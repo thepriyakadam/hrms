@@ -1134,7 +1134,11 @@ end
     end
   end
 
-  resources :holidays
+  resources :holidays do
+    collection do
+      get :assign_to_employee
+    end
+  end
 
   resources :employee_salary_templates do
     collection do

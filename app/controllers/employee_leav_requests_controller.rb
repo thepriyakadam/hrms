@@ -51,6 +51,9 @@ class EmployeeLeavRequestsController < ApplicationController
     elsif @employee_leav_request.is_available2?
       flash[:alert] = "Request already has Approved"
       redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
+    elsif @employee_leav_request.is_present?
+      flash[:alert] = "Leave Request already existed."
+      redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
     else
       if @employee.manager_id.nil?
         flash[:alert] = 'First Reporter not set'
@@ -269,5 +272,3 @@ class EmployeeLeavRequestsController < ApplicationController
     params.require(:employee_leav_request).permit(:current_status,:current_status1,:employee_id, :leav_category_id, :leave_type, :date_range, :start_date, :end_date, :reason)
   end
 end
-
-#ArgumentError (An SMTP To address is required to send a message. Set the message smtp_envelope_to, to, cc, or bcc address.):

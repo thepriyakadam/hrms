@@ -12,18 +12,15 @@
     <tr>
       <th><input type="checkbox" id="selectAll" value="selectAll"></th>
       <th>Travel Request ID</th>
-      <th>Expence Date</th>
+      <th>Expense Date</th>
       <th>Place</th>
-
-      <th>Local Travel Expence </th>
-      <th>Lodging Expence</th>
-
-      <th>Boarding Expence</th>
-      <th>Other Expence</th>
-      <th>Travel Expence Type ID</th>
-      
-      <th>Download Doc</th>
-      <th>Download Image</th>
+      <th>Local Travel Expense </th>
+      <th>Lodging Expense</th>
+      <th>Boarding Expense</th>
+      <th>Other Expense</th>
+      <th>Travel Expense Type ID</th>
+      <th>Comment</th>
+      <th>Status</th>
       <th>Action</th>
     </tr>
   </thead>
@@ -48,21 +45,7 @@
             <small class="label label-success">Approved</small>
             <% else %>
             <% end %>
-        </td>
-        <td>
-           <% if daily_bill_detail.avatar_file_file_name == nil %>
-           <small class="label label-default">Document Not Available</small>
-             <% else %>
-             <%= link_to '',download_doc_path(id: daily_bill_detail.id),class: 'btn btn-xs fa fa-download' %>
-             <% end %>
-        </td>
-        <td>
-           <% if daily_bill_detail.passport_photo_file_name == nil %>
-           <small class="label label-default">Image Not Available</small>
-             <% else %>
-             <%= link_to '',download_pics_path(id: daily_bill_detail.id),class: 'btn btn-xs fa fa-picture-o' %>
-             <% end %>
-        </td>                
+        </td>  
         <td>
         <!--<= link_to 'Edit & Send Next', edit_and_send_next_modal_daily_bill_details_path(daily_bill_detail),class: 'btn btn-sm btn-info fa fa-check', remote: true %>-->
         <%= link_to 'Comment', comment_modal_daily_bill_details_path(daily_bill_detail),class: 'btn btn-sm btn-info fa fa-check', remote: true %>
@@ -76,7 +59,7 @@
 <div class="row">
   <div class="col-sm-3">
     <div class="actions">
-      <%= f.submit "Approve Request", class: 'btn btn-primary btn-sm' %>
+      <%= f.submit "Approve Request", class: 'btn btn-info btn-sm' %>
       <%= r.submit "Reject Request", class: 'btn btn-danger btn-sm' %>
     </div>
   </div>

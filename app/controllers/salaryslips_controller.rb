@@ -636,9 +636,6 @@ class SalaryslipsController < ApplicationController
             end
             @salaryslip_component_array << @addable_salaryslip_item
         end
-
-
-
           deducted_actual_amount = 0
           deducted_calculated_amount = 0
           deducted_total_actual_amount = 0

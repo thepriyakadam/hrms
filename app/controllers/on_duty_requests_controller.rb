@@ -231,9 +231,9 @@ class OnDutyRequestsController < ApplicationController
     @location = params[:employee] ? params[:employee][:company_location_id] : params[:company_location_id]
     @department = params[:employee] ? params[:employee][:department_id] : params[:department_id]
   
-   @employees = Employee.where(company_id: @company_id.to_i).pluck(:id)
-        @on_duty_request_id = OnDutyRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees).take
-        @on_duty_requests = OnDutyRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees)
+    @employees = Employee.where(company_id: @company_id.to_i).pluck(:id)
+    @on_duty_request_id = OnDutyRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees).take
+    @on_duty_requests = OnDutyRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees)
 
     if current_user.class == Group
       if @company_id == ""
@@ -325,8 +325,8 @@ class OnDutyRequestsController < ApplicationController
           @on_duty_requests = OnDutyRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees)
         end
       elsif current_user.role.name == 'Employee'
-      end #current_user.role
-    end #current_user.class
+      end 
+    end
 
     respond_to do |f|
       f.js
@@ -341,7 +341,6 @@ class OnDutyRequestsController < ApplicationController
         #margin:  { top:1,bottom:1,left:1,right:1 }
       end
     end
-   
   end
 
   def on_duty_request_report

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160709092553) do
+ActiveRecord::Schema.define(version: 20160709092554) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -931,9 +931,9 @@ ActiveRecord::Schema.define(version: 20160709092553) do
     t.text     "task_name"
     t.date     "task_date"
     t.boolean  "status"
-    t.string   "time"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.time     "task_time"
   end
 
   add_index "employee_task_to_dos", ["employee_id"], name: "index_employee_task_to_dos_on_employee_id"
@@ -1515,6 +1515,7 @@ ActiveRecord::Schema.define(version: 20160709092553) do
     t.string   "description"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.boolean  "is_payble"
   end
 
   create_table "leav_rejecteds", force: :cascade do |t|

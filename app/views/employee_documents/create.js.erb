@@ -1,6 +1,6 @@
-<%if @flag == true %>
-  $("#form").html("<%= j render 'form' %>");
-  $("#employee_document_list").html("<%= j render 'employee_document_list' %>");
-<%else%>
-  $("#form").html("<%= j render 'form' %>");
-<%end%>
+
+<% if @flag == true %>
+	$("#info").html("<%= j render 'show_detail' %>");      
+<% else %>
+	$("#info").html("<%= j render 'employee_documents/form' %>");      
+<% end %>

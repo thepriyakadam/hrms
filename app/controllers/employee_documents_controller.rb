@@ -10,17 +10,21 @@ class EmployeeDocumentsController < ApplicationController
   # GET /employee_documents/1
   # GET /employee_documents/1.json
   def show
+    @employee = @employee_document.employee
   end
 
   # GET /employee_documents/new
   def new
     @employee_document = EmployeeDocument.new
-    @employee_documents = EmployeeDocument.all
+    # @employee_documents = EmployeeDocument.all
+    # @employee = Employee.find(params[:id])
     session[:active_tab] = "company"
   end
 
   # GET /employee_documents/1/edit
   def edit
+    @info = 'employee_document'
+    @employee = @employee_document.employee
   end
 
   # POST /employee_documents
@@ -28,21 +32,37 @@ class EmployeeDocumentsController < ApplicationController
    
   def create
      @employee_document = EmployeeDocument.new(employee_document_params)
-     @employee_documents = EmployeeDocument.all
+     #@employee_documents = EmployeeDocument.all
+     @employee = Employee.find(params[:employee_document][:employee_id])
+     respond_to do |format|
       if @employee_document.save
-        @employee_document = EmployeeDocument.new
+        format.html { redirect_to @employee_document, notice: 'Employee Document saved Successfully.' }
+        format.json { render :show, status: :created, location: @employee_document }
+        @employee_documents = @employee.employee_documents
+        format.js { @flag = true }
+      else
+        format.html { render :new }
+        format.json { render json: @employee_document.errors, status: :unprocessable_entity }
+        format.js { @flag = false }
       end
-      flash[:notice] = 'Employee Document saved Successfully.' 
-      redirect_to new_employee_document_path
-        
+    end
   end
   # PATCH/PUT /employee_documents/1
   # PATCH/PUT /employee_documents/1.json
   def update
-   @employee_document.update(employee_document_params)
-   @employee_documents = EmployeeDocument.all
-   @employee_document = EmployeeDocument.new
-   redirect_to new_employee_document_path
+    @employee = Employee.find(params['employee_document']['employee_id'])
+    respond_to do |format|
+      if @employee_document.update(employee_document_params)
+        format.html { redirect_to @employee_document, notice: 'Employee Document Updated Successfully.' }
+        format.json { render :show, status: :ok, location: @employee_document }
+        @employee_documents = @employee.employee_documents
+        format.js { @flag = true }
+      else
+        format.html { render :edit }
+        format.json { render json: @employee_document.errors, status: :unprocessable_entity }
+        format.js { @flag = false }
+      end
+    end
   end
 
   # DELETE /employee_documents/1

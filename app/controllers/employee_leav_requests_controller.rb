@@ -43,13 +43,13 @@ class EmployeeLeavRequestsController < ApplicationController
       flash[:alert] = "Your Leave Request has holiday."
       redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
     elsif @employee_leav_request.is_available?
-      flash[:alert] = "Your Leave Request already has attendance available !!"
+      flash[:alert] = "Your Leave Request already has been sent status is pending"
       redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
     elsif @employee_leav_request.is_available1?
-      flash[:alert] = "Leave Request already has attendance!!"
+      flash[:alert] = "Your Leave Request already has been sent status is First Approved"
       redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
     elsif @employee_leav_request.is_available2?
-      flash[:alert] = "Request already has attendance."
+      flash[:alert] = "Request already has Approved"
       redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
     else
       if @employee.manager_id.nil?

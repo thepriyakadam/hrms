@@ -1371,6 +1371,8 @@ end
       get :revert_employee
       get :all_emp_list
       post :update_status
+      get :ajax_employee_document_detail
+      get :ajax_new_employee_document
     end
     member do
       get :edit_manager

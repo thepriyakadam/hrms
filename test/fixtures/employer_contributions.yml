@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  employee_id: 
+  date: 2016-11-12
+  actual_pf: 9.99
+  pf: 9.99
+  actual_esic: 9.99
+  esic: 9.99
+  actual_fp: 9.99
+  fp: 9.99
+  actual_insurance: 9.99
+  insurance: 9.99
+  actual_bonus: 9.99
+  bonus: 9.99
+
+two:
+  employee_id: 
+  date: 2016-11-12
+  actual_pf: 9.99
+  pf: 9.99
+  actual_esic: 9.99
+  esic: 9.99
+  actual_fp: 9.99
+  fp: 9.99
+  actual_insurance: 9.99
+  insurance: 9.99
+  actual_bonus: 9.99
+  bonus: 9.99

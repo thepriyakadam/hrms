@@ -1,0 +1,1 @@
+json.partial! "employer_pfs/employer_pf", employer_pf: @employer_pf

@@ -1,0 +1,1 @@
+json.partial! "employer_esics/employer_esic", employer_esic: @employer_esic

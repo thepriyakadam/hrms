@@ -1,0 +1,1 @@
+json.partial! "bonus_employers/bonus_employer", bonus_employer: @bonus_employer

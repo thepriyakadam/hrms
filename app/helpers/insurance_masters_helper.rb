@@ -1,2 +1,0 @@
-module InsuranceMastersHelper
-end

@@ -1,0 +1,45 @@
+<%= form_for(@bonus_employer) do |f| %>
+  <% if @bonus_employer.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@bonus_employer.errors.count, "error") %> prohibited this bonus_employer from being saved:</h2>
+
+      <ul>
+      <% @bonus_employer.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :base_component %><br>
+    <%= f.text_field :base_component %>
+  </div>
+  <div class="field">
+    <%= f.label :limit_amount %><br>
+    <%= f.text_field :limit_amount %>
+  </div>
+  <div class="field">
+    <%= f.label :percentage %><br>
+    <%= f.text_field :percentage %>
+  </div>
+  <div class="field">
+    <%= f.label :effective_from %><br>
+    <%= f.date_select :effective_from %>
+  </div>
+  <div class="field">
+    <%= f.label :effective_to %><br>
+    <%= f.date_select :effective_to %>
+  </div>
+  <div class="field">
+    <%= f.label :is_active %><br>
+    <%= f.check_box :is_active %>
+  </div>
+  <div class="field">
+    <%= f.label :is_confirm %><br>
+    <%= f.check_box :is_confirm %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,1 @@
+json.array! @employer_pfs, partial: 'employer_pfs/employer_pf', as: :employer_pf

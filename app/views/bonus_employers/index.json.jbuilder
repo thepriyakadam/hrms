@@ -1,0 +1,1 @@
+json.array! @bonus_employers, partial: 'bonus_employers/bonus_employer', as: :bonus_employer

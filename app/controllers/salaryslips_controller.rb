@@ -448,6 +448,9 @@ class SalaryslipsController < ApplicationController
         end
 
 
+        
+
+
           @salaryslip = Salaryslip.last
           @salaryslip_component1 = SalaryslipComponent.where(salaryslip_id: @salaryslip.id)
           @salaryslip_component2 = SalaryslipComponent.where(salaryslip_id: @salaryslip.id,is_deducted: true)
@@ -997,56 +1000,148 @@ class SalaryslipsController < ApplicationController
  
           BonusEmployee.create_bonus(basic_calculated_amount, @employee.id, date)
           # byebug
-        if @employee.joining_detail.is_employeer_pf == true
-          @fp_master = FpMaster.where(is_active: true).take
-          formula_string = @fp_master.base_component.split(',').map {|i| i.to_i}
+        # if @employee.joining_detail.is_employeer_pf == true
+        #   @fp_master = FpMaster.where(is_active: true).take
+        #   formula_string = @fp_master.base_component.split(',').map {|i| i.to_i}
+        #   # formula_string.try(:each) do |f|
+        #   formula_item = SalaryslipComponent.where(salary_component_id: formula_string,salaryslip_id: @salaryslip.id)
+        #   @total = formula_item.sum(:calculated_amount)
+        #   @total_actual = formula_item.sum(:actual_amount)
+        #   formula_item_calculated_amount = (@total / 100 * @fp_master.percentage).ceil
+        #   formula_item_actual_amount = (@total_actual / 100 * @fp_master.percentage).ceil
+        #   # formula_item_calculated_amount = @total / working_day.try(:day_in_month) * working_day.try(:payable_day)
+
+        #   EmployeerPf.create_fp(formula_item_calculated_amount,formula_item_actual_amount,@employee.id, date)
+        #   puts "ttttttttttttttttttttttttttttttttttttttttttttt..........................."
+        #   # end
+        # else
+        # end
+
+        # if @employee.joining_detail.is_employeer_esic == true
+        #   # byebug
+        #   @esic_employer_master = EsicEmployerMaster.where(is_active: true).take
+        #   formula_string = @esic_employer_master.base_component.split(',').map {|i| i.to_i}
+        #   # formula_string.try(:each) do |f|
+        #   formula_item = SalaryslipComponent.where(salary_component_id: formula_string,salaryslip_id: @salaryslip.id)
+        #   @total = formula_item.sum(:calculated_amount)
+        #   @total_actual = formula_item.sum(:actual_amount)
+        #   formula_item_calculated_amount = (@total / 100 * @esic_employer_master.percentage).ceil
+        #   formula_item_actual_amount = (@total_actual / 100 * @esic_employer_master.percentage).ceil
+
+        #   EmployeerEsic.create_esic(formula_item_calculated_amount,formula_item_actual_amount,@employee.id, date)
+        #   puts "ggggggggggggggggggggggggggggggg..........................."
+        #   # end
+        # else
+        # end
+
+        # if @employee.joining_detail.is_insurance == true
+        #   # byebug
+        #   @insurance_master = InsuranceMaster.where(is_active: true).take
+        #   formula_string = @insurance_master.base_component.split(',').map {|i| i.to_i}
+        #   # formula_string.try(:each) do |f|
+        #   formula_item = SalaryslipComponent.where(salary_component_id: formula_string,salaryslip_id: @salaryslip.id)
+        #   @total = formula_item.sum(:calculated_amount)
+        #   @total_actual = formula_item.sum(:actual_amount)
+        #   formula_item_calculated_amount = (@total / 100 * @insurance_master.percentage).ceil
+        #   formula_item_actual_amount = (@total_actual / 100 * @insurance_master.percentage).ceil
+
+        #   EmployeerInsurance.create_insurance(formula_item_calculated_amount,formula_item_actual_amount,@employee.id, date)
+        #   puts "hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh..........................."
+        #   # end
+        # else
+        # end
+
+      if @employee.joining_detail.is_employeer_esic == true || @employee.joining_detail.is_insurance == true || @employee.joining_detail.is_employeer_pf == true || @employee.joining_detail.is_family_pension == true || @employee.joining_detail.is_bonus == true
+          # byebug
+          a = EmployerContribution.create_contribution(@employee.id)
+        if @employee.joining_detail.is_employeer_esic == true
+          @employer_esic = EmployerEsic.where(is_active: true).take
+          formula_string = @employer_esic.base_component.split(',').map {|i| i.to_i}
           # formula_string.try(:each) do |f|
           formula_item = SalaryslipComponent.where(salary_component_id: formula_string,salaryslip_id: @salaryslip.id)
           @total = formula_item.sum(:calculated_amount)
           @total_actual = formula_item.sum(:actual_amount)
-          formula_item_calculated_amount = (@total / 100 * @fp_master.percentage).ceil
-          formula_item_actual_amount = (@total_actual / 100 * @fp_master.percentage).ceil
-          # formula_item_calculated_amount = @total / working_day.try(:day_in_month) * working_day.try(:payable_day)
-
-          EmployeerPf.create_fp(formula_item_calculated_amount,formula_item_actual_amount,@employee.id, date)
-          puts "ttttttttttttttttttttttttttttttttttttttttttttt..........................."
-          # end
-        else
+          formula_item_calculated_amount = (@total / 100 * @employer_esic.percentage).ceil
+          formula_item_actual_amount = (@total_actual / 100 * @employer_esic.percentage).ceil
+          
+            @e1=EmployerContribution.where(id: a.id).update_all(date: date,esic: formula_item_calculated_amount,actual_esic: formula_item_actual_amount)
+          # EmployeerEsic.create_esic(formula_item_calculated_amount,formula_item_actual_amount,@employee.id, date)
+          puts "ggggggggggggggggggggggggggggggg..........................."
         end
 
-        if @employee.joining_detail.is_employeer_esic == true
-          # byebug
-          @esic_employer_master = EsicEmployerMaster.where(is_active: true).take
-          formula_string = @esic_employer_master.base_component.split(',').map {|i| i.to_i}
+
+        if @employee.joining_detail.is_employeer_pf == true
+          @employer_pf = EmployerPf.where(is_active: true).take
+          formula_string = @employer_pf.base_component.split(',').map {|i| i.to_i}
           # formula_string.try(:each) do |f|
           formula_item = SalaryslipComponent.where(salary_component_id: formula_string,salaryslip_id: @salaryslip.id)
           @total = formula_item.sum(:calculated_amount)
           @total_actual = formula_item.sum(:actual_amount)
-          formula_item_calculated_amount = (@total / 100 * @esic_employer_master.percentage).ceil
-          formula_item_actual_amount = (@total_actual / 100 * @esic_employer_master.percentage).ceil
+          formula_item_calculated_amount = (@total / 100 * @employer_pf.percentage).ceil
+          formula_item_actual_amount = (@total_actual / 100 * @employer_pf.percentage).ceil
 
-          EmployeerEsic.create_esic(formula_item_calculated_amount,formula_item_actual_amount,@employee.id, date)
-          puts "ggggggggggggggggggggggggggggggg..........................."
-          # end
-        else
+          @e1=EmployerContribution.where(id: a.id).update_all(date: date,pf: formula_item_calculated_amount,actual_pf: formula_item_actual_amount)
+          # EmployeerEsic.create_esic(formula_item_calculated_amount,formula_item_actual_amount,@employee.id, date)
+          puts "jjjjjjjjjjjjjjjjjjjjjjjjjjjj..........................."
         end
 
         if @employee.joining_detail.is_insurance == true
           # byebug
-          @insurance_master = InsuranceMaster.where(is_active: true).take
-          formula_string = @insurance_master.base_component.split(',').map {|i| i.to_i}
+          @employer_insurance = EmployerInsurance.where(is_active: true).take
+          formula_string = @employer_insurance.base_component.split(',').map {|i| i.to_i}
           # formula_string.try(:each) do |f|
           formula_item = SalaryslipComponent.where(salary_component_id: formula_string,salaryslip_id: @salaryslip.id)
           @total = formula_item.sum(:calculated_amount)
           @total_actual = formula_item.sum(:actual_amount)
-          formula_item_calculated_amount = (@total / 100 * @insurance_master.percentage).ceil
-          formula_item_actual_amount = (@total_actual / 100 * @insurance_master.percentage).ceil
+          formula_item_calculated_amount = (@total / 100 * @employer_insurance.percentage).ceil
+          formula_item_actual_amount = (@total_actual / 100 * @employer_insurance.percentage).ceil
 
-          EmployeerInsurance.create_insurance(formula_item_calculated_amount,formula_item_actual_amount,@employee.id, date)
-          puts "hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh..........................."
-          # end
-        else
+          @e1=EmployerContribution.where(id: a.id).update_all(date: date,insurance: formula_item_calculated_amount,actual_insurance: formula_item_actual_amount)
+          # EmployeerEsic.create_esic(formula_item_calculated_amount,formula_item_actual_amount,@employee.id, date)
+          puts "oooooooooooooooooooooooooooooooooooooooooooooo..........................."
         end
+
+        if @employee.joining_detail.is_family_pension == true
+          # byebug
+          @employer_family_pension = EmployerFamilyPension.where(is_active: true).take
+          formula_string = @employer_family_pension.base_component.split(',').map {|i| i.to_i}
+          # formula_string.try(:each) do |f|
+          formula_item = SalaryslipComponent.where(salary_component_id: formula_string,salaryslip_id: @salaryslip.id)
+          @total = formula_item.sum(:calculated_amount)
+          @total_actual = formula_item.sum(:actual_amount)
+          formula_item_calculated_amount = (@total / 100 * @employer_family_pension.percentage).ceil
+          formula_item_actual_amount = (@total_actual / 100 * @employer_family_pension.percentage).ceil
+
+          @e1=EmployerContribution.where(id: a.id).update_all(date: date,fp: formula_item_calculated_amount,actual_fp: formula_item_actual_amount)
+          # EmployeerEsic.create_esic(formula_item_calculated_amount,formula_item_actual_amount,@employee.id, date)
+          puts "nnnnnnnnnnnnnnnnnnnnnnnnnnnnnn.........................."
+        end
+
+        if @employee.joining_detail.is_bonus == true
+          # byebug
+          @bonus_employer = BonusEmployer.where(is_active: true).take
+          formula_string = @bonus_employer.base_component.split(',').map {|i| i.to_i}
+          # formula_string.try(:each) do |f|
+          formula_item = SalaryslipComponent.where(salary_component_id: formula_string,salaryslip_id: @salaryslip.id)
+          @total = formula_item.sum(:calculated_amount)
+          @total_actual = formula_item.sum(:actual_amount)
+          if @total <= @bonus_employer.limit_amount && @total_actual <= @bonus_employer.limit_amount
+          formula_item_calculated_amount = (@total / 100 * @employer_family_pension.percentage).ceil
+          formula_item_actual_amount = (@total_actual / 100 * @employer_family_pension.percentage).ceil
+
+          @e1=EmployerContribution.where(id: a.id).update_all(date: date,bonus: formula_item_calculated_amount,actual_bonus: formula_item_actual_amount)
+          puts "ssssssssssssssssssssssssssssssssssssss.........................."
+          else
+          formula_item_calculated_amount = (@bonus_employer.limit_amount / 100 * @employer_family_pension.percentage).ceil
+          formula_item_actual_amount = (@bonus_employer.limit_amount / 100 * @employer_family_pension.percentage).ceil
+
+          @e2=EmployerContribution.where(id: a.id).update_all(date: date,bonus: formula_item_calculated_amount,actual_bonus: formula_item_actual_amount)
+          # EmployeerEsic.create_esic(formula_item_calculated_amount,formula_item_actual_amount,@employee.id, date)
+          puts "pppppppppppppppppppppppppppppppp.........................."
+        end
+        end
+
+      end
 
           # @arrear = EmployeeArrear.where('employee_id = ? and is_paid = ?', @employee.id, false).take
           # next if @arrear.nil?

@@ -1,0 +1,1 @@
+json.array! @dearness_allowances, partial: 'dearness_allowances/dearness_allowance', as: :dearness_allowance

@@ -21,8 +21,9 @@
       <th>Boarding Expence</th>
       <th>Other Expence</th>
       <th>Travel Expence Type ID</th>
-      <th>Comment</th>
-      <th>Status</th>
+      
+      <th>Download Doc</th>
+      <th>Download Image</th>
       <th>Action</th>
     </tr>
   </thead>
@@ -47,7 +48,21 @@
             <small class="label label-success">Approved</small>
             <% else %>
             <% end %>
-        </td>       
+        </td>
+        <td>
+           <% if daily_bill_detail.avatar_file_file_name == nil %>
+           <small class="label label-default">Document Not Available</small>
+             <% else %>
+             <%= link_to '',download_doc_path(id: daily_bill_detail.id),class: 'btn btn-xs fa fa-download' %>
+             <% end %>
+        </td>
+        <td>
+           <% if daily_bill_detail.passport_photo_file_name == nil %>
+           <small class="label label-default">Image Not Available</small>
+             <% else %>
+             <%= link_to '',download_pics_path(id: daily_bill_detail.id),class: 'btn btn-xs fa fa-picture-o' %>
+             <% end %>
+        </td>                
         <td>
         <!--<= link_to 'Edit & Send Next', edit_and_send_next_modal_daily_bill_details_path(daily_bill_detail),class: 'btn btn-sm btn-info fa fa-check', remote: true %>-->
         <%= link_to 'Comment', comment_modal_daily_bill_details_path(daily_bill_detail),class: 'btn btn-sm btn-info fa fa-check', remote: true %>

@@ -1,7 +1,7 @@
 <div class="box box-default">
 <div class="box-header with-border">
     <h3 class="box-title">Employee Training Request</h3>
-  </div>
+</div>
   <div class="box-body">
 
 <%= bootstrap_form_for(@training_request,html: {id: "training_request"}) do |f| %>
@@ -50,25 +50,22 @@
   
 
     <div class="col-sm-3">
-    <label>Place</label>
       <div class="form-group required">
-        <%= f.text_field :place,hide_label: true,placeholder: 'Place' %>
+        <%= f.text_field :place,placeholder: 'Place',label: 'Place' %>
       </div>
     </div>
 
     <div class="col-sm-4">
-    <label>Description</label>
       <div class="field">
-        <%= f.text_field :description,hide_label: true,placeholder: 'Description' %>
+        <%= f.text_field :description,placeholder: 'Description',label: 'Description' %>
       </div>
     </div>
    <!--  </div>
     <div class="row"> -->
     <div class="col-sm-5">
-    <label>Justification</label>
-      <div class="form-group required">
-        <%= f.text_field :justification,hide_label: true,placeholder: 'Justification' %>
-      </div>
+        <div class="field">
+           <%= f.text_field :justification,label: 'Justification'%>
+        </div>
     </div>   
   </div>
   <div>
@@ -83,7 +80,7 @@
       </div>
     </div>
   </div>
-    <% end %>
+  <% end %>
 </div>
 </div>
 
@@ -91,10 +88,7 @@
 
   $("#training_request").validate({
     rules: {
-      "training_request[training_topic]":{
-        required: true
-      },
-      "training_request[training_period]":{
+      "training_request[training_topic_master_id]":{
         required: true
       },
       "training_request[training_date]":{
@@ -102,20 +96,23 @@
       },
       "training_request[reporting_master_id]":{
         required: true
+      },
+      "training_request[place]":{
+        required: true
       }
     },
     messages: {
-      "training_request[training_topic]":{
+      "training_request[training_topic_master_id]":{
         required: "Please specify Training Topic"
-      },
-      "training_request[training_period]":{
-        required: "Please specify Training Period"
       },
       "training_request[training_date]":{
         required: "Please specify No of Training Date"
       },
       "training_request[reporting_master_id]":{
-        required: "Please specify Reporting Master"
+        required: "Please specify Reporting Manager"
+      },
+       "training_request[place]":{
+        required: "Please specify Place"
       }
     },
     errorPlacement: function(error, element) {

@@ -4,10 +4,10 @@
      <%= bootstrap_form_for :training_request,url:{action:"reject_training_request",id: @training_request.id},html: {id: 'training_request'} do |f| %>
         <div class="row">
           <div class="col-sm-6">
-            <%= f.text_area :comment,label: 'Comment',placeholder: "Please Enter Reason For Approval/Reject" %>
+            <%= f.text_area :comment,label: 'Comment',placeholder: "Please Enter Reason For Rejection" %>
           </div>
           <div class="col-sm-3" style="padding-top:40px;">
-            <%= f.submit "Update Comment", class: 'btn btn-sm btn-primary fa fa-modx' %>
+            <%= f.submit "Comment & Reject", class: 'btn btn-sm btn-danger fa fa-modx' %>
           </div>
         </div>
       <% end %>

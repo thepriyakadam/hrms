@@ -1,5 +1,5 @@
 class PeriodsController < ApplicationController
-  before_action :set_period, only: [:edit, :update, :destroy]
+  before_action :set_period, only: [:show,:edit, :update, :destroy]
 
   def index
     @periods = Period.all
@@ -8,12 +8,15 @@ class PeriodsController < ApplicationController
 
 	def create
     @period = Period.new(period_params)
-		if @period.save
-	    @period = Period.new
-	    @periods = Period.all
-			@flag = true
-		else
-			@flag = false
+    @periods = Period.all
+    respond_to do |format|
+			if @period.save
+		    @period = Period.new
+		    format.js { @flag = true }
+			else
+				flash.now[:alert] = 'Period Already Exist.'
+        format.js { @flag = false }
+			end
 		end
 	end
 
@@ -21,19 +24,14 @@ class PeriodsController < ApplicationController
 	end
 
 	def update
-		if @period.update(period_params)
-     @period = Period.new
-     @periods = Period.all
-			@flag = true
-		else
-			@flag = false
-		end
+		@period.update(period_params)
+    @period = Period.new
+    @periods = Period.all
 	end
 
 	def destroy
 		@period.destroy
-    flash[:notice] = "Deleted Successfully"
-    redirect_to periods_path
+    @periods = Period.all
 	end
 
 	private

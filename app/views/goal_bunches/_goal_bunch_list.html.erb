@@ -8,7 +8,7 @@
   <tbody>
     <% @goal_bunches.each do |goal_bunch| %>
       <tr>
-        <td><%= goal_bunch.period.name %></td>
+        <td><%= goal_bunch.period.try(:name) %></td>
         <td>
            <!-- link_to '', edit_goal_bunch_path(goal_bunch),class: 'btn btn-xs btn-success fa fa-edit',remote:true %> -->
             <!-- link_to '', modal_period_goal_bunches_path(goal_bunch),class: 'btn btn-xs btn-success fa fa-edit',remote:true %> -->

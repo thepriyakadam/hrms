@@ -56,6 +56,8 @@
       </table>
       <%= link_to " Excel Report ",employee_slip_xls_1_employee_attendances_path(month: params[:month], year: params[:year], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
 
+      <%= link_to " Print Attendance Slip ",employee_slip_pdf_employee_attendances_path(month: params[:month], year: params[:year], format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+
   <!-- </div>
 </div> -->
 
@@ -79,7 +81,7 @@ $(document).ready(function() {
     $('#example5').DataTable( {
         "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]],
         "scrollX": true,
-        "scrollY": 200
+        "scrollY": 500
     } );
 } );
 </script>

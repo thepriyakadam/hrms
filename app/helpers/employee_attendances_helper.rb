@@ -15,6 +15,19 @@ module EmployeeAttendancesHelper
     Hash[exist.sort]
 	end
 
+  # def total_attendance(date, exist, e)
+  #   start_date = date.beginning_of_month
+  #   end_date = date.end_of_month
+  #   start_date.step(end_date).each do |d|
+  #     attendance_record = EmployeeAttendance.where(day: d, employee_id: e.employee_id,present: "P").take
+  #     unless attendance_record.nil?
+  #       exist[d] = attendance_record.count
+  #     end
+  #   end
+  #   Hash[exist.sort]
+  # end
+
+
   def count_day(day,employee)
     e = Employee.find(employee)
     if e.joining_detail.nil?

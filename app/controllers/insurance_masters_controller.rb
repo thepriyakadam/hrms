@@ -52,7 +52,7 @@ class InsuranceMastersController < ApplicationController
     components = params[:components]
     str = ''
     i = 0
-    components.each do |c|
+    components.try(:each) do |c|
       str = if i == 0
               c.to_s
             else

@@ -624,7 +624,6 @@ class SalaryslipsController < ApplicationController
             if item.salary_component.name == 'Basic'
               basic_actual_amount = addable_actual_amount
               basic_calculated_amount = addable_calculated_amount
-              # byebug
             elsif item.salary_component.name == 'DA'
               da_actual_amount = addable_actual_amount
               da_calculated_amount = addable_calculated_amount
@@ -637,9 +636,6 @@ class SalaryslipsController < ApplicationController
             end
             @salaryslip_component_array << @addable_salaryslip_item
         end
-
-
-
           deducted_actual_amount = 0
           deducted_calculated_amount = 0
           deducted_total_actual_amount = 0
@@ -680,7 +676,6 @@ class SalaryslipsController < ApplicationController
           @food_deductions = FoodDeduction.where(food_date: date..date.at_end_of_month, employee_id: @employee.id)
           unless @food_deductions.empty?
             @food_deductions.each do |f|
-              #byebug
               f.update(is_paid: true)
               deducted_actual_amount = 0
               deducted_calculated_amount = f.amount
@@ -936,7 +931,6 @@ class SalaryslipsController < ApplicationController
           unless @food_deductions.empty?
             deducted_calculated_amount = 0
             @food_deductions.each do |f|
-              #byebug
               f.update(is_paid: true)
               deducted_actual_amount = 0
               deducted_calculated_amount = deducted_calculated_amount + f.amount
@@ -1033,6 +1027,23 @@ class SalaryslipsController < ApplicationController
 
           EmployeerEsic.create_esic(formula_item_calculated_amount,formula_item_actual_amount,@employee.id, date)
           puts "ggggggggggggggggggggggggggggggg..........................."
+          # end
+        else
+        end
+
+        if @employee.joining_detail.is_insurance == true
+          # byebug
+          @insurance_master = InsuranceMaster.where(is_active: true).take
+          formula_string = @insurance_master.base_component.split(',').map {|i| i.to_i}
+          # formula_string.try(:each) do |f|
+          formula_item = SalaryslipComponent.where(salary_component_id: formula_string,salaryslip_id: @salaryslip.id)
+          @total = formula_item.sum(:calculated_amount)
+          @total_actual = formula_item.sum(:actual_amount)
+          formula_item_calculated_amount = (@total / 100 * @insurance_master.percentage).ceil
+          formula_item_actual_amount = (@total_actual / 100 * @insurance_master.percentage).ceil
+
+          EmployeerInsurance.create_insurance(formula_item_calculated_amount,formula_item_actual_amount,@employee.id, date)
+          puts "hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh..........................."
           # end
         else
         end

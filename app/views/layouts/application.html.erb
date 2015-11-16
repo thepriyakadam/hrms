@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Hrms</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<% if group_signed_in? %>
+  <li>
+  <%= link_to('Group Logout', destroy_group_session_path, :method => :delete) %>        
+  </li>
+  <li><%= link_to "Group Profile", edit_group_registration_path %></li>
+  
+<%elsif member_signed_in? %>
+  <li>
+  <%= link_to('Member Logout', destroy_member_session_path, :method => :delete) %>        
+  </li>
+  <li><%= link_to "Member Profile", edit_member_registration_path %></li>
+<% end %>
+
+<p class="notice"><%= notice %></p>
+<p class="alert"><%= alert %></p>
+<%= yield %>
+
+</body>
+</html>

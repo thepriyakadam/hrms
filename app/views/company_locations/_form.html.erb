@@ -1,0 +1,45 @@
+<%= form_for(@company_location) do |f| %>
+  <% if @company_location.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@company_location.errors.count, "error") %> prohibited this company_location from being saved:</h2>
+
+      <ul>
+      <% @company_location.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :company_id %><br>
+    <%= f.text_field :company_id %>
+  </div>
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :address %><br>
+    <%= f.text_field :address %>
+  </div>
+  <div class="field">
+    <%= f.label :city %><br>
+    <%= f.text_field :city %>
+  </div>
+  <div class="field">
+    <%= f.label :district %><br>
+    <%= f.text_field :district %>
+  </div>
+  <div class="field">
+    <%= f.label :pin_code %><br>
+    <%= f.number_field :pin_code %>
+  </div>
+  <div class="field">
+    <%= f.label :contact_no %><br>
+    <%= f.text_field :contact_no %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

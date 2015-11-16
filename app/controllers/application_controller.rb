@@ -5,7 +5,8 @@ class ApplicationController < ActionController::Base
   before_action :authenticate!
   before_action :check_subdomain
   before_action :configure_devise_permitted_parameters, if: :devise_controller?
-  helper_method [:user_signed_in?, :current_user]
+  helper_method :user_signed_in?
+  helper_method :current_user
   include LocalSubdomain
   
   def check_subdomain

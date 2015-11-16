@@ -1,5 +1,14 @@
 Rails.application.routes.draw do
-  root 'home#index'
+  resources :employees
+  resources :blood_groups
+  resources :nationalities
+  resources :employee_types
+  resources :department_types
+  resources :company_types
+  resources :departments
+  resources :company_locations
+  resources :companies
+  root 'companies#index'
 
   devise_for :members
   devise_for :groups, :controllers => {registrations: 'groups/registrations'}

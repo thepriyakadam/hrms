@@ -1,0 +1,89 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Group:</strong>
+  <%= @company.group %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @company.name %>
+</p>
+
+<p>
+  <strong>Company type:</strong>
+  <%= @company.company_type.name %>
+</p>
+
+<p>
+  <strong>Registration no:</strong>
+  <%= @company.registration_no %>
+</p>
+
+<p>
+  <strong>Pan card no:</strong>
+  <%= @company.pan_card_no %>
+</p>
+
+<p>
+  <strong>Tax no:</strong>
+  <%= @company.tax_no %>
+</p>
+
+<p>
+  <strong>Professional tax no:</strong>
+  <%= @company.professional_tax_no %>
+</p>
+
+<p>
+  <strong>Address:</strong>
+  <%= @company.address %>
+</p>
+
+<p>
+  <strong>City:</strong>
+  <%= @company.city %>
+</p>
+
+<p>
+  <strong>District:</strong>
+  <%= @company.district %>
+</p>
+
+<p>
+  <strong>Pin code:</strong>
+  <%= @company.pin_code %>
+</p>
+
+<p>
+  <strong>State:</strong>
+  <%= @company.state %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @company.email %>
+</p>
+
+<p>
+  <strong>Contact no:</strong>
+  <%= @company.contact_no %>
+</p>
+
+<p>
+  <strong>Web site:</strong>
+  <%= @company.web_site %>
+</p>
+
+<p>
+  <strong>Starting date:</strong>
+  <%= @company.starting_date %>
+</p>
+
+<p>
+  <strong>Ceo name:</strong>
+  <%= @company.ceo_name %>
+</p>
+
+<%= link_to 'Edit', edit_company_path(@company) %> |
+<%= link_to 'Back', companies_path %>

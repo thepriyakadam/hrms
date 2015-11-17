@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   root 'companies#index'
 
   devise_for :members
-  devise_for :groups, :controllers => {registrations: 'groups/registrations'}
+  devise_for :groups, :controllers => {registrations: 'groups/registrations',registrations: 'groups/sessions'}
 
   devise_scope :group do
     get "/group" => "groups/sessions#new"

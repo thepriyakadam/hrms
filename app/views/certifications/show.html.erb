@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Qualification:</strong>
+  <%= @certification.qualification %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @certification.name %>
+</p>
+
+<p>
+  <strong>Year:</strong>
+  <%= @certification.year %>
+</p>
+
+<p>
+  <strong>Duration:</strong>
+  <%= @certification.duration %>
+</p>
+
+<p>
+  <strong>Descripation:</strong>
+  <%= @certification.descripation %>
+</p>
+
+<%= link_to 'Edit', edit_certification_path(@certification) %> |
+<%= link_to 'Back', certifications_path %>

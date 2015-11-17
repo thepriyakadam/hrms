@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Employee:</strong>
+  <%= @skillset.employee %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @skillset.name %>
+</p>
+
+<p>
+  <strong>Skill level:</strong>
+  <%= @skillset.skill_level %>
+</p>
+
+<%= link_to 'Edit', edit_skillset_path(@skillset) %> |
+<%= link_to 'Back', skillsets_path %>

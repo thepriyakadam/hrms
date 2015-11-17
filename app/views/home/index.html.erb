@@ -1,0 +1,6 @@
+<%if current_user.class == Group %>
+<%= link_to "Create Company", new_company_path %>
+<%elsif current_user.class == Member %>
+<%= link_to "Create Comapany Location", new_company_location_path %>
+<%end%>
+

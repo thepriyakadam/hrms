@@ -11,10 +11,8 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :company_id %><br>
-    <%= f.text_field :company_id %>
-  </div>
+  <%= f.hidden_field :company_id, value: current_user.account_id %>
+  
   <div class="field">
     <%= f.label :name %><br>
     <%= f.text_field :name %>

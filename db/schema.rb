@@ -160,8 +160,11 @@ ActiveRecord::Schema.define(version: 20151116132432) do
     t.string   "last_sign_in_ip",        limit: 255
     t.datetime "created_at",                                      null: false
     t.datetime "updated_at",                                      null: false
+    t.integer  "account_id",             limit: 4
+    t.string   "account_type",           limit: 255
   end
 
+  add_index "members", ["account_type", "account_id"], name: "index_members_on_account_type_and_account_id", using: :btree
   add_index "members", ["email"], name: "index_members_on_email", unique: true, using: :btree
   add_index "members", ["reset_password_token"], name: "index_members_on_reset_password_token", unique: true, using: :btree
 

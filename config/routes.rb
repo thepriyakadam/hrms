@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   resources :departments
   resources :company_locations
   resources :companies
-  root 'companies#index'
+  root 'home#index'
 
   devise_for :members
   devise_for :groups, :controllers => {registrations: 'groups/registrations'}

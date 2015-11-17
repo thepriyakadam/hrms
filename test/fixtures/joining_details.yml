@@ -1,0 +1,33 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  employee_id: 
+  joining_date: MyString
+  reffernce_from: MyString
+  admin_hr: MyString
+  tech_hr: MyString
+  designation: MyString
+  ctc: MyString
+  account_no: MyString
+  employee_grade_id: 
+  confirmation_date: 2015-11-17
+  status: MyString
+  probation_period: MyString
+  notice_period: MyString
+  medical_schem: MyString
+
+two:
+  employee_id: 
+  joining_date: MyString
+  reffernce_from: MyString
+  admin_hr: MyString
+  tech_hr: MyString
+  designation: MyString
+  ctc: MyString
+  account_no: MyString
+  employee_grade_id: 
+  confirmation_date: 2015-11-17
+  status: MyString
+  probation_period: MyString
+  notice_period: MyString
+  medical_schem: MyString

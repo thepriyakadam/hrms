@@ -1,0 +1,2 @@
+module JoiningDetailsHelper
+end

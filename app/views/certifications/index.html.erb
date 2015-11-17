@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Certifications</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Qualification</th>
+      <th>Name</th>
+      <th>Year</th>
+      <th>Duration</th>
+      <th>Descripation</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @certifications.each do |certification| %>
+      <tr>
+        <td><%= certification.qualification %></td>
+        <td><%= certification.name %></td>
+        <td><%= certification.year %></td>
+        <td><%= certification.duration %></td>
+        <td><%= certification.descripation %></td>
+        <td><%= link_to 'Show', certification %></td>
+        <td><%= link_to 'Edit', edit_certification_path(certification) %></td>
+        <td><%= link_to 'Destroy', certification, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Certification', new_certification_path %>

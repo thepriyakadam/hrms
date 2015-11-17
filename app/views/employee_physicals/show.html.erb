@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Employee:</strong>
+  <%= @employee_physical.employee %>
+</p>
+
+<p>
+  <strong>Hieght:</strong>
+  <%= @employee_physical.hieght %>
+</p>
+
+<p>
+  <strong>Weight:</strong>
+  <%= @employee_physical.weight %>
+</p>
+
+<p>
+  <strong>Size:</strong>
+  <%= @employee_physical.size %>
+</p>
+
+<%= link_to 'Edit', edit_employee_physical_path(@employee_physical) %> |
+<%= link_to 'Back', employee_physicals_path %>

@@ -32,6 +32,8 @@ class DeviseCreateMembers < ActiveRecord::Migration
 
 
       t.timestamps null: false
+
+      t.references :account, polymorphic: true, index: true
     end
 
     add_index :members, :email,                unique: true

@@ -28,6 +28,8 @@ class DepartmentsController < ApplicationController
 
     respond_to do |format|
       if @department.save
+        # pass = (0...8).map { (65 + rand(26)).chr }.join
+        # @company.create_user(@company,pass)
         format.html { redirect_to @department, notice: 'Department was successfully created.' }
         format.json { render :show, status: :created, location: @department }
       else
@@ -69,6 +71,6 @@ class DepartmentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def department_params
-      params.require(:department).permit(:company_location_id, :name, :department_type, :address, :pin_code, :head_of_department, :contact_no, :manager, :hr)
+      params.require(:department).permit(:company_location_id, :name, :department_type_id, :address, :pin_code, :head_of_department, :contact_no, :manager, :hr)
     end
 end

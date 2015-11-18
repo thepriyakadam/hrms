@@ -2,7 +2,6 @@
   <% if @company.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@company.errors.count, "error") %> prohibited this company from being saved:</h2>
-
       <ul>
       <% @company.errors.full_messages.each do |message| %>
         <li><%= message %></li>
@@ -10,16 +9,6 @@
       </ul>
     </div>
   <% end %>
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-         <%= f.text_field :group_id %>
-       </div>
-    </div>
-  </div>
-
 
   
    <div class="row">
@@ -36,11 +25,9 @@
     <div class="col-sm-1"></div>
       <div class="col-sm-3">
        <div class="field">
-      <%= f.select :company_type_id,@company_type.collect {|x| [x.name,x.id]} %>
+      <%= f.select :company_type_id, all_company_type %>
      </div>
     </div>
-  </div>
-
 
   <div class="row">
     <div class="col-sm-1"></div>

@@ -11,13 +11,36 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151116132432) do
+ActiveRecord::Schema.define(version: 20151117103754) do
+
+  create_table "awards", force: :cascade do |t|
+    t.integer  "employee_id", limit: 4
+    t.string   "award_name",  limit: 255
+    t.integer  "year",        limit: 4
+    t.string   "award_from",  limit: 255
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  add_index "awards", ["employee_id"], name: "index_awards_on_employee_id", using: :btree
 
   create_table "blood_groups", force: :cascade do |t|
     t.string   "name",       limit: 255
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
   end
+
+  create_table "certifications", force: :cascade do |t|
+    t.integer  "qualification_id", limit: 4
+    t.string   "name",             limit: 255
+    t.integer  "year",             limit: 4
+    t.string   "duration",         limit: 255
+    t.text     "descripation",     limit: 65535
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+  end
+
+  add_index "certifications", ["qualification_id"], name: "index_certifications_on_qualification_id", using: :btree
 
   create_table "companies", force: :cascade do |t|
     t.integer  "group_id",            limit: 4
@@ -87,6 +110,23 @@ ActiveRecord::Schema.define(version: 20151116132432) do
   add_index "departments", ["company_location_id"], name: "index_departments_on_company_location_id", using: :btree
   add_index "departments", ["department_type_id"], name: "index_departments_on_department_type_id", using: :btree
 
+  create_table "employee_grades", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  create_table "employee_physicals", force: :cascade do |t|
+    t.integer  "employee_id", limit: 4
+    t.string   "hieght",      limit: 255
+    t.string   "weight",      limit: 255
+    t.string   "size",        limit: 255
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  add_index "employee_physicals", ["employee_id"], name: "index_employee_physicals_on_employee_id", using: :btree
+
   create_table "employee_types", force: :cascade do |t|
     t.string   "name",       limit: 255
     t.datetime "created_at",             null: false
@@ -127,6 +167,54 @@ ActiveRecord::Schema.define(version: 20151116132432) do
   add_index "employees", ["employee_type_id"], name: "index_employees_on_employee_type_id", using: :btree
   add_index "employees", ["nationality_id"], name: "index_employees_on_nationality_id", using: :btree
 
+  create_table "experinces", force: :cascade do |t|
+    t.integer  "employee_id",          limit: 4
+    t.string   "no_of_year_experince", limit: 255
+    t.string   "company_name",         limit: 255
+    t.string   "designation",          limit: 255
+    t.string   "ctc",                  limit: 255
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+  end
+
+  add_index "experinces", ["employee_id"], name: "index_experinces_on_employee_id", using: :btree
+
+  create_table "families", force: :cascade do |t|
+    t.integer  "employee_id",       limit: 4
+    t.string   "no_of_member",      limit: 255
+    t.string   "f_name",            limit: 255
+    t.string   "m_name",            limit: 255
+    t.string   "l_name",            limit: 255
+    t.date     "date_of_birth"
+    t.integer  "age",               limit: 4
+    t.string   "contact_no",        limit: 255
+    t.string   "phone_no",          limit: 255
+    t.string   "email",             limit: 255
+    t.string   "permanent_address", limit: 255
+    t.string   "city",              limit: 255
+    t.string   "dist",              limit: 255
+    t.string   "state",             limit: 255
+    t.integer  "pin_code",          limit: 4
+    t.string   "current_address",   limit: 255
+    t.string   "relation",          limit: 255
+    t.string   "adhar_no",          limit: 255
+    t.string   "pan_no",            limit: 255
+    t.string   "passport_no",       limit: 255
+    t.string   "medical_claim",     limit: 255
+    t.string   "marital",           limit: 255
+    t.string   "status",            limit: 255
+    t.integer  "nationality_id",    limit: 4
+    t.string   "blood_group",       limit: 255
+    t.string   "religion",          limit: 255
+    t.string   "phandicap",         limit: 255
+    t.string   "profession",        limit: 255
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+  end
+
+  add_index "families", ["employee_id"], name: "index_families_on_employee_id", using: :btree
+  add_index "families", ["nationality_id"], name: "index_families_on_nationality_id", using: :btree
+
   create_table "groups", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
     t.string   "encrypted_password",     limit: 255, default: "", null: false
@@ -147,6 +235,28 @@ ActiveRecord::Schema.define(version: 20151116132432) do
   add_index "groups", ["reset_password_token"], name: "index_groups_on_reset_password_token", unique: true, using: :btree
   add_index "groups", ["subdomain"], name: "index_groups_on_subdomain", unique: true, using: :btree
 
+  create_table "joining_details", force: :cascade do |t|
+    t.integer  "employee_id",       limit: 4
+    t.string   "joining_date",      limit: 255
+    t.string   "reffernce_from",    limit: 255
+    t.string   "admin_hr",          limit: 255
+    t.string   "tech_hr",           limit: 255
+    t.string   "designation",       limit: 255
+    t.string   "ctc",               limit: 255
+    t.string   "account_no",        limit: 255
+    t.integer  "employee_grade_id", limit: 4
+    t.date     "confirmation_date"
+    t.string   "status",            limit: 255
+    t.string   "probation_period",  limit: 255
+    t.string   "notice_period",     limit: 255
+    t.string   "medical_schem",     limit: 255
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+  end
+
+  add_index "joining_details", ["employee_grade_id"], name: "index_joining_details_on_employee_grade_id", using: :btree
+  add_index "joining_details", ["employee_id"], name: "index_joining_details_on_employee_id", using: :btree
+
   create_table "members", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
     t.string   "encrypted_password",     limit: 255, default: "", null: false
@@ -160,8 +270,11 @@ ActiveRecord::Schema.define(version: 20151116132432) do
     t.string   "last_sign_in_ip",        limit: 255
     t.datetime "created_at",                                      null: false
     t.datetime "updated_at",                                      null: false
+    t.integer  "account_id",             limit: 4
+    t.string   "account_type",           limit: 255
   end
 
+  add_index "members", ["account_type", "account_id"], name: "index_members_on_account_type_and_account_id", using: :btree
   add_index "members", ["email"], name: "index_members_on_email", unique: true, using: :btree
   add_index "members", ["reset_password_token"], name: "index_members_on_reset_password_token", unique: true, using: :btree
 
@@ -171,11 +284,64 @@ ActiveRecord::Schema.define(version: 20151116132432) do
     t.datetime "updated_at",             null: false
   end
 
+  create_table "qualifications", force: :cascade do |t|
+    t.integer  "employee_id",        limit: 4
+    t.string   "ssc",                limit: 255
+    t.string   "ssc_from",           limit: 255
+    t.string   "ssc_marks",          limit: 255
+    t.integer  "ssc_year",           limit: 4
+    t.string   "ssc_bord",           limit: 255
+    t.string   "deploma",            limit: 255
+    t.string   "deploma_from",       limit: 255
+    t.string   "deploma_marks",      limit: 255
+    t.integer  "deploma_year",       limit: 4
+    t.string   "deploma_university", limit: 255
+    t.string   "hsc",                limit: 255
+    t.string   "hsc_from",           limit: 255
+    t.string   "hsc_marks",          limit: 255
+    t.integer  "hsc_year",           limit: 4
+    t.string   "hsc_bord",           limit: 255
+    t.string   "ug",                 limit: 255
+    t.string   "ug_from",            limit: 255
+    t.string   "ug_marks",           limit: 255
+    t.integer  "ug_year",            limit: 4
+    t.string   "ug_university",      limit: 255
+    t.string   "pg",                 limit: 255
+    t.string   "pg_from",            limit: 255
+    t.string   "pg_marks",           limit: 255
+    t.integer  "pg_yaer",            limit: 4
+    t.string   "pg_university",      limit: 255
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+  end
+
+  add_index "qualifications", ["employee_id"], name: "index_qualifications_on_employee_id", using: :btree
+
+  create_table "skillsets", force: :cascade do |t|
+    t.integer  "employee_id", limit: 4
+    t.string   "name",        limit: 255
+    t.string   "skill_level", limit: 255
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  add_index "skillsets", ["employee_id"], name: "index_skillsets_on_employee_id", using: :btree
+
+  add_foreign_key "awards", "employees"
+  add_foreign_key "certifications", "qualifications"
   add_foreign_key "companies", "groups"
   add_foreign_key "company_locations", "companies"
   add_foreign_key "departments", "company_locations"
+  add_foreign_key "employee_physicals", "employees"
   add_foreign_key "employees", "blood_groups"
   add_foreign_key "employees", "departments"
   add_foreign_key "employees", "employee_types"
   add_foreign_key "employees", "nationalities"
+  add_foreign_key "experinces", "employees"
+  add_foreign_key "families", "employees"
+  add_foreign_key "families", "nationalities"
+  add_foreign_key "joining_details", "employee_grades"
+  add_foreign_key "joining_details", "employees"
+  add_foreign_key "qualifications", "employees"
+  add_foreign_key "skillsets", "employees"
 end

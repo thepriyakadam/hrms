@@ -1,4 +1,13 @@
 Rails.application.routes.draw do
+  resources :employee_physicals
+  resources :joining_details
+  resources :employee_grades
+  resources :awards
+  resources :skillsets
+  resources :experinces
+  resources :certifications
+  resources :qualifications
+  resources :families
   resources :employees
   resources :blood_groups
   resources :nationalities
@@ -8,10 +17,10 @@ Rails.application.routes.draw do
   resources :departments
   resources :company_locations
   resources :companies
-  root 'companies#index'
+  root 'home#index'
 
   devise_for :members
-  devise_for :groups, :controllers => {registrations: 'groups/registrations'}
+  devise_for :groups, :controllers => {registrations: 'groups/registrations',sessions: 'groups/sessions'}
 
   devise_scope :group do
     get "/group" => "groups/sessions#new"

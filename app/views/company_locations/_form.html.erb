@@ -11,35 +11,83 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :company_id %><br>
-    <%= f.text_field :company_id %>
+  <div class="row">
+    <div class="col-sm-1"></div>
+      <div class="col-sm-3">
+        <div class="field">
+          <%= f.text_field :company_id %>
+        </div>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
+
+
+  <div class="row">
+    <div class="col-sm-1"></div>
+      <div class="col-sm-3">
+        <div class="field">
+         <%= f.text_field :name %>
+        </div>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :address %><br>
-    <%= f.text_field :address %>
+
+
+   <div class="row">
+    <div class="col-sm-1"></div>
+      <div class="col-sm-3">
+        <div class="field">
+          <%= f.text_field :address %>
+        </div>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :city %><br>
-    <%= f.text_field :city %>
+
+  <div class="row">
+    <div class="col-sm-1"></div>
+      <div class="col-sm-3">
+        <div class="field">
+          <%= f.text_field :city %>
+       </div>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :district %><br>
-    <%= f.text_field :district %>
+
+
+  <div class="row">
+    <div class="col-sm-1"></div>
+      <div class="col-sm-3">
+        <div class="field">
+         <%= f.text_field :district %>
+        </div>
+      </div>
   </div>
-  <div class="field">
+
+  <div class="row">
+    <div class="col-sm-1"></div>
+      <div class="col-sm-3">
+        <div class="field">
     <%= f.label :pin_code %><br>
     <%= f.number_field :pin_code %>
-  </div>
-  <div class="field">
+        </div>
+      </div>
+    </div>
+
+
+  <div class="row">
+    <div class="col-sm-1"></div>
+      <div class="col-sm-3">
+        <div class="field">
     <%= f.label :contact_no %><br>
     <%= f.text_field :contact_no %>
-  </div>
-  <div class="actions">
+        </div>
+      </div>
+    </div>
+
+
+  <div class="row">
+    <div class="col-sm-1"></div>
+      <div class="col-sm-3">
+        <div class="actions">
     <%= f.submit %>
-  </div>
+        </div>
+      </div>
+    </div>
+
 <% end %>

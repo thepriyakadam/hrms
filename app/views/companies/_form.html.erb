@@ -11,75 +11,184 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :group_id %><br>
-    <%= f.text_field :group_id %>
+  <div class="row">
+    <div class="col-sm-1"></div>
+      <div class="col-sm-3">
+        <div class="field">
+         <%= f.text_field :group_id %>
+       </div>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
+
+
+  
+   <div class="row">
+    <div class="col-sm-1"></div>
+     <div class="col-sm-3">
+      <div class="field">
+       <%= f.text_field :name %>
+     </div>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :company_type %><br>
-    <%= f.select :company_type_id,@company_type.collect {|x| [x.name,x.id]} %>
+
+
+  <div class="row">
+    <div class="col-sm-1"></div>
+      <div class="col-sm-3">
+       <div class="field">
+      <%= f.select :company_type_id,@company_type.collect {|x| [x.name,x.id]} %>
+     </div>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :registration_no %><br>
-    <%= f.text_field :registration_no %>
+
+
+  <div class="row">
+    <div class="col-sm-1"></div>
+     <div class="col-sm-3">
+      <div class="field">
+       <%= f.text_field :registration_no %>
+     </div>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :pan_card_no %><br>
-    <%= f.text_field :pan_card_no %>
+
+
+  
+  <div class="row">
+    <div class="col-sm-1"></div>
+     <div class="col-sm-3">
+      <div class="field">
+       <%= f.text_field :pan_card_no %>
+      </div>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :tax_no %><br>
-    <%= f.text_field :tax_no %>
+
+
+  <div class="row">
+    <div class="col-sm-1"></div>
+     <div class="col-sm-3">
+      <div class="field">
+       <%= f.text_field :tax_no %>
+     </div>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :professional_tax_no %><br>
-    <%= f.text_field :professional_tax_no %>
+
+
+  <div class="row">
+    <div class="col-sm-1"></div>
+     <div class="col-sm-3">
+      <div class="field">
+       <%= f.text_field :professional_tax_no %>
+      </div>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :address %><br>
-    <%= f.text_area :address %>
+
+
+  <div class="row">
+    <div class="col-sm-1"></div>
+     <div class="col-sm-3">
+      <div class="field">
+       <%= f.text_area :address %>
+      </div>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :city %><br>
-    <%= f.text_field :city %>
+
+
+  <div class="row">
+    <div class="col-sm-1"></div>
+     <div class="col-sm-3">
+      <div class="field">
+       <%= f.text_field :city %>
+      </div>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :district %><br>
-    <%= f.text_field :district %>
+
+
+  <div class="row">
+    <div class="col-sm-1"></div>
+    <div class="col-sm-3">
+      <div class="field">
+       <%= f.text_field :district %>
+      </div>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :pin_code %><br>
-    <%= f.number_field :pin_code %>
+
+
+  <div class="row">
+    <div class="col-sm-1"></div>
+     <div class="col-sm-3">
+      <div class="field">
+       <%= f.number_field :pin_code %>
+      </div>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :state %><br>
-    <%= f.text_field :state %>
+
+
+  <div class="row">
+    <div class="col-sm-1"></div>
+     <div class="col-sm-3">
+      <div class="field">
+       <%= f.text_field :state %>
+      </div>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :email %><br>
-    <%= f.text_field :email %>
+
+
+  <div class="row">
+    <div class="col-sm-1"></div>
+    <div class="col-sm-3">
+      <div class="field">
+       <%= f.text_field :email %>
+     </div>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :contact_no %><br>
-    <%= f.text_field :contact_no %>
+
+
+  <div class="row">
+    <div class="col-sm-1"></div>
+     <div class="col-sm-3">
+      <div class="field">
+       <%= f.text_field :contact_no %>
+     </div>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :web_site %><br>
-    <%= f.text_field :web_site %>
+
+
+  <div class="row">
+    <div class="col-sm-1"></div>
+     <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :web_site %>
+      </div>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :starting_date %><br>
-    <%= f.date_select :starting_date %>
+
+
+  <div class="row">
+    <div class="col-sm-1"></div>
+     <div class="col-sm-3">
+      <div class="field">
+       <%= f.date_select :starting_date %>
+      </div>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :ceo_name %><br>
-    <%= f.text_field :ceo_name %>
+
+
+  <div class="row">
+    <div class="col-sm-1"></div>
+     <div class="col-sm-3">
+      <div class="field">
+       <%= f.text_field :ceo_name %>
+      </div>
+    </div>
   </div>
-  <div class="actions">
-    <%= f.submit %>
+
+
+  <div class="row">
+    <div class="col-sm-1"></div>
+     <div class="col-sm-3">
+      <div class="actions">
+       <%= f.submit %>
+      </div>
+    </div>
   </div>
 <% end %>

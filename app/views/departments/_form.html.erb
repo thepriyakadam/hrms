@@ -11,43 +11,99 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :company_location_id %><br>
-    <%= f.text_field :company_location_id %>
+  <div class="row">
+    <div class="col-sm-1"></div>
+      <div class="col-sm-3">
+        <div class="field">
+        <%= f.text_field :company_location_id %>
+        </div>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
+
+  <div class="row">
+    <div class="col-sm-1"></div>
+      <div class="col-sm-3">
+        <div class="field">
+         <%= f.text_field :name %>
+        </div>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :department_type %><br>
-    <%= f.text_field :department_type %>
+
+  <div class="row">
+    <div class="col-sm-1"></div>
+      <div class="col-sm-3">
+        <div class="field">
+         <%= f.text_field :department_type %>
+        </div>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :address %><br>
+
+
+  <div class="row">
+    <div class="col-sm-1"></div>
+      <div class="col-sm-3">
+        <div class="field">
     <%= f.text_field :address %>
+        </div>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :pin_code %><br>
-    <%= f.number_field :pin_code %>
+
+  <div class="row">
+    <div class="col-sm-1"></div>
+      <div class="col-sm-3">
+        <div class="field">
+          <%= f.number_field :pin_code %>
+       </div>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :head_of_department %><br>
-    <%= f.text_field :head_of_department %>
+
+
+  <div class="row">
+    <div class="col-sm-1"></div>
+      <div class="col-sm-3">
+        <div class="field">
+          <%= f.text_field :head_of_department %>
+         </div>
+      </div>
   </div>
-  <div class="field">
-    <%= f.label :contact_no %><br>
-    <%= f.text_field :contact_no %>
+
+
+  <div class="row">
+    <div class="col-sm-1"></div>
+      <div class="col-sm-3">
+        <div class="field">
+         <%= f.text_field :contact_no %>
+        </div>
+      </div>
   </div>
-  <div class="field">
-    <%= f.label :manager %><br>
+
+  <div class="row">
+    <div class="col-sm-1"></div>
+      <div class="col-sm-3">
+        <div class="field">
     <%= f.text_field :manager %>
+        </div>
+      </div>
   </div>
-  <div class="field">
-    <%= f.label :hr %><br>
-    <%= f.text_field :hr %>
+
+
+   <div class="row">
+    <div class="col-sm-1"></div>
+      <div class="col-sm-3">
+        <div class="field">
+         <%= f.text_field :hr %>
+       </div>
+      </div>
   </div>
-  <div class="actions">
-    <%= f.submit %>
+
+
+  <div class="row">
+    <div class="col-sm-1"></div>
+      <div class="col-sm-3">
+        <div class="actions">
+         <%= f.submit %>
+        </div>
+      </div>
   </div>
+
 <% end %>

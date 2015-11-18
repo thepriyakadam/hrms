@@ -11,23 +11,52 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :employee_id %><br>
-    <%= f.text_field :employee_id %>
+  <div class="row">
+    <div class="col-sm-1"></div>
+      <div class="col-sm-3">
+        <div class="field">
+         <%= f.text_field :employee_id %>
+        </div>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :hieght %><br>
-    <%= f.text_field :hieght %>
+
+
+  <div class="row">
+    <div class="col-sm-1"></div>
+      <div class="col-sm-3">
+        <div class="field">
+         <%= f.text_field :hieght %>
+       </div>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :weight %><br>
+
+  <div class="row">
+    <div class="col-sm-1"></div>
+      <div class="col-sm-3">
+        <div class="field">
     <%= f.text_field :weight %>
+       </div>
+    </div>
   </div>
-  <div class="field">
+
+
+  <div class="row">
+    <div class="col-sm-1"></div>
+      <div class="col-sm-3">
+        <div class="field">
     <%= f.label :size %><br>
     <%= f.text_field :size %>
+       </div>
+    </div>
   </div>
-  <div class="actions">
+
+
+  <div class="row">
+    <div class="col-sm-1"></div>
+      <div class="col-sm-3">
+        <div class="actions">
     <%= f.submit %>
+       </div>
+    </div>
   </div>
 <% end %>

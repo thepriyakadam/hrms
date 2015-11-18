@@ -92,7 +92,7 @@
 
 <p>
   <strong>Nationality:</strong>
-  <%= @employee.nationality.name %>
+  <%= @employee.nationality.try(:name) %>
 </p>
 
 <p>

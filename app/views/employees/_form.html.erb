@@ -11,11 +11,12 @@
     </div>
   <% end %>
 
+
   <div class="row">
     <div class="col-sm-1"></div>
       <div class="col-sm-3">
         <div class="field">
-         <%= f.text_field :department_id %>
+         <%= f.text_field :department_id, value: current_user.id %>
        </div>
     </div>
   </div>
@@ -191,13 +192,12 @@
         </div>
     </div>
   </div>
-
-
+    
   <div class="row">
     <div class="col-sm-1"></div>
       <div class="col-sm-3">
         <div class="field">
-         <%= f.text_field :nationality_id %>
+          <%= f.select :nationality_id, all_nationality %>
         </div>
     </div>
   </div>
@@ -207,7 +207,7 @@
     <div class="col-sm-1"></div>
       <div class="col-sm-3">
         <div class="field">
-         <%= f.text_field :blood_group_id %>
+          <%= f.select :blood_group_id, all_blood_group %>
         </div>
     </div>
   </div>
@@ -230,12 +230,11 @@
     </div>
   </div>
 
-
   <div class="row">
     <div class="col-sm-1"></div>
       <div class="col-sm-3">
         <div class="field">
-         <%= f.text_field :employee_type_id %>
+          <%= f.select :employee_type_id, all_employee_type %>
         </div>
     </div>
   </div>
@@ -257,6 +256,4 @@
         </div>
     </div>
   </div>
-
-  
 <% end %>

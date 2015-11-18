@@ -13,7 +13,7 @@
 
   <div class="field">
     <%= f.label :department_id %><br>
-    <%= f.text_field :department_id %>
+    <%= f.text_field :department_id, value: current_user.id %>
   </div>
   <div class="field">
     <%= f.label :first_name %><br>
@@ -85,11 +85,11 @@
   </div>
   <div class="field">
     <%= f.label :nationality_id %><br>
-    <%= f.text_field :nationality_id %>
+    <%= f.select :nationality_id, all_nationality %>
   </div>
   <div class="field">
     <%= f.label :blood_group_id %><br>
-    <%= f.text_field :blood_group_id %>
+    <%= f.select :blood_group_id, all_blood_group %>
   </div>
   <div class="field">
     <%= f.label :handicap %><br>
@@ -101,7 +101,7 @@
   </div>
   <div class="field">
     <%= f.label :employee_type_id %><br>
-    <%= f.text_field :employee_type_id %>
+    <%= f.select :employee_type_id, all_employee_type %>
   </div>
   <div class="field">
     <%= f.label :gender %><br>

@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :leav_requests
+  resources :leav_types
   resources :employee_physicals
   resources :joining_details
   resources :employee_grades

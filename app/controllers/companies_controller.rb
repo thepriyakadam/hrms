@@ -29,8 +29,8 @@ class CompaniesController < ApplicationController
 
     respond_to do |format|
       if @company.save
-        pass = (0...8).map { (65 + rand(26)).chr }.join
-        @company.create_user(@company,pass)
+        # pass = (0...8).map { (65 + rand(26)).chr }.join
+        # @company.create_user(@company,pass)
         #UserPasswordMailer.welcome_email(@company,pass).deliver_now
         format.html { redirect_to @company, notice: 'Company was successfully created.' }
         format.json { render :show, status: :created, location: @company }

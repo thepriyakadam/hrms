@@ -25,11 +25,10 @@ class CompanyLocationsController < ApplicationController
   # POST /company_locations.json
   def create
     @company_location = CompanyLocation.new(company_location_params)
-
     respond_to do |format|
       if @company_location.save
-        pass = (0...8).map { (65 + rand(26)).chr }.join
-        @company_location.create_user(@company_location,pass)
+        # pass = (0...8).map { (65 + rand(26)).chr }.join
+        # @company_location.create_user(@company_location,pass)
         format.html { redirect_to @company_location, notice: 'Company location was successfully created.' }
         format.json { render :show, status: :created, location: @company_location }
       else

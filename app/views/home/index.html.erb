@@ -1,6 +1,13 @@
 <%if current_user.class == Group %>
-<%= link_to "Create Company", new_company_path %>
+	<%= link_to "Create Company", new_company_path %>
 <%elsif current_user.class == Member %>
-<%= link_to "Create Comapany Location", new_company_location_path %>
+	<% if current_user.account_type == 'Company' %>
+		<%= link_to "Create Company Location", new_company_location_path %>
+	<% elsif current_user.account_type == 'CompanyLocation' %>
+		<%= link_to "Create Department", new_department_path %>
+	<% elsif current_user.account_type == 'Department' %>
+		<%= link_to "Create Employee", new_employee_path %>
+	<% elsif current_user.account_type == 'Employee' %>
+		<%= link_to "Create Qualification", new_qualification_path %>
+	<% end %>
 <%end%>
-

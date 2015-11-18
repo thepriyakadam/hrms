@@ -1,4 +1,4 @@
-<%= form_for(@company_location) do |f| %>
+<%= bootstrap_form_for(@company_location) do |f| %>
   <% if @company_location.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@company_location.errors.count, "error") %> prohibited this company_location from being saved:</h2>
@@ -11,33 +11,75 @@
     </div>
   <% end %>
 
+<<<<<<< HEAD
   <%= f.hidden_field :company_id, value: current_user.account_id %>
-  
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
+
+  <div class="row">
+    <div class="col-sm-1"></div>
+      <div class="col-sm-3">
+        <div class="field">
+         <%= f.text_field :name %>
+        </div>
+    </div>
+
+
+   <div class="row">
+    <div class="col-sm-1"></div>
+      <div class="col-sm-3">
+        <div class="field">
+          <%= f.text_field :address %>
+        </div>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :address %><br>
-    <%= f.text_field :address %>
+
+  <div class="row">
+    <div class="col-sm-1"></div>
+      <div class="col-sm-3">
+        <div class="field">
+          <%= f.text_field :city %>
+       </div>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :city %><br>
-    <%= f.text_field :city %>
+
+
+  <div class="row">
+    <div class="col-sm-1"></div>
+      <div class="col-sm-3">
+        <div class="field">
+         <%= f.text_field :district %>
+        </div>
+      </div>
   </div>
-  <div class="field">
-    <%= f.label :district %><br>
-    <%= f.text_field :district %>
-  </div>
-  <div class="field">
+
+  <div class="row">
+    <div class="col-sm-1"></div>
+      <div class="col-sm-3">
+        <div class="field">
     <%= f.label :pin_code %><br>
     <%= f.number_field :pin_code %>
-  </div>
-  <div class="field">
+        </div>
+      </div>
+    </div>
+
+
+  <div class="row">
+    <div class="col-sm-1"></div>
+      <div class="col-sm-3">
+        <div class="field">
     <%= f.label :contact_no %><br>
     <%= f.text_field :contact_no %>
-  </div>
-  <div class="actions">
+        </div>
+      </div>
+    </div>
+
+
+  <div class="row">
+    <div class="col-sm-1"></div>
+      <div class="col-sm-3">
+        <div class="actions">
     <%= f.submit %>
-  </div>
+        </div>
+      </div>
+    </div>
+
 <% end %>

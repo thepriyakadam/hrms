@@ -1,4 +1,4 @@
-<%= form_for(@experince) do |f| %>
+<%= bootstrap_form_for(@experince) do |f| %>
   <% if @experince.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@experince.errors.count, "error") %> prohibited this experince from being saved:</h2>

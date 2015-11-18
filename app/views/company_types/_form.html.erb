@@ -1,4 +1,4 @@
-<%= form_for(@company_type) do |f| %>
+<%= bootstrap_form_for(@company_type) do |f| %>
   <% if @company_type.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@company_type.errors.count, "error") %> prohibited this company_type from being saved:</h2>

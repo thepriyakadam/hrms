@@ -1,4 +1,4 @@
-<%= form_for(@employee_type) do |f| %>
+<%= bootstrap_form_for(@employee_type) do |f| %>
   <% if @employee_type.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@employee_type.errors.count, "error") %> prohibited this employee_type from being saved:</h2>

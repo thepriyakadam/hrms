@@ -21,8 +21,8 @@ Rails.application.routes.draw do
   resources :companies
   root 'home#index'
 
-  devise_for :members, :controllers => {registrations: 'members/registrations',sessions: 'members/sessions'}
-  devise_for :groups, :controllers => {registrations: 'groups/registrations',sessions: 'groups/sessions'}
+  devise_for :members, :controllers => {registrations: 'members/registrations',sessions: 'members/sessions',passwords: 'groups/passwords'}
+  devise_for :groups, :controllers => {registrations: 'groups/registrations',sessions: 'groups/sessions',passwords: 'groups/passwords'}
 
   devise_scope :group do
     get "/group" => "groups/sessions#new"

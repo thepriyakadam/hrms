@@ -11,16 +11,8 @@
     </div>
   <% end %>
 
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-         <%= f.text_field :department_id, value: current_user.id %>
-       </div>
-    </div>
-  </div>
-
+  <%= f.hidden_field :department_id, value: current_user.account_id %>
+  
   <div class="row">
     <div class="col-sm-1"></div>
       <div class="col-sm-3">
@@ -43,7 +35,7 @@
       </div>
     </div>
   </div>
-  
+
   <div class="row">
     <div class="col-sm-1"></div>
       <div class="col-sm-3">
@@ -175,7 +167,7 @@
     <div class="col-sm-1"></div>
       <div class="col-sm-3">
         <div class="field">
-         <%= f.text_field :marital_status %>
+         <%= f.select :marital_status, ['Marreid','Unmarreid'] %>
         </div>
     </div>
   </div>
@@ -188,7 +180,6 @@
         </div>
     </div>
   </div>
-
 
   <div class="row">
     <div class="col-sm-1"></div>
@@ -203,7 +194,7 @@
     <div class="col-sm-1"></div>
       <div class="col-sm-3">
         <div class="field">
-         <%= f.text_field :handicap %>
+         <%= f.select :handicap, ['Yes','No'] %>
         </div>
     </div>
   </div>
@@ -230,7 +221,7 @@
     <div class="col-sm-1"></div>
       <div class="col-sm-3">
         <div class="field">
-         <%= f.text_field :gender %>
+         <%= f.select :gender, ['Male','Female'] %>
         </div>
     </div>
   </div>

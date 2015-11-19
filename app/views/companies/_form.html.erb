@@ -1,167 +1,193 @@
-<%= bootstrap_form_for(@company) do |f| %>
-  <div class="row">
-    <div class="col-sm-1"></div>
-     <div class="col-sm-3">
-      <div class="field">
-       <%= f.text_field :name %>
-     </div>
+<!-- SELECT2 EXAMPLE -->
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Create Company</h3>
+    <div class="box-tools pull-right">
+      <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+      <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
     </div>
-  </div>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <%= bootstrap_form_for(@company) do |f| %>
+      <% if @company.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@company.errors.count, "error") %> prohibited this company from being saved:</h2>
+          <ul>
+          <% @company.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
 
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-       <div class="field">
-      <%= f.select :company_type_id, all_company_type %>
-     </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-     <div class="col-sm-3">
-      <div class="field">
-       <%= f.text_field :registration_no %>
-     </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-     <div class="col-sm-3">
-      <div class="field">
-       <%= f.text_field :pan_card_no %>
+      <div class="row">
+        <div class="col-sm-1"></div>
+         <div class="col-sm-3">
+          <div class="field">
+           <%= f.text_field :name %>
+         </div>
+        </div>
       </div>
-    </div>
-  </div>
 
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-     <div class="col-sm-3">
-      <div class="field">
-       <%= f.text_field :tax_no %>
-     </div>
-    </div>
-  </div>
-
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-     <div class="col-sm-3">
-      <div class="field">
-       <%= f.text_field :professional_tax_no %>
+      <div class="row">
+        <div class="col-sm-1"></div>
+          <div class="col-sm-3">
+           <div class="field">
+          <%= f.select :company_type_id, all_company_type %>
+         </div>
+        </div>
       </div>
-    </div>
-  </div>
 
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-     <div class="col-sm-3">
-      <div class="field">
-       <%= f.text_area :address %>
+      <div class="row">
+        <div class="col-sm-1"></div>
+         <div class="col-sm-3">
+          <div class="field">
+           <%= f.text_field :registration_no %>
+         </div>
+        </div>
       </div>
-    </div>
-  </div>
 
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-     <div class="col-sm-3">
-      <div class="field">
-       <%= f.text_field :city %>
+      <div class="row">
+        <div class="col-sm-1"></div>
+         <div class="col-sm-3">
+          <div class="field">
+           <%= f.text_field :pan_card_no %>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
 
 
-  <div class="row">
-    <div class="col-sm-1"></div>
-    <div class="col-sm-3">
-      <div class="field">
-       <%= f.text_field :district %>
+      <div class="row">
+        <div class="col-sm-1"></div>
+         <div class="col-sm-3">
+          <div class="field">
+           <%= f.text_field :tax_no %>
+         </div>
+        </div>
       </div>
-    </div>
-  </div>
 
 
-  <div class="row">
-    <div class="col-sm-1"></div>
-     <div class="col-sm-3">
-      <div class="field">
-       <%= f.number_field :pin_code %>
+      <div class="row">
+        <div class="col-sm-1"></div>
+         <div class="col-sm-3">
+          <div class="field">
+           <%= f.text_field :professional_tax_no %>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
 
 
-  <div class="row">
-    <div class="col-sm-1"></div>
-     <div class="col-sm-3">
-      <div class="field">
-       <%= f.text_field :state %>
+      <div class="row">
+        <div class="col-sm-1"></div>
+         <div class="col-sm-3">
+          <div class="field">
+           <%= f.text_area :address %>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
 
 
-  <div class="row">
-    <div class="col-sm-1"></div>
-    <div class="col-sm-3">
-      <div class="field">
-       <%= f.text_field :email %>
-     </div>
-    </div>
-  </div>
-
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-     <div class="col-sm-3">
-      <div class="field">
-       <%= f.text_field :contact_no %>
-     </div>
-    </div>
-  </div>
-
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-     <div class="col-sm-3">
-      <div class="field">
-        <%= f.text_field :web_site %>
+      <div class="row">
+        <div class="col-sm-1"></div>
+         <div class="col-sm-3">
+          <div class="field">
+           <%= f.text_field :city %>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
 
 
-  <div class="row">
-    <div class="col-sm-1"></div>
-     <div class="col-sm-3">
-      <div class="field">
-       <%= f.date_select :starting_date %>
+      <div class="row">
+        <div class="col-sm-1"></div>
+        <div class="col-sm-3">
+          <div class="field">
+           <%= f.text_field :district %>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
 
 
-  <div class="row">
-    <div class="col-sm-1"></div>
-     <div class="col-sm-3">
-      <div class="field">
-       <%= f.text_field :ceo_name %>
+      <div class="row">
+        <div class="col-sm-1"></div>
+         <div class="col-sm-3">
+          <div class="field">
+           <%= f.number_field :pin_code %>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
 
 
-  <div class="row">
-    <div class="col-sm-1"></div>
-     <div class="col-sm-3">
-      <div class="actions">
-       <%= f.submit %>
+      <div class="row">
+        <div class="col-sm-1"></div>
+         <div class="col-sm-3">
+          <div class="field">
+           <%= f.text_field :state %>
+          </div>
+        </div>
       </div>
-    </div>
+
+
+      <div class="row">
+        <div class="col-sm-1"></div>
+        <div class="col-sm-3">
+          <div class="field">
+           <%= f.text_field :email %>
+         </div>
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="col-sm-1"></div>
+         <div class="col-sm-3">
+          <div class="field">
+           <%= f.text_field :contact_no %>
+         </div>
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="col-sm-1"></div>
+         <div class="col-sm-3">
+          <div class="field">
+            <%= f.text_field :web_site %>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="col-sm-1"></div>
+         <div class="col-sm-3">
+          <div class="field">
+           <%= f.date_select :starting_date %>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="col-sm-1"></div>
+         <div class="col-sm-3">
+          <div class="field">
+           <%= f.text_field :ceo_name %>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="col-sm-1"></div>
+         <div class="col-sm-3">
+          <div class="actions">
+           <%= f.submit %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div><!-- /.box-body -->
+  <div class="box-footer">
+    Visit <a href="https://select2.github.io/">Select2 documentation</a> for more examples and information about the plugin.
   </div>
-<% end %>
+</div><!-- /.box -->

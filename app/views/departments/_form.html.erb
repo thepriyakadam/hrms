@@ -26,6 +26,15 @@
     <div class="col-sm-1"></div>
       <div class="col-sm-3">
         <div class="field">
+         <%= f.text_field :email %>
+        </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-1"></div>
+      <div class="col-sm-3">
+        <div class="field">
           <%= f.select :department_type_id, all_department_type %>
         </div>
     </div>

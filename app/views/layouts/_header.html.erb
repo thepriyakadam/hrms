@@ -125,11 +125,15 @@
                     <%= image_tag 'user2-160x160.jpg',class: "img-circle", alt: "User Image"%>
                     <p>
                       <% if current_user.class == Member %>
-                      <% current_user.email %>
-                      <%= current_user.account_type%>
+                        <% if current_user.account_type == 'Employee' %>
+                          <%= current_user.account.first_name %>
+                        <% else %>
+                          <%= current_user.account.name %>
+                        <% end %>
+                        <%= current_user.account_type%>
                       <%else%>
-                      <%= current_user.subdomain %>-
-                      <%= current_user.class %>
+                        <%= current_user.subdomain %>-
+                        <%= current_user.class %>
                       <%end%>
                       <small>Member since Nov. 2012</small>
                     </p>

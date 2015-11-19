@@ -7,7 +7,7 @@ class CompanyLocation < ActiveRecord::Base
     company_location = CompanyLocation.find(id)
     pass = (0...8).map { (65 + rand(26)).chr}.join
     user = Member.new do |u|
-      u.email = name
+      u.email = email
       u.password = '12345678'
       u.account = company_location
       p "------------------------------------------------------------------"

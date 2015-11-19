@@ -70,6 +70,7 @@ ActiveRecord::Schema.define(version: 20151118095539) do
   create_table "company_locations", force: :cascade do |t|
     t.integer  "company_id", limit: 4
     t.string   "name",       limit: 255
+    t.string   "email",      limit: 255
     t.string   "address",    limit: 255
     t.string   "city",       limit: 255
     t.string   "district",   limit: 255
@@ -96,6 +97,7 @@ ActiveRecord::Schema.define(version: 20151118095539) do
   create_table "departments", force: :cascade do |t|
     t.integer  "company_location_id", limit: 4
     t.string   "name",                limit: 255
+    t.string   "email",               limit: 255
     t.string   "address",             limit: 255
     t.integer  "pin_code",            limit: 4
     t.string   "head_of_department",  limit: 255

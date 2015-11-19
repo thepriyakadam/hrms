@@ -8,12 +8,12 @@ class CreateEmployees < ActiveRecord::Migration
       t.date :date_of_birth
       t.string :contact_no
       t.string :email
-      t.string :permanent_address
+      t.text :permanent_address
       t.string :city
       t.string :district
       t.string :state
       t.integer :pin_code
-      t.string :current_address
+      t.text :current_address
       t.string :adhar_no
       t.string :pan_no
       t.string :licence_no

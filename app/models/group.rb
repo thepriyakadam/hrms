@@ -6,7 +6,7 @@ class Group < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  validates :email, uniqueness: true
+  validates :email, uniqueness: true, presence: true
   validate  :email_regex
 
  def email_regex

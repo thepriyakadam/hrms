@@ -141,12 +141,12 @@ ActiveRecord::Schema.define(version: 20151118095539) do
     t.date     "date_of_birth"
     t.string   "contact_no",        limit: 255
     t.string   "email",             limit: 255
-    t.string   "permanent_address", limit: 255
+    t.text     "permanent_address", limit: 65535
     t.string   "city",              limit: 255
     t.string   "district",          limit: 255
     t.string   "state",             limit: 255
     t.integer  "pin_code",          limit: 4
-    t.string   "current_address",   limit: 255
+    t.text     "current_address",   limit: 65535
     t.string   "adhar_no",          limit: 255
     t.string   "pan_no",            limit: 255
     t.string   "licence_no",        limit: 255
@@ -158,8 +158,8 @@ ActiveRecord::Schema.define(version: 20151118095539) do
     t.string   "status",            limit: 255
     t.integer  "employee_type_id",  limit: 4
     t.string   "gender",            limit: 255
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
   end
 
   add_index "employees", ["blood_group_id"], name: "index_employees_on_blood_group_id", using: :btree
@@ -190,12 +190,12 @@ ActiveRecord::Schema.define(version: 20151118095539) do
     t.string   "contact_no",        limit: 255
     t.string   "phone_no",          limit: 255
     t.string   "email",             limit: 255
-    t.string   "permanent_address", limit: 255
+    t.text     "permanent_address", limit: 65535
     t.string   "city",              limit: 255
     t.string   "dist",              limit: 255
     t.string   "state",             limit: 255
     t.integer  "pin_code",          limit: 4
-    t.string   "current_address",   limit: 255
+    t.text     "current_address",   limit: 65535
     t.string   "relation",          limit: 255
     t.string   "adhar_no",          limit: 255
     t.string   "pan_no",            limit: 255
@@ -208,8 +208,8 @@ ActiveRecord::Schema.define(version: 20151118095539) do
     t.string   "religion",          limit: 255
     t.string   "phandicap",         limit: 255
     t.string   "profession",        limit: 255
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
   end
 
   add_index "families", ["employee_id"], name: "index_families_on_employee_id", using: :btree
@@ -316,11 +316,11 @@ ActiveRecord::Schema.define(version: 20151118095539) do
     t.string   "ssc_marks",          limit: 255
     t.integer  "ssc_year",           limit: 4
     t.string   "ssc_bord",           limit: 255
-    t.string   "deploma",            limit: 255
-    t.string   "deploma_from",       limit: 255
-    t.string   "deploma_marks",      limit: 255
-    t.integer  "deploma_year",       limit: 4
-    t.string   "deploma_university", limit: 255
+    t.string   "diploma",            limit: 255
+    t.string   "diploma_from",       limit: 255
+    t.string   "diploma_marks",      limit: 255
+    t.integer  "diploma_year",       limit: 4
+    t.string   "diploma_university", limit: 255
     t.string   "hsc",                limit: 255
     t.string   "hsc_from",           limit: 255
     t.string   "hsc_marks",          limit: 255
@@ -334,7 +334,7 @@ ActiveRecord::Schema.define(version: 20151118095539) do
     t.string   "pg",                 limit: 255
     t.string   "pg_from",            limit: 255
     t.string   "pg_marks",           limit: 255
-    t.integer  "pg_yaer",            limit: 4
+    t.integer  "pg_year",            limit: 4
     t.string   "pg_university",      limit: 255
     t.datetime "created_at",                     null: false
     t.datetime "updated_at",                     null: false

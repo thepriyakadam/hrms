@@ -12,12 +12,12 @@ class CreateFamilies < ActiveRecord::Migration
       t.string :contact_no
       t.string :phone_no
       t.string :email
-      t.string :permanent_address
+      t.text :permanent_address
       t.string :city
       t.string :dist
       t.string :state
       t.integer :pin_code
-      t.string :current_address
+      t.text :current_address
       t.string :relation
       t.string :adhar_no
       t.string :pan_no

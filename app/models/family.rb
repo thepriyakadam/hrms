@@ -2,7 +2,7 @@ class Family < ActiveRecord::Base
   belongs_to :employee
   belongs_to :nationality
 
-  validates :email, uniqueness: true
+  validates :email, uniqueness: true, presence: true
   validate  :email_regex
 
  def email_regex

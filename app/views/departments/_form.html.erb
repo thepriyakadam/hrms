@@ -11,15 +11,8 @@
     </div>
   <% end %>
 
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-        <%= f.text_field :company_location_id %>
-        </div>
-    </div>
-  </div>
-
+  <%= f.hidden_field :company_location_id, value: current_user.id %>
+       
   <div class="row">
     <div class="col-sm-1"></div>
       <div class="col-sm-3">

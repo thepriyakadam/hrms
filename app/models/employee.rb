@@ -6,6 +6,16 @@ class Employee < ActiveRecord::Base
   has_one :member, as: :account
   after_create :create_user_account
 
+  validates :email, uniqueness: true
+  validate  :email_regex
+
+ def email_regex
+    if email.present? and not email.match(/\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/)
+      errors.add :email, "This is not a valid email format"
+    end
+  end
+
+
   def create_user_account
     employee = Employee.find(id)
     pass = (0...8).map { (65 + rand(26)).chr}.join

@@ -7,11 +7,11 @@ class CreateQualifications < ActiveRecord::Migration
       t.string :ssc_marks
       t.integer :ssc_year
       t.string :ssc_bord
-      t.string :deploma
-      t.string :deploma_from
-      t.string :deploma_marks
-      t.integer :deploma_year
-      t.string :deploma_university
+      t.string :diploma
+      t.string :diploma_from
+      t.string :diploma_marks
+      t.integer :diploma_year
+      t.string :diploma_university
       t.string :hsc
       t.string :hsc_from
       t.string :hsc_marks
@@ -25,7 +25,7 @@ class CreateQualifications < ActiveRecord::Migration
       t.string :pg
       t.string :pg_from
       t.string :pg_marks
-      t.integer :pg_yaer
+      t.integer :pg_year
       t.string :pg_university
 
       t.timestamps null: false

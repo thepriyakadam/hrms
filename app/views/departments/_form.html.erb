@@ -11,11 +11,13 @@
     </div>
   <% end %>
 
+  <%= f.hidden_field :company_location_id, value: current_user.account_id %>
+       
   <div class="row">
     <div class="col-sm-1"></div>
       <div class="col-sm-3">
         <div class="field">
-        <%= f.text_field :company_location_id %>
+         <%= f.text_field :name %>
         </div>
     </div>
   </div>
@@ -24,7 +26,7 @@
     <div class="col-sm-1"></div>
       <div class="col-sm-3">
         <div class="field">
-         <%= f.text_field :name %>
+         <%= f.text_field :email %>
         </div>
     </div>
   </div>

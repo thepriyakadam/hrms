@@ -10,7 +10,7 @@
   <div class="box-body">
     <%= bootstrap_form_for(@company_location) do |f| %>
 
-      <%= f.hidden_field :company_id, value: current_user.account_id %>
+  <%= f.hidden_field :company_id, value: current_user.account_id %>
 
       <div class="row">
         <div class="col-sm-1"></div>
@@ -19,7 +19,19 @@
            <%= f.text_field :name %>
          </div>
         </div>
-      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-1"></div>
+      <div class="col-sm-3">
+        <div class="field">
+         <%= f.text_field :email %>
+        </div>
+    </div>
+  </div>
+
+
 
       <div class="row">
         <div class="col-sm-1"></div>
@@ -48,26 +60,23 @@
         </div>
       </div>
 
-
-      <div class="row">
-        <div class="col-sm-1"></div>
-         <div class="col-sm-3">
-          <div class="field">
+  <div class="row">
+    <div class="col-sm-1"></div>
+      <div class="col-sm-3">
+        <div class="field">
             <%= f.number_field :pin_code %>
-         </div>
         </div>
       </div>
 
 
-      <div class="row">
-        <div class="col-sm-1"></div>
-         <div class="col-sm-3">
-          <div class="field">
-            <%= f.text_field :contact_no %>
-          </div>
-        </div>
+  <div class="row">
+    <div class="col-sm-1"></div>
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :contact_no %>
       </div>
-
+    </div>
+  </div>
 
       <div class="row">
         <div class="col-sm-1"></div>
@@ -83,7 +92,6 @@
     Visit <a href="https://select2.github.io/">Select2 documentation</a> for more examples and information about the plugin.
   </div>
 </div><!-- /.box -->
-
 
 
 

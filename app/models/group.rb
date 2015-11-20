@@ -6,6 +6,15 @@ class Group < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  validates :email, uniqueness: true, presence: true
+  validate  :email_regex
+
+ def email_regex
+    if email.present? and not email.match(/\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/)
+      errors.add :email, "This is not a valid email format"
+    end
+  end
+
   private
 
   def create_tenant

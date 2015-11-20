@@ -1,84 +1,103 @@
-<p id="notice"><%= notice %></p>
+<!-- SELECT2 EXAMPLE -->
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Company</h3>
+    <div class="box-tools pull-right">
+      <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+      <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+    </div>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover">
+      <tr>
+        <td>Name:</td>
+        <td><%= @company.name %></td>
+      </tr>
 
-<p>
-  <strong>Name:</strong>
-  <%= @company.name %>
-</p>
+      <tr>
+        <td>Company type:</td>
+        <td><%= @company.company_type.name %></td>
+      </tr>
 
-<p>
-  <strong>Company type:</strong>
-  <%= @company.company_type.name %>
-</p>
+      <tr>
+        <td>Registration no:</td>
+        <td><%= @company.registration_no %></td>
+      </tr>
 
-<p>
-  <strong>Registration no:</strong>
-  <%= @company.registration_no %>
-</p>
+      <tr>
+        <td>Pan card no:</td>
+        <td><%= @company.pan_card_no %></td>
+      </tr>
 
-<p>
-  <strong>Pan card no:</strong>
-  <%= @company.pan_card_no %>
-</p>
+      <tr>
+        <td>Tax no:</td>
+        <td><%= @company.tax_no %></td>
+      </tr>
 
-<p>
-  <strong>Tax no:</strong>
-  <%= @company.tax_no %>
-</p>
+      <tr>
+        <td>Professional tax no:</td>
+        <td><%= @company.professional_tax_no %></td>
+      </tr>
 
-<p>
-  <strong>Professional tax no:</strong>
-  <%= @company.professional_tax_no %>
-</p>
+      <tr>
+        <td>Address:</td>
+        <td><%= @company.address %></td>
+      </tr>
 
-<p>
-  <strong>Address:</strong>
-  <%= @company.address %>
-</p>
+      <tr>
+        <td>City:</td>
+        <td><%= @company.city %></td>
+      </tr>
 
-<p>
-  <strong>City:</strong>
-  <%= @company.city %>
-</p>
+      <tr>
+        <td>District:</td>
+        <td><%= @company.district %></td>
+      </tr>
 
-<p>
-  <strong>District:</strong>
-  <%= @company.district %>
-</p>
+      <tr>
+        <td>Pin code:</td>
+        <td><%= @company.pin_code %></td>
+      </tr>
 
-<p>
-  <strong>Pin code:</strong>
-  <%= @company.pin_code %>
-</p>
+      <tr>
+        <td>State:</td>
+        <td><%= @company.state %></td>
+      </tr>
 
-<p>
-  <strong>State:</strong>
-  <%= @company.state %>
-</p>
+      <tr>
+        <td>Email:</td>
+        <td><%= @company.email %></td>
+      </tr>
 
-<p>
-  <strong>Email:</strong>
-  <%= @company.email %>
-</p>
+      <tr>
+        <td>Contact no:</td>
+        <td><%= @company.contact_no %></td>
+      </tr>
 
-<p>
-  <strong>Contact no:</strong>
-  <%= @company.contact_no %>
-</p>
+      <tr>
+        <td>Web site:</td>
+        <td><%= @company.web_site %></td>
+      </tr>
 
-<p>
-  <strong>Web site:</strong>
-  <%= @company.web_site %>
-</p>
+      <tr>
+        <td>Starting date:</td>
+        <td><%= @company.starting_date %></td>
+      </tr>
 
-<p>
-  <strong>Starting date:</strong>
-  <%= @company.starting_date %>
-</p>
+      <tr>
+        <td>Ceo name:</td>
+        <td><%= @company.ceo_name %></td>
+      </tr>
 
-<p>
-  <strong>Ceo name:</strong>
-  <%= @company.ceo_name %>
-</p>
+    </table>
 
-<%= link_to 'Edit', edit_company_path(@company) %> |
-<%= link_to 'Back', companies_path %>
+    <%= link_to 'Edit', edit_company_path(@company),class: 'btn btn-success fa fa-edit' %> |
+    <%= link_to 'Back', companies_path,class: 'btn btn-default fa fa-arrow-left' %>
+  </div><!-- /.box-body -->
+  <div class="box-footer">
+    Visit <a href="https://select2.github.io/">Select2 documentation</a> for more examples and information about the plugin.
+  </div>
+</div><!-- /.box -->
+
+
+

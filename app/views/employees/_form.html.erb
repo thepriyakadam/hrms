@@ -1,26 +1,7 @@
 <%= bootstrap_form_for(@employee) do |f| %>
-  <% if @employee.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@employee.errors.count, "error") %> prohibited this employee from being saved:</h2>
 
-      <ul>
-      <% @employee.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-         <%= f.text_field :department_id, value: current_user.id %>
-       </div>
-    </div>
-  </div>
-
+  <%= f.hidden_field :department_id, value: current_user.account_id %>
+  
   <div class="row">
     <div class="col-sm-1"></div>
       <div class="col-sm-3">
@@ -44,9 +25,6 @@
     </div>
   </div>
 
-
-
-  
   <div class="row">
     <div class="col-sm-1"></div>
       <div class="col-sm-3">
@@ -178,7 +156,7 @@
     <div class="col-sm-1"></div>
       <div class="col-sm-3">
         <div class="field">
-         <%= f.text_field :marital_status %>
+         <%= f.select :marital_status, ['Marride','Unmarride'] %>
         </div>
     </div>
   </div>
@@ -191,7 +169,6 @@
         </div>
     </div>
   </div>
-
 
   <div class="row">
     <div class="col-sm-1"></div>
@@ -206,7 +183,7 @@
     <div class="col-sm-1"></div>
       <div class="col-sm-3">
         <div class="field">
-         <%= f.text_field :handicap %>
+         <%= f.select :handicap, ['Yes','No'] %>
         </div>
     </div>
   </div>
@@ -233,7 +210,7 @@
     <div class="col-sm-1"></div>
       <div class="col-sm-3">
         <div class="field">
-         <%= f.text_field :gender %>
+         <%= f.select :gender, ['Male','Female'] %>
         </div>
     </div>
   </div>

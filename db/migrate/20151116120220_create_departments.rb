@@ -3,6 +3,7 @@ class CreateDepartments < ActiveRecord::Migration
     create_table :departments do |t|
       t.references :company_location, index: true, foreign_key: true
       t.string :name
+      t.string :email
       t.string :department_type
       t.string :address
       t.integer :pin_code

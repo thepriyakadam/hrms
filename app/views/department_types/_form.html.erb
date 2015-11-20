@@ -1,3 +1,14 @@
+
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Create Department Types</h3>
+    <div class="box-tools pull-right">
+      <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+      <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+    </div>
+  </div><!-- /.box-header -->
+
+<div class="box-body">
 <%= bootstrap_form_for(@department_type) do |f| %>
   <% if @department_type.errors.any? %>
     <div id="error_explanation">
@@ -31,3 +42,8 @@
   </div>
 
 <% end %>
+ </div><!-- /.box-body -->
+  <div class="box-footer">
+    Visit <a href="https://select2.github.io/">Select2 documentation</a> for more examples and information about the plugin.
+  </div>
+</div><!-- /.box -->

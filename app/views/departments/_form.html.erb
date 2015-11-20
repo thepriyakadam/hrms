@@ -11,17 +11,7 @@
 
 <div class="box-body">
 <%= bootstrap_form_for(@department) do |f| %>
-  <% if @department.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@department.errors.count, "error") %> prohibited this department from being saved:</h2>
-      <ul>
-      <% @department.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
+  
   <%= f.hidden_field :company_location_id, value: current_user.account_id %>
        
   <div class="row">

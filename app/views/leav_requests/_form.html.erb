@@ -1,3 +1,16 @@
+
+<!-- SELECT2 EXAMPLE -->
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Create Employee Physicals</h3>
+    <div class="box-tools pull-right">
+      <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+      <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+    </div>
+  </div><!-- /.box-header -->
+
+
+
 <%= form_for(@leav_request) do |f| %>
   <% if @leav_request.errors.any? %>
     <div id="error_explanation">
@@ -51,3 +64,8 @@
     <%= f.submit %>
   </div>
 <% end %>
+ </div><!-- /.box-body -->
+  <div class="box-footer">
+    Visit <a href="https://select2.github.io/">Select2 documentation</a> for more examples and information about the plugin.
+  </div>
+</div><!-- /.box -->

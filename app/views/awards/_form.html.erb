@@ -1,33 +1,69 @@
-<%= form_for(@award) do |f| %>
-  <% if @award.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@award.errors.count, "error") %> prohibited this award from being saved:</h2>
-
-      <ul>
-      <% @award.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+<!-- SELECT2 EXAMPLE -->
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Awards Details</h3>
+    <div class="box-tools pull-right">
+      <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+      <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
     </div>
-  <% end %>
+  </div><!-- /.box-header -->
 
-  <div class="field">
-    <%= f.label :employee_id %><br>
-    <%= f.text_field :employee_id %>
-  </div>
-  <div class="field">
-    <%= f.label :award_name %><br>
-    <%= f.text_field :award_name %>
-  </div>
-  <div class="field">
-    <%= f.label :year %><br>
-    <%= f.number_field :year %>
-  </div>
-  <div class="field">
-    <%= f.label :award_from %><br>
-    <%= f.text_field :award_from %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+<div class="box-body">
+<%= form_for(@award) do |f| %>
+
+  <div class="row">
+        <div class="col-sm-1"></div>
+         <div class="col-sm-3">
+          <div class="field">
+           <%= f.text_field :employee_id %>
+          </div>
+        </div>
+      </div>
+
+
+
+  <div class="row">
+        <div class="col-sm-1"></div>
+         <div class="col-sm-3">
+          <div class="field">
+           <%= f.text_field :award_name %>
+          </div>
+        </div>
+      </div>
+
+
+  <div class="row">
+        <div class="col-sm-1"></div>
+         <div class="col-sm-3">
+          <div class="field">
+           <%= f.number_field :year %>
+          </div>
+        </div>
+      </div>
+
+
+
+   <div class="row">
+        <div class="col-sm-1"></div>
+         <div class="col-sm-3">
+          <div class="field">
+            <%= f.text_field :award_from %>
+          </div>
+        </div>
+      </div>
+
+
+  <div class="row">
+        <div class="col-sm-1"></div>
+         <div class="col-sm-3">
+          <div class="actions">
+           <%= f.submit %>
+          </div>
+        </div>
+      </div>
 <% end %>
+</div><!-- /.box-body -->
+  <div class="box-footer">
+    Visit <a href="https://select2.github.io/">Select2 documentation</a> for more examples and information about the plugin.
+  </div>
+</div><!-- /.box -->

@@ -1,7 +1,7 @@
 <!-- SELECT2 EXAMPLE -->
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title">Create Employee Physicals</h3>
+    <h3 class="box-title">Company Details</h3>
     <div class="box-tools pull-right">
       <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
       <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
@@ -10,17 +10,7 @@
 
   <div class="box-body">
     <%= bootstrap_form_for(@company) do |f| %>
-      <% if @company.errors.any? %>
-        <div id="error_explanation">
-          <h2><%= pluralize(@company.errors.count, "error") %> prohibited this company from being saved:</h2>
-          <ul>
-          <% @company.errors.full_messages.each do |message| %>
-            <li><%= message %></li>
-          <% end %>
-          </ul>
-        </div>
-      <% end %>
-
+    
       <div class="row">
         <div class="col-sm-1"></div>
          <div class="col-sm-3">

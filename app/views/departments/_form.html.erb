@@ -1,16 +1,17 @@
-<%= bootstrap_form_for(@department) do |f| %>
-  <% if @department.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@department.errors.count, "error") %> prohibited this department from being saved:</h2>
-
-      <ul>
-      <% @department.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+<!-- SELECT2 EXAMPLE -->
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Create Departments</h3>
+    <div class="box-tools pull-right">
+      <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+      <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
     </div>
-  <% end %>
+  </div><!-- /.box-header -->
 
+
+<div class="box-body">
+<%= bootstrap_form_for(@department) do |f| %>
+  
   <%= f.hidden_field :company_location_id, value: current_user.account_id %>
        
   <div class="row">
@@ -45,7 +46,7 @@
     <div class="col-sm-1"></div>
       <div class="col-sm-3">
         <div class="field">
-    <%= f.text_field :address %>
+          <%= f.text_field :address %>
         </div>
     </div>
   </div>
@@ -107,5 +108,9 @@
         </div>
       </div>
   </div>
-
 <% end %>
+</div><!-- /.box-body -->
+  <div class="box-footer">
+    Visit <a href="https://select2.github.io/">Select2 documentation</a> for more examples and information about the plugin.
+  </div>
+</div><!-- /.box -->

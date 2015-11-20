@@ -1,16 +1,16 @@
-<%= bootstrap_form_for(@family) do |f| %>
-  <% if @family.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@family.errors.count, "error") %> prohibited this family from being saved:</h2>
-
-      <ul>
-      <% @family.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+<!-- SELECT2 EXAMPLE -->
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Employee Family Details</h3>
+    <div class="box-tools pull-right">
+      <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+      <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
     </div>
-  <% end %>
+  </div><!-- /.box-header -->
 
+
+<div class="box-body">
+<%= bootstrap_form_for(@family) do |f| %>
   <div class="row">
     <div class="col-sm-1"></div>
       <div class="col-sm-3">
@@ -19,8 +19,7 @@
        </div>
     </div>
   </div>
-
-
+  
   <div class="row">
     <div class="col-sm-1"></div>
       <div class="col-sm-3">
@@ -29,8 +28,6 @@
       </div>
     </div>
   </div>
-
-
 
   <div class="row">
     <div class="col-sm-1"></div>
@@ -50,18 +47,6 @@
     </div>
   </div>
 
-
- <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-         <%= f.text_field :m_name %>
-        </div>
-    </div>
-  </div>
-
-
-  
  <div class="row">
     <div class="col-sm-1"></div>
       <div class="col-sm-3">
@@ -70,7 +55,6 @@
         </div>
     </div>
   </div>
-
 
   <div class="row">
     <div class="col-sm-1"></div>
@@ -118,7 +102,6 @@
     </div>
   </div>
 
-
   <div class="row">
     <div class="col-sm-1"></div>
       <div class="col-sm-3">
@@ -128,12 +111,10 @@
     </div>
   </div>
 
-
   <div class="row">
     <div class="col-sm-1"></div>
       <div class="col-sm-3">
         <div class="field">
-        <%= f.label :city %><br>
         <%= f.text_field :city %>
         </div>
     </div>
@@ -166,7 +147,6 @@
     </div>
   </div>
 
-
   <div class="row">
     <div class="col-sm-1"></div>
       <div class="col-sm-3">
@@ -175,7 +155,6 @@
         </div>
     </div>
   </div>
-
 
    <div class="row">
     <div class="col-sm-1"></div>
@@ -186,7 +165,6 @@
     </div>
   </div>
 
-
   <div class="row">
     <div class="col-sm-1"></div>
       <div class="col-sm-3">
@@ -195,7 +173,6 @@
         </div>
     </div>
   </div>
-
 
   <div class="row">
     <div class="col-sm-1"></div>
@@ -210,12 +187,10 @@
     <div class="col-sm-1"></div>
       <div class="col-sm-3">
         <div class="field">
-    <%= f.label :passport_no %><br>
-    <%= f.text_field :passport_no %>
+        <%= f.text_field :passport_no %>
+        </div>
+      </div>
   </div>
-    </div>
-  </div>
-
 
  <div class="row">
     <div class="col-sm-1"></div>
@@ -226,7 +201,6 @@
     </div>
   </div>
 
-
   <div class="row">
     <div class="col-sm-1"></div>
       <div class="col-sm-3">
@@ -236,7 +210,6 @@
     </div>
   </div>
 
-
   <div class="row">
     <div class="col-sm-1"></div>
       <div class="col-sm-3">
@@ -245,7 +218,6 @@
         </div>
     </div>
   </div>
-
 
  <div class="row">
     <div class="col-sm-1"></div>
@@ -280,7 +252,7 @@
         <div class="field">
           <%= f.text_field :phandicap %>
         </div>
-    </div>
+      </div>
   </div>
 
   <div class="row">
@@ -289,7 +261,7 @@
         <div class="field">
           <%= f.text_field :profession %>
         </div>
-    </div>
+      </div>
   </div>
 
   <div class="row">
@@ -301,3 +273,8 @@
     </div>
   </div>
 <% end %>
+</div><!-- /.box-body -->
+  <div class="box-footer">
+    Visit <a href="https://select2.github.io/">Select2 documentation</a> for more examples and information about the plugin.
+  </div>
+</div><!-- /.box -->

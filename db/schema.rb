@@ -239,7 +239,7 @@ ActiveRecord::Schema.define(version: 20151118095539) do
 
   create_table "joining_details", force: :cascade do |t|
     t.integer  "employee_id",       limit: 4
-    t.string   "joining_date",      limit: 255
+    t.date     "joining_date"
     t.string   "reffernce_from",    limit: 255
     t.string   "admin_hr",          limit: 255
     t.string   "tech_hr",           limit: 255

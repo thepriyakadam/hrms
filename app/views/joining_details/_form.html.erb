@@ -1,73 +1,128 @@
 <%= form_for(@joining_detail) do |f| %>
-  <% if @joining_detail.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@joining_detail.errors.count, "error") %> prohibited this joining_detail from being saved:</h2>
 
-      <ul>
-      <% @joining_detail.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+ <div class="row">
+    <div class="col-sm-1"></div>
+      <div class="col-sm-3">
+        <div class="field">
+         <%= f.text_field :employee_id %>
+       </div>
     </div>
-  <% end %>
+  </div>
 
-  <div class="field">
-    <%= f.label :employee_id %><br>
-    <%= f.text_field :employee_id %>
+   <div class="row">
+    <div class="col-sm-1"></div>
+      <div class="col-sm-3">
+        <div class="field">
+         <%= f.date_select :joining_date %>
+       </div>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :joining_date %><br>
-    <%= f.text_field :joining_date %>
+
+   <div class="row">
+    <div class="col-sm-1"></div>
+      <div class="col-sm-3">
+        <div class="field">
+         <%= f.text_field :reffernce_from %>
+       </div>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :reffernce_from %><br>
-    <%= f.text_field :reffernce_from %>
+
+   <div class="row">
+    <div class="col-sm-1"></div>
+      <div class="col-sm-3">
+        <div class="field">
+         <%= f.text_field :admin_hr %>
+       </div>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :admin_hr %><br>
-    <%= f.text_field :admin_hr %>
+
+   <div class="row">
+    <div class="col-sm-1"></div>
+      <div class="col-sm-3">
+        <div class="field">
+         <%= f.text_field :tech_hr %>
+       </div>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :tech_hr %><br>
-    <%= f.text_field :tech_hr %>
+
+   <div class="row">
+    <div class="col-sm-1"></div>
+      <div class="col-sm-3">
+        <div class="field">
+         <%= f.text_field :designation %>
+       </div>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :designation %><br>
-    <%= f.text_field :designation %>
+
+   <div class="row">
+    <div class="col-sm-1"></div>
+      <div class="col-sm-3">
+        <div class="field">
+         <%= f.text_field :ctc %>
+       </div>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :ctc %><br>
-    <%= f.text_field :ctc %>
+
+   <div class="row">
+    <div class="col-sm-1"></div>
+      <div class="col-sm-3">
+        <div class="field">
+         <%= f.text_field :account_no %>
+       </div>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :account_no %><br>
-    <%= f.text_field :account_no %>
+
+   <div class="row">
+    <div class="col-sm-1"></div>
+      <div class="col-sm-3">
+        <div class="field">
+         <%= f.text_field :employee_grade_id %>
+       </div>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :employee_grade_id %><br>
-    <%= f.text_field :employee_grade_id %>
+
+   <div class="row">
+    <div class="col-sm-1"></div>
+      <div class="col-sm-3">
+        <div class="field">
+       <%= f.date_select :confirmation_date %>
+       </div>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :confirmation_date %><br>
-    <%= f.date_select :confirmation_date %>
+
+   <div class="row">
+    <div class="col-sm-1"></div>
+      <div class="col-sm-3">
+        <div class="field">
+         <%= f.text_field :status %>
+       </div>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :status %><br>
-    <%= f.text_field :status %>
+
+   <div class="row">
+    <div class="col-sm-1"></div>
+      <div class="col-sm-3">
+        <div class="field">
+        <%= f.text_field :probation_period %>
+       </div>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :probation_period %><br>
-    <%= f.text_field :probation_period %>
+
+   <div class="row">
+    <div class="col-sm-1"></div>
+      <div class="col-sm-3">
+        <div class="field">
+          <%= f.text_field :notice_period %>
+       </div>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :notice_period %><br>
-    <%= f.text_field :notice_period %>
-  </div>
-  <div class="field">
-    <%= f.label :medical_schem %><br>
-    <%= f.text_field :medical_schem %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
+
+   <div class="row">
+    <div class="col-sm-1"></div>
+      <div class="col-sm-3">
+        <div class="field">
+          <%= f.text_field :medical_schem %>
+       </div>
+    </div>
   </div>
 <% end %>

@@ -1,4 +1,4 @@
-<!-- SELECT2 EXAMPLE -->
+<!--SELECT2 EXAMPLE -->
 <div class="box box-default">
   <div class="box-header with-border">
     <h3 class="box-title">Create Employee</h3>
@@ -13,153 +13,51 @@
       <%= f.hidden_field :department_id, value: current_user.account_id %>
 
       <div class="row">
-        <div class="col-sm-1"></div>
          <div class="col-sm-3">
           <div class="field">
            <%= f.text_field :first_name %>
          </div>
         </div>
-      </div>
 
-      <div class="row">
-        <div class="col-sm-1"></div>
-          <div class="col-sm-3">
+        <div class="col-sm-3">
            <div class="field">
           <%= f.text_field :middle_name %>
          </div>
         </div>
-      </div>
 
-      <div class="row">
-        <div class="col-sm-1"></div>
          <div class="col-sm-3">
           <div class="field">
            <%= f.text_field :last_name %>
          </div>
         </div>
-      </div>
 
-      <div class="row">
-        <div class="col-sm-1"></div>
-         <div class="col-sm-3">
-          <div class="field">
-           <%= f.date_select :date_of_birth %>
-          </div>
-        </div>
-      </div>
-
-
-      <div class="row">
-        <div class="col-sm-1"></div>
-         <div class="col-sm-3">
-          <div class="field">
-           <%= f.text_field :contact_no %>
-         </div>
-        </div>
-      </div>
-
-
-      <div class="row">
-        <div class="col-sm-1"></div>
-         <div class="col-sm-3">
-          <div class="field">
-           <%= f.text_field :email %>
-          </div>
-        </div>
-      </div>
-
-
-      <div class="row">
-        <div class="col-sm-1"></div>
-         <div class="col-sm-3">
-          <div class="field">
-           <%= f.text_field :permanent_address %>
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-sm-1"></div>
-         <div class="col-sm-3">
-          <div class="field">
-           <%= f.text_field :city %>
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-sm-1"></div>
         <div class="col-sm-3">
           <div class="field">
-           <%= f.text_field :district %>
+            <%= f.select :gender, ['Male','Female'] %>
           </div>
         </div>
       </div>
 
-
       <div class="row">
-        <div class="col-sm-1"></div>
-         <div class="col-sm-3">
-          <div class="field">
-           <%= f.number_field :pin_code %>
-          </div>
-        </div>
-      </div>
-
-
-      <div class="row">
-        <div class="col-sm-1"></div>
-         <div class="col-sm-3">
-          <div class="field">
-           <%= f.text_field :state %>
-          </div>
-        </div>
-      </div>
-
-
-      <div class="row">
-        <div class="col-sm-1"></div>
-        <div class="col-sm-3">
-          <div class="field">
-            <%= f.text_field :current_address %>
-         </div>
-        </div>
-      </div>
-
-
-      <div class="row">
-        <div class="col-sm-1"></div>
          <div class="col-sm-3">
           <div class="field">
            <%= f.text_field :adhar_no %>
          </div>
         </div>
-      </div>
 
-
-      <div class="row">
-        <div class="col-sm-1"></div>
-         <div class="col-sm-3">
+        <div class="col-sm-3">
           <div class="field">
             <%= f.text_field :pan_no %>
           </div>
         </div>
-      </div>
 
-
-      <div class="row">
-        <div class="col-sm-1"></div>
-         <div class="col-sm-3">
+        <div class="col-sm-3">
           <div class="field">
            <%= f.text_field :licence_no %>
           </div>
         </div>
-      </div>
 
-
-      <div class="row">
-        <div class="col-sm-1"></div>
-         <div class="col-sm-3">
+        <div class="col-sm-3">
           <div class="field">
            <%= f.text_field :passport_no %>
           </div>
@@ -167,35 +65,25 @@
       </div>
 
       <div class="row">
-        <div class="col-sm-1"></div>
-         <div class="col-sm-3">
+        <div class="col-sm-3">
           <div class="field">
             <%= f.select :marital_status, ['Marride','Unmarride'] %>
           </div>
         </div>
-      </div>
 
-      <div class="row">
-        <div class="col-sm-1"></div>
-         <div class="col-sm-3">
+        <div class="col-sm-3">
           <div class="field">
             <%= f.select :nationality_id, all_nationality %>
           </div>
         </div>
-      </div>
 
-      <div class="row">
-        <div class="col-sm-1"></div>
-         <div class="col-sm-3">
+        <div class="col-sm-3">
           <div class="field">
             <%= f.select :blood_group_id, all_blood_group %>
           </div>
         </div>
-      </div>
 
-      <div class="row">
-        <div class="col-sm-1"></div>
-         <div class="col-sm-3">
+        <div class="col-sm-3">
           <div class="field">
             <%= f.select :handicap, ['Yes','No'] %>
           </div>
@@ -203,8 +91,67 @@
       </div>
 
       <div class="row">
-        <div class="col-sm-1"></div>
+         <div class="col-sm-12">
+          <div class="field">
+           <%= f.text_field :permanent_address %>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
          <div class="col-sm-3">
+          <div class="field">
+           <%= f.text_field :state %>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.text_field :district %>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.text_field :city %>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.number_field :pin_code %>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="field">
+            <%= f.text_field :current_address %>
+         </div>
+        </div>
+      </div>
+
+      <div class="row">
+         <div class="col-sm-3">
+          <div class="field">
+           <%= f.text_field :contact_no %>
+         </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="field">
+           <%= f.text_field :email %>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="field">
+           <%= f.date_select :date_of_birth %>
+         </div>
+        </div>
+
+        <div class="col-sm-3">
           <div class="field">
             <%= f.text_field :status %>
           </div>
@@ -212,7 +159,6 @@
       </div>
 
       <div class="row">
-        <div class="col-sm-1"></div>
          <div class="col-sm-3">
           <div class="field">
             <%= f.select :employee_type_id, all_employee_type %>
@@ -220,14 +166,97 @@
         </div>
       </div>
 
-      <div class="row">
-        <div class="col-sm-1"></div>
-         <div class="col-sm-3">
-          <div class="field">
-            <%= f.select :gender, ['Male','Female'] %>
+      <hr>
+
+      <!-- Nested Form -->
+      <%= f.fields_for :joining_detail do |o| %>
+
+        <div class="row">
+          <div class="col-sm-3">
+            <div class="field">
+              <%= o.text_field :joining_date %>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="field">
+              <%= o.text_field :reffernce_from %>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="field">
+              <%= o.text_field :admin_hr %>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="field">
+              <%= o.text_field :tech_hr %>
+            </div>
           </div>
         </div>
-      </div>
+
+        <div class="row">
+          <div class="col-sm-3">
+            <div class="field">
+              <%= o.text_field :designation %>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="field">
+              <%= o.text_field :employee_grade_id %>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="field">
+              <%= o.text_field :account_no %>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="field">
+              <%= o.text_field :ctc %>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-3">
+            <div class="field">
+              <%= o.date_select :confirmation_date %>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="field">
+              <%= o.text_field :status %>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="field">
+              <%= o.text_field :probation_period %>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="field">
+              <%= o.text_field :notice_period %>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-3">
+            <div class="field">
+              <%= o.text_field :medical_schem %>
+            </div>
+          </div>
+        </div>
+      <% end %>      
 
       <div class="row">
         <div class="col-sm-1"></div>
@@ -242,4 +271,4 @@
   <div class="box-footer">
     Visit <a href="https://select2.github.io/">Select2 documentation</a> for more examples and information about the plugin.
   </div>
-</div><!-- /.box -->
+</div><!-- /.box-->

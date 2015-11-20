@@ -7,7 +7,6 @@
 		<%= link_to "Create Department", new_department_path %>
 	<% elsif current_user.account_type == 'Department' %>
 		<%= render 'department_dashboard' %>
-		<%= link_to "Create Employee", new_employee_path %>
 	<% elsif current_user.account_type == 'Employee' %>
 		<%= link_to "Create Qualification", new_qualification_path %>
 	<% end %>

@@ -11,18 +11,6 @@
 
 <div class="box-body">
 <%= bootstrap_form_for(@family) do |f| %>
-  <% if @family.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@family.errors.count, "error") %> prohibited this family from being saved:</h2>
-
-      <ul>
-      <% @family.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
   <div class="row">
     <div class="col-sm-1"></div>
       <div class="col-sm-3">
@@ -31,8 +19,7 @@
        </div>
     </div>
   </div>
-
-
+  
   <div class="row">
     <div class="col-sm-1"></div>
       <div class="col-sm-3">
@@ -41,8 +28,6 @@
       </div>
     </div>
   </div>
-
-
 
   <div class="row">
     <div class="col-sm-1"></div>
@@ -62,18 +47,6 @@
     </div>
   </div>
 
-
- <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-         <%= f.text_field :m_name %>
-        </div>
-    </div>
-  </div>
-
-
-  
  <div class="row">
     <div class="col-sm-1"></div>
       <div class="col-sm-3">
@@ -82,7 +55,6 @@
         </div>
     </div>
   </div>
-
 
   <div class="row">
     <div class="col-sm-1"></div>
@@ -130,7 +102,6 @@
     </div>
   </div>
 
-
   <div class="row">
     <div class="col-sm-1"></div>
       <div class="col-sm-3">
@@ -140,12 +111,10 @@
     </div>
   </div>
 
-
   <div class="row">
     <div class="col-sm-1"></div>
       <div class="col-sm-3">
         <div class="field">
-        <%= f.label :city %><br>
         <%= f.text_field :city %>
         </div>
     </div>
@@ -178,7 +147,6 @@
     </div>
   </div>
 
-
   <div class="row">
     <div class="col-sm-1"></div>
       <div class="col-sm-3">
@@ -187,7 +155,6 @@
         </div>
     </div>
   </div>
-
 
    <div class="row">
     <div class="col-sm-1"></div>
@@ -198,7 +165,6 @@
     </div>
   </div>
 
-
   <div class="row">
     <div class="col-sm-1"></div>
       <div class="col-sm-3">
@@ -207,7 +173,6 @@
         </div>
     </div>
   </div>
-
 
   <div class="row">
     <div class="col-sm-1"></div>
@@ -222,12 +187,10 @@
     <div class="col-sm-1"></div>
       <div class="col-sm-3">
         <div class="field">
-    <%= f.label :passport_no %><br>
-    <%= f.text_field :passport_no %>
+        <%= f.text_field :passport_no %>
+        </div>
+      </div>
   </div>
-    </div>
-  </div>
-
 
  <div class="row">
     <div class="col-sm-1"></div>
@@ -238,7 +201,6 @@
     </div>
   </div>
 
-
   <div class="row">
     <div class="col-sm-1"></div>
       <div class="col-sm-3">
@@ -248,7 +210,6 @@
     </div>
   </div>
 
-
   <div class="row">
     <div class="col-sm-1"></div>
       <div class="col-sm-3">
@@ -257,7 +218,6 @@
         </div>
     </div>
   </div>
-
 
  <div class="row">
     <div class="col-sm-1"></div>
@@ -292,7 +252,7 @@
         <div class="field">
           <%= f.text_field :phandicap %>
         </div>
-    </div>
+      </div>
   </div>
 
   <div class="row">
@@ -301,7 +261,7 @@
         <div class="field">
           <%= f.text_field :profession %>
         </div>
-    </div>
+      </div>
   </div>
 
   <div class="row">

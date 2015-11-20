@@ -10,7 +10,7 @@
 
 
 <div class="box-body">
-<%= form_for(@leav_type) do |f| %>
+<%= bootstrap_form_for(@leav_type) do |f| %>
   <% if @leav_type.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@leav_type.errors.count, "error") %> prohibited this leav_type from being saved:</h2>

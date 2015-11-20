@@ -11,18 +11,7 @@
 
 
 
-<%= form_for(@leav_request) do |f| %>
-  <% if @leav_request.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@leav_request.errors.count, "error") %> prohibited this leav_request from being saved:</h2>
-
-      <ul>
-      <% @leav_request.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+<%= bootstrap_form_for(@leav_request) do |f| %>
 
   <div class="field">
     <%= f.label :leav_type_id %><br>

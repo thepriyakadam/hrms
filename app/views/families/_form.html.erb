@@ -14,29 +14,30 @@
   <div class="row">
    
       <div class="col-sm-3">
-        <div class="field">
+        <div class="form-group required">
          <%= f.text_field :no_of_member %>
       </div>
     </div>
     <div class="col-sm-3">
-        <div class="field">
-         <%= f.text_field :f_name %>
+        <div class="form-group required">
+         <%= f.text_field :f_name,label: 'First Name' %>
         </div>
     </div>
     <div class="col-sm-3">
         <div class="field">
-         <%= f.text_field :m_name %>
+         <%= f.text_field :m_name,label: 'Middle Name' %>
         </div>
     </div>
      <div class="col-sm-3">
-        <div class="field">
-        <%= f.text_field :l_name %>
+        <div class="form-group required">
+        <%= f.text_field :l_name,label: 'Last Name' %>
         </div>
     </div>
 </div>
 
 <div class="row">
      <div class="col-sm-3">
+     <div class="form-group required">
           <div class="input-group">
             <div class="input-group-addon">
               <i class="fa fa-calendar"></i>
@@ -44,13 +45,16 @@
             <%= f.text_field :date_of_birth, class: 'datemask'%>
           </div>
       </div>
+      </div>
+
+
       <div class="col-sm-3">
         <div class="field">
           <%= f.number_field :age %>
         </div>
       </div>
       <div class="col-sm-3">
-        <div class="field">
+        <div class="form-group required">
           <%= f.text_field :contact_no %>
         </div>
      </div>
@@ -64,7 +68,7 @@
 <div class="row">
    
       <div class="col-sm-12">
-        <div class="field">
+        <div class="form-group required">
          <%= f.text_field :permanent_address %>
         </div>
     </div>
@@ -91,7 +95,7 @@
     </div>
  
     <div class="col-sm-3">
-        <div class="field">
+        <div class="form-group required">
         <%= f.number_field :pin_code %>
         </div>
     </div>   
@@ -119,12 +123,12 @@
 
    
       <div class="col-sm-3">
-        <div class="field">
+        <div class="form-group required">
           <%= f.text_field :relation %>
         </div>
     </div>
     <div class="col-sm-3">
-        <div class="field">
+        <div class="form-group required">
           <%= f.text_field :adhar_no %>
         </div>
     </div>

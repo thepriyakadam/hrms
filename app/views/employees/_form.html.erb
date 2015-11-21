@@ -9,7 +9,7 @@
   </div><!-- /.box-header -->
   <div class="box-body">
     <%= bootstrap_form_for(@employee) do |f| %>
-
+      
       <%= f.hidden_field :department_id, value: current_user.account_id %>
 
       <div class="row">
@@ -173,7 +173,7 @@
 
       <!-- Nested Form -->
       <%= f.fields_for :joining_detail do |o| %>
-
+<%= console %>
         <div class="row">
           <div class="col-sm-3">
             <div class="input-group">

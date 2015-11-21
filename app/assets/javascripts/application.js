@@ -40,3 +40,11 @@ $(function () {
   //Money Euro
   $("[data-mask]").inputmask();
 });
+
+// Automatic hide alert
+$(function(){
+  $("#success-alert").alert();
+  $("#success-alert").fadeTo(3000, 500).slideUp(500, function(){
+  $("#success-alert").alert('close');
+  });   
+});

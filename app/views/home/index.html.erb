@@ -2,12 +2,17 @@
 	<%= render 'group_dashboard' %>
 <%elsif current_user.class == Member %>
 	<% if current_user.account_type == 'Company' %>
-		<%= link_to "Create Company Location", new_company_location_path %>
+		<%= render 'company_dashboard' %>
 	<% elsif current_user.account_type == 'CompanyLocation' %>
-		<%= link_to "Create Department", new_department_path %>
+		<%= render 'company_location_dashboard' %>
 	<% elsif current_user.account_type == 'Department' %>
 		<%= render 'department_dashboard' %>
 	<% elsif current_user.account_type == 'Employee' %>
-		<%= link_to "Create Qualification", new_qualification_path %>
+		<%= render 'employee_dashboard' %>
+		<%= link_to "Add family", new_family_path %>
+		<%= link_to "Add skillsets", new_skillset_path %>
+		<%= link_to "Add awards", new_award_path%>
+		<%= link_to "Add experience", new_experience_path%>
+		<%= link_to "Add qualification", new_qualification_path%>
 	<% end %>
 <%end%>

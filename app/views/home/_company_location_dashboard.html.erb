@@ -1,0 +1,105 @@
+<div class="row">
+  <div class="col-lg-3 col-xs-6">
+    <!-- small box -->
+    <div class="small-box bg-aqua">
+      <div class="inner">
+        <h3>150</h3>
+        <p>Companies</p>
+      </div>
+      <div class="icon">
+        <i class="ion ion-bag"></i>
+      </div>
+      <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+    </div>
+  </div><!-- ./col -->
+  <div class="col-lg-3 col-xs-6">
+    <!-- small box -->
+    <div class="small-box bg-green">
+      <div class="inner">
+        <h3>53<sup style="font-size: 20px">%</sup></h3>
+        <p>Company locations</p>
+      </div>
+      <div class="icon">
+        <i class="ion ion-stats-bars"></i>
+      </div>
+      <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+    </div>
+  </div><!-- ./col -->
+  <div class="col-lg-3 col-xs-6">
+    <!-- small box -->
+    <div class="small-box bg-yellow">
+      <div class="inner">
+        <h3>44</h3>
+        <p>Department</p>
+      </div>
+      <div class="icon">
+        <i class="ion ion-person-add"></i>
+      </div>
+      <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+    </div>
+  </div><!-- ./col -->
+  <div class="col-lg-3 col-xs-6">
+    <!-- small box -->
+    <div class="small-box bg-red">
+      <div class="inner">
+        <h3>65</h3>
+        <p>Employees</p>
+      </div>
+      <div class="icon">
+        <i class="ion ion-pie-graph"></i>
+      </div>
+      <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+    </div>
+  </div><!-- ./col -->
+</div><!-- /.row -->
+<!-- Main row -->
+
+
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Department List</h3>
+    <div class="pull-right">
+    	<%= link_to "Create Department", new_department_path, class: 'btn btn-primary' %>	
+    </div>
+    
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover">
+	  <thead>
+	    <tr>
+	      <th>Company location</th>
+	      <th>Name</th>
+	      <th>Department type</th>
+	      <th>Address</th>
+	      <th>Pin code</th>
+	      <th>Head of department</th>
+	      <th>Contact no</th>
+	      <th>Manager</th>
+	      <th>Hr</th>
+	      <th>Action</th>
+	    </tr>
+	  </thead>
+
+	  <tbody>
+	    <% @departments.each do |department| %>
+	      <tr>
+	        <td><%= department.company_location.name %></td>
+	        <td><%= department.name %></td>
+	        <td><%= department.department_type %></td>
+	        <td><%= department.address %></td>
+	        <td><%= department.pin_code %></td>
+	        <td><%= department.head_of_department %></td>
+	        <td><%= department.contact_no %></td>
+	        <td><%= department.manager %></td>
+	        <td><%= department.hr %></td>
+	        <td>
+	        	<%= link_to 'Show', department, class: 'btn btn-default fa fa-eye' %>
+	        	<%= link_to 'Edit', edit_department_path(department), class: 'btn btn-success fa fa-edit' %>
+	        	<%= link_to 'Destroy', department, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger fa fa-close' %>
+	        </td>
+	      </tr>
+    	<% end %>
+	  </tbody>
+	</table>
+</div>
+</div>

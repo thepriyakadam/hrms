@@ -67,7 +67,7 @@
       <div class="row">
         <div class="col-sm-3">
           <div class="field">
-            <%= f.select :marital_status, ['Marride','Unmarride'] %>
+            <%= f.select :marital_status, ['Married','UnMarried'] %>
           </div>
         </div>
 
@@ -212,7 +212,7 @@
 
           <div class="col-sm-3">
             <div class="field">
-              <%= o.text_field :employee_grade_id, all_employee_grade %>
+              <%= o.select :employee_grade_id, all_employee_grade %>
             </div>
           </div>
 

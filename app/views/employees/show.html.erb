@@ -1,124 +1,191 @@
-<p id="notice"><%= notice %></p>
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Employee Dtails</h3>
+    <div class="box-tools pull-right">
+      <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+      <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+    </div>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover">
+    <tr> 
+      <th colspan="2"></th>
+      <th colspan="2"></th>
+    </tr>
+    <tr>
+      <th> <strong>Department:</strong></th>
+      <td><%= @employee.department.name %></td>
 
-<p>
-  <strong>Department:</strong>
-  <%= @employee.department %>
-</p>
+      <th> <strong>First name:</strong></th>
+      <td> <%= @employee.first_name %></td>
+    </tr>
 
-<p>
-  <strong>First name:</strong>
-  <%= @employee.first_name %>
-</p>
+    <tr>
+      <th>  <strong>Middle name:</strong></th>
+      <td><%= @employee.middle_name %></td>
 
-<p>
-  <strong>Middle name:</strong>
-  <%= @employee.middle_name %>
-</p>
+      <th><strong>Last name:</strong></th>
+      <td> <%= @employee.last_name %></td>
+    </tr>
 
-<p>
-  <strong>Last name:</strong>
-  <%= @employee.last_name %>
-</p>
+    <tr>
+      <th><strong>Date of birth:</strong></th>
+      <td>  <%= @employee.date_of_birth %></td>
 
-<p>
-  <strong>Date of birth:</strong>
-  <%= @employee.date_of_birth %>
-</p>
+      <th><strong>Contact no:</strong></th>
+      <td> <%= @employee.contact_no %></td>
+    </tr>
 
-<p>
-  <strong>Contact no:</strong>
-  <%= @employee.contact_no %>
-</p>
 
-<p>
-  <strong>Email:</strong>
-  <%= @employee.email %>
-</p>
+    <tr>
+      <th><strong>Email:</strong></th>
+      <td><%= @employee.email %></td>
 
-<p>
-  <strong>Permanent address:</strong>
-  <%= @employee.permanent_address %>
-</p>
+      <th> <strong>Permanent address:</strong></th>
+      <td> <%= @employee.permanent_address %></td>
+    </tr>
 
-<p>
-  <strong>City:</strong>
-  <%= @employee.city %>
-</p>
+    <tr>
+      <th> <strong>City:</strong></th>
+      <td> <%= @employee.city %></td>
 
-<p>
-  <strong>District:</strong>
-  <%= @employee.district %>
-</p>
+      <th><strong>District:</strong></th>
+      <td><%= @employee.district %></td>
+    </tr>
 
-<p>
-  <strong>State:</strong>
-  <%= @employee.state %>
-</p>
+    <tr>
+      <th> <strong>State:</strong></th>
+      <td><%= @employee.state %></td>
 
-<p>
-  <strong>Pin code:</strong>
-  <%= @employee.pin_code %>
-</p>
+      <th><strong>Pin code:</strong></th>
+      <td><%= @employee.pin_code %></td>
+    </tr>
 
-<p>
-  <strong>Current address:</strong>
-  <%= @employee.current_address %>
-</p>
+    <tr>
+      <th><strong>Current address:</strong></th>
+      <td><%= @employee.current_address %></td>
 
-<p>
-  <strong>Adhar no:</strong>
-  <%= @employee.adhar_no %>
-</p>
+      <th> <strong>Adhar no:</strong></th>
+      <td> <%= @employee.adhar_no %></td>
+    </tr>
 
-<p>
-  <strong>Pan no:</strong>
-  <%= @employee.pan_no %>
-</p>
+     <tr>
+      <th><strong>Pan no:</strong></th>
+      <td><%= @employee.pan_no %></td>
 
-<p>
-  <strong>Licence no:</strong>
-  <%= @employee.licence_no %>
-</p>
+      <th><strong>Licence no:</strong></th>
+      <td> <%= @employee.licence_no %></td>
+    </tr>
 
-<p>
-  <strong>Passport no:</strong>
-  <%= @employee.passport_no %>
-</p>
 
-<p>
-  <strong>Marital status:</strong>
-  <%= @employee.marital_status %>
-</p>
+     <tr>
+      <th><strong>Passport no:</strong></th>
+      <td> <%= @employee.passport_no %></td>
 
-<p>
-  <strong>Nationality:</strong>
-  <%= @employee.nationality.try(:name) %>
-</p>
+      <th> <strong>Marital status:</strong></th>
+      <td> <%= @employee.marital_status %></td>
+    </tr>
 
-<p>
-  <strong>Blood group:</strong>
-  <%= @employee.blood_group %>
-</p>
+     <tr>
+      <th> <strong>Nationality:</strong></th>
+      <td><%= @employee.nationality.try(:name) %></td>
 
-<p>
-  <strong>Handicap:</strong>
-  <%= @employee.handicap %>
-</p>
+      <th><strong>Blood group:</strong></th>
+      <td> <%= @employee.blood_group.try(:name) %></td>
+    </tr>
 
-<p>
-  <strong>Status:</strong>
-  <%= @employee.status %>
-</p>
+     <tr>
+      <th><strong>Handicap:</strong></th>
+      <td> <%= @employee.handicap %></td>
 
-<p>
-  <strong>Employee type:</strong>
-  <%= @employee.employee_type %>
-</p>
+      <th> <strong>Status:</strong></th>
+      <td><%= @employee.status %></td>
+    </tr>
 
-<p>
-  <strong>Gender:</strong>
-  <%= @employee.gender %>
-</p>
+    <tr>
+      <th><strong>Employee type:</strong></th>
+      <td> <%= @employee.employee_type.try(:name) %></td>
 
-<%= link_to 'Edit', edit_employee_path(@employee) %> |
-<%= link_to 'Back', employees_path %>
+      <th><strong>Gender:</strong></th>
+      <td><%= @employee.gender %></td>
+    </tr>
+
+    <tr> 
+      <th colspan="2"><strong></strong></th>
+      <th colspan="2"></th>
+    </tr>
+
+     <tr> 
+      <th colspan="4"><strong>Joining Dtails:</strong></th>
+      
+    </tr>
+
+ <tr>
+      <th> <strong>Employee:</strong></th>
+      <td><%= @employee.joining_detail.employee %></td>
+
+      <th> <strong>Joining date:</strong></th>
+      <td>  <%= @employee.joining_detail.joining_date %></td>
+    </tr>
+
+    <tr>
+      <th><strong>Reffernce from:</strong></th>
+      <td> <%= @employee.joining_detail.reffernce_from %></td>
+
+      <th><strong>Admin hr:</strong></th>
+      <td><%= @employee.joining_detail.admin_hr %></td>
+    </tr>
+
+    <tr>
+      <th>  <strong>Tech hr:</strong></th>
+      <td> <%= @employee.joining_detail.tech_hr %></td>
+
+      <th><strong>Designation:</strong></th>
+      <td> <%= @employee.joining_detail.designation %></td>
+    </tr>
+
+
+    <tr>
+      <th> <strong>Ctc:</strong></th>
+      <td><%= @employee.joining_detail.ctc %></td>
+
+      <th> <strong>Account no:</strong></th>
+      <td> <%= @employee.joining_detail.account_no %></td>
+    </tr>
+
+    <tr>
+      <th>   <strong>Employee grade:</strong></th>
+      <td>  <%= @employee.joining_detail.employee_grade %></td>
+
+      <th><strong>Confirmation date:</strong></th>
+      <td> <%= @employee.joining_detail.confirmation_date %></td>
+    </tr>
+
+    <tr>
+      <th> <strong>Status:</strong></th>
+      <td><%= @employee.joining_detail.status %></td>
+
+      <th><strong>Probation period:</strong></th>
+      <td><%= @employee.joining_detail.probation_period %></td>
+    </tr>
+
+    <tr>
+      <th> <strong>Notice period:</strong></th>
+      <td><%= @employee.joining_detail.notice_period %></td>
+
+      <th>  <strong>Medical schem:</strong></th>
+      <td> <%= @employee.joining_detail.medical_schem %></td>
+    </tr>
+
+ </table>
+
+  <%= link_to 'Edit', edit_employee_path(@employee),class: 'btn btn-success fa fa-edit' %> |
+    <%= link_to 'Back', root_path,class: 'btn btn-default fa fa-arrow-left' %>
+  </div><!-- /.box-body -->
+
+
+  <div class="box-footer">
+    Visit <a href="https://select2.github.io/">Select2 documentation</a> for more examples and information about the plugin.
+  </div>
+</div><!-- /.box -->
+

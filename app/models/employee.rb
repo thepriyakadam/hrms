@@ -32,7 +32,7 @@ class Employee < ActiveRecord::Base
     if email.present? and not email.match(/\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/)
       errors.add :email, "This is not a valid email format"
     end
-   end
+  end
 
   def create_user_account
     employee = Employee.find(id)

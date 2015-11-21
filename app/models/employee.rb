@@ -4,6 +4,8 @@ class Employee < ActiveRecord::Base
   belongs_to :blood_group
   belongs_to :employee_type
   has_one :member, as: :account
+  has_one :joining_detail
+  accepts_nested_attributes_for :joining_detail
   after_create :create_user_account
 
   validates :first_name, :presence => true

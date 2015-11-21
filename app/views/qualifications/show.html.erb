@@ -1,134 +1,135 @@
-<p id="notice"><%= notice %></p>
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Qualification</h3>
+    <div class="box-tools pull-right">
+      <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+      <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+    </div>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover">
+    <tr> 
+      <th colspan="2"></th>
+      <th colspan="2"></th>
+    </tr>
 
-<p>
-  <strong>Employee:</strong>
-  <%= @qualification.employee %>
-</p>
+  <tr>
+  <th><strong>Employee:</strong></th>
+ <td>  <%= @qualification.employee %></td>
 
-<p>
-  <strong>Ssc:</strong>
-  <%= @qualification.ssc %>
-</p>
+ <th><strong>Ssc:</strong></th>
+  <td><%= @qualification.ssc %></td>
+ </tr>
 
-<p>
-  <strong>Ssc from:</strong>
-  <%= @qualification.ssc_from %>
-</p>
+<tr>
+  <th><strong>Ssc from:</strong></th>
+  <td><%= @qualification.ssc_from %></td>
 
-<p>
-  <strong>Ssc marks:</strong>
-  <%= @qualification.ssc_marks %>
-</p>
+  <th><strong>Ssc marks:</strong></th>
+  <td><%= @qualification.ssc_marks %></td>
+</tr>
 
-<p>
-  <strong>Ssc year:</strong>
-  <%= @qualification.ssc_year %>
-</p>
+<tr>
+  <th><strong>Ssc year:</strong></th>
+  <td><%= @qualification.ssc_year %></td>
 
-<p>
-  <strong>Ssc bord:</strong>
-  <%= @qualification.ssc_bord %>
-</p>
+  <th><strong>Ssc bord:</strong></th>
+  <td><%= @qualification.ssc_bord %></td>
+</tr>
 
-<p>
-  <strong>Diploma:</strong>
-  <%= @qualification.diploma %>
-</p>
+<tr>
+  <th><strong>Diploma:</strong></th>
+  <td><%= @qualification.diploma %></td>
 
-<p>
-  <strong>Diploma from:</strong>
-  <%= @qualification.diploma_from %>
-</p>
+  <th><strong>Diploma from:</strong></th>
+  <td><%= @qualification.diploma_from %></td>
+</tr>
 
-<p>
-  <strong>Diploma marks:</strong>
-  <%= @qualification.diploma_marks %>
-</p>
+<tr>
+  <th><strong>Diploma marks:</strong></th>
+  <td><%= @qualification.diploma_marks %></td>
 
-<p>
-  <strong>Diploma year:</strong>
-  <%= @qualification.diploma_year %>
-</p>
+   <th><strong>Diploma year:</strong></th>
+  <td><%= @qualification.diploma_year %></td>
+</tr>
 
-<p>
-  <strong>Diploma university:</strong>
-  <%= @qualification.diploma_university %>
-</p>
+<tr>
+  <th><strong>Diploma university:</strong></th>
+  <td><%= @qualification.diploma_university %></td>
 
-<p>
-  <strong>Hsc:</strong>
-  <%= @qualification.hsc %>
-</p>
+   <th><strong>Hsc:</strong></th>
+  <td><%= @qualification.hsc %></td>
+</tr>
 
-<p>
-  <strong>Hsc from:</strong>
-  <%= @qualification.hsc_from %>
-</p>
+<tr>
+  <th><strong>Hsc from:</strong></th>
+  <td><%= @qualification.hsc_from %></td>
 
-<p>
-  <strong>Hsc marks:</strong>
-  <%= @qualification.hsc_marks %>
-</p>
+   <th><strong>Hsc marks:</strong></th>
+  <td><%= @qualification.hsc_marks %></td>
+</tr>
 
-<p>
-  <strong>Hsc year:</strong>
-  <%= @qualification.hsc_year %>
-</p>
+<tr>
+  <th><strong>Hsc year:</strong></th>
+  <td><%= @qualification.hsc_year %></td>
 
-<p>
-  <strong>Hsc bord:</strong>
-  <%= @qualification.hsc_bord %>
-</p>
+   <th><strong>Hsc bord:</strong></th>
+  <td><%= @qualification.hsc_bord %></td>
+</tr>
 
-<p>
-  <strong>Ug:</strong>
-  <%= @qualification.ug %>
-</p>
 
-<p>
-  <strong>Ug from:</strong>
-  <%= @qualification.ug_from %>
-</p>
+<tr>
+  <th><strong>Ug:</strong></th>
+  <td><%= @qualification.ug %></td>
 
-<p>
-  <strong>Ug marks:</strong>
-  <%= @qualification.ug_marks %>
-</p>
+   <th><strong>Ug from:</strong></th>
+  <td><%= @qualification.ug_from %></td>
+</tr>
 
-<p>
-  <strong>Ug year:</strong>
-  <%= @qualification.ug_year %>
-</p>
 
-<p>
-  <strong>Ug university:</strong>
-  <%= @qualification.ug_university %>
-</p>
+<tr>
+  <th><strong>Ug marks:</strong></th>
+  <td><%= @qualification.ug_marks %></td>
 
-<p>
-  <strong>Pg:</strong>
-  <%= @qualification.pg %>
-</p>
+   <th><strong>Ug year:</strong></th>
+  <td><%= @qualification.ug_year %></td>
+</tr>
 
-<p>
-  <strong>Pg from:</strong>
-  <%= @qualification.pg_from %>
-</p>
 
-<p>
-  <strong>Pg marks:</strong>
-  <%= @qualification.pg_marks %>
-</p>
+<tr>
+  <th><strong>Ug university:</strong></th>
+  <td><%= @qualification.ug_university %></td>
 
-<p>
-  <strong>Pg year:</strong>
-  <%= @qualification.pg_year %>
-</p>
+  <th> <strong>Pg:</strong></th>
+  <td><%= @qualification.pg %></td>
+</tr>
 
-<p>
-  <strong>Pg university:</strong>
-  <%= @qualification.pg_university %>
-</p>
+<tr>
+  <th><strong>Pg from:</strong></th>
+  <td><%= @qualification.pg_from %></td>
 
-<%= link_to 'Edit', edit_qualification_path(@qualification) %> |
-<%= link_to 'Back', qualifications_path %>
+  <th><strong>Pg marks:</strong></th>
+  <td><%= @qualification.pg_marks %></td>
+</tr>
+
+
+<tr>
+  <th><strong>Pg year:</strong></th>
+  <td><%= @qualification.pg_year %></td>
+
+  <th><strong>Pg university:</strong></th>
+  <td><%= @qualification.pg_university %></td>
+</tr>
+ 
+
+</table>
+
+    <%= link_to 'Edit', edit_qualification_path(@qualification),class: 'btn btn-success fa fa-edit' %> |
+    <%= link_to 'Back', root_path,class: 'btn btn-default fa fa-arrow-left' %>
+  </div><!-- /.box-body -->
+  <div class="box-footer">
+    Visit <a href="https://select2.github.io/">Select2 documentation</a> for more examples and information about the plugin.
+  </div>
+</div><!-- /.box -->
+
+

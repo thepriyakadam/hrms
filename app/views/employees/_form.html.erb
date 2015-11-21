@@ -26,7 +26,7 @@
         </div>
 
          <div class="col-sm-3">
-          <div class="field">
+          <div class="form-group required">
            <%= f.text_field :last_name %>
          </div>
         </div>
@@ -40,7 +40,7 @@
 
       <div class="row">
          <div class="col-sm-3">
-          <div class="field">
+          <div class="form-group required">
            <%= f.text_field :adhar_no %>
          </div>
         </div>
@@ -72,7 +72,7 @@
         </div>
 
         <div class="col-sm-3">
-          <div class="form-group required">
+          <div class="field">
             <%= f.select :nationality_id, all_nationality %>
           </div>
         </div>
@@ -92,7 +92,7 @@
 
       <div class="row">
          <div class="col-sm-12">
-          <div class="field">
+          <div class="form-group required">
            <%= f.text_field :permanent_address %>
           </div>
         </div>
@@ -118,7 +118,7 @@
         </div>
 
         <div class="col-sm-3">
-          <div class="field">
+          <div class="form-group required">
             <%= f.number_field :pin_code %>
           </div>
         </div>
@@ -134,24 +134,26 @@
 
       <div class="row">
          <div class="col-sm-3">
-          <div class="field">
+          <div class="form-group required">
            <%= f.text_field :contact_no %>
          </div>
         </div>
 
         <div class="col-sm-3">
-          <div class="field">
+          <div class="form-group required">
            <%= f.text_field :email %>
           </div>
         </div>
 
         <div class="col-sm-3">
+        <div class="form-group required">
           <div class="input-group">
             <div class="input-group-addon">
               <i class="fa fa-calendar"></i>
             </div>
             <%= f.text_field :date_of_birth, class: 'datemask'%>
           </div>
+        </div>
         </div>
 
         <div class="col-sm-3">
@@ -175,6 +177,7 @@
       <%= f.fields_for :joining_detail do |o| %>
       
         <div class="row">
+        <div class="form-group required">
           <div class="col-sm-3">
             <div class="input-group">
               <div class="input-group-addon">
@@ -183,21 +186,22 @@
               <%= o.text_field :joining_date, class: 'datemask'%>
             </div>
           </div>
+          </div>
 
           <div class="col-sm-3">
-            <div class="field">
+            <div class="form-group required">
               <%= o.text_field :reffernce_from %>
             </div>
           </div>
 
           <div class="col-sm-3">
-            <div class="field">
+            <div class="form-group required">
               <%= o.text_field :admin_hr %>
             </div>
           </div>
 
           <div class="col-sm-3">
-            <div class="field">
+            <div class="form-group required">
               <%= o.text_field :tech_hr %>
             </div>
           </div>
@@ -205,7 +209,7 @@
 
         <div class="row">
           <div class="col-sm-3">
-            <div class="field">
+            <div class="form-group required">
               <%= o.text_field :designation %>
             </div>
           </div>
@@ -223,7 +227,7 @@
           </div>
 
           <div class="col-sm-3">
-            <div class="field">
+            <div class="form-group required">
               <%= o.text_field :ctc %>
             </div>
           </div>
@@ -240,19 +244,19 @@
           </div>
 
           <div class="col-sm-3">
-            <div class="field">
+            <div class="form-group required">
               <%= o.text_field :status %>
             </div>
           </div>
 
           <div class="col-sm-3">
-            <div class="field">
+            <div class="form-group required">
               <%= o.text_field :probation_period %>
             </div>
           </div>
 
           <div class="col-sm-3">
-            <div class="field">
+            <div class="form-group required">
               <%= o.text_field :notice_period %>
             </div>
           </div>
@@ -260,7 +264,7 @@
 
         <div class="row">
           <div class="col-sm-3">
-            <div class="field">
+            <div class="form-group required">
               <%= o.text_field :medical_schem %>
             </div>
           </div>
@@ -268,10 +272,9 @@
       <% end %>      
 
       <div class="row">
-        <div class="col-sm-1"></div>
          <div class="col-sm-3">
           <div class="actions">
-           <%= f.submit %>
+              <%= f.submit :class => class_name, data: { disable_with: data_info } %>
           </div>
         </div>
       </div>

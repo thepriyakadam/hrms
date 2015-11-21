@@ -12,44 +12,31 @@
 <%= bootstrap_form_for(@award) do |f| %>
 
   <div class="row">
-        <div class="col-sm-1"></div>
+        
          <div class="col-sm-3">
           <div class="field">
            <%= f.text_field :employee_id %>
           </div>
         </div>
-      </div>
-
-
-
-  <div class="row">
-        <div class="col-sm-1"></div>
+      
          <div class="col-sm-3">
           <div class="field">
            <%= f.text_field :award_name %>
           </div>
         </div>
-      </div>
 
-
-  <div class="row">
-        <div class="col-sm-1"></div>
          <div class="col-sm-3">
           <div class="field">
            <%= f.number_field :year %>
           </div>
         </div>
-      </div>
 
-
-
-   <div class="row">
-        <div class="col-sm-1"></div>
          <div class="col-sm-3">
           <div class="field">
             <%= f.text_field :award_from %>
           </div>
         </div>
+        
       </div>
 
 
@@ -57,7 +44,7 @@
         <div class="col-sm-1"></div>
          <div class="col-sm-3">
           <div class="actions">
-           <%= f.submit %>
+            <%= f.submit :class => class_name, data: { disable_with: data_info } %>
           </div>
         </div>
       </div>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151118095539) do
+ActiveRecord::Schema.define(version: 20151117103754) do
 
   create_table "awards", force: :cascade do |t|
     t.integer  "employee_id", limit: 4
@@ -259,31 +259,6 @@ ActiveRecord::Schema.define(version: 20151118095539) do
   add_index "joining_details", ["employee_grade_id"], name: "index_joining_details_on_employee_grade_id", using: :btree
   add_index "joining_details", ["employee_id"], name: "index_joining_details_on_employee_id", using: :btree
 
-  create_table "leav_requests", force: :cascade do |t|
-    t.integer  "leav_type_id",     limit: 4
-    t.integer  "employee_id",      limit: 4
-    t.string   "available_leaves", limit: 255
-    t.string   "leave",            limit: 255
-    t.datetime "date_from"
-    t.datetime "date_to"
-    t.string   "no_of_days",       limit: 255
-    t.text     "reason",           limit: 65535
-    t.date     "applied_on"
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
-  end
-
-  add_index "leav_requests", ["employee_id"], name: "index_leav_requests_on_employee_id", using: :btree
-  add_index "leav_requests", ["leav_type_id"], name: "index_leav_requests_on_leav_type_id", using: :btree
-
-  create_table "leav_types", force: :cascade do |t|
-    t.string   "leave_type",        limit: 255
-    t.string   "no_of_leave",       limit: 255
-    t.datetime "leave_expiry_date"
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
-  end
-
   create_table "members", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
     t.string   "encrypted_password",     limit: 255, default: "", null: false
@@ -369,8 +344,6 @@ ActiveRecord::Schema.define(version: 20151118095539) do
   add_foreign_key "families", "nationalities"
   add_foreign_key "joining_details", "employee_grades"
   add_foreign_key "joining_details", "employees"
-  add_foreign_key "leav_requests", "employees"
-  add_foreign_key "leav_requests", "leav_types"
   add_foreign_key "qualifications", "employees"
   add_foreign_key "skillsets", "employees"
 end

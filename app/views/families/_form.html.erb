@@ -12,257 +12,192 @@
 <div class="box-body">
 <%= bootstrap_form_for(@family) do |f| %>
   <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-         <%= f.text_field :employee_id %>
-       </div>
-    </div>
-  </div>
-  
-  <div class="row">
-    <div class="col-sm-1"></div>
+   
       <div class="col-sm-3">
         <div class="field">
          <%= f.text_field :no_of_member %>
       </div>
     </div>
-  </div>
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
+    <div class="col-sm-3">
         <div class="field">
          <%= f.text_field :f_name %>
         </div>
     </div>
-  </div>
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
+    <div class="col-sm-3">
         <div class="field">
          <%= f.text_field :m_name %>
         </div>
     </div>
-  </div>
-
- <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
+     <div class="col-sm-3">
         <div class="field">
         <%= f.text_field :l_name %>
         </div>
     </div>
-  </div>
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-         <%= f.date_select :date_of_birth %>
-        </div>
-    </div>
-  </div>
+</div>
 
 <div class="row">
-    <div class="col-sm-1"></div>
+     <div class="col-sm-3">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+            <%= f.text_field :date_of_birth, class: 'datemask'%>
+          </div>
+      </div>
       <div class="col-sm-3">
         <div class="field">
           <%= f.number_field :age %>
         </div>
       </div>
-</div>
-
-  <div class="row">
-    <div class="col-sm-1"></div>
       <div class="col-sm-3">
         <div class="field">
           <%= f.text_field :contact_no %>
         </div>
-    </div>
-  </div>
-
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
+     </div>
+     <div class="col-sm-3">
         <div class="field">
           <%= f.text_field :phone_no %>
         </div>
     </div>
-  </div>
+</div>
 
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
+<div class="row">
+   
+      <div class="col-sm-12">
         <div class="field">
-         <%= f.text_field :email %>
+         <%= f.text_field :permanent_address %>
         </div>
     </div>
-  </div>
+</div>
 
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-    <%= f.text_field :permanent_address %>
-       </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-        <%= f.text_field :city %>
-        </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-         <%= f.text_field :dist %>
-        </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-sm-1"></div>
+<div class="row">
+    
       <div class="col-sm-3">
         <div class="field">
          <%= f.text_field :state %>
         </div>
     </div>
-  </div>
 
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
+     <div class="col-sm-3">
+        <div class="field">
+         <%= f.text_field :dist %>
+        </div>
+    </div>
+
+    <div class="col-sm-3">
+        <div class="field">
+        <%= f.text_field :city %>
+        </div>
+    </div>
+ 
+    <div class="col-sm-3">
         <div class="field">
         <%= f.number_field :pin_code %>
         </div>
-    </div>
-  </div>
+    </div>   
+     
+</div>
 
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
+<div class="row">
+   
+      <div class="col-sm-12">
         <div class="field">
          <%= f.text_field :current_address %>
         </div>
     </div>
-  </div>
+</div>
 
-   <div class="row">
-    <div class="col-sm-1"></div>
+
+
+<div class="row">
+   
+    <div class="col-sm-3">
+        <div class="field">
+         <%= f.text_field :email %>
+        </div>
+    </div>
+
+   
       <div class="col-sm-3">
         <div class="field">
           <%= f.text_field :relation %>
         </div>
     </div>
-  </div>
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
+    <div class="col-sm-3">
         <div class="field">
           <%= f.text_field :adhar_no %>
         </div>
     </div>
-  </div>
 
-  <div class="row">
-    <div class="col-sm-1"></div>
+   
       <div class="col-sm-3">
         <div class="field">
           <%= f.text_field :pan_no %>
         </div>
     </div>
-  </div>
+</div>
 
-  <div class="row">
-    <div class="col-sm-1"></div>
+<div class="row">
+   
       <div class="col-sm-3">
         <div class="field">
         <%= f.text_field :passport_no %>
         </div>
       </div>
-  </div>
-
- <div class="row">
-    <div class="col-sm-1"></div>
+ 
+   
       <div class="col-sm-3">
         <div class="field">
           <%= f.text_field :medical_claim %>
         </div>
     </div>
-  </div>
 
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
+    <div class="col-sm-3">
         <div class="field">
           <%= f.text_field :marital %>
         </div>
     </div>
-  </div>
-
-  <div class="row">
-    <div class="col-sm-1"></div>
+ 
+    
       <div class="col-sm-3">
         <div class="field">
           <%= f.text_field :status %>
         </div>
     </div>
-  </div>
+</div>
 
- <div class="row">
-    <div class="col-sm-1"></div>
+<div class="row">
       <div class="col-sm-3">
         <div class="field">
           <%= f.text_field :nationality_id %>
         </div>
     </div>
-  </div>
-
-  <div class="row">
-    <div class="col-sm-1"></div>
+ 
       <div class="col-sm-3">
         <div class="field">
           <%= f.text_field :blood_group %>
         </div>
     </div>
-  </div>
-
-   <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
+   <div class="col-sm-3">
         <div class="field">
           <%= f.text_field :religion %>
         </div>
     </div>
-  </div>
-
-  <div class="row">
-    <div class="col-sm-1"></div>
+ 
       <div class="col-sm-3">
         <div class="field">
           <%= f.text_field :phandicap %>
         </div>
       </div>
-  </div>
+</div>
 
-  <div class="row">
-    <div class="col-sm-1"></div>
+<div class="row">
       <div class="col-sm-3">
         <div class="field">
           <%= f.text_field :profession %>
         </div>
       </div>
-  </div>
+ </div>
 
   <div class="row">
     <div class="col-sm-1"></div>

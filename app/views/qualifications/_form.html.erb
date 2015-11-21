@@ -2,7 +2,7 @@
 
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title">Employee Qualifications Details</h3>
+    <h3 class="box-title">Employee Qualifications</h3>
     <div class="box-tools pull-right">
       <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
       <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
@@ -14,248 +14,169 @@
 <%= bootstrap_form_for(@qualification) do|f| %>
 
   <div class="row">
-        <div class="col-sm-1"></div>
-         <div class="col-sm-3">
-          <div class="field">
-            <%= f.text_field :employee_id %>
-          </div>
-        </div>
-      </div>
-
-
-  <div class="row">
-        <div class="col-sm-1"></div>
-         <div class="col-sm-3">
+    
+         <div class="col-sm-2">
           <div class="field">
             <%= f.text_field :ssc %>
          </div>
         </div>
-      </div>
-
-  <div class="row">
-        <div class="col-sm-1"></div>
-         <div class="col-sm-3">
-          <div class="field">
-          <%= f.text_field :ssc_from %>
-           </div>
-        </div>
-      </div>
-
-
-  <div class="row">
-        <div class="col-sm-1"></div>
-         <div class="col-sm-3">
+  
+         <div class="col-sm-2">
           <div class="field">
             <%= f.text_field :ssc_marks %>
           </div>
         </div>
-      </div>
-
-   <div class="row">
-        <div class="col-sm-1"></div>
-         <div class="col-sm-3">
+      
+       
+         <div class="col-sm-2">
           <div class="field">
             <%= f.number_field :ssc_year %>
           </div>
         </div>
-      </div>
-
-
-  <div class="row">
-        <div class="col-sm-1"></div>
+     
+        <div class="col-sm-3">
+          <div class="field">
+          <%= f.text_field :ssc_from %>
+           </div>
+        </div>
+    
          <div class="col-sm-3">
           <div class="field">
            <%= f.text_field :ssc_bord %>
           </div>
         </div>
-      </div>
+ </div>
 
   <div class="row">
-        <div class="col-sm-1"></div>
-         <div class="col-sm-3">
+        
+         <div class="col-sm-2">
           <div class="field">
            <%= f.text_field :diploma %>
            </div>
         </div>
-      </div>
+        
+         <div class="col-sm-2">
+          <div class="field">
+            <%= f.text_field :diploma_marks %>
+         </div>
+        </div>
+     
+       
+         <div class="col-sm-2">
+          <div class="field">
+           <%= f.number_field :diploma_year %>
+          </div>
+        </div>
 
-
-  <div class="row">
-        <div class="col-sm-1"></div>
          <div class="col-sm-3">
           <div class="field"> 
            <%= f.text_field :diploma_from %>
            </div>
         </div>
-      </div>
-
- <div class="row">
-        <div class="col-sm-1"></div>
-         <div class="col-sm-3">
-          <div class="field">
-            <%= f.text_field :diploma_marks %>
-         </div>
-        </div>
-      </div>
-
-
-  <div class="row">
-        <div class="col-sm-1"></div>
-         <div class="col-sm-3">
-          <div class="field">
-           <%= f.number_field :diploma_year %>
-          </div>
-        </div>
-      </div>
-
-   <div class="row">
-        <div class="col-sm-1"></div>
+   
+        
          <div class="col-sm-3">
           <div class="field">
            <%= f.text_field :diploma_university %>
           </div>
         </div>
-      </div>
+   </div>
 
 
   <div class="row">
-        <div class="col-sm-1"></div>
-         <div class="col-sm-3">
+        
+         <div class="col-sm-2">
           <div class="field">
            <%= f.text_field :hsc %>
           </div>
         </div>
-      </div>
+           
+         <div class="col-sm-2">
+          <div class="field">
+           <%= f.text_field :hsc_marks %>
+          </div>
+        </div>
+     
+         <div class="col-sm-2">
+          <div class="field">
+           <%= f.number_field :hsc_year %>
+          </div>
+        </div>
 
-
-  <div class="row">
-        <div class="col-sm-1"></div>
          <div class="col-sm-3">
           <div class="field">
            <%= f.text_field :hsc_from %>
            </div>
         </div>
-      </div>
-
-  <div class="row">
-        <div class="col-sm-1"></div>
-         <div class="col-sm-3">
-          <div class="field">
-           <%= f.text_field :hsc_marks %>
-          </div>
-        </div>
-      </div>
-
-
-  <div class="row">
-        <div class="col-sm-1"></div>
-         <div class="col-sm-3">
-          <div class="field">
-           <%= f.number_field :hsc_year %>
-          </div>
-        </div>
-      </div>
-
-
-  <div class="row">
-        <div class="col-sm-1"></div>
+          
          <div class="col-sm-3">
           <div class="field">
            <%= f.text_field :hsc_bord %>
           </div>
         </div>
-      </div>
+  </div>
 
 
   <div class="row">
-        <div class="col-sm-1"></div>
-         <div class="col-sm-3">
+       
+         <div class="col-sm-2">
           <div class="field">
            <%= f.text_field :ug %>
           </div>
         </div>
-      </div>
-
-
-  <div class="row">
-        <div class="col-sm-1"></div>
-         <div class="col-sm-3">
-          <div class="field">
-           <%= f.text_field :ug_from %>
-          </div>
-        </div>
-      </div>
-
-
-  <div class="row">
-        <div class="col-sm-1"></div>
-         <div class="col-sm-3">
+        
+         <div class="col-sm-2">
           <div class="field">
             <%= f.text_field :ug_marks %>
           </div>
         </div>
-      </div>
-
-  <div class="row">
-        <div class="col-sm-1"></div>
-         <div class="col-sm-3">
+        
+         <div class="col-sm-2">
           <div class="field">
            <%= f.number_field :ug_year %>
           </div>
         </div>
-      </div>
 
-
-  <div class="row">
-        <div class="col-sm-1"></div>
+        <div class="col-sm-3">
+          <div class="field">
+           <%= f.text_field :ug_from %>
+          </div>
+        </div>
+   
          <div class="col-sm-3">
           <div class="field">
            <%= f.text_field :ug_university %>
           </div>
         </div>
-      </div>
+   </div>
 
 
   <div class="row">
-        <div class="col-sm-1"></div>
-         <div class="col-sm-3">
+      
+         <div class="col-sm-2">
           <div class="field">
            <%= f.text_field :pg %>
           </div>
         </div>
-      </div>
+       
+         <div class="col-sm-2">
+          <div class="field">
+            <%= f.text_field :pg_marks %>
+          </div>
+        </div>
+       
+         <div class="col-sm-2">
+          <div class="field">
+           <%= f.number_field :pg_year %>
+          </div>
+        </div>
 
-  <div class="row">
-        <div class="col-sm-1"></div>
          <div class="col-sm-3">
           <div class="field">
            <%= f.text_field :pg_from %>
           </div>
         </div>
-      </div>
-
- <div class="row">
-        <div class="col-sm-1"></div>
-         <div class="col-sm-3">
-          <div class="field">
-            <%= f.text_field :pg_marks %>
-          </div>
-        </div>
-      </div>
-
-
-  <div class="row">
-        <div class="col-sm-1"></div>
-         <div class="col-sm-3">
-          <div class="field">
-           <%= f.number_field :pg_year %>
-          </div>
-        </div>
-      </div>
-
-
-  <div class="row">
-        <div class="col-sm-1"></div>
+       
          <div class="col-sm-3">
           <div class="field">
             <%= f.text_field :pg_university %>

@@ -1,7 +1,7 @@
 
   <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title">Employee Certifications</h3>
+    <h3 class="box-title">Employee Skillset</h3>
     <div class="box-tools pull-right">
       <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
       <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
@@ -13,39 +13,27 @@
 <%= bootstrap_form_for(@skillset) do |f| %>
 
   <div class="row">
-        <div class="col-sm-1"></div>
+        
          <div class="col-sm-3">
           <div class="field">
               <%= f.text_field :employee_id %>
           </div>
         </div>
-  </div>
-
-
-
-  <div class="row">
-        <div class="col-sm-1"></div>
+        
          <div class="col-sm-3">
           <div class="field">
             <%= f.text_field :name %>
          </div>
         </div>
-  </div>
 
-  <div class="row">
-
-        <div class="col-sm-1"></div>
          <div class="col-sm-3">
           <div class="field">
            <%= f.text_field :skill_level %>
            </div>
         </div>
-  </div>
-
- <div class="row">
-
+ 
         <div class="col-sm-1"></div>
-         <div class="col-sm-3">
+         <div class="col-sm-4">
           <div class="actions">
            <%= f.submit %>
             </div>

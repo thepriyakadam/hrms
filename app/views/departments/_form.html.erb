@@ -15,99 +15,80 @@
   <%= f.hidden_field :company_location_id, value: current_user.account_id %>
        
   <div class="row">
-    <div class="col-sm-1"></div>
+    
       <div class="col-sm-3">
-        <div class="field">
+        <div class="form-group required">
          <%= f.text_field :name %>
         </div>
     </div>
-  </div>
 
-  <div class="row">
-    <div class="col-sm-1"></div>
       <div class="col-sm-3">
-        <div class="field">
+        <div class="form-group required">
          <%= f.text_field :email %>
         </div>
     </div>
-  </div>
 
-  <div class="row">
-    <div class="col-sm-1"></div>
       <div class="col-sm-3">
         <div class="field">
           <%= f.select :department_type_id, all_department_type %>
         </div>
     </div>
-  </div>
 
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-          <%= f.text_field :address %>
-        </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
+     <div class="col-sm-3">
+        <div class="form-group required">
           <%= f.number_field :pin_code %>
        </div>
     </div>
+
   </div>
 
+  <div class="row">
+         <div class="col-sm-12">
+          <div class="form-group required">
+           <%= f.text_area :address %>
+          </div>
+        </div>
+   </div>
 
   <div class="row">
-    <div class="col-sm-1"></div>
+
       <div class="col-sm-3">
-        <div class="field">
+        <div class="form-group required">
           <%= f.text_field :head_of_department %>
          </div>
       </div>
-  </div>
 
 
-  <div class="row">
-    <div class="col-sm-1"></div>
       <div class="col-sm-3">
-        <div class="field">
+        <div class="form-group required">
          <%= f.text_field :contact_no %>
         </div>
       </div>
-  </div>
 
-  <div class="row">
-    <div class="col-sm-1"></div>
       <div class="col-sm-3">
-        <div class="field">
-    <%= f.text_field :manager %>
+        <div class="form-group required">
+          <%= f.text_field :manager %>
         </div>
       </div>
-  </div>
 
 
-   <div class="row">
-    <div class="col-sm-1"></div>
       <div class="col-sm-3">
-        <div class="field">
+        <div class="form-group required">
          <%= f.text_field :hr %>
        </div>
       </div>
-  </div>
 
+   </div>
 
   <div class="row">
     <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="actions">
-          <%= f.submit :class => class_name, data: { disable_with: data_info } %>
-        </div>
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit :class => class_name, data: { disable_with: data_info } %>
       </div>
+    </div>
   </div>
+
 <% end %>
 </div><!-- /.box-body -->
   <div class="box-footer">

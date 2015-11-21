@@ -29,3 +29,8 @@ blood_group = ['A','B','AB','O']
 blood_group.each do |d|
 	BloodGroup.create(name: d)
 end
+
+employee_grade = ['G1','G2','G3','G4']
+employee_grade.each do |d|
+	EmployeeGrade.create(name: d)
+end

@@ -18,7 +18,7 @@ class Department < ActiveRecord::Base
   validates :email, uniqueness: true, :presence => true
   validate  :email_regex
   
-  validates :address, :presence => true
+  validates :address, :presence => true, :allow_blank => true
   validate :address_regex
 
   def address_regex

@@ -19,7 +19,7 @@ class Employee < ActiveRecord::Base
   validates :date_of_birth, :presence => true
   validates :email, uniqueness: true, presence: true
   validate  :email_regex
-  validates :permanent_address, :presence => true
+  validates :permanent_address, :presence => true, :allow_blank => true
   validate :address_regex
 
   def address_regex

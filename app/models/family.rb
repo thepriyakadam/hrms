@@ -16,7 +16,7 @@ class Family < ActiveRecord::Base
   validates :email, uniqueness: true
   validate  :email_regex
   
-  validates :permanent_address, :presence => true
+  validates :permanent_address, :presence => true, :allow_blank => true
   validate :address_regex
 
   def address_regex

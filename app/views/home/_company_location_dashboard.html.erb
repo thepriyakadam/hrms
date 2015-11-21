@@ -69,7 +69,6 @@
 	    <tr>
 	      <th>Company location</th>
 	      <th>Name</th>
-	      <th>Department type</th>
 	      <th>Address</th>
 	      <th>Pin code</th>
 	      <th>Head of department</th>
@@ -85,7 +84,6 @@
 	      <tr>
 	        <td><%= department.company_location.name %></td>
 	        <td><%= department.name %></td>
-	        <td><%= department.department_type %></td>
 	        <td><%= department.address %></td>
 	        <td><%= department.pin_code %></td>
 	        <td><%= department.head_of_department %></td>
@@ -93,9 +91,9 @@
 	        <td><%= department.manager %></td>
 	        <td><%= department.hr %></td>
 	        <td>
-	        	<%= link_to 'Show', department, class: 'btn btn-default fa fa-eye' %>
-	        	<%= link_to 'Edit', edit_department_path(department), class: 'btn btn-success fa fa-edit' %>
-	        	<%= link_to 'Destroy', department, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger fa fa-close' %>
+	        	<%= link_to '', department, class: 'btn btn-default fa fa-eye' %>
+	        	<%= link_to '', edit_department_path(department), class: 'btn btn-success fa fa-edit' %>
+	        	<%= link_to '', department, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger fa fa-close' %>
 	        </td>
 	      </tr>
     	<% end %>

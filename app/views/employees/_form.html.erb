@@ -9,14 +9,14 @@
   </div><!-- /.box-header -->
   <div class="box-body">
     <%= bootstrap_form_for(@employee) do |f| %>
-
+      
       <%= f.hidden_field :department_id, value: current_user.account_id %>
 
       <div class="row">
-         <div class="col-sm-3">
-          <div class="field">
-           <%= f.text_field :first_name %>
-         </div>
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.text_field :first_name %>
+          </div>
         </div>
 
         <div class="col-sm-3">
@@ -46,8 +46,8 @@
         </div>
 
         <div class="col-sm-3">
-          <div class="field">
-            <%= f.text_field :pan_no %>
+          <div class="form-group required">
+            <%= f.text_field :pan_no, label: 'Pancard Number' %>
           </div>
         </div>
 
@@ -72,7 +72,7 @@
         </div>
 
         <div class="col-sm-3">
-          <div class="field">
+          <div class="form-group required">
             <%= f.select :nationality_id, all_nationality %>
           </div>
         </div>
@@ -173,7 +173,7 @@
 
       <!-- Nested Form -->
       <%= f.fields_for :joining_detail do |o| %>
-
+<%= console %>
         <div class="row">
           <div class="col-sm-3">
             <div class="input-group">

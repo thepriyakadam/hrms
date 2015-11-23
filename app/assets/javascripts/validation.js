@@ -1,3 +1,4 @@
+
 $(function(){
 
   $.validator.addMethod("loginRegex", function(value, element) {

@@ -309,6 +309,10 @@ $("#employee").validate({
       "employee[adhar_no]":{
         required: true,
         maxlength: 12
+      },
+      "employee[pan_no]":{
+        required: true,
+        maxlength: 10
       }
     },
     messages: {
@@ -323,6 +327,10 @@ $("#employee").validate({
       "employee[adhar_no]":{
         required: "Please specify 12 digit Adhar No",
         maxlength: "Adhar no allows upto 12 characters"
+      },
+      "employee[pan_no]":{
+        required: "Please specify 10 digit Pan No",
+        maxlength: "Adhar no allows upto 10 characters"
       }
     },
     errorPlacement: function(error, element) {

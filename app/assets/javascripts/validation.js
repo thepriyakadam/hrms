@@ -262,6 +262,10 @@ $("#department").validate({
       "department[hr]":{
        required: "Please Specify HR Details",
         maxlength: "Enter the HR detail upto 50 char max"
+      },
+      "department[hr]":{
+       required: "Please Specify HR Details",
+        maxlength: "Enter the HR detail upto 50 char max"
       }
 
     },
@@ -309,7 +313,72 @@ $("#employee").validate({
       "employee[adhar_no]":{
         required: true,
         maxlength: 12
+      },
+      "employee[pan_no]":{
+        required: true,
+        maxlength: 10
+      },
+      "employee[licence_no]":{
+        required: true,
+        maxlength: 17
+      },
+      "employee[passport_no]":{
+        required: true,
+        maxlength: 6
+      },
+      "employee[permanent_address]":{
+        maxlength: 100,
+        required: true
+      },
+      "employee[state]":{
+        maxlength: 50,
+        required: true
+      },
+      "employee[district":{
+        maxlength: 50,
+        required: true
+      },
+      "employee[district":{
+        maxlength: 30,
+        required: true
+      },
+      "employee[pin_code]":{
+        maxlength: 3,
+        required: true
+      },
+      "employee[current_address]":{
+        maxlength: 50,
+        required: true
+      },
+      "employee[contact_no]":{
+          maxlength: 13,
+          required: true
+      },
+      "employee[email]":{
+        loginRegex: true
+      },
+      "employee[reffernce_from]":{
+        maxlength: 50,
+        required: true
+      },
+      "employee[admin_hr]":{
+        maxlength: 50,
+        required: true
+      },
+      "employee[designation]":{
+        maxlength: 50,
+        required: true
+      },
+      "employee[account_no]":{
+        maxlength: 9,
+        required: true
+      },
+      "employee[ctc]":{
+        maxlength: 7,
+        required: true
       }
+
+
     },
     messages: {
       "employee[first_name]":{
@@ -323,7 +392,72 @@ $("#employee").validate({
       "employee[adhar_no]":{
         required: "Please specify 12 digit Adhar No",
         maxlength: "Adhar no allows upto 12 characters"
+      },
+      "employee[pan_no]":{
+        required: "Please specify 10 digit Pan No",
+        maxlength: "Adhar no allows upto 10 characters"
+      },
+      "employee[licence_no]":{
+        required: "Please specify Licence No",
+        maxlength: "Licence No allows upto 17 characters"
+      },
+      "employee[passport_no]":{
+        required: "Please specify  Passport No",
+        maxlength: "Passport No allows upto 6 Digits"
+      },
+      "employee[permanent_address]":{
+       required: "Please Specify Address",
+        maxlength: "Enter the Address upto 100 char max"
+      },
+      "employee[state]":{
+       required: "Please Specify Your State Details",
+        maxlength: "Enter the Stae upto 50 char max"
+      },
+      "employee[city]":{
+       required: "Please Specify Your City Details",
+        maxlength: "Enter the City upto 30 char max"
+      },
+      "employee[pin_code]":{
+      required: "Please Enter your Pincode Details",
+        maxlength: "Please Enter Valid Pincode Details"
+      },
+        "employee[current_address]":{
+       required: "Please Specify Your Current Address",
+        maxlength: "Enter the Current Address upto 100 char max"
+      },
+      "employee[contact_no]":{
+      required: "Please Specify Contact No",
+        maxlength: "Enter the Correct contact number"
+      },
+      "employee[email]":{
+       required: "Please Specify Email ID",
+        maxlength: "Email address can't exceed max limit"
+      },
+      "employee[reffernce_from]":{
+       required: "Please Specify Reference Details",
+        maxlength: "Enter the Reference Details upto 50 char max"
+      },
+      "employee[admin_hr]":{
+       required: "Please Specify Admin HR Details",
+        maxlength: "Enter the Admin HR upto 50 char max"
+      },
+      "employee[tech_hr]":{
+       required: "Please Specify Tech HR Details",
+        maxlength: "Enter the Tech HR upto 50 char max"
+      },
+      "employee[designation]":{
+       required: "Please DESIGNATION Details",
+        maxlength: "Enter the DESIGNATION upto 50 char max"
+      },
+      "employee[account_no]":{
+       required: "Please Enter Your Account No Details",
+        maxlength: "Enter the DESIGNATION upto 9 Digits max"
+      },
+      "employee[ctc]":{
+       required: "Please Enter Your CTC Details",
+        maxlength: "Enter the CTC Details"
       }
+
     },
     errorPlacement: function(error, element) {
      error.css('color','red')

@@ -15,9 +15,16 @@ class Company < ActiveRecord::Base
   validates_length_of :pin_code, is: 6,  message:"Please Enter 12 digit"
   validates_length_of :contact_no, within: 10..13, message:"Enter the Correct contact number"
   validates :starting_date, :presence => true
-
   validates :email, uniqueness: true, presence: true
   validate  :email_regex
+  validates :address, :presence => true, :allow_blank => true
+  validate :address_regex
+
+  def address_regex
+    if address.present? and not address.match(/\A[A-Za-z0-9-_]{4,50}\Z/)
+      errors.add :address,"Please Enter The Correct Address"
+    end
+  end
 
  def email_regex
     if email.present? and not email.match(/\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/)

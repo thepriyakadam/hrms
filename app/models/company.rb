@@ -7,7 +7,8 @@ class Company < ActiveRecord::Base
   validates :name, :presence => true
   validates :registration_no, :presence => true
   validates :pan_card_no, :presence => true
-  validates :tax_no, :presence => true
+  validates :tax_no, :presence => true  
+  validates :address, :presence => true
   validates :pan_card_no, :presence => true
   validates :professional_tax_no, :presence => true
   validates :ceo_name, :presence => true 

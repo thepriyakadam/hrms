@@ -9,7 +9,8 @@
   </div><!-- /.box-header -->
 
 <div class="box-body">
-<%= bootstrap_form_for(@department_type) do |f| %>
+<%= bootstrap_form_for(@department_type,html: {id: 'department_type'}) do |f| %>
+
   <% if @department_type.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@department_type.errors.count, "error") %> prohibited this department_type from being saved:</h2>

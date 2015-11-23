@@ -8,7 +8,7 @@
     </div>
   </div><!-- /.box-header -->
   <div class="box-body">
-    <%= bootstrap_form_for(@company_location) do |f| %>
+    <%= bootstrap_form_for(@company_location,html: {id: 'company_location'}) do |f| %>
       <%= f.hidden_field :company_id, value: current_user.account_id %>
         <div class="row">
           <div class="col-sm-3">
@@ -56,13 +56,12 @@
             </div>
         </div>
 
-        <div class="row">
-           <div class="col-sm-3">
-            <div class="actions">
-              <%= f.submit :class => class_name, data: { disable_with: data_info } %>
-            </div>
+         <div class="row">
+         <div class="col-sm-5">
+          <div class="actions">
+            <%= f.submit "Create Company Locations",class: "btn btn-primary",data: { disable_with: 'Wait....'} %>
           </div>
-        </div>
+
       <% end %>
   </div><!-- /.box-body -->
   <div class="box-footer">

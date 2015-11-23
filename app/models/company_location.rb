@@ -5,6 +5,7 @@ class CompanyLocation < ActiveRecord::Base
 
 
   validates :name, :presence => true
+  validates :address, :presence => true
   validates :city, :presence => true
   validates :district , :presence => true
   validates_length_of :pin_code, is: 6,  message:"Please Enter 6 digit"

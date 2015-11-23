@@ -57,6 +57,3 @@ gem 'bootstrap_form'
 
 # Jquery validation
 gem 'jquery-validation-rails'
-
-
-

@@ -7,11 +7,11 @@
       <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
     </div>
   </div><!-- /.box-header -->
+
   <div class="box-body">
     <%= bootstrap_form_for(@company,html: {id: 'company'}) do |f| %>
     
-      <div class="row">
-        
+      <div class="row"> 
         <div class="col-sm-2">
           <div class="form-group required">
            <%= f.text_field :name,label: 'Name'%>
@@ -45,9 +45,8 @@
             <%= f.text_field :starting_date,label: 'Starting Date',class: 'datemask'%>
           </div>
         </div>
-        </div>
-        
-    </div>
+        </div>   
+  </div>
 
    <div class="row">
          <div class="col-sm-12">
@@ -56,30 +55,25 @@
           </div>
         </div>
    </div>
-
-
-        
-    <div class="row">
+   
+  <div class="row">
          <div class="col-sm-2">
           <div class="field">
            <%= f.text_field :city,label: 'City' %>
           </div>
         </div>
        
-
         <div class="col-sm-2">
           <div class="field">
            <%= f.text_field :district,label: 'District' %>
           </div>
         </div>
    
-
          <div class="col-sm-2">
           <div class="form-group required">
            <%= f.number_field :pin_code,label: 'Pin Code' %>
           </div>
         </div>
-
 
          <div class="col-sm-3">
           <div class="field">
@@ -92,14 +86,14 @@
            <%= f.text_field :contact_no,label: 'Contact No' %>
          </div>
         </div>
-    </div>
+</div>
 
    <div class="row">
      <div class="col-sm-2">
           <div class="form-group required">
            <%= f.text_field :tax_no,label: 'Tax Number' %>
          </div>
-        </div>
+       </div>
 
        <div class="col-sm-2">
           <div class="form-group required">
@@ -126,9 +120,7 @@
            <%= f.text_field :ceo_name %>
           </div>
         </div>
-
-      </div>
-
+   </div>
 
       <div class="row">
          <div class="col-sm-3">

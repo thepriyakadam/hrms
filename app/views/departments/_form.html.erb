@@ -10,9 +10,9 @@
 
 
 <div class="box-body">
-<%= bootstrap_form_for(@department) do |f| %>
-  
-  <%= f.hidden_field :company_location_id, value: current_user.account_id %>
+<%= bootstrap_form_for(@department,html: {id: 'department'}) do |f| %>
+
+<%= f.hidden_field :company_location_id, value: current_user.account_id %>
        
   <div class="row">
     

@@ -7,6 +7,12 @@
 		<%= render 'company_location_dashboard' %>
 	<% elsif current_user.account_type == 'Department' %>
 		<%= render 'department_dashboard' %>
+   <%= link_to "Add Leave Category", new_leav_category_path %>
+    <%= link_to "Add Company Leave ", new_company_leav_path %>
+    <%= link_to "Add Employee Leave Request", new_employee_leav_request_path %>
+    <%= link_to "Aproved Leave", new_leav_aproved_path %>
+    <%= link_to "Cancelled Leave", new_leav_cancelled_path %>
+    <%= link_to "Rejected Leave", new_leav_rejected_path %>
 	<% elsif current_user.account_type == 'Employee' %>
 		<%= render 'employee_dashboard' %>
 		<%= link_to "Add family", new_family_path %>

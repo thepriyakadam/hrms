@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151117103754) do
+ActiveRecord::Schema.define(version: 20151124065014) do
 
   create_table "awards", force: :cascade do |t|
     t.integer  "employee_id", limit: 4
@@ -67,6 +67,18 @@ ActiveRecord::Schema.define(version: 20151117103754) do
   add_index "companies", ["company_type_id"], name: "index_companies_on_company_type_id", using: :btree
   add_index "companies", ["group_id"], name: "index_companies_on_group_id", using: :btree
 
+  create_table "company_leavs", force: :cascade do |t|
+    t.integer  "employee_grade_id", limit: 4
+    t.string   "no_of_leave",       limit: 255
+    t.date     "expire_date"
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.integer  "leav_category_id",  limit: 4
+  end
+
+  add_index "company_leavs", ["employee_grade_id"], name: "index_company_leavs_on_employee_grade_id", using: :btree
+  add_index "company_leavs", ["leav_category_id"], name: "index_company_leavs_on_leav_category_id", using: :btree
+
   create_table "company_locations", force: :cascade do |t|
     t.integer  "company_id", limit: 4
     t.string   "name",       limit: 255
@@ -117,6 +129,30 @@ ActiveRecord::Schema.define(version: 20151117103754) do
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
   end
+
+  create_table "employee_leav_balances", force: :cascade do |t|
+    t.integer  "employee_id",      limit: 4
+    t.integer  "leav_category_id", limit: 4
+    t.string   "no_of_leave",      limit: 255
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+  end
+
+  add_index "employee_leav_balances", ["employee_id"], name: "index_employee_leav_balances_on_employee_id", using: :btree
+  add_index "employee_leav_balances", ["leav_category_id"], name: "index_employee_leav_balances_on_leav_category_id", using: :btree
+
+  create_table "employee_leav_requests", force: :cascade do |t|
+    t.integer  "employee_id",      limit: 4
+    t.integer  "leav_category_id", limit: 4
+    t.string   "leave_type",       limit: 255
+    t.datetime "satrt_date"
+    t.datetime "end_date"
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+  end
+
+  add_index "employee_leav_requests", ["employee_id"], name: "index_employee_leav_requests_on_employee_id", using: :btree
+  add_index "employee_leav_requests", ["leav_category_id"], name: "index_employee_leav_requests_on_leav_category_id", using: :btree
 
   create_table "employee_physicals", force: :cascade do |t|
     t.integer  "employee_id", limit: 4
@@ -259,6 +295,48 @@ ActiveRecord::Schema.define(version: 20151117103754) do
   add_index "joining_details", ["employee_grade_id"], name: "index_joining_details_on_employee_grade_id", using: :btree
   add_index "joining_details", ["employee_id"], name: "index_joining_details_on_employee_id", using: :btree
 
+  create_table "leav_aproveds", force: :cascade do |t|
+    t.integer  "employee_leav_request_id", limit: 4
+    t.datetime "approved_date"
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+  end
+
+  add_index "leav_aproveds", ["employee_leav_request_id"], name: "index_leav_aproveds_on_employee_leav_request_id", using: :btree
+
+  create_table "leav_cancelleds", force: :cascade do |t|
+    t.integer  "employee_leav_request_id", limit: 4
+    t.datetime "cancelled_date"
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+  end
+
+  add_index "leav_cancelleds", ["employee_leav_request_id"], name: "index_leav_cancelleds_on_employee_leav_request_id", using: :btree
+
+  create_table "leav_categories", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  create_table "leav_rejecteds", force: :cascade do |t|
+    t.integer  "employee_leav_request_id", limit: 4
+    t.datetime "rejected_date"
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+  end
+
+  add_index "leav_rejecteds", ["employee_leav_request_id"], name: "index_leav_rejecteds_on_employee_leav_request_id", using: :btree
+
+  create_table "leavcancelleds", force: :cascade do |t|
+    t.integer  "employee_leav_request_id", limit: 4
+    t.datetime "cancelled_date"
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+  end
+
+  add_index "leavcancelleds", ["employee_leav_request_id"], name: "index_leavcancelleds_on_employee_leav_request_id", using: :btree
+
   create_table "members", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
     t.string   "encrypted_password",     limit: 255, default: "", null: false
@@ -332,8 +410,14 @@ ActiveRecord::Schema.define(version: 20151117103754) do
   add_foreign_key "awards", "employees"
   add_foreign_key "certifications", "qualifications"
   add_foreign_key "companies", "groups"
+  add_foreign_key "company_leavs", "employee_grades"
+  add_foreign_key "company_leavs", "leav_categories"
   add_foreign_key "company_locations", "companies"
   add_foreign_key "departments", "company_locations"
+  add_foreign_key "employee_leav_balances", "employees"
+  add_foreign_key "employee_leav_balances", "leav_categories"
+  add_foreign_key "employee_leav_requests", "employees"
+  add_foreign_key "employee_leav_requests", "leav_categories"
   add_foreign_key "employee_physicals", "employees"
   add_foreign_key "employees", "blood_groups"
   add_foreign_key "employees", "departments"
@@ -344,6 +428,10 @@ ActiveRecord::Schema.define(version: 20151117103754) do
   add_foreign_key "families", "nationalities"
   add_foreign_key "joining_details", "employee_grades"
   add_foreign_key "joining_details", "employees"
+  add_foreign_key "leav_aproveds", "employee_leav_requests"
+  add_foreign_key "leav_cancelleds", "employee_leav_requests"
+  add_foreign_key "leav_rejecteds", "employee_leav_requests"
+  add_foreign_key "leavcancelleds", "employee_leav_requests"
   add_foreign_key "qualifications", "employees"
   add_foreign_key "skillsets", "employees"
 end

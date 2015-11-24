@@ -12,7 +12,8 @@
 
 
 <div class="box-body">
-<%= bootstrap_form_for(@employee_physical) do |f| %>
+<%= bootstrap_form_for(@employee_physical,html: {id: 'employee_physical'}) do |f| %>
+ 
   <% if @employee_physical.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@employee_physical.errors.count, "error") %> prohibited this employee_physical from being saved:</h2>
@@ -28,7 +29,7 @@
   <div class="row">
     <div class="col-sm-1"></div>
       <div class="col-sm-3">
-        <div class="field">
+        <div class="form-group required">
          <%= f.text_field :employee_id %>
         </div>
     </div>
@@ -38,7 +39,7 @@
   <div class="row">
     <div class="col-sm-1"></div>
       <div class="col-sm-3">
-        <div class="field">
+        <div class="form-group required">
          <%= f.text_field :hieght %>
        </div>
     </div>
@@ -47,7 +48,7 @@
   <div class="row">
     <div class="col-sm-1"></div>
       <div class="col-sm-3">
-        <div class="field">
+        <div class="form-group required">
           <%= f.text_field :weight %>
        </div>
     </div>
@@ -57,7 +58,7 @@
   <div class="row">
     <div class="col-sm-1"></div>
       <div class="col-sm-3">
-        <div class="field">
+        <div class="form-group required">
           <%= f.text_field :size %>
        </div>
     </div>

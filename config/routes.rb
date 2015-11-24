@@ -1,4 +1,11 @@
 Rails.application.routes.draw do
+  resources :leav_cancelleds
+  resources :employee_leav_balances
+  resources :leav_rejecteds
+  resources :leav_aproveds
+  resources :employee_leav_requests
+  resources :company_leavs
+  resources :leav_categories
   resources :employee_physicals
   resources :joining_details
   resources :employee_grades

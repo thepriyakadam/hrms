@@ -9,7 +9,11 @@ Rails.application.routes.draw do
   resources :employee_physicals
   resources :joining_details
   resources :employee_grades
-  resources :awards
+  resources :awards do
+    collection do
+      get :add_award_field
+    end
+  end
   resources :skillsets
   resources :experinces
   resources :certifications

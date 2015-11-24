@@ -9,46 +9,46 @@
   </div><!-- /.box-header -->
 
 <div class="box-body">
-<%= bootstrap_form_for(@award) do |f| %>
-
-  <div class="row">
+  <%= bootstrap_form_for(@award) do |f| %>
+    <%= f.hidden_field :employee_id %>
         
-         <div class="col-sm-3">
+    <div id="entry1" class="clonedInput">
+      <div class="row">
+        <div class="col-sm-3">
           <div class="field">
-           <%= f.text_field :employee_id %>
-          </div>
-        </div>
-      
-         <div class="col-sm-3">
-          <div class="field">
-           <%= f.text_field :award_name %>
+           <%= f.text_field :award_name, class: 'input_award_name' %>
           </div>
         </div>
 
-         <div class="col-sm-3">
+        <div class="col-sm-3">
           <div class="field">
-           <%= f.number_field :year %>
+           <%= f.number_field :year, class: 'input_year' %>
           </div>
         </div>
 
-         <div class="col-sm-3">
+        <div class="col-sm-3">
           <div class="field">
-            <%= f.text_field :award_from %>
-          </div>
-        </div>
-        
-      </div>
-
-
-  <div class="row">
-        <div class="col-sm-1"></div>
-         <div class="col-sm-3">
-          <div class="actions">
-            <%= f.submit :class => class_name, data: { disable_with: data_info } %>
+            <%= f.text_field :award_from, class: 'input_award_from' %>
           </div>
         </div>
       </div>
-<% end %>
+    </div>
+
+    <div id="addDelButtons">
+        <input type="button" id="btnAdd" value="Add section" class="btn btn-success"> <input type="button" id="btnDel" value="Remove section above" class="btn btn-danger">
+    </div>
+
+    <div class="row">
+      <div class="col-sm-1"></div>
+       <div class="col-sm-3">
+        <div class="actions">
+          <%= f.submit :class => class_name, data: { disable_with: data_info } %>
+        </div>
+      </div>
+    </div>
+    <!-- <div id="area"></div> -->
+  <% end %>
+  <!-- <button id="btnAdd">Add</button> -->
 </div><!-- /.box-body -->
   <div class="box-footer">
     Visit <a href="https://select2.github.io/">Select2 documentation</a> for more examples and information about the plugin.

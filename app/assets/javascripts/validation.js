@@ -1,45 +1,112 @@
 
 $(function(){
 
-  $.validator.addMethod("loginRegex", function(value, element) {
+  $.validator.addMethod("loginRegex", function (value, element) {
           return this.optional(element) || /^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/.test(value);
   }, "Email address must be in the format of name@domain.com");
 
+  $.validator.addMethod("lettersOnly", function (value, element) {
+    return this.optional(element) || /^[a-zA-Z]+$/i.test(value);
+}, "Please enter letters only.");
+
+  $.validator.addMethod("numbersOnly", function (value, element) {
+    return this.optional(element) || /^[0-9]+$/i.test(value);
+}, "Please enter numbers only.");
+
+  $.validator.addMethod("textOnly", function (value, element) {
+    return !/[0-9]*/.test(value);
+},"Alpha Characters Only.");
+
+$.validator.addMethod("mobileNo", function (value, element) {
+    return /^[0-9-+]+$/.test(value);
+},"Please Input Valid Mobile No.");
+
+ /* $.validator.addMethod("textOnly", function (value, element) {
+    return ! /^(http|https)?:\/\/[a-zA-Z0-9-\.]+\.[a-z]{2,4}/.test(value);
+},"PLease Enter Valid Website Name.");*/
+
+$.validator.addMethod("address", function (value, element) {
+    return /^[0-9a-zA-Z]+$/.test(value);
+},"Alpha Characters Only.");
+
+ 
   $("#company").validate({
     rules: {
       "company[name]":{
         required: true,
-        maxlength: 30
-        // <!--loginRegex: true-->
+        maxlength: 30,
+        lettersOnly:true// <!--loginRegex: true-->
       },
       "company[registration_no]":{
         maxlength: 15,
-        required: true
+        required: true,
+        numbersOnly: true
       },
   
       "company[contact_no]":{
           maxlength: 13,
-          required: true
+          required: true,
+          mobileNo: true
       },
 
       "company[address]":{
           maxlength: 100,
-          required: true
+          required: true,
+          address: true
       },
 
       "company[tax_no]":{
           maxlength: 5,
           required: true
       },
+      "company[starting_date]":{
+          required: true
+      },
 
       "company[email]":{
-        loginRegex: true
+        loginRegex: true,
+        required: true
       },
   
       "company[professional_tax_no]":{
           maxlength: 10,
           required: true
+      },
+      "company[pan_card_no]":{
+          maxlength: 12,
+          required: true
+      },
+      "company[city]":{
+          maxlength: 30,
+          required: true,
+          lettersOnly:true
+      },
+      "company[district]":{
+          maxlength: 30,
+          required: true,
+          lettersOnly:true
+      },
+      "company[pin_code]":{
+          maxlength: 9,
+          required: true,
+          numbersOnly:true
+      },
+      "company[state]":{
+          maxlength: 50,
+          required: true,
+          lettersOnly:true
+      },
+      "company[web_site]":{
+          maxlength: 30,
+          required: true,
+      },
+      "company[ceo_name]":{
+          maxlength: 30,
+          required: true,
+          lettersOnly: true
+
       }
+
     },
     messages: {
       "company[name]":{
@@ -65,16 +132,48 @@ $(function(){
         required: "Please Specify Address",
           maxlength: "Enter the Address"
       },
+      "company[pan_card_no]":{
+        required: "Please Enter Valid Pancard Details",
+          maxlength: "Enter the Pancard Details max 9 char"
+      },
 
       "company[email]":{
        required: "Please Specify Email ID",
         maxlength: "Email address can't exceed max limit"
       },
+      "company[starting_date]":{
+          required: "Date can't be blank",
+      },
 
       "company[professional_tax_no]":{
         required: "Please Specify Professional Tax number",
           maxlength: "Enter the Valid Professional Tax number"
+      },
+      "company[city]":{
+        required: "Please Enter City Details",
+          maxlength: "City Details allows max 30 characters"
+      },
+      "company[district]":{
+        required: "Please Enter District Details",
+          maxlength: "District Details allows max 30 characters"
+      },
+      "company[pin_code]":{
+        required: "Please Enter Pincode Details",
+          maxlength: "Pincode Details allows max 9 characters"
+      },
+      "company[state]":{
+        required: "Please Enter State Details",
+          maxlength: "State Details allows max 50 characters"
+      },
+      "company[web_site]":{
+        required: "Please Enter Website Name",
+          maxlength: "Website Name allows max 30 characters"
+      },
+      "company[ceo_name]":{
+        required: "Please Enter CEO Name",
+          maxlength: "CEO Name allows max 30 characters"
       }
+
     },
     errorPlacement: function(error, element) {
      error.css('color','red')
@@ -87,37 +186,46 @@ $("#company_location").validate({
     rules: {
       "company_location[name]":{
         required: true,
-        maxlength: 30
+        maxlength: 30,
+        lettersOnly:true
       },
 
      "company_location[email]":{
         loginRegex: true,
-        required: true
+        required: true,
+        loginRegex: true
       }, 
 
      "company_location[contact_no]":{
         maxlength: 13,
-        required: true
+        required: true,
+        mobileNo: true
       },
 
       "company_location[district]":{
         maxlength: 100,
-        required: true
+        required: true,
+        lettersOnly:true
       },
 
      "company_location[city]":{
         maxlength: 50,
-        required: true
+        required: true,
+        lettersOnly:true
       },
 
       "company_location[pin_code]":{
-        maxlength: 6,
-        required: true
+        maxlength: 9,
+        required: true,
+        numbersOnly: true
+
       },
 
       "company_location[address]":{
         maxlength: 100,
-        required: true
+        required: true,
+        address: true
+
       }
     },
     messages: {
@@ -150,7 +258,7 @@ $("#company_location").validate({
         maxlength: "Enter the Address upto 100 char max"
       },
 
-      "company_location[pincode]":{
+      "company_location[pin_code]":{
       required: "Please Enter your Pincode Details",
         maxlength: "Please Enter Valid Pincode Details"
       }
@@ -167,7 +275,8 @@ $("#company_type").validate({
     rules: {
       "company_type[name]":{
         required: true,
-        maxlength: 30
+        maxlength: 30,
+        lettersOnly:true
       }
     },
     messages: {
@@ -189,38 +298,46 @@ $("#department").validate({
     rules: {
       "department[name]":{
         required: true,
-        maxlength: 30
+        maxlength: 30,
+        lettersOnly:true
       },
 
   "department[email]":{
         loginRegex: true,
-        required: true
+        required: true,
+        maxlength: 30
       },
   "department[pin_code]":{
         maxlength: 6,
-        required: true
+        required: true,
+        numbersOnly: true
       },
 
   "department[address]":{
         maxlength: 100,
-        required: true
+        required: true,
+        address: true
       },
 
    "department[head_of_department]":{
         maxlength: 50,
-        required: true
+        required: true,
+        lettersOnly:true
       },
       "department[contact_no]":{
       maxlength: 13,
-        required: true
+        required: true,
+        mobileNo: true
       },
       "department[manager]":{
         maxlength: 50,
-        required: true
+        required: true,
+        lettersOnly:true
       },
       "department[hr]":{
         maxlength: 50,
-        required: true
+        required: true,
+        lettersOnly:true
       }
 
 
@@ -282,7 +399,8 @@ $("#department_type").validate({
     rules: {
       "department_type[name]":{
         required: true,
-        maxlength: 30
+        maxlength: 30,
+        lettersOnly:true
       }
     },
     messages: {
@@ -304,15 +422,18 @@ $("#employee").validate({
     rules: {
       "employee[first_name]":{
         required: true,
-        maxlength: 30
+        maxlength: 30,
+        lettersOnly:true
       },
       "employee[last_name]":{
         required: true,
-        maxlength: 30
+        maxlength: 30,
+        lettersOnly:true
       },
       "employee[adhar_no]":{
         required: true,
-        maxlength: 12
+        maxlength: 12,
+        numbersOnly: true
       },
       "employee[pan_no]":{
         required: true,
@@ -328,56 +449,75 @@ $("#employee").validate({
       },
       "employee[permanent_address]":{
         maxlength: 100,
-        required: true
+        required: true,
+        address: true
       },
       "employee[state]":{
         maxlength: 50,
-        required: true
+        required: true,
+        lettersOnly:true
       },
-      "employee[district":{
+      "employee[district]":{
         maxlength: 50,
-        required: true
+        required: true,
+         lettersOnly:true
       },
-      "employee[district":{
+      "employee[city]":{
         maxlength: 30,
-        required: true
+        required: true,
+         lettersOnly:true
       },
       "employee[pin_code]":{
-        maxlength: 3,
-        required: true
+        maxlength: 9,
+        required: true,
+        numbersOnly: true
       },
       "employee[current_address]":{
         maxlength: 50,
-        required: true
+        required: true,
+        address: true
       },
       "employee[contact_no]":{
           maxlength: 13,
-          required: true
-      },
+          required: true,
+          mobileNo: true
+          
       "employee[email]":{
+        loginRegex: true,
+        required: true,
         loginRegex: true
       },
-      "employee[reffernce_from]":{
-        maxlength: 50,
-        required: true
-      },
-      "employee[admin_hr]":{
-        maxlength: 50,
-        required: true
-      },
-      "employee[designation]":{
-        maxlength: 50,
-        required: true
-      },
-      "employee[account_no]":{
-        maxlength: 9,
-        required: true
-      },
-      "employee[ctc]":{
-        maxlength: 7,
-        required: true
-      }
-
+      // "joining_detail[reffernce_from]":{
+      //   maxlength: 50,
+      //   required: true
+      // },
+      // "joining_detail[admin_hr]":{
+      //   maxlength: 50,
+      //   required: true
+      // },
+      // "joining_detail[designation]":{
+      //   maxlength: 50,
+      //   required: true
+      // },
+      // "joining_detail[account_no]":{
+      //   maxlength: 9,
+      //   required: true
+      // },
+      // "joining_detail[ctc]":{
+      //   maxlength: 7,
+      //   required: true
+      // },
+      // "employee[date_of_birth]":{
+      //   required: true
+      // },
+      // "employee[status]":{
+      //   maxlength: 15,
+      //   required: true
+      // },
+      // "joining_detail[joining_date]":{
+      //   required: true
+      // },
+      
 
     },
     messages: {
@@ -417,6 +557,10 @@ $("#employee").validate({
        required: "Please Specify Your City Details",
         maxlength: "Enter the City upto 30 char max"
       },
+      "employee[district]":{
+       required: "Please Specify Your District Details",
+        maxlength: "Enter the District upto 50 char max"
+      },
       "employee[pin_code]":{
       required: "Please Enter your Pincode Details",
         maxlength: "Please Enter Valid Pincode Details"
@@ -428,32 +572,117 @@ $("#employee").validate({
       "employee[contact_no]":{
       required: "Please Specify Contact No",
         maxlength: "Enter the Correct contact number"
-      },
-      "employee[email]":{
+         },
+         "employee[email]":{
        required: "Please Specify Email ID",
         maxlength: "Email address can't exceed max limit"
       },
-      "employee[reffernce_from]":{
+      "employee[date_of_birth]":{
+       required: "Please Specify Date Of Birth",
+        maxlength: "Date Of Birth can't exceed max limit"
+      },
+      "employee[status]":{
+       required: "Please Specify Status upto 15",
+        maxlength: "Status can't exceed max limit"
+      }
+      // "joining_detail[joining_date]":{
+      //  required: "Please Specify Joining Details",
+      //  maxlength: "Joining Details can't exceed max limit"
+      // },
+         
+      // "joining_detail[reffernce_from]":{
+      //  required: "Please Specify Reference Details",
+      //   maxlength: "Enter the Reference Details upto 50 char max"
+      // },
+      // "joining_detail[admin_hr]":{
+      //  required: "Please Specify Admin HR Details",
+      //   maxlength: "Enter the Admin HR upto 50 char max"
+      // },
+      // "joining_detail[tech_hr]":{
+      //  required: "Please Specify Tech HR Details",
+      //   maxlength: "Enter the Tech HR upto 50 char max"
+      // },
+      // "joining_detail[designation]":{
+      //  required: "Please DESIGNATION Details",
+      //   maxlength: "Enter the DESIGNATION upto 50 char max"
+      // },
+      // "joining_detail[account_no]":{
+      //  required: "Please Enter Your Account No Details",
+      //   maxlength: "Enter the DESIGNATION upto 9 Digits max"
+      // },
+      // "joining_detail[ctc]":{
+      //  required: "Please Enter Your CTC Details",
+      //   maxlength: "Enter the CTC Details"
+      // },
+
+    },
+    errorPlacement: function(error, element) {
+     error.css('color','red')
+     error.insertAfter(element.parent(element));
+    }
+
+   });
+
+$("#joining_detail").validate({
+    rules: {
+      "joining_detail[reffernce_from]":{
+        maxlength: 50,
+        required: true
+      },
+      "joining_detail[admin_hr]":{
+        maxlength: 50,
+        required: true
+      },
+      "joining_detail[designation]":{
+        maxlength: 50,
+        required: true
+      },
+      "joining_detail[account_no]":{
+        maxlength: 9,
+        required: true
+      },
+      "joining_detail[ctc]":{
+        maxlength: 7,
+        required: true
+      },
+      "employee[date_of_birth]":{
+        required: true
+      },
+      "employee[status]":{
+        maxlength: 15,
+        required: true
+      },
+      "joining_detail[joining_date]":{
+        required: true
+      }
+    },
+    messages: {
+      "joining_detail[joining_date]":{
+       required: "Please Specify Joining Details",
+       maxlength: "Joining Details can't exceed max limit"
+      },
+         
+      "joining_detail[reffernce_from]":{
        required: "Please Specify Reference Details",
         maxlength: "Enter the Reference Details upto 50 char max"
       },
-      "employee[admin_hr]":{
+      "joining_detail[admin_hr]":{
        required: "Please Specify Admin HR Details",
         maxlength: "Enter the Admin HR upto 50 char max"
       },
-      "employee[tech_hr]":{
+      "joining_detail[tech_hr]":{
        required: "Please Specify Tech HR Details",
         maxlength: "Enter the Tech HR upto 50 char max"
       },
-      "employee[designation]":{
+      "joining_detail[designation]":{
        required: "Please DESIGNATION Details",
         maxlength: "Enter the DESIGNATION upto 50 char max"
       },
-      "employee[account_no]":{
+      "joining_detail[account_no]":{
        required: "Please Enter Your Account No Details",
         maxlength: "Enter the DESIGNATION upto 9 Digits max"
       },
-      "employee[ctc]":{
+      "joining_detail[ctc]":{
        required: "Please Enter Your CTC Details",
         maxlength: "Enter the CTC Details"
       }
@@ -465,6 +694,370 @@ $("#employee").validate({
     }
 
    });
+
+$("#employee_grade").validate({
+    rules: {
+      "employee_grade[name]":{
+        required: true,
+        maxlength: 30,
+        lettersOnly: true
+      }
+    },
+    messages: {
+      "employee_grade[name]":{
+        required: "Please specify Employee Name",
+        maxlength: "Name allows upto 30 alphabets"
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css('color','red')
+     error.insertAfter(element.parent(element));
+    }
+
+   });
+
+$("#employee_physical").validate({
+    rules: {
+      "employee_physical[employee_id]":{
+        required: true,
+        maxlength: 30,
+        lettersOnly:true
+      },
+      "employee_physical[hieght]":{
+        required: true,
+        maxlength: 5,
+        numbersOnly:true
+      },
+      "employee_physical[weight]":{
+        required: true,
+        maxlength: 6,
+        numbersOnly:true
+      },
+      "employee_physical[size]":{
+        required: true,
+        maxlength: 6,
+        numbersOnly:true
+      }
+    },
+    messages: {
+      "employee_physical[name]":{
+        required: "Please specify Employee ID",
+        maxlength: "Name allows upto 30 alphabets"
+      },
+      "employee_physical[hieght]":{
+        required: "Please specify Employee Height",
+        maxlength: "Height allows upto 5 integers"
+      },
+      "employee_physical[weight]":{
+        required: "Please specify Employee Weight",
+        maxlength: "Employee Weight allows upto 6 integers"
+      },
+      "employee_physical[size]":{
+        required: "Please specify Size",
+        maxlength: "Employee Size allows upto 6 int"
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css('color','red')
+     error.insertAfter(element.parent(element));
+    }
+
+   });
+
+$("#experince").validate({
+    rules: {
+      "experince[employee_id]":{
+        required: true,
+        maxlength: 30,
+        lettersOnly: true
+      },
+      "experince[no_of_year_experince]":{
+        required: true,
+        maxlength: 4,
+        numbersOnly: true
+      },
+        "experince[company_name]":{
+        required: true,
+        maxlength: 30,
+        lettersOnly: true
+      },
+      "experince[designation]":{
+        required: true,
+        maxlength: 30,
+        lettersOnly: true
+
+      },
+      "experince[ctc]":{
+        required: true,
+        maxlength: 6,
+        numbersOnly: true
+      }
+    },
+    messages: {
+      "experince[employee_id]":{
+        required: "Please specify Employee ID",
+        maxlength: "Employee ID allows upto 30 alphabets"
+      },
+      "experince[no_of_year_experince]":{
+        required: "Please specify No Of Year Of EXperiences",
+        maxlength: "No Of Year Of EXperiencesallows upto 4 integers"
+      },
+      "experince[company_name]":{
+        required: "Please specify Company Name",
+        maxlength: "Company Name allows upto 30 characters"
+      },
+       "experince[designation]":{
+        required: "Please specify Designation Details",
+        maxlength: "Designation allows upto 30 characters"
+      },
+      "experince[ctc]":{
+        required: "Please specify CTC Details",
+        maxlength: "CTC allows upto 6 characters"
+      }
+
+    },
+    errorPlacement: function(error, element) {
+     error.css('color','red')
+     error.insertAfter(element.parent(element));
+    }
+
+   });
+
+$("#family").validate({
+    rules: {
+      "family[no_of_member]":{
+        required: true,
+        maxlength: 30,
+        numbersOnly: true
+      },
+      "family[f_name]":{
+        required: true,
+        maxlength: 30,
+        lettersOnly: true
+      },
+        "family[m_name]":{
+        required: true,
+        maxlength: 30,
+        lettersOnly: true
+         },
+      "family[l_name]":{
+        required: true,
+        maxlength: 30
+      },
+      "family[date_of_birth]":{
+        required: true,
+      },
+      "family[age]":{
+        required: true,
+        maxlength: 3,
+        numbersOnly: true
+      },
+      "family[contact_no]":{
+        required: true,
+        maxlength: 13,
+        mobileNo: true
+      },
+      "family[phone_no]":{
+        maxlength: 13,
+        numbersOnly: true,
+        numbersOnly: true
+      },
+      "family[permanent_address]":{
+        required: true,
+        maxlength: 100,
+        address: true
+      },
+      "family[state]":{
+        required: true,
+        maxlength: 50,
+        lettersOnly: true
+      },
+      "family[dist]":{
+        required: true,
+        maxlength: 30,
+        lettersOnly: true
+      },
+      "family[city]":{
+        required: true,
+        maxlength: 30,
+        lettersOnly: true
+      },
+      "family[pin_code]":{
+        required: true,
+        maxlength: 6,
+        numbersOnly: true
+      },
+        "family[current_address]":{
+        required: true,
+        maxlength: 100,
+        address: true
+      },
+      "family[email]":{
+        required: true,
+        maxlength: 50,
+        loginRegex: true
+      },
+      "family[relation]":{
+        required: true,
+        maxlength: 30,
+        lettersOnly: true
+      },
+      "family[adhar_no]":{
+      required: true,
+      maxlength: 12
+      },
+      "family[pan_no]":{
+      required: true,
+      maxlength: 10
+       },
+       "family[passport_no]":{
+       required: true,
+         maxlength: 6
+      },
+       "family[status]":{
+         required: true,
+        maxlength: 30
+      },
+      "family[religion]":{
+        required: true,
+       maxlength: 30,
+       lettersOnly:true
+      },
+      "family[profession]":{
+       required: true,
+        maxlength: 30,
+        lettersOnly: true
+      }
+    },
+    messages: {
+      "family[no_of_member]":{
+        required: "Please specify Employee ID",
+        maxlength: "Employee ID allows upto 30 alphabets"
+      },
+      "family[f_name]":{
+        required: "Please specify First Name",
+        maxlength: "No Of Year Of EXperiencesallows upto 4 integers"
+      },
+      "family[m_name]":{
+        required: "Please specify MIddle Name",
+        maxlength: "Company Name allows upto 30 characters"
+      },
+       "family[l_name]":{
+        required: "Please specify Last Name",
+        maxlength: "Designation allows upto 30 characters"
+      },
+      "family[date_of_birth]":{
+        required: "Please Date Of Birth",
+        maxlength: "CTC allows upto 6 characters"
+      },
+      "family[age]":{
+        required: "Please specify Age",
+        maxlength: "Employee ID allows upto 2 integers"
+      },
+      "family[contact_no]":{
+        required: "Please specify Contact No.",
+        maxlength: "Enter the Correct contact number"
+      },
+      "family[phone_no]":{
+        maxlength: "Enter the Correct Phone No"
+      },
+       "family[permanent_address]":{
+        required: "Please Specify Your Permanent Address",
+        maxlength: "Permanent Address allows upto 100 characters"
+      },
+      "family[state]":{
+        required: "Enter a valid State Name",
+        maxlength: "State Name allows upto 50 characters"
+      },
+      "family[dist]":{
+        required: "Please specify your District",
+        maxlength: "District allows upto 50 alphabets"
+      },
+      "family[city]":{
+        required: "Please specify Your City",
+        maxlength: "City allows upto 50 integers"
+      },
+      "family[pin_code]":{
+        required: "Please specify Pincode Details",
+        maxlength: "Pincode allows upto 6 characters"
+      },
+       "family[current_address]":{
+        required: "Please Specify Your Current Address Details",
+        maxlength: "Current Address allows upto 100 characters"
+      },
+      "family[relation]":{
+        required: "Please specify Relation Details",
+        maxlength: "Relation allows upto 50 characters"
+      },
+      "family[adhar_no]":{
+        required: "Please specify Adhar No",
+        maxlength: "Adhar No allows upto 12 alphabets"
+      },
+      "family[pan_no]":{
+        required: "Please specify Your Pan Card Details",
+        maxlength: "Pan Card No allows upto 10 alphanumeric characters"
+      },
+      "family[passport_no]":{
+        required: "Please specify Passport No",
+        maxlength: "Passport No allows upto 6 characters"
+      },
+       "family[status]":{
+        required: "Please specify Status Details",
+        maxlength: "Status allows upto 30 characters"
+      },
+      "family[religion]":{
+        required: "Please specify Religion Details",
+        maxlength: "Religion allows upto 6 characters"
+      },
+      "family[profession]":{
+        required: "Please specify Profession",
+        maxlength: "Profession allows upto 30 alphabets"
+      },
+      "family[no_of_year_experince]":{
+        required: "Please specify No Of Year Of EXperiences",
+        maxlength: "No Of Year Of EXperiencesallows upto 4 integers"
+      },
+      "family[company_name]":{
+        required: "Please specify Company Name",
+        maxlength: "Company Name allows upto 30 characters"
+      },
+       "family[designation]":{
+        required: "Please specify Designation Details",
+        maxlength: "Designation allows upto 30 characters"
+      },
+      "family[ctc]":{
+        required: "Please specify CTC Details",
+        maxlength: "CTC allows upto 6 characters"
+      },
+      "family[employee_id]":{
+        required: "Please specify Employee ID",
+        maxlength: "Employee ID allows upto 30 alphabets"
+      },
+      "family[no_of_year_experince]":{
+        required: "Please specify No Of Year Of EXperiences",
+        maxlength: "No Of Year Of EXperiencesallows upto 4 integers"
+      },
+      "family[company_name]":{
+        required: "Please specify Company Name",
+        maxlength: "Company Name allows upto 30 characters"
+      },
+       "family[designation]":{
+        required: "Please specify Designation Details",
+        maxlength: "Designation allows upto 30 characters"
+      },
+      "family[ctc]":{
+        required: "Please specify CTC Details",
+        maxlength: "CTC allows upto 6 characters"
+      }
+
+    },
+    errorPlacement: function(error, element) {
+     error.css('color','red')
+     error.insertAfter(element.parent(element));
+    }
+
+   });
+
 
 
 });

@@ -1,0 +1,38 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Comapny Leaves</h3>
+    <div class="pull-right">
+      <%= link_to "New Company leaves", new_company_leav_path, class: 'btn btn-primary' %> 
+    </div>
+    
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover">
+    <thead>
+      <tr>
+      <th>Employee grade</th>
+      <th>Leave Type</th>
+      <th>No of leave</th>
+      <th>Expire date</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @company_leavs.each do |company_leav| %>
+      <tr>
+        <td><%= company_leav.employee_grade.name %></td>
+         <td><%= company_leav.leav_category.name %></td>
+        <td><%= company_leav.no_of_leave %></td>
+        <td><%= company_leav.expire_date %></td>
+        <td>
+            <%= link_to '', company_leav,class: 'btn btn-default fa fa-eye' %>
+            <%= link_to '', edit_company_leav_path(company_leav),class: 'btn btn-success fa fa-edit' %>
+            <%= link_to '', company_leav, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger fa fa-close' %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+</div>

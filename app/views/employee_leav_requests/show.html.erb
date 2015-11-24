@@ -1,0 +1,48 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Employee Leave Request Details</h3>
+    <div class="box-tools pull-right">
+      <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+      <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+    </div>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover">
+    <tr> 
+      <th colspan="2"></th>
+      <th colspan="2"></th>
+    </tr>
+
+    <tr>
+      <th><strong>Employee:</strong></th>
+      <td> <%= @employee_leav_request.employee %></td>
+
+      <th>  <strong>Leav category:</strong></th>
+      <td> <%= @employee_leav_request.leav_category.name %></td>
+    </tr>
+
+    <tr>
+      <th> <strong>Leave type:</strong></th>
+      <td><%= @employee_leav_request.leave_type %></td>
+
+      <th> <strong>Satrt date:</strong></th>
+      <td><%= @employee_leav_request.satrt_date %></td>
+
+    </tr>
+    <tr>
+      <th><strong>End date:</strong></th>
+      <td><%= @employee_leav_request.end_date %></td>
+
+      <th></th>
+      <td></td>
+
+    </tr>
+
+   </table>
+    <%= link_to 'Edit', edit_employee_leav_request_path(@employee_leav_request),class: 'btn btn-success fa fa-edit' %> |
+    <%= link_to 'Back', root_path,class: 'btn btn-default fa fa-arrow-left' %>
+  </div><!-- /.box-body -->
+  <div class="box-footer">
+    Visit <a href="https://select2.github.io/">Select2 documentation</a> for more examples and information about the plugin.
+  </div>
+</div><!-- /.box -->

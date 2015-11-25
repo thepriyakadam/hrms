@@ -27,6 +27,28 @@ $.validator.addMethod("mobileNo", function (value, element) {
 },"Please Input Valid Mobile No.");
 
 
+/*jQuery.validator.addMethod(
+  "selectNone",
+  function (value, element) {
+    if (element.value == "none")
+    {
+      return false;
+    }
+    else return true;
+  },
+  "Please select an option."
+);
+$(document).ready(function() {
+  $("#qualification").validate({
+    rules: {
+      ssc: {
+        selectNone: true
+      }
+    },
+  });
+});*/
+
+
 /*$.validator.addMethod("cus_url", function(value, element)
     {
         //return this.optional(element) || /^[A-Z]{5}\d{4}[A-Z]{1}$/.test(value);
@@ -1323,6 +1345,64 @@ $("#certification").validate({
     }
 
    });
+
+  // $("#qualification").validate({
+  //   rules: {/*qualification_id*/
+  //     "qualification[ssc]":{
+  //       required: true,
+  //       maxlength: 10,
+  //       lettersOnly:true
+  //     },
+  //     "certification[name]":{
+  //       required: true,
+  //       maxlength: 30,
+  //       numbersOnly:true
+  //     },
+  //     "certification[year]":{
+  //       required: true,
+  //       maxlength: 4,
+  //       numbersOnly:true
+  //     },/*duration*/
+  //     "certification[duration]":{
+  //       required: true,
+  //       maxlength: 30,
+  //       numbersOnly:true
+  //     },
+  //     "certification[descripation]":{
+  //       required: true,
+  //       maxlength: 200
+  //     }
+  //   },
+  //   messages: {
+  //     "qualification[ssc]":{
+  //       required: "Please specify Your Qualification Details",
+  //       maxlength: "ualification Details allows upto 10 characters"
+  //     },
+  //     "certification[name]":{
+  //       required: "Please specify Certification Name",
+  //       maxlength: "Certification Name allows upto 30 characters"
+  //     },
+  //     "certification[year]":{
+  //       required: "Please Specify Year Detail",
+  //       maxlength: "Please Input Correct Year format"
+  //     },
+  //     "certification[duration]":{
+  //       required: "Please Specify Certification Duration Details",
+  //       maxlength: "Please Input Correct Year format"
+  //     },
+  //     "certification[descripation]":{
+  //       required: "Please Specify Description regarding your Certification",
+  //       maxlength: "Certification Description allows upto 200 char max"
+  //     }
+
+  //   },
+  //   errorPlacement: function(error, element) {
+  //    error.css('color','red')
+  //    error.insertAfter(element.parent(element));
+  //   }
+
+  //  });
+
 
 
 });

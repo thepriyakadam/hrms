@@ -51,6 +51,9 @@ $(function(){
   });   
 });
 
+//Date range picker
+$('#reservation').daterangepicker();
+
 $(function () {
   $('#btnAdd').click(function () {
       var num     = $('.clonedInput').length, 

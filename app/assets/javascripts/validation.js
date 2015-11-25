@@ -21,6 +21,13 @@ $.validator.addMethod("mobileNo", function (value, element) {
     return /^[0-9-+]+$/.test(value);
 },"Please Input Valid Mobile No.");
 
+$.validator.addMethod("pan", function(value, element)
+    {
+        //return this.optional(element) || /^[A-Z]{5}\d{4}[A-Z]{1}$/.test(value);
+        return this.optional(element) || /^([a-zA-Z]{5})(\d{4})([a-zA-Z]{1})$/.test(value);
+    }, "Invalid Pan Number");
+
+
  /* $.validator.addMethod("textOnly", function (value, element) {
     return ! /^(http|https)?:\/\/[a-zA-Z0-9-\.]+\.[a-z]{2,4}/.test(value);
 },"PLease Enter Valid Website Name.");*/
@@ -74,7 +81,8 @@ $.validator.addMethod("address", function (value, element) {
       },
       "company[pan_card_no]":{
           maxlength: 12,
-          required: true
+          required: true,
+          pan:true
       },
       "company[city]":{
           maxlength: 30,

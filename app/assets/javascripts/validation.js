@@ -2,7 +2,7 @@
 $(function(){
 
   $.validator.addMethod("loginRegex", function (value, element) {
-          return this.optional(element) || /^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/.test(value);
+          return this.optional(element) || /^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.(com|net|org|info|com.au|))?$/.test(value);
   }, "Email address must be in the format of name@domain.com");
 
   $.validator.addMethod("lettersOnly", function (value, element) {
@@ -23,32 +23,55 @@ $(function(){
 },"Alpha Characters Only.");
 
 $.validator.addMethod("mobileNo", function (value, element) {
-    return /^[0-9-+]+$/.test(value);
+    return /^[0-9-]+$/.test(value);
 },"Please Input Valid Mobile No.");
 
 
+/*$.validator.addMethod("cus_url", function(value, element)
+    {
+        //return this.optional(element) || /^[A-Z]{5}\d{4}[A-Z]{1}$/.test(value);
+        return this.optional(element) || /^(www\.)?[a-zA-Z0-9-\-]{3,}(\.(com|net|org|in))?$/.test(value);
+    }, "Invalid URL");*/
+
+/*$.validator.addMethod("cus_url", function(value, element)
+    {
+        //return this.optional(element) || /^[A-Z]{5}\d{4}[A-Z]{1}$/.test(value);
+        return this.optional(element) || /(www+\.)?[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/.test(value);
+    }, "Invalid URL");*/
 
 
+$.validator.addMethod("cus_url", function(value, element)
+    {
+        //return this.optional(element) || /^[A-Z]{5}\d{4}[A-Z]{1}$/.test(value);
+        return this.optional(element) || /^(www\.)?[a-zA-Z0-9\-]{3,}(\.(com|net|org))?$/.test(value);
+    }, "Invalid URL");
 
 /*$.validator.addMethod("mobileNo", function (value, element) {
     return /^\+?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/.test(value);
-},"Please Input Valid Mobile No.");*/
+},"Please Input Valid Mobile No.");   (http(s)?\/\/:)?*/
 
 $.validator.addMethod("pan", function(value, element)
     {
         //return this.optional(element) || /^[A-Z]{5}\d{4}[A-Z]{1}$/.test(value);
-        return this.optional(element) || /^([a-zA-Z]{5})(\d{4})([a-zA-Z]{1})$/.test(value);
+        return this.optional(element) || /^([A-Z]{5})(\d{4})([A-Z]{1})$/.test(value);
     }, "Invalid Pan Number");
 
+/*
+$.validator.addMethod("cus_url", function(value, element)
+    {
+        //return this.optional(element) || /^[A-Z]{5}\d{4}[A-Z]{1}$/.test(value);
+        return this.optional(element) || /^(www\.)?[a-zA-Z\-]{3,}(\.(com|net|org))?$/.test(value);
+    }, "Invalid URL");*/
+
 // custom method for url validation with or without http://
-$.validator.addMethod("cus_url", function (value, element) { 
-  if(value.substr(0,7) != 'http://'){
-    value = 'http://' + value;
+/*$.validator.addMethod("cus_url", function (value, element) { 
+  if(value.substr(0,7) != 'www'){
+    value = 'www' + value;
   }
   if(value.substr(value.length-1, 1) != '/'){
     value = value + '/';
   }
-  return this.optional(element) || /^(http|https|ftp):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/i.test(value); 
+  return this.optional(element) || /^(www)\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/i.test(value); 
 }, "Not valid url.");
 
 $.validator.addMethod("website", function (value, element) {
@@ -114,7 +137,7 @@ $.validator.addMethod("address", function (value, element) {
           required: true
       },
       "company[pan_card_no]":{
-          maxlength: 12,
+          maxlength: 10,
           required: true,
           pan:true
       },
@@ -129,7 +152,7 @@ $.validator.addMethod("address", function (value, element) {
           lettersOnly:true
       },
       "company[pin_code]":{
-          maxlength: 9,
+          maxlength: 6,
           required: true,
           numbersOnly:true
       },
@@ -681,7 +704,8 @@ $("#joining_detail").validate({
       },
       "joining_detail[account_no]":{
         maxlength: 9,
-        required: true
+        required: true,
+        numbersOnly:true
       },
       "joining_detail[ctc]":{
         maxlength: 7,
@@ -1244,7 +1268,7 @@ $("#award").validate({
 
 
 $("#certification").validate({
-    rules: {
+    rules: {/*qualification_id*/
       "certification[qualification_id]":{
         required: true,
         maxlength: 30,
@@ -1259,7 +1283,7 @@ $("#certification").validate({
         required: true,
         maxlength: 4,
         numbersOnly:true
-      },
+      },/*duration*/
       "certification[duration]":{
         required: true,
         maxlength: 30,

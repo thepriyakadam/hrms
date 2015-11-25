@@ -13,6 +13,11 @@ $(function(){
     return this.optional(element) || /^[0-9]+$/i.test(value);
 }, "Please enter numbers only.");
 
+
+  $.validator.addMethod("passportNo", function (value, element) {
+    return this.optional(element) || /^[a-zA-Z0-9-]+$/i.test(value);
+}, "Please enter Valid Passport No.");
+
   $.validator.addMethod("textOnly", function (value, element) {
     return !/[0-9]*/.test(value);
 },"Alpha Characters Only.");
@@ -21,19 +26,49 @@ $.validator.addMethod("mobileNo", function (value, element) {
     return /^[0-9-+]+$/.test(value);
 },"Please Input Valid Mobile No.");
 
+
+
+
+
+/*$.validator.addMethod("mobileNo", function (value, element) {
+    return /^\+?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/.test(value);
+},"Please Input Valid Mobile No.");*/
+
 $.validator.addMethod("pan", function(value, element)
     {
         //return this.optional(element) || /^[A-Z]{5}\d{4}[A-Z]{1}$/.test(value);
         return this.optional(element) || /^([a-zA-Z]{5})(\d{4})([a-zA-Z]{1})$/.test(value);
     }, "Invalid Pan Number");
 
+// custom method for url validation with or without http://
+$.validator.addMethod("cus_url", function (value, element) { 
+  if(value.substr(0,7) != 'http://'){
+    value = 'http://' + value;
+  }
+  if(value.substr(value.length-1, 1) != '/'){
+    value = value + '/';
+  }
+  return this.optional(element) || /^(http|https|ftp):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/i.test(value); 
+}, "Not valid url.");
+
+$.validator.addMethod("website", function (value, element) {
+    return /(http(s)?:\\)?([\w-]+\.)+[\w-]+[.com|.in|.org]+(\[\?%&=]*)?/.test(value);
+},"Please Enter Valid Website Name.");
 
  /* $.validator.addMethod("textOnly", function (value, element) {
     return ! /^(http|https)?:\/\/[a-zA-Z0-9-\.]+\.[a-z]{2,4}/.test(value);
 },"PLease Enter Valid Website Name.");*/
 
-$.validator.addMethod("address", function (value, element) {
+/*$.validator.addMethod("address", function (value, element) {
     return /^[0-9a-zA-Z]+$/.test(value);
+},"Alpha Characters Only.");*/
+
+$.validator.addMethod("reg_no", function (value, element) {
+    return /^[a-zA-Z0-9-\/] ?([a-zA-Z0-9@.-\/]|[a-zA-Z0-9-\/] )*[a-zA-Z0-9-\/]$/.test(value);
+},"Please Enter Valid Reg No.");
+
+$.validator.addMethod("address", function (value, element) {
+    return /^[a-zA-Z0-9-\/] ?([a-zA-Z0-9-\/]|[a-zA-Z0-9-\/] )*[a-zA-Z0-9-\/]$/.test(value);
 },"Alpha Characters Only.");
 
  
@@ -42,16 +77,15 @@ $.validator.addMethod("address", function (value, element) {
       "company[name]":{
         required: true,
         maxlength: 30,
-        lettersOnly:true// <!--loginRegex: true-->
+        lettersOnly:true
       },
       "company[registration_no]":{
         maxlength: 15,
         required: true,
-        numbersOnly: true
       },
   
       "company[contact_no]":{
-          maxlength: 13,
+          maxlength: 14,
           required: true,
           mobileNo: true
       },
@@ -107,6 +141,7 @@ $.validator.addMethod("address", function (value, element) {
       "company[web_site]":{
           maxlength: 30,
           required: true,
+          cus_url:true
       },
       "company[ceo_name]":{
           maxlength: 30,
@@ -167,7 +202,7 @@ $.validator.addMethod("address", function (value, element) {
       },
       "company[pin_code]":{
         required: "Please Enter Pincode Details",
-          maxlength: "Pincode Details allows max 9 characters"
+          maxlength: "Pincode Details allows max 9 digits"
       },
       "company[state]":{
         required: "Please Enter State Details",
@@ -223,7 +258,7 @@ $("#company_location").validate({
       },
 
       "company_location[pin_code]":{
-        maxlength: 9,
+        maxlength: 6,
         required: true,
         numbersOnly: true
 
@@ -268,7 +303,7 @@ $("#company_location").validate({
 
       "company_location[pin_code]":{
       required: "Please Enter your Pincode Details",
-        maxlength: "Please Enter Valid Pincode Details"
+        maxlength: "Please Enter Valid Pincode Details upto 6 digit max"
       }
     },
     errorPlacement: function(error, element) {
@@ -364,8 +399,8 @@ $("#department").validate({
       },
 
      "department[pincode]":{
-      required: "Please Enter your Pincode Details",
-        maxlength: "Please Enter Valid Pincode Details"
+      required: "Please Enter Pincode Details",
+          maxlength: "Pincode Details allows max 9 digits"
       },
 
       "department[address]":{
@@ -834,7 +869,7 @@ $("#family").validate({
     rules: {
       "family[no_of_member]":{
         required: true,
-        maxlength: 30,
+        maxlength: 2,
         numbersOnly: true
       },
       "family[f_name]":{
@@ -915,11 +950,13 @@ $("#family").validate({
       },
       "family[pan_no]":{
       required: true,
-      maxlength: 10
+      maxlength: 10,
+      pan:true
        },
        "family[passport_no]":{
-       required: true,
-         maxlength: 6
+         required: true,
+         maxlength: 8,
+         passportNo: true
       },
        "family[status]":{
          required: true,
@@ -938,8 +975,8 @@ $("#family").validate({
     },
     messages: {
       "family[no_of_member]":{
-        required: "Please specify Employee ID",
-        maxlength: "Employee ID allows upto 30 alphabets"
+        required: "Please specify No. Of Employees",
+        maxlength: "Employee ID allows upto 2 digit"
       },
       "family[f_name]":{
         required: "Please specify First Name",
@@ -1006,7 +1043,7 @@ $("#family").validate({
       },
       "family[passport_no]":{
         required: "Please specify Passport No",
-        maxlength: "Passport No allows upto 6 characters"
+        maxlength: "Passport No allows upto 8 characters"
       },
        "family[status]":{
         required: "Please specify Status Details",
@@ -1139,6 +1176,129 @@ $("#employee_leav_request").validate({
 
    });
 
+$("#skillset").validate({
+    rules: {
+      "skillset[name]":{
+        required: true,
+        maxlength: 30,
+        lettersOnly:true
+      },
+      "skillset[skill_level]":{
+        required: true
+      }
+    },
+    messages: {
+      "skillset[name]":{
+        required: "Please specify Employee Name",
+        maxlength: "Employee Name allows upto 30 characters"
+      },
+      "skillset[skill_level]":{
+        required: "Please specify Skill Level"
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css('color','red')
+     error.insertAfter(element.parent(element));
+    }
+
+   });
+
+$("#award").validate({
+    rules: {
+      "award[award_name]":{
+        required: true,
+        maxlength: 30,
+        lettersOnly:true
+      },
+      "award[year]":{
+        required: true,
+        maxlength: 4,
+        numbersOnly:true
+      },
+      "award[award_from]":{
+        required: true,
+        maxlength: 30,
+        lettersOnly:true
+      }
+    },
+    messages: {
+      "award[award_name]":{
+        required: "Please specify Awards Name",
+        maxlength: "Awards Name allows upto 30 characters"
+      },
+      "award[year]":{
+        required: "Please specify Year When you received award",
+        maxlength: "Please input correct year format"
+      },
+      "award[award_from]":{
+        required: "Please specify Organization name,whom you received award",
+        maxlength: "Awards from allows upto 30 characters"
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css('color','red')
+     error.insertAfter(element.parent(element));
+    }
+
+   });
+
+
+$("#certification").validate({
+    rules: {
+      "certification[qualification_id]":{
+        required: true,
+        maxlength: 30,
+        lettersOnly:true
+      },
+      "certification[name]":{
+        required: true,
+        maxlength: 30,
+        numbersOnly:true
+      },
+      "certification[year]":{
+        required: true,
+        maxlength: 4,
+        numbersOnly:true
+      },
+      "certification[duration]":{
+        required: true,
+        maxlength: 30,
+        numbersOnly:true
+      },
+      "certification[descripation]":{
+        required: true,
+        maxlength: 200
+      }
+    },
+    messages: {
+      "certification[qualification_id]":{
+        required: "Please specify Qualification ID",
+        maxlength: "Qualification ID allows upto 30 characters"
+      },
+      "certification[name]":{
+        required: "Please specify Certification Name",
+        maxlength: "Certification Name allows upto 30 characters"
+      },
+      "certification[year]":{
+        required: "Please Specify Year Detail",
+        maxlength: "Please Input Correct Year format"
+      },
+      "certification[duration]":{
+        required: "Please Specify Certification Duration Details",
+        maxlength: "Please Input Correct Year format"
+      },
+      "certification[descripation]":{
+        required: "Please Specify Description regarding your Certification",
+        maxlength: "Certification Description allows upto 200 char max"
+      }
+
+    },
+    errorPlacement: function(error, element) {
+     error.css('color','red')
+     error.insertAfter(element.parent(element));
+    }
+
+   });
 
 
 });

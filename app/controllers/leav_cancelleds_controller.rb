@@ -24,16 +24,16 @@ class LeavCancelledsController < ApplicationController
   # POST /leav_cancelleds
   # POST /leav_cancelleds.json
   def create
-    @leav_cancelled = LeavCancelled.new(leav_cancelled_params)
-
-    respond_to do |format|
-      if @leav_cancelled.save
-        format.html { redirect_to @leav_cancelled, notice: 'Leav cancelled was successfully created.' }
-        format.json { render :show, status: :created, location: @leav_cancelled }
-      else
-        format.html { render :new }
-        format.json { render json: @leav_cancelled.errors, status: :unprocessable_entity }
-      end
+    @leav_cancelled = LeavCancelled.new
+    puts params[:format]
+    @leav_cancelled.employee_leav_request_id = params[:format]
+    @leav_cancelled.cancelled_date = Date.today
+    if @leav_cancelled.save
+      redirect_to employee_leav_requests_path
+      flash[:notice] = "Leave cancelled successfully"
+    else
+      render 'employee_leav_requests/index'
+      flash[:alert] = "Leave not cancelled successfully"
     end
   end
 

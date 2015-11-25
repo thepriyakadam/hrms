@@ -24,16 +24,15 @@ class LeavAprovedsController < ApplicationController
   # POST /leav_aproveds
   # POST /leav_aproveds.json
   def create
-    @leav_aproved = LeavAproved.new(leav_aproved_params)
-
-    respond_to do |format|
-      if @leav_aproved.save
-        format.html { redirect_to @leav_aproved, notice: 'Leav aproved was successfully created.' }
-        format.json { render :show, status: :created, location: @leav_aproved }
-      else
-        format.html { render :new }
-        format.json { render json: @leav_aproved.errors, status: :unprocessable_entity }
-      end
+    @leav_aproved = LeavAproved.new
+    @leav_aproved.employee_leav_request_id = params[:format]
+    @leav_aproved.approved_date = Date.today
+    if @leav_aproved.save
+      redirect_to approved_or_rejected_leave_request_employee_leav_requests_path
+      flash[:notice] = "Leave approved successfully"
+    else
+      render 'employee_leav_requests/approved_or_rejected_leave_request'
+      flash[:alert] = "Leave not approved successfully"
     end
   end
 
@@ -42,7 +41,7 @@ class LeavAprovedsController < ApplicationController
   def update
     respond_to do |format|
       if @leav_aproved.update(leav_aproved_params)
-        format.html { redirect_to @leav_aproved, notice: 'Leav aproved was successfully updated.' }
+        format.html { redirect_to @leav_aproved, notice: 'Leave aproved was successfully updated.' }
         format.json { render :show, status: :ok, location: @leav_aproved }
       else
         format.html { render :edit }

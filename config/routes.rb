@@ -3,7 +3,11 @@ Rails.application.routes.draw do
   resources :employee_leav_balances
   resources :leav_rejecteds
   resources :leav_aproveds
-  resources :employee_leav_requests
+  resources :employee_leav_requests do
+    collection do
+      get :approved_or_rejected_leave_request
+    end
+  end
   resources :company_leavs
   resources :leav_categories
   resources :employee_physicals

@@ -21,6 +21,13 @@ $.validator.addMethod("mobileNo", function (value, element) {
     return /^[0-9-+]+$/.test(value);
 },"Please Input Valid Mobile No.");
 
+$.validator.addMethod("pan", function(value, element)
+    {
+        //return this.optional(element) || /^[A-Z]{5}\d{4}[A-Z]{1}$/.test(value);
+        return this.optional(element) || /^([a-zA-Z]{5})(\d{4})([a-zA-Z]{1})$/.test(value);
+    }, "Invalid Pan Number");
+
+
  /* $.validator.addMethod("textOnly", function (value, element) {
     return ! /^(http|https)?:\/\/[a-zA-Z0-9-\.]+\.[a-z]{2,4}/.test(value);
 },"PLease Enter Valid Website Name.");*/
@@ -74,7 +81,8 @@ $.validator.addMethod("address", function (value, element) {
       },
       "company[pan_card_no]":{
           maxlength: 12,
-          required: true
+          required: true,
+          pan:true
       },
       "company[city]":{
           maxlength: 30,
@@ -481,11 +489,10 @@ $("#employee").validate({
           maxlength: 13,
           required: true,
           mobileNo: true
-          
+      },
       "employee[email]":{
         loginRegex: true,
-        required: true,
-        loginRegex: true
+        required: true
       },
       // "joining_detail[reffernce_from]":{
       //   maxlength: 50,
@@ -1048,6 +1055,80 @@ $("#family").validate({
       "family[ctc]":{
         required: "Please specify CTC Details",
         maxlength: "CTC allows upto 6 characters"
+      }
+
+    },
+    errorPlacement: function(error, element) {
+     error.css('color','red')
+     error.insertAfter(element.parent(element));
+    }
+
+   });
+
+$("#leav_cate").validate({
+    rules: {
+      "leav_category[name]":{
+        required: true,
+        maxlength: 30,
+        lettersOnly:true
+      }
+    },
+    messages: {
+      "leav_category[name]":{
+        required: "Please specify Employee Name",
+        maxlength: "Name allows upto 30 alphabets"
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css('color','red')
+     error.insertAfter(element.parent(element));
+    }
+
+   });
+
+$("#company_leav").validate({
+    rules: {
+      "company_leav[no_of_leave]":{
+        required: true,
+        maxlength: 20
+      },
+      "company_leav[expire_date]":{
+        required: true
+      }
+    },
+    messages: {
+      "company_leav[no_of_leave]":{
+        required: "Please specify No. Of leaves",
+        maxlength: "No. Of leaves allows upto 20 characters"
+      },
+      "company_leav[expire_date]":{
+        required: "Please specify Expiry Details for Leave"
+      }
+
+    },
+    errorPlacement: function(error, element) {
+     error.css('color','red')
+     error.insertAfter(element.parent(element));
+    }
+
+   });
+
+
+$("#employee_leav_request").validate({
+    rules: {
+      "employee_leav_request[satrt_date]":{
+        required: true
+      },
+      "employee_leav_request[end_date]":{
+        required: true
+      }
+    },
+    messages: {
+      "employee_leav_request[satrt_date]":{
+        required: "Please specify Start Date for Leave"
+      },
+      "employee_leav_request[end_date]":{
+        required: "Please specify End Date for Leave"
       }
 
     },

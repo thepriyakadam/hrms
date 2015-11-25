@@ -31,7 +31,8 @@
             <%= link_to '', employee_leav_request,class: 'btn btn-default fa fa-eye' %>
             <%= link_to '', edit_employee_leav_request_path(employee_leav_request),class: 'btn btn-success fa fa-edit' %>
             <%= link_to '', employee_leav_request, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger fa fa-close' %>
-            <%= link_to '', leav_cancelleds_path(employee_leav_request), method: :post, data: { confirm: 'Are you sure?' },class: 'btn btn-danger fa fa-trash' %>
+            <%= link_to 'Approved', leav_aproveds_path(employee_leav_request), method: :post, data: { confirm: 'Are you sure?' },class: 'btn btn-info fa fa-trash' %>
+            <%= link_to 'Reject', leav_rejecteds_path(employee_leav_request), method: :post, data: { confirm: 'Are you sure?' },class: 'btn btn-warning fa fa-trash' %>
           </td>
         </tr>
       <% end %>

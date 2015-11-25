@@ -24,16 +24,15 @@ class LeavRejectedsController < ApplicationController
   # POST /leav_rejecteds
   # POST /leav_rejecteds.json
   def create
-    @leav_rejected = LeavRejected.new(leav_rejected_params)
-
-    respond_to do |format|
-      if @leav_rejected.save
-        format.html { redirect_to @leav_rejected, notice: 'Leav rejected was successfully created.' }
-        format.json { render :show, status: :created, location: @leav_rejected }
-      else
-        format.html { render :new }
-        format.json { render json: @leav_rejected.errors, status: :unprocessable_entity }
-      end
+    @leav_rejected = LeavRejected.new
+    @leav_rejected.employee_leav_request_id = params[:format]
+    @leav_rejected.rejected_date = Date.today
+    if @leav_rejected.save
+      redirect_to approved_or_rejected_leave_request_employee_leav_requests_path
+      flash[:notice] = "Leave rejected successfully"
+    else
+      render 'employee_leav_requests/approved_or_rejected_leave_request'
+      flash[:alert] = "Leave not rejected successfully"
     end
   end
 

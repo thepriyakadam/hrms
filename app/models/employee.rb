@@ -4,6 +4,7 @@ class Employee < ActiveRecord::Base
   belongs_to :blood_group
   belongs_to :employee_type
   has_many :awards
+  has_many :employee_leav_requests
   has_one :member, as: :account
   has_one :joining_detail
   accepts_nested_attributes_for :joining_detail

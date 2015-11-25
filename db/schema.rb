@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151124065014) do
+ActiveRecord::Schema.define(version: 20151125070958) do
 
   create_table "awards", force: :cascade do |t|
     t.integer  "employee_id", limit: 4
@@ -149,6 +149,7 @@ ActiveRecord::Schema.define(version: 20151124065014) do
     t.datetime "end_date"
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
+    t.string   "date_range",       limit: 255
   end
 
   add_index "employee_leav_requests", ["employee_id"], name: "index_employee_leav_requests_on_employee_id", using: :btree

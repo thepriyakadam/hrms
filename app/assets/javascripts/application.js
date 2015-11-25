@@ -41,6 +41,11 @@ $(function () {
   $("#datemask2").inputmask("mm/dd/yyyy", {"placeholder": "mm/dd/yyyy"});
   //Money Euro
   $("[data-mask]").inputmask();
+  //Date range picker
+  $('#reservation').daterangepicker();
+  //Date range picker with time picker
+  $('#reservationtime').daterangepicker({timePicker: true, timePickerIncrement: 30, format: 'DD/MM/YYYY h:mm A'});
+  
 });
 
 // Automatic hide alert
@@ -50,9 +55,6 @@ $(function(){
   $("#success-alert").alert('close');
   });   
 });
-
-//Date range picker
-$('#reservation').daterangepicker();
 
 $(function () {
   $('#btnAdd').click(function () {

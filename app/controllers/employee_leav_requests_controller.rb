@@ -4,7 +4,8 @@ class EmployeeLeavRequestsController < ApplicationController
   # GET /employee_leav_requests
   # GET /employee_leav_requests.json
   def index
-    @employee_leav_requests = EmployeeLeavRequest.all
+    @employee_leav_requests = EmployeeLeavRequest.joins("LEFT JOIN leav_aproveds ON employee_leav_requests.id = leav_aproveds.employee_leav_request_id LEFT JOIN leav_cancelleds ON employee_leav_requests.id = leav_cancelleds.employee_leav_request_id LEFT JOIN leav_rejecteds ON employee_leav_requests.id = leav_rejecteds.employee_leav_request_id where leav_aproveds.id IS NULL AND leav_rejecteds.id IS NULL AND leav_cancelleds.id IS NULL")
+    #@employee_leav_requests = EmployeeLeavRequest.all
   end
 
   # GET /employee_leav_requests/1
@@ -25,7 +26,9 @@ class EmployeeLeavRequestsController < ApplicationController
   # POST /employee_leav_requests.json
   def create
     @employee_leav_request = EmployeeLeavRequest.new(employee_leav_request_params)
-
+    date_arr = params["employee_leav_request"]["date_range"].split('-')
+    @employee_leav_request.satrt_date = date_arr[0].rstrip
+    @employee_leav_request.end_date = date_arr[1].lstrip
     respond_to do |format|
       if @employee_leav_request.save
         format.html { redirect_to @employee_leav_request, notice: 'Employee leav request was successfully created.' }
@@ -61,6 +64,10 @@ class EmployeeLeavRequestsController < ApplicationController
     end
   end
 
+  def approved_or_rejected_leave_request
+    @employee_leav_requests = EmployeeLeavRequest.joins("LEFT JOIN leav_aproveds ON employee_leav_requests.id = leav_aproveds.employee_leav_request_id LEFT JOIN leav_cancelleds ON employee_leav_requests.id = leav_cancelleds.employee_leav_request_id LEFT JOIN leav_rejecteds ON employee_leav_requests.id = leav_rejecteds.employee_leav_request_id where leav_aproveds.id IS NULL AND leav_rejecteds.id IS NULL AND leav_cancelleds.id IS NULL")
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_employee_leav_request
@@ -69,6 +76,6 @@ class EmployeeLeavRequestsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def employee_leav_request_params
-      params.require(:employee_leav_request).permit(:employee_id, :leav_category_id, :leave_type, :satrt_date, :end_date)
+      params.require(:employee_leav_request).permit(:employee_id, :leav_category_id, :leave_type, :date_range, :satrt_date, :end_date)
     end
 end

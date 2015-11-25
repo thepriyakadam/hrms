@@ -10,6 +10,8 @@
 
   <div class="box-body">
     <%= bootstrap_form_for(@employee_leav_request,html: {id: 'employee_leav_request'}) do |f| %>
+      
+
       <%= f.hidden_field :employee_id, value: current_user.account_id %>
       <div class="row">
         <div class="col-sm-3">
@@ -25,26 +27,15 @@
         </div>
 
         <div class="col-sm-3">
-          <div class="form-group required">
+          <div class="form-group">
             <div class="input-group">
               <div class="input-group-addon">
                 <i class="fa fa-calendar"></i>
               </div>
-              <%= f.text_field :satrt_date, class: 'datemask',id: "reservation" %>
-            </div>
+              <%= f.text_field :date_range,class: "pull-right active",id: "reservationtime" %>
+            </div><!-- /.input group -->
           </div>
-        </div>   
-
-        <div class="col-sm-3">
-          <div class="form-group required">
-            <div class="input-group">
-              <div class="input-group-addon">
-                <i class="fa fa-calendar"></i>
-              </div>
-              <%= f.text_field :end_date , class: 'datemask'%>
-            </div>
-          </div>
-        </div>   
+        </div>      
       </div>
 
       <div class="row">

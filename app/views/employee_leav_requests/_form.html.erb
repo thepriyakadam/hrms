@@ -1,7 +1,7 @@
 <!-- SELECT2 EXAMPLE -->
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title">Awards Details</h3>
+    <h3 class="box-title">New Employee Leave Request</h3>
     <div class="box-tools pull-right">
       <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
       <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
@@ -10,7 +10,8 @@
 
 <div class="box-body">
 
-<%= bootstrap_form_for(@employee_leav_request) do |f| %>
+<%= bootstrap_form_for(@employee_leav_request,html: {id: 'employee_leav_request'}) do |f| %>
+
  
       <div class="row">
           <div class="col-sm-3">
@@ -32,7 +33,7 @@
             <div class="input-group-addon">
               <i class="fa fa-calendar"></i>
             </div>
-            <%= f.text_field :satrt_date, class: 'datemask'%>
+            <%= f.text_field :satrt_date,label:"Start Date",class: 'datemask'%>
           </div>
         </div>
         </div>   

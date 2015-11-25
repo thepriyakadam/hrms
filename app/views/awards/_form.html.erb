@@ -9,9 +9,8 @@
   </div><!-- /.box-header -->
 
 <div class="box-body">
-  <%= bootstrap_form_for(@award) do |f| %>
-    <%= f.hidden_field :employee_id, value: current_user.account_id %>
-        
+  <%= bootstrap_form_for(@award,html: {id: 'award'}) do |f| %>
+    <%= f.hidden_field :employee_id, value: current_user.account_id %>        
     <div id="entry1" class="clonedInput">
       <div class="row">
         <div class="col-sm-3">

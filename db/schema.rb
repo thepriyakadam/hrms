@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151125070958) do
+ActiveRecord::Schema.define(version: 20151126092647) do
 
   create_table "awards", force: :cascade do |t|
     t.integer  "employee_id", limit: 4
@@ -136,8 +136,10 @@ ActiveRecord::Schema.define(version: 20151125070958) do
     t.string   "no_of_leave",      limit: 255
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
+    t.integer  "company_leav_id",  limit: 4
   end
 
+  add_index "employee_leav_balances", ["company_leav_id"], name: "index_employee_leav_balances_on_company_leav_id", using: :btree
   add_index "employee_leav_balances", ["employee_id"], name: "index_employee_leav_balances_on_employee_id", using: :btree
   add_index "employee_leav_balances", ["leav_category_id"], name: "index_employee_leav_balances_on_leav_category_id", using: :btree
 
@@ -147,9 +149,10 @@ ActiveRecord::Schema.define(version: 20151125070958) do
     t.string   "leave_type",       limit: 255
     t.datetime "satrt_date"
     t.datetime "end_date"
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
+    t.datetime "created_at",                                           null: false
+    t.datetime "updated_at",                                           null: false
     t.string   "date_range",       limit: 255
+    t.decimal  "leave_count",                  precision: 5, scale: 1
   end
 
   add_index "employee_leav_requests", ["employee_id"], name: "index_employee_leav_requests_on_employee_id", using: :btree
@@ -406,6 +409,7 @@ ActiveRecord::Schema.define(version: 20151125070958) do
   add_foreign_key "company_leavs", "leav_categories"
   add_foreign_key "company_locations", "companies"
   add_foreign_key "departments", "company_locations"
+  add_foreign_key "employee_leav_balances", "company_leavs"
   add_foreign_key "employee_leav_balances", "employees"
   add_foreign_key "employee_leav_balances", "leav_categories"
   add_foreign_key "employee_leav_requests", "employees"

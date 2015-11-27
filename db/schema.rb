@@ -329,6 +329,15 @@ ActiveRecord::Schema.define(version: 20151125070958) do
 
   add_index "leav_rejecteds", ["employee_leav_request_id"], name: "index_leav_rejecteds_on_employee_leav_request_id", using: :btree
 
+  create_table "leavcancelleds", force: :cascade do |t|
+    t.integer  "employee_leav_request_id", limit: 4
+    t.datetime "cancelled_date"
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+  end
+
+  add_index "leavcancelleds", ["employee_leav_request_id"], name: "index_leavcancelleds_on_employee_leav_request_id", using: :btree
+
   create_table "members", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
     t.string   "encrypted_password",     limit: 255, default: "", null: false
@@ -423,6 +432,7 @@ ActiveRecord::Schema.define(version: 20151125070958) do
   add_foreign_key "leav_aproveds", "employee_leav_requests"
   add_foreign_key "leav_cancelleds", "employee_leav_requests"
   add_foreign_key "leav_rejecteds", "employee_leav_requests"
+  add_foreign_key "leavcancelleds", "employee_leav_requests"
   add_foreign_key "qualifications", "employees"
   add_foreign_key "skillsets", "employees"
 end

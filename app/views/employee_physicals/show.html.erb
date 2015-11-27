@@ -1,24 +1,39 @@
-<p id="notice"><%= notice %></p>
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Company</h3>
+    <div class="box-tools pull-right">
+      <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+      <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+    </div>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover">
+    <tr> 
+      <th colspan="2"></th>
+      <th colspan="2"></th>
+    </tr>
 
-<p>
-  <strong>Employee:</strong>
-  <%= @employee_physical.employee %>
-</p>
+    <tr>
+    	<th><strong>Employee:</strong></th>
+    	<td>  <%= @employee_physical.employee %></td>
 
-<p>
-  <strong>Hieght:</strong>
-  <%= @employee_physical.hieght %>
-</p>
+    	<th> <strong>Hieght:</strong></th>
+    	<td> <%= @employee_physical.hieght %></td>
+    </tr>
+     <tr>
+    	<th><strong>Weight:</strong></th>
+    	<td><%= @employee_physical.weight %></td>
 
-<p>
-  <strong>Weight:</strong>
-  <%= @employee_physical.weight %>
-</p>
+    	<th> <strong>Size:</strong></th>
+    	<td> <%= @employee_physical.size %></td>
+    </tr>
+  
+    </table>
 
-<p>
-  <strong>Size:</strong>
-  <%= @employee_physical.size %>
-</p>
-
-<%= link_to 'Edit', edit_employee_physical_path(@employee_physical) %> |
-<%= link_to 'Back', employee_physicals_path %>
+    <%= link_to 'Edit', edit_employee_physical_path(@employee_physical),class: 'btn btn-success fa fa-edit' %> |
+    <%= link_to 'Back', employee_physicals_path,class: 'btn btn-default fa fa-arrow-left' %>
+  </div><!-- /.box-body -->
+  <div class="box-footer">
+    Visit <a href="https://select2.github.io/">Select2 documentation</a> for more examples and information about the plugin.
+  </div>
+</div><!-- /.box -->

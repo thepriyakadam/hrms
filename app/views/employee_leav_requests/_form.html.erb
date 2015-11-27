@@ -1,4 +1,4 @@
-<!-- SELECT2 EXAMPLE -->
+<!--SELECT2 EXAMPLE -->
 <div class="box box-default">
   <div class="box-header with-border">
     <h3 class="box-title">New Employee Leave Request</h3>
@@ -10,9 +10,11 @@
 
   <div class="box-body">
     <%= bootstrap_form_for(@employee_leav_request,html: {id: 'employee_leav_request'}) do |f| %>
-      
-
       <%= f.hidden_field :employee_id, value: current_user.account_id %>
+      <% @total_leaves.each do |l| %>
+        <!-- count = @remain_leaves.where('leav_category_id = ?',l.leav_category_id).count  -->
+        <p> <%= l.leav_category.name %> : <%= l.no_of_leave %> </p>
+      <% end %>
       <div class="row">
         <div class="col-sm-3">
           <div class="field">
@@ -50,4 +52,4 @@
   <div class="box-footer">
     Visit <a href="https://select2.github.io/">Select2 documentation</a> for more examples and information about the plugin.
   </div>
-</div><!-- /.box -->
+</div><!-- /.box

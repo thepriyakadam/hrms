@@ -27,6 +27,28 @@ $.validator.addMethod("mobileNo", function (value, element) {
 },"Please Input Valid Mobile No.");
 
 
+/*jQuery.validator.addMethod(
+  "selectNone",
+  function (value, element) {
+    if (element.value == "none")
+    {
+      return false;
+    }
+    else return true;
+  },
+  "Please select an option."
+);
+$(document).ready(function() {
+  $("#qualification").validate({
+    rules: {
+      ssc: {
+        selectNone: true
+      }
+    },
+  });
+});*/
+
+
 /*$.validator.addMethod("cus_url", function(value, element)
     {
         //return this.optional(element) || /^[A-Z]{5}\d{4}[A-Z]{1}$/.test(value);
@@ -200,7 +222,7 @@ $.validator.addMethod("address", function (value, element) {
       },
       "company[pan_card_no]":{
         required: "Please Enter Valid Pancard Details",
-          maxlength: "Enter the Pancard Details max 9 char"
+          maxlength: "Enter the Pancard Details max 10 char"
       },
 
       "company[email]":{
@@ -421,9 +443,9 @@ $("#department").validate({
         maxlength: "Email address can't exceed max limit"
       },
 
-     "department[pincode]":{
+     "department[pin_code]":{
       required: "Please Enter Pincode Details",
-          maxlength: "Pincode Details allows max 9 digits"
+          maxlength: "Pincode Details allows max 6 digits"
       },
 
       "department[address]":{
@@ -432,7 +454,7 @@ $("#department").validate({
       },
       "department[head_of_department]":{
        required: "Please Head Of Department",
-        maxlength: "Enter the Address upto 50 char max"
+        maxlength: "Enter the Head Of Department upto 50 char max"
       },
       "department[contact_no]":{
       required: "Please Specify Contact No",
@@ -893,7 +915,7 @@ $("#family").validate({
     rules: {
       "family[no_of_member]":{
         required: true,
-        maxlength: 2,
+        maxlength: 4,
         numbersOnly: true
       },
       "family[f_name]":{
@@ -902,7 +924,6 @@ $("#family").validate({
         lettersOnly: true
       },
         "family[m_name]":{
-        required: true,
         maxlength: 30,
         lettersOnly: true
          },
@@ -934,18 +955,15 @@ $("#family").validate({
         address: true
       },
       "family[state]":{
-        required: true,
         maxlength: 50,
         lettersOnly: true
       },
       "family[dist]":{
-        required: true,
-        maxlength: 30,
+        maxlength: 50,
         lettersOnly: true
       },
       "family[city]":{
-        required: true,
-        maxlength: 30,
+        maxlength: 50,
         lettersOnly: true
       },
       "family[pin_code]":{
@@ -959,7 +977,6 @@ $("#family").validate({
         address: true
       },
       "family[email]":{
-        required: true,
         maxlength: 50,
         loginRegex: true
       },
@@ -978,7 +995,6 @@ $("#family").validate({
       pan:true
        },
        "family[passport_no]":{
-         required: true,
          maxlength: 8,
          passportNo: true
       },
@@ -1007,7 +1023,6 @@ $("#family").validate({
         maxlength: "No Of Year Of EXperiencesallows upto 4 integers"
       },
       "family[m_name]":{
-        required: "Please specify MIddle Name",
         maxlength: "Company Name allows upto 30 characters"
       },
        "family[l_name]":{
@@ -1034,20 +1049,17 @@ $("#family").validate({
         maxlength: "Permanent Address allows upto 100 characters"
       },
       "family[state]":{
-        required: "Enter a valid State Name",
         maxlength: "State Name allows upto 50 characters"
       },
       "family[dist]":{
-        required: "Please specify your District",
         maxlength: "District allows upto 50 alphabets"
       },
       "family[city]":{
-        required: "Please specify Your City",
         maxlength: "City allows upto 50 integers"
       },
       "family[pin_code]":{
         required: "Please specify Pincode Details",
-        maxlength: "Pincode allows upto 6 characters"
+        maxlength: "Pincode allows upto 6 digits"
       },
        "family[current_address]":{
         required: "Please Specify Your Current Address Details",
@@ -1059,14 +1071,13 @@ $("#family").validate({
       },
       "family[adhar_no]":{
         required: "Please specify Adhar No",
-        maxlength: "Adhar No allows upto 12 alphabets"
+        maxlength: "Adhar No allows upto 12 digits"
       },
       "family[pan_no]":{
         required: "Please specify Your Pan Card Details",
         maxlength: "Pan Card No allows upto 10 alphanumeric characters"
       },
       "family[passport_no]":{
-        required: "Please specify Passport No",
         maxlength: "Passport No allows upto 8 characters"
       },
        "family[status]":{
@@ -1115,7 +1126,10 @@ $("#family").validate({
       },
       "family[ctc]":{
         required: "Please specify CTC Details",
-        maxlength: "CTC allows upto 6 characters"
+        maxlength: "CTC allows upto 6 digits"
+      },
+      "family[email]":{
+        maxlength: "Email id cant exceed 50 chars"
       }
 
     },
@@ -1324,5 +1338,82 @@ $("#certification").validate({
 
    });
 
+  // $("#qualification").validate({
+  //   rules: {/*qualification_id*/
+  //     "qualification[ssc]":{
+  //       required: true,
+  //       maxlength: 10,
+  //       lettersOnly:true
+  //     },
+  //     "certification[name]":{
+  //       required: true,
+  //       maxlength: 30,
+  //       numbersOnly:true
+  //     },
+  //     "certification[year]":{
+  //       required: true,
+  //       maxlength: 4,
+  //       numbersOnly:true
+  //     },/*duration*/
+  //     "certification[duration]":{
+  //       required: true,
+  //       maxlength: 30,
+  //       numbersOnly:true
+  //     },
+  //     "certification[descripation]":{
+  //       required: true,
+  //       maxlength: 200
+  //     }
+  //   },
+  //   messages: {
+  //     "qualification[ssc]":{
+  //       required: "Please specify Your Qualification Details",
+  //       maxlength: "ualification Details allows upto 10 characters"
+  //     },
+  //     "certification[name]":{
+  //       required: "Please specify Certification Name",
+  //       maxlength: "Certification Name allows upto 30 characters"
+  //     },
+  //     "certification[year]":{
+  //       required: "Please Specify Year Detail",
+  //       maxlength: "Please Input Correct Year format"
+  //     },
+  //     "certification[duration]":{
+  //       required: "Please Specify Certification Duration Details",
+  //       maxlength: "Please Input Correct Year format"
+  //     },
+  //     "certification[descripation]":{
+  //       required: "Please Specify Description regarding your Certification",
+  //       maxlength: "Certification Description allows upto 200 char max"
+  //     }
+
+  //   },
+  //   errorPlacement: function(error, element) {
+  //    error.css('color','red')
+  //    error.insertAfter(element.parent(element));
+  //   }
+
+  //  });
+
+$("#employee_type").validate({
+    rules: {
+      "employee_type[name]":{
+        required: true,
+        maxlength: 30,
+        lettersOnly:true
+      }
+    },
+    messages: {
+      "employee_type[name]":{
+        required: "Please specify Employee Name",
+        maxlength: "Name allows upto 30 alphabets"
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css('color','red')
+     error.insertAfter(element.parent(element));
+    }
+
+   });
 
 });

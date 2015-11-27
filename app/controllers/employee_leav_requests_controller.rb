@@ -16,6 +16,8 @@ class EmployeeLeavRequestsController < ApplicationController
   # GET /employee_leav_requests/new
   def new
     @employee_leav_request = EmployeeLeavRequest.new
+    @total_leaves = EmployeeLeavBalance.where('employee_id = ?', current_user.account_id)
+    @remain_leaves = EmployeeLeavRequest.joins(:leav_aproved)
   end
 
   # GET /employee_leav_requests/1/edit
@@ -29,15 +31,27 @@ class EmployeeLeavRequestsController < ApplicationController
     date_arr = params["employee_leav_request"]["date_range"].split('-')
     @employee_leav_request.satrt_date = date_arr[0].rstrip
     @employee_leav_request.end_date = date_arr[1].lstrip
-    respond_to do |format|
-      if @employee_leav_request.save
-        format.html { redirect_to @employee_leav_request, notice: 'Employee leav request was successfully created.' }
-        format.json { render :show, status: :created, location: @employee_leav_request }
-      else
-        format.html { render :new }
-        format.json { render json: @employee_leav_request.errors, status: :unprocessable_entity }
-      end
+    if @employee_leav_request.leave_type == "Full Day"
+      @employee_leav_request.leave_count = (@employee_leav_request.end_date.to_date - @employee_leav_request.satrt_date.to_date).to_f + 1
+    else
+      @employee_leav_request.leave_count = 0.5
     end
+    @emp_leave_bal = EmployeeLeavBalance.where('employee_id = ? AND leav_category_id = ?',current_user.account_id, @employee_leav_request.leav_category_id).take
+    if @employee_leav_request.leave_count.to_f > @emp_leave_bal.no_of_leave.to_f
+      @total_leaves = EmployeeLeavBalance.where('employee_id = ?', current_user.account_id)
+      flash.now[:alert] = 'You exceed the leave limit.'
+      render :new
+    else
+      respond_to do |format|
+        if @employee_leav_request.save
+          format.html { redirect_to @employee_leav_request, notice: 'Employee leav request was successfully created.' }
+          format.json { render :show, status: :created, location: @employee_leav_request }
+        else
+          format.html { render :new }
+          format.json { render json: @employee_leav_request.errors, status: :unprocessable_entity }
+        end
+      end
+    end  
   end
 
   # PATCH/PUT /employee_leav_requests/1

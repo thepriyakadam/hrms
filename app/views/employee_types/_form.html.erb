@@ -10,7 +10,7 @@
 
 
  <div class="box-body">
-<%= bootstrap_form_for(@employee_type) do |f| %>
+<%= bootstrap_form_for(@employee_type,html: {id: 'employee_type'}) do |f| %>
   <% if @employee_type.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@employee_type.errors.count, "error") %> prohibited this employee_type from being saved:</h2>
@@ -26,7 +26,7 @@
   <div class="row">
     <div class="col-sm-1"></div>
       <div class="col-sm-3">
-        <div class="field">
+        <div class="form-group required">
          <%= f.text_field :name %>
         </div>
     </div>

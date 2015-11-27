@@ -13,18 +13,18 @@ class Department < ActiveRecord::Base
   validates :hr, :presence => true
   validates :pin_code, :presence => true
   validates :address, :presence => true
-  validate :name_regex
+  # validate :name_regex
   validate :head_of_department_regex
   validate :manager_regex
   validate :hr_regex
 
-  validates_length_of :name, is: 30,  message:"Dept Name allows upto upto 30 char max"
-  validates_length_of :contact_no, within: 10..13, message:"Enter the Correct contact number"
-   validates_length_of :head_of_department, is: 50,  message:"Enter the Address upto 50 char max"
-  validates_length_of :manager, is:50, message:"Enter the Manager detail upto 50 char max"
-  validates_length_of :hr, is:50, message:"Enter the HR detail upto 50 char max"
-   validates_length_of :pin_code, is: 6,  message:"Pincode Details allows max 6 digits"
-  validates_length_of :address,is:100, message:"Enter the Address upto 100 char max"
+  # validates_length_of :name, is: 30,  message:"Dept Name allows upto upto 30 char max"
+  # validates_length_of :contact_no, within: 10..13, message:"Enter the Correct contact number"
+  #  validates_length_of :head_of_department, is: 50,  message:"Enter the Address upto 50 char max"
+  # validates_length_of :manager, is:50, message:"Enter the Manager detail upto 50 char max"
+  # validates_length_of :hr, is:50, message:"Enter the HR detail upto 50 char max"
+  #  validates_length_of :pin_code, is: 6,  message:"Pincode Details allows max 6 digits"
+  # validates_length_of :address,is:100, message:"Enter the Address upto 100 char max"
   
   
   validates :email, uniqueness: true, :presence => true
@@ -39,11 +39,11 @@ class Department < ActiveRecord::Base
     end
   end
 
-  def name_regex
-    if name.present? and not name.match(/\A[A-Za-z0-9-_]{4,30}\Z/)
-      errors.add :name,"Please Enter The Correct Company Name"
-    end
-  end
+  # def name_regex
+  #   if name.present? and not name.match(/\A[A-Za-z0-9-_]{4,30}\Z/)
+  #     errors.add :name,"Please Enter The Correct Company Name"
+  #   end
+  # end
 
 
   def head_of_department_regex

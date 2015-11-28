@@ -11,11 +11,13 @@
 <div class="box-body">
 <%= bootstrap_form_for(@department,html: {id: 'department'}) do |f| %>
 
-<%= f.hidden_field :company_location_id, value: current_user.account_id %>
-       
   <div class="row">
-    
-      <div class="col-sm-3">
+    <div class="col-sm-3">
+        <div class="form-group required">
+         <%= f.select :company_location_id, all_company_location %>
+        </div>
+    </div>
+    <div class="col-sm-3">
         <div class="form-group required">
          <%= f.text_field :name,label:"Department Name" %>
         </div>
@@ -30,54 +32,7 @@
          <%= f.text_field :contact_no %>
         </div>
     </div>
-
-   <!--   <div class="col-sm-3">
-        <div class="form-group required">
-          <%= f.number_field :pin_code,label:"Pin Code/ZIP" %>
-       </div>
-    </div>
-
   </div>
-
-  <div class="row">
-         <div class="col-sm-12">
-          <div class="form-group required">
-           <%= f.text_area :address %>
-          </div>
-        </div>
-   </div>
-
-  <div class="row">
-
-      <div class="col-sm-3">
-        <div class="form-group required">
-          <%= f.text_field :head_of_department %>
-         </div>
-      </div>
-
- -->
-      
-       <!-- <div class="col-sm-3">
-        <div class="form-group required">
-         <%= f.text_field :email %>
-        </div>
-    </div>
- -->
-
-     <!--  <div class="col-sm-3">
-        <div class="form-group required">
-          <%= f.text_field :manager %>
-        </div>
-      </div>
-
-
-      <div class="col-sm-3">
-        <div class="form-group required">
-         <%= f.text_field :hr %>
-       </div>
-      </div> -->
-
-   </div>
 
   <div class="row">
   

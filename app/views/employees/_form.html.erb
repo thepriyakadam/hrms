@@ -10,8 +10,6 @@
   <div class="box-body">
     <%= bootstrap_form_for(@employee,html: {id: 'employee'}) do |f| %>
       
-      <%= f.hidden_field :department_id, value: current_user.account_id %>
-
       <div class="row">
         <div class="col-sm-3">
           <div class="form-group required">
@@ -192,7 +190,7 @@
 
           <div class="col-sm-3">
             <div class="form-group required">
-              <%= o.text_field :reffernce_from,label:"Reference From" %>
+              <%= o.text_field :reference_from,label:"Reference From" %>
             </div>
           </div>
 
@@ -222,17 +220,6 @@
             </div>
           </div>
 
-          <div class="col-sm-3">
-            <div class="field">
-              <%= o.text_field :account_no %>
-            </div>
-          </div>
-
-         <!--  <div class="col-sm-3">
-            <div class="form-group required">
-              <%= o.text_field :ctc %>
-            </div>
-          </div> -->
           <div class="col-sm-3">
             <div class="input-group">
               <div class="input-group-addon">

@@ -28,8 +28,6 @@ class DepartmentsController < ApplicationController
 
     respond_to do |format|
       if @department.save
-        # pass = (0...8).map { (65 + rand(26)).chr }.join
-        # @company.create_user(@company,pass)
         format.html { redirect_to @department, notice: 'Department was successfully created.' }
         format.json { render :show, status: :created, location: @department }
       else

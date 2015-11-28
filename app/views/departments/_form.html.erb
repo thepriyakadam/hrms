@@ -1,4 +1,4 @@
-<!-- SELECT2 EXAMPLE -->
+
 <div class="box box-default">
   <div class="box-header with-border">
     <h3 class="box-title">Departments</h3>
@@ -7,7 +7,6 @@
       <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
     </div>
   </div><!-- /.box-header -->
-
 
 <div class="box-body">
 <%= bootstrap_form_for(@department,html: {id: 'department'}) do |f| %>
@@ -21,20 +20,18 @@
          <%= f.text_field :name,label:"Department Name" %>
         </div>
     </div>
-
-      <div class="col-sm-3">
+    <div class="col-sm-3">
         <div class="form-group required">
-         <%= f.text_field :email %>
-        </div>
-    </div>
-
-      <div class="col-sm-3">
-        <div class="field">
           <%= f.select :department_type_id, all_department_type %>
         </div>
     </div>
+    <div class="col-sm-3">
+        <div class="field">
+         <%= f.text_field :contact_no %>
+        </div>
+    </div>
 
-     <div class="col-sm-3">
+   <!--   <div class="col-sm-3">
         <div class="form-group required">
           <%= f.number_field :pin_code,label:"Pin Code/ZIP" %>
        </div>
@@ -58,14 +55,16 @@
          </div>
       </div>
 
-
-      <div class="col-sm-3">
+ -->
+      
+       <!-- <div class="col-sm-3">
         <div class="form-group required">
-         <%= f.text_field :contact_no %>
+         <%= f.text_field :email %>
         </div>
-      </div>
+    </div>
+ -->
 
-      <div class="col-sm-3">
+     <!--  <div class="col-sm-3">
         <div class="form-group required">
           <%= f.text_field :manager %>
         </div>
@@ -76,12 +75,12 @@
         <div class="form-group required">
          <%= f.text_field :hr %>
        </div>
-      </div>
+      </div> -->
 
    </div>
 
   <div class="row">
-    <div class="col-sm-1"></div>
+  
     <div class="col-sm-3">
       <div class="actions">
         <%= f.submit :class => class_name, data: { disable_with: data_info } %>
@@ -94,4 +93,4 @@
   <div class="box-footer">
     Visit <a href="https://select2.github.io/">Select2 documentation</a> for more examples and information about the plugin.
   </div>
-</div><!-- /.box -->
+</div><!-- /.box

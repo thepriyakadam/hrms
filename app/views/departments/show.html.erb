@@ -14,23 +14,28 @@
     </tr>
 
     <tr>
+      <th><strong>Department Code:</strong></th>
+      <td><%= @department.department_code %></td>
+
       <th> <strong>Company location:</strong></th>
       <td> <%= @department.company_location.name %></td>
+    </tr>
 
+    <tr>
       <th><strong>Name:</strong></th>
       <td><%= @department.name %></td>
-    </tr>
 
-     <tr>
       <th><strong>Department type:</strong></th>
       <td><%= @department.department_type.name %></td>
-
-      <th> <strong>Contact no:</strong></th>
-      <td> <%= @department.contact_no %></td>
-      
     </tr>
 
+    <tr>
+      <th> <strong>Contact no:</strong></th>
+      <td> <%= @department.contact_no %></td>
 
+      <th> <strong>Description:</strong></th>
+      <td> <%= @department.description %></td>
+    </tr>
 </table>
 
     <%= link_to 'Edit', edit_department_path(@department),class: 'btn btn-success fa fa-edit' %> |

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151124061930) do
+ActiveRecord::Schema.define(version: 20151128095514) do
 
   create_table "awards", force: :cascade do |t|
     t.integer  "employee_id", limit: 4
@@ -103,6 +103,15 @@ ActiveRecord::Schema.define(version: 20151124061930) do
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
   end
+
+  create_table "custom_auto_increments", force: :cascade do |t|
+    t.string   "counter_model_name", limit: 255
+    t.integer  "counter",            limit: 4,   default: 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "custom_auto_increments", ["counter_model_name"], name: "index_custom_auto_increments_on_counter_model_name", using: :btree
 
   create_table "department_types", force: :cascade do |t|
     t.string   "name",       limit: 255

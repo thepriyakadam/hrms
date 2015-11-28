@@ -60,5 +60,8 @@ gem 'bootstrap_form'
 # Jquery validation
 gem 'jquery-validation-rails'
 
-#
+# UML Diagram
 gem "rails-erd"
+
+# Auto increement
+gem 'protokoll'

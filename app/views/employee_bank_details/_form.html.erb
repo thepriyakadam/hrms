@@ -1,0 +1,53 @@
+<%= form_for(@employee_bank_detail) do |f| %>
+  <% if @employee_bank_detail.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@employee_bank_detail.errors.count, "error") %> prohibited this employee_bank_detail from being saved:</h2>
+
+      <ul>
+      <% @employee_bank_detail.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :employee_id %><br>
+    <%= f.text_field :employee_id %>
+  </div>
+  <div class="field">
+    <%= f.label :account_no %><br>
+    <%= f.text_field :account_no %>
+  </div>
+  <div class="field">
+    <%= f.label :bank_name %><br>
+    <%= f.text_field :bank_name %>
+  </div>
+  <div class="field">
+    <%= f.label :branch_name %><br>
+    <%= f.text_field :branch_name %>
+  </div>
+  <div class="field">
+    <%= f.label :address %><br>
+    <%= f.text_field :address %>
+  </div>
+  <div class="field">
+    <%= f.label :contact_no %><br>
+    <%= f.text_field :contact_no %>
+  </div>
+  <div class="field">
+    <%= f.label :micr_code %><br>
+    <%= f.text_field :micr_code %>
+  </div>
+  <div class="field">
+    <%= f.label :branch_code %><br>
+    <%= f.text_field :branch_code %>
+  </div>
+  <div class="field">
+    <%= f.label :ifsc_code %><br>
+    <%= f.text_field :ifsc_code %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151126092647) do
+ActiveRecord::Schema.define(version: 20151128104626) do
 
   create_table "awards", force: :cascade do |t|
     t.integer  "employee_id", limit: 4
@@ -123,6 +123,22 @@ ActiveRecord::Schema.define(version: 20151126092647) do
 
   add_index "departments", ["company_location_id"], name: "index_departments_on_company_location_id", using: :btree
   add_index "departments", ["department_type_id"], name: "index_departments_on_department_type_id", using: :btree
+
+  create_table "employee_bank_details", force: :cascade do |t|
+    t.integer  "employee_id", limit: 4
+    t.string   "account_no",  limit: 255
+    t.string   "bank_name",   limit: 255
+    t.string   "branch_name", limit: 255
+    t.string   "address",     limit: 255
+    t.string   "contact_no",  limit: 255
+    t.string   "micr_code",   limit: 255
+    t.string   "branch_code", limit: 255
+    t.string   "ifsc_code",   limit: 255
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  add_index "employee_bank_details", ["employee_id"], name: "index_employee_bank_details_on_employee_id", using: :btree
 
   create_table "employee_grades", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -409,6 +425,7 @@ ActiveRecord::Schema.define(version: 20151126092647) do
   add_foreign_key "company_leavs", "leav_categories"
   add_foreign_key "company_locations", "companies"
   add_foreign_key "departments", "company_locations"
+  add_foreign_key "employee_bank_details", "employees"
   add_foreign_key "employee_leav_balances", "company_leavs"
   add_foreign_key "employee_leav_balances", "employees"
   add_foreign_key "employee_leav_balances", "leav_categories"

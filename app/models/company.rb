@@ -53,7 +53,6 @@ class Company < ActiveRecord::Base
   end
 
 
-
 # def email_regex
 #    if email.present? and not email.match(/^(www\.)?[a-zA-Z0-9\-]{3,}(\.(com|net|org))?$/\Z/)
 #        errors.add :email, "This is not a valid email format"

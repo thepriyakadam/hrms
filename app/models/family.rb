@@ -23,14 +23,55 @@ class Family < ActiveRecord::Base
   validate :state_regex
   validate :district_regex
   validate :city_regex
-  
+  validate :email_regex
+  validate :relation_regex
+  validate :adhar_no_regex
+  validate :pan_no_regex
+  validate :religion_regex
+  validate :profession_regex
 
   validates :permanent_address, :presence => true, :allow_blank => true
   validate :address_regex
 
   def address_regex
-    if permanent_address.present? and not permanent_address.match(/\A[A-Za-z0-9-_]{4,50}\Z/)
+    if permanent_address.present? and not permanent_address.match(/\A[A-Za-z0-9-_]{4,100}\Z/)
       errors.add :permanent_address,"Please Enter The Correct Address"
+    end
+  end
+
+  def adhar_no_regex
+    if adhar_no.present? and not adhar_no.match(/[0-9]{12}/)
+      errors.add :adhar_no,"Please specify Correct Adhar Number"
+    end
+  end
+
+  def religion_regex
+    if religion.present? and not religion.match(/[a-zA-Z]{50}/)
+      errors.add :religion,"Religion allows only Characters"
+    end
+  end
+
+  def profession_regex
+    if profession.present? and not profession.match(/[a-zA-Z]{30}/)
+      errors.add :profession,"Profession allows only Characters"
+    end
+  end
+
+def pan_no_regex
+    if pan_no.present? and not pan_no.match(/^([A-Z]{5})(\d{10})([A-Z]{1})$/)
+      errors.add :pan_no,"Please specify Correct Pan Card Number"
+    end
+  end
+
+  def email_regex
+    if email.present? and not email.match(/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.(com|net|org|info|com.au|))?$/)
+      errors.add :email, "This is not a valid email format"
+    end
+  end
+
+  def current_address_regex
+    if current_addresscurrent_addresscurrent_address.present? and not current_address.match(/\A[A-Za-z0-9-_]{4,100}\Z/)
+      errors.add :current_addresscurrent_address,"Please Enter The Correct Address Details"
     end
   end
 
@@ -51,6 +92,12 @@ def no_of_member_regex
   def first_name_regex
     if f_name.present? and not f_name.match(/[a-zA-Z]{50}/)
       errors.add :f_name,"First Name allows only Characters"
+    end
+  end
+
+  def relation_regex
+    if relation.present? and not relation.match(/[a-zA-Z]{30}/)
+      errors.add :relation,"Relation Allows Only Characters"
     end
   end
 

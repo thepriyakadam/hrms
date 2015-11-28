@@ -18,12 +18,8 @@ class Department < ActiveRecord::Base
   validate :manager_regex
   validate :hr_regex
 
-  validates_length_of :name, is: 30,  message:"Dept Name allows upto upto 30 char max"
+ 
   validates_length_of :contact_no, within: 10..13, message:"Enter the Correct contact number"
-   validates_length_of :head_of_department, is: 50,  message:"Enter the Address upto 50 char max"
-  validates_length_of :manager, is:50, message:"Enter the Manager detail upto 50 char max"
-  validates_length_of :hr, is:50, message:"Enter the HR detail upto 50 char max"
-   validates_length_of :pin_code, is: 6,  message:"Pincode Details allows max 6 digits"
   validates_length_of :address,is:100, message:"Enter the Address upto 100 char max"
   
   
@@ -40,33 +36,33 @@ class Department < ActiveRecord::Base
   end
 
   def name_regex
-    if name.present? and not name.match(/\A[A-Za-z0-9-_]{4,30}\Z/)
+    if name.present? and not name.match(/[a-zA-Z]{50}/)
       errors.add :name,"Please Enter The Correct Company Name"
     end
   end
 
 
   def head_of_department_regex
-    if head_of_department.present? and not head_of_department.match(/\A[A-Za-z0-9-_]{4,50}\Z/)
-      errors.add :head_of_department,"Enter the Head Of Department upto 50 char max"
+    if head_of_department.present? and not head_of_department.match(/[a-zA-Z]{50}/)
+      errors.add :head_of_department,""
     end
   end
 
   def manager_regex
-    if manager.present? and not manager.match(/\A[A-Za-z0-9-_]{4,50}\Z/)
+    if manager.present? and not manager.match(/[a-zA-Z]{50}/)
       errors.add :manager,"Enter the Manager detail upto 50 char max"
     end
   end
 
   def hr_regex
-    if hr.present? and not hr.match(/\A[A-Za-z0-9-_]{4,50}\Z/)
+    if hr.present? and not hr.match(/[a-zA-Z]{50}/)
       errors.add :hr,"Enter the HR detail upto 50 char max"
     end
   end
 
 
   def email_regex
-    if email.present? and not email.match(/\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/)
+    if email.present? and not email.match(/[a-zA-Z]{50}/)
       errors.add :email, "This is not a valid email format"
     end
    end

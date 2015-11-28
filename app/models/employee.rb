@@ -34,6 +34,7 @@ class Employee < ActiveRecord::Base
   validate :licence_regex
   validate :district_regex
   validate :city_regex
+  
   # validate :ref_from_regex
   # validate :admin_hr_regex
   # validate :desig_regex
@@ -98,38 +99,45 @@ class Employee < ActiveRecord::Base
 
 
 def state_regex
-    if state.present? and not state.match(/[a-zA-Z]{50}/)
+    if state.present? and not state.match(/\A[A-Za-z_ ]{4,50}\Z/)
       errors.add :state,"State allows only Characters"
     end
   end
 
 def district_regex
-    if district.present? and not district.match(/[a-zA-Z]{50}/)
+    if district.present? and not district.match(/\A[A-Za-z_ ]{4,50}\Z/)
       errors.add :district,"District allows only Characters"
     end
   end
 
   def city_regex
-    if city.present? and not city.match(/[a-zA-Z]{50}/)
+    if city.present? and not city.match(/\A[A-Za-z_ ]{4,50}\Z/)
       errors.add :city,"City allows only Characters"
     end
   end
 
-  def first_name_regex
-    if first_name.present? and not first_name.match(/[a-zA-Z]{50}/)
+def first_name_regex
+    if first_name.present? and not first_name.match(/\A[A-Za-z_]{4,50}\Z/)
       errors.add :first_name,"First Name allows only Characters"
     end
   end
+ 
+
+  # def first_name_regex
+  #   if first_name.present? and not first_name.match(/[a-zA-Z]{50}/)
+  #     errors.add :first_name,"First Name allows only Characters"
+  #   end
+  # end
 
 
 def last_name_regex
-    if last_name.present? and not last_name.match(/[a-zA-Z]{50}/)
+    if last_name.present? and not last_name.match(/\A[A-Za-z_ ]{4,50}\Z/)
       errors.add :last_name,"Last Name Allows only Characters"
     end
   end
 
   def middle_name_regex
-    if middle_name.present? and not middle_name.match(/[a-zA-Z]{50}/)
+    if middle_name.present? and not middle_name.match(/\A[A-Za-z_ ]{4,50}\Z/)
       errors.add :middle_name,"Middle Name Allows only Characters"
     end
   end

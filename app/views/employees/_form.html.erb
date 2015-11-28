@@ -1,4 +1,4 @@
-<!--SELECT2 EXAMPLE -->
+
 <div class="box box-default">
   <div class="box-header with-border">
     <h3 class="box-title">Create Employee</h3>
@@ -119,7 +119,7 @@
 
         <div class="col-sm-3">
           <div class="form-group required">
-            <%= f.number_field :pin_code %>
+            <%= f.number_field :pin_code,label:"Pin Code/ZIP"%>
           </div>
         </div>
       </div>
@@ -170,6 +170,8 @@
           </div>
         </div>
       </div>
+
+     
 
       <hr>
 
@@ -226,14 +228,11 @@
             </div>
           </div>
 
-          <div class="col-sm-3">
+         <!--  <div class="col-sm-3">
             <div class="form-group required">
               <%= o.text_field :ctc %>
             </div>
-          </div>
-        </div>
-
-        <div class="row">
+          </div> -->
           <div class="col-sm-3">
             <div class="input-group">
               <div class="input-group-addon">
@@ -242,6 +241,27 @@
               <%= o.text_field :confirmation_date, class: 'datemask'%>
             </div>
           </div>
+
+        </div>
+
+        <!-- <div class="row">
+          <div class="col-sm-3">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <%= o.text_field :confirmation_date, class: 'datemask'%>
+            </div>
+          </div> -->
+           
+
+           <div class="row">
+          <div class="col-sm-3">
+            <div class="form-group required">
+              <%= o.text_field :medical_schem %>
+            </div>
+          </div>
+           
 
           <div class="col-sm-3">
             <div class="form-group required">
@@ -262,12 +282,7 @@
           </div>
         </div>
 
-        <div class="row">
-          <div class="col-sm-3">
-            <div class="form-group required">
-              <%= o.text_field :medical_schem %>
-            </div>
-          </div>
+       
         </div>
       <% end %>      
 
@@ -283,4 +298,4 @@
   <div class="box-footer">
     Visit <a href="https://select2.github.io/">Select2 documentation</a> for more examples and information about the plugin.
   </div>
-</div><!-- /.box-->
+</div><!-- /.box

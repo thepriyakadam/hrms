@@ -28,19 +28,20 @@
           <!-- /.search form -->
 
           <!-- Sidebar Menu -->
-          <ul class="sidebar-menu">
-            <li class="header">HEADER</li>
-            <!-- Optionally, you can add icons to the links -->
-            <li class="active"><a href="#"><i class="fa fa-link"></i> <span>Link</span></a></li>
-            <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
-            <li class="treeview">
-              <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span> <i class="fa fa-angle-left pull-right"></i></a>
-              <ul class="treeview-menu">
-                <li><a href="#">Link in level 2</a></li>
-                <li><a href="#">Link in level 2</a></li>
-              </ul>
-            </li>
-          </ul><!-- /.sidebar-menu -->
+          <%if current_user.class == Group %>
+            <%= render 'sidebars/group' %>
+          <%elsif current_user.class == Member %>
+            <% if current_user.account_type == 'Company' %>
+              <%= render 'sidebars/company' %>
+            <% elsif current_user.account_type == 'CompanyLocation' %>
+              <%= render 'sidebars/company_location' %>
+            <% elsif current_user.account_type == 'Department' %>
+              <%= render 'sidebars/department' %>
+            <% elsif current_user.account_type == 'Employee' %>
+              <%= render 'sidebars/employee' %>
+            <% end %>
+          <%end%>
+          
         </section>
         <!-- /.sidebar -->
       </aside>

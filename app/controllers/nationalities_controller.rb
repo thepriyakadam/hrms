@@ -1,6 +1,6 @@
 class NationalitiesController < ApplicationController
   before_action :set_nationality, only: [:show, :edit, :update, :destroy]
-
+  load_and_authorize_resource
   # GET /nationalities
   # GET /nationalities.json
   def index

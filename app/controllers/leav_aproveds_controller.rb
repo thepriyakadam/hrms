@@ -1,21 +1,16 @@
 class LeavAprovedsController < ApplicationController
-
+  #load_and_authorize_resource
   # POST /leav_aproveds
   # POST /leav_aproveds.json
   def create
-    @leav_aproved = LeavAproved.new
     @emp_leave_request = EmployeeLeavRequest.find(params[:format])
-    @leav_aproved.employee_leav_request_id = params[:format]
-    @leav_aproved.approved_date = Date.today
-    if @leav_aproved.save
+    ActiveRecord::Base.transaction do
+      @emp_leave_request.create_leav_aproved(approved_date: Date.today)
       @employee_leav_balance = EmployeeLeavBalance.where('employee_id = ? AND leav_category_id = ?',@emp_leave_request.employee_id,@emp_leave_request.leav_category_id).take
       count = @employee_leav_balance.no_of_leave.to_f - @emp_leave_request.leave_count
       @employee_leav_balance.update(no_of_leave: count)
       flash[:notice] = "Leave approved successfully"
       redirect_to approved_or_rejected_leave_request_employee_leav_requests_path
-    else
-      flash.now[:alert] = "Leave not approved successfully"
-      render 'employee_leav_requests/approved_or_rejected_leave_request'
     end
   end
 

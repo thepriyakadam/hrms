@@ -1,6 +1,6 @@
 class EmployeeLeavRequestsController < ApplicationController
   before_action :set_employee_leav_request, only: [:show, :edit, :update, :destroy]
-
+  #load_and_authorize_resource
   # GET /employee_leav_requests
   # GET /employee_leav_requests.json
   def index
@@ -37,21 +37,27 @@ class EmployeeLeavRequestsController < ApplicationController
       @employee_leav_request.leave_count = 0.5
     end
     @emp_leave_bal = EmployeeLeavBalance.where('employee_id = ? AND leav_category_id = ?',current_user.account_id, @employee_leav_request.leav_category_id).take
-    if @employee_leav_request.leave_count.to_f > @emp_leave_bal.no_of_leave.to_f
+    if @emp_leave_bal.nil?
+      @total_leaves = EmployeeLeavBalance.where('employee_id = ?', current_user.account_id)
+      flash.now[:alert] = 'Leav balance not set- contact to admin.'
+      render :new
+    else
+      if @employee_leav_request.leave_count.to_f > @emp_leave_bal.try(:no_of_leave).to_f
       @total_leaves = EmployeeLeavBalance.where('employee_id = ?', current_user.account_id)
       flash.now[:alert] = 'You exceed the leave limit.'
       render :new
-    else
-      respond_to do |format|
-        if @employee_leav_request.save
-          format.html { redirect_to @employee_leav_request, notice: 'Employee leav request was successfully created.' }
-          format.json { render :show, status: :created, location: @employee_leav_request }
-        else
-          format.html { render :new }
-          format.json { render json: @employee_leav_request.errors, status: :unprocessable_entity }
+      else
+        respond_to do |format|
+          if @employee_leav_request.save
+            format.html { redirect_to @employee_leav_request, notice: 'Employee leav request was successfully created.' }
+            format.json { render :show, status: :created, location: @employee_leav_request }
+          else
+            format.html { render :new }
+            format.json { render json: @employee_leav_request.errors, status: :unprocessable_entity }
+          end
         end
-      end
-    end  
+      end  
+    end
   end
 
   # PATCH/PUT /employee_leav_requests/1

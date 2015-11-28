@@ -2,31 +2,12 @@ class CreateQualifications < ActiveRecord::Migration
   def change
     create_table :qualifications do |t|
       t.references :employee, index: true, foreign_key: true
-      t.string :ssc
-      t.string :ssc_from
-      t.string :ssc_marks
-      t.integer :ssc_year
-      t.string :ssc_bord
-      t.string :diploma
-      t.string :diploma_from
-      t.string :diploma_marks
-      t.integer :diploma_year
-      t.string :diploma_university
-      t.string :hsc
-      t.string :hsc_from
-      t.string :hsc_marks
-      t.integer :hsc_year
-      t.string :hsc_bord
-      t.string :ug
-      t.string :ug_from
-      t.string :ug_marks
-      t.integer :ug_year
-      t.string :ug_university
-      t.string :pg
-      t.string :pg_from
-      t.string :pg_marks
-      t.integer :pg_year
-      t.string :pg_university
+      t.string :course
+      t.string :college
+      t.string :marks
+      t.integer :passout_year
+      t.string :university
+      
 
       t.timestamps null: false
     end

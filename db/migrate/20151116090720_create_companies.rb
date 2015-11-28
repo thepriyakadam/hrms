@@ -2,8 +2,10 @@ class CreateCompanies < ActiveRecord::Migration
   def change
     create_table :companies do |t|
       t.references :group, index: true, foreign_key: true
+      t.string :company_code
+      t.text :description
       t.string :name
-      t.string :company_type
+      t.references :company_type, index: true, foreign_key: true
       t.string :registration_no
       t.string :pan_card_no
       t.string :tax_no

@@ -14,9 +14,6 @@
       <th colspan="2"></th>
     </tr>
     <tr>
-      <th> <strong>Department:</strong></th>
-      <td><%= @employee.department.name %></td>
-
       <th> <strong>First name:</strong></th>
       <td> <%= @employee.first_name %></td>
     </tr>
@@ -130,8 +127,8 @@
     </tr>
 
     <tr>
-      <th><strong>Reffernce from:</strong></th>
-      <td> <%= @employee.joining_detail.reffernce_from %></td>
+      <th><strong>Reference from:</strong></th>
+      <td> <%= @employee.joining_detail.reference_from %></td>
 
       <th><strong>Admin hr:</strong></th>
       <td><%= @employee.joining_detail.admin_hr %></td>
@@ -143,15 +140,6 @@
 
       <th><strong>Designation:</strong></th>
       <td> <%= @employee.joining_detail.designation %></td>
-    </tr>
-
-
-    <tr>
-      <th> <strong>Ctc:</strong></th>
-      <td><%= @employee.joining_detail.ctc %></td>
-
-      <th> <strong>Account no:</strong></th>
-      <td> <%= @employee.joining_detail.account_no %></td>
     </tr>
 
     <tr>

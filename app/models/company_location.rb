@@ -3,7 +3,7 @@ class CompanyLocation < ActiveRecord::Base
   has_one :member, as: :account
 
   validates :name, :presence => true
-  validates :address, :presence => true
+
   validates :city, :presence => true
   validates :district , :presence => true
   validates :contact_no , :presence => true

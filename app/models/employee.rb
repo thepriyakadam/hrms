@@ -19,7 +19,7 @@ class Employee < ActiveRecord::Base
   validates :pin_code, :presence => true
   # validates :reffernce_from, :presence =>
   
-  
+
   validates :date_of_birth, :presence => true
   validates :email, uniqueness: true, presence: true
   validate  :email_regex
@@ -34,42 +34,42 @@ class Employee < ActiveRecord::Base
   validate :licence_regex
   validate :district_regex
   validate :city_regex
-  
+ 
   # validate :ref_from_regex
   # validate :admin_hr_regex
   # validate :desig_regex
   # validate :tech_hr_regex
 
-  validates_length_of :contact_no, within: 10..13, message:"Enter the Correct contact number"
-  validates_length_of :pin_code, is:6,message:"Pin Code allows only 6 digits"
+  # validates_length_of :contact_no, within: 10..13, message:"Enter the Correct contact number"
+  # validates_length_of :pin_code, is:6,message:"Pin Code allows only 6 digits"
 
 
   
-  validates_length_of :permanent_address,is:100, message:"Enter the Address upto 100 char max"
+  # validates_length_of :permanent_address,is:100, message:"Enter the Address upto 100 char max"
 
 
-  def address_regex
-    if permanent_address.present? and not permanent_address.match(/\A[A-Za-z0-9-_]{4,100}\Z/)
-      errors.add :permanent_address,"Please Enter The Correct Address Details"
-    end
-  end
-
-
-
+  # def address_regex
+  #   if permanent_address.present? and not permanent_address.match(/\A[A-Za-z0-9-_]{4,100}\Z/)
+  #     errors.add :permanent_address,"Please Enter The Correct Address Details"
+  #   end
+  # end
 
 
 
-   def pan_no_regex
-    if pan_no.present? and not pan_no.match(/^([A-Z]{5})(\d{10})([A-Z]{1})$/)
-      errors.add :pan_no,"Please specify Correct Pan Card Number"
-    end
-  end
 
-  def licence_regex
-    if licence_no.present? and not licence_no.match(/^([A-Z]{2})([-]{1})(\d{13})$/)
-      errors.add :licence_no,"Please specify Correct Pan Card Number"
-    end
-  end
+
+
+  #  def pan_no_regex
+  #   if pan_no.present? and not pan_no.match(/^([A-Z]{5})(\d{10})([A-Z]{1})$/)
+  #     errors.add :pan_no,"Please specify Correct Pan Card Number"
+  #   end
+  # end
+
+  # def licence_regex
+  #   if licence_no.present? and not licence_no.match(/^([A-Z]{2})([-]{1})(\d{13})$/)
+  #     errors.add :licence_no,"Please specify Correct Pan Card Number"
+  #   end
+  # end
 
   # def licence_regex
   #   if licence_nopresent? and not licence_no.match(/^[A-Z]{2}-[0-9]{7}$/)
@@ -96,6 +96,7 @@ class Employee < ActiveRecord::Base
   #      errors.add :email, "This is not a valid email format"
   #   end
   #   end 
+
 
 
 def state_regex
@@ -141,6 +142,7 @@ def last_name_regex
       errors.add :middle_name,"Middle Name Allows only Characters"
     end
   end
+
 
 #   def ref_from_regex
 #     if reffernce_from.present? and not reffernce_from.match(/[a-zA-Z]{50}/)

@@ -1,9 +1,30 @@
-<p id="notice"><%= notice %></p>
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Company Type</h3>
+    <div class="box-tools pull-right">
+      <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+      <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+    </div>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover">
+    <tr> 
+      <th colspan="2"></th>
+      <th colspan="2"></th>
+    </tr>
 
-<p>
-  <strong>Name:</strong>
-  <%= @company_type.name %>
-</p>
+    <tr>
+    	<th><strong>Name:</strong></th>
+    	<td><%= @company_type.name %></td>
 
-<%= link_to 'Edit', edit_company_type_path(@company_type) %> |
-<%= link_to 'Back', company_types_path %>
+    </tr>
+
+     </table>
+
+    <%= link_to 'Edit', edit_company_type_path(@company_type),class: 'btn btn-success fa fa-edit' %> |
+    <%= link_to 'Back', company_types_path,class: 'btn btn-default fa fa-arrow-left' %>
+  </div><!-- /.box-body -->
+  <div class="box-footer">
+    Visit <a href="https://select2.github.io/">Select2 documentation</a> for more examples and information about the plugin.
+  </div>
+</div><!-- /.box -->

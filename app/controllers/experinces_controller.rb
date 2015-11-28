@@ -35,6 +35,26 @@ class ExperincesController < ApplicationController
         format.json { render json: @experince.errors, status: :unprocessable_entity }
       end
     end
+
+    def create
+    @experince = Experince.new(experince_params)
+    ActiveRecord::Base.transaction do
+      respond_to do |format|
+        if @experince.save
+          len = params["experince"].length-4
+          for i in 2..len
+            Experince.create(employee_id: params['experince']['employee_id'],company_name: params['experince'][i.to_s]['company_name'], designation: params['experince'][i.to_s]['designation'], ctc: params['experince'][i.to_s]['ctc']) 
+          end
+          format.html { redirect_to @experince, notice: 'Experince was successfully created.' }
+          format.json { render :show, status: :created, location: @experince }
+        else
+          format.html { render :new }
+          format.json { render json: @@xperince.errors, status: :unprocessable_entity }
+        end
+      end
+    end
+end
+
   end
 
   # PATCH/PUT /experinces/1

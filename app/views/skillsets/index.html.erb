@@ -14,7 +14,7 @@
       <th>Employee</th>
       <th>Name</th>
       <th>Skill level</th>
-       <th>Action</th>
+      <th>Action</th>
     </tr>
   </thead>
 
@@ -24,12 +24,12 @@
         <td><%= skillset.employee %></td>
         <td><%= skillset.name %></td>
         <td><%= skillset.skill_level %></td>
-         <td>
+        <td>
          <%= link_to '', skillset,class: 'btn btn-default fa fa-eye' %>
-            <%= link_to '', edit_skillset_path(skillset),class: 'btn btn-success fa fa-edit' %>
-            <%= link_to '', skillset, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger fa fa-close' %>
-          </td>
-        </tr>
+         <%= link_to '', edit_skillset_path(skillset),class: 'btn btn-success fa fa-edit' %>
+         <%= link_to '', skillset, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger fa fa-close' %>
+        </td>
+      </tr>
       <% end %>
     </tbody>
   </table>

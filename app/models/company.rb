@@ -32,6 +32,7 @@ class Company < ActiveRecord::Base
 
 
   validates_length_of :contact_no, within: 10..13, message:"Enter the Correct contact number"
+
   # validates_length_of :tax_no, is: 5,  message:"Enter the Valid Tax number"
   # validates_length_of :address, is: 100,  message:"Enter the Address"
   # validates_length_of :pan_card_no, is: 10,  message:"Enter the Pancard Details max 10 char"

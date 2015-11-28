@@ -1,14 +1,27 @@
+<style type="text/css">
+  .example-modal .modal {
+        position: relative;
+        top: 1;
+        bottom: auto;
+        right: auto;
+        left: auto;
+        display: block;
+      }
+      .example-modal .modal {
+        background: transparent !important;
+      }
+</style>
 
-<div class="box box-default">
-  <div class="box-header with-border">
-    <h3 class="box-title">Company Types</h3>
-    <div class="box-tools pull-right">
-      <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-      <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
-    </div>
-  </div>
+<div class="example-modal">
+  <div class="modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Modal Default</h4>
+        </div>
+        <div class="modal-body">
 
-<div class="box-body">
 <%= bootstrap_form_for(@company_type,html: {id: 'company_type'}) do |f| %>
   <div class="row">
     <div class="col-sm-1"></div>
@@ -18,14 +31,16 @@
        </div>
     </div>
   </div>
- <div class="row">
-  <div class="col-sm-5">
-    <div class="actions">
-     <%= f.submit "Create Company type",class: "btn btn-primary",data: { disable_with: 'Wait....'} %>
-    </div>
-    <% end %>
- </div><!-- /.box-body -->
-  <div class="box-footer">
-    Visit <a href="https://select2.github.io/">Select2 documentation</a> for more examples and information about the plugin.
-  </div>
-</div><!-- /.box -->
+    
+ 
+
+
+</div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+          <%= f.submit "Create Company type",class: "btn btn-primary",data: { disable_with: 'Wait....'} %><% end %>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+</div><!-- /.example-modal -->

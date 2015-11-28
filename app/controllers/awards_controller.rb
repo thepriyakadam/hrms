@@ -31,7 +31,7 @@ class AwardsController < ApplicationController
         if @award.save
           len = params["award"].length-3
           for i in 2..len
-            Award.create(employee_id: params['award']['employee_id'],award_name: params['award'][i.to_s]['award_name'], year: params['award'][i.to_s]['year'], award_from: params['award'][i.to_s]['award_from']) 
+            Award.create(employee_id: params['award']['employee_id'],no_of_year_experince: params['experince'][i.to_s]['no_of_year_experince'], year: params['award'][i.to_s]['year'], award_from: params['award'][i.to_s]['award_from']) 
           end
           format.html { redirect_to @award, notice: 'Award was successfully created.' }
           format.json { render :show, status: :created, location: @award }

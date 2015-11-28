@@ -13,12 +13,12 @@
       <th>Company location</th>
       <th>Name</th>
       <th>Department type</th>
-      <th>Address</th>
-      <th>Head of department</th>
       <th>Contact no</th>
+      <!-- <th>Address</th>
+      <th>Head of department</th>
       <th>Manager</th>
       <th>Hr</th>
-      <th>Email</th>
+      <th>Email</th> -->
       <th>Action</th>
     </tr>
   </thead>
@@ -29,12 +29,12 @@
         <td><%= department.company_location.name %></td>
         <td><%= department.name %></td>
         <td><%= department.department_type.name %></td>
-        <td><%= department.address %></td>
-        <td><%= department.head_of_department %></td>
         <td><%= department.contact_no %></td>
+       <!--  <td><%= department.address %></td>
+        <td><%= department.head_of_department %></td>
         <td><%= department.manager %></td>
         <td><%= department.hr %></td>
-         <td><%= department.email %></td>
+         <td><%= department.email %></td> -->
         <td>
             <%= link_to '', department, class: 'btn btn-default fa fa-eye' %>
             <%= link_to '', edit_department_path(department), class: 'btn btn-success fa fa-edit' %>

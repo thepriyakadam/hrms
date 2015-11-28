@@ -11,8 +11,8 @@ class Family < ActiveRecord::Base
   
   validates :email, uniqueness: true
   validate  :email_regex
-  validate  :no_of_member_regex
-   validate :first_name_regex
+  # validate  :no_of_member_regex
+  validate :first_name_regex
   validate :last_name_regex
   validate :middle_name_regex
   validate :state_regex
@@ -32,11 +32,11 @@ class Family < ActiveRecord::Base
     end
   end
 
-  def no_of_member_regex
-    if no_of_member.present? and not no_of_member.match(/[0-9]{4}/)
-      errors.add :no_of_member,"No of members allow only digits"
-    end
-  end
+  # def no_of_member_regex
+  #   if no_of_member.present? and not no_of_member.match(/[0-9]{4}/)
+  #     errors.add :no_of_member,"No of members allow only digits"
+  #   end
+  # end
 
 
   def first_name_regex

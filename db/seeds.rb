@@ -34,3 +34,8 @@ employee_grade = ['G1','G2','G3','G4']
 employee_grade.each do |d|
 	EmployeeGrade.create(name: d)
 end
+
+leave_categories = ['Seak Leave','Casual Leave','Maternal Leave','Paternal Leave']
+leave_categories.each do |d|
+	LeavCategory.create(name: d)
+end

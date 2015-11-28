@@ -2,6 +2,7 @@ class CreateCompanyLocations < ActiveRecord::Migration
   def change
     create_table :company_locations do |t|
       t.references :company, index: true, foreign_key: true
+      t.string :location_code
       t.string :name
       t.string :email
       t.string :address

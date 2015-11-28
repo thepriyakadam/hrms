@@ -1,4 +1,4 @@
-<!--SELECT2 EXAMPLE -->
+
 <div class="box box-default">
   <div class="box-header with-border">
     <h3 class="box-title">Create Employee</h3>
@@ -10,8 +10,6 @@
   <div class="box-body">
     <%= bootstrap_form_for(@employee,html: {id: 'employee'}) do |f| %>
       
-      <%= f.hidden_field :department_id, value: current_user.account_id %>
-
       <div class="row">
         <div class="col-sm-3">
           <div class="form-group required">
@@ -119,7 +117,7 @@
 
         <div class="col-sm-3">
           <div class="form-group required">
-            <%= f.number_field :pin_code %>
+            <%= f.number_field :pin_code,label:"Pin Code/ZIP"%>
           </div>
         </div>
       </div>
@@ -171,6 +169,8 @@
         </div>
       </div>
 
+     
+
       <hr>
 
       <!-- Nested Form -->
@@ -190,7 +190,7 @@
 
           <div class="col-sm-3">
             <div class="form-group required">
-              <%= o.text_field :reffernce_from,label:"Reference From" %>
+              <%= o.text_field :reference_from,label:"Reference From" %>
             </div>
           </div>
 
@@ -221,20 +221,6 @@
           </div>
 
           <div class="col-sm-3">
-            <div class="field">
-              <%= o.text_field :account_no %>
-            </div>
-          </div>
-
-          <div class="col-sm-3">
-            <div class="form-group required">
-              <%= o.text_field :ctc %>
-            </div>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-sm-3">
             <div class="input-group">
               <div class="input-group-addon">
                 <i class="fa fa-calendar"></i>
@@ -242,6 +228,27 @@
               <%= o.text_field :confirmation_date, class: 'datemask'%>
             </div>
           </div>
+
+        </div>
+
+        <!-- <div class="row">
+          <div class="col-sm-3">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <%= o.text_field :confirmation_date, class: 'datemask'%>
+            </div>
+          </div> -->
+           
+
+           <div class="row">
+          <div class="col-sm-3">
+            <div class="form-group required">
+              <%= o.text_field :medical_schem %>
+            </div>
+          </div>
+           
 
           <div class="col-sm-3">
             <div class="form-group required">
@@ -262,12 +269,7 @@
           </div>
         </div>
 
-        <div class="row">
-          <div class="col-sm-3">
-            <div class="form-group required">
-              <%= o.text_field :medical_schem %>
-            </div>
-          </div>
+       
         </div>
       <% end %>      
 
@@ -283,4 +285,4 @@
   <div class="box-footer">
     Visit <a href="https://select2.github.io/">Select2 documentation</a> for more examples and information about the plugin.
   </div>
-</div><!-- /.box-->
+</div><!-- /.box

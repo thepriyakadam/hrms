@@ -9,11 +9,16 @@
   </div><!-- /.box-header -->
   <div class="box-body">
     <%= bootstrap_form_for(@company_location,html: {id: 'company_location'}) do |f| %>
-      <%= f.hidden_field :company_id, value: current_user.account_id %>
         <div class="row">
           <div class="col-sm-3">
             <div class="form-group required">
-              <%= f.text_field :name %>
+             <%= f.select :company_id, all_company %>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="form-group required">
+              <%= f.text_field :name,label:"Location Name" %>
             </div>
           </div>
 
@@ -23,9 +28,13 @@
             </div>
           </div>
 
-          <div class="col-sm-3">
-            <div class="form-group required">
-              <%= f.text_field :contact_no %>
+          
+        </div>
+
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="field">
+              <%= f.text_area :address %>
             </div>
           </div>
         </div>
@@ -44,16 +53,16 @@
           </div>
 
           <div class="col-sm-3">
-            <div class="form-group required">
-              <%= f.text_field :address %>
+            <div class="field">
+              <%= f.number_field :pin_code,label:"Pin Code/ZIP" %>
             </div>
           </div>
 
           <div class="col-sm-3">
-              <div class="form-group required">
-                  <%= f.number_field :pin_code %>
-              </div>
+            <div class="form-group required">
+              <%= f.text_field :contact_no %>
             </div>
+          </div>
         </div>
 
          <div class="row">

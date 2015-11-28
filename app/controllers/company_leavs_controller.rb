@@ -1,6 +1,6 @@
 class CompanyLeavsController < ApplicationController
   before_action :set_company_leav, only: [:show, :edit, :update, :destroy]
-
+  #load_and_authorize_resource
   # GET /company_leavs
   # GET /company_leavs.json
   def index

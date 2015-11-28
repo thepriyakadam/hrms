@@ -2,6 +2,7 @@ class CreateEmployees < ActiveRecord::Migration
   def change
     create_table :employees do |t|
       t.references :department, index: true, foreign_key: true
+      t.string :employee_code, index: true
       t.string :first_name
       t.string :middle_name
       t.string :last_name
@@ -22,9 +23,11 @@ class CreateEmployees < ActiveRecord::Migration
       t.references :nationality, index: true, foreign_key: true
       t.references :blood_group, index: true, foreign_key: true
       t.string :handicap
+      t.string :handicap_type
       t.string :status
       t.references :employee_type, index: true, foreign_key: true
       t.string :gender
+      t.string :religion
 
       t.timestamps null: false
     end

@@ -1,6 +1,6 @@
 class ExperincesController < ApplicationController
   before_action :set_experince, only: [:show, :edit, :update, :destroy]
-
+  load_and_authorize_resource
   # GET /experinces
   # GET /experinces.json
   def index

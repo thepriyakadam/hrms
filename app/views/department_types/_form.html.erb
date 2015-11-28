@@ -11,18 +11,6 @@
 <div class="box-body">
 <%= bootstrap_form_for(@department_type,html: {id: 'department_type'}) do |f| %>
 
-  <% if @department_type.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@department_type.errors.count, "error") %> prohibited this department_type from being saved:</h2>
-
-      <ul>
-      <% @department_type.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
   <div class="row">
     <div class="col-sm-1"></div>
       <div class="col-sm-3">

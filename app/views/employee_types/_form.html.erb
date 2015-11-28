@@ -10,18 +10,8 @@
 
 
  <div class="box-body">
-<%= bootstrap_form_for(@employee_type,html: {id: 'employee_type'}) do |f| %>
-  <% if @employee_type.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@employee_type.errors.count, "error") %> prohibited this employee_type from being saved:</h2>
 
-      <ul>
-      <% @employee_type.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+<%= bootstrap_form_for(@employee_type,html: {id: 'employee_type'}) do |f| %>
 
   <div class="row">
     <div class="col-sm-1"></div>

@@ -25,15 +25,20 @@ class SkillsetsController < ApplicationController
   # POST /skillsets.json
   def create
     @skillset = Skillset.new(skillset_params)
-
-    respond_to do |format|
-      if @skillset.save
+    ActiveRecord::Base.transaction do
+      respond_to do |format|
+        if @skillset.save
+          len = params["skillset"].length-2
+          for i in 2..len
+            Skillset.create(employee_id: params['skillset']['employee_id'],name: params['skillset'][i.to_s]['name'], skill_level: params['skillset']) 
+          end
         format.html { redirect_to @skillset, notice: 'Skillset was successfully created.' }
         format.json { render :show, status: :created, location: @skillset }
       else
         format.html { render :new }
         format.json { render json: @skillset.errors, status: :unprocessable_entity }
       end
+    end
     end
   end
 

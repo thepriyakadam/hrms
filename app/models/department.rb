@@ -6,7 +6,7 @@ class Department < ActiveRecord::Base
   after_create :create_user_account
 
   validates :name, :presence => true
-  validates :department_type_id :presence => true
+  validates :department_type_id, :presence => true
   def create_user_account
     department = Department.find(id)
     pass = (0...8).map { (65 + rand(26)).chr}.join

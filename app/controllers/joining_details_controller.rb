@@ -1,6 +1,6 @@
 class JoiningDetailsController < ApplicationController
   before_action :set_joining_detail, only: [:show, :edit, :update, :destroy]
-
+  load_and_authorize_resource
   # GET /joining_details
   # GET /joining_details.json
   def index

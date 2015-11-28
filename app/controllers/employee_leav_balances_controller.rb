@@ -1,6 +1,6 @@
 class EmployeeLeavBalancesController < ApplicationController
   before_action :set_employee_leav_balance, only: [:show, :edit, :update, :destroy]
-
+  load_and_authorize_resource
   # GET /employee_leav_balances
   # GET /employee_leav_balances.json
   def index

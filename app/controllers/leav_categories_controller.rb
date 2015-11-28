@@ -1,6 +1,6 @@
 class LeavCategoriesController < ApplicationController
   before_action :set_leav_category, only: [:show, :edit, :update, :destroy]
-
+  load_and_authorize_resource
   # GET /leav_categories
   # GET /leav_categories.json
   def index

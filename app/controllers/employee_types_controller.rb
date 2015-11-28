@@ -1,6 +1,6 @@
 class EmployeeTypesController < ApplicationController
   before_action :set_employee_type, only: [:show, :edit, :update, :destroy]
-
+  load_and_authorize_resource
   # GET /employee_types
   # GET /employee_types.json
   def index

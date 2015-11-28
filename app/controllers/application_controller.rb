@@ -8,10 +8,20 @@ class ApplicationController < ActionController::Base
   helper_method :user_signed_in?
   helper_method :current_user
   include LocalSubdomain
+
+  rescue_from CanCan::AccessDenied do |exception|
+    flash[:alert] = "Sorry! You are not Authorized"
+    redirect_to root_url
+  end
   
   def check_subdomain
     if group_signed_in?
       unless request.subdomain == current_user.subdomain
+        flash[:alert] =  "You are not authorized to access that subdomain."
+        redirect_to root_url(:subdomain => current_user.subdomain)
+      end
+    elsif member_signed_in?
+      unless request.subdomain == Apartment::Tenant.current_tenant
         flash[:alert] =  "You are not authorized to access that subdomain."
         redirect_to root_url(:subdomain => current_user.subdomain)
       end

@@ -1,6 +1,6 @@
 class CompanyTypesController < ApplicationController
   before_action :set_company_type, only: [:show, :edit, :update, :destroy]
-
+  load_and_authorize_resource
   # GET /company_types
   # GET /company_types.json
   def index

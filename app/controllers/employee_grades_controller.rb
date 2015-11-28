@@ -1,6 +1,6 @@
 class EmployeeGradesController < ApplicationController
   before_action :set_employee_grade, only: [:show, :edit, :update, :destroy]
-
+  load_and_authorize_resource
   # GET /employee_grades
   # GET /employee_grades.json
   def index

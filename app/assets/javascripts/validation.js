@@ -226,8 +226,7 @@
 //       },
 
 //       "company[email]":{
-//        required: "Please Specify Email ID",
-//         maxlength: "Email address can't exceed max limit"
+//        required: "Please Specify Email ID"
 //       },
 //       "company[starting_date]":{
 //           required: "Date can't be blank",
@@ -279,8 +278,6 @@
 //       },
 
 //      "company_location[email]":{
-//         loginRegex: true,
-//         required: true,
 //         loginRegex: true
 //       }, 
 
@@ -310,8 +307,7 @@
 //       },
 
 //       "company_location[address]":{
-//         maxlength: 100,
-//         required: true,
+//         maxlength: 200,
 //         address: true
 
 //       }
@@ -321,12 +317,8 @@
 //         required: "Please specify company Name",
 //         maxlength: "Name allows upto 30 alphabets"
 //       },
-//       "company_location[email]":{
-//        required: "Please Specify Email ID",
-//         maxlength: "Email address can't exceed max limit"
-//       },
-
-//     "company_location[district]":{
+      
+//       "company_location[district]":{
 //       required: "Please Specify District",
 //         maxlength: "Cant exceed more than 100 char"
 //       },
@@ -342,12 +334,10 @@
 //       },
       
 //       "company_location[address]":{
-//       required: "Please Specify Address",
-//         maxlength: "Enter the Address upto 100 char max"
+//         maxlength: "Enter the Address upto 200 char max"
 //       },
 
 //       "company_location[pin_code]":{
-//       required: "Please Enter your Pincode Details",
 //         maxlength: "Please Enter Valid Pincode Details upto 6 digit max"
 //       }
 //     },
@@ -392,8 +382,7 @@
 
 //   "department[email]":{
 //         loginRegex: true,
-//         required: true,
-//         maxlength: 30
+//         required: true
 //       },
 //   "department[pin_code]":{
 //         maxlength: 6,
@@ -439,8 +428,7 @@
 //         maxlength: "Dept Name allows upto upto 30 char maxs"
 //     },
 //       "department[email]":{
-//        required: "Please Specify Email ID",
-//         maxlength: "Email address can't exceed max limit"
+//        required: "Please Specify Email ID"
 //       },
 
 //      "department[pin_code]":{
@@ -661,8 +649,7 @@
 //         maxlength: "Enter the Correct contact number"
 //          },
 //          "employee[email]":{
-//        required: "Please Specify Email ID",
-//         maxlength: "Email address can't exceed max limit"
+//        required: "Please Specify Email ID"
 //       },
 //       "employee[date_of_birth]":{
 //        required: "Please Specify Date Of Birth",
@@ -974,7 +961,6 @@
 //         address: true
 //       },
 //       "family[email]":{
-//         maxlength: 50,
 //         loginRegex: true
 //       },
 //       "family[relation]":{

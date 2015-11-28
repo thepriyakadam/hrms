@@ -47,8 +47,10 @@ group :development do
   gem 'spring'
 end
 
-# Devise
+# Authentication and authorization
 gem 'devise'
+gem 'cancancan', '~> 1.10'
+
 # Apartment for Multitenancy
 gem 'apartment'
 gem 'local-subdomain'
@@ -57,3 +59,6 @@ gem 'bootstrap_form'
 
 # Jquery validation
 gem 'jquery-validation-rails'
+
+#
+gem "rails-erd"

@@ -10,19 +10,17 @@
     <table id="example2" class="table table-bordered table-hover">
     <thead>
       <tr>
-      <th>Employee</th>
-      <th>Leav category</th>
-      <th>Leave type</th>
-      <th>Satrt date</th>
-      <th>End date</th>
-      <th>Action</th>
-    </tr>
-  </thead>
+        <th>Leav category</th>
+        <th>Leave type</th>
+        <th>Satrt date</th>
+        <th>End date</th>
+        <th>Action</th>
+      </tr>
+    </thead>
 
   <tbody>
     <% @employee_leav_requests.each do |employee_leav_request| %>
       <tr>
-        <td><%= employee_leav_request.employee %></td>
         <td><%= employee_leav_request.leav_category.name %></td>
         <td><%= employee_leav_request.leave_type %></td>
         <td><%= employee_leav_request.satrt_date %></td>

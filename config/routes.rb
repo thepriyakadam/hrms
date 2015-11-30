@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :roles
+  resources :employee_bank_details
   resources :leav_cancelleds
   resources :employee_leav_balances
   resources :leav_rejecteds

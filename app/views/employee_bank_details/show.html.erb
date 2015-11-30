@@ -1,49 +1,63 @@
-<p id="notice"><%= notice %></p>
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Employee Bank Details</h3>
+    <div class="box-tools pull-right">
+    <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+      <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+    </div>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover">
+    <tr> 
+      <th colspan="2"></th>
+      <th colspan="2"></th>
+    </tr>
 
-<p>
-  <strong>Employee:</strong>
-  <%= @employee_bank_detail.employee %>
-</p>
+    <tr>
+      <th><strong>Employee:</strong></th>
+      <td> <%= @employee_bank_detail.employee %></td>
 
-<p>
-  <strong>Account no:</strong>
-  <%= @employee_bank_detail.account_no %>
-</p>
+      <th> <strong>Account no:</strong></th>
+      <td><%= @employee_bank_detail.account_no %></td>
+    </tr>
 
-<p>
-  <strong>Bank name:</strong>
-  <%= @employee_bank_detail.bank_name %>
-</p>
+    <tr>
+      <th><strong>Bank name:</strong></th>
+      <td><%= @employee_bank_detail.bank_name %></td>
 
-<p>
-  <strong>Branch name:</strong>
-  <%= @employee_bank_detail.branch_name %>
-</p>
+      <th><strong>Branch name:</strong></th>
+      <td><%= @employee_bank_detail.branch_name %></td>
+    </tr>
 
-<p>
-  <strong>Address:</strong>
-  <%= @employee_bank_detail.address %>
-</p>
+    <tr>
+      <th><strong>Address:</strong></th>
+      <td> <%= @employee_bank_detail.address %></td>
 
-<p>
-  <strong>Contact no:</strong>
-  <%= @employee_bank_detail.contact_no %>
-</p>
+      <th><strong>Contact no:</strong></th>
+      <td> <%= @employee_bank_detail.contact_no %></td>
+    </tr>
 
-<p>
-  <strong>Micr code:</strong>
-  <%= @employee_bank_detail.micr_code %>
-</p>
+    <tr>
+      <th><strong>Micr code:</strong></th>
+      <td><%= @employee_bank_detail.micr_code %></td>
 
-<p>
-  <strong>Branch code:</strong>
-  <%= @employee_bank_detail.branch_code %>
-</p>
+      <th><strong>Branch code:</strong></th>
+      <td> <%= @employee_bank_detail.branch_code %></td>
+    </tr>
 
-<p>
-  <strong>Ifsc code:</strong>
-  <%= @employee_bank_detail.ifsc_code %>
-</p>
+    <tr>
+      <th><strong>Ifsc code:</strong></th>
+      <td><%= @employee_bank_detail.ifsc_code %></td>
 
-<%= link_to 'Edit', edit_employee_bank_detail_path(@employee_bank_detail) %> |
-<%= link_to 'Back', employee_bank_details_path %>
+      <th></th>
+      <td></td>
+    </tr>
+    </table>
+
+    <%= link_to 'Edit', edit_employee_bank_detail_path(@employee_bank_detail),class: 'btn btn-success fa fa-edit' %> |
+    <%= link_to 'Back', employee_bank_details_path,class: 'btn btn-default fa fa-arrow-left' %>
+  </div><!-- /.box-body -->
+  <div class="box-footer">
+    Visit <a href="https://select2.github.io/">Select2 documentation</a> for more examples and information about the plugin.
+  </div>
+</div><!-- /.box -->

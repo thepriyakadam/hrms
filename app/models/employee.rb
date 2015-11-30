@@ -29,6 +29,7 @@ class Employee < ActiveRecord::Base
   validate :middle_name_regex
   validate :district_regex
   validate :city_regex
+
   #validate :pan_no_regex
 
   def adhar_no_regex

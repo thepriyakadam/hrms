@@ -21,6 +21,7 @@
   <tbody>
     <% @employees.each do |employee| %>
       <tr>
+
         <td><%= employee.department.try(:name) %></td>
         <td><%= employee.first_name %></td>
         <td><%= employee.contact_no %></td>

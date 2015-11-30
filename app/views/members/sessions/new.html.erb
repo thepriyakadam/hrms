@@ -27,8 +27,10 @@
             </label>
           </div>
         </div><!-- /.col -->
-        <div class="col-xs-4">
-          <%= f.submit "Log in",class: "btn btn-primary btn-block btn-flat" %>
+      </div>
+      <div class="row">  
+        <div class="col-xs-4 pull-left">
+          <%= f.submit "Log in",data: { disable_with: "Logging in..."}, class: "btn btn-primary" %>
         </div><!-- /.col -->
       </div>
         

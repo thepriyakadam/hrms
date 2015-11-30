@@ -7,10 +7,7 @@ class CompanyLocation < ActiveRecord::Base
 
   validates :city, :presence => true
   validates :district , :presence => true
-  validates :contact_no , :presence => true
-  validates :pin_code, :presence => true
-    
-  validates :email, uniqueness: true, :presence => true
+ 
   validate  :email_regex
   
   validates :address, :presence => true

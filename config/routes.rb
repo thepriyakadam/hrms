@@ -25,7 +25,11 @@ Rails.application.routes.draw do
   resources :certifications
   resources :qualifications
   resources :families
-  resources :employees
+  resources :employees do
+    collection do
+      get :assign_role
+    end
+  end
   resources :blood_groups
   resources :nationalities
   resources :employee_types

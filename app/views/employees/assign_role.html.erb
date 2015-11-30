@@ -1,0 +1,32 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Employee List</h3>    
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover">
+	    <thead>
+	      <tr>
+		      <th>Name</th>
+		      <th>Contact no</th>
+		      <th>Select Role</th>
+		      <th>Reporting To</th>
+		      <th>Action</th>
+		    </tr>
+		  </thead>
+
+		  <tbody>
+		    <% @employees.each do |employee| %>
+		      <tr>
+		        <td><%= employee.first_name %></td>
+		        <td><%= employee.contact_no %></td>
+		        <td><%= select_tag "roles[]", options_from_collection_for_select(@roles, "id", "name") %></td>
+		        <td><%= select_tag "reporting[]", options_from_collection_for_select(@employees, "id", "first_name") %></td>
+		        <td>
+		          <%= link_to 'Assign Role', edit_employee_path(employee), method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger fa fa-close' %>
+		        </td>
+		      </tr>
+		    <% end %>
+		  </tbody>
+	  </table>
+	</div>
+</div>

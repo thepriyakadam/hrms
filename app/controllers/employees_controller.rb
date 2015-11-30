@@ -63,6 +63,11 @@ class EmployeesController < ApplicationController
     end
   end
 
+  def assign_role
+    @employees = Employee.all
+    @roles = Role.all    
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_employee

@@ -1,5 +1,5 @@
 class Department < ActiveRecord::Base
-  protokoll :department_code, :pattern => "DEPT###"
+  protokoll :departement_code, :pattern => "DEPT###"
   belongs_to :company_location
   belongs_to :department_type
   has_many :employees
@@ -12,10 +12,16 @@ class Department < ActiveRecord::Base
 
 
   def dept_name_regex
-    if name.present? and not name.match(/\A[A-Za-z_ ]{1,30}\Z/)
+    if name.present? and not name.match(/\A[A-Za-z&@_ ]{1,30}\Z/)
       errors.add :name,"Dept Name allows only Characters"
     end
   end
+
+  # def company_name_regex
+  #   if name.present? and not name.match(/\A[A-Za-z0-9&@_ ]{1,30}\Z/)
+  #     errors.add :name,"Company Name allows only Characters"
+  #   end
+  # end
 
 
 def contact_no_regex

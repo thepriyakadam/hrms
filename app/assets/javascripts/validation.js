@@ -121,8 +121,7 @@ $.validator.addMethod("address", function (value, element) {
     rules: {
       "company[name]":{
         required: true,
-        maxlength: 30,
-        lettersOnly:true
+        maxlength: 30
       },
       "company[registration_no]":{
         maxlength: 15,
@@ -137,8 +136,7 @@ $.validator.addMethod("address", function (value, element) {
 
       "company[address]":{
           maxlength: 100,
-          required: true,
-          address: true
+          required: true
       },
 
       "company[tax_no]":{
@@ -155,7 +153,7 @@ $.validator.addMethod("address", function (value, element) {
       },
   
       "company[professional_tax_no]":{
-          maxlength: 10,
+          maxlength: 20,
           required: true
       },
       "company[pan_card_no]":{
@@ -199,7 +197,7 @@ $.validator.addMethod("address", function (value, element) {
     messages: {
       "company[name]":{
         required: "Please specify company",
-        maxlength: "Name allows upto 30 alphabets"
+        maxlength: "Name allows upto 30 Characters"
       },
       "company[registration_no]":{
         required: "Please Specify Registration No",
@@ -507,7 +505,6 @@ $("#employee").validate({
         lettersOnly:true
       },
       "employee[adhar_no]":{
-        required: true,
         maxlength: 12,
         numbersOnly: true
       },
@@ -516,11 +513,9 @@ $("#employee").validate({
         maxlength: 10
       },
       "employee[licence_no]":{
-        required: true,
         maxlength: 17
       },
       "employee[passport_no]":{
-        required: true,
         maxlength: 6
       },
       "employee[permanent_address]":{
@@ -530,27 +525,22 @@ $("#employee").validate({
       },
       "employee[state]":{
         maxlength: 50,
-        required: true,
         lettersOnly:true
       },
       "employee[district]":{
         maxlength: 50,
-        required: true,
          lettersOnly:true
       },
       "employee[city]":{
         maxlength: 30,
-        required: true,
          lettersOnly:true
       },
       "employee[pin_code]":{
-        maxlength: 9,
-        required: true,
+        maxlength: 6,
         numbersOnly: true
       },
       "employee[current_address]":{
-        maxlength: 50,
-        required: true,
+        maxlength: 100,
         address: true
       },
       "employee[contact_no]":{
@@ -559,8 +549,7 @@ $("#employee").validate({
           mobileNo: true
       },
       "employee[email]":{
-        loginRegex: true,
-        required: true
+        loginRegex: true
       },
       // "joining_detail[reffernce_from]":{
       //   maxlength: 50,
@@ -1062,8 +1051,8 @@ $("#family").validate({
       },
       "family[profession]":{
         maxlength: "Profession allows upto 30 alphabets"
-      },
       }
+    },
     errorPlacement: function(error, element) {
      error.css('color','red')
      error.insertAfter(element.parent(element));

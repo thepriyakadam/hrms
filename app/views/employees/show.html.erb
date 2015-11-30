@@ -16,6 +16,8 @@
     <tr>
       <th> <strong>First name:</strong></th>
       <td> <%= @employee.first_name %></td>
+      <th></th>
+      <td></td>
     </tr>
 
     <tr>
@@ -144,7 +146,7 @@
 
     <tr>
       <th>   <strong>Employee grade:</strong></th>
-      <td>  <%= @employee.joining_detail.employee_grade %></td>
+      <td>  <%= @employee.joining_detail.employee_grade.name %></td>
 
       <th><strong>Confirmation date:</strong></th>
       <td> <%= @employee.joining_detail.confirmation_date %></td>

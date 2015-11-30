@@ -121,7 +121,7 @@ ActiveRecord::Schema.define(version: 20151130070825) do
 
   create_table "departments", force: :cascade do |t|
     t.integer  "company_location_id", limit: 4
-    t.string   "department_code",     limit: 255
+    t.string   "departement_code",    limit: 255
     t.text     "description",         limit: 65535
     t.string   "name",                limit: 255
     t.integer  "department_type_id",  limit: 4

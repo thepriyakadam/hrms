@@ -14,12 +14,11 @@ class Employee < ActiveRecord::Base
   validates :first_name, :presence => true
   validates :last_name, :presence => true
   validates :contact_no, :presence => true
-  validates :adhar_no, :presence => true
   validates :pan_no, :presence => true
-  validates :pin_code, :presence => true
+  
 
-  validates :date_of_birth, :presence => true
-  validates :email, uniqueness: true, presence: true
+  
+  # validates :uniqueness: true
   validate  :email_regex
   validates :permanent_address, :presence => true, :allow_blank => true
   validate :first_name_regex
@@ -29,6 +28,7 @@ class Employee < ActiveRecord::Base
   validate :middle_name_regex
   validate :district_regex
   validate :city_regex
+
   #validate :pan_no_regex
 
   def adhar_no_regex
@@ -49,11 +49,12 @@ class Employee < ActiveRecord::Base
     end
   end
 
-  def pan_no_regex
-    if pan_no.present? and not pan_no.match(/^([A-Z]{5})(\d{10})([A-Z]{1})$/)
+
+def pan_no_regex
+    if pan_no.present? and not pan_no.match(/^([A-Z]{5})(\d{4})([A-Z]{1})$/)
       errors.add :pan_no,"Please specify Correct Pan Card Number"
     end
-  end
+   end
 
   def district_regex
     if district.present? and not district.match(/\A[A-Za-z_ ]{1,30}\Z/)

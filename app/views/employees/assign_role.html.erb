@@ -1,0 +1,33 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Employee List</h3>    
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table  class="table table-bordered table-hover">
+	    <thead>
+	      <tr>
+		      <th>Name</th>
+		      <th>Contact no</th>
+		      <th>Contact no</th>
+		      <th>Action</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		    <% @employees.each do |employee| %>
+					<%= form_for :role, url: {action: 'submit_form'} do |f| %>    
+			      <tr>
+			        <td><%= employee.first_name %></td>
+			        <td><%= employee.contact_no %></td>
+			        <td><%= f.select :name, all_role_list %>
+			   					<%= f.hidden_field :employee_id, value: employee.id %>
+			        </td>
+			        <td><%= f.submit "Assign Role" %></td>
+			      </tr>	
+		     	<% end %>
+		    <% end %>
+		  </tbody>
+		</table>
+	</div>
+</div>
+
+

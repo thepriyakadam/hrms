@@ -1,34 +1,41 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title"> Employee Joining Details</h3>
+    <div class="box-tools pull-right">
+      <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+      <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+    </div>
+  </div><!-- /.box-header -->
+  <div class="box-body">
 <%= bootstrap_form_for(@joining_detail) do |f| %>
 
  <div class="row">
-    <div class="col-sm-1"></div>
+
       <div class="col-sm-3">
         <div class="field">
          <%= f.text_field :employee_id %>
        </div>
     </div>
-  </div>
 
-   <div class="row">
-    <div class="col-sm-1"></div>
+
+    <div class="col-sm-3">
+        <div class="form-group required">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+            <%= f.text_field :joining_date, class: 'datemask'%>
+          </div>
+        </div>
+        </div>
+
+  
       <div class="col-sm-3">
         <div class="field">
-         <%= f.date_select :joining_date %>
+         <%= f.text_field :reference_from %>
        </div>
     </div>
-  </div>
-
-   <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-         <%= f.text_field :reffernce_from %>
-       </div>
-    </div>
-  </div>
-
-   <div class="row">
-    <div class="col-sm-1"></div>
+ 
       <div class="col-sm-3">
         <div class="field">
          <%= f.text_field :admin_hr %>
@@ -37,92 +44,74 @@
   </div>
 
    <div class="row">
-    <div class="col-sm-1"></div>
       <div class="col-sm-3">
         <div class="field">
          <%= f.text_field :tech_hr %>
        </div>
     </div>
-  </div>
-
-   <div class="row">
-    <div class="col-sm-1"></div>
+ 
       <div class="col-sm-3">
         <div class="field">
          <%= f.text_field :designation %>
        </div>
     </div>
-  </div>
-
-   <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
+  
+       <div class="col-sm-3">
         <div class="field">
-         <%= f.text_field :ctc %>
+           <%= f.select :employee_grade_id, all_employee_grade %>
        </div>
     </div>
+    <div class="col-sm-3">
+        <div class="form-group required">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+            <%= f.text_field :confirmation_date, class: 'datemask'%>
+          </div>
+        </div>
+        </div>
+
+
   </div>
 
    <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-         <%= f.text_field :account_no %>
-       </div>
-    </div>
-  </div>
-
-   <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-           <%= o.select :employee_grade_id, all_employee_grade %>
-       </div>
-    </div>
-  </div>
-
-   <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-       <%= f.date_select :confirmation_date %>
-       </div>
-    </div>
-  </div>
-
-   <div class="row">
-    <div class="col-sm-1"></div>
+   
       <div class="col-sm-3">
         <div class="field">
          <%= f.text_field :status %>
        </div>
     </div>
-  </div>
-
-   <div class="row">
-    <div class="col-sm-1"></div>
+  
       <div class="col-sm-3">
         <div class="field">
         <%= f.text_field :probation_period %>
        </div>
     </div>
-  </div>
-
-   <div class="row">
-    <div class="col-sm-1"></div>
+  
       <div class="col-sm-3">
         <div class="field">
           <%= f.text_field :notice_period %>
        </div>
     </div>
-  </div>
-
-   <div class="row">
-    <div class="col-sm-1"></div>
+ 
       <div class="col-sm-3">
         <div class="field">
           <%= f.text_field :medical_schem %>
        </div>
     </div>
   </div>
-<% end %>
+
+ <div class="row">
+         <div class="col-sm-3">
+          <div class="actions">
+              <%= f.submit :class => class_name, data: { disable_with: data_info } %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div><!-- /.box-body -->
+  <div class="box-footer">
+    Visit <a href="https://select2.github.io/">Select2 documentation</a> for more examples and information about the plugin.
+  </div>
+</div><!-- /.box>

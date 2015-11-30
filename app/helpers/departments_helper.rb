@@ -4,6 +4,6 @@ module DepartmentsHelper
 	end
 
 	def all_company_location
-		CompanyLocation.all.collect {|d| [d.name,d.id]}
+		CompanyLocation.all.collect {|cl| [cl.company.name+'-'+cl.name,cl.id]}
 	end
 end

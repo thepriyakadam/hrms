@@ -28,6 +28,7 @@ Rails.application.routes.draw do
   resources :employees do
     collection do
       get :assign_role
+      post :submit_form
     end
   end
   resources :blood_groups

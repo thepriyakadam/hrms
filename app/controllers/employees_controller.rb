@@ -64,8 +64,24 @@ class EmployeesController < ApplicationController
   end
 
   def assign_role
-    @employees = Employee.all
+    @employees = Employee.joins("LEFT JOIN members on members.account_id = employees.id where members.account_id is null")
     @roles = Role.all    
+  end
+
+  def submit_form
+    employee = Employee.find(params["role"]["employee_id"])
+    #pass = (0...8).map { (65 + rand(26)).chr}.join
+    user = Member.new do |u|
+      u.email = employee.email
+      u.password = '12345678'
+      u.account = employee
+      #u.role = params["role"]["name"]
+    end
+    if user.save
+      flash[:notice] = "Account created successfully."
+      redirect_to assign_role_employees_path
+      #UserPasswordMailer.welcome_email(company,pass).deliver_now
+    end
   end
 
   private

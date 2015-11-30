@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151130070825) do
+ActiveRecord::Schema.define(version: 20151130130025) do
 
   create_table "awards", force: :cascade do |t|
     t.integer  "employee_id", limit: 4
@@ -121,7 +121,7 @@ ActiveRecord::Schema.define(version: 20151130070825) do
 
   create_table "departments", force: :cascade do |t|
     t.integer  "company_location_id", limit: 4
-    t.string   "departement_code",    limit: 255
+    t.string   "department_code",     limit: 255
     t.text     "description",         limit: 65535
     t.string   "name",                limit: 255
     t.integer  "department_type_id",  limit: 4
@@ -229,15 +229,19 @@ ActiveRecord::Schema.define(version: 20151130070825) do
     t.integer  "employee_type_id",  limit: 4
     t.string   "gender",            limit: 255
     t.string   "religion",          limit: 255
+    t.integer  "manager_id",        limit: 4
     t.datetime "created_at",                      null: false
     t.datetime "updated_at",                      null: false
+    t.integer  "role_id",           limit: 4
   end
 
   add_index "employees", ["blood_group_id"], name: "index_employees_on_blood_group_id", using: :btree
   add_index "employees", ["department_id"], name: "index_employees_on_department_id", using: :btree
   add_index "employees", ["employee_code"], name: "index_employees_on_employee_code", using: :btree
   add_index "employees", ["employee_type_id"], name: "index_employees_on_employee_type_id", using: :btree
+  add_index "employees", ["manager_id"], name: "index_employees_on_manager_id", using: :btree
   add_index "employees", ["nationality_id"], name: "index_employees_on_nationality_id", using: :btree
+  add_index "employees", ["role_id"], name: "index_employees_on_role_id", using: :btree
 
   create_table "experiences", force: :cascade do |t|
     t.integer  "employee_id",  limit: 4
@@ -442,6 +446,7 @@ ActiveRecord::Schema.define(version: 20151130070825) do
   add_foreign_key "employees", "departments"
   add_foreign_key "employees", "employee_types"
   add_foreign_key "employees", "nationalities"
+  add_foreign_key "employees", "roles"
   add_foreign_key "experiences", "employees"
   add_foreign_key "families", "employees"
   add_foreign_key "families", "nationalities"

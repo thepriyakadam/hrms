@@ -10,6 +10,9 @@ class Employee < ActiveRecord::Base
   has_one :member, as: :account
   has_one :joining_detail
   accepts_nested_attributes_for :joining_detail
+  has_many :subordinates, class_name: "Employee",
+                          foreign_key: "manager_id"
+  belongs_to :manager, class_name: "Employee"
 
   validates :first_name, :presence => true
   validates :last_name, :presence => true

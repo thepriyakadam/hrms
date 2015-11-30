@@ -29,7 +29,8 @@ class Employee < ActiveRecord::Base
   validate :middle_name_regex
   validate :district_regex
   validate :city_regex
-  # validate :pan_no_regex
+
+  #validate :pan_no_regex
 
   def adhar_no_regex
     if adhar_no.present? and not adhar_no.match(/[0-9]{12}/)
@@ -49,7 +50,7 @@ class Employee < ActiveRecord::Base
     end
   end
 
-def pan_no_regex
+  def pan_no_regex
     if pan_no.present? and not pan_no.match(/^([A-Z]{5})(\d{10})([A-Z]{1})$/)
       errors.add :pan_no,"Please specify Correct Pan Card Number"
     end

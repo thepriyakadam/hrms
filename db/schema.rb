@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151128104626) do
+ActiveRecord::Schema.define(version: 20151130070825) do
 
   create_table "awards", force: :cascade do |t|
     t.integer  "employee_id", limit: 4
@@ -405,6 +405,12 @@ ActiveRecord::Schema.define(version: 20151128104626) do
   end
 
   add_index "qualifications", ["employee_id"], name: "index_qualifications_on_employee_id", using: :btree
+
+  create_table "roles", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
 
   create_table "skillsets", force: :cascade do |t|
     t.integer  "employee_id", limit: 4

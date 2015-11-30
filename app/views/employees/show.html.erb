@@ -110,64 +110,7 @@
       <td><%= @employee.gender %></td>
     </tr>
 
-    <tr> 
-      <th colspan="2"><strong></strong></th>
-      <th colspan="2"></th>
-    </tr>
-
-     <tr> 
-      <th colspan="4"><strong>Joining Dtails:</strong></th>
-      
-    </tr>
-
- <tr>
-      <th> <strong>Employee:</strong></th>
-      <td><%= @employee.joining_detail.employee %></td>
-
-      <th> <strong>Joining date:</strong></th>
-      <td>  <%= @employee.joining_detail.joining_date %></td>
-    </tr>
-
-    <tr>
-      <th><strong>Reference from:</strong></th>
-      <td> <%= @employee.joining_detail.reference_from %></td>
-
-      <th><strong>Admin hr:</strong></th>
-      <td><%= @employee.joining_detail.admin_hr %></td>
-    </tr>
-
-    <tr>
-      <th>  <strong>Tech hr:</strong></th>
-      <td> <%= @employee.joining_detail.tech_hr %></td>
-
-      <th><strong>Designation:</strong></th>
-      <td> <%= @employee.joining_detail.designation %></td>
-    </tr>
-
-    <tr>
-      <th>   <strong>Employee grade:</strong></th>
-      <td>  <%= @employee.joining_detail.employee_grade.name %></td>
-
-      <th><strong>Confirmation date:</strong></th>
-      <td> <%= @employee.joining_detail.confirmation_date %></td>
-    </tr>
-
-    <tr>
-      <th> <strong>Status:</strong></th>
-      <td><%= @employee.joining_detail.status %></td>
-
-      <th><strong>Probation period:</strong></th>
-      <td><%= @employee.joining_detail.probation_period %></td>
-    </tr>
-
-    <tr>
-      <th> <strong>Notice period:</strong></th>
-      <td><%= @employee.joining_detail.notice_period %></td>
-
-      <th>  <strong>Medical schem:</strong></th>
-      <td> <%= @employee.joining_detail.medical_schem %></td>
-    </tr>
-
+   
  </table>
 
   <%= link_to 'Edit', edit_employee_path(@employee),class: 'btn btn-success fa fa-edit' %> |

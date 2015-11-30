@@ -1,74 +1,79 @@
-<p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Employee:</strong>
-  <%= @joining_detail.employee %>
-</p>
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Employee Dtails</h3>
+    <div class="box-tools pull-right">
+      <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+      <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+    </div>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover">
+    <tr> 
+      <th colspan="2"></th>
+      <th colspan="2"></th>
+    </tr>
+    <tr>
 
-<p>
-  <strong>Joining date:</strong>
-  <%= @joining_detail.joining_date %>
-</p>
+    <tr>
+      <th><strong>Employee:</strong></th>
+      <td><%= @joining_detail.employee %></td>
 
-<p>
-  <strong>Reffernce from:</strong>
-  <%= @joining_detail.reffernce_from %>
-</p>
+      <th> <strong>Joining date:</strong></th>
+      <td><%= @joining_detail.joining_date %></td>
+    </tr>
 
-<p>
-  <strong>Admin hr:</strong>
-  <%= @joining_detail.admin_hr %>
-</p>
+    <tr>
+      <th><strong>Reference from:</strong></th>
+      <td><%= @joining_detail.reference_from %></td>
 
-<p>
-  <strong>Tech hr:</strong>
-  <%= @joining_detail.tech_hr %>
-</p>
+      <th> <strong>Admin hr:</strong></th>
+      <td> <%= @joining_detail.admin_hr %></td>
+    </tr>
 
-<p>
-  <strong>Designation:</strong>
-  <%= @joining_detail.designation %>
-</p>
+    <tr>
+      <th><strong>Tech hr:</strong></th>
+      <td><%= @joining_detail.tech_hr %></td>
 
-<p>
-  <strong>Ctc:</strong>
-  <%= @joining_detail.ctc %>
-</p>
+      <th><strong>Designation:</strong></th>
+      <td><%= @joining_detail.designation %></td>
+    </tr>
 
-<p>
-  <strong>Account no:</strong>
-  <%= @joining_detail.account_no %>
-</p>
+    <tr>
+      <th><strong>Employee grade:</strong></th>
+      <td><%= @joining_detail.employee_grade %></td>
 
-<p>
-  <strong>Employee grade:</strong>
-  <%= @joining_detail.employee_grade %>
-</p>
+      <th> <strong>Confirmation date:</strong></th>
+      <td><%= @joining_detail.confirmation_date %></td>
+    </tr>
 
-<p>
-  <strong>Confirmation date:</strong>
-  <%= @joining_detail.confirmation_date %>
-</p>
+    <tr>
+      <th><strong>Status:</strong></th>
+      <td><%= @joining_detail.status %></td>
 
-<p>
-  <strong>Status:</strong>
-  <%= @joining_detail.status %>
-</p>
+      <th><strong>Probation period:</strong></th>
+      <td><%= @joining_detail.probation_period %></td>
+    </tr>
 
-<p>
-  <strong>Probation period:</strong>
-  <%= @joining_detail.probation_period %>
-</p>
+    <tr>
+      <th><strong>Notice period:</strong></th>
+      <td><%= @joining_detail.notice_period %></td>
 
-<p>
-  <strong>Notice period:</strong>
-  <%= @joining_detail.notice_period %>
-</p>
+      <th><strong>Medical schem:</strong></th>
+      <td> <%= @joining_detail.medical_schem %></td>
+    </tr>
 
-<p>
-  <strong>Medical schem:</strong>
-  <%= @joining_detail.medical_schem %>
-</p>
+  
+   
+ </table>
 
-<%= link_to 'Edit', edit_joining_detail_path(@joining_detail) %> |
-<%= link_to 'Back', joining_details_path %>
+  <%= link_to 'Edit',  edit_joining_detail_path(@joining_detail),class: 'btn btn-success fa fa-edit' %> |
+    <%= link_to 'Back', joining_details_path,class: 'btn btn-default fa fa-arrow-left' %>
+  </div><!-- /.box-body -->
+
+
+  <div class="box-footer">
+    Visit <a href="https://select2.github.io/">Select2 documentation</a> for more examples and information about the plugin.
+  </div>
+</div><!-- /.box -->
+

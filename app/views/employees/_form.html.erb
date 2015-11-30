@@ -75,17 +75,24 @@
           </div>
         </div>
 
+         <div class="col-sm-3">
+        <div class="form-group required">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+            <%= f.text_field :date_of_birth, class: 'datemask'%>
+          </div>
+        </div>
+        </div>
+
         <div class="col-sm-3">
           <div class="field">
             <%= f.select :blood_group_id, all_blood_group,{include_blank: "Select something"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"}%>
           </div>
         </div>
 
-        <div class="col-sm-3">
-          <div class="field">
-            <%= f.select :handicap, ['Yes','No'] %>
-          </div>
-        </div>
+       
       </div>
 
       <div class="row">
@@ -143,136 +150,40 @@
           </div>
         </div>
 
-        <div class="col-sm-3">
-        <div class="field">
-          <div class="input-group">
-            <div class="input-group-addon">
-              <i class="fa fa-calendar"></i>
-            </div>
-            <%= f.text_field :date_of_birth, class: 'datemask'%>
-          </div>
-        </div>
-        </div>
 
-        <div class="col-sm-3">
-          <div class="field">
-            <%= f.text_field :status %>
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
          <div class="col-sm-3">
           <div class="field">
             <%= f.select :employee_type_id, all_employee_type %>
           </div>
+        </div>      
+
+        <!-- <div class="col-sm-3">
+          <div class="field">
+            <%= f.text_field :status %>
+          </div>
+        </div> -->
+
+         <div class="col-sm-3">
+          <div class="field">
+            <%= f.text_field :religion %>
+          </div>
         </div>
       </div>
 
-     
 
-      <hr>
-
-      <!-- Nested Form -->
-      <%= f.fields_for :joining_detail do |o| %>
-      
-        <div class="row">
-        <div class="form-group required">
-          <div class="col-sm-3">
-            <div class="input-group">
-              <div class="input-group-addon">
-                <i class="fa fa-calendar"></i>
-              </div>
-              <%= o.text_field :joining_date, class: 'datemask'%>
-            </div>
+      <div class="row">
+         <div class="col-sm-3">
+          <div class="field">
+            <%= f.select :handicap, ['Yes','No'] %>
           </div>
-          </div>
-
-          <div class="col-sm-3">
-            <div class="field">
-              <%= o.text_field :reference_from,label:"Reference From" %>
-            </div>
-          </div>
-
-          <div class="col-sm-3">
+        </div>
+        <div class="col-sm-3">
             <div class="form-group required">
-              <%= o.text_field :admin_hr %>
+              <%= f.text_field :handicap_type %>
+
             </div>
           </div>
-
-          <div class="col-sm-3">
-            <div class="form-group required">
-              <%= o.text_field :tech_hr %>
-            </div>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-sm-3">
-            <div class="form-group required">
-              <%= o.text_field :designation %>
-            </div>
-          </div>
-
-          <div class="col-sm-3">
-            <div class="field">
-              <%= o.select :employee_grade_id, all_employee_grade %>
-            </div>
-          </div>
-
-          <div class="col-sm-3">
-            <div class="input-group">
-              <div class="input-group-addon">
-                <i class="fa fa-calendar"></i>
-              </div>
-              <%= o.text_field :confirmation_date, class: 'datemask'%>
-            </div>
-          </div>
-
-        </div>
-
-        <!-- <div class="row">
-          <div class="col-sm-3">
-            <div class="input-group">
-              <div class="input-group-addon">
-                <i class="fa fa-calendar"></i>
-              </div>
-              <%= o.text_field :confirmation_date, class: 'datemask'%>
-            </div>
-          </div> -->
-           
-
-           <div class="row">
-          <div class="col-sm-3">
-            <div class="field">
-              <%= o.text_field :medical_schem %>
-            </div>
-          </div>
-           
-
-          <div class="col-sm-3">
-            <div class="field">
-              <%= o.text_field :status %>
-            </div>
-          </div>
-
-          <div class="col-sm-3">
-            <div class="field">
-              <%= o.text_field :probation_period %>
-            </div>
-          </div>
-
-          <div class="col-sm-3">
-            <div class="field">
-              <%= o.text_field :notice_period %>
-            </div>
-          </div>
-        </div>
-
-       
-        </div>
-      <% end %>      
-
+      </div>
       <div class="row">
          <div class="col-sm-3">
           <div class="actions">

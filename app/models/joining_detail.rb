@@ -3,7 +3,6 @@ class JoiningDetail < ActiveRecord::Base
   belongs_to :employee_grade
 
   validates :joining_date, :presence => true
-  # validates :reference_from, :presence => true
   validates :admin_hr , :presence => true
   validates :tech_hr, :presence => true
   validates :designation, :presence => true

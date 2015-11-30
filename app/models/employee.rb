@@ -1,4 +1,5 @@
 class Employee < ActiveRecord::Base
+  protokoll :company_code, :pattern => "EMP#######"
   belongs_to :department
   belongs_to :nationality
   belongs_to :blood_group

@@ -11,10 +11,8 @@
 
   <div class="box-body">
     <%= bootstrap_form_for(@company,html: {id: 'company'}) do |f| %>
-    
-    
+
       <div class="row">
-        
         <div class="col-sm-2">
           <div class="form-group required">
            <%= f.text_field :name,label: 'Company Name'%>
@@ -49,68 +47,68 @@
           </div>
         </div>
         </div>
-        
-    </div>
+      </div>
 
-   <div class="row">
-         <div class="col-sm-12">
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group required">
+           <%= f.text_area :description,label: 'Description',placeholder: "Company Description" %>
+          </div>
+        </div>
+
+        <div class="col-sm-6">
           <div class="form-group required">
            <%= f.text_area :address,label: 'Address' %>
           </div>
         </div>
-   </div>
+      </div>
 
-
-        
-    <div class="row">
-         <div class="col-sm-2">
+      <div class="row">
+        <div class="col-sm-2">
           <div class="form-group required">
-           <%= f.text_field :city,label: 'City' %>
+            <%= f.text_field :city,label: 'City' %>
           </div>
         </div>
        
-
         <div class="col-sm-2">
           <div class="form-group required">
            <%= f.text_field :district,label: 'District' %>
           </div>
         </div>
    
-
-         <div class="col-sm-2">
+        <div class="col-sm-2">
           <div class="form-group required">
            <%= f.number_field :pin_code,label: 'Pin Code/ZIP' %>
           </div>
         </div>
 
-
-         <div class="col-sm-3">
+        <div class="col-sm-3">
           <div class="form-group required">
            <%= f.text_field :state,label: 'State' %>
           </div>
         </div>
 
-         <div class="col-sm-3">
+        <div class="col-sm-3">
           <div class="form-group required">
-           <%= f.text_field :contact_no,label: 'Contact No' %>
-         </div>
+            <%= f.text_field :contact_no,label: 'Contact No' %>
+          </div>
         </div>
-    </div>
+      </div>
 
-   <div class="row">
-     <div class="col-sm-2">
+      <div class="row">
+        <div class="col-sm-2">
           <div class="form-group required">
-           <%= f.text_field :tax_no,label: 'Tax Number' %>
-         </div>
+            <%= f.text_field :tax_no,label: 'Tax Number' %>
+          </div>
         </div>
-
-       <div class="col-sm-2">
+ 
+        <div class="col-sm-2">
           <div class="form-group required">
            <%= f.text_field :professional_tax_no,label: 'Professional Tax No' %>
           </div>
         </div>
 
-         <div class="col-sm-2">
+        <div class="col-sm-2">
           <div class="form-group required">
            <%= f.text_field :email,label: 'Email' %>
          </div>
@@ -129,17 +127,15 @@
            <%= f.text_field :ceo_name,label:"Company Head" %>
           </div>
         </div>
-
       </div>
 
-
-        <div class="row">
-         <div class="col-sm-5">
+      <div class="row">
+        <div class="col-sm-5">
           <div class="actions">
             <%= f.submit "Create Account",class: "btn btn-primary",data: { disable_with: 'Wait....'} %>
           </div>
-
-
+        </div>
+      </div>
     <% end %>
   </div><!-- /.box-body -->
   <div class="box-footer">

@@ -1,4 +1,5 @@
 class Department < ActiveRecord::Base
+  protokoll :department_code, :pattern => "DEPT###"
   belongs_to :company_location
   belongs_to :department_type
   has_many :employees

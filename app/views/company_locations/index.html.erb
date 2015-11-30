@@ -8,39 +8,33 @@
   </div><!-- /.box-header -->
   <div class="box-body">
     <table id="example2" class="table table-bordered table-hover">
-    <thead>
-    <tr>
-      <th>Company</th>
-      <th>Location Name</th>
-      <th>Address</th>
-      <th>City</th>
-      <th>District</th>
-      <th>Pin code</th>
-      <th>Contact no</th>
-      <th>Email</th>
-       <th>Action</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @company_locations.each do |company_location| %>
+      <thead>
       <tr>
-        <td><%= company_location.company.name %></td>
-        <td><%= company_location.name %></td>
-        <td><%= company_location.address %></td>
-        <td><%= company_location.city %></td>
-        <td><%= company_location.district %></td>
-        <td><%= company_location.pin_code %></td>
-        <td><%= company_location.contact_no %></td>
-        <td><%= company_location.email %></td>
-        <td>
-            <%= link_to '', company_location,class: 'btn btn-default fa fa-eye' %>
-            <%= link_to '', edit_company_location_path(company_location),class: 'btn btn-success fa fa-edit' %>
-            <%= link_to '',  company_location, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger fa fa-close' %>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-</div>
+        <th>Company Name</th>
+        <th>Location Code</th>
+        <th>Location Name</th>
+        <th>Contact no</th>
+        <th>Email</th>
+        <th>Action</th>
+      </tr>
+      </thead>
+
+      <tbody>
+        <% @company_locations.each do |company_location| %>
+          <tr>
+            <td><%= company_location.company.name %></td>
+            <td><%= company_location.location_code %></td>
+            <td><%= company_location.name %></td>
+            <td><%= company_location.contact_no %></td>
+            <td><%= company_location.email %></td>
+            <td>
+              <%= link_to '', company_location,class: 'btn btn-default fa fa-eye' %>
+              <%= link_to '', edit_company_location_path(company_location),class: 'btn btn-success fa fa-edit' %>
+              <%= link_to '',  company_location, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger fa fa-close' %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 </div>

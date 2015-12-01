@@ -70,17 +70,19 @@ class EmployeesController < ApplicationController
 
   def submit_form
     employee = Employee.find(params["role"]["employee_id"])
-    #pass = (0...8).map { (65 + rand(26)).chr}.join
     user = Member.new do |u|
       u.email = employee.email
       u.password = '12345678'
       u.account = employee
-      #u.role = params["role"]["name"]
+      u.subdomain = Apartment::Tenant.current_tenant
     end
-    if user.save
-      flash[:notice] = "Account created successfully."
-      redirect_to assign_role_employees_path
-      #UserPasswordMailer.welcome_email(company,pass).deliver_now
+    ActiveRecord::Base.transaction do
+      if user.save
+        employee.update_attributes(role_id: params["role"]["name"],manager_id: params["role"]["manager_id"])
+        flash[:notice] = "Employee assigned successfully."
+        redirect_to assign_role_employees_path
+        #UserPasswordMailer.welcome_email(company,pass).deliver_now
+      end
     end
   end
 

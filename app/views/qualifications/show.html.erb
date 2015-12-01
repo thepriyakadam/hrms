@@ -18,114 +18,28 @@
  <td>  <%= @qualification.employee %></td>
 
  <th><strong>Ssc:</strong></th>
-  <td><%= @qualification.ssc %></td>
+  <td><%= @qualification.course %></td>
  </tr>
 
 <tr>
   <th><strong>Ssc from:</strong></th>
-  <td><%= @qualification.ssc_from %></td>
+  <td><%= @qualification.college %></td>
 
   <th><strong>Ssc marks:</strong></th>
-  <td><%= @qualification.ssc_marks %></td>
+  <td><%= @qualification.marks %></td>
 </tr>
 
 <tr>
   <th><strong>Ssc year:</strong></th>
-  <td><%= @qualification.ssc_year %></td>
+  <td><%= @qualification.passout_year%></td>
 
   <th><strong>Ssc bord:</strong></th>
-  <td><%= @qualification.ssc_bord %></td>
+  <td><%= @qualification.university %></td>
 </tr>
-
-<tr>
-  <th><strong>Diploma:</strong></th>
-  <td><%= @qualification.diploma %></td>
-
-  <th><strong>Diploma from:</strong></th>
-  <td><%= @qualification.diploma_from %></td>
-</tr>
-
-<tr>
-  <th><strong>Diploma marks:</strong></th>
-  <td><%= @qualification.diploma_marks %></td>
-
-   <th><strong>Diploma year:</strong></th>
-  <td><%= @qualification.diploma_year %></td>
-</tr>
-
-<tr>
-  <th><strong>Diploma university:</strong></th>
-  <td><%= @qualification.diploma_university %></td>
-
-   <th><strong>Hsc:</strong></th>
-  <td><%= @qualification.hsc %></td>
-</tr>
-
-<tr>
-  <th><strong>Hsc from:</strong></th>
-  <td><%= @qualification.hsc_from %></td>
-
-   <th><strong>Hsc marks:</strong></th>
-  <td><%= @qualification.hsc_marks %></td>
-</tr>
-
-<tr>
-  <th><strong>Hsc year:</strong></th>
-  <td><%= @qualification.hsc_year %></td>
-
-   <th><strong>Hsc bord:</strong></th>
-  <td><%= @qualification.hsc_bord %></td>
-</tr>
-
-
-<tr>
-  <th><strong>Ug:</strong></th>
-  <td><%= @qualification.ug %></td>
-
-   <th><strong>Ug from:</strong></th>
-  <td><%= @qualification.ug_from %></td>
-</tr>
-
-
-<tr>
-  <th><strong>Ug marks:</strong></th>
-  <td><%= @qualification.ug_marks %></td>
-
-   <th><strong>Ug year:</strong></th>
-  <td><%= @qualification.ug_year %></td>
-</tr>
-
-
-<tr>
-  <th><strong>Ug university:</strong></th>
-  <td><%= @qualification.ug_university %></td>
-
-  <th> <strong>Pg:</strong></th>
-  <td><%= @qualification.pg %></td>
-</tr>
-
-<tr>
-  <th><strong>Pg from:</strong></th>
-  <td><%= @qualification.pg_from %></td>
-
-  <th><strong>Pg marks:</strong></th>
-  <td><%= @qualification.pg_marks %></td>
-</tr>
-
-
-<tr>
-  <th><strong>Pg year:</strong></th>
-  <td><%= @qualification.pg_year %></td>
-
-  <th><strong>Pg university:</strong></th>
-  <td><%= @qualification.pg_university %></td>
-</tr>
- 
-
 </table>
 
     <%= link_to 'Edit', edit_qualification_path(@qualification),class: 'btn btn-success fa fa-edit' %> |
-    <%= link_to 'Back', root_path,class: 'btn btn-default fa fa-arrow-left' %>
+    <%= link_to 'Back', qualification_path,class: 'btn btn-default fa fa-arrow-left' %>
   </div><!-- /.box-body -->
   <div class="box-footer">
     Visit <a href="https://select2.github.io/">Select2 documentation</a> for more examples and information about the plugin.

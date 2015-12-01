@@ -16,6 +16,16 @@
 //= require jquery.validate.additional-methods
 //= require_tree .
 
+// $(function () {
+//   if ($('#comments').length > 0) {
+//     setTimeout(updateComments, 10000);
+//   }
+// });
+
+// function updateComments() {
+//   $.getScript('/companies');
+//   setTimeout(updateComments, 10000);
+// }
 
 $(function () {
   $("#example1").DataTable();

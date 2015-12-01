@@ -1,4 +1,4 @@
-class LeavAprovedsController < ApplicationController
+class LeavApprovedsController < ApplicationController
   #load_and_authorize_resource
   # POST /leav_aproveds
   # POST /leav_aproveds.json
@@ -18,6 +18,6 @@ class LeavAprovedsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def leav_aproved_params
-      params.require(:leav_aproved).permit(:employee_leav_request_id, :approved_date)
+      params.require(:leav_approved).permit(:employee_leav_request_id, :approved_date)
     end
 end

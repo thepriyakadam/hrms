@@ -8,7 +8,8 @@
 	      <tr>
 		      <th>Name</th>
 		      <th>Contact no</th>
-		      <th>Contact no</th>
+		      <th>Role</th>
+		      <th>Reporting Manager</th>
 		      <th>Action</th>
 		    </tr>
 		  </thead>
@@ -21,6 +22,7 @@
 			        <td><%= f.select :name, all_role_list %>
 			   					<%= f.hidden_field :employee_id, value: employee.id %>
 			        </td>
+			        <td><%= f.select :manager_id, all_employee_list %></td>
 			        <td><%= f.submit "Assign Role" %></td>
 			      </tr>	
 		     	<% end %>

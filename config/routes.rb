@@ -45,7 +45,7 @@ Rails.application.routes.draw do
   devise_for :groups, :controllers => {registrations: 'groups/registrations',sessions: 'groups/sessions',passwords: 'groups/passwords'}
 
   devise_scope :group do
-    get "/group" => "groups/sessions#new"
+    get "/group" => "groups/registrations#new"
   end
 
   devise_scope :member do

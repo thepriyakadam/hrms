@@ -4,6 +4,7 @@ class DepartmentTypesController < ApplicationController
   # GET /department_types
   # GET /department_types.json
   def index
+    @department_type = DepartmentType.new
     @department_types = DepartmentType.all
   end
 
@@ -15,6 +16,7 @@ class DepartmentTypesController < ApplicationController
   # GET /department_types/new
   def new
     @department_type = DepartmentType.new
+    @department_types = DepartmentType.all
   end
 
   # GET /department_types/1/edit
@@ -25,16 +27,10 @@ class DepartmentTypesController < ApplicationController
   # POST /department_types.json
   def create
     @department_type = DepartmentType.new(department_type_params)
-
-    respond_to do |format|
       if @department_type.save
-        format.html { redirect_to @department_type, notice: 'Department type was successfully created.' }
-        format.json { render :show, status: :created, location: @department_type }
+        redirect_to new_department_type_path
       else
-        format.html { render :new }
-        format.json { render json: @department_type.errors, status: :unprocessable_entity }
       end
-    end
   end
 
   # PATCH/PUT /department_types/1
@@ -42,7 +38,7 @@ class DepartmentTypesController < ApplicationController
   def update
     respond_to do |format|
       if @department_type.update(department_type_params)
-        format.html { redirect_to @department_type, notice: 'Department type was successfully updated.' }
+        format.html { redirect_to new_department_type_path, notice: 'Department type was successfully updated.' }
         format.json { render :show, status: :ok, location: @department_type }
       else
         format.html { render :edit }

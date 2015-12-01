@@ -10,30 +10,24 @@
     <table id="example2" class="table table-bordered table-hover">
     <thead>
       <tr>
-        <th>SSC</th>
-        <th>SSC MARKS</th>
-        <th>HSC</th>
-        <th>HSC MARKS</th>
-        <th>UG</th>
-        <th>UG MARKS</th>
-        <th>PG</th>
-        <th>PG MARKS</th>
-        <th>Action</th>
+        <th>COURSE</th>
+        <th>MARKS</th>
+        <th>YEAR</th>
+        <th>COLLEGE</th>
+        <th>UNIVERSITY</th>
+        <th>ACTION</th>
       </tr>
     </thead>
 
     <tbody>
        <% @qualifications.each do |qualification| %>
         <tr>
-          <td><%= qualification.ssc %></td>
-          <td><%= qualification.ssc_marks %></td>
-          <td><%= qualification.hsc %></td>
-          <td><%= qualification.hsc_marks %></td>
-          <td><%= qualification.ug %></td>
-          <td><%= qualification.ug_marks %></td>
-          <td><%= qualification.pg %></td>
-          <td><%= qualification.pg_marks %></td>
-          <td>
+          <td><%= qualification.course %></td>
+          <td><%= qualification.marks %></td>
+          <td><%= qualification.passout_year %></td>
+          <td><%= qualification.college %></td>
+          <td><%= qualification.university %></td>
+         <td>
             <%= link_to '', qualification,class: 'btn btn-default fa fa-eye' %>
             <%= link_to '', edit_qualification_path(qualification),class: 'btn btn-success fa fa-edit' %>
             <%= link_to '', qualification, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger fa fa-close' %>

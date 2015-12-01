@@ -29,10 +29,10 @@ class EmployeeLeavRequestsController < ApplicationController
   def create
     @employee_leav_request = EmployeeLeavRequest.new(employee_leav_request_params)
     date_arr = params["employee_leav_request"]["date_range"].split('-')
-    @employee_leav_request.satrt_date = date_arr[0].rstrip
+    @employee_leav_request.start_date = date_arr[0].rstrip
     @employee_leav_request.end_date = date_arr[1].lstrip
     if @employee_leav_request.leave_type == "Full Day"
-      @employee_leav_request.leave_count = (@employee_leav_request.end_date.to_date - @employee_leav_request.satrt_date.to_date).to_f + 1
+      @employee_leav_request.leave_count = (@employee_leav_request.end_date.to_date - @employee_leav_request.start_date.to_date).to_f + 1
     else
       @employee_leav_request.leave_count = 0.5
     end
@@ -96,6 +96,6 @@ class EmployeeLeavRequestsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def employee_leav_request_params
-      params.require(:employee_leav_request).permit(:employee_id, :leav_category_id, :leave_type, :date_range, :satrt_date, :end_date)
+      params.require(:employee_leav_request).permit(:employee_id, :leav_category_id, :leave_type, :date_range, :start_date, :end_date)
     end
 end

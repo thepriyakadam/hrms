@@ -75,6 +75,7 @@ class EmployeesController < ApplicationController
       u.password = '12345678'
       u.account = employee
       u.subdomain = Apartment::Tenant.current_tenant
+      u.member_code = employee.employee_code
     end
     ActiveRecord::Base.transaction do
       if user.save

@@ -4,7 +4,7 @@ class EmployeeLeavRequestsController < ApplicationController
   # GET /employee_leav_requests
   # GET /employee_leav_requests.json
   def index
-    @employee_leav_requests = EmployeeLeavRequest.joins("LEFT JOIN leav_aproveds ON employee_leav_requests.id = leav_aproveds.employee_leav_request_id LEFT JOIN leav_cancelleds ON employee_leav_requests.id = leav_cancelleds.employee_leav_request_id LEFT JOIN leav_rejecteds ON employee_leav_requests.id = leav_rejecteds.employee_leav_request_id where leav_aproveds.id IS NULL AND leav_rejecteds.id IS NULL AND leav_cancelleds.id IS NULL")
+    @employee_leav_requests = EmployeeLeavRequest.joins("LEFT JOIN leav_approveds ON employee_leav_requests.id = leav_approveds.employee_leav_request_id LEFT JOIN leav_cancelleds ON employee_leav_requests.id = leav_cancelleds.employee_leav_request_id LEFT JOIN leav_rejecteds ON employee_leav_requests.id = leav_rejecteds.employee_leav_request_id where leav_approveds.id IS NULL AND leav_rejecteds.id IS NULL AND leav_cancelleds.id IS NULL")
     #@employee_leav_requests = EmployeeLeavRequest.all
   end
 
@@ -17,7 +17,7 @@ class EmployeeLeavRequestsController < ApplicationController
   def new
     @employee_leav_request = EmployeeLeavRequest.new
     @total_leaves = EmployeeLeavBalance.where('employee_id = ?', current_user.account_id)
-    @remain_leaves = EmployeeLeavRequest.joins(:leav_aproved)
+    @remain_leaves = EmployeeLeavRequest.joins(:leav_approved)
   end
 
   # GET /employee_leav_requests/1/edit
@@ -85,7 +85,7 @@ class EmployeeLeavRequestsController < ApplicationController
   end
 
   def approved_or_rejected_leave_request
-    @employee_leav_requests = EmployeeLeavRequest.joins("LEFT JOIN leav_aproveds ON employee_leav_requests.id = leav_aproveds.employee_leav_request_id LEFT JOIN leav_cancelleds ON employee_leav_requests.id = leav_cancelleds.employee_leav_request_id LEFT JOIN leav_rejecteds ON employee_leav_requests.id = leav_rejecteds.employee_leav_request_id where leav_aproveds.id IS NULL AND leav_rejecteds.id IS NULL AND leav_cancelleds.id IS NULL")
+    @employee_leav_requests = EmployeeLeavRequest.joins("LEFT JOIN leav_approveds ON employee_leav_requests.id = leav_approveds.employee_leav_request_id LEFT JOIN leav_cancelleds ON employee_leav_requests.id = leav_cancelleds.employee_leav_request_id LEFT JOIN leav_rejecteds ON employee_leav_requests.id = leav_rejecteds.employee_leav_request_id where leav_approveds.id IS NULL AND leav_rejecteds.id IS NULL AND leav_cancelleds.id IS NULL")
   end
 
   private

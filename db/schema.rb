@@ -229,6 +229,7 @@ ActiveRecord::Schema.define(version: 20151130130025) do
     t.integer  "employee_type_id",  limit: 4
     t.string   "gender",            limit: 255
     t.string   "religion",          limit: 255
+    t.integer  "manager_id",        limit: 4
     t.datetime "created_at",                      null: false
     t.datetime "updated_at",                      null: false
     t.integer  "role_id",           limit: 4
@@ -238,6 +239,7 @@ ActiveRecord::Schema.define(version: 20151130130025) do
   add_index "employees", ["department_id"], name: "index_employees_on_department_id", using: :btree
   add_index "employees", ["employee_code"], name: "index_employees_on_employee_code", using: :btree
   add_index "employees", ["employee_type_id"], name: "index_employees_on_employee_type_id", using: :btree
+  add_index "employees", ["manager_id"], name: "index_employees_on_manager_id", using: :btree
   add_index "employees", ["nationality_id"], name: "index_employees_on_nationality_id", using: :btree
   add_index "employees", ["role_id"], name: "index_employees_on_role_id", using: :btree
 

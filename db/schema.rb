@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151202085649) do
+ActiveRecord::Schema.define(version: 20151202111330) do
 
   create_table "attendances", force: :cascade do |t|
     t.integer  "employee_shift_id", limit: 4
@@ -428,6 +428,7 @@ ActiveRecord::Schema.define(version: 20151202085649) do
     t.string   "avatar_content_type",    limit: 255
     t.integer  "avatar_file_size",       limit: 4
     t.datetime "avatar_updated_at"
+    t.integer  "role_id",                limit: 4
   end
 
   add_index "members", ["company_id"], name: "index_members_on_company_id", using: :btree
@@ -437,6 +438,7 @@ ActiveRecord::Schema.define(version: 20151202085649) do
   add_index "members", ["employee_id"], name: "index_members_on_employee_id", using: :btree
   add_index "members", ["member_code"], name: "index_members_on_member_code", unique: true, using: :btree
   add_index "members", ["reset_password_token"], name: "index_members_on_reset_password_token", unique: true, using: :btree
+  add_index "members", ["role_id"], name: "index_members_on_role_id", using: :btree
 
   create_table "nationalities", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -510,6 +512,7 @@ ActiveRecord::Schema.define(version: 20151202085649) do
   add_foreign_key "members", "company_locations"
   add_foreign_key "members", "departments"
   add_foreign_key "members", "employees"
+  add_foreign_key "members", "roles"
   add_foreign_key "qualifications", "employees"
   add_foreign_key "skillsets", "employees"
 end

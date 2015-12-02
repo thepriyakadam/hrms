@@ -5,7 +5,7 @@ class LeavApprovedsController < ApplicationController
   def create
     @emp_leave_request = EmployeeLeavRequest.find(params[:format])
     ActiveRecord::Base.transaction do
-      @emp_leave_request.create_leav_aproved(approved_date: Date.today)
+      @emp_leave_request.create_leav_approved(approved_date: Date.today)
       @employee_leav_balance = EmployeeLeavBalance.where('employee_id = ? AND leav_category_id = ?',@emp_leave_request.employee_id,@emp_leave_request.leav_category_id).take
       count = @employee_leav_balance.no_of_leave.to_f - @emp_leave_request.leave_count
       @employee_leav_balance.update(no_of_leave: count)

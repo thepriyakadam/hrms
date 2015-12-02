@@ -1,6 +1,6 @@
 class LeavRejectedsController < ApplicationController
   before_action :set_leav_rejected, only: [:show, :edit, :update, :destroy]
-  load_and_authorize_resource
+  #load_and_authorize_resource
   # GET /leav_rejecteds
   # GET /leav_rejecteds.json
   def index
@@ -24,16 +24,21 @@ class LeavRejectedsController < ApplicationController
   # POST /leav_rejecteds
   # POST /leav_rejecteds.json
   def create
-    @leav_rejected = LeavRejected.new
-    @leav_rejected.employee_leav_request_id = params[:format]
-    @leav_rejected.rejected_date = Date.today
-    if @leav_rejected.save
-      redirect_to approved_or_rejected_leave_request_employee_leav_requests_path
-      flash[:notice] = "Leave rejected successfully"
-    else
-      render 'employee_leav_requests/approved_or_rejected_leave_request'
-      flash[:alert] = "Leave not rejected successfully"
-    end
+    @emp_leave_request = EmployeeLeavRequest.find(params[:format])
+    @emp_leave_request.create_leav_rejected(rejected_date: Date.today)
+    flash[:notice] = "Leave rejected successfully"
+    redirect_to approved_or_rejected_leave_request_employee_leav_requests_path
+
+    # @leav_rejected = LeavRejected.new
+    # @leav_rejected.employee_leav_request_id = params[:format]
+    # @leav_rejected.rejected_date = Date.today
+    # if @leav_rejected.save
+    #   redirect_to approved_or_rejected_leave_request_employee_leav_requests_path
+    #   flash[:notice] = "Leave rejected successfully"
+    # else
+    #   render 'employee_leav_requests/approved_or_rejected_leave_request'
+    #   flash[:alert] = "Leave not rejected successfully"
+    # end
   end
 
   # PATCH/PUT /leav_rejecteds/1

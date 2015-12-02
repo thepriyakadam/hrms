@@ -7,35 +7,8 @@
     
   </div><!-- /.box-header -->
   <div class="box-body">
-    <table id="example2" class="table table-bordered table-hover">
-    <thead>
-      <tr>
-      <th>Employee</th>
-      <th>Leav category</th>
-      <th>Leave type</th>
-      <th>Start date</th>
-      <th>End date</th>
-      <th>Action</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @employee_leav_requests.each do |employee_leav_request| %>
-      <tr>
-        <td><%= employee_leav_request.employee %></td>
-        <td><%= employee_leav_request.leav_category.name %></td>
-        <td><%= employee_leav_request.leave_type %></td>
-        <td><%= employee_leav_request.start_date %></td>
-        <td><%= employee_leav_request.end_date %></td>
-         <td>
-            <%= link_to '', employee_leav_request,class: 'btn btn-default fa fa-eye' %>
-            <%= link_to '', edit_employee_leav_request_path(employee_leav_request),class: 'btn btn-success fa fa-edit' %>
-            <%= link_to '', employee_leav_request, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger fa fa-close' %>
-            <%= link_to '', leav_cancelleds_path(employee_leav_request), method: :post, data: { confirm: 'Are you sure?' },class: 'btn btn-danger fa fa-trash' %>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+  <div id="leave_request">
+    <%= render 'leave_request_list' %>
+  </div>
 </div>
 </div>

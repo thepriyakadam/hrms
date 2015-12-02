@@ -36,7 +36,7 @@
                         <a href="#">
                           <div class="pull-left">
                             <!-- User Image -->
-                            <%= image_tag 'user2-160x160.jpg',class: "img-circle", alt: "User Image"%>
+                            <%= image_tag current_user.avatar.url(:medium),class: "img-circle", alt: "User Image"%>
                           </div>
                           <!-- Message title and timestamp -->
                           <h4>
@@ -115,14 +115,14 @@
                 <!-- Menu Toggle Button -->
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                   <!-- The user image in the navbar-->
-                  <%= image_tag 'user2-160x160.jpg',class: "img-circle", alt: "User Image",size: "25x25" %>
+                  <%= image_tag current_user.avatar.url(:thumb),class: "img-circle", alt: "/images/icons/avatar2.png",size: "25x25" %>
                   <!-- hidden-xs hides the username on small devices so only the image appears. -->
                   <span class="hidden-xs">Alexander Pierce</span>
                 </a>
                 <ul class="dropdown-menu">
                   <!-- The user image in the menu -->
                   <li class="user-header">
-                    <%= image_tag 'user2-160x160.jpg',class: "img-circle", alt: "User Image"%>
+                    <%= image_tag current_user.avatar.url(:medium),class: "img-circle", alt: "avatar2"%>
                     <p>
                       <% if current_user.class == Member %>
                         <% if current_user.account_type == 'Employee' %>

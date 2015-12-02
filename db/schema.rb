@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151201114901) do
+ActiveRecord::Schema.define(version: 20151202085649) do
 
   create_table "attendances", force: :cascade do |t|
     t.integer  "employee_shift_id", limit: 4
@@ -342,6 +342,10 @@ ActiveRecord::Schema.define(version: 20151201114901) do
     t.string   "last_sign_in_ip",        limit: 255
     t.datetime "created_at",                                      null: false
     t.datetime "updated_at",                                      null: false
+    t.string   "avatar_file_name",       limit: 255
+    t.string   "avatar_content_type",    limit: 255
+    t.integer  "avatar_file_size",       limit: 4
+    t.datetime "avatar_updated_at"
   end
 
   add_index "groups", ["email"], name: "index_groups_on_email", unique: true, using: :btree
@@ -416,12 +420,21 @@ ActiveRecord::Schema.define(version: 20151201114901) do
     t.string   "last_sign_in_ip",        limit: 255
     t.datetime "created_at",                                      null: false
     t.datetime "updated_at",                                      null: false
-    t.integer  "account_id",             limit: 4
-    t.string   "account_type",           limit: 255
+    t.integer  "company_id",             limit: 4
+    t.integer  "company_location_id",    limit: 4
+    t.integer  "department_id",          limit: 4
+    t.integer  "employee_id",            limit: 4
+    t.string   "avatar_file_name",       limit: 255
+    t.string   "avatar_content_type",    limit: 255
+    t.integer  "avatar_file_size",       limit: 4
+    t.datetime "avatar_updated_at"
   end
 
-  add_index "members", ["account_type", "account_id"], name: "index_members_on_account_type_and_account_id", using: :btree
+  add_index "members", ["company_id"], name: "index_members_on_company_id", using: :btree
+  add_index "members", ["company_location_id"], name: "index_members_on_company_location_id", using: :btree
+  add_index "members", ["department_id"], name: "index_members_on_department_id", using: :btree
   add_index "members", ["email"], name: "index_members_on_email", unique: true, using: :btree
+  add_index "members", ["employee_id"], name: "index_members_on_employee_id", using: :btree
   add_index "members", ["member_code"], name: "index_members_on_member_code", unique: true, using: :btree
   add_index "members", ["reset_password_token"], name: "index_members_on_reset_password_token", unique: true, using: :btree
 
@@ -493,6 +506,10 @@ ActiveRecord::Schema.define(version: 20151201114901) do
   add_foreign_key "leav_approveds", "employee_leav_requests"
   add_foreign_key "leav_cancelleds", "employee_leav_requests"
   add_foreign_key "leav_rejecteds", "employee_leav_requests"
+  add_foreign_key "members", "companies"
+  add_foreign_key "members", "company_locations"
+  add_foreign_key "members", "departments"
+  add_foreign_key "members", "employees"
   add_foreign_key "qualifications", "employees"
   add_foreign_key "skillsets", "employees"
 end

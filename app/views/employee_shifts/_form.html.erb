@@ -1,25 +1,41 @@
-<%= form_for(@employee_shift) do |f| %>
-  <% if @employee_shift.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@employee_shift.errors.count, "error") %> prohibited this employee_shift from being saved:</h2>
-
-      <ul>
-      <% @employee_shift.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Create Company Shift</h3>
+    <div class="box-tools pull-right">
+      <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+      <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
     </div>
-  <% end %>
+  </div><!-- /.box-header -->
 
-  <div class="field">
-    <%= f.label :company_shift_id %><br>
-    <%= f.text_field :company_shift_id %>
+
+  <div class="box-body">
+  <%= bootstrap_form_for(@employee_shift) do |f| %>
+     <div class="row">
+        <div class="col-sm-2">
+          <div class="form-group required">
+           <%= f.text_field :company_shift_id %>
+          </div>
+        </div>
+        <div class="col-sm-2">
+           <div class="field">
+           <%= f.text_field :employee_id %>
+           </div>
+        </div>
+    </div>
+  <div class="row">
+        <div class="col-sm-5">
+          <div class="actions">
+            <%= f.submit "Create Account",class: "btn btn-primary",data: { disable_with: 'Wait....'} %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div><!-- /.box-body -->
+  <div class="box-footer">
+    Visit <a href="https://select2.github.io/">Select2 documentation</a> for more examples and information about the plugin.
   </div>
-  <div class="field">
-    <%= f.label :employee_id %><br>
-    <%= f.text_field :employee_id %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+</div><!-- /.box -->
+
+
+
+ 

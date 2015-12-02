@@ -1,0 +1,2 @@
+module CompanyShiftsHelper
+end

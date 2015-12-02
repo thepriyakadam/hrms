@@ -69,6 +69,6 @@ class CompanyLeavsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def company_leav_params
-      params.require(:company_leav).permit(:employee_grade_id, :leav_category_id, :no_of_leave, :expire_date)
+      params.require(:company_leav).permit(:employee_grade_id, :leav_category_id, :no_of_leave, :expiry_date)
     end
 end

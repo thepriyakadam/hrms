@@ -25,8 +25,8 @@
       <th> <strong>Leave type:</strong></th>
       <td><%= @employee_leav_request.leave_type %></td>
 
-      <th> <strong>Satrt date:</strong></th>
-      <td><%= @employee_leav_request.satrt_date %></td>
+      <th> <strong>Start date:</strong></th>
+      <td><%= @employee_leav_request.start_date %></td>
 
     </tr>
     <tr>
@@ -40,7 +40,7 @@
 
    </table>
     <%= link_to 'Edit', edit_employee_leav_request_path(@employee_leav_request),class: 'btn btn-success fa fa-edit' %> |
-    <%= link_to 'Back', employee_leav_request_path,class: 'btn btn-default fa fa-arrow-left' %>
+    <%= link_to 'Back', employee_leav_requests_path,class: 'btn btn-default fa fa-arrow-left' %>
   </div><!-- /.box-body -->
   <div class="box-footer">
     Visit <a href="https://select2.github.io/">Select2 documentation</a> for more examples and information about the plugin.

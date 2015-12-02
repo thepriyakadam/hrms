@@ -79,6 +79,7 @@ class EmployeesController < ApplicationController
       #u.company_location_id = params["role"]["department_id"]
       u.subdomain = Apartment::Tenant.current_tenant
       u.member_code = employee.employee_code
+      u.role_id = params["role"]["name"]
     end
     ActiveRecord::Base.transaction do
       if user.save

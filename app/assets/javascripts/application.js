@@ -17,13 +17,13 @@
 //= require_tree .
 
 // $(function () {
-//   if ($('#comments').length > 0) {
+  
 //     setTimeout(updateComments, 10000);
-//   }
+  
 // });
 
 // function updateComments() {
-//   $.getScript('/companies');
+//   $.getScript('/employee_leav_requests');
 //   setTimeout(updateComments, 10000);
 // }
 

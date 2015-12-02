@@ -15,6 +15,7 @@ class JoiningDetailsController < ApplicationController
   # GET /joining_details/new
   def new
     @joining_detail = JoiningDetail.new
+    @employee = Employee.find(params[:format])
   end
 
   # GET /joining_details/1/edit

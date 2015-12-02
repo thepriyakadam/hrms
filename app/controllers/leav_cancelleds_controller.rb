@@ -68,7 +68,7 @@ class LeavCancelledsController < ApplicationController
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
-    def leav_cancelled_params
-      params.require(:leav_cancelled).permit(:employee_leav_request_id, :cancelled_date)
-    end
+    # def leav_cancelled_params
+    #   params.require(:leav_cancelled).permit(:employee_leav_request_id, :cancelled_date)
+    # end
 end

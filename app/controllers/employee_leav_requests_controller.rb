@@ -16,7 +16,7 @@ class EmployeeLeavRequestsController < ApplicationController
   # GET /employee_leav_requests/new
   def new
     @employee_leav_request = EmployeeLeavRequest.new
-    @total_leaves = EmployeeLeavBalance.where('employee_id = ?', current_user.account_id)
+    @total_leaves = EmployeeLeavBalance.where('employee_id = ?', current_user.employee_id)
     @remain_leaves = EmployeeLeavRequest.joins(:leav_approved)
   end
 
@@ -36,9 +36,9 @@ class EmployeeLeavRequestsController < ApplicationController
     else
       @employee_leav_request.leave_count = 0.5
     end
-    @emp_leave_bal = EmployeeLeavBalance.where('employee_id = ? AND leav_category_id = ?',current_user.account_id, @employee_leav_request.leav_category_id).take
+    @emp_leave_bal = EmployeeLeavBalance.where('employee_id = ? AND leav_category_id = ?',current_user.employee_id, @employee_leav_request.leav_category_id).take
     if @emp_leave_bal.nil?
-      @total_leaves = EmployeeLeavBalance.where('employee_id = ?', current_user.account_id)
+      @total_leaves = EmployeeLeavBalance.where('employee_id = ?', current_user.employee_id)
       flash.now[:alert] = 'Leav balance not set- contact to admin.'
       render :new
     else

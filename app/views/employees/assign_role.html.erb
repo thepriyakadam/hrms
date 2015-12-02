@@ -10,20 +10,22 @@
 		      <th>Contact no</th>
 		      <th>Role</th>
 		      <th>Reporting Manager</th>
+		      <th>Department</th>
 		      <th>Action</th>
 		    </tr>
 		  </thead>
 		  <tbody>
 		    <% @employees.each do |employee| %>
-					<%= form_for :role, url: {action: 'submit_form'} do |f| %>    
+					<%= bootstrap_form_for :role, url: {action: 'submit_form'} do |f| %>    
 			      <tr>
 			        <td><%= employee.first_name %></td>
 			        <td><%= employee.contact_no %></td>
-			        <td><%= f.select :name, all_role_list %>
+			        <td><%= f.select :name, all_role_list,hide_label:true,prompt:true %>
 			   					<%= f.hidden_field :employee_id, value: employee.id %>
 			        </td>
-			        <td><%= f.select :manager_id, all_employee_list %></td>
-			        <td><%= f.submit "Assign Role" %></td>
+			        <td><%= f.select :manager_id, all_employee_list,hide_label:true, prompt:true %></td>
+			        <td><%= f.select :department_id, all_department_list,hide_label:true, prompt:true %></td>
+			        <td><%= f.submit "+", class: 'btn btn-primary fa fa-user-plus' %></td>
 			      </tr>	
 		     	<% end %>
 		    <% end %>

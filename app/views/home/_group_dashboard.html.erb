@@ -209,7 +209,7 @@
                   <span class="direct-chat-name pull-left">Alexander Pierce</span>
                   <span class="direct-chat-timestamp pull-right">23 Jan 2:00 pm</span>
                 </div><!-- /.direct-chat-info -->
-                <%= image_tag 'user2-160x160.jpg',class: "img-circle", alt: "User Image",size: "25x25" %>
+                <%= image_tag current_user.avatar.url(:medium),class: "img-circle", alt: "User Image",size: "25x25" %>
                 
                 <div class="direct-chat-text">
                   Is this template really for free? That's unbelievable!

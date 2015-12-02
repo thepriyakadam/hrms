@@ -64,7 +64,7 @@ class EmployeesController < ApplicationController
   end
 
   def assign_role
-    @employees = Employee.joins("LEFT JOIN members on members.account_id = employees.id where members.account_id is null")
+    @employees = Employee.joins("LEFT JOIN members on members.employee_id = employees.id where members.employee_id is null")
     @roles = Role.all    
   end
 
@@ -73,7 +73,10 @@ class EmployeesController < ApplicationController
     user = Member.new do |u|
       u.email = employee.email
       u.password = '12345678'
-      u.account = employee
+      u.employee_id = employee.id
+      u.department_id = params["role"]["department_id"]
+      #u.company_id = params["role"]["department_id"]
+      #u.company_location_id = params["role"]["department_id"]
       u.subdomain = Apartment::Tenant.current_tenant
       u.member_code = employee.employee_code
     end

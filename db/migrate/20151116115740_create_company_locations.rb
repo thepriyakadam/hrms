@@ -13,5 +13,6 @@ class CreateCompanyLocations < ActiveRecord::Migration
 
       t.timestamps null: false
     end
+    add_reference :members, :company_location, index: true, foreign_key: true
   end
 end

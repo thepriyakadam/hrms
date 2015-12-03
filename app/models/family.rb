@@ -54,10 +54,10 @@ validate :pan_no_regex
   end
 
 def pan_no_regex
-    if pan_no.present? and not pan_no.match(/^([A-Z]{5})(\d{10})([A-Z]{1})$/)
-      errors.add :pan_no,"Please specify Correct Pan Card Number"
+    if pan_no.present? and not pan_no.match(/^([A-Z]{5})(\d{4})([A-Z]{1})$/)
+      errors.add :pan_no,"Please specify Correct Pan Card Number eg:ABCDE1234A"
     end
-  end
+   end
 
   def email_regex
     if email.present? and not email.match(/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.(com|net|org|info|com.au|))?$/)

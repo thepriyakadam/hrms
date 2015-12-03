@@ -32,6 +32,9 @@ Rails.application.routes.draw do
     collection do
       get :assign_role
       post :submit_form
+      get :basic_detail
+      get :ajax_joining_detail
+      get :ajax_bank_detail
     end
   end
   resources :blood_groups

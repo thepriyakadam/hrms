@@ -116,8 +116,17 @@
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
           <!-- The user image in the navbar-->
           <%= image_tag current_user.avatar.url(:thumb),class: "img-circle", alt: "/images/icons/avatar2.png",size: "25x25" %>
+          <span class="hidden-xs"> <% if current_user.class == Member %>
+                <% if current_user.role.name == 'Employee' %>
+                  <%= current_user.email%>
+                  <%else%>
+                  <%= current_user.member_code%>
+                <% end %>          
+                <%else%>
+                <%= current_user.subdomain %>-
+                <%= current_user.class %>
+              <%end%></span>
           <!-- hidden-xs hides the username on small devices so only the image appears. -->
-          <span class="hidden-xs">Alexander Pierce</span>
         </a>
         <ul class="dropdown-menu">
           <!-- The user image in the menu -->

@@ -249,8 +249,7 @@ $.validator.addMethod("address", function (value, element) {
       },
       "company[ceo_name]":{
           maxlength: 30,
-          required: true,
-          lettersOnly: true
+          required: true
 
       }
 
@@ -329,7 +328,6 @@ $("#company_location").validate({
       "company_location[name]":{
         required: true,
         maxlength: 30,
-        lettersOnly:true
       },
 
      "company_location[email]":{
@@ -345,13 +343,13 @@ $("#company_location").validate({
       "company_location[district]":{
         maxlength: 100,
         required: true,
-        lettersOnly:true
+        
       },
 
      "company_location[city]":{
         maxlength: 50,
         required: true,
-        lettersOnly:true
+       
       },
 
       "company_location[pin_code]":{
@@ -424,7 +422,7 @@ $("#department").validate({
       "department[name]":{
         required: true,
         maxlength: 30,
-        lettersOnly:true
+        
       },
 
   "department[email]":{
@@ -436,29 +434,12 @@ $("#department").validate({
         required: true,
         numbersOnly: true
       },
-   "department[head_of_department]":{
-        maxlength: 50,
-        required: true,
-        lettersOnly:true
-      },
       "department[contact_no]":{
       maxlength: 13,
         required: true,
         mobileNo: true
-      },
-      "department[manager]":{
-        maxlength: 50,
-        required: true,
-        lettersOnly:true
-      },
-      "department[hr]":{
-        maxlength: 50,
-        required: true,
-        lettersOnly:true
       }
-
-
-
+    
 
 
     },
@@ -475,28 +456,11 @@ $("#department").validate({
       required: "Please Enter Pincode Details",
           maxlength: "Pincode Details allows max 6 digits"
       },
-      "department[head_of_department]":{
-       required: "Please Head Of Department",
-        maxlength: "Enter the Head Of Department upto 50 char max"
-      },
-      "department[contact_no]":{
+     "department[contact_no]":{
       required: "Please Specify Contact No",
         maxlength: "Enter the Correct contact number"
+      }  
       },
-      "department[manager]":{
-       required: "Please Specify Manager Details",
-        maxlength: "Enter the Manager detail upto 50 char max"
-      },
-      "department[hr]":{
-       required: "Please Specify HR Details",
-        maxlength: "Enter the HR detail upto 50 char max"
-      },
-      "department[hr]":{
-       required: "Please Specify HR Details",
-        maxlength: "Enter the HR detail upto 50 char max"
-      }
-
-    },
 
 
     errorPlacement: function(error, element) {

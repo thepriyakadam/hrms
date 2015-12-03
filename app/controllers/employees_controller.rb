@@ -10,6 +10,12 @@ class EmployeesController < ApplicationController
   # GET /employees/1
   # GET /employees/1.json
   def show
+    @joining_detail = JoiningDetail.find(@employee.id)
+    #@employee_bank_detail = EmployeeBankDetail.find(@employee.id)
+    # @qualification = Qualification.find(@employee.id)
+    # @experience = Experience.find(@employee.id)
+    # @family = Family.find(@employee.id)
+    # @employee_physical = EmployeePhysical.find(@employee.id)
   end
 
   # GET /employees/new
@@ -89,6 +95,18 @@ class EmployeesController < ApplicationController
         #UserPasswordMailer.welcome_email(company,pass).deliver_now
       end
     end
+  end
+
+  def basic_detail
+    @employee = Employee.find(params[:id])
+  end
+
+  def ajax_joining_detail
+    @joining_detail = JoiningDetail.find(params[:id])
+  end
+
+  def ajax_bank_detail
+    @employee_bank_detail = EmployeeBankDetail.new
   end
 
   private

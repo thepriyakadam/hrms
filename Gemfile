@@ -65,3 +65,6 @@ gem "rails-erd"
 
 # Auto increement
 gem 'protokoll'
+
+# Image processing
+gem "paperclip", "~> 4.3"

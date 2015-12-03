@@ -7,9 +7,12 @@ class Employee < ActiveRecord::Base
   has_many :awards
   has_many :employee_leav_requests
   has_many :employee_leav_balances
-  has_one :member, as: :account
+  has_one :member
   has_one :joining_detail
   accepts_nested_attributes_for :joining_detail
+  has_many :subordinates, class_name: "Employee",
+                          foreign_key: "manager_id"
+  belongs_to :manager, class_name: "Employee"
 
   validates :first_name, :presence => true
   validates :last_name, :presence => true

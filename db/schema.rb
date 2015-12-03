@@ -11,7 +11,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151130070825) do
+ActiveRecord::Schema.define(version: 20151202111330) do
+
+  create_table "attendances", force: :cascade do |t|
+    t.integer  "employee_shift_id", limit: 4
+    t.integer  "employee_id",       limit: 4
+    t.string   "attendance_date",   limit: 255
+    t.time     "check_in"
+    t.time     "check_out"
+    t.decimal  "company_hrs",                   precision: 10
+    t.decimal  "over_time_hrs",                 precision: 10
+    t.decimal  "total_hrs",                     precision: 10
+    t.datetime "created_at",                                   null: false
+    t.datetime "updated_at",                                   null: false
+  end
+
+  add_index "attendances", ["employee_id"], name: "index_attendances_on_employee_id", using: :btree
+  add_index "attendances", ["employee_shift_id"], name: "index_attendances_on_employee_shift_id", using: :btree
 
   create_table "awards", force: :cascade do |t|
     t.integer  "employee_id", limit: 4
@@ -97,6 +113,14 @@ ActiveRecord::Schema.define(version: 20151130070825) do
   end
 
   add_index "company_locations", ["company_id"], name: "index_company_locations_on_company_id", using: :btree
+
+  create_table "company_shifts", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.string   "in_time",    limit: 255
+    t.string   "out_time",   limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
 
   create_table "company_types", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -195,6 +219,16 @@ ActiveRecord::Schema.define(version: 20151130070825) do
 
   add_index "employee_physicals", ["employee_id"], name: "index_employee_physicals_on_employee_id", using: :btree
 
+  create_table "employee_shifts", force: :cascade do |t|
+    t.integer  "company_shift_id", limit: 4
+    t.integer  "employee_id",      limit: 4
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  add_index "employee_shifts", ["company_shift_id"], name: "index_employee_shifts_on_company_shift_id", using: :btree
+  add_index "employee_shifts", ["employee_id"], name: "index_employee_shifts_on_employee_id", using: :btree
+
   create_table "employee_types", force: :cascade do |t|
     t.string   "name",       limit: 255
     t.datetime "created_at",             null: false
@@ -229,15 +263,19 @@ ActiveRecord::Schema.define(version: 20151130070825) do
     t.integer  "employee_type_id",  limit: 4
     t.string   "gender",            limit: 255
     t.string   "religion",          limit: 255
+    t.integer  "manager_id",        limit: 4
     t.datetime "created_at",                      null: false
     t.datetime "updated_at",                      null: false
+    t.integer  "role_id",           limit: 4
   end
 
   add_index "employees", ["blood_group_id"], name: "index_employees_on_blood_group_id", using: :btree
   add_index "employees", ["department_id"], name: "index_employees_on_department_id", using: :btree
   add_index "employees", ["employee_code"], name: "index_employees_on_employee_code", using: :btree
   add_index "employees", ["employee_type_id"], name: "index_employees_on_employee_type_id", using: :btree
+  add_index "employees", ["manager_id"], name: "index_employees_on_manager_id", using: :btree
   add_index "employees", ["nationality_id"], name: "index_employees_on_nationality_id", using: :btree
+  add_index "employees", ["role_id"], name: "index_employees_on_role_id", using: :btree
 
   create_table "experiences", force: :cascade do |t|
     t.integer  "employee_id",  limit: 4
@@ -304,6 +342,10 @@ ActiveRecord::Schema.define(version: 20151130070825) do
     t.string   "last_sign_in_ip",        limit: 255
     t.datetime "created_at",                                      null: false
     t.datetime "updated_at",                                      null: false
+    t.string   "avatar_file_name",       limit: 255
+    t.string   "avatar_content_type",    limit: 255
+    t.integer  "avatar_file_size",       limit: 4
+    t.datetime "avatar_updated_at"
   end
 
   add_index "groups", ["email"], name: "index_groups_on_email", unique: true, using: :btree
@@ -378,14 +420,25 @@ ActiveRecord::Schema.define(version: 20151130070825) do
     t.string   "last_sign_in_ip",        limit: 255
     t.datetime "created_at",                                      null: false
     t.datetime "updated_at",                                      null: false
-    t.integer  "account_id",             limit: 4
-    t.string   "account_type",           limit: 255
+    t.integer  "company_id",             limit: 4
+    t.integer  "company_location_id",    limit: 4
+    t.integer  "department_id",          limit: 4
+    t.integer  "employee_id",            limit: 4
+    t.string   "avatar_file_name",       limit: 255
+    t.string   "avatar_content_type",    limit: 255
+    t.integer  "avatar_file_size",       limit: 4
+    t.datetime "avatar_updated_at"
+    t.integer  "role_id",                limit: 4
   end
 
-  add_index "members", ["account_type", "account_id"], name: "index_members_on_account_type_and_account_id", using: :btree
+  add_index "members", ["company_id"], name: "index_members_on_company_id", using: :btree
+  add_index "members", ["company_location_id"], name: "index_members_on_company_location_id", using: :btree
+  add_index "members", ["department_id"], name: "index_members_on_department_id", using: :btree
   add_index "members", ["email"], name: "index_members_on_email", unique: true, using: :btree
+  add_index "members", ["employee_id"], name: "index_members_on_employee_id", using: :btree
   add_index "members", ["member_code"], name: "index_members_on_member_code", unique: true, using: :btree
   add_index "members", ["reset_password_token"], name: "index_members_on_reset_password_token", unique: true, using: :btree
+  add_index "members", ["role_id"], name: "index_members_on_role_id", using: :btree
 
   create_table "nationalities", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -422,6 +475,8 @@ ActiveRecord::Schema.define(version: 20151130070825) do
 
   add_index "skillsets", ["employee_id"], name: "index_skillsets_on_employee_id", using: :btree
 
+  add_foreign_key "attendances", "employee_shifts"
+  add_foreign_key "attendances", "employees"
   add_foreign_key "awards", "employees"
   add_foreign_key "certifications", "qualifications"
   add_foreign_key "companies", "company_types"
@@ -438,10 +493,13 @@ ActiveRecord::Schema.define(version: 20151130070825) do
   add_foreign_key "employee_leav_requests", "employees"
   add_foreign_key "employee_leav_requests", "leav_categories"
   add_foreign_key "employee_physicals", "employees"
+  add_foreign_key "employee_shifts", "company_shifts"
+  add_foreign_key "employee_shifts", "employees"
   add_foreign_key "employees", "blood_groups"
   add_foreign_key "employees", "departments"
   add_foreign_key "employees", "employee_types"
   add_foreign_key "employees", "nationalities"
+  add_foreign_key "employees", "roles"
   add_foreign_key "experiences", "employees"
   add_foreign_key "families", "employees"
   add_foreign_key "families", "nationalities"
@@ -450,6 +508,11 @@ ActiveRecord::Schema.define(version: 20151130070825) do
   add_foreign_key "leav_approveds", "employee_leav_requests"
   add_foreign_key "leav_cancelleds", "employee_leav_requests"
   add_foreign_key "leav_rejecteds", "employee_leav_requests"
+  add_foreign_key "members", "companies"
+  add_foreign_key "members", "company_locations"
+  add_foreign_key "members", "departments"
+  add_foreign_key "members", "employees"
+  add_foreign_key "members", "roles"
   add_foreign_key "qualifications", "employees"
   add_foreign_key "skillsets", "employees"
 end

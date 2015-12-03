@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class LeavAprovedTest < ActiveSupport::TestCase
+class CompanyShiftTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

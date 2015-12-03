@@ -30,7 +30,7 @@ class EmployeesController < ApplicationController
 
     respond_to do |format|
       if @employee.save
-        format.html { redirect_to @employee, notice: 'Employee was successfully created.' }
+        format.html { redirect_to new_joining_detail_path(@employee), notice: 'Employee was successfully created.' }
         format.json { render :show, status: :created, location: @employee }
       else
         format.html { render :new }
@@ -60,6 +60,34 @@ class EmployeesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to employees_url, notice: 'Employee was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  def assign_role
+    @employees = Employee.joins("LEFT JOIN members on members.employee_id = employees.id where members.employee_id is null")
+    @roles = Role.all    
+  end
+
+  def submit_form
+    employee = Employee.find(params["role"]["employee_id"])
+    user = Member.new do |u|
+      u.email = employee.email
+      u.password = '12345678'
+      u.employee_id = employee.id
+      u.department_id = params["role"]["department_id"]
+      #u.company_id = params["role"]["department_id"]
+      #u.company_location_id = params["role"]["department_id"]
+      u.subdomain = Apartment::Tenant.current_tenant
+      u.member_code = employee.employee_code
+      u.role_id = params["role"]["name"]
+    end
+    ActiveRecord::Base.transaction do
+      if user.save
+        employee.update_attributes(role_id: params["role"]["name"],manager_id: params["role"]["manager_id"])
+        flash[:notice] = "Employee assigned successfully."
+        redirect_to assign_role_employees_path
+        #UserPasswordMailer.welcome_email(company,pass).deliver_now
+      end
     end
   end
 

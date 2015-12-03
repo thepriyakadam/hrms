@@ -17,7 +17,7 @@
 
     <tr>
       <th><strong>Employee:</strong></th>
-      <td><%= @joining_detail.employee %></td>
+      <td><%= @joining_detail.employee.id %></td>
 
       <th> <strong>Joining date:</strong></th>
       <td><%= @joining_detail.joining_date %></td>
@@ -41,7 +41,7 @@
 
     <tr>
       <th><strong>Employee grade:</strong></th>
-      <td><%= @joining_detail.employee_grade %></td>
+      <td><%= @joining_detail.employee_grade.name %></td>
 
       <th> <strong>Confirmation date:</strong></th>
       <td><%= @joining_detail.confirmation_date %></td>

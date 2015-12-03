@@ -28,8 +28,10 @@ class CreateEmployees < ActiveRecord::Migration
       t.references :employee_type, index: true, foreign_key: true
       t.string :gender
       t.string :religion
+      t.references :manager, index: true
 
       t.timestamps null: false
     end
+    add_reference :members, :employee, index: true, foreign_key: true
   end
 end

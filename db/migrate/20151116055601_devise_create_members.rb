@@ -35,7 +35,11 @@ class DeviseCreateMembers < ActiveRecord::Migration
 
       t.timestamps null: false
 
-      t.references :account, polymorphic: true, index: true
+      #t.references :account, polymorphic: true, index: true
+      # t.references :company, index: true, foreign_key: true
+      # t.references :company_location, index: true, foreign_key: true
+      # t.references :department, index: true, foreign_key: true
+      # t.references :employee, index: true, foreign_key: true
     end
 
     add_index :members, :email,                unique: true

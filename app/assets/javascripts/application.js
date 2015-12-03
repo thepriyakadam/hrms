@@ -16,6 +16,16 @@
 //= require jquery.validate.additional-methods
 //= require_tree .
 
+// $(function () {
+  
+//     setTimeout(updateComments, 10000);
+  
+// });
+
+// function updateComments() {
+//   $.getScript('/employee_leav_requests');
+//   setTimeout(updateComments, 10000);
+// }
 
 $(function () {
   $("#example1").DataTable();

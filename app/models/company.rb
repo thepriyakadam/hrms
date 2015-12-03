@@ -2,7 +2,7 @@ class Company < ActiveRecord::Base
   protokoll :company_code, :pattern => "COM###"
   belongs_to :group
   belongs_to :company_type
-  has_one :member, as: :account
+  has_one :member
 
   validates :name, :presence => true
   validates :registration_no, :presence => true

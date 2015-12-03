@@ -1,10 +1,13 @@
 Rails.application.routes.draw do
+  resources :attendances
+  resources :employee_shifts
+  resources :company_shifts
   resources :roles
   resources :employee_bank_details
   resources :leav_cancelleds
   resources :employee_leav_balances
   resources :leav_rejecteds
-  resources :leav_aproveds
+  resources :leav_approveds
   resources :employee_leav_requests do
     collection do
       get :approved_or_rejected_leave_request
@@ -25,7 +28,12 @@ Rails.application.routes.draw do
   resources :certifications
   resources :qualifications
   resources :families
-  resources :employees
+  resources :employees do
+    collection do
+      get :assign_role
+      post :submit_form
+    end
+  end
   resources :blood_groups
   resources :nationalities
   resources :employee_types
@@ -40,7 +48,7 @@ Rails.application.routes.draw do
   devise_for :groups, :controllers => {registrations: 'groups/registrations',sessions: 'groups/sessions',passwords: 'groups/passwords'}
 
   devise_scope :group do
-    get "/group" => "groups/sessions#new"
+    get "/group" => "groups/registrations#new"
   end
 
   devise_scope :member do

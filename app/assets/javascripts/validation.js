@@ -54,9 +54,34 @@ $.validator.addMethod("stateName", function (value, element) {
     return this.optional(element) || /^[a-zA-Z_]+$/i.test(value);
 },"Please Input Letters Only.");
 
-$.validator.addMethod("Name", function (value, element) {
+$.validator.addMethod("CertName", function (value, element) {
     return this.optional(element) || /^[a-zA-Z_ ]+$/i.test(value);
 },"Please Input Letters Only.");
+
+$.validator.addMethod("AwardName", function (value, element) {
+    return this.optional(element) || /^[a-zA-Z_ ]+$/i.test(value);
+},"Please Input Letters Only.");
+
+
+$.validator.addMethod("AwardFrom", function (value, element) {
+    return this.optional(element) || /^[a-zA-Z_ ]+$/i.test(value);
+},"Please Input Letters Only.");
+
+$.validator.addMethod("ReffFrom", function (value, element) {
+    return this.optional(element) || /^[a-zA-Z_ ]+$/i.test(value);
+},"Please Input Letters Only.");
+
+$.validator.addMethod("status", function (value, element) {
+    return this.optional(element) || /^[0-9a-zA-Z_ ]+$/i.test(value);
+},"Please Input  Correct Status.");
+
+$.validator.addMethod("probPeriod", function (value, element) {
+    return this.optional(element) || /^[0-9a-zA-Z_ ]+$/i.test(value);
+},"Please Input  correct format eg:90 days.");
+
+$.validator.addMethod("noticePeriod", function (value, element) {
+    return this.optional(element) || /^[0-9a-zA-Z_ ]+$/i.test(value);
+},"Please Input  correct format eg:90 days.");
 
 $.validator.addMethod("pincode", function (value, element) {
     return this.optional(element) || /^[0-9]+$/i.test(value);
@@ -723,78 +748,7 @@ $("#employee").validate({
 
    });
 
-$("#joining_detail").validate({
-    rules: {
-      "joining_detail[reffernce_from]":{
-        maxlength: 50,
-        required: true
-      },
-      "joining_detail[admin_hr]":{
-        maxlength: 50,
-        required: true
-      },
-      "joining_detail[designation]":{
-        maxlength: 50,
-        required: true
-      },
-      "joining_detail[account_no]":{
-        maxlength: 9,
-        required: true,
-        numbersOnly:true
-      },
-      "joining_detail[ctc]":{
-        maxlength: 7,
-        required: true
-      },
-      "employee[date_of_birth]":{
-        required: true
-      },
-      "employee[status]":{
-        maxlength: 15,
-        required: true
-      },
-      "joining_detail[joining_date]":{
-        required: true
-      }
-    },
-    messages: {
-      "joining_detail[joining_date]":{
-       required: "Please Specify Joining Details",
-       maxlength: "Joining Details can't exceed max limit"
-      },
-         
-      "joining_detail[reffernce_from]":{
-       required: "Please Specify Reference Details",
-        maxlength: "Enter the Reference Details upto 50 char max"
-      },
-      "joining_detail[admin_hr]":{
-       required: "Please Specify Admin HR Details",
-        maxlength: "Enter the Admin HR upto 50 char max"
-      },
-      "joining_detail[tech_hr]":{
-       required: "Please Specify Tech HR Details",
-        maxlength: "Enter the Tech HR upto 50 char max"
-      },
-      "joining_detail[designation]":{
-       required: "Please DESIGNATION Details",
-        maxlength: "Enter the DESIGNATION upto 50 char max"
-      },
-      "joining_detail[account_no]":{
-       required: "Please Enter Your Account No Details",
-        maxlength: "Enter the DESIGNATION upto 9 Digits max"
-      },
-      "joining_detail[ctc]":{
-       required: "Please Enter Your CTC Details",
-        maxlength: "Enter the CTC Details"
-      }
 
-    },
-    errorPlacement: function(error, element) {
-     error.css('color','red')
-     error.insertAfter(element.parent(element));
-    }
-
-   });
 
 $("#employee_grade").validate({
     rules: {
@@ -1190,32 +1144,26 @@ $("#skillset").validate({
 $("#award").validate({
     rules: {
       "award[award_name]":{
-        required: true,
         maxlength: 30,
-        lettersOnly:true
+        AwardName:true
       },
       "award[year]":{
-        required: true,
         maxlength: 4,
         numbersOnly:true
       },
       "award[award_from]":{
-        required: true,
         maxlength: 30,
-        lettersOnly:true
+        AwardFrom:true
       }
     },
     messages: {
       "award[award_name]":{
-        required: "Please specify Awards Name",
         maxlength: "Awards Name allows upto 30 characters"
       },
       "award[year]":{
-        required: "Please specify Year When you received award",
         maxlength: "Please input correct year format"
       },
       "award[award_from]":{
-        required: "Please specify Organization name,whom you received award",
         maxlength: "Awards from allows upto 30 characters"
       }
     },
@@ -1235,7 +1183,7 @@ $("#certification").validate({
       },
       "certification[name]":{
         maxlength: 30,
-        numbersOnly:true
+        CertName:true
       },
       "certification[year]":{
         maxlength: 4,
@@ -1267,7 +1215,6 @@ $("#certification").validate({
         maxlength: "Please Input Correct Year format"
       },
       "certification[descripation]":{
-        
         maxlength: "Certification Description allows upto 200 char max"
       }
 
@@ -1431,5 +1378,96 @@ $("#employee_bank_detail").validate({
     }
 
    });
+
+
+// $("#joining_detail").validate({
+//     rules: {
+//       "joining_detail[joining_date]":{
+//         maxlength: 4,
+//         required: true
+//       },
+//       "joining_detail[reference_from]":{
+//         maxlength: 30,
+//         ReffFrom: true
+//       },
+//       "joining_detail[admin_hr]":{
+//         maxlength: 30,
+//         required: true,
+//         ReffFrom: true
+//       },
+//       "joining_detail[tech_hr]":{
+//         maxlength: 30,
+//         required: true,
+//         ReffFrom: true
+        
+//       },
+//       "joining_detail[designation]":{
+//         maxlength: 30,
+//         required: true,
+//         ReffFrom: true
+//       },
+//       "employee[status]":{
+//         maxlength: 30,
+//         required: true,
+//         status: true
+//       },
+//       "joining_detail[probation_period]":{
+//         maxlength: 30,
+//         probPeriod:true
+//       },
+//       "joining_detail[notice_period]":{
+//         maxlength: 30,
+//         noticePeriod:true
+//       },
+//       "joining_detail[medical_schem]":{
+//         maxlength: 30
+//       }
+
+//     },
+//     messages: {
+//       "joining_detail[joining_date]":{
+//        required: "Please Specify Joining Details",
+//        maxlength: "Joining Details can't exceed max limit"
+//       },
+         
+//       "joining_detail[reffernce_from]":{
+//        required: "Please Specify Reference Details",
+//         maxlength: "Enter the Reference Details upto 30 char max"
+//       },
+//       "joining_detail[admin_hr]":{
+//        required: "Please Specify Admin HR Details",
+//         maxlength: "Enter the Admin HR upto 30 char max"
+//       },
+//       "joining_detail[tech_hr]":{
+//        required: "Please Specify Tech HR Details",
+//         maxlength: "Enter the Tech HR upto 30 char max"
+//       },
+//       "joining_detail[designation]":{
+//        required: "Please DESIGNATION Details",
+//         maxlength: "Enter the DESIGNATION upto 30 char max"
+//       },
+
+//       "joining_detail[status]":{
+       
+//         maxlength: "Enter the DESIGNATION upto 9 Digits max"
+//       },
+//       "joining_detail[probation_period]":{
+       
+//         maxlength: "Probation Period EXceed MAX limit  of 30char"
+//       },
+//       "joining_detail[notice_period]":{
+//         maxlength: "Notice Period EXceed MAX limit of 30 char"
+//       },
+//     "joining_detail[medical_schem]":{
+//         maxlength: "Medical Scheme exceed MAX limit of 30 char"
+//       }
+
+//     },
+//     errorPlacement: function(error, element) {
+//      error.css('color','red')
+//      error.insertAfter(element.parent(element));
+//     }
+
+//    });
 
 });

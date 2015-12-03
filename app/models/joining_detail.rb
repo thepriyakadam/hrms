@@ -17,6 +17,10 @@ class JoiningDetail < ActiveRecord::Base
   validate :admin_hr_regex
   validate :desig_regex
   validate :tech_hr_regex
+  validate :medical_scheme_regex
+  validate :probation_period_regex
+  validate :notice_period_regex
+  validate :status_regex
 
 
 def ref_from_regex
@@ -44,5 +48,28 @@ def admin_hr_regex
     end
   end
 
+  def probation_period_regex
+    if probation_period.present? and not probation_period.match(/\A[0-9A-Za-z_ ]{1,30}\Z/)
+      errors.add :probation_period,"Please Enter Probation Period In Days or Months"
+    end
+  end
+
+def notice_period_regex
+    if notice_period.present? and not notice_period.match(/\A[0-9A-Za-z_ ]{1,30}\Z/)
+      errors.add :notice_period,"Please Enter Notice Period In Days or Months"
+    end
+  end
+
+def medical_scheme_regex
+    if medical_schem.present? and not medical_schem.match(/\A[A-Za-z_ ]{1,30}\Z/)
+      errors.add :medical_schem,"Medical Scheme Allows only Characters"
+    end
+  end
+
+  def status_regex
+    if status.present? and not status.match(/\A[A-Za-z_ ]{1,30}\Z/)
+      errors.add :status,"Status Allows only Characters"
+    end
+  end
 
 end

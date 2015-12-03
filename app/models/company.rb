@@ -73,7 +73,7 @@ def contact_no_regex
   end
 
 def website_regex
-    if web_site.present? and not web_site.match(/^(www\.)?[a-zA-Z\-]{3,}(\.(com|net|org))?$/)
+    if web_site.present? and not web_site.match(/^(www\.)?[a-zA-Z\-]{3,}(\.(com|net|org|in))?$/)
       errors.add :web_site,"Please Enter Correct Website Format"
     end
   end

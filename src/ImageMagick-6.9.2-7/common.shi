@@ -1,0 +1,21 @@
+# Test environment
+top_srcdir='/home/indiba/workspace/hrms/src/ImageMagick-6.9.2-7'
+top_builddir='/home/indiba/workspace/hrms/src/ImageMagick-6.9.2-7'
+
+set -a
+COMPARE="/home/indiba/workspace/hrms/src/ImageMagick-6.9.2-7/utilities/compare"
+COMPOSITE="/home/indiba/workspace/hrms/src/ImageMagick-6.9.2-7/utilities/composite"
+CONJURE="/home/indiba/workspace/hrms/src/ImageMagick-6.9.2-7/utilities/conjure"
+CONVERT="/home/indiba/workspace/hrms/src/ImageMagick-6.9.2-7/utilities/convert"
+DISPLAY="/home/indiba/workspace/hrms/src/ImageMagick-6.9.2-7/utilities/display"
+IDENTIFY="/home/indiba/workspace/hrms/src/ImageMagick-6.9.2-7/utilities/identify"
+MONTAGE="/home/indiba/workspace/hrms/src/ImageMagick-6.9.2-7/utilities/montage" 
+VALIDATE="/home/indiba/workspace/hrms/src/ImageMagick-6.9.2-7/tests/validate"
+DRAWTEST="/home/indiba/workspace/hrms/src/ImageMagick-6.9.2-7/tests/drawtest"
+WANDTEST="/home/indiba/workspace/hrms/src/ImageMagick-6.9.2-7/tests/wandtest"
+LD_LIBRARY_PATH="/home/indiba/workspace/hrms/src/ImageMagick-6.9.2-7/magick/.libs:${LD_LIBRARY_PATH}"
+MAGICK_CODER_MODULE_PATH="/home/indiba/workspace/hrms/src/ImageMagick-6.9.2-7/coders"
+MAGICK_CONFIGURE_PATH="/home/indiba/workspace/hrms/src/ImageMagick-6.9.2-7/config:/home/indiba/workspace/hrms/src/ImageMagick-6.9.2-7/config"
+MAGICK_FILTER_MODULE_PATH="/home/indiba/workspace/hrms/src/ImageMagick-6.9.2-7/filters"
+PATH="/home/indiba/workspace/hrms/src/ImageMagick-6.9.2-7/utilities:/home/indiba/workspace/hrms/src/ImageMagick-6.9.2-7/tests:${PATH}"
+set +a

@@ -200,11 +200,6 @@ $.validator.addMethod("address", function (value, element) {
           mobileNo: true
       },
 
-      "company[address]":{
-          maxlength: 100,
-          required: true
-      },
-
       "company[tax_no]":{
           maxlength: 5,
           required: true
@@ -280,10 +275,6 @@ $.validator.addMethod("address", function (value, element) {
           maxlength: "Enter the Valid Tax number"
       },
      
-     "company[address]":{
-        required: "Please Specify Address",
-          maxlength: "Enter the Address"
-      },
       "company[pan_card_no]":{
         required: "Please Enter Valid Pancard Details",
           maxlength: "Enter the Pancard Details max 10 char"
@@ -370,11 +361,7 @@ $("#company_location").validate({
 
       },
 
-      "company_location[address]":{
-        maxlength: 200,
-        address: true
-
-      }
+    
     },
     messages: {
       "company_location[name]":{
@@ -396,11 +383,7 @@ $("#company_location").validate({
       required: "Please Specify Your City",
         maxlength: "Cant exceed more than 50 char"
       },
-      
-      "company_location[address]":{
-        maxlength: "Enter the Address upto 200 char max"
-      },
-
+     
       "company_location[pin_code]":{
         maxlength: "Please Enter Valid Pincode Details upto 6 digit max"
       }
@@ -453,13 +436,6 @@ $("#department").validate({
         required: true,
         numbersOnly: true
       },
-
-  "department[address]":{
-        maxlength: 100,
-        required: true,
-        address: true
-      },
-
    "department[head_of_department]":{
         maxlength: 50,
         required: true,
@@ -498,11 +474,6 @@ $("#department").validate({
      "department[pin_code]":{
       required: "Please Enter Pincode Details",
           maxlength: "Pincode Details allows max 6 digits"
-      },
-
-      "department[address]":{
-       required: "Please Specify Address",
-        maxlength: "Enter the Address upto 100 char max"
       },
       "department[head_of_department]":{
        required: "Please Head Of Department",
@@ -584,11 +555,6 @@ $("#employee").validate({
       "employee[passport_no]":{
         maxlength: 6
       },
-      "employee[permanent_address]":{
-        maxlength: 100,
-        required: true,
-        address: true
-      },
       "employee[state]":{
         maxlength: 50,
         lettersOnly:true
@@ -604,9 +570,6 @@ $("#employee").validate({
       "employee[pin_code]":{
         maxlength: 6,
         numbersOnly: true
-      },
-      "employee[current_address]":{
-        maxlength: 100
       },
       "employee[contact_no]":{
           maxlength: 13,
@@ -672,10 +635,6 @@ $("#employee").validate({
       "employee[passport_no]":{
         maxlength: "Passport No allows upto 6 Digits"
       },
-      "employee[permanent_address]":{
-       required: "Please Specify Address",
-        maxlength: "Enter the Address upto 100 char max"
-      },
       "employee[state]":{
        required: "Please Specify Your State Details",
         maxlength: "Enter the Stae upto 50 char max"
@@ -691,9 +650,6 @@ $("#employee").validate({
       "employee[pin_code]":{
       required: "Please Enter your Pincode Details",
         maxlength: "Please Enter Valid Pincode Details"
-      },
-        "employee[current_address]":{
-        maxlength: "Enter the Current Address upto 100 char max"
       },
       "employee[contact_no]":{
       required: "Please Specify Contact No",
@@ -908,9 +864,6 @@ $("#family").validate({
         maxlength: 13,
         contactNo: true
       },
-      "family[permanent_address]":{
-        maxlength: 200
-      },
       "family[state]":{
         maxlength: 50,
         stateName: true
@@ -927,9 +880,6 @@ $("#family").validate({
        
         maxlength: 6,
         pincode: true
-      },
-        "family[current_address]":{
-         maxlength: 100
       },
       "family[email]":{
         loginRegex: true
@@ -989,9 +939,6 @@ $("#family").validate({
       "family[phone_no]":{
         maxlength: "Enter the Correct Phone No"
       },
-       "family[permanent_address]":{
-         maxlength: "Permanent Address allows upto 100 characters"
-      },
       "family[state]":{
         maxlength: "State Name allows upto 50 characters"
       },
@@ -1003,9 +950,6 @@ $("#family").validate({
       },
       "family[pin_code]":{
         maxlength: "Pincode allows upto 6 digits"
-      },
-       "family[current_address]":{
-        maxlength: "Current Address allows upto 100 characters"
       },
       "family[relation]":{
         required: "Please specify Relation Details",
@@ -1321,10 +1265,6 @@ $("#employee_bank_detail").validate({
         required:true,
         bankName:true
       },
-      "employee_bank_detail[address]":{
-        maxlength: 200,
-        required:true
-      },
       "employee_bank_detail[contact_no]":{
         maxlength: 13,
         contactNo:true
@@ -1355,10 +1295,7 @@ $("#employee_bank_detail").validate({
         required: "Please Specify Bank Name",
         maxlength: "Branch Name allows upto 30 Characters"
       },
-      "employee_bank_detail[address]":{
-        required: "Please Specify Address Details",
-        maxlength: "Address Details allows upto 200 Characters"
-      },
+     
       "employee_bank_detail[contact_no]":{
         maxlength: "Contact No allows upto 13 Digits"
       },

@@ -39,3 +39,8 @@ leave_categories = ['Seak Leave','Casual Leave','Maternal Leave','Paternal Leave
 leave_categories.each do |d|
 	LeavCategory.create(name: d)
 end
+
+roles = ['Company','CompanyLocation','Department','Employee']
+roles.each do |r|
+	Role.create(name: r)
+end

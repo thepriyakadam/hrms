@@ -13,6 +13,11 @@ class ApplicationController < ActionController::Base
     flash[:alert] = "Sorry! You are not Authorized"
     redirect_to root_url
   end
+
+  rescue_from ActiveRecord::RecordNotFound do |exc|
+    flash[:alert] = "Sorry! Record not found"
+    redirect_to root_url
+  end
   
   def check_subdomain
     if group_signed_in?
@@ -21,7 +26,7 @@ class ApplicationController < ActionController::Base
         redirect_to root_url(:subdomain => current_user.subdomain)
       end
     elsif member_signed_in?
-      unless request.subdomain == Apartment::Tenant.current_tenant
+      unless request.subdomain == current_user.subdomain
         flash[:alert] =  "You are not authorized to access that subdomain."
         redirect_to root_url(:subdomain => current_user.subdomain)
       end

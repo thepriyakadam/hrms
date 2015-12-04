@@ -24,6 +24,7 @@ class SkillsetsController < ApplicationController
   # POST /skillsets
   # POST /skillsets.json
   def create
+    @employee = Employee.find(params[:skillset][:employee_id])  
     @skillset = Skillset.new(skillset_params)
     ActiveRecord::Base.transaction do
       respond_to do |format|

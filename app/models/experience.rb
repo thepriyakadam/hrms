@@ -1,4 +1,4 @@
-class Experince < ActiveRecord::Base
+class Experience < ActiveRecord::Base
   belongs_to :employee
 
   validates :no_of_year_experince, :presence => true

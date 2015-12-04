@@ -25,7 +25,7 @@ class CertificationsController < ApplicationController
   # POST /certifications.json
   def create
     @certification = Certification.new(certification_params)
-
+    @employee = Employee.find(params[:certification][:employee_id])
     respond_to do |format|
       if @certification.save
         format.html { redirect_to @certification, notice: 'Certification was successfully created.' }

@@ -1,0 +1,6 @@
+<% if Skillset.exists?(employee_id: params[:id]) %>
+<%@skillset = Skillset.find_by_employee_id(params[:id])%>
+$('#info').html("<%= j render 'skillsets/show_detail' %>")
+<%else%>
+$('#info').html("<%= j render 'skillsets/form' %>")
+<%end%>

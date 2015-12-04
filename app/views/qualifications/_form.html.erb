@@ -12,7 +12,7 @@
 <div class="box-body">
 
 <%= bootstrap_form_for(@qualification,html: {id: 'qualification'}) do |f| %>
-
+<%= f.hidden_field :employee_id, value: @employee.id %>
   <div class="row">
     
          <div class="col-sm-2">

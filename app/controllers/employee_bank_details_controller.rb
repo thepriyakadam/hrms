@@ -25,7 +25,7 @@ class EmployeeBankDetailsController < ApplicationController
   # POST /employee_bank_details.json
   def create
     @employee_bank_detail = EmployeeBankDetail.new(employee_bank_detail_params)
-
+    @employee = Employee.find(params[:employee_bank_detail][:employee_id])
     respond_to do |format|
       if @employee_bank_detail.save
         format.html { redirect_to @employee_bank_detail, notice: 'Employee bank detail was successfully created.' }

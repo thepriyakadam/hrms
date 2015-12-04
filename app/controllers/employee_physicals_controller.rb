@@ -25,7 +25,7 @@ class EmployeePhysicalsController < ApplicationController
   # POST /employee_physicals.json
   def create
     @employee_physical = EmployeePhysical.new(employee_physical_params)
-
+    @employee = Employee.find(params[:employee_physical][:employee_id])
     respond_to do |format|
       if @employee_physical.save
         format.html { redirect_to @employee_physical, notice: 'Employee physical was successfully created.' }

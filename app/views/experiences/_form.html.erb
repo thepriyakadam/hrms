@@ -9,23 +9,17 @@
     </div><!-- /.box-header -->
 
 
-  <%= bootstrap_form_for(@experince,html: {id: 'experince'}) do |f| %>
-    
+  <%= bootstrap_form_for(@experience,html: {id: 'experince'}) do |f| %>
+    <%= f.hidden_field :employee_id, value: @employee.id %>
     <div class="row">
         <div class="col-sm-3">
           <div class="form-group required">
-           <%= f.text_field :no_of_year_experince %>
+           <%= f.text_field :no_of_year %>
          </div>
        </div>
 
 
   <div class="row">
-   
-      <!-- <div class="col-sm-2">
-        <div class="field">
-         <%= f.text_field :employee_id %>
-        </div>
-    </div> -->
   
 
        <div class="col-sm-3">
@@ -48,7 +42,7 @@
         </div>
     </div>
 
-    <% if controller_name == 'experinces' and action_name == 'new' %>
+    <% if controller_name == 'experiences' and action_name == 'new' %>
       <div class="row">
         <div class="col-sm-2">
           <input type="button" id="btnAdd" value="Add section" class="btn btn-success"> 

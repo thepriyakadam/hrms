@@ -25,7 +25,7 @@ class FamiliesController < ApplicationController
   # POST /families.json
   def create
     @family = Family.new(family_params)
-
+    @employee = Employee.find(params[:family][:employee_id])
     respond_to do |format|
       if @family.save
         format.html { redirect_to @family, notice: 'Family was successfully created.' }

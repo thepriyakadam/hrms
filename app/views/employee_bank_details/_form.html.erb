@@ -9,15 +9,10 @@
 
 
   <div class="box-body">
+
     <%= bootstrap_form_for(@employee_bank_detail,html: {id: 'employee_bank_detail'}) do |f| %>
-
+    <%= f.hidden_field :employee_id, value: @employee.id %>
      <div class="row">
-        <!-- div class="col-sm-3">
-          <div class="field">
-          <%= f.text_field :employee_id %>
-           </div>
-        </div> -->
-
         <div class="col-sm-3">
            <div class="field">
            <%= f.text_field :account_no %>

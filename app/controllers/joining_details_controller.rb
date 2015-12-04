@@ -26,7 +26,7 @@ class JoiningDetailsController < ApplicationController
   # POST /joining_details.json
   def create
     @joining_detail = JoiningDetail.new(joining_detail_params)
-
+    @employee = Employee.find(params[:joining_detail][:employee_id])
     respond_to do |format|
       if @joining_detail.save
         format.html { redirect_to @joining_detail, notice: 'Joining detail was successfully created.' }

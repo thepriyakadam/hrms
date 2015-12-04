@@ -48,16 +48,16 @@ ActiveRecord::Schema.define(version: 20151202111330) do
   end
 
   create_table "certifications", force: :cascade do |t|
-    t.integer  "qualification_id", limit: 4
-    t.string   "name",             limit: 255
-    t.integer  "year",             limit: 4
-    t.string   "duration",         limit: 255
-    t.text     "descripation",     limit: 65535
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
+    t.integer  "employee_id",  limit: 4
+    t.string   "name",         limit: 255
+    t.integer  "year",         limit: 4
+    t.string   "duration",     limit: 255
+    t.text     "descripation", limit: 65535
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
   end
 
-  add_index "certifications", ["qualification_id"], name: "index_certifications_on_qualification_id", using: :btree
+  add_index "certifications", ["employee_id"], name: "index_certifications_on_employee_id", using: :btree
 
   create_table "companies", force: :cascade do |t|
     t.integer  "group_id",            limit: 4
@@ -478,7 +478,7 @@ ActiveRecord::Schema.define(version: 20151202111330) do
   add_foreign_key "attendances", "employee_shifts"
   add_foreign_key "attendances", "employees"
   add_foreign_key "awards", "employees"
-  add_foreign_key "certifications", "qualifications"
+  add_foreign_key "certifications", "employees"
   add_foreign_key "companies", "company_types"
   add_foreign_key "companies", "groups"
   add_foreign_key "company_leavs", "employee_grades"

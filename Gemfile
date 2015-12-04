@@ -68,3 +68,6 @@ gem 'protokoll'
 
 # Image processing
 gem "paperclip", "~> 4.3"
+
+#country And State Name
+gem 'country_state_select', '~> 2.0.0'

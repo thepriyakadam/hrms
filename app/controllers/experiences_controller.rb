@@ -26,35 +26,21 @@ class ExperiencesController < ApplicationController
   def create
     @experience = Experience.new(experience_params)
     @employee = Employee.find(params[:experience][:employee_id])
-    respond_to do |format|
-      if @experience.save
-        format.html { redirect_to @experience, notice: 'Experience was successfully created.' }
-        format.json { render :show, status: :created, location: @experience }
-      else
-        format.html { render :new }
-        format.json { render json: @experience.errors, status: :unprocessable_entity }
-      end
-    end
-
-    def create
-    @experience = Experience.new(experience_params)
     ActiveRecord::Base.transaction do
       respond_to do |format|
         if @experience.save
           len = params["experience"].length-4
           for i in 2..len
-            Experience.create(employee_id: params['experience']['employee_id'],company_name: params['experience'][i.to_s]['company_name'], designation: params['experience'][i.to_s]['designation'], ctc: params['experience'][i.to_s]['ctc']) 
+            Experience.create(employee_id: params['experience']['employee_id'], no_of_year: params['experience'][i.to_s]['no_of_year'], company_name: params['experience'][i.to_s]['company_name'], designation: params['experience'][i.to_s]['designation'], ctc: params['experience'][i.to_s]['ctc']) 
           end
           format.html { redirect_to @experience, notice: 'Experience was successfully created.' }
           format.json { render :show, status: :created, location: @experience }
         else
           format.html { render :new }
-          format.json { render json: @@xperince.errors, status: :unprocessable_entity }
+          format.json { render json: @experience.errors, status: :unprocessable_entity }
         end
       end
     end
-end
-
   end
 
   # PATCH/PUT /experiences/1

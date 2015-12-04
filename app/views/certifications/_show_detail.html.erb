@@ -7,23 +7,28 @@
     </div>
   </div><!-- /.box-header -->
   <div class="box-body">
-   <table id="example2" class="table table-bordered table-hover">
+    <table id="example2" class="table table-bordered table-hover">
+    <tr>
+      <th><strong>Name:</strong></th>
+      <td><%= @certification.name %></td>
+    </tr>
 
     <tr>
-        <th><strong>Employee:</strong></th>
-        <td>  <%= @employee_physical.employee %></td>
+      <th><strong>Year:</strong></th>
+      <td><%= @certification.year %></td>
 
-        <th> <strong>Hieght:</strong></th>
-        <td> <%= @employee_physical.height %></td>
+      <th><strong>Duration:</strong></th>
+      <td><%= @certification.duration %></td>
     </tr>
-     <tr>
-        <th><strong>Weight:</strong></th>
-        <td><%= @employee_physical.weight %></td>
 
-        <th> <strong>Size:</strong></th>
-        <td> <%= @employee_physical.size %></td>
+    <tr>
+      <th><strong>Descripation:</strong></th>
+      <td><%= @certification.descripation %></td>
+
+      <th></th>
+      <td></td>
     </tr>
-  
+
     </table>
   <div class="box-footer">
       Visit <a href="https://select2.github.io/">Select2 documentation</a> for more examples and information about the plugin.

@@ -1,5 +1,4 @@
 <!-- SELECT2 EXAMPLE -->
-
 <div class="box box-default">
   <div class="box-header with-border">
     <h3 class="box-title">Employee Certifications Details</h3>
@@ -9,56 +8,97 @@
     </div>
   </div><!-- /.box-header -->
 
-<div class="box-body">
-<%= bootstrap_form_for(@certification,html: {id: 'certification'}) do |f| %>
-<%= f.hidden_field :employee_id, value: @employee.id %>
-
-
-  <div class="row">
-      
-         
- 
-         <div class="col-sm-3">
-          <div class="field">
-             <%= f.text_field :name,label: 'Name' %>
-         </div>
-        </div>
-  
-         <div class="col-sm-3">
-          <div class="field">
-           <%= f.number_field :year,label: 'Year' %>
-           </div>
-        </div>
-
-        <div class="col-sm-1"></div>
-         <div class="col-sm-3">
-          <div class="field">
-           <%= f.text_field :duration,label: 'Duration' %>
-          </div>
-        </div>
-  </div>
-
-   <div class="row">
-       
-         <div class="col-sm-12">
-          <div class="field">
-            <%= f.text_area :descripation,label: 'Description' %>
-          </div>
-        </div>
-   </div>
-  <div class="row">
-        <div class="col-sm-1"></div>
-         <div class="col-sm-3">
-          <div class="actions">
-              <%= f.submit :class => class_name, data: { disable_with: data_info } %>
+  <div class="box-body">
+    <%= bootstrap_form_for(@certification,html: {id: 'certification'}) do |f| %>
+      <%= f.hidden_field :employee_id, value: @employee.id %>
+      <div id="entry1" class="clonedInput">
+        <div class="row">
+          <div class="col-sm-3">
+            <div class="field">
+              <%= f.text_field :name, class: 'input_name' %>
             </div>
+          </div>
+      
+          <div class="col-sm-3">
+            <div class="field">
+              <%= f.number_field :year, class: 'input_year' %>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="field">
+              <%= f.text_field :duration, class: 'input_duration' %>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="field">
+              <%= f.text_area :descripation, class: 'input_descripation' %>
+            </div>
+          </div>
         </div>
       </div>
 
-   
- <% end %>
-</div><!-- /.box-body -->
+      <div class="row">
+        <div class="col-sm-2">
+          <input type="button" id="btnAdd" value="Add section" class="btn btn-success"> 
+        </div>
+
+        <div class="col-sm-3">
+          <input type="button" id="btnDel" value="Remove section above" class="btn btn-danger">
+        </div>
+      </div><br>
+
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="actions">
+            <%= f.submit :class => class_name, data: { disable_with: data_info } %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div><!-- /.box-body -->
   <div class="box-footer">
     Visit <a href="https://select2.github.io/">Select2 documentation</a> for more examples and information about the plugin.
   </div>
 </div><!-- /.box -->
+
+
+
+<script type="text/javascript">
+  $(function () {
+  $('#btnAdd').click(function () {
+    var num     = $('.clonedInput').length, 
+        newNum  = new Number(num + 1),      
+        newElem = $('#entry' + num).clone().attr('id', 'entry' + newNum).fadeIn('slow'); 
+    newElem.find('.input_name').attr('name','certification['+ newNum +'][name]').attr('id', newNum + '_certification_name').val('');
+    newElem.find('.input_year').attr('name','certification['+ newNum +'][year]').attr('id', newNum + '_certification_year').val('');
+    newElem.find('.input_duration').attr('name','certification['+ newNum +'][duration]').attr('id', newNum + '_certification_duration').val('');
+    newElem.find('.input_descripation').attr('name','certification['+ newNum +'][descripation]').attr('id', newNum + '_certification_descripation').val('');
+    
+    $('#entry' + num).after(newElem);
+    $('#ID' + newNum + '_title').focus();
+
+    $('#btnDel').attr('disabled', false);
+
+    if (newNum == 5)
+    $('#btnAdd').attr('disabled', true).prop('value', "You've reached the limit"); 
+  });
+
+  $('#btnDel').click(function () {
+      if (confirm("Are you sure you wish to remove this section? This cannot be undone."))
+          {
+              var num = $('.clonedInput').length;
+              $('#entry' + num).slideUp('slow', function () {$(this).remove();
+                  if (num -1 === 1)
+              $('#btnDel').attr('disabled', true);
+              $('#btnAdd').attr('disabled', false).prop('value', "add section");});
+          }
+      return false;
+  });
+  $('#btnAdd').attr('disabled', false);
+  $('#btnDel').attr('disabled', true);
+});
+</script>

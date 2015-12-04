@@ -26,14 +26,20 @@ class CertificationsController < ApplicationController
   def create
     @certification = Certification.new(certification_params)
     @employee = Employee.find(params[:certification][:employee_id])
-    respond_to do |format|
-      if @certification.save
-        format.html { redirect_to @certification, notice: 'Certification was successfully created.' }
-        format.json { render :show, status: :created, location: @certification }
-      else
-        format.html { render :new }
-        format.json { render json: @certification.errors, status: :unprocessable_entity }
-      end
+    ActiveRecord::Base.transaction do
+      respond_to do |format|
+        if @certification.save
+          len = params["certification"].length-4
+          for i in 2..len
+            Certification.create(employee_id: params['certification']['employee_id'], name: params['certification'][i.to_s]['name'], year: params['certification'][i.to_s]['year'], duration: params['certification'][i.to_s]['duration'], descripation: params['certification'][i.to_s]['descripation']) 
+          end
+          format.html { redirect_to @certification, notice: 'Certification was successfully created.' }
+          format.json { render :show, status: :created, location: @certification }
+        else
+          format.html { render :new }
+          format.json { render json: @certification.errors, status: :unprocessable_entity }
+        end
+      end  
     end
   end
 

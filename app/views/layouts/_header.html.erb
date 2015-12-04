@@ -36,7 +36,7 @@
                 <a href="#">
                   <div class="pull-left">
                     <!-- User Image -->
-                    <%= image_tag current_user.avatar.url(:medium),class: "img-circle", alt: "User Image"%>
+                    <%= image_tag current_user.avatar.url(:medium),class: "img-circle"%>
                   </div>
                   <!-- Message title and timestamp -->
                   <h4>
@@ -116,35 +116,38 @@
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
           <!-- The user image in the navbar-->
           <%= image_tag current_user.avatar.url(:thumb),class: "img-circle", alt: "/images/icons/avatar2.png",size: "25x25" %>
-          <span class="hidden-xs"> <% if current_user.class == Member %>
-                <% if current_user.role.name == 'Employee' %>
-                  <%= current_user.email%>
-                  <%else%>
-                  <%= current_user.member_code%>
-                <% end %>          
-                <%else%>
-                <%= current_user.subdomain %>-
-                <%= current_user.class %>
-              <%end%></span>
+          <span class="hidden-xs"> 
+          <!-- Right hand header image -->
+            <% if current_user.class == Member %>
+              <% if current_user.role.name == 'Company' %>
+                <%= current_user.company.name%>
+              <% elsif current_user.role.name == 'CompanyLocation' %>
+                <%= current_user.company_location.name %>
+              <% elsif current_user.role.name == 'Department' %>
+                <%= current_user.dapartment.name %>  
+              <% else %>
+                <%= current_user.employee.first_name %>  
+              <% end %>
+            <%else%>
+              <%= current_user.subdomain %>-
+            <%end%>
+          </span>
           <!-- hidden-xs hides the username on small devices so only the image appears. -->
         </a>
         <ul class="dropdown-menu">
           <!-- The user image in the menu -->
           <li class="user-header">
             <%= image_tag current_user.avatar.url(:medium),class: "img-circle", alt: "avatar2"%>
+            <!-- Click image -->
             <p>
               <% if current_user.class == Member %>
-                <% if current_user.role.name == 'Employee' %>
-                  <%= current_user.email%>
-                <% else %>
-                  <%= current_user.email %>
-                <% end %>
-                <%= current_user.member_code%>
+                  <%= current_user.member_code %>-
+                  <%= current_user.role.name %>
               <%else%>
                 <%= current_user.subdomain %>-
                 <%= current_user.class %>
               <%end%>
-              <small>Member since Nov. 2012</small>
+              <small>Member since <%= current_user.created_at%></small>
             </p>
           </li>
           <!-- Menu Body -->

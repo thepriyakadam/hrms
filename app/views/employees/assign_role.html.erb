@@ -16,11 +16,11 @@
 		  </thead>
 		  <tbody>
 		    <% @employees.each do |employee| %>
-					<%= bootstrap_form_for :role, url: {action: 'submit_form'} do |f| %>    
+					<%= bootstrap_form_for :login, url: {action: 'submit_form'} do |f| %>    
 			      <tr>
 			        <td><%= employee.first_name %></td>
 			        <td><%= employee.contact_no %></td>
-			        <td><%= f.select :name, all_role_list,hide_label:true,prompt:true %>
+			        <td><%= f.select :role_id, all_role_list,hide_label:true,prompt:true %>
 			   					<%= f.hidden_field :employee_id, value: employee.id %>
 			        </td>
 			        <td><%= f.select :manager_id, all_employee_list,hide_label:true, prompt:true %></td>

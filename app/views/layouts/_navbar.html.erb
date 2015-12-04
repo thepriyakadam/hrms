@@ -16,22 +16,15 @@
               <!-- <a href="#"><i class="fa fa-circle text-success"></i> Online</a> --> 
             <h3 class="profile-username text-center"></h3>
               <p>
-             <% if current_user.class == Member %>
-                <% if current_user.role.name == 'Employee' %>
-                  <%= current_user.email%>
-                     <% else %>
-                     <%= current_user.email %>
-                     <% end %><br>
-                  <%= current_user.member_code%>
+                <% if current_user.class == Member %>
+                  ID-<%= current_user.member_code %>
                 <%else%>
-             <%= current_user.subdomain %>-
-             <%= current_user.class %>
-            <%end%><br>
-          <small>Member since Nov. 2012</small>
-        </p>
+                  <%= current_user.subdomain %>-
+                  <%= current_user.class %>
+                <%end%>
+              </p>
             </div>
           </div>
-
 
           <!-- search form (Optional) -->
           <form action="#" method="get" class="sidebar-form">

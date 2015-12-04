@@ -1,8 +1,8 @@
 <div class="box">
   <div class="box-header">
-    <h3 class="box-title">Experinece List</h3>
+    <h3 class="box-title">Experience List</h3>
     <div class="pull-right">
-      <%= link_to "New Experinece", new_experince_path, class: 'btn btn-primary' %> 
+      <%= link_to "New Experience", new_experience_path, class: 'btn btn-primary' %> 
     </div>
     
   </div><!-- /.box-header -->
@@ -11,7 +11,7 @@
     <thead>
       <tr>
       <th>Employee</th>
-      <th>No of year experince</th>
+      <th>No of year experience</th>
       <th>Company name</th>
       <th>Designation</th>
       <th>Ctc</th>
@@ -20,17 +20,17 @@
   </thead>
 
   <tbody>
-    <% @experinces.each do |experince| %>
+    <% @experiences.each do |experience| %>
       <tr>
-        <td><%= experince.employee %></td>
-        <td><%= experince.no_of_year_experince %></td>
-        <td><%= experince.company_name %></td>
-        <td><%= experince.designation %></td>
-        <td><%= experince.ctc %></td>
+        <td><%= experience.employee %></td>
+        <td><%= experience.no_of %></td>
+        <td><%= experience.company_name %></td>
+        <td><%= experience.designation %></td>
+        <td><%= experience.ctc %></td>
         <td>
-            <%= link_to '', experince ,class: 'btn btn-default fa fa-eye' %>
-            <%= link_to '', edit_experince_path(experince),class: 'btn btn-success fa fa-edit' %>
-            <%= link_to '', experince, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger fa fa-close' %>
+            <%= link_to '', experience ,class: 'btn btn-default fa fa-eye' %>
+            <%= link_to '', edit_experience_path(experience),class: 'btn btn-success fa fa-edit' %>
+            <%= link_to '', experience, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger fa fa-close' %>
           </td>
         </tr>
       <% end %>

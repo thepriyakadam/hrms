@@ -1,38 +1,15 @@
-
-<div class="box box-default">
-  <div class="box-header with-border">
-    <h3 class="box-title">Department Types</h3>
-    <div class="box-tools pull-right">
-      <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-      <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
-    </div>
-  </div><!-- /.box-header -->
-
-<div class="box-body">
-<%= bootstrap_form_for(@department_type,html: {id: 'department_type'}) do |f| %>
-
+<%= bootstrap_form_for(@department_type,html: {id: 'department_type'},remote:true) do |f| %>
   <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="form-group required">
-         <%= f.text_field :name %>
-        </div>
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :name,hide_label:true, placeholder: 'Department Type' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit :class => class_name, data: { disable_with: data_info } %>
+      </div>
     </div>
   </div>
-
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="actions">
-          <%= f.submit :class => class_name, data: { disable_with: data_info } %>
-        </div>
-    </div>
-  </div>
-
 <% end %>
- </div><!-- /.box-body -->
-  <div class="box-footer">
-    Visit <a href="https://select2.github.io/">Select2 documentation</a> for more examples and information about the plugin.
-  </div>
-</div><!-- /.box -->

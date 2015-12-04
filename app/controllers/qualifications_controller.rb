@@ -26,13 +26,19 @@ class QualificationsController < ApplicationController
   def create
     @qualification = Qualification.new(qualification_params)
     @employee = Employee.find(params[:qualification][:employee_id])
-    respond_to do |format|
-      if @qualification.save
-        format.html { redirect_to @qualification, notice: 'Qualification was successfully created.' }
-        format.json { render :show, status: :created, location: @qualification }
-      else
-        format.html { render :new }
-        format.json { render json: @qualification.errors, status: :unprocessable_entity }
+    ActiveRecord::Base.transaction do
+      respond_to do |format|
+        if @qualification.save
+          len = params["qualification"].length-5
+          for i in 2..len
+            Qualification.create(employee_id: params['qualification']['employee_id'], course: params['qualification'][i.to_s]['course'], marks: params['qualification'][i.to_s]['marks'], passout_year: params['qualification'][i.to_s]['passout_year'], college: params['qualification'][i.to_s]['college'],university: params['qualification'][i.to_s]['university']) 
+          end
+          format.html { redirect_to @qualification, notice: 'Qualification was successfully created.' }
+          format.json { render :show, status: :created, location: @qualification }
+        else
+          format.html { render :new }
+          format.json { render json: @qualification.errors, status: :unprocessable_entity }
+        end
       end
     end
   end

@@ -1,4 +1,13 @@
-<table id="example2" class="table table-bordered table-hover">
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Employee Details</h3>
+    <div class="box-tools pull-right">
+      <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+      <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+    </div>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover">
     <tr> 
       <th colspan="2"></th>
       <th colspan="2"></th>
@@ -51,8 +60,11 @@
 
       <th><strong>Medical schem:</strong></th>
       <td> <%= @joining_detail.medical_schem %></td>
-    </tr>
-
-  
-   
+    </tr>   
  </table>
+  <div class="box-footer">
+      Visit <a href="https://select2.github.io/">Select2 documentation</a> for more examples and information about the plugin.
+    </div>
+  </div><!-- /.box -->
+</div>
+

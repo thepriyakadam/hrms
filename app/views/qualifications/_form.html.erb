@@ -12,55 +12,108 @@
 <div class="box-body">
 
 <%= bootstrap_form_for(@qualification,html: {id: 'qualification'}) do |f| %>
-<%= f.hidden_field :employee_id, value: @employee.id %>
-  <div class="row">
+  <%= f.hidden_field :employee_id, value: @employee.id %>
+    <div id="entry1" class="clonedInput">
+      <div class="row">
+        <div class="col-sm-2">
+          <div class="field">
+            <%= f.text_field :course, class: 'input_course' %>
+          </div>
+        </div>
     
-         <div class="col-sm-2">
+        <div class="col-sm-2">
           <div class="field">
-            <%= f.text_field :course %>
-         </div>
-        </div>
-  
-         <div class="col-sm-2">
-          <div class="field">
-            <%= f.text_field :marks%>
+            <%= f.text_field :marks, label: 'Marks(%)', class: 'input_marks' %>
           </div>
         </div>
-      
+        
+         
+        <div class="col-sm-2">
+          <div class="field">
+            <%= f.number_field :passout_year, class: 'input_passout_year' %>
+          </div>
+        </div>
        
-         <div class="col-sm-2">
-          <div class="field">
-            <%= f.number_field :passout_year %>
-          </div>
-        </div>
-     
         <div class="col-sm-3">
           <div class="field">
-          <%= f.text_field :college %>
+          <%= f.text_field :college, class: 'input_college' %>
            </div>
         </div>
-    
-         <div class="col-sm-3">
+      
+        <div class="col-sm-3">
           <div class="field">
-           <%= f.text_field :university %>
+            <%= f.text_field :university, class: 'input_university' %>
           </div>
         </div>
- </div>
+      </div>
+    </div>
+      
+      <div class="row">
+        <div class="col-sm-2">
+          <input type="button" id="btnAdd" value="Add section" class="btn btn-success"> 
+        </div>
 
- 
+        <div class="col-sm-3">
+          <input type="button" id="btnDel" value="Remove section above" class="btn btn-danger">
+        </div>
+      </div><br>
 
-  <div class="row">
-        <div class="col-sm-1"></div>
-         <div class="col-sm-3">
-          <div class="actions">
-              <%= f.submit :class => class_name, data: { disable_with: data_info } %>
-            </div>
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="actions">
+          <%= f.submit :class => class_name, data: { disable_with: data_info } %>
         </div>
       </div>
-
+    </div>
+  </div>
 <% end %>
 </div><!-- /.box-body -->
   <div class="box-footer">
     Visit <a href="https://select2.github.io/">Select2 documentation</a> for more examples and information about the plugin.
   </div>
 </div><!-- /.box -->
+
+
+<script type="text/javascript">
+  $(function () {
+  $('#btnAdd').click(function () {
+    var num     = $('.clonedInput').length, 
+        newNum  = new Number(num + 1),      
+        newElem = $('#entry' + num).clone().attr('id', 'entry' + newNum).fadeIn('slow'); // 
+    newElem.find('.input_course').attr('name','qualification['+ newNum +'][course]').attr('id', newNum + '_qualification_course').val('');
+    newElem.find('.input_marks').attr('name','qualification['+ newNum +'][marks]').attr('id', newNum + '_qualification_marks').val('');
+    newElem.find('.input_passout_year').attr('name','qualification['+ newNum +'][passout_year]').attr('id', newNum + '_qualification_passout_year').val('');
+    newElem.find('.input_college').attr('name','qualification['+ newNum +'][college]').attr('id', newNum + '_qualification_college').val('');
+    newElem.find('.input_university').attr('name','qualification['+ newNum +'][university]').attr('id', newNum + '_qualification_university').val('');
+    
+    
+    $('#entry' + num).after(newElem);
+    $('#ID' + newNum + '_title').focus();
+
+    $('#btnDel').attr('disabled', false);
+
+    if (newNum == 5)
+    $('#btnAdd').attr('disabled', true).prop('value', "You've reached the limit"); // value here updates the text in the 'add' button when the limit is reached 
+  });
+
+  $('#btnDel').click(function () {
+  // Confirmation dialog box. Works on all desktop browsers and iPhone.
+      if (confirm("Are you sure you wish to remove this section? This cannot be undone."))
+          {
+              var num = $('.clonedInput').length;
+              // how many "duplicatable" input fields we currently have
+              $('#entry' + num).slideUp('slow', function () {$(this).remove();
+              // if only one element remains, disable the "remove" button
+                  if (num -1 === 1)
+              $('#btnDel').attr('disabled', true);
+              // enable the "add" button
+              $('#btnAdd').attr('disabled', false).prop('value', "add section");});
+          }
+      return false; // Removes the last section you added
+  });
+  // Enable the "add" button
+  $('#btnAdd').attr('disabled', false);
+  // Disable the "remove" button
+  $('#btnDel').attr('disabled', true);
+});
+</script>

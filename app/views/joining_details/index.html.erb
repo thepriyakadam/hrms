@@ -24,7 +24,7 @@
   <tbody>
     <% @joining_details.each do |joining_detail| %>
       <tr>
-        <td><%= joining_detail.employee %></td>
+        <td><%= joining_detail.employee.id %></td>
         <td><%= joining_detail.joining_date %></td>
         <td><%= joining_detail.admin_hr %></td>
         <td><%= joining_detail.tech_hr %></td>

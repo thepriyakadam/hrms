@@ -131,7 +131,7 @@ $(document).ready(function() {
 $.validator.addMethod("cus_url", function(value, element)
     {
         //return this.optional(element) || /^[A-Z]{5}\d{4}[A-Z]{1}$/.test(value);
-        return this.optional(element) || /^(www\.)?[a-zA-Z0-9\-]{3,}(\.(com|net|org))?$/.test(value);
+        return this.optional(element) || /^(www\.)?[a-zA-Z0-9\-]{3,}(\.(com|net|org|in))?$/.test(value);
     }, "Invalid URL");
 
 /*$.validator.addMethod("mobileNo", function (value, element) {
@@ -224,13 +224,13 @@ $.validator.addMethod("address", function (value, element) {
       },
       "company[city]":{
           maxlength: 30,
-          required: true,
-          lettersOnly:true
+          required: true
+         
       },
       "company[district]":{
           maxlength: 30,
-          required: true,
-          lettersOnly:true
+          required: true
+         
       },
       "company[pin_code]":{
           maxlength: 6,
@@ -239,8 +239,8 @@ $.validator.addMethod("address", function (value, element) {
       },
       "company[state]":{
           maxlength: 50,
-          required: true,
-          lettersOnly:true
+          required: true
+         
       },
       "company[web_site]":{
           maxlength: 30,
@@ -331,7 +331,7 @@ $("#company_location").validate({
       },
 
      "company_location[email]":{
-        loginRegex: true
+        // loginRegex: true
       }, 
 
      "company_location[contact_no]":{
@@ -701,17 +701,17 @@ $("#employee_physical").validate({
       "employee_physical[hieght]":{
         required: true,
         maxlength: 8,
-        numbersOnly:true
+      
       },
       "employee_physical[weight]":{
         required: true,
         maxlength: 6,
-        numbersOnly:true
+       
       },
       "employee_physical[size]":{
         required: true,
         maxlength: 6,
-        numbersOnly:true
+       
       }
     },
     messages: {

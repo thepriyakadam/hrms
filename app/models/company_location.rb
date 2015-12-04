@@ -20,7 +20,7 @@ class CompanyLocation < ActiveRecord::Base
   validates :address, :presence => true
   
 def email_regex
-     if email.present? and not email.match(/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.(com|net|org|info|com.au|))?$/)
+     if email.present? and not email.match(/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.(com|net|org|info|com.au|in|))?$/)
        errors.add :email, "This is not a valid email format"
     end
     end

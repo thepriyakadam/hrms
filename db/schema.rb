@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151202111330) do
+ActiveRecord::Schema.define(version: 20151204142922) do
 
   create_table "attendances", force: :cascade do |t|
     t.integer  "employee_shift_id", limit: 4
@@ -136,6 +136,12 @@ ActiveRecord::Schema.define(version: 20151202111330) do
   end
 
   add_index "custom_auto_increments", ["counter_model_name"], name: "index_custom_auto_increments_on_counter_model_name", using: :btree
+
+  create_table "degrees", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
 
   create_table "department_types", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -474,6 +480,12 @@ ActiveRecord::Schema.define(version: 20151202111330) do
   end
 
   add_index "skillsets", ["employee_id"], name: "index_skillsets_on_employee_id", using: :btree
+
+  create_table "years", force: :cascade do |t|
+    t.integer  "name",       limit: 4
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
 
   add_foreign_key "attendances", "employee_shifts"
   add_foreign_key "attendances", "employees"

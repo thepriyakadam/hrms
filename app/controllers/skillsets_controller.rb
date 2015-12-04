@@ -31,7 +31,7 @@ class SkillsetsController < ApplicationController
         if @skillset.save
           len = params["skillset"].length-2
           for i in 2..len
-            Skillset.create(employee_id: params['skillset']['employee_id'],name: params['skillset'][i.to_s]['name'], skill_level: params['skillset']) 
+            Skillset.create(employee_id: params['skillset']['employee_id'],name: params['skillset'][i.to_s]['name'], skill_level: params['skillset'][i.to_s]['skill_level']) 
           end
         format.html { redirect_to @skillset, notice: 'Skillset was successfully created.' }
         format.json { render :show, status: :created, location: @skillset }

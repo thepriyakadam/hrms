@@ -19,8 +19,7 @@
                 <% if current_user.class == Member %>
                   ID-<%= current_user.member_code %>
                 <%else%>
-                  <%= current_user.subdomain %>-
-                  <%= current_user.class %>
+                  <%= current_user.subdomain %> - <%= current_user.class %>
                 <%end%>
               </p>
             </div>

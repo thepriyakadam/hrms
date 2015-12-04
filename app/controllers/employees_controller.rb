@@ -75,21 +75,22 @@ class EmployeesController < ApplicationController
   end
 
   def submit_form
-    employee = Employee.find(params["role"]["employee_id"])
+    employee = Employee.find(params["login"]["employee_id"])
+    @department = Department.find(params["login"]["department_id"])
     user = Member.new do |u|
       u.email = employee.email
       u.password = '12345678'
       u.employee_id = employee.id
-      u.department_id = params["role"]["department_id"]
-      #u.company_id = params["role"]["department_id"]
-      #u.company_location_id = params["role"]["department_id"]
+      u.department_id = params["login"]["department_id"]
+      u.company_id = @department.company_location.company.id
+      u.company_location_id = @department.company_location.id
       u.subdomain = Apartment::Tenant.current_tenant
       u.member_code = employee.employee_code
-      u.role_id = params["role"]["name"]
+      u.role_id = params["login"]["role_id"]
     end
     ActiveRecord::Base.transaction do
       if user.save
-        employee.update_attributes(role_id: params["role"]["name"],manager_id: params["role"]["manager_id"])
+        employee.update_attributes(role_id: params["login"]["role_id"],manager_id: params["login"]["manager_id"])
         flash[:notice] = "Employee assigned successfully."
         redirect_to assign_role_employees_path
         #UserPasswordMailer.welcome_email(company,pass).deliver_now

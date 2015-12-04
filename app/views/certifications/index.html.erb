@@ -10,7 +10,7 @@
     <table id="example2" class="table table-bordered table-hover">
     <thead>
       <tr>
-      <th>Qualification</th>
+      <th>Employee</th>
       <th>Name</th>
       <th>Year</th>
       <th>Duration</th>
@@ -22,7 +22,7 @@
   <tbody>
     <% @certifications.each do |certification| %>
       <tr>
-        <td><%= certification.qualification %></td>
+        <td><%= certification.employee.id %></td>
         <td><%= certification.name %></td>
         <td><%= certification.year %></td>
         <td><%= certification.duration %></td>

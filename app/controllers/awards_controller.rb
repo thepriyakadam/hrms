@@ -26,6 +26,7 @@ class AwardsController < ApplicationController
   # POST /awards.json
   def create
     @award = Award.new(award_params)
+    @employee = Employee.find(params[:award][:employee_id])
     ActiveRecord::Base.transaction do
       respond_to do |format|
         if @award.save

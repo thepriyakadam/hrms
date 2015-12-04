@@ -14,13 +14,9 @@
 <div class="box-body">
 <%= bootstrap_form_for(@employee_physical,html: {id: 'employee_physical'}) do |f| %>
  
-
+<%= f.hidden_field :employee_id, value: @employee.id %>
   <div class="row">
-      <!-- <div class="col-sm-3">
-        <div class="form-group required">
-         <%= f.text_field :employee_id %>
-        </div>
-    </div> -->
+      
   
       <div class="col-sm-3">
         <div class="form-group required">

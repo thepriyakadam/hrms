@@ -24,7 +24,7 @@ Rails.application.routes.draw do
     end
   end
   resources :skillsets
-  resources :experinces
+  resources :experiences
   resources :certifications
   resources :qualifications
   resources :families
@@ -35,6 +35,13 @@ Rails.application.routes.draw do
       get :basic_detail
       get :ajax_joining_detail
       get :ajax_bank_detail
+      get :ajax_qualification_detail
+      get :ajax_experience_detail
+      get :ajax_skillset_detail
+      get :ajax_certification_detail
+      get :ajax_award_detail
+      get :ajax_physical_detail
+      get :ajax_family_detail
     end
   end
   resources :blood_groups

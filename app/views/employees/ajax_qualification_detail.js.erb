@@ -1,0 +1,6 @@
+<% if Qualification.exists?(employee_id: params[:id]) %>
+<%@qualification = Qualification.find_by_employee_id(params[:id])%>
+$('#info').html("<%= j render 'qualifications/show_detail' %>")
+<%else%>
+$('#info').html("<%= j render 'qualifications/form' %>")
+<%end%>

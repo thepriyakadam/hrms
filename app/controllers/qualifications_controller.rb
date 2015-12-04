@@ -25,7 +25,7 @@ class QualificationsController < ApplicationController
   # POST /qualifications.json
   def create
     @qualification = Qualification.new(qualification_params)
-
+    @employee = Employee.find(params[:qualification][:employee_id])
     respond_to do |format|
       if @qualification.save
         format.html { redirect_to @qualification, notice: 'Qualification was successfully created.' }

@@ -5,13 +5,8 @@ class Family < ActiveRecord::Base
   validates :relation, :presence => true
   validates :f_name, :presence => true
   validates :l_name , :presence => true
-  # validates_length_of :pin_code, is: 6,  message:"Please Enter 6 digit"
-  # validates_length_of :adhar_no, is: 12, message:"Please Enter 12 digit"
-  # validates_length_of :age, within: 2..3, message:"Enter the Correct Age Details"
-  
   validates :email, uniqueness: true
   validate  :email_regex
-  # validate  :no_of_member_regex
   validate :first_name_regex
   validate :last_name_regex
   validate :middle_name_regex
@@ -28,12 +23,6 @@ validate :district_regex
 validate :city_regex
 validate :pan_no_regex
  
-
-  # def address_regex
-  #   if permanent_address.present? and not permanent_address.match(/\A[A-Za-z0-9-_ ]{4,50}\Z/)
-  #     errors.add :permanent_address,"Please Enter The Correct Address"
-  #   end
-  # end
 
   def adhar_no_regex
     if adhar_no.present? and not adhar_no.match(/[0-9]{12}/)
@@ -65,24 +54,11 @@ def pan_no_regex
     end
   end
 
-  # def current_address_regex
-  #   if current_addresscurrent_addresscurrent_address.present? and not current_address.match(/\A[A-Za-z0-9-_]{4,100}\Z/)
-  #     errors.add :current_addresscurrent_address,"Please Enter The Correct Address Details"
-  #   end
-  # end
-
   def contact_no_regex
     if contact_no.present? and not contact_no.match(/^[0-9-]+$/)
       errors.add :contact_no,"Please Enter correct Contact No"
     end
   end
-
-  # def no_of_member_regex
-  #   if no_of_member.present? and not no_of_member.match(/[0-9]{4}/)
-  #     errors.add :no_of_member,"No of members allow only digits"
-  #   end
-  # end
-
 
   def first_name_regex
     if f_name.present? and not f_name.match(/\A[A-Za-z_]{1,30}\Z/)

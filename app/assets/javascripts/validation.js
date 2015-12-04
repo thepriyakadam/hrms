@@ -93,50 +93,11 @@ $.validator.addMethod("pincode", function (value, element) {
 }, "Please enter valid Adhar No Format eg:123456789101.");
 
 
-/*jQuery.validator.addMethod(
-  "selectNone",
-  function (value, element) {
-    if (element.value == "none")
-    {
-      return false;
-    }
-    else return true;
-  },
-  "Please select an option."
-);
-$(document).ready(function() {
-  $("#qualification").validate({
-    rules: {
-      ssc: {
-        selectNone: true
-      }
-    },
-  });
-});*/
-
-
-/*$.validator.addMethod("cus_url", function(value, element)
-    {
-        //return this.optional(element) || /^[A-Z]{5}\d{4}[A-Z]{1}$/.test(value);
-        return this.optional(element) || /^(www\.)?[a-zA-Z0-9-\-]{3,}(\.(com|net|org|in))?$/.test(value);
-    }, "Invalid URL");*/
-
-/*$.validator.addMethod("cus_url", function(value, element)
-    {
-        //return this.optional(element) || /^[A-Z]{5}\d{4}[A-Z]{1}$/.test(value);
-        return this.optional(element) || /(www+\.)?[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/.test(value);
-    }, "Invalid URL");*/
-
-
 $.validator.addMethod("cus_url", function(value, element)
     {
         //return this.optional(element) || /^[A-Z]{5}\d{4}[A-Z]{1}$/.test(value);
         return this.optional(element) || /^(www\.)?[a-zA-Z0-9\-]{3,}(\.(com|net|org|in))?$/.test(value);
     }, "Invalid URL");
-
-/*$.validator.addMethod("mobileNo", function (value, element) {
-    return /^\+?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/.test(value);
-},"Please Input Valid Mobile No.");   (http(s)?\/\/:)?*/
 
 $.validator.addMethod("pan", function(value, element)
     {
@@ -144,35 +105,7 @@ $.validator.addMethod("pan", function(value, element)
         return this.optional(element) || /^([A-Z]{5})(\d{4})([A-Z]{1})$/.test(value);
     }, "Invalid Pan Number");
 
-/*
-$.validator.addMethod("cus_url", function(value, element)
-    {
-        //return this.optional(element) || /^[A-Z]{5}\d{4}[A-Z]{1}$/.test(value);
-        return this.optional(element) || /^(www\.)?[a-zA-Z\-]{3,}(\.(com|net|org))?$/.test(value);
-    }, "Invalid URL");*/
 
-// custom method for url validation with or without http://
-/*$.validator.addMethod("cus_url", function (value, element) { 
-  if(value.substr(0,7) != 'www'){
-    value = 'www' + value;
-  }
-  if(value.substr(value.length-1, 1) != '/'){
-    value = value + '/';
-  }
-  return this.optional(element) || /^(www)\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/i.test(value); 
-}, "Not valid url.");
-
-$.validator.addMethod("website", function (value, element) {
-    return /(http(s)?:\\)?([\w-]+\.)+[\w-]+[.com|.in|.org]+(\[\?%&=]*)?/.test(value);
-},"Please Enter Valid Website Name.");
-
- /* $.validator.addMethod("textOnly", function (value, element) {
-    return ! /^(http|https)?:\/\/[a-zA-Z0-9-\.]+\.[a-z]{2,4}/.test(value);
-},"PLease Enter Valid Website Name.");*/
-
-/*$.validator.addMethod("address", function (value, element) {
-    return /^[0-9a-zA-Z]+$/.test(value);
-},"Alpha Characters Only.");*/
 
 $.validator.addMethod("reg_no", function (value, element) {
     return /^[a-zA-Z0-9-\/] ?([a-zA-Z0-9@.-\/]|[a-zA-Z0-9-\/] )*[a-zA-Z0-9-\/]$/.test(value);
@@ -543,38 +476,7 @@ $("#employee").validate({
       "employee[email]":{
         loginRegex: true
       },
-      // "joining_detail[reffernce_from]":{
-      //   maxlength: 50,
-      //   required: true
-      // },
-      // "joining_detail[admin_hr]":{
-      //   maxlength: 50,
-      //   required: true
-      // },
-      // "joining_detail[designation]":{
-      //   maxlength: 50,
-      //   required: true
-      // },
-      // "joining_detail[account_no]":{
-      //   maxlength: 9,
-      //   required: true
-      // },
-      // "joining_detail[ctc]":{
-      //   maxlength: 7,
-      //   required: true
-      // },
-      // "employee[date_of_birth]":{
-      //   required: true
-      // },
-      // "employee[status]":{
-      //   maxlength: 15,
-      //   required: true
-      // },
-      // "joining_detail[joining_date]":{
-      //   required: true
-      // },
-      
-
+     
     },
     messages: {
       "employee[first_name]":{
@@ -630,35 +532,7 @@ $("#employee").validate({
        required: "Please Specify Status upto 15",
         maxlength: "Status can't exceed max limit"
       }
-      // "joining_detail[joining_date]":{
-      //  required: "Please Specify Joining Details",
-      //  maxlength: "Joining Details can't exceed max limit"
-      // },
-         
-      // "joining_detail[reffernce_from]":{
-      //  required: "Please Specify Reference Details",
-      //   maxlength: "Enter the Reference Details upto 50 char max"
-      // },
-      // "joining_detail[admin_hr]":{
-      //  required: "Please Specify Admin HR Details",
-      //   maxlength: "Enter the Admin HR upto 50 char max"
-      // },
-      // "joining_detail[tech_hr]":{
-      //  required: "Please Specify Tech HR Details",
-      //   maxlength: "Enter the Tech HR upto 50 char max"
-      // },
-      // "joining_detail[designation]":{
-      //  required: "Please DESIGNATION Details",
-      //   maxlength: "Enter the DESIGNATION upto 50 char max"
-      // },
-      // "joining_detail[account_no]":{
-      //  required: "Please Enter Your Account No Details",
-      //   maxlength: "Enter the DESIGNATION upto 9 Digits max"
-      // },
-      // "joining_detail[ctc]":{
-      //  required: "Please Enter Your CTC Details",
-      //   maxlength: "Enter the CTC Details"
-      // },
+     
 
     },
     errorPlacement: function(error, element) {
@@ -1134,62 +1008,7 @@ $("#certification").validate({
 
    });
 
-  // $("#qualification").validate({
-  //   rules: {/*qualification_id*/
-  //     "qualification[ssc]":{
-  //       required: true,
-  //       maxlength: 10,
-  //       lettersOnly:true
-  //     },
-  //     "certification[name]":{
-  //       required: true,
-  //       maxlength: 30,
-  //       numbersOnly:true
-  //     },
-  //     "certification[year]":{
-  //       required: true,
-  //       maxlength: 4,
-  //       numbersOnly:true
-  //     },/*duration*/
-  //     "certification[duration]":{
-  //       required: true,
-  //       maxlength: 30,
-  //       numbersOnly:true
-  //     },
-  //     "certification[descripation]":{
-  //       required: true,
-  //       maxlength: 200
-  //     }
-  //   },
-  //   messages: {
-  //     "qualification[ssc]":{
-  //       required: "Please specify Your Qualification Details",
-  //       maxlength: "ualification Details allows upto 10 characters"
-  //     },
-  //     "certification[name]":{
-  //       required: "Please specify Certification Name",
-  //       maxlength: "Certification Name allows upto 30 characters"
-  //     },
-  //     "certification[year]":{
-  //       required: "Please Specify Year Detail",
-  //       maxlength: "Please Input Correct Year format"
-  //     },
-  //     "certification[duration]":{
-  //       required: "Please Specify Certification Duration Details",
-  //       maxlength: "Please Input Correct Year format"
-  //     },
-  //     "certification[descripation]":{
-  //       required: "Please Specify Description regarding your Certification",
-  //       maxlength: "Certification Description allows upto 200 char max"
-  //     }
-
-  //   },
-  //   errorPlacement: function(error, element) {
-  //    error.css('color','red')
-  //    error.insertAfter(element.parent(element));
-  //   }
-
-  //  });
+  
 
 $("#employee_type").validate({
     rules: {
@@ -1279,96 +1098,5 @@ $("#employee_bank_detail").validate({
     }
 
    });
-
-
-// $("#joining_detail").validate({
-//     rules: {
-//       "joining_detail[joining_date]":{
-//         maxlength: 4,
-//         required: true
-//       },
-//       "joining_detail[reference_from]":{
-//         maxlength: 30,
-//         ReffFrom: true
-//       },
-//       "joining_detail[admin_hr]":{
-//         maxlength: 30,
-//         required: true,
-//         ReffFrom: true
-//       },
-//       "joining_detail[tech_hr]":{
-//         maxlength: 30,
-//         required: true,
-//         ReffFrom: true
-        
-//       },
-//       "joining_detail[designation]":{
-//         maxlength: 30,
-//         required: true,
-//         ReffFrom: true
-//       },
-//       "employee[status]":{
-//         maxlength: 30,
-//         required: true,
-//         status: true
-//       },
-//       "joining_detail[probation_period]":{
-//         maxlength: 30,
-//         probPeriod:true
-//       },
-//       "joining_detail[notice_period]":{
-//         maxlength: 30,
-//         noticePeriod:true
-//       },
-//       "joining_detail[medical_schem]":{
-//         maxlength: 30
-//       }
-
-//     },
-//     messages: {
-//       "joining_detail[joining_date]":{
-//        required: "Please Specify Joining Details",
-//        maxlength: "Joining Details can't exceed max limit"
-//       },
-         
-//       "joining_detail[reffernce_from]":{
-//        required: "Please Specify Reference Details",
-//         maxlength: "Enter the Reference Details upto 30 char max"
-//       },
-//       "joining_detail[admin_hr]":{
-//        required: "Please Specify Admin HR Details",
-//         maxlength: "Enter the Admin HR upto 30 char max"
-//       },
-//       "joining_detail[tech_hr]":{
-//        required: "Please Specify Tech HR Details",
-//         maxlength: "Enter the Tech HR upto 30 char max"
-//       },
-//       "joining_detail[designation]":{
-//        required: "Please DESIGNATION Details",
-//         maxlength: "Enter the DESIGNATION upto 30 char max"
-//       },
-
-//       "joining_detail[status]":{
-       
-//         maxlength: "Enter the DESIGNATION upto 9 Digits max"
-//       },
-//       "joining_detail[probation_period]":{
-       
-//         maxlength: "Probation Period EXceed MAX limit  of 30char"
-//       },
-//       "joining_detail[notice_period]":{
-//         maxlength: "Notice Period EXceed MAX limit of 30 char"
-//       },
-//     "joining_detail[medical_schem]":{
-//         maxlength: "Medical Scheme exceed MAX limit of 30 char"
-//       }
-
-//     },
-//     errorPlacement: function(error, element) {
-//      error.css('color','red')
-//      error.insertAfter(element.parent(element));
-//     }
-
-//    });
 
 });

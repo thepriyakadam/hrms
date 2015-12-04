@@ -29,15 +29,4 @@ def no_of_year_experince_regex
       errors.add :designation,"Company Name allows only Characters"
     end
   end
-
-# def ctc_regex
-#     if ctc.present? and not ctc.match(/[0-9]{7}/)
-#       errors.add :ctc,"CTC allows only Digits"
-#     end
-#   end
-
-   
-
-
-
 end

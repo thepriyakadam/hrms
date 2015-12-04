@@ -1,4 +1,7 @@
 
+
+
+
 <div class="box box-default">
   <div class="box-header with-border">
     <h3 class="box-title">Create Employee</h3>
@@ -106,13 +109,13 @@
       <div class="row">
          <div class="col-sm-3">
           <div class="field">
-           <%= f.text_field :state %>
+            <%= f.input :state, collection: CountryStateSelect.countries_collection %>
           </div>
         </div>
 
         <div class="col-sm-3">
           <div class="field">
-            <%= f.text_field :district %>
+            <%= options = { form: f, field_names: { :state => :state_field, :district => :district_field } }f.input :district_field, CountryStateSelect.district_options(options) %>
           </div>
         </div>
 

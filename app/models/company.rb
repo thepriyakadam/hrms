@@ -14,7 +14,7 @@ class Company < ActiveRecord::Base
   validates :web_site, :presence => true
   validates :starting_date, :presence => true
   validates :email, uniqueness: true, :presence => true
-  # validate :address_regex
+ 
   validates :contact_no, :presence => true
   validates :city, :presence => true
   validates :district, :presence => true
@@ -29,23 +29,7 @@ class Company < ActiveRecord::Base
   validate :contact_no_regex
   validate :company_head_regex
   validate :website_regex
-  # validate :address_regex
-
-
-  # validates_length_of :contact_no, within: 10..13, message:"Enter the Correct contact number"
-
-  # def address_regex
-  #   if address.present? and not address.match(/\A[A-Za-z0-9-_ ]{4,100}\Z/)
-  #     errors.add :address,"Please Enter The Correct Address"
-  #   end
-  # end
-
-
-# def address_regex
-#     if address.present? and not address.match(/\A[A-Za-z0-9&@._ ]{1,200}\Z/)
-#       errors.add :address,"Address allows only Characters"
-#     end
-#   end
+  
 
 def company_name_regex
     if name.present? and not name.match(/\A[A-Za-z0-9&@_ ]{1,30}\Z/)
@@ -53,11 +37,6 @@ def company_name_regex
     end
   end
 
-  # def contact_no_regex
-  #   if contact_no.present? and not contact_no.match(/^[0-9-]+$/)
-  #     errors.add :contact_no,"Please Enter correct Contact No"
-  #   end
-  # end
   
 def contact_no_regex
     if contact_no.present? and not contact_no.match(/^((\+)?[1-9]{1,2})?([-\s\.])?((\(\d{1,4}\))|\d{1,4})(([-\s\.])?[0-9]{1,12}){1,2}$/)

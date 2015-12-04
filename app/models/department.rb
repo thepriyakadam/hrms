@@ -17,13 +17,6 @@ class Department < ActiveRecord::Base
     end
   end
 
-  # def company_name_regex
-  #   if name.present? and not name.match(/\A[A-Za-z0-9&@_ ]{1,30}\Z/)
-  #     errors.add :name,"Company Name allows only Characters"
-  #   end
-  # end
-
-
 def contact_no_regex
     if contact_no.present? and not contact_no.match(/^[0-9-]+$/)
       errors.add :contact_no,"Please Enter correct Contact No"

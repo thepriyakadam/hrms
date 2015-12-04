@@ -77,11 +77,7 @@ def pan_no_regex
       errors.add :first_name,"First Name allows only Characters"
     end
   end
-# def company_name_regex
-#     if name.present? and not name.match(/\A[A-Za-z0-9&_ ]{1,30}\Z/)
-#       errors.add :name,"Company Name allows only Characters"
-#     end
-#   end
+
   def last_name_regex
     if last_name.present? and not last_name.match(/\A[A-Za-z_]{1,30}\Z/)
       errors.add :last_name,"Last Name Allows only Characters"

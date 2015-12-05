@@ -26,15 +26,6 @@ class EmployeeBankDetailsController < ApplicationController
   def create
     @employee_bank_detail = EmployeeBankDetail.new(employee_bank_detail_params)
     @employee = Employee.find(params[:employee_bank_detail][:employee_id])
-    respond_to do |format|
-      if @employee_bank_detail.save
-        format.html { redirect_to @employee_bank_detail, notice: 'Employee bank detail was successfully created.' }
-        format.json { render :show, status: :created, location: @employee_bank_detail }
-      else
-        format.html { render :new }
-        format.json { render json: @employee_bank_detail.errors, status: :unprocessable_entity }
-      end
-    end
   end
 
   # PATCH/PUT /employee_bank_details/1

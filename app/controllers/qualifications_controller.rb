@@ -35,9 +35,11 @@ class QualificationsController < ApplicationController
           end
           format.html { redirect_to @qualification, notice: 'Qualification was successfully created.' }
           format.json { render :show, status: :created, location: @qualification }
+          format.js {@flag = true}
         else
           format.html { render :new }
           format.json { render json: @qualification.errors, status: :unprocessable_entity }
+          format.js {@flag = false}
         end
       end
     end

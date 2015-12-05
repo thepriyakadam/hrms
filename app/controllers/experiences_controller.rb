@@ -35,9 +35,11 @@ class ExperiencesController < ApplicationController
           end
           format.html { redirect_to @experience, notice: 'Experience was successfully created.' }
           format.json { render :show, status: :created, location: @experience }
+          format.js {@flag = true}
         else
           format.html { render :new }
           format.json { render json: @experience.errors, status: :unprocessable_entity }
+          format.js {@flag = false}
         end
       end
     end

@@ -1,0 +1,5 @@
+<% if @flag == true %>
+	$("#info").html("<%= j render 'show_detail' %>");      
+<% else %>
+	$("#info").html("<%= j render 'families/form' %>");      
+<% end %>

@@ -44,3 +44,12 @@ roles = ['Company','CompanyLocation','Department','Employee']
 roles.each do |r|
 	Role.create(name: r)
 end
+
+degrees =['SSC','HSC','DEPLOMA','ITI','BA','BSC','BCA','B.COM','BE','B.TECH','BBA','MA','MSC','MCA','M.COM','ME','M.TECH','MBA']
+degrees.each do |d|
+	Degree.create(name:d)
+end
+ 
+for i in 1960..Date.today.year
+	Year.create(name:i)
+end

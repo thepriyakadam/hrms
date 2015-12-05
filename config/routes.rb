@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :degrees
   resources :attendances
   resources :employee_shifts
   resources :company_shifts

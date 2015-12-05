@@ -16,6 +16,7 @@
 //= require jquery.validate.additional-methods
 //= require_tree .
 
+
 // $(function () {
   
 //     setTimeout(updateComments, 10000);

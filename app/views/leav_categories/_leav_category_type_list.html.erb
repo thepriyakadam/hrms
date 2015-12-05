@@ -1,0 +1,19 @@
+<table id="example2" class="table table-bordered table-hover">
+  <thead>
+    <tr>  
+      <th>Name</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @leav_categories.each do |leav_category| %>
+      <tr>
+        <td><%= leav_category.name %></td>
+        <td>
+          <%= link_to '', edit_leav_category_path(leav_category),class: 'btn btn-success fa fa-edit',remote:true %>
+          <%= link_to '',  leav_category, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger fa fa-close' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

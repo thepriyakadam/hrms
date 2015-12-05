@@ -1,23 +1,15 @@
-<!-- SELECT2 EXAMPLE -->
-<div class="box box-default">
-  <div class="box-header with-border">
-    <h3 class="box-title">Leave Type</h3>
-    <div class="box-tools pull-right">
-      <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-      <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+<%= bootstrap_form_for(@leav_category,html: {id: 'leav_category'},remote:true) do |f| %>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :name,hide_label:true, placeholder: 'Leave Category' %>
+      </div>
     </div>
-  </div><!-- /.box-header -->
-<div class="box-body">
-<%= bootstrap_form_for(@leav_category,html: {id: 'leav_cate'}) do |f| %>
- <div class="row">
-        
-         <div class="col-sm-3">
-          <div class="form-group required">
-           <%= f.text_field :name %>
-          </div>
-        </div>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
+
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit :class => class_name %>
+      </div>
+    </div>
   </div>
 <% end %>

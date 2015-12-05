@@ -61,9 +61,6 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.10.0)
-    country_state_select (2.0.0)
-      city-state
-      rails (>= 3.0)
     debug_inspector (0.0.2)
     devise (3.5.2)
       bcrypt (~> 3.0)
@@ -197,8 +194,8 @@ DEPENDENCIES
   bootstrap_form
   byebug
   cancancan (~> 1.10)
+  city-state
   coffee-rails (~> 4.1.0)
-  country_state_select (~> 2.0.0)
   devise
   jbuilder (~> 2.0)
   jquery-rails

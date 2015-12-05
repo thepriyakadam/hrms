@@ -7,8 +7,8 @@
       <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
     </div>
   </div><!-- /.box-header -->
-
-  <%= bootstrap_form_for(@experience,html: {id: 'experince'}) do |f| %>
+  <div class="box-body">
+  <%= bootstrap_form_for(@experience,html: {id: 'experince'},remote:true) do |f| %>
     <%= f.hidden_field :employee_id, value: @employee.id %>
     <div id="entry1" class="clonedInput">
       <div class="row">

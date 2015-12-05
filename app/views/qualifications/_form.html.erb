@@ -11,7 +11,7 @@
 
 <div class="box-body">
 
-<%= bootstrap_form_for(@qualification,html: {id: 'qualification'}) do |f| %>
+<%= bootstrap_form_for(@qualification,html: {id: 'qualification'},remote:true) do |f| %>
   <%= f.hidden_field :employee_id, value: @employee.id %>
     <div id="entry1" class="clonedInput">
       <div class="row">

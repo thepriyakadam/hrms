@@ -1,0 +1,34 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Leave Aproval Details</h3>
+    <div class="box-tools pull-right">
+      <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+      <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+    </div>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover">
+    <tr> 
+      <th colspan="2"></th>
+      <th colspan="2"></th>
+    </tr>
+
+    <tr>
+    	<th> <strong>Employee leave request:</strong></th>
+    	<td> <%= @leav_cancelled.employee_leav_request %></td>
+
+    	<th> <strong>Cancelled date:</strong></th>
+    	<td> <%= @leav_cancelled.cancelled_date %></td>
+    </tr>
+ </table>
+
+  <%= link_to 'Edit', edit_leav_cancelled_path(@leav_cancelled),class: 'btn btn-success fa fa-edit' %> |
+    <%= link_to 'Back', leav_cancelleds_path,class: 'btn btn-default fa fa-arrow-left' %>
+  </div><!-- /.box-body -->
+
+
+  <div class="box-footer">
+    Visit <a href="https://select2.github.io/">Select2 documentation</a> for more examples and information about the plugin.
+  </div>
+</div><!-- /.box -->
+

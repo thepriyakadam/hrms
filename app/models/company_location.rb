@@ -1,22 +1,32 @@
 class CompanyLocation < ActiveRecord::Base
+  protokoll :location_code, :pattern => "COMLOC###"
   belongs_to :company
-  has_one :member, as: :account
-  after_create :create_user_account
+  has_one :member
 
-  def create_user_account
-    company_location = CompanyLocation.find(id)
-    pass = (0...8).map { (65 + rand(26)).chr}.join
-    user = Member.new do |u|
-      u.email = name
-      u.password = '12345678'
-      u.account = company_location
-      p "------------------------------------------------------------------"
+  validates :name, :presence => true
+
+  validates :city, :presence => true
+  validates :district , :presence => true
+ 
+  validate  :email_regex
+  validate :contact_no_regex
+   
+  validates :email, uniqueness: true
+  validate  :email_regex
+  
+  
+  validates :address, :presence => true
+  
+def email_regex
+     if email.present? and not email.match(/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.(com|net|org|info|com.au|in|))?$/)
+       errors.add :email, "This is not a valid email format"
     end
-    puts pass
-    if user.save
-      @message = "Company Location Account created successfully."
-      #UserPasswordMailer.welcome_email(company_location,pass).deliver_now
     end
-    p user.errors
+
+  def contact_no_regex
+    if contact_no.present? and not contact_no.match(/^((\+)?[1-9]{1,2})?([-\s\.])?((\(\d{1,4}\))|\d{1,4})(([-\s\.])?[0-9]{1,12}){1,2}$/)
+      errors.add :contact_no,"Please Enter correct Contact No"
+    end
   end
+ 
 end

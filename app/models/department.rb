@@ -1,24 +1,26 @@
 class Department < ActiveRecord::Base
+  protokoll :department_code, :pattern => "DEPT###"
   belongs_to :company_location
   belongs_to :department_type
   has_many :employees
-  has_one :member, as: :account
-  after_create :create_user_account
+  has_one :member
 
-  def create_user_account
-    department = Department.find(id)
-    pass = (0...8).map { (65 + rand(26)).chr}.join
-    user = Member.new do |u|
-      u.email = name
-      u.password = '12345678'
-      u.account = department
-      p "------------------------------------------------------------------"
+  validates :name, :presence => true
+  validates :department_type_id, :presence => true
+  validate :dept_name_regex
+  validate :contact_no_regex
+
+
+  def dept_name_regex
+    if name.present? and not name.match(/\A[A-Za-z&@_ ]{1,30}\Z/)
+      errors.add :name,"Dept Name allows only Characters"
     end
-    puts pass
-    if user.save
-      @message = "Department Account created successfully."
-      #UserPasswordMailer.welcome_email(department,pass).deliver_now
-    end
-    p user.errors
   end
+
+def contact_no_regex
+    if contact_no.present? and not contact_no.match(/^[0-9-]+$/)
+      errors.add :contact_no,"Please Enter correct Contact No"
+    end
+  end
+
 end

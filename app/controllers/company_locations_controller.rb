@@ -1,6 +1,6 @@
 class CompanyLocationsController < ApplicationController
   before_action :set_company_location, only: [:show, :edit, :update, :destroy]
-
+  load_and_authorize_resource
   # GET /company_locations
   # GET /company_locations.json
   def index
@@ -27,8 +27,6 @@ class CompanyLocationsController < ApplicationController
     @company_location = CompanyLocation.new(company_location_params)
     respond_to do |format|
       if @company_location.save
-        # pass = (0...8).map { (65 + rand(26)).chr }.join
-        # @company_location.create_user(@company_location,pass)
         format.html { redirect_to @company_location, notice: 'Company location was successfully created.' }
         format.json { render :show, status: :created, location: @company_location }
       else
@@ -70,6 +68,6 @@ class CompanyLocationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def company_location_params
-      params.require(:company_location).permit(:company_id, :name, :address, :city, :district, :pin_code, :contact_no)
+      params.require(:company_location).permit(:company_id, :name, :email, :address, :city, :district, :pin_code, :contact_no)
     end
 end

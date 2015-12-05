@@ -1,49 +1,47 @@
-<p id="notice"><%= notice %></p>
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Department</h3>
+    <div class="box-tools pull-right">
+      <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+      <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+    </div>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover">
+    <tr> 
+      <th colspan="2"></th>
+      <th colspan="2"></th>
+    </tr>
 
-<p>
-  <strong>Company location:</strong>
-  <%= @department.company_location %>
-</p>
+    <tr>
+      <th><strong>Department Code:</strong></th>
+      <td><%= @department.department_code %></td>
 
-<p>
-  <strong>Name:</strong>
-  <%= @department.name %>
-</p>
+      <th> <strong>Company location:</strong></th>
+      <td> <%= @department.company_location.name %></td>
+    </tr>
 
-<p>
-  <strong>Department type:</strong>
-  <%= @department.department_type %>
-</p>
+    <tr>
+      <th><strong>Name:</strong></th>
+      <td><%= @department.name %></td>
 
-<p>
-  <strong>Address:</strong>
-  <%= @department.address %>
-</p>
+      <th><strong>Department type:</strong></th>
+      <td><%= @department.department_type.name %></td>
+    </tr>
 
-<p>
-  <strong>Pin code:</strong>
-  <%= @department.pin_code %>
-</p>
+    <tr>
+      <th> <strong>Contact no:</strong></th>
+      <td> <%= @department.contact_no %></td>
 
-<p>
-  <strong>Head of department:</strong>
-  <%= @department.head_of_department %>
-</p>
+      <th> <strong>Description:</strong></th>
+      <td> <%= @department.description %></td>
+    </tr>
+</table>
 
-<p>
-  <strong>Contact no:</strong>
-  <%= @department.contact_no %>
-</p>
-
-<p>
-  <strong>Manager:</strong>
-  <%= @department.manager %>
-</p>
-
-<p>
-  <strong>Hr:</strong>
-  <%= @department.hr %>
-</p>
-
-<%= link_to 'Edit', edit_department_path(@department) %> |
-<%= link_to 'Back', departments_path %>
+    <%= link_to 'Edit', edit_department_path(@department),class: 'btn btn-success fa fa-edit' %> |
+    <%= link_to 'Back', departments_path,class: 'btn btn-default fa fa-arrow-left' %>
+  </div><!-- /.box-body -->
+  <div class="box-footer">
+    Visit <a href="https://select2.github.io/">Select2 documentation</a> for more examples and information about the plugin.
+  </div>
+</div><!-- /.box -->

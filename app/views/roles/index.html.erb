@@ -1,0 +1,33 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Role List</h3>
+    <div class="pull-right">
+      <%= link_to "New Role", new_role_path, class: 'btn btn-primary' %> 
+    </div>
+    
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover">
+    <thead>
+      <tr>
+      <th>Name</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @roles.each do |role| %>
+      <tr>
+        <td><%= role.name %></td>
+         <td>
+            <%= link_to '', role,class: 'btn btn-default fa fa-eye' %>
+            <%= link_to '', edit_role_path(role),class: 'btn btn-success fa fa-edit' %>
+            <%= link_to '',  role, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger fa fa-close' %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+</div>
+      

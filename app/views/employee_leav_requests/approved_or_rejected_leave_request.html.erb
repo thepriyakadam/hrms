@@ -1,0 +1,37 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Employee Leave Request</h3>
+    <div class="pull-right">
+
+    </div>
+    
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover">
+    <thead>
+      <tr>
+        <th>Leav category</th>
+        <th>Leave type</th>
+        <th>Satrt date</th>
+        <th>End date</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+
+  <tbody>
+    <% @employee_leav_requests.each do |employee_leav_request| %>
+      <tr>
+        <td><%= employee_leav_request.leav_category.name %></td>
+        <td><%= employee_leav_request.leave_type %></td>
+        <td><%= employee_leav_request.start_date %></td>
+        <td><%= employee_leav_request.end_date %></td>
+         <td>
+            <%= link_to 'Approved', leav_approveds_path(employee_leav_request), method: :post, data: { confirm: 'Are you sure?' },class: 'btn btn-info fa fa-trash' %>
+            <%= link_to 'Reject', leav_rejecteds_path(employee_leav_request), method: :post, data: { confirm: 'Are you sure?' },class: 'btn btn-danger fa fa-trash' %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+</div>

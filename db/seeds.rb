@@ -29,3 +29,27 @@ blood_group = ['A','B','AB','O']
 blood_group.each do |d|
 	BloodGroup.create(name: d)
 end
+
+employee_grade = ['G1','G2','G3','G4']
+employee_grade.each do |d|
+	EmployeeGrade.create(name: d)
+end
+
+leave_categories = ['Seak Leave','Casual Leave','Maternal Leave','Paternal Leave']
+leave_categories.each do |d|
+	LeavCategory.create(name: d)
+end
+
+roles = ['Company','CompanyLocation','Department','Employee']
+roles.each do |r|
+	Role.create(name: r)
+end
+
+degrees =['SSC','HSC','DEPLOMA','ITI','BA','BSC','BCA','B.COM','BE','B.TECH','BBA','MA','MSC','MCA','M.COM','ME','M.TECH','MBA']
+degrees.each do |d|
+	Degree.create(name:d)
+end
+ 
+for i in 1960..Date.today.year
+	Year.create(name:i)
+end

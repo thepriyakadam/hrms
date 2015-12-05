@@ -1,0 +1,2 @@
+module LeavCancelledsHelper
+end

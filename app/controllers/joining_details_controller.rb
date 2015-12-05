@@ -1,6 +1,6 @@
 class JoiningDetailsController < ApplicationController
   before_action :set_joining_detail, only: [:show, :edit, :update, :destroy]
-
+  load_and_authorize_resource
   # GET /joining_details
   # GET /joining_details.json
   def index
@@ -15,6 +15,7 @@ class JoiningDetailsController < ApplicationController
   # GET /joining_details/new
   def new
     @joining_detail = JoiningDetail.new
+    @employee = Employee.find(params[:format])
   end
 
   # GET /joining_details/1/edit
@@ -25,7 +26,7 @@ class JoiningDetailsController < ApplicationController
   # POST /joining_details.json
   def create
     @joining_detail = JoiningDetail.new(joining_detail_params)
-
+    @employee = Employee.find(params[:joining_detail][:employee_id])
     respond_to do |format|
       if @joining_detail.save
         format.html { redirect_to @joining_detail, notice: 'Joining detail was successfully created.' }

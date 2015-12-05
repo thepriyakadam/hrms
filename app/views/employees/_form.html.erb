@@ -1,249 +1,202 @@
-<%= bootstrap_form_for(@employee) do |f| %>
-  <% if @employee.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@employee.errors.count, "error") %> prohibited this employee from being saved:</h2>
 
-      <ul>
-      <% @employee.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+
+
+
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Create Employee</h3>
+    <div class="box-tools pull-right">
+      <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+      <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
     </div>
-  <% end %>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <%= bootstrap_form_for(@employee,html: {id: 'employee'}) do |f| %>
+      
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.text_field :first_name %>
+          </div>
+        </div>
 
+        <div class="col-sm-3">
+           <div class="field">
+          <%= f.text_field :middle_name %>
+         </div>
+        </div>
 
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-         <%= f.text_field :department_id, value: current_user.id %>
-       </div>
-    </div>
-  </div>
+         <div class="col-sm-3">
+          <div class="form-group required">
+           <%= f.text_field :last_name %>
+         </div>
+        </div>
 
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-         <%= f.text_field :first_name %>
-       </div>
-    </div>
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.select :gender, ['Male','Female'] %>
+          </div>
+        </div>
+     </div>
 
-     <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-         <%= f.text_field :middle_name %>
-       </div>
-    </div>
+      <div class="row">
+         <div class="col-sm-3">
+          <div class="field">
+           <%= f.text_field :adhar_no %>
+         </div>
+        </div>
 
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-        <%= f.text_field :last_name %>
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.text_field :pan_no, label: 'Pan Card No' %>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="field">
+           <%= f.text_field :licence_no %>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="field">
+           <%= f.text_field :passport_no %>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
 
-
-
-  
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-        <%= f.date_select :date_of_birth %>
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.select :marital_status, ['Married','UnMarried'] %>
+          </div>
         </div>
-    </div>
-  </div>
 
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.select :nationality_id, all_nationality %>
+          </div>
+        </div>
 
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-          <%= f.text_field :contact_no %>
+         <div class="col-sm-3">
+        <div class="form-group required">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+            <%= f.text_field :date_of_birth, class: 'datemask'%>
+          </div>
+        </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.select :blood_group_id, all_blood_group,{include_blank: "Select something"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"}%>
+          </div>
+        </div>
+
+       
       </div>
-    </div>
-  </div>
 
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-         <%= f.text_field :email %>
+      <div class="row">
+         <div class="col-sm-12">
+          <div class="form-group required">
+           <%= f.text_field :permanent_address %>
+          </div>
         </div>
-    </div>
-  </div>
+      </div>
 
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-         <%= f.text_field :permanent_address %>
+      <div class="row">
+         <div class="col-sm-3">
+          <div class="field">
+            <%= f.input :state, collection: CountryStateSelect.countries_collection %>
+          </div>
         </div>
-    </div>
-  </div>
 
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-         <%= f.text_field :city %>
+        <div class="col-sm-3">
+          <div class="field">
+            <%= options = { form: f, field_names: { :state => :state_field, :district => :district_field } }f.input :district_field, CountryStateSelect.district_options(options) %>
+          </div>
         </div>
-    </div>
-  </div>
 
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-         <%= f.text_field :district %>
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.text_field :city %>
+          </div>
         </div>
-    </div>
-  </div>
 
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-         <%= f.text_field :state %>
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.number_field :pin_code,label:"Pin Code/ZIP"%>
+          </div>
         </div>
-    </div>
-  </div>
+      </div>
 
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-    <%= f.number_field :pin_code %>
-  </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-         <%= f.text_field :current_address %>
-       </div>
-    </div>
-  </div>
-
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-         <%= f.text_field :adhar_no %>
-       </div>
-    </div>
-  </div>
-
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-         <%= f.text_field :pan_no %>
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="field">
+            <%= f.text_field :current_address %>
+         </div>
         </div>
-    </div>
-  </div>
+      </div>
 
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-        <%= f.text_field :licence_no %>
-       </div>
-    </div>
-  </div>
-
-
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-         <%= f.text_field :passport_no %>
+      <div class="row">
+         <div class="col-sm-3">
+          <div class="form-group required">
+           <%= f.text_field :contact_no %>
+         </div>
         </div>
-    </div>
-  </div>
 
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-         <%= f.text_field :marital_status %>
+        <div class="col-sm-3">
+          <div class="field">
+           <%= f.text_field :email %>
+          </div>
         </div>
-    </div>
-  </div>
-    
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-          <%= f.select :nationality_id, all_nationality %>
+
+
+         <div class="col-sm-3">
+          <div class="field">
+            <%= f.select :employee_type_id, all_employee_type %>
+          </div>
+        </div>      
+
+        <!-- <div class="col-sm-3">
+          <div class="field">
+            <%= f.text_field :status %>
+          </div>
+        </div> -->
+
+         <div class="col-sm-3">
+          <div class="field">
+            <%= f.text_field :religion %>
+          </div>
         </div>
-    </div>
-  </div>
+      </div>
 
 
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-          <%= f.select :blood_group_id, all_blood_group %>
+      <div class="row">
+         <div class="col-sm-3">
+          <div class="field">
+            <%= f.select :handicap, ['Yes','No'] %>
+          </div>
         </div>
-    </div>
-  </div>
+        <div class="col-sm-3">
+            <div class="form-group required">
+              <%= f.text_field :handicap_type %>
 
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-         <%= f.text_field :handicap %>
+            </div>
+          </div>
+      </div>
+      <div class="row">
+         <div class="col-sm-3">
+          <div class="actions">
+              <%= f.submit :class => class_name, data: { disable_with: data_info } %>
+          </div>
         </div>
-    </div>
+      </div>
+    <% end %>
+  </div><!-- /.box-body -->
+  <div class="box-footer">
+    Visit <a href="https://select2.github.io/">Select2 documentation</a> for more examples and information about the plugin.
   </div>
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-         <%= f.text_field :status %>
-       </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-          <%= f.select :employee_type_id, all_employee_type %>
-        </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-         <%= f.text_field :gender %>
-        </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="actions">
-         <%= f.submit %>
-        </div>
-    </div>
-  </div>
-<% end %>
+</div><!-- /.box

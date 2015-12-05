@@ -1,21 +1,37 @@
-<%= form_for(@nationality) do |f| %>
-  <% if @nationality.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@nationality.errors.count, "error") %> prohibited this nationality from being saved:</h2>
-
-      <ul>
-      <% @nationality.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+<!-- SELECT2 EXAMPLE -->
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Nationalities</h3>
+    <div class="box-tools pull-right">
+      <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+      <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
     </div>
-  <% end %>
+  </div><!-- /.box-header -->
 
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+<div class="box-body">
+<%= bootstrap_form_for(@company) do |f| %>
+
+  <div class="row">
+        <div class="col-sm-1"></div>
+         <div class="col-sm-3">
+          <div class="field">
+            <%= f.text_field :name %>
+         </div>
+        </div>
+      </div>
+
+  <div class="row">
+        <div class="col-sm-1"></div>
+         <div class="col-sm-3">
+          <div class="actions">
+              <%= f.submit :class => class_name, data: { disable_with: data_info } %>
+          </div>
+        </div>
+      </div>
+
 <% end %>
+</div><!-- /.box-body -->
+  <div class="box-footer">
+    Visit <a href="https://select2.github.io/">Select2 documentation</a> for more examples and information about the plugin.
+  </div>
+</div><!-- /.box -->

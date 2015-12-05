@@ -12,5 +12,59 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
+//= require jquery.validate
+//= require jquery.validate.additional-methods
+//= require chosen-jquery
 //= require_tree .
+
+
+// $(function () {
+  
+//     setTimeout(updateComments, 10000);
+  
+// });
+
+// function updateComments() {
+//   $.getScript('/employee_leav_requests');
+//   setTimeout(updateComments, 10000);
+// }
+
+$(function () {
+  $("#example1").DataTable();
+  $('#example2').DataTable({
+    "paging": true,
+    "lengthChange": false,
+    "searching": false,
+    "ordering": true,
+    "info": true,
+    "autoWidth": false
+  });
+});
+
+$(function () {
+  //Initialize Select2 Elements
+  $(".select2").select2();
+});
+
+$(function () {
+  //Datemask dd/mm/yyyy
+  $(".datemask").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});
+  //Datemask2 mm/dd/yyyy
+  $("#datemask2").inputmask("mm/dd/yyyy", {"placeholder": "mm/dd/yyyy"});
+  //Money Euro
+  $("[data-mask]").inputmask();
+  //Date range picker
+  $('#reservation').daterangepicker();
+  //Date range picker with time picker
+  $('#reservationtime').daterangepicker({timePicker: true, timePickerIncrement: 30, format: 'DD/MM/YYYY h:mm A'});
+  
+});
+
+// Automatic hide alert
+$(function(){
+  $("#success-alert").alert();
+  $("#success-alert").fadeTo(3000, 500).slideUp(500, function(){
+  $("#success-alert").alert('close');
+  });   
+});
+

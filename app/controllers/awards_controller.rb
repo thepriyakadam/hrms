@@ -1,5 +1,6 @@
 class AwardsController < ApplicationController
   before_action :set_award, only: [:show, :edit, :update, :destroy]
+  load_and_authorize_resource
 
   # GET /awards
   # GET /awards.json
@@ -25,14 +26,20 @@ class AwardsController < ApplicationController
   # POST /awards.json
   def create
     @award = Award.new(award_params)
-
-    respond_to do |format|
-      if @award.save
-        format.html { redirect_to @award, notice: 'Award was successfully created.' }
-        format.json { render :show, status: :created, location: @award }
-      else
-        format.html { render :new }
-        format.json { render json: @award.errors, status: :unprocessable_entity }
+    @employee = Employee.find(params[:award][:employee_id])
+    ActiveRecord::Base.transaction do
+      respond_to do |format|
+        if @award.save
+          len = params["award"].length-3
+          for i in 2..len
+            Award.create(employee_id: params['award']['employee_id'], award_name: params['award'][i.to_s]['award_name'], year: params['award'][i.to_s]['year'], award_from: params['award'][i.to_s]['award_from']) 
+          end
+          format.html { redirect_to @award, notice: 'Award was successfully created.' }
+          format.json { render :show, status: :created, location: @award }
+        else
+          format.html { render :new }
+          format.json { render json: @award.errors, status: :unprocessable_entity }
+        end
       end
     end
   end

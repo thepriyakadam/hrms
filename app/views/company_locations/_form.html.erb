@@ -1,85 +1,78 @@
-<%= bootstrap_form_for(@company_location) do |f| %>
-  <% if @company_location.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@company_location.errors.count, "error") %> prohibited this company_location from being saved:</h2>
+<!-- SELECT2 EXAMPLE -->
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Company Locations</h3>
+    <div class="box-tools pull-right">
+      <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+      <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+    </div>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <%= bootstrap_form_for(@company_location,html: {id: 'company_location'}) do |f| %>
+        <div class="row">
+          <div class="col-sm-3">
+            <div class="form-group required">
+             <%= f.select :company_id, all_company %>
+            </div>
+          </div>
 
-      <ul>
-      <% @company_location.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+          <div class="col-sm-3">
+            <div class="form-group required">
+              <%= f.text_field :name,label:"Location Name" %>
+            </div>
+          </div>
+
+          <div class="col-sm-6">
+            <div class="field">
+             <%= f.text_field :email %>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="field">
+              <%= f.text_area :address %>
+            </div>
+          </div>
+        </div>
+      
+        <div class="row">
+          <div class="col-sm-3">
+            <div class="form-group required">
+              <%= f.text_field :district %>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="form-group required">
+              <%= f.text_field :city %>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="field">
+              <%= f.number_field :pin_code,label:"Pin Code/ZIP" %>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="field">
+              <%= f.text_field :contact_no %>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+         <div class="col-sm-5">
+          <div class="actions">
+            <%= f.submit "Create Company Locations",class: "btn btn-primary",data: { disable_with: 'Wait....'} %>
+          </div>
+          </div>
       <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-<<<<<<< HEAD
-  <%= f.hidden_field :company_id, value: current_user.account_id %>
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-         <%= f.text_field :name %>
-        </div>
-    </div>
-
-
-   <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-          <%= f.text_field :address %>
-        </div>
-    </div>
+      </div>
+        </div><!-- /.box-body -->
+  <div class="box-footer">
+    Visit <a href="https://select2.github.io/">Select2 documentation</a> for more examples and information about the plugin.
   </div>
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-          <%= f.text_field :city %>
-       </div>
-    </div>
-  </div>
-
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-         <%= f.text_field :district %>
-        </div>
-      </div>
-  </div>
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-    <%= f.label :pin_code %><br>
-    <%= f.number_field :pin_code %>
-        </div>
-      </div>
-    </div>
-
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-    <%= f.label :contact_no %><br>
-    <%= f.text_field :contact_no %>
-        </div>
-      </div>
-    </div>
-
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="actions">
-    <%= f.submit %>
-        </div>
-      </div>
-    </div>
-
-<% end %>
+</div><!-- /.box -->

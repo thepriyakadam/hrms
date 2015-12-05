@@ -1,0 +1,2 @@
+module LeavApprovedsHelper
+end

@@ -1,20 +1,21 @@
-<%= bootstrap_form_for(@employee_grade) do |f| %>
-  <% if @employee_grade.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@employee_grade.errors.count, "error") %> prohibited this employee_grade from being saved:</h2>
-
-      <ul>
-      <% @employee_grade.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+<!-- SELECT2 EXAMPLE -->
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Employee Grades</h3>
+    <div class="box-tools pull-right">
+      <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+      <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
     </div>
-  <% end %>
+  </div><!-- /.box-header -->
+
+
+<div class="box-body">
+<%= bootstrap_form_for(@employee_grade,html: {id: 'employee_grade'}) do |f| %>
 
   <div class="row">
     <div class="col-sm-1"></div>
       <div class="col-sm-3">
-        <div class="field">
+        <div class="form-group required">
          <%= f.text_field :name %>
        </div>
     </div>
@@ -25,9 +26,14 @@
     <div class="col-sm-1"></div>
       <div class="col-sm-3">
         <div class="field">
-         <%= f.submit %>
+          <%= f.submit :class => class_name, data: { disable_with: data_info } %>
        </div>
     </div>
   </div>
 
 <% end %>
+</div><!-- /.box-body -->
+  <div class="box-footer">
+    Visit <a href="https://select2.github.io/">Select2 documentation</a> for more examples and information about the plugin.
+  </div>
+</div><!-- /.box -->

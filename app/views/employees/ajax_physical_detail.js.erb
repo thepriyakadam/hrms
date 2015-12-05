@@ -1,0 +1,6 @@
+<% if EmployeePhysical.exists?(employee_id: params[:id]) %>
+<%@employee_physical = EmployeePhysical.find_by_employee_id(params[:id])%>
+$('#info').html("<%= j render 'employee_physicals/show_detail' %>")
+<%else%>
+$('#info').html("<%= j render 'employee_physicals/form' %>")
+<%end%>

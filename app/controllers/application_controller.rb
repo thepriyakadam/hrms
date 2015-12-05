@@ -8,9 +8,24 @@ class ApplicationController < ActionController::Base
   helper_method :user_signed_in?
   helper_method :current_user
   include LocalSubdomain
+
+  rescue_from CanCan::AccessDenied do |exception|
+    flash[:alert] = "Sorry! You are not Authorized"
+    redirect_to root_url
+  end
+
+  rescue_from ActiveRecord::RecordNotFound do |exc|
+    flash[:alert] = "Sorry! Record not found"
+    redirect_to root_url
+  end
   
   def check_subdomain
     if group_signed_in?
+      unless request.subdomain == current_user.subdomain
+        flash[:alert] =  "You are not authorized to access that subdomain."
+        redirect_to root_url(:subdomain => current_user.subdomain)
+      end
+    elsif member_signed_in?
       unless request.subdomain == current_user.subdomain
         flash[:alert] =  "You are not authorized to access that subdomain."
         redirect_to root_url(:subdomain => current_user.subdomain)
@@ -70,7 +85,7 @@ class ApplicationController < ActionController::Base
 
     if params[:action] == 'update'
       devise_parameter_sanitizer.for(:account_update) { 
-        |u| u.permit(registration_params << :current_password)
+        |u| u.permit(registration_params << :current_password,:avatar)
       }
     elsif params[:action] == 'create'
       devise_parameter_sanitizer.for(:sign_up) { 

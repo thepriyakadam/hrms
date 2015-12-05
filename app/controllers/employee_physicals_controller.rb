@@ -1,6 +1,6 @@
 class EmployeePhysicalsController < ApplicationController
   before_action :set_employee_physical, only: [:show, :edit, :update, :destroy]
-
+  load_and_authorize_resource
   # GET /employee_physicals
   # GET /employee_physicals.json
   def index
@@ -25,7 +25,7 @@ class EmployeePhysicalsController < ApplicationController
   # POST /employee_physicals.json
   def create
     @employee_physical = EmployeePhysical.new(employee_physical_params)
-
+    @employee = Employee.find(params[:employee_physical][:employee_id])
     respond_to do |format|
       if @employee_physical.save
         format.html { redirect_to @employee_physical, notice: 'Employee physical was successfully created.' }
@@ -69,6 +69,6 @@ class EmployeePhysicalsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def employee_physical_params
-      params.require(:employee_physical).permit(:employee_id, :hieght, :weight, :size)
+      params.require(:employee_physical).permit(:employee_id, :height, :weight, :size)
     end
 end

@@ -8,6 +8,7 @@ class Employee < ActiveRecord::Base
   has_many :employee_leav_requests
   has_many :employee_leav_balances
   has_one :member
+  has_one :employee_bank_detail
   has_one :joining_detail
   accepts_nested_attributes_for :joining_detail
   has_many :subordinates, class_name: "Employee",

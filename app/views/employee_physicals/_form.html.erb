@@ -12,7 +12,7 @@
 
 
 <div class="box-body">
-<%= bootstrap_form_for(@employee_physical,html: {id: 'employee_physical'}) do |f| %>
+<%= bootstrap_form_for(@employee_physical,html: {id: 'employee_physical'},remote:true) do |f| %>
  
 <%= f.hidden_field :employee_id, value: @employee.id %>
   <div class="row">

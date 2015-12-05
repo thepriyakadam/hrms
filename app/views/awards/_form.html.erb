@@ -9,7 +9,7 @@
   </div><!-- /.box-header -->
 
 <div class="box-body">
-  <%= bootstrap_form_for(@award,html: {id: 'award'}) do |f| %>
+  <%= bootstrap_form_for(@award,html: {id: 'award'},remote:true) do |f| %>
     <%= f.hidden_field :employee_id, value: @employee.id %>        
     <div id="entry1" class="clonedInput">
       <div class="row">

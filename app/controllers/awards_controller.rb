@@ -36,9 +36,11 @@ class AwardsController < ApplicationController
           end
           format.html { redirect_to @award, notice: 'Award was successfully created.' }
           format.json { render :show, status: :created, location: @award }
+          format.js { @flag = true }
         else
           format.html { render :new }
           format.json { render json: @award.errors, status: :unprocessable_entity }
+          format.js { @flag = false }
         end
       end
     end

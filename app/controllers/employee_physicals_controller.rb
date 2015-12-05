@@ -30,9 +30,11 @@ class EmployeePhysicalsController < ApplicationController
       if @employee_physical.save
         format.html { redirect_to @employee_physical, notice: 'Employee physical was successfully created.' }
         format.json { render :show, status: :created, location: @employee_physical }
+        format.js { @flag = true }
       else
         format.html { render :new }
         format.json { render json: @employee_physical.errors, status: :unprocessable_entity }
+        format.js { @flag = false }
       end
     end
   end

@@ -70,4 +70,8 @@ gem 'protokoll'
 gem "paperclip", "~> 4.3"
 
 #country And State Name
-gem 'country_state_select', '~> 2.0.0'
+# gem 'country_state_select', '~> 2.0.0'
+# gem 'countries'
+gem 'city-state'
+
+#infinite-cove-6619

@@ -116,14 +116,6 @@ ActiveRecord::Schema.define(version: 20151118095539) do
     t.datetime "updated_at",             null: false
   end
 
-  create_table "employee_leavs", force: :cascade do |t|
-    t.string   "leave_type",        limit: 255
-    t.string   "no_of_leave",       limit: 255
-    t.datetime "leave_expiry_date"
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
-  end
-
   create_table "employee_physicals", force: :cascade do |t|
     t.integer  "employee_id", limit: 4
     t.string   "hieght",      limit: 255

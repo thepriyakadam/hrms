@@ -2,7 +2,7 @@ class Company < ActiveRecord::Base
   protokoll :company_code, :pattern => "COM###"
   belongs_to :group
   belongs_to :company_type
-  has_one :member
+  has_many :member
 
   validates :name, :presence => true
   validates :registration_no, :presence => true
@@ -10,10 +10,10 @@ class Company < ActiveRecord::Base
   validates :address, :presence => true
   validates :pan_card_no, :presence => true
   validates :professional_tax_no, :presence => true
-  validates :ceo_name, :presence => true
+  #validates :ceo_name, :presence => true
   validates :web_site, :presence => true
   validates :starting_date, :presence => true
-  validates :email, uniqueness: true, :presence => true
+  validates :email, :presence => true
  
   validates :contact_no, :presence => true
   validates :city, :presence => true

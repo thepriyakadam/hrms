@@ -5,6 +5,8 @@ class Employee < ActiveRecord::Base
   belongs_to :blood_group
   belongs_to :employee_type
   has_many :awards
+  has_many :certifications
+  has_many :qualifications
   has_many :employee_leav_requests
   has_many :employee_leav_balances
   has_one :member
@@ -19,10 +21,6 @@ class Employee < ActiveRecord::Base
   validates :last_name, :presence => true
   validates :contact_no, :presence => true
   validates :pan_no, :presence => true
-  
-
-  
-  # validates :uniqueness: true
   validate  :email_regex
   validates :permanent_address, :presence => true, :allow_blank => true
   validate :first_name_regex

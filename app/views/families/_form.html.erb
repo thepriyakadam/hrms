@@ -79,30 +79,31 @@
 </div>
 
 <div class="row">
-      <div class="col-sm-3">
-        <div class="field">
-         <%= f.text_field :country %>
-        </div>
-    </div>
-      <div class="col-sm-3">
-        <div class="field">
-         <%=f.select :state, all_states,{include_blank: "Please Select State"},{onchange:"var a={id:$(this).val()}; $.get('/companies/collect_cities',a,function(response){});"}%>
-        </div>
-    </div>
-
-     <div class="col-sm-3">
-        <div class="field">
-          <div id="district">
-             <%=f.select :dist,{},{include_blank: "Please Select State"} %> 
+          <div class="col-sm-3">
+            <div class="form-group required">
+              <%=f.select :country, all_countries,{include_blank: "Please Select Country"},{onchange:"var a={id:$(this).val()}; $.get('/companies/collect_states',a,function(response){});"}%>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="form-group required">
+              <div id="states">
+              <%=f.select :state,{},{include_blank: "Please Select Country"} %> 
+            </div> 
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="form-group required">
+             <div id="district">
+             <%=f.select :district,{},{include_blank: "Please Select State"} %> 
            </div>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="form-group required">
+              <%= f.text_field :city %>
+            </div>
+          </div>
         </div>
-    </div>
-
-    <div class="col-sm-3">
-        <div class="field">
-        <%= f.text_field :city %>
-        </div>
-    </div>
  
        
      

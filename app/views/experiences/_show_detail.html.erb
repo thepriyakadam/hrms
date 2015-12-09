@@ -8,30 +8,21 @@
   </div><!-- /.box-header -->
   <div class="box-body">
     <table id="example2" class="table table-bordered table-hover">
-    <tr>
-      <th><strong>Employee:</strong></th>
-      <td> <%= @experience.employee %></td>
-
-      <th> <strong>No of year experince:</strong></th>
-      <td> <%= @experience.no_of_year %></td>
-    </tr>
-
      <tr>
-      <th><strong>Company name:</strong></th>
-      <td> <%= @experience.company_name %></td>
-
-      <th> <strong>Designation:</strong></th>
-      <td> <%= @experience.designation %></td>
+      <th>No of year experience</th>
+      <th>Company name</th>
+      <th>Designation</th>
+      <th>CCT</th>
     </tr>
-    
-    <tr>
-      <th><strong>Ctc:</strong></th>
-      <td> <%= @experience.ctc %></td>
-
-      <th></th>
-      <td></td>
-    </tr>
- </table>
+     <% @experiences.each do |experience| %>
+      <tr>
+        <td><%= experience.no_of_year %></td>
+        <td><%= experience.company_name %></td>
+        <td><%= experience.designation %></td>
+        <td><%= experience.ctc %></td>
+      </tr>
+      <%end%>
+    </table>
   <div class="box-footer">
       Visit <a href="https://select2.github.io/">Select2 documentation</a> for more examples and information about the plugin.
     </div>

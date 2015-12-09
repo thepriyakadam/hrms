@@ -1,6 +1,6 @@
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title">Employee Details</h3>
+    <h3 class="box-title">Employee Certification Details</h3>
     <div class="box-tools pull-right">
       <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
       <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
@@ -8,30 +8,23 @@
   </div><!-- /.box-header -->
   <div class="box-body">
     <table id="example2" class="table table-bordered table-hover">
-    <tr>
-      <th><strong>Name:</strong></th>
-      <td><%= @certification.name %></td>
+   <tr>
+      <th>Name</th>
+      <th>Year</th>
+      <th>Duration</th>
+      <th>Descripation</th>
     </tr>
-
-    <tr>
-      <th><strong>Year:</strong></th>
-      <td><%= @certification.year %></td>
-
-      <th><strong>Duration:</strong></th>
-      <td><%= @certification.duration %></td>
-    </tr>
-
-    <tr>
-      <th><strong>Descripation:</strong></th>
-      <td><%= @certification.descripation %></td>
-
-      <th></th>
-      <td></td>
-    </tr>
-
+     <% @certifications.each do |certification| %>
+      <tr>
+        <td><%= certification.name %></td>
+        <td><%= certification.year_id %></td>
+        <td><%= certification.duration %></td>
+        <td><%= certification.descripation %></td>
+      </tr>
+      <%end%>
     </table>
   <div class="box-footer">
-      Visit <a href="https://select2.github.io/">Select2 documentation</a> for more examples and information about the plugin.
-    </div>
+    Visit <a href="https://indiba.in/">www.indiba.in</a> for more Information about the HRMSONE.
+  </div>
   </div><!-- /.box -->
 </div>

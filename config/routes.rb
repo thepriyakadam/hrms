@@ -52,7 +52,11 @@ Rails.application.routes.draw do
   resources :company_types
   resources :departments
   resources :company_locations
-  resources :companies
+  resources :companies do
+    collection do
+      get :collect_cities
+    end
+  end
   root 'home#index'
 
   devise_for :members, :controllers => {registrations: 'members/registrations',sessions: 'members/sessions',passwords: 'groups/passwords'}

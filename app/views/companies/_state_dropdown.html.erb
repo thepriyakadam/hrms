@@ -1,9 +1,5 @@
 <label class="control-label required" for="company_state" aria-required="true">State</label>
-<% if controller_name == 'companies' %>
 <select onchange="var a={id:$(this).val()}; $.get('/companies/collect_cities',a,function(response){});" class="form-control valid" name="company[state]" id="company_state" aria-required="true" aria-invalid="false">
-<%else%>
-<select onchange="var a={id:$(this).val()}; $.get('/companies/collect_cities',a,function(response){});" class="form-control valid" name="company_location[state]" id="company_location_state" aria-required="true" aria-invalid="false">
-<%end%>
 <option value="">Please Select State</option>
 <% @states.each do |k,v| %>
 <option value="<%= k %>"><%= v %></option>

@@ -1,7 +1,7 @@
 class Certification < ActiveRecord::Base
-  belongs_to :qualification
+  belongs_to :employee
 
   validates :name, :presence => true
-  validates :year, :presence => true
+ 
   validates :duration, :presence => true
 end

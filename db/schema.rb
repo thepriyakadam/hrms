@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151204142922) do
+ActiveRecord::Schema.define(version: 20151207091622) do
 
   create_table "attendances", force: :cascade do |t|
     t.integer  "employee_shift_id", limit: 4
@@ -33,13 +33,14 @@ ActiveRecord::Schema.define(version: 20151204142922) do
     t.integer  "employee_id", limit: 4
     t.string   "award_name",  limit: 255
     t.text     "description", limit: 65535
-    t.integer  "year",        limit: 4
     t.string   "award_from",  limit: 255
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
+    t.integer  "year_id",     limit: 4
   end
 
   add_index "awards", ["employee_id"], name: "index_awards_on_employee_id", using: :btree
+  add_index "awards", ["year_id"], name: "index_awards_on_year_id", using: :btree
 
   create_table "blood_groups", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -55,9 +56,11 @@ ActiveRecord::Schema.define(version: 20151204142922) do
     t.text     "descripation", limit: 65535
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
+    t.integer  "year_id",      limit: 4
   end
 
   add_index "certifications", ["employee_id"], name: "index_certifications_on_employee_id", using: :btree
+  add_index "certifications", ["year_id"], name: "index_certifications_on_year_id", using: :btree
 
   create_table "companies", force: :cascade do |t|
     t.integer  "group_id",            limit: 4
@@ -461,9 +464,11 @@ ActiveRecord::Schema.define(version: 20151204142922) do
     t.string   "university",   limit: 255
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
+    t.integer  "year_id",      limit: 4
   end
 
   add_index "qualifications", ["employee_id"], name: "index_qualifications_on_employee_id", using: :btree
+  add_index "qualifications", ["year_id"], name: "index_qualifications_on_year_id", using: :btree
 
   create_table "roles", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -490,7 +495,9 @@ ActiveRecord::Schema.define(version: 20151204142922) do
   add_foreign_key "attendances", "employee_shifts"
   add_foreign_key "attendances", "employees"
   add_foreign_key "awards", "employees"
+  add_foreign_key "awards", "years"
   add_foreign_key "certifications", "employees"
+  add_foreign_key "certifications", "years"
   add_foreign_key "companies", "company_types"
   add_foreign_key "companies", "groups"
   add_foreign_key "company_leavs", "employee_grades"
@@ -526,5 +533,6 @@ ActiveRecord::Schema.define(version: 20151204142922) do
   add_foreign_key "members", "employees"
   add_foreign_key "members", "roles"
   add_foreign_key "qualifications", "employees"
+  add_foreign_key "qualifications", "years"
   add_foreign_key "skillsets", "employees"
 end

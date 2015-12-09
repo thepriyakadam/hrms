@@ -94,7 +94,11 @@ class EmployeesController < ApplicationController
         flash[:notice] = "Employee assigned successfully."
         redirect_to assign_role_employees_path
         #UserPasswordMailer.welcome_email(company,pass).deliver_now
+      else
+        flash[:notice] = "Employee not assigned successfully."
+        redirect_to assign_role_employees_path
       end
+
     end
   end
 

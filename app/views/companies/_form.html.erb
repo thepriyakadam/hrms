@@ -68,22 +68,22 @@
         </div>
         <div class="col-sm-3">
           <div class="form-group required">
-         <%= f.select :state, all_states,label: 'State' %> 
+            <%=f.select :state, all_states,{include_blank: "Please Select State"},{onchange:"var a={id:$(this).val()}; $.get('/companies/collect_cities',a,function(response){});"}%> 
           </div>
         </div>
         <div class="col-sm-3">
           <div class="form-group required">
-           <%= f.select :city, all_cities,label: 'City' %>
+           <div id="district">
+             <%=f.select :district,{},{include_blank: "Please Select State"} %> 
+           </div>
           </div>
-        </div>
-       
-        
+        </div>        
       </div>
 
       <div class="row">
         <div class="col-sm-3">
           <div class="form-group required">
-           <%= f.select :district, all_cities, label: 'District' %>
+           <%= f.text_field :city %>
           </div>
         </div>
         <div class="col-sm-3">

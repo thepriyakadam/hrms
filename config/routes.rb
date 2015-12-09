@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :employee_designations
+  resources :cost_centers
   resources :degrees
   resources :attendances
   resources :employee_shifts

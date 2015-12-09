@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151207091622) do
+ActiveRecord::Schema.define(version: 20151209101324) do
 
   create_table "attendances", force: :cascade do |t|
     t.integer  "employee_shift_id"
@@ -457,7 +457,6 @@ ActiveRecord::Schema.define(version: 20151207091622) do
 
   create_table "qualifications", force: :cascade do |t|
     t.integer  "employee_id"
-    t.string   "course"
     t.string   "college"
     t.string   "marks"
     t.integer  "passout_year"
@@ -465,8 +464,10 @@ ActiveRecord::Schema.define(version: 20151207091622) do
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
     t.integer  "year_id"
+    t.integer  "degree_id"
   end
 
+  add_index "qualifications", ["degree_id"], name: "index_qualifications_on_degree_id"
   add_index "qualifications", ["employee_id"], name: "index_qualifications_on_employee_id"
   add_index "qualifications", ["year_id"], name: "index_qualifications_on_year_id"
 

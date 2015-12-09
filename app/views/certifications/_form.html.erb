@@ -21,7 +21,7 @@
       
           <div class="col-sm-3">
             <div class="field">
-               <%= f.select :year_id, all_year,label: 'Year' %>
+               <%= f.select :year_id, all_year,{},label: 'Year', class: 'input_year_id' %>
             </div>
           </div>
 
@@ -74,7 +74,7 @@
         newNum  = new Number(num + 1),      
         newElem = $('#entry' + num).clone().attr('id', 'entry' + newNum).fadeIn('slow'); 
     newElem.find('.input_name').attr('name','certification['+ newNum +'][name]').attr('id', newNum + '_certification_name').val('');
-    newElem.find('.input_year').attr('name','certification['+ newNum +'][year_id]').attr('id', newNum + '_certification_year').val('');
+    newElem.find('.input_year_id').attr('name','certification['+ newNum +'][year_id]').attr('id', newNum + '_certification_year_id').val('');
     newElem.find('.input_duration').attr('name','certification['+ newNum +'][duration]').attr('id', newNum + '_certification_duration').val('');
     newElem.find('.input_descripation').attr('name','certification['+ newNum +'][descripation]').attr('id', newNum + '_certification_descripation').val('');
     

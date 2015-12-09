@@ -17,9 +17,9 @@
       </tr>
        <% @qualifications.each do |qualification| %>
       <tr>
-          <td><%= qualification.course %></td>
+          <td><%= qualification.degree.name %></td>
           <td><%= qualification.marks %></td>
-          <td><%= qualification.year_id %></td>
+          <td><%= qualification.year.name %></td>
           <td><%= qualification.college %></td>
           <td><%= qualification.university %></td>
       </tr>

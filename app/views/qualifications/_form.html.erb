@@ -17,7 +17,7 @@
       <div class="row">
         <div class="col-sm-2">
           <div class="field">
-            <%= f.text_field :course, class: 'input_course' %>
+            <%= f.select :degree_id, all_degree, {}, class: 'input_degree_id' %>
           </div>
         </div>
     
@@ -27,10 +27,9 @@
           </div>
         </div>
         
-         
         <div class="col-sm-2">
           <div class="field">
-           <%= f.select :year_id, all_year,label: 'Year',class: 'input_year_id' %>
+           <%= f.select :year_id, all_year,{},label: 'Year',class: 'input_year_id' %>
           </div>
         </div>
        
@@ -80,7 +79,7 @@
     var num     = $('.clonedInput').length, 
         newNum  = new Number(num + 1),      
         newElem = $('#entry' + num).clone().attr('id', 'entry' + newNum).fadeIn('slow'); // 
-    newElem.find('.input_course').attr('name','qualification['+ newNum +'][course]').attr('id', newNum + '_qualification_course').val('');
+    newElem.find('.input_degree_id').attr('name','qualification['+ newNum +'][degree_id]').attr('id', newNum + '_qualification_degree_id').val('');
     newElem.find('.input_marks').attr('name','qualification['+ newNum +'][marks]').attr('id', newNum + '_qualification_marks').val('');
     newElem.find('.input_year_id').attr('name','qualification['+ newNum +'][year_id]').attr('id', newNum + '_qualification_year_id').val('');
     newElem.find('.input_college').attr('name','qualification['+ newNum +'][college]').attr('id', newNum + '_qualification_college').val('');

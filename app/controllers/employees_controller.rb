@@ -10,12 +10,7 @@ class EmployeesController < ApplicationController
   # GET /employees/1
   # GET /employees/1.json
   def show
-    @joining_detail = JoiningDetail.find(@employee.id)
-    #@employee_bank_detail = EmployeeBankDetail.find(@employee.id)
-    # @qualification = Qualification.find(@employee.id)
-    # @experience = Experience.find(@employee.id)
-    # @family = Family.find(@employee.id)
-    # @employee_physical = EmployeePhysical.find(@employee.id)
+    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
   end
 
   # GET /employees/new
@@ -107,7 +102,7 @@ class EmployeesController < ApplicationController
   end
 
   def ajax_joining_detail
-    @joining_detail = JoiningDetail.find(params[:id])
+    @joining_detail = JoiningDetail.new
   end
 
   def ajax_bank_detail

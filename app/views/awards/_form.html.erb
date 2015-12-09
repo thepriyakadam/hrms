@@ -21,7 +21,7 @@
 
         <div class="col-sm-3">
           <div class="field">
-            <%= f.select :year_id, all_year,label: 'Year' %>
+            <%= f.select :year_id, all_year,{},label: 'Year', class: 'input_year_id' %>
           </div>
         </div>
 
@@ -67,7 +67,7 @@
           newNum  = new Number(num + 1),      
           newElem = $('#entry' + num).clone().attr('id', 'entry' + newNum).fadeIn('slow'); // 
       newElem.find('.input_award_name').attr('name','award['+ newNum +'][award_name]').attr('id', newNum + '_award_award_name').val('');
-      newElem.find('.input_year').attr('name','award['+ newNum +'][year]').attr('id', newNum + '_award_year').val('');
+      newElem.find('.input_year_id').attr('name','award['+ newNum +'][year_id]').attr('id', newNum + '_award_year_id').val('');
       newElem.find('.input_award_from').attr('name','award['+ newNum +'][award_from]').attr('id', newNum + '_award_award_from').val('');
 
       $('#entry' + num).after(newElem);

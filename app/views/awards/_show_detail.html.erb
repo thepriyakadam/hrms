@@ -16,7 +16,7 @@
     <% @awards.each do |award| %>
       <tr>
         <td><%= award.award_name %></td>
-        <td><%= award.year_id %></td>
+        <td><%= award.year.name %></td>
         <td><%= award.award_from %></td>
       </tr>
       <%end%>

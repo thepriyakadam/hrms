@@ -32,15 +32,16 @@ class QualificationsController < ApplicationController
         if @qualification.save
           len = params["qualification"].length-5
           for i in 2..len
-            Qualification.create(employee_id: params['qualification']['employee_id'], course: params['qualification'][i.to_s]['course'], marks: params['qualification'][i.to_s]['marks'], year_id: params['qualification'][i.to_s]['year_id'], college: params['qualification'][i.to_s]['college'],university: params['qualification'][i.to_s]['university']) 
+            Qualification.create(employee_id: params['qualification']['employee_id'], degree_id: params['qualification'][i.to_s]['degree_id'], marks: params['qualification'][i.to_s]['marks'], year_id: params['qualification'][i.to_s]['year_id'], college: params['qualification'][i.to_s]['college'],university: params['qualification'][i.to_s]['university']) 
           end
+          @qualifications = Qualification.where(employee_id: @employee.id)
           format.html { redirect_to @qualification, notice: 'Qualification was successfully created.' }
           format.json { render :show, status: :created, location: @qualification }
-          format.js {@flag = true}
+          format.js { @flag = true}
         else
           format.html { render :new }
           format.json { render json: @qualification.errors, status: :unprocessable_entity }
-          format.js {@flag = false}
+          format.js { @flag = false}
         end
       end
     end
@@ -78,6 +79,6 @@ class QualificationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def qualification_params
-      params.require(:qualification).permit(:employee_id,:course, :marks, :year_id,:college,:university)
+      params.require(:qualification).permit(:employee_id,:degree_id, :marks, :year_id,:college,:university)
     end
 end

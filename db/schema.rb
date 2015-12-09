@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151209101743) do
+ActiveRecord::Schema.define(version: 20151209142635) do
 
   create_table "attendances", force: :cascade do |t|
     t.integer  "employee_shift_id"
@@ -134,6 +134,12 @@ ActiveRecord::Schema.define(version: 20151209101743) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "cost_centers", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "custom_auto_increments", force: :cascade do |t|
     t.string   "counter_model_name"
     t.integer  "counter",            default: 0
@@ -184,6 +190,12 @@ ActiveRecord::Schema.define(version: 20151209101743) do
   end
 
   add_index "employee_bank_details", ["employee_id"], name: "index_employee_bank_details_on_employee_id"
+
+  create_table "employee_designations", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "employee_grades", force: :cascade do |t|
     t.string   "name"
@@ -280,11 +292,13 @@ ActiveRecord::Schema.define(version: 20151209101743) do
     t.datetime "updated_at",        null: false
     t.integer  "role_id"
     t.string   "country"
+    t.integer  "employee_id"
   end
 
   add_index "employees", ["blood_group_id"], name: "index_employees_on_blood_group_id"
   add_index "employees", ["department_id"], name: "index_employees_on_department_id"
   add_index "employees", ["employee_code"], name: "index_employees_on_employee_code"
+  add_index "employees", ["employee_id"], name: "index_employees_on_employee_id"
   add_index "employees", ["employee_type_id"], name: "index_employees_on_employee_type_id"
   add_index "employees", ["manager_id"], name: "index_employees_on_manager_id"
   add_index "employees", ["nationality_id"], name: "index_employees_on_nationality_id"
@@ -379,10 +393,12 @@ ActiveRecord::Schema.define(version: 20151209101743) do
     t.string   "probation_period"
     t.string   "notice_period"
     t.string   "medical_schem"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.integer  "employee_designation_id"
   end
 
+  add_index "joining_details", ["employee_designation_id"], name: "index_joining_details_on_employee_designation_id"
   add_index "joining_details", ["employee_grade_id"], name: "index_joining_details_on_employee_grade_id"
   add_index "joining_details", ["employee_id"], name: "index_joining_details_on_employee_id"
 

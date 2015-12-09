@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151207091622) do
+ActiveRecord::Schema.define(version: 20151209101743) do
 
   create_table "attendances", force: :cascade do |t|
     t.integer  "employee_shift_id"
@@ -84,6 +84,7 @@ ActiveRecord::Schema.define(version: 20151207091622) do
     t.string   "ceo_name"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
+    t.string   "country"
   end
 
   add_index "companies", ["company_type_id"], name: "index_companies_on_company_type_id"
@@ -113,6 +114,8 @@ ActiveRecord::Schema.define(version: 20151207091622) do
     t.string   "contact_no"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.string   "state"
+    t.string   "country"
   end
 
   add_index "company_locations", ["company_id"], name: "index_company_locations_on_company_id"
@@ -276,6 +279,7 @@ ActiveRecord::Schema.define(version: 20151207091622) do
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
     t.integer  "role_id"
+    t.string   "country"
   end
 
   add_index "employees", ["blood_group_id"], name: "index_employees_on_blood_group_id"
@@ -332,6 +336,7 @@ ActiveRecord::Schema.define(version: 20151207091622) do
     t.string   "profession"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
+    t.string   "country"
   end
 
   add_index "families", ["employee_id"], name: "index_families_on_employee_id"

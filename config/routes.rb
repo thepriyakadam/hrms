@@ -55,6 +55,7 @@ Rails.application.routes.draw do
   resources :companies do
     collection do
       get :collect_cities
+      get :collect_states
     end
   end
   root 'home#index'

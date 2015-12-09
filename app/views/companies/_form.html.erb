@@ -61,9 +61,21 @@
       </div>
 
       <div class="row">
-        <div class="col-sm-6">
+        <div class="col-sm-9">
           <div class="form-group required">
            <%= f.text_field :address,label: 'Address' %>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group required">
+           <%= f.text_field :pin_code,label: 'Pin Code/ZIP' %>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="form-group required">
+           <%= f.text_field :country %>
           </div>
         </div>
         <div class="col-sm-3">
@@ -77,33 +89,27 @@
              <%=f.select :district,{},{include_blank: "Please Select State"} %> 
            </div>
           </div>
-        </div>        
-      </div>
-
-      <div class="row">
+        </div>
         <div class="col-sm-3">
           <div class="form-group required">
            <%= f.text_field :city %>
           </div>
-        </div>
+        </div>        
+      </div>
+
+      <div class="row">
+         
         <div class="col-sm-3">
           <div class="form-group required">
             <%= f.text_field :tax_no,label: 'Tax Number' %>
           </div>
         </div>
-        <div class="col-sm-3">
-          <div class="form-group required">
-           <%= f.text_field :pin_code,label: 'Pin Code/ZIP' %>
-          </div>
-        </div>
+       
         <div class="col-sm-3">
           <div class="form-group required">
            <%= f.text_field :professional_tax_no,label: 'Professional Tax No' %>
           </div>
-        </div>  
-      </div>   
-
-      <div class="row">
+        </div>
         <div class="col-sm-3">
           <div class="form-group required">
            <%= f.text_field :email,label: 'Email' %>
@@ -113,9 +119,8 @@
           <div class="form-group required">
             <%= f.text_field :web_site %>
           </div>
-        </div>
-      </div>
-
+        </div>  
+      </div>   
       <div class="row">
         <div class="col-sm-3">
           <div class="actions">

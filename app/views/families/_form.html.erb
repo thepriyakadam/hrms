@@ -49,7 +49,7 @@
       </div>
       <div class="col-sm-3">
         <div class="field">
-          <%= f.number_field :age %>
+          <%= f.text_field :age %>
         </div>
       </div>
       <div class="col-sm-3">
@@ -66,24 +66,35 @@
 
 <div class="row">
    
-      <div class="col-sm-12">
+      <div class="col-sm-9">
         <div class="field">
          <%= f.text_field :permanent_address %>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="field">
+        <%= f.text_field :pin_code,label:"Pin Code/Zip" %>
         </div>
     </div>
 </div>
 
 <div class="row">
-    
       <div class="col-sm-3">
         <div class="field">
-         <%= f.text_field :state %>
+         <%= f.text_field :country %>
+        </div>
+    </div>
+      <div class="col-sm-3">
+        <div class="field">
+         <%=f.select :state, all_states,{include_blank: "Please Select State"},{onchange:"var a={id:$(this).val()}; $.get('/companies/collect_cities',a,function(response){});"}%>
         </div>
     </div>
 
      <div class="col-sm-3">
         <div class="field">
-         <%= f.text_field :dist %>
+          <div id="district">
+             <%=f.select :dist,{},{include_blank: "Please Select State"} %> 
+           </div>
         </div>
     </div>
 
@@ -93,11 +104,7 @@
         </div>
     </div>
  
-    <div class="col-sm-3">
-        <div class="field">
-        <%= f.number_field :pin_code,label:"Pin Code/Zip" %>
-        </div>
-    </div>   
+       
      
 </div>
 

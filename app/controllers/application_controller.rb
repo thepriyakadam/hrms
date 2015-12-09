@@ -3,11 +3,11 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
   before_action :authenticate!
-  before_action :check_subdomain
+  #before_action :check_subdomain
   before_action :configure_devise_permitted_parameters, if: :devise_controller?
   helper_method :user_signed_in?
   helper_method :current_user
-  include LocalSubdomain
+  #include LocalSubdomain
 
   rescue_from CanCan::AccessDenied do |exception|
     flash[:alert] = "Sorry! You are not Authorized"
@@ -19,34 +19,35 @@ class ApplicationController < ActionController::Base
     redirect_to root_url
   end
   
-  def check_subdomain
-    if group_signed_in?
-      unless request.subdomain == current_user.subdomain
-        flash[:alert] =  "You are not authorized to access that subdomain."
-        redirect_to root_url(:subdomain => current_user.subdomain)
-      end
-    elsif member_signed_in?
-      unless request.subdomain == current_user.subdomain
-        flash[:alert] =  "You are not authorized to access that subdomain."
-        redirect_to root_url(:subdomain => current_user.subdomain)
-      end
-    else
-      #redirect_to root_url(:subdomain => '')
-    end
-  end
+  # def check_subdomain
+  #   if group_signed_in?
+  #     unless request.subdomain == current_user.subdomain
+  #       flash[:alert] =  "You are not authorized to access that subdomain."
+  #       redirect_to root_url(:subdomain => current_user.subdomain)
+  #     end
+  #   elsif member_signed_in?
+  #     unless request.subdomain == current_user.subdomain
+  #       flash[:alert] =  "You are not authorized to access that subdomain."
+  #       redirect_to root_url(:subdomain => current_user.subdomain)
+  #     end
+  #   else
+  #     #redirect_to root_url(:subdomain => '')
+  #   end
+  # end
 
   def after_sign_in_path_for(resource)
     if resource.class == "Group"
-      root_url(:subdomain => current_user.subdomain)
+      #root_url(:subdomain => current_user.subdomain)
+      root_url
     else
       root_url
     end
   end
 
-  def after_sign_out_path_for(resource_or_scope)
-    #root_path
-    root_url(:subdomain => '')
-  end
+  # def after_sign_out_path_for(resource_or_scope)
+  #   #root_path
+  #   root_url(:subdomain => '')
+  # end
 
   # def after_sign_up_path_for(resource)
   #   root_url(:subdomain => resource.subdomain)

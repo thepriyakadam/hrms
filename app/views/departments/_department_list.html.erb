@@ -1,13 +1,4 @@
-<div class="box">
-  <div class="box-header">
-    <h3 class="box-title">Department List</h3>
-    <div class="pull-right">
-      <%= link_to "New Department", new_department_path, class: 'btn btn-primary' %> 
-    </div>
-    
-  </div><!-- /.box-header -->
-  <div class="box-body">
-    <table id="example2" class="table table-bordered table-hover">
+<table id="example2" class="table table-bordered table-hover">
     <thead>
       <tr>
       <th>Company location</th>
@@ -28,13 +19,11 @@
         <td><%= department.department_type.name %></td>
         <td><%= department.contact_no %></td>
         <td>
-            <%= link_to '', department, class: 'btn btn-default fa fa-eye' %>
-            <%= link_to '', edit_department_path(department), class: 'btn btn-success fa fa-edit' %>
+            <%= link_to '', departments, class: 'btn btn-default fa fa-eye' %>
+            <%= link_to '', edit_departments_path(department), class: 'btn btn-success fa fa-edit' %>
             <%= link_to '', department, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger fa fa-close' %>
           </td>
         </tr>
       <% end %>
     </tbody>
   </table>
-</div>
-</div>

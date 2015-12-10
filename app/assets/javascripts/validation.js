@@ -362,8 +362,7 @@ $("#department").validate({
         numbersOnly: true
       },
       "department[contact_no]":{
-      maxlength: 13,
-      mobileNo: true
+      maxlength: 13
       }
     
 

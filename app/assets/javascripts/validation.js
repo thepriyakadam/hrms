@@ -128,9 +128,7 @@ $.validator.addMethod("address", function (value, element) {
       },
   
       "company[contact_no]":{
-          maxlength: 14,
-          required: true,
-          mobileNo: true
+          maxlength: 16
       },
 
       "company[tax_no]":{
@@ -160,21 +158,21 @@ $.validator.addMethod("address", function (value, element) {
           required: true
          
       },
-      "company[district]":{
-          maxlength: 30,
-          required: true
+      // "company[district]":{
+      //     maxlength: 30,
+      //     required: true
          
-      },
+      // },
       "company[pin_code]":{
           maxlength: 6,
           required: true,
           numbersOnly:true
       },
-      "company[state]":{
-          maxlength: 50,
-          required: true
+      // "company[state]":{
+      //     maxlength: 50,
+      //     required: true
          
-      },
+      // },
       "company[web_site]":{
           maxlength: 30,
           required: true,
@@ -268,14 +266,11 @@ $("#company_location").validate({
       }, 
 
      "company_location[contact_no]":{
-        maxlength: 13,
-        required: true,
-        mobileNo: true
+        maxlength: 16
       },
 
       "company_location[district]":{
-        maxlength: 100,
-        required: true,
+        maxlength: 100
         
       },
 
@@ -367,9 +362,7 @@ $("#department").validate({
         numbersOnly: true
       },
       "department[contact_no]":{
-      maxlength: 13,
-        required: true,
-        mobileNo: true
+      maxlength: 13
       }
     
 

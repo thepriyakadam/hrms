@@ -6,21 +6,21 @@ class Company < ActiveRecord::Base
 
   validates :name, :presence => true
   validates :registration_no, :presence => true
-  validates :tax_no, :presence => true 
+  validates :tax_no, :presence => true
   validates :address, :presence => true
   validates :pan_card_no, :presence => true
   validates :professional_tax_no, :presence => true
   #validates :ceo_name, :presence => true
   validates :web_site, :presence => true
   validates :starting_date, :presence => true
-  validates :email, :presence => true
+  #validates :email, :presence => true
  
-  validates :contact_no, :presence => true
+  #validates :contact_no, :presence => true
   validates :city, :presence => true
-  validates :district, :presence => true
+  validates :district, :presence => true, on: :create
   validates :pin_code, :presence => true
-  validates :state, :presence => true
-  validate :email_regex
+  validates :state, :presence => true, on: :create
+  #validate :email_regex
   validate :company_name_regex
   validate :pan_no_regex
   validate :city_regex

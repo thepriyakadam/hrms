@@ -5,10 +5,12 @@ class CompanyLocation < ActiveRecord::Base
 
   # validates :name, :presence => true
 
+
   # validates :city, :presence => true
   # validates :district , :presence => true
 
   # validate :contact_no_regex
+
   
   # validates :address, :presence => true
   

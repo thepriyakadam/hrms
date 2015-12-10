@@ -7,8 +7,8 @@ class Department < ActiveRecord::Base
 
   validates :name, :presence => true
   validates :department_type_id, :presence => true
-  validate :dept_name_regex
-  validate :contact_no_regex
+  #validate :dept_name_regex
+  #validate :contact_no_regex
 
 
   def dept_name_regex

@@ -25,6 +25,7 @@ class CompanyLocationsController < ApplicationController
   # POST /company_locations.json
   def create
     @company_location = CompanyLocation.new(company_location_params)
+    @company_location.district = params['company']['district']
     respond_to do |format|
       if @company_location.save
         format.html { redirect_to @company_location, notice: 'Company location was successfully created.' }

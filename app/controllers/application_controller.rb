@@ -93,6 +93,6 @@ class ApplicationController < ActionController::Base
         |u| u.permit(registration_params) 
       }
     end
-    devise_parameter_sanitizer.for(:sign_in) { |u| u.permit(:login, :member_code, :email, :password, :remember_me) }
+    #devise_parameter_sanitizer.for(:sign_in) { |u| u.permit(:login, :member_code, :email, :password, :remember_me) }
   end
 end

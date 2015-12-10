@@ -79,7 +79,7 @@ class EmployeesController < ApplicationController
       u.department_id = params["login"]["department_id"]
       u.company_id = @department.company_location.company.id
       u.company_location_id = @department.company_location.id
-      u.subdomain = Apartment::Tenant.current_tenant
+      #u.subdomain = Apartment::Tenant.current_tenant
       u.member_code = employee.employee_code
       u.role_id = params["login"]["role_id"]
     end

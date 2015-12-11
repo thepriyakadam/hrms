@@ -1,7 +1,2 @@
 <label class="control-label required" for="company_district" aria-required="true">District</label>
-<select  class="form-control valid" name="company[district]" id="company_district" aria-required="true" aria-invalid="false">
-<option value="">Please Select District</option>
-<% @cities.each do |c| %>
-<option value="<%= c %>"><%= c %></option>
-<%end%>
-</select>
+<%= select :company,:district_id,(@cities.present? ? (@cities.collect {|b| [b.name,b.id]}) : {}),{prompt:"Select State",hide_label:true},class: "form-control"%>

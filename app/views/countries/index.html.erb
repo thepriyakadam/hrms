@@ -5,6 +5,7 @@
 <table>
   <thead>
     <tr>
+      <th>Code</th>
       <th>Name</th>
       <th colspan="3"></th>
     </tr>
@@ -13,6 +14,7 @@
   <tbody>
     <% @countries.each do |country| %>
       <tr>
+        <td><%= country.code %></td>
         <td><%= country.name %></td>
         <td><%= link_to 'Show', country %></td>
         <td><%= link_to 'Edit', edit_country_path(country) %></td>

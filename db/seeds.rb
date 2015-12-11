@@ -5,6 +5,7 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+puts 'Company Type Started...'
 company_type_array = ['Information Technology','Finance','chemical','Production']
 
 company_type_array.each do |ct|
@@ -13,6 +14,7 @@ company_type_array.each do |ct|
 	company_type.save
 end
 
+puts 'Department Type Started...'
 dept_type = ['IT','Finance','Hr']
 dept_type.each do |d|
 	DepartmentType.create(name: d)
@@ -52,7 +54,20 @@ degrees =['SSC','HSC','DEPLOMA','ITI','BA','BSC','BCA','B.COM','BE','B.TECH','BB
 degrees.each do |d|
 	Degree.create(name:d)
 end
- 
+
+employee_designation_array = ['HR','Software Developer','Tester']
+employee_designation_array.each do |d|
+	EmployeeDesignation.create(name: d)
+end
+
+puts 'Year Started...'
 for i in 1960..Date.today.year
 	Year.create(name:i)
 end
+
+puts 'Countries Started...'
+CS.countries.each {|k,v| Country.create(code: k, name: v)}
+puts 'States Started...'
+CS.states(:in).each {|k,v| c = Country.find_by_code('IN'); c.states.create(code: k,name: v)}
+puts 'District Started...'
+CS.states(:in).each {|k,v| s = State.find_by_code(k); CS.cities(k,:in).each {|c| s.districts.create(name: c)}}

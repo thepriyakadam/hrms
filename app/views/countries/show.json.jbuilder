@@ -1,1 +1,1 @@
-json.extract! @country, :id, :name, :created_at, :updated_at
+json.extract! @country, :id, :code, :name, :created_at, :updated_at

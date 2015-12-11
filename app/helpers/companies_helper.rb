@@ -8,11 +8,6 @@ module CompaniesHelper
 	end
 
 	def all_countries
-		CS.countries.collect {|k,v| [v,k]}
-	end
-
-	def all_states
-		CS.states(:in).collect {|a,b| [b,a]}
+		Country.all.collect {|c| [c.name, c.id]}
 	end
 end
-

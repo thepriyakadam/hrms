@@ -81,14 +81,24 @@
         <div class="col-sm-3">
           <div class="form-group required">
             <div id="states">
-              <%= render 'state_dropdown' %> 
+              <%if action_name == 'new' %>
+                <%=f.select :state, {},{include_blank: "Please Select Country"}%>
+              <%else%>
+                <%= f.select :state, @states %>
+              <%end%>
+              
             </div> 
           </div>
         </div>
         <div class="col-sm-3">
           <div class="form-group required">
            <div id="district">
-             <%=f.select :district,{},{include_blank: "Please Select State"} %> 
+              <%if action_name == 'new' %>
+               <%=f.select :district,{},{include_blank: "Please Select State"} %>
+              <%else%>
+                <%= f.select :district, {}, :selected => @company.district %>
+              <%end%>
+              
            </div>
           </div>
         </div>

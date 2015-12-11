@@ -17,10 +17,17 @@ class CompaniesController < ApplicationController
   def new
     @company = Company.new
     @company_type = CompanyType.all
+    # @states = CS.states(params[:id])
+    # @cities = CS.cities(params[:id],:in)
   end
 
   # GET /companies/1/edit
   def edit
+    
+    @states = CS.states(@company.country)
+    # @country = @company.country
+    # @states = CS.states(@country.name)
+    # @cities = CS.cities(params[:id],:in)
   end
 
   # POST /companies

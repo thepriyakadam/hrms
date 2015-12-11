@@ -10,18 +10,13 @@ class Family < ActiveRecord::Base
   validate :first_name_regex
 
   validate :middle_name_regex
-  validate :state_regex
-  validate :district_regex
-  validate :city_regex
   validate :adhar_no_regex
-validate :religion_regex
-validate :profession_regex
-validate :contact_no_regex
-validate :relation_regex
-validate :state_regex
-validate :district_regex
-validate :city_regex
-validate :pan_no_regex
+  validate :religion_regex
+  validate :profession_regex
+  validate :contact_no_regex
+  validate :relation_regex
+  validate :city_regex
+  validate :pan_no_regex
  
 
   def adhar_no_regex

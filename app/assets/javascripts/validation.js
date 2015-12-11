@@ -434,14 +434,13 @@ $("#employee").validate({
         numbersOnly: true
       },
       "employee[pan_no]":{
-        required: true,
         maxlength: 10
       },
       "employee[licence_no]":{
         maxlength: 17
       },
-      "employee[passport_no]":{
-        maxlength: 6
+      "employee[permanent_address]":{
+        required: true
       },
       "employee[state]":{
         maxlength: 50
@@ -486,8 +485,8 @@ $("#employee").validate({
       "employee[licence_no]":{
         maxlength: "Licence No allows upto 17 characters"
       },
-      "employee[passport_no]":{
-        maxlength: "Passport No allows upto 6 Digits"
+      "employee[permanent_address]":{
+        required: "Please specify address"
       },
       "employee[state]":{
        required: "Please Specify Your State Details",

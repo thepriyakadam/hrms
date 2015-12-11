@@ -73,7 +73,14 @@ $(function(){
   $('.company_start_date').datepicker({
    changeYear:true,
    changeMonth: true,
-   yearRange: '-70:-15',
+   yearRange: '-200:-0',
+   dateFormat: 'dd-mm-yy' });   
+
+  $('.birth_date').datepicker({
+   changeYear:true,
+   changeMonth: true,
+   yearRange: '-100:-15',
    dateFormat: 'dd-mm-yy' });   
 });
+
 

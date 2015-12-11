@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151211083517) do
+ActiveRecord::Schema.define(version: 20151211081145) do
 
   create_table "attendances", force: :cascade do |t|
     t.integer  "employee_shift_id"
@@ -79,7 +79,6 @@ ActiveRecord::Schema.define(version: 20151211083517) do
     t.string   "contact_no"
     t.string   "web_site"
     t.date     "starting_date"
-    t.string   "ceo_name"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
     t.integer  "country_id"
@@ -193,7 +192,6 @@ ActiveRecord::Schema.define(version: 20151211083517) do
     t.integer  "state_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string   "code"
   end
 
   add_index "districts", ["state_id"], name: "index_districts_on_state_id"
@@ -315,8 +313,8 @@ ActiveRecord::Schema.define(version: 20151211083517) do
     t.datetime "updated_at",        null: false
     t.integer  "role_id"
     t.string   "country"
-    t.integer  "country_id"
     t.integer  "employee_id"
+    t.integer  "country_id"
     t.integer  "state_id"
     t.integer  "district_id"
   end

@@ -1,0 +1,19 @@
+<table id="example2" class="table table-bordered table-hover">
+  <thead>
+    <tr>  
+      <th>Name</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @degrees.each do |degree| %>
+      <tr>
+        <td><%= degree.name %></td>
+        <td>
+          <%= link_to '', edit_degree_path(degree),class: 'btn btn-success fa fa-edit',remote:true %>
+          <%= link_to '',  degree, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger fa fa-close' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

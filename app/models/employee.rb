@@ -20,14 +20,13 @@ class Employee < ActiveRecord::Base
   validates :first_name, :presence => true
   validates :last_name, :presence => true
   validates :contact_no, :presence => true
-  validates :pan_no, :presence => true
   validate  :email_regex
   validates :permanent_address, :presence => true
   validate :last_name_regex
   validate :adhar_no_regex
   validate :middle_name_regex
  
-  #validate :pan_no_regex
+  validate :pan_no_regex
 
   def adhar_no_regex
     if adhar_no.present? and not adhar_no.match(/[0-9]{12}/)

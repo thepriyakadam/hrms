@@ -66,13 +66,12 @@ def pan_no_regex
     end
   end
 
-def last_name_regex
-    if l_name.present? and not l_name.match(/\A[A-Za-z_]{1,30}\Z/)
+  if l_name.present? and not l_name.match(/\A[A-Za-z_]{1,30}\Z/)
       errors.add :l_name,"Last Name Allows only Characters"
     end
   end
 
-def middle_name_regex
+  def middle_name_regex
     if m_name.present? and not m_name.match(/\A[A-Za-z_]{1,30}\Z/)
       errors.add :m_name,"Middle Name Allows only Characters"
     end
@@ -83,36 +82,9 @@ def middle_name_regex
       errors.add :relation,"Relation Allows Only Characters"
     end
   end
-
-
-  def state_regex
-    if state.present? and not state.match(/\A[A-Za-z_ ]{1,30}\Z/)
-      errors.add :state,"State allows only Characters"
-    end
-  end
-
-  def district_regex
-    if dist.present? and not dist.match(/\A[A-Za-z_ ]{1,30}\Z/)
-      errors.add :dist,"District allows only Characters"
-    end
-  end
-
   def city_regex
     if city.present? and not city.match(/\A[A-Za-z_ ]{1,30}\Z/)
       errors.add :city,"City allows only Characters"
     end
   end
 
-
-def religion_regex
-    if religion.present? and not religion.match(/\A[A-Za-z_]{1,30}\Z/)
-      errors.add :religion,"Religion Allows only Characters"
-    end
-  end
-
-  def email_regex
-    if email.present? and not email.match(/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.(com|net|org|info|com.au|))?$/)
-      errors.add :email, "This is not a valid email format"
-    end
-  end
-end

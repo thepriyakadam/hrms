@@ -81,6 +81,7 @@ ActiveRecord::Schema.define(version: 20151209142635) do
     t.string   "contact_no"
     t.string   "web_site"
     t.date     "starting_date"
+    t.string   "ceo_name"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
     t.string   "country"

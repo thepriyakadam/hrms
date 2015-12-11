@@ -8,7 +8,7 @@ class Family < ActiveRecord::Base
   validates :email, uniqueness: true
   validate  :email_regex
   validate :first_name_regex
-  validate :last_name_regex
+
   validate :middle_name_regex
   validate :state_regex
   validate :district_regex
@@ -42,7 +42,7 @@ validate :pan_no_regex
     end
   end
 
-def pan_no_regex
+  def pan_no_regex
     if pan_no.present? and not pan_no.match(/^([A-Z]{5})(\d{4})([A-Z]{1})$/)
       errors.add :pan_no,"Please specify Correct Pan Card Number eg:ABCDE1234A"
     end
@@ -66,10 +66,7 @@ def pan_no_regex
     end
   end
 
-  if l_name.present? and not l_name.match(/\A[A-Za-z_]{1,30}\Z/)
-      errors.add :l_name,"Last Name Allows only Characters"
-    end
-  end
+  
 
   def middle_name_regex
     if m_name.present? and not m_name.match(/\A[A-Za-z_]{1,30}\Z/)
@@ -82,9 +79,11 @@ def pan_no_regex
       errors.add :relation,"Relation Allows Only Characters"
     end
   end
+
   def city_regex
     if city.present? and not city.match(/\A[A-Za-z_ ]{1,30}\Z/)
       errors.add :city,"City allows only Characters"
     end
   end
 
+end

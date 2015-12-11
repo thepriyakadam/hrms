@@ -23,11 +23,10 @@ class CompaniesController < ApplicationController
 
   # GET /companies/1/edit
   def edit
-    
-    @states = CS.states(@company.country)
-    # @country = @company.country
-    # @states = CS.states(@country.name)
-    # @cities = CS.cities(params[:id],:in)
+    @country = @company.country
+    @states = @country.states
+    @state = @company.state
+    @cities = @state.districts
   end
 
   # POST /companies
@@ -73,11 +72,13 @@ class CompaniesController < ApplicationController
   end
 
   def collect_states
-    @states = CS.states(params[:id])
+    @country = Country.find(params[:id])
+    @states = @country.states
   end
 
   def collect_cities
-    @cities = CS.cities(params[:id],:in)
+    @state = State.find(params[:id])
+    @cities = @state.districts
   end
 
   private
@@ -88,6 +89,6 @@ class CompaniesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def company_params
-      params.require(:company).permit(:group_id, :name, :company_type_id, :registration_no, :description, :pan_card_no, :tax_no, :professional_tax_no, :address, :city, :district, :country, :pin_code, :state, :email, :contact_no, :web_site, :starting_date, :ceo_name)
+      params.require(:company).permit(:manual_company_code, :group_id, :name, :company_type_id, :registration_no, :description, :pan_card_no, :tax_no, :professional_tax_no, :address, :city, :district_id, :country_id, :pin_code, :state_id, :email, :contact_no, :web_site, :starting_date, :ceo_name)
     end
 end

@@ -69,6 +69,6 @@ class DistrictsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def district_params
-      params.require(:district).permit(:name, :state_id)
+      params.require(:district).permit(:state_id, :code, :name)
     end
 end

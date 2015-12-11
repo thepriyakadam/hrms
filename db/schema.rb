@@ -74,21 +74,22 @@ ActiveRecord::Schema.define(version: 20151211081145) do
     t.string   "professional_tax_no"
     t.text     "address"
     t.string   "city"
+    t.string   "district"
     t.integer  "pin_code"
+    t.string   "state"
     t.string   "email"
     t.string   "contact_no"
     t.string   "web_site"
     t.date     "starting_date"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
+    t.string   "country"
     t.integer  "country_id"
     t.integer  "state_id"
-    t.integer  "district_id"
   end
 
   add_index "companies", ["company_type_id"], name: "index_companies_on_company_type_id"
   add_index "companies", ["country_id"], name: "index_companies_on_country_id"
-  add_index "companies", ["district_id"], name: "index_companies_on_district_id"
   add_index "companies", ["group_id"], name: "index_companies_on_group_id"
   add_index "companies", ["state_id"], name: "index_companies_on_state_id"
 
@@ -111,18 +112,19 @@ ActiveRecord::Schema.define(version: 20151211081145) do
     t.string   "email"
     t.string   "address"
     t.string   "city"
+    t.string   "district"
     t.integer  "pin_code"
     t.string   "contact_no"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.string   "state"
+    t.string   "country"
     t.integer  "country_id"
     t.integer  "state_id"
-    t.integer  "district_id"
   end
 
   add_index "company_locations", ["company_id"], name: "index_company_locations_on_company_id"
   add_index "company_locations", ["country_id"], name: "index_company_locations_on_country_id"
-  add_index "company_locations", ["district_id"], name: "index_company_locations_on_district_id"
   add_index "company_locations", ["state_id"], name: "index_company_locations_on_state_id"
 
   create_table "company_shifts", force: :cascade do |t|
@@ -149,7 +151,6 @@ ActiveRecord::Schema.define(version: 20151211081145) do
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string   "code"
   end
 
   create_table "custom_auto_increments", force: :cascade do |t|
@@ -316,13 +317,11 @@ ActiveRecord::Schema.define(version: 20151211081145) do
     t.integer  "employee_id"
     t.integer  "country_id"
     t.integer  "state_id"
-    t.integer  "district_id"
   end
 
   add_index "employees", ["blood_group_id"], name: "index_employees_on_blood_group_id"
   add_index "employees", ["country_id"], name: "index_employees_on_country_id"
   add_index "employees", ["department_id"], name: "index_employees_on_department_id"
-  add_index "employees", ["district_id"], name: "index_employees_on_district_id"
   add_index "employees", ["employee_code"], name: "index_employees_on_employee_code"
   add_index "employees", ["employee_id"], name: "index_employees_on_employee_id"
   add_index "employees", ["employee_type_id"], name: "index_employees_on_employee_type_id"
@@ -359,6 +358,8 @@ ActiveRecord::Schema.define(version: 20151211081145) do
     t.string   "email"
     t.text     "permanent_address"
     t.string   "city"
+    t.string   "dist"
+    t.string   "state"
     t.integer  "pin_code"
     t.text     "current_address"
     t.string   "relation"
@@ -375,13 +376,12 @@ ActiveRecord::Schema.define(version: 20151211081145) do
     t.string   "profession"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
+    t.string   "country"
     t.integer  "country_id"
     t.integer  "state_id"
-    t.integer  "district_id"
   end
 
   add_index "families", ["country_id"], name: "index_families_on_country_id"
-  add_index "families", ["district_id"], name: "index_families_on_district_id"
   add_index "families", ["employee_id"], name: "index_families_on_employee_id"
   add_index "families", ["nationality_id"], name: "index_families_on_nationality_id"
   add_index "families", ["state_id"], name: "index_families_on_state_id"
@@ -543,7 +543,6 @@ ActiveRecord::Schema.define(version: 20151211081145) do
     t.integer  "country_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string   "code"
   end
 
   add_index "states", ["country_id"], name: "index_states_on_country_id"

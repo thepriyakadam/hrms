@@ -12,7 +12,4 @@ class CreateCountries < ActiveRecord::Migration
   add_reference :employees, :country, index: true, foreign_key: true
   add_reference :families, :country, index: true, foreign_key: true
 
-  remove_column :families, :country
-  remove_column :families, :state
-  remove_column :families, :dist
 end

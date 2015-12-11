@@ -7,34 +7,26 @@ class DepartmentsController < ApplicationController
     @departments = Department.all
   end
 
-  # GET /departments/1/edit
   def edit
   end
 
-  # POST /departments
-  # POST /departments.json
   def create
     @department = Department.new(department_params)
     @department.save
     @departments = Department.all
     @department = Department.new
-    
   end
 
-  # PATCH/PUT /departments/1
-  # PATCH/PUT /departments/1.json
+
   def update
      @department.update(department_params)
      @departments = Department.all
      @department = Department.new   
   end
 
-  # DELETE /departments/1
-  # DELETE /departments/1.json
   def destroy
     @department.destroy
     @departments = Department.all
-    
   end
 
   private

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151211081145) do
+ActiveRecord::Schema.define(version: 20151209142635) do
 
   create_table "attendances", force: :cascade do |t|
     t.integer  "employee_shift_id"
@@ -85,14 +85,10 @@ ActiveRecord::Schema.define(version: 20151211081145) do
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
     t.string   "country"
-    t.integer  "country_id"
-    t.integer  "state_id"
   end
 
   add_index "companies", ["company_type_id"], name: "index_companies_on_company_type_id"
-  add_index "companies", ["country_id"], name: "index_companies_on_country_id"
   add_index "companies", ["group_id"], name: "index_companies_on_group_id"
-  add_index "companies", ["state_id"], name: "index_companies_on_state_id"
 
   create_table "company_leavs", force: :cascade do |t|
     t.integer  "employee_grade_id"
@@ -120,13 +116,9 @@ ActiveRecord::Schema.define(version: 20151211081145) do
     t.datetime "updated_at",    null: false
     t.string   "state"
     t.string   "country"
-    t.integer  "country_id"
-    t.integer  "state_id"
   end
 
   add_index "company_locations", ["company_id"], name: "index_company_locations_on_company_id"
-  add_index "company_locations", ["country_id"], name: "index_company_locations_on_country_id"
-  add_index "company_locations", ["state_id"], name: "index_company_locations_on_state_id"
 
   create_table "company_shifts", force: :cascade do |t|
     t.string   "name"
@@ -143,12 +135,6 @@ ActiveRecord::Schema.define(version: 20151211081145) do
   end
 
   create_table "cost_centers", force: :cascade do |t|
-    t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "countries", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -188,15 +174,6 @@ ActiveRecord::Schema.define(version: 20151211081145) do
 
   add_index "departments", ["company_location_id"], name: "index_departments_on_company_location_id"
   add_index "departments", ["department_type_id"], name: "index_departments_on_department_type_id"
-
-  create_table "districts", force: :cascade do |t|
-    t.string   "name"
-    t.integer  "state_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  add_index "districts", ["state_id"], name: "index_districts_on_state_id"
 
   create_table "employee_bank_details", force: :cascade do |t|
     t.integer  "employee_id"
@@ -316,12 +293,9 @@ ActiveRecord::Schema.define(version: 20151211081145) do
     t.integer  "role_id"
     t.string   "country"
     t.integer  "employee_id"
-    t.integer  "country_id"
-    t.integer  "state_id"
   end
 
   add_index "employees", ["blood_group_id"], name: "index_employees_on_blood_group_id"
-  add_index "employees", ["country_id"], name: "index_employees_on_country_id"
   add_index "employees", ["department_id"], name: "index_employees_on_department_id"
   add_index "employees", ["employee_code"], name: "index_employees_on_employee_code"
   add_index "employees", ["employee_id"], name: "index_employees_on_employee_id"
@@ -329,7 +303,6 @@ ActiveRecord::Schema.define(version: 20151211081145) do
   add_index "employees", ["manager_id"], name: "index_employees_on_manager_id"
   add_index "employees", ["nationality_id"], name: "index_employees_on_nationality_id"
   add_index "employees", ["role_id"], name: "index_employees_on_role_id"
-  add_index "employees", ["state_id"], name: "index_employees_on_state_id"
 
   create_table "experiences", force: :cascade do |t|
     t.integer  "employee_id"
@@ -378,14 +351,10 @@ ActiveRecord::Schema.define(version: 20151211081145) do
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
     t.string   "country"
-    t.integer  "country_id"
-    t.integer  "state_id"
   end
 
-  add_index "families", ["country_id"], name: "index_families_on_country_id"
   add_index "families", ["employee_id"], name: "index_families_on_employee_id"
   add_index "families", ["nationality_id"], name: "index_families_on_nationality_id"
-  add_index "families", ["state_id"], name: "index_families_on_state_id"
 
   create_table "groups", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -538,15 +507,6 @@ ActiveRecord::Schema.define(version: 20151211081145) do
   end
 
   add_index "skillsets", ["employee_id"], name: "index_skillsets_on_employee_id"
-
-  create_table "states", force: :cascade do |t|
-    t.string   "name"
-    t.integer  "country_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  add_index "states", ["country_id"], name: "index_states_on_country_id"
 
   create_table "years", force: :cascade do |t|
     t.integer  "name"

@@ -2,7 +2,7 @@
 $(function(){
 
   $.validator.addMethod("loginRegex", function (value, element) {
-          return this.optional(element) || /^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.(com|net|org|info|com.au|))?$/.test(value);
+          return this.optional(element) || /^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.(com|net|org|info|com.au|in|co.in|))?$/.test(value);
   }, "Email address must be in the format of name@domain.com");
 
   $.validator.addMethod("lettersOnly", function (value, element) {
@@ -179,8 +179,8 @@ $.validator.addMethod("address", function (value, element) {
           cus_url:true
       },
       "company[ceo_name]":{
-          maxlength: 30,
-          required: true
+          maxlength: 30
+        
 
       }
 

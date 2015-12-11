@@ -10,7 +10,7 @@
 
   <div class="box-body">
 
-    <%= bootstrap_form_for(@employee_bank_detail,html: {id: 'employee_bank_detail'}) do |f| %>
+    <%= bootstrap_form_for(@employee_bank_detail,html: {id: 'employee_bank_detail'},remote:true) do |f| %>
     <%= f.hidden_field :employee_id, value: @employee.id %>
      <div class="row">
         <div class="col-sm-3">
@@ -73,6 +73,6 @@
   <% end %>
      </div><!-- /.box-body -->
   <div class="box-footer">
-    Visit <a href="https://select2.github.io/">Select2 documentation</a> for more examples and information about the plugin.
+    Visit <a href="https://indiba.in/">www.indiba.in</a> for more Information about the HRMSONE.
   </div>
 </div><!-- /.box -->

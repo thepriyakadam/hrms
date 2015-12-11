@@ -9,24 +9,20 @@
   <div class="box-body">
     <table id="example2" class="table table-bordered table-hover">
    <tr>
-    <th><strong>Employee:</strong></th>
-    <td><%= @skillset.employee %></td>
-
-    <th></th>
-    <td></td>
-   </tr>
-   
-    <tr>
-    <th> <strong>Name:</strong></th>
-    <td> <%= @skillset.name %></td>
-
-    <th><strong>Skill level:</strong></th>
-    <td> <%= @skillset.skill_level %></td>
-   </tr>
+      <th>Name</th>
+      <th>Skill level</th>
+    </tr>
+  
+    <% @skillsets.each do |skillset| %>
+      <tr>
+        <td><%= skillset.name %></td>
+        <td><%= skillset.skill_level %></td>
+        </tr>
+        <%end%>
     </table>
   <div class="box-footer">
-      Visit <a href="https://select2.github.io/">Select2 documentation</a> for more examples and information about the plugin.
-    </div>
+    Visit <a href="https://indiba.in/">www.indiba.in</a> for more Information about the HRMSONE.
+  </div>
   </div><!-- /.box -->
 </div>
 

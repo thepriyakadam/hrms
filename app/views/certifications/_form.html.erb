@@ -9,7 +9,7 @@
   </div><!-- /.box-header -->
 
   <div class="box-body">
-    <%= bootstrap_form_for(@certification,html: {id: 'certification'}) do |f| %>
+    <%= bootstrap_form_for(@certification,html: {id: 'certification'},remote:true) do |f| %>
       <%= f.hidden_field :employee_id, value: @employee.id %>
       <div id="entry1" class="clonedInput">
         <div class="row">
@@ -21,7 +21,7 @@
       
           <div class="col-sm-3">
             <div class="field">
-              <%= f.number_field :year, class: 'input_year' %>
+               <%= f.select :year_id, all_year,{},label: 'Year', class: 'input_year_id' %>
             </div>
           </div>
 
@@ -61,7 +61,7 @@
     <% end %>
   </div><!-- /.box-body -->
   <div class="box-footer">
-    Visit <a href="https://select2.github.io/">Select2 documentation</a> for more examples and information about the plugin.
+    Visit <a href="https://indiba.in/">www.indiba.in</a> for more Information about the HRMSONE.
   </div>
 </div><!-- /.box -->
 
@@ -74,7 +74,7 @@
         newNum  = new Number(num + 1),      
         newElem = $('#entry' + num).clone().attr('id', 'entry' + newNum).fadeIn('slow'); 
     newElem.find('.input_name').attr('name','certification['+ newNum +'][name]').attr('id', newNum + '_certification_name').val('');
-    newElem.find('.input_year').attr('name','certification['+ newNum +'][year]').attr('id', newNum + '_certification_year').val('');
+    newElem.find('.input_year_id').attr('name','certification['+ newNum +'][year_id]').attr('id', newNum + '_certification_year_id').val('');
     newElem.find('.input_duration').attr('name','certification['+ newNum +'][duration]').attr('id', newNum + '_certification_duration').val('');
     newElem.find('.input_descripation').attr('name','certification['+ newNum +'][descripation]').attr('id', newNum + '_certification_descripation').val('');
     

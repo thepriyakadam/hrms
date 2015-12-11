@@ -25,6 +25,7 @@ class CompanyLocationsController < ApplicationController
   # POST /company_locations.json
   def create
     @company_location = CompanyLocation.new(company_location_params)
+    @company_location.district = params['company']['district']
     respond_to do |format|
       if @company_location.save
         format.html { redirect_to @company_location, notice: 'Company location was successfully created.' }
@@ -68,6 +69,6 @@ class CompanyLocationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def company_location_params
-      params.require(:company_location).permit(:company_id, :name, :email, :address, :city, :district, :pin_code, :contact_no)
+      params.require(:company_location).permit(:company_id, :name, :email, :address, :country, :state, :district, :city, :pin_code, :contact_no)
     end
 end

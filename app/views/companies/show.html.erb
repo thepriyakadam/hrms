@@ -15,16 +15,15 @@
     </tr>
 
     <tr>
-       <th>Company Code:</th>
+      <th>Company Code:</th>
       <td><%=@company.company_code %></td>
-      <th></th>
-      <td></td>
+
+      <th>Name:</th>
+      <td><%= @company.name %></td>
     </tr>
-    
-    
-      <tr>
-        <th>Name:</th>
-        <td><%= @company.name %></td>
+    <tr>
+        <th>Company Description:</th>
+        <td><%= @company.description %></td>
 
         <th>Company type:</th>
         <td><%= @company.company_type.name %></td>
@@ -50,47 +49,41 @@
         <th>Address:</th>
         <td><%= @company.address %></td>
 
-         <th>City:</th>
-        <td><%= @company.city %></td>
-      </tr>
-      <tr>
-        <th>District:</th>
-        <td><%= @company.district %></td>
-
         <th>Pin code:</th>
         <td><%= @company.pin_code %></td>
+      </tr>
+      <tr>
+        <th>City:</th>
+        <td><%= @company.city %></td>
+
+        <th>District:</th>
+        <td><%= @company.district %></td>
       </tr>
 
       <tr>
         <th>State:</th>
         <td><%= @company.state %></td>
 
-        <th>Email:</th>
-        <td><%= @company.email %></td>
-      </tr>
-
-      <tr>
-        <th>Contact no:</th>
-        <td><%= @company.contact_no %></td>
-
-        <th>Web site:</th>
-        <td><%= @company.web_site %></td>
+        <th>Country:</th>
+        <td><%= @company.country %></td>
       </tr>
 
       <tr>
         <th>Starting date:</th>
         <td><%= @company.starting_date %></td>
 
-         <th>Ceo name:</th>
-        <td><%= @company.ceo_name %></td>
+        <th>Contact no:</th>
+        <td><%= @company.contact_no %></td>
       </tr>
 
       <tr>
-        <th>Company Description:</th>
-        <td colspan="3"><%= @company.description %></td>
+        <th>Email:</th>
+        <td><%= @company.email %></td>
 
-         
+        <th>Web site:</th>
+        <td><%= @company.web_site %></td>
       </tr>
+
 
     </table>
 
@@ -98,7 +91,7 @@
     <%= link_to 'Back', companies_path,class: 'btn btn-default fa fa-arrow-left' %>
   </div><!-- /.box-body -->
   <div class="box-footer">
-    Visit <a href="https://select2.github.io/">Select2 documentation</a> for more examples and information about the plugin.
+    Visit <a href="https://indiba.in/">www.indiba.in</a> for more Information about the HRMSONE.
   </div>
 </div><!-- /.box -->
 

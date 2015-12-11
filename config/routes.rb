@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  resources :districts
+  resources :states
+  resources :countries
+  resources :employee_designations
+  resources :cost_centers
   resources :degrees
   resources :attendances
   resources :employee_shifts
@@ -52,7 +57,12 @@ Rails.application.routes.draw do
   resources :company_types
   resources :departments
   resources :company_locations
-  resources :companies
+  resources :companies do
+    collection do
+      get :collect_cities
+      get :collect_states
+    end
+  end
   root 'home#index'
 
   devise_for :members, :controllers => {registrations: 'members/registrations',sessions: 'members/sessions',passwords: 'groups/passwords'}

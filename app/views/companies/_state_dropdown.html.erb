@@ -1,0 +1,7 @@
+<label class="control-label required" for="company_district" aria-required="true">State</label>
+<select onchange="var a={id:$(this).val()}; $.get('/companies/collect_cities',a,function(response){});" class="form-control valid" name="company[state]" id="company_state" aria-required="true" aria-invalid="false">
+<option value="">Please Select State</option>
+<% @states.each do |s,v| %>
+<option value="<%= v %><%= s%>"><%= v %></option>
+<%end%>
+</select>

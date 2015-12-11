@@ -35,9 +35,11 @@ class SkillsetsController < ApplicationController
           end
         format.html { redirect_to @skillset, notice: 'Skillset was successfully created.' }
         format.json { render :show, status: :created, location: @skillset }
+        format.js { @flag = true }
       else
         format.html { render :new }
         format.json { render json: @skillset.errors, status: :unprocessable_entity }
+        format.js { @flag = false }
       end
     end
     end

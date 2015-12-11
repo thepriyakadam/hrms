@@ -1,6 +1,6 @@
 class CompaniesController < ApplicationController
   before_action :set_company, only: [:show, :edit, :update, :destroy]
-  load_and_authorize_resource
+  #load_and_authorize_resource
 
   # GET /companies
   # GET /companies.json
@@ -17,21 +17,31 @@ class CompaniesController < ApplicationController
   def new
     @company = Company.new
     @company_type = CompanyType.all
+    # @states = CS.states(params[:id])
+    # @cities = CS.cities(params[:id],:in)
   end
 
   # GET /companies/1/edit
   def edit
+    
+    @states = CS.states(@company.country)
+    # @country = @company.country
+    # @states = CS.states(@country.name)
+    # @cities = CS.cities(params[:id],:in)
   end
 
   # POST /companies
   # POST /companies.json
   def create
     @company = Company.new(company_params)
+    #@company.country = 
+    #@company.state = 
     respond_to do |format|
       if @company.save
         format.html { redirect_to @company, notice: 'Company was successfully created.' }
         format.json { render :show, status: :created, location: @company }
       else
+        p @company.errors
         format.html { render :new }
         format.json { render json: @company.errors, status: :unprocessable_entity }
       end
@@ -62,6 +72,14 @@ class CompaniesController < ApplicationController
     end
   end
 
+  def collect_states
+    @states = CS.states(params[:id])
+  end
+
+  def collect_cities
+    @cities = CS.cities(params[:id],:in)
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_company
@@ -70,6 +88,6 @@ class CompaniesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def company_params
-      params.require(:company).permit(:group_id, :name, :company_type_id, :registration_no, :description, :pan_card_no, :tax_no, :professional_tax_no, :address, :city, :district, :pin_code, :state, :email, :contact_no, :web_site, :starting_date, :ceo_name)
+      params.require(:company).permit(:group_id, :name, :company_type_id, :registration_no, :description, :pan_card_no, :tax_no, :professional_tax_no, :address, :city, :district, :country, :pin_code, :state, :email, :contact_no, :web_site, :starting_date, :ceo_name)
     end
 end

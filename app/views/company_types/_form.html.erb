@@ -1,46 +1,15 @@
-<style type="text/css">
-  .example-modal .modal {
-        position: relative;
-        top: 1;
-        bottom: auto;
-        right: auto;
-        left: auto;
-        display: block;
-      }
-      .example-modal .modal {
-        background: transparent !important;
-      }
-</style>
-
-<div class="example-modal">
-  <div class="modal">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title">Modal Default</h4>
-        </div>
-        <div class="modal-body">
-
-<%= bootstrap_form_for(@company_type,html: {id: 'company_type'}) do |f| %>
+<%= bootstrap_form_for(@company_type,html: {id: 'company_type'},remote:true) do |f| %>
   <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="form-group required">
-         <%= f.text_field :name,label:"Company Type" %>
-       </div>
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :name,hide_label:true, placeholder: 'Company Type' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit :class => class_name, data: { disable_with: data_info } %>
+      </div>
     </div>
   </div>
-    
- 
-
-
-</div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-          <%= f.submit "Create Company type",class: "btn btn-primary",data: { disable_with: 'Wait....'} %><% end %>
-        </div>
-      </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-  </div><!-- /.modal -->
-</div><!-- /.example-modal -->
+<% end %>

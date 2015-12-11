@@ -1,20 +1,10 @@
 class EmployeeGradesController < ApplicationController
   before_action :set_employee_grade, only: [:show, :edit, :update, :destroy]
   load_and_authorize_resource
-  # GET /employee_grades
-  # GET /employee_grades.json
-  def index
-    @employee_grades = EmployeeGrade.all
-  end
 
-  # GET /employee_grades/1
-  # GET /employee_grades/1.json
-  def show
-  end
-
-  # GET /employee_grades/new
   def new
     @employee_grade = EmployeeGrade.new
+     @employee_grades = EmployeeGrade.all
   end
 
   # GET /employee_grades/1/edit
@@ -25,40 +15,26 @@ class EmployeeGradesController < ApplicationController
   # POST /employee_grades.json
   def create
     @employee_grade = EmployeeGrade.new(employee_grade_params)
-
-    respond_to do |format|
-      if @employee_grade.save
-        format.html { redirect_to @employee_grade, notice: 'Employee grade was successfully created.' }
-        format.json { render :show, status: :created, location: @employee_grade }
-      else
-        format.html { render :new }
-        format.json { render json: @employee_grade.errors, status: :unprocessable_entity }
-      end
-    end
+    @employee_grade.save
+    @employee_grades = EmployeeGrade.all
+    @employee_grade = EmployeeGrade.new
   end
 
   # PATCH/PUT /employee_grades/1
   # PATCH/PUT /employee_grades/1.json
   def update
-    respond_to do |format|
-      if @employee_grade.update(employee_grade_params)
-        format.html { redirect_to @employee_grade, notice: 'Employee grade was successfully updated.' }
-        format.json { render :show, status: :ok, location: @employee_grade }
-      else
-        format.html { render :edit }
-        format.json { render json: @employee_grade.errors, status: :unprocessable_entity }
-      end
-    end
+    
+   @employee_grade.update(employee_grade_params)
+   @employee_grades = EmployeeGrade.all
+   @employee_grade = EmployeeGrade.new
+        
   end
 
   # DELETE /employee_grades/1
   # DELETE /employee_grades/1.json
   def destroy
     @employee_grade.destroy
-    respond_to do |format|
-      format.html { redirect_to employee_grades_url, notice: 'Employee grade was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+     @employee_grades = EmployeeGrade.all
   end
 
   private

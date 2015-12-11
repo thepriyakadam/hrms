@@ -1,5 +1,7 @@
 class Award < ActiveRecord::Base
   belongs_to :employee
+  belongs_to :year
+  validates :award_name, presence: true
 validate :award_name_regex
 validate :award_from_regex
 

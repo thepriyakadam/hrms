@@ -17,7 +17,7 @@ class Ability
         can [:read, :create, :update, :destroy], [Employee] 
         can [:read, :create, :update, :destroy], [EmployeeLeavRequest]
       elsif user.role.name == 'Employee'
-        can [:read, :create, :update, :destroy], [EmployeeLeavRequest,CompanyLeav,Award,Family,Qualification,Skillset,Experince,LeavCancelled] 
+        can [:read, :create, :update, :destroy], [EmployeeLeavRequest,CompanyLeav,Award,Family,Qualification,Skillset,Experince,LeavCancelled], :employee_id => user.id 
       end
     end 
 

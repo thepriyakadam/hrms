@@ -1,16 +1,16 @@
 class EmployeeBankDetail < ActiveRecord::Base
   belongs_to :employee
- validates :bank_name, :presence => true
- validates :branch_name, :presence => true
- validates :address, :presence => true
- validates :branch_code, :presence => true
- validate :bank_name_regex
- validate :branch_name_regex
- validate :contact_no_regex
- validate :ifsc_regex
- validate :branch_code_regex
-validate :micr_code_regex
-validate :account_no_regex
+   validates :bank_name, :presence => true
+   validates :branch_name, :presence => true
+   validates :address, :presence => true
+   validates :branch_code, :presence => true
+   validate :bank_name_regex
+   validate :branch_name_regex
+   validate :contact_no_regex
+   validate :ifsc_regex
+   validate :branch_code_regex
+  validate :micr_code_regex
+  validate :account_no_regex
 
 def bank_name_regex
     if bank_name.present? and not bank_name.match(/\A[A-Za-z_ ]{1,30}\Z/)

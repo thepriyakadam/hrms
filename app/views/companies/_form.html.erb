@@ -1,3 +1,4 @@
+
 <!-- SELECT2 EXAMPLE -->
 <div class="box box-default">
   <div class="box-header with-border">
@@ -13,132 +14,134 @@
     <%= bootstrap_form_for(@company,html: {id: 'company'}) do |f| %>
 
       <div class="row">
-        <div class="col-sm-2">
-          <div class="form-group required">
-           <%= f.text_field :name,label: 'Company Name'%>
-           </div>
-        </div>
-
-        <div class="col-sm-2">
-           <div class="field">
-          <%= f.select :company_type_id, all_company_type,label: 'Company Type ID' %>
-           </div>
-        </div>
-
-         <div class="col-sm-2">
-          <div class="form-group required">
-           <%= f.text_field :registration_no,label: 'Registration No' %>
-         </div>
-        </div>
-
         <div class="col-sm-3">
           <div class="form-group required">
-            <%= f.text_field :pan_card_no,label: 'Pancard Number' %>
-          </div>
+           <%= f.text_field :name,label: 'Company Name',placeholder: "e.g : ICS"%>
+           </div>
         </div>
-
-        <div class="col-sm-3">
-        <div class="form-group required">
-          <div class="input-group">
-            <div class="input-group-addon">
-              <i class="fa fa-calendar"></i>
-            </div>
-            <%= f.text_field :starting_date,label: 'Starting Date',class: 'datemask'%>
-          </div>
-        </div>
-        </div>
-      </div>
-
-      <div class="row">
         <div class="col-sm-6">
           <div class="field">
-           <%= f.text_area :description,label: 'Description',placeholder: "Company Description" %>
+           <%= f.text_field :description,label: 'Description',placeholder: "e.g : Indiba Consaltancy Services." %>
           </div>
         </div>
-
-        <div class="col-sm-6">
-          <div class="form-group required">
-           <%= f.text_area :address,label: 'Address' %>
+        <div class="col-sm-3">
+          <div class="field">
+             <%= f.select :company_type_id, all_company_type,label: 'Company Type ID' %>
           </div>
         </div>
       </div>
-
+     
       <div class="row">
-        <div class="col-sm-2">
-          <div class="form-group required">
-            <%= f.text_field :city,label: 'City' %>
-          </div>
-        </div>
-       
-        <div class="col-sm-2">
-          <div class="form-group required">
-           <%= f.text_field :district,label: 'District' %>
-          </div>
-        </div>
-   
-        <div class="col-sm-2">
-          <div class="form-group required">
-           <%= f.number_field :pin_code,label: 'Pin Code/ZIP' %>
-          </div>
-        </div>
-
         <div class="col-sm-3">
           <div class="form-group required">
-           <%= f.text_field :state,label: 'State' %>
+           <%= f.text_field :registration_no,label: 'Registration No' %>
           </div>
         </div>
-
+        
         <div class="col-sm-3">
           <div class="form-group required">
             <%= f.text_field :contact_no,label: 'Contact No' %>
           </div>
         </div>
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.text_field :pan_card_no,label: 'Pancard Number' %>
+          </div>
+        </div>
+        <div class="col-sm-3">
+         <div class="form-group required">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+            <%= f.text_field :starting_date,label: 'Starting Date',class: 'company_start_date'%>
+          </div>
+         </div>
+        </div>
       </div>
 
       <div class="row">
-        <div class="col-sm-2">
+        <div class="col-sm-9">
+          <div class="form-group required">
+           <%= f.text_field :address,label: 'Address' %>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group required">
+           <%= f.text_field :pin_code,label: 'Pin Code/ZIP' %>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <%=f.select :country, all_countries,{include_blank: "Please Select Country"},{onchange:"var a={id:$(this).val()}; $.get('/companies/collect_states',a,function(response){});"}%>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <div id="states">
+              <%if action_name == 'new' %>
+                <%=f.select :state, {},{include_blank: "Please Select Country"}%>
+              <%else%>
+                <%= f.select :state, @states %>
+              <%end%>
+              
+            </div> 
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group required">
+           <div id="district">
+              <%if action_name == 'new' %>
+               <%=f.select :district,{},{include_blank: "Please Select State"} %>
+              <%else%>
+                <%= f.select :district, {}, :selected => @company.district %>
+              <%end%>
+              
+           </div>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group required">
+           <%= f.text_field :city %>
+          </div>
+        </div>        
+      </div>
+
+      <div class="row">
+        <div class="col-sm-3">
           <div class="form-group required">
             <%= f.text_field :tax_no,label: 'Tax Number' %>
           </div>
         </div>
- 
-        <div class="col-sm-2">
+       
+        <div class="col-sm-3">
           <div class="form-group required">
            <%= f.text_field :professional_tax_no,label: 'Professional Tax No' %>
           </div>
         </div>
-
-        <div class="col-sm-2">
+        <div class="col-sm-3">
           <div class="form-group required">
            <%= f.text_field :email,label: 'Email' %>
-         </div>
-        </div> 
-        
-
-         <div class="col-sm-3">
+          </div>
+        </div>
+        <div class="col-sm-3">
           <div class="form-group required">
             <%= f.text_field :web_site %>
           </div>
-        </div>
-
-          
-         <div class="col-sm-3">
-          <div class="form-group required">
-           <%= f.text_field :ceo_name,label:"Company Head" %>
-          </div>
-        </div>
-      </div>
-
+        </div>  
+      </div>   
       <div class="row">
-        <div class="col-sm-5">
+        <div class="col-sm-3">
           <div class="actions">
-            <%= f.submit "Create Account",class: "btn btn-primary",data: { disable_with: 'Wait....'} %>
+            <%= f.submit :class => class_name, data: { disable_with: data_info } %>
           </div>
         </div>
-      </div>
+    </div>
     <% end %>
   </div><!-- /.box-body -->
   <div class="box-footer">
-    Visit <a href="https://select2.github.io/">Select2 documentation</a> for more examples and information about the plugin.
+    Visit <a href="https://indiba.in/">www.indiba.in</a> for more Information about the HRMSONE.
   </div>
 </div><!-- /.box -->

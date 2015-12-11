@@ -1,6 +1,6 @@
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title">Employee Details</h3>
+    <h3 class="box-title">Employee Awards Details</h3>
     <div class="box-tools pull-right">
       <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
       <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
@@ -9,23 +9,20 @@
   <div class="box-body">
     <table id="example2" class="table table-bordered table-hover">
       <tr>
-        <th><strong>Employee:</strong></th>
-        <td><%= @award.employee %></td>
-
-        <th><strong>Award name:</strong></th>
-        <td><%= @award.award_name %></td>
+      <th>Award name</th>
+      <th>Year</th>
+      <th>Award from</th>
+    </tr>
+    <% @awards.each do |award| %>
+      <tr>
+        <td><%= award.award_name %></td>
+        <td><%= award.year.name %></td>
+        <td><%= award.award_from %></td>
       </tr>
-
-       <tr>
-        <th> <strong>Year:</strong></th>
-        <td><%= @award.year %></td>
-
-        <th> <strong>Award from:</strong></th>
-        <td> <%= @award.award_from %></td>
-      </tr>
+      <%end%>
     </table>
     <div class="box-footer">
-      Visit <a href="https://select2.github.io/">Select2 documentation</a> for more examples and information about the plugin.
-    </div>
+    Visit <a href="https://indiba.in/">www.indiba.in</a> for more Information about the HRMSONE.
+  </div>
   </div><!-- /.box -->
 </div>

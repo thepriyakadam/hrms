@@ -5,9 +5,12 @@ class Employee < ActiveRecord::Base
   belongs_to :blood_group
   belongs_to :employee_type
   has_many :awards
+  has_many :certifications
+  has_many :qualifications
   has_many :employee_leav_requests
   has_many :employee_leav_balances
   has_one :member
+  has_one :employee_bank_detail
   has_one :joining_detail
   accepts_nested_attributes_for :joining_detail
   has_many :subordinates, class_name: "Employee",
@@ -18,10 +21,6 @@ class Employee < ActiveRecord::Base
   validates :last_name, :presence => true
   validates :contact_no, :presence => true
   validates :pan_no, :presence => true
-  
-
-  
-  # validates :uniqueness: true
   validate  :email_regex
   validates :permanent_address, :presence => true, :allow_blank => true
   validate :first_name_regex

@@ -2,7 +2,7 @@
 $(function(){
 
   $.validator.addMethod("loginRegex", function (value, element) {
-          return this.optional(element) || /^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.(com|net|org|info|com.au|))?$/.test(value);
+          return this.optional(element) || /^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.(com|net|org|info|com.au|in|co.in|))?$/.test(value);
   }, "Email address must be in the format of name@domain.com");
 
   $.validator.addMethod("lettersOnly", function (value, element) {
@@ -128,9 +128,7 @@ $.validator.addMethod("address", function (value, element) {
       },
   
       "company[contact_no]":{
-          maxlength: 14,
-          required: true,
-          mobileNo: true
+          maxlength: 16
       },
 
       "company[tax_no]":{
@@ -160,29 +158,29 @@ $.validator.addMethod("address", function (value, element) {
           required: true
          
       },
-      "company[district]":{
-          maxlength: 30,
-          required: true
+      // "company[district]":{
+      //     maxlength: 30,
+      //     required: true
          
-      },
+      // },
       "company[pin_code]":{
           maxlength: 6,
           required: true,
           numbersOnly:true
       },
-      "company[state]":{
-          maxlength: 50,
-          required: true
+      // "company[state]":{
+      //     maxlength: 50,
+      //     required: true
          
-      },
+      // },
       "company[web_site]":{
           maxlength: 30,
           required: true,
           cus_url:true
       },
       "company[ceo_name]":{
-          maxlength: 30,
-          required: true
+          maxlength: 30
+        
 
       }
 
@@ -268,14 +266,11 @@ $("#company_location").validate({
       }, 
 
      "company_location[contact_no]":{
-        maxlength: 13,
-        required: true,
-        mobileNo: true
+        maxlength: 16
       },
 
       "company_location[district]":{
-        maxlength: 100,
-        required: true,
+        maxlength: 100
         
       },
 
@@ -331,8 +326,7 @@ $("#company_type").validate({
     rules: {
       "company_type[name]":{
         required: true,
-        maxlength: 30,
-        lettersOnly:true
+        maxlength: 30
       }
     },
     messages: {
@@ -368,9 +362,7 @@ $("#department").validate({
         numbersOnly: true
       },
       "department[contact_no]":{
-      maxlength: 13,
-        required: true,
-        mobileNo: true
+      maxlength: 13
       }
     
 
@@ -407,8 +399,7 @@ $("#department_type").validate({
     rules: {
       "department_type[name]":{
         required: true,
-        maxlength: 30,
-        lettersOnly:true
+        maxlength: 30
       }
     },
     messages: {
@@ -453,16 +444,13 @@ $("#employee").validate({
         maxlength: 6
       },
       "employee[state]":{
-        maxlength: 50,
-        lettersOnly:true
+        maxlength: 50
       },
       "employee[district]":{
-        maxlength: 50,
-         lettersOnly:true
+        maxlength: 50
       },
       "employee[city]":{
-        maxlength: 30,
-         lettersOnly:true
+        maxlength: 30
       },
       "employee[pin_code]":{
         maxlength: 6,
@@ -548,8 +536,7 @@ $("#employee_grade").validate({
     rules: {
       "employee_grade[name]":{
         required: true,
-        maxlength: 30,
-        lettersOnly: true
+        maxlength: 30
       }
     },
     messages: {
@@ -617,29 +604,24 @@ $("#experince").validate({
     rules: {
       "experince[employee_id]":{
         required: true,
-        maxlength: 30,
-        lettersOnly: true
+        maxlength: 30
       },
       "experince[no_of_year_experince]":{
         required: true,
-        maxlength: 4,
-        numbersOnly: true
+        maxlength: 4
       },
         "experince[company_name]":{
         required: true,
-        maxlength: 30,
-        lettersOnly: true
+        maxlength: 30
       },
       "experince[designation]":{
         required: true,
-        maxlength: 30,
-        lettersOnly: true
+        maxlength: 30
 
       },
       "experince[ctc]":{
         required: true,
-        maxlength: 6,
-        numbersOnly: true
+        maxlength: 6
       }
     },
     messages: {
@@ -707,8 +689,7 @@ $("#family").validate({
         stateName: true
       },
       "family[dist]":{
-        maxlength: 50,
-        lettersOnly: true
+        maxlength: 50
       },
       "family[city]":{
         maxlength: 50,
@@ -724,8 +705,7 @@ $("#family").validate({
       },
       "family[relation]":{
         required: true,
-        maxlength: 30,
-        lettersOnly: true
+        maxlength: 30
       },
       "family[adhar_no]":{
       maxlength: 12,
@@ -745,12 +725,10 @@ $("#family").validate({
       },
       "family[religion]":{
        
-       maxlength: 30,
-       lettersOnly:true
+       maxlength: 30
       },
       "family[profession]":{
-        maxlength: 30,
-        lettersOnly: true
+        maxlength: 30
       }
     },
     messages: {
@@ -826,8 +804,7 @@ $("#leav_cate").validate({
     rules: {
       "leav_category[name]":{
         required: true,
-        maxlength: 30,
-        lettersOnly:true
+        maxlength: 30
       }
     },
     messages: {
@@ -960,8 +937,7 @@ $("#award").validate({
 $("#certification").validate({
     rules: {/*qualification_id*/
       "certification[qualification_id]":{
-        maxlength: 30,
-        lettersOnly:true
+        maxlength: 30
       },
       "certification[name]":{
         maxlength: 30,
@@ -1014,8 +990,7 @@ $("#employee_type").validate({
     rules: {
       "employee_type[name]":{
         required: true,
-        maxlength: 30,
-        lettersOnly:true
+        maxlength: 30
       }
     },
     messages: {

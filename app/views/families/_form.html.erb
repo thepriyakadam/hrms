@@ -10,7 +10,7 @@
 
 
 <div class="box-body">
-<%= bootstrap_form_for(@family,html: {id: 'family'}) do |f| %>
+<%= bootstrap_form_for(@family,html: {id: 'family'},remote:true) do |f| %>
 <%= f.hidden_field :employee_id, value: @employee.id %>
   <div class="row">
    
@@ -49,7 +49,7 @@
       </div>
       <div class="col-sm-3">
         <div class="field">
-          <%= f.number_field :age %>
+          <%= f.text_field :age %>
         </div>
       </div>
       <div class="col-sm-3">
@@ -66,38 +66,46 @@
 
 <div class="row">
    
-      <div class="col-sm-12">
+      <div class="col-sm-9">
         <div class="field">
          <%= f.text_field :permanent_address %>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="field">
+        <%= f.text_field :pin_code,label:"Pin Code/Zip" %>
         </div>
     </div>
 </div>
 
 <div class="row">
-    
-      <div class="col-sm-3">
-        <div class="field">
-         <%= f.text_field :state %>
+          <div class="col-sm-3">
+            <div class="form-group required">
+              <%=f.select :country, all_countries,{include_blank: "Please Select Country"},{onchange:"var a={id:$(this).val()}; $.get('/companies/collect_states',a,function(response){});"}%>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="form-group required">
+              <div id="states">
+              <%=f.select :state,{},{include_blank: "Please Select Country"} %> 
+            </div> 
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="form-group required">
+             <div id="district">
+             <%=f.select :district,{},{include_blank: "Please Select State"} %> 
+           </div>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="form-group required">
+              <%= f.text_field :city %>
+            </div>
+          </div>
         </div>
-    </div>
-
-     <div class="col-sm-3">
-        <div class="field">
-         <%= f.text_field :dist %>
-        </div>
-    </div>
-
-    <div class="col-sm-3">
-        <div class="field">
-        <%= f.text_field :city %>
-        </div>
-    </div>
  
-    <div class="col-sm-3">
-        <div class="field">
-        <%= f.number_field :pin_code,label:"Pin Code/Zip" %>
-        </div>
-    </div>   
+       
      
 </div>
 
@@ -132,6 +140,11 @@
           <%= f.text_field :pan_no,label:"Pan Card No" %>
         </div>
     </div>
+    <div class="col-sm-3">
+        <div class="field">
+        <%= f.select :marital, ['Married','UnMarried'] %>
+        </div>
+    </div>
 </div>
 
 <div class="row">
@@ -147,14 +160,13 @@
         <div class="field">
           <%= f.select :medical_claim, ['Yes','No'] %>
         </div>
-    </div>
+      </div>
 
-    <div class="col-sm-3">
+      <div class="col-sm-3">
         <div class="field">
-        <%= f.select :marital, ['Married','UnMarried'] %>
-         
+        <%= f.select :blood_group, all_blood_group %>
         </div>
-    </div>
+      </div>
  
     
       <div class="col-sm-3">
@@ -169,33 +181,26 @@
         <div class="field">
          <%= f.select :nationality_id, all_nationality %>
         </div>
-    </div>
+      </div>
  
+      
       <div class="col-sm-3">
-        <div class="field">
-        <%= f.select :blood_group, all_blood_group,{include_blank: "Select something"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"}%>
-        </div>
-    </div>
-   <div class="col-sm-3">
         <div class="field">
           <%= f.text_field :religion %>
         </div>
-    </div>
+      </div>
  
       <div class="col-sm-3">
         <div class="field">
         <%= f.select :phandicap, ['Yes','No'],label:"Handicap"%>
         </div>
       </div>
-</div>
-
-<div class="row">
       <div class="col-sm-3">
         <div class="field">
           <%= f.text_field :profession %>
         </div>
       </div>
- </div>
+</div>
 
   <div class="row">
     <div class="col-sm-1"></div>
@@ -208,6 +213,6 @@
 <% end %>
 </div><!-- /.box-body -->
   <div class="box-footer">
-    Visit <a href="https://select2.github.io/">Select2 documentation</a> for more examples and information about the plugin.
+    Visit <a href="https://indiba.in/">www.indiba.in</a> for more Information about the HRMSONE.
   </div>
 </div><!-- /.box -->

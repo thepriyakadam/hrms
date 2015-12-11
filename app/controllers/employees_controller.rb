@@ -10,12 +10,7 @@ class EmployeesController < ApplicationController
   # GET /employees/1
   # GET /employees/1.json
   def show
-    @joining_detail = JoiningDetail.find(@employee.id)
-    #@employee_bank_detail = EmployeeBankDetail.find(@employee.id)
-    # @qualification = Qualification.find(@employee.id)
-    # @experience = Experience.find(@employee.id)
-    # @family = Family.find(@employee.id)
-    # @employee_physical = EmployeePhysical.find(@employee.id)
+    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
   end
 
   # GET /employees/new
@@ -84,7 +79,7 @@ class EmployeesController < ApplicationController
       u.department_id = params["login"]["department_id"]
       u.company_id = @department.company_location.company.id
       u.company_location_id = @department.company_location.id
-      u.subdomain = Apartment::Tenant.current_tenant
+      #u.subdomain = Apartment::Tenant.current_tenant
       u.member_code = employee.employee_code
       u.role_id = params["login"]["role_id"]
     end
@@ -94,7 +89,11 @@ class EmployeesController < ApplicationController
         flash[:notice] = "Employee assigned successfully."
         redirect_to assign_role_employees_path
         #UserPasswordMailer.welcome_email(company,pass).deliver_now
+      else
+        flash[:notice] = "Employee not assigned successfully."
+        redirect_to assign_role_employees_path
       end
+
     end
   end
 
@@ -103,7 +102,7 @@ class EmployeesController < ApplicationController
   end
 
   def ajax_joining_detail
-    @joining_detail = JoiningDetail.find(params[:id])
+    @joining_detail = JoiningDetail.new
   end
 
   def ajax_bank_detail
@@ -147,7 +146,7 @@ class EmployeesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def employee_params
       #params.require(:employee).permit(:department_id, :first_name, :middle_name, :last_name, :date_of_birth, :contact_no, :email, :permanent_address, :city, :district, :state, :pin_code, :current_address, :adhar_no, :pan_no, :licence_no, :passport_no, :marital_status, :nationality_id, :blood_group_id, :handicap, :status, :employee_type_id, :gender)
-      params.require(:employee).permit(:department_id, :first_name, :middle_name, :last_name, :date_of_birth, :contact_no, :email, :permanent_address, :city, :district, :state, :pin_code, :current_address, :adhar_no, :pan_no, :licence_no, :passport_no, :marital_status, :nationality_id, :blood_group_id, :handicap, :status, :employee_type_id, :gender, :religion,:handicap_type)
+      params.require(:employee).permit(:department_id, :first_name, :middle_name, :last_name, :date_of_birth, :contact_no, :email, :permanent_address, :city, :district, :state, :pin_code, :current_address, :adhar_no, :pan_no, :licence_no, :passport_no, :marital_status, :nationality_id, :blood_group_id, :handicap, :status, :employee_type_id, :gender, :religion,:handicap_type, :cost_center_id)
         # joining_detail_attributes: [:joining_date, :reference_from, :admin_hr, :tech_hr, :designation, :employee_grade_id, :confirmation_date, :status, :probation_period, :notice_period, :medical_schem])
     end
 end

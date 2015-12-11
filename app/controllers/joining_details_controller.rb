@@ -20,6 +20,7 @@ class JoiningDetailsController < ApplicationController
 
   # GET /joining_details/1/edit
   def edit
+    @employee = @joining_detail.employee
   end
 
   # POST /joining_details
@@ -70,6 +71,6 @@ class JoiningDetailsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def joining_detail_params
-      params.require(:joining_detail).permit(:employee_id, :joining_date, :reffernce_from, :admin_hr, :tech_hr, :designation, :ctc, :account_no, :employee_grade_id, :confirmation_date, :status, :probation_period, :notice_period, :medical_schem)
+      params.require(:joining_detail).permit(:employee_id, :joining_date, :reference_from, :admin_hr, :tech_hr, :designation, :ctc, :account_no, :employee_grade_id, :confirmation_date, :status, :probation_period, :notice_period, :medical_schem, :employee_designation_id)
     end
 end

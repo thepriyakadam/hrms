@@ -3,12 +3,12 @@ class Department < ActiveRecord::Base
   belongs_to :company_location
   belongs_to :department_type
   has_many :employees
-  has_one :member
+  has_many :member
 
   validates :name, :presence => true
   validates :department_type_id, :presence => true
-  validate :dept_name_regex
-  validate :contact_no_regex
+  #validate :dept_name_regex
+  #validate :contact_no_regex
 
 
   def dept_name_regex

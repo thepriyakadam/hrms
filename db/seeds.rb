@@ -5,9 +5,12 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-com_type = ['IT','Finance','chemical']
-com_type.each do |c|
-	CompanyType.create(name: c)
+company_type_array = ['Information Technology','Finance','chemical','Production']
+
+company_type_array.each do |ct|
+	company_type = CompanyType.find_or_initialize_by(name: ct)
+	company_type.name = ct
+	company_type.save
 end
 
 dept_type = ['IT','Finance','Hr']

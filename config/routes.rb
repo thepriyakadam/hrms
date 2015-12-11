@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :districts
+  resources :states
+  resources :countries
   resources :employee_designations
   resources :cost_centers
   resources :degrees

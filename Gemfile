@@ -76,3 +76,6 @@ gem "paperclip", "~> 4.3"
 gem 'city-state'
 
 #infinite-cove-6619
+# DateTimePicker
+gem 'bootstrap3-datetimepicker-rails', '~> 4.0.0'
+gem 'jquery-ui-rails'

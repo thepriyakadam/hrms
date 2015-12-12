@@ -19,6 +19,11 @@ class FamiliesController < ApplicationController
 
   # GET /families/1/edit
   def edit
+    @country = @family.country
+    @states = @country.states
+    @state = @family.state
+    @cities = @state.districts
+    @form = 'family'
   end
 
   # POST /families

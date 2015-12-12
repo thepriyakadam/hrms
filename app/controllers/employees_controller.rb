@@ -22,6 +22,11 @@ class EmployeesController < ApplicationController
   # GET /employees/1/edit
   def edit
     #@employee.build_joining_detail #here
+    @country = @employee.country
+    @states = @country.states
+    @state = @employee.state
+    @cities = @state.districts
+    @form = 'employee'
   end
 
   # POST /employees

@@ -1,7 +1,9 @@
 class Family < ActiveRecord::Base
   belongs_to :employee
   belongs_to :nationality
-
+  belongs_to :country
+  belongs_to :state
+  belongs_to :district
   validates :relation, :presence => true
   validates :f_name, :presence => true
   validates :l_name , :presence => true
@@ -14,14 +16,14 @@ class Family < ActiveRecord::Base
   validate :district_regex
   validate :city_regex
   validate :adhar_no_regex
-validate :religion_regex
-validate :profession_regex
-validate :contact_no_regex
-validate :relation_regex
-validate :state_regex
-validate :district_regex
-validate :city_regex
-validate :pan_no_regex
+  validate :religion_regex
+  validate :profession_regex
+  validate :contact_no_regex
+  validate :relation_regex
+  validate :state_regex
+  validate :district_regex
+  validate :city_regex
+  validate :pan_no_regex
  
 
   def adhar_no_regex

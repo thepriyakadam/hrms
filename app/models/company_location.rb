@@ -1,6 +1,9 @@
 class CompanyLocation < ActiveRecord::Base
   protokoll :location_code, :pattern => "COMLOC###"
   belongs_to :company
+  belongs_to :country
+  belongs_to :state
+  belongs_to :district
   has_many :member
 
   # validates :name, :presence => true

@@ -50,7 +50,7 @@
         </div>
 
         <div class="col-sm-3">
-          <div class="form-group required">
+          <div class="field">
             <%= f.text_field :pan_no, label: 'Pan Card No' %>
           </div>
         </div>
@@ -87,7 +87,7 @@
             <div class="input-group-addon">
               <i class="fa fa-calendar"></i>
             </div>
-            <%= f.text_field :date_of_birth, class: 'datemask'%>
+            <%= f.text_field :date_of_birth, class: 'birth_date'%>
           </div>
         </div>
         </div>
@@ -101,7 +101,7 @@
 
       <div class="row">
          <div class="col-sm-9">
-          <div class="field">
+          <div class="form-group required">
            <%= f.text_field :permanent_address %>
           </div>
         </div>
@@ -134,7 +134,7 @@
             </div>
           </div>
           <div class="col-sm-3">
-            <div class="form-group required">
+            <div class="field">
               <%= f.text_field :city %>
             </div>
           </div>

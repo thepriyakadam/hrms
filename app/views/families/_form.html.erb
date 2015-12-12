@@ -38,15 +38,15 @@
 
 <div class="row">
      <div class="col-sm-3">
-     <div class="field">
+         <div class="form-group required">
           <div class="input-group">
             <div class="input-group-addon">
               <i class="fa fa-calendar"></i>
             </div>
-            <%= f.text_field :date_of_birth, class: 'datemask'%>
+            <%= f.text_field :date_of_birth,label: 'Birth Date', class: 'family_birth_date' %>
           </div>
-      </div>
-      </div>
+         </div>
+        </div>
       <div class="col-sm-3">
         <div class="field">
           <%= f.text_field :age %>
@@ -94,7 +94,7 @@
           <div class="col-sm-3">
             <div class="form-group required">
              <div id="district">
-             <%=f.select :district,{},{include_blank: "Please Select State"} %> 
+             <%=f.select :dist,{},{include_blank: "Please Select State"} %> 
            </div>
             </div>
           </div>
@@ -104,10 +104,6 @@
             </div>
           </div>
         </div>
- 
-       
-     
-</div>
 
 <div class="row">
    
@@ -216,3 +212,13 @@
     Visit <a href="https://indiba.in/">www.indiba.in</a> for more Information about the HRMSONE.
   </div>
 </div><!-- /.box -->
+
+<script type="text/javascript">
+  $(function(){
+    $('.family_birth_date').datepicker({
+   changeYear:true,
+   changeMonth: true,
+   yearRange: '-100:-0',
+   dateFormat: 'dd-mm-yy' });
+  });
+</script>

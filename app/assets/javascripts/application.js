@@ -73,7 +73,32 @@ $(function(){
   $('.company_start_date').datepicker({
    changeYear:true,
    changeMonth: true,
-   yearRange: '-70:-15',
+   yearRange: '-200:-0',
+   dateFormat: 'dd-mm-yy' });   
+
+  $('.birth_date').datepicker({
+   changeYear:true,
+   changeMonth: true,
+   yearRange: '-100:-0',
+   dateFormat: 'dd-mm-yy' });
+
+  $('.family_birth_date').datepicker({
+   changeYear:true,
+   changeMonth: true,
+   yearRange: '-100:-0',
+   dateFormat: 'dd-mm-yy' });
+
+   $('.joining_date').datepicker({
+   changeYear:true,
+   changeMonth: true,
+   yearRange: '-100:-0',
+   dateFormat: 'dd-mm-yy' }); 
+
+   $('.confirm_date').datepicker({
+   changeYear:true,
+   changeMonth: true,
+   yearRange: '-100:+2',
    dateFormat: 'dd-mm-yy' });   
 });
+
 

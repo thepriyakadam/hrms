@@ -8,7 +8,7 @@ class JoiningDetail < ActiveRecord::Base
   validates :designation, :presence => true
   validate :ref_from_regex
   validate :admin_hr_regex
-  validate :desig_regex
+ 
   validate :tech_hr_regex
   validate :medical_scheme_regex
   validate :probation_period_regex
@@ -35,11 +35,7 @@ def admin_hr_regex
     end
   end
 
-   def desig_regex
-    if designation.present? and not designation.match(/\A[A-Za-z_ ]{1,30}\Z/)
-      errors.add :designation,"Designation Allows only Characters"
-    end
-  end
+   
 
   def probation_period_regex
     if probation_period.present? and not probation_period.match(/\A[0-9A-Za-z_ ]{1,30}\Z/)

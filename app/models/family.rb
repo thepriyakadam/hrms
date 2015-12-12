@@ -1,7 +1,9 @@
 class Family < ActiveRecord::Base
   belongs_to :employee
   belongs_to :nationality
-
+  belongs_to :country
+  belongs_to :state
+  belongs_to :district
   validates :relation, :presence => true
   validates :f_name, :presence => true
   validates :l_name , :presence => true

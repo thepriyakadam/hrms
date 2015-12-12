@@ -4,6 +4,9 @@ class Employee < ActiveRecord::Base
   belongs_to :nationality
   belongs_to :blood_group
   belongs_to :employee_type
+  belongs_to :country
+  belongs_to :state
+  belongs_to :district
   has_many :awards
   has_many :certifications
   has_many :qualifications

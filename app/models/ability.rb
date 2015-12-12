@@ -5,6 +5,7 @@ class Ability
     if user.class == Group
       can [:read, :create, :update, :destroy], [CompanyLeav] 
       can :manage, :all
+      #can [:ajax_show_textbox], [Employee]
       #can [:read, :create, :update, :destroy], [Company] 
     elsif user.class == Member
       #can [:read, :create, :update], [MachineProduct], :buyer_id => user.id

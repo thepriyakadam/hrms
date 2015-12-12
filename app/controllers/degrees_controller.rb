@@ -1,20 +1,10 @@
 class DegreesController < ApplicationController
   before_action :set_degree, only: [:show, :edit, :update, :destroy]
 
-  # GET /degrees
-  # GET /degrees.json
-  def index
-    @degrees = Degree.all
-  end
-
-  # GET /degrees/1
-  # GET /degrees/1.json
-  def show
-  end
-
-  # GET /degrees/new
+  
   def new
     @degree = Degree.new
+    @degrees = Degree.all
   end
 
   # GET /degrees/1/edit
@@ -25,40 +15,25 @@ class DegreesController < ApplicationController
   # POST /degrees.json
   def create
     @degree = Degree.new(degree_params)
-
-    respond_to do |format|
-      if @degree.save
-        format.html { redirect_to @degree, notice: 'Degree was successfully created.' }
-        format.json { render :show, status: :created, location: @degree }
-      else
-        format.html { render :new }
-        format.json { render json: @degree.errors, status: :unprocessable_entity }
-      end
-    end
+    @degree.save
+    @degrees = Degree.all
+    @degree = Degree.new
+       
   end
 
   # PATCH/PUT /degrees/1
   # PATCH/PUT /degrees/1.json
   def update
-    respond_to do |format|
-      if @degree.update(degree_params)
-        format.html { redirect_to @degree, notice: 'Degree was successfully updated.' }
-        format.json { render :show, status: :ok, location: @degree }
-      else
-        format.html { render :edit }
-        format.json { render json: @degree.errors, status: :unprocessable_entity }
-      end
-    end
+   @degree.update(degree_params)
+   @degrees = Degree.all
+   @degree = Degree.new
   end
 
   # DELETE /degrees/1
   # DELETE /degrees/1.json
   def destroy
     @degree.destroy
-    respond_to do |format|
-      format.html { redirect_to degrees_url, notice: 'Degree was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    @degrees = Degree.all
   end
 
   private

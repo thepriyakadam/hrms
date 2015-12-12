@@ -20,7 +20,7 @@ class Company < ActiveRecord::Base
  
   #validates :contact_no, :presence => true
   validates :city, :presence => true
-  validates :district_id, :presence => true, on: :create
+
   validates :pin_code, :presence => true
   validates :state_id, :presence => true, on: :create
   #validate :email_regex

@@ -1,5 +1,22 @@
-<h1>New Degree</h1>
-
-<%= render 'form' %>
-
-<%= link_to 'Back', degrees_path %>
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">New Degree</h3>
+    <div class="box-tools pull-right">
+      <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+      <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+    </div>
+  </div><!-- /.box-header -->
+	<div class="box-body">
+		<div id="form">
+			<%= render 'form' %>	
+		</div>
+		
+		<div id="degree_li">
+			<%= render 'degree_list' %>
+		</div>
+		
+	</div><!-- /.box-body -->
+  <div class="box-footer">
+    Visit <a href="https://indiba.in/">www.indiba.in</a> for more Information about the HRMSONE.
+  </div>
+</div><!-- /.box -->

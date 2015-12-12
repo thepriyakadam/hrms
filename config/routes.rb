@@ -48,6 +48,7 @@ Rails.application.routes.draw do
       get :ajax_award_detail
       get :ajax_physical_detail
       get :ajax_family_detail
+      get :ajax_show_textbox
     end
   end
   resources :blood_groups

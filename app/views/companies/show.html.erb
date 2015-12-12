@@ -9,10 +9,6 @@
   </div><!-- /.box-header -->
   <div class="box-body">
     <table id="example2" class="table table-bordered table-hover">
-    <tr> 
-      <th colspan="2"></th>
-      <th colspan="2"></th>
-    </tr>
 
     <tr>
       <th>Company Code:</th>
@@ -57,15 +53,15 @@
         <td><%= @company.city %></td>
 
         <th>District:</th>
-        <td><%= @company.district %></td>
+        <td><%= @company.district.name %></td>
       </tr>
 
       <tr>
         <th>State:</th>
-        <td><%= @company.state %></td>
+        <td><%= @company.state.name %></td>
 
         <th>Country:</th>
-        <td><%= @company.country %></td>
+        <td><%= @company.country.name %></td>
       </tr>
 
       <tr>

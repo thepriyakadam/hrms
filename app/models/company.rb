@@ -2,6 +2,9 @@ class Company < ActiveRecord::Base
   protokoll :company_code, :pattern => "COM###"
   belongs_to :group
   belongs_to :company_type
+  belongs_to :district
+  belongs_to :state
+  belongs_to :country
   has_many :member
 
   validates :name, :presence => true
@@ -17,15 +20,14 @@ class Company < ActiveRecord::Base
  
   #validates :contact_no, :presence => true
   validates :city, :presence => true
-  validates :district, :presence => true, on: :create
+  validates :district_id, :presence => true, on: :create
   validates :pin_code, :presence => true
-  validates :state, :presence => true, on: :create
+  validates :state_id, :presence => true, on: :create
   #validate :email_regex
   validate :company_name_regex
   validate :pan_no_regex
   validate :city_regex
-  validate :district_regex
-  validate :state_regex
+  
   validate :contact_no_regex
   validate :company_head_regex
   validate :website_regex
@@ -72,20 +74,6 @@ def website_regex
  def city_regex
     if city.present? and not city.match(/\A[A-Za-z_ ]{1,30}\Z/)
       errors.add :city,"City Name allows only Characters"
-    end
-  end
-
- def district_regex
-    if district.present? and not district.match(/\A[A-Za-z_ ]{1,30}\Z/)
-      errors.add :district,"District allows only Characters"
-    end
-  end
-
-
-
-  def state_regex
-    if state.present? and not state.match(/\A[A-Za-z_ ]{1,30}\Z/)
-      errors.add :state,"State allows only Characters"
     end
   end
 end

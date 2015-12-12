@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require jquery.validate
 //= require jquery.validate.additional-methods
+//= require jquery-ui/datepicker
 //= require_tree .
 
 
@@ -65,5 +66,14 @@ $(function(){
   $("#success-alert").fadeTo(3000, 500).slideUp(500, function(){
   $("#success-alert").alert('close');
   });   
+});
+
+// Datepicker
+$(function(){
+  $('.company_start_date').datepicker({
+   changeYear:true,
+   changeMonth: true,
+   yearRange: '-70:-15',
+   dateFormat: 'dd-mm-yy' });   
 });
 

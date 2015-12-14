@@ -10,12 +10,12 @@ class Member < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+         :recoverable, :rememberable, :trackable, :validatable, :authentication_keys => [:login]
   #validates_format_of :member_code, with: /^[a-zA-Z0-9_\.]*$/
-  validates :email, uniqueness: true, presence: true
-  validate  :email_regex
+  #validates :email, uniqueness: true, presence: true
+  #validate  :email_regex
 
-  #attr_accessor :login
+  attr_accessor :login
 
   def email_regex
     if email.present? and not email.match(/\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/)
@@ -31,12 +31,12 @@ class Member < ActiveRecord::Base
   #   @login || self.member_code || self.email
   # end
 
-  # def self.find_for_database_authentication(warden_conditions)
-  #     conditions = warden_conditions.dup
-  #     if login = conditions.delete(:login)
-  #       where(conditions.to_h).where(["lower(member_code) = :value OR lower(email) = :value", { :value => login.downcase }]).first
-  #     else
-  #       where(conditions.to_h).first
-  #     end
-  #   end
+  def self.find_for_database_authentication(warden_conditions)
+      conditions = warden_conditions.dup
+      if login = conditions.delete(:login)
+        where(conditions.to_h).where(["lower(member_code) = :value OR lower(email) = :value", { :value => login.downcase }]).first
+      else
+        where(conditions.to_h).first
+      end
+    end
 end

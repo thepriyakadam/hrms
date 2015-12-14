@@ -45,11 +45,13 @@ class JoiningDetailsController < ApplicationController
   def update
     respond_to do |format|
       if @joining_detail.update(joining_detail_params)
-        format.html { redirect_to @joining_detail, notice: 'Joining detail was successfully updated.' }
-        format.json { render :show, status: :ok, location: @joining_detail }
+        # format.html { redirect_to @joining_detail, notice: 'Joining detail was successfully updated.' }
+        # format.json { render :show, status: :ok, location: @joining_detail }
+        format.js { @flag = true }
       else
-        format.html { render :edit }
-        format.json { render json: @joining_detail.errors, status: :unprocessable_entity }
+        # format.html { render :edit }
+        # format.json { render json: @joining_detail.errors, status: :unprocessable_entity }
+        format.js { @flag = true }
       end
     end
   end

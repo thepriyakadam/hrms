@@ -15,31 +15,44 @@
   <%= f.hidden_field :employee_id, value: @employee.id %>
     <div id="entry1" class="clonedInput">
       <div class="row">
-        <div class="col-sm-2">
+        <div class="col-sm-3">
           <div class="field">
-            <%= f.select :degree_id, all_degree, {}, class: 'input_degree_id' %>
+            <%= f.select :degree_type_id, all_degree_type, {include_blank: "Select Degree Type"}, class: 'input_degree_type_id' %>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.select :degree_id, all_degree, {include_blank: "Select Degree"}, class: 'input_degree_id' %>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.select :degree_stream_id, all_degree_stream, {include_blank: " Select Degree Stream"}, class: 'input_degree_stream_id' %>
           </div>
         </div>
     
-        <div class="col-sm-2">
+        <div class="col-sm-3">
           <div class="field">
             <%= f.text_field :marks, label: 'Marks(%)', class: 'input_marks' %>
           </div>
         </div>
-        
-        <div class="col-sm-2">
+    </div>    
+   <div class="row">
+        <div class="col-sm-3">
           <div class="field">
-           <%= f.select :year_id, all_year,{},label: 'Year',class: 'input_year_id' %>
+           <%= f.select :year_id, all_year,{include_blank: " Select Passing Year"},label: 'Year',class: 'input_year_id' %>
           </div>
         </div>
        
-        <div class="col-sm-3">
+        <div class="col-sm-4">
           <div class="field">
           <%= f.text_field :college, class: 'input_college' %>
            </div>
         </div>
       
-        <div class="col-sm-3">
+        <div class="col-sm-4">
           <div class="field">
             <%= f.text_field :university, class: 'input_university' %>
           </div>
@@ -78,8 +91,10 @@
   $('#btnAdd').click(function () {
     var num     = $('.clonedInput').length, 
         newNum  = new Number(num + 1),      
-        newElem = $('#entry' + num).clone().attr('id', 'entry' + newNum).fadeIn('slow'); // 
+        newElem = $('#entry' + num).clone().attr('id', 'entry' + newNum).fadeIn('slow'); //
+    newElem.find('.input_degree_type_id').attr('name','qualification['+ newNum +'][degree_type_id]').attr('id', newNum + '_qualification_degree_type_id').val(''); 
     newElem.find('.input_degree_id').attr('name','qualification['+ newNum +'][degree_id]').attr('id', newNum + '_qualification_degree_id').val('');
+    newElem.find('.input_degree_stream_id').attr('name','qualification['+ newNum +'][degree_stream_id]').attr('id', newNum + '_qualification_degree_stream_id').val('');
     newElem.find('.input_marks').attr('name','qualification['+ newNum +'][marks]').attr('id', newNum + '_qualification_marks').val('');
     newElem.find('.input_year_id').attr('name','qualification['+ newNum +'][year_id]').attr('id', newNum + '_qualification_year_id').val('');
     newElem.find('.input_college').attr('name','qualification['+ newNum +'][college]').attr('id', newNum + '_qualification_college').val('');

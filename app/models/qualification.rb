@@ -4,4 +4,5 @@ class Qualification < ActiveRecord::Base
   belongs_to :degree
   belongs_to :degree_type
   belongs_to :degree_stream
+  belongs_to :university
 end

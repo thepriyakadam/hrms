@@ -32,7 +32,7 @@ class QualificationsController < ApplicationController
         if @qualification.save
           len = params["qualification"].length-7
           for i in 2..len
-            Qualification.create(employee_id: params['qualification']['employee_id'], degree_type_id: params['qualification'][i.to_s]['degree_type_id'],degree_id: params['qualification'][i.to_s]['degree_id'],degree_stream_id: params['qualification'][i.to_s]['degree_stream_id'], marks: params['qualification'][i.to_s]['marks'], year_id: params['qualification'][i.to_s]['year_id'], college: params['qualification'][i.to_s]['college'],university: params['qualification'][i.to_s]['university']) 
+            Qualification.create(employee_id: params['qualification']['employee_id'], degree_type_id: params['qualification'][i.to_s]['degree_type_id'],degree_id: params['qualification'][i.to_s]['degree_id'],degree_stream_id: params['qualification'][i.to_s]['degree_stream_id'], marks: params['qualification'][i.to_s]['marks'], year_id: params['qualification'][i.to_s]['year_id'], college: params['qualification'][i.to_s]['college'],university_id: params['qualification'][i.to_s]['university_id']) 
           end
           @qualifications = Qualification.where(employee_id: @employee.id)
           format.html { redirect_to @qualification, notice: 'Qualification was successfully created.' }

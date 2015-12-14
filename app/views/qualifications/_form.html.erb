@@ -51,10 +51,10 @@
           <%= f.text_field :college, class: 'input_college' %>
            </div>
         </div>
-      
+
         <div class="col-sm-4">
           <div class="field">
-            <%= f.text_field :university, class: 'input_university' %>
+           <%= f.select :university_id, all_university,{include_blank: " Select University"},label: 'Year',class: 'input_university_id' %>
           </div>
         </div>
       </div>
@@ -98,7 +98,7 @@
     newElem.find('.input_marks').attr('name','qualification['+ newNum +'][marks]').attr('id', newNum + '_qualification_marks').val('');
     newElem.find('.input_year_id').attr('name','qualification['+ newNum +'][year_id]').attr('id', newNum + '_qualification_year_id').val('');
     newElem.find('.input_college').attr('name','qualification['+ newNum +'][college]').attr('id', newNum + '_qualification_college').val('');
-    newElem.find('.input_university').attr('name','qualification['+ newNum +'][university]').attr('id', newNum + '_qualification_university').val('');
+    newElem.find('.input_university_id').attr('name','qualification['+ newNum +'][university_id]').attr('id', newNum + '_qualification_university_id').val('');
     
     
     $('#entry' + num).after(newElem);

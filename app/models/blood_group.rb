@@ -1,5 +1,4 @@
 class BloodGroup < ActiveRecord::Base
 	has_many :employees
-
-	# validates :name, uniqueness: true, presence => true
+validates :name, :presence => true,  uniqueness: { case_sensitive: false }
 end

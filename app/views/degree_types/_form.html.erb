@@ -1,8 +1,8 @@
-<%= bootstrap_form_for(@degree,html: {id: 'degree'},remote:true) do |f| %>
+<%= bootstrap_form_for(@degree_type,html: {id: 'degree_type'},remote:true) do |f| %>
   <div class="row">
     <div class="col-sm-3">
       <div class="form-group required">
-        <%= f.text_field :name,hide_label:true, placeholder: 'Qualification' %>
+        <%= f.text_field :name,hide_label:true, placeholder: 'Degree Type' %>
       </div>
     </div>
 

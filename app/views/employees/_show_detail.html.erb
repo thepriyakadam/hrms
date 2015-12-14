@@ -2,6 +2,7 @@
   <div class="box-header with-border">
     <h3 class="box-title">Employee Details</h3>
     <div class="box-tools pull-right">
+      <%= link_to 'Edit', edit_employee_path(@employee),class: 'btn btn-success fa fa-edit', remote:true %>
       <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
       <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
     </div>

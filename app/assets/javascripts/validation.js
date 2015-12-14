@@ -158,21 +158,21 @@ $.validator.addMethod("address", function (value, element) {
           required: true
          
       },
-      // "company[district]":{
-      //     maxlength: 30,
-      //     required: true
+      "company[district]":{
+          maxlength: 30,
+          required: true
          
-      // },
+      },
       "company[pin_code]":{
           maxlength: 6,
           required: true,
           numbersOnly:true
       },
-      // "company[state]":{
-      //     maxlength: 50,
-      //     required: true
+      "company[state]":{
+          maxlength: 50,
+          required: true
          
-      // },
+      },
       "company[web_site]":{
           maxlength: 30,
           required: true,
@@ -270,7 +270,14 @@ $("#company_location").validate({
       },
 
       "company_location[district]":{
-        maxlength: 100
+        maxlength: 100,
+        required: true
+        
+      },
+
+      "company_location[state]":{
+        maxlength: 100,
+        required: true
         
       },
 
@@ -297,6 +304,11 @@ $("#company_location").validate({
       
       "company_location[district]":{
       required: "Please Specify District",
+        maxlength: "Cant exceed more than 100 char"
+      },
+
+      "company_location[state]":{
+      required: "Please Specify state",
         maxlength: "Cant exceed more than 100 char"
       },
 
@@ -443,10 +455,12 @@ $("#employee").validate({
         required: true
       },
       "employee[state]":{
-        maxlength: 50
+        maxlength: 50,
+        required: true
       },
       "employee[district]":{
-        maxlength: 50
+        maxlength: 50,
+        required: true
       },
       "employee[city]":{
         maxlength: 30
@@ -685,10 +699,12 @@ $("#family").validate({
       },
       "family[state]":{
         maxlength: 50,
-        stateName: true
+        stateName: true,
+        required: true
       },
       "family[dist]":{
-        maxlength: 50
+        maxlength: 50,
+        required: true
       },
       "family[city]":{
         maxlength: 50,

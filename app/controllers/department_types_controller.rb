@@ -12,9 +12,16 @@ class DepartmentTypesController < ApplicationController
 
   def create
     @department_type = DepartmentType.new(department_type_params)
-    @department_type.save
     @department_types = DepartmentType.all
+    respond_to do |format|
+    if @department_type.save
     @department_type = DepartmentType.new
+     format.js { @flag = true }
+      else
+        flash.now[:alert] = "Department Type Already Exist."
+         format.js { @flag = false }
+      end
+    end
   end
 
   def update

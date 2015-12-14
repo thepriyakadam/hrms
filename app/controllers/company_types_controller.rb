@@ -23,7 +23,7 @@ class CompanyTypesController < ApplicationController
         #format.json { render :show, status: :created, location: @company_type }
         format.js { @flag = true }
       else
-        flash.now[:alert] = "Company type already exist."
+        flash.now[:alert] = "Company Type Already Exist."
         #format.html { render :new }
         #format.json { render json: @company_type.errors, status: :unprocessable_entity }
         format.js { @flag = false }

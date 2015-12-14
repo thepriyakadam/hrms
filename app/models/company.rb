@@ -6,6 +6,7 @@ class Company < ActiveRecord::Base
   belongs_to :state
   belongs_to :country
   has_many :member
+  has_many :company_locations,:dependent => :destroy
 
   validates :name, :presence => true
   validates :registration_no, :presence => true
@@ -17,6 +18,10 @@ class Company < ActiveRecord::Base
   validates :web_site, :presence => true
   validates :starting_date, :presence => true
   #validates :email, :presence => true
+
+  validates :country_id, :presence => true
+  validates :state_id, :presence => true
+  validates :district_id, :presence => true
  
   #validates :contact_no, :presence => true
   validates :city, :presence => true
@@ -24,13 +29,13 @@ class Company < ActiveRecord::Base
   validates :pin_code, :presence => true
   validates :state_id, :presence => true, on: :create
   #validate :email_regex
-  validate :company_name_regex
+  #validate :company_name_regex
   validate :pan_no_regex
-  validate :city_regex
+  #validate :city_regex
   
   validate :contact_no_regex
-  validate :company_head_regex
-  validate :website_regex
+  #validate :company_head_regex
+  #validate :website_regex
   
 
 def company_name_regex

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151212061720) do
+ActiveRecord::Schema.define(version: 20151214071429) do
 
   create_table "attendances", force: :cascade do |t|
     t.integer  "employee_shift_id"
@@ -163,6 +163,18 @@ ActiveRecord::Schema.define(version: 20151212061720) do
   end
 
   add_index "custom_auto_increments", ["counter_model_name"], name: "index_custom_auto_increments_on_counter_model_name"
+
+  create_table "degree_streams", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "degree_types", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "degrees", force: :cascade do |t|
     t.string   "name"
@@ -515,13 +527,17 @@ ActiveRecord::Schema.define(version: 20151212061720) do
     t.string   "marks"
     t.integer  "passout_year"
     t.string   "university"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
     t.integer  "year_id"
     t.integer  "degree_id"
+    t.integer  "degree_type_id"
+    t.integer  "degree_stream_id"
   end
 
   add_index "qualifications", ["degree_id"], name: "index_qualifications_on_degree_id"
+  add_index "qualifications", ["degree_stream_id"], name: "index_qualifications_on_degree_stream_id"
+  add_index "qualifications", ["degree_type_id"], name: "index_qualifications_on_degree_type_id"
   add_index "qualifications", ["employee_id"], name: "index_qualifications_on_employee_id"
   add_index "qualifications", ["year_id"], name: "index_qualifications_on_year_id"
 

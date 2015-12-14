@@ -1,0 +1,2 @@
+module DegreeStreamsHelper
+end

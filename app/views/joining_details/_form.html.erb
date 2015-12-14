@@ -2,12 +2,13 @@
   <div class="box-header with-border">
     <h3 class="box-title"> Employee Joining Details</h3>
     <div class="box-tools pull-right">
+      <%= link_to 'Back', ajax_joining_detail_employees_path(id: @employee.id),class: 'btn btn-default fa fa-arrow-left',remote:true %>
       <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
       <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
     </div>
   </div><!-- /.box-header -->
   <div class="box-body">
-<%= bootstrap_form_for(@joining_detail) do |f| %>
+<%= bootstrap_form_for(@joining_detail,remote:true) do |f| %>
 <%= f.hidden_field :employee_id, value: @employee.id %>
     <div class="row">
           <div class="col-sm-3">

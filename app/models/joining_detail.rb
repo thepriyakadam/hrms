@@ -1,11 +1,13 @@
 class JoiningDetail < ActiveRecord::Base
   belongs_to :employee
   belongs_to :employee_grade
+  belongs_to :employee_designation
 
+  validates :employee_id, :presence => true,  uniqueness: { case_sensitive: false }
   validates :joining_date, :presence => true
   validates :admin_hr , :presence => true
   validates :tech_hr, :presence => true
-  validates :designation, :presence => true
+  validates :employee_designation_id, :presence => true
   validate :ref_from_regex
   validate :admin_hr_regex
  

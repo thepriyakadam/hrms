@@ -1,2 +1,6 @@
-$("#form").html("<%= j render 'form' %>");
-$("#company_list").html("<%= j render 'company_type_list' %>");
+<%if @flag == true %>
+  $("#form").html("<%= j render 'form' %>");
+  $("#company_list").html("<%= j render 'company_type_list' %>");
+<%else%>
+  $("#form").html("<%= j render 'form' %>");
+<%end%>

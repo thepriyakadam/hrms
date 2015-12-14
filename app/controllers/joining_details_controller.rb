@@ -30,9 +30,10 @@ class JoiningDetailsController < ApplicationController
     @employee = Employee.find(params[:joining_detail][:employee_id])
     respond_to do |format|
       if @joining_detail.save
-        format.html { redirect_to @joining_detail, notice: 'Joining detail was successfully created.' }
+        format.html { redirect_to @employee, notice: 'Joining detail was successfully created.' }
         format.json { render :show, status: :created, location: @joining_detail }
       else
+        flash.now[:alert] = "Joining Detail exist for this employee"
         format.html { render :new }
         format.json { render json: @joining_detail.errors, status: :unprocessable_entity }
       end
@@ -71,6 +72,6 @@ class JoiningDetailsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def joining_detail_params
-      params.require(:joining_detail).permit(:employee_id, :joining_date, :reference_from, :admin_hr, :tech_hr, :designation, :ctc, :account_no, :employee_grade_id, :confirmation_date, :status, :probation_period, :notice_period, :medical_schem, :employee_designation_id)
+      params.require(:joining_detail).permit(:employee_id, :joining_date, :reference_from, :admin_hr, :tech_hr, :ctc, :account_no, :employee_grade_id, :confirmation_date, :status, :probation_period, :notice_period, :medical_schem, :employee_designation_id)
     end
 end

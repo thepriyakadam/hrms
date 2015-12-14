@@ -4,6 +4,7 @@ class Qualification < ActiveRecord::Base
   belongs_to :degree
   belongs_to :degree_type
   belongs_to :degree_stream
+  belongs_to :university
 
   validates :college, :presence => true
   validates :marks, :presence => true

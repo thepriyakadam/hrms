@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :universities
+  resources :degree_streams
+  resources :degree_types
   resources :districts
   resources :states
   resources :countries

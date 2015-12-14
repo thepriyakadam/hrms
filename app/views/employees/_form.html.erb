@@ -7,7 +7,7 @@
     </div>
   </div><!-- /.box-header -->
   <div class="box-body">
-    <%= bootstrap_form_for(@employee,html: {id: 'employee'}) do |f| %>
+    <%= bootstrap_form_for(@employee,html: {id: 'employee'}) do |f| %>    
       <div class="row">
         <div class="col-sm-3">
           <div class="form-group required">
@@ -77,7 +77,7 @@
 
         <div class="col-sm-3">
           <div class="field">
-            <%= f.select :nationality_id, all_nationality %>
+            <%= f.select :nationality_id, all_nationality,{include_blank: " Select Nationality"} %>
           </div>
         </div>
 
@@ -94,7 +94,7 @@
 
         <div class="col-sm-3">
           <div class="field">
-            <%= f.select :blood_group_id, all_blood_group %>
+            <%= f.select :blood_group_id, all_blood_group,{include_blank: " Select Blood Group"} %>
           </div>
         </div>
       </div>
@@ -174,7 +174,7 @@
         </div>
         <div class="col-sm-3">
           <div class="field">
-            <%= f.select :employee_type_id, all_employee_type %>
+            <%= f.select :employee_type_id, all_employee_type,{include_blank: " Select Employee Type"} %>
           </div>
         </div>      
 

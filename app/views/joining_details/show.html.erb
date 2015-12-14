@@ -9,15 +9,12 @@
   </div><!-- /.box-header -->
   <div class="box-body">
     <table id="example2" class="table table-bordered table-hover">
-    <tr> 
-      <th colspan="2"></th>
-      <th colspan="2"></th>
-    </tr>
+    
     <tr>
 
     <tr>
       <th><strong>Employee:</strong></th>
-      <td><%= @joining_detail.employee.id %></td>
+      <td><%= @joining_detail.employee.first_name %></td>
 
       <th> <strong>Joining date:</strong></th>
       <td><%= @joining_detail.joining_date %></td>
@@ -36,7 +33,7 @@
       <td><%= @joining_detail.tech_hr %></td>
 
       <th><strong>Designation:</strong></th>
-      <td><%= @joining_detail.designation %></td>
+      <td><%= @joining_detail.employee_designation.name %></td>
     </tr>
 
     <tr>

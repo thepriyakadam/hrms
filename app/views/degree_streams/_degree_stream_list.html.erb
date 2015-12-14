@@ -1,0 +1,19 @@
+<table id="example2" class="table table-bordered table-hover">
+  <thead>
+    <tr>  
+      <th>Name</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @degree_streams.each do |degree_stream| %>
+      <tr>
+        <td><%= degree_stream.name %></td>
+        <td>
+          <%= link_to '', edit_degree_stream_path(degree_stream),class: 'btn btn-success fa fa-edit',remote:true %>
+          <%= link_to '',  degree_stream, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger fa fa-close' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -13,10 +13,23 @@ class CompanyTypesController < ApplicationController
 
   def create
     @company_type = CompanyType.new(company_type_params)
-    @company_type.save
+    #@company_type.save
     @company_types = CompanyType.all
-    @company_type = CompanyType.new
+    
+    respond_to do |format|
+      if @company_type.save
+        @company_type = CompanyType.new
+        #format.html { notice: 'Company was successfully created.' }
+        #format.json { render :show, status: :created, location: @company_type }
+        format.js { @flag = true }
+      else
+        flash.now[:alert] = "Company Type Already Exist."
+        #format.html { render :new }
+        #format.json { render json: @company_type.errors, status: :unprocessable_entity }
+        format.js { @flag = false }
+      end
     end
+  end
 
   def update
     @company_type.update(company_type_params)

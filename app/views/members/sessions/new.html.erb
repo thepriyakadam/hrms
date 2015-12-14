@@ -6,7 +6,7 @@
     <p class="login-box-msg">Sign in to start your session</p>
     <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
       <div class="form-group has-feedback">
-        <%= f.email_field :email, autofocus: true, class: "form-control", placeholder: "Email" %>
+        <%= f.text_field :login, autofocus: true, class: "form-control", placeholder: "Email" %>
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">

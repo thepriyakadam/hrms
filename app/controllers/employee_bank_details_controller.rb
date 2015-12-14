@@ -19,6 +19,7 @@ class EmployeeBankDetailsController < ApplicationController
 
   # GET /employee_bank_details/1/edit
   def edit
+    @employee = @employee_bank_detail.employee
   end
 
   # POST /employee_bank_details
@@ -33,11 +34,14 @@ class EmployeeBankDetailsController < ApplicationController
   def update
     respond_to do |format|
       if @employee_bank_detail.update(employee_bank_detail_params)
-        format.html { redirect_to @employee_bank_detail, notice: 'Employee bank detail was successfully updated.' }
-        format.json { render :show, status: :ok, location: @employee_bank_detail }
+        #format.html { redirect_to @employee_bank_detail, notice: 'Employee bank detail was successfully updated.' }
+        #format.json { render :show, status: :ok, location: @employee_bank_detail }
+        format.js { @flag = true }
       else
-        format.html { render :edit }
-        format.json { render json: @employee_bank_detail.errors, status: :unprocessable_entity }
+        #format.html { render :edit }
+        #format.json { render json: @employee_bank_detail.errors, status: :unprocessable_entity }
+        @employee = @employee_bank_detail.employee
+        format.js { @flag = false }
       end
     end
   end

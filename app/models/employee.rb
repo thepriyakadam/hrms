@@ -12,6 +12,8 @@ class Employee < ActiveRecord::Base
   has_many :qualifications
   has_many :employee_leav_requests
   has_many :employee_leav_balances
+  has_many :families
+  has_many :experiences
   has_one :member
   has_one :employee_bank_detail
   has_one :joining_detail
@@ -38,7 +40,7 @@ class Employee < ActiveRecord::Base
   end
 
   def email_regex
-    if email.present? and not email.match(/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.(com|net|org|info|com.au|))?$/)
+    if email.present? and not email.match(/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.(com|net|org|info|com.au|in|in.co|))?$/)
       errors.add :email, "This is not a valid email format"
     end
   end

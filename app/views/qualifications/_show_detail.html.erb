@@ -1,6 +1,6 @@
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title">Employee Details</h3>
+    <h3 class="box-title">Employee Qualifications Details</h3>
     <div class="box-tools pull-right">
       <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
       <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
@@ -9,19 +9,28 @@
   <div class="box-body">
     <table id="example2" class="table table-bordered table-hover">
       <tr>
-        <th>COURSE</th>
+        <th>Degree Type</th>
+        <th>Class</th>
+        <th>Degree Steam</th>
         <th>MARKS</th>
         <th>YEAR</th>
         <th>COLLEGE</th>
         <th>UNIVERSITY</th>
+        <th>ACTION</th>
       </tr>
        <% @qualifications.each do |qualification| %>
       <tr>
+          <td><%= qualification.degree_type.name %></td>
           <td><%= qualification.degree.name %></td>
+          <td><%= qualification.degree_stream.name %></td>
           <td><%= qualification.marks %></td>
           <td><%= qualification.year.name %></td>
           <td><%= qualification.college %></td>
           <td><%= qualification.university %></td>
+          <td>
+            <%= link_to '', edit_qualification_path(qualification),class: 'btn btn-success fa fa-edit',remote:true %>
+            <%= link_to '', qualification, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger fa fa-close' %>
+          </td>
       </tr>
         <%end%>
       </table>

@@ -12,6 +12,18 @@
 
   <div class="box-body">
     <%= bootstrap_form_for(@company,html: {id: 'company'}) do |f| %>
+    <% if @company.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@company.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+        <ul>
+        <% @company.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+  
       <div class="row">
         <div class="col-sm-3">
           <div class="form-group required">
@@ -28,7 +40,7 @@
         </div>
         <div class="col-sm-6">
           <div class="field">
-           <%= f.text_field :description,label: 'Description',placeholder: "e.g : Indiba Consaltancy Services." %>
+           <%= f.text_field :description,label: 'Description',placeholder: "e.g : Indiba Consultancy Services." %>
           </div>
         </div>
         <div class="col-sm-3">

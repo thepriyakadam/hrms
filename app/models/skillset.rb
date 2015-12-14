@@ -2,7 +2,7 @@ class Skillset < ActiveRecord::Base
   belongs_to :employee
 
 
-  validates :name, :presence => true
+  validates :name, :presence => true 
   validate :skillset_regex
 
   def skillset_regex

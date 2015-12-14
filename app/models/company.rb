@@ -18,16 +18,13 @@ class Company < ActiveRecord::Base
   validates :web_site, :presence => true
   validates :starting_date, :presence => true
   #validates :email, :presence => true
-
   validates :country_id, :presence => true
   validates :state_id, :presence => true
   validates :district_id, :presence => true
- 
   #validates :contact_no, :presence => true
   validates :city, :presence => true
 
   validates :pin_code, :presence => true
-  validates :state_id, :presence => true, on: :create
   #validate :email_regex
   #validate :company_name_regex
   validate :pan_no_regex

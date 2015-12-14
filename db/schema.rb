@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151212061720) do
+ActiveRecord::Schema.define(version: 20151214151916) do
 
   create_table "attendances", force: :cascade do |t|
     t.integer  "employee_shift_id"
@@ -163,6 +163,18 @@ ActiveRecord::Schema.define(version: 20151212061720) do
   end
 
   add_index "custom_auto_increments", ["counter_model_name"], name: "index_custom_auto_increments_on_counter_model_name"
+
+  create_table "degree_streams", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "degree_types", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "degrees", force: :cascade do |t|
     t.string   "name"
@@ -360,34 +372,25 @@ ActiveRecord::Schema.define(version: 20151212061720) do
     t.string   "contact_no"
     t.string   "phone_no"
     t.string   "email"
-    t.text     "permanent_address"
-    t.string   "city"
-    t.integer  "pin_code"
-    t.text     "current_address"
     t.string   "relation"
     t.string   "adhar_no"
     t.string   "pan_no"
     t.string   "passport_no"
     t.string   "medical_claim"
     t.string   "marital"
-    t.string   "status"
     t.integer  "nationality_id"
     t.string   "blood_group"
     t.string   "religion"
     t.string   "phandicap"
     t.string   "profession"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
-    t.integer  "country_id"
-    t.integer  "state_id"
-    t.integer  "district_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.date     "issue_date"
+    t.date     "expiry_date"
   end
 
-  add_index "families", ["country_id"], name: "index_families_on_country_id"
-  add_index "families", ["district_id"], name: "index_families_on_district_id"
   add_index "families", ["employee_id"], name: "index_families_on_employee_id"
   add_index "families", ["nationality_id"], name: "index_families_on_nationality_id"
-  add_index "families", ["state_id"], name: "index_families_on_state_id"
 
   create_table "groups", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -514,15 +517,20 @@ ActiveRecord::Schema.define(version: 20151212061720) do
     t.string   "college"
     t.string   "marks"
     t.integer  "passout_year"
-    t.string   "university"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
     t.integer  "year_id"
     t.integer  "degree_id"
+    t.integer  "degree_type_id"
+    t.integer  "degree_stream_id"
+    t.integer  "university_id"
   end
 
   add_index "qualifications", ["degree_id"], name: "index_qualifications_on_degree_id"
+  add_index "qualifications", ["degree_stream_id"], name: "index_qualifications_on_degree_stream_id"
+  add_index "qualifications", ["degree_type_id"], name: "index_qualifications_on_degree_type_id"
   add_index "qualifications", ["employee_id"], name: "index_qualifications_on_employee_id"
+  add_index "qualifications", ["university_id"], name: "index_qualifications_on_university_id"
   add_index "qualifications", ["year_id"], name: "index_qualifications_on_year_id"
 
   create_table "roles", force: :cascade do |t|
@@ -550,6 +558,12 @@ ActiveRecord::Schema.define(version: 20151212061720) do
   end
 
   add_index "states", ["country_id"], name: "index_states_on_country_id"
+
+  create_table "universities", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "years", force: :cascade do |t|
     t.integer  "name"

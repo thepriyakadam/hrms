@@ -39,8 +39,16 @@
     </tr>
 
     <tr>
+      <th><strong>Country:</strong></th>
+      <td><%= @company_location.country.name %></td>
+
+      <th><strong>State:</strong></th>
+      <td><%= @company_location.state.name %></td>
+    </tr>
+
+    <tr>
       <th> <strong>District:</strong></th>
-      <td> <%= @company_location.district %></td>
+      <td> <%= @company_location.district.name %></td>
 
       <th><strong>Pin code:</strong></th>
       <td><%= @company_location.pin_code %></td>

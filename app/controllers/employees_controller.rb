@@ -1,6 +1,6 @@
 class EmployeesController < ApplicationController
   before_action :set_employee, only: [:show, :edit, :update, :destroy, :ajax_joining_detail, :ajax_bank_detail, :ajax_qualification_detail, :ajax_experience_detail, :ajax_skillset_detail, :ajax_certification_detail, :ajax_award_detail, :ajax_physical_detail, :ajax_family_detail]
-  load_and_authorize_resource
+  #load_and_authorize_resource
   # GET /employees
   # GET /employees.json
   def index
@@ -22,6 +22,11 @@ class EmployeesController < ApplicationController
   # GET /employees/1/edit
   def edit
     #@employee.build_joining_detail #here
+    @country = @employee.country
+    @states = @country.states
+    @state = @employee.state
+    @cities = @state.districts
+    @form = 'employee'
   end
 
   # POST /employees
@@ -135,6 +140,10 @@ class EmployeesController < ApplicationController
 
   def ajax_family_detail
     @family = Family.new
+  end
+
+  def ajax_show_textbox
+    @value = params[:id]
   end
 
   private

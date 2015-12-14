@@ -116,20 +116,20 @@
          <div class="row">
           <div class="col-sm-3">
             <div class="form-group required">
-              <%=f.select :country, all_countries,{include_blank: "Please Select Country"},{onchange:"var a={id:$(this).val()}; $.get('/companies/collect_states',a,function(response){});"}%>
+              <%=f.select :country, all_countries,{include_blank: "Please Select Country"},{onchange:"var a={id:$(this).val(), form : 'employee'}; $.get('/companies/collect_states',a,function(response){});"}%>
             </div>
           </div>
           <div class="col-sm-3">
             <div class="form-group required">
               <div id="states">
-              <%=f.select :state,{},{include_blank: "Please Select Country"} %> 
+                <%= render 'companies/state_dropdown' %> 
             </div> 
             </div>
           </div>
           <div class="col-sm-3">
             <div class="form-group required">
              <div id="district">
-             <%=f.select :district,{},{include_blank: "Please Select State"} %>
+               <%= render 'companies/city_dropdown' %>
            </div>
             </div>
           </div>
@@ -138,12 +138,7 @@
               <%= f.text_field :city %>
             </div>
           </div>
-
-          
-
-          
         </div>
-
       <div class="row">
         <div class="col-sm-6">
           <div class="field">
@@ -167,12 +162,14 @@
         
         <div class="col-sm-3">
           <div class="field">
-            <%= f.select :handicap, ['Yes','No'] %>
+            <%= f.select :handicap, ['Yes','No'],{include_blank: "Please Select"},{onchange:"var a={id:$(this).val()}; $.get('/employees/ajax_show_textbox',a,function(response){});"} %>
           </div>
         </div>
         <div class="col-sm-3">
           <div class="field">
-            <%= f.text_field :handicap_type %>
+            <div id="handicap_type">
+            
+            </div>
           </div>
         </div>
         <div class="col-sm-3">
@@ -180,12 +177,6 @@
             <%= f.select :employee_type_id, all_employee_type %>
           </div>
         </div>      
-
-        <!-- <div class="col-sm-3">
-          <div class="field">
-            <%= f.text_field :status %>
-          </div>
-        </div> -->
 
          <div class="col-sm-3">
           <div class="field">

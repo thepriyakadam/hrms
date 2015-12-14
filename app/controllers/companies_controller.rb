@@ -27,14 +27,13 @@ class CompaniesController < ApplicationController
     @states = @country.states
     @state = @company.state
     @cities = @state.districts
+    @form = 'company'
   end
 
   # POST /companies
   # POST /companies.json
   def create
     @company = Company.new(company_params)
-    #@company.country = 
-    #@company.state = 
     respond_to do |format|
       if @company.save
         format.html { redirect_to @company, notice: 'Company was successfully created.' }
@@ -74,11 +73,13 @@ class CompaniesController < ApplicationController
   def collect_states
     @country = Country.find(params[:id])
     @states = @country.states
+    @form = params[:form]
   end
 
   def collect_cities
     @state = State.find(params[:id])
     @cities = @state.districts
+    @form = params[:form]
   end
 
   private

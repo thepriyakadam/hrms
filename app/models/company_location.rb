@@ -6,6 +6,9 @@ class CompanyLocation < ActiveRecord::Base
   belongs_to :district
   has_many :member
 
+  validates :country_id, :presence => true
+  validates :state_id, :presence => true
+  validates :district_id, :presence => true
   # validates :name, :presence => true
 
 

@@ -45,10 +45,15 @@ Rails.application.routes.draw do
       get :ajax_joining_detail
       get :ajax_bank_detail
       get :ajax_qualification_detail
+      get :ajax_new_qualification
       get :ajax_experience_detail
+      get :ajax_new_experience
       get :ajax_skillset_detail
+      get :ajax_new_skillset
       get :ajax_certification_detail
+      get :ajax_new_certification
       get :ajax_award_detail
+      get :ajax_new_award
       get :ajax_physical_detail
       get :ajax_family_detail
       get :ajax_show_textbox

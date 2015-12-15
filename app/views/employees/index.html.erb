@@ -10,7 +10,6 @@
     <table id="example2" class="table table-bordered table-hover">
     <thead>
       <tr>
-      <th>Department</th>
       <th>First name</th>
       <th>Contact no</th>
       <th>Email</th>
@@ -21,8 +20,6 @@
   <tbody>
     <% @employees.each do |employee| %>
       <tr>
-
-        <td><%= employee.department.try(:name) %></td>
         <td><%= employee.first_name %></td>
         <td><%= employee.contact_no %></td>
         <td><%= employee.email %></td>

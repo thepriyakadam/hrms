@@ -2,6 +2,7 @@
   <div class="box-header with-border">
     <h3 class="box-title">Employee Details</h3>
     <div class="box-tools pull-right">
+      <%= link_to "Add Skillset", ajax_new_skillset_employees_path(id: @employee.id), class: 'btn btn-primary',remote:true %>
       <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
       <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
     </div>

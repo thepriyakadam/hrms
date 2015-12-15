@@ -1,5 +1,5 @@
 class EmployeesController < ApplicationController
-  before_action :set_employee, only: [:show, :edit, :update, :destroy, :ajax_joining_detail, :ajax_bank_detail, :ajax_qualification_detail, :ajax_experience_detail, :ajax_skillset_detail, :ajax_certification_detail, :ajax_award_detail, :ajax_physical_detail, :ajax_family_detail]
+  before_action :set_employee, only: [:show, :edit, :update, :destroy, :ajax_joining_detail, :ajax_bank_detail, :ajax_qualification_detail, :ajax_new_qualification, :ajax_experience_detail, :ajax_new_experience, :ajax_skillset_detail, :ajax_new_skillset, :ajax_certification_detail, :ajax_new_certification, :ajax_award_detail, :ajax_new_award, :ajax_physical_detail, :ajax_family_detail]
   #load_and_authorize_resource
   # GET /employees
   # GET /employees.json
@@ -86,16 +86,17 @@ class EmployeesController < ApplicationController
       u.company_location_id = @department.company_location.id
       #u.subdomain = Apartment::Tenant.current_tenant
       u.member_code = employee.employee_code
+      u.manual_member_code = employee.manual_employee_code
       u.role_id = params["login"]["role_id"]
     end
     ActiveRecord::Base.transaction do
       if user.save
-        employee.update_attributes(role_id: params["login"]["role_id"],manager_id: params["login"]["manager_id"])
+        employee.update_attributes(department_id: params["login"]["department_id"], manager_id: params["login"]["manager_id"])
         flash[:notice] = "Employee assigned successfully."
         redirect_to assign_role_employees_path
         #UserPasswordMailer.welcome_email(company,pass).deliver_now
       else
-        flash[:notice] = "Employee not assigned successfully."
+        flash[:alert] = "Employee not assigned successfully."
         redirect_to assign_role_employees_path
       end
 
@@ -118,7 +119,15 @@ class EmployeesController < ApplicationController
     @qualification = Qualification.new
   end
 
+  def ajax_new_qualification
+    @qualification = Qualification.new
+  end
+
   def ajax_experience_detail
+    @experience = Experience.new
+  end
+
+  def ajax_new_experience
     @experience = Experience.new
   end
 
@@ -126,11 +135,23 @@ class EmployeesController < ApplicationController
     @skillset = Skillset.new
   end
 
+  def ajax_new_skillset
+    @skillset = Skillset.new
+  end
+
   def ajax_certification_detail
     @certification = Certification.new
   end
 
+  def ajax_new_certification
+    @certification = Certification.new
+  end
+
   def ajax_award_detail
+    @award = Award.new
+  end
+
+  def ajax_new_award
     @award = Award.new
   end
 

@@ -28,6 +28,11 @@ class Employee < ActiveRecord::Base
   validates :contact_no, :presence => true
   validate  :email_regex
   validates :permanent_address, :presence => true
+
+  validates :country_id, :presence => true
+  validates :state_id, :presence => true
+  validates :district_id, :presence => true
+  
   validate :last_name_regex
   validate :adhar_no_regex
   validate :middle_name_regex

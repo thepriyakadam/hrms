@@ -9,6 +9,19 @@
   </div><!-- /.box-header -->
   <div class="box-body">
     <%= bootstrap_form_for(@company_location,html: {id: 'company_location'}) do |f| %>
+
+    <% if @company_location.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@company_location.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+        <ul>
+        <% @company_location.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+    
         <div class="row">
           <div class="col-sm-3">
             <div class="form-group required">

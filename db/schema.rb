@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151214151916) do
+ActiveRecord::Schema.define(version: 20151214132206) do
 
   create_table "attendances", force: :cascade do |t|
     t.integer  "employee_shift_id"
@@ -33,10 +33,10 @@ ActiveRecord::Schema.define(version: 20151214151916) do
     t.integer  "employee_id"
     t.string   "award_name"
     t.text     "description"
+    t.integer  "year_id"
     t.string   "award_from"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
-    t.integer  "year_id"
   end
 
   add_index "awards", ["employee_id"], name: "index_awards_on_employee_id"
@@ -50,13 +50,12 @@ ActiveRecord::Schema.define(version: 20151214151916) do
 
   create_table "certifications", force: :cascade do |t|
     t.integer  "employee_id"
-    t.string   "name"
-    t.integer  "year"
-    t.string   "duration"
-    t.text     "descripation"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
     t.integer  "year_id"
+    t.string   "name"
+    t.string   "duration"
+    t.text     "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   add_index "certifications", ["employee_id"], name: "index_certifications_on_employee_id"
@@ -64,6 +63,7 @@ ActiveRecord::Schema.define(version: 20151214151916) do
 
   create_table "companies", force: :cascade do |t|
     t.integer  "group_id"
+    t.string   "manual_company_code"
     t.string   "company_code"
     t.text     "description"
     t.string   "name"
@@ -73,23 +73,21 @@ ActiveRecord::Schema.define(version: 20151214151916) do
     t.string   "tax_no"
     t.string   "professional_tax_no"
     t.text     "address"
+    t.integer  "company_id"
+    t.integer  "state_id"
+    t.integer  "district_id"
     t.string   "city"
     t.integer  "pin_code"
     t.string   "email"
     t.string   "contact_no"
     t.string   "web_site"
     t.date     "starting_date"
-    t.string   "ceo_name"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
-    t.string   "manual_company_code"
-    t.integer  "country_id"
-    t.integer  "state_id"
-    t.integer  "district_id"
   end
 
+  add_index "companies", ["company_id"], name: "index_companies_on_company_id"
   add_index "companies", ["company_type_id"], name: "index_companies_on_company_type_id"
-  add_index "companies", ["country_id"], name: "index_companies_on_country_id"
   add_index "companies", ["district_id"], name: "index_companies_on_district_id"
   add_index "companies", ["group_id"], name: "index_companies_on_group_id"
   add_index "companies", ["state_id"], name: "index_companies_on_state_id"
@@ -108,44 +106,48 @@ ActiveRecord::Schema.define(version: 20151214151916) do
 
   create_table "company_locations", force: :cascade do |t|
     t.integer  "company_id"
+    t.string   "manual_company_location_code"
     t.string   "location_code"
     t.string   "name"
     t.string   "email"
     t.string   "address"
     t.string   "city"
+    t.integer  "state_id"
+    t.integer  "district_id"
     t.integer  "pin_code"
     t.string   "contact_no"
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
-    t.string   "manual_company_location_code"
-    t.integer  "country_id"
-    t.integer  "state_id"
-    t.integer  "district_id"
   end
 
   add_index "company_locations", ["company_id"], name: "index_company_locations_on_company_id"
-  add_index "company_locations", ["country_id"], name: "index_company_locations_on_country_id"
   add_index "company_locations", ["district_id"], name: "index_company_locations_on_district_id"
   add_index "company_locations", ["state_id"], name: "index_company_locations_on_state_id"
 
   create_table "company_shifts", force: :cascade do |t|
+    t.string   "code"
     t.string   "name"
+    t.string   "description"
     t.string   "in_time"
     t.string   "out_time"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "company_types", force: :cascade do |t|
+    t.string   "code"
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "cost_centers", force: :cascade do |t|
+    t.string   "code"
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "countries", force: :cascade do |t|
@@ -165,31 +167,40 @@ ActiveRecord::Schema.define(version: 20151214151916) do
   add_index "custom_auto_increments", ["counter_model_name"], name: "index_custom_auto_increments_on_counter_model_name"
 
   create_table "degree_streams", force: :cascade do |t|
+    t.string   "code"
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "degree_types", force: :cascade do |t|
+    t.string   "code"
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "degrees", force: :cascade do |t|
+    t.string   "code"
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "department_types", force: :cascade do |t|
+    t.string   "code"
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "departments", force: :cascade do |t|
     t.integer  "company_location_id"
+    t.string   "manual_department_code"
     t.string   "department_code"
     t.text     "description"
     t.string   "name"
@@ -197,7 +208,6 @@ ActiveRecord::Schema.define(version: 20151214151916) do
     t.string   "contact_no"
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
-    t.string   "manual_department_code"
   end
 
   add_index "departments", ["company_location_id"], name: "index_departments_on_company_location_id"
@@ -230,15 +240,19 @@ ActiveRecord::Schema.define(version: 20151214151916) do
   add_index "employee_bank_details", ["employee_id"], name: "index_employee_bank_details_on_employee_id"
 
   create_table "employee_designations", force: :cascade do |t|
+    t.string   "code"
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "employee_grades", force: :cascade do |t|
+    t.string   "code"
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "employee_leav_balances", force: :cascade do |t|
@@ -292,28 +306,38 @@ ActiveRecord::Schema.define(version: 20151214151916) do
   add_index "employee_shifts", ["employee_id"], name: "index_employee_shifts_on_employee_id"
 
   create_table "employee_types", force: :cascade do |t|
+    t.string   "code"
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "employees", force: :cascade do |t|
     t.integer  "department_id"
+    t.string   "manual_employee_code"
     t.string   "employee_code"
     t.string   "first_name"
     t.string   "middle_name"
     t.string   "last_name"
     t.date     "date_of_birth"
     t.string   "contact_no"
+    t.string   "optinal_contact_no"
     t.string   "email"
     t.text     "permanent_address"
+    t.integer  "country_id_id"
+    t.integer  "state_id_id"
+    t.integer  "district_id_id"
     t.string   "city"
     t.integer  "pin_code"
     t.text     "current_address"
     t.string   "adhar_no"
     t.string   "pan_no"
     t.string   "licence_no"
+    t.string   "have_passport"
     t.string   "passport_no"
+    t.date     "passport_issue_date"
+    t.date     "passport_expiry_date"
     t.string   "marital_status"
     t.integer  "nationality_id"
     t.integer  "blood_group_id"
@@ -326,25 +350,17 @@ ActiveRecord::Schema.define(version: 20151214151916) do
     t.integer  "manager_id"
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
-    t.integer  "role_id"
-    t.integer  "employee_id"
-    t.string   "manual_employee_code"
-    t.integer  "country_id"
-    t.integer  "state_id"
-    t.integer  "district_id"
   end
 
   add_index "employees", ["blood_group_id"], name: "index_employees_on_blood_group_id"
-  add_index "employees", ["country_id"], name: "index_employees_on_country_id"
+  add_index "employees", ["country_id_id"], name: "index_employees_on_country_id_id"
   add_index "employees", ["department_id"], name: "index_employees_on_department_id"
-  add_index "employees", ["district_id"], name: "index_employees_on_district_id"
+  add_index "employees", ["district_id_id"], name: "index_employees_on_district_id_id"
   add_index "employees", ["employee_code"], name: "index_employees_on_employee_code"
-  add_index "employees", ["employee_id"], name: "index_employees_on_employee_id"
   add_index "employees", ["employee_type_id"], name: "index_employees_on_employee_type_id"
   add_index "employees", ["manager_id"], name: "index_employees_on_manager_id"
   add_index "employees", ["nationality_id"], name: "index_employees_on_nationality_id"
-  add_index "employees", ["role_id"], name: "index_employees_on_role_id"
-  add_index "employees", ["state_id"], name: "index_employees_on_state_id"
+  add_index "employees", ["state_id_id"], name: "index_employees_on_state_id_id"
 
   create_table "experiences", force: :cascade do |t|
     t.integer  "employee_id"
@@ -370,27 +386,27 @@ ActiveRecord::Schema.define(version: 20151214151916) do
     t.date     "date_of_birth"
     t.integer  "age"
     t.string   "contact_no"
-    t.string   "phone_no"
     t.string   "email"
+    t.text     "current_address"
     t.string   "relation"
     t.string   "adhar_no"
     t.string   "pan_no"
+    t.string   "have_passport"
     t.string   "passport_no"
+    t.date     "passport_issue_date"
+    t.date     "passport_expiry_date"
     t.string   "medical_claim"
     t.string   "marital"
-    t.integer  "nationality_id"
     t.string   "blood_group"
     t.string   "religion"
-    t.string   "phandicap"
+    t.string   "is_handicap"
+    t.string   "handicap_type"
     t.string   "profession"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
-    t.date     "issue_date"
-    t.date     "expiry_date"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
   end
 
   add_index "families", ["employee_id"], name: "index_families_on_employee_id"
-  add_index "families", ["nationality_id"], name: "index_families_on_nationality_id"
 
   create_table "groups", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -419,19 +435,17 @@ ActiveRecord::Schema.define(version: 20151214151916) do
   create_table "joining_details", force: :cascade do |t|
     t.integer  "employee_id"
     t.date     "joining_date"
-    t.string   "reference_from"
-    t.string   "admin_hr"
-    t.string   "tech_hr"
     t.string   "designation"
     t.integer  "employee_grade_id"
+    t.integer  "employee_designation_id"
     t.date     "confirmation_date"
     t.string   "status"
     t.string   "probation_period"
     t.string   "notice_period"
+    t.boolean  "is_mediclaim"
     t.string   "medical_schem"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
-    t.integer  "employee_designation_id"
   end
 
   add_index "joining_details", ["employee_designation_id"], name: "index_joining_details_on_employee_designation_id"
@@ -457,9 +471,11 @@ ActiveRecord::Schema.define(version: 20151214151916) do
   add_index "leav_cancelleds", ["employee_leav_request_id"], name: "index_leav_cancelleds_on_employee_leav_request_id"
 
   create_table "leav_categories", force: :cascade do |t|
+    t.string   "code"
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "leav_rejecteds", force: :cascade do |t|
@@ -472,6 +488,8 @@ ActiveRecord::Schema.define(version: 20151214151916) do
   add_index "leav_rejecteds", ["employee_leav_request_id"], name: "index_leav_rejecteds_on_employee_leav_request_id"
 
   create_table "members", force: :cascade do |t|
+    t.string   "manual_member_code"
+    t.integer  "role_id"
     t.string   "member_code"
     t.string   "subdomain"
     t.string   "email",                  default: "", null: false
@@ -494,7 +512,6 @@ ActiveRecord::Schema.define(version: 20151214151916) do
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
-    t.integer  "role_id"
   end
 
   add_index "members", ["company_id"], name: "index_members_on_company_id"
@@ -507,23 +524,25 @@ ActiveRecord::Schema.define(version: 20151214151916) do
   add_index "members", ["role_id"], name: "index_members_on_role_id"
 
   create_table "nationalities", force: :cascade do |t|
+    t.string   "code"
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "qualifications", force: :cascade do |t|
     t.integer  "employee_id"
-    t.string   "college"
-    t.string   "marks"
-    t.integer  "passout_year"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-    t.integer  "year_id"
     t.integer  "degree_id"
     t.integer  "degree_type_id"
     t.integer  "degree_stream_id"
+    t.integer  "year_id"
     t.integer  "university_id"
+    t.string   "college"
+    t.string   "marks_type"
+    t.string   "marks"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
   end
 
   add_index "qualifications", ["degree_id"], name: "index_qualifications_on_degree_id"
@@ -534,14 +553,17 @@ ActiveRecord::Schema.define(version: 20151214151916) do
   add_index "qualifications", ["year_id"], name: "index_qualifications_on_year_id"
 
   create_table "roles", force: :cascade do |t|
+    t.string   "code"
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "skillsets", force: :cascade do |t|
     t.integer  "employee_id"
     t.string   "name"
+    t.string   "description"
     t.string   "skill_level"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
@@ -560,9 +582,11 @@ ActiveRecord::Schema.define(version: 20151214151916) do
   add_index "states", ["country_id"], name: "index_states_on_country_id"
 
   create_table "universities", force: :cascade do |t|
+    t.string   "code"
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "years", force: :cascade do |t|

@@ -4,7 +4,7 @@ class CreateAwards < ActiveRecord::Migration
       t.references :employee, index: true, foreign_key: true
       t.string :award_name
       t.text :description
-      t.integer :year
+      t.references :year, index: true, foreign_key: true
       t.string :award_from
 
       t.timestamps null: false

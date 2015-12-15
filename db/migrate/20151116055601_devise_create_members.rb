@@ -2,6 +2,8 @@ class DeviseCreateMembers < ActiveRecord::Migration
   def change
     create_table(:members) do |t|
       ## Database authenticatable
+      t.string :manual_member_code
+      t.references :role, index: true, foreign_key: true
       t.string :member_code
       t.string :subdomain
       t.string :email,              null: false, default: ""

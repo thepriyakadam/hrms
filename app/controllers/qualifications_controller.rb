@@ -84,6 +84,6 @@ class QualificationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def qualification_params
-      params.require(:qualification).permit(:employee_id,:degree_type_id, :degree_id, :degree_stream_id, :marks, :year_id,:college,:university)
+      params.require(:qualification).permit(:employee_id,:degree_type_id, :degree_id, :degree_stream_id, :marks, :year_id,:college,:university_id)
     end
 end

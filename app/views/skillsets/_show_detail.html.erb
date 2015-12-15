@@ -11,13 +11,18 @@
    <tr>
       <th>Name</th>
       <th>Skill level</th>
+      <th>Action</th>
     </tr>
   
     <% @skillsets.each do |skillset| %>
       <tr>
         <td><%= skillset.name %></td>
         <td><%= skillset.skill_level %></td>
-        </tr>
+        <td>
+          <%= link_to '', edit_skillset_path(skillset),class: 'btn btn-success fa fa-edit',remote:true %>
+          <%= link_to '', skillset, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger fa fa-close' %>
+        </td>
+      </tr>
         <%end%>
     </table>
   <div class="box-footer">

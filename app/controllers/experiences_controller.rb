@@ -19,6 +19,7 @@ class ExperiencesController < ApplicationController
 
   # GET /experiences/1/edit
   def edit
+    @employee = @experience.employee
   end
 
   # POST /experiences
@@ -49,13 +50,18 @@ class ExperiencesController < ApplicationController
   # PATCH/PUT /experiences/1
   # PATCH/PUT /experiences/1.json
   def update
+    @employee = Employee.find(params["experience"]["employee_id"])
     respond_to do |format|
       if @experience.update(experience_params)
-        format.html { redirect_to @experience, notice: 'Experience was successfully updated.' }
-        format.json { render :show, status: :ok, location: @experience }
+        #format.html { redirect_to @experience, notice: 'Experience was successfully updated.' }
+        #format.json { render :show, status: :ok, location: @experience }
+        
+        @experiences = @employee.experiences
+        format.js { @flag = true }
       else
-        format.html { render :edit }
-        format.json { render json: @experience.errors, status: :unprocessable_entity }
+        #format.html { render :edit }
+        #format.json { render json: @experience.errors, status: :unprocessable_entity }
+        format.js { @flag = false }
       end
     end
   end

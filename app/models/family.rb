@@ -1,11 +1,13 @@
 class Family < ActiveRecord::Base
   belongs_to :employee
+
   validates :relation, :presence => true
   validates :f_name, :presence => true
   validates :l_name , :presence => true
   validates :email, uniqueness: true
-  validate  :email_regex
-  validate :first_name_regex
+  #validate  :email_regex
+  # validate :first_name_regex
+
 
   validate :middle_name_regex
   validate :adhar_no_regex
@@ -15,6 +17,7 @@ class Family < ActiveRecord::Base
   validate :relation_regex
   
   validate :pan_no_regex
+
  
 
   def adhar_no_regex

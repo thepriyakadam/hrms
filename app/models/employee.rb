@@ -14,6 +14,7 @@ class Employee < ActiveRecord::Base
   has_many :employee_leav_balances
   has_many :families
   has_many :experiences
+  has_many :skillsets
   has_one :member
   has_one :employee_bank_detail
   has_one :joining_detail

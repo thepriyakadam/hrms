@@ -14,7 +14,9 @@
     </tr>
 <tr>
   <th><strong>Employee:</strong></th>
-  <td><%= @family.employee.id %></td>
+
+  <td><%= @family.employee.first_name %></td>
+
 
   <th><strong>No of member:</strong></th>
   <td><%= @family.no_of_member %></td>
@@ -50,14 +52,14 @@
   <th> <strong>Email:</strong></th>
   <td><%= @family.email %></td>
 
+
 </tr>
 
 
 
-<tr>
-  <th><strong>Current address:</strong></th>
-  <td> <%= @family.current_address %></td>
 
+<tr>
+ 
   <th> <strong>Relation:</strong></th>
   <td><%= @family.relation %></td>
 </tr>

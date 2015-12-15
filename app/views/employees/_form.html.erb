@@ -40,9 +40,18 @@
             <%= f.select :gender, ['Male','Female'] %>
           </div>
         </div>
+
+        
       </div>
 
       <div class="row">
+
+        <div class="col-sm-3">
+          <div class="field">
+           <%= f.text_field :email %>
+          </div>
+        </div>
+
          <div class="col-sm-3">
           <div class="field">
            <%= f.text_field :adhar_no %>
@@ -104,6 +113,28 @@
             <%= f.text_field :pin_code,label:"Pin Code/ZIP"%>
           </div>
         </div>
+        </div>
+        <div class="row">
+        <div class="col-sm-3">
+          <div class="form-group required">
+           <%= f.text_field :contact_no %>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.text_field :religion %>
+          </div>
+        </div>
+        <div class="col-sm-3">
+        <div class="field">
+            <%= f.select :status,['Active','Inactive'],{include_blank: " Select Employee Status"} %>
+        </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.select :employee_type_id, all_employee_type,{include_blank: " Select Employee Type"} %>
+          </div>
+        </div>   
       </div>
 
    
@@ -140,21 +171,6 @@
           </div>
         </div>
         <div class="col-sm-3">
-          <div class="form-group required">
-           <%= f.text_field :contact_no %>
-          </div>
-        </div>
-
-        <div class="col-sm-3">
-          <div class="field">
-           <%= f.text_field :email %>
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        
-        <div class="col-sm-3">
           <div class="field">
             <%= f.select :handicap, ['Yes','No'],{include_blank: "Please Select"},{onchange:"var a={id:$(this).val()}; $.get('/employees/ajax_show_textbox',a,function(response){});"} %>
           </div>
@@ -166,22 +182,9 @@
             </div>
           </div>
         </div>
-        <div class="col-sm-3">
-          <div class="field">
-            <%= f.select :employee_type_id, all_employee_type,{include_blank: " Select Employee Type"} %>
-          </div>
-        </div>      
 
-         <div class="col-sm-3">
-          <div class="field">
-            <%= f.text_field :religion %>
-          </div>
-        </div>
       </div>
 
-      <div class="row">
-         
-      </div>
       <div class="row">
         <div class="col-sm-3">
           <div class="actions">

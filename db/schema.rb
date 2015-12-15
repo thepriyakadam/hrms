@@ -73,7 +73,7 @@ ActiveRecord::Schema.define(version: 20151214132206) do
     t.string   "tax_no"
     t.string   "professional_tax_no"
     t.text     "address"
-    t.integer  "company_id"
+    t.integer  "country_id"
     t.integer  "state_id"
     t.integer  "district_id"
     t.string   "city"
@@ -86,8 +86,8 @@ ActiveRecord::Schema.define(version: 20151214132206) do
     t.datetime "updated_at",          null: false
   end
 
-  add_index "companies", ["company_id"], name: "index_companies_on_company_id"
   add_index "companies", ["company_type_id"], name: "index_companies_on_company_type_id"
+  add_index "companies", ["country_id"], name: "index_companies_on_country_id"
   add_index "companies", ["district_id"], name: "index_companies_on_district_id"
   add_index "companies", ["group_id"], name: "index_companies_on_group_id"
   add_index "companies", ["state_id"], name: "index_companies_on_state_id"
@@ -112,6 +112,7 @@ ActiveRecord::Schema.define(version: 20151214132206) do
     t.string   "email"
     t.string   "address"
     t.string   "city"
+    t.integer  "country_id"
     t.integer  "state_id"
     t.integer  "district_id"
     t.integer  "pin_code"
@@ -121,6 +122,7 @@ ActiveRecord::Schema.define(version: 20151214132206) do
   end
 
   add_index "company_locations", ["company_id"], name: "index_company_locations_on_company_id"
+  add_index "company_locations", ["country_id"], name: "index_company_locations_on_country_id"
   add_index "company_locations", ["district_id"], name: "index_company_locations_on_district_id"
   add_index "company_locations", ["state_id"], name: "index_company_locations_on_state_id"
 
@@ -325,19 +327,15 @@ ActiveRecord::Schema.define(version: 20151214132206) do
     t.string   "optinal_contact_no"
     t.string   "email"
     t.text     "permanent_address"
-    t.integer  "country_id_id"
-    t.integer  "state_id_id"
-    t.integer  "district_id_id"
+    t.integer  "country_id"
+    t.integer  "state_id"
+    t.integer  "district_id"
     t.string   "city"
     t.integer  "pin_code"
     t.text     "current_address"
     t.string   "adhar_no"
     t.string   "pan_no"
     t.string   "licence_no"
-    t.string   "have_passport"
-    t.string   "passport_no"
-    t.date     "passport_issue_date"
-    t.date     "passport_expiry_date"
     t.string   "marital_status"
     t.integer  "nationality_id"
     t.integer  "blood_group_id"
@@ -353,14 +351,14 @@ ActiveRecord::Schema.define(version: 20151214132206) do
   end
 
   add_index "employees", ["blood_group_id"], name: "index_employees_on_blood_group_id"
-  add_index "employees", ["country_id_id"], name: "index_employees_on_country_id_id"
+  add_index "employees", ["country_id"], name: "index_employees_on_country_id"
   add_index "employees", ["department_id"], name: "index_employees_on_department_id"
-  add_index "employees", ["district_id_id"], name: "index_employees_on_district_id_id"
+  add_index "employees", ["district_id"], name: "index_employees_on_district_id"
   add_index "employees", ["employee_code"], name: "index_employees_on_employee_code"
   add_index "employees", ["employee_type_id"], name: "index_employees_on_employee_type_id"
   add_index "employees", ["manager_id"], name: "index_employees_on_manager_id"
   add_index "employees", ["nationality_id"], name: "index_employees_on_nationality_id"
-  add_index "employees", ["state_id_id"], name: "index_employees_on_state_id_id"
+  add_index "employees", ["state_id"], name: "index_employees_on_state_id"
 
   create_table "experiences", force: :cascade do |t|
     t.integer  "employee_id"
@@ -444,6 +442,10 @@ ActiveRecord::Schema.define(version: 20151214132206) do
     t.string   "notice_period"
     t.boolean  "is_mediclaim"
     t.string   "medical_schem"
+    t.string   "have_passport"
+    t.string   "passport_no"
+    t.date     "passport_issue_date"
+    t.date     "passport_expiry_date"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
   end

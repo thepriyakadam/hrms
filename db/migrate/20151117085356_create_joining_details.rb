@@ -12,6 +12,10 @@ class CreateJoiningDetails < ActiveRecord::Migration
       t.string :notice_period
       t.boolean :is_mediclaim
       t.string :medical_schem
+      t.string :have_passport
+      t.string :passport_no
+      t.date :passport_issue_date
+      t.date :passport_expiry_date
 
       t.timestamps null: false
     end

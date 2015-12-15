@@ -12,7 +12,7 @@ class CreateCompanies < ActiveRecord::Migration
       t.string :tax_no
       t.string :professional_tax_no
       t.text :address
-      t.references :company, index: true, foreign_key: true
+      t.references :country, index: true, foreign_key: true
       t.references :state, index: true, foreign_key: true
       t.references :district, index: true, foreign_key: true
       t.string :city

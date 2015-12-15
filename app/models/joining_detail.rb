@@ -5,39 +5,11 @@ class JoiningDetail < ActiveRecord::Base
 
   validates :employee_id, :presence => true,  uniqueness: { case_sensitive: false }
   validates :joining_date, :presence => true
-  validates :admin_hr , :presence => true
-  validates :tech_hr, :presence => true
   validates :employee_designation_id, :presence => true
-  validate :ref_from_regex
-  validate :admin_hr_regex
- 
-  validate :tech_hr_regex
   validate :medical_scheme_regex
   validate :probation_period_regex
   validate :notice_period_regex
   validate :status_regex
-
-
-def ref_from_regex
-    if reference_from.present? and not reference_from.match(/\A[A-Za-z_ ]{1,30}\Z/)
-      errors.add :reference_from,"Reference From Allows only Characters"
-    end
-  end
-
-
-def admin_hr_regex
-    if admin_hr.present? and not admin_hr.match(/\A[A-Za-z_ ]{1,30}\Z/)
-      errors.add :admin_hr,"Admin HR Allows only Characters"
-    end
-  end
-
-  def tech_hr_regex
-    if tech_hr.present? and not tech_hr.match(/\A[A-Za-z_ ]{1,30}\Z/)
-      errors.add :tech_hr,"Tech HR Allows only Characters"
-    end
-  end
-
-   
 
   def probation_period_regex
     if probation_period.present? and not probation_period.match(/\A[0-9A-Za-z_ ]{1,30}\Z/)

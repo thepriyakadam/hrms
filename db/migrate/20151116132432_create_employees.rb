@@ -12,19 +12,15 @@ class CreateEmployees < ActiveRecord::Migration
       t.string :optinal_contact_no
       t.string :email
       t.text :permanent_address
-      t.references :country_id, index: true, foreign_key: true
-      t.references :state_id, index: true, foreign_key: true
-      t.references :district_id, index: true, foreign_key: true
+      t.references :country, index: true, foreign_key: true
+      t.references :state, index: true, foreign_key: true
+      t.references :district, index: true, foreign_key: true
       t.string :city
       t.integer :pin_code
       t.text :current_address
       t.string :adhar_no
       t.string :pan_no
       t.string :licence_no
-      t.string :have_passport
-      t.string :passport_no
-      t.date :passport_issue_date
-      t.date :passport_expiry_date
       t.string :marital_status
       t.references :nationality, index: true, foreign_key: true
       t.references :blood_group, index: true, foreign_key: true

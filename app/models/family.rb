@@ -1,9 +1,5 @@
 class Family < ActiveRecord::Base
   belongs_to :employee
-  belongs_to :nationality
-  belongs_to :country
-  belongs_to :state
-  belongs_to :district
   validates :relation, :presence => true
   validates :f_name, :presence => true
   validates :l_name , :presence => true
@@ -17,7 +13,7 @@ class Family < ActiveRecord::Base
   validate :profession_regex
   validate :contact_no_regex
   validate :relation_regex
-  validate :city_regex
+  
   validate :pan_no_regex
  
 
@@ -76,11 +72,4 @@ class Family < ActiveRecord::Base
       errors.add :relation,"Relation Allows Only Characters"
     end
   end
-
-  def city_regex
-    if city.present? and not city.match(/\A[A-Za-z_ ]{1,30}\Z/)
-      errors.add :city,"City allows only Characters"
-    end
-  end
-
 end

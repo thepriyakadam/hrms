@@ -14,7 +14,7 @@
     </tr>
 <tr>
   <th><strong>Employee:</strong></th>
-  <td><%= @family.employee %></td>
+  <td><%= @family.employee.id %></td>
 
   <th><strong>No of member:</strong></th>
   <td><%= @family.no_of_member %></td>
@@ -23,9 +23,8 @@
 <tr>
   <th><strong>F name:</strong></th>
   <td><%= @family.f_name %></td>
-
-  <th><strong>M name:</strong></th>
-  <td><%= @family.m_name %></td>
+  <th></th>
+  <td></td>
 </tr>
 
 <tr>
@@ -48,36 +47,12 @@
   <th> <strong>Contact no:</strong></th>
   <td><%= @family.contact_no %></td>
 
-  <th><strong>Phone no:</strong></th>
-  <td><%= @family.phone_no %></td>
-</tr>
-
-
-<tr>
   <th> <strong>Email:</strong></th>
   <td><%= @family.email %></td>
 
-  <th><strong>Permanent address:</strong></th>
-  <td><%= @family.permanent_address %></td>
 </tr>
 
 
-<tr>
-  <th><strong>City:</strong></th>
-  <td> <%= @family.city %></td>
-
-  <th> <strong>Dist:</strong></th>
-  <td><%= @family.dist %></td>
-</tr>
-
-
-<tr>
-  <th><strong>State:</strong></th>
-  <td><%= @family.state %></td>
-
-  <th> <strong>Pin code:</strong></th>
-  <td><%= @family.pin_code %></td>
-</tr>
 
 <tr>
   <th><strong>Current address:</strong></th>
@@ -108,15 +83,6 @@
   <th><strong>Marital:</strong></th>
   <td><%= @family.marital %></td>
 
-  <th><strong>Status:</strong></th>
-  <td><%= @family.status %></td>
-</tr>
-
-
-<tr>
-  <th><strong>Nationality:</strong></th>
-  <td><%= @family.nationality %></td>
-
   <th> <strong>Blood group:</strong></th>
   <td><%= @family.blood_group %></td>
 </tr>
@@ -125,8 +91,8 @@
   <th> <strong>Religion:</strong></th>
   <td><%= @family.religion %></td>
 
-  <th><strong>Phandicap:</strong></th>
-  <td><%= @family.phandicap %></td>
+  <th><strong>Handicap:</strong></th>
+  <td><%= @family.handicap_type %></td>
 </tr>
 
 <tr>

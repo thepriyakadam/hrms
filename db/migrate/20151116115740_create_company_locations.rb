@@ -8,7 +8,7 @@ class CreateCompanyLocations < ActiveRecord::Migration
       t.string :email
       t.string :address
       t.string :city
-      t.references :company, index: true, foreign_key: true
+      t.references :country, index: true, foreign_key: true
       t.references :state, index: true, foreign_key: true
       t.references :district, index: true, foreign_key: true
       t.integer :pin_code

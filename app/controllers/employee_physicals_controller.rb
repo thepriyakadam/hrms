@@ -19,6 +19,7 @@ class EmployeePhysicalsController < ApplicationController
 
   # GET /employee_physicals/1/edit
   def edit
+    @employee = @employee_physical.employee
   end
 
   # POST /employee_physicals
@@ -44,11 +45,13 @@ class EmployeePhysicalsController < ApplicationController
   def update
     respond_to do |format|
       if @employee_physical.update(employee_physical_params)
-        format.html { redirect_to @employee_physical, notice: 'Employee physical was successfully updated.' }
-        format.json { render :show, status: :ok, location: @employee_physical }
+        # format.html { redirect_to @employee_physical, notice: 'Employee physical was successfully updated.' }
+        # format.json { render :show, status: :ok, location: @employee_physical }
+        format.js { @flag = true }
       else
-        format.html { render :edit }
-        format.json { render json: @employee_physical.errors, status: :unprocessable_entity }
+        # format.html { render :edit }
+        # format.json { render json: @employee_physical.errors, status: :unprocessable_entity }
+        format.js { @flag = false }
       end
     end
   end

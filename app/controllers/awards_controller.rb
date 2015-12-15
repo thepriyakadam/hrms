@@ -20,6 +20,7 @@ class AwardsController < ApplicationController
 
   # GET /awards/1/edit
   def edit
+    @employee = @award.employee
   end
 
   # POST /awards
@@ -51,13 +52,17 @@ class AwardsController < ApplicationController
   # PATCH/PUT /awards/1
   # PATCH/PUT /awards/1.json
   def update
+    @employee = Employee.find(params['award']['employee_id'])
     respond_to do |format|
       if @award.update(award_params)
-        format.html { redirect_to @award, notice: 'Award was successfully updated.' }
-        format.json { render :show, status: :ok, location: @award }
+        # format.html { redirect_to @award, notice: 'Award was successfully updated.' }
+        # format.json { render :show, status: :ok, location: @award }
+        @awards = @employee.awards
+        format.js { @flag = true }
       else
-        format.html { render :edit }
-        format.json { render json: @award.errors, status: :unprocessable_entity }
+        # format.html { render :edit }
+        # format.json { render json: @award.errors, status: :unprocessable_entity }
+        format.js { @flag = false }
       end
     end
   end

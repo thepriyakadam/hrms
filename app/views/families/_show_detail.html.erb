@@ -14,7 +14,7 @@
     </tr>
 <tr>
   <th><strong>Employee:</strong></th>
-  <td><%= @family.employee %></td>
+  <td><%= @family.employee.first_name %></td>
 
   <th><strong>No of member:</strong></th>
   <td><%= @family.no_of_member %></td>
@@ -57,32 +57,16 @@
   <th> <strong>Email:</strong></th>
   <td><%= @family.email %></td>
 
-  <th><strong>Permanent address:</strong></th>
-  <td><%= @family.permanent_address %></td>
+  
 </tr>
 
 
-<tr>
-  <th><strong>City:</strong></th>
-  <td> <%= @family.city %></td>
 
-  <th> <strong>Dist:</strong></th>
-  <td><%= @family.dist %></td>
-</tr>
+
 
 
 <tr>
-  <th><strong>State:</strong></th>
-  <td><%= @family.state %></td>
-
-  <th> <strong>Pin code:</strong></th>
-  <td><%= @family.pin_code %></td>
-</tr>
-
-<tr>
-  <th><strong>Current address:</strong></th>
-  <td> <%= @family.current_address %></td>
-
+ 
   <th> <strong>Relation:</strong></th>
   <td><%= @family.relation %></td>
 </tr>
@@ -108,8 +92,7 @@
   <th><strong>Marital:</strong></th>
   <td><%= @family.marital %></td>
 
-  <th><strong>Status:</strong></th>
-  <td><%= @family.status %></td>
+ 
 </tr>
 
 

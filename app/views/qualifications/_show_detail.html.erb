@@ -26,7 +26,7 @@
           <td><%= qualification.marks %></td>
           <td><%= qualification.year.name %></td>
           <td><%= qualification.college %></td>
-          <td><%= qualification.university %></td>
+          <td><%= qualification.university.name %></td>
           <td>
             <%= link_to '', edit_qualification_path(qualification),class: 'btn btn-success fa fa-edit',remote:true %>
             <%= link_to '', qualification, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger fa fa-close' %>

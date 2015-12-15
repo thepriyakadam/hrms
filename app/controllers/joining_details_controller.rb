@@ -30,12 +30,14 @@ class JoiningDetailsController < ApplicationController
     @employee = Employee.find(params[:joining_detail][:employee_id])
     respond_to do |format|
       if @joining_detail.save
-        format.html { redirect_to @employee, notice: 'Joining detail was successfully created.' }
-        format.json { render :show, status: :created, location: @joining_detail }
+        # format.html { redirect_to @employee, notice: 'Joining detail was successfully created.' }
+        # format.json { render :show, status: :created, location: @joining_detail }
+        format.js { @flag = true }
       else
         flash.now[:alert] = "Joining Detail exist for this employee"
-        format.html { render :new }
-        format.json { render json: @joining_detail.errors, status: :unprocessable_entity }
+        # format.html { render :new }
+        # format.json { render json: @joining_detail.errors, status: :unprocessable_entity }
+        format.js { @flag = false }
       end
     end
   end

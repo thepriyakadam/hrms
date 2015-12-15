@@ -19,6 +19,7 @@ class CertificationsController < ApplicationController
 
   # GET /certifications/1/edit
   def edit
+    @employee = @certification.employee
   end
 
   # POST /certifications
@@ -49,13 +50,17 @@ class CertificationsController < ApplicationController
   # PATCH/PUT /certifications/1
   # PATCH/PUT /certifications/1.json
   def update
+    @employee = Employee.find(params['certification']['employee_id'])
     respond_to do |format|
       if @certification.update(certification_params)
-        format.html { redirect_to @certification, notice: 'Certification was successfully updated.' }
-        format.json { render :show, status: :ok, location: @certification }
+        # format.html { redirect_to @certification, notice: 'Certification was successfully updated.' }
+        # format.json { render :show, status: :ok, location: @certification }
+        @certifications = @employee.certifications
+        format.js { @flag = true }
       else
-        format.html { render :edit }
-        format.json { render json: @certification.errors, status: :unprocessable_entity }
+        # format.html { render :edit }
+        # format.json { render json: @certification.errors, status: :unprocessable_entity }
+        format.js { @flag = false }
       end
     end
   end

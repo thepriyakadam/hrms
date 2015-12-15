@@ -63,55 +63,9 @@
     </div>
 </div>
 
-<div class="row">
-   
-      <div class="col-sm-9">
-        <div class="field">
-         <%= f.text_field :permanent_address %>
-        </div>
-    </div>
-    <div class="col-sm-3">
-        <div class="field">
-        <%= f.text_field :pin_code,label:"Pin Code/Zip" %>
-        </div>
-    </div>
-</div>
 
-<div class="row">
-    <div class="col-sm-3">
-      <div class="form-group required">
-        <%=f.select :country_id, all_countries,{include_blank: "Please Select Country"},{onchange:"var a={id:$(this).val(), form : 'family'}; $.get('/companies/collect_states',a,function(response){});"}%>
-      </div>
-    </div>
-    <div class="col-sm-3">
-      <div class="form-group required">
-        <div id="states">
-           <%= render 'companies/state_dropdown' %>
-      </div> 
-      </div>
-    </div>
-    <div class="col-sm-3">
-      <div class="form-group required">
-       <div id="district">
-          <%= render 'companies/city_dropdown' %>
-     </div>
-      </div>
-    </div>
-    <div class="col-sm-3">
-      <div class="form-group required">
-        <%= f.text_field :city %>
-      </div>
-    </div>
-</div>
 
-<div class="row">
-   
-      <div class="col-sm-12">
-        <div class="field">
-         <%= f.text_field :current_address %>
-        </div>
-    </div>
-</div>
+
 
 <div class="row">
    
@@ -164,11 +118,7 @@
       </div>
  
     
-      <div class="col-sm-3">
-        <div class="field">
-          <%= f.text_field :status %>
-        </div>
-    </div>
+      
 </div>
 
 <div class="row">

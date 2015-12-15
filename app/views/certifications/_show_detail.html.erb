@@ -13,6 +13,7 @@
       <th>Year</th>
       <th>Duration</th>
       <th>Descripation</th>
+      <th>Action</th>
     </tr>
      <% @certifications.each do |certification| %>
       <tr>
@@ -20,6 +21,10 @@
         <td><%= certification.year.name %></td>
         <td><%= certification.duration %></td>
         <td><%= certification.descripation %></td>
+        <td>
+          <%= link_to '', edit_certification_path(certification),class: 'btn btn-success fa fa-edit',remote:true %>
+          <%= link_to '', certification, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger fa fa-close' %>
+        </td>
       </tr>
       <%end%>
     </table>

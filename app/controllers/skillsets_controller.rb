@@ -19,6 +19,7 @@ class SkillsetsController < ApplicationController
 
   # GET /skillsets/1/edit
   def edit
+    @employee = @skillset.employee
   end
 
   # POST /skillsets
@@ -49,13 +50,17 @@ class SkillsetsController < ApplicationController
   # PATCH/PUT /skillsets/1
   # PATCH/PUT /skillsets/1.json
   def update
+    @employee = Employee.find(params['skillset']['employee_id'])
     respond_to do |format|
       if @skillset.update(skillset_params)
-        format.html { redirect_to @skillset, notice: 'Skillset was successfully updated.' }
-        format.json { render :show, status: :ok, location: @skillset }
+        # format.html { redirect_to @skillset, notice: 'Skillset was successfully updated.' }
+        # format.json { render :show, status: :ok, location: @skillset }
+        @skillsets = @employee.skillsets
+        format.js { @flag = true }
       else
-        format.html { render :edit }
-        format.json { render json: @skillset.errors, status: :unprocessable_entity }
+        # format.html { render :edit }
+        # format.json { render json: @skillset.errors, status: :unprocessable_entity }
+        format.js { @flag = false }
       end
     end
   end

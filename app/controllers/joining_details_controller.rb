@@ -67,7 +67,7 @@ class JoiningDetailsController < ApplicationController
       format.json { head :no_content }
     end
   end
-
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_joining_detail
@@ -76,6 +76,6 @@ class JoiningDetailsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def joining_detail_params
-      params.require(:joining_detail).permit(:employee_id, :joining_date, :reference_from, :admin_hr, :tech_hr, :ctc, :account_no, :employee_grade_id, :confirmation_date, :status, :probation_period, :notice_period, :medical_schem, :employee_designation_id)
+      params.require(:joining_detail).permit(:employee_id, :joining_date, :ctc, :employee_grade_id, :confirmation_date, :status, :probation_period, :notice_period, :medical_schem, :employee_designation_id, :have_passport, :passport_no, :passport_issue_date, :passport_expiry_date)
     end
 end

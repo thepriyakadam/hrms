@@ -2,6 +2,7 @@ class CreateCompanies < ActiveRecord::Migration
   def change
     create_table :companies do |t|
       t.references :group, index: true, foreign_key: true
+      t.string :manual_company_code
       t.string :company_code
       t.text :description
       t.string :name
@@ -11,15 +12,15 @@ class CreateCompanies < ActiveRecord::Migration
       t.string :tax_no
       t.string :professional_tax_no
       t.text :address
+      t.references :country, index: true, foreign_key: true
+      t.references :state, index: true, foreign_key: true
+      t.references :district, index: true, foreign_key: true
       t.string :city
-      t.string :district
       t.integer :pin_code
-      t.string :state
       t.string :email
       t.string :contact_no
       t.string :web_site
       t.date :starting_date
-      t.string :ceo_name
 
       t.timestamps null: false
     end

@@ -20,39 +20,18 @@
           </div>
         </div>
         </div>
-      <div class="col-sm-3">
-        <div class="field">
-         <%= f.text_field :reference_from %>
-       </div>
-    </div>
- 
-      <div class="col-sm-3">
-        <div class="form-group required">
-         <%= f.text_field :admin_hr, label:"Admin Interviewer" %>
-       </div>
-    </div>
-     <div class="col-sm-3">
-        <div class="form-group required">
-         <%= f.text_field :tech_hr, label:"Technical Interviewer" %>
-       </div>
-      </div>
-  </div>
-
-   <div class="row">
-     
- 
-      <div class="col-sm-3">
-        <div class="form-group required">
-        <%= f.select :employee_designation_id, all_employee_designation %>
-       </div>
-    </div>
-  
-       <div class="col-sm-3">
+        <div class="col-sm-3">
         <div class="field">
            <%= f.select :employee_grade_id, all_employee_grade %>
-       </div>
-      </div>
-    <div class="col-sm-3">
+        </div>
+        </div>
+  
+        <div class="col-sm-3">
+        <div class="form-group required">
+          <%= f.select :employee_designation_id, all_employee_designation %>
+        </div>
+        </div>
+        <div class="col-sm-3">
         <div class="field">
           <div class="input-group">
             <div class="input-group-addon">
@@ -62,29 +41,57 @@
           </div>
         </div>
         </div>
-
-        <div class="col-sm-3">
+    </div>
+  <div class="row">
+      <div class="col-sm-3">
         <div class="field">
            <%= f.select :medical_schem, ['Yes','No'] %>
        </div>
       </div>
-  </div>
-
-   <div class="row">
   
       <div class="col-sm-3">
         <div class="field">
         <%= f.text_field :probation_period %>
        </div>
-    </div>
+     </div>
   
       <div class="col-sm-3">
         <div class="field">
           <%= f.text_field :notice_period %>
        </div>
+    </div> 
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.select :have_passport, ['Yes','No'],{include_blank: "Please Select"},{onchange:"var a={id:$(this).val()}; $.get('/joining_details/ajax_show_textbox',a,function(response){});"} %>
+      </div>
     </div>
- 
-      
+  </div>
+  <div class="row">
+     <div class="col-sm-3">
+        <div class="field">
+        <%= f.text_field :passport_no %>
+       </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="field">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+            <%= f.text_field :passport_issue_date, class: 'passport_issue_date'%>
+          </div>
+        </div>
+        </div>
+        <div class="col-sm-3">
+        <div class="field">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+            <%= f.text_field :passport_expiry_date, class: 'passport_expiry_date'%>
+          </div>
+        </div>
+        </div>
   </div>
 
  <div class="row">
@@ -102,4 +109,27 @@
   <div class="box-footer">
     Visit <a href="https://indiba.in/">www.indiba.in</a> for more Information about the HRMSONE.
   </div>
-</div><!-- /.box>
+</div><!--box -->
+<script type="text/javascript">
+  $(function(){
+    $('.passport_issue_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:-0',
+    dateFormat: 'dd-mm-yy' });
+
+    $('.passport_expiry_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:-0',
+    dateFormat: 'dd-mm-yy' });
+
+    $('.joining_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-100:-0',
+    dateFormat: 'dd-mm-yy' });
+
+
+  }); 
+</script>

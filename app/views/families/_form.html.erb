@@ -58,10 +58,11 @@
      </div>
      <div class="col-sm-3">
         <div class="field">
-          <%= f.text_field :phone_no %>
+         <%= f.text_field :email %>
         </div>
     </div>
 </div>
+<<<<<<< HEAD
 
 
 
@@ -69,22 +70,30 @@
 
 <div class="row">
    
-    <div class="col-sm-3">
+=======
+<div class="row">
+   
+      <div class="col-sm-9">
         <div class="field">
-         <%= f.text_field :email %>
+         <%= f.text_field :current_address %>
         </div>
     </div>
 
-   
-     
+    <div class="col-sm-3">
+        <div class="field">
+        <%= f.select :blood_group, all_blood_group %>
+        </div>
+      </div>
+</div>
+
+<div class="row">
     <div class="col-sm-3">
         <div class="field">
           <%= f.text_field :adhar_no %>
         </div>
     </div>
-
-   
-      <div class="col-sm-3">
+>>>>>>> 9b47114a4b33d41a2188ee6b782fca4a97c909c7
+    <div class="col-sm-3">
         <div class="field">
           <%= f.text_field :pan_no,label:"Pan Card No" %>
         </div>
@@ -94,41 +103,15 @@
         <%= f.select :marital, ['Married','UnMarried'] %>
         </div>
     </div>
-</div>
 
-<div class="row">
-   
-      <div class="col-sm-3">
-        <div class="field">
-        <%= f.text_field :passport_no %>
-        </div>
-      </div>
- 
-   
       <div class="col-sm-3">
         <div class="field">
           <%= f.select :medical_claim, ['Yes','No'] %>
         </div>
       </div>
-
-      <div class="col-sm-3">
-        <div class="field">
-        <%= f.select :blood_group, all_blood_group %>
-        </div>
-      </div>
- 
-    
-      
 </div>
 
-<div class="row">
-      <div class="col-sm-3">
-        <div class="field">
-         <%= f.select :nationality_id, all_nationality %>
-        </div>
-      </div>
- 
-      
+<div class="row">  
       <div class="col-sm-3">
         <div class="field">
           <%= f.text_field :religion %>
@@ -137,15 +120,60 @@
  
       <div class="col-sm-3">
         <div class="field">
-        <%= f.select :phandicap, ['Yes','No'],label:"Handicap"%>
+        <%= f.select :is_handicap, ['Yes','No'],label:"Handicap"%>
         </div>
       </div>
+
+      <div class="col-sm-3">
+        <div class="field">
+          <%= f.text_field :handicap_type %>
+        </div>
+      </div>
+<<<<<<< HEAD
+ 
+    
+      
+=======
       <div class="col-sm-3">
         <div class="field">
           <%= f.text_field :profession %>
         </div>
       </div>
+>>>>>>> 9b47114a4b33d41a2188ee6b782fca4a97c909c7
 </div>
+<div class="row">
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.select :have_passport, ['Yes','No'],{include_blank: "Please Select"},{onchange:"var a={id:$(this).val()}; $.get('/joining_details/ajax_show_textbox',a,function(response){});"} %>
+      </div>
+    </div>
+
+     <div class="col-sm-3">
+        <div class="field">
+        <%= f.text_field :passport_no %>
+       </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="field">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+            <%= f.text_field :passport_issue_date, class: 'family_passport_issue_date'%>
+          </div>
+        </div>
+        </div>
+        <div class="col-sm-3">
+        <div class="field">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+            <%= f.text_field :passport_expiry_date, class: 'family_passport_expiry_date'%>
+          </div>
+        </div>
+        </div>
+  </div>
 
   <div class="row">
     <div class="col-sm-1"></div>
@@ -161,13 +189,26 @@
     Visit <a href="https://indiba.in/">www.indiba.in</a> for more Information about the HRMSONE.
   </div>
 </div><!-- /.box -->
-
 <script type="text/javascript">
   $(function(){
     $('.family_birth_date').datepicker({
-   changeYear:true,
-   changeMonth: true,
-   yearRange: '-100:-0',
-   dateFormat: 'dd-mm-yy' });
-  });
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:-0',
+    dateFormat: 'dd-mm-yy' });
+
+    $('.family_passport_issue_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:-0',
+    dateFormat: 'dd-mm-yy' });
+
+    $('.family_passport_expiry_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-100:-20',
+    dateFormat: 'dd-mm-yy' });
+
+
+  }); 
 </script>

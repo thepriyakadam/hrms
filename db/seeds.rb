@@ -55,6 +55,22 @@ degrees.each do |d|
 	Degree.create(name:d)
 end
 
+degree_types =['SSC','HSC','DEPLOMA','UG','PG','DR']
+degree_types.each do |d|
+	DegreeType.create(name:d)
+end
+
+degree_streams =['Electrical','Mechanical','IT','COMPUTER']
+degree_streams.each do |d|
+	DegreeStream.create(name:d)
+end
+
+universities =['Pune','Mumbai']
+universities.each do |d|
+	University.create(name:d)
+end
+
+
 employee_designation_array = ['HR','Software Developer','Tester']
 employee_designation_array.each do |d|
 	EmployeeDesignation.create(name: d)

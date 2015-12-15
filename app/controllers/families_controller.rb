@@ -19,10 +19,6 @@ class FamiliesController < ApplicationController
 
   # GET /families/1/edit
   def edit
-    @country = @family.country
-    @states = @country.states
-    @state = @family.state
-    @cities = @state.districts
     @form = 'family'
   end
 
@@ -76,6 +72,6 @@ class FamiliesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def family_params
-      params.require(:family).permit(:employee_id, :no_of_member, :f_name, :m_name,:l_name, :date_of_birth, :age, :contact_no, :phone_no, :email, :permanent_address, :city, :country_id, :district_id, :state_id, :pin_code, :current_address, :relation, :adhar_no, :pan_no, :passport_no, :medical_claim, :marital, :status, :nationality_id, :blood_group, :religion, :phandicap, :profession)
+      params.require(:family).permit(:employee_id, :no_of_member, :f_name, :m_name,:l_name, :date_of_birth, :age, :contact_no, :email, :current_address, :relation, :adhar_no, :pan_no, :passport_no, :medical_claim, :passport_expiry_date, :have_passport, :passport_issue_date, :marital, :blood_group, :religion, :handicap_type,:is_handicap, :profession)
     end
 end

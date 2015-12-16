@@ -78,7 +78,11 @@ class EmployeesController < ApplicationController
     employee = Employee.find(params["login"]["employee_id"])
     @department = Department.find(params["login"]["department_id"])
     user = Member.new do |u|
-      u.email = employee.email unless employee.email.nil?
+      if employee.email == ""
+        u.email = "x"
+      else
+        u.email = employee.email
+      end
       u.password = '12345678'
       u.employee_id = employee.id
       u.department_id = params["login"]["department_id"]
@@ -96,6 +100,8 @@ class EmployeesController < ApplicationController
         redirect_to assign_role_employees_path
         #UserPasswordMailer.welcome_email(company,pass).deliver_now
       else
+        p "----------------------------------------------"
+        p user.errors
         flash[:alert] = "Employee not assigned successfully."
         redirect_to assign_role_employees_path
       end

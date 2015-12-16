@@ -12,16 +12,16 @@ class Member < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :authentication_keys => [:login]
   #validates_format_of :member_code, with: /^[a-zA-Z0-9_\.]*$/
-  #validates :email, uniqueness: true, presence: true
+  #validates :email, uniqueness: true, presence: false
   #validate  :email_regex
-
+  #validates_format_of     :email, :with  => email_regexp, :allow_blank => true
   attr_accessor :login
 
-  def email_regex
-    if email.present? and not email.match(/\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/)
-      errors.add :email, "This is not a valid email format"
-    end
-  end
+  # def email_regex
+  #   if not email.match(/\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/)
+  #     errors.add :email, "This is not a valid email format"
+  #   end
+  # end
 
   # def login=(login)
   #   @login = login

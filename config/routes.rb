@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :religions
+  resources :banks
   resources :universities
   resources :degree_streams
   resources :degree_types

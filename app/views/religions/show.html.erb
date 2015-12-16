@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @religion.name %>
+</p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @religion.code %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @religion.description %>
+</p>
+
+<%= link_to 'Edit', edit_religion_path(@religion) %> |
+<%= link_to 'Back', religions_path %>

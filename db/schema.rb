@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151216125726) do
+ActiveRecord::Schema.define(version: 20151216152647) do
 
   create_table "attendances", force: :cascade do |t|
     t.integer  "employee_shift_id"
@@ -41,6 +41,14 @@ ActiveRecord::Schema.define(version: 20151216125726) do
 
   add_index "awards", ["employee_id"], name: "index_awards_on_employee_id"
   add_index "awards", ["year_id"], name: "index_awards_on_year_id"
+
+  create_table "banks", force: :cascade do |t|
+    t.string   "name"
+    t.string   "code"
+    t.string   "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
 
   create_table "blood_groups", force: :cascade do |t|
     t.string   "name"
@@ -553,6 +561,14 @@ ActiveRecord::Schema.define(version: 20151216125726) do
   add_index "qualifications", ["employee_id"], name: "index_qualifications_on_employee_id"
   add_index "qualifications", ["university_id"], name: "index_qualifications_on_university_id"
   add_index "qualifications", ["year_id"], name: "index_qualifications_on_year_id"
+
+  create_table "religions", force: :cascade do |t|
+    t.string   "name"
+    t.string   "code"
+    t.string   "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
 
   create_table "roles", force: :cascade do |t|
     t.string   "code"

@@ -78,7 +78,7 @@ class EmployeesController < ApplicationController
     employee = Employee.find(params["login"]["employee_id"])
     @department = Department.find(params["login"]["department_id"])
     user = Member.new do |u|
-      u.email = employee.email
+      u.email = employee.email unless employee.email.nil?
       u.password = '12345678'
       u.employee_id = employee.id
       u.department_id = params["login"]["department_id"]

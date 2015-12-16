@@ -53,7 +53,7 @@
       </div>
       <div class="col-sm-3">
         <div class="field">
-          <%= f.text_field :contact_no %>
+          <%= f.text_field :contact_no,label: 'Contact No' %>
         </div>
      </div>
      <div class="col-sm-3">
@@ -67,7 +67,7 @@
    
       <div class="col-sm-9">
         <div class="field">
-         <%= f.text_field :current_address %>
+         <%= f.text_field :current_address,label: 'Current Address' %>
         </div>
     </div>
 
@@ -81,7 +81,7 @@
 <div class="row">
     <div class="col-sm-3">
         <div class="field">
-          <%= f.text_field :adhar_no %>
+          <%= f.text_field :adhar_no,label: 'Aadhaar Card No' %>
         </div>
     </div>
 
@@ -92,13 +92,13 @@
     </div>
     <div class="col-sm-3">
         <div class="field">
-        <%= f.select :marital, ['Married','UnMarried'] %>
+        <%= f.select :marital, ['Married','UnMarried'],label:"Marital Status" %>
         </div>
     </div>
 
       <div class="col-sm-3">
         <div class="field">
-          <%= f.select :medical_claim, ['Yes','No'] %>
+          <%= f.select :medical_claim, ['Yes','No'],label:"Medical Claim" %>
         </div>
       </div>
 </div>
@@ -118,7 +118,7 @@
 
       <div class="col-sm-3">
         <div class="field">
-          <%= f.text_field :handicap_type %>
+          <%= f.text_field :handicap_type,label: 'Handicap Type' %>
         </div>
       </div>
 
@@ -138,7 +138,7 @@
 
      <div class="col-sm-3">
         <div class="field">
-        <%= f.text_field :passport_no %>
+        <%= f.text_field :passport_no,label: 'Passport No' %>
        </div>
       </div>
       <div class="col-sm-3">
@@ -147,7 +147,7 @@
             <div class="input-group-addon">
               <i class="fa fa-calendar"></i>
             </div>
-            <%= f.text_field :passport_issue_date, class: 'family_passport_issue_date'%>
+            <%= f.text_field :passport_issue_date,label: 'Passport Issue Date', class: 'family_passport_issue_date'%>
           </div>
         </div>
         </div>
@@ -157,7 +157,7 @@
             <div class="input-group-addon">
               <i class="fa fa-calendar"></i>
             </div>
-            <%= f.text_field :passport_expiry_date, class: 'family_passport_expiry_date'%>
+            <%= f.text_field :passport_expiry_date,label: 'Passport Expiry Date', class: 'family_passport_expiry_date'%>
           </div>
         </div>
         </div>

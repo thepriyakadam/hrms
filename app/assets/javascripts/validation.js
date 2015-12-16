@@ -119,8 +119,7 @@ $.validator.addMethod("address", function (value, element) {
   $("#company").validate({
     rules: {
       "company[name]":{
-        required: true,
-        maxlength: 30
+        required: true
       },
       "company[registration_no]":{
         maxlength: 15,

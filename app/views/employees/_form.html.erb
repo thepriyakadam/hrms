@@ -31,19 +31,19 @@
       <div class="row">
         <div class="col-sm-3">
           <div class="form-group required">
-            <%= f.text_field :first_name %>
+            <%= f.text_field :first_name , label: 'First Name' %>
           </div>
         </div>
 
         <div class="col-sm-3">
           <div class="field">
-           <%= f.text_field :middle_name %>
+           <%= f.text_field :middle_name, label: 'Middle Name' %>
           </div>
         </div>
 
         <div class="col-sm-3">
           <div class="form-group required">
-           <%= f.text_field :last_name %>
+           <%= f.text_field :last_name, label: 'Last Name' %>
           </div>
         </div>
 
@@ -57,27 +57,32 @@
       <div class="row">
          <div class="col-sm-3">
           <div class="field">
-           <%= f.text_field :adhar_no %>
+           <%= f.text_field :adhar_no, label: 'Aadhaar No' %>
           </div>
         </div>
 
         <div class="col-sm-3">
           <div class="field">
-            <%= f.text_field :pan_no, label: 'Pan Card No' %>
+            <%= f.text_field :pan_no, label: 'PAN Card No' %>
           </div>
         </div>
 
         <div class="col-sm-3">
           <div class="field">
-           <%= f.text_field :licence_no %>
+           <%= f.text_field :licence_no, label: 'Licence No' %>
           </div>
         </div>
-      </div>
-
+     
+      <div class="col-sm-3">
+          <div class="field">
+            <%= f.text_field :religion %>
+          </div>
+        </div>
+        </div>
       <div class="row">
         <div class="col-sm-3">
           <div class="field">
-            <%= f.select :marital_status, ['Married','UnMarried'] %>
+            <%= f.select :marital_status, ['Married','UnMarried'], {label: 'Marital Status'},{include_blank: " Select Marital Status"} %>
           </div>
         </div>
 
@@ -93,14 +98,14 @@
             <div class="input-group-addon">
               <i class="fa fa-calendar"></i>
             </div>
-            <%= f.text_field :date_of_birth, class: 'birth_date'%>
+            <%= f.text_field :date_of_birth, label: 'Date of Birth', class: 'birth_date'%>
           </div>
         </div>
         </div>
 
         <div class="col-sm-3">
           <div class="field">
-            <%= f.select :blood_group_id, all_blood_group,{include_blank: " Select Blood Group"} %>
+            <%= f.select :blood_group_id, all_blood_group, {label: 'Blood Group',include_blank: " Select Blood Group"} %>
           </div>
         </div>
       </div>
@@ -108,12 +113,12 @@
       <div class="row">
          <div class="col-sm-9">
           <div class="form-group required">
-           <%= f.text_field :permanent_address %>
+           <%= f.text_field :permanent_address, label: 'Permanent Address' %>
           </div>
         </div>
          <div class="col-sm-3">
           <div class="field">
-            <%= f.text_field :pin_code,label:"Pin Code/ZIP"%>
+            <%= f.text_field :pin_code,label:"Pin/Zip Code"%>
           </div>
         </div>
       </div>
@@ -148,12 +153,12 @@
       <div class="row">
         <div class="col-sm-6">
           <div class="field">
-            <%= f.text_field :current_address %>
+            <%= f.text_field :current_address, label: 'Current Address' %>
           </div>
         </div>
         <div class="col-sm-3">
           <div class="form-group required">
-           <%= f.text_field :contact_no %>
+           <%= f.text_field :contact_no, label: 'Contact No'%>
           </div>
         </div>
 
@@ -165,6 +170,17 @@
       </div>
 
       <div class="row">
+       
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.select :employee_type_id, all_employee_type,{label: 'Employee Type',include_blank: " Select Employee Type"} %>
+          </div>
+        </div>      
+      <div class="col-sm-3">
+        <div class="field">
+           <%= f.select :status, ['Active','Inactive'],{include_blank: " Select Status"} %>
+          </div>
+        </div>
         
         <div class="col-sm-3">
           <div class="field">
@@ -176,17 +192,6 @@
             <div id="handicap_type">
             
             </div>
-          </div>
-        </div>
-        <div class="col-sm-3">
-          <div class="field">
-            <%= f.select :employee_type_id, all_employee_type,{include_blank: " Select Employee Type"} %>
-          </div>
-        </div>      
-
-         <div class="col-sm-3">
-          <div class="field">
-            <%= f.text_field :religion %>
           </div>
         </div>
       </div>

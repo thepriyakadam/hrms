@@ -1,6 +1,6 @@
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title">Employee Details</h3>
+    <h3 class="box-title">Employee Experience Details</h3>
     <div class="box-tools pull-right">
       <%= link_to "Add Experience", ajax_new_experience_employees_path(id: @employee.id), class: 'btn btn-primary',remote:true %>
       <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
@@ -10,17 +10,17 @@
   <div class="box-body">
     <table id="example2" class="table table-bordered table-hover">
      <tr>
-      <th>No of year experience</th>
-      <th>Company name</th>
+      <th>Company Name</th>
       <th>Designation</th>
+      <th>Experience</th>
       <th>CTC</th>
       <th>Action</th>
     </tr>
      <% @experiences.each do |experience| %>
       <tr>
-        <td><%= experience.no_of_year %></td>
         <td><%= experience.company_name %></td>
         <td><%= experience.designation %></td>
+        <td><%= experience.no_of_year %></td>
         <td><%= experience.ctc %></td>
         <td>
           <%= link_to '', edit_experience_path(experience),class: 'btn btn-success fa fa-edit',remote:true %>

@@ -6,12 +6,12 @@
     </tr>
   </thead>
   <tbody>
-   <% @universities.each do |university| %>
+   <% @nationalities.each do |nationality| %>
       <tr>
-        <td><%= university.name %></td>
+        <td><%= nationality.name %></td>
         <td>
-          <%= link_to '', edit_university_path(university),class: 'btn btn-success fa fa-edit',remote:true %>
-          <%= link_to '',  university, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger fa fa-close' %>
+          <%= link_to '', edit_nationality_path(nationality),class: 'btn btn-success fa fa-edit',remote:true %>
+          <%= link_to '',  nationality, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger fa fa-close' %>
         </td>
       </tr>
     <% end %>

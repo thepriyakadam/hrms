@@ -1,8 +1,8 @@
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title">Employee Qualifications Details</h3>
+    <h3 class="box-title">Employee Qualification Details</h3>
     <div class="box-tools pull-right">
-      <%= link_to "Add Academics", ajax_new_qualification_employees_path(id: @employee.id), class: 'btn btn-primary',remote:true %>
+      <%= link_to "Add Qualification", ajax_new_qualification_employees_path(id: @employee.id), class: 'btn btn-primary',remote:true %>
       <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
       <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
     </div>
@@ -13,11 +13,11 @@
         <th>Degree Type</th>
         <th>Class</th>
         <th>Degree Steam</th>
-        <th>MARKS</th>
-        <th>YEAR</th>
-        <th>COLLEGE</th>
-        <th>UNIVERSITY</th>
-        <th>ACTION</th>
+        <th>Marks</th>
+        <th>Year</th>
+        <th>College</th>
+        <th>University</th>
+        <th>Action</th>
       </tr>
        <% @qualifications.each do |qualification| %>
       <tr>

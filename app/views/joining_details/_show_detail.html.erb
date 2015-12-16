@@ -12,48 +12,54 @@
     <tr>
 
     <tr>
-      <th><strong>Employee:</strong></th>
+      <th><strong>Employee</strong></th>
       <td><%= @joining_detail.employee.first_name %></td>
     </tr>
 
     <tr>
-      <th> <strong>Joining date:</strong></th>
+      <th> <strong>Joining Date</strong></th>
       <td><%= @joining_detail.joining_date %></td>
 
-      <th> <strong>Confirmation date:</strong></th>
+      <th> <strong>Confirmation Date</strong></th>
       <td><%= @joining_detail.confirmation_date %></td>
     </tr>
     <tr>
-      <th><strong>Designation:</strong></th>
+      <th><strong>Designation</strong></th>
       <td><%= @joining_detail.employee_designation.name %></td>
 
-      <th><strong>Employee grade:</strong></th>
+      <th><strong>Employee Grade</strong></th>
       <td><%= @joining_detail.employee_grade.name %></td>
     </tr>
 
     <tr>
-      <th><strong>Medical schem:</strong></th>
+      <th><strong>Medical Scheme</strong></th>
       <td> <%= @joining_detail.medical_schem %></td>
 
-      <th><strong>Probation period:</strong></th>
+      <th><strong>Probation Period</strong></th>
       <td><%= @joining_detail.probation_period %></td>
     </tr>
 
     <tr>
-      <th><strong>Notice period:</strong></th>
+      <th><strong>Notice Period</strong></th>
       <td><%= @joining_detail.notice_period %></td>
 
-      <th><strong>Passport No</strong></th>
-      <td><%= @joining_detail.passport_no %></td>
+      <th><strong>Passport</strong></th>
+      <td><%= @joining_detail.have_passport %></td>
       
     </tr> 
-
     <tr>
-      <th><strong>Passport Issue Date:</strong></th>
-      <td><%= @joining_detail.passport_issue_date %></td>
+      <th><strong>Passport No</strong></th>
+      <td><%= @joining_detail.passport_no %></td>
 
+      <th><strong>Passport Issue Date</strong></th>
+      <td><%= @joining_detail.passport_issue_date %></td>
+    </tr>
+    <tr>
+      
       <th> <strong>Passport Expiry Date</strong></th>
       <td> <%= @joining_detail.passport_expiry_date %></td>
+      <th></th>
+      <td></td>
     </tr>  
  </table>
   <div class="box-footer">

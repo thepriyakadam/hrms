@@ -10,6 +10,7 @@ class FamiliesController < ApplicationController
   # GET /families/1
   # GET /families/1.json
   def show
+    @employee = @family.employee
   end
 
   # GET /families/new
@@ -20,6 +21,7 @@ class FamiliesController < ApplicationController
   # GET /families/1/edit
   def edit
     @form = 'family'
+    @employee = @family.employee
   end
 
   # POST /families
@@ -31,6 +33,7 @@ class FamiliesController < ApplicationController
       if @family.save
         format.html { redirect_to @family, notice: 'Family was successfully created.' }
         format.json { render :show, status: :created, location: @family }
+        @families = @employee.families
         format.js { @flag = true }
       else
         format.html { render :new }
@@ -43,13 +46,17 @@ class FamiliesController < ApplicationController
   # PATCH/PUT /families/1
   # PATCH/PUT /families/1.json
   def update
+    @employee = Employee.find(params["family"]["employee_id"])
     respond_to do |format|
       if @family.update(family_params)
-        format.html { redirect_to @family, notice: 'Family was successfully updated.' }
-        format.json { render :show, status: :ok, location: @family }
+        #format.html { redirect_to @family, notice: 'Family was successfully updated.' }
+        #format.json { render :show, status: :ok, location: @family }
+        @families = @employee.families
+        format.js { @flag = true }
       else
-        format.html { render :edit }
-        format.json { render json: @family.errors, status: :unprocessable_entity }
+        #format.html { render :edit }
+        #format.json { render json: @family.errors, status: :unprocessable_entity }
+        format.js { @flag = false }
       end
     end
   end

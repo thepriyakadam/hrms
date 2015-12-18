@@ -1,5 +1,5 @@
 class EmployeesController < ApplicationController
-  before_action :set_employee, only: [:show, :edit, :update, :destroy, :ajax_joining_detail, :ajax_bank_detail, :ajax_qualification_detail, :ajax_new_qualification, :ajax_experience_detail, :ajax_new_experience, :ajax_skillset_detail, :ajax_new_skillset, :ajax_certification_detail, :ajax_new_certification, :ajax_award_detail, :ajax_new_award, :ajax_physical_detail, :ajax_family_detail]
+  before_action :set_employee, only: [:show, :edit, :update, :destroy, :ajax_joining_detail, :ajax_bank_detail, :ajax_qualification_detail, :ajax_new_qualification, :ajax_experience_detail, :ajax_new_experience, :ajax_skillset_detail, :ajax_new_skillset, :ajax_certification_detail, :ajax_new_certification, :ajax_award_detail, :ajax_new_award, :ajax_physical_detail, :ajax_family_detail, :ajax_new_family]
   #load_and_authorize_resource
   # GET /employees
   # GET /employees.json
@@ -11,7 +11,6 @@ class EmployeesController < ApplicationController
         @employees = Employee.all
       end
     end
-
   end
 
   # GET /employees/1
@@ -170,6 +169,10 @@ class EmployeesController < ApplicationController
   end
 
   def ajax_family_detail
+    @family = Family.new
+  end
+
+  def ajax_new_family
     @family = Family.new
   end
 

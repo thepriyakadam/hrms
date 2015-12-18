@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151218124227) do
+ActiveRecord::Schema.define(version: 20151218151044) do
 
   create_table "attendances", force: :cascade do |t|
     t.integer  "employee_shift_id"
@@ -395,7 +395,6 @@ ActiveRecord::Schema.define(version: 20151218124227) do
     t.date     "passport_expiry_date"
     t.string   "medical_claim"
     t.string   "marital"
-    t.string   "blood_group"
     t.string   "religion"
     t.string   "is_handicap"
     t.string   "handicap_type"
@@ -403,8 +402,10 @@ ActiveRecord::Schema.define(version: 20151218124227) do
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
     t.string   "gender"
+    t.integer  "blood_group_id"
   end
 
+  add_index "families", ["blood_group_id"], name: "index_families_on_blood_group_id"
   add_index "families", ["employee_id"], name: "index_families_on_employee_id"
 
   create_table "groups", force: :cascade do |t|

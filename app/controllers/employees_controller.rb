@@ -7,9 +7,9 @@ class EmployeesController < ApplicationController
     if current_user.class == Member
       if current_user.role.name == "Employee"
         @employees = Employee.where(id: current_user.employee_id)
-      else
-        @employees = Employee.all
       end
+    else
+      @employees = Employee.all
     end
   end
 

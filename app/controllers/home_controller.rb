@@ -10,4 +10,9 @@ class HomeController < ApplicationController
 	    end
     end
   end
+
+  def created_user
+    @employees = Employee.joins("INNER JOIN members on employees.id = members.employee_id")
+    @roles = Role.all
+  end
 end

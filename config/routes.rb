@@ -77,6 +77,14 @@ Rails.application.routes.draw do
       get :collect_states
     end
   end
+
+  resources :home do
+    collection do
+      get :created_user
+      patch :update_form
+    end
+  end
+
   root 'home#index'
 
   devise_for :members, :controllers => {registrations: 'members/registrations',sessions: 'members/sessions',passwords: 'groups/passwords'}

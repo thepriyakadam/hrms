@@ -21,7 +21,7 @@
       
           <div class="col-sm-3">
             <div class="field">
-               <%= f.select :year_id, all_year,{},label: 'Year', class: 'input_year_id' %>
+               <%= f.select :year_id, all_year,{label: 'Year',include_blank: " Select Year"}, class: 'input_year_id' %>
             </div>
           </div>
 
@@ -35,26 +35,31 @@
         <div class="row">
           <div class="col-sm-12">
             <div class="field">
-              <%= f.text_area :descripation, class: 'input_descripation' %>
+              <%= f.text_area :description, class: 'input_description' %>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="row">
-        <div class="col-sm-2">
-          <input type="button" id="btnAdd" value="Add section" class="btn btn-success"> 
-        </div>
+      <% unless params['controller'] == 'Certifications' and params['action'] == 'edit' %>
+        <div class="row">
+          <div class="col-sm-2">
+            <input type="button" id="btnAdd" value="Add section" class="btn btn-success"> 
+          </div>
 
-        <div class="col-sm-3">
-          <input type="button" id="btnDel" value="Remove section above" class="btn btn-danger">
-        </div>
-      </div><br>
+          <div class="col-sm-3">
+            <input type="button" id="btnDel" value="Remove section above" class="btn btn-danger">
+          </div>
+        </div><br>
+      <%end%>
 
       <div class="row">
         <div class="col-sm-3">
           <div class="actions">
             <%= f.submit :class => class_name, data: { disable_with: data_info } %>
+            <% if params['controller'] == 'Certifications' and params['action'] == 'edit' %>
+            <%= link_to 'Back',ajax_certification_detail_employees_path(id: @employee.id),class: 'btn btn-default',remote:true%>
+          <%end%>
           </div>
         </div>
       </div>
@@ -76,7 +81,7 @@
     newElem.find('.input_name').attr('name','certification['+ newNum +'][name]').attr('id', newNum + '_certification_name').val('');
     newElem.find('.input_year_id').attr('name','certification['+ newNum +'][year_id]').attr('id', newNum + '_certification_year_id').val('');
     newElem.find('.input_duration').attr('name','certification['+ newNum +'][duration]').attr('id', newNum + '_certification_duration').val('');
-    newElem.find('.input_descripation').attr('name','certification['+ newNum +'][descripation]').attr('id', newNum + '_certification_descripation').val('');
+    newElem.find('.input_description').attr('name','certification['+ newNum +'][description]').attr('id', newNum + '_certification_description').val('');
     
     $('#entry' + num).after(newElem);
     $('#ID' + newNum + '_title').focus();

@@ -5,6 +5,7 @@ class Department < ActiveRecord::Base
   has_many :employees
   has_many :member
 
+  validates :manual_department_code, :presence => true, uniqueness: { case_sensitive: false }
   validates :name, :presence => true
   validates :department_type_id, :presence => true
   #validate :dept_name_regex

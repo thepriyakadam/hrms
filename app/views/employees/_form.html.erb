@@ -7,7 +7,19 @@
     </div>
   </div><!-- /.box-header -->
   <div class="box-body">
-    <%= bootstrap_form_for(@employee,html: {id: 'employee'}) do |f| %>    
+    <%= bootstrap_form_for(@employee,html: {id: 'employee'}) do |f| %>
+    <% if @employee.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@employee.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+        <ul>
+        <% @employee.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+        
       <div class="row">
         <div class="col-sm-3">
           <div class="form-group required">
@@ -19,25 +31,25 @@
       <div class="row">
         <div class="col-sm-3">
           <div class="form-group required">
-            <%= f.text_field :first_name %>
+            <%= f.text_field :first_name , label: 'First Name' %>
           </div>
         </div>
 
         <div class="col-sm-3">
           <div class="field">
-           <%= f.text_field :middle_name %>
+           <%= f.text_field :middle_name, label: 'Middle Name' %>
           </div>
         </div>
 
         <div class="col-sm-3">
           <div class="form-group required">
-           <%= f.text_field :last_name %>
+           <%= f.text_field :last_name, label: 'Last Name' %>
           </div>
         </div>
 
         <div class="col-sm-3">
           <div class="field">
-            <%= f.select :gender, ['Male','Female'] %>
+            <%= f.select :gender, ['Male','Female'],{label: 'Select Gender',include_blank: " Select Gender"} %>
           </div>
         </div>
 
@@ -54,27 +66,32 @@
 
          <div class="col-sm-3">
           <div class="field">
-           <%= f.text_field :adhar_no %>
+           <%= f.text_field :adhar_no, label: 'Aadhaar No' %>
           </div>
         </div>
 
         <div class="col-sm-3">
           <div class="field">
-            <%= f.text_field :pan_no, label: 'Pan Card No' %>
+            <%= f.text_field :pan_no, label: 'PAN Card No' %>
           </div>
         </div>
 
         <div class="col-sm-3">
           <div class="field">
-           <%= f.text_field :licence_no %>
+           <%= f.text_field :licence_no, label: 'Licence No' %>
           </div>
         </div>
-      </div>
-
+     
+      <div class="col-sm-3">
+          <div class="field">
+            <%= f.text_field :religion %>
+          </div>
+        </div>
+        </div>
       <div class="row">
         <div class="col-sm-3">
           <div class="field">
-            <%= f.select :marital_status, ['Married','UnMarried'] %>
+            <%= f.select :marital_status, ['Married','UnMarried'],{label: 'Marital Status',include_blank: " Select Marital Status"} %>
           </div>
         </div>
 
@@ -90,14 +107,14 @@
             <div class="input-group-addon">
               <i class="fa fa-calendar"></i>
             </div>
-            <%= f.text_field :date_of_birth, class: 'birth_date'%>
+            <%= f.text_field :date_of_birth, label: 'Date of Birth', class: 'birth_date'%>
           </div>
         </div>
         </div>
 
         <div class="col-sm-3">
           <div class="field">
-            <%= f.select :blood_group_id, all_blood_group,{include_blank: " Select Blood Group"} %>
+            <%= f.select :blood_group_id, all_blood_group, {label: 'Blood Group',include_blank: " Select Blood Group"} %>
           </div>
         </div>
       </div>
@@ -105,19 +122,19 @@
       <div class="row">
          <div class="col-sm-9">
           <div class="form-group required">
-           <%= f.text_field :permanent_address %>
+           <%= f.text_field :permanent_address, label: 'Permanent Address' %>
           </div>
         </div>
          <div class="col-sm-3">
           <div class="field">
-            <%= f.text_field :pin_code,label:"Pin Code/ZIP"%>
+            <%= f.text_field :pin_code,label:"Pin/Zip Code"%>
           </div>
         </div>
         </div>
         <div class="row">
         <div class="col-sm-3">
           <div class="form-group required">
-           <%= f.text_field :contact_no %>
+           <%= f.text_field :contact_no,label: 'Contact No' %>
           </div>
         </div>
         <div class="col-sm-3">
@@ -167,7 +184,7 @@
       <div class="row">
         <div class="col-sm-6">
           <div class="field">
-            <%= f.text_field :current_address %>
+            <%= f.text_field :current_address, label: 'Current Address' %>
           </div>
         </div>
         <div class="col-sm-3">

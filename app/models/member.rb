@@ -12,16 +12,16 @@ class Member < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :authentication_keys => [:login]
   #validates_format_of :member_code, with: /^[a-zA-Z0-9_\.]*$/
-  #validates :email, uniqueness: true, presence: true
+  #validates :email, uniqueness: true, presence: false
   #validate  :email_regex
-
+  #validates_format_of     :email, :with  => email_regexp, :allow_blank => true
   attr_accessor :login
 
-  def email_regex
-    if email.present? and not email.match(/\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/)
-      errors.add :email, "This is not a valid email format"
-    end
-  end
+  # def email_regex
+  #   if not email.match(/\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/)
+  #     errors.add :email, "This is not a valid email format"
+  #   end
+  # end
 
   # def login=(login)
   #   @login = login
@@ -34,7 +34,7 @@ class Member < ActiveRecord::Base
   def self.find_for_database_authentication(warden_conditions)
       conditions = warden_conditions.dup
       if login = conditions.delete(:login)
-        where(conditions.to_h).where(["lower(member_code) = :value OR lower(email) = :value", { :value => login.downcase }]).first
+        where(conditions.to_h).where(["lower(manual_member_code) = :value OR lower(email) = :value", { :value => login.downcase }]).first
       else
         where(conditions.to_h).first
       end

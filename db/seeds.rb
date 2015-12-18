@@ -6,19 +6,19 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 puts 'Company Type Started...'
-company_type_array = ['Information Technology','Finance','chemical','Production']
+# company_type_array = ['Information Technology','Finance','Chemical','Production']
 
-company_type_array.each do |ct|
-	company_type = CompanyType.find_or_initialize_by(name: ct)
-	company_type.name = ct
-	company_type.save
-end
+# company_type_array.each do |ct|
+# 	company_type = CompanyType.find_or_initialize_by(name: ct)
+# 	company_type.name = ct
+# 	company_type.save
+# end
 
-puts 'Department Type Started...'
-dept_type = ['IT','Finance','Hr']
-dept_type.each do |d|
-	DepartmentType.create(name: d)
-end
+# puts 'Department Type Started...'
+# dept_type = ['IT','Finance','HR']
+# dept_type.each do |d|
+# 	DepartmentType.create(name: d)
+# end
 
 emp_type = ['Temporary','Permanent']
 emp_type.each do |e|
@@ -30,20 +30,20 @@ natinality.each do |n|
 	Nationality.create(name: n)
 end
 
-blood_group = ['A','B','AB','O']
+blood_group = ['A+','B+','AB+','O+','A-','B-','AB-','O-']
 blood_group.each do |d|
 	BloodGroup.create(name: d)
 end
 
-employee_grade = ['G1','G2','G3','G4']
-employee_grade.each do |d|
-	EmployeeGrade.create(name: d)
-end
+# employee_grade = ['G1','G2','G3','G4']
+# employee_grade.each do |d|
+# 	EmployeeGrade.create(name: d)
+# end
 
-leave_categories = ['Seak Leave','Casual Leave','Maternal Leave','Paternal Leave']
-leave_categories.each do |d|
-	LeavCategory.create(name: d)
-end
+# leave_categories = ['Seak Leave','Casual Leave','Maternal Leave','Paternal Leave']
+# leave_categories.each do |d|
+# 	LeavCategory.create(name: d)
+# end
 
 roles = ['Company','CompanyLocation','Department','Employee']
 roles.each do |r|
@@ -55,7 +55,7 @@ degrees.each do |d|
 	Degree.create(name:d)
 end
 
-degree_types =['SSC','HSC','DEPLOMA','UG','PG','DR']
+degree_types =['SSC','HSC','DEPLOMA','Under Graduation','Post Graduation','Ph.ed']
 degree_types.each do |d|
 	DegreeType.create(name:d)
 end
@@ -65,16 +65,16 @@ degree_streams.each do |d|
 	DegreeStream.create(name:d)
 end
 
-universities =['Pune','Mumbai']
-universities.each do |d|
-	University.create(name:d)
-end
+# universities =['Pune','Mumbai']
+# universities.each do |d|
+# 	University.create(name:d)
+# end
 
 
-employee_designation_array = ['HR','Software Developer','Tester']
-employee_designation_array.each do |d|
-	EmployeeDesignation.create(name: d)
-end
+# employee_designation_array = ['HR','Software Developer','Tester']
+# employee_designation_array.each do |d|
+# 	EmployeeDesignation.create(name: d)
+# end
 
 puts 'Year Started...'
 for i in 1960..Date.today.year

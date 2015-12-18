@@ -2,19 +2,19 @@
   <div class="row">
     <div class="col-sm-3">
       <div class="form-group required">
-         <%= f.select :employee_grade_id, all_employee_grade %>
+         <%= f.select :employee_grade_id, all_employee_grade,label:'Employee Grade' %>
       </div>
     </div>
 
      <div class="col-sm-3">
       <div class="form-group required">
-          <%= f.select :leav_category_id, all_leav_category %>
+          <%= f.select :leav_category_id, all_leav_category,label:'Leave Category' %>
       </div>
     </div>
 
      <div class="col-sm-3">
       <div class="form-group required">
-        <%= f.text_field :no_of_leave, placeholder: 'Number of Leave' %>
+        <%= f.text_field :no_of_leave, placeholder: 'Number of Leave',label:'No of Leave' %>
       </div>
     </div>
 
@@ -24,15 +24,26 @@
             <div class="input-group-addon">
               <i class="fa fa-calendar"></i>
             </div>
-            <%= f.text_field :expiry_date,class: 'datemask'%>
+            <%= f.text_field :expiry_date,label:'Leave Expiry Date',class: 'company_leave_expiry_date' %>
           </div>
         </div>   
     </div>
 
     <div class="col-sm-3">
       <div class="actions">
-        <%= f.submit :class => class_name, data: { disable_with: data_info } %>
+        <%= f.submit :class => class_name, data: { disable_with: data_info },value:'Create Company Leave' %>
       </div>
     </div>
   </div>
-<% end %>
+  <%end%>
+
+<script type="text/javascript">
+  $(function(){
+    $('.company_leave_expiry_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:-0',
+    dateFormat: 'dd-mm-yy' });
+
+  }); 
+</script>

@@ -2,6 +2,7 @@
   <div class="box-header with-border">
     <h3 class="box-title">Employee Certification Details</h3>
     <div class="box-tools pull-right">
+      <%= link_to "Add Certification", ajax_new_certification_employees_path(id: @employee.id), class: 'btn btn-primary',remote:true %>
       <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
       <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
     </div>
@@ -12,7 +13,7 @@
       <th>Name</th>
       <th>Year</th>
       <th>Duration</th>
-      <th>Descripation</th>
+      <th>Description</th>
       <th>Action</th>
     </tr>
      <% @certifications.each do |certification| %>
@@ -20,7 +21,7 @@
         <td><%= certification.name %></td>
         <td><%= certification.year.name %></td>
         <td><%= certification.duration %></td>
-        <td><%= certification.descripation %></td>
+        <td><%= certification.description %></td>
         <td>
           <%= link_to '', edit_certification_path(certification),class: 'btn btn-success fa fa-edit',remote:true %>
           <%= link_to '', certification, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger fa fa-close' %>

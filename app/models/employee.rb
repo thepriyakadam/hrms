@@ -23,11 +23,17 @@ class Employee < ActiveRecord::Base
                           foreign_key: "manager_id"
   belongs_to :manager, class_name: "Employee"
 
+  validates :manual_employee_code, :presence => true, uniqueness: { case_sensitive: false }
   validates :first_name, :presence => true
   validates :last_name, :presence => true
   validates :contact_no, :presence => true
   validate  :email_regex
   validates :permanent_address, :presence => true
+
+  validates :country_id, :presence => true
+  validates :state_id, :presence => true
+  validates :district_id, :presence => true
+  
   validate :last_name_regex
   validate :adhar_no_regex
   validate :middle_name_regex

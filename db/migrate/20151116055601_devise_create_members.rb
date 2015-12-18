@@ -6,7 +6,7 @@ class DeviseCreateMembers < ActiveRecord::Migration
       t.references :role, index: true, foreign_key: true
       t.string :member_code
       t.string :subdomain
-      t.string :email,              null: false, default: ""
+      t.string :email,              null: true, default: ""
       t.string :encrypted_password, null: false, default: ""
 
       ## Recoverable

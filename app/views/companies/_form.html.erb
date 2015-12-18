@@ -45,7 +45,7 @@
         </div>
         <div class="col-sm-3">
           <div class="field">
-             <%= f.select :company_type_id, all_company_type,label: 'Company Type ID' %>
+             <%= f.select :company_type_id, all_company_type,{label: 'Company Type',include_blank: " Select Company Type"}%>
           </div>
         </div>
       </div>
@@ -87,7 +87,7 @@
         </div>
         <div class="col-sm-3">
           <div class="form-group required">
-           <%= f.text_field :pin_code,label: 'Pin Code/ZIP' %>
+           <%= f.text_field :pin_code,label: 'Pin/ZIP Code' %>
           </div>
         </div>
       </div>
@@ -137,7 +137,7 @@
         </div>
         <div class="col-sm-3">
           <div class="form-group required">
-            <%= f.text_field :web_site %>
+            <%= f.text_field :web_site, label: 'Website' %>
           </div>
         </div>  
       </div>   

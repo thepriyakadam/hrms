@@ -1,7 +1,7 @@
 <!-- SELECT2 EXAMPLE -->
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title">Awards Details</h3>
+    <h3 class="box-title">Employee Award Details</h3>
     <div class="box-tools pull-right">
       <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
       <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
@@ -21,18 +21,18 @@
 
         <div class="col-sm-3">
           <div class="field">
-            <%= f.select :year_id, all_year,{},label: 'Year', class: 'input_year_id' %>
+            <%= f.select :year_id, all_year,{label: 'Year',include_blank: " Select Year"}, class: 'input_year_id' %>
           </div>
         </div>
 
         <div class="col-sm-3">
           <div class="field">
-            <%= f.text_field :award_from, class: 'input_award_from' %>
+            <%= f.text_field :award_from, label: 'Award From', class: 'input_award_from' %>
           </div>
         </div>
       </div>
     </div>
-    
+    <% unless params['controller'] == 'awards' and params['action'] == 'edit' %>
       <div class="row">
         <div class="col-sm-2">
           <input type="button" id="btnAdd" value="Add section" class="btn btn-success"> 
@@ -42,12 +42,15 @@
           <input type="button" id="btnDel" value="Remove section above" class="btn btn-danger">
         </div>
       </div><br>
-    
+    <%end%>
 
     <div class="row">
       <div class="col-sm-3">
         <div class="actions">
           <%= f.submit :class => class_name, data: { disable_with: data_info } %>
+          <% if params['controller'] == 'awards' and params['action'] == 'edit' %>
+            <%= link_to 'Back',ajax_award_detail_employees_path(id: @employee.id),class: 'btn btn-default',remote:true%>
+          <%end%>
         </div>
       </div>
     </div>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151214132206) do
+ActiveRecord::Schema.define(version: 20151216125726) do
 
   create_table "attendances", force: :cascade do |t|
     t.integer  "employee_shift_id"
@@ -494,7 +494,7 @@ ActiveRecord::Schema.define(version: 20151214132206) do
     t.integer  "role_id"
     t.string   "member_code"
     t.string   "subdomain"
-    t.string   "email",                  default: "", null: false
+    t.string   "email",                  default: ""
     t.string   "encrypted_password",     default: "", null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"

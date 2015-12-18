@@ -12,11 +12,7 @@
     <%= f.hidden_field :employee_id, value: @employee.id %>
     <div id="entry1" class="clonedInput">
       <div class="row">
-        <div class="col-sm-3">
-          <div class="form-group required">
-            <%= f.text_field :no_of_year, class: 'input_no_of_year' %>
-          </div>
-        </div>
+        
 
         <div class="col-sm-3">
           <div class="form-group required">
@@ -27,6 +23,12 @@
         <div class="col-sm-3">
           <div class="form-group required">
             <%= f.text_field :designation, class: 'input_designation' %>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.text_field :no_of_year, class: 'input_no_of_year' %>
           </div>
         </div>
 

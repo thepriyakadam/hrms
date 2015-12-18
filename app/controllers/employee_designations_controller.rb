@@ -14,10 +14,18 @@ class EmployeeDesignationsController < ApplicationController
   # POST /employee_designations.json
   def create
     @employee_designation = EmployeeDesignation.new(employee_designation_params)
-    @employee_designation.save
     @employee_designations = EmployeeDesignation.all
-    @employee_designation = EmployeeDesignation.new
-  end    
+    respond_to do |format|
+    if @employee_designation.save
+     @employee_designation = EmployeeDesignation.new
+     format.js { @flag = true }
+      else
+        flash.now[:alert] = "Employee Designation Already Exist."
+         format.js { @flag = false }
+      end
+    end  
+  end
+   
 
   # PATCH/PUT /employee_designations/1
   # PATCH/PUT /employee_designations/1.json

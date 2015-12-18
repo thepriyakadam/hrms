@@ -15,9 +15,16 @@ class EmployeeGradesController < ApplicationController
   # POST /employee_grades.json
   def create
     @employee_grade = EmployeeGrade.new(employee_grade_params)
-    @employee_grade.save
     @employee_grades = EmployeeGrade.all
+    respond_to do |format|
+    if @employee_grade.save
     @employee_grade = EmployeeGrade.new
+     format.js { @flag = true }
+      else
+        flash.now[:alert] = "Blood Group Already Exist."
+         format.js { @flag = false }
+      end
+    end  
   end
 
   # PATCH/PUT /employee_grades/1

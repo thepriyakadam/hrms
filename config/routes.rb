@@ -11,7 +11,11 @@ Rails.application.routes.draw do
   resources :attendances
   resources :employee_shifts
   resources :company_shifts
-  resources :roles
+  resources :roles do
+    collection do
+      get :dynamic_form
+    end
+  end
   resources :employee_bank_details
   resources :leav_cancelleds
   resources :employee_leav_balances
@@ -56,6 +60,7 @@ Rails.application.routes.draw do
       get :ajax_new_award
       get :ajax_physical_detail
       get :ajax_family_detail
+      get :ajax_new_family
       get :ajax_show_textbox
     end
   end

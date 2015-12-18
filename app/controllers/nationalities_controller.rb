@@ -12,9 +12,16 @@ class NationalitiesController < ApplicationController
 
   def create
     @nationality = Nationality.new(nationality_params)
-    @nationality.save
     @nationalities = Nationality.all
-    @nationality = Nationality.new
+    respond_to do |format|
+    if @nationality.save
+    @@nationality = Nationality.new
+     format.js { @flag = true }
+      else
+        flash.now[:alert] = "Nationality Already Exist."
+         format.js { @flag = false }
+      end
+    end  
   end
 
   def update

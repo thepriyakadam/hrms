@@ -24,10 +24,10 @@ class ApplicationController < ActionController::Base
     redirect_to root_url
   end
 
-  # rescue_from ActionView::Template::Error do |exc|
-  #   flash[:alert] = "Sorry! Template error problem"
-  #   redirect_to root_url
-  # end
+  rescue_from ActionView::Template::Error do |exc|
+    flash[:alert] = "Sorry! Template error problem"
+    redirect_to root_url
+  end
 
   
   

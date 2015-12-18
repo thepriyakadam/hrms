@@ -15,9 +15,16 @@ class DegreeStreamsController < ApplicationController
   # POST /degree_streams.json
   def create
     @degree_stream = DegreeStream.new(degree_stream_params)
-    @degree_stream.save
     @degree_streams = DegreeStream.all
+    respond_to do |format|
+    if @degree_stream.save
     @degree_stream = DegreeStream.new
+     format.js { @flag = true }
+      else
+        flash.now[:alert] = "Blood Group Already Exist."
+         format.js { @flag = false }
+      end
+    end 
   end
 
   # PATCH/PUT /degree_streams/1

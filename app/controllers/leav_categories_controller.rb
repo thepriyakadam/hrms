@@ -12,9 +12,16 @@ class LeavCategoriesController < ApplicationController
 
   def create
     @leav_category = LeavCategory.new(leav_category_params)
-    @leav_category.save
     @leav_categories = LeavCategory.all
+    respond_to do |format|
+    if @leav_category.save
     @leav_category = LeavCategory.new
+     format.js { @flag = true }
+      else
+        flash.now[:alert] = "Leave Type Already Exist."
+         format.js { @flag = false }
+      end
+    end  
   end
 
   def update

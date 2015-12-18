@@ -14,9 +14,16 @@ class DegreeTypesController < ApplicationController
   # POST /degree_types.json
   def create
     @degree_type = DegreeType.new(degree_type_params)
-    @degree_type.save
     @degree_types = DegreeType.all
-    @degree_type = DegreeType.new  
+    respond_to do |format|
+    if @degree_type.save
+    @degree_type = DegreeType.new 
+     format.js { @flag = true }
+      else
+        flash.now[:alert] = "Blood Group Already Exist."
+         format.js { @flag = false }
+      end
+    end
   end
 
   # PATCH/PUT /degree_types/1

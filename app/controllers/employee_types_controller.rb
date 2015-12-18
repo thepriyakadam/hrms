@@ -14,9 +14,16 @@ class EmployeeTypesController < ApplicationController
   
   def create
     @employee_type = EmployeeType.new(employee_type_params)
-    @employee_type.save
     @employee_types = EmployeeType.all
+    respond_to do |format|
+    if @employee_type.save
     @employee_type = EmployeeType.new
+     format.js { @flag = true }
+      else
+        flash.now[:alert] = "Employee Type Already Exist."
+         format.js { @flag = false }
+      end
+    end  
   end
 
   def update

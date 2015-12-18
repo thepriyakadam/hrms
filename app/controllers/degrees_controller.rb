@@ -21,11 +21,11 @@ class DegreesController < ApplicationController
     @degree = Degree.new
     format.js { @flag = true }
     else
-      flash.now[:alert] = "Blood Group Already Exist."
+      flash.now[:alert] = "Degree Already Exist."
       format.js { @flag = false }
     end    
   end
-
+end
   # PATCH/PUT /degrees/1
   # PATCH/PUT /degrees/1.json
   def update

@@ -4,8 +4,10 @@ class HomeController < ApplicationController
   	@company_locations = CompanyLocation.all
   	@departments = Department.all
   	@employees = Employee.all
-  	if current_user.role.name == "Employee"
-  	  @employee = Employee.find(current_user.employee_id)
+  	if current_user.class == Member
+	  	if current_user.role.name == "Employee"
+	  	  @employee = Employee.find(current_user.employee_id)
+	    end
     end
   end
 end

@@ -60,11 +60,6 @@
           <%= f.text_field :notice_period,label: 'Notice Period' %>
        </div>
     </div> 
-    <div class="col-sm-3">
-      <div class="field">
-        <%= f.select :have_passport, ['Yes','No'],{include_blank: "Please Select"},{onchange:"var a={id:$(this).val()}; $.get('/joining_details/ajax_show_textbox',a,function(response){});"}%>
-      </div>
-    </div>
   </div>
   <div class="row">
      <div class="col-sm-3">

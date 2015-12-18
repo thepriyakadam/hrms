@@ -10,7 +10,8 @@ class Ability
     elsif user.class == Member
       #can [:read, :create, :update], [MachineProduct], :buyer_id => user.id
       if user.role.name == 'Company'
-        can [:read, :create, :update, :destroy], [CompanyLocation,Department,Employee] 
+        can [:read, :create, :update, :destroy], [CompanyLocation,Department,Employee]
+        can [:read, :create, :update, :destroy], [Award]  
       elsif user.role.name == 'CompanyLocation'
         can [:read, :create, :update, :destroy], [Department,Employee]
 

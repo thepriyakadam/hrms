@@ -21,7 +21,6 @@ class EmployeesController < ApplicationController
 
   # GET /employees/1/edit
   def edit
-    #@employee.build_joining_detail #here
     @country = @employee.country
     @states = @country.states
     @state = @employee.state
@@ -100,8 +99,6 @@ class EmployeesController < ApplicationController
         redirect_to assign_role_employees_path
         #UserPasswordMailer.welcome_email(company,pass).deliver_now
       else
-        p "----------------------------------------------"
-        p user.errors
         flash[:alert] = "Employee not assigned successfully."
         redirect_to assign_role_employees_path
       end

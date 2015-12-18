@@ -6,8 +6,8 @@
     <table  class="table table-bordered table-hover">
 	    <thead>
 	      <tr>
+		      <th>Employee Code</th>
 		      <th>Name</th>
-		      <th>Contact no</th>
 		      <th>Hrms Access Role</th>
 		      <th>Reporting Manager</th>
 		      <th>Department</th>
@@ -18,8 +18,8 @@
 		    <% @employees.each do |employee| %>
 					<%= bootstrap_form_for :login, url: {action: 'submit_form'} do |f| %>    
 			      <tr>
-			        <td><%= employee.first_name %></td>
-			        <td><%= employee.contact_no %></td>
+			      	<td><%= employee.manual_employee_code %></td>
+			        <td><%= employee.first_name+' '+employee.last_name %></td>
 			        <td><%= f.select :role_id, all_role_list,hide_label:true,prompt:true %>
 			   					<%= f.hidden_field :employee_id, value: employee.id %>
 			        </td>

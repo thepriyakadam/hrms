@@ -2,19 +2,19 @@
 <div class="row">
   <div class="col-md-3 col-sm-6 col-xs-12">
     <div class="info-box">
-      <span class="info-box-icon bg-aqua"><i class="ion ion-ios-gear-outline"></i></span>
+      <span class="info-box-icon bg-aqua"><i class="glyphicon glyphicon-th-large"></i></span>
       <div class="info-box-content">
-        <span class="info-box-text">CPU Traffic</span>
-        <span class="info-box-number">90<small>%</small></span>
+        <span class="info-box-text">Companies</span>
+        <span class="info-box-number"><%=@companies.try(:count)%></span>
       </div><!-- /.info-box-content -->
     </div><!-- /.info-box -->
   </div><!-- /.col -->
   <div class="col-md-3 col-sm-6 col-xs-12">
     <div class="info-box">
-      <span class="info-box-icon bg-red"><i class="fa fa-google-plus"></i></span>
+      <span class="info-box-icon bg-red"><i class="glyphicon glyphicon-th-list"></i></span>
       <div class="info-box-content">
-        <span class="info-box-text">Likes</span>
-        <span class="info-box-number">41,410</span>
+        <span class="info-box-text">Locations</span>
+        <span class="info-box-number"><%= @company_locations.try(:count)%></span>
       </div><!-- /.info-box-content -->
     </div><!-- /.info-box -->
   </div><!-- /.col -->
@@ -24,20 +24,47 @@
 
   <div class="col-md-3 col-sm-6 col-xs-12">
     <div class="info-box">
-      <span class="info-box-icon bg-green"><i class="ion ion-ios-cart-outline"></i></span>
+      <span class="info-box-icon bg-green"><i class="glyphicon glyphicon-th"></i></span>
       <div class="info-box-content">
-        <span class="info-box-text">Sales</span>
-        <span class="info-box-number">760</span>
-      </div><!-- /.info-box-content -->
+        <span class="info-box-text">Departments</span>
+        <span class="info-box-number"><%= @departments.try(:count) %></span>
+      </div><!-- /.info-box-content --> 
     </div><!-- /.info-box -->
   </div><!-- /.col -->
   <div class="col-md-3 col-sm-6 col-xs-12">
     <div class="info-box">
       <span class="info-box-icon bg-yellow"><i class="ion ion-ios-people-outline"></i></span>
       <div class="info-box-content">
-        <span class="info-box-text">New Members</span>
-        <span class="info-box-number">2,000</span>
+        <span class="info-box-text">Employees</span>
+        <span class="info-box-number"><%= @employees.try(:count) %></span>
       </div><!-- /.info-box-content -->
     </div><!-- /.info-box -->
   </div><!-- /.col -->
 </div><!-- /.row -->
+
+
+
+<%= link_to 'Basic Details',basic_detail_employees_path(id: @employee.id),class: 'btn btn-primary', remote:true%>
+
+<%= link_to 'Joining Details',ajax_joining_detail_employees_path(id: @employee.id),class: 'btn btn-primary',remote:true%>
+
+<%= link_to 'Bank Details',ajax_bank_detail_employees_path(id: @employee.id),class: 'btn btn-primary',remote:true%>
+
+<%= link_to 'Qualification Details',ajax_qualification_detail_employees_path(id: @employee.id),class: 'btn btn-primary',remote:true%>
+
+<%= link_to 'Experience Details',ajax_experience_detail_employees_path(id: @employee.id),class: 'btn btn-primary',remote:true%>
+
+<%= link_to 'Skillset Details',ajax_skillset_detail_employees_path(id: @employee.id),class: 'btn btn-primary',remote:true%>
+
+<%= link_to 'Certification Details',ajax_certification_detail_employees_path(id: @employee.id),class: 'btn btn-primary',remote:true%>
+
+<%= link_to 'Award Details',ajax_award_detail_employees_path(id: @employee.id),class: 'btn btn-primary',remote:true%>
+
+<%= link_to 'Physical Details',ajax_physical_detail_employees_path(id: @employee.id),class: 'btn btn-primary',remote:true%>
+
+<%= link_to 'Family Details',ajax_family_detail_employees_path(id: @employee.id),class: 'btn btn-primary',remote:true%>
+
+<div id='info'><%= render 'employees/show_detail'%></div>
+
+    
+    

@@ -4,7 +4,14 @@ class EmployeesController < ApplicationController
   # GET /employees
   # GET /employees.json
   def index
-    @employees = Employee.all
+    if current_user.class == Member
+      if current_user.role.name == "Employee"
+        @employees = Employee.where(id: current_user.employee_id)
+      else
+        @employees = Employee.all
+      end
+    end
+
   end
 
   # GET /employees/1

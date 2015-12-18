@@ -10,7 +10,9 @@
     <table id="example2" class="table table-bordered table-hover">
     <thead>
       <tr>
+      <th>Employee Id</th>
       <th>First Name</th>
+      <th>First Last</th>
       <th>Contact No</th>
       <th>Email</th>
       <th>Action</th>
@@ -20,7 +22,9 @@
   <tbody>
     <% @employees.each do |employee| %>
       <tr>
+        <td><%= employee.manual_employee_code %></td>
         <td><%= employee.first_name %></td>
+        <td><%= employee.last_name %></td>
         <td><%= employee.contact_no %></td>
         <td><%= employee.email %></td>
         <td>

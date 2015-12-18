@@ -81,13 +81,29 @@
            <%= f.text_field :licence_no, label: 'Licence No' %>
           </div>
         </div>
-     
-      <div class="col-sm-3">
+     </div>
+       <div class="row">
+        <div class="col-sm-3">
+          <div class="form-group required">
+           <%= f.text_field :contact_no,label: 'Contact No' %>
+          </div>
+        </div>
+        <div class="col-sm-3">
           <div class="field">
             <%= f.text_field :religion %>
           </div>
         </div>
+        <div class="col-sm-3">
+        <div class="field">
+            <%= f.select :status,['Active','Inactive'],{include_blank: " Select Employee Status"} %>
         </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.select :employee_type_id, all_employee_type,{include_blank: " Select Employee Type"} %>
+          </div>
+        </div>   
+      </div>
       <div class="row">
         <div class="col-sm-3">
           <div class="field">
@@ -131,29 +147,6 @@
           </div>
         </div>
         </div>
-        <div class="row">
-        <div class="col-sm-3">
-          <div class="form-group required">
-           <%= f.text_field :contact_no,label: 'Contact No' %>
-          </div>
-        </div>
-        <div class="col-sm-3">
-          <div class="field">
-            <%= f.text_field :religion %>
-          </div>
-        </div>
-        <div class="col-sm-3">
-        <div class="field">
-            <%= f.select :status,['Active','Inactive'],{include_blank: " Select Employee Status"} %>
-        </div>
-        </div>
-        <div class="col-sm-3">
-          <div class="field">
-            <%= f.select :employee_type_id, all_employee_type,{include_blank: " Select Employee Type"} %>
-          </div>
-        </div>   
-      </div>
-
    
          <div class="row">
           <div class="col-sm-3">

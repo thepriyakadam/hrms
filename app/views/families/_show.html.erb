@@ -1,20 +1,19 @@
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title">Familly Details</h3>
+    <h3 class="box-title">Employee Details</h3>
     <div class="box-tools pull-right">
+      <%= link_to "Add Family Member", ajax_new_family_employees_path(id: @employee.id), class: 'btn btn-primary',remote:true %>
       <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
       <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
     </div>
   </div><!-- /.box-header -->
   <div class="box-body">
-    <table id="example2" class="table table-bordered table-hover">
-    <tr> 
-      <th colspan="2"></th>
-      <th colspan="2"></th>
-    </tr>
+   <table id="example2" class="table table-bordered table-hover">
 <tr>
   <th><strong>Employee:</strong></th>
-  <td><%= @family.employee.id %></td>
+
+  <td><%= @family.employee.first_name %></td>
+
 
   <th><strong>No of member:</strong></th>
   <td><%= @family.no_of_member %></td>
@@ -23,9 +22,8 @@
 <tr>
   <th><strong>F name:</strong></th>
   <td><%= @family.f_name %></td>
-
- <!--  <th><strong>M name:</strong></th>
-  <td><%= @family.m_name %></td> -->
+  <th></th>
+  <td></td>
 </tr>
 
 <tr>
@@ -48,24 +46,10 @@
   <th> <strong>Contact no:</strong></th>
   <td><%= @family.contact_no %></td>
 
-  <!-- <th><strong>Phone no:</strong></th>
-  <td><%= @family.phone_no %></td> -->
-</tr>
-
-
-<tr>
   <th> <strong>Email:</strong></th>
   <td><%= @family.email %></td>
-
-  <th><strong>Permanent address:</strong></th>
-  <td><%= @family.permanent_address %></td>
-</tr>
-
-
 <tr>
-  <th><strong>Current address:</strong></th>
-  <td> <%= @family.current_address %></td>
-
+ 
   <th> <strong>Relation:</strong></th>
   <td><%= @family.relation %></td>
 </tr>
@@ -99,7 +83,7 @@
   <th> <strong>Religion:</strong></th>
   <td><%= @family.religion %></td>
 
-  <th><strong>Phandicap:</strong></th>
+  <th><strong>Handicap:</strong></th>
   <td><%= @family.handicap_type %></td>
 </tr>
 
@@ -110,16 +94,9 @@
   <th></th>
   <td></td>
 </tr>
-
-
 </table>
-
-    <%= link_to 'Edit',  edit_family_path(@family) ,class: 'btn btn-success fa fa-edit' %> |
-    <%= link_to 'Back', famillies_path,class: 'btn btn-default fa fa-arrow-left' %>
-  </div><!-- /.box-body -->
- <div class="box-footer">
+  <div class="box-footer">
     Visit <a href="https://indiba.in/">www.indiba.in</a> for more Information about the HRMSONE.
   </div>
-</div><!-- /.box -->
-
-
+  </div><!-- /.box -->
+</div>

@@ -40,7 +40,12 @@ Rails.application.routes.draw do
   resources :experiences
   resources :certifications
   resources :qualifications
-  resources :families
+  resources :families do
+    collection do
+      get :ajax_show_handicap_type_textbox
+      get :ajax_show_passport_detail_textbox
+    end
+  end
   resources :employees do
     collection do
       get :assign_role

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151216125726) do
+ActiveRecord::Schema.define(version: 20151218124227) do
 
   create_table "attendances", force: :cascade do |t|
     t.integer  "employee_shift_id"
@@ -402,6 +402,7 @@ ActiveRecord::Schema.define(version: 20151216125726) do
     t.string   "profession"
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
+    t.string   "gender"
   end
 
   add_index "families", ["employee_id"], name: "index_families_on_employee_id"

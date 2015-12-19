@@ -1,6 +1,6 @@
 <div class="box">
   <div class="box-header">
-    <h3 class="box-title">Employee List</h3>    
+    <h3 class="box-title">Role Assigned User</h3>    
   </div><!-- /.box-header -->
   <div class="box-body">
     <table  class="table table-bordered table-hover">
@@ -9,25 +9,19 @@
 		      <th>Employee Code</th>
 		      <th>Name</th>
 		      <th>Hrms Access Role</th>
-		      <th>Reporting Manager</th>
+		      <th>Reporting Person</th>
 		      <th>Department</th>
-		      <th>Action</th>
 		    </tr>
 		  </thead>
 		  <tbody>
-		    <% @employees.each do |employee| %>
-					<%= bootstrap_form_for :login, url: {action: 'update_form',method: :patch} do |f| %>    
+		    <% @employees.each do |employee| %>   
 			      <tr>
 			        <td><%= employee.manual_employee_code %></td>
 			        <td><%= employee.first_name+' '+employee.last_name %></td>
-			        <td><%= f.select :role_id, all_role_list,hide_label:true,prompt:true %>
-			   					<%= f.hidden_field :employee_id, value: employee.id %>
-			        </td>
-			        <td><%= f.select :manager_id, all_employee_list,hide_label:true, prompt:true %></td>
-			        <td><%= f.select :department_id, all_department_list,hide_label:true, prompt:true %></td>
-			        <td><%= f.submit "+", class: 'btn btn-primary fa fa-user-plus' %></td>
+			        <td><%= employee.member.role.name %>
+			        <td><%= employee.manager.first_name+' '+employee.manager.last_name %></td>
+			        <td><%= employee.department.name %></td>
 			      </tr>	
-		     	<% end %>
 		    <% end %>
 		  </tbody>
 		</table>

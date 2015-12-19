@@ -84,7 +84,7 @@ class EmployeesController < ApplicationController
     @department = Department.find(params["login"]["department_id"])
     user = Member.new do |u|
       if employee.email == ""
-        u.email = "x"
+        u.email = "#{employee.employee_code}@xxx.com"
       else
         u.email = employee.email
       end
@@ -98,7 +98,6 @@ class EmployeesController < ApplicationController
       u.manual_member_code = employee.manual_employee_code
       u.role_id = params["login"]["role_id"]
     end
-    byebug
     ActiveRecord::Base.transaction do
       if user.save
         employee.update_attributes(department_id: params["login"]["department_id"], manager_id: params["login"]["manager_id"])

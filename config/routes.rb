@@ -42,7 +42,12 @@ Rails.application.routes.draw do
   resources :experiences
   resources :certifications
   resources :qualifications
-  resources :families
+  resources :families do
+    collection do
+      get :ajax_show_handicap_type_textbox
+      get :ajax_show_passport_detail_textbox
+    end
+  end
   resources :employees do
     collection do
       get :assign_role
@@ -79,6 +84,14 @@ Rails.application.routes.draw do
       get :collect_states
     end
   end
+
+  resources :home do
+    collection do
+      get :created_user
+      patch :update_form
+    end
+  end
+
   root 'home#index'
 
   devise_for :members, :controllers => {registrations: 'members/registrations',sessions: 'members/sessions',passwords: 'groups/passwords'}

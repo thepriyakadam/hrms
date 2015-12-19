@@ -188,7 +188,9 @@
         <div class="col-sm-3">
           <div class="field">
             <div id="handicap_type">
-            
+              <% if action_name == 'edit' and @employee.handicap_type != "" %>
+                <%= f.text_field :handicap_type %>
+              <% end %>
             </div>
           </div>
         </div>

@@ -14,9 +14,16 @@ class RolesController < ApplicationController
   # POST /roles.json
   def create
     @role = Role.new(role_params)
-    @role.save
     @roles = Role.all
+    respond_to do |format|
+    if @role.save
     @role = Role.new
+     format.js { @flag = true }
+      else
+        flash.now[:alert] = "Blood Group Already Exist."
+         format.js { @flag = false }
+      end
+    end  
   end
 
   # PATCH/PUT /roles/1

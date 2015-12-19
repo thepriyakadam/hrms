@@ -79,7 +79,7 @@
 
     <div class="col-sm-3">
         <div class="field">
-        <%= f.select :blood_group_id, all_blood_group,{label: 'Boold Group',include_blank: " Select blood Group"} %>
+        <%= f.select :blood_group_id, all_blood_group,{label: 'Blood Group',include_blank: " Select blood Group"} %>
         </div>
       </div>
 </div>
@@ -108,38 +108,12 @@
         </div>
       </div>
 </div>
-
-<div class="row">  
-      <div class="col-sm-3">
-        <div class="field">
-          <%= f.text_field :religion %>
-        </div>
-      </div>
- 
-      <div class="col-sm-3">
-        <div class="field">
-          <%= f.select :is_handicap, ['Yes','No'],{include_blank: "Please Select"},{onchange:"var a={id:$(this).val()}; $.get('/families/ajax_show_handicap_type_textbox',a,function(response){});"} %>
-        </div>
-      </div>
-
-      <div class="col-sm-3">
-        <div class="field">
-          <div id="handicap_type">
-              <% if action_name == 'edit' and @family.handicap_type != "" %>
-                <%= f.text_field :handicap_type %>
-              <% end %>
-            </div>
-        </div>
-      </div>
-
-      <div class="col-sm-3">
+<div class="row">
+     <div class="col-sm-3">
         <div class="field">
           <%= f.text_field :profession %>
         </div>
       </div>
-
-</div>
-<div class="row">
 
      <div class="col-sm-3">
         <div class="field">
@@ -166,6 +140,30 @@
           </div>
         </div>
         </div>
+  </div>
+
+  <div class="row">  
+      <div class="col-sm-3">
+        <div class="field">
+          <%= f.text_field :religion %>
+        </div>
+      </div>
+ 
+      <div class="col-sm-3">
+        <div class="field">
+          <%= f.select :is_handicap, ['Yes','No'],{label: 'Handicap',include_blank: "Please Select"},{onchange:"var a={id:$(this).val()}; $.get('/families/ajax_show_handicap_type_textbox',a,function(response){});"} %>
+        </div>
+      </div>
+
+      <div class="col-sm-3">
+        <div class="field">
+          <div id="handicap_type">
+              <% if action_name == 'edit' and @family.handicap_type != "" %>
+                <%= f.text_field :handicap_type %>
+              <% end %>
+            </div>
+        </div>
+      </div>
   </div>
 
   <div class="row">

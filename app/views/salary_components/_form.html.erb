@@ -1,15 +1,4 @@
 <%= bootstrap_form_for(@salary_component,html: {id: 'salary_component'},remote:true) do |f| %>
-  <% if @salary_component.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@salary_component.errors.count, "error") %> prohibited this salary_component from being saved:</h2>
-
-      <ul>
-      <% @salary_component.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
 
   <div class="row">
     <div class="col-sm-3">
@@ -39,7 +28,7 @@
       </div>
 
       <div class="col-sm-1">
-          <%= f.radio_button :is_deducted, "0", label: 'No' %>No
+          <%= f.radio_button :is_deducted, "0", label: 'No' %>
       </div>
     </div>   
   <% else %>
@@ -52,12 +41,13 @@
       <div class="col-sm-1">
           <%= f.radio_button :is_deducted, "0", checked: true, label: 'No' %>
       </div>
-
+    </div>  
+  <% end %>
+    <div class="row">
       <div class="col-sm-3">
         <div class="actions">
           <%= f.submit :class => class_name, data: { disable_with: data_info } %>
         </div>
-      </div> 
-    </div>    
-  <% end %>
+      </div>
+    </div>   
 <% end %>

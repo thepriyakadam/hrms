@@ -21,6 +21,8 @@ class SalaryComponentsController < ApplicationController
 
   # GET /salary_components/1/edit
   def edit
+    # @deducted_salary_components = SalaryComponent.deducted
+    # @addected_salary_components = SalaryComponent.addected
   end
 
   # POST /salary_components
@@ -49,11 +51,16 @@ class SalaryComponentsController < ApplicationController
   def update
     respond_to do |format|
       if @salary_component.update(salary_component_params)
-        format.html { redirect_to @salary_component, notice: 'Salary component was successfully updated.' }
-        format.json { render :show, status: :ok, location: @salary_component }
+        # format.html { redirect_to @salary_component, notice: 'Salary component was successfully updated.' }
+        # format.json { render :show, status: :ok, location: @salary_component }
+        @salary_component = SalaryComponent.new
+        @deducted_salary_components = SalaryComponent.deducted
+        @addected_salary_components = SalaryComponent.addected
+        format.js { @flag = true }
       else
-        format.html { render :edit }
-        format.json { render json: @salary_component.errors, status: :unprocessable_entity }
+        # format.html { render :edit }
+        # format.json { render json: @salary_component.errors, status: :unprocessable_entity }
+        format.js { @flag = false }
       end
     end
   end

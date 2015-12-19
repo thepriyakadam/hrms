@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :annual_salary_masters
+  resources :salary_components
   resources :universities
   resources :degree_streams
   resources :degree_types

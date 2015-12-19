@@ -16,9 +16,9 @@
 		  </thead>
 		  <tbody>
 		    <% @employees.each do |employee| %>
-					<%= bootstrap_form_for :login, url: {action: 'submit_form'} do |f| %>    
+					<%= bootstrap_form_for :login, url: {action: 'update_form'} do |f| %>    
 			      <tr>
-			      	<td><%= employee.manual_employee_code %></td>
+			        <td><%= employee.manual_employee_code %></td>
 			        <td><%= employee.first_name+' '+employee.last_name %></td>
 			        <td><%= f.select :role_id, all_role_list,hide_label:true,prompt:true %>
 			   					<%= f.hidden_field :employee_id, value: employee.id %>

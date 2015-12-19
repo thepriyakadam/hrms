@@ -6,6 +6,7 @@ class CompanyLeav < ActiveRecord::Base
   validates :expiry_date, :presence => true
   validates_length_of :no_of_leave, within: 0..20,  message:"No. Of leaves allows upto 20 characters"
   # validates_length_of :expiry_date, is:100, message:"lease specify Expiry Details for Leave"
+ 
   
   after_create :create_employee_leave_balance
   after_update :update_employee_leave_balance

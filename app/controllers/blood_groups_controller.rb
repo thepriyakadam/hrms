@@ -21,10 +21,7 @@ class BloodGroupsController < ApplicationController
         flash.now[:alert] = "Blood Group Already Exist."
          format.js { @flag = false }
       end
-    end
-    
-    
-    
+    end  
   end
 
   def update

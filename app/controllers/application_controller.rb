@@ -10,14 +10,26 @@ class ApplicationController < ActionController::Base
   #include LocalSubdomain
 
   rescue_from CanCan::AccessDenied do |exception|
-    flash[:alert] = "Sorry! You are not Authorized"
-    redirect_to root_url
+    if request.xhr?
+      flash[:alert] = "Sorry! You are not Authorized"
+      render js: "window.location = '/#{params["controller"]}'"
+    else
+      flash[:alert] = "Sorry! You are not Authorized"
+      redirect_to root_url
+    end
   end
 
   rescue_from ActiveRecord::RecordNotFound do |exc|
     flash[:alert] = "Sorry! Record not found"
     redirect_to root_url
   end
+
+  rescue_from ActionView::Template::Error do |exc|
+    flash[:alert] = "Sorry! Template error problem"
+    redirect_to root_url
+  end
+
+  
   
   # def check_subdomain
   #   if group_signed_in?

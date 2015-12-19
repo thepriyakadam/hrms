@@ -15,9 +15,16 @@ class CostCentersController < ApplicationController
   # POST /cost_centers.json
   def create
     @cost_center = CostCenter.new(cost_center_params)
-    @cost_center.save
     @cost_centers = CostCenter.all
-    @cost_center = CostCenter.new   
+    respond_to do |format|
+    if @cost_center.save
+    @cost_center = CostCenter.new 
+     format.js { @flag = true }
+      else
+        flash.now[:alert] = "Cost Center Already Exist."
+         format.js { @flag = false }
+      end
+    end  
   end
 
   # PATCH/PUT /cost_centers/1

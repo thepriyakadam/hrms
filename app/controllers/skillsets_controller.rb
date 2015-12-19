@@ -1,6 +1,6 @@
 class SkillsetsController < ApplicationController
   before_action :set_skillset, only: [:show, :edit, :update, :destroy]
-  load_and_authorize_resource
+  #load_and_authorize_resource
   # GET /skillsets
   # GET /skillsets.json
   def index
@@ -34,7 +34,8 @@ class SkillsetsController < ApplicationController
           for i in 2..len
             Skillset.create(employee_id: params['skillset']['employee_id'],name: params['skillset'][i.to_s]['name'], skill_level: params['skillset'][i.to_s]['skill_level']) 
           end
-        @skillsets = @employee.skillsets  
+        @skillsets = @employee.skillsets
+        flash[:notice] = "skillset was successfully created"  
         format.html { redirect_to @skillset, notice: 'Skillset was successfully created.' }
         format.json { render :show, status: :created, location: @skillset }
         format.js { @flag = true }

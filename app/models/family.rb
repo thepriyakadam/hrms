@@ -1,20 +1,18 @@
 class Family < ActiveRecord::Base
   belongs_to :employee
+  belongs_to :blood_group
 
   validates :relation, :presence => true
   validates :f_name, :presence => true
   validates :l_name , :presence => true
   validates :email, uniqueness: true
-  #validate  :email_regex
-  # validate :first_name_regex
-
-
+  
   validate :middle_name_regex
   validate :adhar_no_regex
-  validate :religion_regex
-  validate :profession_regex
+  #validate :religion_regex
+  #validate :profession_regex
   validate :contact_no_regex
-  validate :relation_regex
+  #validate :relation_regex
   
   validate :pan_no_regex
 

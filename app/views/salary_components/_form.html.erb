@@ -1,4 +1,4 @@
-<%= form_for(@salary_component) do |f| %>
+<%= bootstrap_form_for(@salary_component,html: {id: 'salary_component'},remote:true) do |f| %>
   <% if @salary_component.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@salary_component.errors.count, "error") %> prohibited this salary_component from being saved:</h2>
@@ -11,23 +11,53 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :code,hide_label:true, placeholder: 'Code' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :name,hide_label:true, placeholder: 'Salary Component Name' %>
+      </div>
+    </div>
+
+    <div class="col-sm-6">
+      <div class="form-group">
+        <%= f.text_field :description,hide_label:true, placeholder: 'Salary Component Description' %>
+      </div>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :is_deducted %><br>
-    <%= f.text_field :is_deducted %>
-  </div>
-  <div class="field">
-    <%= f.label :code %><br>
-    <%= f.text_field :code %>
-  </div>
-  <div class="field">
-    <%= f.label :description %><br>
-    <%= f.text_field :description %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+
+  <% if @salary_component.is_deducted %>
+    <label>Is Deducted ?</label>
+    <div class="row">
+      <div class="col-sm-1">
+          <%= f.radio_button :is_deducted, "1", checked: true, label: 'Yes' %>
+      </div>
+
+      <div class="col-sm-1">
+          <%= f.radio_button :is_deducted, "0", label: 'No' %>No
+      </div>
+    </div>   
+  <% else %>
+    <label>Is Deducted ?</label>
+    <div class="row">
+      <div class="col-sm-1">
+          <%= f.radio_button :is_deducted, "1", label: 'Yes' %>
+      </div>
+
+      <div class="col-sm-1">
+          <%= f.radio_button :is_deducted, "0", checked: true, label: 'No' %>
+      </div>
+
+      <div class="col-sm-3">
+        <div class="actions">
+          <%= f.submit :class => class_name, data: { disable_with: data_info } %>
+        </div>
+      </div> 
+    </div>    
+  <% end %>
 <% end %>

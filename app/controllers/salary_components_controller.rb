@@ -15,6 +15,8 @@ class SalaryComponentsController < ApplicationController
   # GET /salary_components/new
   def new
     @salary_component = SalaryComponent.new
+    @deducted_salary_components = SalaryComponent.deducted
+    @addected_salary_components = SalaryComponent.addected
   end
 
   # GET /salary_components/1/edit
@@ -28,11 +30,16 @@ class SalaryComponentsController < ApplicationController
 
     respond_to do |format|
       if @salary_component.save
-        format.html { redirect_to @salary_component, notice: 'Salary component was successfully created.' }
-        format.json { render :show, status: :created, location: @salary_component }
+        # format.html { redirect_to @salary_component, notice: 'Salary component was successfully created.' }
+        # format.json { render :show, status: :created, location: @salary_component }
+        @salary_component = SalaryComponent.new
+        @deducted_salary_components = SalaryComponent.deducted
+        @addected_salary_components = SalaryComponent.addected
+        format.js { @flag = true }
       else
-        format.html { render :new }
-        format.json { render json: @salary_component.errors, status: :unprocessable_entity }
+        # format.html { render :new }
+        # format.json { render json: @salary_component.errors, status: :unprocessable_entity }
+        format.js { @flag = false }
       end
     end
   end

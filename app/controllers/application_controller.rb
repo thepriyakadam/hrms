@@ -19,16 +19,36 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  rescue_from ActiveRecord::RecordNotFound do |exc|
-    flash[:alert] = "Sorry! Record not found"
-    redirect_to root_url
-  end
+  # rescue_from ActiveRecord::RecordNotFound do |exc|
+  #   if request.xhr?
+  #     flash[:alert] = "Sorry! Record not found"
+  #     render js: "window.location = '/#{params["controller"]}'"
+  #   else
+  #     flash[:alert] = "Sorry! Record not found"
+  #     redirect_to root_url
+  #   end
+  # end
 
-  rescue_from ActionView::Template::Error do |exc|
-    flash[:alert] = "Sorry! Template error problem"
-    redirect_to root_url
-  end
+  # rescue_from ActionView::Template::Error do |exc|
+  #   if request.xhr?
+  #     flash[:alert] = "Sorry! Template error problem"
+  #     render js: "window.location = '/#{params["controller"]}'"
+  #   else
+  #     flash[:alert] = "Sorry! Template error problem"
+  #     redirect_to root_url
+  #   end
+  # end
+  
 
+  # rescue_from ActiveRecord::PendingMigrationError do |exc|
+  #   if request.xhr?
+  #     flash[:alert] = "Sorry! Migration error problem"
+  #     render js: "window.location = '/#{params["controller"]}'"
+  #   else
+  #     flash[:alert] = "Sorry! Migration error problem"
+  #     redirect_to root_url
+  #   end
+  # end
   
   
   # def check_subdomain

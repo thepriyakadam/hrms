@@ -98,6 +98,7 @@ class EmployeesController < ApplicationController
       u.manual_member_code = employee.manual_employee_code
       u.role_id = params["login"]["role_id"]
     end
+    byebug
     ActiveRecord::Base.transaction do
       if user.save
         employee.update_attributes(department_id: params["login"]["department_id"], manager_id: params["login"]["manager_id"])

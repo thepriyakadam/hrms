@@ -30,15 +30,11 @@ class Employee < ActiveRecord::Base
   validates :contact_no, :presence => true
   validate  :email_regex
   validates :permanent_address, :presence => true
-
   validates :country_id, :presence => true
   validates :state_id, :presence => true
   validates :district_id, :presence => true
-  
-  validate :last_name_regex
+
   validate :adhar_no_regex
-  validate :middle_name_regex
- 
   validate :pan_no_regex
 
   def adhar_no_regex
@@ -59,29 +55,4 @@ class Employee < ActiveRecord::Base
     end
    end
 
-
-  def city_regex
-    if city.present? and not city.match(/\A[A-Za-z_ ]{1,30}\Z/)
-      errors.add :city,"City allows only Characters"
-    end
-  end
-
-
-  def first_name_regex
-    if first_name.present? and not first_name.match(/\A[A-Za-z_]{1,30}\Z/)
-      errors.add :first_name,"First Name allows only Characters"
-    end
-  end
-
-  def last_name_regex
-    if last_name.present? and not last_name.match(/\A[A-Za-z_]{1,30}\Z/)
-      errors.add :last_name,"Last Name Allows only Characters"
-    end
-  end
-
-  def middle_name_regex
-    if middle_name.present? and not middle_name.match(/\A[A-Za-z_]{1,30}\Z/)
-      errors.add :middle_name,"Middle Name Allows only Characters"
-    end
-  end
 end

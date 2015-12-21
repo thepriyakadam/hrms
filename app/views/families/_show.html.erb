@@ -25,7 +25,7 @@
   <td><%= @family.m_name %></td>
 </tr>
 <tr>
-  <th><strong>Last Name:</strong></th>
+  <th><strong>Last Name</strong></th>
   <td><%= @family.l_name %></td>
 
   <th> <strong>Date of Birth</strong></th>
@@ -95,7 +95,11 @@
 </tr>
   
 </table>
-  <div class="box-footer">
+
+
+<%= link_to 'Back',ajax_family_detail_employees_path(id: @employee.id),class: 'btn btn-default fa fa-arrow-left',remote:true%>
+</div>
+<div class="box-footer">
     Visit <a href="https://indiba.in/">www.indiba.in</a> for more Information about the HRMSONE.
   </div>
   </div><!-- /.box -->

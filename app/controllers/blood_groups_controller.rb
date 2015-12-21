@@ -14,12 +14,12 @@ class BloodGroupsController < ApplicationController
     @blood_group = BloodGroup.new(blood_group_params)
     @blood_groups = BloodGroup.all
     respond_to do |format|
-    if @blood_group.save
-    @blood_group = BloodGroup.new
-     format.js { @flag = true }
+      if @blood_group.save
+        @blood_group = BloodGroup.new
+        format.js { @flag = true }
       else
         flash.now[:alert] = "Blood Group Already Exist."
-         format.js { @flag = false }
+        format.js { @flag = false }
       end
     end  
   end

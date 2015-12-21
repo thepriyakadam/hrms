@@ -1,0 +1,53 @@
+<%= bootstrap_form_for(@salary_component,html: {id: 'salary_component'},remote:true) do |f| %>
+
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :code,hide_label:true, placeholder: 'Code' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :name,hide_label:true, placeholder: 'Salary Component Name' %>
+      </div>
+    </div>
+
+    <div class="col-sm-6">
+      <div class="form-group">
+        <%= f.text_field :description,hide_label:true, placeholder: 'Salary Component Description' %>
+      </div>
+    </div>
+  </div>
+
+  <% if @salary_component.is_deducted %>
+    <label>Is Deducted ?</label>
+    <div class="row">
+      <div class="col-sm-1">
+          <%= f.radio_button :is_deducted, "1", checked: true, label: 'Yes' %>
+      </div>
+
+      <div class="col-sm-1">
+          <%= f.radio_button :is_deducted, "0", label: 'No' %>
+      </div>
+    </div>   
+  <% else %>
+    <label>Is Deducted ?</label>
+    <div class="row">
+      <div class="col-sm-1">
+          <%= f.radio_button :is_deducted, "1", label: 'Yes' %>
+      </div>
+
+      <div class="col-sm-1">
+          <%= f.radio_button :is_deducted, "0", checked: true, label: 'No' %>
+      </div>
+    </div>  
+  <% end %>
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="actions">
+          <%= f.submit :class => class_name, data: { disable_with: data_info } %>
+        </div>
+      </div>
+    </div>   
+<% end %>

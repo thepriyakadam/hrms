@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151218151044) do
+ActiveRecord::Schema.define(version: 20151219080055) do
 
   create_table "annual_salary_masters", force: :cascade do |t|
     t.integer  "employee_id"
@@ -293,6 +293,7 @@ ActiveRecord::Schema.define(version: 20151218151044) do
     t.decimal  "leave_count",      precision: 5, scale: 1
     t.datetime "created_at",                               null: false
     t.datetime "updated_at",                               null: false
+    t.string   "reason"
   end
 
   add_index "employee_leav_requests", ["employee_id"], name: "index_employee_leav_requests_on_employee_id"
@@ -462,6 +463,9 @@ ActiveRecord::Schema.define(version: 20151218151044) do
     t.date     "passport_expiry_date"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
+    t.string   "employee_uan_no"
+    t.string   "employee_pf_no"
+    t.string   "employee_efic_no"
   end
 
   add_index "joining_details", ["employee_designation_id"], name: "index_joining_details_on_employee_designation_id"
@@ -578,7 +582,7 @@ ActiveRecord::Schema.define(version: 20151218151044) do
 
   create_table "salary_components", force: :cascade do |t|
     t.string   "name"
-    t.string   "is_deducted"
+    t.boolean  "is_deducted"
     t.string   "code"
     t.string   "description"
     t.datetime "created_at",  null: false

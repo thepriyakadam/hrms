@@ -84,7 +84,7 @@ class EmployeesController < ApplicationController
     @department = Department.find(params["login"]["department_id"])
     user = Member.new do |u|
       if employee.email == ""
-        u.email = "x"
+        u.email = "#{employee.employee_code}@xxx.com"
       else
         u.email = employee.email
       end

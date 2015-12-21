@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Employee:</strong>
+  <%= @annual_salary_master.employee %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @annual_salary_master.name %>
+</p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @annual_salary_master.code %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @annual_salary_master.description %>
+</p>
+
+<p>
+  <strong>Amount:</strong>
+  <%= @annual_salary_master.amount %>
+</p>
+
+<%= link_to 'Edit', edit_annual_salary_master_path(@annual_salary_master) %> |
+<%= link_to 'Back', annual_salary_masters_path %>

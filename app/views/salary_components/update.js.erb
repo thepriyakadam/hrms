@@ -1,0 +1,7 @@
+<% if @flag == true %>
+	$("#form").html("<%= j render 'form' %>");      
+	$("#addected_list").html("<%= j render 'addected_salary_component_list' %>");      
+	$("#deducted_list").html("<%= j render 'deducted_salary_component_list' %>");      
+<% else %>
+	$("#form").html("<%= j render 'form' %>");      
+<% end %>

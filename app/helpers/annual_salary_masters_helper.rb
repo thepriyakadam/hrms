@@ -1,0 +1,2 @@
+module AnnualSalaryMastersHelper
+end

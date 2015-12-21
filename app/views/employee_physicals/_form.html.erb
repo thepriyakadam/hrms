@@ -32,9 +32,14 @@
  
       <div class="col-sm-3">
         <div class="form-group required">
-          <%= f.text_field :size,label:"T-shirt Size",placeholder: "T-shirt Size(XS,S,M,L,XL,XXL)" %>
+          <%= f.select :size, ['XS','S','M','L','XL','XXL'],{label: 'T-Shirt Size',include_blank: " Select T-Shirt Size"} %>
        </div>
-    </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="form-group required">
+          <%= f.select :trouser_size, ['XS','S','M','L','XL','XXL'],{label: 'Trouser Size',include_blank: " Select Trouser Size"} %>
+       </div>
+      </div>
   </div>
 
 

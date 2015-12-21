@@ -7,7 +7,7 @@
 	    <thead>
 	      <tr>
 		      <th>Employee Code</th>
-		      <th>Name</th>
+		      <th>Employee Name</th>
 		      <th>Hrms Access Role</th>
 		      <th>Reporting Person</th>
 		      <th>Department</th>
@@ -19,7 +19,7 @@
 			        <td><%= employee.manual_employee_code %></td>
 			        <td><%= employee.first_name+' '+employee.last_name %></td>
 			        <td><%= employee.member.role.name %>
-			        <td><%= employee.try(:manager).try(:first_name) %></td>
+			        <td><%= employee.manager.first_name+' '+employee.manager.last_name %></td>
 			        <td><%= employee.department.name %></td>
 			      </tr>	
 		    <% end %>

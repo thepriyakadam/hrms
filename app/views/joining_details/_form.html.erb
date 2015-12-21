@@ -11,13 +11,12 @@
 <%= f.hidden_field :employee_id, value: @employee.id %>
     <div class="row">
           <div class="col-sm-3">
-        <label>Joining Date</label>
         <div class="form-group required">
           <div class="input-group">
             <div class="input-group-addon">
               <i class="fa fa-calendar"></i>
             </div>
-            <%= f.text_field :joining_date,hide_label: true,class: 'data-mask joining_date'%>
+            <%= f.text_field :joining_date,label: 'Joining Date',class: 'joining_date'%>
           </div>
         </div>
         </div>
@@ -58,7 +57,7 @@
     </div> 
     <div class="col-sm-3">
         <div class="field">
-          <%= f.text_field :employee_efic_no, label:'FSIC No' %>
+          <%= f.text_field :employee_efic_no, label:'ESIC No' %>
        </div>
     </div> 
     <div class="col-sm-3">

@@ -1,7 +1,7 @@
 <!--SELECT2 EXAMPLE -->
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title">New Employee Leave Request</h3>
+    <h3 class="box-title">Employee Leave Request</h3>
     <div class="box-tools pull-right">
       <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
       <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
@@ -48,13 +48,14 @@
           </div>
         </div>
 
-        <div class="col-sm-3">
+        <div class="col-sm-4">
+        <label>Date Range </label>
           <div class="form-group">
             <div class="input-group">
               <div class="input-group-addon">
                 <i class="fa fa-calendar"></i>
               </div>
-              <%= f.text_field :date_range,class: "pull-right active",id: "reservationtime" %>
+              <%= f.text_field :date_range, hide_label: true,class: "pull-right active",id: "reservationtime" %>
             </div><!-- /.input group -->
           </div>
         </div>

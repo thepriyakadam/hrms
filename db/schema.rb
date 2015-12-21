@@ -13,18 +13,6 @@
 
 ActiveRecord::Schema.define(version: 20151221103949) do
 
-  create_table "annual_salary_masters", force: :cascade do |t|
-    t.integer  "employee_id"
-    t.string   "name"
-    t.string   "code"
-    t.string   "description"
-    t.decimal  "amount",      precision: 13, scale: 2
-    t.datetime "created_at",                           null: false
-    t.datetime "updated_at",                           null: false
-  end
-
-  add_index "annual_salary_masters", ["employee_id"], name: "index_annual_salary_masters_on_employee_id"
-
   create_table "attendances", force: :cascade do |t|
     t.integer  "employee_shift_id"
     t.integer  "employee_id"
@@ -53,6 +41,14 @@ ActiveRecord::Schema.define(version: 20151221103949) do
 
   add_index "awards", ["employee_id"], name: "index_awards_on_employee_id"
   add_index "awards", ["year_id"], name: "index_awards_on_year_id"
+
+  create_table "banks", force: :cascade do |t|
+    t.string   "name"
+    t.string   "code"
+    t.string   "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
 
   create_table "blood_groups", force: :cascade do |t|
     t.string   "name"
@@ -583,6 +579,14 @@ ActiveRecord::Schema.define(version: 20151221103949) do
   add_index "qualifications", ["employee_id"], name: "index_qualifications_on_employee_id"
   add_index "qualifications", ["university_id"], name: "index_qualifications_on_university_id"
   add_index "qualifications", ["year_id"], name: "index_qualifications_on_year_id"
+
+  create_table "religions", force: :cascade do |t|
+    t.string   "name"
+    t.string   "code"
+    t.string   "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
 
   create_table "roles", force: :cascade do |t|
     t.string   "code"

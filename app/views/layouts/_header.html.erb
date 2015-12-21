@@ -141,7 +141,7 @@
             <!-- Click image -->
             <p>
               <% if current_user.class == Member %>
-                  <%= current_user.member_code %>-
+                  <%= current_user.manual_member_code %>-
                   <%= current_user.role.name %>
               <%else%>
                 <%= current_user.subdomain %>-

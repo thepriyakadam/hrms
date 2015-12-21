@@ -22,4 +22,11 @@ module EmployeesHelper
 	def all_employee_list
 		Employee.all.collect {|e| [e.first_name,e.id]}
 	end
+	def check_if_true(item)
+      if(item == 'true' or item == true or item == 1 or item == '1')
+        return true
+    	else
+      		return false
+   	 	end
+   	 end
 end

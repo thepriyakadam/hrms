@@ -118,12 +118,13 @@
         </div>
 
         <div class="col-sm-3">
+        <label>Date of Birth: </label>
         <div class="field">
           <div class="input-group">
             <div class="input-group-addon">
               <i class="fa fa-calendar"></i>
             </div>
-            <%= f.text_field :date_of_birth, label: 'Date of Birth', class: 'birth_date'%>
+            <%= f.text_field :date_of_birth, hide_label: true, class: 'birth_date'%>
           </div>
         </div>
         </div>

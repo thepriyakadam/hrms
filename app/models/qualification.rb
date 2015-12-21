@@ -7,7 +7,6 @@ class Qualification < ActiveRecord::Base
   belongs_to :university
 
   validates :marks, :presence => true
-  validates :university, :presence => true
   validates :degree_id, :presence => true
   validates :degree_type_id, :presence => true
 end

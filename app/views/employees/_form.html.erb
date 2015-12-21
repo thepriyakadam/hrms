@@ -52,15 +52,12 @@
             <%= f.select :gender, ['Male','Female'],{label: 'Select Gender',include_blank: " Select Gender"} %>
           </div>
         </div>
-
-        
       </div>
 
       <div class="row">
-
         <div class="col-sm-3">
           <div class="field">
-           <%= f.text_field :email,placeholder: "e.g : xyz@gmail.com" %>
+           <%= f.text_field :email %>
           </div>
         </div>
 
@@ -78,11 +75,11 @@
 
         <div class="col-sm-3">
           <div class="field">
-           <%= f.text_field :licence_no, label: 'Licence No' %>
+           <%= f.text_field :licence_no, label: 'Driving Licence No' %>
           </div>
         </div>
-     </div>
-       <div class="row">
+      </div>
+      <div class="row">
         <div class="col-sm-3">
           <div class="form-group required">
            <%= f.text_field :contact_no,label: 'Contact No' %>
@@ -170,7 +167,7 @@
           </div>
           <div class="col-sm-3">
             <div class="field">
-              <%= f.text_field :city,placeholder: "e.g : Mumbai"%>
+              <%= f.text_field :city %>
             </div>
           </div>
         </div>

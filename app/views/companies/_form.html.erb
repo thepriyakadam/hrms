@@ -35,12 +35,12 @@
       <div class="row">
         <div class="col-sm-3">
           <div class="form-group required">
-           <%= f.text_field :name,label: 'Company Name',placeholder: "e.g : TCS"%>
+           <%= f.text_field :name,label: 'Company Name',placeholder: "e.g : ICS"%>
            </div>
         </div>
         <div class="col-sm-6">
           <div class="field">
-           <%= f.text_field :description,label: 'Description',placeholder: "e.g : Indiba Consultancy Services." %>
+           <%= f.text_field :description,label: 'Company Full Name',placeholder: "e.g : Indiba Consultancy Services." %>
           </div>
         </div>
         <div class="col-sm-3">
@@ -52,14 +52,14 @@
      
       <div class="row">
         <div class="col-sm-3">
-          <div class="form-group required">
+          <div class="field">
            <%= f.text_field :registration_no,label: 'Registration No' %>
           </div>
         </div>
         
         <div class="col-sm-3">
           <div class="form-group required">
-            <%= f.text_field :contact_no,label: 'Contact No' %>
+            <%= f.text_field :contact_no,label: 'Contact No',placeholder: "Without Space" %>
           </div>
         </div>
         <div class="col-sm-3">
@@ -113,31 +113,31 @@
         </div>
         <div class="col-sm-3">
           <div class="form-group required">
-           <%= f.text_field :city,placeholder: "e.g : Mumbai" %>
+           <%= f.text_field :city %>
           </div>
         </div>        
       </div>
 
       <div class="row">
         <div class="col-sm-3">
-          <div class="form-group required">
-            <%= f.text_field :tax_no,label: 'Tax Number' %>
+          <div class="field">
+            <%= f.text_field :tax_no,label: 'TAN Number' %>
           </div>
         </div>
        
         <div class="col-sm-3">
-          <div class="form-group required">
+          <div class="field">
            <%= f.text_field :professional_tax_no,label: 'Professional Tax No' %>
           </div>
         </div>
         <div class="col-sm-3">
           <div class="form-group required">
-           <%= f.text_field :email,label: 'Email',placeholder: "e.g : xyz@gmail.com" %>
+           <%= f.text_field :email,label: 'Email' %>
           </div>
         </div>
         <div class="col-sm-3">
           <div class="form-group required">
-            <%= f.text_field :web_site, label: 'Website',placeholder: "e.g : www.companyname.com" %>
+            <%= f.text_field :web_site, label: 'Website' %>
           </div>
         </div>  
       </div>   

@@ -60,19 +60,19 @@
 
         <div class="col-sm-3">
           <div class="field">
-           <%= f.text_field :email %>
+           <%= f.text_field :email,placeholder: "e.g : xyz@gmail.com" %>
           </div>
         </div>
 
          <div class="col-sm-3">
           <div class="field">
-           <%= f.text_field :adhar_no, label: 'Aadhaar No' %>
+           <%= f.text_field :adhar_no, label: 'Aadhaar No',placeholder: "e.g : 123456789012" %>
           </div>
         </div>
 
         <div class="col-sm-3">
           <div class="field">
-            <%= f.text_field :pan_no, label: 'PAN Card No' %>
+            <%= f.text_field :pan_no, label: 'PAN Card No',placeholder: "e.g : ABCDE12345B" %>
           </div>
         </div>
 
@@ -143,7 +143,7 @@
         </div>
          <div class="col-sm-3">
           <div class="field">
-            <%= f.text_field :pin_code,label:"Pin/Zip Code"%>
+            <%= f.text_field :pin_code,label:"Pin/Zip Code",placeholder: "e.g : 400703"%>
           </div>
         </div>
         </div>
@@ -170,7 +170,7 @@
           </div>
           <div class="col-sm-3">
             <div class="field">
-              <%= f.text_field :city %>
+              <%= f.text_field :city,placeholder: "e.g : Mumbai"%>
             </div>
           </div>
         </div>

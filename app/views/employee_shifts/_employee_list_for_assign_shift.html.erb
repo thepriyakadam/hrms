@@ -6,20 +6,24 @@
     <table id="example2" class="table table-bordered table-hover">
     <thead>
       <tr>
-      <th>Select</th>
-      <th>Employee Id</th>
+      <th>Select <%= check_box("true", "false") %></th>
+      <th>Employee ID</th>
       <th>Employee Name</th>
+      <th>Designation</th>
+      <th>Employee Type</th>
       <th>Contact No</th>
       </tr>
   </thead>
   <tbody>
     <% @employees.each do |employee| %>
       <tr>
-        <td></td>
+        <td><%= check_box("true", "false") %></td>
         <td><%= employee.manual_employee_code %></td>
         <td><%= employee.first_name+' '+employee.last_name %></td>
+        <td><%= employee.joining_detail.try(:employee_designation).try(:name) %></td>
+        <td><%= employee.employee_type.name %></td>
         <td><%= employee.contact_no %></td>
-        </tr>
+      </tr>
       <% end %>
     </tbody>
   </table>

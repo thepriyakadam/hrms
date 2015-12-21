@@ -1,0 +1,2 @@
+module EmployeeAnnualSalariesHelper
+end

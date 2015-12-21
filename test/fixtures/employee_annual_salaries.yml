@@ -2,14 +2,10 @@
 
 one:
   employee_id: 
-  name: MyString
-  code: MyString
-  description: MyString
+  salary_component_id: 
   amount: 9.99
 
 two:
   employee_id: 
-  name: MyString
-  code: MyString
-  description: MyString
+  salary_component_id: 
   amount: 9.99

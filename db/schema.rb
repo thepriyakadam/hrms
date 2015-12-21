@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151219080055) do
+ActiveRecord::Schema.define(version: 20151221084201) do
 
   create_table "annual_salary_masters", force: :cascade do |t|
     t.integer  "employee_id"
@@ -304,8 +304,9 @@ ActiveRecord::Schema.define(version: 20151219080055) do
     t.string   "height"
     t.string   "weight"
     t.string   "size"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.string   "trouser_size"
   end
 
   add_index "employee_physicals", ["employee_id"], name: "index_employee_physicals_on_employee_id"

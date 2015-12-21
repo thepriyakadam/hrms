@@ -19,12 +19,13 @@
     </div>
 
      <div class="col-sm-3">
+     <label>Leave Expiry Date: </label>
       <div class="form-group required">
           <div class="input-group">
             <div class="input-group-addon">
               <i class="fa fa-calendar"></i>
             </div>
-            <%= f.text_field :expiry_date,label:'Leave Expiry Date',class: 'company_leave_expiry_date' %>
+            <%= f.text_field :expiry_date,hide_label:true,class: 'company_leave_expiry_date' %>
           </div>
         </div>   
     </div>

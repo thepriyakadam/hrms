@@ -37,12 +37,13 @@
 
 <div class="row">
      <div class="col-sm-3">
+     <label>Birth Date: </label>
          <div class="form-group required">
           <div class="input-group">
             <div class="input-group-addon">
               <i class="fa fa-calendar"></i>
             </div>
-            <%= f.text_field :date_of_birth,label: 'Birth Date', class: 'family_birth_date' %>
+            <%= f.text_field :date_of_birth,hide_label:true, class: 'family_birth_date' %>
           </div>
          </div>
         </div>
@@ -120,23 +121,26 @@
         <%= f.text_field :passport_no,label: 'Passport No' %>
        </div>
       </div>
+
       <div class="col-sm-3">
-        <div class="field">
+       <div class="field">
+        <label>Passport Issue Date: </label>
           <div class="input-group">
             <div class="input-group-addon">
               <i class="fa fa-calendar"></i>
             </div>
-            <%= f.text_field :passport_issue_date,label: 'Passport Issue Date', class: 'family_passport_issue_date'%>
+            <%= f.text_field :passport_issue_date,hide_label:true, class: 'family_passport_issue_date'%>
           </div>
         </div>
         </div>
         <div class="col-sm-3">
         <div class="field">
+        <label>Passport Expiry Date: </label>
           <div class="input-group">
             <div class="input-group-addon">
               <i class="fa fa-calendar"></i>
             </div>
-            <%= f.text_field :passport_expiry_date,label: 'Passport Expiry Date', class: 'family_passport_expiry_date'%>
+            <%= f.text_field :passport_expiry_date,hide_label: true, class: 'family_passport_expiry_date'%>
           </div>
         </div>
         </div>

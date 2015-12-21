@@ -14,6 +14,9 @@
     <tr>
       <th><strong>Employee</strong></th>
       <td><%= @joining_detail.employee.first_name %></td>
+
+      <th><strong>Employee UAN No</strong></th>
+      <td><%= @joining_detail.employee_uan_no %></td>
     </tr>
 
     <tr>
@@ -30,9 +33,16 @@
       <th><strong>Employee Grade</strong></th>
       <td><%= @joining_detail.employee_grade.name %></td>
     </tr>
+    <tr>
+      <th><strong>PF No</strong></th>
+      <td><%= @joining_detail.employee_pf_no %></td>
+
+      <th><strong>ESIC No</strong></th>
+      <td><%= @joining_detail.employee_efic_no %></td>
+    </tr>
 
     <tr>
-      <th><strong>Medical Scheme</strong></th>
+      <th><strong>Medical Insurance</strong></th>
       <td> <%= @joining_detail.medical_schem %></td>
 
       <th><strong>Probation Period</strong></th>
@@ -43,24 +53,18 @@
       <th><strong>Notice Period</strong></th>
       <td><%= @joining_detail.notice_period %></td>
 
-      <th><strong>Passport</strong></th>
-      <td><%= @joining_detail.have_passport %></td>
+      <th><strong>Passport No</strong></th>
+      <td><%= @joining_detail.passport_no %></td>
       
     </tr> 
     <tr>
-      <th><strong>Passport No</strong></th>
-      <td><%= @joining_detail.passport_no %></td>
-
       <th><strong>Passport Issue Date</strong></th>
       <td><%= @joining_detail.passport_issue_date %></td>
-    </tr>
-    <tr>
-      
+
       <th> <strong>Passport Expiry Date</strong></th>
       <td> <%= @joining_detail.passport_expiry_date %></td>
-      <th></th>
-      <td></td>
-    </tr>  
+    </tr>
+    
  </table>
   <div class="box-footer">
     Visit <a href="https://indiba.in/">www.indiba.in</a> for more Information about the HRMSONE.

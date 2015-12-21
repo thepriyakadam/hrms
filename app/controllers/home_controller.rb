@@ -13,6 +13,6 @@ class HomeController < ApplicationController
 
   def created_user
     @employees = Employee.joins("INNER JOIN members on employees.id = members.employee_id")
-    @roles = Role.all
+    #@roles = Role.all
   end
 end

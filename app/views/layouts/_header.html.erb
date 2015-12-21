@@ -124,7 +124,7 @@
               <% elsif current_user.role.name == 'CompanyLocation' %>
                 <%= current_user.company_location.name %>
               <% elsif current_user.role.name == 'Department' %>
-                <%= current_user.dapartment.name %>  
+                <%= current_user.department.name %>  
               <% else %>
                 <%= current_user.employee.first_name %>  
               <% end %>
@@ -141,7 +141,7 @@
             <!-- Click image -->
             <p>
               <% if current_user.class == Member %>
-                  <%= current_user.member_code %>-
+                  <%= current_user.manual_member_code %>-
                   <%= current_user.role.name %>
               <%else%>
                 <%= current_user.subdomain %>-

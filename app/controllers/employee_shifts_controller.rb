@@ -15,6 +15,7 @@ class EmployeeShiftsController < ApplicationController
   # GET /employee_shifts/new
   def new
     @employee_shift = EmployeeShift.new
+    @employees = Employee.all
   end
 
   # GET /employee_shifts/1/edit

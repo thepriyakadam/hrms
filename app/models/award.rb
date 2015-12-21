@@ -2,8 +2,8 @@ class Award < ActiveRecord::Base
   belongs_to :employee
   belongs_to :year
   validates :award_name, presence: true
-validate :award_name_regex
-validate :award_from_regex
+  validate :award_name_regex
+  validate :award_from_regex
 
 
   
@@ -18,11 +18,5 @@ def award_from_regex
       errors.add :award_from,"Award From allows only Characters"
     end
   end
-
-  # def year_regex
-  #   if year.present? and not year.match(/\A[0-9]{1,4}\Z/)
-  #     errors.add :year,"Year allows only Digits"
-  #   end
-  # end
 
 end

@@ -76,6 +76,6 @@ class JoiningDetailsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def joining_detail_params
-      params.require(:joining_detail).permit(:employee_id, :joining_date, :ctc, :employee_grade_id, :confirmation_date, :status, :probation_period, :notice_period, :medical_schem, :employee_designation_id, :have_passport, :passport_no, :passport_issue_date, :passport_expiry_date)
+      params.require(:joining_detail).permit(:employee_id, :joining_date, :employee_grade_id, :confirmation_date, :employee_uan_no, :employee_pf_no, :employee_efic_no, :probation_period, :notice_period, :medical_schem, :employee_designation_id, :passport_no, :passport_issue_date, :passport_expiry_date)
     end
 end

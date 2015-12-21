@@ -40,7 +40,7 @@
         </div>
         <div class="col-sm-6">
           <div class="field">
-           <%= f.text_field :description,label: 'Description',placeholder: "e.g : Indiba Consultancy Services." %>
+           <%= f.text_field :description,label: 'Company Full Name',placeholder: "e.g : Indiba Consultancy Services." %>
           </div>
         </div>
         <div class="col-sm-3">
@@ -52,28 +52,29 @@
      
       <div class="row">
         <div class="col-sm-3">
-          <div class="form-group required">
+          <div class="field">
            <%= f.text_field :registration_no,label: 'Registration No' %>
           </div>
         </div>
         
         <div class="col-sm-3">
           <div class="form-group required">
-            <%= f.text_field :contact_no,label: 'Contact No' %>
+            <%= f.text_field :contact_no,label: 'Contact No',placeholder: "Without Space" %>
           </div>
         </div>
         <div class="col-sm-3">
           <div class="form-group required">
-            <%= f.text_field :pan_card_no,label: 'Pancard Number' %>
+            <%= f.text_field :pan_card_no,label: 'Pancard Number',placeholder: "e.g : ABCDE12345B" %>
           </div>
         </div>
         <div class="col-sm-3">
+        <label>Starting Date: </label>
          <div class="form-group required">
           <div class="input-group">
             <div class="input-group-addon">
               <i class="fa fa-calendar"></i>
             </div>
-            <%= f.text_field :starting_date,label: 'Starting Date',class: 'company_start_date'%>
+            <%= f.text_field :starting_date,hide_label: true,class: 'company_start_date'%>
           </div>
          </div>
         </div>
@@ -87,7 +88,7 @@
         </div>
         <div class="col-sm-3">
           <div class="form-group required">
-           <%= f.text_field :pin_code,label: 'Pin/ZIP Code' %>
+           <%= f.text_field :pin_code,label: 'Pin/ZIP Code',placeholder: "e.g : 400703" %>
           </div>
         </div>
       </div>
@@ -120,13 +121,13 @@
 
       <div class="row">
         <div class="col-sm-3">
-          <div class="form-group required">
-            <%= f.text_field :tax_no,label: 'Tax Number' %>
+          <div class="field">
+            <%= f.text_field :tax_no,label: 'TAN Number' %>
           </div>
         </div>
        
         <div class="col-sm-3">
-          <div class="form-group required">
+          <div class="field">
            <%= f.text_field :professional_tax_no,label: 'Professional Tax No' %>
           </div>
         </div>

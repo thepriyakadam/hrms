@@ -12,7 +12,8 @@
     <%= bootstrap_form_for(@employee_leav_request,html: {id: 'employee_leav_request'}) do |f| %>
      <%= f.hidden_field :employee_id, value: current_user.employee_id %>
       <div class="row">
-        <div class="col-sm-6">
+      <div class="col-sm-1"></div>
+        <div class="col-sm-9">
           <div class="field">
           <table class="table table-bordered table-hover">
            <thead>
@@ -57,12 +58,14 @@
             </div><!-- /.input group -->
           </div>
         </div>
-        <div class="col-sm-3">
+      </div>
+      <div class="row">
+        <div class="col-sm-9">
           <div class="field">
-           <%= f.select :leave_type, ['Full Day','Half Day'] %>
+            <%= f.text_area :reason %>
           </div>
         </div>
-      </div>
+        </div>
       
       <div class="row">
          <div class="col-sm-3">

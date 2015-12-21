@@ -121,17 +121,24 @@ $.validator.addMethod("address", function (value, element) {
       "company[name]":{
         required: true
       },
+      "company[manual_company_code]":{
+        required: true
+      },
       "company[registration_no]":{
         maxlength: 15,
         required: true,
       },
+       "company[address]":{
+        required: true,
+      },
   
       "company[contact_no]":{
-          maxlength: 16
+        required: true,
+          maxlength: 19
       },
 
       "company[tax_no]":{
-          required: true
+         
       },
       "company[starting_date]":{
           required: true
@@ -143,7 +150,7 @@ $.validator.addMethod("address", function (value, element) {
       },
   
       "company[professional_tax_no]":{
-          required: true
+          
       },
       "company[pan_card_no]":{
           maxlength: 10,
@@ -167,6 +174,10 @@ $.validator.addMethod("address", function (value, element) {
           required: true
          
       },
+      "company[country_id]":{
+          required: true
+         
+      },
       "company[web_site]":{
           required: true,
           cus_url:true
@@ -176,26 +187,27 @@ $.validator.addMethod("address", function (value, element) {
     messages: {
       "company[name]":{
         required: "Please specify company",
-        maxlength: "Name allows upto 30 Characters"
       },
       "company[registration_no]":{
         required: "Please Specify Registration No",
-        maxlength: "Registration allows upto 30 alphabets"
+      },
+      "company[address]":{
+        required: "Please Specify Address",
       },
  
      "company[contact_no]":{
       required: "Please Specify Contact No",
-        maxlength: "Enter the Correct contact number"
+      maxlength: "Enter the Correct contact number"
       },
   
       "company[tax_no]":{
-        required: "Please Specify Tax No",
+       
           maxlength: "Enter the Valid Tax number"
       },
      
       "company[pan_card_no]":{
         required: "Please Enter Valid Pancard Details",
-          maxlength: "Enter the Pancard Details max 10 char"
+        maxlength: "Enter the Pancard Details max 10 char"
       },
 
       "company[email]":{
@@ -206,7 +218,6 @@ $.validator.addMethod("address", function (value, element) {
       },
 
       "company[professional_tax_no]":{
-        required: "Please Specify Professional Tax number",
           maxlength: "Enter the Valid Professional Tax number"
       },
       "company[city]":{
@@ -221,6 +232,9 @@ $.validator.addMethod("address", function (value, element) {
           maxlength: "Pincode Details allows max 9 digits"
       },
       "company[state_id]":{
+        required: "Please Enter State Details"
+      },
+      "company[country_id]":{
         required: "Please Enter State Details"
       },
       "company[web_site]":{
@@ -241,19 +255,23 @@ $("#company_location").validate({
         required: true
       },
 
-     "company_location[email]":{
-        // loginRegex: true
+      "company_location[manual_company_location_code]":{
+        required: true
       }, 
 
      "company_location[contact_no]":{
         maxlength: 16
       },
 
-      "company_location[district_id]":{
+      "company_location[state_id]":{
         required: true
       },
 
-      "company_location[state_id]":{
+      "company_location[country_id]":{
+        required: true
+      },
+
+      "company_location[district_id]":{
         required: true
       },
 
@@ -275,12 +293,20 @@ $("#company_location").validate({
         required: "Please specify company Name"
       },
       
+      "company_location[manual_company_location_code]":{
+        required: "Please specify company Location code"
+      },
+
       "company_location[district_id]":{
       required: "Please Specify District"
       },
 
       "company_location[state_id]":{
       required: "Please Specify state"
+      },
+
+      "company_location[country_id]":{
+      required: "Please Specify Country"
       },
 
      "company_location[contact_no]":{
@@ -621,21 +647,17 @@ $("#family").validate({
     rules: {
       "family[f_name]":{
         required: true,
-        maxlength: 30,
-        lettersOnly: true
+        maxlength: 30
       },
         "family[m_name]":{
-        maxlength: 30,
-        lettersOnly: true
-         },
+        maxlength: 30
+      },
       "family[l_name]":{
         required: true,
-        maxlength: 30,
-        lettersOnly: true
+        maxlength: 30
       },
       
       "family[age]":{
-       
         maxlength: 3,
         numbersOnly: true
       },
@@ -643,31 +665,7 @@ $("#family").validate({
         maxlength: 13,
         contactNo: true
       },
-      "family[phone_no]":{
-        maxlength: 13,
-        contactNo: true
-      },
-      "family[state]":{
-        maxlength: 50,
-        stateName: true,
-        required: true
-      },
-      "family[dist]":{
-        maxlength: 50,
-        required: true
-      },
-      "family[city]":{
-        maxlength: 50,
-        cityName: true
-      },
-      "family[pin_code]":{
-       
-        maxlength: 6,
-        pincode: true
-      },
-      "family[email]":{
-        loginRegex: true
-      },
+     
       "family[relation]":{
         required: true,
         maxlength: 30
@@ -680,13 +678,9 @@ $("#family").validate({
       maxlength: 10,
       pan:true
        },
-       "family[passport_no]":{
+      "family[passport_no]":{
          maxlength: 8,
          passportNo: true
-      },
-       "family[status]":{
-        
-        maxlength: 30
       },
       "family[religion]":{
        
@@ -708,30 +702,15 @@ $("#family").validate({
         required: "Please specify Last Name",
         maxlength: "Designation allows upto 30 characters"
       },
-      "family[date_of_birth]":{
-        maxlength: "CTC allows upto 6 characters"
-      },
+
       "family[age]":{
-        maxlength: "Employee ID allows upto 2 integers"
+        maxlength: "Please specify Correct Age"
       },
+
       "family[contact_no]":{
         maxlength: "Enter the Correct contact number"
       },
-      "family[phone_no]":{
-        maxlength: "Enter the Correct Phone No"
-      },
-      "family[state]":{
-        maxlength: "State Name allows upto 50 characters"
-      },
-      "family[dist]":{
-        maxlength: "District allows upto 50 alphabets"
-      },
-      "family[city]":{
-        maxlength: "City allows upto 50 integers"
-      },
-      "family[pin_code]":{
-        maxlength: "Pincode allows upto 6 digits"
-      },
+      
       "family[relation]":{
         required: "Please specify Relation Details",
         maxlength: "Relation allows upto 50 characters"
@@ -746,10 +725,7 @@ $("#family").validate({
       "family[passport_no]":{
         maxlength: "Passport No allows upto 8 characters"
       },
-       "family[status]":{
-       
-        maxlength: "Status allows upto 30 characters"
-      },
+      
       "family[religion]":{
         
         maxlength: "Religion allows upto 6 characters"

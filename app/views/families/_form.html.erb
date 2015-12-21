@@ -37,12 +37,13 @@
 
 <div class="row">
      <div class="col-sm-3">
+     <label>Birth Date: </label>
          <div class="form-group required">
           <div class="input-group">
             <div class="input-group-addon">
               <i class="fa fa-calendar"></i>
             </div>
-            <%= f.text_field :date_of_birth,label: 'Birth Date', class: 'family_birth_date' %>
+            <%= f.text_field :date_of_birth,hide_label:true, class: 'family_birth_date' %>
           </div>
          </div>
         </div>
@@ -79,7 +80,7 @@
 
     <div class="col-sm-3">
         <div class="field">
-        <%= f.select :blood_group_id, all_blood_group,{label: 'Boold Group',include_blank: " Select blood Group"} %>
+        <%= f.select :blood_group_id, all_blood_group,{label: 'Blood Group',include_blank: " Select blood Group"} %>
         </div>
       </div>
 </div>
@@ -108,8 +109,44 @@
         </div>
       </div>
 </div>
+<div class="row">
+     <div class="col-sm-3">
+        <div class="field">
+          <%= f.text_field :profession %>
+        </div>
+      </div>
 
-<div class="row">  
+     <div class="col-sm-3">
+        <div class="field">
+        <%= f.text_field :passport_no,label: 'Passport No' %>
+       </div>
+      </div>
+
+      <div class="col-sm-3">
+       <div class="field">
+        <label>Passport Issue Date: </label>
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+            <%= f.text_field :passport_issue_date,hide_label:true, class: 'family_passport_issue_date'%>
+          </div>
+        </div>
+        </div>
+        <div class="col-sm-3">
+        <div class="field">
+        <label>Passport Expiry Date: </label>
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+            <%= f.text_field :passport_expiry_date,hide_label: true, class: 'family_passport_expiry_date'%>
+          </div>
+        </div>
+        </div>
+  </div>
+
+  <div class="row">  
       <div class="col-sm-3">
         <div class="field">
           <%= f.text_field :religion %>
@@ -118,7 +155,7 @@
  
       <div class="col-sm-3">
         <div class="field">
-          <%= f.select :is_handicap, ['Yes','No'],{include_blank: "Please Select"},{onchange:"var a={id:$(this).val()}; $.get('/families/ajax_show_handicap_type_textbox',a,function(response){});"} %>
+          <%= f.select :is_handicap, ['Yes','No'],{label: 'Handicap',include_blank: "Please Select"},{onchange:"var a={id:$(this).val()}; $.get('/families/ajax_show_handicap_type_textbox',a,function(response){});"} %>
         </div>
       </div>
 
@@ -126,46 +163,11 @@
         <div class="field">
           <div id="handicap_type">
               <% if action_name == 'edit' and @family.handicap_type != "" %>
-                <%= f.text_field :handicap_type %>
+                <%= f.text_field :handicap_type,label: 'Handicap' %>
               <% end %>
             </div>
         </div>
       </div>
-
-      <div class="col-sm-3">
-        <div class="field">
-          <%= f.text_field :profession %>
-        </div>
-      </div>
-
-</div>
-<div class="row">
-
-     <div class="col-sm-3">
-        <div class="field">
-        <%= f.text_field :passport_no,label: 'Passport No' %>
-       </div>
-      </div>
-      <div class="col-sm-3">
-        <div class="field">
-          <div class="input-group">
-            <div class="input-group-addon">
-              <i class="fa fa-calendar"></i>
-            </div>
-            <%= f.text_field :passport_issue_date,label: 'Passport Issue Date', class: 'family_passport_issue_date'%>
-          </div>
-        </div>
-        </div>
-        <div class="col-sm-3">
-        <div class="field">
-          <div class="input-group">
-            <div class="input-group-addon">
-              <i class="fa fa-calendar"></i>
-            </div>
-            <%= f.text_field :passport_expiry_date,label: 'Passport Expiry Date', class: 'family_passport_expiry_date'%>
-          </div>
-        </div>
-        </div>
   </div>
 
   <div class="row">

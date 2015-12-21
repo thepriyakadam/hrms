@@ -52,12 +52,9 @@
             <%= f.select :gender, ['Male','Female'],{label: 'Select Gender',include_blank: " Select Gender"} %>
           </div>
         </div>
-
-        
       </div>
 
       <div class="row">
-
         <div class="col-sm-3">
           <div class="field">
            <%= f.text_field :email %>
@@ -66,23 +63,23 @@
 
          <div class="col-sm-3">
           <div class="field">
-           <%= f.text_field :adhar_no, label: 'Aadhaar No' %>
+           <%= f.text_field :adhar_no, label: 'Aadhaar No',placeholder: "e.g : 123456789012" %>
           </div>
         </div>
 
         <div class="col-sm-3">
           <div class="field">
-            <%= f.text_field :pan_no, label: 'PAN Card No' %>
+            <%= f.text_field :pan_no, label: 'PAN Card No',placeholder: "e.g : ABCDE12345B" %>
           </div>
         </div>
 
         <div class="col-sm-3">
           <div class="field">
-           <%= f.text_field :licence_no, label: 'Licence No' %>
+           <%= f.text_field :licence_no, label: 'Driving Licence No' %>
           </div>
         </div>
-     </div>
-       <div class="row">
+      </div>
+      <div class="row">
         <div class="col-sm-3">
           <div class="form-group required">
            <%= f.text_field :contact_no,label: 'Contact No' %>
@@ -118,12 +115,13 @@
         </div>
 
         <div class="col-sm-3">
+        <label>Date of Birth: </label>
         <div class="field">
           <div class="input-group">
             <div class="input-group-addon">
               <i class="fa fa-calendar"></i>
             </div>
-            <%= f.text_field :date_of_birth, label: 'Date of Birth', class: 'birth_date'%>
+            <%= f.text_field :date_of_birth, hide_label: true, class: 'birth_date'%>
           </div>
         </div>
         </div>
@@ -143,7 +141,7 @@
         </div>
          <div class="col-sm-3">
           <div class="field">
-            <%= f.text_field :pin_code,label:"Pin/Zip Code"%>
+            <%= f.text_field :pin_code,label:"Pin/Zip Code",placeholder: "e.g : 400703"%>
           </div>
         </div>
         </div>

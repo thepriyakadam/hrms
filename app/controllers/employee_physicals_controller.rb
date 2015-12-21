@@ -74,6 +74,6 @@ class EmployeePhysicalsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def employee_physical_params
-      params.require(:employee_physical).permit(:employee_id, :height, :weight, :size)
+      params.require(:employee_physical).permit(:employee_id, :height, :weight, :size, :trouser_size)
     end
 end

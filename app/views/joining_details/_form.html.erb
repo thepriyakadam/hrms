@@ -22,71 +22,91 @@
         </div>
         <div class="col-sm-3">
         <div class="field">
-           <%= f.select :employee_grade_id, all_employee_grade, {label: 'Employee Grade'} %>
+           <%= f.select :employee_grade_id, all_employee_grade, {label: 'Employee Grade',include_blank: " Select Employee Grade"} %>
         </div>
         </div>
   
         <div class="col-sm-3">
         <div class="form-group required">
-          <%= f.select :employee_designation_id,all_employee_designation, {label: 'Employee Designation'} %>
+          <%= f.select :employee_designation_id,all_employee_designation,{label: 'Designation',include_blank: " Select Employee Designation"} %>
         </div>
         </div>
         <div class="col-sm-3">
+         <label>Confirmation Date: </label>
         <div class="field">
           <div class="input-group">
             <div class="input-group-addon">
               <i class="fa fa-calendar"></i>
             </div>
-            <%= f.text_field :confirmation_date,label: 'Confirmation Date', class: 'confirm_date'%>
+            <%= f.text_field :confirmation_date,hide_label: true, class: 'confirm_date'%>
           </div>
         </div>
         </div>
     </div>
-  <div class="row">
+    <div class="row">
       <div class="col-sm-3">
         <div class="field">
-           <%= f.select :medical_schem, ['Yes','No'] %>
-       </div>
-      </div>
-  
-      <div class="col-sm-3">
-        <div class="field">
-        <%= f.text_field :probation_period,label: 'Probation Period' %>
+        <%= f.text_field :employee_uan_no, label:'UAN No' %>
        </div>
      </div>
   
       <div class="col-sm-3">
         <div class="field">
-          <%= f.text_field :notice_period,label: 'Notice Period' %>
+          <%= f.text_field :employee_pf_no, label:'PF No' %>
        </div>
     </div> 
-  </div>
-  <div class="row">
-     <div class="col-sm-3">
+    <div class="col-sm-3">
         <div class="field">
-        <%= f.text_field :passport_no,label: 'Passport No' %>
+          <%= f.text_field :employee_efic_no, label:'ESIC No' %>
+       </div>
+    </div> 
+    <div class="col-sm-3">
+        <div class="field">
+           <%= f.select :medical_schem, ['Yes','No'],{label: 'Medical Insurance',include_blank: " Select Medical Insurance"} %>
+       </div>
+      </div>
+
+   </div>
+  <div class="row">
+      <div class="col-sm-3">
+        <div class="field">
+          <%= f.text_field :passport_no,label: 'Passport No' %>
        </div>
       </div>
       <div class="col-sm-3">
+      <label>Passport Issue Date: </label>
         <div class="field">
           <div class="input-group">
             <div class="input-group-addon">
               <i class="fa fa-calendar"></i>
             </div>
-            <%= f.text_field :passport_issue_date,label: 'Passport Issue Date', class: 'passport_issue_date'%>
+              <%= f.text_field :passport_issue_date,hide_label: true,class: 'passport_issue_date'%>
           </div>
         </div>
-        </div>
-        <div class="col-sm-3">
+      </div>
+      <div class="col-sm-3">
+      <label>Passport Expiry Date: </label>
         <div class="field">
           <div class="input-group">
             <div class="input-group-addon">
               <i class="fa fa-calendar"></i>
             </div>
-            <%= f.text_field :passport_expiry_date,label: 'Passport Expiry Date', class: 'passport_expiry_date'%>
+             <%= f.text_field :passport_expiry_date,hide_label:true, class: 'passport_expiry_date'%>
           </div>
         </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="field">
+          <%= f.text_field :probation_period,label: 'Probation Period' %>
         </div>
+      </div> 
+  </div>
+  <div class="row">
+      <div class="col-sm-3">
+        <div class="field">
+          <%= f.text_field :notice_period,label: 'Notice Period' %>
+        </div>
+      </div> 
   </div>
 
  <div class="row">

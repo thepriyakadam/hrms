@@ -2,41 +2,22 @@
 <!-- sidebar menu: : style can be found in sidebar.less -->
 <ul class="sidebar-menu">
   <li class="header">COMPANY LOCATION</li>
-  <li class="active treeview">
+ <li class="active treeview">
     <a href="">
-      <i class="fa fa-dashboard"></i> <span>Create</span> <i class="fa fa-angle-left pull-right"></i>
+      <i class="fa fa-user-plus"></i> <span>Create</span> <i class="fa fa-angle-left pull-right"></i>
     </a>
     <ul class="treeview-menu">
       <li><a href="/departments/new"><i class="fa fa-circle-o"></i>Departments</a></li>
+      <li><a href="/employees"><i class="fa fa-circle-o"></i>Employees</a></li>
     </ul>
   </li>
-  <li class="treeview">
-    <a href="#">
-      <i class="fa fa-files-o"></i>
-      <span>Employee Details</span>
-      <span class="label label-primary pull-right">4</span>
-    </a>
-    <ul class="treeview-menu">
-      <li class="active"><a href="/employees"><i class="fa fa-circle-o"></i> Employee</a></li>
-      <li class="active"><a href="/joining_details"><i class="fa fa-circle-o"></i> Joining Details</a></li>
-      <li class="active"><a href="/employee_bank_details"><i class="fa fa-circle-o"></i> Bank Details</a></li>
-      <li class="active"><a href="/families"><i class="fa fa-circle-o"></i>Family</a></li>
-      <li class="active"><a href="/qualifications"><i class="fa fa-circle-o"></i>Qualification</a></li>
-      <li class="active"><a href="/skillsets"><i class="fa fa-circle-o"></i>Skillset</a></li>
-      <li class="active"><a href="/certifications"><i class="fa fa-circle-o"></i>Certification</a></li>
-      <li class="active"><a href="/awards"><i class="fa fa-circle-o"></i>Award</a></li>
-      <li class="active"><a href="/experiences"><i class="fa fa-circle-o"></i>Experience</a></li>
-      <li class="active"><a href="/employee_physicals"><i class="fa fa-circle-o"></i>Physical</a></li>
-    </ul>
-  </li>
+  
   <!--  -->
   <li class="treeview">
     <a href="">
-      <i class="fa fa-dashboard"></i> <span>Settings</span> <i class="fa fa-angle-left pull-right"></i>
+      <i class="fa fa-cogs"></i> <span>Settings</span> <i class="fa fa-angle-left pull-right"></i>
     </a>
     <ul class="treeview-menu">
-     <li><a href="/company_types/new"><i class="fa fa-circle-o"></i> Company Type</a></li>
-      <li><a href="/department_types/new"><i class="fa fa-circle-o"></i> Department Type</a></li>
       <li><a href="/blood_groups/new"><i class="fa fa-circle-o"></i>Blood Group</a></li>
       <li><a href="/degrees/new"><i class="fa fa-circle-o"></i>Employee Qualifications</a></li>
       <li><a href="/employee_designations/new"><i class="fa fa-circle-o"></i>Employee Designation</a></li>
@@ -49,22 +30,28 @@
       <li><a href="/degree_types/new"><i class="fa fa-circle-o"></i>Degree Type</a></li>
       <li><a href="/degree_streams/new"><i class="fa fa-circle-o"></i>Degree Stream</a></li>
       <li><a href="/universities/new"><i class="fa fa-circle-o"></i> Add University</a></li>
+      <li><a href="/company_shifts/new"><i class="fa fa-circle-o"></i>Company Shift</a></li>
+      
     </ul>
   </li>
   <!-- Leave management -->
   <li class="treeview">
     <a href="">
-      <i class="fa fa-dashboard"></i> <span>Leave Management</span> <i class="fa fa-angle-left pull-right"></i>
+      <i class="fa fa-bell"></i> <span>Leave Management</span> <i class="fa fa-angle-left pull-right"></i>
     </a>
     <ul class="treeview-menu">
-      <li><a href="/company_leavs"><i class="fa fa-circle-o"></i> Set Leave</a></li>
+      <li><a href="/company_leavs/new"><i class="fa fa-circle-o"></i> Set Leave</a></li>
       <li><a href="/employee_leav_requests/approved_or_rejected_leave_request"><i class="fa fa-circle-o"></i>Approv/Reject Leave</a></li>
     </ul>
   </li>
 
-  <li>
-    <a href="/employees/assign_role">
-      <i class="fa fa-th"></i> <span>Assign Role</span> <small class="label pull-right bg-green">new</small>
+  <li class="treeview">
+    <a href="">
+      <i class="fa fa-user-plus"></i> <span>User</span> <i class="fa fa-angle-left pull-right"></i>
     </a>
+    <ul class="treeview-menu">
+      <li><a href="/employees/assign_role"><i class="fa fa-circle-o"></i> Create User</a></li>
+      <li><a href="/home/created_user"><i class="fa fa-circle-o"></i>Created User</a></li>
+    </ul>
   </li>
  </ul>

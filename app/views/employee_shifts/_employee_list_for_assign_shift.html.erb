@@ -1,0 +1,27 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Employee List</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover">
+    <thead>
+      <tr>
+      <th>Select</th>
+      <th>Employee Id</th>
+      <th>Employee Name</th>
+      <th>Contact No</th>
+      </tr>
+  </thead>
+  <tbody>
+    <% @employees.each do |employee| %>
+      <tr>
+        <td></td>
+        <td><%= employee.manual_employee_code %></td>
+        <td><%= employee.first_name+' '+employee.last_name %></td>
+        <td><%= employee.contact_no %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+</div>

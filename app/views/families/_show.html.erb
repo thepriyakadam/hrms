@@ -71,7 +71,7 @@
   <td><%= @family.marital %></td>
 
   <th> <strong>Blood Group</strong></th>
-  <td><%= @family.blood_group.name %></td>
+  <td><%= @family.blood_group.try(:name) %></td>
 </tr>
 <tr>
   <th> <strong>Religion</strong></th>

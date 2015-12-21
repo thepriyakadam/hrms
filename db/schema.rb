@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151221084201) do
+ActiveRecord::Schema.define(version: 20151221103949) do
 
   create_table "annual_salary_masters", force: :cascade do |t|
     t.integer  "employee_id"
@@ -236,6 +236,17 @@ ActiveRecord::Schema.define(version: 20151221084201) do
   end
 
   add_index "districts", ["state_id"], name: "index_districts_on_state_id"
+
+  create_table "employee_annual_salaries", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.integer  "salary_component_id"
+    t.decimal  "amount",              precision: 15, scale: 2
+    t.datetime "created_at",                                   null: false
+    t.datetime "updated_at",                                   null: false
+  end
+
+  add_index "employee_annual_salaries", ["employee_id"], name: "index_employee_annual_salaries_on_employee_id"
+  add_index "employee_annual_salaries", ["salary_component_id"], name: "index_employee_annual_salaries_on_salary_component_id"
 
   create_table "employee_bank_details", force: :cascade do |t|
     t.integer  "employee_id"

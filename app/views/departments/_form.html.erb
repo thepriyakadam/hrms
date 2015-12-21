@@ -16,7 +16,7 @@
     </div>
     <div class="col-sm-3">
         <div class="form-group required">
-         <%= f.text_field :name,label:"Department Name" %>
+         <%= f.text_field :name,label:"Department Name",placeholder: "e.g : IT" %>
         </div>
     </div>
     <div class="col-sm-3">
@@ -24,17 +24,17 @@
           <%= f.select :department_type_id, all_department_type,{label: 'Department Type',include_blank: " Select Department Type"}%>
         </div>
     </div>
-    <div class="col-sm-3">
-        <div class="field">
-         <%= f.text_field :contact_no ,label:"Contact No"%>
-        </div>
+<div class="col-sm-3">
+    <div class="field">
+     <%= f.text_field :contact_no ,label:"Contact No"%>
     </div>
-  </div>
+</div>
+</div>
 
   <div class="row">
     <div class="col-sm-12">
       <div class="field">
-        <%= f.text_area :description %>
+        <%= f.text_area :description,placeholder: "e.g : Any description related to Department."%>
       </div>
     </div>
   </div>

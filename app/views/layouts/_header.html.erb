@@ -124,7 +124,7 @@
               <% elsif current_user.role.name == 'CompanyLocation' %>
                 <%= current_user.company_location.name %>
               <% elsif current_user.role.name == 'Department' %>
-                <%= current_user.dapartment.name %>  
+                <%= current_user.department.name %>  
               <% else %>
                 <%= current_user.employee.first_name %>  
               <% end %>

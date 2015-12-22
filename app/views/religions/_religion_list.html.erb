@@ -1,0 +1,19 @@
+<table id="example2" class="table table-bordered table-hover">
+  <thead>
+    <tr>  
+      <th>Name</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+   <% @religions.each do |religion| %>
+      <tr>
+        <td><%= religion.name %></td>
+        <td>
+          <%= link_to '', edit_religion_path(religion),class: 'btn btn-success fa fa-edit',remote:true %>
+          <%= link_to '',  religion, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger fa fa-close' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

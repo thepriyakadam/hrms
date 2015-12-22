@@ -87,7 +87,7 @@
         </div>
         <div class="col-sm-3">
           <div class="field">
-            <%= f.text_field :religion %>
+            <%= f.select :religion, all_religions,{include_blank: " Select Religion"} %>
           </div>
         </div>
         <div class="col-sm-3">

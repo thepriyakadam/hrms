@@ -20,7 +20,7 @@ class RolesController < ApplicationController
     @role = Role.new
      format.js { @flag = true }
       else
-        flash.now[:alert] = "Blood Group Already Exist."
+        flash.now[:alert] = "Role is Already Exist."
          format.js { @flag = false }
       end
     end  
@@ -29,7 +29,6 @@ class RolesController < ApplicationController
   # PATCH/PUT /roles/1
   # PATCH/PUT /roles/1.json
   def update
-   
    @role.update(role_params)
    @roles = Role.all
    @role = Role.new

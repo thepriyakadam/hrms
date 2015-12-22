@@ -17,19 +17,19 @@
       <div class="row">
         <div class="col-sm-3">
           <div class="field">
-            <%= f.select :degree_type_id, all_degree_type, {include_blank: "Select Degree Type"}, class: 'input_degree_type_id' %>
+            <%= f.select :degree_type_id, all_degree_type, {include_blank: "Select Qualifications Level",label:"Qualifications Level"}, class: 'input_degree_type_id' %>
           </div>
         </div>
 
         <div class="col-sm-3">
           <div class="field">
-            <%= f.select :degree_id, all_degree, {include_blank: "Select Degree"}, class: 'input_degree_id' %>
+            <%= f.select :degree_id, all_degree, {include_blank: "Select Qualifications",label:"Qualifications"}, class: 'input_degree_id' %>
           </div>
         </div>
 
         <div class="col-sm-3">
           <div class="field">
-            <%= f.select :degree_stream_id, all_degree_stream, {include_blank: " Select Degree Stream"}, class: 'input_degree_stream_id' %>
+            <%= f.select :degree_stream_id, all_degree_stream, {include_blank: " Select Qualifications Specializations",label:"Qualifications Specializations"}, class: 'input_degree_stream_id' %>
           </div>
         </div>
     
@@ -42,19 +42,19 @@
    <div class="row">
         <div class="col-sm-3">
           <div class="field">
-           <%= f.select :year_id, all_year,{include_blank: " Select Passing Year"},label: 'Year',class: 'input_year_id' %>
+           <%= f.select :year_id, all_year,{include_blank: " Select Passing Year",label: "Passout Year"},class: 'input_year_id' %>
           </div>
         </div>
        
         <div class="col-sm-4">
           <div class="field">
-          <%= f.text_field :college, class: 'input_college' %>
+          <%= f.text_field :college,label:"College/School", class: 'input_college' %>
            </div>
         </div>
 
         <div class="col-sm-4">
           <div class="field">
-           <%= f.select :university_id, all_university,{include_blank: " Select University"},label: 'Year',class: 'input_university_id' %>
+           <%= f.select :university_id, all_university,{include_blank: " Select University/Institute",label:"University/Institute"},class: 'input_university_id' %>
           </div>
         </div>
       </div>

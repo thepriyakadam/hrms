@@ -10,24 +10,24 @@
   <div class="box-body">
     <table id="example2" class="table table-bordered table-hover">
       <tr>
-        <th>Degree Type</th>
-        <th>Class</th>
-        <th>Degree Steam</th>
+        <th>Qualifications Level</th>
+        <th>Qualifications</th>
+        <th>Qualifications Specializations</th>
         <th>Marks</th>
-        <th>Year</th>
-        <th>College</th>
-        <th>University</th>
+        <th>Passout Year</th>
+        <th>College/School</th>
+        <th>University/Institute</th>
         <th>Action</th>
       </tr>
        <% @qualifications.each do |qualification| %>
       <tr>
-          <td><%= qualification.degree_type.name %></td>
-          <td><%= qualification.degree.name %></td>
-          <td><%= qualification.degree_stream.name %></td>
+          <td><%= qualification.degree_type.try(:name) %></td>
+          <td><%= qualification.degree.try(:name) %></td>
+          <td><%= qualification.degree_stream.try(:name) %></td>
           <td><%= qualification.marks %></td>
-          <td><%= qualification.year.name %></td>
+          <td><%= qualification.year.try(:name) %></td>
           <td><%= qualification.college %></td>
-          <td><%= qualification.university.name %></td>
+          <td><%= qualification.university.try(:name) %></td>
           <td>
             <%= link_to '', edit_qualification_path(qualification),class: 'btn btn-success fa fa-edit',remote:true %>
             <%= link_to '', qualification, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger fa fa-close' %>

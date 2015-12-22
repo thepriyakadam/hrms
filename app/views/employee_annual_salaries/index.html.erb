@@ -1,0 +1,70 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Employee Anual Salary Master</h3>
+    <div class="box-tools pull-right">
+      <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+      <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+    </div>
+  </div><!-- /.box-header -->
+	<div class="box-body">
+		<%= bootstrap_form_for :employee_annual_salary_data do |f| %>
+			<% @salary_components.each do |item| %>
+				<div class="row">
+					<div class="col-sm-3">
+						<label><%= item.name %></label>
+						<%= f.text_field item.id, hide_label: true %>
+					</div>
+				</div>
+			<% end %>
+
+			<table id="example2" class="table table-bordered table-hover">
+	    <thead>
+	      <tr>
+		      <th>
+		      	<input type="checkbox" id="selectAll" value="selectAll">
+		      </th>
+		      <th>Employee ID</th>
+		      <th>Employee Name</th>
+		      <th>Designation</th>
+		      <th>Employee Type</th>
+		      <th>Contact No</th>
+	      </tr>
+		  </thead>
+		  <tbody>
+		    <% @employees.each do |employee| %>
+		      <tr>
+		        <td><%= check_box_tag "employee_ids[]", employee.id %></td>
+		        <td><%= employee.manual_employee_code %></td>
+		        <td><%= employee.first_name+' '+employee.last_name %></td>
+		        <td><%= employee.joining_detail.try(:employee_designation).try(:name) %></td>
+		        <td><%= employee.employee_type.name %></td>
+		        <td><%= employee.contact_no %></td>
+		      </tr>
+		     <% end %>
+	    </tbody>
+  	</table>
+
+			<%= f.submit %>	
+		<% end %>
+
+		
+
+	</div><!-- /.box-body -->
+  <div class="box-footer">
+    Visit <a href="https://indiba.in/">www.indiba.in</a> for more Information about the HRMSONE.
+  </div>
+</div><!-- /.box -->
+
+<script type="text/javascript">
+	$('#selectAll').click(function() {
+   if (this.checked) {
+       $(':checkbox').each(function() {
+           this.checked = true;                        
+       });
+   } else {
+      $(':checkbox').each(function() {
+           this.checked = false;                        
+       });
+   } 
+});
+</script>

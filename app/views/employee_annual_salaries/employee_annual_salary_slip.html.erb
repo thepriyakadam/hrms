@@ -1,0 +1,77 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Employee salary slip</h3>
+    <div class="box-tools pull-right">
+      <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+      <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+    </div>
+  </div><!-- /.box-header -->
+	<div class="box-body">
+		<div class="row">
+			<div class="col-sm-6">
+				<label>Select Employees</label>
+				<table  class="table table-bordered table-hover">
+			    <thead>
+			      <tr>
+				      <th>No.</th>
+				      <th>Particulars</th>
+				      <th>Amount</th>
+			      </tr>
+				  </thead>
+				  <tbody>
+				  	<% i = 0 %><% addect_total = 0 %>
+				    <% @items.each do |item| %>
+				    	<% unless item.salary_component.try(:is_deducted) %>
+					      <tr>
+					        <td><%= i=i+1 %></td>
+					        <td><%= item.salary_component.try(:name) %></td>
+					        <td align="right"><%= item.amount %></td>
+					        <% addect_total = addect_total + item.amount %>
+					      </tr>
+					    <% end %>  
+				    <% end %>
+				    <tr>
+				    	<td></td>
+				    	<td><b><%= "Total" %></b></td>
+			        <td align="right"><b><%= addect_total %></b></td>
+				    </tr>
+			    </tbody>
+		  	</table>
+			</div>
+
+			<div class="col-sm-6">
+				<label>Select Employees</label>
+				<table  class="table table-bordered table-hover">
+			    <thead>
+			      <tr>
+				      <th>No.</th>
+				      <th>Particulars</th>
+				      <th>Amount</th>
+			      </tr>
+				  </thead>
+				  <tbody>
+				  	<% j = 0 %> <% deduct_total = 0 %>
+				    <% @items.each do |item,i| %>
+				      <% if item.salary_component.try(:is_deducted) %>
+					      <tr>
+					        <td><%= j=j+1 %></td>
+					        <td><%= item.salary_component.try(:name) %></td>
+					        <td align="right"><%= item.amount %></td>
+					        <% deduct_total = deduct_total + item.amount %>
+					      </tr>
+					    <% end %>
+				    <% end %>
+				    <tr>
+			        <td><%=  %></td>
+			        <td><b><%= "Total" %></b></td>
+			        <td align="right"><b><%= deduct_total %></b></td>
+			      </tr>
+			    </tbody>
+		  	</table>
+			</div>
+		</div>
+	</div><!-- /.box-body -->
+  <div class="box-footer">
+    Visit <a href="https://indiba.in/">www.indiba.in</a> for more Information about the HRMSONE.
+  </div>
+</div><!-- /.box -->

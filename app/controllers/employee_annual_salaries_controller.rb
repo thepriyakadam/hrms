@@ -9,7 +9,8 @@ class EmployeeAnnualSalariesController < ApplicationController
   def create
   	@items = params["employee_annual_salary_data"]
   	@employee_ids = params["employee_ids"]
-    @salary_components = SalaryComponent.all
+    @deducted_salary_components = SalaryComponent.deducted
+    @addected_salary_components = SalaryComponent.addected
     @employees = Employee.joins("left join employee_annual_salaries on employees.id = employee_annual_salaries.employee_id where employee_annual_salaries.employee_id is null")
     flag = false
     @items.each do |k,v|
@@ -37,7 +38,16 @@ class EmployeeAnnualSalariesController < ApplicationController
         end
       end
       flash[:alert] = "This is under construction."
-      redirect_to employee_annual_salaries_path 
+      redirect_to employee_annual_salaries_path
     end
+  end
+
+  def created_employee_annual_salary
+    @employees = Employee.joins("inner join employee_annual_salaries on employees.id = employee_annual_salaries.employee_id").uniq
+  end
+
+  def employee_annual_salary_slip
+    @employee = Employee.find(params[:format])
+    @items = @employee.employee_annual_salaries
   end
 end

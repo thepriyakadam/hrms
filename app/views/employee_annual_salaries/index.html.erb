@@ -8,10 +8,6 @@
   </div><!-- /.box-header -->
 	<div class="box-body">
 		<%= bootstrap_form_for :employee_annual_salary_data do |f| %>
-			
-
-			
-
 			<div class="row">
 				<div class="col-sm-2">
 					<% @addected_salary_components.each do |item| %>
@@ -61,8 +57,7 @@
 
 			</div>
 
-			
-			<%= f.submit %>	
+			<%= f.button "Create Employee Salary", class: "btn btn-primary", data: {disable_with: "<i class='fa fa-circle-o-notch fa-spin'></i> Wait..."} %>
 		<% end %>
 	</div><!-- /.box-body -->
   <div class="box-footer">

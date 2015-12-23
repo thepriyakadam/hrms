@@ -25,17 +25,20 @@ class EmployeeShiftsController < ApplicationController
   # POST /employee_shifts
   # POST /employee_shifts.json
   def create
-    @employee_shift = EmployeeShift.new(employee_shift_params)
+    @employee_shift = params["employee_shift"]["company_shift_id"]
+    @employee_ids = params["employee_ids"]
+    @employee_shifts = EmployeeShift.all
 
-    respond_to do |format|
-      if @employee_shift.save
-        format.html { redirect_to @employee_shift, notice: 'Employee shift was successfully created.' }
-        format.json { render :show, status: :created, location: @employee_shift }
-      else
-        format.html { render :new }
-        format.json { render json: @employee_shift.errors, status: :unprocessable_entity }
+    @employee_ids.try(:each) do |e|
+      EmployeeShift.new do |es|
+        es.employee_id = e
+        es.company_shift_id = @employee_shift
+        es.save
       end
     end
+
+    flash[:notice] = "Employee shift allowed successfully."
+    redirect_to employee_shifts_path
   end
 
   # PATCH/PUT /employee_shifts/1

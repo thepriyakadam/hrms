@@ -16,6 +16,7 @@ class Employee < ActiveRecord::Base
   has_many :experiences
   has_many :skillsets
   has_many :employee_annual_salaries
+  has_many :employee_shifts
   has_one :member
   has_one :employee_bank_detail
   has_one :joining_detail

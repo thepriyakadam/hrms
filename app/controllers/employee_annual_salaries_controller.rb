@@ -38,11 +38,16 @@ class EmployeeAnnualSalariesController < ApplicationController
         end
       end
       flash[:alert] = "This is under construction."
-      redirect_to employee_annual_salaries_path 
+      redirect_to employee_annual_salaries_path
     end
   end
 
   def created_employee_annual_salary
     @employees = Employee.joins("inner join employee_annual_salaries on employees.id = employee_annual_salaries.employee_id").uniq
+  end
+
+  def employee_annual_salary_slip
+    @employee = Employee.find(params[:format])
+    @items = @employee.employee_annual_salaries
   end
 end

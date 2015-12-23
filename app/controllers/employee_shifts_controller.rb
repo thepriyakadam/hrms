@@ -73,6 +73,6 @@ class EmployeeShiftsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def employee_shift_params
-      params.require(:employee_shift).permit(:company_shift_id, :employee_id)
+      params.require(:employee_shift).permit(:company_shift_id, :employee_id, :from_date, :to_date)
     end
 end

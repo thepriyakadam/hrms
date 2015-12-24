@@ -1,10 +1,6 @@
 <div class="box box-default">
   <div class="box-header with-border">
     <h3 class="box-title">Create Employee</h3>
-    <div class="box-tools pull-right">
-      <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-      <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
-    </div>
   </div><!-- /.box-header -->
   <div class="box-body">
     <%= bootstrap_form_for(@employee,html: {id: 'employee'}) do |f| %>
@@ -207,9 +203,6 @@
       </div>
     <% end %>
   </div><!-- /.box-body -->
-  <div class="box-footer">
-    Visit <a href="https://www.indiba.in/">www.indiba.in</a> for more Information about the HRMSONE.
-  </div>
 </div><!-- /.box-->
 
 <script type="text/javascript">
@@ -219,8 +212,5 @@
     changeMonth: true,
     yearRange: '-200:+1',
     dateFormat: 'dd-mm-yy' });
-
-
-
   }); 
 </script>

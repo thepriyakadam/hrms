@@ -3,8 +3,6 @@
     <h3 class="box-title">Employee Qualification Details</h3>
     <div class="box-tools pull-right">
       <%= link_to "Add Qualification", ajax_new_qualification_employees_path(id: @employee.id), class: 'btn btn-primary',remote:true %>
-      <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-      <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
     </div>
   </div><!-- /.box-header -->
   <div class="box-body">
@@ -35,10 +33,6 @@
       </tr>
         <%end%>
       </table>
-
-  <div class="box-footer">
-    Visit <a href="https://indiba.in/">www.indiba.in</a> for more Information about the HRMSONE.
-  </div>
   </div><!-- /.box -->
 </div>
 

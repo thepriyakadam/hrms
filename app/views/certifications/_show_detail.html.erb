@@ -19,7 +19,7 @@
      <% @certifications.each do |certification| %>
       <tr>
         <td><%= certification.name %></td>
-        <td><%= certification.year.name %></td>
+        <td><%= certification.year.try(:name) %></td>
         <td><%= certification.duration %></td>
         <td><%= certification.description %></td>
         <td>

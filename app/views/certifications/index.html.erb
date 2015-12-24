@@ -22,7 +22,7 @@
   <tbody>
     <% @certifications.each do |certification| %>
       <tr>
-        <td><%= certification.employee.id %></td>
+        <td><%= certification.employee.try(:id) %></td>
         <td><%= certification.name %></td>
         <td><%= certification.year_id %></td>
         <td><%= certification.duration %></td>

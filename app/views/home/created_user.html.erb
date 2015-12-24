@@ -18,9 +18,9 @@
 			      <tr>
 			        <td><%= employee.manual_employee_code %></td>
 			        <td><%= employee.first_name+' '+employee.last_name %></td>
-			        <td><%= employee.member.role.name %>
-			        <td><%= employee.manager.first_name+' '+employee.manager.last_name %></td>
-			        <td><%= employee.department.name %></td>
+			        <td><%= employee.member.role.try(:name) %>
+			        <td><%= employee.manager.try(:first_name)+' '+employee.manager.try(:last_name) %></td>
+			        <td><%= employee.department.try(:name) %></td>
 			      </tr>	
 		    <% end %>
 		  </tbody>

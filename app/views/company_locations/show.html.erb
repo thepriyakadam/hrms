@@ -24,7 +24,7 @@
  
     <tr>
       <th><strong>Company</strong></th>
-      <td> <%= @company_location.company.name %></td>
+      <td> <%= @company_location.company.try(:name) %></td>
 
       <th><strong>Location Name</strong></th>
       <td><%= @company_location.name %></td>
@@ -40,15 +40,15 @@
 
     <tr>
       <th><strong>Country</strong></th>
-      <td><%= @company_location.country.name %></td>
+      <td><%= @company_location.country.try(:name) %></td>
 
       <th><strong>State</strong></th>
-      <td><%= @company_location.state.name %></td>
+      <td><%= @company_location.state.try(:name) %></td>
     </tr>
 
     <tr>
       <th> <strong>District</strong></th>
-      <td> <%= @company_location.district.name %></td>
+      <td> <%= @company_location.district.try(:name) %></td>
 
       <th><strong>Pin/Zip Code</strong></th>
       <td><%= @company_location.pin_code %></td>

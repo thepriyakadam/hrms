@@ -6,8 +6,6 @@
       <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
     </div>
   </div><!-- /.box-header -->
-
-
   <div class="box-body">
   <%= bootstrap_form_for(@employee_shift) do |f| %>
      <div class="row">
@@ -46,7 +44,6 @@
       <div class="col-sm-12">
       <div class="form-group required">
         <div id="employee_list"> 
-
           <%= render 'employee_list_for_assign_shift' %>
         </div>
       </div>

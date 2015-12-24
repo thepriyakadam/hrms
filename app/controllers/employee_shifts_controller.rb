@@ -26,6 +26,8 @@ class EmployeeShiftsController < ApplicationController
   # POST /employee_shifts.json
   def create
     @employee_shift = params["employee_shift"]["company_shift_id"]
+    @from_date = params["employee_shift"]["from_date"]
+    @to_date = params["employee_shift"]["to_date"]
     @employee_ids = params["employee_ids"]
     @employee_shifts = EmployeeShift.all
 
@@ -33,6 +35,8 @@ class EmployeeShiftsController < ApplicationController
       EmployeeShift.new do |es|
         es.employee_id = e
         es.company_shift_id = @employee_shift
+        es.from_date = @from_date
+        es.to_date = @to_date
         es.save
       end
     end

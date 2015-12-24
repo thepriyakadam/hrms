@@ -13,7 +13,13 @@
       </div>
     </div>
 
-    <div class="col-sm-6">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.select :parent_id,all_salary_component,hide_label:true, prompt: 'Select Component' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
       <div class="form-group">
         <%= f.text_field :description,hide_label:true, placeholder: 'Salary Component Description' %>
       </div>

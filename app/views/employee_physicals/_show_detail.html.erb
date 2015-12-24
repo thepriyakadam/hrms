@@ -12,7 +12,7 @@
 
     <tr>
         <th><strong>Employee:</strong></th>
-        <td>  <%= @employee_physical.employee.first_name %></td>
+        <td>  <%= @employee_physical.employee.try(:first_name) %></td>
 
         <th> <strong>Height:</strong></th>
         <td> <%= @employee_physical.height %></td>

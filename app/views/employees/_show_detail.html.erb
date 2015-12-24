@@ -69,15 +69,15 @@
     </tr>
     <tr>
       <th><strong>Country</strong></th>
-      <td><%= @employee.country.name %></td> 
+      <td><%= @employee.country.try(:name) %></td> 
 
       <th> <strong>State</strong></th>
-      <td><%= @employee.state.name %></td>
+      <td><%= @employee.state.try(:name) %></td>
     </tr>
 
     <tr>
       <th><strong>District</strong></th>
-      <td><%= @employee.district.name %></td>
+      <td><%= @employee.district.try(:name) %></td>
 
       <th> <strong>City</strong></th>
       <td> <%= @employee.city %></td>

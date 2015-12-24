@@ -8,6 +8,7 @@ class DepartmentsController < ApplicationController
   end
 
   def edit
+    @departments = Department.all
   end
 
   def create

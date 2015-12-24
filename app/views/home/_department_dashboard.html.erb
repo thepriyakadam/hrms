@@ -73,7 +73,7 @@
           <td><%= employee.last_name %></td>
           <td><%= employee.contact_no %></td>
           <td><%= employee.email %></td>
-          <td><%= employee.employee_type.name %></td>
+          <td><%= employee.employee_type.try(:name) %></td>
           <td><%= employee.gender %></td>
           <td>
             <%= link_to '', employee, class: 'btn btn-default fa fa-eye' %>

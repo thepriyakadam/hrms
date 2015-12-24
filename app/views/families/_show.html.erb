@@ -11,7 +11,7 @@
    <table id="example2" class="table table-bordered table-hover">
 <tr>
   <th><strong>Employee</strong></th>
-  <td><%= @family.employee.first_name %></td>
+  <td><%= @family.employee.try(:first_name %></td>
 
   <th> <strong>Relation</strong></th>
   <td><%= @family.relation %></td>
@@ -57,11 +57,11 @@
   <td><%= @family.passport_no %></td>
 
   <th><strong>Passport Issue Date</strong></th>
-  <td><%= @family.passport_no %></td>
+  <td><%= @family.passport_issue_date %></td>
 </tr>
 <tr>
   <th><strong>Passport Expiry Date</strong></th>
-  <td><%= @family.passport_no %></td>
+  <td><%= @family.passport_expiry_date %></td>
 
   <th><strong>Gender</strong></th>
   <td><%= @family.gender %></td>

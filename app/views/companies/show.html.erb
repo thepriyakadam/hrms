@@ -3,8 +3,6 @@
   <div class="box-header with-border">
     <h3 class="box-title">Company</h3>
     <div class="box-tools pull-right">
-    <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-      <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
     </div>
   </div><!-- /.box-header -->
   <div class="box-body">
@@ -22,7 +20,7 @@
         <td><%= @company.description %></td>
 
         <th>Company Type</th>
-        <td><%= @company.company_type.name %></td>
+        <td><%= @company.company_type.try(:name) %></td>
       </tr>
 
       <tr>
@@ -53,15 +51,15 @@
         <td><%= @company.city %></td>
 
         <th>District</th>
-        <td><%= @company.district.name %></td>
+        <td><%= @company.district.try(:name) %></td>
       </tr>
 
       <tr>
         <th>State</th>
-        <td><%= @company.state.name %></td>
+        <td><%= @company.state.try(:name) %></td>
 
         <th>Country</th>
-        <td><%= @company.country.name %></td>
+        <td><%= @company.country.try(:name) %></td>
       </tr>
 
       <tr>
@@ -84,7 +82,4 @@
     <%= link_to 'Edit', edit_company_path(@company),class: 'btn btn-success fa fa-edit' %> |
     <%= link_to 'Back', companies_path,class: 'btn btn-default fa fa-arrow-left' %>
   </div><!-- /.box-body -->
-  <div class="box-footer">
-    Visit <a href="https://indiba.in/">www.indiba.in</a> for more Information about the HRMSONE.
-  </div>
 </div><!-- /.box -->

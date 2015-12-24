@@ -2,10 +2,6 @@
 <div class="box box-default">
   <div class="box-header with-border">
     <h3 class="box-title">Employee Family Details</h3>
-    <div class="box-tools pull-right">
-      <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-      <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
-    </div>
   </div><!-- /.box-header -->
 
 
@@ -80,7 +76,7 @@
 
     <div class="col-sm-3">
         <div class="field">
-        <%= f.select :blood_group_id, all_blood_group,{label: 'Blood Group',include_blank: " Select blood Group"} %>
+        <%= f.select :blood_group_id, all_blood_group,{label: 'Blood Group',include_blank: " Select Blood Group"} %>
         </div>
       </div>
 </div>
@@ -105,7 +101,7 @@
 
       <div class="col-sm-3">
         <div class="field">
-          <%= f.select :medical_claim, ['Yes','No'],{label: 'Medical Insurance',include_blank: " Select Medical Claim"} %>
+          <%= f.select :medical_claim, ['Yes','No'],{label: 'Medical Insurance',include_blank: " Select Medical Insurance"} %>
         </div>
       </div>
 </div>
@@ -155,7 +151,7 @@
  
       <div class="col-sm-3">
         <div class="field">
-          <%= f.select :is_handicap, ['Yes','No'],{label: 'Handicap',include_blank: "Please Select"},{onchange:"var a={id:$(this).val()}; $.get('/families/ajax_show_handicap_type_textbox',a,function(response){});"} %>
+          <%= f.select :is_handicap, ['Yes','No'],{label: 'Differently Abled',include_blank: "Please Select"},{onchange:"var a={id:$(this).val()}; $.get('/families/ajax_show_handicap_type_textbox',a,function(response){});"} %>
         </div>
       </div>
 
@@ -163,7 +159,7 @@
         <div class="field">
           <div id="handicap_type">
               <% if action_name == 'edit' and @family.handicap_type != "" %>
-                <%= f.text_field :handicap_type,label: 'Handicap' %>
+                <%= f.text_field :handicap_type,label: 'Differently Abled Type' %>
               <% end %>
             </div>
         </div>
@@ -179,9 +175,6 @@
   </div>
 <% end %>
 </div><!-- /.box-body -->
-  <div class="box-footer">
-    Visit <a href="https://indiba.in/">www.indiba.in</a> for more Information about the HRMSONE.
-  </div>
 </div><!-- /.box -->
 <script type="text/javascript">
   $(function(){

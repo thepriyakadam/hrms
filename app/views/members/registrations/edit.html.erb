@@ -7,7 +7,7 @@
       <h3 class="profile-username text-center"></h3>
         <p>
           <% if current_user.class == Member %>
-            <% if current_user.role.name == 'Employee' %>
+            <% if current_user.role.try(:name) == 'Employee' %>
               <%= current_user.email%>
             <% else %>
               <%= current_user.email %>

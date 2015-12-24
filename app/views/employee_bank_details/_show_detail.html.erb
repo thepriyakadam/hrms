@@ -13,7 +13,7 @@
 
     <tr>
       <th><strong>Employee</strong></th>
-      <td> <%= @employee_bank_detail.employee.first_name %></td>
+      <td> <%= @employee_bank_detail.employee.try(:first_name) %></td>
 
       <th> <strong>Account No</strong></th>
       <td><%= @employee_bank_detail.account_no %></td>
@@ -51,9 +51,6 @@
       <td></td>
     </tr>
     </table><br/>
-  <div class="box-footer">
-    Visit <a href="https://indiba.in/">www.indiba.in</a> for more Information about the HRMSONE.
-  </div>
   </div><!-- /.box -->
 </div>
 

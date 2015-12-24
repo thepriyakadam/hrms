@@ -1,34 +1,40 @@
 <div class="box box-default">
   <div class="box-header with-border">
     <h3 class="box-title">Company Shift Details</h3>
-    <div class="box-tools pull-right">
-      <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-      <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
-    </div>
   </div><!-- /.box-header -->
-  <div class="box-body">
+
+    <div class="box-body">
     <table id="example2" class="table table-bordered table-hover">
-    <tr> 
-      <th colspan="2"></th>
-      <th colspan="2"></th>
-    </tr>
-
-    <tr>
-    	<th><strong>Company shift:</strong></th>
-    	<td><%= @employee_shift.company_shift.try(:name) %></td>
+    <thead>
+      <tr><th>Company Shift</th>
+      <th>From Date</th>
+      <th>To Date</th>
       </tr>
-      <% @employee_shifts.each do |employee_shift| %>
       <tr>
-
-    	<th> <strong>Employee:</strong></th>
-    	<td> <%= @employee_shift.employee.try(:manual_employee_code) %></td>
+      
+      <th>Employee Code</th>
+      <th>Employee Name</th>
+      <th>Contact No</th>
+      <th>Email</th>
     </tr>
-  
-    </table>
-    <%= link_to 'Edit', edit_employee_shift_path(@employee_shift),class: 'btn btn-success fa fa-edit' %> |
-    <%= link_to 'Back', employee_shifts_path,class: 'btn btn-default fa fa-arrow-left' %>
-  </div><!-- /.box-body -->
-  <div class="box-footer">
-    Visit <a href="https://indiba.in/">www.indiba.in</a> for more Information about the HRMSONE.
-  </div>
+  </thead>
+
+  <tbody>
+  <tr>
+        <td><%= employee_shift.company_shift.try(:name) %></td>
+        <td><%= employee_shift.from_date %></td>
+        <td><%= employee_shift.to_date %></td>
+    </tr>
+    <% @employee_shifts.each do |employee_shift| %>
+      <tr>
+        
+        <td><%= employee_shift.employee.try(:manual_employee_code) %></td>
+        <td><%= employee_shift.employee.try(:first_name) %></td>
+        <td><%= employee_shift.employee.try(:contact_no) %></td>
+        <td><%= employee_shift.employee.try(:email) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+  </table>
+</div>
 </div><!-- /.box -->

@@ -3,10 +3,6 @@
 <div class="box box-default">
   <div class="box-header with-border">
     <h3 class="box-title">Employee Physical Details</h3>
-    <div class="box-tools pull-right">
-      <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-      <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
-    </div>
   </div><!-- /.box-header -->
 
 
@@ -37,7 +33,7 @@
       </div>
       <div class="col-sm-3">
         <div class="form-group required">
-          <%= f.select :trouser_size, ['XS','S','M','L','XL','XXL'],{label: 'Trouser Size',include_blank: " Select Trouser Size"} %>
+          <%= f.select :trouser_size, ['28','30','32','34','36','38','40','42'],{label: 'Trouser Size',include_blank: " Select Trouser Size"} %>
        </div>
       </div>
   </div>
@@ -52,7 +48,4 @@
   </div>
 <% end %>
 </div><!-- /.box-body -->
-  <div class="box-footer">
-    Visit <a href="https://indiba.in/">www.indiba.in</a> for more Information about the HRMSONE.
-  </div>
 </div><!-- /.box -->

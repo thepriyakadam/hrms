@@ -3,8 +3,6 @@
     <h3 class="box-title">Employee Basic Details</h3>
     <div class="box-tools pull-right">
       <%= link_to 'Edit', edit_employee_path(@employee),class: 'btn btn-success fa fa-edit', remote:true %>
-      <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-      <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
     </div>
   </div><!-- /.box-header -->
   <div class="box-body">
@@ -69,15 +67,15 @@
     </tr>
     <tr>
       <th><strong>Country</strong></th>
-      <td><%= @employee.country.name %></td> 
+      <td><%= @employee.country.try(:name) %></td> 
 
       <th> <strong>State</strong></th>
-      <td><%= @employee.state.name %></td>
+      <td><%= @employee.state.try(:name) %></td>
     </tr>
 
     <tr>
       <th><strong>District</strong></th>
-      <td><%= @employee.district.name %></td>
+      <td><%= @employee.district.try(:name) %></td>
 
       <th> <strong>City</strong></th>
       <td> <%= @employee.city %></td>
@@ -99,10 +97,10 @@
     </tr>
 
      <tr>
-      <th><strong>Handicap</strong></th>
+      <th><strong>Differently Abled</strong></th>
       <td> <%= @employee.handicap %></td>
 
-      <th><strong>Handicap Type</strong></th>
+      <th><strong>Differently Abled Type</strong></th>
       <td> <%= @employee.handicap_type %></td>
     </tr>
 
@@ -114,9 +112,5 @@
       <td><%= @employee.status %></td>
     </tr>
  </table>
-
- <div class="box-footer">
-    Visit <a href="https://indiba.in/">www.indiba.in</a> for more Information about the HRMSONE.
-  </div>
   </div><!-- /.box -->
 </div>

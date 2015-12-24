@@ -1,10 +1,6 @@
 <div class="box box-default">
   <div class="box-header with-border">
     <h3 class="box-title">Qualification</h3>
-    <div class="box-tools pull-right">
-      <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-      <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
-    </div>
   </div><!-- /.box-header -->
   <div class="box-body">
     <table id="example2" class="table table-bordered table-hover">
@@ -18,14 +14,14 @@
  <td>  <%= @qualification.employee %></td>
 
  <th><strong>Degree Type:</strong></th>
-  <td><%= @qualification.degree_type_id.name %></td>
+  <td><%= @qualification.degree_type_id.try(:name) %></td>
  </tr>
  <tr>
   <th><strong>Degree</strong></th>
-  <td><%= @qualification.degree_id.name %></td>
+  <td><%= @qualification.degree_id.try(:name) %></td>
 
   <th><strong>Degree Stream</strong></th>
-  <td><%= @qualification.degree_stream_id.name %></td>
+  <td><%= @qualification.degree_stream_id.try(:name) %></td>
 </tr>
 <tr>
   <th><strong>College</strong></th>
@@ -40,16 +36,13 @@
   <td><%= @qualification.year_id%></td>
 
   <th><strong>University</strong></th>
-  <td><%= @qualification.university_id.name %></td>
+  <td><%= @qualification.university_id.try(:name) %></td>
 </tr>
 </table>
 
     <%= link_to 'Edit', edit_qualification_path(@qualification),class: 'btn btn-success fa fa-edit' %> |
     <%= link_to 'Back', qualifications_path,class: 'btn btn-default fa fa-arrow-left' %>
   </div><!-- /.box-body -->
-  <div class="box-footer">
-    Visit <a href="https://indiba.in/">www.indiba.in</a> for more Information about the HRMSONE.
-  </div>
 </div><!-- /.box -->
 
 

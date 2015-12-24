@@ -14,10 +14,10 @@
   <tbody>
     <% @departments.each do |department| %>
       <tr>
-        <td><%= department.company_location.name %></td>
+        <td><%= department.company_location.try(:name)  %></td>
         <td><%= department.manual_department_code %></td>
         <td><%= department.name %></td>
-        <td><%= department.department_type.name %></td>
+        <td><%= department.department_type.try(:name) %></td>
         <td><%= department.contact_no %></td>
         <td><%= department.description %></td>
         <td>

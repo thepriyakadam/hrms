@@ -14,6 +14,31 @@
             <%= f.select :company_shift_id, all_company_shifts,{include_blank: " Select Company Shift"} %>
           </div>
         </div>
+
+        <div class="col-sm-3">
+        <label> From Date: </label>
+        <div class="field">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+            <%= f.text_field :from_date, hide_label: true, class: 'from_date'%>
+          </div>
+        </div>
+        </div>
+
+        <div class="col-sm-3">
+        <label> To Date </label>
+        <div class="field">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+            <%= f.text_field :to_date, hide_label: true, class: 'to_date'%>
+          </div>
+        </div>
+        </div>
+
         </div>
       <div class="row">
       <div class="col-sm-12">
@@ -39,5 +64,19 @@
 </div><!-- /.box -->
 
 
+<script type="text/javascript">
+  $(function(){
+    $('.from_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-1:+10',
+    dateFormat: 'dd-mm-yy' });
 
+    $('.to_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-1:+10',
+    dateFormat: 'dd-mm-yy' });
+  }); 
+</script>
  

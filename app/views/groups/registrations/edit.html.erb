@@ -18,7 +18,7 @@
             <%= current_user.subdomain %>-
             <%= current_user.class %>
           <%end%><br>
-          <small>Member since Nov. 2012</small>
+         <small>Member since <%= current_user.created_at%></small>
         </p>
         
        <!--  <h3 class="profile-username text-center">TATA GROUP</h3>
@@ -104,7 +104,8 @@
           <div class="row"> 
             <div class="col-sm-9">
               <div class="field">
-               <%= f.file_field :avatar%>
+              <label>Profile Picture</label>
+               <%= f.file_field :avatar, hide_label: true%>
                </div>
             </div>
           </div>

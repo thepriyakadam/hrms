@@ -61,6 +61,17 @@ class AttendancesController < ApplicationController
     end
   end
 
+  def find_employee_for_attendance
+    p "----------------------------------------------------"
+    @employee = Employee.find_by_manual_employee_code(params[:employee_code]) 
+    if @employee.nil?
+      format.js { @flag = true }
+    else
+      format.js { @flag = false }
+    end
+    #@employee_shift = @employee.employee_shifts.first.company_shift.name
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_attendance

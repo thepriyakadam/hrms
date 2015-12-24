@@ -1,26 +1,53 @@
 class EmployeeAnnualSalariesController < ApplicationController
   def index
-  	@salary_components = SalaryComponent.all
-  	@employees = Employee.all
+  	@deducted_salary_components = SalaryComponent.deducted
+    @addected_salary_components = SalaryComponent.addected
+  	@employees = Employee.joins("left join employee_annual_salaries on employees.id = employee_annual_salaries.employee_id where employee_annual_salaries.employee_id is null")
+
   end
 
   def create
-  	p "------------------------------------------------"
-  	@item = params["employee_annual_salary_data"]
+  	@items = params["employee_annual_salary_data"]
   	@employee_ids = params["employee_ids"]
-  	ActiveRecord::Base.transaction do
-	  	@employee_ids.each do |id|
-		  	@item.each do |k,v|
-		  		EmployeeAnnualSalary.new do |e|
-		  			e.employee_id = id
-		  			e.salary_component_id = k
-		  			e.amount = v
-		  			e.save
-		  		end
-		  	end
-		  end
-		end  	
-  	flash[:alert] = "This is under construction."
-  	redirect_to employee_annual_salaries_path
+    @deducted_salary_components = SalaryComponent.deducted
+    @addected_salary_components = SalaryComponent.addected
+    @employees = Employee.joins("left join employee_annual_salaries on employees.id = employee_annual_salaries.employee_id where employee_annual_salaries.employee_id is null")
+    flag = false
+    @items.each do |k,v|
+      if v == ""
+        flag = true
+      end
+    end
+    if flag
+      flash.now[:alert] = "All fields are mandatory."
+      render :index
+    elsif @employee_ids.nil?
+      flash.now[:alert] = "Please select employee."
+      render :index
+    else
+      ActiveRecord::Base.transaction do
+        @employee_ids.try(:each) do |id|
+          @items.each do |k,v|
+            EmployeeAnnualSalary.new do |e|
+              e.employee_id = id
+              e.salary_component_id = k
+              e.amount = v
+              e.save
+            end
+          end
+        end
+      end
+      flash[:alert] = "This is under construction."
+      redirect_to employee_annual_salaries_path
+    end
+  end
+
+  def created_employee_annual_salary
+    @employees = Employee.joins("inner join employee_annual_salaries on employees.id = employee_annual_salaries.employee_id").uniq
+  end
+
+  def employee_annual_salary_slip
+    @employee = Employee.find(params[:format])
+    @items = @employee.employee_annual_salaries
   end
 end

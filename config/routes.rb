@@ -2,7 +2,12 @@ Rails.application.routes.draw do
 
   resources :religions
   resources :banks
-  resources :employee_annual_salaries
+  resources :employee_annual_salaries do
+    collection do
+      get :created_employee_annual_salary
+      get :employee_annual_salary_slip
+    end
+  end
   resources :salary_components
   resources :universities
   resources :degree_streams
@@ -13,7 +18,11 @@ Rails.application.routes.draw do
   resources :employee_designations
   resources :cost_centers
   resources :degrees
-  resources :attendances
+  resources :attendances do
+    collection do
+      get :find_employee_for_attendance
+    end
+  end
   resources :employee_shifts
   resources :company_shifts
   resources :roles do

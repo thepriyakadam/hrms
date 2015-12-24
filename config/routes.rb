@@ -18,7 +18,11 @@ Rails.application.routes.draw do
   resources :employee_designations
   resources :cost_centers
   resources :degrees
-  resources :attendances
+  resources :attendances do
+    collection do
+      get :find_employee_for_attendance
+    end
+  end
   resources :employee_shifts
   resources :company_shifts
   resources :roles do

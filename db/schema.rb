@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151221103949) do
+ActiveRecord::Schema.define(version: 20151224045811) do
 
   create_table "annual_salary_masters", force: :cascade do |t|
     t.integer  "employee_id"
@@ -615,7 +615,10 @@ ActiveRecord::Schema.define(version: 20151221103949) do
     t.string   "description"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.integer  "parent_id"
   end
+
+  add_index "salary_components", ["parent_id"], name: "index_salary_components_on_parent_id"
 
   create_table "skillsets", force: :cascade do |t|
     t.integer  "employee_id"

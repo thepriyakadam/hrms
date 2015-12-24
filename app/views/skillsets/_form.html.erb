@@ -20,7 +20,7 @@
 
           <div class="col-sm-3">
             <div class="form-group required">
-              <%= f.select :skill_level, ['Competence','Proficiency','Expertise','Mastery'],{}, class: 'input_skill_level' %>
+              <%= f.select :skill_level, ['Competence','Proficiency','Expertise','Mastery'],{include_blank: " Select Skill Level"}, class: 'input_skill_level' %>
             </div>
           </div>
         </div>
@@ -29,7 +29,7 @@
       <% unless params['controller'] == 'skillsets' and params['action'] == 'edit' %>
         <div class="row">
           <div class="col-sm-2">
-            <input type="button" id="btnAdd" value="Add More Skillset" class="btn btn-success"> 
+            <input type="button" id="btnAdd" value="+ Additional Skillset" class="btn btn-success"> 
           </div>
 
           <div class="col-sm-3">
@@ -81,7 +81,7 @@
               $('#entry' + num).slideUp('slow', function () {$(this).remove();
                   if (num -1 === 1)
               $('#btnDel').attr('disabled', true);
-              $('#btnAdd').attr('disabled', false).prop('value', "Add More Skillset");});
+              $('#btnAdd').attr('disabled', false).prop('value', "+ Additional Skillset");});
           }
       return false;
   });

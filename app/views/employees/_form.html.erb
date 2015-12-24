@@ -176,14 +176,14 @@
         </div>
         <div class="col-sm-3">
           <div class="field">
-            <%= f.select :handicap, ['Yes','No'],{include_blank: "Please Select"},{onchange:"var a={id:$(this).val()}; $.get('/employees/ajax_show_textbox',a,function(response){});"} %>
+            <%= f.select :handicap, ['Yes','No'],{label:Differently Abled,include_blank: "Please Select"},{onchange:"var a={id:$(this).val()}; $.get('/employees/ajax_show_textbox',a,function(response){});"} %>
           </div>
         </div>
         <div class="col-sm-3">
           <div class="field">
             <div id="handicap_type">
               <% if action_name == 'edit' and @employee.handicap_type != "" %>
-                <%= f.text_field :handicap_type %>
+                <%= f.text_field :handicap_type,label:Differently Abled Type %>
               <% end %>
             </div>
           </div>

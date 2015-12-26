@@ -29,9 +29,11 @@ class EmployeeAnnualSalariesController < ApplicationController
         @employee_ids.try(:each) do |id|
           @items.each do |k,v|
             EmployeeAnnualSalary.new do |e|
+              #SalaryComponent.find()
               e.employee_id = id
               e.salary_component_id = k
               e.amount = v
+              e.parent_salary_component_id = 
               e.save
             end
           end
@@ -49,5 +51,12 @@ class EmployeeAnnualSalariesController < ApplicationController
   def employee_annual_salary_slip
     @employee = Employee.find(params[:format])
     @items = @employee.employee_annual_salaries
+  end
+
+  def all_employee_monthly_salary
+    @deducted_salary_components = SalaryComponent.deducted
+    @addected_salary_components = SalaryComponent.addected
+    @all_employee_annual_salaries = EmployeeAnnualSalary.all
+    @employees = Employee.joins("inner join employee_annual_salaries on employees.id = employee_annual_salaries.employee_id").uniq
   end
 end

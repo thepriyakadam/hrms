@@ -19,6 +19,9 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  #AbstractController::ActionNotFound
+  #ActionController::RoutingError
+
   # rescue_from ActiveRecord::RecordNotFound do |exc|
   #   if request.xhr?
   #     flash[:alert] = "Sorry! Record not found"

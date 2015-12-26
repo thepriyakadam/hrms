@@ -1,0 +1,52 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Create Employee Annual Salary</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+  <%= bootstrap_form_for(@employee_annual_salary) do |f| %>
+     <div class="row">
+        <div class="col-sm-3">
+          <div class="form-group required">
+           <%= f.text_field :manual_Employee_code,label: 'Employee Code',placeholder: "Employee Code"%>
+           </div>
+        </div>
+      </div>
+
+        </div>
+      <div class="row">
+      <div class="col-sm-12">
+      <div class="form-group required">
+        <div id="employee_list"> 
+          <%= render 'salary_components_list_for_employee' %>
+        </div>
+      </div>
+      </div>
+    </div>
+  <div class="row">
+        <div class="col-sm-5">
+          <div class="actions">
+            <%= f.submit "Create Account",class: "btn btn-primary",data: { disable_with: 'Wait....'} %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->
+
+
+<script type="text/javascript">
+  $(function(){
+    $('.from_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-1:+10',
+    dateFormat: 'dd-mm-yy' });
+
+    $('.to_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-1:+10',
+    dateFormat: 'dd-mm-yy' });
+  }); 
+</script>
+ 

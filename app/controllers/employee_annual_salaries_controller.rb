@@ -50,12 +50,4 @@ class EmployeeAnnualSalariesController < ApplicationController
     @employee = Employee.find(params[:format])
     @items = @employee.employee_annual_salaries
   end
-
-  def calculate_salary_component_amount
-    p "-----------------------------------------------"
-    @parcent = params[:parcent]
-    @salary_component = SalaryComponent.find(params[:salary_component_id])
-    p @salary_component.parent.name
-    @parent_salary_component_id = @salary_component.parent.id
-  end
 end

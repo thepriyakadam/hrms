@@ -6,7 +6,6 @@ Rails.application.routes.draw do
     collection do
       get :created_employee_annual_salary
       get :employee_annual_salary_slip
-      get :calculate_salary_component_amount
     end
   end
   resources :salary_components

@@ -24,7 +24,7 @@
 							</div>
 							<div class="col-sm-1">
 								<label>Depends</label>
-								<%= select :parent_salary_component_id,item.id, all_salary_component,{}, class: 'form-control' %>
+								<%= select :parent_salary_component_id,item.id, all_salary_component,{prompt: true}, class: 'form-control' %>
 							</div>
 							<div class="col-sm-1">
 								<label>Factor</label>
@@ -133,19 +133,20 @@
 
 	    function calculate_monthly_and_annual_salary(){
 	      var percentage = parseInt($('#percentage_<%= item.try(:id) %>').val()); 
-	       // var parent_amount = parseInt($("#parent_salary_component_id<%= item.try(:id) %>").val());
-	       var answer=parseInt($("#monthly_amount_21").val());
-				 alert(answer);
+	      var parent_salary_component_id = parseInt($("#parent_salary_component_id_<%= item.try(:id) %>").val());
+	      var parent_salary_component_monthly_amount = parseInt($("#monthly_amount_"+parent_salary_component_id).val());
+
+	      //alert(parent_salary_component_monthly_amount)
 
 	      var monthly_amount = "";
 	      var annual_amount = "";
-	      if(isNaN(percentage)){
+	      if(isNaN(percentage) || isNaN(parent_salary_component_monthly_amount)){
 	        monthly_amount = " ";
 	        annual_amount = " ";
 	      }
 	      else {
-	        monthly_amount = (percentage * 1000 / 100).toFixed(2);
-	        annual_amount = ((percentage * 1000 / 100)*12).toFixed(2);
+	        monthly_amount = (percentage * parent_salary_component_monthly_amount / 100).toFixed(2);
+	        annual_amount = ((percentage * parent_salary_component_monthly_amount / 100)*12).toFixed(2);
 	      }
 	      $('#monthly_amount_<%= item.try(:id) %>').val(monthly_amount);
 	      $('#annual_amount_<%= item.try(:id) %>').val(annual_amount);

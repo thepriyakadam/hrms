@@ -1,5 +1,6 @@
 class EmployeeAnnualSalariesController < ApplicationController
   def index
+    @salary_components = SalaryComponent.all
   	@deducted_salary_components = SalaryComponent.deducted
     @addected_salary_components = SalaryComponent.addected
   	@employees = Employee.joins("left join employee_annual_salaries on employees.id = employee_annual_salaries.employee_id where employee_annual_salaries.employee_id is null")

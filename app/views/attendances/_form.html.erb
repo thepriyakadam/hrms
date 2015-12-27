@@ -1,78 +1,16 @@
 <!-- SELECT2 EXAMPLE -->
 <div class="box box-default">
-  <div class="box-header with-border">
-    <h3 class="box-title">Attendance Details</h3>
-    <div class="box-tools pull-right">
-      
-    </div>
-  </div><!-- /.box-header -->
-
 <div class="box-body">
-<%= bootstrap_form_for(@attendance) do |f| %>
-<div class="row">
-  <div class="col-sm-3">
-    <div class="field">
-     <%= f.text_field :employee_id,{onchange:"var a={employee_code:$(this).val()}; $.get('/attendances/find_employee_for_attendance',a,function(response){});"} %>
-    </div>
-  </div>
-
-  <div class="col-sm-3">
-    <div class="field">
-      <div id="employee_shift">
-        <%= render 'ajax_textbox_for_attendance' %>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-sm-3">
-    <div class="field">
-       <%= f.text_field :attendance_date, value: Date.today %>
-    </div>
-  </div>
-
-  <div class="col-sm-3">
-    <div class="field">
-      <%= f.time_select :check_in %>
-    </div>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-sm-3">
-    <div class="field">
-      <%= f.time_select :check_out %>
-    </div>
-  </div>
-
-  <div class="col-sm-3">
-    <div class="field">
-      <%= f.text_field :company_hrs %>
-    </div>
-  </div>
-
-  <div class="col-sm-3">
-    <div class="field">
-      <%= f.text_field :over_time_hrs %>
-    </div>
-  </div>
-
-  <div class="col-sm-3">
-    <div class="field">
-      <%= f.text_field :total_hrs %>
-    </div>
-  </div>
-</div>
-</div>
-</div>
- <div class="row">
+    <div class="row">
       <div class="col-sm-3">
-        <div class="actions">
-          <%= f.submit :class => class_name, data: { disable_with: data_info } %>
+        <div class="field">
+         <%= text_field :employee_id,:hhh,{oninput:"var a={employee_code:$(this).val()}; $.get('/attendances/find_employee_for_attendance',a,function(response){});"} %>
         </div>
       </div>
     </div>
-    <!-- <div id="area"></div> -->
-  <% end %>
+    <div id="employee_shift">
+      
+    </div>
   <!-- <button id="btnAdd">Add</button> -->
 </div><!-- /.box-body -->
   

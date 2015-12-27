@@ -1,4 +1,4 @@
-<div class="box box-default">
+12<div class="box box-default">
   <div class="box-header with-border">
     <h3 class="box-title">Attendance</h3>
   </div><!-- /.box-header -->
@@ -9,13 +9,13 @@
       <th colspan="2"></th>
     </tr>
 
-    <tr>
+     <tr>
       <th><strong>Employee shift:</strong></th>
       <td><%= @attendance.employee_shift %></td>
 
       <th> <strong>Employee:</strong></th>
       <td><%= @attendance.employee %></td>
-    </tr>
+     </tr>
 
      <tr>
       <th> <strong>Attendance date:</strong></th>
@@ -23,15 +23,15 @@
 
       <th><strong>Check in:</strong></th>
       <td><%= @attendance.check_in %></td>
-    </tr>
+     </tr>
 
      <tr>
       <th><strong>Check out:</strong></th>
-      <td><%= @attendance.check_out %>/td>
+      <td><%= @attendance.check_out %></td>
 
       <th><strong>Company hrs:</strong></th>
       <td><%= @attendance.company_hrs %></td>
-    </tr>
+     </tr>
 
      <tr>
       <th><strong>Over time hrs:</strong></th>
@@ -39,7 +39,7 @@
 
       <th><strong>Total hrs:</strong></th>
       <td><%= @attendance.total_hrs %></td>
-    </tr>
+     </tr>
 
     </table>
 

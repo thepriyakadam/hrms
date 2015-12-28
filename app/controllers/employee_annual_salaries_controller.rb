@@ -8,16 +8,22 @@ class EmployeeAnnualSalariesController < ApplicationController
 
   def create
   	@items = SalaryComponent.all
-    @items.try(:each) do |item|
-      EmployeeAnnualSalary.create(salary_component_id: params["salary_component_id"]["#{item.id}"], \
-                                  to_be_paid: params["to_be_paid"]["#{item.id}"], \
-                                  is_deducted: params["is_deducted"]["#{item.id}"], \
-                                  parent_salary_component_id: params["parent_salary_component_id"]["#{item.id}"], \
-                                  percentage: params["percentage"]["#{item.id}"], \
-                                  max_amount: params["max_amount"]["#{item.id}"], \
-                                  monthly_amount: params["monthly_amount"]["#{item.id}"], \
-                                  annual_amount: params["annual_amount"]["#{item.id}"])
+    @employees = params["employee_ids"]
+    @employees.each do |employee|
+      @items.try(:each) do |item|
+        EmployeeAnnualSalary.create(salary_component_id: params["salary_component_id"]["#{item.id}"], \
+                                    employee_id: employee, \
+                                    to_be_paid: params["to_be_paid"]["#{item.id}"], \
+                                    is_deducted: params["is_deducted"]["#{item.id}"], \
+                                    parent_salary_component_id: params["parent_salary_component_id"]["#{item.id}"], \
+                                    percentage: params["percentage"]["#{item.id}"], \
+                                    max_amount: params["max_amount"]["#{item.id}"], \
+                                    monthly_amount: params["monthly_amount"]["#{item.id}"], \
+                                    annual_amount: params["annual_amount"]["#{item.id}"])
+      end
     end
+    flash[:notice] = "Salary slip generated successfully."
+    redirect_to created_employee_annual_salary_employee_annual_salaries_path  
   end
 
   def created_employee_annual_salary

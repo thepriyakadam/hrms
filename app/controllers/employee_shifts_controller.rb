@@ -16,7 +16,7 @@ class EmployeeShiftsController < ApplicationController
   # GET /employee_shifts/new
   def new
     @employee_shift = EmployeeShift.new
-    @employees = Employee.all
+    @employees = Employee.joins("LEFT JOIN employee_shifts on employees.id = employee_shifts.employee_id where employee_shifts.employee_id is null")
   end
 
   # GET /employee_shifts/1/edit

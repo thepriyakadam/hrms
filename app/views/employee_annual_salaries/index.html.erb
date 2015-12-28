@@ -1,35 +1,50 @@
 <div class="box box-default">
   <div class="box-header with-border">
     <h3 class="box-title">Employee Annual Salary Master</h3>
-    <div class="box-tools pull-right">
-      <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-      <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+    <div class="pull-right">
+      <%= link_to "Create Employee", new_employee_annual_salary_path, class: 'btn btn-primary' %> 
     </div>
   </div><!-- /.box-header -->
 	<div class="box-body">
 		<%= bootstrap_form_for :employee_annual_salary_data do |f| %>
-			<div class="row">
-				<div class="col-sm-2">
-					<% @addected_salary_components.each do |item| %>
+			
+					<% @salary_components.each do |item| %>
 						<div class="row">
-							<div class="col-sm-12">
+							<div class="col-sm-2">
 								<label><%= item.name %></label>
-								<%= f.text_field item.id, hide_label: true %>
+								<%= hidden_field :salary_component_id, item.id,value: item.id,class: 'form-control' %>
+							</div>
+							<div class="col-sm-2">
+								<label>To be paid</label>
+								<%= select :to_be_paid,item.id, [['Monthly'],['Annualy']],{}, class: 'form-control' %>
+							</div>
+							<div class="col-sm-1">
+								<label>is_deduct</label>
+								<%= select :is_deducted,item.id, [['Yes'],['No']],{}, class: 'form-control' %>
+							</div>
+							<div class="col-sm-1">
+								<label>Depends</label>
+								<%= select :parent_salary_component_id,item.id, all_salary_component,{}, class: 'form-control' %>
+							</div>
+							<div class="col-sm-1">
+								<label>Factor</label>
+								<%= text_field :percentage,item.id,class: 'form-control' %>
+							</div>
+							<div class="col-sm-1">
+								<label>Max Amt</label>
+								<%= text_field :max_amount,item.id, class: 'form-control' %>
+							</div>
+							<div class="col-sm-2">
+								<label>Monthly</label>
+								<%= text_field :monthly_amount,item.id, class: 'form-control' %>
+							</div>
+							<div class="col-sm-2">
+								<label>Annualy</label>
+								<%= text_field :annual_amount,item.id, class: 'form-control' %>
 							</div>
 						</div>
 					<% end %>
-				</div>
-				<div class="col-sm-2">
-					<% @deducted_salary_components.each do |item| %>
-						<div class="row">
-							<div class="col-sm-12">
-								<label><%= item.name %></label>
-								<%= f.text_field item.id, hide_label: true %>
-							</div>
-						</div>
-					<% end %>
-				</div>
-				<div class="col-sm-8">
+				
 					<label>Select Employees</label>
 					<table id="example2" class="table table-bordered table-hover">
 				    <thead>
@@ -53,10 +68,6 @@
 					     <% end %>
 				    </tbody>
 			  	</table>
-				</div>
-
-			</div>
-
 			<%= f.button "Create Employee Salary", class: "btn btn-primary", data: {disable_with: "<i class='fa fa-circle-o-notch fa-spin'></i> Wait..."} %>
 		<% end %>
 	</div><!-- /.box-body -->
@@ -70,11 +81,75 @@
     if (this.checked) {
       $(':checkbox').each(function() {
         this.checked = true;                        
-    });
-    } else {
+      });
+    } 
+    else {
       $(':checkbox').each(function() {
         this.checked = false;                        
-    });
-  } 
-});
+      });
+    }
+  });
+
+  <% @addected_salary_components.each do |item| %>
+  
+		$(function(){
+		  $('#monthly_amount_<%=item.id%>').on('input', function() {
+	      calculate_annual_salary();
+	    });
+
+	    $('#annual_amount_<%=item.id%>').on('input', function() {
+	      calculate_monthly_salary();
+	    });
+
+	    $('#percentage_<%=item.id%>').on('input', function() {
+	      calculate_monthly_and_annual_salary();
+	    });
+
+	    function calculate_annual_salary(){
+	      var monthly_amount = parseInt($('#monthly_amount_<%= item.try(:id) %>').val()); 
+	      
+	      var annual_amount = "";
+	      if(isNaN(monthly_amount)){
+	        annual_amount = " ";
+	      }
+	      else {
+	        annual_amount = (monthly_amount*12).toFixed(2);
+	      }
+	      $('#annual_amount_<%= item.try(:id) %>').val(annual_amount);
+	    }
+
+	    function calculate_monthly_salary(){
+	      var annual_amount = parseInt($('#annual_amount_<%= item.try(:id) %>').val()); 
+	      
+	      var monthly_amount = "";
+	      if(isNaN(annual_amount)){
+	        monthly_amount = " ";
+	      }
+	      else {
+	        monthly_amount = (annual_amount / 12).toFixed(2);
+	      }
+	      $('#monthly_amount_<%= item.try(:id) %>').val(monthly_amount);
+	    }
+
+	    function calculate_monthly_and_annual_salary(){
+	      var percentage = parseInt($('#percentage_<%= item.try(:id) %>').val()); 
+	       // var parent_amount = parseInt($("#parent_salary_component_id<%= item.try(:id) %>").val());
+	       var answer=parseInt($("#monthly_amount_21").val());
+				 alert(answer);
+
+	      var monthly_amount = "";
+	      var annual_amount = "";
+	      if(isNaN(percentage)){
+	        monthly_amount = " ";
+	        annual_amount = " ";
+	      }
+	      else {
+	        monthly_amount = (percentage * 1000 / 100).toFixed(2);
+	        annual_amount = ((percentage * 1000 / 100)*12).toFixed(2);
+	      }
+	      $('#monthly_amount_<%= item.try(:id) %>').val(monthly_amount);
+	      $('#annual_amount_<%= item.try(:id) %>').val(annual_amount);
+	    }
+		});
+	<% end %>
 </script>

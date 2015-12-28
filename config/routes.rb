@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     collection do
       get :created_employee_annual_salary
       get :employee_annual_salary_slip
+      get :all_employee_monthly_salary
     end
   end
   resources :salary_components
@@ -23,7 +24,11 @@ Rails.application.routes.draw do
       get :find_employee_for_attendance
     end
   end
-  resources :employee_shifts
+  resources :employee_shifts do
+    collection do
+      get :employee_of_shift
+    end
+  end
   resources :company_shifts
   resources :roles do
     collection do

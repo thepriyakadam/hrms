@@ -57,6 +57,11 @@ $(function () {
   $('#reservation').daterangepicker();
   //Date range picker with time picker
   $('#reservationtime').daterangepicker({timePicker: true, timePickerIncrement: 30, format: 'DD/MM/YYYY h:mm A'});
+
+  //Timepicker
+  $(".timepicker").timepicker({
+    showInputs: false
+  });
   
 });
 

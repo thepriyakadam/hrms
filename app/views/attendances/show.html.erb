@@ -3,35 +3,31 @@
     <h3 class="box-title">Attendance</h3>
   </div><!-- /.box-header -->
   <div class="box-body">
-    <table id="example2" class="table table-bordered table-hover">
-    <tr> 
-      <th colspan="2"></th>
-      <th colspan="2"></th>
-    </tr>
-
-    <tr>
-      <th><strong>Employee shift:</strong></th>
-      <td><%= @attendance.employee_shift %></td>
-
-      <th> <strong>Employee:</strong></th>
-      <td><%= @attendance.employee %></td>
-    </tr>
+    <table class="table table-bordered table-hover">
 
      <tr>
-      <th> <strong>Attendance date:</strong></th>
+      <th><strong>Employee shift</strong></th>
+      <td><%= @attendance.employee_shift.company_shift.try(:name) %></td>
+
+      <th> <strong>Employee</strong></th>
+      <td><%= @attendance.employee.try(:first_name) %></td>
+     </tr>
+
+     <tr>
+      <th> <strong>Attendance date</strong></th>
       <td><%= @attendance.attendance_date %></td>
 
-      <th><strong>Check in:</strong></th>
+      <th><strong>Check in</strong></th>
       <td><%= @attendance.check_in %></td>
-    </tr>
+     </tr>
 
      <tr>
-      <th><strong>Check out:</strong></th>
-      <td><%= @attendance.check_out %>/td>
+      <th><strong>Check out</strong></th>
+      <td><%= @attendance.check_out %></td>
 
-      <th><strong>Company hrs:</strong></th>
+      <th><strong>Company hrs</strong></th>
       <td><%= @attendance.company_hrs %></td>
-    </tr>
+     </tr>
 
      <tr>
       <th><strong>Over time hrs:</strong></th>
@@ -39,7 +35,7 @@
 
       <th><strong>Total hrs:</strong></th>
       <td><%= @attendance.total_hrs %></td>
-    </tr>
+     </tr>
 
     </table>
 

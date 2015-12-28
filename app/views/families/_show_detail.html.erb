@@ -20,7 +20,7 @@
   <tbody>
     <% @families.each do |family| %>
       <tr>
-        <td><%= family.f_name %></td>
+        <td><%= family.f_name+' '+family.m_name+' '+family.l_name %></td>
         <td><%= family.date_of_birth %></td>
         <td><%= family.contact_no %></td>
         <td><%= family.relation %></td>

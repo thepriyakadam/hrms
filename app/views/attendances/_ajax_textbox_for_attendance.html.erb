@@ -1,4 +1,6 @@
 <%= bootstrap_form_for(@attendance) do |f| %>
+<%= hidden_field :attendance, :employee_id, value: @employee.id%>
+<%= hidden_field :attendance, :employee_shift_id, value: @employee.employee_shift.id%>
 <div class="row">
   <div class="col-sm-3">
     <div class="field">

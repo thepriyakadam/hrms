@@ -9,7 +9,7 @@
    <table id="example2" class="table table-bordered table-hover">
 <tr>
   <th><strong>Employee</strong></th>
-  <td><%= @family.employee.try(:first_name %></td>
+  <td><%= @family.employee.try(:first_name) %></td>
 
   <th> <strong>Relation</strong></th>
   <td><%= @family.relation %></td>
@@ -47,7 +47,7 @@
   <th><strong>Aadhar No</strong></th>
   <td> <%= @family.adhar_no %></td>
 
-  <th> <strong>Pan No</strong></th>
+  <th> <strong>PAN Card No</strong></th>
   <td><%= @family.pan_no %></td>
 </tr>
 <tr>
@@ -82,11 +82,11 @@
   <th><strong>Medical Insurance</strong></th>
   <td><%= @family.medical_claim %></td>
 
-  <th><strong>Handicap</strong></th>
+  <th><strong>Differently Abled</strong></th>
   <td><%= @family.is_handicap %></td>
 </tr>
 <tr>
-  <th><strong>Handicap Type</strong></th>
+  <th><strong>Disability Type</strong></th>
   <td><%= @family.handicap_type %></td>
   <th></th>
   <td></td>

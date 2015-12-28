@@ -1,6 +1,6 @@
 <div class="box">
   <div class="box-header">
-    <h3 class="box-title">Employee shift</h3>
+    <h3 class="box-title">Employee Shift List</h3>
   </div><!-- /.box-header -->
   <div class="box-body">
     <table id="example2" class="table table-bordered table-hover">
@@ -10,7 +10,6 @@
       <th>Shift</th>
       <th>From Date</th>
       <th>To Date</th>
-      <th>Action</th>
     </tr>
   </thead>
   <tbody>
@@ -20,12 +19,10 @@
         <td><%= employee_shift.company_shift.try(:name) %></td>
         <td><%= employee_shift.from_date %></td>
         <td><%= employee_shift.to_date %></td>
-        <td>
-        <%= link_to '', employee_of_shift_employee_shifts_path,class: 'btn btn-default fa fa-eye' %>
-        </td>
       </tr>
     <% end %>
   </tbody>
 </table>
+ <%= link_to 'Back', employee_shifts_path,class: 'btn btn-default fa fa-arrow-left' %>
 </div>
 </div>

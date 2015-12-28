@@ -65,6 +65,8 @@ class AttendancesController < ApplicationController
     p "----------------------------------------------------"
     @attendance = Attendance.new
     @employee = Employee.find_by_manual_employee_code(params[:employee_code]) 
+    @employee_shift = EmployeeShift.find_by_employee_id(@employee.id)
+    @company_shift = CompanyShift.find(@employee_shift.comapny_shift_id)
     respond_to do |format|
       if @employee.nil?
         format.js { @flag = true }

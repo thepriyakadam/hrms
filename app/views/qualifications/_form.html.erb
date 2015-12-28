@@ -59,7 +59,7 @@ $(document).ready(function(){
 <%= bootstrap_form_for(@qualification,html: {id: 'qualification'},remote:true) do |f| %>
   <%= f.hidden_field :employee_id, value: @employee.id %>
     <!-- <div id="entry1" class="clonedInput alert"> -->
-    <div id="entry1" class="clonedInput">
+    <div id="entry1" class="clonedInput ">
       <div class="row">
 
       <!-- <div class="box-tools pull-right">
@@ -199,4 +199,6 @@ $(document).ready(function(){
   // Disable the "remove" button
   $('#btnDel').attr('disabled', true);
 });
+
+
 </script>

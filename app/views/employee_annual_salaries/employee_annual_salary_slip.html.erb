@@ -31,7 +31,7 @@
 					      <tr>
 					        <td><%= i=i+1 %></td>
 					        <td><%= item.salary_component.try(:name) %></td>
-					        <td align="right"><%= '%.2f'%amt = item.amount/12 %></td>
+					        <td align="right"><%= '%.2f'%amt = item.monthly_amount/12 %></td>
 					        <% addect_total = addect_total + amt %>
 					      </tr>
 					    <% end %>  
@@ -61,7 +61,7 @@
 					      <tr>
 					        <td><%= j=j+1 %></td>
 					        <td><%= item.salary_component.try(:name) %></td>
-					        <td align="right"><%= '%.2f'%amt =item.amount/12 %></td>
+					        <td align="right"><%= '%.2f'%amt =item.monthly_amount/12 %></td>
 					        <% deduct_total = deduct_total + amt %>
 					      </tr>
 					    <% end %>

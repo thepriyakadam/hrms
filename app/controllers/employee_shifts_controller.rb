@@ -4,7 +4,8 @@ class EmployeeShiftsController < ApplicationController
   # GET /employee_shifts
   # GET /employee_shifts.json
   def index
-    @employee_shifts = EmployeeShift.all
+    #@employee_shifts = EmployeeShift.all
+    @company_shifts = CompanyShift.all
   end
 
   # GET /employee_shifts/1
@@ -67,6 +68,11 @@ class EmployeeShiftsController < ApplicationController
       format.html { redirect_to employee_shifts_url, notice: 'Employee shift was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def employee_of_shift
+    @company_shift = CompanyShift.find(params[:format])
+    @employee_shifts = @company_shift.employee_shifts
   end
 
   private

@@ -10,9 +10,9 @@
     <table id="example2" class="table table-bordered table-hover">
     <thead>
       <tr>
-      <th>Employee shift</th>
+      <th>Shift</th>
       <th>Employee</th>
-      <th>Attendance date</th>
+      <th>Date</th>
       <th>Check in</th>
       <th>Check out</th>
       <th>Company hrs</th>
@@ -25,8 +25,8 @@
   <tbody>
     <% @attendances.each do |attendance| %>
       <tr>
-        <td><%= attendance.employee_shift %></td>
-        <td><%= attendance.employee %></td>
+        <td><%= attendance.employee_shift.company_shift.try(:name) %></td>
+        <td><%= attendance.employee.try(:first_name) %></td>
         <td><%= attendance.attendance_date %></td>
         <td><%= attendance.check_in %></td>
         <td><%= attendance.check_out %></td>

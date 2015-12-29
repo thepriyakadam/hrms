@@ -1,29 +1,27 @@
 class EmployeeAnnualSalariesController < ApplicationController
   def index
     @salary_components = SalaryComponent.all
-  	@deducted_salary_components = SalaryComponent.deducted
-    @addected_salary_components = SalaryComponent.addected
-  	@employees = Employee.joins("left join employee_annual_salaries on employees.id = employee_annual_salaries.employee_id where employee_annual_salaries.employee_id is null")
+  	# @deducted_salary_components = SalaryComponent.deducted
+   #  @addected_salary_components = SalaryComponent.addected
+  	# @employees = Employee.joins("left join employee_annual_salaries on employees.id = employee_annual_salaries.employee_id where employee_annual_salaries.employee_id is null")
+    @employee_annual_salaries = EmployeeAnnualSalary.all
+  end
+
+  def new
+    @employee_annual_salary = EmployeeAnnualSalary.new
+    @salary_component = SalaryComponent.find(params[:id])
   end
 
   def create
-  	@items = SalaryComponent.all
-    @employees = params["employee_ids"]
-    @employees.each do |employee|
-      @items.try(:each) do |item|
-        EmployeeAnnualSalary.create(salary_component_id: params["salary_component_id"]["#{item.id}"], \
-                                    employee_id: employee, \
-                                    to_be_paid: params["to_be_paid"]["#{item.id}"], \
-                                    is_deducted: params["is_deducted"]["#{item.id}"], \
-                                    parent_salary_component_id: params["parent_salary_component_id"]["#{item.id}"], \
-                                    percentage: params["percentage"]["#{item.id}"], \
-                                    max_amount: params["max_amount"]["#{item.id}"], \
-                                    monthly_amount: params["monthly_amount"]["#{item.id}"], \
-                                    annual_amount: params["annual_amount"]["#{item.id}"])
-      end
+  	@employee_annual_salary = EmployeeAnnualSalary.new(employee_annual_salary_params) 
+    if @employee_annual_salary.save
+      @employee_annual_salaries = EmployeeAnnualSalary.all
+      flash[:notice] = "Salary Data Added Successfully."
+      @flag = true
+    else
+      flash[:alert] = "Salary Data Not Added Successfully."
+      @flag = false
     end
-    flash[:notice] = "Salary slip generated successfully."
-    redirect_to created_employee_annual_salary_employee_annual_salaries_path  
   end
 
   def created_employee_annual_salary
@@ -41,41 +39,16 @@ class EmployeeAnnualSalariesController < ApplicationController
     @all_employee_annual_salaries = EmployeeAnnualSalary.all
     @employees = Employee.joins("inner join employee_annual_salaries on employees.id = employee_annual_salaries.employee_id").uniq
   end
+
+  private
+
+  def set_employee_annual_salary
+    @employee_annual_salary = EmployeeAnnualSalary.find(params[:id])
+  end
+
+  def employee_annual_salary_params
+    params.require(:employee_annual_salary).permit(:employee_id,:salary_component_id,:percentage,:parent_salary_component_id,:is_deducted,:to_be_paid,:max_amount,:monthly_amount,:annual_amount,:is_taxable,:tax,:base)
+  end
 end
 
 
-# @items = params["employee_annual_salary_data"]
-#     @employee_ids = params["employee_ids"]
-#     @deducted_salary_components = SalaryComponent.deducted
-#     @addected_salary_components = SalaryComponent.addected
-#     @employees = Employee.joins("left join employee_annual_salaries on employees.id = employee_annual_salaries.employee_id where employee_annual_salaries.employee_id is null")
-#     flag = false
-#     @items.each do |k,v|
-#       if v == ""
-#         flag = true
-#       end
-#     end
-#     if flag
-#       flash.now[:alert] = "All fields are mandatory."
-#       render :index
-#     elsif @employee_ids.nil?
-#       flash.now[:alert] = "Please select employee."
-#       render :index
-#     else
-#       ActiveRecord::Base.transaction do
-#         @employee_ids.try(:each) do |id|
-#           @items.each do |k,v|
-#             EmployeeAnnualSalary.new do |e|
-#               #SalaryComponent.find()
-#               e.employee_id = id
-#               e.salary_component_id = k
-#               e.amount = v
-#               e.parent_salary_component_id = 
-#               e.save
-#             end
-#           end
-#         end
-#       end
-#       flash[:alert] = "This is under construction."
-#       redirect_to employee_annual_salaries_path
-#     end

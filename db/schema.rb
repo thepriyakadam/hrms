@@ -11,19 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151227103218) do
-
-  create_table "annual_salary_masters", force: :cascade do |t|
-    t.integer  "employee_id"
-    t.string   "name"
-    t.string   "code"
-    t.string   "description"
-    t.decimal  "amount",      precision: 13, scale: 2
-    t.datetime "created_at",                           null: false
-    t.datetime "updated_at",                           null: false
-  end
-
-  add_index "annual_salary_masters", ["employee_id"], name: "index_annual_salary_masters_on_employee_id"
+ActiveRecord::Schema.define(version: 20151229101851) do
 
   create_table "annual_salary_masters", force: :cascade do |t|
     t.integer  "employee_id"
@@ -269,6 +257,9 @@ ActiveRecord::Schema.define(version: 20151227103218) do
     t.decimal  "max_amount",                 precision: 15, scale: 2
     t.decimal  "monthly_amount",             precision: 15, scale: 2
     t.decimal  "annual_amount",              precision: 15, scale: 2
+    t.boolean  "is_taxable"
+    t.decimal  "tax",                        precision: 15, scale: 2
+    t.string   "base"
   end
 
   add_index "employee_annual_salaries", ["employee_id"], name: "index_employee_annual_salaries_on_employee_id"
@@ -628,6 +619,29 @@ ActiveRecord::Schema.define(version: 20151227103218) do
     t.datetime "updated_at",  null: false
   end
 
+  create_table "salary_component_templates", force: :cascade do |t|
+    t.string   "manual_template_code"
+    t.string   "auto_template_code"
+    t.integer  "salary_template_id"
+    t.integer  "salary_component_id"
+    t.boolean  "is_deducted"
+    t.integer  "parent_salary_component_id"
+    t.decimal  "percentage",                 precision: 4,  scale: 2
+    t.boolean  "is_taxable"
+    t.decimal  "tax",                        precision: 4,  scale: 2
+    t.string   "base"
+    t.string   "to_be_paid"
+    t.decimal  "max_amount",                 precision: 15, scale: 2
+    t.decimal  "monthly_amount",             precision: 15, scale: 2
+    t.decimal  "annual_amount",              precision: 15, scale: 2
+    t.datetime "created_at",                                          null: false
+    t.datetime "updated_at",                                          null: false
+  end
+
+  add_index "salary_component_templates", ["parent_salary_component_id"], name: "index_salary_component_templates_on_parent_salary_component_id"
+  add_index "salary_component_templates", ["salary_component_id"], name: "index_salary_component_templates_on_salary_component_id"
+  add_index "salary_component_templates", ["salary_template_id"], name: "index_salary_component_templates_on_salary_template_id"
+
   create_table "salary_components", force: :cascade do |t|
     t.string   "name"
     t.boolean  "is_deducted"
@@ -639,6 +653,14 @@ ActiveRecord::Schema.define(version: 20151227103218) do
   end
 
   add_index "salary_components", ["parent_id"], name: "index_salary_components_on_parent_id"
+
+  create_table "salary_templates", force: :cascade do |t|
+    t.string   "code"
+    t.string   "description"
+    t.date     "validity_date"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
 
   create_table "skillsets", force: :cascade do |t|
     t.integer  "employee_id"

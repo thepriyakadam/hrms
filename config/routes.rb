@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :salary_component_templates
+  resources :salary_templates
   resources :religions
   resources :banks
   resources :employee_annual_salaries do

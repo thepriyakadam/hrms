@@ -243,7 +243,7 @@ $.validator.addMethod("address", function (value, element) {
 
     },
     errorPlacement: function(error, element) {
-     error.css('color','red')
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
      error.insertAfter(element.parent(element));
     }
   });
@@ -323,7 +323,7 @@ $("#company_location").validate({
       }
     },
     errorPlacement: function(error, element) {
-     error.css('color','red')
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
      error.insertAfter(element.parent(element));
     }
 
@@ -344,7 +344,7 @@ $("#company_type").validate({
       }
     },
     errorPlacement: function(error, element) {
-     error.css('color','red')
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
      error.insertAfter(element.parent(element));
     }
 
@@ -394,7 +394,7 @@ $("#department").validate({
 
 
     errorPlacement: function(error, element) {
-     error.css('color','red')
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
      error.insertAfter(element.parent(element));
     }
 
@@ -412,7 +412,7 @@ $("#department_type").validate({
       }
     },
     errorPlacement: function(error, element) {
-     error.css('color','red')
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
      error.insertAfter(element.parent(element));
     }
 
@@ -521,7 +521,7 @@ $("#employee").validate({
 
     },
     errorPlacement: function(error, element) {
-     error.css('color','red')
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
      error.insertAfter(element.parent(element));
     }
 
@@ -541,7 +541,7 @@ $("#employee_grade").validate({
       }
     },
     errorPlacement: function(error, element) {
-     error.css('color','red')
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
      error.insertAfter(element.parent(element));
     }
 
@@ -589,7 +589,7 @@ $("#employee_physical").validate({
       }
     },
     errorPlacement: function(error, element) {
-     error.css('color','red')
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
      error.insertAfter(element.parent(element));
     }
 
@@ -637,7 +637,7 @@ $("#experince").validate({
 
     },
     errorPlacement: function(error, element) {
-     error.css('color','red')
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
      error.insertAfter(element.parent(element));
     }
 
@@ -735,7 +735,7 @@ $("#family").validate({
       }
     },
     errorPlacement: function(error, element) {
-     error.css('color','red')
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
      error.insertAfter(element.parent(element));
     }
 
@@ -755,7 +755,7 @@ $("#leav_cate").validate({
       }
     },
     errorPlacement: function(error, element) {
-     error.css('color','red')
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
      error.insertAfter(element.parent(element));
     }
 
@@ -782,7 +782,7 @@ $("#company_leav").validate({
 
     },
     errorPlacement: function(error, element) {
-     error.css('color','red')
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
      error.insertAfter(element.parent(element));
     }
 
@@ -808,7 +808,7 @@ $("#employee_leav_request").validate({
 
     },
     errorPlacement: function(error, element) {
-     error.css('color','red')
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
      error.insertAfter(element.parent(element));
     }
 
@@ -835,7 +835,7 @@ $("#skillset").validate({
       }
     },
     errorPlacement: function(error, element) {
-     error.css('color','red')
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
      error.insertAfter(element.parent(element));
     }
 
@@ -868,7 +868,7 @@ $("#award").validate({
       }
     },
     errorPlacement: function(error, element) {
-     error.css('color','red')
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
      error.insertAfter(element.parent(element));
     }
 
@@ -919,7 +919,7 @@ $("#certification").validate({
 
     },
     errorPlacement: function(error, element) {
-     error.css('color','red')
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
      error.insertAfter(element.parent(element));
     }
 
@@ -941,7 +941,7 @@ $("#employee_type").validate({
       }
     },
     errorPlacement: function(error, element) {
-     error.css('color','red')
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
      error.insertAfter(element.parent(element));
     }
 
@@ -1009,7 +1009,7 @@ $("#employee_bank_detail").validate({
       }
     },
     errorPlacement: function(error, element) {
-     error.css('color','red')
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
      error.insertAfter(element.parent(element));
     }
 

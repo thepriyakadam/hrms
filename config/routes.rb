@@ -26,7 +26,11 @@ Rails.application.routes.draw do
       get :find_employee_for_attendance
     end
   end
-  resources :employee_shifts
+  resources :employee_shifts do
+    collection do
+      get :employee_of_shift
+    end
+  end
   resources :company_shifts
   resources :roles do
     collection do

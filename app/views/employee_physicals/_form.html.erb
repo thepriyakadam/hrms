@@ -16,13 +16,13 @@
   
       <div class="col-sm-3">
         <div class="form-group required">
-         <%= f.text_field :height,label:"Height",placeholder: "Height(in inches)" %>
+         <%= f.text_field :height,label:"Height",placeholder: "Height(inches)" %>
        </div>
     </div>
  
       <div class="col-sm-3">
         <div class="form-group required">
-          <%= f.text_field :weight,label:"Weight",placeholder: "Weight(in Kg)" %>
+          <%= f.text_field :weight,label:"Weight",placeholder: "Weight(kg)" %>
        </div>
     </div>
  
@@ -33,7 +33,7 @@
       </div>
       <div class="col-sm-3">
         <div class="form-group required">
-          <%= f.select :trouser_size, ['28','30','32','34','36','38','40','42','44'],{label: 'Trouser Size(In cm)',include_blank: " Select Trouser Size"} %>
+          <%= f.select :trouser_size, ['28','30','32','34','36','38','40','42','44'],{label: 'Trouser Size',include_blank: " Select Trouser Size(cm)"} %>
        </div>
       </div>
   </div>

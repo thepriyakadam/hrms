@@ -1,1 +1,5 @@
+<% if @flag %>
+$("#form").html(" ")
+<% else %>
 $("#form").html("<%= j render 'form'%>")
+<% end %>

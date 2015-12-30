@@ -7,7 +7,7 @@ class SalaryComponentTemplatesController < ApplicationController
 
   def new
     @salary_component_template = SalaryComponentTemplate.new
-    @salary_component = SalaryComponent.find(params[:id])
+    @salary_component = SalaryComponent.find(params[:id]) 
     @salary_template = SalaryTemplate.find(params[:s])
   end
 
@@ -23,21 +23,21 @@ class SalaryComponentTemplatesController < ApplicationController
     end
   end
 
-  def created_salary_component_template
-    @employees = Employee.joins("inner join employee_annual_salaries on employees.id = employee_annual_salaries.employee_id").uniq
-  end
+  # def created_salary_component_template
+  #   @employees = Employee.joins("inner join employee_annual_salaries on employees.id = employee_annual_salaries.employee_id").uniq
+  # end
 
-  def salary_component_template_slip
-    @employee = Employee.find(params[:format])
-    @items = @employee.employee_annual_salaries
-  end
+  # def salary_component_template_slip
+  #   @employee = Employee.find(params[:format])
+  #   @items = @employee.employee_annual_salaries
+  # end
 
-  def all_employee_monthly_salary
-    @deducted_salary_components = SalaryComponent.deducted
-    @addected_salary_components = SalaryComponent.addected
-    @all_employee_annual_salaries = SalaryComponentTemplate.all
-    @employees = Employee.joins("inner join employee_annual_salaries on employees.id = employee_annual_salaries.employee_id").uniq
-  end
+  # def all_employee_monthly_salary
+  #   @deducted_salary_components = SalaryComponent.deducted
+  #   @addected_salary_components = SalaryComponent.addected
+  #   @all_employee_annual_salaries = SalaryComponentTemplate.all
+  #   @employees = Employee.joins("inner join employee_annual_salaries on employees.id = employee_annual_salaries.employee_id").uniq
+  # end
 
   private
     # Use callbacks to share common setup or constraints between actions.

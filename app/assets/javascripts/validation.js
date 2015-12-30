@@ -1015,4 +1015,37 @@ $("#employee_bank_detail").validate({
 
    });
 
+$("#employee_shift").validate({
+    rules: {
+      "employee_shift[company_shift_id]":{
+        required: true
+       }
+      // "employee_shift[from_date]":{
+      //   required: true
+      // }
+      // "employee_shift[to_date]":{
+      //   required: true
+      // }
+
+    },
+    messages: {
+      "employee_shift[company_shift_id]":{
+        required: "Please specify Company Shift Id"
+      }
+      // "employee_shift[from_date]":{
+      //   required: "Please specify From Date"
+      // }
+      // "employee_shift[to_date]":{
+      //   required: "Please specify To Date"
+      // }
+    },
+    errorPlacement: function(error, element) {
+     error.css('color','red')
+     error.insertAfter(element.parent(element));
+    }
+
+   });
+
+
+
 });

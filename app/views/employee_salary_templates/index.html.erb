@@ -1,0 +1,20 @@
+<!-- SELECT2 EXAMPLE -->
+<div class="box box-default">
+	<div class="box-body">
+	  <div class="row">
+	    <div class="col-sm-3">
+	      <div class="field">
+	        <%= text_field :employee_code,:hhh,{oninput:"var a={employee_code:$(this).val()}; $.get('/employee_salary_templates/find_employee_for_assign_template',a,function(response){});",class: 'form-control',placeholder:'Search by Employee id'} %>
+	      </div>
+	    </div>
+	  </div>
+	  <div id="employee_details">
+	    
+	  </div>
+
+	  <div id="show_template">
+	    
+	  </div>
+	  <!-- <button id="btnAdd">Add</button> -->
+	</div><!-- /.box-body -->
+</div><!-- /.box -->

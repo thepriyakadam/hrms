@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
 
+  resources :employee_salary_templates do
+    collection do
+      get :find_employee_for_assign_template
+    end
+  end
   resources :salary_component_templates
   resources :salary_templates
   resources :religions

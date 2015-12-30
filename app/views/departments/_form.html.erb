@@ -1,109 +1,48 @@
-<%= bootstrap_form_for(@department) do |f| %>
-  <% if @department.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@department.errors.count, "error") %> prohibited this department from being saved:</h2>
-
-      <ul>
-      <% @department.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
+<div class="box-body">
+<%= bootstrap_form_for(@department,html: {id: 'department'},remote: true) do |f| %>
   <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-        <%= f.text_field :company_location_id %>
-        </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-         <%= f.text_field :name %>
-        </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-          <%= f.select :department_type_id, all_department_type %>
-        </div>
-    </div>
-  </div>
-
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-    <%= f.text_field :address %>
-        </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-          <%= f.number_field :pin_code %>
+    <div class="col-sm-3">
+      <div class="form-group required">
+       <%= f.text_field :manual_department_code,label: 'Department Code',placeholder: "Department Code"%>
        </div>
     </div>
   </div>
 
-
   <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-          <%= f.text_field :head_of_department %>
-         </div>
-      </div>
-  </div>
-
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-         <%= f.text_field :contact_no %>
+    <div class="col-sm-3">
+        <div class="form-group required">
+         <%= f.select :company_location_id, all_company_location,{label: 'Department Location',include_blank: " Select Department Location"} %>
         </div>
-      </div>
-  </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="form-group required">
+         <%= f.text_field :name,label:"Department Name",placeholder: "e.g : IT" %>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="form-group required">
+          <%= f.select :department_type_id, all_department_type,{label: 'Department Type',include_blank: " Select Department Type"}%>
+        </div>
+    </div>
+<div class="col-sm-3">
+    <div class="field">
+     <%= f.text_field :contact_no ,label:"Contact No"%>
+    </div>
+</div>
+</div>
 
   <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-    <%= f.text_field :manager %>
-        </div>
+    <div class="col-sm-12">
+      <div class="field">
+        <%= f.text_area :description,placeholder: "e.g : Any description related to Department."%>
       </div>
+    </div>
   </div>
 
-
-   <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-         <%= f.text_field :hr %>
-       </div>
+  <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit :class => class_name, data: { disable_with: data_info } %>
       </div>
+    </div>
   </div>
-
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="actions">
-         <%= f.submit %>
-        </div>
-      </div>
-  </div>
-
 <% end %>

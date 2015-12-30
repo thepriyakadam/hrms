@@ -1,6 +1,6 @@
 class QualificationsController < ApplicationController
   before_action :set_qualification, only: [:show, :edit, :update, :destroy]
-
+  #load_and_authorize_resource
   # GET /qualifications
   # GET /qualifications.json
   def index
@@ -19,20 +19,31 @@ class QualificationsController < ApplicationController
 
   # GET /qualifications/1/edit
   def edit
+    @employee = @qualification.employee
   end
 
   # POST /qualifications
   # POST /qualifications.json
   def create
     @qualification = Qualification.new(qualification_params)
-
-    respond_to do |format|
-      if @qualification.save
-        format.html { redirect_to @qualification, notice: 'Qualification was successfully created.' }
-        format.json { render :show, status: :created, location: @qualification }
-      else
-        format.html { render :new }
-        format.json { render json: @qualification.errors, status: :unprocessable_entity }
+    @employee = Employee.find(params[:qualification][:employee_id])
+    
+    ActiveRecord::Base.transaction do
+      respond_to do |format|
+        if @qualification.save
+          len = params["qualification"].length-7
+          for i in 2..len
+            Qualification.create(employee_id: params['qualification']['employee_id'], degree_type_id: params['qualification'][i.to_s]['degree_type_id'],degree_id: params['qualification'][i.to_s]['degree_id'],degree_stream_id: params['qualification'][i.to_s]['degree_stream_id'], marks: params['qualification'][i.to_s]['marks'], year_id: params['qualification'][i.to_s]['year_id'], college: params['qualification'][i.to_s]['college'],university_id: params['qualification'][i.to_s]['university_id']) 
+          end
+          @qualifications = Qualification.where(employee_id: @employee.id)
+          format.html { redirect_to @qualification, notice: 'Qualification was successfully created.' }
+          format.json { render :show, status: :created, location: @qualification }
+          format.js { @flag = true}
+        else
+          format.html { render :new }
+          format.json { render json: @qualification.errors, status: :unprocessable_entity }
+          format.js { @flag = false}
+        end
       end
     end
   end
@@ -41,12 +52,16 @@ class QualificationsController < ApplicationController
   # PATCH/PUT /qualifications/1.json
   def update
     respond_to do |format|
+      @employee = Employee.find(params["qualification"]["employee_id"])
       if @qualification.update(qualification_params)
-        format.html { redirect_to @qualification, notice: 'Qualification was successfully updated.' }
-        format.json { render :show, status: :ok, location: @qualification }
+        #format.html { redirect_to @qualification, notice: 'Qualification was successfully updated.' }
+        #format.json { render :show, status: :ok, location: @qualification }
+        @qualifications = @employee.qualifications
+        format.js { @flag = true }
       else
-        format.html { render :edit }
-        format.json { render json: @qualification.errors, status: :unprocessable_entity }
+        #format.html { render :edit }
+        #format.json { render json: @qualification.errors, status: :unprocessable_entity }
+        format.js { @flag = false }
       end
     end
   end
@@ -69,6 +84,6 @@ class QualificationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def qualification_params
-      params.require(:qualification).permit(:employee_id, :ssc, :ssc_from, :ssc_marks, :ssc_year, :ssc_bord, :deploma, :deploma_from, :deploma_marks, :deploma_year, :deploma_university, :hsc, :hsc_from, :hsc_marks, :hsc_year, :hsc_bord, :ug, :ug_from, :ug_marks, :ug_year, :ug_university, :pg, :pg_from, :pg_marks, :pg_yaer, :pg_university)
+      params.require(:qualification).permit(:employee_id,:degree_type_id, :degree_id, :degree_stream_id, :marks, :year_id,:college,:university_id)
     end
 end

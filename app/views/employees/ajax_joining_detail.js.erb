@@ -1,0 +1,6 @@
+<% if JoiningDetail.exists?(employee_id: params[:id]) %>
+<%@joining_detail = JoiningDetail.find_by_employee_id(params[:id])%>
+$('#info').html("<%= j render 'joining_details/show_detail' %>")
+<%else%>
+$('#info').html("<%= j render 'joining_details/form' %>")
+<%end%>

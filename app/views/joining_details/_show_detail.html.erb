@@ -1,0 +1,69 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Employee Joining Details</h3>
+    <div class="box-tools pull-right">
+      <%= link_to 'Edit',  edit_joining_detail_path(@joining_detail),class: 'btn btn-success fa fa-edit',remote:true %>
+    </div>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover">
+    <tr>
+
+    <tr>
+      <th><strong>Employee</strong></th>
+      <td><%= @joining_detail.employee.try(:first_name) %></td>
+
+      <th><strong>Employee UAN No</strong></th>
+      <td><%= @joining_detail.employee_uan_no %></td>
+    </tr>
+
+    <tr>
+      <th> <strong>Joining Date</strong></th>
+      <td><%= @joining_detail.joining_date %></td>
+
+      <th> <strong>Confirmation Date</strong></th>
+      <td><%= @joining_detail.confirmation_date %></td>
+    </tr>
+    <tr>
+      <th><strong>Designation</strong></th>
+      <td><%= @joining_detail.employee_designation.try(:name) %></td>
+
+      <th><strong>Employee Grade</strong></th>
+      <td><%= @joining_detail.employee_grade.try(:name) %></td>
+    </tr>
+    <tr>
+      <th><strong>PF No</strong></th>
+      <td><%= @joining_detail.employee_pf_no %></td>
+
+      <th><strong>ESIC No</strong></th>
+      <td><%= @joining_detail.employee_efic_no %></td>
+    </tr>
+
+    <tr>
+      <th><strong>Medical Insurance</strong></th>
+      <td> <%= @joining_detail.medical_schem %></td>
+
+      <th><strong>Probation Period</strong></th>
+      <td><%= @joining_detail.probation_period %></td>
+    </tr>
+
+    <tr>
+      <th><strong>Notice Period</strong></th>
+      <td><%= @joining_detail.notice_period %></td>
+
+      <th><strong>Passport No</strong></th>
+      <td><%= @joining_detail.passport_no %></td>
+      
+    </tr> 
+    <tr>
+      <th><strong>Passport Issue Date</strong></th>
+      <td><%= @joining_detail.passport_issue_date %></td>
+
+      <th> <strong>Passport Expiry Date</strong></th>
+      <td> <%= @joining_detail.passport_expiry_date %></td>
+    </tr>
+    
+ </table>
+  </div><!-- /.box -->
+</div>
+

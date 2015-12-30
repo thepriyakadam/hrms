@@ -1,0 +1,26 @@
+<center><p class="text-aqua">Addected Component</p></center>
+<table class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Dependant</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @addected_salary_components.each do |salary_component| %>
+      <tr>
+        <td><%= salary_component.code %></td>
+        <td><%= salary_component.name %></td>
+        <td><%= salary_component.description %></td>
+        <td><%= salary_component.parent.try(:name) %></td>
+        <td>
+	        <%= link_to '', edit_salary_component_path(salary_component),class: "btn btn-success btn-xs fa fa-edit",remote:true %>
+       </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

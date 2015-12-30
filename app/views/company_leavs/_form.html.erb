@@ -1,0 +1,51 @@
+<%= bootstrap_form_for(@company_leav,html: {id: 'company_leav'},remote:true) do |f| %>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+         <%= f.select :employee_grade_id, all_employee_grade,label:'Employee Grade' %>
+      </div>
+    </div>
+
+     <div class="col-sm-3">
+      <div class="form-group required">
+          <%= f.select :leav_category_id, all_leav_category,label:'Leave Category' %>
+      </div>
+    </div>
+
+     <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :no_of_leave, placeholder: 'Number of Leave Days',label:'No. of leave days' %>
+      </div>
+    </div>
+
+     <div class="col-sm-3">
+     <label>Leave Expiry Date: </label>
+      <div class="form-group required">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+            <%= f.text_field :expiry_date,hide_label:true,class: 'company_leave_expiry_date' %>
+          </div>
+        </div>   
+    </div>
+
+   <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit :class => class_name, data: { disable_with: data_info }%>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+
+<script type="text/javascript">
+  $(function(){
+    $('.company_leave_expiry_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:+5',
+    dateFormat: 'dd-mm-yy' });
+
+  }); 
+</script>

@@ -1,0 +1,7 @@
+<% if @flag %>
+$("#form").html("")
+$("#show_info").html("<%= j render 'show_detail' %>")
+<% else %>
+$("#form").html("<%= j render 'form' %>")
+$("#show_info").html("<%= j render 'show_detail' %>")
+<% end %>

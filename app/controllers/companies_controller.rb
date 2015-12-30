@@ -1,5 +1,6 @@
 class CompaniesController < ApplicationController
   before_action :set_company, only: [:show, :edit, :update, :destroy]
+  #load_and_authorize_resource
 
   # GET /companies
   # GET /companies.json
@@ -16,10 +17,17 @@ class CompaniesController < ApplicationController
   def new
     @company = Company.new
     @company_type = CompanyType.all
+    # @states = CS.states(params[:id])
+    # @cities = CS.cities(params[:id],:in)
   end
 
   # GET /companies/1/edit
   def edit
+    @country = @company.country
+    @states = @country.states
+    @state = @company.state
+    @cities = @state.districts
+    @form = 'company'
   end
 
   # POST /companies
@@ -61,6 +69,18 @@ class CompaniesController < ApplicationController
     end
   end
 
+  def collect_states
+    @country = Country.find(params[:id])
+    @states = @country.states
+    @form = params[:form]
+  end
+
+  def collect_cities
+    @state = State.find(params[:id])
+    @cities = @state.districts
+    @form = params[:form]
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_company
@@ -69,6 +89,6 @@ class CompaniesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def company_params
-      params.require(:company).permit(:group_id, :name, :company_type_id, :registration_no, :pan_card_no, :tax_no, :professional_tax_no, :address, :city, :district, :pin_code, :state, :email, :contact_no, :web_site, :starting_date, :ceo_name)
+      params.require(:company).permit(:manual_company_code, :group_id, :name, :company_type_id, :registration_no, :description, :pan_card_no, :tax_no, :professional_tax_no, :address, :city, :district_id, :country_id, :pin_code, :state_id, :email, :contact_no, :web_site, :starting_date, :ceo_name)
     end
 end

@@ -1,0 +1,6 @@
+<% if Family.exists?(employee_id: params[:id]) %>
+<% @families = Family.where("employee_id = ?", params[:id]) %>
+$('#info').html("<%= j render 'families/show_detail' %>");
+<%else%>
+$('#info').html("<%= j render 'families/form' %>");
+<%end%>

@@ -2,7 +2,11 @@ class DeviseCreateMembers < ActiveRecord::Migration
   def change
     create_table(:members) do |t|
       ## Database authenticatable
-      t.string :email,              null: false, default: ""
+      t.string :manual_member_code
+      t.references :role, index: true, foreign_key: true
+      t.string :member_code
+      t.string :subdomain
+      t.string :email,              null: true, default: ""
       t.string :encrypted_password, null: false, default: ""
 
       ## Recoverable
@@ -33,11 +37,16 @@ class DeviseCreateMembers < ActiveRecord::Migration
 
       t.timestamps null: false
 
-      t.references :account, polymorphic: true, index: true
+      #t.references :account, polymorphic: true, index: true
+      # t.references :company, index: true, foreign_key: true
+      # t.references :company_location, index: true, foreign_key: true
+      # t.references :department, index: true, foreign_key: true
+      # t.references :employee, index: true, foreign_key: true
     end
 
     add_index :members, :email,                unique: true
     add_index :members, :reset_password_token, unique: true
+    add_index :members, :member_code,          unique: true
     # add_index :members, :confirmation_token,   unique: true
     # add_index :members, :unlock_token,         unique: true
   end

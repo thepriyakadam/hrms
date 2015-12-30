@@ -14,7 +14,7 @@ Apartment.configure do |config|
   # Add any models that you do not want to be multi-tenanted, but remain in the global (public) namespace.
   # A typical example would be a Customer or Tenant model that stores each Tenant's information.
   #
-  config.excluded_models = %w{ Group }
+  #config.excluded_models = %w{ Group }
 
   config.seed_after_create = true
 
@@ -25,7 +25,7 @@ Apartment.configure do |config|
   # config.tenant_names = lambda{ Customer.pluck(:tenant_name) }
   # config.tenant_names = ['tenant1', 'tenant2']
   #
-  config.tenant_names = lambda { Group.pluck :subdomain }
+  #config.tenant_names = lambda { Group.pluck :subdomain }
 
   #
   # ==> PostgreSQL only options

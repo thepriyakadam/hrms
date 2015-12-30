@@ -1,0 +1,31 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Role Assigned User</h3>    
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table  id="example2" class="table table-bordered table-hover">
+	    <thead>
+	      <tr>
+		      <th>Employee Code</th>
+		      <th>Employee Name</th>
+		      <th>Hrms Access Role</th>
+		      <th>Reporting Person</th>
+		      <th>Department</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		    <% @employees.each do |employee| %>   
+			      <tr>
+			        <td><%= employee.manual_employee_code %></td>
+			        <td><%= employee.first_name+' '+employee.last_name %></td>
+			        <td><%= employee.member.role.try(:name) %>
+			        <td><%= employee.manager.try(:first_name)+' '+employee.manager.try(:last_name) %></td>
+			        <td><%= employee.department.try(:name) %></td>
+			      </tr>	
+		    <% end %>
+		  </tbody>
+		</table>
+	</div>
+</div>
+
+

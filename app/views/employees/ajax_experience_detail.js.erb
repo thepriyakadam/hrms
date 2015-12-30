@@ -1,0 +1,6 @@
+<% if Experience.exists?(employee_id: params[:id]) %>
+<%@experiences = Experience.where('employee_id=?',params[:id])%>
+$('#info').html("<%= j render 'experiences/show_detail' %>")
+<%else%>
+$('#info').html("<%= j render 'experiences/form' %>")
+<%end%>

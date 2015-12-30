@@ -1,0 +1,18 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Employee Annual Salary Master</h3>
+  </div><!-- /.box-header -->
+	<div class="box-body">
+		<div class="row">
+			<div class="col-sm-2">
+				<label>Salary Component</label>
+				<%=select :parent,:salary_component_id, all_salary_component,{include_blank: "Please Select"},{onchange:"var a={id:$(this).val()}; $.get('/employee_annual_salaries/new',a,function(response){});",class: 'form-control'}%>
+			</div>
+		</div>
+		<div id="form"></div><hr>
+		<div id="show_info"><%= render 'show_detail' %></div>
+	</div><!-- /.box-body -->
+  <div class="box-footer">
+    Visit <a href="https://indiba.in/">www.indiba.in</a> for more Information about the HRMSONE.
+  </div>
+</div><!-- /.box -->

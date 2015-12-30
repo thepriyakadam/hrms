@@ -1,0 +1,88 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Employee Annual Salary Master</h3>
+    <div class="box-tools pull-right">
+      <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+      <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+    </div>
+  </div><!-- /.box-header -->
+	<div class="box-body">
+		<div class="row">
+			<div class="col-sm-12">
+				<label>Select Employees</label>
+				<div class="table-responsive">
+					<table id="example2" class="table table-bordered table-hover">
+				    <thead>
+				    	<tr>
+				    		<th colspan="4">Employee Information</th>
+				    		<th colspan="<%= @addected_salary_components.count+1%>">Addected Item</th>
+				    		<th colspan="<%= @deducted_salary_components.count+1%>">Deducted Item</th>
+				    	</tr>
+				      <tr>
+					      <th>Employee ID</th>
+					      <th>Employee Name</th>
+					      <th>Designation</th>
+					      <th>Annual Salary Slip</th>
+					      <% @addected_salary_components.try(:each) do |s| %>
+					      	<th><%= s.name %></th>
+					      <% end %>
+					      <th>Addect Total</th>
+					      <% @deducted_salary_components.try(:each) do |s| %>
+					      	<th><%= s.name %></th>
+					      <% end %>
+					      <th>Deduct Total</th>
+					      <th>Net Total</th>
+				      </tr>
+					  </thead>
+					  <tbody>
+					    <% @employees.each do |employee| %>
+					      <tr>
+					        <td><%= employee.manual_employee_code %></td>
+					        <td><%= employee.first_name+' '+employee.last_name %></td>
+					        <td><%= employee.joining_detail.try(:employee_designation).try(:name) %></td>
+					        <td><%= link_to "salary", employee_annual_salary_slip_employee_annual_salaries_path(employee) %></td>
+									<% temps = EmployeeAnnualSalary.where(employee_id: employee.id) %>
+									<% addect_total = 0 %>
+									<% temps.try(:each) do |t| %>
+										<% unless t.salary_component.is_deducted %>
+											<% addect_total = addect_total + t.amount %>
+											<td><%= t.amount %></td>
+										<% end %>
+									<% end %>
+									<td><%= addect_total %></td>
+
+									<% deduct_total = 0 %>
+									<% temps.try(:each) do |t| %>
+										<% if t.salary_component.is_deducted %>
+											<% deduct_total = deduct_total + t.amount %>
+											<td><%= t.amount %></td>
+										<% end %>
+									<% end %>
+									<td><%= deduct_total %></td>
+									<td><%= addect_total - deduct_total %></td>
+					      </tr>
+					     <% end %>
+				    </tbody>
+			  	</table>	
+			  </div>
+			</div>
+		</div>
+	</div><!-- /.box-body -->
+  <div class="box-footer">
+    Visit <a href="https://indiba.in/">www.indiba.in</a> for more Information about the HRMSONE.
+  </div>
+</div><!-- /.box -->
+
+<script type="text/javascript">
+	$('#selectAll').click(function() {
+    if (this.checked) {
+      $(':checkbox').each(function() {
+        this.checked = true;                        
+    });
+    } else {
+      $(':checkbox').each(function() {
+        this.checked = false;                        
+    });
+  } 
+});
+</script>

@@ -1,0 +1,79 @@
+<%= bootstrap_form_for(@salary_component,html: {id: 'salary_component'},remote:true) do |f| %>
+
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :code,hide_label:true, placeholder: 'Code' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :name,hide_label:true, placeholder: 'Salary Component Name' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.select :parent_id,all_salary_component,hide_label:true, prompt: 'Select Component' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="form-group">
+        <%= f.text_field :description,hide_label:true, placeholder: 'Salary Component Description' %>
+      </div>
+    </div>
+  </div>
+
+  <% if @salary_component.is_deducted %>
+    <label>Is Deducted ?</label>
+    <div class="row">
+      <div class="col-sm-1">
+          <%= f.radio_button :is_deducted, "1", checked: true, label: 'Yes', class: 'minimal' %>
+      </div>
+
+      <div class="col-sm-1">
+          <%= f.radio_button :is_deducted, "0", label: 'No', class: 'minimal' %>
+      </div>
+    </div>   
+  <% else %>
+    <label>Is Deducted ?</label>
+    <div class="row">
+      <div class="col-sm-1">
+          <%= f.radio_button :is_deducted, "1", label: 'Yes', class: 'minimal' %>
+      </div>
+
+      <div class="col-sm-1">
+          <%= f.radio_button :is_deducted, "0", checked: true, label: 'No', class: 'minimal' %>
+      </div>
+    </div>  
+  <% end %>
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="actions">
+          <%= f.submit :class => class_name, data: { disable_with: data_info } %>
+        </div>
+      </div>
+    </div>   
+<% end %>
+
+<script type="text/javascript">
+  $(function(){
+    //iCheck for checkbox and radio inputs
+        $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+          checkboxClass: 'icheckbox_minimal-blue',
+          radioClass: 'iradio_minimal-blue'
+        });
+        //Red color scheme for iCheck
+        $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
+          checkboxClass: 'icheckbox_minimal-red',
+          radioClass: 'iradio_minimal-red'
+        });
+        //Flat red color scheme for iCheck
+        $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+          checkboxClass: 'icheckbox_flat-green',
+          radioClass: 'iradio_flat-green'
+        });
+  });
+</script>

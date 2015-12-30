@@ -1,6 +1,6 @@
 class SkillsetsController < ApplicationController
   before_action :set_skillset, only: [:show, :edit, :update, :destroy]
-
+  #load_and_authorize_resource
   # GET /skillsets
   # GET /skillsets.json
   def index
@@ -19,34 +19,49 @@ class SkillsetsController < ApplicationController
 
   # GET /skillsets/1/edit
   def edit
+    @employee = @skillset.employee
   end
 
   # POST /skillsets
   # POST /skillsets.json
   def create
+    @employee = Employee.find(params[:skillset][:employee_id])  
     @skillset = Skillset.new(skillset_params)
-
-    respond_to do |format|
-      if @skillset.save
+    ActiveRecord::Base.transaction do
+      respond_to do |format|
+        if @skillset.save
+          len = params["skillset"].length-2
+          for i in 2..len
+            Skillset.create(employee_id: params['skillset']['employee_id'],name: params['skillset'][i.to_s]['name'], skill_level: params['skillset'][i.to_s]['skill_level']) 
+          end
+        @skillsets = @employee.skillsets
+        flash[:notice] = "skillset was successfully created"  
         format.html { redirect_to @skillset, notice: 'Skillset was successfully created.' }
         format.json { render :show, status: :created, location: @skillset }
+        format.js { @flag = true }
       else
         format.html { render :new }
         format.json { render json: @skillset.errors, status: :unprocessable_entity }
+        format.js { @flag = false }
       end
+    end
     end
   end
 
   # PATCH/PUT /skillsets/1
   # PATCH/PUT /skillsets/1.json
   def update
+    @employee = Employee.find(params['skillset']['employee_id'])
     respond_to do |format|
       if @skillset.update(skillset_params)
-        format.html { redirect_to @skillset, notice: 'Skillset was successfully updated.' }
-        format.json { render :show, status: :ok, location: @skillset }
+        # format.html { redirect_to @skillset, notice: 'Skillset was successfully updated.' }
+        # format.json { render :show, status: :ok, location: @skillset }
+        @skillsets = @employee.skillsets
+        format.js { @flag = true }
       else
-        format.html { render :edit }
-        format.json { render json: @skillset.errors, status: :unprocessable_entity }
+        # format.html { render :edit }
+        # format.json { render json: @skillset.errors, status: :unprocessable_entity }
+        format.js { @flag = false }
       end
     end
   end

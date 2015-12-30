@@ -1,249 +1,216 @@
-<%= bootstrap_form_for(@employee) do |f| %>
-  <% if @employee.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@employee.errors.count, "error") %> prohibited this employee from being saved:</h2>
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Create Employee</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <%= bootstrap_form_for(@employee,html: {id: 'employee'}) do |f| %>
+    <% if @employee.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@employee.errors.count, "error") %> prohibited this user from being saved:</h2>
 
-      <ul>
-      <% @employee.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-         <%= f.text_field :department_id, value: current_user.id %>
-       </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-         <%= f.text_field :first_name %>
-       </div>
-    </div>
-
-     <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-         <%= f.text_field :middle_name %>
-       </div>
-    </div>
-
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-        <%= f.text_field :last_name %>
+        <ul>
+        <% @employee.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
       </div>
-    </div>
-  </div>
-
-
-
-  
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-        <%= f.date_select :date_of_birth %>
+    <% end %>
+        
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="form-group required">
+           <%= f.text_field :manual_employee_code,label: 'Employee Code',placeholder: "Employee Code"%>
+           </div>
         </div>
-    </div>
-  </div>
-
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-          <%= f.text_field :contact_no %>
       </div>
-    </div>
-  </div>
 
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-         <%= f.text_field :email %>
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.text_field :first_name , label: 'First Name' %>
+          </div>
         </div>
-    </div>
-  </div>
 
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-         <%= f.text_field :permanent_address %>
+        <div class="col-sm-3">
+          <div class="field">
+           <%= f.text_field :middle_name, label: 'Middle Name' %>
+          </div>
         </div>
-    </div>
-  </div>
 
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-         <%= f.text_field :city %>
+        <div class="col-sm-3">
+          <div class="form-group required">
+           <%= f.text_field :last_name, label: 'Last Name' %>
+          </div>
         </div>
-    </div>
-  </div>
 
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-         <%= f.text_field :district %>
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.select :gender, ['Male','Female'],{label: 'Select Gender',include_blank: " Select Gender"} %>
+          </div>
         </div>
-    </div>
-  </div>
+      </div>
 
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-         <%= f.text_field :state %>
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="field">
+           <%= f.text_field :email %>
+          </div>
         </div>
-    </div>
-  </div>
 
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-    <%= f.number_field :pin_code %>
-  </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-         <%= f.text_field :current_address %>
-       </div>
-    </div>
-  </div>
-
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-         <%= f.text_field :adhar_no %>
-       </div>
-    </div>
-  </div>
-
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-         <%= f.text_field :pan_no %>
+         <div class="col-sm-3">
+          <div class="field">
+           <%= f.text_field :adhar_no, label: 'Aadhaar No',placeholder: "e.g : 123456789012" %>
+          </div>
         </div>
-    </div>
-  </div>
 
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-        <%= f.text_field :licence_no %>
-       </div>
-    </div>
-  </div>
-
-
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-         <%= f.text_field :passport_no %>
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.text_field :pan_no, label: 'PAN Card No',placeholder: "e.g : ABCDE12345B" %>
+          </div>
         </div>
-    </div>
-  </div>
 
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-         <%= f.text_field :marital_status %>
+        <div class="col-sm-3">
+          <div class="field">
+           <%= f.text_field :licence_no, label: 'Driving Licence No' %>
+          </div>
         </div>
-    </div>
-  </div>
-    
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-          <%= f.select :nationality_id, all_nationality %>
+      </div>
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="form-group required">
+           <%= f.text_field :contact_no,label: 'Contact No' %>
+          </div>
         </div>
-    </div>
-  </div>
-
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-          <%= f.select :blood_group_id, all_blood_group %>
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.select :religion, all_religions,{include_blank: " Select Religion"} %>
+          </div>
         </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
+        <div class="col-sm-3">
         <div class="field">
-         <%= f.text_field :handicap %>
+            <%= f.select :status,['Active','Inactive'],{include_blank: " Select Employee Status"} %>
         </div>
-    </div>
-  </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.select :employee_type_id, all_employee_type,{include_blank: " Select Employee Type"} %>
+          </div>
+        </div>   
+      </div>
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.select :marital_status, ['Married','UnMarried'],{label: 'Marital Status',include_blank: " Select Marital Status"} %>
+          </div>
+        </div>
 
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.select :nationality_id, all_nationality,{include_blank: " Select Nationality"} %>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+        <label>Date of Birth: </label>
         <div class="field">
-         <%= f.text_field :status %>
-       </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-          <%= f.select :employee_type_id, all_employee_type %>
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+            <%= f.text_field :date_of_birth, hide_label: true, class: 'birth_date'%>
+          </div>
         </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-         <%= f.text_field :gender %>
         </div>
-    </div>
-  </div>
 
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="actions">
-         <%= f.submit %>
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.select :blood_group_id, all_blood_group, {label: 'Blood Group',include_blank: " Select Blood Group"} %>
+          </div>
         </div>
-    </div>
-  </div>
-<% end %>
+      </div>
+
+      <div class="row">
+         <div class="col-sm-9">
+          <div class="form-group required">
+           <%= f.text_field :permanent_address, label: 'Permanent Address' %>
+          </div>
+        </div>
+         <div class="col-sm-3">
+          <div class="field">
+            <%= f.text_field :pin_code,label:"Pin/Zip Code",placeholder: "e.g : 400703"%>
+          </div>
+        </div>
+        </div>
+   
+         <div class="row">
+          <div class="col-sm-3">
+            <div class="form-group required">
+              <%=f.select :country_id, all_countries,{include_blank: "Please Select Country"},{onchange:"var a={id:$(this).val(), form : 'employee'}; $.get('/companies/collect_states',a,function(response){});"}%>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="form-group required">
+              <div id="states">
+                <%= render 'companies/state_dropdown' %> 
+            </div> 
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="form-group required">
+             <div id="district">
+               <%= render 'companies/city_dropdown' %>
+           </div>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="field">
+              <%= f.text_field :city %>
+            </div>
+          </div>
+        </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="field">
+            <%= f.text_field :current_address, label: 'Current Address' %>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.select :handicap, ['Yes','No'],{label:"Differently Abled",include_blank: "Please Select Differently Abled"},{onchange:"var a={id:$(this).val()}; $.get('/employees/ajax_show_textbox',a,function(response){});"} %>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="field">
+            <div id="handicap_type">
+              <% if action_name == 'edit' and @employee.handicap_type != "" %>
+                <%= f.text_field :handicap_type,label:"Disability Type" %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="actions">
+              <%= f.submit :class => class_name, data: { disable_with: data_info } %>
+              <% if params['controller'] == 'employees' and params['action'] == 'edit' %>
+                <%= link_to 'Back',basic_detail_employees_path(id: @employee.id),class: 'btn btn-default', remote:true%>
+              <%end%>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div><!-- /.box-body -->
+</div><!-- /.box-->
+
+<script type="text/javascript">
+  $(function(){
+    $('.birth_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:+1',
+    dateFormat: 'dd-mm-yy' });
+  }); 
+</script>

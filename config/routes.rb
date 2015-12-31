@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resources :employee_salary_templates do
     collection do
       get :find_employee_for_assign_template
+      get :find_template
     end
   end
   resources :salary_component_templates

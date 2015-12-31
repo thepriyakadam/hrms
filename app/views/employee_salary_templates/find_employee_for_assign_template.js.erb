@@ -1,5 +1,7 @@
 <% unless @flag %>
 $("#employee_details").html("<%= j render 'show_employee' %>")
+$("#search_template_dropdown").html("<%= j render 'show_search_template_dropdown' %>")
 <% else %>
 $("#employee_details").html("<center><p class='text-red'>Record Not Found</p></center>")
+$("#search_template_dropdown").html(" ")
 <% end %>

@@ -12,4 +12,9 @@ class EmployeeSalaryTemplatesController < ApplicationController
       end
     end
   end
+
+  def find_template
+  	@salary_template = SalaryTemplate.find(params[:id])
+  	@employee_salary_templates = @salary_template.salary_component_templates
+  end
 end

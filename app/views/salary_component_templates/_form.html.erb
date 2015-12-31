@@ -1,4 +1,9 @@
 <%= bootstrap_form_for @salary_component_template,remote:true do |f| %>
+
+		<%= f.hidden_field :salary_component_id, value: @salary_component.id %>
+		<%= f.hidden_field :salary_template_id, value: @salary_template.id %>
+		<%= f.hidden_field :manual_template_code, value: @salary_template.code %>
+
 		<div class="row">
 			<div class="col-sm-2">
 				<label>Base</label>

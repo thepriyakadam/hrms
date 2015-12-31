@@ -26,7 +26,7 @@
         <td><%= i=i+1 %></td>
         <td><%= template.try(:salary_component).try(:name) %></td>
         <td><%= template.try(:is_deducted) %></td>
-        <td><%= template.try(:parent_salary_component).try(:name) %></td>
+        <td><%= select :parent_salary_component_id,template.id, all_salary_component,{prompt: true}, class: 'form-control'%></td>
         <td><%= text_field :percentage,template.id, value: template.try(:percentage), class: "ravi" %></td>
         <td><%= template.try(:is_taxable) %></td>
         <td><%= text_field :tax,template.id, value: template.try(:tax),class: "ravi" %></td>
@@ -66,3 +66,118 @@
     padding: 1px;
 }
 </style>
+
+<script type="text/javascript">
+  <% @employee_salary_templates.each do |item| %>
+  
+    $(function(){
+      $('#monthly_amount_<%=item.id%>').on('input', function() {
+        calculate_annual_salary();
+        calculate_percentage_on_month();
+        $('#error<%=item.id%>').html("<p>You are typing</p>")
+      });
+      $('#annual_amount_<%=item.id%>').on('input', function() {
+        calculate_monthly_salary();
+        calculate_percentage_on_annual();
+      });
+      $('#percentage_<%=item.id%>').on('input', function() {
+        calculate_monthly_and_annual_salary();
+      });
+      $('#parent_salary_component_id_<%=item.id%>').on('change', function() {
+          enabled_percentage_textbox();
+      });
+      $('#is_taxable_<%=item.id%>').on('change', function() {
+          enabled_tax_textbox();
+      });
+      function calculate_annual_salary(){
+        var monthly_amount = parseFloat($('#monthly_amount_<%= item.try(:id) %>').val()); 
+        
+        var annual_amount = "";
+        if(isNaN(monthly_amount)){
+          annual_amount = " ";
+        }
+        else {
+          annual_amount = (monthly_amount*12).toFixed(2);
+        }
+        $('#annual_amount_<%= item.try(:id) %>').val(annual_amount);
+      }
+      function calculate_monthly_salary(){
+        var annual_amount = parseInt($('#annual_amount_<%= item.try(:id) %>').val()); 
+        
+        var monthly_amount = "";
+        if(isNaN(annual_amount)){
+          monthly_amount = " ";
+        }
+        else {
+          monthly_amount = (annual_amount / 12).toFixed(2);
+        }
+        $('#monthly_amount_<%= item.try(:id) %>').val(monthly_amount);
+      }
+      function calculate_percentage_on_month(){
+        var monthly_amount = parseInt($('#monthly_amount_<%= item.try(:id) %>').val()); 
+        
+        var parent_salary_component_id = parseInt($("#parent_salary_component_id_<%= item.try(:id) %>").val());
+        var parent_salary_component_monthly_amount = parseInt($("#monthly_amount_"+parent_salary_component_id).val());
+        var percentage = "";
+        if(isNaN(monthly_amount) || isNaN(parent_salary_component_monthly_amount)){
+          percentage = " ";
+        }
+        else {
+          percentage = ((monthly_amount/parent_salary_component_monthly_amount)*100).toFixed(2);
+        }
+        $('#percentage_<%= item.try(:id) %>').val(percentage);
+      }
+      function calculate_percentage_on_annual(){
+        var annual_amount = parseInt($('#annual_amount_<%= item.try(:id) %>').val()); 
+        var monthly_amount = (annual_amount / 12).toFixed(2);
+        var parent_salary_component_id = parseInt($("#parent_salary_component_id_<%= item.try(:id) %>").val());
+        var parent_salary_component_monthly_amount = parseInt($("#monthly_amount_"+parent_salary_component_id).val());
+        var percentage = "";
+        if(isNaN(monthly_amount) || isNaN(parent_salary_component_monthly_amount)){
+          percentage = " ";
+        }
+        else {
+          percentage = ((monthly_amount/parent_salary_component_monthly_amount)*100).toFixed(2);
+        }
+        $('#percentage_<%= item.try(:id) %>').val(percentage);
+      }
+      function calculate_monthly_and_annual_salary(){
+        var percentage = parseInt($('#percentage_<%= item.try(:id) %>').val()); 
+        var parent_salary_component_id = parseInt($("#parent_salary_component_id_<%= item.try(:id) %>").val());
+        var parent_salary_component_monthly_amount = parseInt($("#monthly_amount_"+parent_salary_component_id).val());
+        //alert(parent_salary_component_monthly_amount)
+        var monthly_amount = "";
+        var annual_amount = "";
+        if(isNaN(percentage) || isNaN(parent_salary_component_monthly_amount)){
+          monthly_amount = " ";
+          annual_amount = " ";
+        }
+        else {
+          monthly_amount = (percentage * parent_salary_component_monthly_amount / 100).toFixed(2);
+          annual_amount = ((percentage * parent_salary_component_monthly_amount / 100)*12).toFixed(2);
+        }
+        $('#monthly_amount_<%= item.try(:id) %>').val(monthly_amount);
+        $('#annual_amount_<%= item.try(:id) %>').val(annual_amount);
+      }
+      function enabled_percentage_textbox(){
+        var parent_salary_component_id = parseInt($("#parent_salary_component_id_<%= item.try(:id) %>").val());
+        if(isNaN(parent_salary_component_id)){
+          $("#percentage_<%= item.try(:id) %>").prop('disabled', true);
+        }
+        else {
+          $("#percentage_<%= item.try(:id) %>").prop('disabled', false);
+        }
+      }
+      
+      function enabled_tax_textbox(){
+        var is_taxable = ($("#is_taxable_<%= item.try(:id) %>").val());
+        if(is_taxable == "Yes"){
+          $("#tax_<%= item.try(:id) %>").prop('disabled', false);
+        }
+        else {
+          $("#tax_<%= item.try(:id) %>").prop('disabled', true);
+        }
+      }
+    });
+  <% end %>
+</script>

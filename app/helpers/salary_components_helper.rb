@@ -4,6 +4,6 @@ module SalaryComponentsHelper
 	end
 	
 	def parent_salary_component
-		SalaryComponentTemplate.all.collect {|s| [s.salary_component.name, s.salary_component_id]}	
+		SalaryComponentTemplate.all.collect {|s| [s.salary_component.try(:name), s.salary_component_id]}	
 	end
 end

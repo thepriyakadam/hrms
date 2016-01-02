@@ -14,7 +14,29 @@ class EmployeeSalaryTemplatesController < ApplicationController
   end
 
   def find_template
+    @employee_id = params[:employee_id]
   	@salary_template = SalaryTemplate.find(params[:id])
   	@employee_salary_templates = @salary_template.salary_component_templates
+  end
+
+  def create_employee_template
+    arrays = params[:is_deducted].keys
+    arrays.each do |a|
+      EmployeeSalaryTemplate.create(employee_id: params[:employee][:employee_id], \
+                                    salary_template_id: params[:template][:template_id], \
+                                    salary_component_id: params[:salary_component_id][a], \
+                                    is_deducted: params[:is_deducted][a], \
+                                    parent_salary_component_id: params[:parent_salary_component_id][a], \
+                                    percentage: params[:percentage][a], \
+                                    is_taxable: params[:is_taxable][a], \
+                                    tax: params[:tax][a], \
+                                    base: params[:base][a], \
+                                    to_be_paid: params[:to_be_paid][a], \
+                                    max_amount: params[:max_amount][a], \
+                                    monthly_amount: params[:monthly_amount][a], \
+                                    annual_amount: params[:annual_amount][a])
+    end
+    flash[:notice] = "Employee template created successfully."
+    redirect_to employee_salary_templates_path
   end
 end

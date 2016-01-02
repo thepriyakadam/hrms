@@ -13,8 +13,8 @@ class SalaryComponentTemplatesController < ApplicationController
 
    def edit
     @salary_component_template = SalaryComponentTemplate.find(params[:id])
-    @form = 'salary_component_template'
-    @salary_template = @salary_component_template.salary_template
+    @salary_component = SalaryComponentTemplate.find(params[:id])
+    @salary_template = @salary_component.salary_template
   end
 
   def create

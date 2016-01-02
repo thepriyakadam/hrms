@@ -1,46 +1,56 @@
 <br>
 <div class="table-responsive">
-<table class="table table-bordered table-hover table-condensed">
-  <thead>
-    <tr>
-      <th>Sr No.</th>
-      <th>Salary component</th>
-      <th>Is deducted</th>
-      <th>Parent salary component</th>
-      <th>Percentage</th>
-      <th>Is taxable</th>
-      <th>Tax</th>
-      <th>Base</th>
-      <th>To be paid</th>
-      <th>Max amount</th>
-      <th>Monthly amount</th>
-      <th>Annual amount</th>
-	  </tr>
-  </thead>
+  <% i = 0 %>
+    <%= form_for :employee_salary_template,url: {action: 'create_employee_template'} do |f| %>
+      <%= hidden_field :employee,:employee_id,value: @employee_id %>
+      <%= hidden_field :template,:template_id,value: @salary_template.id %>
+      <table class="table table-bordered table-hover table-condensed">
+        <thead>
+          <tr>
+            <th>Sr No.</th>
+            <th>Salary component</th>
+            <th>Is deducted</th>
+            <th>Parent salary component</th>
+            <th>Percentage</th>
+            <th>Is taxable</th>
+            <th>Tax</th>
+            <th>Base</th>
+            <th>To be paid</th>
+            <th>Max amount</th>
+            <th>Monthly amount</th>
+            <th>Annual amount</th>
+      	  </tr>
+        </thead>
 
-  <tbody>
-  	<% i = 0 %>
-  	<%= form_for :employee_salary_template do |f| %>
-    <% @employee_salary_templates.each do |template| %>
-      <tr>
-        <td><%= i=i+1 %></td>
-        <td><%= template.try(:salary_component).try(:name) %></td>
-        <td><%= template.try(:is_deducted) %></td>
-        <td><%= select :parent_salary_component_id, template.salary_component_id, all_salary_component, {:prompt => true, :selected => template.parent_salary_component_id },class: 'form-control'%></td>
+        <tbody>
+          <% @employee_salary_templates.each do |template| %>
+            <tr>
+              <td><%= i=i+1 %></td>
+              <td><%= select :salary_component_id, template.salary_component_id, all_salary_component, {:prompt => true, :selected => template.salary_component_id, },class: 'form-control'%></td>
+              
+              <td><%= select :is_deducted, template.salary_component_id, [['Yes','true'],['No','false']], {:prompt => true, :selected => template.is_deducted, },class: 'form-control'%></td>
 
-        <td><%= text_field :percentage,template.salary_component_id, value: template.try(:percentage), class: "form-control" %></td>
-        <td><%= template.try(:is_taxable) %></td>
-        <td><%= text_field :tax,template.salary_component_id, value: template.try(:tax),class: "form-control" %></td>
-        <td><%= template.try(:base) %></td>
-        <td><%= template.try(:to_be_paid) %></td>
-        <td><%= text_field :max_amount,template.salary_component_id, value: template.try(:max_amount),class: "form-control" %></td>
-        <td><%= text_field :monthly_amount,template.salary_component_id, value: template.try(:monthly_amount),class: "form-control" %></td>
-        <td><%= text_field :annual_amount,template.salary_component_id, value: template.try(:annual_amount),class: "form-control" %></td>
-      </tr>
-    <% end %>
-    <% end %>
-  </tbody>
-</table>
+              <td><%= select :parent_salary_component_id, template.salary_component_id, all_salary_component, {:prompt => true, :selected => template.parent_salary_component_id },class: 'form-control'%></td>
+
+              <td><%= text_field :percentage,template.salary_component_id, value: template.try(:percentage), class: "form-control" %></td>
+
+              <td><%= select :is_taxable, template.salary_component_id, [['Yes','true'],['No','false']], {:prompt => true, :selected => template.is_taxable, },class: 'form-control'%></td>
+
+              <td><%= text_field :tax,template.salary_component_id, value: template.try(:tax),class: "form-control" %></td>
+
+              <td><%= select :base, template.salary_component_id, [['Annual'],['Monthly']], {:prompt => true, :selected => template.base, },class: 'form-control'%></td>
+
+              <td><%= select :to_be_paid, template.salary_component_id, [['Annual'],['Monthly']], {:prompt => true, :selected => template.to_be_paid, },class: 'form-control'%></td>
+
+              <td><%= text_field :max_amount,template.salary_component_id, value: template.try(:max_amount),class: "form-control" %></td>
+              <td><%= text_field :monthly_amount,template.salary_component_id, value: template.try(:monthly_amount),class: "form-control" %></td>
+              <td><%= text_field :annual_amount,template.salary_component_id, value: template.try(:annual_amount),class: "form-control" %></td>
+            </tr>
+          <% end %>     
+        </tbody>
+      </table>
+    <%= f.button "Create Employee Salary", class: "btn btn-primary", data: {disable_with: "<i class='fa fa-circle-o-notch fa-spin'></i> Wait..."} %>
+  <% end %>
 </div>
 
 <style type="text/css">

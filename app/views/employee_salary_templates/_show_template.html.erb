@@ -2,6 +2,8 @@
 <div class="table-responsive">
   <% i = 0 %>
     <%= form_for :employee_salary_template,url: {action: 'create_employee_template'} do |f| %>
+      <%= hidden_field :employee,:employee_id,value: @employee_id %>
+      <%= hidden_field :template,:template_id,value: @salary_template.id %>
       <table class="table table-bordered table-hover table-condensed">
         <thead>
           <tr>
@@ -24,7 +26,7 @@
           <% @employee_salary_templates.each do |template| %>
             <tr>
               <td><%= i=i+1 %></td>
-              <td><%= select :salary_component_id, template.salary_component_id, all_salary_component, {:prompt => true, :selected => template.salary_component_id, },class: 'form-control',disabled: true%></td>
+              <td><%= select :salary_component_id, template.salary_component_id, all_salary_component, {:prompt => true, :selected => template.salary_component_id, },class: 'form-control'%></td>
               
               <td><%= select :is_deducted, template.salary_component_id, [['Yes','true'],['No','false']], {:prompt => true, :selected => template.is_deducted, },class: 'form-control'%></td>
 
@@ -47,7 +49,7 @@
           <% end %>     
         </tbody>
       </table>
-    <%= f.submit %>
+    <%= f.button "Create Employee Salary", class: "btn btn-primary", data: {disable_with: "<i class='fa fa-circle-o-notch fa-spin'></i> Wait..."} %>
   <% end %>
 </div>
 

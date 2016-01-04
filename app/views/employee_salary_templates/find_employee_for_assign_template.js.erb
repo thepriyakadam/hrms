@@ -5,8 +5,6 @@
 	<% else %>
 		$("#message").html("<center><p class='text-red'>Employee already assign you can update it.</p></center>")
 		$("#employee_details").html("<%= j render 'show_employee' %>")
-	  $("#search_template_dropdown").html("<%= j render 'edit_template_dropdown' %>")
-		$("#template").html("<%= j render 'show_edit_template_form' %>")  
 	<% end %>
 <% else %>
 	$("#message").html("<center><p class='text-red'>Record Not Found</p></center>")

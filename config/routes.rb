@@ -5,6 +5,7 @@ Rails.application.routes.draw do
       get :find_employee_for_assign_template
       get :find_template
       post :create_employee_template
+      get :modal
     end
   end
   resources :salary_component_templates

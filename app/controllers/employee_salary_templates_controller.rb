@@ -13,6 +13,10 @@ class EmployeeSalaryTemplatesController < ApplicationController
         if EmployeeSalaryTemplate.exists?(employee_id: @employee_id)
           @salary_template = EmployeeSalaryTemplate.find_by_employee_id(@employee_id)
           @employee_salary_templates = EmployeeSalaryTemplate.where("employee_id = ?",@employee_id)
+          @array_of_id = []
+          @employee_salary_templates.each do |e|
+            @array_of_id << e.id
+          end
         end
         format.js { @flag = false }
       end
@@ -44,5 +48,9 @@ class EmployeeSalaryTemplatesController < ApplicationController
     end
     flash[:notice] = "Employee template created successfully."
     redirect_to employee_salary_templates_path
+  end
+
+  def modal
+    
   end
 end

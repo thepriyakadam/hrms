@@ -644,7 +644,6 @@ ActiveRecord::Schema.define(version: 20160102053629) do
 
   create_table "salary_component_templates", force: :cascade do |t|
     t.string   "manual_template_code"
-    t.string   "auto_template_code"
     t.integer  "salary_template_id"
     t.integer  "salary_component_id"
     t.boolean  "is_deducted"

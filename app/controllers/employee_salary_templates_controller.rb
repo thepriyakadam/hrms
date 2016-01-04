@@ -29,6 +29,15 @@ class EmployeeSalaryTemplatesController < ApplicationController
   	@employee_salary_templates = @salary_template.salary_component_templates
   end
 
+  def show_employee_list
+    @employees =Employee.all
+  end
+  
+  def show_employee_salary_template
+    @employee_salary_templates = EmployeeSalaryTemplate.where("employee_id=?",params[:format])
+  end
+
+
   def create_employee_template
     arrays = params[:is_deducted].keys
     arrays.each do |a|
@@ -47,7 +56,7 @@ class EmployeeSalaryTemplatesController < ApplicationController
                                     annual_amount: params[:annual_amount][a])
     end
     flash[:notice] = "Employee template created successfully."
-    redirect_to employee_salary_templates_path
+    redirect_to show_employee_salary_template_employee_salary_templates_path
   end
 
   def modal

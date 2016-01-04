@@ -4,10 +4,20 @@ class EmployeeSalaryTemplatesController < ApplicationController
 
   def find_employee_for_assign_template
   	@employee = Employee.find_by_manual_employee_code(params[:employee_code]) 
+    
     respond_to do |format|
       if @employee.nil?
         format.js { @flag = true }
       else
+        @employee_id = @employee.id
+        if EmployeeSalaryTemplate.exists?(employee_id: @employee_id)
+          @salary_template = EmployeeSalaryTemplate.find_by_employee_id(@employee_id)
+          @employee_salary_templates = EmployeeSalaryTemplate.where("employee_id = ?",@employee_id)
+          @array_of_id = []
+          @employee_salary_templates.each do |e|
+            @array_of_id << e.id
+          end
+        end
         format.js { @flag = false }
       end
     end
@@ -47,5 +57,9 @@ class EmployeeSalaryTemplatesController < ApplicationController
     end
     flash[:notice] = "Employee template created successfully."
     redirect_to show_employee_salary_template_employee_salary_templates_path
+  end
+
+  def modal
+    
   end
 end

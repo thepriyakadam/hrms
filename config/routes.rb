@@ -7,6 +7,7 @@ Rails.application.routes.draw do
       post :create_employee_template
       get :show_employee_list
       get :show_employee_salary_template
+      get :modal
     end
   end
   resources :salary_component_templates

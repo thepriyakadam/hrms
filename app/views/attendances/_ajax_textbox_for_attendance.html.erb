@@ -1,4 +1,4 @@
-<% ans = (@company_shift.out_time - @company_shift.in_time)/3600 %>
+<% ans = time_diff(@company_shift.in_time, @company_shift.out_time) %>
 <%= bootstrap_form_for(@attendance) do |f| %>
 <%= hidden_field :attendance, :employee_id, value: @employee.id%>
 <%= hidden_field :attendance, :employee_shift_id, value: @employee.employee_shift.id%>
@@ -53,11 +53,7 @@
     </div>
   </div>
 
-  <div class="col-sm-3">
-    <div class="field">
-      <%= f.text_field :total_hrs, readonly: true %>
-    </div>
-  </div>
+  
 </div>
 
  <div class="row">
@@ -68,35 +64,3 @@
   </div>
 </div>
 <% end %>
-
-<script>
-$(function () {
-//Timepicker
-  $(".timepicker").timepicker({
-    showInputs: false
-  });
-  
-});
-
-$(function(){
-      $('#attendance_check_out').on('change', function() {
-        calculate_total_hrs();
-        calculate_over_time_hrs();
-      });
-    
-      function calculate_total_hrs(){
-        var check_in = parseFloat($('#attendance_check_in').val());
-        var check_out = parseFloat($('#attendance_check_out').val()); 
-        var total_hr = "";
-          total_hr = ((check_out - check_in)+12).toFixed(2);
-        $('#attendance_total_hrs').val(total_hr);
-      }
-      function calculate_over_time_hrs(){
-        var total_hr = parseFloat($('#attendance_total_hrs').val());
-        var company_hr = parseFloat($('#attendance_company_hrs').val()); 
-        var over_time_hr = "";
-          over_time_hr = ((total_hr - company_hr)).toFixed(2);
-        $('#attendance_over_time_hrs').val(over_time_hr);
-      }
-    });
-</script>

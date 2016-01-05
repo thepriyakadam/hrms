@@ -1,0 +1,25 @@
+<table id="example2" class="table table-bordered table-hover">
+  <thead>
+    <tr>  
+      <th>Code</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Holiday date</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @holidays.each do |holiday| %>
+      <tr>
+        <td><%= holiday.code %></td>
+        <td><%= holiday.name %></td>
+        <td><%= holiday.description %></td>
+        <td><%= holiday.holiday_date %></td>
+        <td>
+          <%= link_to '', edit_holiday_path(holiday),class: 'btn btn-success fa fa-edit',remote:true %>
+          <%= link_to '',  holiday, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger fa fa-close' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -125,7 +125,7 @@ $.validator.addMethod("address", function (value, element) {
         required: true
       },
       "company[registration_no]":{
-        maxlength: 15,
+        maxlength: 30,
         required: true,
       },
        "company[address]":{
@@ -457,7 +457,6 @@ $("#employee").validate({
       },
       "employee[contact_no]":{
           maxlength: 13,
-          required: true,
           mobileNo: true
       },
       "employee[email]":{
@@ -503,7 +502,6 @@ $("#employee").validate({
         maxlength: "Please Enter Valid Pincode Details"
       },
       "employee[contact_no]":{
-      required: "Please Specify Contact No",
         maxlength: "Enter the Correct contact number"
          },
          "employee[email]":{

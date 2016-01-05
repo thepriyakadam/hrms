@@ -1,4 +1,3 @@
-
 $(function(){
 
   $.validator.addMethod("loginRegex", function (value, element) {
@@ -1028,7 +1027,6 @@ $("#employee_shift").validate({
       // "employee_shift[to_date]":{
       //   required: true
       // }
-
     },
     messages: {
       "employee_shift[company_shift_id]":{
@@ -1047,7 +1045,4 @@ $("#employee_shift").validate({
     }
 
    });
-
-
-
 });

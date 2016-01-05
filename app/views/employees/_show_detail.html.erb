@@ -8,94 +8,94 @@
   <div class="box-body">
     <table class="table table-bordered table-hover">
       <tr>
-        <th> <strong>Employee Code</strong></th>
-        <td> <%= @employee.manual_employee_code %></td>
+        <th><strong>Employee Code</strong></th>
+        <td><%= @employee.manual_employee_code %></td>
 
-        <th> <strong>First Name</strong></th>
-        <td> <%= @employee.first_name %></td>
+        <th><strong>First Name</strong></th>
+        <td><%= @employee.first_name %></td>
       </tr>
       <tr>
-        <th>  <strong>Middle Name</strong></th>
+        <th><strong>Middle Name</strong></th>
         <td><%= @employee.middle_name %></td>
 
         <th><strong>Last Name</strong></th>
-        <td> <%= @employee.last_name %></td>
+        <td><%= @employee.last_name %></td>
       </tr>
       <tr>
         <th><strong>Gender</strong></th>
         <td><%= @employee.gender %></td>
 
-        <th> <strong>Aadhaar Card No</strong></th>
-        <td> <%= @employee.adhar_no %></td>
+        <th><strong>Aadhaar Card No</strong></th>
+        <td><%= @employee.adhar_no %></td>
       </tr>
       <tr>
         <th><strong>PAN Card No</strong></th>
         <td><%= @employee.pan_no %></td>
 
         <th><strong>Licence No</strong></th>
-        <td> <%= @employee.licence_no %></td>
+        <td><%= @employee.licence_no %></td>
       </tr>
       <tr>
-        <th> <strong>Marital Status</strong></th>
-        <td> <%= @employee.marital_status %></td>
+        <th><strong>Marital Status</strong></th>
+        <td><%= @employee.marital_status %></td>
 
-        <th> <strong>Nationality</strong></th>
+        <th><strong>Nationality</strong></th>
         <td><%= @employee.nationality.try(:name) %></td>
       </tr>
       <tr>
         <th><strong>Date of Birth</strong></th>
-        <td>  <%= @employee.date_of_birth %></td>
+        <td><%= @employee.date_of_birth %></td>
 
         <th><strong>Blood Group</strong></th>
-        <td> <%= @employee.blood_group.try(:name) %></td>
+        <td><%= @employee.blood_group.try(:name) %></td>
       </tr>
       <tr>
-        <th> <strong>Permanent Address</strong></th>
-        <td> <%= @employee.permanent_address %></td>
+        <th> strong>Permanent Address</strong></th>
+        <td><%= @employee.permanent_address %></td>
 
         <th><strong>Pin/Zip Code</strong></th>
-        <td> <%= @employee.pin_code %></td>
+        <td><%= @employee.pin_code %></td>
       </tr>
       <tr>
         <th><strong>Country</strong></th>
         <td><%= @employee.country.try(:name) %></td> 
 
-        <th> <strong>State</strong></th>
+        <th><strong>State</strong></th>
         <td><%= @employee.state.try(:name) %></td>
       </tr>
       <tr>
         <th><strong>District</strong></th>
         <td><%= @employee.district.try(:name) %></td>
 
-        <th> <strong>City</strong></th>
-        <td> <%= @employee.city %></td>
+        <th><strong>City</strong></th>
+        <td><%= @employee.city %></td>
       </tr>
       <tr>      
         <th><strong>Current Address</strong></th>
         <td><%= @employee.current_address %></td>
 
-        <th> <strong>Religion</strong></th>
-        <td> <%= @employee.religion.try(:name) %></td>
+        <th><strong>Religion</strong></th>
+        <td><%= @employee.religion.try(:name) %></td>
       </tr>
       <tr>
         <th><strong>Contact No</strong></th>
-        <td> <%= @employee.contact_no %></td>
+        <td><%= @employee.contact_no %></td>
 
         <th><strong>Email</strong></th>
         <td><%= @employee.email %></td>
       </tr>
       <tr>
         <th><strong>Differently Abled</strong></th>
-        <td> <%= @employee.handicap %></td>
+        <td><%= @employee.handicap %></td>
 
         <th><strong>Disability Type</strong></th>
-        <td> <%= @employee.handicap_type %></td>
+        <td><%= @employee.handicap_type %></td>
       </tr>
       <tr>
         <th><strong>Employement Type</strong></th>
-        <td> <%= @employee.employee_type.try(:name) %></td>
+        <td><%= @employee.employee_type.try(:name) %></td>
 
-        <th> <strong>Employee Status</strong></th>
+        <th><strong>Employee Status</strong></th>
         <td><%= @employee.status %></td>
       </tr>
     </table>

@@ -35,6 +35,7 @@ Rails.application.routes.draw do
   resources :attendances do
     collection do
       get :find_employee_for_attendance
+      get :calculate_time
     end
   end
   resources :employee_shifts do

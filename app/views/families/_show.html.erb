@@ -73,7 +73,7 @@
 </tr>
 <tr>
   <th> <strong>Religion</strong></th>
-  <td><%= @family.religion %></td>
+  <td><%= @family.religion.try(:name) %></td>
 
   <th> <strong>Profession</strong></th>
   <td><%= @family.profession %></td>

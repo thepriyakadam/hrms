@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160102053629) do
+ActiveRecord::Schema.define(version: 20160105061255) do
 
   create_table "annual_salary_masters", force: :cascade do |t|
     t.integer  "employee_id"
@@ -150,8 +150,8 @@ ActiveRecord::Schema.define(version: 20160102053629) do
     t.string   "code"
     t.string   "name"
     t.string   "description"
-    t.time     "in_time"
-    t.time     "out_time"
+    t.datetime "in_time"
+    t.datetime "out_time"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
@@ -499,6 +499,15 @@ ActiveRecord::Schema.define(version: 20160102053629) do
   add_index "groups", ["reset_password_token"], name: "index_groups_on_reset_password_token", unique: true
   add_index "groups", ["subdomain"], name: "index_groups_on_subdomain", unique: true
 
+  create_table "holidays", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
+    t.text     "description"
+    t.date     "holiday_date"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
   create_table "joining_details", force: :cascade do |t|
     t.integer  "employee_id"
     t.date     "joining_date"
@@ -644,6 +653,7 @@ ActiveRecord::Schema.define(version: 20160102053629) do
 
   create_table "salary_component_templates", force: :cascade do |t|
     t.string   "manual_template_code"
+    t.string   "auto_template_code"
     t.integer  "salary_template_id"
     t.integer  "salary_component_id"
     t.boolean  "is_deducted"

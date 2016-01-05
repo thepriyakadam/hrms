@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :holidays
   resources :employee_salary_templates do
     collection do
       get :find_employee_for_assign_template

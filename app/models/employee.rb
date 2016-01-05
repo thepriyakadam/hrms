@@ -7,6 +7,7 @@ class Employee < ActiveRecord::Base
   belongs_to :country
   belongs_to :state
   belongs_to :district
+  belongs_to :religion
   has_many :awards
   has_many :certifications
   has_many :qualifications
@@ -28,8 +29,6 @@ class Employee < ActiveRecord::Base
 
   validates :manual_employee_code, :presence => true, uniqueness: { case_sensitive: false }
   validates :first_name, :presence => true
-  validates :last_name, :presence => true
-  validates :contact_no, :presence => true
   validate  :email_regex
   validates :permanent_address, :presence => true
   validates :country_id, :presence => true

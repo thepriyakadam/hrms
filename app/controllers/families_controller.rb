@@ -87,6 +87,6 @@ class FamiliesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def family_params
-      params.require(:family).permit(:employee_id, :no_of_member, :f_name, :m_name,:l_name, :date_of_birth, :age, :contact_no, :email, :current_address, :relation, :adhar_no, :pan_no, :passport_no, :medical_claim, :passport_expiry_date, :have_passport, :passport_issue_date, :marital, :blood_group_id, :religion, :handicap_type,:is_handicap, :profession, :gender)
+      params.require(:family).permit(:employee_id, :no_of_member, :f_name, :m_name,:l_name, :date_of_birth, :age, :contact_no, :email, :current_address, :relation, :adhar_no, :pan_no, :passport_no, :medical_claim, :passport_expiry_date, :have_passport, :passport_issue_date, :marital, :blood_group_id, :religion_id, :handicap_type,:is_handicap, :profession, :gender)
     end
 end

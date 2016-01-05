@@ -1,6 +1,7 @@
 class Family < ActiveRecord::Base
   belongs_to :employee
   belongs_to :blood_group
+  belongs_to :religion
 
   validates :relation, :presence => true
   validates :f_name, :presence => true

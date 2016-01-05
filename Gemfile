@@ -79,3 +79,6 @@ gem 'city-state'
 # DateTimePicker
 gem 'bootstrap3-datetimepicker-rails', '~> 4.0.0'
 gem 'jquery-ui-rails'
+
+#Time Differences
+gem 'time_difference'

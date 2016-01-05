@@ -56,25 +56,25 @@ class AttendancesController < ApplicationController
   def destroy
     @attendance.destroy
     respond_to do |format|
-      format.html { redirect_to attendances_url, notice: 'Attendance was successfully destroyed.' }
+      format.html { redirect_to attendances_url, notice: 'Attendance was successfully destroyed.'}
       format.json { head :no_content }
     end
   end
 
   def find_employee_for_attendance
-    p "----------------------------------------------------"
-    @attendance = Attendance.new
+    p params
     @employee = Employee.find_by_manual_employee_code(params[:employee_code]) 
-    @employee_shift = EmployeeShift.find_by_employee_id(@employee.id)
-    @company_shift = CompanyShift.find(@employee_shift.company_shift_id)
+    p @employee
     respond_to do |format|
       if @employee.nil?
         format.js { @flag = true }
       else
+        @employee_shift = EmployeeShift.find_by_employee_id(@employee.id)
+        @company_shift = CompanyShift.find(@employee_shift.company_shift_id)
+        @attendance = Attendance.new
         format.js { @flag = false }
       end
     end
-    #@employee_shift = @employee.employee_shifts.first.company_shift.name
   end
 
   private

@@ -29,7 +29,6 @@ class Employee < ActiveRecord::Base
   validates :manual_employee_code, :presence => true, uniqueness: { case_sensitive: false }
   validates :first_name, :presence => true
   validates :last_name, :presence => true
-  validates :contact_no, :presence => true
   validate  :email_regex
   validates :permanent_address, :presence => true
   validates :country_id, :presence => true

@@ -85,7 +85,7 @@
       <td><%= @employee.current_address %></td>
 
       <th> <strong>Religion</strong></th>
-      <td> <%= @employee.religion %></td>
+      <td> <%= @employee.religion.try(:name) %></td>
     </tr>
 
     <tr>

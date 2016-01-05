@@ -1,7 +1,7 @@
 <!-- Optionally, you can add icons to the links -->
 <!-- sidebar menu: : style can be found in sidebar.less -->
 <ul class="sidebar-menu">
-  <li class="header">GROUP-DASHBOARD</li>
+  <li class="header">GROUP DASHBOARD</li>
   <li class="active treeview">
     <a href="">
       <i class="fa fa-user-plus"></i> <span>Create</span> <i class="fa fa-angle-left pull-right"></i>
@@ -14,47 +14,49 @@
     </ul>
   </li>
   
-  <!--  -->
-<li class="treeview">
+  <li class="treeview">
     <a href="#">
-      <i class="fa fa-cogs"></i> <span>Settings</span>
+      <i class="fa fa-share"></i> <span>Settings</span>
       <i class="fa fa-angle-left pull-right"></i>
     </a>
     <ul class="treeview-menu">
-       <a href="#"><i class="glyphicon glyphicon-import"></i>  Company Setting 
-       </a>
+      <li>
+        <a href="#"><i class="fa fa-edit"></i> Company <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
-           <li><a href="/company_types/new"><i class="glyphicon glyphicon-chevron-right"></i> Company Type</a></li>
-           <li><a href="/department_types/new"><i class="glyphicon glyphicon-chevron-right"></i> Department Type</a></li>
-           <li><a href="/roles/new"><i class="glyphicon glyphicon-chevron-right"></i> User Role</a></li>
-           <li><a href="/cost_centers/new"><i class="glyphicon glyphicon-chevron-right"></i> Cost Center</a></li>
-           <li><a href="/company_shifts/new"><i class="glyphicon glyphicon-chevron-right"></i> Company Shift</a></li>
+           <li><a href="/company_types/new"><i class="fa fa-tags"></i> Company Type</a></li>
+           <li><a href="/department_types/new"><i class="fa fa-tags"></i> Department Type</a></li>
+           <li><a href="/roles/new"><i class="fa fa-tags"></i> User Role</a></li>
+           <li><a href="/cost_centers/new"><i class="fa fa-tags"></i> Cost Center</a></li>
+           <li><a href="/company_shifts/new"><i class="fa fa-tags"></i> Company Shift</a></li>
         </ul>
-    </ul>
-
-     <ul class="treeview-menu">
-       <a href="#"><i class="glyphicon glyphicon-import"></i>  Employee Setting  </a>
+      </li>
+      <li>
+        <a href="#"><i class="fa fa-edit"></i> Employee <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
-          <li><a href="/employee_grades/new"><i class="glyphicon glyphicon-chevron-right"></i> Employee Grade</a></li>
-          <li><a href="/blood_groups/new"><i class="glyphicon glyphicon-chevron-right"></i> Blood Group</a></li>
-          <li><a href="/degrees/new"><i class="glyphicon glyphicon-chevron-right"></i> Employee Qualifications</a></li>
-          <li><a href="/employee_designations/new"><i class="glyphicon glyphicon-chevron-right"></i> Employee Designation</a></li>
-          <li><a href="/employee_types/new"><i class="glyphicon glyphicon-chevron-right"></i> Employment Type</a></li>
-          <li><a href="/nationalities/new"><i class="glyphicon glyphicon-chevron-right"></i> Nationality</a></li>
-          <li><a href="/degree_types/new"><i class="glyphicon glyphicon-chevron-right"></i> Qualification Level</a></li>
-          <li><a href="/degree_streams/new"><i class="glyphicon glyphicon-chevron-right"></i> Qualification Specialization</a></li>
-          <li><a href="/universities/new"><i class="glyphicon glyphicon-chevron-right"></i> University/Institutions</a></li>
-          <li><a href="/religions/new"><i class="glyphicon glyphicon-chevron-right"></i> Religion</a></li>
-          <li><a href="/banks/new"><i class="glyphicon glyphicon-chevron-right"></i> Bank</a></li>
+         <li><a href="/employee_grades/new"><i class="fa fa-tags"></i> Employee Grade</a></li>
+          <li><a href="/blood_groups/new"><i class="fa fa-tags"></i> Blood Group</a></li>
+          <li><a href="/degrees/new"><i class="fa fa-tags"></i> Employee Qualifications</a></li>
+          <li><a href="/employee_designations/new"><i class="fa fa-tags"></i> Employee Designation</a></li>
+          <li><a href="/employee_types/new"><i class="fa fa-tags"></i> Employment Type</a></li>
+          <li><a href="/nationalities/new"><i class="fa fa-tags"></i> Nationality</a></li>
+          <li><a href="/degree_types/new"><i class="fa fa-tags"></i> Qualification Level</a></li>
+          <li><a href="/degree_streams/new"><i class="fa fa-tags"></i> Qualification Specialization</a></li>
+          <li><a href="/universities/new"><i class="fa fa-tags"></i> University/Institutions</a></li>
+          <li><a href="/religions/new"><i class="fa fa-tags"></i> Religion</a></li>
+          <li>
+            <a href="/banks/new"><i class="fa fa-tags"></i> Bank <i class="fa fa-angle-left pull-right"></i></a>
+          </li>
         </ul>
-    </ul>
-
-     <ul class="treeview-menu">
-       <a href="#"><i class="glyphicon glyphicon-import"></i>  Leave Setting </a>
+      </li>
+      <li>
+        <a href="#"><i class="fa fa-edit"></i> Leave <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
-           <li><a href="/leav_categories/new"><i class="glyphicon glyphicon-chevron-right"></i> Leave Type</a></li>
-           <li><a href="/employee_shifts"><i class="glyphicon glyphicon-chevron-right"></i> Employee Shift</a></li>
+         <li><a href="/leav_categories/new"><i class="fa fa-tags"></i> Leave Type</a></li>
+          <li>
+            <a href="#"><i class="fa fa-circle-o"></i> Leave <i class="fa fa-angle-left pull-right"></i></a>
+          </li>
         </ul>
+      </li>
     </ul>
   </li>
 
@@ -70,13 +72,33 @@
   </li>
 
   <li class="treeview">
+   <a href="">
+     <i class="fa fa-user-plus"></i> <span>User</span> <i class="fa fa-angle-left pull-right"></i>
+   </a>
+   <ul class="treeview-menu">
+     <li><a href="/employees/assign_role"><i class="fa fa-circle-o"></i> Create User</a></li>
+     <li><a href="/home/created_user"><i class="fa fa-circle-o"></i>Created User</a></li>
+   </ul>
+ </li>
+  <li class="treeview">
     <a href="">
-      <i class="fa fa-user-plus"></i> <span>User</span> <i class="fa fa-angle-left pull-right"></i>
+      <i class="ionicons ion-social-usd"></i>  <span>PayRoll </span> <i class="fa fa-angle-left pull-right"></i>
     </a>
     <ul class="treeview-menu">
-      <li><a href="/employees/assign_role"><i class="fa fa-circle-o"></i> Create User</a></li>
-      <li><a href="/home/created_user"><i class="fa fa-circle-o"></i>Created User</a></li>
+      <li><a href="/salary_components/new"><i class="fa fa-tags"></i>  Salary Component</a></li>
+      <li><a href="/salary_templates/new"><i class="fa fa-tags"></i> Create Salary Template</a></li>
+      <li><a href="/employee_salary_templates"><i class="fa fa-tags"></i> Assign Template to Employee</a></li>
+      <li><a href="/employee_annual_salaries/created_employee_annual_salary"><i class="fa fa-tags"> </i>  Employee Pay Slip </a></li>
     </ul>
-  </li>
-  
+   </li>
+    <li class="treeview">
+    <a href="">
+      <i class="ionicons ion-ios-time"></i><span><span>  Time Management </span></span> <i class="fa fa-angle-left pull-right"></i>
+    </a>
+    <ul class="treeview-menu">
+      <li><a href="/company_shifts/new"><i class="fa fa-circle-o"></i> Company Shift </a></li>
+      <li><a href="/employee_shifts"><i class="fa fa-circle-o"></i> Employee Shift </a></li>
+      <li><a href="/attendances/new"><i class="fa fa-circle-o"></i> Employee Attendance</a></li>
+    </ul>
+   </li>
 </ul>

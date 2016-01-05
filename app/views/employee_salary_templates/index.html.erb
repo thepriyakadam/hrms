@@ -1,0 +1,30 @@
+<!-- SELECT2 EXAMPLE -->
+<div class="box box-default">
+	<div class="box-body">
+	  <div class="row">
+	    <div class="col-sm-3">
+	      <div class="field">
+	        <%= text_field :employee_code,:hhh,{oninput:"var a={employee_code:$(this).val()}; $.get('/employee_salary_templates/find_employee_for_assign_template',a,function(response){});",class: 'form-control',placeholder:'Search by Employee id'} %>
+	      </div>
+	    </div>
+	  </div>
+	  <div id="message">
+	    
+	  </div>
+	  <div id="employee_details">
+	    
+	  </div>
+
+	  <div id="search_template_dropdown">
+	    
+	  </div>
+
+	  <div id="template">
+	    
+	  </div>
+	  <!-- <button id="btnAdd">Add</button> -->
+	</div><!-- /.box-body -->
+</div><!-- /.box -->
+
+<%= link_to "modal", modal_employee_salary_templates_path, remote:true %>
+<div id="myModal" class="modal fade"></div>

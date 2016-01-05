@@ -12,18 +12,18 @@
         <th><strong>Employee:</strong></th>
         <td>  <%= @employee_physical.employee.try(:first_name) %></td>
 
-        <th> <strong>Height:</strong></th>
+        <th> <strong>Height(inches):</strong></th>
         <td> <%= @employee_physical.height %></td>
     </tr>
      <tr>
-        <th><strong>Weight:</strong></th>
+        <th><strong>Weight(kg):</strong></th>
         <td><%= @employee_physical.weight %></td>
 
         <th> <strong>T-Shirt Size</strong></th>
         <td> <%= @employee_physical.size %></td>
     </tr>
      <tr>
-        <th> <strong>Trouser Size</strong></th>
+        <th> <strong>Trouser Size(cm)</strong></th>
         <td> <%= @employee_physical.trouser_size %></td>
 
         <th></th>
@@ -33,3 +33,5 @@
     </table>
   </div><!-- /.box -->
 </div>
+
+

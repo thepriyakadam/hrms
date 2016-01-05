@@ -1,11 +1,24 @@
 Rails.application.routes.draw do
 
+  resources :employee_salary_templates do
+    collection do
+      get :find_employee_for_assign_template
+      get :find_template
+      post :create_employee_template
+      get :show_employee_list
+      get :show_employee_salary_template
+      get :modal
+    end
+  end
+  resources :salary_component_templates
+  resources :salary_templates
   resources :religions
   resources :banks
   resources :employee_annual_salaries do
     collection do
       get :created_employee_annual_salary
       get :employee_annual_salary_slip
+      get :all_employee_monthly_salary
     end
   end
   resources :salary_components
@@ -23,7 +36,11 @@ Rails.application.routes.draw do
       get :find_employee_for_attendance
     end
   end
-  resources :employee_shifts
+  resources :employee_shifts do
+    collection do
+      get :employee_of_shift
+    end
+  end
   resources :company_shifts
   resources :roles do
     collection do

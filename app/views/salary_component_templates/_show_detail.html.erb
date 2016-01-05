@@ -1,0 +1,44 @@
+<div class="table-responsive">
+<table class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Sr No.</th>
+      <th>Salary component</th>
+      <th>Is deducted</th>
+      <th>Parent salary component</th>
+      <th>Percentage</th>
+      <th>Is taxable</th>
+      <th>Tax</th>
+      <th>Base</th>
+      <th>To be paid</th>
+      <th>Max amount</th>
+      <th>Monthly amount</th>
+      <th>Annual amount</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% i = 0 %>
+    <% @salary_component_templates.each do |salary_component_template| %>
+      <tr>
+        <td><%= i=i+1 %></td>
+        <td><%= salary_component_template.try(:salary_component).try(:name) %></td>
+        <td><%= salary_component_template.try(:is_deducted) %></td>
+        <td><%= salary_component_template.try(:parent_salary_component).try(:name) %></td>
+        <td><%= salary_component_template.try(:percentage) %></td>
+        <td><%= salary_component_template.try(:is_taxable) %></td>
+        <td><%= salary_component_template.try(:tax) %></td>
+        <td><%= salary_component_template.try(:base) %></td>
+        <td><%= salary_component_template.try(:to_be_paid) %></td>
+        <td><%= salary_component_template.try(:max_amount) %></td>
+        <td><%= salary_component_template.try(:monthly_amount) %></td>
+        <td><%= salary_component_template.try(:annual_amount) %></td>
+        <td>  
+          <%= link_to '', edit_salary_component_template_path(salary_component_template),class: "btn btn-success btn-xs fa fa-edit", remote: true %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>

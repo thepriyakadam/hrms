@@ -125,7 +125,7 @@ $.validator.addMethod("address", function (value, element) {
         required: true
       },
       "company[registration_no]":{
-        maxlength: 15,
+        maxlength: 30,
         required: true,
       },
        "company[address]":{

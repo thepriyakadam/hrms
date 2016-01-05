@@ -54,6 +54,5 @@ class Employee < ActiveRecord::Base
     if pan_no.present? and not pan_no.match(/^([A-Z]{5})(\d{4})([A-Z]{1})$/)
       errors.add :pan_no,"Please specify Correct Pan Card Number"
     end
-   end
-
+  end
 end

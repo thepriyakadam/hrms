@@ -944,6 +944,12 @@ $("#employee_type").validate({
    });
 
 
+// "student[passport_photo]": {
+//        accept: "Attachment allows only JPEG/PNG/PJPEG/GIF format",
+//        filesize: "Photo size must be less than 100 KB"
+//        }
+
+
 $("#employee_bank_detail").validate({
     rules: {
       "employee_bank_detail[account_no]":{

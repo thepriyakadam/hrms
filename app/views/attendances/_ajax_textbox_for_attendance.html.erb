@@ -31,7 +31,7 @@
         <div class="form-group">
           <label>Check Out</label>
           <div class="input-group">
-            <%= f.text_field :check_out,hide_label:true, class: 'form-control timepicker' %>
+            <%= f.text_field :check_out, {onchange:"var a={out_time:$(this).val(),in_time:$('#attendance_check_in').val()}; $.get('/attendances/calculate_time',a,function(response){});",class: 'form-control timepicker',hide_label:true} %>
             <div class="input-group-addon">
               <i class="fa fa-clock-o"></i>
             </div>
@@ -53,7 +53,11 @@
     </div>
   </div>
 
-  
+  <div class="col-sm-3">
+    <div class="field">
+      <%= f.text_field :total_hrs, readonly: true %>
+    </div>
+  </div>
 </div>
 
  <div class="row">
@@ -64,3 +68,11 @@
   </div>
 </div>
 <% end %>
+
+<script>
+$(function () {
+ $(".timepicker").timepicker({
+   showInputs: false
+ });
+});
+</script>

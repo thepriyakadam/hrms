@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160102053629) do
+ActiveRecord::Schema.define(version: 20160105091422) do
 
   create_table "attendances", force: :cascade do |t|
     t.integer  "employee_shift_id"
@@ -138,8 +138,8 @@ ActiveRecord::Schema.define(version: 20160102053629) do
     t.string   "code"
     t.string   "name"
     t.string   "description"
-    t.time     "in_time"
-    t.time     "out_time"
+    t.datetime "in_time"
+    t.datetime "out_time"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
@@ -399,10 +399,10 @@ ActiveRecord::Schema.define(version: 20160102053629) do
     t.string   "status"
     t.integer  "employee_type_id"
     t.string   "gender"
-    t.string   "religion"
     t.integer  "manager_id"
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
+    t.integer  "religion_id"
   end
 
   add_index "employees", ["blood_group_id"], name: "index_employees_on_blood_group_id"
@@ -413,6 +413,7 @@ ActiveRecord::Schema.define(version: 20160102053629) do
   add_index "employees", ["employee_type_id"], name: "index_employees_on_employee_type_id"
   add_index "employees", ["manager_id"], name: "index_employees_on_manager_id"
   add_index "employees", ["nationality_id"], name: "index_employees_on_nationality_id"
+  add_index "employees", ["religion_id"], name: "index_employees_on_religion_id"
   add_index "employees", ["state_id"], name: "index_employees_on_state_id"
 
   create_table "experiences", force: :cascade do |t|
@@ -450,7 +451,6 @@ ActiveRecord::Schema.define(version: 20160102053629) do
     t.date     "passport_expiry_date"
     t.string   "medical_claim"
     t.string   "marital"
-    t.string   "religion"
     t.string   "is_handicap"
     t.string   "handicap_type"
     t.string   "profession"
@@ -458,10 +458,12 @@ ActiveRecord::Schema.define(version: 20160102053629) do
     t.datetime "updated_at",           null: false
     t.string   "gender"
     t.integer  "blood_group_id"
+    t.integer  "religion_id"
   end
 
   add_index "families", ["blood_group_id"], name: "index_families_on_blood_group_id"
   add_index "families", ["employee_id"], name: "index_families_on_employee_id"
+  add_index "families", ["religion_id"], name: "index_families_on_religion_id"
 
   create_table "groups", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -486,6 +488,15 @@ ActiveRecord::Schema.define(version: 20160102053629) do
   add_index "groups", ["email"], name: "index_groups_on_email", unique: true
   add_index "groups", ["reset_password_token"], name: "index_groups_on_reset_password_token", unique: true
   add_index "groups", ["subdomain"], name: "index_groups_on_subdomain", unique: true
+
+  create_table "holidays", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
+    t.text     "description"
+    t.date     "holiday_date"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
 
   create_table "joining_details", force: :cascade do |t|
     t.integer  "employee_id"

@@ -12,8 +12,10 @@
       <tr>
       <th>Employee Id</th>
       <th>Employee Name</th>
-      <th>Contact No</th>
-      <th>Email</th>
+      <th>Date of Birth</th>
+      <th>City</th>
+      <th>Employement</th>
+      <th>Status</th>
       <th>Action</th>
     </tr>
   </thead>
@@ -23,8 +25,10 @@
       <tr>
         <td><%= employee.manual_employee_code %></td>
         <td><%= employee.first_name+' '+employee.middle_name+' '+employee.last_name %></td>
-        <td><%= employee.contact_no %></td>
-        <td><%= employee.email %></td>
+        <td>  <%= employee.date_of_birth %></td>
+        <td><%= employee.city %></td>
+        <td> <%= employee.employee_type.try(:name) %></td>
+        <td><%= employee.status %></td>
         <td>
             <%= link_to '', employee,class: 'btn btn-default fa fa-eye' %>
         </td>

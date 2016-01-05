@@ -23,16 +23,16 @@ $(function(){
 },"Alpha Characters Only.");
 
 $.validator.addMethod("mobileNo", function (value, element) {
-    return /^[0-9-]+$/.test(value);
-},"Please Input Valid Mobile No.");
+    return this.optional(element) || /^[0-9-]+$/.test(value);
+},"Please Input Valid Contact No.");
 
 $.validator.addMethod("bankName", function (value, element) {
     return this.optional(element) || /^[a-zA-Z_ ]+$/i.test(value);
 },"Please Input Letters Only.");
 
 $.validator.addMethod("contactNo", function (value, element) {
-    return /^((\+)?[1-9]{1,2})?([-\s\.])?((\(\d{1,4}\))|\d{1,4})(([-\s\.])?[0-9]{1,12}){1,2}$/.test(value);
-},"Please Input Valid Mobile No.");
+    return this.optional(element) || /^((\+)?[1-9]{1,2})?([-\s\.])?((\(\d{1,4}\))|\d{1,4})(([-\s\.])?[0-9]{1,12}){1,2}$/.test(value);
+},"Please Input Valid Contact No.");
 
 $.validator.addMethod("iifcCode", function (value, element) {
     return /^([A-Z]{4})(\d{7})$/.test(value);
@@ -428,7 +428,6 @@ $("#employee").validate({
         lettersOnly:true
       },
       "employee[last_name]":{
-        required: true,
         maxlength: 30,
         lettersOnly:true
       },
@@ -470,7 +469,6 @@ $("#employee").validate({
         maxlength: "Name allows upto 30 alphabets"
       },
       "employee[last_name]":{
-        required: "Please specify Your Middle Name",
         maxlength: "Name allows upto 30 alphabets"
       },
       "employee[adhar_no]":{
@@ -944,6 +942,12 @@ $("#employee_type").validate({
     }
 
    });
+
+
+// "student[passport_photo]": {
+//        accept: "Attachment allows only JPEG/PNG/PJPEG/GIF format",
+//        filesize: "Photo size must be less than 100 KB"
+//        }
 
 
 $("#employee_bank_detail").validate({

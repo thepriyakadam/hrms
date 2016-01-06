@@ -61,6 +61,18 @@ class EmployeeMonthlyDaysController < ApplicationController
     end
   end
 
+   def find_employee_for_employee_monthly_day
+    @employee = Employee.find_by_manual_employee_code(params[:employee_id]) 
+    respond_to do |format|
+      if @employee.nil?
+        format.js { @flag = true }
+      else
+        @employee_monthly_day = EmployeeMonthlyDay.new
+        format.js { @flag = false }
+      end
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_employee_monthly_day

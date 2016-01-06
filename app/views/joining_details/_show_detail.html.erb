@@ -11,7 +11,7 @@
 
     <tr>
       <th><strong>Employee</strong></th>
-      <td><%= @joining_detail.employee.try(:first_name) %></td>
+      <td><%= @joining_detail.employee.try(:manual_employee_code) %></td>
 
       <th><strong>UAN No</strong></th>
       <td><%= @joining_detail.employee_uan_no %></td>

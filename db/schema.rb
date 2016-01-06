@@ -150,8 +150,8 @@ ActiveRecord::Schema.define(version: 20160106132935) do
     t.string   "code"
     t.string   "name"
     t.string   "description"
-    t.datetime "in_time"
-    t.datetime "out_time"
+    t.time     "in_time"
+    t.time     "out_time"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end

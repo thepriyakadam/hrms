@@ -9,9 +9,15 @@
     </div>
   </div>
   <div class="col-sm-3">
-    <div class="field">
-       <%= f.text_field :attendance_date, value: Date.today, readonly: true %>
-    </div>
+        <label> Attendance Date </label>
+        <div class="field">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+            <%= f.text_field :attendance_date, hide_label: true, class: 'attendance_date'%>
+          </div>
+        </div>
   </div>
   <div class="col-sm-2">
       <div class="bootstrap-timepicker">
@@ -75,4 +81,14 @@ $(function () {
    showInputs: false
  });
 });
+</script>
+
+<script type="text/javascript">
+  $(function(){
+    $('.attendance_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-1:+10',
+    dateFormat: 'dd-mm-yy' });
+  }); 
 </script>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160105091422) do
+ActiveRecord::Schema.define(version: 20160106065748) do
 
   create_table "annual_salary_masters", force: :cascade do |t|
     t.integer  "employee_id"
@@ -542,8 +542,10 @@ ActiveRecord::Schema.define(version: 20160105091422) do
     t.datetime "approved_date"
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
+    t.integer  "employee_id"
   end
 
+  add_index "leav_approveds", ["employee_id"], name: "index_leav_approveds_on_employee_id"
   add_index "leav_approveds", ["employee_leav_request_id"], name: "index_leav_approveds_on_employee_leav_request_id"
 
   create_table "leav_cancelleds", force: :cascade do |t|
@@ -551,8 +553,10 @@ ActiveRecord::Schema.define(version: 20160105091422) do
     t.datetime "cancelled_date"
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
+    t.integer  "employee_id"
   end
 
+  add_index "leav_cancelleds", ["employee_id"], name: "index_leav_cancelleds_on_employee_id"
   add_index "leav_cancelleds", ["employee_leav_request_id"], name: "index_leav_cancelleds_on_employee_leav_request_id"
 
   create_table "leav_categories", force: :cascade do |t|
@@ -568,8 +572,10 @@ ActiveRecord::Schema.define(version: 20160105091422) do
     t.datetime "rejected_date"
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
+    t.integer  "employee_id"
   end
 
+  add_index "leav_rejecteds", ["employee_id"], name: "index_leav_rejecteds_on_employee_id"
   add_index "leav_rejecteds", ["employee_leav_request_id"], name: "index_leav_rejecteds_on_employee_leav_request_id"
 
   create_table "members", force: :cascade do |t|
@@ -655,6 +661,7 @@ ActiveRecord::Schema.define(version: 20160105091422) do
 
   create_table "salary_component_templates", force: :cascade do |t|
     t.string   "manual_template_code"
+    t.string   "auto_template_code"
     t.integer  "salary_template_id"
     t.integer  "salary_component_id"
     t.boolean  "is_deducted"

@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Employee:</strong>
+  <%= @employee_monthly_day.employee %>
+</p>
+
+<p>
+  <strong>Month:</strong>
+  <%= @employee_monthly_day.month %>
+</p>
+
+<p>
+  <strong>Year:</strong>
+  <%= @employee_monthly_day.year %>
+</p>
+
+<p>
+  <strong>Overtime:</strong>
+  <%= @employee_monthly_day.overtime %>
+</p>
+
+<%= link_to 'Edit', edit_employee_monthly_day_path(@employee_monthly_day) %> |
+<%= link_to 'Back', employee_monthly_days_path %>

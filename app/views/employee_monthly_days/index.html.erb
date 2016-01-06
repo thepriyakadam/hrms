@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Employee Monthly Days</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Employee</th>
+      <th>Month</th>
+      <th>Year</th>
+      <th>Overtime</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @employee_monthly_days.each do |employee_monthly_day| %>
+      <tr>
+        <td><%= employee_monthly_day.employee %></td>
+        <td><%= employee_monthly_day.month %></td>
+        <td><%= employee_monthly_day.year %></td>
+        <td><%= employee_monthly_day.overtime %></td>
+        <td><%= link_to 'Show', employee_monthly_day %></td>
+        <td><%= link_to 'Edit', edit_employee_monthly_day_path(employee_monthly_day) %></td>
+        <td><%= link_to 'Destroy', employee_monthly_day, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Employee monthly day', new_employee_monthly_day_path %>

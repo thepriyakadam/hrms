@@ -25,9 +25,10 @@ class LeavCancelledsController < ApplicationController
   # POST /leav_cancelleds.json
   def create
     @leav_cancelled = LeavCancelled.new
-    puts params[:format]
+    @employee_leav_request = EmployeeLeavRequest.find(params[:format])
     @leav_cancelled.employee_leav_request_id = params[:format]
     @leav_cancelled.cancelled_date = Date.today
+    @leav_cancelled.employee_id = @employee_leav_request.employee_id
     if @leav_cancelled.save
       redirect_to employee_leav_requests_path
       flash[:notice] = "Leave cancelled successfully"
@@ -69,6 +70,6 @@ class LeavCancelledsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     # def leav_cancelled_params
-    #   params.require(:leav_cancelled).permit(:employee_leav_request_id, :cancelled_date)
+    #   params.require(:leav_cancelled).permit(:employee_leav_request_id, :employee_id, :cancelled_date)
     # end
 end

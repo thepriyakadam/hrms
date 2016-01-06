@@ -9,44 +9,43 @@
     </div>
   </div>
   <div class="col-sm-3">
-        <label> Attendance Date </label>
-        <div class="field">
-          <div class="input-group">
-            <div class="input-group-addon">
-              <i class="fa fa-calendar"></i>
-            </div>
-            <%= f.text_field :attendance_date, hide_label: true, class: 'attendance_date'%>
-          </div>
+    <label> Attendance Date </label>
+    <div class="field">
+      <div class="input-group">
+        <div class="input-group-addon">
+          <i class="fa fa-calendar"></i>
         </div>
+         <%= f.text_field :attendance_date, hide_label: true, class: 'attendance_date'%>
+      </div>
+    </div>
   </div>
   <div class="col-sm-2">
-      <div class="bootstrap-timepicker">
-        <div class="form-group">
-          <label>Check In</label>
-          <div class="input-group">
-            <%= f.text_field :check_in,hide_label:true, class: 'form-control timepicker' %>
-            <div class="input-group-addon">
-              <i class="fa fa-clock-o"></i>
-            </div>
-          </div><!-- /.input group -->
-        </div><!-- /.form group -->
-      </div>
+    <div class="bootstrap-timepicker">
+     <div class="form-group">
+      <label>Check In</label>
+      <div class="input-group">
+        <%= f.text_field :check_in,hide_label:true, class: 'form-control timepicker' %>
+        <div class="input-group-addon">
+          <i class="fa fa-clock-o"></i>
+        </div>
+      </div><!-- /.input group -->
+     </div><!-- /.form group -->
     </div>
-   <div class="col-sm-2">
-      <div class="bootstrap-timepicker">
-        <div class="form-group">
-          <label>Check Out</label>
-          <div class="input-group">
-            <%= f.text_field :check_out, {onchange:"var a={out_time:$(this).val(),in_time:$('#attendance_check_in').val()}; $.get('/attendances/calculate_time',a,function(response){});",class: 'form-control timepicker',hide_label:true} %>
-            <div class="input-group-addon">
-              <i class="fa fa-clock-o"></i>
-            </div>
-          </div><!-- /.input group -->
-        </div><!-- /.form group -->
-      </div>
+  </div>
+  <div class="col-sm-2">
+    <div class="bootstrap-timepicker">
+      <div class="form-group">
+        <label>Check Out</label>
+        <div class="input-group">
+         <%= f.text_field :check_out, {onchange:"var a={out_time:$(this).val(),in_time:$('#attendance_check_in').val()}; $.get('/attendances/calculate_time',a,function(response){});",class: 'form-control timepicker',hide_label:true} %>
+          <div class="input-group-addon">
+            <i class="fa fa-clock-o"></i>
+          </div>
+        </div><!-- /.input group -->
+      </div><!-- /.form group -->
     </div>
+  </div>
 </div>
-
 <div class="row">
   <div class="col-sm-3">
     <div class="field">
@@ -58,15 +57,13 @@
       <%= f.text_field :over_time_hrs, readonly: true %>
     </div>
   </div>
-
   <div class="col-sm-3">
     <div class="field">
       <%= f.text_field :total_hrs, readonly: true %>
     </div>
   </div>
 </div>
-
- <div class="row">
+<div class="row">
   <div class="col-sm-3">
     <div class="actions">
       <%= f.submit :class => class_name, data: { disable_with: data_info } %>

@@ -4,7 +4,7 @@ class EmployeeLeavRequestsController < ApplicationController
   # GET /employee_leav_requests
   # GET /employee_leav_requests.json
   def index
-    @employee_leav_requests = EmployeeLeavRequest.joins("LEFT JOIN leav_approveds ON employee_leav_requests.id = leav_approveds.employee_leav_request_id LEFT JOIN leav_cancelleds ON employee_leav_requests.id = leav_cancelleds.employee_leav_request_id LEFT JOIN leav_rejecteds ON employee_leav_requests.id = leav_rejecteds.employee_leav_request_id where leav_approveds.id IS NULL AND leav_rejecteds.id IS NULL AND leav_cancelleds.id IS NULL")
+    @employee_leav_requests = EmployeeLeavRequest.where('employee_id = ?', current_user.employee_id)
     #@employee_leav_requests = EmployeeLeavRequest.all
   end
 

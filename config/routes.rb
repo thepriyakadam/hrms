@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :employee_monthly_days
   resources :holidays
   resources :employee_salary_templates do
     collection do

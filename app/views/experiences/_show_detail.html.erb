@@ -2,11 +2,11 @@
   <div class="box-header with-border">
     <h3 class="box-title">Employee Experience Details</h3>
     <div class="box-tools pull-right">
-      <%= link_to "Add Experience", ajax_new_experience_employees_path(id: @employee.id), class: 'btn btn-primary',remote:true %>
+      <%= link_to "Add Experience", ajax_new_experience_employees_path(id: @employee.id), class: 'btn btn-sm btn-primary',remote:true %>
     </div>
   </div><!-- /.box-header -->
   <div class="box-body">
-    <table id="example2" class="table table-bordered table-hover">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
      <tr>
       <th>Company Name</th>
       <th>Designation</th>
@@ -21,8 +21,8 @@
         <td><%= experience.no_of_year %></td>
         <td><%= experience.ctc %></td>
         <td>
-          <%= link_to '', edit_experience_path(experience),class: 'btn btn-success fa fa-edit',remote:true %>
-          <%= link_to '', experience, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger fa fa-close' %>
+          <%= link_to '', edit_experience_path(experience),class: 'btn btn-sm btn-success fa fa-edit',remote:true %>
+          <%= link_to '', experience, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-sm btn-danger fa fa-close' %>
         </td>
       </tr>
       <%end%>

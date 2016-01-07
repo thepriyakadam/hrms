@@ -6,7 +6,7 @@
     </div>
   </div><!-- /.box-header -->
   <div class="box-body">
-   <table id="example2" class="table table-bordered table-hover">
+   <table id="example2" class="table table-bordered table-hover table-condensed">
 <tr>
   <th><strong>Employee</strong></th>
   <td><%= @family.employee.try(:first_name) %></td>
@@ -94,7 +94,7 @@
   
 </table>
 
-<%= link_to 'Back',ajax_family_detail_employees_path(id: @employee.id),class: 'btn btn-default fa fa-arrow-left',remote:true%>
+<%= link_to 'Back',ajax_family_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-default fa fa-arrow-left',remote:true%>
 </div>
   </div><!-- /.box -->
 </div>

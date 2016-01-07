@@ -1,0 +1,5 @@
+<% if @flag == true %>
+$("#monthly_day").html(" <p> Employee not found </p> ")
+<%else%>
+$("#monthly_day").html("<%= j render 'ajax_textbox_for_employee_monthly_days'%>")
+<%end%>

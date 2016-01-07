@@ -1,24 +1,30 @@
-<p id="notice"><%= notice %></p>
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Attendance</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table class="table table-bordered table-hover">
 
-<p>
-  <strong>Employee:</strong>
-  <%= @employee_monthly_day.employee %>
-</p>
+     <tr>
+      
 
-<p>
-  <strong>Month:</strong>
-  <%= @employee_monthly_day.month %>
-</p>
+      <th> <strong>Employee Name</strong></th>
+      <td><%= @employee_monthly_day.employee.try(:first_name)+' '+@employee_monthly_day.employee.try(:middle_name)+' '+@employee_monthly_day.employee.try(:last_name) %></td>
+     
+      <th> <strong>Month:</strong></th>
+      <td><%= @employee_monthly_day.month %></td>
+     </tr>
 
-<p>
-  <strong>Year:</strong>
-  <%= @employee_monthly_day.year %>
-</p>
+     <tr>
+      <th><strong>Year:</strong></th>
+      <td><%= @employee_monthly_day.year %></td>
 
-<p>
-  <strong>Overtime:</strong>
-  <%= @employee_monthly_day.overtime %>
-</p>
+      <th><strong>Overtime:</strong></th>
+      <td><%= @employee_monthly_day.overtime %>></td>
+     </tr>
+    </table>
 
-<%= link_to 'Edit', edit_employee_monthly_day_path(@employee_monthly_day) %> |
-<%= link_to 'Back', employee_monthly_days_path %>
+    <%= link_to 'Edit', edit_employee_monthly_day_path(@employee_monthly_day),class: 'btn btn-success fa fa-edit' %> 
+    <%= link_to 'Back', employee_monthly_days_path,class: 'btn btn-default fa fa-arrow-left' %>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->

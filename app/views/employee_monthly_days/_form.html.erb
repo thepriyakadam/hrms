@@ -1,33 +1,16 @@
-<%= form_for(@employee_monthly_day) do |f| %>
-  <% if @employee_monthly_day.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@employee_monthly_day.errors.count, "error") %> prohibited this employee_monthly_day from being saved:</h2>
-
-      <ul>
-      <% @employee_monthly_day.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+<!-- SELECT2 EXAMPLE -->
+<div class="box box-default">
+<div class="box-body">
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="field">
+         <%= text_field :employee_id,:hhhh,{oninput:"var a={employee_id:$(this).val()}; $.get('/employee_monthly_days/find_employee_for_employee_monthly_day',a,function(response){});",class: 'form-control',placeholder:'Search by Employee id'} %>
+        </div>
+      </div>
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :employee_id %><br>
-    <%= f.text_field :employee_id %>
-  </div>
-  <div class="field">
-    <%= f.label :month %><br>
-    <%= f.text_field :month %>
-  </div>
-  <div class="field">
-    <%= f.label :year_id %><br>
-    <%= f.text_field :year_id %>
-  </div>
-  <div class="field">
-    <%= f.label :overtime %><br>
-    <%= f.text_field :overtime %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+    <div id="monthly_day">
+      
+    </div>
+  <!-- <button id="btnAdd">Add</button> -->
+</div><!-- /.box-body -->
+</div><!-- /.box -->

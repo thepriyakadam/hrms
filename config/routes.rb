@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
 
-  resources :employee_monthly_days
+  resources :employee_monthly_days do
+    collection do
+      get :find_employee_for_employee_monthly_day
+    end
+  end
   resources :holidays
   resources :employee_salary_templates do
     collection do

@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
 
+  resources :employee_monthly_days do
+    collection do
+      get :find_employee_for_employee_monthly_day
+    end
+  end
   resources :holidays
   resources :employee_salary_templates do
     collection do
@@ -129,7 +134,7 @@ Rails.application.routes.draw do
   devise_for :groups, :controllers => {registrations: 'groups/registrations',sessions: 'groups/sessions',passwords: 'groups/passwords'}
 
   devise_scope :group do
-    get "/group" => "groups/registrations#new"
+    get "/group" => "groups/sessions#new"
   end
 
   devise_scope :member do

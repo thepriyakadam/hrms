@@ -2,7 +2,8 @@
   <div class="box-header">
     <h3 class="box-title">Attendance List</h3>
     <div class="pull-right">
-      <%= link_to "New Attendance", new_attendance_path, class: 'btn btn-primary btn-sm' %> 
+
+      <%= link_to "New Attendance", new_attendance_path, class: 'btn btn-sm btn-primary' %> 
     </div>
     
   </div><!-- /.box-header -->
@@ -26,7 +27,7 @@
     <% @attendances.each do |attendance| %>
       <tr>
         <td><%= attendance.employee_shift.company_shift.try(:name) %></td>
-        <td><%= attendance.employee.try(:first_name) %></td>
+        <td><%= attendance.employee.try(:first_name)+' '+attendance.employee.try(:middle_name)+' '+attendance.employee.try(:last_name) %></td>
         <td><%= attendance.attendance_date %></td>
         <td><%= attendance.check_in %></td>
         <td><%= attendance.check_out %></td>

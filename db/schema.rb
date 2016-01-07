@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160105091422) do
+ActiveRecord::Schema.define(version: 20160106132935) do
 
   create_table "annual_salary_masters", force: :cascade do |t|
     t.integer  "employee_id"
@@ -150,8 +150,8 @@ ActiveRecord::Schema.define(version: 20160105091422) do
     t.string   "code"
     t.string   "name"
     t.string   "description"
-    t.time     "in_time"
-    t.time     "out_time"
+    t.datetime "in_time"
+    t.datetime "out_time"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
@@ -326,6 +326,18 @@ ActiveRecord::Schema.define(version: 20160105091422) do
 
   add_index "employee_leav_requests", ["employee_id"], name: "index_employee_leav_requests_on_employee_id"
   add_index "employee_leav_requests", ["leav_category_id"], name: "index_employee_leav_requests_on_leav_category_id"
+
+  create_table "employee_monthly_days", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.string   "month"
+    t.integer  "year_id"
+    t.decimal  "overtime",    precision: 4, scale: 1
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+  end
+
+  add_index "employee_monthly_days", ["employee_id"], name: "index_employee_monthly_days_on_employee_id"
+  add_index "employee_monthly_days", ["year_id"], name: "index_employee_monthly_days_on_year_id"
 
   create_table "employee_physicals", force: :cascade do |t|
     t.integer  "employee_id"
@@ -542,8 +554,10 @@ ActiveRecord::Schema.define(version: 20160105091422) do
     t.datetime "approved_date"
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
+    t.integer  "employee_id"
   end
 
+  add_index "leav_approveds", ["employee_id"], name: "index_leav_approveds_on_employee_id"
   add_index "leav_approveds", ["employee_leav_request_id"], name: "index_leav_approveds_on_employee_leav_request_id"
 
   create_table "leav_cancelleds", force: :cascade do |t|
@@ -551,8 +565,10 @@ ActiveRecord::Schema.define(version: 20160105091422) do
     t.datetime "cancelled_date"
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
+    t.integer  "employee_id"
   end
 
+  add_index "leav_cancelleds", ["employee_id"], name: "index_leav_cancelleds_on_employee_id"
   add_index "leav_cancelleds", ["employee_leav_request_id"], name: "index_leav_cancelleds_on_employee_leav_request_id"
 
   create_table "leav_categories", force: :cascade do |t|
@@ -568,8 +584,10 @@ ActiveRecord::Schema.define(version: 20160105091422) do
     t.datetime "rejected_date"
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
+    t.integer  "employee_id"
   end
 
+  add_index "leav_rejecteds", ["employee_id"], name: "index_leav_rejecteds_on_employee_id"
   add_index "leav_rejecteds", ["employee_leav_request_id"], name: "index_leav_rejecteds_on_employee_leav_request_id"
 
   create_table "members", force: :cascade do |t|

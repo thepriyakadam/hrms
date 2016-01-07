@@ -4,7 +4,7 @@
     <div class="row">
       <div class="col-sm-3">
         <div class="field">
-         <%= text_field :employee_code,:hhh,{oninput:"var a={employee_code:$(this).val()}; $.get('/attendances/find_employee_for_attendance',a,function(response){});",class: 'form-control',placeholder:'Search by Employee id'} %>
+         <%= text_field :employee_code,:employee,{oninput:"var a={employee_code:$(this).val()}; $.get('/attendances/find_employee_for_attendance',a,function(response){});",class: 'form-control',placeholder:'Search by Employee id'} %>
         </div>
       </div>
     </div>

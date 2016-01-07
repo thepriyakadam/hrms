@@ -61,6 +61,18 @@ class EmployeeMonthlyDaysController < ApplicationController
     end
   end
 
+   def find_employee_for_employee_monthly_day
+    @employee = Employee.find_by_manual_employee_code(params[:employee_id]) 
+    respond_to do |format|
+      if @employee.nil?
+        format.js { @flag = true }
+      else
+        @employee_monthly_day = EmployeeMonthlyDay.new
+        format.js { @flag = false }
+      end
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_employee_monthly_day
@@ -69,6 +81,6 @@ class EmployeeMonthlyDaysController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def employee_monthly_day_params
-      params.require(:employee_monthly_day).permit(:employee_id, :month, :year_id, :overtime)
+      params.require(:employee_monthly_day).permit(:employee_id, :month, :year_id, :no_of_working_day, :overtime)
     end
 end

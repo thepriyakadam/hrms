@@ -2,12 +2,12 @@
   <div class="box-header">
     <h3 class="box-title">Awards List</h3>
     <div class="pull-right">
-      <%= link_to "New Award", new_award_path, class: 'btn btn-primary' %> 
+      <%= link_to "New Award", new_award_path, class: 'btn btn-primary btn-sm' %> 
     </div>
     
   </div><!-- /.box-header -->
   <div class="box-body">
-    <table id="example2" class="table table-bordered table-hover">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
     <thead>
       <tr>
       <th>Employee</th>
@@ -26,9 +26,9 @@
         <td><%= award.year_id %></td>
         <td><%= award.award_from %></td>
          <td>
-            <%= link_to '', award,class: 'btn btn-default fa fa-eye' %>
-            <%= link_to '', edit_award_path(award),class: 'btn btn-success fa fa-edit' %>
-            <%= link_to '', award, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger fa fa-close' %>
+            <%= link_to '', award,class: 'btn btn-default fa fa-eye btn-sm' %>
+            <%= link_to '', edit_award_path(award),class: 'btn btn-success fa fa-edit btn-sm' %>
+            <%= link_to '', award, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger fa fa-close btn-sm' %>
           </td>
         </tr>
       <% end %>

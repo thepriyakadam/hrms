@@ -2,11 +2,11 @@
   <div class="box-header with-border">
     <h3 class="box-title">Employee Basic Details</h3>
     <div class="box-tools pull-right">
-      <%= link_to 'Edit', edit_employee_path(@employee),class: 'btn btn-success fa fa-edit', remote:true %>
+      <%= link_to 'Edit', edit_employee_path(@employee),class: 'btn btn-sm btn-success fa fa-edit', remote:true %>
     </div>
   </div><!-- /.box-header -->
   <div class="box-body">
-    <table class="table table-bordered table-hover">
+    <table class="table table-bordered table-hover table-condensed">
       <tr>
         <th><strong>Employee Code</strong></th>
         <td><%= @employee.manual_employee_code %></td>

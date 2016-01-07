@@ -81,6 +81,6 @@ class EmployeeMonthlyDaysController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def employee_monthly_day_params
-      params.require(:employee_monthly_day).permit(:employee_id, :month, :year_id, :overtime)
+      params.require(:employee_monthly_day).permit(:employee_id, :month, :year_id, :no_of_working_day, :overtime)
     end
 end

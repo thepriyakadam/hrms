@@ -1,0 +1,6 @@
+<%if @flag == true %>
+$("#form").html("<%= j render 'form' %>");
+$("#shift_rotation_li").html("<%= j render 'shift_rotation_list' %>");
+<%else%>
+  $("#form").html("<%= j render 'form' %>");
+<%end%>

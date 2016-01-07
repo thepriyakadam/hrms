@@ -1,20 +1,9 @@
 class ShiftRotationsController < ApplicationController
   before_action :set_shift_rotation, only: [:show, :edit, :update, :destroy]
-
-  # GET /shift_rotations
-  # GET /shift_rotations.json
-  def index
-    @shift_rotations = ShiftRotation.all
-  end
-
-  # GET /shift_rotations/1
-  # GET /shift_rotations/1.json
-  def show
-  end
-
   # GET /shift_rotations/new
   def new
     @shift_rotation = ShiftRotation.new
+    @shift_rotations = ShiftRotation.all
   end
 
   # GET /shift_rotations/1/edit
@@ -25,14 +14,14 @@ class ShiftRotationsController < ApplicationController
   # POST /shift_rotations.json
   def create
     @shift_rotation = ShiftRotation.new(shift_rotation_params)
-
+    @shift_rotations = ShiftRotation.all
     respond_to do |format|
       if @shift_rotation.save
-        format.html { redirect_to @shift_rotation, notice: 'Shift rotation was successfully created.' }
-        format.json { render :show, status: :created, location: @shift_rotation }
+         @shift_rotations = ShiftRotation.all
+        format.js { @flag = true }
       else
-        format.html { render :new }
-        format.json { render json: @shift_rotation.errors, status: :unprocessable_entity }
+        flash.now[:alert] = "ShiftRotation Already Exist."
+         format.js { @flag = false }
       end
     end
   end
@@ -40,25 +29,16 @@ class ShiftRotationsController < ApplicationController
   # PATCH/PUT /shift_rotations/1
   # PATCH/PUT /shift_rotations/1.json
   def update
-    respond_to do |format|
-      if @shift_rotation.update(shift_rotation_params)
-        format.html { redirect_to @shift_rotation, notice: 'Shift rotation was successfully updated.' }
-        format.json { render :show, status: :ok, location: @shift_rotation }
-      else
-        format.html { render :edit }
-        format.json { render json: @shift_rotation.errors, status: :unprocessable_entity }
-      end
-    end
+    @shift_rotation.update(shift_rotation_params)
+    @shift_rotations = ShiftRotation.all  
+    @shift_rotation = ShiftRotation.new
   end
 
   # DELETE /shift_rotations/1
   # DELETE /shift_rotations/1.json
   def destroy
     @shift_rotation.destroy
-    respond_to do |format|
-      format.html { redirect_to shift_rotations_url, notice: 'Shift rotation was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    @shift_rotations = ShiftRotation.all
   end
 
   private

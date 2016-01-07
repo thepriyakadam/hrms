@@ -7,7 +7,7 @@
       <div class="row">
         <div class="col-sm-3">
           <div class="form-group required">
-            <%= f.select :company_shift_id, all_company_shifts,{include_blank: " Select Company Shift"} %>
+            <%= f.select :employee_id, all_company_shifts,{include_blank: " Select Shift Rotation"} %>
           </div>
         </div>
         <div class="col-sm-3">
@@ -36,12 +36,11 @@
       <div class="row">
         <div class="col-sm-12">
           <div class="form-group required">
-           <div id="employee_list"> 
-            <%= render 'employee_list_for_assign_shift' %>
-           </div>
+            <%= select_tag :employee_shift,[['a'],['b'],{},{include_blank: " Select Shift Rotation"} %>
           </div>
-        </div>
+        </div>        
       </div>
+      
       <div class="row">
         <div class="col-sm-5">
           <div class="actions">
@@ -52,7 +51,6 @@
     <% end %>
   </div><!-- /.box-body -->
 </div><!-- /.box -->
-
 
 <script type="text/javascript">
   $(function(){
@@ -68,5 +66,4 @@
     yearRange: '-1:+10',
     dateFormat: 'dd-mm-yy' });
   }); 
-</script>
- 
+</script> 

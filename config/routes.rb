@@ -49,8 +49,9 @@ Rails.application.routes.draw do
     collection do
       get :employee_of_shift
       get :shift_date
-      get :shift_employee
+      get :shift_rotation
       get :find_employee_for_assign_shift_rotation
+      get :employee_shift_list
     end
   end
   resources :company_shifts

@@ -75,8 +75,13 @@ class EmployeeShiftsController < ApplicationController
     @employee_shifts = EmployeeShift.where(company_shift_id: params[:format])
   end
 
-  def shift_employee
-    @attendances = Attendance.where(employee_shift_id: params[:format])
+  def shift_rotation
+    @shift_rotations = ShiftRotation.where(company_shift_id: params[:format])
+  end
+
+  def employee_shift_list
+    @shift_rotation = ShiftRotation.find(params[:format])
+    @employee_shifts = @shift_rotation.employee_shifts
   end
 
   private

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160106132935) do
+ActiveRecord::Schema.define(version: 20160107041930) do
 
   create_table "annual_salary_masters", force: :cascade do |t|
     t.integer  "employee_id"
@@ -331,9 +331,10 @@ ActiveRecord::Schema.define(version: 20160106132935) do
     t.integer  "employee_id"
     t.string   "month"
     t.integer  "year_id"
-    t.decimal  "overtime",    precision: 4, scale: 1
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
+    t.decimal  "overtime",          precision: 4, scale: 1
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
+    t.string   "no_of_working_day"
   end
 
   add_index "employee_monthly_days", ["employee_id"], name: "index_employee_monthly_days_on_employee_id"

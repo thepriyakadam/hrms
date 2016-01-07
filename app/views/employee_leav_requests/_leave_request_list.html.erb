@@ -1,4 +1,4 @@
-<table id="example2" class="table table-bordered table-hover">
+<table id="example2" class="table table-bordered table-hover table-condensed'">
     <thead>
       <tr>
       <th>Employee ID</th>
@@ -19,8 +19,8 @@
         <td><%= employee_leav_request.start_date %></td>
         <td><%= employee_leav_request.end_date %></td>
          <td>
-            <%= link_to '', employee_leav_request,class: 'btn btn-default fa fa-eye' %>
-            <%= link_to '', leav_cancelleds_path(employee_leav_request), method: :post, data: { confirm: 'Are you sure?' },class: 'btn btn-danger fa fa-trash' %>
+            <%= link_to '', employee_leav_request,class: 'btn btn-default btn-sm fa fa-eye' %>
+            <%= link_to '', leav_cancelleds_path(employee_leav_request), method: :post, data: { confirm: 'Are you sure?' },class: 'btn btn-sm btn-danger fa fa-trash' %>
           </td>
         </tr>
       <% end %>

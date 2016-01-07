@@ -77,16 +77,8 @@ class AttendancesController < ApplicationController
     end
   end
 
-  def calculate_time
-    start_time = params[:in_time].to_time
-    end_time = params[:out_time].to_time
-
-    seconds_diff = (start_time - end_time).to_i.abs
-
-    @hours = seconds_diff / 3600
-    seconds_diff -= @hours * 3600
-
-    @minutes = seconds_diff / 60
+  def attendance_details
+    @company_shifts = CompanyShift.all
   end
 
   private

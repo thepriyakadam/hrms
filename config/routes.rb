@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :shift_rotations
+  resources :employee_monthly_days
   resources :employee_monthly_days do
     collection do
       get :find_employee_for_employee_monthly_day
@@ -40,12 +42,15 @@ Rails.application.routes.draw do
   resources :attendances do
     collection do
       get :find_employee_for_attendance
-      get :calculate_time
+      get :attendance_details
     end
   end
   resources :employee_shifts do
     collection do
       get :employee_of_shift
+      get :shift_date
+      get :shift_employee
+      get :find_employee_for_assign_shift_rotation
     end
   end
   resources :company_shifts

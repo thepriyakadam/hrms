@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160107041930) do
+ActiveRecord::Schema.define(version: 20160107054936) do
 
   create_table "annual_salary_masters", force: :cascade do |t|
     t.integer  "employee_id"
@@ -376,16 +376,22 @@ ActiveRecord::Schema.define(version: 20160107041930) do
   add_index "employee_salary_templates", ["salary_template_id"], name: "index_employee_salary_templates_on_salary_template_id"
 
   create_table "employee_shifts", force: :cascade do |t|
-    t.integer  "company_shift_id"
     t.integer  "employee_id"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-    t.date     "from_date"
-    t.date     "to_date"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
-  add_index "employee_shifts", ["company_shift_id"], name: "index_employee_shifts_on_company_shift_id"
   add_index "employee_shifts", ["employee_id"], name: "index_employee_shifts_on_employee_id"
+
+  create_table "employee_shifts_shift_rotations", force: :cascade do |t|
+    t.integer  "shift_rotation_id"
+    t.integer  "employee_shift_id"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
+  add_index "employee_shifts_shift_rotations", ["employee_shift_id"], name: "index_employee_shifts_shift_rotations_on_employee_shift_id"
+  add_index "employee_shifts_shift_rotations", ["shift_rotation_id"], name: "index_employee_shifts_shift_rotations_on_shift_rotation_id"
 
   create_table "employee_types", force: :cascade do |t|
     t.string   "code"
@@ -674,6 +680,7 @@ ActiveRecord::Schema.define(version: 20160107041930) do
 
   create_table "salary_component_templates", force: :cascade do |t|
     t.string   "manual_template_code"
+    t.string   "auto_template_code"
     t.integer  "salary_template_id"
     t.integer  "salary_component_id"
     t.boolean  "is_deducted"
@@ -713,6 +720,16 @@ ActiveRecord::Schema.define(version: 20160107041930) do
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
   end
+
+  create_table "shift_rotations", force: :cascade do |t|
+    t.integer  "company_shift_id"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "shift_rotations", ["company_shift_id"], name: "index_shift_rotations_on_company_shift_id"
 
   create_table "skillsets", force: :cascade do |t|
     t.integer  "employee_id"

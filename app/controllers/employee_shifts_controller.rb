@@ -75,6 +75,14 @@ class EmployeeShiftsController < ApplicationController
     @employee_shifts = @company_shift.employee_shifts
   end
 
+  def shift_date
+    @employee_shifts = EmployeeShift.where(company_shift_id: params[:format])
+  end
+
+  def shift_employee
+    @attendances = Attendance.where(employee_shift_id: params[:format])
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_employee_shift

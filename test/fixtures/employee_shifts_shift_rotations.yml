@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  shift_rotation_id: 
+  employee_shift_id: 
+
+two:
+  shift_rotation_id: 
+  employee_shift_id: 

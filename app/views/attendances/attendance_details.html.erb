@@ -1,0 +1,32 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Company Shift</h3>
+  </div><!-- /.box-header -->
+	<div class="box-body">
+		<table id="example2" class="table table-bordered table-hover">
+		  <thead>
+		    <tr>  
+		      <th>Name</th>
+		      <th>Start Time</th>
+		      <th>End Time</th>
+		      <th>Time Diff</th>
+		      <th>Action</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		    <% @company_shifts.each do |company_shift| %>
+		      <tr>
+		        <td><%= company_shift.name %></td>
+		        <td><%= company_shift.in_time %></td>
+		        <td><%= company_shift.out_time %></td>
+		        <td><%= time_diff(company_shift.in_time,company_shift.out_time) %></td>
+		        <td>
+		          <%= link_to '', shift_date_employee_shifts_path(company_shift),class: 'btn btn-default btn-sm fa fa-eye' %>
+		        </td>
+		      </tr>
+		    <% end %>
+		  </tbody>
+		</table>
+	</div><!-- /.box-body -->
+</div><!-- /.box -->
+

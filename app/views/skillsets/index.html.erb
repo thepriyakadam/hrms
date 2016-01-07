@@ -2,12 +2,12 @@
   <div class="box-header">
     <h3 class="box-title">Skills List</h3>
     <div class="pull-right">
-      <%= link_to "New Skillset", new_skillset_path, class: 'btn btn-primary' %> 
+      <%= link_to "New Skillset", new_skillset_path, class: 'btn btn-sm btn-primary' %> 
     </div>
     
   </div><!-- /.box-header -->
   <div class="box-body">
-    <table id="example2" class="table table-bordered table-hover">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
     <thead>
       <tr>
     <tr>
@@ -25,9 +25,9 @@
         <td><%= skillset.name %></td>
         <td><%= skillset.skill_level %></td>
         <td>
-         <%= link_to '', skillset,class: 'btn btn-default fa fa-eye' %>
-         <%= link_to '', edit_skillset_path(skillset),class: 'btn btn-success fa fa-edit' %>
-         <%= link_to '', skillset, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger fa fa-close' %>
+         <%= link_to '', skillset,class: 'btn btn-sm btn-default fa fa-eye' %>
+         <%= link_to '', edit_skillset_path(skillset),class: 'btn btn-sm btn-success fa fa-edit' %>
+         <%= link_to '', skillset, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-sm btn-danger fa fa-close' %>
         </td>
       </tr>
       <% end %>

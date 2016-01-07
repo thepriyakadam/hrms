@@ -1,4 +1,4 @@
-<table id="example2" class="table table-bordered table-hover">
+<table id="example2" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>  
       <th>Name</th>
@@ -10,8 +10,8 @@
       <tr>
         <td><%= role.name %></td>
         <td>
-          <%= link_to '', edit_role_path(role),class: 'btn btn-success fa fa-edit',remote:true %>
-          <%= link_to '',  role, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger fa fa-close' %>
+          <%= link_to '', edit_role_path(role),class: 'btn btn-success btn-sm fa fa-edit',remote:true %>
+          <%= link_to '',  role, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-sm fa fa-close' %>
         </td>
       </tr>
     <% end %>

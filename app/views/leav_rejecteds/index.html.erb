@@ -7,7 +7,7 @@
     
   </div><!-- /.box-header -->
   <div class="box-body">
-    <table id="example2" class="table table-bordered table-hover">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
     <thead>
       <tr>
       <th>Employee leav request</th>
@@ -22,9 +22,9 @@
         <td><%= leav_rejected.employee_leav_request %></td>
         <td><%= leav_rejected.rejected_date %></td>
           <td>
-            <%= link_to '', leav_rejected,class: 'btn btn-default fa fa-eye' %>
-            <%= link_to '', edit_leav_rejected_path(leav_rejected),class: 'btn btn-success fa fa-edit' %>
-            <%= link_to '', leav_rejected, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger fa fa-close' %>
+            <%= link_to '', leav_rejected,class: 'btn btn-default btn-sm fa fa-eye' %>
+            <%= link_to '', edit_leav_rejected_path(leav_rejected),class: 'btn btn-success btn-sm  fa fa-edit' %>
+            <%= link_to '', leav_rejected, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-sm fa fa-close' %>
           </td>
         </tr>
       <% end %>

@@ -31,11 +31,11 @@
     <% unless params['controller'] == 'awards' and params['action'] == 'edit' %>
       <div class="row">
         <div class="col-sm-2">
-          <input type="button" id="btnAdd" value="+ Additional Awards" class="btn btn-success"> 
+          <input type="button" id="btnAdd" value="+ Additional Awards" class="btn btn-success btn-sm"> 
         </div>
 
         <div class="col-sm-3">
-          <input type="button" id="btnDel" value="Remove Above Awards" class="btn btn-danger">
+          <input type="button" id="btnDel" value="Remove Above Awards" class="btn btn-danger btn-sm">
         </div>
       </div><br>
     <%end%>
@@ -45,7 +45,7 @@
         <div class="actions">
           <%= f.submit :class => class_name, data: { disable_with: data_info } %>
           <% if params['controller'] == 'awards' and params['action'] == 'edit' %>
-            <%= link_to 'Back',ajax_award_detail_employees_path(id: @employee.id),class: 'btn btn-default',remote:true%>
+            <%= link_to 'Back',ajax_award_detail_employees_path(id: @employee.id),class: 'btn btn-default btn-sm',remote:true%>
           <%end%>
         </div>
       </div>

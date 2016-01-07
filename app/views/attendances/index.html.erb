@@ -2,6 +2,7 @@
   <div class="box-header">
     <h3 class="box-title">Attendance List</h3>
     <div class="pull-right">
+
       <%= link_to "New Attendance", new_attendance_path, class: 'btn btn-sm btn-primary' %> 
     </div>
     
@@ -34,9 +35,9 @@
         <td><%= attendance.over_time_hrs %></td>
         <td><%= attendance.total_hrs %></td>
          <td>
-            <%= link_to '', attendance,class: 'btn btn-default btn-sm fa fa-eye' %>
-            <%= link_to '', edit_attendance_path(attendance) ,class: 'btn btn-success btn-sm fa fa-edit' %>
-            <%= link_to '', attendance, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-sm fa fa-close' %>
+            <%= link_to '', attendance,class: 'btn btn-sm btn-default fa fa-eye' %>
+            <%= link_to '', edit_attendance_path(attendance) ,class: 'btn btn-sm btn-success fa fa-edit' %>
+            <%= link_to '', attendance, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-sm btn-danger fa fa-close' %>
           </td>
         </tr>
       <% end %>

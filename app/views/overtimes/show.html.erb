@@ -1,0 +1,54 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Employee:</strong>
+  <%= @overtime.employee %>
+</p>
+
+<p>
+  <strong>Ot date:</strong>
+  <%= @overtime.ot_date %>
+</p>
+
+<p>
+  <strong>Ot type:</strong>
+  <%= @overtime.ot_type %>
+</p>
+
+<p>
+  <strong>Ot total hrs:</strong>
+  <%= @overtime.ot_total_hrs %>
+</p>
+
+<p>
+  <strong>Total production:</strong>
+  <%= @overtime.total_production %>
+</p>
+
+<p>
+  <strong>Normal wages rate:</strong>
+  <%= @overtime.normal_wages_rate %>
+</p>
+
+<p>
+  <strong>Ot wages rate:</strong>
+  <%= @overtime.ot_wages_rate %>
+</p>
+
+<p>
+  <strong>Ot earning:</strong>
+  <%= @overtime.ot_earning %>
+</p>
+
+<p>
+  <strong>Paid on date:</strong>
+  <%= @overtime.paid_on_date %>
+</p>
+
+<p>
+  <strong>Remarks:</strong>
+  <%= @overtime.remarks %>
+</p>
+
+<%= link_to 'Edit', edit_overtime_path(@overtime) %> |
+<%= link_to 'Back', overtimes_path %>

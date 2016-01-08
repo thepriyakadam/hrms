@@ -37,6 +37,10 @@ class EmployeeSalaryTemplatesController < ApplicationController
     @employee_salary_templates = EmployeeSalaryTemplate.where("employee_id=?",params[:format])
   end
 
+  def show_employee_salary_slip
+    @employee_salary_templates = EmployeeSalaryTemplate.where("employee_id=?",params[:format])
+  end
+
 
   def create_employee_template
     arrays = params[:is_deducted].keys

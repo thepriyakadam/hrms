@@ -1,0 +1,57 @@
+<%= form_for(@overtime) do |f| %>
+  <% if @overtime.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@overtime.errors.count, "error") %> prohibited this overtime from being saved:</h2>
+
+      <ul>
+      <% @overtime.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :employee_id %><br>
+    <%= f.text_field :employee_id %>
+  </div>
+  <div class="field">
+    <%= f.label :ot_date %><br>
+    <%= f.date_select :ot_date %>
+  </div>
+  <div class="field">
+    <%= f.label :ot_type %><br>
+    <%= f.text_field :ot_type %>
+  </div>
+  <div class="field">
+    <%= f.label :ot_total_hrs %><br>
+    <%= f.text_field :ot_total_hrs %>
+  </div>
+  <div class="field">
+    <%= f.label :total_production %><br>
+    <%= f.text_field :total_production %>
+  </div>
+  <div class="field">
+    <%= f.label :normal_wages_rate %><br>
+    <%= f.text_field :normal_wages_rate %>
+  </div>
+  <div class="field">
+    <%= f.label :ot_wages_rate %><br>
+    <%= f.text_field :ot_wages_rate %>
+  </div>
+  <div class="field">
+    <%= f.label :ot_earning %><br>
+    <%= f.text_field :ot_earning %>
+  </div>
+  <div class="field">
+    <%= f.label :paid_on_date %><br>
+    <%= f.date_select :paid_on_date %>
+  </div>
+  <div class="field">
+    <%= f.label :remarks %><br>
+    <%= f.text_area :remarks %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

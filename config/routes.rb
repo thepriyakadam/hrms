@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :overtimes
   resources :shift_rotations
-  resources :employee_monthly_days
   resources :employee_monthly_days do
     collection do
       get :find_employee_for_employee_monthly_day
@@ -15,6 +15,7 @@ Rails.application.routes.draw do
       post :create_employee_template
       get :show_employee_list
       get :show_employee_salary_template
+      get :show_employee_salary_slip
       get :modal
     end
   end

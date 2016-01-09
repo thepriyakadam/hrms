@@ -1,7 +1,7 @@
 
 <div class="box">
   <div class="box-header">
-    <h3 class="box-title">Overtime List</h3>
+    <h3 class="box-title">Over Time List</h3>
     <div class="pull-right">
       <%= link_to "Create Overtime", new_overtime_path, class: 'btn btn-sm btn-primary' %> 
     </div>
@@ -13,15 +13,12 @@
     <thead>
       <tr>
       <th>Employee</th>
-      <th>Ot date</th>
-      <th>Ot type</th>
-      <th>Ot total hrs</th>
-      <th>Total production</th>
-      <th>Normal wages rate</th>
-      <th>Ot wages rate</th>
-      <th>Ot earning</th>
-      <th>Paid on date</th>
-      <th>Remarks</th>
+      <th>OT Date</th>
+      <th>OT Type</th>
+      <th>OT Total Hrs</th>
+      <th>OT Wages Rate</th>
+      <th>OT Earning</th>
+      <th>Paid on Date</th>
       <th>Action</th>
       </tr>
     </thead>
@@ -29,19 +26,16 @@
     <tbody>
        <% @overtimes.each do |overtime| %>
         <tr>
-          <td><%= overtime.employee %></td>
+        <td><%= overtime.employee %></td>
         <td><%= overtime.ot_date %></td>
         <td><%= overtime.ot_type %></td>
         <td><%= overtime.ot_total_hrs %></td>
-        <td><%= overtime.total_production %></td>
-        <td><%= overtime.normal_wages_rate %></td>
         <td><%= overtime.ot_wages_rate %></td>
         <td><%= overtime.ot_earning %></td>
         <td><%= overtime.paid_on_date %></td>
-        <td><%= overtime.remarks %></td>
-          <td>
-            <td><%= link_to '', overtime,class: 'btn btn-sm btn-default fa fa-eye' %></td>
-          </td>
+        <td>
+        <%= link_to '', overtime,class: 'btn btn-sm btn-default fa fa-eye' %>
+        </td>
         </tr>
       <% end %>
     </tbody>

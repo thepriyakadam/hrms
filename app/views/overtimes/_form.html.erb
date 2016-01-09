@@ -1,57 +1,87 @@
-<%= form_for(@overtime) do |f| %>
-  <% if @overtime.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@overtime.errors.count, "error") %> prohibited this overtime from being saved:</h2>
-
-      <ul>
-      <% @overtime.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+<!-- SELECT2 EXAMPLE -->
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Create Overtime</h3>
+  </div><!-- /.box-header --> 
+  <div class="box-body">
+    <%= bootstrap_form_for(@overtime,html: {id: 'company'}) do |f| %>
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="form-group required">
+           <%= f.text_field :employee_id %>
+           </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-3">
+        <label>Overtime Date </label>
+         <div class="form-group required">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+            <%= f.text_field :ot_date,hide_label: true,class: 'company_start_date'%>
+          </div>
+         </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="field">
+           <%= f.select :ot_type, ['Hours','Product'],{label: 'Overtime Type',include_blank: "Select Overtime Type"} %>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="field">
+             <%= f.text_field :ot_total_hrs %>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="field">
+           <%= f.text_field :total_production %>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="form-group required">
+           <%= f.text_field :normal_wages_rate %>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.text_field :ot_wages_rate %>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.text_field :ot_earning %>
+          </div>
+        </div>
+        <div class="col-sm-3">
+        <label>Paid On</label>
+         <div class="form-group required">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+            <%= f.text_field :paid_on_date,hide_label: true,class: 'company_start_date'%>
+          </div>
+         </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-9">
+          <div class="form-group required">
+           <%= f.text_area :remarks %>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="actions">
+            <%= f.submit :class => class_name, data: { disable_with: data_info } %>
+          </div>
+        </div>
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :employee_id %><br>
-    <%= f.text_field :employee_id %>
-  </div>
-  <div class="field">
-    <%= f.label :ot_date %><br>
-    <%= f.date_select :ot_date %>
-  </div>
-  <div class="field">
-    <%= f.label :ot_type %><br>
-    <%= f.text_field :ot_type %>
-  </div>
-  <div class="field">
-    <%= f.label :ot_total_hrs %><br>
-    <%= f.text_field :ot_total_hrs %>
-  </div>
-  <div class="field">
-    <%= f.label :total_production %><br>
-    <%= f.text_field :total_production %>
-  </div>
-  <div class="field">
-    <%= f.label :normal_wages_rate %><br>
-    <%= f.text_field :normal_wages_rate %>
-  </div>
-  <div class="field">
-    <%= f.label :ot_wages_rate %><br>
-    <%= f.text_field :ot_wages_rate %>
-  </div>
-  <div class="field">
-    <%= f.label :ot_earning %><br>
-    <%= f.text_field :ot_earning %>
-  </div>
-  <div class="field">
-    <%= f.label :paid_on_date %><br>
-    <%= f.date_select :paid_on_date %>
-  </div>
-  <div class="field">
-    <%= f.label :remarks %><br>
-    <%= f.text_area :remarks %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+    <% end %>
+  </div><!-- /.box-body -->  
+</div><!-- /.box -->

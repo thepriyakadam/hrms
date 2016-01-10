@@ -25,7 +25,7 @@ class LeavRejectedsController < ApplicationController
   # POST /leav_rejecteds.json
   def create
     @emp_leave_request = EmployeeLeavRequest.find(params[:format])
-    @emp_leave_request.create_leav_rejected(rejected_date: Date.today)
+    @emp_leave_request.create_leav_rejected(rejected_date: Date.today, employee_id: @emp_leave_request.employee_id)
     flash[:notice] = "Leave rejected successfully"
     redirect_to approved_or_rejected_leave_request_employee_leav_requests_path
 
@@ -73,6 +73,6 @@ class LeavRejectedsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def leav_rejected_params
-      params.require(:leav_rejected).permit(:employee_leav_request_id, :rejected_date)
+      params.require(:leav_rejected).permit(:employee_leav_request_id, :employee_id, :rejected_date)
     end
 end

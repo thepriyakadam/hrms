@@ -6,12 +6,12 @@
     </div>
   </div><!-- /.box-header -->
   <div class="box-body">
-    <table id="example2" class="table table-bordered table-hover">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
     <tr>
 
     <tr>
       <th><strong>Employee</strong></th>
-      <td><%= @joining_detail.employee.try(:first_name) %></td>
+      <td><%= @joining_detail.employee.try(:manual_employee_code) %></td>
 
       <th><strong>UAN No</strong></th>
       <td><%= @joining_detail.employee_uan_no %></td>

@@ -14,7 +14,7 @@
       <th>Max amount</th>
       <th>Monthly amount</th>
       <th>Annual amount</th>
-      <th colspan="2">Action</th>
+      <th>Action</th>
     </tr>
   </thead>
 
@@ -35,10 +35,7 @@
         <td><%= salary_component_template.try(:monthly_amount) %></td>
         <td><%= salary_component_template.try(:annual_amount) %></td>
         <td>  
-          <%= link_to '', edit_salary_component_template_path(salary_component_template),class: "btn btn-success btn-xs fa fa-edit", remote: true %>
-        </td>
-        <td>  
-          <%= link_to '', salary_component_template, method: :delete, data: { confirm: 'Are you sure?' },class: "btn btn-danger btn-xs fa fa-close" %>
+          <%= link_to '', edit_salary_component_template_path(salary_component_template),class: "btn btn-sm btn-success btn-xs fa fa-edit", remote: true %>
         </td>
       </tr>
     <% end %>

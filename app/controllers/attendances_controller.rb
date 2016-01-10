@@ -56,27 +56,27 @@ class AttendancesController < ApplicationController
   def destroy
     @attendance.destroy
     respond_to do |format|
-      format.html { redirect_to attendances_url, notice: 'Attendance was successfully destroyed.' }
+      format.html { redirect_to attendances_url, notice: 'Attendance was successfully destroyed.'}
       format.json { head :no_content }
     end
   end
 
   def find_employee_for_attendance
-    p "----------------------------------------------------"
-    @attendance = Attendance.new
     @employee = Employee.find_by_manual_employee_code(params[:employee_code]) 
-    @employee_shift = EmployeeShift.find_by_employee_id(@employee.id)
-    @company_shift = CompanyShift.find(@employee_shift.company_shift_id)
     respond_to do |format|
       if @employee.nil?
         format.js { @flag = true }
       else
+        @employee_shift = EmployeeShift.find_by_employee_id(@employee.id)
+        @company_shift = CompanyShift.where(employee_id = @employee.id)
+        @last_record = @company_shift.last
+        @last_record.shiftrotation.companyshift.name
+        @companyshift = CompanyShift
+        @attendance = Attendance.new
         format.js { @flag = false }
       end
     end
-    #@employee_shift = @employee.employee_shifts.first.company_shift.name
   end
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_attendance
@@ -87,4 +87,4 @@ class AttendancesController < ApplicationController
     def attendance_params
       params.require(:attendance).permit(:employee_shift_id, :employee_id, :attendance_date, :check_in, :check_out, :company_hrs, :over_time_hrs, :total_hrs)
     end
-end
+  end

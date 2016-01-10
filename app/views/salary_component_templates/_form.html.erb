@@ -44,18 +44,32 @@
 				<%= f.text_field :annual_amount %>
 			</div>
 		</div>
-		<%= f.button "Create Salary Template", class: "btn btn-primary", data: {disable_with: "<i class='fa fa-circle-o-notch fa-spin'></i> Wait..."} %>
+		<%= f.button "Create Salary Template", class: "btn btn-primary btn-sm", data: {disable_with: "<i class='fa fa-circle-o-notch fa-spin'></i> Wait..."} %>
 <% end %>
 
 <script type="text/javascript">
 	$(function(){
-
+		// $('#salary_component_template_monthly_amount').on('change', function() {
+  //     cal_annual_salary();
+  //   });
     $('#salary_component_template_is_taxable').on('change', function() {
       enabled_tax_textbox();
     });
     $('#salary_component_template_parent_salary_component_id').on('change', function() {
       enabled_percent_textbox();
     });
+
+    // function cal_annual_salary(){
+    // 	var monthly_amount = ($("#salary_component_template_monthly_amount").val());
+    	
+    // 	if(is_taxable == 'true'){
+    // 		$("#salary_component_template_tax").prop('disabled', false);
+    //   }
+    //   else if (is_taxable == 'false'){
+    //   	$("#salary_component_template_tax").val("");
+    //     $("#salary_component_template_tax").prop('disabled', true);
+    //   }
+    // }
 
     function enabled_tax_textbox(){
     	var is_taxable = ($("#salary_component_template_is_taxable").val());

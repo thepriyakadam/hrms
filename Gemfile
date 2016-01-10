@@ -43,7 +43,7 @@ group :development do
   gem 'web-console', '~> 2.0'
   # Rails console table print
   gem 'table_print'
-
+  gem 'wirble'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
 end
@@ -79,3 +79,7 @@ gem 'city-state'
 # DateTimePicker
 gem 'bootstrap3-datetimepicker-rails', '~> 4.0.0'
 gem 'jquery-ui-rails'
+
+#Time Differences
+gem 'time_difference'
+

@@ -2,7 +2,7 @@ class EmployeeAnnualSalariesController < ApplicationController
   def index
     @salary_components = SalaryComponent.all
   	# @deducted_salary_components = SalaryComponent.deducted
-   #  @addected_salary_components = SalaryComponent.addected
+    # @addected_salary_components = SalaryComponent.addected
   	# @employees = Employee.joins("left join employee_annual_salaries on employees.id = employee_annual_salaries.employee_id where employee_annual_salaries.employee_id is null")
     @employee_annual_salaries = EmployeeAnnualSalary.all
   end
@@ -50,5 +50,3 @@ class EmployeeAnnualSalariesController < ApplicationController
     params.require(:employee_annual_salary).permit(:employee_id,:salary_component_id,:percentage,:parent_salary_component_id,:is_deducted,:to_be_paid,:max_amount,:monthly_amount,:annual_amount,:is_taxable,:tax,:base)
   end
 end
-
-

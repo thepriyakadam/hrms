@@ -7,6 +7,7 @@ class Employee < ActiveRecord::Base
   belongs_to :country
   belongs_to :state
   belongs_to :district
+  belongs_to :religion
   has_many :awards
   has_many :certifications
   has_many :qualifications
@@ -16,6 +17,8 @@ class Employee < ActiveRecord::Base
   has_many :experiences
   has_many :skillsets
   has_many :employee_annual_salaries
+  has_many :employee_salary_templates
+  has_many :overtimes
   has_one :employee_shift
   has_one :member
   has_one :employee_bank_detail
@@ -27,8 +30,6 @@ class Employee < ActiveRecord::Base
 
   validates :manual_employee_code, :presence => true, uniqueness: { case_sensitive: false }
   validates :first_name, :presence => true
-  validates :last_name, :presence => true
-  validates :contact_no, :presence => true
   validate  :email_regex
   validates :permanent_address, :presence => true
   validates :country_id, :presence => true
@@ -54,6 +55,5 @@ class Employee < ActiveRecord::Base
     if pan_no.present? and not pan_no.match(/^([A-Z]{5})(\d{4})([A-Z]{1})$/)
       errors.add :pan_no,"Please specify Correct Pan Card Number"
     end
-   end
-
+  end
 end

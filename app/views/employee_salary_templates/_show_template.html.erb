@@ -1,3 +1,5 @@
+<% @@parents = [] %>
+<% @@children = [] %>
 <br>
 <div class="table-responsive">
   <% i = 0 %>
@@ -46,6 +48,13 @@
               <td><%= text_field :monthly_amount,template.salary_component_id, value: template.try(:monthly_amount),class: "form-control" %></td>
               <td><%= text_field :annual_amount,template.salary_component_id, value: template.try(:annual_amount),class: "form-control" %></td>
             </tr>
+            <%unless template.parent_salary_component_id.nil? %>
+            <% @@parents << template.parent_salary_component_id %>
+            <%end  %>
+
+            <%unless template.parent_salary_component_id.nil? %>
+            <% @@children << template.salary_component_id %>
+            <%end  %>
           <% end %>     
         </tbody>
       </table>
@@ -85,7 +94,20 @@
           enabled_tax_textbox();
       });
       function calculate_children_component(){
-        console.log("ravikiran");
+          var child = []
+          var parents = []
+          var parents = <%= @@parents %>
+          for (p = 0; p < parents.length; p++) {
+            var monthly_amount = parseFloat($('#monthly_amount_'+parents[p]).val()); 
+            var child = <%= @@children %>
+
+            for (i = 0; i < child.length; i++) {
+              var child_percentage = parseFloat($('#percentage_'+child[i]).val());
+              var ans = ((child_percentage * monthly_amount)/100).toFixed(2);
+              $('#monthly_amount_'+child[i]).val(ans);
+              $('#annual_amount_'+child[i]).val((ans*12).toFixed(2));
+            }
+          }
       }
       function calculate_annual_salary(){
         var monthly_amount = parseFloat($('#monthly_amount_<%= item.try(:salary_component_id) %>').val()); 

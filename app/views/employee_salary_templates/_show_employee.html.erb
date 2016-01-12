@@ -1,6 +1,14 @@
 <table class="table table-bordered table-hover">
+ 	<tr>
+ 		<td><strong>Employee Code</strong></td>
+ 		<td><strong>Employee Name</strong></td>
+ 		<td><strong>Employee Email</strong></td>
+ 		<td><strong>Employee Designation</strong></td>
+ 	</tr>
   <tr>
-    <td><%= @employee.first_name %></td>
-    <td><%= @employee.email %></td>
+  <td><%= @employee.manual_employee_code %></td>
+	<td><%= @employee.first_name+' '+@employee.last_name %></td>
+  <td><%= @employee.email %></td>
+  <td><%= @employee.joining_detail.try(:designation) %></td>
   </tr>
 </table>

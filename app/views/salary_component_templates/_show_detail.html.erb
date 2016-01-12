@@ -24,10 +24,10 @@
       <tr>
         <td><%= i=i+1 %></td>
         <td><%= salary_component_template.try(:salary_component).try(:name) %></td>
-        <td><%= salary_component_template.try(:is_deducted) %></td>
+        <td><%= salary_component_template.try(:is_deducted) ? "Yes" : "No" %></td>
         <td><%= salary_component_template.try(:parent_salary_component).try(:name) %></td>
         <td><%= salary_component_template.try(:percentage) %></td>
-        <td><%= salary_component_template.try(:is_taxable) %></td>
+        <td><%= salary_component_template.try(:is_taxable) ? "Yes" : "No" %></td>
         <td><%= salary_component_template.try(:tax) %></td>
         <td><%= salary_component_template.try(:base) %></td>
         <td><%= salary_component_template.try(:to_be_paid) %></td>

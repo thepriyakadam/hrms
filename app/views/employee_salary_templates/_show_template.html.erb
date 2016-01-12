@@ -25,20 +25,29 @@
         </thead>
       
         <tbody>
-          <% for i in 1..10 %>
+          <% i=0 %>
+          <% @employee_salary_templates.each do |template| %>
           <tr>
-            <td><%= i %></td>
-            <td>1</td>
-            <td>1</td>
-            <td>1</td>
-            <td>1</td>
-            <td>1</td>
-            <td>1</td>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
+            <td><%= i=i+1 %></td>
+            <td><%= select :salary_component_id, template.salary_component_id, all_salary_component, {:prompt => true, :selected => template.salary_component_id,},class: 'form-control',id: "A#{i}"%></td>
+              
+              <td><%= select :is_deducted, template.salary_component_id, [['Yes','true'],['No','false']], {:prompt => true, :selected => template.is_deducted, },class: 'form-control',id: "B#{i}"%></td>
+
+              <td><%= select :parent_salary_component_id, template.salary_component_id, all_salary_component, {:prompt => true, :selected => template.parent_salary_component_id },class: 'form-control',id: "C#{i}"%></td>
+
+              <td><%= text_field :percentage,template.salary_component_id, value: template.try(:percentage), class: "form-control",id: "D#{i}" %></td>
+
+              <td><%= select :is_taxable, template.salary_component_id, [['Yes','true'],['No','false']], {:prompt => true, :selected => template.is_taxable, },class: 'form-control',id: "E#{i}"%></td>
+
+              <td><%= text_field :tax,template.salary_component_id, value: template.try(:tax),class: "form-control",id: "F#{i}" %></td>
+
+              <td><%= select :base, template.salary_component_id, [['Annual'],['Monthly']], {:prompt => true, :selected => template.base, },class: 'form-control',id: "G#{i}"%></td>
+
+              <td><%= select :to_be_paid, template.salary_component_id, [['Annual'],['Monthly']], {:prompt => true, :selected => template.to_be_paid, },class: 'form-control',id: "H#{i}"%></td>
+
+              <td><%= text_field :max_amount,template.salary_component_id, value: template.try(:max_amount),class: "form-control",id: "I#{i}" %></td>
+              <td><%= text_field :monthly_amount,template.salary_component_id, value: template.try(:monthly_amount),{onchange:"var a={id:$(this).val(),employee_id : '#{@employee.id}'}; $.get('/employee_salary_templates/find_template',a,function(response){});",class: "form-control",id: "J#{i}"} %></td>
+              <td><%= text_field :annual_amount,template.salary_component_id, value: template.try(:annual_amount),class: "form-control",id: "K#{i}" %></td>
           </tr>
           <% end %>
         </tbody>

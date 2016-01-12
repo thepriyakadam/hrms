@@ -48,9 +48,12 @@
 
 <script type="text/javascript">
 	$(function(){
-		// $('#salary_component_template_monthly_amount').on('change', function() {
-  //     cal_annual_salary();
-  //   });
+		$('#salary_component_template_monthly_amount').on('input', function() {
+      cal_annual_salary();
+    });
+    $('#salary_component_template_annual_amount').on('input', function() {
+      cal_monthly_salary();
+    });
     $('#salary_component_template_is_taxable').on('change', function() {
       enabled_tax_textbox();
     });
@@ -58,17 +61,17 @@
       enabled_percent_textbox();
     });
 
-    // function cal_annual_salary(){
-    // 	var monthly_amount = ($("#salary_component_template_monthly_amount").val());
-    	
-    // 	if(is_taxable == 'true'){
-    // 		$("#salary_component_template_tax").prop('disabled', false);
-    //   }
-    //   else if (is_taxable == 'false'){
-    //   	$("#salary_component_template_tax").val("");
-    //     $("#salary_component_template_tax").prop('disabled', true);
-    //   }
-    // }
+    function cal_annual_salary(){
+    	var monthly_amount = ($("#salary_component_template_monthly_amount").val());
+    	var ans = (monthly_amount * 12).toFixed(2);
+      $("#salary_component_template_annual_amount").val(ans);
+    }
+
+    function cal_monthly_salary(){
+    	var annual_amount = ($("#salary_component_template_annual_amount").val());
+    	var ans = (annual_amount / 12).toFixed(2);
+      $("#salary_component_template_monthly_amount").val(ans);
+    }
 
     function enabled_tax_textbox(){
     	var is_taxable = ($("#salary_component_template_is_taxable").val());

@@ -69,9 +69,29 @@ class EmployeeSalaryTemplatesController < ApplicationController
 
   def find_employee_for_salary
     @employee = Employee.find_by_manual_employee_code(params[:employee_code])
-    @addable_salary_components = EmployeeSalaryTemplate.where("employee_id = ? and is_deducted = ?",@employee.id,false)
-    @deducted_salary_components = EmployeeSalaryTemplate.where("employee_id = ? and is_deducted = ?",@employee.id,true)
-    @working_day = Workingday.where("employee_id = ?", @employee.id).take
+    if @employee.nil?
+      @flag = false
+    else
+      @addable_salary_components = EmployeeSalaryTemplate.where("employee_id = ? and is_deducted = ?",@employee.id,false)
+      @deducted_salary_components = EmployeeSalaryTemplate.where("employee_id = ? and is_deducted = ?",@employee.id,true)
+      @working_day = Workingday.where("employee_id = ? and month_name = ? and year = ?", @employee.id, params["month"], params["year"]).take
+      @addable_total = @addable_salary_components.sum('monthly_amount').to_f
+      @absent_value = ((@addable_total / @working_day.day_in_month) * @working_day.absent_day).to_f
+      @deducted_total = (@deducted_salary_components.sum('monthly_amount') + @absent_value).to_f
+
+      @advance_salary = AdvanceSalary.find_by_employee_id(@employee.id)
+      @instalments = @advance_salary.instalments
+      @instalment_array = []
+      @instalments.each do |i|
+        p i
+        p "------------------------------"
+        if i.try(:instalment_date).try('strftime("%B")') == params["month"] and i.try(:instalment_date).try('strftime("%Y")') == params["year"]
+          @instalment_array << i
+        end
+      end
+      @flag = true
+    end
+    
   end
 
   def modal

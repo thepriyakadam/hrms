@@ -53,3 +53,34 @@
     <% end %>
   </div><!-- /.box-body -->
 </div><!-- /.box -->
+
+<script type="text/javascript">
+  $(function(){
+    $('#advance_salary_advance_amount').on('input', function() {
+      var advance_salary_advance_amount = parseFloat($('#advance_salary_advance_amount').val());
+      var advance_salary_no_of_instalment = parseFloat($('#advance_salary_no_of_instalment').val());
+      var ans="";
+      if (isNaN(advance_salary_advance_amount) || isNaN(advance_salary_no_of_instalment)) {
+        ans = ""
+      }
+      else{
+        ans = (advance_salary_advance_amount / advance_salary_no_of_instalment).toFixed(2);
+      }
+      $('#advance_salary_instalment_amount').val(ans);
+
+    });
+
+    $('#advance_salary_no_of_instalment').on('input', function() {
+      var advance_salary_no_of_instalment = parseFloat($('#advance_salary_no_of_instalment').val());
+      var advance_salary_advance_amount = parseFloat($('#advance_salary_advance_amount').val());
+      var ans="";
+      if (isNaN(advance_salary_advance_amount) || isNaN(advance_salary_no_of_instalment)) {
+        ans = ""
+      }
+      else{
+        ans = (advance_salary_advance_amount / advance_salary_no_of_instalment).toFixed(2);
+      }
+      $('#advance_salary_instalment_amount').val(ans);
+    });
+  });
+</script>

@@ -18,13 +18,12 @@
 				    <% @addable_salary_components.each do |salary_component| %>
 				      <tr>
 				        <td><%= salary_component.salary_component.name %></td>
-				        <td align="right"><%= amount = '%.2f'%(salary_component.monthly_amount.to_f) %></td>
-				        <% addable_total = addable_total + amount.to_f %>
+				        <td align="right"><%=salary_component.monthly_amount %></td>
 				      </tr>
 				    <% end %>
 				    <tr>
 			        <td>Total</td>
-			        <td align="right"><%= '%.2f'%addable_total %></td>
+			        <td align="right"><%= @addable_total %></td>
 			      </tr>
 				  </tbody>
 				</table>
@@ -43,13 +42,22 @@
 				    <% @deducted_salary_components.each do |salary_component| %>
 				      <tr>
 				        <td><%= salary_component.salary_component.name %></td>
-				        <td align="right"><%= amount = '%.2f'%(salary_component.monthly_amount.to_f) %></td>
-				        <% deducted_total = deducted_total + amount.to_f %>
+				        <td align="right"><%= salary_component.monthly_amount %></td>
 				      </tr>
 				    <% end %>
+				    <% @instalment_array.each do |ia| %>
+				    <tr>
+				    	<td>Installment</td>
+				    	<td align="right"><%= ia.advance_salary.instalment_amount %></td>
+				    </tr>
+					<% end %>
+				    <tr>
+				        <td>Absent</td>
+				        <td align="right"><%= '%.2f'%(@absent_value) %></td>
+				      </tr>
 				    <tr>
 			        <td>Total</td>
-			        <td align="right"><%= '%.2f'%deducted_total %></td>
+			        <td align="right"><%= '%.2f'%(@deducted_total) %></td>
 			      </tr>
 				  </tbody>
 				</table>
@@ -94,3 +102,4 @@
 		</div>
 	</div><!-- /.box-body -->
 </div><!-- /.box -->
+

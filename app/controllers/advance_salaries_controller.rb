@@ -25,16 +25,16 @@ class AdvanceSalariesController < ApplicationController
   # POST /advance_salaries.json
   def create
     @advance_salary = AdvanceSalary.new(advance_salary_params)
-
-    respond_to do |format|
-      if @advance_salary.save
-        format.html { redirect_to @advance_salary, notice: 'Advance salary was successfully created.' }
-        format.json { render :show, status: :created, location: @advance_salary }
-      else
-        format.html { render :new }
-        format.json { render json: @advance_salary.errors, status: :unprocessable_entity }
-      end
+    id = AdvanceSalary.create(employee_id: @advance_salary.employee_id, \
+                         advance_amount: @advance_salary.advance_amount, \
+                         no_of_instalment: @advance_salary.no_of_instalment, \
+                         instalment_amount: @advance_salary.instalment_amount, \
+                         advance_date:@advance_salary.advance_date ).id
+    current_record = AdvanceSalary.find(id)
+    for i in 1..current_record.no_of_instalment.to_i
+      current_record.instalments.create(instalment_amount: current_record.instalment_amount)
     end
+    redirect_to new_advance_salary_path
   end
 
   # PATCH/PUT /advance_salaries/1

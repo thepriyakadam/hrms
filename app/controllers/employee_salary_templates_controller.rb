@@ -64,9 +64,14 @@ class EmployeeSalaryTemplatesController < ApplicationController
   end
 
   def salary_template
-    @addable_salary_components = EmployeeSalaryTemplate.addable
-    @deducted_salary_components = EmployeeSalaryTemplate.deducted
-    @working_day = Workingday.first
+    
+  end
+
+  def find_employee_for_salary
+    @employee = Employee.find_by_manual_employee_code(params[:employee_code])
+    @addable_salary_components = EmployeeSalaryTemplate.where("employee_id = ? and is_deducted = ?",@employee.id,false)
+    @deducted_salary_components = EmployeeSalaryTemplate.where("employee_id = ? and is_deducted = ?",@employee.id,true)
+    @working_day = Workingday.where("employee_id = ?", @employee.id).take
   end
 
   def modal

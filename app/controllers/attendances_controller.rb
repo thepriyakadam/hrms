@@ -24,10 +24,14 @@ class AttendancesController < ApplicationController
   # POST /attendances
   # POST /attendances.json
   def create
+    @employee_shifts = params[:employee_shift_ids]
     @employees = params[:employee_ids]
-    @employees.each do |e|
+    @employee_and_employee_shift = Hash[@employees.zip(@employee_shifts)]
+
+    @employee_and_employee_shift.each do |k,v|
       @attendance = Attendance.new(attendance_params)  
-      @attendance.employee_id = e
+      @attendance.employee_id = k
+      @attendance.employee_shift_id = v
       @attendance.save
     end
   end

@@ -13,6 +13,7 @@
 	  <tbody>
 	    <% @employees.each do |employee| %>
 	      <tr>
+          <%= hidden_field_tag "employee_shift_ids[]", employee.id %>
 	        <td><%= check_box_tag "employee_ids[]",employee.employee.id%></td>
 	        <td><%= employee.employee.try(:manual_employee_code) %></td>
 	        <td><%= employee.employee.try(:first_name)+' '+employee.employee.try(:last_name) %></td>
@@ -58,7 +59,7 @@
 
     <div class="col-sm-2">
      <div class="field">
-      <%= f.text_field :attendance_date, class: "attendance_date" %>
+      <%= f.text_field :attendance_date, id: "attendance_date" %>
      </div>
     </div>
   </div>
@@ -93,7 +94,7 @@ $('#selectAll').click(function() {
   });
 
   $(function(){
-    $('.attendance_date').datepicker({
+    $('#attendance_date').datepicker({
     changeYear:true,
     changeMonth: true,
     yearRange: '-1:+10',

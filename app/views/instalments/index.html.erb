@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Instalments</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Advance salary</th>
+      <th>Instalment date</th>
+      <th>Instalment amount</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @instalments.each do |instalment| %>
+      <tr>
+        <td><%= instalment.advance_salary %></td>
+        <td><%= instalment.instalment_date %></td>
+        <td><%= instalment.instalment_amount %></td>
+        <td><%= link_to 'Show', instalment %></td>
+        <td><%= link_to 'Edit', edit_instalment_path(instalment) %></td>
+        <td><%= link_to 'Destroy', instalment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Instalment', new_instalment_path %>

@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Employee:</strong>
+  <%= @advance_salary.employee %>
+</p>
+
+<p>
+  <strong>Advance amount:</strong>
+  <%= @advance_salary.advance_amount %>
+</p>
+
+<p>
+  <strong>No of instalment:</strong>
+  <%= @advance_salary.no_of_instalment %>
+</p>
+
+<p>
+  <strong>Instalment amount:</strong>
+  <%= @advance_salary.instalment_amount %>
+</p>
+
+<p>
+  <strong>Advance date:</strong>
+  <%= @advance_salary.advance_date %>
+</p>
+
+<%= link_to 'Edit', edit_advance_salary_path(@advance_salary) %> |
+<%= link_to 'Back', advance_salaries_path %>

@@ -1,0 +1,29 @@
+<%= form_for(@instalment) do |f| %>
+  <% if @instalment.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@instalment.errors.count, "error") %> prohibited this instalment from being saved:</h2>
+
+      <ul>
+      <% @instalment.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :advance_salary_id %><br>
+    <%= f.text_field :advance_salary_id %>
+  </div>
+  <div class="field">
+    <%= f.label :instalment_date %><br>
+    <%= f.date_select :instalment_date %>
+  </div>
+  <div class="field">
+    <%= f.label :instalment_amount %><br>
+    <%= f.text_field :instalment_amount %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

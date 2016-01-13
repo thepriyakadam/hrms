@@ -11,7 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160113064755) do
+ActiveRecord::Schema.define(version: 20160113093434) do
+
+  create_table "advance_salaries", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.decimal  "advance_amount",    precision: 15, scale: 2
+    t.string   "no_of_instalment"
+    t.decimal  "instalment_amount", precision: 15, scale: 2
+    t.date     "advance_date"
+    t.datetime "created_at",                                 null: false
+    t.datetime "updated_at",                                 null: false
+  end
+
+  add_index "advance_salaries", ["employee_id"], name: "index_advance_salaries_on_employee_id"
 
   create_table "attendances", force: :cascade do |t|
     t.integer  "employee_shift_id"
@@ -518,6 +530,16 @@ ActiveRecord::Schema.define(version: 20160113064755) do
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
   end
+
+  create_table "instalments", force: :cascade do |t|
+    t.integer  "advance_salary_id"
+    t.date     "instalment_date"
+    t.decimal  "instalment_amount", precision: 15, scale: 2
+    t.datetime "created_at",                                 null: false
+    t.datetime "updated_at",                                 null: false
+  end
+
+  add_index "instalments", ["advance_salary_id"], name: "index_instalments_on_advance_salary_id"
 
   create_table "joining_details", force: :cascade do |t|
     t.integer  "employee_id"

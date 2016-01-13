@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Advance Salaries</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Employee</th>
+      <th>Advance amount</th>
+      <th>No of instalment</th>
+      <th>Instalment amount</th>
+      <th>Advance date</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @advance_salaries.each do |advance_salary| %>
+      <tr>
+        <td><%= advance_salary.employee %></td>
+        <td><%= advance_salary.advance_amount %></td>
+        <td><%= advance_salary.no_of_instalment %></td>
+        <td><%= advance_salary.instalment_amount %></td>
+        <td><%= advance_salary.advance_date %></td>
+        <td><%= link_to 'Show', advance_salary %></td>
+        <td><%= link_to 'Edit', edit_advance_salary_path(advance_salary) %></td>
+        <td><%= link_to 'Destroy', advance_salary, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Advance salary', new_advance_salary_path %>

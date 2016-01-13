@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :instalments
+  resources :advance_salaries
   resources :workingdays
   resources :overtimes
   resources :shift_rotations

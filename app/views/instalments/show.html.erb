@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Advance salary:</strong>
+  <%= @instalment.advance_salary %>
+</p>
+
+<p>
+  <strong>Instalment date:</strong>
+  <%= @instalment.instalment_date %>
+</p>
+
+<p>
+  <strong>Instalment amount:</strong>
+  <%= @instalment.instalment_amount %>
+</p>
+
+<%= link_to 'Edit', edit_instalment_path(@instalment) %> |
+<%= link_to 'Back', instalments_path %>

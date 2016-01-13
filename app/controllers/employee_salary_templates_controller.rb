@@ -63,6 +63,12 @@ class EmployeeSalaryTemplatesController < ApplicationController
     redirect_to show_employee_salary_template_employee_salary_templates_path
   end
 
+  def salary_template
+    @addable_salary_components = EmployeeSalaryTemplate.addable
+    @deducted_salary_components = EmployeeSalaryTemplate.deducted
+    @working_day = Workingday.first
+  end
+
   def modal
     
   end

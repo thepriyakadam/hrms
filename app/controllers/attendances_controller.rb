@@ -24,16 +24,15 @@ class AttendancesController < ApplicationController
   # POST /attendances
   # POST /attendances.json
   def create
-    @attendance = Attendance.new(attendance_params)
+    @employee_shifts = params[:employee_shift_ids]
+    @employees = params[:employee_ids]
+    @employee_and_employee_shift = Hash[@employees.zip(@employee_shifts)]
 
-    respond_to do |format|
-      if @attendance.save
-        format.html { redirect_to @attendance, notice: 'Attendance was successfully created.' }
-        format.json { render :show, status: :created, location: @attendance }
-      else
-        format.html { render :new }
-        format.json { render json: @attendance.errors, status: :unprocessable_entity }
-      end
+    @employee_and_employee_shift.each do |k,v|
+      @attendance = Attendance.new(attendance_params)  
+      @attendance.employee_id = k
+      @attendance.employee_shift_id = v
+      @attendance.save
     end
   end
 
@@ -61,24 +60,25 @@ class AttendancesController < ApplicationController
     end
   end
 
-  def find_employee_for_attendance
-    p params
-    @employee = Employee.find_by_manual_employee_code(params[:employee_code]) 
-    p @employee
-    respond_to do |format|
-      if @employee.nil?
-        format.js { @flag = true }
-      else
-        @employee_shift = EmployeeShift.find_by_employee_id(@employee.id)
-        @company_shift = CompanyShift.find(@employee_shift.company_shift_id)
-        @attendance = Attendance.new
-        format.js { @flag = false }
-      end
+  def collect_shift_date
+    if params[:id] == ""
+      @flag = false
+    else
+      @flag = true
+      @company_shift = CompanyShift.find(params[:id])
+      @shift_rotations = @company_shift.shift_rotations  
     end
   end
 
-  def attendance_details
-    @company_shifts = CompanyShift.all
+  def collect_employee
+    if params[:id] == ""
+      @flag = false
+    else
+      @flag = true
+      @shift_rotation = ShiftRotation.find(params[:id])
+      @employees = @shift_rotation.employee_shifts
+      @attendance = Attendance.new  
+    end
   end
 
   private
@@ -91,4 +91,4 @@ class AttendancesController < ApplicationController
     def attendance_params
       params.require(:attendance).permit(:employee_shift_id, :employee_id, :attendance_date, :check_in, :check_out, :company_hrs, :over_time_hrs, :total_hrs)
     end
-end
+  end

@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Workingdays</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Employee</th>
+      <th>Month name</th>
+      <th>Year</th>
+      <th>Day in month</th>
+      <th>Present day</th>
+      <th>Total leave</th>
+      <th>Holiday in month</th>
+      <th>Week off day</th>
+      <th>Absent day</th>
+      <th>Payable day</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @workingdays.each do |workingday| %>
+      <tr>
+        <td><%= workingday.employee %></td>
+        <td><%= workingday.month_name %></td>
+        <td><%= workingday.year %></td>
+        <td><%= workingday.day_in_month %></td>
+        <td><%= workingday.present_day %></td>
+        <td><%= workingday.total_leave %></td>
+        <td><%= workingday.holiday_in_month %></td>
+        <td><%= workingday.week_off_day %></td>
+        <td><%= workingday.absent_day %></td>
+        <td><%= workingday.payable_day %></td>
+        <td><%= link_to 'Show', workingday %></td>
+        <td><%= link_to 'Edit', edit_workingday_path(workingday) %></td>
+        <td><%= link_to 'Destroy', workingday, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Workingday', new_workingday_path %>

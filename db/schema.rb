@@ -11,19 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160107054936) do
-
-  create_table "annual_salary_masters", force: :cascade do |t|
-    t.integer  "employee_id"
-    t.string   "name"
-    t.string   "code"
-    t.string   "description"
-    t.decimal  "amount",      precision: 13, scale: 2
-    t.datetime "created_at",                           null: false
-    t.datetime "updated_at",                           null: false
-  end
-
-  add_index "annual_salary_masters", ["employee_id"], name: "index_annual_salary_masters_on_employee_id"
+ActiveRecord::Schema.define(version: 20160113064755) do
 
   create_table "attendances", force: :cascade do |t|
     t.integer  "employee_shift_id"
@@ -36,10 +24,12 @@ ActiveRecord::Schema.define(version: 20160107054936) do
     t.decimal  "total_hrs"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
+    t.integer  "shift_rotation_id"
   end
 
   add_index "attendances", ["employee_id"], name: "index_attendances_on_employee_id"
   add_index "attendances", ["employee_shift_id"], name: "index_attendances_on_employee_shift_id"
+  add_index "attendances", ["shift_rotation_id"], name: "index_attendances_on_shift_rotation_id"
 
   create_table "awards", force: :cascade do |t|
     t.integer  "employee_id"
@@ -150,8 +140,8 @@ ActiveRecord::Schema.define(version: 20160107054936) do
     t.string   "code"
     t.string   "name"
     t.string   "description"
-    t.datetime "in_time"
-    t.datetime "out_time"
+    t.time     "in_time"
+    t.time     "out_time"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
@@ -641,6 +631,23 @@ ActiveRecord::Schema.define(version: 20160107054936) do
     t.datetime "updated_at",  null: false
   end
 
+  create_table "overtimes", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.date     "ot_date"
+    t.string   "ot_type"
+    t.string   "ot_total_hrs"
+    t.string   "total_production"
+    t.string   "normal_wages_rate"
+    t.string   "ot_wages_rate"
+    t.string   "ot_earning"
+    t.date     "paid_on_date"
+    t.text     "remarks"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
+  add_index "overtimes", ["employee_id"], name: "index_overtimes_on_employee_id"
+
   create_table "qualifications", force: :cascade do |t|
     t.integer  "employee_id"
     t.integer  "degree_id"
@@ -758,6 +765,23 @@ ActiveRecord::Schema.define(version: 20160107054936) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
+
+  create_table "workingdays", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.string   "month_name"
+    t.string   "year"
+    t.integer  "day_in_month"
+    t.decimal  "present_day"
+    t.decimal  "total_leave"
+    t.decimal  "holiday_in_month"
+    t.decimal  "week_off_day"
+    t.decimal  "absent_day"
+    t.decimal  "payable_day"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "workingdays", ["employee_id"], name: "index_workingdays_on_employee_id"
 
   create_table "years", force: :cascade do |t|
     t.integer  "name"

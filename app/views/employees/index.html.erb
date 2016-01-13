@@ -25,7 +25,7 @@
       <tr>
         <td><%= employee.manual_employee_code %></td>
         <td><%= employee.first_name+' '+employee.middle_name+' '+employee.last_name %></td>
-        <td>  <%= employee.date_of_birth %></td>
+        <td><%= employee.date_of_birth %></td>
         <td><%= employee.city %></td>
         <td> <%= employee.employee_type.try(:name) %></td>
         <td><%= employee.status %></td>

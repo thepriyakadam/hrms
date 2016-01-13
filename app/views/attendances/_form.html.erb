@@ -1,19 +1,12 @@
-<!-- SELECT2 EXAMPLE -->
-<div class="box box-default">
-<div class="box-body">
-    <div class="row">
-      <div class="col-sm-3">
-        <div class="field">
-         <%= text_field :employee_code,:employee,{oninput:"var a={employee_code:$(this).val()}; $.get('/attendances/find_employee_for_attendance',a,function(response){});",class: 'form-control',placeholder:'Search by Employee id'} %>
-        </div>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="field">
+      <label> Shift </label>
+        <%= select :attendance, :employee_shift_id, all_company_shifts,{include_blank: "Please Select Shift"},{onchange: "var a = {id : $(this).val()};$.get('/attendances/collect_shift_date',a,function(response){});",class: 'form-control'} %>
       </div>
     </div>
-    <div id="employee_shift">
-      
+    <div class="col-sm-3">
+      <label> Attendance Date Range </label>
+      <div id="shift_rotation_dropdown"></div>
     </div>
-  <!-- <button id="btnAdd">Add</button> -->
-</div><!-- /.box-body -->
-  
-</div><!-- /.box -->
-
-<div id="ans">TIME HERE</div>
+  </div>

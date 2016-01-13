@@ -9,17 +9,14 @@
     <table class="table table-bordered table-hover table-condensed">
         <thead>
           <tr>
-            <th>Salary component</th>
-            <th>Is deducted</th>
-            <th>Parent salary component</th>
+            <th>Salary Component</th>
+            <th>Is Deducted</th>
+            <th>Parent Component</th>
             <th>Percentage</th>
-            <th>Is taxable</th>
-            <th>Tax</th>
             <th>Base</th>
-            <th>To be paid</th>
-            <th>Max amount</th>
-            <th>Monthly amount</th>
-            <th>Annual amount</th>
+            <th>To Be Paid</th>
+            <th>Monthly Amount</th>
+            <th>Annual Amount</th>
           </tr>
         </thead>
 
@@ -30,11 +27,8 @@
              <td><%= template.try(:is_deducted)%></td>
              <td><%= template.try(:parent_salary_component).try(:name)%></td>
              <td><%= template.try(:percentage)%></td>
-             <td><%= template.try(:is_taxable)%></td>
-             <td><%= template.try(:tax)%></td>
              <td><%= template.try(:base)%></td>
              <td><%= template.try(:to_be_paid)%></td>
-             <td><%= template.try(:max_amount)%></td>
              <td><%= template.try(:monthly_amount)%></td>
              <td><%= template.try(:annual_amount)%></td>
             </tr>

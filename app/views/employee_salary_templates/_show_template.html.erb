@@ -1,3 +1,5 @@
+<% @@parents = [] %>
+<% @@children = [] %>
 <br>
 <div class="table-responsive">
   <% i = 0 %>
@@ -7,18 +9,18 @@
       <table class="table table-bordered table-hover table-condensed">
         <thead>
           <tr>
-            <th>Sr No.</th>
-            <th>Salary component</th>
-            <th>Is deducted</th>
-            <th>Parent salary component</th>
+            <th>Sr. No</th>
+            <th>Salary Component</th>
+            <th>Is Deducted</th>
+            <th>Parent Salary Component</th>
             <th>Percentage</th>
-            <th>Is taxable</th>
+            <th>Is Taxable</th>
             <th>Tax</th>
             <th>Base</th>
-            <th>To be paid</th>
-            <th>Max amount</th>
-            <th>Monthly amount</th>
-            <th>Annual amount</th>
+            <th>To Be Paid</th>
+            <th>Max Amount</th>
+            <th>Monthly Amount</th>
+            <th>Annual Amount</th>
       	  </tr>
         </thead>
 
@@ -46,6 +48,13 @@
               <td><%= text_field :monthly_amount,template.salary_component_id, value: template.try(:monthly_amount),class: "form-control" %></td>
               <td><%= text_field :annual_amount,template.salary_component_id, value: template.try(:annual_amount),class: "form-control" %></td>
             </tr>
+            <%unless template.parent_salary_component_id.nil? %>
+            <% @@parents << template.parent_salary_component_id %>
+            <%end  %>
+
+            <%unless template.parent_salary_component_id.nil? %>
+            <% @@children << template.salary_component_id %>
+            <%end  %>
           <% end %>     
         </tbody>
       </table>
@@ -68,6 +77,7 @@
         calculate_annual_salary();
         calculate_percentage_on_month();
         calculate_children_component();
+        // calculate_children_monthly_and_annual_salary();
         $('#error<%=item.try(:salary_component_id)%>').html("<p>You are typing</p>")
       });
       $('#annual_amount_<%=item.try(:salary_component_id)%>').on('input', function() {
@@ -84,9 +94,20 @@
           enabled_tax_textbox();
       });
       function calculate_children_component(){
-        var monthly_amount = parseFloat($('#monthly_amount_<%= item.try(:salary_component_id) %>').val());
+          var child = []
+          var parents = []
+          var parents = <%= @@parents %>
+          for (p = 0; p < parents.length; p++) {
+            var monthly_amount = parseFloat($('#monthly_amount_'+parents[p]).val()); 
+            var child = <%= @@children %>
 
-        console.log(monthly_amount);
+            for (i = 0; i < child.length; i++) {
+              var child_percentage = parseFloat($('#percentage_'+child[i]).val());
+              var ans = ((child_percentage * monthly_amount)/100).toFixed(2);
+              $('#monthly_amount_'+child[i]).val(ans);
+              $('#annual_amount_'+child[i]).val((ans*12).toFixed(2));
+            }
+          }
       }
       function calculate_annual_salary(){
         var monthly_amount = parseFloat($('#monthly_amount_<%= item.try(:salary_component_id) %>').val()); 
@@ -158,6 +179,7 @@
         $('#monthly_amount_<%= item.try(:salary_component_id) %>').val(monthly_amount);
         $('#annual_amount_<%= item.try(:salary_component_id) %>').val(annual_amount);
       }
+     
       function enabled_percentage_textbox(){
         var parent_salary_component_id = parseInt($("#parent_salary_component_id_<%= item.try(:salary_component_id) %>").val());
         if(isNaN(parent_salary_component_id)){

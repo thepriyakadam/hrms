@@ -18,6 +18,7 @@ class ShiftRotationsController < ApplicationController
     respond_to do |format|
       if @shift_rotation.save
          @shift_rotations = ShiftRotation.all
+         @shift_rotation = ShiftRotation.new
         format.js { @flag = true }
       else
         flash.now[:alert] = "ShiftRotation Already Exist."

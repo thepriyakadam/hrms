@@ -1,29 +1,56 @@
-<%= form_for(@instalment) do |f| %>
-  <% if @instalment.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@instalment.errors.count, "error") %> prohibited this instalment from being saved:</h2>
+<!-- SELECT2 EXAMPLE -->
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Create Company</h3>
+  </div><!-- /.box-header -->
 
-      <ul>
-      <% @instalment.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+  <div class="box-body">
+    <%= bootstrap_form_for(@instalment,html: {id: 'company'}) do |f| %>
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="form-group required">
+          <%= f.text_field :advance_salary_id, placeholder: "Advance Salary ID" %>
+           </div>
+        </div>
+        <div class="col-sm-3">
+        <label>Instalment Date</label>
+         <div class="form-group required">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+            <%= f.text_field :instalment_date,hide_label: true,placeholder: "Select Instalment Date",class: 'instalment_date'%>
+          </div>
+         </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="field">
+           <%= f.text_field :instalment_amount,placeholder: "Instalment Amount" %>
+          </div>
+        </div> 
+        </div>
+        <div class="row">
+        <div class="col-sm-3">
+          <div class="actions">
+            <%= f.submit :class => class_name, data: { disable_with: data_info } %>
+          </div>
+        </div>
     </div>
-  <% end %>
+    <% end %>
+  </div><!-- /.box-body -->
+  
+</div><!-- /.box -->
 
-  <div class="field">
-    <%= f.label :advance_salary_id %><br>
-    <%= f.text_field :advance_salary_id %>
-  </div>
-  <div class="field">
-    <%= f.label :instalment_date %><br>
-    <%= f.date_select :instalment_date %>
-  </div>
-  <div class="field">
-    <%= f.label :instalment_amount %><br>
-    <%= f.text_field :instalment_amount %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+
+<script type="text/javascript">
+  $(function(){
+    $('.instalment_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:+1',
+    dateFormat: 'dd-mm-yy' });
+  }); 
+</script>
+
+
+

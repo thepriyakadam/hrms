@@ -6,13 +6,19 @@
     <table id="example2" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>  
-      <th>Name</th>
+      <th>Employee Code</th>
+      <th>Employee Name</th>
+      <th>Employee Designation</th>
+      <th>Employee Contact No</th>
     </tr>
   </thead>
   <tbody>
     <% @employee_shifts.each do |employee_shift| %>
       <tr>
-        <td><%= employee_shift.employee.try(:first_name) %></td>
+        <td><%= employee_shift.employee.try(:manual_employee_code) %></td>
+        <td><%= employee_shift.employee.try(:first_name)+' '+employee_shift.employee.try(:middle_name)+' '+employee_shift.employee.try(:last_name) %>
+        <td><%= employee_shift.employee.employee_shift.employee.try(:joining_detail).try(:employee_designation).try(:name) %></td>
+        <td><%= employee_shift.employee.try(:contact_no) %></td>
       </tr>
     <% end %>
   </tbody>

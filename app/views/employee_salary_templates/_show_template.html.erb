@@ -1,3 +1,5 @@
+<% @@parents = [] %>
+<% @@children = [] %>
 <br>
 <div class="table-responsive">
   <% i = 0 %>
@@ -10,9 +12,13 @@
             <th>Sr. No</th>
             <th>Salary Component</th>
             <th>Is Deducted</th>
-            <th>Parent Component</th>
+            <th>Parent Salary Component</th>
             <th>Percentage</th>
+            <th>Is Taxable</th>
+            <th>Tax</th>
+            <th>Base</th>
             <th>To Be Paid</th>
+            <th>Max Amount</th>
             <th>Monthly Amount</th>
             <th>Annual Amount</th>
       	  </tr>
@@ -30,12 +36,25 @@
 
               <td><%= text_field :percentage,template.salary_component_id, value: template.try(:percentage), class: "form-control" %></td>
 
+              <td><%= select :is_taxable, template.salary_component_id, [['Yes','true'],['No','false']], {:prompt => true, :selected => template.is_taxable, },class: 'form-control'%></td>
+
+              <td><%= text_field :tax,template.salary_component_id, value: template.try(:tax),class: "form-control" %></td>
+
+              <td><%= select :base, template.salary_component_id, [['Annual'],['Monthly']], {:prompt => true, :selected => template.base, },class: 'form-control'%></td>
+
               <td><%= select :to_be_paid, template.salary_component_id, [['Annual'],['Monthly']], {:prompt => true, :selected => template.to_be_paid, },class: 'form-control'%></td>
 
+              <td><%= text_field :max_amount,template.salary_component_id, value: template.try(:max_amount),class: "form-control" %></td>
               <td><%= text_field :monthly_amount,template.salary_component_id, value: template.try(:monthly_amount),class: "form-control" %></td>
-              
               <td><%= text_field :annual_amount,template.salary_component_id, value: template.try(:annual_amount),class: "form-control" %></td>
             </tr>
+            <%unless template.parent_salary_component_id.nil? %>
+            <% @@parents << template.parent_salary_component_id %>
+            <%end  %>
+
+            <%unless template.parent_salary_component_id.nil? %>
+            <% @@children << template.salary_component_id %>
+            <%end  %>
           <% end %>     
         </tbody>
       </table>
@@ -75,7 +94,20 @@
           enabled_tax_textbox();
       });
       function calculate_children_component(){
-        console.log("ravikiran");
+          var child = []
+          var parents = []
+          var parents = <%= @@parents %>
+          for (p = 0; p < parents.length; p++) {
+            var monthly_amount = parseFloat($('#monthly_amount_'+parents[p]).val()); 
+            var child = <%= @@children %>
+
+            for (i = 0; i < child.length; i++) {
+              var child_percentage = parseFloat($('#percentage_'+child[i]).val());
+              var ans = ((child_percentage * monthly_amount)/100).toFixed(2);
+              $('#monthly_amount_'+child[i]).val(ans);
+              $('#annual_amount_'+child[i]).val((ans*12).toFixed(2));
+            }
+          }
       }
       function calculate_annual_salary(){
         var monthly_amount = parseFloat($('#monthly_amount_<%= item.try(:salary_component_id) %>').val()); 
@@ -146,7 +178,8 @@
         }
         $('#monthly_amount_<%= item.try(:salary_component_id) %>').val(monthly_amount);
         $('#annual_amount_<%= item.try(:salary_component_id) %>').val(annual_amount);
-      } 
+      }
+     
       function enabled_percentage_textbox(){
         var parent_salary_component_id = parseInt($("#parent_salary_component_id_<%= item.try(:salary_component_id) %>").val());
         if(isNaN(parent_salary_component_id)){

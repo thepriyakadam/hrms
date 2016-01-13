@@ -1,88 +1,15 @@
+<!-- SELECT2 EXAMPLE -->
 <div class="box box-default">
-  <div class="box-header with-border">
-    <h3 class="box-title">Salary Master Data</h3>    
-  </div><!-- /.box-header -->
 	<div class="box-body">
-		<div class="row">
-			<div class="col-sm-4">
-				<table class="table table-bordered table-hover table-condensed">
-				  <thead>
-				    <tr>
-				      <th>Particular</th>
-				      <th>Amount</th>
-				    </tr>
-				  </thead>
-
-				  <tbody>
-				  	<% addable_total = 0 %>
-				    <% @addable_salary_components.each do |salary_component| %>
-				      <tr>
-				        <td><%= salary_component.salary_component.name %></td>
-				        <td align="right"><%= amount = '%.2f'%(salary_component.monthly_amount.to_f) %></td>
-				        <% addable_total = addable_total + amount.to_f %>
-				      </tr>
-				    <% end %>
-				    <tr>
-			        <td>Total</td>
-			        <td align="right"><%= '%.2f'%addable_total %></td>
-			      </tr>
-				  </tbody>
-				</table>
-			</div>
-			<div class="col-sm-4">
-				<table class="table table-bordered table-hover table-condensed">
-				  <thead>
-				    <tr>
-				      <th>Particular</th>
-				      <th>Amount</th>
-				    </tr>
-				  </thead>
-
-				  <tbody>
-				    <% deducted_total = 0 %>
-				    <% @deducted_salary_components.each do |salary_component| %>
-				      <tr>
-				        <td><%= salary_component.salary_component.name %></td>
-				        <td align="right"><%= amount = '%.2f'%(salary_component.monthly_amount.to_f) %></td>
-				        <% deducted_total = deducted_total + amount.to_f %>
-				      </tr>
-				    <% end %>
-				    <tr>
-			        <td>Total</td>
-			        <td align="right"><%= '%.2f'%deducted_total %></td>
-			      </tr>
-				  </tbody>
-				</table>
-			</div>
-			<div class="col-sm-4">
-				<table class="table table-bordered table-hover table-condensed">
-				  <thead>
-				    <tr>
-				      <th>Particular</th>
-				      <th>Value</th>
-				    </tr>
-				  </thead>
-
-				  <tbody>
-				      <tr>
-				        <td>Month Day</td>
-				        <td><%= @working_day.day_in_month %></td>
-				      </tr>
-				      <tr>
-				        <td>Holidays</td>
-				        <td><%= @working_day.holiday_in_month %></td>
-				      </tr>
-				      <tr>
-				        <td>Leave Total</td>
-				        <td><%= @working_day.total_leave %></td>
-				      </tr>
-				      <tr>
-				        <td>Working Days</td>
-				        <td><%= @working_day.present_day %></td>
-				      </tr>
-				  </tbody>
-				</table>
-			</div>
-		</div>
+	  <div class="row">
+	    <div class="col-sm-3">
+	      <div class="field">
+	        <%= text_field :employee_code,:hhh,{oninput:"var a={employee_code:$(this).val()}; $.get('/employee_salary_templates/find_employee_for_salary',a,function(response){});",class: 'form-control',placeholder:'Search by Employee id'} %>
+	      </div>
+	    </div>
+	  </div>
+	  <div id="salary">
+	    
+	  </div>
 	</div><!-- /.box-body -->
 </div><!-- /.box -->

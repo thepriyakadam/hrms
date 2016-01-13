@@ -13,7 +13,7 @@
 
   <div class="field">
     <%= f.label :employee_id %><br>
-    <%= f.text_field :employee_id %>
+    <%= f.select :employee_id, Employee.all.collect {|e| [e.first_name+" "+e.last_name,e.id]} %>
   </div>
   <div class="field">
     <%= f.label :month_name %><br>

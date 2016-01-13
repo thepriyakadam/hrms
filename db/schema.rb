@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160108115343) do
+ActiveRecord::Schema.define(version: 20160113064755) do
 
   create_table "attendances", force: :cascade do |t|
     t.integer  "employee_shift_id"
@@ -24,10 +24,12 @@ ActiveRecord::Schema.define(version: 20160108115343) do
     t.decimal  "total_hrs"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
+    t.integer  "shift_rotation_id"
   end
 
   add_index "attendances", ["employee_id"], name: "index_attendances_on_employee_id"
   add_index "attendances", ["employee_shift_id"], name: "index_attendances_on_employee_shift_id"
+  add_index "attendances", ["shift_rotation_id"], name: "index_attendances_on_shift_rotation_id"
 
   create_table "awards", force: :cascade do |t|
     t.integer  "employee_id"
@@ -763,6 +765,23 @@ ActiveRecord::Schema.define(version: 20160108115343) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
+
+  create_table "workingdays", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.string   "month_name"
+    t.string   "year"
+    t.integer  "day_in_month"
+    t.decimal  "present_day"
+    t.decimal  "total_leave"
+    t.decimal  "holiday_in_month"
+    t.decimal  "week_off_day"
+    t.decimal  "absent_day"
+    t.decimal  "payable_day"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "workingdays", ["employee_id"], name: "index_workingdays_on_employee_id"
 
   create_table "years", force: :cascade do |t|
     t.integer  "name"

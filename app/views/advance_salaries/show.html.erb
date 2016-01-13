@@ -1,29 +1,37 @@
-<p id="notice"><%= notice %></p>
+<!-- SELECT2 EXAMPLE -->
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Salary Advance</h3>
+    <div class="box-tools pull-right">
+    </div>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
 
-<p>
-  <strong>Employee:</strong>
-  <%= @advance_salary.employee %>
-</p>
+    <tr>
+      <th><strong>Employee:</strong></th>
+      <td><%= @advance_salary.employee.try(:id) %></td>
 
-<p>
-  <strong>Advance amount:</strong>
-  <%= @advance_salary.advance_amount %>
-</p>
+      <th><strong>Emplyee Name</strong></th>
+      <td><%= @advance_salary.employee.try(:first_name) %></td>
+    </tr>
+    <tr>
+      <th><strong>Advance amount:</strong></th>
+      <td><%= @advance_salary.advance_amount %></td>
+   
+      <th><strong>No of instalment:</strong></th>
+      <td><%= @advance_salary.no_of_instalment %></td>
+    </tr>
+    <tr>
+      <th><strong>Instalment amount:</strong></th>
+      <td><%= @advance_salary.instalment_amount %></td>
 
-<p>
-  <strong>No of instalment:</strong>
-  <%= @advance_salary.no_of_instalment %>
-</p>
+      <th><strong>Advance date:</strong></th>
+      <td><%= @advance_salary.advance_date %></td>
+    </tr>
+    </table>
 
-<p>
-  <strong>Instalment amount:</strong>
-  <%= @advance_salary.instalment_amount %>
-</p>
-
-<p>
-  <strong>Advance date:</strong>
-  <%= @advance_salary.advance_date %>
-</p>
-
-<%= link_to 'Edit', edit_advance_salary_path(@advance_salary) %> |
-<%= link_to 'Back', advance_salaries_path %>
+    <%= link_to 'Edit', edit_advance_salary_path(@advance_salary),class: 'btn btn-success btn-sm fa fa-edit' %> |
+    <%= link_to 'Back', advance_salaries_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->

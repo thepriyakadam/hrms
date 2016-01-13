@@ -20,6 +20,7 @@ Rails.application.routes.draw do
       get :show_employee_salary_template
       get :show_employee_salary_slip
       get :modal
+      get :salary_template
     end
   end
   resources :salary_component_templates

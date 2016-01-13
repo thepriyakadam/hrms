@@ -1,4 +1,5 @@
 class ShiftRotation < ActiveRecord::Base
   belongs_to :company_shift
-  has_and_belongs_to_many :employee_shifts
+  has_many :employee_shifts_shift_rotations
+  has_many :employee_shifts, through: :employee_shifts_shift_rotations
 end

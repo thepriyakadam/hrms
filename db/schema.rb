@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160108115343) do
+ActiveRecord::Schema.define(version: 20160112151617) do
 
   create_table "attendances", force: :cascade do |t|
     t.integer  "employee_shift_id"
@@ -24,10 +24,12 @@ ActiveRecord::Schema.define(version: 20160108115343) do
     t.decimal  "total_hrs"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
+    t.integer  "shift_rotation_id"
   end
 
   add_index "attendances", ["employee_id"], name: "index_attendances_on_employee_id"
   add_index "attendances", ["employee_shift_id"], name: "index_attendances_on_employee_shift_id"
+  add_index "attendances", ["shift_rotation_id"], name: "index_attendances_on_shift_rotation_id"
 
   create_table "awards", force: :cascade do |t|
     t.integer  "employee_id"

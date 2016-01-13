@@ -84,7 +84,9 @@
           enabled_tax_textbox();
       });
       function calculate_children_component(){
-        console.log("ravikiran");
+        var monthly_amount = parseFloat($('#monthly_amount_<%= item.try(:salary_component_id) %>').val());
+
+        console.log(monthly_amount);
       }
       function calculate_annual_salary(){
         var monthly_amount = parseFloat($('#monthly_amount_<%= item.try(:salary_component_id) %>').val()); 

@@ -42,8 +42,9 @@ Rails.application.routes.draw do
   resources :degrees
   resources :attendances do
     collection do
-      get :find_employee_for_attendance
       get :attendance_details
+      get :collect_shift_date
+      get :collect_employee
     end
   end
   resources :employee_shifts do

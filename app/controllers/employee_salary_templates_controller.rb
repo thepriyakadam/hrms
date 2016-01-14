@@ -60,7 +60,7 @@ class EmployeeSalaryTemplatesController < ApplicationController
                                     annual_amount: params[:annual_amount][a])
     end
     flash[:notice] = "Employee template created successfully."
-    redirect_to show_employee_salary_template_employee_salary_templates_path
+    redirect_to show_employee_list_employee_salary_templates_path
   end
 
   def salary_template
@@ -78,7 +78,7 @@ class EmployeeSalaryTemplatesController < ApplicationController
       @addable_total = @addable_salary_components.sum('monthly_amount').to_f
       @absent_value = ((@addable_total / @working_day.day_in_month) * @working_day.absent_day).to_f
       @deducted_total = (@deducted_salary_components.sum('monthly_amount') + @absent_value).to_f
-
+      @net_total = @addable_total - @deducted_total
       @advance_salary = AdvanceSalary.find_by_employee_id(@employee.id)
       @instalments = @advance_salary.instalments
       @instalment_array = []

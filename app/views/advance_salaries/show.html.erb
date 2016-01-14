@@ -10,10 +10,10 @@
 
     <tr>
       <th><strong>Employee:</strong></th>
-      <td><%= @advance_salary.employee.try(:id) %></td>
+      <td><%= @advance_salary.employee.try(:manual_employee_code) %></td>
 
       <th><strong>Emplyee Name</strong></th>
-      <td><%= @advance_salary.employee.try(:first_name) %></td>
+      <td><%= @advance_salary.employee.try(:first_name)+' '+@advance_salary.employee.try(:middle_name)+' '+@advance_salary.employee.try(:last_name) %></td>
     </tr>
     <tr>
       <th><strong>Advance amount:</strong></th>
@@ -31,7 +31,39 @@
     </tr>
     </table>
 
-    <%= link_to 'Edit', edit_advance_salary_path(@advance_salary),class: 'btn btn-success btn-sm fa fa-edit' %> |
-    <%= link_to 'Back', advance_salaries_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
-  </div><!-- /.box-body -->
-</div><!-- /.box -->
+   
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Instalment Details</h3>
+    
+    
+  </div><!-- /.box-header -->
+  <div class="box-body">
+  <div id="comments">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+    <thead>
+      <tr>
+        <th>Advance salary</th>
+        <th>Instalment date</th>
+        <th>Instalment amount</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+
+    <tbody>
+       <% @instalments.each do |instalment| %>
+        <tr>
+          <td><%= instalment.advance_salary.id %></td>
+          <td><%= instalment.instalment_date %></td>
+          <td><%= instalment.instalment_amount %></td>
+          <td>
+            <%= link_to '', edit_instalment_path(instalment), class: 'btn btn-sm btn-success fa fa-edit' %>
+            <%= link_to '', instalment, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-sm  btn-danger fa fa-close' %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  </div>
+</div>
+</div>

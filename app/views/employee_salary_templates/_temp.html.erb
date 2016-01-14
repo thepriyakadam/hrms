@@ -52,62 +52,57 @@
 				      <th>Amount</th>
 				    </tr>
 				  </thead>
-				  	<% addable_total = 0 %>
-				    <% @addable_salary_components.each do |salary_component| %>
-				      <tr>
-				        <td><%= salary_component.salary_component.name %></td>
-				        <td align="right"><%=salary_component.monthly_amount %></td>
-				      </tr>
-				    <% end %>
-				    <tr>
-			        <th>Gross Salary</th>
-			        <td align="right"><strong><%= @addable_total %></strong></td>
+			  	<% addable_total = 0 %>
+			    <% @addable_salary_components.each do |salary_component| %>
+			      <tr>
+			        <td><%= salary_component.salary_component.name %></td>
+			        <td align="right"><%=salary_component.monthly_amount %></td>
 			      </tr>
-				 
+			    <% end %>
+			    <tr>
+		        <th>Gross Salary</th>
+		        <td align="right"><strong><%= @addable_total %></strong></td>
+		      </tr>
 			</div>
 			<div class="col-sm-6">
-				  
-				    <% deducted_total = 0 %>
-				    <% @deducted_salary_components.each do |salary_component| %>
-				      <tr>
-				        <td><%= salary_component.salary_component.name %></td>
-				        <td align="right"><%= salary_component.monthly_amount %></td>
-				      </tr>
-				    <% end %>
-				    <% @instalment_array.each do |ia| %>
+		    <% deducted_total = 0 %>
+		    <% @deducted_salary_components.each do |salary_component| %>
+		      <tr>
+		        <td><%= salary_component.salary_component.name %></td>
+		        <td align="right"><%= salary_component.monthly_amount %></td>
+		      </tr>
+		    <% end %>
+		    <% if @as_flag %>
+			    <% @instalment_array.each do |ia| %>
 				    <tr>
 				    	<td>Installment</td>
 				    	<td align="right"><%= ia.advance_salary.instalment_amount %></td>
 				    </tr>
 					<% end %>
-				    <tr>
-				        <td>Absent</td>
-				        <td align="right"><%= '%.2f'%(@absent_value) %></td>
-				      </tr>
-				    <tr>
-			        <th>Total</th>
-			        <td align="right"><strong><%= '%.2f'%(@deducted_total) %></strong></td>
-			      </tr>
-				
-				
+				<% end %>
+		    <tr>
+		      <td>Absent</td>
+		      <td align="right"><%= '%.2f'%(@absent_value) %></td>
+		     </tr>
+		    <tr>
+	        <th>Total</th>
+	        <td align="right"><strong><%= '%.2f'%(@deducted_total) %></strong></td>
+	      </tr>
 			</div>
 			<div class="col-sm-6">
-			<tr>
-			<th></th>
-			<td></td>
-			</tr>
-				   <tr>
-		      		<th>Net Salary</th>
-		      		<td align="right"><strong><%= '%.2f'%(@net_total) %></strong></td>
-		    		</tr>  
-				
-			</div>
+				<tr>
+					<th></th>
+					<td></td>
+				</tr>
+			  <tr>
+	        <th>Net Salary</th>
+	      	<td align="right"><strong><%= '%.2f'%(@net_total) %></strong></td>
+	    	</tr>
 
+			</div>
+			</table>  
 		</div>
-		  
-		  </table>
-		
-		<button>Submit</button>
+	
 	</div><!-- /.box-body -->
 </div><!-- /.box -->
 

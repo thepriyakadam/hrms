@@ -62,33 +62,21 @@ class AttendancesController < ApplicationController
   end
 
   def find_employee_for_attendance
-    p params
     @employee = Employee.find_by_manual_employee_code(params[:employee_code]) 
-    p @employee
     respond_to do |format|
       if @employee.nil?
         format.js { @flag = true }
       else
         @employee_shift = EmployeeShift.find_by_employee_id(@employee.id)
-        @company_shift = CompanyShift.find(@employee_shift.company_shift_id)
+        @company_shift = CompanyShift.where(employee_id = @employee.id)
+        @last_record = @company_shift.last
+        @last_record.shiftrotation.companyshift.name
+        @companyshift = CompanyShift
         @attendance = Attendance.new
         format.js { @flag = false }
       end
     end
   end
-
-  def calculate_time
-    start_time = params[:in_time].to_time
-    end_time = params[:out_time].to_time
-
-    seconds_diff = (start_time - end_time).to_i.abs
-
-    @hours = seconds_diff / 3600
-    seconds_diff -= @hours * 3600
-
-    @minutes = seconds_diff / 60
-  end
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_attendance
@@ -99,4 +87,4 @@ class AttendancesController < ApplicationController
     def attendance_params
       params.require(:attendance).permit(:employee_shift_id, :employee_id, :attendance_date, :check_in, :check_out, :company_hrs, :over_time_hrs, :total_hrs)
     end
-end
+  end

@@ -7,18 +7,18 @@
       <table class="table table-bordered table-hover table-condensed">
         <thead>
           <tr>
-            <th>Sr No.</th>
-            <th>Salary component</th>
-            <th>Is deducted</th>
-            <th>Parent salary component</th>
+            <th>Sr. No</th>
+            <th>Salary Component</th>
+            <th>Is Deducted</th>
+            <th>Parent Salary Component</th>
             <th>Percentage</th>
-            <th>Is taxable</th>
+            <th>Is Taxable</th>
             <th>Tax</th>
             <th>Base</th>
-            <th>To be paid</th>
-            <th>Max amount</th>
-            <th>Monthly amount</th>
-            <th>Annual amount</th>
+            <th>To Be Paid</th>
+            <th>Max Amount</th>
+            <th>Monthly Amount</th>
+            <th>Annual Amount</th>
       	  </tr>
         </thead>
 
@@ -68,6 +68,7 @@
         calculate_annual_salary();
         calculate_percentage_on_month();
         calculate_children_component();
+        // calculate_children_monthly_and_annual_salary();
         $('#error<%=item.try(:salary_component_id)%>').html("<p>You are typing</p>")
       });
       $('#annual_amount_<%=item.try(:salary_component_id)%>').on('input', function() {
@@ -156,6 +157,25 @@
         $('#monthly_amount_<%= item.try(:salary_component_id) %>').val(monthly_amount);
         $('#annual_amount_<%= item.try(:salary_component_id) %>').val(annual_amount);
       }
+      // function calculate_children_monthly_and_annual_salary(){
+      //   var percentage = parseFloat($('#percentage_<%= item.try(:salary_component_id) %>').val()); 
+      //   var parent_salary_component_id = parseInt($("#parent_salary_component_id_<%= item.try(:salary_component_id) %>").val());
+      //   var parent_salary_component_monthly_amount = parseFloat($("#monthly_amount_"+parent_salary_component_id).val());
+      //   //alert(parent_salary_component_monthly_amount)
+      //   var new_monthly_amount = "";
+      //   var new_annual_amount = "";
+      //   if(isNaN(monthly_amount) || isNaN(parent_salary_component_monthly_amount)){
+      //     new_monthly_amount = " ";
+      //     new_annual_amount = " ";
+      //   }
+      //   else {
+      //     new_monthly_amount = ((parent_salary_component_monthly_amount / 100)*percentage).toFixed(2);
+      //     new_annual_amount = ((parent_salary_component_monthly_amount / 100)*12).toFixed(2);
+      //   }
+      //   $('#parent_salary_component_id_<%= item.try(:salary_component_id) %>').val(new_monthly_amount);
+      //   $('#parent_salary_component_id_<%= item.try(:salary_component_id) %>').val(new_annual_amount);
+      // }
+      
       function enabled_percentage_textbox(){
         var parent_salary_component_id = parseInt($("#parent_salary_component_id_<%= item.try(:salary_component_id) %>").val());
         if(isNaN(parent_salary_component_id)){

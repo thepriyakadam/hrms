@@ -11,7 +11,6 @@
     <table id="example2" class="table table-bordered table-hover table-condensed">
     <thead>
       <tr>
-      <th>Shift</th>
       <th>Employee</th>
       <th>Date</th>
       <th>Check in</th>
@@ -26,8 +25,7 @@
   <tbody>
     <% @attendances.each do |attendance| %>
       <tr>
-        <td><%= attendance.employee_shift.company_shift.try(:name) %></td>
-        <td><%= attendance.employee.try(:first_name)+' '+attendance.employee.try(:middle_name)+' '+attendance.employee.try(:last_name) %></td>
+        <td><%= attendance.employee.try(:first_name) %></td>
         <td><%= attendance.attendance_date %></td>
         <td><%= attendance.check_in %></td>
         <td><%= attendance.check_out %></td>

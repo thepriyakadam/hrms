@@ -1,5 +1,50 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Employee List</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+  <%= form_for @employee_shift do |f| %>
+  	<%= select :employee_shift,:id,(@rotations.present? ? (@rotations.collect {|b| [b.start_date,b.id]}) : {}),{prompt:"Select District",hide_label:true},class: "form-control"%>
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+    <thead>
+      <tr>
+      <th><input type="checkbox" id="selectAll" value="selectAll"></th>
+      <th>Employee ID</th>
+      <th>Employee Name</th>
+      <th>Designation</th>
+      <th>Employement</th>
+      <th>Contact No</th>
+      </tr>
+  </thead>
+  <tbody>
+    <% @employees.each do |employee| %>
+      <tr>
+        <td><%= check_box_tag "employee_ids[]", employee.id %></td>
+        <td><%= employee.manual_employee_code %></td>
+        <td><%= employee.first_name+' '+employee.last_name %></td>
+        <td><%= employee.joining_detail.try(:employee_designation).try(:name) %></td>
+        <td><%= employee.employee_type.try(:name) %></td>
+        <td><%= employee.contact_no %></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <%= f.submit %>
+  <% end %>
+</div>
+</div>
 
 
-<%= render 'form' %>
-
-<%= link_to 'Back', employee_shifts_path %>
+<script type="text/javascript">
+  $('#selectAll').click(function() {
+    if (this.checked) {
+      $(':checkbox').each(function() {
+        this.checked = true;                        
+    });
+    } else {
+      $(':checkbox').each(function() {
+        this.checked = false;                        
+    });
+  } 
+});
+</script>

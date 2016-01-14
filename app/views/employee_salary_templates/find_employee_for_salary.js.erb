@@ -1,4 +1,8 @@
 <% if @flag %>
+ <% unless @as_flag%>
+ $("#salary").html("advance salary not exist")
+ <%else%>
+ <%end%>
 $("#salary").html("<%= j render 'temp' %>")
 <% else %>
 $("#salary").html("<p align='center'> <font color='red'>Record Not Found </font></p>")

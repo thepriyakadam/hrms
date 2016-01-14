@@ -80,16 +80,20 @@ class EmployeeSalaryTemplatesController < ApplicationController
       @deducted_total = (@deducted_salary_components.sum('monthly_amount') + @absent_value).to_f
 
       @advance_salary = AdvanceSalary.find_by_employee_id(@employee.id)
-      @instalments = @advance_salary.instalments
-      @instalment_array = []
-      @instalments.each do |i|
-        p i
-        p "------------------------------"
-        if i.try(:instalment_date).try('strftime("%B")') == params["month"] and i.try(:instalment_date).try('strftime("%Y")') == params["year"]
+      if @advance_salary.nil?
+        @as_flag = false
+      else
+        @instalments = @advance_salary.instalments
+        @instalment_array = []
+        @instalments.each do |i|
+        if i.try(:instalment_date).strftime("%B") == params["month"] and i.try(:instalment_date).strftime("%Y") == params["year"]
           @instalment_array << i
         end
+        @as_flag = true
       end
       @flag = true
+      end
+      
     end
     
   end

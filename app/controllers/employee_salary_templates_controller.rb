@@ -98,7 +98,7 @@ class EmployeeSalaryTemplatesController < ApplicationController
       end
       @advance_salary = AdvanceSalary.find_by_employee_id(@employee.id)
       unless @advance_salary.nil?
-        @instalments = @advance_salary.instalments
+        @instalments = @advance_salary.instalments.where(instalment_date: !nil)
         @instalment_array = []
         @instalments.each do |i|
           if i.try(:instalment_date).strftime("%B") == params["month"] and i.try(:instalment_date).strftime("%Y") == params["year"]

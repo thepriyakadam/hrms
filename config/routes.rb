@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :instalments
+  resources :advance_salaries
   resources :workingdays
   resources :overtimes
   resources :shift_rotations
@@ -18,6 +20,8 @@ Rails.application.routes.draw do
       get :show_employee_salary_template
       get :show_employee_salary_slip
       get :modal
+      get :salary_template
+      get :find_employee_for_salary
     end
   end
   resources :salary_component_templates

@@ -35,6 +35,7 @@ class WorkingdaysController < ApplicationController
         format.json { render json: @workingday.errors, status: :unprocessable_entity }
       end
     end
+    
   end
 
   # PATCH/PUT /workingdays/1

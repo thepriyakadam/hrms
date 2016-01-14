@@ -1,0 +1,5 @@
+<% if @flag %>
+$("#employee_list").html("<%= j render 'employee_list' %>")
+<% else %>
+$("#employee_list").html("")
+<% end %>

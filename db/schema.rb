@@ -11,7 +11,31 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160108115343) do
+ActiveRecord::Schema.define(version: 20160113093434) do
+
+  create_table "advance_salaries", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.decimal  "advance_amount",    precision: 15, scale: 2
+    t.string   "no_of_instalment"
+    t.decimal  "instalment_amount", precision: 15, scale: 2
+    t.date     "advance_date"
+    t.datetime "created_at",                                 null: false
+    t.datetime "updated_at",                                 null: false
+  end
+
+  add_index "advance_salaries", ["employee_id"], name: "index_advance_salaries_on_employee_id"
+
+  create_table "annual_salary_masters", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.string   "name"
+    t.string   "code"
+    t.string   "description"
+    t.decimal  "amount",      precision: 13, scale: 2
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
+  end
+
+  add_index "annual_salary_masters", ["employee_id"], name: "index_annual_salary_masters_on_employee_id"
 
   create_table "annual_salary_masters", force: :cascade do |t|
     t.integer  "employee_id"
@@ -36,10 +60,12 @@ ActiveRecord::Schema.define(version: 20160108115343) do
     t.decimal  "total_hrs"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
+    t.integer  "shift_rotation_id"
   end
 
   add_index "attendances", ["employee_id"], name: "index_attendances_on_employee_id"
   add_index "attendances", ["employee_shift_id"], name: "index_attendances_on_employee_shift_id"
+  add_index "attendances", ["shift_rotation_id"], name: "index_attendances_on_shift_rotation_id"
 
   create_table "awards", force: :cascade do |t|
     t.integer  "employee_id"
@@ -150,8 +176,8 @@ ActiveRecord::Schema.define(version: 20160108115343) do
     t.string   "code"
     t.string   "name"
     t.string   "description"
-    t.time     "in_time"
-    t.time     "out_time"
+    t.datetime "in_time"
+    t.datetime "out_time"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
@@ -529,6 +555,16 @@ ActiveRecord::Schema.define(version: 20160108115343) do
     t.datetime "updated_at",   null: false
   end
 
+  create_table "instalments", force: :cascade do |t|
+    t.integer  "advance_salary_id"
+    t.date     "instalment_date"
+    t.decimal  "instalment_amount", precision: 15, scale: 2
+    t.datetime "created_at",                                 null: false
+    t.datetime "updated_at",                                 null: false
+  end
+
+  add_index "instalments", ["advance_salary_id"], name: "index_instalments_on_advance_salary_id"
+
   create_table "joining_details", force: :cascade do |t|
     t.integer  "employee_id"
     t.date     "joining_date"
@@ -775,6 +811,23 @@ ActiveRecord::Schema.define(version: 20160108115343) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
+
+  create_table "workingdays", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.string   "month_name"
+    t.string   "year"
+    t.integer  "day_in_month"
+    t.decimal  "present_day"
+    t.decimal  "total_leave"
+    t.decimal  "holiday_in_month"
+    t.decimal  "week_off_day"
+    t.decimal  "absent_day"
+    t.decimal  "payable_day"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "workingdays", ["employee_id"], name: "index_workingdays_on_employee_id"
 
   create_table "years", force: :cascade do |t|
     t.integer  "name"

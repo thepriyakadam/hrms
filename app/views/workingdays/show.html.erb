@@ -1,0 +1,51 @@
+<!-- SELECT2 EXAMPLE -->
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Working Day</h3>
+    <div class="box-tools pull-right">
+    </div>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+
+    <tr>
+    <th> <strong>Employee:</strong></th>
+    <td><%= @workingday.employee.id %></td>
+
+    <th> <strong>Month name:</strong></th>
+    <td><%= @workingday.month_name %></td>
+    </tr>
+    <tr>
+    <th> <strong>Year:</strong></th>
+    <td><%= @workingday.year %></td>
+
+    <th><strong>Day in month:</strong></th>
+    <td><%= @workingday.day_in_month %></td>
+    </tr>
+    <tr>
+    <th><strong>Present day:</strong></th>
+    <td><%= @workingday.present_day %></td>
+
+    <th><strong>Total leave:</strong></th>
+    <td><%= @workingday.total_leave %></td>
+    </tr>
+    <tr>
+    <th> <strong>Holiday in month:</strong></th>
+    <td><%= @workingday.holiday_in_month %></td>
+
+    <th> <strong>Week off day:</strong></th>
+    <td><%= @workingday.week_off_day %></td>
+    </tr>
+    <tr>
+    <th> <strong>Absent day:</strong></th>
+    <td><%= @workingday.absent_day %></td>
+    
+    <th><strong>Payable day:</strong></th>
+    <td><%= @workingday.payable_day %></td>
+    </tr>
+    </table>
+
+    <%= link_to 'Edit', edit_workingday_path(@workingday),class: 'btn btn-success btn-sm fa fa-edit' %> |
+    <%= link_to 'Back', workingdays_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->

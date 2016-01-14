@@ -60,7 +60,7 @@ class EmployeeSalaryTemplatesController < ApplicationController
                                     annual_amount: params[:annual_amount][a])
     end
     flash[:notice] = "Employee template created successfully."
-    redirect_to show_employee_salary_template_employee_salary_templates_path
+    redirect_to show_employee_list_employee_salary_templates_path
   end
 
   def salary_template
@@ -96,7 +96,6 @@ class EmployeeSalaryTemplatesController < ApplicationController
           end
         end
       end
-
       @advance_salary = AdvanceSalary.find_by_employee_id(@employee.id)
       unless @advance_salary.nil?
         @instalments = @advance_salary.instalments

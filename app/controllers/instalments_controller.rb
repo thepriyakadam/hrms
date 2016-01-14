@@ -10,6 +10,7 @@ class InstalmentsController < ApplicationController
   # GET /instalments/1
   # GET /instalments/1.json
   def show
+    @advance_salary = @instalment.advance_salary
   end
 
   # GET /instalments/new
@@ -40,9 +41,10 @@ class InstalmentsController < ApplicationController
   # PATCH/PUT /instalments/1
   # PATCH/PUT /instalments/1.json
   def update
+    @advance_salary = @instalment.advance_salary
     respond_to do |format|
       if @instalment.update(instalment_params)
-        format.html { redirect_to @instalment, notice: 'Instalment was successfully updated.' }
+        format.html { redirect_to @advance_salary, notice: 'Instalment was successfully updated.' }
         format.json { render :show, status: :ok, location: @instalment }
       else
         format.html { render :edit }

@@ -10,6 +10,7 @@ class AdvanceSalariesController < ApplicationController
   # GET /advance_salaries/1
   # GET /advance_salaries/1.json
   def show
+     @instalments = @advance_salary.instalments 
   end
 
   # GET /advance_salaries/new
@@ -19,6 +20,7 @@ class AdvanceSalariesController < ApplicationController
 
   # GET /advance_salaries/1/edit
   def edit
+
   end
 
   # POST /advance_salaries

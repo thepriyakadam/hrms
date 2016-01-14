@@ -26,19 +26,19 @@
 	  	</tr>
 	  	 <tr>
         <th>Month Day</th>		
-        <td align="right"><%= @working_day.day_in_month %></td>      
+        <td align="right"><%= @working_day.try(:day_in_month) %></td>      
         <th>Holidays</th>	    
-        <td align="right"><%= @working_day.holiday_in_month %></td>    
+        <td align="right"><%= @working_day.try(:holiday_in_month) %></td>    
         <th>Leave Total</th>		
-        <td align="right"><%= @working_day.total_leave %></td>		        
+        <td align="right"><%= @working_day.try(:total_leave) %></td>		        
 			</tr>
 			<tr>
 				<th>Working Days</th>
-				<td align="right"><%= @working_day.present_day %></td>
+				<td align="right"><%= @working_day.try(:present_day) %></td>
 				<th>Absent Days</th>
-				<td align="right"><%= @working_day.absent_day %></td>
+				<td align="right"><%= @working_day.try(:absent_day) %></td>
 				<th>Payble Days</th>
-				<td align="right"><%= @working_day.payable_day %></td>
+				<td align="right"><%= @working_day.try(:payable_day) %></td>
 			</tr>
 	  </tbody>
 	</table>

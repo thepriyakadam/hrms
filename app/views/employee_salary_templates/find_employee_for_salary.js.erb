@@ -1,5 +1,25 @@
-<% if @flag %>
-$("#salary").html("<%= j render 'temp' %>")
+$("ol").text("");
+<% if params["month"] == "" %>
+$("ol").append("<li><font color='red'>Please select month</font></li>");<% end %>
+<% if params["year"] == "" %>
+$("ol").append("<li><font color='red'>Pleas select year</font></li>");<% end %>
+<% if @employee.nil? %>
+$("ol").append("<li><font color='red'>Employee Not found.</font></li>");
+$("#salary").html("");
 <% else %>
-$("#salary").html("<p align='center'> <font color='red'>Record Not Found </font></p>")
+$("#salary").html("<%= j render 'temp' %>");
+<% if @addable_salary_components.nil? %>
+$("ol").append("<li><font color='red'>Addable salary component not found</font></li>");<% end %>
+<% if @deducted_salary_components.nil? %>
+$("ol").append("<li><font color='red'>Deducted salary component not found</font></li>");<% end %>
+<% if @working_day.nil? %>
+$("ol").append("<li><font color='red'>Working no found</font></li>");<% end %>
+<% if @addable_total.nil? %>
+$("ol").append("<li><font color='red'>Addable total not calculated</font></li>");<% end %>
+<% if @deducted_total.nil? %>
+$("ol").append("<li><font color='red'>Deducted total no calculated</font></li>");<% end %>
+<% if @advance_salary.nil? %>
+$("ol").append("<li><font color='red'>Advance Salary no found</font></li>");<% end %>
+<% if @instalments.nil? %>
+$("ol").append("<li><font color='red'>Installment not found</font></li>");<% end %>
 <% end %>

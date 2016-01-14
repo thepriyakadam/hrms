@@ -45,12 +45,14 @@
 				        <td align="right"><%= salary_component.monthly_amount %></td>
 				      </tr>
 				    <% end %>
-				    <% @instalment_array.each do |ia| %>
-				    <tr>
-				    	<td>Installment</td>
-				    	<td align="right"><%= ia.advance_salary.instalment_amount %></td>
-				    </tr>
-					<% end %>
+				    <% if @as_flag %>
+					    <% @instalment_array.each do |ia| %>
+						    <tr>
+						    	<td>Installment</td>
+						    	<td align="right"><%= ia.advance_salary.instalment_amount %></td>
+						    </tr>
+							<% end %>
+						<% end %>
 				    <tr>
 				        <td>Absent</td>
 				        <td align="right"><%= '%.2f'%(@absent_value) %></td>
@@ -74,27 +76,27 @@
 				  <tbody>
 				      <tr>
 				        <td>Month Day</td>
-				        <td><%= @working_day.day_in_month %></td>
+				        <td><%= @working_day.try(:day_in_month) %></td>
 				      </tr>
 				      <tr>
 				        <td>Holidays</td>
-				        <td><%= @working_day.holiday_in_month %></td>
+				        <td><%= @working_day.try(:holiday_in_month) %></td>
 				      </tr>
 				      <tr>
 				        <td>Leave Total</td>
-				        <td><%= @working_day.total_leave %></td>
+				        <td><%= @working_day.try(:total_leave) %></td>
 				      </tr>
 				      <tr>
 				        <td>Working Days</td>
-				        <td><%= @working_day.present_day %></td>
+				        <td><%= @working_day.try(:present_day) %></td>
 				      </tr>
 				       <tr>
 				        <td>Absent Days</td>
-				        <td><%= @working_day.absent_day %></td>
+				        <td><%= @working_day.try(:absent_day) %></td>
 				      </tr>
 				      <tr>
 				        <td>Payble Days</td>
-				        <td><%= @working_day.payable_day %></td>
+				        <td><%= @working_day.try(:payable_day) %></td>
 				      </tr>
 				  </tbody>
 				</table>

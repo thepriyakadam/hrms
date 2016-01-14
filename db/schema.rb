@@ -25,18 +25,6 @@ ActiveRecord::Schema.define(version: 20160113093434) do
 
   add_index "advance_salaries", ["employee_id"], name: "index_advance_salaries_on_employee_id"
 
-  create_table "annual_salary_masters", force: :cascade do |t|
-    t.integer  "employee_id"
-    t.string   "name"
-    t.string   "code"
-    t.string   "description"
-    t.decimal  "amount",      precision: 13, scale: 2
-    t.datetime "created_at",                           null: false
-    t.datetime "updated_at",                           null: false
-  end
-
-  add_index "annual_salary_masters", ["employee_id"], name: "index_annual_salary_masters_on_employee_id"
-
   create_table "attendances", force: :cascade do |t|
     t.integer  "employee_shift_id"
     t.integer  "employee_id"

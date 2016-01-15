@@ -102,59 +102,6 @@
 	    	</tr>
 			</table>
 			</div>
-     <!--  <div class="col-sm-6">
-				<table class="table table-bordered table-hover table-condensed">
-					  <thead>
-					    <tr>
-					      <th>Particular</th>
-					      <th>Amount</th>
-					    </tr>
-					  </thead>
-				  	<% addable_total = 0 %>
-				  	
-				    <% @addable_salary_components.each do |salary_component| %>
-				      <tr>
-				      	<td><%= salary_component.salary_component.name %></td>
-				       
-				        
-				      </tr>
-				    <% end %>
-				    <tr>
-			        <th>Gross Salary</th>
-			        
-			      </tr>			
-			    <% deducted_total = 0 %>
-			    <% @deducted_salary_components.each do |salary_component| %>
-			      <tr>
-			        <td><%= salary_component.salary_component.name %></td>
-			        
-			      </tr>
-			    <% end %>
-			    <% if @as_flag %>
-				    <% @instalment_array.each do |ia| %>
-					    <tr>
-					    	<td>Installment</td>
-					    	
-					    </tr>
-						<% end %>
-					<% end %>
-			   
-			    <tr>
-		        <th>Total</th>
-		        <td align="right"><strong><%= '%.0f'%(@deducted_total) %></strong></td>
-		      </tr>
-					<tr>
-						<th></th>
-						<td></td>
-					</tr>
-				  <tr>
-		        <th>Net Salary</th>
-		      	<td align="right"><strong>
-		      		<%= '%.0f'%(add_ans - @deducted_total) %></strong>
-		      	</td>
-		    	</tr>
-				</table>
-    </div> -->
-		</div> 
+     	</div> 
 		</div>
 	

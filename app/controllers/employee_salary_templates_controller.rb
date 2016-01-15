@@ -83,17 +83,7 @@ class EmployeeSalaryTemplatesController < ApplicationController
       unless @addable_salary_components.nil?
         @addable_total = @addable_salary_components.sum('monthly_amount').to_f
         unless @addable_total.nil?
-          if @working_day.nil?
-            @absent_value = 0
-          else
-            @absent_value = ((@addable_total / @working_day.try(:day_in_month)) * @working_day.try(:absent_day)).to_f
-          end
-
-          if @absent_value.nil?
             @deducted_total = (@deducted_salary_components.sum('monthly_amount')).to_f
-          else
-            @deducted_total = (@deducted_salary_components.sum('monthly_amount') + @absent_value).to_f
-          end
         end
       end
       @advance_salary = AdvanceSalary.find_by_employee_id(@employee.id)

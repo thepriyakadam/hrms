@@ -1,0 +1,2 @@
+class SalaryslipsController < ApplicationController
+end

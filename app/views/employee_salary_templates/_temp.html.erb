@@ -1,8 +1,4 @@
-<div class="box box-default">
-  <div class="box-header with-border">
-    <h3 class="box-title">Salary Master Data</h3>    
-  </div><!-- /.box-header -->
-	<div class="box-body">
+
 	<table class="table table-bordered table-hover table-condensed">
 	  <thead>
 	    <tr>
@@ -22,7 +18,6 @@
 	  		<td><%= @employee.contact_no %></td>
 	  		<th>Email</th>
 	  		<td><%= @employee.email %></td>
-	  		
 	  	</tr>
 	  	 <tr>
         <th>Month Day</th>		
@@ -42,7 +37,7 @@
 			</tr>
 	  </tbody>
 	</table>
-	<hr>
+	
 		<div class="row">
 			<div class="col-sm-6">
 				<table class="table table-bordered table-hover table-condensed">
@@ -62,9 +57,7 @@
 			    <tr>
 		        <th>Gross Salary</th>
 		        <td align="right"><strong><%= @addable_total %></strong></td>
-		      </tr>
-			</div>
-			<div class="col-sm-6">
+		      </tr>			
 		    <% deducted_total = 0 %>
 		    <% @deducted_salary_components.each do |salary_component| %>
 		      <tr>
@@ -88,22 +81,77 @@
 	        <th>Total</th>
 	        <td align="right"><strong><%= '%.2f'%(@deducted_total) %></strong></td>
 	      </tr>
-			</div>
-			<div class="col-sm-6">
 				<tr>
 					<th></th>
 					<td></td>
 				</tr>
 			  <tr>
 	        <th>Net Salary</th>
-	      	<td align="right"><strong><%= '%.2f'%(@addable_total - 
-@deducted_total) %></strong></td>
+	      	<td align="right"><strong>
+	      		<%= '%.2f'%(@addable_total - @deducted_total) %></strong>
+	      	</td>
 	    	</tr>
-
+			</table>
 			</div>
-			</table>  
+      <div class="col-sm-6">
+				<table class="table table-bordered table-hover table-condensed">
+					  <thead>
+					    <tr>
+					      <th>Particular</th>
+					      <th>Amount</th>
+					    </tr>
+					  </thead>
+				  	<% addable_total = 0 %>
+				  	<% add_ans = 0%>
+				    <% @addable_salary_components.each do |salary_component| %>
+				      <tr>
+				      	<td><%= salary_component.salary_component.name %></td>
+				        <% item = salary_component.monthly_amount %>
+				        <% ans = (item.to_f / @working_day.try(:day_in_month)) * @working_day.try(:payable_day) %>
+				        <% add_ans = add_ans + ans %>
+				        <td align="right"><%= '%.2f'%ans %></td>
+				        
+				      </tr>
+				    <% end %>
+				    <tr>
+			        <th>Gross Salary</th>
+			        <td align="right"><strong><%= '%.2f'%add_ans %></strong></td>
+			      </tr>			
+			    <% deducted_total = 0 %>
+			    <% @deducted_salary_components.each do |salary_component| %>
+			      <tr>
+			        <td><%= salary_component.salary_component.name %></td>
+			        <td align="right"><%= salary_component.monthly_amount %></td>
+			      </tr>
+			    <% end %>
+			    <% if @as_flag %>
+				    <% @instalment_array.each do |ia| %>
+					    <tr>
+					    	<td>Installment</td>
+					    	<td align="right"><%= ia.advance_salary.instalment_amount %></td>
+					    </tr>
+						<% end %>
+					<% end %>
+			    <tr>
+			      <td>Absent</td>
+			      <td align="right"><%= '%.2f'%(@absent_value) %></td>
+			     </tr>
+			    <tr>
+		        <th>Total</th>
+		        <td align="right"><strong><%= '%.2f'%(@deducted_total) %></strong></td>
+		      </tr>
+					<tr>
+						<th></th>
+						<td></td>
+					</tr>
+				  <tr>
+		        <th>Net Salary</th>
+		      	<td align="right"><strong>
+		      		<%= '%.2f'%(add_ans - @deducted_total) %></strong>
+		      	</td>
+		    	</tr>
+				</table>
+    </div>
+		</div> 
 		</div>
 	
-	</div><!-- /.box-body -->
-</div><!-- /.box -->
-

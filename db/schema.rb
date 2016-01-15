@@ -152,8 +152,8 @@ ActiveRecord::Schema.define(version: 20160113093434) do
     t.string   "code"
     t.string   "name"
     t.string   "description"
-    t.datetime "in_time"
-    t.datetime "out_time"
+    t.time     "in_time"
+    t.time     "out_time"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
@@ -709,7 +709,6 @@ ActiveRecord::Schema.define(version: 20160113093434) do
 
   create_table "salary_component_templates", force: :cascade do |t|
     t.string   "manual_template_code"
-    t.string   "auto_template_code"
     t.integer  "salary_template_id"
     t.integer  "salary_component_id"
     t.boolean  "is_deducted"

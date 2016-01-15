@@ -5,7 +5,7 @@
 	      <th>Employee Code</th>
 	      <td><%= @employee.manual_employee_code%></td>
 	      <th>Employee Name</th>
-	      <td><%= @employee.first_name+""+@employee.last_name %></td>
+	      <td><%= @employee.first_name+" "+@employee.middle_name+" "+@employee.last_name %></td>
 	      <th>Designation</th>
 	      <td><%= @employee.joining_detail.try(:designation) %></td>
 	    </tr>
@@ -95,8 +95,9 @@
 				</tr>
 			  <tr>
 	        <th colspan="2">Net Salary</th>
+
 	      	<td align="right"><strong>
-	      		<%= '%.2f'%(@addable_total - @deducted_total) %></strong>
+	      		 <%= '%.0f'%(add_ans - @deducted_total) %></strong>
 	      	</td>
 	    	</tr>
 			</table>

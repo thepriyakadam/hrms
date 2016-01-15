@@ -103,4 +103,10 @@ class EmployeeSalaryTemplatesController < ApplicationController
   def modal
     
   end
+
+  def save_data
+    p "------------------------------------"
+    p params[:employee]
+    p "-----------------------------------"
+  end
 end

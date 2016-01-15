@@ -35,10 +35,10 @@ module EmployeesHelper
   end
 
   def full_name(emp)
-    emp.first_name+" "+emp.middle_name+" "+emp.last_name
+    emp.try(:first_name)+" "+emp.try(:middle_name)+" "+emp.try(:last_name)
   end
 
   def short_name(emp)
-    emp.first_name+" "+emp.last_name
+    emp.try(:first_name)+" "+emp.try(:last_name)
   end
 end

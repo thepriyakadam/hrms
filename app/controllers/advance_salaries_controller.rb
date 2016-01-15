@@ -37,7 +37,7 @@ class AdvanceSalariesController < ApplicationController
     for i in 1..current_record.no_of_instalment.to_i
       current_record.instalments.create(instalment_amount: current_record.instalment_amount)
     end
-    redirect_to new_advance_salary_path
+    redirect_to @advance_salary
   end
 
   # PATCH/PUT /advance_salaries/1

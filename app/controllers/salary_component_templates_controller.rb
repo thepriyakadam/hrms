@@ -6,9 +6,14 @@ class SalaryComponentTemplatesController < ApplicationController
   end
 
   def new
-    @salary_component_template = SalaryComponentTemplate.new
-    @salary_component = SalaryComponent.find(params[:id]) 
-    @salary_template = SalaryTemplate.find(params[:s])
+    if params[:id] == ""
+      @flag = false
+    else
+      @salary_component_template = SalaryComponentTemplate.new
+      @salary_component = SalaryComponent.find(params[:id]) 
+      @salary_template = SalaryTemplate.find(params[:s])
+      @flag = true
+    end
   end
 
    def edit

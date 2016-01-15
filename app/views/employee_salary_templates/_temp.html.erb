@@ -5,7 +5,7 @@
 	      <th>Employee Code</th>
 	      <td><%= @employee.manual_employee_code%></td>
 	      <th>Employee Name</th>
-	      <td><%= @employee.first_name+" "+@employee.middle_name+" "+@employee.last_name %></td>
+	      <td><%= full_name(@employee) %></td>
 	      <th>Designation</th>
 	      <td><%= @employee.joining_detail.try(:designation) %></td>
 	    </tr>
@@ -54,10 +54,14 @@
 			      <tr>
 			        <td><%= salary_component.salary_component.name %></td>
 			        <td align="right"><%=salary_component.monthly_amount %></td>
-			         <% item = salary_component.monthly_amount %>
-				        <% ans = (item.to_f / @working_day.try(:day_in_month)) * @working_day.try(:payable_day) %>
-				        <% add_ans = add_ans + ans %>
+			        <% item = salary_component.monthly_amount %>
+			        <% if item.nil? %>
+				      	<td align="right"><%= 0.00 %></td>
+				      <% else %>
+				      <% ans = (item.to_f / @working_day.try(:day_in_month)) * @working_day.try(:payable_day) %>
+				      <% add_ans = add_ans + ans %>
 				      <td align="right"><%= '%.0f'%ans %></td>
+				      <% end %>
 			      </tr>
 			    <% end %>
 			    <tr>
@@ -105,3 +109,13 @@
      	</div> 
 		</div>
 	
+<%= form_for :data, url: {controller: 'salaryslips', action: 'save_data',
+	employee: @employee,
+	working_day: @working_day,
+	addable_salary_components: @addable_salary_components,
+	deducted_salary_components: @deducted_salary_components,
+	addable_total: @addable_total,
+	deducted_total: @deducted_total,
+	instalment_array: @instalment_array} do |f| %>
+<%= f.submit %>
+<% end %>

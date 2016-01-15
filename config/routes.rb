@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
 
+  resources :salaryslips do
+    collection do
+      post :save_data
+    end
+  end
   resources :instalments
   resources :advance_salaries
   resources :workingdays
@@ -22,6 +27,7 @@ Rails.application.routes.draw do
       get :modal
       get :salary_template
       get :find_employee_for_salary
+      post :save_data
     end
   end
   resources :salary_component_templates

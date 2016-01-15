@@ -3,7 +3,7 @@
     <h3 class="box-title">Employee List</h3>    
   </div><!-- /.box-header -->
   <div class="box-body">
-    <table  class="table table-bordered table-hover">
+    <table  class="table table-bordered table-hover table-condensed">
 	    <thead>
 	      <tr>
 		      <th>Employee Code</th>
@@ -25,7 +25,7 @@
 			        </td>
 			        <td><%= f.select :manager_id, all_employee_list,hide_label:true, prompt:true %></td>
 			        <td><%= f.select :department_id, all_department_list,hide_label:true, prompt:true %></td>
-			        <td><%= f.submit "+", class: 'btn btn-primary fa fa-user-plus' %></td>
+			        <td><%= f.submit "+", class: 'btn btn-primary btn-sm fa fa-user-plus' %></td>
 			      </tr>	
 		     	<% end %>
 		    <% end %>
@@ -33,5 +33,10 @@
 		</table>
 	</div>
 </div>
+<style type="text/css">
 
+.table-condensed>thead>tr>th, .table-condensed>tbody>tr>th, .table-condensed>tfoot>tr>th, .table-condensed>thead>tr>td, .table-condensed>tbody>tr>td, .table-condensed>tfoot>tr>td {
+    padding: 1px;
+}
+</style>
 

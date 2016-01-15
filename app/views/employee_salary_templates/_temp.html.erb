@@ -9,7 +9,7 @@
 	      <th>Employee Code</th>
 	      <td><%= @employee.manual_employee_code%></td>
 	      <th>Employee Name</th>
-	      <td><%= @employee.first_name+""+@employee.last_name %></td>
+	      <td><%= @employee.first_name+" "+@employee.last_name %></td>
 	      <th>Designation</th>
 	      <td><%= @employee.joining_detail.try(:designation) %></td>
 	    </tr>

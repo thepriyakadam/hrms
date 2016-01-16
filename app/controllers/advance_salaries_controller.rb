@@ -27,7 +27,7 @@ class AdvanceSalariesController < ApplicationController
   # POST /advance_salaries.json
   def create
     @advance_salary = AdvanceSalary.new(advance_salary_params)
-    @employee = Employee.find_by_manual_employee_code(@advance_salary.employee_id)
+    @employee = Employee.find(@advance_salary.employee_id)
     id = AdvanceSalary.create(employee_id: @employee.id, \
                          advance_amount: @advance_salary.advance_amount, \
                          no_of_instalment: @advance_salary.no_of_instalment, \

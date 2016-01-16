@@ -70,6 +70,8 @@ class EmployeeSalaryTemplatesController < ApplicationController
   def find_employee_for_salary
     @addable_salary_components = nil
     @deducted_salary_components = nil
+    @month = params["month"]
+    @year = params["year"]
     @employee = Employee.find_by_manual_employee_code(params[:employee_code])
     if @employee.nil?
       @flag = false
@@ -88,11 +90,14 @@ class EmployeeSalaryTemplatesController < ApplicationController
       end
       @advance_salary = AdvanceSalary.find_by_employee_id(@employee.id)
       unless @advance_salary.nil?
-        @instalments = @advance_salary.instalments.where(instalment_date: !nil)
+        #@instalments = @advance_salary.instalments.where(instalment_date: !nil)
+        @instalments = @advance_salary.instalments
         @instalment_array = []
         @instalments.try(:each) do |i|
+          unless i.instalment_date.nil?
           if i.try(:instalment_date).strftime("%B") == params["month"] and i.try(:instalment_date).strftime("%Y") == params["year"]
             @instalment_array << i
+          end
           end
         end
       end

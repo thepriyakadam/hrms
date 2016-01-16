@@ -8,15 +8,20 @@ $("ol").append("<li><font color='red'>Pleas select year</font></li>");
 <% end %>
 
 <% if @employee.nil? %>
+
   $("ol").append("<li><font color='red'>Employee Not found.</font></li>");
   $("#salary").html("");
 <% else %>
-  <% if @working_day.nil? %>
-  $("ol").append("<li><font color='red'>Working days not assigned for this month.</font></li>");
-  $("#salary").html("");
-  <% else %>
-  $("#salary").html("<%= j render 'temp' %>");
-  <% end %>
+	<% unless @record.nil? %>
+		$("ol").append("<li><font color='red'>Salary already assigned for this month and year.</font></li>");
+	<% else %>
+		<% if @working_day.nil? %>
+	  $("ol").append("<li><font color='red'>Working days not assigned for this month.</font></li>");
+	  $("#salary").html("");
+	  <% else %>
+	  $("#salary").html("<%= j render 'temp' %>");
+	  <% end %>
+	<% end %>
 <% end %>
 
 <% if @addable_salary_components.nil? %>

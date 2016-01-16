@@ -1,0 +1,2 @@
+module SalaryslipsHelper
+end

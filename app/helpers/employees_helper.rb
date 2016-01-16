@@ -25,11 +25,20 @@ module EmployeesHelper
 	def all_employee_list
 		Employee.all.collect {|e| [e.first_name,e.id]}
 	end
+
 	def check_if_true(item)
-      if(item == 'true' or item == true or item == 1 or item == '1')
-        return true
-    	else
-      		return false
-   	 	end
-   	 end
+    if(item == 'true' or item == true or item == 1 or item == '1')
+      return true
+  	else
+    	return false
+  	end
+  end
+
+  def full_name(emp)
+    emp.try(:first_name)+" "+emp.try(:middle_name)+" "+emp.try(:last_name)
+  end
+
+  def short_name(emp)
+    emp.try(:first_name)+" "+emp.try(:last_name)
+  end
 end

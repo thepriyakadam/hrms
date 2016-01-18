@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       post :save_data
       get :employee_salary_list
       get :show_salaryslip
+      get :salary_slip_list
     end
   end
   resources :instalments

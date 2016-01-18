@@ -1,23 +1,5 @@
 class SalaryslipsController < ApplicationController
   def save_data
-    # @employee = params[:employee]
-    # @working_day = params[:working_day]
-    # @addable_salary_components = params[:addable_salary_components]
-    # @deducted_salary_components = params[:deducted_salary_components]
-    # @addable_total = params[:addable_total]
-    # @deducted_total = params[:deducted_total]
-    # @instalment_array = params[:instalment_array]
-
-    # byebug
-
-    # id = Salaryslip.create(employee_id: @employee, workingday_id: @working_day, gross_salary: @addable_total, total_deduction: @deducted_total).id
-    # @addable_salary_components.try(:each) do |a|
-    #   SalaryslipComponent.create(salaryslip_id: id, salary_component_id: a.salary_component_id, amount: a.monthly_amount, is_deducted: false)
-    # end
-    # @deducted_salary_components.try(:each) do |a|
-    #   SalaryslipComponent.create(salaryslip_id: id, salary_component_id: a.salary_component_id, amount: a.monthly_amount, is_deducted: true)
-    # end
-
     @employee = Employee.find(params[:employee])
     if @employee.nil?
       @flag = false
@@ -54,24 +36,34 @@ class SalaryslipsController < ApplicationController
       end
       @flag = true
     end
-
-    
     redirect_to salary_template_employee_salary_templates_path
   end
   def employee_salary_list
     @employees =Employee.all
   end
 
+  def salary_slip_list
+    @employee = Employee.find(params[:format])
+    @salray_slips = Salaryslip.where("employee_id= ?",@employee.id)
+  end
+
   def show_salaryslip
-    # @employee = Employee.find(params[:format])
-    # if @employee.nil?
-    #   @flag = false
-    # else
-    #   @salaryslip = Salaryslip.find_by_employee_id(@employee.id)
-    #   @deducted_salary_components = SalaryslipComponent.where("salaryslip_id = ?,is_deducted = ?",@salaryslip.id,false)
-    #   @deducted_salary_components = SalaryslipComponent.where("salaryslip_id = ?",@salaryslip.id)
-    #   @working_day = Workingday.where("employee_id = ? and month_name = ? and year = ?", @employee.id, params["month"], params["year"]).take
-    #   @flag = true
-    # end
+    @salaryslip = Salaryslip.find(params[:format])
+    @addable_salary_components = SalaryslipComponent.where("is_deducted = ? and salaryslip_id = ?",false,@salaryslip.id)
+    @deducted_salary_components = SalaryslipComponent.where("is_deducted = ? and salaryslip_id = ?",true,@salaryslip.id)
+    @working_day = Workingday.find(@salaryslip.working_day)
+    @employee = Employee.find(@salaryslip.employee_id)
+    @advance_salary = AdvanceSalary.find_by_employee_id(@employee.id)
+    unless @advance_salary.nil?
+      @instalments = @advance_salary.instalments
+      @instalment_array = []
+      @instalments.try(:each) do |i|
+        unless i.instalment_date.nil?
+          if i.try(:instalment_date).strftime("%B") == params["month"] and i.try(:instalment_date).strftime("%Y") == params["year"]
+            @instalment_array << i
+          end
+        end
+      end
+    end
   end
 end

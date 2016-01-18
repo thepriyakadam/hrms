@@ -22,7 +22,7 @@
         <td><%= employee.contact_no %></td>
         <td><%= employee.email %></td>
         <td>
-            <%= link_to '', show_salaryslip_salaryslips_path, class: 'btn btn-default fa fa-eye' %>
+        <%= link_to '', salary_slip_list_salaryslips_path(employee), class: 'btn btn-default fa fa-eye' %>
         </td>
         </tr>
       <% end %>

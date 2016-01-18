@@ -11,11 +11,12 @@
     <table id="example2" class="table table-bordered table-hover table-condensed">
     <thead>
       <tr>
-        <th>Employee</th>
-        <th>Advance amount</th>
-        <th>No of instalment</th>
-        <th>Instalment amount</th>
-        <th>Advance date</th>
+        <th>Employee ID</th>
+        <th>Employee Name</th>
+        <th>Advance Amount</th>
+        <th>No of Instalment</th>
+        <th>Instalment Amount</th>
+        <th>Advance Date</th>
         <th>Action</th>
       </tr>
     </thead>
@@ -23,7 +24,10 @@
     <tbody>
       <% @advance_salaries.each do |advance_salary| %>
         <tr>
-         <td><%= advance_salary.employee.id %></td>
+       
+     
+         <td><%= advance_salary.employee.try(:manual_employee_code) %></td>
+         <td><%= advance_salary.employee.try(:first_name)+' '+advance_salary.employee.try(:middle_name)+' '+advance_salary.employee.try(:last_name) %></td>
          <td><%= advance_salary.advance_amount %></td>
          <td><%= advance_salary.no_of_instalment %></td>
          <td><%= advance_salary.instalment_amount %></td>

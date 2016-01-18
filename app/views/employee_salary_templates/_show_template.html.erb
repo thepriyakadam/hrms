@@ -14,11 +14,7 @@
             <th>Is Deducted</th>
             <th>Parent Salary Component</th>
             <th>Percentage</th>
-            <th>Is Taxable</th>
-            <th>Tax</th>
-            <th>Base</th>
             <th>To Be Paid</th>
-            <th>Max Amount</th>
             <th>Monthly Amount</th>
             <th>Annual Amount</th>
       	  </tr>
@@ -34,19 +30,12 @@
 
               <td><%= select :parent_salary_component_id, template.salary_component_id, all_salary_component, {:prompt => true, :selected => template.parent_salary_component_id },class: 'form-control'%></td>
 
-              <td><%= text_field :percentage,template.salary_component_id, value: template.try(:percentage), class: "form-control" %></td>
-
-              <td><%= select :is_taxable, template.salary_component_id, [['Yes','true'],['No','false']], {:prompt => true, :selected => template.is_taxable, },class: 'form-control'%></td>
-
-              <td><%= text_field :tax,template.salary_component_id, value: template.try(:tax),class: "form-control" %></td>
-
-              <td><%= select :base, template.salary_component_id, [['Annual'],['Monthly']], {:prompt => true, :selected => template.base, },class: 'form-control'%></td>
+              <td><%= text_field :percentage,template.salary_component_id,readonly: true, value: template.try(:percentage), class: "form-control" %></td>
 
               <td><%= select :to_be_paid, template.salary_component_id, [['Annual'],['Monthly']], {:prompt => true, :selected => template.to_be_paid, },class: 'form-control'%></td>
 
-              <td><%= text_field :max_amount,template.salary_component_id, value: template.try(:max_amount),class: "form-control" %></td>
               <td><%= text_field :monthly_amount,template.salary_component_id, value: template.try(:monthly_amount),class: "form-control" %></td>
-              <td><%= text_field :annual_amount,template.salary_component_id, value: template.try(:annual_amount),class: "form-control" %></td>
+              <td><%= text_field :annual_amount,template.salary_component_id,readonly: true, value: template.try(:annual_amount),class: "form-control" %></td>
             </tr>
             <%unless template.parent_salary_component_id.nil? %>
             <% @@parents << template.parent_salary_component_id %>

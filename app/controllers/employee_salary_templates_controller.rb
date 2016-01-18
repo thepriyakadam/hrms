@@ -51,11 +51,7 @@ class EmployeeSalaryTemplatesController < ApplicationController
                                     is_deducted: params[:is_deducted][a], \
                                     parent_salary_component_id: params[:parent_salary_component_id][a], \
                                     percentage: params[:percentage][a], \
-                                    is_taxable: params[:is_taxable][a], \
-                                    tax: params[:tax][a], \
-                                    base: params[:base][a], \
                                     to_be_paid: params[:to_be_paid][a], \
-                                    max_amount: params[:max_amount][a], \
                                     monthly_amount: params[:monthly_amount][a], \
                                     annual_amount: params[:annual_amount][a])
     end

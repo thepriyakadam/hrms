@@ -82,7 +82,7 @@
 			    <% @instalment_array.each do |ia| %>
 				    <tr>
 				    	<td>Advance</td>
-				    	<td align="right"><%= ia.advance_salary.instalment_amount %></td>
+				    	<td align="right"><%=  %></td>
 				    	<td align="right"><%= ia.advance_salary.instalment_amount %></td>
 				    	<% instalment_deducted = deducted_total + ia.advance_salary.instalment_amount %>
 				    </tr>
@@ -99,9 +99,9 @@
 				</tr>
 			  <tr>
 	        <th colspan="2">Net Salary</th>
-	        <% net_salary = add_ans - @deducted_total %>
+	        <% net_salary = add_ans - instalment_deducted %>
 	      	<td align="right"><strong>
-	      		 <%= '%.0f'%(add_ans - @deducted_total) %></strong>
+	      		 <%= '%.0f'%(net_salary) %></strong>
 	      	</td>
 	    	</tr>
 			</table>

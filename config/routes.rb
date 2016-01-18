@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :other_salary_components
   resources :salaryslips do
     collection do
       post :save_data

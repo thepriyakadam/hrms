@@ -1,33 +1,25 @@
-<%= form_for(@other_salary_component) do |f| %>
-  <% if @other_salary_component.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@other_salary_component.errors.count, "error") %> prohibited this other_salary_component from being saved:</h2>
-
-      <ul>
-      <% @other_salary_component.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+<%= bootstrap_form_for(@other_salary_component,html: {id: 'nationality'},remote:true) do |f| %>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :code,hide_label:true, placeholder: 'Code' %>
+      </div>
     </div>
-  <% end %>
+      <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :name,hide_label:true, placeholder: 'Name' %>
+      </div>
+    </div>
+      <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :description,hide_label:true, placeholder: 'Description' %>
+      </div>
+    </div>
 
-  <div class="field">
-    <%= f.label :code %><br>
-    <%= f.text_field :code %>
-  </div>
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :description %><br>
-    <%= f.text_field :description %>
-  </div>
-  <div class="field">
-    <%= f.label :is_deducted %><br>
-    <%= f.text_field :is_deducted %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit :class => class_name%>
+      </div>
+    </div>
   </div>
 <% end %>

@@ -1,20 +1,9 @@
 class OtherSalaryComponentsController < ApplicationController
   before_action :set_other_salary_component, only: [:show, :edit, :update, :destroy]
 
-  # GET /other_salary_components
-  # GET /other_salary_components.json
-  def index
-    @other_salary_components = OtherSalaryComponent.all
-  end
-
-  # GET /other_salary_components/1
-  # GET /other_salary_components/1.json
-  def show
-  end
-
-  # GET /other_salary_components/new
   def new
     @other_salary_component = OtherSalaryComponent.new
+    @other_salary_components = OtherSalaryComponent.all
   end
 
   # GET /other_salary_components/1/edit
@@ -25,40 +14,31 @@ class OtherSalaryComponentsController < ApplicationController
   # POST /other_salary_components.json
   def create
     @other_salary_component = OtherSalaryComponent.new(other_salary_component_params)
-
+    @other_salary_components = OtherSalaryComponent.all
     respond_to do |format|
       if @other_salary_component.save
-        format.html { redirect_to @other_salary_component, notice: 'Other salary component was successfully created.' }
-        format.json { render :show, status: :created, location: @other_salary_component }
+        @other_salary_component = OtherSalaryComponent.new
+       format.js { @flag = true }
       else
-        format.html { render :new }
-        format.json { render json: @other_salary_component.errors, status: :unprocessable_entity }
+        flash.now[:alert] = "salary Component Already Exist."
+         format.js { @flag = false }
       end
-    end
+    end  
   end
 
   # PATCH/PUT /other_salary_components/1
   # PATCH/PUT /other_salary_components/1.json
   def update
-    respond_to do |format|
-      if @other_salary_component.update(other_salary_component_params)
-        format.html { redirect_to @other_salary_component, notice: 'Other salary component was successfully updated.' }
-        format.json { render :show, status: :ok, location: @other_salary_component }
-      else
-        format.html { render :edit }
-        format.json { render json: @other_salary_component.errors, status: :unprocessable_entity }
-      end
-    end
+      @other_salary_component.update(other_salary_component_params)
+      @other_salary_components = OtherSalaryComponent.all
+      @other_salary_component = OtherSalaryComponent.new
   end
 
   # DELETE /other_salary_components/1
   # DELETE /other_salary_components/1.json
   def destroy
     @other_salary_component.destroy
-    respond_to do |format|
-      format.html { redirect_to other_salary_components_url, notice: 'Other salary component was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    @other_salary_components = OtherSalaryComponent.all
   end
 
   private

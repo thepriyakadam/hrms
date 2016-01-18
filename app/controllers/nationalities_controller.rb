@@ -15,7 +15,7 @@ class NationalitiesController < ApplicationController
     @nationalities = Nationality.all
     respond_to do |format|
     if @nationality.save
-    @@nationality = Nationality.new
+    @nationality = Nationality.new
      format.js { @flag = true }
       else
         flash.now[:alert] = "Nationality Already Exist."

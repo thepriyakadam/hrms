@@ -69,11 +69,13 @@
 		        <td align="right"><strong><%= '%.0f'%add_ans %></strong></td>
 		      </tr>			
 		    <% deducted_total = 0 %>
+		    <% instalment_deducted = 0 %>
 		    <% @deducted_salary_components.each do |salary_component| %>
 		      <tr>
 		        <td><%= salary_component.salary_component.name %></td>
 		        <td align="right"><%= salary_component.monthly_amount %></td>
 		        <td align="right"><%= salary_component.monthly_amount %></td>
+		        <% deducted_total = deducted_total + salary_component.monthly_amount %>
 		      </tr>
 		    <% end %>
 		    
@@ -82,12 +84,13 @@
 				    	<td>Advance</td>
 				    	<td align="right"><%= ia.advance_salary.instalment_amount %></td>
 				    	<td align="right"><%= ia.advance_salary.instalment_amount %></td>
+				    	<% instalment_deducted = deducted_total + ia.advance_salary.instalment_amount %>
 				    </tr>
 					<% end %>
 		    <tr>
 	        <th>Total Deducted</th>
 	        <td align="right"><strong><%= '%.0f'%(@deducted_total) %></strong></td>
-	        <td align="right"><strong><%= '%.0f'%(@deducted_total) %></strong></td>
+	        <td align="right"><strong><%= instalment_deducted %></strong></td>
 	      </tr>
 				<tr>
 					<th></th>

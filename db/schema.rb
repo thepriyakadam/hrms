@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160116114046) do
+ActiveRecord::Schema.define(version: 20160118052507) do
 
   create_table "advance_salaries", force: :cascade do |t|
     t.integer  "employee_id"
@@ -649,6 +649,15 @@ ActiveRecord::Schema.define(version: 20160116114046) do
     t.string   "code"
     t.string   "name"
     t.string   "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "other_salary_components", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
+    t.string   "description"
+    t.string   "is_deducted"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end

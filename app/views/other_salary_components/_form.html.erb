@@ -1,0 +1,33 @@
+<%= form_for(@other_salary_component) do |f| %>
+  <% if @other_salary_component.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@other_salary_component.errors.count, "error") %> prohibited this other_salary_component from being saved:</h2>
+
+      <ul>
+      <% @other_salary_component.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :code %><br>
+    <%= f.text_field :code %>
+  </div>
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :description %><br>
+    <%= f.text_field :description %>
+  </div>
+  <div class="field">
+    <%= f.label :is_deducted %><br>
+    <%= f.text_field :is_deducted %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

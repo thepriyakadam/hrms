@@ -51,7 +51,7 @@ class SalaryslipsController < ApplicationController
     @salaryslip = Salaryslip.find(params[:format])
     @addable_salary_components = SalaryslipComponent.where("is_deducted = ? and salaryslip_id = ?",false,@salaryslip.id)
     @deducted_salary_components = SalaryslipComponent.where("is_deducted = ? and salaryslip_id = ?",true,@salaryslip.id)
-    @working_day = Workingday.find(@salaryslip.working_day)
+    @working_day = Workingday.find(@salaryslip.workingday_id)
     @employee = Employee.find(@salaryslip.employee_id)
     @advance_salary = AdvanceSalary.find_by_employee_id(@employee.id)
     unless @advance_salary.nil?

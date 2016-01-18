@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @other_salary_component.code %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @other_salary_component.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @other_salary_component.description %>
+</p>
+
+<p>
+  <strong>Is deducted:</strong>
+  <%= @other_salary_component.is_deducted %>
+</p>
+
+<%= link_to 'Edit', edit_other_salary_component_path(@other_salary_component) %> |
+<%= link_to 'Back', other_salary_components_path %>

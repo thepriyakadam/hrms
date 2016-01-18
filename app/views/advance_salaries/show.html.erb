@@ -7,31 +7,28 @@
   </div><!-- /.box-header -->
   <div class="box-body">
     <table id="example2" class="table table-bordered table-hover table-condensed">
-
     <tr>
-      <th><strong>Employee:</strong></th>
+      <th><strong>Employee</strong></th>
       <td><%= @advance_salary.employee.try(:manual_employee_code) %></td>
 
       <th><strong>Emplyee Name</strong></th>
       <td><%= @advance_salary.employee.try(:first_name)+' '+@advance_salary.employee.try(:middle_name)+' '+@advance_salary.employee.try(:last_name) %></td>
     </tr>
     <tr>
-      <th><strong>Advance amount:</strong></th>
+      <th><strong>Advance Amount</strong></th>
       <td><%= @advance_salary.advance_amount %></td>
    
-      <th><strong>No of instalment:</strong></th>
+      <th><strong>No of Instalment</strong></th>
       <td><%= @advance_salary.no_of_instalment %></td>
     </tr>
     <tr>
-      <th><strong>Instalment amount:</strong></th>
+      <th><strong>Instalment Amount</strong></th>
       <td><%= @advance_salary.instalment_amount %></td>
 
-      <th><strong>Advance date:</strong></th>
+      <th><strong>Advance Date</strong></th>
       <td><%= @advance_salary.advance_date %></td>
     </tr>
     </table>
-
-   
 <div class="box">
   <div class="box-header">
     <h3 class="box-title">Instalment Details</h3>
@@ -41,9 +38,9 @@
     <table id="example2" class="table table-bordered table-hover table-condensed">
     <thead>
       <tr>
-        <th>Advance salary</th>
-        <th>Instalment date</th>
-        <th>Instalment amount</th>
+        <th>Advance Salary</th>
+        <th>Instalment Date</th>
+        <th>Instalment Amount</th>
         <th>Action</th>
       </tr>
     </thead>

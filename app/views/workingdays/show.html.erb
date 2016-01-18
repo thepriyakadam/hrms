@@ -9,38 +9,44 @@
     <table id="example2" class="table table-bordered table-hover table-condensed">
 
     <tr>
-    <th> <strong>Employee:</strong></th>
-    <td><%= @workingday.employee.id %></td>
+    <th> <strong>Employee Code</strong></th>
+    <td><%= @workingday.employee.try(:manual_employee_code) %></td>
 
-    <th> <strong>Month name:</strong></th>
+    <th><strong>Emplyee Name</strong></th>
+    <td><%= @workingday.employee.try(:first_name)+' '+@workingday.employee.try(:middle_name)+' '+@workingday.employee.try(:last_name) %></td>
+    </tr>
+    <tr>
+
+    <th> <strong>Month Name</strong></th>
     <td><%= @workingday.month_name %></td>
-    </tr>
-    <tr>
-    <th> <strong>Year:</strong></th>
-    <td><%= @workingday.year %></td>
-
-    <th><strong>Day in month:</strong></th>
-    <td><%= @workingday.day_in_month %></td>
-    </tr>
-    <tr>
-    <th><strong>Present day:</strong></th>
-    <td><%= @workingday.present_day %></td>
-
-    <th><strong>Total leave:</strong></th>
-    <td><%= @workingday.total_leave %></td>
-    </tr>
-    <tr>
-    <th> <strong>Holiday in month:</strong></th>
-    <td><%= @workingday.holiday_in_month %></td>
-
-    <th> <strong>Week off day:</strong></th>
-    <td><%= @workingday.week_off_day %></td>
-    </tr>
-    <tr>
-    <th> <strong>Absent day:</strong></th>
-    <td><%= @workingday.absent_day %></td>
     
-    <th><strong>Payable day:</strong></th>
+    
+    <th> <strong>Year</strong></th>
+    <td><%= @workingday.year %></td>
+    </tr>
+    <tr>
+    <th><strong>Day in Month</strong></th>
+    <td><%= @workingday.day_in_month %></td>
+   
+    <th><strong>Present Day</strong></th>
+    <td><%= @workingday.present_day %></td>
+    </tr>
+    <tr>
+    <th><strong>Total Leave</strong></th>
+    <td><%= @workingday.total_leave %></td>
+    
+    <th> <strong>Holiday in Month</strong></th>
+    <td><%= @workingday.holiday_in_month %></td>
+    </tr>
+    <tr>
+    <th> <strong>Week off Day</strong></th>
+    <td><%= @workingday.week_off_day %></td>
+    
+    <th> <strong>Absent Day</strong></th>
+    <td><%= @workingday.absent_day %></td>
+    </tr>
+    <tr>
+    <th><strong>Payable Day</strong></th>
     <td><%= @workingday.payable_day %></td>
     </tr>
     </table>

@@ -2,7 +2,7 @@
   <div class="box-header">
     <h3 class="box-title">Working Day</h3>
     <div class="pull-right">
-      <%= link_to 'New Workingday', new_workingday_path, class: 'btn btn-sm btn-primary' %> 
+      <%= link_to 'Working Day ', new_workingday_path, class: 'btn btn-sm btn-primary' %> 
     </div>
     
   </div><!-- /.box-header -->
@@ -12,15 +12,15 @@
     <thead>
       <tr>
         <th>Employee</th>
-        <th>Month name</th>
+        <th>Month Name</th>
         <th>Year</th>
-        <th>Day in month</th>
-        <th>Present day</th>
-        <th>Total leave</th>
-        <th>Holiday in month</th>
-        <th>Week off day</th>
-        <th>Absent day</th>
-        <th>Payable day</th>
+        <th>Day in Month</th>
+        <th>Present Day</th>
+        <th>Total Leave</th>
+        <th>Holiday in Month</th>
+        <th>Week off Day</th>
+        <th>Absent Day</th>
+        <th>Payable Day</th>
         <th>Action</th>
       </tr>
     </thead>
@@ -28,7 +28,7 @@
     <tbody>
        <% @workingdays.each do |workingday| %>
         <tr>
-          <td><%= workingday.employee.id %></td>
+          <td><%= workingday.employee.try(:manual_employee_code) %></td>
           <td><%= workingday.month_name %></td>
           <td><%= workingday.year %></td>
           <td><%= workingday.day_in_month %></td>

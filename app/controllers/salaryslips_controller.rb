@@ -58,4 +58,20 @@ class SalaryslipsController < ApplicationController
     
     redirect_to salary_template_employee_salary_templates_path
   end
+  def employee_salary_list
+    @employees =Employee.all
+  end
+
+  def show_salaryslip
+    # @employee = Employee.find(params[:format])
+    # if @employee.nil?
+    #   @flag = false
+    # else
+    #   @salaryslip = Salaryslip.find_by_employee_id(@employee.id)
+    #   @deducted_salary_components = SalaryslipComponent.where("salaryslip_id = ?,is_deducted = ?",@salaryslip.id,false)
+    #   @deducted_salary_components = SalaryslipComponent.where("salaryslip_id = ?",@salaryslip.id)
+    #   @working_day = Workingday.where("employee_id = ? and month_name = ? and year = ?", @employee.id, params["month"], params["year"]).take
+    #   @flag = true
+    # end
+  end
 end

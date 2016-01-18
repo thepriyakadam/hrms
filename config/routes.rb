@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   resources :salaryslips do
     collection do
       post :save_data
+      get :employee_salary_list
+      get :show_salaryslip
     end
   end
   resources :instalments

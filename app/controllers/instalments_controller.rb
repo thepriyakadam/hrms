@@ -28,14 +28,19 @@ class InstalmentsController < ApplicationController
   # POST /instalments.json
   def create
     @instalment = Instalment.new(instalment_params)
-
-    respond_to do |format|
-      if @instalment.save
-        format.html { redirect_to @instalment, notice: 'Instalment was successfully created.' }
-        format.json { render :show, status: :created, location: @instalment }
-      else
-        format.html { render :new }
-        format.json { render json: @instalment.errors, status: :unprocessable_entity }
+    @advance_salary = AdvanceSalary.find(params[:instalment][:advance_salary_id])
+    if @instalment.instalment_amount > @advance_salary.advance_amount.to_i
+      flash[:alert] = "Amount exceed the limit."
+      render :new
+    else
+      respond_to do |format|
+        if @instalment.save
+          format.html { redirect_to @instalment, notice: 'Instalment was successfully created.' }
+          format.json { render :show, status: :created, location: @instalment }
+        else
+          format.html { render :new }
+          format.json { render json: @instalment.errors, status: :unprocessable_entity }
+        end
       end
     end
   end

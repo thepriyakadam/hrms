@@ -15,11 +15,13 @@ class InstalmentsController < ApplicationController
 
   # GET /instalments/new
   def new
+    @advance_salary = AdvanceSalary.find(params[:format])
     @instalment = Instalment.new
   end
 
   # GET /instalments/1/edit
   def edit
+    @advance_salary = @instalment.advance_salary
   end
 
   # POST /instalments

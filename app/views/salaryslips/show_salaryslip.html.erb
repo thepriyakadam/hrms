@@ -89,7 +89,13 @@
 		    <tr>
 	        <th>Total Deducted</th>
 	        <td align="right"><strong><%= deducted_total %></strong></td>
-	        <td align="right"><strong><%= instalment_deducted %></strong></td>
+	        
+	        <% if @instalment_array.empty? %>
+	        	<td align="right"><strong><%= '%.0f'%(deducted_total) %></strong></td>
+	        <% else %>
+	        	<td align="right"><strong><%= instalment_deducted %></strong></td>
+	        <% end %>
+
 	      </tr>
 				<tr>
 					<th></th>
@@ -98,7 +104,11 @@
 				</tr>
 			  <tr>
 	        <th colspan="2">Net Salary</th>
+	        <% unless @instalment_array.empty? %>
 	        <% net_salary = add_ans - instalment_deducted %>
+	        <%else%>
+	        <% net_salary = add_ans - deducted_total %>
+	      	<%end%>
 	      	<td align="right"><strong>
 	      		<%= '%.0f'%(net_salary) %></strong>
 	      	</td>

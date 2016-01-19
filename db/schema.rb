@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160118052507) do
+ActiveRecord::Schema.define(version: 20160119091826) do
 
   create_table "advance_salaries", force: :cascade do |t|
     t.integer  "employee_id"
@@ -535,8 +535,9 @@ ActiveRecord::Schema.define(version: 20160118052507) do
     t.integer  "advance_salary_id"
     t.date     "instalment_date"
     t.decimal  "instalment_amount", precision: 15, scale: 2
-    t.datetime "created_at",                                 null: false
-    t.datetime "updated_at",                                 null: false
+    t.datetime "created_at",                                                 null: false
+    t.datetime "updated_at",                                                 null: false
+    t.boolean  "is_complete",                                default: false
   end
 
   add_index "instalments", ["advance_salary_id"], name: "index_instalments_on_advance_salary_id"

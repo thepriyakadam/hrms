@@ -68,7 +68,7 @@ class EmployeeSalaryTemplatesController < ApplicationController
     @deducted_salary_components = nil
     @month = params["month"]
     @year = params["year"]
-
+    @instalment_array = []
     @employee = Employee.find_by_manual_employee_code(params[:employee_code])
     
     if @employee.nil?
@@ -92,7 +92,7 @@ class EmployeeSalaryTemplatesController < ApplicationController
         unless @advance_salary.nil?
           #@instalments = @advance_salary.instalments.where(instalment_date: !nil)
           @instalments = @advance_salary.instalments
-          @instalment_array = []
+          
           @instalments.try(:each) do |i|
             unless i.instalment_date.nil?
             if i.try(:instalment_date).strftime("%B") == params["month"] and i.try(:instalment_date).strftime("%Y") == params["year"]
@@ -110,9 +110,4 @@ class EmployeeSalaryTemplatesController < ApplicationController
     
   end
 
-  def save_data
-    p "------------------------------------"
-    p params[:employee]
-    p "-----------------------------------"
-  end
 end

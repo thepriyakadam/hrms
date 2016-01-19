@@ -2,8 +2,7 @@
 <div class="box box-default">
   <div class="box-header with-border">
     <h3 class="box-title">Salary Advance</h3>
-    <div class="box-tools pull-right">
-    </div>
+
   </div><!-- /.box-header -->
   <div class="box-body">
     <table id="example2" class="table table-bordered table-hover table-condensed">
@@ -28,11 +27,21 @@
       <th><strong>Advance Date</strong></th>
       <td><%= @advance_salary.advance_date %></td>
     </tr>
+    <tr>
+      <th><strong>Instalment Paid</strong></th>
+      <td><%= @advance_salary.instalments.where(is_complete: true).sum('instalment_amount') %></td>
+
+      <th><strong>Instalment Remain</strong></th>
+      <td><%= @advance_salary.instalments.where(is_complete: false).sum('instalment_amount') %></td>
+    </tr>
     </table>
 <div class="box">
   <div class="box-header">
     <h3 class="box-title">Instalment Details</h3>
   </div><!-- /.box-header -->
+  <div class="box-tools pull-right">
+    <%= link_to "Add Instalment", new_instalment_path(@advance_salary),class: "btn btn-primary btn-sm" %>
+    </div>
   <div class="box-body">
   <div id="comments">
     <table id="example2" class="table table-bordered table-hover table-condensed">
@@ -55,8 +64,10 @@
           
           <td><%= instalment.instalment_amount %></td>
           <td>
-            <%= link_to '', edit_instalment_path(instalment), class: 'btn btn-sm btn-success fa fa-edit' %>
-            <%= link_to '', instalment, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-sm  btn-danger fa fa-close' %>
+            <% unless instalment.is_complete %>
+              <%= link_to '', edit_instalment_path(instalment), class: 'btn btn-sm btn-success fa fa-edit' %>
+              <%= link_to '', instalment, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-sm  btn-danger fa fa-close' %>
+            <% end %>
           </td>
         </tr>
       <% end %>

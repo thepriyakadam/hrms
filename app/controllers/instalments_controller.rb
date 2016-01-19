@@ -29,7 +29,8 @@ class InstalmentsController < ApplicationController
   def create
     @instalment = Instalment.new(instalment_params)
     @advance_salary = AdvanceSalary.find(params[:instalment][:advance_salary_id])
-    if @instalment.instalment_amount > @advance_salary.advance_amount.to_i
+    amount = @advance_salary.instalments.where(is_complete: false).sum('instalment_amount')
+    if @instalment.instalment_amount > amount
       flash[:alert] = "Amount exceed the limit."
       render :new
     else

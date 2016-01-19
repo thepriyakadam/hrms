@@ -40,8 +40,10 @@
     <h3 class="box-title">Instalment Details</h3>
   </div><!-- /.box-header -->
   <div class="box-tools pull-right">
+    <% unless @instalments.where(is_complete: true).sum('instalment_amount').to_i >= @advance_salary.advance_amount.to_i %>
     <%= link_to "Add Instalment", new_instalment_path(@advance_salary),class: "btn btn-primary btn-sm" %>
-    </div>
+    <% end %>
+  </div>
   <div class="box-body">
   <div id="comments">
     <table id="example2" class="table table-bordered table-hover table-condensed">
@@ -76,3 +78,4 @@
   </div>
 </div>
 </div>
+<%= console %>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160119091826) do
+ActiveRecord::Schema.define(version: 20160118113539) do
 
   create_table "advance_salaries", force: :cascade do |t|
     t.integer  "employee_id"
@@ -529,6 +529,7 @@ ActiveRecord::Schema.define(version: 20160119091826) do
     t.date     "holiday_date"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+    t.boolean  "isweekend"
   end
 
   create_table "instalments", force: :cascade do |t|

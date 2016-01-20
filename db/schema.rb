@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160119091826) do
+ActiveRecord::Schema.define(version: 20160120060451) do
 
   create_table "advance_salaries", force: :cascade do |t|
     t.integer  "employee_id"
@@ -366,10 +366,10 @@ ActiveRecord::Schema.define(version: 20160119091826) do
     t.string   "base"
     t.string   "to_be_paid"
     t.decimal  "max_amount",                 precision: 15, scale: 2
-    t.decimal  "monthly_amount",             precision: 15, scale: 2
-    t.decimal  "annual_amount",              precision: 15, scale: 2
-    t.datetime "created_at",                                          null: false
-    t.datetime "updated_at",                                          null: false
+    t.decimal  "monthly_amount",             precision: 15, scale: 2, default: 0.0
+    t.decimal  "annual_amount",              precision: 15, scale: 2, default: 0.0
+    t.datetime "created_at",                                                        null: false
+    t.datetime "updated_at",                                                        null: false
   end
 
   add_index "employee_salary_templates", ["employee_id"], name: "index_employee_salary_templates_on_employee_id"

@@ -15,25 +15,33 @@ class InstalmentsController < ApplicationController
 
   # GET /instalments/new
   def new
+    @advance_salary = AdvanceSalary.find(params[:format])
     @instalment = Instalment.new
   end
 
   # GET /instalments/1/edit
   def edit
+    @advance_salary = @instalment.advance_salary
   end
 
   # POST /instalments
   # POST /instalments.json
   def create
     @instalment = Instalment.new(instalment_params)
-
-    respond_to do |format|
-      if @instalment.save
-        format.html { redirect_to @instalment, notice: 'Instalment was successfully created.' }
-        format.json { render :show, status: :created, location: @instalment }
-      else
-        format.html { render :new }
-        format.json { render json: @instalment.errors, status: :unprocessable_entity }
+    @advance_salary = AdvanceSalary.find(params[:instalment][:advance_salary_id])
+    amount = @advance_salary.instalments.where(is_complete: false).sum('instalment_amount')
+    if @instalment.instalment_amount > amount
+      flash[:alert] = "Amount exceed the limit."
+      render :new
+    else
+      respond_to do |format|
+        if @instalment.save
+          format.html { redirect_to @instalment, notice: 'Instalment was successfully created.' }
+          format.json { render :show, status: :created, location: @instalment }
+        else
+          format.html { render :new }
+          format.json { render json: @instalment.errors, status: :unprocessable_entity }
+        end
       end
     end
   end

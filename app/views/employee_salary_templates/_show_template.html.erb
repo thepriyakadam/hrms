@@ -30,7 +30,7 @@
 
               <td><%= select :parent_salary_component_id, template.salary_component_id, all_salary_component, {:prompt => true, :selected => template.parent_salary_component_id },class: 'form-control'%></td>
 
-              <td><%= text_field :percentage,template.salary_component_id,readonly: true, value: template.try(:percentage), class: "form-control" %></td>
+              <td><%= text_field :percentage,template.salary_component_id, value: template.try(:percentage), class: "form-control" %></td>
 
               <td><%= select :to_be_paid, template.salary_component_id, [['Annual'],['Monthly']], {:prompt => true, :selected => template.to_be_paid, },class: 'form-control'%></td>
 

@@ -83,3 +83,6 @@ gem 'jquery-ui-rails'
 #Time Differences
 gem 'time_difference'
 
+#Excel Read
+gem 'roo'
+

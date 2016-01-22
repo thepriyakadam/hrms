@@ -21,7 +21,10 @@ class ApplicationController < ActionController::Base
 
   #AbstractController::ActionNotFound
   #ActionController::RoutingError
-
+  #SQLite3::BusyException
+  #ActiveRecord::StatementInvalid
+  #ActiveRecord::RecordInvalid
+  
   rescue_from ActiveRecord::RecordNotFound do |exc|
     if request.xhr?
       flash[:alert] = "Sorry! Record not found"

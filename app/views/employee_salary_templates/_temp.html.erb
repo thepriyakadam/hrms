@@ -36,7 +36,6 @@
 			</tr>
 	  </tbody>
 	</table>
-	
 		<div class="row">
 			<div class="col-sm-6">
 				<table class="table table-bordered table-hover table-condensed">
@@ -68,14 +67,20 @@
 		        <td align="right"><strong><%= @addable_total %></strong></td>
 		        <td align="right"><strong><%= '%.0f'%add_ans %></strong></td>
 		      </tr>			
-		    <% deducted_total = 0 %>
+		    <% deducted_ans = 0 %>
 		    <% instalment_deducted = 0 %>
 		    <% @deducted_salary_components.each do |salary_component| %>
 		      <tr>
 		        <td><%= salary_component.salary_component.name %></td>
-		        <td align="right"><%= salary_component.monthly_amount %></td>
-		        <td align="right"><%= salary_component.monthly_amount %></td>
-		        <% deducted_total = deducted_total + salary_component.monthly_amount %>
+			        <td align="right"><%=salary_component.monthly_amount %></td>
+			        <% item = salary_component.monthly_amount %>
+			        <% if item.nil? %>
+				      	<td align="right"><%= 0.00 %></td>
+				      <% else %>
+				      <% ans = (item.to_f / @working_day.try(:day_in_month)) * @working_day.try(:payable_day) %>
+				      <% deducted_ans = deducted_ans + ans %>
+				      <td align="right"><%= '%.0f'%ans %></td>
+				      <% end %>
 		      </tr>
 		    <% end %>
 		    
@@ -91,7 +96,7 @@
 	        <th>Total Deducted</th>
 	        <td align="right"><strong><%= '%.0f'%(@deducted_total) %></strong></td>
 	        <% if @instalment_array.empty? %>
-	        	<td align="right"><strong><%= '%.0f'%(@deducted_total) %></strong></td>
+	        	<td align="right"><strong><%= '%.0f'%(deducted_ans) %></strong></td>
 	        <% else %>
 	        	<td align="right"><strong><%= instalment_deducted %></strong></td>
 	        <% end %>
@@ -106,7 +111,7 @@
 	        <% unless @instalment_array.empty? %>
 	        <% net_salary = add_ans - instalment_deducted %>
 	        <%else%>
-	        <% net_salary = add_ans - @deducted_total %>
+	        <% net_salary = add_ans - deducted_ans %>
 	      	<%end%>
 	      	<td align="right"><strong><%= '%.0f'%(net_salary) %></strong>
 	      	</td>

@@ -36,7 +36,6 @@
 			</tr>
 	  </tbody>
 	</table>
-	
 		<div class="row">
 			<div class="col-sm-6">
 				<table class="table table-bordered table-hover table-condensed">
@@ -138,6 +137,7 @@
 							<td align="right"><%= salary_component.monthly_amount %></td>
 							<% deducted_total = deducted_total + salary_component.monthly_amount %>
 						<% end %>
+
 		      </tr>
 		    <% end %>
 			    <% @instalment_array.try(:each) do |ia| %>
@@ -152,7 +152,7 @@
 	        <th>Total Deducted</th>
 	        <td align="right"><strong><%= '%.0f'%(@deducted_total) %></strong></td>
 	        <% if @instalment_array.empty? %>
-	        	<td align="right"><strong><%= '%.0f'%(@deducted_total) %></strong></td>
+	        	<td align="right"><strong><%= '%.0f'%(deducted_ans) %></strong></td>
 	        <% else %>
 	        	<td align="right"><strong><%= instalment_deducted %></strong></td>
 	        <% end %>
@@ -167,7 +167,9 @@
 	        <% unless @instalment_array.empty? %>
 	        	<% net_salary = add_ans - instalment_deducted %>
 	        <%else%>
+
 	        	<% net_salary = add_ans - @deducted_total %>
+
 	      	<%end%>
 	      	<td align="right"><strong><%= '%.0f'%(net_salary) %></strong>
 	      	</td>

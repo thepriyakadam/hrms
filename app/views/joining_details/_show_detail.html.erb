@@ -32,11 +32,34 @@
       <td><%= @joining_detail.employee_grade.try(:name) %></td>
     </tr>
     <tr>
+      <th><strong>PF</strong></th>
+      <td><%= @joining_detail.select_pf %></td>
+
       <th><strong>PF No</strong></th>
       <td><%= @joining_detail.employee_pf_no %></td>
+    </tr>
 
+    <tr>
+      <th><strong>PF Max Amount</strong></th>
+      <td><%= @joining_detail.pf_max_amount %></td>
+
+      <th><strong>ESIC</strong></th>
+      <td><%= @joining_detail.have_esic %></td>
+    </tr>
+
+    <tr>
       <th><strong>ESIC No</strong></th>
       <td><%= @joining_detail.employee_efic_no %></td>
+
+      <th><strong>Payment Mode</strong></th>
+      <td><%= @joining_detail.payment_mode %></td>
+    </tr>
+     <tr>
+      <th><strong>Cost Center</strong></th>
+      <td><%= @joining_detail.cost_center.try(:name) %></td>
+
+      <th><strong>Employee Category</strong></th>
+      <td><%= @joining_detail.employee_category.try(:name) %></td>
     </tr>
 
     <tr>

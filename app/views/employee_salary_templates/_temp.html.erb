@@ -18,7 +18,7 @@
 	  		<th>Email</th>
 	  		<td><%= @employee.email %></td>
 	  	</tr>
-	  	 <tr>
+	  	<tr>
         <th>Month Day</th>		
         <td align="right"><%= @working_day.try(:day_in_month) %></td>      
         <th>Holidays</th>	    
@@ -61,6 +61,14 @@
 				      <td align="right"><%= '%.0f'%ans %></td>
 				      <% end %>
 			      </tr>
+
+			      <% if salary_component.salary_component.name == "Washing Allowance" %>
+						<% washing_allowence = item %>
+						<% elsif salary_component.salary_component.name == "Basic" %>
+						<% basic = ans %>
+						<% elsif salary_component.salary_component.name == "DA" %>
+						<% driver_allowance = ans %>
+						<% end %>
 			    <% end %>
 			    <tr>
 		        <th>Total Salary</th>
@@ -71,16 +79,80 @@
 		    <% instalment_deducted = 0 %>
 		    <% @deducted_salary_components.each do |salary_component| %>
 		      <tr>
-		        <td><%= salary_component.salary_component.name %></td>
-			        <td align="right"><%=salary_component.monthly_amount %></td>
-			        <% item = salary_component.monthly_amount %>
+						<% if salary_component.salary_component.name == "ESIC" and !(@employee.joining_detail.try(:employee_efic_no).nil?) and add_ans <= 15000 %>
+							<% esic_temp = @addable_total - washing_allowence %>
+							<% esic = (esic_temp / 100) * 1.7 %>
+							<td><%= salary_component.salary_component.name %></td>
+							<td align="right"><%= salary_component.monthly_amount %></td>
+							<td align="right"><%= esic.round %></td>
+							<% deducted_total = deducted_total + esic %>
+						<% elsif salary_component.salary_component.name == "Prof. Tax" and @addable_total > 15000 %>
+							<td><%= salary_component.salary_component.name %></td>
+							<% if @month == "March" %>
+							  <td align="right"><%= 212 %></td>
+								<td align="right"><%= 212 %></td>
+								<% deducted_total = deducted_total + 212 %>
+							<% else %>
+								<td align="right"><%= 208 %></td>
+								<td align="right"><%= 208 %></td>
+								<% deducted_total = deducted_total + 208 %>
+							<% end %>
+						<% elsif salary_component.salary_component.name == "PF" %>
+							<% if @employee.joining_detail.try(:employee_category).try(:name) == 'Worker' %>
+								<% worker_pf = ((basic + direct_allowance)/100)*12 %>
+								<td><%= salary_component.salary_component.name %></td>
+							  <td align="right"><%= salary_component.monthly_amount %></td>
+								<td align="right"><%= worker_pf.round %></td>
+								<% deducted_total = deducted_total + worker_pf %>
+							<% elsif @employee.joining_detail.try(:employee_category).try(:name) == 'Staff' %>
+								<% if select_pf == "Yes" %>
+									<% staff_pf = (basic/100)*12 %>
+									<td><%= salary_component.salary_component.name %></td>
+								  <td align="right"><%= salary_component.monthly_amount %></td>
+									<td align="right"><%= staff_pf.round %></td>
+									<% deducted_total = deducted_total + staff_pf %>
+								<% elsif select_pf == 'Limit' %>
+									<% staff_pf = (@employee.joining_detail.pf_max_amount/100)*12 %>
+									<td><%= salary_component.salary_component.name %></td>
+								  <td align="right"><%= salary_component.monthly_amount %></td>
+									<td align="right"><%= staff_pf.round %></td>
+									<% deducted_total = deducted_total + staff_pf %>
+								<% else %>
+									<td><%= salary_component.salary_component.name %></td>
+								  <td align="right"><%= salary_component.monthly_amount %></td>
+									<% item = salary_component.monthly_amount %>
+					        <% if item.nil? %>
+						      	<td align="right"><%= 0.00 %></td>
+						      <% else %>
+							      <% ans = (item.to_f / @working_day.try(:day_in_month)) * @working_day.try(:payable_day) %>
+							      <td align="right"><%= '%.0f'%ans %></td>
+										<% deducted_total = deducted_total + ans %>
+									<% end %>
+								<% end %>	
+							<% else %>
+								<td><%= salary_component.salary_component.name %></td>
+							  <td align="right"><%= salary_component.monthly_amount %></td>
+								<% item = salary_component.monthly_amount %>
+				        <% if item.nil? %>
+					      	<td align="right"><%= 0.00 %></td>
+					      <% else %>
+						      <% ans = (item.to_f / @working_day.try(:day_in_month)) * @working_day.try(:payable_day) %>
+						      <td align="right"><%= '%.0f'%ans %></td>
+									<% deducted_total = deducted_total + ans %>
+								<% end %>
+							<% end %>
+						<% else %>
+							<td><%= salary_component.salary_component.name %></td>
+						  <td align="right"><%= salary_component.monthly_amount %></td>
+							<% item = salary_component.monthly_amount %>
 			        <% if item.nil? %>
 				      	<td align="right"><%= 0.00 %></td>
 				      <% else %>
-				      <% ans = (item.to_f / @working_day.try(:day_in_month)) * @working_day.try(:payable_day) %>
-				      <% deducted_ans = deducted_ans + ans %>
-				      <td align="right"><%= '%.0f'%ans %></td>
-				      <% end %>
+					      <% ans = (item.to_f / @working_day.try(:day_in_month)) * @working_day.try(:payable_day) %>
+					      <td align="right"><%= '%.0f'%ans %></td>
+								<% deducted_total = deducted_total + ans %>
+							<% end %>
+						<% end %>
 		      </tr>
 		    <% end %>
 		    
@@ -96,7 +168,7 @@
 	        <th>Total Deducted</th>
 	        <td align="right"><strong><%= '%.0f'%(@deducted_total) %></strong></td>
 	        <% if @instalment_array.empty? %>
-	        	<td align="right"><strong><%= '%.0f'%(deducted_ans) %></strong></td>
+	        	<td align="right"><strong><%= '%.0f'%(deducted_total) %></strong></td>
 	        <% else %>
 	        	<td align="right"><strong><%= instalment_deducted %></strong></td>
 	        <% end %>
@@ -111,7 +183,7 @@
 	        <% unless @instalment_array.empty? %>
 	        <% net_salary = add_ans - instalment_deducted %>
 	        <%else%>
-	        <% net_salary = add_ans - deducted_ans %>
+	        	<% net_salary = add_ans - deducted_total %>
 	      	<%end%>
 	      	<td align="right"><strong><%= '%.0f'%(net_salary) %></strong>
 	      	</td>

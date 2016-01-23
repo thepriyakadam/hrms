@@ -19,6 +19,7 @@ class Employee < ActiveRecord::Base
   has_many :employee_annual_salaries
   has_many :employee_salary_templates
   has_many :overtimes
+  has_many :workingdays
   has_one :employee_shift
   has_one :member
   has_one :employee_bank_detail
@@ -30,11 +31,11 @@ class Employee < ActiveRecord::Base
 
   validates :manual_employee_code, :presence => true, uniqueness: { case_sensitive: false }
   validates :first_name, :presence => true
-  validate  :email_regex
+  #validate  :email_regex
   validates :permanent_address, :presence => true
-  validates :country_id, :presence => true
-  validates :state_id, :presence => true
-  validates :district_id, :presence => true
+  # validates :country_id, :presence => true
+  # validates :state_id, :presence => true
+  # validates :district_id, :presence => true
 
   validate :adhar_no_regex
   validate :pan_no_regex

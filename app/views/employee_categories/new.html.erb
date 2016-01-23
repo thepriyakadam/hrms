@@ -1,5 +1,14 @@
-<h1>New Employee Category</h1>
-
-<%= render 'form' %>
-
-<%= link_to 'Back', employee_categories_path %>
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Employee Category List</h3>
+  </div><!-- /.box-header -->
+	<div class="box-body">
+		<div id="form">
+			<%= render 'form' %>	
+		</div>
+		
+		<div id="employee_category_li">
+			<%= render 'employee_category_list' %>
+		</div>
+	</div><!-- /.box-body -->
+</div><!-- /.box -->

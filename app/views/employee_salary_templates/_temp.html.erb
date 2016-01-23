@@ -18,13 +18,13 @@
 	  		<th>Email</th>
 	  		<td><%= @employee.email %></td>
 	  	</tr>
-	  	 <tr>
-        <th>Month Day</th>
-        <td align="right"><%= @working_day.try(:day_in_month) %></td>
-        <th>Holidays</th>
-        <td align="right"><%= @working_day.try(:holiday_in_month) %></td>
-        <th>Leave Total</th>
-        <td align="right"><%= @working_day.try(:total_leave) %></td>
+	  	<tr>
+        <th>Month Day</th>		
+        <td align="right"><%= @working_day.try(:day_in_month) %></td>      
+        <th>Holidays</th>	    
+        <td align="right"><%= @working_day.try(:holiday_in_month) %></td>    
+        <th>Leave Total</th>		
+        <td align="right"><%= @working_day.try(:total_leave) %></td>		        
 			</tr>
 			<tr>
 				<th>Working Days</th>
@@ -46,9 +46,6 @@
 				      <th>Amount</th>
 				    </tr>
 				  </thead>
-				  <% basic = 0 %>
-				  <% direct_allowance = 0 %>
-				  <% washing_allowence = 0 %>
 			  	<% addable_total = 0 %>
 			  	<% add_ans = 0%>
 			    <% @addable_salary_components.each do |salary_component| %>
@@ -64,6 +61,7 @@
 				      <td align="right"><%= '%.0f'%ans %></td>
 				      <% end %>
 			      </tr>
+
 			      <% if salary_component.salary_component.name == "Washing Allowance" %>
 						<% washing_allowence = item %>
 						<% elsif salary_component.salary_component.name == "Basic" %>
@@ -77,9 +75,9 @@
 		        <td align="right"><strong><%= @addable_total %></strong></td>
 		        <td align="right"><strong><%= '%.0f'%add_ans %></strong></td>
 		      </tr>			
-			    <% deducted_total = 0 %>
-			    <% instalment_deducted = 0 %>
-			    <% @deducted_salary_components.each do |salary_component| %>
+		    <% deducted_ans = 0 %>
+		    <% instalment_deducted = 0 %>
+		    <% @deducted_salary_components.each do |salary_component| %>
 		      <tr>
 						<% if salary_component.salary_component.name == "ESIC" and !(@employee.joining_detail.try(:employee_efic_no).nil?) and add_ans <= 15000 %>
 							<% esic_temp = @addable_total - washing_allowence %>
@@ -155,9 +153,9 @@
 								<% deducted_total = deducted_total + ans %>
 							<% end %>
 						<% end %>
-
 		      </tr>
 		    <% end %>
+		    
 			    <% @instalment_array.try(:each) do |ia| %>
 				    <tr>
 				    	<td>Advance</td>
@@ -183,7 +181,7 @@
 			  <tr>
 	        <th colspan="2">Net Salary</th>
 	        <% unless @instalment_array.empty? %>
-	        	<% net_salary = add_ans - instalment_deducted %>
+	        <% net_salary = add_ans - instalment_deducted %>
 	        <%else%>
 	        	<% net_salary = add_ans - deducted_total %>
 	      	<%end%>
@@ -202,5 +200,5 @@
 	net_salary: net_salary,
 	month: @month,
 	year: @year } do |f| %>
-  <%= f.submit %>
+<%= f.submit %>
 <% end %>

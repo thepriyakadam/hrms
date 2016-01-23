@@ -11,7 +11,7 @@
       <div class="row">
         <div class="col-sm-3">
           <div class="form-group required">
-           <%= f.select :employee_id, Employee.all.collect {|e| [e.manual_employee_code+"  "+e.first_name+" "+e.last_name,e.id]} %>
+           <%= f.select :employee_id, Employee.all.collect {|e| [e.manual_employee_code+"  "+e.first_name.to_s+" "+e.last_name.to_s,e.id]} %>
            </div>
         </div>
       </div>
@@ -92,11 +92,8 @@
         ans = (workingday_day_in_month - workingday_absent_day).toFixed(2);
       }
       $('#workingday_payable_day').val(ans);
-
     });
-
     $('#workingday_absent_day').on('input', function() {
-      
     });
 
     $('#workingday_absent_day').on('input', function() {
@@ -111,5 +108,24 @@
       }
       $('#workingday_payable_day').val(ans);
     });
+
+    $('#workingday_week_off_day').on('input', function() {
+      var workingday_present_day = parseFloat($('#workingday_present_day').val());
+      var workingday_total_leave = parseFloat($('#workingday_total_leave').val());
+      var workingday_holiday_in_month = parseFloat($('#workingday_holiday_in_month').val());
+      var workingday_week_off_day = parseFloat($('#workingday_week_off_day').val());
+
+
+      var ans="";
+      // if (isNaN(workingday_day_in_month) || isNaN(workingday_absent_day)) {
+      //   ans = ""
+      // }
+      // else{
+        ans = (workingday_present_day + workingday_total_leave + workingday_holiday_in_month + workingday_week_off_day).toFixed(2);
+      //}
+      $('#workingday_payable_day').val(ans);
+    });
+
+
   });
 </script>

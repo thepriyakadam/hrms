@@ -65,10 +65,10 @@
 				      <% end %>
 			      </tr>
 			      <% if salary_component.salary_component.name == "Washing Allowance" %>
-						<% washing_allowence = ans %>
+						<% washing_allowence = item %>
 						<% elsif salary_component.salary_component.name == "Basic" %>
 						<% basic = ans %>
-						<% elsif salary_component.salary_component.name == "Driver Allowance" %>
+						<% elsif salary_component.salary_component.name == "DA" %>
 						<% driver_allowance = ans %>
 						<% end %>
 			    <% end %>
@@ -81,8 +81,8 @@
 			    <% instalment_deducted = 0 %>
 			    <% @deducted_salary_components.each do |salary_component| %>
 		      <tr>
-						<% if salary_component.salary_component.name == "ESIC" and !(@employee.joining_detail.employee_efic_no.nil?) and add_ans <= 15000 %>
-							<% esic_temp = add_ans - washing_allowence %>
+						<% if salary_component.salary_component.name == "ESIC" and !(@employee.joining_detail.try(:employee_efic_no).nil?) and add_ans <= 15000 %>
+							<% esic_temp = @addable_total - washing_allowence %>
 							<% esic = (esic_temp / 100) * 1.7 %>
 							<td><%= salary_component.salary_component.name %></td>
 							<td align="right"><%= salary_component.monthly_amount %></td>
@@ -122,20 +122,38 @@
 								<% else %>
 									<td><%= salary_component.salary_component.name %></td>
 								  <td align="right"><%= salary_component.monthly_amount %></td>
-									<td align="right"><%= salary_component.monthly_amount %></td>
-									<% deducted_total = deducted_total + salary_component.monthly_amount %>
+									<% item = salary_component.monthly_amount %>
+					        <% if item.nil? %>
+						      	<td align="right"><%= 0.00 %></td>
+						      <% else %>
+							      <% ans = (item.to_f / @working_day.try(:day_in_month)) * @working_day.try(:payable_day) %>
+							      <td align="right"><%= '%.0f'%ans %></td>
+										<% deducted_total = deducted_total + ans %>
+									<% end %>
 								<% end %>	
 							<% else %>
 								<td><%= salary_component.salary_component.name %></td>
 							  <td align="right"><%= salary_component.monthly_amount %></td>
-								<td align="right"><%= salary_component.monthly_amount %></td>
-								<% deducted_total = deducted_total + salary_component.monthly_amount %>
+								<% item = salary_component.monthly_amount %>
+				        <% if item.nil? %>
+					      	<td align="right"><%= 0.00 %></td>
+					      <% else %>
+						      <% ans = (item.to_f / @working_day.try(:day_in_month)) * @working_day.try(:payable_day) %>
+						      <td align="right"><%= '%.0f'%ans %></td>
+									<% deducted_total = deducted_total + ans %>
+								<% end %>
 							<% end %>
 						<% else %>
 							<td><%= salary_component.salary_component.name %></td>
 						  <td align="right"><%= salary_component.monthly_amount %></td>
-							<td align="right"><%= salary_component.monthly_amount %></td>
-							<% deducted_total = deducted_total + salary_component.monthly_amount %>
+							<% item = salary_component.monthly_amount %>
+			        <% if item.nil? %>
+				      	<td align="right"><%= 0.00 %></td>
+				      <% else %>
+					      <% ans = (item.to_f / @working_day.try(:day_in_month)) * @working_day.try(:payable_day) %>
+					      <td align="right"><%= '%.0f'%ans %></td>
+								<% deducted_total = deducted_total + ans %>
+							<% end %>
 						<% end %>
 
 		      </tr>
@@ -152,7 +170,7 @@
 	        <th>Total Deducted</th>
 	        <td align="right"><strong><%= '%.0f'%(@deducted_total) %></strong></td>
 	        <% if @instalment_array.empty? %>
-	        	<td align="right"><strong><%= '%.0f'%(deducted_ans) %></strong></td>
+	        	<td align="right"><strong><%= '%.0f'%(deducted_total) %></strong></td>
 	        <% else %>
 	        	<td align="right"><strong><%= instalment_deducted %></strong></td>
 	        <% end %>
@@ -167,9 +185,7 @@
 	        <% unless @instalment_array.empty? %>
 	        	<% net_salary = add_ans - instalment_deducted %>
 	        <%else%>
-
-	        	<% net_salary = add_ans - @deducted_total %>
-
+	        	<% net_salary = add_ans - deducted_total %>
 	      	<%end%>
 	      	<td align="right"><strong><%= '%.0f'%(net_salary) %></strong>
 	      	</td>

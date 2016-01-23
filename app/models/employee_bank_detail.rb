@@ -1,9 +1,9 @@
 class EmployeeBankDetail < ActiveRecord::Base
   belongs_to :employee
-   validates :bank_name, :presence => true
-   validates :branch_name, :presence => true
-   validates :address, :presence => true
-   validates :branch_code, :presence => true
+   # validates :bank_name, :presence => true
+   # validates :branch_name, :presence => true
+   # validates :address, :presence => true
+   # validates :branch_code, :presence => true
    #validate :bank_name_regex
    #validate :branch_name_regex
    validate :contact_no_regex

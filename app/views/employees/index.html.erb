@@ -4,7 +4,6 @@
     <div class="pull-right">
       <%= link_to "Create Employee", new_employee_path, class: 'btn btn-sm btn-primary' %> 
     </div>
-    
   </div><!-- /.box-header -->
   <div class="box-body">
     <table id="example2" class="table table-bordered table-hover table-condensed">
@@ -24,13 +23,13 @@
     <% @employees.each do |employee| %>
       <tr>
         <td><%= employee.manual_employee_code %></td>
-        <td><%= employee.first_name+' '+employee.middle_name+' '+employee.last_name %></td>
+        <td><%= employee.first_name.to_s+' '+employee.try(:last_name).to_s %></td>
         <td><%= employee.date_of_birth %></td>
         <td><%= employee.city %></td>
         <td> <%= employee.employee_type.try(:name) %></td>
         <td><%= employee.status %></td>
         <td>
-            <%= link_to '', employee,class: 'btn btn-sm btn-default fa fa-eye' %>
+          <%= link_to '', employee,class: 'btn btn-sm btn-default fa fa-eye' %>
         </td>
         </tr>
       <% end %>

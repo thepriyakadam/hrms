@@ -1,20 +1,9 @@
 class EmployeeCategoriesController < ApplicationController
   before_action :set_employee_category, only: [:show, :edit, :update, :destroy]
 
-  # GET /employee_categories
-  # GET /employee_categories.json
-  def index
-    @employee_categories = EmployeeCategory.all
-  end
-
-  # GET /employee_categories/1
-  # GET /employee_categories/1.json
-  def show
-  end
-
-  # GET /employee_categories/new
   def new
     @employee_category = EmployeeCategory.new
+    @employee_categories = EmployeeCategory.all
   end
 
   # GET /employee_categories/1/edit
@@ -25,40 +14,24 @@ class EmployeeCategoriesController < ApplicationController
   # POST /employee_categories.json
   def create
     @employee_category = EmployeeCategory.new(employee_category_params)
-
-    respond_to do |format|
-      if @employee_category.save
-        format.html { redirect_to @employee_category, notice: 'Employee category was successfully created.' }
-        format.json { render :show, status: :created, location: @employee_category }
-      else
-        format.html { render :new }
-        format.json { render json: @employee_category.errors, status: :unprocessable_entity }
-      end
-    end
+    @employee_category.save
+    @employee_categories = EmployeeCategory.all
+    @employee_category = EmployeeCategory.new
   end
 
   # PATCH/PUT /employee_categories/1
   # PATCH/PUT /employee_categories/1.json
   def update
-    respond_to do |format|
-      if @employee_category.update(employee_category_params)
-        format.html { redirect_to @employee_category, notice: 'Employee category was successfully updated.' }
-        format.json { render :show, status: :ok, location: @employee_category }
-      else
-        format.html { render :edit }
-        format.json { render json: @employee_category.errors, status: :unprocessable_entity }
-      end
-    end
+     @employee_category.update(employee_category_params)
+     @employee_categories = EmployeeCategory.all
+     @employee_category = EmployeeCategory.new  
   end
 
   # DELETE /employee_categories/1
   # DELETE /employee_categories/1.json
   def destroy
     @employee_category.destroy
-    respond_to do |format|
-      format.html { redirect_to employee_categories_url, notice: 'Employee category was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    @employee_categories = EmployeeCategory.all
   end
 
   private

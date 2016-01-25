@@ -235,15 +235,15 @@ end
 #   end
 # end
 
-# Workingday.new do |w|
-#   w.employee_id = @employee.id
-#   w.month_name = ex.cell(line,'D')
-#   w.year = 
-#   w.day_in_month
-#   w.present_day
-#   w.total_leave
-#   w.holiday_in_month
-#   w.week_of_day
-#   w.absent_day
-#   w.payble_day
-# end
+Workingday.new do |w|
+  w.employee_id = @employee.id
+  w.month_name = ex.cell(line,'D')
+  w.year = 
+  w.day_in_month
+  w.present_day
+  w.total_leave
+  w.holiday_in_month
+  w.week_of_day
+  w.absent_day
+  w.payble_day
+end

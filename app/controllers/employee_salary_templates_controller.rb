@@ -108,9 +108,4 @@ class EmployeeSalaryTemplatesController < ApplicationController
   def modal
     
   end
-
-  def all_employee_salary_list
-    @employees =Employee.all
-  end
-
 end

@@ -15,7 +15,7 @@
 			
 			<div class="col-sm-2">
 				<label>Depends</label>
-				
+				<%= f.select :parent_salary_component_id, parent_salary_component,{prompt: true,hide_label: true,:multiple=>true,:id => "batches"} %>
         <%=select_tag("batches[]",options_for_select(SalaryComponent.all.collect { |ff| [ff.name, ff.id] }),{:multiple=>true,:id => "batches",class: "form-control"})%>
 			</div>
 			<div class="col-sm-2">
@@ -79,8 +79,8 @@
 
   $(function() {
     $('#batches').multiselect({
-    includeSelectAllOption: true,
-    maxHeight: 200
+    // includeSelectAllOption: true,
+    // maxHeight: 200
     });
   });
 </script>

@@ -3,11 +3,11 @@
 		<%=select :salary,:template, all_salary_template,{include_blank: "Please Select Template"},{onchange:"var a={id:$(this).val(),employee_id : '#{@employee.id}'}; $.get('/employee_salary_templates/find_template',a,function(response){});",class: 'form-control'}%>
 	</div>
 	<div class="col-sm-6"></div>
-	 <div class="col-sm-3">
+	<!--  <div class="col-sm-3">
           <div class="form-group required">
             <%= text_field :salary, :ctc, placeholder: "Employee CTC",class: 'form-control' %>
           </div>
-      	</div>
+      	</div> -->
 	
 </div>
        

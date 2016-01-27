@@ -41,7 +41,6 @@ class EmployeeSalaryTemplatesController < ApplicationController
     @employee_salary_templates = EmployeeSalaryTemplate.where("employee_id=?",params[:format])
   end
 
-
   def create_employee_template
     arrays = params[:is_deducted].keys
     arrays.each do |a|
@@ -108,6 +107,10 @@ class EmployeeSalaryTemplatesController < ApplicationController
 
   def modal
     
+  end
+
+  def all_employee_salary_list
+    @employees =Employee.all
   end
 
 end

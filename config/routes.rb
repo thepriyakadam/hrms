@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
 
+  resources :excel_uploads do
+    collection do
+      post :load_excel
+    end
+  end
   resources :employee_categories
   resources :other_salary_components
   resources :salaryslips do

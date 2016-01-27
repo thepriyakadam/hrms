@@ -42,12 +42,14 @@
 				  <thead>
 				    <tr>
 				      <th>Particular</th>
-				      <th>Amount</th>
-				      <th>Amount</th>
+				      <th>Actual Amount</th>
+				      <th>Calculated Amount</th>
 				    </tr>
 				  </thead>
 			  	<% addable_total = 0 %>
 			  	<% add_ans = 0%>
+			  	<% deducted_total = 0 %>
+			  	<% washing_allowence = 0 %>
 			    <% @addable_salary_components.each do |salary_component| %>
 			      <tr>
 			        <td><%= salary_component.salary_component.name %></td>
@@ -79,9 +81,9 @@
 		    <% instalment_deducted = 0 %>
 		    <% @deducted_salary_components.each do |salary_component| %>
 		      <tr>
-						<% if salary_component.salary_component.name == "ESIC" and !(@employee.joining_detail.try(:employee_efic_no).nil?) and add_ans <= 15000 %>
-							<% esic_temp = @addable_total - washing_allowence %>
-							<% esic = (esic_temp / 100) * 1.7 %>
+						<% if salary_component.salary_component.name == "ESIC" %>
+							<% esic_temp = salary_component.monthly_amount %>
+							<% esic = ((add_ans.round - washing_allowence)/ 100) * 1.75 %>
 							<td><%= salary_component.salary_component.name %></td>
 							<td align="right"><%= salary_component.monthly_amount %></td>
 							<td align="right"><%= esic.round %></td>

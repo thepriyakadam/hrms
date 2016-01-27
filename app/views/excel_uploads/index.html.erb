@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Excel Uploads</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>File name</th>
+      <th>Size</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @excel_uploads.each do |excel_upload| %>
+      <tr>
+        <td><%= excel_upload.code %></td>
+        <td><%= excel_upload.file_name %></td>
+        <td><%= excel_upload.size %></td>
+        <td><%= link_to 'Show', excel_upload %></td>
+        <td><%= link_to 'Edit', edit_excel_upload_path(excel_upload) %></td>
+        <td><%= link_to 'Destroy', excel_upload, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Excel upload', new_excel_upload_path %>

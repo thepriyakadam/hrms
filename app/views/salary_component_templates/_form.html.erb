@@ -15,7 +15,8 @@
 			
 			<div class="col-sm-2">
 				<label>Depends</label>
-				<%= f.select :parent_salary_component_id, parent_salary_component,{prompt: true,hide_label: true} %>
+				
+        <%=select_tag("batches[]",options_for_select(SalaryComponent.all.collect { |ff| [ff.name, ff.id] }),{:multiple=>true,:id => "batches",class: "form-control"})%>
 			</div>
 			<div class="col-sm-2">
 				<label>Factor(%)</label>
@@ -74,5 +75,12 @@
         $("#salary_component_template_percentage").prop('disabled', false);
       }
     }
+  });
+
+  $(function() {
+    $('#batches').multiselect({
+    includeSelectAllOption: true,
+    maxHeight: 200
+    });
   });
 </script>

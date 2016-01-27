@@ -13,6 +13,7 @@
             <th>Salary Component</th>
             <th>Is Deducted</th>
             <th>Parent Salary Component</th>
+            <th>Parent Salary Component1</th>
             <th>Percentage</th>
             <th>To Be Paid</th>
             <th>Monthly Amount</th>
@@ -29,6 +30,8 @@
               <td><%= select :is_deducted, template.salary_component_id, [['Yes','true'],['No','false']], {:prompt => true, :selected => template.is_deducted, },class: 'form-control'%></td>
 
               <td><%= select :parent_salary_component_id, template.salary_component_id, all_salary_component, {:prompt => true, :selected => template.parent_salary_component_id },class: 'form-control'%></td>
+
+              <td><%=select_tag("batches[]",options_for_select(SalaryComponent.all.collect { |ff| [ff.name, ff.id] }),{:multiple=>true,:id => "batches",class: "form-control"})%></td>
 
               <td><%= text_field :percentage,template.salary_component_id, value: template.try(:percentage), class: "form-control" %></td>
 
@@ -190,4 +193,11 @@
       }
     });
   <% end %>
+
+  $(function() {
+    $('#batches').multiselect({
+    includeSelectAllOption: true,
+    maxHeight: 200
+    });
+  });
 </script>

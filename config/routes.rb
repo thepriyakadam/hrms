@@ -14,6 +14,9 @@ Rails.application.routes.draw do
       get :employee_salary_list
       get :show_salaryslip
       get :salary_slip_list
+      get :select_month_year_form
+      get :show_unsaved_employee
+      post :save_all_data
     end
   end
   resources :instalments
@@ -38,7 +41,6 @@ Rails.application.routes.draw do
       get :modal
       get :salary_template
       get :find_employee_for_salary
-      get :all_employee_salary_list
       post :save_data
     end
   end

@@ -89,7 +89,6 @@ class SalaryslipsController < ApplicationController
   end
 
   def save_all_data
-    p "------------------------------------"
     @employee_ids = params[:employee_ids]
     @employee_ids.each do |e_id|
       @employee = Employee.find(e_id)
@@ -133,7 +132,8 @@ class SalaryslipsController < ApplicationController
         end
         @flag = true
       end
-    end  
-    redirect_to salary_template_employee_salary_templates_path
+    end
+    flash[:notice] = "All data saved successfully."
+    redirect_to select_month_year_form_salaryslips_path
   end
 end

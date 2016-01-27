@@ -81,7 +81,7 @@
 		    <% instalment_deducted = 0 %>
 		    <% @deducted_salary_components.each do |salary_component| %>
 		      <tr>
-						<% if salary_component.salary_component.name == "ESIC" %>
+						<% if salary_component.salary_component.name == "ESIC" and add_ans <= 15000 %>
 							<% esic_temp = salary_component.monthly_amount %>
 							<% esic = ((add_ans.round - washing_allowence)/ 100) * 1.75 %>
 							<td><%= salary_component.salary_component.name %></td>

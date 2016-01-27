@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :esic_masters
   resources :excel_uploads do
     collection do
       post :load_excel

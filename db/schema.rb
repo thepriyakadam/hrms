@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160126095053) do
+ActiveRecord::Schema.define(version: 20160127112049) do
 
   create_table "advance_salaries", force: :cascade do |t|
     t.integer  "employee_id"
@@ -456,6 +456,17 @@ ActiveRecord::Schema.define(version: 20160126095053) do
   add_index "employees", ["nationality_id"], name: "index_employees_on_nationality_id"
   add_index "employees", ["religion_id"], name: "index_employees_on_religion_id"
   add_index "employees", ["state_id"], name: "index_employees_on_state_id"
+
+  create_table "esic_masters", force: :cascade do |t|
+    t.boolean  "esic"
+    t.decimal  "percentage",     precision: 15, scale: 2, default: 0.0
+    t.decimal  "decimal",        precision: 15, scale: 2, default: 0.0
+    t.date     "date_effective"
+    t.decimal  "max_limit",      precision: 15, scale: 2, default: 0.0
+    t.string   "base_component"
+    t.datetime "created_at",                                            null: false
+    t.datetime "updated_at",                                            null: false
+  end
 
   create_table "excel_uploads", force: :cascade do |t|
     t.string   "code"

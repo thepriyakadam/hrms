@@ -37,6 +37,7 @@ Rails.application.routes.draw do
       get :modal
       get :salary_template
       get :find_employee_for_salary
+      get :all_employee_salary_list
       post :save_data
     end
   end

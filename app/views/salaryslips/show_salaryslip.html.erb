@@ -68,16 +68,17 @@
 		        <td align="right"><strong><%= @addable_total %></strong></td>
 		        <td align="right"><strong><%= '%.0f'%add_ans %></strong></td>
 		      </tr>			
-		    <% deducted_total = 0.0 %>
+		    <% deducted_total = 0 %>
 		    <% instalment_deducted = 0 %>
 		    <% @deducted_salary_components.each do |salary_component| %>
 		      <tr>
 		        <td><%= salary_component.salary_component.try(:name) %></td>
 		        <td align="right"><%= salary_component.amount %></td>
 		        <td align="right"><%= salary_component.amount %></td>
-		        <% deducted_total = deducted_total + salary_component.amount %>
+		        <% deducted_total = deducted_total.to_i + salary_component.amount.to_i %>
 		      </tr>
 		    <% end %>
+		    	<% unless @instalment_array.empty? %>
 			    <% @instalment_array.each do |ia| %>
 				    <tr>
 				    	<td>Advance</td>
@@ -85,6 +86,7 @@
 				    	<td align="right"><%= ia.advance_salary.instalment_amount %></td>
 				    	<% instalment_deducted = deducted_total + ia.advance_salary.instalment_amount %>
 				    </tr>
+					<% end %>
 					<% end %>
 		    <tr>
 	        <th>Total Deducted</th>

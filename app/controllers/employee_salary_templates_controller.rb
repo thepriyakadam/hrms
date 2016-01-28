@@ -68,6 +68,7 @@ class EmployeeSalaryTemplatesController < ApplicationController
     @month = params["month"]
     @year = params["year"]
     @instalment_array = []
+    @salary_slip_component = []
     @employee = Employee.find_by_manual_employee_code(params[:employee_code])
     
     if @employee.nil?
@@ -75,6 +76,7 @@ class EmployeeSalaryTemplatesController < ApplicationController
     else
       @record = Salaryslip.where("month = ? and year = ? and employee_id = ?",params["month"],params["year"],@employee.id).take
       if @record.nil?
+        @salaryslip = Salaryslip.new
         @addable_salary_components = EmployeeSalaryTemplate.where("employee_id = ? and is_deducted = ?",@employee.id,false)
         @deducted_salary_components = EmployeeSalaryTemplate.where("employee_id = ? and is_deducted = ?",@employee.id,true)
         unless params["month"].nil? and params["year"].nil?
@@ -91,7 +93,6 @@ class EmployeeSalaryTemplatesController < ApplicationController
         unless @advance_salary.nil?
           #@instalments = @advance_salary.instalments.where(instalment_date: !nil)
           @instalments = @advance_salary.instalments
-          
           @instalments.try(:each) do |i|
             unless i.instalment_date.nil?
             if i.try(:instalment_date).strftime("%B") == params["month"] and i.try(:instalment_date).strftime("%Y") == params["year"]

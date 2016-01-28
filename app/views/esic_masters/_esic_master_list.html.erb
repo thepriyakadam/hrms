@@ -17,7 +17,6 @@
         <td><%= esic_master.date_effective %></td>
         <td><%= esic_master.max_limit %></td>
         <td><%= esic_master.base_component %></td>
-       
         <td>
           <%= link_to '', edit_esic_master_path(esic_master),class: 'btn btn-sm btn-success fa fa-edit',remote:true %>
           <%= link_to '',  esic_master, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-sm btn-danger fa fa-close' %>

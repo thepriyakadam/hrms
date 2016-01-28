@@ -18,7 +18,7 @@
     <% @employees.each do |employee| %>
       <tr>
         <td><%= employee.manual_employee_code %></td>
-        <td><%= employee.first_name+' '+employee.middle_name+' '+employee.last_name %></td>
+        <td><%= employee.first_name %><%= employee.middle_name %><%= employee.last_name %></td>
         <td><%= employee.contact_no %></td>
         <td><%= employee.email %></td>
         <td>

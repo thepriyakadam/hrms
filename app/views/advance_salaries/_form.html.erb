@@ -9,7 +9,7 @@
       <div class="row">
         <div class="col-sm-3">
           <div class="form-group required">
-           <%= f.select :employee_id, Employee.all.collect {|e| [e.manual_employee_code ,e.id]} %>
+          <%= f.select :employee_id, Employee.all.collect {|e| [e.manual_employee_code+"  "+e.first_name.to_s+" "+e.last_name.to_s,e.id]} %>
            </div>
         </div>
       </div>

@@ -13,7 +13,19 @@ class EsicMastersController < ApplicationController
   # POST /esic_masters
   # POST /esic_masters.json
   def create
+    components = params[:components]
+    str = String.new
+    i = 0
+    components.each do |c|
+      if i == 0
+        str = c.to_s
+      else
+        str = str.to_s+","+c.to_s
+      end
+      i = i + 1
+    end
     @esic_master = EsicMaster.new(esic_master_params)
+    @esic_master.base_component = str
     @esic_masters = EsicMaster.all
     @esic_master.save
     @esic_master = EsicMaster.new

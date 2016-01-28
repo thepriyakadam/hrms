@@ -19,11 +19,11 @@ class BanksController < ApplicationController
     @banks = Bank.all
     respond_to do |format|
       if @bank.save
-         @bank = Bank.new
+        @bank = Bank.new
         format.js { @flag = true }
       else
         flash.now[:alert] = "Bank Already Exist."
-         format.js { @flag = false }
+        format.js { @flag = false }
       end
     end
   end
@@ -31,9 +31,9 @@ class BanksController < ApplicationController
   # PATCH/PUT /banks/1
   # PATCH/PUT /banks/1.json
   def update
-      @bank.update(bank_params)
-      @banks = Bank.all
-      @bank = Bank.new
+    @bank.update(bank_params)
+    @banks = Bank.all
+    @bank = Bank.new
   end
 
   # DELETE /banks/1

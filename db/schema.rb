@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160127112049) do
+ActiveRecord::Schema.define(version: 20160128064951) do
 
   create_table "advance_salaries", force: :cascade do |t|
     t.integer  "employee_id"
@@ -798,11 +798,12 @@ ActiveRecord::Schema.define(version: 20160127112049) do
   create_table "salaryslip_components", force: :cascade do |t|
     t.integer  "salaryslip_id"
     t.integer  "salary_component_id"
-    t.decimal  "amount",               precision: 15, scale: 2
+    t.decimal  "actual_amount",        precision: 15, scale: 2
     t.boolean  "is_deducted"
     t.datetime "created_at",                                    null: false
     t.datetime "updated_at",                                    null: false
     t.string   "other_component_name"
+    t.decimal  "calculated_amount",    precision: 15, scale: 2
   end
 
   add_index "salaryslip_components", ["salary_component_id"], name: "index_salaryslip_components_on_salary_component_id"
@@ -812,14 +813,17 @@ ActiveRecord::Schema.define(version: 20160127112049) do
     t.string   "salary_slip_code"
     t.integer  "employee_id"
     t.integer  "workingday_id"
-    t.decimal  "gross_salary",       precision: 15, scale: 2
-    t.decimal  "total_deduction",    precision: 15, scale: 2
-    t.decimal  "net_salary",         precision: 15, scale: 2
-    t.datetime "created_at",                                  null: false
-    t.datetime "updated_at",                                  null: false
+    t.decimal  "actual_gross_salary",        precision: 15, scale: 2
+    t.decimal  "actual_total_deduction",     precision: 15, scale: 2
+    t.decimal  "actual_net_salary",          precision: 15, scale: 2
+    t.datetime "created_at",                                          null: false
+    t.datetime "updated_at",                                          null: false
     t.integer  "salary_template_id"
     t.string   "month"
     t.string   "year"
+    t.decimal  "calculated_gross_salary",    precision: 15, scale: 2
+    t.decimal  "calculated_total_deduction", precision: 15, scale: 2
+    t.decimal  "calculated_net_salary",      precision: 15, scale: 2
   end
 
   add_index "salaryslips", ["employee_id"], name: "index_salaryslips_on_employee_id"

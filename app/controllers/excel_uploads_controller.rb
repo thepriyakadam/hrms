@@ -62,32 +62,14 @@ class ExcelUploadsController < ApplicationController
   end
 
   def load_excel
-    puts params
-    puts "-----------------------------------------------------------"
-    #params.permit!
-    puts book = Spreadsheet.open(params["upload"]["spreadsheet"].open, 'rb')
-    puts "-----------------------------------------------------------"
-    puts ex = Roo::Excel.new("#{Rails.root}/public/employee.xls")
-    puts "-----------------------------------------------------------"
-    # ex = Roo::Excel.new("")
-    # ex.default_sheet = ex.sheets[1] 
-    # i=1
-    # 3.upto(5) do |line|
-    # EmployeeBankDetail.new do |b|
-    #   b.employee_id = 4034
-    #   b.account_no = ex.cell(line,'AN')
-    #   b.bank_name = ex.cell(line,'AO')
-    #   b.branch_name = ex.cell(line,'AP')
-    #   b.address = ex.cell(line,'AQ')
-    #   b.contact_no = ex.cell(line,'AR')
-    #   b.micr_code = ex.cell(line,'AS')
-    #   b.branch_code = ex.cell(line,'AT')
-    #   b.ifsc_code = ex.cell(line,'AU')
-    #   b.save!
-    # end
-    # puts "#{i} Record inserted.-----------------------------------------------"
-    # i = i+1
-    # end
+    ex = Roo::Spreadsheet.open(params["upload"]["spreadsheet"].open)
+
+    ex.default_sheet = ex.sheets[1]
+    3.upto(50) do |line|
+      puts a = ex.cell(line, 'A')
+      puts b = ex.cell(line, 'B')
+      puts c = ex.cell(line, 'C')
+    end
   end
 
   private

@@ -63,8 +63,8 @@ class EmployeeSalaryTemplatesController < ApplicationController
   end
 
   def find_employee_for_salary
-    @addable_salary_components = nil
-    @deducted_salary_components = nil
+    @addable_salary_items = nil
+    @deducted_salary_items = nil
     @month = params["month"]
     @year = params["year"]
     @instalment_array = []
@@ -77,16 +77,16 @@ class EmployeeSalaryTemplatesController < ApplicationController
       @record = Salaryslip.where("month = ? and year = ? and employee_id = ?",params["month"],params["year"],@employee.id).take
       if @record.nil?
         @salaryslip = Salaryslip.new
-        @addable_salary_components = EmployeeSalaryTemplate.where("employee_id = ? and is_deducted = ?",@employee.id,false)
-        @deducted_salary_components = EmployeeSalaryTemplate.where("employee_id = ? and is_deducted = ?",@employee.id,true)
+        @addable_salary_items = EmployeeSalaryTemplate.where("employee_id = ? and is_deducted = ?",@employee.id,false)
+        @deducted_salary_items = EmployeeSalaryTemplate.where("employee_id = ? and is_deducted = ?",@employee.id,true)
         unless params["month"].nil? and params["year"].nil?
           @working_day = Workingday.where("employee_id = ? and month_name = ? and year = ?", @employee.id, params["month"], params["year"]).take
         end
 
-        unless @addable_salary_components.nil?
-          @addable_total = @addable_salary_components.sum('monthly_amount').to_f
+        unless @addable_salary_items.nil?
+          @addable_total = @addable_salary_items.sum('monthly_amount').to_f
           unless @addable_total.nil?
-              @deducted_total = (@deducted_salary_components.sum('monthly_amount')).to_f
+              @deducted_total = (@deducted_salary_items.sum('monthly_amount')).to_f
           end
         end
         @advance_salary = AdvanceSalary.find_by_employee_id(@employee.id)

@@ -36,7 +36,7 @@ class InstalmentsController < ApplicationController
     else
       respond_to do |format|
         if @instalment.save
-          format.html { redirect_to @instalment, notice: 'Instalment was successfully created.' }
+          format.html { redirect_to @advance_salary, notice: 'Instalment was successfully created.' }
           format.json { render :show, status: :created, location: @instalment }
         else
           format.html { render :new }

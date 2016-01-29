@@ -8,8 +8,6 @@
       <th>Parent salary component</th>
       <th>Percentage</th>
       <th>To be paid</th>
-      <th>Monthly amount</th>
-      <th>Annual amount</th>
       <th>Action</th>
     </tr>
   </thead>
@@ -24,8 +22,6 @@
         <td><%= salary_component_template.try(:parent_salary_component).try(:name) %></td>
         <td><%= salary_component_template.try(:percentage) %></td>
         <td><%= salary_component_template.try(:to_be_paid) %></td>
-        <td><%= salary_component_template.try(:monthly_amount) %></td>
-        <td><%= salary_component_template.try(:annual_amount) %></td>
         <td>  
           <%= link_to '', edit_salary_component_template_path(salary_component_template),class: "btn btn-sm btn-success btn-xs fa fa-edit", remote: true %>
         </td>

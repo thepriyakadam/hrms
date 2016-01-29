@@ -1,334 +1,186 @@
 <table class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Employee Code</th>
+      <td><%= @employee.manual_employee_code%></td>
+      <th>Employee Name</th>
+      <td><%= full_name(@employee) %></td>
+      <th>Designation</th>
+      <td><%= @employee.joining_detail.try(:designation) %></td>
+    </tr>
+  </thead>
+  <tbody>
+  	<tr>
+  	  <th>Employement</th>
+  		<td><%= @employee.employee_type.try(:name) %></td>
+  		<th>Contact No</th>
+  		<td><%= @employee.contact_no %></td>
+  		<th>Email</th>
+  		<td><%= @employee.email %></td>
+  	</tr>
+  	<tr>
+      <th>Month Day</th>
+      <td align="right"><%= @working_day.try(:day_in_month) %></td>
+      <th>Holidays</th>
+      <td align="right"><%= @working_day.try(:holiday_in_month) %></td>
+      <th>Leave Total</th>
+      <td align="right"><%= @working_day.try(:total_leave) %></td>
+		</tr>
+		<tr>
+			<th>Working Days</th>
+			<td align="right"><%= @working_day.try(:present_day) %></td>
+			<th>Absent Days</th>
+			<td align="right"><%= @working_day.try(:absent_day) %></td>
+			<th>Payble Days</th>
+			<td align="right"><%= @working_day.try(:payable_day) %></td>
+		</tr>
+  </tbody>
+</table>
+
+<div class="row">
+  <div class="col-sm-6">
+    <table class="table table-bordered table-hover table-condensed">
       <thead>
         <tr>
-          <th>Employee Code</th>
-          <td><%= @employee.manual_employee_code%></td>
-          <th>Employee Name</th>
-          <td><%= full_name(@employee) %></td>
-          <th>Designation</th>
-          <td><%= @employee.joining_detail.try(:designation) %></td>
+          <th>Particular</th>
+          <th>Actual Amount</th>
+          <th>Calculated Amount</th>
         </tr>
       </thead>
-      <tbody>
-          <tr>
-            <th>Employement</th>
-              <td><%= @employee.employee_type.try(:name) %></td>
-              <th>Contact No</th>
-              <td><%= @employee.contact_no %></td>
-              <th>Email</th>
-              <td><%= @employee.email %></td>
-          </tr>
-          <tr>
-        <th>Month Day</th>
-        <td align="right"><%= @working_day.try(:day_in_month) %></td>
-        <th>Holidays</th>
-        <td align="right"><%= @working_day.try(:holiday_in_month) %></td>
-        <th>Leave Total</th>
-        <td align="right"><%= @working_day.try(:total_leave) %></td>
-            </tr>
-            <tr>
-                <th>Working Days</th>
-                <td align="right"><%= @working_day.try(:present_day) %></td>
-                <th>Absent Days</th>
-                <td align="right"><%= @working_day.try(:absent_day) %></td>
-                <th>Payble Days</th>
-                <td align="right"><%= @working_day.try(:payable_day) %></td>
-            </tr>
-      </tbody>
-    </table>
-        <div class="row">
-            <div class="col-sm-6">
-                <table class="table table-bordered table-hover table-condensed">
-                  <thead>
-                    <tr>
-                      <th>Particular</th>
-                      <th>Actual Amount</th>
-                      <th>Calculated Amount</th>
-                    </tr>
-                  </thead>
-                  <% addable_total = 0 %>
-                  <% add_ans = 0%>
-                  <% deducted_total = 0 %>
-                  <% washing_allowence = 0 %>
-                
-
-
-
-
-
-
-
-                <% @addable_salary_components.each do |salary_component| %>
-                  <tr>
-                    <td><%= salary_component.salary_component.name %></td>
-                    <td align="right"><%=salary_component.monthly_amount %></td>
-                    <% actual_amount = salary_component.monthly_amount %>
-                    <% if actual_amount.nil? %>
-                          <td align="right"><%= 0.00 %></td>
-                      <% else %>
-                      <% ans = (actual_amount.to_f / @working_day.try(:day_in_month)) * @working_day.try(:payable_day) %>
-                      <% add_ans = add_ans + ans %>
-                      <td align="right"><%= '%.0f'%ans %></td>
-                      <% end %>
-                  </tr>
-
-                  <% @salaryslip_component = SalaryslipComponent.new do |sc| %>
-                  <% sc.salary_component_id = salary_component.salary_component.id %>
-                  <% sc.actual_amount = actual_amount %>
-                  <% sc.calculated_amount = ans %>
-                  <% sc.is_deducted = false %>
-                  <% end %>
-                  <% @salary_slip_component << @salaryslip_component %>
-
-                  <% if salary_component.salary_component.name == "Washing Allowance" %>
-                        <% washing_allowence = ans %>
-                        <% elsif salary_component.salary_component.name == "Basic" %>
-                        <% basic = ans %>
-                        <% elsif salary_component.salary_component.name == "DA" %>
-                        <% driver_allowance = ans %>
-                        <% end %>
-                <% end %>
-
-
-
-
-
-
-
-
-
-                <tr>
-                <th>Total Salary</th>
-                <td align="right"><strong><%= @addable_total %></strong></td>
-                <td align="right"><strong><%= '%.0f'%add_ans %></strong></td>
-                <% @salaryslip.calculated_gross_salary = '%.0f'%add_ans %>
-              </tr>
-                <% gross_washing = 0 %>
-                <% deducted_ans = 0 %>
-                <% instalment_deducted = 0 %>
-                <% left_esic = 0 %>
-                <% left_col_total = 0 %>
-
-
-
-
-
-
-
-
-
-
-            <% @deducted_salary_components.each do |salary_component| %>
-              <tr>
-                  
-                        <% if salary_component.salary_component.name == "ESIC" and EsicMaster.first.esic %>
-                                <% unless add_ans > EsicMaster.first.max_limit %>
-                                    <% formula_array = EsicMaster.first.base_component.split(",") %>
-                                    <% formula_array.each do |a| %>
-                                        <% before_calculated_value = @addable_salary_components.where(salary_component_id: a.to_i).take.monthly_amount.to_f %>
-
-                                        <% calculated_value = (before_calculated_value / @working_day.try(:day_in_month)) * @working_day.try(:payable_day) %>
-
-
-                                        <% gross_washing = gross_washing + calculated_value %>
-                                        <% left_col_total = left_col_total + before_calculated_value %>
-                                    <% end %>
-                                    <% final_esic = gross_washing / 100 * EsicMaster.first.percentage %>
-                                    <% left_esic = left_col_total / 100 * EsicMaster.first.percentage %>
-                                    <td><%= salary_component.salary_component.name %></td>
-                                    <td align="right"><%= left_esic.ceil %></td>
-                                    <td align="right"><%= final_esic.ceil %></td>
-
-                        <% @salary_slip_component << create_salaryslip_component(left_esic, final_esic,salary_component.salary_component.id) %>
-
-
-
-                                    <% deducted_total = deducted_total + final_esic %>
-                                <% else %>
-                                    <td><%= salary_component.salary_component.name %></td>
-                                    <td align="right"><%= 0 %></td>
-                                    <td align="right"><%= 0 %></td>
-                                    <% @salary_slip_component << create_salaryslip_component(0, 0,salary_component.salary_component.id) %>
-                                <% end %>    
-                        <% elsif salary_component.salary_component.name == "Prof. Tax" and @addable_total > 15000 %>
-                            <td><%= salary_component.salary_component.name %></td>
-                            <% if @month == "March" %>
-                                <% march_prof_tax = 212 %>
-                              <td align="right"><%= 212 %></td>
-                                <td align="right"><%= 212 %></td>
-                                <% deducted_total = deducted_total + 212 %>
-                                <% @salary_slip_component << create_salaryslip_component(march_prof_tax, march_prof_tax,salary_component.salary_component.id) %>
-                            <% else %>
-                                <% prof_tax = 208 %>
-                                <td align="right"><%= 208 %></td>
-                                <td align="right"><%= 208 %></td>
-                                <% deducted_total = deducted_total + 208 %>
-                                <% @salary_slip_component << create_salaryslip_component(prof_tax,prof_tax,salary_component.salary_component.id) %>
-                            <% end %>
-                        <% elsif salary_component.salary_component.name == "PF" %>
-                            <% if @employee.joining_detail.try(:employee_category).try(:name) == 'Worker' %>
-                                <% worker_pf = ((basic + direct_allowance)/100)*12 %>
-                                <td><%= actual_value = salary_component.salary_component.name %></td>
-                              <td align="right"><%= salary_component.monthly_amount %></td>
-                                <td align="right"><%= worker_pf.round %></td>
-                                <% deducted_total = deducted_total + worker_pf %>
-                                <% @salary_slip_component << create_salaryslip_component(actual_value, worker_pf,salary_component.salary_component.id) %>
-                            <% elsif @employee.joining_detail.try(:employee_category).try(:name) == 'Staff' %>
-                                <% if select_pf == "Yes" %>
-                                    <% staff_pf = (basic/100)*12 %>
-                                    <td><%= salary_component.salary_component.name %></td>
-                                  <td align="right"><%= salary_component.monthly_amount %></td>
-                                    <td align="right"><%= staff_pf.round %></td>
-                                    <% deducted_total = deducted_total + staff_pf %>
-                                    <% @salary_slip_component << create_salaryslip_component(salary_component.monthly_amount, staff_pf.round,salary_component.salary_component.id) %>
-                                <% elsif select_pf == 'Limit' %>
-                                    <% staff_pf = (@employee.joining_detail.pf_max_amount/100)*12 %>
-                                    <td><%= salary_component.salary_component.name %></td>
-                                  <td align="right"><%= salary_component.monthly_amount %></td>
-                                    <td align="right"><%= staff_pf.round %></td>
-                                    <% deducted_total = deducted_total + staff_pf %>
-                                    <% @salary_slip_component << create_salaryslip_component(actual_value, worker_pf,salary_component.salary_component.id) %>
-                                <% else %>
-                                    <td><%= salary_component.salary_component.name %></td>
-                                  <td align="right"><%= salary_component.monthly_amount %></td>
-                                    <% actual_amount = salary_component.monthly_amount %>
-                            <% if actual_amount.nil? %>
-                                  <td align="right"><%= 0.00 %></td>
-                              <% else %>
-                                  <% ans = (actual_amount.to_f / @working_day.try(:day_in_month)) * @working_day.try(:payable_day) %>
-                                  <td align="right"><%= '%.0f'%ans %></td>
-                                        <% deducted_total = deducted_total + ans %>
-                                        <% @salary_slip_component << create_salaryslip_component(actual_amount, ans.round,salary_component.salary_component.id) %>
-                                    <% end %>
-                                <% end %>    
-                            <% else %>
-                                <td><%= salary_component.salary_component.name %></td>
-                              <td align="right"><%= salary_component.monthly_amount %></td>
-                                <% actual_amount = salary_component.monthly_amount %>
-                        <% if actual_amount.nil? %>
-                              <td align="right"><%= 0.00 %></td>
-                          <% else %>
-                              <% ans = (actual_amount.to_f / @working_day.try(:day_in_month)) * @working_day.try(:payable_day) %>
-                              <td align="right"><%= '%.0f'%ans %></td>
-                                    <% deducted_total = deducted_total + ans %>
-                                    <% @salary_slip_component << create_salaryslip_component(actual_amount, ans.round,salary_component.salary_component.id) %>
-                                <% end %>
-                            <% end %>
-                        <% else %>
-                            <td><%= salary_component.salary_component.name %></td>
-                          <td align="right"><%= 0 %></td>
-                            <% actual_amount = salary_component.monthly_amount %>
-                            <% zero = 0 %>
-                    <% if actual_amount.nil? %>
-                          <td align="right"><%= 0.00 %></td>
-                                <% @salary_slip_component << create_salaryslip_component(zero, zero,salary_component.salary_component.id) %>
-                      <% else %>
-                          <td align="right"><%= actual_amount %></td>
-                                <% deducted_total = deducted_total + actual_amount %>
-                                <% @salary_slip_component << create_salaryslip_component(zero.to_f, actual_amount,salary_component.salary_component.id) %>
-                            <% end %>
-                        <% end %>
-              </tr>
-            <% end %>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            
-                <% @instalment_array.try(:each) do |ia| %>
-                    <tr>
-                        <td>Advance</td>
-                        <td align="right"><%=  %></td>
-                        <td align="right"><%= ia.advance_salary.instalment_amount %>
-                        </td>
-                        <% instalment_deducted = deducted_total + ia.advance_salary.instalment_amount %>
-                            
-                            <% @salaryslip_component = SalaryslipComponent.new do |sc| %>
-                  <% sc.calculated_amount = ia.advance_salary.instalment_amount %>
-                  <% sc.is_deducted = true %>
-                  <% sc.other_component_name = "Advance" %>
-                  <% end %>
-                  <% @salary_slip_component << @salaryslip_component %>
-
-                    </tr>
-                    <% end %>
-
-
-
-
-            <tr>
-            <th>Total Deducted</th>
-            <td align="right"><strong><%=  %></strong></td>
-            <% if @instalment_array.empty? %>
-                <td align="right"><strong><%= '%.0f'%(deducted_total) %></strong></td>
-                <% @salaryslip.calculated_total_deduction = '%.0f'%(deducted_total) %>
-            <% else %>
-                <td align="right"><strong><%= instalment_deducted %></strong></td>
-                <% @salaryslip.calculated_total_deduction = instalment_deducted %>
-            <% end %>
-          </tr>
-
-
-
-
-
-
-                
-              <tr>
-            <th colspan="2">Net Salary</th>
-            <% unless @instalment_array.empty? %>
-            <% net_salary = add_ans - instalment_deducted %>
-            <%else%>
-                <% net_salary = add_ans - deducted_total %>
-              <%end%>
-              <td align="right"><strong><%= '%.0f'%(net_salary) %></strong>
-              </td>
-            </tr>
-            </table>
-            </div>
-         </div> 
-        </div>
-    
-
-    <% @salaryslip.employee_id = @employee.id %>
-    <% @salaryslip.workingday_id = @working_day.id %>
-    <% @salaryslip.actual_gross_salary = @addable_total%>
-    
-
-    
-<% @salaryslip.calculated_net_salary = '%.0f'%(net_salary) %>
-<% @salary_slip_component.each do |s| %>
-<%= s.salary_component.name %>
-<% end %>
-<%= form_for :data, url: {controller: 'salaryslips', action: 'save_data',
-    employee: @employee,
-    month: @month,
-    year: @year } do |f| %>
-    <%= f.hidden_field :workingday_id, value: @working_day.id %>
-    <%= f.hidden_field :actual_gross_salary, value: @addable_total %>
-    <%= f.hidden_field :actual_total_deduction, value: 0 %>
-    <%= f.hidden_field :actual_net_salary, value: 0 %>
-    <%= f.hidden_field :calculated_gross_salary, value: @salaryslip.calculated_gross_salary %>
-    <%= f.hidden_field :calculated_total_deduction, value: @salaryslip.calculated_total_deduction %>
-    <%= f.hidden_field :calculated_net_salary, value: @salaryslip.calculated_net_salary %>
-    
-    <% @salary_slip_component.each_with_index do |s,i| %>
-        <%= hidden_field_tag "salary_component_id[]", i, value: s.salary_component_id  %>
-        <%= hidden_field_tag "actual_amount[]", i, value: s.actual_amount  %>
-        <%= hidden_field_tag "calculated_amount[]", i, value: s.calculated_amount %>
-        <%= hidden_field_tag "is_deducted[]", i, value: s.is_deducted %>
-    <% end %>
-
-<%= f.submit %>
+	    <% addable_total_actual_amount = 0 %>
+	    <% addable_total_calculated_amount = 0 %>
+	    <% basic_actual_amount = 0 %>
+	    <% basic_calculated_amount = 0 %>
+	    <% da_actual_amount = 0 %>
+	    <% da_calculated_amount = 0 %>
+
+	    <% @addable_salary_items.try(:each) do |item| %>
+	      <% addable_calculated_amount = 0 %>
+	      <% @template_id = item.salary_template_id %>
+	      <% addable_actual_amount = item.monthly_amount %>
+	      <% unless addable_actual_amount.nil? %>
+	        <% addable_calculated_amount = addable_actual_amount / @working_day.day_in_month * @working_day.payable_day %>
+	      <% else %>
+	        <% addable_actual_amount = 0 %>
+	        <% addable_calculated_amount = 0 %>
+	      <% end %>
+	      <% addable_total_actual_amount = addable_total_actual_amount + addable_actual_amount %>
+	      <% addable_total_calculated_amount = addable_total_calculated_amount + addable_calculated_amount %>
+	      <tr>
+	        <td><%= item.salary_component.name %></td>
+	        <td><%= addable_actual_amount %></td>
+	        <td><%= addable_calculated_amount %></td>
+	      </tr>  
+	      <% if item.salary_component.name == "Basic" %>
+	        <% basic_actual_amount = addable_actual_amount %>
+	        <% basic_calculated_amount = addable_calculated_amount %>
+	      <% elsif item.salary_component.name == "DA" %>
+	        <% da_actual_amount = addable_actual_amount %>
+	        <% da_calculated_amount = addable_calculated_amount %>
+	      <% end %>
+	    <% end %>
+	    
+	    <tr>
+	      <td>Total</td>
+	      <td><%= addable_total_actual_amount %></td>
+	      <td><%= addable_total_calculated_amount %></td>
+	    </tr>
+
+	    <% formula_item_actual_amount = 0 %>
+	    <% formula_item_calculated_amount = 0 %>
+	    <% formula_total_actual_amount = 0 %>
+	    <% formula_total_calculated_amount = 0 %>
+	    <% deducted_actual_amount = 0 %>
+	    <% deducted_calculated_amount = 0 %>
+	    <% deducted_total_actual_amount = 0 %>
+	    <% deducted_total_calculated_amount = 0 %>
+
+	    <% @deducted_salary_items.try(:each) do |item| %>
+	      <% deducted_item_name = item.salary_component.name %>
+	      <% case deducted_item_name %>
+	      <% when "ESIC" %>
+	        <% master_esic = EsicMaster.first %>
+	        <% if master_esic.esic and addable_total_calculated_amount <= master_esic.max_limit and @employee.joining_detail.have_esic %>
+	          <% formula_string = master_esic.base_component.split(",") %>
+	          <% formula_string.try(:each) do |f| %>
+	            <% formula_item = @addable_salary_items.where(salary_component_id: f.to_i).take %>
+	            <% formula_item_actual_amount = formula_item.monthly_amount %>
+	            <% formula_item_actual_amount = 0 if formula_item_actual_amount.nil? %>
+	            <% formula_total_actual_amount = formula_total_actual_amount +formula_item_actual_amount %>
+	            <% formula_item_calculated_amount = formula_item_actual_amount / @working_day.try(:day_in_month) * @working_day.try(:payable_day) %>
+	            <% formula_total_calculated_amount = formula_total_calculated_amount + formula_item_calculated_amount %>
+	          <% end %>
+	          <% deducted_actual_amount = formula_total_actual_amount / 100 * master_esic.percentage %>
+	          <% deducted_calculated_amount = formula_total_calculated_amount / 100 * master_esic.percentage %>
+	        <% else %>
+	          <% deducted_actual_amount = 0 %>
+	          <% deducted_calculated_amount = 0 %>
+	        <% end %>
+	        
+	      <% when "Prof. Tax" %>
+	        <% if addable_total_calculated_amount > 15000 %>
+	          <% if @month == "March" %>
+	            <% deducted_actual_amount = 212 %>
+	            <% deducted_calculated_amount = 212 %>
+	          <% else %>
+	            <% deducted_actual_amount = 208 %>
+	            <% deducted_calculated_amount = 208 %>
+	          <% end %>
+	        <% else %>
+	          <% deducted_actual_amount = 0 %>
+	          <% deducted_calculated_amount = 0 %>
+	        <% end %>
+
+	      <% when "PF" %>
+	        <% direct_allowence_id = SalaryComponent.find_by_name("DA").id %>
+	        <% direct_allowence = @addable_salary_items.where(salary_component_id: direct_allowence_id).take.monthly_amount.to_f %>
+	        <% if direct_allowence.nil? %>
+	          <% if @employee.joining_detail.select_pf == "Yes" %>
+	            <% deducted_actual_amount = basic_actual_amount / 100 * 12 %>
+	            <% deducted_calculated_amount = basic_calculated_amount / 100 * 12 %>
+	          <% elsif @employee.joining_detail.select_pf == "Limit" %>
+	            <% deducted_actual_amount = @employee.joining_detail.pf_max_amount.to_f / 100 * 12 %>
+	            <% deducted_calculated_amount = deducted_actual_amount %>
+	          <% else %>
+	            <% deducted_actual_amount = 0 %>
+	            <% deducted_calculated_amount = 0 %>
+	          <% end %>
+	        <% else %>
+	          <% deducted_actual_amount = (basic_actual_amount + da_actual_amount) / 100 * 12 %>
+	          <% deducted_calculated_amount = (basic_calculated_amount + da_calculated_amount) / 100 * 12 %>
+	        <% end %>
+
+	      <% else %>
+	        <% if item.monthly_amount.nil? %>
+	          <% deducted_actual_amount = 0 %>
+	          <% deducted_calculated_amount = 0 %>
+	        <% else %>
+	          <% deducted_actual_amount = item.monthly_amount %>
+	          <% deducted_calculated_amount = deducted_actual_amount %>
+	        <% end %>  
+	      <% end %>
+	      <% deducted_total_actual_amount = deducted_total_actual_amount + deducted_actual_amount %>
+	      <% deducted_total_calculated_amount = deducted_total_calculated_amount + deducted_calculated_amount %>
+	      <tr>
+	        <td><%= item.salary_component.name %></td>
+	        <td><%= deducted_actual_amount %></td>
+	        <td><%= deducted_calculated_amount %></td>
+	      </tr>
+	    <% end %> <!-- deducted_salary_items loop -->
+	    <tr>
+	      <td>Total</td>
+	      <td><%= deducted_total_actual_amount %></td>
+	      <td><%= deducted_total_calculated_amount %></td>
+	    </tr>
+	    <tr>
+	      <td>Net Salary</td>
+	      <td><%= addable_total_actual_amount - deducted_total_actual_amount %></td>
+	      <td><%= addable_total_calculated_amount - deducted_total_calculated_amount %></td>
+	    </tr>
+	  </table>
+	</div>
+</div>
+	  
+<%= form_for :data, url: {controller: 'salaryslips', action: 'save_data',	employee: @employee, month: @month,	year: @year } do |f| %>
+	<%= f.submit %>
 <% end %>

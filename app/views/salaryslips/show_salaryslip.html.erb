@@ -1,121 +1,79 @@
 <table class="table table-bordered table-hover table-condensed">
-      <thead>
-        <tr>
-          <th>Employee Code</th>
-          <td><%= @employee.manual_employee_code%></td>
-          <th>Employee Name</th>
-          <td><%= full_name(@employee) %></td>
-          <th>Designation</th>
-          <td><%= @employee.joining_detail.try(:designation) %></td>
-        </tr>
-      </thead>
-      <tbody>
-          <tr>
-            <th>Employement</th>
-              <td><%= @employee.employee_type.try(:name) %></td>
-              <th>Contact No</th>
-              <td><%= @employee.contact_no %></td>
-              <th>Email</th>
-              <td><%= @employee.email %></td>
-          </tr>
-           <tr>
-        <th>Month Day</th>        
-        <td align="right"><%= @working_day.try(:day_in_month) %></td>      
-        <th>Holidays</th>        
-        <td align="right"><%= @working_day.try(:holiday_in_month) %></td>    
-        <th>Leave Total</th>        
-        <td align="right"><%= @working_day.try(:total_leave) %></td>                
-            </tr>
-            <tr>
-                <th>Working Days</th>
-                <td align="right"><%= @working_day.try(:present_day) %></td>
-                <th>Absent Days</th>
-                <td align="right"><%= @working_day.try(:absent_day) %></td>
-                <th>Payble Days</th>
-                <td align="right"><%= @working_day.try(:payable_day) %></td>
-            </tr>
-      </tbody>
-    </table>
-    
-        <div class="row">
-            <div class="col-sm-6">
-                <table class="table table-bordered table-hover table-condensed">
-                  <thead>
-                    <tr>
-                      <th>Particular</th>
-                      <th>Amount</th>
-                      <th>Amount</th>
-                    </tr>
-                  </thead>
-                  <% addable_total = 0 %>
-                  <% add_ans = 0%>
-                <% @addable_salary_components.each do |salary_component| %>
-                  <tr>
-                    <td><%= salary_component.salary_component.try(:name) %></td>
-                    <td align="right"><%=salary_component.amount %></td>
-                    <% item = salary_component.amount %>
-                    <% if item.nil? %>
-                          <td align="right"><%= 0.00 %></td>
-                      <% else %>
-                      <% ans = (item.to_f / @working_day.try(:day_in_month)) * @working_day.try(:payable_day) %>
-                      <% add_ans = add_ans + ans %>
-                      <td align="right"><%= '%.0f'%ans %></td>
-                      <% end %>
-                  </tr>
-                <% end %>
-                <tr>
-                <th>Total Salary</th>
-                <td align="right"><strong><%= @addable_total %></strong></td>
-                <td align="right"><strong><%= '%.0f'%add_ans %></strong></td>
-              </tr>            
-            <% deducted_total = 0 %>
-            <% instalment_deducted = 0 %>
-            <% @deducted_salary_components.each do |salary_component| %>
-              <tr>
-                <td><%= salary_component.salary_component.try(:name) %></td>
-                <td align="right"><%= salary_component.amount %></td>
-                <td align="right"><%= salary_component.amount %></td>
-                <% deducted_total = deducted_total.to_i + salary_component.amount.to_i %>
-              </tr>
-            <% end %>
-                <% unless @instalment_array.empty? %>
-                <% @instalment_array.each do |ia| %>
-                    <tr>
-                        <td>Advance</td>
-                        <td align="right"><%=  %></td>
-                        <td align="right"><%= ia.advance_salary.instalment_amount %></td>
-                        <% instalment_deducted = deducted_total + ia.advance_salary.instalment_amount %>
-                    </tr>
-                    <% end %>
-                    <% end %>
-            <tr>
-            <th>Total Deducted</th>
-            <td align="right"><strong><%= deducted_total %></strong></td>
-            
-            <% if @instalment_array.empty? %>
-                <td align="right"><strong><%= '%.0f'%(deducted_total) %></strong></td>
-            <% else %>
-                <td align="right"><strong><%= instalment_deducted %></strong></td>
-            <% end %>
-
-          </tr>
-                <tr>
-                    <th></th>
-                    <td></td>
-                    <td></td>
-                </tr>
-              <tr>
-            <th colspan="2">Net Salary</th>
-            <% unless @instalment_array.empty? %>
-            <% net_salary = add_ans - instalment_deducted %>
-            <%else%>
-            <% net_salary = add_ans - deducted_total %>
-              <%end%>
-              <td align="right"><strong>
-                  <%= '%.0f'%(net_salary) %></strong>
-              </td>
-            </tr>
-            </table>
-            </div>
-         </div> 
-        </div>
+  <thead>
+    <tr>
+      <th>Employee Code</th>
+      <td><%= @employee.manual_employee_code%></td>
+      <th>Employee Name</th>
+      <td><%= full_name(@employee) %></td>
+      <th>Designation</th>
+      <td><%= @employee.joining_detail.try(:designation) %></td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Employement</th>
+      <td><%= @employee.employee_type.try(:name) %></td>
+      <th>Contact No</th>
+      <td><%= @employee.contact_no %></td>
+      <th>Email</th>
+      <td><%= @employee.email %></td>
+    </tr>
+    <tr>
+      <th>Month Day</th>        
+      <td align="right"><%= @working_day.try(:day_in_month) %></td>      
+      <th>Holidays</th>        
+      <td align="right"><%= @working_day.try(:holiday_in_month) %></td>    
+      <th>Leave Total</th>		
+      <td align="right"><%= @working_day.try(:total_leave) %></td>		        
+  	</tr>
+  	<tr>
+  		<th>Working Days</th>
+  		<td align="right"><%= @working_day.try(:present_day) %></td>
+  		<th>Absent Days</th>
+  		<td align="right"><%= @working_day.try(:absent_day) %></td>
+  		<th>Payble Days</th>
+  		<td align="right"><%= @working_day.try(:payable_day) %></td>
+  	</tr>
+  </tbody>
+</table>
+	
+<div class="row">
+	<div class="col-sm-6">
+		<table class="table table-bordered table-hover table-condensed">
+		  <thead>
+		    <tr>
+		      <th>Particular</th>
+		      <th>Actual Amount</th>
+		      <th>Calculated Amount</th>
+		    </tr>
+		  </thead>
+	  	<tbody>
+	  		<% @addable_salary_components.each do |item| %>
+		  		<tr>
+		  			<td><%= item.salary_component.name %></td>
+		  			<td><%= item.actual_amount %></td>
+		  			<td><%= item.calculated_amount %></td>
+		  		</tr>
+	  		<% end %>
+	  		<tr>
+	  			<td>Total</td>
+	  			<td><%= @salaryslip.actual_gross_salary %></td>
+	  			<td><%= @salaryslip.calculated_gross_salary %></td>
+	  		</tr>
+	  		<% @deducted_salary_components.each do |item| %>
+		  		<tr>
+		  			<td><%= item.salary_component.name %></td>
+		  			<td><%= item.actual_amount %></td>
+		  			<td><%= item.calculated_amount %></td>
+		  		</tr>
+	  		<% end %>
+	  		<tr>
+	  			<td>Total</td>
+	  			<td><%= @salaryslip.actual_total_deduction %></td>
+	  			<td><%= @salaryslip.calculated_total_deduction %></td>
+	  		</tr>
+	  	</tbody>
+	</table>
+	</div>
+ 	</div> 
+</div>

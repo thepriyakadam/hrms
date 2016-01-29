@@ -77,7 +77,7 @@ require 'roo'
 #   e.religion_id = @religion.id unless @religion.nil?
 #   e.date_of_birth = ex.cell(line,'G')
 #   e.permanent_address = ex.cell(line,'H')
-#   e.pin_code = ex.cell(line,'I')
+#   e.pin_code = ex.cell(line,'I').to_i
 #   @country = Country.find_by_name(ex.cell(line,'J'))
 #   e.country_id = @country.id unless @country.nil?
 #   @state = State.find_by_name(ex.cell(line,'K'))
@@ -86,7 +86,7 @@ require 'roo'
 #   e.district_id =  @district.id unless @district.nil?
 #   e.city = ex.cell(line,'M')
 #   e.current_address = ex.cell(line,'N')
-#   e.contact_no = ex.cell(line,'O')
+#   e.contact_no = ex.cell(line,'O').to_i
 #   e.email = ex.cell(line,'P')
 #   @type = EmployeeType.find_by_name(ex.cell(line,'Q'))
 #   e.employee_type_id = @type.id unless @type.nil?
@@ -115,7 +115,7 @@ require 'roo'
 
 #   j.select_pf = ex.cell(line,'AA')
 
-#   j.employee_pf_no = ex.cell(line,'AB')
+#   j.employee_pf_no = ex.cell(line,'AB').to_i
 #   j.pf_max_amount = ex.cell(line,'AC')
 #     if ex.cell(line,'AD') == "Yes"
 #       j.have_esic = true
@@ -123,7 +123,7 @@ require 'roo'
 #       j.have_esic = false
 #     end
   
-#   j.employee_efic_no = ex.cell(line,'AE')
+#   j.employee_efic_no = ex.cell(line,'AE').to_i
 #   j.payment_mode = ex.cell(line,'AF')
 #   @cost_center = CostCenter.find_by_name(ex.cell(line,'AG'))
 #   j.cost_center_id = @cost_center.id unless @cost_center.nil?
@@ -141,11 +141,11 @@ require 'roo'
 
 # EmployeeBankDetail.new do |b|
 #   b.employee_id = @employee.id unless @employee.nil?
-#   b.account_no = ex.cell(line,'AN')
+#   b.account_no = ex.cell(line,'AN').to_i
 #   b.bank_name = ex.cell(line,'AO')
 #   b.branch_name = ex.cell(line,'AP')
 #   b.address = ex.cell(line,'AQ')
-#   b.contact_no = ex.cell(line,'AR')
+#   b.contact_no = ex.cell(line,'AR').to_i
 #   b.micr_code = ex.cell(line,'AS')
 #   b.branch_code = ex.cell(line,'AT')
 #   b.ifsc_code = ex.cell(line,'AU')
@@ -155,6 +155,7 @@ require 'roo'
 # puts "#{i} Record inserted.-----------------------------------------------"
 # i = i+1
 # end
+
 
 
 ex = Roo::Excel.new("#{Rails.root}/public/payroll.xls")
@@ -195,74 +196,74 @@ gross_salary = 0
       est.to_be_paid = t.to_be_paid
       
       if t.salary_component.name == "Basic"
-      est.monthly_amount = ex.cell(line,'H')
+      est.monthly_amount = ex.cell(line,'H') unless ex.cell(line,'H').nil?
       est.annual_amount = est.monthly_amount.to_i * 12
       gross_salary = gross_salary + ex.cell(line,'H').to_i
       elsif t.salary_component.name == "HRA"
-      est.monthly_amount = ex.cell(line,'I')
+      est.monthly_amount = ex.cell(line,'I') unless ex.cell(line,'I').nil?
       est.annual_amount = est.monthly_amount.to_i * 12
       gross_salary = gross_salary + ex.cell(line,'I').to_i
       elsif t.salary_component.name == "Special Allowance"
-      est.monthly_amount = ex.cell(line,'J')
+      est.monthly_amount = ex.cell(line,'J') unless ex.cell(line,'J').nil?
       est.annual_amount = est.monthly_amount.to_i * 12
       gross_salary = gross_salary + ex.cell(line,'J').to_i
       elsif t.salary_component.name == "Convenience Allowance"
-      est.monthly_amount = ex.cell(line,'K')
+      est.monthly_amount = ex.cell(line,'K') unless ex.cell(line,'K').nil?
       est.annual_amount = est.monthly_amount.to_i * 12
       gross_salary = gross_salary + ex.cell(line,'K').to_i
       elsif t.salary_component.name == "Other Allowance"
-      est.monthly_amount = ex.cell(line,'L')
+      est.monthly_amount = ex.cell(line,'L') unless ex.cell(line,'L').nil?
       est.annual_amount = est.monthly_amount.to_i * 12
       gross_salary = gross_salary.to_i + ex.cell(line,'L').to_i
       elsif t.salary_component.name == "Washing Allowance"
-      est.monthly_amount = ex.cell(line,'M')
+      est.monthly_amount = ex.cell(line,'M') unless ex.cell(line,'M').nil?
       est.annual_amount = est.monthly_amount.to_i * 12
       gross_salary = gross_salary + ex.cell(line,'M').to_i
       elsif t.salary_component.name == "DA"
-      est.monthly_amount = ex.cell(line,'N')
+      est.monthly_amount = ex.cell(line,'N') unless ex.cell(line,'N').nil?
       est.annual_amount = est.monthly_amount.to_i * 12
       gross_salary = gross_salary + ex.cell(line,'N').to_i
       elsif t.salary_component.name == "Medical Allowance"
-      est.monthly_amount = ex.cell(line,'O')
+      est.monthly_amount = ex.cell(line,'O') unless ex.cell(line,'O').nil?
       est.annual_amount = est.monthly_amount.to_i * 12
       gross_salary = gross_salary + ex.cell(line,'O').to_i
       elsif t.salary_component.name == "Driver Allowance"
-      est.monthly_amount = ex.cell(line,'P')
+      est.monthly_amount = ex.cell(line,'P') unless ex.cell(line,'P').nil?
       est.annual_amount = est.monthly_amount.to_i * 12
       gross_salary = gross_salary + ex.cell(line,'P').to_i
       elsif t.salary_component.name == "Rembursement of medical exp."
-      est.monthly_amount = ex.cell(line,'Q')
+      est.monthly_amount = ex.cell(line,'Q') unless ex.cell(line,'Q').nil?
       est.annual_amount = est.monthly_amount.to_i * 12
       gross_salary = gross_salary + ex.cell(line,'Q').to_i
       elsif t.salary_component.name == "Children Education Allowance"
-      est.monthly_amount = ex.cell(line,'R')
+      est.monthly_amount = ex.cell(line,'R') unless ex.cell(line,'R').nil?
       est.annual_amount = est.monthly_amount.to_i * 12
       gross_salary = gross_salary + ex.cell(line,'R').to_i
       elsif t.salary_component.name == "PF"
-      est.monthly_amount = (ex.cell(line,'H')/100) * 12
+      est.monthly_amount = (ex.cell(line,'H')/100) * 12 unless ex.cell(line,'H').nil?
       est.annual_amount = est.monthly_amount.to_i * 12
       elsif t.salary_component.name == "ESIC"
         if have_esic and gross_salary <= 15000
           temp = gross_salary - ex.cell(line,'M')
-          est.monthly_amount = (temp / 100 * 1.75).round
+          est.monthly_amount = (temp / 100 * 1.75).round 
         else
           est.monthly_amount = 0
         end
       est.annual_amount = est.monthly_amount.to_i * 12
       elsif t.salary_component.name == "Income Tax"
-      est.monthly_amount = ex.cell(line,'AH')
+      est.monthly_amount = ex.cell(line,'AH') unless ex.cell(line,'AH').nil?
       est.annual_amount = est.monthly_amount.to_i * 12
       elsif t.salary_component.name == "Food Deduction"
-      est.monthly_amount = ex.cell(line,'AI')
+      est.monthly_amount = ex.cell(line,'AI') unless ex.cell(line,'AI').nil?
       est.annual_amount = est.monthly_amount.to_i * 12
       elsif t.salary_component.name == "Other Deduction"
-      est.monthly_amount = ex.cell(line,'AJ')
+      est.monthly_amount = ex.cell(line,'AJ') unless ex.cell(line,'AJ').nil?
       est.annual_amount = est.monthly_amount.to_i * 12
       elsif t.salary_component.name == "Society"
-      est.monthly_amount = ex.cell(line,'AL')
+      est.monthly_amount = ex.cell(line,'AL') unless ex.cell(line,'AL').nil?
       est.annual_amount = est.monthly_amount.to_i * 12
       elsif t.salary_component.name == "Prof. Tax"
-      est.monthly_amount = ex.cell(line,'AP')
+      est.monthly_amount = ex.cell(line,'AP') unless ex.cell(line,'AP').nil?
       est.annual_amount = est.monthly_amount.to_i * 12
       end
       est.save!
@@ -271,5 +272,36 @@ gross_salary = 0
     end
   end
   gross_salary = 0
+end
+
+
+ex = Roo::Excel.new("#{Rails.root}/public/payroll.xls")
+ex.default_sheet = ex.sheets[0]
+j = 1
+2.upto(91) do |line|
+  puts "Starting Record---------------------------------------"
+  @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
+  
+  
+  AdvanceSalary.new do |a|
+    a.employee_id = @employee.id unless @employee.nil? 
+    a.advance_amount = ex.cell(line,'A')
+    a.no_of_instalment = ex.cell(line,'A').to_i
+    a.instalment_amount = a.advance_amount.to_i / a.no_of_instalment
+    a.advance_date = ex.cell(line,'A')
+    a.save!
+  end
+
+  @advance_salary = AdvanceSalary.find_by_employee_id(@employee.id)
+
+  for i in 1..a.no_of_instalment
+    Instalment.new do |i|
+      i.advance_salary_id = @advance_salary.id
+      #i.instalment_date = 
+      i.instalment_amount = @advance_salary.instalment_amount
+      i.save!
+    end
+  end
+
 end
 

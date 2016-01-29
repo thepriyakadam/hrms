@@ -159,15 +159,15 @@ require 'roo'
 
 
 ex = Roo::Excel.new("#{Rails.root}/public/payroll.xls")
-ex.default_sheet = ex.sheets[2]
+ex.default_sheet = ex.sheets[0]
 j = 1
 gross_salary = 0
-2.upto(91) do |line|
+2.upto(456) do |line|
   puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
   
   @salary_template = SalaryTemplate.find_by_code(ex.cell(line,'B'))
-  @salary_component_templates = @salary_template.salary_component_templates
+  @salary_component_templates = @salary_template.salary_component_templates unless @salary_template.nil?
   
   Workingday.new do |w|
     w.employee_id = @employee.id

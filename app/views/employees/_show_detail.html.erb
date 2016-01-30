@@ -11,15 +11,8 @@
         <th><strong>Employee Code</strong></th>
         <td><%= @employee.manual_employee_code %></td>
 
-        <th><strong>First Name</strong></th>
-        <td><%= @employee.first_name %></td>
-      </tr>
-      <tr>
-        <th><strong>Middle Name</strong></th>
-        <td><%= @employee.middle_name %></td>
-
-        <th><strong>Last Name</strong></th>
-        <td><%= @employee.last_name %></td>
+        <th><strong>Employee Name</strong></th>
+        <td><%= @employee.first_name %> <%= @employee.middle_name %> <%= @employee.last_name %></td> 
       </tr>
       <tr>
         <th><strong>Gender</strong></th>

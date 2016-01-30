@@ -1,4 +1,5 @@
 class Salaryslip < ActiveRecord::Base
+  protokoll :salary_slip_code, :pattern => "SAL#######"
   belongs_to :employee
   belongs_to :template
   belongs_to :workingday

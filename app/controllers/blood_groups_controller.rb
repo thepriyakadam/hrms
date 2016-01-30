@@ -34,7 +34,6 @@ class BloodGroupsController < ApplicationController
     @blood_group.destroy
     @blood_groups = BloodGroup.all
   end
- 
 
   private
     # Use callbacks to share common setup or constraints between actions.

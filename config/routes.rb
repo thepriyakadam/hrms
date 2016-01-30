@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
 
+  resources :excel_exports do
+    collection do
+      get :payroll
+    end
+  end
   resources :esic_masters
   resources :excel_uploads do
     collection do

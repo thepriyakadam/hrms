@@ -81,7 +81,11 @@
 
 <script type="text/javascript">
   $(function(){
-    $('#workingday_day_in_month').on('input', function() {
+    $('#workingday_absent_day').on('input', function() {
+      var workingday_present_day = parseFloat($('#workingday_present_day').val());
+      var workingday_total_leave = parseFloat($('#workingday_total_leave').val());
+      var workingday_holiday_in_month = parseFloat($('#workingday_holiday_in_month').val());
+      var workingday_week_off_day = parseFloat($('#workingday_week_off_day').val());
       var workingday_day_in_month = parseFloat($('#workingday_day_in_month').val());
       var workingday_absent_day = parseFloat($('#workingday_absent_day').val());
       var ans="";
@@ -89,22 +93,59 @@
         ans = ""
       }
       else{
-        ans = (workingday_day_in_month - workingday_absent_day).toFixed(2);
+        present_total = workingday_present_day + workingday_total_leave + workingday_holiday_in_month + workingday_week_off_day
+        ans = (present_total - workingday_absent_day).toFixed(2);
       }
       $('#workingday_payable_day').val(ans);
     });
-    $('#workingday_absent_day').on('input', function() {
-    });
 
-    $('#workingday_absent_day').on('input', function() {
-      var workingday_day_in_month = parseFloat($('#workingday_day_in_month').val());
+    $('#workingday_present_day').on('input', function() {
+      var workingday_present_day = parseFloat($('#workingday_present_day').val());
+      var workingday_total_leave = parseFloat($('#workingday_total_leave').val());
+      var workingday_holiday_in_month = parseFloat($('#workingday_holiday_in_month').val());
+      var workingday_week_off_day = parseFloat($('#workingday_week_off_day').val());
       var workingday_absent_day = parseFloat($('#workingday_absent_day').val());
       var ans="";
-      if (isNaN(workingday_day_in_month) || isNaN(workingday_absent_day)) {
+      if (isNaN(workingday_present_day) || isNaN(workingday_total_leave) || isNaN(workingday_holiday_in_month) || isNaN(workingday_week_off_day) || isNaN(workingday_absent_day)) {
         ans = ""
       }
       else{
-        ans = (workingday_day_in_month - workingday_absent_day).toFixed(2);
+        present_total = workingday_present_day + workingday_total_leave + workingday_holiday_in_month + workingday_week_off_day
+        ans = (present_total - workingday_absent_day).toFixed(2);
+      }
+      $('#workingday_payable_day').val(ans);
+    });
+
+    $('#workingday_total_leave').on('input', function() {
+      var workingday_present_day = parseFloat($('#workingday_present_day').val());
+      var workingday_total_leave = parseFloat($('#workingday_total_leave').val());
+      var workingday_holiday_in_month = parseFloat($('#workingday_holiday_in_month').val());
+      var workingday_week_off_day = parseFloat($('#workingday_week_off_day').val());
+      var workingday_absent_day = parseFloat($('#workingday_absent_day').val());
+      var ans="";
+      if (isNaN(workingday_present_day) || isNaN(workingday_total_leave) || isNaN(workingday_holiday_in_month) || isNaN(workingday_week_off_day) || isNaN(workingday_absent_day)) {
+        ans = ""
+      }
+      else{
+        present_total = workingday_present_day + workingday_total_leave + workingday_holiday_in_month + workingday_week_off_day
+        ans = (present_total - workingday_absent_day).toFixed(2);
+      }
+      $('#workingday_payable_day').val(ans);
+    });
+
+    $('#workingday_holiday_in_month').on('input', function() {
+      var workingday_present_day = parseFloat($('#workingday_present_day').val());
+      var workingday_total_leave = parseFloat($('#workingday_total_leave').val());
+      var workingday_holiday_in_month = parseFloat($('#workingday_holiday_in_month').val());
+      var workingday_week_off_day = parseFloat($('#workingday_week_off_day').val());
+      var workingday_absent_day = parseFloat($('#workingday_absent_day').val());
+      var ans="";
+      if (isNaN(workingday_present_day) || isNaN(workingday_total_leave) || isNaN(workingday_holiday_in_month) || isNaN(workingday_week_off_day) || isNaN(workingday_absent_day)) {
+        ans = ""
+      }
+      else{
+        present_total = workingday_present_day + workingday_total_leave + workingday_holiday_in_month + workingday_week_off_day
+        ans = (present_total - workingday_absent_day).toFixed(2);
       }
       $('#workingday_payable_day').val(ans);
     });
@@ -114,18 +155,16 @@
       var workingday_total_leave = parseFloat($('#workingday_total_leave').val());
       var workingday_holiday_in_month = parseFloat($('#workingday_holiday_in_month').val());
       var workingday_week_off_day = parseFloat($('#workingday_week_off_day').val());
-
-
+      var workingday_absent_day = parseFloat($('#workingday_absent_day').val());
       var ans="";
-      // if (isNaN(workingday_day_in_month) || isNaN(workingday_absent_day)) {
-      //   ans = ""
-      // }
-      // else{
-        ans = (workingday_present_day + workingday_total_leave + workingday_holiday_in_month + workingday_week_off_day).toFixed(2);
-      //}
+      if (isNaN(workingday_present_day) || isNaN(workingday_total_leave) || isNaN(workingday_holiday_in_month) || isNaN(workingday_week_off_day) || isNaN(workingday_absent_day)) {
+        ans = ""
+      }
+      else{
+        present_total = workingday_present_day + workingday_total_leave + workingday_holiday_in_month + workingday_week_off_day
+        ans = (present_total - workingday_absent_day).toFixed(2);
+      }
       $('#workingday_payable_day').val(ans);
     });
-
-
   });
 </script>

@@ -68,8 +68,8 @@
 	      <% addable_total_calculated_amount = addable_total_calculated_amount + addable_calculated_amount %>
 	      <tr>
 	        <td><%= item.salary_component.name %></td>
-	        <td><%= addable_actual_amount %></td>
-	        <td><%= addable_calculated_amount %></td>
+	        <td align="right"><%= addable_actual_amount.round %></td>
+	        <td align="right"><%= addable_calculated_amount.round %></td>
 	      </tr>  
 	      <% if item.salary_component.name == "Basic" %>
 	        <% basic_actual_amount = addable_actual_amount %>
@@ -80,10 +80,10 @@
 	      <% end %>
 	    <% end %>
 	    
-	    <tr>
+	    <tr bgcolor="#8CD0F8">
 	      <td>Total</td>
-	      <td><%= addable_total_actual_amount %></td>
-	      <td><%= addable_total_calculated_amount %></td>
+	      <td align="right"><%= addable_total_actual_amount.round %></td>
+	      <td align="right"><%= addable_total_calculated_amount.round %></td>
 	    </tr>
 
 	    <% formula_item_actual_amount = 0 %>
@@ -163,19 +163,19 @@
 	      <% deducted_total_calculated_amount = deducted_total_calculated_amount + deducted_calculated_amount %>
 	      <tr>
 	        <td><%= item.salary_component.name %></td>
-	        <td><%= deducted_actual_amount %></td>
-	        <td><%= deducted_calculated_amount %></td>
+	        <td align="right"><%= deducted_actual_amount.round %></td>
+	        <td align="right"><%= deducted_calculated_amount.round %></td>
 	      </tr>
 	    <% end %> <!-- deducted_salary_items loop -->
-	    <tr>
-	      <td>Total</td>
-	      <td><%= deducted_total_actual_amount %></td>
-	      <td><%= deducted_total_calculated_amount %></td>
+	    <tr bgcolor="#F88CA3">
+	      <td>Total Deduction</td>
+	      <td align="right"><%= deducted_total_actual_amount.round %></td>
+	      <td align="right"><%= deducted_total_calculated_amount.round %></td>
 	    </tr>
 	    <tr>
 	      <td>Net Salary</td>
-	      <td><%= addable_total_actual_amount - deducted_total_actual_amount %></td>
-	      <td><%= addable_total_calculated_amount - deducted_total_calculated_amount %></td>
+	      <td align="right"><%= (addable_total_actual_amount - deducted_total_actual_amount).round %></td>
+	      <td align="right"><%= (addable_total_calculated_amount - deducted_total_calculated_amount).round %></td>
 	    </tr>
 	  </table>
 	</div>

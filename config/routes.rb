@@ -1,5 +1,15 @@
 Rails.application.routes.draw do
 
+  namespace :reports do
+    resources :salaries do 
+      member do
+        post :date_range_report
+      end
+    end
+    post 'salaries/date_range_report'
+    get 'salaries/new'
+  end
+
   resources :excel_exports do
     collection do
       get :payroll

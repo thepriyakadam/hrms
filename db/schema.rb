@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160128064951) do
+ActiveRecord::Schema.define(version: 20160201112746) do
 
   create_table "advance_salaries", force: :cascade do |t|
     t.integer  "employee_id"
@@ -824,6 +824,7 @@ ActiveRecord::Schema.define(version: 20160128064951) do
     t.decimal  "calculated_gross_salary",    precision: 15, scale: 2
     t.decimal  "calculated_total_deduction", precision: 15, scale: 2
     t.decimal  "calculated_net_salary",      precision: 15, scale: 2
+    t.date     "month_year"
   end
 
   add_index "salaryslips", ["employee_id"], name: "index_salaryslips_on_employee_id"

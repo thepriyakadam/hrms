@@ -134,7 +134,7 @@
 	      <% when "PF" %>
 	        <% direct_allowence_id = SalaryComponent.find_by_name("DA").id %>
 	        <% direct_allowence = @addable_salary_items.where(salary_component_id: direct_allowence_id).take.monthly_amount.to_f %>
-	        <% if direct_allowence.nil? %>
+	        <% if direct_allowence.nil? or direct_allowence == 0 %>
 	          <% if @employee.joining_detail.select_pf == "Yes" %>
 	            <% deducted_actual_amount = basic_actual_amount / 100 * 12 %>
 	            <% deducted_calculated_amount = basic_calculated_amount / 100 * 12 %>

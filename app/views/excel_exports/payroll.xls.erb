@@ -5,12 +5,7 @@
   xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
   xmlns:html="http://www.w3.org/TR/REC-html40">
   <Worksheet ss:Name="Sheet1">
-    <Table>
-      <Row>
-        <% for i in 1..50 %>
-          <Cell><Data ss:Type="Number"><%= i %></Data></Cell>
-        <% end %>
-      </Row>    
+    <Table>  
       <Row>
         <Cell ss:Index="1"><Data ss:Type="String">Employee Code</Data></Cell>
         <Cell ss:Index="2"><Data ss:Type="String">Template</Data></Cell>
@@ -61,7 +56,7 @@
 
         <Cell ss:Index="42"><Data ss:Type="String">Total Deduction</Data></Cell>
 
-        <Cell ss:Index="42"><Data ss:Type="String">Net Salary</Data></Cell>
+        <Cell ss:Index="43"><Data ss:Type="String">Net Salary</Data></Cell>
 
         <Cell ss:Index="44"><Data ss:Type="String">Total Leave</Data></Cell>
         <Cell ss:Index="45"><Data ss:Type="String">No of Days in Month</Data></Cell>
@@ -85,91 +80,91 @@
           <% @addable_salaryslip_items.each do |item| %>
             <% case item.salary_component.name %>
             <% when "Basic" %>
-              <Cell ss:Index="8"><Data ss:Type="Number"><%= item.actual_amount %></Data></Cell>
+              <Cell ss:Index="8"><Data ss:Type="Number"><%= item.actual_amount.round %></Data></Cell>
             <% when "HRA" %>
-              <Cell ss:Index="9"><Data ss:Type="Number"><%= item.actual_amount %></Data></Cell>
+              <Cell ss:Index="9"><Data ss:Type="Number"><%= item.actual_amount.round %></Data></Cell>
             <% when "Special Allowance" %>
-              <Cell ss:Index="10"><Data ss:Type="Number"><%= item.actual_amount %></Data></Cell>
+              <Cell ss:Index="10"><Data ss:Type="Number"><%= item.actual_amount.round %></Data></Cell>
             <% when "Convenience Allowance" %>
-              <Cell ss:Index="11"><Data ss:Type="Number"><%= item.actual_amount %></Data></Cell>
+              <Cell ss:Index="11"><Data ss:Type="Number"><%= item.actual_amount.round %></Data></Cell>
             <% when "Other Allowance" %>
-              <Cell ss:Index="12"><Data ss:Type="Number"><%= item.actual_amount %></Data></Cell>
+              <Cell ss:Index="12"><Data ss:Type="Number"><%= item.actual_amount.round %></Data></Cell>
             <% when "Washing Allowance" %>
-              <Cell ss:Index="13"><Data ss:Type="Number"><%= item.actual_amount %></Data></Cell>
+              <Cell ss:Index="13"><Data ss:Type="Number"><%= item.actual_amount.round %></Data></Cell>
             <% when "DA" %>
-              <Cell ss:Index="14"><Data ss:Type="Number"><%= 444 %></Data></Cell>
+              <Cell ss:Index="14"><Data ss:Type="Number"><%= item.actual_amount.round %></Data></Cell>
             <% when "Medical Allowance" %>
-              <Cell ss:Index="15"><Data ss:Type="Number"><%= 555 %></Data></Cell>
+              <Cell ss:Index="15"><Data ss:Type="Number"><%= item.actual_amount.round %></Data></Cell>
             <% when "Driver Allowance" %>
-              <Cell ss:Index="16"><Data ss:Type="Number"><%= 666 %></Data></Cell>
+              <Cell ss:Index="16"><Data ss:Type="Number"><%= item.actual_amount.round %></Data></Cell>
             <% when "Rembursement of Medical Allowence" %>
-              <Cell ss:Index="17"><Data ss:Type="Number"><%= 777 %></Data></Cell>
+              <Cell ss:Index="17"><Data ss:Type="Number"><%= item.actual_amount.round %></Data></Cell>
             <% when "Children Education Allowance" %>
-              <Cell ss:Index="18"><Data ss:Type="Number"><%= 888 %></Data></Cell>
+              <Cell ss:Index="18"><Data ss:Type="Number"><%= item.actual_amount.round %></Data></Cell>
             <% else %>
             
             <% end %> <!-- switch case -->
           <% end %><!-- addable items -->
-            <Cell ss:Index="19"><Data ss:Type="Number"><%= slip.actual_gross_salary %></Data></Cell>
+            <Cell ss:Index="19"><Data ss:Type="Number"><%= slip.actual_gross_salary.round %></Data></Cell>
           <% @addable_salaryslip_items.each do |item| %>
             <% case item.salary_component.name %>
             <% when "Basic" %>
-              <Cell ss:Index="20"><Data ss:Type="Number"><%= item.calculated_amount %></Data></Cell>
+              <Cell ss:Index="20"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
             <% when "HRA" %>
-              <Cell ss:Index="21"><Data ss:Type="Number"><%= item.calculated_amount %></Data></Cell>
+              <Cell ss:Index="21"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
             <% when "Special Allowance" %>
-              <Cell ss:Index="22"><Data ss:Type="Number"><%= item.calculated_amount %></Data></Cell>
+              <Cell ss:Index="22"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
             <% when "Convenience Allowance" %>
-              <Cell ss:Index="23"><Data ss:Type="Number"><%= item.calculated_amount %></Data></Cell>
+              <Cell ss:Index="23"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
             <% when "Other Allowance" %>
-              <Cell ss:Index="24"><Data ss:Type="Number"><%= item.calculated_amount %></Data></Cell>
+              <Cell ss:Index="24"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
             <% when "Washing Allowance" %>
-              <Cell ss:Index="25"><Data ss:Type="Number"><%= item.calculated_amount %></Data></Cell>
+              <Cell ss:Index="25"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
             <% when "DA" %>
-              <Cell ss:Index="26"><Data ss:Type="Number"><%= item.calculated_amount %></Data></Cell>
+              <Cell ss:Index="26"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
             <% when "Medical Allowance" %>
-              <Cell ss:Index="27"><Data ss:Type="Number"><%= item.calculated_amount %></Data></Cell>
+              <Cell ss:Index="27"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
             <% when "Driver Allowance" %>
-              <Cell ss:Index="28"><Data ss:Type="Number"><%= item.calculated_amount %></Data></Cell>
+              <Cell ss:Index="28"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
             <% when "Rembursement of Medical Allowence" %>
-              <Cell ss:Index="29"><Data ss:Type="Number"><%= item.calculated_amount %></Data></Cell>
+              <Cell ss:Index="29"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
             <% when "Children Education Allowance" %>
-              <Cell ss:Index="30"><Data ss:Type="Number"><%= item.calculated_amount %></Data></Cell>
+              <Cell ss:Index="30"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
             <% else %>
             
             <% end %> <!-- switch case -->
           <% end %><!-- addable items -->
-          <Cell ss:Index="31"><Data ss:Type="Number"><%= slip.calculated_gross_salary %></Data></Cell>
+          <Cell ss:Index="31"><Data ss:Type="Number"><%= slip.calculated_gross_salary.round %></Data></Cell>
 
           <% @deducted_salaryslip_items = slip.salaryslip_components.where(is_deducted: true) %>
           <% @deducted_salaryslip_items.each do |item| %>
             <% case item.salary_component.name %>
             <% when "PF" %>
-              <Cell ss:Index="32"><Data ss:Type="Number"><%= item.calculated_amount %></Data></Cell>
+              <Cell ss:Index="32"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
             <% when "ESIC" %>
-              <Cell ss:Index="33"><Data ss:Type="Number"><%= item.calculated_amount %></Data></Cell>
+              <Cell ss:Index="33"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
             <% when "Income Tax" %>
-              <Cell ss:Index="34"><Data ss:Type="Number"><%= item.calculated_amount %></Data></Cell>
+              <Cell ss:Index="34"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
             <% when "Food Deduction" %>
-              <Cell ss:Index="35"><Data ss:Type="Number"><%= item.calculated_amount %></Data></Cell>
+              <Cell ss:Index="35"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
             <% when "Other Deduction" %>
-              <Cell ss:Index="36"><Data ss:Type="Number"><%= item.calculated_amount %></Data></Cell>
+              <Cell ss:Index="36"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
             <% when "Society" %>
-              <Cell ss:Index="37"><Data ss:Type="Number"><%= item.calculated_amount %></Data></Cell>
+              <Cell ss:Index="37"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
             <% when "Society Loan" %>
-              <Cell ss:Index="38"><Data ss:Type="Number"><%= item.calculated_amount %></Data></Cell>
+              <Cell ss:Index="38"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
             <% when "Mobile Deduction" %>
-              <Cell ss:Index="39"><Data ss:Type="Number"><%= item.calculated_amount %></Data></Cell>
+              <Cell ss:Index="39"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
             <% when "Welfair" %>
-              <Cell ss:Index="40"><Data ss:Type="Number"><%= item.calculated_amount %></Data></Cell>
+              <Cell ss:Index="40"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
             <% when "Prof. Tax" %>
-              <Cell ss:Index="41"><Data ss:Type="Number"><%= item.calculated_amount %></Data></Cell>
+              <Cell ss:Index="41"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
             <% else %>
             
             <% end %> <!-- switch case -->
           <% end %><!-- deducted items -->
-          <Cell ss:Index="42"><Data ss:Type="Number"><%= slip.calculated_total_deduction %></Data></Cell>
-          <Cell ss:Index="43"><Data ss:Type="Number"><%= slip.calculated_net_salary %></Data></Cell>
+          <Cell ss:Index="42"><Data ss:Type="Number"><%= slip.calculated_total_deduction.round %></Data></Cell>
+          <Cell ss:Index="43"><Data ss:Type="Number"><%= slip.calculated_net_salary.round %></Data></Cell>
 
           <Cell ss:Index="44"><Data ss:Type="Number"><%= slip.workingday.total_leave %></Data></Cell>
           <Cell ss:Index="45"><Data ss:Type="Number"><%= slip.workingday.day_in_month %></Data></Cell>

@@ -166,8 +166,8 @@ gross_salary = 0
   puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
   
-  @salary_template = SalaryTemplate.find_by_code(ex.cell(line,'B'))
-  @salary_component_templates = @salary_template.salary_component_templates unless @salary_template.nil?
+  #@salary_template = SalaryTemplate.find_by_code(ex.cell(line,'B'))
+  #@salary_component_templates = @salary_template.salary_component_templates unless @salary_template.nil?
   
   Workingday.new do |w|
     w.employee_id = @employee.id
@@ -184,124 +184,124 @@ gross_salary = 0
     w.save!
   end
 
-  @salary_component_templates.each do |t|
-    EmployeeSalaryTemplate.new do |est|
-      have_esic = @employee.joining_detail.have_esic
-      est.employee_id = @employee.id
-      est.salary_template_id = @salary_template.id
-      est.salary_component_id = t.salary_component_id 
-      est.is_deducted = t.is_deducted
-      est.parent_salary_component_id
-      est.percentage = t.is_deducted
-      est.to_be_paid = t.to_be_paid
+  # @salary_component_templates.each do |t|
+  #   EmployeeSalaryTemplate.new do |est|
+  #     have_esic = @employee.joining_detail.have_esic
+  #     est.employee_id = @employee.id
+  #     est.salary_template_id = @salary_template.id
+  #     est.salary_component_id = t.salary_component_id 
+  #     est.is_deducted = t.is_deducted
+  #     est.parent_salary_component_id
+  #     est.percentage = t.is_deducted
+  #     est.to_be_paid = t.to_be_paid
       
-      if t.salary_component.name == "Basic"
-      est.monthly_amount = ex.cell(line,'H') unless ex.cell(line,'H').nil?
-      est.annual_amount = est.monthly_amount.to_i * 12
-      gross_salary = gross_salary + ex.cell(line,'H').to_i
-      elsif t.salary_component.name == "HRA"
-      est.monthly_amount = ex.cell(line,'I') unless ex.cell(line,'I').nil?
-      est.annual_amount = est.monthly_amount.to_i * 12
-      gross_salary = gross_salary + ex.cell(line,'I').to_i
-      elsif t.salary_component.name == "Special Allowance"
-      est.monthly_amount = ex.cell(line,'J') unless ex.cell(line,'J').nil?
-      est.annual_amount = est.monthly_amount.to_i * 12
-      gross_salary = gross_salary + ex.cell(line,'J').to_i
-      elsif t.salary_component.name == "Convenience Allowance"
-      est.monthly_amount = ex.cell(line,'K') unless ex.cell(line,'K').nil?
-      est.annual_amount = est.monthly_amount.to_i * 12
-      gross_salary = gross_salary + ex.cell(line,'K').to_i
-      elsif t.salary_component.name == "Other Allowance"
-      est.monthly_amount = ex.cell(line,'L') unless ex.cell(line,'L').nil?
-      est.annual_amount = est.monthly_amount.to_i * 12
-      gross_salary = gross_salary.to_i + ex.cell(line,'L').to_i
-      elsif t.salary_component.name == "Washing Allowance"
-      est.monthly_amount = ex.cell(line,'M') unless ex.cell(line,'M').nil?
-      est.annual_amount = est.monthly_amount.to_i * 12
-      gross_salary = gross_salary + ex.cell(line,'M').to_i
-      elsif t.salary_component.name == "DA"
-      est.monthly_amount = ex.cell(line,'N') unless ex.cell(line,'N').nil?
-      est.annual_amount = est.monthly_amount.to_i * 12
-      gross_salary = gross_salary + ex.cell(line,'N').to_i
-      elsif t.salary_component.name == "Medical Allowance"
-      est.monthly_amount = ex.cell(line,'O') unless ex.cell(line,'O').nil?
-      est.annual_amount = est.monthly_amount.to_i * 12
-      gross_salary = gross_salary + ex.cell(line,'O').to_i
-      elsif t.salary_component.name == "Driver Allowance"
-      est.monthly_amount = ex.cell(line,'P') unless ex.cell(line,'P').nil?
-      est.annual_amount = est.monthly_amount.to_i * 12
-      gross_salary = gross_salary + ex.cell(line,'P').to_i
-      elsif t.salary_component.name == "Rembursement of medical exp."
-      est.monthly_amount = ex.cell(line,'Q') unless ex.cell(line,'Q').nil?
-      est.annual_amount = est.monthly_amount.to_i * 12
-      gross_salary = gross_salary + ex.cell(line,'Q').to_i
-      elsif t.salary_component.name == "Children Education Allowance"
-      est.monthly_amount = ex.cell(line,'R') unless ex.cell(line,'R').nil?
-      est.annual_amount = est.monthly_amount.to_i * 12
-      gross_salary = gross_salary + ex.cell(line,'R').to_i
-      elsif t.salary_component.name == "PF"
-      est.monthly_amount = (ex.cell(line,'H')/100) * 12 unless ex.cell(line,'H').nil?
-      est.annual_amount = est.monthly_amount.to_i * 12
-      elsif t.salary_component.name == "ESIC"
-        if have_esic and gross_salary <= 15000
-          temp = gross_salary - ex.cell(line,'M')
-          est.monthly_amount = (temp / 100 * 1.75).round 
-        else
-          est.monthly_amount = 0
-        end
-      est.annual_amount = est.monthly_amount.to_i * 12
-      elsif t.salary_component.name == "Income Tax"
-      est.monthly_amount = ex.cell(line,'AH') unless ex.cell(line,'AH').nil?
-      est.annual_amount = est.monthly_amount.to_i * 12
-      elsif t.salary_component.name == "Food Deduction"
-      est.monthly_amount = ex.cell(line,'AI') unless ex.cell(line,'AI').nil?
-      est.annual_amount = est.monthly_amount.to_i * 12
-      elsif t.salary_component.name == "Other Deduction"
-      est.monthly_amount = ex.cell(line,'AJ') unless ex.cell(line,'AJ').nil?
-      est.annual_amount = est.monthly_amount.to_i * 12
-      elsif t.salary_component.name == "Society"
-      est.monthly_amount = ex.cell(line,'AL') unless ex.cell(line,'AL').nil?
-      est.annual_amount = est.monthly_amount.to_i * 12
-      elsif t.salary_component.name == "Prof. Tax"
-      est.monthly_amount = ex.cell(line,'AP') unless ex.cell(line,'AP').nil?
-      est.annual_amount = est.monthly_amount.to_i * 12
-      end
-      est.save!
-      puts "#{j} component inserted..."
-      j=j+1
-    end
-  end
-  gross_salary = 0
-end
+  #     if t.salary_component.name == "Basic"
+  #     est.monthly_amount = ex.cell(line,'H') unless ex.cell(line,'H').nil?
+  #     est.annual_amount = est.monthly_amount.to_i * 12
+  #     gross_salary = gross_salary + ex.cell(line,'H').to_i
+  #     elsif t.salary_component.name == "HRA"
+  #     est.monthly_amount = ex.cell(line,'I') unless ex.cell(line,'I').nil?
+  #     est.annual_amount = est.monthly_amount.to_i * 12
+  #     gross_salary = gross_salary + ex.cell(line,'I').to_i
+  #     elsif t.salary_component.name == "Special Allowance"
+  #     est.monthly_amount = ex.cell(line,'J') unless ex.cell(line,'J').nil?
+  #     est.annual_amount = est.monthly_amount.to_i * 12
+  #     gross_salary = gross_salary + ex.cell(line,'J').to_i
+  #     elsif t.salary_component.name == "Convenience Allowance"
+  #     est.monthly_amount = ex.cell(line,'K') unless ex.cell(line,'K').nil?
+  #     est.annual_amount = est.monthly_amount.to_i * 12
+  #     gross_salary = gross_salary + ex.cell(line,'K').to_i
+  #     elsif t.salary_component.name == "Other Allowance"
+  #     est.monthly_amount = ex.cell(line,'L') unless ex.cell(line,'L').nil?
+  #     est.annual_amount = est.monthly_amount.to_i * 12
+  #     gross_salary = gross_salary.to_i + ex.cell(line,'L').to_i
+  #     elsif t.salary_component.name == "Washing Allowance"
+  #     est.monthly_amount = ex.cell(line,'M') unless ex.cell(line,'M').nil?
+  #     est.annual_amount = est.monthly_amount.to_i * 12
+  #     gross_salary = gross_salary + ex.cell(line,'M').to_i
+  #     elsif t.salary_component.name == "DA"
+  #     est.monthly_amount = ex.cell(line,'N') unless ex.cell(line,'N').nil?
+  #     est.annual_amount = est.monthly_amount.to_i * 12
+  #     gross_salary = gross_salary + ex.cell(line,'N').to_i
+  #     elsif t.salary_component.name == "Medical Allowance"
+  #     est.monthly_amount = ex.cell(line,'O') unless ex.cell(line,'O').nil?
+  #     est.annual_amount = est.monthly_amount.to_i * 12
+  #     gross_salary = gross_salary + ex.cell(line,'O').to_i
+  #     elsif t.salary_component.name == "Driver Allowance"
+  #     est.monthly_amount = ex.cell(line,'P') unless ex.cell(line,'P').nil?
+  #     est.annual_amount = est.monthly_amount.to_i * 12
+  #     gross_salary = gross_salary + ex.cell(line,'P').to_i
+  #     elsif t.salary_component.name == "Rembursement of medical exp."
+  #     est.monthly_amount = ex.cell(line,'Q') unless ex.cell(line,'Q').nil?
+  #     est.annual_amount = est.monthly_amount.to_i * 12
+  #     gross_salary = gross_salary + ex.cell(line,'Q').to_i
+  #     elsif t.salary_component.name == "Children Education Allowance"
+  #     est.monthly_amount = ex.cell(line,'R') unless ex.cell(line,'R').nil?
+  #     est.annual_amount = est.monthly_amount.to_i * 12
+  #     gross_salary = gross_salary + ex.cell(line,'R').to_i
+  #     elsif t.salary_component.name == "PF"
+  #     est.monthly_amount = (ex.cell(line,'H')/100) * 12 unless ex.cell(line,'H').nil?
+  #     est.annual_amount = est.monthly_amount.to_i * 12
+  #     elsif t.salary_component.name == "ESIC"
+  #       if have_esic and gross_salary <= 15000
+  #         temp = gross_salary - ex.cell(line,'M')
+  #         est.monthly_amount = (temp / 100 * 1.75).round 
+  #       else
+  #         est.monthly_amount = 0
+  #       end
+  #     est.annual_amount = est.monthly_amount.to_i * 12
+  #     elsif t.salary_component.name == "Income Tax"
+  #     est.monthly_amount = ex.cell(line,'AH') unless ex.cell(line,'AH').nil?
+  #     est.annual_amount = est.monthly_amount.to_i * 12
+  #     elsif t.salary_component.name == "Food Deduction"
+  #     est.monthly_amount = ex.cell(line,'AI') unless ex.cell(line,'AI').nil?
+  #     est.annual_amount = est.monthly_amount.to_i * 12
+  #     elsif t.salary_component.name == "Other Deduction"
+  #     est.monthly_amount = ex.cell(line,'AJ') unless ex.cell(line,'AJ').nil?
+  #     est.annual_amount = est.monthly_amount.to_i * 12
+  #     elsif t.salary_component.name == "Society"
+  #     est.monthly_amount = ex.cell(line,'AL') unless ex.cell(line,'AL').nil?
+  #     est.annual_amount = est.monthly_amount.to_i * 12
+  #     elsif t.salary_component.name == "Prof. Tax"
+  #     est.monthly_amount = ex.cell(line,'AP') unless ex.cell(line,'AP').nil?
+  #     est.annual_amount = est.monthly_amount.to_i * 12
+  #     end
+  #     est.save!
+  #     puts "#{j} component inserted..."
+  #     j=j+1
+  #   end
+  # end
+  # gross_salary = 0
+#end
 
 
-ex = Roo::Excel.new("#{Rails.root}/public/payroll.xls")
-ex.default_sheet = ex.sheets[0]
-j = 1
-2.upto(91) do |line|
-  puts "Starting Record---------------------------------------"
-  @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
+# ex = Roo::Excel.new("#{Rails.root}/public/payroll.xls")
+# ex.default_sheet = ex.sheets[0]
+# j = 1
+# 2.upto(91) do |line|
+#   puts "Starting Record---------------------------------------"
+#   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
   
   
-  AdvanceSalary.new do |a|
-    a.employee_id = @employee.id unless @employee.nil? 
-    a.advance_amount = ex.cell(line,'A')
-    a.no_of_instalment = ex.cell(line,'A').to_i
-    a.instalment_amount = a.advance_amount.to_i / a.no_of_instalment
-    a.advance_date = ex.cell(line,'A')
-    a.save!
-  end
+#   AdvanceSalary.new do |a|
+#     a.employee_id = @employee.id unless @employee.nil? 
+#     a.advance_amount = ex.cell(line,'A')
+#     a.no_of_instalment = ex.cell(line,'A').to_i
+#     a.instalment_amount = a.advance_amount.to_i / a.no_of_instalment
+#     a.advance_date = ex.cell(line,'A')
+#     a.save!
+#   end
 
-  @advance_salary = AdvanceSalary.find_by_employee_id(@employee.id)
+#   @advance_salary = AdvanceSalary.find_by_employee_id(@employee.id)
 
-  for i in 1..a.no_of_instalment
-    Instalment.new do |i|
-      i.advance_salary_id = @advance_salary.id
-      #i.instalment_date = 
-      i.instalment_amount = @advance_salary.instalment_amount
-      i.save!
-    end
-  end
+#   for i in 1..a.no_of_instalment
+#     Instalment.new do |i|
+#       i.advance_salary_id = @advance_salary.id
+#       #i.instalment_date = 
+#       i.instalment_amount = @advance_salary.instalment_amount
+#       i.save!
+#     end
+#   end
 
 end
 

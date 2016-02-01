@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     get 'salaries/new'
   end
 
+  resources :payment_modes
   resources :excel_exports do
     collection do
       get :payroll

@@ -60,7 +60,7 @@ require 'roo'
 # puts 'District Started...'
 # CS.states(:in).each {|k,v| s = State.find_by_code(k); CS.cities(k,:in).each {|c| s.districts.create(name: c)}}
 
-
+###############################################################################################
 # puts "Starting ..."
 # ex = Roo::Excel.new("#{Rails.root}/public/employee.xls")
 # ex.default_sheet = ex.sheets[1] 
@@ -156,33 +156,33 @@ require 'roo'
 # i = i+1
 # end
 
+###############################################################################################
 
-
-ex = Roo::Excel.new("#{Rails.root}/public/payroll.xls")
-ex.default_sheet = ex.sheets[0]
-j = 1
-gross_salary = 0
-2.upto(456) do |line|
-  puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
-  @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
+# ex = Roo::Excel.new("#{Rails.root}/public/payroll.xls")
+# ex.default_sheet = ex.sheets[0]
+# j = 1
+# gross_salary = 0
+# 2.upto(456) do |line|
+#   puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
+#   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
   
   #@salary_template = SalaryTemplate.find_by_code(ex.cell(line,'B'))
   #@salary_component_templates = @salary_template.salary_component_templates unless @salary_template.nil?
   
-  Workingday.new do |w|
-    w.employee_id = @employee.id
-    w.month_name = ex.cell(line,'F')
-    w.year = ex.cell(line,'G').to_i
-    w.day_in_month = ex.cell(line, 'AX')
-    w.present_day = ex.cell(line, 'AY')
-    w.holiday_in_month = ex.cell(line, 'AZ')
-    total_leave = ex.cell(line, 'AT').to_i+ex.cell(line, 'AU').to_i+ex.cell(line, 'AV').to_i+ex.cell(line, 'AW').to_i
-    w.total_leave = total_leave 
-    w.week_off_day = ex.cell(line, 'BA')
-    w.absent_day = ex.cell(line, 'BB')
-    w.payable_day = ex.cell(line, 'BC')
-    w.save!
-  end
+  # Workingday.new do |w|
+  #   w.employee_id = @employee.id
+  #   w.month_name = ex.cell(line,'F')
+  #   w.year = ex.cell(line,'G').to_i
+  #   w.day_in_month = ex.cell(line, 'AX')
+  #   w.present_day = ex.cell(line, 'AY')
+  #   w.holiday_in_month = ex.cell(line, 'AZ')
+  #   total_leave = ex.cell(line, 'AT').to_i+ex.cell(line, 'AU').to_i+ex.cell(line, 'AV').to_i+ex.cell(line, 'AW').to_i
+  #   w.total_leave = total_leave 
+  #   w.week_off_day = ex.cell(line, 'BA')
+  #   w.absent_day = ex.cell(line, 'BB')
+  #   w.payable_day = ex.cell(line, 'BC')
+  #   w.save!
+  # end
 
   # @salary_component_templates.each do |t|
   #   EmployeeSalaryTemplate.new do |est|
@@ -274,34 +274,39 @@ gross_salary = 0
   # gross_salary = 0
 #end
 
+###############################################################################################
 
-# ex = Roo::Excel.new("#{Rails.root}/public/payroll.xls")
-# ex.default_sheet = ex.sheets[0]
-# j = 1
-# 2.upto(91) do |line|
-#   puts "Starting Record---------------------------------------"
-#   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
+ex = Roo::Excel.new("#{Rails.root}/public/advance.xls")
+ex.default_sheet = ex.sheets[0]
+j = 1
+3.upto(35) do |line|
+  puts "Starting Record---------------------------------------"
+  @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
   
-  
-#   AdvanceSalary.new do |a|
-#     a.employee_id = @employee.id unless @employee.nil? 
-#     a.advance_amount = ex.cell(line,'A')
-#     a.no_of_instalment = ex.cell(line,'A').to_i
-#     a.instalment_amount = a.advance_amount.to_i / a.no_of_instalment
-#     a.advance_date = ex.cell(line,'A')
-#     a.save!
-#   end
+  unless @employee.nil?
+    AdvanceSalary.new do |a|
+      a.employee_id = @employee.id  
+      a.advance_date = ex.cell(line,'C').to_date unless ex.cell(line,'C').nil?
+      a.advance_amount = ex.cell(line,'D').to_f unless ex.cell(line,'D').nil?
+      a.instalment_amount = ex.cell(line,'F').to_f unless ex.cell(line,'F').nil?
+      #a.no_of_instalment = ex.cell(line,'E').to_i
+      unless a.advance_amount.nil? and a.instalment_amount.nil?
+      a.no_of_instalment = (a.advance_amount.to_i / a.instalment_amount).ceil
+      end
+      a.save!
+    end
 
-#   @advance_salary = AdvanceSalary.find_by_employee_id(@employee.id)
-
-#   for i in 1..a.no_of_instalment
-#     Instalment.new do |i|
-#       i.advance_salary_id = @advance_salary.id
-#       #i.instalment_date = 
-#       i.instalment_amount = @advance_salary.instalment_amount
-#       i.save!
-#     end
-#   end
-
+    @advance_salary = AdvanceSalary.find_by_employee_id(@employee.id)
+    unless @advance_salary.nil?
+      for i in 1..@advance_salary.no_of_instalment.to_i
+        Instalment.new do |i|
+          i.advance_salary_id = @advance_salary.id
+          #i.instalment_date = 
+          i.instalment_amount = @advance_salary.instalment_amount
+          i.save!
+        end
+      end
+    end
+  end
 end
 

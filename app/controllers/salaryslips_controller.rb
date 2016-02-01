@@ -161,6 +161,7 @@ class SalaryslipsController < ApplicationController
         ss.salary_template_id = @template_id
         ss.month = @month
         ss.year = @year
+        ss.month_year = "01 #{@month} #{@year}".to_date
         ss.calculated_gross_salary = addable_total_calculated_amount 
         ss.calculated_total_deduction = deducted_total_calculated_amount
         ss.calculated_net_salary = addable_total_calculated_amount - deducted_total_calculated_amount
@@ -397,6 +398,7 @@ class SalaryslipsController < ApplicationController
           ss.salary_template_id = @template_id
           ss.month = @month
           ss.year = @year
+          ss.month_year = "01 #{@month} #{@year}".to_date
           ss.calculated_gross_salary = addable_total_calculated_amount 
           ss.calculated_total_deduction = deducted_total_calculated_amount
           ss.calculated_net_salary = addable_total_calculated_amount - deducted_total_calculated_amount

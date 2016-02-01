@@ -91,7 +91,6 @@ class EmployeeSalaryTemplatesController < ApplicationController
         end
         @advance_salary = AdvanceSalary.find_by_employee_id(@employee.id)
         unless @advance_salary.nil?
-          #@instalments = @advance_salary.instalments.where(instalment_date: !nil)
           @instalments = @advance_salary.instalments
           @instalments.try(:each) do |i|
             unless i.instalment_date.nil?

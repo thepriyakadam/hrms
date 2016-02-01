@@ -159,6 +159,7 @@
 	          <% deducted_calculated_amount = deducted_actual_amount %>
 	        <% end %>  
 	      <% end %>
+
 	      <% deducted_total_actual_amount = deducted_total_actual_amount + deducted_actual_amount %>
 	      <% deducted_total_calculated_amount = deducted_total_calculated_amount + deducted_calculated_amount %>
 	      <tr>
@@ -167,6 +168,19 @@
 	        <td align="right"><%= deducted_calculated_amount.round %></td>
 	      </tr>
 	    <% end %> <!-- deducted_salary_items loop -->
+
+      <% @instalment_array.try(:each) do |ia| %>
+        <tr>
+          <% deducted_actual_amount = ia.advance_salary.instalment_amount %>
+          <% deducted_calculated_amount = deducted_actual_amount %>
+          <td>Advance</td>
+          <td align="right"><%= deducted_actual_amount %></td>
+          <td align="right"><%= deducted_calculated_amount %></td>
+          <% deducted_total_actual_amount = deducted_total_actual_amount + deducted_actual_amount %>
+          <% deducted_total_calculated_amount = deducted_total_calculated_amount + deducted_calculated_amount %>
+        </tr>
+      <% end %>
+
 	    <tr bgcolor="#F88CA3">
 	      <td>Total Deduction</td>
 	      <td align="right"><%= deducted_total_actual_amount.round %></td>

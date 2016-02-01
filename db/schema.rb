@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160128064951) do
+ActiveRecord::Schema.define(version: 20160201113155) do
 
   create_table "advance_salaries", force: :cascade do |t|
     t.integer  "employee_id"
@@ -594,16 +594,19 @@ ActiveRecord::Schema.define(version: 20160128064951) do
     t.string   "select_pf"
     t.string   "pf_max_amount"
     t.boolean  "have_esic"
-    t.string   "payment_mode"
     t.integer  "cost_center_id"
     t.integer  "employee_category_id"
+    t.integer  "payment_mode_id"
+    t.integer  "department_id"
   end
 
   add_index "joining_details", ["cost_center_id"], name: "index_joining_details_on_cost_center_id"
+  add_index "joining_details", ["department_id"], name: "index_joining_details_on_department_id"
   add_index "joining_details", ["employee_category_id"], name: "index_joining_details_on_employee_category_id"
   add_index "joining_details", ["employee_designation_id"], name: "index_joining_details_on_employee_designation_id"
   add_index "joining_details", ["employee_grade_id"], name: "index_joining_details_on_employee_grade_id"
   add_index "joining_details", ["employee_id"], name: "index_joining_details_on_employee_id"
+  add_index "joining_details", ["payment_mode_id"], name: "index_joining_details_on_payment_mode_id"
 
   create_table "leav_approveds", force: :cascade do |t|
     t.integer  "employee_leav_request_id"
@@ -715,6 +718,14 @@ ActiveRecord::Schema.define(version: 20160128064951) do
   end
 
   add_index "overtimes", ["employee_id"], name: "index_overtimes_on_employee_id"
+
+  create_table "payment_modes", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
+    t.string   "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
 
   create_table "qualifications", force: :cascade do |t|
     t.integer  "employee_id"
@@ -882,6 +893,11 @@ ActiveRecord::Schema.define(version: 20160128064951) do
     t.decimal  "payable_day"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
+    t.string   "lwp_leave"
+    t.string   "cl_leave"
+    t.string   "el_leave"
+    t.string   "esic_leave"
+    t.string   "coff_leave"
   end
 
   add_index "workingdays", ["employee_id"], name: "index_workingdays_on_employee_id"

@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :payment_modes
   resources :excel_exports do
     collection do
       get :payroll

@@ -31,25 +31,45 @@
     <th><strong>Present Day</strong></th>
     <td><%= @workingday.present_day %></td>
     </tr>
+
     <tr>
+    <th><strong>LWP Leave</strong></th>
+    <td><%= @workingday.lwp_leave %></td>
+   
+    <th><strong>CL</strong></th>
+    <td><%= @workingday.cl_leave %></td>
+    </tr>
+
+    <tr>
+    <th><strong>EL</strong></th>
+    <td><%= @workingday.el_leave %></td>
+   
+    <th><strong>ESIC Leave</strong></th>
+    <td><%= @workingday.esic_leave %></td>
+    </tr>
+    
+    <tr>
+    <th><strong>COFF Leave</strong></th>
+    <td><%= @workingday.coff_leave %></td>
+
     <th><strong>Total Leave</strong></th>
     <td><%= @workingday.total_leave %></td>
-    
+    </tr>
+
+    <tr>
     <th> <strong>Holiday in Month</strong></th>
     <td><%= @workingday.holiday_in_month %></td>
-    </tr>
-    <tr>
+   
     <th> <strong>Week off Day</strong></th>
     <td><%= @workingday.week_off_day %></td>
+    </tr>
     
+    <tr>
     <th> <strong>Absent Day</strong></th>
     <td><%= @workingday.absent_day %></td>
-    </tr>
-    <tr>
+   
     <th><strong>Payable Day</strong></th>
     <td><%= @workingday.payable_day %></td>
-    <th></th>
-    <td></td>
     </tr>
     </table>
 

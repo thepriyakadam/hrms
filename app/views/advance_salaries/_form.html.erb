@@ -1,0 +1,86 @@
+
+<!-- SELECT2 EXAMPLE -->
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Salary Advance</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <%= bootstrap_form_for(@advance_salary,html: {id: 'company'}) do |f| %>
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="form-group required">
+          <%= f.select :employee_id, Employee.all.collect {|e| [e.manual_employee_code+"  "+e.first_name.to_s+" "+e.last_name.to_s,e.id]} %>
+           </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-3">
+        <label>Date of Advance </label>
+         <div class="form-group required">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+            <%= f.text_field :advance_date,hide_label: true,class: 'company_start_date'%>
+          </div>
+         </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group required">
+           <%= f.text_field :advance_amount,label: 'Advance Amount',placeholder: "Advance Amount"%>
+           </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="field">
+           <%= f.text_field :no_of_instalment,label: 'No of Instalment',placeholder: "No of Instalment" %>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="field">
+             <%= f.text_field :instalment_amount,label: 'Instalment Amount',placeholder: " Instalment Amount" %>
+          </div>
+        </div>
+       
+      </div>
+
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="actions">
+            <%= f.submit :class => class_name, data: { disable_with: data_info } %>
+          </div>
+        </div>
+    </div>
+    <% end %>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->
+
+<script type="text/javascript">
+  $(function(){
+    $('#advance_salary_advance_amount').on('input', function() {
+      var advance_salary_advance_amount = parseFloat($('#advance_salary_advance_amount').val());
+      var advance_salary_no_of_instalment = parseFloat($('#advance_salary_no_of_instalment').val());
+      var ans="";
+      if (isNaN(advance_salary_advance_amount) || isNaN(advance_salary_no_of_instalment)) {
+        ans = ""
+      }
+      else{
+        ans = (advance_salary_advance_amount / advance_salary_no_of_instalment).toFixed(2);
+      }
+      $('#advance_salary_instalment_amount').val(ans);
+
+    });
+
+    $('#advance_salary_no_of_instalment').on('input', function() {
+      var advance_salary_no_of_instalment = parseFloat($('#advance_salary_no_of_instalment').val());
+      var advance_salary_advance_amount = parseFloat($('#advance_salary_advance_amount').val());
+      var ans="";
+      if (isNaN(advance_salary_advance_amount) || isNaN(advance_salary_no_of_instalment)) {
+        ans = ""
+      }
+      else{
+        ans = (advance_salary_advance_amount / advance_salary_no_of_instalment).toFixed(2);
+      }
+      $('#advance_salary_instalment_amount').val(ans);
+    });
+  });
+</script>

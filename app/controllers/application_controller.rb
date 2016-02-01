@@ -21,16 +21,19 @@ class ApplicationController < ActionController::Base
 
   #AbstractController::ActionNotFound
   #ActionController::RoutingError
-
-  # rescue_from ActiveRecord::RecordNotFound do |exc|
-  #   if request.xhr?
-  #     flash[:alert] = "Sorry! Record not found"
-  #     render js: "window.location = '/#{params["controller"]}'"
-  #   else
-  #     flash[:alert] = "Sorry! Record not found"
-  #     redirect_to root_url
-  #   end
-  # end
+  #SQLite3::BusyException
+  #ActiveRecord::StatementInvalid
+  #ActiveRecord::RecordInvalid
+  
+  rescue_from ActiveRecord::RecordNotFound do |exc|
+    if request.xhr?
+      flash[:alert] = "Sorry! Record not found"
+      render js: "window.location = '/#{params["controller"]}'"
+    else
+      flash[:alert] = "Sorry! Record not found"
+      redirect_to root_url
+    end
+  end
 
   # rescue_from ActionView::Template::Error do |exc|
   #   if request.xhr?

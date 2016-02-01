@@ -41,7 +41,7 @@ class EmployeeGradesController < ApplicationController
   # DELETE /employee_grades/1.json
   def destroy
     @employee_grade.destroy
-     @employee_grades = EmployeeGrade.all
+    @employee_grades = EmployeeGrade.all
   end
 
   private

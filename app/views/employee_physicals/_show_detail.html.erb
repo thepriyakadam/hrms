@@ -2,28 +2,28 @@
   <div class="box-header with-border">
     <h3 class="box-title">Employee Physical Details</h3>
     <div class="box-tools pull-right">
-      <%= link_to 'Edit',  edit_employee_physical_path(@employee_physical),class: 'btn btn-success fa fa-edit',remote:true %>
+      <%= link_to 'Edit',  edit_employee_physical_path(@employee_physical),class: 'btn btn-sm btn-success fa fa-edit',remote:true %>
     </div>
   </div><!-- /.box-header -->
   <div class="box-body">
-   <table id="example2" class="table table-bordered table-hover">
+   <table id="example2" class="table table-bordered table-hover table-condensed">
 
     <tr>
         <th><strong>Employee:</strong></th>
         <td>  <%= @employee_physical.employee.try(:first_name) %></td>
 
-        <th> <strong>Height:</strong></th>
+        <th> <strong>Height(inches):</strong></th>
         <td> <%= @employee_physical.height %></td>
     </tr>
      <tr>
-        <th><strong>Weight:</strong></th>
+        <th><strong>Weight(kg):</strong></th>
         <td><%= @employee_physical.weight %></td>
 
         <th> <strong>T-Shirt Size</strong></th>
         <td> <%= @employee_physical.size %></td>
     </tr>
      <tr>
-        <th> <strong>Trouser Size</strong></th>
+        <th> <strong>Trouser Size(cm)</strong></th>
         <td> <%= @employee_physical.trouser_size %></td>
 
         <th></th>
@@ -33,3 +33,5 @@
     </table>
   </div><!-- /.box -->
 </div>
+
+

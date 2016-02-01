@@ -16,7 +16,9 @@ class EmployeeShiftsController < ApplicationController
   # GET /employee_shifts/new
   def new
     @employee_shift = EmployeeShift.new
-    @employees = Employee.joins("LEFT JOIN employee_shifts on employees.id = employee_shifts.employee_id where employee_shifts.employee_id is null")
+    @employees = Employee.all
+    @rotations = ShiftRotation.all
+    #@employees = Employee.joins("LEFT JOIN employee_shifts on employees.id = employee_shifts.employee_id where employee_shifts.employee_id is null")
   end
 
   # GET /employee_shifts/1/edit
@@ -26,24 +28,18 @@ class EmployeeShiftsController < ApplicationController
   # POST /employee_shifts
   # POST /employee_shifts.json
   def create
-    @employee_shift = params["employee_shift"]["company_shift_id"]
-    @from_date = params["employee_shift"]["from_date"]
-    @to_date = params["employee_shift"]["to_date"]
-    @employee_ids = params["employee_ids"]
-    @employee_shifts = EmployeeShift.all
-
-    @employee_ids.try(:each) do |e|
-      EmployeeShift.new do |es|
-        es.employee_id = e
-        es.company_shift_id = @employee_shift
-        es.from_date = @from_date
-        es.to_date = @to_date
-        es.save
+    @employees = params[:employee_ids]
+    if @employees.nil?
+      flash[:notice] = "Select Employees."
+      render :new
+    else
+      @employees.each do |e|
+        id = EmployeeShift.create(employee_id: e).id
+        EmployeeShiftsShiftRotation.create(shift_rotation_id: params[:employee_shift][:id], employee_shift_id: id )
       end
+      flash[:notice] = "Employee assign successfully."
+      redirect_to new_employee_shift_path
     end
-
-    flash[:notice] = "Employee shift allowed successfully."
-    redirect_to employee_shifts_path
   end
 
   # PATCH/PUT /employee_shifts/1
@@ -73,6 +69,19 @@ class EmployeeShiftsController < ApplicationController
   def employee_of_shift
     @company_shift = CompanyShift.find(params[:format])
     @employee_shifts = @company_shift.employee_shifts
+  end
+
+  def shift_date
+    @employee_shifts = EmployeeShift.where(company_shift_id: params[:format])
+  end
+
+  def shift_rotation
+    @shift_rotations = ShiftRotation.where(company_shift_id: params[:format])
+  end
+
+  def employee_shift_list
+    @shift_rotation = ShiftRotation.find(params[:format])
+    @employee_shifts = @shift_rotation.employee_shifts
   end
 
   private

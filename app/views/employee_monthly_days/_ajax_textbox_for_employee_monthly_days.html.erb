@@ -1,0 +1,32 @@
+<%= bootstrap_form_for(@employee_monthly_day) do |f| %>
+<%= hidden_field :employee_monthly_day, :employee_id, value: @employee.id%>
+<div class="row">
+  <div class="col-sm-3">
+    <div class="field">
+        <%= f.select :month, ['January','February','March','April','May','June','July','August','September','October','November','December'],{label: 'Select Month',include_blank: " Select Month"} %>
+    </div>
+  </div>
+  <div class="col-sm-3">
+    <div class="field">
+      <%= f.select :year_id, all_year,{include_blank: " Select Year",label: "Year"},class: 'input_year_id' %>
+    </div>
+  </div>
+  <div class="col-sm-3">
+    <div class="field">
+     <%= f.text_field :no_of_working_day %>
+    </div>
+  </div>
+  <div class="col-sm-3">
+    <div class="field">
+     <%= f.text_field :overtime %>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-3">
+    <div class="actions">
+      <%= f.submit :class => class_name, data: { disable_with: data_info } %>
+    </div>
+  </div>
+</div>
+<% end %>

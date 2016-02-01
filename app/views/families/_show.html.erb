@@ -6,7 +6,7 @@
     </div>
   </div><!-- /.box-header -->
   <div class="box-body">
-   <table id="example2" class="table table-bordered table-hover">
+   <table id="example2" class="table table-bordered table-hover table-condensed">
 <tr>
   <th><strong>Employee</strong></th>
   <td><%= @family.employee.try(:first_name) %></td>
@@ -44,7 +44,7 @@
   <td><%= @family.email %></td>
 </tr>
 <tr>
-  <th><strong>Aadhar No</strong></th>
+  <th><strong>Aadhaar No</strong></th>
   <td> <%= @family.adhar_no %></td>
 
   <th> <strong>PAN Card No</strong></th>
@@ -73,7 +73,7 @@
 </tr>
 <tr>
   <th> <strong>Religion</strong></th>
-  <td><%= @family.religion %></td>
+  <td><%= @family.religion.try(:name) %></td>
 
   <th> <strong>Profession</strong></th>
   <td><%= @family.profession %></td>
@@ -94,7 +94,7 @@
   
 </table>
 
-<%= link_to 'Back',ajax_family_detail_employees_path(id: @employee.id),class: 'btn btn-default fa fa-arrow-left',remote:true%>
+<%= link_to 'Back',ajax_family_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-default fa fa-arrow-left',remote:true%>
 </div>
   </div><!-- /.box -->
 </div>

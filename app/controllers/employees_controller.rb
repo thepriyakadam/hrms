@@ -78,7 +78,9 @@ class EmployeesController < ApplicationController
 
   def assign_role
     @employees = Employee.joins("LEFT JOIN members on members.employee_id = employees.id where members.employee_id is null")
-    @roles = Role.all    
+    @all_role_list = Employee.all.collect {|e| [e.first_name,e.id]}
+    @all_employee_list = Role.all.collect {|r| [r.name,r.id]}
+    @all_department_list = Department.all.collect {|d| [d.company_location.company.name+'-'+d.company_location.name+'-'+d.name,d.id]}    
   end
 
   def submit_form
@@ -191,7 +193,7 @@ class EmployeesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def employee_params
       #params.require(:employee).permit(:department_id, :first_name, :middle_name, :last_name, :date_of_birth, :contact_no, :email, :permanent_address, :city, :district, :state, :pin_code, :current_address, :adhar_no, :pan_no, :licence_no, :passport_no, :marital_status, :nationality_id, :blood_group_id, :handicap, :status, :employee_type_id, :gender)
-      params.require(:employee).permit(:manual_employee_code, :department_id, :first_name, :middle_name, :last_name, :date_of_birth, :contact_no, :email, :permanent_address, :city, :country_id, :district_id, :state_id, :pin_code, :current_address, :adhar_no, :pan_no, :licence_no, :passport_no, :marital_status, :nationality_id, :blood_group_id, :handicap, :status, :employee_type_id, :gender, :religion,:handicap_type, :cost_center_id)
+      params.require(:employee).permit(:manual_employee_code, :department_id, :first_name, :middle_name, :last_name, :date_of_birth, :contact_no, :email, :permanent_address, :city, :country_id, :district_id, :state_id, :pin_code, :current_address, :adhar_no, :pan_no, :licence_no, :passport_no, :marital_status, :nationality_id, :blood_group_id, :handicap, :status, :employee_type_id, :gender, :religion_id,:handicap_type, :cost_center_id)
         # joining_detail_attributes: [:joining_date, :reference_from, :admin_hr, :tech_hr, :designation, :employee_grade_id, :confirmation_date, :status, :probation_period, :notice_period, :medical_schem])
     end
 end

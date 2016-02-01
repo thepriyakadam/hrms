@@ -7,7 +7,7 @@
     
   </div><!-- /.box-header -->
   <div class="box-body">
-    <table id="example2" class="table table-bordered table-hover">
+    <table id="example2" class="table table-bordered table-hover table-condensed'">
     <thead>
       <tr>
       <th>Employee</th>
@@ -25,9 +25,9 @@
         <td><%= employee_leav_balance.no_of_leave %></td>
 
          <td>
-            <%= link_to '', employee_leav_balance,class: 'btn btn-default fa fa-eye' %>
-            <%= link_to '', edit_employee_leav_balance_path(employee_leav_balance),class: 'btn btn-success fa fa-edit' %>
-            <%= link_to '', employee_leav_balance, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger fa fa-close' %>
+            <%= link_to '', employee_leav_balance,class: 'btn btn-sm btn-default fa fa-eye' %>
+            <%= link_to '', edit_employee_leav_balance_path(employee_leav_balance),class: 'btn btn-success fa fa-edit btn-sm' %>
+            <%= link_to '', employee_leav_balance, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-sm fa fa-close' %>
           </td>
         </tr>
       <% end %>

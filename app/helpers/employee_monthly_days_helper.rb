@@ -1,0 +1,2 @@
+module EmployeeMonthlyDaysHelper
+end

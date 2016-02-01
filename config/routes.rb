@@ -1,5 +1,54 @@
 Rails.application.routes.draw do
 
+  resources :excel_exports do
+    collection do
+      get :payroll
+    end
+  end
+  resources :esic_masters
+  resources :excel_uploads do
+    collection do
+      post :load_excel
+    end
+  end
+  resources :employee_categories
+  resources :other_salary_components
+  resources :salaryslips do
+    collection do
+      post :save_data
+      get :employee_salary_list
+      get :show_salaryslip
+      get :salary_slip_list
+      get :select_month_year_form
+      get :show_unsaved_employee
+      post :save_all_data
+    end
+  end
+  resources :instalments
+  resources :advance_salaries
+  resources :workingdays
+  resources :overtimes
+  resources :shift_rotations
+  resources :employee_monthly_days do
+    collection do
+      get :find_employee_for_employee_monthly_day
+    end
+  end
+  resources :holidays
+  resources :employee_salary_templates do
+    collection do
+      get :find_employee_for_assign_template
+      get :find_template
+      post :create_employee_template
+      get :show_employee_list
+      get :show_employee_salary_template
+      get :show_employee_salary_slip
+      get :modal
+      get :salary_template
+      get :find_employee_for_salary
+      post :save_data
+    end
+  end
   resources :salary_component_templates
   resources :salary_templates
   resources :religions
@@ -23,12 +72,18 @@ Rails.application.routes.draw do
   resources :degrees
   resources :attendances do
     collection do
-      get :find_employee_for_attendance
+      get :attendance_details
+      get :collect_shift_date
+      get :collect_employee
     end
   end
   resources :employee_shifts do
     collection do
       get :employee_of_shift
+      get :shift_date
+      get :shift_rotation
+      get :find_employee_for_assign_shift_rotation
+      get :employee_shift_list
     end
   end
   resources :company_shifts
@@ -45,6 +100,7 @@ Rails.application.routes.draw do
   resources :employee_leav_requests do
     collection do
       get :approved_or_rejected_leave_request
+      get :employee_list
     end
   end
   resources :company_leavs
@@ -117,7 +173,7 @@ Rails.application.routes.draw do
   devise_for :groups, :controllers => {registrations: 'groups/registrations',sessions: 'groups/sessions',passwords: 'groups/passwords'}
 
   devise_scope :group do
-    get "/group" => "groups/registrations#new"
+    get "/group" => "groups/sessions#new"
   end
 
   devise_scope :member do

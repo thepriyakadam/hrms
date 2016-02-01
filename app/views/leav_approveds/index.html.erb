@@ -2,12 +2,12 @@
   <div class="box-header">
     <h3 class="box-title">Leave Aproved</h3>
     <div class="pull-right">
-      <%= link_to "New Leave aproved",new_leav_aproved_path, class: 'btn btn-primary' %> 
+      <%= link_to "New Leave aproved",new_leav_aproved_path, class: 'btn btn-sm btn-primary' %> 
     </div>
     
   </div><!-- /.box-header -->
   <div class="box-body">
-    <table id="example2" class="table table-bordered table-hover">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
     <thead>
       <tr>
       <th>Employee leav request</th>
@@ -22,9 +22,9 @@
         <td><%= leav_aproved.employee_leav_request %></td>
         <td><%= leav_aproved.approved_date %></td>
          <td>
-            <%= link_to '', leav_aproved,class: 'btn btn-default fa fa-eye' %>
-            <%= link_to '',  edit_leav_aproved_path(leav_aproved),class: 'btn btn-success fa fa-edit' %>
-            <%= link_to '', leav_aproved, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger fa fa-close' %>
+            <%= link_to '', leav_aproved,class: 'btn btn-default btn-sm fa fa-eye' %>
+            <%= link_to '',  edit_leav_aproved_path(leav_aproved),class: 'btn btn-success btn-sm fa fa-edit' %>
+            <%= link_to '', leav_aproved, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-sm fa fa-close' %>
           </td>
         </tr>
       <% end %>

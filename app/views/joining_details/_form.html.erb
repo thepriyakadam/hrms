@@ -7,12 +7,13 @@
 <%= f.hidden_field :employee_id, value: @employee.id %>
     <div class="row">
           <div class="col-sm-3">
-        <div class="form-group required">
+           <label>Joining Date </label>
+          <div class="form-group required">
           <div class="input-group">
             <div class="input-group-addon">
               <i class="fa fa-calendar"></i>
             </div>
-            <%= f.text_field :joining_date,label: 'Joining Date',class: 'joining_date'%>
+            <%= f.text_field :joining_date,hide_label: true,class: 'joining_date'%>
           </div>
         </div>
         </div>
@@ -21,14 +22,22 @@
            <%= f.select :employee_grade_id, all_employee_grade, {label: 'Employee Grade',include_blank: " Select Employee Grade"} %>
         </div>
         </div>
+        <div class="col-sm-3">
+        <div class="field">
+           <%= f.select :employee_category_id, all_employee_category, {label: 'Employee Category',include_blank: " Select Employee Category"} %>
+        </div>
+        </div>
   
         <div class="col-sm-3">
         <div class="form-group required">
           <%= f.select :employee_designation_id,all_employee_designation,{label: 'Designation',include_blank: " Select Employee Designation"} %>
         </div>
         </div>
+        </div>
+
+        <div class="row">
         <div class="col-sm-3">
-         <label>Confirmation Date: </label>
+         <label>Confirmation Date</label>
         <div class="field">
           <div class="input-group">
             <div class="input-group-addon">
@@ -38,8 +47,6 @@
           </div>
         </div>
         </div>
-    </div>
-    <div class="row">
       <div class="col-sm-3">
         <div class="field">
         <%= f.text_field :employee_uan_no, label:'UAN No' %>
@@ -48,7 +55,25 @@
   
       <div class="col-sm-3">
         <div class="field">
+          <%= f.select :select_pf,['Yes','No','Limit'],{label: 'PF Option',include_blank: " Select PF"} %>
+       </div>
+    </div> 
+    <div class="col-sm-3">
+        <div class="field">
           <%= f.text_field :employee_pf_no, label:'PF No' %>
+       </div>
+    </div> 
+    </div>
+
+    <div class="row">
+    <div class="col-sm-3">
+        <div class="field">
+          <%= f.text_field :pf_max_amount, label:'PF Max Amount' %>
+       </div>
+    </div> 
+     <div class="col-sm-3">
+        <div class="field">
+          <%= f.select :have_esic, ['Yes','No'],{label: 'ESIC Option',include_blank: " Select ESIC Option"} %>
        </div>
     </div> 
     <div class="col-sm-3">
@@ -58,19 +83,29 @@
     </div> 
     <div class="col-sm-3">
         <div class="field">
+          <%= f.select :payment_mode, ['Check','Cash'],{label: 'Payment Mode',include_blank: " Select Payment Mode"} %>
+       </div>
+    </div> 
+    </div>
+
+    <div class="row">
+     <div class="col-sm-3">
+        <div class="field">
+           <%= f.select :cost_center_id, all_cost_center, {label: 'Cost Center',include_blank: " Select Cost Center"} %>
+        </div>
+        </div>
+    <div class="col-sm-3">
+        <div class="field">
            <%= f.select :medical_schem, ['Yes','No'],{label: 'Medical Insurance',include_blank: " Select Medical Insurance"} %>
        </div>
       </div>
-
-   </div>
-  <div class="row">
       <div class="col-sm-3">
         <div class="field">
           <%= f.text_field :passport_no,label: 'Passport No' %>
        </div>
       </div>
       <div class="col-sm-3">
-      <label>Passport Issue Date: </label>
+      <label>Passport Issue Date </label>
         <div class="field">
           <div class="input-group">
             <div class="input-group-addon">
@@ -80,8 +115,11 @@
           </div>
         </div>
       </div>
+      </div>
+
+      <div class="row">
       <div class="col-sm-3">
-      <label>Passport Expiry Date: </label>
+      <label>Passport Expiry Date </label>
         <div class="field">
           <div class="input-group">
             <div class="input-group-addon">
@@ -96,8 +134,7 @@
           <%= f.text_field :probation_period,label: 'Probation Period' %>
         </div>
       </div> 
-  </div>
-  <div class="row">
+  
       <div class="col-sm-3">
         <div class="field">
           <%= f.text_field :notice_period,label: 'Notice Period' %>

@@ -6,14 +6,14 @@
     </div>
   </div><!-- /.box-header -->
   <div class="box-body">
-    <table id="example2" class="table table-bordered table-hover">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
     <tr>
 
     <tr>
       <th><strong>Employee</strong></th>
-      <td><%= @joining_detail.employee.try(:first_name) %></td>
+      <td><%= @joining_detail.employee.try(:manual_employee_code) %></td>
 
-      <th><strong>Employee UAN No</strong></th>
+      <th><strong>UAN No</strong></th>
       <td><%= @joining_detail.employee_uan_no %></td>
     </tr>
 
@@ -32,11 +32,34 @@
       <td><%= @joining_detail.employee_grade.try(:name) %></td>
     </tr>
     <tr>
+      <th><strong>PF</strong></th>
+      <td><%= @joining_detail.select_pf %></td>
+
       <th><strong>PF No</strong></th>
       <td><%= @joining_detail.employee_pf_no %></td>
+    </tr>
 
+    <tr>
+      <th><strong>PF Max Amount</strong></th>
+      <td><%= @joining_detail.pf_max_amount %></td>
+
+      <th><strong>ESIC</strong></th>
+      <td><%= @joining_detail.have_esic %></td>
+    </tr>
+
+    <tr>
       <th><strong>ESIC No</strong></th>
       <td><%= @joining_detail.employee_efic_no %></td>
+
+      <th><strong>Payment Mode</strong></th>
+      <td><%= @joining_detail.payment_mode %></td>
+    </tr>
+     <tr>
+      <th><strong>Cost Center</strong></th>
+      <td><%= @joining_detail.cost_center.try(:name) %></td>
+
+      <th><strong>Employee Category</strong></th>
+      <td><%= @joining_detail.employee_category.try(:name) %></td>
     </tr>
 
     <tr>

@@ -2,18 +2,16 @@
   <div class="box-header with-border">
     <h3 class="box-title">Employee Bank Details</h3>
     <div class="box-tools pull-right">
-      <%= link_to 'Edit', edit_employee_bank_detail_path(@employee_bank_detail),class: 'btn btn-success fa fa-edit', remote:true %>
-      <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-      <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+      <%= link_to 'Edit', edit_employee_bank_detail_path(@employee_bank_detail),class: 'btn btn-sm btn-success fa fa-edit', remote:true %>
     </div>
   </div><!-- /.box-header -->
   <div class="box-body">
     
-    <table id="example2" class="table table-bordered table-hover">
+    <table id="example2" class="table table-bordered table-hover table-condensed'">
 
     <tr>
       <th><strong>Employee</strong></th>
-      <td> <%= @employee_bank_detail.employee.try(:first_name) %></td>
+      <td><%= @employee_bank_detail.employee.first_name %><%= @employee_bank_detail.employee.middle_name %><%= @employee_bank_detail.employee.last_name %></td>
 
       <th> <strong>Account No</strong></th>
       <td><%= @employee_bank_detail.account_no %></td>

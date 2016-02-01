@@ -2,6 +2,8 @@ class JoiningDetail < ActiveRecord::Base
   belongs_to :employee
   belongs_to :employee_grade
   belongs_to :employee_designation
+  belongs_to :cost_center
+  belongs_to :employee_category
 
   validates :employee_id, :presence => true,  uniqueness: { case_sensitive: false }
   validates :joining_date, :presence => true

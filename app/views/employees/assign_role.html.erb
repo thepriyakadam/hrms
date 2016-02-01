@@ -19,14 +19,14 @@
 					<%= bootstrap_form_for :login, url: {action: 'submit_form'} do |f| %>    
 			      <tr>
 			      	<td><%= employee.manual_employee_code %></td>
-			        <td><%= employee.first_name %> <%= employee.middle_name %> <%= employee.last_name %></td> 
-			        <td><%= f.select :role_id, all_role_list,hide_label:true,prompt:true %>
-			   					<%= f.hidden_field :employee_id, value: employee.id %>
+			        <td><%= employee.first_name %> <%= employee.middle_name %> <%= employee.last_name %></td>
+			        <td><%= f.select :role_id, @all_role_list,hide_label:true,prompt:true %>
+			   				<%= f.hidden_field :employee_id, value: employee.id %>
 			        </td>
-			        <td><%= f.select :manager_id, all_employee_list,hide_label:true, prompt:true %></td>
-			        <td><%= f.select :department_id, all_department_list,hide_label:true, prompt:true %></td>
+			        <td><%= f.select :manager_id, @all_employee_list,hide_label:true, prompt:true %></td>
+			        <td><%= f.select :department_id, @all_department_list,hide_label:true, prompt:true %></td>
 			        <td><%= f.submit "+", class: 'btn btn-primary btn-sm fa fa-user-plus' %></td>
-			      </tr>	
+			      </tr>
 		     	<% end %>
 		    <% end %>
 		  </tbody>

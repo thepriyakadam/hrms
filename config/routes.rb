@@ -100,6 +100,7 @@ Rails.application.routes.draw do
   resources :employee_leav_requests do
     collection do
       get :approved_or_rejected_leave_request
+      get :employee_list
     end
   end
   resources :company_leavs

@@ -17,9 +17,10 @@
 	        <%= text_field :employee_code,:hhh,{oninput:"var a={employee_code:$(this).val(),month:$('#salary_month_name').val(),year: $('#salary_year').val()}; $.get('/employee_salary_templates/find_employee_for_salary',a,function(response){});",class: 'form-control',placeholder:'Search by Employee id'} %>
 	      </div>
 	    </div>
-	  </div>
+	  </div><br>
+    <ol></ol>
 	  <div id="salary">
 	  </div>
-	  <ol></ol>
+	  
 	</div><!-- /.box-body -->
 </div><!-- /.box -->

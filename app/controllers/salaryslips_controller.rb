@@ -71,7 +71,7 @@ class SalaryslipsController < ApplicationController
               formula_total_calculated_amount = formula_total_calculated_amount + formula_item_calculated_amount
             end
             deducted_actual_amount = formula_total_actual_amount / 100 * master_esic.percentage
-            deducted_calculated_amount = formula_total_calculated_amount / 100 * master_esic.percentage
+            deducted_calculated_amount = (formula_total_calculated_amount / 100 * master_esic.percentage).ceil
             @salaryslip_component_array << create_salaryslip_component(item.salary_component_id, deducted_actual_amount, deducted_calculated_amount)
           else
             deducted_actual_amount = 0
@@ -307,7 +307,7 @@ class SalaryslipsController < ApplicationController
                 formula_total_calculated_amount = formula_total_calculated_amount + formula_item_calculated_amount
               end
               deducted_actual_amount = formula_total_actual_amount / 100 * master_esic.percentage
-              deducted_calculated_amount = formula_total_calculated_amount / 100 * master_esic.percentage
+              deducted_calculated_amount = (formula_total_calculated_amount / 100 * master_esic.percentage).ceil
               @salaryslip_component_array << create_salaryslip_component(item.salary_component_id, deducted_actual_amount, deducted_calculated_amount)
             else
               deducted_actual_amount = 0

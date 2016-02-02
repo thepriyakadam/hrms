@@ -279,7 +279,7 @@ require 'roo'
 ex = Roo::Excel.new("#{Rails.root}/public/advance.xls")
 ex.default_sheet = ex.sheets[0]
 j = 1
-3.upto(35) do |line|
+2.upto(38) do |line|
   puts "Starting Record---------------------------------------"
   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
   

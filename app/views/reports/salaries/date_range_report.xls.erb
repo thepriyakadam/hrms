@@ -54,17 +54,19 @@
         <Cell ss:Index="40"><Data ss:Type="String">Well Faire</Data></Cell>
         <Cell ss:Index="41"><Data ss:Type="String">Professional Tax</Data></Cell>
 
-        <Cell ss:Index="42"><Data ss:Type="String">Total Deduction</Data></Cell>
+        <Cell ss:Index="42"><Data ss:Type="String">Advance</Data></Cell>
 
-        <Cell ss:Index="43"><Data ss:Type="String">Net Salary</Data></Cell>
+        <Cell ss:Index="43"><Data ss:Type="String">Total Deduction</Data></Cell>
 
-        <Cell ss:Index="44"><Data ss:Type="String">Total Leave</Data></Cell>
-        <Cell ss:Index="45"><Data ss:Type="String">No of Days in Month</Data></Cell>
-        <Cell ss:Index="46"><Data ss:Type="String">Present Days</Data></Cell>
-        <Cell ss:Index="47"><Data ss:Type="String">Holiday</Data></Cell>
-        <Cell ss:Index="48"><Data ss:Type="String">Weekoff</Data></Cell>
-        <Cell ss:Index="49"><Data ss:Type="String">Absent Days</Data></Cell>
-        <Cell ss:Index="50"><Data ss:Type="String">Payable Days</Data></Cell>
+        <Cell ss:Index="44"><Data ss:Type="String">Net Salary</Data></Cell>
+
+        <Cell ss:Index="45"><Data ss:Type="String">Total Leave</Data></Cell>
+        <Cell ss:Index="46"><Data ss:Type="String">No of Days in Month</Data></Cell>
+        <Cell ss:Index="47"><Data ss:Type="String">Present Days</Data></Cell>
+        <Cell ss:Index="48"><Data ss:Type="String">Holiday</Data></Cell>
+        <Cell ss:Index="49"><Data ss:Type="String">Weekoff</Data></Cell>
+        <Cell ss:Index="50"><Data ss:Type="String">Absent Days</Data></Cell>
+        <Cell ss:Index="51"><Data ss:Type="String">Payable Days</Data></Cell>
       </Row>
       <% @salaryslips.each do |slip| %>
         <Row>
@@ -138,7 +140,7 @@
 
           <% @deducted_salaryslip_items = slip.salaryslip_components.where(is_deducted: true) %>
           <% @deducted_salaryslip_items.each do |item| %>
-            <% case item.salary_component.name %>
+            <% case item.salary_component.try(:name) %>
             <% when "PF" %>
               <Cell ss:Index="32"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
             <% when "ESIC" %>
@@ -159,20 +161,23 @@
               <Cell ss:Index="40"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
             <% when "Prof. Tax" %>
               <Cell ss:Index="41"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
-            <% else %>
             
             <% end %> <!-- switch case -->
+            <% if item.salary_component_id.nil? %>
+              <Cell ss:Index="42"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
+            <%end%>
           <% end %><!-- deducted items -->
-          <Cell ss:Index="42"><Data ss:Type="Number"><%= slip.calculated_total_deduction.round %></Data></Cell>
-          <Cell ss:Index="43"><Data ss:Type="Number"><%= slip.calculated_net_salary.round %></Data></Cell>
 
-          <Cell ss:Index="44"><Data ss:Type="Number"><%= slip.workingday.total_leave %></Data></Cell>
-          <Cell ss:Index="45"><Data ss:Type="Number"><%= slip.workingday.day_in_month %></Data></Cell>
-          <Cell ss:Index="46"><Data ss:Type="Number"><%= slip.workingday.present_day %></Data></Cell>
-          <Cell ss:Index="47"><Data ss:Type="Number"><%= slip.workingday.holiday_in_month %></Data></Cell>
-          <Cell ss:Index="48"><Data ss:Type="Number"><%= slip.workingday.week_off_day %></Data></Cell>
-          <Cell ss:Index="49"><Data ss:Type="Number"><%= slip.workingday.absent_day %></Data></Cell>
-          <Cell ss:Index="50"><Data ss:Type="Number"><%= slip.workingday.payable_day %></Data></Cell>
+          <Cell ss:Index="43"><Data ss:Type="Number"><%= slip.calculated_total_deduction.round %></Data></Cell>
+          <Cell ss:Index="44"><Data ss:Type="Number"><%= slip.calculated_net_salary.round %></Data></Cell>
+
+          <Cell ss:Index="45"><Data ss:Type="Number"><%= slip.workingday.total_leave %></Data></Cell>
+          <Cell ss:Index="46"><Data ss:Type="Number"><%= slip.workingday.day_in_month %></Data></Cell>
+          <Cell ss:Index="47"><Data ss:Type="Number"><%= slip.workingday.present_day %></Data></Cell>
+          <Cell ss:Index="48"><Data ss:Type="Number"><%= slip.workingday.holiday_in_month %></Data></Cell>
+          <Cell ss:Index="49"><Data ss:Type="Number"><%= slip.workingday.week_off_day %></Data></Cell>
+          <Cell ss:Index="50"><Data ss:Type="Number"><%= slip.workingday.absent_day %></Data></Cell>
+          <Cell ss:Index="51"><Data ss:Type="Number"><%= slip.workingday.payable_day %></Data></Cell>
           
         </Row><!-- Row -->
       <% end %><!-- slip -->

@@ -62,9 +62,15 @@
 	  		</tr>
 	  		<% @deducted_salary_components.each do |item| %>
 		  		<tr>
-		  			<td><%= item.salary_component.name %></td>
-		  			<td align="right"><%= item.actual_amount.round %></td>
-		  			<td align="right"><%= item.calculated_amount.round %></td>
+		  			<% unless item.salary_component_id.nil? %>
+              <td><%= item.salary_component.name %></td>
+              <td align="right"><%= item.actual_amount.round %></td>
+              <td align="right"><%= item.calculated_amount.round %></td>
+            <%else%>
+              <td><%= item.other_component_name %></td>
+              <td align="right"><%= item.actual_amount.round %></td>
+              <td align="right"><%= item.calculated_amount.round %></td>
+            <%end%>
 		  		</tr>
 	  		<% end %>
 	  		<tr>
@@ -105,9 +111,15 @@
         </tr>
         <% @deducted_salary_components.each do |item| %>
           <tr>
-            <td><%= item.salary_component.name %></td>
-            <td align="right"><%= item.actual_amount.round %></td>
-            <td align="right"><%= item.calculated_amount.round %></td>
+            <% unless item.salary_component_id.nil? %>
+              <td><%= item.salary_component.name %></td>
+              <td align="right"><%= item.actual_amount.round %></td>
+              <td align="right"><%= item.calculated_amount.round %></td>
+            <%else%>
+              <td><%= item.other_component_name %></td>
+              <td align="right"><%= item.actual_amount.round %></td>
+              <td align="right"><%= item.calculated_amount.round %></td>
+            <%end%>
           </tr>
         <% end %>
         <tr>

@@ -17,7 +17,6 @@
                 </td>
                 <td align="right">
                   <%= item.calculated_amount.round %>
-                  <font color="green"><%= link_to "", salary_bubble_form_salaryslips_path(item_id: item.id,column_name:'calculated_amount'),class: "fa fa-edit", remote:true %></font>
                 </td>
               </tr>
             <% end %>

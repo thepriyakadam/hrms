@@ -176,7 +176,10 @@ require 'roo'
   #   w.day_in_month = ex.cell(line, 'AX')
   #   w.present_day = ex.cell(line, 'AY')
   #   w.holiday_in_month = ex.cell(line, 'AZ')
-  #   total_leave = ex.cell(line, 'AT').to_i+ex.cell(line, 'AU').to_i+ex.cell(line, 'AV').to_i+ex.cell(line, 'AW').to_i
+  #   w.lwp_leave = ex.cell(line, 'AT').to_i
+  #   w.cl_leave = ex.cell(line, 'AU').to_i
+  #   w.el_leave = ex.cell(line, 'AV').to_i
+  #   w.esic_leave = ex.cell(line, 'AW').to_i
   #   w.total_leave = total_leave 
   #   w.week_off_day = ex.cell(line, 'BA')
   #   w.absent_day = ex.cell(line, 'BB')

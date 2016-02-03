@@ -241,6 +241,7 @@ class SalaryslipsController < ApplicationController
       redirect_to root_url
     else
       employee_ids.each do |eid|
+        @instalment_array = []
         @salaryslip_component_array = []
         @employee = Employee.find(eid)
         working_day = Workingday.find_by_employee_id(eid)
@@ -413,7 +414,7 @@ class SalaryslipsController < ApplicationController
         @instalment_array.try(:each) do |ia|
           deducted_actual_amount = ia.advance_salary.instalment_amount
           deducted_calculated_amount = deducted_actual_amount
-          SalaryslipComponent.create(salaryslip_id: @Salaryslip.id, actual_amount: deducted_actual_amount, calculated_amount: deducted_calculated_amount, is_deducted: true, other_component_name: "Advance")
+          SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: deducted_actual_amount, calculated_amount: deducted_calculated_amount, is_deducted: true, other_component_name: "Advance")
         end
       end #employee_ids loop
     end # if for employee_ids.nil?

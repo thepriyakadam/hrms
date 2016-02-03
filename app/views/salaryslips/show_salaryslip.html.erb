@@ -3,6 +3,7 @@
     <h3 class="box-title">Employee Salary slip</h3>
   </div><!-- /.box-header -->
   <div class="box-body">
+
     <table class="table table-bordered table-hover table-condensed">
       <thead>
         <tr>
@@ -23,6 +24,7 @@
           <th>Email</th>
           <td><%= @employee.email %></td>
         </tr>
+
         <tr>
           <th>Month Day</th>        
           <td align="right"><%= @working_day.try(:day_in_month) %></td>      
@@ -46,18 +48,6 @@
   </div>
 </div>
 
-<div id="myModal" class="modal fade">
+<!-- <div id="myModal" class="modal fade">
       
-</div>
-
-
-<script type="text/javascript">
-
-  $(function(){
-    <% @addable_salary_components.each do |item| %>
-      $('#<%= item.id %>_actual_amount').on('click', function() {
-        alert("ok");
-      });
-    <% end %>
-  })
-</script>
+</div> -->

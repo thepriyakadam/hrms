@@ -6,53 +6,45 @@
           <th>Particular</th>
           <th>Actual Amount</th>
           <th>Calculated Amount</th>
+          <th>Action</th>
         </tr>
       </thead>
       <tbody>
         <% @addable_salary_components.each do |item| %>
           <tr>
             <td><%= item.salary_component.name %></td>
-            <td id="<%= item.id %>_actual_amount" align="right">
-              <%= item.actual_amount.round %>
-            </td>
-            <td align="right">
-              <%= item.calculated_amount.round %>
-            </td>
+            <td align="right"><%= item.actual_amount.round %></td>
+            <td align="right"><%= item.calculated_amount.round %></td>
+            <td align="center"><%= link_to "", edit_salaryslip_component_path(item),remote:true,class: "fa fa-edit" %></td>
           </tr>
         <% end %>
         <tr>
           <td>Total</td>
           <td align="right"><%= @salaryslip.actual_gross_salary.round %></td>
           <td align="right"><%= @salaryslip.calculated_gross_salary.round %></td>
+          <td></td>
         </tr>
         <% @deducted_salary_components.each do |item| %>
           <tr>
             <td><%= item.salary_component.name %></td>
             <td align="right"><%= item.actual_amount.round %></td>
             <td align="right"><%= item.calculated_amount.round %></td>
+            <td align="center"><%= link_to "", edit_salaryslip_component_path(item),remote:true,class: "fa fa-edit" %></td>
           </tr>
         <% end %>
         <tr>
           <td>Total</td>
           <td align="right"><%= @salaryslip.actual_total_deduction.round %></td>
           <td align="right"><%= @salaryslip.calculated_total_deduction.round %></td>
+          <td></td>
         </tr>
         <tr>
           <td>Net Salary</td>
           <td align="right"><%= @salaryslip.actual_net_salary.round %></td>
           <td align="right"><%= @salaryslip.calculated_net_salary.round %></td>
+          <td></td>
         </tr>
       </tbody>
     </table>
   </div>
 </div>
-
-<script type="text/javascript">
-  $(function(){
-    <% @addable_salary_components.each do |item| %>
-      $('#<%= item.id %>_actual_amount').on('click', function() {
-        alert("ok");
-      });
-    <% end %>
-  })
-</script>

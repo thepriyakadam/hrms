@@ -24,6 +24,7 @@ Rails.application.routes.draw do
   end
   resources :employee_categories
   resources :other_salary_components
+  resources :salaryslip_components
   resources :salaryslips do
     collection do
       post :save_data

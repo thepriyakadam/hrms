@@ -66,93 +66,133 @@ require 'roo'
 # ex.default_sheet = ex.sheets[1] 
 # i=1
 
-# 3.upto(491) do |line|
-# Employee.new do |e|
-#   e.manual_employee_code = ex.cell(line,'A').to_i
-#   e.first_name = ex.cell(line,'B')
-#   e.middle_name = ex.cell(line,'C')
-#   e.last_name = ex.cell(line,'D')
-#   e.gender = ex.cell(line,'E')
-#   @religion = Religion.find_by_name(ex.cell(line,'F'))
-#   e.religion_id = @religion.id unless @religion.nil?
-#   e.date_of_birth = ex.cell(line,'G')
-#   e.permanent_address = ex.cell(line,'H')
-#   e.pin_code = ex.cell(line,'I').to_i
-#   @country = Country.find_by_name(ex.cell(line,'J'))
-#   e.country_id = @country.id unless @country.nil?
-#   @state = State.find_by_name(ex.cell(line,'K'))
-#   e.state_id = @state.id unless @state.nil?
-#   @district = District.find_by_name(ex.cell(line,'L'))
-#   e.district_id =  @district.id unless @district.nil?
-#   e.city = ex.cell(line,'M')
-#   e.current_address = ex.cell(line,'N')
-#   e.contact_no = ex.cell(line,'O').to_i
-#   e.email = ex.cell(line,'P')
-#   @type = EmployeeType.find_by_name(ex.cell(line,'Q'))
-#   e.employee_type_id = @type.id unless @type.nil?
-#   e.status = ex.cell(line,'R')
-#   e.handicap = ex.cell(line,'S')
-#   e.handicap_type = ex.cell(line, 'T')
-#   e.save!
-# end
+3.upto(491) do |line|
+Employee.new do |e|
+  e.manual_employee_code = ex.cell(line,'A').to_i
+  e.first_name = ex.cell(line,'B')
+  e.middle_name = ex.cell(line,'C')
+  e.last_name = ex.cell(line,'D')
+  e.gender = ex.cell(line,'E')
+  @religion = Religion.find_by_name(ex.cell(line,'F'))
+  e.religion_id = @religion.id unless @religion.nil?
+  e.date_of_birth = ex.cell(line,'G')
+  e.permanent_address = ex.cell(line,'H')
+  e.pin_code = ex.cell(line,'I').to_i
+  @country = Country.find_by_name(ex.cell(line,'J'))
+  e.country_id = @country.id unless @country.nil?
+  @state = State.find_by_name(ex.cell(line,'K'))
+  e.state_id = @state.id unless @state.nil?
+  @district = District.find_by_name(ex.cell(line,'L'))
+  e.district_id =  @district.id unless @district.nil?
+  e.city = ex.cell(line,'M')
+  e.current_address = ex.cell(line,'N')
+  e.contact_no = ex.cell(line,'O').to_i
+  e.email = ex.cell(line,'P')
+  @nation = Nationality.find_by_name(ex.cell(line,'Q'))
+  e.nationality_id = @nation.id unless @nation.nil?
+  e.marital_status = ex.cell(line,'R')
+  @type = EmployeeType.find_by_name(ex.cell(line,'S'))
+  e.employee_type_id = @type.id unless @type.nil?
+  e.status = ex.cell(line,'T')
+  e.handicap = ex.cell(line,'U')
+  e.handicap_type = ex.cell(line, 'V')
+  e.save!
+end
 
-# @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
-# JoiningDetail.new do |j|
-#   j.employee_id = @employee.id unless @employee.nil?
-#   j.joining_date = ex.cell(line,'U')
+@employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
+JoiningDetail.new do |j|
+  j.employee_id = @employee.id unless @employee.nil?
+  j.joining_date = ex.cell(line,'W')
 
-#   @grade = EmployeeGrade.find_by_name(ex.cell(line,'V'))
-#   j.employee_grade_id = @grade.id unless @grade.nil?
+  @grade = EmployeeGrade.find_by_name(ex.cell(line,'X'))
+  j.employee_grade_id = @grade.id unless @grade.nil?
 
-#   @category = EmployeeCategory.find_by_name(ex.cell(line,'W'))
-#   j.employee_category_id = @category.id unless @category.nil?
+  @department = Department.find_by_name(ex.cell(line,'Y'))
+  j.department_id = @department unless @department.nil?
 
-#   @designation = EmployeeDesignation.find_by_name(ex.cell(line,'X'))
-#   j.employee_designation_id = @designation.id unless @designation.nil?
+  @category = EmployeeCategory.find_by_name(ex.cell(line,'Z'))
+  j.employee_category_id = @category.id unless @category.nil?
+
+  @designation = EmployeeDesignation.find_by_name(ex.cell(line,'AA'))
+  j.employee_designation_id = @designation.id unless @designation.nil?
   
-#   j.confirmation_date = ex.cell(line,'Y')
-#   j.employee_uan_no = ex.cell(line,'Z')
+  j.confirmation_date = ex.cell(line,'AB')
+  j.employee_uan_no = ex.cell(line,'AC')
 
-#   j.select_pf = ex.cell(line,'AA')
+  j.select_pf = ex.cell(line,'AD')
 
-#   j.employee_pf_no = ex.cell(line,'AB').to_i
-#   j.pf_max_amount = ex.cell(line,'AC')
-#     if ex.cell(line,'AD') == "Yes"
-#       j.have_esic = true
-#     else
-#       j.have_esic = false
-#     end
+  j.employee_pf_no = ex.cell(line,'AE').to_i
+  j.pf_max_amount = ex.cell(line,'AF')
+    if ex.cell(line,'AG') == "Yes"
+      j.have_esic = true
+    else
+      j.have_esic = false
+    end
   
-#   j.employee_efic_no = ex.cell(line,'AE').to_i
-#   j.payment_mode = ex.cell(line,'AF')
-#   @cost_center = CostCenter.find_by_name(ex.cell(line,'AG'))
-#   j.cost_center_id = @cost_center.id unless @cost_center.nil?
+  j.employee_efic_no = ex.cell(line,'AH').to_i
+  j.payment_mode = ex.cell(line,'AI')
+  @cost_center = CostCenter.find_by_name(ex.cell(line,'AJ'))
+  j.cost_center_id = @cost_center.id unless @cost_center.nil?
 
 
-#   j.medical_schem = ex.cell(line,'AH')
-#   j.passport_no = ex.cell(line,'AI')
-#   j.passport_issue_date = ex.cell(line,'AJ')
-#   j.passport_expiry_date = ex.cell(line,'AK')
+  j.medical_schem = ex.cell(line,'AK')
+  j.passport_no = ex.cell(line,'AL')
+  j.passport_issue_date = ex.cell(line,'AM')
+  j.passport_expiry_date = ex.cell(line,'AN')
 
-#   j.probation_period = ex.cell(line,'AL')
-#   j.notice_period = ex.cell(line,'AM')
-#   j.save!
-# end
+  j.probation_period = ex.cell(line,'AO')
+  j.notice_period = ex.cell(line,'AP')
+  j.save!
+end
 
-# EmployeeBankDetail.new do |b|
-#   b.employee_id = @employee.id unless @employee.nil?
-#   b.account_no = ex.cell(line,'AN').to_i
-#   b.bank_name = ex.cell(line,'AO')
-#   b.branch_name = ex.cell(line,'AP')
-#   b.address = ex.cell(line,'AQ')
-#   b.contact_no = ex.cell(line,'AR').to_i
-#   b.micr_code = ex.cell(line,'AS')
-#   b.branch_code = ex.cell(line,'AT')
-#   b.ifsc_code = ex.cell(line,'AU')
-#   b.save!
-# end
+EmployeeBankDetail.new do |b|
+  b.employee_id = @employee.id unless @employee.nil?
+  b.account_no = ex.cell(line,'AQ').to_i
+  b.bank_name = ex.cell(line,'AR')
+  b.branch_name = ex.cell(line,'AS')
+  b.address = ex.cell(line,'AT')
+  b.contact_no = ex.cell(line,'AU').to_i
+  b.micr_code = ex.cell(line,'AV')
+  b.branch_code = ex.cell(line,'AW')
+  b.ifsc_code = ex.cell(line,'AX')
+  b.save!
+end
 
-# puts "#{i} Record inserted.-----------------------------------------------"
+puts "#{i} Record inserted.-----------------------------------------------"
+i = i+1
+end
+
+###############################################################################################
+
+# ex = Roo::Excel.new("#{Rails.root}/public/workingdays.xls")
+# ex.default_sheet = ex.sheets[0]
+# i = 1
+# gross_salary = 0
+# 2.upto(456) do |line|
+#   puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
+#   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
+  
+  
+#   Workingday.new do |w|
+#     w.employee_id = @employee.id
+#     w.month_name = ex.cell(line,'B')
+#     w.year = ex.cell(line,'C').to_i
+
+#     w.lwp_leave = ex.cell(line, 'D').to_i
+#     w.cl_leave = ex.cell(line, 'E').to_i
+#     w.el_leave = ex.cell(line, 'F').to_i
+#     w.esic_leave = ex.cell(line, 'G').to_i
+
+#     w.day_in_month = ex.cell(line, 'H')
+#     w.present_day = ex.cell(line, 'I')
+#     w.holiday_in_month = ex.cell(line, 'J')
+     
+#     w.week_off_day = ex.cell(line, 'K')
+#     w.absent_day = ex.cell(line, 'L')
+#     w.payable_day = ex.cell(line, 'M')
+#     w.save!
+#   end
+#   puts "#{i} Record inserted.-----------------------------------------------"
 # i = i+1
 # end
 
@@ -166,26 +206,8 @@ require 'roo'
 #   puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
 #   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
   
-  #@salary_template = SalaryTemplate.find_by_code(ex.cell(line,'B'))
-  #@salary_component_templates = @salary_template.salary_component_templates unless @salary_template.nil?
-  
-  # Workingday.new do |w|
-  #   w.employee_id = @employee.id
-  #   w.month_name = ex.cell(line,'F')
-  #   w.year = ex.cell(line,'G').to_i
-  #   w.day_in_month = ex.cell(line, 'AX')
-  #   w.present_day = ex.cell(line, 'AY')
-  #   w.holiday_in_month = ex.cell(line, 'AZ')
-  #   w.lwp_leave = ex.cell(line, 'AT').to_i
-  #   w.cl_leave = ex.cell(line, 'AU').to_i
-  #   w.el_leave = ex.cell(line, 'AV').to_i
-  #   w.esic_leave = ex.cell(line, 'AW').to_i
-  #   w.total_leave = total_leave 
-  #   w.week_off_day = ex.cell(line, 'BA')
-  #   w.absent_day = ex.cell(line, 'BB')
-  #   w.payable_day = ex.cell(line, 'BC')
-  #   w.save!
-  # end
+#   @salary_template = SalaryTemplate.find_by_code(ex.cell(line,'B'))
+#   @salary_component_templates = @salary_template.salary_component_templates unless @salary_template.nil?
 
   # @salary_component_templates.each do |t|
   #   EmployeeSalaryTemplate.new do |est|

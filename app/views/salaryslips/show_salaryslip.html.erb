@@ -1,138 +1,53 @@
-<table class="table table-bordered table-hover table-condensed">
-  <thead>
-    <tr>
-      <th>Employee Code</th>
-      <td><%= @employee.manual_employee_code%></td>
-      <th>Employee Name</th>
-      <td><%= full_name(@employee) %></td>
-      <th>Designation</th>
-      <td><%= @employee.joining_detail.try(:designation) %></td>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>Employement</th>
-      <td><%= @employee.employee_type.try(:name) %></td>
-      <th>Contact No</th>
-      <td><%= @employee.contact_no %></td>
-      <th>Email</th>
-      <td><%= @employee.email %></td>
-    </tr>
-    <tr>
-      <th>Month Day</th>        
-      <td align="right"><%= @working_day.try(:day_in_month) %></td>      
-      <th>Holidays</th>        
-      <td align="right"><%= @working_day.try(:holiday_in_month) %></td>    
-      <th>Leave Total</th>		
-      <td align="right"><%= @working_day.try(:total_leave) %></td>		        
-  	</tr>
-  	<tr>
-  		<th>Working Days</th>
-  		<td align="right"><%= @working_day.try(:present_day) %></td>
-  		<th>Absent Days</th>
-  		<td align="right"><%= @working_day.try(:absent_day) %></td>
-  		<th>Payble Days</th>
-  		<td align="right"><%= @working_day.try(:payable_day) %></td>
-  	</tr>
-  </tbody>
-</table>
-	
-<div class="row">
-	<div class="col-sm-6">
-		<table class="table table-bordered table-hover table-condensed">
-		  <thead>
-		    <tr>
-		      <th>Particular</th>
-		      <th>Actual Amount</th>
-		      <th>Calculated Amount</th>
-		    </tr>
-		  </thead>
-	  	<tbody>
-	  		<% @addable_salary_components.each do |item| %>
-		  		<tr>
-		  			<td><%= item.salary_component.name %></td>
-		  			<td align="right"><%= item.actual_amount.round %></td>
-		  			<td align="right"><%= item.calculated_amount.round %></td>
-		  		</tr>
-	  		<% end %>
-	  		<tr>
-	  			<td>Total</td>
-	  			<td align="right"><%= @salaryslip.actual_gross_salary.round %></td>
-	  			<td align="right"><%= @salaryslip.calculated_gross_salary.round %></td>
-	  		</tr>
-	  		<% @deducted_salary_components.each do |item| %>
-		  		<tr>
-		  			<% unless item.salary_component_id.nil? %>
-              <td><%= item.salary_component.name %></td>
-              <td align="right"><%= item.actual_amount.round %></td>
-              <td align="right"><%= item.calculated_amount.round %></td>
-            <%else%>
-              <td><%= item.other_component_name %></td>
-              <td align="right"><%= item.actual_amount.round %></td>
-              <td align="right"><%= item.calculated_amount.round %></td>
-            <%end%>
-		  		</tr>
-	  		<% end %>
-	  		<tr>
-	  			<td>Total</td>
-	  			<td align="right"><%= @salaryslip.actual_total_deduction.round %></td>
-	  			<td align="right"><%= @salaryslip.calculated_total_deduction.round %></td>
-	  		</tr>
-	  		<tr>
-	  			<td>Net Salary</td>
-	  			<td align="right"><%= @salaryslip.actual_net_salary.round %></td>
-	  			<td align="right"><%= @salaryslip.calculated_net_salary.round %></td>
-	  		</tr>
-	  	</tbody>
-	  </table>
-	</div>
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Employee Salary slip</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
 
-  <div class="col-sm-6">
     <table class="table table-bordered table-hover table-condensed">
       <thead>
         <tr>
-          <th>Particular</th>
-          <th>Actual Amount</th>
-          <th>Calculated Amount</th>
+          <th>Employee Code</th>
+          <td><%= @employee.manual_employee_code%></td>
+          <th>Employee Name</th>
+          <td><%= full_name(@employee) %></td>
+          <th>Designation</th>
+          <td><%= @employee.joining_detail.try(:designation) %></td>
         </tr>
       </thead>
       <tbody>
-        <% @addable_salary_components.each do |item| %>
-          <tr>
-            <td><%= item.salary_component.name %></td>
-            <td align="right"><%= item.actual_amount.round %></td>
-            <td align="right"><%= item.calculated_amount.round %></td>
-          </tr>
-        <% end %>
         <tr>
-          <td>Total</td>
-          <td align="right"><%= @salaryslip.actual_gross_salary.round %></td>
-          <td align="right"><%= @salaryslip.calculated_gross_salary.round %></td>
+          <th>Employement</th>
+          <td><%= @employee.employee_type.try(:name) %></td>
+          <th>Contact No</th>
+          <td><%= @employee.contact_no %></td>
+          <th>Email</th>
+          <td><%= @employee.email %></td>
         </tr>
-        <% @deducted_salary_components.each do |item| %>
-          <tr>
-            <% unless item.salary_component_id.nil? %>
-              <td><%= item.salary_component.name %></td>
-              <td align="right"><%= item.actual_amount.round %></td>
-              <td align="right"><%= item.calculated_amount.round %></td>
-            <%else%>
-              <td><%= item.other_component_name %></td>
-              <td align="right"><%= item.actual_amount.round %></td>
-              <td align="right"><%= item.calculated_amount.round %></td>
-            <%end%>
-          </tr>
-        <% end %>
+
         <tr>
-          <td>Total</td>
-          <td align="right"><%= @salaryslip.actual_total_deduction.round %></td>
-          <td align="right"><%= @salaryslip.calculated_total_deduction.round %></td>
+          <th>Month Day</th>        
+          <td align="right"><%= @working_day.try(:day_in_month) %></td>      
+          <th>Holidays</th>        
+          <td align="right"><%= @working_day.try(:holiday_in_month) %></td>    
+          <th>Leave Total</th>    
+          <td align="right"><%= @working_day.try(:total_leave) %></td>            
         </tr>
         <tr>
-          <td>Net Salary</td>
-          <td align="right"><%= @salaryslip.actual_net_salary.round %></td>
-          <td align="right"><%= @salaryslip.calculated_net_salary.round %></td>
+          <th>Working Days</th>
+          <td align="right"><%= @working_day.try(:present_day) %></td>
+          <th>Absent Days</th>
+          <td align="right"><%= @working_day.try(:absent_day) %></td>
+          <th>Payble Days</th>
+          <td align="right"><%= @working_day.try(:payable_day) %></td>
         </tr>
       </tbody>
     </table>
+      
+    <div id="slip"><%= render 'slip' %></div>
   </div>
 </div>
+
+<!-- <div id="myModal" class="modal fade">
+      
+</div> -->

@@ -33,6 +33,8 @@ Rails.application.routes.draw do
       get :select_month_year_form
       get :show_unsaved_employee
       post :save_all_data
+      get :salary_bubble_form
+      patch :update_cell
     end
   end
   resources :instalments

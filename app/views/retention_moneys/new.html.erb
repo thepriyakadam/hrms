@@ -1,5 +1,15 @@
-<h1>New Retention Money</h1>
-
-<%= render 'form' %>
-
-<%= link_to 'Back', retention_moneys_path %>
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Retention Money</h3>
+  </div><!-- /.box-header -->
+	<div class="box-body">
+		<div id="form">
+			<%= render 'form' %>	
+		</div>
+		
+		<div id="retention_money_li">
+			<%= render 'retention_money_list' %>
+		</div>
+		
+	</div><!-- /.box-body -->
+</div><!-- /.box -->

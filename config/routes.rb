@@ -67,13 +67,13 @@ Rails.application.routes.draw do
   resources :salary_templates
   resources :religions
   resources :banks
-  resources :employee_annual_salaries do
-    collection do
-      get :created_employee_annual_salary
-      get :employee_annual_salary_slip
-      get :all_employee_monthly_salary
-    end
-  end
+  # resources :employee_annual_salaries do
+  #   collection do
+  #     get :created_employee_annual_salary
+  #     get :employee_annual_salary_slip
+  #     get :all_employee_monthly_salary
+  #   end
+  # end
   resources :salary_components
   resources :universities
   resources :degree_streams
@@ -115,6 +115,9 @@ Rails.application.routes.draw do
     collection do
       get :approved_or_rejected_leave_request
       get :employee_list
+    end
+    member do
+      get :from_hr
     end
   end
   resources :company_leavs

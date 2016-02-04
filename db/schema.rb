@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160204101542) do
+ActiveRecord::Schema.define(version: 20160204115319) do
 
   create_table "advance_salaries", force: :cascade do |t|
     t.integer  "employee_id"
@@ -599,6 +599,7 @@ ActiveRecord::Schema.define(version: 20160204101542) do
     t.integer  "payment_mode_id"
     t.integer  "department_id"
     t.integer  "company_location_id"
+    t.boolean  "have_retention"
   end
 
   add_index "joining_details", ["company_location_id"], name: "index_joining_details_on_company_location_id"
@@ -756,6 +757,16 @@ ActiveRecord::Schema.define(version: 20160204101542) do
     t.string   "description"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+  end
+
+  create_table "retention_moneys", force: :cascade do |t|
+    t.boolean  "have_retention"
+    t.decimal  "amount",         precision: 15, scale: 2
+    t.decimal  "decimal",        precision: 15, scale: 2
+    t.string   "no_of_month"
+    t.string   "description"
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
   end
 
   create_table "roles", force: :cascade do |t|

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160201113155) do
+ActiveRecord::Schema.define(version: 20160204100236) do
 
   create_table "advance_salaries", force: :cascade do |t|
     t.integer  "employee_id"
@@ -598,6 +598,7 @@ ActiveRecord::Schema.define(version: 20160201113155) do
     t.integer  "employee_category_id"
     t.integer  "payment_mode_id"
     t.integer  "department_id"
+    t.integer  "location_id"
   end
 
   add_index "joining_details", ["cost_center_id"], name: "index_joining_details_on_cost_center_id"
@@ -606,6 +607,7 @@ ActiveRecord::Schema.define(version: 20160201113155) do
   add_index "joining_details", ["employee_designation_id"], name: "index_joining_details_on_employee_designation_id"
   add_index "joining_details", ["employee_grade_id"], name: "index_joining_details_on_employee_grade_id"
   add_index "joining_details", ["employee_id"], name: "index_joining_details_on_employee_id"
+  add_index "joining_details", ["location_id"], name: "index_joining_details_on_location_id"
   add_index "joining_details", ["payment_mode_id"], name: "index_joining_details_on_payment_mode_id"
 
   create_table "leav_approveds", force: :cascade do |t|

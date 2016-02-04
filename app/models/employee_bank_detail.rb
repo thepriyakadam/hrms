@@ -6,7 +6,7 @@ class EmployeeBankDetail < ActiveRecord::Base
    # validates :branch_code, :presence => true
    #validate :bank_name_regex
    #validate :branch_name_regex
-   validate :contact_no_regex
+   #validate :contact_no_regex
    #validate :ifsc_regex
    #validate :branch_code_regex
   #validate :micr_code_regex

@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Retention Moneys</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Have retention</th>
+      <th>Amount</th>
+      <th>No of month</th>
+      <th>Description</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @retention_moneys.each do |retention_money| %>
+      <tr>
+        <td><%= retention_money.have_retention %></td>
+        <td><%= retention_money.amount %></td>
+        <td><%= retention_money.no_of_month %></td>
+        <td><%= retention_money.description %></td>
+        <td><%= link_to 'Show', retention_money %></td>
+        <td><%= link_to 'Edit', edit_retention_money_path(retention_money) %></td>
+        <td><%= link_to 'Destroy', retention_money, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Retention money', new_retention_money_path %>

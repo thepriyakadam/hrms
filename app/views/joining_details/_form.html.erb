@@ -152,6 +152,11 @@
           <%= f.select :company_location_id, all_company_location,{label: 'Location',include_blank: " Select Location"} %>
        </div>
     </div> 
+     <div class="col-sm-3">
+        <div class="field">
+          <%= f.select :have_retention,[['Yes','true'],['No','false']],{label: 'Retention',include_blank: " Select Retention"} %>
+       </div>
+    </div>
   </div>
 
  <div class="row">

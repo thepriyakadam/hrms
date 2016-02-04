@@ -4,7 +4,7 @@ class RetentionMoneysController < ApplicationController
   # GET /retention_moneys
   # GET /retention_moneys.json
   def index
-    @retention_moneys = RetentionMoney.all
+    
   end
 
   # GET /retention_moneys/1
@@ -15,6 +15,7 @@ class RetentionMoneysController < ApplicationController
   # GET /retention_moneys/new
   def new
     @retention_money = RetentionMoney.new
+    @retention_moneys = RetentionMoney.all
   end
 
   # GET /retention_moneys/1/edit
@@ -25,14 +26,14 @@ class RetentionMoneysController < ApplicationController
   # POST /retention_moneys.json
   def create
     @retention_money = RetentionMoney.new(retention_money_params)
-
+    @retention_moneys = RetentionMoney.all
     respond_to do |format|
       if @retention_money.save
-        format.html { redirect_to @retention_money, notice: 'Retention money was successfully created.' }
-        format.json { render :show, status: :created, location: @retention_money }
+        @retention_money = RetentionMoney.new
+        format.js { @flag = true }
       else
-        format.html { render :new }
-        format.json { render json: @retention_money.errors, status: :unprocessable_entity }
+        flash.now[:alert] = "Retention Money Already Exist."
+         format.js { @flag = false }
       end
     end
   end
@@ -40,25 +41,16 @@ class RetentionMoneysController < ApplicationController
   # PATCH/PUT /retention_moneys/1
   # PATCH/PUT /retention_moneys/1.json
   def update
-    respond_to do |format|
-      if @retention_money.update(retention_money_params)
-        format.html { redirect_to @retention_money, notice: 'Retention money was successfully updated.' }
-        format.json { render :show, status: :ok, location: @retention_money }
-      else
-        format.html { render :edit }
-        format.json { render json: @retention_money.errors, status: :unprocessable_entity }
-      end
-    end
+    @retention_money.update(retention_money_params)
+    @retention_moneys = RetentionMoney.all
+    @retention_money = RetentionMoney.new   
   end
 
   # DELETE /retention_moneys/1
   # DELETE /retention_moneys/1.json
   def destroy
     @retention_money.destroy
-    respond_to do |format|
-      format.html { redirect_to retention_moneys_url, notice: 'Retention money was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    @retention_moneys = RetentionMoney.all
   end
 
   private

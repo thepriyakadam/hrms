@@ -1,33 +1,31 @@
-<%= form_for(@retention_money) do |f| %>
-  <% if @retention_money.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@retention_money.errors.count, "error") %> prohibited this retention_money from being saved:</h2>
-
-      <ul>
-      <% @retention_money.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+<%= bootstrap_form_for(@retention_money,remote:true) do |f| %>
+  <div class="row">
+      <div class="col-sm-2">
+      <div class="field">       
+        <%= f.select :have_retention,[['Yes','true'],['No','false']],{label: 'Retention',include_blank: " Select Retention"} %>
+      </div>
     </div>
-  <% end %>
+    <div class="col-sm-2">
+      <div class="form-group required">
+        <%= f.text_field :amount, placeholder: 'Amount' %>
+      </div>
+    </div>
+    <div class="col-sm-2">
+      <div class="field">
+        <%= f.text_field :no_of_month, placeholder: 'No of Month' %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :description, placeholder: 'Description' %>
+      </div>
+    </div>
 
-  <div class="field">
-    <%= f.label :have_retention %><br>
-    <%= f.check_box :have_retention %>
-  </div>
-  <div class="field">
-    <%= f.label :amount %><br>
-    <%= f.text_field :amount %>
-  </div>
-  <div class="field">
-    <%= f.label :no_of_month %><br>
-    <%= f.text_field :no_of_month %>
-  </div>
-  <div class="field">
-    <%= f.label :description %><br>
-    <%= f.text_field :description %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
+    <div class="col-sm-3">
+    <label></label>
+      <div class="actions">
+        <%= f.submit :class => class_name %>
+      </div>
+    </div>
   </div>
 <% end %>

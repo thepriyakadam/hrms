@@ -22,4 +22,8 @@ module JoiningDetailsHelper
 	def all_department
 		Department.all.collect {|x| [x.name,x.id]}
 	end
+
+	def all_company_location
+		CompanyLocation.all.collect {|x| [x.name,x.id]}
+	end
 end

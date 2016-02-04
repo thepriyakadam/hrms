@@ -146,16 +146,23 @@
        </div>
     </div> 
   </div>
+  <div class="row">
+    <div class="col-sm-3">
+        <div class="field">
+          <%= f.select :company_location_id, all_company_location,{label: 'Location',include_blank: " Select Location"} %>
+       </div>
+    </div> 
+  </div>
 
  <div class="row">
-         <div class="col-sm-3">
-          <div class="actions">
-              <%= f.submit :class => class_name, data: { disable_with: data_info } %>
-              <% if params['controller'] == 'joining_details' and params['action'] == 'edit' %>
-                <%= link_to 'Back',ajax_joining_detail_employees_path(id: @employee.id),class: 'btn btn-default', remote:true%>
-              <%end%>
-          </div>
-        </div>
+   <div class="col-sm-3">
+    <div class="actions">
+        <%= f.submit :class => class_name, data: { disable_with: data_info } %>
+        <% if params['controller'] == 'joining_details' and params['action'] == 'edit' %>
+          <%= link_to 'Back',ajax_joining_detail_employees_path(id: @employee.id),class: 'btn btn-default', remote:true%>
+        <%end%>
+    </div>
+  </div>
       </div>
     <% end %>
   </div><!-- /.box-body -->

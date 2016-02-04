@@ -146,6 +146,7 @@ class SalaryslipsController < ApplicationController
       end
 
       @instalment_array.try(:each) do |ia|
+        ia.update(is_complete: true)
         deducted_actual_amount = ia.advance_salary.instalment_amount
         deducted_calculated_amount = deducted_actual_amount
         deducted_total_actual_amount = deducted_total_actual_amount + deducted_actual_amount

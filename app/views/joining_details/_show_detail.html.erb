@@ -25,6 +25,13 @@
       <td><%= @joining_detail.confirmation_date %></td>
     </tr>
     <tr>
+      <th><strong>Location</strong></th>
+      <td><%= @joining_detail.company_location.try(:name) %></td>
+
+     <th><strong>Department</strong></th>
+      <td><%= @joining_detail.department.try(:name) %></td>
+    </tr>
+    <tr>
       <th><strong>Designation</strong></th>
       <td><%= @joining_detail.employee_designation.try(:name) %></td>
 
@@ -52,7 +59,7 @@
       <td><%= @joining_detail.employee_efic_no %></td>
 
       <th><strong>Payment Mode</strong></th>
-      <td><%= @joining_detail.payment_mode %></td>
+      <td><%= @joining_detail.payment_mode.try(:name) %></td>
     </tr>
      <tr>
       <th><strong>Cost Center</strong></th>

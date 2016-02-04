@@ -4,6 +4,7 @@ class Department < ActiveRecord::Base
   belongs_to :department_type
   has_many :employees
   has_many :member
+  has_many :joining_details
 
   validates :manual_department_code, :presence => true, uniqueness: { case_sensitive: false }
   validates :name, :presence => true

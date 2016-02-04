@@ -1,5 +1,16 @@
 Rails.application.routes.draw do
 
+  namespace :reports do
+    resources :salaries do 
+      member do
+        post :date_range_report
+      end
+    end
+    post 'salaries/date_range_report'
+    get 'salaries/new'
+  end
+
+  resources :payment_modes
   resources :excel_exports do
     collection do
       get :payroll
@@ -13,6 +24,7 @@ Rails.application.routes.draw do
   end
   resources :employee_categories
   resources :other_salary_components
+  resources :salaryslip_components
   resources :salaryslips do
     collection do
       post :save_data
@@ -22,6 +34,8 @@ Rails.application.routes.draw do
       get :select_month_year_form
       get :show_unsaved_employee
       post :save_all_data
+      get :salary_bubble_form
+      patch :update_cell
     end
   end
   resources :instalments

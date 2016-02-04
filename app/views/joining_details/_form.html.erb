@@ -83,7 +83,7 @@
     </div> 
     <div class="col-sm-3">
         <div class="field">
-          <%= f.select :payment_mode, ['Check','Cash'],{label: 'Payment Mode',include_blank: " Select Payment Mode"} %>
+          <%= f.select :payment_mode_id, all_payment_mode,{label: 'Payment Mode',include_blank: " Select Payment Mode"} %>
        </div>
     </div> 
     </div>
@@ -140,6 +140,18 @@
           <%= f.text_field :notice_period,label: 'Notice Period' %>
         </div>
       </div> 
+       <div class="col-sm-3">
+        <div class="field">
+          <%= f.select :department_id, all_department,{label: 'Department',include_blank: " Select Department"} %>
+       </div>
+    </div> 
+  </div>
+  <div class="row">
+    <div class="col-sm-3">
+        <div class="field">
+          <%= f.select :company_location_id, all_company_location,{label: 'Location',include_blank: " Select Location"} %>
+       </div>
+    </div> 
   </div>
 
  <div class="row">

@@ -42,6 +42,35 @@
       
         <div class="col-sm-3">
           <div class="field">
+           <%= f.text_field :lwp_leave %>
+           </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="field">
+           <%= f.text_field :cl_leave %>
+           </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="field">
+           <%= f.text_field :el_leave %>
+           </div>
+        </div>
+        
+        <div class="col-sm-2">
+          <div class="field">
+           <%= f.text_field :esic_leave %>
+           </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="field">
+           <%= f.text_field :coff_leave %>
+           </div>
+        </div>
+        </div> 
+        <div class="row">
+      
+        <div class="col-sm-3">
+          <div class="field">
            <%= f.text_field :total_leave %>
            </div>
         </div>
@@ -94,7 +123,7 @@
       }
       else{
         present_total = workingday_present_day + workingday_total_leave + workingday_holiday_in_month + workingday_week_off_day
-        ans = (present_total - workingday_absent_day).toFixed(2);
+        ans = (present_total).toFixed(2);
       }
       $('#workingday_payable_day').val(ans);
     });
@@ -111,7 +140,7 @@
       }
       else{
         present_total = workingday_present_day + workingday_total_leave + workingday_holiday_in_month + workingday_week_off_day
-        ans = (present_total - workingday_absent_day).toFixed(2);
+        ans = (present_total).toFixed(2);
       }
       $('#workingday_payable_day').val(ans);
     });
@@ -128,7 +157,7 @@
       }
       else{
         present_total = workingday_present_day + workingday_total_leave + workingday_holiday_in_month + workingday_week_off_day
-        ans = (present_total - workingday_absent_day).toFixed(2);
+        ans = (present_total).toFixed(2);
       }
       $('#workingday_payable_day').val(ans);
     });
@@ -145,7 +174,7 @@
       }
       else{
         present_total = workingday_present_day + workingday_total_leave + workingday_holiday_in_month + workingday_week_off_day
-        ans = (present_total - workingday_absent_day).toFixed(2);
+        ans = (present_total).toFixed(2);
       }
       $('#workingday_payable_day').val(ans);
     });
@@ -162,7 +191,7 @@
       }
       else{
         present_total = workingday_present_day + workingday_total_leave + workingday_holiday_in_month + workingday_week_off_day
-        ans = (present_total - workingday_absent_day).toFixed(2);
+        ans = (present_total).toFixed(2);
       }
       $('#workingday_payable_day').val(ans);
     });

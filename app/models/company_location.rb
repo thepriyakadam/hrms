@@ -5,6 +5,7 @@ class CompanyLocation < ActiveRecord::Base
   belongs_to :state
   belongs_to :district
   has_many :member
+  has_many :employees
 
   validates :manual_company_location_code, :presence => true, uniqueness: { case_sensitive: false }
   validates :country_id, :presence => true

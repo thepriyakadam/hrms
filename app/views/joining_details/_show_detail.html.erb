@@ -25,11 +25,11 @@
       <td><%= @joining_detail.confirmation_date %></td>
     </tr>
     <tr>
-      <th><strong>Department</strong></th>
-      <td><%= @joining_detail.department.try(:name) %></td>
+      <th><strong>Location</strong></th>
+      <td><%= @joining_detail.company_location.try(:name) %></td>
 
-      <th></th>
-      <td></td>
+     <th><strong>Department</strong></th>
+      <td><%= @joining_detail.department.try(:name) %></td>
     </tr>
     <tr>
       <th><strong>Designation</strong></th>

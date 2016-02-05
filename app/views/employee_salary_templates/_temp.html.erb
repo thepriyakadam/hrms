@@ -183,7 +183,6 @@
         </tr>
       <% end %>
       <% @retention = RetentionMoney.first %>
-      
       <% unless @retention.nil? %>
         <% if @retention.have_retention and @employee.joining_detail.have_retention %>
           <% unless @employee.employee_type.name == "Confirmed" %>

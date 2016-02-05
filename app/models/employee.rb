@@ -20,6 +20,7 @@ class Employee < ActiveRecord::Base
   has_many :employee_salary_templates
   has_many :overtimes
   has_many :workingdays
+  has_many :employee_templates
   has_one :employee_shift
   has_one :member
   has_one :employee_bank_detail

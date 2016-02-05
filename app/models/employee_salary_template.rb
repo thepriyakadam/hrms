@@ -5,6 +5,7 @@ class EmployeeSalaryTemplate < ActiveRecord::Base
   belongs_to :salary_template
   belongs_to :salary_component
   belongs_to :parent_salary_component, class_name: "SalaryComponent"
+  belongs_to :employee_template
 
   def self.collect_salary_objects(emp_id)
   	@employee = Employee.find_by_manual_employee_code(emp_id)

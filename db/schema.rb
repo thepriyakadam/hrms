@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160204115319) do
+ActiveRecord::Schema.define(version: 20160205091313) do
 
   create_table "advance_salaries", force: :cascade do |t|
     t.integer  "employee_id"
@@ -378,9 +378,11 @@ ActiveRecord::Schema.define(version: 20160204115319) do
     t.decimal  "annual_amount",              precision: 15, scale: 2, default: 0.0
     t.datetime "created_at",                                                        null: false
     t.datetime "updated_at",                                                        null: false
+    t.integer  "employee_template_id"
   end
 
   add_index "employee_salary_templates", ["employee_id"], name: "index_employee_salary_templates_on_employee_id"
+  add_index "employee_salary_templates", ["employee_template_id"], name: "index_employee_salary_templates_on_employee_template_id"
   add_index "employee_salary_templates", ["parent_salary_component_id"], name: "index_employee_salary_templates_on_parent_salary_component_id"
   add_index "employee_salary_templates", ["salary_component_id"], name: "index_employee_salary_templates_on_salary_component_id"
   add_index "employee_salary_templates", ["salary_template_id"], name: "index_employee_salary_templates_on_salary_template_id"
@@ -402,6 +404,19 @@ ActiveRecord::Schema.define(version: 20160204115319) do
 
   add_index "employee_shifts_shift_rotations", ["employee_shift_id"], name: "index_employee_shifts_shift_rotations_on_employee_shift_id"
   add_index "employee_shifts_shift_rotations", ["shift_rotation_id"], name: "index_employee_shifts_shift_rotations_on_shift_rotation_id"
+
+  create_table "employee_templates", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.integer  "salary_template_id"
+    t.boolean  "is_active",          default: true
+    t.date     "start_date"
+    t.date     "end_date"
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+  end
+
+  add_index "employee_templates", ["employee_id"], name: "index_employee_templates_on_employee_id"
+  add_index "employee_templates", ["salary_template_id"], name: "index_employee_templates_on_salary_template_id"
 
   create_table "employee_types", force: :cascade do |t|
     t.string   "code"
@@ -828,8 +843,10 @@ ActiveRecord::Schema.define(version: 20160204115319) do
     t.datetime "updated_at",                                    null: false
     t.string   "other_component_name"
     t.decimal  "calculated_amount",    precision: 15, scale: 2
+    t.integer  "employee_template_id"
   end
 
+  add_index "salaryslip_components", ["employee_template_id"], name: "index_salaryslip_components_on_employee_template_id"
   add_index "salaryslip_components", ["salary_component_id"], name: "index_salaryslip_components_on_salary_component_id"
   add_index "salaryslip_components", ["salaryslip_id"], name: "index_salaryslip_components_on_salaryslip_id"
 
@@ -849,9 +866,11 @@ ActiveRecord::Schema.define(version: 20160204115319) do
     t.decimal  "calculated_total_deduction", precision: 15, scale: 2
     t.decimal  "calculated_net_salary",      precision: 15, scale: 2
     t.date     "month_year"
+    t.integer  "employee_template_id"
   end
 
   add_index "salaryslips", ["employee_id"], name: "index_salaryslips_on_employee_id"
+  add_index "salaryslips", ["employee_template_id"], name: "index_salaryslips_on_employee_template_id"
   add_index "salaryslips", ["salary_template_id"], name: "index_salaryslips_on_salary_template_id"
   add_index "salaryslips", ["workingday_id"], name: "index_salaryslips_on_workingday_id"
 

@@ -111,7 +111,7 @@
   	            <% formula_item_calculated_amount = formula_item_actual_amount / @working_day.try(:day_in_month) * @working_day.try(:payable_day) %>
   	            <% formula_total_calculated_amount = formula_total_calculated_amount + formula_item_calculated_amount %>
   	          <% end %>
-  	          <% deducted_actual_amount = formula_total_actual_amount / 100 * master_esic.percentage %>
+  	          <% deducted_actual_amount = (formula_total_actual_amount / 100 * master_esic.percentage).ceil %>
   	          <% deducted_calculated_amount = (formula_total_calculated_amount / 100 * master_esic.percentage).ceil %>
   	        <% else %>
   	          <% deducted_actual_amount = 0 %>

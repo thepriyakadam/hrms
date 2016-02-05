@@ -1,5 +1,15 @@
-<h1>New Payment Mode</h1>
-
-<%= render 'form' %>
-
-<%= link_to 'Back', payment_modes_path %>
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Payment Mode</h3>
+  </div><!-- /.box-header -->
+	<div class="box-body">
+		<div id="form">
+			<%= render 'form' %>	
+		</div>
+		
+		<div id="payment_mode_li">
+			<%= render 'payment_mode_list' %>
+		</div>
+		
+	</div><!-- /.box-body -->
+</div><!-- /.box -->

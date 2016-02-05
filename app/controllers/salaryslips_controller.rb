@@ -153,6 +153,18 @@ class SalaryslipsController < ApplicationController
         deducted_total_calculated_amount = deducted_total_calculated_amount + deducted_calculated_amount
       end
 
+      @retention = RetentionMoney.first
+      unless @retention.nil?
+        if @retention.have_retention and @employee.joining_detail.have_retention
+          unless @employee.employee_type.name == "Confirmed"
+            deducted_actual_amount = 0
+            deducted_calculated_amount = @retention.amount
+            deducted_total_actual_amount = deducted_total_actual_amount + deducted_actual_amount
+            deducted_total_calculated_amount = deducted_total_calculated_amount + deducted_calculated_amount
+          end
+        end
+      end
+
       Salaryslip.new do |ss|
         ss.employee_id = @employee.id
         ss.workingday_id = working_day.id
@@ -163,7 +175,7 @@ class SalaryslipsController < ApplicationController
         ss.month = @month
         ss.year = @year
         ss.month_year = "01 #{@month} #{@year}".to_date
-        ss.calculated_gross_salary = addable_total_calculated_amount 
+        ss.calculated_gross_salary = addable_total_calculated_amount
         ss.calculated_total_deduction = deducted_total_calculated_amount
         ss.calculated_net_salary = addable_total_calculated_amount - deducted_total_calculated_amount
         ss.save!
@@ -179,8 +191,20 @@ class SalaryslipsController < ApplicationController
       @instalment_array.try(:each) do |ia|
         deducted_actual_amount = ia.advance_salary.instalment_amount
         deducted_calculated_amount = deducted_actual_amount
-        SalaryslipComponent.create(salaryslip_id: @Salaryslip.id, actual_amount: deducted_actual_amount, calculated_amount: deducted_calculated_amount, is_deducted: true, other_component_name: "Advance")
+        SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: deducted_actual_amount, calculated_amount: deducted_calculated_amount, is_deducted: true, other_component_name: "Advance")
       end
+
+      @retention = RetentionMoney.first
+      unless @retention.nil?
+        if @retention.have_retention and @employee.joining_detail.have_retention
+          unless @employee.employee_type.name == "Confirmed"
+            deducted_actual_amount = 0
+            deducted_calculated_amount = @retention.amount
+            SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: deducted_actual_amount, calculated_amount: deducted_calculated_amount, is_deducted: true, other_component_name: "Retention")
+          end
+        end
+      end
+
     end
     flash[:notice] = "Salary processed."
     redirect_to salary_template_employee_salary_templates_path
@@ -391,6 +415,18 @@ class SalaryslipsController < ApplicationController
           deducted_total_calculated_amount = deducted_total_calculated_amount + deducted_calculated_amount
         end
 
+        @retention = RetentionMoney.first
+        unless @retention.nil?
+          if @retention.have_retention and @employee.joining_detail.have_retention
+            unless @employee.employee_type.name == "Confirmed"
+              deducted_actual_amount = 0
+              deducted_calculated_amount = @retention.amount
+              deducted_total_actual_amount = deducted_total_actual_amount + deducted_actual_amount
+              deducted_total_calculated_amount = deducted_total_calculated_amount + deducted_calculated_amount
+            end
+          end
+        end
+
         Salaryslip.new do |ss|
           ss.employee_id = @employee.id
           ss.workingday_id = working_day.id
@@ -416,6 +452,17 @@ class SalaryslipsController < ApplicationController
           deducted_actual_amount = ia.advance_salary.instalment_amount
           deducted_calculated_amount = deducted_actual_amount
           SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: deducted_actual_amount, calculated_amount: deducted_calculated_amount, is_deducted: true, other_component_name: "Advance")
+        end
+
+        @retention = RetentionMoney.first
+        unless @retention.nil?
+          if @retention.have_retention and @employee.joining_detail.have_retention
+            unless @employee.employee_type.name == "Confirmed"
+              deducted_actual_amount = 0
+              deducted_calculated_amount = @retention.amount
+              SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: deducted_actual_amount, calculated_amount: deducted_calculated_amount, is_deducted: true, other_component_name: "Retention")
+            end
+          end
         end
       end #employee_ids loop
     end # if for employee_ids.nil?

@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :employee_templates
+
   resources :retention_moneys
   namespace :reports do
     resources :salaries do 

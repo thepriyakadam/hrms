@@ -8,8 +8,9 @@ class SalaryslipsController < ApplicationController
     else
       working_day = Workingday.find_by_employee_id(@employee.id)
       
-      addable_salary_items = EmployeeSalaryTemplate.where("employee_id = ? and is_deducted = ?", @employee.id, false)
-      deducted_salary_items = EmployeeSalaryTemplate.where("employee_id = ? and is_deducted = ?", @employee.id, true)
+      current_template = EmployeeTemplate.where("employee_id = ? and is_active = ?",@employee.id,true).take
+      addable_salary_items = current_template.employee_salary_templates.where("is_deducted = ?",false)
+      deducted_salary_items = current_template.employee_salary_templates.where("is_deducted = ?",true)
 
       addable_total_actual_amount = 0
       addable_total_calculated_amount = 0
@@ -168,6 +169,7 @@ class SalaryslipsController < ApplicationController
       Salaryslip.new do |ss|
         ss.employee_id = @employee.id
         ss.workingday_id = working_day.id
+        ss.employee_template_id = current_template.id
         ss.actual_gross_salary = addable_total_actual_amount
         ss.actual_total_deduction = deducted_total_actual_amount
         ss.actual_net_salary = addable_total_actual_amount - deducted_total_actual_amount
@@ -185,6 +187,7 @@ class SalaryslipsController < ApplicationController
 
       @salaryslip_component_array.each do |sa|
         sa.salaryslip_id = @salaryslip.id
+        sa.employee_template_id = current_template.id
         sa.save!
       end
 
@@ -271,8 +274,9 @@ class SalaryslipsController < ApplicationController
         @employee = Employee.find(eid)
         working_day = Workingday.find_by_employee_id(eid)
         
-        addable_salary_items = EmployeeSalaryTemplate.where("employee_id = ? and is_deducted = ?", eid, false)
-        deducted_salary_items = EmployeeSalaryTemplate.where("employee_id = ? and is_deducted = ?", eid, true)
+        current_template = EmployeeTemplate.where("employee_id = ? and is_active = ?",@employee.id,true).take
+        addable_salary_items = current_template.employee_salary_templates.where("is_deducted = ?",false)
+        deducted_salary_items = current_template.employee_salary_templates.where("is_deducted = ?",true)
 
         addable_total_actual_amount = 0
         addable_total_calculated_amount = 0
@@ -430,6 +434,7 @@ class SalaryslipsController < ApplicationController
         Salaryslip.new do |ss|
           ss.employee_id = @employee.id
           ss.workingday_id = working_day.id
+          ss.employee_template_id = current_template.id
           ss.actual_gross_salary = addable_total_actual_amount
           ss.actual_total_deduction = deducted_total_actual_amount
           ss.actual_net_salary = addable_total_actual_amount - deducted_total_actual_amount
@@ -445,6 +450,7 @@ class SalaryslipsController < ApplicationController
         @salaryslip = Salaryslip.last
         @salaryslip_component_array.each do |sa|
           sa.salaryslip_id = @salaryslip.id
+          ss.employee_template_id = current_template.id
           sa.save!
         end
 

@@ -15,11 +15,14 @@ $("ol").append("<li><font color='red'>Pleas select year</font></li>");
 	<% unless @record.nil? %>
 		$("ol").append("<li><font color='red'>Salary already assigned for this month and year.</font></li>");
 	<% else %>
-		<% if @working_day.nil? %>
-	  $("ol").append("<li><font color='red'>Working days not assigned for this month.</font></li>");
-	  $("#salary").html("");
+		<% if @current_template.nil? %>
+	  	$("ol").append("<li><font color='red'>Salary Template not assigned.</font></li>");
+	  	$("#salary").html("");
+	  <% elsif @working_day.nil?%>
+	  	$("ol").append("<li><font color='red'>Working days not assigned for this month.</font></li>");
+	  	$("#salary").html("");
 	  <% else %>
-	  $("#salary").html("<%= j render 'temp' %>");
+	  	$("#salary").html("<%= j render 'temp' %>");
 	  <% end %>
 	<% end %>
 <% end %>

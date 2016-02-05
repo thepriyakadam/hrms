@@ -1,0 +1,2 @@
+module EmployeeTemplatesHelper
+end

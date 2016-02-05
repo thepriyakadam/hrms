@@ -26,7 +26,7 @@
         <td> <%= employee.employee_type.try(:name) %></td>
         <td><%= employee.status %></td>
         <td>
-          <%= link_to 'Leave Request', employee,class: 'btn btn-sm btn-info' %>
+          <%= link_to 'Leave Request', from_hr_employee_leav_request_path(employee),class: 'btn btn-sm btn-info' %>
         </td>
         </tr>
       <% end %>

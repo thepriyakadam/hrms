@@ -78,9 +78,9 @@ class EmployeesController < ApplicationController
 
   def assign_role
     @employees = Employee.joins("LEFT JOIN members on members.employee_id = employees.id where members.employee_id is null")
-    @all_role_list = Employee.all.collect {|e| [e.first_name,e.id]}
-    @all_employee_list = Role.all.collect {|r| [r.name,r.id]}
-    @all_department_list = Department.all.collect {|d| [d.company_location.company.name+'-'+d.company_location.name+'-'+d.name,d.id]}    
+    @all_employee_list = Employee.all.collect {|e| [e.first_name,e.id]}
+    @all_role_list = Role.all.collect {|r| [r.name,r.id]}
+    #@all_department_list = Department.all.collect {|d| [d.company_location.company.name+'-'+d.company_location.name+'-'+d.name,d.id]}    
   end
 
   def submit_form

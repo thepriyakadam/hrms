@@ -27,7 +27,9 @@ class EmployeeLeavRequestsController < ApplicationController
   # POST /employee_leav_requests
   # POST /employee_leav_requests.json
   def create
+
     @employee_leav_request = EmployeeLeavRequest.new(employee_leav_request_params)
+    @employee = Employee.find(@employee_leav_request.employee_id)
     date_arr = params["employee_leav_request"]["date_range"].split('-')
     @employee_leav_request.start_date = date_arr[0].rstrip
     @employee_leav_request.end_date = date_arr[1].lstrip
@@ -36,14 +38,14 @@ class EmployeeLeavRequestsController < ApplicationController
     else
       @employee_leav_request.leave_count = 0.5
     end
-    @emp_leave_bal = EmployeeLeavBalance.where('employee_id = ? AND leav_category_id = ?',current_user.employee_id, @employee_leav_request.leav_category_id).take
+    @emp_leave_bal = EmployeeLeavBalance.where('employee_id = ? AND leav_category_id = ?',@employee.id, @employee_leav_request.leav_category_id).take
     if @emp_leave_bal.nil?
-      @total_leaves = EmployeeLeavBalance.where('employee_id = ?', current_user.employee_id)
+      @total_leaves = EmployeeLeavBalance.where('employee_id = ?', @employee.id)
       flash.now[:alert] = 'Leav balance not set- contact to admin.'
       render :new
     else
       if @employee_leav_request.leave_count.to_f > @emp_leave_bal.try(:no_of_leave).to_f
-      @total_leaves = EmployeeLeavBalance.where('employee_id = ?', current_user.account_id)
+      @total_leaves = EmployeeLeavBalance.where('employee_id = ?', @employee.id)
       flash.now[:alert] = 'You exceed the leave limit.'
       render :new
       else
@@ -90,6 +92,13 @@ class EmployeeLeavRequestsController < ApplicationController
 
   def employee_list
     @employees = Employee.all
+  end
+
+  def from_hr
+    @employee = Employee.find(params[:id])
+    @employee_leav_request = EmployeeLeavRequest.new
+    @total_leaves = EmployeeLeavBalance.where('employee_id = ?', @employee.id)
+    @remain_leaves = EmployeeLeavRequest.joins(:leav_approved)
   end
 
   private

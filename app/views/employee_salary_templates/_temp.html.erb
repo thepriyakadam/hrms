@@ -78,7 +78,7 @@
 	        <% da_actual_amount = addable_actual_amount %>
 	        <% da_calculated_amount = addable_calculated_amount %>
 	      <% end %>
-	    <% end %>
+	    <% end %> <!-- Addable end -->
 	    
 	    <tr bgcolor="#8CD0F8">
 	      <td>Total</td>
@@ -100,22 +100,24 @@
 	      <% case deducted_item_name %>
 	      <% when "ESIC" %>
 	        <% master_esic = EsicMaster.first %>
-	        <% if master_esic.esic and addable_total_calculated_amount <= master_esic.max_limit and @employee.joining_detail.have_esic %>
-	          <% formula_string = master_esic.base_component.split(",") %>
-	          <% formula_string.try(:each) do |f| %>
-	            <% formula_item = @addable_salary_items.where(salary_component_id: f.to_i).take %>
-	            <% formula_item_actual_amount = formula_item.monthly_amount %>
-	            <% formula_item_actual_amount = 0 if formula_item_actual_amount.nil? %>
-	            <% formula_total_actual_amount = formula_total_actual_amount + formula_item_actual_amount %>
-	            <% formula_item_calculated_amount = formula_item_actual_amount / @working_day.try(:day_in_month) * @working_day.try(:payable_day) %>
-	            <% formula_total_calculated_amount = formula_total_calculated_amount + formula_item_calculated_amount %>
-	          <% end %>
-	          <% deducted_actual_amount = formula_total_actual_amount / 100 * master_esic.percentage %>
-	          <% deducted_calculated_amount = (formula_total_calculated_amount / 100 * master_esic.percentage).ceil %>
-	        <% else %>
-	          <% deducted_actual_amount = 0 %>
-	          <% deducted_calculated_amount = 0 %>
-	        <% end %>
+          <% unless master_esic.nil? %>
+  	        <% if master_esic.esic and addable_total_calculated_amount <= master_esic.max_limit and @employee.joining_detail.have_esic %>
+  	          <% formula_string = master_esic.base_component.split(",") %>
+  	          <% formula_string.try(:each) do |f| %>
+  	            <% formula_item = @addable_salary_items.where(salary_component_id: f.to_i).take %>
+  	            <% formula_item_actual_amount = formula_item.monthly_amount %>
+  	            <% formula_item_actual_amount = 0 if formula_item_actual_amount.nil? %>
+  	            <% formula_total_actual_amount = formula_total_actual_amount + formula_item_actual_amount %>
+  	            <% formula_item_calculated_amount = formula_item_actual_amount / @working_day.try(:day_in_month) * @working_day.try(:payable_day) %>
+  	            <% formula_total_calculated_amount = formula_total_calculated_amount + formula_item_calculated_amount %>
+  	          <% end %>
+  	          <% deducted_actual_amount = (formula_total_actual_amount / 100 * master_esic.percentage).ceil %>
+  	          <% deducted_calculated_amount = (formula_total_calculated_amount / 100 * master_esic.percentage).ceil %>
+  	        <% else %>
+  	          <% deducted_actual_amount = 0 %>
+  	          <% deducted_calculated_amount = 0 %>
+  	        <% end %> <!-- esic end -->
+          <% end %> <!-- esic unless end --> 
 	        
 	      <% when "Prof. Tax" %>
 	        <% if addable_total_calculated_amount > 15000 %>
@@ -129,7 +131,7 @@
 	        <% else %>
 	          <% deducted_actual_amount = 0 %>
 	          <% deducted_calculated_amount = 0 %>
-	        <% end %>
+	        <% end %> <!-- prof_tax_end -->
 
 	      <% when "PF" %>
 	        <% direct_allowence_id = SalaryComponent.find_by_name("DA").id %>
@@ -148,7 +150,7 @@
 	        <% else %>
 	          <% deducted_actual_amount = (basic_actual_amount + da_actual_amount) / 100 * 12 %>
 	          <% deducted_calculated_amount = (basic_calculated_amount + da_calculated_amount) / 100 * 12 %>
-	        <% end %>
+	        <% end %> <!-- pf end -->
 
 	      <% else %>
 	        <% if item.monthly_amount.nil? %>
@@ -158,7 +160,7 @@
 	          <% deducted_actual_amount = item.monthly_amount %>
 	          <% deducted_calculated_amount = deducted_actual_amount %>
 	        <% end %>  
-	      <% end %>
+	      <% end %> <!-- switch case end -->
 
 	      <% deducted_total_actual_amount = deducted_total_actual_amount + deducted_actual_amount %>
 	      <% deducted_total_calculated_amount = deducted_total_calculated_amount + deducted_calculated_amount %>
@@ -179,6 +181,22 @@
           <% deducted_total_actual_amount = deducted_total_actual_amount + deducted_actual_amount %>
           <% deducted_total_calculated_amount = deducted_total_calculated_amount + deducted_calculated_amount %>
         </tr>
+      <% end %>
+      <% @retention = RetentionMoney.first %>
+      <% unless @retention.nil? %>
+        <% if @retention.have_retention and @employee.joining_detail.have_retention %>
+          <% unless @employee.employee_type.name == "Confirmed" %>
+            <tr>
+              <% deducted_actual_amount = 0 %>
+              <% deducted_calculated_amount = 1000 %>
+              <td>Retention</td>
+              <td align="right"><%= deducted_actual_amount %></td>
+              <td align="right"><%= deducted_calculated_amount %></td>
+              <% deducted_total_actual_amount = deducted_total_actual_amount + deducted_actual_amount %>
+              <% deducted_total_calculated_amount = deducted_total_calculated_amount + deducted_calculated_amount %>
+            </tr>
+          <% end %>  
+        <% end %>
       <% end %>
 
 	    <tr bgcolor="#F88CA3">

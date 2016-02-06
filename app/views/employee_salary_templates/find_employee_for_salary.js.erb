@@ -35,14 +35,6 @@ $("ol").append("<li><font color='red'>Addable salary component not found</font><
 $("ol").append("<li><font color='red'>Deducted salary component not found</font></li>");
 <% end %>
 
-<% if @addable_total.nil? %>
-$("ol").append("<li><font color='red'>Addable total not calculated</font></li>");
-<% end %>
-
-<% if @deducted_total.nil? %>
-$("ol").append("<li><font color='red'>Deducted total no calculated</font></li>");
-<% end %>
-
 <% if @instalments.nil? %>
 $("ol").append("<li><font color='red'>Installment not found</font></li>");
 <% end %>

@@ -72,6 +72,6 @@ class AdvanceSalariesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def advance_salary_params
-      params.require(:advance_salary).permit(:employee_id, :advance_amount, :no_of_instalment, :instalment_amount, :advance_date)
+      params.require(:advance_salary).permit(:employee_id, :advance_amount, :no_of_instalment, :instalment_amount, :advance_date, :advance_type_id, :interest)
     end
 end

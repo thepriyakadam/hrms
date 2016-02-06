@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @advance_type.code %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @advance_type.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @advance_type.description %>
+</p>
+
+<%= link_to 'Edit', edit_advance_type_path(@advance_type) %> |
+<%= link_to 'Back', advance_types_path %>

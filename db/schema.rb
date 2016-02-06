@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160205091313) do
+ActiveRecord::Schema.define(version: 20160206052959) do
 
   create_table "advance_salaries", force: :cascade do |t|
     t.integer  "employee_id"
@@ -21,9 +21,20 @@ ActiveRecord::Schema.define(version: 20160205091313) do
     t.date     "advance_date"
     t.datetime "created_at",                                 null: false
     t.datetime "updated_at",                                 null: false
+    t.integer  "advance_type_id"
+    t.decimal  "interest",          precision: 15, scale: 2
   end
 
+  add_index "advance_salaries", ["advance_type_id"], name: "index_advance_salaries_on_advance_type_id"
   add_index "advance_salaries", ["employee_id"], name: "index_advance_salaries_on_employee_id"
+
+  create_table "advance_types", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
+    t.string   "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
 
   create_table "attendances", force: :cascade do |t|
     t.integer  "employee_shift_id"
@@ -613,6 +624,7 @@ ActiveRecord::Schema.define(version: 20160205091313) do
     t.integer  "employee_category_id"
     t.integer  "payment_mode_id"
     t.integer  "department_id"
+    t.integer  "location_id"
     t.integer  "company_location_id"
     t.boolean  "have_retention"
   end
@@ -624,6 +636,7 @@ ActiveRecord::Schema.define(version: 20160205091313) do
   add_index "joining_details", ["employee_designation_id"], name: "index_joining_details_on_employee_designation_id"
   add_index "joining_details", ["employee_grade_id"], name: "index_joining_details_on_employee_grade_id"
   add_index "joining_details", ["employee_id"], name: "index_joining_details_on_employee_id"
+  add_index "joining_details", ["location_id"], name: "index_joining_details_on_location_id"
   add_index "joining_details", ["payment_mode_id"], name: "index_joining_details_on_payment_mode_id"
 
   create_table "leav_approveds", force: :cascade do |t|

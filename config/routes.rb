@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :advance_types
   resources :employee_templates
 
   resources :retention_moneys

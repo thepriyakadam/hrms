@@ -77,6 +77,11 @@
           </div>
         <% end %>
       </div>
+      <div class="row">
+        <div class="col-sm-3">
+          <%= text_field :increement,:date,{class: 'form-control increement_date',placeholder:'Select Increement Date'} %>
+        </div>
+      </div><br>
     <%= f.submit "Create Employee Salary", class: "btn btn-primary btn-sm", data: {disable_with: "Wait..."} %>
   <% end %>
 </div>
@@ -88,6 +93,14 @@
 </style>
 
 <script type="text/javascript">
+  $(function(){
+    $('.increement_date').datepicker({
+     changeYear:true,
+     changeMonth: true,
+     yearRange: '-200:-0',
+     dateFormat: 'dd-mm-yy' });
+  });
+
   <% @employee_salary_templates.each do |item| %>
   
     $(function(){
@@ -243,4 +256,6 @@
     maxHeight: 200
     });
   });
+
+  
 </script>

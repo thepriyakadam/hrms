@@ -16,7 +16,6 @@ class Employee < ActiveRecord::Base
   has_many :families
   has_many :experiences
   has_many :skillsets
-  has_many :employee_annual_salaries
   has_many :employee_salary_templates
   has_many :overtimes
   has_many :workingdays

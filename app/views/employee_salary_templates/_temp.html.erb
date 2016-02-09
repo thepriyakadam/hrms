@@ -15,8 +15,8 @@
   		<td><%= @employee.employee_type.try(:name) %></td>
   		<th>Contact No</th>
   		<td><%= @employee.contact_no %></td>
-  		<th>Email</th>
-  		<td><%= @employee.email %></td>
+  		<th>Week Off</th>
+  		<td><%= @working_day.try(:week_off_day) %></td>
   	</tr>
   	<tr>
       <th>Month Day</th>
@@ -24,7 +24,7 @@
       <th>Holidays</th>
       <td align="right"><%= @working_day.try(:holiday_in_month) %></td>
       <th>Leave Total</th>
-      <td align="right"><%= @working_day.try(:total_leave) %></td>
+      <td align="right"><%= @working_day.try(:cl_leave) %></td>
 		</tr>
 		<tr>
 			<th>Working Days</th>
@@ -173,7 +173,7 @@
 
       <% @instalment_array.try(:each) do |ia| %>
         <tr>
-          <% deducted_actual_amount = ia.advance_salary.instalment_amount %>
+          <% deducted_actual_amount = ia.instalment_amount %>
           <% deducted_calculated_amount = deducted_actual_amount %>
           <td>Advance</td>
           <td align="right"><%= deducted_actual_amount %></td>

@@ -19,6 +19,7 @@ class SalaryslipsController < ApplicationController
       da_actual_amount = 0
       da_calculated_amount = 0
       @salaryslip_component_array = []
+      @instalment_array = []
       addable_salary_items.try(:each) do |item|
         addable_calculated_amount = 0
         @template_id = item.salary_template_id
@@ -81,7 +82,7 @@ class SalaryslipsController < ApplicationController
           end
           
         when "Prof. Tax"
-          if addable_total_calculated_amount > 15000
+          if addable_total_actual_amount > 15000
             if @month == "March"
               deducted_actual_amount = 212
               deducted_calculated_amount = 212
@@ -134,9 +135,9 @@ class SalaryslipsController < ApplicationController
         deducted_total_calculated_amount = deducted_total_calculated_amount + deducted_calculated_amount    
       end #deducted_salary_items loop
 
-      @advance_salary = AdvanceSalary.find_by_employee_id(@employee.id)
-      unless @advance_salary.nil?
-        @instalments = @advance_salary.instalments
+      @advance_salaries = AdvanceSalary.where(employee_id: @employee.id)
+      @advance_salaries.try(:each) do |a|
+        @instalments = a.instalments
         @instalments.try(:each) do |i|
           unless i.instalment_date.nil?
             if i.try(:instalment_date).strftime("%B") == params["month"] and i.try(:instalment_date).strftime("%Y") == params["year"]
@@ -349,7 +350,7 @@ class SalaryslipsController < ApplicationController
               end
               
             when "Prof. Tax"
-              if addable_total_calculated_amount > 15000
+              if addable_total_actual_amount > 15000
                 if @month == "March"
                   deducted_actual_amount = 212
                   deducted_calculated_amount = 212
@@ -402,9 +403,9 @@ class SalaryslipsController < ApplicationController
             deducted_total_calculated_amount = deducted_total_calculated_amount + deducted_calculated_amount    
           end #deducted_salary_items loop
 
-          @advance_salary = AdvanceSalary.find_by_employee_id(@employee.id)
-          unless @advance_salary.nil?
-            @instalments = @advance_salary.instalments
+          @advance_salaries = AdvanceSalary.where(employee_id: @employee.id)
+          @advance_salaries.try(:each) do |a|
+            @instalments = a.instalments
             @instalments.try(:each) do |i|
               unless i.instalment_date.nil?
                 if i.try(:instalment_date).strftime("%B") == params["month"] and i.try(:instalment_date).strftime("%Y") == params["year"]

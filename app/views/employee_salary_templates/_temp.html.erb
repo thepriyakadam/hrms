@@ -120,7 +120,7 @@
           <% end %> <!-- esic unless end --> 
 	        
 	      <% when "Prof. Tax" %>
-	        <% if addable_total_calculated_amount > 15000 %>
+	        <% if addable_total_actual_amount > 15000 %>
 	          <% if @month == "March" %>
 	            <% deducted_actual_amount = 212 %>
 	            <% deducted_calculated_amount = 212 %>
@@ -210,9 +210,31 @@
 	      <td align="right"><%= (addable_total_calculated_amount - deducted_total_calculated_amount).round %></td>
 	    </tr>
 	  </table>
-	</div>
+  </div>
+  <% unless @arrear_items.empty? %>
+    <div class="col-sm-6">
+      <table class="table table-bordered table-hover table-condensed">
+        <thead>
+          <tr>
+            <th>Arrears</th>
+            <th>Actual Amount</th>
+            <th>Calculated Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @arrear_items.each do |a| %>
+            <tr>
+              <td><%= a.salary_component.name %></td>
+              <td><%= a.actual_amount %></td>
+              <td><%= ((a.actual_amount/30) * @total_payable_days).round %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+  	</div>
+  <% end %>
 </div>
 	  
 <%= form_for :data, url: {controller: 'salaryslips', action: 'save_data',	employee: @employee, month: @month,	year: @year } do |f| %>
-	<%= f.submit %>
+	<%= f.submit class: "btn btn-primary btn-sm" %>
 <% end %>

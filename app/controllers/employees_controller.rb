@@ -85,18 +85,18 @@ class EmployeesController < ApplicationController
 
   def submit_form
     employee = Employee.find(params["login"]["employee_id"])
-    @department = Department.find(params["login"]["department_id"])
+    #@department = Department.find(params["login"]["department_id"])
     user = Member.new do |u|
-      if employee.email == ""
+      if employee.email == "" or employee.email.nil?
         u.email = "#{employee.employee_code}@xxx.com"
       else
         u.email = employee.email
       end
       u.password = '12345678'
       u.employee_id = employee.id
-      u.department_id = params["login"]["department_id"]
-      u.company_id = @department.company_location.company.id
-      u.company_location_id = @department.company_location.id
+      u.department_id = employee.joining_detail.department_id
+      u.company_id = employee.joining_detail.company_location.company_id
+      u.company_location_id = employee.joining_detail.company_location_id
       #u.subdomain = Apartment::Tenant.current_tenant
       u.member_code = employee.employee_code
       u.manual_member_code = employee.manual_employee_code
@@ -104,15 +104,15 @@ class EmployeesController < ApplicationController
     end
     ActiveRecord::Base.transaction do
       if user.save
-        employee.update_attributes(department_id: params["login"]["department_id"], manager_id: params["login"]["manager_id"])
+        employee.update_attributes(department_id: employee.joining_detail.department_id, manager_id: params["login"]["manager_id"])
         flash[:notice] = "Employee assigned successfully."
         redirect_to assign_role_employees_path
         #UserPasswordMailer.welcome_email(company,pass).deliver_now
       else
+        p user.errors
         flash[:alert] = "Employee not assigned successfully."
         redirect_to assign_role_employees_path
       end
-
     end
   end
 

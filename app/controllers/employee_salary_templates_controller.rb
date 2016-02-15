@@ -2,8 +2,19 @@ class EmployeeSalaryTemplatesController < ApplicationController
   def index
   end
 
+  def edit
+    @employee_salary_template = EmployeeSalaryTemplate.find(params[:id])
+  end
+
+  def update
+    @employee_salary_template = EmployeeSalaryTemplate.find(params[:id])
+    @employee_salary_template.update(employee_salary_template_params)
+    flash[:notice] = "Amount updated successfully."
+    redirect_to salary_template_employee_salary_templates_path
+  end
+
   def find_employee_for_assign_template
-  	@employee = Employee.find_by_manual_employee_code(params[:employee_code]) 
+  	@employee = Employee.find_by_manual_employee_code(params[:employee_code])
     respond_to do |format|
       if @employee.nil?
         format.js { @flag = true }
@@ -25,7 +36,7 @@ class EmployeeSalaryTemplatesController < ApplicationController
         @flag = true
       end
     else
-      @flag = false  
+      @flag = false
   	end
   end
 
@@ -148,8 +159,6 @@ class EmployeeSalaryTemplatesController < ApplicationController
               end #instalment nil
             end #instalment each
           end #advance salaries loop
-
-
         end # template nil  
       end # record nil
       @arrear = EmployeeArrear.where("employee_id = ? and is_paid = ?", @employee.id,false).take
@@ -174,5 +183,11 @@ class EmployeeSalaryTemplatesController < ApplicationController
   def new
     @employee = Employee.find(params[:id])
     @employee_template = EmployeeTemplate.where("employee_id = ? and is_active = ?", @employee.id, true).take
+  end
+
+  private
+
+  def employee_salary_template_params
+    params.require(:employee_salary_template).permit(:monthly_amount)
   end
 end

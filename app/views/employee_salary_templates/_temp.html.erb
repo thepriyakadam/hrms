@@ -36,7 +36,7 @@
 		</tr>
   </tbody>
 </table>
-
+<div id="myModal"></div>
 <div class="row">
   <div class="col-sm-6">
     <table class="table table-bordered table-hover table-condensed">
@@ -68,7 +68,10 @@
 	      <% addable_total_calculated_amount = addable_total_calculated_amount + addable_calculated_amount %>
 	      <tr>
 	        <td><%= item.salary_component.name %></td>
-	        <td align="right"><%= addable_actual_amount.round %></td>
+	        <td align="right">
+            <%= addable_actual_amount.round %>
+            <%= link_to "", edit_employee_salary_template_path(item),remote:true,class: "fa fa-edit" %>
+          </td>
 	        <td align="right"><%= addable_calculated_amount.round %></td>
 	      </tr>  
 	      <% if item.salary_component.name == "Basic" %>
@@ -166,7 +169,10 @@
 	      <% deducted_total_calculated_amount = deducted_total_calculated_amount + deducted_calculated_amount %>
 	      <tr>
 	        <td><%= item.salary_component.name %></td>
-	        <td align="right"><%= deducted_actual_amount.round %></td>
+	        <td align="right">
+            <%= deducted_actual_amount.round %>
+            <%= link_to "", edit_employee_salary_template_path(item),remote:true,class: "fa fa-edit" %>
+          </td>
 	        <td align="right"><%= deducted_calculated_amount.round %></td>
 	      </tr>
 	    <% end %> <!-- deducted_salary_items loop -->
@@ -231,9 +237,11 @@
           <% end %>
         </tbody>
       </table>
-  	</div>
+    </div>
   <% end %>
 </div>
+
+
 	  
 <%= form_for :data, url: {controller: 'salaryslips', action: 'save_data',	employee: @employee, month: @month,	year: @year } do |f| %>
 	<%= f.submit class: "btn btn-primary btn-sm" %>

@@ -78,8 +78,9 @@
         <Cell ss:Index="60"><Data ss:Type="String">Weekoff</Data></Cell>
         <Cell ss:Index="61"><Data ss:Type="String">Absent Days</Data></Cell>
         <Cell ss:Index="62"><Data ss:Type="String">Payable Days</Data></Cell>
+        <Cell ss:Index="63"><Data ss:Type="String">Location</Data></Cell>
       </Row>
-      <% i = 1 %>
+      <% i = 0 %>
       <% @salaryslips.each do |slip| %>
         <% employee = slip.employee %>
         <% joining = employee.joining_detail %>
@@ -190,10 +191,11 @@
             <% end %> <!-- switch case -->
             <% if item.salary_component_id.nil? %>
               <% if item.other_component_name == "Advance" %>
-              <Cell ss:Index="49"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
+                <Cell ss:Index="49"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
               <% elsif item.other_component_name == "Retention" %>
-              <Cell ss:Index="50"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
-            <%end%>
+                <Cell ss:Index="50"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
+              <% end %>
+            <% end %>
           <% end %><!-- deducted items -->
 
           <Cell ss:Index="51"><Data ss:Type="Number"><%= slip.calculated_total_deduction.round %></Data></Cell>
@@ -210,7 +212,7 @@
           <Cell ss:Index="60"><Data ss:Type="Number"><%= workingday.week_off_day %></Data></Cell>
           <Cell ss:Index="61"><Data ss:Type="Number"><%= workingday.absent_day %></Data></Cell>
           <Cell ss:Index="62"><Data ss:Type="Number"><%= workingday.payable_day %></Data></Cell>
-          
+          <Cell ss:Index="63"><Data ss:Type="String"><%= joining.company_location.name %></Data></Cell>
         </Row><!-- Row -->
       <% end %><!-- slip -->
     </Table>

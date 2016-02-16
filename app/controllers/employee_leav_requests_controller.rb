@@ -27,12 +27,17 @@ class EmployeeLeavRequestsController < ApplicationController
   # POST /employee_leav_requests
   # POST /employee_leav_requests.json
   def create
-
     @employee_leav_request = EmployeeLeavRequest.new(employee_leav_request_params)
     @employee = Employee.find(@employee_leav_request.employee_id)
     date_arr = params["employee_leav_request"]["date_range"].split('-')
     @employee_leav_request.start_date = date_arr[0].rstrip
     @employee_leav_request.end_date = date_arr[1].lstrip
+
+    @employee_leav_request.first_reporter_id = 4605
+    @employee_leav_request.second_reporter_id = 4606
+    @employee_leav_request.is_pending = true
+    @employee_leav_request.current_status = "Pending"
+    
     if @employee_leav_request.leave_type == "Full Day"
       @employee_leav_request.leave_count = (@employee_leav_request.end_date.to_date - @employee_leav_request.start_date.to_date).to_f + 1
     else
@@ -46,7 +51,7 @@ class EmployeeLeavRequestsController < ApplicationController
     else
       if @employee_leav_request.leave_count.to_f > @emp_leave_bal.try(:no_of_leave).to_f
       @total_leaves = EmployeeLeavBalance.where('employee_id = ?', @employee.id)
-      flash.now[:alert] = 'You exceed the leave limit.'
+      flash.now[:alert] = 'Not Allowed. You exceed the leave limit.'
       render :new
       else
         respond_to do |format|
@@ -87,7 +92,14 @@ class EmployeeLeavRequestsController < ApplicationController
   end
 
   def approved_or_rejected_leave_request
-    @employee_leav_requests = EmployeeLeavRequest.joins("LEFT JOIN leav_approveds ON employee_leav_requests.id = leav_approveds.employee_leav_request_id LEFT JOIN leav_cancelleds ON employee_leav_requests.id = leav_cancelleds.employee_leav_request_id LEFT JOIN leav_rejecteds ON employee_leav_requests.id = leav_rejecteds.employee_leav_request_id where leav_approveds.id IS NULL AND leav_rejecteds.id IS NULL AND leav_cancelleds.id IS NULL")
+    if current_user.class == Group
+      @pending_employee_leav_requests = EmployeeLeavRequest.where(is_pending: true)
+      @first_approved_employee_leav_requests = EmployeeLeavRequest.where(is_first_approved: true)  
+    else
+      @pending_employee_leav_requests = EmployeeLeavRequest.where(is_pending: true)
+      @first_approved_employee_leav_requests = EmployeeLeavRequest.where(is_first_approved: true, first_reporter_id: current_user.employee_id)
+    end
+    #@employee_leav_requests = EmployeeLeavRequest.joins("LEFT JOIN leav_approveds ON employee_leav_requests.id = leav_approveds.employee_leav_request_id LEFT JOIN leav_cancelleds ON employee_leav_requests.id = leav_cancelleds.employee_leav_request_id LEFT JOIN leav_rejecteds ON employee_leav_requests.id = leav_rejecteds.employee_leav_request_id where leav_approveds.id IS NULL AND leav_rejecteds.id IS NULL AND leav_cancelleds.id IS NULL")
   end
 
   def employee_list

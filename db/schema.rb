@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160206052959) do
+ActiveRecord::Schema.define(version: 20160215105326) do
 
   create_table "advance_salaries", force: :cascade do |t|
     t.integer  "employee_id"
@@ -278,6 +278,32 @@ ActiveRecord::Schema.define(version: 20160206052959) do
   add_index "employee_annual_salaries", ["employee_id"], name: "index_employee_annual_salaries_on_employee_id"
   add_index "employee_annual_salaries", ["salary_component_id"], name: "index_employee_annual_salaries_on_salary_component_id"
 
+  create_table "employee_arrear_items", force: :cascade do |t|
+    t.integer  "employee_arrear_id"
+    t.integer  "salary_component_id"
+    t.decimal  "actual_amount",       precision: 15, scale: 2, default: 0.0
+    t.decimal  "calculated_amount",   precision: 15, scale: 2, default: 0.0
+    t.datetime "created_at",                                                 null: false
+    t.datetime "updated_at",                                                 null: false
+  end
+
+  add_index "employee_arrear_items", ["employee_arrear_id"], name: "index_employee_arrear_items_on_employee_arrear_id"
+  add_index "employee_arrear_items", ["salary_component_id"], name: "index_employee_arrear_items_on_salary_component_id"
+
+  create_table "employee_arrears", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.boolean  "is_paid",                                    default: false
+    t.date     "start_date"
+    t.date     "end_date"
+    t.date     "paid_date"
+    t.decimal  "actual_amount",     precision: 15, scale: 2, default: 0.0
+    t.decimal  "calculated_amount", precision: 15, scale: 2, default: 0.0
+    t.datetime "created_at",                                                 null: false
+    t.datetime "updated_at",                                                 null: false
+  end
+
+  add_index "employee_arrears", ["employee_id"], name: "index_employee_arrears_on_employee_id"
+
   create_table "employee_bank_details", force: :cascade do |t|
     t.integer  "employee_id"
     t.string   "account_no"
@@ -339,14 +365,25 @@ ActiveRecord::Schema.define(version: 20160206052959) do
     t.datetime "end_date"
     t.string   "date_range"
     t.integer  "no_of_day"
-    t.decimal  "leave_count",      precision: 5, scale: 1
-    t.datetime "created_at",                               null: false
-    t.datetime "updated_at",                               null: false
+    t.decimal  "leave_count",        precision: 5, scale: 1
+    t.datetime "created_at",                                 null: false
+    t.datetime "updated_at",                                 null: false
     t.string   "reason"
+    t.boolean  "is_pending"
+    t.boolean  "is_cancelled"
+    t.boolean  "is_first_approved"
+    t.boolean  "is_second_approved"
+    t.boolean  "is_first_rejected"
+    t.boolean  "is_second_rejected"
+    t.integer  "current_status"
+    t.integer  "first_reporter_id"
+    t.integer  "second_reporter_id"
   end
 
   add_index "employee_leav_requests", ["employee_id"], name: "index_employee_leav_requests_on_employee_id"
+  add_index "employee_leav_requests", ["first_reporter_id"], name: "index_employee_leav_requests_on_first_reporter_id"
   add_index "employee_leav_requests", ["leav_category_id"], name: "index_employee_leav_requests_on_leav_category_id"
+  add_index "employee_leav_requests", ["second_reporter_id"], name: "index_employee_leav_requests_on_second_reporter_id"
 
   create_table "employee_monthly_days", force: :cascade do |t|
     t.integer  "employee_id"
@@ -680,6 +717,18 @@ ActiveRecord::Schema.define(version: 20160206052959) do
   add_index "leav_rejecteds", ["employee_id"], name: "index_leav_rejecteds_on_employee_id"
   add_index "leav_rejecteds", ["employee_leav_request_id"], name: "index_leav_rejecteds_on_employee_leav_request_id"
 
+  create_table "leave_status_records", force: :cascade do |t|
+    t.integer  "employee_leav_request_id"
+    t.integer  "change_status_employee_id"
+    t.string   "status"
+    t.datetime "change_date"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
+  add_index "leave_status_records", ["change_status_employee_id"], name: "index_leave_status_records_on_change_status_employee_id"
+  add_index "leave_status_records", ["employee_leav_request_id"], name: "index_leave_status_records_on_employee_leav_request_id"
+
   create_table "members", force: :cascade do |t|
     t.string   "manual_member_code"
     t.integer  "role_id"
@@ -944,6 +993,7 @@ ActiveRecord::Schema.define(version: 20160206052959) do
     t.string   "el_leave"
     t.string   "esic_leave"
     t.string   "coff_leave"
+    t.integer  "month"
   end
 
   add_index "workingdays", ["employee_id"], name: "index_workingdays_on_employee_id"

@@ -1,8 +1,16 @@
 Rails.application.routes.draw do
 
   resources :advance_types
-  resources :employee_templates
-
+  resources :employee_templates do
+    member do
+      get :template_list
+      get :activate
+      get :deactivate
+    end
+    collection do
+      
+    end
+  end
   resources :retention_moneys
   namespace :reports do
     resources :salaries do 

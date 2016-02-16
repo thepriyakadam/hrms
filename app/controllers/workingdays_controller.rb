@@ -57,7 +57,7 @@ class WorkingdaysController < ApplicationController
   def destroy
     @workingday.destroy
     respond_to do |format|
-      format.html { redirect_to workingdays_url, notice: 'Workingday was successfully destroyed.' }
+      format.html { redirect_to workingdays_path, notice: 'Workingday was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

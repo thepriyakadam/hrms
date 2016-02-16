@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160211062224) do
+ActiveRecord::Schema.define(version: 20160215105326) do
 
   create_table "advance_salaries", force: :cascade do |t|
     t.integer  "employee_id"
@@ -365,14 +365,25 @@ ActiveRecord::Schema.define(version: 20160211062224) do
     t.datetime "end_date"
     t.string   "date_range"
     t.integer  "no_of_day"
-    t.decimal  "leave_count",      precision: 5, scale: 1
-    t.datetime "created_at",                               null: false
-    t.datetime "updated_at",                               null: false
+    t.decimal  "leave_count",        precision: 5, scale: 1
+    t.datetime "created_at",                                 null: false
+    t.datetime "updated_at",                                 null: false
     t.string   "reason"
+    t.boolean  "is_pending"
+    t.boolean  "is_cancelled"
+    t.boolean  "is_first_approved"
+    t.boolean  "is_second_approved"
+    t.boolean  "is_first_rejected"
+    t.boolean  "is_second_rejected"
+    t.integer  "current_status"
+    t.integer  "first_reporter_id"
+    t.integer  "second_reporter_id"
   end
 
   add_index "employee_leav_requests", ["employee_id"], name: "index_employee_leav_requests_on_employee_id"
+  add_index "employee_leav_requests", ["first_reporter_id"], name: "index_employee_leav_requests_on_first_reporter_id"
   add_index "employee_leav_requests", ["leav_category_id"], name: "index_employee_leav_requests_on_leav_category_id"
+  add_index "employee_leav_requests", ["second_reporter_id"], name: "index_employee_leav_requests_on_second_reporter_id"
 
   create_table "employee_monthly_days", force: :cascade do |t|
     t.integer  "employee_id"
@@ -705,6 +716,18 @@ ActiveRecord::Schema.define(version: 20160211062224) do
 
   add_index "leav_rejecteds", ["employee_id"], name: "index_leav_rejecteds_on_employee_id"
   add_index "leav_rejecteds", ["employee_leav_request_id"], name: "index_leav_rejecteds_on_employee_leav_request_id"
+
+  create_table "leave_status_records", force: :cascade do |t|
+    t.integer  "employee_leav_request_id"
+    t.integer  "change_status_employee_id"
+    t.string   "status"
+    t.datetime "change_date"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
+  add_index "leave_status_records", ["change_status_employee_id"], name: "index_leave_status_records_on_change_status_employee_id"
+  add_index "leave_status_records", ["employee_leav_request_id"], name: "index_leave_status_records_on_employee_leav_request_id"
 
   create_table "members", force: :cascade do |t|
     t.string   "manual_member_code"

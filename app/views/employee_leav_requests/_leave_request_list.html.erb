@@ -20,7 +20,11 @@
         <td><%= employee_leav_request.end_date.to_date.to_s+" "+employee_leav_request.end_date.to_s %></td>
         <td>
           <%= link_to '', employee_leav_request,class: 'btn btn-default btn-sm fa fa-eye' %>
-          <%= link_to '', leav_cancelleds_path(employee_leav_request), method: :post, data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-sm fa fa-trash' %>
+          <% if employee_leav_request.current_status == "Pending" %>
+            <%= link_to '', cancel_leave_status_record_path(employee_leav_request), data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-sm fa fa-trash' %>
+          <% else %>
+            <small class="label label-info"><%employee_leav_request.current_status%></small>
+          <% end %>
         </td>
       </tr>
     <% end %>

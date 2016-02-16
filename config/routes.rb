@@ -1,5 +1,16 @@
 Rails.application.routes.draw do
 
+  resources :leave_status_records do 
+    collection do
+    end
+    member do
+      get :cancel
+      get :first_approve
+      get :second_approve
+      get :first_reject
+      get :second_reject
+    end
+  end
   resources :advance_types
   resources :employee_templates do
     member do

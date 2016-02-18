@@ -141,6 +141,7 @@ Rails.application.routes.draw do
     end
     member do
       get :from_hr
+      get :hr_view_request
     end
   end
   resources :company_leavs

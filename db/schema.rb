@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160215105326) do
+ActiveRecord::Schema.define(version: 20160217052410) do
 
   create_table "advance_salaries", force: :cascade do |t|
     t.integer  "employee_id"
@@ -285,6 +285,7 @@ ActiveRecord::Schema.define(version: 20160215105326) do
     t.decimal  "calculated_amount",   precision: 15, scale: 2, default: 0.0
     t.datetime "created_at",                                                 null: false
     t.datetime "updated_at",                                                 null: false
+    t.boolean  "is_deducted"
   end
 
   add_index "employee_arrear_items", ["employee_arrear_id"], name: "index_employee_arrear_items_on_employee_arrear_id"
@@ -507,6 +508,7 @@ ActiveRecord::Schema.define(version: 20160215105326) do
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
     t.integer  "religion_id"
+    t.integer  "manager_2_id"
   end
 
   add_index "employees", ["blood_group_id"], name: "index_employees_on_blood_group_id"
@@ -515,6 +517,7 @@ ActiveRecord::Schema.define(version: 20160215105326) do
   add_index "employees", ["district_id"], name: "index_employees_on_district_id"
   add_index "employees", ["employee_code"], name: "index_employees_on_employee_code"
   add_index "employees", ["employee_type_id"], name: "index_employees_on_employee_type_id"
+  add_index "employees", ["manager_2_id"], name: "index_employees_on_manager_2_id"
   add_index "employees", ["manager_id"], name: "index_employees_on_manager_id"
   add_index "employees", ["nationality_id"], name: "index_employees_on_nationality_id"
   add_index "employees", ["religion_id"], name: "index_employees_on_religion_id"
@@ -906,6 +909,7 @@ ActiveRecord::Schema.define(version: 20160215105326) do
     t.string   "other_component_name"
     t.decimal  "calculated_amount",    precision: 15, scale: 2
     t.integer  "employee_template_id"
+    t.boolean  "is_arrear"
   end
 
   add_index "salaryslip_components", ["employee_template_id"], name: "index_salaryslip_components_on_employee_template_id"
@@ -929,6 +933,8 @@ ActiveRecord::Schema.define(version: 20160215105326) do
     t.decimal  "calculated_net_salary",      precision: 15, scale: 2
     t.date     "month_year"
     t.integer  "employee_template_id"
+    t.decimal  "arrear_actual_amount",       precision: 15, scale: 2
+    t.decimal  "arrear_calculated_amount",   precision: 15, scale: 2
   end
 
   add_index "salaryslips", ["employee_id"], name: "index_salaryslips_on_employee_id"

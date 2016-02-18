@@ -61,65 +61,33 @@ class EmployeeSalaryTemplatesController < ApplicationController
     
     @previous_employee_template = EmployeeTemplate.where("employee_id = ? and is_active = ?",@employee_id,true).take
       if @previous_employee_template.nil?
-        @employee_template = EmployeeTemplate.new do |et|
-          et.employee_id = @employee_id
-          et.salary_template_id = @template_id
-          et.is_active = true
-          et.start_date = Date.today
+        @employee_template = EmployeeTemplate.create_object(@employee_id, @template_id)
+        @employee_template = EmployeeTemplate.build_objects(arrays,params,@employee_id, @template_id, @employee_template)
+        
+        if @employee_template.save
+          flash[:notice] = "Employee template created successfully."
+        else
+          flash[:alert] = "Employee template not created successfully."
         end
-        arrays.each do |a|
-          @employee_template.employee_salary_templates.build(employee_id: @employee_id, \
-                                      salary_template_id: @template_id, \
-                                      salary_component_id: params[:salary_component_id][a], \
-                                      is_deducted: params[:is_deducted][a], \
-                                      parent_salary_component_id: params[:parent_salary_component_id][a], \
-                                      percentage: params[:percentage][a], \
-                                      to_be_paid: params[:to_be_paid][a], \
-                                      monthly_amount: params[:monthly_amount][a], \
-                                      annual_amount: params[:annual_amount][a])
-        end
-        @employee_template.save!
-
-        flash[:notice] = "Employee template created successfully."
         redirect_to template_list_employee_template_path(@employee_id)
       else
         arrears_array = params[:old_salary_component_id].keys
         increement_date = params[:increement][:date]
-
-        @employee_template = EmployeeTemplate.find_or_initialize_by(employee_id: @employee_id, is_active: false, start_date: nil)
-        if @employee_template.id.nil?
-          arrays.each do |a|
-            @employee_template.employee_salary_templates.build(employee_id: @employee_id, \
-                                        salary_template_id: @template_id, \
-                                        salary_component_id: params[:salary_component_id][a], \
-                                        is_deducted: params[:is_deducted][a], \
-                                        parent_salary_component_id: params[:parent_salary_component_id][a], \
-                                        percentage: params[:percentage][a], \
-                                        to_be_paid: params[:to_be_paid][a], \
-                                        monthly_amount: params[:monthly_amount][a], \
-                                        annual_amount: params[:annual_amount][a])
+        @employee_template = EmployeeTemplate.create_new_object(@employee_id,@template_id)
+        @employee_template = EmployeeTemplate.build_objects(arrays,params,@employee_id, @template_id, @employee_template)
+        
+        @employee_arrear = EmployeeArrear.create_object(@employee_id, increement_date)  
+        @employee_arrear = EmployeeArrear.build_objects(arrears_array,params,@employee_arrear)
+        ActiveRecord::Base.transaction do
+          if @employee_arrear.save
+            @employee_template.save
+            flash[:notice] = "Employee template created successfully."
+          else
+            flash[:alert] = "Same template cannot assigned."   
           end
-          
-          @employee_arrear = EmployeeArrear.new do |ea|
-            ea.employee_id = @employee_id
-            ea.start_date = increement_date
-          end
-          arrears_array.each do |aa|
-            @employee_arrear.employee_arrear_items.build(salary_component_id: params[:old_salary_component_id][aa], actual_amount: params[:difference][aa])
-          end
-          ActiveRecord::Base.transaction do
-            @employee_template.save!          
-            @employee_arrear.save!
-          end
-          
-          flash[:notice] = "Employee template created successfully."
-          redirect_to template_list_employee_template_path(@employee_id)
-        else
-          flash[:alert] = "Template already assigned. Activate it."
-          redirect_to template_list_employee_template_path(@employee_id)
-        end  
-    end  
-    
+        end
+        redirect_to template_list_employee_template_path(@employee_id)
+      end  
   end
 
   def salary_template

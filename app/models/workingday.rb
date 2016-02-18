@@ -14,4 +14,34 @@ class Workingday < ActiveRecord::Base
   # validates :week_off_day, :presence => true
   # validates :absent_day, :presence => true
   # validates :payable_day, :presence => true
+
+  def self.day(i)
+    case i
+      when 1
+        31
+      when 2
+        28
+      when 3
+        31
+      when 4
+        30
+      when 5
+        31
+      when 6
+        30
+      when 7
+        31
+      when 8
+        31
+      when 9
+        30
+      when 10
+        31
+      when 11
+        30
+      when 12
+        31
+    end
+
+  end
 end

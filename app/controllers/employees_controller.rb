@@ -104,7 +104,7 @@ class EmployeesController < ApplicationController
     end
     ActiveRecord::Base.transaction do
       if user.save
-        employee.update_attributes(department_id: employee.joining_detail.department_id, manager_id: params["login"]["manager_id"])
+        employee.update_attributes(department_id: employee.joining_detail.department_id, manager_id: params["login"]["manager_id"], manager_2_id: params["login"]["manager_2_id"])
         flash[:notice] = "Employee assigned successfully."
         redirect_to assign_role_employees_path
         #UserPasswordMailer.welcome_email(company,pass).deliver_now

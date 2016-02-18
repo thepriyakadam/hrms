@@ -9,7 +9,8 @@
 		      <th>Employee Code</th>
 		      <th>Name</th>
 		      <th>Hrms Access Role</th>
-		      <th>Reporting Manager</th>
+		      <th>Reporting Manager-1</th>
+		      <th>Reporting Manager-2</th>
 		      <th>Action</th>
 		    </tr>
 		  </thead>
@@ -23,6 +24,8 @@
 			   				<%= f.hidden_field :employee_id, value: employee.id %>
 			        </td>
 			        <td><%= f.select :manager_id, @all_employee_list,hide_label:true, prompt:true %></td>
+
+			        <td><%= f.select :manager_2_id, @all_employee_list,hide_label:true, prompt:true %></td>
 			        
 			        <td><%= f.submit "+", class: 'btn btn-primary btn-sm fa fa-user-plus' %></td>
 			      </tr>

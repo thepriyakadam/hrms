@@ -18,18 +18,16 @@ class SalaryComponentTemplatesController < ApplicationController
 
    def edit
     @salary_component_template = SalaryComponentTemplate.find(params[:id])
-    @salary_component = SalaryComponentTemplate.find(params[:id])
-    @salary_template = @salary_component.salary_template
+    @salary_component = SalaryComponent.find(@salary_component_template.salary_component_id)
+    @salary_template = @salary_component_template.salary_template
   end
 
   def create
     @salary_component_template = SalaryComponentTemplate.new(salary_component_template_params) 
+    @salary_component_templates = SalaryComponentTemplate.where(salary_template_id: @salary_component_template.salary_template_id)
     if @salary_component_template.save
-      @salary_component_templates = SalaryComponentTemplate.where(salary_template_id: @salary_component_template.salary_template_id)
-      flash[:notice] = "Salary Data Added Successfully."
       @flag = true
     else
-      flash[:alert] = "Salary Data Not Added Successfully."
       @flag = false
     end
   end
@@ -39,13 +37,8 @@ class SalaryComponentTemplatesController < ApplicationController
     @salary_component_templates = SalaryComponentTemplate.where(salary_template_id: @salary_component_template.salary_template_id)
     respond_to do |format|
       if @salary_component_template.update(salary_component_template_params)
-        #format.html { redirect_to @family, notice: 'Family was successfully updated.' }
-        #format.json { render :show, status: :ok, location: @family }
-        # @salary_component_templates = @salary_template.salary_component_templates
         format.js { @flag = true }
       else
-        #format.html { render :edit }
-        #format.json { render json: @family.errors, status: :unprocessable_entity }
         format.js { @flag = false }
       end
     end
@@ -75,6 +68,6 @@ class SalaryComponentTemplatesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def salary_component_template_params
-      params.require(:salary_component_template).permit(:manual_template_code, :auto_template_code, :salary_template_id, :salary_component_id, :is_deducted, :parent_salary_component_id, :percentage, :is_taxable, :tax, :base, :to_be_paid, :max_amount, :monthly_amount, :annual_amount)
+      params.require(:salary_component_template).permit(:manual_template_code, :salary_template_id, :salary_component_id, :is_deducted, :parent_salary_component_id, :percentage, :to_be_paid)
     end
 end

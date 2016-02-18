@@ -1,7 +1,27 @@
 Rails.application.routes.draw do
 
-  resources :employee_templates
-
+  resources :leave_status_records do 
+    collection do
+    end
+    member do
+      get :cancel
+      get :first_approve
+      get :second_approve
+      get :first_reject
+      get :second_reject
+    end
+  end
+  resources :advance_types
+  resources :employee_templates do
+    member do
+      get :template_list
+      get :activate
+      get :deactivate
+    end
+    collection do
+      
+    end
+  end
   resources :retention_moneys
   namespace :reports do
     resources :salaries do 
@@ -121,6 +141,7 @@ Rails.application.routes.draw do
     end
     member do
       get :from_hr
+      get :hr_view_request
     end
   end
   resources :company_leavs

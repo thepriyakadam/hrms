@@ -12,11 +12,13 @@ class Employee < ActiveRecord::Base
   has_many :certifications
   has_many :qualifications
   has_many :employee_leav_requests
+  has_many :first_reporters, class_name: "EmployeeLeavRequest", foreign_key: "first_reporter_id"
+  has_many :second_reporters, class_name: "EmployeeLeavRequest", foreign_key: "second_reporter_id"
+  has_many :leave_status_records, class_name: "LeaveStatusRecord", foreign_key: 'change_status_employee_id'
   has_many :employee_leav_balances
   has_many :families
   has_many :experiences
   has_many :skillsets
-  has_many :employee_annual_salaries
   has_many :employee_salary_templates
   has_many :overtimes
   has_many :workingdays
@@ -29,6 +31,10 @@ class Employee < ActiveRecord::Base
   has_many :subordinates, class_name: "Employee",
                           foreign_key: "manager_id"
   belongs_to :manager, class_name: "Employee"
+
+  has_many :indirect_subordinates, class_name: "Employee",
+                          foreign_key: "manager_2_id"
+  belongs_to :manager_2, class_name: "Employee"
 
   validates :manual_employee_code, :presence => true, uniqueness: { case_sensitive: false }
   validates :first_name, :presence => true

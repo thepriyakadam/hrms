@@ -24,6 +24,7 @@ class ApplicationController < ActionController::Base
   #SQLite3::BusyException
   #ActiveRecord::StatementInvalid
   #ActiveRecord::RecordInvalid
+  #AbstractController::DoubleRenderError
   
   rescue_from ActiveRecord::RecordNotFound do |exc|
     if request.xhr?

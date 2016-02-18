@@ -1,8 +1,7 @@
 <% if @flag %>
-$("#parent_salary_component_id").val();
 $("#form").html("")
 $("#show_info").html("<%= j render 'show_detail' %>")
 <% else %>
-$("#form").html("<%= j render 'form' %>")
+$("#form").html("Not updated")
 $("#show_info").html("<%= j render 'show_detail' %>")
 <% end %>

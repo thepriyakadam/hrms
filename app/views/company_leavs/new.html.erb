@@ -7,8 +7,18 @@
 			<%= render 'form' %>	
 		</div>
 		
-		<div id="company_leave_list">
-			<%= render 'company_leave_type_list' %>
-		</div>
+    <div class="row">
+      <div class="col-sm-6">
+        <div id="company_leave_list">
+          <%= render 'company_leave_type_list' %>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div id="company_expired_leave_list">
+          <%= render 'company_expired_leave_type_list' %>
+        </div>
+      </div>
+    </div>
 	</div><!-- /.box-body -->
 </div><!-- /.box -->
+

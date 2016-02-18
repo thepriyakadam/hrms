@@ -15,8 +15,8 @@
   		<td><%= @employee.employee_type.try(:name) %></td>
   		<th>Contact No</th>
   		<td><%= @employee.contact_no %></td>
-  		<th>Email</th>
-  		<td><%= @employee.email %></td>
+  		<th>Week Off</th>
+  		<td><%= @working_day.try(:week_off_day) %></td>
   	</tr>
   	<tr>
       <th>Month Day</th>
@@ -24,7 +24,7 @@
       <th>Holidays</th>
       <td align="right"><%= @working_day.try(:holiday_in_month) %></td>
       <th>Leave Total</th>
-      <td align="right"><%= @working_day.try(:total_leave) %></td>
+      <td align="right"><%= @working_day.try(:cl_leave) %></td>
 		</tr>
 		<tr>
 			<th>Working Days</th>
@@ -36,7 +36,7 @@
 		</tr>
   </tbody>
 </table>
-
+<div id="myModal"></div>
 <div class="row">
   <div class="col-sm-6">
     <table class="table table-bordered table-hover table-condensed">
@@ -68,7 +68,10 @@
 	      <% addable_total_calculated_amount = addable_total_calculated_amount + addable_calculated_amount %>
 	      <tr>
 	        <td><%= item.salary_component.name %></td>
-	        <td align="right"><%= addable_actual_amount.round %></td>
+	        <td align="right">
+            <%= addable_actual_amount.round %>
+            <%= link_to "", edit_employee_salary_template_path(item),remote:true,class: "fa fa-edit" %>
+          </td>
 	        <td align="right"><%= addable_calculated_amount.round %></td>
 	      </tr>  
 	      <% if item.salary_component.name == "Basic" %>
@@ -120,7 +123,7 @@
           <% end %> <!-- esic unless end --> 
 	        
 	      <% when "Prof. Tax" %>
-	        <% if addable_total_calculated_amount > 15000 %>
+	        <% if addable_total_actual_amount > 15000 %>
 	          <% if @month == "March" %>
 	            <% deducted_actual_amount = 212 %>
 	            <% deducted_calculated_amount = 212 %>
@@ -166,14 +169,17 @@
 	      <% deducted_total_calculated_amount = deducted_total_calculated_amount + deducted_calculated_amount %>
 	      <tr>
 	        <td><%= item.salary_component.name %></td>
-	        <td align="right"><%= deducted_actual_amount.round %></td>
+	        <td align="right">
+            <%= deducted_actual_amount.round %>
+            <%= link_to "", edit_employee_salary_template_path(item),remote:true,class: "fa fa-edit" %>
+          </td>
 	        <td align="right"><%= deducted_calculated_amount.round %></td>
 	      </tr>
 	    <% end %> <!-- deducted_salary_items loop -->
 
       <% @instalment_array.try(:each) do |ia| %>
         <tr>
-          <% deducted_actual_amount = ia.advance_salary.instalment_amount %>
+          <% deducted_actual_amount = ia.instalment_amount %>
           <% deducted_calculated_amount = deducted_actual_amount %>
           <td>Advance</td>
           <td align="right"><%= deducted_actual_amount %></td>
@@ -210,9 +216,35 @@
 	      <td align="right"><%= (addable_total_calculated_amount - deducted_total_calculated_amount).round %></td>
 	    </tr>
 	  </table>
-	</div>
+  </div>
+  <% unless @arrear_items.nil? %>
+    <div class="col-sm-6">
+      <table class="table table-bordered table-hover table-condensed">
+        <thead>
+          <tr>
+            <th>Arrears</th>
+            <th>Actual Amount</th>
+            <th>Calculated Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% total_arrear_amount = 0 %>
+          <% @arrear_items.each do |a| %>
+            <tr>
+              <td><%= a.salary_component.name %></td>
+              <td><%= a.actual_amount %></td>
+              <% arrear_calculated_amount = ((a.actual_amount/30) * @total_payable_days).round %>
+              <td><%= arrear_calculated_amount %></td>
+              <% total_arrear_amount = total_arrear_amount + arrear_calculated_amount%>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    Net Salary + Arrear = <%= total_arrear_amount + ((addable_total_calculated_amount - deducted_total_calculated_amount).round)%>
+  <% end %>
 </div>
-	  
+
 <%= form_for :data, url: {controller: 'salaryslips', action: 'save_data',	employee: @employee, month: @month,	year: @year } do |f| %>
-	<%= f.submit %>
+	<%= f.submit class: "btn btn-primary btn-sm" %>
 <% end %>

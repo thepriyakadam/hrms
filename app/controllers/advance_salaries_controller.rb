@@ -27,17 +27,16 @@ class AdvanceSalariesController < ApplicationController
   # POST /advance_salaries.json
   def create
     @advance_salary = AdvanceSalary.new(advance_salary_params)
-    @employee = Employee.find(@advance_salary.employee_id)
-    id = AdvanceSalary.create(employee_id: @employee.id, \
-                         advance_amount: @advance_salary.advance_amount, \
-                         no_of_instalment: @advance_salary.no_of_instalment, \
-                         instalment_amount: @advance_salary.instalment_amount, \
-                         advance_date:@advance_salary.advance_date ).id
-    current_record = AdvanceSalary.find(id)
-    for i in 1..current_record.no_of_instalment.to_i
-      current_record.instalments.create(instalment_amount: current_record.instalment_amount)
+    for i in 1..@advance_salary.no_of_instalment.to_i
+      @advance_salary.instalments.build(instalment_amount: @advance_salary.instalment_amount)
     end
-    redirect_to @advance_salary
+    if @advance_salary.save
+      flash[:notice] = "Advance Salary created successfully."
+      redirect_to @advance_salary
+    else
+      flash.now[:alert] = "Advance Salary saved failed."
+      render :new
+    end
   end
 
   # PATCH/PUT /advance_salaries/1
@@ -72,6 +71,6 @@ class AdvanceSalariesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def advance_salary_params
-      params.require(:advance_salary).permit(:employee_id, :advance_amount, :no_of_instalment, :instalment_amount, :advance_date)
+      params.require(:advance_salary).permit(:employee_id, :advance_amount, :no_of_instalment, :instalment_amount, :advance_date, :advance_type_id, :interest)
     end
 end

@@ -161,6 +161,7 @@ class EmployeeSalaryTemplatesController < ApplicationController
           end #advance salaries loop
         end # template nil  
       end # record nil
+      @arrear_items = nil
       @arrear = EmployeeArrear.where("employee_id = ? and is_paid = ?", @employee.id,false).take
       unless @arrear.nil?
         arrear_start_date = @arrear.start_date

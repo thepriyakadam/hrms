@@ -300,12 +300,12 @@ require 'roo'
 
 ###############################################################################################
 
-ex = Roo::Excel.new("#{Rails.root}/public/12345678.xls")
-ex.default_sheet = ex.sheets[0]
+ex = Roo::Excel.new("#{Rails.root}/public/workingdays.xls")
+ex.default_sheet = ex.sheets[4]
 i = 1
 gross_salary = 0
 ActiveRecord::Base.transaction do
-2.upto(380) do |line|
+2.upto(94) do |line|
   puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
   unless @employee.nil?

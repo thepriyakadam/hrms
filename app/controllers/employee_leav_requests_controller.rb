@@ -4,7 +4,7 @@ class EmployeeLeavRequestsController < ApplicationController
   # GET /employee_leav_requests
   # GET /employee_leav_requests.json
   def index
-    @employee_leav_requests = EmployeeLeavRequest.where('employee_id = ?', current_user.employee_id)
+    @employee_leav_requests = EmployeeLeavRequest.where('employee_id = ?', current_user.try(:employee_id))
     #@employee_leav_requests = EmployeeLeavRequest.all
   end
 

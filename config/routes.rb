@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :reporting_masters
   resources :leave_status_records do 
     collection do
     end

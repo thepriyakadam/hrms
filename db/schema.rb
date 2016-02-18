@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160217052410) do
+ActiveRecord::Schema.define(version: 20160218060839) do
 
   create_table "advance_salaries", force: :cascade do |t|
     t.integer  "employee_id"
@@ -838,6 +838,17 @@ ActiveRecord::Schema.define(version: 20160217052410) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
+
+  create_table "reporting_masters", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
+    t.string   "description"
+    t.integer  "employee_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "reporting_masters", ["employee_id"], name: "index_reporting_masters_on_employee_id"
 
   create_table "retention_moneys", force: :cascade do |t|
     t.boolean  "have_retention"

@@ -7,15 +7,16 @@ class LeaveStatusRecordsController < ApplicationController
       s.status = "Cancelled"
       s.change_date = Time.now
     end
-    ActiveRecord::Base.transaction do 
+    ActiveRecord::Base.transaction do
       if @leave_status.save
         @employee_leav_request.update(is_cancelled: true, current_status: "Cancelled")
+        LeaveRequestMailer.cancel(@employee_leav_request).deliver_now
         flash[:notice] = "Leave Cancelled Successfully."
-        redirect_to employee_leav_requests_path
+        redirect_to approved_or_rejected_leave_request_employee_leav_requests_path
       else
         flash[:alert] = "Leave Already cancelled. Please refresh page."
-        redirect_to employee_leav_requests_path
-      end  
+        redirect_to approved_or_rejected_leave_request_employee_leav_requests_path
+      end
     end    
   end
 
@@ -24,17 +25,18 @@ class LeaveStatusRecordsController < ApplicationController
       @leave_status = LeaveStatusRecord.new do |s|
         s.employee_leav_request_id = params[:id]
         s.change_status_employee_id = current_user.employee_id unless current_user.class == Group
-        s.status = "SecondApproved"
+        s.status = "FirstApproved"
         s.change_date = Time.now
       end
-      ActiveRecord::Base.transaction do 
+      ActiveRecord::Base.transaction do
         if @leave_status.save
-          @employee_leav_request.update(is_second_approved: true, current_status: "SecondApproved")
+          @employee_leav_request.update(is_first_approved: true, current_status: "FirstApproved")
+          LeaveRequestMailer.first_approve(@employee_leav_request).deliver_now
           flash[:notice] = "Leave Approved Successfully."
-          redirect_to employee_leav_requests_path
+          redirect_to approved_or_rejected_leave_request_employee_leav_requests_path
         else
           flash[:alert] = "Leave Already Approved. Please refresh page."
-          redirect_to employee_leav_requests_path
+          redirect_to approved_or_rejected_leave_request_employee_leav_requests_path
         end
       end
     else
@@ -47,11 +49,12 @@ class LeaveStatusRecordsController < ApplicationController
       ActiveRecord::Base.transaction do
         if @leave_status.save
           @employee_leav_request.update(is_first_approved: true, current_status: "FirstApproved", second_reporter_id: @employee_leav_request.employee.manager_2_id)
+          LeaveRequestMailer.first_approve(@employee_leav_request).deliver_now
           flash[:notice] = "Leave Approved Successfully."
-          redirect_to employee_leav_requests_path
+          redirect_to approved_or_rejected_leave_request_employee_leav_requests_path
         else
           flash[:alert] = "Leave Already Approved. Please refresh page."
-          redirect_to employee_leav_requests_path
+          redirect_to approved_or_rejected_leave_request_employee_leav_requests_path
         end
       end
     end
@@ -67,11 +70,12 @@ class LeaveStatusRecordsController < ApplicationController
     ActiveRecord::Base.transaction do 
       if @leave_status.save
         @employee_leav_request.update(is_second_approved: true, current_status: "SecondApproved")
+        LeaveRequestMailer.second_approve(@employee_leav_request).deliver_now
         flash[:notice] = "Leave Approved Successfully."
-        redirect_to employee_leav_requests_path
+        redirect_to approved_or_rejected_leave_request_employee_leav_requests_path
       else
         flash[:alert] = "Leave Already Approved. Please refresh page."
-        redirect_to employee_leav_requests_path
+        redirect_to approved_or_rejected_leave_request_employee_leav_requests_path
       end
     end
   end
@@ -86,11 +90,12 @@ class LeaveStatusRecordsController < ApplicationController
     ActiveRecord::Base.transaction do 
       if @leave_status.save
         @employee_leav_request.update(is_first_rejected: true, current_status: "FirstRejected")
+        LeaveRequestMailer.first_reject(@employee_leav_request).deliver_now
         flash[:notice] = "Leave Rejected Successfully."
-        redirect_to employee_leav_requests_path
+        redirect_to approved_or_rejected_leave_request_employee_leav_requests_path
       else
         flash[:alert] = "Leave Already Rejected. Please refresh page."
-        redirect_to employee_leav_requests_path
+        redirect_to approved_or_rejected_leave_request_employee_leav_requests_path
       end
     end
   end
@@ -105,11 +110,12 @@ class LeaveStatusRecordsController < ApplicationController
     ActiveRecord::Base.transaction do 
       if @leave_status.save
         @employee_leav_request.update(is_second_rejected: true, current_status: "SecondRejected")
+        LeaveRequestMailer.second_reject(@employee_leav_request).deliver_now
         flash[:notice] = "Leave Rejected Successfully."
-        redirect_to employee_leav_requests_path
+        redirect_to approved_or_rejected_leave_request_employee_leav_requests_path
       else
         flash[:alert] = "Leave Already Rejected. Please refresh page."
-        redirect_to employee_leav_requests_path
+        redirect_to approved_or_rejected_leave_request_employee_leav_requests_path
       end
     end
   end

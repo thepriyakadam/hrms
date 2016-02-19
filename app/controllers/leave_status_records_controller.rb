@@ -17,7 +17,7 @@ class LeaveStatusRecordsController < ApplicationController
         flash[:alert] = "Leave Already cancelled. Please refresh page."
         redirect_to approved_or_rejected_leave_request_employee_leav_requests_path
       end
-    end    
+    end
   end
 
   def first_approve
@@ -32,7 +32,8 @@ class LeaveStatusRecordsController < ApplicationController
         if @leave_status.save
           @employee_leav_request.update(is_first_approved: true, current_status: "FirstApproved")
           @employee_leav_request.create_single_record_for_leave(@employee_leav_request)
-          LeaveRequestMailer.first_approve(@employee_leav_request).deliver_now
+          @employee_leav_request.minus_leave(@employee_leav_request)
+          #LeaveRequestMailer.first_approve(@employee_leav_request).deliver_now
           flash[:notice] = "Leave Approved Successfully."
           redirect_to approved_or_rejected_leave_request_employee_leav_requests_path
         else
@@ -72,7 +73,8 @@ class LeaveStatusRecordsController < ApplicationController
       if @leave_status.save
         @employee_leav_request.update(is_second_approved: true, current_status: "SecondApproved")
         @employee_leav_request.create_single_record_for_leave(@employee_leav_request)
-        LeaveRequestMailer.second_approve(@employee_leav_request).deliver_now
+        @employee_leav_request.minus_leave(@employee_leav_request)
+        #LeaveRequestMailer.second_approve(@employee_leav_request).deliver_now
         flash[:notice] = "Leave Approved Successfully."
         redirect_to approved_or_rejected_leave_request_employee_leav_requests_path
       else

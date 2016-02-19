@@ -1,33 +1,30 @@
-<%= form_for(@food_coupan_master) do |f| %>
-  <% if @food_coupan_master.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@food_coupan_master.errors.count, "error") %> prohibited this food_coupan_master from being saved:</h2>
 
-      <ul>
-      <% @food_coupan_master.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+<%= bootstrap_form_for(@food_coupan_master,html: {id: 'food_coupan_master'},remote:true) do |f| %>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :code,hide_label:true, placeholder: 'Food Coupan Code' %>
+      </div>
     </div>
-  <% end %>
 
-  <div class="field">
-    <%= f.label :code %><br>
-    <%= f.text_field :code %>
-  </div>
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :description %><br>
-    <%= f.text_field :description %>
-  </div>
-  <div class="field">
-    <%= f.label :price %><br>
-    <%= f.text_field :price %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :name,hide_label:true, placeholder: 'Food Coupan Type ' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :price,hide_label:true, placeholder: 'Food Coupan Price' %>
+      </div>
+    </div>
+    </div>
+
+    <div class="row">
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit :class => class_name, data: { disable_with: data_info } %>
+      </div>
+    </div>
   </div>
 <% end %>

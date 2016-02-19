@@ -1,5 +1,15 @@
-<h1>New Food Coupan Master</h1>
-
-<%= render 'form' %>
-
-<%= link_to 'Back', food_coupan_masters_path %>
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Food Coupan Master</h3>
+  </div><!-- /.box-header -->
+	<div class="box-body">
+		<div id="form">
+			<%= render 'form' %>	
+		</div>
+		
+		<div id="food_coupan_master_li">
+			<%= render 'food_coupan_master_list' %>
+		</div>
+		
+	</div><!-- /.box-body -->
+</div><!-- /.box -->

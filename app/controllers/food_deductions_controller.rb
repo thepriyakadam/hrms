@@ -61,6 +61,10 @@ class FoodDeductionsController < ApplicationController
     end
   end
 
+  def calculate_food_deduction_amount
+    p "----------------------------------------"
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_food_deduction
@@ -69,6 +73,6 @@ class FoodDeductionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def food_deduction_params
-      params.require(:food_deduction).permit(:food_date, :no_of_coupan, :rate, :amount, :employee_id)
+      params.require(:food_deduction).permit(:food_date, :no_of_coupan, :rate, :amount, :employee_id, :return_coupan, :total_coupan)
     end
 end

@@ -62,7 +62,10 @@ class FoodDeductionsController < ApplicationController
   end
 
   def calculate_food_deduction_amount
-    p "----------------------------------------"
+    total_coupan = params[:total_coupan].to_i
+    food_coupan = FoodCoupanMaster.find(params[:id])
+    price = food_coupan.price.to_i
+    @amount = price * total_coupan
   end
 
   private
@@ -73,6 +76,6 @@ class FoodDeductionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def food_deduction_params
-      params.require(:food_deduction).permit(:food_date, :no_of_coupan, :rate, :amount, :employee_id, :return_coupan, :total_coupan)
+      params.require(:food_deduction).permit(:food_date, :no_of_coupan, :amount, :employee_id, :return_coupan, :total_coupan, :food_coupan_master_id)
     end
 end

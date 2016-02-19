@@ -11,7 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
+ActiveRecord::Schema.define(version: 20160219121055) do
+=======
 ActiveRecord::Schema.define(version: 20160219105414) do
+>>>>>>> 3f1f984bddc0f88ab70e74d58908b3c4622c4144
 
   create_table "advance_salaries", force: :cascade do |t|
     t.integer  "employee_id"
@@ -1029,6 +1033,19 @@ ActiveRecord::Schema.define(version: 20160219105414) do
 
   add_index "skillsets", ["employee_id"], name: "index_skillsets_on_employee_id"
 
+<<<<<<< HEAD
+  create_table "society_member_ships", force: :cascade do |t|
+    t.boolean  "is_society_member"
+    t.decimal  "amount",            precision: 15, scale: 2, default: 0.0
+    t.integer  "employee_id"
+    t.datetime "created_at",                                               null: false
+    t.datetime "updated_at",                                               null: false
+  end
+
+  add_index "society_member_ships", ["employee_id"], name: "index_society_member_ships_on_employee_id"
+
+=======
+>>>>>>> 3f1f984bddc0f88ab70e74d58908b3c4622c4144
   create_table "states", force: :cascade do |t|
     t.integer  "country_id"
     t.string   "code"
@@ -1047,6 +1064,8 @@ ActiveRecord::Schema.define(version: 20160219105414) do
     t.datetime "updated_at",  null: false
   end
 
+<<<<<<< HEAD
+=======
   create_table "well_faires", force: :cascade do |t|
     t.string   "month"
     t.decimal  "amount",     precision: 15, scale: 2, default: 0.0
@@ -1055,6 +1074,7 @@ ActiveRecord::Schema.define(version: 20160219105414) do
     t.datetime "updated_at",                                        null: false
   end
 
+>>>>>>> 3f1f984bddc0f88ab70e74d58908b3c4622c4144
   create_table "workingdays", force: :cascade do |t|
     t.integer  "employee_id"
     t.string   "month_name"

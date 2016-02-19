@@ -1,0 +1,35 @@
+<%= form_for(@monthly_expence) do |f| %>
+  <% if @monthly_expence.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@monthly_expence.errors.count, "error") %> prohibited this monthly_expence from being saved:</h2>
+
+      <ul>
+      <% @monthly_expence.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :expence_date %><br>
+    <%= f.date_select :expence_date %>
+  </div>
+  <div class="field">
+    <%= f.label :amount %><br>
+    <%= f.text_field :amount %>
+  </div>
+   <div class="col-sm-3">
+    <div class="form-group required">
+     <%= f.select :employee_id, Employee.all.collect {|e| [e.manual_employee_code+"  "+e.first_name.to_s+" "+e.last_name.to_s,e.id]} %>
+     </div>
+  </div>
+   <div class="col-sm-3">
+    <div class="field">
+      <%= f.select :expencess_type_id, all_expencess_type,{include_blank: " Select Expence Type"} %>
+    </div>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

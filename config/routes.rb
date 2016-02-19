@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
 
+  resources :monthly_expences
+  resources :expencess_types
+  resources :food_coupan_masters
   resources :food_deductions
   resources :reporting_masters
   resources :leave_status_records do 

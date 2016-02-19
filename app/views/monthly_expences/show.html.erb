@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Expence date:</strong>
+  <%= @monthly_expence.expence_date %>
+</p>
+
+<p>
+  <strong>Amount:</strong>
+  <%= @monthly_expence.amount %>
+</p>
+
+<p>
+  <strong>Employee:</strong>
+  <%= @monthly_expence.employee %>
+</p>
+
+<%= link_to 'Edit', edit_monthly_expence_path(@monthly_expence) %> |
+<%= link_to 'Back', monthly_expences_path %>

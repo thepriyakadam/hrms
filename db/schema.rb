@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160218151055) do
+ActiveRecord::Schema.define(version: 20160219090147) do
 
   create_table "advance_salaries", force: :cascade do |t|
     t.integer  "employee_id"
@@ -542,6 +542,14 @@ ActiveRecord::Schema.define(version: 20160218151055) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "expencess_types", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
+    t.string   "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
   create_table "experiences", force: :cascade do |t|
     t.integer  "employee_id"
     t.date     "start_date"
@@ -591,17 +599,27 @@ ActiveRecord::Schema.define(version: 20160218151055) do
   add_index "families", ["employee_id"], name: "index_families_on_employee_id"
   add_index "families", ["religion_id"], name: "index_families_on_religion_id"
 
+  create_table "food_coupan_masters", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
+    t.string   "description"
+    t.decimal  "price",       precision: 15, scale: 2, default: 0.0
+    t.datetime "created_at",                                         null: false
+    t.datetime "updated_at",                                         null: false
+  end
+
   create_table "food_deductions", force: :cascade do |t|
     t.date     "food_date"
     t.string   "no_of_coupan"
-    t.decimal  "rate",         precision: 15, scale: 2, default: 0.0
-    t.decimal  "amount",       precision: 15, scale: 2, default: 0.0
+    t.decimal  "amount",                precision: 15, scale: 2, default: 0.0
     t.integer  "employee_id"
-    t.datetime "created_at",                                          null: false
-    t.datetime "updated_at",                                          null: false
+    t.datetime "created_at",                                                   null: false
+    t.datetime "updated_at",                                                   null: false
+    t.integer  "food_coupan_master_id"
   end
 
   add_index "food_deductions", ["employee_id"], name: "index_food_deductions_on_employee_id"
+  add_index "food_deductions", ["food_coupan_master_id"], name: "index_food_deductions_on_food_coupan_master_id"
 
   create_table "groups", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -779,6 +797,18 @@ ActiveRecord::Schema.define(version: 20160218151055) do
   add_index "members", ["member_code"], name: "index_members_on_member_code", unique: true
   add_index "members", ["reset_password_token"], name: "index_members_on_reset_password_token", unique: true
   add_index "members", ["role_id"], name: "index_members_on_role_id"
+
+  create_table "monthly_expences", force: :cascade do |t|
+    t.date     "expence_date"
+    t.decimal  "amount",            precision: 15, scale: 2, default: 0.0
+    t.integer  "employee_id"
+    t.datetime "created_at",                                               null: false
+    t.datetime "updated_at",                                               null: false
+    t.integer  "expencess_type_id"
+  end
+
+  add_index "monthly_expences", ["employee_id"], name: "index_monthly_expences_on_employee_id"
+  add_index "monthly_expences", ["expencess_type_id"], name: "index_monthly_expences_on_expencess_type_id"
 
   create_table "nationalities", force: :cascade do |t|
     t.string   "code"

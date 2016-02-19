@@ -1,19 +1,39 @@
-<p id="notice"><%= notice %></p>
+<!-- SELECT2 EXAMPLE -->
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Society Member Ship</h3>
+    <div class="box-tools pull-right">
+    </div>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
 
-<p>
-  <strong>Is society member:</strong>
-  <%= @society_member_ship.is_society_member %>
-</p>
+    <tr>
+    <th> <strong>Employee Code</strong></th>
+    <td><%= @society_member_ship.employee.try(:manual_employee_code) %></td>
 
-<p>
-  <strong>Amount:</strong>
-  <%= @society_member_ship.amount %>
-</p>
+    <th><strong>Emplyee Name</strong></th>
+    <td><%= @society_member_ship.employee.first_name %><%= @society_member_ship.employee.middle_name %><%= @society_member_ship.employee.last_name %></td>
+    </tr>
+    <tr>
 
-<p>
-  <strong>Employee:</strong>
-  <%= @society_member_ship.employee %>
-</p>
+    <th> <strong>Society Member/strong></th>
+    <td><%= @society_member_ship.is_society_member %></td>
+    
+    
+    <th> <strong>Amount</strong></th>
+    <td><%= @society_member_ship.amount %></td>
+    </tr>
+    <tr>
+    <th><strong>Day in Month</strong></th>
+    <td><%= @workingday.day_in_month %></td>
+   
+    <th><strong>Present Day</strong></th>
+    <td><%= @workingday.present_day %></td>
+    </tr>
+    </table>
 
-<%= link_to 'Edit', edit_society_member_ship_path(@society_member_ship) %> |
-<%= link_to 'Back', society_member_ships_path %>
+    <%= link_to 'Edit', edit_society_member_ship_path(@society_member_ship),class: 'btn btn-success btn-sm fa fa-edit' %> |
+    <%= link_to 'Back', society_member_ships_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->

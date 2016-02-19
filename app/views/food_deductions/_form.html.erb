@@ -1,0 +1,37 @@
+<%= form_for(@food_deduction) do |f| %>
+  <% if @food_deduction.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@food_deduction.errors.count, "error") %> prohibited this food_deduction from being saved:</h2>
+
+      <ul>
+      <% @food_deduction.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :food_date %><br>
+    <%= f.date_select :food_date %>
+  </div>
+  <div class="field">
+    <%= f.label :no_of_coupan %><br>
+    <%= f.text_field :no_of_coupan %>
+  </div>
+  <div class="field">
+    <%= f.label :rate %><br>
+    <%= f.text_field :rate %>
+  </div>
+  <div class="field">
+    <%= f.label :amount %><br>
+    <%= f.text_field :amount %>
+  </div>
+  <div class="field">
+    <%= f.label :employee_id %><br>
+    <%= f.text_field :employee_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

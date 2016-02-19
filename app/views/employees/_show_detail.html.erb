@@ -91,6 +91,10 @@
         <th><strong>Employee Status</strong></th>
         <td><%= @employee.status %></td>
       </tr>
+      <tr>
+        <th><strong>Company Location</strong></th>
+        <td><%= @employee.try(:company_location).try(:name) %></td>
+      </tr>
     </table>
   </div><!-- /.box -->
 </div>

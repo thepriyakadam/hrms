@@ -32,13 +32,10 @@
   </div>
   <div class="col-sm-3">
     <div class="field">
-      <%= f.select :food_coupan_master_id, all_food_coupan_master,{include_blank: " Select Coupan Type"},{onchange:"var a={id:$(this).val(),total_coupan : '$(#food_deduction_total_coupan).val()'}; $.get('/food_deductions/calculate_food_deduction_amount',a,function(response){});",class: 'form-control'} %>
+      <%= f.select :food_coupan_master_id, all_food_coupan_master,{include_blank: " Select Coupan Type"},{onchange:"var a={id:$(this).val(),total_coupan:$('#food_deduction_total_coupan').val()}; $.get('/food_deductions/calculate_food_deduction_amount',a,function(response){});",class: 'form-control'} %>
     </div>
   </div>
-
-  <div id="amount">
-    
-  </div>
+  <div id="amount"></div>
   <div class="actions">
     <%= f.submit %>
   </div>

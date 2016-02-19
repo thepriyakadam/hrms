@@ -19,13 +19,6 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  #AbstractController::ActionNotFound
-  #ActionController::RoutingError
-  #SQLite3::BusyException
-  #ActiveRecord::StatementInvalid
-  #ActiveRecord::RecordInvalid
-  #AbstractController::DoubleRenderError
-  
   rescue_from ActiveRecord::RecordNotFound do |exc|
     if request.xhr?
       flash[:alert] = "Sorry! Record not found"
@@ -36,6 +29,14 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  #AbstractController::ActionNotFound
+  #ActionController::RoutingError
+  #SQLite3::BusyException
+  #ActiveRecord::StatementInvalid
+  #ActiveRecord::RecordInvalid
+  #AbstractController::DoubleRenderError
+  
+  
   # rescue_from ActionView::Template::Error do |exc|
   #   if request.xhr?
   #     flash[:alert] = "Sorry! Template error problem"
@@ -122,7 +123,6 @@ class ApplicationController < ActionController::Base
 
   def configure_devise_permitted_parameters
     registration_params = [:subdomain, :email, :password, :password_confirmation]
-
     if params[:action] == 'update'
       devise_parameter_sanitizer.for(:account_update) { 
         |u| u.permit(registration_params << :current_password,:avatar)

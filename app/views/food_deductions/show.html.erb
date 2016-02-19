@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Food date:</strong>
+  <%= @food_deduction.food_date %>
+</p>
+
+<p>
+  <strong>No of coupan:</strong>
+  <%= @food_deduction.no_of_coupan %>
+</p>
+
+<p>
+  <strong>Rate:</strong>
+  <%= @food_deduction.rate %>
+</p>
+
+<p>
+  <strong>Amount:</strong>
+  <%= @food_deduction.amount %>
+</p>
+
+<p>
+  <strong>Employee:</strong>
+  <%= @food_deduction.employee %>
+</p>
+
+<%= link_to 'Edit', edit_food_deduction_path(@food_deduction) %> |
+<%= link_to 'Back', food_deductions_path %>

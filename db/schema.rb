@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160218060839) do
+ActiveRecord::Schema.define(version: 20160218151055) do
 
   create_table "advance_salaries", force: :cascade do |t|
     t.integer  "employee_id"
@@ -590,6 +590,18 @@ ActiveRecord::Schema.define(version: 20160218060839) do
   add_index "families", ["blood_group_id"], name: "index_families_on_blood_group_id"
   add_index "families", ["employee_id"], name: "index_families_on_employee_id"
   add_index "families", ["religion_id"], name: "index_families_on_religion_id"
+
+  create_table "food_deductions", force: :cascade do |t|
+    t.date     "food_date"
+    t.string   "no_of_coupan"
+    t.decimal  "rate",         precision: 15, scale: 2, default: 0.0
+    t.decimal  "amount",       precision: 15, scale: 2, default: 0.0
+    t.integer  "employee_id"
+    t.datetime "created_at",                                          null: false
+    t.datetime "updated_at",                                          null: false
+  end
+
+  add_index "food_deductions", ["employee_id"], name: "index_food_deductions_on_employee_id"
 
   create_table "groups", force: :cascade do |t|
     t.string   "email",                  default: "", null: false

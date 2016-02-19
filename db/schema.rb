@@ -681,7 +681,6 @@ ActiveRecord::Schema.define(version: 20160219071732) do
     t.integer  "payment_mode_id"
     t.integer  "department_id"
     t.boolean  "have_retention"
-    t.string   "company_location"
     t.boolean  "is_society_member"
   end
 

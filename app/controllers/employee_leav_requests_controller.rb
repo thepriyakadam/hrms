@@ -63,7 +63,7 @@ class EmployeeLeavRequestsController < ApplicationController
           flash.now[:alert] = 'Leave Time Expired.'
           render :new
         else
-          @employee_leav_request.leave_status_records.build(change_status_employee_id: current_user.employee_id,status: "Pending")
+          @employee_leav_request.leave_status_records.build(change_status_employee_id: current_user.employee_id,status: "Pending", change_date: Date.today)
           respond_to do |format|
             if @employee_leav_request.save
               format.html { redirect_to @employee_leav_request, notice: 'Employee leav request was successfully created.' }

@@ -142,7 +142,8 @@
             <p>
               <% if current_user.class == Member %>
                   <%= current_user.manual_member_code %>-
-                  <%= current_user.role.name %>
+                  <%= current_user.role.name %><br>
+                  <%= current_user.employee.first_name %>
               <%else%>
                 <%= current_user.subdomain %>-
                 <%= current_user.class %>

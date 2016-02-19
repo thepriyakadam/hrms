@@ -67,7 +67,7 @@ class LeaveStatusRecordsController < ApplicationController
       s.status = "SecondApproved"
       s.change_date = Time.now
     end
-    ActiveRecord::Base.transaction do 
+    ActiveRecord::Base.transaction do
       if @leave_status.save
         @employee_leav_request.update(is_second_approved: true, current_status: "SecondApproved")
         LeaveRequestMailer.second_approve(@employee_leav_request).deliver_now

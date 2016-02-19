@@ -20,19 +20,19 @@
     <%= f.text_field :no_of_coupan %>
   </div>
   <div class="col-sm-3">
-          <div class="field">
-            <%= f.select :food_coupan_master_id, all_food_coupan_master,{include_blank: " Select Coupan Type"} %>
-          </div>
-        </div>
+    <div class="field">
+      <%= f.select :food_coupan_master_id, all_food_coupan_master,{include_blank: " Select Coupan Type"} %>
+    </div>
+  </div>
   <div class="field">
     <%= f.label :amount %><br>
     <%= f.text_field :amount %>
   </div>
   <div class="col-sm-3">
-          <div class="form-group required">
-           <%= f.select :employee_id, Employee.all.collect {|e| [e.manual_employee_code+"  "+e.first_name.to_s+" "+e.last_name.to_s,e.id]} %>
-           </div>
-        </div>
+    <div class="form-group required">
+     <%= f.select :employee_id, Employee.all.collect {|e| [e.manual_employee_code+"  "+e.first_name.to_s+" "+e.last_name.to_s,e.id]} %>
+     </div>
+  </div>
   <div class="actions">
     <%= f.submit %>
   </div>

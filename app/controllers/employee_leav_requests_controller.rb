@@ -42,7 +42,6 @@ class EmployeeLeavRequestsController < ApplicationController
       #@employee_leav_request.second_reporter_id = @employee.manager_2_id
       @employee_leav_request.is_pending = true
       @employee_leav_request.current_status = "Pending"
-      
       if @employee_leav_request.leave_type == "Full Day"
         @employee_leav_request.leave_count = (@employee_leav_request.end_date.to_date - @employee_leav_request.start_date.to_date).to_f + 1
       else
@@ -63,6 +62,7 @@ class EmployeeLeavRequestsController < ApplicationController
           flash.now[:alert] = 'Leave Time Expired.'
           render :new
         else
+
           @employee_leav_request.leave_status_records.build(change_status_employee_id: current_user.employee_id,status: "Pending", change_date: Date.today)
           respond_to do |format|
             if @employee_leav_request.save

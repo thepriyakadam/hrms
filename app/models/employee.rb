@@ -1,6 +1,7 @@
 class Employee < ActiveRecord::Base
   protokoll :employee_code, :pattern => "EMP#######"
   belongs_to :department
+  belongs_to :company_location
   belongs_to :nationality
   belongs_to :blood_group
   belongs_to :employee_type
@@ -23,6 +24,7 @@ class Employee < ActiveRecord::Base
   has_many :overtimes
   has_many :workingdays
   has_many :employee_templates
+  has_many :particular_leave_records
   has_one :employee_shift
   has_one :member
   has_one :employee_bank_detail

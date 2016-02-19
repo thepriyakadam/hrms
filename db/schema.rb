@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160218060839) do
+ActiveRecord::Schema.define(version: 20160219044950) do
 
   create_table "advance_salaries", force: :cascade do |t|
     t.integer  "employee_id"
@@ -509,9 +509,13 @@ ActiveRecord::Schema.define(version: 20160218060839) do
     t.datetime "updated_at",           null: false
     t.integer  "religion_id"
     t.integer  "manager_2_id"
+    t.integer  "company_location_id"
+    t.integer  "company_id"
   end
 
   add_index "employees", ["blood_group_id"], name: "index_employees_on_blood_group_id"
+  add_index "employees", ["company_id"], name: "index_employees_on_company_id"
+  add_index "employees", ["company_location_id"], name: "index_employees_on_company_location_id"
   add_index "employees", ["country_id"], name: "index_employees_on_country_id"
   add_index "employees", ["department_id"], name: "index_employees_on_department_id"
   add_index "employees", ["district_id"], name: "index_employees_on_district_id"
@@ -664,19 +668,17 @@ ActiveRecord::Schema.define(version: 20160218060839) do
     t.integer  "employee_category_id"
     t.integer  "payment_mode_id"
     t.integer  "department_id"
-    t.integer  "location_id"
-    t.integer  "company_location_id"
     t.boolean  "have_retention"
+    t.string   "company_location"
+    t.boolean  "is_society_member"
   end
 
-  add_index "joining_details", ["company_location_id"], name: "index_joining_details_on_company_location_id"
   add_index "joining_details", ["cost_center_id"], name: "index_joining_details_on_cost_center_id"
   add_index "joining_details", ["department_id"], name: "index_joining_details_on_department_id"
   add_index "joining_details", ["employee_category_id"], name: "index_joining_details_on_employee_category_id"
   add_index "joining_details", ["employee_designation_id"], name: "index_joining_details_on_employee_designation_id"
   add_index "joining_details", ["employee_grade_id"], name: "index_joining_details_on_employee_grade_id"
   add_index "joining_details", ["employee_id"], name: "index_joining_details_on_employee_id"
-  add_index "joining_details", ["location_id"], name: "index_joining_details_on_location_id"
   add_index "joining_details", ["payment_mode_id"], name: "index_joining_details_on_payment_mode_id"
 
   create_table "leav_approveds", force: :cascade do |t|

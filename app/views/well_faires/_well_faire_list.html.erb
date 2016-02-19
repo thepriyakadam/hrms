@@ -1,0 +1,23 @@
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>  
+      <th>Month</th>
+      <th>Amount</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @well_faires.each do |well_faire| %>
+      <tr>
+        <td><%= well_faire.month %></td>
+        <td><%= well_faire.amount %></td>
+        <td><%= well_faire.status %></td>
+        <td>
+          <%= link_to '', edit_well_faire_path(well_faire),class: 'btn btn-success btn-sm fa fa-edit',remote:true %>
+          <%= link_to '',  well_faire, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-sm fa fa-close' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

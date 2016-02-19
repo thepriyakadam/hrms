@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Is society member:</strong>
+  <%= @society_member_ship.is_society_member %>
+</p>
+
+<p>
+  <strong>Amount:</strong>
+  <%= @society_member_ship.amount %>
+</p>
+
+<p>
+  <strong>Employee:</strong>
+  <%= @society_member_ship.employee %>
+</p>
+
+<%= link_to 'Edit', edit_society_member_ship_path(@society_member_ship) %> |
+<%= link_to 'Back', society_member_ships_path %>

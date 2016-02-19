@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :society_member_ships
+  resources :well_faires
   resources :monthly_expences
   resources :expencess_types
   resources :food_coupan_masters

@@ -1,0 +1,29 @@
+<%= form_for(@society_member_ship) do |f| %>
+  <% if @society_member_ship.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@society_member_ship.errors.count, "error") %> prohibited this society_member_ship from being saved:</h2>
+
+      <ul>
+      <% @society_member_ship.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :is_society_member %><br>
+    <%= f.check_box :is_society_member %>
+  </div>
+  <div class="field">
+    <%= f.label :amount %><br>
+    <%= f.text_field :amount %>
+  </div>
+  <div class="field">
+    <%= f.label :employee_id %><br>
+    <%= f.text_field :employee_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

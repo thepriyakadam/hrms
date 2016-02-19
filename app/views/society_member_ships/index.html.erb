@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Society Member Ships</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Is society member</th>
+      <th>Amount</th>
+      <th>Employee</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @society_member_ships.each do |society_member_ship| %>
+      <tr>
+        <td><%= society_member_ship.is_society_member %></td>
+        <td><%= society_member_ship.amount %></td>
+        <td><%= society_member_ship.employee %></td>
+        <td><%= link_to 'Show', society_member_ship %></td>
+        <td><%= link_to 'Edit', edit_society_member_ship_path(society_member_ship) %></td>
+        <td><%= link_to 'Destroy', society_member_ship, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Society member ship', new_society_member_ship_path %>

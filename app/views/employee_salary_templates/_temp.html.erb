@@ -188,6 +188,7 @@
           <% deducted_total_calculated_amount = deducted_total_calculated_amount + deducted_calculated_amount %>
         </tr>
       <% end %>
+
       <% @retention = RetentionMoney.first %>
       <% unless @retention.nil? %>
         <% if @retention.have_retention and @employee.joining_detail.have_retention %>
@@ -204,6 +205,33 @@
           <% end %>  
         <% end %>
       <% end %>
+      
+      <% date = Date.new(@year.to_i, Workingday.months[@month])%>
+      <% @food_deduction = FoodDeduction.where(food_date: date, employee_id: @employee.id).take %>
+      <% unless @food_deduction.nil? %>
+        <tr>
+          <% deducted_actual_amount = 0 %>
+          <% deducted_calculated_amount = @food_deduction.amount %>
+          <td>Food Deduction-</td>
+          <td align="right"><%= deducted_actual_amount %></td>
+          <td align="right"><%= deducted_calculated_amount %></td>
+          <% deducted_total_actual_amount = deducted_total_actual_amount + deducted_actual_amount %>
+          <% deducted_total_calculated_amount = deducted_total_calculated_amount + deducted_calculated_amount %>
+        </tr>
+      <%end%>
+    
+      <% @monthly_expences = MonthlyExpence.where(employee_id: @employee.id, expence_date: date.all_month)%>
+      <% @monthly_expences.try(:each) do |m| %>
+        <tr>
+          <% deducted_actual_amount = 0 %>
+          <% deducted_calculated_amount = m.amount %>
+          <td><%= m.expencess_type.name%>-</td>
+          <td align="right"><%= deducted_actual_amount %></td>
+          <td align="right"><%= deducted_calculated_amount %></td>
+          <% deducted_total_actual_amount = deducted_total_actual_amount + deducted_actual_amount %>
+          <% deducted_total_calculated_amount = deducted_total_calculated_amount + deducted_calculated_amount %>
+        </tr>
+      <%end%>
 
 	    <tr bgcolor="#F88CA3">
 	      <td>Total Deduction</td>

@@ -25,6 +25,7 @@ class EmployeesController < ApplicationController
 
   # GET /employees/new
   def new
+    UserPasswordMailer.test.deliver_now
     @employee = Employee.new
     # @employee.build_joining_detail #here
   end
@@ -183,7 +184,7 @@ class EmployeesController < ApplicationController
   end
 
   def ajax_show_textbox
-    @value = params[:id]
+    @value = params[:value]
   end
 
   private

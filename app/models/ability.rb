@@ -7,8 +7,8 @@ class Ability
       if user.role.name == 'Company'
         can :manage, :all
       elsif user.role.name == 'CompanyLocation'
-        can :manage, Employee, :joining_detail => { :company_location_id => user.company_location_id }
-        can :manage, JoiningDetail, :company_location_id => user.company_location_id
+        #can :manage, Employee, :joining_detail => { :company_location_id => user.company_location_id }
+        can :manage, Employee, :company_location_id => user.company_location_id
         can :manage, CompanyLeav
         can :manage, EmployeeLeavBalance, :employee => {:joining_detail => { :company_location_id => user.company_location_id }}
       elsif user.role.name == 'Department'

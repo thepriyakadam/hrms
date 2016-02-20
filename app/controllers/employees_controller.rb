@@ -20,7 +20,7 @@ class EmployeesController < ApplicationController
   # GET /employees/1
   # GET /employees/1.json
   def show
-    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
+    #@joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
   end
 
   # GET /employees/new
@@ -97,8 +97,8 @@ class EmployeesController < ApplicationController
       u.password = '12345678'
       u.employee_id = employee.id
       u.department_id = employee.joining_detail.department_id
-      u.company_id = employee.joining_detail.company_location.company_id
-      u.company_location_id = employee.joining_detail.company_location_id
+      u.company_id = employee.company_location.company_id
+      u.company_location_id = employee.company_location_id
       #u.subdomain = Apartment::Tenant.current_tenant
       u.member_code = employee.employee_code
       u.manual_member_code = employee.manual_employee_code

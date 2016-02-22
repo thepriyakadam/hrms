@@ -110,7 +110,7 @@ class EmployeesController < ApplicationController
         employee.update_attributes(department_id: employee.joining_detail.department_id, manager_id: params["login"]["manager_id"], manager_2_id: params["login"]["manager_2_id"])
         flash[:notice] = "Employee assigned successfully."
         redirect_to assign_role_employees_path
-        #UserPasswordMailer.welcome_email(company,pass).deliver_now
+        UserPasswordMailer.welcome_email(company,pass).deliver_now
       else
         p user.errors
         flash[:alert] = "Employee not assigned successfully."

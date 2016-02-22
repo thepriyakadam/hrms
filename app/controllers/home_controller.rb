@@ -13,6 +13,7 @@ class HomeController < ApplicationController
 
   def created_user
     @employees = Employee.joins("INNER JOIN members on employees.id = members.employee_id")
+    #@employees = Employee.joins("LEFT JOIN members on members.employee_id = employees.id where members.employee_id is null")
     #@roles = Role.all
   end
 end

@@ -1,24 +1,35 @@
-<p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Food date:</strong>
-  <%= @food_deduction.food_date %>
-</p>
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Employee Food Deduction Dtails</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+   <tr>
+      <th><strong>Employee Id</strong></th>
+      <td> <%= @food_deduction.employee.try(:manual_employee_code) %></td>
 
-<p>
-  <strong>No of coupan:</strong>
-  <%= @food_deduction.no_of_coupan %>
-</p>
+      <th> <strong>Employee Name</strong></th>
+      <td> <%= @food_deduction.employee %></td>
+    </tr>
 
-<p>
-  <strong>Amount:</strong>
-  <%= @food_deduction.amount %>
-</p>
+    <tr>
+      <th><strong>Food date</strong></th>
+      <td><%= @food_deduction.food_date %></td>
 
-<p>
-  <strong>Employee:</strong>
-  <%= @food_deduction.employee %>
-</p>
+      <th> <strong>No of coupan</strong></th>
+      <td><%= @food_deduction.no_of_coupan %></td>
+    </tr>
 
-<%= link_to 'Edit', edit_food_deduction_path(@food_deduction) %> |
-<%= link_to 'Back', food_deductions_path %>
+    <tr>
+      <th><strong>Amount</strong></th>
+      <td><%= @joining_detail.reference_from %></td>
+
+      <th> <strong>Admin Interviewer:</strong></th>
+      <td><%= @food_deduction.amount %></td>
+    </tr>
+ </table>
+  <%= link_to 'Edit',  edit_food_deduction_path(@food_deduction),class: 'btn btn-sm btn-success fa fa-edit' %> |
+   <%= link_to 'Back', food_deductions_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->

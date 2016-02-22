@@ -1,34 +1,41 @@
-<p id="notice"><%= notice %></p>
-
-<h1>Listing Food Deductions</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Food date</th>
-      <th>No of coupan</th>
-      <th>Rate</th>
-      <th>Amount</th>
-      <th>Employee</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @food_deductions.each do |food_deduction| %>
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Food Deduction List</h3>
+    <div class="pull-right">
+      <%= link_to "New Food Deduction", new_food_deduction_path, class: 'btn btn-sm btn-primary' %> 
+    </div>
+    
+  </div><!-- /.box-header -->
+  <div class="box-body">
+  <div id="comments">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+    <thead>
       <tr>
-        <td><%= food_deduction.food_date %></td>
-        <td><%= food_deduction.no_of_coupan %></td>
-        <td><%= food_deduction.amount %></td>
-        <td><%= food_deduction.employee %></td>
-        <td><%= link_to 'Show', food_deduction %></td>
-        <td><%= link_to 'Edit', edit_food_deduction_path(food_deduction) %></td>
-        <td><%= link_to 'Destroy', food_deduction, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <th>Employee</th>
+        <th>Food date</th>
+        <th>No of coupan</th>
+        <th>Rate</th>
+        <th>Amount</th>
+        
+        <th>Action</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
 
-<br>
-
-<%= link_to 'New Food deduction', new_food_deduction_path %>
+    <tbody>
+      <% @food_deductions.each do |food_deduction| %>
+        <tr>
+          <td><%= food_deduction.employee.try(:manual_employee_code) %></td>
+          <td><%= food_deduction.food_date %></td>
+          <td><%= food_deduction.no_of_coupan %></td>
+          <td><%= food_deduction.amount %></td>  
+          <td>
+          <td><%= link_to 'Show', food_deduction %></td>
+          <td><%= link_to 'Edit', edit_food_deduction_path(food_deduction) %></td>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  </div>
+</div>
+</div>

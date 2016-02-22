@@ -35,6 +35,7 @@ class ApplicationController < ActionController::Base
   #ActiveRecord::StatementInvalid
   #ActiveRecord::RecordInvalid
   #AbstractController::DoubleRenderError
+  #AbstractController::DoubleRenderError
   
   
   # rescue_from ActionView::Template::Error do |exc|

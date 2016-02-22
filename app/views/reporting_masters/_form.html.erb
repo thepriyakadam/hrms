@@ -1,33 +1,16 @@
-<%= form_for(@reporting_master) do |f| %>
-  <% if @reporting_master.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@reporting_master.errors.count, "error") %> prohibited this reporting_master from being saved:</h2>
-
-      <ul>
-      <% @reporting_master.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+<%= bootstrap_form_for(@reporting_master,remote:true) do |f| %>
+  <div class="row">
+    <div class="col-sm-3">
+    <div><label>Select Reporting Managar</label></div>
+      <div class="form-group required">
+        <%= f.select :employee_id,Employee.all.collect {|e| [e.manual_employee_code+"  "+e.first_name.to_s+" "+e.last_name.to_s,e.id]}, hide_label: true %>
+      </div>
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :code %><br>
-    <%= f.text_field :code %>
-  </div>
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :description %><br>
-    <%= f.text_field :description %>
-  </div>
-  <div class="field">
-    <%= f.label :employee_id %><br>
-    <%= f.select :employee_id, all_employee_list %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
+    <div class="col-sm-3">
+    <label></label>
+      <div class="actions">
+        <%= f.submit :class => class_name %>
+      </div>
+    </div>
   </div>
 <% end %>

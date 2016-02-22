@@ -1,5 +1,13 @@
-
-
-<%= render 'form' %>
-
-<%= link_to 'Back', employee_leav_balances_path %>
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Employee Leave Balance</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <div class="row">
+      <div class="col-sm-3">
+        <%= select :employee_leav_balance,:leav_category_id, all_leav_category,{include_blank: " Select Leave"},{onchange:"var a={leav_category_id:$(this).val()}; $.get('/employee_leav_balances/collect_employee_for_leave',a,function(response){});",class: 'form-control'} %>    
+      </div>
+    </div>
+    <div id="form"></div>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->

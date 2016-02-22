@@ -703,7 +703,6 @@ ActiveRecord::Schema.define(version: 20160221080204) do
     t.integer  "payment_mode_id"
     t.integer  "department_id"
     t.boolean  "have_retention"
-    t.string   "company_location"
     t.boolean  "is_society_member"
   end
 
@@ -853,7 +852,6 @@ ActiveRecord::Schema.define(version: 20160221080204) do
   create_table "particular_leave_records", force: :cascade do |t|
     t.integer  "employee_id"
     t.integer  "employee_leav_request_id"
-    t.integer  "leav_category_id"
     t.datetime "leave_date"
     t.boolean  "is_full"
     t.datetime "created_at",               null: false
@@ -862,7 +860,6 @@ ActiveRecord::Schema.define(version: 20160221080204) do
 
   add_index "particular_leave_records", ["employee_id"], name: "index_particular_leave_records_on_employee_id"
   add_index "particular_leave_records", ["employee_leav_request_id"], name: "index_particular_leave_records_on_employee_leav_request_id"
-  add_index "particular_leave_records", ["leav_category_id"], name: "index_particular_leave_records_on_leav_category_id"
 
   create_table "payment_modes", force: :cascade do |t|
     t.string   "code"

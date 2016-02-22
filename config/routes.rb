@@ -142,7 +142,11 @@ Rails.application.routes.draw do
   end
   resources :employee_bank_details
   resources :leav_cancelleds
-  resources :employee_leav_balances
+  resources :employee_leav_balances do
+    collection do
+      get :collect_employee_for_leave
+    end
+  end
   resources :leav_rejecteds
   resources :leav_approveds
   resources :employee_leav_requests do

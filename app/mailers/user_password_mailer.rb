@@ -6,5 +6,7 @@ class UserPasswordMailer < ApplicationMailer
     mail(to: @user.email, subject: 'Welcome to My Awesome Site')
   end
 
-  
+  def test
+    mail(to: 'ravikirankadam.1991@gmail.com', subject: 'Welcome to My Awesome Site')
+  end
 end

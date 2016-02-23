@@ -142,6 +142,12 @@ Rails.application.routes.draw do
   resources :roles do
     collection do
       get :dynamic_form
+      get :role_edit_list
+    end
+
+    member do
+      get :edit_role
+      patch :update_role
     end
   end
   resources :employee_bank_details

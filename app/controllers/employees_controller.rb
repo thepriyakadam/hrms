@@ -25,7 +25,7 @@ class EmployeesController < ApplicationController
 
   # GET /employees/new
   def new
-    #UserPasswordMailer.test.deliver_now
+    UserPasswordMailer.test.deliver_now
     @employee = Employee.new
     # @employee.build_joining_detail #here
   end

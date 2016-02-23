@@ -1,4 +1,5 @@
 class EmployeeTemplatesController < ApplicationController
+  load_and_authorize_resource
   def index
     if current_user.class == Group
       @employees = Employee.all

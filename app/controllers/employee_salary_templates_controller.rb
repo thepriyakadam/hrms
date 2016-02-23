@@ -1,5 +1,5 @@
 class EmployeeSalaryTemplatesController < ApplicationController
-  load_and_authorize_resource
+  load_and_authorize_resource :except => :salary_template
   def index
   end
 
@@ -106,6 +106,7 @@ class EmployeeSalaryTemplatesController < ApplicationController
     if @employee.nil?
       @flag = false
     else
+      authorize! :show, @employee
       @record = Salaryslip.where("month = ? and year = ? and employee_id = ?",params["month"],params["year"],@employee.id).take
       if @record.nil?
         @current_template = EmployeeTemplate.where("employee_id = ? and is_active = ?",@employee.id,true).take

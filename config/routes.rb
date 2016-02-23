@@ -74,7 +74,11 @@ Rails.application.routes.draw do
   end
   resources :instalments
   resources :advance_salaries
-  resources :workingdays
+  resources :workingdays do
+    collection do
+      get :employees
+    end
+  end
   resources :overtimes
   resources :shift_rotations
   resources :employee_monthly_days do

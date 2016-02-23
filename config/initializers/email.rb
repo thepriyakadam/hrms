@@ -1,15 +1,15 @@
-require 'tls_smtp'
+#require 'tls_smtp'
 
   ActionMailer::Base.delivery_method = :smtp
 
   ActionMailer::Base.smtp_settings = {
-    :address => 'smtp.gmail.com',
-    :port => 465,
+    :address => 'mail.bhandarigroup.in',
+    :port => 25,
     :domain => 'yourdomain.com',
-    :user_name => 'it@indiba.in',
-    :password => 'indiba057',
+    :user_name => 'hrmsdws@bhandarigroup.in',
+    :password => 'hrms1234',
     :authentication => :plain,
-    :enable_startssl_auto => true
+    :enable_startssl_auto => false
   }
 
   # config.action_mailer.delivery_method = :smtp

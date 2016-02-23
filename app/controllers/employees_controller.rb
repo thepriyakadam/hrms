@@ -80,10 +80,17 @@ class EmployeesController < ApplicationController
   end
 
   def assign_role
-    @employees = Employee.joins("LEFT JOIN members on members.employee_id = employees.id where members.employee_id is null")
+    if current_user.class == Group
+      @employees = Employee.joins("LEFT JOIN members on members.employee_id = employees.id where members.employee_id is null")
+    else
+      if current_user.role.name == "Company"
+        @employees = Employee.joins("LEFT JOIN members on members.employee_id = employees.id where members.employee_id is null")
+      elsif current_user.role.name == "CompanyLocation"
+        @employees = Employee.joins("LEFT JOIN members on members.employee_id = employees.id where members.employee_id is null and employees.company_location_id = #{current_user.company_location_id}")
+      end
+    end
     @all_employee_list = ReportingMaster.all.collect {|e| [e.try(:employee).try(:manual_employee_code).try(:to_s)+' '+e.try(:employee).try(:first_name).try(:to_s)+' '+e.try(:employee).try(:last_name).try(:to_s),e.try(:employee).id]}
     @all_role_list = Role.all.collect {|r| [r.name,r.id]}
-    #@all_department_list = Department.all.collect {|d| [d.company_location.company.name+'-'+d.company_location.name+'-'+d.name,d.id]}    
   end
 
   def submit_form
@@ -110,7 +117,7 @@ class EmployeesController < ApplicationController
         employee.update_attributes(department_id: employee.joining_detail.department_id, manager_id: params["login"]["manager_id"], manager_2_id: params["login"]["manager_2_id"])
         flash[:notice] = "Employee assigned successfully."
         redirect_to assign_role_employees_path
-        UserPasswordMailer.welcome_email(company,pass).deliver_now
+        #UserPasswordMailer.welcome_email(company,pass).deliver_now
       else
         p user.errors
         flash[:alert] = "Employee not assigned successfully."

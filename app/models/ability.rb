@@ -10,10 +10,14 @@ class Ability
         #can :manage, Employee, :joining_detail => { :company_location_id => user.company_location_id }
         can :manage, Employee, :company_location_id => user.company_location_id
         can :manage, CompanyLeav
-        can :manage, EmployeeLeavBalance, :employee => {:joining_detail => { :company_location_id => user.company_location_id }}
+        can :manage, Department, :company_location_id => user.company_location_id
+        #can :manage, EmployeeLeavBalance, :employee => {:joining_detail => { :company_location_id => user.company_location_id }}
+        can :manage, EmployeeLeavBalance
+        can :manage, EmployeeLeavRequest, :employee => {:joining_detail => { :department_id => user.department_id }}
       elsif user.role.name == 'Department'
-        can [:read, :create, :update, :destroy], [Employee]
-        can [:read, :create, :update, :destroy], [EmployeeLeavRequest]
+        can :manage, Employee
+        can :manage, EmployeeLeavRequest
+        
       elsif user.role.name == 'Employee'
         can [:read, :create, :update, :destroy], [EmployeeLeavRequest,CompanyLeav,Award,Family,Qualification,Skillset,Experience,Certification,EmplyeePhysical,LeavCancelled]
       end

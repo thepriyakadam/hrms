@@ -475,40 +475,74 @@ require 'roo'
 
 ###############################################################################################################3
 
+# ex = Roo::Excel.new("#{Rails.root}/public/deductions.xls")
+# ex.default_sheet = ex.sheets[5]
+# j = 1
+# 2.upto(372) do |line|
+#   puts "Starting Record---------------------------------------"
+#   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'B').to_i)
+#   unless @employee.nil?
+#     EmployeeSalaryTemplate.new do |a|
+#       a.employee_id = @employee.id
+#       a.salary_template_id = 9
+#       a.salary_component_id = 15
+#       a.is_deducted = true
+#       a.monthly_amount = ex.cell(line,'J').to_i
+#       a.save!
+#     end
+
+#     EmployeeSalaryTemplate.new do |a|
+#       a.employee_id = @employee.id
+#       a.salary_template_id = 9
+#       a.salary_component_id = 23
+#       a.is_deducted = true
+#       a.monthly_amount = ex.cell(line,'L').to_i
+#       a.save!
+#     end
+
+#     EmployeeSalaryTemplate.new do |a|
+#       a.employee_id = @employee.id
+#       a.salary_template_id = 9
+#       a.salary_component_id = 18
+#       a.is_deducted = true
+#       a.monthly_amount = ex.cell(line,'M').to_i
+#       a.save!
+#     end
+#   end
+# end
+##################################################################################################################
 ex = Roo::Excel.new("#{Rails.root}/public/deductions.xls")
-ex.default_sheet = ex.sheets[5]
+ex.default_sheet = ex.sheets[0]
 j = 1
-2.upto(372) do |line|
+1.upto(500) do |line|
   puts "Starting Record---------------------------------------"
-  @employee = Employee.find_by_manual_employee_code(ex.cell(line,'B').to_i)
+  employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
   unless @employee.nil?
-    EmployeeSalaryTemplate.new do |a|
-      a.employee_id = @employee.id
-      a.salary_template_id = 9
-      a.salary_component_id = 15
-      a.is_deducted = true
-      a.monthly_amount = ex.cell(line,'J').to_i
-      a.save!
+    user = Member.new do |u|
+      if employee.email == "" or employee.email.nil?
+        u.email = "#{employee.employee_code}@xxx.com"
+      else
+        u.email = employee.email
+      end
+      u.password = '12345678'
+      u.employee_id = employee.id
+      u.department_id = employee.joining_detail.department_id
+      u.company_id = employee.company_location.company_id
+      u.company_location_id = employee.company_location_id
+      u.member_code = employee.employee_code
+      u.manual_member_code = employee.manual_employee_code
+      #u.role_id = 
     end
-
-    EmployeeSalaryTemplate.new do |a|
-      a.employee_id = @employee.id
-      a.salary_template_id = 9
-      a.salary_component_id = 23
-      a.is_deducted = true
-      a.monthly_amount = ex.cell(line,'L').to_i
-      a.save!
-    end
-
-    EmployeeSalaryTemplate.new do |a|
-      a.employee_id = @employee.id
-      a.salary_template_id = 9
-      a.salary_component_id = 18
-      a.is_deducted = true
-      a.monthly_amount = ex.cell(line,'M').to_i
-      a.save!
+    ActiveRecord::Base.transaction do
+      if user.save
+        employee.update_attributes(department_id: employee.joining_detail.department_id, manager_id: ex.cell(line, 'B').to_i, manager_2_id: ex.cell(line, 'C').to_i)
+      else
+        puts "Not saved #{employee.manual_employee_code}"
+      end
     end
   end
+  puts "record inserted #{j}"
+  j = j + 1
 end
 
 

@@ -11,7 +11,7 @@ Rails.application.routes.draw do
     end
   end
   resources :reporting_masters
-  resources :leave_status_records do 
+  resources :leave_status_records do
     collection do
     end
     member do
@@ -28,9 +28,6 @@ Rails.application.routes.draw do
       get :template_list
       get :activate
       get :deactivate
-    end
-    collection do
-      
     end
   end
   resources :retention_moneys
@@ -142,6 +139,12 @@ Rails.application.routes.draw do
   resources :roles do
     collection do
       get :dynamic_form
+      get :role_edit_list
+    end
+
+    member do
+      get :edit_role
+      patch :update_role
     end
   end
   resources :employee_bank_details
@@ -204,6 +207,11 @@ Rails.application.routes.draw do
       get :ajax_family_detail
       get :ajax_new_family
       get :ajax_show_textbox
+      get :manager
+    end
+    member do
+      get :edit_manager
+      patch :update_manager
     end
   end
   resources :blood_groups

@@ -45,6 +45,26 @@ class RolesController < ApplicationController
     @roles = Role.all
   end
 
+  def role_edit_list
+    @employees = Member.all 
+  end
+
+  def edit_role
+    @member = Member.find(params[:id])
+    @roles = Role.all
+  end
+
+  def update_role
+    @member = Member.find(params[:id])
+    @member.role_id = params[:member][:role_id]
+    if @member.save
+      @flag = true
+      @employees = Member.all  
+    else
+      @flag = false
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_role

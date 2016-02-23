@@ -44,6 +44,20 @@ Rails.application.configure do
   #config.domain = 'lvh.me'
   #config.action_mailer.perform_deliveries = true,
 
+  ActionMailer::Base.delivery_method = :smtp
+
+  ActionMailer::Base.smtp_settings = {
+    :address => 'smtp.bhandarigroup.in',
+    :port => 25,
+    :domain => 'yourdomain.com',
+    :user_name => 'hrmsdws-bhandarigroup',
+    :password => 'hrms1234',
+    :authentication => :plain,
+    #:ssl => true,  
+    #:tls => true,  
+    :enable_starttls_auto => true 
+  }
+
   # Paperclip setup
   #Paperclip.options[:command_path] = "/usr/local/bin/convert"
   #Paperclip.options[:command_path] = "/home/rk/.rvm/gems/ruby-2.2.2/bin/convert"

@@ -1,16 +1,16 @@
 #require 'tls_smtp'
 
-  ActionMailer::Base.delivery_method = :smtp
+  # ActionMailer::Base.delivery_method = :smtp
 
-  ActionMailer::Base.smtp_settings = {
-    :address => 'mail.bhandarigroup.in',
-    :port => 25,
-    :domain => 'yourdomain.com',
-    :user_name => 'hrmsdws@bhandarigroup.in',
-    :password => 'hrms1234',
-    :authentication => :plain,
-    :enable_startssl_auto => false
-  }
+  # ActionMailer::Base.smtp_settings = {
+  #   :address => 'smtp.bhandarigroup.in',
+  #   :port => 25,
+  #   :domain => 'yourdomain.com',
+  #   :user_name => 'hrmsdws-bhandarigroup',
+  #   :password => 'hrms1234',
+  #   :authentication => :plain,
+  #   :enable_startssl_auto => false
+  # }
 
   # config.action_mailer.delivery_method = :smtp
   

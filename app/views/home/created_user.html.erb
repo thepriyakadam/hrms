@@ -20,8 +20,8 @@
 			        <td><%= employee.manual_employee_code %></td>
 			        <td><%= employee.first_name %> <%= employee.middle_name %> <%= employee.last_name %></td>
 			        <td><%= employee.member.role.try(:name) %>
-			        <td><%= employee.manager.try(:first_name)%> <% employee.manager.try(:last_name) %></td>
-			         <td><%= employee.manager_2.try(:first_name)%> <% employee.manager.try(:last_name) %></td>
+			        <td><%= employee.manager_id %> </td>
+			         <td><%= employee.manager_2_id %></td>
 			        <td><%= employee.department.try(:name) %></td>
 			      </tr>	
 		    <% end %>

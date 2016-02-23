@@ -511,13 +511,13 @@ require 'roo'
 #   end
 # end
 ##################################################################################################################
-ex = Roo::Excel.new("#{Rails.root}/public/deductions.xls")
-ex.default_sheet = ex.sheets[0]
+ex = Roo::Excel.new("#{Rails.root}/public/role.xls")
+ex.default_sheet = ex.sheets[1]
 j = 1
-1.upto(500) do |line|
+2.upto(460) do |line|
   puts "Starting Record---------------------------------------"
   employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
-  unless @employee.nil?
+  unless employee.nil?
     user = Member.new do |u|
       if employee.email == "" or employee.email.nil?
         u.email = "#{employee.employee_code}@xxx.com"
@@ -531,7 +531,7 @@ j = 1
       u.company_location_id = employee.company_location_id
       u.member_code = employee.employee_code
       u.manual_member_code = employee.manual_employee_code
-      #u.role_id = 
+      u.role_id = ex.cell(line,"D").to_i
     end
     ActiveRecord::Base.transaction do
       if user.save

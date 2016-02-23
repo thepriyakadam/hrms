@@ -1,6 +1,6 @@
 class EmployeeLeavRequestsController < ApplicationController
   before_action :set_employee_leav_request, only: [:show, :edit, :update, :destroy]
-  #load_and_authorize_resource
+  load_and_authorize_resource
   # GET /employee_leav_requests
   # GET /employee_leav_requests.json
   def index
@@ -114,7 +114,19 @@ class EmployeeLeavRequestsController < ApplicationController
   end
 
   def employee_list
-    @employees = Employee.all
+    if current_user.class == Group
+      @employees = Employee.all
+    elsif current_user.class == Member
+      if current_user.role.name == "Company"
+        @employees = Employee.all
+      elsif current_user.role.name == "CompanyLocation"
+        @employees = Employee.where(company_location_id: current_user.company_location_id)
+      elsif current_user.role.name == "Department"
+        @employees = Employee.where(department_id: current_user.department_id)
+      else current_user.role.name == "Employee"
+        @employees = Employee.where(id: current_user.employee_id)
+      end
+    end
   end
 
   def from_hr

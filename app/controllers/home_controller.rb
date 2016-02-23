@@ -7,13 +7,21 @@ class HomeController < ApplicationController
   	if current_user.class == Member
 	  	if current_user.role.name == "Employee"
 	  	  @employee = Employee.find(current_user.employee_id)
+      elsif current_user.role.name == "CompanyLocation"
+        @employees = Employee.where(company_location_id: current_user.company_location_id)
 	    end
     end
   end
 
   def created_user
-    @employees = Employee.joins("INNER JOIN members on employees.id = members.employee_id")
-    #@employees = Employee.joins("LEFT JOIN members on members.employee_id = employees.id where members.employee_id is null")
-    #@roles = Role.all
+    if current_user.class == Group
+      @employees = Employee.joins("INNER JOIN members on employees.id = members.employee_id")
+    else
+      if current_user.role.name == "Company"
+        @employees = Employee.joins("INNER JOIN members on employees.id = members.employee_id")
+      elsif current_user.role.name == "CompanyLocation"
+        @employees = Employee.joins("INNER JOIN members on employees.id = members.employee_id where employees.company_location_id = #{current_user.company_location_id}")
+      end
+    end
   end
 end

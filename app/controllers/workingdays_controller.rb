@@ -4,7 +4,7 @@ class WorkingdaysController < ApplicationController
   # GET /workingdays
   # GET /workingdays.json
   def index
-    @workingdays = Workingday.all
+    @workingdays = Workingday.group(:year)
   end
 
   # GET /workingdays/1
@@ -60,6 +60,10 @@ class WorkingdaysController < ApplicationController
       format.html { redirect_to workingdays_path, notice: 'Workingday was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def employees
+    @workingdays = Workingday.where(year: params[:year],month_name: params[:month])
   end
 
   private

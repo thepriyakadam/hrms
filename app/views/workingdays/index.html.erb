@@ -11,37 +11,28 @@
     <table id="example1" class="table table-bordered table-hover table-condensed">
     <thead>
       <tr>
-        <th>Employee</th>
-        <th>Month Name</th>
         <th>Year</th>
-        <th>Day in Month</th>
-        <th>Present Day</th>
-        <th>Total Leave</th>
-        <th>Holiday in Month</th>
-        <th>Week off Day</th>
-        <th>Absent Day</th>
-        <th>Payable Day</th>
         <th>Action</th>
       </tr>
     </thead>
 
     <tbody>
-       <% @workingdays.each do |workingday| %>
+       <% @workingdays.each do |w| %>
         <tr>
-          <td><%= workingday.employee.try(:manual_employee_code) %></td>
-          <td><%= workingday.month_name %></td>
-          <td><%= workingday.year %></td>
-          <td><%= workingday.day_in_month %></td>
-          <td><%= workingday.present_day %></td>
-          <td><%= workingday.total_leave %></td>
-          <td><%= workingday.holiday_in_month %></td>
-          <td><%= workingday.week_off_day %></td>
-          <td><%= workingday.absent_day %></td>
-          <td><%= workingday.payable_day %></td>
+          <td><%= w.year %></td>
           <td>
-            <%= link_to '', edit_workingday_path(workingday), class: 'btn btn-xs btn-success fa fa-edit' %>
-            <%= link_to '', workingday, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-xs  btn-danger fa fa-close' %>
-            <%= link_to '', workingday,class: 'btn btn-xs btn-default fa fa-eye' %>
+            <%= link_to 'January',employees_workingdays_path(year: w.year, month: "January") , class: 'btn btn-xs btn-primary' %>
+            <%= link_to 'February',employees_workingdays_path(year: w.year, month: "February") , class: 'btn btn-xs btn-primary' %>
+            <%= link_to 'March',employees_workingdays_path(year: w.year, month: "March") , class: 'btn btn-xs btn-primary' %>
+            <%= link_to 'April',employees_workingdays_path(year: w.year, month: "April") , class: 'btn btn-xs btn-primary' %>
+            <%= link_to 'May',employees_workingdays_path(year: w.year, month: "May") , class: 'btn btn-xs btn-success' %>
+            <%= link_to 'June',employees_workingdays_path(year: w.year, month: "June") , class: 'btn btn-xs btn-success' %>
+            <%= link_to 'July',employees_workingdays_path(year: w.year, month: "July") , class: 'btn btn-xs btn-success' %>
+            <%= link_to 'August',employees_workingdays_path(year: w.year, month: "August") , class: 'btn btn-xs btn-success' %>
+            <%= link_to 'September',employees_workingdays_path(year: w.year, month: "September") , class: 'btn btn-xs btn-danger' %>
+            <%= link_to 'October',employees_workingdays_path(year: w.year, month: "October") , class: 'btn btn-xs btn-danger' %>
+            <%= link_to 'November',employees_workingdays_path(year: w.year, month: "November") , class: 'btn btn-xs btn-danger' %>
+            <%= link_to 'December',employees_workingdays_path(year: w.year, month: "December") , class: 'btn btn-xs btn-danger' %>
           </td>
         </tr>
       <% end %>

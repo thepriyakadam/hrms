@@ -1,6 +1,14 @@
 class EmployeeTemplatesController < ApplicationController
   def index
-    @employees = Employee.all
+    if current_user.class == Group
+      @employees = Employee.all
+    else
+      if current_user.role.name == "Company"
+        @employees = Employee.all
+      elsif current_user.role.name == "CompanyLocation"
+        @employees = Employee.where(company_location_id: current_user.company_location_id)
+      end
+    end
   end
 
   def template_list

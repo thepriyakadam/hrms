@@ -15,7 +15,6 @@ class EmployeeLeavBalancesController < ApplicationController
   # GET /employee_leav_balances/new
   def new
     @employee_leav_balance = EmployeeLeavBalance.new
-    #@employees = Employee.joins("LEFT JOIN employee_leav_balances on employee_leav_balances.employee_id = employees.id where employee_leav_balances.employee_id is null")
     @employees = Employee.all
   end
 
@@ -72,7 +71,15 @@ class EmployeeLeavBalancesController < ApplicationController
     else
       leav_category_id = params[:leav_category_id]
       @leav_category = LeavCategory.find(params[:leav_category_id])
-      @employees = Employee.joins("LEFT JOIN employee_leav_balances on employee_leav_balances.employee_id = employees.id where employee_leav_balances.leav_category_id is not #{leav_category_id}")
+      if current_user.class == Group
+      else
+        if current_user.role.name == "Company"
+          @employees = Employee.joins("LEFT JOIN employee_leav_balances on employee_leav_balances.employee_id = employees.id where employee_leav_balances.leav_category_id is not #{leav_category_id}")
+        elsif current_user.role.name == "CompanyLocation"
+          @employees = Employee.joins("LEFT JOIN employee_leav_balances on employee_leav_balances.employee_id = employees.id where employee_leav_balances.leav_category_id is not #{leav_category_id} and employees.company_location_id = #{current_user.company_location_id}")
+        end
+      end
+      
       @employee_leav_balance = EmployeeLeavBalance.new
     end
   end

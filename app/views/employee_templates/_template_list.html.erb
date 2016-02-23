@@ -21,6 +21,7 @@
           <% else %>
             <small class="label label-danger">Expired Template</small>
           <% end %>
+          <%= link_to '', show_employee_salary_template_employee_salary_templates_path(t.employee_id),class: 'btn btn-default fa fa-eye' %>
         </td>
       </tr>
     <% end %>

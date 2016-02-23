@@ -194,11 +194,36 @@ class EmployeesController < ApplicationController
     @value = params[:value]
   end
 
+  def manager
+    @employees = Employee.all
+  end
+
+  def edit_manager
+    @employee = Employee.find(params[:id])
+    @managers = ReportingMaster.all
+  end
+
+  def update_manager
+    @employee = Employee.find(params[:id])
+    @employee.manager_id = params[:employee][:manager_id]
+    @employee.manager_2_id = params[:employee][:manager_2_id]
+    if @employee.save
+      @employees = Employee.all
+      @flag = true
+    else
+      @flag = false
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_employee
       @employee = Employee.find(params[:id])
     end
+
+    # def manager_params
+    #   params.require(:employee).permit(:manager_id, :manager_2_id)
+    # end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def employee_params

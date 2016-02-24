@@ -4,7 +4,16 @@ class FoodDeductionsController < ApplicationController
   # GET /food_deductions
   # GET /food_deductions.json
   def index
-    @food_deductions = FoodDeduction.all
+    if current_user.class == "Group"
+      @food_deductions = FoodDeduction.all
+    else
+      if current_user.role.name == "Company"
+        @food_deductions = FoodDeduction.all
+      elsif current_user.role.name == "CompanyLocation"
+        @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+        @food_deductions = FoodDeduction.where(employee_id: @employees)
+      end
+    end
   end
 
   # GET /food_deductions/1
@@ -25,10 +34,10 @@ class FoodDeductionsController < ApplicationController
   # POST /food_deductions.json
   def create
     @food_deduction = FoodDeduction.new(food_deduction_params)
-
+    @food_deduction.food_date = @food_deduction.food_date.end_of_month
     respond_to do |format|
       if @food_deduction.save
-        format.html { redirect_to @food_deduction, notice: 'Food deduction was successfully created.' }
+        format.html { redirect_to food_deductions_path, notice: 'Food deduction was successfully created.' }
         format.json { render :show, status: :created, location: @food_deduction }
       else
         format.html { render :new }

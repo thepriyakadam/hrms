@@ -267,11 +267,12 @@ class SalaryslipsController < ApplicationController
     @month = params[:month]
     @year = params[:year]
     @employees = []
-    employee_ids = Workingday.joins("LEFT JOIN salaryslips on workingdays.employee_id = salaryslips.employee_id where salaryslips.employee_id is null and workingdays.month_name = '#{params[:month]}' and workingdays.year = '#{params[:year]}'").pluck('employee_id')
-    employee_ids.each do |e|
-      emp = Employee.find(e)
-      @employees << emp
-    end
+    @workingdays = Workingday.joins("LEFT JOIN salaryslips on workingdays.employee_id = salaryslips.employee_id where salaryslips.employee_id is null and workingdays.month_name = '#{params[:month]}' and workingdays.year = '#{params[:year]}'").pluck(:employee_id)
+    @employees = Workingday.find_by_role(@workingdays, current_user)
+    # employee_ids.each do |e|
+    #   emp = Employee.find(e)
+    #   @employees << emp
+    # end
   end
 
   def save_all_data

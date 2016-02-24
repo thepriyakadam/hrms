@@ -14,6 +14,7 @@ class Ability
         #can :manage, EmployeeLeavBalance, :employee => {:joining_detail => { :company_location_id => user.company_location_id }}
         can :manage, EmployeeLeavBalance
         can :manage, EmployeeLeavRequest, :employee => {:joining_detail => { :department_id => user.department_id }}
+        can :manage, EmployeeSalaryTemplate
       elsif user.role.name == 'Department'
         can :manage, Employee
         can :manage, EmployeeLeavRequest

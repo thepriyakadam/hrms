@@ -12,7 +12,8 @@ class ApplicationController < ActionController::Base
   rescue_from CanCan::AccessDenied do |exception|
     if request.xhr?
       flash[:alert] = "Sorry! You are not Authorized"
-      render js: "window.location = '/#{params["controller"]}'"
+      render js: "window.location = '/'"
+      #redirect_to root_url
     else
       flash[:alert] = "Sorry! You are not Authorized"
       redirect_to root_url

@@ -511,38 +511,37 @@ require 'roo'
 #   end
 # end
 ##################################################################################################################
-ex = Roo::Excel.new("#{Rails.root}/public/role.xls")
-ex.default_sheet = ex.sheets[1]
-j = 1
-2.upto(460) do |line|
-  puts "Starting Record---------------------------------------"
-  employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
-  unless employee.nil?
-    user = Member.new do |u|
-      if employee.email == "" or employee.email.nil?
-        u.email = "#{employee.employee_code}@xxx.com"
-      else
-        u.email = employee.email
-      end
-      u.password = '12345678'
-      u.employee_id = employee.id
-      u.department_id = employee.joining_detail.department_id
-      u.company_id = employee.company_location.company_id
-      u.company_location_id = employee.company_location_id
-      u.member_code = employee.employee_code
-      u.manual_member_code = employee.manual_employee_code
-      u.role_id = ex.cell(line,"D").to_i
-    end
-    ActiveRecord::Base.transaction do
-      if user.save
-        employee.update_attributes(department_id: employee.joining_detail.department_id, manager_id: ex.cell(line, 'B').to_i, manager_2_id: ex.cell(line, 'C').to_i)
-      else
-        puts "Not saved #{employee.manual_employee_code}"
-      end
-    end
-  end
-  puts "record inserted #{j}"
-  j = j + 1
-end
-
-
+# ex = Roo::Excel.new("#{Rails.root}/public/role.xls")
+# ex.default_sheet = ex.sheets[1]
+# j = 1
+# 2.upto(460) do |line|
+#   puts "Starting Record---------------------------------------"
+#   employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
+#   unless employee.nil?
+#     user = Member.new do |u|
+#       if employee.email == "" or employee.email.nil?
+#         u.email = "#{employee.employee_code}@xxx.com"
+#       else
+#         u.email = employee.email
+#       end
+#       u.password = '12345678'
+#       u.employee_id = employee.id
+#       u.department_id = employee.joining_detail.department_id
+#       u.company_id = employee.company_location.company_id
+#       u.company_location_id = employee.company_location_id
+#       u.member_code = employee.employee_code
+#       u.manual_member_code = employee.manual_employee_code
+#       u.role_id = ex.cell(line,"D").to_i
+#     end
+#     ActiveRecord::Base.transaction do
+#       if user.save
+#         employee.update_attributes(department_id: employee.joining_detail.department_id, manager_id: ex.cell(line, 'B').to_i, manager_2_id: ex.cell(line, 'C').to_i)
+#       else
+#         puts "Not saved #{employee.manual_employee_code}"
+#       end
+#     end
+#   end
+#   puts "record inserted #{j}"
+#   j = j + 1
+# end
+###############################################################################################

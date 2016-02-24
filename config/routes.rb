@@ -25,9 +25,11 @@ Rails.application.routes.draw do
   resources :advance_types
   resources :employee_templates do
     member do
-      get :template_list
       get :activate
       get :deactivate
+    end
+    collection do 
+      get :template_list
     end
   end
   resources :retention_moneys
@@ -160,10 +162,9 @@ Rails.application.routes.draw do
     collection do
       get :approved_or_rejected_leave_request
       get :employee_list
-    end
-    member do
       get :from_hr
       get :hr_view_request
+      get :employee_history_with_current_leave
     end
   end
   resources :company_leavs

@@ -13,7 +13,7 @@ class EmployeeTemplatesController < ApplicationController
   end
 
   def template_list
-    @employee = Employee.find(params[:id])
+    @employee = Employee.find(params[:format])
     @employee_templates = @employee.employee_templates
   end
 

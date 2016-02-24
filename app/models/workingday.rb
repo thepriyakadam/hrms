@@ -51,6 +51,10 @@ class Workingday < ActiveRecord::Base
       if current_user.role.name == "Company"
         Employee.where(id: workingdays)
       elsif current_user.role.name == "CompanyLocation"
+        puts "------------------------------------------------------"
+        puts workingdays.count
+        puts current_user.manual_member_code
+        puts "------------------------------------------------------"
         Employee.where(id: workingdays, company_location_id: current_user.company_location_id)
       end
     end

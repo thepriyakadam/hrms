@@ -63,7 +63,18 @@ class WorkingdaysController < ApplicationController
   end
 
   def employees
-    @workingdays = Workingday.where(year: params[:year],month_name: params[:month])
+    if current_user.class == Group
+      @workingdays = Workingday.where(year: params[:year],month_name: params[:month])
+    else
+      if current_user.role.name == "Company"
+        @workingdays = Workingday.where(year: params[:year],month_name: params[:month])
+      elsif current_user.role.name == "CompanyLocation"
+        @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+        @workingdays = Workingday.where(year: params[:year],month_name: params[:month], employee_id: @employees)
+      elsif current_user.role.name == "Employee"
+        @workingdays = Workingday.where(year: params[:year],month_name: params[:month], employee_id: current_user.employee_id)
+      end
+    end
   end
 
   private

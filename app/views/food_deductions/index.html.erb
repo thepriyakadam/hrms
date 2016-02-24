@@ -14,9 +14,10 @@
         <th>Employee</th>
         <th>Food date</th>
         <th>No of coupan</th>
-        <th>Rate</th>
+        <th>Return coupan</th>
+        <th>Total coupan</th>
+        <th>Coupan Type</th>
         <th>Amount</th>
-        
         <th>Action</th>
       </tr>
     </thead>
@@ -27,10 +28,13 @@
           <td><%= food_deduction.employee.try(:manual_employee_code) %></td>
           <td><%= food_deduction.food_date %></td>
           <td><%= food_deduction.no_of_coupan %></td>
-          <td><%= food_deduction.amount %></td>  
+          <td><%= food_deduction.return_coupan %></td>
+          <td><%= food_deduction.total_coupan %></td>
+          <td><%= food_deduction.food_coupan_master.name %></td>
+          <td><%= food_deduction.amount %></td>
           <td>
-          <td><%= link_to 'Show', food_deduction %></td>
-          <td><%= link_to 'Edit', edit_food_deduction_path(food_deduction) %></td>
+            <%= link_to '', food_deduction, class: "btn btn-default btn-xs fa fa-eye" %>
+            <%= link_to '', edit_food_deduction_path(food_deduction), class: "btn btn-success btn-xs fa fa-edit" %>
           </td>
         </tr>
       <% end %>

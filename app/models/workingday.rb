@@ -42,6 +42,17 @@ class Workingday < ActiveRecord::Base
       when 12
         31
     end
+  end
 
+  def self.find_by_role(workingdays, current_user)
+    if current_user.class == Group
+      Employee.where(id: workingdays)
+    else
+      if current_user.role.name == "Company"
+        Employee.where(id: workingdays)
+      elsif current_user.role.name == "CompanyLocation"
+        Employee.where(id: workingdays, company_location_id: current_user.company_location_id)
+      end
+    end
   end
 end

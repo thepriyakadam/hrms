@@ -231,7 +231,7 @@ class SalaryslipsController < ApplicationController
   end
 
   def employee_salary_list
-    @employees =Employee.all
+    @employees = Employee.find_by_role(current_user)
   end
 
   def salary_slip_list

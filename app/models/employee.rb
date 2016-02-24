@@ -68,4 +68,16 @@ class Employee < ActiveRecord::Base
       errors.add :pan_no,"Please specify Correct Pan Card Number"
     end
   end
+
+  def self.find_by_role(current_user)
+    if current_user.class == Group
+      Employee.all
+    else
+      if current_user.role.name == "Company"
+        Employee.all
+      elsif current_user.role.name == "CompanyLocation"
+        Employee.where(company_location_id: current_user.company_location_id)
+      end 
+    end
+  end
 end

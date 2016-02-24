@@ -1,35 +1,57 @@
-<%= form_for(@monthly_expence) do |f| %>
-  <% if @monthly_expence.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@monthly_expence.errors.count, "error") %> prohibited this monthly_expence from being saved:</h2>
 
-      <ul>
-      <% @monthly_expence.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+<!-- SELECT2 EXAMPLE -->
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Employee Monthly Expences</h3>
+  </div><!-- /.box-header -->
+  
+  <div class="box-body">
+    <%= bootstrap_form_for(@monthly_expence,html: {id: 'monthly_expence'}) do |f| %>
+      <div class="row">
+       <div class="col-sm-3">
+        <div class="form-group required">
+          <%= f.select :employee_id, Employee.all.collect {|e| [e.manual_employee_code+"  "+e.first_name.to_s+" "+e.last_name.to_s,e.id]} %>
+        </div>
+      </div>
+      <div class="col-sm-3">
+      <label> Date </label>
+       <div class="form-group required">
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="fa fa-calendar"></i>
+          </div>
+          <%= f.text_field :expence_date,hide_label: true,class: 'expence_date'%>
+        </div>
+       </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="field">
+         <%= f.select :expencess_type_id, all_expencess_type,{include_blank: " Select Expence Type"} %>
+        </div>
+      </div>
+        <div class="col-sm-3">
+          <div class="form-group required">
+           <%= f.text_field :amount,label: 'Amount',placeholder: "Amount"%>
+           </div>
+        </div> 
+      </div>
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="actions">
+            <%= f.submit :class => class_name, data: { disable_with: data_info } %>
+          </div>
+        </div>
     </div>
-  <% end %>
+    <% end %>
+  </div><!-- /.box-body --> 
+</div><!-- /.box -->
 
-  <div class="field">
-    <%= f.label :expence_date %><br>
-    <%= f.date_select :expence_date %>
-  </div>
-  <div class="field">
-    <%= f.label :amount %><br>
-    <%= f.text_field :amount %>
-  </div>
-   <div class="col-sm-3">
-    <div class="form-group required">
-     <%= f.select :employee_id, Employee.all.collect {|e| [e.manual_employee_code+"  "+e.first_name.to_s+" "+e.last_name.to_s,e.id]} %>
-     </div>
-  </div>
-   <div class="col-sm-3">
-    <div class="field">
-      <%= f.select :expencess_type_id, all_expencess_type,{include_blank: " Select Expence Type"} %>
-    </div>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+<script type="text/javascript">
+  $(function(){
+    $('.expence_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-0:100',
+    dateFormat: 'dd-mm-yy' });
+  }); 
+</script>

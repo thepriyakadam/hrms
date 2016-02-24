@@ -14,18 +14,26 @@
     </tr>
 
     <tr>
-      <th><strong>Food date</strong></th>
+      <th><strong>Food Date</strong></th>
       <td><%= @food_deduction.food_date %></td>
 
-      <th> <strong>No of coupan</strong></th>
+      <th> <strong>No of Coupan</strong></th>
       <td><%= @food_deduction.no_of_coupan %></td>
     </tr>
 
-    <tr>
-      <th><strong>Amount</strong></th>
-      <td><%= @joining_detail.reference_from %></td>
+     <tr>
+      <th><strong>Coupan Return</strong></th>
+      <td><%= @food_deduction.return_coupan %></td>
 
-      <th> <strong>Admin Interviewer:</strong></th>
+      <th> <strong>Total Coupan</strong></th>
+      <td><%= @food_deduction.total_coupan %></td>
+    </tr>
+
+    <tr>
+      <th> <strong>Coupan Type</strong></th>
+      <td><%= @food_deduction.food_coupan_master.name %></td>
+
+      <th> <strong>Amount</strong></th>
       <td><%= @food_deduction.amount %></td>
     </tr>
  </table>

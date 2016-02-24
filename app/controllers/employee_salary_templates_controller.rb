@@ -1,5 +1,5 @@
 class EmployeeSalaryTemplatesController < ApplicationController
-  load_and_authorize_resource :except => :salary_template
+  load_and_authorize_resource :except => [:salary_template, :find_template]
   def index
   end
 

@@ -57,12 +57,11 @@ class EmployeeLeavRequestsController < ApplicationController
           @total_leaves = EmployeeLeavBalance.where('employee_id = ?', @employee.id)
           flash.now[:alert] = 'Not Allowed. You exceed the leave limit.'
           render :new
-        elsif @emp_leave_bal.company_leav.expiry_date < Date.today
+        elsif @emp_leave_bal.expiry_date < Date.today
           @total_leaves = EmployeeLeavBalance.where('employee_id = ?', @employee.id)
           flash.now[:alert] = 'Leave Time Expired.'
           render :new
         else
-
           @employee_leav_request.leave_status_records.build(change_status_employee_id: current_user.employee_id,status: "Pending", change_date: Date.today)
           respond_to do |format|
             if @employee_leav_request.save
@@ -130,14 +129,20 @@ class EmployeeLeavRequestsController < ApplicationController
   end
 
   def from_hr
-    @employee = Employee.find(params[:id])
+    @employee = Employee.find(params[:format])
     @employee_leav_request = EmployeeLeavRequest.new
     @total_leaves = EmployeeLeavBalance.where('employee_id = ?', @employee.id)
     @remain_leaves = EmployeeLeavRequest.joins(:leav_approved)
   end
 
   def hr_view_request
-    @employee = Employee.find(params[:id])
+    @employee = Employee.find(params[:format])
+    @employee_leav_requests = @employee.employee_leav_requests
+  end
+
+  def employee_history_with_current_leave
+    @current_request = EmployeeLeavRequest.find(params[:format])
+    @employee = Employee.find(@current_request.employee_id)
     @employee_leav_requests = @employee.employee_leav_requests
   end
 

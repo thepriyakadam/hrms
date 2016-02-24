@@ -26,7 +26,7 @@
             <td><%=  %></td>
             <td>
               <%= link_to 'Assign Template', new_employee_salary_template_path(id: employee),class: 'btn btn-sm btn-info fa fa-check' %>
-              <%= link_to 'Assigned Template', template_list_employee_template_path(id: employee),class: 'btn btn-sm btn-info fa fa-check' %>
+              <%= link_to 'Assigned Template', template_list_employee_templates_path(employee),class: 'btn btn-sm btn-info fa fa-check' %>
             </td>
           </tr>
         <% end %>

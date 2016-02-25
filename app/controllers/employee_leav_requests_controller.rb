@@ -48,6 +48,7 @@ class EmployeeLeavRequestsController < ApplicationController
         @employee_leav_request.leave_count = 0.5
       end
       @emp_leave_bal = EmployeeLeavBalance.where('employee_id = ? AND leav_category_id = ?',@employee.id, @employee_leav_request.leav_category_id).take
+
       if @employee_leav_request.leav_category.name == "LWP" and @employee_leav_request.leav_category.name == "ESIC Leave"
         @employee_leav_request.leave_status_records.build(change_status_employee_id: current_user.employee_id,status: "Pending", change_date: Date.today)
         respond_to do |format|

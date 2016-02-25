@@ -235,3 +235,4 @@ class EmployeesController < ApplicationController
         # joining_detail_attributes: [:joining_date, :reference_from, :admin_hr, :tech_hr, :designation, :employee_grade_id, :confirmation_date, :status, :probation_period, :notice_period, :medical_schem])
     end
 end
+#select *, strftime('%Y',expence_date) as month from monthly_expences;

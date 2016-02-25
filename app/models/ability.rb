@@ -21,7 +21,9 @@ class Ability
         can :manage, EmployeeLeavRequest
         
       elsif user.role.name == 'Employee'
-        can [:read, :create, :update, :destroy], [EmployeeLeavRequest,CompanyLeav,Award,Family,Qualification,Skillset,Experience,Certification,EmplyeePhysical,LeavCancelled]
+        #[EmployeeLeavRequest,CompanyLeav,Award,Family,Qualification,Skillset,Experience,Certification,EmplyeePhysical,LeavCancelled]
+        can :read, [Employee, JoiningDetail,EmployeeBankDetail]
+        can :manage, EmployeeLeavRequest
       end
     end
   end

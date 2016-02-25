@@ -1,6 +1,6 @@
 class EmployeesController < ApplicationController
   before_action :set_employee, only: [:show, :edit, :update, :destroy, :ajax_joining_detail, :ajax_bank_detail, :ajax_qualification_detail, :ajax_new_qualification, :ajax_experience_detail, :ajax_new_experience, :ajax_skillset_detail, :ajax_new_skillset, :ajax_certification_detail, :ajax_new_certification, :ajax_award_detail, :ajax_new_award, :ajax_physical_detail, :ajax_family_detail, :ajax_new_family]
-  load_and_authorize_resource
+  #load_and_authorize_resource
   # GET /employees
   # GET /employees.json
   def index
@@ -11,6 +11,8 @@ class EmployeesController < ApplicationController
         @employees = Employee.where(company_location_id: current_user.company_location_id)
       elsif current_user.role.name == "Department"
         @employees = Employee.where(department_id: current_user.department_id)
+      elsif current_user.role.name == "Company"
+        @employees = Employee.all
       end
     else
       @employees = Employee.all
@@ -32,6 +34,7 @@ class EmployeesController < ApplicationController
 
   # GET /employees/1/edit
   def edit
+    authorize! :edit, @employee
     @country = @employee.country
     @states = @country.states
     @state = @employee.state

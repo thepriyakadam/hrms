@@ -48,12 +48,23 @@ class EmployeeLeavRequestsController < ApplicationController
         @employee_leav_request.leave_count = 0.5
       end
       @emp_leave_bal = EmployeeLeavBalance.where('employee_id = ? AND leav_category_id = ?',@employee.id, @employee_leav_request.leav_category_id).take
-      if @emp_leave_bal.nil?
-        @total_leaves = EmployeeLeavBalance.where('employee_id = ?', @employee.id)
-        flash.now[:alert] = 'Leave balance not set- contact to admin.'
-        render :new
+      if @employee_leav_request.leav_category.name == "LWP" and @employee_leav_request.leav_category.name == "ESIC Leave"
+        @employee_leav_request.leave_status_records.build(change_status_employee_id: current_user.employee_id,status: "Pending", change_date: Date.today)
+        respond_to do |format|
+          if @employee_leav_request.save
+            format.html { redirect_to @employee_leav_request, notice: 'Employee leav request was successfully created.' }
+            format.json { render :show, status: :created, location: @employee_leav_request }
+          else
+            format.html { render :new }
+            format.json { render json: @employee_leav_request.errors, status: :unprocessable_entity }
+          end
+        end
       else
-        if @employee_leav_request.leave_count.to_f > @emp_leave_bal.try(:no_of_leave).to_f
+        if @emp_leave_bal.nil?
+          @total_leaves = EmployeeLeavBalance.where('employee_id = ?', @employee.id)
+          flash.now[:alert] = 'Leave balance not set- contact to admin.'
+          render :new
+        elsif @employee_leav_request.leave_count.to_f > @emp_leave_bal.try(:no_of_leave).to_f
           @total_leaves = EmployeeLeavBalance.where('employee_id = ?', @employee.id)
           flash.now[:alert] = 'Not Allowed. You exceed the leave limit.'
           render :new
@@ -72,7 +83,7 @@ class EmployeeLeavRequestsController < ApplicationController
               format.json { render json: @employee_leav_request.errors, status: :unprocessable_entity }
             end
           end
-        end  
+        end
       end
     end
   end

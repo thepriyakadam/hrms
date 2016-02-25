@@ -72,6 +72,7 @@ class EmployeeLeavBalancesController < ApplicationController
       leav_category_id = params[:leav_category_id]
       @leav_category = LeavCategory.find(params[:leav_category_id])
       if current_user.class == Group
+        @employees = Employee.joins("LEFT JOIN employee_leav_balances on employee_leav_balances.employee_id = employees.id where employee_leav_balances.leav_category_id is not #{leav_category_id}")
       else
         if current_user.role.name == "Company"
           @employees = Employee.joins("LEFT JOIN employee_leav_balances on employee_leav_balances.employee_id = employees.id where employee_leav_balances.leav_category_id is not #{leav_category_id}")

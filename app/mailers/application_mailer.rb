@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: "hrmsdws-bhandarigroup"
+  default from: "it@indiba.in"
   layout 'mailer'
 end

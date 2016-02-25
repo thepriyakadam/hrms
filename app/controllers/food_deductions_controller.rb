@@ -4,7 +4,7 @@ class FoodDeductionsController < ApplicationController
   # GET /food_deductions
   # GET /food_deductions.json
   def index
-    if current_user.class == "Group"
+    if current_user.class == Group
       @food_deductions = FoodDeduction.all
     else
       if current_user.role.name == "Company"

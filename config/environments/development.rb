@@ -47,18 +47,58 @@ Rails.application.configure do
   ActionMailer::Base.delivery_method = :smtp
 
   ActionMailer::Base.smtp_settings = {
-    :address => 'smtp.bhandarigroup.in',
+    :address => 'smtp.gmail.com',
     :port => 25,
     :domain => 'yourdomain.com',
-    :user_name => 'hrmsdws-bhandarigroup',
-    :password => 'hrms1234',
+    :user_name => 'it@indiba.in',
+    :password => 'itservice',
     :authentication => :plain,
-    #:ssl => true,  
-    #:tls => true,  
-    :enable_starttls_auto => true 
+    :tls => false,
+    :ssl => true
+    #:enable_starttls_auto => false,
+    #:openssl_verify_mode => 'none'
   }
 
   # Paperclip setup
   #Paperclip.options[:command_path] = "/usr/local/bin/convert"
   #Paperclip.options[:command_path] = "/home/rk/.rvm/gems/ruby-2.2.2/bin/convert"
 end
+
+
+# ActionMailer::Base.smtp_settings = {
+#     :address => 'smtp.bhandarigroup.in',
+#     :port => 25,
+#     :domain => 'yourdomain.com',
+#     :user_name => 'hrmsdws-bhandarigroup',
+#     :password => 'hrms1234',
+#     :authentication => :plain,
+#     #:ssl => true,  
+#     #:tls => true,  
+#     :enable_starttls_auto => true 
+#   }
+
+#SocketError (getaddrinfo: Name or service not known):
+#Net::SMTPFatalError (553 5.7.1 <hrmsdws-bhandarigroup>: Sender address rejected: not owned by user hrmsdws-bhandarigroup):
+#Net::SMTPAuthenticationError (535 5.7.8 Error: authentication failed: authentication failure
+#EOFError (end of file reached):
+#Net::SMTPAuthenticationError (530 5.7.0 Must issue a STARTTLS command first. r65sm11167724pfa.27 - gsmtp
+#Net::SMTPAuthenticationError (535-5.7.8 Username and Password not accepted. Learn more at
+#SocketError (getaddrinfo: Name or service not known):   while address is wrong smtp.
+
+#Net::SMTPAuthenticationError (530 5.7.0 Must issue a STARTTLS command first. 85sm11346951pfl.18 - gsmtp = same code not work on cisco crd
+
+#OpenSSL::SSL::SSLError (SSL_connect returned=1 errno=0 state=unknown state: unknown protocol): = when tls: true
+##########################################
+# ActionMailer::Base.delivery_method = :smtp
+
+#   ActionMailer::Base.smtp_settings = {
+#     :address => 'smtp.gmail.com',
+#     :port => 25,
+#     :domain => 'yourdomain.com',
+#     :user_name => 'erp@indiba.in',
+#     :password => 'indibaerp',
+#     :authentication => :plain,
+#     :enable_starttls_auto => true
+#     #:openssl_verify_mode => 'none'
+#   }
+##########################################3

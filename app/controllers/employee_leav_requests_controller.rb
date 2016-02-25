@@ -68,7 +68,7 @@ class EmployeeLeavRequestsController < ApplicationController
           @total_leaves = EmployeeLeavBalance.where('employee_id = ?', @employee.id)
           flash.now[:alert] = 'Not Allowed. You exceed the leave limit.'
           render :new
-        elsif @emp_leave_bal.expiry_date < Date.today
+        elsif @employee_leav_request.end_date < @emp_leave_bal.expiry_date and @emp_leave_bal.expiry_date < Date.today
           @total_leaves = EmployeeLeavBalance.where('employee_id = ?', @employee.id)
           flash.now[:alert] = 'Leave Time Expired.'
           render :new

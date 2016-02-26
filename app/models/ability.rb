@@ -22,8 +22,11 @@ class Ability
         
       elsif user.role.name == 'Employee'
         #[EmployeeLeavRequest,CompanyLeav,Award,Family,Qualification,Skillset,Experience,Certification,EmplyeePhysical,LeavCancelled]
-        can :read, [Employee, JoiningDetail,EmployeeBankDetail]
-        can :manage, EmployeeLeavRequest
+        can :read, Employee, :id => user.employee_id
+        can :read, [JoiningDetail,EmployeeBankDetail,Qualification,Experience,Skillset,EmployeePhysical,Family]
+        can :manage, EmployeeLeavRequest, :employee_id => user.employee_id
+        can :read, EmployeeTemplate, :employee_id => user.employee_id
+        can :read, AdvanceSalary, :employee_id => user.employee_id
       end
     end
   end

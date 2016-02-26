@@ -232,10 +232,12 @@ class SalaryslipsController < ApplicationController
 
   def employee_salary_list
     @employees = Employee.find_by_role(current_user)
+    #authorize! :show, @employees
   end
 
   def salary_slip_list
     @employee = Employee.find(params[:format])
+    authorize! :show, @employee
     @salray_slips = Salaryslip.where("employee_id= ?",@employee.id)
   end
 

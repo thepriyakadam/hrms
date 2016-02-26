@@ -1,5 +1,5 @@
 class EmployeeTemplatesController < ApplicationController
-  load_and_authorize_resource
+  load_and_authorize_resource except: [:template_list]
   def index
     if current_user.class == Group
       @employees = Employee.all
@@ -8,6 +8,8 @@ class EmployeeTemplatesController < ApplicationController
         @employees = Employee.all
       elsif current_user.role.name == "CompanyLocation"
         @employees = Employee.where(company_location_id: current_user.company_location_id)
+      elsif current_user.role.name == "Employee"
+        @employees = Employee.where(id: current_user.employee_id)
       end
     end
   end

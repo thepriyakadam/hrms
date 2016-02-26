@@ -29,6 +29,7 @@ class EmployeesController < ApplicationController
   def new
     UserPasswordMailer.test.deliver_now
     @employee = Employee.new
+    authorize! :show, @employee
     # @employee.build_joining_detail #here
   end
 
@@ -46,7 +47,7 @@ class EmployeesController < ApplicationController
   # POST /employees.json
   def create
     @employee = Employee.new(employee_params)
-
+    authorize! :create, @employee
     respond_to do |format|
       if @employee.save
         format.html { redirect_to @employee, notice: 'Employee was successfully created.' }
@@ -76,6 +77,7 @@ class EmployeesController < ApplicationController
   # DELETE /employees/1.json
   def destroy
     @employee.destroy
+    authorize! :destroy, @employee
     respond_to do |format|
       format.html { redirect_to employees_url, notice: 'Employee was successfully destroyed.' }
       format.json { head :no_content }

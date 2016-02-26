@@ -1,3 +1,4 @@
+require 'tls_smtp'
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -52,9 +53,9 @@ Rails.application.configure do
     :domain => 'yourdomain.com',
     :user_name => 'it@indiba.in',
     :password => 'itservice',
-    :authentication => :plain,
-    :tls => false,
-    :ssl => true
+    :authentication => :plain
+    # :tls => false,
+    # :ssl => false
     #:enable_starttls_auto => false,
     #:openssl_verify_mode => 'none'
   }

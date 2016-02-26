@@ -27,6 +27,7 @@ class Ability
         can :manage, EmployeeLeavRequest, :employee_id => user.employee_id
         can :read, EmployeeTemplate, :employee_id => user.employee_id
         can :read, AdvanceSalary, :employee_id => user.employee_id
+        can :read, Attendance, :employee_id => user.employee_id
       end
     end
   end

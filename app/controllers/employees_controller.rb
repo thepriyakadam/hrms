@@ -29,7 +29,7 @@ class EmployeesController < ApplicationController
   def new
     UserPasswordMailer.test.deliver_now
     @employee = Employee.new
-    authorize! :show, @employee
+    authorize! :create, @employee
     # @employee.build_joining_detail #here
   end
 

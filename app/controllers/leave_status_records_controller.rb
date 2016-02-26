@@ -13,7 +13,7 @@ class LeaveStatusRecordsController < ApplicationController
           @employee_leav_request.update(is_cancelled: true, current_status: "Cancelled")
           #LeaveRequestMailer.cancel(@employee_leav_request).deliver_now
           flash[:notice] = "Leave Cancelled Successfully."
-          redirect_to approved_or_rejected_leave_request_employee_leav_requests_path
+          redirect_to employee_leav_requests_path
         else
           flash[:alert] = "Leave Already cancelled. Please refresh page."
           redirect_to employee_leav_requests_path

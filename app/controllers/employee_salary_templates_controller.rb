@@ -1,5 +1,5 @@
 class EmployeeSalaryTemplatesController < ApplicationController
-  load_and_authorize_resource :except => [:salary_template, :find_template]
+  load_and_authorize_resource :except => [:salary_template, :find_template, :show_employee_salary_template]
   def index
   end
 
@@ -47,6 +47,7 @@ class EmployeeSalaryTemplatesController < ApplicationController
   
   def show_employee_salary_template
     @current_template = EmployeeTemplate.where("employee_id = ? and is_active = ?",params[:format],true).take
+    authorize! :show, @current_template
     @employee_salary_templates = @current_template.employee_salary_templates
   end
 

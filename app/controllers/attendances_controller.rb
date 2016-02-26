@@ -1,10 +1,21 @@
 class AttendancesController < ApplicationController
   before_action :set_attendance, only: [:show, :edit, :update, :destroy]
-
+  
   # GET /attendances
   # GET /attendances.json
   def index
-    @attendances = Attendance.all
+    if current_user.class == Group
+      @attendances = Attendance.all
+    else
+      if current_user.role.name == "Company"
+        @attendances = Attendance.all
+      elsif current_user.role.name == "CompanyLocation"
+        @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+        @attendances = Attendance.where(employee_id: @employees)
+      elsif current_user.role.name == "Employee"
+        @attendances = Attendance.where(employee_id: current_user.employee_id)
+      end
+    end
   end
 
   # GET /attendances/1

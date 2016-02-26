@@ -1,6 +1,6 @@
 class AdvanceSalariesController < ApplicationController
   before_action :set_advance_salary, only: [:show, :edit, :update, :destroy]
-
+  load_and_authorize_resource
   # GET /advance_salaries
   # GET /advance_salaries.json
   def index

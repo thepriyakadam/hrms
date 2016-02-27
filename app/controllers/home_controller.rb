@@ -1,4 +1,5 @@
 class HomeController < ApplicationController
+  #load_and_authorize_resource
   def index
   	@companies = Company.all
   	@company_locations = CompanyLocation.all
@@ -7,6 +8,7 @@ class HomeController < ApplicationController
   	if current_user.class == Member
 	  	if current_user.role.name == "Employee"
 	  	  @employee = Employee.find(current_user.employee_id)
+        #authorize! :show, @employee
       elsif current_user.role.name == "CompanyLocation"
         @employees = Employee.where(company_location_id: current_user.company_location_id)
 	    end

@@ -11,9 +11,9 @@
     <table id="example1" class="table table-bordered table-hover table-condensed">
     <thead>
       <tr>
+        <th>Employee</th>
         <th>Is society member</th>
         <th>Amount</th>
-        <th>Employee</th>
         <th>Action</th>
       </tr>
     </thead>
@@ -21,12 +21,11 @@
     <tbody>
        <% @society_member_ships.each do |society_member_ship| %>
         <tr>
+          <td><%= full_name(society_member_ship.employee) %></td>
           <td><%= society_member_ship.is_society_member %></td>
           <td><%= society_member_ship.amount %></td>
-          <td><%= society_member_ship.employee %></td>
           <td>
             <%= link_to '', edit_society_member_ship_path(society_member_ship), class: 'btn btn-xs btn-success fa fa-edit' %>
-            <%= link_to '', society_member_ship, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-xs  btn-danger fa fa-close' %>
             <%= link_to '', society_member_ship,class: 'btn btn-xs btn-default fa fa-eye' %>
           </td>
         </tr>

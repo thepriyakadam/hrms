@@ -26,7 +26,6 @@ class DepartmentsController < ApplicationController
     @department = Department.new
   end
 
-
   def update
      @department.update(department_params)
      @departments = Department.all

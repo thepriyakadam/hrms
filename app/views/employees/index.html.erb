@@ -11,6 +11,7 @@
       <tr>
       <th>Employee Id</th>
       <th>Employee Name</th>
+      <th>Comapny Location</th>
       <th>Date of Birth</th>
       <th>City</th>
       <th>Employement</th>
@@ -23,7 +24,8 @@
     <% @employees.each do |employee| %>
       <tr>
         <td><%= employee.manual_employee_code %></td>
-        <td><%= employee.first_name.to_s+' '+employee.try(:last_name).to_s %></td>
+        <td><%= full_name(employee) %></td>
+        <td><%= employee.try(:company_location).try(:name) %></td>
         <td><%= employee.date_of_birth %></td>
         <td><%= employee.city %></td>
         <td> <%= employee.employee_type.try(:name) %></td>

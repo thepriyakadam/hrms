@@ -88,7 +88,7 @@ class EmployeeSalaryTemplatesController < ApplicationController
             flash[:alert] = "Same template cannot assigned."   
           end
         end
-        redirect_to template_list_employee_template_path(@employee_id)
+        redirect_to template_list_employee_templates_path(@employee_id)
       end  
   end
 

@@ -5,7 +5,7 @@ class Member < ActiveRecord::Base
   belongs_to :company_location
   belongs_to :department
   belongs_to :role
-  belongs_to :member
+  #belongs_to :member
   belongs_to :employee
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable

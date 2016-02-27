@@ -4,16 +4,16 @@
   </div><!-- /.box-header -->
   <div class="box-body">
     <%= bootstrap_form_for(@employee,html: {id: 'employee'}) do |f| %>
-    <% if @employee.errors.any? %>
-      <div id="error_explanation">
-        <h2><%= pluralize(@employee.errors.count, "error") %> prohibited this user from being saved:</h2>
-        <ul>
-        <% @employee.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-        </ul>
-      </div>
-    <% end %>
+      <% if @employee.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@employee.errors.count, "error") %> prohibited this user from being saved:</h2>
+          <ul>
+          <% @employee.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
         
       <div class="row">
         <div class="col-sm-3">
@@ -175,7 +175,7 @@
         </div>
         <div class="col-sm-3">
           <div class="field">
-            <%= f.select :handicap, ['Yes','No'],{label:"Differently Abled",include_blank: "Please Select Differently Abled"},{onchange:"var a={id:$(this).val()}; $.get('/employees/ajax_show_textbox',a,function(response){});"} %>
+            <%= f.select :handicap, ['Yes','No'],{label:"Differently Abled",include_blank: "Please Select Differently Abled"},{onchange:"var a={value:$(this).val()}; $.get('/employees/ajax_show_textbox',a,function(response){});"} %>
           </div>
         </div>
         <div class="col-sm-3">
@@ -187,7 +187,15 @@
             </div>
           </div>
         </div>
-
+      </div>
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="field">
+            <div class="field">
+              <%= f.select :company_location_id, all_company_location,{label: 'Location',include_blank: " Select Location"} %>
+            </div>
+          </div>
+        </div> 
       </div>
 
       <div class="row">

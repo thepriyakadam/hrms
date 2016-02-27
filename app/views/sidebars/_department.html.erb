@@ -1,56 +1,50 @@
 <!-- Optionally, you can add icons to the links -->
 <!-- sidebar menu: : style can be found in sidebar.less -->
 <ul class="sidebar-menu">
-  <li class="header">DEPARTMENT</li>
-  
-   <li class="active treeview">
+  <li class="header">COMPANY LOCATION DASHBOARD</li>
+  <li class="active treeview">
     <a href="">
-      <i class="fa fa-user-plus"></i> <span>Create</span> <i class="fa fa-angle-left pull-right"></i>
+      <!-- <i class="fa fa-user-plus"></i> <span>Create</span> <i class="fa fa-angle-left pull-right"></i> -->
+      <i class="fa fa-user-plus"></i> <span>Company Details</span> <i class="fa fa-angle-left pull-right"></i>
     </a>
     <ul class="treeview-menu">
-      <li><a href="/employees"><i class="fa fa-circle-o"></i>Employees</a></li>
+      <li><a href="/departments/new"><i class="fa fa-circle-o"></i> Departments</a></li>
     </ul>
   </li>
-  
-  <!--  -->
+  <!-- <li class="header">GROUP DASHBOARD</li> -->
   <li class="treeview">
     <a href="">
-      <i class="fa fa-cogs"></i> <span>Settings</span> <i class="fa fa-angle-left pull-right"></i>
+      <i class="fa fa-user-plus"></i> <span>Employee Management</span> 
     </a>
     <ul class="treeview-menu">
-      <li><a href="/blood_groups/new"><i class="fa fa-circle-o"></i>Blood Group</a></li>
-      <li><a href="/degrees/new"><i class="fa fa-circle-o"></i>Employee Qualification</a></li>
-      <li><a href="/employee_designations/new"><i class="fa fa-circle-o"></i>Employee Designation</a></li>
-      <li><a href="/employee_types/new"><i class="fa fa-circle-o"></i>Employment Type</a></li>
-      <li><a href="/nationalities/new"><i class="fa fa-circle-o"></i>Nationality</a></li>
-      <li><a href="/leav_categories/new"><i class="fa fa-circle-o"></i>Leave Type</a></li>
-      <li><a href="/roles/new"><i class="fa fa-circle-o"></i>User Role Type</a></li>
-      <li><a href="/cost_centers/new"><i class="fa fa-circle-o"></i>Cost Center</a></li>
-      <li><a href="/degree_types/new"><i class="fa fa-circle-o"></i>Qualification Level</a></li>
-      <li><a href="/degree_streams/new"><i class="fa fa-circle-o"></i>Qualification Specialization</a></li>
-      <li><a href="/universities/new"><i class="fa fa-circle-o"></i>Add University/Institution</a></li>
-      <li><a href="/company_shifts/new"><i class="fa fa-circle-o"></i>Company Shift</a></li>
-      
+      <li><a href="/employees"><i class="fa fa-circle-o"></i> Employees</a></li>
     </ul>
   </li>
+
   <!-- Leave management -->
   <li class="treeview">
     <a href="">
       <i class="fa fa-bell"></i> <span>Leave Management</span> <i class="fa fa-angle-left pull-right"></i>
     </a>
     <ul class="treeview-menu">
-      <li><a href="/company_leavs/new"><i class="fa fa-circle-o"></i> Set Leave</a></li>
-      <li><a href="/employee_leav_requests/approved_or_rejected_leave_request"><i class="fa fa-circle-o"></i>Approve/Reject Leave</a></li>
+      <li><a href="/employee_leav_balances"><i class="fa fa-tags"></i> Assign Leave</a></li>
+      <li>
+        <a href="/employee_leav_requests/approved_or_rejected_leave_request"><i class="fa fa-tags"></i>Approve/Reject Leave</a>
+      </li>
+      <li><a href="/employee_leav_requests/employee_list"><i class="fa fa-circle-o"></i>Create Leave Request</a></li>
     </ul>
   </li>
 
- <!--  <li class="treeview">
+    <li class="treeview">
     <a href="">
-      <i class="fa fa-user-plus"></i> <span>User</span> <i class="fa fa-angle-left pull-right"></i>
+      <i class="ionicons ion-ios-time"></i><span><span>  Time Management </span></span> <i class="fa fa-angle-left pull-right"></i>
     </a>
     <ul class="treeview-menu">
-      <li><a href="/employees/assign_role"><i class="fa fa-circle-o"></i> Create User</a></li>
-      <li><a href="/home/created_user"><i class="fa fa-circle-o"></i>Created User</a></li>
+      <li><a href="/holidays/new"><i class="fa fa-circle-o"></i> Holiday </a></li>
+      <li><a href="/shift_rotations/new"><i class="fa fa-circle-o"></i> Create Shift Rotation </a></li>
+      <li><a href="/employee_shifts"><i class="fa fa-circle-o"></i> Assign Employee To Shift </a></li>
+      <li><a href="/overtimes"><i class="fa fa-circle-o"></i> Over Time </a></li>
+      <li><a href="/attendances"><i class="fa fa-circle-o"></i> Employee Attendance </a></li>
     </ul>
-  </li> -->
-  </ul>
+   </li>
+</ul>

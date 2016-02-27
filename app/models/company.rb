@@ -18,6 +18,7 @@ class Company < ActiveRecord::Base
   validates :district_id, :presence => true
   validates :city, :presence => true
   validates :pin_code, :presence => true
+  validates :name, uniqueness: { scope: [:company_type_id]}
   validate :pan_no_regex
   validate :contact_no_regex
 

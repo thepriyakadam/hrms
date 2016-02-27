@@ -147,11 +147,7 @@
     </div> 
   </div>
   <div class="row">
-    <div class="col-sm-3">
-        <div class="field">
-          <%= f.select :company_location_id, all_company_location,{label: 'Location',include_blank: " Select Location"} %>
-       </div>
-    </div> 
+    
      <div class="col-sm-3">
         <div class="field">
           <%= f.select :have_retention,[['Yes','true'],['No','false']],{label: 'Retention',include_blank: " Select Retention"} %>
@@ -166,10 +162,12 @@
         <% if params['controller'] == 'joining_details' and params['action'] == 'edit' %>
           <%= link_to 'Back',ajax_joining_detail_employees_path(id: @employee.id),class: 'btn btn-default', remote:true%>
         <%end%>
+
     </div>
   </div>
       </div>
     <% end %>
+    
   </div><!-- /.box-body -->
 </div><!--box -->
 <script type="text/javascript">
@@ -196,8 +194,6 @@
     changeYear:true,
     changeMonth: true,
     yearRange: '-100:+5',
-    dateFormat: 'dd-mm-yy' }); 
-
-
+    dateFormat: 'dd-mm-yy' });
   }); 
 </script>

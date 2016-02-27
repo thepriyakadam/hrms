@@ -23,7 +23,7 @@ module EmployeesHelper
 	end
 
 	def all_employee_list
-		Employee.all.collect {|e| [e.first_name,e.id]}
+		Employee.all.collect {|e| [e.try(:manual_employee_code).to_s+' '+e.try(:first_name).to_s+' '+e.try(:last_name).to_s,e.id]}
 	end
 
 	def check_if_true(item)
@@ -40,5 +40,17 @@ module EmployeesHelper
 
   def short_name(emp)
     emp.try(:first_name).to_s+" "+emp.try(:last_name).to_s
+  end
+
+  def employee_list_by_company_location
+    if current_user.class == Group
+      Employee.all.collect {|e| [e.manual_employee_code+"  "+e.first_name.to_s+" "+e.last_name.to_s,e.id]}
+    else
+      if current_user.role.name == "Company"
+        Employee.all.collect {|e| [e.manual_employee_code+"  "+e.first_name.to_s+" "+e.last_name.to_s,e.id]}
+      elsif current_user.role.name == "CompanyLocation"
+        Employee.where(company_location_id: current_user.company_location_id).collect {|e| [e.manual_employee_code+"  "+e.first_name.to_s+" "+e.last_name.to_s,e.id]}
+      end 
+    end
   end
 end

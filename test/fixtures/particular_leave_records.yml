@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  employee_id: 
+  employee_leav_request_id: 
+  leave_date: 2016-02-19 12:47:32
+  is_full: false
+
+two:
+  employee_id: 
+  employee_leav_request_id: 
+  leave_date: 2016-02-19 12:47:32
+  is_full: false

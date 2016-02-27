@@ -1,0 +1,2 @@
+module SocietyMemberShipsHelper
+end

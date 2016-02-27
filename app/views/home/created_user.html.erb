@@ -9,7 +9,8 @@
 		      <th>Employee Code</th>
 		      <th>Employee Name</th>
 		      <th>Hrms Access Role</th>
-		      <th>Reporting Person</th>
+		      <th>Reporting Person One</th>
+		      <th>Reporting Person Two</th>
 		      <th>Department</th>
 		    </tr>
 		  </thead>
@@ -17,9 +18,10 @@
 		    <% @employees.each do |employee| %>   
 			      <tr>
 			        <td><%= employee.manual_employee_code %></td>
-			        <td><%= employee.first_name+' '+employee.last_name %></td>
+			        <td><%= employee.first_name %> <%= employee.middle_name %> <%= employee.last_name %></td>
 			        <td><%= employee.member.role.try(:name) %>
-			        <td><%= employee.manager.try(:first_name)+' '+employee.manager.try(:last_name) %></td>
+			        <td><%= employee.manager_id %> </td>
+			         <td><%= employee.manager_2_id %></td>
 			        <td><%= employee.department.try(:name) %></td>
 			      </tr>	
 		    <% end %>

@@ -1,0 +1,2 @@
+module FoodCoupanMastersHelper
+end

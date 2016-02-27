@@ -4,7 +4,18 @@ class EmployeeLeavBalancesController < ApplicationController
   # GET /employee_leav_balances
   # GET /employee_leav_balances.json
   def index
-    @employee_leav_balances = EmployeeLeavBalance.all
+    if current_user.class == Group
+      @employee_leav_balances = EmployeeLeavBalance.all
+    else
+      if current_user.role.name == "Company"
+        @employee_leav_balances = EmployeeLeavBalance.all
+      elsif current_user.role.name == "CompanyLocation"
+        @employees = Employee.where(company_location_id: current_user.company_location_id)
+        @employee_leav_balances = EmployeeLeavBalance.where(employee_id: @employees)
+      elsif current_user.role.name == "Employee"
+        @employee_leav_balances = EmployeeLeavBalance.where(employee_id: current_user.employee_id)
+      end
+    end
   end
 
   # GET /employee_leav_balances/1
@@ -66,8 +77,7 @@ class EmployeeLeavBalancesController < ApplicationController
 
   def collect_employee_for_leave
     if params[:leav_category_id] == ""
-      flash.now[:alert] = "Please specify Leave Category."
-      render :new
+      @flag = false
     else
       leav_category_id = params[:leav_category_id]
       @leav_category = LeavCategory.find(params[:leav_category_id])
@@ -80,7 +90,7 @@ class EmployeeLeavBalancesController < ApplicationController
           @employees = Employee.joins("LEFT JOIN employee_leav_balances on employee_leav_balances.employee_id = employees.id where employee_leav_balances.leav_category_id is not #{leav_category_id} and employees.company_location_id = #{current_user.company_location_id}")
         end
       end
-      
+      @flag = true
       @employee_leav_balance = EmployeeLeavBalance.new
     end
   end

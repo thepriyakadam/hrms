@@ -7,6 +7,7 @@ class EmployeesController < ApplicationController
     if current_user.class == Member
       if current_user.role.name == "Employee"
         @employees = Employee.where(id: current_user.employee_id)
+        redirect_to home_index_path
       elsif current_user.role.name == "CompanyLocation"
         @employees = Employee.where(company_location_id: current_user.company_location_id)
       elsif current_user.role.name == "Department"
@@ -22,14 +23,15 @@ class EmployeesController < ApplicationController
   # GET /employees/1
   # GET /employees/1.json
   def show
+    authorize! :show, @employee
     #@joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
   end
 
   # GET /employees/new
   def new
-    UserPasswordMailer.test.deliver_now
+    #UserPasswordMailer.test.deliver_now
     @employee = Employee.new
-    authorize! :create, @employee
+    #authorize! :create, @employee
     # @employee.build_joining_detail #here
   end
 
@@ -237,4 +239,4 @@ class EmployeesController < ApplicationController
         # joining_detail_attributes: [:joining_date, :reference_from, :admin_hr, :tech_hr, :designation, :employee_grade_id, :confirmation_date, :status, :probation_period, :notice_period, :medical_schem])
     end
 end
-#select *, strftime('%Y',expence_date) as month from monthly_expences;
+

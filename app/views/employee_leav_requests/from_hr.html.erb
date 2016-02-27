@@ -33,13 +33,13 @@
       <div class="row">
         <div class="col-sm-3">
           <div class="field">
-            <%= f.select :leav_category_id, all_leav_category %>
+            <%= f.select :leav_category_id, all_leav_category,{include_blank: 'Select leave category'} %>
           </div>
         </div>
 
         <div class="col-sm-3">
           <div class="field">
-           <%= f.select :leave_type, ['Full Day','Half Day'] %>
+           <%= f.select :leave_type, ['Full Day','Half Day'],{include_blank: 'Select leave type'} %>
           </div>
         </div>
 
@@ -72,4 +72,41 @@
       </div>
     <% end %>
   </div><!-- /.box-body -->
-</div><!-- /.box
+</div><!-- /.box -->
+
+<script type="text/javascript">
+  $("#employee_leav_request").validate({
+    rules: {
+      "employee_leav_request[leav_category_id]":{
+        required: true
+      },
+      "employee_leav_request[leave_type]":{
+        required: true
+      },
+      "employee_leav_request[date_range]":{
+        required: true
+      },
+      "employee_leav_request[reason]":{
+        required: true
+      }
+    },
+    messages: {
+      "employee_leav_request[leav_category_id]":{
+        required: "Please specify leave category."
+      },
+      "employee_leav_request[leave_type]":{
+        required: "Please specify leave type."
+      },
+      "employee_leav_request[date_range]":{
+        required: "Please specify date range."
+      },
+      "employee_leav_request[reason]":{
+        required: "Please specify reason."
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+  });
+</script>

@@ -5,6 +5,9 @@ class Workingday < ActiveRecord::Base
   belongs_to :employee
   has_many :salaryslips
 
+  #validates_uniqueness_of :acronym, :allow_blank => true, :scope => [:group_id], :case_sensitive => false
+  #validates_uniqueness_of :acronym, :allow_nil => true, :scope => [:group_id], :case_sensitive => false
+
   # validates :month_name, :presence => true
   # validates :year, :presence => true
   # validates :day_in_month, :presence => true

@@ -83,7 +83,7 @@
           <td>
             <% unless instalment.is_complete %>
               <%= link_to '', edit_instalment_path(instalment), class: 'btn btn-sm btn-success fa fa-edit' %>
-              <%= link_to '', instalment, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-sm  btn-danger fa fa-close' %>
+              <!-- link_to '', instalment, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-sm  btn-danger fa fa-close' -->
             <% else %>
               <small class="label label-info">Paid.</small>
             <% end %>

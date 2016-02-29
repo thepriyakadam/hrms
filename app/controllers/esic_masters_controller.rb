@@ -33,9 +33,21 @@ class EsicMastersController < ApplicationController
   # PATCH/PUT /esic_masters/1
   # PATCH/PUT /esic_masters/1.json
   def update
-        @esic_master.update(esic_master_params)
-        @esic_masters = EsicMaster.all
-        @esic_master = EsicMaster.new
+    components = params[:components]
+    str = String.new
+    i = 0
+    components.each do |c|
+      if i == 0
+        str = c.to_s
+      else
+        str = str.to_s+","+c.to_s
+      end
+      i = i + 1
+    end
+    @esic_master.base_component = str
+    @esic_master.update(esic_master_params)
+    @esic_masters = EsicMaster.all
+    @esic_master = EsicMaster.new
   end
 
   # DELETE /esic_masters/1

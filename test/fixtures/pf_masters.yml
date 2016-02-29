@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  is_pf: false
+  percentage: 9.99
+  date_effective: 2016-02-29
+  min_limit: 9.99
+  base_component: MyString
+  is_active: false
+
+two:
+  is_pf: false
+  percentage: 9.99
+  date_effective: 2016-02-29
+  min_limit: 9.99
+  base_component: MyString
+  is_active: false

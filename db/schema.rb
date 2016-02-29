@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160221080204) do
+ActiveRecord::Schema.define(version: 20160229130415) do
 
   create_table "advance_salaries", force: :cascade do |t|
     t.integer  "employee_id"
@@ -257,6 +257,26 @@ ActiveRecord::Schema.define(version: 20160221080204) do
   end
 
   add_index "districts", ["state_id"], name: "index_districts_on_state_id"
+
+  create_table "employee_annual_salaries", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.integer  "salary_component_id"
+    t.datetime "created_at",                                          null: false
+    t.datetime "updated_at",                                          null: false
+    t.decimal  "percentage",                 precision: 5,  scale: 2
+    t.integer  "parent_salary_component_id"
+    t.boolean  "is_deducted"
+    t.string   "to_be_paid"
+    t.decimal  "max_amount",                 precision: 15, scale: 2
+    t.decimal  "monthly_amount",             precision: 15, scale: 2
+    t.decimal  "annual_amount",              precision: 15, scale: 2
+    t.boolean  "is_taxable"
+    t.decimal  "tax",                        precision: 15, scale: 2
+    t.string   "base"
+  end
+
+  add_index "employee_annual_salaries", ["employee_id"], name: "index_employee_annual_salaries_on_employee_id"
+  add_index "employee_annual_salaries", ["salary_component_id"], name: "index_employee_annual_salaries_on_salary_component_id"
 
   create_table "employee_arrear_items", force: :cascade do |t|
     t.integer  "employee_arrear_id"
@@ -832,7 +852,6 @@ ActiveRecord::Schema.define(version: 20160221080204) do
   create_table "particular_leave_records", force: :cascade do |t|
     t.integer  "employee_id"
     t.integer  "employee_leav_request_id"
-    t.integer  "leav_category_id"
     t.datetime "leave_date"
     t.boolean  "is_full"
     t.datetime "created_at",               null: false
@@ -841,7 +860,6 @@ ActiveRecord::Schema.define(version: 20160221080204) do
 
   add_index "particular_leave_records", ["employee_id"], name: "index_particular_leave_records_on_employee_id"
   add_index "particular_leave_records", ["employee_leav_request_id"], name: "index_particular_leave_records_on_employee_leav_request_id"
-  add_index "particular_leave_records", ["leav_category_id"], name: "index_particular_leave_records_on_leav_category_id"
 
   create_table "payment_modes", force: :cascade do |t|
     t.string   "code"
@@ -849,6 +867,17 @@ ActiveRecord::Schema.define(version: 20160221080204) do
     t.string   "description"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+  end
+
+  create_table "professional_taxes", force: :cascade do |t|
+    t.string   "is_pt"
+    t.decimal  "min_salary",  precision: 15, scale: 2, default: 0.0
+    t.decimal  "max_salary",  precision: 15, scale: 2, default: 0.0
+    t.decimal  "pt_amount",   precision: 15, scale: 2, default: 0.0
+    t.decimal  "for_months",  precision: 15, scale: 2, default: 0.0
+    t.decimal  "march_month", precision: 15, scale: 2, default: 0.0
+    t.datetime "created_at",                                         null: false
+    t.datetime "updated_at",                                         null: false
   end
 
   create_table "qualifications", force: :cascade do |t|

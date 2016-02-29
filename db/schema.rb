@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160221080204) do
+ActiveRecord::Schema.define(version: 20160229130415) do
 
   create_table "advance_salaries", force: :cascade do |t|
     t.integer  "employee_id"
@@ -867,6 +867,17 @@ ActiveRecord::Schema.define(version: 20160221080204) do
     t.string   "description"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+  end
+
+  create_table "professional_taxes", force: :cascade do |t|
+    t.string   "is_pt"
+    t.decimal  "min_salary",  precision: 15, scale: 2, default: 0.0
+    t.decimal  "max_salary",  precision: 15, scale: 2, default: 0.0
+    t.decimal  "pt_amount",   precision: 15, scale: 2, default: 0.0
+    t.decimal  "for_months",  precision: 15, scale: 2, default: 0.0
+    t.decimal  "march_month", precision: 15, scale: 2, default: 0.0
+    t.datetime "created_at",                                         null: false
+    t.datetime "updated_at",                                         null: false
   end
 
   create_table "qualifications", force: :cascade do |t|

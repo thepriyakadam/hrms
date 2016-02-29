@@ -25,7 +25,7 @@
       <% @advance_salaries.each do |advance_salary| %>
         <tr>
          <td><%= advance_salary.employee.try(:manual_employee_code) %></td>
-         <td><%= advance_salary.employee.first_name %><%= advance_salary.employee.middle_name %><%= advance_salary.employee.last_name %></td>
+         <td><%= full_name(advance_salary.employee) %></td>
          <td><%= advance_salary.advance_amount %></td>
          <td><%= advance_salary.no_of_instalment %></td>
          <td><%= advance_salary.instalment_amount %></td>

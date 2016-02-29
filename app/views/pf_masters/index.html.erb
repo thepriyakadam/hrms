@@ -1,0 +1,37 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Pf Masters</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Is pf</th>
+      <th>Percentage</th>
+      <th>Date effective</th>
+      <th>Min limit</th>
+      <th>Base component</th>
+      <th>Is active</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @pf_masters.each do |pf_master| %>
+      <tr>
+        <td><%= pf_master.is_pf %></td>
+        <td><%= pf_master.percentage %></td>
+        <td><%= pf_master.date_effective %></td>
+        <td><%= pf_master.min_limit %></td>
+        <td><%= pf_master.base_component %></td>
+        <td><%= pf_master.is_active %></td>
+        <td><%= link_to 'Show', pf_master %></td>
+        <td><%= link_to 'Edit', edit_pf_master_path(pf_master) %></td>
+        <td><%= link_to 'Destroy', pf_master, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Pf master', new_pf_master_path %>

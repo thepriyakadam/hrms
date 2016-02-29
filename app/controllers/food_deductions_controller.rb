@@ -51,7 +51,7 @@ class FoodDeductionsController < ApplicationController
   def update
     respond_to do |format|
       if @food_deduction.update(food_deduction_params)
-        format.html { redirect_to @food_deduction, notice: 'Food deduction was successfully updated.' }
+        format.html { redirect_to food_deductions_path, notice: 'Food deduction was successfully updated.' }
         format.json { render :show, status: :ok, location: @food_deduction }
       else
         format.html { render :edit }

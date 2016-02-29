@@ -18,21 +18,22 @@
 
     <tbody>
        <% @monthly_expences.each do |w| %>
+        <% year = w.expence_date.strftime('%Y') %>
         <tr>
-          <td><%= w.year %></td>
+          <td><%= year %></td>
           <td>
-            <%= link_to 'January',employees_workingdays_path(year: w.year, month: "January") , class: 'btn btn-xs btn-primary' %>
-            <%= link_to 'February',employees_workingdays_path(year: w.year, month: "February") , class: 'btn btn-xs btn-primary' %>
-            <%= link_to 'March',employees_workingdays_path(year: w.year, month: "March") , class: 'btn btn-xs btn-primary' %>
-            <%= link_to 'April',employees_workingdays_path(year: w.year, month: "April") , class: 'btn btn-xs btn-primary' %>
-            <%= link_to 'May',employees_workingdays_path(year: w.year, month: "May") , class: 'btn btn-xs btn-success' %>
-            <%= link_to 'June',employees_workingdays_path(year: w.year, month: "June") , class: 'btn btn-xs btn-success' %>
-            <%= link_to 'July',employees_workingdays_path(year: w.year, month: "July") , class: 'btn btn-xs btn-success' %>
-            <%= link_to 'August',employees_workingdays_path(year: w.year, month: "August") , class: 'btn btn-xs btn-success' %>
-            <%= link_to 'September',employees_workingdays_path(year: w.year, month: "September") , class: 'btn btn-xs btn-danger' %>
-            <%= link_to 'October',employees_workingdays_path(year: w.year, month: "October") , class: 'btn btn-xs btn-danger' %>
-            <%= link_to 'November',employees_workingdays_path(year: w.year, month: "November") , class: 'btn btn-xs btn-danger' %>
-            <%= link_to 'December',employees_workingdays_path(year: w.year, month: "December") , class: 'btn btn-xs btn-danger' %>
+            <%= link_to 'January',employees_monthly_expences_path(year: year, month: "January") , class: 'btn btn-xs btn-primary' %>
+            <%= link_to 'February',employees_monthly_expences_path(year: year, month: "February") , class: 'btn btn-xs btn-primary' %>
+            <%= link_to 'March',employees_monthly_expences_path(year: year, month: "March") , class: 'btn btn-xs btn-primary' %>
+            <%= link_to 'April',employees_monthly_expences_path(year: year, month: "April") , class: 'btn btn-xs btn-primary' %>
+            <%= link_to 'May',employees_monthly_expences_path(year: year, month: "May") , class: 'btn btn-xs btn-success' %>
+            <%= link_to 'June',employees_monthly_expences_path(year: year, month: "June") , class: 'btn btn-xs btn-success' %>
+            <%= link_to 'July',employees_monthly_expences_path(year: year, month: "July") , class: 'btn btn-xs btn-success' %>
+            <%= link_to 'August',employees_monthly_expences_path(year: year, month: "August") , class: 'btn btn-xs btn-success' %>
+            <%= link_to 'September',employees_monthly_expences_path(year: year, month: "September") , class: 'btn btn-xs btn-danger' %>
+            <%= link_to 'October',employees_monthly_expences_path(year: year, month: "October") , class: 'btn btn-xs btn-danger' %>
+            <%= link_to 'November',employees_monthly_expences_path(year: year, month: "November") , class: 'btn btn-xs btn-danger' %>
+            <%= link_to 'December',employees_monthly_expences_path(year: year, month: "December") , class: 'btn btn-xs btn-danger' %>
           </td>
         </tr>
       <% end %>

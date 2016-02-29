@@ -4,7 +4,7 @@ class MonthlyExpencesController < ApplicationController
   # GET /monthly_expences
   # GET /monthly_expences.json
   def index
-    @monthly_expences = MonthlyExpence.all
+    @monthly_expences =  MonthlyExpence.group("strftime('%Y',expence_date)")
   end
 
   # GET /monthly_expences/1
@@ -28,7 +28,7 @@ class MonthlyExpencesController < ApplicationController
 
     respond_to do |format|
       if @monthly_expence.save
-        format.html { redirect_to @monthly_expence, notice: 'Monthly expence was successfully created.' }
+        format.html { redirect_to monthly_expences_path, notice: 'Monthly expence was successfully created.' }
         format.json { render :show, status: :created, location: @monthly_expence }
       else
         format.html { render :new }
@@ -42,7 +42,7 @@ class MonthlyExpencesController < ApplicationController
   def update
     respond_to do |format|
       if @monthly_expence.update(monthly_expence_params)
-        format.html { redirect_to @monthly_expence, notice: 'Monthly expence was successfully updated.' }
+        format.html { redirect_to monthly_expences_path, notice: 'Monthly expence was successfully updated.' }
         format.json { render :show, status: :ok, location: @monthly_expence }
       else
         format.html { render :edit }
@@ -61,6 +61,22 @@ class MonthlyExpencesController < ApplicationController
     end
   end
 
+  def employees
+    date = Date.new(params[:year].to_i, Workingday.months[params[:month]])
+    if current_user.class == Group
+      @monthly_expences = MonthlyExpence.where("strftime('%m/%Y', expence_date) = ?", date.strftime('%m/%Y'))
+    else
+      if current_user.role.name == "Company" or current_user.role.name == "Account"
+        @monthly_expences = MonthlyExpence.where("strftime('%m/%Y', expence_date) = ?", date.strftime('%m/%Y'))
+      elsif current_user.role.name == "CompanyLocation"
+        @employees = Employee.where(company_location_id: current_user.company_location_id)
+        @monthly_expences = MonthlyExpence.where("strftime('%m/%Y', expence_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+      elsif current_user.role.name == "Employee"
+        @monthly_expences = MonthlyExpence.where("strftime('%m/%Y', expence_date) = ?", date.strftime('%m/%Y')).where(employee_id: current_user.employee_id)
+      end    
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_monthly_expence
@@ -72,3 +88,5 @@ class MonthlyExpencesController < ApplicationController
       params.require(:monthly_expence).permit(:expence_date, :amount, :employee_id, :expencess_type_id)
     end
 end
+#MonthlyExpence.where("strftime('%m/%Y', created_at) = ?", '12/02/2016'.to_date.strftime('%m/%Y'))
+#select *, strftime('%Y',expence_date) as month from monthly_expences;

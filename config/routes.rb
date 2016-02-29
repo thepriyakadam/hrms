@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
   resources :pf_masters
+  resources :professional_taxes
   resources :society_member_ships
   resources :well_faires
   resources :monthly_expences do

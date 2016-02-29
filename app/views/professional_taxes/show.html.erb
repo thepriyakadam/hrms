@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Is pt:</strong>
+  <%= @professional_tax.is_pt %>
+</p>
+
+<p>
+  <strong>Min salary:</strong>
+  <%= @professional_tax.min_salary %>
+</p>
+
+<p>
+  <strong>Max salary:</strong>
+  <%= @professional_tax.max_salary %>
+</p>
+
+<p>
+  <strong>Pt amount:</strong>
+  <%= @professional_tax.pt_amount %>
+</p>
+
+<p>
+  <strong>For months:</strong>
+  <%= @professional_tax.for_months %>
+</p>
+
+<p>
+  <strong>March month:</strong>
+  <%= @professional_tax.march_month %>
+</p>
+
+<%= link_to 'Edit', edit_professional_tax_path(@professional_tax) %> |
+<%= link_to 'Back', professional_taxes_path %>

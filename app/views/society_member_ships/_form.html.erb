@@ -7,7 +7,6 @@
   
   <div class="box-body">
     <%= bootstrap_form_for(@society_member_ship,html: {id: 'workingday'}) do |f| %>
-  
       <div class="row">
         <div class="col-sm-3">
           <div class="form-group required">
@@ -16,7 +15,7 @@
         </div>
         <div class="col-sm-3">
           <div class="field">
-           <%= f.select :is_society_member, [['Yes','true'],['No','false']],{label: 'Society Membership Option',include_blank: " Select Society Membership Option"} %>
+           <%= f.select :is_society_member, [['Yes',true],['No', false]],{label: 'Society Membership Option',include_blank: " Select Society Membership Option"} %>
            </div>
         </div>
         <div class="col-sm-3">

@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :pf_masters
   resources :society_member_ships
   resources :well_faires
   resources :monthly_expences do

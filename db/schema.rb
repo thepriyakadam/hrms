@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160221080204) do
+ActiveRecord::Schema.define(version: 20160229093149) do
 
   create_table "advance_salaries", force: :cascade do |t|
     t.integer  "employee_id"
@@ -868,6 +868,20 @@ ActiveRecord::Schema.define(version: 20160221080204) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
+
+  create_table "pf_masters", force: :cascade do |t|
+    t.boolean  "is_pf"
+    t.integer  "salary_component_id"
+    t.decimal  "percentage",          precision: 4,  scale: 2
+    t.date     "date_effective"
+    t.decimal  "min_limit",           precision: 15, scale: 2
+    t.string   "base_component"
+    t.boolean  "is_active"
+    t.datetime "created_at",                                   null: false
+    t.datetime "updated_at",                                   null: false
+  end
+
+  add_index "pf_masters", ["salary_component_id"], name: "index_pf_masters_on_salary_component_id"
 
   create_table "qualifications", force: :cascade do |t|
     t.integer  "employee_id"

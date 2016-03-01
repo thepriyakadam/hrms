@@ -4,7 +4,7 @@ class ProfessionalTaxesController < ApplicationController
   # GET /professional_taxes
   # GET /professional_taxes.json
   def index
-    @professional_taxes = ProfessionalTax.all
+    
   end
 
   # GET /professional_taxes/1
@@ -15,6 +15,7 @@ class ProfessionalTaxesController < ApplicationController
   # GET /professional_taxes/new
   def new
     @professional_tax = ProfessionalTax.new
+    @professional_taxes = ProfessionalTax.all
   end
 
   # GET /professional_taxes/1/edit
@@ -25,14 +26,14 @@ class ProfessionalTaxesController < ApplicationController
   # POST /professional_taxes.json
   def create
     @professional_tax = ProfessionalTax.new(professional_tax_params)
-
+    @professional_taxes = ProfessionalTax.all
     respond_to do |format|
       if @professional_tax.save
-        format.html { redirect_to @professional_tax, notice: 'Professional tax was successfully created.' }
-        format.json { render :show, status: :created, location: @professional_tax }
+       @professional_tax = ProfessionalTax.new
+        format.js { @flag = true }
       else
-        format.html { render :new }
-        format.json { render json: @professional_tax.errors, status: :unprocessable_entity }
+        flash.now[:alert] = "PT Already Exist."
+         format.js { @flag = false }
       end
     end
   end
@@ -40,25 +41,17 @@ class ProfessionalTaxesController < ApplicationController
   # PATCH/PUT /professional_taxes/1
   # PATCH/PUT /professional_taxes/1.json
   def update
-    respond_to do |format|
-      if @professional_tax.update(professional_tax_params)
-        format.html { redirect_to @professional_tax, notice: 'Professional tax was successfully updated.' }
-        format.json { render :show, status: :ok, location: @professional_tax }
-      else
-        format.html { render :edit }
-        format.json { render json: @professional_tax.errors, status: :unprocessable_entity }
-      end
-    end
+     @professional_tax.update(professional_tax_params)
+     @professional_taxes = ProfessionalTax.all
+     @professional_tax = ProfessionalTax.new  
+   
   end
 
   # DELETE /professional_taxes/1
   # DELETE /professional_taxes/1.json
   def destroy
     @professional_tax.destroy
-    respond_to do |format|
-      format.html { redirect_to professional_taxes_url, notice: 'Professional tax was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    @professional_taxes = ProfessionalTax.all
   end
 
   private

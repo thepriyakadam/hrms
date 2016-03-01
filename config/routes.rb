@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resources :monthly_expences do
     collection do
       get :employees
+      get :employee_expences
     end
   end
   resources :expencess_types

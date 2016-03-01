@@ -68,18 +68,36 @@ class MonthlyExpencesController < ApplicationController
   end
 
   def employees
+    @year = params[:year]
+    @month = params[:month]
     date = Date.new(params[:year].to_i, Workingday.months[params[:month]])
     if current_user.class == Group
-      @monthly_expences = MonthlyExpence.where("strftime('%m/%Y', expence_date) = ?", date.strftime('%m/%Y'))
+      @monthly_expences = MonthlyExpence.where("strftime('%m/%Y', expence_date) = ?", date.strftime('%m/%Y')).group(:employee_id)
     else
       if current_user.role.name == "Company" or current_user.role.name == "Account"
-        @monthly_expences = MonthlyExpence.where("strftime('%m/%Y', expence_date) = ?", date.strftime('%m/%Y'))
+        @monthly_expences = MonthlyExpence.where("strftime('%m/%Y', expence_date) = ?", date.strftime('%m/%Y')).group(:employee_id)
       elsif current_user.role.name == "CompanyLocation"
         @employees = Employee.where(company_location_id: current_user.company_location_id)
-        @monthly_expences = MonthlyExpence.where("strftime('%m/%Y', expence_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+        @monthly_expences = MonthlyExpence.where("strftime('%m/%Y', expence_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees).group(:employee_id)
       elsif current_user.role.name == "Employee"
         @monthly_expences = MonthlyExpence.where("strftime('%m/%Y', expence_date) = ?", date.strftime('%m/%Y')).where(employee_id: current_user.employee_id)
-      end    
+      end
+    end
+  end
+
+  def employee_expences
+    date = Date.new(params[:year].to_i, Workingday.months[params[:month]])
+    if current_user.class == Group
+      @monthly_expences = MonthlyExpence.where("strftime('%m/%Y', expence_date) = ?", date.strftime('%m/%Y')).where(employee_id: params[:employee_id])
+    else
+      if current_user.role.name == "Company" or current_user.role.name == "Account"
+        @monthly_expences = MonthlyExpence.where("strftime('%m/%Y', expence_date) = ?", date.strftime('%m/%Y')).where(employee_id: params[:employee_id])
+      elsif current_user.role.name == "CompanyLocation"
+        #@employees = Employee.where(company_location_id: current_user.company_location_id)
+        @monthly_expences = MonthlyExpence.where("strftime('%m/%Y', expence_date) = ?", date.strftime('%m/%Y')).where(employee_id: params[:employee_id])
+      elsif current_user.role.name == "Employee"
+        @monthly_expences = MonthlyExpence.where("strftime('%m/%Y', expence_date) = ?", date.strftime('%m/%Y')).where(employee_id: current_user.employee_id)
+      end
     end
   end
 

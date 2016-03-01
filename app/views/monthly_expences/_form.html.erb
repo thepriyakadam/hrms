@@ -8,33 +8,53 @@
   <div class="box-body">
     <%= bootstrap_form_for(@monthly_expence,html: {id: 'monthly_expence'}) do |f| %>
       <div class="row">
-       <div class="col-sm-3">
-        <div class="form-group required">
-          <%= f.select :employee_id, employee_list_for_food_deduction %>
-        </div>
-      </div>
-      <div class="col-sm-3">
-      <label> Date </label>
-       <div class="form-group required">
-        <div class="input-group">
-          <div class="input-group-addon">
-            <i class="fa fa-calendar"></i>
-          </div>
-          <%= f.text_field :expence_date,hide_label: true,class: 'expence_date'%>
-        </div>
-       </div>
-      </div>
-      <div class="col-sm-3">
-        <div class="field">
-         <%= f.select :expencess_type_id, all_expencess_type,{include_blank: " Select Expence Type"} %>
-        </div>
-      </div>
         <div class="col-sm-3">
           <div class="form-group required">
-           <%= f.text_field :amount,label: 'Amount',placeholder: "Amount"%>
-           </div>
-        </div> 
+            <%= f.select :employee_id, employee_list_for_food_deduction %>
+          </div>
+        </div>
+        
+      </div>  
+        
+      <div id="entry1" class="clonedInput">
+        <div class="row">
+          <div class="col-sm-3">
+            <label> Date </label>
+            <div class="form-group required">
+              <div class="input-group">
+                <div class="input-group-addon">
+                  <i class="fa fa-calendar"></i>
+                </div>
+                <%= f.text_field :expence_date,hide_label: true,class: 'input_expence_date'%>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="field">
+             <%= f.select :expencess_type_id, all_expencess_type,{include_blank: " Select Expence Type"}, class: 'input_expencess_type_id' %>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="form-group required">
+              <%= f.text_field :amount,label: 'Amount',placeholder: "Amount", class: 'input_amount'%>
+            </div>
+          </div>
+        </div>
       </div>
+
+      
+        <div class="row">
+          <div class="col-sm-2">
+            <input type="button" id="btnAdd" value="+ Additional Awards" class="btn btn-success btn-sm"> 
+          </div>
+
+          <div class="col-sm-3">
+            <input type="button" id="btnDel" value="Remove Above Awards" class="btn btn-danger btn-sm">
+          </div>
+        </div><br>
+      
+
       <div class="row">
         <div class="col-sm-3">
           <div class="actions">
@@ -48,10 +68,50 @@
 
 <script type="text/javascript">
   $(function(){
-    $('.expence_date').datepicker({
+    $('.input_expence_date').datepicker({
     changeYear:true,
     changeMonth: true,
     yearRange: '-0:100',
     dateFormat: 'dd-mm-yy' });
-  }); 
+  });
+
+  $(function () {
+  $('#btnAdd').click(function () {
+      var num     = $('.clonedInput').length, 
+          newNum  = new Number(num + 1),      
+          newElem = $('#entry' + num).clone().attr('id', 'entry' + newNum).fadeIn('slow'); //
+      newElem.find('.input_expence_date').attr('name','monthly_expence['+ newNum +'][expence_date]').attr('id', newNum + '_monthly_expence_expence_date').val('');
+      newElem.find('.input_expencess_type_id').attr('name','monthly_expence['+ newNum +'][expencess_type_id]').attr('id', newNum + '_monthly_expencess_expencess_type_id').val('');
+      newElem.find('.input_amount').attr('name','monthly_expence['+ newNum +'][amount]').attr('id', newNum + '_monthly_expence_amount').val('');
+
+      $('#entry' + num).after(newElem);
+      $('#ID' + newNum + '_title').focus();
+
+      $('#btnDel').attr('disabled', false);
+
+      if (newNum == 3)
+      $('#btnAdd').attr('disabled', true).prop('value', "You've reached the limit"); // value here updates the text in the 'add' button when the limit is reached 
+  });
+
+  $('#btnDel').click(function () {
+  // Confirmation dialog box. Works on all desktop browsers and iPhone.
+      if (confirm("Are you sure you wish to remove this section? This cannot be undone."))
+          {
+              var num = $('.clonedInput').length;
+              // how many "duplicatable" input fields we currently have
+              $('#entry' + num).slideUp('slow', function () {$(this).remove();
+              // if only one element remains, disable the "remove" button
+                  if (num -1 === 1)
+              $('#btnDel').attr('disabled', true);
+              // enable the "add" button
+              $('#btnAdd').attr('disabled', false).prop('value', "+ Additional Awards");});
+          }
+      return false; // Removes the last section you added
+  });
+  // Enable the "add" button
+  $('#btnAdd').attr('disabled', false);
+  // Disable the "remove" button
+  $('#btnDel').attr('disabled', true);
+});
+
 </script>

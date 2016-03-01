@@ -25,9 +25,15 @@ class MonthlyExpencesController < ApplicationController
   # POST /monthly_expences.json
   def create
     @monthly_expence = MonthlyExpence.new(monthly_expence_params)
+    @employee = Employee.find(@monthly_expence.employee_id)
 
+    len = params["monthly_expence"].length-3
+      for i in 2..len
+        @employee.monthly_expences.build(expence_date: params['monthly_expence'][i.to_s]['expence_date'], expencess_type_id: params['monthly_expence'][i.to_s]['expencess_type_id'], amount: params['monthly_expence'][i.to_s]['amount']) 
+      end
+    @employee.monthly_expences.build(monthly_expence_params)  
     respond_to do |format|
-      if @monthly_expence.save
+      if @employee.save
         format.html { redirect_to monthly_expences_path, notice: 'Monthly expence was successfully created.' }
         format.json { render :show, status: :created, location: @monthly_expence }
       else

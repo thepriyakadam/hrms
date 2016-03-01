@@ -1,5 +1,15 @@
-<h1>New Professional Tax</h1>
-
-<%= render 'form' %>
-
-<%= link_to 'Back', professional_taxes_path %>
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Professional Tax</h3>
+  </div><!-- /.box-header -->
+	<div class="box-body">
+		<div id="form">
+			<%= render 'form' %>	
+		</div>
+		
+		<div id="professional_tax_li">
+			<%= render 'professional_tax_list' %>
+		</div>
+		
+	</div><!-- /.box-body -->
+</div><!-- /.box -->

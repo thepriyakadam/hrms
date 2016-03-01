@@ -1,0 +1,29 @@
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>  
+      <th>Is pt</th>
+      <th>Min salary</th>
+      <th>Max salary</th>
+      <th>Pt amount</th>
+      <th>For months</th>
+      <th>March month</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+   <% @professional_taxes.each do |professional_tax| %>
+      <tr>
+        <td><%= professional_tax.is_pt %></td>
+        <td><%= professional_tax.min_salary %></td>
+        <td><%= professional_tax.max_salary %></td>
+        <td><%= professional_tax.pt_amount %></td>
+        <td><%= professional_tax.for_months %></td>
+        <td><%= professional_tax.march_month %></td>
+        <td>
+          <%= link_to '', edit_professional_tax_path(professional_tax) ,class: 'btn btn-sm btn-success fa fa-edit',remote:true %>
+          <%= link_to '',  professional_tax, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-sm btn-danger fa fa-close' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

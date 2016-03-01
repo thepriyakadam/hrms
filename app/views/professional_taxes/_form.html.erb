@@ -1,41 +1,43 @@
-<%= form_for(@professional_tax) do |f| %>
-  <% if @professional_tax.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@professional_tax.errors.count, "error") %> prohibited this professional_tax from being saved:</h2>
-
-      <ul>
-      <% @professional_tax.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+<%= bootstrap_form_for(@professional_tax,remote:true) do |f| %>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="field">
+       <%= f.select :is_pt,['Yes','No'],{label: 'PT Option',include_blank: " Select PT"} %>
+      </div>
     </div>
-  <% end %>
+     <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :min_salary, label:'From Salary' %>
+      </div>
+    </div>
+     <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :max_salary, label:'To Salary' %>
+      </div>
+    </div>
+    </div>
+    <div class="row">
+    <div class="col-sm-3">
+      <div class="field">
+       <%= f.text_field :pt_amount, label:'PT Amount' %>
+      </div>
+    </div>
+     <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :for_months, label:'For 11 Month ' %>
+      </div>
+    </div>
+     <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :march_month, label:'For March Month' %>
+      </div>
+    </div>
+    </div>
 
-  <div class="field">
-    <%= f.label :is_pt %><br>
-    <%= f.text_field :is_pt %>
-  </div>
-  <div class="field">
-    <%= f.label :min_salary %><br>
-    <%= f.text_field :min_salary %>
-  </div>
-  <div class="field">
-    <%= f.label :max_salary %><br>
-    <%= f.text_field :max_salary %>
-  </div>
-  <div class="field">
-    <%= f.label :pt_amount %><br>
-    <%= f.text_field :pt_amount %>
-  </div>
-  <div class="field">
-    <%= f.label :for_months %><br>
-    <%= f.text_field :for_months %>
-  </div>
-  <div class="field">
-    <%= f.label :march_month %><br>
-    <%= f.text_field :march_month %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit :class => class_name %>
+      </div>
+    </div>
   </div>
 <% end %>

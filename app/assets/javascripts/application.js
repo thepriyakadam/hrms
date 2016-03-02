@@ -103,6 +103,12 @@ $(function(){
    changeYear:true,
    changeMonth: true,
    yearRange: '-100:+2',
+   dateFormat: 'dd-mm-yy' });  
+
+   $('.workingday_date').datepicker({
+   changeYear:true,
+   changeMonth: true,
+   yearRange: '-10:+50',
    dateFormat: 'dd-mm-yy' });   
 });
 

@@ -83,6 +83,8 @@ Rails.application.routes.draw do
   resources :workingdays do
     collection do
       get :employees
+      get :search_month_year
+      get :generate_workingday
     end
   end
   resources :overtimes

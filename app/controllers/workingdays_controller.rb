@@ -77,6 +77,29 @@ class WorkingdaysController < ApplicationController
     end
   end
 
+  def search_month_year
+    
+  end
+
+  def generate_workingday
+    @date = params[:date].to_date
+    @workingdays = []
+    @employees = Employee.all
+    @employees.each do |e|
+      workingday = Workingday.new
+      if e.joining_detail.employee_category.try(:name) == "Worker"
+        workingday.day_in_month = 26  
+      else
+        workingday.day_in_month = @date.end_of_month.day
+      end
+      workingday.present_day = Attendance.where(attendance_date: @date.beginning_of_month..@date.end_of_month, employee_id: e.id).count
+      #workingday.total_leave = ParticularLeaveRecord.where(leave_date: @date.beginning_of_month..@date.end_of_month, employee_id: e.id).count
+      workingday.holiday_in_month = Holiday.where(holiday_date: @date.beginning_of_month..@date.end_of_month).count
+      workingday.employee_id = e.id
+      @workingdays << workingday
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_workingday

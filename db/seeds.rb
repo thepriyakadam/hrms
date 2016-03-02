@@ -545,3 +545,47 @@ require 'roo'
 #   j = j + 1
 # end
 ###############################################################################################
+ex = Roo::Excel.new("#{Rails.root}/public/leave.xls")
+ex.default_sheet = ex.sheets[0]
+j = 1
+expiry_date = '31/12/2016'.to_date
+3.upto(366) do |line|
+  employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
+  
+  unless employee.nil?
+    puts "Starting Record---------------------------------------#{employee.manual_employee_code}"
+    cl = ex.cell(line,'E').to_i
+    el = ex.cell(line,'F').to_i
+
+    cl_taken = ex.cell(line,'G')
+    el_taken = ex.cell(line,'F')
+
+    employee.employee_leav_balances.build(leav_category_id: 1, no_of_leave: cl, expiry_date: expiry_date, total_leave: cl)
+    employee.employee_leav_balances.build(leav_category_id: 2, no_of_leave: el, expiry_date: expiry_date, total_leave: el)
+
+    # if cl_taken.nil?
+    # else
+      # cl_arr = cl_taken.divmod 1
+      # cl_arr.each do |c|
+      #   if c == 0
+
+      #   else
+      #     if c.integer?
+      #       employee.employee_leav_requests.build(leav_category_id: 1, leav_type: 'Full Day',)
+      #     else
+      #       employee.employee_leav_requests.build()
+      #     end
+      #   end
+      # end  
+
+    # end
+
+    # if ex.cell(line,'G').nil?
+    # else
+    # end
+    employee.save  
+  end
+  puts "record inserted #{j}"
+  j = j + 1
+end
+###############################################################################################

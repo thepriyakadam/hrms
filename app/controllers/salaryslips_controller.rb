@@ -205,33 +205,56 @@ class SalaryslipsController < ApplicationController
       end
 
       @pf_master = PfMaster.where(is_active: true).take 
-        if @pf_master.nil? 
-        else 
-          if @pf_master.is_pf 
-            formula_string = @pf_master.base_component.split(",") 
-            formula_string.try(:each) do |f| 
-              formula_item = addable_salary_items.where(salary_component_id: f.to_i).take 
-              formula_item_actual_amount = formula_item.monthly_amount 
-              formula_item_actual_amount = 0 if formula_item_actual_amount.nil? 
-              formula_total_actual_amount = formula_total_actual_amount + formula_item_actual_amount 
-              formula_item_calculated_amount = formula_item_actual_amount / working_day.try(:day_in_month) * working_day.try(:payable_day) 
-              formula_total_calculated_amount = formula_total_calculated_amount + formula_item_calculated_amount 
-            end 
-
-            if @employee.joining_detail.select_pf == "Yes" 
-              deducted_actual_amount = (formula_total_actual_amount / 100 * @pf_master.percentage).round 
-              deducted_calculated_amount = (formula_total_calculated_amount / 100 * @pf_master.percentage).round 
-            elsif @employee.joining_detail.select_pf == "Limit" 
-              deducted_actual_amount = (@employee.joining_detail.pf_max_amount.to_f / 100 * @pf_master.percentage).round 
-              deducted_calculated_amount = deducted_actual_amount 
-            else 
-              deducted_actual_amount = 0 
-              deducted_calculated_amount = 0 
-            end 
-            deducted_total_actual_amount = deducted_total_actual_amount + deducted_actual_amount 
-            deducted_total_calculated_amount = deducted_total_calculated_amount + deducted_calculated_amount 
+      if @pf_master.nil? 
+      else 
+        if @pf_master.is_pf 
+          formula_string = @pf_master.base_component.split(",") 
+          formula_string.try(:each) do |f| 
+            formula_item = addable_salary_items.where(salary_component_id: f.to_i).take 
+            formula_item_actual_amount = formula_item.monthly_amount 
+            formula_item_actual_amount = 0 if formula_item_actual_amount.nil? 
+            formula_total_actual_amount = formula_total_actual_amount + formula_item_actual_amount 
+            formula_item_calculated_amount = formula_item_actual_amount / working_day.try(:day_in_month) * working_day.try(:payable_day) 
+            formula_total_calculated_amount = formula_total_calculated_amount + formula_item_calculated_amount 
           end 
+
+          if @employee.joining_detail.select_pf == "Yes" 
+            deducted_actual_amount = (formula_total_actual_amount / 100 * @pf_master.percentage).round 
+            deducted_calculated_amount = (formula_total_calculated_amount / 100 * @pf_master.percentage).round 
+          elsif @employee.joining_detail.select_pf == "Limit" 
+            deducted_actual_amount = (@employee.joining_detail.pf_max_amount.to_f / 100 * @pf_master.percentage).round 
+            deducted_calculated_amount = deducted_actual_amount 
+          else 
+            deducted_actual_amount = 0 
+            deducted_calculated_amount = 0 
+          end 
+          deducted_total_actual_amount = deducted_total_actual_amount + deducted_actual_amount 
+          deducted_total_calculated_amount = deducted_total_calculated_amount + deducted_calculated_amount 
         end 
+      end
+
+      master_esic = EsicMaster.first
+      unless master_esic.nil?
+        if master_esic.esic and addable_total_calculated_amount <= master_esic.max_limit and @employee.joining_detail.have_esic
+          formula_string = master_esic.base_component.split(",")
+          formula_string.try(:each) do |f|
+            formula_item = addable_salary_items.where(salary_component_id: f.to_i).take
+            formula_item_actual_amount = formula_item.monthly_amount
+            formula_item_actual_amount = 0 if formula_item_actual_amount.nil?
+            formula_total_actual_amount = formula_total_actual_amount + formula_item_actual_amount
+            formula_item_calculated_amount = formula_item_actual_amount / working_day.try(:day_in_month) * working_day.try(:payable_day)
+            formula_total_calculated_amount = formula_total_calculated_amount + formula_item_calculated_amount
+          end
+          deducted_actual_amount = (formula_total_actual_amount / 100 * master_esic.percentage).ceil
+          deducted_calculated_amount = (formula_total_calculated_amount / 100 * master_esic.percentage).ceil
+        else
+          deducted_actual_amount = 0
+          deducted_calculated_amount = 0
+        end
+        deducted_total_actual_amount = deducted_total_actual_amount + deducted_actual_amount
+        deducted_total_calculated_amount = deducted_total_calculated_amount + deducted_calculated_amount
+      end
+           
 
 
       Salaryslip.new do |ss|
@@ -336,6 +359,28 @@ class SalaryslipsController < ApplicationController
           SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: deducted_actual_amount, calculated_amount: deducted_calculated_amount, is_deducted: true, other_component_name: "PF")   
         end 
       end
+
+      master_esic = EsicMaster.first
+      unless master_esic.nil?
+        if master_esic.esic and addable_total_calculated_amount <= master_esic.max_limit and @employee.joining_detail.have_esic
+          formula_string = master_esic.base_component.split(",")
+          formula_string.try(:each) do |f|
+            formula_item = addable_salary_items.where(salary_component_id: f.to_i).take
+            formula_item_actual_amount = formula_item.monthly_amount
+            formula_item_actual_amount = 0 if formula_item_actual_amount.nil?
+            formula_total_actual_amount = formula_total_actual_amount + formula_item_actual_amount
+            formula_item_calculated_amount = formula_item_actual_amount / working_day.try(:day_in_month) * working_day.try(:payable_day)
+            formula_total_calculated_amount = formula_total_calculated_amount + formula_item_calculated_amount
+          end
+          deducted_actual_amount = (formula_total_actual_amount / 100 * master_esic.percentage).ceil
+          deducted_calculated_amount = (formula_total_calculated_amount / 100 * master_esic.percentage).ceil
+        else
+          deducted_actual_amount = 0
+          deducted_calculated_amount = 0
+        end
+        SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: deducted_actual_amount, calculated_amount: deducted_calculated_amount, is_deducted: true, other_component_name: "ESIC")   
+      end
+
       
       @arrear = EmployeeArrear.where("employee_id = ? and is_paid = ?", @employee.id,false).take
       unless @arrear.nil?
@@ -648,6 +693,28 @@ class SalaryslipsController < ApplicationController
             end 
           end
 
+          master_esic = EsicMaster.first
+          unless master_esic.nil?
+            if master_esic.esic and addable_total_calculated_amount <= master_esic.max_limit and @employee.joining_detail.have_esic
+              formula_string = master_esic.base_component.split(",")
+              formula_string.try(:each) do |f|
+                formula_item = addable_salary_items.where(salary_component_id: f.to_i).take
+                formula_item_actual_amount = formula_item.monthly_amount
+                formula_item_actual_amount = 0 if formula_item_actual_amount.nil?
+                formula_total_actual_amount = formula_total_actual_amount + formula_item_actual_amount
+                formula_item_calculated_amount = formula_item_actual_amount / working_day.try(:day_in_month) * working_day.try(:payable_day)
+                formula_total_calculated_amount = formula_total_calculated_amount + formula_item_calculated_amount
+              end
+              deducted_actual_amount = (formula_total_actual_amount / 100 * master_esic.percentage).ceil
+              deducted_calculated_amount = (formula_total_calculated_amount / 100 * master_esic.percentage).ceil
+            else
+              deducted_actual_amount = 0
+              deducted_calculated_amount = 0
+            end
+            deducted_total_actual_amount = deducted_total_actual_amount + deducted_actual_amount
+            deducted_total_calculated_amount = deducted_total_calculated_amount + deducted_calculated_amount
+          end
+
           Salaryslip.new do |ss|
             ss.employee_id = @employee.id
             ss.workingday_id = working_day.id
@@ -748,6 +815,28 @@ class SalaryslipsController < ApplicationController
               SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: deducted_actual_amount, calculated_amount: deducted_calculated_amount, is_deducted: true, other_component_name: "PF")   
             end 
           end
+
+          master_esic = EsicMaster.first
+          unless master_esic.nil?
+            if master_esic.esic and addable_total_calculated_amount <= master_esic.max_limit and @employee.joining_detail.have_esic
+              formula_string = master_esic.base_component.split(",")
+              formula_string.try(:each) do |f|
+                formula_item = addable_salary_items.where(salary_component_id: f.to_i).take
+                formula_item_actual_amount = formula_item.monthly_amount
+                formula_item_actual_amount = 0 if formula_item_actual_amount.nil?
+                formula_total_actual_amount = formula_total_actual_amount + formula_item_actual_amount
+                formula_item_calculated_amount = formula_item_actual_amount / working_day.try(:day_in_month) * working_day.try(:payable_day)
+                formula_total_calculated_amount = formula_total_calculated_amount + formula_item_calculated_amount
+              end
+              deducted_actual_amount = (formula_total_actual_amount / 100 * master_esic.percentage).ceil
+              deducted_calculated_amount = (formula_total_calculated_amount / 100 * master_esic.percentage).ceil
+            else
+              deducted_actual_amount = 0
+              deducted_calculated_amount = 0
+            end
+            SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: deducted_actual_amount, calculated_amount: deducted_calculated_amount, is_deducted: true, other_component_name: "ESIC")   
+          end
+
 
           @arrear = EmployeeArrear.where("employee_id = ? and is_paid = ?", @employee.id,false).take
           unless @arrear.nil?

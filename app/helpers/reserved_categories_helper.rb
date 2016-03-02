@@ -1,0 +1,2 @@
+module ReservedCategoriesHelper
+end

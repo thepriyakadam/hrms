@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160229130415) do
+ActiveRecord::Schema.define(version: 20160302134042) do
 
   create_table "advance_salaries", force: :cascade do |t|
     t.integer  "employee_id"
@@ -704,6 +704,8 @@ ActiveRecord::Schema.define(version: 20160229130415) do
     t.integer  "department_id"
     t.boolean  "have_retention"
     t.boolean  "is_society_member"
+    t.date     "retirement_date"
+    t.integer  "reserved_category_id"
   end
 
   add_index "joining_details", ["cost_center_id"], name: "index_joining_details_on_cost_center_id"
@@ -713,6 +715,7 @@ ActiveRecord::Schema.define(version: 20160229130415) do
   add_index "joining_details", ["employee_grade_id"], name: "index_joining_details_on_employee_grade_id"
   add_index "joining_details", ["employee_id"], name: "index_joining_details_on_employee_id"
   add_index "joining_details", ["payment_mode_id"], name: "index_joining_details_on_payment_mode_id"
+  add_index "joining_details", ["reserved_category_id"], name: "index_joining_details_on_reserved_category_id"
 
   create_table "leav_approveds", force: :cascade do |t|
     t.integer  "employee_leav_request_id"
@@ -871,17 +874,14 @@ ActiveRecord::Schema.define(version: 20160229130415) do
 
   create_table "pf_masters", force: :cascade do |t|
     t.boolean  "is_pf"
-    t.integer  "salary_component_id"
-    t.decimal  "percentage",          precision: 4,  scale: 2
+    t.decimal  "percentage",     precision: 4,  scale: 2
     t.date     "date_effective"
-    t.decimal  "min_limit",           precision: 15, scale: 2
+    t.decimal  "min_limit",      precision: 15, scale: 2
     t.string   "base_component"
     t.boolean  "is_active"
-    t.datetime "created_at",                                   null: false
-    t.datetime "updated_at",                                   null: false
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
   end
-
-  add_index "pf_masters", ["salary_component_id"], name: "index_pf_masters_on_salary_component_id"
 
   create_table "professional_taxes", force: :cascade do |t|
     t.string   "is_pt"
@@ -933,6 +933,14 @@ ActiveRecord::Schema.define(version: 20160229130415) do
   end
 
   add_index "reporting_masters", ["employee_id"], name: "index_reporting_masters_on_employee_id"
+
+  create_table "reserved_categories", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
+    t.string   "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
 
   create_table "retention_moneys", force: :cascade do |t|
     t.boolean  "have_retention"

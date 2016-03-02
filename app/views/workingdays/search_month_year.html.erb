@@ -1,0 +1,15 @@
+<!-- SELECT2 EXAMPLE -->
+<div class="box box-default">
+  <div class="box-body">
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="field">
+          <%= text_field :workingday,:date,{onchange:"var a={date:$(this).val()}; $.get('/workingdays/generate_workingday',a,function(response){});",class: 'form-control workingday_date',placeholder:'Search by Employee id'} %>
+        </div>
+      </div>
+    </div><br>
+    <ol></ol>
+    <div id="all_employee_workingday">
+    </div>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->

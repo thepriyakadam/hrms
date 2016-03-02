@@ -1,0 +1,33 @@
+<table id="example1" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Employee</th>
+      <th>Day in Month</th>
+      <th>Present Day</th>
+      <th>Total Leave</th>
+      <th>Holiday in Month</th>
+      <th>Week off Day</th>
+      <th>Absent Day</th>
+      <th>Payable Day</th>
+    </tr>
+  </thead>
+
+  <tbody>
+     <% @workingdays.each do |workingday| %>
+      <tr>
+        <td><%= workingday.employee.try(:manual_employee_code) %></td>
+        <td><%= workingday.day_in_month %></td>
+        <td><%= workingday.present_day %></td>
+        <td><%= workingday.total_leave %></td>
+        <td><%= workingday.holiday_in_month %></td>
+        <td><%= workingday.week_off_day %></td>
+        <td><%= workingday.absent_day %></td>
+        <td><%= workingday.payable_day %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<script type="text/javascript">
+  $("#example1").DataTable();
+</script>

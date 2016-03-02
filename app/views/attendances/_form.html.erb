@@ -2,7 +2,7 @@
    <div class="col-sm-3">
      <div class="field">
      <label> Shift </label>
-       <%= select :attendance, :employee_shift_id, all_company_shifts,{include_blank: "Please Select Shift"},{onchange: "var a = {id : $(this).val()};$.get('/attendances/collect_shift_date',a,function(response){});",class: 'form-control'} %></div>
+       <%= select :attendance, :employee_shift_id, all_company_shifts,{include_blank: "Please Select Shift"},{onchange: "var a = {company_shift_id : $(this).val()};$.get('/attendances/collect_shift_date',a,function(response){});",class: 'form-control'} %></div>
    </div>
    <div class="col-sm-3">
      <label> Attendance Date Range </label>

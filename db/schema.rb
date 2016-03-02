@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160229130415) do
+ActiveRecord::Schema.define(version: 20160302104300) do
 
   create_table "advance_salaries", force: :cascade do |t|
     t.integer  "employee_id"
@@ -39,7 +39,7 @@ ActiveRecord::Schema.define(version: 20160229130415) do
   create_table "attendances", force: :cascade do |t|
     t.integer  "employee_shift_id"
     t.integer  "employee_id"
-    t.string   "attendance_date"
+    t.date     "attendance_date"
     t.time     "check_in"
     t.time     "check_out"
     t.decimal  "company_hrs"

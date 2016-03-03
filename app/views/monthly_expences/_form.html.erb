@@ -114,4 +114,25 @@
   $('#btnDel').attr('disabled', true);
 });
 
+$("#monthly_expence").validate({
+  rules: {
+    "monthly_expence[employee_id]":{
+      required: true
+    },
+    "monthly_expence[expencess_type_id]":{
+      required: true
+    },
+    "monthly_expence[expence_date]":{
+      required: true
+    },
+    "monthly_expence[amount]":{
+      required: true
+    }
+  },
+  
+  errorPlacement: function(error, element) {
+   error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+   error.insertAfter(element.parent(element));
+  }
+});
 </script>

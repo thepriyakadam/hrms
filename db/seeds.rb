@@ -563,22 +563,38 @@ expiry_date = '31/12/2016'.to_date
     employee.employee_leav_balances.build(leav_category_id: 1, no_of_leave: cl, expiry_date: expiry_date, total_leave: cl)
     employee.employee_leav_balances.build(leav_category_id: 2, no_of_leave: el, expiry_date: expiry_date, total_leave: el)
 
-    # if cl_taken.nil?
-    # else
-      # cl_arr = cl_taken.divmod 1
-      # cl_arr.each do |c|
-      #   if c == 0
+    start_date = Date.new(2016,01,1)
+    end_date = Date.new
+    date_range = String.new
 
-      #   else
-      #     if c.integer?
-      #       employee.employee_leav_requests.build(leav_category_id: 1, leav_type: 'Full Day',)
-      #     else
-      #       employee.employee_leav_requests.build()
-      #     end
-      #   end
-      # end  
+    if cl_taken.nil?
+      puts "cl is not taken by #{employee.id}"
+    else
+      cl_arr = cl_taken.divmod 1
+      cl_arr.each do |c|
+        end_date = start_date + c
+        date_range = start_date.to_s+' '+start_date.to_time.to_s+' - '+end_date.to_s+' '+end_date.to_time.to_s 
 
-    # end
+        if c == 0
+
+        else
+          if c.integer?
+            puts 'Full day request.'
+            
+            employee.employee_leav_requests.build(leav_category_id: 1, leave_type: 'Full Day', start_date: start_date,end_date: end_date,date_range: date_range,leave_count: c, reason: 'aaa', current_status: 'Pending', is_pending: true, first_reporter_id: employee.manager_id)
+            # for i in start_date..end_date
+            #   puts "full day leave particular record."
+            #   employee.particular_leave_records.build(leav_category_id: 1, leave_date: i,is_full: true)
+            # end
+          else
+            puts 'Half day request.'
+            employee.employee_leav_requests.build(leav_category_id: 1, leave_type: 'Half Day', start_date: start_date,end_date: start_date, leave_count: c, reason: 'aaa', current_status: 'Pending', is_pending: true, first_reporter_id: employee.manager_id)
+
+            #employee.particular_leave_records.build(leav_category_id: 1, employee_leav_request_id: elr.id, leave_date: start_date,is_full: false)
+          end
+        end
+      end
+    end
 
     # if ex.cell(line,'G').nil?
     # else

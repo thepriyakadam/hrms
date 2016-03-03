@@ -37,7 +37,7 @@ class MonthlyExpencesController < ApplicationController
         format.html { redirect_to monthly_expences_path, notice: 'Monthly expence was successfully created.' }
         format.json { render :show, status: :created, location: @monthly_expence }
       else
-        format.html { render :new }
+        format.html { render 'monthly_expences/new' }
         format.json { render json: @monthly_expence.errors, status: :unprocessable_entity }
       end
     end

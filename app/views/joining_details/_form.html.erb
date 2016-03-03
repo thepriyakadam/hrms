@@ -144,7 +144,7 @@
         <div class="field">
           <%= f.select :department_id, all_department,{label: 'Department',include_blank: " Select Department"} %>
        </div>
-    </div> 
+       </div> 
   </div>
   <div class="row">
     
@@ -153,6 +153,23 @@
           <%= f.select :have_retention,[['Yes','true'],['No','false']],{label: 'Retention',include_blank: " Select Retention"} %>
        </div>
     </div>
+
+     <div class="col-sm-3">
+      <label>Retirement Date </label>
+        <div class="field">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+             <%= f.text_field :retirement_date,hide_label:true, class: 'retirement_date'%>
+          </div>
+        </div>
+      </div>
+       <div class="col-sm-3">
+        <div class="field">
+          <%= f.select :reserved_category_id, all_reserved_category,{label: 'Reserved Category',include_blank: " Select Reserved Category"} %>
+       </div>
+       </div> 
   </div>
 
  <div class="row">
@@ -189,6 +206,13 @@
     changeMonth: true,
     yearRange: '-100:-0',
     dateFormat: 'dd-mm-yy' });
+
+    $('.retirement_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-1:+150',
+    dateFormat: 'dd-mm-yy' });
+
 
     $('.confirm_date').datepicker({
     changeYear:true,

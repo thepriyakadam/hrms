@@ -14,7 +14,7 @@
 
     <div class="col-sm-3">
       <div class="field">
-        <%= f.text_field :status %>
+      <%= f.select :status,['Active','Inactive'],{label: 'Select Active',include_blank: " Select Option"} %>
       </div>
     </div>
 

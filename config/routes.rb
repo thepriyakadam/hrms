@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :reserved_categories
   resources :pf_masters
   resources :professional_taxes
   resources :society_member_ships
@@ -83,6 +84,8 @@ Rails.application.routes.draw do
   resources :workingdays do
     collection do
       get :employees
+      get :search_month_year
+      get :generate_workingday
     end
   end
   resources :overtimes

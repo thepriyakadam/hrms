@@ -20,10 +20,13 @@ module JoiningDetailsHelper
 	end
 
 	def all_department
-		Department.all.collect {|x| [x.name,x.id]}
+		Department.all.collect {|x| [x.company_location.name+'-'+x.name,x.id]}
 	end
 
 	def all_company_location
 		CompanyLocation.all.collect {|x| [x.name,x.id]}
+	end
+	def all_reserved_category
+		ReservedCategory.all.collect {|x| [x.name,x.id]}
 	end
 end

@@ -1,20 +1,10 @@
 class ReservedCategoriesController < ApplicationController
   before_action :set_reserved_category, only: [:show, :edit, :update, :destroy]
 
-  # GET /reserved_categories
-  # GET /reserved_categories.json
-  def index
-    @reserved_categories = ReservedCategory.all
-  end
-
-  # GET /reserved_categories/1
-  # GET /reserved_categories/1.json
-  def show
-  end
-
   # GET /reserved_categories/new
   def new
     @reserved_category = ReservedCategory.new
+    @reserved_categories = ReservedCategory.all
   end
 
   # GET /reserved_categories/1/edit
@@ -25,40 +15,30 @@ class ReservedCategoriesController < ApplicationController
   # POST /reserved_categories.json
   def create
     @reserved_category = ReservedCategory.new(reserved_category_params)
-
+    @reserved_categories = ReservedCategory.all
     respond_to do |format|
       if @reserved_category.save
-        format.html { redirect_to @reserved_category, notice: 'Reserved category was successfully created.' }
-        format.json { render :show, status: :created, location: @reserved_category }
+        @reserved_category = ReservedCategory.new
+         format.js { @flag = true }
       else
-        format.html { render :new }
-        format.json { render json: @reserved_category.errors, status: :unprocessable_entity }
+        flash.now[:alert] = "Reserved Category Already Exist."
+         format.js { @flag = false }
       end
     end
   end
-
   # PATCH/PUT /reserved_categories/1
   # PATCH/PUT /reserved_categories/1.json
   def update
-    respond_to do |format|
-      if @reserved_category.update(reserved_category_params)
-        format.html { redirect_to @reserved_category, notice: 'Reserved category was successfully updated.' }
-        format.json { render :show, status: :ok, location: @reserved_category }
-      else
-        format.html { render :edit }
-        format.json { render json: @reserved_category.errors, status: :unprocessable_entity }
-      end
-    end
+    @reserved_category.update(reserved_category_params)
+    @reserved_categories = ReservedCategory.all
+    @reserved_category = ReservedCategory.new
   end
 
   # DELETE /reserved_categories/1
   # DELETE /reserved_categories/1.json
   def destroy
     @reserved_category.destroy
-    respond_to do |format|
-      format.html { redirect_to reserved_categories_url, notice: 'Reserved category was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    @reserved_categories = ReservedCategory.all
   end
 
   private

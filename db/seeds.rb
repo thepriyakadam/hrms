@@ -549,7 +549,7 @@ ex = Roo::Excel.new("#{Rails.root}/public/leave.xls")
 ex.default_sheet = ex.sheets[0]
 j = 1
 expiry_date = '31/12/2016'.to_date
-3.upto(366) do |line|
+12.upto(20) do |line|
   employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
   
   unless employee.nil?
@@ -563,45 +563,67 @@ expiry_date = '31/12/2016'.to_date
     employee.employee_leav_balances.build(leav_category_id: 1, no_of_leave: cl, expiry_date: expiry_date, total_leave: cl)
     employee.employee_leav_balances.build(leav_category_id: 2, no_of_leave: el, expiry_date: expiry_date, total_leave: el)
 
-    start_date = Date.new(2016,01,1)
-    end_date = Date.new
-    date_range = String.new
+    cl_start_date = Date.new(2016,01,1)
+    cl_end_date = Date.new
+    cl_date_range = String.new
+
+    el_start_date = Date.new(2016,01,20)
+    el_end_date = Date.new
+    el_date_range = String.new
 
     if cl_taken.nil?
       puts "cl is not taken by #{employee.id}"
     else
       cl_arr = cl_taken.divmod 1
       cl_arr.each do |c|
-        end_date = start_date + c
-        date_range = start_date.to_s+' '+start_date.to_time.to_s+' - '+end_date.to_s+' '+end_date.to_time.to_s 
+        cl_end_date = cl_start_date + c
+        cl_date_range = cl_start_date.to_s+' '+cl_start_date.to_time.to_s+' - '+cl_end_date.to_s+' '+cl_end_date.to_time.to_s 
 
         if c == 0
 
         else
           if c.integer?
             puts 'Full day request.'
-            
-            employee.employee_leav_requests.build(leav_category_id: 1, leave_type: 'Full Day', start_date: start_date,end_date: end_date,date_range: date_range,leave_count: c, reason: 'aaa', current_status: 'Pending', is_pending: true, first_reporter_id: employee.manager_id)
-            # for i in start_date..end_date
-            #   puts "full day leave particular record."
-            #   employee.particular_leave_records.build(leav_category_id: 1, leave_date: i,is_full: true)
-            # end
+            employee.employee_leav_requests.build(leav_category_id: 1, leave_type: 'Full Day', start_date: cl_start_date,end_date: cl_end_date,date_range: cl_date_range,leave_count: c, reason: 'aaa', current_status: 'Pending', is_pending: true, first_reporter_id: employee.manager_id)         
           else
             puts 'Half day request.'
-            employee.employee_leav_requests.build(leav_category_id: 1, leave_type: 'Half Day', start_date: start_date,end_date: start_date, leave_count: c, reason: 'aaa', current_status: 'Pending', is_pending: true, first_reporter_id: employee.manager_id)
-
-            #employee.particular_leave_records.build(leav_category_id: 1, employee_leav_request_id: elr.id, leave_date: start_date,is_full: false)
+            employee.employee_leav_requests.build(leav_category_id: 1, leave_type: 'Half Day', start_date: cl_start_date,end_date: cl_start_date, leave_count: c, reason: 'aaa', current_status: 'Pending', is_pending: true, first_reporter_id: employee.manager_id)
           end
         end
       end
     end
 
-    # if ex.cell(line,'G').nil?
-    # else
-    # end
-    employee.save  
+    if el_taken.nil?
+      puts "cl is not taken by #{employee.id}"
+    else
+      el_arr = cl_taken.divmod 1
+      el_arr.each do |c|
+        el_end_date = el_start_date + c
+        el_date_range = el_start_date.to_s+' '+el_start_date.to_time.to_s+' - '+el_end_date.to_s+' '+el_end_date.to_time.to_s 
+
+        if c == 0
+
+        else
+          if c.integer?
+            puts 'Full day request.'
+            employee.employee_leav_requests.build(leav_category_id: 2, leave_type: 'Full Day', start_date: el_start_date,end_date: el_end_date,date_range: el_date_range,leave_count: c, reason: 'aaa', current_status: 'Pending', is_pending: true, first_reporter_id: employee.manager_id)
+          else
+            puts 'Half day request.'
+            employee.employee_leav_requests.build(leav_category_id: 2, leave_type: 'Half Day', start_date: el_start_date,end_date: el_start_date, leave_count: c, reason: 'aaa', current_status: 'Pending', is_pending: true, first_reporter_id: employee.manager_id)
+          end
+        end
+      end
+    end
+
+    
+    #employee.save  
   end
   puts "record inserted #{j}"
   j = j + 1
 end
 ###############################################################################################
+#employee.save
+# for i in start_date..end_date
+#   puts "full day leave particular record."
+#   employee.particular_leave_records.build(leav_category_id: 1, leave_date: i,is_full: true)
+# end

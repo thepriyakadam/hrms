@@ -492,6 +492,7 @@ require 'roo'
 #   puts "record inserted #{j}"
 #   j = j + 1
 # end
+
 ###############################################################################################
 ex = Roo::Excel.new("#{Rails.root}/public/leave.xls")
 ex.default_sheet = ex.sheets[0]
@@ -568,28 +569,69 @@ expiry_date = '31/12/2016'.to_date
   puts "record inserted #{j}"
   j = j + 1
 end
-###############################################################################################
-#employee.save
-# for i in start_date..end_date
-#   puts "full day leave particular record."
-#   employee.particular_leave_records.build(leav_category_id: 1, leave_date: i,is_full: true)
-# end
+puts "**************************************************************************************************************************************************************************"
+puts "**************************************************************************************************************************************************************************"
+puts "**************************************************************************************************************************************************************************"
+puts "**************************************************************************************************************************************************************************"
+puts "**************************************************************************************************************************************************************************"
+puts "**************************************************************************************************************************************************************************"
+puts "**************************************************************************************************************************************************************************"
 
+###############################################################################################
 @employee = Employee.all
 @employee.each do |e|
-  if e.manager_2_id.nil?
-    @elrs = EmployeeLeavRequest.where(employee_id: e.id)
-    @elrs.each do |r|
-      r.update(is_first_approved: true, current_status: 'FirstApproved')
-      r.leave_status_records.build(change_status_employee_id: r.first_reporter_id,status: 'FirstApproved',change_date:'01/01/2016')
-      if r.leave_type == "Full Day"
-        for i in r.start_date..r.end_date
-          r.particular_leave_records.build(employee_id: r.employee_id, leav_category_id: r.leav_category_id, leave_date: i ,is_full: true )
+  unless e.manager_id.nil?
+    if e.manager_2_id.nil?
+      @elrs = EmployeeLeavRequest.where(employee_id: e.id)
+      ActiveRecord::Base.transaction do
+        @elrs.each do |r|
+          r.is_first_approved = true
+          r.current_status = "FirstApproved"
+          #r.update(is_first_approved: true, current_status: 'FirstApproved')
+          r.leave_status_records.build(change_status_employee_id: r.first_reporter_id,status: 'FirstApproved',change_date:'01/01/2016')
+          puts "leave statusssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss"
+          if r.leave_type == "Full Day"
+            for i in r.start_date.to_date..r.end_date.to_date
+              r.particular_leave_records.build(employee_id: r.employee_id, leave_date: i ,is_full: true )
+              puts "full day requesttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"
+            end
+          else
+            r.particular_leave_records.build(employee_id: r.employee_id, leave_date: r.start_date ,is_full: false )
+            puts "half day requesttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"
+          end
+          r.save
         end
-      else
-        r.particular_leave_records.build(employee_id: r.employee_id, leav_category_id: r.leav_category_id, leave_date: i ,is_full: false )
+      end
+    else
+      @elrs = EmployeeLeavRequest.where(employee_id: e.id)
+      ActiveRecord::Base.transaction do
+        @elrs.each do |r|
+          r.is_first_approved = true
+          r.current_status = "FirstApproved"
+          r.second_reporter_id = e.manager_2_id
+          r.leave_status_records.build(change_status_employee_id: r.first_reporter_id,status: 'FirstApproved',change_date:'01/01/2016')
+          puts "leave statusssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss"
+          r.save
+        end
+
+        @elrs.each do |r|
+          r.is_second_approved = true
+          r.current_status = "SecondApproved"
+          r.leave_status_records.build(change_status_employee_id: r.second_reporter_id,status: 'SecondApproved',change_date:'01/01/2016')
+          puts "leave statusssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss"
+          if r.leave_type == "Full Day"
+            for i in r.start_date.to_date..r.end_date.to_date
+              r.particular_leave_records.build(employee_id: r.employee_id, leave_date: i ,is_full: true )
+              puts "full day requesttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"
+            end
+          else
+            r.particular_leave_records.build(employee_id: r.employee_id, leave_date: r.start_date ,is_full: false )
+            puts "half day requesttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"
+          end
+          r.save
+        end
       end
     end
-  else
   end
 end
+###########################################################################################################

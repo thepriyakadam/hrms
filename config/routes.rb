@@ -47,8 +47,12 @@ Rails.application.routes.draw do
         post :date_range_report
       end
     end
+    resources :employees 
+    
     post 'salaries/date_range_report'
     get 'salaries/new'
+    post 'employees/employee_basic_detail'
+    get 'employees/new'
   end
 
   resources :payment_modes

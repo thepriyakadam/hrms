@@ -79,7 +79,11 @@ Rails.application.routes.draw do
       patch :update_cell
     end
   end
-  resources :instalments
+  resources :instalments do
+    collection do
+      get :employees
+    end
+  end
   resources :advance_salaries
   resources :workingdays do
     collection do

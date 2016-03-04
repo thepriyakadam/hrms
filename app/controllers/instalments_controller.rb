@@ -4,7 +4,7 @@ class InstalmentsController < ApplicationController
   # GET /instalments
   # GET /instalments.json
   def index
-    @instalments = Instalment.all
+    @instalments = Instalment.where.not(instalment_date: nil).group("strftime('%Y',instalment_date)")
   end
 
   # GET /instalments/1
@@ -68,6 +68,23 @@ class InstalmentsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to instalments_url, notice: 'Instalment was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  def employees
+    date = Date.new(params[:year].to_i, Workingday.months[params[:month]])
+    if current_user.class == Group
+      @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y'))
+    else
+      if current_user.role.name == "Company" or current_user.role.name == "Account"
+        @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y'))
+      elsif current_user.role.name == "CompanyLocation"
+        @employees = Employee.where(company_location_id: current_user.company_location_id)
+        @advance_salaries = AdvanceSalary.where(employee_id: @employees)
+        @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y')).where(advance_salary_id: @advance_salaries)
+      elsif current_user.role.name == "Employee"
+        @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y')).where(employee_id: current_user.employee_id)
+      end
     end
   end
 

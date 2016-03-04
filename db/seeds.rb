@@ -1,104 +1,52 @@
 require 'rubygems'
 require 'roo'
 
-# ex = Roo::Excel.new("#{Rails.root}/public/AVNISH.xls")
-# ex.default_sheet = ex.sheets[2]
+# ex = Roo::Excel.new("#{Rails.root}/public/employee_salary_template_dewas.xls")
+# ex.default_sheet = ex.sheets[0]
 # j = 1
 # gross_salary = 0
 # ActiveRecord::Base.transaction do
-# 2.upto(385) do |line|
-#   puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
+# 375.upto(468) do |line|
+#   puts "Starting Record #{ex.cell(line,'A')}--------------------------------------"
 #   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
   
 #   @salary_template = SalaryTemplate.find_by_code(ex.cell(line,'B'))
 #   @salary_component_templates = @salary_template.salary_component_templates unless @salary_template.nil?
 
-#   EmployeeTemplate.create(employee_id: @employee.id, salary_template_id: @salary_template.id, start_date: Date.today)
+#   employee_template_id = EmployeeTemplate.create(employee_id: @employee.id, salary_template_id: @salary_template.id, start_date: Date.today).id
 
 #   @salary_component_templates.each do |t|
 #     EmployeeSalaryTemplate.new do |est|
 #       have_esic = @employee.joining_detail.have_esic
 #       est.employee_id = @employee.id
 #       est.salary_template_id = @salary_template.id
-#       est.salary_component_id = t.salary_component_id 
+#       est.salary_component_id = t.salary_component_id
 #       est.is_deducted = t.is_deducted
 #       est.parent_salary_component_id
 #       est.percentage = t.is_deducted
 #       est.to_be_paid = t.to_be_paid
-#       est.employee_template_id = EmployeeTemplate.last.id
+#       est.employee_template_id = employee_template_id
       
 #       if t.salary_component.name == "Basic"
-#       est.monthly_amount = ex.cell(line,'C') unless ex.cell(line,'C').nil?
-#       est.annual_amount = est.monthly_amount.to_i * 12
-#       gross_salary = gross_salary + ex.cell(line,'C').to_i
-#       elsif t.salary_component.name == "HRA"
-#       est.monthly_amount = ex.cell(line,'D') unless ex.cell(line,'D').nil?
-#       est.annual_amount = est.monthly_amount.to_i * 12
-#       gross_salary = gross_salary + ex.cell(line,'D').to_i
-#       elsif t.salary_component.name == "Special Allowance"
-#       est.monthly_amount = ex.cell(line,'E') unless ex.cell(line,'E').nil?
-#       est.annual_amount = est.monthly_amount.to_i * 12
-#       gross_salary = gross_salary + ex.cell(line,'E').to_i
-#       elsif t.salary_component.name == "Convenience Allowance"
-#       est.monthly_amount = ex.cell(line,'F') unless ex.cell(line,'F').nil?
-#       est.annual_amount = est.monthly_amount.to_i * 12
-#       gross_salary = gross_salary + ex.cell(line,'F').to_i
-#       elsif t.salary_component.name == "Other Allowance"
-#       est.monthly_amount = ex.cell(line,'G') unless ex.cell(line,'G').nil?
-#       est.annual_amount = est.monthly_amount.to_i * 12
-#       gross_salary = gross_salary.to_i + ex.cell(line,'G').to_i
-#       elsif t.salary_component.name == "Washing Allowance"
-#       est.monthly_amount = ex.cell(line,'H') unless ex.cell(line,'H').nil?
-#       est.annual_amount = est.monthly_amount.to_i * 12
-#       gross_salary = gross_salary + ex.cell(line,'H').to_i
-#       elsif t.salary_component.name == "DA"
-#       est.monthly_amount = ex.cell(line,'I') unless ex.cell(line,'I').nil?
-#       est.annual_amount = est.monthly_amount.to_i * 12
-#       gross_salary = gross_salary + ex.cell(line,'I').to_i
-#       elsif t.salary_component.name == "Medical Allowance"
-#       est.monthly_amount = ex.cell(line,'J') unless ex.cell(line,'J').nil?
-#       est.annual_amount = est.monthly_amount.to_i * 12
-#       gross_salary = gross_salary + ex.cell(line,'J').to_i
-#       elsif t.salary_component.name == "Driver Allowance"
-#       est.monthly_amount = ex.cell(line,'K') unless ex.cell(line,'K').nil?
-#       est.annual_amount = est.monthly_amount.to_i * 12
-#       gross_salary = gross_salary + ex.cell(line,'K').to_i
-#       elsif t.salary_component.name == "Rembursement of medical exp."
-#       est.monthly_amount = ex.cell(line,'L') unless ex.cell(line,'L').nil?
-#       est.annual_amount = est.monthly_amount.to_i * 12
-#       gross_salary = gross_salary + ex.cell(line,'L').to_i
-#       elsif t.salary_component.name == "Children Education Allowance"
-#       est.monthly_amount = ex.cell(line,'M') unless ex.cell(line,'M').nil?
-#       est.annual_amount = est.monthly_amount.to_i * 12
-#       gross_salary = gross_salary + ex.cell(line,'M').to_i
-#       elsif t.salary_component.name == "PF"
-#       est.monthly_amount = (ex.cell(line,'C')/100) * 12 unless ex.cell(line,'C').nil?
-#       est.annual_amount = est.monthly_amount.to_i * 12
-#       elsif t.salary_component.name == "ESIC"
-#         if have_esic and gross_salary <= 15000
-#           temp = gross_salary - ex.cell(line,'H')
-#           est.monthly_amount = (temp / 100 * 1.75).round 
-#         else
-#           est.monthly_amount = 0
-#         end
-#       est.annual_amount = est.monthly_amount.to_i * 12
-#       elsif t.salary_component.name == "Income Tax"
 #       est.monthly_amount = ex.cell(line,'N') unless ex.cell(line,'N').nil?
 #       est.annual_amount = est.monthly_amount.to_i * 12
-#       elsif t.salary_component.name == "Food Deduction"
+#       elsif t.salary_component.name == "HRA"
 #       est.monthly_amount = ex.cell(line,'O') unless ex.cell(line,'O').nil?
 #       est.annual_amount = est.monthly_amount.to_i * 12
-#       elsif t.salary_component.name == "Other Deduction"
+#       elsif t.salary_component.name == "Special Allowance"
 #       est.monthly_amount = ex.cell(line,'P') unless ex.cell(line,'P').nil?
 #       est.annual_amount = est.monthly_amount.to_i * 12
-#       elsif t.salary_component.name == "Mobile Deduction"
+#       elsif t.salary_component.name == "Convenience Allowance"
 #       est.monthly_amount = ex.cell(line,'Q') unless ex.cell(line,'Q').nil?
 #       est.annual_amount = est.monthly_amount.to_i * 12
-#       elsif t.salary_component.name == "Society"
+#       elsif t.salary_component.name == "Other Allowance"
 #       est.monthly_amount = ex.cell(line,'R') unless ex.cell(line,'R').nil?
 #       est.annual_amount = est.monthly_amount.to_i * 12
-#       elsif t.salary_component.name == "Prof. Tax"
+#       elsif t.salary_component.name == "Washing Allowance"
 #       est.monthly_amount = ex.cell(line,'S') unless ex.cell(line,'S').nil?
+#       est.annual_amount = est.monthly_amount.to_i * 12
+#       elsif t.salary_component.name == "DA"
+#       est.monthly_amount = ex.cell(line,'T') unless ex.cell(line,'I').nil?
 #       est.annual_amount = est.monthly_amount.to_i * 12
 #       end
 #       est.save!
@@ -549,7 +497,7 @@ ex = Roo::Excel.new("#{Rails.root}/public/leave.xls")
 ex.default_sheet = ex.sheets[0]
 j = 1
 expiry_date = '31/12/2016'.to_date
-12.upto(20) do |line|
+4.upto(366) do |line|
   employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
   
   unless employee.nil?
@@ -558,7 +506,7 @@ expiry_date = '31/12/2016'.to_date
     el = ex.cell(line,'F').to_i
 
     cl_taken = ex.cell(line,'G')
-    el_taken = ex.cell(line,'F')
+    el_taken = ex.cell(line,'H')
 
     employee.employee_leav_balances.build(leav_category_id: 1, no_of_leave: cl, expiry_date: expiry_date, total_leave: cl)
     employee.employee_leav_balances.build(leav_category_id: 2, no_of_leave: el, expiry_date: expiry_date, total_leave: el)
@@ -574,6 +522,7 @@ expiry_date = '31/12/2016'.to_date
     if cl_taken.nil?
       puts "cl is not taken by #{employee.id}"
     else
+      puts "#{cl_taken} ---#{employee.manual_employee_code}"
       cl_arr = cl_taken.divmod 1
       cl_arr.each do |c|
         cl_end_date = cl_start_date + c
@@ -594,9 +543,9 @@ expiry_date = '31/12/2016'.to_date
     end
 
     if el_taken.nil?
-      puts "cl is not taken by #{employee.id}"
+      puts "el is not taken by #{employee.id}"
     else
-      el_arr = cl_taken.divmod 1
+      el_arr = el_taken.divmod 1
       el_arr.each do |c|
         el_end_date = el_start_date + c
         el_date_range = el_start_date.to_s+' '+el_start_date.to_time.to_s+' - '+el_end_date.to_s+' '+el_end_date.to_time.to_s 
@@ -614,9 +563,7 @@ expiry_date = '31/12/2016'.to_date
         end
       end
     end
-
-    
-    #employee.save  
+    employee.save  
   end
   puts "record inserted #{j}"
   j = j + 1
@@ -627,3 +574,22 @@ end
 #   puts "full day leave particular record."
 #   employee.particular_leave_records.build(leav_category_id: 1, leave_date: i,is_full: true)
 # end
+
+@employee = Employee.all
+@employee.each do |e|
+  if e.manager_2_id.nil?
+    @elrs = EmployeeLeavRequest.where(employee_id: e.id)
+    @elrs.each do |r|
+      r.update(is_first_approved: true, current_status: 'FirstApproved')
+      r.leave_status_records.build(change_status_employee_id: r.first_reporter_id,status: 'FirstApproved',change_date:'01/01/2016')
+      if r.leave_type == "Full Day"
+        for i in r.start_date..r.end_date
+          r.particular_leave_records.build(employee_id: r.employee_id, leav_category_id: r.leav_category_id, leave_date: i ,is_full: true )
+        end
+      else
+        r.particular_leave_records.build(employee_id: r.employee_id, leav_category_id: r.leav_category_id, leave_date: i ,is_full: false )
+      end
+    end
+  else
+  end
+end

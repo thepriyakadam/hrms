@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   resources :food_deductions do
     collection do
       get :calculate_food_deduction_amount
+      get :employees
     end
   end
   resources :reporting_masters

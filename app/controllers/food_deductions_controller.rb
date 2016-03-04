@@ -4,16 +4,7 @@ class FoodDeductionsController < ApplicationController
   # GET /food_deductions
   # GET /food_deductions.json
   def index
-    if current_user.class == Group
-      @food_deductions = FoodDeduction.all
-    else
-      if current_user.role.name == "Company"
-        @food_deductions = FoodDeduction.all
-      elsif current_user.role.name == "CompanyLocation"
-        @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
-        @food_deductions = FoodDeduction.where(employee_id: @employees)
-      end
-    end
+    @food_deductions = FoodDeduction.group("strftime('%Y',food_date)")
   end
 
   # GET /food_deductions/1
@@ -75,6 +66,24 @@ class FoodDeductionsController < ApplicationController
     food_coupan = FoodCoupanMaster.find(params[:id])
     price = food_coupan.price.to_i
     @amount = price * total_coupan
+  end
+
+  def employees
+    @year = params[:year]
+    @month = params[:month]
+    date = Date.new(@year.to_i, Workingday.months[@month])
+    if current_user.class == Group
+      @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y'))
+    else
+      if current_user.role.name == "Company" or current_user.role.name == "Account"
+        @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y'))
+      elsif current_user.role.name == "CompanyLocation"
+        @employees = Employee.where(company_location_id: current_user.company_location_id)
+        @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+      elsif current_user.role.name == "Employee"
+        @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: current_user.employee_id)
+      end
+    end
   end
 
   private

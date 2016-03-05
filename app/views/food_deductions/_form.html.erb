@@ -5,7 +5,7 @@
   </div><!-- /.box-header -->
   
   <div class="box-body">
-    <%= bootstrap_form_for(@food_deduction) do |f| %>
+    <%= bootstrap_form_for(@food_deduction,html: {id: 'food_deduction'}) do |f| %>
       <div class="row">
         <div class="col-sm-3">
           <div class="form-group required">
@@ -15,7 +15,7 @@
 
         <div class="col-sm-3">
           <label>Date</label>
-          <div class="field">
+          <div class="form-group required">
             <div class="input-group">
               <div class="input-group-addon">
                 <i class="fa fa-calendar"></i>
@@ -32,7 +32,7 @@
         </div>
 
         <div class="col-sm-3">
-          <div class="form-group required">
+          <div class="field">
             <%= f.text_field :return_coupan, placeholder: 'Return Food Coupan' %>
           </div>
         </div>
@@ -40,13 +40,13 @@
 
       <div class="row">
         <div class="col-sm-3">
-          <div class="form-group required">
+          <div class="field">
             <%= f.text_field :total_coupan, placeholder: 'Total Food Coupan', readonly:true %>
           </div>
         </div>
 
         <div class="col-sm-3">
-          <div class="field">
+          <div class="form-group required">
             <%= f.select :food_coupan_master_id, all_food_coupan_master,{include_blank: " Select Coupan Type"},{onchange:"var a={id:$(this).val(),total_coupan:$('#food_deduction_total_coupan').val()}; $.get('/food_deductions/calculate_food_deduction_amount',a,function(response){});",class: 'form-control'} %>
           </div>
         </div>
@@ -106,4 +106,28 @@
     });
     
   });  
+
+  $("#food_deduction").validate({
+  rules: {
+    "food_deduction[employee_id]":{
+      required: true
+    },
+    "food_deduction[food_date]":{
+      required: true
+    },
+    "food_deduction[no_of_coupan]":{
+      required: true
+    },
+    "food_deduction[food_coupan_master_id]":{
+      required: true
+    }
+  },
+  
+  errorPlacement: function(error, element) {
+   error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+   error.insertAfter(element.parent(element));
+  }
+});
 </script>
+
+

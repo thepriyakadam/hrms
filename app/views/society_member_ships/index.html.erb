@@ -11,6 +11,7 @@
     <table id="example1" class="table table-bordered table-hover table-condensed">
     <thead>
       <tr>
+        <th>Employee Code</th>
         <th>Employee</th>
         <th>Is society member</th>
         <th>Amount</th>
@@ -21,6 +22,7 @@
     <tbody>
        <% @society_member_ships.each do |society_member_ship| %>
         <tr>
+          <td><%= society_member_ship.employee.try(:manual_employee_code) %></td>
           <td><%= full_name(society_member_ship.employee) %></td>
           <td><%= society_member_ship.is_society_member %></td>
           <td><%= society_member_ship.amount %></td>

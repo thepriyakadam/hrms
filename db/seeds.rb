@@ -6,56 +6,57 @@ require 'roo'
 # j = 1
 # gross_salary = 0
 # ActiveRecord::Base.transaction do
-# 375.upto(468) do |line|
-#   puts "Starting Record #{ex.cell(line,'A')}--------------------------------------"
-#   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
-  
-#   @salary_template = SalaryTemplate.find_by_code(ex.cell(line,'B'))
-#   @salary_component_templates = @salary_template.salary_component_templates unless @salary_template.nil?
+#   2.upto(372) do |line|
+#   #375.upto(468) do |line|
+#     puts "Starting Record #{ex.cell(line,'A')}--------------------------------------"
+#     @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
+    
+#     @salary_template = SalaryTemplate.find_by_code(ex.cell(line,'B'))
+#     @salary_component_templates = @salary_template.salary_component_templates unless @salary_template.nil?
 
-#   employee_template_id = EmployeeTemplate.create(employee_id: @employee.id, salary_template_id: @salary_template.id, start_date: Date.today).id
+#     employee_template_id = EmployeeTemplate.create(employee_id: @employee.id, salary_template_id: @salary_template.id, start_date: Date.today).id
 
-#   @salary_component_templates.each do |t|
-#     EmployeeSalaryTemplate.new do |est|
-#       have_esic = @employee.joining_detail.have_esic
-#       est.employee_id = @employee.id
-#       est.salary_template_id = @salary_template.id
-#       est.salary_component_id = t.salary_component_id
-#       est.is_deducted = t.is_deducted
-#       est.parent_salary_component_id
-#       est.percentage = t.is_deducted
-#       est.to_be_paid = t.to_be_paid
-#       est.employee_template_id = employee_template_id
-      
-#       if t.salary_component.name == "Basic"
-#       est.monthly_amount = ex.cell(line,'N') unless ex.cell(line,'N').nil?
-#       est.annual_amount = est.monthly_amount.to_i * 12
-#       elsif t.salary_component.name == "HRA"
-#       est.monthly_amount = ex.cell(line,'O') unless ex.cell(line,'O').nil?
-#       est.annual_amount = est.monthly_amount.to_i * 12
-#       elsif t.salary_component.name == "Special Allowance"
-#       est.monthly_amount = ex.cell(line,'P') unless ex.cell(line,'P').nil?
-#       est.annual_amount = est.monthly_amount.to_i * 12
-#       elsif t.salary_component.name == "Convenience Allowance"
-#       est.monthly_amount = ex.cell(line,'Q') unless ex.cell(line,'Q').nil?
-#       est.annual_amount = est.monthly_amount.to_i * 12
-#       elsif t.salary_component.name == "Other Allowance"
-#       est.monthly_amount = ex.cell(line,'R') unless ex.cell(line,'R').nil?
-#       est.annual_amount = est.monthly_amount.to_i * 12
-#       elsif t.salary_component.name == "Washing Allowance"
-#       est.monthly_amount = ex.cell(line,'S') unless ex.cell(line,'S').nil?
-#       est.annual_amount = est.monthly_amount.to_i * 12
-#       elsif t.salary_component.name == "DA"
-#       est.monthly_amount = ex.cell(line,'T') unless ex.cell(line,'I').nil?
-#       est.annual_amount = est.monthly_amount.to_i * 12
+#     @salary_component_templates.each do |t|
+#       EmployeeSalaryTemplate.new do |est|
+#         have_esic = @employee.joining_detail.have_esic
+#         est.employee_id = @employee.id
+#         est.salary_template_id = @salary_template.id
+#         est.salary_component_id = t.salary_component_id
+#         est.is_deducted = t.is_deducted
+#         est.parent_salary_component_id
+#         est.percentage = t.is_deducted
+#         est.to_be_paid = t.to_be_paid
+#         est.employee_template_id = employee_template_id
+        
+#         if t.salary_component.name == "Basic"
+#         est.monthly_amount = ex.cell(line,'N') unless ex.cell(line,'N').nil?
+#         est.annual_amount = est.monthly_amount.to_i * 12
+#         elsif t.salary_component.name == "HRA"
+#         est.monthly_amount = ex.cell(line,'O') unless ex.cell(line,'O').nil?
+#         est.annual_amount = est.monthly_amount.to_i * 12
+#         elsif t.salary_component.name == "Special Allowance"
+#         est.monthly_amount = ex.cell(line,'P') unless ex.cell(line,'P').nil?
+#         est.annual_amount = est.monthly_amount.to_i * 12
+#         elsif t.salary_component.name == "Convenience Allowance"
+#         est.monthly_amount = ex.cell(line,'Q') unless ex.cell(line,'Q').nil?
+#         est.annual_amount = est.monthly_amount.to_i * 12
+#         elsif t.salary_component.name == "Other Allowance"
+#         est.monthly_amount = ex.cell(line,'R') unless ex.cell(line,'R').nil?
+#         est.annual_amount = est.monthly_amount.to_i * 12
+#         elsif t.salary_component.name == "Washing Allowance"
+#         est.monthly_amount = ex.cell(line,'S') unless ex.cell(line,'S').nil?
+#         est.annual_amount = est.monthly_amount.to_i * 12
+#         elsif t.salary_component.name == "DA"
+#         est.monthly_amount = ex.cell(line,'T') unless ex.cell(line,'I').nil?
+#         est.annual_amount = est.monthly_amount.to_i * 12
+#         end
+#         est.save!
+#         puts "#{j} component inserted..."
+#         j=j+1
 #       end
-#       est.save!
-#       puts "#{j} component inserted..."
-#       j=j+1
 #     end
+#     gross_salary = 0
 #   end
-#   gross_salary = 0
-# end
 # end
 ################################################################################################################################
 # require 'rubygems'
@@ -262,12 +263,12 @@ require 'roo'
 #       w.month_name = ex.cell(line,'B')
 #       w.year = ex.cell(line,'C').to_i
 
-#       w.lwp_leave = ex.cell(line, 'D').to_i
-#       w.cl_leave = ex.cell(line, 'E').to_i
-#       w.el_leave = ex.cell(line, 'F').to_i
-#       w.esic_leave = ex.cell(line, 'G').to_i
+#       # w.lwp_leave = ex.cell(line, 'D').to_i
+#       # w.cl_leave = ex.cell(line, 'E').to_i
+#       # w.el_leave = ex.cell(line, 'F').to_i
+#       # w.esic_leave = ex.cell(line, 'G').to_i
 
-#       w.day_in_month = ex.cell(line, 'H')
+#       #w.day_in_month = ex.cell(line, 'H')
 #       w.present_day = ex.cell(line, 'I')
 #       w.holiday_in_month = ex.cell(line, 'J')
        
@@ -492,104 +493,130 @@ require 'roo'
 #   puts "record inserted #{j}"
 #   j = j + 1
 # end
+
 ###############################################################################################
-ex = Roo::Excel.new("#{Rails.root}/public/leave.xls")
-ex.default_sheet = ex.sheets[0]
-j = 1
-expiry_date = '31/12/2016'.to_date
-4.upto(366) do |line|
-  employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
+# ex = Roo::Excel.new("#{Rails.root}/public/leave.xls")
+# ex.default_sheet = ex.sheets[0]
+# j = 1
+# expiry_date = '31/12/2016'.to_date
+# #4.upto(366) do |line| # JANUARY DEWAS
+# #370.upto(461) do |line| #JANUARY SIYA
+# 466.upto(559) do |line| #FEBRUARY SIYA
+#   employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
   
-  unless employee.nil?
-    puts "Starting Record---------------------------------------#{employee.manual_employee_code}"
-    cl = ex.cell(line,'E').to_i
-    el = ex.cell(line,'F').to_i
+#   unless employee.nil?
+#     puts "Starting Record---#{employee.manual_employee_code}"
+#     cl = ex.cell(line,'E').to_i
+#     el = ex.cell(line,'F').to_i
 
-    cl_taken = ex.cell(line,'G')
-    el_taken = ex.cell(line,'H')
+#     cl_taken = ex.cell(line,'G')
+#     el_taken = ex.cell(line,'H')
 
-    employee.employee_leav_balances.build(leav_category_id: 1, no_of_leave: cl, expiry_date: expiry_date, total_leave: cl)
-    employee.employee_leav_balances.build(leav_category_id: 2, no_of_leave: el, expiry_date: expiry_date, total_leave: el)
+#     employee.employee_leav_balances.build(leav_category_id: 1, no_of_leave: cl, expiry_date: expiry_date, total_leave: cl)
+#     employee.employee_leav_balances.build(leav_category_id: 2, no_of_leave: el, expiry_date: expiry_date, total_leave: el)
 
-    cl_start_date = Date.new(2016,01,1)
-    cl_end_date = Date.new
-    cl_date_range = String.new
+#     cl_start_date = Date.new(2016,02,1)
+#     cl_end_date = Date.new
+#     cl_date_range = String.new
 
-    el_start_date = Date.new(2016,01,20)
-    el_end_date = Date.new
-    el_date_range = String.new
+#     el_start_date = Date.new(2016,02,20)
+#     el_end_date = Date.new
+#     el_date_range = String.new
 
-    if cl_taken.nil?
-      puts "cl is not taken by #{employee.id}"
-    else
-      puts "#{cl_taken} ---#{employee.manual_employee_code}"
-      cl_arr = cl_taken.divmod 1
-      cl_arr.each do |c|
-        cl_end_date = cl_start_date + c
-        cl_date_range = cl_start_date.to_s+' '+cl_start_date.to_time.to_s+' - '+cl_end_date.to_s+' '+cl_end_date.to_time.to_s 
+#     if cl_taken.nil?
+#     else
+#       cl_arr = cl_taken.divmod 1
+#       cl_arr.each do |c|
+#         cl_end_date = cl_start_date + c
+#         cl_date_range = cl_start_date.to_s+' '+cl_start_date.to_time.to_s+' - '+cl_end_date.to_s+' '+cl_end_date.to_time.to_s 
 
-        if c == 0
+#         if c == 0
+#         else
+#           if c.integer?
+#             employee.employee_leav_requests.build(leav_category_id: 1, leave_type: 'Full Day', start_date: cl_start_date,end_date: cl_end_date,date_range: cl_date_range,leave_count: c, reason: 'aaa', current_status: 'Pending', is_pending: true, first_reporter_id: employee.manager_id)         
+#           else
+#             employee.employee_leav_requests.build(leav_category_id: 1, leave_type: 'Half Day', start_date: cl_start_date,end_date: cl_start_date, leave_count: c, reason: 'aaa', current_status: 'Pending', is_pending: true, first_reporter_id: employee.manager_id)
+#           end
+#         end
+#       end
+#     end
 
-        else
-          if c.integer?
-            puts 'Full day request.'
-            employee.employee_leav_requests.build(leav_category_id: 1, leave_type: 'Full Day', start_date: cl_start_date,end_date: cl_end_date,date_range: cl_date_range,leave_count: c, reason: 'aaa', current_status: 'Pending', is_pending: true, first_reporter_id: employee.manager_id)         
-          else
-            puts 'Half day request.'
-            employee.employee_leav_requests.build(leav_category_id: 1, leave_type: 'Half Day', start_date: cl_start_date,end_date: cl_start_date, leave_count: c, reason: 'aaa', current_status: 'Pending', is_pending: true, first_reporter_id: employee.manager_id)
-          end
-        end
-      end
-    end
+#     if el_taken.nil?
+#     else
+#       el_arr = el_taken.divmod 1
+#       el_arr.each do |c|
+#         el_end_date = el_start_date + c
+#         el_date_range = el_start_date.to_s+' '+el_start_date.to_time.to_s+' - '+el_end_date.to_s+' '+el_end_date.to_time.to_s 
 
-    if el_taken.nil?
-      puts "el is not taken by #{employee.id}"
-    else
-      el_arr = el_taken.divmod 1
-      el_arr.each do |c|
-        el_end_date = el_start_date + c
-        el_date_range = el_start_date.to_s+' '+el_start_date.to_time.to_s+' - '+el_end_date.to_s+' '+el_end_date.to_time.to_s 
+#         if c == 0
 
-        if c == 0
-
-        else
-          if c.integer?
-            puts 'Full day request.'
-            employee.employee_leav_requests.build(leav_category_id: 2, leave_type: 'Full Day', start_date: el_start_date,end_date: el_end_date,date_range: el_date_range,leave_count: c, reason: 'aaa', current_status: 'Pending', is_pending: true, first_reporter_id: employee.manager_id)
-          else
-            puts 'Half day request.'
-            employee.employee_leav_requests.build(leav_category_id: 2, leave_type: 'Half Day', start_date: el_start_date,end_date: el_start_date, leave_count: c, reason: 'aaa', current_status: 'Pending', is_pending: true, first_reporter_id: employee.manager_id)
-          end
-        end
-      end
-    end
-    employee.save  
-  end
-  puts "record inserted #{j}"
-  j = j + 1
-end
-###############################################################################################
-#employee.save
-# for i in start_date..end_date
-#   puts "full day leave particular record."
-#   employee.particular_leave_records.build(leav_category_id: 1, leave_date: i,is_full: true)
+#         else
+#           if c.integer?
+#             puts 'Full day request.'
+#             employee.employee_leav_requests.build(leav_category_id: 2, leave_type: 'Full Day', start_date: el_start_date,end_date: el_end_date,date_range: el_date_range,leave_count: c, reason: 'aaa', current_status: 'Pending', is_pending: true, first_reporter_id: employee.manager_id)
+#           else
+#             puts 'Half day request.'
+#             employee.employee_leav_requests.build(leav_category_id: 2, leave_type: 'Half Day', start_date: el_start_date,end_date: el_start_date, leave_count: c, reason: 'aaa', current_status: 'Pending', is_pending: true, first_reporter_id: employee.manager_id)
+#           end
+#         end
+#       end
+#     end
+#     employee.save  
+#   end
+#   puts "record inserted #{j}"
+#   j = j + 1
 # end
 
+###############################################################################################
 @employee = Employee.all
 @employee.each do |e|
-  if e.manager_2_id.nil?
-    @elrs = EmployeeLeavRequest.where(employee_id: e.id)
-    @elrs.each do |r|
-      r.update(is_first_approved: true, current_status: 'FirstApproved')
-      r.leave_status_records.build(change_status_employee_id: r.first_reporter_id,status: 'FirstApproved',change_date:'01/01/2016')
-      if r.leave_type == "Full Day"
-        for i in r.start_date..r.end_date
-          r.particular_leave_records.build(employee_id: r.employee_id, leav_category_id: r.leav_category_id, leave_date: i ,is_full: true )
+  unless e.manager_id.nil?
+    if e.manager_2_id.nil?
+      @elrs = EmployeeLeavRequest.where(employee_id: e.id)
+      ActiveRecord::Base.transaction do
+        @elrs.each do |r|
+          r.is_first_approved = true
+          r.current_status = "FirstApproved"
+          #r.update(is_first_approved: true, current_status: 'FirstApproved')
+          r.leave_status_records.build(change_status_employee_id: r.first_reporter_id,status: 'FirstApproved',change_date:'01/02/2016')
+          if r.leave_type == "Full Day"
+            for i in r.start_date.to_date..r.end_date.to_date
+              r.particular_leave_records.build(employee_id: r.employee_id, leave_date: i ,is_full: true )
+            end
+          else
+            r.particular_leave_records.build(employee_id: r.employee_id, leave_date: r.start_date ,is_full: false )
+          end
+          r.save
+          r.minus_leave(r)
         end
-      else
-        r.particular_leave_records.build(employee_id: r.employee_id, leav_category_id: r.leav_category_id, leave_date: i ,is_full: false )
+      end
+    else
+      @elrs = EmployeeLeavRequest.where(employee_id: e.id)
+      ActiveRecord::Base.transaction do
+        @elrs.each do |r|
+          r.is_first_approved = true
+          r.current_status = "FirstApproved"
+          r.second_reporter_id = e.manager_2_id
+          r.leave_status_records.build(change_status_employee_id: r.first_reporter_id,status: 'FirstApproved',change_date:'01/02/2016')
+          r.save
+        end
+
+        @elrs.each do |r|
+          r.is_second_approved = true
+          r.current_status = "SecondApproved"
+          r.leave_status_records.build(change_status_employee_id: r.second_reporter_id,status: 'SecondApproved',change_date:'01/02/2016')
+          if r.leave_type == "Full Day"
+            for i in r.start_date.to_date..r.end_date.to_date
+              r.particular_leave_records.build(employee_id: r.employee_id, leave_date: i ,is_full: true )
+            end
+          else
+            r.particular_leave_records.build(employee_id: r.employee_id, leave_date: r.start_date ,is_full: false )
+          end
+          r.save
+          r.minus_leave(r)
+        end
       end
     end
-  else
   end
 end
+###########################################################################################################

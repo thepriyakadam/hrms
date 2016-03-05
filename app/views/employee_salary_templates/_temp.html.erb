@@ -125,6 +125,23 @@
         </tr>
       <% end %> <!-- esic unless end -->
 
+      <% if addable_total_actual_amount > 15000 %>
+        <% if @month == "March" %>
+          <% deducted_actual_amount = 212 %>
+          <% deducted_calculated_amount = 212 %>
+        <% else %>
+          <% deducted_actual_amount = 208 %>
+          <% deducted_calculated_amount = 208 %>
+        <% end %>
+        <tr>
+          <td>Prof. Tax</td>
+          <td align="right"><%= deducted_actual_amount %></td>
+          <td align="right"><%= deducted_calculated_amount %></td>
+          <% deducted_total_actual_amount = deducted_total_actual_amount + deducted_actual_amount %>
+          <% deducted_total_calculated_amount = deducted_total_calculated_amount + deducted_calculated_amount %>
+        </tr>  
+      <% end %>
+
       <% @instalment_array.try(:each) do |ia| %>
         <tr>
           <% deducted_actual_amount = ia.instalment_amount %>
@@ -160,7 +177,7 @@
         <tr>
           <% deducted_actual_amount = 0 %>
           <% deducted_calculated_amount = @food_deduction.amount %>
-          <td>Food Deduction-</td>
+          <td>Food Deduction</td>
           <td align="right"><%= deducted_actual_amount %></td>
           <td align="right"><%= deducted_calculated_amount %></td>
           <% deducted_total_actual_amount = deducted_total_actual_amount + deducted_actual_amount %>
@@ -173,7 +190,7 @@
         <tr>
           <% deducted_actual_amount = 0 %>
           <% deducted_calculated_amount = m.amount %>
-          <td><%= m.expencess_type.name%>-</td>
+          <td><%= m.expencess_type.name%></td>
           <td align="right"><%= deducted_actual_amount %></td>
           <td align="right"><%= deducted_calculated_amount %></td>
           <% deducted_total_actual_amount = deducted_total_actual_amount + deducted_actual_amount %>
@@ -182,16 +199,18 @@
       <%end%>
 
       <% society = SocietyMemberShip.find_by_employee_id(@employee.id)%>
-      <% if society.is_society_member %>
-        <tr>
-          <% deducted_actual_amount = 0 %>
-          <% deducted_calculated_amount = society.amount %>
-          <td><%= 'Society Member Ship' %>-</td>
-          <td align="right"><%= deducted_actual_amount %></td>
-          <td align="right"><%= deducted_calculated_amount %></td>
-          <% deducted_total_actual_amount = deducted_total_actual_amount + deducted_actual_amount %>
-          <% deducted_total_calculated_amount = deducted_total_calculated_amount + deducted_calculated_amount %>
-        </tr>
+      <% unless society.nil? %>
+        <% if society.is_society_member %>
+          <tr>
+            <% deducted_actual_amount = 0 %>
+            <% deducted_calculated_amount = society.amount %>
+            <td><%= 'Society Member Ship' %></td>
+            <td align="right"><%= deducted_actual_amount %></td>
+            <td align="right"><%= deducted_calculated_amount %></td>
+            <% deducted_total_actual_amount = deducted_total_actual_amount + deducted_actual_amount %>
+            <% deducted_total_calculated_amount = deducted_total_calculated_amount + deducted_calculated_amount %>
+          </tr>
+        <%end%>
       <%end%>
 
       <% @well_faires = WellFaire.all %>
@@ -200,7 +219,7 @@
           <tr>
             <% deducted_actual_amount = 0 %>
             <% deducted_calculated_amount = w.amount %>
-            <td><%= 'Well Faire' %>-</td>
+            <td><%= 'Well Faire' %></td>
             <td align="right"><%= deducted_actual_amount %></td>
             <td align="right"><%= deducted_calculated_amount %></td>
             <% deducted_total_actual_amount = deducted_total_actual_amount + deducted_actual_amount %>
@@ -208,6 +227,16 @@
           </tr>
         <%end%>  
       <%end%>
+
+      <% formula_item_actual_amount = 0 %>
+      <% formula_item_calculated_amount = 0 %>
+      <% formula_total_actual_amount = 0 %>
+      <% formula_total_calculated_amount = 0 %>
+      <% deducted_actual_amount = 0 %>
+      <% deducted_calculated_amount = 0 %>
+      <% deducted_total_actual_amount = 0 %>
+      <% deducted_total_calculated_amount = 0 %>
+
 
       <% @pf_master = PfMaster.where(is_active: true).take %>
       <% if @pf_master.nil? %>
@@ -234,7 +263,7 @@
             <% deducted_calculated_amount = 0 %>
           <% end %>
           <tr>
-            <td><%= 'PF' %>-</td>
+            <td><%= 'PF' %></td>
             <td align="right"><%= deducted_actual_amount %></td>
             <td align="right"><%= deducted_calculated_amount %></td>
             <% deducted_total_actual_amount = deducted_total_actual_amount + deducted_actual_amount %>

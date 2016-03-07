@@ -71,7 +71,7 @@ class EmployeeSalaryTemplatesController < ApplicationController
         else
           flash[:alert] = "Employee template not created successfully."
         end
-        redirect_to template_list_employee_template_path(@employee_id)
+        redirect_to template_list_employee_templates_path(@employee_id)
       else
         arrears_array = params[:old_salary_component_id].keys
         increement_date = params[:increement][:date]

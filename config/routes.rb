@@ -39,6 +39,10 @@ Rails.application.routes.draw do
     end
     collection do 
       get :template_list
+      get :fresh_template
+      get :fresh
+      get :assign_new_template
+      post :create_fresh_template
     end
   end
   resources :retention_moneys

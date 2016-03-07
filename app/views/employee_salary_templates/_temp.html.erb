@@ -49,10 +49,6 @@
       </thead>
 	    <% addable_total_actual_amount = 0 %>
 	    <% addable_total_calculated_amount = 0 %>
-	    <% basic_actual_amount = 0 %>
-	    <% basic_calculated_amount = 0 %>
-	    <% da_actual_amount = 0 %>
-	    <% da_calculated_amount = 0 %>
 
 	    <% @addable_salary_items.try(:each) do |item| %>
 	      <% addable_calculated_amount = 0 %>
@@ -73,14 +69,7 @@
             <%= link_to "", edit_employee_salary_template_path(item),remote:true,class: "fa fa-edit" %>
           </td>
 	        <td align="right"><%= addable_calculated_amount.round %></td>
-	      </tr>  
-	      <% if item.salary_component.name == "Basic" %>
-	        <% basic_actual_amount = addable_actual_amount %>
-	        <% basic_calculated_amount = addable_calculated_amount %>
-	      <% elsif item.salary_component.name == "DA" %>
-	        <% da_actual_amount = addable_actual_amount %>
-	        <% da_calculated_amount = addable_calculated_amount %>
-	      <% end %>
+	      </tr>
 	    <% end %> <!-- Addable end -->
 	    
 	    <tr bgcolor="#8CD0F8">
@@ -172,7 +161,7 @@
       <% end %>
       
       <% date = Date.new(@year.to_i, Workingday.months[@month])%>
-      <% @food_deduction = FoodDeduction.where(food_date: date, employee_id: @employee.id).take %>
+      <% @food_deduction = FoodDeduction.where(food_date: date..date.at_end_of_month, employee_id: @employee.id).take %>
       <% unless @food_deduction.nil? %>
         <tr>
           <% deducted_actual_amount = 0 %>
@@ -232,11 +221,6 @@
       <% formula_item_calculated_amount = 0 %>
       <% formula_total_actual_amount = 0 %>
       <% formula_total_calculated_amount = 0 %>
-      <% deducted_actual_amount = 0 %>
-      <% deducted_calculated_amount = 0 %>
-      <% deducted_total_actual_amount = 0 %>
-      <% deducted_total_calculated_amount = 0 %>
-
 
       <% @pf_master = PfMaster.where(is_active: true).take %>
       <% if @pf_master.nil? %>

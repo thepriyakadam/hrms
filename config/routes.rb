@@ -1,7 +1,46 @@
 Rails.application.routes.draw do
 
-  resources :employee_templates
-
+  resources :reserved_categories
+  resources :pf_masters
+  resources :professional_taxes
+  resources :society_member_ships
+  resources :well_faires
+  resources :monthly_expences do
+    collection do
+      get :employees
+      get :employee_expences
+    end
+  end
+  resources :expencess_types
+  resources :food_coupan_masters
+  resources :food_deductions do
+    collection do
+      get :calculate_food_deduction_amount
+      get :employees
+    end
+  end
+  resources :reporting_masters
+  resources :leave_status_records do
+    collection do
+    end
+    member do
+      get :cancel
+      get :first_approve
+      get :second_approve
+      get :first_reject
+      get :second_reject
+    end
+  end
+  resources :advance_types
+  resources :employee_templates do
+    member do
+      get :activate
+      get :deactivate
+    end
+    collection do 
+      get :template_list
+    end
+  end
   resources :retention_moneys
   namespace :reports do
     resources :salaries do 
@@ -9,8 +48,12 @@ Rails.application.routes.draw do
         post :date_range_report
       end
     end
+    resources :employees 
+    
     post 'salaries/date_range_report'
     get 'salaries/new'
+    post 'employees/employee_basic_detail'
+    get 'employees/new'
   end
 
   resources :payment_modes
@@ -41,9 +84,19 @@ Rails.application.routes.draw do
       patch :update_cell
     end
   end
-  resources :instalments
+  resources :instalments do
+    collection do
+      get :employees
+    end
+  end
   resources :advance_salaries
-  resources :workingdays
+  resources :workingdays do
+    collection do
+      get :employees
+      get :search_month_year
+      get :generate_workingday
+    end
+  end
   resources :overtimes
   resources :shift_rotations
   resources :employee_monthly_days do
@@ -107,20 +160,30 @@ Rails.application.routes.draw do
   resources :roles do
     collection do
       get :dynamic_form
+      get :role_edit_list
+    end
+
+    member do
+      get :edit_role
+      patch :update_role
     end
   end
   resources :employee_bank_details
   resources :leav_cancelleds
-  resources :employee_leav_balances
+  resources :employee_leav_balances do
+    collection do
+      get :collect_employee_for_leave
+    end
+  end
   resources :leav_rejecteds
   resources :leav_approveds
   resources :employee_leav_requests do
     collection do
       get :approved_or_rejected_leave_request
       get :employee_list
-    end
-    member do
       get :from_hr
+      get :hr_view_request
+      get :employee_history_with_current_leave
     end
   end
   resources :company_leavs
@@ -164,6 +227,11 @@ Rails.application.routes.draw do
       get :ajax_family_detail
       get :ajax_new_family
       get :ajax_show_textbox
+      get :manager
+    end
+    member do
+      get :edit_manager
+      patch :update_manager
     end
   end
   resources :blood_groups

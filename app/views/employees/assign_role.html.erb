@@ -3,19 +3,20 @@
     <h3 class="box-title">Employee List</h3>    
   </div><!-- /.box-header -->
   <div class="box-body">
-    <table  class="table table-bordered table-hover table-condensed">
+    <table class="table table-bordered table-hover table-condensed">
 	    <thead>
 	      <tr>
 		      <th>Employee Code</th>
 		      <th>Name</th>
 		      <th>Hrms Access Role</th>
-		      <th>Reporting Manager</th>
+		      <th>Reporting Manager-1</th>
+		      <th>Reporting Manager-2</th>
 		      <th>Action</th>
 		    </tr>
 		  </thead>
 		  <tbody>
 		    <% @employees.each do |employee| %>
-					<%= bootstrap_form_for :login, url: {action: 'submit_form'} do |f| %>    
+					<%= bootstrap_form_for :login, url: {action: 'submit_form'}, html: {id: 'login'} do |f| %>    
 			      <tr>
 			      	<td><%= employee.manual_employee_code %></td>
 			        <td><%= employee.first_name %> <%= employee.middle_name %> <%= employee.last_name %></td>
@@ -23,6 +24,8 @@
 			   				<%= f.hidden_field :employee_id, value: employee.id %>
 			        </td>
 			        <td><%= f.select :manager_id, @all_employee_list,hide_label:true, prompt:true %></td>
+
+			        <td><%= f.select :manager_2_id, @all_employee_list,hide_label:true, prompt:true %></td>
 			        
 			        <td><%= f.submit "+", class: 'btn btn-primary btn-sm fa fa-user-plus' %></td>
 			      </tr>
@@ -34,7 +37,37 @@
 </div>
 <style type="text/css">
 .table-condensed>thead>tr>th, .table-condensed>tbody>tr>th, .table-condensed>tfoot>tr>th, .table-condensed>thead>tr>td, .table-condensed>tbody>tr>td, .table-condensed>tfoot>tr>td {
-    padding: 1px;
-}
+  padding: 1px;
+  }
 </style>
 
+<script type="text/javascript">
+  $("#login").validate({
+    rules: {
+      "login[role_id]":{
+        required: true
+      },
+      "login[manager_id]":{
+        required: true
+      },
+      "login[manager_2_id]":{
+        required: true
+      }
+    },
+    messages: {
+      "login[role_id]":{
+        required: "Please specify role."
+      },
+      "login[manager_id]":{
+        required: "Please specify first level reporter."
+      },
+      "login[manager_2_id]":{
+        required: "Please specify second level reporter."
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+  });
+</script>

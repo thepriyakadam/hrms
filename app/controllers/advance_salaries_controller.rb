@@ -1,10 +1,23 @@
 class AdvanceSalariesController < ApplicationController
   before_action :set_advance_salary, only: [:show, :edit, :update, :destroy]
-
+  load_and_authorize_resource
   # GET /advance_salaries
   # GET /advance_salaries.json
   def index
-    @advance_salaries = AdvanceSalary.all
+    if current_user.class == Group
+      @advance_salaries = AdvanceSalary.all
+    else
+      if current_user.role.name == "Company"
+        @advance_salaries = AdvanceSalary.all
+      elsif current_user.role.name == "CompanyLocation"
+        @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+        @advance_salaries = AdvanceSalary.where(employee_id: @employees)
+      elsif current_user.role.name == "SalaryAccount"
+        @advance_salaries = AdvanceSalary.all
+      elsif current_user.role.name == "Employee"
+        @advance_salaries = AdvanceSalary.where(employee_id: current_user.employee_id)
+      end
+    end
   end
 
   # GET /advance_salaries/1
@@ -27,17 +40,16 @@ class AdvanceSalariesController < ApplicationController
   # POST /advance_salaries.json
   def create
     @advance_salary = AdvanceSalary.new(advance_salary_params)
-    @employee = Employee.find(@advance_salary.employee_id)
-    id = AdvanceSalary.create(employee_id: @employee.id, \
-                         advance_amount: @advance_salary.advance_amount, \
-                         no_of_instalment: @advance_salary.no_of_instalment, \
-                         instalment_amount: @advance_salary.instalment_amount, \
-                         advance_date:@advance_salary.advance_date ).id
-    current_record = AdvanceSalary.find(id)
-    for i in 1..current_record.no_of_instalment.to_i
-      current_record.instalments.create(instalment_amount: current_record.instalment_amount)
+    for i in 1..@advance_salary.no_of_instalment.to_i
+      @advance_salary.instalments.build(instalment_amount: @advance_salary.instalment_amount)
     end
-    redirect_to @advance_salary
+    if @advance_salary.save
+      flash[:notice] = "Advance Salary created successfully."
+      redirect_to @advance_salary
+    else
+      flash.now[:alert] = "Advance Salary saved failed."
+      render :new
+    end
   end
 
   # PATCH/PUT /advance_salaries/1
@@ -72,6 +84,6 @@ class AdvanceSalariesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def advance_salary_params
-      params.require(:advance_salary).permit(:employee_id, :advance_amount, :no_of_instalment, :instalment_amount, :advance_date)
+      params.require(:advance_salary).permit(:employee_id, :advance_amount, :no_of_instalment, :instalment_amount, :advance_date, :advance_type_id, :interest)
     end
 end

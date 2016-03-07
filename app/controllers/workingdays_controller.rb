@@ -4,7 +4,7 @@ class WorkingdaysController < ApplicationController
   # GET /workingdays
   # GET /workingdays.json
   def index
-    @workingdays = Workingday.all
+    @workingdays = Workingday.group(:year)
   end
 
   # GET /workingdays/1
@@ -57,8 +57,46 @@ class WorkingdaysController < ApplicationController
   def destroy
     @workingday.destroy
     respond_to do |format|
-      format.html { redirect_to workingdays_url, notice: 'Workingday was successfully destroyed.' }
+      format.html { redirect_to workingdays_path, notice: 'Workingday was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  def employees
+    if current_user.class == Group
+      @workingdays = Workingday.where(year: params[:year],month_name: params[:month])
+    else
+      if current_user.role.name == "Company"
+        @workingdays = Workingday.where(year: params[:year],month_name: params[:month])
+      elsif current_user.role.name == "CompanyLocation"
+        @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+        @workingdays = Workingday.where(year: params[:year],month_name: params[:month], employee_id: @employees)
+      elsif current_user.role.name == "Employee"
+        @workingdays = Workingday.where(year: params[:year],month_name: params[:month], employee_id: current_user.employee_id)
+      end
+    end
+  end
+
+  def search_month_year
+    
+  end
+
+  def generate_workingday
+    @date = params[:date].to_date
+    @workingdays = []
+    @employees = Employee.all
+    @employees.each do |e|
+      workingday = Workingday.new
+      if e.joining_detail.employee_category.try(:name) == "Worker"
+        workingday.day_in_month = 26  
+      else
+        workingday.day_in_month = @date.end_of_month.day
+      end
+      workingday.present_day = Attendance.where(attendance_date: @date.beginning_of_month..@date.end_of_month, employee_id: e.id).count
+      workingday.total_leave = ParticularLeaveRecord.where(leave_date: @date.beginning_of_month..@date.end_of_month, employee_id: e.id).count
+      workingday.holiday_in_month = Holiday.where(holiday_date: @date.beginning_of_month..@date.end_of_month).count
+      workingday.employee_id = e.id
+      @workingdays << workingday
     end
   end
 

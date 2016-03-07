@@ -25,7 +25,7 @@
 // });
 
 // function updateComments() {
-//   $.getScript('/employee_leav_requests');
+//   $.getScript('/employee_leav_requests/approved_or_rejected_leave_request');
 //   setTimeout(updateComments, 10000);
 // }
 
@@ -103,6 +103,12 @@ $(function(){
    changeYear:true,
    changeMonth: true,
    yearRange: '-100:+2',
+   dateFormat: 'dd-mm-yy' });  
+
+   $('.workingday_date').datepicker({
+   changeYear:true,
+   changeMonth: true,
+   yearRange: '-10:+50',
    dateFormat: 'dd-mm-yy' });   
 });
 

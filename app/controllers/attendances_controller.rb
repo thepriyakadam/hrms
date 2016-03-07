@@ -1,10 +1,21 @@
 class AttendancesController < ApplicationController
   before_action :set_attendance, only: [:show, :edit, :update, :destroy]
-
+  load_and_authorize_resource
   # GET /attendances
   # GET /attendances.json
   def index
-    @attendances = Attendance.all
+    if current_user.class == Group
+      @attendances = Attendance.all
+    else
+      if current_user.role.name == "Company"
+        @attendances = Attendance.all
+      elsif current_user.role.name == "CompanyLocation"
+        @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+        @attendances = Attendance.where(employee_id: @employees)
+      elsif current_user.role.name == "Employee"
+        @attendances = Attendance.where(employee_id: current_user.employee_id)
+      end
+    end
   end
 
   # GET /attendances/1
@@ -24,14 +35,14 @@ class AttendancesController < ApplicationController
   # POST /attendances
   # POST /attendances.json
   def create
-    @employee_shifts = params[:employee_shift_ids]
+    #@employee_shifts = params[:employee_shift_ids]
     @employees = params[:employee_ids]
-    @employee_and_employee_shift = Hash[@employees.zip(@employee_shifts)]
+    #@employee_and_employee_shift = Hash[@employees.zip(@employee_shifts)]
 
-    @employee_and_employee_shift.each do |k,v|
-      @attendance = Attendance.new(attendance_params)  
-      @attendance.employee_id = k
-      @attendance.employee_shift_id = v
+    @employees.each do |e|
+      @attendance = Attendance.new(attendance_params)
+      @attendance.employee_id = e
+      #@attendance.employee_shift_id = 
       @attendance.save
     end
   end
@@ -61,21 +72,21 @@ class AttendancesController < ApplicationController
   end
 
   def collect_shift_date
-    if params[:id] == ""
+    if params[:company_shift_id] == ""
       @flag = false
     else
       @flag = true
-      @company_shift = CompanyShift.find(params[:id])
+      @company_shift = CompanyShift.find(params[:company_shift_id])
       @shift_rotations = @company_shift.shift_rotations  
     end
   end
 
   def collect_employee
-    if params[:id] == ""
+    if params[:shift_rotation_id] == ""
       @flag = false
     else
       @flag = true
-      @shift_rotation = ShiftRotation.find(params[:id])
+      @shift_rotation = ShiftRotation.find(params[:shift_rotation_id])
       @employees = @shift_rotation.employee_shifts
       @attendance = Attendance.new  
     end

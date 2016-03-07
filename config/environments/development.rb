@@ -1,3 +1,4 @@
+#require 'tls_smtp'
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -14,7 +15,7 @@ Rails.application.configure do
   config.action_controller.perform_caching = false
 
   # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.raise_delivery_errors = true
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
@@ -41,26 +42,21 @@ Rails.application.configure do
 
   # Root url
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
-  config.domain = 'lvh.me'
+  #config.domain = 'lvh.me'
+  #config.action_mailer.perform_deliveries = true,
 
-  # Mail configuration
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.perform_deliveries = true,
-  config.action_mailer.raise_delivery_errors = true
-  config.action_mailer.default :charset => "utf-8"
-  config.action_mailer.smtp_settings = {
-    :address => "smtp.gmail.com",
-    :port => 587,
-    #:domain =>"http://machinesandmachines.com/",
-    :user_name => "it@indiba.in",
-    :password => "indiba057",
-    :authentication => :plain,
-    :enable_starttls_auto => true
+  ActionMailer::Base.delivery_method = :smtp
+
+  ActionMailer::Base.smtp_settings = {
+    :address => 'mail.bhandarigroup.in',
+    :port => 25,
+    :domain => 'yourdomain.com',
+    :user_name => 'hrmsdws-bhandarigroup',
+    :password => 'hrms1234',
+    :authentication => :plain
   }
 
   # Paperclip setup
   #Paperclip.options[:command_path] = "/usr/local/bin/convert"
   #Paperclip.options[:command_path] = "/home/rk/.rvm/gems/ruby-2.2.2/bin/convert"
-  
-
 end

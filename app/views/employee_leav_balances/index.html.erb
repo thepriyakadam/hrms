@@ -7,12 +7,14 @@
     
   </div><!-- /.box-header -->
   <div class="box-body">
-    <table id="example2" class="table table-bordered table-hover table-condensed'">
+    <table id="example1" class="table table-bordered table-hover table-condensed'">
     <thead>
       <tr>
-      <th>Employee</th>
-      <th>Leav category</th>
-      <th>No of leave</th>
+      <th>Employee Code</th>
+      <th>Employee Name</th>
+      <th>Leave Category</th>
+      <th>No of Leave</th>
+      <th>Total Leave</th>
       <th>Action</th>
     </tr>
   </thead>
@@ -20,14 +22,14 @@
   <tbody>
     <% @employee_leav_balances.each do |employee_leav_balance| %>
       <tr>
-        <td><%= employee_leav_balance.employee %></td>
-        <td><%= employee_leav_balance.leav_category %></td>
+        <td><%= employee_leav_balance.employee.try(:manual_employee_code) %></td>
+         <td><%= employee_leav_balance.employee.try(:first_name) %><%= employee_leav_balance.employee.try(:middle_name) %><%= employee_leav_balance.employee.try(:last_name) %></td>
+        <td><%= employee_leav_balance.leav_category.try(:name) %></td>
         <td><%= employee_leav_balance.no_of_leave %></td>
+        <td><%= employee_leav_balance.total_leave %></td>
 
          <td>
             <%= link_to '', employee_leav_balance,class: 'btn btn-sm btn-default fa fa-eye' %>
-            <%= link_to '', edit_employee_leav_balance_path(employee_leav_balance),class: 'btn btn-success fa fa-edit btn-sm' %>
-            <%= link_to '', employee_leav_balance, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-sm fa fa-close' %>
           </td>
         </tr>
       <% end %>

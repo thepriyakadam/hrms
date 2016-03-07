@@ -1,0 +1,28 @@
+<%= bootstrap_form_for(@well_faire,remote:true) do |f| %>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.select :month,['January','February','March','April','May','June','July','August','September','October','November','December'],{label: 'Select Month',include_blank: " Select Month"} %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :amount %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="field">
+      <%= f.select :status,['Active','Inactive'],{label: 'Select Active',include_blank: " Select Option"} %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+    <label></label>
+      <div class="actions">
+        <%= f.submit :class => class_name %>
+      </div>
+    </div>
+  </div>
+<% end %>

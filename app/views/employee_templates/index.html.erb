@@ -7,29 +7,30 @@
   </div><!-- /.box-header -->
   <div class="box-body">
     <table id="example1" class="table table-bordered table-hover table-condensed">
-    <thead>
-      <tr>
-      <th>Employee Id</th>
-      <th>Employee Name</th>
-      <th>Employement</th>
-      <th>Active Template</th>
-      <th>Action</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @employees.each do |employee| %>
-      <tr>
-        <td><%= employee.manual_employee_code %></td>
-        <td><%= employee.first_name.to_s+' '+employee.try(:last_name).to_s %></td>
-        <td><%= employee.employee_type.try(:name) %></td>
-        <td><%=  %></td>
-        <td>
-          <%= link_to 'Assign Template', new_employee_salary_template_path(id: employee),class: 'btn btn-sm btn-info fa fa-check' %>
-        </td>
+      <thead>
+        <tr>
+          <th>Employee Id</th>
+          <th>Employee Name</th>
+          <th>Employement</th>
+          <th>Active Template</th>
+          <th>Action</th>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
-</div>
+      </thead>
+
+      <tbody>
+        <% @employees.each do |employee| %>
+          <tr>
+            <td><%= employee.try(:manual_employee_code) %></td>
+            <td><%= employee.first_name.to_s+' '+employee.try(:last_name).to_s %></td>
+            <td><%= employee.employee_type.try(:name) %></td>
+            <td><%=  %></td>
+            <td>
+              <%= link_to 'Assign Template', new_employee_salary_template_path(id: employee),class: 'btn btn-sm btn-info fa fa-check' %>
+              <%= link_to 'Assigned Template', template_list_employee_templates_path(employee),class: 'btn btn-sm btn-info fa fa-check' %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 </div>

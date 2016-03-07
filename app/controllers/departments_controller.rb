@@ -4,7 +4,15 @@ class DepartmentsController < ApplicationController
   
   def new
     @department = Department.new
-    @departments = Department.all
+    if current_user.class == Group
+      @departments = Department.all
+    else
+      if current_user.role.name == "Company"
+        @departments = Department.all
+      elsif current_user.role.name == "CompanyLocation"
+        @departments = Department.where(company_location_id: current_user.company_location_id)
+      end
+    end
   end
 
   def edit
@@ -17,7 +25,6 @@ class DepartmentsController < ApplicationController
     @departments = Department.all
     @department = Department.new
   end
-
 
   def update
      @department.update(department_params)

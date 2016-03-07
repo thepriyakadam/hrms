@@ -1,0 +1,36 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">PF Master Dtails</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+    <tr>
+      <th><strong>PF Option</strong></th>
+      <td> <%= @pf_master.is_pf %></td>
+
+      <th><strong>Percentage</strong></th>
+      <td><%= @pf_master.percentage %></td>
+    </tr>
+
+     <tr>
+      <th> <strong>Effective Date</strong></th>
+      <td> <%= @pf_master.date_effective %></td>
+
+      <th><strong>Minimum Limit</strong></th>
+      <td><%= @pf_master.min_limit %></td>
+    </tr>
+
+     <tr>
+      <th><strong>Base Component</strong></th>
+      <td> <%= @pf_master.base_component %></td>
+
+      <th> <strong>Status</strong></th>
+      <td><%= @pf_master.is_active %></td>
+    </tr>
+
+     </table>
+
+  <%= link_to 'Edit',  edit_pf_master_path(@pf_master),class: 'btn btn-sm btn-success fa fa-edit' %> |
+    <%= link_to 'Back', pf_masters_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->

@@ -1,53 +1,35 @@
 class Ability
   include CanCan::Ability
-
   def initialize(user)
     if user.class == Group
-      can [:read, :create, :update, :destroy], [CompanyLeav] 
       can :manage, :all
-      #can [:ajax_show_textbox], [Employee]
-      #can [:read, :create, :update, :destroy], [Company] 
     elsif user.class == Member
-      #can [:read, :create, :update], [MachineProduct], :buyer_id => user.id
       if user.role.name == 'Company'
-        can [:read, :create, :update, :destroy], [CompanyLocation,Department,Employee]
-        #can [:read, :create, :update, :destroy], [Award]  
+        can :manage, :all
       elsif user.role.name == 'CompanyLocation'
-        can [:read, :create, :update, :destroy], [Department,Employee]
-
+        #can :manage, Employee, :joining_detail => { :company_location_id => user.company_location_id }
+        can :manage, Employee, :company_location_id => user.company_location_id
+        can :manage, CompanyLeav
+        can [:read,:new], Department
+        #can :manage, EmployeeLeavBalance, :employee => {:joining_detail => { :company_location_id => user.company_location_id }}
+        can :manage, EmployeeLeavBalance
+        can :manage, EmployeeLeavRequest
+        can :manage, EmployeeSalaryTemplate
+        can :manage, EmployeeTemplate
+        can :manage, AdvanceSalary
+        can :manage, Instalment
+        can [:read,:create,:update], SocietyMemberShip
       elsif user.role.name == 'Department'
-        can [:read, :create, :update, :destroy], [Employee] 
-        can [:read, :create, :update, :destroy], [EmployeeLeavRequest]
+        can :manage, Employee
+        can :manage, EmployeeLeavRequest
       elsif user.role.name == 'Employee'
-        can [:read, :create, :update, :destroy], [EmployeeLeavRequest,CompanyLeav,Award,Family,Qualification,Skillset,Experience,Certification,EmplyeePhysical,LeavCancelled]
+        can :read, Employee, :id => user.employee_id
+        can :read, [JoiningDetail,EmployeeBankDetail,Qualification,Experience,Skillset,EmployeePhysical,Family]
+        can :manage, EmployeeLeavRequest, :employee_id => user.employee_id
+        can :read, EmployeeTemplate, :employee_id => user.employee_id
+        can :read, AdvanceSalary, :employee_id => user.employee_id
+        can :read, Attendance, :employee_id => user.employee_id
       end
-    end 
-
-    # Define abilities for the passed in user here. For example:
-    #
-    #   user ||= User.new # guest user (not logged in)
-    #   if user.admin?
-    #     can :manage, :all
-    #   else
-    #     can :read, :all
-    #   end
-    #
-    # The first argument to `can` is the action you are giving the user
-    # permission to do.
-    # If you pass :manage it will apply to every action. Other common actions
-    # here are :read, :create, :update and :destroy.
-    #
-    # The second argument is the resource the user can perform the action on.
-    # If you pass :all it will apply to every resource. Otherwise pass a Ruby
-    # class of the resource.
-    #
-    # The third argument is an optional hash of conditions to further filter the
-    # objects.
-    # For example, here the user can only update published articles.
-    #
-    #   can :update, Article, :published => true
-    #
-    # See the wiki for details:
-    # https://github.com/CanCanCommunity/cancancan/wiki/Defining-Abilities
+    end
   end
 end

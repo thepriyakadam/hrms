@@ -7,6 +7,7 @@ class JoiningDetail < ActiveRecord::Base
   belongs_to :payment_mode
   belongs_to :department
   belongs_to :company_location
+  belongs_to :reserved_category
 
   validates :employee_id, :presence => true,  uniqueness: { case_sensitive: false }
   validates :joining_date, :presence => true

@@ -98,7 +98,7 @@ class EmployeeSalaryTemplatesController < ApplicationController
 
   def find_employee_for_salary
     @addable_salary_items = nil
-    @deducted_salary_items = nil
+    #@deducted_salary_items = nil
     @month = params["month"]
     @year = params["year"]
     @instalment_array = []
@@ -113,7 +113,7 @@ class EmployeeSalaryTemplatesController < ApplicationController
         @current_template = EmployeeTemplate.where("employee_id = ? and is_active = ?",@employee.id,true).take
         unless @current_template.nil?
           @addable_salary_items = @current_template.employee_salary_templates.where("is_deducted = ?",false)
-          @deducted_salary_items = @current_template.employee_salary_templates.where("is_deducted = ?",true)
+          #@deducted_salary_items = @current_template.employee_salary_templates.where("is_deducted = ?",true)
 
           unless params["month"].nil? and params["year"].nil?
             @working_day = Workingday.where("employee_id = ? and month_name = ? and year = ?", @employee.id, params["month"], params["year"]).take

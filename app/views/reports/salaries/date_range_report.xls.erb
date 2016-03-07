@@ -153,9 +153,9 @@
                 <Cell ss:Index="33"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
               <% elsif item.other_component_name == "Retention" %>
                 <Cell ss:Index="34"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
-              <% elsif item.other_component_name == "Society" %>
-                <Cell ss:Index="35"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
               <% elsif item.other_component_name == "Well Faire" %>
+                <Cell ss:Index="35"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
+              <% elsif item.other_component_name == "Society" %>
                 <Cell ss:Index="36"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
               <% elsif item.other_component_name == "Food Deduction" %>
                 <Cell ss:Index="37"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>

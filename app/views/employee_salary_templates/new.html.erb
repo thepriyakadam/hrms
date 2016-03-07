@@ -12,7 +12,7 @@
       </tr>
       <tr>
         <td><%= @employee.manual_employee_code %></td>
-        <td><%= @employee.first_name+' '+@employee.last_name %></td>
+        <td><%= full_name(@employee) %></td>
         <td><%= @employee_template.try(:salary_template).try(:code) %></td>
       </tr>
     </table><br>

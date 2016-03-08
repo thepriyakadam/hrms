@@ -1,33 +1,58 @@
-<%= form_for(@bonus_master) do |f| %>
-  <% if @bonus_master.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@bonus_master.errors.count, "error") %> prohibited this bonus_master from being saved:</h2>
-
-      <ul>
-      <% @bonus_master.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+<%= bootstrap_form_for(@bonus_master,html: {id: 'bonus_master'},remote:true) do |f| %>
+  <div class="row">
+   
+    <div class="col-sm-3">
+      <div class="form-group required">       
+        <%= f.select :is_bouns,[['Yes','true'],['No','false']],{label: 'Overtime Option',include_blank: " Select Overtime Option"} %>
+      </div>
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :is_bouns %><br>
-    <%= f.check_box :is_bouns %>
+     <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :limit_amount,label: 'Limit Amount' %>
+      </div>
+    </div>
+     <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :bonus_persentage,label:'Bonus Persentage' %>
+      </div>
+    </div>
+     <div class="col-sm-3">
+      <div class="form-group required">       
+        <%= f.select :status,[['Active','true'],['Inactive','false']],{label: 'OT Status',include_blank: " Select Status Option"} %>
+      </div>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :limit_amount %><br>
-    <%= f.text_field :limit_amount %>
-  </div>
-  <div class="field">
-    <%= f.label :bonus_persentage %><br>
-    <%= f.text_field :bonus_persentage %>
-  </div>
-  <div class="field">
-    <%= f.label :status %><br>
-    <%= f.check_box :status %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
+     
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit :class => class_name %>
+      </div>
+    </div>
   </div>
 <% end %>
+
+<script type="text/javascript">
+
+$("#bonus_master").validate({
+  rules: {
+    "bonus_master[is_bonus]":{
+      required: true
+    },
+    "bonus_master[limit_amount]":{
+      required: true
+    },
+    "bonus_master[bonus_persentage]":{
+      required: true
+    },
+    "bonus_master[status]":{
+      required: true
+    }
+  },
+  
+  errorPlacement: function(error, element) {
+   error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+   error.insertAfter(element.parent(element));
+  }
+});
+</script>

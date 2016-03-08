@@ -10,7 +10,7 @@
       <td> <%= @food_deduction.employee.try(:manual_employee_code) %></td>
 
       <th> <strong>Employee Name</strong></th>
-      <td> <%= @food_deduction.employee %></td>
+      <td><%= @food_deduction.employee.first_name %> <%= @food_deduction.employee.middle_name %> <%= @food_deduction.employee.last_name %></td> 
     </tr>
 
     <tr>

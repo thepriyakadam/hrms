@@ -92,11 +92,11 @@
           <Cell ss:Index="7"><Data ss:Type="String"><%= slip.year %></Data></Cell>
           <Cell ss:Index="8"><Data ss:Type="String"><%= slip.month %></Data></Cell>
           <Cell ss:Index="9"><Data ss:Type="String"><%= joining.employee_category.try(:name) %></Data></Cell>
-          <Cell ss:Index="10"><Data ss:Type="String"><%= bank.account_no %></Data></Cell>
-          <Cell ss:Index="11"><Data ss:Type="String"><%= bank.bank_name %></Data></Cell>
-          <Cell ss:Index="12"><Data ss:Type="String"><%= joining.payment_mode.try(:name) %></Data></Cell>
-          <Cell ss:Index="13"><Data ss:Type="String"><%= joining.employee_pf_no %></Data></Cell>
-          <Cell ss:Index="14"><Data ss:Type="String"><%= joining.employee_efic_no %></Data></Cell>
+          <Cell ss:Index="10"><Data ss:Type="String"><%= bank.try(:account_no) %></Data></Cell>
+          <Cell ss:Index="11"><Data ss:Type="String"><%= bank.try(:bank_name) %></Data></Cell>
+          <Cell ss:Index="12"><Data ss:Type="String"><%= joining.try(:payment_mode).try(:name) %></Data></Cell>
+          <Cell ss:Index="13"><Data ss:Type="String"><%= joining.try(:employee_pf_no) %></Data></Cell>
+          <Cell ss:Index="14"><Data ss:Type="String"><%= joining.try(:employee_efic_no) %></Data></Cell>
 
           <% @addable_salaryslip_items = slip.salaryslip_components.where(is_deducted: false) %>
           <% @addable_salaryslip_items.each do |item| %>

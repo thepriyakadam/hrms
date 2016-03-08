@@ -17,6 +17,7 @@ class Employee < ActiveRecord::Base
   has_many :second_reporters, class_name: "EmployeeLeavRequest", foreign_key: "second_reporter_id"
   has_many :leave_status_records, class_name: "LeaveStatusRecord", foreign_key: 'change_status_employee_id'
   has_many :employee_leav_balances
+  has_many :overtime_salaries
   #accepts_nested_attributes_for :employee_leav_balances
   has_many :families
   has_many :experiences

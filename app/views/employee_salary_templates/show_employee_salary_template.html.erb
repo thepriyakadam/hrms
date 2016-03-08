@@ -4,47 +4,50 @@
     <div class="box-tools pull-right">
     </div>
   </div><!-- /.box-header -->
-  <div id="myModal"></div>
   <div class="box-body">
+    <div class="row">
+      <div class="col-sm-12">
+        <div id="myModal"></div>    
+      </div>
+    </div>
+
     <table class="table table-bordered table-hover table-condensed">
-        <thead>
+      <thead>
+        <tr>
+          <th>Salary Component</th>
+          <th>Is Deducted</th>
+          <th>Parent Component</th>
+          <th>Percentage</th>
+          <th>To Be Paid</th>
+          <th>Monthly Amount</th>
+          <th>Annual Amount</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @employee_salary_templates.each do |template| %>
           <tr>
-            <th>Salary Component</th>
-            <th>Is Deducted</th>
-            <th>Parent Component</th>
-            <th>Percentage</th>
-            <th>To Be Paid</th>
-            <th>Monthly Amount</th>
-            <th>Annual Amount</th>
-            <th>Action</th>
+           <td><%= template.try(:salary_component).try(:name)%></td>
+           <td><%= template.try(:is_deducted)%></td>
+           <td><%= template.try(:parent_salary_component).try(:name)%></td>
+           <td><%= template.try(:percentage)%></td>
+           <td><%= template.try(:to_be_paid)%></td>
+           <td align="right"><%= template.try(:monthly_amount)%></td>
+           <td align="right"><%= template.try(:annual_amount)%></td>
+           <td><%= link_to '', edit_employee_salary_template_path(template), class: 'btn btn-success btn-xs fa fa-edit',remote:true %></td>
           </tr>
-        </thead>
-        <tbody>
-          <% @employee_salary_templates.each do |template| %>
-            <tr>
-             <td><%= template.try(:salary_component).try(:name)%></td>
-             <td><%= template.try(:is_deducted)%></td>
-             <td><%= template.try(:parent_salary_component).try(:name)%></td>
-             <td><%= template.try(:percentage)%></td>
-             <td><%= template.try(:to_be_paid)%></td>
-             <td align="right"><%= template.try(:monthly_amount)%></td>
-             <td align="right"><%= template.try(:annual_amount)%></td>
-             <td><%= link_to '', edit_employee_salary_template_path(template), class: 'btn btn-success btn-xs fa fa-edit',remote:true %></td>
-            </tr>
-          <% end %> 
-          <tr>
-            <th>Total</th>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td align="right"><%= @employee_salary_templates.sum(:monthly_amount) %></th>
-            <td align="right"><%= @employee_salary_templates.sum(:annual_amount) %></th>
-          </tr>    
-        </tbody>
-      </table>
-       <%= link_to 'Back', employee_templates_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
-        <!-- link_to 'edit', edit_employee_templates_path(@employee_templates),class: 'btn btn-default btn-sm fa fa-arrow-left' -->
-      
+        <% end %> 
+        <tr>
+          <th>Total</th>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td align="right"><%= @employee_salary_templates.sum(:monthly_amount) %></th>
+          <td align="right"><%= @employee_salary_templates.sum(:annual_amount) %></th>
+        </tr>    
+      </tbody>
+    </table>
+    <%= link_to 'Back', employee_templates_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
   </div><!-- /.box-body -->
 </div><!-- /.box -->

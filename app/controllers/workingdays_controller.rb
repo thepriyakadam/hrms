@@ -87,10 +87,17 @@ class WorkingdaysController < ApplicationController
     @employees = Employee.all
     @employees.each do |e|
       workingday = Workingday.new
-      if e.joining_detail.employee_category.try(:name) == "Worker"
-        workingday.day_in_month = 26  
+      if e.joining_detail.nil?
+        
       else
-        workingday.day_in_month = @date.end_of_month.day
+        if e.joining_detail.employee_category.nil?
+        else
+          if e.joining_detail.employee_category.name == "Worker"
+            workingday.day_in_month = 26  
+          else
+            workingday.day_in_month = @date.end_of_month.day
+          end
+        end
       end
       workingday.present_day = Attendance.where(attendance_date: @date.beginning_of_month..@date.end_of_month, employee_id: e.id).count
       workingday.total_leave = ParticularLeaveRecord.where(leave_date: @date.beginning_of_month..@date.end_of_month, employee_id: e.id).count

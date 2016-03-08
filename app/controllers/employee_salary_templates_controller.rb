@@ -160,6 +160,6 @@ class EmployeeSalaryTemplatesController < ApplicationController
   private
 
   def employee_salary_template_params
-    params.require(:employee_salary_template).permit(:monthly_amount)
+    params.require(:employee_salary_template).permit(:monthly_amount,:annual_amount)
   end
 end

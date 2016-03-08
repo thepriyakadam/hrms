@@ -2,7 +2,11 @@ Rails.application.routes.draw do
 
   resources :bonus
   resources :bonus_masters
-  resources :overtime_salaries
+  resources :overtime_salaries do
+    collection do
+      get :collect_basic
+    end
+  end
   resources :overtime_masters
   resources :reserved_categories
   resources :pf_masters

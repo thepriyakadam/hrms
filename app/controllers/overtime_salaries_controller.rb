@@ -14,7 +14,12 @@ class OvertimeSalariesController < ApplicationController
 
   # GET /overtime_salaries/new
   def new
+    @overtime_master = OvertimeMaster.find_by_status(true)
     @overtime_salary = OvertimeSalary.new
+    if @overtime_master.nil?
+      flash[:alert] = "Overtime Master not set. First set the master."
+    else
+    end
   end
 
   # GET /overtime_salaries/1/edit
@@ -25,7 +30,6 @@ class OvertimeSalariesController < ApplicationController
   # POST /overtime_salaries.json
   def create
     @overtime_salary = OvertimeSalary.new(overtime_salary_params)
-
     respond_to do |format|
       if @overtime_salary.save
         format.html { redirect_to @overtime_salary, notice: 'Overtime salary was successfully created.' }
@@ -58,6 +62,35 @@ class OvertimeSalariesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to overtime_salaries_url, notice: 'Overtime salary was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  def collect_basic
+    @employee_id = params[:employee_id]
+    if @employee_id == ""
+      @employee_nil = true
+    else
+      @employee_nil = false
+      @employee = Employee.find(@employee_id)
+      @employee_template = @employee.employee_templates.where(is_active: true).take
+      if @employee_template.nil?
+        @employee_template_nil = true
+      else
+        @employee_template_nil = false
+        @salary_component = SalaryComponent.find_by_name('Basic')
+        if @salary_component.nil?
+          @salary_component_nil = true
+        else
+          @salary_component_nil = false
+          @basic_record = @employee_template.employee_salary_templates.where(salary_component_id: @salary_component.id).take
+          if @basic_record.nil?
+            @basic_record_nil = true
+          else
+            @basic_record_nil = false
+            @basic_amount = @basic_record.monthly_amount
+          end
+        end
+      end
     end
   end
 

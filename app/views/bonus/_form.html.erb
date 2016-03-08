@@ -1,0 +1,29 @@
+<%= form_for(@bonu) do |f| %>
+  <% if @bonu.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@bonu.errors.count, "error") %> prohibited this bonu from being saved:</h2>
+
+      <ul>
+      <% @bonu.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :employee_id %><br>
+    <%= f.text_field :employee_id %>
+  </div>
+  <div class="field">
+    <%= f.label :bonus_amount %><br>
+    <%= f.text_field :bonus_amount %>
+  </div>
+  <div class="field">
+    <%= f.label :bouns_date %><br>
+    <%= f.text_field :bouns_date %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

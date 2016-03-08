@@ -58,4 +58,26 @@
     maxHeight: 200
     });
   });
+
+   $("#esic_master").validate({
+  rules: {
+    "esic_master[date_effective]":{
+      required: true
+    },
+    "esic_master[esic]":{
+      required: true
+    },
+    "esic_master[percentage]":{
+      required: true
+    },
+    "esic_master[max_limit]":{
+      required: true
+    }
+  },
+  
+  errorPlacement: function(error, element) {
+   error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+   error.insertAfter(element.parent(element));
+  }
+});
 </script>

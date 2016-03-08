@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160305054427) do
+ActiveRecord::Schema.define(version: 20160308095842) do
 
   create_table "advance_salaries", force: :cascade do |t|
     t.integer  "employee_id"
@@ -834,6 +834,32 @@ ActiveRecord::Schema.define(version: 20160305054427) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
+
+  create_table "overtime_masters", force: :cascade do |t|
+    t.boolean  "is_over_time"
+    t.integer  "day"
+    t.decimal  "company_hrs",  precision: 15, scale: 2, default: 0.0
+    t.decimal  "ot_rate",      precision: 15, scale: 2, default: 0.0
+    t.boolean  "is_esic"
+    t.boolean  "status"
+    t.datetime "created_at",                                          null: false
+    t.datetime "updated_at",                                          null: false
+  end
+
+  create_table "overtime_salaries", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.decimal  "ot_hrs",                  precision: 15, scale: 2, default: 0.0
+    t.decimal  "ot_esic_amount",          precision: 15, scale: 2, default: 0.0
+    t.decimal  "total_amount",            precision: 15, scale: 2, default: 0.0
+    t.decimal  "attendence_bouns_amount", precision: 15, scale: 2, default: 0.0
+    t.decimal  "paid_holiday_amount",     precision: 15, scale: 2, default: 0.0
+    t.decimal  "net_payble_amount",       precision: 15, scale: 2, default: 0.0
+    t.datetime "created_at",                                                     null: false
+    t.datetime "updated_at",                                                     null: false
+    t.date     "ot_date"
+  end
+
+  add_index "overtime_salaries", ["employee_id"], name: "index_overtime_salaries_on_employee_id"
 
   create_table "overtimes", force: :cascade do |t|
     t.integer  "employee_id"

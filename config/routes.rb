@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :overtime_salaries
+  resources :overtime_masters
   resources :reserved_categories
   resources :pf_masters
   resources :professional_taxes

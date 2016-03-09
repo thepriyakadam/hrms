@@ -16,11 +16,16 @@ class OvertimeSalary < ActiveRecord::Base
 
     basic_amount_by_day = basic_amount/day
     basic_amount_by_day_by_company_hrs = basic_amount_by_day/company_hrs
-    ot_amount = basic_amount_by_day_by_company_hrs*ot_rate
+    temp = basic_amount_by_day_by_company_hrs*ot_rate
+    ot_amount = temp * self.ot_hrs
     ot_esic_amount = (ot_amount/100*percentage)
-    total_amount = ot_amount - ot_esic_amount
-    net_payble = total_amount + attendence_bouns_amount + paid_holiday_amount
+    if master_esic.esic and addable_total_calculated_amount <= master_esic.max_limit and @employee.joining_detail.have_esic
+      total_amount = ot_amount - ot_esic_amount
+    else
+      total_amount = ot_amount
+    end
 
+    net_payble = total_amount + attendence_bouns_amount + paid_holiday_amount
     self.ot_amount = ot_amount
     self.ot_esic_amount = ot_esic_amount
     self.total_amount = total_amount

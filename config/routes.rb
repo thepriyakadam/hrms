@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :bonus_employees
   resources :bonus_masters
   resources :overtime_salaries do
     collection do

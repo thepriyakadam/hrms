@@ -1,12 +1,29 @@
 class OvertimeSalary < ActiveRecord::Base
   belongs_to :employee
   before_create :calculate_amount
-  #after_update :update_employee_leave_balance
 
   def calculate_amount
     @overtime_master = OvertimeMaster.find_by_status(true)
-    temp = (6500/@overtime_master.day/@overtime_master.company_hrs*@overtime_master.ot_rate*self.ot_hrs)
-    puts temp
-    puts "--------------------------------------------------------------------------"
+    @esic_master = EsicMaster.first
+    basic_amount = self.basic_amount
+    day = @overtime_master.day
+    company_hrs = @overtime_master.company_hrs
+    ot_rate = @overtime_master.ot_rate
+    ot_hrs = self.ot_hrs
+    percentage = @esic_master.percentage
+    attendence_bouns_amount = self.attendence_bouns_amount
+    paid_holiday_amount = self.paid_holiday_amount
+
+    basic_amount_by_day = basic_amount/day
+    basic_amount_by_day_by_company_hrs = basic_amount_by_day/company_hrs
+    ot_amount = basic_amount_by_day_by_company_hrs*ot_rate
+    ot_esic_amount = (ot_amount/100*percentage)
+    total_amount = ot_amount - ot_esic_amount
+    net_payble = total_amount + attendence_bouns_amount + paid_holiday_amount
+
+    self.ot_amount = ot_amount
+    self.ot_esic_amount = ot_esic_amount
+    self.total_amount = total_amount
+    self.net_payble_amount = net_payble
   end
 end

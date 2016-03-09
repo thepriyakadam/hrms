@@ -102,6 +102,6 @@ class OvertimeSalariesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def overtime_salary_params
-      params.require(:overtime_salary).permit(:employee_id, :date, :ot_hrs, :ot_esic_amount, :total_amount, :attendence_bouns_amount, :paid_holiday_amount, :net_payble_amount)
+      params.require(:overtime_salary).permit(:employee_id, :ot_date, :basic_amount, :ot_hrs, :ot_amount, :ot_esic_amount, :total_amount, :attendence_bouns_amount, :paid_holiday_amount, :net_payble_amount)
     end
 end

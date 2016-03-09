@@ -1,5 +1,3 @@
-<p id="notice"><%= notice %></p>
-
 <h1>Listing Overtime Salaries</h1>
 
 <table>
@@ -21,7 +19,7 @@
     <% @overtime_salaries.each do |overtime_salary| %>
       <tr>
         <td><%= overtime_salary.employee %></td>
-        <td><%= overtime_salary.date %></td>
+        <td><%= overtime_salary.ot_date %></td>
         <td><%= overtime_salary.ot_hrs %></td>
         <td><%= overtime_salary.ot_esic_amount %></td>
         <td><%= overtime_salary.total_amount %></td>

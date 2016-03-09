@@ -1,7 +1,6 @@
-< !-- SELECT2 EXAMPLE -->
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title">Company Locations</h3>
+    <h3 class="box-title">Create Overtiem Salary</h3>
   </div><!-- /.box-header -->
   <div class="box-body">
     <%= bootstrap_form_for(@overtime_salary,html: {id: 'overtime_salary'}) do |f| %>
@@ -35,19 +34,6 @@
           </div>
 
           <div class="col-sm-3">
-            <div class="form-group required">
-              <%= f.text_field :ot_esic_amount,label:"ESIC Amount" %>
-            </div>
-          </div>
-
-          <div class="col-sm-3">
-            <div class="field">
-             <%= f.text_field :total_amount,placeholder: "OT Amount" %>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-sm-3">
             <div class="field">
               <%= f.text_field :attendence_bouns_amount,label:"Attendance Bouns" %>
             </div>
@@ -58,9 +44,29 @@
               <%= f.text_field :paid_holiday_amount,label:"PH Amount" %>
             </div>
           </div>
+
+          
+        </div>
+        <div class="row">
+          <div class="col-sm-3">
+            <div class="form-group required">
+              <%= f.text_field :ot_amount,label:"OT Amount", readonly: true %>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="form-group required">
+              <%= f.text_field :ot_esic_amount,label:"ESIC Amount", readonly: true %>
+            </div>
+          </div>
+
           <div class="col-sm-3">
             <div class="field">
-              <%= f.text_field :net_payble_amount,label:"Net Amount" %>
+             <%= f.text_field :total_amount,placeholder: "OT Amount", readonly: true %>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="field">
+              <%= f.text_field :net_payble_amount,label:"Net Amount", readonly: true %>
             </div>
           </div>
         </div>
@@ -76,9 +82,6 @@
         </div><!-- /.box-body -->
 </div><!-- /.box -->
 
-
-
-
 <script type="text/javascript">
   $(function(){
     $('.ot_date').datepicker({
@@ -86,5 +89,5 @@
     changeMonth: true,
     yearRange: '-200:-0',
     dateFormat: 'dd-mm-yy' });
-     }); 
+  }); 
 </script>

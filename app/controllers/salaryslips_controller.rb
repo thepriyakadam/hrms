@@ -6,6 +6,7 @@ class SalaryslipsController < ApplicationController
     if @employee.nil?
       @flag = false
     else
+      ActiveRecord::Base.transaction do
       working_day = Workingday.find_by_employee_id(@employee.id)
       
       current_template = EmployeeTemplate.where("employee_id = ? and is_active = ?",@employee.id,true).take
@@ -196,8 +197,6 @@ class SalaryslipsController < ApplicationController
         deducted_total_calculated_amount = deducted_total_calculated_amount + deducted_calculated_amount
       end
            
-
-
       Salaryslip.new do |ss|
         ss.employee_id = @employee.id
         ss.workingday_id = working_day.id
@@ -295,7 +294,7 @@ class SalaryslipsController < ApplicationController
         if @pf_master.is_pf 
           formula_string = @pf_master.base_component.split(",") 
           formula_string.try(:each) do |f| 
-            formula_item = @addable_salary_items.where(salary_component_id: f.to_i).take 
+            formula_item = addable_salary_items.where(salary_component_id: f.to_i).take 
             formula_item_actual_amount = formula_item.monthly_amount 
             formula_item_actual_amount = 0 if formula_item_actual_amount.nil? 
             formula_total_actual_amount = formula_total_actual_amount + formula_item_actual_amount 
@@ -343,6 +342,7 @@ class SalaryslipsController < ApplicationController
         SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: deducted_actual_amount, calculated_amount: deducted_calculated_amount, is_deducted: true, other_component_name: "ESIC")   
       end
 
+      BonusEmployee.create_bonus(basic_calculated_amount, @employee.id, date)
       
       @arrear = EmployeeArrear.where("employee_id = ? and is_paid = ?", @employee.id,false).take
       unless @arrear.nil?
@@ -359,6 +359,7 @@ class SalaryslipsController < ApplicationController
           arrear_calculated_amount = ((ai.actual_amount/30) * @total_payable_days).round
           SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: ai.actual_amount ,calculated_amount: arrear_calculated_amount, is_deducted: ai.is_deducted, is_arrear: true)
         end
+      end
       end
     end
     flash[:notice] = "Salary processed."
@@ -756,6 +757,8 @@ class SalaryslipsController < ApplicationController
             deducted_calculated_amount = m.amount
             SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: deducted_actual_amount, calculated_amount: deducted_calculated_amount, is_deducted: true, other_component_name: m.expencess_type.name)
           end
+
+          BonusEmployee.create_bonus(basic_calculated_amount, @employee.id, date)
 
           @arrear = EmployeeArrear.where("employee_id = ? and is_paid = ?", @employee.id,false).take
           unless @arrear.nil?

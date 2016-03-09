@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160309050028) do
+ActiveRecord::Schema.define(version: 20160309072652) do
 
   create_table "advance_salaries", force: :cascade do |t|
     t.integer  "employee_id"
@@ -80,6 +80,16 @@ ActiveRecord::Schema.define(version: 20160309050028) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "bonus_employees", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.date     "bonus_date"
+    t.decimal  "amount",      precision: 15, scale: 2
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
+  end
+
+  add_index "bonus_employees", ["employee_id"], name: "index_bonus_employees_on_employee_id"
 
   create_table "bonus_masters", force: :cascade do |t|
     t.boolean  "is_bouns"

@@ -32,7 +32,7 @@ class OvertimeSalariesController < ApplicationController
     @overtime_salary = OvertimeSalary.new(overtime_salary_params)
     respond_to do |format|
       if @overtime_salary.save
-        format.html { redirect_to @overtime_salary, notice: 'Overtime salary was successfully created.' }
+        format.html { redirect_to overtime_salaries_path, notice: 'Overtime salary was successfully created.' }
         format.json { render :show, status: :created, location: @overtime_salary }
       else
         format.html { render :new }

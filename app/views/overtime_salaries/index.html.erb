@@ -1,39 +1,50 @@
-<h1>Listing Overtime Salaries</h1>
-
-<table>
-  <thead>
-    <tr>
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Listing Overtime Salaries</h3>
+    <div class="pull-right">
+      <%= link_to "New Overtime salary", new_overtime_salary_path, class: 'btn btn-sm btn-primary' %> 
+    </div>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example1" class="table table-bordered table-hover table-condensed">
+    <thead>
+      <tr>
       <th>Employee</th>
       <th>Date</th>
-      <th>Ot hrs</th>
-      <th>Ot esic amount</th>
-      <th>Total amount</th>
-      <th>Attendence bouns amount</th>
-      <th>Paid holiday amount</th>
-      <th>Net payble amount</th>
-      <th colspan="3"></th>
+      <th>Hrs</th>
+      <th>Wages</th>
+      <th>OT Amount</th>
+      <th>ESIC</th>
+      <th>OT paid</th>
+      <th>Att Bonus</th>
+      <th>PH Amount</th>
+      <th>Net Amount</th>
+      <th>Action</th>
     </tr>
   </thead>
 
   <tbody>
     <% @overtime_salaries.each do |overtime_salary| %>
       <tr>
-        <td><%= overtime_salary.employee %></td>
+        <td><%= overtime_salary.employee.try(:manual_employee_code) %></td>
         <td><%= overtime_salary.ot_date %></td>
+
         <td><%= overtime_salary.ot_hrs %></td>
+        <td><%= overtime_salary.basic_amount %></td>
+        <td><%= overtime_salary.ot_amount %></td>
         <td><%= overtime_salary.ot_esic_amount %></td>
         <td><%= overtime_salary.total_amount %></td>
         <td><%= overtime_salary.attendence_bouns_amount %></td>
         <td><%= overtime_salary.paid_holiday_amount %></td>
         <td><%= overtime_salary.net_payble_amount %></td>
-        <td><%= link_to 'Show', overtime_salary %></td>
-        <td><%= link_to 'Edit', edit_overtime_salary_path(overtime_salary) %></td>
-        <td><%= link_to 'Destroy', overtime_salary, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Overtime salary', new_overtime_salary_path %>
+       <td>
+        <%= link_to 'Edit', edit_overtime_salary_path(overtime_salary) %>
+        <%= link_to 'Destroy', overtime_salary, method: :delete, data: { confirm: 'Are you sure?' } %>
+        <%= link_to '', overtime_salary,class: 'btn btn-sm btn-default fa fa-eye' %>
+        </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+</div>

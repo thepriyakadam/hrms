@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Employee:</strong>
+  <%= @bonus_employee.employee %>
+</p>
+
+<p>
+  <strong>Bonus date:</strong>
+  <%= @bonus_employee.bonus_date %>
+</p>
+
+<p>
+  <strong>Amount:</strong>
+  <%= @bonus_employee.amount %>
+</p>
+
+<%= link_to 'Edit', edit_bonus_employee_path(@bonus_employee) %> |
+<%= link_to 'Back', bonus_employees_path %>

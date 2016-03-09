@@ -1,9 +1,7 @@
 Rails.application.routes.draw do
 
-  resources :bonus_employees do
-    collection do
-    end
-  end
+  resources :overtime_daily_records
+  resources :bonus_employees
   resources :bonus_masters
   resources :overtime_salaries do
     collection do
@@ -112,7 +110,6 @@ Rails.application.routes.draw do
       get :generate_workingday
     end
   end
-  resources :overtimes
   resources :shift_rotations
   resources :employee_monthly_days do
     collection do

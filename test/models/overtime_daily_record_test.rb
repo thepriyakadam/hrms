@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class OvertimeTest < ActiveSupport::TestCase
+class OvertimeDailyRecordTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

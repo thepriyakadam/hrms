@@ -1,9 +1,9 @@
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title">Create Overtime Salary</h3>
+    <h3 class="box-title">Create Overtime Daily Record</h3>
   </div><!-- /.box-header -->
   <div class="box-body">
-    <%= bootstrap_form_for(@overtime_salary,html: {id: 'overtime_salary'}) do |f| %>
+    <%= bootstrap_form_for(@overtime_daily_record,html: {id: 'overtime_daily_record'}) do |f| %>
         <div class="row">
           <div class="col-sm-3">
             <div class="form-group required">
@@ -15,7 +15,7 @@
           </div>
         </div>
 
-      <div class="row">
+    <div class="row">
       <div class="col-sm-3">
       <label>Overtime Date </label>
         <div class="field">
@@ -23,55 +23,29 @@
             <div class="input-group-addon">
               <i class="fa fa-calendar"></i>
             </div>
-             <%= f.text_field :ot_date,hide_label:true, class: 'ot_date'%>
+             <%= f.text_field :ot_daily_date,hide_label:true, class: 'ot_daily_date'%>
           </div>
         </div>
       </div>
           <div class="col-sm-3">
             <div class="form-group required">
-             <%= f.text_field :ot_hrs,label:"OT Hrs"%>
+             <%= f.text_field :ot_daily_hrs,label:"OT Hrs"%>
             </div>
           </div>
 
           <div class="col-sm-3">
             <div class="field">
-              <%= f.text_field :attendence_bouns_amount,label:"Attendance Bouns" %>
+              <%= f.text_field :ot_rate,label:"Wages Rate" %>
             </div>
           </div>
 
           <div class="col-sm-3">
             <div class="field">
-              <%= f.text_field :paid_holiday_amount,label:"PH Amount" %>
+              <%= f.text_field :ot_daily_amount,label:"OT Amount" %>
             </div>
           </div>
-
-          
-        </div>
-        <!-- <div class="row">
-          <div class="col-sm-3">
-            <div class="form-group required">
-              <%= f.text_field :ot_amount,label:"OT Amount", readonly: true %>
-            </div>
-          </div>
-          <div class="col-sm-3">
-            <div class="form-group required">
-              <%= f.text_field :ot_esic_amount,label:"ESIC Amount", readonly: true %>
-            </div>
-          </div>
-
-          <div class="col-sm-3">
-            <div class="field">
-             <%= f.text_field :total_amount,placeholder: "OT Amount", readonly: true %>
-            </div>
-          </div>
-          <div class="col-sm-3">
-            <div class="field">
-              <%= f.text_field :net_payble_amount,label:"Net Amount", readonly: true %>
-            </div>
-          </div>
-        </div> -->
-
-        <div class="row">
+      </div>
+      <div class="row">
          <div class="col-sm-5">
           <div class="actions">
             <%= f.submit :class => class_name, data: { disable_with: data_info } %>
@@ -84,7 +58,7 @@
 
 <script type="text/javascript">
   $(function(){
-    $('.ot_date').datepicker({
+    $('.ot_daily_date').datepicker({
     changeYear:true,
     changeMonth: true,
     yearRange: '-200:-0',

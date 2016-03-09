@@ -29,8 +29,24 @@
           <td align="right"><%= @working_day.try(:day_in_month) %></td>      
           <th>Holidays</th>        
           <td align="right"><%= @working_day.try(:holiday_in_month) %></td>    
-          <th>Leave Total</th>    
+          <th>Weekoff</th>    
           <td align="right"><%= @working_day.try(:total_leave) %></td>            
+        </tr>
+        <tr>
+          <th>CL</th>        
+          <td align="right"><%= @working_day.try(:cl_leave) %></td>      
+          <th>EL</th>        
+          <td align="right"><%= @working_day.try(:el_leave) %></td>    
+          <th>Advance Leave</th>    
+          <td align="right"><%= @working_day.try(:total_leave) %></td>            
+        </tr>
+         <tr>
+          <th>C.off</th>        
+          <td align="right"><%= @working_day.try(:coff_leave) %></td>      
+          <th>ESIC Leave</th>        
+          <td align="right"><%= @working_day.try(:esic_leave) %></td>    
+          <th>LWP</th>    
+          <td align="right"><%= @working_day.try(:lwp_leave) %></td>            
         </tr>
         <tr>
           <th>Working Days</th>

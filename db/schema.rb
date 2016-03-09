@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160309072652) do
+ActiveRecord::Schema.define(version: 20160309115846) do
 
   create_table "advance_salaries", force: :cascade do |t|
     t.integer  "employee_id"
@@ -863,6 +863,18 @@ ActiveRecord::Schema.define(version: 20160309072652) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
+
+  create_table "overtime_daily_records", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.string   "ot_daily_date"
+    t.decimal  "ot_daily_hrs",    precision: 15, scale: 2, default: 0.0
+    t.decimal  "ot_rate",         precision: 15, scale: 2, default: 0.0
+    t.decimal  "ot_daily_amount", precision: 15, scale: 2, default: 0.0
+    t.datetime "created_at",                                             null: false
+    t.datetime "updated_at",                                             null: false
+  end
+
+  add_index "overtime_daily_records", ["employee_id"], name: "index_overtime_daily_records_on_employee_id"
 
   create_table "overtime_masters", force: :cascade do |t|
     t.boolean  "is_over_time"

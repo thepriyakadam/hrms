@@ -1,7 +1,13 @@
 Rails.application.routes.draw do
 
   resources :overtime_daily_records
-  resources :bonus_employees
+  resources :bonus_employees do
+    collection do
+      get :search_bonus
+      get :collect_bonus
+      get :particular_employee_bonus
+    end
+  end
   resources :bonus_masters
   resources :overtime_salaries do
     collection do

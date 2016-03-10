@@ -19,9 +19,7 @@
 
 
 // $(function () {
-  
-//     setTimeout(updateComments, 10000);
-  
+//   setTimeout(updateComments, 10000);
 // });
 
 // function updateComments() {
@@ -62,7 +60,6 @@ $(function () {
   $(".timepicker").timepicker({
     showInputs: false
   });
-  
 });
 
 // Automatic hide alert
@@ -76,40 +73,52 @@ $(function(){
 // Datepicker
 $(function(){
   $('.company_start_date').datepicker({
-   changeYear:true,
-   changeMonth: true,
-   yearRange: '-200:-0',
-   dateFormat: 'dd-mm-yy' });   
+  changeYear:true,
+  changeMonth: true,
+  yearRange: '-200:-0',
+  dateFormat: 'dd-mm-yy' });   
 
   $('.birth_date').datepicker({
-   changeYear:true,
-   changeMonth: true,
-   yearRange: '-100:-0',
-   dateFormat: 'dd-mm-yy' });
+  changeYear:true,
+  changeMonth: true,
+  yearRange: '-100:-0',
+  dateFormat: 'dd-mm-yy' });
 
   $('.family_birth_date').datepicker({
-   changeYear:true,
-   changeMonth: true,
-   yearRange: '-100:-0',
-   dateFormat: 'dd-mm-yy' }); 
+  changeYear:true,
+  changeMonth: true,
+  yearRange: '-100:-0',
+  dateFormat: 'dd-mm-yy' }); 
 
-   $('.passport_issue_date').datepicker({
-   changeYear:true,
-   changeMonth: true,
-   yearRange: '-100:+2',
-   dateFormat: 'dd-mm-yy' });  
+  $('.passport_issue_date').datepicker({
+  changeYear:true,
+  changeMonth: true,
+  yearRange: '-100:+2',
+  dateFormat: 'dd-mm-yy' });  
 
-   $('.passport_expiry_date').datepicker({
-   changeYear:true,
-   changeMonth: true,
-   yearRange: '-100:+2',
-   dateFormat: 'dd-mm-yy' });  
+  $('.passport_expiry_date').datepicker({
+  changeYear:true,
+  changeMonth: true,
+  yearRange: '-100:+2',
+  dateFormat: 'dd-mm-yy' });  
 
-   $('.workingday_date').datepicker({
-   changeYear:true,
-   changeMonth: true,
-   yearRange: '-10:+50',
-   dateFormat: 'dd-mm-yy' });   
+  $('.workingday_date').datepicker({
+  changeYear:true,
+  changeMonth: true,
+  yearRange: '-10:+50',
+  dateFormat: 'dd-mm-yy' });
+
+  $('.bonus_start_date').datepicker({
+  changeYear:true,
+  changeMonth: true,
+  yearRange: '-10:+50',
+  dateFormat: 'dd-mm-yy' });
+
+  $('.bonus_end_date').datepicker({
+  changeYear:true,
+  changeMonth: true,
+  yearRange: '-10:+50',
+  dateFormat: 'dd-mm-yy' });  
 });
 
 

@@ -29,6 +29,7 @@ class Employee < ActiveRecord::Base
   has_many :particular_leave_records
   has_many :society_member_ships
   has_many :monthly_expences
+  has_many :bonus_employees
   has_one :employee_shift
   has_one :member
   has_one :employee_bank_detail

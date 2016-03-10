@@ -61,6 +61,21 @@ class BonusEmployeesController < ApplicationController
     end
   end
 
+  def search_bonus
+    
+  end
+
+  def collect_bonus
+    start_date = params[:start_date].to_date
+    end_date = params[:end_date].to_date
+    @bonus_employees = BonusEmployee.where(bonus_date: start_date..end_date).group(:employee_id)
+  end
+
+  def particular_employee_bonus
+    @employee = Employee.find(params[:format])
+    @particular_bonuses = @employee.bonus_employees
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_bonus_employee

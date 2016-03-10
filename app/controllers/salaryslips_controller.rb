@@ -289,12 +289,12 @@ class SalaryslipsController < ApplicationController
       formula_total_calculated_amount = 0
       
       @pf_master = PfMaster.where(is_active: true).take 
-      if @pf_master.nil? 
+      if @pf_master.nil?
       else 
-        if @pf_master.is_pf 
-          formula_string = @pf_master.base_component.split(",") 
-          formula_string.try(:each) do |f| 
-            formula_item = addable_salary_items.where(salary_component_id: f.to_i).take 
+        if @pf_master.is_pf
+          formula_string = @pf_master.base_component.split(",")
+          formula_string.try(:each) do |f|
+            formula_item = addable_salary_items.where(salary_component_id: f.to_i).take
             formula_item_actual_amount = formula_item.monthly_amount 
             formula_item_actual_amount = 0 if formula_item_actual_amount.nil? 
             formula_total_actual_amount = formula_total_actual_amount + formula_item_actual_amount 
@@ -416,9 +416,9 @@ class SalaryslipsController < ApplicationController
     # @salaryslip_array = []
     # @salaryslip_component_array = []
     @instalment_array = []
-    if employee_ids.empty?
-      flash[:notice] = "Please select employees."
-      redirect_to root_url
+    if employee_ids.nil? or employee_ids.empty?
+      flash[:alert] = "Please select employees."
+      redirect_to select_month_year_form_salaryslips_path  
     else
       ActiveRecord::Base.transaction do
       employee_ids.each do |eid|
@@ -779,9 +779,9 @@ class SalaryslipsController < ApplicationController
         end # current template nil
       end #employee_ids loop
       end
+      flash[:notice] = "All Salary processed."
+      redirect_to select_month_year_form_salaryslips_path  
     end # if for employee_ids.nil?
-    flash[:notice] = "All Salary processed."
-    redirect_to select_month_year_form_salaryslips_path
   end # action end
 
   def create_salaryslip_component(salary_component_id, actual_amount, calculated_amount)

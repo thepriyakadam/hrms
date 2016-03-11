@@ -55,6 +55,14 @@
           <th>Payble Days</th>
           <td align="right"><%= @working_day.try(:payable_day) %></td>
         </tr>
+        <tr>
+          <th>ESIC No.</th>
+          <td><%= @employee.joining_detail.try(:employee_efic_no) %></td>
+          <th>PF No.</th>
+          <td align="right"><%= @employee.joining_detail.try(:employee_pf_no) %></td>
+          <th>UNI No.</th>
+          <td align="right"><%= @employee.joining_detail.try(:employee_uan_no) %></td>
+        </tr>
       </tbody>
     </table>
     <br>

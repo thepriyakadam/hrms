@@ -42,112 +42,48 @@
   </div><!-- /.col -->
 </div><!-- /.row -->
 
-<div class="row">
-  <div class="col-md-12">
-    <div class="box">
-      <div class="box-header with-border">
-        
-      </div><!-- /.box-header -->
-      <div class="box-body">
-        <div class="row">
-          <div class="col-md-8">
-            <p class="text-center">
-              <strong></strong>
-            </p>
-            <div class="chart">
-              <!-- Sales Chart Canvas -->
-              <canvas id="salesChart" style="height: 180px;"></canvas>
-            </div><!-- /.chart-responsive -->
-          </div><!-- /.col -->
-          <div class="col-md-4">
-    <!-- Info Boxes Style 2 -->
-    
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Employee List</h3>
+    <div class="pull-right">
+      <%= link_to "Create Employee", new_employee_path, class: 'btn btn-sm btn-primary' %> 
+    </div>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example1" class="table table-bordered table-hover table-condensed">
+    <thead>
+      <tr>
+      <th>Code</th>
+      <th>Employee Name</th>
+      <th>Comapny Location</th>
+      <th>Date of Birth</th>
+      <th>Employement</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+  </thead>
 
-            <div class="box box-default">
-              <div class="box-header with-border">
-                <h3 class="box-title">Group Usage</h3>
-                <div class="box-tools pull-right">
-                  <button class="btn btn-sm btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                  <button class="btn btn-sm btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                </div>
-              </div><!-- /.box-header -->
-              <div class="box-body">
-                <div class="row">
-                  <div class="col-md-8">
-                    <div class="chart-responsive">
-                      <canvas id="pieChart" height="150"></canvas>
-                    </div><!-- ./chart-responsive -->
-                  </div><!-- /.col -->
-                  <div class="col-md-4">
-                    
-                  </div><!-- /.col -->
-                </div><!-- /.row -->
-              </div><!-- /.box-body -->
-              <div class="box-footer no-padding">
-                
-              </div><!-- /.footer -->
-            </div><!-- /.box -->
+  <tbody>
+    <% @employees.each do |employee| %>
+      <tr>
+        <td><%= employee.manual_employee_code %></td>
+        <td><%= full_name(employee) %></td>
+        <td><%= employee.try(:company_location).try(:name) %></td>
+        <td><%= employee.date_of_birth %></td>
+        <td> <%= employee.employee_type.try(:name) %></td>
+        <td><%= employee.status %></td>
+        <td>
+          <%= link_to '', employee,class: 'btn btn-sm btn-default fa fa-eye' %>
+        </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+</div>
 
-    
-  </div><!-- /.col -->
-        </div><!-- /.row -->
-      </div><!-- ./box-body -->
-      
-    </div><!-- /.box -->
-  </div><!-- /.col -->
-</div><!-- /.row -->
 
-<!-- Main row -->
-<div class="row">
-  <!-- Left col -->
-  <div class="col-md-8">
-    <!-- MAP & BOX PANE -->
-    <div class="box box-success">
-      <div class="box-header with-border">
-        <h3 class="box-title">Visitors Report</h3>
-        <div class="box-tools pull-right">
-          <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-          <button class="btn btn-sm btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-        </div>
-      </div><!-- /.box-header -->
-      <div class="box-body no-padding">
-        <div class="row">
-          <div class="col-md-9 col-sm-8">
-            <div class="pad">
-              <!-- Map will be created here -->
-              <div id="world-map-markers" style="height: 325px;"></div>
-            </div>
-          </div><!-- /.col -->
-          <div class="col-md-3 col-sm-4">
-            <div class="pad box-pane-right bg-green" style="min-height: 280px">
-              <div class="description-block margin-bottom">
-                <div class="sparkbar pad" data-color="#fff">90,70,90,70,75,80,70</div>
-                <h5 class="description-header">8390</h5>
-                <span class="description-text">Visits</span>
-              </div><!-- /.description-block -->
-              <div class="description-block margin-bottom">
-                <div class="sparkbar pad" data-color="#fff">90,50,90,70,61,83,63</div>
-                <h5 class="description-header">30%</h5>
-                <span class="description-text">Referrals</span>
-              </div><!-- /.description-block -->
-              <div class="description-block">
-                <div class="sparkbar pad" data-color="#fff">90,50,90,70,61,83,63</div>
-                <h5 class="description-header">70%</h5>
-                <span class="description-text">Organic</span>
-              </div><!-- /.description-block -->
-            </div>
-          </div><!-- /.col -->
-        </div><!-- /.row -->
-      </div><!-- /.box-body -->
-    </div><!-- /.box -->
-    
 
-    
-  </div><!-- /.col -->
-
-  
-</div><!-- /.row -->
-        
 
 <script type="text/javascript">
   $(function () {

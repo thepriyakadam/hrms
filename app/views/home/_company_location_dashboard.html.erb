@@ -41,7 +41,6 @@
     </div><!-- /.info-box -->
   </div><!-- /.col -->
 </div><!-- /.row -->
-
 <div class="box">
   <div class="box-header">
     <h3 class="box-title">Employee List</h3>
@@ -53,31 +52,31 @@
     <table id="example1" class="table table-bordered table-hover table-condensed">
     <thead>
       <tr>
-        <th>Employee Id</th>
-        <th>Employee Name</th>
-        <th>Date of Birth</th>
-        <th>City</th>
-        <th>Employement</th>
-        <th>Status</th>
-        <th>Action</th>
-      </tr>
-    </thead>
+      <th>Code</th>
+      <th>Employee Name</th>
+      <th>Comapny Location</th>
+      <th>Date of Birth</th>
+      <th>Employement</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+  </thead>
 
-    <tbody>
-      <% @employees.each do |employee| %>
-        <tr>
-          <td><%= employee.manual_employee_code %></td>
-          <td><%= employee.first_name.to_s+' '+employee.try(:last_name).to_s %></td>
-          <td><%= employee.date_of_birth %></td>
-          <td><%= employee.city %></td>
-          <td> <%= employee.employee_type.try(:name) %></td>
-          <td><%= employee.status %></td>
-          <td>
-            <%= link_to '', employee,class: 'btn btn-sm btn-default fa fa-eye' %>
-          </td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
+  <tbody>
+    <% @employees.each do |employee| %>
+      <tr>
+        <td><%= employee.manual_employee_code %></td>
+        <td><%= full_name(employee) %></td>
+        <td><%= employee.try(:company_location).try(:name) %></td>
+        <td><%= employee.date_of_birth %></td>
+        <td> <%= employee.employee_type.try(:name) %></td>
+        <td><%= employee.status %></td>
+        <td>
+          <%= link_to '', employee,class: 'btn btn-sm btn-default fa fa-eye' %>
+        </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
 </div>

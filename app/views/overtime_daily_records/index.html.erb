@@ -23,7 +23,7 @@
     <% @overtime_daily_records.each do |overtime_daily_record| %>
       <tr>
         <td><%= overtime_daily_record.employee.try(:manual_employee_code) %></td>
-        <td><%= overtime_daily_record.employee.try(:first_name)%> <%= overtime_daily_record.employee.try(:middle_name)%> <%= overtime_daily_record.employee.try(:last_name)%></td>
+        <td><%= full_name(overtime_daily_record.employee) %></td>
         <td><%= overtime_daily_record.ot_daily_date %></td>
         <td><%= overtime_daily_record.ot_daily_hrs %></td>
         <td><%= overtime_daily_record.ot_rate %></td>

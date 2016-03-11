@@ -94,6 +94,20 @@ class OvertimeSalariesController < ApplicationController
     end
   end
 
+  def select_month_year_form
+      
+  end
+
+  def collect_employee
+    @month = params[:month]
+    @year = params[:year]
+    @employees = OvertimeDailyRecord.all
+  end
+
+  def create_overtime_salary
+    
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_overtime_salary

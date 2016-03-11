@@ -15,6 +15,11 @@ class OvertimeDailyRecordsController < ApplicationController
   # GET /overtime_daily_records/new
   def new
     @overtime_daily_record = OvertimeDailyRecord.new
+    @overtime_master = OvertimeMaster.find_by_status(true)
+    @esic_master = EsicMaster.first
+    if @overtime_master.nil? or @esic_master.nil?
+      flash[:alert] = "Over time master or esic master not set."
+    end
   end
 
   # GET /overtime_daily_records/1/edit

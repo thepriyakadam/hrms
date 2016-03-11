@@ -77,18 +77,11 @@
       var company_hrs = <%= @overtime_master.company_hrs %>
       var ot_rate = <%= @overtime_master.ot_rate %>
       var percentage = <%= @esic_master.percentage %>
-      console.log(ot_hrs+' ot hrs');
-      console.log(basic_amount+' basic_amount');
-      console.log(day+'  day');
-      console.log(company_hrs+' company hrs');
-      console.log(ot_rate+' ot rate');
-      console.log(percentage+' percentage');
-      console.log(day + company_hrs + ot_rate + percentage)
 
       var basic_amount_by_day = (basic_amount / day).toFixed(2);
       var basic_amount_by_day_by_company_hrs = (basic_amount_by_day / company_hrs).toFixed(2);
       var wages = (basic_amount_by_day_by_company_hrs * ot_rate).toFixed(2);
-      var ot_amount = (wages * ot_hrs).toFixed(2);    
+      var ot_amount = (wages * ot_hrs).toFixed(2);
 
       $('#overtime_daily_record_ot_rate').val(wages);
       $('#overtime_daily_record_ot_daily_amount').val(ot_amount);

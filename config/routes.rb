@@ -12,6 +12,9 @@ Rails.application.routes.draw do
   resources :overtime_salaries do
     collection do
       get :collect_basic
+      get :select_month_year_form
+      get :collect_employee
+      post :create_overtime_salary
     end
   end
   resources :overtime_masters

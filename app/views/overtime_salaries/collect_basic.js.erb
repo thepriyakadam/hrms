@@ -1,0 +1,11 @@
+<% if @employee_nil %>
+$("#basic_amount").html("Employee not found.")
+<% elsif @employee_template_nil %>
+$("#basic_amount").html("Employee template not found.")
+<% elsif @salary_component_nil %>
+$("#basic_amount").html("Basic component not found.")
+<% elsif @basic_record_nil %>
+$("#basic_amount").html("Basic record not found.")
+<% else %>
+$("#basic_amount").html("<%= j render 'basic_amount' %>")
+<% end %>

@@ -1,0 +1,33 @@
+<%= form_for(@overtime_month_record) do |f| %>
+  <% if @overtime_month_record.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@overtime_month_record.errors.count, "error") %> prohibited this overtime_month_record from being saved:</h2>
+
+      <ul>
+      <% @overtime_month_record.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :employee_id %><br>
+    <%= f.text_field :employee_id %>
+  </div>
+  <div class="field">
+    <%= f.label :overtime_data %><br>
+    <%= f.date_select :overtime_data %>
+  </div>
+  <div class="field">
+    <%= f.label :attendance_bonus_amount %><br>
+    <%= f.text_field :attendance_bonus_amount %>
+  </div>
+  <div class="field">
+    <%= f.label :paid_holiday_amount %><br>
+    <%= f.text_field :paid_holiday_amount %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

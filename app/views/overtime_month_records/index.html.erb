@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Overtime Month Records</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Employee</th>
+      <th>Overtime data</th>
+      <th>Attendance bonus amount</th>
+      <th>Paid holiday amount</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @overtime_month_records.each do |overtime_month_record| %>
+      <tr>
+        <td><%= overtime_month_record.employee %></td>
+        <td><%= overtime_month_record.overtime_data %></td>
+        <td><%= overtime_month_record.attendance_bonus_amount %></td>
+        <td><%= overtime_month_record.paid_holiday_amount %></td>
+        <td><%= link_to 'Show', overtime_month_record %></td>
+        <td><%= link_to 'Edit', edit_overtime_month_record_path(overtime_month_record) %></td>
+        <td><%= link_to 'Destroy', overtime_month_record, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Overtime month record', new_overtime_month_record_path %>

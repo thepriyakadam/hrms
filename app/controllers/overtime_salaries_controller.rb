@@ -14,12 +14,12 @@ class OvertimeSalariesController < ApplicationController
 
   # GET /overtime_salaries/new
   def new
-    @overtime_master = OvertimeMaster.find_by_status(true)
     @overtime_salary = OvertimeSalary.new
-    if @overtime_master.nil?
-      flash[:alert] = "Overtime Master not set. First set the master."
-    else
-    end
+    @overtime_master = OvertimeMaster.find_by_status(true)
+    @esic_master = EsicMaster.first
+    if @overtime_master.nil? or @esic_master.nil?
+      flash[:alert] = "Over time master or esic master not set."
+    end    
   end
 
   # GET /overtime_salaries/1/edit

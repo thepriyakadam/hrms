@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160305054427) do
+ActiveRecord::Schema.define(version: 20160309115846) do
 
   create_table "advance_salaries", force: :cascade do |t|
     t.integer  "employee_id"
@@ -79,6 +79,35 @@ ActiveRecord::Schema.define(version: 20160305054427) do
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "bonus", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.decimal  "bonus_amount", precision: 15, scale: 2, default: 0.0
+    t.string   "bouns_date"
+    t.datetime "created_at",                                          null: false
+    t.datetime "updated_at",                                          null: false
+  end
+
+  add_index "bonus", ["employee_id"], name: "index_bonus_on_employee_id"
+
+  create_table "bonus_employees", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.date     "bonus_date"
+    t.decimal  "amount",      precision: 15, scale: 2
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
+  end
+
+  add_index "bonus_employees", ["employee_id"], name: "index_bonus_employees_on_employee_id"
+
+  create_table "bonus_masters", force: :cascade do |t|
+    t.boolean  "is_bouns"
+    t.decimal  "limit_amount",     precision: 15, scale: 2, default: 0.0
+    t.decimal  "bonus_persentage", precision: 15, scale: 2, default: 0.0
+    t.boolean  "status"
+    t.datetime "created_at",                                              null: false
+    t.datetime "updated_at",                                              null: false
   end
 
   create_table "certifications", force: :cascade do |t|
@@ -834,6 +863,46 @@ ActiveRecord::Schema.define(version: 20160305054427) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
+
+  create_table "overtime_daily_records", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.string   "ot_daily_date"
+    t.decimal  "ot_daily_hrs",    precision: 15, scale: 2, default: 0.0
+    t.decimal  "ot_rate",         precision: 15, scale: 2, default: 0.0
+    t.decimal  "ot_daily_amount", precision: 15, scale: 2, default: 0.0
+    t.datetime "created_at",                                             null: false
+    t.datetime "updated_at",                                             null: false
+  end
+
+  add_index "overtime_daily_records", ["employee_id"], name: "index_overtime_daily_records_on_employee_id"
+
+  create_table "overtime_masters", force: :cascade do |t|
+    t.boolean  "is_over_time"
+    t.integer  "day"
+    t.decimal  "company_hrs",  precision: 15, scale: 2, default: 0.0
+    t.decimal  "ot_rate",      precision: 15, scale: 2, default: 0.0
+    t.boolean  "is_esic"
+    t.boolean  "status"
+    t.datetime "created_at",                                          null: false
+    t.datetime "updated_at",                                          null: false
+  end
+
+  create_table "overtime_salaries", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.decimal  "ot_hrs",                  precision: 15, scale: 2, default: 0.0
+    t.decimal  "ot_esic_amount",          precision: 15, scale: 2, default: 0.0
+    t.decimal  "total_amount",            precision: 15, scale: 2, default: 0.0
+    t.decimal  "attendence_bouns_amount", precision: 15, scale: 2, default: 0.0
+    t.decimal  "paid_holiday_amount",     precision: 15, scale: 2, default: 0.0
+    t.decimal  "net_payble_amount",       precision: 15, scale: 2, default: 0.0
+    t.datetime "created_at",                                                     null: false
+    t.datetime "updated_at",                                                     null: false
+    t.date     "ot_date"
+    t.decimal  "basic_amount",            precision: 15, scale: 2, default: 0.0
+    t.decimal  "ot_amount",               precision: 15, scale: 2, default: 0.0
+  end
+
+  add_index "overtime_salaries", ["employee_id"], name: "index_overtime_salaries_on_employee_id"
 
   create_table "overtimes", force: :cascade do |t|
     t.integer  "employee_id"

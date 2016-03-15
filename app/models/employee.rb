@@ -17,6 +17,7 @@ class Employee < ActiveRecord::Base
   has_many :second_reporters, class_name: "EmployeeLeavRequest", foreign_key: "second_reporter_id"
   has_many :leave_status_records, class_name: "LeaveStatusRecord", foreign_key: 'change_status_employee_id'
   has_many :employee_leav_balances
+  has_many :overtime_salaries
   #accepts_nested_attributes_for :employee_leav_balances
   has_many :families
   has_many :experiences
@@ -28,6 +29,7 @@ class Employee < ActiveRecord::Base
   has_many :particular_leave_records
   has_many :society_member_ships
   has_many :monthly_expences
+  has_many :bonus_employees
   has_one :employee_shift
   has_one :member
   has_one :employee_bank_detail
@@ -40,6 +42,8 @@ class Employee < ActiveRecord::Base
   has_many :indirect_subordinates, class_name: "Employee",
                           foreign_key: "manager_2_id"
   belongs_to :manager_2, class_name: "Employee"
+
+  before_create :add_department
 
   validates :manual_employee_code, :presence => true, uniqueness: { case_sensitive: false }
   validates :first_name, :presence => true
@@ -82,5 +86,13 @@ class Employee < ActiveRecord::Base
         Employee.where(id: current_user.employee_id)
       end 
     end
+  end
+
+  def add_department
+    department = Department.find(self.department_id)
+    company_location = department.company_location
+    self.company_location_id = company_location.id
+    company = company_location.company
+    self.company_id = company.id 
   end
 end

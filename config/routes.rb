@@ -1,5 +1,24 @@
 Rails.application.routes.draw do
 
+  resources :overtime_month_records
+  resources :overtime_daily_records
+  resources :bonus_employees do
+    collection do
+      get :search_bonus
+      get :collect_bonus
+      get :particular_employee_bonus
+    end
+  end
+  resources :bonus_masters
+  resources :overtime_salaries do
+    collection do
+      get :collect_basic
+      get :select_month_year_form
+      get :collect_employee
+      post :create_overtime_salary
+    end
+  end
+  resources :overtime_masters
   resources :reserved_categories
   resources :pf_masters
   resources :professional_taxes
@@ -39,6 +58,10 @@ Rails.application.routes.draw do
     end
     collection do 
       get :template_list
+      get :fresh_template
+      get :fresh
+      get :assign_new_template
+      post :create_fresh_template
     end
   end
   resources :retention_moneys
@@ -97,7 +120,6 @@ Rails.application.routes.draw do
       get :generate_workingday
     end
   end
-  resources :overtimes
   resources :shift_rotations
   resources :employee_monthly_days do
     collection do

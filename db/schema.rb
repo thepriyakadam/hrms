@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160309115846) do
+ActiveRecord::Schema.define(version: 20160315100744) do
 
   create_table "advance_salaries", force: :cascade do |t|
     t.integer  "employee_id"
@@ -787,6 +787,18 @@ ActiveRecord::Schema.define(version: 20160309115846) do
   add_index "leav_rejecteds", ["employee_id"], name: "index_leav_rejecteds_on_employee_id"
   add_index "leav_rejecteds", ["employee_leav_request_id"], name: "index_leav_rejecteds_on_employee_leav_request_id"
 
+  create_table "leave_c_offs", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.date     "c_off_date"
+    t.string   "c_off_type"
+    t.integer  "c_off_expire_day"
+    t.boolean  "expiry_status"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "leave_c_offs", ["employee_id"], name: "index_leave_c_offs_on_employee_id"
+
   create_table "leave_status_records", force: :cascade do |t|
     t.integer  "employee_leav_request_id"
     t.integer  "change_status_employee_id"
@@ -886,6 +898,17 @@ ActiveRecord::Schema.define(version: 20160309115846) do
     t.datetime "created_at",                                          null: false
     t.datetime "updated_at",                                          null: false
   end
+
+  create_table "overtime_month_records", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.date     "overtime_data"
+    t.decimal  "attendance_bonus_amount", precision: 15, scale: 2
+    t.decimal  "paid_holiday_amount",     precision: 15, scale: 2
+    t.datetime "created_at",                                       null: false
+    t.datetime "updated_at",                                       null: false
+  end
+
+  add_index "overtime_month_records", ["employee_id"], name: "index_overtime_month_records_on_employee_id"
 
   create_table "overtime_salaries", force: :cascade do |t|
     t.integer  "employee_id"

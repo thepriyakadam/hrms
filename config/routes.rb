@@ -71,7 +71,7 @@ Rails.application.routes.draw do
         post :date_range_report
       end
     end
-    resources :employees 
+    resources :employees
     
     post 'salaries/date_range_report'
     get 'salaries/new'
@@ -250,6 +250,8 @@ Rails.application.routes.draw do
       get :ajax_new_family
       get :ajax_show_textbox
       get :manager
+      get :transfer_form
+      post :transfer_employee
     end
     member do
       get :edit_manager

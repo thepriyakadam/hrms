@@ -24,7 +24,7 @@ class CostCentersController < ApplicationController
         flash.now[:alert] = "Cost Center Already Exist."
          format.js { @flag = false }
       end
-    end  
+    end
   end
 
   # PATCH/PUT /cost_centers/1

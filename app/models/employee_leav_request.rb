@@ -26,10 +26,6 @@ class EmployeeLeavRequest < ActiveRecord::Base
     unless leave_balance.nil?
       leave_balance.no_of_leave = leave_balance.no_of_leave.to_i - employee_leav_request.leave_count.to_i
       leave_balance.save
-    else
-      puts "*******************************************************************************"
-      puts "#{employee_leav_request.employee_id}-----------------------------------------"
-      puts "*******************************************************************************"
     end
   end
 end

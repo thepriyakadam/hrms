@@ -15,6 +15,7 @@ class PfMastersController < ApplicationController
   # GET /pf_masters/new
   def new
     @pf_master = PfMaster.new
+    @pf_masters = PfMaster.all
   end
 
   # GET /pf_masters/1/edit
@@ -25,17 +26,14 @@ class PfMastersController < ApplicationController
   # POST /pf_masters.json
   def create
     @components = params[:components]
-
+    @pf_masters = PfMaster.all
     @pf_master = PfMaster.new(pf_master_params)
     @pf_master.base_component = PfMaster.create_string(@components)
-    respond_to do |format|
-      if @pf_master.save
-        format.html { redirect_to @pf_master, notice: 'Pf master was successfully created.' }
-        format.json { render :show, status: :created, location: @pf_master }
-      else
-        format.html { render :new }
-        format.json { render json: @pf_master.errors, status: :unprocessable_entity }
-      end
+    if @pf_master.save
+      @flag = true
+      @pf_master = PfMaster.new
+    else
+      @flag = false
     end
   end
 

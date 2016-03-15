@@ -378,10 +378,14 @@ $("#employee").validate({
       "employee[permanent_address]":{
         required: true
       },
-      "employee[state_id]":{
+
+      "employee[country_id]":{
         required: true
       },
-      "employee[district_id]":{
+      "company[state_id]":{
+        required: true
+      },
+      "company[district_id]":{
         required: true
       },
       "employee[pin_code]":{
@@ -419,13 +423,17 @@ $("#employee").validate({
       "employee[permanent_address]":{
         required: "Please specify address"
       },
-      "employee[state_id]":{
+
+      "employee[country_id]":{
+        required: "Please Specify Country"
+      },
+      "company[state_id]":{
         required: "Please Specify State"
       },
       "employee[city]":{
         maxlength: "Enter the City upto 30 char max"
       },
-      "employee[district_id]":{
+      "company[district_id]":{
         required: "Please Specify District"
       },
       "employee[pin_code]":{

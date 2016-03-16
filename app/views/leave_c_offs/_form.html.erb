@@ -1,0 +1,37 @@
+<%= form_for(@leave_c_off) do |f| %>
+  <% if @leave_c_off.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@leave_c_off.errors.count, "error") %> prohibited this leave_c_off from being saved:</h2>
+
+      <ul>
+      <% @leave_c_off.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :employee_id %><br>
+    <%= f.text_field :employee_id %>
+  </div>
+  <div class="field">
+    <%= f.label :c_off_date %><br>
+    <%= f.date_select :c_off_date %>
+  </div>
+  <div class="field">
+    <%= f.label :c_off_type %><br>
+    <%= f.text_field :c_off_type %>
+  </div>
+  <div class="field">
+    <%= f.label :c_off_expire_day %><br>
+    <%= f.number_field :c_off_expire_day %>
+  </div>
+  <div class="field">
+    <%= f.label :expiry_status %><br>
+    <%= f.check_box :expiry_status %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

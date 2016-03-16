@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :attribute_masters
   resources :goal_measures
   resources :goal_perspectives
+  resources :leave_c_offs
   resources :overtime_month_records
   resources :overtime_daily_records
   resources :bonus_employees do

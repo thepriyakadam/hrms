@@ -1,0 +1,2 @@
+module OvertimeSalariesHelper
+end

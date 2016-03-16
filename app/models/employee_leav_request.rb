@@ -23,7 +23,9 @@ class EmployeeLeavRequest < ActiveRecord::Base
 
   def minus_leave(employee_leav_request)
     leave_balance = EmployeeLeavBalance.where(employee_id: employee_leav_request.employee_id, leav_category_id: employee_leav_request.leav_category_id).take
-    leave_balance.no_of_leave = leave_balance.no_of_leave.to_i - employee_leav_request.leave_count.to_i
-    leave_balance.save
+    unless leave_balance.nil?
+      leave_balance.no_of_leave = leave_balance.no_of_leave.to_i - employee_leav_request.leave_count.to_i
+      leave_balance.save
+    end
   end
 end

@@ -8,6 +8,7 @@ class Ability
         can :manage, :all
       elsif user.role.name == 'CompanyLocation'
         #can :manage, Employee, :joining_detail => { :company_location_id => user.company_location_id }
+        can :manage, [JoiningDetail,EmployeeBankDetail,Qualification,Experience,Skillset,EmployeePhysical,Family]
         can :manage, Employee, :company_location_id => user.company_location_id
         can :manage, CompanyLeav
         can [:read,:new], Department
@@ -20,7 +21,7 @@ class Ability
         can :manage, Instalment
         can [:read,:create,:update], SocietyMemberShip
       elsif user.role.name == 'Department'
-        can :manage, Employee
+        can :read, Employee
         can :manage, EmployeeLeavRequest
       elsif user.role.name == 'Employee'
         can :read, Employee, :id => user.employee_id

@@ -20,8 +20,8 @@
         <td><%= pf_master.base_component %></td>
         <td><%= pf_master.is_active %></td>
         <td>
-          <%= link_to '', edit_pf_master_path(pf_master) ,class: 'btn btn-sm btn-success fa fa-edit',remote:true %>
-          <%= link_to '',  pf_master, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-sm btn-danger fa fa-close' %>
+          <%= link_to '', edit_pf_master_path(pf_master) ,class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
+          <%= link_to '',  pf_master, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-xs btn-danger fa fa-close' %>
         </td>
       </tr>
     <% end %>

@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :capture_resumes
+  resources :capture_resumes
   resources :interview_schedules
   resources :vacancy_masters do
     collection { post :import }

@@ -1,0 +1,77 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Vacancy Masters</h3>
+  </div><!-- /.box-header -->
+
+  <div class="box-body">
+    <%= bootstrap_form_for(@vacancy_master) do |f| %>
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="form-group required">
+           <%= f.select :job_title, EmployeeDesignation.all.collect {|e| [e.name]},{label: 'Job Title',include_blank: " Select Job Title"} %>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="form-group required">
+           <%= f.text_field :vacancy_name,label: 'Vacancy Name'%>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.select :department_name, Department.all.collect {|e| [e.manual_department_code+"  "+e.name]},{label: 'Department Name',include_blank: " Select Department Name"} %>
+          </div>
+        </div>  
+
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.text_field :educational_qualification,label: 'Educational Qualification'%>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="form-group required">
+             <%= f.text_field :no_of_position,label: 'No. of Positions'%>
+          </div>
+        </div>  
+
+        <div class="col-sm-3">
+          <div class="form-group required">
+             <%= f.text_field :budget,label: 'Budget'%>
+          </div>
+        </div>  
+
+        <div class="col-sm-3">
+          <label>Vacancy Post Date: </label>
+          <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+               <%= f.text_field :vacancy_post_date, hide_label: true, class: 'birth_date'%>
+            </div>
+          </div>
+        </div>      
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="field">
+           <%= f.text_area :description,label: 'Description',placeholder: "e.g : Any Description related to Vacancy"%>
+          </div>
+        </div>
+      </div> 
+
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="actions">
+            <%= f.submit "Create Vacancy",class: "btn btn-primary btn-sm" %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

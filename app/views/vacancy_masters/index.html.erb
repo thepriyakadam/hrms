@@ -1,0 +1,65 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Vacancy List</h3>
+    <div class="pull-right">
+      <%= link_to "Create Vacancy Master", new_vacancy_master_path, class: 'btn btn-sm btn-primary' %> 
+    </div>
+    </div>
+
+<p id="notice"><%= notice %></p>
+
+<div class="box-body">
+<table id="example" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Job title</th>
+      <th>Vacancy name</th>
+      <th>Educational qualification</th>
+      <th>No of position</th>
+      <th>Description</th>
+      <th>Vacancy post date</th>
+      <th>Department name</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @vacancy_masters.each do |vacancy_master| %>
+      <tr>
+       <td><%= vacancy_master.job_title %></td>
+        <td><%= vacancy_master.vacancy_name %></td>
+        <td><%= vacancy_master.educational_qualification %></td>
+        <td><%= vacancy_master.no_of_position %></td>
+        <td><%= vacancy_master.description %></td>
+        <td><%= vacancy_master.vacancy_post_date %></td>
+        <td><%= vacancy_master.department_name %></td>
+        <td>
+            <%= link_to '', vacancy_master,class: 'btn btn-xs btn-default fa fa-eye' %>
+          <%= link_to '', edit_vacancy_master_path(vacancy_master),class: 'btn btn-xs btn-success fa fa-edit' %>
+            <%= link_to '', vacancy_master,method: :delete,data:{confirm:'Are you sure?'},class: 'btn btn-xs btn-danger fa fa-close' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<p>
+  Download:
+  <%= link_to "CSV", vacancy_masters_path(format: "csv") %>
+  <%= link_to "Excel", vacancy_masters_path(format: "xls") %>
+
+</p>
+
+</div>
+  </div>
+
+<%= link_to 'New Vacancy master', new_vacancy_master_path %>
+<%= form_tag import_vacancy_masters_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Import" %>
+  <% end %>
+<script>
+$(document).ready(function() {
+    $('#example').DataTable();
+} );
+</script>
+

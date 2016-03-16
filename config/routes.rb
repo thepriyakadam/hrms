@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  resources :interview_schedules
+  resources :vacancy_masters do
+    collection { post :import }
+end
   resources :reserved_categories
   resources :pf_masters
   resources :professional_taxes

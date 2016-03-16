@@ -1,0 +1,46 @@
+<div class="box box-default">
+<div class="box-header with-border">
+    <h3 class="box-title">Vacancy Master Details</h3>
+  </div><!-- /.box-header -->
+ <div class="box-body">
+   <table id="example2" class="table table-bordered table-hover table-condensed">
+   <tr> 
+      <th colspan="2"></th>
+      <th colspan="2"></th>
+    </tr>
+  
+  <tr>
+   <th><strong>Job Title:</strong></th>
+  <td><%= @vacancy_master.job_title %></td>
+  <th><strong>Vacancy Name:</strong></th>
+  <td><%= @vacancy_master.vacancy_name %></td>
+  </tr>
+
+<tr>
+  
+  <th><strong>Dept Name:</strong></th>
+  <td><%= @vacancy_master.department_name %></td>
+  <th>Educational Qualification:</th>
+  <td><%= @vacancy_master.educational_qualification %></td>
+</tr>
+
+
+<tr>
+  <th><strong>No. of Positions:</strong></th>
+  <td><%= @vacancy_master.no_of_position %></td>
+   <th><strong>Budget:</strong></th>
+  <td><%= @vacancy_master.budget %></td>
+</tr>
+
+<tr>
+  <th><strong>Vacancy Post Date:</strong></th>
+  <td><%= @vacancy_master.vacancy_post_date %></td>
+  <th><strong>Description:</strong></th>
+  <td><%= @vacancy_master.description %></td>
+</tr>
+
+</table>
+<%= link_to 'Edit', edit_vacancy_master_path(@vacancy_master),class: 'btn btn-success btn-sm fa fa-edit' %> |
+<%= link_to 'Back', vacancy_masters_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+</div>
+</div>

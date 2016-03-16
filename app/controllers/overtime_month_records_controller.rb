@@ -4,7 +4,7 @@ class OvertimeMonthRecordsController < ApplicationController
   # GET /overtime_month_records
   # GET /overtime_month_records.json
   def index
-    @overtime_month_records = OvertimeMonthRecord.all
+    
   end
 
   # GET /overtime_month_records/1
@@ -15,6 +15,7 @@ class OvertimeMonthRecordsController < ApplicationController
   # GET /overtime_month_records/new
   def new
     @overtime_month_record = OvertimeMonthRecord.new
+    @overtime_month_records = OvertimeMonthRecord.all
   end
 
   # GET /overtime_month_records/1/edit
@@ -25,40 +26,25 @@ class OvertimeMonthRecordsController < ApplicationController
   # POST /overtime_month_records.json
   def create
     @overtime_month_record = OvertimeMonthRecord.new(overtime_month_record_params)
-
-    respond_to do |format|
-      if @overtime_month_record.save
-        format.html { redirect_to @overtime_month_record, notice: 'Overtime month record was successfully created.' }
-        format.json { render :show, status: :created, location: @overtime_month_record }
-      else
-        format.html { render :new }
-        format.json { render json: @overtime_month_record.errors, status: :unprocessable_entity }
-      end
-    end
+    @overtime_month_records = OvertimeMonthRecord.all
+    @overtime_month_record.save
+    @overtime_month_record = OvertimeMonthRecord.new
+        
   end
 
   # PATCH/PUT /overtime_month_records/1
   # PATCH/PUT /overtime_month_records/1.json
   def update
-    respond_to do |format|
-      if @overtime_month_record.update(overtime_month_record_params)
-        format.html { redirect_to @overtime_month_record, notice: 'Overtime month record was successfully updated.' }
-        format.json { render :show, status: :ok, location: @overtime_month_record }
-      else
-        format.html { render :edit }
-        format.json { render json: @overtime_month_record.errors, status: :unprocessable_entity }
-      end
-    end
+     @overtime_month_record.update(overtime_month_record_params)
+     @overtime_month_records = OvertimeMonthRecord.all
+     @overtime_month_record = OvertimeMonthRecord.new
   end
 
   # DELETE /overtime_month_records/1
   # DELETE /overtime_month_records/1.json
   def destroy
     @overtime_month_record.destroy
-    respond_to do |format|
-      format.html { redirect_to overtime_month_records_url, notice: 'Overtime month record was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    @overtime_month_records = OvertimeMonthRecord.all
   end
 
   private

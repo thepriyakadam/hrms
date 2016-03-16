@@ -20,8 +20,8 @@
         <td><%= professional_tax.for_months %></td>
         <td><%= professional_tax.march_month %></td>
         <td>
-          <%= link_to '', edit_professional_tax_path(professional_tax) ,class: 'btn btn-sm btn-success fa fa-edit',remote:true %>
-          <%= link_to '',  professional_tax, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-sm btn-danger fa fa-close' %>
+          <%= link_to '', edit_professional_tax_path(professional_tax) ,class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
+          <%= link_to '',  professional_tax, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-xs btn-danger fa fa-close' %>
         </td>
       </tr>
     <% end %>

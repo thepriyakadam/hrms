@@ -1,34 +1,41 @@
-<p id="notice"><%= notice %></p>
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Professional Taxes Details</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+  <table id="example2" class="table table-bordered table-hover table-condensed">
+  <tr>
+  <th><strong>Is pt:</strong></th>
+  <td><%= @professional_tax.is_pt %></td>
+  </tr>
 
-<p>
-  <strong>Is pt:</strong>
-  <%= @professional_tax.is_pt %>
-</p>
+  <tr>
+  <th><strong>Min salary:</strong></th>
+  <td><%= @professional_tax.min_salary %></td>
+  </tr>
 
-<p>
-  <strong>Min salary:</strong>
-  <%= @professional_tax.min_salary %>
-</p>
+  <tr>
+  <th><strong>Max salary:</strong></th>
+  <td><%= @professional_tax.max_salary %></td>
+  </tr>
 
-<p>
-  <strong>Max salary:</strong>
-  <%= @professional_tax.max_salary %>
-</p>
+  <tr>
+  <th><strong>Pt amount:</strong></th>
+  <td><%= @professional_tax.pt_amount %></td>
+  </tr>
 
-<p>
-  <strong>Pt amount:</strong>
-  <%= @professional_tax.pt_amount %>
-</p>
-
-<p>
-  <strong>For months:</strong>
-  <%= @professional_tax.for_months %>
-</p>
-
-<p>
-  <strong>March month:</strong>
-  <%= @professional_tax.march_month %>
-</p>
+  <tr>
+  <th><strong>For months:</strong></th>
+  <td><%= @professional_tax.for_months %></td>
+  </tr>
+  
+  <tr>
+  <th><strong>March month:</strong></th>
+  <td><%= @professional_tax.march_month %></td>
+  </tr>
+  </table>
 
 <%= link_to 'Edit', edit_professional_tax_path(@professional_tax) %> |
 <%= link_to 'Back', professional_taxes_path %>
+</div>
+</div>

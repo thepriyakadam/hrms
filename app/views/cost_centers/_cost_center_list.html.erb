@@ -10,8 +10,8 @@
       <tr>
         <td><%= cost_center.name %></td>
         <td>
-          <%= link_to '', edit_cost_center_path(cost_center),class: 'btn btn-sm btn-success fa fa-edit',remote:true %>
-          <%= link_to '',  cost_center, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-sm btn-danger fa fa-close' %>
+          <%= link_to '', edit_cost_center_path(cost_center),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
+          <%= link_to '',  cost_center, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-xs btn-danger fa fa-close' %>
         </td>
       </tr>
     <% end %>

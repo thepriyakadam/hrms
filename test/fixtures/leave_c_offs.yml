@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  employee_id: 
+  c_off_date: 2016-03-15
+  c_off_type: MyString
+  c_off_expire_day: 1
+  expiry_status: false
+
+two:
+  employee_id: 
+  c_off_date: 2016-03-15
+  c_off_type: MyString
+  c_off_expire_day: 1
+  expiry_status: false

@@ -140,7 +140,6 @@ class LeaveStatusRecordsController < ApplicationController
     ActiveRecord::Base.transaction do 
       if @leave_status.save
         @employee_leav_request.update(is_second_rejected: true, current_status: "SecondRejected")
-        
         if @employee_leav_request.employee.email.nil?
           flash[:notice] = "Leave Rejected Successfully without email."
         else

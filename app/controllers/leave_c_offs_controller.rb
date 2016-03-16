@@ -4,7 +4,7 @@ class LeaveCOffsController < ApplicationController
   # GET /leave_c_offs
   # GET /leave_c_offs.json
   def index
-    @leave_c_offs = LeaveCOff.all
+    
   end
 
   # GET /leave_c_offs/1
@@ -15,6 +15,15 @@ class LeaveCOffsController < ApplicationController
   # GET /leave_c_offs/new
   def new
     @leave_c_off = LeaveCOff.new
+    if current_user.class == Group
+      @leave_c_offs = LeaveCOff.all
+    else
+      if current_user.role.name == "Company"
+        @leave_c_offs = LeaveCOff.all
+      elsif current_user.role.name == "CompanyLocation"
+        @leave_c_offs = LeaveCOff.where(company_location_id: current_user.company_location_id)
+      end
+    end
   end
 
   # GET /leave_c_offs/1/edit
@@ -25,40 +34,25 @@ class LeaveCOffsController < ApplicationController
   # POST /leave_c_offs.json
   def create
     @leave_c_off = LeaveCOff.new(leave_c_off_params)
-
-    respond_to do |format|
-      if @leave_c_off.save
-        format.html { redirect_to @leave_c_off, notice: 'Leave c off was successfully created.' }
-        format.json { render :show, status: :created, location: @leave_c_off }
-      else
-        format.html { render :new }
-        format.json { render json: @leave_c_off.errors, status: :unprocessable_entity }
-      end
-    end
+    @leave_c_offs = LeaveCOff.all
+    @leave_c_off.save
+    @leave_c_off = LeaveCOff.new
   end
+        
 
   # PATCH/PUT /leave_c_offs/1
   # PATCH/PUT /leave_c_offs/1.json
   def update
-    respond_to do |format|
-      if @leave_c_off.update(leave_c_off_params)
-        format.html { redirect_to @leave_c_off, notice: 'Leave c off was successfully updated.' }
-        format.json { render :show, status: :ok, location: @leave_c_off }
-      else
-        format.html { render :edit }
-        format.json { render json: @leave_c_off.errors, status: :unprocessable_entity }
-      end
-    end
+     @leave_c_off.update(leave_c_off_params)
+     @leave_c_offs = LeaveCOff.all
+     @leave_c_off = LeaveCOff.new     
   end
 
   # DELETE /leave_c_offs/1
   # DELETE /leave_c_offs/1.json
   def destroy
     @leave_c_off.destroy
-    respond_to do |format|
-      format.html { redirect_to leave_c_offs_url, notice: 'Leave c off was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    @leave_c_offs = LeaveCOff.all
   end
 
   private

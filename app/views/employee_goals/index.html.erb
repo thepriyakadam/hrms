@@ -1,0 +1,38 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Employee Goal</h3>
+    <div class="pull-right">
+      <%= link_to "New Goal", new_employee_goal_path, class: 'btn btn-sm btn-primary' %> 
+    </div>  
+  </div>
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+      <thead>
+        <tr>
+          <th>Goal perspective</th>
+          <th>Goal measure</th>
+          <th>Target</th>
+          <th>Goal weightage</th>
+          <th>Difficulty level</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @employee_goals.each do |employee_goal| %>
+        <tr>
+          <td><%= employee_goal.goal_perspective.name %></td>
+          <td><%= employee_goal.goal_measure.name %></td>
+          <td><%= employee_goal.target %></td>
+          <td><%= employee_goal.goal_weightage %></td>
+          <td><%= employee_goal.difficulty_level %></td>
+          <td>
+            <%= link_to '', employee_goal,class: 'btn btn-sm btn-default fa fa-eye' %>
+            <%= link_to '', edit_employee_goal_path(employee_goal) ,class: 'btn btn-sm btn-success fa fa-edit' %>
+            <%= link_to '', employee_goal, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-sm btn-danger fa fa-close' %>
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

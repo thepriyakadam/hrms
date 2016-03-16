@@ -43,6 +43,12 @@ class Employee < ActiveRecord::Base
                           foreign_key: "manager_2_id"
   belongs_to :manager_2, class_name: "Employee"
 
+  has_many :appraisee_employee_goals, class_name: "Employee",
+                          foreign_key: "appraisee_id"
+
+  has_many :appraiser_employee_goals, class_name: "Employee",
+                          foreign_key: "appraiser_id"
+
   before_create :add_department
 
   validates :manual_employee_code, :presence => true, uniqueness: { case_sensitive: false }

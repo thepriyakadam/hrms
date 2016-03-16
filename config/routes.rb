@@ -1,5 +1,13 @@
 Rails.application.routes.draw do
 
+  resources :employee_goals do
+    collection do
+      get :appraisee
+      post :appraisee_create
+      get :appraiser
+      post :appraiser_create
+    end
+  end
   resources :definitions
   resources :attribute_masters
   resources :goal_measures

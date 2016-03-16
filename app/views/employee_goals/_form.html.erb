@@ -1,0 +1,36 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Employee Goal</h3>
+  </div>
+  <div class="box-body">
+<%= bootstrap_form_for(@employee_goal) do |f| %>
+<table id="tbl" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Goal Perspctive</th>
+      <th>Goal Measure</th>
+      <th>Target</th>
+      <th>Goal Weightage</th>
+      <th>Difficulty Level</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr> 
+      <td><%= f.select :goal_perspective_id,all_goal_perspective_type,{hide_label: true }%></td>
+      <td><%= f.select :goal_measure_id,all_goal_measure_type,{hide_label: true} %></td>
+      <td><%= f.text_field :target,hide_label: true %></td>
+      <td><%= f.select :goal_weightage,["1","2","3","4","5"],hide_label: true %></td>
+      <td><%= f.select :difficulty_level,["1","2","3"],hide_label: true %></td>
+    </tr>   
+  </tbody>
+</table>
+  <div class= "row">
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "Create Goal",class: "btn btn-primary btn-sm" %>
+      </div>
+    </div>
+  </div>
+  </div>
+  </div>
+<% end %>

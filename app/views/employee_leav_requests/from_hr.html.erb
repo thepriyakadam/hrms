@@ -42,11 +42,11 @@
               <th>Expiry Date</th>
             </tr>
            </thead>
-          <% @total_leaves.each do |l| %>
+          <% @leave_c_offs.each do |leave_c_off| %>
           <tr>
-          <th><%=  %></th>
-          <td><%=  %></td>
-          <td><%=  %></td>
+            <th><%= leave_c_off.c_off_date %></th>
+            <td><%= leave_c_off.c_off_type %></td>
+            <td><%= leave_c_off.c_off_date + leave_c_off.c_off_expire_day %></td>
           </tr>
           <% end %>
           </table>

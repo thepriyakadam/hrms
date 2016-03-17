@@ -406,7 +406,7 @@ class SalaryslipsController < ApplicationController
     @year = params[:year]
     @employees = []
     #@temp = Workingday.joins("LEFT JOIN salaryslips on workingdays.employee_id = salaryslips.employee_id where salaryslips.employee_id is null")
-    #@workingdays = @temp.where(month_name: @month,year: @year).pluck(:employee_id)
+    #@workingdays = @temp.where(workingday: [month_name: @month,year: @year]).pluck(:employee_id)
     @workingdays = Workingday.joins("LEFT JOIN salaryslips on workingdays.employee_id = salaryslips.employee_id where salaryslips.employee_id is null and workingdays.month_name = '#{params[:month]}' and workingdays.year = '#{params[:year]}'").pluck(:employee_id)
     @employees = Workingday.find_by_role(@workingdays, current_user)
   end

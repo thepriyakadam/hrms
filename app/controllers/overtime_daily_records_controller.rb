@@ -24,6 +24,8 @@ class OvertimeDailyRecordsController < ApplicationController
 
   # GET /overtime_daily_records/1/edit
   def edit
+    @overtime_master = OvertimeMaster.find_by_status(true)
+    @esic_master = EsicMaster.first
   end
 
   # POST /overtime_daily_records

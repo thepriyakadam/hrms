@@ -20,6 +20,7 @@ class EmployeeLeavRequestsController < ApplicationController
     @employee = Employee.find(current_user.employee_id)
     @total_leaves = EmployeeLeavBalance.where('employee_id = ?', current_user.employee_id)
     @remain_leaves = EmployeeLeavRequest.joins(:leav_approved)
+    @leave_c_offs = LeaveCOff.where(employee_id: @employee.id)
   end
 
   # GET /employee_leav_requests/1/edit
@@ -147,6 +148,7 @@ class EmployeeLeavRequestsController < ApplicationController
     @employee_leav_request = EmployeeLeavRequest.new
     @total_leaves = EmployeeLeavBalance.where('employee_id = ?', @employee.id)
     @remain_leaves = EmployeeLeavRequest.joins(:leav_approved)
+    @leave_c_offs = LeaveCOff.where(employee_id: @employee.id)
   end
 
   def hr_view_request

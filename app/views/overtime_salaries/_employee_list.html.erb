@@ -1,15 +1,13 @@
-<%= form_for :overtime_salary, url: { action: 'create_overtime_salary',month: @month,
-  year: @year} do |f| %>
 <table id="example1" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
       <th><input type="checkbox" id="selectAll" value="selectAll"></th>
       <th>Code</th>
       <th>Name</th>
-      <th>Date</th>
-      <th>Hrs</th>
-      <th>Rate</th>
-      <th>Amount</th>
+      <th>Overtime Month</th>
+      <th>Attendance Bonus Amount</th>
+      <th>Paid Holiday Amount</th>
+      <th>Overtime Daily Amount </th>
     </tr>
   </thead>
   <tbody>
@@ -18,17 +16,14 @@
         <td><%= check_box_tag "employee_ids[]", o.employee_id %></td>
         <td><%= o.employee.try(:manual_employee_code) %></td>
         <td><%= full_name(o.employee) %></td>
-        <td><%= o.ot_daily_date %></td>
-        <td><%= o.ot_daily_hrs %></td>
-        <td><%= o.ot_rate %></td>
-        <td><%= o.ot_daily_amount %></td>
+        <td><%= o.overtime_data.strftime('%B-%Y') %></td>
+        <td><%= o.attendance_bonus_amount %></td>
+        <td><%= o.paid_holiday_amount %></td>
+        <td><%= OvertimeDailyRecord.where(employee_id: o.employee_id).sum(:ot_daily_amount)%></td>
       </tr>
     <% end %>
   </tbody>
 </table>
-<%= f.submit class: 'btn btn-primary' %>
-<% end %>
-
 
 <script type="text/javascript">
 $('#selectAll').click(function() {

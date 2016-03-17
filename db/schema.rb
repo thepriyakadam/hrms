@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160315100744) do
+ActiveRecord::Schema.define(version: 20160316124556) do
 
   create_table "advance_salaries", force: :cascade do |t|
     t.integer  "employee_id"
@@ -878,7 +878,7 @@ ActiveRecord::Schema.define(version: 20160315100744) do
 
   create_table "overtime_daily_records", force: :cascade do |t|
     t.integer  "employee_id"
-    t.string   "ot_daily_date"
+    t.date     "ot_daily_date"
     t.decimal  "ot_daily_hrs",    precision: 15, scale: 2, default: 0.0
     t.decimal  "ot_rate",         precision: 15, scale: 2, default: 0.0
     t.decimal  "ot_daily_amount", precision: 15, scale: 2, default: 0.0

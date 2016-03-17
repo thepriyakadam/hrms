@@ -68,11 +68,11 @@ class EmployeeGoalsController < ApplicationController
     aligns = params[:allign_to_supervisor]
     comments = params[:appraisee_comment]
     ratings = params[:appraisee_rating]
-    final = employee_goal_ids.zip(comments,ratings)
+    final = employee_goal_ids.zip(aligns,comments,ratings)
 
-    final.each do |e,c,r|
+    final.each do |e,a,c,r|
       emp = EmployeeGoal.find(e)
-      emp.update( appraisee_comment: c, appraisee_rating: r, appraisee_id: params[:appraisee_id])
+      emp.update(allign_to_supervisor: a, appraisee_comment: c, appraisee_rating: r, appraisee_id: params[:appraisee_id])
     end
     redirect_to appraisee_employee_goals_path
   end

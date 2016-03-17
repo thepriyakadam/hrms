@@ -28,7 +28,7 @@
           <td><%= employee_goal.target %></td>
           <td><%= employee_goal.goal_weightage %></td>
           <td><%= employee_goal.difficulty_level %></td>
-          <td><%= select_tag :allign_to_supervisor,[['Yes','true'],['No','false']],{} %></td>
+          <td><%= select_tag 'allign_to_supervisor[]',options_for_select([['Yes',true],['No',false]]),include_blank: "Allign To Supervisor" %></td>
          
           <td><%= text_field_tag 'appraisee_comment[]' %></td>
           <td><%= text_field_tag 'appraisee_rating[]' %></td>
@@ -47,8 +47,6 @@
   <% end %>
   </div>
 </div>
-
-
 
 <div class="box">
   <div class="box-header">
@@ -86,3 +84,5 @@
         <% end %>
       </tbody>
     </table>
+  </div>
+</div>

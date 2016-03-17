@@ -3,7 +3,7 @@
     <h3 class="box-title">Employee Goal</h3>
   </div>
   <div class="box-body">
-<%= bootstrap_form_for(@employee_goal) do |f| %>
+<%= bootstrap_form_for(@employee_goal,html: {id: "employee_goal"}) do |f| %>
 <table id="tbl" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
@@ -16,11 +16,11 @@
   </thead>
   <tbody>
     <tr> 
-      <td><%= f.select :goal_perspective_id,all_goal_perspective_type,{hide_label: true }%></td>
-      <td><%= f.select :goal_measure_id,all_goal_measure_type,{hide_label: true} %></td>
+      <td><%= f.select :goal_perspective_id,all_goal_perspective_type,{hide_label: true,include_blank: "Select Goal Perspective"}%></td>
+      <td><%= f.select :goal_measure_id,all_goal_measure_type,{hide_label: true,include_blank: "Select Goal Measure"} %></td>
       <td><%= f.text_field :target,hide_label: true %></td>
-      <td><%= f.select :goal_weightage,["1","2","3","4","5"],hide_label: true %></td>
-      <td><%= f.select :difficulty_level,["1","2","3"],hide_label: true %></td>
+      <td><%= f.select :goal_weightage,["1","2","3","4","5"],{hide_label: true, include_blank: "Select Goal Weightage"} %></td>
+      <td><%= f.select :difficulty_level,["1","2","3"],{hide_label: true, include_blank: "Select Difficulty Level"} %></td>
     </tr>   
   </tbody>
 </table>
@@ -32,5 +32,48 @@
     </div>
   </div>
   </div>
-  </div>
+</div>
 <% end %>
+
+<script type="text/javascript">
+  $("#employee_goal").validate({
+    rules: {
+      "employee_goal[target]":{
+        required: true
+      },
+      "employee_goal[goal_weightage]":{
+        required: true
+      },
+      "employee_goal[difficulty_level]":{
+        required: true
+      },
+      "employee_goal[goal_perspective_id]":{
+        required: true
+      },
+      "employee_goal[goal_measure_id]":{
+        required: true
+      }
+    },
+    messages: {
+      "employee_goal[target]":{
+        required: "Please specify target"
+      },
+      "employee_goal[goal_weightage]":{
+        required: "Please specify goal_weightage"
+      },
+      "employee_goal[difficulty_level]":{
+        required: "Please specify difficulty_level"
+      },
+      "employee_goal[goal_perspective_id]":{
+        required: "Please specify goal_perspective_id"
+      },
+      "employee_goal[goal_measure_id]":{
+        required: "Please specify goal_measure_id"
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

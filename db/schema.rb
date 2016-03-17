@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160316063045) do
+ActiveRecord::Schema.define(version: 20160317050954) do
 
   create_table "advance_salaries", force: :cascade do |t|
     t.integer  "employee_id"
@@ -335,6 +335,25 @@ ActiveRecord::Schema.define(version: 20160316063045) do
   end
 
   add_index "employee_arrears", ["employee_id"], name: "index_employee_arrears_on_employee_id"
+
+  create_table "employee_attributes", force: :cascade do |t|
+    t.integer  "appraisee_id"
+    t.integer  "appraiser_id"
+    t.integer  "attribute_master_id"
+    t.integer  "definition_id"
+    t.integer  "weightage"
+    t.text     "appraisee_comment"
+    t.integer  "appraisee_rating"
+    t.text     "appraiser_comment"
+    t.integer  "appraiser_rating"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+  end
+
+  add_index "employee_attributes", ["appraisee_id"], name: "index_employee_attributes_on_appraisee_id"
+  add_index "employee_attributes", ["appraiser_id"], name: "index_employee_attributes_on_appraiser_id"
+  add_index "employee_attributes", ["attribute_master_id"], name: "index_employee_attributes_on_attribute_master_id"
+  add_index "employee_attributes", ["definition_id"], name: "index_employee_attributes_on_definition_id"
 
   create_table "employee_bank_details", force: :cascade do |t|
     t.integer  "employee_id"

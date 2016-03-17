@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  appraisee_id: 
+  appraiser_id: 
+  attribute_master_id: 
+  definition_id: 
+  weightage: 1
+  appraisee_comment: MyText
+  appraisee_rating: 1
+  appraiser_comment: MyText
+  appraiser_rating: 1
+
+two:
+  appraisee_id: 
+  appraiser_id: 
+  attribute_master_id: 
+  definition_id: 
+  weightage: 1
+  appraisee_comment: MyText
+  appraisee_rating: 1
+  appraiser_comment: MyText
+  appraiser_rating: 1

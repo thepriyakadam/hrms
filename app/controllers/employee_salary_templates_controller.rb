@@ -11,7 +11,7 @@ class EmployeeSalaryTemplatesController < ApplicationController
     @employee_salary_template = EmployeeSalaryTemplate.find(params[:id])
     @employee_salary_template.update(employee_salary_template_params)
     flash[:notice] = "Amount updated successfully."
-    redirect_to salary_template_employee_salary_templates_path
+    redirect_to fresh_template_employee_templates_path
   end
 
   def find_employee_for_assign_template

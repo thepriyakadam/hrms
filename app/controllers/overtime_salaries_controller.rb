@@ -101,7 +101,8 @@ class OvertimeSalariesController < ApplicationController
   def collect_employee
     @month = params[:month]
     @year = params[:year]
-    @employees = OvertimeDailyRecord.all
+    date = Date.new(@year.to_i, Workingday.months[@month])
+    @employees = OvertimeMonthRecord.where("strftime('%m/%Y', overtime_data) = ?", date.strftime("%m/%Y"))
   end
 
   def create_overtime_salary

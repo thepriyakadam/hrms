@@ -1,12 +1,12 @@
-Rails.application.routes.draw do
+Rails.application.routes.draw do 
 
-  resources :capture_resumes
-  resources :capture_resumes
+  resources :capture_resumes 
   resources :interview_schedules
   resources :vacancy_masters do
     collection { post :import }
 end
-
+  match 'capture_resumes/:id/download/:id' => 'capture_resumes#download', :via => [:get], :as => :download
+  
   resources :leave_c_offs
   resources :overtime_month_records
   resources :overtime_daily_records

@@ -61,6 +61,14 @@ class CaptureResumesController < ApplicationController
     end
   end
 
+  def download
+    @capture_resume = CaptureResume.find(params[:id])
+    send_file @capture_resume.avatar.path,
+                :filename => @capture_resume.avatar_file_name,
+                :type => @capture_resume.avatar_content_type,
+                :disposition => 'attachment'
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_capture_resume
@@ -69,6 +77,6 @@ class CaptureResumesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def capture_resume_params
-      params.require(:capture_resume).permit(:name_of_candidate,:contact_no, :post_applied, :mode_of_application, :date_of_application, :url, :fax, :street, :country, :state, :district, :city, :zip_code, :current_job_title, :current_employeer, :skill_set, :additional_info, :email, :skype_id, :twitter, :current_salary, :expected_salary, :current_location, :notice_period, :interview_date, :interview_time, :reason, :work_experience, :candidate_call_status)
+      params.require(:capture_resume).permit(:name_of_candidate,:avatar,:contact_no, :post_applied, :mode_of_application, :date_of_application, :url, :fax, :street, :country, :state, :district, :city, :zip_code, :current_job_title, :current_employeer, :skill_set, :additional_info, :email, :skype_id, :twitter, :current_salary, :expected_salary, :current_location, :notice_period, :interview_date, :interview_time, :reason, :work_experience, :candidate_call_status)
     end
 end

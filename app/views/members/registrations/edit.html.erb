@@ -12,7 +12,7 @@
             <% else %>
               Email:- <%= current_user.email %>
             <% end %><br>
-              Name:- <%= current_user.employee.try(:first_name)%> <%= current_user.employee.try(:middle_name)%> <%= current_user.employee.try(:last_name)%>
+              Name:- <%= current_user.employee.try(:first_name)%> <%= current_user.employee.try(:last_name)%>
              <%else%>
             <%= current_user.subdomain %>-
             <%= current_user.class %>

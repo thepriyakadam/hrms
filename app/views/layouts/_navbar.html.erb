@@ -17,7 +17,8 @@
             <h3 class="profile-username text-center"></h3>
               <p>
                 <% if current_user.class == Member %>
-                  ID-<%= current_user.manual_member_code %>
+                  Employee ID : <%= current_user.manual_member_code %><br>
+                  <%= current_user.employee.try(:first_name) %> <%= current_user.employee.try(:last_name) %>
                 <%else%>
                   <%= current_user.subdomain %> - <%= current_user.class %>
                 <%end%>

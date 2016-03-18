@@ -125,8 +125,10 @@
                 <%= current_user.company_location.name %>
               <% elsif current_user.role.name == 'Department' %>
                 <%= current_user.department.name %>  
+              <% elsif current_user.role.name == 'Supervisor' %>
+                <%= current_user.department.name %>  
               <% else %>
-                <%= current_user.employee.first_name %>  
+               Name :- <%= current_user.employee.try(:first_name) %> <%= current_user.employee.try(:last_name) %>  
               <% end %>
             <%else%>
               <%= current_user.subdomain %>
@@ -141,26 +143,26 @@
             <!-- Click image -->
             <p>
               <% if current_user.class == Member %>
-                  <%= current_user.manual_member_code %>-
-                  <%= current_user.role.name %><br>
-                  <%= current_user.employee.first_name %>
+                <small> ID : <%= current_user.manual_member_code %><br></small>
+                <small> Role : <%= current_user.role.name %> <br></small>
+                <small> Name : <%= current_user.employee.try(:first_name) %> <%= current_user.employee.try(:last_name) %></small>
               <%else%>
                 <%= current_user.subdomain %>-
                 <%= current_user.class %>
               <%end%>
-              <small>Member since <%= current_user.created_at%></small>
+              <!-- <small>Member since <%= current_user.created_at%></small> -->
             </p>
           </li>
           <!-- Menu Body -->
           <li class="user-body">
             <div class="col-xs-4 text-center">
-              <a href="#">Followers</a>
+              <!-- <a href="#">Followers</a> -->
             </div>
             <div class="col-xs-4 text-center">
-              <a href="#">Sales</a>
+              <!-- <a href="#">Sales</a> -->
             </div>
             <div class="col-xs-4 text-center">
-              <a href="#">Friends</a>
+              <!-- <a href="#">Friends</a> -->
             </div>
           </li>
           <!-- Menu Footer-->

@@ -16,8 +16,8 @@
         <td><%= bonus_master.bonus_persentage %></td>
         <td><%= bonus_master.status %></td>
         <td>
-          <%= link_to '', edit_bonus_master_path(bonus_master),class: 'btn btn-success btn-sm fa fa-edit',remote:true %>
-          <%= link_to '',  bonus_master, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-sm fa fa-close' %>
+          <%= link_to '', edit_bonus_master_path(bonus_master),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
+          <%= link_to '',  bonus_master, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
         </td>
       </tr>
     <% end %>

@@ -19,7 +19,7 @@ class OvertimeSalariesController < ApplicationController
     @esic_master = EsicMaster.first
     if @overtime_master.nil? or @esic_master.nil?
       flash[:alert] = "Over time master or esic master not set."
-    end    
+    end  
   end
 
   # GET /overtime_salaries/1/edit

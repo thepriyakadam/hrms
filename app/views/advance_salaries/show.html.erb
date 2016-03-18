@@ -9,35 +9,35 @@
       <th><strong>Employee</strong></th>
       <td><%= @advance_salary.employee.try(:manual_employee_code) %></td>
 
-      <th><strong>Emplyee Name</strong></th>
+      <th><strong>Employee Name</strong></th>
       <td><%= @advance_salary.employee.first_name %><%= @advance_salary.employee.middle_name %><%= @advance_salary.employee.last_name %></td>
     </tr>
     <tr>
       <th><strong>Advance Type</strong></th>
       <td><%= @advance_salary.advance_type.try(:name) %></td>
    
-      <th><strong>Intrest</strong></th>
+      <th><strong>Interest</strong></th>
       <td><%= @advance_salary.interest %></td>
     </tr>
     <tr>
       <th><strong>Advance Amount</strong></th>
       <td><%= @advance_salary.advance_amount %></td>
    
-      <th><strong>No of Instalment</strong></th>
+      <th><strong>No of Installment</strong></th>
       <td><%= @advance_salary.no_of_instalment %></td>
     </tr>
     <tr>
-      <th><strong>Instalment Amount</strong></th>
+      <th><strong>Installment Amount</strong></th>
       <td><%= @advance_salary.instalment_amount %></td>
 
       <th><strong>Advance Date</strong></th>
       <td><%= @advance_salary.advance_date %></td>
     </tr>
     <tr>
-      <th><strong>Instalment Paid</strong></th>
+      <th><strong>Installment Paid</strong></th>
       <td><%= @advance_salary.instalments.where(is_complete: true).sum('instalment_amount') %></td>
 
-      <th><strong>Instalment Remain</strong></th>
+      <th><strong>Installment Remain</strong></th>
       <td><%= @advance_salary.instalments.where(is_complete: false).sum('instalment_amount') %></td>
     </tr>
     </table>
@@ -47,7 +47,7 @@
     <% change_total = @advance_salary.instalments.sum('instalment_amount') %>
   
   <div class="row">
-    <div class="col-sm-10"><h5>Instalment Details</h5></div>
+    <div class="col-sm-10"><h5>Installment Details</h5></div>
     <div class="col-sm-2">
       <div class="box-tools pull-right">
         <% if change_total < total %>
@@ -64,8 +64,8 @@
     <table id="example2" class="table table-bordered table-hover table-condensed">
     <thead>
       <tr>
-        <th>Instalment Date</th>
-        <th>Instalment Amount</th>
+        <th>Installment Date</th>
+        <th>Installment Amount</th>
         <th>Action</th>
       </tr>
     </thead>
@@ -82,7 +82,7 @@
           <td align="right"><%= instalment.instalment_amount %></td>
           <td>
             <% unless instalment.is_complete %>
-              <%= link_to '', edit_instalment_path(instalment), class: 'btn btn-sm btn-success fa fa-edit' %>
+              <%= link_to '', edit_instalment_path(instalment), class: 'btn btn-xs btn-success fa fa-edit' %>
               <!-- link_to '', instalment, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-sm  btn-danger fa fa-close' -->
             <% else %>
               <small class="label label-info">Paid.</small>
@@ -95,5 +95,5 @@
   </table>
   
   </div>
-</div>
+  <%= link_to 'Back', advance_salaries_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
 </div>

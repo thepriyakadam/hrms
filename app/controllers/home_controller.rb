@@ -13,6 +13,8 @@ class HomeController < ApplicationController
         @employees = Employee.where(company_location_id: current_user.company_location_id)
       elsif current_user.role.name == "Department"
         @employees = Employee.where(department_id: current_user.department_id)
+      elsif current_user.role.name == "Supervisor"
+        @employee = Employee.find(current_user.employee_id)
 	    end
     end
   end

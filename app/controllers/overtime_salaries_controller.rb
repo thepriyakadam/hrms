@@ -102,11 +102,16 @@ class OvertimeSalariesController < ApplicationController
     @month = params[:month]
     @year = params[:year]
     date = Date.new(@year.to_i, Workingday.months[@month])
-    @employees = OvertimeMonthRecord.where("strftime('%m/%Y', overtime_data) = ?", date.strftime("%m/%Y"))
+    @employees = OvertimeDailyRecord.where("strftime('%m/%Y', ot_daily_date) = ?", date.strftime("%m/%Y")).group(:employee_id)
   end
 
   def create_overtime_salary
-    
+    employee_ids = params[:employee_ids]
+    unless employee_ids.nil? or employee_ids.empty?
+      employee_ids.each do |e|
+        
+      end
+    end
   end
 
   private

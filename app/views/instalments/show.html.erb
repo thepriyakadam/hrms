@@ -1,7 +1,7 @@
 <!-- SELECT2 EXAMPLE -->
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title">Instalment Detail</h3>
+    <h3 class="box-title">Installment Detail</h3>
     <div class="box-tools pull-right">
     </div>
   </div><!-- /.box-header -->
@@ -12,11 +12,11 @@
     <th><strong>Advance salary:</strong></th>
     <td><%= @instalment.advance_salary %></td>
 
-    <th><strong>Instalment date:</strong></th>
+    <th><strong>Installment date:</strong></th>
     <td><%= @instalment.instalment_date %></td>
     </tr>
     <tr>
-    <strong>Instalment amount:</strong>
+    <strong>Installment amount:</strong>
     <td><%= @instalment.instalment_amount %></td>
 
     <th></th>
@@ -24,7 +24,7 @@
     </tr>
  </table>
 
-    <%= link_to 'Edit', edit_instalment_path(@instalment),class: 'btn btn-success btn-sm fa fa-edit' %> |
-    <%= link_to 'Back', instalments_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+    <%= link_to 'Edit', edit_instalment_path(@instalment),class: 'btn btn-success btn-xs fa fa-edit' %> |
+    <%= link_to 'Back', instalments_path,class: 'btn btn-default btn-xs fa fa-arrow-left' %>
   </div><!-- /.box-body -->
 </div><!-- /.box -->

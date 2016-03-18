@@ -35,6 +35,7 @@ class EmployeeLeavRequestsController < ApplicationController
     date_arr = params["employee_leav_request"]["date_range"].split('-')
     @employee_leav_request.start_date = date_arr[0].rstrip
     @employee_leav_request.end_date = date_arr[1].lstrip
+    @leave_c_offs = LeaveCOff.where(employee_id: @employee.id)
 
     if @employee.manager_id.nil?
       flash[:alert] = "First Reporter not set."

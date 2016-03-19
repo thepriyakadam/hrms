@@ -18,6 +18,8 @@ class AttributeRatingSheetsController < ApplicationController
     @employee_attributes = []
     @attribute_rating_sheets = AttributeRatingSheet.all
     if @attribute_rating_sheets.nil?
+      @employee_attributes = EmployeeAttribute.all
+    else
       @attribute_rating_sheets.each do |a|
         temp = AttributeRatingSheet.exists?(appraisee_id: current_user.employee_id, employee_attribute_id: a.employee_attribute_id)
         if temp
@@ -27,10 +29,7 @@ class AttributeRatingSheetsController < ApplicationController
           @employee_attributes << ea
         end
       end
-    else
-      @employee_attributes = EmployeeAttribute.all
     end
-    
   end
 
   # GET /attribute_rating_sheets/1/edit

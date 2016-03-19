@@ -25,7 +25,7 @@
         <!-- Menu toggle button -->
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
           <i class="fa fa-envelope-o"></i>
-          <span class="label label-success">4</span>
+          <span class="label label-success">4 </span>
         </a>
         <ul class="dropdown-menu">
           <li class="header">You have 4 messages</li>
@@ -45,6 +45,9 @@
                   </h4>
                   <!-- The message -->
                   <p>Why not buy a new awesome theme?</p>
+                 <!--   @pending_employee_leav_requests.try(:each) do |employee_leav_request| %>
+                   employee_leav_request.employee.try(:first_name) %>
+                   end %> -->
                 </a>
               </li><!-- end message -->
             </ul><!-- /.menu -->
@@ -120,13 +123,13 @@
           <!-- Right hand header image -->
             <% if current_user.class == Member %>
               <% if current_user.role.name == 'Company' %>
-                <%= current_user.company.name%>
+               ID : <%= current_user.employee.try(:manual_employee_code) %>
               <% elsif current_user.role.name == 'CompanyLocation' %>
-                <%= current_user.company_location.name %>
+               ID :  <%= current_user.employee.try(:manual_employee_code) %>
               <% elsif current_user.role.name == 'Department' %>
-                <%= current_user.department.name %>  
+               ID :  <%= current_user.employee.try(:manual_employee_code) %>
               <% elsif current_user.role.name == 'Supervisor' %>
-                <%= current_user.department.name %>  
+               ID :  <%= current_user.employee.try(:manual_employee_code) %>
               <% else %>
                Name :- <%= current_user.employee.try(:first_name) %> <%= current_user.employee.try(:last_name) %>  
               <% end %>

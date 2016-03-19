@@ -76,7 +76,7 @@ end
 
   def search_by_vacancy_post_date
     @vacancy_masters=VacancyMaster.all
-    reporter(@vacancy_masters) do
+    reporter(@vacancy_masters,template_class: PdfReportTemplate) do
       filter :vacancy_post_date, type: :date
       column(:job_title,sortable: true) { |vacancy_master| vacancy_master.job_title }
       column(:vacancy_name,sortable: true) { |vacancy_master| vacancy_master.vacancy_name }

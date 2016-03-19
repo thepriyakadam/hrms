@@ -1,6 +1,7 @@
 require 'query_report/helper'  #need to require the helper
 class AdvanceSalariesController < ApplicationController
   before_action :set_advance_salary, only: [:show, :edit, :update, :destroy]
+  before_filter  only: [:index]
   load_and_authorize_resource
   # GET /advance_salaries
   # GET /advance_salaries.json
@@ -21,6 +22,8 @@ class AdvanceSalariesController < ApplicationController
       end
     end
   end
+
+
 
   # GET /advance_salaries/1
   # GET /advance_salaries/1.json
@@ -78,18 +81,34 @@ class AdvanceSalariesController < ApplicationController
     end
   end
   
+
   def search_by_advance_date
-    reporter(@advance_salaries) do
+    reporter(@advance_salaries,template_class: PdfReportTemplate) do
       filter :advance_date, type: :date
       column(:manual_employee_code,sortable: true) { |advance_salary| advance_salary.employee.try(:manual_employee_code) }
       column(:first_name,sortable: true) { |advance_salary| full_name(advance_salary.employee) }
-      column(:advance_date,sortable: true) { |advance_salary| advance_salary.advance_date }
-      column(:advance_amount,sortable: true) { |advance_salary| advance_salary.advance_amount }
-      column(:no_of_instalment,sortable: true) { |advance_salary| advance_salary.no_of_instalment }
-      column(:instalment_amount,sortable: true) { |advance_salary| advance_salary.instalment_amount }
-      column(:instalment_amount,sortable: true) { |advance_salary| advance_salary.instalment_amount }
+      column :advance_date,sortable: true,pdf: {width: 65}
+      column :advance_amount,sortable: true
+      column :no_of_instalment,sortable: true
+      column :instalment_amount,sortable: true
+      column :instalment_amount,sortable: true
     end
   end
+
+  # def search_by_advance_date
+  #   @advance_salaries=AdvanceSalary.all
+  #   reporter(advance_salaries) do
+  #     filter :advance_date, type: :date
+  #     column :manual_employee_code
+  #     column :first_name,sortable: true
+  #     column :advance_date,sortable: true,pdf: {width: 65}
+  #     column :advance_amount,sortable: true
+  #     column :no_of_instalment,sortable: true
+  #     column :instalment_amount,sortable: true
+  #     column :instalment_amount,sortable: true
+  #   end
+  # end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

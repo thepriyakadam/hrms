@@ -16,6 +16,10 @@ gem 'therubyracer', platforms: :ruby
 gem 'query_report', '~> 1.2', '>= 1.2.1'
 
 gem 'kaminari', '~> 0.16.3'
+gem 'coderay'
+gem 'bootstrap-datepicker-rails'
+gem "letter_opener", :group => :development
+gem "awesome_print"
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'

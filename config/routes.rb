@@ -231,7 +231,11 @@ end
   resources :company_leavs
   resources :leav_categories
   resources :employee_physicals
-  resources :joining_details
+  resources :joining_details do
+    collection do
+      get :search_by_joining_date
+    end
+  end
   resources :employee_grades
   resources :awards do
     collection do
@@ -272,6 +276,7 @@ end
       get :manager
       get :transfer_form
       post :transfer_employee
+      get :search_by_employee_manual_code
     end
     member do
       get :edit_manager

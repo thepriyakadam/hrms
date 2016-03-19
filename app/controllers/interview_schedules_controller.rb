@@ -66,7 +66,7 @@ class InterviewSchedulesController < ApplicationController
 
   def search_by_interview_date
     @interview_schedules=InterviewSchedule.all
-    reporter(@interview_schedules) do
+    reporter(@interview_schedules,template_class: PdfReportTemplate) do
       filter :interview_date, type: :date
       column(:interviewer_name,sortable: true) { |interview_schedule| interview_schedule.interviewer_name }
       column(:candidate_name,sortable: true) { |interview_schedule| interview_schedule.candidate_name }

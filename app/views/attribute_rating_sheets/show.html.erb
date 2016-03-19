@@ -1,0 +1,28 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Attribute Rating</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table class="table table-bordered table-hover table-condensed">
+      <tr>
+      <th> <strong>Attribute:</strong></th>
+      <td><%= @attribute_rating_sheet.employee_attribute.attribute_master.name %></td>
+
+      <th><strong>Definition:</strong></th>
+      <td><%= @attribute_rating_sheet.employee_attribute.definition.name %></td>
+
+      <th> <strong>Weightage:</strong></th>
+      <td><%= @attribute_rating_sheet.employee_attribute.weightage %></td>
+
+      <th><strong>Appraisee Comment:</strong></th>
+      <td><%= @attribute_rating_sheet.appraisee_comment %></td>
+
+      <th><strong>Appraisee rating:</strong></th>
+      <td><%= @attribute_rating_sheet.appraisee_rating %></td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<%= link_to 'Edit', edit_attribute_rating_sheet_path(@attribute_rating_sheet) %> |
+<%= link_to 'Back', attribute_rating_sheets_path %>

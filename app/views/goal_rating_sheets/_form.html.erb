@@ -1,0 +1,48 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Employee Goal Rating</h3>
+  </div>
+  <div class="box-body">
+   <%= bootstrap_form_for(@goal_rating_sheet) do |f| %>
+    <table id="tbl" class="table table-bordered table-hover table-condensed">
+    <thead>
+      <tr>
+        <th>Goal Perspctive</th>
+        <th>Goal Measure</th>
+        <th>Target</th>
+        <th>Goal Weightage</th>
+        <th>Difficulty Level</th>
+
+        <th>Allign To Supervisor</th>
+        <th>Appraisee Comment</th>
+        <th>Appraisee Rating</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @employee_goals.each do |employee_goal| %>
+        <tr>
+          <td><%= employee_goal.goal_perspective.name %></td>
+          <td><%= employee_goal.goal_measure.name %></td>
+          <td><%= employee_goal.target %></td>
+          <td><%= employee_goal.goal_weightage %></td>
+          <td><%= employee_goal.difficulty_level %></td>
+
+          <td><%= select_tag 'allign_to_supervisor[]',options_for_select([['Yes',true],['No',false]]),include_blank: "Allign To Supervisor" %></td>
+          <td><%= text_field_tag 'appraisee_comment[]' %></td>
+          <td><%= text_field_tag 'appraisee_rating[]' %></td>
+             <%= hidden_field_tag 'employee_goal_id[]',{},value: employee_goal.id %>
+             <%= hidden_field_tag :appraisee_id, {},value: current_user.employee_id %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="actions">
+          <%= f.submit %>
+         </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <% end %> 

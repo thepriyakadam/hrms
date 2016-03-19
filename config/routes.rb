@@ -99,17 +99,12 @@ Rails.application.routes.draw do
   end
   resources :retention_moneys
   namespace :reports do
-    resources :salaries do 
-      member do
-        post :date_range_report
-      end
-    end
-    resources :employees
-    
     post 'salaries/date_range_report'
     get 'salaries/new'
-    post 'employees/employee_basic_detail'
-    get 'employees/new'
+    post 'salaries/department_wise'
+    get 'salaries/show'
+    post 'salaries/ctc_yearly_report'
+    get 'salaries/ctc_yearly'
   end
 
   resources :payment_modes

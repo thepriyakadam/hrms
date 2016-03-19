@@ -20,6 +20,7 @@ class EmployeeLeavRequestsController < ApplicationController
     @employee = Employee.find(current_user.employee_id)
     @total_leaves = EmployeeLeavBalance.where('employee_id = ?', current_user.employee_id)
     @remain_leaves = EmployeeLeavRequest.joins(:leav_approved)
+    @leave_c_offs = LeaveCOff.where(employee_id: @employee.id)
   end
 
   # GET /employee_leav_requests/1/edit
@@ -34,6 +35,7 @@ class EmployeeLeavRequestsController < ApplicationController
     date_arr = params["employee_leav_request"]["date_range"].split('-')
     @employee_leav_request.start_date = date_arr[0].rstrip
     @employee_leav_request.end_date = date_arr[1].lstrip
+    @leave_c_offs = LeaveCOff.where(employee_id: @employee.id)
 
     if @employee.manager_id.nil?
       flash[:alert] = "First Reporter not set."
@@ -147,6 +149,7 @@ class EmployeeLeavRequestsController < ApplicationController
     @employee_leav_request = EmployeeLeavRequest.new
     @total_leaves = EmployeeLeavBalance.where('employee_id = ?', @employee.id)
     @remain_leaves = EmployeeLeavRequest.joins(:leav_approved)
+    @leave_c_offs = LeaveCOff.where(employee_id: @employee.id)
   end
 
   def hr_view_request

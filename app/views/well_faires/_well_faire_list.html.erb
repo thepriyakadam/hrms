@@ -14,8 +14,8 @@
         <td><%= well_faire.amount %></td>
         <td><%= well_faire.status %></td>
         <td>
-          <%= link_to '', edit_well_faire_path(well_faire),class: 'btn btn-success btn-sm fa fa-edit',remote:true %>
-          <%= link_to '',  well_faire, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-sm fa fa-close' %>
+          <%= link_to '', edit_well_faire_path(well_faire),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
+          <%= link_to '',  well_faire, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
         </td>
       </tr>
     <% end %>

@@ -105,7 +105,7 @@ class EmployeesController < ApplicationController
     #@department = Department.find(params["login"]["department_id"])
     user = Member.new do |u|
       if employee.email == "" or employee.email.nil?
-        u.email = "#{employee.employee_code}@xxx.com"
+        u.email = "#{employee.manual_employee_code}@xyz.com"
       else
         u.email = employee.email
       end

@@ -61,7 +61,23 @@ $(function () {
     showInputs: false
   });
 });
+$(function () {
+  //Datemask dd/mm/yyyy
+  $(".date").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});
+  //Datemask2 mm/dd/yyyy
+  $("#date").inputmask("mm/dd/yyyy", {"placeholder": "mm/dd/yyyy"});
+  //Money Euro
+  $("[data-mask]").inputmask();
+  //Date range picker
+  $('#reservation').daterangepicker();
+  //Date range picker with time picker
+  $('#reservationtime').daterangepicker({timePicker: true, timePickerIncrement: 30, format: 'DD/MM/YYYY h:mm A'});
 
+  //Timepicker
+  $(".timepicker").timepicker({
+    showInputs: false
+  });
+});
 // Automatic hide alert
 $(function(){
   $("#success-alert").alert();

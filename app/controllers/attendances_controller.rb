@@ -1,8 +1,10 @@
+require 'query_report/helper'  #need to require the helper
 class AttendancesController < ApplicationController
   before_action :set_attendance, only: [:show, :edit, :update, :destroy]
   load_and_authorize_resource
   # GET /attendances
   # GET /attendances.json
+  include QueryReport::Helper  #need to include it
   def index
     if current_user.class == Group
       @attendances = Attendance.all
@@ -89,6 +91,19 @@ class AttendancesController < ApplicationController
       @shift_rotation = ShiftRotation.find(params[:shift_rotation_id])
       @employees = @shift_rotation.employee_shifts
       @attendance = Attendance.new  
+    end
+  end
+
+  def search_by_date
+    reporter(@attendances) do
+      filter :attendance_date, type: :date
+      column(:manual_employee_code,sortable: true) { |attendance| attendance.employee.try(:manual_employee_code) }
+      column(:first_name,sortable: true) { |attendance| attendance.employee.try(:first_name) }
+      column(:attendance_date,sortable: true) { |attendance| attendance.attendance_date }
+      column(:check_in,sortable: true) { |attendance| attendance.check_in }
+      column(:check_out,sortable: true) { |attendance| attendance.check_out }
+      column(:over_time_hrs,sortable: true) { |attendance| attendance.over_time_hrs }
+      column(:total_hrs,sortable: true) { |attendance| attendance.total_hrs }
     end
   end
 

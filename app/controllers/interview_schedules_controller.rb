@@ -1,8 +1,11 @@
+require 'query_report/helper'  #need to require the helper
+
 class InterviewSchedulesController < ApplicationController
   before_action :set_interview_schedule, only: [:show, :edit, :update, :destroy]
 
   # GET /interview_schedules
   # GET /interview_schedules.json
+  include QueryReport::Helper  #need to include it
   def index
     @interview_schedules = InterviewSchedule.all
   end
@@ -58,6 +61,22 @@ class InterviewSchedulesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to interview_schedules_url, notice: 'Interview schedule was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  def search_by_interview_date
+    @interview_schedules=InterviewSchedule.all
+    reporter(@interview_schedules) do
+      filter :interview_date, type: :date
+      column(:interviewer_name,sortable: true) { |interview_schedule| interview_schedule.interviewer_name }
+      column(:candidate_name,sortable: true) { |interview_schedule| interview_schedule.candidate_name }
+      column(:interview_date,sortable: true) { |interview_schedule| interview_schedule.interview_date }
+      column(:interview_time,sortable: true) { |interview_schedule| interview_schedule.interview_time }
+      column(:location,sortable: true) { |interview_schedule| interview_schedule.location }
+      column(:schedule_comments,sortable: true) { |interview_schedule| interview_schedule.schedule_comments }
+      column(:post_title,sortable: true) { |interview_schedule| interview_schedule.post_title }
+      column(:interview_type,sortable: true) { |interview_schedule| interview_schedule.interview_type }
+      column(:interview_status,sortable: true) { |interview_schedule| interview_schedule.interview_status }  
     end
   end
 

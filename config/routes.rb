@@ -2,12 +2,23 @@ Rails.application.routes.draw do
 
   resources :capture_resumes
   resources :capture_resumes
-  resources :interview_schedules
-  resources :vacancy_masters do
-    collection { post :import }
+  resources :interview_schedules do
+    collection do
+    get :search_by_interview_date
+    end
 end
-
-  resources :leave_c_offs
+  resources :vacancy_masters do
+    collection do
+    get :search_by_vacancy_post_date
+    post :import  
+    end
+end
+  
+  resources :leave_c_offs do
+    collection do
+      get :search_by_c_off_date
+    end
+  end
   resources :overtime_month_records
   resources :overtime_daily_records
   resources :bonus_employees do
@@ -120,7 +131,11 @@ end
       get :employees
     end
   end
-  resources :advance_salaries
+  resources :advance_salaries do
+    collection do
+      get :search_by_advance_date
+    end
+  end
   resources :workingdays do
     collection do
       get :employees
@@ -175,6 +190,7 @@ end
       get :attendance_details
       get :collect_shift_date
       get :collect_employee
+      get :search_by_date
     end
   end
   resources :employee_shifts do
@@ -214,6 +230,7 @@ end
       get :from_hr
       get :hr_view_request
       get :employee_history_with_current_leave
+      get :search_by_date
     end
   end
   resources :company_leavs

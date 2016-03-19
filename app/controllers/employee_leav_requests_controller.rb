@@ -1,6 +1,9 @@
+require 'query_report/helper'  #need to require the helper
 class EmployeeLeavRequestsController < ApplicationController
   before_action :set_employee_leav_request, only: [:show, :edit, :update, :destroy]
   load_and_authorize_resource
+  include QueryReport::Helper  #need to include it
+
   # GET /employee_leav_requests
   # GET /employee_leav_requests.json
   def index
@@ -158,6 +161,19 @@ class EmployeeLeavRequestsController < ApplicationController
     @current_request = EmployeeLeavRequest.find(params[:format])
     @employee = Employee.find(@current_request.employee_id)
     @employee_leav_requests = @employee.employee_leav_requests
+  end
+
+  def search_by_date
+    reporter(@employee_leav_requests) do
+      filter :start_date, type: :date
+      column(:manual_employee_code,sortable: true) { |employee_leav_request| employee_leav_request.employee.try(:manual_employee_code) }
+      column(:date_range,sortable: true) { |employee_leav_request| employee_leav_request.date_range }
+      column(:start_date,sortable: true) { |employee_leav_request| employee_leav_request.start_date }
+      column(:end_date,sortable: true) { |employee_leav_request| employee_leav_request.end_date }
+      column(:leav_category_id,sortable: true) { |employee_leav_request| employee_leav_request.leav_category.try(:name) }
+      column(:leave_type,sortable: true) { |employee_leav_request| employee_leav_request.leave_type }
+      column(:reason,sortable: true) { |employee_leav_request| employee_leav_request.reason }
+    end
   end
 
   private

@@ -1,10 +1,10 @@
+require 'query_report/helper'  #need to require the helper
 class VacancyMastersController < ApplicationController
   before_action :set_vacancy_master, only: [:show, :edit, :update, :destroy]
 
   # GET /vacancy_masters
   # GET /vacancy_masters.json
-
-
+  include QueryReport::Helper  #need to include it
   def index
     @vacancy_masters = VacancyMaster.all
     @vacancy_masters = VacancyMaster.order(:vacancy_name)
@@ -71,6 +71,21 @@ end
     respond_to do |format|
       format.html { redirect_to vacancy_masters_url, notice: 'Vacancy master was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  def search_by_vacancy_post_date
+    @vacancy_masters=VacancyMaster.all
+    reporter(@vacancy_masters) do
+      filter :vacancy_post_date, type: :date
+      column(:job_title,sortable: true) { |vacancy_master| vacancy_master.job_title }
+      column(:vacancy_name,sortable: true) { |vacancy_master| vacancy_master.vacancy_name }
+      column(:department_name,sortable: true) { |vacancy_master| vacancy_master.department_name }
+      column(:educational_qualification,sortable: true) { |vacancy_master| vacancy_master.educational_qualification }
+      column(:no_of_position,sortable: true) { |vacancy_master| vacancy_master.no_of_position }
+      column(:budget,sortable: true) { |vacancy_master| vacancy_master.budget }
+      column(:vacancy_post_date,sortable: true) { |vacancy_master| vacancy_master.vacancy_post_date }
+      column(:description,sortable: true) { |vacancy_master| vacancy_master.description }
     end
   end
 

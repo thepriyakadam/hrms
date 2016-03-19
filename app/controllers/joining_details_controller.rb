@@ -1,8 +1,11 @@
+require 'query_report/helper'  #need to require the helper
 class JoiningDetailsController < ApplicationController
   before_action :set_joining_detail, only: [:show, :edit, :update, :destroy]
   load_and_authorize_resource
   # GET /joining_details
   # GET /joining_details.json
+  include QueryReport::Helper  #need to include it
+  
   def index
     @joining_details = JoiningDetail.all
   end
@@ -67,6 +70,28 @@ class JoiningDetailsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def search_by_joining_date
+    reporter(@joining_details,template_class: PdfReportTemplate) do
+      filter :joining_date, type: :date
+      column(:manual_employee_code,sortable: true) { |joining_detail| joining_detail.employee.try(:manual_employee_code) }
+      column(:employee_grade) { |joining_detail| link_to joining_detail.employee_grade, joining_detail }
+      column(:joining_date, sortable: true) { |joining_detail| joining_detail.joining_date }
+      column(:date_of_birth, sortable: true) { |joining_detail| joining_detail.employee.try(:date_of_birth) }
+      column(:employee_id, sortable: true) { |joining_detail| joining_detail.employee.try(:first_name) }
+      column(:employee_grade, sortable: true) { |joining_detail| joining_detail.employee_grade.try(:name) }
+      column(:employee_designation, sortable: true) { |joining_detail| joining_detail.employee_designation.try(:name) }
+      column(:confirmation_date, sortable: true) { |joining_detail| joining_detail.confirmation_date }
+      column(:employee_uan_no, sortable: true) { |joining_detail| joining_detail.employee_uan_no }
+      column(:employee_pf_no, sortable: true) { |joining_detail| joining_detail.employee_pf_no }
+      column(:employee_efic_no, sortable: true) { |joining_detail| joining_detail.employee_efic_no }
+      column(:medical_schem, sortable: true) { |joining_detail| joining_detail.medical_schem }
+      column(:passport_no, sortable: true) { |joining_detail| joining_detail.passport_no }
+      column(:passport_expiry_date, sortable: true) { |joining_detail| joining_detail.passport_expiry_date }
+      column(:probation_period, sortable: true) { |joining_detail| joining_detail.probation_period }
+      column(:notice_period, sortable: true) { |joining_detail| joining_detail.notice_period }
+      end
+ end
   
   private
     # Use callbacks to share common setup or constraints between actions.

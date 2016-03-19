@@ -95,7 +95,7 @@ class AttendancesController < ApplicationController
   end
 
   def search_by_date
-    reporter(@attendances) do
+    reporter(@attendances,template_class: PdfReportTemplate) do
       filter :attendance_date, type: :date
       column(:manual_employee_code,sortable: true) { |attendance| attendance.employee.try(:manual_employee_code) }
       column(:first_name,sortable: true) { |attendance| attendance.employee.try(:first_name) }

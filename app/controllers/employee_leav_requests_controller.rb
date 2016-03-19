@@ -167,7 +167,7 @@ class EmployeeLeavRequestsController < ApplicationController
   end
 
   def search_by_date
-    reporter(@employee_leav_requests) do
+    reporter(@employee_leav_requests,template_class: PdfReportTemplate) do
       filter :start_date, type: :date
       column(:manual_employee_code,sortable: true) { |employee_leav_request| employee_leav_request.employee.try(:manual_employee_code) }
       column(:date_range,sortable: true) { |employee_leav_request| employee_leav_request.date_range }

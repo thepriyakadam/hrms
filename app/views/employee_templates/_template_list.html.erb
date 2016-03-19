@@ -4,7 +4,8 @@
       <th>Template Name</th>
       <th>Active Date</th>
       <th>Inactive Date</th>
-      <th>Active Template</th>
+      <th>Status</th>
+      <th>Action</th>
     </tr>
   </thead>
   <tbody>
@@ -23,16 +24,11 @@
             <%= f.hidden_field :id, value: t.id %>
             <%= f.submit %>
           <% end %>
-        
-
-
-
-
-
-      
           <% else %>
             <small class="label label-danger">Expired Template</small>
           <% end %>
+          </td>
+          <td>
           <%= link_to '', show_employee_salary_template_employee_salary_templates_path(t.employee_id),class: 'btn btn-default fa fa-eye' %>
         </td>
       </tr>
@@ -48,7 +44,7 @@
     $('.ot_date').datepicker({
     changeYear:true,
     changeMonth: true,
-    yearRange: '-200:-0',
+    yearRange: '-1:+50',
     dateFormat: 'dd-mm-yy' });
   });
 </script>

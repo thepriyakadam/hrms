@@ -17,7 +17,6 @@
             <h3 class="profile-username text-center"></h3>
               <p>
                 <% if current_user.class == Member %>
-
                   <%= current_user.employee.try(:first_name) %> <%= current_user.employee.try(:last_name) %><br>
                   <small> <%= current_user.employee.joining_detail.employee_designation.try(:name) %></small>
                 <%else%>

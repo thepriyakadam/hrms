@@ -15,6 +15,7 @@
 //= require jquery.validate
 //= require jquery.validate.additional-methods
 //= require jquery-ui/datepicker
+//= require turbolinks
 //= require_tree .
 
 

@@ -4,6 +4,7 @@
   </div><!-- /.login-logo -->
   <div class="login-box-body">
     <p class="login-box-msg">Sign up to start your session</p>
+
     <%= bootstrap_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
       <div class="form-group has-feedback">
         <%= f.email_field :email, autofocus: true, class: "form-control", placeholder: "Email",required: true %>
@@ -29,20 +30,14 @@
       </div>
 
       <div class="row">
-        <div class="col-xs-4">
-          <%= f.submit "Sign up",class: "btn btn-sm btn-primary",data: {disable_with: "Signing up..."} %>
+        <div class="col-xs-3">
+          <%= f.submit "Sign up",class: "btn btn-primary",data: {disable_with: "Signing up..."} %>
         </div><!-- /.col -->
+        <div class="col-xs-3">
+          <%= link_to 'Existing User', new_session_path(resource_name), class: 'btn btn-primary'%>
+        </div>
       </div>
-        
-
-      <!-- <div class="social-auth-links text-center">
-        <p>- OR -</p>
-        <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign in using Facebook</a>
-        <a href="#" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Sign in using Google+</a>
-      </div> --><!-- /.social-auth-links -->
-
       <%= render "members/shared/links" %>
     <% end %>  
   </div><!-- /.login-box-body -->
-
 </div><!-- /.login-box -->

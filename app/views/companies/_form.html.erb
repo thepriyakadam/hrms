@@ -38,11 +38,19 @@
            <%= f.text_field :description,label: 'Company Full Name',placeholder: "e.g : Indiba Consultancy Services." %>
           </div>
         </div>
-        <div class="col-sm-3">
+        <div class="col-sm-2">
           <div class="field">
-             <%= f.select :company_type_id, all_company_type,{label: 'Company Type',include_blank: " Select Company Type"}%>
+            <%= f.select :company_type_id, all_company_type,{label: 'Company Type',include_blank: " Select Company Type"}%>
           </div>
         </div>
+
+        <div class="col-sm-2">
+          <div class="field">
+            <%= f.select :company_type_id, all_company_type,{label: 'Company Type',include_blank: " Select Company Type"}%>
+          </div>
+        </div>
+
+          <%= link_to "", edit_salaryslip_component_path(3),remote:true,class: "fa fa-edit" %>
       </div>
      
       <div class="row">

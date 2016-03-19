@@ -109,7 +109,7 @@ class OvertimeSalariesController < ApplicationController
     employee_ids = params[:employee_ids]
     unless employee_ids.nil? or employee_ids.empty?
       employee_ids.each do |e|
-        
+        OvertimeSalary.create()
       end
     end
   end

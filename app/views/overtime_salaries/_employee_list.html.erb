@@ -18,7 +18,8 @@
           <td><%= o.ot_daily_date.strftime('%B-%Y') %></td>
           <% start_date = o.ot_daily_date.at_beginning_of_month %>
           <% end_date = o.ot_daily_date.at_end_of_month %>
-          <td><%= OvertimeDailyRecord.where(employee_id: o.employee_id, ot_daily_date:start_date..end_date).sum(:ot_daily_hrs) %></td>
+          <% hrs = OvertimeDailyRecord.where(employee_id: o.employee_id, ot_daily_date:start_date..end_date).sum(:ot_daily_hrs) %>
+          <td><%= hrs %></td>
         </tr>
       <% end %>
     </tbody>

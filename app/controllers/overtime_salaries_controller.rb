@@ -19,7 +19,7 @@ class OvertimeSalariesController < ApplicationController
     @esic_master = EsicMaster.first
     if @overtime_master.nil? or @esic_master.nil?
       flash[:alert] = "Over time master or esic master not set."
-    end    
+    end  
   end
 
   # GET /overtime_salaries/1/edit
@@ -101,11 +101,17 @@ class OvertimeSalariesController < ApplicationController
   def collect_employee
     @month = params[:month]
     @year = params[:year]
-    @employees = OvertimeDailyRecord.all
+    date = Date.new(@year.to_i, Workingday.months[@month])
+    @employees = OvertimeDailyRecord.where("strftime('%m/%Y', ot_daily_date) = ?", date.strftime("%m/%Y")).group(:employee_id)
   end
 
   def create_overtime_salary
-    
+    employee_ids = params[:employee_ids]
+    unless employee_ids.nil? or employee_ids.empty?
+      employee_ids.each do |e|
+        
+      end
+    end
   end
 
   private

@@ -20,14 +20,15 @@ class EmployeeTemplatesController < ApplicationController
   end
 
   def activate
-    @employee_template = EmployeeTemplate.find(params[:id])
+    @employee_template = EmployeeTemplate.find(params[:activate][:id])
     @employee = @employee_template.employee
     @pre_employee_template = EmployeeTemplate.where("employee_id = ? and is_active = ?",@employee.id, true).take
     ActiveRecord::Base.transaction do
-      @pre_employee_template.update(is_active: false, end_date: Date.today)
-      @employee_template.update(is_active: true, start_date: Date.today)
+      @pre_employee_template.update(is_active: false, end_date: params[:activate][:activate_date])
+      @employee_template.update(is_active: true, start_date: params[:activate][:activate_date])
     end
     @employee_templates = @employee.employee_templates
+    redirect_to template_list_employee_templates_path(format: @employee.id)
   end
 
   def deactivate

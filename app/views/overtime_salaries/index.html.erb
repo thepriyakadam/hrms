@@ -37,7 +37,7 @@
         <td><%= overtime_salary.total_amount %></td>
         <td><%= overtime_salary.attendence_bouns_amount %></td>
         <td><%= overtime_salary.paid_holiday_amount %></td>
-        <td><strong><%= overtime_salary.net_payble_amount %></strong></td>
+        <td><strong><%= '%.2f'%(overtime_salary.net_payble_amount) %></strong></td>
        <td>
         <!-- link_to '', edit_overtime_salary_path(overtime_salary),class: 'btn btn-sm btn-success fa fa-edit' -->
        <!-- link_to 'Destroy', overtime_salary, method: :delete, data: { confirm: 'Are you sure?' } %> -->

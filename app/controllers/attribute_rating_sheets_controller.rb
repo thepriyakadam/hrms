@@ -15,11 +15,27 @@ class AttributeRatingSheetsController < ApplicationController
   # GET /attribute_rating_sheets/new
   def new
     @attribute_rating_sheet = AttributeRatingSheet.new
-    @employee_attributes = EmployeeAttribute.all
+    @employee_attributes = []
+    @attribute_rating_sheets = AttributeRatingSheet.all
+    if @attribute_rating_sheets.nil?
+      @attribute_rating_sheets.each do |a|
+        temp = AttributeRatingSheet.exists?(appraisee_id: current_user.employee_id, employee_attribute_id: a.employee_attribute_id)
+        if temp
+              
+        else
+          ea = EmployeeAttribute.find(a.employee_attribute_id)
+          @employee_attributes << ea
+        end
+      end
+    else
+      @employee_attributes = EmployeeAttribute.all
+    end
+    
   end
 
   # GET /attribute_rating_sheets/1/edit
   def edit
+    @employee_attributes = EmployeeAttribute.all
   end
 
   # POST /attribute_rating_sheets
@@ -65,6 +81,19 @@ class AttributeRatingSheetsController < ApplicationController
   def appraiser
     @attribute_rating_sheets = AttributeRatingSheet.all
     @attribute_rating_sheet = AttributeRatingSheet.new
+  end
+
+  def appraiser_create
+    attribute_rating_sheets = params[:attribute_rating_sheet_id]
+    comments = params[:appraiser_comment]
+    ratings = params[:appraiser_rating]
+    final = attribute_rating_sheets.zip(comments,ratings)
+    final.each do |e,c,r|
+      attribute_rating_sheet = AttributeRatingSheet.find(e)
+      attribute_rating_sheet.update(appraiser_comment: c, appraiser_rating: r, appraiser_id: params[:appraiser_id])
+    end
+    flash[:notice] = "Appraiser Attribute Created Successfully"
+    redirect_to appraiser_attribute_rating_sheets_path
   end
 
   private

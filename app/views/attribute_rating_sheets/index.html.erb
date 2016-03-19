@@ -27,7 +27,7 @@
             <td><%= a.appraisee_rating %></td>
             <td>
               <%= link_to '', a,class: 'btn btn-default btn-xs fa fa-eye' %>
-              <%= link_to '', edit_certification_path(a),class: 'btn btn-success btn-xs fa fa-edit' %>
+              <%= link_to '', edit_attribute_rating_sheet_path(a),class: 'btn btn-success btn-xs fa fa-edit' %>
               <%= link_to '', a, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-xs fa fa-close' %>
             </td>
           </tr>

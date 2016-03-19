@@ -1,39 +1,28 @@
-<p id="notice"><%= notice %></p>
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Attribute Rating</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table class="table table-bordered table-hover table-condensed">
+      <tr>
+      <th> <strong>Attribute:</strong></th>
+      <td><%= @attribute_rating_sheet.employee_attribute.attribute_master.name %></td>
 
-<p>
-  <strong>Appraisee:</strong>
-  <%= @attribute_rating_sheet.appraisee %>
-</p>
+      <th><strong>Definition:</strong></th>
+      <td><%= @attribute_rating_sheet.employee_attribute.definition.name %></td>
 
-<p>
-  <strong>Appraiser:</strong>
-  <%= @attribute_rating_sheet.appraiser %>
-</p>
+      <th> <strong>Weightage:</strong></th>
+      <td><%= @attribute_rating_sheet.employee_attribute.weightage %></td>
 
-<p>
-  <strong>Employee attribute:</strong>
-  <%= @attribute_rating_sheet.employee_attribute %>
-</p>
+      <th><strong>Appraisee Comment:</strong></th>
+      <td><%= @attribute_rating_sheet.appraisee_comment %></td>
 
-<p>
-  <strong>Appraisee comment:</strong>
-  <%= @attribute_rating_sheet.appraisee_comment %>
-</p>
-
-<p>
-  <strong>Appraisee rating:</strong>
-  <%= @attribute_rating_sheet.appraisee_rating %>
-</p>
-
-<p>
-  <strong>Appraiser comment:</strong>
-  <%= @attribute_rating_sheet.appraiser_comment %>
-</p>
-
-<p>
-  <strong>Appraiser rating:</strong>
-  <%= @attribute_rating_sheet.appraiser_rating %>
-</p>
+      <th><strong>Appraisee rating:</strong></th>
+      <td><%= @attribute_rating_sheet.appraisee_rating %></td>
+      </tr>
+    </table>
+  </div>
+</div>
 
 <%= link_to 'Edit', edit_attribute_rating_sheet_path(@attribute_rating_sheet) %> |
 <%= link_to 'Back', attribute_rating_sheets_path %>

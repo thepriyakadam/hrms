@@ -26,7 +26,9 @@
             <td><%= a.appraisee_rating %></td>
             <td><%= text_field_tag 'appraiser_comment[]' %></td>
             <td><%= text_field_tag 'appraiser_rating[]' %></td> 
-              
+              <%= hidden_field_tag 'employee_goal_id[]',{},value: a.employee_attribute.id %>
+              <%= hidden_field_tag 'attribute_rating_sheet_id[]', {},value: a.id %> 
+              <%= hidden_field_tag :appraiser_id, {},value: current_user.employee_id %> 
           </tr>
         <% end %>
       </tbody>
@@ -34,12 +36,11 @@
     <div class="row">
       <div class="col-sm-3">
         <div class="actions">
-          <%= f.submit %>
+          <%= f.submit "Create Rating" , class: "btn btn-primary btn-sm" %>
         </div>
       </div>
     </div>
-  </div>
-</div>
+  
 <% end %>
 
 <table id="tbl" class="table table-bordered table-hover table-condensed">
@@ -68,4 +69,5 @@
       <% end %>
     </tbody>
   </table>
+  </div>
   </div>

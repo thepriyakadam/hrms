@@ -25,7 +25,7 @@
         <!-- Menu toggle button -->
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
           <i class="fa fa-envelope-o"></i>
-          <span class="label label-success">4</span>
+          <span class="label label-success">4 </span>
         </a>
         <ul class="dropdown-menu">
           <li class="header">You have 4 messages</li>
@@ -45,6 +45,9 @@
                   </h4>
                   <!-- The message -->
                   <p>Why not buy a new awesome theme?</p>
+                 <!--   @pending_employee_leav_requests.try(:each) do |employee_leav_request| %>
+                   employee_leav_request.employee.try(:first_name) %>
+                   end %> -->
                 </a>
               </li><!-- end message -->
             </ul><!-- /.menu -->
@@ -120,13 +123,15 @@
           <!-- Right hand header image -->
             <% if current_user.class == Member %>
               <% if current_user.role.name == 'Company' %>
-                <%= current_user.company.name%>
+               ID : <%= current_user.employee.try(:manual_employee_code) %>
               <% elsif current_user.role.name == 'CompanyLocation' %>
-                <%= current_user.company_location.name %>
+               ID :  <%= current_user.employee.try(:manual_employee_code) %>
               <% elsif current_user.role.name == 'Department' %>
-                <%= current_user.department.name %>  
+               ID :  <%= current_user.employee.try(:manual_employee_code) %>
+              <% elsif current_user.role.name == 'Supervisor' %>
+               ID :  <%= current_user.employee.try(:manual_employee_code) %>
               <% else %>
-                <%= current_user.employee.first_name %>  
+               Name :- <%= current_user.employee.try(:first_name) %> <%= current_user.employee.try(:last_name) %>  
               <% end %>
             <%else%>
               <%= current_user.subdomain %>
@@ -141,26 +146,26 @@
             <!-- Click image -->
             <p>
               <% if current_user.class == Member %>
-                  <%= current_user.manual_member_code %>-
-                  <%= current_user.role.name %><br>
-                  <%= current_user.employee.first_name %>
+                <small> ID : <%= current_user.manual_member_code %><br></small>
+                <small> Role : <%= current_user.role.name %> <br></small>
+                <small> Name : <%= current_user.employee.try(:first_name) %> <%= current_user.employee.try(:last_name) %></small>
               <%else%>
                 <%= current_user.subdomain %>-
                 <%= current_user.class %>
               <%end%>
-              <small>Member since <%= current_user.created_at%></small>
+              <!-- <small>Member since <%= current_user.created_at%></small> -->
             </p>
           </li>
           <!-- Menu Body -->
           <li class="user-body">
             <div class="col-xs-4 text-center">
-              <a href="#">Followers</a>
+              <!-- <a href="#">Followers</a> -->
             </div>
             <div class="col-xs-4 text-center">
-              <a href="#">Sales</a>
+              <!-- <a href="#">Sales</a> -->
             </div>
             <div class="col-xs-4 text-center">
-              <a href="#">Friends</a>
+              <!-- <a href="#">Friends</a> -->
             </div>
           </li>
           <!-- Menu Footer-->

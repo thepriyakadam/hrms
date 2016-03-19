@@ -166,7 +166,7 @@
               <!-- <a href="#">Sales</a> -->
               <% if current_user.class == Member %>
               <small><a href="#">  <%= current_user.employee.joining_detail.employee_designation.try(:name) %></a></small>
-               <%else%>
+              <%else%>
                 <%= current_user.subdomain %>-
                 <%= current_user.class %>
               <%end%>

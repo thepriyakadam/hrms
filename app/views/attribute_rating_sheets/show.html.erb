@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Appraisee:</strong>
+  <%= @attribute_rating_sheet.appraisee %>
+</p>
+
+<p>
+  <strong>Appraiser:</strong>
+  <%= @attribute_rating_sheet.appraiser %>
+</p>
+
+<p>
+  <strong>Employee attribute:</strong>
+  <%= @attribute_rating_sheet.employee_attribute %>
+</p>
+
+<p>
+  <strong>Appraisee comment:</strong>
+  <%= @attribute_rating_sheet.appraisee_comment %>
+</p>
+
+<p>
+  <strong>Appraisee rating:</strong>
+  <%= @attribute_rating_sheet.appraisee_rating %>
+</p>
+
+<p>
+  <strong>Appraiser comment:</strong>
+  <%= @attribute_rating_sheet.appraiser_comment %>
+</p>
+
+<p>
+  <strong>Appraiser rating:</strong>
+  <%= @attribute_rating_sheet.appraiser_rating %>
+</p>
+
+<%= link_to 'Edit', edit_attribute_rating_sheet_path(@attribute_rating_sheet) %> |
+<%= link_to 'Back', attribute_rating_sheets_path %>

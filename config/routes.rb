@@ -1,5 +1,17 @@
 Rails.application.routes.draw do
 
+  resources :attribute_rating_sheets do
+    collection do
+      get :appraiser
+      post :appraiser_create
+    end
+  end
+  resources :goal_rating_sheets  do
+    collection do
+      get :appraiser
+      post :appraiser_create
+    end
+  end
   resources :employee_attributes do
     collection do
       get :appraisee

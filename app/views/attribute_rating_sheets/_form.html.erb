@@ -1,0 +1,40 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Employee Attribute Rating</h3>
+  </div>
+  <div class="box-body">
+    <%= bootstrap_form_for(@attribute_rating_sheet) do |f| %>
+    <table id="tbl" class="table table-bordered table-hover table-condensed">
+      <thead>
+        <tr>
+          <th>Attribute</th>
+          <th>Definition</th>
+          <th>Weightage</th>
+          <th>Appraisee Comment</th>
+          <th>Appraisee Rating</th>
+        </tr>
+      </thead>
+      <tbody>
+      <% @employee_attributes.each do |employee_attribute| %>
+        <tr>
+          <td><%= employee_attribute.attribute_master.name %></td>
+          <td><%= employee_attribute.definition.name %></td>
+          <td><%= employee_attribute.weightage %></td>
+          <td><%= text_field_tag 'appraisee_comment[]' %></td>
+          <td><%= text_field_tag 'appraisee_rating[]' %></td>
+          <%= hidden_field_tag 'employee_attribute_id[]',{},value: employee_attribute.id %>
+          <%= hidden_field_tag :appraisee_id, {},value: current_user.employee_id %>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="actions">
+          <%= f.submit %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<% end %>

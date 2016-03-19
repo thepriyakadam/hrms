@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  appraisee_id: 
+  appraiser_id: 
+  employee_goal_id: 
+  allign_to_supervisor: false
+  appraisee_comment: MyText
+  appraisee_rating: 1
+  appraiser_comment: MyText
+  appraiser_rating: 1
+
+two:
+  appraisee_id: 
+  appraiser_id: 
+  employee_goal_id: 
+  allign_to_supervisor: false
+  appraisee_comment: MyText
+  appraisee_rating: 1
+  appraiser_comment: MyText
+  appraiser_rating: 1

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160317050954) do
+ActiveRecord::Schema.define(version: 20160319053455) do
 
   create_table "advance_salaries", force: :cascade do |t|
     t.integer  "employee_id"
@@ -59,6 +59,22 @@ ActiveRecord::Schema.define(version: 20160317050954) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "attribute_rating_sheets", force: :cascade do |t|
+    t.integer  "appraisee_id"
+    t.integer  "appraiser_id"
+    t.integer  "employee_attribute_id"
+    t.text     "appraisee_comment"
+    t.integer  "appraisee_rating"
+    t.text     "appraiser_comment"
+    t.integer  "appraiser_rating"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+  end
+
+  add_index "attribute_rating_sheets", ["appraisee_id"], name: "index_attribute_rating_sheets_on_appraisee_id"
+  add_index "attribute_rating_sheets", ["appraiser_id"], name: "index_attribute_rating_sheets_on_appraiser_id"
+  add_index "attribute_rating_sheets", ["employee_attribute_id"], name: "index_attribute_rating_sheets_on_employee_attribute_id"
 
   create_table "awards", force: :cascade do |t|
     t.integer  "employee_id"
@@ -342,10 +358,6 @@ ActiveRecord::Schema.define(version: 20160317050954) do
     t.integer  "attribute_master_id"
     t.integer  "definition_id"
     t.integer  "weightage"
-    t.text     "appraisee_comment"
-    t.integer  "appraisee_rating"
-    t.text     "appraiser_comment"
-    t.integer  "appraiser_rating"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
   end
@@ -395,13 +407,8 @@ ActiveRecord::Schema.define(version: 20160317050954) do
     t.string   "target"
     t.integer  "goal_weightage"
     t.integer  "difficulty_level"
-    t.boolean  "allign_to_supervisor"
-    t.text     "appraisee_comment"
-    t.integer  "appraisee_rating"
-    t.text     "appraiser_comment"
-    t.integer  "appraiser_rating"
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
   end
 
   add_index "employee_goals", ["appraisee_id"], name: "index_employee_goals_on_appraisee_id"
@@ -712,6 +719,23 @@ ActiveRecord::Schema.define(version: 20160317050954) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "goal_rating_sheets", force: :cascade do |t|
+    t.integer  "appraisee_id"
+    t.integer  "appraiser_id"
+    t.integer  "employee_goal_id"
+    t.boolean  "allign_to_supervisor"
+    t.text     "appraisee_comment"
+    t.integer  "appraisee_rating"
+    t.text     "appraiser_comment"
+    t.integer  "appraiser_rating"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
+  add_index "goal_rating_sheets", ["appraisee_id"], name: "index_goal_rating_sheets_on_appraisee_id"
+  add_index "goal_rating_sheets", ["appraiser_id"], name: "index_goal_rating_sheets_on_appraiser_id"
+  add_index "goal_rating_sheets", ["employee_goal_id"], name: "index_goal_rating_sheets_on_employee_goal_id"
 
   create_table "groups", force: :cascade do |t|
     t.string   "email",                  default: "", null: false

@@ -6,9 +6,7 @@
         <th>Code</th>
         <th>Name</th>
         <th>Overtime Month</th>
-        <th>Attendance Bonus Amount</th>
-        <th>Paid Holiday Amount</th>
-        <th>Overtime Daily Amount </th>
+        <th>Total hrs </th>
       </tr>
     </thead>
     <tbody>
@@ -18,9 +16,9 @@
           <td><%= o.employee.try(:manual_employee_code) %></td>
           <td><%= full_name(o.employee) %></td>
           <td><%= o.ot_daily_date.strftime('%B-%Y') %></td>
-          <td><%= o.ot_daily_hrs %></td>
-          <td><%= o.ot_rate %></td>
-          <td><%= o.ot_daily_amount %></td>
+          <% start_date = o.ot_daily_date.at_beginning_of_month %>
+          <% end_date = o.ot_daily_date.at_end_of_month %>
+          <td><%= OvertimeDailyRecord.where(employee_id: o.employee_id, ot_daily_date:start_date..end_date).sum(:ot_daily_hrs) %></td>
         </tr>
       <% end %>
     </tbody>
@@ -29,16 +27,16 @@
 <% end %>
 
 <script type="text/javascript">
-$('#selectAll').click(function() {
-  if (this.checked) {
-    $(':checkbox').each(function() {
-      this.checked = true;                       
-    });
-  } 
-  else {
-    $(':checkbox').each(function() {
-      this.checked = false;                        
-    });
-  } 
-});
+  $('#selectAll').click(function() {
+    if (this.checked) {
+      $(':checkbox').each(function() {
+        this.checked = true;                       
+      });
+    } 
+    else {
+      $(':checkbox').each(function() {
+        this.checked = false;                        
+      });
+    }
+  });
 </script>

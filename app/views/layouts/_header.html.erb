@@ -131,7 +131,7 @@
               <% elsif current_user.role.name == 'Supervisor' %>
                ID :  <%= current_user.employee.try(:manual_employee_code) %>
               <% else %>
-               Name :- <%= current_user.employee.try(:first_name) %> <%= current_user.employee.try(:last_name) %>  
+               ID :  <%= current_user.employee.try(:manual_employee_code) %>
               <% end %>
             <%else%>
               <%= current_user.subdomain %>

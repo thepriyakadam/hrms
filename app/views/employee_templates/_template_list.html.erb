@@ -4,7 +4,8 @@
       <th>Template Name</th>
       <th>Active Date</th>
       <th>Inactive Date</th>
-      <th>Active Template</th>
+      <th>Status</th>
+      <th>Action</th>
     </tr>
   </thead>
   <tbody>
@@ -17,10 +18,17 @@
           <% if t.is_active %>
             <small class="label label-info">Current Template</small>
           <% elsif t.is_active == false and t.start_date.nil? %>
-            <%= link_to "Activate",activate_employee_template_path(t),class: "btn btn-xs btn-success",remote:true %>
+
+          <%= form_for :activate, url: { action: 'activate'} do |f| %>
+            <%= f.text_field :activate_date, class: 'ot_date' %>
+            <%= f.hidden_field :id, value: t.id %>
+            <%= f.submit %>
+          <% end %>
           <% else %>
             <small class="label label-danger">Expired Template</small>
           <% end %>
+          </td>
+          <td>
           <%= link_to '', show_employee_salary_template_employee_salary_templates_path(t.employee_id),class: 'btn btn-default fa fa-eye' %>
         </td>
       </tr>
@@ -30,3 +38,13 @@
 <div>
   <%= link_to 'Back', employee_templates_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
 </div>
+
+<script type="text/javascript">
+  $(function(){
+    $('.ot_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-1:+50',
+    dateFormat: 'dd-mm-yy' });
+  });
+</script>

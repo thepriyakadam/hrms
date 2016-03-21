@@ -7,6 +7,8 @@
 		<%= render 'company_location_dashboard' %>
 	<% elsif current_user.role.try(:name) == 'Department' %>
 		<%= render 'department_dashboard' %>
+	<% elsif current_user.role.try(:name) == 'Supervisor' %>
+		<%= render 'supervisor_dashboard' %>
 	<% else %>
 		<%= render 'employee_dashboard' %>
 	<% end %>

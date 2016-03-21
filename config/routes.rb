@@ -61,10 +61,10 @@ end
   resources :advance_types
   resources :employee_templates do
     member do
-      get :activate
       get :deactivate
     end
     collection do 
+      post :activate
       get :template_list
       get :fresh_template
       get :fresh

@@ -1,4 +1,3 @@
-
 <!-- SELECT2 EXAMPLE -->
 <div class="box box-default">
   <div class="box-header with-border">
@@ -6,6 +5,7 @@
   </div><!-- /.box-header -->
   
   <div class="box-body">
+  <div id="dynamicDropdown"></div>
     <%= bootstrap_form_for(@company,html: {id: 'company'}) do |f| %>
     <% if @company.errors.any? %>
       <div id="error_explanation">
@@ -30,27 +30,26 @@
       <div class="row">
         <div class="col-sm-3">
           <div class="form-group required">
-           <%= f.text_field :name,label: 'Company Name',placeholder: "e.g : ICS"%>
-           </div>
+            <%= f.text_field :name,label: 'Company Name',placeholder: "e.g : ICS"%>
+          </div>
         </div>
         <div class="col-sm-6">
           <div class="field">
-           <%= f.text_field :description,label: 'Company Full Name',placeholder: "e.g : Indiba Consultancy Services." %>
-          </div>
-        </div>
-        <div class="col-sm-2">
-          <div class="field">
-            <%= f.select :company_type_id, all_company_type,{label: 'Company Type',include_blank: " Select Company Type"}%>
+            <%= f.text_field :description,label: 'Company Full Name',placeholder: "e.g : Indiba Consultancy Services." %>
           </div>
         </div>
 
-        <div class="col-sm-2">
-          <div class="field">
-            <%= f.select :company_type_id, all_company_type,{label: 'Company Type',include_blank: " Select Company Type"}%>
+        <div class="col-sm-3">
+          <label>Company Type: </label>
+          <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <%= link_to "", new_company_type_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+              </div>
+              <%= f.select :company_type_id, all_company_type,{hide_label: true,include_blank: " Select Company Type"}%>
+            </div>
           </div>
-        </div>
-
-          <%= link_to "", edit_salaryslip_component_path(3),remote:true,class: "fa fa-edit" %>
+        </div>          
       </div>
      
       <div class="row">
@@ -71,15 +70,15 @@
           </div>
         </div>
         <div class="col-sm-3">
-        <label>Starting Date: </label>
-         <div class="form-group required">
-          <div class="input-group">
-            <div class="input-group-addon">
-              <i class="fa fa-calendar"></i>
+          <label>Starting Date: </label>
+          <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <%= f.text_field :starting_date,hide_label: true,class: 'company_start_date'%>
             </div>
-            <%= f.text_field :starting_date,hide_label: true,class: 'company_start_date'%>
-          </div>
-         </div>
+           </div>
         </div>
       </div>
 
@@ -154,6 +153,4 @@
     </div>
     <% end %>
   </div><!-- /.box-body -->
-  
 </div><!-- /.box -->
-

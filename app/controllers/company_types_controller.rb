@@ -7,7 +7,6 @@ class CompanyTypesController < ApplicationController
     @company_types = CompanyType.all
   end
 
-  
   def edit
   end
 
@@ -38,6 +37,19 @@ class CompanyTypesController < ApplicationController
   def destroy
     @company_type.destroy
     @company_types = CompanyType.all
+  end
+
+  def add_company_type
+    @company_type = CompanyType.new
+  end
+
+  def create_company_type
+    @company_type = CompanyType.new(company_type_params)    
+    if @company_type.save
+      @flag = true
+    else
+      @flag = false
+    end
   end
 
   private

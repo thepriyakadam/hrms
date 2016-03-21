@@ -258,7 +258,12 @@ Rails.application.routes.draw do
   resources :nationalities
   resources :employee_types
   resources :department_types
-  resources :company_types
+  resources :company_types do
+    collection do
+      get :add_company_type
+      post :create_company_type
+    end
+  end
   resources :departments
   resources :company_locations
   resources :companies do

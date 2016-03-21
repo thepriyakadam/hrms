@@ -78,14 +78,13 @@ end
     @vacancy_masters=VacancyMaster.all
     reporter(@vacancy_masters,template_class: PdfReportTemplate) do
       filter :vacancy_post_date, type: :date
-      column(:job_title,sortable: true) { |vacancy_master| vacancy_master.job_title }
-      column(:vacancy_name,sortable: true) { |vacancy_master| vacancy_master.vacancy_name }
-      column(:department_name,sortable: true) { |vacancy_master| vacancy_master.department_name }
-      column(:educational_qualification,sortable: true) { |vacancy_master| vacancy_master.educational_qualification }
-      column(:no_of_position,sortable: true) { |vacancy_master| vacancy_master.no_of_position }
-      column(:budget,sortable: true) { |vacancy_master| vacancy_master.budget }
-      column(:vacancy_post_date,sortable: true) { |vacancy_master| vacancy_master.vacancy_post_date }
-      column(:description,sortable: true) { |vacancy_master| vacancy_master.description }
+      column :job_title,sortable: true
+      column :vacancy_name,sortable: true
+      column :department_name,sortable: true
+      column :educational_qualification,sortable: true
+      column :budget,sortable: true
+      column :vacancy_post_date,sortable: true
+      column :description,sortable: true
     end
   end
 

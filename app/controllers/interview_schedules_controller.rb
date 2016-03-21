@@ -68,16 +68,15 @@ class InterviewSchedulesController < ApplicationController
     @interview_schedules=InterviewSchedule.all
     reporter(@interview_schedules,template_class: PdfReportTemplate) do
       filter :interview_date, type: :date
-      column(:interviewer_name,sortable: true) { |interview_schedule| interview_schedule.interviewer_name }
-      column(:candidate_name,sortable: true) { |interview_schedule| interview_schedule.candidate_name }
-      column(:interview_date,sortable: true) { |interview_schedule| interview_schedule.interview_date }
-      column(:interview_time,sortable: true) { |interview_schedule| interview_schedule.interview_time }
-      column(:location,sortable: true) { |interview_schedule| interview_schedule.location }
-      column(:schedule_comments,sortable: true) { |interview_schedule| interview_schedule.schedule_comments }
-      column(:post_title,sortable: true) { |interview_schedule| interview_schedule.post_title }
-      column(:interview_type,sortable: true) { |interview_schedule| interview_schedule.interview_type }
-      column(:interview_status,sortable: true) { |interview_schedule| interview_schedule.interview_status }  
-    end
+      column :interviewer_name,sortable: true
+      column :candidate_name,sortable: true
+      column :interview_date,sortable: true
+      column :interview_time,sortable: true
+      column :location,sortable: true
+      column :schedule_comments,sortable: true
+      column :post_title,sortable: true
+      column :interview_type,sortable: true
+      column :interview_status,sortable: true
   end
 
   private

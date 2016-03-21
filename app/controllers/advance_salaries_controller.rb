@@ -91,24 +91,8 @@ class AdvanceSalariesController < ApplicationController
       column :advance_amount,sortable: true
       column :no_of_instalment,sortable: true
       column :instalment_amount,sortable: true
-      column :instalment_amount,sortable: true
     end
   end
-
-  # def search_by_advance_date
-  #   @advance_salaries=AdvanceSalary.all
-  #   reporter(advance_salaries) do
-  #     filter :advance_date, type: :date
-  #     column :manual_employee_code
-  #     column :first_name,sortable: true
-  #     column :advance_date,sortable: true,pdf: {width: 65}
-  #     column :advance_amount,sortable: true
-  #     column :no_of_instalment,sortable: true
-  #     column :instalment_amount,sortable: true
-  #     column :instalment_amount,sortable: true
-  #   end
-  # end
-
 
   private
     # Use callbacks to share common setup or constraints between actions.

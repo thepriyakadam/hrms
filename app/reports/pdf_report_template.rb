@@ -10,8 +10,8 @@ class PdfReportTemplate < QueryReport::ReportPdf
   end
 
   def render_footer
-    pdf.move_down 20
-    pdf.text "Copyright to @indiba", :size => 12
+    # pdf.move_down 20
+    # pdf.text "Copyright to @indiba", :size => 12
   end
 
   def to_pdf

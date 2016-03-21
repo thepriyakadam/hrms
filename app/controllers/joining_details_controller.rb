@@ -75,19 +75,19 @@ class JoiningDetailsController < ApplicationController
     reporter(@joining_details,template_class: PdfReportTemplate) do
       filter :joining_date, type: :date
       column(:manual_employee_code,sortable: true) { |joining_detail| joining_detail.employee.try(:manual_employee_code) }
-      column(:employee_grade) { |joining_detail| link_to joining_detail.employee_grade, joining_detail }
-      column(:joining_date, sortable: true) { |joining_detail| joining_detail.joining_date }
+      column :employee_grade
+      column :joining_date, sortable: true 
       column(:date_of_birth, sortable: true) { |joining_detail| joining_detail.employee.try(:date_of_birth) }
       column(:employee_id, sortable: true) { |joining_detail| joining_detail.employee.try(:first_name) }
       column(:employee_grade, sortable: true) { |joining_detail| joining_detail.employee_grade.try(:name) }
       column(:employee_designation, sortable: true) { |joining_detail| joining_detail.employee_designation.try(:name) }
-      column(:confirmation_date, sortable: true) { |joining_detail| joining_detail.confirmation_date }
-      column(:employee_uan_no, sortable: true) { |joining_detail| joining_detail.employee_uan_no }
-      column(:employee_pf_no, sortable: true) { |joining_detail| joining_detail.employee_pf_no }
-      column(:employee_efic_no, sortable: true) { |joining_detail| joining_detail.employee_efic_no }
-      column(:medical_schem, sortable: true) { |joining_detail| joining_detail.medical_schem }
-      column(:passport_no, sortable: true) { |joining_detail| joining_detail.passport_no }
-      column(:passport_expiry_date, sortable: true) { |joining_detail| joining_detail.passport_expiry_date }
+      column :confirmation_date, sortable: true
+      column :employee_uan_no, sortable: true
+      column :employee_pf_no, sortable: true
+      column :employee_efic_no, sortable: true
+      column :medical_schem, sortable: true
+      column :passport_no, sortable: true
+      column :passport_expiry_date, sortable: true
       column(:probation_period, sortable: true) { |joining_detail| joining_detail.probation_period }
       column(:notice_period, sortable: true) { |joining_detail| joining_detail.notice_period }
       end

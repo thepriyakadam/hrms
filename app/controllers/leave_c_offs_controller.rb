@@ -69,7 +69,6 @@ class LeaveCOffsController < ApplicationController
       column(:c_off_type,sortable: true) { |leave_c_off| leave_c_off.c_off_type }
       column(:c_off_expire_day,sortable: true) { |leave_c_off| leave_c_off.c_off_expire_day }
       column(:expiry_status,sortable: true) { |leave_c_off| leave_c_off.expiry_status }    
-    
     end
   end
 

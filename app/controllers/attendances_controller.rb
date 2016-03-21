@@ -98,12 +98,12 @@ class AttendancesController < ApplicationController
     reporter(@attendances,template_class: PdfReportTemplate) do
       filter :attendance_date, type: :date
       column(:manual_employee_code,sortable: true) { |attendance| attendance.employee.try(:manual_employee_code) }
-      column(:first_name,sortable: true) { |attendance| attendance.employee.try(:first_name) }
-      column(:attendance_date,sortable: true) { |attendance| attendance.attendance_date }
-      column(:check_in,sortable: true) { |attendance| attendance.check_in }
-      column(:check_out,sortable: true) { |attendance| attendance.check_out }
-      column(:over_time_hrs,sortable: true) { |attendance| attendance.over_time_hrs }
-      column(:total_hrs,sortable: true) { |attendance| attendance.total_hrs }
+      column(:first_name,sortable: true) { |attendance| full_name(attendance.employee) }
+      column :attendance_date,sortable: true
+      column :check_in,sortable: true
+      column :check_out,sortable: true
+      column :over_time_hrs,sortable: true
+      column :total_hrs,sortable: true
     end
   end
 

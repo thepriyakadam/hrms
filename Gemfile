@@ -14,7 +14,6 @@ gem 'coffee-rails', '~> 4.1.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 gem 'therubyracer', platforms: :ruby
 gem 'query_report', '~> 1.2', '>= 1.2.1'
-
 gem 'kaminari', '~> 0.16.3'
 gem 'coderay'
 gem 'bootstrap-datepicker-rails'

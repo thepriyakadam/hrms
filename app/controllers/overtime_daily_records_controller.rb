@@ -76,6 +76,6 @@ class OvertimeDailyRecordsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def overtime_daily_record_params
-      params.require(:overtime_daily_record).permit(:employee_id, :ot_daily_date, :ot_daily_hrs, :ot_rate, :ot_daily_amount)
+      params.require(:overtime_daily_record).permit(:employee_id, :ot_daily_date, :ot_daily_hrs, :ot_rate, :ot_daily_amount, :attendance_bonus_amount, :paid_holiday_amount)
     end
 end

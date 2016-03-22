@@ -10,6 +10,7 @@
         <th>Total Hours </th>
         <th>Bonus Amount</th>
         <th>Holiday Amount </th>
+        <th>Ot Daily Amount</th>
       </tr>
     </thead>
     <tbody>
@@ -25,10 +26,12 @@
           <% ot_hrs = OvertimeDailyRecord.where(employee_id: o.employee_id, ot_daily_date:start_date..end_date).sum(:ot_daily_hrs) %>
           <% attendance_bonus_amount = OvertimeDailyRecord.where(employee_id: o.employee_id, ot_daily_date:start_date..end_date).sum(:attendance_bonus_amount) %>
           <% paid_holiday_amount = OvertimeDailyRecord.where(employee_id: o.employee_id, ot_daily_date:start_date..end_date).sum(:paid_holiday_amount) %>
+          <% ot_daily_amount = OvertimeDailyRecord.where(employee_id: o.employee_id, ot_daily_date:start_date..end_date).sum(:ot_daily_amount) %>
           <td><%= text_field_tag 'ot_amount[]',{}, value: ot_amount, readonly:true %></td>
           <td><%= text_field_tag 'ot_hrs[]',{}, value: ot_hrs, readonly: true %></td>
           <td><%= text_field_tag 'attendance_bonus_amount[]',{}, value: attendance_bonus_amount %></td>
           <td><%= text_field_tag 'paid_holiday_amount[]',{}, value: paid_holiday_amount %></td>
+          <td><%= text_field_tag 'ot_daily_amount[]',{}, value: ot_daily_amount %></td>
         </tr>
       <% end %>
     </tbody>

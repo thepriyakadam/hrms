@@ -47,6 +47,8 @@
               <%= render 'sidebars/company_location' %>
             <% elsif current_user.role.name == 'Department' %>
               <%= render 'sidebars/department' %>
+            <% elsif current_user.role.name == 'Supervisor' %>
+              <%= render 'sidebars/supervisor' %>
             <% else %>
               <%= render 'sidebars/employee' %>
             <% end %>

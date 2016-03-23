@@ -11,10 +11,10 @@
       <tr>
       <th>Code</th>
       <th>Employee Name</th>
-      <th>Company Location</th>
-      <th>Date of Birth</th>
+      <th>Department</th>
+      <th>Designation</th>
       <th>Employement</th>
-      <th>Status</th>
+      <th>Contact</th>
       <th>Action</th>
     </tr>
   </thead>
@@ -24,10 +24,10 @@
       <tr>
         <td><%= employee.manual_employee_code %></td>
         <td><%= full_name(employee) %></td>
-        <td><%= employee.try(:company_location).try(:name) %></td>
-        <td><%= employee.date_of_birth %></td>
-        <td> <%= employee.employee_type.try(:name) %></td>
-        <td><%= employee.status %></td>
+        <td><%= employee.try(:company_location).try(:name) %> - <%= employee.try(:department).try(:name) %></td>
+        <td> <%= employee.joining_detail.try(:employee_designation).try(:name) %></td>
+        <td><%= employee.employee_type.try(:name) %>
+        <td><%= employee.try(:contact_no) %></td>
         <td>
           <%= link_to '', employee,class: 'btn btn-sm btn-default fa fa-eye' %>
         </td>

@@ -19,7 +19,7 @@ class OvertimeSalariesController < ApplicationController
     @esic_master = EsicMaster.first
     if @overtime_master.nil? or @esic_master.nil?
       flash[:alert] = "Over time master or esic master not set."
-    end  
+    end
   end
 
   # GET /overtime_salaries/1/edit
@@ -105,13 +105,71 @@ class OvertimeSalariesController < ApplicationController
     @employees = OvertimeDailyRecord.where("strftime('%m/%Y', ot_daily_date) = ?", date.strftime("%m/%Y")).group(:employee_id)
   end
 
+  def calculate_amount
+    @overtime_master = OvertimeMaster.find_by_status(true)
+    @esic_master = EsicMaster.first
+
+    basic_amount = self.basic_amount
+    paid_holiday_amount = self.paid_holiday_amount
+    attendence_bouns_amount = self.attendence_bouns_amount
+    ot_hrs = self.ot_hrs
+    
+    day = @overtime_master.day
+    company_hrs = @overtime_master.company_hrs
+    ot_rate = @overtime_master.ot_rate
+    percentage = @esic_master.percentage
+
+    basic_amount_by_day = basic_amount/day
+    basic_amount_by_day_by_company_hrs = basic_amount_by_day / company_hrs
+    temp = basic_amount_by_day_by_company_hrs*ot_rate
+    ot_amount = temp * self.ot_hrs
+    ot_esic_amount = (ot_amount / 100*percentage).ceil
+    if @esic_master.esic # and addable_total_calculated_amount <= @esic_master.max_limit and @employee.joining_detail.have_esic
+      total_amount = ot_amount - ot_esic_amount
+    else
+      total_amount = ot_amount
+    end
+    net_payble = total_amount + attendence_bouns_amount + paid_holiday_amount
+    self.ot_amount = ot_amount.round
+    self.ot_esic_amount = ot_esic_amount.round
+    self.total_amount = total_amount.round
+    self.net_payble_amount = net_payble.round
+  end
+
+
   def create_overtime_salary
+    month = params[:month]
+    year = params[:year]
+    date = Date.new(year.to_i,Workingday.months[month])
     employee_ids = params[:employee_ids]
-    unless employee_ids.nil? or employee_ids.empty?
-      employee_ids.each do |e|
-        OvertimeSalary.create("")
+    ot_amount = params[:ot_amount]
+    ot_hrs = params[:ot_hrs]
+    attendence_bonus_amount = params[:attendance_bonus_amount]
+    paid_holiday_amount = params[:paid_holiday_amount]
+    ot_daily_amount = params[:ot_daily_amount]
+
+    @esic_master = EsicMaster.first
+    percentage = @esic_master.percentage
+    final = employee_ids.zip(ot_amount,ot_hrs,attendence_bonus_amount,paid_holiday_amount,ot_daily_amount)
+
+    final.each do |i,a,h,bonus,holiday,ot_amount|
+      ot_esic_amount = (a.to_i / 100 * percentage).ceil
+      total_amount = a.to_i - ot_esic_amount
+      net_payble = total_amount + bonus.to_f + holiday.to_f
+      OvertimeSalary.new do |o|
+        o.employee_id = i
+        o.ot_esic_amount = ot_esic_amount
+        o.total_amount = total_amount
+        o.ot_hrs = h.to_i
+        o.attendence_bouns_amount = bonus.to_f
+        o.paid_holiday_amount = holiday.to_f
+        o.net_payble_amount = net_payble
+        o.ot_date = date
+        o.ot_amount = ot_amount
+        o.save
       end
     end
+    redirect_to select_month_year_form_overtime_salaries_path
   end
 
   private

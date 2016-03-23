@@ -19,10 +19,11 @@
             <small class="label label-info">Current Template</small>
           <% elsif t.is_active == false and t.start_date.nil? %>
 
-          <%= form_for :activate, url: { action: 'activate'} do |f| %>
-            <%= f.text_field :activate_date, class: 'ot_date' %>
+          <%= bootstrap_form_for :activate, url: { action: 'activate'} do |f| %>
+            <%= f.text_field :activate_date,hide_label: true, class: 'ot_date' %>
             <%= f.hidden_field :id, value: t.id %>
-            <%= f.submit %>
+            <%= f.hidden_field :employee_id, value: t.employee_id %>
+            <%= f.submit "Activate", class: 'btn btn-primary btn-xs' %>
           <% end %>
           <% else %>
             <small class="label label-danger">Expired Template</small>

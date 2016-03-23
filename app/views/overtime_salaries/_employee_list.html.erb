@@ -6,7 +6,11 @@
         <th>Code</th>
         <th>Name</th>
         <th>Overtime Month</th>
-        <th>Total hrs </th>
+        <th>Total Amount </th>
+        <th>Total Hours </th>
+        <th>Bonus Amount</th>
+        <th>Holiday Amount </th>
+        <th>Ot Daily Amount</th>
       </tr>
     </thead>
     <tbody>
@@ -18,7 +22,16 @@
           <td><%= o.ot_daily_date.strftime('%B-%Y') %></td>
           <% start_date = o.ot_daily_date.at_beginning_of_month %>
           <% end_date = o.ot_daily_date.at_end_of_month %>
-          <td><%= OvertimeDailyRecord.where(employee_id: o.employee_id, ot_daily_date:start_date..end_date).sum(:ot_daily_hrs) %></td>
+          <% ot_amount = OvertimeDailyRecord.where(employee_id: o.employee_id, ot_daily_date:start_date..end_date).sum(:ot_daily_amount) %>
+          <% ot_hrs = OvertimeDailyRecord.where(employee_id: o.employee_id, ot_daily_date:start_date..end_date).sum(:ot_daily_hrs) %>
+          <% attendance_bonus_amount = OvertimeDailyRecord.where(employee_id: o.employee_id, ot_daily_date:start_date..end_date).sum(:attendance_bonus_amount) %>
+          <% paid_holiday_amount = OvertimeDailyRecord.where(employee_id: o.employee_id, ot_daily_date:start_date..end_date).sum(:paid_holiday_amount) %>
+          <% ot_daily_amount = OvertimeDailyRecord.where(employee_id: o.employee_id, ot_daily_date:start_date..end_date).sum(:ot_daily_amount) %>
+          <td><%= text_field_tag 'ot_amount[]',{}, value: ot_amount, readonly:true,class: 'form-control' %></td>
+          <td><%= text_field_tag 'ot_hrs[]',{}, value: ot_hrs, readonly: true,class: 'form-control' %></td>
+          <td><%= text_field_tag 'attendance_bonus_amount[]',{}, value: attendance_bonus_amount,class: 'form-control' %></td>
+          <td><%= text_field_tag 'paid_holiday_amount[]',{}, value: paid_holiday_amount,class: 'form-control' %></td>
+          <td><%= text_field_tag 'ot_daily_amount[]',{}, value: ot_daily_amount,readonly: true,class: 'form-control' %></td>
         </tr>
       <% end %>
     </tbody>

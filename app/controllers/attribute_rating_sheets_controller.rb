@@ -6,6 +6,7 @@ class AttributeRatingSheetsController < ApplicationController
   def index
     @attribute_rating_sheets = AttributeRatingSheet.all
     @attribute_rating_sheets = AttributeRatingSheet.where(appraisee_id: current_user.employee_id)
+
   end
 
   # GET /attribute_rating_sheets/1
@@ -18,6 +19,7 @@ class AttributeRatingSheetsController < ApplicationController
     @attribute_rating_sheet = AttributeRatingSheet.new
     @employee_attributes = []
     @attribute_rating_sheets = AttributeRatingSheet.all
+
     if @attribute_rating_sheets.empty?
       @employee_attributes = EmployeeAttribute.all
     else

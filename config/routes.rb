@@ -1,13 +1,16 @@
 Rails.application.routes.draw do
 
+  resources :performance_periods
   resources :attribute_rating_sheets do
     collection do
+      get :edit_attribute_rating
       get :appraiser
       post :appraiser_create
     end
   end
   resources :goal_rating_sheets  do
     collection do
+      get :edit_goal_rating
       get :appraiser
       post :appraiser_create
     end

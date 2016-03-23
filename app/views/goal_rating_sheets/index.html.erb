@@ -14,7 +14,7 @@
             <th>Target</th>
             <th>Goal Weightage</th>
             <th>Difficulty Level</th>
-            <th>Allign to supervisor</th>
+            <th>Allign To Supervisor</th>
             <th>Appraisee comment</th>
             <th>Appraisee rating</th>
             <th>Action</th>
@@ -24,17 +24,18 @@
         <% @goal_rating_sheets.each do |g| %>
           <tr>
             <td><%= g.employee_goal.goal_perspective.name %></td>
-            <td><%= g.employee_goal.goal_measure.name %></td>
+            <td><%= g.employee_goal.goal_measure %></td>
             <td><%= g.employee_goal.target %></td>
             <td><%= g.employee_goal.goal_weightage %></td>
             <td><%= g.employee_goal.difficulty_level %></td>
+            <td><%= g.employee_goal.allign_to_supervisor %></td>
 
-            <td><%= g.allign_to_supervisor %></td>
             <td><%= g.appraisee_comment %></td>
             <td><%= g.appraisee_rating %></td>
-            <td><%= link_to 'Show', g %></td>
-            <td><%= link_to 'Edit', edit_goal_rating_sheet_path(g) %></td>
-            <td><%= link_to 'Destroy', g, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <td>
+            <%= link_to '', edit_goal_rating_sheet_path(g) ,class: 'btn btn-xs btn-success fa fa-edit' %>
+            <%= link_to '', g, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-xs btn-danger fa fa-close' %>
+          </td>
           </tr>
         <% end %>
         </tbody>

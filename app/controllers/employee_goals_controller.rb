@@ -19,6 +19,7 @@ class EmployeeGoalsController < ApplicationController
 
   # GET /employee_goals/1/edit
   def edit
+
   end
   
   # POST /employee_goals
@@ -38,15 +39,14 @@ class EmployeeGoalsController < ApplicationController
   # PATCH/PUT /employee_goals/1
   # PATCH/PUT /employee_goals/1.json
   def update
-    respond_to do |format|
       if @employee_goal.update(employee_goal_params)
-        format.html { redirect_to @employee_goal, notice: 'Employee goal was successfully updated.' }
-        format.json { render :show, status: :ok, location: @employee_goal }
+        flash[:notice]="Employee Updated successfully"
+        redirect_to employee_goals_path 
       else
-        format.html { render :edit }
-        format.json { render json: @employee_goal.errors, status: :unprocessable_entity }
+        flash[:alert]="Employee Not Updated successfully"
+        redirect_to new_
+        employee_goal_path
       end
-    end
   end
 
   # DELETE /employee_goals/1
@@ -101,6 +101,6 @@ class EmployeeGoalsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def employee_goal_params
-      params.require(:employee_goal).permit(:appraisee_id, :appraiser_id, :goal_perspective_id, :goal_measure_id, :target, :goal_weightage, :difficulty_level, :allign_to_supervisor, :appraisee_comment, :appraisee_rating, :appraiser_comment, :appraiser_rating)
+      params.require(:employee_goal).permit(:period_id,:appraisee_id, :appraiser_id, :goal_perspective_id, :goal_measure, :target, :goal_weightage, :difficulty_level, :allign_to_supervisor, :appraisee_comment, :appraisee_rating, :appraiser_comment, :appraiser_rating)
     end
 end

@@ -5,7 +5,7 @@ class GoalRatingSheetsController < ApplicationController
   # GET /goal_rating_sheets.json
   def index
     @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: current_user.employee_id)
-
+    
   end
 
   # GET /goal_rating_sheets/1
@@ -15,44 +15,63 @@ class GoalRatingSheetsController < ApplicationController
 
   # GET /goal_rating_sheets/new
   def new
-    @goal_rating_sheet = GoalRatingSheet.new
+
+   @goal_rating_sheet = GoalRatingSheet.new
+    @employee_goals = []
     @goal_rating_sheets = GoalRatingSheet.all
-    @employee_goals = EmployeeGoal.all
+    if @goal_rating_sheets.empty?
+      @employee_goals = EmployeeGoal.all
+    else
+      @goal_rating_sheets.each do |a|
+        temp = GoalRatingSheet.exists?(appraisee_id: current_user.employee_id, employee_goal_id: a.employee_goal_id)
+        if temp
+        else
+          ea = EmployeeGoal.find(a.employee_goal_id)
+          @employee_goals << ea
+        end
+      end
+    end
+
   end
 
   # GET /goal_rating_sheets/1/edit
   def edit
+    @employee_goals = EmployeeGoal.all
   end
 
   # POST /goal_rating_sheets
   # POST /goal_rating_sheets.json
   def create
     goal_rating_sheet_ids = params[:employee_goal_id]
-    aligns = params[:allign_to_supervisor]
     comments = params[:appraisee_comment]
     ratings = params[:appraisee_rating]
-    final = goal_rating_sheet_ids.zip(aligns,comments,ratings)
+   
+    final = goal_rating_sheet_ids.zip(comments,ratings)
 
-    final.each do |e,a,c,r|
-      emp = EmployeeGoal.find(e)
-      GoalRatingSheet.create(allign_to_supervisor: a, appraisee_comment: c, appraisee_rating: r, appraisee_id: params[:appraisee_id], employee_goal_id: emp.id)
+    final.each do |e,c,r|
+      emp = EmployeeGoal.find(e) 
+      if c == ""
+      flash[:alert] = "Fill comments"
+      elsif r == ""
+      flash[:alert] = "Fill all the fields"
+      else
+      GoalRatingSheet.create(appraisee_comment: c, appraisee_rating: r, appraisee_id: params[:appraisee_id], employee_goal_id: emp.id)
+      flash[:notice] = "Employee Goal Created Successfully"
+      end
     end
-    flash[:notice] = "Employee Goal Created Successfully"
-    redirect_to goal_rating_sheets_path
+    redirect_to new_goal_rating_sheet_path  
   end
 
   # PATCH/PUT /goal_rating_sheets/1
   # PATCH/PUT /goal_rating_sheets/1.json
   def update
-    respond_to do |format|
       if @goal_rating_sheet.update(goal_rating_sheet_params)
-        format.html { redirect_to @goal_rating_sheet, notice: 'Goal rating sheet was successfully updated.' }
-        format.json { render :show, status: :ok, location: @goal_rating_sheet }
+        flash[:notice] = "Updated Successfully"
+        redirect_to goal_rating_sheets_path
       else
-        format.html { render :edit }
-        format.json { render json: @goal_rating_sheet.errors, status: :unprocessable_entity }
+        flash[:alert] = "Not Updated"
+        redirect_to new_goal_rating_sheet_path
       end
-    end
   end
 
   # DELETE /goal_rating_sheets/1
@@ -68,6 +87,7 @@ class GoalRatingSheetsController < ApplicationController
   def appraiser 
     @goal_rating_sheets = GoalRatingSheet.all
     @goal_rating_sheet = GoalRatingSheet.new
+    @performance_periods = PerformancePeriod.all
   end
 
   def appraiser_create
@@ -77,13 +97,24 @@ class GoalRatingSheetsController < ApplicationController
     ratings = params[:appraiser_rating]
     final = goal_rating_sheets.zip(comments,ratings)
     final.each do |e,c,r|
-      # emp = EmployeeGoal.find(e)
       goal_rating_sheet = GoalRatingSheet.find(e)
+      if c == ""
+      flash[:alert] = "Fill comments"
+      elsif r == ""
+      flash[:alert] = "Fill ratings"
+      else
+      # emp = EmployeeGoal.find(e)
+      #goal_rating_sheet = GoalRatingSheet.find(e)
       goal_rating_sheet.update(appraiser_comment: c, appraiser_rating: r, appraiser_id: params[:appraiser_id])
+      end
     end
-    flash[:notice] = "Appraiser Goal Created Successfully"
     redirect_to appraiser_goal_rating_sheets_path
   end
+
+  def edit_goal_rating
+    @goal_rating_sheet = GoalRatingSheet.find(params :format)
+  end
+  
 
   private
     # Use callbacks to share common setup or constraints between actions.

@@ -7,20 +7,25 @@
 <table id="tbl" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
+      <th>Period</th>
       <th>Goal Perspctive</th>
       <th>Goal Measure</th>
       <th>Target</th>
       <th>Goal Weightage</th>
       <th>Difficulty Level</th>
+      <th>Allign To Supervisor</th>
     </tr>
   </thead>
   <tbody>
-    <tr> 
+    <tr>
+      <td><%= f.select :period_id,all_period_type,{label: 'Period ',include_blank: " Select Period",hide_label: true},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"}%></td>
+
       <td><%= f.select :goal_perspective_id,all_goal_perspective_type,{hide_label: true,include_blank: "Select Goal Perspective"}%></td>
-      <td><%= f.select :goal_measure_id,all_goal_measure_type,{hide_label: true,include_blank: "Select Goal Measure"} %></td>
+      <td><%= f.text_field :goal_measure,{hide_label: true,include_blank: "Select Goal Measure"} %></td>
       <td><%= f.text_field :target,hide_label: true %></td>
       <td><%= f.select :goal_weightage,["1","2","3","4","5"],{hide_label: true, include_blank: "Select Goal Weightage"} %></td>
       <td><%= f.select :difficulty_level,["1","2","3"],{hide_label: true, include_blank: "Select Difficulty Level"} %></td>
+      <td><%= f.select :allign_to_supervisor,options_for_select([['Yes',true],['No',false]]),{hide_label: true,include_blank: "Allign To Supervisor"} %></td>
     </tr>   
   </tbody>
 </table>

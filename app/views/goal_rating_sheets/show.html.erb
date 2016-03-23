@@ -1,24 +1,5 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Appraisee:</strong>
-  <%= @goal_rating_sheet.appraisee %>
-</p>
-
-<p>
-  <strong>Appraiser:</strong>
-  <%= @goal_rating_sheet.appraiser %>
-</p>
-
-<p>
-  <strong>Employee goal:</strong>
-  <%= @goal_rating_sheet.employee_goal %>
-</p>
-
-<p>
-  <strong>Allign to supervisor:</strong>
-  <%= @goal_rating_sheet.allign_to_supervisor %>
-</p>
 
 <p>
   <strong>Appraisee comment:</strong>
@@ -30,15 +11,7 @@
   <%= @goal_rating_sheet.appraisee_rating %>
 </p>
 
-<p>
-  <strong>Appraiser comment:</strong>
-  <%= @goal_rating_sheet.appraiser_comment %>
-</p>
 
-<p>
-  <strong>Appraiser rating:</strong>
-  <%= @goal_rating_sheet.appraiser_rating %>
-</p>
 
 <%= link_to 'Edit', edit_goal_rating_sheet_path(@goal_rating_sheet) %> |
 <%= link_to 'Back', goal_rating_sheets_path %>

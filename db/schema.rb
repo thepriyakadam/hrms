@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160319053455) do
+ActiveRecord::Schema.define(version: 20160322132104) do
 
   create_table "advance_salaries", force: :cascade do |t|
     t.integer  "employee_id"
@@ -102,16 +102,6 @@ ActiveRecord::Schema.define(version: 20160319053455) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
-
-  create_table "bonus", force: :cascade do |t|
-    t.integer  "employee_id"
-    t.decimal  "bonus_amount", precision: 15, scale: 2, default: 0.0
-    t.string   "bouns_date"
-    t.datetime "created_at",                                          null: false
-    t.datetime "updated_at",                                          null: false
-  end
-
-  add_index "bonus", ["employee_id"], name: "index_bonus_on_employee_id"
 
   create_table "bonus_employees", force: :cascade do |t|
     t.integer  "employee_id"
@@ -417,14 +407,18 @@ ActiveRecord::Schema.define(version: 20160319053455) do
     t.string   "target"
     t.integer  "goal_weightage"
     t.integer  "difficulty_level"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+    t.string   "goal_measure"
+    t.boolean  "allign_to_supervisor"
+    t.integer  "period_id"
   end
 
   add_index "employee_goals", ["appraisee_id"], name: "index_employee_goals_on_appraisee_id"
   add_index "employee_goals", ["appraiser_id"], name: "index_employee_goals_on_appraiser_id"
   add_index "employee_goals", ["goal_measure_id"], name: "index_employee_goals_on_goal_measure_id"
   add_index "employee_goals", ["goal_perspective_id"], name: "index_employee_goals_on_goal_perspective_id"
+  add_index "employee_goals", ["period_id"], name: "index_employee_goals_on_period_id"
 
   create_table "employee_grades", force: :cascade do |t|
     t.string   "code"
@@ -1053,6 +1047,16 @@ ActiveRecord::Schema.define(version: 20160319053455) do
     t.string   "code"
     t.string   "name"
     t.string   "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "performance_periods", force: :cascade do |t|
+    t.string   "title"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.string   "description"
+    t.boolean  "is_open"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end

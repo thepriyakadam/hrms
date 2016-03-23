@@ -14,9 +14,9 @@
   </thead>
   <tbody>
     <tr> 
-      <td><%= f.select :attribute_master_id,all_attribute_type,{hide_label: true }%></td>
-      <td><%= f.select :definition_id,all_definition_type,{hide_label: true} %></td>
-      <td><%= f.select :weightage,["1","2","3"],hide_label: true %></td>
+      <td><%= f.select :attribute_master_id,all_attribute_type,{hide_label: true, include_blank: "Select Attribute" }%></td>
+      <td><%= f.select :definition_id,all_definition_type,{hide_label: true, include_blank: "Select Definition"} %></td>
+      <td><%= f.select :weightage,["1","2","3"],{hide_label: true, include_blank: "Select Weightage"} %></td>
     </tr>   
   </tbody>
 </table>

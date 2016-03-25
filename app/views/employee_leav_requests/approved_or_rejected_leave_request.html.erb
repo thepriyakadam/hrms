@@ -25,7 +25,7 @@
           <tbody>
             <% @pending_employee_leav_requests.try(:each) do |employee_leav_request| %>
               <tr>
-                <td><%= employee_leav_request.employee.try(:first_name)+" "+employee_leav_request.employee.try(:last_name) %></td>
+                <td><%= employee_leav_request.employee.try(:first_name) %> <%=employee_leav_request.employee.try(:last_name) %></td>
                 <td><%= employee_leav_request.leav_category.name %></td>
                 <td><%= employee_leav_request.leave_type %></td>
                 <td><%= employee_leav_request.start_date.to_date.to_s+" "+employee_leav_request.start_date.to_s %></td>
@@ -55,11 +55,10 @@
               <th>Action</th>
             </tr>
           </thead>
-
           <tbody>
             <% @first_approved_employee_leav_requests.try(:each) do |employee_leav_request| %>
               <tr>
-                <td><%= employee_leav_request.employee.try(:first_name)+" "+employee_leav_request.employee.try(:last_name) %></td>
+                <td><%= employee_leav_request.employee.try(:first_name) %> <%=employee_leav_request.employee.try(:last_name) %></td>
                 <td><%= employee_leav_request.leav_category.name %></td>
                 <td><%= employee_leav_request.leave_type %></td>
                 <td><%= employee_leav_request.start_date.to_date.to_s+" "+employee_leav_request.start_date.to_s %></td>

@@ -4,7 +4,7 @@ class PdfReportTemplate < QueryReport::ReportPdf
     pdf.text "Address: Plot D1- D4 Industrial Area,
               Dewas M.P. Pin 455001", :size => 12
     filename = "#{Rails.root}/app/assets/images/avatar.png"
-    pdf.image filename,:width => 100, :height => 100, :align => :center
+    pdf.image filename,:width => 100, :height => 100
     report.filters.each do |filter|
       filter.comparators.each do |comparator|
         pdf.text "#{comparator.name} : #{comparator.param_value}" if comparator.param_value.present?

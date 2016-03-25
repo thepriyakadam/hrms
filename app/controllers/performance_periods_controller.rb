@@ -66,6 +66,6 @@ class PerformancePeriodsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def performance_period_params
-      params.require(:performance_period).permit(:title, :start_date, :end_date, :description, :is_open)
+      params.require(:performance_period).permit(:performance_period_id,:title, :start_date, :end_date, :description, :is_open)
     end
 end

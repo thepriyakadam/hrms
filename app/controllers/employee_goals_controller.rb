@@ -15,6 +15,7 @@ class EmployeeGoalsController < ApplicationController
   # GET /employee_goals/new
   def new
     @employee_goal = EmployeeGoal.new
+    @employee_goals = EmployeeGoal.all
   end
 
   # GET /employee_goals/1/edit
@@ -28,11 +29,12 @@ class EmployeeGoalsController < ApplicationController
     @employee_goal = EmployeeGoal.new(employee_goal_params)
 
       if @employee_goal.save
-        flash[:notice] = "Employee goal was successfully created"
-        redirect_to employee_goals_path
+        @flag = true
+        @employee_goal = EmployeeGoal.new
+        @employee_goals = EmployeeGoal.all
+        redirect_to new_employee_goal_path
       else
-        flash[:alert] = "Employee goal was not successfully created"
-        render :new
+        @flag = false
       end
   end
 
@@ -40,12 +42,11 @@ class EmployeeGoalsController < ApplicationController
   # PATCH/PUT /employee_goals/1.json
   def update
       if @employee_goal.update(employee_goal_params)
-        flash[:notice]="Employee Updated successfully"
-        redirect_to employee_goals_path 
+         @flag = true
+        @employee_goal = EmployeeGoal.new
+        @employee_goals = EmployeeGoal.all
       else
-        flash[:alert]="Employee Not Updated successfully"
-        redirect_to new_
-        employee_goal_path
+        @flag = false
       end
   end
 
@@ -53,45 +54,11 @@ class EmployeeGoalsController < ApplicationController
   # DELETE /employee_goals/1.json
   def destroy
     @employee_goal.destroy
-    respond_to do |format|
-      format.html { redirect_to employee_goals_url, notice: 'Employee goal was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+      flash[:notice]='Deleted'
+      redirect_to new_employee_goal_path
+  
   end
   
-  def appraisee
-    @employee_goals = EmployeeGoal.all
-  end
-
-  def appraisee_create
-    employee_goal_ids = params[:employee_goal_id]
-    aligns = params[:allign_to_supervisor]
-    comments = params[:appraisee_comment]
-    ratings = params[:appraisee_rating]
-    final = employee_goal_ids.zip(aligns,comments,ratings)
-
-    final.each do |e,a,c,r|
-      emp = EmployeeGoal.find(e)
-      emp.update(allign_to_supervisor: a, appraisee_comment: c, appraisee_rating: r, appraisee_id: params[:appraisee_id])
-    end
-    redirect_to appraisee_employee_goals_path
-  end
-
-  def appraiser
-    @employee_goals = EmployeeGoal.all
-  end
-
-  def appraiser_create
-    employee_goal_ids = params[:employee_goal_id]
-    comments = params[:appraiser_comment]
-    ratings = params[:appraiser_rating]
-    final = employee_goal_ids.zip(comments,ratings)
-    final.each do |e,c,r|
-      emp = EmployeeGoal.find(e)
-      emp.update(appraiser_comment: c, appraiser_rating: r, appraiser_id: params[:appraiser_id])
-    end
-    redirect_to appraiser_employee_goals_path
-  end
   
   private
     # Use callbacks to share common setup or constraints between actions.

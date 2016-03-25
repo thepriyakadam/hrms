@@ -2,7 +2,9 @@ class GoalRatingSheet < ActiveRecord::Base
   belongs_to :appraisee, class_name: "Employee"
   belongs_to :appraiser, class_name: "Employee"
   belongs_to :employee_goal
-  belongs_to :performance_period
+  belongs_to :performance_period 
+  belongs_to :period,class_name: 'PerformancePeriod'
+
  
  #  validate :validate_allign_to_supervisor
  #  def validate_allign_to_supervisor

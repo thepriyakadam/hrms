@@ -104,6 +104,6 @@ class EmployeeAttributesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def employee_attribute_params
-      params.require(:employee_attribute).permit(:appraisee_id, :appraiser_id, :attribute_master_id, :definition_id, :weightage, :appraisee_comment, :appraisee_rating, :appraiser_comment, :appraiser_rating)
+      params.require(:employee_attribute).permit(:performance_period_id,:appraisee_id, :appraiser_id, :attribute_master_id, :definition_id, :weightage, :appraisee_comment, :appraisee_rating, :appraiser_comment, :appraiser_rating)
     end
 end

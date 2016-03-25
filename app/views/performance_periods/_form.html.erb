@@ -8,7 +8,13 @@
       <div class="row">
         <div class="col-sm-3">
           <div class="field">
-            <%= f.text_field :title %>
+            <%= f.text_field :title,label: 'Period' ,placeholder: 'Eg: H1' %>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.text_field :description,label: 'Description'  %>
           </div>
         </div>
 
@@ -19,7 +25,7 @@
               <div class="input-group-addon">
                 <i class="fa fa-calendar"></i>
               </div>
-              <%= f.text_field :start_date, hide_label: true, class: 'birth_date'%>
+              <%= f.text_field :start_date, hide_label: true, class: 'birth_date1'%>
             </div>
           </div>
         </div>
@@ -31,22 +37,18 @@
               <div class="input-group-addon">
                 <i class="fa fa-calendar"></i>
               </div>
-              <%= f.text_field :end_date, hide_label: true, class: 'birth_date'%>
+              <%= f.text_field :end_date, hide_label: true, class: 'birth_date1'%>
             </div>
           </div>
         </div>
 
-        <div class="col-sm-3">
-          <div class="field">
-            <%= f.text_field :description %>
-          </div>
-        </div>
+        
       </div>
 
       <div class="row">
         <div class="col-sm-3">
           <div class="field">
-            <%= f.select :is_open,options_for_select([['Yes',true],['No',false]]),include_blank: "Is Open" %>
+            <%= f.check_box :is_open,include_blank: "Is Open",label: 'Active' %>
           </div>
         </div>
       </div>

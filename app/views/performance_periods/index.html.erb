@@ -10,10 +10,10 @@
       <thead>
         <tr>
           <th>Title</th>
+          <th>Description</th>
           <th>Start date</th>
           <th>End date</th>
-          <th>Description</th>
-          <th>Is open</th>
+          <th>Status</th>
           <th>Action</th>
         </tr>
       </thead>
@@ -22,9 +22,9 @@
         <% @performance_periods.each do |performance_period| %>
           <tr>
             <td><%= performance_period.title %></td>
+            <td><%= performance_period.description %></td>
             <td><%= performance_period.start_date %></td>
             <td><%= performance_period.end_date %></td>
-            <td><%= performance_period.description %></td>
             <td><%= performance_period.is_open %></td>
             <td>
             <%= link_to '', edit_performance_period_path(performance_period),class: 'btn btn-xs btn-success fa fa-edit' %>

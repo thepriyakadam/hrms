@@ -166,18 +166,48 @@ class EmployeeLeavRequestsController < ApplicationController
     @employee_leav_requests = @employee.employee_leav_requests
   end
 
-  def search_by_date
+  def search_by_start_date
     reporter(@employee_leav_requests,template_class: PdfReportTemplate) do
       filter :start_date, type: :date
       column(:manual_employee_code,sortable: true) { |employee_leav_request| employee_leav_request.employee.try(:manual_employee_code) }
       column(:date_range,sortable: true) { |employee_leav_request| employee_leav_request.date_range }
-      column(:start_date,sortable: true) { |employee_leav_request| employee_leav_request.start_date }
-      column(:end_date,sortable: true) { |employee_leav_request| employee_leav_request.end_date }
+      column(:start_date,sortable: true) { |employee_leav_request| employee_leav_request.start_date.to_date }
+      column(:end_date,sortable: true) { |employee_leav_request| employee_leav_request.end_date.to_date }
       column(:leav_category_id,sortable: true) { |employee_leav_request| employee_leav_request.leav_category.try(:name) }
       column(:leave_type,sortable: true) { |employee_leav_request| employee_leav_request.leave_type }
       column(:reason,sortable: true) { |employee_leav_request| employee_leav_request.reason }
     end
   end
+
+  def search_by_end_date
+    reporter(@employee_leav_requests,template_class: PdfReportTemplate) do
+      filter :end_date, type: :date
+      column(:manual_employee_code,sortable: true) { |employee_leav_request| employee_leav_request.employee.try(:manual_employee_code) }
+      column(:date_range,sortable: true) { |employee_leav_request| employee_leav_request.date_range }
+      column(:start_date,sortable: true) { |employee_leav_request| employee_leav_request.start_date.to_date }
+      column(:end_date,sortable: true) { |employee_leav_request| employee_leav_request.end_date.to_date }
+      column(:leav_category_id,sortable: true) { |employee_leav_request| employee_leav_request.leav_category.try(:name) }
+      column(:leave_type,sortable: true) { |employee_leav_request| employee_leav_request.leave_type }
+      column(:reason,sortable: true) { |employee_leav_request| employee_leav_request.reason }
+    end
+  end
+  
+  def search_by_is_pending_date
+    reporter(@employee_leav_requests,template_class: PdfReportTemplate) do
+      filter :current_status, type: :string
+      column(:manual_employee_code,sortable: true) { |employee_leav_request| employee_leav_request.employee.try(:manual_employee_code) }
+      column(:employee_id,sortable: true) { |employee_leav_request| full_name(employee_leav_request.employee) }
+      column :is_pending
+      column :is_cancelled
+      column :is_first_approved
+      column :is_second_approved
+      column :is_first_rejected
+      column :is_second_rejected
+      column :current_status
+    end
+  end
+
+  
 
   private
     # Use callbacks to share common setup or constraints between actions.

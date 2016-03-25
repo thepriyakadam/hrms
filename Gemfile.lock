@@ -70,6 +70,8 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.10.0)
+    datagrid (1.4.2)
+      rails (>= 3.2.22.2)
     debug_inspector (0.0.2)
     devise (3.5.2)
       bcrypt (~> 3.0)
@@ -122,6 +124,7 @@ GEM
     nokogiri (1.6.6.2)
       mini_portile (~> 0.6.0)
     orm_adapter (0.5.0)
+    pagination (0.3.3)
     paperclip (4.3.1)
       activemodel (>= 3.2.0)
       activesupport (>= 3.2.0)
@@ -264,6 +267,7 @@ DEPENDENCIES
   city-state
   coderay
   coffee-rails (~> 4.1.0)
+  datagrid (~> 1.4, >= 1.4.1)
   devise
   jbuilder (~> 2.0)
   jquery-rails
@@ -272,6 +276,7 @@ DEPENDENCIES
   kaminari (~> 0.16.3)
   letter_opener
   local-subdomain
+  pagination (~> 0.3.3)
   paperclip (~> 4.3)
   protokoll
   query_report (~> 1.2, >= 1.2.1)

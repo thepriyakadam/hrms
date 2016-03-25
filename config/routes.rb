@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  
+  resources :employee_leav_request_reports, :only => [:index]
 
   resources :capture_resumes
   resources :capture_resumes
@@ -225,7 +227,9 @@ end
       get :from_hr
       get :hr_view_request
       get :employee_history_with_current_leave
-      get :search_by_date
+      get :search_by_start_date
+      get :search_by_end_date
+      get :search_by_is_pending_date
     end
   end
   resources :company_leavs

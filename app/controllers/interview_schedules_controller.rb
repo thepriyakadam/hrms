@@ -77,7 +77,8 @@ class InterviewSchedulesController < ApplicationController
       column :post_title,sortable: true
       column :interview_type,sortable: true
       column :interview_status,sortable: true
-  end
+    end
+  end 
 
   private
     # Use callbacks to share common setup or constraints between actions.

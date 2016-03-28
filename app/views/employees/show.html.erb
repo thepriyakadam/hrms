@@ -14,17 +14,14 @@
 	
 		<%= link_to 'Award Details',ajax_award_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-primary ',remote:true%>
 	
-		<%= link_to 'Physical Details',ajax_physical_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-primary ',remote:true%>
+		<%= link_to 'Physical Details',ajax_physical_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-primary',remote:true%>
 	
 		<%= link_to 'Family Details',ajax_family_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-primary ',remote:true%>
 
+		<%= link_to 'Payroll',ajax_setup_payroll_employees_path(id: @employee.id),class: 'btn btn-sm btn-primary ',remote:true %>
 <div id="message">
-	
 </div>
 
 <div id='info'>
 <%= render 'show_detail'%>
 </div>
-
-    
-    

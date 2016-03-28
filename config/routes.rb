@@ -148,7 +148,11 @@ Rails.application.routes.draw do
   #     get :all_employee_monthly_salary
   #   end
   # end
-  resources :salary_components
+  resources :salary_components do
+    collection do
+      post :create_employee_template
+    end
+  end
   resources :universities
   resources :degree_streams
   resources :degree_types
@@ -245,6 +249,7 @@ Rails.application.routes.draw do
       get :ajax_family_detail
       get :ajax_new_family
       get :ajax_show_textbox
+      get :ajax_setup_payroll
       get :manager
       get :transfer_form
       post :transfer_employee

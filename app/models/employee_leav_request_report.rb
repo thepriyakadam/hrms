@@ -1,4 +1,6 @@
+
 class EmployeeLeavRequestReport
+
   include Datagrid
 
   #
@@ -21,7 +23,8 @@ class EmployeeLeavRequestReport
   filter(:no_of_day, :integer, :range => true)
   filter(:condition, :dynamic, :header => "Dynamic condition")
   filter(:current_status, :enum, :select => EmployeeLeavRequest::CURRENT_STATUSS.map {|r| [r.humanize, r]})
- 
+  # filter(:current_status, :integer)
+
   # filter(:current_status, :enum, 
   #   :select => lambda {EmployeeLeavRequest.all.map {|p| [p.current_status.id]}},
   #   :multiple => true,

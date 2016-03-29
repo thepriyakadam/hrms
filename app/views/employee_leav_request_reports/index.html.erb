@@ -1,5 +1,7 @@
-<h3>Employee Leave Request Report</h3>
-
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Employee Leave Report</h3>
+  </div><!-- /.box-header -->
 <div class="right">
   <%= render :partial => "shared/source", :object => @employee_leav_request_report %>
 </div>
@@ -9,3 +11,6 @@
   <%= datagrid_table(@employee_leav_request_report) %>
   <%= paginate @employee_leav_request_report.assets %>
 </div>
+
+</div><!-- /.box-body -->
+</div><!-- /.box -->

@@ -9,9 +9,6 @@ class EmployeeLeavRequestReportsController < ApplicationController
     end
   end
   
-  def employee_leav_request_reports
-    
-  end
-
+  
 end
 

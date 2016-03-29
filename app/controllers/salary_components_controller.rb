@@ -31,9 +31,9 @@ class SalaryComponentsController < ApplicationController
   # PATCH/PUT /salary_components/1
   # PATCH/PUT /salary_components/1.json
   def update
-        @salary_component.update(salary_component_params)
-        @salary_components = SalaryComponent.all
-        @salary_component = SalaryComponent.new   
+    @salary_component.update(salary_component_params)
+    @salary_components = SalaryComponent.all
+    @salary_component = SalaryComponent.new   
   end
 
   # DELETE /salary_components/1
@@ -41,6 +41,10 @@ class SalaryComponentsController < ApplicationController
   def destroy
     @salary_component.destroy
     @salary_components = SalaryComponent.all
+  end
+
+  def create_employee_template
+    
   end
 
   private

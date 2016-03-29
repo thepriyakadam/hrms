@@ -37,16 +37,16 @@
         <th><strong>Street:</strong></th>
         <td><%= @capture_resume.street %></td>
 
-        <th><strong>Country:</strong></th>
-        <td><%= @capture_resume.country %></td>
+        <th><strong>Country</strong></th>
+        <td><%= @capture_resume.country.try(:name) %></td>
       </tr>
-
+      
       <tr>
-        <th><strong>State:</strong></th>
-        <td><%= @capture_resume.state %></td>
+        <th><strong>State</strong></th>
+        <td><%= @capture_resume.state.try(:name) %></td>
 
-        <th><strong>District:</strong></th>
-        <td><%= @capture_resume.district %></td>
+        <th><strong>District</strong></th>
+        <td><%= @capture_resume.district.try(:name) %></td>
       </tr>
 
       <tr>

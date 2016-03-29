@@ -5,7 +5,6 @@ class VacancyMaster < ActiveRecord::Base
   validates :department_name, :presence => true
   validates :educational_qualification, :presence => true
   validates :no_of_position, :presence => true
-  validates :budget, :presence => true
   validates :vacancy_post_date, :presence => true
 
   def self.to_csv(options = {})

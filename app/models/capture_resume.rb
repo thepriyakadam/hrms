@@ -1,5 +1,9 @@
 class CaptureResume < ActiveRecord::Base
-   
+  
+  belongs_to :country
+  belongs_to :state
+  belongs_to :district
+  
   validates :name_of_candidate, :presence => true
   validates :post_applied, :presence => true
   validates :mode_of_application, :presence => true

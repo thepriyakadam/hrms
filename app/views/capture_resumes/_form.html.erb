@@ -77,14 +77,16 @@
 
     <div class="col-sm-3">
       <div class="form-group required">
-       <%=f.select :country, all_countries,{include_blank: "Please Select Country"},{onchange:"var a={id:$(this).val(), form : 'employee'}; $.get('/companies/collect_states',a,function(response){});"}%>
+       <%=f.select :country_id, all_countries,{include_blank: "Please Select Country"},{onchange:"var a={id:$(this).val(), form : 'capture_resume'}; $.get('/companies/collect_states',a,function(response){});"}%>
       </div>
     </div>
   
     <div class="col-sm-3">
       <div class="field">
         <div class="form-group required">
-        <%= render 'companies/state_dropdown' %> 
+        <div id="states">
+                <%= render 'companies/state_dropdown' %> 
+            </div>
         </div>
       </div>
     </div>

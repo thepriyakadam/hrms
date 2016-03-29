@@ -83,6 +83,7 @@ class EmployeeLeavRequestsController < ApplicationController
           @employee_leav_request.leave_status_records.build(change_status_employee_id: current_user.employee_id,status: "Pending", change_date: Date.today)
           respond_to do |format|
             if @employee_leav_request.save
+              @employee_leav_request.minus_leave(@employee_leav_request)
               LeaveRequestMailer.pending(@employee_leav_request).deliver_now
               format.html { redirect_to employee_leav_requests_path, notice: 'Employee leav request was successfully created.' }
               format.json { render :show, status: :created, location: @employee_leav_request }

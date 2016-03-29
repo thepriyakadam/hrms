@@ -4,7 +4,6 @@
     <div class="pull-right">
       <%= link_to "Create Company", new_company_path, class: 'btn btn-sm btn-primary' %> 
     </div>
-    
   </div><!-- /.box-header -->
   <div class="box-body">
   <div id="comments">
@@ -29,7 +28,7 @@
           <td><%= company.contact_no %></td>
           <td><%= company.web_site %></td>
           <td>
-            <%= link_to '', company,class: 'btn btn-sm btn-default fa fa-eye' %>
+            <%= link_to '', company,class: 'btn btn-sm btn-default fa fa-eye',:target => "_blank" %>
           </td>
         </tr>
       <% end %>

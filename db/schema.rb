@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160317121539) do
+ActiveRecord::Schema.define(version: 20160330043527) do
 
   create_table "advance_salaries", force: :cascade do |t|
     t.integer  "employee_id"
@@ -954,6 +954,7 @@ ActiveRecord::Schema.define(version: 20160317121539) do
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
     t.integer  "leav_category_id"
+    t.boolean  "is_cancel_after_approve"
   end
 
   add_index "particular_leave_records", ["employee_id"], name: "index_particular_leave_records_on_employee_id"
@@ -1072,8 +1073,10 @@ ActiveRecord::Schema.define(version: 20160317121539) do
     t.decimal  "annual_amount",              precision: 15, scale: 2
     t.datetime "created_at",                                          null: false
     t.datetime "updated_at",                                          null: false
+    t.integer  "parent_id"
   end
 
+  add_index "salary_component_templates", ["parent_id"], name: "index_salary_component_templates_on_parent_id"
   add_index "salary_component_templates", ["parent_salary_component_id"], name: "index_salary_component_templates_on_parent_salary_component_id"
   add_index "salary_component_templates", ["salary_component_id"], name: "index_salary_component_templates_on_salary_component_id"
   add_index "salary_component_templates", ["salary_template_id"], name: "index_salary_component_templates_on_salary_template_id"

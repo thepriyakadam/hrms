@@ -215,6 +215,10 @@ class EmployeesController < ApplicationController
     @managers = ReportingMaster.all
   end
 
+  def ajax_setup_payroll
+    @salary_components = SalaryComponent.first(5)
+  end
+
   def update_manager
     @employee = Employee.find(params[:id])
     @employee.manager_id = params[:employee][:manager_id]

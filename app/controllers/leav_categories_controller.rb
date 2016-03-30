@@ -16,7 +16,7 @@ class LeavCategoriesController < ApplicationController
     respond_to do |format|
     if @leav_category.save
     @leav_category = LeavCategory.new
-     format.js { @flag = true }
+      format.js { @flag = true }
       else
         flash.now[:alert] = "Leave Type Already Exist."
          format.js { @flag = false }
@@ -43,6 +43,6 @@ class LeavCategoriesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def leav_category_params
-      params.require(:leav_category).permit(:name)
+      params.require(:leav_category).permit(:code, :name, :description)
     end
 end

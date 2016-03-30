@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160317121539) do
+ActiveRecord::Schema.define(version: 20160330043527) do
 
   create_table "advance_salaries", force: :cascade do |t|
     t.integer  "employee_id"
@@ -80,6 +80,16 @@ ActiveRecord::Schema.define(version: 20160317121539) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "bonus", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.decimal  "bonus_amount", precision: 15, scale: 2, default: 0.0
+    t.string   "bouns_date"
+    t.datetime "created_at",                                          null: false
+    t.datetime "updated_at",                                          null: false
+  end
+
+  add_index "bonus", ["employee_id"], name: "index_bonus_on_employee_id"
 
   create_table "bonus_employees", force: :cascade do |t|
     t.integer  "employee_id"
@@ -944,6 +954,7 @@ ActiveRecord::Schema.define(version: 20160317121539) do
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
     t.integer  "leav_category_id"
+    t.boolean  "is_cancel_after_approve"
   end
 
   add_index "particular_leave_records", ["employee_id"], name: "index_particular_leave_records_on_employee_id"
@@ -960,17 +971,14 @@ ActiveRecord::Schema.define(version: 20160317121539) do
 
   create_table "pf_masters", force: :cascade do |t|
     t.boolean  "is_pf"
-    t.integer  "salary_component_id"
-    t.decimal  "percentage",          precision: 4,  scale: 2
+    t.decimal  "percentage",     precision: 4,  scale: 2
     t.date     "date_effective"
-    t.decimal  "min_limit",           precision: 15, scale: 2
+    t.decimal  "min_limit",      precision: 15, scale: 2
     t.string   "base_component"
     t.boolean  "is_active"
-    t.datetime "created_at",                                   null: false
-    t.datetime "updated_at",                                   null: false
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
   end
-
-  add_index "pf_masters", ["salary_component_id"], name: "index_pf_masters_on_salary_component_id"
 
   create_table "professional_taxes", force: :cascade do |t|
     t.string   "is_pt"
@@ -1065,8 +1073,10 @@ ActiveRecord::Schema.define(version: 20160317121539) do
     t.decimal  "annual_amount",              precision: 15, scale: 2
     t.datetime "created_at",                                          null: false
     t.datetime "updated_at",                                          null: false
+    t.integer  "parent_id"
   end
 
+  add_index "salary_component_templates", ["parent_id"], name: "index_salary_component_templates_on_parent_id"
   add_index "salary_component_templates", ["parent_salary_component_id"], name: "index_salary_component_templates_on_parent_salary_component_id"
   add_index "salary_component_templates", ["salary_component_id"], name: "index_salary_component_templates_on_salary_component_id"
   add_index "salary_component_templates", ["salary_template_id"], name: "index_salary_component_templates_on_salary_template_id"

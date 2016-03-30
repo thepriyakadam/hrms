@@ -24,6 +24,10 @@ class SalaryComponentTemplatesController < ApplicationController
 
   def create
     @salary_component_template = SalaryComponentTemplate.new(salary_component_template_params) 
+    parent = SalaryComponentTemplate.where(salary_template_id: @salary_component_template.salary_template_id,salary_component_id: @salary_component_template.parent_salary_component_id).take
+    unless parent.nil?
+      @salary_component_template.parent_id =  parent.id
+    end
     @salary_component_templates = SalaryComponentTemplate.where(salary_template_id: @salary_component_template.salary_template_id)
     if @salary_component_template.save
       @flag = true

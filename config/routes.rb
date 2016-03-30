@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
 
+  resources :particular_leave_records do
+    collection do
+      get :show_leave_record
+    end
+  end
+
   resources :leave_c_offs
   resources :overtime_month_records
   resources :overtime_daily_records
@@ -42,6 +48,7 @@ Rails.application.routes.draw do
   resources :reporting_masters
   resources :leave_status_records do
     collection do
+      get :cancel_after_approve
     end
     member do
       get :cancel

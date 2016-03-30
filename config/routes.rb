@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   
+  resources :week_offs
   resources :employee_leav_request_reports, :only => [:index]
 
   resources :capture_resumes

@@ -404,19 +404,16 @@ class SalaryslipsController < ApplicationController
   def show_unsaved_employee
     @month = params[:month]
     @year = params[:year]
-    @employees = []
-    #@temp = Workingday.joins("LEFT JOIN salaryslips on workingdays.employee_id = salaryslips.employee_id where salaryslips.employee_id is null")
-    #@workingdays = @temp.where(workingday: [month_name: @month,year: @year]).pluck(:employee_id)
-    @workingdays = Workingday.joins("LEFT JOIN salaryslips on workingdays.employee_id = salaryslips.employee_id where salaryslips.employee_id is null and workingdays.month_name = '#{params[:month]}' and workingdays.year = '#{params[:year]}'").pluck(:employee_id)
-    @employees = Workingday.find_by_role(@workingdays, current_user)
+    @workingdays = Workingday.where(month_name: @month, year: @year).pluck(:employee_id)
+    @salaryslips = Salaryslip.where(month: @month, year: @year.to_s).pluck(:employee_id)
+    emp_ids = @workingdays - @salaryslips
+    @employees = Employee.where(id: emp_ids)
   end
 
   def save_all_data
     employee_ids = params[:employee_ids]
     @month = params[:month]
     @year = params[:year]
-    # @salaryslip_array = []
-    # @salaryslip_component_array = []
     @instalment_array = []
     if employee_ids.nil? or employee_ids.empty?
       flash[:alert] = "Please select employees."
@@ -427,8 +424,8 @@ class SalaryslipsController < ApplicationController
         @instalment_array = []
         @salaryslip_component_array = []
         @employee = Employee.find(eid)
-        working_day = Workingday.find_by_employee_id(eid)
-        
+        working_day = Workingday.where(employee_id: eid, month_name: @month, year: @year).take
+
         current_template = EmployeeTemplate.where("employee_id = ? and is_active = ?",@employee.id,true).take
         unless current_template.nil?  
           addable_salary_items = current_template.employee_salary_templates.where("is_deducted = ?",false)

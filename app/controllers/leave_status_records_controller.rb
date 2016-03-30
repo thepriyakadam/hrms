@@ -157,6 +157,24 @@ class LeaveStatusRecordsController < ApplicationController
     end
   end
 
+  def cancel_after_approve
+    @particular_leave_record = ParticularLeaveRecord.find(params[:format])
+    @particular_leave_record.is_cancel_after_approve = true
+
+    @employee_leav_balance = EmployeeLeavBalance.where(employee_id: @particular_leave_record.employee_id, leav_category_id: @particular_leave_record.leav_category_id).take
+    if @particular_leave_record.is_full
+      @employee_leav_balance.no_of_leave = @employee_leav_balance.no_of_leave.to_f + 1
+    else
+      @employee_leav_balance.no_of_leave = @employee_leav_balance.no_of_leave.to_f + 0.5
+    end
+    ActiveRecord::Base.transaction do
+      @employee_leav_balance.save
+      @particular_leave_record.save
+    end
+    flash[:notice] = "Leave Cancelled Successfully."
+    redirect_to show_leave_record_particular_leave_records_path(format: @particular_leave_record.employee_leav_request_id)
+  end
+
   private
 
   def set_employee_leav_request

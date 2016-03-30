@@ -71,7 +71,7 @@ class SkillsetsController < ApplicationController
   def destroy
     @skillset.destroy
     respond_to do |format|
-      format.html { redirect_to skillsets_url, notice: 'Skillset was successfully destroyed.' }
+      format.html { redirect_to employees_url, notice: 'Skillset was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

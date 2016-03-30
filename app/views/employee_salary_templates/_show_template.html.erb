@@ -104,7 +104,7 @@
      yearRange: '-200:-0',
      dateFormat: 'dd-mm-yy' });
   });
-
+  
   <% @employee_salary_templates.each do |item| %>
   
     $(function(){
@@ -237,7 +237,6 @@
       }
 
       function calculate_difference(){
-        console.log("----------------------------------------");
         var monthly_amount = parseFloat($('#monthly_amount_<%= item.try(:salary_component_id) %>').val()); 
         
         var old_monthly_amount = parseFloat($('#old_monthly_amount_<%= item.try(:salary_component_id) %>').val());
@@ -253,11 +252,4 @@
       }
     });
   <% end %>
-
-  $(function() {
-    $('#batches').multiselect({
-    includeSelectAllOption: true,
-    maxHeight: 200
-    });
-  });
 </script>

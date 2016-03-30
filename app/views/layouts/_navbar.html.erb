@@ -17,7 +17,8 @@
             <h3 class="profile-username text-center"></h3>
               <p>
                 <% if current_user.class == Member %>
-                  ID-<%= current_user.manual_member_code %>
+                  <%= current_user.employee.try(:first_name) %> <%= current_user.employee.try(:last_name) %><br>
+                  <small> <%= current_user.employee.joining_detail.employee_designation.try(:name) %></small>
                 <%else%>
                   <%= current_user.subdomain %> - <%= current_user.class %>
                 <%end%>
@@ -46,6 +47,8 @@
               <%= render 'sidebars/company_location' %>
             <% elsif current_user.role.name == 'Department' %>
               <%= render 'sidebars/department' %>
+            <% elsif current_user.role.name == 'Supervisor' %>
+              <%= render 'sidebars/supervisor' %>
             <% else %>
               <%= render 'sidebars/employee' %>
             <% end %>
@@ -105,14 +108,18 @@
                 <a href="javascript::;">
                   <i class="menu-icon fa fa-birthday-cake bg-red"></i>
                   <div class="menu-info">
-                    <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
-                    <p>Will be 23 on April 24th</p>
+                    <h4 class="control-sidebar-subheading"> Today's Birthday</h4>
+                    <p> Employee Name </p>
+
+                    <h4 class="control-sidebar-subheading"> Tomorrow's Birthday</h4>
+
+                    <p> Employee Name </p>
                   </div>
                 </a>
               </li>
             </ul><!-- /.control-sidebar-menu -->
 
-            <h3 class="control-sidebar-heading">Tasks Progress</h3>
+            <!-- <h3 class="control-sidebar-heading">Event's </h3>
             <ul class="control-sidebar-menu">
               <li>
                 <a href="javascript::;">
@@ -125,7 +132,7 @@
                   </div>
                 </a>
               </li>
-            </ul><!-- /.control-sidebar-menu -->
+            </ul> --><!-- /.control-sidebar-menu -->
 
           </div><!-- /.tab-pane -->
           <!-- Stats tab content -->
@@ -133,15 +140,15 @@
           <!-- Settings tab content -->
           <div class="tab-pane" id="control-sidebar-settings-tab">
             <form method="post">
-              <h3 class="control-sidebar-heading">General Settings</h3>
+              <h3 class="control-sidebar-heading">Event's</h3>
               <div class="form-group">
-                <label class="control-sidebar-subheading">
+                <!-- <label class="control-sidebar-subheading">
                   Report panel usage
                   <input type="checkbox" class="pull-right" checked>
                 </label>
                 <p>
                   Some information about this general settings option
-                </p>
+                </p> -->
               </div><!-- /.form-group -->
             </form>
           </div><!-- /.tab-pane -->

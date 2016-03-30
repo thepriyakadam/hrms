@@ -19,9 +19,15 @@
           </tr>
         <% end %>
         <tr>
-          <td>Total</td>
+          <td><strong>Total Gross</strong></td>
           <td align="right"><strong><%= @salaryslip.actual_gross_salary.round %></strong></td>
           <td align="right"><strong><%= @salaryslip.calculated_gross_salary.round %></strong></td>
+         <!--  <td></td> -->
+        </tr>
+         <tr>
+          <td><strong>Deduction Component</strong></td>
+          <td align="right"><strong></strong></td>
+          <td align="right"><strong>Amount</strong></td>
          <!--  <td></td> -->
         </tr>
         <% @deducted_salary_components.each do |item| %>
@@ -40,13 +46,13 @@
           </tr>
         <% end %>
         <tr>
-          <td>Total</td>
+          <td><strong>Total Deduction</strong></td>
           <td align="right"><strong><%= @salaryslip.actual_total_deduction.round %></strong></td>
           <td align="right"><strong><%= @salaryslip.calculated_total_deduction.round %></strong></td>
           <!-- <td></td> -->
         </tr>
         <tr>
-          <td>Net Salary</td>
+          <td><strong>Net Salary</strong></td>
           <td align="right"><strong><%= @salaryslip.actual_net_salary.round %></strong></td>
           <td align="right"><strong><%= @salaryslip.calculated_net_salary.round %></strong></td>
           <!-- <td></td> -->

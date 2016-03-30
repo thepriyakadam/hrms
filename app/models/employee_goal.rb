@@ -5,6 +5,7 @@ class EmployeeGoal < ActiveRecord::Base
   has_many :goal_rating_sheets
   belongs_to :period,class_name: 'PerformancePeriod'
   belongs_to :performance_period
+  belongs_to :employee
 
   validates :goal_perspective_id ,presence: true
   validates :goal_measure,presence: true

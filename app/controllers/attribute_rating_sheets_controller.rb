@@ -58,6 +58,7 @@ class AttributeRatingSheetsController < ApplicationController
       flash[:notice] = "Employee Attribute Created Successfully"
       end
     end
+
     redirect_to attribute_rating_sheets_path
   end
 

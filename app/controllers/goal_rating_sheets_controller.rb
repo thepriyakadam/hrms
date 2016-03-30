@@ -15,7 +15,7 @@ class GoalRatingSheetsController < ApplicationController
 
   # GET /goal_rating_sheets/new
   def new
-
+    
    @goal_rating_sheet = GoalRatingSheet.new
     @employee_goals = []
     @goal_rating_sheets = GoalRatingSheet.all

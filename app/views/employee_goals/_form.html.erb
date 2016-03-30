@@ -1,12 +1,10 @@
-<div class="box box-default">
-  
-  <div class="box-body">
-<%= bootstrap_form_for(@employee_goal,html: {id: "employee_goal"}) do |f| %>
+
+<%= bootstrap_form_for(@employee_goal,html: {id: "employee_goal"},remote: true) do |f| %>
 
   <div class="row">
     <div class="col-sm-3">
       <div class="field">
-        <%= f.select :period_id,all_period_type,{label: 'Period ',include_blank: " Select Period"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
+        <%= f.select :period_id,all_period_type,{label: 'Period ',include_blank: " Select Period"} %>
       </div>
     </div>
   </div>
@@ -29,7 +27,9 @@
       <td><%= f.text_field :target,{hide_label: true, placeholder: 'eg:100%'} %></td>
       <td><%= f.select :goal_weightage,["1","2","3","4","5"],{hide_label: true, include_blank: "Select Goal Weightage"} %></td>
       <td><%= f.select :difficulty_level,["1","2","3"],{hide_label: true, include_blank: "Select Difficulty Level"} %></td>
-      <td><%= f.select :allign_to_supervisor,options_for_select([['Yes',true],['No',false]]),{hide_label: true,include_blank: "Allign To Supervisor"} %></td>
+      <td><%= f.select :allign_to_supervisor,["Yes","No"],{hide_label: true,include_blank: "Allign To Supervisor"} %></td>
+
+        <%= f.hidden_field :employee_id,value: @employee.id %>
     </tr>   
   </tbody>
 </table>
@@ -40,8 +40,7 @@
       </div>
     </div>
   </div>
-  </div>
-</div>
+  
 <% end %>
 
 <script type="text/javascript">

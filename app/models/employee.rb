@@ -30,6 +30,7 @@ class Employee < ActiveRecord::Base
   has_many :society_member_ships
   has_many :monthly_expences
   has_many :bonus_employees
+  has_many :employee_goals
   has_one :employee_shift
   has_one :member
   has_one :employee_bank_detail
@@ -48,6 +49,7 @@ class Employee < ActiveRecord::Base
 
   has_many :appraiser_goal_rating_sheets, class_name: "Employee",
                           foreign_key: "appraiser_id"
+
 
   before_create :add_department
 

@@ -23,7 +23,12 @@ Rails.application.routes.draw do
       post :appraiser_create
     end
   end
-  resources :employee_goals
+  resources :employee_goals do
+    collection do
+      get :subordinate_list
+      get :is_confirm
+    end
+  end
   
   resources :definitions
   resources :attribute_masters

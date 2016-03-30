@@ -1,8 +1,10 @@
 class VacancyMaster < ActiveRecord::Base
+  
+  belongs_to :department
+  belongs_to :employee_designation
+  belongs_to :company_location
 
-  validates :job_title, :presence => true
   validates :vacancy_name, :presence => true
-  validates :department_name, :presence => true
   validates :educational_qualification, :presence => true
   validates :no_of_position, :presence => true
   validates :vacancy_post_date, :presence => true

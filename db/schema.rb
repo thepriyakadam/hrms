@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160329110359) do
+ActiveRecord::Schema.define(version: 20160330095452) do
 
   create_table "advance_salaries", force: :cascade do |t|
     t.integer  "employee_id"
@@ -1240,17 +1240,22 @@ ActiveRecord::Schema.define(version: 20160329110359) do
   end
 
   create_table "vacancy_masters", force: :cascade do |t|
-    t.string   "job_title"
     t.string   "vacancy_name"
     t.string   "educational_qualification"
     t.integer  "no_of_position"
     t.text     "description"
     t.date     "vacancy_post_date"
-    t.string   "department_name"
     t.string   "budget"
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
+    t.integer  "department_id"
+    t.integer  "employee_designation_id"
+    t.integer  "company_location_id"
   end
+
+  add_index "vacancy_masters", ["company_location_id"], name: "index_vacancy_masters_on_company_location_id"
+  add_index "vacancy_masters", ["department_id"], name: "index_vacancy_masters_on_department_id"
+  add_index "vacancy_masters", ["employee_designation_id"], name: "index_vacancy_masters_on_employee_designation_id"
 
   create_table "well_faires", force: :cascade do |t|
     t.string   "month"

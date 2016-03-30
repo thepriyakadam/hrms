@@ -7,17 +7,19 @@ class VacancyMastersController < ApplicationController
 
   def index
     @vacancy_masters = VacancyMaster.all
-    @vacancy_masters = VacancyMaster.order(:vacancy_name)
-    respond_to do |format|
-    format.html
-    format.csv { send_data @vacancy_masters.to_csv }
-    format.xls 
-  end
+    if current_user.class == Member
+      if current_user.role.name == "Department"
+        @vacancy_masters = VacancyMaster.where(department_id:current_user.department_id)
+      elsif current_user.role.name == "CompanyLocation"
+        @vacancy_masters = VacancyMaster.where(company_location_id: current_user.company_location_id)
+      end
+    end
   end
 
   # GET /vacancy_masters/1
   # GET /vacancy_masters/1.json
   def show
+    
   end
 
   # GET /vacancy_masters/new
@@ -38,7 +40,8 @@ end
   # POST /vacancy_masters.json
   def create
     @vacancy_master = VacancyMaster.new(vacancy_master_params)
-
+    @vacancy = Department.find(@vacancy_master.department_id)
+    @vacancy_master.company_location_id=@vacancy.company_location_id
     respond_to do |format|
       if @vacancy_master.save
         format.html { redirect_to @vacancy_master, notice: 'Vacancy master was successfully created.' }
@@ -82,6 +85,6 @@ end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def vacancy_master_params
-      params.require(:vacancy_master).permit(:job_title, :vacancy_name, :educational_qualification, :no_of_position, :description, :vacancy_post_date, :department_name, :budget)
+      params.require(:vacancy_master).permit(:employee_designation_id,:department_id, :company_location_id, :vacancy_name, :educational_qualification, :no_of_position, :description, :vacancy_post_date, :budget)
     end
 end

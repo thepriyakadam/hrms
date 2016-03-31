@@ -1,0 +1,65 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Performance Period</h3>
+  </div>
+  <div class="box-body">
+    <%= bootstrap_form_for(@performance_period) do |f| %>
+  
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.text_field :title,label: 'Period' ,placeholder: 'Eg: H1' %>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.text_field :description,label: 'Description'  %>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <label>From Date: </label>
+          <div class="field">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <%= f.text_field :start_date, hide_label: true, class: 'birth_date1'%>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <label>To Date: </label>
+          <div class="field">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <%= f.text_field :end_date, hide_label: true, class: 'birth_date1'%>
+            </div>
+          </div>
+        </div>
+
+        
+      </div>
+
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.check_box :is_open,include_blank: "Is Open",label: 'Active' %>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="actions">
+            <%= f.submit "Create Period", class: "btn btn-primary btn-sm" %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

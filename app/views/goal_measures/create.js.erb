@@ -1,0 +1,6 @@
+<%if @flag %>
+$("#form").html("<%= j render 'form' %>");
+$("#goal_measure_list").html("<%= j render 'goal_measure_list' %>");
+<%else%>
+  $("#form").html("<%= j render 'form' %>");
+<%end%>

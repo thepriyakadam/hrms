@@ -85,6 +85,12 @@ $(function(){
   yearRange: '-100:-0',
   dateFormat: 'dd-mm-yy' });
 
+  $('.birth_date1').datepicker({
+  changeYear:true,
+  changeMonth: true,
+  yearRange: '-100:+10',
+  dateFormat: 'dd-mm-yy' });
+
   $('.family_birth_date').datepicker({
   changeYear:true,
   changeMonth: true,

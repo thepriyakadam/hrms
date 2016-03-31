@@ -1,0 +1,143 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Appraiser Goal Rating</h3>
+  </div>
+  <div class="box-body">
+   <%= bootstrap_form_for(@goal_rating_sheet,url: {action: "appraiser_create"},html: {id: "goal_rating_sheet"}) do |f| %>
+
+  <table id="tbl" class="table table-bordered table-hover table-condensed">
+    <thead>
+      <tr>
+        <th>Period</th>
+        <th>From</th>
+        <th>To</th>
+        <th>Description</th>
+        <th>Is Open</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @performance_periods.each do |p| %>
+      <tr>
+        <td><%= p.title %></td>
+        <td><%= p.start_date %></td>
+        <td><%= p.end_date %></td>
+        <td><%= p.description %></td>
+        <td><%= p.is_open %></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+
+    <table id="tbl" class="table table-bordered table-hover table-condensed">
+    <thead>
+      <tr>
+        <th>Goal Perspctive</th>
+        <th>Goal Measure</th>
+        <th>Target</th>
+        <th>Goal Weightage</th>
+        <th>Difficulty Level</th>
+        <th>Allign To Supervisor</th>
+
+        <th>Appraisee Comment</th>
+        <th>Appraisee Rating</th>
+        <th>Appraiser Comment</th>
+        <th>Appraiser Rating</th>
+        <th>Employee Name</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @goal_rating_sheets.each do |g| %>
+        <tr>
+          <td><%= g.employee_goal.goal_perspective.name %></td>
+          <td><%= g.employee_goal.goal_measure %></td>
+          <td><%= g.employee_goal.target %></td>
+          <td><%= g.employee_goal.goal_weightage %></td>
+          <td><%= g.employee_goal.difficulty_level %></td>
+          <td><%= g.employee_goal.allign_to_supervisor %></td>
+
+          <td><%= g.appraisee_comment %></td>
+          <td><%= g.appraisee_rating %></td>
+          <td><%= text_field_tag 'appraiser_comment[]' %></td>
+          <td><%= text_field_tag 'appraiser_rating[]' %></td>
+          <td><%= g.appraisee.first_name %></td> 
+          <%= hidden_field_tag 'employee_goal_id[]',{},value: g.employee_goal.id %>
+          <%= hidden_field_tag 'goal_rating_sheet_id[]', {},value: g.id %> 
+          <%= hidden_field_tag :appraiser_id, {},value: current_user.employee_id %>  
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="actions">
+          <%= f.submit "Create Rating Sheet" ,class: "btn btn-primary btn-sm"%>
+         </div>
+        </div>
+      </div>
+    
+  </div>
+  <% end %> 
+
+
+  <table id="tbl" class="table table-bordered table-hover table-condensed">
+    <thead>
+      <tr>
+        <th>Goal Perspctive</th>
+        <th>Goal Measure</th>
+        <th>Target</th>
+        <th>Goal Weightage</th>
+        <th>Difficulty Level</th>
+        
+        <th>Allign To Supervisor</th>
+        <th>Appraisee Comment</th>
+        <th>Appraisee Rating</th>
+        <th>Appraiser Comment</th>
+        <th>Appraiser Rating</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @goal_rating_sheets.each do |g| %>
+        <tr>
+          <td><%= g.employee_goal.goal_perspective.name %></td>
+          <td><%= g.employee_goal.goal_measure %></td>
+          <td><%= g.employee_goal.target %></td>
+          <td><%= g.employee_goal.goal_weightage %></td>
+          <td><%= g.employee_goal.difficulty_level %></td>
+          <td><%= g.employee_goal.allign_to_supervisor %></td>
+
+          <td><%= g.appraisee_comment %></td>
+          <td><%= g.appraisee_rating %></td>
+          <td><%= g.appraiser_comment %></td>
+          <td><%= g.appraiser_rating %></td> 
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  </div>
+
+
+<script type="text/javascript">
+  $("#goal_rating_sheet").validate({
+    rules: {
+      "goal_rating_sheet[appraiser_comment]":{
+        required: true
+      },
+      "goal_rating_sheet[appraiser_rating]":{
+        required: true
+      }
+    },
+    messages: {
+      "goal_rating_sheet[appraiser_comment]":{
+        required: "Please Specify appraiser_comment"
+      },
+     "goal_rating_sheet[appraiser_rating]":{
+       required: "Please Specify appraiser_rating"
+      } 
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

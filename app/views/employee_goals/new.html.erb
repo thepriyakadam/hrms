@@ -1,0 +1,17 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Goal Setting</h3>
+
+    <h6><%= @employee.manual_employee_code+" "+@employee.first_name+" "+@employee.last_name %></h6>
+  </div><!-- /.box-header -->
+    <div class="box-body">
+	    <div id="form">
+	      <%= render 'form' %>
+	  	</div>
+	  	
+      <div id="employee_goal_list">
+        <%= render 'employee_goal_list' %>
+      </div>
+   	</div>
+</div>
+

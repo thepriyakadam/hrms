@@ -12,7 +12,10 @@ class EmployeeArrear < ActiveRecord::Base
 
   def self.build_objects(arrears_array,params,employee_arrear)
     arrears_array.each do |aa|
-      employee_arrear.employee_arrear_items.build(salary_component_id: params[:old_salary_component_id][aa], actual_amount: params[:difference][aa], is_deducted: params[:old_is_deducted][aa])
+      salary_component = SalaryComponent.find(params[:salary_component_id][aa])
+      unless salary_component.name == "CTC"
+        employee_arrear.employee_arrear_items.build(salary_component_id: params[:old_salary_component_id][aa], actual_amount: params[:difference][aa], is_deducted: params[:old_is_deducted][aa])
+      end
     end
     employee_arrear
   end

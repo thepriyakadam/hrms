@@ -14,9 +14,8 @@
       <th>Post applied</th>
       <th>Mode of application</th>
       <th>Date of application</th>
-      <th>Url</th>
-      <th>Fax</th>
-      <th>Street</th>
+      <th>File Name</th>
+      <th>Download Resume</th>
       <th>Action</th>
     </tr>
   </thead>
@@ -29,9 +28,8 @@
         <td><%= capture_resume.post_applied %></td>
         <td><%= capture_resume.mode_of_application %></td>
         <td><%= capture_resume.date_of_application %></td>
-        <td><%= capture_resume.url %></td>
-        <td><%= capture_resume.fax %></td>
-        <td><%= capture_resume.street %></td>
+        <td><%= capture_resume.avatar_file_name %></td>
+        <td><%= link_to 'Download', download_path(id: capture_resume.id)  %></td>
         <td>
             <%= link_to '', capture_resume,class: 'btn btn-xs btn-default fa fa-eye' %>
           <%= link_to '', edit_capture_resume_path(capture_resume),class: 'btn btn-xs btn-success fa fa-edit' %>

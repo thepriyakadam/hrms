@@ -5,4 +5,5 @@ class State < ActiveRecord::Base
   has_many :company_locations
   has_many :employees
   has_many :families
+  has_many :capture_resumes
 end

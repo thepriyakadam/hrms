@@ -14,11 +14,11 @@
     <tr>
       <th>Job title</th>
       <th>Vacancy name</th>
+      <th>Company Location</th>
       <th>Educational qualification</th>
       <th>No of position</th>
       <th>Description</th>
       <th>Vacancy post date</th>
-      <th>Department name</th>
       <th>Action</th>
     </tr>
   </thead>
@@ -26,13 +26,13 @@
   <tbody>
     <% @vacancy_masters.each do |vacancy_master| %>
       <tr>
-       <td><%= vacancy_master.job_title %></td>
+       <td><%= vacancy_master.employee_designation.name %></td>
         <td><%= vacancy_master.vacancy_name %></td>
+        <td><%= vacancy_master.department.manual_department_code+' '+vacancy_master.company_location.name+' '+vacancy_master.department.name %></td>
         <td><%= vacancy_master.educational_qualification %></td>
         <td><%= vacancy_master.no_of_position %></td>
         <td><%= vacancy_master.description %></td>
         <td><%= vacancy_master.vacancy_post_date %></td>
-        <td><%= vacancy_master.department_name %></td>
         <td>
             <%= link_to '', vacancy_master,class: 'btn btn-xs btn-default fa fa-eye' %>
           <%= link_to '', edit_vacancy_master_path(vacancy_master),class: 'btn btn-xs btn-success fa fa-edit' %>

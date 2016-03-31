@@ -1,5 +1,6 @@
 class EmployeeLeavRequestReport
   include Datagrid
+
   scope do
     EmployeeLeavRequest
   end
@@ -19,6 +20,8 @@ class EmployeeLeavRequestReport
   column(:employee_id, :mandatory => true) { |employee_leav_request| employee_leav_request.employee.try(:manual_employee_code) }
   column(:employee_id, :mandatory => true) { |employee_leav_request| employee_leav_request.employee.try(:first_name) }
   column(:employee_id, :mandatory => true) { |employee_leav_request| employee_leav_request.employee.try(:last_name) }
+  column(:id, :mandatory => true)
+  column(:employee_id, :mandatory => true) { |employee_leav_request| employee_leav_request.employee.try(:manual_employee_code) }
   column(:start_date, :mandatory => true) { |employee_leav_request| employee_leav_request.start_date.to_date }
   column(:end_date, :mandatory => true) { |employee_leav_request| employee_leav_request.end_date.to_date }
   column(:no_of_day, :mandatory => true)

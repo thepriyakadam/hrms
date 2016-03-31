@@ -1,9 +1,9 @@
+
 Rails.application.routes.draw do
   
   resources :week_offs
   resources :employee_leav_request_reports, :only => [:index]
 
-  resources :capture_resumes
   resources :capture_resumes
   resources :interview_schedules do
     collection do
@@ -15,8 +15,7 @@ end
     get :search_by_vacancy_post_date
     post :import  
     end
-end
-  
+end  
   resources :leave_c_offs do
     collection do
       get :search_by_c_off_date
@@ -28,7 +27,9 @@ end
       get :show_leave_record
     end
   end
-
+  
+  match 'capture_resumes/:id/download/:id' => 'capture_resumes#download', :via => [:get], :as => :download
+  
   resources :leave_c_offs
   resources :overtime_month_records
   resources :overtime_daily_records

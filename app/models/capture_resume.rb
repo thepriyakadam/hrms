@@ -15,9 +15,5 @@ class CaptureResume < ActiveRecord::Base
   validates_attachment_presence :avatar
   validates_attachment_size :avatar, :less_than => 2.megabytes
   validates_attachment :avatar, :content_type => { :content_type => %w(application/pdf application/msword application/msexcel application/vnd.openxmlformats-officedocument.wordprocessingml.document) }
-
-  # validates :country, :presence => true
-  # validates :state, :presence => true
-  # validates :district, :presence => true
-
+  
 end

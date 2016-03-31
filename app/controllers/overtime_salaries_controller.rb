@@ -146,12 +146,13 @@ class OvertimeSalariesController < ApplicationController
     ot_hrs = params[:ot_hrs]
     attendence_bonus_amount = params[:attendance_bonus_amount]
     paid_holiday_amount = params[:paid_holiday_amount]
+    ot_daily_amount = params[:ot_daily_amount]
 
     @esic_master = EsicMaster.first
     percentage = @esic_master.percentage
-    final = employee_ids.zip(ot_amount,ot_hrs,attendence_bonus_amount,paid_holiday_amount)
+    final = employee_ids.zip(ot_amount,ot_hrs,attendence_bonus_amount,paid_holiday_amount,ot_daily_amount)
 
-    final.each do |i,a,h,bonus,holiday|
+    final.each do |i,a,h,bonus,holiday,ot_amount|
       ot_esic_amount = (a.to_i / 100 * percentage).ceil
       total_amount = a.to_i - ot_esic_amount
       net_payble = total_amount + bonus.to_f + holiday.to_f
@@ -164,6 +165,7 @@ class OvertimeSalariesController < ApplicationController
         o.paid_holiday_amount = holiday.to_f
         o.net_payble_amount = net_payble
         o.ot_date = date
+        o.ot_amount = ot_amount
         o.save
       end
     end

@@ -1,0 +1,106 @@
+<!--SELECT2 EXAMPLE -->
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Employee Leave Request</h3>
+  </div><!-- /.box-header -->
+
+  <div class="box-body">
+    <%= bootstrap_form_for(@employee_leav_request,html: {id: 'employee_leav_request'}) do |f| %>
+     <%= f.hidden_field :employee_id, value: @employee.id %>
+     <div class="row">
+        <div class="col-sm-1"></div>
+        <div class="col-sm-5">
+          <div class="field">
+          
+          <table class="table table-bordered table-hover table-condensed'">
+           <thead>
+           <tr><center><th colspan="2"><center> Leave Balance </center></th></tr>
+            <tr>
+              <th>Leave Type</th>
+              <th>No.of Leaves Available</th>
+            </tr>
+           </thead>
+          <% @total_leaves.each do |l| %>
+          <tr>
+          <th><%= l.leav_category.name %></th>
+          <td><%= l.no_of_leave %></td>
+          </tr>
+          <% end %>
+          </table>
+          </div>
+        </div>
+
+         
+        <div class="col-sm-5">
+          <div class="field">
+          <table class="table table-bordered table-hover table-condensed'">
+           <thead>
+            <tr><center><th colspan="3"><center> C_Off Balance </center></th></tr>
+            <tr>
+              <th>Date</th>
+              <th>Type</th>
+              <th>Expiry Date</th>
+            </tr>
+           </thead>
+          <% @leave_c_offs.each do |leave_c_off| %>
+          <tr>
+          <th><%= leave_c_off.c_off_date %></th>
+          <td><%= leave_c_off.c_off_type %></td>
+          <td><%= leave_c_off.c_off_date+leave_c_off.c_off_expire_day %></td>
+          </tr>
+          <% end %>
+          </table>
+          </div>
+        </div>
+        <div class="col-sm-1"></div>
+
+      </div>
+      <hr>
+
+      <div class="row">
+      <div class="col-sm-1"></div>
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.select :leav_category_id, all_leav_category %>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="field">
+           <%= f.select :leave_type, ['Full Day','Half Day'] %>
+          </div>
+        </div>
+
+        <div class="col-sm-4">
+        <label>Date Range </label>
+          <div class="form-group">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <%= f.text_field :date_range, hide_label: true,class: "pull-right active",id: "reservationtime" %>
+            </div><!-- /.input group -->
+          </div>
+        </div>
+      </div>
+      <div class="row">
+      <div class="col-sm-1"></div>
+        <div class="col-sm-9">
+          <div class="field">
+            <%= f.text_area :reason %>
+          </div>
+        </div>
+        </div>
+      
+      <div class="row">
+      <div class="col-sm-1"></div>
+         <div class="col-sm-3">
+          <div class="actions">
+            <%= f.submit :class => class_name, data: { disable_with: data_info } %>
+          </div>
+        </div>
+        <%= link_to 'Back', employee_leav_requests_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+      </div>
+    <% end %>
+  </div><!-- /.box-body -->
+</div><!-- /.box

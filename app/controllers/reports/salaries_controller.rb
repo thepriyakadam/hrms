@@ -30,7 +30,7 @@ class Reports::SalariesController < ApplicationController
   def department_wise
     @month = params[:salary][:month]
     @year = params[:salary][:year]
-  
+ 
     @department= params[:salary][:department_id]
     @salaryslips = []
     unless @department == ""
@@ -39,7 +39,7 @@ class Reports::SalariesController < ApplicationController
     else
       @salaryslips = Salaryslip.where("month = ? and year = ?", @month, @year)
     end
-    
+   
     if @salaryslips.empty?
       flash[:alert] = "Salary not available for this month and year"
       redirect_to show_reports_salary_path
@@ -52,7 +52,7 @@ class Reports::SalariesController < ApplicationController
   def ctc_yearly_report
     @month = params[:salary][:month]
     @year = params[:salary][:year]
-  
+ 
     @department= params[:salary][:department_id]
     @salaryslips = []
     unless @department == ""
@@ -61,7 +61,7 @@ class Reports::SalariesController < ApplicationController
     else
       @salaryslips = Salaryslip.where("month = ? and year = ?", @month, @year)
     end
-    
+   
     if @salaryslips.empty?
       flash[:alert] = "Salary not available for this month and year"
       redirect_to show_reports_salary_path
@@ -72,3 +72,4 @@ class Reports::SalariesController < ApplicationController
   end
 
 end
+

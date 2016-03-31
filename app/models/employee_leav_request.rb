@@ -11,6 +11,9 @@ class EmployeeLeavRequest < ActiveRecord::Base
   belongs_to :first_reporter, class_name: "Employee"
   belongs_to :second_reporter, class_name: "Employee"
 
+  # CURRENT_STATUSS = [["Pending",0], ["FirstApproved",2], ["SecondApproved",3], ["FirstRejected",4],["SecondRejected",5],["Cancelled",1]]
+  # validates_inclusion_of :current_status, :in => CURRENT_STATUSS
+
   def create_single_record_for_leave(employee_leav_request)
     if employee_leav_request.leave_type == "Full Day"
       for i in employee_leav_request.start_date.to_date..employee_leav_request.end_date.to_date
@@ -24,7 +27,15 @@ class EmployeeLeavRequest < ActiveRecord::Base
   def minus_leave(employee_leav_request)
     leave_balance = EmployeeLeavBalance.where(employee_id: employee_leav_request.employee_id, leav_category_id: employee_leav_request.leav_category_id).take
     unless leave_balance.nil?
-      leave_balance.no_of_leave = leave_balance.no_of_leave.to_i - employee_leav_request.leave_count.to_i
+      leave_balance.no_of_leave = leave_balance.no_of_leave.to_i - employee_leav_request.leave_count.to_f
+      leave_balance.save
+    end
+  end
+
+  def revert_leave(employee_leav_request)  
+    leave_balance = EmployeeLeavBalance.where(employee_id: employee_leav_request.employee_id, leav_category_id: employee_leav_request.leav_category_id).take
+    unless leave_balance.nil?
+      leave_balance.no_of_leave = leave_balance.no_of_leave.to_f + employee_leav_request.leave_count.to_f
       leave_balance.save
     end
   end

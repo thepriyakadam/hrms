@@ -1,8 +1,11 @@
+require 'query_report/helper'  #need to require the helper
 class AdvanceSalariesController < ApplicationController
   before_action :set_advance_salary, only: [:show, :edit, :update, :destroy]
+  before_filter  only: [:index]
   load_and_authorize_resource
   # GET /advance_salaries
   # GET /advance_salaries.json
+  include QueryReport::Helper  #need to include it
   def index
     if current_user.class == Group
       @advance_salaries = AdvanceSalary.all
@@ -19,6 +22,8 @@ class AdvanceSalariesController < ApplicationController
       end
     end
   end
+
+
 
   # GET /advance_salaries/1
   # GET /advance_salaries/1.json
@@ -73,6 +78,19 @@ class AdvanceSalariesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to advance_salaries_url, notice: 'Advance salary was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+  
+
+  def search_by_advance_date
+    reporter(@advance_salaries,template_class: PdfReportTemplate) do
+      filter :advance_date, type: :date
+      column(:manual_employee_code,sortable: true) { |advance_salary| advance_salary.employee.try(:manual_employee_code) }
+      column(:first_name,sortable: true) { |advance_salary| full_name(advance_salary.employee) }
+      column :advance_date,sortable: true,pdf: {width: 65}
+      column :advance_amount,sortable: true
+      column :no_of_instalment,sortable: true
+      column :instalment_amount,sortable: true
     end
   end
 

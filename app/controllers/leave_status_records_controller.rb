@@ -11,7 +11,8 @@ class LeaveStatusRecordsController < ApplicationController
       ActiveRecord::Base.transaction do
         if @leave_status.save
           @employee_leav_request.update(is_cancelled: true, current_status: "Cancelled")
-          if @employee_leav_request.first_reporter.email.nil?
+          @employee_leav_request.revert_leave(@employee_leav_request)
+          if @employee_leav_request.first_reporter.email.nil? or @employee_leav_request.first_reporter.email == ""
             flash[:notice] = "Leave Cancelled Successfully without email."
           else
             LeaveRequestMailer.cancel(@employee_leav_request).deliver_now
@@ -30,6 +31,7 @@ class LeaveStatusRecordsController < ApplicationController
   end
 
   def first_approve
+    ### if no second reporter available
     if @employee_leav_request.employee.manager_2_id.nil?
       @leave_status = LeaveStatusRecord.new do |s|
         s.employee_leav_request_id = params[:id]
@@ -41,8 +43,8 @@ class LeaveStatusRecordsController < ApplicationController
         if @leave_status.save
           @employee_leav_request.update(is_first_approved: true, current_status: "FirstApproved")
           @employee_leav_request.create_single_record_for_leave(@employee_leav_request)
-          @employee_leav_request.minus_leave(@employee_leav_request)
-          if @employee_leav_request.employee.email.nil?
+          #@employee_leav_request.minus_leave(@employee_leav_request)
+          if @employee_leav_request.employee.email.nil? or @employee_leav_request.employee.email == ""
             flash[:notice] = "Leave Approved Successfully without email."
           else
             LeaveRequestMailer.first_approve(@employee_leav_request).deliver_now
@@ -54,6 +56,7 @@ class LeaveStatusRecordsController < ApplicationController
           redirect_to approved_or_rejected_leave_request_employee_leav_requests_path
         end
       end
+    ### if second reporter available  
     else
       @leave_status = LeaveStatusRecord.new do |s|
         s.employee_leav_request_id = params[:id]
@@ -64,8 +67,7 @@ class LeaveStatusRecordsController < ApplicationController
       ActiveRecord::Base.transaction do
         if @leave_status.save
           @employee_leav_request.update(is_first_approved: true, current_status: "FirstApproved", second_reporter_id: @employee_leav_request.employee.manager_2_id)
-          LeaveRequestMailer.first_approve(@employee_leav_request).deliver_now
-          if @employee_leav_request.second_reporter.email.nil?
+          if @employee_leav_request.first_reporter.email.nil? or @employee_leav_request.first_reporter.email == ""
             flash[:notice] = "Leave Approved Successfully without email."
           else
             LeaveRequestMailer.first_approve(@employee_leav_request).deliver_now
@@ -91,8 +93,8 @@ class LeaveStatusRecordsController < ApplicationController
       if @leave_status.save
         @employee_leav_request.update(is_second_approved: true, current_status: "SecondApproved")
         @employee_leav_request.create_single_record_for_leave(@employee_leav_request)
-        @employee_leav_request.minus_leave(@employee_leav_request)
-        if @employee_leav_request.employee.email.nil?
+        #@employee_leav_request.minus_leave(@employee_leav_request)
+        if @employee_leav_request.employee.email.nil? or @employee_leav_request.employee.email == "" 
           flash[:notice] = "Leave Approved Successfully without mail."
         else
           flash[:notice] = "Leave Approved Successfully."
@@ -116,7 +118,8 @@ class LeaveStatusRecordsController < ApplicationController
     ActiveRecord::Base.transaction do 
       if @leave_status.save
         @employee_leav_request.update(is_first_rejected: true, current_status: "FirstRejected")
-        if @employee_leav_request.employee.email.nil?
+        @employee_leav_request.revert_leave(@employee_leav_request)
+        if @employee_leav_request.first_reporter.email.nil? or @employee_leav_request.first_reporter.email == ""
           flash[:notice] = "Leave Rejected Successfully without email."
         else
           flash[:notice] = "Leave Rejected Successfully."
@@ -140,7 +143,8 @@ class LeaveStatusRecordsController < ApplicationController
     ActiveRecord::Base.transaction do 
       if @leave_status.save
         @employee_leav_request.update(is_second_rejected: true, current_status: "SecondRejected")
-        if @employee_leav_request.employee.email.nil?
+        @employee_leav_request.revert_leave(@employee_leav_request)
+        if @employee_leav_request.first_reporter.email.nil? or @employee_leav_request.first_reporter.email == ""
           flash[:notice] = "Leave Rejected Successfully without email."
         else
           flash[:notice] = "Leave Rejected Successfully."
@@ -152,6 +156,24 @@ class LeaveStatusRecordsController < ApplicationController
         redirect_to approved_or_rejected_leave_request_employee_leav_requests_path
       end
     end
+  end
+
+  def cancel_after_approve
+    @particular_leave_record = ParticularLeaveRecord.find(params[:format])
+    @particular_leave_record.is_cancel_after_approve = true
+
+    @employee_leav_balance = EmployeeLeavBalance.where(employee_id: @particular_leave_record.employee_id, leav_category_id: @particular_leave_record.leav_category_id).take
+    if @particular_leave_record.is_full
+      @employee_leav_balance.no_of_leave = @employee_leav_balance.no_of_leave.to_f + 1
+    else
+      @employee_leav_balance.no_of_leave = @employee_leav_balance.no_of_leave.to_f + 0.5
+    end
+    ActiveRecord::Base.transaction do
+      @employee_leav_balance.save
+      @particular_leave_record.save
+    end
+    flash[:notice] = "Leave Cancelled Successfully."
+    redirect_to show_leave_record_particular_leave_records_path(format: @particular_leave_record.employee_leav_request_id)
   end
 
   private

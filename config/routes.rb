@@ -1,10 +1,33 @@
-Rails.application.routes.draw do 
 
-  resources :capture_resumes 
-  resources :interview_schedules
-  resources :vacancy_masters do
-    collection { post :import }
+Rails.application.routes.draw do
+  
+  resources :week_offs
+  resources :employee_leav_request_reports, :only => [:index]
+
+  resources :capture_resumes
+  resources :interview_schedules do
+    collection do
+    get :search_by_interview_date
+    end
 end
+  resources :vacancy_masters do
+    collection do
+    get :search_by_vacancy_post_date
+    post :import  
+    end
+end  
+  resources :leave_c_offs do
+    collection do
+      get :search_by_c_off_date
+    end
+  end
+
+  resources :particular_leave_records do
+    collection do
+      get :show_leave_record
+    end
+  end
+  
   match 'capture_resumes/:id/download/:id' => 'capture_resumes#download', :via => [:get], :as => :download
   
   resources :leave_c_offs
@@ -49,6 +72,7 @@ end
   resources :reporting_masters
   resources :leave_status_records do
     collection do
+      get :cancel_after_approve
     end
     member do
       get :cancel
@@ -115,7 +139,11 @@ end
       get :employees
     end
   end
-  resources :advance_salaries
+  resources :advance_salaries do
+    collection do
+      get :search_by_advance_date
+    end
+  end
   resources :workingdays do
     collection do
       get :employees
@@ -155,7 +183,11 @@ end
   #     get :all_employee_monthly_salary
   #   end
   # end
-  resources :salary_components
+  resources :salary_components do
+    collection do
+      post :create_employee_template
+    end
+  end
   resources :universities
   resources :degree_streams
   resources :degree_types
@@ -170,6 +202,7 @@ end
       get :attendance_details
       get :collect_shift_date
       get :collect_employee
+      get :search_by_date
     end
   end
   resources :employee_shifts do
@@ -209,12 +242,20 @@ end
       get :from_hr
       get :hr_view_request
       get :employee_history_with_current_leave
+      get :search_by_start_date
+      get :search_by_end_date
+      get :search_by_is_pending_date
+      get :employee_leav_request_reports
     end
   end
   resources :company_leavs
   resources :leav_categories
   resources :employee_physicals
-  resources :joining_details
+  resources :joining_details do
+    collection do
+      get :search_by_joining_date
+    end
+  end
   resources :employee_grades
   resources :awards do
     collection do
@@ -252,9 +293,11 @@ end
       get :ajax_family_detail
       get :ajax_new_family
       get :ajax_show_textbox
+      get :ajax_setup_payroll
       get :manager
       get :transfer_form
       post :transfer_employee
+      get :search_by_employee_manual_code
     end
     member do
       get :edit_manager
@@ -265,7 +308,12 @@ end
   resources :nationalities
   resources :employee_types
   resources :department_types
-  resources :company_types
+  resources :company_types do
+    collection do
+      get :add_company_type
+      post :create_company_type
+    end
+  end
   resources :departments
   resources :company_locations
   resources :companies do

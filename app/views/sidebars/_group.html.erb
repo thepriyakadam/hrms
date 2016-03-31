@@ -2,7 +2,7 @@
 <!-- sidebar menu: : style can be found in sidebar.less -->
 <ul class="sidebar-menu">
   <li class="header">GROUP DASHBOARD</li>
-  <li class="active treeview">
+  <li class="treeview">
     <a href="">
       <!-- <i class="fa fa-user-plus"></i> <span>Create</span> <i class="fa fa-angle-left pull-right"></i> -->
       <i class="fa fa-user-plus"></i> <span>Company Details</span> <i class="fa fa-angle-left pull-right"></i>
@@ -107,6 +107,11 @@
     </ul>
   </li>
 
+  <li class="treeview">
+      <a href="/employee_leav_request_reports"><i class="ionicons ion-ios-time"></i><span><span>  Employee Leave Request Report </span></span> <i class="fa fa-angle-left pull-right"></i></a>
+    </a>
+   </li>
+   
    <!-- Leave management -->
   <li class="treeview">
     <a href="">
@@ -186,11 +191,6 @@
     </ul>
   </li>
 
-
-
-
-
-
     <li class="treeview">
     <a href="">
       <i class="ionicons ion-ios-time"></i><span><span>  Time Management </span></span> <i class="fa fa-angle-left pull-right"></i>
@@ -203,7 +203,65 @@
       <li><a href="/attendances"><i class="fa fa-tags"></i> Employee Attendance </a></li>
     </ul>
    </li>
-
+   <li class="treeview">
+    <a href="#">
+      <i class="glyphicon glyphicon-th-large"></i> <span>Reports</span>
+      <i class="fa fa-angle-left pull-right"></i>
+    </a>
+    <ul class="treeview-menu">
+      <li>
+        <a href="#"><i class="fa fa-edit"></i>Employee Leave Request <i class="fa fa-angle-left pull-right"></i></a>
+        <ul class="treeview-menu">
+           <li><a href="/employee_leav_requests/search_by_start_date"><i class="fa fa-tags"></i> Search By Start Date</a></li>
+        </ul>
+        <ul class="treeview-menu">
+           <li><a href="/employee_leav_requests/search_by_end_date"><i class="fa fa-tags"></i> Search By End Date</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#"><i class="fa fa-edit"></i> Employee Attendance Reports <i class="fa fa-angle-left pull-right"></i></a>
+        <ul class="treeview-menu">
+           <li><a href="/attendances/search_by_date"><i class="fa fa-tags"></i> Search By Date</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#"><i class="fa fa-edit"></i> Advance Salary Reports <i class="fa fa-angle-left pull-right"></i></a>
+        <ul class="treeview-menu">
+           <li><a href="/advance_salaries/search_by_advance_date"><i class="fa fa-tags"></i> Search By Date</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#"><i class="fa fa-edit"></i> Leave Coffs Reports <i class="fa fa-angle-left pull-right"></i></a>
+        <ul class="treeview-menu">
+           <li><a href="/leave_c_offs/search_by_c_off_date"><i class="fa fa-tags"></i> Search By Date</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#"><i class="fa fa-edit"></i> Joining Details Reports <i class="fa fa-angle-left pull-right"></i></a>
+        <ul class="treeview-menu">
+           <li><a href="/joining_details/search_by_joining_date"><i class="fa fa-tags"></i> Search By Date</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#"><i class="fa fa-edit"></i> Vacancy Master Reports <i class="fa fa-angle-left pull-right"></i></a>
+        <ul class="treeview-menu">
+           <li><a href="/vacancy_masters/search_by_vacancy_post_date"><i class="fa fa-tags"></i> Search By Date</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#"><i class="fa fa-edit"></i> Interview Schedule Reports <i class="fa fa-angle-left pull-right"></i></a>
+        <ul class="treeview-menu">
+           <li><a href="/interview_schedules/search_by_interview_date"><i class="fa fa-tags"></i> Search By Date</a></li>
+        </ul>
+      </li>
+     
+      <li>
+        
+        <ul class="treeview-menu">
+         
+          </li>
+        </ul>
+      </li>
 
     <li class="treeview">
     <a href="">
@@ -215,4 +273,5 @@
       <li><a href="/interview_schedules/new"><i class="fa fa-tags"></i> Interview Schedule </a></li>
     </ul>
    </li>
+
 </ul>

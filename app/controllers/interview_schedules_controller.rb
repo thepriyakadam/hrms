@@ -1,8 +1,11 @@
+require 'query_report/helper'  #need to require the helper
+
 class InterviewSchedulesController < ApplicationController
   before_action :set_interview_schedule, only: [:show, :edit, :update, :destroy]
 
   # GET /interview_schedules
   # GET /interview_schedules.json
+  include QueryReport::Helper  #need to include it
   def index
     @interview_schedules = InterviewSchedule.all
   end
@@ -60,6 +63,22 @@ class InterviewSchedulesController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def search_by_interview_date
+    @interview_schedules=InterviewSchedule.all
+    reporter(@interview_schedules,template_class: PdfReportTemplate) do
+      filter :interview_date, type: :date
+      column :interviewer_name,sortable: true
+      column :candidate_name,sortable: true
+      column :interview_date,sortable: true
+      column :interview_time,sortable: true
+      column :location,sortable: true
+      column :schedule_comments,sortable: true
+      column :post_title,sortable: true
+      column :interview_type,sortable: true
+      column :interview_status,sortable: true
+    end
+  end 
 
   private
     # Use callbacks to share common setup or constraints between actions.

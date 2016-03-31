@@ -14,6 +14,11 @@ class EmployeesController < ApplicationController
         @employees = Employee.where(department_id: current_user.department_id)
       elsif current_user.role.name == "Company"
         @employees = Employee.all
+      elsif current_user.role.name == "Supervisor"
+        @emp = Employee.find(current_user.employee_id)
+        #@employees_indirect = @emp.indirect_subordinates
+        #@employees_direct = @emp.subordinates
+        @employees =  @emp.subordinates
       end
     else
       @employees = Employee.all
@@ -208,6 +213,10 @@ class EmployeesController < ApplicationController
   def edit_manager
     @employee = Employee.find(params[:id])
     @managers = ReportingMaster.all
+  end
+
+  def ajax_setup_payroll
+    @salary_components = SalaryComponent.first(5)
   end
 
   def update_manager

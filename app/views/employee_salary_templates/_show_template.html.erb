@@ -103,11 +103,13 @@
           $('#monthly_amount_<%=i.salary_component_id%>').on('input', function(){
             <% children = i.children %>
             var parent = parseFloat($("#monthly_amount_<%=i.salary_component_id%>").val());
+            $('#annual_amount_<%=i.salary_component_id%>').val(parent*12);
             <% children.each do |c| %>
               var percentage = <%= c.percentage %>
               var amt = parent * percentage / 100
               console.log(parent+"*"+percentage+"/"+100+"="+amt+"<%= c.salary_component.name%>");
               $('#monthly_amount_<%=c.salary_component_id%>').val(amt);
+              $('#annual_amount_<%=c.salary_component_id%>').val(amt*12);
 
               var parent1 = amt
               <% children1 = c.children%>
@@ -116,6 +118,7 @@
                 var amt1 = parent1 * percentage1 / 100
                 console.log(parent1+"*"+percentage1+"/"+100+"="+amt1+"<%= c1.salary_component.name%>");
                 $('#monthly_amount_<%=c1.salary_component_id%>').val(amt1);
+                $('#annual_amount_<%=c1.salary_component_id%>').val(amt1*12);
               <% end %>
             <% end %>
           });
@@ -124,12 +127,13 @@
             <% else_children =  i.children %>
             
             var parent = parseFloat($("#monthly_amount_<%=i.salary_component_id%>").val());
+            $('#annual_amount_<%=i.salary_component_id%>').val(parent*12);
             <% else_children.each do |c| %>
               var percentage = <%= c.percentage %>
               var amt = parent * percentage / 100
               console.log(parent+"*"+percentage+"/"+100+"="+amt+"<%= c.salary_component.name%>");
               $('#monthly_amount_<%=c.salary_component_id%>').val(amt);
-
+              $('#annual_amount_<%=c.salary_component_id%>').val(amt*12);  
               var parent1 = amt
               <% children1 = c.children%>
               <% children1.each do |c1| %>
@@ -137,9 +141,9 @@
                 var amt1 = parent1 * percentage1 / 100
                 console.log(parent1+"*"+percentage1+"/"+100+"="+amt1+"<%= c1.salary_component.name%>");
                 $('#monthly_amount_<%=c1.salary_component_id%>').val(amt1);
+                $('#annual_amount_<%=c1.salary_component_id%>').val(amt1*12);
               <% end %>
             <% end %>
-
           });
         <%end%>  
       <% end %>

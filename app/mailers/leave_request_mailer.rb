@@ -17,7 +17,7 @@ class LeaveRequestMailer < ApplicationMailer
   def first_approve1(request)
     @leave_request = request
     @employee = Employee.find(@leave_request.employee_id)
-    @manager = Employee.find(@leave_request.second_reporter_id)
+    @manager = Employee.find(@leave_request.first_reporter_id)
     email = @employee.try(:email)
     mail(to: email, subject: 'Leave First Approved')
   end

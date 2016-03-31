@@ -5,6 +5,8 @@ class AttributeRatingSheetsController < ApplicationController
   # GET /attribute_rating_sheets.json
   def index
     @attribute_rating_sheets = AttributeRatingSheet.all
+    @attribute_rating_sheets = AttributeRatingSheet.where(appraisee_id: current_user.employee_id)
+
   end
 
   # GET /attribute_rating_sheets/1
@@ -17,13 +19,13 @@ class AttributeRatingSheetsController < ApplicationController
     @attribute_rating_sheet = AttributeRatingSheet.new
     @employee_attributes = []
     @attribute_rating_sheets = AttributeRatingSheet.all
-    if @attribute_rating_sheets.nil?
+
+    if @attribute_rating_sheets.empty?
       @employee_attributes = EmployeeAttribute.all
     else
       @attribute_rating_sheets.each do |a|
         temp = AttributeRatingSheet.exists?(appraisee_id: current_user.employee_id, employee_attribute_id: a.employee_attribute_id)
         if temp
-              
         else
           ea = EmployeeAttribute.find(a.employee_attribute_id)
           @employee_attributes << ea
@@ -47,24 +49,29 @@ class AttributeRatingSheetsController < ApplicationController
 
     final.each do |e,c,r|
       emp = EmployeeAttribute.find(e)
+      if c == ""
+      flash[:alert] = "Fill comments"
+      elsif r == ""
+      flash[:alert] = "Fill ratings"
+      else
       AttributeRatingSheet.create(appraisee_comment: c, appraisee_rating: r, appraisee_id: params[:appraisee_id], employee_attribute_id: emp.id)
+      flash[:notice] = "Employee Attribute Created Successfully"
+      end
     end
-    flash[:notice] = "Employee Attribute Created Successfully"
+
     redirect_to attribute_rating_sheets_path
   end
 
   # PATCH/PUT /attribute_rating_sheets/1
   # PATCH/PUT /attribute_rating_sheets/1.json
   def update
-    respond_to do |format|
       if @attribute_rating_sheet.update(attribute_rating_sheet_params)
-        format.html { redirect_to @attribute_rating_sheet, notice: 'Attribute rating sheet was successfully updated.' }
-        format.json { render :show, status: :ok, location: @attribute_rating_sheet }
+        flash[:notice] = "Employee Attribute Updated Successfully"
+        redirect_to attribute_rating_sheets_path
       else
-        format.html { render :edit }
-        format.json { render json: @attribute_rating_sheet.errors, status: :unprocessable_entity }
+        flash[:alert] = "Not Updated"
+        redirect_to new_attribute_rating_sheet_path
       end
-    end
   end
 
   # DELETE /attribute_rating_sheets/1
@@ -89,10 +96,19 @@ class AttributeRatingSheetsController < ApplicationController
     final = attribute_rating_sheets.zip(comments,ratings)
     final.each do |e,c,r|
       attribute_rating_sheet = AttributeRatingSheet.find(e)
+      if c == ""
+      flash[:alert] = "Fill comments"
+      elsif r == ""
+      flash[:alert] = "Fill ratings"
+      else
       attribute_rating_sheet.update(appraiser_comment: c, appraiser_rating: r, appraiser_id: params[:appraiser_id])
+      end
     end
-    flash[:notice] = "Appraiser Attribute Created Successfully"
     redirect_to appraiser_attribute_rating_sheets_path
+  end
+
+  def edit_attribute_rating
+    @attribute_rating_sheet = AttributeRatingSheet.find(params :format)
   end
 
   private

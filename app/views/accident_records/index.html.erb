@@ -1,0 +1,47 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Accident Records</h3>
+    <div class="pull-right">
+      <%= link_to "New Accident Record", new_accident_record_path, class: 'btn btn-sm btn-primary' %> 
+    </div>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+  <div id="comments">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+    <thead>
+    <tr>
+      <th>Sr.No</th>
+      <th>ID</th>
+      <th>Employee</th>
+      <th>Accident date</th>
+      <th>Esic no</th>
+      <th>Case type</th>
+      <th>Type of injury</th>
+      <th>No of day</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @accident_records.each do |accident_record| %>
+      <tr>
+        <td><%= accident_record.code %></td>
+        <td><%= accident_record.employee.try(:manual_employee_code) %></td>
+        <td><%= accident_record.employee.try(:first_name) %> <%= accident_record.employee.try(:middle_name) %> <%= accident_record.employee.try(:last_name) %></td>
+        <td><%= accident_record.accident_date %></td>
+        <td><%= accident_record.esic_no %></td>
+        <td><%= accident_record.case_type %></td>
+        <td><%= accident_record.type_of_injury %></td>
+        <td><%= accident_record.no_of_day %></td>
+        <td>
+          <%= link_to '', accident_record,class: 'btn btn-xs btn-default fa fa-eye' %>
+        <!-- < link_to 'Edit', edit_accident_record_path(accident_record) %> -->
+       <!--  <= link_to '', , method: :delete, data: { confirm: 'Are you sure?' } %> -->
+        <%= link_to '',  accident_record, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-xs btn-danger fa fa-trash' %></td>
+      </tr>
+   <% end %>
+    </tbody>
+  </table>
+  </div>
+</div>
+</div>

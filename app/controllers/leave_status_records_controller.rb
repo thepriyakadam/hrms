@@ -48,9 +48,7 @@ class LeaveStatusRecordsController < ApplicationController
           if @employee_leav_request.employee.email.nil? or @employee_leav_request.employee.email == ""
             flash[:notice] = "Leave Approved Successfully without email."
           else
-            puts "------------------------------------------------------1"
             LeaveRequestMailer.first_approve1(@employee_leav_request).deliver_now
-            puts "------------------------------------------------------2"
             flash[:notice] = "Leave Approved Successfully."
           end
           redirect_to approved_or_rejected_leave_request_employee_leav_requests_path
@@ -70,7 +68,7 @@ class LeaveStatusRecordsController < ApplicationController
       ActiveRecord::Base.transaction do
         if @leave_status.save
           @employee_leav_request.update(is_first_approved: true, current_status: "FirstApproved", second_reporter_id: @employee_leav_request.employee.manager_2_id)
-          if @employee_leav_request.first_reporter.email.nil? or @employee_leav_request.first_reporter.email == ""
+          if @employee_leav_request.second_reporter.email.nil? or @employee_leav_request.second_reporter.email == ""
             flash[:notice] = "Leave Approved Successfully without email."
           else
             LeaveRequestMailer.first_approve(@employee_leav_request).deliver_now

@@ -11,7 +11,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
+ActiveRecord::Schema.define(version: 20160331045040) do
+
+  create_table "accident_records", force: :cascade do |t|
+    t.string   "code"
+    t.integer  "employee_id"
+    t.date     "accident_date"
+    t.string   "esic_no"
+    t.string   "case_type"
+    t.string   "type_of_injury"
+    t.string   "leave_date_range"
+    t.string   "no_of_day"
+    t.text     "description"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "accident_records", ["employee_id"], name: "index_accident_records_on_employee_id"
+=======
 ActiveRecord::Schema.define(version: 20160330054959) do
+>>>>>>> 9373387f0cbb3b3f35ed32ebfad868ef72af85a8
 
   create_table "advance_salaries", force: :cascade do |t|
     t.integer  "employee_id"

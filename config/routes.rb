@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
 
+
+  resources :accident_records
+
   resources :performance_periods
   resources :attribute_rating_sheets do
     collection do

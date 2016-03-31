@@ -7,6 +7,10 @@ class VacancyMastersController < ApplicationController
 
   def index
     @vacancy_masters = VacancyMaster.all
+    respond_to do |format|
+    format.html
+    format.csv { send_data @vacancy_masters.to_csv }
+    format.xls 
     if current_user.class == Member
       if current_user.role.name == "Department"
         @vacancy_masters = VacancyMaster.where(department_id:current_user.department_id)
@@ -15,6 +19,7 @@ class VacancyMastersController < ApplicationController
       end
     end
   end
+ end 
 
   # GET /vacancy_masters/1
   # GET /vacancy_masters/1.json

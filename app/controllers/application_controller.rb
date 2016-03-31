@@ -122,6 +122,16 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  # require 'open-uri'
+
+  # def internet_connection?
+  #   begin
+  #     true if open("http://www.google.com/")
+  #   rescue
+  #     false
+  #   end
+  # end
+
   protected
 
   def configure_devise_permitted_parameters

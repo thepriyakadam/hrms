@@ -1,0 +1,18 @@
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>  
+      <th>Definition</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @definitions.each do |definition| %>
+      <tr>
+        <td><%= definition.name %></td>
+        <td>
+          <%= link_to '', edit_definition_path(definition),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

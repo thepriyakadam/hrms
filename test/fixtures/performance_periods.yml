@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  start_date: 2016-03-22
+  end_date: 2016-03-22
+  description: MyString
+  is_open: false
+
+two:
+  title: MyString
+  start_date: 2016-03-22
+  end_date: 2016-03-22
+  description: MyString
+  is_open: false

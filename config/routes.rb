@@ -1,6 +1,42 @@
 Rails.application.routes.draw do
 
+
   resources :accident_records
+
+  resources :performance_periods
+  resources :attribute_rating_sheets do
+    collection do
+      get :edit_attribute_rating
+      get :appraiser
+      post :appraiser_create
+    end
+  end
+  resources :goal_rating_sheets  do
+    collection do
+      get :edit_goal_rating
+      get :appraiser
+      post :appraiser_create
+    end
+  end
+  resources :employee_attributes do
+    collection do
+      get :appraisee
+      post :appraisee_create
+      get :appraiser
+      post :appraiser_create
+    end
+  end
+  resources :employee_goals do
+    collection do
+      get :subordinate_list
+      get :is_confirm
+    end
+  end
+  
+  resources :definitions
+  resources :attribute_masters
+  resources :goal_measures
+  resources :goal_perspectives
   resources :particular_leave_records do
     collection do
       get :show_leave_record

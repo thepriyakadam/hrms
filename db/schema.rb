@@ -11,7 +11,6 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20160331045040) do
 
   create_table "accident_records", force: :cascade do |t|
@@ -29,9 +28,6 @@ ActiveRecord::Schema.define(version: 20160331045040) do
   end
 
   add_index "accident_records", ["employee_id"], name: "index_accident_records_on_employee_id"
-=======
-ActiveRecord::Schema.define(version: 20160330054959) do
->>>>>>> 9373387f0cbb3b3f35ed32ebfad868ef72af85a8
 
   create_table "advance_salaries", force: :cascade do |t|
     t.integer  "employee_id"

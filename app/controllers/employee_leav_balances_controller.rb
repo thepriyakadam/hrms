@@ -46,6 +46,8 @@ class EmployeeLeavBalancesController < ApplicationController
           leave_category = LeavCategory.find(params[:employee_leav_balance][:leav_category_id])
           if leave_category.name == "Casual Leave"
             @elb = EmployeeLeavBalance.create(employee_id: e, leav_category_id: params[:employee_leav_balance][:leav_category_id], no_of_leave: params[:employee_leav_balance][:no_of_leave], total_leave: params[:employee_leav_balance][:total_leave], expiry_date: params[:employee_leav_balance][:expiry_date])
+          else
+            @elb = EmployeeLeavBalance.create(employee_id: e, leav_category_id: params[:employee_leav_balance][:leav_category_id], no_of_leave: params[:employee_leav_balance][:no_of_leave], total_leave: params[:employee_leav_balance][:total_leave], expiry_date: params[:employee_leav_balance][:expiry_date])
           end
         end
       end

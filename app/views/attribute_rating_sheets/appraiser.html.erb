@@ -7,8 +7,7 @@
     <table id="tbl" class="table table-bordered table-hover table-condensed">
       <thead>
         <tr>
-          <th>Attribute</th>
-          <th>Definition</th>
+          <th>Attribute & Definition</th>
           <th>Weightage</th>
           <th>Appraisee Comment</th>
           <th>Appraisee Rating</th>
@@ -20,7 +19,6 @@
         <% @attribute_rating_sheets.each do |a| %>
           <tr>
             <td><%= a.employee_attribute.attribute_master.name %></td>
-            <td><%= a.employee_attribute.definition.name %></td>
             <td><%= a.employee_attribute.weightage %></td>
             <td><%= a.appraisee_comment %></td>
             <td><%= a.appraisee_rating %></td>
@@ -46,25 +44,27 @@
 <table id="tbl" class="table table-bordered table-hover table-condensed">
     <thead>
       <tr>
-        <th>Attribute</th>
-        <th>Definition</th>
+        <th>Attribute & Definition</th>
         <th>Weightage</th>
         <th>Appraisee Comment</th>
         <th>Appraisee Rating</th>
         <th>Appraiser Comment</th>
         <th>Appraiser Rating</th>
+        <th>Action</th>
       </tr>
     </thead>
     <tbody>
       <% @attribute_rating_sheets.each do |a| %>
         <tr>
           <td><%= a.employee_attribute.attribute_master.name %></td>
-          <td><%= a.employee_attribute.definition.name %></td>
           <td><%= a.employee_attribute.weightage %></td>
           <td><%= a.appraisee_comment %></td>
           <td><%= a.appraisee_rating %></td>
           <td><%= a.appraiser_comment %></td>
-          <td><%= a.appraiser_rating %></td>   
+          <td><%= a.appraiser_rating %></td> 
+          <td>
+            <%= link_to '', edit_appraiser_attribute_rating_sheets_path(a) ,class: 'btn btn-xs btn-success fa fa-edit' %>
+          </td>  
         </tr>
       <% end %>
     </tbody>

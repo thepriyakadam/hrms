@@ -15,7 +15,6 @@ class GoalRatingSheetsController < ApplicationController
 
   # GET /goal_rating_sheets/new
   def new
-    
    @goal_rating_sheet = GoalRatingSheet.new
     @employee_goals = []
     @goal_rating_sheets = GoalRatingSheet.all
@@ -85,6 +84,7 @@ class GoalRatingSheetsController < ApplicationController
   end
   
   def appraiser 
+     @employee = Employee.find(params[:format])
     @goal_rating_sheets = GoalRatingSheet.all
     @goal_rating_sheet = GoalRatingSheet.new
     @performance_periods = PerformancePeriod.all
@@ -112,10 +112,53 @@ class GoalRatingSheetsController < ApplicationController
   end
 
   def edit_goal_rating
-    @goal_rating_sheet = GoalRatingSheet.find(params :format)
+    @goal_rating_sheet = GoalRatingSheet.find(params[:format])
   end
   
+  def subordinate_list
+    current_login = Employee.find(current_user.employee_id)
+    @employees = current_login.subordinates
+  end
+ 
 
+  def edit_appraiser
+    @goal_rating_sheet = GoalRatingSheet.find(params[:format])
+  end
+  
+  def update_appraiser
+    #byebug
+    @goal_rating_sheet = GoalRatingSheet.find(params[:id])
+    if @goal_rating_sheet.update(goal_rating_sheet_params)
+      flash[:notice] = "Updated Successfully"
+      redirect_to appraiser_goal_rating_sheets_path
+    else
+      flash[:alert] = "Not Updated "
+      redirect_to appraiser_goal_rating_sheets_path
+    end
+  end
+
+  def destroy_appraiser
+    @goal_rating_sheet = GoalRatingSheet.find(params[:format])
+    if @goal_rating_sheet.destroy
+      flash[:notice] = "Deleted Successfully"
+      redirect_to appraiser_goal_rating_sheets_path
+    else
+      flash[:alert] = "Not Deleted"
+      redirect_to appraiser_goal_rating_sheets_path
+    end
+  end
+
+  def is_confirm
+     @goal_rating_sheet = GoalRatingSheet.find(params[:format])
+    
+    @goal_rating_sheet.update(is_confirm: true)
+
+    redirect_to appraiser_goal_rating_sheets_path(@goal_rating_sheet.appraiser_id)
+  end
+ 
+ def modal
+ end
+ 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_goal_rating_sheet
@@ -124,6 +167,6 @@ class GoalRatingSheetsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def goal_rating_sheet_params
-      params.require(:goal_rating_sheet).permit(:appraisee_id, :appraiser_id, :employee_goal_id, :allign_to_supervisor, :appraisee_comment, :appraisee_rating, :appraiser_comment, :appraiser_rating)
+      params.require(:goal_rating_sheet).permit(:is_confirm,:appraisee_id, :appraiser_id, :employee_goal_id, :allign_to_supervisor, :appraisee_comment, :appraisee_rating, :appraiser_comment, :appraiser_rating)
     end
 end

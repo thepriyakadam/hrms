@@ -52,6 +52,7 @@ class Employee < ActiveRecord::Base
 
 
   before_create :add_department
+  before_update :add_department
 
   validates :manual_employee_code, :presence => true, uniqueness: { case_sensitive: false }
   validates :first_name, :presence => true

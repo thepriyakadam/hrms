@@ -67,7 +67,7 @@ class AttributeRatingSheetsController < ApplicationController
   def update
       if @attribute_rating_sheet.update(attribute_rating_sheet_params)
         flash[:notice] = "Employee Attribute Updated Successfully"
-        redirect_to attribute_rating_sheets_path
+        redirect_to appraiser_attribute_rating_sheets_path
       else
         flash[:alert] = "Not Updated"
         redirect_to new_attribute_rating_sheet_path
@@ -108,7 +108,11 @@ class AttributeRatingSheetsController < ApplicationController
   end
 
   def edit_attribute_rating
-    @attribute_rating_sheet = AttributeRatingSheet.find(params :format)
+    @attribute_rating_sheet = AttributeRatingSheet.find(params[:format])
+  end
+
+  def edit_appraiser
+    @attribute_rating_sheet = AttributeRatingSheet.find(params[:format])
   end
 
   private

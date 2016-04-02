@@ -9,8 +9,7 @@
     <table id="example2" class="table table-bordered table-hover table-condensed">
         <thead>
           <tr>
-            <th>Attribute</th>
-            <th>Definition</th>
+            <th>Attribute & Definition</th>
             <th>Weightage</th>
             <th>Appraisee comment</th>
             <th>Appraisee rating</th>
@@ -21,7 +20,6 @@
           <% @attribute_rating_sheets.each do |a| %>
           <tr>
             <td><%= a.employee_attribute.attribute_master.name %></td>
-            <td><%= a.employee_attribute.definition.name %></td>
             <td><%= a.employee_attribute.weightage %></td>
             <td><%= a.appraisee_comment %></td>
             <td><%= a.appraisee_rating %></td>

@@ -5,33 +5,10 @@
   <div class="box-body">
    <%= bootstrap_form_for(@goal_rating_sheet,url: {action: "appraiser_create"},html: {id: "goal_rating_sheet"}) do |f| %>
 
-  <table id="tbl" class="table table-bordered table-hover table-condensed">
-    <thead>
-      <tr>
-        <th>Period</th>
-        <th>From</th>
-        <th>To</th>
-        <th>Description</th>
-        <th>Is Open</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @performance_periods.each do |p| %>
-      <tr>
-        <td><%= p.title %></td>
-        <td><%= p.start_date %></td>
-        <td><%= p.end_date %></td>
-        <td><%= p.description %></td>
-        <td><%= p.is_open %></td>
-      </tr>
-      <% end %>
-    </tbody>
-  </table>
-
-
     <table id="tbl" class="table table-bordered table-hover table-condensed">
     <thead>
       <tr>
+        <th>Period</th>
         <th>Goal Perspctive</th>
         <th>Goal Measure</th>
         <th>Target</th>
@@ -49,6 +26,7 @@
     <tbody>
       <% @goal_rating_sheets.each do |g| %>
         <tr>
+          <td><%= g.employee_goal.period.title %></td>
           <td><%= g.employee_goal.goal_perspective.name %></td>
           <td><%= g.employee_goal.goal_measure %></td>
           <td><%= g.employee_goal.target %></td>
@@ -94,6 +72,7 @@
         <th>Appraisee Rating</th>
         <th>Appraiser Comment</th>
         <th>Appraiser Rating</th>
+        <th>Action</th>
       </tr>
     </thead>
     <tbody>
@@ -109,13 +88,26 @@
           <td><%= g.appraisee_comment %></td>
           <td><%= g.appraisee_rating %></td>
           <td><%= g.appraiser_comment %></td>
-          <td><%= g.appraiser_rating %></td> 
+          <td><%= g.appraiser_rating %></td>
+          <td>
+          <% if g.is_confirm == true %>
+          <%= link_to '', modal_goal_rating_sheets_path, class: 'btn btn-xs btn-success fa fa-check', remote: true %>
+            <% else %>
+              <%= link_to '', edit_appraiser_goal_rating_sheets_path(g) ,class: 'btn btn-xs btn-success fa fa-edit' %>
+              <%= link_to '', destroy_appraiser_goal_rating_sheets_path(g), data: { confirm: 'Are you sure?', method: :delete },class: 'btn btn-xs btn-danger fa fa-close' %>
+              <%= link_to '',is_confirm_goal_rating_sheets_path(g),class: 'btn btn-xs btn-warning fa fa-check'%>
+              
+            <% end %>
+          </td>
         </tr>
       <% end %>
     </tbody>
   </table>
   </div>
 
+   <%= link_to 'Attribute-Setting', appraiser_attribute_rating_sheets_path(@employee.id) , class: 'btn btn-warning btn-sm' %>
+
+    <div id="myModal" class="modal fade"></div>
 
 <script type="text/javascript">
   $("#goal_rating_sheet").validate({

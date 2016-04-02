@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resources :performance_periods
   resources :attribute_rating_sheets do
     collection do
+      get :edit_appraiser
       get :edit_attribute_rating
       get :appraiser
       post :appraiser_create
@@ -10,9 +11,15 @@ Rails.application.routes.draw do
   end
   resources :goal_rating_sheets  do
     collection do
+      get :is_confirm
+      get :edit_appraiser
+      patch :update_appraiser
+      delete :destroy_appraiser
+      get :subordinate_list
       get :edit_goal_rating
       get :appraiser
       post :appraiser_create
+      get :modal
     end
   end
   resources :employee_attributes do

@@ -232,11 +232,27 @@ class EmployeesController < ApplicationController
   end
 
   def transfer_form
-    
+    @employee = Employee.find(params[:id])
   end
 
   def transfer_employee
-    
+    #byebug
+    @department = Department.find(params[:employee][:department_id])
+    @company_location = CompanyLocation.find(@department.company_location_id)
+    @company = Company.find(@company_location.company_id)
+    @employee = Employee.find(params[:id])
+    @member = @employee.member
+
+    ActiveRecord::Base.transaction do
+      @employee.update(company_id: @company.id, company_location_id: @company_location.id, department_id: @department.id)
+      @member.update(company_id: @company.id, company_location_id: @company_location.id, department_id: @department.id)
+    end
+    flash[:notice] = "Employee Transfer successfully."
+    redirect_to transfer_employee_list_employees_path
+  end
+
+  def transfer_employee_list
+    @employees = Employee.all
   end
 
   private

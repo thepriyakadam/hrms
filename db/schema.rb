@@ -119,16 +119,6 @@ ActiveRecord::Schema.define(version: 20160331045040) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "bonus", force: :cascade do |t|
-    t.integer  "employee_id"
-    t.decimal  "bonus_amount", precision: 15, scale: 2, default: 0.0
-    t.string   "bouns_date"
-    t.datetime "created_at",                                          null: false
-    t.datetime "updated_at",                                          null: false
-  end
-
-  add_index "bonus", ["employee_id"], name: "index_bonus_on_employee_id"
-
   create_table "bonus_employees", force: :cascade do |t|
     t.integer  "employee_id"
     t.date     "bonus_date"
@@ -372,26 +362,6 @@ ActiveRecord::Schema.define(version: 20160331045040) do
   end
 
   add_index "districts", ["state_id"], name: "index_districts_on_state_id"
-
-  create_table "employee_annual_salaries", force: :cascade do |t|
-    t.integer  "employee_id"
-    t.integer  "salary_component_id"
-    t.datetime "created_at",                                          null: false
-    t.datetime "updated_at",                                          null: false
-    t.decimal  "percentage",                 precision: 5,  scale: 2
-    t.integer  "parent_salary_component_id"
-    t.boolean  "is_deducted"
-    t.string   "to_be_paid"
-    t.decimal  "max_amount",                 precision: 15, scale: 2
-    t.decimal  "monthly_amount",             precision: 15, scale: 2
-    t.decimal  "annual_amount",              precision: 15, scale: 2
-    t.boolean  "is_taxable"
-    t.decimal  "tax",                        precision: 15, scale: 2
-    t.string   "base"
-  end
-
-  add_index "employee_annual_salaries", ["employee_id"], name: "index_employee_annual_salaries_on_employee_id"
-  add_index "employee_annual_salaries", ["salary_component_id"], name: "index_employee_annual_salaries_on_salary_component_id"
 
   create_table "employee_arrear_items", force: :cascade do |t|
     t.integer  "employee_arrear_id"
@@ -1103,31 +1073,14 @@ ActiveRecord::Schema.define(version: 20160331045040) do
 
   add_index "overtime_salaries", ["employee_id"], name: "index_overtime_salaries_on_employee_id"
 
-  create_table "overtimes", force: :cascade do |t|
-    t.integer  "employee_id"
-    t.date     "ot_date"
-    t.string   "ot_type"
-    t.string   "ot_total_hrs"
-    t.string   "total_production"
-    t.string   "normal_wages_rate"
-    t.string   "ot_wages_rate"
-    t.string   "ot_earning"
-    t.date     "paid_on_date"
-    t.text     "remarks"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
-  end
-
-  add_index "overtimes", ["employee_id"], name: "index_overtimes_on_employee_id"
-
   create_table "particular_leave_records", force: :cascade do |t|
     t.integer  "employee_id"
     t.integer  "employee_leav_request_id"
+    t.integer  "leav_category_id"
     t.datetime "leave_date"
     t.boolean  "is_full"
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
-    t.integer  "leav_category_id"
     t.boolean  "is_cancel_after_approve"
   end
 

@@ -4,15 +4,7 @@
     <h3 class="box-title">Employee Transfer</h3>
   </div><!-- /.box-header -->
   <div class="box-body">
-    <%= bootstrap_form_for :employee, url: { action: 'transfer_employee'} do |f| %>
-      <div class="row">
-        <div class="col-sm-3">
-          <div class="field">
-            <%= f.select :employee_id, all_employee_list,{include_blank: " Select Employee"} %>
-          </div>
-        </div>
-      </div>
-
+    <%= bootstrap_form_for @employee, url: { action: 'transfer_employee', id: @employee.id} do |f| %>
       <div class="row">
         <div class="col-sm-3">
           <div class="field">

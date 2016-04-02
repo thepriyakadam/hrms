@@ -17,7 +17,9 @@ class EmployeeTemplate < ActiveRecord::Base
 
   def self.build_objects(arrays,params,employee_id,template_id,employee_template)
     arrays.each do |a|
-      employee_template.employee_salary_templates.build(employee_id: employee_id, \
+      salary_component = SalaryComponent.find(params[:salary_component_id][a])
+      unless salary_component.name == "CTC"
+        employee_template.employee_salary_templates.build(employee_id: employee_id, \
                                   salary_template_id: template_id, \
                                   salary_component_id: params[:salary_component_id][a], \
                                   is_deducted: params[:is_deducted][a], \
@@ -26,6 +28,7 @@ class EmployeeTemplate < ActiveRecord::Base
                                   to_be_paid: params[:to_be_paid][a], \
                                   monthly_amount: params[:monthly_amount][a], \
                                   annual_amount: params[:annual_amount][a])
+      end  
     end
     employee_template
   end

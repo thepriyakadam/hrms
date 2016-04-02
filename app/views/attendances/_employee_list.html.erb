@@ -1,6 +1,17 @@
 
 <%= bootstrap_form_for(@attendance,html: {id: 'award'},remote:true) do |f| %>
 <div class="row">
+    <div class="col-sm-3">
+    <label>Attendance Date </label>
+    <div class="field">
+      <div class="input-group">
+        <div class="input-group-addon">
+          <i class="fa fa-calendar"></i>
+        </div>
+        <%= f.text_field :attendance_date, hide_label: true, id: 'attendance_date'%>
+      </div>
+    </div>
+    </div>
     <div class="col-sm-2">
       <div class="bootstrap-timepicker">
        <div class="form-group">
@@ -32,21 +43,12 @@
       <%= f.text_field :company_hrs %>
      </div>
     </div>
-
-    <div class="col-sm-3">
-        <label>Attendance Date </label>
-        <div class="field">
-          <div class="input-group">
-            <div class="input-group-addon">
-              <i class="fa fa-calendar"></i>
-            </div>
-            <%= f.text_field :attendance_date, hide_label: true, id: 'attendance_date'%>
-          </div>
-        </div>
-        </div>
   </div>
+
+  <hr>
+
   <div class="row">
-    <div class="col-sm-6">
+    <div class="col-sm-10">
       <table id="example2" class="table table-bordered table-hover table-condensed">
         <thead>
           <tr>
@@ -80,9 +82,6 @@
     </div>
   </div>
 <% end %>
-	
-
-  
 
 <script>
 $(function () {

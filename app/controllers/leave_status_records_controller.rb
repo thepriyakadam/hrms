@@ -31,6 +31,8 @@ class LeaveStatusRecordsController < ApplicationController
   end
 
   def first_approve
+    #byebug
+    ### if no second reporter available
     if @employee_leav_request.employee.manager_2_id.nil?
       @leave_status = LeaveStatusRecord.new do |s|
         s.employee_leav_request_id = params[:id]
@@ -43,10 +45,10 @@ class LeaveStatusRecordsController < ApplicationController
           @employee_leav_request.update(is_first_approved: true, current_status: "FirstApproved")
           @employee_leav_request.create_single_record_for_leave(@employee_leav_request)
           #@employee_leav_request.minus_leave(@employee_leav_request)
-          if @employee_leav_request.first_reporter.email.nil? or @employee_leav_request.first_reporter.email == ""
+          if @employee_leav_request.employee.email.nil? or @employee_leav_request.employee.email == ""
             flash[:notice] = "Leave Approved Successfully without email."
           else
-            LeaveRequestMailer.first_approve(@employee_leav_request).deliver_now
+            LeaveRequestMailer.first_approve1(@employee_leav_request).deliver_now
             flash[:notice] = "Leave Approved Successfully."
           end
           redirect_to approved_or_rejected_leave_request_employee_leav_requests_path
@@ -55,6 +57,7 @@ class LeaveStatusRecordsController < ApplicationController
           redirect_to approved_or_rejected_leave_request_employee_leav_requests_path
         end
       end
+    ### if second reporter available  
     else
       @leave_status = LeaveStatusRecord.new do |s|
         s.employee_leav_request_id = params[:id]
@@ -65,8 +68,7 @@ class LeaveStatusRecordsController < ApplicationController
       ActiveRecord::Base.transaction do
         if @leave_status.save
           @employee_leav_request.update(is_first_approved: true, current_status: "FirstApproved", second_reporter_id: @employee_leav_request.employee.manager_2_id)
-          LeaveRequestMailer.first_approve(@employee_leav_request).deliver_now
-          if @employee_leav_request.first_reporter.email.nil? or @employee_leav_request.first_reporter.email == ""
+          if @employee_leav_request.second_reporter.email.nil? or @employee_leav_request.second_reporter.email == ""
             flash[:notice] = "Leave Approved Successfully without email."
           else
             LeaveRequestMailer.first_approve(@employee_leav_request).deliver_now

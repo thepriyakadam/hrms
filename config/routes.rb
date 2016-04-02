@@ -296,11 +296,14 @@ Rails.application.routes.draw do
       get :ajax_setup_payroll
       get :manager
       get :transfer_form
-      post :transfer_employee
+      
+      get :transfer_employee_list
     end
     member do
       get :edit_manager
       patch :update_manager
+      patch :transfer_employee
+      get :transfer_form
     end
   end
   resources :blood_groups

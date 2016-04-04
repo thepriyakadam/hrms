@@ -4,6 +4,7 @@ class GoalRatingSheetsController < ApplicationController
   # GET /goal_rating_sheets
   # GET /goal_rating_sheets.json
   def index
+
     @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: current_user.employee_id)
     
   end
@@ -17,9 +18,9 @@ class GoalRatingSheetsController < ApplicationController
   def new
    @goal_rating_sheet = GoalRatingSheet.new
     @employee_goals = []
-    @goal_rating_sheets = GoalRatingSheet.all
+    @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: current_user.employee_id)
     if @goal_rating_sheets.empty?
-      @employee_goals = EmployeeGoal.all
+      @employee_goals = EmployeeGoal.where(employee_id: current_user.employee_id)
     else
       @goal_rating_sheets.each do |a|
         temp = GoalRatingSheet.exists?(appraisee_id: current_user.employee_id, employee_goal_id: a.employee_goal_id)
@@ -58,7 +59,7 @@ class GoalRatingSheetsController < ApplicationController
       flash[:notice] = "Employee Goal Created Successfully"
       end
     end
-    redirect_to new_goal_rating_sheet_path  
+    redirect_to goal_rating_sheets_path  
   end
 
   # PATCH/PUT /goal_rating_sheets/1
@@ -66,7 +67,7 @@ class GoalRatingSheetsController < ApplicationController
   def update
       if @goal_rating_sheet.update(goal_rating_sheet_params)
         flash[:notice] = "Updated Successfully"
-        redirect_to goal_rating_sheets_path
+        redirect_to new_goal_rating_sheet_path
       else
         flash[:alert] = "Not Updated"
         redirect_to new_goal_rating_sheet_path
@@ -108,7 +109,7 @@ class GoalRatingSheetsController < ApplicationController
       goal_rating_sheet.update(appraiser_comment: c, appraiser_rating: r, appraiser_id: params[:appraiser_id])
       end
     end
-    redirect_to appraiser_goal_rating_sheets_path
+    redirect_to appraiser_goal_rating_sheets_path(current_user.employee_id)
   end
 
   def edit_goal_rating
@@ -130,10 +131,10 @@ class GoalRatingSheetsController < ApplicationController
     @goal_rating_sheet = GoalRatingSheet.find(params[:id])
     if @goal_rating_sheet.update(goal_rating_sheet_params)
       flash[:notice] = "Updated Successfully"
-      redirect_to appraiser_goal_rating_sheets_path
+      redirect_to appraiser_goal_rating_sheets_path(current_user.employee_id)
     else
       flash[:alert] = "Not Updated "
-      redirect_to appraiser_goal_rating_sheets_path
+      redirect_to appraiser_goal_rating_sheets_path(current_user.employee_id)
     end
   end
 
@@ -148,17 +149,29 @@ class GoalRatingSheetsController < ApplicationController
     end
   end
 
-  def is_confirm
+  def is_confirm_appraiser
      @goal_rating_sheet = GoalRatingSheet.find(params[:format])
     
-    @goal_rating_sheet.update(is_confirm: true)
+    @goal_rating_sheet.update(is_confirm_appraiser: true)
 
     redirect_to appraiser_goal_rating_sheets_path(@goal_rating_sheet.appraiser_id)
   end
  
+ def is_confirm_appraisee
+     @goal_rating_sheet = GoalRatingSheet.find(params[:format])
+    
+    @goal_rating_sheet.update(is_confirm_appraisee: true)
+
+    redirect_to new_goal_rating_sheet_path
+  end
+
  def modal
  end
  
+ def appraisee_goal_list
+   @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: current_user.employee_id)
+ end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_goal_rating_sheet

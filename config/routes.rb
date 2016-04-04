@@ -64,11 +64,14 @@ Rails.application.routes.draw do
       get :edit_attribute_rating
       get :appraiser
       post :appraiser_create
+      get :is_confirm_appraiser
+      get :is_confirm_appraisee
     end
   end
   resources :goal_rating_sheets  do
     collection do
-      get :is_confirm
+      get :is_confirm_appraisee
+      get :is_confirm_appraiser
       get :edit_appraiser
       patch :update_appraiser
       delete :destroy_appraiser
@@ -76,6 +79,7 @@ Rails.application.routes.draw do
       get :edit_goal_rating
       get :appraiser
       post :appraiser_create
+      get :appraisee_goal_list
       get :modal
     end
   end
@@ -85,6 +89,7 @@ Rails.application.routes.draw do
       post :appraisee_create
       get :appraiser
       post :appraiser_create
+      get :is_confirm
     end
   end
   resources :employee_goals do

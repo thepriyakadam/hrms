@@ -16,7 +16,7 @@
       <tbody>
       <% @employee_attributes.each do |employee_attribute| %>
         <tr>
-          <td><%= employee_attribute.attribute_master %></td>
+          <td><%= employee_attribute.attribute_master.name %></td>
           <td><%= employee_attribute.weightage %></td>
           <td><%= text_field_tag 'appraisee_comment[]' %></td>
           <td><%= text_field_tag 'appraisee_rating[]' %></td>

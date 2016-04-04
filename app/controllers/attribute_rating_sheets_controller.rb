@@ -6,7 +6,6 @@ class AttributeRatingSheetsController < ApplicationController
   def index
     @attribute_rating_sheets = AttributeRatingSheet.all
     @attribute_rating_sheets = AttributeRatingSheet.where(appraisee_id: current_user.employee_id)
-
   end
 
   # GET /attribute_rating_sheets/1
@@ -85,6 +84,7 @@ class AttributeRatingSheetsController < ApplicationController
   end
 
   def appraiser
+    @employee = Employee.find(params[:format])
     @attribute_rating_sheets = AttributeRatingSheet.all
     @attribute_rating_sheet = AttributeRatingSheet.new
   end
@@ -115,6 +115,22 @@ class AttributeRatingSheetsController < ApplicationController
     @attribute_rating_sheet = AttributeRatingSheet.find(params[:format])
   end
 
+  def is_confirm_appraiser
+    @attribute_rating_sheet = AttributeRatingSheet.find(params[:format])
+    
+    @attribute_rating_sheet.update(is_confirm_appraiser: true)
+
+    redirect_to appraiser_attribute_rating_sheets_path(format: @attribute_rating_sheet.appraiser_id)
+  end
+
+  def is_confirm_appraisee
+    @attribute_rating_sheet = AttributeRatingSheet.find(params[:format])
+    
+    @attribute_rating_sheet.update(is_confirm_appraisee: true)
+
+    redirect_to attribute_rating_sheets_path(@attribute_rating_sheet.appraisee_id)
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_attribute_rating_sheet
@@ -123,6 +139,6 @@ class AttributeRatingSheetsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def attribute_rating_sheet_params
-      params.require(:attribute_rating_sheet).permit(:appraisee_id, :appraiser_id, :employee_attribute_id, :appraisee_comment, :appraisee_rating, :appraiser_comment, :appraiser_rating)
+      params.require(:attribute_rating_sheet).permit(:is_confirm_appraisee,:is_confirm_appraiser,:appraisee_id, :appraiser_id, :employee_attribute_id, :appraisee_comment, :appraisee_rating, :appraiser_comment, :appraiser_rating)
     end
 end

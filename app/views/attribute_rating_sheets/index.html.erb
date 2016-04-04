@@ -24,8 +24,12 @@
             <td><%= a.appraisee_comment %></td>
             <td><%= a.appraisee_rating %></td>
             <td>
+              <% if a.is_confirm_appraisee == true %>
+              <% else %>
               <%= link_to '', edit_attribute_rating_sheet_path(a),class: 'btn btn-success btn-xs fa fa-edit' %>
               <%= link_to '', a, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-xs fa fa-close' %>
+              <%= link_to '',is_confirm_appraisee_attribute_rating_sheets_path(a),class: 'btn btn-xs btn-warning fa fa-check'%>
+              <% end %>
             </td>
           </tr>
           <% end %>
@@ -33,3 +37,4 @@
     </table>
   </div>
 </div>
+<%= link_to 'Back', new_attribute_rating_sheet_path %>

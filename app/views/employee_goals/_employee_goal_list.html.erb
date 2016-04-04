@@ -14,9 +14,7 @@
       <tbody>
         <% @employee_goals.each do |e| %>
         <tr>
-        <td>
-         <%= e.period.title %>
-        </td>
+          <td><%= e.period.title %></td>
           <td><%= e.goal_perspective.name %></td>
           <td><%= e.goal_measure %></td>
           <td><%= e.target %></td>
@@ -35,5 +33,6 @@
         <% end %>
       </tbody>
     </table>
-    <%= link_to 'Attribute Setting', new_employee_attribute_path(@employee.id) , class: 'btn btn-warning btn-sm' %>
-  
+    <%= link_to 'Attribute Setting', new_employee_attribute_path(@employee.id) , class: 'btn btn-warning btn-sm' %> </br>
+      </br>
+    <%= link_to 'Back', subordinate_list_employee_goals_path %>

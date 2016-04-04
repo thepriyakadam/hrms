@@ -54,6 +54,7 @@ class QualificationsController < ApplicationController
     respond_to do |format|
       @employee = Employee.find(params["qualification"]["employee_id"])
       if @qualification.update(qualification_params)
+        
         #format.html { redirect_to @qualification, notice: 'Qualification was successfully updated.' }
         #format.json { render :show, status: :ok, location: @qualification }
         @qualifications = @employee.qualifications

@@ -64,11 +64,13 @@ class EmployeeLeavBalancesController < ApplicationController
   def update
     respond_to do |format|
       if @employee_leav_balance.update(employee_leav_balance_params)
-        format.html { redirect_to @employee_leav_balance, notice: 'Employee leav balance was successfully updated.' }
-        format.json { render :show, status: :ok, location: @employee_leav_balance }
+        #format.html { redirect_to @employee_leav_balance, notice: 'Employee leav balance was successfully updated.' }
+        #format.json { render :show, status: :ok, location: @employee_leav_balance }
+        format.js { @flag = true }
       else
-        format.html { render :edit }
-        format.json { render json: @employee_leav_balance.errors, status: :unprocessable_entity }
+        #format.html { render :edit }
+        #format.json { render json: @employee_leav_balance.errors, status: :unprocessable_entity }
+        format.js { @flag = true }
       end
     end
   end

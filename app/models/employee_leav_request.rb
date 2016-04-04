@@ -11,6 +11,9 @@ class EmployeeLeavRequest < ActiveRecord::Base
   belongs_to :first_reporter, class_name: "Employee"
   belongs_to :second_reporter, class_name: "Employee"
 
+  # CURRENT_STATUSS = [["Pending",0], ["FirstApproved",2], ["SecondApproved",3], ["FirstRejected",4],["SecondRejected",5],["Cancelled",1]]
+  # validates_inclusion_of :current_status, :in => CURRENT_STATUSS
+
   def create_single_record_for_leave(employee_leav_request)
     if employee_leav_request.leave_type == "Full Day"
       for i in employee_leav_request.start_date.to_date..employee_leav_request.end_date.to_date

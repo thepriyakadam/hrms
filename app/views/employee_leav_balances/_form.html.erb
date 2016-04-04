@@ -3,10 +3,10 @@
     <div class="col-sm-3">
       <div class="field">
         <%= label "employee_leav_balance","Leav Category"%>
-        <%= text_field "employee_leav_balance","category_name", value: @leav_category.name, class: "form-control", readonly:true %>
+        <%= text_field "employee_leav_balance","category_name", value: @leav_category.try(:name), class: "form-control", readonly:true %>
       </div>
     </div>
-    <%= f.hidden_field :leav_category_id, value: @leav_category.id %>
+    <%= f.hidden_field :leav_category_id, value: @leav_category.try(:id) %>
     <div class="col-sm-3">
       <div class="field">
         <%= f.text_field :no_of_leave %>

@@ -30,6 +30,9 @@
       <body class="hold-transition login-page">
         <%= render 'layouts/messages' %>
         <%= yield %>
+        <div>
+        <%= render :partial => "layouts/email_modal" %>
+        </div>
       </body>
     <% end %>
   </body>

@@ -55,6 +55,9 @@ Rails.application.configure do
     :password => 'hrms1234',
     :authentication => :plain
   }
+  
+  config.assets.debug = true
+  config.action_mailer.delivery_method = :letter_opener
 
   # Paperclip setup
   #Paperclip.options[:command_path] = "/usr/local/bin/convert"

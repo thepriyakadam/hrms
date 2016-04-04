@@ -5,6 +5,7 @@ class Department < ActiveRecord::Base
   has_many :employees
   has_many :member
   has_many :joining_details
+  has_many :vacancy_masters
 
   validates :manual_department_code, :presence => true, uniqueness: { case_sensitive: false }
   validates :name, :presence => true

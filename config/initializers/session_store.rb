@@ -2,6 +2,7 @@
 
 Rails.application.config.session_store :cookie_store, key: '_hrms_session'
 
+# for multitenancy
 # Rails.application.config.session_store :cookie_store, {
 #   key: '_hrms_session',
 #   domain: Rails.configuration.domain

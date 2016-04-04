@@ -22,6 +22,15 @@ end
     end
   end
 
+  resources :self_services do
+    collection do
+      get :employee
+      get :employee_template
+      get :salaryslip
+      get :advance
+      get :attendance
+    end
+  end
 
   namespace :reports do
   get 'family_details/new'

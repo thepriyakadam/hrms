@@ -176,6 +176,8 @@ class EmployeeLeavRequestsController < ApplicationController
       column(:end_date,sortable: true) { |employee_leav_request| employee_leav_request.end_date.to_date }
       column(:leav_category_id,sortable: true) { |employee_leav_request| employee_leav_request.leav_category.try(:name) }
       column(:leave_type,sortable: true) { |employee_leav_request| employee_leav_request.leave_type }
+      column(:current_status,sortable: true) { |employee_leav_request| employee_leav_request.current_status }
+      column(:leave_count,sortable: true) { |employee_leav_request| employee_leav_request.leave_count }
       column(:reason,sortable: true) { |employee_leav_request| employee_leav_request.reason }
     end
   end

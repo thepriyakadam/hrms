@@ -391,13 +391,9 @@ end
       get :ajax_setup_payroll
       get :manager
       get :transfer_form
-<<<<<<< HEAD
       post :transfer_employee
       get :search_by_employee_manual_code
-=======
-      
       get :transfer_employee_list
->>>>>>> 0b70c373f74a3558263a303ee9223128160989d2
     end
     member do
       get :edit_manager

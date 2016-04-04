@@ -35,7 +35,6 @@ class EmployeeTemplatesController < ApplicationController
       flash[:notice] = "Template Activated..."
       redirect_to template_list_employee_templates_path(format: @employee.id)
     end
-    
   end
 
   def deactivate

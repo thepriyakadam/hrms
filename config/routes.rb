@@ -1,4 +1,26 @@
+
 Rails.application.routes.draw do
+  
+  resources :week_offs
+  resources :employee_leav_request_reports, :only => [:index]
+
+  resources :capture_resumes
+  resources :interview_schedules do
+    collection do
+    get :search_by_interview_date
+    end
+end
+  resources :vacancy_masters do
+    collection do
+    get :search_by_vacancy_post_date
+    post :import  
+    end
+end  
+  resources :leave_c_offs do
+    collection do
+      get :search_by_c_off_date
+    end
+  end
 
 
   namespace :reports do
@@ -96,7 +118,9 @@ Rails.application.routes.draw do
       get :show_leave_record
     end
   end
-
+  
+  match 'capture_resumes/:id/download/:id' => 'capture_resumes#download', :via => [:get], :as => :download
+  
   resources :leave_c_offs
   resources :overtime_month_records
   resources :overtime_daily_records
@@ -210,7 +234,11 @@ Rails.application.routes.draw do
       get :employees
     end
   end
-  resources :advance_salaries
+  resources :advance_salaries do
+    collection do
+      get :search_by_advance_date
+    end
+  end
   resources :workingdays do
     collection do
       get :employees
@@ -269,6 +297,7 @@ Rails.application.routes.draw do
       get :attendance_details
       get :collect_shift_date
       get :collect_employee
+      get :search_by_date
     end
   end
   resources :employee_shifts do
@@ -308,12 +337,20 @@ Rails.application.routes.draw do
       get :from_hr
       get :hr_view_request
       get :employee_history_with_current_leave
+      get :search_by_start_date
+      get :search_by_end_date
+      get :search_by_is_pending_date
+      get :employee_leav_request_reports
     end
   end
   resources :company_leavs
   resources :leav_categories
   resources :employee_physicals
-  resources :joining_details
+  resources :joining_details do
+    collection do
+      get :search_by_joining_date
+    end
+  end
   resources :employee_grades
   resources :awards do
     collection do
@@ -355,10 +392,14 @@ Rails.application.routes.draw do
       get :manager
       get :transfer_form
       post :transfer_employee
+      get :search_by_employee_manual_code
+      get :transfer_employee_list
     end
     member do
       get :edit_manager
       patch :update_manager
+      patch :transfer_employee
+      get :transfer_form
     end
   end
   resources :blood_groups

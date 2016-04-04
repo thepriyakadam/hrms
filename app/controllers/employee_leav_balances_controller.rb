@@ -44,8 +44,11 @@ class EmployeeLeavBalancesController < ApplicationController
       ActiveRecord::Base.transaction do
         @employee_ids.each do |e|
           leave_category = LeavCategory.find(params[:employee_leav_balance][:leav_category_id])
-          if leave_category.name == "Casual Leave"
-            @elb = EmployeeLeavBalance.create(employee_id: e, leav_category_id: params[:employee_leav_balance][:leav_category_id], no_of_leave: params[:employee_leav_balance][:no_of_leave], total_leave: params[:employee_leav_balance][:total_leave], expiry_date: params[:employee_leav_balance][:expiry_date])
+          if leave_category.name == "Seak Leave" or leav_category.code == "SL"
+            today_date = Date.today
+            month = today_date.strftime("%-m")
+            leave = EmployeeLeavBalance.count_leave(month) 
+            @elb = EmployeeLeavBalance.create(employee_id: e, leav_category_id: params[:employee_leav_balance][:leav_category_id], no_of_leave: leave, total_leave: leave, expiry_date: params[:employee_leav_balance][:expiry_date])
           else
             @elb = EmployeeLeavBalance.create(employee_id: e, leav_category_id: params[:employee_leav_balance][:leav_category_id], no_of_leave: params[:employee_leav_balance][:no_of_leave], total_leave: params[:employee_leav_balance][:total_leave], expiry_date: params[:employee_leav_balance][:expiry_date])
           end
@@ -61,11 +64,13 @@ class EmployeeLeavBalancesController < ApplicationController
   def update
     respond_to do |format|
       if @employee_leav_balance.update(employee_leav_balance_params)
-        format.html { redirect_to @employee_leav_balance, notice: 'Employee leav balance was successfully updated.' }
-        format.json { render :show, status: :ok, location: @employee_leav_balance }
+        #format.html { redirect_to @employee_leav_balance, notice: 'Employee leav balance was successfully updated.' }
+        #format.json { render :show, status: :ok, location: @employee_leav_balance }
+        format.js { @flag = true }
       else
-        format.html { render :edit }
-        format.json { render json: @employee_leav_balance.errors, status: :unprocessable_entity }
+        #format.html { render :edit }
+        #format.json { render json: @employee_leav_balance.errors, status: :unprocessable_entity }
+        format.js { @flag = true }
       end
     end
   end

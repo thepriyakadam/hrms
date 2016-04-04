@@ -38,6 +38,7 @@ class ApplicationController < ActionController::Base
   #AbstractController::DoubleRenderError
   #AbstractController::DoubleRenderError
   #ActionController::ActionControllerError
+  #ActionController::InvalidAuthenticityToken
   
   
   # rescue_from ActionView::Template::Error do |exc|

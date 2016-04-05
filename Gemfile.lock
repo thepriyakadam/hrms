@@ -282,6 +282,7 @@ DEPENDENCIES
   query_report (~> 1.2, >= 1.2.1)
   rails (= 4.2.4)
   rails-erd
+  rmagick (~> 2.15.4)
   roo
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
@@ -295,3 +296,6 @@ DEPENDENCIES
   web-console (~> 2.0)
   wirble
   yaml_db
+
+BUNDLED WITH
+   1.10.6

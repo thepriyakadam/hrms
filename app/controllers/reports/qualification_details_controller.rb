@@ -3,6 +3,6 @@ class Reports::QualificationDetailsController < ApplicationController
   end
 
   def qualification_detail_report
-  	@qualifications = Qualification.all
+  	@qualifications = Qualification.where(employee_id: Employee.where(company_location_id: params[:salary][:company_location_id]))
   end
 end

@@ -3,7 +3,7 @@ class Reports::ExperienceDetailsController < ApplicationController
   end
 
   def experience_detail_report
-  	 @experiences = Experience.all
+  	 @experiences = Experience.where(employee_id: Employee.where(company_location_id: params[:salary][:company_location_id]))
   end
 
 end

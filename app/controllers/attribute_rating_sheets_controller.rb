@@ -17,10 +17,10 @@ class AttributeRatingSheetsController < ApplicationController
   def new
     @attribute_rating_sheet = AttributeRatingSheet.new
     @employee_attributes = []
-    @attribute_rating_sheets = AttributeRatingSheet.all
+    @attribute_rating_sheets = AttributeRatingSheet.where(appraisee_id: current_user.employee_id)
 
     if @attribute_rating_sheets.empty?
-      @employee_attributes = EmployeeAttribute.all
+      @employee_attributes = EmployeeAttribute.where(employee_id: current_user.employee_id)
     else
       @attribute_rating_sheets.each do |a|
         temp = AttributeRatingSheet.exists?(appraisee_id: current_user.employee_id, employee_attribute_id: a.employee_attribute_id)
@@ -85,7 +85,7 @@ class AttributeRatingSheetsController < ApplicationController
 
   def appraiser
     @employee = Employee.find(params[:format])
-    @attribute_rating_sheets = AttributeRatingSheet.all
+    @attribute_rating_sheets = AttributeRatingSheet.where(appraisee_id: @employee.id)
     @attribute_rating_sheet = AttributeRatingSheet.new
   end
 

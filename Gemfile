@@ -13,14 +13,13 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.1.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 gem 'therubyracer', platforms: :ruby
-gem 'query_report', '~> 1.2', '>= 1.2.1'
-gem 'kaminari', '~> 0.16.3'
-gem 'coderay'
-gem 'bootstrap-datepicker-rails'
-gem "letter_opener", :group => :development
-gem "awesome_print"
-gem 'datagrid', '~> 1.4', '>= 1.4.1'
-gem 'pagination', '~> 0.3.3'
+# gem 'query_report', '~> 1.2', '>= 1.2.1'
+# gem 'kaminari', '~> 0.16.3'
+# gem 'coderay'
+# gem 'bootstrap-datepicker-rails'
+# gem "awesome_print"
+# gem 'datagrid', '~> 1.4', '>= 1.4.1'
+# gem 'pagination', '~> 0.3.3'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'

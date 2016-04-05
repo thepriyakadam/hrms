@@ -19,6 +19,7 @@ class Ability
         can :manage, EmployeeTemplate
         can :manage, AdvanceSalary
         can :manage, Instalment
+        can :manage, ParticularLeaveRecord
         can [:read,:create,:update], SocietyMemberShip
       elsif user.role.name == 'Department'
         can :read, Employee

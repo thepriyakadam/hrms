@@ -760,10 +760,10 @@ require 'roo'
 # end
 #end
 ####################################################################
-ex = Roo::Excel.new("#{Rails.root}/public/advance.xls")
-ex.default_sheet = ex.sheets[0]
+ex = Roo::Excel.new("#{Rails.root}/public/advance_opening_balance.xls")
+ex.default_sheet = ex.sheets[5]
 j = 1
-2.upto(38) do |line|
+2.upto(30) do |line|
   puts "Starting Record---------------------------------------"
   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
   ActiveRecord::Base.transaction do |a|

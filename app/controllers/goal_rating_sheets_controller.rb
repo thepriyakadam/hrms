@@ -92,6 +92,7 @@ class GoalRatingSheetsController < ApplicationController
   end
 
   def appraiser_create
+    @employee = Employee.find(params[:format])
     goal_rating_sheets = params[:goal_rating_sheet_id]
     #employee_goals = params[:employee_goal_id]
     comments = params[:appraiser_comment]
@@ -109,7 +110,7 @@ class GoalRatingSheetsController < ApplicationController
       goal_rating_sheet.update(appraiser_comment: c, appraiser_rating: r, appraiser_id: params[:appraiser_id])
       end
     end
-    redirect_to appraiser_goal_rating_sheets_path(current_user.employee_id)
+    redirect_to appraiser_goal_rating_sheets_path(format: @employee.id)
   end
 
   def edit_goal_rating

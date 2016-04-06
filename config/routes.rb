@@ -1,6 +1,11 @@
 
 Rails.application.routes.draw do
   
+  namespace :reports do
+  get 'advance_salaries/new'
+  post 'advance_salaries/advance_salary_report'
+  end
+
   resources :week_offs
   resources :employee_leav_request_reports, :only => [:index]
 

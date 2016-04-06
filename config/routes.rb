@@ -44,11 +44,13 @@ Rails.application.routes.draw do
   namespace :reports do
   get 'joining_details/new'
   post 'joining_details/joining_detail_report'
+  get 'joining_details/collect_departments'
   end
 
   namespace :reports do
   get 'basic_details/new'
   post 'basic_details/employee_basic_report'
+  get 'basic_details/collect_departments'
   end
 
   namespace :reports do

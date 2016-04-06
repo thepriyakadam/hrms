@@ -8,4 +8,9 @@ class Reports::BasicDetailsController < ApplicationController
 
   end
 
+  def collect_departments
+    @company_location = CompanyLocation.find(params[:id])
+    @department = @company_location.departments
+   
+  end
 end

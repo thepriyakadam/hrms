@@ -33,7 +33,7 @@ module Hrms
     end
 
     # Paperclip setup
-    Paperclip.options[:command_path] = "/usr/local/bin/convert"
+    #Paperclip.options[:command_path] = "/usr/local/bin/convert"
     #Paperclip.options[:command_path] = "/home/rk/.rvm/gems/ruby-2.2.2/bin/convert"
 
   end

@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  code: MyString
+  employee_id: 
+  accident_date: 2016-03-31
+  esic_no: MyString
+  case_type: MyString
+  type_of_injury: MyString
+  leave_date_range: MyString
+  no_of_day: MyString
+  description: MyText
+
+two:
+  code: MyString
+  employee_id: 
+  accident_date: 2016-03-31
+  esic_no: MyString
+  case_type: MyString
+  type_of_injury: MyString
+  leave_date_range: MyString
+  no_of_day: MyString
+  description: MyText

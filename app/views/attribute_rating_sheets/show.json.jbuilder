@@ -1,0 +1,1 @@
+json.extract! @attribute_rating_sheet, :id, :appraisee_id, :appraiser_id, :employee_attribute_id, :appraisee_comment, :appraisee_rating, :appraiser_comment, :appraiser_rating, :created_at, :updated_at

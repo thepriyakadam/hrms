@@ -1,6 +1,11 @@
 
 Rails.application.routes.draw do
   
+  namespace :reports do
+  get 'advance_salaries/new'
+  post 'advance_salaries/advance_salary_report'
+  end
+
   resources :week_offs
   resources :employee_leav_request_reports, :only => [:index]
 
@@ -26,6 +31,106 @@ end
     end
   end
 
+  resources :self_services do
+    collection do
+      get :employee
+      get :employee_template
+      get :salaryslip
+      get :advance
+      get :attendance
+    end
+  end
+
+  namespace :reports do
+  get 'family_details/new'
+  post 'family_details/family_detail_report'
+  end
+
+  namespace :reports do
+  get 'physical_details/new'
+  post 'physical_details/physical_detail_report'
+  end
+
+  namespace :reports do
+  get 'award_details/new'
+  post 'award_details/award_detail_report'
+  end
+
+  namespace :reports do
+  get 'certification_details/new'
+  post 'certification_details/certification_detail_report'
+  end
+
+  namespace :reports do
+  get 'skillset_details/new'
+  post 'skillset_details/skillset_detail_report'
+  end
+
+  namespace :reports do
+  get 'experience_details/new'
+  post 'experience_details/experience_detail_report'
+  end
+
+  namespace :reports do
+  get 'qualification_details/new'
+  post 'qualification_details/qualification_detail_report'
+  end
+
+  namespace :reports do
+  get 'bank_details/new'
+  post 'bank_details/bank_detail_report'
+  end
+
+  namespace :reports do
+  get 'joining_details/new'
+  post 'joining_details/joining_detail_report'
+  end
+
+  namespace :reports do
+  get 'basic_details/new'
+  post 'basic_details/employee_basic_report'
+  end
+
+  namespace :reports do
+  
+  end
+
+  resources :accident_records
+
+  resources :performance_periods
+  resources :attribute_rating_sheets do
+    collection do
+      get :edit_attribute_rating
+      get :appraiser
+      post :appraiser_create
+    end
+  end
+  resources :goal_rating_sheets  do
+    collection do
+      get :edit_goal_rating
+      get :appraiser
+      post :appraiser_create
+    end
+  end
+  resources :employee_attributes do
+    collection do
+      get :appraisee
+      post :appraisee_create
+      get :appraiser
+      post :appraiser_create
+    end
+  end
+  resources :employee_goals do
+    collection do
+      get :subordinate_list
+      get :is_confirm
+    end
+  end
+  
+  resources :definitions
+  resources :attribute_masters
+  resources :goal_measures
+  resources :goal_perspectives
   resources :particular_leave_records do
     collection do
       get :show_leave_record
@@ -110,6 +215,10 @@ end
     get 'salaries/show'
     post 'salaries/ctc_yearly_report'
     get 'salaries/ctc_yearly'
+    post 'employee_reports/basic_detail_report'
+    get 'employee_reports/show'
+    post 'basic_detail/basic_detail_report'
+    get 'basic_detail/new'
   end
 
   resources :payment_modes
@@ -148,6 +257,7 @@ end
   resources :advance_salaries do
     collection do
       get :search_by_advance_date
+      get :advances
     end
   end
   resources :workingdays do
@@ -304,10 +414,13 @@ end
       get :transfer_form
       post :transfer_employee
       get :search_by_employee_manual_code
+      get :transfer_employee_list
     end
     member do
       get :edit_manager
       patch :update_manager
+      patch :transfer_employee
+      get :transfer_form
     end
   end
   resources :blood_groups

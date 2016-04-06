@@ -1,0 +1,2 @@
+module GoalPerspectivesHelper
+end

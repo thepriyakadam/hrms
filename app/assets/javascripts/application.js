@@ -110,6 +110,8 @@ $(function(){
   dateFormat: 'dd-mm-yy' });
 
   $('.interview_date').datepicker({
+  $('.birth_date1').datepicker({
+
   changeYear:true,
   changeMonth: true,
   yearRange: '-100:+10',

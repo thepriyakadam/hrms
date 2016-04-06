@@ -7,10 +7,10 @@
 
      <tr>
       <th><strong>Shift</strong></th>
-      <td><%= @attendance.employee_shift.company_shift.try(:name) %></td>
+      <td><%= @attendance.try(:employee_shift).try(:company_shift).try(:name) %></td>
 
       <th> <strong>Employee Name</strong></th>
-      <td><%= @attendance.employee.try(:first_name)+' '+@attendance.employee.try(:middle_name)+' '+@attendance.employee.try(:last_name) %></td>
+      <td><%= full_name(@attendance.employee) %></td>
      </tr>
 
      <tr>

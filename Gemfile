@@ -92,3 +92,5 @@ gem 'time_difference'
 #Excel Read
 gem 'roo'
 gem 'yaml_db'
+
+gem 'rmagick',"~> 2.15.4"

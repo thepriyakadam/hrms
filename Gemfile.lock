@@ -36,7 +36,6 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
-    addressable (2.3.8)
     apartment (1.0.2)
       activerecord (>= 3.1.2, < 5.0)
       rack (>= 1.3.6)
@@ -104,10 +103,6 @@ GEM
     kaminari (0.16.3)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
-    launchy (2.4.2)
-      addressable (~> 2.3)
-    letter_opener (1.2.0)
-      launchy (~> 2.2)
     libv8 (3.16.14.13)
     local-subdomain (1.0.0)
     loofah (2.0.3)
@@ -274,7 +269,6 @@ DEPENDENCIES
   jquery-ui-rails
   jquery-validation-rails
   kaminari (~> 0.16.3)
-  letter_opener
   local-subdomain
   pagination (~> 0.3.3)
   paperclip (~> 4.3)
@@ -295,3 +289,6 @@ DEPENDENCIES
   web-console (~> 2.0)
   wirble
   yaml_db
+
+BUNDLED WITH
+   1.10.6

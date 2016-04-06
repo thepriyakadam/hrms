@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160330095452) do
+ActiveRecord::Schema.define(version: 20160405053755) do
 
   create_table "advance_salaries", force: :cascade do |t|
     t.integer  "employee_id"
@@ -745,6 +745,18 @@ ActiveRecord::Schema.define(version: 20160330095452) do
 
   add_index "instalments", ["advance_salary_id"], name: "index_instalments_on_advance_salary_id"
 
+  create_table "interview_reschedules", force: :cascade do |t|
+    t.date     "interview_date"
+    t.time     "interview_time"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+    t.integer  "interview_schedule_id"
+    t.integer  "employee_id"
+  end
+
+  add_index "interview_reschedules", ["employee_id"], name: "index_interview_reschedules_on_employee_id"
+  add_index "interview_reschedules", ["interview_schedule_id"], name: "index_interview_reschedules_on_interview_schedule_id"
+
   create_table "interview_schedules", force: :cascade do |t|
     t.string   "interviewer_name"
     t.string   "candidate_name"
@@ -755,9 +767,15 @@ ActiveRecord::Schema.define(version: 20160330095452) do
     t.string   "post_title"
     t.string   "interview_type"
     t.string   "interview_status"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+    t.integer  "reporting_master_id"
+    t.string   "email_id"
+    t.integer  "employee_id"
   end
+
+  add_index "interview_schedules", ["employee_id"], name: "index_interview_schedules_on_employee_id"
+  add_index "interview_schedules", ["reporting_master_id"], name: "index_interview_schedules_on_reporting_master_id"
 
   create_table "joining_details", force: :cascade do |t|
     t.integer  "employee_id"

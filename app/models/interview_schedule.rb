@@ -1,4 +1,7 @@
 class InterviewSchedule < ActiveRecord::Base
+  has_many :reporting_master
+  belongs_to :employee
+  belongs_to :interview_reschedule
   validates :interviewer_name, :presence => true
   validates :candidate_name, :presence => true
   validates :interview_date, :presence => true

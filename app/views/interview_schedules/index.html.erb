@@ -10,14 +10,12 @@
 <table id="example" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
-      <th>Interviewername</th>
+      <th>Job Title</th>
       <th>Candidate Name</th>
       <th>Interview Date</th>
-      <th>Interviewdate</th>
       <th>Interviewtime</th>
       <th>Location</th>
-      <th>Schedulecomments</th>
-      <th>+Action</th>
+      <th>Action</th>
     </tr>
   </thead>
 
@@ -28,20 +26,21 @@
         <td><%= interview_schedule.candidate_name %></td>
         <td><%= interview_schedule.interview_date %></td>
         <td><%= interview_schedule.interview_time %></td>
-        <td><%= interview_schedule.schedule_comments %></td>
-        <td><%= interview_schedule.interview_type %></td>
-        <td><%= interview_schedule.interview_status %></td>
+        <td><%= interview_schedule.location %></td>
         <td>
             <%= link_to '', interview_schedule,class: 'btn btn-sm btn-default fa fa-eye' %>
             <%= link_to '', edit_interview_schedule_path(interview_schedule),class: 'btn btn-sm btn-success fa fa-edit' %>
             <%= link_to '', interview_schedule,method: :delete,data:{confirm:'Are you sure?'},class: 'btn btn-sm btn-danger fa fa-close' %>
+            <%= link_to '', interview_reschedule_interview_schedules_path(id:interview_schedule.employee_id),class: 'btn btn-sm btn-primary fa fa-envelope-o'  %>
+            <%= link_to '',sample_email_to_interviewer_path(id:interview_schedule.employee_id),class: 'btn btn-sm btn-warning fa fa-check' %>
+            <%= link_to '',modal_interview_schedules_path,class: 'btn btn-sm btn-warning fa fa-modx',remote: true %>
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
-
 <br>
+<div id="myModal" class="modal fade"></div>
 
 <%= link_to 'New Interview schedule', new_interview_schedule_path %>
 </div>

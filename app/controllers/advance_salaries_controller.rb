@@ -7,20 +7,7 @@ class AdvanceSalariesController < ApplicationController
   # GET /advance_salaries.json
   include QueryReport::Helper  #need to include it
   def index
-    if current_user.class == Group
-      @advance_salaries = AdvanceSalary.all
-    else
-      if current_user.role.name == "Company"
-        @advance_salaries = AdvanceSalary.all
-      elsif current_user.role.name == "CompanyLocation"
-        @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
-        @advance_salaries = AdvanceSalary.where(employee_id: @employees)
-      elsif current_user.role.name == "SalaryAccount"
-        @advance_salaries = AdvanceSalary.all
-      elsif current_user.role.name == "Employee"
-        @advance_salaries = AdvanceSalary.where(employee_id: current_user.employee_id)
-      end
-    end
+   @advance_salaries = AdvanceSalary.group("strftime('%Y',advance_date)")
   end
 
 
@@ -91,6 +78,26 @@ class AdvanceSalariesController < ApplicationController
       column :advance_amount,sortable: true
       column :no_of_instalment,sortable: true
       column :instalment_amount,sortable: true
+    end
+  end
+
+  def advances
+    @year = params[:year]
+    @month = params[:month]
+    date = Date.new(@year.to_i, Workingday.months[@month])
+   if current_user.class == Group
+      @advance_salaries = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y'))
+    else
+      if current_user.role.name == "Company" or current_user.role.name == "Account"
+        @advance_salaries = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y'))
+      elsif current_user.role.name == "CompanyLocation"
+        @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+        @advance_salaries = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+      elsif current_user.role.name == "SalaryAccount"
+        @advance_salaries = AdvanceSalary.all
+      elsif current_user.role.name == "Employee"
+        @advance_salaries = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: current_user.employee_id)
+      end
     end
   end
 

@@ -246,6 +246,7 @@ end
   resources :advance_salaries do
     collection do
       get :search_by_advance_date
+      get :advances
     end
   end
   resources :workingdays do

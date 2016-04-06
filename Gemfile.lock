@@ -290,6 +290,3 @@ DEPENDENCIES
   web-console (~> 2.0)
   wirble
   yaml_db
-
-BUNDLED WITH
-   1.10.6

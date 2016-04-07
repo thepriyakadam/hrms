@@ -773,8 +773,7 @@ require 'roo'
 #       a.employee_id = @employee.id  
 #       a.advance_date = date unless ex.cell(line,'C').nil?
 #       a.advance_amount = ex.cell(line,'D').to_f unless ex.cell(line,'D').nil?
-#       a.instalment_amount = ex.cell(line,'F').to_f unless ex.cell(line,'F').nil?
-      
+#       a.instalment_amount = ex.cell(line,'F').to_f unless ex.cell(line,'F').nil?      
 #       unless a.advance_amount.nil? and a.instalment_amount.nil?
 #       a.no_of_instalment = (a.advance_amount.to_i / a.instalment_amount).ceil
 #       end

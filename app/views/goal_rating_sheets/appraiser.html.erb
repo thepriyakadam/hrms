@@ -41,7 +41,8 @@
           <td><%= g.appraisee.first_name %></td> 
           <%= hidden_field_tag 'employee_goal_id[]',{},value: g.employee_goal.id %>
           <%= hidden_field_tag 'goal_rating_sheet_id[]', {},value: g.id %> 
-          <%= hidden_field_tag :appraiser_id, {},value: current_user.employee_id %>  
+          <%= hidden_field_tag :appraisee_id, {},value: g.appraisee_id %>
+          <%= hidden_field_tag :appraiser_id, {},value: current_user.employee_id %>   
         </tr>
       <% end %>
     </tbody>
@@ -55,6 +56,7 @@
       </div>
     
   </div>
+
   <% end %> 
 
 
@@ -89,12 +91,14 @@
           <td><%= g.appraisee_rating %></td>
           <td><%= g.appraiser_comment %></td>
           <td><%= g.appraiser_rating %></td>
+           
+
           <td>
           <% if g.is_confirm_appraiser == true %>
             <% else %>
               <%= link_to '', edit_appraiser_goal_rating_sheets_path(g) ,class: 'btn btn-xs btn-success fa fa-edit' %>
-              <%= link_to '', destroy_appraiser_goal_rating_sheets_path(g), data: { confirm: 'Are you sure?', method: :delete },class: 'btn btn-xs btn-danger fa fa-close' %>
-              <%= link_to '',is_confirm_appraiser_goal_rating_sheets_path(g),class: 'btn btn-xs btn-warning fa fa-check'%>
+              
+              <%= link_to '',is_confirm_appraiser_goal_rating_sheets_path(g,a: g.appraisee_id),class: 'btn btn-xs btn-warning fa fa-check'%>
               
             <% end %>
           </td>
@@ -110,27 +114,3 @@
 
     <div id="myModal" class="modal fade"></div>
 
-<script type="text/javascript">
-  $("#goal_rating_sheet").validate({
-    rules: {
-      "goal_rating_sheet[appraiser_comment]":{
-        required: true
-      },
-      "goal_rating_sheet[appraiser_rating]":{
-        required: true
-      }
-    },
-    messages: {
-      "goal_rating_sheet[appraiser_comment]":{
-        required: "Please Specify appraiser_comment"
-      },
-     "goal_rating_sheet[appraiser_rating]":{
-       required: "Please Specify appraiser_rating"
-      } 
-    },
-    errorPlacement: function(error, element) {
-     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
-     error.insertAfter(element.parent(element));
-    }
-   });
-</script>

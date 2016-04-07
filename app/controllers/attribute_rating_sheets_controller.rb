@@ -4,7 +4,6 @@ class AttributeRatingSheetsController < ApplicationController
   # GET /attribute_rating_sheets
   # GET /attribute_rating_sheets.json
   def index
-    @attribute_rating_sheets = AttributeRatingSheet.all
     @attribute_rating_sheets = AttributeRatingSheet.where(appraisee_id: current_user.employee_id)
   end
 
@@ -64,9 +63,10 @@ class AttributeRatingSheetsController < ApplicationController
   # PATCH/PUT /attribute_rating_sheets/1
   # PATCH/PUT /attribute_rating_sheets/1.json
   def update
+    @employee = Employee.find(params[:appraiser_id])
       if @attribute_rating_sheet.update(attribute_rating_sheet_params)
         flash[:notice] = "Employee Attribute Updated Successfully"
-        redirect_to appraiser_attribute_rating_sheets_path
+        redirect_to attribute_rating_sheets_path
       else
         flash[:alert] = "Not Updated"
         redirect_to new_attribute_rating_sheet_path
@@ -105,7 +105,9 @@ class AttributeRatingSheetsController < ApplicationController
       attribute_rating_sheet.update(appraiser_comment: c, appraiser_rating: r, appraiser_id: params[:appraiser_id])
       end
     end
-    redirect_to appraiser_attribute_rating_sheets_path
+    @employee = Employee.find(params[:appraisee_id])
+
+    redirect_to appraiser_attribute_rating_sheets_path(format: @employee.id)
   end
 
   def edit_attribute_rating
@@ -115,13 +117,30 @@ class AttributeRatingSheetsController < ApplicationController
   def edit_appraiser
     @attribute_rating_sheet = AttributeRatingSheet.find(params[:format])
   end
+  
+  def update_appraiser
+
+    @employee = Employee.find(params[:appraiser_id])
+
+    @attribute_rating_sheet = AttributeRatingSheet.find(params[:id])
+
+    if @attribute_rating_sheet.update(attribute_rating_sheet_params)
+      flash[:notice] = "Updated Successfully."
+    else
+      flash[:alert] = "Not Updated "
+    end
+   
+    redirect_to appraiser_attribute_rating_sheets_path(format: @employee.id)
+  end
 
   def is_confirm_appraiser
     @attribute_rating_sheet = AttributeRatingSheet.find(params[:format])
     
     @attribute_rating_sheet.update(is_confirm_appraiser: true)
 
-    redirect_to appraiser_attribute_rating_sheets_path(format: @attribute_rating_sheet.appraiser_id)
+    #@employee = Employee.find(params[:g])
+
+    redirect_to appraiser_attribute_rating_sheets_path(format: @attribute_rating_sheet.appraisee_id)
   end
 
   def is_confirm_appraisee
@@ -130,6 +149,11 @@ class AttributeRatingSheetsController < ApplicationController
     @attribute_rating_sheet.update(is_confirm_appraisee: true)
 
     redirect_to attribute_rating_sheets_path(@attribute_rating_sheet.appraisee_id)
+  end
+
+  def employee_details
+    @attribute_rating_sheets = AttributeRatingSheet.all
+    @employee = Employee.find(params[:format])
   end
 
   private

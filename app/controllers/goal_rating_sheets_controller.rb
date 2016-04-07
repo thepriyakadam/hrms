@@ -4,9 +4,7 @@ class GoalRatingSheetsController < ApplicationController
   # GET /goal_rating_sheets
   # GET /goal_rating_sheets.json
   def index
-
     @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: current_user.employee_id)
-    
   end
 
   # GET /goal_rating_sheets/1
@@ -31,7 +29,6 @@ class GoalRatingSheetsController < ApplicationController
         end
       end
     end
-
   end
 
   # GET /goal_rating_sheets/1/edit
@@ -59,7 +56,7 @@ class GoalRatingSheetsController < ApplicationController
       flash[:notice] = "Employee Goal Created Successfully"
       end
     end
-    redirect_to goal_rating_sheets_path  
+    redirect_to new_goal_rating_sheet_path  
   end
 
   # PATCH/PUT /goal_rating_sheets/1
@@ -92,7 +89,7 @@ class GoalRatingSheetsController < ApplicationController
   end
 
   def appraiser_create
-    @employee = Employee.find(params[:format])
+    
     goal_rating_sheets = params[:goal_rating_sheet_id]
     #employee_goals = params[:employee_goal_id]
     comments = params[:appraiser_comment]
@@ -105,11 +102,13 @@ class GoalRatingSheetsController < ApplicationController
       elsif r == ""
       flash[:alert] = "Fill ratings"
       else
-      # emp = EmployeeGoal.find(e)
-      #goal_rating_sheet = GoalRatingSheet.find(e)
+      
       goal_rating_sheet.update(appraiser_comment: c, appraiser_rating: r, appraiser_id: params[:appraiser_id])
       end
     end
+  
+    @employee = Employee.find(params[:appraisee_id])
+    
     redirect_to appraiser_goal_rating_sheets_path(format: @employee.id)
   end
 
@@ -122,40 +121,46 @@ class GoalRatingSheetsController < ApplicationController
     @employees = current_login.subordinates
   end
  
-
   def edit_appraiser
     @goal_rating_sheet = GoalRatingSheet.find(params[:format])
   end
   
   def update_appraiser
-    #byebug
+    #@goal_rating = GoalRatingSheet.find(params[:])
+
+    @employee = Employee.find(params[:appraiser_id])
+
     @goal_rating_sheet = GoalRatingSheet.find(params[:id])
+
     if @goal_rating_sheet.update(goal_rating_sheet_params)
-      flash[:notice] = "Updated Successfully"
-      redirect_to appraiser_goal_rating_sheets_path(current_user.employee_id)
+      flash[:notice] = "Updated Successfully."
     else
       flash[:alert] = "Not Updated "
-      redirect_to appraiser_goal_rating_sheets_path(current_user.employee_id)
     end
+    
+    redirect_to appraiser_goal_rating_sheets_path(format: @employee.id)
   end
 
-  def destroy_appraiser
-    @goal_rating_sheet = GoalRatingSheet.find(params[:format])
-    if @goal_rating_sheet.destroy
-      flash[:notice] = "Deleted Successfully"
-      redirect_to appraiser_goal_rating_sheets_path
-    else
-      flash[:alert] = "Not Deleted"
-      redirect_to appraiser_goal_rating_sheets_path
-    end
-  end
+  # def destroy_appraiser
+  #    @goal_rating = GoalRatingSheet.find(params[:appraiser_id])
+  #   @goal_rating_sheet = GoalRatingSheet.find(params[:format])
+  #   if @goal_rating_sheet.destroy
+  #     flash[:notice] = "Deleted Successfully"
+  #     redirect_to appraiser_goal_rating_sheets_path(@goal_rating.appraiser_id)
+  #   else
+  #     flash[:alert] = "Not Deleted"
+  #     redirect_to appraiser_goal_rating_sheets_path(@goal_rating.appraiser_id)
+  #   end
+  # end
 
   def is_confirm_appraiser
      @goal_rating_sheet = GoalRatingSheet.find(params[:format])
     
     @goal_rating_sheet.update(is_confirm_appraiser: true)
-
-    redirect_to appraiser_goal_rating_sheets_path(@goal_rating_sheet.appraiser_id)
+     
+    @employee = Employee.find(params[:a])
+   
+    redirect_to appraiser_goal_rating_sheets_path(format: @goal_rating_sheet.appraiser_id)
   end
  
  def is_confirm_appraisee

@@ -64,10 +64,12 @@ Rails.application.routes.draw do
     collection do
       get :edit_appraiser
       get :edit_attribute_rating
+      patch :update_appraiser
       get :appraiser
       post :appraiser_create
       get :is_confirm_appraiser
       get :is_confirm_appraisee
+      get :employee_details
     end
   end
   resources :goal_rating_sheets  do

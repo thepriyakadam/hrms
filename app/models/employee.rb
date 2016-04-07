@@ -50,6 +50,11 @@ class Employee < ActiveRecord::Base
   has_many :appraiser_goal_rating_sheets, class_name: "Employee",
                           foreign_key: "appraiser_id"
 
+  has_many :appraisee_attribute_rating_sheets, class_name: "Employee",
+                          foreign_key: "appraisee_id"
+
+  has_many :appraiser_attribute_rating_sheets, class_name: "Employee",
+                          foreign_key: "appraiser_id"
 
   before_create :add_department
   before_update :add_department

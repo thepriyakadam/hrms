@@ -33,7 +33,7 @@ class SalaryComponentsController < ApplicationController
   def update
     @salary_component.update(salary_component_params)
     @salary_components = SalaryComponent.all
-    @salary_component = SalaryComponent.new   
+    @salary_component = SalaryComponent.new
   end
 
   # DELETE /salary_components/1

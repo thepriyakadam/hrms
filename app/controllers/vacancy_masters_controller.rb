@@ -89,7 +89,6 @@ end
       column :job_title,sortable: true
       column :vacancy_name,sortable: true
       column :department_name,sortable: true
-      column :educational_qualification,sortable: true
       column :budget,sortable: true
       column :vacancy_post_date,sortable: true
       column :description,sortable: true
@@ -104,6 +103,6 @@ end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def vacancy_master_params
-      params.require(:vacancy_master).permit(:employee_designation_id,:department_id, :company_location_id, :vacancy_name, :educational_qualification, :no_of_position, :description, :vacancy_post_date, :budget)
+      params.require(:vacancy_master).permit(:employee_designation_id,:department_id,:degree_id, :company_location_id, :vacancy_name, :no_of_position, :description, :vacancy_post_date, :budget)
     end
 end

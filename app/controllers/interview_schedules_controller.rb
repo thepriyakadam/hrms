@@ -8,6 +8,13 @@ class InterviewSchedulesController < ApplicationController
   include QueryReport::Helper  #need to include it
   def index
     @interview_schedules = InterviewSchedule.all
+    respond_to do |format|
+      format.html
+      format.pdf do
+        pdf = ReportPdf.new(@interview_schedules)
+        send_data pdf.render, filename: 'report.pdf', type: 'application/pdf'
+      end
+    end
   end
 
   # GET /interview_schedules/1
@@ -68,20 +75,27 @@ class InterviewSchedulesController < ApplicationController
 
       @interview_reschedule.save
       @interview_schedule.update(interview_date: params[:interview_reschedule][:interview_date], interview_time: params[:interview_reschedule][:interview_time])
-
+      if @interview_schedule.email_id.nil?
+        flash[:alert] = "Email not Available"
+        redirect_to interview_schedules_path
+      else
       InterviewScheduleMailer.sample_email_to_candidate(@interview_schedule).deliver_now
-      redirect_to interview_schedules_path
       flash[:notice] = "Email Sent Successfully"
+      redirect_to interview_schedules_path
       @interview_reschedule = InterviewReschedule.new(interview_reschedule_params)
       # @interview_reschedule.save
+    end
   end
 
   def sample_email_to_interviewer
      @interview_schedule = InterviewSchedule.find_by_employee_id(params[:id])
-    if InterviewScheduleMailer.sample_email_to_interviewer(@interview_schedule).deliver_now
-      redirect_to interview_schedules_path
+     @employee= Employee.find(@interview_schedule.employee_id)
+      if @employee.email.nil?
+        flash[:alert] = "Email not Available"
+        redirect_to interview_schedules_path
+      else
+     InterviewScheduleMailer.sample_email_to_interviewer(@interview_schedule).deliver_now
       flash[:notice] = "Email Sent Successfully"
-    else
       redirect_to interview_schedules_path
     end
   end

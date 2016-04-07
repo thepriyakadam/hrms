@@ -3,9 +3,10 @@ class VacancyMaster < ActiveRecord::Base
   belongs_to :department
   belongs_to :employee_designation
   belongs_to :company_location
+  belongs_to :degree
+
 
   validates :vacancy_name, :presence => true
-  validates :educational_qualification, :presence => true
   validates :no_of_position, :presence => true
   validates :vacancy_post_date, :presence => true
 
@@ -39,6 +40,6 @@ class VacancyMaster < ActiveRecord::Base
   end
 
   def accessible_attributes
-   [job_title, vacancy_name,department_name,educational_qualification,no_of_position,budget,vacancy_post_date,description]
+    [employee_designation_id,department_id,degree_id,company_location_id,vacancy_name,no_of_position,description,vacancy_post_date,budget]
   end
 end

@@ -415,6 +415,7 @@ end
       post :transfer_employee
       get :search_by_employee_manual_code
       get :transfer_employee_list
+      get :report
     end
     member do
       get :edit_manager

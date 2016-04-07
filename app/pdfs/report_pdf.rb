@@ -45,16 +45,16 @@ class ReportPdf < Prawn::Document
     table employee_rows do
       row(0).font_style = :bold
       self.header = true
-      self.row_colors = ['DDDDDD', 'FFFFFF']
-      self.column_widths = [40, 100, 100,100,100,100]
+      self.row_colors = ['FFFFFF']
+      self.column_widths = [50, 200,100,100,90]
     end
   end
 
 
     def employee_rows
-      [['Code', 'Employee Name', 'Department','Designation','Employment','Contact']] +
+      [['Code', 'Employee Name','Designation','Employment','Contact']] +
         @employees.map do |employee|
-      [employee.manual_employee_code, employee.first_name.to_s+" "+employee.middle_name.to_s+" "+employee.last_name.to_s, employee.try(:company_location).try(:name).to_s+" "+employee.try(:department).try(:name).to_s,employee.joining_detail.try(:employee_designation).try(:name),employee.employee_type.try(:name),employee.try(:contact_no)]  
+      [employee.manual_employee_code, employee.first_name.to_s+" "+employee.middle_name.to_s+" "+employee.last_name.to_s,employee.joining_detail.try(:employee_designation).try(:name),employee.employee_type.try(:name),employee.try(:contact_no)]  
     end
   end
   

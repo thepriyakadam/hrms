@@ -31,7 +31,7 @@ class EmployeesController < ApplicationController
       format.html
       format.pdf do
         pdf = ReportPdf.new(@employees)
-        send_data pdf.render, filename: 'report.pdf', type: 'application/pdf'
+        send_data pdf.render, filename: 'Employee List.pdf', type: 'application/pdf'
       end
     end
   end

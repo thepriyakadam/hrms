@@ -203,16 +203,16 @@ end
   end
   resources :retention_moneys
   namespace :reports do
-    post 'salaries/date_range_report'
-    get 'salaries/new'
-    post 'salaries/department_wise'
-    get 'salaries/show'
-    post 'salaries/ctc_yearly_report'
-    get 'salaries/ctc_yearly'
-    post 'employee_reports/basic_detail_report'
-    get 'employee_reports/show'
-    post 'basic_detail/basic_detail_report'
-    get 'basic_detail/new'
+     get 'salaries/new'
+     post 'salaries/date_range_report'
+    # post 'salaries/department_wise'
+    # get 'salaries/show'
+    # post 'salaries/ctc_yearly_report'
+    # get 'salaries/ctc_yearly'
+    # post 'employee_reports/basic_detail_report'
+    # get 'employee_reports/show'
+    # post 'basic_detail/basic_detail_report'
+    # get 'basic_detail/new'
   end
 
   resources :payment_modes

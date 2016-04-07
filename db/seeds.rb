@@ -761,7 +761,7 @@ require 'roo'
 #end
 ####################################################################
 ex = Roo::Excel.new("#{Rails.root}/public/advance_opening_balance.xls")
-ex.default_sheet = ex.sheets[5]
+ex.default_sheet = ex.sheets[6]
 j = 1
 2.upto(30) do |line|
   puts "Starting Record---------------------------------------"

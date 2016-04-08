@@ -17,6 +17,7 @@ Rails.application.routes.draw do
     get :interview_reschedule
     post :send_email_to_candidate
     get :sample_email_to_interviewer
+    get :sample_email
     end
 end
   resources :vacancy_masters do
@@ -416,6 +417,7 @@ end
       get :search_by_employee_manual_code
       get :transfer_employee_list
       get :report
+      get :birthday_email
     end
     member do
       get :edit_manager

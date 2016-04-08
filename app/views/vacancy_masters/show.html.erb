@@ -21,7 +21,7 @@
   <th><strong>Location:</strong></th>
   <td><%= @vacancy_master.department.manual_department_code+' '+@vacancy_master.company_location.name+' '+@vacancy_master.department.name %></td>
   <th>Educational Qualification:</th>
-  <td><%= @vacancy_master.educational_qualification %></td>
+  <td><%= @vacancy_master.degree.try(:name) %></td>
 </tr>
 
 

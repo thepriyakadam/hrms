@@ -760,10 +760,11 @@ require 'roo'
 # end
 #end
 ####################################################################
-# ex = Roo::Excel.new("#{Rails.root}/public/advance.xls")
-# ex.default_sheet = ex.sheets[0]
+
+# ex = Roo::Excel.new("#{Rails.root}/public/advance_opening_balance.xls")
+# ex.default_sheet = ex.sheets[5]
 # j = 1
-# 2.upto(38) do |line|
+# 2.upto(30) do |line|
 #   puts "Starting Record---------------------------------------"
 #   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
 #   ActiveRecord::Base.transaction do |a|
@@ -773,7 +774,10 @@ require 'roo'
 #       a.employee_id = @employee.id  
 #       a.advance_date = date unless ex.cell(line,'C').nil?
 #       a.advance_amount = ex.cell(line,'D').to_f unless ex.cell(line,'D').nil?
-#       a.instalment_amount = ex.cell(line,'F').to_f unless ex.cell(line,'F').nil?      
+
+#       a.instalment_amount = ex.cell(line,'F').to_f unless ex.cell(line,'F').nil?
+      
+
 #       unless a.advance_amount.nil? and a.instalment_amount.nil?
 #       a.no_of_instalment = (a.advance_amount.to_i / a.instalment_amount).ceil
 #       end

@@ -11,6 +11,8 @@ class Employee < ActiveRecord::Base
   belongs_to :religion
   has_many :awards
   has_many :certifications
+  has_many :interview_schedules
+  has_many :interview_reschedules
   has_many :qualifications
   has_many :employee_leav_requests
   has_many :first_reporters, class_name: "EmployeeLeavRequest", foreign_key: "first_reporter_id"
@@ -35,6 +37,7 @@ class Employee < ActiveRecord::Base
   has_one :member
   has_one :employee_bank_detail
   has_one :joining_detail
+
   accepts_nested_attributes_for :joining_detail
   has_many :subordinates, class_name: "Employee",
                           foreign_key: "manager_id"

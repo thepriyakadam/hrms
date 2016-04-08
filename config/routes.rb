@@ -2,6 +2,26 @@
 Rails.application.routes.draw do
   
   namespace :reports do
+  get 'ctc_details/new'
+  post 'ctc_details/ctc_detail_report'
+  end
+
+  namespace :reports do
+  get 'esic_details/new'
+  post 'esic_details/esic_detail_report'
+  end
+
+  namespace :reports do
+  get 'pf_details/new'
+  post 'pf_details/pf_detail_report'
+  end
+
+  namespace :reports do
+  get 'instalment_details/new'
+  post 'instalment_details/instalment_detail_report'
+  end
+
+  namespace :reports do
   get 'advance_salaries/new'
   post 'advance_salaries/advance_salary_report'
   end
@@ -209,16 +229,16 @@ end
   end
   resources :retention_moneys
   namespace :reports do
-    post 'salaries/date_range_report'
-    get 'salaries/new'
-    post 'salaries/department_wise'
-    get 'salaries/show'
-    post 'salaries/ctc_yearly_report'
-    get 'salaries/ctc_yearly'
-    post 'employee_reports/basic_detail_report'
-    get 'employee_reports/show'
-    post 'basic_detail/basic_detail_report'
-    get 'basic_detail/new'
+     get 'salaries/new'
+     post 'salaries/date_range_report'
+    # post 'salaries/department_wise'
+    # get 'salaries/show'
+     post 'salaries/ctc_yearly_report'
+     get 'salaries/ctc_yearly'
+    # post 'employee_reports/basic_detail_report'
+    # get 'employee_reports/show'
+    # post 'basic_detail/basic_detail_report'
+    # get 'basic_detail/new'
   end
 
   resources :payment_modes

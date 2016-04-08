@@ -1,12 +1,11 @@
-
 <!--SELECT2 EXAMPLE -->
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title">Employee Physical Report</h3>
+    <h3 class="box-title">Employee Instalment Report</h3>
   </div><!-- /.box-header -->
 
   <div class="box-body">
-    <%= bootstrap_form_for(:emploee, url: { action: 'physical_detail_report',format: 'xls'}) do |f| %>
+    <%= bootstrap_form_for(:emploee, url: { action: 'instalment_detail_report',format: 'xls'}) do |f| %>
 
       <div class="col-sm-3">
           <div class="field">
@@ -24,4 +23,3 @@
     <% end %>
   </div><!-- /.box-body -->
 </div><!-- /.box -->
-

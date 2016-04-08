@@ -13,13 +13,7 @@
           <%= select :salary, :company_location_id, all_company_location,{label: 'Company Location',include_blank: " Select Company Location"}, class: "form-control" %>
           </div>
         </div>
-
-        <div class="col-sm-3">
-          <div class="field">
-          <%= select :salary, :department_id, all_department_list,{label: 'Department Location',include_blank: " Select Department Location"}, class: "form-control" %>
-          </div>
-        </div>
-
+        
         <div class="col-sm-3">
           <div class="actions">
             <%= f.submit "Download Excel", class: "btn btn-sm btn-warning" %>

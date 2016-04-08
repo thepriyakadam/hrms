@@ -18,4 +18,9 @@ module VacancyMastersHelper
 		Department.all.collect {|d| [d.company_location.company.name+'-'+d.company_location.name+'-'+d.name,d.id]}
 	end
 
+   def all_degree_list
+    Degree.all.collect {|x| [x.name,x.id]}
+  end
+
+
 end

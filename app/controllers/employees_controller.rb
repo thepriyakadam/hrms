@@ -24,6 +24,17 @@ class EmployeesController < ApplicationController
       @employees = Employee.all
     end
   end
+  
+  def report
+   @employees = Employee.all
+    respond_to do |format|
+      format.html
+      format.pdf do
+        pdf = ReportPdf.new(@employees)
+        send_data pdf.render, filename: 'Employee List.pdf', type: 'application/pdf'
+      end
+    end
+  end
 
   # GET /employees/1
   # GET /employees/1.json

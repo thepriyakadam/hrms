@@ -13,6 +13,10 @@ Rails.application.routes.draw do
   resources :interview_schedules do
     collection do
     get :search_by_interview_date
+    get :modal
+    get :interview_reschedule
+    post :send_email_to_candidate
+    get :sample_email_to_interviewer
     end
 end
   resources :vacancy_masters do
@@ -134,6 +138,8 @@ end
   end
   
   match 'capture_resumes/:id/download/:id' => 'capture_resumes#download', :via => [:get], :as => :download
+  match 'interview_schedules/:id/send_email_to_candidate/:id' => 'interview_schedules#send_email_to_candidate', :via => [:get], :as => :send_email_to_candidate
+  match 'interview_schedules/:id/sample_email_to_interviewer/:id' => 'interview_schedules#sample_email_to_interviewer', :via => [:get], :as => :sample_email_to_interviewer
   
   resources :leave_c_offs
   resources :overtime_month_records
@@ -409,6 +415,7 @@ end
       post :transfer_employee
       get :search_by_employee_manual_code
       get :transfer_employee_list
+      get :report
     end
     member do
       get :edit_manager

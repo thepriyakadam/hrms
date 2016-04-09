@@ -1,6 +1,7 @@
 class Reports::PhysicalDetailsController < ApplicationController
   def new
   end
+  
   def physical_detail_report
 	@location = params[:salary][:company_location_id]
   if current_user.class == Group

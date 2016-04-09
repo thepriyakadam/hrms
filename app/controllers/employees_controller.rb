@@ -36,6 +36,19 @@ class EmployeesController < ApplicationController
     end
   end
 
+  def birthday_email
+    date = Date.today 
+    @employees = Employee.where("strftime('%d/%m', date_of_birth) = ?", date.strftime('%d/%m')) 
+    if @employees.empty?
+    else
+      @employees.each do |e|
+        EmployeeMailer.birthday_email(e).deliver_now
+        flash[:notice] = "Birthday Email Sent" 
+      end
+    end
+    redirect_to root_url
+  end 
+
   # GET /employees/1
   # GET /employees/1.json
   def show

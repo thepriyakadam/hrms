@@ -2,6 +2,26 @@
 Rails.application.routes.draw do
   
   namespace :reports do
+  get 'ctc_details/new'
+  post 'ctc_details/ctc_detail_report'
+  end
+
+  namespace :reports do
+  get 'esic_details/new'
+  post 'esic_details/esic_detail_report'
+  end
+
+  namespace :reports do
+  get 'pf_details/new'
+  post 'pf_details/pf_detail_report'
+  end
+
+  namespace :reports do
+  get 'instalment_details/new'
+  post 'instalment_details/instalment_detail_report'
+  end
+
+  namespace :reports do
   get 'advance_salaries/new'
   post 'advance_salaries/advance_salary_report'
   end
@@ -13,6 +33,10 @@ Rails.application.routes.draw do
   resources :interview_schedules do
     collection do
     get :search_by_interview_date
+    get :modal
+    get :interview_reschedule
+    post :send_email_to_candidate
+    get :sample_email_to_interviewer
     end
 end
   resources :vacancy_masters do
@@ -134,6 +158,8 @@ end
   end
   
   match 'capture_resumes/:id/download/:id' => 'capture_resumes#download', :via => [:get], :as => :download
+  match 'interview_schedules/:id/send_email_to_candidate/:id' => 'interview_schedules#send_email_to_candidate', :via => [:get], :as => :send_email_to_candidate
+  match 'interview_schedules/:id/sample_email_to_interviewer/:id' => 'interview_schedules#sample_email_to_interviewer', :via => [:get], :as => :sample_email_to_interviewer
   
   resources :leave_c_offs
   resources :overtime_month_records
@@ -203,16 +229,16 @@ end
   end
   resources :retention_moneys
   namespace :reports do
-    post 'salaries/date_range_report'
-    get 'salaries/new'
-    post 'salaries/department_wise'
-    get 'salaries/show'
-    post 'salaries/ctc_yearly_report'
-    get 'salaries/ctc_yearly'
-    post 'employee_reports/basic_detail_report'
-    get 'employee_reports/show'
-    post 'basic_detail/basic_detail_report'
-    get 'basic_detail/new'
+     get 'salaries/new'
+     post 'salaries/date_range_report'
+    # post 'salaries/department_wise'
+    # get 'salaries/show'
+     post 'salaries/ctc_yearly_report'
+     get 'salaries/ctc_yearly'
+    # post 'employee_reports/basic_detail_report'
+    # get 'employee_reports/show'
+    # post 'basic_detail/basic_detail_report'
+    # get 'basic_detail/new'
   end
 
   resources :payment_modes
@@ -409,6 +435,7 @@ end
       post :transfer_employee
       get :search_by_employee_manual_code
       get :transfer_employee_list
+      get :report
     end
     member do
       get :edit_manager

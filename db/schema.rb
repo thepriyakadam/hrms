@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160404090532) do
+ActiveRecord::Schema.define(version: 20160408101938) do
 
   create_table "accident_records", force: :cascade do |t|
     t.string   "code"
@@ -86,8 +86,6 @@ ActiveRecord::Schema.define(version: 20160404090532) do
     t.integer  "appraiser_rating"
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
-    t.boolean  "is_confirm_appraiser"
-    t.boolean  "is_confirm_appraisee"
   end
 
   add_index "attribute_rating_sheets", ["appraisee_id"], name: "index_attribute_rating_sheets_on_appraisee_id"
@@ -432,7 +430,6 @@ ActiveRecord::Schema.define(version: 20160404090532) do
     t.datetime "updated_at",            null: false
     t.integer  "performance_period_id"
     t.integer  "employee_id"
-    t.boolean  "is_confirm"
   end
 
   add_index "employee_attributes", ["appraisee_id"], name: "index_employee_attributes_on_appraisee_id"
@@ -814,8 +811,6 @@ ActiveRecord::Schema.define(version: 20160404090532) do
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
     t.integer  "performance_period_id"
-    t.boolean  "is_confirm_appraiser"
-    t.boolean  "is_confirm_appraisee"
   end
 
   add_index "goal_rating_sheets", ["appraisee_id"], name: "index_goal_rating_sheets_on_appraisee_id"
@@ -868,6 +863,18 @@ ActiveRecord::Schema.define(version: 20160404090532) do
 
   add_index "instalments", ["advance_salary_id"], name: "index_instalments_on_advance_salary_id"
 
+  create_table "interview_reschedules", force: :cascade do |t|
+    t.date     "interview_date"
+    t.time     "interview_time"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+    t.integer  "interview_schedule_id"
+    t.integer  "employee_id"
+  end
+
+  add_index "interview_reschedules", ["employee_id"], name: "index_interview_reschedules_on_employee_id"
+  add_index "interview_reschedules", ["interview_schedule_id"], name: "index_interview_reschedules_on_interview_schedule_id"
+
   create_table "interview_schedules", force: :cascade do |t|
     t.string   "interviewer_name"
     t.string   "candidate_name"
@@ -878,9 +885,15 @@ ActiveRecord::Schema.define(version: 20160404090532) do
     t.string   "post_title"
     t.string   "interview_type"
     t.string   "interview_status"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+    t.integer  "reporting_master_id"
+    t.string   "email_id"
+    t.integer  "employee_id"
   end
+
+  add_index "interview_schedules", ["employee_id"], name: "index_interview_schedules_on_employee_id"
+  add_index "interview_schedules", ["reporting_master_id"], name: "index_interview_schedules_on_reporting_master_id"
 
   create_table "joining_details", force: :cascade do |t|
     t.integer  "employee_id"
@@ -1360,6 +1373,7 @@ ActiveRecord::Schema.define(version: 20160404090532) do
     t.integer  "employee_id"
     t.datetime "created_at",                                               null: false
     t.datetime "updated_at",                                               null: false
+    t.date     "start_date"
   end
 
   add_index "society_member_ships", ["employee_id"], name: "index_society_member_ships_on_employee_id"
@@ -1384,19 +1398,20 @@ ActiveRecord::Schema.define(version: 20160404090532) do
 
   create_table "vacancy_masters", force: :cascade do |t|
     t.string   "vacancy_name"
-    t.string   "educational_qualification"
     t.integer  "no_of_position"
     t.text     "description"
     t.date     "vacancy_post_date"
     t.string   "budget"
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
     t.integer  "department_id"
     t.integer  "employee_designation_id"
     t.integer  "company_location_id"
+    t.integer  "degree_id"
   end
 
   add_index "vacancy_masters", ["company_location_id"], name: "index_vacancy_masters_on_company_location_id"
+  add_index "vacancy_masters", ["degree_id"], name: "index_vacancy_masters_on_degree_id"
   add_index "vacancy_masters", ["department_id"], name: "index_vacancy_masters_on_department_id"
   add_index "vacancy_masters", ["employee_designation_id"], name: "index_vacancy_masters_on_employee_designation_id"
 

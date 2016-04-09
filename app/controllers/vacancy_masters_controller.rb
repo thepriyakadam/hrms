@@ -7,6 +7,10 @@ class VacancyMastersController < ApplicationController
   include QueryReport::Helper  #need to include it
   def index
     @vacancy_masters = VacancyMaster.all
+    respond_to do |format|
+    format.html
+    format.csv { send_data @vacancy_masters.to_csv }
+    format.xls 
     if current_user.class == Member
       if current_user.role.name == "Department"
         @vacancy_masters = VacancyMaster.where(department_id:current_user.department_id)
@@ -15,6 +19,7 @@ class VacancyMastersController < ApplicationController
       end
     end
   end
+ end 
 
   # GET /vacancy_masters/1
   # GET /vacancy_masters/1.json
@@ -84,7 +89,6 @@ end
       column :job_title,sortable: true
       column :vacancy_name,sortable: true
       column :department_name,sortable: true
-      column :educational_qualification,sortable: true
       column :budget,sortable: true
       column :vacancy_post_date,sortable: true
       column :description,sortable: true
@@ -99,6 +103,6 @@ end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def vacancy_master_params
-      params.require(:vacancy_master).permit(:employee_designation_id,:department_id, :company_location_id, :vacancy_name, :educational_qualification, :no_of_position, :description, :vacancy_post_date, :budget)
+      params.require(:vacancy_master).permit(:employee_designation_id,:department_id,:degree_id, :company_location_id, :vacancy_name, :no_of_position, :description, :vacancy_post_date, :budget)
     end
 end

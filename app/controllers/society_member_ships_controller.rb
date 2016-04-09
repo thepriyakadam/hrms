@@ -69,6 +69,6 @@ class SocietyMemberShipsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def society_member_ship_params
-      params.require(:society_member_ship).permit(:is_society_member, :amount, :employee_id)
+      params.require(:society_member_ship).permit(:is_society_member, :amount, :employee_id, :start_date)
     end
 end

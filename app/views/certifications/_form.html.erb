@@ -1,14 +1,10 @@
-
 <!-- SELECT2 EXAMPLE -->
 <div class="box box-default">
   <div class="box-header with-border">
     <h3 class="box-title">Employee Certifications Details</h3>
-    
   </div><!-- /.box-header -->
 
   <div class="box-body">
- 
-    
     <%= bootstrap_form_for(@certification,html: {id: 'certification'},remote:true) do |f| %>
       <%= f.hidden_field :employee_id, value: @employee.id %>
       <div id="entry1" class="clonedInput">
@@ -57,8 +53,6 @@
           <span class="icon-input-btn btn-sm">
             <input type="button" id="btnDel" value="Remove Above Certifications" class="btn-sm btn-danger"></span>
           </div>
-
-
         </div><br>
       <%end%>
 
@@ -75,8 +69,6 @@
     <% end %>
   </div><!-- /.box-body -->
 </div><!-- /.box -->
-
-
 
 <script type="text/javascript">
   $(function () {

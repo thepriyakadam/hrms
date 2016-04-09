@@ -118,7 +118,7 @@
                         <p> <%= full_name(e) %> </p>
                       <%end%>
                     <%end%>
-
+                    <br>
                     <h4 class="control-sidebar-subheading"> Tomorrow's Birthday</h4>
 
                     <% date = Date.today + 1 %>
@@ -135,6 +135,8 @@
                 </a>
               </li>
             </ul><!-- /.control-sidebar-menu -->
+
+            <%= link_to 'Send Birthday Wishes', birthday_email_employees_path,class: 'btn btn-xl btn-warning' %>
 
             <!-- <h3 class="control-sidebar-heading">Event's </h3>
             <ul class="control-sidebar-menu">

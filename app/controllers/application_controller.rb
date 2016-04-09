@@ -9,6 +9,15 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
   #include LocalSubdomain
 
+  def after_sign_in_path_for(resource)
+    if resource.class == "Group"
+      #root_url(:subdomain => current_user.subdomain)
+      root_url
+    else
+      root_url
+    end
+  end
+
   rescue_from CanCan::AccessDenied do |exception|
     if request.xhr?
       flash[:alert] = "Sorry! You are not Authorized"
@@ -22,13 +31,26 @@ class ApplicationController < ActionController::Base
 
   rescue_from ActiveRecord::RecordNotFound do |exc|
     if request.xhr?
-      flash[:alert] = "Sorry! Record not found"
-      render js: "window.location = '/#{params["controller"]}'"
+      #flash[:alert] = "Sorry! Record not found"
+      #render js: "window.location = '/#{params["controller"]}'"
+      render js: "alert('problem is detected');"
     else
       flash[:alert] = "Sorry! Record not found"
       redirect_to root_url
     end
   end
+
+  # begin
+  #   # do something dodgy
+  # rescue ActiveRecord::RecordNotFound
+  #   # handle not found error
+  # rescue ActiveRecord::ActiveRecordError
+  #   # handle other ActiveRecord errors
+  # rescue # StandardError
+  #   # handle most other errors
+  # rescue Exception
+  #   # handle everything else
+  # end
 
   #AbstractController::ActionNotFound
   #ActionController::RoutingError
@@ -79,14 +101,7 @@ class ApplicationController < ActionController::Base
   #   end
   # end
 
-  def after_sign_in_path_for(resource)
-    if resource.class == "Group"
-      #root_url(:subdomain => current_user.subdomain)
-      root_url
-    else
-      root_url
-    end
-  end
+  
 
   # def after_sign_out_path_for(resource_or_scope)
   #   #root_path
@@ -123,16 +138,6 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  # require 'open-uri'
-
-  # def internet_connection?
-  #   begin
-  #     true if open("http://www.google.com/")
-  #   rescue
-  #     false
-  #   end
-  # end
-
   protected
 
   def configure_devise_permitted_parameters
@@ -155,3 +160,13 @@ class ApplicationController < ActionController::Base
     end
   end
 end
+
+# require 'open-uri'
+
+  # def internet_connection?
+  #   begin
+  #     true if open("http://www.google.com/")
+  #   rescue
+  #     false
+  #   end
+  # end

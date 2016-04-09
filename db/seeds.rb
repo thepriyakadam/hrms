@@ -286,14 +286,14 @@ require 'roo'
 #####################################################################
 ex = Roo::Excel.new("#{Rails.root}/public/workingdays.xls")
 #ex.default_sheet = ex.sheets[6] #dewas jan
-#ex.default_sheet = ex.sheets[4] #siya jan
-ex.default_sheet = ex.sheets[11] #dewas and siya jan
+ex.default_sheet = ex.sheets[4] #siya jan
+#ex.default_sheet = ex.sheets[11] #dewas and siya jan
 i = 1
 gross_salary = 0
 ActiveRecord::Base.transaction do
 #2.upto(372) do |line| # dewas jan 2016
-#2.upto(90) do |line| # siya jan 2016
-2.upto(465) do |line| # siya and dewas feb 2016
+2.upto(90) do |line| # siya jan 2016
+#2.upto(465) do |line| # siya and dewas feb 2016
 #2.upto(95) do |line| # siya Feb 2016
   puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)

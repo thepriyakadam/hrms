@@ -2,6 +2,10 @@
 Rails.application.routes.draw do
   
   namespace :reports do
+  get 'food_deduction_details/new'
+  end
+
+  namespace :reports do
   get 'ctc_details/new'
   post 'ctc_details/ctc_detail_report'
   end

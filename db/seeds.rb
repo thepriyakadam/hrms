@@ -284,41 +284,44 @@ require 'roo'
 # end
 # end
 #####################################################################
-# ex = Roo::Excel.new("#{Rails.root}/public/workingdays.xls")
-# ex.default_sheet = ex.sheets[4]
-# i = 1
-# gross_salary = 0
-# ActiveRecord::Base.transaction do
-# #2.upto(372) do |line| # dewas jan 2016
-# 2.upto(93) do |line| # siya jan 2016
-# #2.upto(95) do |line| # siya Feb 2016
-#   puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
-#   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
-#   unless @employee.nil?
-#     Workingday.new do |w|
-#       w.employee_id = @employee.id
-#       w.month_name = ex.cell(line,'B')
-#       w.year = ex.cell(line,'C').to_i
+ex = Roo::Excel.new("#{Rails.root}/public/workingdays.xls")
+#ex.default_sheet = ex.sheets[6] #dewas jan
+#ex.default_sheet = ex.sheets[4] #siya jan
+ex.default_sheet = ex.sheets[11] #dewas and siya jan
+i = 1
+gross_salary = 0
+ActiveRecord::Base.transaction do
+#2.upto(372) do |line| # dewas jan 2016
+#2.upto(90) do |line| # siya jan 2016
+2.upto(465) do |line| # siya and dewas feb 2016
+#2.upto(95) do |line| # siya Feb 2016
+  puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
+  @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
+  unless @employee.nil?
+    Workingday.new do |w|
+      w.employee_id = @employee.id
+      w.month_name = ex.cell(line,'B')
+      w.year = ex.cell(line,'C').to_i
 
-#       w.lwp_leave = ex.cell(line, 'D').to_i
-#       w.cl_leave = ex.cell(line, 'E').to_i
-#       w.el_leave = ex.cell(line, 'F').to_i
-#       w.esic_leave = ex.cell(line, 'G').to_i
+      w.lwp_leave = ex.cell(line, 'D').to_i
+      w.cl_leave = ex.cell(line, 'E').to_i
+      w.el_leave = ex.cell(line, 'F').to_i
+      w.esic_leave = ex.cell(line, 'G').to_i
 
-#       w.day_in_month = ex.cell(line, 'H')
-#       w.present_day = ex.cell(line, 'I')
-#       w.holiday_in_month = ex.cell(line, 'J')
+      w.day_in_month = ex.cell(line, 'H')
+      w.present_day = ex.cell(line, 'I')
+      w.holiday_in_month = ex.cell(line, 'J')
        
-#       w.week_off_day = ex.cell(line, 'K')
-#       w.absent_day = ex.cell(line, 'L')
-#       w.payable_day = ex.cell(line, 'M')
-#       w.save!
-#     end
-#     puts "#{i} Record inserted.-----------------------------------------------"
-#     i = i+1
-#   end
-# end
-# end
+      w.week_off_day = ex.cell(line, 'K')
+      w.absent_day = ex.cell(line, 'L')
+      w.payable_day = ex.cell(line, 'M')
+      w.save!
+    end
+    puts "#{i} Record inserted.-----------------------------------------------"
+    i = i+1
+  end
+end
+end
 
 ###############################################################################################
 
@@ -760,38 +763,38 @@ require 'roo'
 # end
 #end
 ####################################################################
-ex = Roo::Excel.new("#{Rails.root}/public/advance_opening_balance.xls")
-ex.default_sheet = ex.sheets[6]
-j = 1
-2.upto(30) do |line|
-  puts "Starting Record---------------------------------------"
-  @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
-  ActiveRecord::Base.transaction do |a|
-  unless @employee.nil?
-    date = ex.cell(line,'C').to_date
-    @advance_salary = AdvanceSalary.new do |a|
-      a.employee_id = @employee.id  
-      a.advance_date = date unless ex.cell(line,'C').nil?
-      a.advance_amount = ex.cell(line,'D').to_f unless ex.cell(line,'D').nil?
-      a.instalment_amount = ex.cell(line,'F').to_f unless ex.cell(line,'F').nil?
+# ex = Roo::Excel.new("#{Rails.root}/public/advance_opening_balance.xls")
+# ex.default_sheet = ex.sheets[6]
+# j = 1
+# 2.upto(30) do |line|
+#   puts "Starting Record---------------------------------------"
+#   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
+#   ActiveRecord::Base.transaction do |a|
+#   unless @employee.nil?
+#     date = ex.cell(line,'C').to_date
+#     @advance_salary = AdvanceSalary.new do |a|
+#       a.employee_id = @employee.id  
+#       a.advance_date = date unless ex.cell(line,'C').nil?
+#       a.advance_amount = ex.cell(line,'D').to_f unless ex.cell(line,'D').nil?
+#       a.instalment_amount = ex.cell(line,'F').to_f unless ex.cell(line,'F').nil?
       
-      unless a.advance_amount.nil? and a.instalment_amount.nil?
-      a.no_of_instalment = (a.advance_amount.to_i / a.instalment_amount).ceil
-      end
-      a.save!
-    end
+#       unless a.advance_amount.nil? and a.instalment_amount.nil?
+#       a.no_of_instalment = (a.advance_amount.to_i / a.instalment_amount).ceil
+#       end
+#       a.save!
+#     end
 
-    unless @advance_salary.nil?
-      for i in 1..@advance_salary.no_of_instalment.to_i
-        Instalment.new do |i|
-          i.advance_salary_id = @advance_salary.id
-          i.instalment_date = date
-          i.instalment_amount = @advance_salary.instalment_amount
-          i.save!
-        end
-        date = date.next_month
-      end
-    end
-  end
-  end
-end
+#     unless @advance_salary.nil?
+#       for i in 1..@advance_salary.no_of_instalment.to_i
+#         Instalment.new do |i|
+#           i.advance_salary_id = @advance_salary.id
+#           i.instalment_date = date
+#           i.instalment_amount = @advance_salary.instalment_amount
+#           i.save!
+#         end
+#         date = date.next_month
+#       end
+#     end
+#   end
+#   end
+# end

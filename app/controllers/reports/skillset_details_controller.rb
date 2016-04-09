@@ -1,6 +1,7 @@
 class Reports::SkillsetDetailsController < ApplicationController
   def new
   end
+
   def skillset_detail_report	
 	  @location = params[:salary][:company_location_id]
 	  if current_user.class == Group

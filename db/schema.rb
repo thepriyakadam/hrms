@@ -1352,9 +1352,11 @@ ActiveRecord::Schema.define(version: 20160408101938) do
     t.date     "end_date"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
+    t.integer  "department_id"
   end
 
   add_index "shift_rotations", ["company_shift_id"], name: "index_shift_rotations_on_company_shift_id"
+  add_index "shift_rotations", ["department_id"], name: "index_shift_rotations_on_department_id"
 
   create_table "skillsets", force: :cascade do |t|
     t.integer  "employee_id"

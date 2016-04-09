@@ -2,6 +2,7 @@
   <thead>
     <tr>  
       <th>Company shift</th>
+      <th>Department Name</th>
       <th>Start date</th>
       <th>End date</th>
       <th>Action</th>
@@ -11,6 +12,7 @@
    <% @shift_rotations.each do |shift_rotation| %>
       <tr>
         <td><%= shift_rotation.company_shift.try(:name) %></td>
+        <td><%= shift_rotation.department.name %>
         <td><%= shift_rotation.start_date %></td>
         <td><%= shift_rotation.end_date %></td>
         <td>

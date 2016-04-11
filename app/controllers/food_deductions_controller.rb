@@ -71,7 +71,7 @@ class FoodDeductionsController < ApplicationController
   def employees
     @year = params[:year]
     @month = params[:month]
-    date = Date.new(@year.to_i, FoodDeduction.months[@month])
+    date = Date.new(@year.to_i, Workingday.months[@month])
     if current_user.class == Group
       @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y'))
     else

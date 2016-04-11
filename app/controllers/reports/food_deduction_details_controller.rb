@@ -1,4 +1,4 @@
-class Reports::FoodDeductionDetailsController < ApplicationController
+ class Reports::FoodDeductionDetailsController < ApplicationController
   def new
   end
 
@@ -10,6 +10,7 @@ class Reports::FoodDeductionDetailsController < ApplicationController
     if current_user.class == Group
       if params[:salary][:company_location_id] == "" or params[:salary][:company_location_id].nil?
        @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y'))
+       @advance_salaries = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y'))
       else
         @employees = Employee.where(company_location_id: @location.to_i)
         @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)

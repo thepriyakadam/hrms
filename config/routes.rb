@@ -1,5 +1,79 @@
-Rails.application.routes.draw do
 
+Rails.application.routes.draw do
+  
+  namespace :reports do
+  get 'overtime_salary_details/new'
+  end
+
+  namespace :reports do
+  get 'overtime_salary_details/daily'
+  end
+
+  namespace :reports do
+  get 'food_deduction_details/new'
+  post 'food_deduction_details/food_deduction_detail_report'
+  end
+
+  namespace :reports do
+  get 'ctc_details/new'
+  post 'ctc_details/ctc_detail_report'
+  end
+
+  namespace :reports do
+  get 'esic_details/new'
+  post 'esic_details/esic_detail_report'
+  end
+
+  namespace :reports do
+  get 'pf_details/new'
+  post 'pf_details/pf_detail_report'
+  end
+
+  namespace :reports do
+  get 'instalment_details/new'
+  post 'instalment_details/instalment_detail_report'
+  end
+
+  namespace :reports do
+  get 'advance_salaries/new'
+  post 'advance_salaries/advance_salary_report'
+  end
+
+  resources :week_offs
+  resources :employee_leav_request_reports, :only => [:index]
+
+  resources :capture_resumes
+  resources :interview_schedules do
+    collection do
+    get :search_by_interview_date
+    get :modal
+    get :interview_reschedule
+    post :send_email_to_candidate
+    get :sample_email_to_interviewer
+    get :sample_email
+    end
+end
+  resources :vacancy_masters do
+    collection do
+    get :search_by_vacancy_post_date
+    post :import  
+    end
+end  
+  resources :leave_c_offs do
+    collection do
+      get :search_by_c_off_date
+    end
+  end
+
+  resources :self_services do
+    collection do
+      get :employee
+      get :employee_template
+      get :salaryslip
+      get :advance
+      get :attendance
+    end
+  end
 
   namespace :reports do
   get 'family_details/new'
@@ -113,7 +187,11 @@ Rails.application.routes.draw do
       get :show_leave_record
     end
   end
-
+  
+  match 'capture_resumes/:id/download/:id' => 'capture_resumes#download', :via => [:get], :as => :download
+  match 'interview_schedules/:id/send_email_to_candidate/:id' => 'interview_schedules#send_email_to_candidate', :via => [:get], :as => :send_email_to_candidate
+  match 'interview_schedules/:id/sample_email_to_interviewer/:id' => 'interview_schedules#sample_email_to_interviewer', :via => [:get], :as => :sample_email_to_interviewer
+  
   resources :leave_c_offs
   resources :overtime_month_records
   resources :overtime_daily_records
@@ -182,16 +260,16 @@ Rails.application.routes.draw do
   end
   resources :retention_moneys
   namespace :reports do
-    post 'salaries/date_range_report'
-    get 'salaries/new'
-    post 'salaries/department_wise'
-    get 'salaries/show'
-    post 'salaries/ctc_yearly_report'
-    get 'salaries/ctc_yearly'
-    post 'employee_reports/basic_detail_report'
-    get 'employee_reports/show'
-    post 'basic_detail/basic_detail_report'
-    get 'basic_detail/new'
+     get 'salaries/new'
+     post 'salaries/date_range_report'
+    # post 'salaries/department_wise'
+    # get 'salaries/show'
+     post 'salaries/ctc_yearly_report'
+     get 'salaries/ctc_yearly'
+    # post 'employee_reports/basic_detail_report'
+    # get 'employee_reports/show'
+    # post 'basic_detail/basic_detail_report'
+    # get 'basic_detail/new'
   end
 
   resources :payment_modes
@@ -220,6 +298,7 @@ Rails.application.routes.draw do
       post :save_all_data
       get :salary_bubble_form
       patch :update_cell
+      get :print_salary_slip
     end
   end
   resources :instalments do
@@ -227,7 +306,12 @@ Rails.application.routes.draw do
       get :employees
     end
   end
-  resources :advance_salaries
+  resources :advance_salaries do
+    collection do
+      get :search_by_advance_date
+      get :advances
+    end
+  end
   resources :workingdays do
     collection do
       get :employees
@@ -286,6 +370,7 @@ Rails.application.routes.draw do
       get :attendance_details
       get :collect_shift_date
       get :collect_employee
+      get :search_by_date
     end
   end
   resources :employee_shifts do
@@ -325,12 +410,20 @@ Rails.application.routes.draw do
       get :from_hr
       get :hr_view_request
       get :employee_history_with_current_leave
+      get :search_by_start_date
+      get :search_by_end_date
+      get :search_by_is_pending_date
+      get :employee_leav_request_reports
     end
   end
   resources :company_leavs
   resources :leav_categories
   resources :employee_physicals
-  resources :joining_details
+  resources :joining_details do
+    collection do
+      get :search_by_joining_date
+    end
+  end
   resources :employee_grades
   resources :awards do
     collection do
@@ -372,10 +465,17 @@ Rails.application.routes.draw do
       get :manager
       get :transfer_form
       post :transfer_employee
+      get :search_by_employee_manual_code
+      get :transfer_employee_list
+      get :report
+      get :birthday_email
+      get :birthday_invitation
     end
     member do
       get :edit_manager
       patch :update_manager
+      patch :transfer_employee
+      get :transfer_form
     end
   end
   resources :blood_groups

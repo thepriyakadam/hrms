@@ -1,6 +1,9 @@
+require 'query_report/helper'  #need to require the helper
 class EmployeeLeavRequestsController < ApplicationController
   before_action :set_employee_leav_request, only: [:show, :edit, :update, :destroy]
   load_and_authorize_resource
+  include QueryReport::Helper  #need to include it
+
   # GET /employee_leav_requests
   # GET /employee_leav_requests.json
   def index
@@ -54,15 +57,15 @@ class EmployeeLeavRequestsController < ApplicationController
       type = LeavCategory.find(@employee_leav_request.leav_category_id).name
       if type == "LWP Leave" or type == "ESIC Leave"
         @employee_leav_request.leave_status_records.build(change_status_employee_id: current_user.employee_id,status: "Pending", change_date: Date.today)
-        respond_to do |format|
-          if @employee_leav_request.save
-            format.html { redirect_to @employee_leav_request, notice: 'Employee leav request was successfully created.' }
-            format.json { render :show, status: :created, location: @employee_leav_request }
-          else
-            format.html { render :new }
-            format.json { render json: @employee_leav_request.errors, status: :unprocessable_entity }
-          end
+        if @employee.email.nil or @employee.email == ""
+          flash[:notice] = "Send request without email."
+        else
+          flash[:notice] = "Leave Request sent successfully."
+          LeaveRequestMailer.pending(@employee_leav_request).deliver_now    
         end
+        redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
+      elsif type == "C.Off"
+        
       else
         if @emp_leave_bal.nil?
           @total_leaves = EmployeeLeavBalance.where('employee_id = ?', @employee.id)
@@ -81,12 +84,15 @@ class EmployeeLeavRequestsController < ApplicationController
           respond_to do |format|
             if @employee_leav_request.save
               @employee_leav_request.minus_leave(@employee_leav_request)
-              LeaveRequestMailer.pending(@employee_leav_request).deliver_now
-              format.html { redirect_to employee_leav_requests_path, notice: 'Employee leav request was successfully created.' }
-              format.json { render :show, status: :created, location: @employee_leav_request }
+              if @employee.email.nil or @employee.email == ""
+                flash[:notice] = "Send request without email."
+              else
+                flash[:notice] = "Leave Request sent successfully."
+                LeaveRequestMailer.pending(@employee_leav_request).deliver_now    
+              end
+              redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
             else
-              format.html { render :new }
-              format.json { render json: @employee_leav_request.errors, status: :unprocessable_entity }
+              render :new
             end
           end
         end
@@ -163,6 +169,53 @@ class EmployeeLeavRequestsController < ApplicationController
     @employee = Employee.find(@current_request.employee_id)
     @employee_leav_requests = @employee.employee_leav_requests
   end
+
+  def search_by_start_date
+    reporter(@employee_leav_requests,template_class: PdfReportTemplate) do
+      filter :start_date, type: :date
+      #filter(:current_status, :enum, :select => [["Pending",0], ["FirstApproved",2], ["SecondApproved",3], ["FirstRejected",4],["SecondRejected",5],["Cancelled",1]])
+      column(:manual_employee_code,sortable: true) { |employee_leav_request| employee_leav_request.employee.try(:manual_employee_code) }
+      #column(:date_range,sortable: true) { |employee_leav_request| employee_leav_request.date_range }
+      column(:start_date,sortable: true) { |employee_leav_request| employee_leav_request.start_date.to_date }
+      column(:end_date,sortable: true) { |employee_leav_request| employee_leav_request.end_date.to_date }
+      column(:leav_category_id,sortable: true) { |employee_leav_request| employee_leav_request.leav_category.try(:name) }
+      column(:leave_type,sortable: true) { |employee_leav_request| employee_leav_request.leave_type }
+      column(:current_status,sortable: true) { |employee_leav_request| employee_leav_request.current_status }
+      column(:leave_count,sortable: true) { |employee_leav_request| employee_leav_request.leave_count }
+      column(:reason,sortable: true) { |employee_leav_request| employee_leav_request.reason }
+      column(:company_location,sortable: true) { |employee_leav_request| employee_leav_request.employee.try(:company_location).try(:name) }
+    end
+  end
+
+  def search_by_end_date
+    reporter(@employee_leav_requests,template_class: PdfReportTemplate) do
+      filter :end_date, type: :date
+      column(:manual_employee_code,sortable: true) { |employee_leav_request| employee_leav_request.employee.try(:manual_employee_code) }
+      column(:date_range,sortable: true) { |employee_leav_request| employee_leav_request.date_range }
+      column(:start_date,sortable: true) { |employee_leav_request| employee_leav_request.start_date.to_date }
+      column(:end_date,sortable: true) { |employee_leav_request| employee_leav_request.end_date.to_date }
+      column(:leav_category_id,sortable: true) { |employee_leav_request| employee_leav_request.leav_category.try(:name) }
+      column(:leave_type,sortable: true) { |employee_leav_request| employee_leav_request.leave_type }
+      column(:reason,sortable: true) { |employee_leav_request| employee_leav_request.reason }
+    end
+  end
+  
+  def search_by_is_pending_date
+    reporter(@employee_leav_requests,template_class: PdfReportTemplate) do
+      filter :current_status, type: :string
+      column(:manual_employee_code,sortable: true) { |employee_leav_request| employee_leav_request.employee.try(:manual_employee_code) }
+      column(:employee_id,sortable: true) { |employee_leav_request| full_name(employee_leav_request.employee) }
+      column :is_pending
+      column :is_cancelled
+      column :is_first_approved
+      column :is_second_approved
+      column :is_first_rejected
+      column :is_second_rejected
+      column :current_status
+    end
+  end
+
+  
 
   private
     # Use callbacks to share common setup or constraints between actions.

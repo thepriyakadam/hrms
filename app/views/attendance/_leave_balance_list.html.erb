@@ -1,0 +1,52 @@
+<div class="row">
+ <div class="col-sm-6">
+  <table id="example2" class="table table-bordered table-hover table-condensed">
+    <thead>
+      <tr>
+        <th>Leave Category</th>
+        <th>Expiry Date</th>
+        <th>Remaining Balance</th>
+        <th>Total Leave</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @employee_leav_balances.each do |b| %>
+        <tr>
+          <td><%= b.leav_category.try(:name) %></td>
+          <td><%= b.expiry_date %></td>
+          <td><%= b.no_of_leave %></td>
+          <td><%= b.total_leave %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+ </div>
+ <div class="col-sm-5">
+  <div class="field">
+  <table class="table table-bordered table-hover table-condensed'">
+    <thead>
+      <tr>
+        <th colspan="3">
+          <center> C_Off Balance </center>
+        </th>
+      </tr>
+      <tr>
+        <th>Date</th>
+        <th>Type</th>
+        <th>Expiry Date</th>
+      </tr>
+     </thead>
+      <% %>
+      <tr>
+        <th><%=  %></th>
+        <td><%=  %></td>
+        <td><%=  %></td>
+      </tr>
+     
+      </table>
+      </div>
+    </div>
+    <div class="col-sm-1"></div>
+  </div>
+

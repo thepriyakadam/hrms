@@ -50,6 +50,6 @@ class ShiftRotationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def shift_rotation_params
-      params.require(:shift_rotation).permit(:company_shift_id, :start_date, :end_date)
+      params.require(:shift_rotation).permit(:company_shift_id,:department_id, :start_date, :end_date)
     end
 end

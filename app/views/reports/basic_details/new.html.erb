@@ -13,19 +13,19 @@
           <div class="field">
           <%= select :salary, :company_location_id, all_company_location,{include_blank: 'select Location'},{onchange:"var a={id:$(this).val()}; $.get('/reports/basic_details/collect_departments',a,function(response){});", class: "form-control"}%>
           </div>
-        </div>
+      </div>
 
-        <div class="col-sm-3">
-          <div class="field">
+      <div class="col-sm-3">
+        <div class="field">
           
-          </div>
         </div>
+      </div>
 
-        <div class="col-sm-3">
-          <div class="actions">
-            <%= f.submit "Download Excel", class: "btn btn-sm btn-warning" %>
-          </div>
+      <div class="col-sm-3">
+        <div class="actions">
+          <%= f.submit "Download Excel", class: "btn btn-sm btn-warning" %>
         </div>
+      </div>
 
       </div><br>
     <% end %>

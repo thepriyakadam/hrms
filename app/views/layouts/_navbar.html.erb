@@ -109,16 +109,37 @@
                   <i class="menu-icon fa fa-birthday-cake bg-red"></i>
                   <div class="menu-info">
                     <h4 class="control-sidebar-subheading"> Today's Birthday</h4>
-                    <p> Employee Name </p>
-
+                    <% date = Date.today %>
+                    <% @employees = Employee.where("strftime('%d/%m', date_of_birth) = ?", date.strftime('%d/%m')) %>
+                    <% if @employees.empty? %>
+                      <p>No birth day</p>
+                    <%else%>
+                      <%@employees.each do |e|%>
+                        <p> <%= full_name(e) %> </p>
+                      <%end%>
+                      <% if current_user.role.name == 'Company'%>
+                        <%= link_to 'Send Birthday Wishes', birthday_email_employees_path,class: 'btn btn-xl btn-warning' %>
+                      <% end %>
+                    <%end%>
+                    <br>
                     <h4 class="control-sidebar-subheading"> Tomorrow's Birthday</h4>
 
-                    <p> Employee Name </p>
+                    <% date = Date.today + 1 %>
+                    <% @employees = Employee.where("strftime('%d/%m', date_of_birth) = ?", date.strftime('%d/%m')) %>
+                    <% if @employees.empty? %>
+                      <p>No birth day</p>
+                    <%else%>
+                      <%@employees.each do |e|%>
+                        <p> <%= full_name(e) %> </p>
+                      <%end%>
+                    <%end%>
+                    
                   </div>
                 </a>
               </li>
             </ul><!-- /.control-sidebar-menu -->
-
+            <%= link_to 'Send Birthday Wishes', birthday_email_employees_path,class: 'btn btn-xl btn-warning' %><br><br>
+            <%= link_to 'Send Birthday Invitation', birthday_invitation_employees_path,class: 'btn btn-xl btn-warning' %>
             <!-- <h3 class="control-sidebar-heading">Event's </h3>
             <ul class="control-sidebar-menu">
               <li>

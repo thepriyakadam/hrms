@@ -13,6 +13,13 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.1.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 gem 'therubyracer', platforms: :ruby
+gem 'query_report', '~> 1.2', '>= 1.2.1'
+gem 'kaminari', '~> 0.16.3'
+gem 'coderay'
+gem 'bootstrap-datepicker-rails'
+gem "awesome_print"
+gem 'datagrid', '~> 1.4', '>= 1.4.1'
+gem 'pagination', '~> 0.3.3'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
@@ -22,6 +29,17 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
+# for pdf generation
+gem 'prawn', '~> 1.3.0'
+# for pdf generation
+gem 'pdfkit', '~> 0.8.2'
+# Provides binaries for WKHTMLTOPDF project in an easily accessible package.
+
+gem 'wicked_pdf', '~> 1.0', '>= 1.0.5'
+
+gem 'wkhtmltopdf-binary', '~> 0.9.9.3'
+
+
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

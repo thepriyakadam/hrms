@@ -9,26 +9,59 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
   #include LocalSubdomain
 
+  def after_sign_in_path_for(resource)
+    if resource.class == "Group"
+      #root_url(:subdomain => current_user.subdomain)
+      root_url
+    else
+      root_url
+    end
+  end
+
   rescue_from CanCan::AccessDenied do |exception|
     if request.xhr?
-      flash[:alert] = "Sorry! You are not Authorized"
-      render js: "window.location = '/'"
-      #redirect_to root_url
+      render js: "alert('Sorry, You are not authorized.');"
     else
-      flash[:alert] = "Sorry! You are not Authorized"
+      flash[:alert] = "Sorry! You are not Authorized."
       redirect_to root_url
     end
   end
 
   rescue_from ActiveRecord::RecordNotFound do |exc|
     if request.xhr?
-      flash[:alert] = "Sorry! Record not found"
-      render js: "window.location = '/#{params["controller"]}'"
+      render js: "alert('Sorry! Record not found');"
     else
       flash[:alert] = "Sorry! Record not found"
       redirect_to root_url
     end
   end
+
+  rescue_from ActiveRecord::ActiveRecordError do |exc|
+    if request.xhr?
+      render js: "alert('Sorry! Record Error');"
+    else
+      flash[:alert] = "Sorry! Record Error"
+      redirect_to root_url
+    end
+  end
+
+  # rescue_from ActionView::Template::Error do |exc|
+  #   if request.xhr?
+  #     render js: "alert('Sorry! Template error problem');"
+  #   else
+  #     flash[:alert] = "Sorry! Template error problem"
+  #     redirect_to root_url
+  #   end
+  # end
+
+  # rescue_from Exception do |exc|
+  #   if request.xhr?
+  #     render js: "alert('Sorry! Something is wrong.');"
+  #   else
+  #     flash[:alert] = "Sorry! Something is wrong."
+  #     redirect_to root_url
+  #   end
+  # end
 
   #AbstractController::ActionNotFound
   #ActionController::RoutingError
@@ -38,30 +71,8 @@ class ApplicationController < ActionController::Base
   #AbstractController::DoubleRenderError
   #AbstractController::DoubleRenderError
   #ActionController::ActionControllerError
-  
-  
-  # rescue_from ActionView::Template::Error do |exc|
-  #   if request.xhr?
-  #     flash[:alert] = "Sorry! Template error problem"
-  #     render js: "window.location = '/#{params["controller"]}'"
-  #   else
-  #     flash[:alert] = "Sorry! Template error problem"
-  #     redirect_to root_url
-  #   end
-  # end
-  
-
-  # rescue_from ActiveRecord::PendingMigrationError do |exc|
-  #   if request.xhr?
-  #     flash[:alert] = "Sorry! Migration error problem"
-  #     render js: "window.location = '/#{params["controller"]}'"
-  #   else
-  #     flash[:alert] = "Sorry! Migration error problem"
-  #     redirect_to root_url
-  #   end
-  # end
-  
-  
+  #ActionController::InvalidAuthenticityToken
+    
   # def check_subdomain
   #   if group_signed_in?
   #     unless request.subdomain == current_user.subdomain
@@ -77,15 +88,6 @@ class ApplicationController < ActionController::Base
   #     #redirect_to root_url(:subdomain => '')
   #   end
   # end
-
-  def after_sign_in_path_for(resource)
-    if resource.class == "Group"
-      #root_url(:subdomain => current_user.subdomain)
-      root_url
-    else
-      root_url
-    end
-  end
 
   # def after_sign_out_path_for(resource_or_scope)
   #   #root_path
@@ -122,16 +124,6 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  # require 'open-uri'
-
-  # def internet_connection?
-  #   begin
-  #     true if open("http://www.google.com/")
-  #   rescue
-  #     false
-  #   end
-  # end
-
   protected
 
   def configure_devise_permitted_parameters
@@ -154,3 +146,13 @@ class ApplicationController < ActionController::Base
     end
   end
 end
+
+# require 'open-uri'
+
+  # def internet_connection?
+  #   begin
+  #     true if open("http://www.google.com/")
+  #   rescue
+  #     false
+  #   end
+  # end

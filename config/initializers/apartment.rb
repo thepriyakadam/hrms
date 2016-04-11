@@ -16,7 +16,7 @@ Apartment.configure do |config|
   #
   #config.excluded_models = %w{ Group }
 
-  config.seed_after_create = true
+  #config.seed_after_create = true
 
   # In order to migrate all of your Tenants you need to provide a list of Tenant names to Apartment.
   # You can make this dynamic by providing a Proc object to be called on migrations.

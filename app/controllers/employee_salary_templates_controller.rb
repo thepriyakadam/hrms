@@ -46,7 +46,7 @@ class EmployeeSalaryTemplatesController < ApplicationController
   end
   
   def show_employee_salary_template
-    @current_template = EmployeeTemplate.where("employee_id = ? and is_active = ?",params[:format],true).take
+    @current_template = EmployeeTemplate.where(employee_id: params[:format], is_active: true).take
     authorize! :show, @current_template
     @employee_salary_templates = @current_template.employee_salary_templates
   end

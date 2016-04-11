@@ -15,7 +15,7 @@
             <td><%= item.salary_component.name %></td>
             <td align="right"><%= item.actual_amount.round %></td>
             <td align="right"><%= item.calculated_amount.round %></td>
-            <td align="center"><%= link_to "", edit_salaryslip_component_path(item),remote:true,class: "fa fa-edit" %></td>
+            <!-- <td align="center">< link_to "", edit_salaryslip_component_path(item),remote:true,class: "fa fa-edit" %></td> -->
           </tr>
         <% end %>
         <tr>
@@ -61,4 +61,4 @@
     </table>
   </div>
 </div>
-<div><%= link_to 'Back', salaryslips_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %></div>
+<div><%= link_to 'Back', employee_salary_list_salaryslips_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %></div>

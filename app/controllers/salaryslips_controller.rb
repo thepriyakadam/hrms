@@ -237,6 +237,7 @@ class SalaryslipsController < ApplicationController
         deducted_actual_amount = ia.advance_salary.instalment_amount
         deducted_calculated_amount = deducted_actual_amount
         SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: deducted_actual_amount, calculated_amount: deducted_calculated_amount, is_deducted: true, other_component_name: "Advance")
+        ia.update(is_complete: true)
       end
 
       @retention = RetentionMoney.first
@@ -396,6 +397,36 @@ class SalaryslipsController < ApplicationController
       end
     end
   end
+
+ 
+  def print_salary_slip
+    @instalment_array = []
+    @salaryslip = Salaryslip.find(params[:id])
+    @addable_salary_components = SalaryslipComponent.where("is_deducted = ? and salaryslip_id = ?",false,@salaryslip.id)
+    @deducted_salary_components = SalaryslipComponent.where("is_deducted = ? and salaryslip_id = ?",true,@salaryslip.id)
+    @working_day = Workingday.find(@salaryslip.workingday_id)
+    @employee = Employee.find(@salaryslip.employee_id)
+    @advance_salary = AdvanceSalary.find_by_employee_id(@employee.id)
+    # unless @advance_salary.nil?
+    #   @instalments = @advance_salary.instalments
+    #   @instalments.try(:each) do |i|
+    #     unless i.instalment_date.nil?
+    #       if i.try(:instalment_date).strftime("%B") == params["month"] and i.try(:instalment_date).strftime("%Y") == params["year"]
+    #         @instalment_array << i
+            respond_to do |format|
+            format.html
+            format.pdf do
+            render :pdf => 'print_salary_slip',
+            layout: 'pdf.html',
+            :template => 'salaryslips/print_salary_slip.pdf.erb',
+            :show_as_html => params[:debug].present?
+          end
+        end
+      end
+#     end
+#   end
+#  end
+# end 
 
   def select_month_year_form
     
@@ -748,6 +779,7 @@ class SalaryslipsController < ApplicationController
             deducted_actual_amount = ia.advance_salary.instalment_amount
             deducted_calculated_amount = deducted_actual_amount
             SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: deducted_actual_amount, calculated_amount: deducted_calculated_amount, is_deducted: true, other_component_name: "Advance")
+            ia.update(is_complete: true)
           end
 
           @monthly_expences = MonthlyExpence.where(employee_id: @employee.id, expence_date: date.all_month)

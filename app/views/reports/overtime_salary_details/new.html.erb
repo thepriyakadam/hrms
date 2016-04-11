@@ -1,11 +1,12 @@
+
 <!--SELECT2 EXAMPLE -->
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title">Employee Instalment Report</h3>
+    <h3 class="box-title">Employee Overtime Salary Report</h3>
   </div><!-- /.box-header -->
 
   <div class="box-body">
-    <%= bootstrap_form_for(:emploee, url: { action: 'instalment_detail_report',format: 'xls'}) do |f| %>
+    <%= bootstrap_form_for(:salary, url: { action: 'overtime_montly_detail_report',format: 'xls'}) do |f| %>
 
         <div class="row">
         <div class="col-sm-3">
@@ -18,20 +19,19 @@
             <%= select :salary,:year,['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025','2026','2027'],{label: 'Select Year',include_blank: " Select Year"}, class: "form-control" %>
           </div>
         </div>
-
         <div class="col-sm-3">
           <div class="field">
           <%= select :salary, :company_location_id, all_company_location,{label: 'Company Location',include_blank: " Select Company Location"}, class: "form-control" %>
           </div>
         </div>
-
+        
         <div class="col-sm-3">
           <div class="actions">
             <%= f.submit "Download Excel", class: "btn btn-sm btn-warning" %>
           </div>
         </div>
-
-      </div><br>
+        </div>
+      <br>
     <% end %>
   </div><!-- /.box-body -->
 </div><!-- /.box -->

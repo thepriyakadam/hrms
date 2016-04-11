@@ -2,6 +2,19 @@
 Rails.application.routes.draw do
   
   namespace :reports do
+  get 'overtime_salary_details/new'
+  end
+
+  namespace :reports do
+  get 'overtime_salary_details/daily'
+  end
+
+  namespace :reports do
+  get 'food_deduction_details/new'
+  post 'food_deduction_details/food_deduction_detail_report'
+  end
+
+  namespace :reports do
   get 'ctc_details/new'
   post 'ctc_details/ctc_detail_report'
   end
@@ -268,6 +281,7 @@ end
       post :save_all_data
       get :salary_bubble_form
       patch :update_cell
+      get :print_salary_slip
     end
   end
   resources :instalments do
@@ -438,6 +452,7 @@ end
       get :transfer_employee_list
       get :report
       get :birthday_email
+      get :birthday_invitation
     end
     member do
       get :edit_manager

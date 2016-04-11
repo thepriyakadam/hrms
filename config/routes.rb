@@ -2,7 +2,16 @@
 Rails.application.routes.draw do
   
   namespace :reports do
+  get 'overtime_salary_details/new'
+  end
+
+  namespace :reports do
+  get 'overtime_salary_details/daily'
+  end
+
+  namespace :reports do
   get 'food_deduction_details/new'
+  post 'food_deduction_details/food_deduction_detail_report'
   end
 
   namespace :reports do

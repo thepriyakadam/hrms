@@ -237,6 +237,7 @@ class SalaryslipsController < ApplicationController
         deducted_actual_amount = ia.advance_salary.instalment_amount
         deducted_calculated_amount = deducted_actual_amount
         SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: deducted_actual_amount, calculated_amount: deducted_calculated_amount, is_deducted: true, other_component_name: "Advance")
+        ia.update(is_complete: true)
       end
 
       @retention = RetentionMoney.first
@@ -778,6 +779,7 @@ class SalaryslipsController < ApplicationController
             deducted_actual_amount = ia.advance_salary.instalment_amount
             deducted_calculated_amount = deducted_actual_amount
             SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: deducted_actual_amount, calculated_amount: deducted_calculated_amount, is_deducted: true, other_component_name: "Advance")
+            ia.update(is_complete: true)
           end
 
           @monthly_expences = MonthlyExpence.where(employee_id: @employee.id, expence_date: date.all_month)

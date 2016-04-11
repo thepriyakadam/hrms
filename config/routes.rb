@@ -145,6 +145,7 @@ end
       get :is_confirm_appraisee
       get :employee_details
       get :employee_info
+      get :subordinate_list
     end
   end
   resources :goal_rating_sheets  do

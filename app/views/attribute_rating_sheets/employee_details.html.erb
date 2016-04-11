@@ -47,13 +47,15 @@
       </tr>
     </thead>
     <tbody>
+    <% @experiences.each do |e| %>
       <tr>
-       <td><%= @experience.company_name %></td>
-       <td><%= @experience.designation %></td>
-       <td><%= @experience.no_of_year %></td>
-       <td><%= @experience.ctc %></td>
+       <td><%= e.company_name %></td>
+       <td><%= e.designation %></td>
+       <td><%= e.no_of_year %></td>
+       <td><%= e.ctc %></td>
        <td><%= @ctc %></td>
       </tr>
+      <% end %>
     </tbody>
 	</table>
   
@@ -69,11 +71,13 @@
       </tr>
     </thead>
     <tbody>
+    <% @qualifications.each do |q| %>
       <tr>
-        <td><%= @qualification.degree.name %></td>
-        <td><%= @qualification.year.name.to_s+" / "+@qualification.marks.to_s %></td>
-        <td><%= @qualification.degree_type.name %></td>
+        <td><%= q.degree.name %></td>
+        <td><%= q.year.name.to_s+" / "+q.marks.to_s %></td>
+        <td><%= q.degree_type.name %></td>
       </tr>
+      <% end %>
     </tbody>
   </table>
   

@@ -156,17 +156,22 @@ class AttributeRatingSheetsController < ApplicationController
     @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: params[:format])
     @attribute_rating_sheets = AttributeRatingSheet.where(appraisee_id: params[:format]).group(:appraisee_id)
     @employee = Employee.find(params[:format])
-    @qualification = Qualification.find_by_employee_id(@employee.id)
+    @qualifications = Qualification.where(employee_id: @employee.id)
     @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
-    @experience = Experience.find_by_employee_id(@employee.id)
+    @experiences = Experience.where(employee_id: @employee.id)
     @ctc = EmployeeSalaryTemplate.where(employee_id: @employee.id).sum(:monthly_amount)
     @attribute_rating_multiple_sheets = AttributeRatingSheet.where(appraisee_id: params[:format])
   end
 
-  def employee_info
-    @employee = Employee.find(params[:format])
-    @attribute_rating_sheets = AttributeRatingSheet.where(appraisee_id: params[:format]).group(:appraisee_id)
-    @qualification = Qualification.find_by_employee_id(@employee.id) 
+  # def employee_info
+  #   @employee = Employee.find(params[:format])
+  #   @attribute_rating_sheets = AttributeRatingSheet.where(appraisee_id: params[:format]).group(:appraisee_id)
+  #   @qualification = Qualification.find_by_employee_id(@employee.id) 
+  # end
+
+  def subordinate_list
+    current_login = Employee.find(current_user.employee_id)
+    @employees = current_login.subordinates
   end
 
   private

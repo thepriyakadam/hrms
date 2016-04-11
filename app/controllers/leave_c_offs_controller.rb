@@ -39,17 +39,51 @@ class LeaveCOffsController < ApplicationController
   def create
     @leave_c_off = LeaveCOff.new(leave_c_off_params)
     @leave_c_offs = LeaveCOff.all
-    @leave_c_off.save
+    leav_category = LeavCategory.find_by_name("C.Off")
+    
+    if leav_category.nil?
+    else
+      is_exist = EmployeeLeavBalance.exists?(employee_id: @leave_c_off.employee_id, leav_category_id: leav_category.id)
+      if is_exist
+        @employee_leave_balance = EmployeeLeavBalance.where(employee_id: @leave_c_off.employee_id, leav_category_id: leav_category.id).take
+        
+        if @leave_c_off.c_off_type == "Full Day"
+          @employee_leave_balance.total_leave = @employee_leave_balance.total_leave.to_f + 1
+          @employee_leave_balance.no_of_leave = @employee_leave_balance.no_of_leave.to_f + 1
+        else
+          @employee_leave_balance.total_leave = @employee_leave_balance.total_leave.to_f + 0.5
+          @employee_leave_balance.no_of_leave = @employee_leave_balance.no_of_leave.to_f + 0.5
+        end
+      else
+        @employee_leave_balance = EmployeeLeavBalance.new do |b|
+          b.employee_id = @leave_c_off.employee_id
+          b.leav_category_id = leav_category.id
+          b.expiry_date = @leave_c_off.c_off_date + @leave_c_off.c_off_expire_day
+
+          if @leave_c_off.c_off_type == "Full Day"
+            b.no_of_leave = 1
+            b.total_leave = 1
+          else
+            b.no_of_leave = 0.5
+            b.total_leave = 0.5
+          end
+        end
+      end
+
+      ActiveRecord::Base.transaction do
+        @leave_c_off.save
+        @employee_leave_balance.save
+      end
+    end
     @leave_c_off = LeaveCOff.new
   end
         
-
   # PATCH/PUT /leave_c_offs/1
   # PATCH/PUT /leave_c_offs/1.json
   def update
-     @leave_c_off.update(leave_c_off_params)
-     @leave_c_offs = LeaveCOff.all
-     @leave_c_off = LeaveCOff.new     
+    @leave_c_off.update(leave_c_off_params)
+    @leave_c_offs = LeaveCOff.all
+    @leave_c_off = LeaveCOff.new
   end
 
   # DELETE /leave_c_offs/1

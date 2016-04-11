@@ -64,6 +64,8 @@ class EmployeeLeavRequestsController < ApplicationController
           LeaveRequestMailer.pending(@employee_leav_request).deliver_now    
         end
         redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
+      elsif type == "C.Off"
+        
       else
         if @emp_leave_bal.nil?
           @total_leaves = EmployeeLeavBalance.where('employee_id = ?', @employee.id)

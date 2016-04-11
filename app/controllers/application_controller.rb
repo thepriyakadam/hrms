@@ -20,36 +20,47 @@ class ApplicationController < ActionController::Base
 
   rescue_from CanCan::AccessDenied do |exception|
     if request.xhr?
-      flash[:alert] = "Sorry! You are not Authorized"
-      render js: "window.location = '/'"
-      #redirect_to root_url
+      render js: "alert('Sorry, You are not authorized.');"
     else
-      flash[:alert] = "Sorry! You are not Authorized"
+      flash[:alert] = "Sorry! You are not Authorized."
       redirect_to root_url
     end
   end
 
   rescue_from ActiveRecord::RecordNotFound do |exc|
     if request.xhr?
-      #flash[:alert] = "Sorry! Record not found"
-      #render js: "window.location = '/#{params["controller"]}'"
-      render js: "alert('problem is detected');"
+      render js: "alert('Sorry! Record not found');"
     else
       flash[:alert] = "Sorry! Record not found"
       redirect_to root_url
     end
   end
 
-  # begin
-  #   # do something dodgy
-  # rescue ActiveRecord::RecordNotFound
-  #   # handle not found error
-  # rescue ActiveRecord::ActiveRecordError
-  #   # handle other ActiveRecord errors
-  # rescue # StandardError
-  #   # handle most other errors
-  # rescue Exception
-  #   # handle everything else
+  rescue_from ActiveRecord::ActiveRecordError do |exc|
+    if request.xhr?
+      render js: "alert('Sorry! Record Error');"
+    else
+      flash[:alert] = "Sorry! Record Error"
+      redirect_to root_url
+    end
+  end
+
+  # rescue_from ActionView::Template::Error do |exc|
+  #   if request.xhr?
+  #     render js: "alert('Sorry! Template error problem');"
+  #   else
+  #     flash[:alert] = "Sorry! Template error problem"
+  #     redirect_to root_url
+  #   end
+  # end
+
+  # rescue_from Exception do |exc|
+  #   if request.xhr?
+  #     render js: "alert('Sorry! Something is wrong.');"
+  #   else
+  #     flash[:alert] = "Sorry! Something is wrong."
+  #     redirect_to root_url
+  #   end
   # end
 
   #AbstractController::ActionNotFound
@@ -61,30 +72,7 @@ class ApplicationController < ActionController::Base
   #AbstractController::DoubleRenderError
   #ActionController::ActionControllerError
   #ActionController::InvalidAuthenticityToken
-  
-  
-  # rescue_from ActionView::Template::Error do |exc|
-  #   if request.xhr?
-  #     flash[:alert] = "Sorry! Template error problem"
-  #     render js: "window.location = '/#{params["controller"]}'"
-  #   else
-  #     flash[:alert] = "Sorry! Template error problem"
-  #     redirect_to root_url
-  #   end
-  # end
-  
-
-  # rescue_from ActiveRecord::PendingMigrationError do |exc|
-  #   if request.xhr?
-  #     flash[:alert] = "Sorry! Migration error problem"
-  #     render js: "window.location = '/#{params["controller"]}'"
-  #   else
-  #     flash[:alert] = "Sorry! Migration error problem"
-  #     redirect_to root_url
-  #   end
-  # end
-  
-  
+    
   # def check_subdomain
   #   if group_signed_in?
   #     unless request.subdomain == current_user.subdomain
@@ -100,8 +88,6 @@ class ApplicationController < ActionController::Base
   #     #redirect_to root_url(:subdomain => '')
   #   end
   # end
-
-  
 
   # def after_sign_out_path_for(resource_or_scope)
   #   #root_path

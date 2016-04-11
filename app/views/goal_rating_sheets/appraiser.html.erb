@@ -24,7 +24,7 @@
       </tr>
     </thead>
     <tbody>
-      <% @goal_rating_sheets.each do |g| %>
+      <% @goal_ratings.each do |g| %>
         <tr>
           <td><%= g.employee_goal.period.title %></td>
           <td><%= g.employee_goal.goal_perspective.name %></td>
@@ -33,9 +33,13 @@
           <td><%= g.employee_goal.goal_weightage %></td>
           <td><%= g.employee_goal.difficulty_level %></td>
           <td><%= g.employee_goal.allign_to_supervisor %></td>
-
+          <% if g.is_confirm_appraisee == true %>
           <td><%= g.appraisee_comment %></td>
           <td><%= g.appraisee_rating %></td>
+          <% else %>
+          <td></td>
+          <td></td>
+          <% end %>
           <td><%= text_field_tag 'appraiser_comment[]' %></td>
           <td><%= text_field_tag 'appraiser_rating[]' %></td>
           <td><%= g.appraisee.first_name %></td> 
@@ -55,7 +59,7 @@
         </div>
       </div>
     
-  </div>
+  
 
   <% end %> 
 
@@ -86,9 +90,13 @@
           <td><%= g.employee_goal.goal_weightage %></td>
           <td><%= g.employee_goal.difficulty_level %></td>
           <td><%= g.employee_goal.allign_to_supervisor %></td>
-
+          <% if g.is_confirm_appraisee == true %>
           <td><%= g.appraisee_comment %></td>
           <td><%= g.appraisee_rating %></td>
+          <% else %>
+          <td></td>
+          <td></td>
+          <% end %>
           <td><%= g.appraiser_comment %></td>
           <td><%= g.appraiser_rating %></td>
            
@@ -106,6 +114,7 @@
       <% end %>
     </tbody>
   </table>
+  </div>
   </div>
 
    <%= link_to 'Attribute-Setting', appraiser_attribute_rating_sheets_path(@employee.id) , class: 'btn btn-warning btn-sm' %></br>

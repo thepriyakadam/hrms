@@ -18,12 +18,17 @@
       </thead>
       <tbody>
       <%= console %>
-        <% @attribute_rating_sheets.each do |a| %>
+        <% @attribute_ratings.each do |a| %>
           <tr>
             <td><%= a.employee_attribute.attribute_master.name %></td>
             <td><%= a.employee_attribute.weightage %></td>
+            <% if a.is_confirm_appraisee == true %>
             <td><%= a.appraisee_comment %></td>
             <td><%= a.appraisee_rating %></td>
+            <% else %>
+            <td></td>
+            <td></td>
+            <% end %>
             <td><%= text_field_tag 'appraiser_comment[]' %></td>
             <td><%= text_field_tag 'appraiser_rating[]' %></td> 
               <%= hidden_field_tag 'employee_goal_id[]',{},value: a.employee_attribute.id %>
@@ -63,8 +68,13 @@
         <tr>
           <td><%= a.employee_attribute.attribute_master.name %></td>
           <td><%= a.employee_attribute.weightage %></td>
+          <% if a.is_confirm_appraisee == true %>
           <td><%= a.appraisee_comment %></td>
           <td><%= a.appraisee_rating %></td>
+          <% else %>
+          <td></td>
+          <td></td>
+          <% end %>
           <td><%= a.appraiser_comment %></td>
           <td><%= a.appraiser_rating %></td> 
           <td>
@@ -83,4 +93,4 @@
 </div>
     <%= link_to 'Back', appraiser_goal_rating_sheets_path(@employee.id) %>
 
-    <%= link_to 'Next', employee_details_attribute_rating_sheets_path(@employee.id) %>
+    <%= link_to 'Next', employee_info_attribute_rating_sheets_path(@employee.id),class: 'btn btn-primary btn-sm' %>

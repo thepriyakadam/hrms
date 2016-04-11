@@ -86,6 +86,7 @@ class AttributeRatingSheetsController < ApplicationController
   def appraiser
     @employee = Employee.find(params[:format])
     @attribute_rating_sheets = AttributeRatingSheet.where(appraisee_id: @employee.id)
+    @attribute_ratings = AttributeRatingSheet.where(appraisee_id: @employee.id, appraiser_comment: nil)
     #byebug
     @attribute_rating_sheet = AttributeRatingSheet.new
   end
@@ -152,8 +153,20 @@ class AttributeRatingSheetsController < ApplicationController
   end
 
   def employee_details
-    @attribute_rating_sheets = AttributeRatingSheet.all
+    @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: params[:format])
+    @attribute_rating_sheets = AttributeRatingSheet.where(appraisee_id: params[:format]).group(:appraisee_id)
     @employee = Employee.find(params[:format])
+    @qualification = Qualification.find_by_employee_id(@employee.id)
+    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
+    @experience = Experience.find_by_employee_id(@employee.id)
+    @ctc = EmployeeSalaryTemplate.where(employee_id: @employee.id).sum(:monthly_amount)
+    @attribute_rating_multiple_sheets = AttributeRatingSheet.where(appraisee_id: params[:format])
+  end
+
+  def employee_info
+    @employee = Employee.find(params[:format])
+    @attribute_rating_sheets = AttributeRatingSheet.where(appraisee_id: params[:format]).group(:appraisee_id)
+    @qualification = Qualification.find_by_employee_id(@employee.id) 
   end
 
   private

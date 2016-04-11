@@ -82,7 +82,9 @@ class GoalRatingSheetsController < ApplicationController
   end
   
   def appraiser 
-     @employee = Employee.find(params[:format])
+    @employee = Employee.find(params[:format])
+    @goal_ratings = GoalRatingSheet.where(appraisee_id: @employee.id,appraiser_comment: nil)
+    #@goal_ratings = GoalRatingSheet.where("appraisee_id = ? and (appraiser_comment = ? or appraiser_comment = ?)",@employee.id,nil,"")
     @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: @employee.id)
     @goal_rating_sheet = GoalRatingSheet.new
     @performance_periods = PerformancePeriod.all

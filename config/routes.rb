@@ -70,6 +70,7 @@ Rails.application.routes.draw do
       get :is_confirm_appraiser
       get :is_confirm_appraisee
       get :employee_details
+      get :employee_info
     end
   end
   resources :goal_rating_sheets  do

@@ -244,7 +244,9 @@ GEM
       binding_of_caller (>= 0.7.2)
       railties (>= 4.0)
       sprockets-rails (>= 2.0, < 4.0)
+    wicked_pdf (1.0.6)
     wirble (0.1.3)
+    wkhtmltopdf-binary (0.9.9.3)
     yaml_db (0.3.0)
       rails (>= 3.0, < 4.3)
       rake (>= 0.8.7)
@@ -290,5 +292,10 @@ DEPENDENCIES
   turbolinks
   uglifier (>= 1.3.0)
   web-console (~> 2.0)
+  wicked_pdf (~> 1.0, >= 1.0.5)
   wirble
+  wkhtmltopdf-binary (~> 0.9.9.3)
   yaml_db
+
+BUNDLED WITH
+   1.10.6

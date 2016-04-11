@@ -248,6 +248,7 @@ end
       post :save_all_data
       get :salary_bubble_form
       patch :update_cell
+      get :print_salary_slip
     end
   end
   resources :instalments do
@@ -418,6 +419,7 @@ end
       get :transfer_employee_list
       get :report
       get :birthday_email
+      get :birthday_invitation
     end
     member do
       get :edit_manager

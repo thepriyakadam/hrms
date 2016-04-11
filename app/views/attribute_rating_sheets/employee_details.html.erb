@@ -1,0 +1,146 @@
+	<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Employee Details</h3>
+  </div>
+  <div class="box-body">
+
+
+	<table class="table table-bordered table-hover table-condensed">
+       
+    <thead>
+	    <tr>
+	    	<th>Employee Id</th>
+	    	<th>Name</th>
+        <th>Age</th>
+	    	<th>Department</th>
+	    	<th>Date Of Joining</th>
+	    	<th>Joining Grade</th>
+	    	<th>Current Designation</th> 
+      </tr>
+    </thead>
+    <tbody>
+      <% @attribute_rating_sheets.each do |a| %>
+      <tr>
+        <td><%= a.appraisee.manual_employee_code %></td> 
+        <td><%= a.appraisee.first_name %></td>
+        <td><%= Time.now.year-a.appraisee.date_of_birth.year %></td>
+        <td><%= a.appraisee.department.name %></td>
+        <td><%= @joining_detail.joining_date %></td>
+        <td><%= @joining_detail.employee_grade.name %></td>
+        <td><%= @joining_detail.employee_designation.name %></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <div class="box-header with-border">
+    <h3 class="box-title">Employee Past Experience</h3>
+  </div>
+  <table class="table table-bordered table-hover table-condensed">
+    <thead>
+      <tr>
+	    	<th>Past Company</th>
+        <th>Designation</th>
+        <th>Past Exp In Years</th>
+        <th>Past CTC</th>
+        <th>Current CTC</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+       <td><%= @experience.company_name %></td>
+       <td><%= @experience.designation %></td>
+       <td><%= @experience.no_of_year %></td>
+       <td><%= @experience.ctc %></td>
+       <td><%= @ctc %></td>
+      </tr>
+    </tbody>
+	</table>
+  
+  <div class="box-header with-border">
+    <h3 class="box-title">Employee Qualification Details</h3>
+  </div>
+  <table class="table table-bordered table-hover table-condensed">
+    <thead>
+      <tr>
+        <th>Degree/Deploma</th>
+        <th>Year Of Passing/marks%</th>
+        <th>Qualification Category</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><%= @qualification.degree.name %></td>
+        <td><%= @qualification.year.name.to_s+" / "+@qualification.marks.to_s %></td>
+        <td><%= @qualification.degree_type.name %></td>
+      </tr>
+    </tbody>
+  </table>
+  
+	<div class="box-header with-border">
+    <h3 class="box-title">Employee Goals</h3>
+  </div>
+	 <table id="tbl" class="table table-bordered table-hover table-condensed">
+    <thead>
+      <tr>
+        <th>Goal Perspctive</th>
+        <th>Goal Measure</th>
+        <th>Target</th>
+        <th>Goal Weightage</th>
+        <th>Difficulty Level</th>
+        
+        <th>Allign To Supervisor</th>
+        <th>Appraisee Comment</th>
+        <th>Appraisee Rating</th>
+        <th>Appraiser Comment</th>
+        <th>Appraiser Rating</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @goal_rating_sheets.each do |g| %>
+        <tr>
+          <td><%= g.employee_goal.goal_perspective.name %></td>
+          <td><%= g.employee_goal.goal_measure %></td>
+          <td><%= g.employee_goal.target %></td>
+          <td><%= g.employee_goal.goal_weightage %></td>
+          <td><%= g.employee_goal.difficulty_level %></td>
+          <td><%= g.employee_goal.allign_to_supervisor %></td>
+
+          <td><%= g.appraisee_comment %></td>
+          <td><%= g.appraisee_rating %></td>
+          <td><%= g.appraiser_comment %></td>
+          <td><%= g.appraiser_rating %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <div class="box-header with-border">
+    <h3 class="box-title">Employee Attribute</h3>
+  </div>
+  <table id="tbl" class="table table-bordered table-hover table-condensed">
+    <thead>
+      <tr>
+        <th>Attribute & Definition</th>
+        <th>Weightage</th>
+        <th>Appraisee Comment</th>
+        <th>Appraisee Rating</th>
+        <th>Appraiser Comment</th>
+        <th>Appraiser Rating</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @attribute_rating_multiple_sheets.each do |a| %>
+        <tr>
+          <td><%= a.employee_attribute.attribute_master.name %></td>
+          <td><%= a.employee_attribute.weightage %></td>
+          <td><%= a.appraisee_comment %></td>
+          <td><%= a.appraisee_rating %></td>
+          <td><%= a.appraiser_comment %></td>
+          <td><%= a.appraiser_rating %></td>   
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+</div>

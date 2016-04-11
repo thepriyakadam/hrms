@@ -1,6 +1,7 @@
 class Reports::FamilyDetailsController < ApplicationController
   def new
   end
+
   def family_detail_report 	 
 	  @location = params[:salary][:company_location_id]
 	  if current_user.class == Group
@@ -28,5 +29,6 @@ class Reports::FamilyDetailsController < ApplicationController
 	  		elsif current_user.role.name == "Employee"
 	  		end
 	  	end
+
   end
 end

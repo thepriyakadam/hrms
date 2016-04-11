@@ -19,7 +19,7 @@
   </thead>
   <tbody>
     <tr>
-      <td><%= f.select :attribute_master_id,all_attribute_type,{hide_label: true, include_blank: "Select Attribute" }%></td>
+      <td><%= f.select :attribute_master_id,all_attribute_type,{hide_label: true, include_blank: "Select Attribute & Definition" }%></td>
       <td><%= f.select :weightage,["1","2","3","4","5"],{hide_label: true, include_blank: "Select Weightage"} %></td>
           <%= f.hidden_field :employee_id,value: @employee.id %>
     </tr>   

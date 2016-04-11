@@ -29,6 +29,7 @@ class Reports::AwardDetailsController < ApplicationController
   		elsif current_user.role.name == "Employee"
   		end
   	end
+
   end
 
 end

@@ -19,15 +19,20 @@
         <tr>
           <td><%= employee_attribute.attribute_master.name %></td>
           <td><%= employee_attribute.weightage %></td>
-          <td>  
+          <td>
+            <% if employee_attribute.is_confirm == true %>
+            <% else %>  
             <%= link_to '', edit_employee_attribute_path(employee_attribute),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
 
             <%= link_to '', employee_attribute, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-xs btn-danger fa fa-close' %>
+            <%= link_to '',is_confirm_employee_attributes_path(employee_attribute),class: 'btn btn-xs btn-warning fa fa-check'%>
+            <% end %>
           </td>
         </tr>
         <% end %>
       </tbody>
     </table>
-    <%= link_to 'Back', new_employee_goal_path %>
+   
   </div>
 </div>
+ <%= link_to 'Back', new_employee_goal_path(@employee.id) %>

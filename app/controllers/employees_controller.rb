@@ -141,6 +141,7 @@ class EmployeesController < ApplicationController
   end
 
   def submit_form
+    #byebug
     employee = Employee.find(params["login"]["employee_id"])
     #@department = Department.find(params["login"]["department_id"])
     user = Member.new do |u|
@@ -151,7 +152,7 @@ class EmployeesController < ApplicationController
       end
       u.password = '12345678'
       u.employee_id = employee.id
-      u.department_id = employee.joining_detail.department_id
+      u.department_id = employee.department_id
       u.company_id = employee.company_location.company_id
       u.company_location_id = employee.company_location_id
       #u.subdomain = Apartment::Tenant.current_tenant
@@ -161,7 +162,7 @@ class EmployeesController < ApplicationController
     end
     ActiveRecord::Base.transaction do
       if user.save
-        employee.update_attributes(department_id: employee.joining_detail.department_id, manager_id: params["login"]["manager_id"], manager_2_id: params["login"]["manager_2_id"])
+        employee.update_attributes(manager_id: params["login"]["manager_id"], manager_2_id: params["login"]["manager_2_id"])
         flash[:notice] = "Employee assigned successfully."
         redirect_to assign_role_employees_path
         #UserPasswordMailer.welcome_email(company,pass).deliver_now

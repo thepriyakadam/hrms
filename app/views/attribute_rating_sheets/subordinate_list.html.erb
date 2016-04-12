@@ -19,7 +19,7 @@
         <tr>
         	<td><%= e.manual_employee_code %></td>
           <td><%= e.first_name.to_s+" "+e.last_name.to_s %></td>
-          <td><%= e.department.name %></td>
+          <td><%= e.department.try(:name) %></td>
           <td><%= link_to '', employee_details_attribute_rating_sheets_path(e) ,class: 'btn btn-xs btn-default fa fa-eye' %></td>
         </tr>
         <% end %>

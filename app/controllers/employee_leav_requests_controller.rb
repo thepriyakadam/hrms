@@ -84,7 +84,7 @@ class EmployeeLeavRequestsController < ApplicationController
           respond_to do |format|
             if @employee_leav_request.save
               @employee_leav_request.minus_leave(@employee_leav_request)
-              if @employee.email.nil or @employee.email == ""
+              if @employee.email.nil? or @employee.email == ""
                 flash[:notice] = "Send request without email."
               else
                 flash[:notice] = "Leave Request sent successfully."

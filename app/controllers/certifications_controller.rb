@@ -30,9 +30,9 @@ class CertificationsController < ApplicationController
     ActiveRecord::Base.transaction do
       respond_to do |format|
         if @certification.save
-          len = params["certification"].length-4
+          len = params['certification'].length - 4
           for i in 2..len
-            Certification.create(employee_id: params['certification']['employee_id'], name: params['certification'][i.to_s]['name'], year_id: params['certification'][i.to_s]['year_id'], duration: params['certification'][i.to_s]['duration'], description: params['certification'][i.to_s]['description']) 
+            Certification.create(employee_id: params['certification']['employee_id'], name: params['certification'][i.to_s]['name'], year_id: params['certification'][i.to_s]['year_id'], duration: params['certification'][i.to_s]['duration'], description: params['certification'][i.to_s]['description'])
           end
           @certifications = Certification.where(employee_id: @employee.id)
           format.html { redirect_to @certification, notice: 'Certification was successfully created.' }
@@ -43,7 +43,7 @@ class CertificationsController < ApplicationController
           format.json { render json: @certification.errors, status: :unprocessable_entity }
           format.js { @flag = false }
         end
-      end  
+      end
     end
   end
 
@@ -76,13 +76,14 @@ class CertificationsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_certification
-      @certification = Certification.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def certification_params
-      params.require(:certification).permit(:employee_id, :name, :year_id, :duration, :description)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_certification
+    @certification = Certification.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def certification_params
+    params.require(:certification).permit(:employee_id, :name, :year_id, :duration, :description)
+  end
 end

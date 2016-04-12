@@ -1,5 +1,4 @@
 class InterviewScheduleMailer < ApplicationMailer
- 
   def sample_email(interview_schedule)
     @interview_schedule = InterviewSchedule.find_by_employee_id(interview_schedule.employee_id)
     @employee = Employee.find(@interview_schedule.employee_id)
@@ -17,5 +16,4 @@ class InterviewScheduleMailer < ApplicationMailer
     @employee = Employee.find(@interview_schedule.employee_id)
     mail(to: @employee.email, subject: 'Interview Confirmation')
   end
-
 end

@@ -5,18 +5,18 @@ class CountriesControllerTest < ActionController::TestCase
     @country = countries(:one)
   end
 
-  test "should get index" do
+  test 'should get index' do
     get :index
     assert_response :success
     assert_not_nil assigns(:countries)
   end
 
-  test "should get new" do
+  test 'should get new' do
     get :new
     assert_response :success
   end
 
-  test "should create country" do
+  test 'should create country' do
     assert_difference('Country.count') do
       post :create, country: { code: @country.code, name: @country.name }
     end
@@ -24,22 +24,22 @@ class CountriesControllerTest < ActionController::TestCase
     assert_redirected_to country_path(assigns(:country))
   end
 
-  test "should show country" do
+  test 'should show country' do
     get :show, id: @country
     assert_response :success
   end
 
-  test "should get edit" do
+  test 'should get edit' do
     get :edit, id: @country
     assert_response :success
   end
 
-  test "should update country" do
+  test 'should update country' do
     patch :update, id: @country, country: { code: @country.code, name: @country.name }
     assert_redirected_to country_path(assigns(:country))
   end
 
-  test "should destroy country" do
+  test 'should destroy country' do
     assert_difference('Country.count', -1) do
       delete :destroy, id: @country
     end

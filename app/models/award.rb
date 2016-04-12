@@ -7,15 +7,14 @@ class Award < ActiveRecord::Base
   validates :employee_id, uniqueness: { scope: [:award_name] }
 
   def award_name_regex
-    if award_name.present? and not award_name.match(/\A[A-Za-z_ ]{1,30}\Z/)
-      errors.add :award_name,"Award Name allows only Characters"
+    if award_name.present? && !award_name.match(/\A[A-Za-z_ ]{1,30}\Z/)
+      errors.add :award_name, 'Award Name allows only Characters'
     end
   end
 
   def award_from_regex
-    if award_from.present? and not award_from.match(/\A[A-Za-z_ ]{1,30}\Z/)
-      errors.add :award_from,"Award From allows only Characters"
+    if award_from.present? && !award_from.match(/\A[A-Za-z_ ]{1,30}\Z/)
+      errors.add :award_from, 'Award From allows only Characters'
     end
   end
-
 end

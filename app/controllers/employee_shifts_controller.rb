@@ -4,7 +4,7 @@ class EmployeeShiftsController < ApplicationController
   # GET /employee_shifts
   # GET /employee_shifts.json
   def index
-    #@employee_shifts = EmployeeShift.all
+    # @employee_shifts = EmployeeShift.all
     @company_shifts = CompanyShift.all
   end
 
@@ -18,7 +18,7 @@ class EmployeeShiftsController < ApplicationController
     @employee_shift = EmployeeShift.new
     @employees = Employee.all
     @rotations = ShiftRotation.all
-    #@employees = Employee.joins("LEFT JOIN employee_shifts on employees.id = employee_shifts.employee_id where employee_shifts.employee_id is null")
+    # @employees = Employee.joins("LEFT JOIN employee_shifts on employees.id = employee_shifts.employee_id where employee_shifts.employee_id is null")
   end
 
   # GET /employee_shifts/1/edit
@@ -30,14 +30,14 @@ class EmployeeShiftsController < ApplicationController
   def create
     @employees = params[:employee_ids]
     if @employees.nil?
-      flash[:notice] = "Select Employees."
+      flash[:notice] = 'Select Employees.'
       render :new
     else
       @employees.each do |e|
         id = EmployeeShift.create(employee_id: e).id
-        EmployeeShiftsShiftRotation.create(shift_rotation_id: params[:employee_shift][:id], employee_shift_id: id )
+        EmployeeShiftsShiftRotation.create(shift_rotation_id: params[:employee_shift][:id], employee_shift_id: id)
       end
-      flash[:notice] = "Employee assign successfully."
+      flash[:notice] = 'Employee assign successfully.'
       redirect_to new_employee_shift_path
     end
   end
@@ -85,13 +85,14 @@ class EmployeeShiftsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_employee_shift
-      @employee_shift = EmployeeShift.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def employee_shift_params
-      params.require(:employee_shift).permit(:company_shift_id, :employee_id, :from_date, :to_date)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_employee_shift
+    @employee_shift = EmployeeShift.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def employee_shift_params
+    params.require(:employee_shift).permit(:company_shift_id, :employee_id, :from_date, :to_date)
+  end
 end

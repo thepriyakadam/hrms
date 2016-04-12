@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160411132653) do
+ActiveRecord::Schema.define(version: 20160412090355) do
 
   create_table "accident_records", force: :cascade do |t|
     t.string   "code"
@@ -983,12 +983,13 @@ ActiveRecord::Schema.define(version: 20160411132653) do
     t.integer  "employee_id"
     t.date     "c_off_date"
     t.string   "c_off_type"
-    t.integer  "c_off_expire_day", default: 60
+    t.integer  "c_off_expire_day",                         default: 60
     t.boolean  "expiry_status"
-    t.datetime "created_at",                       null: false
-    t.datetime "updated_at",                       null: false
-    t.boolean  "is_taken",         default: false
+    t.datetime "created_at",                                               null: false
+    t.datetime "updated_at",                                               null: false
+    t.boolean  "is_taken",                                 default: false
     t.date     "expiry_date"
+    t.decimal  "leave_count",      precision: 3, scale: 1
   end
 
   add_index "leave_c_offs", ["employee_id"], name: "index_leave_c_offs_on_employee_id"

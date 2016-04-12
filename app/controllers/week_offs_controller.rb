@@ -62,13 +62,14 @@ class WeekOffsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_week_off
-      @week_off = WeekOff.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def week_off_params
-      params.require(:week_off).permit(:weekoff_date_range, :employee_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_week_off
+    @week_off = WeekOff.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def week_off_params
+    params.require(:week_off).permit(:weekoff_date_range, :employee_id)
+  end
 end

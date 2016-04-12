@@ -4,7 +4,6 @@ class OvertimeMastersController < ApplicationController
   # GET /overtime_masters
   # GET /overtime_masters.json
   def index
-   
   end
 
   # GET /overtime_masters/1
@@ -30,13 +29,12 @@ class OvertimeMastersController < ApplicationController
     respond_to do |format|
       if @overtime_master.save
         @overtime_master = OvertimeMaster.new
-         format.js { @flag = true }
+        format.js { @flag = true }
       else
-        flash.now[:alert] = "Overtime Master Already Exist."
-         format.js { @flag = false }
+        flash.now[:alert] = 'Overtime Master Already Exist.'
+        format.js { @flag = false }
       end
     end
-
   end
 
   # PATCH/PUT /overtime_masters/1
@@ -55,13 +53,14 @@ class OvertimeMastersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_overtime_master
-      @overtime_master = OvertimeMaster.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def overtime_master_params
-      params.require(:overtime_master).permit(:is_over_time, :day, :company_hrs, :ot_rate, :is_esic, :status)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_overtime_master
+    @overtime_master = OvertimeMaster.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def overtime_master_params
+    params.require(:overtime_master).permit(:is_over_time, :day, :company_hrs, :ot_rate, :is_esic, :status)
+  end
 end

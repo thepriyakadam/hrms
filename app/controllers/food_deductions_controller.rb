@@ -75,25 +75,26 @@ class FoodDeductionsController < ApplicationController
     if current_user.class == Group
       @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y'))
     else
-      if current_user.role.name == "Company" or current_user.role.name == "Account"
+      if current_user.role.name == 'Company' || current_user.role.name == 'Account'
         @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y'))
-      elsif current_user.role.name == "CompanyLocation"
+      elsif current_user.role.name == 'CompanyLocation'
         @employees = Employee.where(company_location_id: current_user.company_location_id)
         @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
-      elsif current_user.role.name == "Employee"
+      elsif current_user.role.name == 'Employee'
         @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: current_user.employee_id)
       end
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_food_deduction
-      @food_deduction = FoodDeduction.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def food_deduction_params
-      params.require(:food_deduction).permit(:food_date, :no_of_coupan, :amount, :employee_id, :return_coupan, :total_coupan, :food_coupan_master_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_food_deduction
+    @food_deduction = FoodDeduction.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def food_deduction_params
+    params.require(:food_deduction).permit(:food_date, :no_of_coupan, :amount, :employee_id, :return_coupan, :total_coupan, :food_coupan_master_id)
+  end
 end

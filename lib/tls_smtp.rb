@@ -171,25 +171,26 @@
 #            Net::SMTP.method_defined? :tls?
 
 #################################################################################################
-require "openssl"
-require "net/smtp"
+require 'openssl'
+require 'net/smtp'
 
 Net::SMTP.class_eval do
   private
+
   def do_start(helodomain, user, secret, authtype)
     raise IOError, 'SMTP session already started' if @started
-    
-    if RUBY_VERSION > "1.8.6"
-      check_auth_args user, secret if user or secret
+
+    if RUBY_VERSION > '1.8.6'
+      check_auth_args user, secret if user || secret
     else
-      check_auth_args user, secret, authtype if user or secret
+      check_auth_args user, secret, authtype if user || secret
     end
 
     sock = timeout(@open_timeout) { TCPSocket.open(@address, @port) }
     @socket = Net::InternetMessageIO.new(sock)
-    @socket.read_timeout = 60 #@read_timeout
+    @socket.read_timeout = 60 # @read_timeout
 
-    check_response(critical { recv_response() })
+    check_response(critical { recv_response })
     do_helo(helodomain)
 
     if starttls
@@ -198,7 +199,7 @@ Net::SMTP.class_eval do
       ssl.sync_close = true
       ssl.connect
       @socket = Net::InternetMessageIO.new(ssl)
-      @socket.read_timeout = 60 #@read_timeout
+      @socket.read_timeout = 60 # @read_timeout
       do_helo(helodomain)
     end
 
@@ -207,37 +208,37 @@ Net::SMTP.class_eval do
   ensure
     unless @started
       # authentication failed, cancel connection.
-      @socket.close if not @started and @socket and not @socket.closed?
+      @socket.close if !@started && @socket && !@socket.closed?
       @socket = nil
     end
   end
 
   def do_helo(helodomain)
-    begin
-      if @esmtp
-        ehlo helodomain
-      else
-        helo helodomain
-      end
-    rescue Net::ProtocolError
-      if @esmtp
-        @esmtp = false
-        @error_occured = false
-        retry
-      end
-      raise
+    if @esmtp
+      ehlo helodomain
+    else
+      helo helodomain
     end
+  rescue Net::ProtocolError
+    if @esmtp
+      @esmtp = false
+      @error_occured = false
+      retry
+    end
+    raise
   end
 
   def starttls
-    getok('STARTTLS') rescue return false
-  return true
+    begin
+      getok('STARTTLS')
+    rescue
+      return false
+    end
+    true
   end
 
   def quit
-    begin
-      getok('QUIT')
-    rescue EOFError
-    end
+    getok('QUIT')
+  rescue EOFError
   end
 end

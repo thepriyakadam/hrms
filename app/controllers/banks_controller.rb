@@ -1,7 +1,6 @@
 class BanksController < ApplicationController
   before_action :set_bank, only: [:show, :edit, :update, :destroy]
 
-
   # GET /banks/new
   def new
     @bank = Bank.new
@@ -22,7 +21,7 @@ class BanksController < ApplicationController
         @bank = Bank.new
         format.js { @flag = true }
       else
-        flash.now[:alert] = "Bank Already Exist."
+        flash.now[:alert] = 'Bank Already Exist.'
         format.js { @flag = false }
       end
     end
@@ -44,13 +43,14 @@ class BanksController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_bank
-      @bank = Bank.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def bank_params
-      params.require(:bank).permit(:name, :code, :description)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_bank
+    @bank = Bank.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def bank_params
+    params.require(:bank).permit(:name, :code, :description)
+  end
 end

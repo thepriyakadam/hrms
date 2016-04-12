@@ -17,8 +17,8 @@ class OvertimeDailyRecordsController < ApplicationController
     @overtime_daily_record = OvertimeDailyRecord.new
     @overtime_master = OvertimeMaster.find_by_status(true)
     @esic_master = EsicMaster.first
-    if @overtime_master.nil? or @esic_master.nil?
-      flash[:alert] = "Over time master or esic master not set."
+    if @overtime_master.nil? || @esic_master.nil?
+      flash[:alert] = 'Over time master or esic master not set.'
     end
   end
 
@@ -69,13 +69,14 @@ class OvertimeDailyRecordsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_overtime_daily_record
-      @overtime_daily_record = OvertimeDailyRecord.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def overtime_daily_record_params
-      params.require(:overtime_daily_record).permit(:employee_id, :ot_daily_date, :ot_daily_hrs, :ot_rate, :ot_daily_amount, :attendance_bonus_amount, :paid_holiday_amount)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_overtime_daily_record
+    @overtime_daily_record = OvertimeDailyRecord.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def overtime_daily_record_params
+    params.require(:overtime_daily_record).permit(:employee_id, :ot_daily_date, :ot_daily_hrs, :ot_rate, :ot_daily_amount, :attendance_bonus_amount, :paid_holiday_amount)
+  end
 end

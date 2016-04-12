@@ -5,18 +5,18 @@ class AttributeMastersControllerTest < ActionController::TestCase
     @attribute_master = attribute_masters(:one)
   end
 
-  test "should get index" do
+  test 'should get index' do
     get :index
     assert_response :success
     assert_not_nil assigns(:attribute_masters)
   end
 
-  test "should get new" do
+  test 'should get new' do
     get :new
     assert_response :success
   end
 
-  test "should create attribute_master" do
+  test 'should create attribute_master' do
     assert_difference('AttributeMaster.count') do
       post :create, attribute_master: { name: @attribute_master.name }
     end
@@ -24,22 +24,22 @@ class AttributeMastersControllerTest < ActionController::TestCase
     assert_redirected_to attribute_master_path(assigns(:attribute_master))
   end
 
-  test "should show attribute_master" do
+  test 'should show attribute_master' do
     get :show, id: @attribute_master
     assert_response :success
   end
 
-  test "should get edit" do
+  test 'should get edit' do
     get :edit, id: @attribute_master
     assert_response :success
   end
 
-  test "should update attribute_master" do
+  test 'should update attribute_master' do
     patch :update, id: @attribute_master, attribute_master: { name: @attribute_master.name }
     assert_redirected_to attribute_master_path(assigns(:attribute_master))
   end
 
-  test "should destroy attribute_master" do
+  test 'should destroy attribute_master' do
     assert_difference('AttributeMaster.count', -1) do
       delete :destroy, id: @attribute_master
     end

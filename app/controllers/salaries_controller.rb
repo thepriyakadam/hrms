@@ -23,7 +23,6 @@ class Reports::SalariesController < ApplicationController
     end
   end
 
-  def show
 
   end
 

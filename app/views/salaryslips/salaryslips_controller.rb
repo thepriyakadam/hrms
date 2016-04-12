@@ -428,8 +428,6 @@ class SalaryslipsController < ApplicationController
 #  end
 # end 
 
-  
- 
   def select_month_year_form
     
   end

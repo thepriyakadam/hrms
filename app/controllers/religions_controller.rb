@@ -18,11 +18,11 @@ class ReligionsController < ApplicationController
     @religions = Religion.all
     respond_to do |format|
       if @religion.save
-         @religion = Religion.new
-          format.js { @flag = true }
+        @religion = Religion.new
+        format.js { @flag = true }
       else
-        flash.now[:alert] = "Religion Already Exist."
-         format.js { @flag = false }
+        flash.now[:alert] = 'Religion Already Exist.'
+        format.js { @flag = false }
       end
     end
   end
@@ -30,9 +30,9 @@ class ReligionsController < ApplicationController
   # PATCH/PUT /religions/1
   # PATCH/PUT /religions/1.json
   def update
-      @religion.update(religion_params)
-      @religions = Religion.all
-      @religion = Religion.new
+    @religion.update(religion_params)
+    @religions = Religion.all
+    @religion = Religion.new
   end
 
   # DELETE /religions/1
@@ -43,13 +43,14 @@ class ReligionsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_religion
-      @religion = Religion.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def religion_params
-      params.require(:religion).permit(:name, :code, :description)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_religion
+    @religion = Religion.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def religion_params
+    params.require(:religion).permit(:name, :code, :description)
+  end
 end

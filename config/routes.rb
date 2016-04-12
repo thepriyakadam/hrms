@@ -1,55 +1,63 @@
 
 Rails.application.routes.draw do
-  
   namespace :reports do
-  get 'food_deduction_details/new'
+    get 'overtime_salary_details/new'
   end
 
   namespace :reports do
-  get 'ctc_details/new'
-  post 'ctc_details/ctc_detail_report'
+    get 'overtime_salary_details/daily'
   end
 
   namespace :reports do
-  get 'esic_details/new'
-  post 'esic_details/esic_detail_report'
+    get 'food_deduction_details/new'
+    post 'food_deduction_details/food_deduction_detail_report'
   end
 
   namespace :reports do
-  get 'pf_details/new'
-  post 'pf_details/pf_detail_report'
+    get 'ctc_details/new'
+    post 'ctc_details/ctc_detail_report'
   end
 
   namespace :reports do
-  get 'instalment_details/new'
-  post 'instalment_details/instalment_detail_report'
+    get 'esic_details/new'
+    post 'esic_details/esic_detail_report'
   end
 
   namespace :reports do
-  get 'advance_salaries/new'
-  post 'advance_salaries/advance_salary_report'
+    get 'pf_details/new'
+    post 'pf_details/pf_detail_report'
+  end
+
+  namespace :reports do
+    get 'instalment_details/new'
+    post 'instalment_details/instalment_detail_report'
+  end
+
+  namespace :reports do
+    get 'advance_salaries/new'
+    post 'advance_salaries/advance_salary_report'
   end
 
   resources :week_offs
-  resources :employee_leav_request_reports, :only => [:index]
+  resources :employee_leav_request_reports, only: [:index]
 
   resources :capture_resumes
   resources :interview_schedules do
     collection do
-    get :search_by_interview_date
-    get :modal
-    get :interview_reschedule
-    post :send_email_to_candidate
-    get :sample_email_to_interviewer
-    get :sample_email
+      get :search_by_interview_date
+      get :modal
+      get :interview_reschedule
+      post :send_email_to_candidate
+      get :sample_email_to_interviewer
+      get :sample_email
     end
-end
+  end
   resources :vacancy_masters do
     collection do
-    get :search_by_vacancy_post_date
-    post :import  
+      get :search_by_vacancy_post_date
+      post :import
     end
-end  
+  end
   resources :leave_c_offs do
     collection do
       get :search_by_c_off_date
@@ -67,57 +75,58 @@ end
   end
 
   namespace :reports do
-  get 'family_details/new'
-  post 'family_details/family_detail_report'
+    get 'family_details/new'
+    post 'family_details/family_detail_report'
   end
 
   namespace :reports do
-  get 'physical_details/new'
-  post 'physical_details/physical_detail_report'
+    get 'physical_details/new'
+    post 'physical_details/physical_detail_report'
   end
 
   namespace :reports do
-  get 'award_details/new'
-  post 'award_details/award_detail_report'
+    get 'award_details/new'
+    post 'award_details/award_detail_report'
   end
 
   namespace :reports do
-  get 'certification_details/new'
-  post 'certification_details/certification_detail_report'
+    get 'certification_details/new'
+    post 'certification_details/certification_detail_report'
   end
 
   namespace :reports do
-  get 'skillset_details/new'
-  post 'skillset_details/skillset_detail_report'
+    get 'skillset_details/new'
+    post 'skillset_details/skillset_detail_report'
   end
 
   namespace :reports do
-  get 'experience_details/new'
-  post 'experience_details/experience_detail_report'
+    get 'experience_details/new'
+    post 'experience_details/experience_detail_report'
   end
 
   namespace :reports do
-  get 'qualification_details/new'
-  post 'qualification_details/qualification_detail_report'
+    get 'qualification_details/new'
+    post 'qualification_details/qualification_detail_report'
   end
 
   namespace :reports do
-  get 'bank_details/new'
-  post 'bank_details/bank_detail_report'
+    get 'bank_details/new'
+    post 'bank_details/bank_detail_report'
   end
 
   namespace :reports do
   get 'joining_details/new'
   post 'joining_details/joining_detail_report'
+  get 'joining_details/collect_departments'
   end
 
   namespace :reports do
   get 'basic_details/new'
   post 'basic_details/employee_basic_report'
+  get 'basic_details/collect_departments'
   end
 
   namespace :reports do
-  
   end
 
   resources :accident_records
@@ -125,16 +134,31 @@ end
   resources :performance_periods
   resources :attribute_rating_sheets do
     collection do
+      get :edit_appraiser
       get :edit_attribute_rating
+      patch :update_appraiser
       get :appraiser
       post :appraiser_create
+      get :is_confirm_appraiser
+      get :is_confirm_appraisee
+      get :employee_details
+      get :employee_info
+      get :subordinate_list
     end
   end
-  resources :goal_rating_sheets  do
+  resources :goal_rating_sheets do
     collection do
+      get :is_confirm_appraisee
+      get :is_confirm_appraiser
+      get :edit_appraiser
+      patch :update_appraiser
+      delete :destroy_appraiser
+      get :subordinate_list
       get :edit_goal_rating
       get :appraiser
       post :appraiser_create
+      get :appraisee_goal_list
+      get :modal
     end
   end
   resources :employee_attributes do
@@ -143,6 +167,7 @@ end
       post :appraisee_create
       get :appraiser
       post :appraiser_create
+      get :is_confirm
     end
   end
   resources :employee_goals do
@@ -151,7 +176,7 @@ end
       get :is_confirm
     end
   end
-  
+
   resources :definitions
   resources :attribute_masters
   resources :goal_measures
@@ -161,11 +186,11 @@ end
       get :show_leave_record
     end
   end
-  
+
   match 'capture_resumes/:id/download/:id' => 'capture_resumes#download', :via => [:get], :as => :download
   match 'interview_schedules/:id/send_email_to_candidate/:id' => 'interview_schedules#send_email_to_candidate', :via => [:get], :as => :send_email_to_candidate
   match 'interview_schedules/:id/sample_email_to_interviewer/:id' => 'interview_schedules#sample_email_to_interviewer', :via => [:get], :as => :sample_email_to_interviewer
-  
+
   resources :leave_c_offs
   resources :overtime_month_records
   resources :overtime_daily_records
@@ -180,6 +205,7 @@ end
   resources :overtime_salaries do
     collection do
       get :collect_basic
+      get :overtimes
       get :select_month_year_form
       get :collect_employee
       post :create_overtime_salary
@@ -223,7 +249,7 @@ end
     member do
       get :deactivate
     end
-    collection do 
+    collection do
       post :activate
       get :template_list
       get :fresh_template
@@ -234,12 +260,12 @@ end
   end
   resources :retention_moneys
   namespace :reports do
-     get 'salaries/new'
-     post 'salaries/date_range_report'
+    get 'salaries/new'
+    post 'salaries/date_range_report'
     # post 'salaries/department_wise'
     # get 'salaries/show'
-     post 'salaries/ctc_yearly_report'
-     get 'salaries/ctc_yearly'
+    post 'salaries/ctc_yearly_report'
+    get 'salaries/ctc_yearly'
     # post 'employee_reports/basic_detail_report'
     # get 'employee_reports/show'
     # post 'basic_detail/basic_detail_report'
@@ -492,15 +518,15 @@ end
 
   root 'home#index'
 
-  devise_for :members, :controllers => {registrations: 'members/registrations',sessions: 'members/sessions',passwords: 'groups/passwords'}
-  devise_for :groups, :controllers => {registrations: 'groups/registrations',sessions: 'groups/sessions',passwords: 'groups/passwords'}
+  devise_for :members, controllers: { registrations: 'members/registrations', sessions: 'members/sessions', passwords: 'groups/passwords' }
+  devise_for :groups, controllers: { registrations: 'groups/registrations', sessions: 'groups/sessions', passwords: 'groups/passwords' }
 
   devise_scope :group do
-    get "/group" => "groups/sessions#new"
+    get '/group' => 'groups/sessions#new'
   end
 
   devise_scope :member do
-    get "/member" => "members/sessions#new"
+    get '/member' => 'members/sessions#new'
   end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

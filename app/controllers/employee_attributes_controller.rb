@@ -14,7 +14,6 @@ class EmployeeAttributesController < ApplicationController
 
   # GET /employee_attributes/new
   def new
-
     @employee_attribute = EmployeeAttribute.new
     @employee = Employee.find(params[:format])
     @employee_attributes = EmployeeAttribute.where(employee_id: @employee.id)
@@ -23,7 +22,7 @@ class EmployeeAttributesController < ApplicationController
   # GET /employee_attributes/1/edit
   def edit
     @employee = Employee.find(@employee_attribute.employee_id)
-     @employee_attributes = EmployeeAttribute.where(employee_id: @employee.id)
+    @employee_attributes = EmployeeAttribute.where(employee_id: @employee.id)
   end
 
   # POST /employee_attributes
@@ -31,26 +30,25 @@ class EmployeeAttributesController < ApplicationController
   def create
     @employee_attribute = EmployeeAttribute.new(employee_attribute_params)
     @employee = Employee.find(@employee_attribute.employee_id)
-      if @employee_attribute.save
-        @flag = true
-        @employee_attribute = EmployeeAttribute.new
-        @employee_attributes = EmployeeAttribute.where(employee_id: @employee.id)
-        else
-        @flag = false
-      end
+    if @employee_attribute.save
+      @flag = true
+      @employee_attribute = EmployeeAttribute.new
+      @employee_attributes = EmployeeAttribute.where(employee_id: @employee.id)
+    else
+      @flag = false
+    end
   end
 
   # PATCH/PUT /employee_attributes/1
   # PATCH/PUT /employee_attributes/1.json
   def update
-
     @employee = Employee.find(@employee_attribute.employee_id)
     if @employee_attribute.update(employee_attribute_params)
-         @flag = true
-        @employee_attribute = EmployeeAttribute.new
-        @employee_attributes = EmployeeAttribute.where(employee_id: @employee.id)
-      else
-        @flag = false
+      @flag = true
+      @employee_attribute = EmployeeAttribute.new
+      @employee_attributes = EmployeeAttribute.where(employee_id: @employee.id)
+    else
+      @flag = false
       end
   end
 
@@ -63,15 +61,23 @@ class EmployeeAttributesController < ApplicationController
     flash[:alert] = 'Deleted Successfully'
   end
 
+  def is_confirm
+    @employee_attribute = EmployeeAttribute.find(params[:format])
+    
+    @employee_attribute.update(is_confirm: true)
+
+    redirect_to new_employee_attribute_path(@employee_attribute.employee_id)
+  end
   
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_employee_attribute
-      @employee_attribute = EmployeeAttribute.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def employee_attribute_params
-      params.require(:employee_attribute).permit(:employee_id,:performance_period_id,:appraisee_id, :appraiser_id, :attribute_master_id, :definition_id, :weightage, :appraisee_comment, :appraisee_rating, :appraiser_comment, :appraiser_rating)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_employee_attribute
+    @employee_attribute = EmployeeAttribute.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def employee_attribute_params
+    params.require(:employee_attribute).permit(:is_confirm,:employee_id, :performance_period_id, :appraisee_id, :appraiser_id, :attribute_master_id, :definition_id, :weightage, :appraisee_comment, :appraisee_rating, :appraiser_comment, :appraiser_rating)
+  end
 end

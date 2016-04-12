@@ -4,7 +4,6 @@ class RetentionMoneysController < ApplicationController
   # GET /retention_moneys
   # GET /retention_moneys.json
   def index
-    
   end
 
   # GET /retention_moneys/1
@@ -32,8 +31,8 @@ class RetentionMoneysController < ApplicationController
         @retention_money = RetentionMoney.new
         format.js { @flag = true }
       else
-        flash.now[:alert] = "Retention Money Already Exist."
-         format.js { @flag = false }
+        flash.now[:alert] = 'Retention Money Already Exist.'
+        format.js { @flag = false }
       end
     end
   end
@@ -43,7 +42,7 @@ class RetentionMoneysController < ApplicationController
   def update
     @retention_money.update(retention_money_params)
     @retention_moneys = RetentionMoney.all
-    @retention_money = RetentionMoney.new   
+    @retention_money = RetentionMoney.new
   end
 
   # DELETE /retention_moneys/1
@@ -54,13 +53,14 @@ class RetentionMoneysController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_retention_money
-      @retention_money = RetentionMoney.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def retention_money_params
-      params.require(:retention_money).permit(:have_retention, :amount, :no_of_month, :description)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_retention_money
+    @retention_money = RetentionMoney.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def retention_money_params
+    params.require(:retention_money).permit(:have_retention, :amount, :no_of_month, :description)
+  end
 end

@@ -3,12 +3,12 @@
     <h3 class="box-title">Appraiser Attribute Rating</h3>
   </div>
   <div class="box-body">
-    <%= bootstrap_form_for(@attribute_rating_sheet,url:{action: "appraiser_create"}) do |f| %>
+    <%= bootstrap_form_for(@attribute_rating_sheet,url:{action: "appraiser_create"},html: {id: "attribute_rating_sheet"}) do |f| %>
+
     <table id="tbl" class="table table-bordered table-hover table-condensed">
       <thead>
         <tr>
-          <th>Attribute</th>
-          <th>Definition</th>
+          <th>Attribute & Definition</th>
           <th>Weightage</th>
           <th>Appraisee Comment</th>
           <th>Appraisee Rating</th>
@@ -17,17 +17,23 @@
         </tr>
       </thead>
       <tbody>
-        <% @attribute_rating_sheets.each do |a| %>
+      <%= console %>
+        <% @attribute_ratings.each do |a| %>
           <tr>
             <td><%= a.employee_attribute.attribute_master.name %></td>
-            <td><%= a.employee_attribute.definition.name %></td>
             <td><%= a.employee_attribute.weightage %></td>
+            <% if a.is_confirm_appraisee == true %>
             <td><%= a.appraisee_comment %></td>
             <td><%= a.appraisee_rating %></td>
+            <% else %>
+            <td></td>
+            <td></td>
+            <% end %>
             <td><%= text_field_tag 'appraiser_comment[]' %></td>
             <td><%= text_field_tag 'appraiser_rating[]' %></td> 
               <%= hidden_field_tag 'employee_goal_id[]',{},value: a.employee_attribute.id %>
               <%= hidden_field_tag 'attribute_rating_sheet_id[]', {},value: a.id %> 
+              <%= hidden_field_tag :appraisee_id, {},value: a.appraisee_id %>
               <%= hidden_field_tag :appraiser_id, {},value: current_user.employee_id %> 
           </tr>
         <% end %>
@@ -36,38 +42,53 @@
     <div class="row">
       <div class="col-sm-3">
         <div class="actions">
-          <%= f.submit "Create Rating" , class: "btn btn-primary btn-sm" %>
+          <%= f.submit "Create Attribute Rating" , class: "btn btn-primary btn-sm" %>
         </div>
       </div>
     </div>
+  
+
   
 <% end %>
 
 <table id="tbl" class="table table-bordered table-hover table-condensed">
     <thead>
       <tr>
-        <th>Attribute</th>
-        <th>Definition</th>
+        <th>Attribute & Definition</th>
         <th>Weightage</th>
         <th>Appraisee Comment</th>
         <th>Appraisee Rating</th>
         <th>Appraiser Comment</th>
         <th>Appraiser Rating</th>
+        <th>Action</th>
       </tr>
     </thead>
     <tbody>
       <% @attribute_rating_sheets.each do |a| %>
         <tr>
           <td><%= a.employee_attribute.attribute_master.name %></td>
-          <td><%= a.employee_attribute.definition.name %></td>
           <td><%= a.employee_attribute.weightage %></td>
+          <% if a.is_confirm_appraisee == true %>
           <td><%= a.appraisee_comment %></td>
           <td><%= a.appraisee_rating %></td>
+          <% else %>
+          <td></td>
+          <td></td>
+          <% end %>
           <td><%= a.appraiser_comment %></td>
-          <td><%= a.appraiser_rating %></td>   
+          <td><%= a.appraiser_rating %></td> 
+          <td>
+            <% if a.is_confirm_appraiser == true %>
+            <% else %>
+            <%= link_to '', edit_appraiser_attribute_rating_sheets_path(a) ,class: 'btn btn-xs btn-success fa fa-edit' %>
+            <%= link_to '',is_confirm_appraiser_attribute_rating_sheets_path(a,g: a.appraisee_id),class: 'btn btn-xs btn-warning fa fa-check'%>
+            <% end %>
+          </td>  
         </tr>
       <% end %>
     </tbody>
   </table>
   </div>
-  </div>
+
+</div>
+    <%= link_to 'Back', appraiser_goal_rating_sheets_path(@employee.id) %>

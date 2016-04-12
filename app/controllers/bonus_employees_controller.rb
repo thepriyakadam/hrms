@@ -62,7 +62,6 @@ class BonusEmployeesController < ApplicationController
   end
 
   def search_bonus
-    
   end
 
   def collect_bonus
@@ -77,13 +76,14 @@ class BonusEmployeesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_bonus_employee
-      @bonus_employee = BonusEmployee.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def bonus_employee_params
-      params.require(:bonus_employee).permit(:employee_id, :bonus_date, :amount)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_bonus_employee
+    @bonus_employee = BonusEmployee.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def bonus_employee_params
+    params.require(:bonus_employee).permit(:employee_id, :bonus_date, :amount)
+  end
 end

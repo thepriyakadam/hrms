@@ -31,10 +31,10 @@ class LeavCancelledsController < ApplicationController
     @leav_cancelled.employee_id = @employee_leav_request.employee_id
     if @leav_cancelled.save
       redirect_to employee_leav_requests_path
-      flash[:notice] = "Leave cancelled successfully"
+      flash[:notice] = 'Leave cancelled successfully'
     else
       render 'employee_leav_requests/index'
-      flash[:alert] = "Leave not cancelled successfully"
+      flash[:alert] = 'Leave not cancelled successfully'
     end
   end
 
@@ -63,13 +63,14 @@ class LeavCancelledsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_leav_cancelled
-      @leav_cancelled = LeavCancelled.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    # def leav_cancelled_params
-    #   params.require(:leav_cancelled).permit(:employee_leav_request_id, :employee_id, :cancelled_date)
-    # end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_leav_cancelled
+    @leav_cancelled = LeavCancelled.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  # def leav_cancelled_params
+  #   params.require(:leav_cancelled).permit(:employee_leav_request_id, :employee_id, :cancelled_date)
+  # end
 end

@@ -42,26 +42,35 @@ class GoalRatingSheetsController < ApplicationController
     goal_rating_sheet_ids = params[:employee_goal_id]
     comments = params[:appraisee_comment]
     ratings = params[:appraisee_rating]
-   
-    final = goal_rating_sheet_ids.zip(comments,ratings)
 
-    final.each do |e,c,r|
-      emp = EmployeeGoal.find(e) 
-      if c == ""
-      flash[:alert] = "Fill comments"
-      elsif r == ""
-      flash[:alert] = "Fill all the fields"
+    final = goal_rating_sheet_ids.zip(comments, ratings)
+
+    final.each do |e, c, r|
+      emp = EmployeeGoal.find(e)
+      if c == ''
+        flash[:alert] = 'Fill comments'
+      elsif r == ''
+        flash[:alert] = 'Fill all the fields'
       else
-      GoalRatingSheet.create(appraisee_comment: c, appraisee_rating: r, appraisee_id: params[:appraisee_id], employee_goal_id: emp.id)
-      flash[:notice] = "Employee Goal Created Successfully"
+        GoalRatingSheet.create(appraisee_comment: c, appraisee_rating: r, appraisee_id: params[:appraisee_id], employee_goal_id: emp.id)
+        flash[:notice] = 'Employee Goal Created Successfully'
       end
     end
-    redirect_to new_goal_rating_sheet_path  
+    redirect_to new_goal_rating_sheet_path
   end
 
   # PATCH/PUT /goal_rating_sheets/1
   # PATCH/PUT /goal_rating_sheets/1.json
   def update
+<<<<<<< HEAD
+    if @goal_rating_sheet.update(goal_rating_sheet_params)
+      flash[:notice] = 'Updated Successfully'
+      redirect_to goal_rating_sheets_path
+    else
+      flash[:alert] = 'Not Updated'
+      redirect_to new_goal_rating_sheet_path
+    end
+=======
       if @goal_rating_sheet.update(goal_rating_sheet_params)
         flash[:notice] = "Updated Successfully"
         redirect_to new_goal_rating_sheet_path
@@ -69,6 +78,7 @@ class GoalRatingSheetsController < ApplicationController
         flash[:alert] = "Not Updated"
         redirect_to new_goal_rating_sheet_path
       end
+>>>>>>> d38ed673360e7926b38b6ef2694e44dddaa298a8
   end
 
   # DELETE /goal_rating_sheets/1
@@ -80,12 +90,18 @@ class GoalRatingSheetsController < ApplicationController
       format.json { head :no_content }
     end
   end
+<<<<<<< HEAD
+
+  def appraiser
+    @goal_rating_sheets = GoalRatingSheet.all
+=======
   
   def appraiser 
     @employee = Employee.find(params[:format])
     @goal_ratings = GoalRatingSheet.where(appraisee_id: @employee.id,appraiser_comment: nil)
     #@goal_ratings = GoalRatingSheet.where("appraisee_id = ? and (appraiser_comment = ? or appraiser_comment = ?)",@employee.id,nil,"")
     @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: @employee.id)
+>>>>>>> d38ed673360e7926b38b6ef2694e44dddaa298a8
     @goal_rating_sheet = GoalRatingSheet.new
     @performance_periods = PerformancePeriod.all
   end
@@ -93,19 +109,25 @@ class GoalRatingSheetsController < ApplicationController
   def appraiser_create
     
     goal_rating_sheets = params[:goal_rating_sheet_id]
-    #employee_goals = params[:employee_goal_id]
+    # employee_goals = params[:employee_goal_id]
     comments = params[:appraiser_comment]
     ratings = params[:appraiser_rating]
-    final = goal_rating_sheets.zip(comments,ratings)
-    final.each do |e,c,r|
+    final = goal_rating_sheets.zip(comments, ratings)
+    final.each do |e, c, r|
       goal_rating_sheet = GoalRatingSheet.find(e)
-      if c == ""
-      flash[:alert] = "Fill comments"
-      elsif r == ""
-      flash[:alert] = "Fill ratings"
+      if c == ''
+        flash[:alert] = 'Fill comments'
+      elsif r == ''
+        flash[:alert] = 'Fill ratings'
       else
+<<<<<<< HEAD
+        # emp = EmployeeGoal.find(e)
+        # goal_rating_sheet = GoalRatingSheet.find(e)
+        goal_rating_sheet.update(appraiser_comment: c, appraiser_rating: r, appraiser_id: params[:appraiser_id])
+=======
       
       goal_rating_sheet.update(appraiser_comment: c, appraiser_rating: r, appraiser_id: params[:appraiser_id])
+>>>>>>> d38ed673360e7926b38b6ef2694e44dddaa298a8
       end
     end
   
@@ -126,6 +148,8 @@ class GoalRatingSheetsController < ApplicationController
   def edit_appraiser
     @goal_rating_sheet = GoalRatingSheet.find(params[:format])
   end
+<<<<<<< HEAD
+=======
   
   def update_appraiser
     #@goal_rating = GoalRatingSheet.find(params[:])
@@ -179,15 +203,24 @@ class GoalRatingSheetsController < ApplicationController
  def appraisee_goal_list
    @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: current_user.employee_id)
  end
+>>>>>>> d38ed673360e7926b38b6ef2694e44dddaa298a8
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_goal_rating_sheet
-      @goal_rating_sheet = GoalRatingSheet.find(params[:id])
-    end
 
+<<<<<<< HEAD
+  # Use callbacks to share common setup or constraints between actions.
+  def set_goal_rating_sheet
+    @goal_rating_sheet = GoalRatingSheet.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def goal_rating_sheet_params
+    params.require(:goal_rating_sheet).permit(:appraisee_id, :appraiser_id, :employee_goal_id, :allign_to_supervisor, :appraisee_comment, :appraisee_rating, :appraiser_comment, :appraiser_rating)
+  end
+=======
     # Never trust parameters from the scary internet, only allow the white list through.
     def goal_rating_sheet_params
       params.require(:goal_rating_sheet).permit(:is_confirm,:appraisee_id, :appraiser_id, :employee_goal_id, :allign_to_supervisor, :appraisee_comment, :appraisee_rating, :appraiser_comment, :appraiser_rating)
     end
+>>>>>>> d38ed673360e7926b38b6ef2694e44dddaa298a8
 end

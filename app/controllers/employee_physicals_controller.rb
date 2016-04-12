@@ -67,13 +67,14 @@ class EmployeePhysicalsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_employee_physical
-      @employee_physical = EmployeePhysical.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def employee_physical_params
-      params.require(:employee_physical).permit(:employee_id, :height, :weight, :size, :trouser_size)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_employee_physical
+    @employee_physical = EmployeePhysical.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def employee_physical_params
+    params.require(:employee_physical).permit(:employee_id, :height, :weight, :size, :trouser_size)
+  end
 end

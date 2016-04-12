@@ -4,7 +4,6 @@ class SalaryTemplatesController < ApplicationController
   # GET /salary_templates
   # GET /salary_templates.json
   def index
-    
   end
 
   # GET /salary_templates/1
@@ -32,8 +31,8 @@ class SalaryTemplatesController < ApplicationController
         @salary_template = SalaryTemplate.new
         format.js { @flag = true }
       else
-        flash.now[:alert] = "SalaryTemplate Already Exist."
-         format.js { @flag = false }
+        flash.now[:alert] = 'SalaryTemplate Already Exist.'
+        format.js { @flag = false }
       end
     end
   end
@@ -44,7 +43,6 @@ class SalaryTemplatesController < ApplicationController
     @salary_template.update(salary_template_params)
     @salary_templates = SalaryTemplate.all
     @salary_template = SalaryTemplate.new
-        
   end
 
   # DELETE /salary_templates/1
@@ -55,13 +53,14 @@ class SalaryTemplatesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_salary_template
-      @salary_template = SalaryTemplate.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def salary_template_params
-      params.require(:salary_template).permit(:code, :description, :validity_date)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_salary_template
+    @salary_template = SalaryTemplate.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def salary_template_params
+    params.require(:salary_template).permit(:code, :description, :validity_date)
+  end
 end

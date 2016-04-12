@@ -1,11 +1,11 @@
-require 'query_report/helper'  #need to require the helper
+require 'query_report/helper' # need to require the helper
 class JoiningDetailsController < ApplicationController
   before_action :set_joining_detail, only: [:show, :edit, :update, :destroy]
   load_and_authorize_resource
   # GET /joining_details
   # GET /joining_details.json
-  include QueryReport::Helper  #need to include it
-  
+  include QueryReport::Helper # need to include it
+
   def index
     @joining_details = JoiningDetail.all
   end
@@ -37,7 +37,7 @@ class JoiningDetailsController < ApplicationController
         # format.json { render :show, status: :created, location: @joining_detail }
         format.js { @flag = true }
       else
-        flash.now[:alert] = "Joining Detail exist for this employee"
+        flash.now[:alert] = 'Joining Detail exist for this employee'
         # format.html { render :new }
         # format.json { render json: @joining_detail.errors, status: :unprocessable_entity }
         format.js { @flag = false }
@@ -72,11 +72,11 @@ class JoiningDetailsController < ApplicationController
   end
 
   def search_by_joining_date
-    reporter(@joining_details,template_class: PdfReportTemplate) do
+    reporter(@joining_details, template_class: PdfReportTemplate) do
       filter :joining_date, type: :date
-      column(:manual_employee_code,sortable: true) { |joining_detail| joining_detail.employee.try(:manual_employee_code) }
+      column(:manual_employee_code, sortable: true) { |joining_detail| joining_detail.employee.try(:manual_employee_code) }
       column :employee_grade
-      column :joining_date, sortable: true 
+      column :joining_date, sortable: true
       column(:date_of_birth, sortable: true) { |joining_detail| joining_detail.employee.try(:date_of_birth) }
       column(:employee_id, sortable: true) { |joining_detail| joining_detail.employee.try(:first_name) }
       column(:employee_grade, sortable: true) { |joining_detail| joining_detail.employee_grade.try(:name) }
@@ -88,19 +88,20 @@ class JoiningDetailsController < ApplicationController
       column :medical_schem, sortable: true
       column :passport_no, sortable: true
       column :passport_expiry_date, sortable: true
-      column(:probation_period, sortable: true) { |joining_detail| joining_detail.probation_period }
-      column(:notice_period, sortable: true) { |joining_detail| joining_detail.notice_period }
-      end
+      column(:probation_period, sortable: true, &:probation_period)
+      column(:notice_period, sortable: true, &:notice_period)
+    end
  end
-  
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_joining_detail
-      @joining_detail = JoiningDetail.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def joining_detail_params
-      params.require(:joining_detail).permit(:employee_id, :joining_date, :employee_grade_id, :confirmation_date, :employee_uan_no, :employee_pf_no, :employee_efic_no, :probation_period, :notice_period, :medical_schem, :employee_designation_id, :passport_no, :passport_issue_date, :passport_expiry_date, :select_pf, :pf_max_amount, :have_esic, :payment_mode_id, :cost_center_id, :employee_category_id, :department_id, :have_retention, :retirement_date, :reserved_category_id)
-    end
+  private
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_joining_detail
+    @joining_detail = JoiningDetail.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def joining_detail_params
+    params.require(:joining_detail).permit(:employee_id, :joining_date, :employee_grade_id, :confirmation_date, :employee_uan_no, :employee_pf_no, :employee_efic_no, :probation_period, :notice_period, :medical_schem, :employee_designation_id, :passport_no, :passport_issue_date, :passport_expiry_date, :select_pf, :pf_max_amount, :have_esic, :payment_mode_id, :cost_center_id, :employee_category_id, :department_id, :have_retention, :retirement_date, :reserved_category_id)
+  end
 end

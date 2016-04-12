@@ -43,17 +43,17 @@ class AttributeRatingSheetsController < ApplicationController
     attribute_rating_sheet_ids = params[:employee_attribute_id]
     comments = params[:appraisee_comment]
     ratings = params[:appraisee_rating]
-    final = attribute_rating_sheet_ids.zip(comments,ratings)
+    final = attribute_rating_sheet_ids.zip(comments, ratings)
 
-    final.each do |e,c,r|
+    final.each do |e, c, r|
       emp = EmployeeAttribute.find(e)
-      if c == ""
-      flash[:alert] = "Fill comments"
-      elsif r == ""
-      flash[:alert] = "Fill ratings"
+      if c == ''
+        flash[:alert] = 'Fill comments'
+      elsif r == ''
+        flash[:alert] = 'Fill ratings'
       else
-      AttributeRatingSheet.create(appraisee_comment: c, appraisee_rating: r, appraisee_id: params[:appraisee_id], employee_attribute_id: emp.id)
-      flash[:notice] = "Employee Attribute Created Successfully"
+        AttributeRatingSheet.create(appraisee_comment: c, appraisee_rating: r, appraisee_id: params[:appraisee_id], employee_attribute_id: emp.id)
+        flash[:notice] = 'Employee Attribute Created Successfully'
       end
     end
 
@@ -64,13 +64,13 @@ class AttributeRatingSheetsController < ApplicationController
   # PATCH/PUT /attribute_rating_sheets/1.json
   def update
     @employee = Employee.find(params[:appraiser_id])
-      if @attribute_rating_sheet.update(attribute_rating_sheet_params)
-        flash[:notice] = "Employee Attribute Updated Successfully"
-        redirect_to attribute_rating_sheets_path
-      else
-        flash[:alert] = "Not Updated"
-        redirect_to new_attribute_rating_sheet_path
-      end
+    if @attribute_rating_sheet.update(attribute_rating_sheet_params)
+      flash[:notice] = "Employee Attribute Updated Successfully"
+      redirect_to attribute_rating_sheets_path
+    else
+      flash[:alert] = "Not Updated"
+      redirect_to new_attribute_rating_sheet_path
+    end
   end
 
   # DELETE /attribute_rating_sheets/1
@@ -95,15 +95,15 @@ class AttributeRatingSheetsController < ApplicationController
     attribute_rating_sheets = params[:attribute_rating_sheet_id]
     comments = params[:appraiser_comment]
     ratings = params[:appraiser_rating]
-    final = attribute_rating_sheets.zip(comments,ratings)
-    final.each do |e,c,r|
+    final = attribute_rating_sheets.zip(comments, ratings)
+    final.each do |e, c, r|
       attribute_rating_sheet = AttributeRatingSheet.find(e)
-      if c == ""
-      flash[:alert] = "Fill comments"
-      elsif r == ""
-      flash[:alert] = "Fill ratings"
+      if c == ''
+        flash[:alert] = 'Fill comments'
+      elsif r == ''
+        flash[:alert] = 'Fill ratings'
       else
-      attribute_rating_sheet.update(appraiser_comment: c, appraiser_rating: r, appraiser_id: params[:appraiser_id])
+        attribute_rating_sheet.update(appraiser_comment: c, appraiser_rating: r, appraiser_id: params[:appraiser_id])
       end
     end
     @employee = Employee.find(params[:appraisee_id])
@@ -175,13 +175,21 @@ class AttributeRatingSheetsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_attribute_rating_sheet
-      @attribute_rating_sheet = AttributeRatingSheet.find(params[:id])
-    end
 
+<<<<<<< HEAD
+  # Use callbacks to share common setup or constraints between actions.
+  def set_attribute_rating_sheet
+    @attribute_rating_sheet = AttributeRatingSheet.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def attribute_rating_sheet_params
+    params.require(:attribute_rating_sheet).permit(:appraisee_id, :appraiser_id, :employee_attribute_id, :appraisee_comment, :appraisee_rating, :appraiser_comment, :appraiser_rating)
+  end
+=======
     # Never trust parameters from the scary internet, only allow the white list through.
     def attribute_rating_sheet_params
       params.require(:attribute_rating_sheet).permit(:is_confirm_appraisee,:is_confirm_appraiser,:appraisee_id, :appraiser_id, :employee_attribute_id, :appraisee_comment, :appraisee_rating, :appraiser_comment, :appraiser_rating)
     end
+>>>>>>> d38ed673360e7926b38b6ef2694e44dddaa298a8
 end

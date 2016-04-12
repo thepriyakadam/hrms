@@ -64,13 +64,14 @@ class PfMastersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_pf_master
-      @pf_master = PfMaster.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def pf_master_params
-      params.require(:pf_master).permit(:is_pf, :percentage, :date_effective, :min_limit, :base_component, :is_active)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_pf_master
+    @pf_master = PfMaster.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def pf_master_params
+    params.require(:pf_master).permit(:is_pf, :percentage, :date_effective, :min_limit, :base_component, :is_active)
+  end
 end

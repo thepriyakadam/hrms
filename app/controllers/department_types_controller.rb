@@ -1,7 +1,7 @@
 class DepartmentTypesController < ApplicationController
   before_action :set_department_type, only: [:show, :edit, :update, :destroy]
   load_and_authorize_resource
-  
+
   def new
     @department_type = DepartmentType.new
     @department_types = DepartmentType.all
@@ -14,13 +14,13 @@ class DepartmentTypesController < ApplicationController
     @department_type = DepartmentType.new(department_type_params)
     @department_types = DepartmentType.all
     respond_to do |format|
-    if @department_type.save
-    @department_type = DepartmentType.new
-     format.js { @flag = true }
+      if @department_type.save
+        @department_type = DepartmentType.new
+        format.js { @flag = true }
       else
-        flash.now[:alert] = "Department Type Already Exist."
-         format.js { @flag = false }
-      end
+        flash.now[:alert] = 'Department Type Already Exist.'
+        format.js { @flag = false }
+        end
     end
   end
 
@@ -36,11 +36,12 @@ class DepartmentTypesController < ApplicationController
   end
 
   private
-    def set_department_type
-      @department_type = DepartmentType.find(params[:id])
-    end
 
-    def department_type_params
-      params.require(:department_type).permit(:name)
-    end
+  def set_department_type
+    @department_type = DepartmentType.find(params[:id])
+  end
+
+  def department_type_params
+    params.require(:department_type).permit(:name)
+  end
 end

@@ -32,9 +32,9 @@ class AwardsController < ApplicationController
     ActiveRecord::Base.transaction do
       respond_to do |format|
         if @award.save
-          len = params["award"].length-3
+          len = params['award'].length - 3
           for i in 2..len
-            Award.create(employee_id: params['award']['employee_id'], award_name: params['award'][i.to_s]['award_name'], year_id: params['award'][i.to_s]['year_id'], award_from: params['award'][i.to_s]['award_from']) 
+            Award.create(employee_id: params['award']['employee_id'], award_name: params['award'][i.to_s]['award_name'], year_id: params['award'][i.to_s]['year_id'], award_from: params['award'][i.to_s]['award_from'])
           end
           @awards = Award.where(employee_id: @employee.id)
           format.html { redirect_to @award, notice: 'Award was successfully created.' }
@@ -78,13 +78,14 @@ class AwardsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_award
-      @award = Award.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def award_params
-      params.require(:award).permit(:employee_id, :award_name, :year_id, :award_from)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_award
+    @award = Award.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def award_params
+    params.require(:award).permit(:employee_id, :award_name, :year_id, :award_from)
+  end
 end

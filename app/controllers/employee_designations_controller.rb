@@ -16,23 +16,22 @@ class EmployeeDesignationsController < ApplicationController
     @employee_designation = EmployeeDesignation.new(employee_designation_params)
     @employee_designations = EmployeeDesignation.all
     respond_to do |format|
-    if @employee_designation.save
-     @employee_designation = EmployeeDesignation.new
-     format.js { @flag = true }
+      if @employee_designation.save
+        @employee_designation = EmployeeDesignation.new
+        format.js { @flag = true }
       else
-        flash.now[:alert] = "Employee Designation Already Exist."
-         format.js { @flag = false }
-      end
-    end  
+        flash.now[:alert] = 'Employee Designation Already Exist.'
+        format.js { @flag = false }
+        end
+    end
   end
-   
 
   # PATCH/PUT /employee_designations/1
   # PATCH/PUT /employee_designations/1.json
   def update
-   @employee_designation.update(employee_designation_params)
-   @employee_designations = EmployeeDesignation.all
-   @employee_designation = EmployeeDesignation.new    
+    @employee_designation.update(employee_designation_params)
+    @employee_designations = EmployeeDesignation.all
+    @employee_designation = EmployeeDesignation.new
   end
 
   # DELETE /employee_designations/1
@@ -43,13 +42,14 @@ class EmployeeDesignationsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_employee_designation
-      @employee_designation = EmployeeDesignation.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def employee_designation_params
-      params.require(:employee_designation).permit(:name)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_employee_designation
+    @employee_designation = EmployeeDesignation.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def employee_designation_params
+    params.require(:employee_designation).permit(:name)
+  end
 end

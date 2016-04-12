@@ -26,10 +26,10 @@ class PerformancePeriodsController < ApplicationController
   def create
     @performance_period = PerformancePeriod.new(performance_period_params)
     if @performance_period.save
-      flash[:notice] = "saved."
+      flash[:notice] = 'saved.'
       redirect_to performance_periods_path
     else
-      flash[:alert] = "not saved"
+      flash[:alert] = 'not saved'
       render :new
     end
   end
@@ -59,13 +59,14 @@ class PerformancePeriodsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_performance_period
-      @performance_period = PerformancePeriod.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def performance_period_params
-      params.require(:performance_period).permit(:performance_period_id,:title, :start_date, :end_date, :description, :is_open)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_performance_period
+    @performance_period = PerformancePeriod.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def performance_period_params
+    params.require(:performance_period).permit(:performance_period_id, :title, :start_date, :end_date, :description, :is_open)
+  end
 end

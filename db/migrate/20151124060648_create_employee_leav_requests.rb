@@ -8,7 +8,7 @@ class CreateEmployeeLeavRequests < ActiveRecord::Migration
       t.datetime :end_date
       t.string :date_range
       t.integer :no_of_day
-      t.decimal :leave_count, :precision => 5, :scale => 1
+      t.decimal :leave_count, precision: 5, scale: 1
 
       t.timestamps null: false
     end

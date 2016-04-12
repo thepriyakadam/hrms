@@ -17,12 +17,18 @@
       </div>
       </div>
 
+      <div class="col-sm-3">
+      <div class= "field">
+      <%= hidden_field_tag :appraiser_id, {},value: @attribute_rating_sheet.appraisee_id %>
+      
+      </div>
+      </div>
       </div>
 
     <div class="row">
       <div class="col-sm-3">
         <div class="actions">
-          <%= f.submit "Create Attribute Rating" ,class: "btn btn-primary btn-sm"%>
+          <%= f.submit "Update Attribute Rating" ,class: "btn btn-primary btn-sm"%>
          </div>
         </div>
       </div>

@@ -31,3 +31,4 @@ class Reports::QualificationDetailsController < ApplicationController
       end
   end
 end
+

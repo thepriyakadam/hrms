@@ -2,6 +2,11 @@ class Reports::JoiningDetailsController < ApplicationController
   def new
   end
 
+  def collect_departments
+    @company_location = CompanyLocation.find(params[:id])
+    @departments = @company_location.departments
+  end
+  
   def joining_detail_report
     @location = params[:salary][:company_location_id]
     if current_user.class == Group

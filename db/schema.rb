@@ -86,6 +86,8 @@ ActiveRecord::Schema.define(version: 20160412090355) do
     t.integer  "appraiser_rating"
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
+    t.boolean  "is_confirm_appraiser"
+    t.boolean  "is_confirm_appraisee"
   end
 
   add_index "attribute_rating_sheets", ["appraisee_id"], name: "index_attribute_rating_sheets_on_appraisee_id"
@@ -430,6 +432,7 @@ ActiveRecord::Schema.define(version: 20160412090355) do
     t.datetime "updated_at",            null: false
     t.integer  "performance_period_id"
     t.integer  "employee_id"
+    t.boolean  "is_confirm"
   end
 
   add_index "employee_attributes", ["appraisee_id"], name: "index_employee_attributes_on_appraisee_id"
@@ -811,6 +814,8 @@ ActiveRecord::Schema.define(version: 20160412090355) do
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
     t.integer  "performance_period_id"
+    t.boolean  "is_confirm_appraiser"
+    t.boolean  "is_confirm_appraisee"
   end
 
   add_index "goal_rating_sheets", ["appraisee_id"], name: "index_goal_rating_sheets_on_appraisee_id"

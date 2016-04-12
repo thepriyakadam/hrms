@@ -1,7 +1,7 @@
 class Reports::AwardDetailsController < ApplicationController
   def new
   end
-
+  
   def award_detail_report
     @location = params[:salary][:company_location_id]
     if current_user.class == Group

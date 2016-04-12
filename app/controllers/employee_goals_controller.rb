@@ -69,7 +69,6 @@ class EmployeeGoalsController < ApplicationController
   end
 
   def is_confirm
-    puts '--------------------------------------------------------------------'
     @employee_goal = EmployeeGoal.find(params[:format])
 
     @employee_goal.update(is_confirm: true)

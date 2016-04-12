@@ -35,7 +35,6 @@ class WorkingdaysController < ApplicationController
         format.json { render json: @workingday.errors, status: :unprocessable_entity }
       end
     end
-    
   end
 
   # PATCH/PUT /workingdays/1
@@ -64,21 +63,20 @@ class WorkingdaysController < ApplicationController
 
   def employees
     if current_user.class == Group
-      @workingdays = Workingday.where(year: params[:year],month_name: params[:month])
+      @workingdays = Workingday.where(year: params[:year], month_name: params[:month])
     else
-      if current_user.role.name == "Company"
-        @workingdays = Workingday.where(year: params[:year],month_name: params[:month])
-      elsif current_user.role.name == "CompanyLocation"
+      if current_user.role.name == 'Company'
+        @workingdays = Workingday.where(year: params[:year], month_name: params[:month])
+      elsif current_user.role.name == 'CompanyLocation'
         @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
-        @workingdays = Workingday.where(year: params[:year],month_name: params[:month], employee_id: @employees)
-      elsif current_user.role.name == "Employee"
-        @workingdays = Workingday.where(year: params[:year],month_name: params[:month], employee_id: current_user.employee_id)
+        @workingdays = Workingday.where(year: params[:year], month_name: params[:month], employee_id: @employees)
+      elsif current_user.role.name == 'Employee'
+        @workingdays = Workingday.where(year: params[:year], month_name: params[:month], employee_id: current_user.employee_id)
       end
     end
   end
 
   def search_month_year
-    
   end
 
   def generate_workingday
@@ -88,12 +86,12 @@ class WorkingdaysController < ApplicationController
     @employees.each do |e|
       workingday = Workingday.new
       if e.joining_detail.nil?
-        
+
       else
         if e.joining_detail.employee_category.nil?
         else
-          if e.joining_detail.employee_category.name == "Worker"
-            workingday.day_in_month = 26  
+          if e.joining_detail.employee_category.name == 'Worker'
+            workingday.day_in_month = 26
           else
             workingday.day_in_month = @date.end_of_month.day
           end
@@ -108,13 +106,14 @@ class WorkingdaysController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_workingday
-      @workingday = Workingday.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def workingday_params
-      params.require(:workingday).permit(:employee_id, :month_name, :year, :day_in_month, :present_day, :total_leave, :holiday_in_month, :week_off_day, :absent_day, :payable_day)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_workingday
+    @workingday = Workingday.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def workingday_params
+    params.require(:workingday).permit(:employee_id, :month_name, :year, :day_in_month, :present_day, :total_leave, :holiday_in_month, :week_off_day, :absent_day, :payable_day)
+  end
 end

@@ -1,7 +1,6 @@
 class BonusMastersController < ApplicationController
   before_action :set_bonus_master, only: [:show, :edit, :update, :destroy]
 
-  
   # GET /bonus_masters/new
   def new
     @bonus_master = BonusMaster.new
@@ -20,13 +19,12 @@ class BonusMastersController < ApplicationController
     respond_to do |format|
       if @bonus_master.save
         @bonus_master = BonusMaster.new
-         format.js { @flag = true }
+        format.js { @flag = true }
       else
-        flash.now[:alert] = "Bonus Master Already Exist."
+        flash.now[:alert] = 'Bonus Master Already Exist.'
         format.js { @flag = false }
       end
     end
-        
   end
 
   # PATCH/PUT /bonus_masters/1
@@ -45,13 +43,14 @@ class BonusMastersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_bonus_master
-      @bonus_master = BonusMaster.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def bonus_master_params
-      params.require(:bonus_master).permit(:is_bouns, :limit_amount, :bonus_persentage, :status)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_bonus_master
+    @bonus_master = BonusMaster.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def bonus_master_params
+    params.require(:bonus_master).permit(:is_bouns, :limit_amount, :bonus_persentage, :status)
+  end
 end

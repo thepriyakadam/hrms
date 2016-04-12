@@ -31,7 +31,7 @@ class InstalmentsController < ApplicationController
     @advance_salary = AdvanceSalary.find(params[:instalment][:advance_salary_id])
     amount = @advance_salary.instalments.where(is_complete: false).sum('instalment_amount')
     if @instalment.instalment_amount > amount
-      flash[:alert] = "Amount exceed the limit."
+      flash[:alert] = 'Amount exceed the limit.'
       render :new
     else
       respond_to do |format|
@@ -76,26 +76,27 @@ class InstalmentsController < ApplicationController
     if current_user.class == Group
       @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y'))
     else
-      if current_user.role.name == "Company" or current_user.role.name == "Account"
+      if current_user.role.name == 'Company' || current_user.role.name == 'Account'
         @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y'))
-      elsif current_user.role.name == "CompanyLocation"
+      elsif current_user.role.name == 'CompanyLocation'
         @employees = Employee.where(company_location_id: current_user.company_location_id)
         @advance_salaries = AdvanceSalary.where(employee_id: @employees)
         @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y')).where(advance_salary_id: @advance_salaries)
-      elsif current_user.role.name == "Employee"
+      elsif current_user.role.name == 'Employee'
         @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y')).where(employee_id: current_user.employee_id)
       end
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_instalment
-      @instalment = Instalment.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def instalment_params
-      params.require(:instalment).permit(:advance_salary_id, :instalment_date, :instalment_amount)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_instalment
+    @instalment = Instalment.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def instalment_params
+    params.require(:instalment).permit(:advance_salary_id, :instalment_date, :instalment_amount)
+  end
 end

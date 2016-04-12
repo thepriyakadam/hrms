@@ -46,16 +46,16 @@ class FamiliesController < ApplicationController
   # PATCH/PUT /families/1
   # PATCH/PUT /families/1.json
   def update
-    @employee = Employee.find(params["family"]["employee_id"])
+    @employee = Employee.find(params['family']['employee_id'])
     respond_to do |format|
       if @family.update(family_params)
-        #format.html { redirect_to @family, notice: 'Family was successfully updated.' }
-        #format.json { render :show, status: :ok, location: @family }
+        # format.html { redirect_to @family, notice: 'Family was successfully updated.' }
+        # format.json { render :show, status: :ok, location: @family }
         @families = @employee.families
         format.js { @flag = true }
       else
-        #format.html { render :edit }
-        #format.json { render json: @family.errors, status: :unprocessable_entity }
+        # format.html { render :edit }
+        # format.json { render json: @family.errors, status: :unprocessable_entity }
         format.js { @flag = false }
       end
     end
@@ -72,21 +72,22 @@ class FamiliesController < ApplicationController
   end
 
   def ajax_show_handicap_type_textbox
-    @value = params[:id]    
+    @value = params[:id]
   end
 
   def ajax_show_passport_detail_textbox
-    @value = params[:id]    
+    @value = params[:id]
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_family
-      @family = Family.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def family_params
-      params.require(:family).permit(:employee_id, :no_of_member, :f_name, :m_name,:l_name, :date_of_birth, :age, :contact_no, :email, :current_address, :relation, :adhar_no, :pan_no, :passport_no, :medical_claim, :passport_expiry_date, :have_passport, :passport_issue_date, :marital, :blood_group_id, :religion_id, :handicap_type,:is_handicap, :profession, :gender)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_family
+    @family = Family.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def family_params
+    params.require(:family).permit(:employee_id, :no_of_member, :f_name, :m_name, :l_name, :date_of_birth, :age, :contact_no, :email, :current_address, :relation, :adhar_no, :pan_no, :passport_no, :medical_claim, :passport_expiry_date, :have_passport, :passport_issue_date, :marital, :blood_group_id, :religion_id, :handicap_type, :is_handicap, :profession, :gender)
+  end
 end

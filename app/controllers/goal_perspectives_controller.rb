@@ -38,13 +38,13 @@ class GoalPerspectivesController < ApplicationController
   # PATCH/PUT /goal_perspectives/1
   # PATCH/PUT /goal_perspectives/1.json
   def update
-      if @goal_perspective.update(goal_perspective_params)
-        @flag = true
-        @goal_perspectives = GoalPerspective.all
-        @goal_perspective = GoalPerspective.new
-      else
-        @flag = false
-      end
+    if @goal_perspective.update(goal_perspective_params)
+      @flag = true
+      @goal_perspectives = GoalPerspective.all
+      @goal_perspective = GoalPerspective.new
+    else
+      @flag = false
+    end
   end
 
   # DELETE /goal_perspectives/1
@@ -58,13 +58,14 @@ class GoalPerspectivesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_goal_perspective
-      @goal_perspective = GoalPerspective.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def goal_perspective_params
-      params.require(:goal_perspective).permit(:name)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_goal_perspective
+    @goal_perspective = GoalPerspective.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def goal_perspective_params
+    params.require(:goal_perspective).permit(:name)
+  end
 end

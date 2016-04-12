@@ -1,7 +1,6 @@
 class CostCentersController < ApplicationController
   before_action :set_cost_center, only: [:show, :edit, :update, :destroy]
 
-
   def new
     @cost_center = CostCenter.new
     @cost_centers = CostCenter.all
@@ -17,22 +16,22 @@ class CostCentersController < ApplicationController
     @cost_center = CostCenter.new(cost_center_params)
     @cost_centers = CostCenter.all
     respond_to do |format|
-    if @cost_center.save
-    @cost_center = CostCenter.new 
-     format.js { @flag = true }
+      if @cost_center.save
+        @cost_center = CostCenter.new
+        format.js { @flag = true }
       else
-        flash.now[:alert] = "Cost Center Already Exist."
-         format.js { @flag = false }
-      end
+        flash.now[:alert] = 'Cost Center Already Exist.'
+        format.js { @flag = false }
+        end
     end
   end
 
   # PATCH/PUT /cost_centers/1
   # PATCH/PUT /cost_centers/1.json
   def update
-   @cost_center.update(cost_center_params)
-   @cost_centers = CostCenter.all
-   @cost_center = CostCenter.new     
+    @cost_center.update(cost_center_params)
+    @cost_centers = CostCenter.all
+    @cost_center = CostCenter.new
   end
 
   # DELETE /cost_centers/1
@@ -43,13 +42,14 @@ class CostCentersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_cost_center
-      @cost_center = CostCenter.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def cost_center_params
-      params.require(:cost_center).permit(:name)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_cost_center
+    @cost_center = CostCenter.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def cost_center_params
+    params.require(:cost_center).permit(:name)
+  end
 end

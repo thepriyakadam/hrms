@@ -5,18 +5,18 @@ class LeavCategoriesControllerTest < ActionController::TestCase
     @leav_category = leav_categories(:one)
   end
 
-  test "should get index" do
+  test 'should get index' do
     get :index
     assert_response :success
     assert_not_nil assigns(:leav_categories)
   end
 
-  test "should get new" do
+  test 'should get new' do
     get :new
     assert_response :success
   end
 
-  test "should create leav_category" do
+  test 'should create leav_category' do
     assert_difference('LeavCategory.count') do
       post :create, leav_category: { name: @leav_category.name }
     end
@@ -24,22 +24,22 @@ class LeavCategoriesControllerTest < ActionController::TestCase
     assert_redirected_to leav_category_path(assigns(:leav_category))
   end
 
-  test "should show leav_category" do
+  test 'should show leav_category' do
     get :show, id: @leav_category
     assert_response :success
   end
 
-  test "should get edit" do
+  test 'should get edit' do
     get :edit, id: @leav_category
     assert_response :success
   end
 
-  test "should update leav_category" do
+  test 'should update leav_category' do
     patch :update, id: @leav_category, leav_category: { name: @leav_category.name }
     assert_redirected_to leav_category_path(assigns(:leav_category))
   end
 
-  test "should destroy leav_category" do
+  test 'should destroy leav_category' do
     assert_difference('LeavCategory.count', -1) do
       delete :destroy, id: @leav_category
     end

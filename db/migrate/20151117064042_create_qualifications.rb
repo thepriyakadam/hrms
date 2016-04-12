@@ -9,7 +9,7 @@ class CreateQualifications < ActiveRecord::Migration
       t.references :university, index: true, foreign_key: true
       t.string :college
       t.string :marks_type
-      t.string :marks      
+      t.string :marks
 
       t.timestamps null: false
     end

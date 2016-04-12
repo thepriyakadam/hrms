@@ -26,25 +26,25 @@ class AttributeMastersController < ApplicationController
   # POST /attribute_masters.json
   def create
     @attribute_master = AttributeMaster.new(attribute_master_params)
-      if @attribute_master.save
-        @flag = true
-        @attribute_master = AttributeMaster.new
-        @attribute_masters = AttributeMaster.all
-      else
-        @flag = false
-      end
+    if @attribute_master.save
+      @flag = true
+      @attribute_master = AttributeMaster.new
+      @attribute_masters = AttributeMaster.all
+    else
+      @flag = false
+    end
   end
 
   # PATCH/PUT /attribute_masters/1
   # PATCH/PUT /attribute_masters/1.json
   def update
-      if @attribute_master.update(attribute_master_params)
-        @flag = true
-        @attribute_master = AttributeMaster.new
-        @attribute_masters = AttributeMaster.all
-      else
-        @flag = false
-      end
+    if @attribute_master.update(attribute_master_params)
+      @flag = true
+      @attribute_master = AttributeMaster.new
+      @attribute_masters = AttributeMaster.all
+    else
+      @flag = false
+    end
   end
 
   # DELETE /attribute_masters/1
@@ -58,13 +58,14 @@ class AttributeMastersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_attribute_master
-      @attribute_master = AttributeMaster.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def attribute_master_params
-      params.require(:attribute_master).permit(:name)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_attribute_master
+    @attribute_master = AttributeMaster.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def attribute_master_params
+    params.require(:attribute_master).permit(:name)
+  end
 end

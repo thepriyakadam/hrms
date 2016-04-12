@@ -5,18 +5,18 @@ class DegreesControllerTest < ActionController::TestCase
     @degree = degrees(:one)
   end
 
-  test "should get index" do
+  test 'should get index' do
     get :index
     assert_response :success
     assert_not_nil assigns(:degrees)
   end
 
-  test "should get new" do
+  test 'should get new' do
     get :new
     assert_response :success
   end
 
-  test "should create degree" do
+  test 'should create degree' do
     assert_difference('Degree.count') do
       post :create, degree: { name: @degree.name }
     end
@@ -24,22 +24,22 @@ class DegreesControllerTest < ActionController::TestCase
     assert_redirected_to degree_path(assigns(:degree))
   end
 
-  test "should show degree" do
+  test 'should show degree' do
     get :show, id: @degree
     assert_response :success
   end
 
-  test "should get edit" do
+  test 'should get edit' do
     get :edit, id: @degree
     assert_response :success
   end
 
-  test "should update degree" do
+  test 'should update degree' do
     patch :update, id: @degree, degree: { name: @degree.name }
     assert_redirected_to degree_path(assigns(:degree))
   end
 
-  test "should destroy degree" do
+  test 'should destroy degree' do
     assert_difference('Degree.count', -1) do
       delete :destroy, id: @degree
     end

@@ -20,7 +20,7 @@ class UniversitiesController < ApplicationController
         @university = University.new
         format.js { @flag = true }
       else
-        flash.now[:alert] = "University Already Exist."
+        flash.now[:alert] = 'University Already Exist.'
         format.js { @flag = false }
       end
     end
@@ -29,9 +29,9 @@ class UniversitiesController < ApplicationController
   # PATCH/PUT /universities/1
   # PATCH/PUT /universities/1.json
   def update
-   @university.update(university_params)
-   @universities = University.all
-   @university = University.new    
+    @university.update(university_params)
+    @universities = University.all
+    @university = University.new
   end
 
   # DELETE /universities/1
@@ -42,13 +42,14 @@ class UniversitiesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_university
-      @university = University.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def university_params
-      params.require(:university).permit(:name)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_university
+    @university = University.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def university_params
+    params.require(:university).permit(:name)
+  end
 end

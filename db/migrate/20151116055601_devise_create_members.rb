@@ -6,8 +6,8 @@ class DeviseCreateMembers < ActiveRecord::Migration
       t.references :role, index: true, foreign_key: true
       t.string :member_code
       t.string :subdomain
-      t.string :email,              null: true, default: ""
-      t.string :encrypted_password, null: false, default: ""
+      t.string :email,              null: true, default: ''
+      t.string :encrypted_password, null: false, default: ''
 
       ## Recoverable
       t.string   :reset_password_token
@@ -34,10 +34,9 @@ class DeviseCreateMembers < ActiveRecord::Migration
       # t.string   :unlock_token # Only if unlock strategy is :email or :both
       # t.datetime :locked_at
 
-
       t.timestamps null: false
 
-      #t.references :account, polymorphic: true, index: true
+      # t.references :account, polymorphic: true, index: true
       # t.references :company, index: true, foreign_key: true
       # t.references :company_location, index: true, foreign_key: true
       # t.references :department, index: true, foreign_key: true

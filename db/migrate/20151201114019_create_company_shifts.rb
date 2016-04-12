@@ -1,7 +1,7 @@
 class CreateCompanyShifts < ActiveRecord::Migration
   def change
     create_table :company_shifts do |t|
-    	t.string :code
+      t.string :code
       t.string :name
       t.string :description
       t.string :in_time

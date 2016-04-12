@@ -1,6 +1,6 @@
 class FoodCoupanMaster < ActiveRecord::Base
-	has_many :food_deductions
+  has_many :food_deductions
 
-	validates :code, :presence => true
-	validates :name, :presence => true
+  validates :code, presence: true
+  validates :name, presence: true
 end

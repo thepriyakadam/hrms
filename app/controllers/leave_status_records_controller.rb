@@ -31,7 +31,6 @@ class LeaveStatusRecordsController < ApplicationController
   end
 
   def first_approve
-    #byebug
     ### if no second reporter available
     if @employee_leav_request.employee.manager_2_id.nil?
       @leave_status = LeaveStatusRecord.new do |s|
@@ -44,6 +43,13 @@ class LeaveStatusRecordsController < ApplicationController
         if @leave_status.save
           @employee_leav_request.update(is_first_approved: true, current_status: "FirstApproved")
           @employee_leav_request.create_single_record_for_leave(@employee_leav_request)
+          @employee_leav_request.manage_coff(@employee_leav_request)
+          # if @employee_leav_request.leav_category.name == "C.Off"
+          #   c_off = LeaveCOff.where(employee_id: @employee_leav_request.employee_id, is_taken: false).order("c_off_date desc").first
+          #   c_off.update(is_taken)
+          # end  
+
+
           #@employee_leav_request.minus_leave(@employee_leav_request)
           if @employee_leav_request.employee.email.nil? or @employee_leav_request.employee.email == ""
             flash[:notice] = "Leave Approved Successfully without email."

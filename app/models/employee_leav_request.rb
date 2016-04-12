@@ -39,4 +39,28 @@ class EmployeeLeavRequest < ActiveRecord::Base
       leave_balance.save
     end
   end
+
+  def manage_coff(request)
+    if request.leav_category.name == "C.Off"
+      c_offs = LeaveCOff.where(employee_id: @employee_leav_request.employee_id, is_taken: false).order("c_off_date asc")
+      leave_count = request.leave_count
+      c_offs.each do |c|
+        if leave_count == 0
+          
+        elsif leave_count == 0.5
+          if c.c_off_type == "Full Day"
+            leave_count = leave_count - 1
+          else
+            leave_count = leave_count - 0.5
+          end
+        else
+          if c.c_off_type == "Full Day"
+            leave_count = leave_count - 1
+          else
+            leave_count = leave_count - 0.5
+          end
+        end
+      end
+    end
+  end
 end

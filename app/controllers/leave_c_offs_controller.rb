@@ -40,7 +40,7 @@ class LeaveCOffsController < ApplicationController
     @leave_c_off = LeaveCOff.new(leave_c_off_params)
     @leave_c_offs = LeaveCOff.all
     leav_category = LeavCategory.find_by_name("C.Off")
-    
+    @leave_c_off.expiry_date = @leave_c_off.c_off_date + @leave_c_off.c_off_expire_day
     if leav_category.nil?
     else
       is_exist = EmployeeLeavBalance.exists?(employee_id: @leave_c_off.employee_id, leav_category_id: leav_category.id)
@@ -114,6 +114,6 @@ class LeaveCOffsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def leave_c_off_params
-      params.require(:leave_c_off).permit(:employee_id, :c_off_date, :c_off_type, :c_off_expire_day, :expiry_status)
+      params.require(:leave_c_off).permit(:employee_id, :c_off_date, :c_off_type, :c_off_expire_day, :expiry_status, :expiry_date)
     end
 end

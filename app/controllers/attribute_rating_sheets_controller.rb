@@ -176,7 +176,6 @@ class AttributeRatingSheetsController < ApplicationController
 
   private
 
-<<<<<<< HEAD
   # Use callbacks to share common setup or constraints between actions.
   def set_attribute_rating_sheet
     @attribute_rating_sheet = AttributeRatingSheet.find(params[:id])
@@ -184,12 +183,7 @@ class AttributeRatingSheetsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def attribute_rating_sheet_params
-    params.require(:attribute_rating_sheet).permit(:appraisee_id, :appraiser_id, :employee_attribute_id, :appraisee_comment, :appraisee_rating, :appraiser_comment, :appraiser_rating)
+    params.require(:attribute_rating_sheet).permit(:is_confirm_appraisee,:is_confirm_appraiser,:appraisee_id, :appraiser_id, :employee_attribute_id, :appraisee_comment, :appraisee_rating, :appraiser_comment, :appraiser_rating)
   end
-=======
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def attribute_rating_sheet_params
-      params.require(:attribute_rating_sheet).permit(:is_confirm_appraisee,:is_confirm_appraiser,:appraisee_id, :appraiser_id, :employee_attribute_id, :appraisee_comment, :appraisee_rating, :appraiser_comment, :appraiser_rating)
-    end
->>>>>>> d38ed673360e7926b38b6ef2694e44dddaa298a8
+
 end

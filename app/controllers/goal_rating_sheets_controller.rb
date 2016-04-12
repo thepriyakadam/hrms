@@ -69,7 +69,6 @@ class GoalRatingSheetsController < ApplicationController
       flash[:alert] = 'Not Updated'
       redirect_to new_goal_rating_sheet_path
     end
-
   end
 
   # DELETE /goal_rating_sheets/1
@@ -81,13 +80,15 @@ class GoalRatingSheetsController < ApplicationController
       format.json { head :no_content }
     end
   end
-
   
   def appraiser 
     @employee = Employee.find(params[:format])
     @goal_ratings = GoalRatingSheet.where(appraisee_id: @employee.id,appraiser_comment: nil)
     #@goal_ratings = GoalRatingSheet.where("appraisee_id = ? and (appraiser_comment = ? or appraiser_comment = ?)",@employee.id,nil,"")
     @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: @employee.id)
+
+    @goal_rating_single_sheets = GoalRatingSheet.where(appraisee_id: @employee.id).group(:appraisee_id)
+
     @goal_rating_sheet = GoalRatingSheet.new
     @performance_periods = PerformancePeriod.all
   end

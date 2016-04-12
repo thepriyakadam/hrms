@@ -18,21 +18,21 @@ class HolidaysController < ApplicationController
     @holidays = Holiday.all
     respond_to do |format|
       if @holiday.save
-      @holiday = Holiday.new
+        @holiday = Holiday.new
         format.js { @flag = true }
       else
-        flash.now[:alert] = "Holiday Already Exist."
-         format.js { @flag = false }
+        flash.now[:alert] = 'Holiday Already Exist.'
+        format.js { @flag = false }
       end
-    end  
+    end
   end
 
   # PATCH/PUT /holidays/1
   # PATCH/PUT /holidays/1.json
   def update
-   @holiday.update(holiday_params)
-   @holidays = Holiday.all
-   @holiday = Holiday.new
+    @holiday.update(holiday_params)
+    @holidays = Holiday.all
+    @holiday = Holiday.new
   end
 
   # DELETE /holidays/1
@@ -40,17 +40,17 @@ class HolidaysController < ApplicationController
   def destroy
     @holiday.destroy
     @holidays = Holiday.all
-    
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_holiday
-      @holiday = Holiday.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def holiday_params
-      params.require(:holiday).permit(:code, :name, :description, :holiday_date)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_holiday
+    @holiday = Holiday.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def holiday_params
+    params.require(:holiday).permit(:code, :name, :description, :holiday_date)
+  end
 end

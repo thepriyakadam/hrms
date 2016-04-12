@@ -15,7 +15,7 @@ class GoalMeasuresController < ApplicationController
   # GET /goal_measures/new
   def new
     @goal_measure = GoalMeasure.new
-     @goal_measures = GoalMeasure.all
+    @goal_measures = GoalMeasure.all
   end
 
   # GET /goal_measures/1/edit
@@ -27,25 +27,25 @@ class GoalMeasuresController < ApplicationController
   def create
     @goal_measure = GoalMeasure.new(goal_measure_params)
 
-      if @goal_measure.save
-        @flag = true
+    if @goal_measure.save
+      @flag = true
       @goal_measures = GoalMeasure.all
       @goal_measure = GoalMeasure.new
-      else
-        @flag = false
-      end
+    else
+      @flag = false
+    end
   end
 
   # PATCH/PUT /goal_measures/1
   # PATCH/PUT /goal_measures/1.json
   def update
-      if @goal_measure.update(goal_measure_params)
-        @flag = true
-        @goal_measures = GoalMeasure.all
-        @goal_measure = GoalMeasure.new
-      else
-        @flag = false
-      end
+    if @goal_measure.update(goal_measure_params)
+      @flag = true
+      @goal_measures = GoalMeasure.all
+      @goal_measure = GoalMeasure.new
+    else
+      @flag = false
+    end
   end
 
   # DELETE /goal_measures/1
@@ -59,13 +59,14 @@ class GoalMeasuresController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_goal_measure
-      @goal_measure = GoalMeasure.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def goal_measure_params
-      params.require(:goal_measure).permit(:name)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_goal_measure
+    @goal_measure = GoalMeasure.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def goal_measure_params
+    params.require(:goal_measure).permit(:name)
+  end
 end

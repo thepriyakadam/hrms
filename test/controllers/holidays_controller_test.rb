@@ -5,18 +5,18 @@ class HolidaysControllerTest < ActionController::TestCase
     @holiday = holidays(:one)
   end
 
-  test "should get index" do
+  test 'should get index' do
     get :index
     assert_response :success
     assert_not_nil assigns(:holidays)
   end
 
-  test "should get new" do
+  test 'should get new' do
     get :new
     assert_response :success
   end
 
-  test "should create holiday" do
+  test 'should create holiday' do
     assert_difference('Holiday.count') do
       post :create, holiday: { code: @holiday.code, description: @holiday.description, holiday_date: @holiday.holiday_date, name: @holiday.name }
     end
@@ -24,22 +24,22 @@ class HolidaysControllerTest < ActionController::TestCase
     assert_redirected_to holiday_path(assigns(:holiday))
   end
 
-  test "should show holiday" do
+  test 'should show holiday' do
     get :show, id: @holiday
     assert_response :success
   end
 
-  test "should get edit" do
+  test 'should get edit' do
     get :edit, id: @holiday
     assert_response :success
   end
 
-  test "should update holiday" do
+  test 'should update holiday' do
     patch :update, id: @holiday, holiday: { code: @holiday.code, description: @holiday.description, holiday_date: @holiday.holiday_date, name: @holiday.name }
     assert_redirected_to holiday_path(assigns(:holiday))
   end
 
-  test "should destroy holiday" do
+  test 'should destroy holiday' do
     assert_difference('Holiday.count', -1) do
       delete :destroy, id: @holiday
     end

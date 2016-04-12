@@ -5,18 +5,18 @@ class DefinitionsControllerTest < ActionController::TestCase
     @definition = definitions(:one)
   end
 
-  test "should get index" do
+  test 'should get index' do
     get :index
     assert_response :success
     assert_not_nil assigns(:definitions)
   end
 
-  test "should get new" do
+  test 'should get new' do
     get :new
     assert_response :success
   end
 
-  test "should create definition" do
+  test 'should create definition' do
     assert_difference('Definition.count') do
       post :create, definition: { name: @definition.name }
     end
@@ -24,22 +24,22 @@ class DefinitionsControllerTest < ActionController::TestCase
     assert_redirected_to definition_path(assigns(:definition))
   end
 
-  test "should show definition" do
+  test 'should show definition' do
     get :show, id: @definition
     assert_response :success
   end
 
-  test "should get edit" do
+  test 'should get edit' do
     get :edit, id: @definition
     assert_response :success
   end
 
-  test "should update definition" do
+  test 'should update definition' do
     patch :update, id: @definition, definition: { name: @definition.name }
     assert_redirected_to definition_path(assigns(:definition))
   end
 
-  test "should destroy definition" do
+  test 'should destroy definition' do
     assert_difference('Definition.count', -1) do
       delete :destroy, id: @definition
     end

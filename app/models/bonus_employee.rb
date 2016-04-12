@@ -1,7 +1,7 @@
 class BonusEmployee < ActiveRecord::Base
   belongs_to :employee
 
-  def self.create_bonus(basic_amount,employee_id,date)
+  def self.create_bonus(basic_amount, employee_id, date)
     bonus_master = BonusMaster.find_by_status(true)
     unless bonus_master.nil?
       if basic_amount <= bonus_master.limit_amount

@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.4'
 # Use mysql as the database for Active Record
-#gem 'mysql2', '~> 0.3.18'
+# gem 'mysql2', '~> 0.3.18'
 gem 'sqlite3'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
@@ -17,7 +17,7 @@ gem 'query_report', '~> 1.2', '>= 1.2.1'
 gem 'kaminari', '~> 0.16.3'
 gem 'coderay'
 gem 'bootstrap-datepicker-rails'
-gem "awesome_print"
+gem 'awesome_print'
 gem 'datagrid', '~> 1.4', '>= 1.4.1'
 gem 'pagination', '~> 0.3.3'
 
@@ -38,8 +38,6 @@ gem 'pdfkit', '~> 0.8.2'
 gem 'wicked_pdf', '~> 1.0', '>= 1.0.5'
 
 gem 'wkhtmltopdf-binary', '~> 0.9.9.3'
-
-
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
@@ -79,27 +77,27 @@ gem 'bootstrap_form'
 gem 'jquery-validation-rails'
 
 # UML Diagram
-gem "rails-erd"
+gem 'rails-erd'
 
 # Auto increement
 gem 'protokoll'
 
 # Image processing
-gem "paperclip", "~> 4.3"
+gem 'paperclip', '~> 4.3'
 
-#country And State Name
+# country And State Name
 # gem 'country_state_select', '~> 2.0.0'
 # gem 'countries'
 gem 'city-state'
 
-#infinite-cove-6619
+# infinite-cove-6619
 # DateTimePicker
 gem 'bootstrap3-datetimepicker-rails', '~> 4.0.0'
 gem 'jquery-ui-rails'
 
-#Time Differences
+# Time Differences
 gem 'time_difference'
 
-#Excel Read
+# Excel Read
 gem 'roo'
 gem 'yaml_db'

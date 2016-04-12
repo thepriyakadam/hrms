@@ -34,12 +34,12 @@
         <Cell ss:Index="25"><Data ss:Type="String">Religion</Data></Cell>
         <Cell ss:Index="26"><Data ss:Type="String">Retirement Date</Data></Cell>
         <Cell ss:Index="27"><Data ss:Type="String">Reserved Category</Data></Cell> 
-         </Row>
+      </Row>
 
         <% i = 0 %>
        <% @joining_details.each do |joining_detail| %>
-        <Row>
-          <Cell ss:Index="1"><Data ss:Type="String"><%= i=i+1 %></Data></Cell>
+      <Row>
+          <Cell ss:Index="1"><Data ss:Type="Integer"><%= i=i+1 %></Data></Cell>
           <Cell ss:Index="2"><Data ss:Type="String"><%= joining_detail.employee.try(:manual_employee_code) %></Data></Cell>
           <Cell ss:Index="3"><Data ss:Type="String"><%= joining_detail.employee.try(:first_name) %></Data></Cell>
           <Cell ss:Index="4"><Data ss:Type="String"><%= joining_detail.employee.try(:middle_name) %></Data></Cell>
@@ -66,7 +66,12 @@
           <Cell ss:Index="25"><Data ss:Type="String"><%= joining_detail.try(:have_retention) %></Data></Cell>
           <Cell ss:Index="26"><Data ss:Type="String"><%= joining_detail.try(:retirement_date) %></Data></Cell>
           <Cell ss:Index="27"><Data ss:Type="String"><%= joining_detail.try(:reserved_category_id) %></Data></Cell>
+<<<<<<< HEAD
+      </Row><!-- Row -->
+   
+=======
         </Row><!-- Row -->
+>>>>>>> ef2465376897d58e4f53f6b4c2245c7672e4d173
       <% end %><!-- slip -->
     </Table>
   </Worksheet>

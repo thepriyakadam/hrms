@@ -118,11 +118,13 @@ end
   namespace :reports do
   get 'joining_details/new'
   post 'joining_details/joining_detail_report'
+  get 'joining_details/collect_departments'
   end
 
   namespace :reports do
   get 'basic_details/new'
   post 'basic_details/employee_basic_report'
+  get 'basic_details/collect_departments'
   end
 
   namespace :reports do
@@ -134,16 +136,31 @@ end
   resources :performance_periods
   resources :attribute_rating_sheets do
     collection do
+      get :edit_appraiser
       get :edit_attribute_rating
+      patch :update_appraiser
       get :appraiser
       post :appraiser_create
+      get :is_confirm_appraiser
+      get :is_confirm_appraisee
+      get :employee_details
+      get :employee_info
+      get :subordinate_list
     end
   end
   resources :goal_rating_sheets  do
     collection do
+      get :is_confirm_appraisee
+      get :is_confirm_appraiser
+      get :edit_appraiser
+      patch :update_appraiser
+      delete :destroy_appraiser
+      get :subordinate_list
       get :edit_goal_rating
       get :appraiser
       post :appraiser_create
+      get :appraisee_goal_list
+      get :modal
     end
   end
   resources :employee_attributes do
@@ -152,6 +169,7 @@ end
       post :appraisee_create
       get :appraiser
       post :appraiser_create
+      get :is_confirm
     end
   end
   resources :employee_goals do

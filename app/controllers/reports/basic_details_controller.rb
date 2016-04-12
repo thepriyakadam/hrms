@@ -1,7 +1,14 @@
 class Reports::BasicDetailsController < ApplicationController
  
   def new
+
   end
+
+  def collect_departments
+    @company_location = CompanyLocation.find(params[:id])
+    @department = @company_location.departments
+   
+  end 
 
   def employee_basic_report
   	if current_user.class == Group
@@ -25,7 +32,6 @@ class Reports::BasicDetailsController < ApplicationController
   		elsif current_user.role.name == "Employee"
   		end
   	end
-   
   end
 
 end

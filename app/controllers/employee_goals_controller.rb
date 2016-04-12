@@ -68,9 +68,8 @@ class EmployeeGoalsController < ApplicationController
     current_login = Employee.find(current_user.employee_id)
     @employees = current_login.subordinates
   end
-  
+
   def is_confirm
-    puts '--------------------------------------------------------------------'
     @employee_goal = EmployeeGoal.find(params[:format])
     
     @employee_goal.update(is_confirm: true)

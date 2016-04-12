@@ -4,7 +4,7 @@ class OvertimeSalariesController < ApplicationController
   # GET /overtime_salaries
   # GET /overtime_salaries.json
   def index
-    @overtime_salaries = OvertimeSalary.all
+    @overtime_salaries = OvertimeSalary.group("strftime('%Y',ot_date)")
   end
 
   # GET /overtime_salaries/1
@@ -170,6 +170,26 @@ class OvertimeSalariesController < ApplicationController
       end
     end
     redirect_to select_month_year_form_overtime_salaries_path
+  end
+
+  def overtimes
+    @year = params[:year]
+    @month = params[:month]
+    date = Date.new(@year.to_i, Workingday.months[@month])
+   if current_user.class == Group
+       @overtime_salaries = OvertimeSalary.where("strftime('%m/%Y', ot_date) = ?", date.strftime('%m/%Y'))
+    else
+      if current_user.role.name == "Company" or current_user.role.name == "Account"
+         @overtime_salaries = OvertimeSalary.where("strftime('%m/%Y', ot_date) = ?", date.strftime('%m/%Y'))
+      elsif current_user.role.name == "CompanyLocation"
+        @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+         @overtime_salaries = OvertimeSalary.where("strftime('%m/%Y', ot_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+      elsif current_user.role.name == "SalaryAccount"
+         @overtime_salaries = OvertimeSalary.all
+      elsif current_user.role.name == "Employee"
+         @overtime_salaries = OvertimeSalary.where("strftime('%m/%Y', ot_date) = ?", date.strftime('%m/%Y')).where(employee_id: current_user.employee_id)
+      end
+    end
   end
 
   private

@@ -189,6 +189,7 @@ end
   resources :overtime_salaries do
     collection do
       get :collect_basic
+      get :overtimes
       get :select_month_year_form
       get :collect_employee
       post :create_overtime_salary

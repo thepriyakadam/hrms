@@ -63,6 +63,13 @@ class EmployeeAttributesController < ApplicationController
     flash[:alert] = 'Deleted Successfully'
   end
 
+  def is_confirm
+    @employee_attribute = EmployeeAttribute.find(params[:format])
+    
+    @employee_attribute.update(is_confirm: true)
+
+    redirect_to new_employee_attribute_path(@employee_attribute.employee_id)
+  end
   
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -72,6 +79,6 @@ class EmployeeAttributesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def employee_attribute_params
-      params.require(:employee_attribute).permit(:employee_id,:performance_period_id,:appraisee_id, :appraiser_id, :attribute_master_id, :definition_id, :weightage, :appraisee_comment, :appraisee_rating, :appraiser_comment, :appraiser_rating)
+      params.require(:employee_attribute).permit(:is_confirm,:employee_id,:performance_period_id,:appraisee_id, :appraiser_id, :attribute_master_id, :definition_id, :weightage, :appraisee_comment, :appraisee_rating, :appraiser_comment, :appraiser_rating)
     end
 end

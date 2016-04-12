@@ -9,8 +9,7 @@
     <table id="example2" class="table table-bordered table-hover table-condensed">
         <thead>
           <tr>
-            <th>Attribute</th>
-            <th>Definition</th>
+            <th>Attribute & Definition</th>
             <th>Weightage</th>
             <th>Appraisee comment</th>
             <th>Appraisee rating</th>
@@ -21,13 +20,16 @@
           <% @attribute_rating_sheets.each do |a| %>
           <tr>
             <td><%= a.employee_attribute.attribute_master.name %></td>
-            <td><%= a.employee_attribute.definition.name %></td>
             <td><%= a.employee_attribute.weightage %></td>
             <td><%= a.appraisee_comment %></td>
             <td><%= a.appraisee_rating %></td>
             <td>
+              <% if a.is_confirm_appraisee == true %>
+              <% else %>
               <%= link_to '', edit_attribute_rating_sheet_path(a),class: 'btn btn-success btn-xs fa fa-edit' %>
-              <%= link_to '', a, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-xs fa fa-close' %>
+              
+              <%= link_to '',is_confirm_appraisee_attribute_rating_sheets_path(a),class: 'btn btn-xs btn-warning fa fa-check'%>
+              <% end %>
             </td>
           </tr>
           <% end %>
@@ -35,3 +37,4 @@
     </table>
   </div>
 </div>
+<%= link_to 'Back', new_attribute_rating_sheet_path %>

@@ -132,7 +132,6 @@ class GoalRatingSheetsController < ApplicationController
     @goal_rating_sheet = GoalRatingSheet.find(params[:format])
   end
 
-  
   def update_appraiser
     #@goal_rating = GoalRatingSheet.find(params[:])
 

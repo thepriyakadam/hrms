@@ -23,6 +23,7 @@
     <tbody>
       <% @employee_goals.each do |employee_goal| %>
         <tr>
+          <% if employee_goal.is_confirm == true %>
           <td><%= employee_goal.period.title+"  "+employee_goal.period.start_date.to_s+"  "+employee_goal.period.end_date.to_s %></td>
           <td><%= employee_goal.goal_perspective.name %></td>
           <td><%= employee_goal.goal_measure %></td>
@@ -30,10 +31,11 @@
           <td><%= employee_goal.goal_weightage %></td>
           <td><%= employee_goal.difficulty_level %></td>
           <td><%= employee_goal.allign_to_supervisor %></td>
-
+          
           <td><%= text_field_tag 'appraisee_comment[]' %></td>
           <td><%= text_field_tag 'appraisee_rating[]' %></td>
-
+          <% else %>
+          <% end %>
              <%= hidden_field_tag 'employee_goal_id[]',{},value: employee_goal.id %>
              <%= hidden_field_tag :appraisee_id, {},value: current_user.employee_id %>
         </tr>
@@ -41,6 +43,9 @@
     </tbody>
   </table>
 
+  <% if @employee_goals.empty? %>
+
+  <% else %>
   <div class="row">
     <div class="col-sm-3">
       <div class="actions">
@@ -48,6 +53,8 @@
       </div>
     </div>
   </div>
+  
+  <% end %>
+  <% end %>
   </div>
 </div>
-  <% end %>

@@ -55,10 +55,10 @@ class EmployeeLeavRequestsController < ApplicationController
       end
       @emp_leave_bal = EmployeeLeavBalance.where('employee_id = ? AND leav_category_id = ?', @employee.id, @employee_leav_request.leav_category_id).take
       type = LeavCategory.find(@employee_leav_request.leav_category_id).name
-      if type == 'LWP Leave' || type == 'ESIC Leave'
-        @employee_leav_request.leave_status_records.build(change_status_employee_id: current_user.employee_id, status: 'Pending', change_date: Date.today)
-        if @employee.email.nil? || @employee.email == ''
-          flash[:notice] = 'Send request without email.'
+      if type == "LWP Leave" or type == "ESIC Leave"
+        @employee_leav_request.leave_status_records.build(change_status_employee_id: current_user.employee_id,status: "Pending", change_date: Date.today)
+        if @employee.email.nil? or @employee.email == ""
+          flash[:notice] = "Send request without email."
         else
           flash[:notice] = 'Leave Request sent successfully.'
           LeaveRequestMailer.pending(@employee_leav_request).deliver_now
@@ -92,6 +92,7 @@ class EmployeeLeavRequestsController < ApplicationController
             render :new
           end
         else
+
           @employee_leav_request.leave_status_records.build(change_status_employee_id: current_user.employee_id, status: 'Pending', change_date: Date.today)
           if @employee_leav_request.save
             @employee_leav_request.minus_leave(@employee_leav_request)

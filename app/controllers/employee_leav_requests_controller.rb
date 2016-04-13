@@ -1,6 +1,6 @@
 require 'query_report/helper'  # need to require the helper
 class EmployeeLeavRequestsController < ApplicationController
-  before_action :set_employee_leav_request, only: [:show, :edit, :update, :destroy]
+  before_action :set_employee_leav_request, only: [:show, :edit,:update, :destroy]
   load_and_authorize_resource
   include QueryReport::Helper  # need to include it
 

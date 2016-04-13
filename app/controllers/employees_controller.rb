@@ -50,13 +50,16 @@ class EmployeesController < ApplicationController
   end
 
   def birthday_invitation
-    date = Date.today
+    date = Date.today 
     @employees = Employee.where.not("strftime('%d/%m', date_of_birth) = ?", date.strftime('%d/%m'))
-    @employees.each do |employee|
-      EmployeeMailer.birthday_invitation(employee).deliver_now
-      flash[:notice] = 'Birthday Invitation Email Sent'
-    end
- end
+    if @employees.empty?
+    else
+    @employees.each do |employee|    
+     EmployeeMailer.birthday_invitation(employee).deliver_now
+   end
+  end
+  redirect_to root_url 
+ end 
 
   # GET /employees/1
   # GET /employees/1.json

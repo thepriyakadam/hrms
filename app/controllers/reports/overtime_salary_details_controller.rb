@@ -2,6 +2,7 @@ class Reports::OvertimeSalaryDetailsController < ApplicationController
   def new
   end
 
+
   def overtime_montly_detail_report
   	@month = params[:salary][:month]
     @year = params[:salary][:year]

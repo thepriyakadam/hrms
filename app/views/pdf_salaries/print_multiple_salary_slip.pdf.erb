@@ -3,11 +3,17 @@ th {
     text-align: left;
 }
 </style>
-  
-
+<% @salaryslips.each do |e| %>
+ <%  @addable_salary_components = SalaryslipComponent.where("is_deducted = ? and salaryslip_id = ?",false,e.id) %>
+   <%@deducted_salary_components = SalaryslipComponent.where("is_deducted = ? and salaryslip_id = ?",true,e.id) %>
+  <% @working_day = Workingday.find(e.workingday_id) %>
+   <% @employee = Employee.find(e.employee_id) %>
+  <% @advance_salary = AdvanceSalary.find_by_employee_id(@employee.id) %>
+  <body>
+  </br>
        <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
       <thead>
-        <tr>
+       <tr>
           <td colspan="6">
            <center><strong>BHANDARI</strong></center> 
             <center><strong>BHANDARI FOILS AND TUBES LTD.</strong></center>
@@ -15,7 +21,7 @@ th {
           </td>           
         </tr>
         <tr>
-          <td colspan="2">Salary Slip : <%= @salaryslip.month%> - <%= @salaryslip.year%></td>
+          <td colspan="2">Salary Slip : <%= e.month%> - <%= e.year%></td>
           <td colspan="2"></td>      
           <td colspan="2"></td>            
         </tr>
@@ -79,8 +85,6 @@ th {
         </tr>
       </tbody>
     </table>
-
-    
        <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
       <thead>
         <tr>
@@ -93,7 +97,7 @@ th {
       <tbody>
         <% @addable_salary_components.each do |item| %>
           <tr>
-            <td><%= item.salary_component.name %></td>
+            <td><%= item.salary_component.try(:name) %></td>
             <td align="right"><%= item.actual_amount.round %></td>
             <td align="right"><%= item.calculated_amount.round %></td>
             <!-- <td align="center">< link_to "", edit_salaryslip_component_path(item),remote:true,class: "fa fa-edit" %></td> -->
@@ -101,8 +105,8 @@ th {
         <% end %>
         <tr>
           <td><strong>Total Gross</strong></td>
-          <td align="right"><strong><%= @salaryslip.actual_gross_salary.round %></strong></td>
-          <td align="right"><strong><%= @salaryslip.calculated_gross_salary.round %></strong></td>
+          <td align="right"><strong><%= e.actual_gross_salary.round %></strong></td>
+          <td align="right"><strong><%= e.calculated_gross_salary.round %></strong></td>
          <!--  <td></td> -->
         </tr>
          <tr>
@@ -128,17 +132,20 @@ th {
         <% end %>
         <tr>
           <td><strong>Total Deduction</strong></td>
-          <td align="right"><strong><%= @salaryslip.actual_total_deduction.round %></strong></td>
-          <td align="right"><strong><%= @salaryslip.calculated_total_deduction.round %></strong></td>
+          <td align="right"><strong><%= e.actual_total_deduction.round %></strong></td>
+          <td align="right"><strong><%= e.calculated_total_deduction.round %></strong></td>
           <!-- <td></td> -->
         </tr>
         <tr>
           <td><strong>Net Salary</strong></td>
-          <td align="right"><strong><%= @salaryslip.actual_net_salary.round %></strong></td>
-          <td align="right"><strong><%= @salaryslip.calculated_net_salary.round %></strong></td>
+          <td align="right"><strong><%= e.actual_net_salary.round %></strong></td>
+          <td align="right"><strong><%= e.calculated_net_salary.round %></strong></td>
           <!-- <td></td> -->
         </tr>
       </tbody>
     </table>
-
+    </body>
+    <hr></br>
+<% end %>
+</body>
 

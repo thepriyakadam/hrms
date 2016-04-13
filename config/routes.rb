@@ -2,10 +2,12 @@
 Rails.application.routes.draw do
   namespace :reports do
     get 'overtime_salary_details/new'
+    post 'overtime_salary_details/overtime_montly_detail_report'
   end
 
   namespace :reports do
     get 'overtime_salary_details/daily'
+
   end
 
   namespace :reports do
@@ -193,7 +195,13 @@ Rails.application.routes.draw do
 
   resources :leave_c_offs
   resources :overtime_month_records
-  resources :overtime_daily_records
+
+  resources :overtime_daily_records do
+    collection do
+      get :employees
+    end
+  end
+
   resources :bonus_employees do
     collection do
       get :search_bonus

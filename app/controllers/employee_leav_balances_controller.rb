@@ -44,14 +44,14 @@ class EmployeeLeavBalancesController < ApplicationController
       ActiveRecord::Base.transaction do
         @employee_ids.each do |e|
           leave_category = LeavCategory.find(params[:employee_leav_balance][:leav_category_id])
-          if leave_category.name == 'Seak Leave' || leav_category.code == 'SL'
-            today_date = Date.today
-            month = today_date.strftime('%-m')
-            leave = EmployeeLeavBalance.count_leave(month)
-            @elb = EmployeeLeavBalance.create(employee_id: e, leav_category_id: params[:employee_leav_balance][:leav_category_id], no_of_leave: leave, total_leave: leave, expiry_date: params[:employee_leav_balance][:expiry_date])
-          else
+          # if leave_category.name == 'Seak Leave' || leav_category.code == 'SL'
+          #   today_date = Date.today
+          #   month = today_date.strftime('%-m')
+          #   leave = EmployeeLeavBalance.count_leave(month)
+          #   @elb = EmployeeLeavBalance.create(employee_id: e, leav_category_id: params[:employee_leav_balance][:leav_category_id], no_of_leave: leave, total_leave: leave, expiry_date: params[:employee_leav_balance][:expiry_date])
+          # else
             @elb = EmployeeLeavBalance.create(employee_id: e, leav_category_id: params[:employee_leav_balance][:leav_category_id], no_of_leave: params[:employee_leav_balance][:no_of_leave], total_leave: params[:employee_leav_balance][:total_leave], expiry_date: params[:employee_leav_balance][:expiry_date])
-          end
+          # end
         end
       end
       flash[:notice] = 'Leave assigned successfully.'

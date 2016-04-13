@@ -49,9 +49,11 @@ class LeaveCOffsController < ApplicationController
         if @leave_c_off.c_off_type == 'Full Day'
           @employee_leave_balance.total_leave = @employee_leave_balance.total_leave.to_f + 1
           @employee_leave_balance.no_of_leave = @employee_leave_balance.no_of_leave.to_f + 1
+          @leave_c_off.leave_count = 1
         else
           @employee_leave_balance.total_leave = @employee_leave_balance.total_leave.to_f + 0.5
           @employee_leave_balance.no_of_leave = @employee_leave_balance.no_of_leave.to_f + 0.5
+          @leave_c_off.leave_count = 0.5
         end
       else
         @employee_leave_balance = EmployeeLeavBalance.new do |b|
@@ -59,17 +61,21 @@ class LeaveCOffsController < ApplicationController
           b.leav_category_id = leav_category.id
           b.expiry_date = @leave_c_off.c_off_date + @leave_c_off.c_off_expire_day
 
-          if @leave_c_off.c_off_type == 'Full Day'
+          if @leave_c_off.c_off_type == "Full Day"
             b.no_of_leave = 1
             b.total_leave = 1
+            @leave_c_off.leave_count = 1
+            puts @leave_c_off.leave_count
           else
             b.no_of_leave = 0.5
             b.total_leave = 0.5
+            @leave_c_off.leave_count = 0.5
+            puts @leave_c_off.leave_count
           end
         end
       end
-
       ActiveRecord::Base.transaction do
+        puts @leave_c_off.leave_count
         @leave_c_off.save
         @employee_leave_balance.save
       end
@@ -114,6 +120,6 @@ class LeaveCOffsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def leave_c_off_params
-    params.require(:leave_c_off).permit(:employee_id, :c_off_date, :c_off_type, :c_off_expire_day, :expiry_status, :expiry_date)
+    params.require(:leave_c_off).permit(:employee_id, :c_off_date, :c_off_type, :c_off_expire_day, :expiry_status, :expiry_date, :leave_count)
   end
 end

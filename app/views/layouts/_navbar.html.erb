@@ -117,7 +117,7 @@
                       <%@employees.each do |e|%>
                         <p> <%= full_name(e) %> </p>
                       <%end%>
-                      <% if current_user.role.name == 'Company'%>
+                      <% if current_user.try(:role).try(:name) == 'Company'%>
                         <%= link_to 'Send Birthday Wishes', birthday_email_employees_path,class: 'btn btn-xl btn-warning' %>
                       <% end %>
                     <%end%>

@@ -19,7 +19,9 @@ class Reports::SalariesController < ApplicationController
     end
   end
 
+
   def show
+    
   end
 
   def department_wise

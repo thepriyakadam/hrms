@@ -68,6 +68,26 @@ class OvertimeDailyRecordsController < ApplicationController
     end
   end
 
+  def employees
+    @year = params[:year]
+    @month = params[:month]
+    date = Date.new(@year.to_i, Workingday.months[@month])
+   if current_user.class == Group
+       @overtime_daily_records = OvertimeDailyRecord.where("strftime('%m/%Y', ot_daily_date) = ?", date.strftime('%m/%Y'))
+    else
+      if current_user.role.name == "Company" or current_user.role.name == "Account"
+          @overtime_daily_records = OvertimeDailyRecord.where("strftime('%m/%Y', ot_daily_date) = ?", date.strftime('%m/%Y'))
+      elsif current_user.role.name == "CompanyLocation"
+        @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+          @overtime_daily_records = OvertimeDailyRecord.where("strftime('%m/%Y', ot_daily_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+      elsif current_user.role.name == "SalaryAccount"
+          @overtime_daily_records = OvertimeDailyRecord.all
+      elsif current_user.role.name == "Employee"
+          @overtime_daily_records = OvertimeDailyRecord.where("strftime('%m/%Y', ot_daily_date) = ?", date.strftime('%m/%Y')).where(employee_id: current_user.employee_id)
+      end
+    end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

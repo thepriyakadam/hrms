@@ -1,4 +1,5 @@
-<%= form_for :pdf_salaries, url: { action: 'print_salary_slip_monthwise',format: 'pdf',month: "January",year: "2016"} do |f| %>
+<%= form_for :pdf_salaries, url: { action: 'print_salary_slip_monthwise',format: 'pdf',month: @month,
+  year: @year},:html => {:target => '_blank'} do |f| %>
 <table id="example1" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
@@ -24,7 +25,7 @@
   </tbody>
 </table>
  <div class="col-sm-3">
-        <%= f.submit "Print Salary Slip",class: "btn btn-xl btn-warning fa fa-print",:target => '_blank' %>
+        <%= f.submit "Print Salary Slip",class: "btn btn-xl btn-warning fa fa-print" %>
      </div>
 <% end %>
 

@@ -10,9 +10,11 @@ th {
    <% @employee = Employee.find(e.employee_id) %>
   <% @advance_salary = AdvanceSalary.find_by_employee_id(@employee.id) %>
 
-  
+  <header>
     <h3 class="box-title">Employee Salary Slip <%= e.month%> <%= e.year%></h3><br>
   <!-- /.box-header -->
+  </header>
+  <body>
        <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
       <thead>
         <tr>
@@ -138,4 +140,5 @@ th {
       </tbody>
     </table>
 <% end %>
+</body>
 

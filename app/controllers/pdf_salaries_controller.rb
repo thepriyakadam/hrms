@@ -1,6 +1,8 @@
 class PdfSalariesController < ApplicationController
 
      def print_salary_slip_monthwise
+      @month = params[:month]
+      @year = params[:year]
       @employees = params[:employee_ids]
       @salaryslips = Salaryslip.where(month: params[:month],year: params[:year],employee_id: @employees)
             respond_to do |format|
@@ -15,7 +17,10 @@ class PdfSalariesController < ApplicationController
     end
 
     def show_employee
-       @employees = Employee.all
+      @month = params[:month]
+      @year = params[:year]
+      @salaryslips = Salaryslip.where(month: @month, year: @year.to_s).pluck(:employee_id)
+      @employees = Employee.where(id: @salaryslips)
     end
 
     def show_unsaved_employee
@@ -28,7 +33,7 @@ class PdfSalariesController < ApplicationController
     end
 
     def employee_list_pdf
-      @employees = Employee.all
+      # @employees = Employee.all
     end
 
 end

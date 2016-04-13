@@ -167,13 +167,13 @@ Rails.application.routes.draw do
       post :appraisee_create
       get :appraiser
       post :appraiser_create
-      get :is_confirm
+      post :is_confirm
     end
   end
   resources :employee_goals do
     collection do
       get :subordinate_list
-      get :is_confirm
+      post :is_confirm
     end
   end
 

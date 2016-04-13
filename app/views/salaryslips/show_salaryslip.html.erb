@@ -10,6 +10,19 @@
     <table class="table table-bordered table-hover table-condensed">
       <thead>
         <tr>
+          <td colspan="6">
+          <center><%= image_tag alt: "/public/images/Bhandari2.jpeg",size: "45x25" %></center>
+           <center><strong>BHANDARI</br></strong></center> 
+            <center><h6><strong>BHANDARI FOILS AND TUBES LTD.</br></strong></h6></center>
+            <center>Manufacturers of Stainless Steel Cold Rolled Coils, Tubes & Fitings</center>
+          </td>           
+        </tr>
+        <tr>
+          <td colspan="2">Salary Slip : <%= @salaryslip.month%> - <%= @salaryslip.year%></td>
+          <td colspan="2"></td>      
+          <td colspan="2"></td>            
+        </tr>
+        <tr>
           <th>Employee Code</th>
           <td><%= @employee.manual_employee_code%></td>
           <th>CL</th>        

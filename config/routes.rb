@@ -2,6 +2,7 @@
 Rails.application.routes.draw do
   namespace :reports do
     get 'overtime_salary_details/new'
+    post 'overtime_salary_details/overtime_montly_detail_report'
   end
 
   namespace :reports do

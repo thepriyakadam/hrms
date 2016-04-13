@@ -28,7 +28,7 @@ class PdfSalariesController < ApplicationController
     end
 
     def employee_list_pdf
-    @employees = Employee.all
+      @employees = Employee.all
     end
 
 end

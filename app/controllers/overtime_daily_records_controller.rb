@@ -79,7 +79,7 @@ class OvertimeDailyRecordsController < ApplicationController
           @overtime_daily_records = OvertimeDailyRecord.where("strftime('%m/%Y', ot_daily_date) = ?", date.strftime('%m/%Y'))
       elsif current_user.role.name == "CompanyLocation"
         @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
-          @overtime_daily_records = OvertimeDailyRecord.where("strftime('%m/%Y', ot_daily_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+          @overtime_daily_records = OvertimeDailyRecord.where("strftime('%m/%Y', ot_daily_date) = ? and employee_id = ?", date.strftime('%m/%Y'), @employees)
       elsif current_user.role.name == "SalaryAccount"
           @overtime_daily_records = OvertimeDailyRecord.all
       elsif current_user.role.name == "Employee"

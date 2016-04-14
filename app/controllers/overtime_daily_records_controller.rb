@@ -4,7 +4,7 @@ class OvertimeDailyRecordsController < ApplicationController
   # GET /overtime_daily_records
   # GET /overtime_daily_records.json
   def index
-    @overtime_daily_records = OvertimeDailyRecord.all
+    @overtime_daily_records = OvertimeDailyRecord.group("strftime('%Y',ot_daily_date)")
   end
 
   # GET /overtime_daily_records/1

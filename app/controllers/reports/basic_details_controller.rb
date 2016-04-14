@@ -5,8 +5,7 @@ class Reports::BasicDetailsController < ApplicationController
 
   def collect_departments
     @company_location = CompanyLocation.find(params[:id])
-    @department = @company_location.departments
-   
+    @department = @company_location.departments 
   end 
 
   def employee_basic_report

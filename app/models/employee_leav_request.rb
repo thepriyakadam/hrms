@@ -43,27 +43,39 @@ class EmployeeLeavRequest < ActiveRecord::Base
   def manage_coff(request)
     if request.leav_category.name == 'C.Off'
       c_offs = LeaveCOff.where(employee_id: request.employee_id, is_taken: false).order('c_off_date asc')
-      leave_count = request.leave_count
       c_offs.each do |c|
-        puts "----------------------------------------------------"
-        puts leave_count
-        puts "----------------------------------------------------"
-        if leave_count == 0
-          break
-        elsif leave_count == 0.5
-          leave_count = if c.c_off_type == 'Full Day'
-                          leave_count - 0.5
-                        else
-                          leave_count - 0.5
-                        end
+        if request.leave_count == 0
+        elsif request.leave_count == 0.5
+          #request.leave_count = request.leave_count - 0.5
+          c.leave_count = c.leave_count - 0.5
+          c.save
+          if c.leave_count == 0
+            c.update(is_taken: true)
+          end
         else
-          leave_count = if c.c_off_type == 'Full Day'
-                          leave_count - 1
-                        else
-                          leave_count - 0.5
-                        end
+          if c.c_off_type == 'Full Day'
+            if c.leave_count == 0.5
+              request.leave_count = request.leave_count - 0.5
+              c.leave_count = c.leave_count - 0.5
+              c.is_taken = true  
+              c.save
+            else
+              request.leave_count = request.leave_count - 1
+              c.leave_count = c.leave_count - 1
+              c.save
+              if c.leave_count == 0
+                c.update(is_taken: true)
+              end
+            end
+          else
+            request.leave_count = request.leave_count - 0.5
+            c.leave_count = c.leave_count - 0.5
+            c.save
+            if c.leave_count == 0
+              c.update(is_taken: true)
+            end
+          end
         end
-        c.update(leave_count: leave_count)
       end
     end
   end

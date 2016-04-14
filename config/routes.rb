@@ -2,10 +2,12 @@
 Rails.application.routes.draw do
   namespace :reports do
     get 'overtime_salary_details/new'
+    post 'overtime_salary_details/overtime_montly_detail_report'
   end
 
   namespace :reports do
     get 'overtime_salary_details/daily'
+
   end
 
   namespace :reports do
@@ -167,13 +169,13 @@ Rails.application.routes.draw do
       post :appraisee_create
       get :appraiser
       post :appraiser_create
-      get :is_confirm
+      post :is_confirm
     end
   end
   resources :employee_goals do
     collection do
       get :subordinate_list
-      get :is_confirm
+      post :is_confirm
     end
   end
 
@@ -193,7 +195,13 @@ Rails.application.routes.draw do
 
   resources :leave_c_offs
   resources :overtime_month_records
-  resources :overtime_daily_records
+
+  resources :overtime_daily_records do
+    collection do
+      get :employees
+    end
+  end
+
   resources :bonus_employees do
     collection do
       get :search_bonus
@@ -299,8 +307,20 @@ Rails.application.routes.draw do
       get :salary_bubble_form
       patch :update_cell
       get :print_salary_slip
+      get :print_multiple_salary_slip
     end
   end
+  
+  resources :pdf_salaries do
+     collection do
+        get :employee_list_pdf
+        get :select_month_year_form
+        get :show_employee
+        post :print_salary_slip_monthwise
+     end
+   end  
+
+
   resources :instalments do
     collection do
       get :employees

@@ -3,6 +3,7 @@ class Reports::SalariesController < ApplicationController
   end
 
   def date_range_report
+    byebug
     @month = params[:salary][:month]
     @year = params[:salary][:year]
     @location = params[:salary][:company_location_id]
@@ -19,7 +20,9 @@ class Reports::SalariesController < ApplicationController
     end
   end
 
+
   def show
+    
   end
 
   def department_wise

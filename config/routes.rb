@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
   namespace :reports do
     get 'overtime_salary_details/daily'
+    post 'overtime_salary_details/overtime_daily_detail_report'
 
   end
 

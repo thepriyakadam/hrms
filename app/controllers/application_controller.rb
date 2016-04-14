@@ -45,6 +45,15 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  rescue_from ActiveRecord::RecordInvalid do |_exc|
+    if request.xhr?
+      render js: "alert('Sorry! Transaction Rollbacked Record Invalid');"
+    else
+      flash[:alert] = 'Sorry! Transaction Rollbacked Record Invalid #{_exc.message}'
+      redirect_to root_url
+    end
+  end
+
   # rescue_from ActionView::Template::Error do |exc|
   #   if request.xhr?
   #     render js: "alert('Sorry! Template error problem');"

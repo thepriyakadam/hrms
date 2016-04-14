@@ -46,7 +46,7 @@ class EmployeeLeavRequest < ActiveRecord::Base
       c_offs.each do |c|
         if request.leave_count == 0
         elsif request.leave_count == 0.5
-          #request.leave_count = request.leave_count - 0.5
+          request.leave_count = request.leave_count - 0.5
           c.leave_count = c.leave_count - 0.5
           c.save
           if c.leave_count == 0

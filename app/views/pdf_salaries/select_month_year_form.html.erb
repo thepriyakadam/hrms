@@ -16,7 +16,7 @@
       </div>
       <div class="col-sm-3">
         <div class="field">
-          <%= select :salary, :company_location_id, all_department_type_list1,{include_blank: 'select Location'},{onchange:"var a={department_id:$(this).val(),year:$('salary_year').val(),month:$('#salary_month_name').val()}; $.get('/pdf_salaries/show_employee',a,function(response){});",class: 'form-control'}%>
+          <%= select :salary, :company_location_id, all_department_type_list1,{include_blank: 'select Location'},{onchange:"var a={department_id:$(this).val(),year:$('#salary_year').val(),month:$('#salary_month_name').val()}; $.get('/pdf_salaries/show_employee',a,function(response){});",class: 'form-control'}%>
         </div>
       </div>
     

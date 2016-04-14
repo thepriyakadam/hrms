@@ -61,6 +61,13 @@ class AccidentRecordsController < ApplicationController
     end
   end
 
+  def collect_esic
+    @employee = Employee.find(params[:id])
+    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
+    @esic_no = @joining_detail.employee_efic_no
+    
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

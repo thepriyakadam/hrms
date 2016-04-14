@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
   namespace :reports do
     get 'overtime_salary_details/daily'
+    post 'overtime_salary_details/overtime_daily_detail_report'
 
   end
 
@@ -131,7 +132,11 @@ Rails.application.routes.draw do
   namespace :reports do
   end
 
-  resources :accident_records
+  resources :accident_records do
+    collection do
+      get :collect_esic
+    end
+  end
 
   resources :performance_periods
   resources :attribute_rating_sheets do

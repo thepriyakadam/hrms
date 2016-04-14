@@ -16,7 +16,7 @@
         </div>
        <div class="col-sm-3">
           <div class="form-group required">
-            <%= f.select :employee_id, employee_list_for_food_deduction, {include_blank: "Select Employee"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
+            <%= f.select :employee_id, employee_list_for_food_deduction,{include_blank: "Select Employee"},{onchange:"var a={id:$(this).val()}; $.get('/accident_records/collect_esic',a,function(response){});", :class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"}%>
           </div>
         </div> 
 
@@ -34,7 +34,7 @@
 
         <div class="col-sm-3">
           <div class="field">
-            <%= f.text_field :esic_no,label: 'ESIC NO',placeholder: "e.g : ESIC No" %>
+            <%= f.text_field :esic_no,label: 'ESIC NO',placeholder: "e.g : ESIC No", readonly: true%> 
           </div>
         </div>
       </div>
@@ -123,4 +123,8 @@
    error.insertAfter(element.parent(element));
   }
 });
+
+   $(document).ready(function() {
+    $(".select2").select2();
+  });
 </script>

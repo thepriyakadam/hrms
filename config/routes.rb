@@ -313,6 +313,9 @@ Rails.application.routes.draw do
       patch :update_cell
       get :print_salary_slip
       get :print_multiple_salary_slip
+      get :revert_salary
+      get :show_employee
+      post :destroy_salary_slip
     end
   end
   

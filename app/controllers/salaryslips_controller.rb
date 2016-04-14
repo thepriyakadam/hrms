@@ -824,4 +824,26 @@ class SalaryslipsController < ApplicationController
     end
     salaryslip_component
   end
+
+  def revert_salary
+  end
+
+  def show_employee
+    @month = params[:month]
+    @year = params[:year]
+    @salaryslips = Salaryslip.where(month: @month, year: @year.to_s)
+   
+  end
+
+  def destroy_salary_slip
+    puts '---------------------------------------------------------'
+    @salaryslip_ids = params[:salaryslip_ids]
+      @salaryslip_ids.each do |sid|
+        @salaryslip = Salaryslip.find(sid)
+        @salaryslip.destroy 
+        SalaryslipComponent.where(salaryslip_id: @salaryslip.id).destroy_all
+      end
+    redirect_to revert_salary_salaryslips_path
+  end
 end
+

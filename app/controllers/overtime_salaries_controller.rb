@@ -77,19 +77,21 @@ class OvertimeSalariesController < ApplicationController
         @employee_template_nil = true
       else
         @employee_template_nil = false
-        @salary_component = SalaryComponent.find_by_name('Basic')
-        if @salary_component.nil?
-          @salary_component_nil = true
-        else
-          @salary_component_nil = false
-          @basic_record = @employee_template.employee_salary_templates.where(salary_component_id: @salary_component.id).take
-          if @basic_record.nil?
-            @basic_record_nil = true
-          else
-            @basic_record_nil = false
-            @basic_amount = @basic_record.monthly_amount
-          end
-        end
+        #@salary_component = SalaryComponent.find_by_name('Basic')
+        # if @salary_component.nil?
+        #   @salary_component_nil = true
+        # else
+          #@salary_component_nil = false
+          #@basic_record = @employee_template.employee_salary_templates.where(salary_component_id: @salary_component.id).take
+          #@basic_record = @employee_template.employee_salary_templates.sum(:monthly_amount)
+          # if @basic_record.nil?
+          #   @basic_record_nil = true
+          # else
+          #   @basic_record_nil = false
+            #@basic_amount = @basic_record.monthly_amount
+            @basic_amount = @employee_template.employee_salary_templates.sum(:monthly_amount)
+          # end
+        # end
       end
     end
   end

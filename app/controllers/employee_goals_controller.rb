@@ -69,10 +69,15 @@ class EmployeeGoalsController < ApplicationController
   end
 
   def is_confirm
-    @employee_goal = EmployeeGoal.find(params[:format])
+    @employee_goal_ids = params[:employee_goal_ids]
+     @employee_goal_ids.each do |eid|
+      
+      @employee_goal = EmployeeGoal.find(eid)
 
-    @employee_goal.update(is_confirm: true)
+      @employee_goal.update(is_confirm: true)
 
+      
+    end
     redirect_to new_employee_goal_path(@employee_goal.employee_id)
   end
 

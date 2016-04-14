@@ -62,10 +62,12 @@ class EmployeeAttributesController < ApplicationController
   end
 
   def is_confirm
-    @employee_attribute = EmployeeAttribute.find(params[:format])
-    
-    @employee_attribute.update(is_confirm: true)
-
+    @employee_attribute_ids = params[:employee_attribute_ids]
+      @employee_attribute_ids.each do |aid|
+        @employee_attribute = EmployeeAttribute.find(aid)
+        
+        @employee_attribute.update(is_confirm: true)
+      end
     redirect_to new_employee_attribute_path(@employee_attribute.employee_id)
   end
   

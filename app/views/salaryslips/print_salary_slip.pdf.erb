@@ -4,10 +4,21 @@ th {
 }
 </style>
   
-    <h3 class="box-title">Employee Salary slip <%= @salaryslip.month%> <%= @salaryslip.year%></h3><br>
-  <!-- /.box-header -->
+
        <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
       <thead>
+        <tr>
+          <td colspan="6">
+           <center><strong>BHANDARI</strong></center> 
+            <center><strong>BHANDARI FOILS AND TUBES LTD.</strong></center>
+            <center><small>Manufacturers of Stainless Steel Cold Rolled Coils, Tubes & Fitings</small></center>
+          </td>           
+        </tr>
+        <tr>
+          <td colspan="2">Salary Slip : <%= @salaryslip.month%> - <%= @salaryslip.year%></td>
+          <td colspan="2"></td>      
+          <td colspan="2"></td>            
+        </tr>
         <tr>
           <th>Employee Code</th>
           <td><%= @employee.manual_employee_code%></td>
@@ -68,9 +79,8 @@ th {
         </tr>
       </tbody>
     </table>
-    <br>
-    <br>
-    <br>
+
+    
        <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
       <thead>
         <tr>

@@ -53,6 +53,13 @@
         </div>  
 
         <div class="col-sm-3">
+          <div class="form-group required">
+             <%= f.text_field :experience,label: 'No. of Positions'%>
+          </div>
+        </div>
+
+
+        <div class="col-sm-3">
           <div class="field">
              <%= f.text_field :budget,label: 'Budget'%>
           </div>
@@ -70,6 +77,20 @@
           </div>
         </div>      
       </div>
+
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="form-group required">
+             <%= f.text_field :keyword,label: 'Keyword'%>
+          </div>
+        </div>  
+
+        <div class="col-sm-3">
+          <div class="form-group required">
+             <%= f.text_field :others,label: 'Others'%>
+          </div>
+        </div>
+        </div>      
 
       <div class="row">
         <div class="col-sm-12">

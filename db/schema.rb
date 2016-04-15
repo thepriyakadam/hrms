@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160415054033) do
+ActiveRecord::Schema.define(version: 20160415070421) do
 
   create_table "accident_records", force: :cascade do |t|
     t.string   "code"
@@ -177,8 +177,8 @@ ActiveRecord::Schema.define(version: 20160415054033) do
     t.string   "reason"
     t.string   "work_experience"
     t.string   "candidate_call_status"
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
     t.string   "avatar_file_name"
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
@@ -186,11 +186,22 @@ ActiveRecord::Schema.define(version: 20160415054033) do
     t.integer  "country_id"
     t.integer  "state_id"
     t.integer  "district_id"
+    t.string   "passport_photo_file_name"
+    t.string   "passport_photo_content_type"
+    t.integer  "passport_photo_file_size"
+    t.datetime "passport_photo_updated_at"
+    t.string   "contact_no2"
+    t.string   "email2"
+    t.string   "linkedin"
+    t.integer  "vacancy_master_id"
+    t.integer  "degree_id"
   end
 
   add_index "capture_resumes", ["country_id"], name: "index_capture_resumes_on_country_id"
+  add_index "capture_resumes", ["degree_id"], name: "index_capture_resumes_on_degree_id"
   add_index "capture_resumes", ["district_id"], name: "index_capture_resumes_on_district_id"
   add_index "capture_resumes", ["state_id"], name: "index_capture_resumes_on_state_id"
+  add_index "capture_resumes", ["vacancy_master_id"], name: "index_capture_resumes_on_vacancy_master_id"
 
   create_table "certifications", force: :cascade do |t|
     t.integer  "employee_id"
@@ -1420,7 +1431,8 @@ ActiveRecord::Schema.define(version: 20160415054033) do
     t.integer  "degree_id"
     t.string   "experience"
     t.string   "keyword"
-    t.string   "others"
+    t.string   "other_organization"
+    t.string   "industry"
   end
 
   add_index "vacancy_masters", ["company_location_id"], name: "index_vacancy_masters_on_company_location_id"

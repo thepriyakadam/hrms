@@ -439,7 +439,21 @@ class SalaryslipsController < ApplicationController
     @workingdays = Workingday.where(month_name: @month, year: @year).pluck(:employee_id)
     @salaryslips = Salaryslip.where(month: @month, year: @year.to_s).pluck(:employee_id)
     emp_ids = @workingdays - @salaryslips
-    @employees = Employee.where(id: emp_ids)
+    if current_user.class == Group
+      @employees = Employee.where(id: emp_ids)  
+    elsif current_user.class == Member
+      if current_user.role.name == "Company"
+        @employees = Employee.where(id: emp_ids)
+      elsif current_user.role.name == "CompanyLocation"
+        location_employees = Employee.where(company_location_id: current_user.company_location_id)
+        new_ids = location_employees & emp_ids
+        @employees = Employee.where(id: new_ids)
+      elsif current_user.role.name == "Department"
+        department_employees = Employee.where(department_id: current_user.company_location_id)
+        new_ids = department_employees & emp_ids
+        @employees = Employee.where(id: new_ids)
+      end
+    end
   end
 
   def save_all_data

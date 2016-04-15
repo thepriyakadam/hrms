@@ -4,9 +4,9 @@ class VacancyMaster < ActiveRecord::Base
   belongs_to :company_location
   belongs_to :degree
 
-  validates :vacancy_name, presence: true
-  validates :no_of_position, presence: true
-  validates :vacancy_post_date, presence: true
+  # validates :vacancy_name, presence: true
+  # validates :no_of_position, presence: true
+  # validates :vacancy_post_date, presence: true
 
   def self.to_csv(options = {})
     CSV.generate(options) do |csv|
@@ -38,6 +38,6 @@ class VacancyMaster < ActiveRecord::Base
   end
 
   def accessible_attributes
-    [employee_designation_id, department_id, degree_id, company_location_id, vacancy_name, no_of_position, description, vacancy_post_date, budget]
+    [employee_designation_id,experience,keyword,other_organization, department_id, degree_id, company_location_id, vacancy_name, no_of_position, description, vacancy_post_date, budget]
   end
 end

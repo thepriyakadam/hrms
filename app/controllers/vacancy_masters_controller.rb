@@ -43,6 +43,18 @@ end
   # POST /vacancy_masters
   # POST /vacancy_masters.json
   def create
+    components = params[:components]
+    str = ''
+    i = 0
+    components.each do |c|
+      str = if i == 0
+              c.to_s
+            else
+              str.to_s + ',' + c.to_s
+            end
+      i += 1
+    end
+    @vacancy_master.description = str
     @vacancy_master = VacancyMaster.new(vacancy_master_params)
     @vacancy = Department.find(@vacancy_master.department_id)
     @vacancy_master.company_location_id = @vacancy.company_location_id
@@ -103,6 +115,6 @@ end
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def vacancy_master_params
-    params.require(:vacancy_master).permit(:employee_designation_id, :department_id, :degree_id, :company_location_id, :vacancy_name, :no_of_position, :description, :vacancy_post_date, :budget)
+    params.require(:vacancy_master).permit(:employee_designation_id,:experience,:keyword,:other_organization, :department_id, :degree_id, :company_location_id, :vacancy_name, :no_of_position, :description, :vacancy_post_date, :budget)
   end
 end

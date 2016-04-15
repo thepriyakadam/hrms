@@ -19,18 +19,11 @@ class PdfSalariesController < ApplicationController
     def show_employee
       @month = params[:month]
       @year = params[:year]
+      department = params[:department_id]
       @salaryslips = Salaryslip.where(month: @month, year: @year.to_s).pluck(:employee_id)
-      @employees = Employee.where(id: @salaryslips)
+      @employees = Employee.where(id: @salaryslips, department_id: department)
     end
-
-    def show_unsaved_employee
-	    # @month = params[:month]
-	    # @year = params[:year]
-	    # @workingdays = Workingday.where(month_name: @month, year: @year).pluck(:employee_id)
-	    # @salaryslips = Salaryslip.where(month: @month, year: @year.to_s).pluck(:employee_id)
-	    # emp_ids = @workingdays - @salaryslips
-	    @employees = Employee.all
-    end
+  
 
     def employee_list_pdf
       # @employees = Employee.all

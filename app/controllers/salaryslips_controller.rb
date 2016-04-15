@@ -860,7 +860,7 @@ class SalaryslipsController < ApplicationController
       
       @instalments = Instalment.where("strftime('%m/%Y' , instalment_date) = ? ", date.strftime('%m/%Y'))
       @instalments.each do |i|
-        i.update(is_complete: true)
+        i.update(is_complete: false)
       end
       @bonus_employees.destroy_all
       @salaryslip.destroy 

@@ -45,7 +45,7 @@ class Reports::OvertimeSalaryDetailsController < ApplicationController
     @month = params[:salary][:month]
     @year = params[:salary][:year]
     @location = params[:salary][:company_location_id]
-    date = Date.new(@year.to_i,@month.to_i, Workingday.days[@day])
+    
     if current_user.class == Group
       if params[:salary][:company_location_id] == '' || params[:salary][:company_location_id].nil?
         @overtime_salaries = OvertimeSalary.where("strftime('%d/%m/%Y', ot_date) = ?", date.strftime('%d/%m/%Y'))

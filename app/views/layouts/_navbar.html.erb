@@ -53,7 +53,8 @@
               <%= render 'sidebars/salary_account' %>
             <% elsif current_user.role.name == 'Account' %>
               <%= render 'sidebars/account' %>
-            
+            <% else %>
+              <%= render 'sidebars/employee' %>
             <% end %>
             
           <%end%>

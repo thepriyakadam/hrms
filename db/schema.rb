@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160412090355) do
+ActiveRecord::Schema.define(version: 20160415054033) do
 
   create_table "accident_records", force: :cascade do |t|
     t.string   "code"
@@ -1418,6 +1418,9 @@ ActiveRecord::Schema.define(version: 20160412090355) do
     t.integer  "employee_designation_id"
     t.integer  "company_location_id"
     t.integer  "degree_id"
+    t.string   "experience"
+    t.string   "keyword"
+    t.string   "others"
   end
 
   add_index "vacancy_masters", ["company_location_id"], name: "index_vacancy_masters_on_company_location_id"

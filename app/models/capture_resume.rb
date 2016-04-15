@@ -11,7 +11,7 @@ class CaptureResume < ActiveRecord::Base
   validates :state_id, presence: true
   validates :district_id, presence: true
   has_attached_file :avatar, path: ':rails_root/attachments/:id/:style/:basename.:extension'
-  validates_attachment_presence :avatar
+  # validates_attachment_presence :avatar
   validates_attachment_size :avatar, less_than: 2.megabytes
   validates_attachment :avatar, content_type: { content_type: %w(application/pdf application/msword application/msexcel application/vnd.openxmlformats-officedocument.wordprocessingml.document) }
 end

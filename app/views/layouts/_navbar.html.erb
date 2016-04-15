@@ -49,9 +49,13 @@
               <%= render 'sidebars/department' %>
             <% elsif current_user.role.name == 'Supervisor' %>
               <%= render 'sidebars/supervisor' %>
-            <% else %>
-              <%= render 'sidebars/employee' %>
+            <% elsif current_user.role.name == 'SalaryAccount' %>
+              <%= render 'sidebars/salary_account' %>
+            <% elsif current_user.role.name == 'Account' %>
+              <%= render 'sidebars/account' %>
+            
             <% end %>
+            
           <%end%>
           
         </section>

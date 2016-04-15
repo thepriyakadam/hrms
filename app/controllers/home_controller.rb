@@ -16,7 +16,9 @@ class HomeController < ApplicationController
       elsif current_user.role.name == 'Supervisor'
         @employees = Employee.where(department_id: current_user.department_id)
       elsif current_user.role.name == 'SalaryAccount'
-        @employees = Employee.where(department_id: current_user.department_id)
+        @employee = Employee.find(current_user.employee_id)
+      elsif current_user.role.name == 'Account'
+         @employee = Employee.find(current_user.employee_id)
       end
     end
   end

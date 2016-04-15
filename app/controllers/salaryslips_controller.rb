@@ -439,7 +439,21 @@ class SalaryslipsController < ApplicationController
     @workingdays = Workingday.where(month_name: @month, year: @year).pluck(:employee_id)
     @salaryslips = Salaryslip.where(month: @month, year: @year.to_s).pluck(:employee_id)
     emp_ids = @workingdays - @salaryslips
-    @employees = Employee.where(id: emp_ids)
+    if current_user.class == Group
+      @employees = Employee.where(id: emp_ids)  
+    elsif current_user.class == Member
+      if current_user.role.name == "Company"
+        @employees = Employee.where(id: emp_ids)
+      elsif current_user.role.name == "CompanyLocation"
+        location_employees = Employee.where(company_location_id: current_user.company_location_id)
+        new_ids = location_employees & emp_ids
+        @employees = Employee.where(id: new_ids)
+      elsif current_user.role.name == "Department"
+        department_employees = Employee.where(department_id: current_user.company_location_id)
+        new_ids = department_employees & emp_ids
+        @employees = Employee.where(id: new_ids)
+      end
+    end
   end
 
   def save_all_data
@@ -824,4 +838,37 @@ class SalaryslipsController < ApplicationController
     end
     salaryslip_component
   end
+
+  def revert_salary
+  end
+
+  def show_employee
+    @month = params[:month]
+    @year = params[:year]
+    @salaryslips = Salaryslip.where(month: @month, year: @year.to_s)
+   
+  end
+
+  def destroy_salary_slip
+    @month = params[:month]
+    @year = params[:year]
+    date = Date.new(@year.to_i,Workingday.months[@month])
+    @salaryslip_ids = params[:salaryslip_ids]
+    @salaryslip_ids.each do |sid|
+      @salaryslip = Salaryslip.find(sid)
+      @bonus_employees = BonusEmployee.where("strftime('%m/%Y', bonus_date) = ? and employee_id = ?", date.strftime('%m/%Y'), @salaryslip.employee_id)
+      
+      @instalments = Instalment.where("strftime('%m/%Y' , instalment_date) = ? ", date.strftime('%m/%Y'))
+      @instalments.each do |i|
+        i.update(is_complete: true)
+      end
+      @bonus_employees.destroy_all
+      @salaryslip.destroy 
+      SalaryslipComponent.where(salaryslip_id: @salaryslip.id).destroy_all
+      
+    end
+
+      redirect_to revert_salary_salaryslips_path
+  end
 end
+

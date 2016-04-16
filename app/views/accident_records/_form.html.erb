@@ -16,7 +16,7 @@
         </div>
        <div class="col-sm-3">
           <div class="form-group required">
-            <%= f.select :employee_id, employee_list_for_food_deduction, {include_blank: "Select Employee"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
+            <%= f.select :employee_id, employee_list_for_food_deduction,{include_blank: "Select Employee"},{onchange:"var a={id:$(this).val()}; $.get('/accident_records/collect_esic',a,function(response){});", :class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"}%>
           </div>
         </div> 
 
@@ -34,7 +34,7 @@
 
         <div class="col-sm-3">
           <div class="field">
-            <%= f.text_field :esic_no,label: 'ESIC NO',placeholder: "e.g : ESIC No" %>
+            <%= f.text_field :esic_no,label: 'ESIC NO',placeholder: "e.g : ESIC No", readonly: true%> 
           </div>
         </div>
       </div>
@@ -94,5 +94,37 @@
     changeMonth: true,
     yearRange: '-200:-0',
     dateFormat: 'dd-mm-yy' });
+  });
+
+   $("#accident_record").validate({
+  rules: {
+    "accident_record[code]":{
+      required: true
+    },
+    "accident_record[employee_id]":{
+      required: true
+    },
+    "accident_record[accident_date]":{
+      required: true
+    },
+    "accident_record[esic_no]":{
+      required: true
+    },
+    "accident_record[case_type]":{
+      required: true
+    },
+    "accident_record[type_of_injury]":{
+      required: true
+    }
+  },
+  
+  errorPlacement: function(error, element) {
+   error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+   error.insertAfter(element.parent(element));
+  }
+});
+
+   $(document).ready(function() {
+    $(".select2").select2();
   });
 </script>

@@ -30,18 +30,18 @@ class ExperiencesController < ApplicationController
     ActiveRecord::Base.transaction do
       respond_to do |format|
         if @experience.save
-          len = params["experience"].length-4
+          len = params['experience'].length - 4
           for i in 2..len
-            Experience.create(employee_id: params['experience']['employee_id'], no_of_year: params['experience'][i.to_s]['no_of_year'], company_name: params['experience'][i.to_s]['company_name'], designation: params['experience'][i.to_s]['designation'], ctc: params['experience'][i.to_s]['ctc']) 
+            Experience.create(employee_id: params['experience']['employee_id'], no_of_year: params['experience'][i.to_s]['no_of_year'], company_name: params['experience'][i.to_s]['company_name'], designation: params['experience'][i.to_s]['designation'], ctc: params['experience'][i.to_s]['ctc'])
           end
           @experiences = @employee.experiences
           format.html { redirect_to @experience, notice: 'Experience was successfully created.' }
           format.json { render :show, status: :created, location: @experience }
-          format.js {@flag = true}
+          format.js { @flag = true }
         else
           format.html { render :new }
           format.json { render json: @experience.errors, status: :unprocessable_entity }
-          format.js {@flag = false}
+          format.js { @flag = false }
         end
       end
     end
@@ -50,17 +50,17 @@ class ExperiencesController < ApplicationController
   # PATCH/PUT /experiences/1
   # PATCH/PUT /experiences/1.json
   def update
-    @employee = Employee.find(params["experience"]["employee_id"])
+    @employee = Employee.find(params['experience']['employee_id'])
     respond_to do |format|
       if @experience.update(experience_params)
-        #format.html { redirect_to @experience, notice: 'Experience was successfully updated.' }
-        #format.json { render :show, status: :ok, location: @experience }
-        
+        # format.html { redirect_to @experience, notice: 'Experience was successfully updated.' }
+        # format.json { render :show, status: :ok, location: @experience }
+
         @experiences = @employee.experiences
         format.js { @flag = true }
       else
-        #format.html { render :edit }
-        #format.json { render json: @experience.errors, status: :unprocessable_entity }
+        # format.html { render :edit }
+        # format.json { render json: @experience.errors, status: :unprocessable_entity }
         format.js { @flag = false }
       end
     end
@@ -77,13 +77,14 @@ class ExperiencesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_experience
-      @experience = Experience.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def experience_params
-      params.require(:experience).permit(:employee_id, :no_of_year, :company_name, :designation, :ctc)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_experience
+    @experience = Experience.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def experience_params
+    params.require(:experience).permit(:employee_id, :no_of_year, :company_name, :designation, :ctc)
+  end
 end

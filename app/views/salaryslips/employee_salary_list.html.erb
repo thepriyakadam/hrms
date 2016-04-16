@@ -7,10 +7,10 @@
     <table id="example1" class="table table-bordered table-hover">
     <thead>
       <tr>
-      <th>Employee Id</th>
+      <th> ID</th>
       <th>Employee Name</th>
+      <th>Department</th>
       <th>Contact No</th>
-      <th>Email</th>
       <th>Action</th>
     </tr>
   </thead>
@@ -19,9 +19,10 @@
     <% @employees.each do |employee| %>
       <tr>
         <td><%= employee.manual_employee_code %></td>
-        <td><%= employee.first_name.to_s+' '+employee.middle_name.to_s+' '+employee.last_name.to_s %></td>
+        <td><%= employee.try(:first_name) %> <%= employee.try(:middle_name) %> <%= employee.try(:last_name) %></td>
+        <td><%= employee.company_location.try(:name) %> - <%= employee.department.try(:name) %></td>
         <td><%= employee.contact_no %></td>
-        <td><%= employee.email %></td>
+  
         <td>
         <%= link_to '', salary_slip_list_salaryslips_path(employee), class: 'btn btn-default fa fa-eye' %>
         </td>

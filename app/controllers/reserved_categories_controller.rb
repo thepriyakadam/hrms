@@ -19,13 +19,14 @@ class ReservedCategoriesController < ApplicationController
     respond_to do |format|
       if @reserved_category.save
         @reserved_category = ReservedCategory.new
-         format.js { @flag = true }
+        format.js { @flag = true }
       else
-        flash.now[:alert] = "Reserved Category Already Exist."
-         format.js { @flag = false }
+        flash.now[:alert] = 'Reserved Category Already Exist.'
+        format.js { @flag = false }
       end
     end
   end
+
   # PATCH/PUT /reserved_categories/1
   # PATCH/PUT /reserved_categories/1.json
   def update
@@ -42,13 +43,14 @@ class ReservedCategoriesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_reserved_category
-      @reserved_category = ReservedCategory.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def reserved_category_params
-      params.require(:reserved_category).permit(:code, :name, :description)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_reserved_category
+    @reserved_category = ReservedCategory.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def reserved_category_params
+    params.require(:reserved_category).permit(:code, :name, :description)
+  end
 end

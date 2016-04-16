@@ -10,7 +10,7 @@ require 'roo'
 #   #375.upto(468) do |line|
 #     puts "Starting Record #{ex.cell(line,'A')}--------------------------------------"
 #     @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
-    
+
 #     @salary_template = SalaryTemplate.find_by_code(ex.cell(line,'B'))
 #     @salary_component_templates = @salary_template.salary_component_templates unless @salary_template.nil?
 
@@ -27,7 +27,7 @@ require 'roo'
 #         est.percentage = t.is_deducted
 #         est.to_be_paid = t.to_be_paid
 #         est.employee_template_id = employee_template_id
-        
+
 #         if t.salary_component.name == "Basic"
 #         est.monthly_amount = ex.cell(line,'N') unless ex.cell(line,'N').nil?
 #         est.annual_amount = est.monthly_amount.to_i * 12
@@ -72,15 +72,15 @@ require 'roo'
 #     unless @joining.nil?
 #       @category = EmployeeCategory.find_by_name(ex.cell(line,'Z'))
 #       unless @category.nil?
-#         puts @category.name  
+#         puts @category.name
 #         @joining.update(employee_category_id: @category.id)
 #       end
-      
+
 #     end
 #   end
 # end
 
-######################################################################################################3
+# #####################################################################################################3
 
 # require 'rubygems'
 # require 'roo'
@@ -147,7 +147,7 @@ require 'roo'
 ###############################################################################################
 # puts "Starting ..."
 # ex = Roo::Excel.new("#{Rails.root}/public/employe.xls")
-# ex.default_sheet = ex.sheets[0] 
+# ex.default_sheet = ex.sheets[0]
 # i=1
 
 # 3.upto(510) do |line|
@@ -199,7 +199,7 @@ require 'roo'
 
 #   @designation = EmployeeDesignation.find_by_name(ex.cell(line,'AA'))
 #   j.employee_designation_id = @designation.id unless @designation.nil?
-  
+
 #   j.confirmation_date = ex.cell(line,'AB')
 #   j.employee_uan_no = ex.cell(line,'AC')
 
@@ -212,13 +212,12 @@ require 'roo'
 #     else
 #       j.have_esic = false
 #     end
-  
+
 #   j.employee_efic_no = ex.cell(line,'AH').to_i
 #   @mode = PaymentMode.find_by_name(ex.cell(line,'AI'))
 #   j.payment_mode_id = @mode.id unless @mode.nil?
 #   @cost_center = CostCenter.find_by_name(ex.cell(line,'AJ'))
 #   j.cost_center_id = @cost_center.id unless @cost_center.nil?
-
 
 #   j.medical_schem = ex.cell(line,'AK')
 #   j.passport_no = ex.cell(line,'AL')
@@ -254,8 +253,8 @@ require 'roo'
 # i = 1
 # gross_salary = 0
 # ActiveRecord::Base.transaction do
-# #2.upto(372) do |line| 
-# 367.upto(372) do |line| 
+# #2.upto(372) do |line|
+# 367.upto(372) do |line|
 #   puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
 #   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
 #   unless @employee.nil?
@@ -272,7 +271,7 @@ require 'roo'
 #       w.day_in_month = ex.cell(line, 'H')
 #       w.present_day = ex.cell(line, 'I')
 #       w.holiday_in_month = ex.cell(line, 'J')
-       
+
 #       w.week_off_day = ex.cell(line, 'K')
 #       w.absent_day = ex.cell(line, 'L')
 #       w.payable_day = ex.cell(line, 'M')
@@ -284,41 +283,48 @@ require 'roo'
 # end
 # end
 #####################################################################
-# ex = Roo::Excel.new("#{Rails.root}/public/workingdays.xls")
-# ex.default_sheet = ex.sheets[7]
-# i = 1
-# gross_salary = 0
-# ActiveRecord::Base.transaction do
-# #2.upto(372) do |line| # dewas jan 2016
-# #2.upto(97) do |line| # siya jan 2016
-# 2.upto(95) do |line| # siya Feb 2016
-#   puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
-#   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
-#   unless @employee.nil?
-#     Workingday.new do |w|
-#       w.employee_id = @employee.id
-#       w.month_name = ex.cell(line,'B')
-#       w.year = ex.cell(line,'C').to_i
+ex = Roo::Excel.new("#{Rails.root}/public/Workingdaya.xls")
+#ex.default_sheet = ex.sheets[6] #dewas jan
+#ex.default_sheet = ex.sheets[4] #siya jan
+#ex.default_sheet = ex.sheets[9] #dewas feb
+ex.default_sheet = ex.sheets[14] #siya feb
+i = 1
+gross_salary = 0
+ActiveRecord::Base.transaction do
+#2.upto(372) do |line| # dewas jan 2016
+#2.upto(90) do |line| # siya jan 2016
+#2.upto(371) do |line| # siya and dewas feb 2016
+2.upto(90) do |line| # siya Feb 2016
+#2.upto(95) do |line| # siya jan 2016
+#2.upto(465) do |line| # siya and dewas feb 2016
+#2.upto(95) do |line| # siya Feb 2016
+  puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
+  @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
+  unless @employee.nil?
 
-#       w.lwp_leave = ex.cell(line, 'D').to_i
-#       w.cl_leave = ex.cell(line, 'E').to_i
-#       w.el_leave = ex.cell(line, 'F').to_i
-#       w.esic_leave = ex.cell(line, 'G').to_i
+    Workingday.new do |w|
+      w.employee_id = @employee.id
+      w.month_name = ex.cell(line, 'B')
+      w.year = ex.cell(line, 'C').to_i
 
-#       w.day_in_month = ex.cell(line, 'H')
-#       w.present_day = ex.cell(line, 'I')
-#       w.holiday_in_month = ex.cell(line, 'J')
-       
-#       w.week_off_day = ex.cell(line, 'K')
-#       w.absent_day = ex.cell(line, 'L')
-#       w.payable_day = ex.cell(line, 'M')
-#       w.save!
-#     end
-#     puts "#{i} Record inserted.-----------------------------------------------"
-#     i = i+1
-#   end
-# end
-# end
+      w.lwp_leave = ex.cell(line, 'D').to_i
+      w.cl_leave = ex.cell(line, 'E').to_i
+      w.el_leave = ex.cell(line, 'F').to_i
+      w.esic_leave = ex.cell(line, 'G').to_i
+
+      w.day_in_month = ex.cell(line, 'H')
+      w.present_day = ex.cell(line, 'I')
+      w.holiday_in_month = ex.cell(line, 'J')
+
+      w.week_off_day = ex.cell(line, 'K')
+      w.absent_day = ex.cell(line, 'L')
+      w.payable_day = ex.cell(line, 'M')
+      w.save!
+    end
+    puts "#{i} Record inserted.-----------------------------------------------"
+    i += 1
+  end
+end
 
 ###############################################################################################
 
@@ -329,7 +335,7 @@ require 'roo'
 # 470.upto(488) do |line|
 #   puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
 #   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
-  
+
 #   @salary_template = SalaryTemplate.find_by_code(ex.cell(line,'B'))
 #   @salary_component_templates = @salary_template.salary_component_templates unless @salary_template.nil?
 
@@ -338,12 +344,12 @@ require 'roo'
 #       have_esic = @employee.joining_detail.have_esic
 #       est.employee_id = @employee.id
 #       est.salary_template_id = @salary_template.id
-#       est.salary_component_id = t.salary_component_id 
+#       est.salary_component_id = t.salary_component_id
 #       est.is_deducted = t.is_deducted
 #       est.parent_salary_component_id
 #       est.percentage = t.is_deducted
 #       est.to_be_paid = t.to_be_paid
-      
+
 #       if t.salary_component.name == "Basic"
 #       est.monthly_amount = ex.cell(line,'C') unless ex.cell(line,'C').nil?
 #       est.annual_amount = est.monthly_amount.to_i * 12
@@ -394,7 +400,7 @@ require 'roo'
 #       elsif t.salary_component.name == "ESIC"
 #         if have_esic and gross_salary <= 15000
 #           temp = gross_salary - ex.cell(line,'H')
-#           est.monthly_amount = (temp / 100 * 1.75).round 
+#           est.monthly_amount = (temp / 100 * 1.75).round
 #         else
 #           est.monthly_amount = 0
 #         end
@@ -431,10 +437,10 @@ require 'roo'
 # 2.upto(38) do |line|
 #   puts "Starting Record---------------------------------------"
 #   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
-  
+
 #   unless @employee.nil?
 #     AdvanceSalary.new do |a|
-#       a.employee_id = @employee.id  
+#       a.employee_id = @employee.id
 #       a.advance_date = ex.cell(line,'C').to_date unless ex.cell(line,'C').nil?
 #       a.advance_amount = ex.cell(line,'D').to_f unless ex.cell(line,'D').nil?
 #       a.instalment_amount = ex.cell(line,'F').to_f unless ex.cell(line,'F').nil?
@@ -450,7 +456,7 @@ require 'roo'
 #       for i in 1..@advance_salary.no_of_instalment.to_i
 #         Instalment.new do |i|
 #           i.advance_salary_id = @advance_salary.id
-#           #i.instalment_date = 
+#           #i.instalment_date =
 #           i.instalment_amount = @advance_salary.instalment_amount
 #           i.save!
 #         end
@@ -459,7 +465,7 @@ require 'roo'
 #   end
 # end
 
-###############################################################################################################3
+# ##############################################################################################################3
 
 # ex = Roo::Excel.new("#{Rails.root}/public/deductions.xls")
 # ex.default_sheet = ex.sheets[5]
@@ -540,7 +546,7 @@ require 'roo'
 # #370.upto(461) do |line| #JANUARY SIYA
 # 2.upto(364) do |line| #FEBRUARY SIYA
 #   employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
-  
+
 #   unless employee.nil?
 #     puts "Starting Record---#{employee.manual_employee_code}"
 #     # cl = ex.cell(line,'E').to_i
@@ -565,12 +571,12 @@ require 'roo'
 #       cl_arr = cl_taken.divmod 1
 #       cl_arr.each do |c|
 #         cl_end_date = cl_start_date + c
-#         cl_date_range = cl_start_date.to_s+' '+cl_start_date.to_time.to_s+' - '+cl_end_date.to_s+' '+cl_end_date.to_time.to_s 
+#         cl_date_range = cl_start_date.to_s+' '+cl_start_date.to_time.to_s+' - '+cl_end_date.to_s+' '+cl_end_date.to_time.to_s
 
 #         if c == 0
 #         else
 #           if c.integer?
-#             employee.employee_leav_requests.build(leav_category_id: 1, leave_type: 'Full Day', start_date: cl_start_date,end_date: cl_end_date,date_range: cl_date_range,leave_count: c, reason: 'aaa', current_status: 'Pending', is_pending: true, first_reporter_id: employee.manager_id)         
+#             employee.employee_leav_requests.build(leav_category_id: 1, leave_type: 'Full Day', start_date: cl_start_date,end_date: cl_end_date,date_range: cl_date_range,leave_count: c, reason: 'aaa', current_status: 'Pending', is_pending: true, first_reporter_id: employee.manager_id)
 #           else
 #             employee.employee_leav_requests.build(leav_category_id: 1, leave_type: 'Half Day', start_date: cl_start_date,end_date: cl_start_date, leave_count: c, reason: 'aaa', current_status: 'Pending', is_pending: true, first_reporter_id: employee.manager_id)
 #           end
@@ -583,7 +589,7 @@ require 'roo'
 #       el_arr = el_taken.divmod 1
 #       el_arr.each do |c|
 #         el_end_date = el_start_date + c
-#         el_date_range = el_start_date.to_s+' '+el_start_date.to_time.to_s+' - '+el_end_date.to_s+' '+el_end_date.to_time.to_s 
+#         el_date_range = el_start_date.to_s+' '+el_start_date.to_time.to_s+' - '+el_end_date.to_s+' '+el_end_date.to_time.to_s
 
 #         if c == 0
 
@@ -598,7 +604,7 @@ require 'roo'
 #         end
 #       end
 #     end
-#     employee.save  
+#     employee.save
 #   end
 #   puts "record inserted #{j}"
 #   j = j + 1
@@ -680,7 +686,7 @@ require 'roo'
 #   	# unless food_amount.nil?
 # 	  # 	FoodDeduction.new do |f|
 # 	  # 		f.food_date = '01/01/2016'.to_date
-	  		
+
 # 	  # 		no_of_coupan = food_amount / 30
 # 	  # 		if no_of_coupan.integer?
 # 	  # 			f.no_of_coupan =  no_of_coupan
@@ -702,7 +708,7 @@ require 'roo'
 #   	# 	    end
 # 	  # 		end
 # 	  # 		f.amount = food_amount
-	  		
+
 # 	  # 		f.employee_id = employee.id
 # 	  # 		f.food_coupan_master_id = mid
 # 	  # 		f.return_coupan = 0
@@ -712,50 +718,86 @@ require 'roo'
 # 	  # 	end
 #   	# end # food deduction nil
 
-
 #   end # employee nil
 # end
-######################################################################################3
-@elrs = EmployeeLeavRequest.where(current_status: "Pending")
-ActiveRecord::Base.transaction do
-@elrs.each do |r|
-  unless r.employee.manager_id.nil?
-    if r.employee.manager_2_id.nil?
-      r.is_first_approved = true
-      r.current_status = "FirstApproved"
-      r.leave_status_records.build(change_status_employee_id: r.first_reporter_id,status: 'FirstApproved',change_date:'01/01/2016')
-      if r.leave_type == "Full Day"
-        for i in r.start_date.to_date..r.end_date.to_date
-          r.particular_leave_records.build(employee_id: r.employee_id, leave_date: i ,is_full: true )
-        end
-      else
-        r.particular_leave_records.build(employee_id: r.employee_id, leave_date: r.start_date ,is_full: false )
-      end
-      r.save
-      r.minus_leave(r)
-      p "First Approved only for single layer employee"
-    else
-      r.is_first_approved = true
-      r.current_status = "FirstApproved"
-      r.second_reporter_id = r.employee.manager_2_id
-      r.leave_status_records.build(change_status_employee_id: r.first_reporter_id,status: 'FirstApproved',change_date:'01/02/2016')
-      r.save
-      p "First Approved only for double layer employee"
+# #####################################################################################3
+# @elrs = EmployeeLeavRequest.where(current_status: "Pending")
+# ActiveRecord::Base.transaction do
+# @elrs.each do |r|
+#   unless r.employee.manager_id.nil?
+#     if r.employee.manager_2_id.nil?
+#       r.is_first_approved = true
+#       r.current_status = "FirstApproved"
+#       r.leave_status_records.build(change_status_employee_id: r.first_reporter_id,status: 'FirstApproved',change_date:'01/01/2016')
+#       if r.leave_type == "Full Day"
+#         for i in r.start_date.to_date..r.end_date.to_date
+#           r.particular_leave_records.build(employee_id: r.employee_id, leave_date: i ,is_full: true )
+#         end
+#       else
+#         r.particular_leave_records.build(employee_id: r.employee_id, leave_date: r.start_date ,is_full: false )
+#       end
+#       r.save
+#       r.minus_leave(r)
+#       p "First Approved only for single layer employee"
+#     else
+#       r.is_first_approved = true
+#       r.current_status = "FirstApproved"
+#       r.second_reporter_id = r.employee.manager_2_id
+#       r.leave_status_records.build(change_status_employee_id: r.first_reporter_id,status: 'FirstApproved',change_date:'01/02/2016')
+#       r.save
+#       p "First Approved only for double layer employee"
 
-      r.is_second_approved = true
-      r.current_status = "SecondApproved"
-      r.leave_status_records.build(change_status_employee_id: r.second_reporter_id,status: 'SecondApproved',change_date:'01/02/2016')
-      if r.leave_type == "Full Day"
-        for i in r.start_date.to_date..r.end_date.to_date
-          r.particular_leave_records.build(employee_id: r.employee_id, leave_date: i ,is_full: true )
-        end
-      else
-        r.particular_leave_records.build(employee_id: r.employee_id, leave_date: r.start_date ,is_full: false )
-      end
-      r.save
-      r.minus_leave(r)
-      p "Second Approved only for double layer employee"
-    end
-  end
-end
+#       r.is_second_approved = true
+#       r.current_status = "SecondApproved"
+#       r.leave_status_records.build(change_status_employee_id: r.second_reporter_id,status: 'SecondApproved',change_date:'01/02/2016')
+#       if r.leave_type == "Full Day"
+#         for i in r.start_date.to_date..r.end_date.to_date
+#           r.particular_leave_records.build(employee_id: r.employee_id, leave_date: i ,is_full: true )
+#         end
+#       else
+#         r.particular_leave_records.build(employee_id: r.employee_id, leave_date: r.start_date ,is_full: false )
+#       end
+#       r.save
+#       r.minus_leave(r)
+#       p "Second Approved only for double layer employee"
+#     end
+#   end
+# end
+# end
+####################################################################
+# ex = Roo::Excel.new("#{Rails.root}/public/advance_opening_balance.xls")
+# ex.default_sheet = ex.sheets[6]
+# j = 1
+# 2.upto(30) do |line|
+#   puts "Starting Record---------------------------------------"
+#   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
+#   ActiveRecord::Base.transaction do |a|
+#   unless @employee.nil?
+#     date = ex.cell(line,'C').to_date
+#     @advance_salary = AdvanceSalary.new do |a|
+#       a.employee_id = @employee.id
+#       a.advance_date = date unless ex.cell(line,'C').nil?
+#       a.advance_amount = ex.cell(line,'D').to_f unless ex.cell(line,'D').nil?
+#       a.instalment_amount = ex.cell(line,'F').to_f unless ex.cell(line,'F').nil?
+
+#       unless a.advance_amount.nil? and a.instalment_amount.nil?
+#       a.no_of_instalment = (a.advance_amount.to_i / a.instalment_amount).ceil
+#       end
+#       a.save!
+#     end
+
+#     unless @advance_salary.nil?
+#       for i in 1..@advance_salary.no_of_instalment.to_i
+#         Instalment.new do |i|
+#           i.advance_salary_id = @advance_salary.id
+#           i.instalment_date = date
+#           i.instalment_amount = @advance_salary.instalment_amount
+#           i.save!
+#         end
+#         date = date.next_month
+#       end
+#     end
+#   end
+#   end
+# end
 end

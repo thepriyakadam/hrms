@@ -158,11 +158,11 @@
           </li>
           <!-- Menu Body -->
           <li class="user-body">
-            <div class="col-xs-6 text-center">
+            <div class="col-xs-5 text-center">
               <!-- <a href="#">Followers</a> -->
-              <small>DESIGNATION : </small>
+              <small>DESIGNATION:</small>
             </div>
-            <div class="col-xs-6 text-left">
+            <div class="col-xs-7 text-left">
               <!-- <a href="#">Sales</a> -->
               <% if current_user.class == Member %>
               <small><a href="#">  <%= current_user.employee.joining_detail.employee_designation.try(:name) %></a></small>
@@ -199,7 +199,7 @@
       </li>
       <!-- Control Sidebar Toggle Button -->
       <li>
-        <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+        <a href="#" data-toggle="control-sidebar"><i class="fa fa-cog fa-spin fa-spin fa-2x "></i></i></a>
       </li>
     </ul>
   </div>

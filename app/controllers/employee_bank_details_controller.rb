@@ -1,6 +1,6 @@
 class EmployeeBankDetailsController < ApplicationController
   before_action :set_employee_bank_detail, only: [:show, :edit, :update, :destroy]
-  #load_and_authorize_resource
+  # load_and_authorize_resource
   # GET /employee_bank_details
   # GET /employee_bank_details.json
   def index
@@ -35,12 +35,12 @@ class EmployeeBankDetailsController < ApplicationController
   def update
     respond_to do |format|
       if @employee_bank_detail.update(employee_bank_detail_params)
-        #format.html { redirect_to @employee_bank_detail, notice: 'Employee bank detail was successfully updated.' }
-        #format.json { render :show, status: :ok, location: @employee_bank_detail }
+        # format.html { redirect_to @employee_bank_detail, notice: 'Employee bank detail was successfully updated.' }
+        # format.json { render :show, status: :ok, location: @employee_bank_detail }
         format.js { @flag = true }
       else
-        #format.html { render :edit }
-        #format.json { render json: @employee_bank_detail.errors, status: :unprocessable_entity }
+        # format.html { render :edit }
+        # format.json { render json: @employee_bank_detail.errors, status: :unprocessable_entity }
         @employee = @employee_bank_detail.employee
         format.js { @flag = false }
       end
@@ -58,13 +58,14 @@ class EmployeeBankDetailsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_employee_bank_detail
-      @employee_bank_detail = EmployeeBankDetail.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def employee_bank_detail_params
-      params.require(:employee_bank_detail).permit(:employee_id, :account_no, :bank_name, :branch_name, :address, :contact_no, :micr_code, :branch_code, :ifsc_code)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_employee_bank_detail
+    @employee_bank_detail = EmployeeBankDetail.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def employee_bank_detail_params
+    params.require(:employee_bank_detail).permit(:employee_id, :account_no, :bank_name, :branch_name, :address, :contact_no, :micr_code, :branch_code, :ifsc_code)
+  end
 end

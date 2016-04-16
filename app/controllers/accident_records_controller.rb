@@ -61,14 +61,22 @@ class AccidentRecordsController < ApplicationController
     end
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_accident_record
-      @accident_record = AccidentRecord.find(params[:id])
-    end
+  def collect_esic
+    @employee = Employee.find(params[:id])
+    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
+    @esic_no = @joining_detail.employee_efic_no
+    
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def accident_record_params
-      params.require(:accident_record).permit(:code, :employee_id, :accident_date, :esic_no, :case_type, :type_of_injury, :leave_date_range, :no_of_day, :description)
-    end
+  private
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_accident_record
+    @accident_record = AccidentRecord.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def accident_record_params
+    params.require(:accident_record).permit(:code, :employee_id, :accident_date, :esic_no, :case_type, :type_of_injury, :leave_date_range, :no_of_day, :description)
+  end
 end

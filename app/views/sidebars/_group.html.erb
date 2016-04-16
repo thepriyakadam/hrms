@@ -5,7 +5,7 @@
   <li class="treeview">
     <a href="">
       <!-- <i class="fa fa-user-plus"></i> <span>Create</span> <i class="fa fa-angle-left pull-right"></i> -->
-      <i class="fa fa-user-plus"></i> <span>Company Details</span> <i class="fa fa-angle-left pull-right"></i>
+      <i class="fa fa-building"></i> <span>Company Details</span> <i class="fa fa-angle-left pull-right"></i>
     </a>
     <ul class="treeview-menu">
       <li><a href="/companies"><i class="fa fa-tags"></i> Companies</a></li>
@@ -46,7 +46,8 @@
         <a href="#"><i class="fa fa-edit"></i> Payroll <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
           <li><a href="/advance_types/new"><i class="fa fa-tags"></i> Advance Type </a></li>
-           <li><a href="/expencess_types/new"><i class="fa fa-tags"></i> Expencess Type </a></li>
+          <li><a href="/instalments"><i class="fa fa-tags"> </i>Instalment</a></li>
+          <li><a href="/expencess_types/new"><i class="fa fa-tags"></i> Expencess Type </a></li>
           <li><a href="/food_coupan_masters/new"><i class="fa fa-tags"></i> Food Coupan Type </a></li>
         </ul>
        </li>
@@ -87,22 +88,22 @@
         </ul>
       </li>
 
-      <li>
+       <li>
         <a href="#"><i class="fa fa-edit"></i> Performance <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
           <li><a href="/goal_perspectives/new"><i class="fa fa-tags"></i>Goal Perspective</a></li>
-          
+
           <li><a href="/attribute_masters/new"><i class="fa fa-tags"></i>Attribute</a></li>
-          
+          <li><a href="/performance_periods/new"><i class="fa fa-tags"></i>Performance Period</a></li>
         </ul>
-      </li>
+      </li> 
     
     </ul>
   </li>
 
   <li class="treeview">
     <a href="">
-      <i class="fa fa-user-plus"></i> <span>User</span> <i class="fa fa-angle-left pull-right"></i>
+      <i class="fa fa-user"></i> <span>User</span> <i class="fa fa-angle-left pull-right"></i>
     </a>
     <ul class="treeview-menu">
       <li><a href="/reporting_masters/new"><i class="fa fa-tags"></i> Reporting Manager</a></li>
@@ -113,6 +114,11 @@
     </ul>
   </li>
 
+  <li class="treeview">
+      <a href="/employee_leav_request_reports"><i class="fa fa-calendar"></i><span><span>  Employee Leave Request Report </span></span> <i class="fa fa-angle-left pull-right"></i></a>
+    </a>
+   </li>
+   
    <!-- Leave management -->
   <li class="treeview">
     <a href="">
@@ -162,6 +168,7 @@
         <li><a href="/workingdays"><i class="fa fa-tags"> </i>Working Days </a></li>
         <li><a href="/employee_salary_templates/salary_template"><i class="fa fa-tags"> </i>Employee Monthly Salary </a></li>
         <li><a href="/salaryslips/select_month_year_form"><i class="fa fa-tags"> </i>  All Monthly Salary </a></li>
+        <li><a href="/salaryslips/revert_salary"><i class="fa fa-tags"> </i>Revert Salary </a></li>
         </ul>
        </li>
 
@@ -180,6 +187,7 @@
         <ul class="treeview-menu">
         <li><a href="/salaryslips/employee_salary_list"><i class="fa fa-tags"> </i>Salary Slip </a></li>
         <li><a href="/reports/salaries/new"><i class="fa fa-tags"> </i>Salary Reports </a></li>
+        <li><a href="/pdf_salaries/select_month_year_form"><i class="fa fa-tags"> </i>PDF Salary Slip Monthwise</a></li>
         <!-- <li><a href="/employee_annual_salaries/created_employee_annual_salary"><i class="fa fa-tags"> </i>  Employee Pay Slip </a></li> -->
 
         </ul>
@@ -192,9 +200,10 @@
     </ul>
   </li>
 
+
   <li class="treeview">
     <a href="">
-      <i class="ionicons ion-ios-time"></i><span><span>  Safety Management </span></span> <i class="fa fa-angle-left pull-right"></i>
+      <i class="fa fa-medkit"></i><span><span>  Safety Management </span></span> <i class="fa fa-angle-left pull-right"></i>
     </a>
     <ul class="treeview-menu">
       <li><a href="/accident_records"><i class="fa fa-tags"></i> Accident Record </a></li>
@@ -203,7 +212,7 @@
 
     <li class="treeview">
     <a href="">
-      <i class="ionicons ion-ios-time"></i><span><span>  Time Management </span></span> <i class="fa fa-angle-left pull-right"></i>
+      <i class="fa fa-clock-o"></i><span><span>  Time Management </span></span> <i class="fa fa-angle-left pull-right"></i>
     </a>
     <ul class="treeview-menu">
       <li><a href="/holidays/new"><i class="fa fa-tags"></i> Holiday </a></li>
@@ -214,16 +223,4 @@
     </ul>
    </li>
 
-   <li class="treeview">
-    <a href="">
-      <i class="ionicons ion-ios-time"></i><span><span>  Performance Management </span></span> <i class="fa fa-angle-left pull-right"></i>
-    </a>
-    <ul class="treeview-menu">
-      <li><a href="/employee_goals/new"><i class="fa fa-tags"></i> Goal Sheet </a></li>
-    </ul>
-    <ul class="treeview-menu">
-      <li><a href="/employee_attributes/new"><i class="fa fa-tags"></i> Attribute Sheet </a></li>
-    </ul>
-    
-   </li>
 </ul>

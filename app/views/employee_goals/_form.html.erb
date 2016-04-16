@@ -49,6 +49,12 @@
       "employee_goal[target]":{
         required: true
       },
+      "employee_goal[period_id]":{
+        required: true
+      },
+      "employee_goal[goal_measure]":{
+        required: true
+      },
       "employee_goal[goal_weightage]":{
         required: true
       },
@@ -59,24 +65,36 @@
         required: true
       },
       "employee_goal[goal_measure_id]":{
+        required: true
+      },
+      "employee_goal[allign_to_supervisor]":{
         required: true
       }
     },
     messages: {
       "employee_goal[target]":{
-        required: "Please specify target"
+        required: "Please specify Target"
+      },
+      "employee_goal[period_id]":{
+        required: "Please specify period id"
+      },
+      "employee_goal[goal_measure]":{
+        required: "Please specify Goal Measure"
       },
       "employee_goal[goal_weightage]":{
-        required: "Please specify goal_weightage"
+        required: "Please specify Goal Weightage"
       },
       "employee_goal[difficulty_level]":{
-        required: "Please specify difficulty_level"
+        required: "Please specify Difficulty Level"
       },
       "employee_goal[goal_perspective_id]":{
-        required: "Please specify goal_perspective_id"
+        required: "Please specify Goal Perspective"
       },
       "employee_goal[goal_measure_id]":{
-        required: "Please specify goal_measure_id"
+        required: "Please specify Goal Measure"
+      },
+      "employee_goal[allign_to_supervisor]":{
+        required: "Please specify Allign to supervisor"
       }
     },
     errorPlacement: function(error, element) {

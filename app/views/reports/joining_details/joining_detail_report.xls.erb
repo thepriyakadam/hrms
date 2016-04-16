@@ -12,13 +12,13 @@
         <Cell ss:Index="3"><Data ss:Type="String">First Name</Data></Cell>
         <Cell ss:Index="4"><Data ss:Type="String">Middle Name</Data></Cell>
         <Cell ss:Index="5"><Data ss:Type="String">Last Name</Data></Cell>
-        <Cell ss:Index="6"><Data ss:Type="String"> UAN No</Data></Cell>
+        <Cell ss:Index="6"><Data ss:Type="String">UAN No</Data></Cell>
         <Cell ss:Index="7"><Data ss:Type="String">Joining Date</Data></Cell>
         <Cell ss:Index="8"><Data ss:Type="String">Confirmation Date</Data></Cell>
         <Cell ss:Index="9"><Data ss:Type="String">Designation</Data></Cell>
         <Cell ss:Index="10"><Data ss:Type="String">Employee Grade</Data></Cell>
         <Cell ss:Index="11"><Data ss:Type="String">PF</Data></Cell>
-        <Cell ss:Index="12"><Data ss:Type="String"> PF No</Data></Cell>
+        <Cell ss:Index="12"><Data ss:Type="String">PF No</Data></Cell>
         <Cell ss:Index="13"><Data ss:Type="String">PF Max Amount</Data></Cell>
         <Cell ss:Index="14"><Data ss:Type="String">ESIC</Data></Cell>
         <Cell ss:Index="15"><Data ss:Type="String">ESIC No</Data></Cell>
@@ -34,17 +34,17 @@
         <Cell ss:Index="25"><Data ss:Type="String">Religion</Data></Cell>
         <Cell ss:Index="26"><Data ss:Type="String">Retirement Date</Data></Cell>
         <Cell ss:Index="27"><Data ss:Type="String">Reserved Category</Data></Cell> 
-         </Row>
+      </Row>
 
         <% i = 0 %>
        <% @joining_details.each do |joining_detail| %>
-        <Row>
-          <Cell ss:Index="1"><Data ss:Type="String"><%= i=i+1 %></Data></Cell>
+      <Row>
+          <Cell ss:Index="1"><Data ss:Type="Integer"><%= i=i+1 %></Data></Cell>
           <Cell ss:Index="2"><Data ss:Type="String"><%= joining_detail.employee.try(:manual_employee_code) %></Data></Cell>
           <Cell ss:Index="3"><Data ss:Type="String"><%= joining_detail.employee.try(:first_name) %></Data></Cell>
           <Cell ss:Index="4"><Data ss:Type="String"><%= joining_detail.employee.try(:middle_name) %></Data></Cell>
           <Cell ss:Index="5"><Data ss:Type="String"><%= joining_detail.employee.try(:last_name) %></Data></Cell>
-           <Cell ss:Index="6"><Data ss:Type="String"><%= joining_detail.try(:employee_uan_no) %>
+          <Cell ss:Index="6"><Data ss:Type="String"><%= joining_detail.try(:employee_uan_no) %></Data></Cell>
           <Cell ss:Index="7"><Data ss:Type="String"><%= joining_detail.try(:joining_date) %></Data></Cell>
           <Cell ss:Index="8"><Data ss:Type="String"><%= joining_detail.try(:confirmation_date) %></Data></Cell>
           <Cell ss:Index="9"><Data ss:Type="String"><%= joining_detail.try(:employee_designation).try(:name)%></Data></Cell> 
@@ -66,8 +66,12 @@
           <Cell ss:Index="25"><Data ss:Type="String"><%= joining_detail.try(:have_retention) %></Data></Cell>
           <Cell ss:Index="26"><Data ss:Type="String"><%= joining_detail.try(:retirement_date) %></Data></Cell>
           <Cell ss:Index="27"><Data ss:Type="String"><%= joining_detail.try(:reserved_category_id) %></Data></Cell>
-     </Row><!-- Row -->
+<<<<<<< HEAD
+      </Row><!-- Row -->
    
+=======
+        </Row><!-- Row -->
+>>>>>>> ef2465376897d58e4f53f6b4c2245c7672e4d173
       <% end %><!-- slip -->
     </Table>
   </Worksheet>

@@ -1,5 +1,6 @@
 
    <%= bootstrap_form_for(@goal_rating_sheet,url:{controller: "goal_rating_sheets",action: 'update_appraiser', id: @goal_rating_sheet.id}) do |f| %>
+   
     <div class= "row">
       <div class="col-sm-3">
         <div class= "field">
@@ -11,6 +12,12 @@
         <div class= "field">
           <%= f.text_field :appraiser_rating %>
         </div>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class= "field">
+        <%= hidden_field_tag :appraiser_id, {},value: @goal_rating_sheet.appraisee_id %>
       </div>
     </div>
 

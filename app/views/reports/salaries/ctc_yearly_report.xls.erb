@@ -35,7 +35,7 @@
         <Cell ss:Index="22"><Data ss:Type="String">CTC Salary</Data></Cell>
       </Row>
       <% i = 0 %>
-      <% @salaryslips.each do |slip| %>
+      <% @@employee_salary_templates.each do |slip| %>
         <% employee = slip.employee %>
         <% joining = employee.joining_detail %>
         <% bank = employee.employee_bank_detail %>
@@ -57,8 +57,8 @@
           <Cell ss:Index="13"><Data ss:Type="String"><%= joining.try(:employee_pf_no) %></Data></Cell>
           <Cell ss:Index="14"><Data ss:Type="String"><%= joining.try(:employee_efic_no) %></Data></Cell>
 
-          <% @addable_salaryslip_items = slip.salaryslip_components.where(is_deducted: false) %>
-          <% @addable_salaryslip_items.each do |item| %>
+          <% @addable_employee_salary_template_items = employee_salary_template.salaryslip_components.where(is_deducted: false) %>
+          <% @addable_employee_salary_template_items.each do |item| %>
             <% case item.salary_component.try(:name) %>
             <% when "Basic" %>
               <Cell ss:Index="15"><Data ss:Type="Number"><%= item.actual_amount.round * 12 %></Data></Cell>

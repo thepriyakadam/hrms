@@ -1,6 +1,6 @@
 class PaymentModesController < ApplicationController
   before_action :set_payment_mode, only: [:show, :edit, :update, :destroy]
-  
+
   def new
     @payment_mode = PaymentMode.new
     @payment_modes = PaymentMode.all
@@ -18,19 +18,19 @@ class PaymentModesController < ApplicationController
     respond_to do |format|
       if @payment_mode.save
         @payment_mode = PaymentMode.new
-         format.js { @flag = true }
+        format.js { @flag = true }
       else
-        flash.now[:alert] = "Payment Mode Already Exist."
-         format.js { @flag = false }
+        flash.now[:alert] = 'Payment Mode Already Exist.'
+        format.js { @flag = false }
       end
     end
   end
-       
+
   # PATCH/PUT /payment_modes/1
   # PATCH/PUT /payment_modes/1.json
   def update
     @payment_mode.update(payment_mode_params)
-    @payment_modes = PaymentMode.all 
+    @payment_modes = PaymentMode.all
     @payment_mode = PaymentMode.new
   end
 
@@ -42,13 +42,14 @@ class PaymentModesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_payment_mode
-      @payment_mode = PaymentMode.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def payment_mode_params
-      params.require(:payment_mode).permit(:code, :name, :description)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_payment_mode
+    @payment_mode = PaymentMode.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def payment_mode_params
+    params.require(:payment_mode).permit(:code, :name, :description)
+  end
 end

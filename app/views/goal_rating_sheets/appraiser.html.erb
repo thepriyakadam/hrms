@@ -8,6 +8,27 @@
     <table id="tbl" class="table table-bordered table-hover table-condensed">
     <thead>
       <tr>
+        <th>Employee Id</th>
+        <th>Employee Name</th>
+        <th>Department</th>
+        <th>Designation</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @goal_rating_single_sheets.each do |g| %>
+        <tr>
+          <td><%= g.appraisee.manual_employee_code %></td>
+          <td><%= g.appraisee.first_name %></td>
+          <td><%= g.appraisee.joining_detail.department.name %></td>
+          <td><%= g.appraisee.joining_detail.employee_designation.name %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+    <table id="tbl" class="table table-bordered table-hover table-condensed">
+    <thead>
+      <tr>
         <th>Period</th>
         <th>Goal Perspctive</th>
         <th>Goal Measure</th>
@@ -20,11 +41,10 @@
         <th>Appraisee Rating</th>
         <th>Appraiser Comment</th>
         <th>Appraiser Rating</th>
-        <th>Employee Name</th>
       </tr>
     </thead>
     <tbody>
-      <% @goal_rating_sheets.each do |g| %>
+      <% @goal_ratings.each do |g| %>
         <tr>
           <td><%= g.employee_goal.period.title %></td>
           <td><%= g.employee_goal.goal_perspective.name %></td>
@@ -33,19 +53,27 @@
           <td><%= g.employee_goal.goal_weightage %></td>
           <td><%= g.employee_goal.difficulty_level %></td>
           <td><%= g.employee_goal.allign_to_supervisor %></td>
-
+          <% if g.is_confirm_appraisee == true %>
           <td><%= g.appraisee_comment %></td>
           <td><%= g.appraisee_rating %></td>
+          <% else %>
+          <td></td>
+          <td></td>
+          <% end %>
           <td><%= text_field_tag 'appraiser_comment[]' %></td>
           <td><%= text_field_tag 'appraiser_rating[]' %></td>
-          <td><%= g.appraisee.first_name %></td> 
           <%= hidden_field_tag 'employee_goal_id[]',{},value: g.employee_goal.id %>
           <%= hidden_field_tag 'goal_rating_sheet_id[]', {},value: g.id %> 
-          <%= hidden_field_tag :appraiser_id, {},value: current_user.employee_id %>  
+          <%= hidden_field_tag :appraisee_id, {},value: g.appraisee_id %>
+          <%= hidden_field_tag :appraiser_id, {},value: current_user.employee_id %>   
         </tr>
       <% end %>
     </tbody>
   </table>
+
+  <% if @goal_ratings.empty? %>
+
+  <% else %>
     <div class="row">
       <div class="col-sm-3">
         <div class="actions">
@@ -53,8 +81,9 @@
          </div>
         </div>
       </div>
-    
-  </div>
+  <% end %>
+  
+
   <% end %> 
 
 
@@ -84,18 +113,23 @@
           <td><%= g.employee_goal.goal_weightage %></td>
           <td><%= g.employee_goal.difficulty_level %></td>
           <td><%= g.employee_goal.allign_to_supervisor %></td>
-
+          <% if g.is_confirm_appraisee == true %>
           <td><%= g.appraisee_comment %></td>
           <td><%= g.appraisee_rating %></td>
+          <% else %>
+          <td></td>
+          <td></td>
+          <% end %>
           <td><%= g.appraiser_comment %></td>
           <td><%= g.appraiser_rating %></td>
+           
+
           <td>
-          <% if g.is_confirm == true %>
-          <%= link_to '', modal_goal_rating_sheets_path, class: 'btn btn-xs btn-success fa fa-check', remote: true %>
+          <% if g.is_confirm_appraiser == true %>
             <% else %>
               <%= link_to '', edit_appraiser_goal_rating_sheets_path(g) ,class: 'btn btn-xs btn-success fa fa-edit' %>
-              <%= link_to '', destroy_appraiser_goal_rating_sheets_path(g), data: { confirm: 'Are you sure?', method: :delete },class: 'btn btn-xs btn-danger fa fa-close' %>
-              <%= link_to '',is_confirm_goal_rating_sheets_path(g),class: 'btn btn-xs btn-warning fa fa-check'%>
+              
+              <%= link_to '',is_confirm_appraiser_goal_rating_sheets_path(g,a: g.appraisee_id),class: 'btn btn-xs btn-warning fa fa-check'%>
               
             <% end %>
           </td>
@@ -104,32 +138,11 @@
     </tbody>
   </table>
   </div>
+  </div>
 
-   <%= link_to 'Attribute-Setting', appraiser_attribute_rating_sheets_path(@employee.id) , class: 'btn btn-warning btn-sm' %>
+   <%= link_to 'Attribute-Setting', appraiser_attribute_rating_sheets_path(@employee.id) , class: 'btn btn-warning btn-sm' %></br>
+      </br>
+    <%= link_to 'Back', subordinate_list_goal_rating_sheets_path %>
 
     <div id="myModal" class="modal fade"></div>
 
-<script type="text/javascript">
-  $("#goal_rating_sheet").validate({
-    rules: {
-      "goal_rating_sheet[appraiser_comment]":{
-        required: true
-      },
-      "goal_rating_sheet[appraiser_rating]":{
-        required: true
-      }
-    },
-    messages: {
-      "goal_rating_sheet[appraiser_comment]":{
-        required: "Please Specify appraiser_comment"
-      },
-     "goal_rating_sheet[appraiser_rating]":{
-       required: "Please Specify appraiser_rating"
-      } 
-    },
-    errorPlacement: function(error, element) {
-     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
-     error.insertAfter(element.parent(element));
-    }
-   });
-</script>

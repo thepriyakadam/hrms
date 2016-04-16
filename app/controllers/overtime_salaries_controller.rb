@@ -4,7 +4,7 @@ class OvertimeSalariesController < ApplicationController
   # GET /overtime_salaries
   # GET /overtime_salaries.json
   def index
-    @overtime_salaries = OvertimeSalary.all
+    @overtime_salaries = OvertimeSalary.group("strftime('%Y',ot_date)")
   end
 
   # GET /overtime_salaries/1
@@ -17,8 +17,8 @@ class OvertimeSalariesController < ApplicationController
     @overtime_salary = OvertimeSalary.new
     @overtime_master = OvertimeMaster.find_by_status(true)
     @esic_master = EsicMaster.first
-    if @overtime_master.nil? or @esic_master.nil?
-      flash[:alert] = "Over time master or esic master not set."
+    if @overtime_master.nil? || @esic_master.nil?
+      flash[:alert] = 'Over time master or esic master not set.'
     end
   end
 
@@ -67,7 +67,7 @@ class OvertimeSalariesController < ApplicationController
 
   def collect_basic
     @employee_id = params[:employee_id]
-    if @employee_id == ""
+    if @employee_id == ''
       @employee_nil = true
     else
       @employee_nil = false
@@ -77,32 +77,33 @@ class OvertimeSalariesController < ApplicationController
         @employee_template_nil = true
       else
         @employee_template_nil = false
-        @salary_component = SalaryComponent.find_by_name('Basic')
-        if @salary_component.nil?
-          @salary_component_nil = true
-        else
-          @salary_component_nil = false
-          @basic_record = @employee_template.employee_salary_templates.where(salary_component_id: @salary_component.id).take
-          if @basic_record.nil?
-            @basic_record_nil = true
-          else
-            @basic_record_nil = false
-            @basic_amount = @basic_record.monthly_amount
-          end
-        end
+        #@salary_component = SalaryComponent.find_by_name('Basic')
+        # if @salary_component.nil?
+        #   @salary_component_nil = true
+        # else
+          #@salary_component_nil = false
+          #@basic_record = @employee_template.employee_salary_templates.where(salary_component_id: @salary_component.id).take
+          #@basic_record = @employee_template.employee_salary_templates.sum(:monthly_amount)
+          # if @basic_record.nil?
+          #   @basic_record_nil = true
+          # else
+          #   @basic_record_nil = false
+            #@basic_amount = @basic_record.monthly_amount
+            @basic_amount = @employee_template.employee_salary_templates.sum(:monthly_amount)
+          # end
+        # end
       end
     end
   end
 
   def select_month_year_form
-      
   end
 
   def collect_employee
     @month = params[:month]
     @year = params[:year]
     date = Date.new(@year.to_i, Workingday.months[@month])
-    @employees = OvertimeDailyRecord.where("strftime('%m/%Y', ot_daily_date) = ?", date.strftime("%m/%Y")).group(:employee_id)
+    @employees = OvertimeDailyRecord.where("strftime('%m/%Y', ot_daily_date) = ?", date.strftime('%m/%Y')).group(:employee_id)
   end
 
   def calculate_amount
@@ -113,17 +114,17 @@ class OvertimeSalariesController < ApplicationController
     paid_holiday_amount = self.paid_holiday_amount
     attendence_bouns_amount = self.attendence_bouns_amount
     ot_hrs = self.ot_hrs
-    
+
     day = @overtime_master.day
     company_hrs = @overtime_master.company_hrs
     ot_rate = @overtime_master.ot_rate
     percentage = @esic_master.percentage
 
-    basic_amount_by_day = basic_amount/day
+    basic_amount_by_day = basic_amount / day
     basic_amount_by_day_by_company_hrs = basic_amount_by_day / company_hrs
-    temp = basic_amount_by_day_by_company_hrs*ot_rate
+    temp = basic_amount_by_day_by_company_hrs * ot_rate
     ot_amount = temp * self.ot_hrs
-    ot_esic_amount = (ot_amount / 100*percentage).ceil
+    ot_esic_amount = (ot_amount / 100 * percentage).ceil
     if @esic_master.esic # and addable_total_calculated_amount <= @esic_master.max_limit and @employee.joining_detail.have_esic
       total_amount = ot_amount - ot_esic_amount
     else
@@ -136,11 +137,10 @@ class OvertimeSalariesController < ApplicationController
     self.net_payble_amount = net_payble.round
   end
 
-
   def create_overtime_salary
     month = params[:month]
     year = params[:year]
-    date = Date.new(year.to_i,Workingday.months[month])
+    date = Date.new(year.to_i, Workingday.months[month])
     employee_ids = params[:employee_ids]
     ot_amount = params[:ot_amount]
     ot_hrs = params[:ot_hrs]
@@ -150,9 +150,9 @@ class OvertimeSalariesController < ApplicationController
 
     @esic_master = EsicMaster.first
     percentage = @esic_master.percentage
-    final = employee_ids.zip(ot_amount,ot_hrs,attendence_bonus_amount,paid_holiday_amount,ot_daily_amount)
+    final = employee_ids.zip(ot_amount, ot_hrs, attendence_bonus_amount, paid_holiday_amount, ot_daily_amount)
 
-    final.each do |i,a,h,bonus,holiday,ot_amount|
+    final.each do |i, a, h, bonus, holiday, ot_amount|
       ot_esic_amount = (a.to_i / 100 * percentage).ceil
       total_amount = a.to_i - ot_esic_amount
       net_payble = total_amount + bonus.to_f + holiday.to_f
@@ -172,14 +172,35 @@ class OvertimeSalariesController < ApplicationController
     redirect_to select_month_year_form_overtime_salaries_path
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_overtime_salary
-      @overtime_salary = OvertimeSalary.find(params[:id])
+  def overtimes
+    @year = params[:year]
+    @month = params[:month]
+    date = Date.new(@year.to_i, Workingday.months[@month])
+   if current_user.class == Group
+       @overtime_salaries = OvertimeSalary.where("strftime('%m/%Y', ot_date) = ?", date.strftime('%m/%Y'))
+    else
+      if current_user.role.name == "Company" or current_user.role.name == "Account"
+         @overtime_salaries = OvertimeSalary.where("strftime('%m/%Y', ot_date) = ?", date.strftime('%m/%Y'))
+      elsif current_user.role.name == "CompanyLocation"
+        @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+         @overtime_salaries = OvertimeSalary.where("strftime('%m/%Y', ot_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+      elsif current_user.role.name == "SalaryAccount"
+         @overtime_salaries = OvertimeSalary.all
+      elsif current_user.role.name == "Employee"
+         @overtime_salaries = OvertimeSalary.where("strftime('%m/%Y', ot_date) = ?", date.strftime('%m/%Y')).where(employee_id: current_user.employee_id)
+      end
     end
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def overtime_salary_params
-      params.require(:overtime_salary).permit(:employee_id, :ot_date, :basic_amount, :ot_hrs, :ot_amount, :ot_esic_amount, :total_amount, :attendence_bouns_amount, :paid_holiday_amount, :net_payble_amount)
-    end
+  private
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_overtime_salary
+    @overtime_salary = OvertimeSalary.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def overtime_salary_params
+    params.require(:overtime_salary).permit(:employee_id, :ot_date, :basic_amount, :ot_hrs, :ot_amount, :ot_esic_amount, :total_amount, :attendence_bouns_amount, :paid_holiday_amount, :net_payble_amount)
+  end
 end

@@ -20,7 +20,7 @@
         <% @employees.each do |employee| %>
           <tr>
             <td><%= employee.try(:manual_employee_code) %></td>
-            <td><%= employee.first_name.to_s+' '+employee.try(:middle_name).to_s+' '+employee.try(:last_name).to_s %></td>
+            <td><%= full_name(employee) %></td>
             <td><%=  %></td>
             <td>
               <%= link_to 'Increment Salary', new_employee_salary_template_path(id: employee),class: 'btn btn-sm btn-info fa fa-check' %>

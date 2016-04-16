@@ -3,65 +3,85 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
   before_action :authenticate!
-  #before_action :check_subdomain
+  # before_action :check_subdomain
   before_action :configure_devise_permitted_parameters, if: :devise_controller?
   helper_method :user_signed_in?
   helper_method :current_user
-  #include LocalSubdomain
+  # include LocalSubdomain
 
-  rescue_from CanCan::AccessDenied do |exception|
-    if request.xhr?
-      flash[:alert] = "Sorry! You are not Authorized"
-      render js: "window.location = '/'"
-      #redirect_to root_url
+  def after_sign_in_path_for(resource)
+    if resource.class == 'Group'
+      # root_url(:subdomain => current_user.subdomain)
+      root_url
     else
-      flash[:alert] = "Sorry! You are not Authorized"
+      root_url
+    end
+  end
+
+  rescue_from CanCan::AccessDenied do |_exception|
+    if request.xhr?
+      render js: "alert('Sorry, You are not authorized.');"
+    else
+      flash[:alert] = 'Sorry! You are not Authorized.'
       redirect_to root_url
     end
   end
 
-  rescue_from ActiveRecord::RecordNotFound do |exc|
+  rescue_from ActiveRecord::RecordNotFound do |_exc|
     if request.xhr?
-      flash[:alert] = "Sorry! Record not found"
-      render js: "window.location = '/#{params["controller"]}'"
+      render js: "alert('Sorry! Record not found');"
     else
-      flash[:alert] = "Sorry! Record not found"
+      flash[:alert] = 'Sorry! Record not found'
       redirect_to root_url
     end
   end
 
-  #AbstractController::ActionNotFound
-  #ActionController::RoutingError
-  #SQLite3::BusyException
-  #ActiveRecord::StatementInvalid
-  #ActiveRecord::RecordInvalid
-  #AbstractController::DoubleRenderError
-  #AbstractController::DoubleRenderError
-  #ActionController::ActionControllerError
-  
-  
+  rescue_from ActiveRecord::ActiveRecordError do |_exc|
+    if request.xhr?
+      render js: "alert('Sorry! Record Error');"
+    else
+      flash[:alert] = 'Sorry! Record Error'
+      redirect_to root_url
+    end
+  end
+
+  rescue_from ActiveRecord::RecordInvalid do |_exc|
+    if request.xhr?
+      render js: "alert('Sorry! Transaction Rollbacked Record Invalid');"
+    else
+      flash[:alert] = 'Sorry! Transaction Rollbacked Record Invalid #{_exc.message}'
+      redirect_to root_url
+    end
+  end
+
   # rescue_from ActionView::Template::Error do |exc|
   #   if request.xhr?
-  #     flash[:alert] = "Sorry! Template error problem"
-  #     render js: "window.location = '/#{params["controller"]}'"
+  #     render js: "alert('Sorry! Template error problem');"
   #   else
   #     flash[:alert] = "Sorry! Template error problem"
   #     redirect_to root_url
   #   end
   # end
-  
 
-  # rescue_from ActiveRecord::PendingMigrationError do |exc|
+  # rescue_from Exception do |exc|
   #   if request.xhr?
-  #     flash[:alert] = "Sorry! Migration error problem"
-  #     render js: "window.location = '/#{params["controller"]}'"
+  #     render js: "alert('Sorry! Something is wrong.');"
   #   else
-  #     flash[:alert] = "Sorry! Migration error problem"
+  #     flash[:alert] = "Sorry! Something is wrong."
   #     redirect_to root_url
   #   end
   # end
-  
-  
+
+  # AbstractController::ActionNotFound
+  # ActionController::RoutingError
+  # SQLite3::BusyException
+  # ActiveRecord::StatementInvalid
+  # ActiveRecord::RecordInvalid
+  # AbstractController::DoubleRenderError
+  # AbstractController::DoubleRenderError
+  # ActionController::ActionControllerError
+  # ActionController::InvalidAuthenticityToken
+
   # def check_subdomain
   #   if group_signed_in?
   #     unless request.subdomain == current_user.subdomain
@@ -78,15 +98,6 @@ class ApplicationController < ActionController::Base
   #   end
   # end
 
-  def after_sign_in_path_for(resource)
-    if resource.class == "Group"
-      #root_url(:subdomain => current_user.subdomain)
-      root_url
-    else
-      root_url
-    end
-  end
-
   # def after_sign_out_path_for(resource_or_scope)
   #   #root_path
   #   root_url(:subdomain => '')
@@ -97,19 +108,19 @@ class ApplicationController < ActionController::Base
   # end
 
   def authenticate!
-  	if group_signed_in?
-  		authenticate_group!
-  	else
-  		authenticate_member!
-  	end
+    if group_signed_in?
+      authenticate_group!
+    else
+      authenticate_member!
+    end
   end
 
   def current_user
-  	if group_signed_in?
-  		current_group
-  	elsif member_signed_in?
-  		current_member
-  	end
+    if group_signed_in?
+      current_group
+    elsif member_signed_in?
+      current_member
+    end
   end
 
   def user_signed_in?
@@ -122,35 +133,35 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  # require 'open-uri'
-
-  # def internet_connection?
-  #   begin
-  #     true if open("http://www.google.com/")
-  #   rescue
-  #     false
-  #   end
-  # end
-
   protected
 
   def configure_devise_permitted_parameters
     registration_params = [:subdomain, :email, :password, :password_confirmation]
     if params[:action] == 'update'
-      devise_parameter_sanitizer.for(:account_update) { 
-        |u| u.permit(registration_params << :current_password,:avatar)
-      }
+      devise_parameter_sanitizer.for(:account_update) do |u|
+        u.permit(registration_params << :current_password, :avatar)
+      end
     elsif params[:action] == 'create'
-      devise_parameter_sanitizer.for(:sign_up) { 
-        |u| u.permit(registration_params) 
-      }
+      devise_parameter_sanitizer.for(:sign_up) do |u|
+        u.permit(registration_params)
+      end
     end
 
-    if params[:controller] == "members/sessions" and params[:action] == "new"
-      #devise_parameter_sanitizer.for(:sign_in) { |u| u.permit(:login, :member_code, :email, :password, :remember_me) }
+    if params[:controller] == 'members/sessions' && params[:action] == 'new'
+      # devise_parameter_sanitizer.for(:sign_in) { |u| u.permit(:login, :member_code, :email, :password, :remember_me) }
       devise_parameter_sanitizer.for(:sign_in) { |u| u.permit(:login, :manual_member_code, :email, :password, :remember_me) }
     else
-      devise_parameter_sanitizer.for(:sign_in) { |u| u.permit(:email, :password, :remember_me) }  
+      devise_parameter_sanitizer.for(:sign_in) { |u| u.permit(:email, :password, :remember_me) }
     end
   end
 end
+
+# require 'open-uri'
+
+# def internet_connection?
+#   begin
+#     true if open("http://www.google.com/")
+#   rescue
+#     false
+#   end
+# end

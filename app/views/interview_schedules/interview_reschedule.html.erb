@@ -1,0 +1,50 @@
+<div class="box box-default">
+    <div class="box-header with-border">
+      <h3 class="box-title">Interview Reschedule</h3>
+    </div><!-- /.box-header -->
+ <div class="box-body">
+ <%= bootstrap_form_for(@interview_reschedule,url:{action:"send_email_to_candidate"}) do |f| %>
+ <%= f.hidden_field :employee_id, value: @employee.id %>
+ <%= f.hidden_field :interview_schedule_id, value: @interview_schedule.id %>
+ <div>
+ <%= render 'show_interview_schedule' %>
+ </div>
+  <div class="row">
+  <div class="col-sm-3">
+      <label>Interview Date: </label>
+      <div class="form-group required">
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="fa fa-calendar"></i>
+          </div>
+          <%= f.text_field :interview_date, hide_label: true, class: 'interview_date'%>
+        </div>
+      </div>
+    </div>
+  
+    <div class="col-sm-3">
+      <div class="bootstrap-timepicker">
+       <div class="form-group required">
+       <label>Interview Time</label>
+        <div class="input-group">
+         <%= f.text_field :interview_time,hide_label:true, class: 'form-control timepicker' %>
+        <div class="input-group-addon">
+        <i class="fa fa-clock-o"></i>
+        </div>
+        </div><!-- /.input group -->
+       </div><!-- /.form group -->
+      </div>
+    </div>
+    </div>
+    <div class="row">
+    <div class="col-sm-3">
+      <div class="actions">
+      <%= f.submit "Create Interview Rechedule",class: "btn btn-primary btn-sm" %>
+      </div>
+    </div> 
+  </div>
+  </div>
+</div>
+<% end %>
+
+

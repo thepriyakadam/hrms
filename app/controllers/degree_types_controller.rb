@@ -16,13 +16,13 @@ class DegreeTypesController < ApplicationController
     @degree_type = DegreeType.new(degree_type_params)
     @degree_types = DegreeType.all
     respond_to do |format|
-    if @degree_type.save
-    @degree_type = DegreeType.new 
-     format.js { @flag = true }
+      if @degree_type.save
+        @degree_type = DegreeType.new
+        format.js { @flag = true }
       else
-        flash.now[:alert] = "Blood Group Already Exist."
-         format.js { @flag = false }
-      end
+        flash.now[:alert] = 'Blood Group Already Exist.'
+        format.js { @flag = false }
+        end
     end
   end
 
@@ -31,7 +31,7 @@ class DegreeTypesController < ApplicationController
   def update
     @degree_type.update(degree_type_params)
     @degree_types = DegreeType.all
-    @degree_type = DegreeType.new  
+    @degree_type = DegreeType.new
   end
 
   # DELETE /degree_types/1
@@ -42,13 +42,14 @@ class DegreeTypesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_degree_type
-      @degree_type = DegreeType.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def degree_type_params
-      params.require(:degree_type).permit(:name)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_degree_type
+    @degree_type = DegreeType.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def degree_type_params
+    params.require(:degree_type).permit(:name)
+  end
 end

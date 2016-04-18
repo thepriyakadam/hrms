@@ -18,15 +18,15 @@ class LeaveStatusRecordsController < ApplicationController
             LeaveRequestMailer.cancel(@employee_leav_request).deliver_now
             flash[:notice] = 'Leave Cancelled Successfully.'
           end
-          redirect_to employee_leav_requests_path
+          redirect_to hr_view_request_employee_leav_requests_path(@employee_leav_request.employee_id)
         else
           flash[:alert] = 'Leave Already cancelled. Please refresh page.'
-          redirect_to employee_leav_requests_path
+          redirect_to hr_view_request_employee_leav_requests_path(@employee_leav_request.employee_id)
         end
       end
     else
       flash[:alert] = 'Leave not cancelled. It may be approve or reject.'
-      redirect_to employee_leav_requests_path
+      redirect_to hr_view_request_employee_leav_requests_path(@employee_leav_request.employee_id)
     end
   end
 
@@ -146,7 +146,7 @@ class LeaveStatusRecordsController < ApplicationController
       if @leave_status.save
         @employee_leav_request.update(is_second_rejected: true, current_status: 'SecondRejected')
         @employee_leav_request.revert_leave(@employee_leav_request)
-        if @employee_leav_request.first_reporter.email.nil? || @employee_leav_request.first_reporter.email == ''
+        if @employee_leav_request.employee.email.nil? || @employee_leav_request.employee.email == ''
           flash[:notice] = 'Leave Rejected Successfully without email.'
         else
           flash[:notice] = 'Leave Rejected Successfully.'
@@ -173,6 +173,9 @@ class LeaveStatusRecordsController < ApplicationController
     ActiveRecord::Base.transaction do
       @employee_leav_balance.save
       @particular_leave_record.save
+      if @particular_leave_record.employee_leav_request.leav_category.name == "C.Off"
+        @particular_leave_record.rollback_coff(@particular_leave_record)
+      end
     end
     flash[:notice] = 'Leave Cancelled Successfully.'
     redirect_to show_leave_record_particular_leave_records_path(format: @particular_leave_record.employee_leav_request_id)

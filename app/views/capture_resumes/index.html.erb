@@ -19,6 +19,7 @@
       <th>Action</th>
     </tr>
   </thead>
+  fa fa-picture-o
 
   <tbody>
     <% @capture_resumes.each do |capture_resume| %>
@@ -31,9 +32,10 @@
         <td><%= capture_resume.avatar_file_name %></td>
         <td><%= link_to 'Download', download_path(id: capture_resume.id)  %></td>
         <td>
-            <%= link_to '', capture_resume,class: 'btn btn-xs btn-default fa fa-eye' %>
+          <%= link_to '', download_photo_path(id: capture_resume.id),class: 'btn btn-xs btn-warning fa fa-picture-o'  %>
+          <%= link_to '', capture_resume,class: 'btn btn-xs btn-default fa fa-eye' %>
           <%= link_to '', edit_capture_resume_path(capture_resume),class: 'btn btn-xs btn-success fa fa-edit' %>
-            <%= link_to '', capture_resume,method: :delete,data:{confirm:'Are you sure?'},class: 'btn btn-xs btn-danger fa fa-close' %>
+          <%= link_to '', capture_resume,method: :delete,data:{confirm:'Are you sure?'},class: 'btn btn-xs btn-danger fa fa-close' %>
         </td>
       </tr>
     <% end %>

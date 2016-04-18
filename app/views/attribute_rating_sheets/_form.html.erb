@@ -20,7 +20,7 @@
           <td><%= employee_attribute.attribute_master.name %></td>
           <td><%= employee_attribute.weightage %></td>
           <td><%= text_field_tag 'appraisee_comment[]' %></td>
-          <td><%= text_field_tag 'appraisee_rating[]' %></td>
+          <td><%= select_tag 'appraisee_rating[]',options_for_select(["1","2","3","4","5"]), class: 'form_control' %></td>
           <% else %>
           <% end %>
           <%= hidden_field_tag 'employee_attribute_id[]',{},value: employee_attribute.id %>
@@ -29,6 +29,10 @@
       <% end %>
       </tbody>
     </table>
+
+  <% if @employee_attributes.empty? %>
+
+  <% else %>
     <div class="row">
       <div class="col-sm-3">
         <div class="actions">
@@ -36,6 +40,8 @@
         </div>
       </div>
     </div>
-  </div>
+  <% end %>
+  
+</div>
 </div>
 <% end %>

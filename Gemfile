@@ -101,3 +101,7 @@ gem 'time_difference'
 # Excel Read
 gem 'roo'
 gem 'yaml_db'
+
+
+#gem 'mail'
+gem 'email_verifier'

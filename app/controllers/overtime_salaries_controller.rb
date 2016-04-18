@@ -192,6 +192,33 @@ class OvertimeSalariesController < ApplicationController
     end
   end
 
+  def revert_salary
+  end
+
+  def show_employee
+   
+    @month = params[:month]
+    @year = params[:year]
+    date = Date.new(@year.to_i,Workingday.months[@month])
+    @overtime_salaries = OvertimeSalary.where("strftime('%m/%Y' , ot_date) = ? ", date.strftime('%m/%Y'))
+   
+  end
+
+  def destroy_overtime_salary
+    @month = params[:month]
+    @year = params[:year]
+    date = Date.new(@year.to_i,Workingday.months[@month])
+    @overtime_salaries = OvertimeSalary.where("strftime('%m/%Y' , ot_date) = ? ", date.strftime('%m/%Y'))
+    
+    @overtime_salaries_id = params[:overtime_salaries_id]
+    @overtime_salaries_id.each do |oid|
+     @overtime_salary = OvertimeSalary.find(oid)
+    end
+    @overtime_salary.destroy
+
+    redirect_to revert_overtime_overtime_salaries_path
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

@@ -100,12 +100,14 @@ class SalaryslipsController < ApplicationController
         end
 
         date = Date.new(@year.to_i, Workingday.months[@month])
-        @food_deduction = FoodDeduction.where(food_date: date..date.at_end_of_month, employee_id: @employee.id).take
-        unless @food_deduction.nil?
-          deducted_actual_amount = 0
-          deducted_calculated_amount = @food_deduction.amount
-          deducted_total_actual_amount += deducted_actual_amount
-          deducted_total_calculated_amount += deducted_calculated_amount
+        @food_deductions = FoodDeduction.where(food_date: date..date.at_end_of_month, employee_id: @employee.id)
+        unless @food_deductions.empty?
+          @food_deductions.each do |f|
+            deducted_actual_amount = 0
+            deducted_calculated_amount = f.amount
+            deducted_total_actual_amount += deducted_actual_amount
+            deducted_total_calculated_amount += deducted_calculated_amount
+          end
         end
 
         @monthly_expences = MonthlyExpence.where(employee_id: @employee.id, expence_date: date.all_month)
@@ -252,11 +254,13 @@ class SalaryslipsController < ApplicationController
         end
 
         date = Date.new(@year.to_i, Workingday.months[@month])
-        @food_deduction = FoodDeduction.where(food_date: date..date.at_end_of_month, employee_id: @employee.id).take
-        unless @food_deduction.nil?
-          deducted_actual_amount = 0
-          deducted_calculated_amount = @food_deduction.amount
-          SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: deducted_actual_amount, calculated_amount: deducted_calculated_amount, is_deducted: true, other_component_name: 'Food Deduction')
+        @food_deductions = FoodDeduction.where(food_date: date..date.at_end_of_month, employee_id: @employee.id)
+        unless @food_deductions.empty?
+          @food_deductions.each do |f|
+            deducted_actual_amount = 0
+            deducted_calculated_amount = f.amount
+            SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: deducted_actual_amount, calculated_amount: deducted_calculated_amount, is_deducted: true, other_component_name: 'Food Deduction')
+          end
         end
 
         @monthly_expences = MonthlyExpence.where(employee_id: @employee.id, expence_date: date.all_month)
@@ -562,12 +566,14 @@ class SalaryslipsController < ApplicationController
           end
 
           date = Date.new(@year.to_i, Workingday.months[@month])
-          @food_deduction = FoodDeduction.where(food_date: date..date.at_end_of_month, employee_id: @employee.id).take
-          unless @food_deduction.nil?
-            deducted_actual_amount = 0
-            deducted_calculated_amount = @food_deduction.amount
-            deducted_total_actual_amount += deducted_actual_amount
-            deducted_total_calculated_amount += deducted_calculated_amount
+          @food_deductions = FoodDeduction.where(food_date: date..date.at_end_of_month, employee_id: @employee.id)
+          unless @food_deductions.empty?
+            @food_deductions.each do |f|
+              deducted_actual_amount = 0
+              deducted_calculated_amount = f.amount
+              deducted_total_actual_amount += deducted_actual_amount
+              deducted_total_calculated_amount += deducted_calculated_amount
+            end
           end
 
           @monthly_expences = MonthlyExpence.where(employee_id: @employee.id, expence_date: date.all_month)
@@ -783,11 +789,13 @@ class SalaryslipsController < ApplicationController
           end
 
           date = Date.new(@year.to_i, Workingday.months[@month])
-          @food_deduction = FoodDeduction.where(food_date: date..date.at_end_of_month, employee_id: @employee.id).take
-          unless @food_deduction.nil?
-            deducted_actual_amount = 0
-            deducted_calculated_amount = @food_deduction.amount
-            SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: deducted_actual_amount, calculated_amount: deducted_calculated_amount, is_deducted: true, other_component_name: 'Food Deduction')
+          @food_deductions = FoodDeduction.where(food_date: date..date.at_end_of_month, employee_id: @employee.id)
+          unless @food_deductions.empty?
+            @food_deductions.each do |f|
+              deducted_actual_amount = 0
+              deducted_calculated_amount = f.amount
+              SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: deducted_actual_amount, calculated_amount: deducted_calculated_amount, is_deducted: true, other_component_name: 'Food Deduction')
+            end
           end
 
           @instalment_array.try(:each) do |ia|

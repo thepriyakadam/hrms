@@ -70,15 +70,18 @@ class EmployeeGoalsController < ApplicationController
 
   def is_confirm
     @employee_goal_ids = params[:employee_goal_ids]
-     @employee_goal_ids.each do |eid|
-      
+    if @employee_goal_ids.nil?
+      flash[:notice] = "Please Select the Checkbox"
+      redirect_to root_url
+    else
+      @employee_goal_ids.each do |eid|
       @employee_goal = EmployeeGoal.find(eid)
-
       @employee_goal.update(is_confirm: true)
-
-      
-    end
-    redirect_to new_employee_goal_path(@employee_goal.employee_id)
+      flash[:notice] = "Confirmed Successfully"
+     
+    end  
+     redirect_to new_employee_goal_path(@employee_goal.employee_id)
+  end
   end
 
   private

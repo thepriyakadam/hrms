@@ -223,6 +223,9 @@ Rails.application.routes.draw do
       get :select_month_year_form
       get :collect_employee
       post :create_overtime_salary
+      get :revert_overtime
+      get :show_employee
+      post :destroy_overtime_salary
     end
   end
   resources :overtime_masters

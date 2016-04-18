@@ -167,7 +167,7 @@ class EmployeeLeavRequestsController < ApplicationController
     @employee_leav_request = EmployeeLeavRequest.new
     @total_leaves = EmployeeLeavBalance.where('employee_id = ?', @employee.id)
     @remain_leaves = EmployeeLeavRequest.joins(:leav_approved)
-    @leave_c_offs = LeaveCOff.where(employee_id: @employee.id)
+    @leave_c_offs = LeaveCOff.where(employee_id: @employee.id, is_taken: false)
   end
 
   def hr_view_request

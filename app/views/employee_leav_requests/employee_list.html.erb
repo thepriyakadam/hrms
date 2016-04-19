@@ -8,10 +8,8 @@
         <tr>
           <th>Employee Id</th>
           <th>Employee Name</th>
-          <th>Date of Birth</th>
-          <th>City</th>
-          <th>Employement</th>
-          <th>Status</th>
+          <th>Department</th>
+          <th>Contact No</th>
           <th>Action</th>
         </tr>
       </thead>
@@ -20,11 +18,9 @@
         <% @employees.each do |employee| %>
           <tr>
             <td><%= employee.manual_employee_code %></td>
-            <td><%= employee.first_name.to_s+' '+employee.try(:last_name).to_s %></td>
-            <td><%= employee.date_of_birth %></td>
-            <td><%= employee.city %></td>
-            <td><%= employee.employee_type.try(:name) %></td>
-            <td><%= employee.status %></td>
+            <td><%= employee.try(:first_name) %> <%= employee.try(:middle_name) %> <%= employee.try(:last_name).to_s %></td>
+            <td><%= employee.company_location.try(:name) %> - <%= employee.department.try(:name) %></td>
+             <td><%= employee.try(:contact_no) %></td>
             <td>
               <%= link_to 'Leave Request', from_hr_employee_leav_requests_path(employee), class: 'btn btn-sm btn-info' %>
               <%= link_to 'View Requests', hr_view_request_employee_leav_requests_path(employee), class: 'btn btn-sm btn-info' %>

@@ -79,10 +79,9 @@ GEM
       responders
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
-    dnsruby (1.58.0)
-    email_verifier (0.0.9)
+    dnsruby (1.59.2)
+    email_verifier (0.1.0)
       dnsruby (>= 1.5)
-      rails (>= 3.0.0)
     erubis (2.7.0)
     execjs (2.6.0)
     globalid (0.3.6)

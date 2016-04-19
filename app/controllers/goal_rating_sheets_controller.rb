@@ -28,6 +28,7 @@ class GoalRatingSheetsController < ApplicationController
           @employee_goals << ea
         end
       end
+      
     end
   end
 
@@ -167,15 +168,23 @@ class GoalRatingSheetsController < ApplicationController
      
     @employee = Employee.find(params[:a])
    
-    redirect_to appraiser_goal_rating_sheets_path(format: @goal_rating_sheet.appraiser_id)
+    redirect_to appraiser_goal_rating_sheets_path(format: @goal_rating_sheet.appraisee_id)
   end
  
- def is_confirm_appraisee
-     @goal_rating_sheet = GoalRatingSheet.find(params[:format])
-    
-    @goal_rating_sheet.update(is_confirm_appraisee: true)
-
-    redirect_to new_goal_rating_sheet_path
+  def is_confirm_appraisee
+    @goal_rating_sheet_ids = params[:goal_rating_sheet_ids]
+    if @goal_rating_sheet_ids.nil?
+        flash[:alert] = "Please Select the Checkbox"
+        redirect_to new_goal_rating_sheet_path
+      else
+        @goal_rating_sheet_ids.each do |gid|
+        @goal_rating_sheet = GoalRatingSheet.find(gid)
+        @goal_rating_sheet.update(is_confirm_appraisee: true)
+        flash[:notice] = "Confirmed Successfully"
+      end  
+       redirect_to new_goal_rating_sheet_path
+    end
+      
   end
 
  def modal
@@ -184,6 +193,126 @@ class GoalRatingSheetsController < ApplicationController
  def appraisee_goal_list
    @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: current_user.employee_id)
  end
+
+ def subordinate_list2
+    current_login = Employee.find(current_user.employee_id)
+    @employees = current_login.indirect_subordinates
+  end
+
+  def appraiser2
+    @goal_rating_sheet = GoalRatingSheet.new
+    @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: params[:format])
+    @attribute_rating_sheets = AttributeRatingSheet.where(appraisee_id: params[:format]).group(:appraisee_id)
+    @employee = Employee.find(params[:format])
+    @qualifications = Qualification.where(employee_id: @employee.id)
+    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
+    @experiences = Experience.where(employee_id: @employee.id)
+    @ctc = EmployeeSalaryTemplate.where(employee_id: @employee.id).sum(:monthly_amount)
+    @attribute_rating_multiple_sheets = AttributeRatingSheet.where(appraisee_id: params[:format])
+  end
+
+  def appraiser2_create
+    goal_rating_sheets = params[:goal_rating_sheet_id]
+    
+    comments = params[:appraiser2_comment]
+    ratings = params[:appraiser2_rating]
+    final = goal_rating_sheets.zip(comments, ratings)
+    final.each do |e, c, r|
+      goal_rating_sheet = GoalRatingSheet.find(e)
+      if c == ''
+        flash[:alert] = 'Fill comments'
+      elsif r == ''
+        flash[:alert] = 'Fill ratings'
+      else
+        # emp = EmployeeGoal.find(e)
+        # goal_rating_sheet = GoalRatingSheet.find(e)
+        goal_rating_sheet.update(appraiser2_comment: c, appraiser2_rating: r, appraiser_2_id: params[:appraiser_2_id])
+
+      end
+    end
+  
+    @employee = GoalRatingSheet.find(params[:appraisee_id])
+    
+    redirect_to appraiser2_goal_rating_sheets_path(format: @employee.id)
+  end
+
+  def edit_appraiser2
+    @goal_rating_sheet = GoalRatingSheet.find(params[:format])
+  end
+
+  def update_appraiser2
+    
+    @employee = Employee.find(params[:appraiser_2_id])
+
+    @goal_rating_sheet = GoalRatingSheet.find(params[:format])
+
+    if @goal_rating_sheet.update(goal_rating_sheet_params)
+      flash[:notice] = "Updated Successfully."
+    else
+      flash[:alert] = "Not Updated "
+    end
+   
+    redirect_to appraiser2_goal_rating_sheets_path(format: @employee.id)
+  end
+
+  def employee_list
+    if current_user.class == Member
+      if current_user.role.name == 'Employee'
+        @employees = Employee.where(id: current_user.employee_id)
+        redirect_to home_index_path
+      elsif current_user.role.name == 'CompanyLocation'
+        @employees = Employee.where(company_location_id: current_user.company_location_id)
+      elsif current_user.role.name == 'Department'
+        @employees = Employee.where(department_id: current_user.department_id)
+      elsif current_user.role.name == 'Company'
+        @employees = Employee.all
+      elsif current_user.role.name == 'Supervisor'
+        @emp = Employee.find(current_user.employee_id)
+        # @employees_indirect = @emp.indirect_subordinates
+        # @employees_direct = @emp.subordinates
+        @employees = @emp.subordinates
+      end
+    else
+      @employees = Employee.all
+    end
+  end
+  
+  def final_create
+    puts '------------------------------------------------------------------------'
+
+    goal_rating_sheets = params[:goal_rating_sheet_id]
+    
+    comments = params[:final_comment]
+    ratings = params[:final_rating]
+    final = goal_rating_sheets.zip(comments, ratings)
+    final.each do |e, c, r|
+      goal_rating_sheet = GoalRatingSheet.find(e)
+      if c == ''
+        flash[:alert] = 'Fill comments'
+      elsif r == ''
+        flash[:alert] = 'Fill ratings'
+      else
+        # emp = EmployeeGoal.find(e)
+        # goal_rating_sheet = GoalRatingSheet.find(e)
+        goal_rating_sheet.update(final_comment: c, final_rating: r, final_id_id: params[:final_id_id])
+
+      end
+    end
+    redirect_to new_goal_rating_sheet_path
+  end
+
+  def final_comment
+    @goal_rating_sheet = GoalRatingSheet.new
+    @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: params[:format])
+
+    @attribute_rating_sheets = AttributeRatingSheet.where(appraisee_id: params[:format]).group(:appraisee_id)
+    @employee = Employee.find(params[:format])
+    @qualifications = Qualification.where(employee_id: @employee.id)
+    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
+    @experiences = Experience.where(employee_id: @employee.id)
+    @ctc = EmployeeSalaryTemplate.where(employee_id: @employee.id).sum(:monthly_amount)
+    @attribute_rating_multiple_sheets = AttributeRatingSheet.where(appraisee_id: params[:format])
+  end
 
   private
 
@@ -194,7 +323,7 @@ class GoalRatingSheetsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def goal_rating_sheet_params
-    params.require(:goal_rating_sheet).permit(:is_confirm,:appraisee_id, :appraiser_id, :employee_goal_id, :allign_to_supervisor, :appraisee_comment, :appraisee_rating, :appraiser_comment, :appraiser_rating)
+    params.require(:goal_rating_sheet).permit(:final_id,:appraiser_2_id,:is_confirm,:appraisee_id, :appraiser_id, :employee_goal_id, :allign_to_supervisor, :appraisee_comment, :appraisee_rating, :appraiser_comment, :appraiser_rating)
   end
 
 end

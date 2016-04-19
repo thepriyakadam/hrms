@@ -1,0 +1,200 @@
+	<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Employee Details</h3>
+  </div>
+  <div class="box-body">
+
+
+	<table class="table table-bordered table-hover table-condensed">
+       
+    <thead>
+	    <tr>
+	    	<th>Employee Id</th>
+	    	<th>Name</th>
+        <th>Age</th>
+	    	<th>Department</th>
+	    	<th>Date Of Joining</th>
+	    	<th>Joining Grade</th>
+	    	<th>Current Designation</th> 
+      </tr>
+    </thead>
+    <tbody>
+      <% @attribute_rating_sheets.each do |a| %>
+      <tr>
+        <td><%= a.appraisee.manual_employee_code %></td> 
+        <td><%= a.appraisee.first_name %></td>
+        <td><%= Time.now.year-a.appraisee.date_of_birth.year %></td>
+        <td><%= a.appraisee.department.name %></td>
+        <td><%= @joining_detail.joining_date %></td>
+        <td><%= @joining_detail.employee_grade.name %></td>
+        <td><%= @joining_detail.employee_designation.name %></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+<div class="row">
+  <div class="col-sm-6">
+    <div class="box-header with-border">
+    
+      <h3 class="box-title">Employee Past Experience</h3>
+    </div>
+  <table class="table table-bordered table-hover table-condensed">
+    <thead>
+      <tr>
+	    	<th>Past Company</th>
+        <th>Designation</th>
+        <th>Past Exp In Years</th>
+        <th>Past CTC</th>
+        <th>Current CTC</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @experiences.each do |e| %>
+      <tr>
+       <td><%= e.company_name %></td>
+       <td><%= e.designation %></td>
+       <td><%= e.no_of_year %></td>
+       <td><%= e.ctc %></td>
+       <td><%= @ctc %></td>
+      </tr>
+      <% end %>
+    </tbody>
+	</table>
+  </div>
+
+  <div class="col-sm-6">
+    <div class="box-header with-border">
+      <h3 class="box-title">Employee Qualification Details</h3>
+    </div>
+      <table class="table table-bordered table-hover table-condensed">
+        <thead>
+          <tr>
+            <th>Degree/Deploma</th>
+            <th>Year Of Passing/marks%</th>
+            <th>Qualification Category</th>
+          </tr>
+        </thead>
+        <tbody>
+        <% @qualifications.each do |q| %>
+          <tr>
+            <td><%= q.degree.name %></td>
+            <td><%= q.year.name.to_s+" / "+q.marks.to_s %></td>
+            <td><%= q.degree_type.name %></td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  
+</div>
+
+ <%= bootstrap_form_for(@goal_rating_sheet,url:{action: "appraiser2_create"}) do |f| %>
+
+	<div class="box-header with-border">
+    <h3 class="box-title">Employee Goals</h3>
+  </div>
+	 <table id="tbl" class="table table-bordered table-hover table-condensed">
+    <thead>
+      <tr>
+        <th>Goal Perspctive</th>
+        <th>Goal Measure</th>
+        <th>Target</th>
+        <th>Goal Weightage</th>
+        <th>Difficulty Level</th>
+        
+        <th>Allign To Supervisor</th>
+        <th>Appraisee Comment</th>
+        <th>Appraisee Rating</th>
+        <th>Appraiser1 Comment</th>
+        <th>Appraiser1 Rating</th>
+        <th>Appraiser2 Comment</th>
+        <th>Appraiser2 Rating</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @goal_rating_sheets.each do |g| %>
+        <tr>
+          <td><%= g.employee_goal.goal_perspective.name %></td>
+          <td><%= g.employee_goal.goal_measure %></td>
+          <td><%= g.employee_goal.target %></td>
+          <td><%= g.employee_goal.goal_weightage %></td>
+          <td><%= g.employee_goal.difficulty_level %></td>
+          <td><%= g.employee_goal.allign_to_supervisor %></td>
+
+          <td><%= g.appraisee_comment %></td>
+          <td><%= g.appraisee_rating %></td>
+          <td><%= g.appraiser_comment %></td>
+          <td><%= g.appraiser_rating %></td>
+          <td><%= text_field_tag 'appraiser2_comment[]' %></td>
+          <td><%= text_field_tag 'appraiser2_rating[]' %></td>
+          <%= hidden_field_tag 'goal_rating_sheet_id[]', {},value: g.id %> 
+          <%= hidden_field_tag :appraiser_2_id, {},value: current_user.employee_id %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="actions">
+          <%= f.submit "Create Rating" , class: "btn btn-primary btn-sm" %>
+        </div>
+      </div>
+    </div>
+<% end %>
+
+
+
+<table id="tbl" class="table table-bordered table-hover table-condensed">
+    <thead>
+      <tr>
+        <th>Goal Perspctive</th>
+        <th>Goal Measure</th>
+        <th>Target</th>
+        <th>Goal Weightage</th>
+        <th>Difficulty Level</th>
+        
+        <th>Allign To Supervisor</th>
+        <th>Appraisee Comment</th>
+        <th>Appraisee Rating</th>
+        <th>Appraiser1 Comment</th>
+        <th>Appraiser1 Rating</th>
+        <th>Appraiser2 Comment</th>
+        <th>Appraiser2 Rating</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @goal_rating_sheets.each do |g| %>
+        <tr>
+          <td><%= g.employee_goal.goal_perspective.name %></td>
+          <td><%= g.employee_goal.goal_measure %></td>
+          <td><%= g.employee_goal.target %></td>
+          <td><%= g.employee_goal.goal_weightage %></td>
+          <td><%= g.employee_goal.difficulty_level %></td>
+          <td><%= g.employee_goal.allign_to_supervisor %></td>
+
+          <td><%= g.appraisee_comment %></td>
+          <td><%= g.appraisee_rating %></td>
+          <td><%= g.appraiser_comment %></td>
+          <td><%= g.appraiser_rating %></td>
+          <td><%= g.appraiser2_comment %></td>
+          <td><%= g.appraiser2_rating %></td>
+          <td>
+         
+              <%= link_to '', edit_appraiser2_goal_rating_sheets_path(g) ,class: 'btn btn-xs btn-success fa fa-edit' %>
+              
+              <%= link_to '',is_confirm_appraiser_goal_rating_sheets_path(g,a: g.appraisee_id),class: 'btn btn-xs btn-warning fa fa-check'%>
+          </td>
+          <%= hidden_field_tag 'goal_rating_sheet_id[]', {},value: g.id %> 
+          <%= hidden_field_tag :appraiser_2_id, {},value: current_user.employee_id %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= link_to 'Back', subordinate_list_attribute_rating_sheets_path(@employee.id) %>
+  <%= link_to 'Attribute', appraiser2_attribute_rating_sheets_path(@employee.id) %>  
+</div>
+</div>

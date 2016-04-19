@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160415070421) do
+ActiveRecord::Schema.define(version: 20160419095332) do
 
   create_table "accident_records", force: :cascade do |t|
     t.string   "code"
@@ -88,11 +88,19 @@ ActiveRecord::Schema.define(version: 20160415070421) do
     t.datetime "updated_at",            null: false
     t.boolean  "is_confirm_appraiser"
     t.boolean  "is_confirm_appraisee"
+    t.text     "appraiser2_comment"
+    t.integer  "appraiser2_rating"
+    t.text     "final_comment"
+    t.integer  "final_rating"
+    t.integer  "final_id_id"
+    t.integer  "appraiser_2_id"
   end
 
   add_index "attribute_rating_sheets", ["appraisee_id"], name: "index_attribute_rating_sheets_on_appraisee_id"
+  add_index "attribute_rating_sheets", ["appraiser_2_id"], name: "index_attribute_rating_sheets_on_appraiser_2_id"
   add_index "attribute_rating_sheets", ["appraiser_id"], name: "index_attribute_rating_sheets_on_appraiser_id"
   add_index "attribute_rating_sheets", ["employee_attribute_id"], name: "index_attribute_rating_sheets_on_employee_attribute_id"
+  add_index "attribute_rating_sheets", ["final_id_id"], name: "index_attribute_rating_sheets_on_final_id_id"
 
   create_table "awards", force: :cascade do |t|
     t.integer  "employee_id"
@@ -827,11 +835,19 @@ ActiveRecord::Schema.define(version: 20160415070421) do
     t.integer  "performance_period_id"
     t.boolean  "is_confirm_appraiser"
     t.boolean  "is_confirm_appraisee"
+    t.text     "appraiser2_comment"
+    t.integer  "appraiser2_rating"
+    t.text     "final_comment"
+    t.integer  "final_rating"
+    t.integer  "appraiser_2_id"
+    t.integer  "final_id_id"
   end
 
   add_index "goal_rating_sheets", ["appraisee_id"], name: "index_goal_rating_sheets_on_appraisee_id"
+  add_index "goal_rating_sheets", ["appraiser_2_id"], name: "index_goal_rating_sheets_on_appraiser_2_id"
   add_index "goal_rating_sheets", ["appraiser_id"], name: "index_goal_rating_sheets_on_appraiser_id"
   add_index "goal_rating_sheets", ["employee_goal_id"], name: "index_goal_rating_sheets_on_employee_goal_id"
+  add_index "goal_rating_sheets", ["final_id_id"], name: "index_goal_rating_sheets_on_final_id_id"
   add_index "goal_rating_sheets", ["performance_period_id"], name: "index_goal_rating_sheets_on_performance_period_id"
 
   create_table "groups", force: :cascade do |t|

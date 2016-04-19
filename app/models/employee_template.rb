@@ -41,11 +41,4 @@ class EmployeeTemplate < ActiveRecord::Base
     end
     employee_template
   end
-
-  def self.cnt
-    puts EmployeeTemplate.count
-    puts EmployeeSalaryTemplate.count
-    puts EmployeeArrear.count
-    puts EmployeeArrearItem.count
-  end
 end

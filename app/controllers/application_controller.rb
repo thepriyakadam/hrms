@@ -27,23 +27,23 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  rescue_from ActiveRecord::RecordNotFound do |_exc|
-    if request.xhr?
-      render js: "alert('Sorry! Record not found');"
-    else
-      flash[:alert] = 'Sorry! Record not found'
-      redirect_to root_url
-    end
-  end
+  # rescue_from ActiveRecord::RecordNotFound do |_exc|
+  #   if request.xhr?
+  #     render js: "alert('Sorry! Record not found');"
+  #   else
+  #     flash[:alert] = 'Sorry! Record not found'
+  #     redirect_to root_url
+  #   end
+  # end
 
-  rescue_from ActiveRecord::ActiveRecordError do |_exc|
-    if request.xhr?
-      render js: "alert('Sorry! Record Error');"
-    else
-      flash[:alert] = 'Sorry! Record Error'
-      redirect_to root_url
-    end
-  end
+  # rescue_from ActiveRecord::ActiveRecordError do |_exc|
+  #   if request.xhr?
+  #     render js: "alert('Sorry! Record Error');"
+  #   else
+  #     flash[:alert] = 'Sorry! Record Error'
+  #     redirect_to root_url
+  #   end
+  # end
 
   rescue_from ActiveRecord::RecordInvalid do |_exc|
     if request.xhr?

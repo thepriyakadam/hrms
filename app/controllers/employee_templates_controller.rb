@@ -83,7 +83,7 @@ class EmployeeTemplatesController < ApplicationController
 
       if @employee_template.save
         flash[:notice] = 'Employee template created successfully.'
-        redirect_to show_employee_salary_template_employee_salary_templates_path(@employee_id)
+        redirect_to template_list_employee_templates_path(@employee_id)
       else
         flash[:alert] = 'Employee template not created successfully.'
         redirect_to template_list_employee_templates_path(@employee_id)

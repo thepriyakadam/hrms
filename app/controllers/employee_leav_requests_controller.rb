@@ -58,7 +58,7 @@ class EmployeeLeavRequestsController < ApplicationController
       if type == "LWP Leave" or type == "ESIC Leave"
         @employee_leav_request.save
         @employee_leav_request.leave_status_records.build(change_status_employee_id: current_user.employee_id,status: "Pending", change_date: Date.today)
-        if @employee.email.nil? or @employee.email == ""
+        if @employee.manager.email.nil? or @employee.manager.email == ""
           flash[:notice] = "Send request without email."
         else
           flash[:notice] = 'Leave Request sent successfully.'
@@ -239,3 +239,5 @@ class EmployeeLeavRequestsController < ApplicationController
     params.require(:employee_leav_request).permit(:employee_id, :leav_category_id, :leave_type, :date_range, :start_date, :end_date, :reason)
   end
 end
+
+#ArgumentError (An SMTP To address is required to send a message. Set the message smtp_envelope_to, to, cc, or bcc address.):

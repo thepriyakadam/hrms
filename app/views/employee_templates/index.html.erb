@@ -11,7 +11,8 @@
         <tr>
           <th>Employee Id</th>
           <th>Employee Name</th>
-          <th>Active Template</th>
+          <th>Department</th>
+          <th>Category</th>
           <th>Action</th>
         </tr>
       </thead>
@@ -21,7 +22,8 @@
           <tr>
             <td><%= employee.try(:manual_employee_code) %></td>
             <td><%= full_name(employee) %></td>
-            <td><%=  %></td>
+            <td><%= employee.company_location.try(:name) %> - <%= employee.department.try(:name) %></td>
+            <td><%= employee.joining_detail.employee_category.try(:name) %></td>
             <td>
               <%= link_to 'Increment Salary', new_employee_salary_template_path(id: employee),class: 'btn btn-sm btn-info fa fa-check' %>
               <%= link_to 'Assigned Salary Template', template_list_employee_templates_path(employee),class: 'btn btn-sm btn-info fa fa-check' %>

@@ -23,8 +23,8 @@
   <tbody>
     <tr>
       <td><%= f.select :goal_perspective_id,all_goal_perspective_type,{hide_label: true,include_blank: "Select Goal Perspective"}%></td>
-      <td><%= f.text_field :goal_measure,{hide_label: true,include_blank: "Select Goal Measure", placeholder: 'eg:punctuality'} %></td>
-      <td><%= f.text_field :target,{hide_label: true, placeholder: 'eg:100%'} %></td>
+      <td><%= f.text_field :goal_measure,{hide_label: true,include_blank: "Select Goal Measure", placeholder: 'e.g.:punctuality'} %></td>
+      <td><%= f.text_field :target,{hide_label: true, placeholder: 'e.g.:100%'} %></td>
       <td><%= f.select :goal_weightage,["1","2","3","4","5"],{hide_label: true, include_blank: "Select Goal Weightage"} %></td>
       <td><%= f.select :difficulty_level,["1","2","3"],{hide_label: true, include_blank: "Select Difficulty Level"} %></td>
       <td><%= f.select :allign_to_supervisor,["Yes","No"],{hide_label: true,include_blank: "Allign To Supervisor"} %></td>

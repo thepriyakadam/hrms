@@ -34,6 +34,14 @@ class Ability
         can :read, EmployeeTemplate, employee_id: user.employee_id
         can :read, AdvanceSalary, employee_id: user.employee_id
         can :read, Attendance, employee_id: user.employee_id
+      elsif user.role.name == 'SalaryAccount'
+        can :read, Employee
+        can :manage, EmployeeLeavRequest
+        can :manage, AdvanceSalary
+      elsif user.role.name == 'Account'
+        can :read, Employee
+        can :manage, EmployeeLeavRequest
+        can :manage, AdvanceSalary
       end
     end
   end

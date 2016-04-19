@@ -13,12 +13,12 @@
 			<%= f.select :to_be_paid, [['Monthly'],['Annual']] %>
 		</div>
 		<div class="col-sm-2">
-			<%= f.select :is_deducted, [['NO','false'],['YES','true'],['IS_CTC','IS_CTC']] %>
+			<%= f.select :is_deducted, [['Addable','false'],['Dedected','true'],['EmployerContribution','CTC']] %>
 		</div>
 		
 		<div class="col-sm-2">
 			<label>Depends</label>
-			<%= f.select :parent_salary_component_id, parent_salary_component1(@salary_template),{ include_blank: "Select Item",hide_label: true} %>
+			<%= f.select :parent_salary_component_id, parent_salary_component1(@salary_template),{include_blank: "Select Item",hide_label: true} %>
 		</div>
 		<div class="col-sm-2">
 			<label>Factor(%)</label>

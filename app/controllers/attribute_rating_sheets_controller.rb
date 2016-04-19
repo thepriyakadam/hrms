@@ -218,7 +218,8 @@ class AttributeRatingSheetsController < ApplicationController
   end
 
   def final_comment
-
+    @attribute_rating_sheet = AttributeRatingSheet.new
+    puts '--------------------------------------------------------------'
     @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: params[:format])
     @attribute_rating_sheets = AttributeRatingSheet.where(appraisee_id: params[:format]).group(:appraisee_id)
     @employee = Employee.find(params[:format])
@@ -227,6 +228,26 @@ class AttributeRatingSheetsController < ApplicationController
     @experiences = Experience.where(employee_id: @employee.id)
     @ctc = EmployeeSalaryTemplate.where(employee_id: @employee.id).sum(:monthly_amount)
     @attribute_rating_multiple_sheets = AttributeRatingSheet.where(appraisee_id: params[:format])
+  end
+
+  def final_create
+
+    attribute_rating_sheets = params[:attribute_rating_sheet_id]
+    comments = params[:final_comment]
+    ratings = params[:final_rating]
+    final = attribute_rating_sheets.zip(comments, ratings)
+    final.each do |e, c, r|
+      attribute_rating_sheet = AttributeRatingSheet.find(e)
+      if c == ''
+        flash[:alert] = 'Fill comments'
+      elsif r == ''
+        flash[:alert] = 'Fill ratings'
+      else
+        attribute_rating_sheet.update(final_comment: c, final_rating: r, final_id_id: params[:final_id_id])
+      end
+    end
+      new_attribute_rating_sheet_path
+
   end
 
   private

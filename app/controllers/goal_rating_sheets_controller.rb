@@ -278,7 +278,6 @@ class GoalRatingSheetsController < ApplicationController
   end
   
   def final_create
-    puts '------------------------------------------------------------------------'
 
     goal_rating_sheets = params[:goal_rating_sheet_id]
     

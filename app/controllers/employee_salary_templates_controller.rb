@@ -61,7 +61,6 @@ class EmployeeSalaryTemplatesController < ApplicationController
     arrays = params[:is_deducted].keys
     @employee_id = params[:employee][:employee_id]
     @template_id = params[:template][:template_id]
-
     @previous_employee_template = EmployeeTemplate.where('employee_id = ? and is_active = ?', @employee_id, true).take
     if params[:increement][:date] == ''
       flash[:alert] = 'Please specify date.'
@@ -69,7 +68,6 @@ class EmployeeSalaryTemplatesController < ApplicationController
     elsif @previous_employee_template.nil?
       @employee_template = EmployeeTemplate.create_object(@employee_id, @template_id)
       @employee_template = EmployeeTemplate.build_objects(arrays, params, @employee_id, @template_id, @employee_template)
-
       if @employee_template.save
         flash[:notice] = 'Employee template created successfully.'
       else

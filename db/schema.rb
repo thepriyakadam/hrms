@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160415070421) do
+ActiveRecord::Schema.define(version: 20160420133805) do
 
   create_table "accident_records", force: :cascade do |t|
     t.string   "code"
@@ -1252,6 +1252,17 @@ ActiveRecord::Schema.define(version: 20160415070421) do
 
   add_index "reporting_masters", ["employee_id"], name: "index_reporting_masters_on_employee_id"
 
+  create_table "reporting_masters_vacancy_masters", force: :cascade do |t|
+    t.integer  "vacancy_master_id"
+    t.integer  "reporting_master_id"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+    t.string   "vacancy_status"
+  end
+
+  add_index "reporting_masters_vacancy_masters", ["reporting_master_id"], name: "index_reporting_masters_vacancy_masters_on_reporting_master_id"
+  add_index "reporting_masters_vacancy_masters", ["vacancy_master_id"], name: "index_reporting_masters_vacancy_masters_on_vacancy_master_id"
+
   create_table "reserved_categories", force: :cascade do |t|
     t.string   "code"
     t.string   "name"
@@ -1431,15 +1442,23 @@ ActiveRecord::Schema.define(version: 20160415070421) do
     t.integer  "degree_id"
     t.string   "experience"
     t.string   "keyword"
-    t.string   "others"
     t.string   "other_organization"
     t.string   "industry"
+    t.integer  "degree_1_id"
+    t.integer  "degree_2_id"
+    t.integer  "reporting_master_id"
+    t.string   "current_status"
+    t.integer  "employee_id"
   end
 
   add_index "vacancy_masters", ["company_location_id"], name: "index_vacancy_masters_on_company_location_id"
+  add_index "vacancy_masters", ["degree_1_id"], name: "index_vacancy_masters_on_degree_1_id"
+  add_index "vacancy_masters", ["degree_2_id"], name: "index_vacancy_masters_on_degree_2_id"
   add_index "vacancy_masters", ["degree_id"], name: "index_vacancy_masters_on_degree_id"
   add_index "vacancy_masters", ["department_id"], name: "index_vacancy_masters_on_department_id"
   add_index "vacancy_masters", ["employee_designation_id"], name: "index_vacancy_masters_on_employee_designation_id"
+  add_index "vacancy_masters", ["employee_id"], name: "index_vacancy_masters_on_employee_id"
+  add_index "vacancy_masters", ["reporting_master_id"], name: "index_vacancy_masters_on_reporting_master_id"
 
   create_table "week_offs", force: :cascade do |t|
     t.string   "weekoff_date_range"

@@ -58,7 +58,13 @@ Rails.application.routes.draw do
   resources :vacancy_masters do
     collection do
       get :search_by_vacancy_post_date
+      get :vacancy_request_confirmation
+      get :vacancy_history
       post :import
+      get :modal
+      post :send_request_to_higher_authority
+      get :reject_vacancy
+      get :approve_vacancy
     end
   end
   resources :leave_c_offs do

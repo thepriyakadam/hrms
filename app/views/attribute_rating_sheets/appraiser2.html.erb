@@ -133,10 +133,11 @@
     </div>
   <% end %>
 
-
+<%= bootstrap_form_for @attribute_rating_sheet,url:{action:'is_confirm_appraiser2'} do |f| %>
   <table id="tbl" class="table table-bordered table-hover table-condensed">
     <thead>
       <tr>
+        <th><input type="checkbox" id="selectAll" value="selectAll"></th>
         <th>Attribute & Definition</th>
         <th>Weightage</th>
         <th>Appraisee Comment</th>
@@ -151,6 +152,7 @@
     <tbody>
       <% @attribute_rating_multiple_sheets.each do |a| %>
         <tr>
+          <td><%= check_box_tag "attribute_rating_sheet_ids[]", a.id %></td>
           <td><%= a.employee_attribute.attribute_master.name %></td>
           <td><%= a.employee_attribute.weightage %></td>
           <td><%= a.appraisee_comment %></td>
@@ -161,16 +163,41 @@
           <td><%= a.appraiser2_rating %></td>
           <%= hidden_field_tag 'attribute_rating_sheet_id[]', {},value: a.id %> 
           <td>
-         
-              <%= link_to '', edit_appraiser_goal_rating_sheets_path(a) ,class: 'btn btn-xs btn-success fa fa-edit' %>
-              
-              <%= link_to '',is_confirm_appraiser_goal_rating_sheets_path(a,a: a.appraisee_id),class: 'btn btn-xs btn-warning fa fa-check'%>
+            <% if a.is_confirm_appraiser2 == true %>
+            <% else %>
+              <%= link_to '', edit_appraiser2_attribute_rating_sheets_path(a) ,class: 'btn btn-xs btn-success fa fa-edit' %>
+            <% end %>
           </td> 
         </tr>
       <% end %>
     </tbody>
   </table>
-</div>
-</div>
 
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="actions">
+          <%= f.submit "Confirm", class: 'btn btn-primary btn-sm' %>
+        </div>
+      </div>
+    </div>
+</div>
+</div>
+<% end %>
 <%= link_to 'Back', subordinate_list_attribute_rating_sheets_path(@employee.id) %>
+
+<script type="text/javascript">
+  $(function () {
+    $('#selectAll').click(function() {
+      if (this.checked) {
+        $(':checkbox').each(function() {
+          this.checked = true;                       
+        });
+      } 
+      else {
+        $(':checkbox').each(function() {
+          this.checked = false;                        
+        });
+      } 
+    });
+  });
+</script>

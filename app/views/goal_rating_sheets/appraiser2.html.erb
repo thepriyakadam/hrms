@@ -89,7 +89,7 @@
   
 </div>
 
- <%= bootstrap_form_for(@goal_rating_sheet,url:{action: "appraiser2_create"}) do |f| %>
+ <%= bootstrap_form_for(:goal_rating_sheet,url:{action: "appraiser2_create"}) do |f| %>
 
 	<div class="box-header with-border">
     <h3 class="box-title">Employee Goals</h3>
@@ -145,10 +145,11 @@
 <% end %>
 
 
-
+<%= bootstrap_form_for :goal_rating_sheet,url:{action:'is_confirm_appraiser2'} do |f| %>
 <table id="tbl" class="table table-bordered table-hover table-condensed">
     <thead>
       <tr>
+        <th><input type="checkbox" id="selectAll" value="selectAll"></th>
         <th>Goal Perspctive</th>
         <th>Goal Measure</th>
         <th>Target</th>
@@ -168,6 +169,7 @@
     <tbody>
       <% @goal_rating_sheets.each do |g| %>
         <tr>
+          <td><%= check_box_tag "goal_rating_sheet_ids[]", g.id %></td>
           <td><%= g.employee_goal.goal_perspective.name %></td>
           <td><%= g.employee_goal.goal_measure %></td>
           <td><%= g.employee_goal.target %></td>
@@ -182,10 +184,10 @@
           <td><%= g.appraiser2_comment %></td>
           <td><%= g.appraiser2_rating %></td>
           <td>
-         
+            <% if g.is_confirm_appraiser2 == true %>
+            <% else %>
               <%= link_to '', edit_appraiser2_goal_rating_sheets_path(g) ,class: 'btn btn-xs btn-success fa fa-edit' %>
-              
-              <%= link_to '',is_confirm_appraiser_goal_rating_sheets_path(g,a: g.appraisee_id),class: 'btn btn-xs btn-warning fa fa-check'%>
+            <% end %>
           </td>
           <%= hidden_field_tag 'goal_rating_sheet_id[]', {},value: g.id %> 
           <%= hidden_field_tag :appraiser_2_id, {},value: current_user.employee_id %>
@@ -193,8 +195,32 @@
       <% end %>
     </tbody>
   </table>
-
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="actions">
+          <%= f.submit "Confirm", class: 'btn btn-primary btn-sm' %>
+        </div>
+      </div>
+    </div>
+    <% end %>
   <%= link_to 'Back', subordinate_list_attribute_rating_sheets_path(@employee.id) %>
   <%= link_to 'Attribute', appraiser2_attribute_rating_sheets_path(@employee.id) %>  
 </div>
 </div>
+
+<script type="text/javascript">
+  $(function () {
+    $('#selectAll').click(function() {
+      if (this.checked) {
+        $(':checkbox').each(function() {
+          this.checked = true;                       
+        });
+      } 
+      else {
+        $(':checkbox').each(function() {
+          this.checked = false;                        
+        });
+      } 
+    });
+  });
+</script>

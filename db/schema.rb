@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160419095332) do
+ActiveRecord::Schema.define(version: 20160420095645) do
 
   create_table "accident_records", force: :cascade do |t|
     t.string   "code"
@@ -94,6 +94,8 @@ ActiveRecord::Schema.define(version: 20160419095332) do
     t.integer  "final_rating"
     t.integer  "final_id_id"
     t.integer  "appraiser_2_id"
+    t.boolean  "is_confirm_final"
+    t.boolean  "is_confirm_appraiser2"
   end
 
   add_index "attribute_rating_sheets", ["appraisee_id"], name: "index_attribute_rating_sheets_on_appraisee_id"
@@ -841,6 +843,8 @@ ActiveRecord::Schema.define(version: 20160419095332) do
     t.integer  "final_rating"
     t.integer  "appraiser_2_id"
     t.integer  "final_id_id"
+    t.boolean  "is_confirm_final"
+    t.boolean  "is_confirm_appraiser2"
   end
 
   add_index "goal_rating_sheets", ["appraisee_id"], name: "index_goal_rating_sheets_on_appraisee_id"

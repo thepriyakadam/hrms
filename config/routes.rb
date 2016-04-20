@@ -146,7 +146,7 @@ Rails.application.routes.draw do
       patch :update_appraiser
       get :appraiser
       post :appraiser_create
-      get :is_confirm_appraiser
+      post :is_confirm_appraiser
       post :is_confirm_appraisee
       get :employee_details
       get :employee_info
@@ -155,12 +155,18 @@ Rails.application.routes.draw do
       post :appraiser2_create
       get :final_comment
       post :final_create
+      get :edit_final
+      patch :update_final
+      post :is_confirm_final
+      post :is_confirm_appraiser2
+      get :edit_appraiser2
+      patch :update_appraiser2
     end
   end
   resources :goal_rating_sheets do
     collection do
       post :is_confirm_appraisee
-      get :is_confirm_appraiser
+      post :is_confirm_appraiser
       get :edit_appraiser
       patch :update_appraiser
       delete :destroy_appraiser
@@ -178,6 +184,10 @@ Rails.application.routes.draw do
       get :employee_list
       get :final_comment
       post :final_create
+      get :edit_final
+      patch :update_final
+      post :is_confirm_final
+      post :is_confirm_appraiser2
     end
   end
   resources :employee_attributes do

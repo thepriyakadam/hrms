@@ -3,6 +3,17 @@ class VacancyMaster < ActiveRecord::Base
   belongs_to :employee_designation
   belongs_to :company_location
   belongs_to :degree
+  belongs_to :employee
+  has_many :reporting_masters_vacancy_masters
+  has_many :reporting_masters, through: :reporting_masters_vacancy_masters
+
+  has_many :subordinates, class_name: 'VacancyMaster',
+                          foreign_key: 'degree_1_id'
+  belongs_to :degree_1, class_name: 'Degree'
+
+  has_many :indirect_subordinates, class_name: 'VacancyMaster',
+                                   foreign_key: 'degree_2_id'
+  belongs_to :degree_2, class_name: 'Degree'
 
   # validates :vacancy_name, presence: true
   # validates :no_of_position, presence: true

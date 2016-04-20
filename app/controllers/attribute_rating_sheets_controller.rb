@@ -4,6 +4,7 @@ class AttributeRatingSheetsController < ApplicationController
   # GET /attribute_rating_sheets
   # GET /attribute_rating_sheets.json
   def index
+    @attribute_rating_sheet = AttributeRatingSheet.new 
     @attribute_rating_sheets = AttributeRatingSheet.where(appraisee_id: current_user.employee_id)
   end
 
@@ -135,21 +136,65 @@ class AttributeRatingSheetsController < ApplicationController
   end
 
   def is_confirm_appraiser
-    @attribute_rating_sheet = AttributeRatingSheet.find(params[:format])
     
-    @attribute_rating_sheet.update(is_confirm_appraiser: true)
-
-    #@employee = Employee.find(params[:g])
-
-    redirect_to appraiser_attribute_rating_sheets_path(format: @attribute_rating_sheet.appraisee_id)
+     @attribute_rating_sheet_ids = params[:attribute_rating_sheet_ids]
+    if @attribute_rating_sheet_ids.nil?
+        flash[:alert] = "Please Select the Checkbox"
+        redirect_to attribute_rating_sheets_path
+      else
+        @attribute_rating_sheet_ids.each do |aid|
+        @attribute_rating_sheet = AttributeRatingSheet.find(aid)
+        @attribute_rating_sheet.update(is_confirm_appraiser: true)
+        flash[:notice] = "Confirmed Successfully"
+      end  
+       redirect_to appraiser_attribute_rating_sheets_path(@attribute_rating_sheet.appraisee_id)
+    end
   end
 
   def is_confirm_appraisee
-    @attribute_rating_sheet = AttributeRatingSheet.find(params[:format])
-    
-    @attribute_rating_sheet.update(is_confirm_appraisee: true)
 
-    redirect_to attribute_rating_sheets_path(@attribute_rating_sheet.appraisee_id)
+     @attribute_rating_sheet_ids = params[:attribute_rating_sheet_ids]
+    if @attribute_rating_sheet_ids.nil?
+        flash[:alert] = "Please Select the Checkbox"
+        redirect_to attribute_rating_sheets_path
+      else
+        @attribute_rating_sheet_ids.each do |aid|
+        @attribute_rating_sheet = AttributeRatingSheet.find(aid)
+        @attribute_rating_sheet.update(is_confirm_appraisee: true)
+        flash[:notice] = "Confirmed Successfully"
+      end  
+       redirect_to attribute_rating_sheets_path(@attribute_rating_sheet.appraisee_id)
+    end
+  end
+
+   def is_confirm_final
+    @attribute_rating_sheet_ids = params[:attribute_rating_sheet_ids]
+    if @attribute_rating_sheet_ids.nil?
+        flash[:alert] = "Please Select the Checkbox"
+        redirect_to new_attribute_rating_sheet_path
+      else
+        @attribute_rating_sheet_ids.each do |gid|
+        @attribute_rating_sheet = AttributeRatingSheet.find(gid)
+        @attribute_rating_sheet.update(is_confirm_final: true)
+        flash[:notice] = "Confirmed Successfully"
+      end  
+       redirect_to new_attribute_rating_sheet_path
+    end  
+  end
+
+  def is_confirm_appraiser2
+    @attribute_rating_sheet_ids = params[:attribute_rating_sheet_ids]
+    if @attribute_rating_sheet_ids.nil?
+        flash[:alert] = "Please Select the Checkbox"
+        redirect_to new_attribute_rating_sheet_path
+      else
+        @attribute_rating_sheet_ids.each do |gid|
+        @attribute_rating_sheet = AttributeRatingSheet.find(gid)
+        @attribute_rating_sheet.update(is_confirm_appraiser2: true)
+        flash[:notice] = "Confirmed Successfully"
+      end  
+       redirect_to root_url
+    end  
   end
 
   def employee_details
@@ -174,6 +219,104 @@ class AttributeRatingSheetsController < ApplicationController
     @employees = current_login.subordinates
   end
 
+  def appraiser2
+    @employee = Employee.find(params[:format])
+    @attribute_rating_sheets = AttributeRatingSheet.where(appraisee_id: @employee.id)
+    @attribute_ratings = AttributeRatingSheet.where(appraisee_id: @employee.id, appraiser_comment: nil)
+    
+
+    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
+    @qualifications = Qualification.where(employee_id: @employee.id)
+    @experiences = Experience.where(employee_id: @employee.id)
+    @ctc = EmployeeSalaryTemplate.where(employee_id: @employee.id).sum(:monthly_amount)
+    @attribute_rating_multiple_sheets = AttributeRatingSheet.where(appraisee_id: params[:format])
+    @attribute_rating_sheet = AttributeRatingSheet.new
+  end
+
+  def appraiser2_create
+    attribute_rating_sheets = params[:attribute_rating_sheet_id]
+    comments = params[:appraiser2_comment]
+    ratings = params[:appraiser2_rating]
+    final = attribute_rating_sheets.zip(comments, ratings)
+    final.each do |e, c, r|
+      attribute_rating_sheet = AttributeRatingSheet.find(e)
+      if c == ''
+        flash[:alert] = 'Fill comments'
+      elsif r == ''
+        flash[:alert] = 'Fill ratings'
+      else
+        attribute_rating_sheet.update(appraiser2_comment: c, appraiser2_rating: r)
+      end
+    end
+    @employee = Employee.find(params[:appraisee_id])
+
+    redirect_to appraiser2_attribute_rating_sheets_path(format: @employee.id)
+  end
+
+  def final_comment
+    #@attribute_rating_sheet = AttributeRatingSheet.new
+    
+    @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: params[:format])
+    @attribute_rating_sheets = AttributeRatingSheet.where(appraisee_id: params[:format]).group(:appraisee_id)
+    @employee = Employee.find(params[:format])
+    @qualifications = Qualification.where(employee_id: @employee.id)
+    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
+    @experiences = Experience.where(employee_id: @employee.id)
+    @ctc = EmployeeSalaryTemplate.where(employee_id: @employee.id).sum(:monthly_amount)
+    @attribute_rating_multiple_sheets = AttributeRatingSheet.where(appraisee_id: params[:format])
+  end
+
+  def final_create
+     #@attribute_rating_sheet = AttributeRatingSheet.find(params[:id])
+
+    attribute_rating_sheets = params[:attribute_rating_sheet_id]
+    comments = params[:final_comment]
+    ratings = params[:final_rating]
+    final = attribute_rating_sheets.zip(comments, ratings)
+    final.each do |e, c, r|
+      attribute_rating_sheet = AttributeRatingSheet.find(e)
+      if c == ''
+        flash[:alert] = 'Fill comments'
+      elsif r == ''
+        flash[:alert] = 'Fill ratings'
+      else
+        attribute_rating_sheet.update(final_comment: c, final_rating: r, final_id_id: params[:final_id_id])
+      end
+    end
+      redirect_to root_url
+  end
+
+  def edit_final
+    @attribute_rating_sheet = AttributeRatingSheet.find(params[:format])
+  end
+
+  def update_final
+    @attribute_rating_sheet = AttributeRatingSheet.find(params[:id])
+
+    if @attribute_rating_sheet.update(attribute_rating_sheet_params)
+      flash[:notice] = "Updated Successfully."
+    else
+      flash[:alert] = "Not Updated "
+    end
+    redirect_to root_url
+  end
+
+  def edit_appraiser2
+    @attribute_rating_sheet = AttributeRatingSheet.find(params[:format])
+  end
+
+  def update_appraiser2
+    @attribute_rating_sheet = AttributeRatingSheet.find(params[:id])
+
+    if @attribute_rating_sheet.update(attribute_rating_sheet_params)
+      flash[:notice] = "Updated Successfully."
+    else
+      flash[:alert] = "Not Updated "
+    end
+   
+    redirect_to root_url
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -183,7 +326,7 @@ class AttributeRatingSheetsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def attribute_rating_sheet_params
-    params.require(:attribute_rating_sheet).permit(:is_confirm_appraisee,:is_confirm_appraiser,:appraisee_id, :appraiser_id, :employee_attribute_id, :appraisee_comment, :appraisee_rating, :appraiser_comment, :appraiser_rating)
+    params.require(:attribute_rating_sheet).permit(:final_id,:appraiser_2_id,:final_comment,:final_rating,:appraiser2_comment,:appraiser2_rating,:is_confirm_final,:is_confirm_appraiser2,:is_confirm_appraisee,:is_confirm_appraiser,:appraisee_id, :appraiser_id, :employee_attribute_id, :appraisee_comment, :appraisee_rating, :appraiser_comment, :appraiser_rating)
   end
 
 end

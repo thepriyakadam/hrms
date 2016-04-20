@@ -6,10 +6,11 @@ class CreateEmployeeAttributes < ActiveRecord::Migration
       t.references :attribute_master, index: true, foreign_key: true
       t.references :definition, index: true, foreign_key: true
       t.integer :weightage
-      t.text :appraisee_comment
-      t.integer :appraisee_rating
-      t.text :appraiser_comment
-      t.integer :appraiser_rating
+
+      t.references :employee, index: true, foreign_key: true
+      t.references :performance_period, index: true, foreign_key: true
+
+      t.boolean :is_confirm
 
       t.timestamps null: false
     end

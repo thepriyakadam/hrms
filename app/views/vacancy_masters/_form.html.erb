@@ -6,6 +6,13 @@
   <div class="box-body">
     <%= bootstrap_form_for(@vacancy_master) do |f| %>
       <div class="row">
+
+       <div class="col-sm-3">
+          <div class="form-group required">
+             <%= f.text_field :other_organization,label: 'Organization'%>
+          </div>
+        </div>
+
         <div class="col-sm-3">
          <label>Job Title</label>
           <div class="form-group required">
@@ -32,17 +39,7 @@
           </div>
         </div> 
 
-         <div class="col-sm-3">
-          <label>Educational Qualification</label>
-          <div class="form-group required">
-            <div class="input-group">
-              <div class="input-group-addon">
-                <%= link_to "", new_degree_path,class: "fa fa-plus fa-success",:target => "_blank" %>
-              </div>
-              <%= f.select :degree_id, all_degree_list,{hide_label: true,include_blank: " Select Qualification"} %>
-            </div>
-          </div>
-        </div>
+     
       </div>
 
       <div class="row">
@@ -66,7 +63,7 @@
         </div>  
 
         <div class="col-sm-3">
-          <label>Vacancy Post Date: </label>
+          <label>Vacancy Expected Date: </label>
           <div class="form-group required">
             <div class="input-group">
               <div class="input-group-addon">
@@ -85,17 +82,57 @@
           </div>
         </div>  
 
-        <div class="col-sm-3">
+            <div class="col-sm-3">
+          <label>Educational Qualification1</label>
           <div class="form-group required">
-             <%= f.text_field :other_organization,label: 'Organization'%>
+            <div class="input-group">
+              <div class="input-group-addon">
+                <%= link_to "", new_degree_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+              </div>
+               <%= f.select :degree_id, all_degree, {hide_label: true,include_blank: " Select Qualification"}, class: 'input_degree_stream_id' %>
+            </div>
           </div>
         </div>
-        </div>      
+
+        <div class="col-sm-3">
+          <label>Educational Qualification2</label>
+          <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <%= link_to "", new_degree_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+              </div>
+               <%= f.select :degree_1_id, all_degree, {hide_label: true,include_blank: " Select Qualification"}, class: 'input_degree_stream_id' %>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <label>Educational Qualification3</label>
+          <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <%= link_to "", new_degree_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+              </div>
+               <%= f.select :degree_2_id, all_degree, {hide_label: true,include_blank: " Select Qualification"}, class: 'input_degree_stream_id' %>
+            </div>
+          </div>
+        </div>
+       
+        </div> 
+      <div class="row">
+        <div class="col-sm-3">
+        <label>Vacancy Approval</label>
+            <div class="field">
+              <%= f.select :reporting_master_id,all_reporting_master_list,{hide_label: true,include_blank: " Select Reporting Master"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
+            </div>
+        </div>
+       </div>  
+     
 
       <div class="row">
         <div class="col-sm-12">
           <div class="field">
-           <%= f.text_area :description,label: 'Description',placeholder: "e.g : Any Description related to Vacancy"%>
+           <%= f.text_area :description,label: 'Job Description',placeholder: "e.g : Any Description related to Vacancy"%>
           </div>
         </div>
       </div> 

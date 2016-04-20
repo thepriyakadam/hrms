@@ -1,6 +1,6 @@
 class PdfSalariesController < ApplicationController
 
-     def print_salary_slip_monthwise
+    def print_salary_slip_monthwise
       @month = params[:month]
       @year = params[:year]
       @employees = params[:employee_ids]
@@ -11,6 +11,16 @@ class PdfSalariesController < ApplicationController
             render :pdf => 'print_multiple_sal_slip_monthwise',
             layout: '/layouts/pdf.html.erb',
             :template => 'pdf_salaries/print_multiple_salary_slip.pdf.erb',
+            :header => {
+                    :center => "BFTL Salaryslip"
+                 },
+            :orientation      => 'Landscape', # default , Landscape
+            :page_height      => 1000,
+            :dpi              => '300',
+            :margin           => {:top    => 55, # default 10 (mm)
+                          :bottom => 55,
+                          :left   => 12,
+                          :right  => 0},
             :show_as_html => params[:debug].present?
           end
         end

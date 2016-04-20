@@ -86,10 +86,11 @@
 
   <% end %> 
 
-
+<%= bootstrap_form_for @goal_rating_sheet,url:{action:'is_confirm_appraiser'} do |f| %> 
   <table id="tbl" class="table table-bordered table-hover table-condensed">
     <thead>
       <tr>
+        <th><input type="checkbox" id="selectAll" value="selectAll"></th>
         <th>Goal Perspctive</th>
         <th>Goal Measure</th>
         <th>Target</th>
@@ -107,12 +108,14 @@
     <tbody>
       <% @goal_rating_sheets.each do |g| %>
         <tr>
+          <td><%= check_box_tag "goal_rating_sheet_ids[]", g.id %></td>
           <td><%= g.employee_goal.goal_perspective.name %></td>
           <td><%= g.employee_goal.goal_measure %></td>
           <td><%= g.employee_goal.target %></td>
           <td><%= g.employee_goal.goal_weightage %></td>
           <td><%= g.employee_goal.difficulty_level %></td>
           <td><%= g.employee_goal.allign_to_supervisor %></td>
+
           <% if g.is_confirm_appraisee == true %>
           <td><%= g.appraisee_comment %></td>
           <td><%= g.appraisee_rating %></td>
@@ -123,26 +126,46 @@
           <td><%= g.appraiser_comment %></td>
           <td><%= g.appraiser_rating %></td>
            
-
           <td>
           <% if g.is_confirm_appraiser == true %>
             <% else %>
               <%= link_to '', edit_appraiser_goal_rating_sheets_path(g) ,class: 'btn btn-xs btn-success fa fa-edit' %>
               
-              <%= link_to '',is_confirm_appraiser_goal_rating_sheets_path(g,a: g.appraisee_id),class: 'btn btn-xs btn-warning fa fa-check'%>
-              
             <% end %>
           </td>
+          
         </tr>
       <% end %>
     </tbody>
   </table>
+
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="actions">
+          <%= f.submit "Confirm", class: 'btn btn-primary btn-sm' %>
+        </div>
+      </div>
+    </div>
+
   </div>
   </div>
+   <% end %>
+   <%= link_to 'Attribute-Setting', appraiser_attribute_rating_sheets_path(@employee.id) , class: 'btn btn-warning btn-sm' %>
+  
 
-   <%= link_to 'Attribute-Setting', appraiser_attribute_rating_sheets_path(@employee.id) , class: 'btn btn-warning btn-sm' %></br>
-      </br>
-    <%= link_to 'Back', subordinate_list_goal_rating_sheets_path %>
-
-    <div id="myModal" class="modal fade"></div>
-
+<script type="text/javascript">
+  $(function () {
+    $('#selectAll').click(function() {
+      if (this.checked) {
+        $(':checkbox').each(function() {
+          this.checked = true;                       
+        });
+      } 
+      else {
+        $(':checkbox').each(function() {
+          this.checked = false;                        
+        });
+      } 
+    });
+  });
+</script>

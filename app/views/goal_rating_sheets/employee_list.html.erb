@@ -1,0 +1,21 @@
+<table id="example1" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+	    <th>Code</th>
+	    <th>Employee Name</th>
+	    <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+  	<% @employees.each do |employee| %>
+    <tr>
+      <td><%= employee.manual_employee_code %></td>
+      <td><%= full_name(employee) %></td>
+      <td>
+        <%= link_to '', final_comment_goal_rating_sheets_path(employee),class: 'btn btn-sm btn-default fa fa-eye' %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+ </table>

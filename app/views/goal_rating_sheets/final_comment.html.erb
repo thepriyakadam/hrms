@@ -114,7 +114,7 @@
       </tr>
     </thead>
     <tbody>
-      <% @goal_rating_sheets.each do |g| %>
+      <% @goal_ratings.each do |g| %>
         <tr>
           <td><%= g.employee_goal.goal_perspective.name %></td>
           <td><%= g.employee_goal.goal_measure %></td>
@@ -140,6 +140,9 @@
     </tbody>
   </table>
 
+  <% if @goal_ratings.empty? %>
+
+  <% else %>
     <div class="row">
       <div class="col-sm-3">
         <div class="actions">
@@ -147,6 +150,7 @@
         </div>
       </div>
     </div>
+  <% end %>
   <% end %>
 
 <%= bootstrap_form_for @goal_rating_sheet,url:{action:'is_confirm_final'} do |f| %>
@@ -216,9 +220,9 @@
         </div>
       </div>
     </div>
-
-  <%= link_to 'Back', subordinate_list_attribute_rating_sheets_path(@employee.id) %>
-  <%= link_to 'Attribute', final_comment_attribute_rating_sheets_path(@employee.id) %>  
+      </br>
+  <%= link_to 'Attribute', final_comment_attribute_rating_sheets_path(@employee.id),class: 'btn btn-warning btn-sm' %> |
+  <%= link_to 'Back', subordinate_list_attribute_rating_sheets_path(@employee.id) %> 
 </div>
 </div>
 <% end %>

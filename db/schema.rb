@@ -1429,9 +1429,6 @@ ActiveRecord::Schema.define(version: 20160415070421) do
     t.integer  "employee_designation_id"
     t.integer  "company_location_id"
     t.integer  "degree_id"
-    t.string   "experience"
-    t.string   "keyword"
-    t.string   "others"
     t.string   "other_organization"
     t.string   "industry"
   end

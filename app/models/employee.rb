@@ -12,6 +12,7 @@ class Employee < ActiveRecord::Base
   has_many :awards
   has_many :certifications
   has_many :interview_schedules
+  has_many :vacancy_masters
   has_many :interview_reschedules
   has_many :qualifications
   has_many :employee_leav_requests
@@ -56,6 +57,18 @@ class Employee < ActiveRecord::Base
   has_many :appraiser_attribute_rating_sheets, class_name: "Employee",
                           foreign_key: "appraiser_id"
 
+  has_many :appraiser_2_goal_rating_sheets, class_name: "Employee",
+                          foreign_key: "appraiser_2_id"
+
+  has_many :final_id_goal_rating_sheets, class_name: "Employee",
+                          foreign_key: "final_id_id"
+
+  has_many :appraiser_2_attribute_rating_sheets, class_name: "Employee",
+                          foreign_key: "appraiser_2_id"
+
+  has_many :final_id_attribute_rating_sheets, class_name: "Employee",
+                          foreign_key: "final_id_id"
+                          
   before_create :add_department
   before_update :add_department
 

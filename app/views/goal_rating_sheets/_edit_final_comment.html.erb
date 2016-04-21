@@ -1,0 +1,32 @@
+
+   <%= bootstrap_form_for(@goal_rating_sheet,url:{controller: "goal_rating_sheets",action: 'update_final',id:@goal_rating_sheet.id}) do |f| %>
+   
+    <div class= "row">
+      <div class="col-sm-3">
+        <div class= "field">
+          <%= f.text_field :final_comment %>
+        </div>
+      </div>
+
+      <div class="col-sm-3">
+        <div class= "field">
+          <%= f.text_field :final_rating %>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class= "field">
+        <%= hidden_field_tag :final_id_id, {},value: current_user.employee_id %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="actions">
+          <%= f.submit "Update Final Rating" ,class: "btn btn-primary btn-sm"%>
+        </div>
+      </div>
+    </div>
+   
+  <% end %>

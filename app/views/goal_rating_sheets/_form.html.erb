@@ -1,6 +1,6 @@
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title">Employee Goal Rating : <%= @employee_goals.first.period.title %></h3>
+    <h3 class="box-title">Employee Goal Rating : <%= @employee_goals.try(:first).try(:period).try(:title) %></h3>
   </div>
   <div class="box-body">
 
@@ -9,7 +9,7 @@
   <table id="tbl" class="table table-bordered table-hover table-condensed">
     <thead>
       <tr>
-        <th>Perspctive</th>
+        <th>Perspective</th>
         <th>Measure</th>
         <th>Target</th>
         <th>Weightage</th>

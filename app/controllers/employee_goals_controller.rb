@@ -65,7 +65,7 @@ class EmployeeGoalsController < ApplicationController
 
   def subordinate_list
     current_login = Employee.find(current_user.employee_id)
-    @employees = current_login.subordinates
+    @employees = current_login.subordinates 
   end
 
 

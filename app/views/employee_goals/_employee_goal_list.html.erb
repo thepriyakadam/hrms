@@ -33,9 +33,10 @@
             </td>
           </tr>
           <% end %>
+           <%= f.hidden_field :employee_id,value: @employee.id %>
         </tbody>
       </table>
-
+      
       <div class="row">
         <div class="col-sm-3">
           <div class="actions">
@@ -43,7 +44,9 @@
           </div>
         </div>
       </div>
-    <% end %> 
+    
+
+  <% end %>
 
       </br>
 

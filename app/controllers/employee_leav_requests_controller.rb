@@ -56,8 +56,9 @@ class EmployeeLeavRequestsController < ApplicationController
       @emp_leave_bal = EmployeeLeavBalance.where('employee_id = ? AND leav_category_id = ?', @employee.id, @employee_leav_request.leav_category_id).take
       type = LeavCategory.find(@employee_leav_request.leav_category_id).name
       if type == "LWP Leave" or type == "ESIC Leave"
+        @employee_leav_request.save
         @employee_leav_request.leave_status_records.build(change_status_employee_id: current_user.employee_id,status: "Pending", change_date: Date.today)
-        if @employee.email.nil? or @employee.email == ""
+        if @employee.manager.email.nil? or @employee.manager.email == ""
           flash[:notice] = "Send request without email."
         else
           flash[:notice] = 'Leave Request sent successfully.'
@@ -81,7 +82,7 @@ class EmployeeLeavRequestsController < ApplicationController
           @employee_leav_request.leave_status_records.build(change_status_employee_id: current_user.employee_id, status: 'Pending', change_date: Date.today)
           if @employee_leav_request.save
             @employee_leav_request.minus_leave(@employee_leav_request)
-            if @employee.email.nil? || @employee.email == ''
+            if @employee.manager.email.nil? || @employee.manager.email == ''
               flash[:notice] = 'Send request without email.'
             else
               flash[:notice] = 'Leave Request sent successfully.'
@@ -92,11 +93,10 @@ class EmployeeLeavRequestsController < ApplicationController
             render :new
           end
         else
-
           @employee_leav_request.leave_status_records.build(change_status_employee_id: current_user.employee_id, status: 'Pending', change_date: Date.today)
           if @employee_leav_request.save
             @employee_leav_request.minus_leave(@employee_leav_request)
-            if @employee.email.nil? || @employee.email == ''
+            if @employee.manager.email.nil? || @employee.manager.email == ''
               flash[:notice] = 'Send request without email.'
             else
               flash[:notice] = 'Leave Request sent successfully.'
@@ -167,7 +167,7 @@ class EmployeeLeavRequestsController < ApplicationController
     @employee_leav_request = EmployeeLeavRequest.new
     @total_leaves = EmployeeLeavBalance.where('employee_id = ?', @employee.id)
     @remain_leaves = EmployeeLeavRequest.joins(:leav_approved)
-    @leave_c_offs = LeaveCOff.where(employee_id: @employee.id)
+    @leave_c_offs = LeaveCOff.where(employee_id: @employee.id, is_taken: false)
   end
 
   def hr_view_request
@@ -238,3 +238,5 @@ class EmployeeLeavRequestsController < ApplicationController
     params.require(:employee_leav_request).permit(:employee_id, :leav_category_id, :leave_type, :date_range, :start_date, :end_date, :reason)
   end
 end
+
+#ArgumentError (An SMTP To address is required to send a message. Set the message smtp_envelope_to, to, cc, or bcc address.):

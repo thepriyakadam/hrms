@@ -1,0 +1,105 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Vacancy Confirmation List</h3>
+    <div class="pull-right">
+    </div>
+    </div>
+<div class="box-body">
+<table id="example" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Organization</th>
+      <th>Job title</th>
+      <th>Vacancy name</th>
+      <th>Company Location</th>
+      <th>Educational qualification</th>
+      <th>No of position</th>
+      <th>Experience</th>
+    </tr>
+  </thead>
+
+  <tbody>
+      <% @vacancy_masters.each do |vacancy_master| %>
+      <tr>
+        <td><%= vacancy_master.other_organization %></td>
+        <td><%= vacancy_master.employee_designation.try(:name) %></td>
+        <td><%= vacancy_master.vacancy_name %></td>
+        <td><%= vacancy_master.department.manual_department_code+' '+vacancy_master.company_location.try(:name)+' '+vacancy_master.department.try(:name) %></td>
+        <td><%= vacancy_master.degree.try(:name) %></td>
+        <td><%= vacancy_master.no_of_position %></td>
+        <td><%= vacancy_master.experience %></td>
+      </tr>
+      <% end %>
+  </tbody>
+</table>
+
+
+<div class="row">
+      <div class="col-sm-2">Organization</div>
+      <div class="col-sm-6"><%= @vacancy_master.other_organization %></div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2">Job Title</div>
+      <div class="col-sm-6"><%= @vacancy_master.employee_designation.try(:name) %></div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2">Vacancy Name</div>
+      <div class="col-sm-6"><%= @vacancy_master.vacancy_name %></div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2">Company Location</div>
+      <div class="col-sm-6"><%= @vacancy_master.department.manual_department_code+' '+@vacancy_master.company_location.name+' '+@vacancy_master.department.try(:name) %></div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2">No of Position</div>
+      <div class="col-sm-6"><%= @vacancy_master.no_of_position %></div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2">Experience</div>
+      <div class="col-sm-6"><%= @vacancy_master.experience %></div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2">Budget</div>
+      <div class="col-sm-6"><%= @vacancy_master.budget %></div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2">Vacancy Expected Date</div>
+      <div class="col-sm-6"><%= @vacancy_master.vacancy_post_date %></div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2">Keyword</div>
+      <div class="col-sm-6"><%= @vacancy_master.keyword %></div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2">Educational Qualification 1</div>
+      <div class="col-sm-6"><%= @vacancy_master.degree.try(:name) %></div>
+    </div>
+     <div class="row">
+      <div class="col-sm-2">Educational Qualification 2</div>
+      <div class="col-sm-6"><%= @vacancy_master.degree_1.try(:name) %></div>
+    </div>
+     <div class="row">
+      <div class="col-sm-2">Educational Qualification 3</div>
+      <div class="col-sm-6"><%= @vacancy_master.degree_2.try(:name) %></div>
+    </div>
+<!--     <div class="row">
+      <div class="col-sm-2">Vacancy Approval</div>
+      <div class="col-sm-6"><%= @vacancy_master.reporting_master_id %></div>
+    </div> -->
+    <div class="row">
+      <div class="col-sm-2">Description</div>
+      <div class="col-sm-6"><%= @vacancy_master.description %></div>
+    </div><br>
+    <div id="myModal" class="modal fade"></div>
+<%= link_to 'Approve',approve_vacancy_vacancy_masters_path(@vacancy_master.id),class: 'btn btn-sm btn-warning' %> |
+<%= link_to 'Reject',reject_vacancy_vacancy_masters_path(@vacancy_master.id),class: 'btn btn-sm btn-warning' %> |
+<%= link_to 'Approve & Send next',modal_vacancy_masters_path(@vacancy_master.id),class: 'btn btn-sm btn-warning fa fa-modx',remote: true %>
+    </div>
+</div>
+
+<script>
+$(document).ready(function() {
+    $('#example').DataTable();
+} );
+</script>
+

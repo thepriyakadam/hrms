@@ -1,8 +1,8 @@
 <div class="box">
   <div class="box-header">
-    <h3 class="box-title">Vacancy List</h3>
+    <h3 class="box-title">Vacancy </h3>
     <div class="pull-right">
-      <%= link_to "Create Vacancy Master", new_vacancy_master_path, class: 'btn btn-sm btn-primary' %> 
+      <%= link_to "Create New Vacancy", new_vacancy_master_path, class: 'btn btn-sm btn-primary' %> 
     </div>
     </div>
 
@@ -17,7 +17,6 @@
       <th>Company Location</th>
       <th>Educational qualification</th>
       <th>No of position</th>
-      <th>Description</th>
       <th>Vacancy post date</th>
       <th>Action</th>
     </tr>
@@ -31,12 +30,10 @@
         <td><%= vacancy_master.department.manual_department_code+' '+vacancy_master.company_location.name+' '+vacancy_master.department.name %></td>
         <td><%= vacancy_master.degree.try(:name) %></td>
         <td><%= vacancy_master.no_of_position %></td>
-        <td><%= vacancy_master.description %></td>
         <td><%= vacancy_master.vacancy_post_date %></td>
         <td>
             <%= link_to '', vacancy_master,class: 'btn btn-xs btn-default fa fa-eye' %>
-          <%= link_to '', edit_vacancy_master_path(vacancy_master),class: 'btn btn-xs btn-success fa fa-edit' %>
-            <%= link_to '', vacancy_master,method: :delete,data:{confirm:'Are you sure?'},class: 'btn btn-xs btn-danger fa fa-close' %>
+            <%= link_to 'Cancel',method: :delete,data:{confirm:'Are you sure?'},class: 'btn btn-danger btn-xs fa fa-trash' %>
         </td>
       </tr>
     <% end %>
@@ -53,10 +50,7 @@
   </div>
 
 <%= link_to 'New Vacancy master', new_vacancy_master_path %>
-<%= form_tag import_vacancy_masters_path, multipart: true do %>
-  <%= file_field_tag :file %>
-  <%= submit_tag "Import" %>
-  <% end %>
+
 <script>
 $(document).ready(function() {
     $('#example').DataTable();

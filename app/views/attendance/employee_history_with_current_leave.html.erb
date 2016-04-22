@@ -32,12 +32,10 @@
                         <small class="label label-default">Pending</small>
                       <% when "FirstApproved" %>
                         <small class="label label-primary">FirstApproved</small>
-                      <% when "SecondApproved" %>
-                        <small class="label label-success">SecondApproved</small>
-                      <% when "FirstRejected" %>
-                        <small class="label label-danger">FirstRejected</small>
-                      <% when "SecondRejected" %>
-                        <small class="label label-danger">SecondRejected</small>
+                      <% when "FinalApproved" %>
+                        <small class="label label-success">FinalApproved</small>
+                      <% when "Rejected" %>
+                        <small class="label label-danger">Rejected</small>
                       <% when "Cancelled" %>
                         <small class="label label-warning">Cancelled</small>
                       <% else %>

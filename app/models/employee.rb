@@ -12,6 +12,7 @@ class Employee < ActiveRecord::Base
   has_many :awards
   has_many :certifications
   has_many :interview_schedules
+  has_many :vacancy_masters
   has_many :interview_reschedules
   has_many :qualifications
   has_many :employee_leav_requests

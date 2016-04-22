@@ -10,7 +10,7 @@
 
       <div class="col-sm-3">
         <div class= "field">
-          <%= f.text_field :appraiser2_rating %>
+          <%= f.select :appraiser2_rating_id,options_for_select(all_rating_type),class: 'form-control' %>
         </div>
       </div>
     </div>

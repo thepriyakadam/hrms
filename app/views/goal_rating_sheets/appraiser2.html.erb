@@ -37,7 +37,7 @@
   <div class="col-sm-6">
     <div class="box-header with-border">
     
-      <h3 class="box-title">Employee Past Experience</h3>
+      <h3 class="box-title">Past Experience</h3>
     </div>
   <table class="table table-bordered table-hover table-condensed">
     <thead>
@@ -65,7 +65,7 @@
 
   <div class="col-sm-6">
     <div class="box-header with-border">
-      <h3 class="box-title">Employee Qualification Details</h3>
+      <h3 class="box-title">Qualification Details</h3>
     </div>
       <table class="table table-bordered table-hover table-condensed">
         <thead>
@@ -89,10 +89,10 @@
   
 </div>
 
- <%= bootstrap_form_for(:goal_rating_sheet,url:{action: "appraiser2_create"}) do |f| %>
+ <%= bootstrap_form_for(:goal_rating_sheet,url:{action: "appraiser2_create",id: @employee.id}) do |f| %>
 
 	<div class="box-header with-border">
-    <h3 class="box-title">Employee Goals</h3>
+    <h3 class="box-title">Goals</h3>
   </div>
 	 <table id="tbl" class="table table-bordered table-hover table-condensed">
     <thead>
@@ -123,11 +123,11 @@
           <td><%= g.employee_goal.allign_to_supervisor %></td>
 
           <td><%= g.appraisee_comment %></td>
-          <td><%= g.appraisee_rating %></td>
+          <td><%= g.appraisee_rating_id %></td>
           <td><%= g.appraiser_comment %></td>
-          <td><%= g.appraiser_rating %></td>
+          <td><%= g.appraiser_rating_id %></td>
           <td><%= text_field_tag 'appraiser2_comment[]' %></td>
-          <td><%= text_field_tag 'appraiser2_rating[]' %></td>
+          <td><%= select_tag 'appraiser2_rating_id[]',options_for_select(all_rating_type) ,class: 'form_control' %></td>
           <%= hidden_field_tag 'goal_rating_sheet_id[]', {},value: g.id %> 
           <%= hidden_field_tag :appraiser_2_id, {},value: current_user.employee_id %>
         </tr>
@@ -138,16 +138,16 @@
     <div class="row">
       <div class="col-sm-3">
         <div class="actions">
-          <%= f.submit "Create Rating" , class: "btn btn-primary btn-sm" %>
+          <%= f.submit "Assign Rating" , class: "btn btn-primary btn-sm" %>
         </div>
       </div>
     </div>
 <% end %>
 
 
-<%= bootstrap_form_for :goal_rating_sheet,url:{action:'is_confirm_appraiser2'} do |f| %>
+<%= bootstrap_form_for :goal_rating_sheet,url:{action:'is_confirm_appraiser2',id: @employee.id} do |f| %>
 <div class="box-header with-border">
-  <h3 class="box-title">Employee Goals</h3>
+  <h3 class="box-title">Goals</h3>
 </div>
 <table id="tbl" class="table table-bordered table-hover table-condensed">
     <thead>
@@ -181,11 +181,11 @@
           <td><%= g.employee_goal.allign_to_supervisor %></td>
 
           <td><%= g.appraisee_comment %></td>
-          <td><%= g.appraisee_rating %></td>
+          <td><%= g.appraisee_rating.try(:code) %></td>
           <td><%= g.appraiser_comment %></td>
-          <td><%= g.appraiser_rating %></td>
+          <td><%= g.appraiser_rating.try(:code)%></td>
           <td><%= g.appraiser2_comment %></td>
-          <td><%= g.appraiser2_rating %></td>
+          <td><%= g.appraiser2_rating.try(:code) %></td>
           <td>
             <% if g.is_confirm_appraiser2 == true %>
             <% else %>

@@ -68,8 +68,6 @@ class EmployeeGoalsController < ApplicationController
     @employees = current_login.subordinates 
   end
 
-
-
   def is_confirm
     @employee_goal_ids = params[:employee_goal_ids]
     if @employee_goal_ids.nil?
@@ -79,6 +77,9 @@ class EmployeeGoalsController < ApplicationController
       @employee_goal_ids.each do |eid|
       @employee_goal = EmployeeGoal.find(eid)
       @employee_goal.update(is_confirm: true)
+
+      GoalRatingSheet.create(appraisee_id: current_user.employee_id, employee_goal_id: @employee_goal.id)
+      
       flash[:notice] = "Confirmed Successfully"
     end  
      redirect_to new_employee_goal_path( @employee_goal.employee_id) 

@@ -76,10 +76,11 @@
     <% if @current_request.current_status == "Pending" %>
       <%= link_to 'Approved', first_approve_leave_status_record_path(@current_request.id), data: { confirm: 'Are you sure?' },class: 'btn btn-sm btn-info fa fa-check' %>
       <%= link_to 'Reject', first_reject_leave_status_record_path(@current_request.id), data: { confirm: 'Are you sure?' },class: 'btn btn-sm btn-danger fa fa-trash' %>
+      <%= link_to 'Back', approved_or_rejected_leave_request_employee_leav_requests_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
     <% elsif @current_request.current_status == "FirstApproved" %>
       <%= link_to 'Approved', second_approve_leave_status_record_path(@current_request.id), data: { confirm: 'Are you sure?' },class: 'btn btn-sm btn-info fa fa-check' %>
       <%= link_to 'Reject', second_reject_leave_status_record_path(@current_request.id), data: { confirm: 'Are you sure?' },class: 'btn btn-sm btn-danger fa fa-trash' %>
-      <%= link_to 'Back', employee_history_with_current_leave_employee_leav_requests_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+      <%= link_to 'Back', approved_or_rejected_leave_request_employee_leav_requests_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
     <% end %>
   </div>
 </div>

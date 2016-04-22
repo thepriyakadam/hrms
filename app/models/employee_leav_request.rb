@@ -1,5 +1,5 @@
 class EmployeeLeavRequest < ActiveRecord::Base
-  enum current_status: [:Pending, :Cancelled, :FirstApproved, :SecondApproved, :FirstRejected, :SecondRejected]
+  enum current_status: [:Pending, :Cancelled, :FirstApproved, :FinalApproved, :Rejected, :Rejected]
   belongs_to :employee
   belongs_to :leav_category
   has_one :leav_cancelled

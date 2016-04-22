@@ -65,6 +65,7 @@ Rails.application.routes.draw do
       post :send_request_to_higher_authority
       get :reject_vacancy
       get :approve_vacancy
+      get :approve_vacancy_list
     end
   end
   resources :leave_c_offs do
@@ -229,6 +230,9 @@ Rails.application.routes.draw do
       get :select_month_year_form
       get :collect_employee
       post :create_overtime_salary
+      get :revert_overtime
+      get :show_employee
+      post :destroy_overtime_salary
     end
   end
   resources :overtime_masters

@@ -37,9 +37,9 @@
           
             <% case item.salary_component.try(:name) %>
             <% when "Basic" %>
-              <Cell ss:Index="6"><Data ss:Type="Number"><%= basic_amt = item.actual_amount.round %></Data></Cell>
+              <Cell ss:Index="6"><Data ss:Type="Number"><%= basic_amt = item.calculated_amount.round %></Data></Cell>
             <% when "DA" %>
-              <Cell ss:Index="7"><Data ss:Type="Number"><%= da_amt = item.actual_amount.round %></Data></Cell>
+              <Cell ss:Index="7"><Data ss:Type="Number"><%= da_amt = item.calculated_amount.round %></Data></Cell>
             <% else %>
             <% end %> <!-- switch case -->
             

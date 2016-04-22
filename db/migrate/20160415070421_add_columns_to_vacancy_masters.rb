@@ -1,7 +1,5 @@
 class AddColumnsToVacancyMasters < ActiveRecord::Migration
   def change
-   
-    
     add_column :vacancy_masters, :other_organization, :string
     add_column :vacancy_masters, :industry, :string
     add_attachment :capture_resumes, :passport_photo

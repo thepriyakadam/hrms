@@ -1,5 +1,5 @@
- <?xml version="1.0"?>
- <Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
   xmlns:o="urn:schemas-microsoft-com:office:office"
   xmlns:x="urn:schemas-microsoft-com:office:excel"
   xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
@@ -7,25 +7,23 @@
   <Worksheet ss:Name="Sheet1">
     <Table>
       <Row>
-      <Cell ss:Index="1"><Data ss:Type="String">Code</Data></Cell>
-      <Cell ss:Index="1"><Data ss:Type="String">Name</Data></Cell>
-      <Cell ss:Index="1"><Data ss:Type="String">Date</Data></Cell>
-      <Cell ss:Index="1"><Data ss:Type="String">Hrs</Data></Cell>
-      <Cell ss:Index="1"><Data ss:Type="String">Rate</Data></Cell>
-      <Cell ss:Index="1"><Data ss:Type="String">Amount</Data></Cell>
-      <Cell ss:Index="1"><Data ss:Type="String">Action</Data></Cell>
-       </Row>
+        <Cell ss:Index="1"><Data ss:Type="String">Code</Data></Cell>
+        <Cell ss:Index="2"><Data ss:Type="String">Name</Data></Cell>
+        <Cell ss:Index="3"><Data ss:Type="String">Date</Data></Cell>
+        <Cell ss:Index="4"><Data ss:Type="String">Hrs</Data></Cell>
+        <Cell ss:Index="5"><Data ss:Type="String">Rate</Data></Cell>
+        <Cell ss:Index="6"><Data ss:Type="String">Amount</Data></Cell>
+      </Row>
 
-      <% i = 0 %>
       <% @overtime_daily_records.each do |overtime_daily_record| %>
       <Row>
         <Cell ss:Index="1"><Data ss:Type="String"><%= overtime_daily_record.employee.try(:manual_employee_code) %></Data></Cell>
-        <Cell ss:Index="1"><Data ss:Type="String"><%= full_name(overtime_daily_record.employee) %></Data></Cell>
-        <Cell ss:Index="1"><Data ss:Type="String"><%= overtime_daily_record.ot_daily_date %></Data></Cell>
-        <Cell ss:Index="1"><Data ss:Type="String"><%= overtime_daily_record.ot_daily_hrs %></Data></Cell>
-        <Cell ss:Index="1"><Data ss:Type="String"><%= overtime_daily_record.ot_rate %></Data></Cell>
-        <Cell ss:Index="1"><Data ss:Type="String"><%= overtime_daily_record.ot_daily_amount %></Data></Cell>
-        </Row><!-- Row -->
+        <Cell ss:Index="2"><Data ss:Type="String"><%= full_name(overtime_daily_record.employee) %></Data></Cell>
+        <Cell ss:Index="3"><Data ss:Type="String"><%= overtime_daily_record.ot_daily_date %></Data></Cell>
+        <Cell ss:Index="4"><Data ss:Type="String"><%= overtime_daily_record.ot_daily_hrs %></Data></Cell>
+        <Cell ss:Index="5"><Data ss:Type="String"><%= overtime_daily_record.ot_rate %></Data></Cell>
+        <Cell ss:Index="6"><Data ss:Type="String"><%= overtime_daily_record.ot_daily_amount %></Data></Cell>
+      </Row><!-- Row -->
       <% end %><!-- slip -->
     </Table>
   </Worksheet>

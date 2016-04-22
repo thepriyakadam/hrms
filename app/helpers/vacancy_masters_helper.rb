@@ -41,10 +41,10 @@ module VacancyMastersHelper
 
   def role_location_list
    if current_user.class == Group
-      CompanyLocation.all.collect { |d| [d.company_location.company.name + '-' + d.name , d.id] }
+      CompanyLocation.all.collect { |d| [d.company.name + '-' + d.name , d.id] }
     else
       if current_user.role.name == 'Company'
-        CompanyLocation.all.collect { |d| [d.company_location.company.name + '-' + d.name, d.id] }
+        CompanyLocation.all.collect { |d| [d.company.name + '-' + d.name, d.id] }
       elsif current_user.role.name == 'CompanyLocation'
         CompanyLocation.where(id: current_user.company_location_id).collect { |d| [d.company.name + '-' + d.name, d.id] }
       elsif current_user.role.name == 'Department'

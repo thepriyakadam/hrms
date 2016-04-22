@@ -47,6 +47,8 @@ module VacancyMastersHelper
         CompanyLocation.all.collect { |d| [d.company_location.company.name + '-' + d.name, d.id] }
       elsif current_user.role.name == 'CompanyLocation'
         CompanyLocation.where(id: current_user.company_location_id).collect { |d| [d.company.name + '-' + d.name, d.id] }
+      elsif current_user.role.name == 'Department'
+        CompanyLocation.where(id: current_user.company_location_id).collect { |d| [d.company.name + '-' + d.name, d.id] }
       end
     end
   end
@@ -59,6 +61,8 @@ module VacancyMastersHelper
         Department.all.collect { |d| [d.company_location.company.name + '-' + d.company_location.name + '-' + d.name, d.id] }
       elsif current_user.role.name == 'CompanyLocation'
         Department.where(company_location_id: current_user.company_location_id).collect { |d| [d.company_location.company.name + '-' + d.company_location.name + '-' + d.name, d.id] }
+        elsif current_user.role.name == 'Department'
+        Department.where(id: current_user.department_id).collect { |d| [d.company_location.name + '-' + d.name, d.id] }
       end
     end
   end

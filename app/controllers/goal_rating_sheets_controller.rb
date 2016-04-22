@@ -262,12 +262,8 @@ class GoalRatingSheetsController < ApplicationController
         # emp = EmployeeGoal.find(e)
         # goal_rating_sheet = GoalRatingSheet.find(e)
         goal_rating_sheet.update(appraiser2_comment: c, appraiser2_rating: r, appraiser_2_id: params[:appraiser_2_id])
-
       end
     end
-  
-    
-    
     redirect_to root_url
   end
 
@@ -335,6 +331,7 @@ class GoalRatingSheetsController < ApplicationController
     @goal_rating_sheet = GoalRatingSheet.new
     @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: params[:format])
 
+    @goal_ratings = GoalRatingSheet.where(appraisee_id: params[:format],final_comment: nil)
     @attribute_rating_sheets = AttributeRatingSheet.where(appraisee_id: params[:format]).group(:appraisee_id)
     @employee = Employee.find(params[:format])
     @qualifications = Qualification.where(employee_id: @employee.id)

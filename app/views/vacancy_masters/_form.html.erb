@@ -1,10 +1,11 @@
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title">Vacancy Masters</h3>
+    <h3 class="box-title">Vacancy</h3>
   </div><!-- /.box-header -->
 
   <div class="box-body">
-    <%= bootstrap_form_for(@vacancy_master) do |f| %>
+  <%= bootstrap_form_for(@vacancy_master) do |f| %>
+  <%= f.hidden_field :employee_id, :value => current_user.employee_id %>
       <div class="row">
 
        <div class="col-sm-3">
@@ -17,9 +18,6 @@
          <label>Job Title</label>
           <div class="form-group required">
             <div class="input-group">
-              <div class="input-group-addon">
-                <%= link_to "", new_employee_designation_path,class: "fa fa-plus fa-success",:target => "_blank" %>
-              </div>
               <%= f.select :employee_designation_id,all_employee_designation,{hide_label: true,include_blank: " Select Job Title"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
             </div>
           </div>
@@ -34,15 +32,24 @@
           <div class="col-sm-3">
           <div class="field">
             <div class="field">
-              <%= f.select :department_id, all_department_type_list1,{label: 'Location',include_blank: " Select Location"} %>
+              <%= f.select :company_location_id, all_company_location2,{label: 'Location',include_blank: " Select Location"} %>
+            </div>
+          </div>
+        </div> 
+        </div>
+
+      <div class="row">
+
+         <div class="col-sm-3">
+          <div class="field">
+            <div class="field">
+              <%= f.select :department_id, all_department_type_list2,{label: 'Department',include_blank: " Select Department"} %>
             </div>
           </div>
         </div> 
 
      
-      </div>
-
-      <div class="row">
+      
         <div class="col-sm-3">
           <div class="form-group required">
              <%= f.text_field :no_of_position,label: 'No. of Positions'%>
@@ -60,10 +67,13 @@
           <div class="field">
              <%= f.text_field :budget,label: 'Budget'%>
           </div>
-        </div>  
+        </div> 
+          </div>
+
+      <div class="row">
 
         <div class="col-sm-3">
-          <label>Vacancy Expected Date: </label>
+          <label>Vacancy Fulfillment Date </label>
           <div class="form-group required">
             <div class="input-group">
               <div class="input-group-addon">
@@ -73,9 +83,7 @@
             </div>
           </div>
         </div>      
-      </div>
-
-      <div class="row">
+    
         <div class="col-sm-3">
           <div class="form-group required">
              <%= f.text_field :keyword,label: 'Keyword'%>
@@ -83,7 +91,7 @@
         </div>  
 
             <div class="col-sm-3">
-          <label>Educational Qualification1</label>
+          <label>Educational Qualification 1</label>
           <div class="form-group required">
             <div class="input-group">
               <div class="input-group-addon">
@@ -95,7 +103,7 @@
         </div>
 
         <div class="col-sm-3">
-          <label>Educational Qualification2</label>
+          <label>Educational Qualification 2</label>
           <div class="form-group required">
             <div class="input-group">
               <div class="input-group-addon">
@@ -105,9 +113,11 @@
             </div>
           </div>
         </div>
+         </div> 
+      <div class="row">
 
         <div class="col-sm-3">
-          <label>Educational Qualification3</label>
+          <label>Educational Qualification 3</label>
           <div class="form-group required">
             <div class="input-group">
               <div class="input-group-addon">
@@ -118,8 +128,7 @@
           </div>
         </div>
        
-        </div> 
-      <div class="row">
+       
         <div class="col-sm-3">
         <label>Vacancy Approval</label>
             <div class="field">

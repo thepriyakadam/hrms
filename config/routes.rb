@@ -65,6 +65,7 @@ Rails.application.routes.draw do
       post :send_request_to_higher_authority
       get :reject_vacancy
       get :approve_vacancy
+      get :approve_vacancy_list
     end
   end
   resources :leave_c_offs do

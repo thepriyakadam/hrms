@@ -128,6 +128,7 @@
            
           <td>
           <% if g.is_confirm_appraiser == true %>
+          <small class="label label-success">Confirmed</small>
             <% else %>
               <%= link_to '', edit_appraiser_goal_rating_sheets_path(g) ,class: 'btn btn-xs btn-success fa fa-edit' %>
               

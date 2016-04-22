@@ -19,6 +19,7 @@ def new
     @employee_goals = []
     @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: current_user.employee_id)
     @employee_goals = EmployeeGoal.where(employee_id: current_user.employee_id)
+    @goal_rting_sheets = GoalRatingSheet.where(appraisee_id: current_user.employee_id).group(:appraisee_id)
 
   end
 

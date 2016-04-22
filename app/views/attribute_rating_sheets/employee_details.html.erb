@@ -119,9 +119,9 @@
           <td><%= g.employee_goal.allign_to_supervisor %></td>
 
           <td><%= g.appraisee_comment %></td>
-          <td><%= g.appraisee_rating %></td>
+          <td><%= g.appraisee_rating.try(:code) %></td>
           <td><%= g.appraiser_comment %></td>
-          <td><%= g.appraiser_rating %></td>
+          <td><%= g.appraiser_rating.try(:code) %></td>
         </tr>
       <% end %>
     </tbody>
@@ -147,9 +147,9 @@
           <td><%= a.employee_attribute.attribute_master.name %></td>
           <td><%= a.employee_attribute.weightage %></td>
           <td><%= a.appraisee_comment %></td>
-          <td><%= a.appraisee_rating %></td>
+          <td><%= a.appraisee_rating.try(:code) %></td>
           <td><%= a.appraiser_comment %></td>
-          <td><%= a.appraiser_rating %></td>   
+          <td><%= a.appraiser_rating.try(:code) %></td>   
         </tr>
       <% end %>
     </tbody>

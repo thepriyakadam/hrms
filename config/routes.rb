@@ -1,5 +1,6 @@
 
 Rails.application.routes.draw do
+  resources :rating_masters
   namespace :reports do
     get 'overtime_salary_details/new'
     post 'overtime_salary_details/overtime_montly_detail_report'

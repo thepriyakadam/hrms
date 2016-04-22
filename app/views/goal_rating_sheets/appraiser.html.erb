@@ -55,13 +55,13 @@
           <td><%= g.employee_goal.allign_to_supervisor %></td>
           <% if g.is_confirm_appraisee == true %>
           <td><%= g.appraisee_comment %></td>
-          <td><%= g.appraisee_rating %></td>
+          <td><%= g.appraisee_rating.try(:code) %></td>
           <% else %>
           <td></td>
           <td></td>
           <% end %>
           <td><%= text_field_tag 'appraiser_comment[]' %></td>
-          <td><%= text_field_tag 'appraiser_rating[]' %></td>
+          <td><%= select_tag 'appraiser_rating_id[]',options_for_select(all_rating_type) ,class: 'form_control' %></td>
           <%= hidden_field_tag 'employee_goal_id[]',{},value: g.employee_goal.id %>
           <%= hidden_field_tag 'goal_rating_sheet_id[]', {},value: g.id %> 
           <%= hidden_field_tag :appraisee_id, {},value: g.appraisee_id %>
@@ -118,13 +118,13 @@
 
           <% if g.is_confirm_appraisee == true %>
           <td><%= g.appraisee_comment %></td>
-          <td><%= g.appraisee_rating %></td>
+          <td><%= g.appraisee_rating.try(:code) %></td>
           <% else %>
           <td></td>
           <td></td>
           <% end %>
           <td><%= g.appraiser_comment %></td>
-          <td><%= g.appraiser_rating %></td>
+          <td><%= g.appraiser_rating.try(:code) %></td>
            
           <td>
           <% if g.is_confirm_appraiser == true %>

@@ -37,7 +37,7 @@
   <div class="col-sm-6">
     <div class="box-header with-border">
     
-      <h3 class="box-title">Employee Past Experience</h3>
+      <h3 class="box-title">Past Experience</h3>
     </div>
   <table class="table table-bordered table-hover table-condensed">
     <thead>
@@ -65,7 +65,7 @@
 
   <div class="col-sm-6">
     <div class="box-header with-border">
-      <h3 class="box-title">Employee Qualification Details</h3>
+      <h3 class="box-title">Qualification Details</h3>
     </div>
       <table class="table table-bordered table-hover table-condensed">
         <thead>
@@ -90,9 +90,9 @@
 </div>
 
 	
-<%= bootstrap_form_for(@attribute_rating_sheet,url:{action: "appraiser2_create"}) do |f| %>
+<%= bootstrap_form_for(@attribute_rating_sheet,url:{action: "appraiser2_create", id: @employee.id}) do |f| %>
   <div class="box-header with-border">
-    <h3 class="box-title">Employee Attribute</h3>
+    <h3 class="box-title">Attributes</h3>
   </div>
   <table id="tbl" class="table table-bordered table-hover table-condensed">
     <thead>
@@ -113,11 +113,11 @@
           <td><%= a.employee_attribute.attribute_master.name %></td>
           <td><%= a.employee_attribute.weightage %></td>
           <td><%= a.appraisee_comment %></td>
-          <td><%= a.appraisee_rating %></td>
+          <td><%= a.appraisee_rating.try(:code) %></td>
           <td><%= a.appraiser_comment %></td>
-          <td><%= a.appraiser_rating %></td> 
+          <td><%= a.appraiser_rating.try(:code) %></td> 
           <td><%= text_field_tag 'appraiser2_comment[]' %></td>
-          <td><%= text_field_tag 'appraiser2_rating[]' %></td>
+          <td><%= select_tag 'appraiser2_rating_id[]',options_for_select(all_rating_type) ,class: 'form_control' %></td>
           <%= hidden_field_tag 'attribute_rating_sheet_id[]', {},value: a.id %>  
         </tr>
       <% end %>
@@ -127,13 +127,16 @@
     <div class="row">
       <div class="col-sm-3">
         <div class="actions">
-          <%= f.submit "Create Rating" , class: "btn btn-primary btn-sm" %>
+          <%= f.submit "Assign Rating" , class: "btn btn-primary btn-sm" %>
         </div>
       </div>
     </div>
   <% end %>
 
-<%= bootstrap_form_for @attribute_rating_sheet,url:{action:'is_confirm_appraiser2'} do |f| %>
+<%= bootstrap_form_for @attribute_rating_sheet,url:{action:'is_confirm_appraiser2',id: @employee.id} do |f| %>
+  <div class="box-header with-border">
+    <h3 class="box-title">Attributes</h3>
+  </div>
   <table id="tbl" class="table table-bordered table-hover table-condensed">
     <thead>
       <tr>
@@ -156,11 +159,11 @@
           <td><%= a.employee_attribute.attribute_master.name %></td>
           <td><%= a.employee_attribute.weightage %></td>
           <td><%= a.appraisee_comment %></td>
-          <td><%= a.appraisee_rating %></td>
+          <td><%= a.appraisee_rating.try(:code) %></td>
           <td><%= a.appraiser_comment %></td>
-          <td><%= a.appraiser_rating %></td> 
+          <td><%= a.appraiser_rating.try(:code)%></td> 
           <td><%= a.appraiser2_comment %></td>
-          <td><%= a.appraiser2_rating %></td>
+          <td><%= a.appraiser2_rating.try(:code) %></td>
           <%= hidden_field_tag 'attribute_rating_sheet_id[]', {},value: a.id %> 
           <td>
             <% if a.is_confirm_appraiser2 == true %>
@@ -183,7 +186,7 @@
 </div>
 </div>
 <% end %>
-<%= link_to 'Back', subordinate_list_attribute_rating_sheets_path(@employee.id) %>
+<%= link_to 'Back', appraiser2_goal_rating_sheets_path(@employee.id) %>
 
 <script type="text/javascript">
   $(function () {

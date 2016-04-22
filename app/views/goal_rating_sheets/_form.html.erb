@@ -22,7 +22,7 @@
     <tbody>
       <% @employee_goals.each do |employee_goal| %>
         <tr>
-          <% if employee_goal.is_confirm == true %>
+          
           <td><%= employee_goal.goal_perspective.name %></td>
           <td><%= employee_goal.goal_measure %></td>
           <td><%= employee_goal.target %></td>
@@ -31,9 +31,8 @@
           <td><%= employee_goal.allign_to_supervisor %></td>
           
           <td><%= text_field_tag 'appraisee_comment[]' %></td>
-          <td><%= select_tag 'appraisee_rating[]',options_for_select(["1","2","3","4","5"]), class: 'form_control' %></td>
-          <% else %>
-          <% end %>
+          <td><%= select_tag 'appraisee_rating_id[]',options_for_select(all_rating_type), class: 'form-control' %></td>
+          
              <%= hidden_field_tag 'employee_goal_id[]',{},value: employee_goal.id %>
              <%= hidden_field_tag :appraisee_id, {},value: current_user.employee_id %>
         </tr>

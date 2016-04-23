@@ -1,10 +1,31 @@
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title">Employee Goal Rating : <%= @employee_goals.try(:first).try(:period).try(:title) %></h3>
+    <h3 class="box-title"> <%= @employee_goals.try(:first).employee.try(:manual_employee_code) %> <%= @employee_goals.try(:first).employee.try(:first_name) %> <%= @employee_goals.try(:first).employee.try(:last_name) %> Goal Rating : <%= @employee_goals.try(:first).try(:period).try(:title) %> : <%= @employee_goals.try(:first).try(:period).try(:start_date) %> To <%= @employee_goals.try(:first).try(:period).try(:end_date) %></h3>
   </div>
   <div class="box-body">
 
   <%= bootstrap_form_for(@goal_rating_sheet) do |f| %>
+
+  <table id="tbl" class="table table-bordered table-hover table-condensed">
+    <thead>
+      <tr>
+        <th>Employee Id</th>
+        <th>Employee Name</th>
+        <th>Department</th>
+        <th>Designation</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @goal_rting_sheets.each do |g| %>
+        <tr>
+          <td><%= g.appraisee.manual_employee_code %></td>
+          <td><%= g.appraisee.first_name %></td>
+          <td><%= g.appraisee.joining_detail.department.name %></td>
+          <td><%= g.appraisee.joining_detail.employee_designation.name %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 
   <table id="tbl" class="table table-bordered table-hover table-condensed">
     <thead>

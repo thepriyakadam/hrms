@@ -1,4 +1,15 @@
+<div class="box box-default">
+    <div class="box-header with-border">
+      <h3 class="box-title">Create Performance Period</h3>
+    </div><!-- /.box-header -->
+  <div class="box-body">
+	  <div id="form">
+	    <%= render 'form' %>
+	  </div>
 
-<%= render 'form' %>
+	  <div id="period_list">
+			<%= render 'period_list' %>
+		</div>
+  </div>
+</div>
 
-<%= link_to 'Back', performance_periods_path %>

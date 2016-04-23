@@ -126,7 +126,7 @@
           <td><%= g.appraiser_rating.try(:code) %></td>
           <td><%= g.appraiser2_comment %></td>
           <td><%= g.appraiser2_rating.try(:code) %></td>
-          <td><%= text_field_tag 'final_comment[]' %></td>
+          <td><%= text_field_tag 'final_comment[]'%></td>
           <td><%= select_tag 'final_rating_id[]',options_for_select(all_rating_type) ,class: 'form_control' %></td>
         </tr>
           <%= hidden_field_tag 'goal_rating_sheet_id[]', {},value: g.id %> 
@@ -196,6 +196,7 @@
           <td><%= g.final_rating.try(:code) %></td>
           <td>
             <% if g.is_confirm_final == true %>
+            <small class="label label-success">Confirmed</small>
             <% else %>
             <%= link_to '', edit_final_goal_rating_sheets_path(g) ,class: 'btn btn-xs btn-success fa fa-edit' %>
             <% end %>

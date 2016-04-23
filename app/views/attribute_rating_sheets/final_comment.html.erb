@@ -175,6 +175,7 @@
           <td><%= a.final_rating.try(:code) %></td>
           <td>
           <% if a.is_confirm_final == true %>
+          <small class="label label-success">Confirmed</small>
             <% else %>
             <%= link_to '', edit_final_attribute_rating_sheets_path(a),class: 'btn btn-success btn-xs fa fa-edit' %>
             <% end %>
@@ -190,12 +191,12 @@
       <div class="col-sm-3">
         <div class="actions">
           <%= f.submit "Confirm", class: 'btn btn-primary btn-sm' %>
+          <%= link_to 'Back', final_comment_goal_rating_sheets_path(@employee.id),class: 'btn btn-default btn-sm fa fa-arrow-left' %>
         </div>
       </div>
     </div>
 
   <% end %>
-<%= link_to 'Back', final_comment_goal_rating_sheets_path(@employee.id) %>
 </div>
 </div>
 

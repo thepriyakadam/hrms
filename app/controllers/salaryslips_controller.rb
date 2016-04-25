@@ -868,9 +868,7 @@ class SalaryslipsController < ApplicationController
       @bonus_employees.destroy_all
       @salaryslip.destroy 
       SalaryslipComponent.where(salaryslip_id: @salaryslip.id).destroy_all
-      
     end
-
       redirect_to revert_salary_salaryslips_path
   end
 end

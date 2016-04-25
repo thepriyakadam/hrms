@@ -34,5 +34,4 @@ class HomeController < ApplicationController
       end
     end
   end
-  session[:active_tab] ="user"
 end

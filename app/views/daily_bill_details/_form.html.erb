@@ -1,0 +1,49 @@
+<%= form_for(@daily_bill_detail) do |f| %>
+  <% if @daily_bill_detail.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@daily_bill_detail.errors.count, "error") %> prohibited this daily_bill_detail from being saved:</h2>
+
+      <ul>
+      <% @daily_bill_detail.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :travel_request_id %><br>
+    <%= f.text_field :travel_request_id %>
+  </div>
+  <div class="field">
+    <%= f.label :expence_date %><br>
+    <%= f.date_select :expence_date %>
+  </div>
+  <div class="field">
+    <%= f.label :e_place %><br>
+    <%= f.text_field :e_place %>
+  </div>
+  <div class="field">
+    <%= f.label :travel_expence %><br>
+    <%= f.text_field :travel_expence %>
+  </div>
+  <div class="field">
+    <%= f.label :local_travel_expence %><br>
+    <%= f.text_field :local_travel_expence %>
+  </div>
+  <div class="field">
+    <%= f.label :lodging_expence %><br>
+    <%= f.text_field :lodging_expence %>
+  </div>
+  <div class="field">
+    <%= f.label :boarding_expence %><br>
+    <%= f.text_field :boarding_expence %>
+  </div>
+  <div class="field">
+    <%= f.label :other_expence %><br>
+    <%= f.text_field :other_expence %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

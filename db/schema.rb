@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160425071432) do
+ActiveRecord::Schema.define(version: 20160425130430) do
 
   create_table "accident_records", force: :cascade do |t|
     t.string   "code"
@@ -336,6 +336,21 @@ ActiveRecord::Schema.define(version: 20160425071432) do
   end
 
   add_index "custom_auto_increments", ["counter_model_name"], name: "index_custom_auto_increments_on_counter_model_name"
+
+  create_table "daily_bill_details", force: :cascade do |t|
+    t.integer  "travel_request_id"
+    t.date     "expence_date"
+    t.string   "e_place"
+    t.decimal  "travel_expence",       precision: 15, scale: 2, default: 0.0
+    t.decimal  "local_travel_expence", precision: 15, scale: 2, default: 0.0
+    t.decimal  "lodging_expence",      precision: 15, scale: 2, default: 0.0
+    t.decimal  "boarding_expence",     precision: 15, scale: 2, default: 0.0
+    t.decimal  "other_expence",        precision: 15, scale: 2, default: 0.0
+    t.datetime "created_at",                                                  null: false
+    t.datetime "updated_at",                                                  null: false
+  end
+
+  add_index "daily_bill_details", ["travel_request_id"], name: "index_daily_bill_details_on_travel_request_id"
 
   create_table "definitions", force: :cascade do |t|
     t.text     "name"
@@ -1444,6 +1459,37 @@ ActiveRecord::Schema.define(version: 20160425071432) do
   end
 
   add_index "states", ["country_id"], name: "index_states_on_country_id"
+
+  create_table "travel_expences", force: :cascade do |t|
+    t.integer  "travel_request_id"
+    t.decimal  "total_advance_amount", precision: 15, scale: 2, default: 0.0
+    t.decimal  "total_expence_amount", precision: 15, scale: 2, default: 0.0
+    t.decimal  "remaining_amount",     precision: 15, scale: 2, default: 0.0
+    t.decimal  "employee_amount",      precision: 15, scale: 2, default: 0.0
+    t.decimal  "company_amount",       precision: 15, scale: 2, default: 0.0
+    t.datetime "created_at",                                                  null: false
+    t.datetime "updated_at",                                                  null: false
+  end
+
+  add_index "travel_expences", ["travel_request_id"], name: "index_travel_expences_on_travel_request_id"
+
+  create_table "travel_requests", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.integer  "reporting_manager_id"
+    t.date     "application_date"
+    t.date     "traveling_date"
+    t.text     "tour_purpose"
+    t.string   "place"
+    t.decimal  "traveling_advance",        precision: 15, scale: 2, default: 0.0
+    t.decimal  "lodging_boarding_advance", precision: 15, scale: 2, default: 0.0
+    t.decimal  "extra_advance",            precision: 15, scale: 2, default: 0.0
+    t.decimal  "total_advance",            precision: 15, scale: 2, default: 0.0
+    t.datetime "created_at",                                                      null: false
+    t.datetime "updated_at",                                                      null: false
+  end
+
+  add_index "travel_requests", ["employee_id"], name: "index_travel_requests_on_employee_id"
+  add_index "travel_requests", ["reporting_manager_id"], name: "index_travel_requests_on_reporting_manager_id"
 
   create_table "universities", force: :cascade do |t|
     t.string   "code"

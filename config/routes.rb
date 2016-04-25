@@ -1,5 +1,8 @@
 
 Rails.application.routes.draw do
+  resources :travel_expences
+  resources :daily_bill_details
+  resources :travel_requests
   namespace :reports do
   get 'monthly_expences_details/new'
   end

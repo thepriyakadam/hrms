@@ -1,5 +1,6 @@
 
 Rails.application.routes.draw do
+  resources :rating_masters
   namespace :reports do
     get 'overtime_salary_details/new'
     post 'overtime_salary_details/overtime_montly_detail_report'
@@ -58,7 +59,14 @@ Rails.application.routes.draw do
   resources :vacancy_masters do
     collection do
       get :search_by_vacancy_post_date
+      get :vacancy_request_confirmation
+      get :vacancy_history
       post :import
+      get :modal
+      post :send_request_to_higher_authority
+      get :reject_vacancy
+      get :approve_vacancy
+      get :approve_vacancy_list
     end
   end
   resources :leave_c_offs do
@@ -146,17 +154,27 @@ Rails.application.routes.draw do
       patch :update_appraiser
       get :appraiser
       post :appraiser_create
-      get :is_confirm_appraiser
-      get :is_confirm_appraisee
+      post :is_confirm_appraiser
+      post :is_confirm_appraisee
       get :employee_details
       get :employee_info
       get :subordinate_list
+      get :appraiser2
+      post :appraiser2_create
+      get :final_comment
+      post :final_create
+      get :edit_final
+      patch :update_final
+      post :is_confirm_final
+      post :is_confirm_appraiser2
+      get :edit_appraiser2
+      patch :update_appraiser2
     end
   end
   resources :goal_rating_sheets do
     collection do
-      get :is_confirm_appraisee
-      get :is_confirm_appraiser
+      post :is_confirm_appraisee
+      post :is_confirm_appraiser
       get :edit_appraiser
       patch :update_appraiser
       delete :destroy_appraiser
@@ -166,6 +184,18 @@ Rails.application.routes.draw do
       post :appraiser_create
       get :appraisee_goal_list
       get :modal
+      get :subordinate_list2
+      get :appraiser2
+      post :appraiser2_create
+      get :edit_appraiser2
+      patch :update_appraiser2
+      get :employee_list
+      get :final_comment
+      post :final_create
+      get :edit_final
+      patch :update_final
+      post :is_confirm_final
+      post :is_confirm_appraiser2
     end
   end
   resources :employee_attributes do

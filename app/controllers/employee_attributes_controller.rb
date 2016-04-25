@@ -67,6 +67,7 @@ class EmployeeAttributesController < ApplicationController
         @employee_attribute = EmployeeAttribute.find(aid)
         
         @employee_attribute.update(is_confirm: true)
+        flash[:notice] = "Confirmed Successfully"
       end
     redirect_to new_employee_attribute_path(@employee_attribute.employee_id)
   end

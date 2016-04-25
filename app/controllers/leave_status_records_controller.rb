@@ -36,12 +36,12 @@ class LeaveStatusRecordsController < ApplicationController
       @leave_status = LeaveStatusRecord.new do |s|
         s.employee_leav_request_id = params[:id]
         s.change_status_employee_id = current_user.employee_id unless current_user.class == Group
-        s.status = 'FirstApproved'
+        s.status = 'FinalApproved'
         s.change_date = Time.now
       end
       ActiveRecord::Base.transaction do
         if @leave_status.save
-          @employee_leav_request.update(is_first_approved: true, current_status: 'FirstApproved')
+          @employee_leav_request.update(is_first_approved: true, current_status: 'FinalApproved')
           @employee_leav_request.create_single_record_for_leave(@employee_leav_request)
           @employee_leav_request.manage_coff(@employee_leav_request)
           # @employee_leav_request.minus_leave(@employee_leav_request)
@@ -87,12 +87,12 @@ class LeaveStatusRecordsController < ApplicationController
     @leave_status = LeaveStatusRecord.new do |s|
       s.employee_leav_request_id = params[:id]
       s.change_status_employee_id = current_user.employee_id unless current_user.class == Group
-      s.status = 'SecondApproved'
+      s.status = 'FinalApproved'
       s.change_date = Time.now
     end
     ActiveRecord::Base.transaction do
       if @leave_status.save
-        @employee_leav_request.update(is_second_approved: true, current_status: 'SecondApproved')
+        @employee_leav_request.update(is_second_approved: true, current_status: 'FinalApproved')
         @employee_leav_request.create_single_record_for_leave(@employee_leav_request)
         @employee_leav_request.manage_coff(@employee_leav_request)
         # @employee_leav_request.minus_leave(@employee_leav_request)
@@ -114,14 +114,14 @@ class LeaveStatusRecordsController < ApplicationController
     @leave_status = LeaveStatusRecord.new do |s|
       s.employee_leav_request_id = params[:id]
       s.change_status_employee_id = current_user.employee_id unless current_user.class == Group
-      s.status = 'FirstRejected'
+      s.status = 'Rejected'
       s.change_date = Time.now
     end
     ActiveRecord::Base.transaction do
       if @leave_status.save
-        @employee_leav_request.update(is_first_rejected: true, current_status: 'FirstRejected')
+        @employee_leav_request.update(is_first_rejected: true, current_status: 'Rejected')
         @employee_leav_request.revert_leave(@employee_leav_request)
-        if @employee_leav_request.first_reporter.email.nil? || @employee_leav_request.first_reporter.email == ''
+        if @employee_leav_request.employee.email.nil? || @employee_leav_request.employee.email == ''
           flash[:notice] = 'Leave Rejected Successfully without email.'
         else
           flash[:notice] = 'Leave Rejected Successfully.'
@@ -139,12 +139,12 @@ class LeaveStatusRecordsController < ApplicationController
     @leave_status = LeaveStatusRecord.new do |s|
       s.employee_leav_request_id = params[:id]
       s.change_status_employee_id = current_user.employee_id unless current_user.class == Group
-      s.status = 'SecondRejected'
+      s.status = 'Rejected'
       s.change_date = Time.now
     end
     ActiveRecord::Base.transaction do
       if @leave_status.save
-        @employee_leav_request.update(is_second_rejected: true, current_status: 'SecondRejected')
+        @employee_leav_request.update(is_second_rejected: true, current_status: 'Rejected')
         @employee_leav_request.revert_leave(@employee_leav_request)
         if @employee_leav_request.employee.email.nil? || @employee_leav_request.employee.email == ''
           flash[:notice] = 'Leave Rejected Successfully without email.'

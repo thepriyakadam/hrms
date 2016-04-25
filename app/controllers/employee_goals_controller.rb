@@ -65,22 +65,28 @@ class EmployeeGoalsController < ApplicationController
 
   def subordinate_list
     current_login = Employee.find(current_user.employee_id)
-    @employees = current_login.subordinates
+    @employees = current_login.subordinates 
+    session[:active_tab] ="performance"
   end
 
   def is_confirm
+    #@employee_goal = EmployeeGoal.find(params[:id])
+    @employee = Employee.find(params[:id])
+
     @employee_goal_ids = params[:employee_goal_ids]
     if @employee_goal_ids.nil?
-      flash[:notice] = "Please Select the Checkbox"
-      redirect_to root_url
+      flash[:alert] = "Please Select the Checkbox"
+      redirect_to new_employee_goal_path(@employee.id)
     else
       @employee_goal_ids.each do |eid|
       @employee_goal = EmployeeGoal.find(eid)
       @employee_goal.update(is_confirm: true)
+
+      GoalRatingSheet.create(appraisee_id: current_user.employee_id, employee_goal_id: @employee_goal.id)
+      
       flash[:notice] = "Confirmed Successfully"
-     
     end  
-     redirect_to new_employee_goal_path(@employee_goal.employee_id)
+     redirect_to new_employee_goal_path( @employee.id) 
   end
   end
 

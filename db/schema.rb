@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160415070421) do
+ActiveRecord::Schema.define(version: 20160421112551) do
 
   create_table "accident_records", force: :cascade do |t|
     t.string   "code"
@@ -81,18 +81,32 @@ ActiveRecord::Schema.define(version: 20160415070421) do
     t.integer  "appraiser_id"
     t.integer  "employee_attribute_id"
     t.text     "appraisee_comment"
-    t.integer  "appraisee_rating"
     t.text     "appraiser_comment"
-    t.integer  "appraiser_rating"
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
     t.boolean  "is_confirm_appraiser"
     t.boolean  "is_confirm_appraisee"
+    t.text     "appraiser2_comment"
+    t.text     "final_comment"
+    t.integer  "final_id_id"
+    t.integer  "appraiser_2_id"
+    t.boolean  "is_confirm_final"
+    t.boolean  "is_confirm_appraiser2"
+    t.integer  "appraisee_rating_id"
+    t.integer  "appraiser_rating_id"
+    t.integer  "appraiser2_rating_id"
+    t.integer  "final_rating_id"
   end
 
   add_index "attribute_rating_sheets", ["appraisee_id"], name: "index_attribute_rating_sheets_on_appraisee_id"
+  add_index "attribute_rating_sheets", ["appraisee_rating_id"], name: "index_attribute_rating_sheets_on_appraisee_rating_id"
+  add_index "attribute_rating_sheets", ["appraiser2_rating_id"], name: "index_attribute_rating_sheets_on_appraiser2_rating_id"
+  add_index "attribute_rating_sheets", ["appraiser_2_id"], name: "index_attribute_rating_sheets_on_appraiser_2_id"
   add_index "attribute_rating_sheets", ["appraiser_id"], name: "index_attribute_rating_sheets_on_appraiser_id"
+  add_index "attribute_rating_sheets", ["appraiser_rating_id"], name: "index_attribute_rating_sheets_on_appraiser_rating_id"
   add_index "attribute_rating_sheets", ["employee_attribute_id"], name: "index_attribute_rating_sheets_on_employee_attribute_id"
+  add_index "attribute_rating_sheets", ["final_id_id"], name: "index_attribute_rating_sheets_on_final_id_id"
+  add_index "attribute_rating_sheets", ["final_rating_id"], name: "index_attribute_rating_sheets_on_final_rating_id"
 
   create_table "awards", force: :cascade do |t|
     t.integer  "employee_id"
@@ -819,19 +833,33 @@ ActiveRecord::Schema.define(version: 20160415070421) do
     t.integer  "employee_goal_id"
     t.boolean  "allign_to_supervisor"
     t.text     "appraisee_comment"
-    t.integer  "appraisee_rating"
     t.text     "appraiser_comment"
-    t.integer  "appraiser_rating"
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
     t.integer  "performance_period_id"
     t.boolean  "is_confirm_appraiser"
     t.boolean  "is_confirm_appraisee"
+    t.text     "appraiser2_comment"
+    t.text     "final_comment"
+    t.integer  "appraiser_2_id"
+    t.integer  "final_id_id"
+    t.boolean  "is_confirm_final"
+    t.boolean  "is_confirm_appraiser2"
+    t.integer  "appraisee_rating_id"
+    t.integer  "appraiser_rating_id"
+    t.integer  "appraiser2_rating_id"
+    t.integer  "final_rating_id"
   end
 
   add_index "goal_rating_sheets", ["appraisee_id"], name: "index_goal_rating_sheets_on_appraisee_id"
+  add_index "goal_rating_sheets", ["appraisee_rating_id"], name: "index_goal_rating_sheets_on_appraisee_rating_id"
+  add_index "goal_rating_sheets", ["appraiser2_rating_id"], name: "index_goal_rating_sheets_on_appraiser2_rating_id"
+  add_index "goal_rating_sheets", ["appraiser_2_id"], name: "index_goal_rating_sheets_on_appraiser_2_id"
   add_index "goal_rating_sheets", ["appraiser_id"], name: "index_goal_rating_sheets_on_appraiser_id"
+  add_index "goal_rating_sheets", ["appraiser_rating_id"], name: "index_goal_rating_sheets_on_appraiser_rating_id"
   add_index "goal_rating_sheets", ["employee_goal_id"], name: "index_goal_rating_sheets_on_employee_goal_id"
+  add_index "goal_rating_sheets", ["final_id_id"], name: "index_goal_rating_sheets_on_final_id_id"
+  add_index "goal_rating_sheets", ["final_rating_id"], name: "index_goal_rating_sheets_on_final_rating_id"
   add_index "goal_rating_sheets", ["performance_period_id"], name: "index_goal_rating_sheets_on_performance_period_id"
 
   create_table "groups", force: :cascade do |t|
@@ -1233,6 +1261,13 @@ ActiveRecord::Schema.define(version: 20160415070421) do
   add_index "qualifications", ["university_id"], name: "index_qualifications_on_university_id"
   add_index "qualifications", ["year_id"], name: "index_qualifications_on_year_id"
 
+  create_table "rating_masters", force: :cascade do |t|
+    t.integer  "code"
+    t.text     "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
   create_table "religions", force: :cascade do |t|
     t.string   "name"
     t.string   "code"
@@ -1251,6 +1286,17 @@ ActiveRecord::Schema.define(version: 20160415070421) do
   end
 
   add_index "reporting_masters", ["employee_id"], name: "index_reporting_masters_on_employee_id"
+
+  create_table "reporting_masters_vacancy_masters", force: :cascade do |t|
+    t.integer  "vacancy_master_id"
+    t.integer  "reporting_master_id"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+    t.string   "vacancy_status"
+  end
+
+  add_index "reporting_masters_vacancy_masters", ["reporting_master_id"], name: "index_reporting_masters_vacancy_masters_on_reporting_master_id"
+  add_index "reporting_masters_vacancy_masters", ["vacancy_master_id"], name: "index_reporting_masters_vacancy_masters_on_vacancy_master_id"
 
   create_table "reserved_categories", force: :cascade do |t|
     t.string   "code"
@@ -1434,12 +1480,21 @@ ActiveRecord::Schema.define(version: 20160415070421) do
     t.string   "others"
     t.string   "other_organization"
     t.string   "industry"
+    t.integer  "degree_1_id"
+    t.integer  "degree_2_id"
+    t.integer  "reporting_master_id"
+    t.string   "current_status"
+    t.integer  "employee_id"
   end
 
   add_index "vacancy_masters", ["company_location_id"], name: "index_vacancy_masters_on_company_location_id"
+  add_index "vacancy_masters", ["degree_1_id"], name: "index_vacancy_masters_on_degree_1_id"
+  add_index "vacancy_masters", ["degree_2_id"], name: "index_vacancy_masters_on_degree_2_id"
   add_index "vacancy_masters", ["degree_id"], name: "index_vacancy_masters_on_degree_id"
   add_index "vacancy_masters", ["department_id"], name: "index_vacancy_masters_on_department_id"
   add_index "vacancy_masters", ["employee_designation_id"], name: "index_vacancy_masters_on_employee_designation_id"
+  add_index "vacancy_masters", ["employee_id"], name: "index_vacancy_masters_on_employee_id"
+  add_index "vacancy_masters", ["reporting_master_id"], name: "index_vacancy_masters_on_reporting_master_id"
 
   create_table "week_offs", force: :cascade do |t|
     t.string   "weekoff_date_range"

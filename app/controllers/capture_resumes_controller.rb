@@ -5,6 +5,7 @@ class CaptureResumesController < ApplicationController
   # GET /capture_resumes.json
   def index
     @capture_resumes = CaptureResume.all
+    session[:active_tab] ="recruitment"
   end
 
   # GET /capture_resumes/1

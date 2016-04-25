@@ -2,7 +2,7 @@
 <!-- sidebar menu: : style can be found in sidebar.less -->
 <ul class="sidebar-menu">
   <li class="header">GROUP DASHBOARD</li>
-  <li class="treeview">
+  <li class="treeview" id="company">
     <a href="">
       <!-- <i class="fa fa-user-plus"></i> <span>Create</span> <i class="fa fa-angle-left pull-right"></i> -->
       <i class="fa fa-building"></i> <span>Company Details</span> <i class="fa fa-angle-left pull-right"></i>
@@ -14,7 +14,7 @@
     </ul>
   </li>
   <!-- <li class="header">GROUP DASHBOARD</li> -->
-  <li class="treeview">
+  <li class="treeview" id="employee">
     <a href="">
       <i class="fa fa-user-plus"></i> <span>Employee Management</span> 
     </a>
@@ -94,7 +94,9 @@
           <li><a href="/goal_perspectives/new"><i class="fa fa-tags"></i>Goal Perspective</a></li>
 
           <li><a href="/attribute_masters/new"><i class="fa fa-tags"></i>Attribute</a></li>
-          <li><a href="/performance_periods/new"><i class="fa fa-tags"></i>Performance Period</a></li>
+          <li><a href="/performance_periods"><i class="fa fa-tags"></i>Performance Period</a></li>
+          <li><a href="/rating_masters/new"><i class="fa fa-tags"></i>Rating</a></li>
+
         </ul>
       </li> 
     
@@ -128,8 +130,6 @@
       <li><a href="/leav_categories/new"><i class="fa fa-tags"></i> Leave Type</a></li>
       <li><a href="/employee_leav_balances"><i class="fa fa-tags"></i> Assign Leave</a></li>
       <li><a href="/leave_c_offs/new"><i class="fa fa-tags"></i> Add C.Off</a></li>
-      <li><a href="/employee_leav_requests/employee_list"><i class="fa fa-tags"></i>Create Leave Request</a></li>
-      <li><a href="/employee_leav_requests/approved_or_rejected_leave_request"><i class="fa fa-tags"></i>Approve/Reject Leave</a></li>
     </ul>
   </li>
 
@@ -224,3 +224,6 @@
    </li>
 
 </ul>
+<script typgre="text/javascript">
+  document.getElementById("<%= session[:active_tab] %>").classList.add("active");
+</script>

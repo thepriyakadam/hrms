@@ -84,3 +84,5 @@ class ExcelUploadsController < ApplicationController
     params.require(:excel_upload).permit(:code, :file_name, :size)
   end
 end
+
+   

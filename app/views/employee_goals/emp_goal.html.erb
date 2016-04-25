@@ -1,3 +1,4 @@
+<%= bootstrap_form_for(:employee_goal,html: {id: "employee_goal"},remote: true, id:@employee_goal.id) do |f| %>
 
   <div class="row">
     <div class="col-sm-3">
@@ -27,6 +28,7 @@
       <td><%= f.select :difficulty_level,["1","2","3"],{hide_label: true, include_blank: "Select Difficulty Level"} %></td>
       <td><%= f.select :allign_to_supervisor,["Yes","No"],{hide_label: true,include_blank: "Allign To Supervisor"} %></td>
 
+        <%= f.hidden_field :employee_id,value: @employee.id %>
         <%= f.hidden_field :emp_head,value: current_user.employee_id %>
     </tr>   
   </tbody>

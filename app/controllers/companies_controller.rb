@@ -6,6 +6,7 @@ class CompaniesController < ApplicationController
   # GET /companies.json
   def index
     @companies = Company.all
+    session[:active_tab] = "company"
   end
 
   # GET /companies/1

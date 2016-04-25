@@ -68,6 +68,17 @@ class EmployeeGoalsController < ApplicationController
     @employees = current_login.subordinates 
   end
 
+  def employee_list
+    @employees = Employee.all
+  end
+
+  def emp_goal
+    puts '-------------------------'
+    @employee_goal = EmployeeGoal.new
+    @employee = Employee.find(params[:format])
+
+  end
+
   def is_confirm
     #@employee_goal = EmployeeGoal.find(params[:id])
     @employee = Employee.find(params[:id])
@@ -98,6 +109,6 @@ class EmployeeGoalsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def employee_goal_params
-    params.require(:employee_goal).permit(:is_confirm, :period_id, :employee_id, :appraisee_id, :appraiser_id, :goal_perspective_id, :goal_measure, :target, :goal_weightage, :difficulty_level, :allign_to_supervisor, :appraisee_comment, :appraisee_rating, :appraiser_comment, :appraiser_rating)
+    params.require(:employee_goal).permit(:emp_head,:is_confirm, :period_id, :employee_id, :goal_perspective_id, :goal_measure, :target, :goal_weightage, :difficulty_level, :allign_to_supervisor, :appraisee_comment, :appraisee_rating, :appraiser_comment, :appraiser_rating)
   end
 end

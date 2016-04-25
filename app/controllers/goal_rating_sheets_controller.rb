@@ -201,7 +201,7 @@ def new
     @goal_rating_sheet_ids = params[:goal_rating_sheet_ids]
     if @goal_rating_sheet_ids.nil?
         flash[:alert] = "Please Select the Checkbox"
-        redirect_to new_goal_rating_sheet_path
+        redirect_to final_comment_goal_rating_sheets_path(format: @employee.id)
       else
         @goal_rating_sheet_ids.each do |gid|
         @goal_rating_sheet = GoalRatingSheet.find(gid)
@@ -217,7 +217,7 @@ def new
     @goal_rating_sheet_ids = params[:goal_rating_sheet_ids]
     if @goal_rating_sheet_ids.nil?
         flash[:alert] = "Please Select the Checkbox"
-        redirect_to new_goal_rating_sheet_path
+        redirect_to appraiser2_goal_rating_sheets_path(format: @employee.id)
       else
         @goal_rating_sheet_ids.each do |gid|
         @goal_rating_sheet = GoalRatingSheet.find(gid)

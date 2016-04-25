@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160421112551) do
+ActiveRecord::Schema.define(version: 20160425071432) do
 
   create_table "accident_records", force: :cascade do |t|
     t.string   "code"
@@ -448,22 +448,17 @@ ActiveRecord::Schema.define(version: 20160421112551) do
   add_index "employee_arrears", ["employee_id"], name: "index_employee_arrears_on_employee_id"
 
   create_table "employee_attributes", force: :cascade do |t|
-    t.integer  "appraisee_id"
-    t.integer  "appraiser_id"
     t.integer  "attribute_master_id"
-    t.integer  "definition_id"
     t.integer  "weightage"
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
     t.integer  "performance_period_id"
     t.integer  "employee_id"
     t.boolean  "is_confirm"
+    t.string   "emp_head"
   end
 
-  add_index "employee_attributes", ["appraisee_id"], name: "index_employee_attributes_on_appraisee_id"
-  add_index "employee_attributes", ["appraiser_id"], name: "index_employee_attributes_on_appraiser_id"
   add_index "employee_attributes", ["attribute_master_id"], name: "index_employee_attributes_on_attribute_master_id"
-  add_index "employee_attributes", ["definition_id"], name: "index_employee_attributes_on_definition_id"
   add_index "employee_attributes", ["employee_id"], name: "index_employee_attributes_on_employee_id"
   add_index "employee_attributes", ["performance_period_id"], name: "index_employee_attributes_on_performance_period_id"
 
@@ -500,10 +495,7 @@ ActiveRecord::Schema.define(version: 20160421112551) do
   end
 
   create_table "employee_goals", force: :cascade do |t|
-    t.integer  "appraisee_id"
-    t.integer  "appraiser_id"
     t.integer  "goal_perspective_id"
-    t.integer  "goal_measure_id"
     t.string   "target"
     t.integer  "goal_weightage"
     t.integer  "difficulty_level"
@@ -514,12 +506,10 @@ ActiveRecord::Schema.define(version: 20160421112551) do
     t.integer  "employee_id"
     t.string   "allign_to_supervisor"
     t.boolean  "is_confirm"
+    t.string   "emp_head"
   end
 
-  add_index "employee_goals", ["appraisee_id"], name: "index_employee_goals_on_appraisee_id"
-  add_index "employee_goals", ["appraiser_id"], name: "index_employee_goals_on_appraiser_id"
   add_index "employee_goals", ["employee_id"], name: "index_employee_goals_on_employee_id"
-  add_index "employee_goals", ["goal_measure_id"], name: "index_employee_goals_on_goal_measure_id"
   add_index "employee_goals", ["goal_perspective_id"], name: "index_employee_goals_on_goal_perspective_id"
   add_index "employee_goals", ["period_id"], name: "index_employee_goals_on_period_id"
 

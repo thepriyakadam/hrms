@@ -102,8 +102,8 @@
         <th>Target</th>
         <th>Goal Weightage</th>
         <th>Difficulty Level</th>
-        
         <th>Allign To Supervisor</th>
+
         <th>Appraisee Comment</th>
         <th>Appraisee Rating</th>
         <th>Appraiser1 Comment</th>
@@ -127,7 +127,8 @@
           <td><%= g.appraiser_comment %></td>
           <td><%= g.appraiser_rating_id %></td>
           <td><%= text_field_tag 'appraiser2_comment[]' %></td>
-          <td><%= f.select 'appraiser2_rating_id[]',options_for_select(all_rating_type) ,{class: 'form_control', hide_label: true} %></td>
+          <td><%= select_tag 'appraiser2_rating_id[]',options_for_select(all_rating_type) ,{class: 'form_control', hide_label: true} %></td>
+
           <%= hidden_field_tag 'goal_rating_sheet_id[]', {},value: g.id %> 
           <%= hidden_field_tag :appraiser_2_id, {},value: current_user.employee_id %>
         </tr>

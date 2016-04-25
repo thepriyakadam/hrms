@@ -18,10 +18,23 @@ def new
    @goal_rating_sheet = GoalRatingSheet.new
     @employee_goals = []
     @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: current_user.employee_id)
-    @employee_goals = EmployeeGoal.where(employee_id: current_user.employee_id)
-    @goal_rting_sheets = GoalRatingSheet.where(appraisee_id: current_user.employee_id).group(:appraisee_id)
 
+    if @goal_rating_sheets.empty?
+      @employee_goals = EmployeeGoal.where(employee_id: current_user.employee_id)
+    else
+      @goal_rating_sheets.each do |a|
+        temp = GoalRatingSheet.exists?(appraisee_id: current_user.employee_id, employee_goal_id: a.employee_goal_id)
+        if temp
+        else
+          ea = EmployeeGoal.find(a.employee_goal_id)
+          @employee_goals << ea
+        end
+      end
+    end
+     @goal_rting_sheets = GoalRatingSheet.where(appraisee_id: current_user.employee_id).group(:appraisee_id)
   end
+
+
 
   # GET /goal_rating_sheets/1/edit
   def edit
@@ -56,7 +69,7 @@ def new
   def update
     if @goal_rating_sheet.update(goal_rating_sheet_params)
       flash[:notice] = 'Updated Successfully'
-      redirect_to goal_rating_sheets_path
+      redirect_to new_goal_rating_sheet_path
     else
       flash[:alert] = 'Not Updated'
       redirect_to new_goal_rating_sheet_path

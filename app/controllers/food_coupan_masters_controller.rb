@@ -3,7 +3,7 @@ class FoodCoupanMastersController < ApplicationController
 
   def new
     @food_coupan_master = FoodCoupanMaster.new
-    @food_coupan_mastrs = FoodCoupanMaster.all
+    @food_coupan_masters = FoodCoupanMaster.all
     session[:active_tab] ="master"
     session[:active_tab1] ="setting"
   end

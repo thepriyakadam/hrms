@@ -24,6 +24,7 @@ class HomeController < ApplicationController
   end
 
   def created_user
+    session[:active_tab] ="user"
     if current_user.class == Group
       @employees = Employee.joins('INNER JOIN members on employees.id = members.employee_id')
     else
@@ -34,5 +35,4 @@ class HomeController < ApplicationController
       end
     end
   end
-  session[:active_tab] ="user"
 end

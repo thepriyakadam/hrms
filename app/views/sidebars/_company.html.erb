@@ -42,8 +42,8 @@
       <i class="glyphicon glyphicon-th-large"></i> <span>Master</span>
       <i class="fa fa-angle-left pull-right"></i>
     </a>
-    <ul class="treeview-menu" id="master">
-        <li>
+    <ul class="treeview-menu" >
+        <li id="setting">
         <a href="#"><i class="fa fa-edit"></i> Settings <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
            <li><a href="/food_coupan_masters/new"><i class="fa fa-tags"></i> Food Coupan Type </a></li>
@@ -269,4 +269,5 @@
 
 <script typgre="text/javascript">
   document.getElementById("<%= session[:active_tab] %>").classList.add("active");
+  document.getElementById("<%= session[:active_tab1] %>").classList.add("active");
 </script>

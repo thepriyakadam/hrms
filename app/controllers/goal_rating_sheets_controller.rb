@@ -226,7 +226,8 @@ def new
         flash[:notice] = "Confirmed Successfully"
       end  
        redirect_to appraiser2_goal_rating_sheets_path(format: @employee.id)
-    end  
+    end 
+
   end
 
    def modal
@@ -239,6 +240,7 @@ def new
  def subordinate_list2
     current_login = Employee.find(current_user.employee_id)
     @employees = current_login.indirect_subordinates
+    session[:active_tab] ="performance"
   end
 
   def appraiser2
@@ -313,6 +315,7 @@ def new
     else
       @employees = Employee.all
     end
+  session[:active_tab] ="performance"
   end
   
   def final_create

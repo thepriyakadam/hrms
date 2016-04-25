@@ -220,6 +220,7 @@ class AttributeRatingSheetsController < ApplicationController
   def subordinate_list
     current_login = Employee.find(current_user.employee_id)
     @employees = current_login.subordinates
+    session[:active_tab] ="performance"
   end
 
   def appraiser2

@@ -12,24 +12,26 @@ class GoalRatingSheetsController < ApplicationController
   def show
   end
 
-  # GET /goal_rating_sheets/new
-  
-def new
-   @goal_rating_sheet = GoalRatingSheet.new
+  # GET /goal_rating_sheets/new  
+  def new
+    @goal_rating_sheet = GoalRatingSheet.new
     @employee_goals = []
     @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: current_user.employee_id)
 
     if @goal_rating_sheets.empty?
       @employee_goals = EmployeeGoal.where(employee_id: current_user.employee_id)
     else
+      from_goal_rating_sheets = []
       @goal_rating_sheets.each do |a|
         temp = GoalRatingSheet.exists?(appraisee_id: current_user.employee_id, employee_goal_id: a.employee_goal_id)
         if temp
         else
           ea = EmployeeGoal.find(a.employee_goal_id)
-          @employee_goals << ea
+          from_goal_rating_sheets << ea
         end
       end
+      from_employee_goals = EmployeeGoal.where(employee_id: current_user.employee_id,is_confirm: true)
+      @employee_gaols = from_employee_goals + from_goal_rating_sheets
     end
      @goal_rting_sheets = GoalRatingSheet.where(appraisee_id: current_user.employee_id).group(:appraisee_id)
   end

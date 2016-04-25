@@ -12,6 +12,9 @@ class SalaryslipsController < ApplicationController
         current_template = EmployeeTemplate.where('employee_id = ? and is_active = ?', @employee.id, true).take
         addable_salary_items = current_template.employee_salary_templates.where('is_deducted = ?', false)
         deducted_salary_items = current_template.employee_salary_templates.where('is_deducted = ?', true)
+        employee_contribution_items = current_template.employee_salary_templates.where(is_deducted: nil)
+
+
 
         addable_total_actual_amount = 0
         addable_total_calculated_amount = 0
@@ -347,6 +350,10 @@ class SalaryslipsController < ApplicationController
           SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: deducted_actual_amount, calculated_amount: deducted_calculated_amount, is_deducted: true, other_component_name: 'ESIC')
         end
 
+        employee_contribution_items.try(:each) do |c|
+          SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: deducted_actual_amount, calculated_amount: deducted_calculated_amount, is_deducted: true, other_component_name: 'ESIC')
+        end
+
         BonusEmployee.create_bonus(basic_calculated_amount, @employee.id, date)
 
         @arrear = EmployeeArrear.where('employee_id = ? and is_paid = ?', @employee.id, false).take
@@ -410,12 +417,6 @@ class SalaryslipsController < ApplicationController
     @working_day = Workingday.find(@salaryslip.workingday_id)
     @employee = Employee.find(@salaryslip.employee_id)
     @advance_salary = AdvanceSalary.find_by_employee_id(@employee.id)
-    # unless @advance_salary.nil?
-    #   @instalments = @advance_salary.instalments
-    #   @instalments.try(:each) do |i|
-    #     unless i.instalment_date.nil?
-    #       if i.try(:instalment_date).strftime("%B") == params["month"] and i.try(:instalment_date).strftime("%Y") == params["year"]
-    #         @instalment_array << i
     respond_to do |format|
       format.html
       format.pdf do
@@ -425,13 +426,7 @@ class SalaryslipsController < ApplicationController
                show_as_html: params[:debug].present?
       end
     end
-      end
-  #     end
-  #   end
-  #  end
-  # end
-
-  
+  end  
  
   def select_month_year_form
     
@@ -873,9 +868,7 @@ class SalaryslipsController < ApplicationController
       @bonus_employees.destroy_all
       @salaryslip.destroy 
       SalaryslipComponent.where(salaryslip_id: @salaryslip.id).destroy_all
-      
     end
-
       redirect_to revert_salary_salaryslips_path
   end
 end

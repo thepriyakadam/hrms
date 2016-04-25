@@ -236,7 +236,7 @@ Rails.application.routes.draw do
       get :subordinate_list
       post :is_confirm
       get :employee_list
-      get :emp_goal
+      get :show_goal
     end
   end
 

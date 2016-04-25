@@ -72,11 +72,11 @@ class EmployeeGoalsController < ApplicationController
     @employees = Employee.all
   end
 
-  def emp_goal
-    puts '-------------------------'
+  def show_goal
     @employee_goal = EmployeeGoal.new
     @employee = Employee.find(params[:format])
-
+    @employee_goals = EmployeeGoal.where(employee_id: @employee.id) 
+    @employee_attributes = EmployeeAttribute.where(employee_id: @employee.id)
   end
 
   def is_confirm

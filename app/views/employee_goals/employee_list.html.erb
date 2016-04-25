@@ -10,6 +10,7 @@
         <tr>
           <th>Employee ID</th>
            <th>Name</th>
+           <th>Department</th>
           <th>Action</th>
         </tr>
       </thead>
@@ -18,7 +19,9 @@
         <tr>
         <td><%= e.manual_employee_code %></td>
         <td><%= e.first_name %> <%= e.middle_name %> <%= e.last_name %> </td>
-          <td><%= link_to '', emp_goal_employee_goals_path(e.id) ,class: 'btn btn-xs btn-default fa fa-eye' %></td>
+        <td><%= e.company_location.try(:name) %> - <%= e.department.try(:name) %></td>
+          <td><%= link_to 'Assign Goals & Attributes', new_employee_goal_path(e.id) ,class: 'btn btn-xs btn-warning' %>
+            <%= link_to 'Show Goals & Attributes', show_goal_employee_goals_path(e.id) ,class: 'btn btn-xs btn-info' %></td>
         </tr>
         <% end %>
       </tbody>

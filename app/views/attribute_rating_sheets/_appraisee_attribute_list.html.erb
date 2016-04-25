@@ -29,7 +29,7 @@
                 <td><%= a.appraisee_rating_id %></td>
                 <td>
                   <% if a.is_confirm_appraisee == true %>
-                  <small class="label label-success">Confirmed</small>
+                  <small class="label label-info">Confirmed</small>
                   <% else %>
                   <%= link_to '', edit_attribute_rating_sheet_path(a),class: 'btn btn-success btn-xs fa fa-edit' %>
                   

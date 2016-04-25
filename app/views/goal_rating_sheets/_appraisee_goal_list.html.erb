@@ -38,7 +38,7 @@
             <td><%= g.appraisee_rating.try(:code) %></td>
             <td>
               <% if g.is_confirm_appraisee == true %>
-              <small class="label label-success">Confirmed</small>
+              <small class="label label-info">Confirmed</small>
               <% else %>
               <%= link_to '', edit_goal_rating_sheet_path(g) ,class: 'btn btn-xs btn-success fa fa-edit' %>
               <% end %>
@@ -66,11 +66,11 @@
           </div>
         </div>
       </div>
-      
+      <%= link_to 'Attribute-Setting', new_attribute_rating_sheet_path, class: 'btn btn-warning btn-sm' %>
   </div>
  </div>
  <% end %>
-<%= link_to 'Attribute-Setting', new_attribute_rating_sheet_path, class: 'btn btn-warning btn-sm' %>
+
 <script type="text/javascript">
   $(function () {
     $('#selectAll').click(function() {

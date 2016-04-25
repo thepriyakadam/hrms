@@ -127,7 +127,7 @@
           <td><%= g.appraiser_comment %></td>
           <td><%= g.appraiser_rating_id %></td>
           <td><%= text_field_tag 'appraiser2_comment[]' %></td>
-          <td><%= select_tag 'appraiser2_rating_id[]',options_for_select(all_rating_type) ,class: 'form_control' %></td>
+          <td><%= f.select 'appraiser2_rating_id[]',options_for_select(all_rating_type) ,{class: 'form_control', hide_label: true} %></td>
           <%= hidden_field_tag 'goal_rating_sheet_id[]', {},value: g.id %> 
           <%= hidden_field_tag :appraiser_2_id, {},value: current_user.employee_id %>
         </tr>
@@ -188,7 +188,7 @@
           <td><%= g.appraiser2_rating.try(:code) %></td>
           <td>
             <% if g.is_confirm_appraiser2 == true %>
-            <small class="label label-success">Confirmed</small>
+            <small class="label label-info">Confirmed</small>
             <% else %>
               <%= link_to '', edit_appraiser2_goal_rating_sheets_path(g) ,class: 'btn btn-xs btn-success fa fa-edit' %>
             <% end %>
@@ -210,7 +210,7 @@
   
   </br>
   <%= link_to 'Attribute', appraiser2_attribute_rating_sheets_path(@employee.id) ,class: 'btn btn-warning btn-sm' %> |
-  <%= link_to 'Back', subordinate_list2_goal_rating_sheets_path(@employee.id) %>
+  <%= link_to 'Back', subordinate_list2_goal_rating_sheets_path(@employee.id),class: 'btn btn-default btn-sm fa fa-arrow-left' %>
 </div>
 </div>
 

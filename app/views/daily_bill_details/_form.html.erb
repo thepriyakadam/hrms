@@ -1,49 +1,71 @@
-<%= form_for(@daily_bill_detail) do |f| %>
-  <% if @daily_bill_detail.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@daily_bill_detail.errors.count, "error") %> prohibited this daily_bill_detail from being saved:</h2>
-
-      <ul>
-      <% @daily_bill_detail.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Daily Bill Detail</h3>
+  </div>
+  <div class="box-body">
+    <%= bootstrap_form_for(@daily_bill_detail) do |f| %>
+  
+  <div class="row">
+    <div class="col-sm-3">
+      <label>Expence Date </label>
+      <div class="field">
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="fa fa-calendar"></i>
+          </div>
+          <%= f.text_field :expence_date, hide_label: true, class: 'birth_date' %>
+        </div>
+      </div>
     </div>
-  <% end %>
 
-  <div class="field">
-    <%= f.label :travel_request_id %><br>
-    <%= f.text_field :travel_request_id %>
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :e_place, label: 'E Place'  %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :travel_expence, label: 'Travel Expence'  %>
+      </div>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :expence_date %><br>
-    <%= f.date_select :expence_date %>
+
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :local_travel_expence, label: 'Local Travel Expence'  %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :lodging_expence, label: 'Lodging Expence'  %>
+      </div>
+    </div>
+  
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :boarding_expence, label: 'Boarding Expence'  %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :other_expence, label: 'Other Expence'  %>
+      </div>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :e_place %><br>
-    <%= f.text_field :e_place %>
+
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit :class => class_name, data: { disable_with: data_info }  %>
+      </div>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :travel_expence %><br>
-    <%= f.text_field :travel_expence %>
+
+  <%= link_to 'Back', daily_bill_details_path,class: 'btn btn-default btn-sm fa fa-arrow-left'  %>
   </div>
-  <div class="field">
-    <%= f.label :local_travel_expence %><br>
-    <%= f.text_field :local_travel_expence %>
   </div>
-  <div class="field">
-    <%= f.label :lodging_expence %><br>
-    <%= f.text_field :lodging_expence %>
-  </div>
-  <div class="field">
-    <%= f.label :boarding_expence %><br>
-    <%= f.text_field :boarding_expence %>
-  </div>
-  <div class="field">
-    <%= f.label :other_expence %><br>
-    <%= f.text_field :other_expence %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+      <% end %>

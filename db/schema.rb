@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160425130430) do
+ActiveRecord::Schema.define(version: 20160426051551) do
 
   create_table "accident_records", force: :cascade do |t|
     t.string   "code"
@@ -1475,7 +1475,6 @@ ActiveRecord::Schema.define(version: 20160425130430) do
 
   create_table "travel_requests", force: :cascade do |t|
     t.integer  "employee_id"
-    t.integer  "reporting_manager_id"
     t.date     "application_date"
     t.date     "traveling_date"
     t.text     "tour_purpose"
@@ -1486,10 +1485,11 @@ ActiveRecord::Schema.define(version: 20160425130430) do
     t.decimal  "total_advance",            precision: 15, scale: 2, default: 0.0
     t.datetime "created_at",                                                      null: false
     t.datetime "updated_at",                                                      null: false
+    t.integer  "reporting_master_id"
   end
 
   add_index "travel_requests", ["employee_id"], name: "index_travel_requests_on_employee_id"
-  add_index "travel_requests", ["reporting_manager_id"], name: "index_travel_requests_on_reporting_manager_id"
+  add_index "travel_requests", ["reporting_master_id"], name: "index_travel_requests_on_reporting_master_id"
 
   create_table "universities", force: :cascade do |t|
     t.string   "code"

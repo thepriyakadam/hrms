@@ -22,6 +22,7 @@
       <td><%= f.select :attribute_master_id,all_attribute_type,{hide_label: true, include_blank: "Select Attribute & Definition" }%></td>
       <td><%= f.select :weightage,["1","2","3","4","5"],{hide_label: true, include_blank: "Select Weightage"} %></td>
           <%= f.hidden_field :employee_id,value: @employee.id %>
+           <%= f.hidden_field :emp_head,value: current_user.employee_id %>
     </tr>   
   </tbody>
 </table>

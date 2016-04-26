@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Travel request:</strong>
+  <%= @travel_expence.travel_request %>
+</p>
+
+<p>
+  <strong>Total advance amount:</strong>
+  <%= @travel_expence.total_advance_amount %>
+</p>
+
+<p>
+  <strong>Total expence amount:</strong>
+  <%= @travel_expence.total_expence_amount %>
+</p>
+
+<p>
+  <strong>Remaining amount:</strong>
+  <%= @travel_expence.remaining_amount %>
+</p>
+
+<p>
+  <strong>Employee amount:</strong>
+  <%= @travel_expence.employee_amount %>
+</p>
+
+<p>
+  <strong>Company amount:</strong>
+  <%= @travel_expence.company_amount %>
+</p>
+
+<%= link_to 'Edit', edit_travel_expence_path(@travel_expence) %> |
+<%= link_to 'Back', travel_expences_path %>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160421112551) do
+ActiveRecord::Schema.define(version: 20160425130430) do
 
   create_table "accident_records", force: :cascade do |t|
     t.string   "code"
@@ -337,6 +337,21 @@ ActiveRecord::Schema.define(version: 20160421112551) do
 
   add_index "custom_auto_increments", ["counter_model_name"], name: "index_custom_auto_increments_on_counter_model_name"
 
+  create_table "daily_bill_details", force: :cascade do |t|
+    t.integer  "travel_request_id"
+    t.date     "expence_date"
+    t.string   "e_place"
+    t.decimal  "travel_expence",       precision: 15, scale: 2, default: 0.0
+    t.decimal  "local_travel_expence", precision: 15, scale: 2, default: 0.0
+    t.decimal  "lodging_expence",      precision: 15, scale: 2, default: 0.0
+    t.decimal  "boarding_expence",     precision: 15, scale: 2, default: 0.0
+    t.decimal  "other_expence",        precision: 15, scale: 2, default: 0.0
+    t.datetime "created_at",                                                  null: false
+    t.datetime "updated_at",                                                  null: false
+  end
+
+  add_index "daily_bill_details", ["travel_request_id"], name: "index_daily_bill_details_on_travel_request_id"
+
   create_table "definitions", force: :cascade do |t|
     t.text     "name"
     t.datetime "created_at", null: false
@@ -448,22 +463,17 @@ ActiveRecord::Schema.define(version: 20160421112551) do
   add_index "employee_arrears", ["employee_id"], name: "index_employee_arrears_on_employee_id"
 
   create_table "employee_attributes", force: :cascade do |t|
-    t.integer  "appraisee_id"
-    t.integer  "appraiser_id"
     t.integer  "attribute_master_id"
-    t.integer  "definition_id"
     t.integer  "weightage"
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
     t.integer  "performance_period_id"
     t.integer  "employee_id"
     t.boolean  "is_confirm"
+    t.string   "emp_head"
   end
 
-  add_index "employee_attributes", ["appraisee_id"], name: "index_employee_attributes_on_appraisee_id"
-  add_index "employee_attributes", ["appraiser_id"], name: "index_employee_attributes_on_appraiser_id"
   add_index "employee_attributes", ["attribute_master_id"], name: "index_employee_attributes_on_attribute_master_id"
-  add_index "employee_attributes", ["definition_id"], name: "index_employee_attributes_on_definition_id"
   add_index "employee_attributes", ["employee_id"], name: "index_employee_attributes_on_employee_id"
   add_index "employee_attributes", ["performance_period_id"], name: "index_employee_attributes_on_performance_period_id"
 
@@ -500,10 +510,7 @@ ActiveRecord::Schema.define(version: 20160421112551) do
   end
 
   create_table "employee_goals", force: :cascade do |t|
-    t.integer  "appraisee_id"
-    t.integer  "appraiser_id"
     t.integer  "goal_perspective_id"
-    t.integer  "goal_measure_id"
     t.string   "target"
     t.integer  "goal_weightage"
     t.integer  "difficulty_level"
@@ -514,12 +521,10 @@ ActiveRecord::Schema.define(version: 20160421112551) do
     t.integer  "employee_id"
     t.string   "allign_to_supervisor"
     t.boolean  "is_confirm"
+    t.string   "emp_head"
   end
 
-  add_index "employee_goals", ["appraisee_id"], name: "index_employee_goals_on_appraisee_id"
-  add_index "employee_goals", ["appraiser_id"], name: "index_employee_goals_on_appraiser_id"
   add_index "employee_goals", ["employee_id"], name: "index_employee_goals_on_employee_id"
-  add_index "employee_goals", ["goal_measure_id"], name: "index_employee_goals_on_goal_measure_id"
   add_index "employee_goals", ["goal_perspective_id"], name: "index_employee_goals_on_goal_perspective_id"
   add_index "employee_goals", ["period_id"], name: "index_employee_goals_on_period_id"
 
@@ -1454,6 +1459,37 @@ ActiveRecord::Schema.define(version: 20160421112551) do
   end
 
   add_index "states", ["country_id"], name: "index_states_on_country_id"
+
+  create_table "travel_expences", force: :cascade do |t|
+    t.integer  "travel_request_id"
+    t.decimal  "total_advance_amount", precision: 15, scale: 2, default: 0.0
+    t.decimal  "total_expence_amount", precision: 15, scale: 2, default: 0.0
+    t.decimal  "remaining_amount",     precision: 15, scale: 2, default: 0.0
+    t.decimal  "employee_amount",      precision: 15, scale: 2, default: 0.0
+    t.decimal  "company_amount",       precision: 15, scale: 2, default: 0.0
+    t.datetime "created_at",                                                  null: false
+    t.datetime "updated_at",                                                  null: false
+  end
+
+  add_index "travel_expences", ["travel_request_id"], name: "index_travel_expences_on_travel_request_id"
+
+  create_table "travel_requests", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.integer  "reporting_manager_id"
+    t.date     "application_date"
+    t.date     "traveling_date"
+    t.text     "tour_purpose"
+    t.string   "place"
+    t.decimal  "traveling_advance",        precision: 15, scale: 2, default: 0.0
+    t.decimal  "lodging_boarding_advance", precision: 15, scale: 2, default: 0.0
+    t.decimal  "extra_advance",            precision: 15, scale: 2, default: 0.0
+    t.decimal  "total_advance",            precision: 15, scale: 2, default: 0.0
+    t.datetime "created_at",                                                      null: false
+    t.datetime "updated_at",                                                      null: false
+  end
+
+  add_index "travel_requests", ["employee_id"], name: "index_travel_requests_on_employee_id"
+  add_index "travel_requests", ["reporting_manager_id"], name: "index_travel_requests_on_reporting_manager_id"
 
   create_table "universities", force: :cascade do |t|
     t.string   "code"

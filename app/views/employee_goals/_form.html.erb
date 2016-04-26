@@ -30,6 +30,7 @@
       <td><%= f.select :allign_to_supervisor,["Yes","No"],{hide_label: true,include_blank: "Allign To Supervisor"} %></td>
 
         <%= f.hidden_field :employee_id,value: @employee.id %>
+        <%= f.hidden_field :emp_head,value: current_user.employee_id %>
     </tr>   
   </tbody>
 </table>

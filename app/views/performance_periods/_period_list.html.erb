@@ -1,0 +1,26 @@
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>  
+      <th>title</th>
+      <th>description</th>
+      <th>start_date</th>
+      <th>end_date</th>
+      <th>is_open</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @performance_periods.each do |performance_period| %>
+      <tr>
+        <td><%= performance_period.title %></td>
+        <td><%= performance_period.description %></td>
+        <td><%= performance_period.start_date %></td>
+        <td><%= performance_period.end_date %></td>
+        <td><%= performance_period.is_open %></td>
+        <td>
+          <%= link_to '', edit_performance_period_path(performance_period),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

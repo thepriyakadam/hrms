@@ -15,6 +15,7 @@ class InterviewSchedulesController < ApplicationController
         send_data pdf.render, filename: 'report.pdf', type: 'application/pdf'
       end
     end
+    session[:active_tab] ="recruitment"
   end
 
   # GET /interview_schedules/1

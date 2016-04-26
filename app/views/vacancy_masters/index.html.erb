@@ -1,8 +1,8 @@
 <div class="box">
   <div class="box-header">
-    <h3 class="box-title">Vacancy </h3>
+    <h3 class="box-title">Vacancy Details</h3>
     <div class="pull-right">
-      <%= link_to "Create Vacancy Master", new_vacancy_master_path, class: 'btn btn-sm btn-primary' %> 
+      <%= link_to "Create New Vacancy", new_vacancy_master_path, class: 'btn btn-sm btn-primary' %> 
     </div>
     </div>
 
@@ -12,13 +12,11 @@
 <table id="example" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
-      <th>Job title</th>
-      <th>Vacancy name</th>
+      <th>Job Title</th>
       <th>Company Location</th>
-      <th>Educational qualification</th>
-      <th>No of position</th>
-      <th>Description</th>
-      <th>Vacancy post date</th>
+      <th>Educational Qualification</th>
+      <th>No of Position</th>
+      <th>Vacancy Fulfillment Date</th>
       <th>Action</th>
     </tr>
   </thead>
@@ -26,16 +24,29 @@
   <tbody>
     <% @vacancy_masters.each do |vacancy_master| %>
       <tr>
-       <td><%= vacancy_master.employee_designation.name %></td>
-        <td><%= vacancy_master.vacancy_name %></td>
-        <td><%= vacancy_master.department.manual_department_code+' '+vacancy_master.company_location.name+' '+vacancy_master.department.name %></td>
+       <td><%= vacancy_master.employee_designation.try(:name) %></td>
+        <td><%= vacancy_master.company_location.try(:name) %> - <%= vacancy_master.department.try(:name) %></td>
         <td><%= vacancy_master.degree.try(:name) %></td>
         <td><%= vacancy_master.no_of_position %></td>
-        <td><%= vacancy_master.description %></td>
+        <td><%= vacancy_master.experience %></td>
         <td><%= vacancy_master.vacancy_post_date %></td>
         <td>
-            
-            <%= link_to 'Cancel',method: :delete,data:{confirm:'Are you sure?'},class: 'btn btn-danger btn-xs fa fa-trash' %>
+            <%= link_to '', vacancy_master,class: 'btn btn-xs btn-default fa fa-eye' %>
+            <% if vacancy_master.current_status == "Pending" %>
+             <%= link_to '', cancel_vacancy_request_vacancy_masters_path(vacancy_master), data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-xs fa fa-trash' %>
+             <% elsif vacancy_master.current_status == "Approved" %>
+              <small class="label label-primary">Approved</small>
+             <% elsif vacancy_master.current_status == "Reject" %>
+              <small class="label label-danger">Reject</small>
+              <% elsif vacancy_master.current_status == "Approved & Send Next" %>
+              <small class="label label-info">Approved & Send Next</small>
+              <% elsif vacancy_master.current_status == "Cancelled" %>
+              <small class="label label-warning">Cancelled</small>
+              <% else %>
+               <small class="label label-success">Revert</small>
+          <% end %>
+            <%= link_to 'Show', vacancy_master,class: 'btn btn-sm btn-info fa fa-check' %>
+            <%= link_to 'Cancel',method: :delete,data:{confirm:'Are you sure?'},class: 'btn btn-sm btn-danger fa fa-trash' %>
         </td>
       </tr>
     <% end %>
@@ -44,18 +55,13 @@
 <p>
   Download:
   <%= link_to "CSV", vacancy_masters_path(format: "csv") %>
-  <%= link_to "Excel", vacancy_masters_path(format: "xls") %>
-
 </p>
 
 </div>
   </div>
 
 <%= link_to 'New Vacancy master', new_vacancy_master_path %>
-<%= form_tag import_vacancy_masters_path, multipart: true do %>
-  <%= file_field_tag :file %>
-  <%= submit_tag "Import" %>
-  <% end %>
+
 <script>
 $(document).ready(function() {
     $('#example').DataTable();

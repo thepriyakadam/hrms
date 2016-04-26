@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Travel Requests</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Employee</th>
+      <th>Reporting manager</th>
+      <th>Application date</th>
+      <th>Traveling date</th>
+      <th>Tour purpose</th>
+      <th>Place</th>
+      <th>Traveling advance</th>
+      <th>Lodging boarding advance</th>
+      <th>Extra advance</th>
+      <th>Total advance</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @travel_requests.each do |travel_request| %>
+      <tr>
+        <td><%= travel_request.employee %></td>
+        <td><%= travel_request.reporting_manager %></td>
+        <td><%= travel_request.application_date %></td>
+        <td><%= travel_request.traveling_date %></td>
+        <td><%= travel_request.tour_purpose %></td>
+        <td><%= travel_request.place %></td>
+        <td><%= travel_request.traveling_advance %></td>
+        <td><%= travel_request.lodging_boarding_advance %></td>
+        <td><%= travel_request.extra_advance %></td>
+        <td><%= travel_request.total_advance %></td>
+        <td><%= link_to 'Show', travel_request %></td>
+        <td><%= link_to 'Edit', edit_travel_request_path(travel_request) %></td>
+        <td><%= link_to 'Destroy', travel_request, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Travel request', new_travel_request_path %>

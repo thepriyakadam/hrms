@@ -4,9 +4,7 @@
   </div>
   <div class="box-body">
 
-
-	<table class="table table-bordered table-hover table-condensed">
-       
+	<table class="table table-bordered table-hover table-condensed">    
     <thead>
 	    <tr>
 	    	<th>Employee Id</th>
@@ -36,8 +34,7 @@
 <div class="row">
   <div class="col-sm-6">
     <div class="box-header with-border">
-    
-      <h3 class="box-title">Employee Past Experience</h3>
+      <h3 class="box-title">Past Experience</h3>
     </div>
   <table class="table table-bordered table-hover table-condensed">
     <thead>
@@ -65,7 +62,7 @@
 
   <div class="col-sm-6">
     <div class="box-header with-border">
-      <h3 class="box-title">Employee Qualification Details</h3>
+      <h3 class="box-title">Qualification Details</h3>
     </div>
       <table class="table table-bordered table-hover table-condensed">
         <thead>
@@ -89,9 +86,9 @@
   
 </div>
 
-   <%= bootstrap_form_for(@goal_rating_sheet,url:{action: "final_create", id: @employee.id}) do |f| %>
+  <%= bootstrap_form_for(@goal_rating_sheet,url:{action: "final_create", id: @employee.id}) do |f| %>
    <div class="box-header with-border">
-    <h3 class="box-title">Employee Goal Details</h3>
+    <h3 class="box-title">Goals</h3>
   </div>
   <table id="tbl" class="table table-bordered table-hover table-condensed">
     <thead>
@@ -114,7 +111,7 @@
       </tr>
     </thead>
     <tbody>
-      <% @goal_rating_sheets.each do |g| %>
+      <% @goal_ratings.each do |g| %>
         <tr>
           <td><%= g.employee_goal.goal_perspective.name %></td>
           <td><%= g.employee_goal.goal_measure %></td>
@@ -124,35 +121,37 @@
           <td><%= g.employee_goal.allign_to_supervisor %></td>
 
           <td><%= g.appraisee_comment %></td>
-          <td><%= g.appraisee_rating %></td>
+          <td><%= g.appraisee_rating.try(:code) %></td>
           <td><%= g.appraiser_comment %></td>
-          <td><%= g.appraiser_rating %></td>
+          <td><%= g.appraiser_rating.try(:code) %></td>
           <td><%= g.appraiser2_comment %></td>
-          <td><%= g.appraiser2_rating %></td>
-          <td><%= text_field_tag 'final_comment[]' %></td>
-          <td><%= text_field_tag 'final_rating[]' %></td>
+          <td><%= g.appraiser2_rating.try(:code) %></td>
+          <td><%= text_field_tag 'final_comment[]' ,{}, size= "20" %></td>
+          <td><%= select_tag 'final_rating_id[]',options_for_select(all_rating_type) ,{class: 'form_control',hide_label: true} %></td>
         </tr>
           <%= hidden_field_tag 'goal_rating_sheet_id[]', {},value: g.id %> 
           <%= hidden_field_tag :final_id_id, {},value: current_user.employee_id %>
-        
-
-    <% end %>
+      <% end %>
     </tbody>
   </table>
 
+  <% if @goal_ratings.empty? %>
+
+  <% else %>
     <div class="row">
       <div class="col-sm-3">
         <div class="actions">
-          <%= f.submit "Create Rating" , class: "btn btn-primary btn-sm" %>
+          <%= f.submit "Assign Rating" , class: "btn btn-primary btn-sm" %>
         </div>
       </div>
     </div>
   <% end %>
+  <% end %>
 
-<%= bootstrap_form_for @goal_rating_sheet,url:{action:'is_confirm_final'} do |f| %>
+<%= bootstrap_form_for @goal_rating_sheet,url:{action:'is_confirm_final',id: @employee.id} do |f| %>
 
   <div class="box-header with-border">
-    <h3 class="box-title">Employee Goal Details</h3>
+    <h3 class="box-title">Goals</h3>
   </div>
   <table id="tbl" class="table table-bordered table-hover table-condensed">
     <thead>
@@ -188,15 +187,16 @@
           <td><%= g.employee_goal.allign_to_supervisor %></td>
 
           <td><%= g.appraisee_comment %></td>
-          <td><%= g.appraisee_rating %></td>
+          <td><%= g.appraisee_rating.try(:code) %></td>
           <td><%= g.appraiser_comment %></td>
-          <td><%= g.appraiser_rating %></td>
+          <td><%= g.appraiser_rating.try(:code) %></td>
           <td><%= g.appraiser2_comment %></td>
-          <td><%= g.appraiser2_rating %></td>
+          <td><%= g.appraiser2_rating.try(:code) %></td>
           <td><%= g.final_comment %></td>
-          <td><%= g.final_rating %></td>
+          <td><%= g.final_rating.try(:code) %></td>
           <td>
             <% if g.is_confirm_final == true %>
+            <small class="label label-info">Confirmed</small>
             <% else %>
             <%= link_to '', edit_final_goal_rating_sheets_path(g) ,class: 'btn btn-xs btn-success fa fa-edit' %>
             <% end %>
@@ -216,9 +216,9 @@
         </div>
       </div>
     </div>
-
-  <%= link_to 'Back', subordinate_list_attribute_rating_sheets_path(@employee.id) %>
-  <%= link_to 'Attribute', final_comment_attribute_rating_sheets_path(@employee.id) %>  
+      </br>
+  <%= link_to 'Attribute', final_comment_attribute_rating_sheets_path(@employee.id),class: 'btn btn-warning btn-sm' %> |
+  <%= link_to 'Back', employee_list_goal_rating_sheets_path(@employee.id),class: 'btn btn-default btn-sm fa fa-arrow-left' %> 
 </div>
 </div>
 <% end %>

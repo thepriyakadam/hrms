@@ -1,5 +1,29 @@
 
 Rails.application.routes.draw do
+  resources :travel_expences
+  resources :daily_bill_details
+  resources :travel_requests
+  namespace :reports do
+  get 'monthly_expences_details/new'
+  end
+
+  namespace :reports do
+  get 'society_membership_details/new'
+  end
+
+  namespace :reports do
+  get 'retention_money_details/new'
+  end
+
+  namespace :reports do
+  get 'professional_tax_details/new'
+  end
+
+  namespace :reports do
+  get 'welfare_details/new'
+  end
+
+  resources :rating_masters
   namespace :reports do
     get 'overtime_salary_details/new'
     post 'overtime_salary_details/overtime_montly_detail_report'
@@ -51,7 +75,7 @@ Rails.application.routes.draw do
       get :modal
       get :interview_reschedule
       post :send_email_to_candidate
-      get :sample_email_to_interviewer
+      
       get :sample_email
     end
   end
@@ -65,6 +89,8 @@ Rails.application.routes.draw do
       post :send_request_to_higher_authority
       get :reject_vacancy
       get :approve_vacancy
+      get :approve_vacancy_list
+      get :cancel_vacancy_request
     end
   end
   resources :leave_c_offs do
@@ -167,6 +193,10 @@ Rails.application.routes.draw do
       post :is_confirm_appraiser2
       get :edit_appraiser2
       patch :update_appraiser2
+      get :employee_list
+      get :employee_final_details
+      get :subordinate_list2
+      get :employee_appraiser2_details
     end
   end
   resources :goal_rating_sheets do
@@ -209,6 +239,8 @@ Rails.application.routes.draw do
     collection do
       get :subordinate_list
       post :is_confirm
+      get :employee_list
+      get :show_goal
     end
   end
 

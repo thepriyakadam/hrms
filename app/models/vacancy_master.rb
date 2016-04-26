@@ -1,4 +1,5 @@
 class VacancyMaster < ActiveRecord::Base
+  # protokoll :employee_code, pattern: 'VAC#####'
   belongs_to :department
   belongs_to :employee_designation
   belongs_to :company_location
@@ -15,9 +16,10 @@ class VacancyMaster < ActiveRecord::Base
                                    foreign_key: 'degree_2_id'
   belongs_to :degree_2, class_name: 'Degree'
 
-  # validates :vacancy_name, presence: true
-  # validates :no_of_position, presence: true
-  # validates :vacancy_post_date, presence: true
+  validates :employee_designation_id, presence: true
+  validates :no_of_position, presence: true
+  validates :vacancy_post_date, presence: true
+  validates :reporting_master_id, presence: true
 
   def self.to_csv(options = {})
     CSV.generate(options) do |csv|

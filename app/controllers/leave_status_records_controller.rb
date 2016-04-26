@@ -119,7 +119,7 @@ class LeaveStatusRecordsController < ApplicationController
     end
     ActiveRecord::Base.transaction do
       if @leave_status.save
-        @employee_leav_request.update(is_first_rejected: true, current_status: 'FirstRejected')
+        @employee_leav_request.update(is_first_rejected: true, current_status: 'Rejected')
         @employee_leav_request.revert_leave(@employee_leav_request)
         if @employee_leav_request.employee.email.nil? || @employee_leav_request.employee.email == ''
           flash[:notice] = 'Leave Rejected Successfully without email.'
@@ -144,7 +144,7 @@ class LeaveStatusRecordsController < ApplicationController
     end
     ActiveRecord::Base.transaction do
       if @leave_status.save
-        @employee_leav_request.update(is_second_rejected: true, current_status: 'SecondRejected')
+        @employee_leav_request.update(is_second_rejected: true, current_status: 'Rejected')
         @employee_leav_request.revert_leave(@employee_leav_request)
         if @employee_leav_request.employee.email.nil? || @employee_leav_request.employee.email == ''
           flash[:notice] = 'Leave Rejected Successfully without email.'

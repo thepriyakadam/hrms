@@ -10,6 +10,7 @@
           <thead>
             <tr>
               <th>Organization</th>
+              <th>Reporting Master</th>
               <th>Job title</th>
               <th>Vacancy name</th>
               <th>Company Location</th>
@@ -26,6 +27,7 @@
             <% @vacancy_masters.each do |vacancy_master| %>
               <tr>
                 <td><%= vacancy_master.other_organization %></td>
+                <td><%= vacancy_master.reporting_master_id %></td>
                 <td><%= vacancy_master.employee_designation.name %></td>
                 <td><%= vacancy_master.vacancy_name %></td>
                 <td><%= vacancy_master.company_location.try(:name) %></td>

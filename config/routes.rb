@@ -1,8 +1,12 @@
 
 Rails.application.routes.draw do
   resources :travel_expences
-  resources :daily_bill_details
-  resources :travel_requests
+  resources :daily_bill_details 
+  resources :travel_requests do
+    collection do 
+      get :daily_bill
+    end
+  end
   namespace :reports do
   get 'monthly_expences_details/new'
   end
@@ -68,14 +72,19 @@ Rails.application.routes.draw do
   resources :week_offs
   resources :employee_leav_request_reports, only: [:index]
 
-  resources :capture_resumes
+  resources :capture_resumes do
+    collection do
+      get :download_resume_page
+    end
+  end
+
+
   resources :interview_schedules do
     collection do
       get :search_by_interview_date
       get :modal
       get :interview_reschedule
       post :send_email_to_candidate
-      
       get :sample_email
     end
   end

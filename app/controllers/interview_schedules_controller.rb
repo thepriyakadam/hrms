@@ -54,6 +54,7 @@ class InterviewSchedulesController < ApplicationController
   def update
     respond_to do |format|
       if @interview_schedule.update(interview_schedule_params)
+        InterviewScheduleMailer.sample_email(@interview_schedule).deliver_now
         format.html { redirect_to @interview_schedule, notice: 'Interview schedule was successfully updated.' }
         format.json { render :show, status: :ok, location: @interview_schedule }
       else
@@ -83,7 +84,7 @@ class InterviewSchedulesController < ApplicationController
       redirect_to interview_schedules_path
       @interview_reschedule = InterviewReschedule.new(interview_reschedule_params)
     # @interview_reschedule.save
-  end
+    end
   end
 
   def sample_email_to_interviewer
@@ -94,6 +95,7 @@ class InterviewSchedulesController < ApplicationController
       redirect_to interview_schedules_path
     else
       InterviewScheduleMailer.sample_email_to_interviewer(@interview_schedule).deliver_now
+      InterviewScheduleMailer.confirmation_email_to_candidate(@interview_schedule).deliver_now
       flash[:notice] = 'Email Sent Successfully'
       redirect_to interview_schedules_path
   end
@@ -147,6 +149,7 @@ class InterviewSchedulesController < ApplicationController
       column :interview_status, sortable: true
     end
   end
+
 
   private
 

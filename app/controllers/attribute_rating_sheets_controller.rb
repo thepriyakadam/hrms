@@ -58,7 +58,7 @@ class AttributeRatingSheetsController < ApplicationController
       end
     end
 
-    redirect_to attribute_rating_sheets_path
+    redirect_to new_attribute_rating_sheet_path
   end
 
   # PATCH/PUT /attribute_rating_sheets/1
@@ -172,7 +172,7 @@ class AttributeRatingSheetsController < ApplicationController
     @attribute_rating_sheet_ids = params[:attribute_rating_sheet_ids]
     if @attribute_rating_sheet_ids.nil?
         flash[:alert] = "Please Select the Checkbox"
-        redirect_to new_attribute_rating_sheet_path
+        redirect_to final_comment_attribute_rating_sheets_path(format: @employee.id)
       else
         @attribute_rating_sheet_ids.each do |gid|
         @attribute_rating_sheet = AttributeRatingSheet.find(gid)
@@ -183,21 +183,32 @@ class AttributeRatingSheetsController < ApplicationController
     end  
   end
 
-  def is_confirm_appraiser2
-    
+  def is_confirm_appraiser2 
+    @employee = Employee.find(params[:id])
     @attribute_rating_sheet_ids = params[:attribute_rating_sheet_ids]
     if @attribute_rating_sheet_ids.nil?
         flash[:alert] = "Please Select the Checkbox"
-        redirect_to new_attribute_rating_sheet_path
+        redirect_to appraiser2_attribute_rating_sheets_path(@employee.id)
       else
         @attribute_rating_sheet_ids.each do |gid|
         @attribute_rating_sheet = AttributeRatingSheet.find(gid)
         @attribute_rating_sheet.update(is_confirm_appraiser2: true)
         flash[:notice] = "Confirmed Successfully"
-      end 
-       @employee = Employee.find(params[:id]) 
-       redirect_to appraiser2_attribute_rating_sheets_path(foramt: @employee.id)
+      end  
+       redirect_to appraiser2_attribute_rating_sheets_path(@attribute_rating_sheet.appraisee_id)
     end  
+  end
+
+
+  # def employee_info
+  #   @employee = Employee.find(params[:format])
+  #   @attribute_rating_sheets = AttributeRatingSheet.where(appraisee_id: params[:format]).group(:appraisee_id)
+  #   @qualification = Qualification.find_by_employee_id(@employee.id) 
+  # end
+
+  def subordinate_list
+    current_login = Employee.find(current_user.employee_id)
+    @employees = current_login.subordinates
   end
 
   def employee_details
@@ -211,16 +222,39 @@ class AttributeRatingSheetsController < ApplicationController
     @attribute_rating_multiple_sheets = AttributeRatingSheet.where(appraisee_id: params[:format])
   end
 
-  # def employee_info
-  #   @employee = Employee.find(params[:format])
-  #   @attribute_rating_sheets = AttributeRatingSheet.where(appraisee_id: params[:format]).group(:appraisee_id)
-  #   @qualification = Qualification.find_by_employee_id(@employee.id) 
-  # end
-
-  def subordinate_list
-    current_login = Employee.find(current_user.employee_id)
-    @employees = current_login.subordinates
+  def employee_list
+    @employees = Employee.all
   end
+
+  def employee_final_details
+    @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: params[:format])
+    @attribute_rating_sheets = AttributeRatingSheet.where(appraisee_id: params[:format]).group(:appraisee_id)
+    @employee = Employee.find(params[:format])
+    @qualifications = Qualification.where(employee_id: @employee.id)
+    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
+    @experiences = Experience.where(employee_id: @employee.id)
+    @ctc = EmployeeSalaryTemplate.where(employee_id: @employee.id).sum(:monthly_amount)
+    @attribute_rating_multiple_sheets = AttributeRatingSheet.where(appraisee_id: params[:format])
+  end
+
+   def subordinate_list2
+    current_login = Employee.find(current_user.employee_id)
+    @employees = current_login.indirect_subordinates
+  end
+
+  def employee_appraiser2_details
+   @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: params[:format])
+    @attribute_rating_sheets = AttributeRatingSheet.where(appraisee_id: params[:format]).group(:appraisee_id)
+    @employee = Employee.find(params[:format])
+    @qualifications = Qualification.where(employee_id: @employee.id)
+    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
+    @experiences = Experience.where(employee_id: @employee.id)
+    @ctc = EmployeeSalaryTemplate.where(employee_id: @employee.id).sum(:monthly_amount)
+    @attribute_rating_multiple_sheets = AttributeRatingSheet.where(appraisee_id: params[:format]) 
+    @employees = current_login.subordinates
+    session[:active_tab] ="performance"
+  end
+
 
   def appraiser2
     @employee = Employee.find(params[:format])

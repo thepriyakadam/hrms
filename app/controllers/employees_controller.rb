@@ -23,6 +23,8 @@ class EmployeesController < ApplicationController
     else
       @employees = Employee.all
     end
+
+      session[:active_tab] = "employee"
   end
 
   def report
@@ -139,6 +141,8 @@ class EmployeesController < ApplicationController
     end
     @all_employee_list = ReportingMaster.all.collect { |e| [e.try(:employee).try(:manual_employee_code).try(:to_s) + ' ' + e.try(:employee).try(:first_name).try(:to_s) + ' ' + e.try(:employee).try(:last_name).try(:to_s), e.try(:employee).id] }
     @all_role_list = Role.all.collect { |r| [r.name, r.id] }
+
+    session[:active_tab] ="user"
   end
 
   def submit_form
@@ -244,6 +248,7 @@ class EmployeesController < ApplicationController
 
   def manager
     @employees = Employee.all
+    session[:active_tab] ="user"
   end
 
   def edit_manager
@@ -289,6 +294,7 @@ class EmployeesController < ApplicationController
 
   def transfer_employee_list
     @employees = Employee.all
+    session[:active_tab] ="user"
   end
 
   private

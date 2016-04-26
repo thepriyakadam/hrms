@@ -66,6 +66,30 @@ class EmployeeGoalsController < ApplicationController
   def subordinate_list
     current_login = Employee.find(current_user.employee_id)
     @employees = current_login.subordinates 
+    session[:active_tab] ="performance"
+  end
+
+  def employee_list
+     if current_user.class == Group
+      @employees = Employee.all
+    elsif current_user.class == Member
+      if current_user.role.name == 'Company'
+        @employees = Employee.all
+      elsif current_user.role.name == 'CompanyLocation'
+        @employees = Employee.where(company_location_id: current_user.company_location_id)
+      elsif current_user.role.name == 'Department'
+        @employees = Employee.where(department_id: current_user.department_id)
+      else current_user.role.name == 'Employee'
+           @employees = Employee.where(id: current_user.employee_id)
+      end
+    end
+  end
+
+  def show_goal
+    @employee_goal = EmployeeGoal.new
+    @employee = Employee.find(params[:format])
+    @employee_goals = EmployeeGoal.where(employee_id: @employee.id) 
+    @employee_attributes = EmployeeAttribute.where(employee_id: @employee.id)
   end
 
   def is_confirm
@@ -98,6 +122,6 @@ class EmployeeGoalsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def employee_goal_params
-    params.require(:employee_goal).permit(:is_confirm, :period_id, :employee_id, :appraisee_id, :appraiser_id, :goal_perspective_id, :goal_measure, :target, :goal_weightage, :difficulty_level, :allign_to_supervisor, :appraisee_comment, :appraisee_rating, :appraiser_comment, :appraiser_rating)
+    params.require(:employee_goal).permit(:emp_head,:is_confirm, :period_id, :employee_id, :goal_perspective_id, :goal_measure, :target, :goal_weightage, :difficulty_level, :allign_to_supervisor, :appraisee_comment, :appraisee_rating, :appraiser_comment, :appraiser_rating)
   end
 end

@@ -1,0 +1,47 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Daily Bill Details</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+    <tr> 
+      <th colspan="2"></th>
+      <th colspan="2"></th>
+    </tr>
+    <tr>
+      <th><strong>Travel request:</strong></th>
+      <td><%= @daily_bill_detail.travel_request_id %></td>
+    
+      <th><strong>Expence date:</strong></th>
+      <td><%= @daily_bill_detail.expence_date %></td>
+    </tr>
+
+    <tr>
+      <th><strong>E place:</strong></th>
+      <td><%= @daily_bill_detail.e_place %></td>
+    
+      <th><strong>Travel expence:</strong></th>
+      <td><%= @daily_bill_detail.travel_expence %></td>
+    </tr>
+
+    <tr>
+      <th><strong>Local travel expence:</strong></th>
+      <td><%= @daily_bill_detail.local_travel_expence %></td>
+    
+      <th><strong>Lodging expence:</strong></th>
+      <td><%= @daily_bill_detail.lodging_expence %></td>
+    </tr>
+
+    <tr>
+      <th><strong>Boarding expence:</strong></th>
+      <td><%= @daily_bill_detail.boarding_expence %></td>
+    
+      <th><strong>Other expence:</strong></th>
+      <td><%= @daily_bill_detail.other_expence %></td>
+    </tr>
+  </table>
+
+    <%= link_to 'Edit', edit_daily_bill_detail_path(@daily_bill_detail),class: 'btn btn-success btn-sm fa fa-edit'  %> |
+    <%= link_to 'Back', daily_bill_details_path,class: 'btn btn-default btn-sm fa fa-arrow-left'  %>
+  </div>
+</div>

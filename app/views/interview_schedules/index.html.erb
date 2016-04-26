@@ -13,8 +13,10 @@
       <th>Job Title</th>
       <th>Candidate Name</th>
       <th>Interview Date</th>
-      <th>Interviewtime</th>
+      <th>Interview Time</th>
       <th>Location</th>
+      <th>Reschedule</th>
+      <th>Confirm</th>
       <th>Action</th>
     </tr>
   </thead>
@@ -27,14 +29,20 @@
         <td><%= interview_schedule.interview_date %></td>
         <td><%= interview_schedule.interview_time %></td>
         <td><%= interview_schedule.location %></td>
+        
         <td>
+           <!--  link_to '', interview_schedule,method: :delete,data:{confirm:'Are you sure?'},class: 'btn btn-sm btn-danger fa fa-close' %> -->
+
+            <%= link_to ' Reschedule', interview_reschedule_interview_schedules_path(id:interview_schedule.employee_id),class: 'btn btn-sm btn-info fa fa-envelope-o'  %>
+            </td>
+            <td>
+            <%= link_to ' Confirm',sample_email_to_interviewer_path(id:interview_schedule.employee_id),class: 'btn btn-sm btn-warning fa fa-check' %>
+<!--              link_to '',modal_interview_schedules_path,class: 'btn btn-sm btn-warning fa fa-modx',remote: true %>
+ -->       </td>
+ <td>
             <%= link_to '', interview_schedule,class: 'btn btn-sm btn-default fa fa-eye' %>
             <%= link_to '', edit_interview_schedule_path(interview_schedule),class: 'btn btn-sm btn-success fa fa-edit' %>
-            <%= link_to '', interview_schedule,method: :delete,data:{confirm:'Are you sure?'},class: 'btn btn-sm btn-danger fa fa-close' %>
-            <%= link_to '', interview_reschedule_interview_schedules_path(id:interview_schedule.employee_id),class: 'btn btn-sm btn-primary fa fa-envelope-o'  %>
-            <%= link_to '',sample_email_to_interviewer_path(id:interview_schedule.employee_id),class: 'btn btn-sm btn-warning fa fa-check' %>
-<!--             <%= link_to '',modal_interview_schedules_path,class: 'btn btn-sm btn-warning fa fa-modx',remote: true %>
- -->        </td>
+        </td>
       </tr>
     <% end %>
   </tbody>
@@ -42,10 +50,8 @@
 <br>
 <div id="myModal" class="modal fade"></div>
 
-<%= link_to 'Download Report', interview_schedules_path(format: 'pdf') %> |
-
-<%= link_to 'New Interview schedule', new_interview_schedule_path %> |
-<%= link_to 'Send Email', sample_email_interview_schedules_path %>
+ 
+<%= link_to 'New Interview schedule', new_interview_schedule_path %>
 
 </div>
 </div>

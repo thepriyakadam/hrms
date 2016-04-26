@@ -120,7 +120,7 @@
           <td><%= a.appraiser2_comment %></td>
           <td><%= a.appraiser2_rating.try(:code) %></td>
           <td><%= text_field_tag 'final_comment[]' %></td>
-          <td><%= select_tag 'final_rating_id[]',options_for_select(all_rating_type),class: 'form_control' %></td> 
+          <td><%= select_tag 'final_rating_id[]',options_for_select(all_rating_type),{class: 'form_control',hide_label: true} %></td> 
         </tr>
         <%= hidden_field_tag 'attribute_rating_sheet_id[]', {},value: a.id %> 
         <%= hidden_field_tag :final_id_id, {},value: current_user.employee_id %> 
@@ -175,7 +175,7 @@
           <td><%= a.final_rating.try(:code) %></td>
           <td>
           <% if a.is_confirm_final == true %>
-          <small class="label label-success">Confirmed</small>
+          <small class="label label-info">Confirmed</small>
             <% else %>
             <%= link_to '', edit_final_attribute_rating_sheets_path(a),class: 'btn btn-success btn-xs fa fa-edit' %>
             <% end %>

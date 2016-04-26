@@ -144,6 +144,7 @@ class EmployeeLeavRequestsController < ApplicationController
       @first_approved_employee_leav_requests = EmployeeLeavRequest.where(is_first_approved: true, is_second_approved: nil, is_second_rejected: nil, is_cancelled: nil, second_reporter_id: current_user.employee_id)
     end
     # @employee_leav_requests = EmployeeLeavRequest.joins("LEFT JOIN leav_approveds ON employee_leav_requests.id = leav_approveds.employee_leav_request_id LEFT JOIN leav_cancelleds ON employee_leav_requests.id = leav_cancelleds.employee_leav_request_id LEFT JOIN leav_rejecteds ON employee_leav_requests.id = leav_rejecteds.employee_leav_request_id where leav_approveds.id IS NULL AND leav_rejecteds.id IS NULL AND leav_cancelleds.id IS NULL")
+     session[:active_tab] ="leave"
   end
 
   def employee_list
@@ -160,10 +161,11 @@ class EmployeeLeavRequestsController < ApplicationController
            @employees = Employee.where(id: current_user.employee_id)
       end
     end
+    session[:active_tab] ="leave"
   end
 
   def from_hr
-    @employee = Employee.find(params[:format])
+    @employee = Employee.find(params[:id])
     @employee_leav_request = EmployeeLeavRequest.new
     @total_leaves = EmployeeLeavBalance.where('employee_id = ?', @employee.id)
     @remain_leaves = EmployeeLeavRequest.joins(:leav_approved)
@@ -182,10 +184,13 @@ class EmployeeLeavRequestsController < ApplicationController
   end
 
   def search_by_start_date
-    reporter(@employee_leav_requests, template_class: PdfReportTemplate) do
+    reporter(EmployeeLeavRequest.filter_records(current_user), template_class: PdfReportTemplate) do
       filter :start_date, type: :date
       # filter(:current_status, :enum, :select => [["Pending",0], ["FirstApproved",2], ["SecondApproved",3], ["FirstRejected",4],["SecondRejected",5],["Cancelled",1]])
       column(:manual_employee_code, sortable: true) { |employee_leav_request| employee_leav_request.employee.try(:manual_employee_code) }
+      column(:first_name, sortable: true) { |employee_leav_request| employee_leav_request.employee.try(:first_name) }
+      column(:middle_name, sortable: true) { |employee_leav_request| employee_leav_request.employee.try(:middle_name) }
+      column(:last_name, sortable: true) { |employee_leav_request| employee_leav_request.employee.try(:last_name) }
       # column(:date_range,sortable: true) { |employee_leav_request| employee_leav_request.date_range }
       column(:start_date, sortable: true) { |employee_leav_request| employee_leav_request.start_date.to_date }
       column(:end_date, sortable: true) { |employee_leav_request| employee_leav_request.end_date.to_date }

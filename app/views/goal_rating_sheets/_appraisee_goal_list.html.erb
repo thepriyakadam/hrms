@@ -25,7 +25,7 @@
         <tbody>
         <% @goal_rating_sheets.each do |g| %>
         <tr>
-            <% if g.employee_goal.is_confirm == true %>
+            <% if g.employee_goal.try(:is_confirm) == true %>
             <td><%= check_box_tag "goal_rating_sheet_ids[]", g.id %></td>
             <td><%= g.employee_goal.goal_perspective.name %></td>
             <td><%= g.employee_goal.goal_measure %></td>
@@ -38,7 +38,7 @@
             <td><%= g.appraisee_rating.try(:code) %></td>
             <td>
               <% if g.is_confirm_appraisee == true %>
-              <small class="label label-success">Confirmed</small>
+              <small class="label label-info">Confirmed</small>
               <% else %>
               <%= link_to '', edit_goal_rating_sheet_path(g) ,class: 'btn btn-xs btn-success fa fa-edit' %>
               <% end %>
@@ -63,6 +63,7 @@
         <div class="col-sm-3">
           <div class="actions">
             <%= f.submit "Confirm", class: 'btn btn-primary btn-sm' %>
+            <%= link_to 'Attribute-Setting', new_attribute_rating_sheet_path, class: 'btn btn-warning btn-sm' %>
           </div>
         </div>
       </div>
@@ -70,7 +71,7 @@
   </div>
  </div>
  <% end %>
-<%= link_to 'Attribute-Setting', new_attribute_rating_sheet_path, class: 'btn btn-warning btn-sm' %>
+
 <script type="text/javascript">
   $(function () {
     $('#selectAll').click(function() {

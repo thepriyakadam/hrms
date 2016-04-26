@@ -1513,7 +1513,6 @@ ActiveRecord::Schema.define(version: 20160426051551) do
     t.integer  "degree_id"
     t.string   "experience"
     t.string   "keyword"
-    t.string   "others"
     t.string   "other_organization"
     t.string   "industry"
     t.integer  "degree_1_id"
@@ -1521,6 +1520,7 @@ ActiveRecord::Schema.define(version: 20160426051551) do
     t.integer  "reporting_master_id"
     t.string   "current_status"
     t.integer  "employee_id"
+    t.text     "justification"
   end
 
   add_index "vacancy_masters", ["company_location_id"], name: "index_vacancy_masters_on_company_location_id"

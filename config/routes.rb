@@ -72,14 +72,19 @@ Rails.application.routes.draw do
   resources :week_offs
   resources :employee_leav_request_reports, only: [:index]
 
-  resources :capture_resumes
+  resources :capture_resumes do
+    collection do
+      get :download_resume_page
+    end
+  end
+
+
   resources :interview_schedules do
     collection do
       get :search_by_interview_date
       get :modal
       get :interview_reschedule
       post :send_email_to_candidate
-      get :sample_email_to_interviewer
       get :sample_email
     end
   end
@@ -94,6 +99,7 @@ Rails.application.routes.draw do
       get :reject_vacancy
       get :approve_vacancy
       get :approve_vacancy_list
+      get :cancel_vacancy_request
     end
   end
   resources :leave_c_offs do

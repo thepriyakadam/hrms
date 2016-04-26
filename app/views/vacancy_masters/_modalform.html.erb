@@ -1,13 +1,13 @@
 <div class="modal-dialog">
   <div class="modal-content">
-    <div class="modal-body" style="height:1000px; max-height:650px; width:630px; max-width:630px;">
-     <%= bootstrap_form_for(:vacancy_master,url:{action:"send_request_to_higher_authority", id: @vacancy_master.id},remote: true) do |f| %>
+    <div class="modal-body" style="height:1000px; max-height:100px; width:630px; max-width:630px;">
+     <%= bootstrap_form_for :vacancy_master,url:{action:"send_request_to_higher_authority", id: @vacancy_master.id},remote: true do |f| %>
         <div class="row">
           <div class="col-sm-6">
             <%= f.select :reporting_master_id, all_reporting_master_list, {hide_label: true,include_blank: " Select Reporting Master"}, class: 'input_degree_stream_id' %>
           </div>
           <div class="col-sm-2">
-            <%= f.submit "Approve & Send next", class: 'btn btn-sm btn-warning fa fa-modx' %>
+            <%= f.submit "Approve & Send next", class: 'btn btn-sm btn-warning fa fa-modx',:data => { :dismiss => 'modal' } %>
           </div>
         </div>
       <% end %>
@@ -15,3 +15,10 @@
     </div>
   </div>
 </div>
+<script>
+$('#myModal').on('hidden.bs.modal', function() {
+    $('form').submit();
+    form_submitted = false;
+});
+</script>  
+

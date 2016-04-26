@@ -1,3 +1,4 @@
+require 'open-uri'
 class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
@@ -26,6 +27,16 @@ class ApplicationController < ActionController::Base
       redirect_to root_url
     end
   end
+
+  rescue_from SocketError do |e|
+    flash[:alert] = "Check Your Internet Connection!"
+    redirect_to root_url
+  end
+
+  # rescue SocketError => e
+  #   flash[:success] = "Vendor Added Successfully mail is not send"
+  #   redirect_to amain_path
+  # end
 
   # rescue_from ActiveRecord::RecordNotFound do |_exc|
   #   if request.xhr?
@@ -133,6 +144,14 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def internet_connection?
+    begin
+      true if open("http://www.google.com/")
+    rescue
+      false
+    end
+  end
+
   protected
 
   def configure_devise_permitted_parameters
@@ -155,13 +174,3 @@ class ApplicationController < ActionController::Base
     end
   end
 end
-
-# require 'open-uri'
-
-# def internet_connection?
-#   begin
-#     true if open("http://www.google.com/")
-#   rescue
-#     false
-#   end
-# end

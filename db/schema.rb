@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160421112551) do
+ActiveRecord::Schema.define(version: 20160422090711) do
 
   create_table "accident_records", force: :cascade do |t|
     t.string   "code"
@@ -1477,7 +1477,6 @@ ActiveRecord::Schema.define(version: 20160421112551) do
     t.integer  "degree_id"
     t.string   "experience"
     t.string   "keyword"
-    t.string   "others"
     t.string   "other_organization"
     t.string   "industry"
     t.integer  "degree_1_id"
@@ -1485,6 +1484,7 @@ ActiveRecord::Schema.define(version: 20160421112551) do
     t.integer  "reporting_master_id"
     t.string   "current_status"
     t.integer  "employee_id"
+    t.text     "justification"
   end
 
   add_index "vacancy_masters", ["company_location_id"], name: "index_vacancy_masters_on_company_location_id"

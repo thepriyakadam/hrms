@@ -17,6 +17,7 @@ Rails.application.routes.draw do
 
   namespace :reports do
   get 'professional_tax_details/new'
+  post 'professional_tax_details/professional_tax_detail_report'
   end
 
   namespace :reports do

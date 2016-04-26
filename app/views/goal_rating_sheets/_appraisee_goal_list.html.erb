@@ -25,7 +25,7 @@
         <tbody>
         <% @goal_rating_sheets.each do |g| %>
         <tr>
-            <% if g.employee_goal.is_confirm == true %>
+            <% if g.employee_goal.try(:is_confirm) == true %>
             <td><%= check_box_tag "goal_rating_sheet_ids[]", g.id %></td>
             <td><%= g.employee_goal.goal_perspective.name %></td>
             <td><%= g.employee_goal.goal_measure %></td>

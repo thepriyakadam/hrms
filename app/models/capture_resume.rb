@@ -2,14 +2,15 @@ class CaptureResume < ActiveRecord::Base
   belongs_to :country
   belongs_to :state
   belongs_to :district
+  belongs_to :degree
 
-  # validates :name_of_candidate, presence: true
-  # validates :post_applied, presence: true
-  # validates :mode_of_application, presence: true
-  # validates :date_of_application, presence: true
-  # validates :country_id, presence: true
-  # validates :state_id, presence: true
-  # validates :district_id, presence: true
+  validates :name_of_candidate, presence: true
+  validates :post_applied, presence: true
+  validates :mode_of_application, presence: true
+  validates :date_of_application, presence: true
+  validates :country_id, presence: true
+  validates :state_id, presence: true
+  validates :district_id, presence: true
   has_attached_file :avatar, path: ':rails_root/attachments/:id/:style/:basename.:extension'
   
   has_attached_file :passport_photo, styles: { medium: '300x300>', thumb: '100x100>' }, default_url: 'missing.png'

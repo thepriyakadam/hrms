@@ -19,9 +19,9 @@
       <% @goal_rting_sheets.each do |g| %>
         <tr>
           <td><%= g.appraisee.manual_employee_code %></td>
-          <td><%= g.appraisee.first_name %></td>
-          <td><%= g.appraisee.joining_detail.department.name %></td>
-          <td><%= g.appraisee.joining_detail.employee_designation.name %></td>
+          <td><%= g.appraisee.try(:first_name) %> <%= g.appraisee.try(:middle_name) %> <%= g.appraisee.try(:last_name) %></td>
+          <td><%= g.appraisee.joining_detail.department.try(:name) %></td>
+          <td><%= g.appraisee.joining_detail.employee_designation.try(:name) %></td>
         </tr>
       <% end %>
     </tbody>
@@ -52,7 +52,7 @@
           <td><%= employee_goal.allign_to_supervisor %></td>
           
           <td><%= text_field_tag 'appraisee_comment[]' %></td>
-          <td><%= f.select 'appraisee_rating_id[]',options_for_select(all_rating_type), {class: 'form-control', hide_label: true} %></td>
+          <td><%= select_tag 'appraisee_rating_id[]',options_for_select(all_rating_type), {class: 'form-control', hide_label: true} %></td>
           
              <%= hidden_field_tag 'employee_goal_id[]',{},value: employee_goal.id %>
              <%= hidden_field_tag :appraisee_id, {},value: current_user.employee_id %>

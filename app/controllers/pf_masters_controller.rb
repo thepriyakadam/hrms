@@ -4,7 +4,7 @@ class PfMastersController < ApplicationController
   # GET /pf_masters
   # GET /pf_masters.json
   def index
-    @pf_masters = PfMaster.all
+
   end
 
   # GET /pf_masters/1
@@ -14,6 +14,8 @@ class PfMastersController < ApplicationController
 
   # GET /pf_masters/new
   def new
+    session[:active_tab] ="master"
+    session[:active_tab1] ="setting"
     @pf_master = PfMaster.new
     @pf_masters = PfMaster.all
   end

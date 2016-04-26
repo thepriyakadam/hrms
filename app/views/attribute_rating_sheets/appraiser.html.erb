@@ -30,7 +30,7 @@
             <td></td>
             <% end %>
             <td><%= text_field_tag 'appraiser_comment[]' %></td>
-            <td><%= f.select 'appraiser_rating_id[]',options_for_select(all_rating_type) ,{class: 'form_control', hide_label: true } %></td> 
+            <td><%= select_tag 'appraiser_rating_id[]',options_for_select(all_rating_type) ,{class: 'form_control', hide_label: true } %></td> 
               <%= hidden_field_tag 'employee_goal_id[]',{},value: a.employee_attribute.id %>
               <%= hidden_field_tag 'attribute_rating_sheet_id[]', {},value: a.id %> 
               <%= hidden_field_tag :appraisee_id, {},value: a.appraisee_id %>

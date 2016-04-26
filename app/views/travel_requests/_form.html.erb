@@ -1,0 +1,57 @@
+<%= form_for(@travel_request) do |f| %>
+  <% if @travel_request.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@travel_request.errors.count, "error") %> prohibited this travel_request from being saved:</h2>
+
+      <ul>
+      <% @travel_request.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :employee_id %><br>
+    <%= f.text_field :employee_id %>
+  </div>
+  <div class="field">
+    <%= f.label :reporting_manager_id %><br>
+    <%= f.text_field :reporting_manager_id %>
+  </div>
+  <div class="field">
+    <%= f.label :application_date %><br>
+    <%= f.date_select :application_date %>
+  </div>
+  <div class="field">
+    <%= f.label :traveling_date %><br>
+    <%= f.date_select :traveling_date %>
+  </div>
+  <div class="field">
+    <%= f.label :tour_purpose %><br>
+    <%= f.text_area :tour_purpose %>
+  </div>
+  <div class="field">
+    <%= f.label :place %><br>
+    <%= f.text_field :place %>
+  </div>
+  <div class="field">
+    <%= f.label :traveling_advance %><br>
+    <%= f.text_field :traveling_advance %>
+  </div>
+  <div class="field">
+    <%= f.label :lodging_boarding_advance %><br>
+    <%= f.text_field :lodging_boarding_advance %>
+  </div>
+  <div class="field">
+    <%= f.label :extra_advance %><br>
+    <%= f.text_field :extra_advance %>
+  </div>
+  <div class="field">
+    <%= f.label :total_advance %><br>
+    <%= f.text_field :total_advance %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

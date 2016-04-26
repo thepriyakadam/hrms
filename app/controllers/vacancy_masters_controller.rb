@@ -15,6 +15,7 @@ class VacancyMastersController < ApplicationController
           @vacancy_masters = VacancyMaster.where(employee_id: current_user.employee_id)
         end
       end
+      session[:active_tab] ="recruitment"
  end
 
 
@@ -104,6 +105,7 @@ class VacancyMastersController < ApplicationController
   def vacancy_history
     # @reporting_master = ReportingMaster.where(reporting_master_id: current_user.employee_id)
     @vacancy_masters = VacancyMaster.where(reporting_master_id: current_user.employee_id, current_status: "Pending")
+    session[:active_tab] ="recruitment"
   end
 
   def modal
@@ -137,6 +139,7 @@ class VacancyMastersController < ApplicationController
 
   def approve_vacancy_list
     @vacancy_masters = VacancyMaster.all
+    session[:active_tab] ="recruitment"
   end
 
   private

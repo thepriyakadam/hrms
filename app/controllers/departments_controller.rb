@@ -13,6 +13,7 @@ class DepartmentsController < ApplicationController
         @departments = Department.where(company_location_id: current_user.company_location_id)
       end
     end
+    session[:active_tab] = "company"
   end
 
   def edit

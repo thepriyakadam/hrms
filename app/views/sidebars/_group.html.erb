@@ -2,7 +2,7 @@
 <!-- sidebar menu: : style can be found in sidebar.less -->
 <ul class="sidebar-menu">
   <li class="header">GROUP DASHBOARD</li>
-  <li class="treeview">
+  <li class="treeview" id="company">
     <a href="">
       <!-- <i class="fa fa-user-plus"></i> <span>Create</span> <i class="fa fa-angle-left pull-right"></i> -->
       <i class="fa fa-building"></i> <span>Company Details</span> <i class="fa fa-angle-left pull-right"></i>
@@ -14,7 +14,7 @@
     </ul>
   </li>
   <!-- <li class="header">GROUP DASHBOARD</li> -->
-  <li class="treeview">
+  <li class="treeview" id="employee">
     <a href="">
       <i class="fa fa-user-plus"></i> <span>Employee Management</span> 
     </a>
@@ -224,3 +224,6 @@
    </li>
 
 </ul>
+<script typgre="text/javascript">
+  document.getElementById("<%= session[:active_tab] %>").classList.add("active");
+</script>

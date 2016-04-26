@@ -239,7 +239,6 @@ class AttributeRatingSheetsController < ApplicationController
 
    def subordinate_list2
     current_login = Employee.find(current_user.employee_id)
-<<<<<<< HEAD
     @employees = current_login.indirect_subordinates
   end
 
@@ -252,10 +251,8 @@ class AttributeRatingSheetsController < ApplicationController
     @experiences = Experience.where(employee_id: @employee.id)
     @ctc = EmployeeSalaryTemplate.where(employee_id: @employee.id).sum(:monthly_amount)
     @attribute_rating_multiple_sheets = AttributeRatingSheet.where(appraisee_id: params[:format]) 
-=======
     @employees = current_login.subordinates
     session[:active_tab] ="performance"
->>>>>>> 11059ca9161c2789289eacc3a8f4e5d1e4f268ce
   end
 
 

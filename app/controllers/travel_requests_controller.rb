@@ -61,6 +61,10 @@ class TravelRequestsController < ApplicationController
     end
   end
 
+  def daily_bill
+    @travel_requests = TravelRequest.all
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_travel_request
@@ -69,6 +73,6 @@ class TravelRequestsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def travel_request_params
-      params.require(:travel_request).permit(:employee_id, :reporting_manager_id, :application_date, :traveling_date, :tour_purpose, :place, :traveling_advance, :lodging_boarding_advance, :extra_advance, :total_advance)
+      params.require(:travel_request).permit(:employee_id, :reporting_master_id, :application_date, :traveling_date, :tour_purpose, :place, :traveling_advance, :lodging_boarding_advance, :extra_advance, :total_advance)
     end
 end

@@ -15,6 +15,7 @@ class PerformancePeriodsController < ApplicationController
   # GET /performance_periods/new
   def new
     @performance_period = PerformancePeriod.new
+    @performance_periods = PerformancePeriod.all
   end
 
   # GET /performance_periods/1/edit

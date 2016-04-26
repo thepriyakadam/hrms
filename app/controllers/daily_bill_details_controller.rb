@@ -15,6 +15,7 @@ class DailyBillDetailsController < ApplicationController
   # GET /daily_bill_details/new
   def new
     @daily_bill_detail = DailyBillDetail.new
+   
   end
 
   # GET /daily_bill_details/1/edit

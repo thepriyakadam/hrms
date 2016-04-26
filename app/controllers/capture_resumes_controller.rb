@@ -78,6 +78,11 @@ class CaptureResumesController < ApplicationController
               disposition: 'attachment'
   end
 
+  def download_resume_page
+    @capture_resumes = CaptureResume.all
+    session[:active_tab] ="recruitment"
+  end  
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

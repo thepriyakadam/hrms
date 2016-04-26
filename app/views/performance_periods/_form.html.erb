@@ -2,13 +2,13 @@
   <div class="row">
     <div class="col-sm-3">
       <div class="form-group required">
-        <%= f.text_field :title,hide_label:true, placeholder: 'Title' %>
+        <%= f.text_field :title,label: 'Title', placeholder: 'Title' %>
       </div>
     </div>
 
     <div class="col-sm-3">
       <div class="form-group required">
-        <%= f.text_field :description,hide_label:true, placeholder: 'Description' %>
+        <%= f.text_field :description,label: 'Description' , placeholder: 'Description' %>
       </div>
     </div>
 
@@ -23,9 +23,7 @@
         </div>
       </div>
     </div>
-    </div>
 
-    <div class="row">
     <div class="col-sm-3">
       <label>To Date: </label>
       <div class="field">
@@ -37,14 +35,17 @@
         </div>
       </div>
     </div>
+  </div>
 
+  <div class="row">
     <div class="col-sm-3">
       <div class="form-group required">
         <%= f.check_box :is_open,include_blank: "Is Open",label: 'Active' %>
       </div>
     </div>
+  </div>
 
-
+  <div class="row">
     <div class="col-sm-3">
       <div class="actions">
         <%= f.submit "Create Rating",class: 'btn btn-primary btn-sm'%>

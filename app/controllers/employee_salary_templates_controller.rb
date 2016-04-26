@@ -99,7 +99,6 @@ class EmployeeSalaryTemplatesController < ApplicationController
 
   def find_employee_for_salary
     @addable_salary_items = nil
-    # @deducted_salary_items = nil
     @month = params['month']
     @year = params['year']
     @instalment_array = []
@@ -113,13 +112,11 @@ class EmployeeSalaryTemplatesController < ApplicationController
       if @record.nil?
         @current_template = EmployeeTemplate.where('employee_id = ? and is_active = ?', @employee.id, true).take
         unless @current_template.nil?
-          @addable_salary_items = @current_template.employee_salary_templates.where('is_deducted = ?', false)
-          # @deducted_salary_items = @current_template.employee_salary_templates.where("is_deducted = ?",true)
-
+          #@addable_salary_items = @current_template.employee_salary_templates.where('is_deducted = ?', false)
+          @addable_salary_items = EmployeeSalaryTemplate.where(employee_template_id: @current_template.id, is_deducted: false)
           unless params['month'].nil? && params['year'].nil?
             @working_day = Workingday.where('employee_id = ? and month_name = ? and year = ?', @employee.id, params['month'], params['year']).take
           end
-
           @advance_salaries = AdvanceSalary.where(employee_id: @employee.id)
           @advance_salaries.try(:each) do |a|
             @instalments = a.instalments

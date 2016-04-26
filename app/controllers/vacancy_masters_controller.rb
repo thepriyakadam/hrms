@@ -21,6 +21,9 @@ class VacancyMastersController < ApplicationController
       end
      end 
     end
+      session[:active_tab] ="recruitment"
+ end
+
 
 
   # GET /vacancy_masters/1
@@ -112,6 +115,9 @@ class VacancyMastersController < ApplicationController
       
       @vacancy_masters = VacancyMaster.where("current_status = 'Approved & Send Next' or current_status = 'Pending'")   
           
+    # @reporting_master = ReportingMaster.where(reporting_master_id: current_user.employee_id)
+    @vacancy_masters = VacancyMaster.where(reporting_master_id: current_user.employee_id, current_status: "Pending")
+    session[:active_tab] ="recruitment"
   end
 
   def modal
@@ -147,6 +153,7 @@ class VacancyMastersController < ApplicationController
 
   def approve_vacancy_list
     @vacancy_masters = VacancyMaster.all
+    session[:active_tab] ="recruitment"
   end
 
   # def cancel_vacancy_request

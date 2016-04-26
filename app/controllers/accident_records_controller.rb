@@ -5,6 +5,7 @@ class AccidentRecordsController < ApplicationController
   # GET /accident_records.json
   def index
     @accident_records = AccidentRecord.all
+    session[:active_tab] ="safety"
   end
 
   # GET /accident_records/1

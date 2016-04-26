@@ -1,7 +1,7 @@
  <%= bootstrap_form_for @goal_rating_sheet,url:{action:'is_confirm_appraisee'} do |f| %>   
 <div class="box">
   <div class="box-header">
-    <h3 class="box-title">Employee Goal Rating : <%= @employee_goals.try(:first).try(:period).try(:title) %>-</h3>
+    <h3 class="box-title">Employee Goal Rating : <%= @employee_goals.try(:first).try(:period).try(:title) %></h3>
     <div class="pull-right">
       <%= link_to "New Goal rating sheet", new_goal_rating_sheet_path, class: 'btn btn-sm btn-primary' %> 
     </div>
@@ -25,7 +25,7 @@
         <tbody>
         <% @goal_rating_sheets.each do |g| %>
         <tr>
-            <% if g.employee_goal.is_confirm == true %>
+            <% if g.employee_goal.try(:is_confirm) == true %>
             <td><%= check_box_tag "goal_rating_sheet_ids[]", g.id %></td>
             <td><%= g.employee_goal.goal_perspective.name %></td>
             <td><%= g.employee_goal.goal_measure %></td>
@@ -38,6 +38,7 @@
             <td><%= g.appraisee_rating.try(:code) %></td>
             <td>
               <% if g.is_confirm_appraisee == true %>
+              <small class="label label-info">Confirmed</small>
               <% else %>
               <%= link_to '', edit_goal_rating_sheet_path(g) ,class: 'btn btn-xs btn-success fa fa-edit' %>
               <% end %>
@@ -65,11 +66,11 @@
           </div>
         </div>
       </div>
-      
+      <%= link_to 'Attribute-Setting', new_attribute_rating_sheet_path, class: 'btn btn-warning btn-sm' %>
   </div>
  </div>
  <% end %>
-<%= link_to 'Attribute-Setting', new_attribute_rating_sheet_path, class: 'btn btn-warning btn-sm' %>
+
 <script type="text/javascript">
   $(function () {
     $('#selectAll').click(function() {

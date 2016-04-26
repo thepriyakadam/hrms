@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Travel request:</strong>
+  <%= @daily_bill_detail.travel_request %>
+</p>
+
+<p>
+  <strong>Expence date:</strong>
+  <%= @daily_bill_detail.expence_date %>
+</p>
+
+<p>
+  <strong>E place:</strong>
+  <%= @daily_bill_detail.e_place %>
+</p>
+
+<p>
+  <strong>Travel expence:</strong>
+  <%= @daily_bill_detail.travel_expence %>
+</p>
+
+<p>
+  <strong>Local travel expence:</strong>
+  <%= @daily_bill_detail.local_travel_expence %>
+</p>
+
+<p>
+  <strong>Lodging expence:</strong>
+  <%= @daily_bill_detail.lodging_expence %>
+</p>
+
+<p>
+  <strong>Boarding expence:</strong>
+  <%= @daily_bill_detail.boarding_expence %>
+</p>
+
+<p>
+  <strong>Other expence:</strong>
+  <%= @daily_bill_detail.other_expence %>
+</p>
+
+<%= link_to 'Edit', edit_daily_bill_detail_path(@daily_bill_detail) %> |
+<%= link_to 'Back', daily_bill_details_path %>

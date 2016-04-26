@@ -1,0 +1,2 @@
+module Reports::SocietyMembershipDetailsHelper
+end

@@ -2,8 +2,11 @@ class FoodCoupanMastersController < ApplicationController
   before_action :set_food_coupan_master, only: [:show, :edit, :update, :destroy]
 
   def new
+    session[:active_tab] ="master"
+    session[:active_tab1] ="setting"
     @food_coupan_master = FoodCoupanMaster.new
-    @food_coupan_masters = FoodCoupanMaster.all
+    @food_coupan_mastrs = FoodCoupanMaster.all
+   
   end
 
   # GET /food_coupan_masters/1/edit

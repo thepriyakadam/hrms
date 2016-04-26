@@ -1,0 +1,54 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Employee:</strong>
+  <%= @travel_request.employee %>
+</p>
+
+<p>
+  <strong>Reporting manager:</strong>
+  <%= @travel_request.reporting_manager %>
+</p>
+
+<p>
+  <strong>Application date:</strong>
+  <%= @travel_request.application_date %>
+</p>
+
+<p>
+  <strong>Traveling date:</strong>
+  <%= @travel_request.traveling_date %>
+</p>
+
+<p>
+  <strong>Tour purpose:</strong>
+  <%= @travel_request.tour_purpose %>
+</p>
+
+<p>
+  <strong>Place:</strong>
+  <%= @travel_request.place %>
+</p>
+
+<p>
+  <strong>Traveling advance:</strong>
+  <%= @travel_request.traveling_advance %>
+</p>
+
+<p>
+  <strong>Lodging boarding advance:</strong>
+  <%= @travel_request.lodging_boarding_advance %>
+</p>
+
+<p>
+  <strong>Extra advance:</strong>
+  <%= @travel_request.extra_advance %>
+</p>
+
+<p>
+  <strong>Total advance:</strong>
+  <%= @travel_request.total_advance %>
+</p>
+
+<%= link_to 'Edit', edit_travel_request_path(@travel_request) %> |
+<%= link_to 'Back', travel_requests_path %>

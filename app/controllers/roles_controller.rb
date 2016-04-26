@@ -46,6 +46,7 @@ class RolesController < ApplicationController
 
   def role_edit_list
     @employees = Member.all
+    session[:active_tab] ="user"
   end
 
   def edit_role

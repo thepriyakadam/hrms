@@ -1,10 +1,31 @@
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title">Employee Goal Rating : <%= @employee_goals.try(:first).try(:period).try(:title) %></h3>
+    <h3 class="box-title"> <%= @employee_goals.try(:first).try(:employee).try(:manual_employee_code) %> <%= @employee_goals.try(:first).try(:employee).try(:first_name) %> <%= @employee_goals.try(:first).try(:employee).try(:last_name) %> Goal Rating : <%= @employee_goals.try(:first).try(:period).try(:title) %> : <%= @employee_goals.try(:first).try(:period).try(:start_date) %> To <%= @employee_goals.try(:first).try(:period).try(:end_date) %></h3>
   </div>
   <div class="box-body">
 
   <%= bootstrap_form_for(@goal_rating_sheet) do |f| %>
+
+  <table id="tbl" class="table table-bordered table-hover table-condensed">
+    <thead>
+      <tr>
+        <th>Employee Id</th>
+        <th>Employee Name</th>
+        <th>Department</th>
+        <th>Designation</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @goal_rting_sheets.each do |g| %>
+        <tr>
+          <td><%= g.appraisee.manual_employee_code %></td>
+          <td><%= g.appraisee.try(:first_name) %> <%= g.appraisee.try(:middle_name) %> <%= g.appraisee.try(:last_name) %></td>
+          <td><%= g.appraisee.joining_detail.department.try(:name) %></td>
+          <td><%= g.appraisee.joining_detail.employee_designation.try(:name) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 
   <table id="tbl" class="table table-bordered table-hover table-condensed">
     <thead>
@@ -31,7 +52,7 @@
           <td><%= employee_goal.allign_to_supervisor %></td>
           
           <td><%= text_field_tag 'appraisee_comment[]' %></td>
-          <td><%= select_tag 'appraisee_rating_id[]',options_for_select(all_rating_type), class: 'form-control' %></td>
+          <td><%= select_tag 'appraisee_rating_id[]',options_for_select(all_rating_type), {class: 'form-control', hide_label: true} %></td>
           
              <%= hidden_field_tag 'employee_goal_id[]',{},value: employee_goal.id %>
              <%= hidden_field_tag :appraisee_id, {},value: current_user.employee_id %>

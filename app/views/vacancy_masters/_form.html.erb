@@ -9,7 +9,7 @@
       <div class="row">
 
        <div class="col-sm-3">
-          <div class="form-group required">
+          <div class="field">
              <%= f.text_field :other_organization,label: 'Organization'%>
           </div>
         </div>
@@ -18,13 +18,13 @@
          <label>Job Title</label>
           <div class="form-group required">
             <div class="input-group">
-              <%= f.select :employee_designation_id,all_employee_designation,{hide_label: true,include_blank: " Select Job Title"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
+              <%= f.select :employee_designation_id,all_employee_designation,{hide_label: true,include_blank: " Select Job Title"} %>
             </div>
           </div>
         </div>
 
         <div class="col-sm-3">
-          <div class="form-group required">
+          <div class="field">
            <%= f.text_field :vacancy_name,label: 'Vacancy Name'%>
           </div>
         </div>
@@ -57,7 +57,7 @@
         </div>  
 
         <div class="col-sm-3">
-          <div class="form-group required">
+          <div class="field">
              <%= f.text_field :experience,label: 'Experience'%>
           </div>
         </div>
@@ -131,7 +131,7 @@
        
         <div class="col-sm-3">
         <label>Vacancy Approval</label>
-            <div class="field">
+            <div class="form-group required">
               <%= f.select :reporting_master_id,all_reporting_master_list,{hide_label: true,include_blank: " Select Reporting Master"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
             </div>
         </div>
@@ -139,9 +139,14 @@
      
 
       <div class="row">
-        <div class="col-sm-12">
+        <div class="col-sm-6">
           <div class="field">
            <%= f.text_area :description,label: 'Job Description',placeholder: "e.g : Any Description related to Vacancy"%>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="field">
+           <%= f.text_area :justification,label: 'Justification',placeholder: "e.g : Any Description related to why its needed for creating this vacancy"%>
           </div>
         </div>
       </div> 

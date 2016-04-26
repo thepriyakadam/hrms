@@ -75,7 +75,7 @@ Rails.application.routes.draw do
       get :modal
       get :interview_reschedule
       post :send_email_to_candidate
-      get :sample_email_to_interviewer
+      
       get :sample_email
     end
   end
@@ -90,6 +90,7 @@ Rails.application.routes.draw do
       get :reject_vacancy
       get :approve_vacancy
       get :approve_vacancy_list
+      get :cancel_vacancy_request
     end
   end
   resources :leave_c_offs do

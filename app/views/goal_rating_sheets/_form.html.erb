@@ -18,10 +18,10 @@
     <tbody>
       <% @goal_rting_sheets.each do |g| %>
         <tr>
-          <td><%= g.appraisee.manual_employee_code %></td>
-          <td><%= g.appraisee.try(:first_name) %> <%= g.appraisee.try(:middle_name) %> <%= g.appraisee.try(:last_name) %></td>
-          <td><%= g.appraisee.joining_detail.department.try(:name) %></td>
-          <td><%= g.appraisee.joining_detail.employee_designation.try(:name) %></td>
+          <td><%= g.employee.manual_employee_code %></td>
+          <td><%= g.employee.try(:first_name) %> <%= g.employee.try(:middle_name) %> <%= g.employee.try(:last_name) %></td>
+          <td><%= g.employee.joining_detail.department.try(:name) %></td>
+          <td><%= g.employee.joining_detail.employee_designation.try(:name) %></td>
         </tr>
       <% end %>
     </tbody>

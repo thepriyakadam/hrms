@@ -33,7 +33,7 @@ class GoalRatingSheetsController < ApplicationController
       from_employee_goals = EmployeeGoal.where(employee_id: current_user.employee_id,is_confirm: true)
       @employee_gaols = from_employee_goals + from_goal_rating_sheets
     end
-     @goal_rting_sheets = GoalRatingSheet.where(appraisee_id: current_user.employee_id).group(:appraisee_id)
+     @goal_rting_sheets = EmployeeGoal.where(employee_id: current_user.employee_id).group(:employee_id)
   end
 
 

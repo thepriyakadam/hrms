@@ -1,8 +1,12 @@
 
 Rails.application.routes.draw do
   resources :travel_expences
-  resources :daily_bill_details
-  resources :travel_requests
+  resources :daily_bill_details 
+  resources :travel_requests do
+    collection do 
+      get :daily_bill
+    end
+  end
   namespace :reports do
   get 'monthly_expences_details/new'
   end
@@ -17,6 +21,7 @@ Rails.application.routes.draw do
 
   namespace :reports do
   get 'professional_tax_details/new'
+  post 'professional_tax_details/professional_tax_detail_report'
   end
 
   namespace :reports do

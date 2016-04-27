@@ -3,9 +3,10 @@
     <h3 class="box-title">Daily Bill Detail</h3>
   </div>
   <div class="box-body">
-    <%= bootstrap_form_for(@daily_bill_detail) do |f| %>
+    <%= bootstrap_form_for(@daily_bill_detail,remote:true) do |f| %>
   
   <%= f.hidden_field :travel_request_id, value:@travel_request.id  %>
+   <div id="entry1" class="clonedInput">
   <div class="row">
     <div class="col-sm-3">
       <label>Expence Date </label>
@@ -21,13 +22,13 @@
 
     <div class="col-sm-3">
       <div class="field">
-        <%= f.text_field :e_place, label: 'E Place'  %>
+        <%= f.text_field :e_place, label: 'E Place',class: 'input_e_place'  %>
       </div>
     </div>
 
     <div class="col-sm-3">
       <div class="field">
-        <%= f.text_field :travel_expence, label: 'Travel Expence'  %>
+        <%= f.text_field :travel_expence, label: 'Travel Expence',class: 'input_travel_expence'  %>
       </div>
     </div>
   </div>
@@ -35,27 +36,28 @@
   <div class="row">
     <div class="col-sm-3">
       <div class="field">
-        <%= f.text_field :local_travel_expence, label: 'Local Travel Expence'  %>
+        <%= f.text_field :local_travel_expence, label: 'Local Travel Expence',class: 'input_local_travel_expence'  %>
       </div>
     </div>
 
     <div class="col-sm-3">
       <div class="field">
-        <%= f.text_field :lodging_expence, label: 'Lodging Expence'  %>
+        <%= f.text_field :lodging_expence, label: 'Lodging Expence',class: 'input_lodging_expence'  %>
       </div>
     </div>
   
     <div class="col-sm-3">
       <div class="field">
-        <%= f.text_field :boarding_expence, label: 'Boarding Expence'  %>
+        <%= f.text_field :boarding_expence, label: 'Boarding Expence',class: 'input_boarding_expence'  %>
       </div>
     </div>
 
     <div class="col-sm-3">
       <div class="field">
-        <%= f.text_field :other_expence, label: 'Other Expence'  %>
+        <%= f.text_field :other_expence, label: 'Other Expence',class: 'input_other_expence'  %>
       </div>
     </div>
+  </div>
   </div>
 
   <% unless params['controller'] == 'daily_bill_details' and params['action'] == 'edit' %>
@@ -95,7 +97,7 @@
     var num     = $('.clonedInput').length, 
         newNum  = new Number(num + 1),      
         newElem = $('#entry' + num).clone().attr('id', 'entry' + newNum).fadeIn('slow'); 
-    newElem.find('.input_expence_date').attr('name','daily_bill_detail['+ newNum +'][expence_date]').attr('id', newNum + '_daily_bill_detail_expence_date').val('');
+    newElem.find('.birth_date').attr('name','daily_bill_detail['+ newNum +'][expence_date]').attr('id', newNum + '_daily_bill_detail_expence_date').val('');
 
     newElem.find('.input_e_place').attr('name','daily_bill_detail['+ newNum +'][e_place]').attr('id', newNum + '_daily_bill_detail_e_place').val('');
 
@@ -132,4 +134,5 @@
   $('#btnAdd').attr('disabled', false);
   $('#btnDel').attr('disabled', true);
 });
+
 </script>

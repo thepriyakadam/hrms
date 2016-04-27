@@ -18,6 +18,7 @@
       <th>Traveling Date</th>
       <th>Place</th>
       <th>Total Advance</th>
+      <th>Status</th>
       <th>Action</th>
     </tr>
   </thead>
@@ -33,9 +34,8 @@
         <td><%= travel_request.place %></td>
         <td><%= travel_request.total_advance %></td>
          <td>
-            <%= link_to 'Show', travel_request,class: 'btn btn-xs btn-info fa fa-check' %>
-            <% if travel_request.current_status == "Pending" %>
-             <%= link_to '', cancel_travel_request_travel_requests_path(travel_request),data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-xs fa fa-trash' %>
+             <% if travel_request.current_status == "Pending" %>
+              <small class="label label-primary">Pending</small>
              <% elsif travel_request.current_status == "Approved" %>
               <small class="label label-primary">Approved</small>
              <% elsif travel_request.current_status == "Reject" %>
@@ -47,6 +47,9 @@
               <% else %>
                <small class="label label-success">Revert</small>
           <% end %>
+        </td>
+        <td>
+         <%= link_to 'Show', travel_request,class: 'btn btn-xs btn-info fa fa-check' %>
         </td>
       </tr>
     <% end %>

@@ -165,7 +165,7 @@ class EmployeeLeavRequestsController < ApplicationController
   end
 
   def from_hr
-    @employee = Employee.find(params[:id])
+    @employee = Employee.find(params[:format])
     @employee_leav_request = EmployeeLeavRequest.new
     @total_leaves = EmployeeLeavBalance.where('employee_id = ?', @employee.id)
     @remain_leaves = EmployeeLeavRequest.joins(:leav_approved)

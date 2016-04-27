@@ -58,7 +58,7 @@
     </div>
   </div>
 
-  <% unless params['controller'] == 'experiences' and params['action'] == 'edit' %>
+  <% unless params['controller'] == 'daily_bill_details' and params['action'] == 'edit' %>
       <div class="row">
         <div class="col-sm-2">
           <input type="button" id="btnAdd" value="+ Add Bill Details" class="btn btn-sm btn-success"> 
@@ -76,7 +76,7 @@
       <div class="actions">
         <%= f.submit :class => class_name, data: { disable_with: data_info }  %>
 
-        <% if params['controller'] == 'experiences' and params['action'] == 'edit' %>
+        <% if params['controller'] == 'daily_bill_details' and params['action'] == 'edit' %>
 
         <%= link_to 'Back', daily_bill_details_path,class: 'btn btn-default btn-sm fa fa-arrow-left'  %>
 

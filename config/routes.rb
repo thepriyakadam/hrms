@@ -21,6 +21,7 @@ Rails.application.routes.draw do
 
   namespace :reports do
   get 'professional_tax_details/new'
+  post 'professional_tax_details/professional_tax_detail_report'
   end
 
   namespace :reports do
@@ -389,6 +390,7 @@ Rails.application.routes.draw do
       get :revert_salary
       get :show_employee
       post :destroy_salary_slip
+      get :salary_slip_report
     end
   end
   

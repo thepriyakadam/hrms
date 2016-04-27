@@ -58,7 +58,7 @@ class AttributeRatingSheetsController < ApplicationController
       end
     end
 
-    redirect_to attribute_rating_sheets_path
+    redirect_to new_attribute_rating_sheet_path
   end
 
   # PATCH/PUT /attribute_rating_sheets/1

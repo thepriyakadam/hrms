@@ -39,7 +39,25 @@ th, td {
 
   <tbody>
       <tr>
-
+       <% @addable_salaryslip_items.each do |item| %>
+            <% case item.salary_component.try(:name) %>
+            <% when "Basic" %>
+              <Cell ss:Index="15"><Data ss:Type="Number"><%= item.actual_amount.round %></Data></Cell>
+            <% when "HRA" %>
+              <Cell ss:Index="16"><Data ss:Type="Number"><%= item.actual_amount.round %></Data></Cell>
+            <% when "Special Allowance" %>
+              <Cell ss:Index="17"><Data ss:Type="Number"><%= item.actual_amount.round %></Data></Cell>
+            <% when "Convenience Allowance" %>
+              <Cell ss:Index="18"><Data ss:Type="Number"><%= item.actual_amount.round %></Data></Cell>
+            <% when "Other Allowance" %>
+              <Cell ss:Index="19"><Data ss:Type="Number"><%= item.actual_amount.round %></Data></Cell>
+            <% when "Washing Allowance" %>
+              <Cell ss:Index="20"><Data ss:Type="Number"><%= item.actual_amount.round %></Data></Cell>
+            <% when "DA" %>
+              <Cell ss:Index="21"><Data ss:Type="Number"><%= item.actual_amount.round %></Data></Cell>
+            <% else %>
+            
+            <% end %> <!-- switch case -->
        <td>Basic</td>
        <td>DA</td>
        <td>HRA</td>

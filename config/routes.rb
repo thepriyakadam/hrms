@@ -5,6 +5,14 @@ Rails.application.routes.draw do
   resources :travel_requests do
     collection do 
       get :daily_bill
+      get :travel_history
+      get :travel_request_confirmation
+      get :approve_travel_request
+      get :reject_travel_request
+      post :send_request_to_higher_authority
+      get :modal
+      get :cancel_travel_request
+      get :travel_request_list
     end
   end
   namespace :reports do

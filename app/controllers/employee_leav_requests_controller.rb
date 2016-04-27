@@ -184,10 +184,13 @@ class EmployeeLeavRequestsController < ApplicationController
   end
 
   def search_by_start_date
-    reporter(@employee_leav_requests, template_class: PdfReportTemplate) do
+    reporter(EmployeeLeavRequest.filter_records(current_user), template_class: PdfReportTemplate) do
       filter :start_date, type: :date
       # filter(:current_status, :enum, :select => [["Pending",0], ["FirstApproved",2], ["SecondApproved",3], ["FirstRejected",4],["SecondRejected",5],["Cancelled",1]])
       column(:manual_employee_code, sortable: true) { |employee_leav_request| employee_leav_request.employee.try(:manual_employee_code) }
+      column(:first_name, sortable: true) { |employee_leav_request| employee_leav_request.employee.try(:first_name) }
+      column(:middle_name, sortable: true) { |employee_leav_request| employee_leav_request.employee.try(:middle_name) }
+      column(:last_name, sortable: true) { |employee_leav_request| employee_leav_request.employee.try(:last_name) }
       # column(:date_range,sortable: true) { |employee_leav_request| employee_leav_request.date_range }
       column(:start_date, sortable: true) { |employee_leav_request| employee_leav_request.start_date.to_date }
       column(:end_date, sortable: true) { |employee_leav_request| employee_leav_request.end_date.to_date }

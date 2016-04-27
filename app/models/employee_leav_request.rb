@@ -79,4 +79,24 @@ class EmployeeLeavRequest < ActiveRecord::Base
       end
     end
   end
+
+
+  def self.filter_records(current_user)
+    @employee_leave_requests =  if current_user.class == Group
+                                  EmployeeLeavRequest.all
+                                elsif current_user.class == Member
+                                  if current_user.role.name == "Company"
+                                    @employees = Employee.where(company_id: current_user.company_id)
+                                    EmployeeLeavRequest.where(employee_id: @employees)
+                                  elsif current_user.role.name == "CompanyLocation"
+                                    @employees = Employee.where(company_location_id: current_user.company_location_id)
+                                    EmployeeLeavRequest.where(employee_id: @employees)  
+                                  elsif current_user.role.name == "Department"
+                                    @employees = Employee.where(department_id: current_user.department_id)
+                                    EmployeeLeavRequest.where(employee_id: @employees)
+                                  elsif current_user.role.name == "Employee"
+                                    EmployeeLeavRequest.where(employee_id: current_user.employee_id)
+                                  end
+                                end
+  end
 end

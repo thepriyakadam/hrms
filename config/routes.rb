@@ -385,6 +385,7 @@ Rails.application.routes.draw do
       get :revert_salary
       get :show_employee
       post :destroy_salary_slip
+      get :salary_slip_report
     end
   end
   

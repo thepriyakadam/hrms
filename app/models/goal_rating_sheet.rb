@@ -11,6 +11,15 @@ class GoalRatingSheet < ActiveRecord::Base
   belongs_to :appraiser_rating, class_name: 'RatingMaster'
   belongs_to :appraiser2_rating, class_name: 'RatingMaster'
   belongs_to :final_rating, class_name: 'RatingMaster'
+
+  validates :appraisee_rating, presence: true
+  validates :appraiser_rating, presence: true
+  validates :appraiser2_rating, presence: true
+  validates :final_rating, presence: true
+  validates :appraisee_comment, presence: true
+  validates :appraiser_comment, presence: true
+  validates :appraiser2_comment, presence: true
+  validates :final_comment, presence: true
   #  validate :validate_allign_to_supervisor
   #  def validate_allign_to_supervisor
   #   	if !allign_to_supervisor.is_a?(Array) || allign_to_supervisor.detect{|d| !(yes..no).include?(d)}

@@ -105,7 +105,7 @@ class EmployeeGoalsController < ApplicationController
       @employee_goal = EmployeeGoal.find(eid)
       @employee_goal.update(is_confirm: true)
 
-      GoalRatingSheet.create(appraisee_id: current_user.employee_id, employee_goal_id: @employee_goal.id)
+      GoalRatingSheet.create(appraisee_id: @employee.id, employee_goal_id: @employee_goal.id)
       
       flash[:notice] = "Confirmed Successfully"
     end  

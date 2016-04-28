@@ -120,7 +120,7 @@
           <td><%= a.appraiser2_comment %></td>
           <td><%= a.appraiser2_rating.try(:code) %></td>
           <td><%= text_field_tag 'final_comment[]' %></td>
-          <td><%= select_tag 'final_rating_id[]',options_for_select(all_rating_type),{class: 'form_control',hide_label: true} %></td> 
+          <td><%= select_tag 'final_rating_id[]',options_for_select(all_rating_type),{class: 'form-control',hide_label: true} %></td> 
         </tr>
         <%= hidden_field_tag 'attribute_rating_sheet_id[]', {},value: a.id %> 
         <%= hidden_field_tag :final_id_id, {},value: current_user.employee_id %> 
@@ -160,7 +160,7 @@
       </tr>
     </thead>
     <tbody>
-      <% @attribute_rating_multiple_sheets.each do |a| %>
+      <% @attribute_rating_multi_sheets.each do |a| %>
         <tr>
           <td><%= check_box_tag "attribute_rating_sheet_ids[]", a.id %></td>
           <td><%= a.employee_attribute.attribute_master.name %></td>

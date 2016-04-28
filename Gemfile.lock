@@ -89,6 +89,7 @@ GEM
     google_visualr (2.5.1)
     gruff (0.6.0)
       rmagick (>= 2.13.4)
+    hirb (0.7.3)
     i18n (0.7.0)
     jbuilder (2.3.2)
       activesupport (>= 3.0.0, < 5)
@@ -270,6 +271,7 @@ DEPENDENCIES
   datagrid (~> 1.4, >= 1.4.1)
   devise
   email_verifier
+  hirb
   jbuilder (~> 2.0)
   jquery-rails
   jquery-ui-rails
@@ -298,3 +300,6 @@ DEPENDENCIES
   wirble
   wkhtmltopdf-binary (~> 0.9.9.3)
   yaml_db
+
+BUNDLED WITH
+   1.11.2

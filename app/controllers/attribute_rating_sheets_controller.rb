@@ -73,9 +73,10 @@ class AttributeRatingSheetsController < ApplicationController
 
   def appraiser
     @employee = Employee.find(params[:format])
+    @employees = AttributeRatingSheet.where(appraisee_id: @employee.id).group(:appraisee_id)
     @attribute_rating_sheets = AttributeRatingSheet.where(appraisee_id: @employee.id,is_confirm_appraisee: true)
     @attribute_ratings = AttributeRatingSheet.where(appraisee_id: @employee.id, appraiser_comment: nil,is_confirm_appraisee: true)
-    #byebug
+    
     @attribute_rating_sheet = AttributeRatingSheet.new
   end
 

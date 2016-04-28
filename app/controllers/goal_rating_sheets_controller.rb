@@ -17,9 +17,9 @@ class GoalRatingSheetsController < ApplicationController
     @goal_rating_sheet = GoalRatingSheet.new
     @employee_goals = []
     @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: current_user.employee_id)
-
+    
     if @goal_rating_sheets.empty?
-      @employee_goals = EmployeeGoal.where(employee_id: current_user.employee_id)
+      @employee_goals = EmployeeGoal.where(employee_id: current_user.employee_id,is_confirm: true)
     else
       from_goal_rating_sheets = []
       @goal_rating_sheets.each do |a|
@@ -31,7 +31,7 @@ class GoalRatingSheetsController < ApplicationController
         end
       end
       from_employee_goals = EmployeeGoal.where(employee_id: current_user.employee_id,is_confirm: true)
-      @employee_gaols = from_employee_goals + from_goal_rating_sheets
+      @employee_goals = from_employee_goals + from_goal_rating_sheets
     end
      @goal_rting_sheets = EmployeeGoal.where(employee_id: current_user.employee_id).group(:employee_id)
   end

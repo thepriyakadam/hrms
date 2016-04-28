@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160426051551) do
+ActiveRecord::Schema.define(version: 20160427070132) do
 
   create_table "accident_records", force: :cascade do |t|
     t.string   "code"
@@ -1292,6 +1292,17 @@ ActiveRecord::Schema.define(version: 20160426051551) do
 
   add_index "reporting_masters", ["employee_id"], name: "index_reporting_masters_on_employee_id"
 
+  create_table "reporting_masters_travel_requests", force: :cascade do |t|
+    t.integer  "travel_request_id"
+    t.integer  "reporting_master_id"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+    t.string   "travel_status"
+  end
+
+  add_index "reporting_masters_travel_requests", ["reporting_master_id"], name: "index_reporting_masters_travel_requests_on_reporting_master_id"
+  add_index "reporting_masters_travel_requests", ["travel_request_id"], name: "index_reporting_masters_travel_requests_on_travel_request_id"
+
   create_table "reporting_masters_vacancy_masters", force: :cascade do |t|
     t.integer  "vacancy_master_id"
     t.integer  "reporting_master_id"
@@ -1486,6 +1497,7 @@ ActiveRecord::Schema.define(version: 20160426051551) do
     t.datetime "created_at",                                                      null: false
     t.datetime "updated_at",                                                      null: false
     t.integer  "reporting_master_id"
+    t.string   "current_status"
   end
 
   add_index "travel_requests", ["employee_id"], name: "index_travel_requests_on_employee_id"

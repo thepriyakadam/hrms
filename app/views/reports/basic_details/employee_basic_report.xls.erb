@@ -74,28 +74,28 @@
         <Cell ss:Index="62"><Data ss:Type="String">Employee Trouser Size</Data></Cell>
 
         <Cell ss:Index="63"><Data ss:Type="String">Employee Qualification Level 1</Data></Cell>
-        <Cell ss:Index="64"><Data ss:Type="String">Employee Qualification 1</Data></Cell>
-        <Cell ss:Index="65"><Data ss:Type="String">Employee Qualification Specialization 1</Data></Cell>
-        <Cell ss:Index="66"><Data ss:Type="String">Employee Persentage 1</Data></Cell>
-        <Cell ss:Index="67"><Data ss:Type="String">Employee Passout Year 1</Data></Cell>
-        <Cell ss:Index="68"><Data ss:Type="String">Employee College/School 1</Data></Cell>
-        <Cell ss:Index="69"><Data ss:Type="String">Employee University/Institute 1</Data></Cell>
+        <Cell ss:Index="64"><Data ss:Type="String">Employee Qualification </Data></Cell>
+        <Cell ss:Index="65"><Data ss:Type="String">Employee Qualification Specialization </Data></Cell>
+        <Cell ss:Index="66"><Data ss:Type="String">Employee Persentage </Data></Cell>
+        <Cell ss:Index="67"><Data ss:Type="String">Employee Passout Year </Data></Cell>
+        <Cell ss:Index="68"><Data ss:Type="String">Employee College/School </Data></Cell>
+        <Cell ss:Index="69"><Data ss:Type="String">Employee University/Institute </Data></Cell>
 
         <Cell ss:Index="70"><Data ss:Type="String">Employee Qualification Level 2</Data></Cell>
-        <Cell ss:Index="71"><Data ss:Type="String">Employee Qualification 2</Data></Cell>
-        <Cell ss:Index="72"><Data ss:Type="String">Employee Qualification Specialization 2</Data></Cell>
-        <Cell ss:Index="73"><Data ss:Type="String">Employee Marks 2</Data></Cell>
-        <Cell ss:Index="74"><Data ss:Type="String">Employee Passout Year 2</Data></Cell>
-        <Cell ss:Index="75"><Data ss:Type="String">Employee College/School 2</Data></Cell>
-        <Cell ss:Index="76"><Data ss:Type="String">Employee University/Institute 2</Data></Cell>
+        <Cell ss:Index="71"><Data ss:Type="String">Employee Qualification </Data></Cell>
+        <Cell ss:Index="72"><Data ss:Type="String">Employee Qualification Specialization </Data></Cell>
+        <Cell ss:Index="73"><Data ss:Type="String">Employee Marks </Data></Cell>
+        <Cell ss:Index="74"><Data ss:Type="String">Employee Passout Year </Data></Cell>
+        <Cell ss:Index="75"><Data ss:Type="String">Employee College/School </Data></Cell>
+        <Cell ss:Index="76"><Data ss:Type="String">Employee University/Institute </Data></Cell>
 
         <Cell ss:Index="77"><Data ss:Type="String">Employee Qualification Level 3</Data></Cell>
-        <Cell ss:Index="78"><Data ss:Type="String">Employee Qualification 3</Data></Cell>
-        <Cell ss:Index="79"><Data ss:Type="String">Employee Qualification Specialization 3</Data></Cell>
+        <Cell ss:Index="78"><Data ss:Type="String">Employee Qualification </Data></Cell>
+        <Cell ss:Index="79"><Data ss:Type="String">Employee Qualification Specialization </Data></Cell>
         <Cell ss:Index="80"><Data ss:Type="String">Employee Marks 3</Data></Cell>
-        <Cell ss:Index="81"><Data ss:Type="String">Employee Passout Year 3</Data></Cell>
-        <Cell ss:Index="82"><Data ss:Type="String">Employee College/School 3</Data></Cell>
-        <Cell ss:Index="83"><Data ss:Type="String">Employee University/Institute 3</Data></Cell>
+        <Cell ss:Index="81"><Data ss:Type="String">Employee Passout Year </Data></Cell>
+        <Cell ss:Index="82"><Data ss:Type="String">Employee College/School </Data></Cell>
+        <Cell ss:Index="83"><Data ss:Type="String">Employee University/Institute </Data></Cell>
 
         <Cell ss:Index="84"><Data ss:Type="String">Employee Previous Company Name 1 </Data></Cell>
         <Cell ss:Index="85"><Data ss:Type="String">Employee Previous Designation </Data></Cell>
@@ -217,11 +217,7 @@
         <Cell ss:Index="187"><Data ss:Type="String">Family Member Differently Abled</Data></Cell>
         <Cell ss:Index="188"><Data ss:Type="String">Family Member Disability Type</Data></Cell>
 
-        
-
-
-       
-         </Row>
+        </Row>
 
         <% i = 0 %>
         <% @employees.each do |employee| %>
@@ -423,29 +419,29 @@
           <Cell ss:Index="144"><Data ss:Type="String"><%= family1.try(:handicap_type) %></Data></Cell>
 
           <Cell ss:Index="145"><Data ss:Type="String"><%= family2.try(:relation) %></Data></Cell>
-            <Cell ss:Index="146"><Data ss:Type="String"><%= family2.try(:f_name) %></Data></Cell>
-            <Cell ss:Index="147"><Data ss:Type="String"><%= family2.try(:m_name) %></Data></Cell>
-            <Cell ss:Index="148"><Data ss:Type="String"><%= family2.try(:l_name) %></Data></Cell>
-            <Cell ss:Index="149"><Data ss:Type="String"><%= family2.try(:date_of_birth) %></Data></Cell>
-            <Cell ss:Index="150"><Data ss:Type="String"><%= family2.try(:current_address) %></Data></Cell>
-            <Cell ss:Index="151"><Data ss:Type="String"><%= family2.try(:age) %></Data></Cell>
-            <Cell ss:Index="152"><Data ss:Type="String"><%= family2.try(:contact_no) %></Data></Cell>
-            <Cell ss:Index="153"><Data ss:Type="String"><%= family2.try(:email) %></Data></Cell>
-            <Cell ss:Index="154"><Data ss:Type="String"><%= family2.try(:adhar_no) %></Data></Cell>
-            <Cell ss:Index="155"><Data ss:Type="String"><%= family2.try(:pan_no) %></Data></Cell>
-            <Cell ss:Index="156"><Data ss:Type="String"><%= family2.try(:passport_no) %></Data></Cell>
-            <Cell ss:Index="157"><Data ss:Type="String"><%= family2.try(:passport_issue_date) %></Data></Cell>
-            <Cell ss:Index="158"><Data ss:Type="String"><%= family2.try(:passport_expiry_date) %></Data></Cell>
-            <Cell ss:Index="159"><Data ss:Type="String"><%= family2.try(:gender) %></Data></Cell>
-            <Cell ss:Index="160"><Data ss:Type="String"><%= family2.try(:marital) %></Data></Cell>
-            <Cell ss:Index="161"><Data ss:Type="String"><%= family2.try(:blood_group).try(:name) %></Data></Cell>
-            <Cell ss:Index="162"><Data ss:Type="String"><%= family2.try(:religion).try(:name) %></Data></Cell>
-            <Cell ss:Index="163"><Data ss:Type="String"><%= family2.try(:profession) %></Data></Cell>
-            <Cell ss:Index="164"><Data ss:Type="String"><%= family2.try(:medical_claim) %></Data></Cell>
-            <Cell ss:Index="165"><Data ss:Type="String"><%= family2.try(:is_handicap) %></Data></Cell>
-            <Cell ss:Index="166"><Data ss:Type="String"><%= family2.try(:handicap_type) %></Data></Cell>  
+          <Cell ss:Index="146"><Data ss:Type="String"><%= family2.try(:f_name) %></Data></Cell>
+          <Cell ss:Index="147"><Data ss:Type="String"><%= family2.try(:m_name) %></Data></Cell>
+          <Cell ss:Index="148"><Data ss:Type="String"><%= family2.try(:l_name) %></Data></Cell>
+          <Cell ss:Index="149"><Data ss:Type="String"><%= family2.try(:date_of_birth) %></Data></Cell>
+          <Cell ss:Index="150"><Data ss:Type="String"><%= family2.try(:current_address) %></Data></Cell>
+          <Cell ss:Index="151"><Data ss:Type="String"><%= family2.try(:age) %></Data></Cell>
+          <Cell ss:Index="152"><Data ss:Type="String"><%= family2.try(:contact_no) %></Data></Cell>
+          <Cell ss:Index="153"><Data ss:Type="String"><%= family2.try(:email) %></Data></Cell>
+          <Cell ss:Index="154"><Data ss:Type="String"><%= family2.try(:adhar_no) %></Data></Cell>
+          <Cell ss:Index="155"><Data ss:Type="String"><%= family2.try(:pan_no) %></Data></Cell>
+          <Cell ss:Index="156"><Data ss:Type="String"><%= family2.try(:passport_no) %></Data></Cell>
+          <Cell ss:Index="157"><Data ss:Type="String"><%= family2.try(:passport_issue_date) %></Data></Cell>
+          <Cell ss:Index="158"><Data ss:Type="String"><%= family2.try(:passport_expiry_date) %></Data></Cell>
+          <Cell ss:Index="159"><Data ss:Type="String"><%= family2.try(:gender) %></Data></Cell>
+          <Cell ss:Index="160"><Data ss:Type="String"><%= family2.try(:marital) %></Data></Cell>
+          <Cell ss:Index="161"><Data ss:Type="String"><%= family2.try(:blood_group).try(:name) %></Data></Cell>
+          <Cell ss:Index="162"><Data ss:Type="String"><%= family2.try(:religion).try(:name) %></Data></Cell>
+          <Cell ss:Index="163"><Data ss:Type="String"><%= family2.try(:profession) %></Data></Cell>
+          <Cell ss:Index="164"><Data ss:Type="String"><%= family2.try(:medical_claim) %></Data></Cell>
+          <Cell ss:Index="165"><Data ss:Type="String"><%= family2.try(:is_handicap) %></Data></Cell>
+          <Cell ss:Index="166"><Data ss:Type="String"><%= family2.try(:handicap_type) %></Data></Cell>  
 
-            <Cell ss:Index="167"><Data ss:Type="String"><%= family3.try(:relation) %></Data></Cell>
+          <Cell ss:Index="167"><Data ss:Type="String"><%= family3.try(:relation) %></Data></Cell>
           <Cell ss:Index="168"><Data ss:Type="String"><%= family3.try(:f_name) %></Data></Cell>
           <Cell ss:Index="169"><Data ss:Type="String"><%= family3.try(:m_name) %></Data></Cell>
           <Cell ss:Index="170"><Data ss:Type="String"><%= family3.try(:l_name) %></Data></Cell>

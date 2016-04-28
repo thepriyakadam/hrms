@@ -3,6 +3,19 @@ class Reports::BasicDetailsController < ApplicationController
 
   end
 
+  def employee_list
+    @employees = Employee.column_names
+    @joining_details = JoiningDetail.column_names
+    @employee_physicals = EmployeePhysical.column_names
+    @qualifications = Qualification.column_names
+    @experiences = Experience.column_names
+    @skillsets = Skillset.column_names
+    @certifications = Certification.column_names
+    @employee_bank_details = EmployeeBankDetail.column_names
+    @families = Family.column_names
+    @awards = Award.column_names
+  end
+
   def collect_departments
     @company_location = CompanyLocation.find(params[:id])
     @department = @company_location.departments 

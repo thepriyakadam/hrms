@@ -231,7 +231,7 @@ class AttributeRatingSheetsController < ApplicationController
   end
 
   def employee_appraiser2_details
-   @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: params[:format])
+    @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: params[:format])
     @attribute_rating_sheets = AttributeRatingSheet.where(appraisee_id: params[:format]).group(:appraisee_id)
     @employee = Employee.find(params[:format])
     @qualifications = Qualification.where(employee_id: @employee.id)
@@ -239,7 +239,8 @@ class AttributeRatingSheetsController < ApplicationController
     @experiences = Experience.where(employee_id: @employee.id)
     @ctc = EmployeeSalaryTemplate.where(employee_id: @employee.id).sum(:monthly_amount)
     @attribute_rating_multiple_sheets = AttributeRatingSheet.where(appraisee_id: params[:format]) 
-    @employees = current_login.subordinates
+    current_login = Employee.find(current_user.employee_id)
+    @employees = current_login.indirect_subordinates
     session[:active_tab] ="performance"
   end
 

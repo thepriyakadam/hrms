@@ -7,6 +7,7 @@
     </div>
   </div>
   <div class="box-body">
+  @goal_rating_sheets
     <table id="example2" class="table table-bordered table-hover table-condensed">
         <thead>
           <tr>
@@ -25,7 +26,7 @@
         <tbody>
         <% @goal_rating_sheets.each do |g| %>
         <tr>
-            <% if g.employee_goal.try(:is_confirm) == true %>
+            
             <td><%= check_box_tag "goal_rating_sheet_ids[]", g.id %></td>
             <td><%= g.employee_goal.goal_perspective.name %></td>
             <td><%= g.employee_goal.goal_measure %></td>
@@ -43,17 +44,7 @@
               <%= link_to '', edit_goal_rating_sheet_path(g) ,class: 'btn btn-xs btn-success fa fa-edit' %>
               <% end %>
             </td>
-             <% else %>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              <% end %> 
+             
           
         </tr>
         <% end %>

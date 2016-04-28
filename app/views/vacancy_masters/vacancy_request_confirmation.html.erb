@@ -44,6 +44,14 @@
       <div class="col-sm-6"><%= @vacancy_master.id %></div>
     </div>
     <div class="row">
+      <div class="col-sm-2">Request By</div>
+      <div class="col-sm-6"><%= @vacancy_master.employee_id %></div>
+    </div>
+     <div class="row">
+      <div class="col-sm-2">Approved By</div>
+      <div class="col-sm-6"><%= @vacancy_master.reporting_master_id %></div>
+    </div>
+    <div class="row">
       <div class="col-sm-2">Organization</div>
       <div class="col-sm-6"><%= @vacancy_master.other_organization %></div>
     </div>

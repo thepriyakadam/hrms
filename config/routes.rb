@@ -177,6 +177,7 @@ Rails.application.routes.draw do
   get 'basic_details/new'
   post 'basic_details/employee_basic_report'
   get 'basic_details/collect_departments'
+  get 'basic_details/employee_list'
   end
 
   namespace :reports do

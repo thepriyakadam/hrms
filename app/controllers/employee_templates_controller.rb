@@ -12,6 +12,8 @@ class EmployeeTemplatesController < ApplicationController
         @employees = Employee.where(id: current_user.employee_id)
       end
     end
+    session[:active_tab] ="payroll"
+    session[:active_tab1] ="salarymaster"
   end
 
   def template_list
@@ -52,6 +54,8 @@ class EmployeeTemplatesController < ApplicationController
         @employees = Employee.where(id: current_user.employee_id)
       end
     end
+    session[:active_tab] ="payroll"
+    session[:active_tab1] ="salarymaster"
   end
 
   def fresh

@@ -19,14 +19,19 @@ div.nobreak{ page-break-inside: avoid;
           <td colspan="6">
            <center><strong>BHANDARI</strong></center> 
             <center><strong>BHANDARI FOILS AND TUBES LTD.</strong></center>
-            <center><small>Manufacturers of Stainless Steel Cold Rolled Coils, Tubes & Fitings</small></center>
+            <center><small>Manufacturers of Stainless Steel Cold Rolled Coils, Tubes & Fitings</small></center><br><br>
+            
           </td>           
         </tr>
-        <tr>
+      </thead>
+      <tbody>
+      
+      <tr>
           <td colspan="2">Salary Slip : <%= @salaryslip.month%> - <%= @salaryslip.year%></td>
           <td colspan="2"></td>      
-          <td colspan="2"></td>            
+          <td colspan="2"><%= full_name(@employee) %></td>            
         </tr>
+      
         <tr>
           <th>Employee Code</th>
           <td><%= @employee.manual_employee_code%></td>
@@ -35,8 +40,6 @@ div.nobreak{ page-break-inside: avoid;
           <th style="text-align: right;">Month Day</th>        
           <td align="right"><%= @working_day.try(:day_in_month) %></td>            
         </tr>
-      </thead>
-      <tbody>
         <tr>
           <th>Employee Name</th>
           <td><%= full_name(@employee) %></td>
@@ -86,7 +89,7 @@ div.nobreak{ page-break-inside: avoid;
           <td align="right"><%= @employee.joining_detail.try(:employee_uan_no) %></td>
         </tr>
       </tbody>
-    </table>
+    </table><br><br>
 
     
        <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">

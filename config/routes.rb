@@ -5,6 +5,14 @@ Rails.application.routes.draw do
   resources :travel_requests do
     collection do 
       get :daily_bill
+      get :travel_history
+      get :travel_request_confirmation
+      get :approve_travel_request
+      get :reject_travel_request
+      post :send_request_to_higher_authority
+      get :modal
+      get :cancel_travel_request
+      get :travel_request_list
     end
   end
   namespace :reports do
@@ -169,6 +177,7 @@ Rails.application.routes.draw do
   get 'basic_details/new'
   post 'basic_details/employee_basic_report'
   get 'basic_details/collect_departments'
+  get 'basic_details/employee_list'
   end
 
   namespace :reports do
@@ -391,6 +400,7 @@ Rails.application.routes.draw do
       get :revert_salary
       get :show_employee
       post :destroy_salary_slip
+      get :salary_slip_report
     end
   end
   

@@ -32,10 +32,21 @@
         <td><%= travel_request.traveling_date %></td>
         <td><%= travel_request.place %></td>
         <td><%= travel_request.total_advance %></td>
-        <td>
-            <%= link_to '', travel_request,class: 'btn btn-default btn-sm fa fa-eye' %>
-            <%= link_to '', edit_travel_request_path(travel_request),class: 'btn btn-sm btn-success fa fa-edit' %>
-            <%= link_to '', travel_request, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-sm fa fa-close' %>
+         <td>
+            <%= link_to 'Show', travel_request,class: 'btn btn-xs btn-info fa fa-check' %>
+            <% if travel_request.current_status == "Pending" %>
+             <%= link_to '', cancel_travel_request_travel_requests_path(travel_request),data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-xs fa fa-trash' %>
+             <% elsif travel_request.current_status == "Approved" %>
+              <small class="label label-primary">Approved</small>
+             <% elsif travel_request.current_status == "Reject" %>
+              <small class="label label-danger">Reject</small>
+              <% elsif travel_request.current_status == "Approved & Send Next" %>
+              <small class="label label-info">Approved & Send Next</small>
+              <% elsif travel_request.current_status == "Cancelled" %>
+              <small class="label label-warning">Cancelled</small>
+              <% else %>
+               <small class="label label-success">Revert</small>
+          <% end %>
         </td>
       </tr>
     <% end %>

@@ -61,7 +61,8 @@
           <td></td>
           <% end %>
           <td><%= text_field_tag 'appraiser_comment[]' %></td>
-          <td><%= select_tag 'appraiser_rating_id[]',options_for_select(all_rating_type) ,{class: 'form_control', hide_label: true} %></td>
+          <td>
+          <%= select_tag 'appraiser_rating_id[]',options_for_select(all_rating_type), {class: 'form-control', hide_label: true} %></td>
           <%= hidden_field_tag 'employee_goal_id[]',{},value: g.employee_goal.id %>
           <%= hidden_field_tag 'goal_rating_sheet_id[]', {},value: g.id %> 
           <%= hidden_field_tag :appraisee_id, {},value: g.appraisee_id %>
@@ -85,6 +86,7 @@
   
 
   <% end %> 
+<hr>
 
 <%= bootstrap_form_for @goal_rating_sheet,url:{action:'is_confirm_appraiser'} do |f| %> 
   <table id="tbl" class="table table-bordered table-hover table-condensed">
@@ -144,6 +146,7 @@
       <div class="col-sm-3">
         <div class="actions">
           <%= f.submit "Confirm", class: 'btn btn-primary btn-sm' %>
+          <%= link_to 'Attribute-Setting', appraiser_attribute_rating_sheets_path(@employee.id) , class: 'btn btn-warning btn-sm' %>
         </div>
       </div>
     </div>
@@ -151,7 +154,7 @@
   </div>
   </div>
    <% end %>
-   <%= link_to 'Attribute-Setting', appraiser_attribute_rating_sheets_path(@employee.id) , class: 'btn btn-warning btn-sm' %>
+   
   
 
 <script type="text/javascript">

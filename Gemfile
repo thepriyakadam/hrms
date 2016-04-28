@@ -58,6 +58,7 @@ group :development do
   # Rails console table print
   gem 'table_print'
   gem 'wirble'
+  gem 'hirb'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
 end

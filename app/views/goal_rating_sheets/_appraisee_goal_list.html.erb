@@ -7,7 +7,6 @@
     </div>
   </div>
   <div class="box-body">
-  @goal_rating_sheets
     <table id="example2" class="table table-bordered table-hover table-condensed">
         <thead>
           <tr>
@@ -24,7 +23,7 @@
           </tr>
         </thead>
         <tbody>
-        <% @goal_rating_sheets.each do |g| %>
+        <% @goal_rating_shets.each do |g| %>
         <tr>
             
             <td><%= check_box_tag "goal_rating_sheet_ids[]", g.id %></td>

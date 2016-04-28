@@ -62,14 +62,24 @@ class EmployeeAttributesController < ApplicationController
   end
 
   def is_confirm
+
+    @employee = Employee.find(params[:id])
+
     @employee_attribute_ids = params[:employee_attribute_ids]
+    if @employee_attribute_ids.nil?
+      flash[:alert] = "Please Select the Checkbox"
+      redirect_to new_employee_attribute_path(@employee.id)
+    else
       @employee_attribute_ids.each do |aid|
-        @employee_attribute = EmployeeAttribute.find(aid)
-        
-        @employee_attribute.update(is_confirm: true)
-        flash[:notice] = "Confirmed Successfully"
-      end
-    redirect_to new_employee_attribute_path(@employee_attribute.employee_id)
+      @employee_attribute = EmployeeAttribute.find(aid)
+      @employee_attribute.update(is_confirm: true)
+
+      AttributeRatingSheet.create(appraisee_id: @employee.id, employee_attribute_id: @employee_attribute.id)
+      
+      flash[:notice] = "Confirmed Successfully"
+    end  
+     redirect_to new_employee_attribute_path(@employee_attribute.employee_id) 
+  end
   end
   
   private

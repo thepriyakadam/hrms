@@ -14,16 +14,15 @@
         </tr>
       </thead>
       <tbody>
-      <% @employee_attributes.each do |employee_attribute| %>
+      <% @attribute_rating_sheets.each do |attribute_rating_sheet| %>
         <tr>
-          <% if employee_attribute.is_confirm == true %>
-          <td><%= employee_attribute.attribute_master.name %></td>
-          <td><%= employee_attribute.weightage %></td>
+          
+          <td><%= attribute_rating_sheet.employee_attribute.attribute_master.name %></td>
+          <td><%= attribute_rating_sheet.employee_attribute.weightage %></td>
           <td><%= text_field_tag 'appraisee_comment[]' %></td>
-          <td><%= select_tag 'appraisee_rating_id[]',options_for_select(all_rating_type) ,{class: 'form_control', hide_label: true} %></td>
-          <% else %>
-          <% end %>
-          <%= hidden_field_tag 'employee_attribute_id[]',{},value: employee_attribute.id %>
+          <td><%= select_tag 'appraisee_rating_id[]',options_for_select(all_rating_type) ,{class: 'form-control', hide_label: true} %></td>
+          
+          <%= hidden_field_tag 'employee_attribute_id[]',{},value: attribute_rating_sheet.id %>
           <%= hidden_field_tag :appraisee_id, {},value: current_user.employee_id %>
         </tr>
       <% end %>
@@ -36,7 +35,7 @@
     <div class="row">
       <div class="col-sm-3">
         <div class="actions">
-          <%= f.submit "Create Rating", class: "btn btn-primary btn-sm" %>
+          <%= f.submit "Create Attribute Rating", class: "btn btn-primary btn-sm" %>
         </div>
       </div>
     </div>

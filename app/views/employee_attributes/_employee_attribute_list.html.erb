@@ -6,7 +6,7 @@
     </div>  
   </div>
   <div class="box-body">
-  <%= bootstrap_form_for @employee_attribute,url:{action:'is_confirm'} do |f| %> 
+  <%= bootstrap_form_for @employee_attribute,url:{action:'is_confirm',id: @employee.id} do |f| %> 
 
     <table id="example2" class="table table-bordered table-hover table-condensed">
       <thead>
@@ -32,6 +32,7 @@
             <%= link_to '', a, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-xs btn-danger fa fa-close' %>
             
             <% end %>
+            <%= f.hidden_field :employee_id,value: @employee.id %>
           </td>
         </tr>
         <% end %>

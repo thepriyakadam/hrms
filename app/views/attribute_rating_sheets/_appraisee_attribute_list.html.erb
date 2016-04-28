@@ -19,7 +19,7 @@
           </tr>
         </thead>
         <tbody>
-          <% @attribute_rating_sheets.each do |a| %>
+          <% @attribute_rating_shets.each do |a| %>
             <tr>
               <% if a.employee_attribute.is_confirm == true %>
                 <td><%= check_box_tag "attribute_rating_sheet_ids[]", a.id %></td>

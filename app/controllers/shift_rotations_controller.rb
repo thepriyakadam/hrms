@@ -42,6 +42,10 @@ class ShiftRotationsController < ApplicationController
     @shift_rotations = ShiftRotation.all
   end
 
+  def collect_employee
+    
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

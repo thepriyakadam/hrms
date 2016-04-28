@@ -429,6 +429,8 @@ class SalaryslipsController < ApplicationController
   end
  
   def select_month_year_form
+    session[:active_tab] ="payroll"
+    session[:active_tab1] ="salaryprocess"
     
   end
 
@@ -843,6 +845,8 @@ class SalaryslipsController < ApplicationController
   end
 
   def revert_salary
+    session[:active_tab] ="payroll"
+    session[:active_tab1] ="salaryprocess"
   end
   
   def salary_slip_report 

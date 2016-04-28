@@ -15,6 +15,8 @@ class SalaryTemplatesController < ApplicationController
   def new
     @salary_template = SalaryTemplate.new
     @salary_templates = SalaryTemplate.all
+    session[:active_tab] ="payroll"
+    session[:active_tab1] ="salarymaster"
   end
 
   # GET /salary_templates/1/edit

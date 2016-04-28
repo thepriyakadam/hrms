@@ -16,6 +16,8 @@ class RatingMastersController < ApplicationController
   def new
     @rating_master = RatingMaster.new
     @rating_masters = RatingMaster.all
+    session[:active_tab] ="master"
+    session[:active_tab1] ="perform"
   end
 
   # GET /rating_masters/1/edit

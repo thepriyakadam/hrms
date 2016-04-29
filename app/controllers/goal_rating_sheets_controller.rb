@@ -21,8 +21,6 @@ class GoalRatingSheetsController < ApplicationController
      @goal_rating_shets = GoalRatingSheet.where(appraisee_id: current_user.employee_id)
   end
 
-
-
   # GET /goal_rating_sheets/1/edit
   def edit
     @employee_goals = EmployeeGoal.all

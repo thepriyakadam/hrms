@@ -5,21 +5,24 @@ class HomeController < ApplicationController
     @company_locations = CompanyLocation.all
     @departments = Department.all
     @employees = Employee.all
-    if current_user.class == Member
+   if current_user.class == Member
       if current_user.role.name == 'Employee'
-        @employee = Employee.find(current_user.employee_id)
-      # authorize! :show, @employee
+        @employees = Employee.where(id: current_user.employee_id)
+        redirect_to home_index_path
       elsif current_user.role.name == 'CompanyLocation'
         @employees = Employee.where(company_location_id: current_user.company_location_id)
       elsif current_user.role.name == 'Department'
         @employees = Employee.where(department_id: current_user.department_id)
+      elsif current_user.role.name == 'Company'
+        @employees = Employee.all
       elsif current_user.role.name == 'Supervisor'
-        @employees = Employee.where(department_id: current_user.department_id)
-      elsif current_user.role.name == 'SalaryAccount'
-        @employee = Employee.find(current_user.employee_id)
-      elsif current_user.role.name == 'Account'
-         @employee = Employee.find(current_user.employee_id)
+        @emp = Employee.find(current_user.employee_id)
+        # @employees_indirect = @emp.indirect_subordinates
+        # @employees_direct = @emp.subordinates
+        @employees = @emp.subordinates
       end
+    else
+      @employees = Employee.all
     end
   end
 

@@ -25,7 +25,7 @@ class AttributeRatingSheetsController < ApplicationController
     @employee_attributes = EmployeeAttribute.all
   end
 
-  # POST /attribute_rating_sheets
+  # POST /attribute_rating_sheets51285128
   # POST /attribute_rating_sheets.json
   def create
     attribute_rating_sheet_ids = params[:employee_attribute_id]
@@ -388,9 +388,34 @@ class AttributeRatingSheetsController < ApplicationController
   def update_final_modal
     @attribute_rating_sheet = AttributeRatingSheet.find(params[:id])
     @attribute_rating_sheet.update(attribute_rating_sheet_params)
-    flash[:notice] = 'Updated Successfully'
+    flash[:notice] = 'Updatede Successfully'
     redirect_to final_comment_attribute_rating_sheets_path(@attribute_rating_sheet.appraisee_id)
   end
+
+  def print_details_appraiser
+
+    puts "-----------"
+    @employee = Employee.find(params[:id])
+    @attribute_rating_sheets = AttributeRatingSheet.where(appraisee_id: @employee.id ).group(:appraisee_id)
+    @experiences = Experience.where(employee_id: @employee.id)
+    @qualifications = Qualification.where(employee_id: @employee.id)
+     @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: @employee.id)
+     @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
+    
+    @ctc = EmployeeSalaryTemplate.where(employee_id: @employee.id).sum(:monthly_amount)
+    @attribute_rating_multiple_sheets = AttributeRatingSheet.where(appraisee_id: @employee.id)
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render pdf: 'print_details_appraiser',
+               layout: 'pdf.html',
+               :orientation      => 'Landscape', # default , Landscape
+               template: 'attribute_rating_sheets/print_details_appraiser.pdf.erb',
+              :show_as_html => params[:debug].present?
+      end
+    end  
+  end
+
   
   private
 

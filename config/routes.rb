@@ -224,6 +224,7 @@ Rails.application.routes.draw do
       patch :update_appraiser2_modal
       get :modal_final
       patch :update_final_modal
+      get :print_details_appraiser
     end
   end
   resources :goal_rating_sheets do

@@ -216,6 +216,14 @@ Rails.application.routes.draw do
       get :employee_final_details
       get :subordinate_list2
       get :employee_appraiser2_details
+      get :modal
+      patch :update_modal
+      get :modal_appraiser
+      patch :update_appraiser_modal
+      get :modal_appraiser2
+      patch :update_appraiser2_modal
+      get :modal_final
+      patch :update_final_modal
     end
   end
   resources :goal_rating_sheets do
@@ -230,7 +238,6 @@ Rails.application.routes.draw do
       get :appraiser
       post :appraiser_create
       get :appraisee_goal_list
-      get :modal
       get :subordinate_list2
       get :appraiser2
       post :appraiser2_create
@@ -243,7 +250,16 @@ Rails.application.routes.draw do
       patch :update_final
       post :is_confirm_final
       post :is_confirm_appraiser2
+      get :modal
+      patch :update_modal
+      get :modal_appraiser
+      patch :update_appraiser_modal
+      get :modal_appraiser2
+      patch :update_appraiser2_modal
+      get :modal_final
+      patch :update_final_modal
     end
+     
   end
   resources :employee_attributes do
     collection do
@@ -252,6 +268,7 @@ Rails.application.routes.draw do
       get :appraiser
       post :appraiser_create
       post :is_confirm
+      get :show_list
     end
   end
   resources :employee_goals do

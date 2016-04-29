@@ -348,6 +348,50 @@ class AttributeRatingSheetsController < ApplicationController
     redirect_to appraiser2_attribute_rating_sheets_path(format: @employee.id)
   end
 
+  def modal
+    @attribute_rating_sheet = AttributeRatingSheet.find(params[:format])
+  end
+
+  def update_modal
+    @attribute_rating_sheet = AttributeRatingSheet.find(params[:id])
+    @attribute_rating_sheet.update(attribute_rating_sheet_params)
+    flash[:notice] = 'Updated Successfully'
+    redirect_to new_attribute_rating_sheet_path
+  end
+
+  def modal_appraiser
+    @attribute_rating_sheet = AttributeRatingSheet.find(params[:format])
+  end
+
+  def update_appraiser_modal
+    @attribute_rating_sheet = AttributeRatingSheet.find(params[:id])
+    @attribute_rating_sheet.update(attribute_rating_sheet_params)
+    flash[:notice] = 'Updated Successfully'
+    redirect_to appraiser_attribute_rating_sheets_path(@attribute_rating_sheet.appraisee_id)
+  end
+  
+  def modal_appraiser2
+    @attribute_rating_sheet = AttributeRatingSheet.find(params[:format])
+  end
+
+  def update_appraiser2_modal
+    @attribute_rating_sheet = AttributeRatingSheet.find(params[:id])
+    @attribute_rating_sheet.update(attribute_rating_sheet_params)
+    flash[:notice] = 'Updated Successfully'
+    redirect_to appraiser2_attribute_rating_sheets_path(@attribute_rating_sheet.appraisee_id)
+  end
+  
+  def modal_final
+    @attribute_rating_sheet = AttributeRatingSheet.find(params[:format])
+  end
+
+  def update_final_modal
+    @attribute_rating_sheet = AttributeRatingSheet.find(params[:id])
+    @attribute_rating_sheet.update(attribute_rating_sheet_params)
+    flash[:notice] = 'Updated Successfully'
+    redirect_to final_comment_attribute_rating_sheets_path(@attribute_rating_sheet.appraisee_id)
+  end
+  
   private
 
   # Use callbacks to share common setup or constraints between actions.

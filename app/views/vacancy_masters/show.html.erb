@@ -27,7 +27,7 @@
   <th><strong>Vacancy Name:</strong></th>
   <td><%= @vacancy_master.vacancy_name %></td>
   <th><strong>Location:</strong></th>
-  <td><%= @vacancy_master.company_location.name %></td>
+  <td><%= @vacancy_master.company_location.try(:name) %></td>
   </tr>
 
 <tr> 

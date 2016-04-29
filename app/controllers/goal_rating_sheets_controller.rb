@@ -266,9 +266,7 @@ class GoalRatingSheetsController < ApplicationController
 
   end
 
-   def modal
-   end
- 
+  
  def appraisee_goal_list
    @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: current_user.employee_id)
  end
@@ -357,6 +355,50 @@ class GoalRatingSheetsController < ApplicationController
    
     redirect_to final_comment_goal_rating_sheets_path(format: @employee.id)
 
+  end
+
+  def modal
+    @goal_rating_sheet = GoalRatingSheet.find(params[:format])
+  end
+
+  def update_modal
+    @goal_rating_sheet = GoalRatingSheet.find(params[:id])
+    @goal_rating_sheet.update(goal_rating_sheet_params)
+    flash[:notice] = 'Updated Successfully'
+    redirect_to new_goal_rating_sheet_path
+  end
+
+  def modal_appraiser
+    @goal_rating_sheet = GoalRatingSheet.find(params[:format])
+  end
+
+  def update_appraiser_modal
+    @goal_rating_sheet = GoalRatingSheet.find(params[:id])
+    @goal_rating_sheet.update(goal_rating_sheet_params)
+    flash[:notice] = 'Updated Successfully'
+    redirect_to appraiser_goal_rating_sheets_path(@goal_rating_sheet.appraisee_id)
+  end
+
+  def modal_appraiser2
+    @goal_rating_sheet = GoalRatingSheet.find(params[:format])
+  end
+
+  def update_appraiser2_modal
+    @goal_rating_sheet = GoalRatingSheet.find(params[:id])
+    @goal_rating_sheet.update(goal_rating_sheet_params)
+    flash[:notice] = 'Updated Successfully'
+    redirect_to appraiser2_goal_rating_sheets_path(@goal_rating_sheet.appraisee_id)
+  end
+
+  def modal_final
+    @goal_rating_sheet = GoalRatingSheet.find(params[:format])
+  end
+
+  def update_final_modal
+    @goal_rating_sheet = GoalRatingSheet.find(params[:id])
+    @goal_rating_sheet.update(goal_rating_sheet_params)
+    flash[:notice] = 'Updated Successfully'
+    redirect_to final_comment_goal_rating_sheets_path(@goal_rating_sheet.appraisee_id)
   end
 
   private

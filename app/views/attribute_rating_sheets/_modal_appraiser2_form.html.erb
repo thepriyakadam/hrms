@@ -2,14 +2,14 @@
   <div class="modal-content">
     <div class="modal-body">
 
-      <%= bootstrap_form_for @goal_rating_sheet,url:{action: "update_modal", method: :patch,id:@goal_rating_sheet.id} do |f| %>
+      <%= bootstrap_form_for @attribute_rating_sheet,url:{action: "update_appraiser2_modal", method: :patch,id:@attribute_rating_sheet.id} do |f| %>
         <div class="row">
           <div class="col-sm-4">
-            <%= f.text_field :appraisee_comment,hide_label:true, placeholder: "appraisee_comment" %>    
+            <%= f.text_field :appraiser2_comment,hide_label:true, placeholder: "Appraiser2 Comment" %>    
           </div>
 
            <div class="col-sm-4">
-            <%= f.text_field :appraisee_rating_id,hide_label:true, placeholder: "appraisee_rating" %>    
+            <%= f.text_field :appraiser2_rating_id,hide_label:true, placeholder: "Appraiser2 Rating" %>    
           </div>
 
           <div class="col-sm-2">

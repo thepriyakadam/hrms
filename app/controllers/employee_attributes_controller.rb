@@ -61,8 +61,14 @@ class EmployeeAttributesController < ApplicationController
     flash[:alert] = 'Deleted Successfully'
   end
 
-  def is_confirm
+  def show_list
+    @employee_goal = EmployeeGoal.new
+    @employee = Employee.find(params[:format])
+    @employee_goals = EmployeeGoal.where(employee_id: @employee.id) 
+    @employee_attributes = EmployeeAttribute.where(employee_id: @employee.id)
+  end
 
+  def is_confirm
     @employee = Employee.find(params[:id])
 
     @employee_attribute_ids = params[:employee_attribute_ids]

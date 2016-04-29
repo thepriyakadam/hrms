@@ -44,7 +44,8 @@
         <div class="actions">
           <%= f.submit "Confirm", class: 'btn btn-primary btn-sm' %> 
           <%= link_to 'Back', new_employee_goal_path(@employee.id),class: 'btn btn-default btn-sm fa fa-arrow-left' %>
-
+          <hr>
+          <%= link_to 'Created Goals & Attributes', show_list_employee_attributes_path(@employee.id),class: 'btn btn-warning btn-sm' %>
         </div>
       </div>
     </div>

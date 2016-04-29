@@ -31,7 +31,7 @@
                   <% if a.is_confirm_appraisee == true %>
                   <small class="label label-info">Confirmed</small>
                   <% else %>
-                  <%= link_to '', edit_attribute_rating_sheet_path(a),class: 'btn btn-success btn-xs fa fa-edit' %>
+                  <%= link_to '', modal_attribute_rating_sheets_path(a),class: 'btn btn-success btn-xs fa fa-edit',remote: true %>
                   
                   <% end %>
                 </td>
@@ -60,6 +60,9 @@
 </div>
 </div>
 <% end %>
+
+<div id="myModal" class="modal fade"></div>
+
 <script type="text/javascript">
   $(function () {
     $('#selectAll').click(function() {

@@ -1,5 +1,6 @@
 
 Rails.application.routes.draw do
+  resources :particular_vacancy_requests
   resources :travel_expences
   resources :daily_bill_details 
   resources :travel_requests do
@@ -411,7 +412,14 @@ Rails.application.routes.draw do
         post :print_salary_slip_monthwise
      end
    end  
-
+  
+  resources :salary_slip_ledgers do
+     collection do
+        get :select_month_year_form
+        get :show_employee
+        post :print_salary_slip_monthwise
+     end
+   end  
 
   resources :instalments do
     collection do

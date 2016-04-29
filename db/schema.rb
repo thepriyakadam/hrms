@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160427070132) do
+ActiveRecord::Schema.define(version: 20160429101007) do
 
   create_table "accident_records", force: :cascade do |t|
     t.string   "code"
@@ -1205,6 +1205,23 @@ ActiveRecord::Schema.define(version: 20160427070132) do
   add_index "particular_leave_records", ["employee_leav_request_id"], name: "index_particular_leave_records_on_employee_leav_request_id"
   add_index "particular_leave_records", ["leav_category_id"], name: "index_particular_leave_records_on_leav_category_id"
 
+  create_table "particular_vacancy_requests", force: :cascade do |t|
+    t.integer  "vacancy_master_id"
+    t.integer  "employee_id"
+    t.date     "open_date"
+    t.date     "closed_date"
+    t.date     "fulfillment_date"
+    t.string   "status"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.integer  "employee_designation_id"
+    t.string   "vacancy_name"
+  end
+
+  add_index "particular_vacancy_requests", ["employee_designation_id"], name: "index_particular_vacancy_requests_on_employee_designation_id"
+  add_index "particular_vacancy_requests", ["employee_id"], name: "index_particular_vacancy_requests_on_employee_id"
+  add_index "particular_vacancy_requests", ["vacancy_master_id"], name: "index_particular_vacancy_requests_on_vacancy_master_id"
+
   create_table "payment_modes", force: :cascade do |t|
     t.string   "code"
     t.string   "name"
@@ -1525,7 +1542,6 @@ ActiveRecord::Schema.define(version: 20160427070132) do
     t.integer  "degree_id"
     t.string   "experience"
     t.string   "keyword"
-    t.string   "others"
     t.string   "other_organization"
     t.string   "industry"
     t.integer  "degree_1_id"

@@ -56,6 +56,10 @@ class VacancyMastersController < ApplicationController
 
     respond_to do |format|
       if @vacancy_master.save
+        len = @vacancy_master.no_of_position
+        for i in 1..len
+        ParticularVacancyRequest.create(vacancy_master_id: @vacancy_master.id,employee_id: @vacancy_master.employee_id,employee_designation_id: @vacancy_master.employee_designation_id,vacancy_name: @vacancy_master.vacancy_name,fulfillment_date: @vacancy_master.vacancy_post_date,status: "Pending")
+        end
         ReportingMastersVacancyMaster.create(reporting_master_id: @vacancy_master.reporting_master_id, vacancy_master_id: @vacancy_master.id, vacancy_status: "Pending")
         VacancyMasterMailer.vacancy_request(@vacancy_master).deliver_now
         format.html { redirect_to @vacancy_master, notice: 'Vacancy created successfully.' }

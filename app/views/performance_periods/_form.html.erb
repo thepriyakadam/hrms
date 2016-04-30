@@ -1,4 +1,4 @@
-<%= bootstrap_form_for(@performance_period, remote: true) do |f| %>
+<%= bootstrap_form_for(@performance_period, remote: true,html: {id: "performance_period"}) do |f| %>
   <div class="row">
     <div class="col-sm-3">
       <div class="form-group required">
@@ -19,7 +19,7 @@
           <div class="input-group-addon">
             <i class="fa fa-calendar"></i>
           </div>
-          <%= f.text_field :start_date, hide_label: true, class: 'Start Date'%>
+          <%= f.text_field :start_date, hide_label: true, class: 'birth_date1'%>
         </div>
       </div>
     </div>
@@ -31,7 +31,7 @@
           <div class="input-group-addon">
             <i class="fa fa-calendar"></i>
           </div>
-          <%= f.text_field :end_date, hide_label: true, class: 'End Date'%>
+          <%= f.text_field :end_date, hide_label: true, class: 'birth_date1'%>
         </div>
       </div>
     </div>
@@ -69,4 +69,39 @@
     yearRange: '-2:+25',
     dateFormat: 'dd-mm-yy' });
 });
+
+  $("#performance_period").validate({
+    rules: {
+      "performance_period[title]":{
+        required: true
+      },
+      "performance_period[description]":{
+        required: true
+      },
+      "performance_period[start_date]":{
+        required: true
+      },
+      "performance_period[end_date]":{
+        required: true
+      }
+    },
+    messages: {
+      "performance_period[title]":{
+        required: "Please specify title"
+      },
+      "performance_period[description]":{
+        required: "Please specify description"
+      },
+      "performance_period[start_date]":{
+        required: "Please specify start_date"
+      },
+      "performance_period[end_date]":{
+        required: "Please specify end_date"
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
 </script>

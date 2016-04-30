@@ -225,6 +225,7 @@ Rails.application.routes.draw do
       get :modal_final
       patch :update_final_modal
       get :print_details_appraiser
+      get :print_details_final
     end
   end
   resources :goal_rating_sheets do

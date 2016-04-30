@@ -1,12 +1,19 @@
-<div class="box box-default">
-  <div class="box-header with-border">
-    <h3 class="box-title">Employee Details</h3>
-  </div>
-  <div class="box-body">
-
-
-	<table class="table table-bordered table-hover table-condensed">
-       
+<style>
+th {
+    text-align: left;
+}
+tr {
+    page-break-inside: avoid;
+}
+div.alwaysbreak { page-break-before: always; }
+div.nobreak:before { clear:both; }
+div.nobreak{ page-break-inside: avoid;
+  /* http://code.google.com/p/wkhtmltopdf/issues/detail?id=9#c21 */
+}
+</style>
+<div>
+<h3>Employee Details</h3>
+<table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
     <thead>
 	    <tr>
 	    	<th>Employee Id</th>
@@ -31,15 +38,9 @@
       </tr>
       <% end %>
     </tbody>
-  </table>
+  </table><br>
 
-<div class="row">
-  <div class="col-sm-6">
-    <div class="box-header with-border">
-    
-      <h3 class="box-title">Past Experience</h3>
-    </div>
-  <table class="table table-bordered table-hover table-condensed">
+  <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
     <thead>
       <tr>
 	    	<th>Past Company</th>
@@ -60,14 +61,9 @@
       </tr>
       <% end %>
     </tbody>
-	</table>
-  </div>
+	</table><br>
 
-  <div class="col-sm-6">
-    <div class="box-header with-border">
-      <h3 class="box-title">Qualification Details</h3>
-    </div>
-      <table class="table table-bordered table-hover table-condensed">
+	<table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
         <thead>
           <tr>
             <th>Degree/Deploma</th>
@@ -84,14 +80,42 @@
           </tr>
           <% end %>
         </tbody>
-      </table>
-    </div>
-</div>
+      </table><br>
 
-<div class="box-header with-border">
-    <h3 class="box-title">Goals</h3>
-  </div>
-  <table id="tbl" class="table table-bordered table-hover table-condensed">
+  <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
+    <thead>
+      <tr>
+        <th>Attribute & Definition</th>
+        <th>Weightage</th>
+        <th>Appraisee Comment</th>
+        <th>Appraisee Rating</th>
+        <th>Appraiser1 Comment</th>
+        <th>Appraiser1 Rating</th>
+        <th>Appraiser2 Comment</th>
+        <th>Appraiser2 Rating</th>
+        <th>Final Comment</th>
+        <th>Final Rating</th>
+      </tr>
+    </thead>
+     <tbody>
+      <% @attribute_rating_multiple_sheets.each do |a| %>
+        <tr>
+          <td><%= a.employee_attribute.attribute_master.name %></td>
+          <td><%= a.employee_attribute.weightage %></td>
+          <td><%= a.appraisee_comment %></td>
+          <td><%= a.appraisee_rating.try(:code) %></td>
+          <td><%= a.appraiser_comment %></td>
+          <td><%= a.appraiser_rating.try(:code) %></td>
+          <td><%= a.appraiser2_comment %></td>
+          <td><%= a.appraiser2_rating.try(:code) %></td>
+          <td><%= a.final_comment %></td>
+          <td><%= a.final_rating.try(:code) %></td>
+        </tr>
+        <% end %>
+      </tbody>
+  </table><br>
+
+  <table id="tbl" style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
     <thead>
       <tr>
         <th>Goal Perspctive</th>
@@ -132,46 +156,6 @@
         </tr>
         <% end %>
       </tbody>
-    </table>
+  </table><br>
 
-<div class="box-header with-border">
-    <h3 class="box-title">Attribute</h3>
-  </div>
-  <table id="tbl" class="table table-bordered table-hover table-condensed">
-    <thead>
-      <tr>
-        <th>Attribute & Definition</th>
-        <th>Weightage</th>
-        <th>Appraisee Comment</th>
-        <th>Appraisee Rating</th>
-        <th>Appraiser1 Comment</th>
-        <th>Appraiser1 Rating</th>
-        <th>Appraiser2 Comment</th>
-        <th>Appraiser2 Rating</th>
-        <th>Final Comment</th>
-        <th>Final Rating</th>
-      </tr>
-    </thead>
-     <tbody>
-      <% @attribute_rating_multiple_sheets.each do |a| %>
-        <tr>
-          <td><%= a.employee_attribute.attribute_master.name %></td>
-          <td><%= a.employee_attribute.weightage %></td>
-          <td><%= a.appraisee_comment %></td>
-          <td><%= a.appraisee_rating.try(:code) %></td>
-          <td><%= a.appraiser_comment %></td>
-          <td><%= a.appraiser_rating.try(:code) %></td>
-          <td><%= a.appraiser2_comment %></td>
-          <td><%= a.appraiser2_rating.try(:code) %></td>
-          <td><%= a.final_comment %></td>
-          <td><%= a.final_rating.try(:code) %></td>
-        </tr>
-        <% end %>
-      </tbody>
-    </table>
-    <hr>
-<%= link_to 'Back', employee_list_attribute_rating_sheets_path(@employee.id),class: 'btn btn-default btn-sm fa fa-arrow-left' %> |
-
-<%= link_to 'Print PDF', print_details_final_attribute_rating_sheets_path(format: 'pdf',id:@employee.id ),class: 'btn btn-xl btn-warning', :target => '_blank' %><br>
-  </div>
-  </div>
+ </div> 

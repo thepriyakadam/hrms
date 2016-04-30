@@ -46,6 +46,11 @@
 <hr>
 
 <script type="text/javascript">
+
+$.validator.addMethod("goal_measure", function (value, element) {
+    return this.optional(element) || /^[a-zA-Z_]+$/i.test(value);
+},"Please Input Letters Only.");
+
   $("#employee_goal").validate({
     rules: {
       "employee_goal[target]":{
@@ -55,7 +60,8 @@
         required: true
       },
       "employee_goal[goal_measure]":{
-        required: true
+        required: true,
+        goal_measure: true
       },
       "employee_goal[goal_weightage]":{
         required: true

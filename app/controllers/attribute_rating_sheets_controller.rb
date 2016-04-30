@@ -17,7 +17,7 @@ class AttributeRatingSheetsController < ApplicationController
     @attribute_rating_sheet = AttributeRatingSheet.new
     @employee_attributes = EmployeeAttribute.where(employee_id: current_user.employee_id,is_confirm: true)
     @attribute_rating_sheets = AttributeRatingSheet.where(appraisee_id: current_user.employee_id,appraisee_comment: nil)
-    @attribute_rating_shets = AttributeRatingSheet.where(appraisee_id: current_user.employee_id)
+    @attribute_rating_shets = AttributeRatingSheet.where(appraisee_id: current_user.employee_id).where.not(appraisee_comment: nil)
   end
 
   # GET /attribute_rating_sheets/1/edit
@@ -74,7 +74,7 @@ class AttributeRatingSheetsController < ApplicationController
   def appraiser
     @employee = Employee.find(params[:format])
     @employees = AttributeRatingSheet.where(appraisee_id: @employee.id).group(:appraisee_id)
-    @attribute_rating_sheets = AttributeRatingSheet.where(appraisee_id: @employee.id,is_confirm_appraisee: true)
+    @attribute_rating_sheets = AttributeRatingSheet.where(appraisee_id: @employee.id,is_confirm_appraisee: true).where.not(appraiser_comment: nil)
     @attribute_ratings = AttributeRatingSheet.where(appraisee_id: @employee.id, appraiser_comment: nil,is_confirm_appraisee: true)
     
     @attribute_rating_sheet = AttributeRatingSheet.new
@@ -255,7 +255,7 @@ class AttributeRatingSheetsController < ApplicationController
     @experiences = Experience.where(employee_id: @employee.id)
     @ctc = EmployeeSalaryTemplate.where(employee_id: @employee.id).sum(:monthly_amount)
     @attribute_rating_multiple_sheets = AttributeRatingSheet.where(appraisee_id: params[:format],appraiser2_comment: nil,is_confirm_appraiser: true)
-    @attribute_rating_multi_sheets = AttributeRatingSheet.where(appraisee_id: params[:format],is_confirm_appraiser: true)
+    @attribute_rating_multi_sheets = AttributeRatingSheet.where(appraisee_id: params[:format],is_confirm_appraiser: true).where.not(appraiser2_comment: nil)
     @attribute_rating_sheet = AttributeRatingSheet.new
   end
 
@@ -291,7 +291,7 @@ class AttributeRatingSheetsController < ApplicationController
     @experiences = Experience.where(employee_id: @employee.id)
     @ctc = EmployeeSalaryTemplate.where(employee_id: @employee.id).sum(:monthly_amount)
     @attribute_rating_multiple_sheets = AttributeRatingSheet.where(appraisee_id: params[:format],final_comment: nil, is_confirm_appraiser2: true)
-    @attribute_rating_multi_sheets = AttributeRatingSheet.where(appraisee_id: params[:format], is_confirm_appraiser2: true)
+    @attribute_rating_multi_sheets = AttributeRatingSheet.where(appraisee_id: params[:format], is_confirm_appraiser2: true).where.not(final_comment: nil)
   end
 
   def final_create
@@ -394,7 +394,6 @@ class AttributeRatingSheetsController < ApplicationController
 
   def print_details_appraiser
 
-    puts "-----------"
     @employee = Employee.find(params[:id])
     @attribute_rating_sheets = AttributeRatingSheet.where(appraisee_id: @employee.id ).group(:appraisee_id)
     @experiences = Experience.where(employee_id: @employee.id)
@@ -410,12 +409,40 @@ class AttributeRatingSheetsController < ApplicationController
         render pdf: 'print_details_appraiser',
                layout: 'pdf.html',
                :orientation      => 'Landscape', # default , Landscape
+               :page_height      => 1000,
+               :dpi              => '300',
+               :margin           => {:top    => 55, # default 10 (mm)
+                          :bottom => 55,
+                          :left   => 12,
+                          :right  => 0},
                template: 'attribute_rating_sheets/print_details_appraiser.pdf.erb',
               :show_as_html => params[:debug].present?
       end
     end  
   end
 
+  def print_details_final
+
+    @employee = Employee.find(params[:id])
+    @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: @employee.id)
+    @attribute_rating_sheets = AttributeRatingSheet.where(appraisee_id: @employee.id).group(:appraisee_id)
+    @qualifications = Qualification.where(employee_id: @employee.id)
+    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
+    @experiences = Experience.where(employee_id: @employee.id)
+    @ctc = EmployeeSalaryTemplate.where(employee_id: @employee.id).sum(:monthly_amount)
+    @attribute_rating_multiple_sheets = AttributeRatingSheet.where(appraisee_id: @employee.id)
+    
+      respond_to do |format|
+      format.html
+      format.pdf do
+        render pdf: 'print_details_final',
+               layout: 'pdf.html',
+               :orientation      => 'Landscape', # default , Landscape
+               template: 'attribute_rating_sheets/print_details_final.pdf.erb',
+              :show_as_html => params[:debug].present?
+      end
+    end  
+  end
   
   private
 

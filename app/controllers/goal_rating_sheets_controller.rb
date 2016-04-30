@@ -15,10 +15,10 @@ class GoalRatingSheetsController < ApplicationController
   # GET /goal_rating_sheets/new  
   def new
     @goal_rating_sheet = GoalRatingSheet.new
-    @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: current_user.employee_id,appraisee_comment: nil)
     @goal_rting_sheets = EmployeeGoal.where(employee_id: current_user.employee_id).group(:employee_id)
     @employee_goals = EmployeeGoal.where(employee_id: current_user.employee_id,is_confirm: true)
-     @goal_rating_shets = GoalRatingSheet.where(appraisee_id: current_user.employee_id)
+      @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: current_user.employee_id,appraisee_comment: nil)
+     @goal_rating_shets = GoalRatingSheet.where(appraisee_id: current_user.employee_id).where.not(appraisee_comment: nil)
   end
 
   # GET /goal_rating_sheets/1/edit
@@ -39,6 +39,7 @@ class GoalRatingSheetsController < ApplicationController
       emp = GoalRatingSheet.find(e)
       if c == ''
         flash[:alert] = 'Fill comments'
+      
       elsif r == ''
         flash[:alert] = 'Fill all the fields'
       else
@@ -75,8 +76,7 @@ class GoalRatingSheetsController < ApplicationController
     @employee = Employee.find(params[:format])
     @goal_ratings = GoalRatingSheet.where(appraisee_id: @employee.id,appraiser_comment: nil,is_confirm_appraisee: true)
     #@goal_ratings = GoalRatingSheet.where("appraisee_id = ? and (appraiser_comment = ? or appraiser_comment = ?)",@employee.id,nil,"")
-    @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: @employee.id,is_confirm_appraisee: true)
-
+    @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: @employee.id,is_confirm_appraisee: true).where.not(appraiser_comment: nil)
     @goal_rating_single_sheets = GoalRatingSheet.where(appraisee_id: @employee.id).group(:appraisee_id)
 
     @goal_rating_sheet = GoalRatingSheet.new
@@ -113,7 +113,7 @@ class GoalRatingSheetsController < ApplicationController
   def appraiser2
     #@goal_rating_sheet = GoalRatingSheet.new
     @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: params[:format],appraiser2_comment: nil,is_confirm_appraiser: true)
-    @goal_rating_shets = GoalRatingSheet.where(appraisee_id: params[:format],is_confirm_appraiser: true)
+    @goal_rating_shets = GoalRatingSheet.where(appraisee_id: params[:format],is_confirm_appraiser: true).where.not(appraiser2_comment: nil)
     @attribute_rating_sheets = AttributeRatingSheet.where(appraisee_id: params[:format]).group(:appraisee_id)
     @employee = Employee.find(params[:format])
     @qualifications = Qualification.where(employee_id: @employee.id)
@@ -147,7 +147,7 @@ class GoalRatingSheetsController < ApplicationController
 
   def final_comment
     @goal_rating_sheet = GoalRatingSheet.new
-    @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: params[:format],is_confirm_appraiser2: true)
+    @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: params[:format],is_confirm_appraiser2: true).where.not(final_comment: nil)
 
     @goal_ratings = GoalRatingSheet.where(appraisee_id: params[:format],final_comment: nil,is_confirm_appraiser2: true)
     @attribute_rating_sheets = AttributeRatingSheet.where(appraisee_id: params[:format]).group(:appraisee_id)

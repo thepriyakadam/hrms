@@ -64,8 +64,8 @@ class EmployeeAttributesController < ApplicationController
   def show_list
     @employee_goal = EmployeeGoal.new
     @employee = Employee.find(params[:format])
-    @employee_goals = EmployeeGoal.where(employee_id: @employee.id) 
-    @employee_attributes = EmployeeAttribute.where(employee_id: @employee.id)
+    @employee_goals = EmployeeGoal.where(employee_id: @employee.id,is_confirm: true) 
+    @employee_attributes = EmployeeAttribute.where(employee_id: @employee.id,is_confirm: true)
   end
 
   def is_confirm

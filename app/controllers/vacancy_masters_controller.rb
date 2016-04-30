@@ -124,6 +124,10 @@ class VacancyMastersController < ApplicationController
   def send_request_to_higher_authority
     puts ".................."
     @vacancy_master = VacancyMaster.find(params[:id])
+    len = @vacancy_master.no_of_position
+    for i in 1..len
+      ParticularVacancyRequest.create(vacancy_master_id: @vacancy_master.id,employee_id: @vacancy_master.employee_id,employee_designation_id: @vacancy_master.employee_designation_id,vacancy_name: @vacancy_master.vacancy_name,fulfillment_date: @vacancy_master.vacancy_post_date,status: "Approved & Send Next")
+    end
     @vacancy_master.update(current_status: "Approved & Send Next",reporting_master_id: params[:vacancy_master][:reporting_master_id])
     ReportingMastersVacancyMaster.create(vacancy_master_id: @vacancy_master.id, reporting_master_id: params[:vacancy_master][:reporting_master_id], vacancy_status: "Approved & Send Next")
     flash[:notice] = 'Vacancy Send to Higher Authority'
@@ -132,6 +136,10 @@ class VacancyMastersController < ApplicationController
 
   def reject_vacancy
     @vacancy_master = VacancyMaster.find(params[:format])
+    len = @vacancy_master.no_of_position
+    for i in 1..len
+      ParticularVacancyRequest.create(vacancy_master_id: @vacancy_master.id,employee_id: @vacancy_master.employee_id,employee_designation_id: @vacancy_master.employee_designation_id,vacancy_name: @vacancy_master.vacancy_name,fulfillment_date: @vacancy_master.vacancy_post_date,status: "Reject")
+    end
     @vacancy_master.update(current_status: "Reject")
     ReportingMastersVacancyMaster.create(vacancy_master_id: @vacancy_master.id, reporting_master_id: current_user.employee_id, vacancy_status: "Reject")
     VacancyMasterMailer.reject_vacancy_email(@vacancy_master).deliver_now
@@ -141,6 +149,10 @@ class VacancyMastersController < ApplicationController
 
   def approve_vacancy
     @vacancy_master = VacancyMaster.find(params[:format])
+    len = @vacancy_master.no_of_position
+    for i in 1..len
+        ParticularVacancyRequest.create(vacancy_master_id: @vacancy_master.id,employee_id: @vacancy_master.employee_id,employee_designation_id: @vacancy_master.employee_designation_id,vacancy_name: @vacancy_master.vacancy_name,fulfillment_date: @vacancy_master.vacancy_post_date,status: "Approved")
+    end
     @vacancy_master.update(current_status: "Approved")
     ReportingMastersVacancyMaster.create(vacancy_master_id: @vacancy_master.id, reporting_master_id: current_user.employee_id, vacancy_status: "Approved")
     VacancyMasterMailer.approve_vacancy_email(@vacancy_master).deliver_now
@@ -161,6 +173,10 @@ class VacancyMastersController < ApplicationController
 
   def cancel_vacancy_request
     @vacancy_master = VacancyMaster.find(params[:format])
+     len = @vacancy_master.no_of_position
+    for i in 1..len
+        ParticularVacancyRequest.create(vacancy_master_id: @vacancy_master.id,employee_id: @vacancy_master.employee_id,employee_designation_id: @vacancy_master.employee_designation_id,vacancy_name: @vacancy_master.vacancy_name,fulfillment_date: @vacancy_master.vacancy_post_date,status: "Cancelled")
+    end
     @vacancy_master.update(current_status: "Cancelled")
     ReportingMastersVacancyMaster.create(vacancy_master_id: @vacancy_master.id, reporting_master_id: current_user.employee_id, vacancy_status: "Cancelled")
     VacancyMasterMailer.cancel_vacancy_email(@vacancy_master).deliver_now

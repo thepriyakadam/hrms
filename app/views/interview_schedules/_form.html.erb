@@ -13,7 +13,7 @@
 
     <div class="col-sm-3">
      <div class="form-group required">
-      <%= f.text_field :candidate_name %>
+       <%= f.select :candidate_name, all_candidate_name,{label: 'Candidate Name',include_blank: " Select Candidate Name"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
      </div>
     </div>
 
@@ -24,7 +24,7 @@
     </div>
 
     <div class="col-sm-3">
-     <div class="form-group required">
+     <div class="field">
       <%= f.text_field :email_id %>
      </div>
     </div>

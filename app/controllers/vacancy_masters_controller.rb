@@ -193,7 +193,7 @@ class VacancyMastersController < ApplicationController
     @vacancy_master = VacancyMaster.find(params[:id])
   end
 
-  # Never trust parameters from the scary internet, only allow the white list through.
+  # Never trust param eters from the scary internet, only allow the white list through.
   def vacancy_master_params
     params.require(:vacancy_master).permit(:employee_designation_id,:justification,:employee_id,:current_status,:experience,:degree_1_id,:degree_2_id,:reporting_master_id,:keyword,:other_organization, :department_id, :degree_id, :company_location_id, :vacancy_name, :no_of_position, :description, :vacancy_post_date, :budget)
   end

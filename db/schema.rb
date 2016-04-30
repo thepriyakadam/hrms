@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160429101007) do
+ActiveRecord::Schema.define(version: 20160430102835) do
 
   create_table "accident_records", force: :cascade do |t|
     t.string   "code"
@@ -209,6 +209,7 @@ ActiveRecord::Schema.define(version: 20160429101007) do
     t.string   "linkedin"
     t.integer  "vacancy_master_id"
     t.integer  "degree_id"
+    t.string   "job_title"
   end
 
   add_index "capture_resumes", ["country_id"], name: "index_capture_resumes_on_country_id"
@@ -1216,6 +1217,7 @@ ActiveRecord::Schema.define(version: 20160429101007) do
     t.datetime "updated_at",              null: false
     t.integer  "employee_designation_id"
     t.string   "vacancy_name"
+    t.boolean  "is_complete"
   end
 
   add_index "particular_vacancy_requests", ["employee_designation_id"], name: "index_particular_vacancy_requests_on_employee_designation_id"
@@ -1542,6 +1544,7 @@ ActiveRecord::Schema.define(version: 20160429101007) do
     t.integer  "degree_id"
     t.string   "experience"
     t.string   "keyword"
+    t.string   "others"
     t.string   "other_organization"
     t.string   "industry"
     t.integer  "degree_1_id"

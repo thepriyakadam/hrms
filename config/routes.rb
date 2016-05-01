@@ -431,7 +431,11 @@ Rails.application.routes.draw do
       get :generate_workingday
     end
   end
-  resources :shift_rotations
+  resources :shift_rotations do
+    collection do
+      get :collect_employee
+    end
+  end
   resources :employee_monthly_days do
     collection do
       get :find_employee_for_employee_monthly_day

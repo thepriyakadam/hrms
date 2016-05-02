@@ -92,6 +92,6 @@ class CaptureResumesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def capture_resume_params
-    params.require(:capture_resume).permit(:name_of_candidate, :vacancy_master_id,:avatar, :degree_id,:passport_photo,:contact_no, :contact_no2,:email2,:linkedin,:vacancy_master_id,:post_applied, :mode_of_application, :date_of_application, :url, :fax, :street, :country_id, :state_id, :district_id, :city, :zip_code, :current_job_title, :current_employeer, :skill_set, :additional_info, :email, :skype_id, :twitter, :current_salary, :expected_salary, :current_location, :notice_period, :interview_date, :interview_time, :reason, :work_experience, :candidate_call_status)
+    params.require(:capture_resume).permit(:name_of_candidate, :employee_designation_id,:job_title,:vacancy_master_id,:avatar, :degree_id,:passport_photo,:contact_no, :contact_no2,:email2,:linkedin,:vacancy_master_id,:post_applied, :mode_of_application, :date_of_application, :url, :fax, :street, :country_id, :state_id, :district_id, :city, :zip_code, :current_job_title, :current_employeer, :skill_set, :additional_info, :email, :skype_id, :twitter, :current_salary, :expected_salary, :current_location, :notice_period, :interview_date, :interview_time, :reason, :work_experience, :candidate_call_status)
   end
 end

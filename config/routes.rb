@@ -96,6 +96,7 @@ Rails.application.routes.draw do
       get :interview_reschedule
       post :send_email_to_candidate
       get :sample_email
+      post :is_confirm
     end
   end
   resources :vacancy_masters do

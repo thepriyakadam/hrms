@@ -1,24 +1,23 @@
 <%= form_for :salary_slip_ledgers do |f| %>
 <table id="example1" class="table table-bordered table-hover table-condensed">
   <thead>
-    <tr>
-      <th><input type="checkbox" id="selectAll" value="selectAll"></th>
-      <th>Employee ID</th>
-      <th>Employee Name</th>
-      <th>Designation</th>
-      <th>Employement</th>
-      <th>Contact No</th>
-    </tr>
+      <!-- <th><input type="checkbox" id="selectAll" value="selectAll"></th> -->
+      <th>SalarySlip ID</th>
+      <th>Salary Slip Component</th>
+      <th>Actual Amount</th>
+      <th>Other Component</th>
+      <th>Calculated Amount</th>
+    
   </thead>
   <tbody>
-    <% @employees.each do |employee| %>
+    <% @salaryslip_components.each do |salaryslip_component| %>
       <tr>
-        <td><%= check_box_tag "employee_ids[]", employee.id %></td>
-        <td><%= employee_bank_detail.manual_employee_code %></td>
-        <td><%= employee.first_name %><%= employee.middle_name %><%= employee.last_name %></td>
-        <td><%= employee.joining_detail.try(:employee_designation).try(:name) %></td>
-        <td><%= employee.employee_type.try(:name) %></td>
-        <td><%= employee.contact_no %></td>
+        <!-- <td><%= check_box_tag "salaryslip_component_ids[]" %></td> -->
+        <td><%= salaryslip_component.salaryslip_id %></td>
+        <td><%= salaryslip_component.salary_component.try(:name) %></td>
+        <td><%= salaryslip_component.actual_amount %></td>
+        <td><%= salaryslip_component.other_component_name %></td>
+        <td><%= salaryslip_component.calculated_amount %></td>
       </tr>
     <% end %>
   </tbody>

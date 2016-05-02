@@ -109,20 +109,9 @@ class VacancyMastersController < ApplicationController
   end
 
   def vacancy_history
-    
-    #@vacancy_masters = VacancyMaster.where(reporting_master_id: current_user.employee_id, current_status: "Pending")  
-    # @vacancy_masters = VacancyMaster.where("current_status = 'Approved & Send Next' or current_status = 'Pending'")      
-    # @reporting_master = ReportingMaster.where(reporting_master_id: current_user.employee_id)
-    # if @vacancy_masters.current_status == "Pending"
-    @vacancy_masters = VacancyMaster.where(reporting_master_id: current_user.employee_id, current_status: "Pending")
-    # elsif @vacancy_masters.current_status == "Approved & Send Next"
-    # @vacancy_masters = VacancyMaster.where(reporting_master_id: current_user.employee_id, current_status: "Approved & Send Next")
-    # else 
-    #   redirect_to root_url
-    # @vacancy_masters = VacancyMaster.where(current_status: "Approved & Send Next")
+    @vacancy_masters = VacancyMaster.where("reporting_master_id = ? and (current_status = ? or current_status = ?)",current_user.employee_id,"Pending","Approved & Send Next")
     session[:active_tab] ="recruitment"
-  # end
- end 
+  end 
 
   def modal
     @vacancy_master = VacancyMaster.find(params[:format])
@@ -131,8 +120,8 @@ class VacancyMastersController < ApplicationController
   def send_request_to_higher_authority
     puts ".................."
     @vacancy_master = VacancyMaster.find(params[:id])
-    @vacancy_master.update(current_status: "Approved & Send Next")
-    ReportingMastersVacancyMaster.create(vacancy_master_id: @vacancy_master.id, reporting_master_id: current_user.employee_id, vacancy_status: "Approved & Send Next")
+    @vacancy_master.update(current_status: "Approved & Send Next",reporting_master_id: params[:vacancy_master][:reporting_master_id])
+    ReportingMastersVacancyMaster.create(vacancy_master_id: @vacancy_master.id, reporting_master_id: params[:vacancy_master][:reporting_master_id], vacancy_status: "Approved & Send Next")
     flash[:notice] = 'Vacancy Send to Higher Authority'
     redirect_to vacancy_history_vacancy_masters_path
   end
@@ -170,6 +159,7 @@ class VacancyMastersController < ApplicationController
     @vacancy_master = VacancyMaster.find(params[:format])
     @vacancy_master.update(current_status: "Cancelled")
     ReportingMastersVacancyMaster.create(vacancy_master_id: @vacancy_master.id, reporting_master_id: current_user.employee_id, vacancy_status: "Cancelled")
+    VacancyMasterMailer.cancel_vacancy_email(@vacancy_master).deliver_now
     flash[:notice] = 'Vacancy Request Cancelled'
     redirect_to vacancy_masters_path
   end

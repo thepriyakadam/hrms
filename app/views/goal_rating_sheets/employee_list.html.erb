@@ -20,7 +20,7 @@
       <td><%= employee.manual_employee_code %></td>
       <td><%= full_name(employee) %></td>
       <td>
-        <%= link_to '', final_comment_goal_rating_sheets_path(employee),class: 'btn btn-sm btn-default fa fa-eye' %>
+        <%= link_to 'Final Comment & Rating', final_comment_goal_rating_sheets_path(employee),class: 'btn btn-sm btn-warning' %>
       </td>
     </tr>
     <% end %>

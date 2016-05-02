@@ -15,28 +15,11 @@ class GoalRatingSheetsController < ApplicationController
   # GET /goal_rating_sheets/new  
   def new
     @goal_rating_sheet = GoalRatingSheet.new
-    @employee_goals = []
-    @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: current_user.employee_id)
-
-    if @goal_rating_sheets.empty?
-      @employee_goals = EmployeeGoal.where(employee_id: current_user.employee_id)
-    else
-      from_goal_rating_sheets = []
-      @goal_rating_sheets.each do |a|
-        temp = GoalRatingSheet.exists?(appraisee_id: current_user.employee_id, employee_goal_id: a.employee_goal_id)
-        if temp
-        else
-          ea = EmployeeGoal.find(a.employee_goal_id)
-          from_goal_rating_sheets << ea
-        end
-      end
-      from_employee_goals = EmployeeGoal.where(employee_id: current_user.employee_id,is_confirm: true)
-      @employee_gaols = from_employee_goals + from_goal_rating_sheets
-    end
-     @goal_rting_sheets = EmployeeGoal.where(employee_id: current_user.employee_id).group(:employee_id)
+    @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: current_user.employee_id,appraisee_comment: nil)
+    @goal_rting_sheets = EmployeeGoal.where(employee_id: current_user.employee_id).group(:employee_id)
+    @employee_goals = EmployeeGoal.where(employee_id: current_user.employee_id,is_confirm: true)
+     @goal_rating_shets = GoalRatingSheet.where(appraisee_id: current_user.employee_id)
   end
-
-
 
   # GET /goal_rating_sheets/1/edit
   def edit
@@ -53,13 +36,13 @@ class GoalRatingSheetsController < ApplicationController
     final = goal_rating_sheet_ids.zip(comments, ratings)
 
     final.each do |e, c, r|
-      emp = EmployeeGoal.find(e)
+      emp = GoalRatingSheet.find(e)
       if c == ''
         flash[:alert] = 'Fill comments'
       elsif r == ''
         flash[:alert] = 'Fill all the fields'
       else
-        GoalRatingSheet.create(appraisee_comment: c, appraisee_rating_id: r, appraisee_id: params[:appraisee_id], employee_goal_id: emp.id)
+        emp.update(appraisee_comment: c, appraisee_rating_id: r)
         flash[:notice] = 'Employee Goal Created Successfully'
       end
     end
@@ -90,9 +73,9 @@ class GoalRatingSheetsController < ApplicationController
   
   def appraiser 
     @employee = Employee.find(params[:format])
-    @goal_ratings = GoalRatingSheet.where(appraisee_id: @employee.id,appraiser_comment: nil)
+    @goal_ratings = GoalRatingSheet.where(appraisee_id: @employee.id,appraiser_comment: nil,is_confirm_appraisee: true)
     #@goal_ratings = GoalRatingSheet.where("appraisee_id = ? and (appraiser_comment = ? or appraiser_comment = ?)",@employee.id,nil,"")
-    @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: @employee.id)
+    @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: @employee.id,is_confirm_appraisee: true)
 
     @goal_rating_single_sheets = GoalRatingSheet.where(appraisee_id: @employee.id).group(:appraisee_id)
 
@@ -125,7 +108,58 @@ class GoalRatingSheetsController < ApplicationController
     
     redirect_to appraiser_goal_rating_sheets_path(format: @employee.id)
   end
+  
 
+  def appraiser2
+    #@goal_rating_sheet = GoalRatingSheet.new
+    @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: params[:format],appraiser2_comment: nil,is_confirm_appraiser: true)
+    @goal_rating_shets = GoalRatingSheet.where(appraisee_id: params[:format],is_confirm_appraiser: true)
+    @attribute_rating_sheets = AttributeRatingSheet.where(appraisee_id: params[:format]).group(:appraisee_id)
+    @employee = Employee.find(params[:format])
+    @qualifications = Qualification.where(employee_id: @employee.id)
+    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
+    @experiences = Experience.where(employee_id: @employee.id)
+    @ctc = EmployeeSalaryTemplate.where(employee_id: @employee.id).sum(:monthly_amount)
+    @attribute_rating_multiple_sheets = AttributeRatingSheet.where(appraisee_id: params[:format])
+  end
+
+  def appraiser2_create
+    @employee = Employee.find(params[:id])
+    goal_rating_sheets = params[:goal_rating_sheet_id]
+    
+    comments = params[:appraiser2_comment]
+    ratings = params[:appraiser2_rating_id]
+    final = goal_rating_sheets.zip(comments, ratings)
+    final.each do |e, c, r|
+      goal_rating_sheet = GoalRatingSheet.find(e)
+      if c == ''
+        flash[:alert] = 'Fill comments'
+      elsif r == ''
+        flash[:alert] = 'Fill ratings'
+      else
+        # emp = EmployeeGoal.find(e)
+        # goal_rating_sheet = GoalRatingSheet.find(e)
+        goal_rating_sheet.update(appraiser2_comment: c, appraiser2_rating_id: r, appraiser_2_id: params[:appraiser_2_id])
+      end
+    end
+    redirect_to  appraiser2_goal_rating_sheets_path(format: @employee.id)
+  end
+
+  def final_comment
+    @goal_rating_sheet = GoalRatingSheet.new
+    @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: params[:format],is_confirm_appraiser2: true)
+
+    @goal_ratings = GoalRatingSheet.where(appraisee_id: params[:format],final_comment: nil,is_confirm_appraiser2: true)
+    @attribute_rating_sheets = AttributeRatingSheet.where(appraisee_id: params[:format]).group(:appraisee_id)
+    @employee = Employee.find(params[:format])
+    @qualifications = Qualification.where(employee_id: @employee.id)
+    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
+    @experiences = Experience.where(employee_id: @employee.id)
+    @ctc = EmployeeSalaryTemplate.where(employee_id: @employee.id).sum(:monthly_amount)
+    @attribute_rating_multiple_sheets = AttributeRatingSheet.where(appraisee_id: params[:format])
+    @employees = Employee.where(id: @employee.id)
+  end
+  
   def edit_goal_rating
     @goal_rating_sheet = GoalRatingSheet.find(params[:format])
   end
@@ -245,40 +279,6 @@ class GoalRatingSheetsController < ApplicationController
     session[:active_tab] ="performance"
   end
 
-  def appraiser2
-    #@goal_rating_sheet = GoalRatingSheet.new
-    @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: params[:format])
-    @attribute_rating_sheets = AttributeRatingSheet.where(appraisee_id: params[:format]).group(:appraisee_id)
-    @employee = Employee.find(params[:format])
-    @qualifications = Qualification.where(employee_id: @employee.id)
-    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
-    @experiences = Experience.where(employee_id: @employee.id)
-    @ctc = EmployeeSalaryTemplate.where(employee_id: @employee.id).sum(:monthly_amount)
-    @attribute_rating_multiple_sheets = AttributeRatingSheet.where(appraisee_id: params[:format])
-  end
-
-  def appraiser2_create
-    @employee = Employee.find(params[:id])
-    goal_rating_sheets = params[:goal_rating_sheet_id]
-    
-    comments = params[:appraiser2_comment]
-    ratings = params[:appraiser2_rating_id]
-    final = goal_rating_sheets.zip(comments, ratings)
-    final.each do |e, c, r|
-      goal_rating_sheet = GoalRatingSheet.find(e)
-      if c == ''
-        flash[:alert] = 'Fill comments'
-      elsif r == ''
-        flash[:alert] = 'Fill ratings'
-      else
-        # emp = EmployeeGoal.find(e)
-        # goal_rating_sheet = GoalRatingSheet.find(e)
-        goal_rating_sheet.update(appraiser2_comment: c, appraiser2_rating_id: r, appraiser_2_id: params[:appraiser_2_id])
-      end
-    end
-    redirect_to  appraiser2_goal_rating_sheets_path(format: @employee.id)
-  end
-
   def edit_appraiser2
     @goal_rating_sheet = GoalRatingSheet.find(params[:format])
     #@employee = GoalRatingSheet.find(@goal_rating_sheet.appraisee_id)
@@ -340,19 +340,6 @@ class GoalRatingSheetsController < ApplicationController
     redirect_to final_comment_goal_rating_sheets_path(format: @employee.id)
   end
 
-  def final_comment
-    @goal_rating_sheet = GoalRatingSheet.new
-    @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: params[:format])
-
-    @goal_ratings = GoalRatingSheet.where(appraisee_id: params[:format],final_comment: nil)
-    @attribute_rating_sheets = AttributeRatingSheet.where(appraisee_id: params[:format]).group(:appraisee_id)
-    @employee = Employee.find(params[:format])
-    @qualifications = Qualification.where(employee_id: @employee.id)
-    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
-    @experiences = Experience.where(employee_id: @employee.id)
-    @ctc = EmployeeSalaryTemplate.where(employee_id: @employee.id).sum(:monthly_amount)
-    @attribute_rating_multiple_sheets = AttributeRatingSheet.where(appraisee_id: params[:format])
-  end
   
   def edit_final
     @goal_rating_sheet = GoalRatingSheet.find(params[:format])

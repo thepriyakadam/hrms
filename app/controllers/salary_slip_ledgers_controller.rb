@@ -2,6 +2,8 @@ class SalarySlipLedgersController < ApplicationController
 
     def show_employee
      @salaryslip_components = SalaryslipComponent.all
+     @employees =Employee.all
+     @employee_salary_templates = EmployeeSalaryTemplate.all
     end
 
     # def show_employee

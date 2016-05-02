@@ -1,23 +1,44 @@
 <%= form_for :salary_slip_ledgers do |f| %>
 <table id="example1" class="table table-bordered table-hover table-condensed">
   <thead>
-      <!-- <th><input type="checkbox" id="selectAll" value="selectAll"></th> -->
-      <th>SalarySlip ID</th>
-      <th>Salary Slip Component</th>
-      <th>Actual Amount</th>
-      <th>Other Component</th>
-      <th>Calculated Amount</th>
-    
+  <tr>
+      <th>Employee Name</th>
+      <th>Basic Pay</th>
+      <th>HRA</th>
+      <th>Special Allowance</th>
+      <th>Convenience Allowance</th>
+      <th>Other Allowance</th>
+      <th>Washing Allowanc</th>
+      <th>DA</th>
+    </tr>
   </thead>
   <tbody>
-    <% @salaryslip_components.each do |salaryslip_component| %>
+    <% @employees.each do |employee| %>
+    <% @salaryslip =  Salaryslip.find_by_employee_id(employee.id) %>
+
+     <% @addable_items = SalaryslipComponent.where(salaryslip_id: @salaryslip.id, is_deducted: false).where.not(other_component_name: nil) %>
+        <% @addable_items.each do |item| %>
       <tr>
-        <!-- <td><%= check_box_tag "salaryslip_component_ids[]" %></td> -->
-        <td><%= salaryslip_component.salaryslip_id %></td>
-        <td><%= salaryslip_component.salary_component.try(:name) %></td>
-        <td><%= salaryslip_component.actual_amount %></td>
-        <td><%= salaryslip_component.other_component_name %></td>
-        <td><%= salaryslip_component.calculated_amount %></td>
+        <td><%= employee.try(:first_name) %></td>
+        <% case item.salary_component.try(:name) %>
+        <% when "Basic" %>
+        <td><%= item.actual_amount.round * 12 %></td>
+         <% when "HRA" %>
+        <td><%= item.actual_amount.round * 12 %></td>
+        <% when "Special Allowance" %>
+        <td><%= item.actual_amount.round * 12 %></td>
+        <% when "Convenience Allowance" %>
+        <td><%= item.actual_amount.round * 12 %></td>
+        <% when "Other Allowance" %>
+        <td><%= item.actual_amount.round * 12 %></td>
+        <% when "Washing Allowance" %>
+        <td><%= item.actual_amount.round * 12 %></td>
+        <% when "DA" %>
+        <td><%= item.actual_amount.round * 12 %></td>
+        <% else %>
+        <td><%= %></td>
+       <% end %>
+     <% end %>
       </tr>
     <% end %>
   </tbody>

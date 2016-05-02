@@ -201,8 +201,8 @@ class AttributeRatingSheetsController < ApplicationController
 
   def employee_details
     @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: params[:format])
-    @attribute_rating_sheets = AttributeRatingSheet.where(appraisee_id: params[:format]).group(:appraisee_id)
     @employee = Employee.find(params[:format])
+    @attribute_rating_sheets = Employee.where(id: @employee.id).group(:id)
     @qualifications = Qualification.where(employee_id: @employee.id)
     @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
     @experiences = Experience.where(employee_id: @employee.id)
@@ -408,18 +408,48 @@ class AttributeRatingSheetsController < ApplicationController
       format.pdf do
         render pdf: 'print_details_appraiser',
                layout: 'pdf.html',
-               :orientation      => 'Landscape', # default , Landscape
                :page_height      => 1000,
                :dpi              => '300',
-               :margin           => {:top    => 55, # default 10 (mm)
-                          :bottom => 55,
+               :margin           => {:top    => 10, # default 10 (mm)
+                          :bottom => 100,
                           :left   => 12,
-                          :right  => 0},
+                          :right  => 12},
                template: 'attribute_rating_sheets/print_details_appraiser.pdf.erb',
               :show_as_html => params[:debug].present?
       end
     end  
   end
+
+
+  def print_details_appraiser2
+
+    @employee = Employee.find(params[:id])
+    @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: @employee.id)
+    @attribute_rating_sheets = AttributeRatingSheet.where(appraisee_id: @employee.id).group(:appraisee_id)
+    
+    @qualifications = Qualification.where(employee_id: @employee.id)
+    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
+    @experiences = Experience.where(employee_id: @employee.id)
+    @ctc = EmployeeSalaryTemplate.where(employee_id: @employee.id).sum(:monthly_amount)
+    @attribute_rating_multiple_sheets = AttributeRatingSheet.where(appraisee_id: @employee.id) 
+    
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render pdf: 'print_details_appraiser2',
+               layout: 'pdf.html',
+               :page_height      => 1000,
+               :dpi              => '300',
+               :margin           => {:top    => 10, # default 10 (mm)
+                          :bottom => 100,
+                          :left   => 12,
+                          :right  => 12},
+               template: 'attribute_rating_sheets/print_details_appraiser2.pdf.erb',
+              :show_as_html => params[:debug].present?
+      end
+    end  
+  end
+
 
   def print_details_final
 
@@ -444,6 +474,16 @@ class AttributeRatingSheetsController < ApplicationController
     end  
   end
   
+  def send_email_to_appraiser
+    @employee = Employee.find(params[:id])
+    @attribute_rating_sheet = AttributeRatingSheet.find_by_appraisee_id(@employee.id)
+    @employee_attribute = EmployeeAttribute.where(employee_id: @employee.id)
+
+    AttributeRatingSheetMailer.send_email_to_appraiser(@attribute_rating_sheet).deliver_now
+    flash[:notice] = "Email sent Successfully"
+    redirect_to new_attribute_rating_sheet_path
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

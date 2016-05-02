@@ -226,6 +226,8 @@ Rails.application.routes.draw do
       patch :update_final_modal
       get :print_details_appraiser
       get :print_details_final
+      get :print_details_appraiser2
+      get :send_email_to_appraiser
     end
   end
   resources :goal_rating_sheets do
@@ -279,6 +281,7 @@ Rails.application.routes.draw do
       post :is_confirm
       get :employee_list
       get :show_goal
+      get :send_email_to_employee
     end
   end
 

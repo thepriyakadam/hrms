@@ -17,15 +17,11 @@
 
 <script type="text/javascript">
 
-$.validator.addMethod("attribute", function (value, element) {
-    return this.optional(element) || /^[a-zA-Z_]+$/i.test(value);
-},"Please Input Letters Only.");
 
  $("#attribute_master").validate({
     rules: {
       "attribute_master[name]":{
-        required: true,
-        attribute: true
+        required: true
       }
     },
     messages: {

@@ -43,12 +43,16 @@
       <div class="col-sm-3">
         <div class="actions">
           <%= f.submit "Confirm", class: 'btn btn-primary btn-sm' %> 
+          
+          <%= link_to 'Created Goals & Attributes', show_list_employee_attributes_path(@employee.id),class: 'btn btn-warning btn-sm' %><br><br>
           <%= link_to 'Back', new_employee_goal_path(@employee.id),class: 'btn btn-default btn-sm fa fa-arrow-left' %>
-          <hr>
-          <%= link_to 'Created Goals & Attributes', show_list_employee_attributes_path(@employee.id),class: 'btn btn-warning btn-sm' %>
         </div>
       </div>
+        <div style="float:right;">
+          <%= link_to ' Send Email',send_email_to_employee_employee_goals_path(@employee.id),class: 'btn btn-sm btn-info'  %>
+        </div>
     </div>
+
   <% end %> 
   
   </div>

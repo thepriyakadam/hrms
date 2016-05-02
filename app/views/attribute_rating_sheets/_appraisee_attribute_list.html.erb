@@ -55,6 +55,9 @@
             <%= link_to 'Back', new_goal_rating_sheet_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
           </div>
         </div>
+        <div style="float:right;">
+          <%= link_to ' Send Email',send_email_to_appraiser_attribute_rating_sheets_path(id: current_user.employee_id),class: 'btn btn-sm btn-info'  %>
+        </div>
       </div>
  
 </div>

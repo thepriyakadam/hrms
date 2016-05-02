@@ -16,15 +16,10 @@
 
 <script type="text/javascript">
 
-$.validator.addMethod("goal", function (value, element) {
-    return this.optional(element) || /^[a-zA-Z_]+$/i.test(value);
-},"Please Input Letters Only.");
-
  $("#goal_perspective").validate({
     rules: {
       "goal_perspective[name]":{
-        required: true,
-        goal: true
+        required: true
       }
     },
     messages: {

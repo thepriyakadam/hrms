@@ -16,6 +16,8 @@ class AttributeMastersController < ApplicationController
   def new
     @attribute_master = AttributeMaster.new
     @attribute_masters = AttributeMaster.all
+    session[:active_tab] ="master"
+    session[:active_tab1] ="perform"
   end
 
   # GET /attribute_masters/1/edit

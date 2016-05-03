@@ -95,6 +95,8 @@ class EmployeeSalaryTemplatesController < ApplicationController
   end
 
   def salary_template
+    session[:active_tab] ="payroll"
+    session[:active_tab1] ="salaryprocess"
   end
 
   def find_employee_for_salary

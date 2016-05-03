@@ -15,7 +15,7 @@
           <div class="input-group-addon">
             <i class="fa fa-calendar"></i>
           </div>
-          <%= f.text_field :expence_date, hide_label: true, class: 'birth_date' %>
+          <%= f.text_field :expence_date, hide_label: true, class: 'input_expence_date' %>
         </div>
       </div>
     </div>
@@ -97,7 +97,7 @@
     var num     = $('.clonedInput').length, 
         newNum  = new Number(num + 1),      
         newElem = $('#entry' + num).clone().attr('id', 'entry' + newNum).fadeIn('slow'); 
-    newElem.find('.birth_date').attr('name','daily_bill_detail['+ newNum +'][expence_date]').attr('id', newNum + '_daily_bill_detail_expence_date').val('');
+    newElem.find('.input_expence_date').attr('name','daily_bill_detail['+ newNum +'][expence_date]').attr('id', newNum + '_daily_bill_detail_expence_date').val('');
 
     newElem.find('.input_e_place').attr('name','daily_bill_detail['+ newNum +'][e_place]').attr('id', newNum + '_daily_bill_detail_e_place').val('');
 
@@ -134,5 +134,12 @@
   $('#btnAdd').attr('disabled', false);
   $('#btnDel').attr('disabled', true);
 });
+$(function(){
+    $('.input_expence_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:-0',
+    dateFormat: 'dd-mm-yy' });
+  });
 
 </script>

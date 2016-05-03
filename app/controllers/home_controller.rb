@@ -7,8 +7,8 @@ class HomeController < ApplicationController
     @employees = Employee.all
    if current_user.class == Member
       if current_user.role.name == 'Employee'
-        @employees = Employee.where(id: current_user.employee_id)
-        redirect_to home_index_path
+        @employee = Employee.find(current_user.employee_id)
+        #redirect_to home_index_path
       elsif current_user.role.name == 'CompanyLocation'
         @employees = Employee.where(company_location_id: current_user.company_location_id)
       elsif current_user.role.name == 'Department'

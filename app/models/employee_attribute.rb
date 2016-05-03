@@ -7,4 +7,6 @@ class EmployeeAttribute < ActiveRecord::Base
   has_many :attribute_rating_sheets
 
   validates :performance_period_id, presence: true
+  validates :attribute_master_id, presence: true
+  validates :weightage, presence: true
 end

@@ -1,4 +1,4 @@
- <%= bootstrap_form_for @goal_rating_sheet,url:{action:'is_confirm_appraisee'} do |f| %>   
+<%= bootstrap_form_for @goal_rating_sheet,url:{action:'is_confirm_appraisee'} do |f| %>   
 <div class="box">
   <div class="box-header">
     <h3 class="box-title">Employee Goal Rating : <%= @employee_goals.try(:first).try(:period).try(:title) %></h3>
@@ -38,13 +38,12 @@
             <td><%= g.appraisee_rating.try(:code) %></td>
             <td>
               <% if g.is_confirm_appraisee == true %>
-              <small class="label label-info">Confirmed</small>
+                <small class="label label-info">Confirmed</small>
               <% else %>
-              <%= link_to '', edit_goal_rating_sheet_path(g) ,class: 'btn btn-xs btn-success fa fa-edit' %>
+              
+              <%= link_to '',modal_goal_rating_sheets_path(g) ,class: 'btn btn-xs btn-success fa fa-edit',remote: true %>
               <% end %>
             </td>
-             
-          
         </tr>
         <% end %>
         </tbody>
@@ -61,6 +60,8 @@
   </div>
  </div>
  <% end %>
+
+ <div id="myModal" class="modal fade"></div>
 
 <script type="text/javascript">
   $(function () {

@@ -4,7 +4,7 @@
   </div><!-- /.box-header -->
 
   <div class="box-body">
-  <%= bootstrap_form_for(@vacancy_master) do |f| %>
+  <%= bootstrap_form_for(@vacancy_master,html: {id: 'vacancy_master'}) do |f| %>
   <%= f.hidden_field :employee_id, :value => current_user.employee_id %>
       <div class="row">
 
@@ -161,3 +161,39 @@
     </div>
   </div>
 <% end %>
+<script>
+$("#vacancy_master").validate({
+    rules: {
+      "vacancy_master[company_location_id]":{
+        required: true,
+        maxlength: 30
+      },
+      "vacancy_master[company_location_id]":{
+        required: true,
+        maxlength: 30
+      },
+      "vacancy_master[department_id]":{
+        required: true,
+        maxlength: 30
+      },
+      "vacancy_master[department_id]":{
+        required: true,
+        maxlength: 30
+      }
+    },
+    messages: {
+      "vacancy_master[company_location_id]":{
+        required: "Please specify Location Name",
+        maxlength: "Name allows upto 30 alphabets"
+      },
+      "vacancy_master[department_id]":{
+        required: "Please specify Department Name",
+        maxlength: "Name allows upto 30 alphabets"
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

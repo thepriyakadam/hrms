@@ -125,6 +125,9 @@
           <%= link_to 'Back', appraiser_goal_rating_sheets_path(@employee.id),class: 'btn btn-default btn-sm fa fa-arrow-left'%>
         </div>
       </div>
+      <div style="float:right;">
+          <%= link_to ' Send Email',send_email_to_appraiser2_attribute_rating_sheets_path(@employee.id),class: 'btn btn-sm btn-info'  %>
+      </div>
     </div>
 </div>
 </div>

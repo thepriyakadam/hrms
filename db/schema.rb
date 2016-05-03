@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160502065715) do
+ActiveRecord::Schema.define(version: 20160503130816) do
 
   create_table "accident_records", force: :cascade do |t|
     t.string   "code"
@@ -492,8 +492,10 @@ ActiveRecord::Schema.define(version: 20160502065715) do
     t.string   "ifsc_code"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.integer  "bank_id"
   end
 
+  add_index "employee_bank_details", ["bank_id"], name: "index_employee_bank_details_on_bank_id"
   add_index "employee_bank_details", ["employee_id"], name: "index_employee_bank_details_on_employee_id"
 
   create_table "employee_categories", force: :cascade do |t|

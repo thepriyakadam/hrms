@@ -16,10 +16,9 @@
            <%= f.text_field :account_no,label: 'Account No' %>
            </div>
         </div>
-
-         <div class="col-sm-3">
+        <div class="col-sm-3">
           <div class="form-group required">
-            <%= f.text_field :bank_name,label: 'Bank Name' %>
+              <%= f.select :bank_id, all_banks,{include_blank: " Select Bank"} %>
          </div>
         </div>
 

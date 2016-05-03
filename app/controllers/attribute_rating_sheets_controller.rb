@@ -200,14 +200,14 @@ class AttributeRatingSheetsController < ApplicationController
   end
 
   def employee_details
-    @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: params[:format])
+    @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: params[:format], is_confirm_appraiser: true)
     @employee = Employee.find(params[:format])
     @attribute_rating_sheets = Employee.where(id: @employee.id).group(:id)
     @qualifications = Qualification.where(employee_id: @employee.id)
     @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
     @experiences = Experience.where(employee_id: @employee.id)
     @ctc = EmployeeSalaryTemplate.where(employee_id: @employee.id).sum(:monthly_amount)
-    @attribute_rating_multiple_sheets = AttributeRatingSheet.where(appraisee_id: params[:format])
+    @attribute_rating_multiple_sheets = AttributeRatingSheet.where(appraisee_id: params[:format], is_confirm_appraiser: true)
   end
 
   def employee_list
@@ -215,14 +215,14 @@ class AttributeRatingSheetsController < ApplicationController
   end
 
   def employee_final_details
-    @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: params[:format])
+    @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: params[:format], is_confirm_final: true)
     @attribute_rating_sheets = AttributeRatingSheet.where(appraisee_id: params[:format]).group(:appraisee_id)
     @employee = Employee.find(params[:format])
     @qualifications = Qualification.where(employee_id: @employee.id)
     @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
     @experiences = Experience.where(employee_id: @employee.id)
     @ctc = EmployeeSalaryTemplate.where(employee_id: @employee.id).sum(:monthly_amount)
-    @attribute_rating_multiple_sheets = AttributeRatingSheet.where(appraisee_id: params[:format])
+    @attribute_rating_multiple_sheets = AttributeRatingSheet.where(appraisee_id: params[:format], is_confirm_final: true)
   end
 
    def subordinate_list2
@@ -231,14 +231,14 @@ class AttributeRatingSheetsController < ApplicationController
   end
 
   def employee_appraiser2_details
-    @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: params[:format])
+    @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: params[:format], is_confirm_appraiser2: true)
     @attribute_rating_sheets = AttributeRatingSheet.where(appraisee_id: params[:format]).group(:appraisee_id)
     @employee = Employee.find(params[:format])
     @qualifications = Qualification.where(employee_id: @employee.id)
     @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
     @experiences = Experience.where(employee_id: @employee.id)
     @ctc = EmployeeSalaryTemplate.where(employee_id: @employee.id).sum(:monthly_amount)
-    @attribute_rating_multiple_sheets = AttributeRatingSheet.where(appraisee_id: params[:format]) 
+    @attribute_rating_multiple_sheets = AttributeRatingSheet.where(appraisee_id: params[:format], is_confirm_appraiser2: true) 
     current_login = Employee.find(current_user.employee_id)
     @employees = current_login.indirect_subordinates
     session[:active_tab] ="performance"
@@ -482,6 +482,16 @@ class AttributeRatingSheetsController < ApplicationController
     AttributeRatingSheetMailer.send_email_to_appraiser(@attribute_rating_sheet).deliver_now
     flash[:notice] = "Email sent Successfully"
     redirect_to new_attribute_rating_sheet_path
+  end
+
+  def send_email_to_appraiser2
+    @employee = Employee.find(params[:format])
+    @attribute_rating_sheet = AttributeRatingSheet.find_by_appraisee_id(@employee.id)
+    @employee_attribute = EmployeeAttribute.where(employee_id: @employee.id)
+
+    AttributeRatingSheetMailer.send_email_to_appraiser2(@attribute_rating_sheet).deliver_now
+    flash[:notice] = "Email sent Successfully"
+    redirect_to appraiser_attribute_rating_sheets_path(@employee.id)
   end
 
   private

@@ -136,6 +136,9 @@
     </tbody>
   </table>
 
+  <% if @goal_rating_sheets.empty? %>
+
+  <% else %>
     <div class="row">
       <div class="col-sm-3">
         <div class="actions">
@@ -145,7 +148,7 @@
     </div>
 <% end %>
 
-
+<% end %>
 <%= bootstrap_form_for :goal_rating_sheet,url:{action:'is_confirm_appraiser2',id: @employee.id} do |f| %>
 <div class="box-header with-border">
   <h3 class="box-title">Goals</h3>

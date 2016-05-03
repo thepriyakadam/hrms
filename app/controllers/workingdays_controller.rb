@@ -5,6 +5,8 @@ class WorkingdaysController < ApplicationController
   # GET /workingdays.json
   def index
     @workingdays = Workingday.group(:year)
+    session[:active_tab] ="payroll"
+    session[:active_tab1] ="salaryprocess"
   end
 
   # GET /workingdays/1

@@ -3,6 +3,8 @@ class CaptureResume < ActiveRecord::Base
   belongs_to :state
   belongs_to :district
   belongs_to :degree
+  belongs_to :vacancy_master
+  belongs_to :employee_designation
 
   validates :name_of_candidate, presence: true
   validates :post_applied, presence: true

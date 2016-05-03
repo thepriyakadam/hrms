@@ -90,7 +90,7 @@
    <div class="box-header with-border">
     <h3 class="box-title">Goals</h3>
   </div>
-  <table id="tbl" class="table table-bordered table-hover table-condensed">
+  <table id="example3" class="table table-bordered table-hover table-condensed">
     <thead>
       <tr>
         <th>Goal Perspctive</th>
@@ -200,7 +200,7 @@
             <% if g.is_confirm_final == true %>
             <small class="label label-info">Confirmed</small>
             <% else %>
-            <%= link_to '', edit_final_goal_rating_sheets_path(g) ,class: 'btn btn-xs btn-success fa fa-edit' %>
+            <%= link_to '', modal_final_goal_rating_sheets_path(g) ,class: 'btn btn-xs btn-success fa fa-edit',remote: true %>
             <% end %>
           </td>
           <%= hidden_field_tag 'goal_rating_sheet_id[]', {},value: g.id %> 
@@ -225,6 +225,8 @@
 </div>
 <% end %>
 
+<div id="myModal" class="modal fade"></div>
+
 <script type="text/javascript">
   $(function () {
     $('#selectAll').click(function() {
@@ -240,4 +242,13 @@
       } 
     });
   });
+
+  $(document).ready(function() {
+    $('#example3').DataTable( {
+        "scrollY":        "200px",
+        "scrollX":        "1000px",
+        "scrollCollapse": true,
+        "paging":         false
+    } );
+} );
 </script>

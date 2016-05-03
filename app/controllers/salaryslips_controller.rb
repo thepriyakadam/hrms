@@ -381,6 +381,8 @@ class SalaryslipsController < ApplicationController
   def employee_salary_list
     @employees = Employee.find_by_role(current_user)
     # authorize! :show, @employees
+    session[:active_tab] ="payroll"
+    session[:active_tab1] ="salaryreport"
   end
 
   def salary_slip_list

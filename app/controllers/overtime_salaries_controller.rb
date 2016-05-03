@@ -97,6 +97,8 @@ class OvertimeSalariesController < ApplicationController
   end
 
   def select_month_year_form
+    session[:active_tab] ="payroll"
+    session[:active_tab1] ="overtime"
   end
 
   def collect_employee

@@ -383,6 +383,7 @@ Rails.application.routes.draw do
   namespace :reports do
     get 'salaries/new'
     post 'salaries/date_range_report'
+    get 'salaries/download'
     # post 'salaries/department_wise'
     # get 'salaries/show'
     post 'salaries/ctc_yearly_report'

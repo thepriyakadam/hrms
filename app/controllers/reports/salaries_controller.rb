@@ -2,6 +2,14 @@ class Reports::SalariesController < ApplicationController
   def new
   end
 
+  def download
+    @payments = Salaryslip.all
+    # respond_to do |format|
+    #   format.xlsx {render xlsx: 'download',filename: "payments.xlsx"}
+    # end
+    #render xlsx: "create", template: "api/reports/create"
+  end
+
   def date_range_report
     @month = params[:salary][:month]
     @year = params[:salary][:year]

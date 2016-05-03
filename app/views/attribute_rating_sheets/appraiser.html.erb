@@ -110,7 +110,7 @@
             <% if a.is_confirm_appraiser == true %>
             <small class="label label-info">Confirmed</small>
             <% else %>
-            <%= link_to '', edit_appraiser_attribute_rating_sheets_path(a) ,class: 'btn btn-xs btn-success fa fa-edit' %>
+            <%= link_to '', modal_appraiser_attribute_rating_sheets_path(a) ,class: 'btn btn-xs btn-success fa fa-edit',remote: true %>
             
             <% end %>
           </td>  
@@ -122,13 +122,15 @@
       <div class="col-sm-3">
         <div class="actions">
           <%= f.submit "Confirm", class: 'btn btn-primary btn-sm' %>
-          <%= link_to 'Back', appraiser_goal_rating_sheets_path(@employee.id),class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+          <%= link_to 'Back', appraiser_goal_rating_sheets_path(@employee.id),class: 'btn btn-default btn-sm fa fa-arrow-left'%>
         </div>
       </div>
     </div>
 </div>
 </div>
 <% end %>
+
+<div id="myModal" class="modal fade"></div>
 
 <script type="text/javascript">
   $(function () {

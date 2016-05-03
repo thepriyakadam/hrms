@@ -74,19 +74,39 @@
             </div>
           </div>
         </div>
-        
+
+      <div class="col-sm-3">
+          <div class="form-group required">
+            <div class="input-group">
+              <%= f.select :job_title, all_job_title,{label: 'Candidate Name',include_blank: " Select Job Title"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
+            </div>
+          </div>
+      </div>
+
+       <div class="col-sm-3">
+         <label>Job Title2</label>
+          <div class="form-group required">
+            <div class="input-group">
+              <%= f.select :employee_designation_id,all_employee_designation,{hide_label: true,include_blank: " Select Job Title"} %>
+            </div>
+          </div>
+        </div>
+
     <div class="col-sm-3">
       <div class="field">
         <%= f.file_field :avatar,label: 'Resume Upload' %>
       </div>
     </div>
 
+  </div>
+
+  <div class="row">
     <div class="col-sm-3">
       <div class="field">
         <%= f.file_field :passport_photo,label: 'Photo Upload' %>
       </div>
     </div>
-  </div>
+    </div>
 
     <div class="box-header with-border">
       <h3 class="box-title">Address Information</h3>

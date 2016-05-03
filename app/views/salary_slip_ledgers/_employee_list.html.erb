@@ -10,20 +10,19 @@
       <th>Other Allowance</th>
       <th>Washing Allowanc</th>
       <th>DA</th>
-    </tr>
+  </tr>
   </thead>
   <tbody>
     <% @employees.each do |employee| %>
     <% @salaryslip =  Salaryslip.find_by_employee_id(employee.id) %>
-
-     <% @addable_items = SalaryslipComponent.where(salaryslip_id: @salaryslip.id, is_deducted: false).where.not(other_component_name: nil) %>
-        <% @addable_items.each do |item| %>
+    <% @addable_items = SalaryslipComponent.where(salaryslip_id: @salaryslip.id, is_deducted: false).where.not(other_component_name: nil) %>
+      <% @addable_items.each do |item| %>
       <tr>
         <td><%= employee.try(:first_name) %></td>
         <% case item.salary_component.try(:name) %>
         <% when "Basic" %>
         <td><%= item.actual_amount.round * 12 %></td>
-         <% when "HRA" %>
+        <% when "HRA" %>
         <td><%= item.actual_amount.round * 12 %></td>
         <% when "Special Allowance" %>
         <td><%= item.actual_amount.round * 12 %></td>
@@ -37,17 +36,16 @@
         <td><%= item.actual_amount.round * 12 %></td>
         <% else %>
         <td><%= %></td>
-       <% end %>
-     <% end %>
+        <% end %>
+      <% end %>
       </tr>
     <% end %>
   </tbody>
 </table>
- <div class="col-sm-3">
-        <%= f.submit "Print Salary Slip",class: "btn btn-xl btn-warning fa fa-print" %>
-     </div>
-<% end %>
-
+   <div class="col-sm-3">
+      <%= f.submit "Print Salary Slip",class: "btn btn-xl btn-warning fa fa-print" %>
+   </div>
+ <% end %>
 
 <script type="text/javascript">
 $('#selectAll').click(function() {

@@ -230,6 +230,7 @@ Rails.application.routes.draw do
       get :print_details_final
       get :print_details_appraiser2
       get :send_email_to_appraiser
+      get :send_email_to_appraiser2
     end
   end
   resources :goal_rating_sheets do
@@ -382,6 +383,7 @@ Rails.application.routes.draw do
   namespace :reports do
     get 'salaries/new'
     post 'salaries/date_range_report'
+    get 'salaries/download'
     # post 'salaries/department_wise'
     # get 'salaries/show'
     post 'salaries/ctc_yearly_report'

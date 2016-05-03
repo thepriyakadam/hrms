@@ -169,8 +169,9 @@
         <% end %>
       </tbody>
     </table>
+    <hr>
+<%= link_to 'Back', employee_list_attribute_rating_sheets_path(@employee.id),class: 'btn btn-default btn-sm fa fa-arrow-left' %> |
 
-<%= link_to 'Back', employee_list_attribute_rating_sheets_path(@employee.id) %>
-
+<%= link_to 'Print PDF', print_details_final_attribute_rating_sheets_path(format: 'pdf',id:@employee.id ),class: 'btn btn-xl btn-warning', :target => '_blank' %><br>
   </div>
   </div>

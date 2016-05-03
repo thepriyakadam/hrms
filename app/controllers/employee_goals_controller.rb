@@ -113,6 +113,14 @@ class EmployeeGoalsController < ApplicationController
   end
   end
 
+  def send_email_to_employee
+    @employee_goal = EmployeeGoal.find_by_employee_id(params[:format])
+    @employee = Employee.find(@employee_goal.employee_id)
+    EmployeeGoalMailer.send_email_to_employee(@employee_goal).deliver_now
+    flash[:notice] = "Email sent Successfully"
+     redirect_to new_employee_attribute_path(@employee.id) 
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

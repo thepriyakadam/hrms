@@ -41,19 +41,20 @@
       <div class="row">
         <div class="col-sm-3">
           <div class="actions">
-            <%= f.submit "Confirm", class: 'btn btn-primary btn-sm' %>
+            <%= f.submit "Confirm", class: 'btn btn-primary btn-sm' %> 
+            
           </div>
         </div>
       </div>
     
-
-  <% end %>
 
       </br>
 
     <%= link_to 'Attribute Setting', new_employee_attribute_path(@employee.id) , class: 'btn btn-warning btn-sm' %> </br>
       </br>
     <%= link_to 'Back', subordinate_list_employee_goals_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+
+  <% end %>
 
 <script type="text/javascript">
   $(function () {

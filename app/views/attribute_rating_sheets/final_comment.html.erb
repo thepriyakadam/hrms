@@ -177,7 +177,7 @@
           <% if a.is_confirm_final == true %>
           <small class="label label-info">Confirmed</small>
             <% else %>
-            <%= link_to '', edit_final_attribute_rating_sheets_path(a),class: 'btn btn-success btn-xs fa fa-edit' %>
+            <%= link_to '', modal_final_attribute_rating_sheets_path(a),class: 'btn btn-success btn-xs fa fa-edit', remote: true %>
             <% end %>
           </td>
         </tr>
@@ -199,6 +199,8 @@
   <% end %>
 </div>
 </div>
+
+<div id="myModal" class="modal fade"></div>
 
 <script type="text/javascript">
   $(function () {

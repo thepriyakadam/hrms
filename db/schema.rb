@@ -1256,6 +1256,19 @@ ActiveRecord::Schema.define(version: 20160502065715) do
     t.datetime "updated_at",                              null: false
   end
 
+  create_table "privileges", force: :cascade do |t|
+    t.integer  "member_id"
+    t.string   "privilege_table"
+    t.boolean  "privilege_read"
+    t.boolean  "privilege_create"
+    t.boolean  "privilege_update"
+    t.boolean  "privilege_delete"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "privileges", ["member_id"], name: "index_privileges_on_member_id"
+
   create_table "professional_taxes", force: :cascade do |t|
     t.string   "is_pt"
     t.decimal  "min_salary",  precision: 15, scale: 2, default: 0.0

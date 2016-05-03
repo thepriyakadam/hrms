@@ -45,7 +45,7 @@
     </div>
     <div class="row">
       <div class="col-sm-2">Request By</div>
-      <div class="col-sm-6"><%= @vacancy_master.employee_id %></div>
+      <div class="col-sm-6"><%= @vacancy_master.employee.first_name+' '+@vacancy_master.employee.middle_name+' '+@vacancy_master.employee.last_name %></div>
     </div>
      <div class="row">
       <div class="col-sm-2">Approved By</div>

@@ -1,6 +1,7 @@
 class PdfSalariesController < ApplicationController
 
     def print_salary_slip_monthwise
+      puts "-----------"
       @month = params[:month]
       @year = params[:year]
       @employees = params[:employee_ids]

@@ -150,6 +150,11 @@ class InterviewSchedulesController < ApplicationController
     end
   end
 
+  def is_confirm
+     puts "---------------"
+     @interview_schedule_ids = params[:interview_schedule_ids]
+  end
+
 
   private
 

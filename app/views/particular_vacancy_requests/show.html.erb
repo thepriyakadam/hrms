@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Vacancy master:</strong>
+  <%= @particular_vacancy_request.vacancy_master %>
+</p>
+
+<p>
+  <strong>Employee:</strong>
+  <%= @particular_vacancy_request.employee %>
+</p>
+
+<p>
+  <strong>Open date:</strong>
+  <%= @particular_vacancy_request.open_date %>
+</p>
+
+<p>
+  <strong>Closed date:</strong>
+  <%= @particular_vacancy_request.closed_date %>
+</p>
+
+<p>
+  <strong>Fulfillment date:</strong>
+  <%= @particular_vacancy_request.fulfillment_date %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @particular_vacancy_request.status %>
+</p>
+
+<%= link_to 'Edit', edit_particular_vacancy_request_path(@particular_vacancy_request) %> |
+<%= link_to 'Back', particular_vacancy_requests_path %>

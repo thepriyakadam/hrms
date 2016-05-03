@@ -80,6 +80,7 @@ class EmployeeLeavRequest < ActiveRecord::Base
     end
   end
 
+
   def self.filter_records(current_user)
     @employee_leave_requests =  if current_user.class == Group
                                   EmployeeLeavRequest.all

@@ -3,6 +3,7 @@
     <h3 class="box-title">Employee Awards Details</h3>
     <div class="box-tools pull-right">
       <%= link_to "Add Award", ajax_new_award_employees_path(id: @employee.id), class: 'btn btn-primary btn-sm',remote:true %>
+      <%= link_to 'Back', employees_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
     </div>
   </div><!-- /.box-header -->
   <div class="box-body">
@@ -20,7 +21,7 @@
         <td><%= award.award_from %></td>
         <td>
           <%= link_to '', edit_award_path(award),class: 'btn btn-success fa fa-edit btn-sm',remote:true %>
-          <%= link_to '', award, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger fa fa-close btn-sm' %>
+           <!-- link_to '', award, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger fa fa-close btn-sm' %> -->
         </td>
       </tr>
       <%end%>

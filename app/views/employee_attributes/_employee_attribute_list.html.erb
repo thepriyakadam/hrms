@@ -1,0 +1,71 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Attribute List</h3>
+    <div class="pull-right">
+       
+    </div>  
+  </div>
+  <div class="box-body">
+  <%= bootstrap_form_for @employee_attribute,url:{action:'is_confirm',id: @employee.id} do |f| %> 
+
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+      <thead>
+        <tr>
+          <th><input type="checkbox" id="selectAll" value="selectAll"></th>
+          <th>Attribute & Definition</th>
+          <th>Weightage</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @employee_attributes.each do |a| %>
+        <tr>
+          <td><%= check_box_tag "employee_attribute_ids[]", a.id %></td>
+          <td><%= a.attribute_master.name %></td>
+          <td><%= a.weightage %></td>
+          <td>
+            <% if a.is_confirm == true %>
+            <small class="label label-info">Confirmed</small>
+            <% else %>  
+            <%= link_to '', edit_employee_attribute_path(a),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
+
+            <%= link_to '', a, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-xs btn-danger fa fa-close' %>
+            
+            <% end %>
+            <%= f.hidden_field :employee_id,value: @employee.id %>
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+   
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="actions">
+          <%= f.submit "Confirm", class: 'btn btn-primary btn-sm' %> 
+          <%= link_to 'Back', new_employee_goal_path(@employee.id),class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+
+        </div>
+      </div>
+    </div>
+  <% end %> 
+  
+  </div>
+</div>
+
+ <script type="text/javascript">
+  $(function () {
+    $('#selectAll').click(function() {
+      if (this.checked) {
+        $(':checkbox').each(function() {
+          this.checked = true;                       
+        });
+      } 
+      else {
+        $(':checkbox').each(function() {
+          this.checked = false;                        
+        });
+      } 
+    });
+  });
+</script>

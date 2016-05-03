@@ -5,5 +5,5 @@ class EmployeeShift < ActiveRecord::Base
   # validates :company_shift_id, :presence => true
   # validates :from_date, :presence => true
   # validates :to_date, :presence => true
-  #belongs_to :company_shift
+  # belongs_to :company_shift
 end

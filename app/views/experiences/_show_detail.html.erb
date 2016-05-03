@@ -1,8 +1,9 @@
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title">Employee Experience Details</h3>
+    <h6 class="box-title">Employee Experience Details : <%= @experience.try(:employee).try(:manual_employee_code) %> - Name : <%= @experience.try(:employee).try(:first_name) %> <%= @experience.try(:employee).try(:middle_name) %> <%= @experience.try(:employee).try(:last_name) %></h6>
     <div class="box-tools pull-right">
       <%= link_to "Add Experience", ajax_new_experience_employees_path(id: @employee.id), class: 'btn btn-sm btn-primary',remote:true %>
+      <%= link_to 'Back', employees_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
     </div>
   </div><!-- /.box-header -->
   <div class="box-body">
@@ -21,8 +22,8 @@
         <td><%= experience.no_of_year %></td>
         <td><%= experience.ctc %></td>
         <td>
-          <%= link_to '', edit_experience_path(experience),class: 'btn btn-sm btn-success fa fa-edit',remote:true %>
-          <%= link_to '', experience, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-sm btn-danger fa fa-close' %>
+           <%= link_to '', edit_experience_path(experience),class: 'btn btn-sm btn-success fa fa-edit',remote:true %>
+          <!-- link_to '', experience, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-sm btn-danger fa fa-close'  -->
         </td>
       </tr>
       <%end%>

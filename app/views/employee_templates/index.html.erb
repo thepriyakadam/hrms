@@ -9,10 +9,10 @@
     <table id="example1" class="table table-bordered table-hover table-condensed">
       <thead>
         <tr>
-          <th>Employee Id</th>
+          <th>Id</th>
           <th>Employee Name</th>
-          <th>Employement</th>
-          <th>Active Template</th>
+          <th>Department</th>
+          <th>Category</th>
           <th>Action</th>
         </tr>
       </thead>
@@ -21,12 +21,12 @@
         <% @employees.each do |employee| %>
           <tr>
             <td><%= employee.try(:manual_employee_code) %></td>
-            <td><%= employee.first_name.to_s+' '+employee.try(:last_name).to_s %></td>
-            <td><%= employee.employee_type.try(:name) %></td>
-            <td><%=  %></td>
+            <td><%= full_name(employee) %></td>
+            <td><%= employee.company_location.try(:name) %> - <%= employee.department.try(:name) %></td>
+            <td><%= employee.joining_detail.employee_category.try(:name) %></td>
             <td>
-              <%= link_to 'Assign Template', new_employee_salary_template_path(id: employee),class: 'btn btn-sm btn-info fa fa-check' %>
-              <%= link_to 'Assigned Template', template_list_employee_templates_path(employee),class: 'btn btn-sm btn-info fa fa-check' %>
+              <%= link_to 'Increment Salary', new_employee_salary_template_path(id: employee),class: 'btn btn-sm btn-info fa fa-check' %>
+              <%= link_to 'Assigned Salary Template', template_list_employee_templates_path(employee),class: 'btn btn-sm btn-info fa fa-check' %>
             </td>
           </tr>
         <% end %>

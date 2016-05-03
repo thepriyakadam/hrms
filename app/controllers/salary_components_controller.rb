@@ -4,12 +4,14 @@ class SalaryComponentsController < ApplicationController
   def new
     @salary_component = SalaryComponent.new
     @salary_components = SalaryComponent.all
+    session[:active_tab] ="payroll"
+    session[:active_tab1] ="salarymaster"
   end
 
   # GET /salary_components/1/edit
   def edit
-     # @salary_components = SalaryComponent.all
-     # @salary_component = SalaryComponent.new
+    # @salary_components = SalaryComponent.all
+    # @salary_component = SalaryComponent.new
   end
 
   # POST /salary_components
@@ -18,22 +20,22 @@ class SalaryComponentsController < ApplicationController
     @salary_component = SalaryComponent.new(salary_component_params)
     @salary_components = SalaryComponent.all
     respond_to do |format|
-    if @salary_component.save
-    @salary_component = SalaryComponent.new
-     format.js { @flag = true }
+      if @salary_component.save
+        @salary_component = SalaryComponent.new
+        format.js { @flag = true }
       else
-        flash.now[:alert] = "Salary Component is Already Exist."
-         format.js { @flag = false }
-      end
-    end 
+        flash.now[:alert] = 'Salary Component is Already Exist.'
+        format.js { @flag = false }
+        end
+    end
   end
 
   # PATCH/PUT /salary_components/1
   # PATCH/PUT /salary_components/1.json
   def update
-        @salary_component.update(salary_component_params)
-        @salary_components = SalaryComponent.all
-        @salary_component = SalaryComponent.new   
+    @salary_component.update(salary_component_params)
+    @salary_components = SalaryComponent.all
+    @salary_component = SalaryComponent.new
   end
 
   # DELETE /salary_components/1
@@ -43,14 +45,18 @@ class SalaryComponentsController < ApplicationController
     @salary_components = SalaryComponent.all
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_salary_component
-      @salary_component = SalaryComponent.find(params[:id])
-    end
+  def create_employee_template
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def salary_component_params
-      params.require(:salary_component).permit(:name, :is_deducted, :code, :parent_id, :description)
-    end
+  private
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_salary_component
+    @salary_component = SalaryComponent.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def salary_component_params
+    params.require(:salary_component).permit(:name, :is_deducted, :code, :parent_id, :description)
+  end
 end

@@ -3,7 +3,6 @@
     <a><b>Login</b></a>
   </div><!-- /.login-logo -->
   
-
   <div class="login-box-body">
     <p class="login-box-msg">Sign in to start your session</p>
    <%= bootstrap_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
@@ -32,20 +31,17 @@
             </label>
           </div>
         </div><!-- /.col -->
-        <div class="col-sm-5">
-          <%= f.submit "Sign in",class: "btn btn-sm btn-primary", data: { disable_with: 'Signing in...'} %>
-        </div><!-- /.col -->
       </div>
-        
-
-      <!-- <div class="social-auth-links text-center">
-        <p>- OR -</p>
-        <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign in using Facebook</a>
-        <a href="#" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Sign in using Google+</a>
-      </div> --><!-- /.social-auth-links -->
-
+        <div class="row">
+          <div class="col-sm-3">
+            <%= f.submit "Sign in",class: "btn btn-primary", data: { disable_with: 'Signing in...'} %>
+          </div><!-- /.col -->
+          <div class="col-sm-3">
+            <%= link_to 'New User',new_registration_path(resource_name), class: 'btn btn-primary'%>
+          </div>
+        </div>
+      </div>
       <%= render "members/shared/links" %>
     <% end %>  
   </div><!-- /.login-box-body -->
-
 </div><!-- /.login-box -->

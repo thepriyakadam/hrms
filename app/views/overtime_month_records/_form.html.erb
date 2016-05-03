@@ -1,0 +1,52 @@
+<%= bootstrap_form_for(@overtime_month_record,html: {id: 'overtime_month_record'},remote:true) do |f| %>
+  <div class="row">
+   <div class="col-sm-3">
+    <div class="form-group required">
+      <%= f.select :employee_id, employee_list_by_company_location, {label: 'Employee',include_blank: " Select Employee"},{onchange:"var a={employee_id:$(this).val()}; $.get('/overtime_salaries/collect_basic',a,function(response){});",:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"}  %>
+    </div>
+    </div>
+  </div>
+   <div class="row">
+     <div class="col-sm-3">
+      <label>Date</label>
+        <div class="field">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+             <%= f.text_field :overtime_data,hide_label:true, class: 'overtime_data'%>
+          </div>
+        </div>
+      </div>
+     <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :attendance_bonus_amount,label:'Attendance Bonus' %>
+      </div>
+    </div>
+     <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :paid_holiday_amount,label:'PH Amount' %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit :class => class_name %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<script type="text/javascript">
+  $(function(){
+    $('.overtime_data').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:-0',
+    dateFormat: 'dd-mm-yy' });
+     }); 
+  $(document).ready(function() {
+    $(".select2").select2();
+  });
+</script>

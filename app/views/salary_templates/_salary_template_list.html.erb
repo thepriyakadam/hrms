@@ -14,9 +14,9 @@
         <td><%= salary_template.description %></td>
         <td><%= salary_template.validity_date %></td>
         <td>
-          <%= link_to '', edit_salary_template_path(salary_template),class: 'btn btn-sm btn-success btn-xs fa fa-edit',remote:true %>
-          <%= link_to '', salary_template, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-sm btn-danger btn-xs fa fa-close' %>
-          <%= link_to '', salary_component_templates_path(salary_template),class: 'btn btn-sm btn-warning btn-xs fa fa-check' %>
+          <%= link_to 'Edit Template Detail', edit_salary_template_path(salary_template),class: 'btn btn-sm btn-success btn-xs',remote:true %>
+           <!-- link_to '', salary_template, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-sm btn-danger btn-xs fa fa-close' -->
+          <%= link_to 'Assign Component To Template', salary_component_templates_path(salary_template),class: 'btn btn-sm btn-warning btn-xs' %>
         </td>
       </tr>
     <% end %>

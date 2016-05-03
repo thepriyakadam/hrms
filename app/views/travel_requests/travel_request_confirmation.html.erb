@@ -1,0 +1,103 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Travel Request Confirmation List</h3>
+    <div class="pull-right">
+    </div>
+    </div>
+<div class="box-body">
+<table id="example" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Employee Code</th>
+      <th>Employee Name</th>
+      <th>Department</th>
+      <th>Request To</th>
+      <th>Traveling Date</th>
+      <th>Place</th>
+      <th>Total Advance</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @travel_requests.each do |travel_request| %>
+      <tr>
+        <td><%= travel_request.employee.try(:manual_employee_code) %></td>
+        <td><%= travel_request.employee.try(:first_name) %> <%= travel_request.employee.try(:middle_name) %> <%= travel_request.employee.try(:last_name) %></td>
+        <td><%= travel_request.employee.company_location.try(:name) %> - <%= travel_request.employee.department.try(:name) %></td>
+        <td><%= travel_request.reporting_master_id %></td>
+        <td><%= travel_request.traveling_date %></td>
+        <td><%= travel_request.place %></td>
+        <td><%= travel_request.total_advance %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+    
+     <div class="row">
+      <div class="col-sm-2">Traveling Request Id</div>
+      <div class="col-sm-6"><%= @travel_request.id %></div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2">Application date</div>
+      <div class="col-sm-6"><%=  @travel_request.application_date %></div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2">Employee Code</div>
+      <div class="col-sm-6"><%=  @travel_request.employee.try(:manual_employee_code) %></div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2">Employee</div>
+      <div class="col-sm-6"><%=  @travel_request.employee.try(:first_name) %> <%= @travel_request.employee.try(:middle_name) %> <%= @travel_request.employee.try(:last_name) %></div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2">Department</div>
+      <div class="col-sm-6"><%=  @travel_request.employee.company_location.try(:name) %> - <%= @travel_request.employee.department.try(:name) %></div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2">Reporting manager</div>
+      <div class="col-sm-6"><%=  @travel_request.reporting_master_id %></div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2">Traveling date</div>
+      <div class="col-sm-6"><%=  @travel_request.traveling_date %></div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2">Place</div>
+      <div class="col-sm-6"><%=  @travel_request.place %></div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2">Traveling advance</div>
+      <div class="col-sm-6"><%=  @travel_request.traveling_advance %></div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2">Lodging boarding advance</div>
+      <div class="col-sm-6"><%=  @travel_request.lodging_boarding_advance %></div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2">Extra advance</div>
+      <div class="col-sm-6"><%=  @travel_request.extra_advance %></div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2">Total advance</div>
+      <div class="col-sm-6"><%=  @travel_request.total_advance %></div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2">Tour purpose</div>
+      <div class="col-sm-6"><%=  @travel_request.tour_purpose %></div>
+    </div>
+    
+
+      <br>
+  <div id="myModal" class="modal fade"></div>
+<%= link_to 'Approve',approve_travel_request_travel_requests_path(@travel_request.id),class: 'btn btn-sm btn-info fa fa-check' %> |
+<%= link_to 'Reject',reject_travel_request_travel_requests_path(@travel_request.id),class: 'btn btn-sm btn-danger fa fa-trash' %>
+<%= link_to 'Approve & Send next',modal_travel_requests_path(@travel_request.id),class: 'btn btn btn-sm btn-success fa fa-modx',remote: true %>
+    </div>
+</div>
+
+<script>
+$(document).ready(function() {
+    $('#example').DataTable();
+} );
+</script>
+

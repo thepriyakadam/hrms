@@ -1,13 +1,26 @@
 <!-- Optionally, you can add icons to the links -->
 <!-- sidebar menu: : style can be found in sidebar.less -->
 <ul class="sidebar-menu">
-  <li class="header">COMPANY LOCATION DASHBOARD</li>
+  <li class="header">DEPARTMENT DASHBOARD</li>
   <li class="active treeview">
     <a href="">
       <i class="fa fa-user-plus"></i> <span>Employee Management</span> 
     </a>
     <ul class="treeview-menu">
       <li><a href="/employees"><i class="fa fa-tags"></i> Employees</a></li>
+    </ul>
+  </li>
+  <li class="treeview">
+    <a href="">
+      <i class="fa fa-user-plus"></i> <span>Employee Self Service</span> 
+    </a>
+    <ul class="treeview-menu">
+      <li><a href="/self_services/employee"><i class="fa fa-tags"></i> Employees</a></li>
+      <li><a href="/self_services/employee_template"><i class="fa fa-tags"> </i> Salary Structure </a></li>
+      <li><a href="/self_services/attendance"><i class="fa fa-tags"></i>Attendance</a></li>
+      <li><a href="/self_services/salaryslip"><i class="fa fa-tags"></i>Salaryslips</a></li>
+      <li><a href="/self_services/advance"><i class="fa fa-tags"></i>Advance & Instalment</a></li>
+      <li><a href="/goal_rating_sheets/new"><i class="fa fa-tags"></i> Self Rating </a></li>
     </ul>
   </li>
 
@@ -27,11 +40,38 @@
       <i class="ionicons ion-ios-time"></i><span><span>  Time Management </span></span> <i class="fa fa-angle-left pull-right"></i>
     </a>
     <ul class="treeview-menu">
-      <li><a href="/holidays/new"><i class="fa fa-tags"></i> Holiday </a></li>
-      <li><a href="/shift_rotations/new"><i class="fa fa-tags"></i> Create Shift Rotation </a></li>
       <li><a href="/employee_shifts"><i class="fa fa-tags"></i> Assign Employee To Shift </a></li>
-      <li><a href="/overtimes"><i class="fa fa-tags"></i> Over Time </a></li>
-      <li><a href="/attendances"><i class="fa fa-tags"></i> Employee Attendance </a></li>
     </ul>
    </li>
+
+  <li class="treeview">
+    <a href="">
+      <i class="fa fa-briefcase"></i><span> Recruitment Management </span> <i class="fa fa-angle-left pull-right"></i>
+    </a>
+    <ul class="treeview-menu">
+      <li><a href="/vacancy_masters"><i class="fa fa-tags"></i> Create Vacancy </a></li>
+      <li><a href="/vacancy_masters/vacancy_history"><i class="fa fa-tags"></i> Vacancy Aprroval/Reject </a></li>
+    </ul>
+   </li>
+
+  <li class="treeview">
+    <a href="">
+      <i class="ionicons ion-ios-time"></i><span><span>  Performance Management </span></span> <i class="fa fa-angle-left pull-right"></i>
+    </a>
+
+     <ul class="treeview-menu">
+      <li><a href="/employee_goals/subordinate_list"><i class="fa fa-tags"></i> Set Goals & Attributes</a></li>
+      <li><a href="/goal_rating_sheets/subordinate_list"><i class="fa fa-tags"></i> Appraiser Rating </a></li>
+      <!-- <li><a href="/attribute_rating_sheets/subordinate_list"><i class="fa fa-tags"></i> Employee Details </a></li> -->
+      <li><a href="/goal_rating_sheets/subordinate_list2"><i class="fa fa-tags"></i> Appraiser2 Rating </a></li>
+      <li><a href="/goal_rating_sheets/employee_list"><i class="fa fa-tags"></i> Final Rating </a></li>
+      <li><a href="/attribute_rating_sheets/employee_list"><i class="fa fa-tags"></i> Employee Final Details </a></li>
+      <li><a href="/attribute_rating_sheets/subordinate_list2"><i class="fa fa-tags"></i> Employees for Appraiser2 </a></li>
+      <li><a href="/employee_goals/employee_list"><i class="fa fa-tags"></i> HR </a></li>
+      <li><a href="/attribute_rating_sheets/subordinate_list"><i class="fa fa-tags"></i> Employee Details </a></li>
+    </ul> 
+    </ul>
+ 
+    
+  </li>
 </ul>

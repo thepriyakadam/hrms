@@ -17,18 +17,23 @@
             <%= select :salary,:year,['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025','2026','2027'],{label: 'Select Year',include_blank: " Select Year"}, class: "form-control" %>
           </div>
         </div>
+
         <div class="col-sm-3">
           <div class="field">
-          <%= select :salary, :company_location_id, all_company_location,{label: 'Department Location',include_blank: " Select Department Location"}, class: "form-control" %>
+          <%= select :salary, :company_location_id, all_company_location,{label: 'Company Location',include_blank: " Select Company Location"}, class: "form-control" %>
           </div>
         </div>
+        </div>
+
+        <div class="row">
         <div class="col-sm-3">
           <div class="actions">
             <%= f.submit "Download Excel", class: "btn btn-sm btn-warning" %>
           </div>
         </div>
+        </div>
 
-      </div><br>
+      <br>
     <% end %>
   </div><!-- /.box-body -->
 </div><!-- /.box -->

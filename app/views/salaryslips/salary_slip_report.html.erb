@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 5px;
+    text-align: left;    
+}
+</style>
+</head>
+<body>
+ <table align="center"  width=1000 >
+      <thead>
+        <tr>
+          <td colspan="6">
+           <center><strong>BHANDARI</strong></center> 
+            <center><strong>BHANDARI FOILS AND TUBES LTD.</strong></center>
+            <center><small>Manufacturers of Stainless Steel Cold Rolled Coils, Tubes & Fitings</small></center><br><br>
+            <center><small>Salary Slip for the month of: </small></center>
+          </td>           
+        </tr>
+    
+       
+      </thead>
+</table><br>
+<table id="example" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th colspan="7"><center>Salary</center></th>
+      <th colspan="7"><center>Leaves/Present</center></th>
+      <th colspan="6"><center>Earned Salary</center></th>
+      <th colspan="11"><center>Deductions</center></th>
+    </tr>
+  </thead>
+
+  <tbody>
+      <tr>
+       <% @addable_salaryslip_items.each do |item| %>
+            <% case item.salary_component.try(:name) %>
+            <% when "Basic" %>
+              <Cell ss:Index="15"><Data ss:Type="Number"><%= item.actual_amount.round %></Data></Cell>
+            <% when "HRA" %>
+              <Cell ss:Index="16"><Data ss:Type="Number"><%= item.actual_amount.round %></Data></Cell>
+            <% when "Special Allowance" %>
+              <Cell ss:Index="17"><Data ss:Type="Number"><%= item.actual_amount.round %></Data></Cell>
+            <% when "Convenience Allowance" %>
+              <Cell ss:Index="18"><Data ss:Type="Number"><%= item.actual_amount.round %></Data></Cell>
+            <% when "Other Allowance" %>
+              <Cell ss:Index="19"><Data ss:Type="Number"><%= item.actual_amount.round %></Data></Cell>
+            <% when "Washing Allowance" %>
+              <Cell ss:Index="20"><Data ss:Type="Number"><%= item.actual_amount.round %></Data></Cell>
+            <% when "DA" %>
+              <Cell ss:Index="21"><Data ss:Type="Number"><%= item.actual_amount.round %></Data></Cell>
+            <% else %>
+            
+            <% end %> <!-- switch case -->
+       <td>Basic</td>
+       <td>DA</td>
+       <td>HRA</td>
+       <td>Conv</td>
+       <td>Alwn</td>
+       <td>W.All</td>
+       <td>Total</td>
+      
+       <td>Days</td>
+       <td>OFF</td>
+       <td>CL</td>
+       <td>EL</td>
+       <td>HD</td>
+       <td>TDays</td>
+       <td>Basic</td>
+
+       <td>DA</td>
+       <td>HRA</td>
+       <td>Cony.</td>
+       <td>Allow.</td>
+       <td>CWA</td>
+       <td>Gross</td>
+
+       <td>PF</td>
+       <td>ESIC</td>
+       <td>I.Tax</td>
+       <td>P.T.</td>
+       <td>Adv.</td>
+       <td>Scty.</td>
+       <td>Food Ded.</td>
+       <td>Others</td>
+       <td>Ded. Total</td>
+       <td>Net Pay</td>
+       <td>Sign</td>
+      
+      </tr>
+      <tr>
+
+       <td>Basic</td>
+       <td>DA</td>
+       <td>HRA</td>
+       <td>Conv</td>
+       <td>Alwn</td>
+       <td>W.All</td>
+       <td>Total</td>
+      
+       <td>Days</td>
+       <td>OFF</td>
+       <td>CL</td>
+       <td>EL</td>
+       <td>HD</td>
+       <td>TDays</td>
+       <td>Basic</td>
+
+       <td>DA</td>
+       <td>HRA</td>
+       <td>Cony.</td>
+       <td>Allow.</td>
+       <td>CWA</td>
+       <td>Gross</td>
+
+       <td>PF</td>
+       <td>ESIC</td>
+       <td>I.Tax</td>
+       <td>P.T.</td>
+       <td>Adv.</td>
+       <td>Scty.</td>
+       <td>Food Ded.</td>
+       <td>Others</td>
+       <td>Ded. Total</td>
+       <td>Net Pay</td>
+       <td>Sign</td>
+      
+      </tr>
+  </tbody>
+</table>
+
+</body>
+</html>

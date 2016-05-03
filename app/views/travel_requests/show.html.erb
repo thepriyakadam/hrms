@@ -1,0 +1,73 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Travel Request</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+    <tr> 
+      <th colspan="2"></th>
+      <th colspan="2"></th>
+    </tr>
+
+    <tr>
+      <th><strong>Traveling Request Id:</strong></th>
+      <td><%= @travel_request.id %></td>
+
+      <th><strong>Application date:</strong></th>
+      <td><%= @travel_request.application_date %></td>
+    </tr>
+
+    <tr>
+      <th><strong>Employee Code:</strong></th>
+      <td><%= @travel_request.employee.try(:manual_employee_code) %></td>
+
+      <th><strong>Employee:</strong></th>
+      <td><%= @travel_request.employee.try(:first_name) %> <%= @travel_request.employee.try(:middle_name) %> <%= @travel_request.employee.try(:last_name) %></td>
+    </tr>
+
+    <tr>
+      <th><strong>Department:</strong></th>
+      <td><%= @travel_request.employee.company_location.try(:name) %> - <%= @travel_request.employee.department.try(:name) %></td>
+
+      <th><strong>Reporting manager:</strong></th>
+      <td><%= @travel_request.reporting_master_id %></td>
+    </tr>
+
+    <tr>
+      <th><strong>Traveling date:</strong></th>
+      <td><%= @travel_request.traveling_date %></td>
+
+      <th><strong>Place:</strong></th>
+      <td><%= @travel_request.place %></td>
+    </tr>
+
+    <tr>
+      <th><strong>Traveling advance:</strong></th>
+      <td><%= @travel_request.traveling_advance %></td>
+
+      <th><strong>Lodging boarding advance:</strong></th>
+      <td><%= @travel_request.lodging_boarding_advance %></td>
+
+    </tr>
+
+    <tr>
+      <th><strong>Extra advance:</strong></th>
+      <td><%= @travel_request.extra_advance %></td>
+
+      <th><strong>Total advance:</strong></th>
+      <td><%= @travel_request.total_advance %></td>
+    </tr>
+
+    <tr>
+      <th><strong>Tour purpose:</strong></th>
+      <td><%= @travel_request.tour_purpose %></td>
+
+      <th></th>
+      <td></td>
+    </tr>
+
+  </table>
+    <%= link_to 'Edit', edit_travel_request_path(@travel_request),class: 'btn btn-success btn-sm fa fa-edit' %> |
+    <%= link_to 'Back', travel_requests_path,class: 'btn btn-default btn-sm fa fa-arrow-left'  %>
+    </div>
+  </div>

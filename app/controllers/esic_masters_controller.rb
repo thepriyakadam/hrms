@@ -1,9 +1,11 @@
 class EsicMastersController < ApplicationController
   before_action :set_esic_master, only: [:show, :edit, :update, :destroy]
-  
+
   def new
     @esic_master = EsicMaster.new
     @esic_masters = EsicMaster.all
+    session[:active_tab] ="master"
+    session[:active_tab1] ="setting"
   end
 
   # GET /esic_masters/1/edit
@@ -14,15 +16,15 @@ class EsicMastersController < ApplicationController
   # POST /esic_masters.json
   def create
     components = params[:components]
-    str = String.new
+    str = ''
     i = 0
     components.each do |c|
-      if i == 0
-        str = c.to_s
-      else
-        str = str.to_s+","+c.to_s
-      end
-      i = i + 1
+      str = if i == 0
+              c.to_s
+            else
+              str.to_s + ',' + c.to_s
+            end
+      i += 1
     end
     @esic_master = EsicMaster.new(esic_master_params)
     @esic_master.base_component = str
@@ -30,19 +32,20 @@ class EsicMastersController < ApplicationController
     @esic_master.save
     @esic_master = EsicMaster.new
   end
+
   # PATCH/PUT /esic_masters/1
   # PATCH/PUT /esic_masters/1.json
   def update
     components = params[:components]
-    str = String.new
+    str = ''
     i = 0
     components.each do |c|
-      if i == 0
-        str = c.to_s
-      else
-        str = str.to_s+","+c.to_s
-      end
-      i = i + 1
+      str = if i == 0
+              c.to_s
+            else
+              str.to_s + ',' + c.to_s
+            end
+      i += 1
     end
     @esic_master.base_component = str
     @esic_master.update(esic_master_params)
@@ -58,13 +61,14 @@ class EsicMastersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_esic_master
-      @esic_master = EsicMaster.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def esic_master_params
-      params.require(:esic_master).permit(:esic, :percentage, :date_effective, :max_limit, :base_component)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_esic_master
+    @esic_master = EsicMaster.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def esic_master_params
+    params.require(:esic_master).permit(:esic, :percentage, :date_effective, :max_limit, :base_component)
+  end
 end

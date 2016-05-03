@@ -104,7 +104,6 @@
      yearRange: '-200:-0',
      dateFormat: 'dd-mm-yy' });
   });
-
   <% @employee_salary_templates.each do |item| %>
   
     $(function(){
@@ -136,7 +135,6 @@
           for (p = 0; p < parents.length; p++) {
             var monthly_amount = parseFloat($('#monthly_amount_'+parents[p]).val()); 
             var child = <%= @@children %>
-
             for (i = 0; i < child.length; i++) {
               var child_percentage = parseFloat($('#percentage_'+child[i]).val());
               var ans = ((child_percentage * monthly_amount)/100).toFixed(2);
@@ -235,13 +233,11 @@
           $("#tax_<%= item.try(:salary_component_id) %>").prop('disabled', true);
         }
       }
-
       function calculate_difference(){
         console.log("----------------------------------------");
         var monthly_amount = parseFloat($('#monthly_amount_<%= item.try(:salary_component_id) %>').val()); 
         
         var old_monthly_amount = parseFloat($('#old_monthly_amount_<%= item.try(:salary_component_id) %>').val());
-
         var difference = "";
         if(isNaN(monthly_amount) || isNaN(old_monthly_amount)){
           difference = " ";
@@ -253,11 +249,5 @@
       }
     });
   <% end %>
-
-  $(function() {
-    $('#batches').multiselect({
-    includeSelectAllOption: true,
-    maxHeight: 200
-    });
-  });
 </script>
+

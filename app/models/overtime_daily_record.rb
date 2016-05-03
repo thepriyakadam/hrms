@@ -1,0 +1,3 @@
+class OvertimeDailyRecord < ActiveRecord::Base
+  belongs_to :employee
+end

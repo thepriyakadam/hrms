@@ -3,10 +3,10 @@
     <table class="table table-bordered table-hover table-condensed">
       <thead>
         <tr>
-          <th>Particular</th>
+          <th>Salary Component</th>
           <th>Actual Amount</th>
           <th>Calculated Amount</th>
-          <th>Action</th>
+          <!-- <th>Action</th> -->
         </tr>
       </thead>
       <tbody>
@@ -15,14 +15,20 @@
             <td><%= item.salary_component.name %></td>
             <td align="right"><%= item.actual_amount.round %></td>
             <td align="right"><%= item.calculated_amount.round %></td>
-            <td align="center"><%= link_to "", edit_salaryslip_component_path(item),remote:true,class: "fa fa-edit" %></td>
+            <!-- <td align="center">< link_to "", edit_salaryslip_component_path(item),remote:true,class: "fa fa-edit" %></td> -->
           </tr>
         <% end %>
         <tr>
-          <td>Total</td>
-          <td align="right"><%= @salaryslip.actual_gross_salary.round %></td>
-          <td align="right"><%= @salaryslip.calculated_gross_salary.round %></td>
-          <td></td>
+          <td><strong>Total Gross</strong></td>
+          <td align="right"><strong><%= @salaryslip.actual_gross_salary.round %></strong></td>
+          <td align="right"><strong><%= @salaryslip.calculated_gross_salary.round %></strong></td>
+         <!--  <td></td> -->
+        </tr>
+         <tr>
+          <td><strong>Deduction Component</strong></td>
+          <td align="right"><strong></strong></td>
+          <td align="right"><strong>Amount</strong></td>
+         <!--  <td></td> -->
         </tr>
         <% @deducted_salary_components.each do |item| %>
           <tr>
@@ -30,28 +36,29 @@
               <td><%= item.salary_component.name %></td>
               <td align="right"><%= item.actual_amount.round %></td>
               <td align="right"><%= item.calculated_amount.round %></td>
-              <td align="center"><%= link_to "", edit_salaryslip_component_path(item),remote:true,class: "fa fa-edit" %></td>
+             <!--  <td align="center"> link_to "", edit_salaryslip_component_path(item),remote:true,class: "fa fa-edit" %></td> -->
             <%else%>
               <td><%= item.other_component_name %></td>
               <td align="right"><%= item.actual_amount.round %></td>
               <td align="right"><%= item.calculated_amount.round %></td>
-              <td align="center"><%= link_to "", edit_salaryslip_component_path(item),remote:true,class: "fa fa-edit" %></td>
+             <!--  <td align="center">link_to "", edit_salaryslip_component_path(item),remote:true,class: "fa fa-edit" %></td> -->
             <%end%>
           </tr>
         <% end %>
         <tr>
-          <td>Total</td>
-          <td align="right"><%= @salaryslip.actual_total_deduction.round %></td>
-          <td align="right"><%= @salaryslip.calculated_total_deduction.round %></td>
-          <td></td>
+          <td><strong>Total Deduction</strong></td>
+          <td align="right"><strong><%= @salaryslip.actual_total_deduction.round %></strong></td>
+          <td align="right"><strong><%= @salaryslip.calculated_total_deduction.round %></strong></td>
+          <!-- <td></td> -->
         </tr>
         <tr>
-          <td>Net Salary</td>
-          <td align="right"><%= @salaryslip.actual_net_salary.round %></td>
-          <td align="right"><%= @salaryslip.calculated_net_salary.round %></td>
-          <td></td>
+          <td><strong>Net Salary</strong></td>
+          <td align="right"><strong><%= @salaryslip.actual_net_salary.round %></strong></td>
+          <td align="right"><strong><%= @salaryslip.calculated_net_salary.round %></strong></td>
+          <!-- <td></td> -->
         </tr>
       </tbody>
     </table>
   </div>
 </div>
+<div><%= link_to 'Back', employee_salary_list_salaryslips_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %></div>

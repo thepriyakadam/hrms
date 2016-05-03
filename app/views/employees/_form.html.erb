@@ -4,16 +4,7 @@
   </div><!-- /.box-header -->
   <div class="box-body">
     <%= bootstrap_form_for(@employee,html: {id: 'employee'}) do |f| %>
-      <% if @employee.errors.any? %>
-        <div id="error_explanation">
-          <h2><%= pluralize(@employee.errors.count, "error") %> prohibited this user from being saved:</h2>
-          <ul>
-          <% @employee.errors.full_messages.each do |message| %>
-            <li><%= message %></li>
-          <% end %>
-          </ul>
-        </div>
-      <% end %>
+      
         
       <div class="row">
         <div class="col-sm-3">
@@ -110,15 +101,15 @@
         </div>
 
         <div class="col-sm-3">
-        <label>Date of Birth: </label>
-        <div class="field">
-          <div class="input-group">
-            <div class="input-group-addon">
-              <i class="fa fa-calendar"></i>
+          <label>Date of Birth: </label>
+          <div class="field">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <%= f.text_field :date_of_birth, hide_label: true, class: 'birth_date'%>
             </div>
-            <%= f.text_field :date_of_birth, hide_label: true, class: 'birth_date'%>
           </div>
-        </div>
         </div>
 
         <div class="col-sm-3">
@@ -192,7 +183,7 @@
         <div class="col-sm-3">
           <div class="field">
             <div class="field">
-              <%= f.select :company_location_id, all_company_location,{label: 'Location',include_blank: " Select Location"} %>
+              <%= f.select :department_id, all_department_list,{label: 'Location',include_blank: " Select Location"} %>
             </div>
           </div>
         </div> 

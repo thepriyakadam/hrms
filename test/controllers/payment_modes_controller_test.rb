@@ -5,18 +5,18 @@ class PaymentModesControllerTest < ActionController::TestCase
     @payment_mode = payment_modes(:one)
   end
 
-  test "should get index" do
+  test 'should get index' do
     get :index
     assert_response :success
     assert_not_nil assigns(:payment_modes)
   end
 
-  test "should get new" do
+  test 'should get new' do
     get :new
     assert_response :success
   end
 
-  test "should create payment_mode" do
+  test 'should create payment_mode' do
     assert_difference('PaymentMode.count') do
       post :create, payment_mode: { code: @payment_mode.code, description: @payment_mode.description, name: @payment_mode.name }
     end
@@ -24,22 +24,22 @@ class PaymentModesControllerTest < ActionController::TestCase
     assert_redirected_to payment_mode_path(assigns(:payment_mode))
   end
 
-  test "should show payment_mode" do
+  test 'should show payment_mode' do
     get :show, id: @payment_mode
     assert_response :success
   end
 
-  test "should get edit" do
+  test 'should get edit' do
     get :edit, id: @payment_mode
     assert_response :success
   end
 
-  test "should update payment_mode" do
+  test 'should update payment_mode' do
     patch :update, id: @payment_mode, payment_mode: { code: @payment_mode.code, description: @payment_mode.description, name: @payment_mode.name }
     assert_redirected_to payment_mode_path(assigns(:payment_mode))
   end
 
-  test "should destroy payment_mode" do
+  test 'should destroy payment_mode' do
     assert_difference('PaymentMode.count', -1) do
       delete :destroy, id: @payment_mode
     end

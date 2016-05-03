@@ -1,27 +1,39 @@
 class HomeController < ApplicationController
-  #load_and_authorize_resource
+  # load_and_authorize_resource
   def index
-  	@companies = Company.all
-  	@company_locations = CompanyLocation.all
-  	@departments = Department.all
-  	@employees = Employee.all
-  	if current_user.class == Member
-	  	if current_user.role.name == "Employee"
-	  	  @employee = Employee.find(current_user.employee_id)
-        #authorize! :show, @employee
-      elsif current_user.role.name == "CompanyLocation"
+    @companies = Company.all
+    @company_locations = CompanyLocation.all
+    @departments = Department.all
+    @employees = Employee.all
+   if current_user.class == Member
+      if current_user.role.name == 'Employee'
+        @employees = Employee.where(id: current_user.employee_id)
+        redirect_to home_index_path
+      elsif current_user.role.name == 'CompanyLocation'
         @employees = Employee.where(company_location_id: current_user.company_location_id)
-	    end
+      elsif current_user.role.name == 'Department'
+        @employees = Employee.where(department_id: current_user.department_id)
+      elsif current_user.role.name == 'Company'
+        @employees = Employee.all
+      elsif current_user.role.name == 'Supervisor'
+        @emp = Employee.find(current_user.employee_id)
+        # @employees_indirect = @emp.indirect_subordinates
+        # @employees_direct = @emp.subordinates
+        @employees = @emp.subordinates
+      end
+    else
+      @employees = Employee.all
     end
   end
 
   def created_user
+    session[:active_tab] ="user"
     if current_user.class == Group
-      @employees = Employee.joins("INNER JOIN members on employees.id = members.employee_id")
+      @employees = Employee.joins('INNER JOIN members on employees.id = members.employee_id')
     else
-      if current_user.role.name == "Company"
-        @employees = Employee.joins("INNER JOIN members on employees.id = members.employee_id")
-      elsif current_user.role.name == "CompanyLocation"
+      if current_user.role.name == 'Company'
+        @employees = Employee.joins('INNER JOIN members on employees.id = members.employee_id')
+      elsif current_user.role.name == 'CompanyLocation'
         @employees = Employee.joins("INNER JOIN members on employees.id = members.employee_id where employees.company_location_id = #{current_user.company_location_id}")
       end
     end

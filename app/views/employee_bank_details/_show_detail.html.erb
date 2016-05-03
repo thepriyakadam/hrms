@@ -1,8 +1,9 @@
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title">Employee Bank Details</h3>
+    <h6 class="box-title"> Bank Details of ID : <%= @employee_bank_detail.try(:employee).try(:manual_employee_code) %> - Name : <%= @employee_bank_detail.try(:employee).try(:first_name) %> <%= @employee_bank_detail.try(:employee).try(:middle_name) %> <%= @employee_bank_detail.try(:employee).try(:last_name) %></h6>
     <div class="box-tools pull-right">
       <%= link_to 'Edit', edit_employee_bank_detail_path(@employee_bank_detail),class: 'btn btn-sm btn-success fa fa-edit', remote:true %>
+      <%= link_to 'Back', employees_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
     </div>
   </div><!-- /.box-header -->
   <div class="box-body">

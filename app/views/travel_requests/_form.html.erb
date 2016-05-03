@@ -1,0 +1,94 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Travel Request</h3>
+  </div>
+  <div class="box-body">
+<%= bootstrap_form_for(@travel_request) do |f| %>
+
+  <%= f.hidden_field :employee_id, value: current_user.employee_id %>
+
+<div class="row">
+  <div class="col-sm-3">
+    <label>Reporting Manager </label>
+    <div class="field">
+      <%= f.select :reporting_master_id,all_reporting_master_list,{hide_label: true,include_blank: " Select Reporting Master"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
+    </div>
+  </div>
+
+  <div class="col-sm-3">
+    <label>Application Date </label>
+    <div class="field">
+      <div class="input-group">
+        <div class="input-group-addon">
+          <i class="fa fa-calendar"></i>
+        </div>
+        <%= f.text_field :application_date, hide_label: true, class: 'birth_date'%>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-3">
+    <label>Traveling Date </label>
+    <div class="field">
+      <div class="input-group">
+        <div class="input-group-addon">
+          <i class="fa fa-calendar"></i>
+        </div>
+        <%= f.text_field :traveling_date, hide_label: true, class: 'birth_date'%>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-3">
+    <div class="field">
+      <%= f.text_area :tour_purpose, label: 'Tour Purpose' %>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-3">
+    <div class="field">
+      <%= f.text_field :place, label: 'Place' %>
+    </div>
+  </div>
+
+  <div class="col-sm-3">
+    <div class="field">
+      <%= f.text_field :traveling_advance, label: 'Traveling Advance' %>
+    </div>
+  </div>
+
+  <div class="col-sm-3">
+    <div class="field">
+      <%= f.text_field :lodging_boarding_advance, label: 'Lodging Boarding Advance' %>
+    </div>
+  </div>
+
+  <div class="col-sm-3">
+    <div class="field">
+      <%= f.text_field :extra_advance, label: 'Extra Advance' %>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-3">
+    <div class="field">
+      <%= f.text_field :total_advance, label: 'Total Advance' %>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-3">
+    <div class="actions">
+      <%= f.submit :class => class_name, data: { disable_with: data_info }  %>
+      <%= link_to 'Back', travel_requests_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+    </div>
+  </div>
+</div>
+
+</div>
+</div>
+<% end %>

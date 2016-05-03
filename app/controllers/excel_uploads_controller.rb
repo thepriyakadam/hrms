@@ -62,7 +62,7 @@ class ExcelUploadsController < ApplicationController
   end
 
   def load_excel
-    ex = Roo::Spreadsheet.open(params["upload"]["spreadsheet"].open)
+    ex = Roo::Spreadsheet.open(params['upload']['spreadsheet'].open)
 
     ex.default_sheet = ex.sheets[1]
     3.upto(50) do |line|
@@ -73,13 +73,16 @@ class ExcelUploadsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_excel_upload
-      @excel_upload = ExcelUpload.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def excel_upload_params
-      params.require(:excel_upload).permit(:code, :file_name, :size)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_excel_upload
+    @excel_upload = ExcelUpload.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def excel_upload_params
+    params.require(:excel_upload).permit(:code, :file_name, :size)
+  end
 end
+
+   

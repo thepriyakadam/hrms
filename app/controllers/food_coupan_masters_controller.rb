@@ -1,10 +1,11 @@
 class FoodCoupanMastersController < ApplicationController
   before_action :set_food_coupan_master, only: [:show, :edit, :update, :destroy]
 
-  
   def new
     @food_coupan_master = FoodCoupanMaster.new
     @food_coupan_masters = FoodCoupanMaster.all
+    session[:active_tab] ="master"
+    session[:active_tab1] ="setting"
   end
 
   # GET /food_coupan_masters/1/edit
@@ -19,12 +20,12 @@ class FoodCoupanMastersController < ApplicationController
     respond_to do |format|
       if @food_coupan_master.save
         @food_coupan_master = FoodCoupanMaster.new
-         format.js { @flag = true }
+        format.js { @flag = true }
       else
-        flash.now[:alert] = "Employee Type Already Exist."
-         format.js { @flag = false }
+        flash.now[:alert] = 'Employee Type Already Exist.'
+        format.js { @flag = false }
       end
-    end  
+    end
   end
 
   # PATCH/PUT /food_coupan_masters/1
@@ -32,7 +33,7 @@ class FoodCoupanMastersController < ApplicationController
   def update
     @food_coupan_master.update(food_coupan_master_params)
     @food_coupan_masters = FoodCoupanMaster.all
-    @food_coupan_master = FoodCoupanMaster.new 
+    @food_coupan_master = FoodCoupanMaster.new
   end
 
   # DELETE /food_coupan_masters/1
@@ -43,13 +44,14 @@ class FoodCoupanMastersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_food_coupan_master
-      @food_coupan_master = FoodCoupanMaster.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def food_coupan_master_params
-      params.require(:food_coupan_master).permit(:code, :name, :description, :price)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_food_coupan_master
+    @food_coupan_master = FoodCoupanMaster.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def food_coupan_master_params
+    params.require(:food_coupan_master).permit(:code, :name, :description, :price)
+  end
 end

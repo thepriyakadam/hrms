@@ -25,26 +25,26 @@ class SkillsetsController < ApplicationController
   # POST /skillsets
   # POST /skillsets.json
   def create
-    @employee = Employee.find(params[:skillset][:employee_id])  
+    @employee = Employee.find(params[:skillset][:employee_id])
     @skillset = Skillset.new(skillset_params)
     ActiveRecord::Base.transaction do
       respond_to do |format|
         if @skillset.save
-          len = params["skillset"].length-2
+          len = params['skillset'].length - 2
           for i in 2..len
-            Skillset.create(employee_id: params['skillset']['employee_id'],name: params['skillset'][i.to_s]['name'], skill_level: params['skillset'][i.to_s]['skill_level']) 
+            Skillset.create(employee_id: params['skillset']['employee_id'], name: params['skillset'][i.to_s]['name'], skill_level: params['skillset'][i.to_s]['skill_level'])
           end
-        @skillsets = @employee.skillsets
-        flash[:notice] = "skillset was successfully created"  
-        format.html { redirect_to @skillset, notice: 'Skillset was successfully created.' }
-        format.json { render :show, status: :created, location: @skillset }
-        format.js { @flag = true }
-      else
-        format.html { render :new }
-        format.json { render json: @skillset.errors, status: :unprocessable_entity }
-        format.js { @flag = false }
+          @skillsets = @employee.skillsets
+          flash[:notice] = 'skillset was successfully created'
+          format.html { redirect_to @skillset, notice: 'Skillset was successfully created.' }
+          format.json { render :show, status: :created, location: @skillset }
+          format.js { @flag = true }
+        else
+          format.html { render :new }
+          format.json { render json: @skillset.errors, status: :unprocessable_entity }
+          format.js { @flag = false }
       end
-    end
+      end
     end
   end
 
@@ -71,19 +71,20 @@ class SkillsetsController < ApplicationController
   def destroy
     @skillset.destroy
     respond_to do |format|
-      format.html { redirect_to skillsets_url, notice: 'Skillset was successfully destroyed.' }
+      format.html { redirect_to employees_url, notice: 'Skillset was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_skillset
-      @skillset = Skillset.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def skillset_params
-      params.require(:skillset).permit(:employee_id, :name, :skill_level)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_skillset
+    @skillset = Skillset.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def skillset_params
+    params.require(:skillset).permit(:employee_id, :name, :skill_level)
+  end
 end

@@ -47,6 +47,7 @@
           <th>Calculated Amount</th>
         </tr>
       </thead>
+      <% basic_amount = 0 %>
 	    <% addable_total_actual_amount = 0 %>
 	    <% addable_total_calculated_amount = 0 %>
 
@@ -70,6 +71,9 @@
           </td>
 	        <td align="right"><%= addable_calculated_amount.round %></td>
 	      </tr>
+        <% if item.salary_component.name == 'Basic' %>
+          <% basic_amount = item.monthly_amount %>
+        <%end%> 
 	    <% end %> <!-- Addable end -->
 	    
 	    <tr bgcolor="#8CD0F8">
@@ -86,6 +90,24 @@
 	    <% deducted_calculated_amount = 0 %>
 	    <% deducted_total_actual_amount = 0 %>
 	    <% deducted_total_calculated_amount = 0 %>
+      
+      <% 
+=begin %>
+      <% bonus_master = BonusMaster.find_by_status(true) %>
+      <% unless bonus_master.nil? %>
+        <% if basic_amount <= bonus_master.limit_amount %>
+            <% bonus = (basic_amount / 100 * bonus_master.bonus_persentage).round %>
+        <% else %>
+            <% bonus = (bonus_master.limit_amount / 100 * bonus_master.bonus_persentage).round %>
+        <% end %>
+        <tr>
+          <td>Bonus</td>
+          <td align="right"><%= deducted_actual_amount %></td>
+          <td align="right"><%= deducted_calculated_amount %></td>
+        </tr>
+      <% end %>
+<% 
+=end %>
 
       <% master_esic = EsicMaster.first %>
       <% unless master_esic.nil? %>
@@ -161,17 +183,19 @@
       <% end %>
       
       <% date = Date.new(@year.to_i, Workingday.months[@month])%>
-      <% @food_deduction = FoodDeduction.where(food_date: date..date.at_end_of_month, employee_id: @employee.id).take %>
-      <% unless @food_deduction.nil? %>
-        <tr>
-          <% deducted_actual_amount = 0 %>
-          <% deducted_calculated_amount = @food_deduction.amount %>
-          <td>Food Deduction</td>
-          <td align="right"><%= deducted_actual_amount %></td>
-          <td align="right"><%= deducted_calculated_amount %></td>
-          <% deducted_total_actual_amount = deducted_total_actual_amount + deducted_actual_amount %>
-          <% deducted_total_calculated_amount = deducted_total_calculated_amount + deducted_calculated_amount %>
-        </tr>
+      <% @food_deductions = FoodDeduction.where(food_date: date..date.at_end_of_month, employee_id: @employee.id) %>
+      <% unless @food_deductions.empty? %>
+        <% @food_deductions.each do |f| %>
+          <tr>
+            <% deducted_actual_amount = 0 %>
+            <% deducted_calculated_amount = f.amount %>
+            <td>Food Deduction</td>
+            <td align="right"><%= deducted_actual_amount %></td>
+            <td align="right"><%= deducted_calculated_amount %></td>
+            <% deducted_total_actual_amount = deducted_total_actual_amount + deducted_actual_amount %>
+            <% deducted_total_calculated_amount = deducted_total_calculated_amount + deducted_calculated_amount %>
+          </tr>
+        <%end%>
       <%end%>
     
       <% @monthly_expences = MonthlyExpence.where(employee_id: @employee.id, expence_date: date.all_month)%>
@@ -295,6 +319,8 @@
     Net Salary + Arrear = <%= total_arrear_amount + ((addable_total_calculated_amount - deducted_total_calculated_amount).round)%>
   <% end %>
 </div>
+
+
 
 <%= form_for :data, url: {controller: 'salaryslips', action: 'save_data',	employee: @employee, month: @month,	year: @year } do |f| %>
 	<%= f.submit class: "btn btn-primary btn-sm" %>

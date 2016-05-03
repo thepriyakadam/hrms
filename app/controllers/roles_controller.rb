@@ -6,7 +6,6 @@ class RolesController < ApplicationController
     @roles = Role.all
   end
 
- 
   def edit
   end
 
@@ -16,22 +15,22 @@ class RolesController < ApplicationController
     @role = Role.new(role_params)
     @roles = Role.all
     respond_to do |format|
-    if @role.save
-    @role = Role.new
-     format.js { @flag = true }
+      if @role.save
+        @role = Role.new
+        format.js { @flag = true }
       else
-        flash.now[:alert] = "Role is Already Exist."
-         format.js { @flag = false }
-      end
-    end  
+        flash.now[:alert] = 'Role is Already Exist.'
+        format.js { @flag = false }
+        end
+    end
   end
 
   # PATCH/PUT /roles/1
   # PATCH/PUT /roles/1.json
   def update
-   @role.update(role_params)
-   @roles = Role.all
-   @role = Role.new
+    @role.update(role_params)
+    @roles = Role.all
+    @role = Role.new
   end
 
   # DELETE /roles/1
@@ -46,7 +45,8 @@ class RolesController < ApplicationController
   end
 
   def role_edit_list
-    @employees = Member.all 
+    @employees = Member.all
+    session[:active_tab] ="user"
   end
 
   def edit_role
@@ -59,20 +59,21 @@ class RolesController < ApplicationController
     @member.role_id = params[:member][:role_id]
     if @member.save
       @flag = true
-      @employees = Member.all  
+      @employees = Member.all
     else
       @flag = false
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_role
-      @role = Role.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def role_params
-      params.require(:role).permit(:name)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_role
+    @role = Role.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def role_params
+    params.require(:role).permit(:name)
+  end
 end

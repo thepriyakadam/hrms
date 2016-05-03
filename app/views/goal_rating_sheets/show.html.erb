@@ -1,0 +1,17 @@
+<p id="notice"><%= notice %></p>
+
+
+<p>
+  <strong>Appraisee comment:</strong>
+  <%= @goal_rating_sheet.appraisee_comment %>
+</p>
+
+<p>
+  <strong>Appraisee rating:</strong>
+  <%= @goal_rating_sheet.appraisee_rating_id %>
+</p>
+
+
+
+<%= link_to 'Edit', edit_goal_rating_sheet_path(@goal_rating_sheet) %> |
+<%= link_to 'Back', goal_rating_sheets_path %>

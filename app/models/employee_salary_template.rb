@@ -1,22 +1,22 @@
 class EmployeeSalaryTemplate < ActiveRecord::Base
-	scope :deducted, -> { where(is_deducted: true) }
-	scope :addable, -> { where(is_deducted: false) }
+  scope :deducted, -> { where(is_deducted: true) }
+  scope :addable, -> { where(is_deducted: false) }
   belongs_to :employee
   belongs_to :salary_template
   belongs_to :salary_component
-  belongs_to :parent_salary_component, class_name: "SalaryComponent"
+  belongs_to :parent_salary_component, class_name: 'SalaryComponent'
   belongs_to :employee_template
-  #validates :employee_id, uniqueness: { scope: [:salary_template_id, :salary_component_id] }
+  # validates :employee_id, uniqueness: { scope: [:salary_template_id, :salary_component_id] }
 
   def self.collect_salary_objects(emp_id)
-  	@employee = Employee.find_by_manual_employee_code(emp_id)
+    @employee = Employee.find_by_manual_employee_code(emp_id)
     if @employee.nil?
       @flag = false
     else
-      @addable_salary_components = EmployeeSalaryTemplate.where("employee_id = ? and is_deducted = ?",@employee.id,false)
-      @deducted_salary_components = EmployeeSalaryTemplate.where("employee_id = ? and is_deducted = ?",@employee.id,true)
-      unless params["month"].nil? and params["year"].nil?
-        @working_day = Workingday.where("employee_id = ? and month_name = ? and year = ?", @employee.id, params["month"], params["year"]).take
+      @addable_salary_components = EmployeeSalaryTemplate.where('employee_id = ? and is_deducted = ?', @employee.id, false)
+      @deducted_salary_components = EmployeeSalaryTemplate.where('employee_id = ? and is_deducted = ?', @employee.id, true)
+      unless params['month'].nil? && params['year'].nil?
+        @working_day = Workingday.where('employee_id = ? and month_name = ? and year = ?', @employee.id, params['month'], params['year']).take
       end
 
       unless @addable_salary_components.nil?
@@ -29,7 +29,7 @@ class EmployeeSalaryTemplate < ActiveRecord::Base
           end
 
           if @absent_value.nil?
-            @deducted_total = (@deducted_salary_components.sum('monthly_amount')).to_f
+            @deducted_total = @deducted_salary_components.sum('monthly_amount').to_f
           else
             @deducted_total = (@deducted_salary_components.sum('monthly_amount') + @absent_value).to_f
           end
@@ -41,7 +41,7 @@ class EmployeeSalaryTemplate < ActiveRecord::Base
         @instalments = @advance_salary.instalments
         @instalment_array = []
         @instalments.each do |i|
-          if i.try(:instalment_date).strftime("%B") == params["month"] and i.try(:instalment_date).strftime("%Y") == params["year"]
+          if i.try(:instalment_date).strftime('%B') == params['month'] && i.try(:instalment_date).strftime('%Y') == params['year']
             @instalment_array << i
           end
         end

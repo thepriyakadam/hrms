@@ -1,11 +1,12 @@
 class CompaniesController < ApplicationController
   before_action :set_company, only: [:show, :edit, :update, :destroy]
-  #load_and_authorize_resource
+  # load_and_authorize_resource
 
   # GET /companies
   # GET /companies.json
   def index
     @companies = Company.all
+    session[:active_tab] = "company"
   end
 
   # GET /companies/1
@@ -82,13 +83,14 @@ class CompaniesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_company
-      @company = Company.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def company_params
-      params.require(:company).permit(:manual_company_code, :group_id, :name, :company_type_id, :registration_no, :description, :pan_card_no, :tax_no, :professional_tax_no, :address, :city, :district_id, :country_id, :pin_code, :state_id, :email, :contact_no, :web_site, :starting_date, :ceo_name)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_company
+    @company = Company.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def company_params
+    params.require(:company).permit(:manual_company_code, :group_id, :name, :company_type_id, :registration_no, :description, :pan_card_no, :tax_no, :professional_tax_no, :address, :city, :district_id, :country_id, :pin_code, :state_id, :email, :contact_no, :web_site, :starting_date, :ceo_name)
+  end
 end

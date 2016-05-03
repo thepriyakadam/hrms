@@ -2,20 +2,20 @@
   <div class="box-header">
     <h3 class="box-title">Employee List</h3>
     <div class="pull-right">
-      <%= link_to "Create Employee", new_employee_path, class: 'btn btn-sm btn-primary' %> 
+      <%= link_to "New Employee", new_employee_path, class: 'btn btn-sm btn-primary' %> 
     </div>
   </div><!-- /.box-header -->
   <div class="box-body">
     <table id="example1" class="table table-bordered table-hover table-condensed">
     <thead>
       <tr>
-      <th>Employee Id</th>
+      <th>Code</th>
       <th>Employee Name</th>
-      <th>Comapny Location</th>
-      <th>Date of Birth</th>
-      <th>City</th>
+      <th>Department</th>
+      <th>Designation</th>
       <th>Employement</th>
-      <th>Status</th>
+      <th>Category</th>
+      <th>Contact</th>
       <th>Action</th>
     </tr>
   </thead>
@@ -25,11 +25,11 @@
       <tr>
         <td><%= employee.manual_employee_code %></td>
         <td><%= full_name(employee) %></td>
-        <td><%= employee.try(:company_location).try(:name) %></td>
-        <td><%= employee.date_of_birth %></td>
-        <td><%= employee.city %></td>
-        <td> <%= employee.employee_type.try(:name) %></td>
-        <td><%= employee.status %></td>
+        <td><%= employee.try(:company_location).try(:name) %> - <%= employee.try(:department).try(:name) %></td>
+        <td> <%= employee.joining_detail.try(:employee_designation).try(:name) %></td>
+        <td><%= employee.employee_type.try(:name) %>
+        <td> <%= employee.joining_detail.try(:employee_category).try(:name) %></td>
+        <td><%= employee.try(:contact_no) %></td>
         <td>
           <%= link_to '', employee,class: 'btn btn-sm btn-default fa fa-eye' %>
         </td>
@@ -39,3 +39,11 @@
   </table>
 </div>
 </div>
+
+<%= link_to 'Download PDF', report_employees_path(format: 'pdf'),class: 'btn btn-xl btn-warning fa fa-download' %>
+
+<script type="text/javascript">
+  $(function () {
+    $('#example1').Datatable();
+  });
+</script>

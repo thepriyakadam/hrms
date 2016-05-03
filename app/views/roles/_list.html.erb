@@ -3,6 +3,7 @@
     <tr>
       <th>Employee Code</th>
       <th>Employee Name</th>
+      <th>Location</th>
       <th>Hrms Access Role</th>
       <th>Action</th>
     </tr>
@@ -12,9 +13,16 @@
         <tr>
           <td><%= m.manual_member_code %></td>
           <td><%= m.employee.first_name %> <%= m.employee.middle_name %> <%= m.employee.last_name %></td> 
-          <td><%= m.role.try(:name) %>
+          <td><%= m.company_location.try(:name) %> - <%= m.department.try(:name) %> </td>
+          <td><%= m.role.try(:name) %></td>
           <td><%= link_to "", edit_role_role_path(m), class: "btn btn-success btn-xs fa fa-edit", remote:true %></td>
         </tr> 
     <% end %>
   </tbody>
 </table>
+
+<script type="text/javascript">
+  $(function () {
+    $('#example1').Datatable();
+  });
+</script>

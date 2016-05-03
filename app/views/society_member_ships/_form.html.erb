@@ -19,6 +19,17 @@
            </div>
         </div>
         <div class="col-sm-3">
+        <label>Date</label>
+         <div class="form-group required">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+            <%= f.text_field :start_date,hide_label: true,class: 'start_date'%>
+          </div>
+         </div>
+        </div>
+        <div class="col-sm-3">
           <div class="field">
            <%= f.text_field :amount %>
            </div>
@@ -35,4 +46,18 @@
   </div><!-- /.box-body -->
   
 </div><!-- /.box -->
+
+<script type="text/javascript">
+  $(function(){
+ $('.start_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-4:+15',
+    dateFormat: 'dd-mm-yy' });
+     }); 
+  
+  $(document).ready(function() {
+    $(".select2").select2();
+  });
+</script>
   

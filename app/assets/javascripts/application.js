@@ -15,13 +15,12 @@
 //= require jquery.validate
 //= require jquery.validate.additional-methods
 //= require jquery-ui/datepicker
+
 //= require_tree .
 
 
 // $(function () {
-  
-//     setTimeout(updateComments, 10000);
-  
+//   setTimeout(updateComments, 10000);
 // });
 
 // function updateComments() {
@@ -62,9 +61,24 @@ $(function () {
   $(".timepicker").timepicker({
     showInputs: false
   });
-  
 });
+$(function () {
+  //Datemask dd/mm/yyyy
+  $(".date").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});
+  //Datemask2 mm/dd/yyyy
+  $("#date").inputmask("mm/dd/yyyy", {"placeholder": "mm/dd/yyyy"});
+  //Money Euro
+  $("[data-mask]").inputmask();
+  //Date range picker
+  $('#reservation').daterangepicker();
+  //Date range picker with time picker
+  $('#reservationtime').daterangepicker({timePicker: true, timePickerIncrement: 30, format: 'DD/MM/YYYY h:mm A'});
 
+  //Timepicker
+  $(".timepicker").timepicker({
+    showInputs: false
+  });
+});
 // Automatic hide alert
 $(function(){
   $("#success-alert").alert();
@@ -73,43 +87,75 @@ $(function(){
   });   
 });
 
+Date.format = "yyyy-mm-dd"
+$(document).ready(function() {
+  sh_highlightDocument();
+  $('.date_filter').datePicker({startDate: '2010-01-01'});
+  $("#dp-popup").addClass("dp-popup")
+})
+
+
 // Datepicker
 $(function(){
   $('.company_start_date').datepicker({
-   changeYear:true,
-   changeMonth: true,
-   yearRange: '-200:-0',
-   dateFormat: 'dd-mm-yy' });   
+  changeYear:true,
+  changeMonth: true,
+  yearRange: '-200:-0',
+  dateFormat: 'dd-mm-yy' });   
 
   $('.birth_date').datepicker({
-   changeYear:true,
-   changeMonth: true,
-   yearRange: '-100:-0',
-   dateFormat: 'dd-mm-yy' });
+  changeYear:true,
+  changeMonth: true,
+  yearRange: '-100:-0',
+  dateFormat: 'dd-mm-yy' });
+
+  $('.birth_date1').datepicker({
+  changeYear:true,
+  changeMonth: true,
+  yearRange: '-100:+10',
+  dateFormat: 'dd-mm-yy' });
+
+  $('.interview_date').datepicker({
+  changeYear:true,
+  changeMonth: true,
+  yearRange: '-100:+10',
+  dateFormat: 'dd-mm-yy' });
 
   $('.family_birth_date').datepicker({
-   changeYear:true,
-   changeMonth: true,
-   yearRange: '-100:-0',
-   dateFormat: 'dd-mm-yy' }); 
+  changeYear:true,
+  changeMonth: true,
+  yearRange: '-100:-0',
+  dateFormat: 'dd-mm-yy' }); 
 
-   $('.passport_issue_date').datepicker({
-   changeYear:true,
-   changeMonth: true,
-   yearRange: '-100:+2',
-   dateFormat: 'dd-mm-yy' });  
+  $('.passport_issue_date').datepicker({
+  changeYear:true,
+  changeMonth: true,
+  yearRange: '-100:+2',
+  dateFormat: 'dd-mm-yy' });  
 
-   $('.passport_expiry_date').datepicker({
-   changeYear:true,
-   changeMonth: true,
-   yearRange: '-100:+2',
-   dateFormat: 'dd-mm-yy' });  
+  $('.passport_expiry_date').datepicker({
+  changeYear:true,
+  changeMonth: true,
+  yearRange: '-100:+2',
+  dateFormat: 'dd-mm-yy' });  
 
-   $('.workingday_date').datepicker({
-   changeYear:true,
-   changeMonth: true,
-   yearRange: '-10:+50',
-   dateFormat: 'dd-mm-yy' });   
+  $('.workingday_date').datepicker({
+  changeYear:true,
+  changeMonth: true,
+  yearRange: '-10:+50',
+  dateFormat: 'dd-mm-yy' });
+
+  $('.bonus_start_date').datepicker({
+  changeYear:true,
+  changeMonth: true,
+  yearRange: '-10:+50',
+  dateFormat: 'dd-mm-yy' });
+
+  $('.bonus_end_date').datepicker({
+  changeYear:true,
+  changeMonth: true,
+  yearRange: '-10:+50',
+  dateFormat: 'dd-mm-yy' });  
 });
 
 

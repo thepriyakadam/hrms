@@ -1,39 +1,37 @@
 <div class="box">
   <div class="box-header">
-    <h3 class="box-title">Emplyee List</h3>
+    <h3 class="box-title"> Advance Salary List</h3>
     <div class="pull-right">
-      <%= link_to 'New Advance salary', new_advance_salary_path, class: 'btn btn-sm btn-primary' %> 
+      <%= link_to "New Advance salary", new_advance_salary_path, class: 'btn btn-sm btn-primary' %> 
     </div>
-    
   </div><!-- /.box-header -->
   <div class="box-body">
   <div id="comments">
-    <table id="example1" class="table table-bordered table-hover table-condensed">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
     <thead>
       <tr>
-        <th>Employee ID</th>
-        <th>Employee Name</th>
-        <th>Advance Amount</th>
-        <th>No of Instalment</th>
-        <th>Instalment Amount</th>
-        <th>Advance Date</th>
-        <th>Action</th>
+        <th>Year</th>
+        <th>Months</th>
       </tr>
     </thead>
-
     <tbody>
-      <% @advance_salaries.each do |advance_salary| %>
+      <% @advance_salaries.each do |a| %>
         <tr>
-         <td><%= advance_salary.employee.try(:manual_employee_code) %></td>
-         <td><%= full_name(advance_salary.employee) %></td>
-         <td><%= advance_salary.advance_amount %></td>
-         <td><%= advance_salary.no_of_instalment %></td>
-         <td><%= advance_salary.instalment_amount %></td>
-         <td><%= advance_salary.advance_date %></td>
-         <td>
-            <%= link_to '', edit_advance_salary_path(advance_salary), class: 'btn btn-sm btn-success fa fa-edit' %>
-            <!-- link_to '', advance_salary, method: :delete, data: { confirm: 'Are you sure?'},class: 'btn btn-sm  btn-danger fa fa-close' -->
-            <%= link_to '', advance_salary ,class: 'btn btn-sm btn-default fa fa-eye' %>
+          <% year = a.advance_date.strftime("%Y")%>
+          <td><%= year %></td>
+          <td>
+            <%= link_to 'January',advances_advance_salaries_path(year: year, month: "January") , class: 'btn btn-xs btn-primary' %>
+            <%= link_to 'February',advances_advance_salaries_path(year: year, month: "February") , class: 'btn btn-xs btn-primary' %>
+            <%= link_to 'March',advances_advance_salaries_path(year: year, month: "March") , class: 'btn btn-xs btn-primary' %>
+            <%= link_to 'April',advances_advance_salaries_path(year: year, month: "April") , class: 'btn btn-xs btn-primary' %>
+            <%= link_to 'May',advances_advance_salaries_path(year: year, month: "May") , class: 'btn btn-xs btn-success' %>
+            <%= link_to 'June',advances_advance_salaries_path(year: year, month: "June") , class: 'btn btn-xs btn-success' %>
+            <%= link_to 'July',advances_advance_salaries_path(year: year, month: "July") , class: 'btn btn-xs btn-success' %>
+            <%= link_to 'August',advances_advance_salaries_path(year: year, month: "August") , class: 'btn btn-xs btn-success' %>
+            <%= link_to 'September',advances_advance_salaries_path(year: year, month: "September") , class: 'btn btn-xs btn-danger' %>
+            <%= link_to 'October',advances_advance_salaries_path(year: year, month: "October") , class: 'btn btn-xs btn-danger' %>
+            <%= link_to 'November',advances_advance_salaries_path(year: year, month: "November") , class: 'btn btn-xs btn-danger' %>
+            <%= link_to 'December',advances_advance_salaries_path(year: year, month: "December") , class: 'btn btn-xs btn-danger' %>
           </td>
         </tr>
       <% end %>

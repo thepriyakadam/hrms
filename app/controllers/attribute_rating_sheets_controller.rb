@@ -135,7 +135,15 @@ class AttributeRatingSheetsController < ApplicationController
         @attribute_rating_sheet.update(is_confirm_appraiser: true)
         flash[:notice] = "Confirmed Successfully"
       end  
-       redirect_to appraiser_attribute_rating_sheets_path(@attribute_rating_sheet.appraisee_id)
+
+    @employee = Employee.find(params[:id])
+    @attribute_rating_sheet = AttributeRatingSheet.find_by_appraisee_id(@employee.id)
+    @employee_attribute = EmployeeAttribute.where(employee_id: @employee.id)
+
+    AttributeRatingSheetMailer.send_email_to_appraiser(@attribute_rating_sheet).deliver_now
+    flash[:notice] = "Email sent Successfully"
+
+    redirect_to appraiser_attribute_rating_sheets_path(@attribute_rating_sheet.appraisee_id)
     end
   end
 
@@ -398,8 +406,8 @@ class AttributeRatingSheetsController < ApplicationController
     @attribute_rating_sheets = AttributeRatingSheet.where(appraisee_id: @employee.id ).group(:appraisee_id)
     @experiences = Experience.where(employee_id: @employee.id)
     @qualifications = Qualification.where(employee_id: @employee.id)
-     @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: @employee.id)
-     @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
+    @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: @employee.id)
+    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
     
     @ctc = EmployeeSalaryTemplate.where(employee_id: @employee.id).sum(:monthly_amount)
     @attribute_rating_multiple_sheets = AttributeRatingSheet.where(appraisee_id: @employee.id)

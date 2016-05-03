@@ -285,6 +285,8 @@ Rails.application.routes.draw do
       get :employee_list
       get :show_goal
       get :send_email_to_employee
+      get :show_employee
+      post :print_detail
     end
   end
 

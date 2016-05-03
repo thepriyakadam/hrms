@@ -10,6 +10,7 @@
 <table id="example" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
+      <th><input type="checkbox" id="selectAll" value="selectAll"></th>
       <th>Job Title</th>
       <th>Candidate Name</th>
       <th>Interview Date</th>
@@ -24,6 +25,7 @@
   <tbody>
     <% @interview_schedules.each do |interview_schedule| %>
       <tr>
+        <td><%= check_box_tag "interview_schedule_ids[]", interview_schedule.id %></td>
         <td><%= interview_schedule.interviewer_name %></td>
         <td><%= interview_schedule.candidate_name %></td>
         <td><%= interview_schedule.interview_date %></td>
@@ -47,6 +49,7 @@
     <% end %>
   </tbody>
 </table>
+     
 <br>
 <div id="myModal" class="modal fade"></div>
 
@@ -59,4 +62,20 @@
 $(document).ready(function() {
     $('#example').DataTable();
 } );
+</script>
+<script type="text/javascript">
+  $(function () {
+    $('#selectAll').click(function() {
+      if (this.checked) {
+        $(':checkbox').each(function() {
+          this.checked = true;                       
+        });
+      } 
+      else {
+        $(':checkbox').each(function() {
+          this.checked = false;                        
+        });
+      } 
+    });
+  });
 </script>

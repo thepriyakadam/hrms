@@ -29,26 +29,24 @@ class PerformancePeriodsController < ApplicationController
   def create
     @performance_period = PerformancePeriod.new(performance_period_params)
     if @performance_period.save
-      flash[:notice] = 'saved.'
-      redirect_to performance_periods_path
+      @flag = true
+      @performance_period = PerformancePeriod.new
+      @performance_periods = PerformancePeriod.all
     else
-      flash[:alert] = 'not saved'
-      render :new
+      @flag = false
     end
   end
 
   # PATCH/PUT /performance_periods/1
   # PATCH/PUT /performance_periods/1.json
   def update
-    respond_to do |format|
       if @performance_period.update(performance_period_params)
-        format.html { redirect_to @performance_period, notice: 'Performance period was successfully updated.' }
-        format.json { render :show, status: :ok, location: @performance_period }
+        @flag = true
+        @performance_period = PerformancePeriod.new
+        @performance_periods = PerformancePeriod.all
       else
-        format.html { render :edit }
-        format.json { render json: @performance_period.errors, status: :unprocessable_entity }
+      @flag = false
       end
-    end
   end
 
   # DELETE /performance_periods/1

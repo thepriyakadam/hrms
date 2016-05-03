@@ -4,7 +4,7 @@
   </div>
   <div class="box-body">
 
-
+   <%= link_to 'Print PDF', print_details_appraiser_attribute_rating_sheets_path(format: 'pdf',id:@employee.id ),class: 'btn btn-xl btn-warning', :target => '_blank' %><br><br>
 	<table class="table table-bordered table-hover table-condensed">
        
     <thead>
@@ -21,10 +21,10 @@
     <tbody>
       <% @attribute_rating_sheets.each do |a| %>
       <tr>
-        <td><%= a.appraisee.manual_employee_code %></td> 
-        <td><%= a.appraisee.first_name %></td>
-        <td><%= Time.now.year-a.appraisee.date_of_birth.year %></td>
-        <td><%= a.appraisee.department.name %></td>
+        <td><%= a.manual_employee_code %></td> 
+        <td><%= a.first_name %></td>
+        <td><%= Time.now.year-a.date_of_birth.year %></td>
+        <td><%= a.department.name %></td>
         <td><%= @joining_detail.joining_date %></td>
         <td><%= @joining_detail.employee_grade.name %></td>
         <td><%= @joining_detail.employee_designation.name %></td>
@@ -37,7 +37,7 @@
   <div class="col-sm-6">
     <div class="box-header with-border">
     
-      <h3 class="box-title">Employee Past Experience</h3>
+      <h3 class="box-title">Experience</h3>
     </div>
   <table class="table table-bordered table-hover table-condensed">
     <thead>
@@ -65,7 +65,7 @@
 
   <div class="col-sm-6">
     <div class="box-header with-border">
-      <h3 class="box-title">Employee Qualification Details</h3>
+      <h3 class="box-title">Qualification Details</h3>
     </div>
       <table class="table table-bordered table-hover table-condensed">
         <thead>
@@ -90,7 +90,7 @@
 </div>
 
 	<div class="box-header with-border">
-    <h3 class="box-title">Employee Goals</h3>
+    <h3 class="box-title">Goals</h3>
   </div>
 	 <table id="tbl" class="table table-bordered table-hover table-condensed">
     <thead>
@@ -128,7 +128,7 @@
   </table>
 
   <div class="box-header with-border">
-    <h3 class="box-title">Employee Attribute</h3>
+    <h3 class="box-title">Attributes</h3>
   </div>
   <table id="tbl" class="table table-bordered table-hover table-condensed">
     <thead>
@@ -144,8 +144,8 @@
     <tbody>
       <% @attribute_rating_multiple_sheets.each do |a| %>
         <tr>
-          <td><%= a.employee_attribute.attribute_master.name %></td>
-          <td><%= a.employee_attribute.weightage %></td>
+          <td><%= a.employee_attribute.attribute_master.try(:name) %></td>
+          <td><%= a.employee_attribute.try(:weightage) %></td>
           <td><%= a.appraisee_comment %></td>
           <td><%= a.appraisee_rating.try(:code) %></td>
           <td><%= a.appraiser_comment %></td>
@@ -154,7 +154,7 @@
       <% end %>
     </tbody>
   </table>
+<hr>
+<%= link_to 'Back', subordinate_list_attribute_rating_sheets_path(@employee.id),class: 'btn btn-default btn-sm fa fa-arrow-left' %>
 </div>
 </div>
-
-<%= link_to 'Back', subordinate_list_attribute_rating_sheets_path(@employee.id) %>

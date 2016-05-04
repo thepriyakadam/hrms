@@ -5,7 +5,10 @@
 
 <div class="box-body">
 <%= bootstrap_form_for(@capture_resume,html: { multipart: true}) do |f| %>
-<%= f.hidden_field :vacancy_master_id, value:@vacancy_master.id  %>
+<%= f.hidden_field :vacancy_master_id, value: @vacancy_master.id  %>
+<div>
+ <%= render 'show_vacancy_detail' %>
+ </div>
   <div class="row">
     <div class="col-sm-3">
       <div class="form-group required">

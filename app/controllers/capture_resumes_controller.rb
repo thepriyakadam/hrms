@@ -15,7 +15,9 @@ class CaptureResumesController < ApplicationController
 
   # GET /capture_resumes/new
   def new
+    #byebug
     @capture_resume = CaptureResume.new
+    @vacancy_master = VacancyMaster.find(params[:format])
   end
 
   # GET /capture_resumes/1/edit

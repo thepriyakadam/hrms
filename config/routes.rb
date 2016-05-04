@@ -111,6 +111,8 @@ Rails.application.routes.draw do
       get :approve_vacancy
       get :approve_vacancy_list
       get :cancel_vacancy_request
+      get :particular_vacancy_request_list
+      get :approved_vacancy_list
     end
   end
   resources :leave_c_offs do

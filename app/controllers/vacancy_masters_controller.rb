@@ -24,7 +24,6 @@ class VacancyMastersController < ApplicationController
     end
 
 
-
   # GET /vacancy_masters/1
   # GET /vacancy_masters/1.json
   def show
@@ -108,8 +107,8 @@ class VacancyMastersController < ApplicationController
   end
 
   def vacancy_request_confirmation
-   @vacancy_master = VacancyMaster.find(params[:format])
-   @vacancy_masters = VacancyMaster.where(reporting_master_id: current_user.employee_id)
+     @vacancy_master = VacancyMaster.find(params[:format])
+     @vacancy_masters = VacancyMaster.where(reporting_master_id: current_user.employee_id)
   end
 
   def vacancy_history
@@ -124,10 +123,12 @@ class VacancyMastersController < ApplicationController
   def send_request_to_higher_authority
     puts ".................."
     @vacancy_master = VacancyMaster.find(params[:id])
-    len = @vacancy_master.no_of_position
-    for i in 1..len
-      ParticularVacancyRequest.create(vacancy_master_id: @vacancy_master.id,employee_id: @vacancy_master.employee_id,employee_designation_id: @vacancy_master.employee_designation_id,vacancy_name: @vacancy_master.vacancy_name,fulfillment_date: @vacancy_master.vacancy_post_date,status: "Approved & Send Next")
-    end
+    @particular_vacancy_requests = ParticularVacancyRequest.where(vacancy_master_id: @vacancy_master.id)
+    
+    @particular_vacancy_requests.each do |p|
+      p.update(status: "Approved & Send Next",open_date: Time.zone.now.to_date)
+    end 
+    
     @vacancy_master.update(current_status: "Approved & Send Next",reporting_master_id: params[:vacancy_master][:reporting_master_id])
     ReportingMastersVacancyMaster.create(vacancy_master_id: @vacancy_master.id, reporting_master_id: params[:vacancy_master][:reporting_master_id], vacancy_status: "Approved & Send Next")
     flash[:notice] = 'Vacancy Send to Higher Authority'
@@ -136,10 +137,12 @@ class VacancyMastersController < ApplicationController
 
   def reject_vacancy
     @vacancy_master = VacancyMaster.find(params[:format])
-    len = @vacancy_master.no_of_position
-    for i in 1..len
-      ParticularVacancyRequest.create(vacancy_master_id: @vacancy_master.id,employee_id: @vacancy_master.employee_id,employee_designation_id: @vacancy_master.employee_designation_id,vacancy_name: @vacancy_master.vacancy_name,fulfillment_date: @vacancy_master.vacancy_post_date,status: "Reject")
-    end
+    @particular_vacancy_requests = ParticularVacancyRequest.where(vacancy_master_id: @vacancy_master.id)
+    
+    @particular_vacancy_requests.each do |p|
+      p.update(status: "Reject")
+    end  
+
     @vacancy_master.update(current_status: "Reject")
     ReportingMastersVacancyMaster.create(vacancy_master_id: @vacancy_master.id, reporting_master_id: current_user.employee_id, vacancy_status: "Reject")
     VacancyMasterMailer.reject_vacancy_email(@vacancy_master).deliver_now
@@ -149,10 +152,12 @@ class VacancyMastersController < ApplicationController
 
   def approve_vacancy
     @vacancy_master = VacancyMaster.find(params[:format])
-    len = @vacancy_master.no_of_position
-    for i in 1..len
-        ParticularVacancyRequest.create(vacancy_master_id: @vacancy_master.id,employee_id: @vacancy_master.employee_id,employee_designation_id: @vacancy_master.employee_designation_id,vacancy_name: @vacancy_master.vacancy_name,fulfillment_date: @vacancy_master.vacancy_post_date,status: "Approved")
-    end
+    @particular_vacancy_requests = ParticularVacancyRequest.where(vacancy_master_id: @vacancy_master.id)
+
+    @particular_vacancy_requests.each do |p|
+      p.update(status: "Approved",open_date: Time.zone.now.to_date)
+    end    
+
     @vacancy_master.update(current_status: "Approved")
     ReportingMastersVacancyMaster.create(vacancy_master_id: @vacancy_master.id, reporting_master_id: current_user.employee_id, vacancy_status: "Approved")
     VacancyMasterMailer.approve_vacancy_email(@vacancy_master).deliver_now
@@ -174,14 +179,20 @@ class VacancyMastersController < ApplicationController
   def cancel_vacancy_request
     @vacancy_master = VacancyMaster.find(params[:format])
      len = @vacancy_master.no_of_position
-    for i in 1..len
-        ParticularVacancyRequest.create(vacancy_master_id: @vacancy_master.id,employee_id: @vacancy_master.employee_id,employee_designation_id: @vacancy_master.employee_designation_id,vacancy_name: @vacancy_master.vacancy_name,fulfillment_date: @vacancy_master.vacancy_post_date,status: "Cancelled")
-    end
     @vacancy_master.update(current_status: "Cancelled")
     ReportingMastersVacancyMaster.create(vacancy_master_id: @vacancy_master.id, reporting_master_id: current_user.employee_id, vacancy_status: "Cancelled")
     VacancyMasterMailer.cancel_vacancy_email(@vacancy_master).deliver_now
     flash[:notice] = 'Vacancy Request Cancelled'
     redirect_to vacancy_masters_path
+  end
+
+  def particular_vacancy_request_list
+    @vacancy_master = VacancyMaster.find(params[:format])
+    @particular_vacancy_requests = ParticularVacancyRequest.where(vacancy_master_id: @vacancy_master.id)
+  end
+
+  def approved_vacancy_list
+     @vacancy_masters = VacancyMaster.where(employee_id: current_user.employee_id,current_status: "Approved")
   end
 
 

@@ -5,13 +5,18 @@ class SalaryReport
 	              :pf, :esic, :income_tax, :pt, :advance, :society, :food_deduction, :mobile, :retention, :deduction_total, :net_payable,
 	              :total_leave, :lwp_leave, :day_in_month, :present_day, :absent_day, :holiday, :weekoff
 
-	def self.collect_data(e, j, w, s)
-		addable_items = SalaryslipComponent.where(salaryslip_id: s.id, is_deducted: false)
-		deductable_items = SalaryslipComponent.where(salaryslip_id: s.id, is_deducted: true)
+	def self.collect_data(e, j, wd, sl)
+		puts e.class
+		puts j.class
+		puts wd.class
+		puts sl.class
+		puts "----------------------------------------"
+		addable_items = SalaryslipComponent.where(salaryslip_id: sl.id, is_deducted: false)
+		deductable_items = SalaryslipComponent.where(salaryslip_id: sl.id, is_deducted: true)
 
 		sr = SalaryReport.new
 		sr.employee_name = e.try(:first_name).to_s + ' ' + e.try(:last_name).to_s
-		sr.department_name = e.department.name
+		sr.department_name = e.department.try(:name)
 		sr.code = e.manual_employee_code
 		sr.pf_no = j.employee_pf_no
 		sr.esic_no = j.employee_efic_no
@@ -19,37 +24,37 @@ class SalaryReport
 		addable_items.each do |a|
 			case a.salary_component.name
 			  when "Basic"
-			  sr.actual_basic = a.actual_amount
-			  sr.earned_basic = a.calculated_amount
+			  sr.actual_basic = a.actual_amount.round
+			  sr.earned_basic = a.calculated_amount.round
 
 			  when "DA"
-			  sr.actual_da = a.actual_amount
-			  sr.earned_da = a.calculated_amount
+			  sr.actual_da = a.actual_amount.round
+			  sr.earned_da = a.calculated_amount.round
 
 			  when "HRA"
-			  sr.actual_hra = a.actual_amount
-			  sr.earned_hra = a.calculated_amount
+			  sr.actual_hra = a.actual_amount.round
+			  sr.earned_hra = a.calculated_amount.round
 
 			  when "Convenience Allowance"
-			  sr.actual_convenience = a.actual_amount
-			  sr.earned_convenience = a.calculated_amount
+			  sr.actual_convenience = a.actual_amount.round
+			  sr.earned_convenience = a.calculated_amount.round
 
 			  when "Other Allowance"
-			  sr.actual_other = a.actual_amount
-			  sr.earned_other = a.calculated_amount
+			  sr.actual_other = a.actual_amount.round
+			  sr.earned_other = a.calculated_amount.round
 
 			  when "Special Allowance"
-			  sr.actual_special = a.actual_amount
-			  sr.earned_special = a.calculated_amount 
+			  sr.actual_special = a.actual_amount.round
+			  sr.earned_special = a.calculated_amount.round 
 
 			  when "Washing Allowance"
-			  sr.actual_washing = a.actual_amount
-			  sr.earned_washing = a.calculated_amount
+			  sr.actual_washing = a.actual_amount.round
+			  sr.earned_washing = a.calculated_amount.round
 			end
 		end
 
-	  sr.earned_total = addable_items.sum(:actual_amount)
-	  sr.actual_total = addable_items.sum(:calculated_amount)
+	  sr.earned_total = addable_items.sum(:actual_amount).round
+	  sr.actual_total = addable_items.sum(:calculated_amount).round
 		
 		deductable_items.each do |d|
 			case d.other_component_name
@@ -76,14 +81,14 @@ class SalaryReport
 	  
 	  sr.deduction_total =  deductable_items.sum(:calculated_amount)
 	  sr.net_payable = sr.actual_total - sr.deduction_total
-
-	  sr.total_leave = w.total_leave
-	  sr.lwp_leave = w.lwp_leave
-	  sr.day_in_month = w.day_in_month
-	  sr.present_day = w.present_day
-	  sr.absent_day = w.absent_day
-	  sr.holiday = w.holiday_in_month
-	  sr.weekoff = w.week_off_day
+	  
+	  sr.total_leave = wd.total_leave
+	  sr.lwp_leave = wd.lwp_leave
+	  sr.day_in_month = wd.day_in_month
+	  sr.present_day = wd.present_day
+	  sr.absent_day = wd.absent_day
+	  sr.holiday = wd.holiday_in_month
+	  sr.weekoff = wd.week_off_day
 	  sr
 	end
 end

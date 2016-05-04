@@ -4,15 +4,23 @@ class SalarySlipLedgersController < ApplicationController
       @bank = Bank.find(params[:bank_id])
       @month = params[:month]
       @year = params[:year]
-      emp_array = JoiningDetail.where(bank_id: @bank.id).pluck(:employee_id)
+      emp_array = EmployeeBankDetail.where(bank_id: @bank.id).pluck(:employee_id)
       @reports = []
+      i = 0
       @employees = Employee.where(id: emp_array)
       @employees.each do |e|
         j = JoiningDetail.find_by_employee_id(e.id)
-        w = Workingday.where('employee_id = ? and month_name = ? and year = ?', e.id, @month, @year).take
-        s = Salaryslip.where('employee_id = ? and month = ? and year = ?', e.id, @month, @year).take
-        sr = SalaryReport.collect_data(e,j,w,s)
+        wd1 = Workingday.where('employee_id = ? and month_name = ? and year = ?', e.id, @month, @year.to_s).take
+        sl1 = Salaryslip.where('employee_id = ? and month = ? and year = ?', e.id, @month, @year.to_s).take
+
+        if j.nil? or e.nil? or wd1.nil? or sl1.nil?
+          i=i+1
+        else
+          sr = SalaryReport.collect_data(e,j,wd1,sl1)
+        end
         @reports << sr
+        puts i
+        puts "-------------------------------------***********"
       end
     end
 

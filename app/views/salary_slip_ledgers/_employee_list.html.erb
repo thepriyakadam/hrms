@@ -1,59 +1,79 @@
 <%= form_for :salary_slip_ledgers do |f| %>
+<% i = 0 %>
 <table id="example3" class="table table-bordered table-hover table-condensed">
   <thead>
+   <tr>
+    <th colspan="6"><center> BASIC DETAILS</center> </th>
+
+    <th colspan="8"><center> SALARY DETAILS</center> </th>
+
+    <th colspan="7"><center> WORKING DAYS</center> </th>
+
+    <th colspan="8"><center> EARNED SALARY</center>  </th>
+
+    <th colspan="10"><center>DEDUCTION</center> </th>
+
+    <th><center> NET</center>  </th>
+
+    <th><center> SING</center>  </th>
+  </tr>
+
   <tr>
-      <th>Employee Name</th>
-      <th>department_name</th>
-      <th>code</th>
-      <th>pf_no</th>
-      <th>esic_no</th>
-      <th>actual_basic</th>
-      <th>actual_da</th>
-      <th>actual_hra</th>
+      <th>No</th>
+      <th>Code</th>
+      <th>Employee</th>
+      <th>Department</th>
+      <th>PF No</th>
+      <th>ESIC No</th>
 
-      <th>actual_convenience</th>
-      <th>actual_other</th>
-      <th>actual_special</th>
-      <th>actual_washing</th>
-      <th>actual_total</th>
-      <th>earned_basic</th>
-      <th>earned_da</th>
-      <th>earned_hra</th>
+      <th>Basic</th>
+      <th>DA</th>
+      <th>HRA</th>
+      <th>Conv</th>
+      <th>O.Allow</th>
+      <th>S.Allow</th>
+      <th>Wsh.Allow</th>
+      <th>Total</th>
 
-      <th>earned_convenience</th>
-      <th>earned_other</th>
-      <th>earned_special</th>
-      <th>earned_washing</th>
-      <th>earned_total</th>
+      <th>Leave</th>
+      <th>LWP/ESIC</th>
+      <th>Days</th>
+      <th>PD</th>
+      <th>AD</th>
+      <th>HD</th>
+      <th>WOff</th>
 
-      <th>pf</th>
-      <th>esic</th>
-      <th>income_tax</th>
-      <th>pt</th>
-      <th>advance</th>
-      <th>society</th>
+      <th>Basic</th>
+      <th>DA</th>
+      <th>HRA</th>
+      <th>conv</th>
+      <th>O.Allow</th>
+      <th>S.Allow</th>
+      <th>Wsh.Allow</th>
+      <th>Gross</th>
 
-      <th>food_deduction</th>
-      <th>mobile</th>
-      <th>retention</th>
-      <th>deduction_total</th>
-      <th>net_payable</th>
-      <th>total_leave</th>
+      <th>PF</th>
+      <th>ESIC</th>
+      <th>IT</th>
+      <th>PT</th>
+      <th>Adv.Sal</th>
+      <th>Society</th>
+      <th>Food</th>
+      <th>Mobile</th>
+      <th>Retention</th>
+      <th>Total Dedu</th>
 
-      <th>lwp_leave</th>
-      <th>day_in_month</th>
-      <th>present_day</th>
-      <th>absent_day</th>
-      <th>holiday</th>
-      <th>weekoff</th>
+      <th>NET</th>
+      <th>SING</th>
   </tr>
   </thead>
   <tbody>
     <% @reports.each do |r| %>
       <tr>
+        <td><%= i = i + 1 %></td>
+        <td><%= r.try(:code) %></td>
         <td><%= r.try(:employee_name) %></td>
         <td><%= r.try(:department_name) %></td>
-        <td><%= r.try(:code) %></td>
         <td><%= r.try(:pf_no) %></td>
         <td><%= r.try(:esic_no) %></td>
         <td><%= r.try(:actual_basic) %></td>
@@ -65,6 +85,16 @@
         <td><%= r.try(:actual_special) %></td>
         <td><%= r.try(:actual_washing) %></td>
         <td><%= r.try(:actual_total) %></td>
+
+        <td><%= r.try(:total_leave) %></td>
+
+        <td><%= r.try(:lwp_leave) %></td>
+        <td><%= r.try(:day_in_month) %></td>
+        <td><%= r.try(:present_day) %></td>
+        <td><%= r.try(:absent_day) %></td>
+        <td><%= r.try(:holiday) %></td>
+        <td><%= r.try(:weekoff) %></td>
+
         <td><%= r.try(:earned_basic) %></td>
         <td><%= r.try(:earned_da) %></td>
         <td><%= r.try(:earned_hra) %></td>
@@ -87,14 +117,8 @@
         <td><%= r.try(:retention) %></td>
         <td><%= r.try(:deduction_total) %></td>
         <td><%= r.try(:net_payable) %></td>
-        <td><%= r.try(:total_leave) %></td>
-
-        <td><%= r.try(:lwp_leave) %></td>
-        <td><%= r.try(:day_in_month) %></td>
-        <td><%= r.try(:present_day) %></td>
-        <td><%= r.try(:absent_day) %></td>
-        <td><%= r.try(:holiday) %></td>
-        <td><%= r.try(:weekoff) %></td>
+        <td><%=  %></td>
+        
       </tr>
     <% end %>
   </tbody>
@@ -122,10 +146,10 @@
 
   $(document).ready(function() {
     $('#example3').DataTable( {
-        "scrollY":        "200px",
+        //"scrollY":        "200px",
         "scrollX":        "1000px",
         "scrollCollapse": true,
-        "paging":         false
+        "paging":         true
     } );
 } );
 </script>

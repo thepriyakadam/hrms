@@ -4,7 +4,7 @@
   </div>
   <div class="box-body">
 
-   <%= link_to 'Print PDF', print_details_appraiser_attribute_rating_sheets_path(format: 'pdf',id:@employee.id ),class: 'btn btn-xl btn-warning', :target => '_blank' %><br><br>
+  
 	<table class="table table-bordered table-hover table-condensed">
        
     <thead>
@@ -155,6 +155,8 @@
     </tbody>
   </table>
 <hr>
-<%= link_to 'Back', subordinate_list_attribute_rating_sheets_path(@employee.id),class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+<%= link_to 'Back', subordinate_list_attribute_rating_sheets_path(@employee.id),class: 'btn btn-default btn-sm fa fa-arrow-left' %> |
+
+ <%= link_to 'Print PDF', print_details_appraiser_attribute_rating_sheets_path(format: 'pdf',id:@employee.id ),class: 'btn btn-xl btn-warning', :target => '_blank' %><br><br>
 </div>
 </div>

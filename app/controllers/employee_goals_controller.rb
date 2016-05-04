@@ -121,6 +121,39 @@ class EmployeeGoalsController < ApplicationController
      redirect_to new_employee_attribute_path(@employee.id) 
   end
 
+
+  def show_employee
+    @employee = Employee.new
+    @employees = Employee.all
+  end
+
+  def print_detail
+
+    puts '-------------------------------------------------------'
+   
+
+    @employees = params[:employee_ids]
+            respond_to do |format|
+            format.html
+            format.pdf do
+            render :pdf => 'print_multiple_emp_detail',
+            layout: '/layouts/pdf.html.erb',
+            :template => 'employee_goals/print_multiple_emp_detail.pdf.erb',
+            :header => {
+                    :center => "BFTL"
+                 },
+            :orientation      => 'Landscape', # default , Landscape
+            :page_height      => 1000,
+            :dpi              => '300',
+            :margin           => {:top    => 55, # default 10 (mm)
+                          :bottom => 55,
+                          :left   => 12,
+                          :right  => 0},
+            :show_as_html => params[:debug].present?
+          end
+        end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

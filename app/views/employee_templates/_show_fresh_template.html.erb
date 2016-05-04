@@ -37,7 +37,7 @@
 
                   <td><%= select :to_be_paid, template.salary_component_id, [['Annual'],['Monthly']], {:prompt => true, :selected => template.to_be_paid, },class: 'form-control'%></td>
 
-                  <td class="excel"><%= text_field :monthly_amount,template.salary_component_id, value: 0, autocomplete: "off",class: "form-control",:tabindex => i=i+1 %></td>
+                  <td class="excel"><%= text_field :monthly_amount,template.salary_component_id, value: 0, autocomplete: "off",class: "form-control",:tabindex => i %></td>
                   
                   <td><%= text_field :annual_amount,template.salary_component_id,readonly: true, value: template.try(:annual_amount),class: "form-control" %></td>
                 </tr>

@@ -43,7 +43,9 @@ class ShiftRotationsController < ApplicationController
   end
 
   def collect_employee
-    
+    @shift_rotation = ShiftRotation.find(params[:id])
+    @employees_array = ShiftRotation.collect_array(@shift_rotation)
+    @employees = Employee.where(employee_id: @employees_array)
   end
 
   private

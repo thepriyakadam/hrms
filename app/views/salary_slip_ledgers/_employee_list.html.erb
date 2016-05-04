@@ -1,43 +1,124 @@
 <%= form_for :salary_slip_ledgers do |f| %>
-<table id="example1" class="table table-bordered table-hover table-condensed">
+<% i = 0 %>
+<table id="example3" class="table table-bordered table-hover table-condensed">
   <thead>
+   <tr>
+    <th colspan="6"><center> BASIC DETAILS</center> </th>
+
+    <th colspan="8"><center> SALARY DETAILS</center> </th>
+
+    <th colspan="7"><center> WORKING DAYS</center> </th>
+
+    <th colspan="8"><center> EARNED SALARY</center>  </th>
+
+    <th colspan="10"><center>DEDUCTION</center> </th>
+
+    <th><center> NET</center>  </th>
+
+    <th><center> SING</center>  </th>
+  </tr>
+
   <tr>
-      <th>Employee Name</th>
-      <th>Basic Pay</th>
-      <th>HRA</th>
-      <th>Special Allowance</th>
-      <th>Convenience Allowance</th>
-      <th>Other Allowance</th>
-      <th>Washing Allowanc</th>
+      <th>No</th>
+      <th>Code</th>
+      <th>Employee</th>
+      <th>Department</th>
+      <th>PF No</th>
+      <th>ESIC No</th>
+
+      <th>Basic</th>
       <th>DA</th>
+      <th>HRA</th>
+      <th>Conv</th>
+      <th>O.Allow</th>
+      <th>S.Allow</th>
+      <th>Wsh.Allow</th>
+      <th>Total</th>
+
+      <th>Leave</th>
+      <th>LWP/ESIC</th>
+      <th>Days</th>
+      <th>PD</th>
+      <th>AD</th>
+      <th>HD</th>
+      <th>WOff</th>
+
+      <th>Basic</th>
+      <th>DA</th>
+      <th>HRA</th>
+      <th>conv</th>
+      <th>O.Allow</th>
+      <th>S.Allow</th>
+      <th>Wsh.Allow</th>
+      <th>Gross</th>
+
+      <th>PF</th>
+      <th>ESIC</th>
+      <th>IT</th>
+      <th>PT</th>
+      <th>Adv.Sal</th>
+      <th>Society</th>
+      <th>Food</th>
+      <th>Mobile</th>
+      <th>Retention</th>
+      <th>Total Dedu</th>
+
+      <th>NET</th>
+      <th>SING</th>
   </tr>
   </thead>
   <tbody>
-    <% @employees.each do |employee| %>
-    <% @salaryslip =  Salaryslip.find_by_employee_id(employee.id) %>
-    <% @addable_items = SalaryslipComponent.where(salaryslip_id: @salaryslip.id, is_deducted: false).where.not(other_component_name: nil) %>
-      <% @addable_items.each do |item| %>
+    <% @reports.each do |r| %>
       <tr>
-        <td><%= employee.try(:first_name) %></td>
-        <% case item.salary_component.try(:name) %>
-        <% when "Basic" %>
-        <td><%= item.actual_amount.round * 12 %></td>
-        <% when "HRA" %>
-        <td><%= item.actual_amount.round * 12 %></td>
-        <% when "Special Allowance" %>
-        <td><%= item.actual_amount.round * 12 %></td>
-        <% when "Convenience Allowance" %>
-        <td><%= item.actual_amount.round * 12 %></td>
-        <% when "Other Allowance" %>
-        <td><%= item.actual_amount.round * 12 %></td>
-        <% when "Washing Allowance" %>
-        <td><%= item.actual_amount.round * 12 %></td>
-        <% when "DA" %>
-        <td><%= item.actual_amount.round * 12 %></td>
-        <% else %>
-        <td><%= %></td>
-        <% end %>
-      <% end %>
+        <td><%= i = i + 1 %></td>
+        <td><%= r.try(:code) %></td>
+        <td><%= r.try(:employee_name) %></td>
+        <td><%= r.try(:department_name) %></td>
+        <td><%= r.try(:pf_no) %></td>
+        <td><%= r.try(:esic_no) %></td>
+        <td><%= r.try(:actual_basic) %></td>
+        <td><%= r.try(:actual_da) %></td>
+        <td><%= r.try(:actual_hra) %></td>
+
+        <td><%= r.try(:actual_convenience) %></td>
+        <td><%= r.try(:actual_other) %></td>
+        <td><%= r.try(:actual_special) %></td>
+        <td><%= r.try(:actual_washing) %></td>
+        <td><%= r.try(:actual_total) %></td>
+
+        <td><%= r.try(:total_leave) %></td>
+
+        <td><%= r.try(:lwp_leave) %></td>
+        <td><%= r.try(:day_in_month) %></td>
+        <td><%= r.try(:present_day) %></td>
+        <td><%= r.try(:absent_day) %></td>
+        <td><%= r.try(:holiday) %></td>
+        <td><%= r.try(:weekoff) %></td>
+
+        <td><%= r.try(:earned_basic) %></td>
+        <td><%= r.try(:earned_da) %></td>
+        <td><%= r.try(:earned_hra) %></td>
+
+        <td><%= r.try(:earned_convenience) %></td>
+        <td><%= r.try(:earned_other) %></td>
+        <td><%= r.try(:earned_special) %></td>
+        <td><%= r.try(:earned_washing) %></td>
+        <td><%= r.try(:earned_total) %></td>
+
+        <td><%= r.try(:pf) %></td>
+        <td><%= r.try(:esic) %></td>
+        <td><%= r.try(:income_tax) %></td>
+        <td><%= r.try(:pt) %></td>
+        <td><%= r.try(:advance) %></td>
+        <td><%= r.try(:society) %></td>
+
+        <td><%= r.try(:food_deduction) %></td>
+        <td><%= r.try(:mobile) %></td>
+        <td><%= r.try(:retention) %></td>
+        <td><%= r.try(:deduction_total) %></td>
+        <td><%= r.try(:net_payable) %></td>
+        <td><%=  %></td>
+        
       </tr>
     <% end %>
   </tbody>
@@ -48,16 +129,27 @@
  <% end %>
 
 <script type="text/javascript">
-$('#selectAll').click(function() {
-  if (this.checked) {
-    $(':checkbox').each(function() {
-      this.checked = true;                       
+  $(function () {
+    $('#selectAll').click(function() {
+      if (this.checked) {
+        $(':checkbox').each(function() {
+          this.checked = true;                       
+        });
+      } 
+      else {
+        $(':checkbox').each(function() {
+          this.checked = false;                        
+        });
+      } 
     });
-  } 
-  else {
-    $(':checkbox').each(function() {
-      this.checked = false;                        
-    });
-  } 
-});
+  });
+
+  $(document).ready(function() {
+    $('#example3').DataTable( {
+        //"scrollY":        "200px",
+        "scrollX":        "1000px",
+        "scrollCollapse": true,
+        "paging":         true
+    } );
+} );
 </script>

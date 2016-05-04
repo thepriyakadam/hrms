@@ -15,7 +15,7 @@
 
     <tr>
       <th><strong>Bank name:</strong></th>
-      <td><%= @employee_bank_detail.bank_name %></td>
+      <td><%= @employee_bank_detail.bank.try(:name) %></td>
 
       <th><strong>Branch name:</strong></th>
       <td><%= @employee_bank_detail.branch_name %></td>

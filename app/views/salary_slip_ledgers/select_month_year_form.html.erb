@@ -16,7 +16,7 @@
       </div>
       <div class="col-sm-3">
         <div class="field">
-           <%= select :salary, :bank_name, all_bank_name,{include_blank: 'Select Bank Name'},{onchange:"var a={bank_name:$(this).val(),year:$('#salary_year').val(),month:$('#salary_month_name').val()}; $.get('/salary_slip_ledgers/show_employee',a,function(response){});",class: 'form-control'}%>
+           <%= select :salary, :bank_name, all_bank_name,{include_blank: 'Select Bank Name'},{onchange:"var a={bank_id:$(this).val(),year:$('#salary_year').val(),month:$('#salary_month_name').val()}; $.get('/salary_slip_ledgers/show_employee',a,function(response){});",class: 'form-control'}%>
         </div>
       </div>
     

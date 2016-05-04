@@ -285,6 +285,8 @@ Rails.application.routes.draw do
       get :employee_list
       get :show_goal
       get :send_email_to_employee
+      get :show_employee
+      post :print_detail
     end
   end
 
@@ -383,6 +385,7 @@ Rails.application.routes.draw do
   namespace :reports do
     get 'salaries/new'
     post 'salaries/date_range_report'
+    get 'salaries/download'
     # post 'salaries/department_wise'
     # get 'salaries/show'
     post 'salaries/ctc_yearly_report'
@@ -463,7 +466,11 @@ Rails.application.routes.draw do
       get :generate_workingday
     end
   end
-  resources :shift_rotations
+  resources :shift_rotations do
+    collection do
+      get :collect_employee
+    end
+  end
   resources :employee_monthly_days do
     collection do
       get :find_employee_for_employee_monthly_day

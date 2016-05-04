@@ -2,6 +2,7 @@ class EmployeeBankDetail < ActiveRecord::Base
   belongs_to :employee
   has_many :salaryslips
   has_many :employee_bank_details
+  belongs_to :bank
   # validates :bank_name, :presence => true
   # validates :branch_name, :presence => true
   # validates :address, :presence => true

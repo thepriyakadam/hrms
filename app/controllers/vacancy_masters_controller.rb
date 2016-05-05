@@ -120,6 +120,10 @@ class VacancyMastersController < ApplicationController
     @vacancy_master = VacancyMaster.find(params[:format])
   end
 
+  def modal1
+    @vacancy_master = VacancyMaster.find(params[:format])
+  end
+
   def send_request_to_higher_authority
     puts ".................."
     @vacancy_master = VacancyMaster.find(params[:id])
@@ -128,7 +132,7 @@ class VacancyMastersController < ApplicationController
     @particular_vacancy_requests.each do |p|
       p.update(status: "Approved & Send Next",open_date: Time.zone.now.to_date)
     end 
-    
+    VacancyMasterMailer.approve_and_send_next_email(@vacancy_master).deliver_now
     @vacancy_master.update(current_status: "Approved & Send Next",reporting_master_id: params[:vacancy_master][:reporting_master_id])
     ReportingMastersVacancyMaster.create(vacancy_master_id: @vacancy_master.id, reporting_master_id: params[:vacancy_master][:reporting_master_id], vacancy_status: "Approved & Send Next")
     flash[:notice] = 'Vacancy Send to Higher Authority'
@@ -195,6 +199,46 @@ class VacancyMastersController < ApplicationController
      @vacancy_masters = VacancyMaster.where(employee_id: current_user.employee_id,current_status: "Approved")
   end
 
+  def update_no_of_positions 
+    puts "-----------"
+    byebug
+    @vacancy_master = VacancyMaster.find(params[:particular_vacancy_request][:vacancy_master_id])
+    @particular_vacancy_request = ParticularVacancyRequest.where(vacancy_master_id: @vacancy_master.id)
+    len =@vacancy_master.no_of_position
+    for i in 1..len
+            particular_vacancy_request.update(status: "Approved")
+    end  
+  end
+
+  def interview_reschedule
+    @employee = Employee.find(params[:id])
+    @interview_reschedule = InterviewReschedule.new
+    @interview_schedule = InterviewSchedule.find_by_employee_id(params[:id])
+  end
+
+
+   def send_email_to_candidate
+    @interview_reschedule = InterviewReschedule.new
+    @interview_schedule = InterviewSchedule.find(params[:interview_reschedule][:interview_schedule_id])
+
+    @interview_reschedule.interview_date = @interview_schedule.interview_date
+    @interview_reschedule.interview_time = @interview_schedule.interview_time
+    @interview_reschedule.employee_id = params[:interview_reschedule][:employee_id]
+    @interview_reschedule.interview_schedule_id = @interview_schedule.id
+
+    @interview_reschedule.save
+    @interview_schedule.update(interview_date: params[:interview_reschedule][:interview_date], interview_time: params[:interview_reschedule][:interview_time])
+    if @interview_schedule.email_id.nil?
+      flash[:alert] = 'Email not Available'
+      redirect_to interview_schedules_path
+    else
+      InterviewScheduleMailer.sample_email_to_candidate(@interview_schedule).deliver_now
+      flash[:notice] = 'Email Sent Successfully'
+      redirect_to interview_schedules_path
+      @interview_reschedule = InterviewReschedule.new(interview_reschedule_params)
+    # @interview_reschedule.save
+    end
+  end
 
 
   private

@@ -113,6 +113,8 @@ Rails.application.routes.draw do
       get :cancel_vacancy_request
       get :particular_vacancy_request_list
       get :approved_vacancy_list
+      get :modal1
+      post :update_no_of_positions
     end
   end
   resources :leave_c_offs do

@@ -15,6 +15,6 @@ class SalarySlipLedgersController < ApplicationController
       end
       @reports << sr
     end
-    #@sum = SalaryReport.create_sum(@reports)
+    @sum = SalaryReport.create_sum(@reports)
   end
 end

@@ -83,8 +83,14 @@ class EmployeeAttributesController < ApplicationController
       AttributeRatingSheet.create(appraisee_id: @employee.id, employee_attribute_id: @employee_attribute.id)
       
       flash[:notice] = "Confirmed Successfully"
-    end  
-     redirect_to new_employee_attribute_path(@employee_attribute.employee_id) 
+    end 
+
+    @employee_goal = EmployeeGoal.find_by_employee_id(params[:id])
+    @employee = Employee.find(@employee_goal.employee_id)
+    EmployeeGoalMailer.send_email_to_employee(@employee_goal).deliver_now
+    flash[:notice] = "Email sent Successfully"
+    redirect_to new_employee_attribute_path(@employee.id) 
+
   end
   end
   

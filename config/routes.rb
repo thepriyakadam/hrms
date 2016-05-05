@@ -287,6 +287,7 @@ Rails.application.routes.draw do
       get :send_email_to_employee
       get :show_employee
       post :print_detail
+      get :select_designation
     end
   end
 

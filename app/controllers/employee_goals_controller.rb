@@ -126,6 +126,7 @@ class EmployeeGoalsController < ApplicationController
 
 
   def show_employee
+    puts '---------------------------'
     @employee = Employee.new
     designation = params[:employee_designation_id]
     @employees = Employee.where(employee_designation_id: designation)
@@ -134,7 +135,6 @@ class EmployeeGoalsController < ApplicationController
 
   def print_detail
 
-    puts '-------------------------------------------------------'
     designation = params[:employee_designation_id]
     @employee = params[:employee_ids]
     @employees = Employee.where(id: @employee, employee_designation_id: designation)

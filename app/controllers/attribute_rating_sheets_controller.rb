@@ -492,6 +492,17 @@ class AttributeRatingSheetsController < ApplicationController
     end  
   end
   
+  def try
+    @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: params[:format], is_confirm_appraiser: true)
+    @employee = Employee.find("5126")
+    @attribute_rating_sheets = Employee.where(id: @employee.id).group(:id)
+    @qualifications = Qualification.where(employee_id: @employee.id)
+    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
+    @experiences = Experience.where(employee_id: @employee.id)
+    @ctc = EmployeeSalaryTemplate.where(employee_id: @employee.id).sum(:monthly_amount)
+    @attribute_rating_multiple_sheets = AttributeRatingSheet.where(appraisee_id: params[:format], is_confirm_appraiser: true)
+
+  end
   # def send_email_to_appraiser
   #   @employee = Employee.find(params[:id])
   #   @attribute_rating_sheet = AttributeRatingSheet.find_by_appraisee_id(@employee.id)

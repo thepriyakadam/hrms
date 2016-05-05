@@ -29,7 +29,11 @@ class Reports::InstalmentDetailsController < ApplicationController
         @employees = Employee.where(company_location_id: current_user.company_location_id)
         @advances = AdvanceSalary.where(employee_id: @employees)
         @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y')).where(advance_salary_id: @advances)
-
+      elsif current_user.role.name == 'SalaryAccount'
+        params[:salary][:company_location_id] == '' || params[:salary][:company_location_id].nil?
+        @employees = Employee.where(company_location_id: current_user.company_location_id)
+        @advances = AdvanceSalary.where(employee_id: @employees)
+        @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y')).where(advance_salary_id: @advances)
       elsif current_user.role.name == 'Department'
         @salaryslips = Salaryslip.where(department_id: current_user.department_id)
       elsif current_user.role.name == 'Superviser'

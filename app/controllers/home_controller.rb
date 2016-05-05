@@ -5,7 +5,7 @@ class HomeController < ApplicationController
     @company_locations = CompanyLocation.all
     @departments = Department.all
     @employees = Employee.all
-   if current_user.class == Member
+    if current_user.class == Member
       if current_user.role.name == 'Employee'
         @employee = Employee.find(current_user.employee_id)
         #redirect_to home_index_path
@@ -20,6 +20,8 @@ class HomeController < ApplicationController
         # @employees_indirect = @emp.indirect_subordinates
         # @employees_direct = @emp.subordinates
         @employees = @emp.subordinates
+      elsif current_user.role.name == 'SalaryAccount'
+        @employee = Employee.find(current_user.employee_id)
       end
     else
       @employees = Employee.all

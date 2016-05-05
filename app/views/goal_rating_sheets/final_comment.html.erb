@@ -182,7 +182,13 @@
     <tbody>
       <% @goal_rating_sheets.each do |g| %>
         <tr>
-          <td><%= check_box_tag "goal_rating_sheet_ids[]", g.id %></td>
+          <td>
+            <% if g.is_confirm_final == true %>
+
+            <% else %>
+            <%= check_box_tag "goal_rating_sheet_ids[]", g.id %>
+            <% end %>
+          </td>
           <td><%= g.employee_goal.goal_perspective.name %></td>
           <td><%= g.employee_goal.goal_measure %></td>
           <td><%= g.employee_goal.target %></td>

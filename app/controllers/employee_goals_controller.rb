@@ -70,6 +70,8 @@ class EmployeeGoalsController < ApplicationController
   end
 
   def employee_list
+      @year = params[:year]
+      @employees = params[:employee_ids]
      if current_user.class == Group
       @employees = Employee.all
     elsif current_user.class == Member
@@ -108,7 +110,8 @@ class EmployeeGoalsController < ApplicationController
       GoalRatingSheet.create(appraisee_id: @employee.id, employee_goal_id: @employee_goal.id)
       
       flash[:notice] = "Confirmed Successfully"
-    end  
+    end 
+
      redirect_to new_employee_goal_path( @employee.id) 
   end
   end
@@ -123,16 +126,19 @@ class EmployeeGoalsController < ApplicationController
 
 
   def show_employee
+    puts '---------------------------'
     @employee = Employee.new
-    @employees = Employee.all
+    designation = params[:employee_designation_id]
+    @employees = Employee.where(employee_designation_id: designation)
+
   end
 
   def print_detail
 
-    puts '-------------------------------------------------------'
-   
+    designation = params[:employee_designation_id]
+    @employee = params[:employee_ids]
+    @employees = Employee.where(id: @employee, employee_designation_id: designation)
 
-    @employees = params[:employee_ids]
             respond_to do |format|
             format.html
             format.pdf do

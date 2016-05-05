@@ -19,8 +19,8 @@
         <tr>
           <td><%= g.appraisee.manual_employee_code %></td>
           <td><%= g.appraisee.first_name %></td>
-          <td><%= g.appraisee.joining_detail.department.name %></td>
-          <td><%= g.appraisee.joining_detail.employee_designation.name %></td>
+          <td><%= g.appraisee.department.try(:name) %></td>
+          <td><%= g.appraisee.joining_detail.employee_designation.try(:name) %></td>
         </tr>
       <% end %>
     </tbody>
@@ -93,7 +93,13 @@
     <tbody>
       <% @attribute_rating_sheets.each do |a| %>
         <tr>
-          <td><%= check_box_tag "attribute_rating_sheet_ids[]", a.id %></td>
+          <td>
+            <% if a.is_confirm_appraiser == true %>
+
+            <% else %>
+            <%= check_box_tag "attribute_rating_sheet_ids[]", a.id %>
+            <% end %>
+          </td>
           <td><%= a.employee_attribute.attribute_master.name %></td>
           <td><%= a.employee_attribute.weightage %></td>
           
@@ -125,9 +131,7 @@
           <%= link_to 'Back', appraiser_goal_rating_sheets_path(@employee.id),class: 'btn btn-default btn-sm fa fa-arrow-left'%>
         </div>
       </div>
-      <div style="float:right;">
-          <%= link_to ' Send Email',send_email_to_appraiser2_attribute_rating_sheets_path(@employee.id),class: 'btn btn-sm btn-info'  %>
-      </div>
+      
     </div>
 </div>
 </div>

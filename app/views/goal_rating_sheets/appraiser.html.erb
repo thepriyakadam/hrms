@@ -19,8 +19,8 @@
         <tr>
           <td><%= g.appraisee.manual_employee_code %></td>
           <td><%= g.appraisee.first_name %></td>
-          <td><%= g.appraisee.joining_detail.department.name %></td>
-          <td><%= g.appraisee.joining_detail.employee_designation.name %></td>
+          <td><%= g.appraisee.joining_detail.department.try(:name) %></td>
+          <td><%= g.appraisee.joining_detail.employee_designation.try(:name) %></td>
         </tr>
       <% end %>
     </tbody>
@@ -110,7 +110,13 @@
     <tbody>
       <% @goal_rating_sheets.each do |g| %>
         <tr>
-          <td><%= check_box_tag "goal_rating_sheet_ids[]", g.id %></td>
+          <td>
+            <% if g.is_confirm_appraiser == true %>
+          
+            <% else %>
+              <%= check_box_tag "goal_rating_sheet_ids[]", g.id %> 
+            <% end %>
+          </td>
           <td><%= g.employee_goal.goal_perspective.name %></td>
           <td><%= g.employee_goal.goal_measure %></td>
           <td><%= g.employee_goal.target %></td>

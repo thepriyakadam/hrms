@@ -160,7 +160,13 @@
     <tbody>
       <% @attribute_rating_multi_sheets.each do |a| %>
         <tr>
-          <td><%= check_box_tag "attribute_rating_sheet_ids[]", a.id %></td>
+          <td>
+            <% if a.is_confirm_appraiser2 == true %>
+
+            <% else %>
+              <%= check_box_tag "attribute_rating_sheet_ids[]", a.id %>
+            <% end %>
+          </td>
           <td><%= a.employee_attribute.attribute_master.name %></td>
           <td><%= a.employee_attribute.weightage %></td>
           <td><%= a.appraisee_comment %></td>

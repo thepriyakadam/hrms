@@ -1,7 +1,9 @@
 <div class="box box-default">
   <div class="box-header with-border">
     <h3 class="box-title">Attribute Setting</h3>
-  </div><!-- /.box-header -->
+
+  <h6><%= @employee.manual_employee_code+" "+@employee.first_name+" "+@employee.last_name %></h6>
+   </div>
     <div class="box-body">
 	    <div id="form">
 	      <%= render 'form' %>

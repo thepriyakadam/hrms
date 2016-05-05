@@ -21,7 +21,7 @@ class VacancyMastersController < ApplicationController
       end
      end
       session[:active_tab] ="recruitment"
-    end
+  end
 
 
   # GET /vacancy_masters/1
@@ -145,7 +145,7 @@ class VacancyMastersController < ApplicationController
     
     @particular_vacancy_requests.each do |p|
       p.update(status: "Reject")
-    end  
+  end  
 
     @vacancy_master.update(current_status: "Reject")
     ReportingMastersVacancyMaster.create(vacancy_master_id: @vacancy_master.id, reporting_master_id: current_user.employee_id, vacancy_status: "Reject")
@@ -160,8 +160,7 @@ class VacancyMastersController < ApplicationController
 
     @particular_vacancy_requests.each do |p|
       p.update(status: "Approved",open_date: Time.zone.now.to_date)
-    end    
-
+  end    
     @vacancy_master.update(current_status: "Approved")
     ReportingMastersVacancyMaster.create(vacancy_master_id: @vacancy_master.id, reporting_master_id: current_user.employee_id, vacancy_status: "Approved")
     VacancyMasterMailer.approve_vacancy_email(@vacancy_master).deliver_now
@@ -200,48 +199,25 @@ class VacancyMastersController < ApplicationController
   end
 
   def update_no_of_positions 
-    puts "-----------"
-    byebug
-    @vacancy_master = VacancyMaster.find(params[:particular_vacancy_request][:vacancy_master_id])
-    @particular_vacancy_request = ParticularVacancyRequest.where(vacancy_master_id: @vacancy_master.id)
-    len =@vacancy_master.no_of_position
-    for i in 1..len
-            particular_vacancy_request.update(status: "Approved")
-    end  
-  end
-
-  def interview_reschedule
-    @employee = Employee.find(params[:id])
-    @interview_reschedule = InterviewReschedule.new
-    @interview_schedule = InterviewSchedule.find_by_employee_id(params[:id])
-  end
-
-
-   def send_email_to_candidate
-    @interview_reschedule = InterviewReschedule.new
-    @interview_schedule = InterviewSchedule.find(params[:interview_reschedule][:interview_schedule_id])
-
-    @interview_reschedule.interview_date = @interview_schedule.interview_date
-    @interview_reschedule.interview_time = @interview_schedule.interview_time
-    @interview_reschedule.employee_id = params[:interview_reschedule][:employee_id]
-    @interview_reschedule.interview_schedule_id = @interview_schedule.id
-
-    @interview_reschedule.save
-    @interview_schedule.update(interview_date: params[:interview_reschedule][:interview_date], interview_time: params[:interview_reschedule][:interview_time])
-    if @interview_schedule.email_id.nil?
-      flash[:alert] = 'Email not Available'
-      redirect_to interview_schedules_path
+    @vacancy_master = VacancyMaster.find(params[:id])
+    @no_of_position = params[:particular_vacancy_request][:no_of_position]
+    if @vacancy_master.no_of_position < @no_of_position.to_i
+      flash[:alert] = 'No of Positions greater than max limit'
+      redirect_to vacancy_history_vacancy_masters_path
     else
-      InterviewScheduleMailer.sample_email_to_candidate(@interview_schedule).deliver_now
-      flash[:notice] = 'Email Sent Successfully'
-      redirect_to interview_schedules_path
-      @interview_reschedule = InterviewReschedule.new(interview_reschedule_params)
-    # @interview_reschedule.save
-    end
+      @particular_vacancy_requests = ParticularVacancyRequest.where(vacancy_master_id: @vacancy_master.id).limit(@no_of_position)
+      @particular_vacancy_requests.each do |p|
+        p.update(status: "Approved")
+      end
+      redirect_to vacancy_history_vacancy_masters_path
+    end 
   end
-
 
   private
+
+  def particular_vacancy_request_params
+    params.require(:particular_vacancy_request).permit(:vacancy_master_id, :employee_id, :open_date, :closed_date, :fulfillment_date, :status)
+  end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_vacancy_master

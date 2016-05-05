@@ -91,8 +91,9 @@ class AdvanceSalariesController < ApplicationController
       elsif current_user.role.name == 'CompanyLocation'
         @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
         @advance_salaries = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
-      elsif current_user.role.name == 'SalaryAccount'
-        @advance_salaries = AdvanceSalary.all
+       elsif current_user.role.name == 'SalaryAccount'
+        @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+        @advance_salaries = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
       elsif current_user.role.name == 'Employee'
         @advance_salaries = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: current_user.employee_id)
       end

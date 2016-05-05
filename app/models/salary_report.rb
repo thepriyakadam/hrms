@@ -6,11 +6,6 @@ class SalaryReport
 	              :total_leave, :lwp_leave, :day_in_month, :present_day, :absent_day, :holiday, :weekoff
 
 	def self.collect_data(e, j, wd, sl)
-		puts e.class
-		puts j.class
-		puts wd.class
-		puts sl.class
-		puts "----------------------------------------"
 		addable_items = SalaryslipComponent.where(salaryslip_id: sl.id, is_deducted: false)
 		deductable_items = SalaryslipComponent.where(salaryslip_id: sl.id, is_deducted: true)
 
@@ -90,5 +85,34 @@ class SalaryReport
 	  sr.holiday = wd.holiday_in_month
 	  sr.weekoff = wd.week_off_day
 	  sr
+	end
+
+	def self.create_sum(reports)
+		@sum = SalaryReport.new
+		array_actual_basic = reports.collect {|r| r.try(:actual_basic)}.compact
+    @sum.actual_basic = array_actual_basic.inject(0){|sum,x| sum + x }
+
+    array_actual_da = reports.collect {|r| r.try(:actual_da)}.compact
+    @sum.actual_da = array_actual_da.inject(0){|sum,x| sum + x }
+
+    array_actual_hra = reports.collect {|r| r.try(:actual_hra)}.compact
+    @sum.actual_hra = array_actual_hra.inject(0){|sum,x| sum + x }
+
+    array_actual_convenience = reports.collect {|r| r.try(:actual_convenience)}.compact
+    @sum.actual_convenience = array_actual_convenience.inject(0){|sum,x| sum + x }
+
+    array_actual_other = reports.collect {|r| r.try(:actual_other)}.compact
+    @sum.actual_other = array_actual_other.inject(0){|sum,x| sum + x }
+
+    array_actual_special = reports.collect {|r| r.try(:actual_special)}.compact
+    @sum.actual_special = array_actual_special.inject(0){|sum,x| sum + x }
+
+    array_actual_washing = reports.collect {|r| r.try(:actual_washing)}.compact
+    @sum.actual_washing = array_actual_washing.inject(0){|sum,x| sum + x }
+
+    array_actual_total = reports.collect {|r| r.try(:actual_total)}.compact
+    @sum.actual_total = array_actual_total.inject(0){|sum,x| sum + x }
+
+    @sum
 	end
 end

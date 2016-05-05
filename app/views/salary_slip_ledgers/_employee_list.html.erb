@@ -2,23 +2,17 @@
 <% i = 0 %>
 <table id="example3" class="table table-bordered table-hover table-condensed">
   <thead>
-   <tr>
-    <th colspan="6"><center> BASIC DETAILS</center> </th>
+    <tr>
+      <th colspan="6"><center> BASIC DETAILS</center></th>
+      <th colspan="8"><center> SALARY DETAILS</center></th>
+      <th colspan="7"><center> WORKING DAYS</center></th>
+      <th colspan="8"><center> EARNED SALARY</center></th>
+      <th colspan="10"><center>DEDUCTION</center></th>
+      <th><center> NET </center></th>
+      <th><center> SIGN </center></th>
+    </tr>
 
-    <th colspan="8"><center> SALARY DETAILS</center> </th>
-
-    <th colspan="7"><center> WORKING DAYS</center> </th>
-
-    <th colspan="8"><center> EARNED SALARY</center>  </th>
-
-    <th colspan="10"><center>DEDUCTION</center> </th>
-
-    <th><center> NET</center>  </th>
-
-    <th><center> SING</center>  </th>
-  </tr>
-
-  <tr>
+    <tr>
       <th>No</th>
       <th>Code</th>
       <th>Employee</th>
@@ -65,7 +59,7 @@
 
       <th>NET</th>
       <th>SING</th>
-  </tr>
+    </tr>
   </thead>
   <tbody>
     <% @reports.each do |r| %>
@@ -118,9 +112,57 @@
         <td><%= r.try(:deduction_total) %></td>
         <td><%= r.try(:net_payable) %></td>
         <td><%=  %></td>
-        
       </tr>
     <% end %>
+
+    <tr>
+      <td><!-- No --></td>
+      <td><!-- Code --></td>
+      <td><!-- Employee --></td>
+      <td><!-- Department --></td>
+      <td><!-- PF No --></td>
+      <td><!-- ESIC No --></td>
+
+      <td><%= @sum.actual_basic %></td>
+      <td><%= @sum.actual_da %></td>
+      <td><%= @sum.actual_hra %></td>
+      <td>Conv</td>
+      <td>O.Allow</td>
+      <td>S.Allow</td>
+      <td>Wsh.Allow</td>
+      <td>Total</td>
+
+      <td>Leave</td>
+      <td>LWP/ESIC</td>
+      <td>Days</td>
+      <td>PD</td>
+      <td>AD</td>
+      <td>HD</td>
+      <td>WOff</td>
+
+      <td>Basic</td>
+      <td>DA</td>
+      <td>HRA</td>
+      <td>conv</td>
+      <td>O.Allow</td>
+      <td>S.Allow</td>
+      <td>Wsh.Allow</td>
+      <td>Gross</td>
+
+      <td>PF</td>
+      <td>ESIC</td>
+      <td>IT</td>
+      <td>PT</td>
+      <td>Adv.Sal</td>
+      <td>Society</td>
+      <td>Food</td>
+      <td>Mobile</td>
+      <td>Retention</td>
+      <td>Total Dedu</td>
+
+      <td>NET</td>
+      <td>SING</td>
+    </tr>
   </tbody>
 </table>
    <div class="col-sm-3">
@@ -146,10 +188,10 @@
 
   $(document).ready(function() {
     $('#example3').DataTable( {
-        //"scrollY":        "200px",
-        "scrollX":        "1000px",
-        "scrollCollapse": true,
-        "paging":         true
+      //"scrollY":        "200px",
+      "scrollX":        "1000px",
+      "scrollCollapse": true,
+      "paging":         true
     } );
 } );
 </script>

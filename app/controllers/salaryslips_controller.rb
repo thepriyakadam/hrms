@@ -455,7 +455,6 @@ class SalaryslipsController < ApplicationController
         location_employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
         new_ids = location_employees & emp_ids
         @employees = Employee.where(id: new_ids)
-        #byebug
       elsif current_user.role.name == "Department"
         department_employees = Employee.where(department_id: current_user.company_location_id)
         new_ids = department_employees & emp_ids

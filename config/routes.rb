@@ -231,6 +231,7 @@ Rails.application.routes.draw do
       get :print_details_appraiser2
       get :send_email_to_appraiser
       get :send_email_to_appraiser2
+      get :try
     end
   end
   resources :goal_rating_sheets do

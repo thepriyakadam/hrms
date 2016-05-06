@@ -22,7 +22,7 @@
             <td><%= employee.company_location.try(:name) %> - <%= employee.department.try(:name) %></td>
              <td><%= employee.try(:contact_no) %></td>
             <td>
-              <%= link_to 'Leave Request', from_hr_employee_leav_requests_path(employee), class: 'btn btn-sm btn-info' %>
+              <%= link_to 'Leave Request', from_hr_employee_leav_requests_path(employee), class: 'btn btn-sm btn-primary' %>
               <%= link_to 'View Requests', hr_view_request_employee_leav_requests_path(employee), class: 'btn btn-sm btn-info' %>
             </td>
           </tr>

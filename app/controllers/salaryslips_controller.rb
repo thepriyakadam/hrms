@@ -14,8 +14,6 @@ class SalaryslipsController < ApplicationController
         deducted_salary_items = current_template.employee_salary_templates.where('is_deducted = ?', true)
         employee_contribution_items = current_template.employee_salary_templates.where(is_deducted: nil)
 
-
-
         addable_total_actual_amount = 0
         addable_total_calculated_amount = 0
         basic_actual_amount = 0
@@ -238,11 +236,13 @@ class SalaryslipsController < ApplicationController
           SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: deducted_actual_amount, calculated_amount: deducted_calculated_amount, is_deducted: true, other_component_name: 'Prof. Tax')
         end
 
-        @instalment_array.try(:each) do |ia|
-          deducted_actual_amount = ia.advance_salary.instalment_amount
-          deducted_calculated_amount = deducted_actual_amount
+        unless @instalment_array.empty?
+          @instalment_array.each do |ia|
+            deducted_actual_amount = deducted_actual_amount + ia.advance_salary.instalment_amount
+            deducted_calculated_amount = deducted_calculated_amount + deducted_actual_amount          
+            ia.update(is_complete: true)
+          end
           SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: deducted_actual_amount, calculated_amount: deducted_calculated_amount, is_deducted: true, other_component_name: 'Advance')
-          ia.update(is_complete: true)
         end
 
         @retention = RetentionMoney.first
@@ -261,9 +261,9 @@ class SalaryslipsController < ApplicationController
         unless @food_deductions.empty?
           @food_deductions.each do |f|
             deducted_actual_amount = 0
-            deducted_calculated_amount = f.amount
-            SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: deducted_actual_amount, calculated_amount: deducted_calculated_amount, is_deducted: true, other_component_name: 'Food Deduction')
+            deducted_calculated_amount = deducted_calculated_amount + f.amount
           end
+          SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: deducted_actual_amount, calculated_amount: deducted_calculated_amount, is_deducted: true, other_component_name: 'Food Deduction')
         end
 
         @monthly_expences = MonthlyExpence.where(employee_id: @employee.id, expence_date: date.all_month)
@@ -274,12 +274,14 @@ class SalaryslipsController < ApplicationController
         end
 
         @well_faires = WellFaire.all
-        @well_faires.try(:each) do |w|
-          if @month == w.month
-            deducted_actual_amount = 0
-            deducted_calculated_amount = w.amount
-            SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: deducted_actual_amount, calculated_amount: deducted_calculated_amount, is_deducted: true, other_component_name: 'Well Faire')
+        unless @well_faires.empty?
+          @well_faires.try(:each) do |w|
+            if @month == w.month
+              deducted_actual_amount = 0
+              deducted_calculated_amount = deducted_calculated_amount + w.amount
+            end
           end
+          SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: deducted_actual_amount, calculated_amount: deducted_calculated_amount, is_deducted: true, other_component_name: 'Well Faire')
         end
 
         society = SocietyMemberShip.find_by_employee_id(@employee.id)
@@ -770,12 +772,14 @@ class SalaryslipsController < ApplicationController
           end
 
           @well_faires = WellFaire.all
-          @well_faires.try(:each) do |w|
-            if @month == w.month
-              deducted_actual_amount = 0
-              deducted_calculated_amount = w.amount
-              SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: deducted_actual_amount, calculated_amount: deducted_calculated_amount, is_deducted: true, other_component_name: 'Well Faire')
+          unless @well_faires.empty?
+            @well_faires.try(:each) do |w|
+              if @month == w.month
+                deducted_actual_amount = 0
+                deducted_calculated_amount = deducted_calculated_amount + w.amount
+              end
             end
+            SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: deducted_actual_amount, calculated_amount: deducted_calculated_amount, is_deducted: true, other_component_name: 'Well Faire')
           end
 
           society = SocietyMemberShip.find_by_employee_id(@employee.id)
@@ -792,16 +796,18 @@ class SalaryslipsController < ApplicationController
           unless @food_deductions.empty?
             @food_deductions.each do |f|
               deducted_actual_amount = 0
-              deducted_calculated_amount = f.amount
-              SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: deducted_actual_amount, calculated_amount: deducted_calculated_amount, is_deducted: true, other_component_name: 'Food Deduction')
+              deducted_calculated_amount = deducted_calculated_amount + f.amount
             end
+            SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: deducted_actual_amount, calculated_amount: deducted_calculated_amount, is_deducted: true, other_component_name: 'Food Deduction')
           end
 
-          @instalment_array.try(:each) do |ia|
-            deducted_actual_amount = ia.advance_salary.instalment_amount
-            deducted_calculated_amount = deducted_actual_amount
+          unless @instalment_array.empty?
+            @instalment_array.each do |ia|
+              deducted_actual_amount = deducted_actual_amount + ia.advance_salary.instalment_amount
+              deducted_calculated_amount = deducted_calculated_amount + deducted_actual_amount          
+              ia.update(is_complete: true)
+            end
             SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: deducted_actual_amount, calculated_amount: deducted_calculated_amount, is_deducted: true, other_component_name: 'Advance')
-            ia.update(is_complete: true)
           end
 
           @monthly_expences = MonthlyExpence.where(employee_id: @employee.id, expence_date: date.all_month)

@@ -113,6 +113,41 @@ class SalaryReport
     array_actual_total = reports.collect {|r| r.try(:actual_total)}.compact
     @sum.actual_total = array_actual_total.inject(0){|sum,x| sum + x }
 
+
+    array_earned_basic = reports.collect {|r| r.try(:earned_basic)}.compact
+    @sum.earned_basic = array_earned_basic.inject(0){|sum,x| sum + x }
+
+    array_earned_da = reports.collect {|r| r.try(:earned_da)}.compact
+    @sum.earned_da = array_earned_da.inject(0){|sum,x| sum + x }
+
+    array_earned_hra = reports.collect {|r| r.try(:earned_hra)}.compact
+    @sum.earned_hra = array_earned_hra.inject(0){|sum,x| sum + x }
+
+    array_earned_convenience = reports.collect {|r| r.try(:earned_convenience)}.compact
+    @sum.earned_convenience = array_earned_convenience.inject(0){|sum,x| sum + x }
+
+    array_earned_other = reports.collect {|r| r.try(:earned_other)}.compact
+    @sum.earned_other = array_earned_other.inject(0){|sum,x| sum + x }
+
+    array_earned_special = reports.collect {|r| r.try(:earned_special)}.compact
+    @sum.earned_special = array_earned_special.inject(0){|sum,x| sum + x }
+
+    array_earned_washing = reports.collect {|r| r.try(:earned_washing)}.compact
+    @sum.earned_washing = array_earned_washing.inject(0){|sum,x| sum + x }
+
+    array_earned_total = reports.collect {|r| r.try(:earned_total)}.compact
+    @sum.earned_total = array_earned_total.inject(0){|sum,x| sum + x }
+
+    array_pf = reports.collect {|r| r.try(:pf)}.compact
+    @sum.pf = array_pf.inject(0){|sum,x| sum + x }
+
+    array_earned_total = reports.collect {|r| r.try(:earned_total)}.compact
+    @sum.earned_total = array_earned_total.inject(0){|sum,x| sum + x }
+
+    :pf, :esic, :income_tax, :pt, :advance, :society, :food_deduction, :mobile, :retention, :deduction_total, :net_payable,
+	  :total_leave, :lwp_leave, :day_in_month, :present_day, :absent_day, :holiday, :weekoff
+
+
     @sum
 	end
 end

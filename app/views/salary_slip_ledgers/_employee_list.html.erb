@@ -133,13 +133,14 @@
       <td><%= @sum.actual_washing %></td>
       <td><%= @sum.actual_total %></td>
 
-      <td>Leave</td>
-      <td>LWP/ESIC</td>
-      <td>Days</td>
-      <td>PD</td>
-      <td>AD</td>
-      <td>HD</td>
-      <td>WOff</td>
+      
+      <td><%= @sum.total_leave %></td>
+      <td><%= @sum.lwp_leave %></td>
+      <td><%= @sum.day_in_month %></td>
+      <td><%= @sum.present_day %></td>
+      <td><%= @sum.absent_day %></td>
+      <td><%= @sum.holiday %></td>
+      <td><%= @sum.weekoff %></td>
 
       <td><%= @sum.earned_basic %></td>
       <td><%= @sum.earned_da %></td>
@@ -150,18 +151,18 @@
       <td><%= @sum.earned_washing %></td>
       <td><%= @sum.earned_total %></td>
 
-      <td>PF</td>
-      <td>ESIC</td>
-      <td>IT</td>
-      <td>PT</td>
-      <td>Adv.Sal</td>
-      <td>Society</td>
-      <td>Food</td>
-      <td>Mobile</td>
-      <td>Retention</td>
-      <td>Total Dedu</td>
+      <td><%= @sum.pf %></td>
+      <td><%= @sum.esic %></td>
+      <td><%= @sum.income_tax %></td>
+      <td><%= @sum.pt %></td>
+      <td><%= @sum.advance %></td>
+      <td><%= @sum.society %></td>
+      <td><%= @sum.food_deduction %></td>
+      <td><%= @sum.mobile %></td>
+      <td><%= @sum.retention %></td>
+      <td><%= @sum.deduction_total %></td>
 
-      <td>NET</td>
+      <td><%= @sum.net_payable %></td>
       <td>SING</td>
     </tr>
   </tbody>

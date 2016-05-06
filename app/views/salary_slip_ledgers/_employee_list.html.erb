@@ -1,3 +1,4 @@
+<div class="ajax-progress"></div>
 <%= form_for :salary_slip_ledgers do |f| %>
 <% i = 0 %>
 <table id="example3" class="table table-bordered table-hover table-condensed">
@@ -126,41 +127,42 @@
       <td><%= @sum.actual_basic %></td>
       <td><%= @sum.actual_da %></td>
       <td><%= @sum.actual_hra %></td>
-      <td>Conv</td>
-      <td>O.Allow</td>
-      <td>S.Allow</td>
-      <td>Wsh.Allow</td>
-      <td>Total</td>
+      <td><%= @sum.actual_convenience %></td>
+      <td><%= @sum.actual_other %></td>
+      <td><%= @sum.actual_special %></td>
+      <td><%= @sum.actual_washing %></td>
+      <td><%= @sum.actual_total %></td>
 
-      <td>Leave</td>
-      <td>LWP/ESIC</td>
-      <td>Days</td>
-      <td>PD</td>
-      <td>AD</td>
-      <td>HD</td>
-      <td>WOff</td>
+      
+      <td><%= @sum.total_leave %></td>
+      <td><%= @sum.lwp_leave %></td>
+      <td><%= @sum.day_in_month %></td>
+      <td><%= @sum.present_day %></td>
+      <td><%= @sum.absent_day %></td>
+      <td><%= @sum.holiday %></td>
+      <td><%= @sum.weekoff %></td>
 
-      <td>Basic</td>
-      <td>DA</td>
-      <td>HRA</td>
-      <td>conv</td>
-      <td>O.Allow</td>
-      <td>S.Allow</td>
-      <td>Wsh.Allow</td>
-      <td>Gross</td>
+      <td><%= @sum.earned_basic %></td>
+      <td><%= @sum.earned_da %></td>
+      <td><%= @sum.earned_hra %></td>
+      <td><%= @sum.earned_convenience %></td>
+      <td><%= @sum.earned_other %></td>
+      <td><%= @sum.earned_special %></td>
+      <td><%= @sum.earned_washing %></td>
+      <td><%= @sum.earned_total %></td>
 
-      <td>PF</td>
-      <td>ESIC</td>
-      <td>IT</td>
-      <td>PT</td>
-      <td>Adv.Sal</td>
-      <td>Society</td>
-      <td>Food</td>
-      <td>Mobile</td>
-      <td>Retention</td>
-      <td>Total Dedu</td>
+      <td><%= @sum.pf %></td>
+      <td><%= @sum.esic %></td>
+      <td><%= @sum.income_tax %></td>
+      <td><%= @sum.pt %></td>
+      <td><%= @sum.advance %></td>
+      <td><%= @sum.society %></td>
+      <td><%= @sum.food_deduction %></td>
+      <td><%= @sum.mobile %></td>
+      <td><%= @sum.retention %></td>
+      <td><%= @sum.deduction_total %></td>
 
-      <td>NET</td>
+      <td><%= @sum.net_payable %></td>
       <td>SING</td>
     </tr>
   </tbody>

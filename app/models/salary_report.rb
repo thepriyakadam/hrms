@@ -17,7 +17,7 @@ class SalaryReport
 		sr.esic_no = j.employee_efic_no
 
 		addable_items.each do |a|
-			case a.salary_component.name
+			case a.salary_component.try(:name)
 			  when "Basic"
 			  sr.actual_basic = a.actual_amount.round
 			  sr.earned_basic = a.calculated_amount.round

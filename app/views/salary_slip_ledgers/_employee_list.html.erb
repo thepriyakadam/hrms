@@ -1,3 +1,4 @@
+<div class="ajax-progress"></div>
 <%= form_for :salary_slip_ledgers do |f| %>
 <% i = 0 %>
 <table id="example3" class="table table-bordered table-hover table-condensed">
@@ -126,11 +127,11 @@
       <td><%= @sum.actual_basic %></td>
       <td><%= @sum.actual_da %></td>
       <td><%= @sum.actual_hra %></td>
-      <td>Conv</td>
-      <td>O.Allow</td>
-      <td>S.Allow</td>
-      <td>Wsh.Allow</td>
-      <td>Total</td>
+      <td><%= @sum.actual_convenience %></td>
+      <td><%= @sum.actual_other %></td>
+      <td><%= @sum.actual_special %></td>
+      <td><%= @sum.actual_washing %></td>
+      <td><%= @sum.actual_total %></td>
 
       <td>Leave</td>
       <td>LWP/ESIC</td>
@@ -140,14 +141,14 @@
       <td>HD</td>
       <td>WOff</td>
 
-      <td>Basic</td>
-      <td>DA</td>
-      <td>HRA</td>
-      <td>conv</td>
-      <td>O.Allow</td>
-      <td>S.Allow</td>
-      <td>Wsh.Allow</td>
-      <td>Gross</td>
+      <td><%= @sum.earned_basic %></td>
+      <td><%= @sum.earned_da %></td>
+      <td><%= @sum.earned_hra %></td>
+      <td><%= @sum.earned_convenience %></td>
+      <td><%= @sum.earned_other %></td>
+      <td><%= @sum.earned_special %></td>
+      <td><%= @sum.earned_washing %></td>
+      <td><%= @sum.earned_total %></td>
 
       <td>PF</td>
       <td>ESIC</td>

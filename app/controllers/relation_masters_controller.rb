@@ -15,6 +15,7 @@ class RelationMastersController < ApplicationController
   # GET /relation_masters/new
   def new
     @relation_master = RelationMaster.new
+    @relation_masters = RelationMaster.all
   end
 
   # GET /relation_masters/1/edit
@@ -26,29 +27,25 @@ class RelationMastersController < ApplicationController
   def create
     @relation_master = RelationMaster.new(relation_master_params)
 
-    respond_to do |format|
       if @relation_master.save
-        format.html { redirect_to @relation_master, notice: 'Relation master was successfully created.' }
-        format.json { render :show, status: :created, location: @relation_master }
+        @flag = true
+        @relation_master = RelationMaster.new
+        @relation_masters = RelationMaster.all
       else
-        format.html { render :new }
-        format.json { render json: @relation_master.errors, status: :unprocessable_entity }
+         @flag = false
       end
-    end
   end
 
   # PATCH/PUT /relation_masters/1
   # PATCH/PUT /relation_masters/1.json
   def update
-    respond_to do |format|
       if @relation_master.update(relation_master_params)
-        format.html { redirect_to @relation_master, notice: 'Relation master was successfully updated.' }
-        format.json { render :show, status: :ok, location: @relation_master }
+        @flag = true
+        @relation_master = RelationMaster.new
+        @relation_masters = RelationMaster.all
       else
-        format.html { render :edit }
-        format.json { render json: @relation_master.errors, status: :unprocessable_entity }
+        @flag = false
       end
-    end
   end
 
   # DELETE /relation_masters/1

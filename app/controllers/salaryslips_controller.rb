@@ -870,8 +870,16 @@ class SalaryslipsController < ApplicationController
   def show_employee
     @month = params[:month]
     @year = params[:year]
-    @salaryslips = Salaryslip.where(month: @month, year: @year.to_s)
-   
+    if current_user.class == Group
+      @salaryslips = Salaryslip.where(month: @month, year: @year.to_s)
+    elsif current_user.class == Member
+      if current_user.role.name == "Company"
+        @salaryslips = Salaryslip.where(month: @month, year: @year.to_s)
+      elsif current_user.role.name == "CompanyLocation"
+        @employees = Employee.where(company_location_id: current_user.company_location_id)
+        @salaryslips = Salaryslip.where(month: @month, year: @year.to_s, employee_id: @employees)
+      end  
+    end    
   end
 
   def destroy_salary_slip

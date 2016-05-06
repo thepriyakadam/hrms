@@ -4,7 +4,11 @@
   </div>
 
 <div class="box-body">
-<%= bootstrap_form_for(@capture_resume,html: { multipart: true }) do |f| %>
+<%= bootstrap_form_for(@capture_resume,html: { multipart: true}) do |f| %>
+<%= f.hidden_field :vacancy_master_id, value: @vacancy_master.id  %>
+<div>
+ <%= render 'show_vacancy_detail' %>
+ </div>
   <div class="row">
     <div class="col-sm-3">
       <div class="form-group required">
@@ -78,7 +82,7 @@
       <div class="col-sm-3">
           <div class="form-group required">
             <div class="input-group">
-              <%= f.select :job_title, all_job_title,{label: 'Candidate Name',include_blank: " Select Job Title"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
+              <%= f.select :job_title, all_job_title,{label: 'Job Title',include_blank: " Select Job Title"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
             </div>
           </div>
       </div>

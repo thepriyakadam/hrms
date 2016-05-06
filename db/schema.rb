@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160503130816) do
+ActiveRecord::Schema.define(version: 20160506130010) do
 
   create_table "accident_records", force: :cascade do |t|
     t.string   "code"
@@ -1223,6 +1223,7 @@ ActiveRecord::Schema.define(version: 20160503130816) do
     t.integer  "employee_designation_id"
     t.string   "vacancy_name"
     t.boolean  "is_complete"
+    t.integer  "closed_position"
   end
 
   add_index "particular_vacancy_requests", ["employee_designation_id"], name: "index_particular_vacancy_requests_on_employee_designation_id"
@@ -1292,6 +1293,14 @@ ActiveRecord::Schema.define(version: 20160503130816) do
 
   create_table "rating_masters", force: :cascade do |t|
     t.integer  "code"
+    t.text     "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "relation_masters", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
     t.text     "description"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false

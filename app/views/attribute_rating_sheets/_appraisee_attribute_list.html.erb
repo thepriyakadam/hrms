@@ -1,4 +1,4 @@
-<%= bootstrap_form_for @attribute_rating_sheet,url:{action:'is_confirm_appraisee'} do |f| %>
+<%= bootstrap_form_for @attribute_rating_sheet,url:{action:'is_confirm_appraisee',id: current_user.employee_id} do |f| %>
 <div class="box">
   <div class="box-header">
     <h3 class="box-title">Employee Attribute Rating</h3>
@@ -21,8 +21,13 @@
         <tbody>
           <% @attribute_rating_shets.each do |a| %>
             <tr>
-              <% if a.employee_attribute.is_confirm == true %>
-                <td><%= check_box_tag "attribute_rating_sheet_ids[]", a.id %></td>
+                <td>
+                  <% if a.is_confirm_appraisee == true %>
+
+                  <% else %>
+                  <%= check_box_tag "attribute_rating_sheet_ids[]", a.id %>
+                  <% end %>
+                </td>
                 <td><%= a.employee_attribute.attribute_master.name %></td>
                 <td><%= a.employee_attribute.weightage %></td>
                 <td><%= a.appraisee_comment %></td>
@@ -35,13 +40,6 @@
                   
                   <% end %>
                 </td>
-              <% else %>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              <% end %>
 
             </tr>
           <% end %>
@@ -55,9 +53,7 @@
             <%= link_to 'Back', new_goal_rating_sheet_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
           </div>
         </div>
-        <div style="float:right;">
-          <%= link_to ' Send Email',send_email_to_appraiser_attribute_rating_sheets_path(id: current_user.employee_id),class: 'btn btn-sm btn-info'  %>
-        </div>
+        
       </div>
  
 </div>

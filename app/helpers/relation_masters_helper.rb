@@ -1,0 +1,2 @@
+module RelationMastersHelper
+end

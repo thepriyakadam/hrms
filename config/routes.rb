@@ -1,6 +1,7 @@
 
 Rails.application.routes.draw do
   resources :nomination_masters
+  resources :relation_masters
   resources :particular_vacancy_requests
   resources :travel_expences
   resources :daily_bill_details 
@@ -112,6 +113,10 @@ Rails.application.routes.draw do
       get :approve_vacancy
       get :approve_vacancy_list
       get :cancel_vacancy_request
+      get :particular_vacancy_request_list
+      get :approved_vacancy_list
+      get :modal1
+      post :update_no_of_positions
     end
   end
   resources :leave_c_offs do

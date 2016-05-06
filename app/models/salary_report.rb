@@ -141,12 +141,56 @@ class SalaryReport
     array_pf = reports.collect {|r| r.try(:pf)}.compact
     @sum.pf = array_pf.inject(0){|sum,x| sum + x }
 
-    array_earned_total = reports.collect {|r| r.try(:earned_total)}.compact
-    @sum.earned_total = array_earned_total.inject(0){|sum,x| sum + x }
+    array_esic = reports.collect {|r| r.try(:esic)}.compact
+    @sum.esic = array_esic.inject(0){|sum,x| sum + x }
 
-    :pf, :esic, :income_tax, :pt, :advance, :society, :food_deduction, :mobile, :retention, :deduction_total, :net_payable,
-	  :total_leave, :lwp_leave, :day_in_month, :present_day, :absent_day, :holiday, :weekoff
+    array_income_tax = reports.collect {|r| r.try(:income_tax)}.compact
+    @sum.income_tax = array_income_tax.inject(0){|sum,x| sum + x }
 
+    array_pt = reports.collect {|r| r.try(:pt)}.compact
+    @sum.pt = array_pt.inject(0){|sum,x| sum + x }
+
+    array_advance = reports.collect {|r| r.try(:advance)}.compact
+    @sum.advance = array_advance.inject(0){|sum,x| sum + x }
+
+    array_society = reports.collect {|r| r.try(:society)}.compact
+    @sum.society = array_society.inject(0){|sum,x| sum + x }
+
+    array_food_deduction = reports.collect {|r| r.try(:food_deduction)}.compact
+    @sum.food_deduction = array_food_deduction.inject(0){|sum,x| sum + x }
+
+    array_mobile = reports.collect {|r| r.try(:mobile)}.compact
+    @sum.mobile = array_mobile.inject(0){|sum,x| sum + x }
+
+    array_retention = reports.collect {|r| r.try(:retention)}.compact
+    @sum.retention = array_retention.inject(0){|sum,x| sum + x }
+
+    array_deduction_total = reports.collect {|r| r.try(:deduction_total)}.compact
+    @sum.deduction_total = array_deduction_total.inject(0){|sum,x| sum + x }
+
+    array_net_payable = reports.collect {|r| r.try(:net_payable)}.compact
+    @sum.net_payable = array_net_payable.inject(0){|sum,x| sum + x }
+
+    array_total_leave = reports.collect {|r| r.try(:total_leave)}.compact
+    @sum.total_leave = array_total_leave.inject(0){|sum,x| sum + x }
+
+		array_lwp_leave = reports.collect {|r| r.try(:lwp_leave)}.compact
+    @sum.lwp_leave = array_lwp_leave.inject(0){|sum,x| sum + x.to_i }
+
+    array_day_in_month = reports.collect {|r| r.try(:day_in_month)}.compact
+    @sum.day_in_month = array_day_in_month.inject(0){|sum,x| sum + x }
+
+    array_present_day = reports.collect {|r| r.try(:present_day)}.compact
+    @sum.present_day = array_present_day.inject(0){|sum,x| sum + x }
+
+    array_absent_day = reports.collect {|r| r.try(:absent_day)}.compact
+    @sum.absent_day = array_absent_day.inject(0){|sum,x| sum + x }
+
+    array_holiday = reports.collect {|r| r.try(:holiday)}.compact
+    @sum.holiday = array_holiday.inject(0){|sum,x| sum + x }
+
+    array_weekoff = reports.collect {|r| r.try(:weekoff)}.compact
+    @sum.weekoff = array_weekoff.inject(0){|sum,x| sum + x }
 
     @sum
 	end

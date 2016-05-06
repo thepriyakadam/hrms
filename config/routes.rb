@@ -1,5 +1,6 @@
 
 Rails.application.routes.draw do
+  resources :relation_masters
   resources :particular_vacancy_requests
   resources :travel_expences
   resources :daily_bill_details 

@@ -143,8 +143,6 @@
           <Cell ss:Index="30"><Data ss:Type="Number"><%= slip.calculated_gross_salary.round %></Data></Cell>
 
           <% @deducted_salaryslip_items = slip.salaryslip_components.where(is_deducted: true) %>
-          <% advance = @deducted_salaryslip_items.where(other_component_name: "Advance").sum(:calculated_amount).round%>
-         <% food_deduction = @deducted_salaryslip_items.where(other_component_name: "Food Deduction").sum(:calculated_amount).round%>
           <% @deducted_salaryslip_items.each do |item| %>
             <% if item.salary_component_id.nil? %>
               <% if item.other_component_name == "PF" %>
@@ -160,9 +158,9 @@
               <% elsif item.other_component_name == "Society" %>
                 <Cell ss:Index="36"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
               <% elsif item.other_component_name == "Food Deduction" %>
-                <Cell ss:Index="37"><Data ss:Type="Number"><%= food_deduction %></Data></Cell>
+                <Cell ss:Index="37"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
               <% elsif item.other_component_name == "Advance" %>
-                <Cell ss:Index="38"><Data ss:Type="Number"><%= advance %></Data></Cell>
+                <Cell ss:Index="38"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
               <% elsif item.other_component_name == "Income Tax" %>
                 <Cell ss:Index="39"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
               <% elsif item.other_component_name == "Mobile Deduction" %>

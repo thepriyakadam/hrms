@@ -141,6 +141,7 @@
             <% end %> <!-- switch case -->
           <% end %><!-- addable items -->
           <Cell ss:Index="30"><Data ss:Type="Number"><%= slip.calculated_gross_salary.round %></Data></Cell>
+          
          <% @deducted_salaryslip_items = slip.salaryslip_components.where(is_deducted: true) %>
           <% @deducted_salaryslip_items.each do |item| %>
             <% if item.salary_component_id.nil? %>

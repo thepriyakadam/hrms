@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160503130816) do
+ActiveRecord::Schema.define(version: 20160506111946) do
 
   create_table "accident_records", force: :cascade do |t|
     t.string   "code"
@@ -351,6 +351,7 @@ ActiveRecord::Schema.define(version: 20160503130816) do
     t.decimal  "other_expence",        precision: 15, scale: 2, default: 0.0
     t.datetime "created_at",                                                  null: false
     t.datetime "updated_at",                                                  null: false
+    t.boolean  "is_confirm"
   end
 
   add_index "daily_bill_details", ["travel_request_id"], name: "index_daily_bill_details_on_travel_request_id"

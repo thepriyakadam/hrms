@@ -288,7 +288,14 @@
 </ul>
 
 <script typgre="text/javascript">
+
+  <% unless session[:active_tab].nil? %>
   document.getElementById("<%= session[:active_tab] %>").classList.add("active");
+  <%end%>
+  <% unless session[:active_tab1].nil? %>
   document.getElementById("<%= session[:active_tab1] %>").classList.add("active");
+  <%end%>
+  <% unless session[:active_tab2].nil? %>
   document.getElementById("<%= session[:active_tab2] %>").classList.add("active");
+  <%end%>
 </script>

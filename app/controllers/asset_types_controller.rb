@@ -15,6 +15,7 @@ class AssetTypesController < ApplicationController
   # GET /asset_types/new
   def new
     @asset_type = AssetType.new
+    @asset_types = AssetType.all
   end
 
   # GET /asset_types/1/edit
@@ -26,39 +27,33 @@ class AssetTypesController < ApplicationController
   def create
     @asset_type = AssetType.new(asset_type_params)
 
-    respond_to do |format|
       if @asset_type.save
-        format.html { redirect_to @asset_type, notice: 'Asset type was successfully created.' }
-        format.json { render :show, status: :created, location: @asset_type }
+        @flag = true
+        @asset_type = AssetType.new
+        @asset_types = AssetType.all
       else
-        format.html { render :new }
-        format.json { render json: @asset_type.errors, status: :unprocessable_entity }
+        @flag = false
       end
-    end
   end
 
   # PATCH/PUT /asset_types/1
   # PATCH/PUT /asset_types/1.json
   def update
-    respond_to do |format|
       if @asset_type.update(asset_type_params)
-        format.html { redirect_to @asset_type, notice: 'Asset type was successfully updated.' }
-        format.json { render :show, status: :ok, location: @asset_type }
+        @flag = true
+        @asset_type = AssetType.new
+        @asset_types = AssetType.all
       else
-        format.html { render :edit }
-        format.json { render json: @asset_type.errors, status: :unprocessable_entity }
+        @flag = false
       end
-    end
   end
 
   # DELETE /asset_types/1
   # DELETE /asset_types/1.json
   def destroy
     @asset_type.destroy
-    respond_to do |format|
-      format.html { redirect_to asset_types_url, notice: 'Asset type was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    flash[:notice] = "Deleted Successfully"
+     redirect_to new_asset_type_path
   end
 
   private

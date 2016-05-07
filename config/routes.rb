@@ -1,6 +1,7 @@
 
 Rails.application.routes.draw do
 
+  resources :assigned_assets
   resources :asset_types
   resources :employee_nominations
   resources :nomination_masters

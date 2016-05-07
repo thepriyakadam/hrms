@@ -4,7 +4,7 @@
      <%= bootstrap_form_for :particular_vacancy_request,url:{action:"update_no_of_positions",id: @vacancy_master.id} do |f| %>
         <div class="row">
           <div class="col-sm-6">
-            <%= f.text_field :no_of_position,value: @vacancy_master.no_of_position,label: 'No. of Positions'%>
+            <%= f.text_field :no_of_position,value: @vacancy_master.no_of_position,hide_label: true%>
           </div>
           <div class="col-sm-3">
             <%= f.submit "Update", class: 'btn btn-sm btn-warning fa fa-modx' %>

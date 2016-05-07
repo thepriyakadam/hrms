@@ -130,7 +130,7 @@ class VacancyMastersController < ApplicationController
     @particular_vacancy_requests = ParticularVacancyRequest.where(vacancy_master_id: @vacancy_master.id)
     
     @particular_vacancy_requests.each do |p|
-      p.update(status: "Approved & Send Next",open_date: Time.zone.now.to_date)
+      p.update(status: "Approved & Send Next")
     end 
     VacancyMasterMailer.approve_and_send_next_email(@vacancy_master).deliver_now
     @vacancy_master.update(current_status: "Approved & Send Next",reporting_master_id: params[:vacancy_master][:reporting_master_id])
@@ -170,6 +170,7 @@ class VacancyMastersController < ApplicationController
 
   def approve_vacancy_list
     @vacancy_masters = VacancyMaster.all
+
     session[:active_tab] ="recruitment"
   end
 
@@ -209,6 +210,8 @@ class VacancyMastersController < ApplicationController
       @particular_vacancy_requests.each do |p|
         p.update(status: "Approved")
       end
+      @vacancy_master.update(current_status: "Approved")
+      flash[:notice] = "No. Of Positions Updated Successfully"
       redirect_to vacancy_history_vacancy_masters_path
     end 
   end
@@ -221,12 +224,13 @@ class VacancyMastersController < ApplicationController
       redirect_to vacancy_masters_path
   end
 
+  def vacancy_resume
+      @vacancy_masters = VacancyMaster.all
+  end
+
 
   private
 
-  def particular_vacancy_request_params
-    params.require(:particular_vacancy_request).permit(:vacancy_master_id, :employee_id, :open_date, :closed_date, :fulfillment_date, :status)
-  end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_vacancy_master

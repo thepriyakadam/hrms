@@ -457,6 +457,7 @@ Rails.application.routes.draw do
         get :select_month_year_form
         get :show_employee
         post :print_salary_slip_monthwise
+        get :bank_wise_salary
      end
    end  
 

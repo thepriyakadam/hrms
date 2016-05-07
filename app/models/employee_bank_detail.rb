@@ -1,5 +1,8 @@
 class EmployeeBankDetail < ActiveRecord::Base
   belongs_to :employee
+  has_many :salaryslips
+  has_many :employee_bank_details
+  belongs_to :bank
   # validates :bank_name, :presence => true
   # validates :branch_name, :presence => true
   # validates :address, :presence => true
@@ -16,7 +19,7 @@ class EmployeeBankDetail < ActiveRecord::Base
     if bank_name.present? && !bank_name.match(/\A[A-Za-z_ ]{1,30}\Z/)
       errors.add :bank_name, 'Bank Name allows only Characters'
     end
-    end
+  end
 
   def branch_name_regex
     if branch_name.present? && !branch_name.match(/\A[A-Za-z_ ]{1,30}\Z/)
@@ -52,5 +55,37 @@ class EmployeeBankDetail < ActiveRecord::Base
     if account_no.present? && !account_no.match(/\A[0-9]{1,15}\Z/)
       errors.add :account_no, 'Account NO Allows Only Digits allows only Digits'
     end
-    end
-end
+  end
+
+  def self.add_bank
+    ba = [nil, "", "AXIS BANK", "CHEQUE", "HDFC", "NARMADA GRAMIN ", "S .B.I.", "SBI", "SBM", "STATE BANK OF INDIA", "State Bank of ondia", "UNION BANK", "sbi"]
+    EmployeeBankDetail.all.each do |b|
+      case b.bank_name
+        when nil
+          b.update(bank_id: nil)
+        when ""
+          b.update(bank_id: nil)
+        when "AXIS BANK"
+          b.update(bank_id: 2)
+        when "CHEQUE"
+          b.update(bank_id: nil)
+        when "HDFC"
+          b.update(bank_id: 4)
+        when "NARMADA GRAMIN "
+          b.update(bank_id: 5)
+        when "S .B.I."
+          b.update(bank_id: 1)
+        when "SBM"
+          b.update(bank_id: 3)
+        when "STATE BANK OF INDIA"
+          b.update(bank_id: 1)
+        when "State Bank of ondia"
+          b.update(bank_id: 1)
+        when "UNION BANK"
+          b.update(bank_id: 6)
+        when "sbi"
+          b.update(bank_id: 1)
+      end # case end  
+    end # bank_loop
+  end # action end
+end # class end

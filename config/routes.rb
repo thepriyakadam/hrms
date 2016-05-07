@@ -1,7 +1,14 @@
 
 Rails.application.routes.draw do
+  resources :nomination_masters
+  resources :relation_masters
+  resources :particular_vacancy_requests
   resources :travel_expences
-  resources :daily_bill_details 
+  resources :daily_bill_details do
+    collection do 
+    post :is_confirm
+    end
+  end 
   resources :travel_requests do
     collection do 
       get :daily_bill
@@ -95,6 +102,7 @@ Rails.application.routes.draw do
       get :interview_reschedule
       post :send_email_to_candidate
       get :sample_email
+      post :is_confirm
     end
   end
   resources :vacancy_masters do
@@ -109,6 +117,11 @@ Rails.application.routes.draw do
       get :approve_vacancy
       get :approve_vacancy_list
       get :cancel_vacancy_request
+      get :particular_vacancy_request_list
+      get :approved_vacancy_list
+      get :modal1
+      post :update_no_of_positions
+      get :is_closed
     end
   end
   resources :leave_c_offs do
@@ -216,6 +229,20 @@ Rails.application.routes.draw do
       get :employee_final_details
       get :subordinate_list2
       get :employee_appraiser2_details
+      get :modal
+      patch :update_modal
+      get :modal_appraiser
+      patch :update_appraiser_modal
+      get :modal_appraiser2
+      patch :update_appraiser2_modal
+      get :modal_final
+      patch :update_final_modal
+      get :print_details_appraiser
+      get :print_details_final
+      get :print_details_appraiser2
+      get :send_email_to_appraiser
+      get :send_email_to_appraiser2
+      get :try
     end
   end
   resources :goal_rating_sheets do
@@ -230,7 +257,6 @@ Rails.application.routes.draw do
       get :appraiser
       post :appraiser_create
       get :appraisee_goal_list
-      get :modal
       get :subordinate_list2
       get :appraiser2
       post :appraiser2_create
@@ -243,7 +269,16 @@ Rails.application.routes.draw do
       patch :update_final
       post :is_confirm_final
       post :is_confirm_appraiser2
+      get :modal
+      patch :update_modal
+      get :modal_appraiser
+      patch :update_appraiser_modal
+      get :modal_appraiser2
+      patch :update_appraiser2_modal
+      get :modal_final
+      patch :update_final_modal
     end
+     
   end
   resources :employee_attributes do
     collection do
@@ -252,6 +287,7 @@ Rails.application.routes.draw do
       get :appraiser
       post :appraiser_create
       post :is_confirm
+      get :show_list
     end
   end
   resources :employee_goals do
@@ -260,6 +296,10 @@ Rails.application.routes.draw do
       post :is_confirm
       get :employee_list
       get :show_goal
+      get :send_email_to_employee
+      get :show_employee
+      post :print_detail
+      get :select_designation
     end
   end
 
@@ -358,6 +398,7 @@ Rails.application.routes.draw do
   namespace :reports do
     get 'salaries/new'
     post 'salaries/date_range_report'
+    get 'salaries/download'
     # post 'salaries/department_wise'
     # get 'salaries/show'
     post 'salaries/ctc_yearly_report'
@@ -411,7 +452,15 @@ Rails.application.routes.draw do
         post :print_salary_slip_monthwise
      end
    end  
-
+  
+  resources :salary_slip_ledgers do
+     collection do
+        get :select_month_year_form
+        get :show_employee
+        post :print_salary_slip_monthwise
+        get :bank_wise_salary
+     end
+   end  
 
   resources :instalments do
     collection do
@@ -431,7 +480,11 @@ Rails.application.routes.draw do
       get :generate_workingday
     end
   end
-  resources :shift_rotations
+  resources :shift_rotations do
+    collection do
+      get :collect_employee
+    end
+  end
   resources :employee_monthly_days do
     collection do
       get :find_employee_for_employee_monthly_day

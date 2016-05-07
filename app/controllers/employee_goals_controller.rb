@@ -70,6 +70,8 @@ class EmployeeGoalsController < ApplicationController
   end
 
   def employee_list
+      @year = params[:year]
+      @employees = params[:employee_ids]
      if current_user.class == Group
       @employees = Employee.all
     elsif current_user.class == Member
@@ -108,9 +110,52 @@ class EmployeeGoalsController < ApplicationController
       GoalRatingSheet.create(appraisee_id: @employee.id, employee_goal_id: @employee_goal.id)
       
       flash[:notice] = "Confirmed Successfully"
-    end  
+    end 
+
      redirect_to new_employee_goal_path( @employee.id) 
   end
+  end
+
+  def send_email_to_employee
+    @employee_goal = EmployeeGoal.find_by_employee_id(params[:format])
+    @employee = Employee.find(@employee_goal.employee_id)
+    EmployeeGoalMailer.send_email_to_employee(@employee_goal).deliver_now
+    flash[:notice] = "Email sent Successfully"
+    redirect_to new_employee_attribute_path(@employee.id) 
+  end
+
+
+  def show_employee
+    puts '---------------------------'
+    @employee = Employee.new
+    @employees = Employee.all
+
+  end
+
+  def print_detail
+
+    @employee = params[:employee_ids]
+    @employees = Employee.where(id: @employee)
+
+            respond_to do |format|
+            format.html
+            format.pdf do
+            render :pdf => 'print_multiple_emp_detail',
+            layout: '/layouts/pdf.html.erb',
+            :template => 'employee_goals/print_multiple_emp_detail.pdf.erb',
+            :header => {
+                    :center => "BFTL"
+                 },
+            :orientation      => 'Landscape', # default , Landscape
+            :page_height      => 1000,
+            :dpi              => '300',
+            :margin           => {:top    => 55, # default 10 (mm)
+                          :bottom => 55,
+                          :left   => 12,
+                          :right  => 0},
+            :show_as_html => params[:debug].present?
+          end
+        end
   end
 
   private

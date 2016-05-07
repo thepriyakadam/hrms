@@ -20,7 +20,13 @@
       <tbody>
         <% @employee_attributes.each do |a| %>
         <tr>
-          <td><%= check_box_tag "employee_attribute_ids[]", a.id %></td>
+          <td>
+            <% if a.is_confirm == true %>
+
+            <% else %>  
+            <%= check_box_tag "employee_attribute_ids[]", a.id %>
+            <% end %>
+          </td>
           <td><%= a.attribute_master.name %></td>
           <td><%= a.weightage %></td>
           <td>
@@ -43,11 +49,14 @@
       <div class="col-sm-3">
         <div class="actions">
           <%= f.submit "Confirm", class: 'btn btn-primary btn-sm' %> 
+          
+          <%= link_to 'Created Goals & Attributes', show_list_employee_attributes_path(@employee.id),class: 'btn btn-warning btn-sm' %><br><br>
           <%= link_to 'Back', new_employee_goal_path(@employee.id),class: 'btn btn-default btn-sm fa fa-arrow-left' %>
-
         </div>
       </div>
+        
     </div>
+
   <% end %> 
   
   </div>

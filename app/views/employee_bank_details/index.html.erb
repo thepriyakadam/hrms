@@ -27,7 +27,7 @@
       <tr>
         <td><%= employee_bank_detail.employee %></td>
         <td><%= employee_bank_detail.account_no %></td>
-        <td><%= employee_bank_detail.bank_name %></td>
+        <td><%= employee_bank_detail.bank.try(:name) %></td>
         <td><%= employee_bank_detail.branch_name %></td>
         <td><%= employee_bank_detail.contact_no %></td>
         <td><%= employee_bank_detail.micr_code %></td>

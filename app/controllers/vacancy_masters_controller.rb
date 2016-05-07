@@ -21,8 +21,7 @@ class VacancyMastersController < ApplicationController
       end
      end
       session[:active_tab] ="recruitment"
-    end
-
+  end
 
 
   # GET /vacancy_masters/1
@@ -56,6 +55,10 @@ class VacancyMastersController < ApplicationController
 
     respond_to do |format|
       if @vacancy_master.save
+        len = @vacancy_master.no_of_position
+        for i in 1..len
+        ParticularVacancyRequest.create(vacancy_master_id: @vacancy_master.id,employee_id: @vacancy_master.employee_id,employee_designation_id: @vacancy_master.employee_designation_id,vacancy_name: @vacancy_master.vacancy_name,fulfillment_date: @vacancy_master.vacancy_post_date,status: "Pending")
+        end
         ReportingMastersVacancyMaster.create(reporting_master_id: @vacancy_master.reporting_master_id, vacancy_master_id: @vacancy_master.id, vacancy_status: "Pending")
         VacancyMasterMailer.vacancy_request(@vacancy_master).deliver_now
         format.html { redirect_to @vacancy_master, notice: 'Vacancy created successfully.' }
@@ -104,8 +107,8 @@ class VacancyMastersController < ApplicationController
   end
 
   def vacancy_request_confirmation
-   @vacancy_master = VacancyMaster.find(params[:format])
-   @vacancy_masters = VacancyMaster.where(reporting_master_id: current_user.employee_id)
+     @vacancy_master = VacancyMaster.find(params[:format])
+     @vacancy_masters = VacancyMaster.where(reporting_master_id: current_user.employee_id)
   end
 
   def vacancy_history
@@ -117,9 +120,19 @@ class VacancyMastersController < ApplicationController
     @vacancy_master = VacancyMaster.find(params[:format])
   end
 
+  def modal1
+    @vacancy_master = VacancyMaster.find(params[:format])
+  end
+
   def send_request_to_higher_authority
     puts ".................."
     @vacancy_master = VacancyMaster.find(params[:id])
+    @particular_vacancy_requests = ParticularVacancyRequest.where(vacancy_master_id: @vacancy_master.id)
+    
+    @particular_vacancy_requests.each do |p|
+      p.update(status: "Approved & Send Next",open_date: Time.zone.now.to_date)
+    end 
+    VacancyMasterMailer.approve_and_send_next_email(@vacancy_master).deliver_now
     @vacancy_master.update(current_status: "Approved & Send Next",reporting_master_id: params[:vacancy_master][:reporting_master_id])
     ReportingMastersVacancyMaster.create(vacancy_master_id: @vacancy_master.id, reporting_master_id: params[:vacancy_master][:reporting_master_id], vacancy_status: "Approved & Send Next")
     flash[:notice] = 'Vacancy Send to Higher Authority'
@@ -128,6 +141,12 @@ class VacancyMastersController < ApplicationController
 
   def reject_vacancy
     @vacancy_master = VacancyMaster.find(params[:format])
+    @particular_vacancy_requests = ParticularVacancyRequest.where(vacancy_master_id: @vacancy_master.id)
+    
+    @particular_vacancy_requests.each do |p|
+      p.update(status: "Reject")
+  end  
+
     @vacancy_master.update(current_status: "Reject")
     ReportingMastersVacancyMaster.create(vacancy_master_id: @vacancy_master.id, reporting_master_id: current_user.employee_id, vacancy_status: "Reject")
     VacancyMasterMailer.reject_vacancy_email(@vacancy_master).deliver_now
@@ -137,6 +156,11 @@ class VacancyMastersController < ApplicationController
 
   def approve_vacancy
     @vacancy_master = VacancyMaster.find(params[:format])
+    @particular_vacancy_requests = ParticularVacancyRequest.where(vacancy_master_id: @vacancy_master.id)
+
+    @particular_vacancy_requests.each do |p|
+      p.update(status: "Approved",open_date: Time.zone.now.to_date)
+  end    
     @vacancy_master.update(current_status: "Approved")
     ReportingMastersVacancyMaster.create(vacancy_master_id: @vacancy_master.id, reporting_master_id: current_user.employee_id, vacancy_status: "Approved")
     VacancyMasterMailer.approve_vacancy_email(@vacancy_master).deliver_now
@@ -157,6 +181,7 @@ class VacancyMastersController < ApplicationController
 
   def cancel_vacancy_request
     @vacancy_master = VacancyMaster.find(params[:format])
+     len = @vacancy_master.no_of_position
     @vacancy_master.update(current_status: "Cancelled")
     ReportingMastersVacancyMaster.create(vacancy_master_id: @vacancy_master.id, reporting_master_id: current_user.employee_id, vacancy_status: "Cancelled")
     VacancyMasterMailer.cancel_vacancy_email(@vacancy_master).deliver_now
@@ -164,16 +189,74 @@ class VacancyMastersController < ApplicationController
     redirect_to vacancy_masters_path
   end
 
+  def particular_vacancy_request_list
+    @vacancy_master = VacancyMaster.find(params[:format])
+    @particular_vacancy_requests = ParticularVacancyRequest.where(vacancy_master_id: @vacancy_master.id)
+  end
+
+  def approved_vacancy_list
+     @vacancy_masters = VacancyMaster.where(employee_id: current_user.employee_id,current_status: "Approved")
+  end
+
+  def update_no_of_positions 
+    @vacancy_master = VacancyMaster.find(params[:id])
+    @no_of_position = params[:particular_vacancy_request][:no_of_position]
+    if @vacancy_master.no_of_position < @no_of_position.to_i
+      flash[:alert] = 'No of Positions greater than max limit'
+      redirect_to vacancy_history_vacancy_masters_path
+    else
+      @particular_vacancy_requests = ParticularVacancyRequest.where(vacancy_master_id: @vacancy_master.id).limit(@no_of_position)
+      @particular_vacancy_requests.each do |p|
+        p.update(status: "Approved")
+      end
+      redirect_to vacancy_history_vacancy_masters_path
+    end 
+  end
+
+
+  def is_confirm
+    #@employee_goal = EmployeeGoal.find(params[:id])
+    @employee = Employee.find(params[:id])
+
+    @employee_goal_ids = params[:employee_goal_ids]
+    if @employee_goal_ids.nil?
+      flash[:alert] = "Please Select the Checkbox"
+      redirect_to new_employee_goal_path(@employee.id)
+    else
+      @employee_goal_ids.each do |eid|
+      @employee_goal = EmployeeGoal.find(eid)
+      @employee_goal.update(is_confirm: true)
+
+      GoalRatingSheet.create(appraisee_id: @employee.id, employee_goal_id: @employee_goal.id)
+      
+      flash[:notice] = "Confirmed Successfully"
+    end 
+
+     redirect_to new_employee_goal_path( @employee.id) 
+  end
+  end
+
+  def is_closed
+      #byebug
+      @particular_vacancy_request =  ParticularVacancyRequest.find(params[:format])
+      @particular_vacancy_request.update(is_complete: true)
+      flash[:notice] = "Vacancy Request Closed Successfully"
+      redirect_to vacancy_history_vacancy_masters_path
+  end
 
 
   private
+
+  def particular_vacancy_request_params
+    params.require(:particular_vacancy_request).permit(:vacancy_master_id, :employee_id, :open_date, :closed_date, :fulfillment_date, :status)
+  end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_vacancy_master
     @vacancy_master = VacancyMaster.find(params[:id])
   end
 
-  # Never trust parameters from the scary internet, only allow the white list through.
+  # Never trust param eters from the scary internet, only allow the white list through.
   def vacancy_master_params
     params.require(:vacancy_master).permit(:employee_designation_id,:justification,:employee_id,:current_status,:experience,:degree_1_id,:degree_2_id,:reporting_master_id,:keyword,:other_organization, :department_id, :degree_id, :company_location_id, :vacancy_name, :no_of_position, :description, :vacancy_post_date, :budget)
   end

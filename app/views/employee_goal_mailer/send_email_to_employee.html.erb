@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+     <h4>Employee Goals Set Confirmation</h4>
+    <p>    
+      This is to inform you that your Goals & Attributes have been set,now set your own rating.<br><br>
+        Employee Name :- <%= @employee_goal.employee.first_name.to_s %> <%= @employee_goal.employee.last_name.to_s %><%= @employee_goal.employee.middle_name.to_s %><br><br>
+        With Regards,<br><br>
+        BFTL HR
+     </p>
+  </body>
+</html>

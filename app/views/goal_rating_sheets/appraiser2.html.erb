@@ -136,6 +136,9 @@
     </tbody>
   </table>
 
+  <% if @goal_rating_sheets.empty? %>
+
+  <% else %>
     <div class="row">
       <div class="col-sm-3">
         <div class="actions">
@@ -145,7 +148,7 @@
     </div>
 <% end %>
 
-
+<% end %>
 <%= bootstrap_form_for :goal_rating_sheet,url:{action:'is_confirm_appraiser2',id: @employee.id} do |f| %>
 <div class="box-header with-border">
   <h3 class="box-title">Goals</h3>
@@ -173,7 +176,13 @@
     <tbody>
       <% @goal_rating_shets.each do |g| %>
         <tr>
-          <td><%= check_box_tag "goal_rating_sheet_ids[]", g.id %></td>
+          <td>
+            <% if g.is_confirm_appraiser2 == true %>
+
+            <% else %>
+              <%= check_box_tag "goal_rating_sheet_ids[]", g.id %>
+            <% end %>
+          </td>
           <td><%= g.employee_goal.goal_perspective.name %></td>
           <td><%= g.employee_goal.goal_measure %></td>
           <td><%= g.employee_goal.target %></td>
@@ -191,7 +200,7 @@
             <% if g.is_confirm_appraiser2 == true %>
             <small class="label label-info">Confirmed</small>
             <% else %>
-              <%= link_to '', edit_appraiser2_goal_rating_sheets_path(g) ,class: 'btn btn-xs btn-success fa fa-edit' %>
+              <%= link_to '', modal_appraiser2_goal_rating_sheets_path(g) ,class: 'btn btn-xs btn-success fa fa-edit', remote: true %>
             <% end %>
           </td>
           <%= hidden_field_tag 'goal_rating_sheet_id[]', {},value: g.id %> 
@@ -208,6 +217,8 @@
       </div>
     </div>
     <% end %>
+  
+  <div id="myModal" class="modal fade"></div>
   
   </br>
   <%= link_to 'Attribute', appraiser2_attribute_rating_sheets_path(@employee.id) ,class: 'btn btn-warning btn-sm' %> |

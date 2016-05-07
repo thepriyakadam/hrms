@@ -21,10 +21,10 @@
     <tbody>
       <% @attribute_rating_sheets.each do |a| %>
       <tr>
-        <td><%= a.appraisee.manual_employee_code %></td> 
-        <td><%= a.appraisee.first_name %></td>
-        <td><%= Time.now.year-a.appraisee.date_of_birth.year %></td>
-        <td><%= a.appraisee.department.name %></td>
+        <td><%= a.manual_employee_code %></td> 
+        <td><%= a.first_name %></td>
+        <td><%= Time.now.year-a.date_of_birth.year %></td>
+        <td><%= a.department.name %></td>
         <td><%= @joining_detail.joining_date %></td>
         <td><%= @joining_detail.employee_grade.name %></td>
         <td><%= @joining_detail.employee_designation.name %></td>
@@ -161,6 +161,9 @@
       <% end %>
       </tbody>
       </table>
+      <hr>
+    <%= link_to 'Back', subordinate_list2_attribute_rating_sheets_path(@employee.id),class: 'btn btn-default btn-sm fa fa-arrow-left' %> |
 
+    <%= link_to 'Print PDF', print_details_appraiser2_attribute_rating_sheets_path(format: 'pdf',id:@employee.id ),class: 'btn btn-xl btn-warning', :target => '_blank' %><br>
     </div>
     </div>

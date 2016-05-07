@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160427070132) do
+ActiveRecord::Schema.define(version: 20160506132700) do
 
   create_table "accident_records", force: :cascade do |t|
     t.string   "code"
@@ -209,11 +209,14 @@ ActiveRecord::Schema.define(version: 20160427070132) do
     t.string   "linkedin"
     t.integer  "vacancy_master_id"
     t.integer  "degree_id"
+    t.string   "job_title"
+    t.integer  "employee_designation_id"
   end
 
   add_index "capture_resumes", ["country_id"], name: "index_capture_resumes_on_country_id"
   add_index "capture_resumes", ["degree_id"], name: "index_capture_resumes_on_degree_id"
   add_index "capture_resumes", ["district_id"], name: "index_capture_resumes_on_district_id"
+  add_index "capture_resumes", ["employee_designation_id"], name: "index_capture_resumes_on_employee_designation_id"
   add_index "capture_resumes", ["state_id"], name: "index_capture_resumes_on_state_id"
   add_index "capture_resumes", ["vacancy_master_id"], name: "index_capture_resumes_on_vacancy_master_id"
 
@@ -348,6 +351,7 @@ ActiveRecord::Schema.define(version: 20160427070132) do
     t.decimal  "other_expence",        precision: 15, scale: 2, default: 0.0
     t.datetime "created_at",                                                  null: false
     t.datetime "updated_at",                                                  null: false
+    t.boolean  "is_confirm"
   end
 
   add_index "daily_bill_details", ["travel_request_id"], name: "index_daily_bill_details_on_travel_request_id"
@@ -489,8 +493,10 @@ ActiveRecord::Schema.define(version: 20160427070132) do
     t.string   "ifsc_code"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.integer  "bank_id"
   end
 
+  add_index "employee_bank_details", ["bank_id"], name: "index_employee_bank_details_on_bank_id"
   add_index "employee_bank_details", ["employee_id"], name: "index_employee_bank_details_on_employee_id"
 
   create_table "employee_categories", force: :cascade do |t|
@@ -939,6 +945,7 @@ ActiveRecord::Schema.define(version: 20160427070132) do
     t.integer  "reporting_master_id"
     t.string   "email_id"
     t.integer  "employee_id"
+    t.boolean  "is_confirm"
   end
 
   add_index "interview_schedules", ["employee_id"], name: "index_interview_schedules_on_employee_id"
@@ -1111,6 +1118,14 @@ ActiveRecord::Schema.define(version: 20160427070132) do
     t.datetime "updated_at",  null: false
   end
 
+  create_table "nomination_masters", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
+    t.string   "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
   create_table "other_salary_components", force: :cascade do |t|
     t.string   "code"
     t.string   "name"
@@ -1205,6 +1220,25 @@ ActiveRecord::Schema.define(version: 20160427070132) do
   add_index "particular_leave_records", ["employee_leav_request_id"], name: "index_particular_leave_records_on_employee_leav_request_id"
   add_index "particular_leave_records", ["leav_category_id"], name: "index_particular_leave_records_on_leav_category_id"
 
+  create_table "particular_vacancy_requests", force: :cascade do |t|
+    t.integer  "vacancy_master_id"
+    t.integer  "employee_id"
+    t.date     "open_date"
+    t.date     "closed_date"
+    t.date     "fulfillment_date"
+    t.string   "status"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.integer  "employee_designation_id"
+    t.string   "vacancy_name"
+    t.boolean  "is_complete"
+    t.integer  "closed_position"
+  end
+
+  add_index "particular_vacancy_requests", ["employee_designation_id"], name: "index_particular_vacancy_requests_on_employee_designation_id"
+  add_index "particular_vacancy_requests", ["employee_id"], name: "index_particular_vacancy_requests_on_employee_id"
+  add_index "particular_vacancy_requests", ["vacancy_master_id"], name: "index_particular_vacancy_requests_on_vacancy_master_id"
+
   create_table "payment_modes", force: :cascade do |t|
     t.string   "code"
     t.string   "name"
@@ -1268,6 +1302,14 @@ ActiveRecord::Schema.define(version: 20160427070132) do
 
   create_table "rating_masters", force: :cascade do |t|
     t.integer  "code"
+    t.text     "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "relation_masters", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
     t.text     "description"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false

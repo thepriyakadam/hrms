@@ -16,7 +16,13 @@
         <tbody>
           <% @employee_goals.each do |e| %>
           <tr>
-            <td><%= check_box_tag "employee_goal_ids[]", e.id %></td>
+            <td>
+              <% if e.is_confirm == true %>
+
+              <% else %>
+                <%= check_box_tag "employee_goal_ids[]", e.id %>
+              <% end %>
+            </td>
             <td><%= e.period.title %></td>
             <td><%= e.goal_perspective.name %></td>
             <td><%= e.goal_measure %></td>
@@ -41,19 +47,20 @@
       <div class="row">
         <div class="col-sm-3">
           <div class="actions">
-            <%= f.submit "Confirm", class: 'btn btn-primary btn-sm' %>
+            <%= f.submit "Confirm", class: 'btn btn-primary btn-sm' %> 
+            
           </div>
         </div>
       </div>
     
-
-  <% end %>
 
       </br>
 
     <%= link_to 'Attribute Setting', new_employee_attribute_path(@employee.id) , class: 'btn btn-warning btn-sm' %> </br>
       </br>
     <%= link_to 'Back', subordinate_list_employee_goals_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+
+  <% end %>
 
 <script type="text/javascript">
   $(function () {

@@ -128,6 +128,9 @@
     </tbody>
   </table>
 
+  <% if @attribute_rating_multiple_sheets.empty? %>
+
+  <% else %>
   <div class="row">
       <div class="col-sm-3">
         <div class="actions">
@@ -137,6 +140,7 @@
     </div>
   <% end %>
 
+<% end %>
 
   <%= bootstrap_form_for :attribute_rating_sheet,url:{action:'is_confirm_final',id: @employee.id} do |f| %>
   <div class="box-header with-border">
@@ -162,7 +166,13 @@
     <tbody>
       <% @attribute_rating_multi_sheets.each do |a| %>
         <tr>
-          <td><%= check_box_tag "attribute_rating_sheet_ids[]", a.id %></td>
+          <td>
+            <% if a.is_confirm_final == true %>
+
+            <% else %>
+            <%= check_box_tag "attribute_rating_sheet_ids[]", a.id %>
+            <% end %>
+          </td>
           <td><%= a.employee_attribute.attribute_master.name %></td>
           <td><%= a.employee_attribute.weightage %></td>
           <td><%= a.appraisee_comment %></td>
@@ -177,7 +187,7 @@
           <% if a.is_confirm_final == true %>
           <small class="label label-info">Confirmed</small>
             <% else %>
-            <%= link_to '', edit_final_attribute_rating_sheets_path(a),class: 'btn btn-success btn-xs fa fa-edit' %>
+            <%= link_to '', modal_final_attribute_rating_sheets_path(a),class: 'btn btn-success btn-xs fa fa-edit', remote: true %>
             <% end %>
           </td>
         </tr>
@@ -199,6 +209,8 @@
   <% end %>
 </div>
 </div>
+
+<div id="myModal" class="modal fade"></div>
 
 <script type="text/javascript">
   $(function () {

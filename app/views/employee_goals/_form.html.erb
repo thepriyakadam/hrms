@@ -27,7 +27,7 @@
       <td><%= f.text_field :target,{hide_label: true, placeholder: 'e.g.:100%'} %></td>
       <td><%= f.select :goal_weightage,["1","2","3","4","5"],{hide_label: true, include_blank: "Select Goal Weightage"} %></td>
       <td><%= f.select :difficulty_level,["1","2","3"],{hide_label: true, include_blank: "Select Difficulty Level"} %></td>
-      <td><%= f.select :allign_to_supervisor,["Yes","No"],{hide_label: true,include_blank: "Allign To Supervisor"} %></td>
+      <td><%= f.select :allign_to_supervisor,["Yes","No"],{hide_label: true,include_blank: "Select Option"} %></td>
 
         <%= f.hidden_field :employee_id,value: @employee.id %>
         <%= f.hidden_field :emp_head,value: current_user.employee_id %>
@@ -38,14 +38,22 @@
     <div class="col-sm-3">
       <div class="actions">
         <%= f.submit "Create Goal",class: "btn btn-primary btn-sm" %>
+        
       </div>
     </div>
   </div>
+
+
   
 <% end %>
 <hr>
 
 <script type="text/javascript">
+
+$.validator.addMethod("goal_measure", function (value, element) {
+    return this.optional(element) || /^[a-zA-Z_]+$/i.test(value);
+},"Please Input Letters Only.");
+
   $("#employee_goal").validate({
     rules: {
       "employee_goal[target]":{
@@ -55,7 +63,8 @@
         required: true
       },
       "employee_goal[goal_measure]":{
-        required: true
+        required: true,
+        goal_measure: true
       },
       "employee_goal[goal_weightage]":{
         required: true

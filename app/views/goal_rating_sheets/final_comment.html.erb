@@ -90,7 +90,7 @@
    <div class="box-header with-border">
     <h3 class="box-title">Goals</h3>
   </div>
-  <table id="tbl" class="table table-bordered table-hover table-condensed">
+  <table id="example3" class="table table-bordered table-hover table-condensed">
     <thead>
       <tr>
         <th>Goal Perspctive</th>
@@ -126,8 +126,10 @@
           <td><%= g.appraiser_rating.try(:code) %></td>
           <td><%= g.appraiser2_comment %></td>
           <td><%= g.appraiser2_rating.try(:code) %></td>
+
           <td><%= text_field_tag 'final_comment[]'%></td>
           <td><%= select_tag 'final_rating_id[]',options_for_select(all_rating_type) ,{class: 'form-control', hide_label: true} %></td>
+
 
           <%= hidden_field_tag 'goal_rating_sheet_id[]', {},value: g.id %> 
           <%= hidden_field_tag :final_id_id, {},value: current_user.employee_id %>
@@ -180,7 +182,13 @@
     <tbody>
       <% @goal_rating_sheets.each do |g| %>
         <tr>
-          <td><%= check_box_tag "goal_rating_sheet_ids[]", g.id %></td>
+          <td>
+            <% if g.is_confirm_final == true %>
+
+            <% else %>
+            <%= check_box_tag "goal_rating_sheet_ids[]", g.id %>
+            <% end %>
+          </td>
           <td><%= g.employee_goal.goal_perspective.name %></td>
           <td><%= g.employee_goal.goal_measure %></td>
           <td><%= g.employee_goal.target %></td>
@@ -200,7 +208,7 @@
             <% if g.is_confirm_final == true %>
             <small class="label label-info">Confirmed</small>
             <% else %>
-            <%= link_to '', edit_final_goal_rating_sheets_path(g) ,class: 'btn btn-xs btn-success fa fa-edit' %>
+            <%= link_to '', modal_final_goal_rating_sheets_path(g) ,class: 'btn btn-xs btn-success fa fa-edit',remote: true %>
             <% end %>
           </td>
           <%= hidden_field_tag 'goal_rating_sheet_id[]', {},value: g.id %> 
@@ -225,6 +233,8 @@
 </div>
 <% end %>
 
+<div id="myModal" class="modal fade"></div>
+
 <script type="text/javascript">
   $(function () {
     $('#selectAll').click(function() {
@@ -240,4 +250,13 @@
       } 
     });
   });
+
+  $(document).ready(function() {
+    $('#example3').DataTable( {
+        "scrollY":        "200px",
+        "scrollX":        "1000px",
+        "scrollCollapse": true,
+        "paging":         false
+    } );
+} );
 </script>

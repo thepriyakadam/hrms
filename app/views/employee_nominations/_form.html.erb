@@ -1,0 +1,132 @@
+<%= bootstrap_form_for(@employee_nomination,remote: true,html: {id: "employee_nomination"}) do |f| %>
+
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.select :nomination_master_id,all_nomination_type,placeholder:"Nomination" %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.select :family_id,placeholder:"Family" %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :nomination,placeholder:"Nomination" %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.check_box :mental_illness,placeholder:"Mental Illness" %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.check_box :minor,placeholder:"Minor" %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :guardian_name,placeholder:"Guardian Name" %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :relation_id,placeholder:"Relation Id" %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.check_box :same_address,placeholder:"Same Address" %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_area :address,placeholder:"Address" %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :city,placeholder:"City" %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :district_id,placeholder:"District" %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :state_id,placeholder:"State" %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :contry_id,placeholder:"Contry" %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.number_field :pin_code,placeholder:"Pin Code" %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.number_field :phone_no,placeholder:"Phone No" %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.number_field :mobile_no,placeholder:"Mobile No" %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :email,placeholder:"Email" %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "create Employee Nomination", class: "btn btn-primary btn-sm" %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<script type="text/javascript">
+
+
+ $("#employee_nomination").validate({
+    rules: {
+      "employee_nomination[name]":{
+        required: true
+      },
+      "employee_nomination[name]":{
+        required: true
+      }
+    },
+    messages: {
+      "employee_nomination[name]":{
+        required: "Please specify name"
+      },
+      "employee_nomination[name]":{
+        required: "Please specify name"
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

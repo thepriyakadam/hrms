@@ -15,6 +15,7 @@ class NominationMastersController < ApplicationController
   # GET /nomination_masters/new
   def new
     @nomination_master = NominationMaster.new
+    @nomination_masters = NominationMaster.all
   end
 
   # GET /nomination_masters/1/edit
@@ -26,28 +27,24 @@ class NominationMastersController < ApplicationController
   def create
     @nomination_master = NominationMaster.new(nomination_master_params)
 
-    respond_to do |format|
       if @nomination_master.save
-        format.html { redirect_to @nomination_master, notice: 'Nomination master was successfully created.' }
-        format.json { render :show, status: :created, location: @nomination_master }
+        @flag = true
+        @nomination_master = NominationMaster.new
+        @nomination_masters = NominationMaster.all
       else
-        format.html { render :new }
-        format.json { render json: @nomination_master.errors, status: :unprocessable_entity }
+        @flag = false
       end
-    end
   end
 
   # PATCH/PUT /nomination_masters/1
   # PATCH/PUT /nomination_masters/1.json
   def update
-    respond_to do |format|
-      if @nomination_master.update(nomination_master_params)
-        format.html { redirect_to @nomination_master, notice: 'Nomination master was successfully updated.' }
-        format.json { render :show, status: :ok, location: @nomination_master }
-      else
-        format.html { render :edit }
-        format.json { render json: @nomination_master.errors, status: :unprocessable_entity }
-      end
+    if @nomination_master.update(nomination_master_params)
+      @flag = true
+      @nomination_master = NominationMaster.new
+      @nomination_masters = NominationMaster.all
+    else
+      @flag = false
     end
   end
 

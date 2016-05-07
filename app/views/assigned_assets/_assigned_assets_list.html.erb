@@ -1,11 +1,7 @@
-<p id="notice"><%= notice %></p>
-
-<h1>Listing Assigned Assets</h1>
-
-<table>
+<table id="example2" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
-      <th>Employee</th>
+	    <th>Employee</th>
       <th>Asset type</th>
       <th>Assets detail</th>
       <th>Assets</th>
@@ -15,12 +11,12 @@
       <th>Valid till</th>
       <th>Returned on</th>
       <th>Remarks</th>
-      <th colspan="3"></th>
+      <th>Action</th>
     </tr>
   </thead>
 
-  <tbody>
-    <% @assigned_assets.each do |assigned_asset| %>
+	<tbody>
+	<% @assigned_assets.each do |assigned_asset| %>
       <tr>
         <td><%= assigned_asset.employee %></td>
         <td><%= assigned_asset.asset_type %></td>
@@ -32,14 +28,22 @@
         <td><%= assigned_asset.valid_till %></td>
         <td><%= assigned_asset.returned_on %></td>
         <td><%= assigned_asset.remarks %></td>
-        <td><%= link_to 'Show', assigned_asset %></td>
-        <td><%= link_to 'Edit', edit_assigned_asset_path(assigned_asset) %></td>
-        <td><%= link_to 'Destroy', assigned_asset, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td>
+        	<%= link_to '', edit_assigned_asset_path(assigned_asset),class: 'btn btn-success btn-sm fa fa-edit',remote:true %>
+          <%= link_to '', assigned_asset, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-sm fa fa-close' %>
+        </td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<br>
-
-<%= link_to 'New Assigned asset', new_assigned_asset_path %>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#example3').DataTable( {
+        "scrollY":        "200px",
+        "scrollX":        "1000px",
+        "scrollCollapse": true,
+        "paging":         false
+    } );
+} );
+</script>

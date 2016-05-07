@@ -47,6 +47,7 @@ class DailyBillDetailsController < ApplicationController
       end
     end
   end
+    redirect_to daily_bill_details_path
 end
 
   # PATCH/PUT /daily_bill_details/1

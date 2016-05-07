@@ -88,7 +88,6 @@ class TravelRequestsController < ApplicationController
   end
 
   def reject_travel_request
-     puts "------------"
     @travel_request = TravelRequest.find(params[:format])
     @travel_request.update(current_status: "Reject")
     ReportingMastersTravelRequest.create(reporting_master_id: @travel_request.reporting_master_id, travel_request_id: @travel_request.id, travel_status: "Reject")

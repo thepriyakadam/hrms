@@ -1,8 +1,14 @@
 
 Rails.application.routes.draw do
+  resources :nomination_masters
+  resources :relation_masters
   resources :particular_vacancy_requests
   resources :travel_expences
-  resources :daily_bill_details 
+  resources :daily_bill_details do
+    collection do 
+    post :is_confirm
+    end
+  end 
   resources :travel_requests do
     collection do 
       get :daily_bill
@@ -236,6 +242,7 @@ Rails.application.routes.draw do
       get :print_details_appraiser2
       get :send_email_to_appraiser
       get :send_email_to_appraiser2
+      get :try
     end
   end
   resources :goal_rating_sheets do
@@ -451,6 +458,7 @@ Rails.application.routes.draw do
         get :select_month_year_form
         get :show_employee
         post :print_salary_slip_monthwise
+        get :bank_wise_salary
      end
    end  
 

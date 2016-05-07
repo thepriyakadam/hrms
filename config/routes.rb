@@ -1,6 +1,6 @@
-
 Rails.application.routes.draw do
 
+  resources :selected_resumes
   resources :assigned_assets
   resources :asset_types
   resources :employee_nominations
@@ -97,7 +97,6 @@ Rails.application.routes.draw do
       get :download_resume_page
     end
   end
-
 
   resources :interview_schedules do
     collection do
@@ -449,22 +448,24 @@ Rails.application.routes.draw do
   end
   
   resources :pdf_salaries do
-     collection do
-        get :employee_list_pdf
-        get :select_month_year_form
-        get :show_employee
-        post :print_salary_slip_monthwise
-     end
+    collection do
+      get :employee_list_pdf
+      get :select_month_year_form
+      get :show_employee
+      post :print_salary_slip_monthwise
+    end
    end  
   
   resources :salary_slip_ledgers do
-     collection do
-        get :select_month_year_form
-        get :show_employee
-        post :print_salary_slip_monthwise
-        get :bank_wise_salary
-     end
-   end  
+    collection do
+      get :select_month_year_form
+      get :show_employee
+      post :print_salary_slip_monthwise
+      get :bank_wise_salary
+      get :cost_unit_wise
+      get :cost_unit_wise_salary
+    end
+  end
 
   resources :instalments do
     collection do

@@ -1,0 +1,43 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Selected Resumes</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Contact no</th>
+      <th>Skillset</th>
+      <th>Degree</th>
+      <th>Ctc</th>
+      <th>Email</th>
+      <th>Experience</th>
+      <th>Notice period</th>
+      <th>Vacancy master</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @selected_resumes.each do |selected_resume| %>
+      <tr>
+        <td><%= selected_resume.name %></td>
+        <td><%= selected_resume.contact_no %></td>
+        <td><%= selected_resume.skillset %></td>
+        <td><%= selected_resume.degree %></td>
+        <td><%= selected_resume.ctc %></td>
+        <td><%= selected_resume.email_id %></td>
+        <td><%= selected_resume.experience %></td>
+        <td><%= selected_resume.notice_period %></td>
+        <td><%= selected_resume.vacancy_master %></td>
+        <td><%= link_to 'Show', selected_resume %></td>
+        <td><%= link_to 'Edit', edit_selected_resume_path(selected_resume) %></td>
+        <td><%= link_to 'Destroy', selected_resume, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Selected resume', new_selected_resume_path %>

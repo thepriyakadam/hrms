@@ -5,4 +5,5 @@ class Country < ActiveRecord::Base
   has_many :employees
   has_many :families
   has_many :capture_resumes
+  has_many :employee_nominations
 end

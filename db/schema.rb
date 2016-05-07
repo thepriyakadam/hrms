@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160506132700) do
+ActiveRecord::Schema.define(version: 20160507041032) do
 
   create_table "accident_records", force: :cascade do |t|
     t.string   "code"
@@ -597,6 +597,35 @@ ActiveRecord::Schema.define(version: 20160506132700) do
 
   add_index "employee_monthly_days", ["employee_id"], name: "index_employee_monthly_days_on_employee_id"
   add_index "employee_monthly_days", ["year_id"], name: "index_employee_monthly_days_on_year_id"
+
+  create_table "employee_nominations", force: :cascade do |t|
+    t.integer  "nomination_master_id"
+    t.integer  "family_id"
+    t.decimal  "nomination"
+    t.boolean  "mental_illness"
+    t.boolean  "minor"
+    t.string   "guardian_name"
+    t.integer  "relation_id"
+    t.boolean  "same_address"
+    t.text     "address"
+    t.string   "city"
+    t.integer  "district_id"
+    t.integer  "state_id"
+    t.integer  "contry_id"
+    t.integer  "pin_code"
+    t.integer  "phone_no"
+    t.integer  "mobile_no"
+    t.string   "email"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
+  add_index "employee_nominations", ["contry_id"], name: "index_employee_nominations_on_contry_id"
+  add_index "employee_nominations", ["district_id"], name: "index_employee_nominations_on_district_id"
+  add_index "employee_nominations", ["family_id"], name: "index_employee_nominations_on_family_id"
+  add_index "employee_nominations", ["nomination_master_id"], name: "index_employee_nominations_on_nomination_master_id"
+  add_index "employee_nominations", ["relation_id"], name: "index_employee_nominations_on_relation_id"
+  add_index "employee_nominations", ["state_id"], name: "index_employee_nominations_on_state_id"
 
   create_table "employee_physicals", force: :cascade do |t|
     t.integer  "employee_id"

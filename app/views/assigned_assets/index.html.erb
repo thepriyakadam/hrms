@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Assigned Assets</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Employee</th>
+      <th>Asset type</th>
+      <th>Assets detail</th>
+      <th>Assets</th>
+      <th>Assets value</th>
+      <th>Assest status</th>
+      <th>Issue date</th>
+      <th>Valid till</th>
+      <th>Returned on</th>
+      <th>Remarks</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @assigned_assets.each do |assigned_asset| %>
+      <tr>
+        <td><%= assigned_asset.employee %></td>
+        <td><%= assigned_asset.asset_type %></td>
+        <td><%= assigned_asset.assets_detail %></td>
+        <td><%= assigned_asset.assets_id %></td>
+        <td><%= assigned_asset.assets_value %></td>
+        <td><%= assigned_asset.assest_status %></td>
+        <td><%= assigned_asset.issue_date %></td>
+        <td><%= assigned_asset.valid_till %></td>
+        <td><%= assigned_asset.returned_on %></td>
+        <td><%= assigned_asset.remarks %></td>
+        <td><%= link_to 'Show', assigned_asset %></td>
+        <td><%= link_to 'Edit', edit_assigned_asset_path(assigned_asset) %></td>
+        <td><%= link_to 'Destroy', assigned_asset, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Assigned asset', new_assigned_asset_path %>

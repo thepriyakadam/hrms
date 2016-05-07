@@ -1,5 +1,6 @@
 
 Rails.application.routes.draw do
+  resources :assigned_assets
   resources :nomination_masters
   resources :relation_masters
   resources :particular_vacancy_requests

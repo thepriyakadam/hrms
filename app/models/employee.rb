@@ -122,4 +122,20 @@ class Employee < ActiveRecord::Base
     company = company_location.company
     self.company_id = company.id
   end
+
+  def self.collect_rolewise(current_user)
+    if current_user.class == Group
+      Employee.all.pluck(:id)
+    else
+      if current_user.role.name == 'Company'
+        Employee.all.pluck(:id)
+      elsif current_user.role.name == 'CompanyLocation'
+        Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+      elsif current_user.role.name == 'Department'
+        Employee.where(id: current_user.department_id).pluck(:id)
+      elsif current_user.role.name == 'Employee'
+        Employee.where(id: current_user.employee_id).pluck(:id)
+      end
+    end
+  end
 end

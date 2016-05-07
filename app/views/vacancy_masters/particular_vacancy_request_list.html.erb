@@ -46,9 +46,12 @@
                    <% end %>
                 </td>
                 <td>
-              <% if particular_vacancy_request.is_complete == '' %>
+              <% if particular_vacancy_request.is_complete == true %>
+                  <small class="label label-info">Closed</small>
+                <% elsif particular_vacancy_request.is_complete == false %>
+                <small class="label label-primary">Open</small>
                  <%= link_to ' Closed',is_closed_vacancy_masters_path(particular_vacancy_request),class: 'btn btn-xs btn-default' %>
-              <% else %>
+                <% else %>
                 <small class="label label-info">Closed</small>
               <% end %>
                </td>

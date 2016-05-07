@@ -93,7 +93,7 @@
   <div class="box-header with-border">
     <h3 class="box-title">Attribute</h3>
   </div>
-  <table id="tbl" class="table table-bordered table-hover table-condensed">
+  <table id="example3" class="table table-bordered table-hover table-condensed">
     <thead>
       <tr>
         <th>Attribute & Definition</th>
@@ -227,4 +227,13 @@
       } 
     });
   });
+
+ $(document).ready(function() {
+    $('#example3').DataTable( {
+        "scrollY":        "200px",
+        "scrollX":        "1000px",
+        "scrollCollapse": true,
+        "paging":         false
+    } );
+} );
 </script>

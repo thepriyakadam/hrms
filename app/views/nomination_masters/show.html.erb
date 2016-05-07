@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @nomination_master.code %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @nomination_master.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @nomination_master.description %>
+</p>
+
+<%= link_to 'Edit', edit_nomination_master_path(@nomination_master) %> |
+<%= link_to 'Back', nomination_masters_path %>

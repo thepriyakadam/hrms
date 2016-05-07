@@ -3,4 +3,5 @@ class DailyBillDetail < ActiveRecord::Base
   validates :expence_date, presence: true
   validates :e_place, presence: true
   validates :travel_expence, presence: true
+
 end

@@ -213,6 +213,38 @@ class VacancyMastersController < ApplicationController
     end 
   end
 
+
+  def is_confirm
+    #@employee_goal = EmployeeGoal.find(params[:id])
+    @employee = Employee.find(params[:id])
+
+    @employee_goal_ids = params[:employee_goal_ids]
+    if @employee_goal_ids.nil?
+      flash[:alert] = "Please Select the Checkbox"
+      redirect_to new_employee_goal_path(@employee.id)
+    else
+      @employee_goal_ids.each do |eid|
+      @employee_goal = EmployeeGoal.find(eid)
+      @employee_goal.update(is_confirm: true)
+
+      GoalRatingSheet.create(appraisee_id: @employee.id, employee_goal_id: @employee_goal.id)
+      
+      flash[:notice] = "Confirmed Successfully"
+    end 
+
+     redirect_to new_employee_goal_path( @employee.id) 
+  end
+  end
+
+  def is_closed
+      #byebug
+      @particular_vacancy_request =  ParticularVacancyRequest.find(params[:format])
+      @particular_vacancy_request.update(is_complete: true)
+      flash[:notice] = "Vacancy Request Closed Successfully"
+      redirect_to vacancy_history_vacancy_masters_path
+  end
+
+
   private
 
   def particular_vacancy_request_params

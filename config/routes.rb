@@ -121,6 +121,7 @@ Rails.application.routes.draw do
       get :approved_vacancy_list
       get :modal1
       post :update_no_of_positions
+      get :is_closed
     end
   end
   resources :leave_c_offs do
@@ -457,6 +458,7 @@ Rails.application.routes.draw do
         get :select_month_year_form
         get :show_employee
         post :print_salary_slip_monthwise
+        get :bank_wise_salary
      end
    end  
 

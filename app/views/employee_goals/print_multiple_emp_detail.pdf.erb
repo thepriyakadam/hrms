@@ -27,6 +27,7 @@ div.nobreak{ page-break-inside: avoid;
 	    <tr>
 	    	<th>Employee Id</th>
 	    	<th>Name</th>
+        <th>Age</th>
 	    	<th>Department</th>
 	    	<th>Date Of Joining</th>
 	    	<th>Joining Grade</th>
@@ -38,6 +39,7 @@ div.nobreak{ page-break-inside: avoid;
       <tr>
         <td><%= a.manual_employee_code %></td> 
         <td><%= a.first_name %></td>
+        <td><%= Time.now.year - a.date_of_birth.year %></td>
         <td><%= a.department.try(:name) %></td>
         <td><%= @joining_detail.joining_date %></td>
         <td><%= @joining_detail.employee_grade.try(:name) %></td>

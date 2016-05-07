@@ -16,6 +16,7 @@
       <th>Department</th>
       <th>Qualification</th>
       <th>Total No Of Position</th>
+      <th>Total No Of Approved Position</th>
       <th>Current Status</th>
       <th>Action</th>
     </tr>
@@ -28,6 +29,7 @@
         <td><%= vacancy_master.company_location.try(:name) %> - <%= vacancy_master.department.try(:name) %></td>
         <td><%= vacancy_master.degree.try(:name) %></td>
         <td><%= vacancy_master.no_of_position %></td>
+         <td><%= vacancy_master.particular_vacancy_requests.where(status: "Approved").count %></td>
         <td>
             <% if vacancy_master.current_status == "Pending" %>
               <%= link_to '', cancel_vacancy_request_vacancy_masters_path(vacancy_master), data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-xs fa fa-trash' %>
@@ -55,11 +57,8 @@
   Download:
   <%= link_to "CSV", vacancy_masters_path(format: "csv") %>
 </p>
-
 </div>
   </div>
-
-
 <script>
 $(document).ready(function() {
     $('#example').DataTable();

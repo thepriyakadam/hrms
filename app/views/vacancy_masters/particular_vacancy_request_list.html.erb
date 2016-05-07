@@ -45,13 +45,13 @@
                 </td>
                 <td>
               <% if particular_vacancy_request.is_complete == '' %>
-               <%= link_to ' Closed',is_closed_vacancy_masters_path(particular_vacancy_request),class: 'btn btn-xs btn-default' %>
+               <%= link_to ' Close',is_closed_vacancy_masters_path(particular_vacancy_request),class: 'btn btn-xs btn-default' %>
                 <% elsif particular_vacancy_request.is_complete == true %>
                 <small class="label label-primary">Closed</small>
                  <% elsif particular_vacancy_request.is_complete == '' %>
                 <small class="label label-primary">Open</small>
                 <% else %>
-                <%= link_to ' Closed',is_closed_vacancy_masters_path(particular_vacancy_request),class: 'btn btn-xs btn-default' %>
+                <%= link_to ' Close',is_closed_vacancy_masters_path(particular_vacancy_request),class: 'btn btn-xs btn-default' %>
               <% end %>
                </td>
               </tr>

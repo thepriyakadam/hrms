@@ -126,6 +126,7 @@ Rails.application.routes.draw do
       get :modal1
       post :update_no_of_positions
       get :is_closed
+      get :vacancy_resume
     end
   end
   resources :leave_c_offs do

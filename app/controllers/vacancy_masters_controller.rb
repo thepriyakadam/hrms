@@ -224,6 +224,10 @@ class VacancyMastersController < ApplicationController
       redirect_to vacancy_masters_path
   end
 
+  def vacancy_resume
+      @vacancy_masters = VacancyMaster.all
+  end
+
 
   private
 

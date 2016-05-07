@@ -2,9 +2,14 @@ class SalarySlipLedgersController < ApplicationController
   def show_employee
     @bank = Bank.find(params[:bank_id])
     @month, @year = params[:month], params[:year]
+    joining_array = JoiningDetail.where(employee_designation_id: params[:category]).pluck(:employee_id)
     emp_array = EmployeeBankDetail.where(bank_id: @bank.id).pluck(:employee_id)
     emp_user_array = Employee.collect_rolewise(current_user)
-    final_emp_array = emp_array & emp_user_array
+    if joining_array.empty?
+      final_emp_array = emp_array & emp_user_array
+    else
+      final_emp_array = emp_array & emp_user_array & joining_array
+    end
     @reports = []
     @employees = Employee.where(id: final_emp_array)
     @employees.try(:each) do |e|

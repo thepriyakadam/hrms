@@ -54,19 +54,19 @@ class SalaryReport
 		deductable_items.each do |d|
 			case d.other_component_name
 			  when "PF"
-			  sr.pf = d.calculated_amount
+			  sr.pf = d.calculated_amount.to_i
 			  when "ESIC"  
-			  sr.esic = d.calculated_amount
+			  sr.esic = d.calculated_amount.to_i
 			  when "Income Tax"
 			  sr.income_tax = d.calculated_amount
 			  when "Prof. Tax"
 			  sr.pt = d.calculated_amount
 			  when "Advance" 
-			  sr.advance = d.calculated_amount
+			  sr.advance = d.calculated_amount.to_i
 			  when "Society"
 			  sr.society = d.calculated_amount
 			  when "Food Deduction"
-			  sr.food_deduction = d.calculated_amount
+			  sr.food_deduction = d.calculated_amount.to_i
 			  when "Mobile Deduction"
 			  sr.mobile = d.calculated_amount
 			  when "Retention"
@@ -74,15 +74,15 @@ class SalaryReport
 			end
 		end  
 	  
-	  sr.deduction_total =  deductable_items.sum(:calculated_amount)
-	  sr.net_payable = sr.actual_total - sr.deduction_total
+	  sr.deduction_total =  deductable_items.sum(:calculated_amount).try(:to_i)
+	  sr.net_payable = sr.actual_total - sr.deduction_total.to_i
 	  
 	  sr.total_leave = wd.el_leave.to_f + wd.cl_leave.to_f + wd.coff_leave.to_f
 	  sr.lwp_leave = wd.lwp_leave.to_f + wd.esic_leave.to_f
 	  sr.day_in_month = wd.day_in_month
 	  sr.present_day = wd.present_day
 	  sr.absent_day = wd.absent_day
-	  sr.holiday = wd.holiday_in_month
+	  sr.holiday = wd.holiday_in_month.to_i
 	  sr.weekoff = wd.week_off_day
 	  sr
 	end

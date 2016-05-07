@@ -77,8 +77,8 @@ class SalaryReport
 	  sr.deduction_total =  deductable_items.sum(:calculated_amount)
 	  sr.net_payable = sr.actual_total - sr.deduction_total
 	  
-	  sr.total_leave = wd.total_leave
-	  sr.lwp_leave = wd.lwp_leave
+	  sr.total_leave = wd.el_leave.to_f + wd.cl_leave.to_f + wd.coff_leave.to_f
+	  sr.lwp_leave = wd.lwp_leave.to_f + wd.esic_leave.to_f
 	  sr.day_in_month = wd.day_in_month
 	  sr.present_day = wd.present_day
 	  sr.absent_day = wd.absent_day

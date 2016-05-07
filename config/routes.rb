@@ -4,7 +4,11 @@ Rails.application.routes.draw do
   resources :relation_masters
   resources :particular_vacancy_requests
   resources :travel_expences
-  resources :daily_bill_details 
+  resources :daily_bill_details do
+    collection do 
+    post :is_confirm
+    end
+  end 
   resources :travel_requests do
     collection do 
       get :daily_bill

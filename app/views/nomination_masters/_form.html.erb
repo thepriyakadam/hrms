@@ -1,29 +1,59 @@
-<%= form_for(@nomination_master) do |f| %>
-  <% if @nomination_master.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@nomination_master.errors.count, "error") %> prohibited this nomination_master from being saved:</h2>
-
-      <ul>
-      <% @nomination_master.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+<%= bootstrap_form_for(@nomination_master,remote: true,html: {id: "nomination_master"}) do |f| %>
+  
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :code,hide_label: true,placeholder:"Code" %>
+      </div>
     </div>
-  <% end %>
 
-  <div class="field">
-    <%= f.label :code %><br>
-    <%= f.text_field :code %>
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :name,hide_label: true,placeholder:"Name" %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :description,hide_label: true,placeholder:"Description" %>
+      </div>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
+
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit %>
+      </div>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :description %><br>
-    <%= f.text_field :description %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+
 <% end %>
+
+
+<script type="text/javascript">
+
+
+ $("#nomination_master").validate({
+    rules: {
+      "nomination_master[name]":{
+        required: true
+      },
+      "nomination_master[code]":{
+        required: true
+      }
+    },
+    messages: {
+      "nomination_master[name]":{
+        required: "Please specify name"
+      },
+      "nomination_master[code]":{
+        required: "Please specify code"
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

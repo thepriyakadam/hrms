@@ -38,6 +38,7 @@ class TravelRequestsController < ApplicationController
         format.json { render json: @travel_request.errors, status: :unprocessable_entity }
       end
     end
+    redirect_to redirect_daily_bill_details_path
   end
 
   # PATCH/PUT /travel_requests/1

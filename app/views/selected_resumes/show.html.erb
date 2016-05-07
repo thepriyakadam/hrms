@@ -1,0 +1,49 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @selected_resume.name %>
+</p>
+
+<p>
+  <strong>Contact no:</strong>
+  <%= @selected_resume.contact_no %>
+</p>
+
+<p>
+  <strong>Skillset:</strong>
+  <%= @selected_resume.skillset %>
+</p>
+
+<p>
+  <strong>Degree:</strong>
+  <%= @selected_resume.degree %>
+</p>
+
+<p>
+  <strong>Ctc:</strong>
+  <%= @selected_resume.ctc %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @selected_resume.email_id %>
+</p>
+
+<p>
+  <strong>Experience:</strong>
+  <%= @selected_resume.experience %>
+</p>
+
+<p>
+  <strong>Notice period:</strong>
+  <%= @selected_resume.notice_period %>
+</p>
+
+<p>
+  <strong>Vacancy master:</strong>
+  <%= @selected_resume.vacancy_master %>
+</p>
+
+<%= link_to 'Edit', edit_selected_resume_path(@selected_resume) %> |
+<%= link_to 'Back', selected_resumes_path %>

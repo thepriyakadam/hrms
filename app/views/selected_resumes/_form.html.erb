@@ -1,0 +1,53 @@
+<%= form_for(@selected_resume) do |f| %>
+  <% if @selected_resume.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@selected_resume.errors.count, "error") %> prohibited this selected_resume from being saved:</h2>
+
+      <ul>
+      <% @selected_resume.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :contact_no %><br>
+    <%= f.text_field :contact_no %>
+  </div>
+  <div class="field">
+    <%= f.label :skillset %><br>
+    <%= f.text_area :skillset %>
+  </div>
+  <div class="field">
+    <%= f.label :degree_id %><br>
+    <%= f.text_field :degree_id %>
+  </div>
+  <div class="field">
+    <%= f.label :ctc %><br>
+    <%= f.text_field :ctc %>
+  </div>
+  <div class="field">
+    <%= f.label :email_id %><br>
+    <%= f.text_field :email_id %>
+  </div>
+  <div class="field">
+    <%= f.label :experience %><br>
+    <%= f.text_field :experience %>
+  </div>
+  <div class="field">
+    <%= f.label :notice_period %><br>
+    <%= f.text_field :notice_period %>
+  </div>
+  <div class="field">
+    <%= f.label :vacancy_master_id %><br>
+    <%= f.text_field :vacancy_master_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

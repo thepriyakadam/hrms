@@ -45,7 +45,16 @@
                      <small class="label label-success">Revert</small>
                    <% end %>
                 </td>
-                <td><%=  %></td>
+                <td>
+              <% if particular_vacancy_request.is_complete == true %>
+                  <small class="label label-info">Closed</small>
+                <% elsif particular_vacancy_request.is_complete == false %>
+                <small class="label label-primary">Open</small>
+                 <%= link_to ' Closed',is_closed_vacancy_masters_path(particular_vacancy_request),class: 'btn btn-xs btn-default' %>
+                <% else %>
+                <small class="label label-info">Closed</small>
+              <% end %>
+               </td>
               </tr>
             <% end %>
           </tbody>

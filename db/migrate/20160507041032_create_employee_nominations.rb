@@ -13,7 +13,7 @@ class CreateEmployeeNominations < ActiveRecord::Migration
       t.string :city
       t.references :district, index: true, foreign_key: true
       t.references :state, index: true, foreign_key: true
-      t.references :contry, index: true, foreign_key: true
+      t.references :country, index: true, foreign_key: true
       t.integer :pin_code
       t.integer :phone_no
       t.integer :mobile_no

@@ -15,6 +15,7 @@ class AssignedAssetsController < ApplicationController
   # GET /assigned_assets/new
   def new
     @assigned_asset = AssignedAsset.new
+    @assigned_assets = AssignedAsset.all
   end
 
   # GET /assigned_assets/1/edit
@@ -25,14 +26,14 @@ class AssignedAssetsController < ApplicationController
   # POST /assigned_assets.json
   def create
     @assigned_asset = AssignedAsset.new(assigned_asset_params)
-
+    @assigned_assets = AssignedAsset.all
     respond_to do |format|
       if @assigned_asset.save
-        format.html { redirect_to @assigned_asset, notice: 'Assigned asset was successfully created.' }
-        format.json { render :show, status: :created, location: @assigned_asset }
+        @assigned_asset = AssignedAsset.new
+        format.js { @flag = true }
       else
-        format.html { render :new }
-        format.json { render json: @assigned_asset.errors, status: :unprocessable_entity }
+        flash.now[:alert] = 'Asset Already Exist.'
+        format.js { @flag = false }
       end
     end
   end
@@ -40,25 +41,22 @@ class AssignedAssetsController < ApplicationController
   # PATCH/PUT /assigned_assets/1
   # PATCH/PUT /assigned_assets/1.json
   def update
-    respond_to do |format|
+    
       if @assigned_asset.update(assigned_asset_params)
-        format.html { redirect_to @assigned_asset, notice: 'Assigned asset was successfully updated.' }
-        format.json { render :show, status: :ok, location: @assigned_asset }
+        @flag = true
+        @assigned_asset = AssignedAsset.new
+        @assigned_assets = AssignedAsset.all
       else
-        format.html { render :edit }
-        format.json { render json: @assigned_asset.errors, status: :unprocessable_entity }
+        @flag = false
       end
-    end
   end
 
   # DELETE /assigned_assets/1
   # DELETE /assigned_assets/1.json
   def destroy
     @assigned_asset.destroy
-    respond_to do |format|
-      format.html { redirect_to assigned_assets_url, notice: 'Assigned asset was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    flash[:notice] = "Deleted Successfully"
+    redirect_to new_assigned_asset_path
   end
 
   private

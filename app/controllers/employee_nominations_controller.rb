@@ -52,7 +52,8 @@ class EmployeeNominationsController < ApplicationController
   # DELETE /employee_nominations/1.json
   def destroy
     @employee_nomination.destroy
-      new_employee_nomination_path
+    flash[:notice] = 'Deleted Successfully'
+    redirect_to new_employee_nomination_path
   end
 
   private

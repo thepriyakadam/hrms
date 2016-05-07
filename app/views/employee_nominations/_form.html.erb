@@ -8,7 +8,7 @@
     </div>
     <div class="col-sm-3">
       <div class="field">
-        <%= f.select :family_id,placeholder:"Family" %>
+        <%= f.select :family_id,all_family_type,placeholder:"Family" %>
       </div>
     </div>
     <div class="col-sm-3">
@@ -51,25 +51,29 @@
       </div>
     </div>
     <div class="col-sm-3">
-      <div class="field">
-        <%= f.text_field :city,placeholder:"City" %>
+      <div class="form-group required">
+        <%=f.select :country_id, all_countries,{include_blank: "Please Select Country"},{onchange:"var a={id:$(this).val(), form : 'employee'}; $.get('/companies/collect_states',a,function(response){});"}%>
       </div>
     </div>
     <div class="col-sm-3">
-      <div class="field">
-        <%= f.text_field :district_id,placeholder:"District" %>
+      <div class="form-group required">
+        <div id="states">
+          <%= render 'companies/state_dropdown' %> 
+      </div> 
       </div>
     </div>
     <div class="col-sm-3">
-      <div class="field">
-        <%= f.text_field :state_id,placeholder:"State" %>
+      <div class="form-group required">
+       <div id="district">
+         <%= render 'companies/city_dropdown' %>
+     </div>
       </div>
     </div>
   </div>
   <div class="row">
     <div class="col-sm-3">
       <div class="field">
-        <%= f.text_field :contry_id,placeholder:"Contry" %>
+        <%= f.text_field :city,placeholder:"City" %>
       </div>
     </div>
     <div class="col-sm-3">

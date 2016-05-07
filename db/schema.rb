@@ -11,7 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20160507125255) do
+=======
+ActiveRecord::Schema.define(version: 20160507093658) do
+>>>>>>> 173a18d55f4d84ac777631b319323f9c1995f4cc
 
   create_table "accident_records", force: :cascade do |t|
     t.string   "code"
@@ -637,7 +641,11 @@ ActiveRecord::Schema.define(version: 20160507125255) do
     t.string   "city"
     t.integer  "district_id"
     t.integer  "state_id"
+<<<<<<< HEAD
     t.integer  "contry_id"
+=======
+    t.integer  "country_id"
+>>>>>>> 173a18d55f4d84ac777631b319323f9c1995f4cc
     t.integer  "pin_code"
     t.integer  "phone_no"
     t.integer  "mobile_no"
@@ -646,7 +654,11 @@ ActiveRecord::Schema.define(version: 20160507125255) do
     t.datetime "updated_at",           null: false
   end
 
+<<<<<<< HEAD
   add_index "employee_nominations", ["contry_id"], name: "index_employee_nominations_on_contry_id"
+=======
+  add_index "employee_nominations", ["country_id"], name: "index_employee_nominations_on_country_id"
+>>>>>>> 173a18d55f4d84ac777631b319323f9c1995f4cc
   add_index "employee_nominations", ["district_id"], name: "index_employee_nominations_on_district_id"
   add_index "employee_nominations", ["family_id"], name: "index_employee_nominations_on_family_id"
   add_index "employee_nominations", ["nomination_master_id"], name: "index_employee_nominations_on_nomination_master_id"
@@ -1524,6 +1536,7 @@ ActiveRecord::Schema.define(version: 20160507125255) do
   add_index "salaryslips", ["salary_template_id"], name: "index_salaryslips_on_salary_template_id"
   add_index "salaryslips", ["workingday_id"], name: "index_salaryslips_on_workingday_id"
 
+<<<<<<< HEAD
   create_table "selected_resumes", force: :cascade do |t|
     t.string   "name"
     t.string   "contact_no"
@@ -1541,6 +1554,8 @@ ActiveRecord::Schema.define(version: 20160507125255) do
   add_index "selected_resumes", ["degree_id"], name: "index_selected_resumes_on_degree_id"
   add_index "selected_resumes", ["vacancy_master_id"], name: "index_selected_resumes_on_vacancy_master_id"
 
+=======
+>>>>>>> 173a18d55f4d84ac777631b319323f9c1995f4cc
   create_table "shift_rotations", force: :cascade do |t|
     t.integer  "company_shift_id"
     t.date     "start_date"

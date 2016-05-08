@@ -1,0 +1,75 @@
+
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Selected Resume</h3>
+  </div>
+  <div class="box-body">
+<%= bootstrap_form_for(@selected_resume) do |f| %>
+<%= f.hidden_field :vacancy_master_id, value: @vacancy_master.id  %>
+
+<div class="row">
+  <div class="col-sm-3">
+    <div class="field">
+      <%= f.text_field :name,label: 'Name' %>
+    </div>
+  </div>
+
+   <div class="col-sm-3">
+    <div class="field">
+      <%= f.text_field :contact_no,label: 'Contact No' %>
+    </div>
+  </div>
+
+  <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :skillset,label: 'Skillset' %>
+      </div>
+    </div>
+    
+  <div class="col-sm-3">
+      <label>Educational Qualification</label>
+      <div class="form-group required">
+        <div class="input-group">
+          <div class="input-group-addon">
+            <%= link_to "", new_degree_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+          </div>
+          <%= f.select :degree_id, all_degree_list,{hide_label: true,include_blank: " Select Qualification"} %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div class="row">
+  <div class="col-sm-3">
+    <div class="field">
+      <%= f.text_field :email_id, label: 'Email Id' %>
+    </div>
+  </div>
+
+  <div class="col-sm-3">
+    <div class="field">
+      <%= f.text_field :experience, label: 'Experience' %>
+    </div>
+  </div>
+
+  <div class="col-sm-3">
+    <div class="field">
+      <%= f.text_field :notice_period, label: 'Notice Period' %>
+    </div>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="col-sm-3">
+    <div class="actions">
+      <%= f.submit "Create",class: "btn btn-primary btn-sm" %>
+      <%= link_to 'Back', selected_resumes_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+    </div>
+  </div>
+</div>
+
+</div>
+</div>
+<% end %>
+

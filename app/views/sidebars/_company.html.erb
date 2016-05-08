@@ -219,6 +219,7 @@
       <li><a href="/vacancy_masters"><i class="fa fa-tags"></i> Create Vacancy </a></li>
       <li><a href="/vacancy_masters/vacancy_history"><i class="fa fa-tags"></i> Vacancy Approve / Reject </a></li>
       <li><a href="/vacancy_masters/approve_vacancy_list"><i class="fa fa-tags"></i> Vacancy List </a></li>
+      <li><a href="/vacancy_masters/approved_vacancy_list"><i class="fa fa-tags"></i> Approved Vacancy List </a></li>
       <li><a href="/capture_resumes"><i class="fa fa-tags"></i> Capture Resume </a></li>
       <li><a href="/capture_resumes/download_resume_page"><i class="fa fa-tags"></i> Download Resume </a></li>
       <li><a href="/interview_schedules"><i class="fa fa-tags"></i> Interview Schedule </a></li>
@@ -287,7 +288,14 @@
 </ul>
 
 <script typgre="text/javascript">
+
+  <% unless session[:active_tab].nil? %>
   document.getElementById("<%= session[:active_tab] %>").classList.add("active");
+  <%end%>
+  <% unless session[:active_tab1].nil? %>
   document.getElementById("<%= session[:active_tab1] %>").classList.add("active");
+  <%end%>
+  <% unless session[:active_tab2].nil? %>
   document.getElementById("<%= session[:active_tab2] %>").classList.add("active");
+  <%end%>
 </script>

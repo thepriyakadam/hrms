@@ -1,0 +1,59 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Employee Nominations</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nominational master</th>
+      <th>Family</th>
+      <th>Nomination</th>
+      <th>Mental illness</th>
+      <th>Minor</th>
+      <th>Guardian name</th>
+      <th>Relation</th>
+      <th>Same address</th>
+      <th>Address</th>
+      <th>City</th>
+      <th>District</th>
+      <th>State</th>
+      <th>Contry</th>
+      <th>Pin code</th>
+      <th>Phone no</th>
+      <th>Mobile no</th>
+      <th>Email</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @employee_nominations.each do |employee_nomination| %>
+      <tr>
+        <td><%= employee_nomination.nominational_master %></td>
+        <td><%= employee_nomination.family %></td>
+        <td><%= employee_nomination.nomination %></td>
+        <td><%= employee_nomination.mental_illness %></td>
+        <td><%= employee_nomination.minor %></td>
+        <td><%= employee_nomination.guardian_name %></td>
+        <td><%= employee_nomination.relation %></td>
+        <td><%= employee_nomination.same_address %></td>
+        <td><%= employee_nomination.address %></td>
+        <td><%= employee_nomination.city %></td>
+        <td><%= employee_nomination.district %></td>
+        <td><%= employee_nomination.state %></td>
+        <td><%= employee_nomination.contry %></td>
+        <td><%= employee_nomination.pin_code %></td>
+        <td><%= employee_nomination.phone_no %></td>
+        <td><%= employee_nomination.mobile_no %></td>
+        <td><%= employee_nomination.email %></td>
+        <td><%= link_to 'Show', employee_nomination %></td>
+        <td><%= link_to 'Edit', edit_employee_nomination_path(employee_nomination) %></td>
+        <td><%= link_to 'Destroy', employee_nomination, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Employee nomination', new_employee_nomination_path %>

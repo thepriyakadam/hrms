@@ -465,6 +465,7 @@ Rails.application.routes.draw do
       get :bank_wise_salary
       get :cost_unit_wise
       get :cost_unit_wise_salary
+      get :cost_unit_wise_salary_pdf
     end
   end
 

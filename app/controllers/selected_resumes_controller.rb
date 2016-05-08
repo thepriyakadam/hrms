@@ -15,6 +15,7 @@ class SelectedResumesController < ApplicationController
   # GET /selected_resumes/new
   def new
     @selected_resume = SelectedResume.new
+    @vacancy_master = VacancyMaster.find(params[:format])
   end
 
   # GET /selected_resumes/1/edit

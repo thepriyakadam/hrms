@@ -174,32 +174,3 @@
     </tr>
   </tbody>
 </table>
-   <div class="col-sm-3">
-      <%= link_to "Print Salary Slip", bank_wise_salary_salary_slip_ledgers_path(bank_id: @bank.id,year: @year,month: @month,format: "pdf"), class: "btn btn-xl btn-success fa fa-print" %>
-   </div>
-
-<script type="text/javascript">
-  $(function () {
-    $('#selectAll').click(function() {
-      if (this.checked) {
-        $(':checkbox').each(function() {
-          this.checked = true;                       
-        });
-      } 
-      else {
-        $(':checkbox').each(function() {
-          this.checked = false;                        
-        });
-      } 
-    });
-  });
-
-  $(document).ready(function() {
-    $('#example3').DataTable( {
-      //"scrollY":        "200px",
-      "scrollX":        "1000px",
-      "scrollCollapse": true,
-      "paging":         true
-    } );
-} );
-</script>

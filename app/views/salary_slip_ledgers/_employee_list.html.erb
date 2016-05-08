@@ -166,8 +166,12 @@
     </tr>
   </tbody>
 </table>
-   <div class="col-sm-3">
-      <%= link_to "Print Salary Slip", bank_wise_salary_salary_slip_ledgers_path(bank_id: @bank.id,year: @year,month: @month,format: "pdf"), class: "btn btn-xl btn-success fa fa-print" %>
+  <div class="col-sm-3">
+    <% if action_name == "cost_unit_wise_salary" %>
+      <%= link_to "Print Salary Slip", cost_unit_wise_salary_pdf_salary_slip_ledgers_path(bank_id: @bank.id,year: @year,month: @month, cost_center: @cost_center,format: "pdf"), class: "btn btn-xl btn-success fa fa-print" %>
+    <% else %>  
+      <%= link_to "Print Salary Slip", bank_wise_salary_salary_slip_ledgers_path(bank_id: @bank.id,year: @year,month: @month, category: @category,format: "pdf"), class: "btn btn-xl btn-success fa fa-print" %>
+    <%end%>
    </div>
 
 <script type="text/javascript">

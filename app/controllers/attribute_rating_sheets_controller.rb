@@ -4,7 +4,6 @@ class AttributeRatingSheetsController < ApplicationController
   # GET /attribute_rating_sheets
   # GET /attribute_rating_sheets.json
   def index
-    @attribute_rating_sheet = AttributeRatingSheet.new 
     @attribute_rating_sheets = AttributeRatingSheet.where(appraisee_id: current_user.employee_id)
   end
 
@@ -15,9 +14,10 @@ class AttributeRatingSheetsController < ApplicationController
   # GET /attribute_rating_sheets/new
   def new
     @attribute_rating_sheet = AttributeRatingSheet.new
-    @employee_attributes = EmployeeAttribute.where(employee_id: current_user.employee_id,is_confirm: true)
     @attribute_rating_sheets = AttributeRatingSheet.where(appraisee_id: current_user.employee_id,appraisee_comment: nil)
     @attribute_rating_shets = AttributeRatingSheet.where(appraisee_id: current_user.employee_id).where.not(appraisee_comment: nil)
+    
+    @employee_attributes = EmployeeAttribute.where(employee_id: current_user.employee_id,is_confirm: true)
   end
 
   # GET /attribute_rating_sheets/1/edit
@@ -300,21 +300,21 @@ class AttributeRatingSheetsController < ApplicationController
 
   def final_comment
     #@attribute_rating_sheet = AttributeRatingSheet.new
-    
-    @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: params[:format])
-    @attribute_rating_sheets = AttributeRatingSheet.where(appraisee_id: params[:format]).group(:appraisee_id)
     @employee = Employee.find(params[:format])
+    @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: @employee.id)
+    @attribute_rating_sheets = AttributeRatingSheet.where(appraisee_id: @employee.id).group(:appraisee_id)
+   
     @qualifications = Qualification.where(employee_id: @employee.id)
     @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
     @experiences = Experience.where(employee_id: @employee.id)
     @ctc = EmployeeSalaryTemplate.where(employee_id: @employee.id).sum(:monthly_amount)
-    @attribute_rating_multiple_sheets = AttributeRatingSheet.where(appraisee_id: params[:format],final_comment: nil, is_confirm_appraiser2: true)
-    @attribute_rating_multi_sheets = AttributeRatingSheet.where(appraisee_id: params[:format], is_confirm_appraiser2: true).where.not(final_comment: nil)
+    @attribute_rating_multiple_sheets = AttributeRatingSheet.where(appraisee_id: @employee.id,final_comment: nil, is_confirm_appraiser2: true)
+    @attribute_rating_multi_sheets = AttributeRatingSheet.where(appraisee_id: @employee.id, is_confirm_appraiser2: true).where.not(final_comment: nil)
   end
 
   def final_create
      #@attribute_rating_sheet = AttributeRatingSheet.find(params[:id])
-    
+     
     attribute_rating_sheets = params[:attribute_rating_sheet_id]
     comments = params[:final_comment]
     ratings = params[:final_rating_id]

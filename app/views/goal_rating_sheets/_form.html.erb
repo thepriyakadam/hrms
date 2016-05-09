@@ -16,7 +16,7 @@
         <th>Level</th>
         <th>Allign To Supervisor</th>
         <th>Comment</th>
-        <th>Rating</th>
+        <th>Evaluation</th>
       </tr>
     </thead>
     <tbody>
@@ -31,7 +31,7 @@
           <td><%= goal_rating_sheet.employee_goal.allign_to_supervisor %></td>
           
           <td><%= text_field_tag 'appraisee_comment[]' %></td>
-          <td><%= select_tag 'appraisee_rating_id[]',options_for_select(all_rating_type), {class: 'form-control', hide_label: true} %></td>
+          <td><%= select_tag 'appraisee_rating_id[]',options_for_select(all_rating_type), {class: 'form-control', hide_label: true,include_blank: " Select Rating"} %></td>
           
              <%= hidden_field_tag 'employee_goal_id[]',{},value: goal_rating_sheet.id %>
              <%= hidden_field_tag :appraisee_id, {},value: current_user.employee_id %>
@@ -52,6 +52,7 @@
   </div>
   
   <% end %>
-  <% end %>
+
   </div>
 </div>
+  <% end %>

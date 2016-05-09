@@ -25,73 +25,54 @@ class SelectedResumesController < ApplicationController
 
   # POST /selected_resumes
   # POST /selected_resumes.json
-  # def create
-  #   @selected_resume = SelectedResume.new(selected_resume_params)
-
-  #   respond_to do |format|
-  #     if @selected_resume.save
-  #       format.html { redirect_to @selected_resume, notice: 'Selected resume was successfully created.' }
-  #       format.json { render :show, status: :created, location: @selected_resume }
-  #     else
-  #       format.html { render :new }
-  #       format.json { render json: @selected_resume.errors, status: :unprocessable_entity }
-  #     end
-  #   end
-  # end
-
   def create
     @selected_resume = SelectedResume.new(selected_resume_params)
     @selected_resumes = SelectedResume.all
     respond_to do |format|
-      if @selected_resume.save
+       if @selected_resume.save
         @selected_resume = SelectedResume.new
         format.js { @flag = true }
       else
-        flash.now[:alert] = 'Resume Already Exist.'
+        flash.now[:alert] = 'Resume Details Saved Successfully.'
         format.js { @flag = false }
-      end
+        end
     end
   end
 
   # PATCH/PUT /selected_resumes/1
   # PATCH/PUT /selected_resumes/1.json
-  # def update
-  #   respond_to do |format|
-  #     if @selected_resume.update(selected_resume_params)
-  #       format.html { redirect_to @selected_resume, notice: 'Selected resume was successfully updated.' }
-  #       format.json { render :show, status: :ok, location: @selected_resume }
-  #     else
-  #       format.html { render :edit }
-  #       format.json { render json: @selected_resume.errors, status: :unprocessable_entity }
-  #     end
-  #   end
-  # end
-
   def update
-      if @selected_resume.update(selected_resume_params)
-        @flag = true
-        @selected_resume = SelectedResume.new
-        @selected_resumes = SelectedResume.all
-      else
-        @flag = false
-      end
+    @selected_resume.update(selected_resume_params)
+    @selected_resumes = SelectedResume.all
+    @selected_resume = SelectedResume.new
   end
 
   # DELETE /selected_resumes/1
   # DELETE /selected_resumes/1.json
-  # def destroy
-  #   @selected_resume.destroy
-  #   respond_to do |format|
-  #     format.html { redirect_to selected_resumes_url, notice: 'Selected resume was successfully destroyed.' }
-  #     format.json { head :no_content }
-  #   end
-  # end
-
   def destroy
     @selected_resume.destroy
-    flash[:notice] = "Deleted Successfully"
-    redirect_to new_selected_resume_path
+    respond_to do |format|
+      format.html { redirect_to selected_resumes_url, notice: 'Resume was successfully destroyed.' }
+      format.json { head :no_content }
+    end
   end
+  
+  def download_resume
+    @selected_resume = SelectedResume.find(params[:id])
+    send_file @selected_resume.avatar.path,
+              filename: @selected_resume.avatar_file_name,
+              type: @selected_resume.avatar_content_type,
+              disposition: 'attachment'
+  end
+
+  def download_image
+    @selected_resume = SelectedResume.find(params[:id])
+    send_file @selected_resume.passport_photo.path,
+              filename: @selected_resume.passport_photo_file_name,
+              type: @selected_resume.passport_photo_content_type,
+              disposition: 'attachment'
+  end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

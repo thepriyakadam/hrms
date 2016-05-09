@@ -20,6 +20,8 @@ gem 'bootstrap-datepicker-rails'
 gem 'awesome_print'
 gem 'datagrid', '~> 1.4', '>= 1.4.1'
 
+gem 'paperclip', '~> 4.3', '>= 4.3.6'
+
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
@@ -83,7 +85,6 @@ gem 'rails-erd'
 gem 'protokoll'
 
 # Image processing
-gem 'paperclip', '~> 4.3'
 
 # country And State Name
 # gem 'country_state_select', '~> 2.0.0'

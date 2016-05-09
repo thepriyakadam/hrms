@@ -70,7 +70,8 @@ class SalarySlipLedgersController < ApplicationController
 
   def cost_unit_wise_salary
     @bank = Bank.find(params[:bank_id])
-    @month, @year, @cost_center = params[:month], params[:year], params[:cost_center]
+    @category = CostCenter.find(params[:cost_center])
+    @month, @year = params[:month], params[:year]
     cost_center_array = JoiningDetail.where(cost_center_id: params[:cost_center]).pluck(:employee_id)
     emp_array = EmployeeBankDetail.where(bank_id: @bank.id).pluck(:employee_id)
     emp_user_array = Employee.collect_rolewise(current_user)
@@ -92,11 +93,11 @@ class SalarySlipLedgersController < ApplicationController
       end
     end
     @sum = SalaryReport.create_sum(@reports)
-    
   end
 
   def cost_unit_wise_salary_pdf
     @bank = Bank.find(params[:bank_id])
+    @category = CostCenter.find(params[:cost_center])
     @month, @year, @cost_center = params[:month], params[:year], params[:cost_center]
     cost_center_array = JoiningDetail.where(cost_center_id: params[:cost_center]).pluck(:employee_id)
     emp_array = EmployeeBankDetail.where(bank_id: @bank.id).pluck(:employee_id)

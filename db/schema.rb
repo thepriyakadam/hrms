@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160507093658) do
+ActiveRecord::Schema.define(version: 20160507125255) do
 
   create_table "accident_records", force: :cascade do |t|
     t.string   "code"
@@ -1523,6 +1523,23 @@ ActiveRecord::Schema.define(version: 20160507093658) do
   add_index "salaryslips", ["employee_template_id"], name: "index_salaryslips_on_employee_template_id"
   add_index "salaryslips", ["salary_template_id"], name: "index_salaryslips_on_salary_template_id"
   add_index "salaryslips", ["workingday_id"], name: "index_salaryslips_on_workingday_id"
+
+  create_table "selected_resumes", force: :cascade do |t|
+    t.string   "name"
+    t.string   "contact_no"
+    t.text     "skillset"
+    t.integer  "degree_id"
+    t.decimal  "ctc"
+    t.string   "email_id"
+    t.string   "experience"
+    t.string   "notice_period"
+    t.integer  "vacancy_master_id"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
+  add_index "selected_resumes", ["degree_id"], name: "index_selected_resumes_on_degree_id"
+  add_index "selected_resumes", ["vacancy_master_id"], name: "index_selected_resumes_on_vacancy_master_id"
 
   create_table "shift_rotations", force: :cascade do |t|
     t.integer  "company_shift_id"

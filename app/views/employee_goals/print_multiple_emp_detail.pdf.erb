@@ -35,7 +35,7 @@ div.nobreak{ page-break-inside: avoid;
       </tr>
     </thead>
     <tbody>
-      <% @employees.each do |a| %>
+      <% @employes.each do |a| %>
       <tr>
         <td><%= a.manual_employee_code %></td> 
         <td><%= a.first_name %></td>
@@ -124,9 +124,9 @@ div.nobreak{ page-break-inside: avoid;
         </tr>
       <% end %>
     </tbody>
-  </table><br><br>
+  </table><br>
 
-  <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
+  <table id="tbl" style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
     <thead>
       <tr>
         <th>Attribute & Definition</th>

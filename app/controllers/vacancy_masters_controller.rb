@@ -170,7 +170,6 @@ class VacancyMastersController < ApplicationController
 
   def approve_vacancy_list
     @vacancy_masters = VacancyMaster.all
-
     session[:active_tab] ="recruitment"
   end
 

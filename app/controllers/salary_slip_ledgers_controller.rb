@@ -34,7 +34,7 @@ class SalarySlipLedgersController < ApplicationController
               orientation: 'Landscape',
               template: 'salary_slip_ledgers/bank_wise_salary.pdf.erb',
               show_as_html: params[:debug].present?,
-              margin:  {top:1,bottom:1,left:1,right:1 }
+              margin:  { top:1,bottom:1,left:1,right:1 }
       end
     end
   end
@@ -47,6 +47,7 @@ class SalarySlipLedgersController < ApplicationController
     @pdf = "cost_center"
     @bank = Bank.find(params[:bank_id])
     @category = params[:cost_center]
+    #byebug
     @month, @year = params[:month], params[:year]
     cost_center_array = JoiningDetail.where(cost_center_id: params[:cost_center]).pluck(:employee_id)
     emp_array = EmployeeBankDetail.where(bank_id: @bank.id).pluck(:employee_id)

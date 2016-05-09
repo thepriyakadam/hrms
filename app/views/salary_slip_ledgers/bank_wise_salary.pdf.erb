@@ -1,9 +1,10 @@
+
 <div class="ajax-progress"></div>
 <% i = 0 %>
-<table id="example3" class="table table-bordered table-hover table-condensed" style="border-collapse: collapse;" border=1 width=900>
+<table style="border-collapse: collapse; font-size:30pt;" border=1 width=1000 cellpadding="15">
   <thead>
     <tr>
-      <th colspan="41">
+      <th colspan="35">
         <center><strong>BHANDARI FOILS AND TUBES LTD.</strong></center>
         <center><small>Worker - <%= @bank.name %></small></center>
         <center><small>Employee Monthly Salary For The Month <%= @month %> - <%= @year %></small></center>
@@ -11,7 +12,7 @@
       </th>
     </tr>
     <tr>
-      <th colspan="6"><center> BASIC DETAILS</center></th>
+      
       <th colspan="8"><center> SALARY DETAILS</center></th>
       <th colspan="7"><center> WORKING DAYS</center></th>
       <th colspan="8"><center> EARNED SALARY</center></th>
@@ -21,12 +22,7 @@
     </tr>
 
     <tr>
-      <th>No</th>
-      <th>Code</th>
-      <th>Employee</th>
-      <th>Department</th>
-      <th>PF No</th>
-      <th>ESIC No</th>
+     
 
       <th>Basic</th>
       <th>DA</th>
@@ -72,12 +68,18 @@
   <tbody>
     <% @reports.each do |r| %>
       <tr>
-        <td><%= i = i + 1 %></td>
-        <td><%= r.try(:code) %></td>
-        <td><%= r.try(:employee_name) %></td>
-        <td><%= r.try(:department_name) %></td>
-        <td><%= r.try(:pf_no) %></td>
-        <td><%= r.try(:esic_no) %></td>
+      <td colspan="2">
+        <strong><%= i = i + 1 %></strong>
+      </td>
+      <td colspan="6"><strong>Code - <%= r.try(:code) %></strong></td>
+      <td colspan="7"><strong>Employee - <%= r.try(:employee_name) %></strong></td>
+      <td colspan="8"><strong>Department - <%= r.try(:department_name) %></strong></td>
+      <td colspan="6">
+        <strong>PF NO - <%= r.try(:pf_no) %></strong></td>
+      <td colspan="6">
+        <strong>ESIC NO - <%= r.try(:esic_no) %></strong></td>
+      </tr>
+      <tr>  
         <td><%= r.try(:actual_basic) %></td>
         <td><%= r.try(:actual_da) %></td>
         <td><%= r.try(:actual_hra) %></td>
@@ -122,15 +124,12 @@
         <td><%=  %></td>
       </tr>
     <% end %>
+    <tr>
+      <td colspan="35"><strong>Total</strong></td>
+    </tr>
 
     <tr>
-      <td><!-- No --></td>
-      <td><!-- Code --></td>
-      <td><!-- Employee --></td>
-      <td><!-- Department --></td>
-      <td><!-- PF No --></td>
-      <td><!-- ESIC No --></td>
-
+      
       <td><%= @sum.actual_basic %></td>
       <td><%= @sum.actual_da %></td>
       <td><%= @sum.actual_hra %></td>
@@ -170,7 +169,7 @@
       <td><%= @sum.deduction_total %></td>
 
       <td><%= @sum.net_payable %></td>
-      <td>SING</td>
+      <td></td>
     </tr>
   </tbody>
 </table>

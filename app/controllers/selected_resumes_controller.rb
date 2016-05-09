@@ -3,10 +3,6 @@ class SelectedResumesController < ApplicationController
 
   # GET /selected_resumes
   # GET /selected_resumes.json
-  def index
-    @selected_resumes = SelectedResume.all
-  end
-
   # GET /selected_resumes/1
   # GET /selected_resumes/1.json
   def show
@@ -27,7 +23,7 @@ class SelectedResumesController < ApplicationController
   # POST /selected_resumes.json
   def create
     @selected_resume = SelectedResume.new(selected_resume_params)
-    @selected_resumes = SelectedResume.all
+    @selected_resumes = SelectedResume.where(vacancy_master_id: @vacancy_master.id)
     respond_to do |format|
        if @selected_resume.save
         @selected_resume = SelectedResume.new
@@ -45,16 +41,15 @@ class SelectedResumesController < ApplicationController
     @selected_resume.update(selected_resume_params)
     @selected_resumes = SelectedResume.all
     @selected_resume = SelectedResume.new
+    flash.now[:notice] = 'Resume Details Updated Successfully.'
   end
 
   # DELETE /selected_resumes/1
   # DELETE /selected_resumes/1.json
   def destroy
     @selected_resume.destroy
-    respond_to do |format|
-      format.html { redirect_to selected_resumes_url, notice: 'Resume was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    @selected_resumes = SelectedResume.all
+    flash.now[:alert] = 'Resume Details Destroyed Successfully.'
   end
   
   def download_resume

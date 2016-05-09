@@ -5,7 +5,7 @@
     <tr>
       <th colspan="6"><center> BASIC DETAILS</center></th>
       <th colspan="8"><center> SALARY DETAILS</center></th>
-      <th colspan="7"><center> WORKING DAYS</center></th>
+      <th colspan="8"><center> WORKING DAYS</center></th>
       <th colspan="8"><center> EARNED SALARY</center></th>
       <th colspan="10"><center>DEDUCTION</center></th>
       <th><center> NET </center></th>
@@ -29,9 +29,10 @@
       <th>Wsh.Allow</th>
       <th>Total</th>
 
-      <th>Leave</th>
-      <th>LWP/ESIC</th>
-      <th>Days</th>
+      <th>CL</th>
+      <th>EL</th>
+      <th>LWP</th>
+      <th>Payable</th>
       <th>PD</th>
       <th>AD</th>
       <th>HD</th>
@@ -67,7 +68,7 @@
         <td><%= i = i+1 %></td>
         <td><%= r.try(:code) %></td>
         <td><%= r.try(:employee_name) %></td>
-        <td><%= r.try(:department) %></td>
+        <td><%= r.try(:department_name) %></td>
         <td><%= r.try(:pf_no) %></td>
         <td><%= r.try(:esic_no) %></td>
 
@@ -81,10 +82,11 @@
         <td><%= r.try(:actual_washing) %></td>
         <td><%= r.try(:actual_total) %></td>
 
-        <td><%= r.try(:total_leave) %></td>
+        <td><%= r.try(:cl_leave) %></td>
+        <td><%= r.try(:el_leave) %></td>
 
         <td><%= r.try(:lwp_leave) %></td>
-        <td><%= r.try(:day_in_month) %></td>
+        <td><%= r.try(:payable_day) %></td>
         <td><%= r.try(:present_day) %></td>
         <td><%= r.try(:absent_day) %></td>
         <td><%= r.try(:holiday) %></td>
@@ -134,9 +136,10 @@
       <td><%= @sum.actual_total %></td>
 
       
-      <td><%= @sum.total_leave %></td>
+      <td><%= @sum.cl_leave %></td>
+      <td><%= @sum.el_leave %></td>
       <td><%= @sum.lwp_leave %></td>
-      <td><%= @sum.day_in_month %></td>
+      <td><%= @sum.payable_day %></td>
       <td><%= @sum.present_day %></td>
       <td><%= @sum.absent_day %></td>
       <td><%= @sum.holiday %></td>
@@ -169,15 +172,15 @@
 </table>
   <div class="col-sm-3">
     <% if action_name == "cost_unit_wise_salary" %>
-      <%= link_to "Print Salary Slip", cost_unit_wise_salary_pdf_salary_slip_ledgers_path(bank_id: @bank.id,year: @year,month: @month, cost_center: @cost_center,format: "pdf"), class: "btn btn-xl btn-success fa fa-print" %>
+      <%= link_to "Print Salary Slip", cost_unit_wise_salary_pdf_salary_slip_ledgers_path(bank_id: @bank.id,year: @year,month: @month, cost_center: @category,format: "pdf"), class: "btn btn-xl btn-success fa fa-print" %>
 
-      <%= link_to "Excel Report", cost_unit_wise_salary_pdf_salary_slip_ledgers_path(bank_id: @bank.id,year: @year,month: @month, cost_center: @cost_center,format: "xlsx"), class: "btn btn-xl btn-success fa fa-print" %>
+      <%= link_to "Excel Report", cost_unit_wise_salary_pdf_salary_slip_ledgers_path(bank_id: @bank.id,year: @year,month: @month, cost_center: @category,format: "xlsx"), class: "btn btn-xl btn-success fa fa-print" %>
     <% else %>  
-      <%= link_to "Print Salary Slip", bank_wise_salary_salary_slip_ledgers_path(bank_id: @bank.id,year: @year,month: @month, category: @category,format: "pdf"), class: "btn btn-xl btn-success fa fa-print" %>
+      <%= link_to "Print Salary Slip", show_employee_salary_slip_ledgers_path(bank_id: @bank.id,year: @year,month: @month, category: @category,format: "pdf"), class: "btn btn-xl btn-success fa fa-print" %>
 
       <%= link_to "Excel Report", bank_wise_salary_salary_slip_ledgers_path(bank_id: @bank.id,year: @year,month: @month, category: @category,format: "xlsx"), class: "btn btn-xl btn-success fa fa-print" %>
     <%end%>
-   </div>
+  </div>
 
 <script type="text/javascript">
   $(document).ready(function() {

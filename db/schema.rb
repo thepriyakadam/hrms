@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160507125255) do
+ActiveRecord::Schema.define(version: 20160509053112) do
 
   create_table "accident_records", force: :cascade do |t|
     t.string   "code"
@@ -1534,8 +1534,16 @@ ActiveRecord::Schema.define(version: 20160507125255) do
     t.string   "experience"
     t.string   "notice_period"
     t.integer  "vacancy_master_id"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.string   "avatar_file_name"
+    t.string   "avatar_content_type"
+    t.integer  "avatar_file_size"
+    t.datetime "avatar_updated_at"
+    t.string   "passport_photo_file_name"
+    t.string   "passport_photo_content_type"
+    t.integer  "passport_photo_file_size"
+    t.datetime "passport_photo_updated_at"
   end
 
   add_index "selected_resumes", ["degree_id"], name: "index_selected_resumes_on_degree_id"

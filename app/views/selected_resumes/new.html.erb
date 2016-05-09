@@ -1,5 +1,14 @@
-<h1>New Selected Resume</h1>
-
-<%= render 'form' %>
-
-<%= link_to 'Back', selected_resumes_path %>
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Create Resumes</h3>
+  </div><!-- /.box-header -->
+    <div class="box-body">
+	    <div id="form">
+	      <%= render 'form' %>
+	  	</div>
+	  	<div id="selected_resumes_list">
+	    	<%= render 'selected_resumes_list' %>
+			</div>
+		</div>
+   	</div>
+</div>

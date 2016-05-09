@@ -3,7 +3,7 @@ class SalaryReport
 	              :actual_basic, :actual_da, :actual_hra, :actual_convenience, :actual_other, :actual_special, :actual_washing, :actual_total,
 	              :earned_basic, :earned_da, :earned_hra, :earned_convenience, :earned_other, :earned_special, :earned_washing, :earned_total,
 	              :pf, :esic, :income_tax, :pt, :advance, :society, :food_deduction, :mobile, :retention, :deduction_total, :net_payable,
-	              :total_leave, :lwp_leave, :day_in_month, :present_day, :absent_day, :holiday, :weekoff
+	              :total_leave, :cl_leave, :el_leave, :lwp_leave, :day_in_month, :payable_day, :present_day, :absent_day, :holiday, :weekoff
 
 	def self.collect_data(e, j, wd, sl)
 		addable_items = SalaryslipComponent.where(salaryslip_id: sl.id, is_deducted: false)
@@ -48,8 +48,8 @@ class SalaryReport
 			end
 		end
 
-	  sr.earned_total = addable_items.sum(:actual_amount).round
-	  sr.actual_total = addable_items.sum(:calculated_amount).round
+	  sr.earned_total = addable_items.sum(:calculated_amount).round
+	  sr.actual_total = addable_items.sum(:actual_amount).round
 		
 		deductable_items.each do |d|
 			case d.other_component_name
@@ -77,9 +77,12 @@ class SalaryReport
 	  sr.deduction_total =  deductable_items.sum(:calculated_amount).try(:to_i)
 	  sr.net_payable = sr.actual_total - sr.deduction_total.to_i
 	  
-	  sr.total_leave = wd.el_leave.to_f + wd.cl_leave.to_f + wd.coff_leave.to_f
+	  #sr.total_leave = wd.el_leave.to_f + wd.cl_leave.to_f + wd.coff_leave.to_f
+	  sr.cl_leave = wd.cl_leave.to_f
+	  sr.el_leave = wd.el_leave.to_f
 	  sr.lwp_leave = wd.lwp_leave.to_f + wd.esic_leave.to_f
 	  sr.day_in_month = wd.day_in_month
+	  sr.payable_day = wd.payable_day
 	  sr.present_day = wd.present_day
 	  sr.absent_day = wd.absent_day
 	  sr.holiday = wd.holiday_in_month.to_i
@@ -174,11 +177,17 @@ class SalaryReport
     array_total_leave = reports.collect {|r| r.try(:total_leave)}.compact
     @sum.total_leave = array_total_leave.inject(0){|sum,x| sum + x }
 
+    array_cl_leave = reports.collect {|r| r.try(:cl_leave)}.compact
+    @sum.cl_leave = array_cl_leave.inject(0){|sum,x| sum + x }
+
+    array_el_leave = reports.collect {|r| r.try(:el_leave)}.compact
+    @sum.el_leave = array_el_leave.inject(0){|sum,x| sum + x }
+
 		array_lwp_leave = reports.collect {|r| r.try(:lwp_leave)}.compact
     @sum.lwp_leave = array_lwp_leave.inject(0){|sum,x| sum + x.to_i }
 
-    array_day_in_month = reports.collect {|r| r.try(:day_in_month)}.compact
-    @sum.day_in_month = array_day_in_month.inject(0){|sum,x| sum + x }
+    array_payable_day = reports.collect {|r| r.try(:payable_day)}.compact
+    @sum.payable_day = array_payable_day.inject(0){|sum,x| sum + x }
 
     array_present_day = reports.collect {|r| r.try(:present_day)}.compact
     @sum.present_day = array_present_day.inject(0){|sum,x| sum + x }

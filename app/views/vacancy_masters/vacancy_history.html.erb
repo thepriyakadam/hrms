@@ -24,6 +24,7 @@
           <tbody>
             <% @vacancy_masters.each do |vacancy_master| %>
               <tr>
+                <td><%= vacancy_master.other_organization %></td>
                 <td><%= vacancy_master.justification %></td>
                 <td><%= vacancy_master.employee_designation.try(:name) %></td>
                 <td><%= vacancy_master.vacancy_name %></td>

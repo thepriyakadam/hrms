@@ -68,13 +68,16 @@
   <tbody>
     <% @reports.each do |r| %>
       <tr>
-      <td colspan="8">
-        <strong><%= i = i + 1 %>
-        Code - <%= r.try(:code) %></strong>
+      <td colspan="2">
+        <strong><%= i = i + 1 %></strong>
       </td>
+      <td colspan="6"><strong>Code - <%= r.try(:code) %></strong></td>
       <td colspan="7"><strong>Employee - <%= r.try(:employee_name) %></strong></td>
       <td colspan="8"><strong>Department - <%= r.try(:department_name) %></strong></td>
-      <td colspan="12"><strong>PF NO - <%= r.try(:pf_no) %> - ESIC NO - <%= r.try(:esic_no) %></strong></td>
+      <td colspan="6">
+        <strong>PF NO - <%= r.try(:pf_no) %></strong></td>
+      <td colspan="6">
+        <strong>ESIC NO - <%= r.try(:esic_no) %></strong></td>
       </tr>
       <tr>  
         <td><%= r.try(:actual_basic) %></td>

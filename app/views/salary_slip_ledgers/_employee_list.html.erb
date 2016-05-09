@@ -15,11 +15,11 @@
     <tr>
       <th>No</th>
       <th>Code</th>
-      <th>Employee</th>
+      <th>Name</th>
       <th>Department</th>
       <th>PF No</th>
       <th>ESIC No</th>
-
+      
       <th>Basic</th>
       <th>DA</th>
       <th>HRA</th>
@@ -64,12 +64,13 @@
   <tbody>
     <% @reports.each do |r| %>
       <tr>
-        <td><%= i = i + 1 %></td>
+        <td><%= i = i+1 %></td>
         <td><%= r.try(:code) %></td>
         <td><%= r.try(:employee_name) %></td>
-        <td><%= r.try(:department_name) %></td>
+        <td><%= r.try(:department) %></td>
         <td><%= r.try(:pf_no) %></td>
         <td><%= r.try(:esic_no) %></td>
+
         <td><%= r.try(:actual_basic) %></td>
         <td><%= r.try(:actual_da) %></td>
         <td><%= r.try(:actual_hra) %></td>
@@ -116,12 +117,12 @@
     <% end %>
 
     <tr>
-      <td><!-- No --></td>
-      <td><!-- Code --></td>
-      <td><!-- Employee --></td>
-      <td><!-- Department --></td>
-      <td><!-- PF No --></td>
-      <td><!-- ESIC No --></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
 
       <td><%= @sum.actual_basic %></td>
       <td><%= @sum.actual_da %></td>
@@ -175,21 +176,6 @@
    </div>
 
 <script type="text/javascript">
-  $(function () {
-    $('#selectAll').click(function() {
-      if (this.checked) {
-        $(':checkbox').each(function() {
-          this.checked = true;                       
-        });
-      } 
-      else {
-        $(':checkbox').each(function() {
-          this.checked = false;                        
-        });
-      } 
-    });
-  });
-
   $(document).ready(function() {
     $('#example3').DataTable( {
       //"scrollY":        "200px",

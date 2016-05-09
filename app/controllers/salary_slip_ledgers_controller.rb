@@ -56,7 +56,8 @@ class SalarySlipLedgersController < ApplicationController
               layout: 'pdf.html',
               orientation: 'Landscape',
               template: 'salary_slip_ledgers/bank_wise_salary.pdf.erb',
-              :show_as_html => params[:debug].present?
+              show_as_html: params[:debug].present?,
+              margin:  {top:1,bottom:1,left:1,right:1 }
       end
     end
   end
@@ -123,7 +124,8 @@ class SalarySlipLedgersController < ApplicationController
               layout: 'pdf.html',
               orientation: 'Landscape',
               template: 'salary_slip_ledgers/bank_wise_salary.pdf.erb',
-              :show_as_html => params[:debug].present?
+              show_as_html: params[:debug].present?,
+              margin:  {top:1,bottom:1,left:1,right:1 }
       end
     end
   end

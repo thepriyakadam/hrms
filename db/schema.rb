@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160507041032) do
+ActiveRecord::Schema.define(version: 20160507093658) do
 
   create_table "accident_records", force: :cascade do |t|
     t.string   "code"
@@ -51,6 +51,32 @@ ActiveRecord::Schema.define(version: 20160507041032) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
+
+  create_table "asset_types", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
+    t.text     "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "assigned_assets", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.integer  "asset_type_id"
+    t.string   "assets_detail"
+    t.string   "assets_id"
+    t.decimal  "assets_value"
+    t.string   "assest_status"
+    t.date     "issue_date"
+    t.date     "valid_till"
+    t.date     "returned_on"
+    t.text     "remarks"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "assigned_assets", ["asset_type_id"], name: "index_assigned_assets_on_asset_type_id"
+  add_index "assigned_assets", ["employee_id"], name: "index_assigned_assets_on_employee_id"
 
   create_table "attendances", force: :cascade do |t|
     t.integer  "employee_shift_id"

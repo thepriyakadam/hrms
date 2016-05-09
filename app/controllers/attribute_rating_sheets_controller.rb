@@ -314,7 +314,7 @@ class AttributeRatingSheetsController < ApplicationController
 
   def final_create
      #@attribute_rating_sheet = AttributeRatingSheet.find(params[:id])
-    
+     
     attribute_rating_sheets = params[:attribute_rating_sheet_id]
     comments = params[:final_comment]
     ratings = params[:final_rating_id]

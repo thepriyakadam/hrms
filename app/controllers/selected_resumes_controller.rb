@@ -40,6 +40,7 @@ class SelectedResumesController < ApplicationController
   # PATCH/PUT /selected_resumes/1.json
   def update
     @selected_resume.update(selected_resume_params)
+    @vacancy_master = VacancyMaster.find(params[:format])
     @selected_resumes = SelectedResume.all
     @selected_resume = SelectedResume.new
     flash.now[:notice] = 'Resume Details Updated Successfully.'

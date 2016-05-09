@@ -6,7 +6,7 @@
     <tr>
       <th colspan="35">
         <center><strong>BHANDARI FOILS AND TUBES LTD.</strong></center>
-        <center><small>Worker - <%= @bank.name %></small></center>
+        <center><small><%= @bank.name %></small></center>
         <center><small>Employee Monthly Salary For The Month <%= @month %> - <%= @year %></small></center>
       
       </th>
@@ -68,10 +68,10 @@
   <tbody>
     <% @reports.each do |r| %>
       <tr>
-      <td colspan="2">
+      <td colspan="1">
         <strong><%= i = i + 1 %></strong>
       </td>
-      <td colspan="6"><strong>Code - <%= r.try(:code) %></strong></td>
+      <td colspan="7"><strong>Code - <%= r.try(:code) %></strong></td>
       <td colspan="7"><strong>Employee - <%= r.try(:employee_name) %></strong></td>
       <td colspan="8"><strong>Department - <%= r.try(:department_name) %></strong></td>
       <td colspan="6">

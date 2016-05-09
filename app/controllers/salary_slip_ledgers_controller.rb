@@ -1,8 +1,9 @@
 class SalarySlipLedgersController < ApplicationController
   def show_employee
     @bank = Bank.find(params[:bank_id])
+    @category = EmployeeCategory.find(params[:category])
     @month, @year = params[:month], params[:year]
-    joining_array = JoiningDetail.where(employee_designation_id: params[:category]).pluck(:employee_id)
+    joining_array = JoiningDetail.where(employee_category_id: @category.id).pluck(:employee_id)
     emp_array = EmployeeBankDetail.where(bank_id: @bank.id).pluck(:employee_id)
     emp_user_array = Employee.collect_rolewise(current_user)
     if joining_array.empty?
@@ -27,10 +28,18 @@ class SalarySlipLedgersController < ApplicationController
 
   def bank_wise_salary
     @bank = Bank.find(params[:bank_id])
+    @category = EmployeeCategory.find(params[:category])
     @month, @year = params[:month], params[:year]
+    joining_array = JoiningDetail.where(employee_category_id: @category.id).pluck(:employee_id)
     emp_array = EmployeeBankDetail.where(bank_id: @bank.id).pluck(:employee_id)
+    emp_user_array = Employee.collect_rolewise(current_user)
+    if joining_array.empty?
+      final_emp_array = emp_array & emp_user_array
+    else
+      final_emp_array = emp_array & emp_user_array & joining_array
+    end
     @reports = []
-    @employees = Employee.where(id: emp_array)
+    @employees = Employee.where(id: final_emp_array)
     @employees.each do |e|
       j = JoiningDetail.find_by_employee_id(e.id)
       wd1 = Workingday.where('employee_id = ? and month_name = ? and year = ?', e.id, @month, @year.to_s).take
@@ -49,7 +58,8 @@ class SalarySlipLedgersController < ApplicationController
               layout: 'pdf.html',
               orientation: 'Landscape',
               template: 'salary_slip_ledgers/bank_wise_salary.pdf.erb',
-              :show_as_html => params[:debug].present?
+              show_as_html: params[:debug].present?,
+              margin:  {top:1,bottom:1,left:1,right:1 }
       end
     end
   end
@@ -60,14 +70,15 @@ class SalarySlipLedgersController < ApplicationController
 
   def cost_unit_wise_salary
     @bank = Bank.find(params[:bank_id])
+    @category = CostCenter.find(params[:cost_center])
     @month, @year = params[:month], params[:year]
-    joining_array = JoiningDetail.where(employee_designation_id: params[:category]).pluck(:employee_id)
+    cost_center_array = JoiningDetail.where(cost_center_id: params[:cost_center]).pluck(:employee_id)
     emp_array = EmployeeBankDetail.where(bank_id: @bank.id).pluck(:employee_id)
     emp_user_array = Employee.collect_rolewise(current_user)
-    if joining_array.empty?
+    if cost_center_array.empty?
       final_emp_array = emp_array & emp_user_array
     else
-      final_emp_array = emp_array & emp_user_array & joining_array
+      final_emp_array = emp_array & emp_user_array & cost_center_array
     end
     @reports = []
     @employees = Employee.where(id: final_emp_array)
@@ -84,4 +95,41 @@ class SalarySlipLedgersController < ApplicationController
     @sum = SalaryReport.create_sum(@reports)
   end
 
+  def cost_unit_wise_salary_pdf
+    @bank = Bank.find(params[:bank_id])
+    @category = CostCenter.find(params[:cost_center])
+    @month, @year, @cost_center = params[:month], params[:year], params[:cost_center]
+    cost_center_array = JoiningDetail.where(cost_center_id: params[:cost_center]).pluck(:employee_id)
+    emp_array = EmployeeBankDetail.where(bank_id: @bank.id).pluck(:employee_id)
+    emp_user_array = Employee.collect_rolewise(current_user)
+    if cost_center_array.empty?
+      final_emp_array = emp_array & emp_user_array
+    else
+      final_emp_array = emp_array & emp_user_array & cost_center_array
+    end
+    @reports = []
+    @employees = Employee.where(id: final_emp_array)
+    @employees.try(:each) do |e|
+      j = JoiningDetail.find_by_employee_id(e.id)
+      wd1 = Workingday.where('employee_id = ? and month_name = ? and year = ?', e.id, @month, @year.to_s).take
+      sl1 = Salaryslip.where('employee_id = ? and month = ? and year = ?', e.id, @month, @year.to_s).take
+      if j.nil? or e.nil? or wd1.nil? or sl1.nil?
+      else
+        sr = SalaryReport.collect_data(e,j,wd1,sl1)
+        @reports << sr
+      end
+    end
+    @sum = SalaryReport.create_sum(@reports)
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render pdf: 'cost_center_wise_salary',
+              layout: 'pdf.html',
+              orientation: 'Landscape',
+              template: 'salary_slip_ledgers/bank_wise_salary.pdf.erb',
+              show_as_html: params[:debug].present?,
+              margin:  {top:1,bottom:1,left:1,right:1 }
+      end
+    end
+  end
 end

@@ -1,8 +1,9 @@
 class SalarySlipLedgersController < ApplicationController
   def show_employee
     @bank = Bank.find(params[:bank_id])
-    @month, @year, @category = params[:month], params[:year], params[:category]
-    joining_array = JoiningDetail.where(employee_category_id: @category).pluck(:employee_id)
+    @category = EmployeeCategory.find(params[:category])
+    @month, @year = params[:month], params[:year]
+    joining_array = JoiningDetail.where(employee_category_id: @category.id).pluck(:employee_id)
     emp_array = EmployeeBankDetail.where(bank_id: @bank.id).pluck(:employee_id)
     emp_user_array = Employee.collect_rolewise(current_user)
     if joining_array.empty?
@@ -27,8 +28,9 @@ class SalarySlipLedgersController < ApplicationController
 
   def bank_wise_salary
     @bank = Bank.find(params[:bank_id])
-    @month, @year, @category = params[:month], params[:year], params[:category]
-    joining_array = JoiningDetail.where(employee_category_id: @category).pluck(:employee_id)
+    @category = EmployeeCategory.find(params[:category])
+    @month, @year = params[:month], params[:year]
+    joining_array = JoiningDetail.where(employee_category_id: @category.id).pluck(:employee_id)
     emp_array = EmployeeBankDetail.where(bank_id: @bank.id).pluck(:employee_id)
     emp_user_array = Employee.collect_rolewise(current_user)
     if joining_array.empty?

@@ -5,7 +5,7 @@
     <tr>
       <th colspan="36">
         <center><strong>BHANDARI FOILS AND TUBES LTD.</strong></center>
-        <center><small><%= @bank.name %><%= JoiningDetail.find_by_employee_id(current_user.employee_id).employee_designation.name %></small></center>
+        <center><small><%= @bank.name %></small></center>
         <center><small>Employee Monthly Salary For The Month <%= @month %> - <%= @year %></small></center>   
       </th>
     </tr>
@@ -69,7 +69,7 @@
       </td>
       <td colspan="7"><strong>Code - <%= r.try(:code) %></strong></td>
       <td colspan="8"><strong>Employee - <%= r.try(:employee_name) %></strong></td>
-      <td colspan="8"><strong>Department - <%= r.try(:department_name) %>   Designation <%= JoiningDetail.find_by_employee_id(current_user.employee_id).employee_designation.try(:name) %> </strong></td>
+      <td colspan="8"><strong>Department - <%= r.try(:department_name) %></strong></td>
       <td colspan="6">
         <strong>PF NO - <%= r.try(:pf_no) %></strong></td>
       <td colspan="6">

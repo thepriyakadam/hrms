@@ -1,19 +1,17 @@
 <div class="ajax-progress"></div>
 <% i = 0 %>
-<table id="example3" class="table table-bordered table-hover table-condensed" style="border-collapse: collapse;" border=1 width=900>
+<table style="border-collapse: collapse; font-size:30pt;" border=1 width=1000 cellpadding="15">
   <thead>
     <tr>
-      <th colspan="41">
+      <th colspan="36">
         <center><strong>BHANDARI FOILS AND TUBES LTD.</strong></center>
-        <center><small>Worker - <%= @bank.name %></small></center>
-        <center><small>Employee Monthly Salary For The Month <%= @month %> - <%= @year %></small></center>
-      
+        <center><small><%= @bank.name %><%= JoiningDetail.find_by_employee_id(current_user.employee_id).employee_designation.name %></small></center>
+        <center><small>Employee Monthly Salary For The Month <%= @month %> - <%= @year %></small></center>   
       </th>
     </tr>
     <tr>
-      <th colspan="6"><center> BASIC DETAILS</center></th>
       <th colspan="8"><center> SALARY DETAILS</center></th>
-      <th colspan="7"><center> WORKING DAYS</center></th>
+      <th colspan="8"><center> WORKING DAYS</center></th>
       <th colspan="8"><center> EARNED SALARY</center></th>
       <th colspan="10"><center>DEDUCTION</center></th>
       <th><center> NET </center></th>
@@ -21,13 +19,6 @@
     </tr>
 
     <tr>
-      <th>No</th>
-      <th>Code</th>
-      <th>Employee</th>
-      <th>Department</th>
-      <th>PF No</th>
-      <th>ESIC No</th>
-
       <th>Basic</th>
       <th>DA</th>
       <th>HRA</th>
@@ -37,9 +28,10 @@
       <th>Wsh.Allow</th>
       <th>Total</th>
 
-      <th>Leave</th>
-      <th>LWP/ESIC</th>
-      <th>Days</th>
+      <th>CL</th>
+      <th>EL</th>
+      <th>LWP</th>
+      <th>Payable</th>
       <th>PD</th>
       <th>AD</th>
       <th>HD</th>
@@ -72,12 +64,18 @@
   <tbody>
     <% @reports.each do |r| %>
       <tr>
-        <td><%= i = i + 1 %></td>
-        <td><%= r.try(:code) %></td>
-        <td><%= r.try(:employee_name) %></td>
-        <td><%= r.try(:department_name) %></td>
-        <td><%= r.try(:pf_no) %></td>
-        <td><%= r.try(:esic_no) %></td>
+      <td colspan="1">
+        <strong><%= i = i + 1 %></strong>
+      </td>
+      <td colspan="7"><strong>Code - <%= r.try(:code) %></strong></td>
+      <td colspan="8"><strong>Employee - <%= r.try(:employee_name) %></strong></td>
+      <td colspan="8"><strong>Department - <%= r.try(:department_name) %></strong></td>
+      <td colspan="6">
+        <strong>PF NO - <%= r.try(:pf_no) %></strong></td>
+      <td colspan="6">
+        <strong>ESIC NO - <%= r.try(:esic_no) %></strong></td>
+      </tr>
+      <tr>  
         <td><%= r.try(:actual_basic) %></td>
         <td><%= r.try(:actual_da) %></td>
         <td><%= r.try(:actual_hra) %></td>
@@ -88,10 +86,11 @@
         <td><%= r.try(:actual_washing) %></td>
         <td><%= r.try(:actual_total) %></td>
 
-        <td><%= r.try(:total_leave) %></td>
+        <td><%= r.try(:cl_leave) %></td>
+        <td><%= r.try(:el_leave) %></td>
 
         <td><%= r.try(:lwp_leave) %></td>
-        <td><%= r.try(:day_in_month) %></td>
+        <td><%= r.try(:payable_day) %></td>
         <td><%= r.try(:present_day) %></td>
         <td><%= r.try(:absent_day) %></td>
         <td><%= r.try(:holiday) %></td>
@@ -122,15 +121,11 @@
         <td><%=  %></td>
       </tr>
     <% end %>
-
     <tr>
-      <td><!-- No --></td>
-      <td><!-- Code --></td>
-      <td><!-- Employee --></td>
-      <td><!-- Department --></td>
-      <td><!-- PF No --></td>
-      <td><!-- ESIC No --></td>
+      <td colspan="35"><strong>Total</strong></td>
+    </tr>
 
+    <tr>      
       <td><%= @sum.actual_basic %></td>
       <td><%= @sum.actual_da %></td>
       <td><%= @sum.actual_hra %></td>
@@ -140,10 +135,10 @@
       <td><%= @sum.actual_washing %></td>
       <td><%= @sum.actual_total %></td>
 
-      
-      <td><%= @sum.total_leave %></td>
+      <td><%= @sum.cl_leave %></td>
+      <td><%= @sum.el_leave %></td>
       <td><%= @sum.lwp_leave %></td>
-      <td><%= @sum.day_in_month %></td>
+      <td><%= @sum.payable_day %></td>
       <td><%= @sum.present_day %></td>
       <td><%= @sum.absent_day %></td>
       <td><%= @sum.holiday %></td>
@@ -170,7 +165,7 @@
       <td><%= @sum.deduction_total %></td>
 
       <td><%= @sum.net_payable %></td>
-      <td>SING</td>
+      <td></td>
     </tr>
   </tbody>
 </table>

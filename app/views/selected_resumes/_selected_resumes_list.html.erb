@@ -1,0 +1,45 @@
+<table id="example" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Sr.No</th>
+      <th>Name</th>
+      <th>Contact no</th>
+      <th>Skillset</th>
+      <th>Degree</th>
+      <th>Ctc</th>
+      <th>Email</th>
+      <th>Experience</th>
+      <th>Notice period</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+  <% i = 0 %>
+    <% @selected_resumes.each do |selected_resume| %>
+      <tr>
+        <td><%= i=i+1 %></td>
+        <td><%= selected_resume.name %></td>
+        <td><%= selected_resume.contact_no %></td>
+        <td><%= selected_resume.skillset %></td>
+        <td><%= selected_resume.degree.try(:name) %></td>
+        <td><%= selected_resume.ctc %></td>
+        <td><%= selected_resume.email_id %></td>
+        <td><%= selected_resume.experience %></td>
+        <td><%= selected_resume.notice_period %></td>
+        <td>
+        <%= link_to '', edit_selected_resume_path(selected_resume),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
+        <%= link_to '', selected_resume, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
+        <%= link_to '',download_resume_path(id: selected_resume.id),class: 'btn btn-xs btn-info fa fa-download' %>
+        <%= link_to '',download_image_path(id: selected_resume.id),class: 'btn btn-xs btn-warning fa fa-picture-o' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<script>
+$(document).ready(function() {
+    $('#example').DataTable();
+} );
+</script>

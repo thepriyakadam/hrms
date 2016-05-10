@@ -26,7 +26,6 @@ class AccidentRecordsController < ApplicationController
   # POST /accident_records.json
   def create
     @accident_record = AccidentRecord.new(accident_record_params)
-
     respond_to do |format|
       if @accident_record.save
         format.html { redirect_to @accident_record, notice: 'Accident record was successfully created.' }

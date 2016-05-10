@@ -1,12 +1,10 @@
 
 <div class="box box-default">
-  <div class="box-header with-border">
-    <h3 class="box-title">Selected Resume</h3>
-  </div>
-  <div class="box-body">
-<%= bootstrap_form_for(@selected_resume) do |f| %>
-<%= f.hidden_field :vacancy_master_id, value: @vacancy_master.id  %>
-
+ 
+<div class="box-body">
+<%= bootstrap_form_for(@selected_resume,remote: true) do |f| %>
+<%= f.hidden_field :vacancy_master_id,value: @vacancy_master.id  %>
+<%= hidden_field_tag :authenticity_token, form_authenticity_token %>
 <div class="row">
   <div class="col-sm-3">
     <div class="field">
@@ -40,6 +38,13 @@
   </div>
 
 <div class="row">
+
+  <div class="col-sm-3">
+    <div class="field">
+      <%= f.text_field :ctc, label: 'CTC' %>
+    </div>
+  </div>
+
   <div class="col-sm-3">
     <div class="field">
       <%= f.text_field :email_id, label: 'Email Id' %>
@@ -59,12 +64,25 @@
   </div>
 </div>
 
+<div class="row">
+ <div class="col-sm-3">
+      <div class="field">
+        <%= f.file_field :avatar,label: 'Resume Upload' %>
+      </div>
+ </div>
+
+ <div class="col-sm-3">
+      <div class="field">
+        <%= f.file_field :passport_photo,label: 'Photo Upload' %>
+      </div>
+    </div>
+  </div>  
+
 
 <div class="row">
   <div class="col-sm-3">
     <div class="actions">
-      <%= f.submit "Create",class: "btn btn-primary btn-sm" %>
-      <%= link_to 'Back', selected_resumes_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+      <%= f.submit "Create", class: "btn btn-primary btn-sm" %>
     </div>
   </div>
 </div>

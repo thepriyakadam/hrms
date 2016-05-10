@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160507125255) do
+ActiveRecord::Schema.define(version: 20160509053112) do
 
   create_table "accident_records", force: :cascade do |t|
     t.string   "code"
@@ -637,7 +637,7 @@ ActiveRecord::Schema.define(version: 20160507125255) do
     t.string   "city"
     t.integer  "district_id"
     t.integer  "state_id"
-    t.integer  "country_id"
+    t.integer  "contry_id"
     t.integer  "pin_code"
     t.integer  "phone_no"
     t.integer  "mobile_no"
@@ -646,7 +646,7 @@ ActiveRecord::Schema.define(version: 20160507125255) do
     t.datetime "updated_at",           null: false
   end
 
-  add_index "employee_nominations", ["country_id"], name: "index_employee_nominations_on_country_id"
+  add_index "employee_nominations", ["contry_id"], name: "index_employee_nominations_on_contry_id"
   add_index "employee_nominations", ["district_id"], name: "index_employee_nominations_on_district_id"
   add_index "employee_nominations", ["family_id"], name: "index_employee_nominations_on_family_id"
   add_index "employee_nominations", ["nomination_master_id"], name: "index_employee_nominations_on_nomination_master_id"
@@ -1534,8 +1534,16 @@ ActiveRecord::Schema.define(version: 20160507125255) do
     t.string   "experience"
     t.string   "notice_period"
     t.integer  "vacancy_master_id"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.string   "avatar_file_name"
+    t.string   "avatar_content_type"
+    t.integer  "avatar_file_size"
+    t.datetime "avatar_updated_at"
+    t.string   "passport_photo_file_name"
+    t.string   "passport_photo_content_type"
+    t.integer  "passport_photo_file_size"
+    t.datetime "passport_photo_updated_at"
   end
 
   add_index "selected_resumes", ["degree_id"], name: "index_selected_resumes_on_degree_id"

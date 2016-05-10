@@ -126,17 +126,14 @@ class EmployeeGoalsController < ApplicationController
 
 
   def show_employee
-    puts '---------------------------'
     @employee = Employee.new
     @employees = Employee.all
 
   end
 
   def print_detail
-
     @employee = params[:employee_ids]
     @employees = Employee.where(id: @employee)
-
             respond_to do |format|
             format.html
             format.pdf do
@@ -149,8 +146,8 @@ class EmployeeGoalsController < ApplicationController
             :orientation      => 'Landscape', # default , Landscape
             :page_height      => 1000,
             :dpi              => '300',
-            :margin           => {:top    => 55, # default 10 (mm)
-                          :bottom => 55,
+            :margin           => {:top    => 10, # default 10 (mm)
+                          :bottom => 10,
                           :left   => 12,
                           :right  => 0},
             :show_as_html => params[:debug].present?

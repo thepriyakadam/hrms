@@ -28,6 +28,7 @@ class SalarySlipLedgersController < ApplicationController
     respond_to do |format|
       format.js
       format.html
+      format.xls
       format.pdf do
         render pdf: 'bank_wise_salary',
               layout: 'pdf.html',
@@ -47,7 +48,6 @@ class SalarySlipLedgersController < ApplicationController
     @pdf = "cost_center"
     @bank = Bank.find(params[:bank_id])
     @category = params[:cost_center]
-    #byebug
     @month, @year = params[:month], params[:year]
     cost_center_array = JoiningDetail.where(cost_center_id: params[:cost_center]).pluck(:employee_id)
     emp_array = EmployeeBankDetail.where(bank_id: @bank.id).pluck(:employee_id)
@@ -72,6 +72,7 @@ class SalarySlipLedgersController < ApplicationController
     @sum = SalaryReport.create_sum(@reports)
     respond_to do |format|
       format.js
+      format.xls {render template: 'salary_slip_ledgers/show_employee.xls.erb'}
       format.html
       format.pdf do
         render pdf: 'cost_center_wise_salary',

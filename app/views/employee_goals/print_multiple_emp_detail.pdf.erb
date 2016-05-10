@@ -16,7 +16,7 @@ div.nobreak{ page-break-inside: avoid;
    <% @experiences = Experience.where(employee_id: e.id)  %>
    <% @qualifications = Qualification.where(employee_id: e.id)%> 
    <% @goal_rating_sheets = GoalRatingSheet.where(appraisee_id:e.id)%>
-<%@joining_detail = JoiningDetail.find_by_employee_id(e.id) %>
+   <%@joining_detail = JoiningDetail.find_by_employee_id(e.id) %>
     <% @employes = Employee.where(id: e.id).group(:id) %>
   <%  @ctc = EmployeeSalaryTemplate.where(employee_id: e.id).sum(:monthly_amount)%>
    <% @attribute_rating_multiple_sheets = AttributeRatingSheet.where(appraisee_id: e.id) %>
@@ -27,6 +27,7 @@ div.nobreak{ page-break-inside: avoid;
 	    <tr>
 	    	<th>Employee Id</th>
 	    	<th>Name</th>
+        <th>Age</th>
 	    	<th>Department</th>
 	    	<th>Date Of Joining</th>
 	    	<th>Joining Grade</th>
@@ -38,6 +39,7 @@ div.nobreak{ page-break-inside: avoid;
       <tr>
         <td><%= a.manual_employee_code %></td> 
         <td><%= a.first_name %></td>
+        <td><%= Time.now.year - a.date_of_birth.year %></td>
         <td><%= a.department.try(:name) %></td>
         <td><%= @joining_detail.joining_date %></td>
         <td><%= @joining_detail.employee_grade.try(:name) %></td>
@@ -122,9 +124,9 @@ div.nobreak{ page-break-inside: avoid;
         </tr>
       <% end %>
     </tbody>
-  </table><br><br>
+  </table><br>
 
-  <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
+  <table id="tbl" style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
     <thead>
       <tr>
         <th>Attribute & Definition</th>

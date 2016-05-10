@@ -6,8 +6,8 @@ class SalaryReport
 	              :total_leave, :cl_leave, :el_leave, :lwp_leave, :day_in_month, :payable_day, :present_day, :absent_day, :holiday, :weekoff
 
 	def self.collect_data(e, j, wd, sl)
-		addable_items = SalaryslipComponent.where(salaryslip_id: sl.id, is_deducted: false)
-		deductable_items = SalaryslipComponent.where(salaryslip_id: sl.id, is_deducted: true)
+		addable_items = SalaryslipComponent.where(salaryslip_id: sl.id, is_deducted: false, is_arrear: nil)
+		deductable_items = SalaryslipComponent.where(salaryslip_id: sl.id, is_deducted: true, is_arrear: nil)
 
 		sr = SalaryReport.new
 		sr.employee_name = e.try(:first_name).to_s + ' ' + e.try(:last_name).to_s

@@ -1,6 +1,6 @@
-require 'query_report/helper'  # need to require the helper
+require 'query_report/helper'
 class SalarySlipLedgersController < ApplicationController
-  include QueryReport::Helper  # need to include it
+  include QueryReport::Helper
   def show_employee
     @pdf = "category"
     @bank = Bank.find(params[:bank_id])
@@ -30,7 +30,7 @@ class SalarySlipLedgersController < ApplicationController
     respond_to do |format|
       format.js
       format.html
-      format.xls
+      format.xls {render template: 'salary_slip_ledgers/show_employee.xls.erb'}
       format.pdf do
         render pdf: 'bank_wise_salary',
               layout: 'pdf.html',
@@ -111,6 +111,5 @@ class SalarySlipLedgersController < ApplicationController
       
       #column(:company_location, sortable: true) { |employee_leav_request| employee_leav_request.employee.try(:company_location).try(:name) }
     end
-
   end
 end

@@ -1546,6 +1546,7 @@ ActiveRecord::Schema.define(version: 20160510100004) do
     t.string   "passport_photo_content_type"
     t.integer  "passport_photo_file_size"
     t.datetime "passport_photo_updated_at"
+    t.boolean  "is_confirm"
   end
 
   add_index "selected_resumes", ["degree_id"], name: "index_selected_resumes_on_degree_id"

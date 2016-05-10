@@ -17,8 +17,8 @@ class GoalRatingSheetsController < ApplicationController
     @goal_rating_sheet = GoalRatingSheet.new
     @goal_rting_sheets = EmployeeGoal.where(employee_id: current_user.employee_id).group(:employee_id)
     @employee_goals = EmployeeGoal.where(employee_id: current_user.employee_id,is_confirm: true)
-      @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: current_user.employee_id,appraisee_comment: nil)
-     @goal_rating_shets = GoalRatingSheet.where(appraisee_id: current_user.employee_id).where.not(appraisee_comment: nil)
+    @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: current_user.employee_id,appraisee_comment: nil)
+    @goal_rating_shets = GoalRatingSheet.where(appraisee_id: current_user.employee_id).where.not(appraisee_comment: nil)
   end
 
   # GET /goal_rating_sheets/1/edit

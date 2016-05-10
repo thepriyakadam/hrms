@@ -23,7 +23,7 @@
 				    	<% @employees.each do |e| %>
 				     		<tr>
 				     			<td><%= check_box_tag "employee_ids[]", e %></td>
-				        	<td><%= e %></td>
+				        	<td><%= e.gsub("_"," "). %></td>
 				        </tr>
 				      <% end %>
 				    </tbody>

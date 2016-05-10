@@ -45,8 +45,7 @@ class DailyBillDetailsController < ApplicationController
       @flag = false
       @daily_bill_details = @travel_request.daily_bill_details
     end
-    
-
+  end
     redirect_to daily_bill_details_path
 end
 

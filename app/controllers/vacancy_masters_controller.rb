@@ -211,6 +211,7 @@ class VacancyMastersController < ApplicationController
       end
       @vacancy_master.update(current_status: "Approved")
       flash[:notice] = "No. Of Positions Updated Successfully"
+      VacancyMasterMailer.update_no_of_position_email(@vacancy_master).deliver_now
       redirect_to vacancy_history_vacancy_masters_path
     end 
   end

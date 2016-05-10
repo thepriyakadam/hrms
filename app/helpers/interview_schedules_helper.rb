@@ -4,7 +4,7 @@ module InterviewSchedulesHelper
   end
 
   def all_candidate_name
-      CaptureResume.all.collect { |x| [x.name_of_candidate, x.id] }
+      SelectedResume.where(is_confirm: true).collect { |x| [x.name, x.id] }
   end
 
 end

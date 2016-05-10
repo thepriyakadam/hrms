@@ -17,8 +17,8 @@
       <% @attribute_rating_sheets.each do |attribute_rating_sheet| %>
         <tr>
           
-          <td><%= attribute_rating_sheet.employee_attribute.attribute_master.name %></td>
-          <td><%= attribute_rating_sheet.employee_attribute.weightage %></td>
+          <td><%= attribute_rating_sheet.employee_attribute.try(:attribute_master).try(:name) %></td>
+          <td><%= attribute_rating_sheet.employee_attribute.try(:weightage) %></td>
           <td><%= text_field_tag 'appraisee_comment[]' %></td>
           <td><%= select_tag 'appraisee_rating_id[]',options_for_select(all_rating_type) ,{class: 'form-control', hide_label: true,include_blank: " Select Rating"} %></td>
           
@@ -29,7 +29,7 @@
       </tbody>
     </table>
 
-  <% if @employee_attributes.empty? %>
+  <% if @attribute_rating_sheets.empty? %>
 
   <% else %>
     <div class="row">

@@ -166,7 +166,7 @@
       <td><%= @sum.deduction_total %></td>
 
       <td><%= @sum.net_payable %></td>
-      <td>SING</td>
+      <td>SIGN</td>
     </tr>
   </tbody>
 </table>
@@ -181,14 +181,3 @@
       <%= link_to " Excel Report ", show_employee_salary_slip_ledgers_path(bank_id: @bank.id,year: @year,month: @month, category: @category,format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
     <%end%>
   </div>
-
-<script type="text/javascript">
-  $(document).ready(function() {
-    $('#example3').DataTable( {
-      //"scrollY":        "200px",
-      "scrollX":        "1000px",
-      "scrollCollapse": true,
-      "paging":         true
-    } );
-} );
-</script>

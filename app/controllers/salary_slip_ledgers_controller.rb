@@ -108,7 +108,6 @@ class SalarySlipLedgersController < ApplicationController
       # filter(:current_status, :enum, :select => [["Pending",0], ["FirstApproved",2], ["SecondApproved",3], ["FirstRejected",4],["SecondRejected",5],["Cancelled",1]])
       column :employee_name
       column :department_name
-      
       #column(:company_location, sortable: true) { |employee_leav_request| employee_leav_request.employee.try(:company_location).try(:name) }
     end
   end

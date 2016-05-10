@@ -132,7 +132,6 @@ class EmployeeGoalsController < ApplicationController
   end
 
   def print_detail
-
     @employee = params[:employee_ids]
     @employees = Employee.where(id: @employee)
             respond_to do |format|

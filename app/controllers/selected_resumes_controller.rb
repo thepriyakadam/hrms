@@ -23,11 +23,8 @@ class SelectedResumesController < ApplicationController
   # POST /selected_resumes.json
   def create
     @selected_resume = SelectedResume.new(selected_resume_params)
-<<<<<<< HEAD
-    @selected_resumes = SelectedResume.where(vacancy_master_id: @vacancy_master.id)
-=======
+
     @selected_resumes = SelectedResume.all
->>>>>>> 94aa39c97de6dd089687430ae6ea379399233416
     respond_to do |format|
        if @selected_resume.save
         @selected_resume = SelectedResume.new

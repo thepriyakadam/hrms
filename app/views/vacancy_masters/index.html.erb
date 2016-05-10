@@ -46,8 +46,8 @@
         </td>
         <td>
          <%= link_to ' Vacancy Request', particular_vacancy_request_list_vacancy_masters_path(vacancy_master),class: 'btn btn-xs btn-default' %>
-          <%= link_to ' Capture Resume', new_capture_resume_path(vacancy_master.id),class: 'btn btn-xs btn-default' %>
-         </td>
+         <!-- link_to ' Capture Resume', new_capture_resume_path(vacancy_master.id),class: 'btn btn-xs btn-default' %>-->
+        </td>
       </tr>
     <% end %>
   </tbody>
@@ -57,10 +57,9 @@
   <%= link_to "CSV", vacancy_masters_path(format: "csv") %>
 </p>
 </div>
-  </div>
+</div>
 <script>
 $(document).ready(function() {
     $('#example').DataTable();
 } );
 </script>
-

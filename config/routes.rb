@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
 
-  resources :selected_resumes
+  resources :selected_resumes  do
+    collection do 
+    post :is_confirm
+    end
+  end 
   resources :assigned_assets
   resources :asset_types
   resources :employee_nominations

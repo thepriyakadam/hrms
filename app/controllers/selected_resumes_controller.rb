@@ -40,6 +40,7 @@ class SelectedResumesController < ApplicationController
   # PATCH/PUT /selected_resumes/1.json
   def update
     @selected_resume.update(selected_resume_params)
+    @vacancy_master = VacancyMaster.find(params[:format])
     @selected_resumes = SelectedResume.all
     @selected_resume = SelectedResume.new
     flash.now[:notice] = 'Resume Details Updated Successfully.'
@@ -67,6 +68,22 @@ class SelectedResumesController < ApplicationController
               filename: @selected_resume.passport_photo_file_name,
               type: @selected_resume.passport_photo_content_type,
               disposition: 'attachment'
+  end
+
+  def is_confirm
+    # @vacancy_master = VacancyMaster.find(params[:format])
+    @selected_resume_ids = params[:selected_resume_ids]
+    if @selected_resume_ids.nil?
+      flash[:alert] = "Please Select the Checkbox"
+      redirect_to new_employee_goal_path(@employee.id)
+    else
+      @selected_resume_ids.each do |eid|
+      @selected_resume = SelectedResume.find(eid)
+      @selected_resume.update(is_confirm: true)      
+      flash[:notice] = "Confirmed Successfully"
+    end 
+     redirect_to root_url
+  end
   end
 
 

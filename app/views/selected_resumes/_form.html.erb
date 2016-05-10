@@ -1,19 +1,21 @@
-
 <div class="box box-default">
  
 <div class="box-body">
-<%= bootstrap_form_for(@selected_resume,remote: true) do |f| %>
+<%= bootstrap_form_for(@selected_resume,html: {id: 'selected_resume'},remote:true) do |f| %>
 <%= f.hidden_field :vacancy_master_id,value: @vacancy_master.id  %>
 <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+<div>
+  <%= render 'show_vacancy_detail' %>
+</div>
 <div class="row">
   <div class="col-sm-3">
-    <div class="field">
+    <div class="form-group required">
       <%= f.text_field :name,label: 'Name' %>
     </div>
   </div>
 
    <div class="col-sm-3">
-    <div class="field">
+    <div class="form-group required">
       <%= f.text_field :contact_no,label: 'Contact No' %>
     </div>
   </div>
@@ -22,7 +24,7 @@
       <div class="form-group required">
         <%= f.text_field :skillset,label: 'Skillset' %>
       </div>
-    </div>
+  </div>
     
   <div class="col-sm-3">
       <label>Educational Qualification</label>
@@ -38,7 +40,6 @@
   </div>
 
 <div class="row">
-
   <div class="col-sm-3">
     <div class="field">
       <%= f.text_field :ctc, label: 'CTC' %>
@@ -62,13 +63,14 @@
       <%= f.text_field :notice_period, label: 'Notice Period' %>
     </div>
   </div>
+
 </div>
 
 <div class="row">
  <div class="col-sm-3">
-      <div class="field">
-        <%= f.file_field :avatar,label: 'Resume Upload' %>
-      </div>
+    <div class="field">
+      <%= f.file_field :avatar,label: 'Resume Upload' %>
+    </div>
  </div>
 
  <div class="col-sm-3">
@@ -90,4 +92,42 @@
 </div>
 </div>
 <% end %>
+<script>
+$("#selected_resume").validate({
+    rules: {
+      "selected_resume[name]":{
+        required: true
+              },
+      "selected_resume[contact_no]":{
+        required: true
+      },
+      "selected_resume[degree_id]":{
+        required: true
+      },
+      "selected_resume[skillset]":{
+        required: true
+      }
+    },
+    messages: {
+      "selected_resume[name]":{
+        required: "Please specify Name"
+      },
+      "selected_resume[contact_no]":{
+        required: "Please specify Contact No"
+      },
+      "selected_resume[degree_id]":{
+        required: "Please specify Qualification"
+      },
+      "selected_resume[skillset]":{
+        required: "Please specify Skillset"
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>
+
+
 

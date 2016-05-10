@@ -36,6 +36,10 @@ class DailyBillDetailsController < ApplicationController
     @daily_bill_details = DailyBillDetail.all
     respond_to do |format|
       if @daily_bill_detail.save
+        len = params['daily_bill_detail'].length - 7
+      for i in 2..len
+        DailyBillDetail.create(travel_request_id: params['daily_bill_detail']['travel_request_id'], expence_date: params['daily_bill_detail'][i.to_s]['expence_date'], e_place: params['daily_bill_detail'][i.to_s]['e_place'], travel_expence: params['daily_bill_detail'][i.to_s]['travel_expence'],local_travel_expence: params['daily_bill_detail'][i.to_s]['local_travel_expence'],lodging_expence: params['daily_bill_detail'][i.to_s]['lodging_expence'],boarding_expence: params['daily_bill_detail'][i.to_s]['boarding_expence'],other_expence: params['daily_bill_detail'][i.to_s]['other_expence'])
+      end     
         @daily_bill_detail = DailyBillDetail.new
         format.js { @flag = true }
       else
@@ -64,11 +68,24 @@ class DailyBillDetailsController < ApplicationController
     
   end
 
+
   def is_confirm
-     @daily_bill_detail = DailyBillDetail.new
-    @daily_bill_details = DailyBillDetail.all
-    flash[:notice] = 'Confirmed successfully'
-    redirect_to root_url
+
+    @travel_request = TravelRequest.find(params[:id])
+    
+    @daily_bill_detail_ids = params[:daily_bill_detail_ids]
+    if @daily_bill_detail_ids.nil?
+      flash[:alert] = "Please Select the Checkbox"
+      redirect_to new_daily_bill_detail_path(@travel_request.id)
+    else
+      @daily_bill_detail_ids.each do |did|
+      @daily_bill_detail = DailyBillDetail.find(did)
+      @daily_bill_detail.update(is_confirm: true)
+      
+      flash[:notice] = "Confirmed Successfully"
+    end 
+      redirect_to new_daily_bill_detail_path(@travel_request.id)
+    end
   end
 
   private

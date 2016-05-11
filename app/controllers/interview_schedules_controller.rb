@@ -150,9 +150,19 @@ end
     end
   end
 
-  def is_confirm
-     puts "---------------"
-     @interview_schedule_ids = params[:interview_schedule_ids]
+   def is_confirm
+    @interview_schedule_ids = params[:interview_schedule_ids]
+    if @interview_schedule_ids.nil?
+      flash[:alert] = "Please Select the Checkbox"
+      redirect_to new_employee_goal_path(@employee.id)
+    else
+      @interview_schedule_ids.each do |eid|
+      @interview_schedule = SelectedResume.find(eid)
+      @interview_schedule.update(is_confirm: true)      
+      flash[:notice] = "Confirmed Successfully"
+    end 
+     redirect_to root_url
+  end
   end
 
 

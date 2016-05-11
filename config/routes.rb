@@ -472,6 +472,7 @@ Rails.application.routes.draw do
       get :cost_unit_wise_salary
       get :salary_report
       get :bank_wise_net_amount
+      get :collect_salary
     end
   end
 

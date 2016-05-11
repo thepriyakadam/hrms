@@ -96,6 +96,16 @@ class SalarySlipLedgersController < ApplicationController
   end
 
   def collect_salary
-    
+    @month, @year, @bank = params[:month], params[:year], params[:bank_id]
+    employee_bank_array = EmployeeBankDetail.where(bank_id: @bank).pluck(:employee_id)
+    @slips = Salaryslip.where(month: @month, year: @year.to_s, employee_id: employee_bank_array)
+    respond_to do |f|
+      f.js
+      f.xls
+      f.html
+      # f.pdf do 
+      #   render
+      # end
+    end
   end
 end

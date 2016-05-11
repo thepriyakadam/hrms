@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160510100004) do
+ActiveRecord::Schema.define(version: 20160511051814) do
 
   create_table "accident_records", force: :cascade do |t|
     t.string   "code"
@@ -637,7 +637,7 @@ ActiveRecord::Schema.define(version: 20160510100004) do
     t.string   "city"
     t.integer  "district_id"
     t.integer  "state_id"
-    t.integer  "contry_id"
+    t.integer  "country_id"
     t.integer  "pin_code"
     t.integer  "phone_no"
     t.integer  "mobile_no"
@@ -646,7 +646,7 @@ ActiveRecord::Schema.define(version: 20160510100004) do
     t.datetime "updated_at",           null: false
   end
 
-  add_index "employee_nominations", ["contry_id"], name: "index_employee_nominations_on_contry_id"
+  add_index "employee_nominations", ["country_id"], name: "index_employee_nominations_on_country_id"
   add_index "employee_nominations", ["district_id"], name: "index_employee_nominations_on_district_id"
   add_index "employee_nominations", ["family_id"], name: "index_employee_nominations_on_family_id"
   add_index "employee_nominations", ["nomination_master_id"], name: "index_employee_nominations_on_nomination_master_id"
@@ -1002,6 +1002,7 @@ ActiveRecord::Schema.define(version: 20160510100004) do
     t.integer  "employee_id"
     t.boolean  "is_confirm"
     t.integer  "selected_resume_id"
+    t.string   "candidate_name2"
   end
 
   add_index "interview_schedules", ["employee_id"], name: "index_interview_schedules_on_employee_id"

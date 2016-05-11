@@ -52,7 +52,7 @@ class VacancyMastersController < ApplicationController
     # @vacancy = Department.find(@vacancy_master.department_id)
     # @vacancy_master.company_location_id = @vacancy.company_location_id
     @vacancy_master.current_status = "Pending"
-
+ 
     respond_to do |format|
       if @vacancy_master.save
         len = @vacancy_master.no_of_position
@@ -127,8 +127,7 @@ class VacancyMastersController < ApplicationController
   def send_request_to_higher_authority
     puts ".................."
     @vacancy_master = VacancyMaster.find(params[:id])
-    @particular_vacancy_requests = ParticularVacancyRequest.where(vacancy_master_id: @vacancy_master.id)
-    
+    @particular_vacancy_requests = ParticularVacancyRequest.where(vacancy_master_id: @vacancy_master.id)  
     @particular_vacancy_requests.each do |p|
       p.update(status: "Approved & Send Next")
     end 

@@ -470,6 +470,7 @@ Rails.application.routes.draw do
       post :print_salary_slip_monthwise
       get :cost_unit_wise
       get :cost_unit_wise_salary
+      get :salary_report
     end
   end
 

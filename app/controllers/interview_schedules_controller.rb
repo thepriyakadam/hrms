@@ -169,6 +169,6 @@ end
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def interview_schedule_params
-    params.require(:interview_schedule).permit(:interviewer_name, :employee_id, :interview_schedule_id, :reporting_master_id, :email_id, :candidate_name, :interview_date, :interview_time, :location, :schedule_comments, :post_title, :interview_type, :interview_status)
+    params.require(:interview_schedule).permit(:interviewer_name, :candidate_name2, :employee_id, :interview_schedule_id, :reporting_master_id, :email_id, :candidate_name, :interview_date, :interview_time, :location, :schedule_comments, :post_title, :interview_type, :interview_status)
   end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160510100004) do
+ActiveRecord::Schema.define(version: 20160511051814) do
 
   create_table "accident_records", force: :cascade do |t|
     t.string   "code"
@@ -1002,6 +1002,7 @@ ActiveRecord::Schema.define(version: 20160510100004) do
     t.integer  "employee_id"
     t.boolean  "is_confirm"
     t.integer  "selected_resume_id"
+    t.string   "candidate_name2"
   end
 
   add_index "interview_schedules", ["employee_id"], name: "index_interview_schedules_on_employee_id"

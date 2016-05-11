@@ -101,11 +101,16 @@ class SalarySlipLedgersController < ApplicationController
     @slips = Salaryslip.where(month: @month, year: @year.to_s, employee_id: employee_bank_array)
     respond_to do |f|
       f.js
-      f.xls
+      f.xls {render template: 'salary_slip_ledgers/collect_salary.xls.erb'}
       f.html
-      # f.pdf do 
-      #   render
-      # end
+      f.pdf do
+        render pdf: 'net_salary',
+              layout: 'pdf.html',
+              #orientation: 'Landscape',
+              template: 'salary_slip_ledgers/collect_salary.pdf.erb',
+              show_as_html: params[:debug].present?,
+              margin:  {top:1,bottom:1,left:1,right:1 }
+      end
     end
   end
 end

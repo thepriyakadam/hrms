@@ -26,6 +26,11 @@ class InterviewSchedulesController < ApplicationController
   # GET /interview_schedules/new
   def new
     @interview_schedule = InterviewSchedule.new
+    @selected_resume = SelectedResume.find(params[:format])
+  end
+
+  def new1
+    @interview_schedule = InterviewSchedule.new
   end
 
   # GET /interview_schedules/1/edit
@@ -150,18 +155,18 @@ end
     end
   end
 
-   def is_confirm
+  def is_confirm
     @interview_schedule_ids = params[:interview_schedule_ids]
     if @interview_schedule_ids.nil?
       flash[:alert] = "Please Select the Checkbox"
-      redirect_to new_employee_goal_path(@employee.id)
+      redirect_to interview_schedules_path
     else
       @interview_schedule_ids.each do |eid|
-      @interview_schedule = SelectedResume.find(eid)
+      @interview_schedule = InterviewSchedule.find(eid)
       @interview_schedule.update(is_confirm: true)      
       flash[:notice] = "Confirmed Successfully"
     end 
-     redirect_to root_url
+     redirect_to interview_schedules_path
   end
   end
 
@@ -179,6 +184,6 @@ end
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def interview_schedule_params
-    params.require(:interview_schedule).permit(:interviewer_name, :candidate_name2, :employee_id, :interview_schedule_id, :reporting_master_id, :email_id, :candidate_name, :interview_date, :interview_time, :location, :schedule_comments, :post_title, :interview_type, :interview_status)
+    params.require(:interview_schedule).permit(:interviewer_name, :selected_resume_id, :candidate_name2, :employee_id, :interview_schedule_id, :reporting_master_id, :email_id, :candidate_name, :interview_date, :interview_time, :location, :schedule_comments, :post_title, :interview_type, :interview_status)
   end
 end

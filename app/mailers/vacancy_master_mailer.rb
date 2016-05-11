@@ -4,6 +4,7 @@ class VacancyMasterMailer < ApplicationMailer
     # @vacancy_master = VacancyMaster.find_by_reporting_master_id(vacancy_master.reporting_master_id)
     @employee = Employee.find(vacancy_master.reporting_master_id)
     @vacancy_master = VacancyMaster.find(vacancy_master.id)
+    @emp = VacancyMaster.find_by_employee_id(vacancy_master.employee_id)
     mail(to: @employee.email, subject: 'Vacancy Request')
   end
 

@@ -5,7 +5,7 @@ class LeavCategoriesController < ApplicationController
   def new
     @leav_category = LeavCategory.new
     @leav_categories = LeavCategory.all
-    session[:active_tab] ="leave"
+    session[:active_tab] ="leavemanagement"
   end
 
   def edit

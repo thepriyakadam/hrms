@@ -1,5 +1,7 @@
 class Reports::PhysicalDetailsController < ApplicationController
   def new
+    session[:active_tab] = "employee"
+    session[:active_tab1] = "basicreport"
   end
 
   def physical_detail_report

@@ -1,7 +1,9 @@
 class Reports::BasicDetailsController < ApplicationController
   def new
-
+    session[:active_tab] = "employee"
+    session[:active_tab1] = "detailreport"
   end
+
 
   def employee_list
     @employees = Employee.column_names
@@ -14,6 +16,8 @@ class Reports::BasicDetailsController < ApplicationController
     @employee_bank_details = EmployeeBankDetail.column_names
     @families = Family.column_names
     @awards = Award.column_names
+    session[:active_tab] = "employee"
+    session[:active_tab1] = "detailreport"
   end
 
   def collect_departments

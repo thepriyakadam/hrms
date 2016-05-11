@@ -374,7 +374,7 @@ class SalaryslipsController < ApplicationController
 
           @arrear_items.try(:each) do |ai|
             arrear_calculated_amount = ((ai.actual_amount / 30) * @total_payable_days).round
-            SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: ai.actual_amount, calculated_amount: arrear_calculated_amount, is_deducted: ai.is_deducted, is_arrear: true)
+            SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: ai.actual_amount, calculated_amount: arrear_calculated_amount, is_deducted: ai.is_deducted, is_arrear: true, salary_component_id: ai.salary_component_id)
           end
         end
       end
@@ -838,7 +838,7 @@ class SalaryslipsController < ApplicationController
 
           @arrear_items.try(:each) do |ai|
             arrear_calculated_amount = ((ai.actual_amount / 30) * @total_payable_days).round
-            SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: ai.actual_amount, calculated_amount: arrear_calculated_amount, is_deducted: ai.is_deducted, is_arrear: true)
+            SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: ai.actual_amount, calculated_amount: arrear_calculated_amount, is_deducted: ai.is_deducted, is_arrear: true, salary_component_id: ai.salary_component_id)
           end
           # current template nil
         end # employee_ids loop

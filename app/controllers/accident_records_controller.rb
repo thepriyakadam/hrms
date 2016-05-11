@@ -65,7 +65,6 @@ class AccidentRecordsController < ApplicationController
     @employee = Employee.find(params[:id])
     @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
     @esic_no = @joining_detail.employee_efic_no
-    
   end
 
   private

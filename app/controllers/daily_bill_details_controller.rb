@@ -15,15 +15,16 @@ class DailyBillDetailsController < ApplicationController
   # GET /daily_bill_details/new
   def new
     @daily_bill_detail = DailyBillDetail.new
-    @daily_bill_details = DailyBillDetail.all
     @travel_request = TravelRequest.find(params[:format])
+    @daily_bill_details = DailyBillDetail.where(travel_request_id: @travel_request.id)
     @daily_bill_details = @travel_request.daily_bill_details
 
   end
 
   # GET /daily_bill_details/1/edit
   def edit
-    @travel_request = @daily_bill_detail.travel_request
+    # @travel_request = TravelRequest.find(params[:format])
+    # @daily_bill_details = DailyBillDetail.where(travel_request_id: @travel_request.id)
   end
 
   # POST /daily_bill_details
@@ -33,7 +34,8 @@ class DailyBillDetailsController < ApplicationController
     @daily_bill_detail = DailyBillDetail.new(daily_bill_detail_params)
     @travel_request = TravelRequest.find(params[:daily_bill_detail][:travel_request_id])
 
-    @daily_bill_details = DailyBillDetail.all
+
+    @daily_bill_details = DailyBillDetail.where(travel_request_id: @travel_request.id)
     respond_to do |format|
       if @daily_bill_detail.save
         len = params['daily_bill_detail'].length - 7
@@ -64,15 +66,14 @@ class DailyBillDetailsController < ApplicationController
   def destroy
     @daily_bill_detail.destroy
     @daily_bill_details = DailyBillDetail.all
-    flash.now[:notice] = "Updated successfully"
+    flash.now[:notice] = "Destroy successfully"
     
   end
 
 
   def is_confirm
-
-    @travel_request = TravelRequest.find(params[:id])
     
+    @travel_request = TravelRequest.find(params[:qwe])
     @daily_bill_detail_ids = params[:daily_bill_detail_ids]
     if @daily_bill_detail_ids.nil?
       flash[:alert] = "Please Select the Checkbox"
@@ -96,6 +97,6 @@ class DailyBillDetailsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def daily_bill_detail_params
-      params.require(:daily_bill_detail).permit(:travel_request_id, :expence_date, :e_place, :travel_expence, :local_travel_expence, :lodging_expence, :boarding_expence, :other_expence)
+      params.require(:daily_bill_detail).permit(:is_confirm,:travel_request_id, :expence_date, :e_place, :travel_expence, :local_travel_expence, :lodging_expence, :boarding_expence, :other_expence)
     end
 end

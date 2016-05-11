@@ -51,13 +51,20 @@ class SalarySlipLedgersController < ApplicationController
     @bank = params[:bank_id]
     @category = params[:cost_center]
     @month, @year = params[:month], params[:year]
+    category_array = JoiningDetail.where(employee_category_id: @category).pluck(:employee_id)
+    bank_array = EmployeeBankDetail.where(bank_id: @bank).pluck(:employee_id)
     cost_center_array = JoiningDetail.where(cost_center_id: params[:cost_center]).pluck(:employee_id)
-    emp_array = EmployeeBankDetail.where(bank_id: @bank).pluck(:employee_id)
     emp_user_array = Employee.collect_rolewise(current_user)
-    if emp_array.empty?
+    if bank_array.empty? and category_array.empty?
       final_emp_array = emp_user_array & cost_center_array
-    else
-      final_emp_array = emp_array & emp_user_array & cost_center_array
+    elsif bank_array.present? and category_array.present?
+      final_emp_array = emp_user_array & cost_center_array & category_array & bank_array
+    elsif category_array.empty? and bank_array.present?
+      final_emp_array = emp_user_array & cost_center_array & bank_array
+    elsif category_array.present? and bank_array.blank?
+      final_emp_array = emp_user_array & cost_center_array & category_array
+    else 
+      final_emp_array = [] 
     end
     @reports = []
     @employees = Employee.where(id: final_emp_array)

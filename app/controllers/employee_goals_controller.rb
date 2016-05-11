@@ -16,7 +16,6 @@ class EmployeeGoalsController < ApplicationController
   def new
     @employee_goal = EmployeeGoal.new
     @employee = Employee.find(params[:format])
-
     @employee_goals = EmployeeGoal.where(employee_id: @employee.id)
   end
 

@@ -60,7 +60,7 @@ class ApplicationController < ActionController::Base
     if request.xhr?
       render js: "alert('Sorry! Transaction Rollbacked Record Invalid');"
     else
-      flash[:alert] = 'Sorry! Transaction Rollbacked Record Invalid #{_exc.message}'
+      flash[:alert] = 'Sorry! Transaction Rollbacked Record Invalid'
       redirect_to root_url
     end
   end

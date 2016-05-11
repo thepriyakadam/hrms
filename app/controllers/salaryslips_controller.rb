@@ -282,9 +282,9 @@ class SalaryslipsController < ApplicationController
             if @month == w.month
               deducted_actual_amount = 0
               deducted_calculated_amount = deducted_calculated_amount + w.amount
+              SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: w.amount, calculated_amount: w.amount, is_deducted: true, other_component_name: 'Well Faire')
             end
           end
-          SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: deducted_actual_amount, calculated_amount: deducted_calculated_amount, is_deducted: true, other_component_name: 'Well Faire')
         end
 
         society = SocietyMemberShip.find_by_employee_id(@employee.id)
@@ -780,9 +780,10 @@ class SalaryslipsController < ApplicationController
               if @month == w.month
                 deducted_actual_amount = 0
                 deducted_calculated_amount = deducted_calculated_amount + w.amount
+                SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: w.amount, calculated_amount: w.amount, is_deducted: true, other_component_name: 'Well Faire')
               end
             end
-            SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: deducted_actual_amount, calculated_amount: deducted_calculated_amount, is_deducted: true, other_component_name: 'Well Faire')
+            
           end
 
           society = SocietyMemberShip.find_by_employee_id(@employee.id)

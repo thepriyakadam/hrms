@@ -11,14 +11,14 @@ class PdfSalariesController < ApplicationController
             render :pdf => 'print_multiple_sal_slip_monthwise',
             layout: '/layouts/pdf.html.erb',
             :template => 'pdf_salaries/print_multiple_salary_slip.pdf.erb',
-            :header => {
-                    :center => "BFTL Salaryslip"
-                 },
+            # :header => {
+            #         :center => "BFTL Salaryslip"
+            #      },
             :orientation      => 'Landscape', # default , Landscape
             :page_height      => 1000,
             :dpi              => '300',
-            :margin           => {:top    => 20, # default 10 (mm)
-                          :bottom => 20,
+            :margin           => {:top    => 10, # default 10 (mm)
+                          :bottom => 10,
                           :left   => 20,
                           :right  => 20},
             :show_as_html => params[:debug].present?

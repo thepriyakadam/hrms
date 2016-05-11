@@ -14,7 +14,7 @@
   <td><%= @interview_schedule.interviewer_name %></td>
 
    <th><strong>Candidate Name:</strong></th>
-  <td><%= @interview_schedule.candidate_name %></td>
+  <td><%= @interview_schedule.candidate_name.to_s %></td>
 
   <th><strong>Interviewer Name:</strong></th>
   <td><%= @interview_schedule.employee.try(:manual_employee_code)+' '+@interview_schedule.employee.try(:first_name)+' '+@interview_schedule.employee.try(:last_name) %></td>

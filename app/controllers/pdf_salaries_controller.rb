@@ -17,10 +17,10 @@ class PdfSalariesController < ApplicationController
             :orientation      => 'Landscape', # default , Landscape
             :page_height      => 1000,
             :dpi              => '300',
-            :margin           => {:top    => 55, # default 10 (mm)
-                          :bottom => 55,
-                          :left   => 12,
-                          :right  => 0},
+            :margin           => {:top    => 20, # default 10 (mm)
+                          :bottom => 20,
+                          :left   => 20,
+                          :right  => 20},
             :show_as_html => params[:debug].present?
           end
         end

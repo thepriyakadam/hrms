@@ -16,7 +16,8 @@ class EmployeeLeavBalancesController < ApplicationController
         @employee_leav_balances = EmployeeLeavBalance.where(employee_id: current_user.employee_id)
       end
     end
-    session[:active_tab] ="leave"
+    session[:active_tab] ="leavemanagement"
+    session[:active_tab1] ="assignleave"
   end
 
   # GET /employee_leav_balances/1

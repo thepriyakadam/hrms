@@ -38,7 +38,6 @@ class TravelRequestsController < ApplicationController
         format.json { render json: @travel_request.errors, status: :unprocessable_entity }
       end
     end
-    redirect_to redirect_daily_bill_details_path
   end
 
   # PATCH/PUT /travel_requests/1
@@ -66,8 +65,13 @@ class TravelRequestsController < ApplicationController
     end
   end
 
+
   def daily_bill
-    @travel_requests = TravelRequest.all
+    if current_user.role.name == 'Company'
+      @travel_requests = TravelRequest.all
+    else
+      @travel_requests = TravelRequest.where(employee_id: current_user.employee_id)
+    end
   end
 
   def travel_history

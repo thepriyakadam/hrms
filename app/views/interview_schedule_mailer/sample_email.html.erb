@@ -6,7 +6,7 @@
   <body>
      <h4>Interview Schedule Details</h4>
     <p>
-       Dear <%= @interview_schedule.candidate_name %><br><br>
+       Dear <%= @interview_schedule.candidate_name.to_s %><br><br>
        This is with reference with your resume we have organize your interview for the position of  <%= @interview_schedule.post_title %> as details given below.<br><br>
        1 Date :- <%= @interview_schedule.interview_date %><br><br>
        2 Time :- <%= @interview_schedule.interview_time %><br><br>

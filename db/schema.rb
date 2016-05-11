@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160509053112) do
+ActiveRecord::Schema.define(version: 20160511051814) do
 
   create_table "accident_records", force: :cascade do |t|
     t.string   "code"
@@ -1001,10 +1001,13 @@ ActiveRecord::Schema.define(version: 20160509053112) do
     t.string   "email_id"
     t.integer  "employee_id"
     t.boolean  "is_confirm"
+    t.integer  "selected_resume_id"
+    t.string   "candidate_name2"
   end
 
   add_index "interview_schedules", ["employee_id"], name: "index_interview_schedules_on_employee_id"
   add_index "interview_schedules", ["reporting_master_id"], name: "index_interview_schedules_on_reporting_master_id"
+  add_index "interview_schedules", ["selected_resume_id"], name: "index_interview_schedules_on_selected_resume_id"
 
   create_table "joining_details", force: :cascade do |t|
     t.integer  "employee_id"
@@ -1544,6 +1547,7 @@ ActiveRecord::Schema.define(version: 20160509053112) do
     t.string   "passport_photo_content_type"
     t.integer  "passport_photo_file_size"
     t.datetime "passport_photo_updated_at"
+    t.boolean  "is_confirm"
   end
 
   add_index "selected_resumes", ["degree_id"], name: "index_selected_resumes_on_degree_id"

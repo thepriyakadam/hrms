@@ -1,4 +1,53 @@
 class SalaryReport
+# def self.columns() @columns ||= []; end
+ 
+ #  def self.column(name, sql_type = nil, default = nil, null = true)
+ #    columns << ActiveRecord::ConnectionAdapters::Column.new(name.to_s, default, sql_type.to_s, null)
+ #  end
+
+  # column :employee_name, :string
+	# column :department_name, :string
+	# column :code, :integer
+	# column :pf_no, :integer
+	# column :esic_no, :integer
+	# column :actual_basic, :integer
+	# column :actual_da, :integer
+	# column :actual_hra, :integer
+	# column :actual_convenience, :integer
+	# column :actual_other, :integer
+	# column :actual_special, :integer
+	# column :actual_washing, :integer
+	# column :actual_total, :integer
+	# column :earned_basic, :integer
+	# column :earned_da, :integer
+	# column :earned_hra, :integer
+	# column :earned_convenience, :integer
+	# column :earned_other, :integer
+	# column :earned_special, :integer
+	# column :earned_washing, :integer
+	# column :earned_total, :integer
+	# column :pf, :integer
+	# column :esic, :integer
+	# column :income_tax, :integer
+	# column :pt, :integer
+	# column :advance, :integer
+	# column :society, :integer
+	# column :food_deduction, :integer
+	# column :mobile, :integer
+	# column :retention, :integer
+	# column :deduction_total, :integer
+	# column :net_payable, :integer
+	# column :total_leave, :integer
+	# column :cl_leave, :integer
+	# column :el_leave, :integer
+	# column :lwp_leave, :integer
+	# column :day_in_month, :integer
+	# column :payable_day, :integer
+	# column :present_day, :integer
+	# column :absent_day, :integer
+	# column :holiday, :integer
+	# column :weekoff, :integer
+
 	attr_accessor :employee_name, :department_name, :code, :pf_no, :esic_no,
 	              :actual_basic, :actual_da, :actual_hra, :actual_convenience, :actual_other, :actual_special, :actual_washing, :actual_total,
 	              :earned_basic, :earned_da, :earned_hra, :earned_convenience, :earned_other, :earned_special, :earned_washing, :earned_total,
@@ -6,8 +55,8 @@ class SalaryReport
 	              :total_leave, :cl_leave, :el_leave, :lwp_leave, :day_in_month, :payable_day, :present_day, :absent_day, :holiday, :weekoff
 
 	def self.collect_data(e, j, wd, sl)
-		addable_items = SalaryslipComponent.where(salaryslip_id: sl.id, is_deducted: false)
-		deductable_items = SalaryslipComponent.where(salaryslip_id: sl.id, is_deducted: true)
+		addable_items = SalaryslipComponent.where(salaryslip_id: sl.id, is_deducted: false, is_arrear: nil)
+		deductable_items = SalaryslipComponent.where(salaryslip_id: sl.id, is_deducted: true, is_arrear: nil)
 
 		sr = SalaryReport.new
 		sr.employee_name = e.try(:first_name).to_s + ' ' + e.try(:last_name).to_s

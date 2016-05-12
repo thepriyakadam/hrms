@@ -19,13 +19,17 @@ class SelectedResumesController < ApplicationController
     @selected_resume = SelectedResume.new
   end
 
+  def index
+     @selected_resumes = SelectedResume.where(vacancy_master_id: nil)
+  end
+
 
   # GET /selected_resumes/1/edit
   def edit
   end
 
   # POST /selected_resumes
-  # POST /selected_resumes.json
+  # POST /selec ted_resumes.json
   def create
     @selected_resume = SelectedResume.new(selected_resume_params)
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160512064603) do
+ActiveRecord::Schema.define(version: 20160512104401) do
 
   create_table "accident_records", force: :cascade do |t|
     t.string   "code"
@@ -1596,6 +1596,18 @@ ActiveRecord::Schema.define(version: 20160512064603) do
   end
 
   add_index "states", ["country_id"], name: "index_states_on_country_id"
+
+  create_table "training_plans", force: :cascade do |t|
+    t.date     "training_date"
+    t.string   "topic"
+    t.string   "no_of_employee"
+    t.string   "trainer_name"
+    t.string   "no_of_days"
+    t.string   "no_of_hrs"
+    t.string   "place"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
 
   create_table "training_requests", force: :cascade do |t|
     t.integer  "employee_id"

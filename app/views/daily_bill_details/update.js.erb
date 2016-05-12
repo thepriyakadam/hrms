@@ -1,3 +1,5 @@
-
-
+<%if @flag == true %>
 $("#daily_bill_list").html("<%= j render 'daily_bill_list' %>");
+<%else%>
+  $("#form").html("<%= j render 'form' %>");
+<%end%>

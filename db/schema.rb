@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160511051814) do
+ActiveRecord::Schema.define(version: 20160512121825) do
 
   create_table "accident_records", force: :cascade do |t|
     t.string   "code"
@@ -637,7 +637,7 @@ ActiveRecord::Schema.define(version: 20160511051814) do
     t.string   "city"
     t.integer  "district_id"
     t.integer  "state_id"
-    t.integer  "country_id"
+    t.integer  "contry_id"
     t.integer  "pin_code"
     t.integer  "phone_no"
     t.integer  "mobile_no"
@@ -646,7 +646,7 @@ ActiveRecord::Schema.define(version: 20160511051814) do
     t.datetime "updated_at",           null: false
   end
 
-  add_index "employee_nominations", ["country_id"], name: "index_employee_nominations_on_country_id"
+  add_index "employee_nominations", ["contry_id"], name: "index_employee_nominations_on_contry_id"
   add_index "employee_nominations", ["district_id"], name: "index_employee_nominations_on_district_id"
   add_index "employee_nominations", ["family_id"], name: "index_employee_nominations_on_family_id"
   add_index "employee_nominations", ["nomination_master_id"], name: "index_employee_nominations_on_nomination_master_id"
@@ -1291,10 +1291,14 @@ ActiveRecord::Schema.define(version: 20160511051814) do
     t.string   "vacancy_name"
     t.boolean  "is_complete"
     t.integer  "closed_position"
+    t.integer  "interview_schedule_id"
+    t.integer  "selected_resume_id"
   end
 
   add_index "particular_vacancy_requests", ["employee_designation_id"], name: "index_particular_vacancy_requests_on_employee_designation_id"
   add_index "particular_vacancy_requests", ["employee_id"], name: "index_particular_vacancy_requests_on_employee_id"
+  add_index "particular_vacancy_requests", ["interview_schedule_id"], name: "index_particular_vacancy_requests_on_interview_schedule_id"
+  add_index "particular_vacancy_requests", ["selected_resume_id"], name: "index_particular_vacancy_requests_on_selected_resume_id"
   add_index "particular_vacancy_requests", ["vacancy_master_id"], name: "index_particular_vacancy_requests_on_vacancy_master_id"
 
   create_table "payment_modes", force: :cascade do |t|
@@ -1596,6 +1600,32 @@ ActiveRecord::Schema.define(version: 20160511051814) do
   end
 
   add_index "states", ["country_id"], name: "index_states_on_country_id"
+
+  create_table "training_plans", force: :cascade do |t|
+    t.date     "training_date"
+    t.string   "topic"
+    t.string   "no_of_employee"
+    t.string   "trainer_name"
+    t.string   "no_of_days"
+    t.string   "no_of_hrs"
+    t.string   "place"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  create_table "training_requests", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.string   "training_topic"
+    t.string   "training_period"
+    t.date     "training_date"
+    t.integer  "reporting_master_id"
+    t.text     "description"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+  end
+
+  add_index "training_requests", ["employee_id"], name: "index_training_requests_on_employee_id"
+  add_index "training_requests", ["reporting_master_id"], name: "index_training_requests_on_reporting_master_id"
 
   create_table "travel_expences", force: :cascade do |t|
     t.integer  "travel_request_id"

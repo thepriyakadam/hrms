@@ -213,6 +213,8 @@ class AttributeRatingSheetsController < ApplicationController
   def subordinate_list
     current_login = Employee.find(current_user.employee_id)
     @employees = current_login.subordinates
+    session[:active_tab] ="performance"
+    session[:active_tab1] ="performancereport"
   end
 
   def employee_details
@@ -228,6 +230,8 @@ class AttributeRatingSheetsController < ApplicationController
 
   def employee_list
     @employees = Employee.all
+    session[:active_tab] ="performance"
+    session[:active_tab1] ="performancereport"
   end
 
   def employee_final_details
@@ -244,6 +248,8 @@ class AttributeRatingSheetsController < ApplicationController
    def subordinate_list2
     current_login = Employee.find(current_user.employee_id)
     @employees = current_login.indirect_subordinates
+    session[:active_tab] ="performance"
+    session[:active_tab1] ="performancereport"
   end
 
   def employee_appraiser2_details

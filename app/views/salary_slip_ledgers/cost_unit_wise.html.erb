@@ -29,7 +29,11 @@
 
       <div class="col-sm-3">
         <div class="field">
+<<<<<<< HEAD
+          <%= select :salary,:cost_center,all_cost_center,{include_blank: "Cost Center"},{onchange:"var a={bank_id:$('#salary_bank_name').val(),year:$('#salary_year').val(),month:$('#salary_month_name').val(),cost_center:$(this).val()};$('.ajax-progress').show(); $.get('/salary_slip_ledgers/cost_unit_wise_salary',a,function(response){});",class: 'form-control'} %>
+=======
           <%= select :salary,:cost_center,all_cost_center,{include_blank: "Cost Center"},{onchange:"var a={bank_id:$('#salary_bank_name').val(),year:$('#salary_year').val(),month:$('#salary_month_name').val(),cost_center:$(this).val(),category:$('#salary_category').val()};$('.ajax-progress').show(); $.get('/salary_slip_ledgers/cost_unit_wise_salary',a,function(response){});",class: 'form-control'} %>
+>>>>>>> ed87b686f118a8212f47563630cff87263441bbb
         </div>
       </div>
 

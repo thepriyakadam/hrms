@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resources :selected_resumes  do
     collection do 
     post :is_confirm
+    get :new1
     end
   end 
   resources :assigned_assets
@@ -110,6 +111,7 @@ Rails.application.routes.draw do
       post :send_email_to_candidate
       get :sample_email
       post :is_confirm
+      get :new1
     end
   end
   resources :vacancy_masters do

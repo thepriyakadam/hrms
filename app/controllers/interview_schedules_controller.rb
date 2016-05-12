@@ -112,8 +112,8 @@ class InterviewSchedulesController < ApplicationController
       InterviewScheduleMailer.sample_email(e).deliver_now
       redirect_to interview_schedules_path
     end
-    end
-    end
+  end
+end
 
   # DELETE /interview_schedules/1
   # DELETE /interview_schedules/1.json

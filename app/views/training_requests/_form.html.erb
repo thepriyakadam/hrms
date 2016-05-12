@@ -1,0 +1,59 @@
+<div class="box box-default">
+<div class="box-header with-border">
+    <h3 class="box-title">Training Request</h3>
+  </div>
+  <div class="box-body">
+
+<%= bootstrap_form_for(@training_request) do |f| %>
+
+<%= f.hidden_field :employee_id, value: current_user.employee_id %>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :training_topic,placeholder: 'Training Topic' %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :training_period,placeholder: 'Training Period' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+    <label>Training Date</label>
+    <div class="field">
+      <div class="input-group">
+        <div class="input-group-addon">
+          <i class="fa fa-calendar"></i>
+        </div>
+        <%= f.text_field :training_date, hide_label: true,class: 'birth_date'%>
+      </div>
+    </div>
+  </div>
+
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.select :reporting_master_id,all_reporting_master_list,{include_blank: " Select Reporting Master"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
+      </div>
+    </div>
+    </div>
+    
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_area :description,placeholder: 'Description' %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "Create Training Request", class: 'btn btn-primary btn-sm' %> <br><br>
+        <%= link_to 'Back', training_requests_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+
+      </div>
+    </div>
+  </div>
+    <% end %>
+</div>
+</div>

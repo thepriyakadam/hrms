@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Training date:</strong>
+  <%= @training_plan.training_date %>
+</p>
+
+<p>
+  <strong>Topic:</strong>
+  <%= @training_plan.topic %>
+</p>
+
+<p>
+  <strong>No of employee:</strong>
+  <%= @training_plan.no_of_employee %>
+</p>
+
+<p>
+  <strong>Trainer name:</strong>
+  <%= @training_plan.trainer_name %>
+</p>
+
+<p>
+  <strong>No of days:</strong>
+  <%= @training_plan.no_of_days %>
+</p>
+
+<p>
+  <strong>No of hrs:</strong>
+  <%= @training_plan.no_of_hrs %>
+</p>
+
+<p>
+  <strong>Place:</strong>
+  <%= @training_plan.place %>
+</p>
+
+<%= link_to 'Edit', edit_training_plan_path(@training_plan) %> |
+<%= link_to 'Back', training_plans_path %>

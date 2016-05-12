@@ -1,0 +1,43 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Training Requests</h3>
+    <div class="pull-right">
+      <%= link_to "Create Training Request", new_training_request_path, class: 'btn btn-sm btn-primary' %> 
+    </div>
+  </div>
+
+<div class="box-body">
+
+    <table id="example" class="table table-bordered table-hover table-condensed">
+      <thead>
+        <tr>
+          <th>Employee</th>
+          <th>Training topic</th>
+          <th>Training period</th>
+          <th>Training date</th>
+          <th>Reporting master</th>
+          <th>Description</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @training_requests.each do |training_request| %>
+          <tr>
+            <td><%= training_request.employee.manual_employee_code %> <%= full_name(training_request.employee) %> </td>
+            <td><%= training_request.training_topic %></td>
+            <td><%= training_request.training_period %></td>
+            <td><%= training_request.training_date %></td>
+            <td><%= training_request.reporting_master_id %></td>
+            <td><%= training_request.description %></td>
+            <td>
+            <%= link_to '', edit_training_request_path(training_request) ,class: 'btn btn-xs btn-success fa fa-edit' %>
+            <%= link_to '', training_request, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-xs btn-danger fa fa-close' %>
+            <%= link_to '', training_request,class: 'btn btn-xs btn-default fa fa-eye' %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

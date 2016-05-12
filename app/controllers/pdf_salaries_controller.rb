@@ -11,9 +11,6 @@ class PdfSalariesController < ApplicationController
             render :pdf => 'print_multiple_sal_slip_monthwise',
             layout: '/layouts/pdf.html.erb',
             :template => 'pdf_salaries/print_multiple_salary_slip.pdf.erb',
-            # :header => {
-            #         :center => "BFTL Salaryslip"
-            #      },
             :orientation      => 'Landscape', # default , Landscape
             :page_height      => 1000,
             :dpi              => '300',

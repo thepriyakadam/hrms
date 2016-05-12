@@ -144,7 +144,8 @@ class EmployeeLeavRequestsController < ApplicationController
       @first_approved_employee_leav_requests = EmployeeLeavRequest.where(is_first_approved: true, is_second_approved: nil, is_second_rejected: nil, is_cancelled: nil, second_reporter_id: current_user.employee_id)
     end
     # @employee_leav_requests = EmployeeLeavRequest.joins("LEFT JOIN leav_approveds ON employee_leav_requests.id = leav_approveds.employee_leav_request_id LEFT JOIN leav_cancelleds ON employee_leav_requests.id = leav_cancelleds.employee_leav_request_id LEFT JOIN leav_rejecteds ON employee_leav_requests.id = leav_rejecteds.employee_leav_request_id where leav_approveds.id IS NULL AND leav_rejecteds.id IS NULL AND leav_cancelleds.id IS NULL")
-     session[:active_tab] ="leave"
+    session[:active_tab] ="leavemanagement"
+    session[:active_tab1] ="leaverequest"
   end
 
   def employee_list
@@ -161,7 +162,8 @@ class EmployeeLeavRequestsController < ApplicationController
            @employees = Employee.where(id: current_user.employee_id)
       end
     end
-    session[:active_tab] ="leave"
+    session[:active_tab] ="leavemanagement"
+    session[:active_tab1] ="leaverequest"
   end
 
   def from_hr
@@ -201,6 +203,8 @@ class EmployeeLeavRequestsController < ApplicationController
       column(:reason, sortable: true, &:reason)
       column(:company_location, sortable: true) { |employee_leav_request| employee_leav_request.employee.try(:company_location).try(:name) }
     end
+    session[:active_tab] ="leavemanagement"
+    session[:active_tab1] ="leavereport"
   end
 
   def search_by_end_date

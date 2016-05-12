@@ -4,20 +4,10 @@
     </div><!-- /.box-header -->
  <div class="box-body">
   <%= bootstrap_form_for(@interview_schedule) do |f| %>
-  <%= f.hidden_field :selected_resume_id, value: @selected_resume.id  %>
-  <div>
-  <%= render 'show_selected_resume_detail' %>
-  </div>
   <div class="row">
     <div class="col-sm-3">
      <div class="form-group required">
       <%= f.text_field :interviewer_name,label: 'Job Title' %>
-     </div>
-    </div>
-
-    <div class="col-sm-3">
-     <div class="form-group required">
-       <%= f.text_field :candidate_name,value: @selected_resume.name,readonly: true %>
      </div>
     </div>
 
@@ -32,16 +22,16 @@
       <%= f.select :employee_id, all_interviewer_name_list,{label: 'Interviewer Name',include_blank: " Select Interviewer Name"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
      </div>
     </div>
- 
-  </div>
-  
-  <div class="row">
 
     <div class="col-sm-3">
      <div class="field">
       <%= f.text_field :email_id %>
      </div>
     </div>  
+ 
+  </div>
+  
+  <div class="row">
 
     <div class="col-sm-3">
       <label>Interview Date: </label>
@@ -75,16 +65,16 @@
       </div>
     </div>
 
-  </div>
-
-  <div class="row">
-  
     <div class="col-sm-3">
       <div class="field">
         <%= f.text_field :schedule_comments,label:'Schedule Comments' %>
       </div>
-    </div>  
+    </div> 
 
+  </div>
+
+  <div class="row">
+  
   <div class="col-sm-3">
       <div class="field">
        <%= f.text_field :post_title,label:'Posting Title' %>

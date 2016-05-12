@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :training_plans
+  resources :training_requests
   resources :selected_resumes  do
     collection do 
     post :is_confirm
@@ -470,6 +472,9 @@ Rails.application.routes.draw do
       post :print_salary_slip_monthwise
       get :cost_unit_wise
       get :cost_unit_wise_salary
+      get :salary_report
+      get :bank_wise_net_amount
+      get :collect_salary
     end
   end
 

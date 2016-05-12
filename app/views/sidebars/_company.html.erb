@@ -14,27 +14,22 @@
     </ul>
   </li>
 
-  <li class="treeview" id="master">
+  <li class="treeview" id="employee">
     <a href="#">
       <i class="glyphicon glyphicon-th-large"></i> <span>Employee Management</span>
       <i class="fa fa-angle-left pull-right"></i>
     </a>
     <ul class="treeview-menu" >
-       <li id="setting">
         <li><a href="/employees"><i class="fa fa-tags"></i> Employees </a></li>
-       </li>
-       <li id="setting">
         <li><a href="/society_member_ships"><i class="fa fa-tags"> </i> Society Membership</a></li>
-       </li>
-
-      <li>
+      <li class="treeview" id="detailreport">
         <a href="#"><i class="fa fa-edit"></i> Detail Report <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
         <li><a href="/reports/basic_details/new"><i class="fa fa-tags"></i>All Details</a></li>
         <li><a href="/reports/basic_details/employee_list"><i class="fa fa-tags"></i>Selected Details</a></li>
         </ul>
       </li> 
-       <li>
+       <li class="treeview" id="basicreport">
         <a href="#"><i class="fa fa-edit"></i> Basic Report <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
         <li><a href="/reports/joining_details/new"><i class="fa fa-tags"></i>Joining Detail</a></li>
@@ -125,30 +120,28 @@
     </ul>
   </li>
 
-  <li class="treeview" id="master">
+  <li class="treeview" id="leavemanagement">
     <a href="#">
       <i class="glyphicon glyphicon-th-large"></i> <span>Leave Management</span>
       <i class="fa fa-angle-left pull-right"></i>
     </a>
     <ul class="treeview-menu" >
-       <li id="setting">
         <li><a href="/leav_categories/new"><i class="fa fa-tags"></i>Leave Type</a></li>
-       </li>
-       <li>
+       <li class="treeview" id="assignleave">
         <a href="#"><i class="fa fa-edit"></i>Assign Leave <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
         <li><a href="/employee_leav_balances"><i class="fa fa-tags"></i>Assign Leave</a></li>
         <li><a href="/leave_c_offs/new"><i class="fa fa-tags"></i>Add C.Off</a></li>
         </ul>
       </li> 
-       <li>
+       <li class="treeview" id="leaverequest">
         <a href="#"><i class="fa fa-edit"></i> Leave  <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
         <li><a href="/employee_leav_requests/employee_list"><i class="fa fa-tags"></i>Create Leave Request</a></li>
         <li><a href="/employee_leav_requests/approved_or_rejected_leave_request"><i class="fa fa-tags"></i>Approve/Reject Leave</a></li>
         </ul>
       </li>
-       <li>
+       <li class="treeview" id="leavereport">
         <a href="#"><i class="fa fa-edit"></i> Leave Report  <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
          <li><a href="/employee_leav_requests/search_by_start_date"><i class="fa fa-tags"></i>Leave Report</a></li>
@@ -207,6 +200,7 @@
         <li><a href="/reports/salaries/new"><i class="fa fa-tags"> </i>Monthly Salary Report</a></li>
         <li><a href="/salary_slip_ledgers/select_month_year_form"><i class="fa fa-tags"> </i>Bank Wise Report</a></li>
         <li><a href="/salary_slip_ledgers/cost_unit_wise"><i class="fa fa-tags"> </i>Unit Wise Report</a></li>
+        <li><a href="/salary_slip_ledgers/bank_wise_net_amount"><i class="fa fa-tags"> </i>Bank Wise Net Salary </a></li>
         </ul>
       </li>
       <li>
@@ -238,20 +232,18 @@
     </ul>
    </li>
 
-    <li class="treeview" id="master">
+    <li class="treeview" id="performance">
     <a href="#">
       <i class="glyphicon glyphicon-th-large"></i> <span>Performance Management</span>
       <i class="fa fa-angle-left pull-right"></i>
     </a>
     <ul class="treeview-menu" >
-       <li id="setting">
+     
         <li><a href="/employee_goals/subordinate_list"><i class="fa fa-tags"></i> Set Goals & Attributes </a></li>
-       </li>
-       <li id="setting">
         <li><a href="/employee_goals/employee_list"><i class="fa fa-tags"></i> HR Set Goals & Attributes </a></li>
-       </li>
+      
 
-      <li>
+      <li id="appraiserevaluation">
         <a href="#"><i class="fa fa-edit"></i> Appraiser Evaluation <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
         <li><a href="/goal_rating_sheets/subordinate_list"><i class="fa fa-tags"></i> Appraiser Evaluation </a></li>
@@ -259,7 +251,7 @@
         <li><a href="/goal_rating_sheets/employee_list"><i class="fa fa-tags"></i> Final Rating </a></li>  
         </ul>
       </li> 
-       <li>
+      <li id="performancereport">
       <a href="#"><i class="fa fa-edit"></i> Performance Report <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
        <li><a href="/attribute_rating_sheets/subordinate_list"><i class="fa fa-tags"></i> Employee Evaluation </a></li>

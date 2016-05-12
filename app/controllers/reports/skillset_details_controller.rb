@@ -1,5 +1,7 @@
 class Reports::SkillsetDetailsController < ApplicationController
   def new
+    session[:active_tab] = "employee"
+    session[:active_tab1] = "basicreport"
   end
 
   def skillset_detail_report

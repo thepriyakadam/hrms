@@ -1,4 +1,6 @@
+require 'query_report/helper'
 class SalarySlipLedgersController < ApplicationController
+  include QueryReport::Helper
   def show_employee
     @pdf = "category"
     @bank = Bank.find(params[:bank_id])
@@ -28,7 +30,7 @@ class SalarySlipLedgersController < ApplicationController
     respond_to do |format|
       format.js
       format.html
-      format.xls
+      format.xls {render template: 'salary_slip_ledgers/show_employee.xls.erb'}
       format.pdf do
         render pdf: 'bank_wise_salary',
               layout: 'pdf.html',
@@ -46,16 +48,24 @@ class SalarySlipLedgersController < ApplicationController
 
   def cost_unit_wise_salary
     @pdf = "cost_center"
-    @bank = Bank.find(params[:bank_id])
-    @category = params[:cost_center]
+    @bank = params[:bank_id]
+    @cost_center = params[:cost_center]
+    @category = params[:category]
     @month, @year = params[:month], params[:year]
+    category_array = JoiningDetail.where(employee_category_id: @category).pluck(:employee_id)
+    bank_array = EmployeeBankDetail.where(bank_id: @bank).pluck(:employee_id)
     cost_center_array = JoiningDetail.where(cost_center_id: params[:cost_center]).pluck(:employee_id)
-    emp_array = EmployeeBankDetail.where(bank_id: @bank.id).pluck(:employee_id)
     emp_user_array = Employee.collect_rolewise(current_user)
-    if cost_center_array.empty?
-      final_emp_array = emp_array & emp_user_array
-    else
-      final_emp_array = emp_array & emp_user_array & cost_center_array
+    if bank_array.empty? and category_array.empty?
+      final_emp_array = emp_user_array & cost_center_array
+    elsif bank_array.present? and category_array.present?
+      final_emp_array = emp_user_array & cost_center_array & category_array & bank_array
+    elsif category_array.empty? and bank_array.present?
+      final_emp_array = emp_user_array & cost_center_array & bank_array
+    elsif category_array.present? and bank_array.blank?
+      final_emp_array = emp_user_array & cost_center_array & category_array
+    else 
+      final_emp_array = [] 
     end
     @reports = []
     @employees = Employee.where(id: final_emp_array)
@@ -81,6 +91,27 @@ class SalarySlipLedgersController < ApplicationController
               template: 'salary_slip_ledgers/bank_wise_salary.pdf.erb',
               show_as_html: params[:debug].present?,
               margin:  {top:1,bottom:1,left:1,right:1 }
+      end
+    end
+  end
+
+  def collect_salary
+    @month, @year, @bank = params[:month], params[:year], params[:bank_id]
+    employee_bank_array = EmployeeBankDetail.where(bank_id: @bank).pluck(:employee_id)
+    emp_user_array = Employee.collect_rolewise(current_user)
+    final_emp_array = employee_bank_array & emp_user_array
+    @slips = Salaryslip.where(month: @month, year: @year.to_s, employee_id: final_emp_array)
+
+    respond_to do |f|
+      f.js
+      f.xls {render template: 'salary_slip_ledgers/collect_salary.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'net_salary',
+        layout: 'pdf.html',
+        template: 'salary_slip_ledgers/collect_salary.pdf.erb',
+        show_as_html: params[:debug].present?,
+        margin:  { top:1,bottom:1,left:1,right:1 }
       end
     end
   end

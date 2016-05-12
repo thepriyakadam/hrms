@@ -101,6 +101,7 @@ class SalarySlipLedgersController < ApplicationController
     emp_user_array = Employee.collect_rolewise(current_user)
     final_emp_array = employee_bank_array & emp_user_array
     @slips = Salaryslip.where(month: @month, year: @year.to_s, employee_id: final_emp_array)
+
     respond_to do |f|
       f.js
       f.xls {render template: 'salary_slip_ledgers/collect_salary.xls.erb'}

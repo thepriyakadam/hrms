@@ -31,44 +31,52 @@ class DailyBillDetailsController < ApplicationController
   def create
     @daily_bill_detail = DailyBillDetail.new(daily_bill_detail_params)
     @travel_request = TravelRequest.find(@daily_bill_detail.travel_request_id)
-
-    if @daily_bill_detail.save
-        len = params['daily_bill_detail'].length - 7
-      for i in 2..len
-        DailyBillDetail.create(travel_request_id: params['daily_bill_detail']['travel_request_id'], expence_date: params['daily_bill_detail'][i.to_s]['expence_date'], e_place: params['daily_bill_detail'][i.to_s]['e_place'], travel_expence: params['daily_bill_detail'][i.to_s]['travel_expence'],local_travel_expence: params['daily_bill_detail'][i.to_s]['local_travel_expence'],lodging_expence: params['daily_bill_detail'][i.to_s]['lodging_expence'],boarding_expence: params['daily_bill_detail'][i.to_s]['boarding_expence'],other_expence: params['daily_bill_detail'][i.to_s]['other_expence'])
-      end 
-      @flag = true
-      @daily_bill_detail = DailyBillDetail.new
-      @daily_bill_details = DailyBillDetail.where(travel_request_id: @travel_request.id)
-      # redirect_to new_employee_goal_path
-    else
-      @flag = false
+  
+       ActiveRecord::Base.transaction do
+        respond_to do |format|
+          if @daily_bill_detail.save
+            len = params['daily_bill_detail'].length - 7
+          for i in 2..len
+            DailyBillDetail.create(travel_request_id: params['daily_bill_detail']['travel_request_id'], expence_date: params['daily_bill_detail'][i.to_s]['expence_date'], e_place: params['daily_bill_detail'][i.to_s]['e_place'], travel_expence: params['daily_bill_detail'][i.to_s]['travel_expence'],local_travel_expence: params['daily_bill_detail'][i.to_s]['local_travel_expence'],lodging_expence: params['daily_bill_detail'][i.to_s]['lodging_expence'],boarding_expence: params['daily_bill_detail'][i.to_s]['boarding_expence'],other_expence: params['daily_bill_detail'][i.to_s]['other_expence'])
+          end
+        @daily_bill_details = DailyBillDetail.where(travel_request_id: @travel_request.id)
+        format.html { redirect_to @daily_bill_detail, notice: 'Daily Bill was successfully created.' }
+        format.json { render :show, status: :created, location: @daily_bill_detail }
+        format.js { @flag = true }
+      else
+        format.html { render :new }
+        format.json { render json: @daily_bill_detail.errors, status: :unprocessable_entity }
+        format.js { @flag = false }
+      end
     end
   end
-
+end
 
   # PATCH/PUT /daily_bill_details/1
   # PATCH/PUT /daily_bill_details/1.json
 
   def update
-    @travel_request = TravelRequest.find(@daily_bill_detail.travel_request_id)
+    respond_to do |format|
+      @travel_request = TravelRequest.find(@daily_bill_detail.travel_request_id)
 
       if @daily_bill_detail.update(daily_bill_detail_params)
-        @flag = true
-        @daily_bill_detail = DailyBillDetail.new
-        @daily_bill_details = DailyBillDetail.where(travel_request_id: @travel_request.id)
+        
+        @daily_bill_details =  @travel_request.daily_bill_details
+         format.js { @flag = true }
       else
-        @flag = false
+        format.js { @flag = false }
       end
+    end
   end
+
 
   # DELETE /daily_bill_details/1
   # DELETE /daily_bill_details/1.json
   def destroy
     @travel_request = TravelRequest.find(@daily_bill_detail.travel_request_id)
+    @daily_bill_details = DailyBillDetail.where(travel_request_id: @travel_request.id)
 
     @daily_bill_detail.destroy
-    @daily_bill_details = DailyBillDetail.where(travel_request_id: @travel_request.id)
     flash.now[:notice] = "Deleted successfully"
   end
 

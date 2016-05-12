@@ -3,27 +3,29 @@
 <table id="example3" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
-      <th>No</th>
-      <th>Code</th>
-      <th>Name</th>
+      <th>Sr. No</th>
+      <th>Employee ID</th>
+      <th>Employee Name</th>
       <th>Account Number</th>
       <th>Net Salary</th>
+      <th>Location</th>
     </tr>
   </thead>
   <tbody>
     <% @slips.each do |s| %>
       <tr>
         <td><%= i = i+1 %></td>
-        <td><%= code(s.employee) %></td>
+        <td><%= s.employee.manual_employee_code %></td>
         <td><%= full_name(s.employee) %></td>
-        <td><%= account_no(s.employee) %></td>
-        <td><%= s.calculated_net_salary %></td>
+        <td><%= account_no(s.employee.id) %></td>
+        <td><%= s.calculated_net_salary.round %></td>
+        <td><%= s.employee.company_location.try(:name) %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 <div class="col-sm-6">
-  <%= link_to " Print Salary Slip ", collect_salary_salary_slip_ledgers_path(bank_id: @bank,year: @year,month: @month, cost_center: @cost_center,category: @category, format: "pdf"), class: "btn btn-xl btn-info fa fa-print" %>
+  <%= link_to " Print Salary Slip ", collect_salary_salary_slip_ledgers_path(bank_id: @bank,year: @year,month: @month, format: "pdf"), class: "btn btn-xl btn-info fa fa-print" %>
 
-  <%= link_to " Excel Report ", collect_salary_salary_slip_ledgers_path(bank_id: @bank,year: @year,month: @month, cost_center: @cost_center,category: @category,format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+  <%= link_to " Excel Report ", collect_salary_salary_slip_ledgers_path(bank_id: @bank,year: @year,month: @month, format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
 </div>

@@ -278,6 +278,12 @@ class VacancyMastersController < ApplicationController
 
   def confirm_candidate
       puts "-----------------"
+      # byebug
+      # @vacancy_master = VacancyMaster.find(params[:id])
+      @particular_vacancy_request = ParticularVacancyRequest.find(params[:id])
+      @candidate_name = params[:particular_vacancy_request][:selected_resume_id]
+      @particular_vacancy_request = ParticularVacancyRequest.where(vacancy_master_id: @particular_vacancy_request.id)
+      @particular_vacancy_request.update(selected_resume_id: @candidate_name.to_s)
   end
 
 

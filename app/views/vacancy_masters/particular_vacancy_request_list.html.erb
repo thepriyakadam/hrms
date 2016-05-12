@@ -49,7 +49,7 @@
                   <% if particular_vacancy_request.is_complete == true %>
                   <small class="label label-default">Complete</small>
                   <% else %>
-                  <%= link_to ' Close',is_closed_vacancy_masters_path(particular_vacancy_request),class: 'btn btn-xs btn-default' %>
+                  <%= link_to ' Close',is_closed_vacancy_masters_path(particular_vacancy_request),class: 'btn btn-xs btn-danger' %>
                   <div id="myModal2" class="modal fade"></div>
                   <%= link_to ' Confirm Candidates',modal2_vacancy_masters_path(particular_vacancy_request),class: 'btn btn btn-sm btn-default fa fa-modx',remote: true %>
                   <% end %>

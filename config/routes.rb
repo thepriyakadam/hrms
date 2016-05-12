@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :training_plans
   resources :training_requests
   resources :selected_resumes  do
     collection do 

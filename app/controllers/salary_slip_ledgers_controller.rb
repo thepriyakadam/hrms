@@ -98,6 +98,8 @@ class SalarySlipLedgersController < ApplicationController
   def collect_salary
     @month, @year, @bank = params[:month], params[:year], params[:bank_id]
     employee_bank_array = EmployeeBankDetail.where(bank_id: @bank).pluck(:employee_id)
+    emp_user_array = Employee.collect_rolewise(current_user)
+    final_array = employee_bank_array & emp_user_array
     @slips = Salaryslip.where(month: @month, year: @year.to_s, employee_id: employee_bank_array)
     respond_to do |f|
       f.js
@@ -109,7 +111,7 @@ class SalarySlipLedgersController < ApplicationController
               #orientation: 'Landscape',
               template: 'salary_slip_ledgers/collect_salary.pdf.erb',
               show_as_html: params[:debug].present?,
-              margin:  {top:1,bottom:1,left:1,right:1 }
+              margin:  { top:1,bottom:1,left:1,right:1 }
       end
     end
   end

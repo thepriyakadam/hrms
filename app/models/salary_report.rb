@@ -255,13 +255,4 @@ class SalaryReport
 
     @sum
 	end
-
-	def salary_ledger(emp)
-		salaryslips = Salaryslip.where(employee_id: emp.id)
-		salaryslips.each do |s|
-			addable_items = SalaryslipComponent.where(salaryslip_id: s.id, is_deducted: false, is_arrear: nil)
-		  deductable_items = SalaryslipComponent.where(salaryslip_id: s.id, is_deducted: true, is_arrear: nil)
-		  
-		end
-	end
 end

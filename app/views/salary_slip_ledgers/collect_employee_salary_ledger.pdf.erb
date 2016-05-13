@@ -5,13 +5,13 @@
     <tr>
       <th colspan="20">
         <center><strong>BHANDARI FOILS AND TUBES LTD.</strong></center>
-        <center><small><%= Bank.find(@bank).name %></small></center>
+        <center><small></small></center>
         <center><small>Employee Monthly Salary For The Month <%= @month %> - <%= @year %></small></center>   
       </th>
     </tr>
     <tr>
-      <th colspan="5"> Employee ID: <%= r.try(:code) %> </th>
-      <th colspan="10">Employee Name: <%= r.try(:employee_name) %> </th>
+      <th colspan="5"> Employee ID: <%= @reports.first.try(:code) %> </th>
+      <th colspan="10">Employee Name: <%= @reports.first.try(:employee_name) %> </th>
       <th colspan="5">Designation:</th>
     </tr>
      <tr>

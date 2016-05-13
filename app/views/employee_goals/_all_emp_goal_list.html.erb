@@ -1,0 +1,75 @@
+   <%= bootstrap_form_for @employee_goal,url:{action:'is_confirm_all'} do |f| %>   
+      <table id="example2" class="table table-bordered table-hover table-condensed">
+        <thead>
+          <tr>
+            <th><input type="checkbox" id="selectAll" value="selectAll"></th>
+            <th>Period</th>
+            <th>Goal perspective</th>
+            <th>Goal measure</th>
+            <th>Target</th>
+            <th>Goal weightage</th>
+            <th>Difficulty level</th>
+            <th>Allign To Supervisor</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @employee_goals.each do |e| %>
+          <tr>
+            <td>
+              <% if e.is_confirm == true %>
+
+              <% else %>
+                <%= check_box_tag "employee_goal_ids[]", e.id %>
+              <% end %>
+            </td>
+            <td><%= e.period.title %></td>
+            <td><%= e.goal_perspective.name %></td>
+            <td><%= e.goal_measure %></td>
+            <td><%= e.target %></td>
+            <td><%= e.goal_weightage %></td>
+            <td><%= e.difficulty_level %></td>
+            <td><%= e.allign_to_supervisor %></td>
+            <td>
+              <% if e.is_confirm == true %>
+              <small class="label label-info">Confirmed</small>
+              <% else %>
+                <%= link_to '', edit_employee_goal_path(e) ,class: 'btn btn-xs btn-success fa fa-edit',remote:true  %>
+                <%= link_to '',  e, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-xs btn-danger fa fa-close' %>
+              <% end %>
+            </td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="actions">
+            <%= f.submit "Confirm", class: 'btn btn-primary btn-sm' %> 
+            
+            <%= link_to 'Attribute Setting', single_attribute_employee_attributes_path , class: 'btn btn-warning btn-sm' %>
+          </div>
+        </div>
+      </div>
+
+      </br>
+
+  <% end %>
+
+<script type="text/javascript">
+  $(function () {
+    $('#selectAll').click(function() {
+      if (this.checked) {
+        $(':checkbox').each(function() {
+          this.checked = true;                       
+        });
+      } 
+      else {
+        $(':checkbox').each(function() {
+          this.checked = false;                        
+        });
+      } 
+    });
+  });
+</script>

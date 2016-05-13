@@ -94,6 +94,44 @@ class EmployeeAttributesController < ApplicationController
   end
   end
   
+  def single_attribute
+    @employee_attribute = EmployeeAttribute.new
+    @employee = Employee.all
+    @employee_attributes = EmployeeAttribute.all 
+  end
+
+  def create_attribute
+     @employee_attribute = EmployeeAttribute.new(employee_attribute_params)
+    @employee = Employee.all
+    if @employee_attribute.save
+      @flag = true
+      @employee_attribute = EmployeeAttribute.new
+      @employee_attributes = EmployeeAttribute.all
+    else
+      @flag = false
+    end
+  end
+
+  def is_confirm_all
+    @employee = Employee.all
+
+    @employee_attribute_ids = params[:employee_attribute_ids]
+    if @employee_attribute_ids.nil?
+      flash[:alert] = "Please Select the Checkbox"
+      redirect_to new_employee_attribute_path
+    else
+      @employee_attribute_ids.each do |aid|
+      @employee_attribute = EmployeeAttribute.find(aid)
+      @employee_attribute.update(is_confirm: true)
+
+      AttributeRatingSheet.create(employee_attribute_id: @employee_attribute.id)
+      
+      flash[:notice] = "Confirmed Successfully"
+      end 
+      redirect_to new_employee_attribute_path
+    end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

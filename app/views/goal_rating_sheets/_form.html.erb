@@ -23,7 +23,7 @@
       <% @goal_rating_sheets.each do |goal_rating_sheet| %>
         <tr>
           
-          <td><%= goal_rating_sheet.employee_goal.goal_perspective.name %></td>
+          <td><%= goal_rating_sheet.employee_goal.goal_perspective.try(:name) %></td>
           <td><%= goal_rating_sheet.employee_goal.goal_measure %></td>
           <td><%= goal_rating_sheet.employee_goal.target %></td>
           <td><%= goal_rating_sheet.employee_goal.goal_weightage %></td>

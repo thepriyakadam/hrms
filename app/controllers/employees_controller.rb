@@ -242,6 +242,10 @@ class EmployeesController < ApplicationController
     @family = Family.new
   end
 
+  def ajax_employee_nomination_detail
+    @employee_nomination = EmployeeNomination.new
+  end
+
   def ajax_show_textbox
     @value = params[:value]
   end

@@ -120,6 +120,11 @@ class SalarySlipLedgersController < ApplicationController
     end
   end
 
+  def employee_ctc
+  end
+  def show_employee_ctc
+  end
+
   def salary_ledger
     @reports = []
     @start_date = params[:start_date].to_date

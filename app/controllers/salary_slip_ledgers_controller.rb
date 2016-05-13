@@ -64,8 +64,8 @@ class SalarySlipLedgersController < ApplicationController
       final_emp_array = emp_user_array & cost_center_array & bank_array
     elsif category_array.present? and bank_array.blank?
       final_emp_array = emp_user_array & cost_center_array & category_array
-    else 
-      final_emp_array = [] 
+    else
+      final_emp_array = []
     end
     @reports = []
     @employees = Employee.where(id: final_emp_array)
@@ -124,6 +124,7 @@ class SalarySlipLedgersController < ApplicationController
     @reports = []
     @start_date = params[:start_date].to_date
     @end_date = params[:end_date].to_date
+    @employee = params[:employee_id]
     @salaryslips = Salaryslip.where(employee_id: params[:employee_id], month_year: @start_date..@end_date)
     @salaryslips.try(:each) do |s|
       employee = Employee.find(s.employee_id)

@@ -1,11 +1,21 @@
 <div class="ajax-progress"></div>
 <% i = 0 %>
-<table id="example3" class="table table-bordered table-hover table-condensed">
+<table style="border-collapse: collapse; font-size:30pt;" border=1 width=1000 cellpadding="15">
   <thead>
     <tr>
+      <th colspan="20">
+        <center><strong>BHANDARI FOILS AND TUBES LTD.</strong></center>
+        <center><small><%= Bank.find(@bank).name %></small></center>
+        <center><small>Employee Monthly Salary For The Month <%= @month %> - <%= @year %></small></center>   
+      </th>
+    </tr>
+    <tr>
+      <th colspan="5"> Employee ID: <%= r.try(:code) %> </th>
+      <th colspan="10">Employee Name: <%= r.try(:employee_name) %> </th>
+      <th colspan="5">Designation:</th>
+    </tr>
+     <tr>
       <th>No</th>
-      <th>Code</th>
-      <th>Name</th>
       <th>Month</th>
       
       <th>Basic</th>
@@ -30,14 +40,12 @@
 
       <th>NET</th>
     </tr>
-  </thead>
-  <tbody>
-    <% @reports.each do |r| %>
+    </thead>
+    <tbody>
+     <% @reports.each do |r| %>
       <tr>
-        <td><%= i = i+1 %></td>
-        <td><%= r.try(:code) %></td>
-        <td><%= r.try(:employee_name) %></td>
-        <td><%= r.try(:month) %></td>
+       <td><%= i = i+1 %></td>
+       <td><%= r.try(:month) %></td>
         
         <td><%= r.try(:earned_basic) %></td>
         <td><%= r.try(:earned_da) %></td>
@@ -61,9 +69,13 @@
         <td><%= r.try(:retention) %></td>
         <td><%= r.try(:deduction_total) %></td>
         <td><%= r.try(:net_payable) %></td>
-     </Row>
-    <% end %>  
-    </Table>
-  </Worksheet>
-</Workbook>
-    
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<style type="text/css">
+div.alwaysbreak { page-break-before: always; }
+div.nobreak:before { clear:both; }
+div.nobreak { page-break-inside: avoid; }
+</style>

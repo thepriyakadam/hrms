@@ -163,16 +163,13 @@ class EmployeeGoalsController < ApplicationController
   end
 
   def create_goal
-    @employee_goal = EmployeeGoal.new(employee_goal_params)
-    @employee = Employee.all
-    if @employee_goal.save
-      @flag = true
-      @employee_goal = EmployeeGoal.new
-      @employee_goals = EmployeeGoal.all
-      # redirect_to new_employee_goal_path
-    else
-      @flag = false
+    @employees = Employee.all
+    @employees.each do |e|
+      @employee_goal = EmployeeGoal.new(employee_goal_params)
+      @employee_goal.employee_id = e.id
+      @employee_goal.save
     end
+    redirect_to root_url
   end
 
   def is_confirm_all

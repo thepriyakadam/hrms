@@ -15,6 +15,11 @@ class SelectedResumesController < ApplicationController
     @vacancy_master = VacancyMaster.find(params[:format])
   end
 
+  def new1
+    @selected_resume = SelectedResume.new
+  end
+
+
   # GET /selected_resumes/1/edit
   def edit
   end
@@ -75,7 +80,6 @@ class SelectedResumesController < ApplicationController
     @selected_resume_ids = params[:selected_resume_ids]
     if @selected_resume_ids.nil?
       flash[:alert] = "Please Select the Checkbox"
-      redirect_to new_employee_goal_path(@employee.id)
     else
       @selected_resume_ids.each do |eid|
       @selected_resume = SelectedResume.find(eid)

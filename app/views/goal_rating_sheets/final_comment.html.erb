@@ -223,11 +223,12 @@
       <div class="col-sm-3">
         <div class="actions">
           <%= f.submit "Confirm", class: 'btn btn-primary btn-sm' %>
+           <%= link_to 'Attribute', final_comment_attribute_rating_sheets_path(@employee.id),class: 'btn btn-warning btn-sm' %> 
         </div>
       </div>
     </div>
       </br>
-  <%= link_to 'Attribute', final_comment_attribute_rating_sheets_path(@employee.id),class: 'btn btn-warning btn-sm' %> |
+ 
   <%= link_to 'Back', employee_list_goal_rating_sheets_path(@employee.id),class: 'btn btn-default btn-sm fa fa-arrow-left' %> 
 </div>
 </div>

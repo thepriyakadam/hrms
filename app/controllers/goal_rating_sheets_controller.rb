@@ -168,6 +168,7 @@ class GoalRatingSheetsController < ApplicationController
     current_login = Employee.find(current_user.employee_id)
     @employees = current_login.subordinates
     session[:active_tab] ="performance"
+    session[:active_tab1] ="appraiserevaluation"
   end
  
   def edit_appraiser
@@ -275,6 +276,7 @@ class GoalRatingSheetsController < ApplicationController
     current_login = Employee.find(current_user.employee_id)
     @employees = current_login.indirect_subordinates
     session[:active_tab] ="performance"
+    session[:active_tab1] ="appraiserevaluation"
   end
 
   def edit_appraiser2
@@ -316,6 +318,7 @@ class GoalRatingSheetsController < ApplicationController
       @employees = Employee.all
     end
   session[:active_tab] ="performance"
+  session[:active_tab1] ="appraiserevaluation"
   end
   
   def final_create

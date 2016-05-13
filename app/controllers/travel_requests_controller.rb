@@ -4,7 +4,13 @@ class TravelRequestsController < ApplicationController
   # GET /travel_requests
   # GET /travel_requests.json
   def index
-    @travel_requests = TravelRequest.all
+
+    if current_user.role.name == 'Company'
+      @travel_requests = TravelRequest.all
+    else
+      @travel_requests = TravelRequest.where(employee_id: current_user.employee_id)
+    end
+   
   end
 
   # GET /travel_requests/1

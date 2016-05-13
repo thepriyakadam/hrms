@@ -1,9 +1,11 @@
 Rails.application.routes.draw do
 
+  resources :training_plans
   resources :training_requests
   resources :selected_resumes  do
     collection do 
     post :is_confirm
+    get :new1
     end
   end 
   resources :assigned_assets
@@ -111,6 +113,7 @@ Rails.application.routes.draw do
       post :send_email_to_candidate
       get :sample_email
       post :is_confirm
+      get :new1
     end
   end
   resources :vacancy_masters do
@@ -468,6 +471,7 @@ Rails.application.routes.draw do
     collection do
       get :select_month_year_form
       get :show_employee
+      get :employee_salary_ledger
       post :print_salary_slip_monthwise
       get :cost_unit_wise
       get :cost_unit_wise_salary

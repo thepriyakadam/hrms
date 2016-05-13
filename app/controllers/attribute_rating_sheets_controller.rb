@@ -213,6 +213,8 @@ class AttributeRatingSheetsController < ApplicationController
   def subordinate_list
     current_login = Employee.find(current_user.employee_id)
     @employees = current_login.subordinates
+    session[:active_tab] ="performance"
+    session[:active_tab1] ="performancereport"
   end
 
   def employee_details
@@ -228,6 +230,8 @@ class AttributeRatingSheetsController < ApplicationController
 
   def employee_list
     @employees = Employee.all
+    session[:active_tab] ="performance"
+    session[:active_tab1] ="performancereport"
   end
 
   def employee_final_details
@@ -244,6 +248,8 @@ class AttributeRatingSheetsController < ApplicationController
    def subordinate_list2
     current_login = Employee.find(current_user.employee_id)
     @employees = current_login.indirect_subordinates
+    session[:active_tab] ="performance"
+    session[:active_tab1] ="performancereport"
   end
 
   def employee_appraiser2_details
@@ -427,9 +433,8 @@ class AttributeRatingSheetsController < ApplicationController
         render pdf: 'print_details_appraiser',
                layout: 'pdf.html',
                :page_height      => 1000,
-               :dpi              => '300',
                :margin           => {:top    => 10, # default 10 (mm)
-                          :bottom => 100,
+                          :bottom => 10,
                           :left   => 12,
                           :right  => 12},
                template: 'attribute_rating_sheets/print_details_appraiser.pdf.erb',
@@ -459,7 +464,7 @@ class AttributeRatingSheetsController < ApplicationController
                :page_height      => 1000,
                :dpi              => '300',
                :margin           => {:top    => 10, # default 10 (mm)
-                          :bottom => 100,
+                          :bottom => 10,
                           :left   => 12,
                           :right  => 12},
                template: 'attribute_rating_sheets/print_details_appraiser2.pdf.erb',

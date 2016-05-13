@@ -3,13 +3,10 @@
   <thead>
     <tr>
       <th><input type="checkbox" id="selectAll" value="selectAll"></th>
-      <th>Sr.No</th>
       <th>Name</th>
       <th>Contact no</th>
-      <th>Skillset</th>
       <th>Degree</th>
       <th>Ctc</th>
-      <th>Email</th>
       <th>Experience</th>
       <th>Notice period</th>
       <th>Confirmed</th>
@@ -20,7 +17,6 @@
   </thead>
 
   <tbody>
-  <% i = 0 %>
     <% @selected_resumes.each do |selected_resume| %>
       <tr>
         <td>
@@ -30,13 +26,10 @@
             <%= check_box_tag "selected_resume_ids[]", selected_resume.id %>
           <% end %>
         </td>
-        <td><%= i=i+1 %></td>
         <td><%= selected_resume.name %></td>
         <td><%= selected_resume.contact_no %></td>
-        <td><%= selected_resume.skillset %></td>
         <td><%= selected_resume.degree.try(:name) %></td>
         <td><%= selected_resume.ctc %></td>
-        <td><%= selected_resume.email_id %></td>
         <td><%= selected_resume.experience %></td>
         <td><%= selected_resume.notice_period %></td>
         <td>
@@ -61,8 +54,15 @@
               <% end %>
         </td>
         <td>
+        <%= link_to '', selected_resume,class: 'btn btn-xs btn-default fa fa-eye' %>
         <%= link_to '', edit_selected_resume_path(selected_resume),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
         <%= link_to '', selected_resume, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
+           <% if selected_resume.is_confirm == true %>
+          <%= link_to ' ', new_interview_schedule_path(selected_resume.id),class: 'btn btn-xs btn-warning fa fa-check' %>
+          <% else %>
+          <small class="label label-default">Not Yet Confirmed</small>
+          <% end %>
+        </td>
         </td>
       </tr>
     <% end %>

@@ -18,11 +18,11 @@ class SalarySlipLedgersController < ApplicationController
     @employees = Employee.where(id: final_emp_array)
     @employees.try(:each) do |e|
       j = JoiningDetail.find_by_employee_id(e.id)
-      wd1 = Workingday.where('employee_id = ? and month_name = ? and year = ?', e.id, @month, @year.to_s).take
+      #wd1 = Workingday.where('employee_id = ? and month_name = ? and year = ?', e.id, @month, @year.to_s).take
       sl1 = Salaryslip.where('employee_id = ? and month = ? and year = ?', e.id, @month, @year.to_s).take
       if j.nil? or e.nil? or wd1.nil? or sl1.nil?
       else
-        sr = SalaryReport.collect_data(e,j,wd1,sl1)
+        sr = SalaryReport.collect_data(e,j,sl1)
         @reports << sr
       end
     end
@@ -71,11 +71,11 @@ class SalarySlipLedgersController < ApplicationController
     @employees = Employee.where(id: final_emp_array)
     @employees.try(:each) do |e|
       j = JoiningDetail.find_by_employee_id(e.id)
-      wd1 = Workingday.where('employee_id = ? and month_name = ? and year = ?', e.id, @month, @year.to_s).take
+      #wd1 = Workingday.where('employee_id = ? and month_name = ? and year = ?', e.id, @month, @year.to_s).take
       sl1 = Salaryslip.where('employee_id = ? and month = ? and year = ?', e.id, @month, @year.to_s).take
       if j.nil? or e.nil? or wd1.nil? or sl1.nil?
       else
-        sr = SalaryReport.collect_data(e,j,wd1,sl1)
+        sr = SalaryReport.collect_data(e,j,sl1)
         @reports << sr
       end
     end
@@ -114,6 +114,18 @@ class SalarySlipLedgersController < ApplicationController
         show_as_html: params[:debug].present?,
         margin:  { top:1,bottom:1,left:1,right:1 }
       end
+    end
+  end
+
+  def ledger
+    @reports = []
+    @salaryslips = Salaryslip.all
+    @salaryslips.each do |s|
+      employee = Employee.find(employee)
+      joining = JoiningDetail.find_by_employee_id(employee.id)
+      workingday = Workingday.find_by_employee_id(employee.id)
+      sr = SalaryReport.collect_data(employee,joining,workingday,s)
+      @reports << sr
     end
   end
 end

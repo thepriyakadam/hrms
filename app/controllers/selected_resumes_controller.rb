@@ -11,21 +11,24 @@ class SelectedResumesController < ApplicationController
   # GET /selected_resumes/new
   def new
     @selected_resume = SelectedResume.new
-    @selected_resumes = SelectedResume.all
     @vacancy_master = VacancyMaster.find(params[:format])
+    @selected_resumes = SelectedResume.where(vacancy_master_id: @vacancy_master.id)
   end
 
   def new1
     @selected_resume = SelectedResume.new
   end
 
-  def index
-     @selected_resumes = SelectedResume.where(vacancy_master_id: nil)
-  end
+  # def index
+  #    @selected_resume = SelectedResume.new
+  #    @selected_resumes = SelectedResume.where(vacancy_master_id: nil)
+  # end
 
 
   # GET /selected_resumes/1/edit
   def edit
+    @vacancy_master = VacancyMaster.find(@selected_resume.vacancy_master_id)
+    @selected_resumes = SelectedResume.where(vacancy_master_id: @vacancy_master.id)
   end
 
   # POST /selected_resumes
@@ -47,12 +50,19 @@ class SelectedResumesController < ApplicationController
 
   # PATCH/PUT /selected_resumes/1
   # PATCH/PUT /selected_resumes/1.json
+ 
   def update
-    @selected_resume.update(selected_resume_params)
-    @vacancy_master = VacancyMaster.find(params[:format])
-    @selected_resumes = SelectedResume.all
-    @selected_resume = SelectedResume.new
-    flash.now[:notice] = 'Resume Details Updated Successfully.'
+    respond_to do |format|
+      @vacancy_master = VacancyMaster.find(@selected_resume.vacancy_master_id)
+
+      if @selected_resume.update(selected_resume_params)
+        
+        @selected_resumes =  @vacancy_master.selected_resumes
+         format.js { @flag = true }
+      else
+        format.js { @flag = false }
+      end
+    end
   end
 
   # DELETE /selected_resumes/1
@@ -92,6 +102,11 @@ class SelectedResumesController < ApplicationController
     end 
      redirect_to root_url
   end
+  end
+
+  def all_resume_list
+     @selected_resume = SelectedResume.new
+     @selected_resumes = SelectedResume.where(vacancy_master_id: nil)
   end
 
 

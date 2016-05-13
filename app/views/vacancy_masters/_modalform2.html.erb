@@ -4,7 +4,7 @@
      <%= bootstrap_form_for :particular_vacancy_request,url:{action:"confirm_candidate",id: @particular_vacancy_request.id} do |f| %>
         <div class="row">
           <div class="col-sm-6">
-             <%= f.select :selected_resume_id, all_candidate_name, {hide_label: true,include_blank: " Select Candidate Name"}, class: 'input_degree_stream_id' %>
+             <%= f.select :candidate_name, all_candidate_name2, {hide_label: true,include_blank: " Select Candidate Name"}, class: 'input_degree_stream_id' %>
           </div>
           <div class="col-sm-3">
             <%= f.submit "Update", class: 'btn btn-sm btn-warning fa fa-modx' %>

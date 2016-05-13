@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     collection do 
     post :is_confirm
     get :new1
+    get :all_resume_list
     end
   end 
   resources :assigned_assets
@@ -114,6 +115,7 @@ Rails.application.routes.draw do
       get :sample_email
       post :is_confirm
       get :new1
+      get :edit1
     end
   end
   resources :vacancy_masters do

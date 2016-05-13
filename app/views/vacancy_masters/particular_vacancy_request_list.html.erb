@@ -14,6 +14,7 @@
               <th>Job Title</th>
               <th>Open Date</th>
               <th>Fulfillment Date</th>
+              <th>Candidate Name</th>
               <th>Vacancy Request Status</th>
               <th>Action</th>
             </tr>
@@ -28,6 +29,7 @@
                 <td><%= particular_vacancy_request.vacancy_name %></td>
                 <td><%= particular_vacancy_request.open_date %></td>
                 <td><%= particular_vacancy_request.fulfillment_date %></td>
+                <td><%= particular_vacancy_request.candidate_name %></td>
                 <td>
                   <% if particular_vacancy_request.status == "Pending" %>
                     <small class="label label-default">Pending</small>
@@ -44,14 +46,13 @@
                    <% end %>
                 </td>
                 <td>
-              <% if particular_vacancy_request.status == 'Pending' %>
-                <% elsif particular_vacancy_request.status == 'Approved' %>
+                <% if particular_vacancy_request.status == 'Approved' %>
                   <% if particular_vacancy_request.is_complete == true %>
-                  <small class="label label-default">Complete</small>
+                  <small class="label label-default">Vacancy Completed</small>
                   <% else %>
-                  <%= link_to ' Close',is_closed_vacancy_masters_path(particular_vacancy_request),class: 'btn btn-xs btn-danger' %>
                   <div id="myModal2" class="modal fade"></div>
                   <%= link_to ' Confirm Candidates',modal2_vacancy_masters_path(particular_vacancy_request),class: 'btn btn btn-sm btn-default fa fa-modx',remote: true %>
+                  <!-- link_to ' Close',is_closed_vacancy_masters_path(particular_vacancy_request),class: 'btn btn-xs btn-danger' %>-->
                   <% end %>
               <% end %>
                </td>
@@ -60,9 +61,10 @@
           </tbody>
         </table>
       </div>
-</div>
+   </div>
+  </div>
 
-<%= link_to 'Back', vacancy_masters_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+<%= link_to 'Back', approved_vacancy_list_vacancy_masters_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
 
 <script>
 $(document).ready(function() {

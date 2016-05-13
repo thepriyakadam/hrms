@@ -471,18 +471,20 @@ Rails.application.routes.draw do
       get :show_employee
       post :print_salary_slip_monthwise
     end
-   end  
+   end
   
   resources :salary_slip_ledgers do
     collection do
       get :select_month_year_form
       get :show_employee
+      get :employee_salary_ledger
       post :print_salary_slip_monthwise
       get :cost_unit_wise
       get :cost_unit_wise_salary
       get :salary_report
       get :bank_wise_net_amount
       get :collect_salary
+      get :salary_ledger
     end
   end
 

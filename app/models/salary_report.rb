@@ -52,13 +52,16 @@ class SalaryReport
 	              :actual_basic, :actual_da, :actual_hra, :actual_convenience, :actual_other, :actual_special, :actual_washing, :actual_total,
 	              :earned_basic, :earned_da, :earned_hra, :earned_convenience, :earned_other, :earned_special, :earned_washing, :earned_total,
 	              :pf, :esic, :income_tax, :pt, :advance, :society, :food_deduction, :mobile, :retention, :deduction_total, :net_payable,
-	              :total_leave, :cl_leave, :el_leave, :lwp_leave, :day_in_month, :payable_day, :present_day, :absent_day, :holiday, :weekoff
+	              :total_leave, :cl_leave, :el_leave, :lwp_leave, :day_in_month, :payable_day, :present_day, :absent_day, :holiday, :weekoff, :month, :year
 
-	def self.collect_data(e, j, wd, sl)
+	def self.collect_data(e, j, sl)
 		addable_items = SalaryslipComponent.where(salaryslip_id: sl.id, is_deducted: false, is_arrear: nil)
 		deductable_items = SalaryslipComponent.where(salaryslip_id: sl.id, is_deducted: true, is_arrear: nil)
 
+		wd = Workingday.find(sl.workingday_id)
 		sr = SalaryReport.new
+		sr.month = sl.month
+		sr.year = sl.year
 		sr.employee_name = e.try(:first_name).to_s + ' ' + e.try(:last_name).to_s
 		sr.department_name = e.department.try(:name)
 		sr.code = e.manual_employee_code
@@ -89,7 +92,7 @@ class SalaryReport
 
 			  when "Special Allowance"
 			  sr.actual_special = a.actual_amount.round
-			  sr.earned_special = a.calculated_amount.round 
+			  sr.earned_special = a.calculated_amount.round
 
 			  when "Washing Allowance"
 			  sr.actual_washing = a.actual_amount.round
@@ -251,5 +254,14 @@ class SalaryReport
     @sum.weekoff = array_weekoff.inject(0){|sum,x| sum + x }
 
     @sum
+	end
+
+	def salary_ledger(emp)
+		salaryslips = Salaryslip.where(employee_id: emp.id)
+		salaryslips.each do |s|
+			addable_items = SalaryslipComponent.where(salaryslip_id: s.id, is_deducted: false, is_arrear: nil)
+		  deductable_items = SalaryslipComponent.where(salaryslip_id: s.id, is_deducted: true, is_arrear: nil)
+		  
+		end
 	end
 end

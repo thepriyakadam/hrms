@@ -22,14 +22,16 @@
         <td><%= s.employee.company_location.try(:name) %></td>
       </tr>
     <% end %>
-    <tr>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td><%= @total_net_salary %></td>
-      <td></td>
-    </tr>
+    <tfoot>
+      <tr>
+        <th>Total</th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th><%= @total_net_salary %></th>
+        <th></th>
+      </tr>
+    </tfoot>
   </tbody>
 </table>
 <div class="col-sm-6">

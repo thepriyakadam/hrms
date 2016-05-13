@@ -300,6 +300,9 @@ Rails.application.routes.draw do
       post :appraiser_create
       post :is_confirm
       get :show_list
+      get :single_attribute
+      post :create_attribute
+      post :is_confirm_all
     end
   end
   resources :employee_goals do
@@ -312,6 +315,9 @@ Rails.application.routes.draw do
       get :show_employee
       post :print_detail
       get :select_designation
+      get :single_goal
+      post :create_goal
+      post :is_confirm_all
     end
   end
 

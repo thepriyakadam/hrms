@@ -156,6 +156,49 @@ class EmployeeGoalsController < ApplicationController
         end
   end
 
+  def single_goal
+    @employee_goal = EmployeeGoal.new
+    @employee = Employee.all
+    @employee_goals = EmployeeGoal.all
+  end
+
+  def create_goal
+    @employee_goal = EmployeeGoal.new(employee_goal_params)
+    @employee = Employee.all
+    if @employee_goal.save
+      @flag = true
+      @employee_goal = EmployeeGoal.new
+      @employee_goals = EmployeeGoal.all
+      # redirect_to new_employee_goal_path
+    else
+      @flag = false
+    end
+  end
+
+  def is_confirm_all
+
+    #@employee_goal = EmployeeGoal.find(params[:id])
+    @employee = Employee.all
+
+    @employee_goal_ids = params[:employee_goal_ids]
+    if @employee_goal_ids.nil?
+      flash[:alert] = "Please Select the Checkbox"
+      redirect_to new_employee_goal_path
+    else
+      @employee_goal_ids.each do |eid|
+      @employee_goal = EmployeeGoal.find(eid)
+      @employee_goal.update(is_confirm: true)
+
+      GoalRatingSheet.create(employee_goal_id: @employee_goal.id)
+      
+      flash[:notice] = "Confirmed Successfully"
+    end 
+
+     redirect_to new_employee_goal_path
+  end
+  end
+
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

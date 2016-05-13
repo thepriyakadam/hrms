@@ -58,7 +58,7 @@ class SalaryReport
 		addable_items = SalaryslipComponent.where(salaryslip_id: sl.id, is_deducted: false, is_arrear: nil)
 		deductable_items = SalaryslipComponent.where(salaryslip_id: sl.id, is_deducted: true, is_arrear: nil)
 
-		wd = Workignday.find(sl.workingday_id)
+		wd = Workingday.find(sl.workingday_id)
 		sr = SalaryReport.new
 		sr.month = sl.month
 		sr.year = sl.year

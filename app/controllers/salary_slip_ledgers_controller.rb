@@ -120,15 +120,30 @@ class SalarySlipLedgersController < ApplicationController
     end
   end
 
-  def ledger
+  def salary_ledger
     @reports = []
-    @salaryslips = Salaryslip.all
-    @salaryslips.each do |s|
-      employee = Employee.find(employee)
+    @start_date = params[:start_date].to_date
+    @end_date = params[:end_date].to_date
+    @salaryslips = Salaryslip.where(employee_id: params[:employee_id], month_year: @start_date..@end_date)
+    @salaryslips.try(:each) do |s|
+      employee = Employee.find(s.employee_id)
       joining = JoiningDetail.find_by_employee_id(employee.id)
-      workingday = Workingday.find_by_employee_id(employee.id)
-      sr = SalaryReport.collect_data(employee,joining,workingday,s)
+      #workingday = Workingday.find_by_employee_id(employee.id)
+      sr = SalaryReport.collect_data(employee,joining,s)
       @reports << sr
+    end
+
+    respond_to do |f|
+      f.js
+      f.xls {render template: 'salary_slip_ledgers/collect_employee_salary_ledger.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'salary_ledger',
+        layout: 'pdf.html',
+        template: 'salary_slip_ledgers/collect_employee_salary_ledger.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+      end
     end
   end
 end

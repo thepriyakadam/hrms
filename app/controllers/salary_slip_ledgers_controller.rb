@@ -95,6 +95,9 @@ class SalarySlipLedgersController < ApplicationController
     end
   end
 
+  def employee_salary_ledger
+  end
+
   def collect_salary
     @month, @year, @bank = params[:month], params[:year], params[:bank_id]
     employee_bank_array = EmployeeBankDetail.where(bank_id: @bank).pluck(:employee_id)

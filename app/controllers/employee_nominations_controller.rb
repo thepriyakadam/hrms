@@ -33,7 +33,7 @@ class EmployeeNominationsController < ApplicationController
       if @employee_nomination.save
         format.html { redirect_to @employee_nomination, notice: 'Nominies was successfully created.' }
         format.json { render :show, status: :created, location: @employee_nomination }
-        @employee_nominations = @employee.employee_nomination
+        @employee_nominations = @employee.employee_nominations
         format.js { @flag = true }
       else
         format.html { render :new }

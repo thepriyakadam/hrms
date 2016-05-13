@@ -244,6 +244,7 @@ class EmployeesController < ApplicationController
 
   def ajax_employee_nomination_detail
     @employee_nomination = EmployeeNomination.new
+    @employee = Employee.find(params[:id])
   end
 
   def ajax_show_textbox

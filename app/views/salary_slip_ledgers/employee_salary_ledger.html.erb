@@ -11,7 +11,7 @@
             <div class="input-group-addon">
               <i class="fa fa-calendar"></i>
             </div>
-             <%= text_field :salary, :from_date,hide_label:true, class: 'from_date'%>
+             <%= text_field :salary, :from_date,hide_label:true, class: 'from_date form-control'%>
           </div>
         </div>
       </div>
@@ -23,14 +23,14 @@
             <div class="input-group-addon">
               <i class="fa fa-calendar"></i>
             </div>
-             <%= text_field :salary, :to_date,hide_label:true, class: 'from_date'%>
+             <%= text_field :salary, :to_date,hide_label:true, class: 'from_date form-control'%>
           </div>
         </div>
       </div>
-       <div class="col-sm-3">
+      <div class="col-sm-3">
         <label>Select employee</label>
           <div class="form-group required">
-            <%= select :salary, :employee_id, employee_list_for_food_deduction, {include_blank: "Select Employee"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
+            <%= select :salary, :employee_id, employee_list_for_food_deduction, {include_blank: "Select Employee"},{onchange:"var a={employee_id:$(this).val(),start_date:$('#salary_start_date').val(),ene_date:$('#salary_end_date').val()};$('.ajax-progress').show(); $.get('/salary_slip_ledgers/salary_ledger',a,function(response){});",:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
           </div>
         </div>
     </div><br>

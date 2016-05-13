@@ -465,7 +465,7 @@ Rails.application.routes.draw do
       get :show_employee
       post :print_salary_slip_monthwise
     end
-   end  
+   end
   
   resources :salary_slip_ledgers do
     collection do
@@ -478,6 +478,7 @@ Rails.application.routes.draw do
       get :salary_report
       get :bank_wise_net_amount
       get :collect_salary
+      get :salary_ledger
     end
   end
 

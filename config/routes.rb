@@ -304,6 +304,9 @@ Rails.application.routes.draw do
       post :appraiser_create
       post :is_confirm
       get :show_list
+      get :single_attribute
+      post :create_attribute
+      post :is_confirm_all
     end
   end
   resources :employee_goals do
@@ -316,6 +319,9 @@ Rails.application.routes.draw do
       get :show_employee
       post :print_detail
       get :select_designation
+      get :single_goal
+      post :create_goal
+      post :is_confirm_all
     end
   end
 
@@ -469,18 +475,22 @@ Rails.application.routes.draw do
       get :show_employee
       post :print_salary_slip_monthwise
     end
-   end  
+   end
   
   resources :salary_slip_ledgers do
     collection do
       get :select_month_year_form
       get :show_employee
+      get :employee_ctc
+      post :show_employee_ctc
+      get :employee_salary_ledger
       post :print_salary_slip_monthwise
       get :cost_unit_wise
       get :cost_unit_wise_salary
       get :salary_report
       get :bank_wise_net_amount
       get :collect_salary
+      get :salary_ledger
     end
   end
 
@@ -648,6 +658,7 @@ Rails.application.routes.draw do
       get :ajax_family_detail
       get :ajax_new_family
       get :ajax_show_textbox
+      get :ajax_employee_nomination_detail
       get :ajax_setup_payroll
       get :manager
       get :transfer_form

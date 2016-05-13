@@ -654,6 +654,7 @@ Rails.application.routes.draw do
       get :ajax_family_detail
       get :ajax_new_family
       get :ajax_show_textbox
+      get :ajax_employee_nomination_detail
       get :ajax_setup_payroll
       get :manager
       get :transfer_form

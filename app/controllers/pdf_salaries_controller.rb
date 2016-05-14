@@ -23,6 +23,14 @@ class PdfSalariesController < ApplicationController
         end
     end
 
+    def show_employee_costunit_wise
+      @month = params[:month]
+      @year = params[:year]
+      cost_center = params[:cost_center]
+      @joining_details = JoiningDetail.where(cost_center_id: cost_center).pluck(:employee_id)
+      @employees = Employee.where(id: @joining_details)
+    end
+
     def show_employee
       @month = params[:month]
       @year = params[:year]

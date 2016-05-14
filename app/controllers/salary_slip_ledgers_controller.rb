@@ -126,6 +126,7 @@ class SalarySlipLedgersController < ApplicationController
   def show_employee_ctc
     @reports = []
   end
+  
 
   def salary_ledger
     @reports = []

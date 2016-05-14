@@ -29,11 +29,10 @@
         <td><%= family.profession %></td>
         <td><%= family.blood_group.try(:name) %></td>
         <td>
-            <%= link_to '', family,class: 'btn btn-default fa btn-sm fa-eye',remote: true %>
-            <%= link_to '', edit_family_path(family),class: 'btn btn-sm btn-success fa fa-edit',remote: true %>
-            
-          </td>
-        </tr>
+        <%= link_to '', family,class: 'btn btn-default fa btn-sm fa-eye',remote: true %>
+        <%= link_to '', edit_family_path(family),class: 'btn btn-sm btn-success fa fa-edit',remote: true %>
+        </td>
+      </tr>
       <% end %>
     </tbody>
   </table>

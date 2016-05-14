@@ -1,0 +1,6 @@
+<%if @flag %>
+$("#all_emp_goal").html("<%= j render 'all_emp_goal' %>");
+$("#all_emp_goal_list").html("<%= j render 'all_emp_goal_list' %>");
+<%else%>
+  $("#all_emp_goal").html("<%= j render 'all_emp_goal' %>");
+<%end%>

@@ -1,39 +1,48 @@
-<p id="notice"><%= notice %></p>
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Training Plan</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+      <tr> 
+        <th colspan="2"></th>
+        <th colspan="2"></th>
+      </tr>
 
-<p>
-  <strong>Training date:</strong>
-  <%= @training_plan.training_date %>
-</p>
+      <tr>
+        <th><strong>Training date:</strong></th>
+        <td><%= @training_plan.training_date %></td>
+      
+        <th><strong>Topic:</strong></th>
+        <td><%= @training_plan.topic %></td>
+      </tr>
 
-<p>
-  <strong>Topic:</strong>
-  <%= @training_plan.topic %>
-</p>
+      <tr>
+        <th><strong>No of employee:</strong></th>
+        <td><%= @training_plan.no_of_employee %></td>
+      
+        <th><strong>Trainer name:</strong></th>
+        <td><%= @training_plan.trainer_name %></td>
+      </tr>
 
-<p>
-  <strong>No of employee:</strong>
-  <%= @training_plan.no_of_employee %>
-</p>
+      <p>
+        <th><strong>No of days:</strong></th>
+        <td><%= @training_plan.no_of_days %></td>
+      
+        <th><strong>No of hrs:</strong></th>
+        <td><%= @training_plan.no_of_hrs %></td>
+      </p>
 
-<p>
-  <strong>Trainer name:</strong>
-  <%= @training_plan.trainer_name %>
-</p>
+      <tr>
+        <th><strong>Place:</strong></th>
+        <td><%= @training_plan.place %></td>
 
-<p>
-  <strong>No of days:</strong>
-  <%= @training_plan.no_of_days %>
-</p>
+        <th></th>
+        <td></td>
+      </tr>
+    </table>
 
-<p>
-  <strong>No of hrs:</strong>
-  <%= @training_plan.no_of_hrs %>
-</p>
-
-<p>
-  <strong>Place:</strong>
-  <%= @training_plan.place %>
-</p>
-
-<%= link_to 'Edit', edit_training_plan_path(@training_plan) %> |
-<%= link_to 'Back', training_plans_path %>
+     <%= link_to 'Edit', edit_training_plan_path(@training_plan),class: 'btn btn-success btn-sm fa fa-edit' %> |
+      <%= link_to 'Back', training_plans_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+  </div>
+</div>

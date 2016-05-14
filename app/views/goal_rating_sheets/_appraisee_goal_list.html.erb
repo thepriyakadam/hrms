@@ -29,7 +29,7 @@
               <%= check_box_tag "goal_rating_sheet_ids[]", g.id %>
               <% end %>
             </td>
-            <td><%= g.employee_goal.goal_perspective.name %></td>
+            <td><%= g.employee_goal.goal_perspective.try(:name) %></td>
             <td><%= g.employee_goal.goal_measure %></td>
             <td><%= g.employee_goal.target %></td>
             <td><%= g.employee_goal.goal_weightage %></td>

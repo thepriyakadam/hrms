@@ -43,6 +43,7 @@ class EmployeeNominationsController < ApplicationController
     end
   end
 
+
   # PATCH/PUT /employee_nominations/1
   # PATCH/PUT /employee_nominations/1.json
   def update

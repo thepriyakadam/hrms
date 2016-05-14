@@ -91,7 +91,7 @@ class VacancyMastersController < ApplicationController
         # for i in 1..len
         # ParticularVacancyRequest.create(vacancy_master_id: @vacancy_master.id,employee_id: @vacancy_master.employee_id,employee_designation_id: @vacancy_master.employee_designation_id,vacancy_name: @vacancy_master.vacancy_name,fulfillment_date: @vacancy_master.vacancy_post_date,status: "Pending")
         # end
-        ReportingMastersVacancyMaster.create(reporting_master_id: @vacancy_master.reporting_master_id, vacancy_master_id: @vacancy_master.id, vacancy_status: "Pending")
+        ReportingMastersVacancyMaster.create(reporting_master_id: @vacancy_master.reporting_master_id, vacancy_master_id: @vacancy_master.id, vacancy_status: @vacancy_master.current_status)
         VacancyMasterMailer.vacancy_request(@vacancy_master).deliver_now
         format.html { redirect_to @vacancy_master, notice: 'Vacancy created successfully.' }
         format.json { render :show, status: :created, location: @vacancy_master }
@@ -253,7 +253,7 @@ class VacancyMastersController < ApplicationController
     else
       @particular_vacancy_requests = ParticularVacancyRequest.where(vacancy_master_id: @vacancy_master.id).limit(@no_of_position)
       @particular_vacancy_requests.each do |p|
-        p.update(status: "Approved")
+        p.update(status: "Approved",open_date: Time.zone.now.to_date)
       end
       @vacancy_master.update(current_status: "Approved")
       flash[:notice] = "No. Of Positions Updated Successfully"
@@ -295,12 +295,12 @@ class VacancyMastersController < ApplicationController
       @particular_vacancy_request = ParticularVacancyRequest.find(params[:id])
       @candidate_name = params[:particular_vacancy_request][:candidate_name]
       #@particular_vacancy_request = ParticularVacancyRequest.where(vacancy_master_id: @particular_vacancy_request.id)
+      @particular_vacancy_request.update(closed_date: Time.zone.now.to_date)
       @particular_vacancy_request.update(is_complete: true)
       @particular_vacancy_request.update(candidate_name: @candidate_name)
-      flash[:notice] = "Candidate Confirmed & Closed Successfully"
+      flash[:notice] = "Candidate Confirmed & Vacancy Closed Successfully"
       redirect_to approved_vacancy_list_vacancy_masters_path
   end
-
 
   private
 

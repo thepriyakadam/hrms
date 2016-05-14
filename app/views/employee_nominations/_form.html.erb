@@ -6,7 +6,7 @@
 
 
 <div class="box-body">
-<%= bootstrap_form_for(@employee_nomination,remote: true,html: {id: "employee_nomination"}) do |f| %>
+<%= bootstrap_form_for(@employee_nomination,html: {id: "employee_nomination"},remote: true) do |f| %>
   <%= f.hidden_field :employee_id, value: @employee.id %>
   <div class="row">
     <div class="col-sm-3">

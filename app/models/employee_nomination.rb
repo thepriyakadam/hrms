@@ -1,5 +1,5 @@
 class EmployeeNomination < ActiveRecord::Base
-  belongs_to :nominational_master
+  belongs_to :nomination_master
   belongs_to :family
   belongs_to :relation
   belongs_to :district

@@ -168,8 +168,13 @@ class EmployeeGoalsController < ApplicationController
       @employee_goal = EmployeeGoal.new(employee_goal_params)
       @employee_goal.employee_id = e.id
       @employee_goal.save
+      gr = GoalRatingSheet.new
+      gr.employee_goal_id = @employee_goal.id
+      gr.save
+      #@employee_goal.update(is_confirm: true)
+      flash[:notice] = "Goals set Successfully"
     end
-    redirect_to root_url
+    redirect_to single_goal_employee_goals_path
   end
 
   def is_confirm_all
@@ -190,7 +195,6 @@ class EmployeeGoalsController < ApplicationController
       
       flash[:notice] = "Confirmed Successfully"
     end 
-
      redirect_to new_employee_goal_path
   end
   end

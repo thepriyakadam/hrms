@@ -101,15 +101,18 @@ class EmployeeAttributesController < ApplicationController
   end
 
   def create_attribute
-     @employee_attribute = EmployeeAttribute.new(employee_attribute_params)
     @employee = Employee.all
-    if @employee_attribute.save
-      @flag = true
-      @employee_attribute = EmployeeAttribute.new
-      @employee_attributes = EmployeeAttribute.all
-    else
-      @flag = false
-    end
+    @employees.each do |e|
+        @employee_attribute = EmployeeAttribute.new(employee_attribute_params)
+        @employee_attribute.employee_id = e.id
+        @employee_attribute.save
+        gr = GoalRatingSheet.new
+        gr.employee_attribute_id = @employee_attribute.id
+        gr.save
+        flash[:notice] = "Attributes set Successfully"
+        #@employee_attribute.update(is_confirm: true)
+      end
+    redirect_to single_attribute_employee_attributes_path
   end
 
   def is_confirm_all

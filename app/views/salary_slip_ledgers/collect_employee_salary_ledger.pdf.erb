@@ -3,19 +3,19 @@
 <table style="border-collapse: collapse; font-size:30pt;" border=1 width=1000 cellpadding="15">
   <thead>
     <tr>
-      <th colspan="20">
+      <th colspan="21">
         <center><strong>BHANDARI FOILS AND TUBES LTD.</strong></center>
         <center><small></small></center>
         <center><small>Employee Monthly Salary For The Month <%= @month %> - <%= @year %></small></center>   
       </th>
     </tr>
     <tr>
-      <th colspan="5"> Employee ID: <%= @reports.first.try(:code) %> </th>
-      <th colspan="10">Employee Name: <%= @reports.first.try(:employee_name) %> </th>
-      <th colspan="5">Designation:</th>
+      <th colspan="5" align="left"> Employee ID: <%= @reports.first.try(:code) %> </th>
+      <th colspan="10" align="left">Employee Name: <%= @reports.first.try(:employee_name) %> </th>
+      <th colspan="6" align="left">Designation: </th>
     </tr>
      <tr>
-      <th>No</th>
+      <th>Sr.No</th>
       <th>Month</th>
       
       <th>Basic</th>
@@ -45,7 +45,7 @@
      <% @reports.each do |r| %>
       <tr>
        <td><%= i = i+1 %></td>
-       <td><%= r.try(:month) %></td>
+       <td><%= r.try(:month) %> <%= r.try(:year) %></td>
         
         <td><%= r.try(:earned_basic) %></td>
         <td><%= r.try(:earned_da) %></td>

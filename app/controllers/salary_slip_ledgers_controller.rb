@@ -64,8 +64,8 @@ class SalarySlipLedgersController < ApplicationController
       final_emp_array = emp_user_array & cost_center_array & bank_array
     elsif category_array.present? and bank_array.blank?
       final_emp_array = emp_user_array & cost_center_array & category_array
-    else 
-      final_emp_array = [] 
+    else
+      final_emp_array = []
     end
     @reports = []
     @employees = Employee.where(id: final_emp_array)
@@ -120,10 +120,16 @@ class SalarySlipLedgersController < ApplicationController
     end
   end
 
+  def employee_ctc
+  end
+  def show_employee_ctc
+  end
+
   def salary_ledger
     @reports = []
     @start_date = params[:start_date].to_date
     @end_date = params[:end_date].to_date
+    @employee = params[:employee_id]
     @salaryslips = Salaryslip.where(employee_id: params[:employee_id], month_year: @start_date..@end_date)
     @salaryslips.try(:each) do |s|
       employee = Employee.find(s.employee_id)
@@ -140,6 +146,7 @@ class SalarySlipLedgersController < ApplicationController
       f.pdf do
         render pdf: 'salary_ledger',
         layout: 'pdf.html',
+        orientation: 'Landscape',
         template: 'salary_slip_ledgers/collect_employee_salary_ledger.pdf.erb',
         show_as_html: params[:debug].present?
         #margin:  { top:1,bottom:1,left:1,right:1 }

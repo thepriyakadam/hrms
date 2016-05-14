@@ -477,6 +477,8 @@ Rails.application.routes.draw do
     collection do
       get :select_month_year_form
       get :show_employee
+      get :employee_ctc
+      post :show_employee_ctc
       get :employee_salary_ledger
       post :print_salary_slip_monthwise
       get :cost_unit_wise
@@ -652,6 +654,7 @@ Rails.application.routes.draw do
       get :ajax_family_detail
       get :ajax_new_family
       get :ajax_show_textbox
+      get :ajax_employee_nomination_detail
       get :ajax_setup_payroll
       get :manager
       get :transfer_form

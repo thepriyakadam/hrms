@@ -61,9 +61,12 @@
         <td><%= r.try(:retention) %></td>
         <td><%= r.try(:deduction_total) %></td>
         <td><%= r.try(:net_payable) %></td>
-     </Row>
-    <% end %>  
-    </Table>
-  </Worksheet>
-</Workbook>
-    
+      </tr>
+      <% end %>
+  </tbody>
+</table>
+<div class="col-sm-6">
+  <%= link_to " Print Salary Slip ",salary_ledger_salary_slip_ledgers_path(employee_id: @employee, start_date: @start_date,end_date: @end_date, format: "pdf"), class: "btn btn-xl btn-info fa fa-print" %>
+
+  <%= link_to " Excel Report ",salary_ledger_salary_slip_ledgers_path(employee_id: @employee,start_date: @start_date,end_date: @end_date, format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+</div>

@@ -9,6 +9,8 @@ class Employee < ActiveRecord::Base
   belongs_to :state
   belongs_to :district
   belongs_to :religion
+
+  has_many :employee_nominations
   has_many :awards
   has_many :certifications
   has_many :interview_schedules

@@ -5,4 +5,5 @@ class EmployeeNomination < ActiveRecord::Base
   belongs_to :district
   belongs_to :state
   belongs_to :country
+  belongs_to :employee
 end

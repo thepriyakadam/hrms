@@ -7,7 +7,7 @@
 
 <div class="box-body">
 <%= bootstrap_form_for(@employee_nomination,remote: true,html: {id: "employee_nomination"}) do |f| %>
-<%= f.hidden_field :employee_id, value: @employee.id %>
+  <%= f.hidden_field :employee_id, value: @employee.id %>
   <div class="row">
     <div class="col-sm-3">
       <div class="field">
@@ -117,6 +117,8 @@
 <% end %>
 </div>
 </div>
+
+<div id="employee_nomination_list"></div>
 
 <script type="text/javascript">
  $("#employee_nomination").validate({

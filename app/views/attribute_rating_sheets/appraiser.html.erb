@@ -77,7 +77,7 @@
 <hr>
 
 <%= bootstrap_form_for @attribute_rating_sheet,url:{action:'is_confirm_appraiser',id: @employee.id} do |f| %>
-<table id="example3" class="table table-bordered table-hover table-condensed">
+<table id="example4" class="table table-bordered table-hover table-condensed">
     <thead>
       <tr>
         <th><input type="checkbox" id="selectAll" value="selectAll"></th>
@@ -157,6 +157,15 @@
 
  $(document).ready(function() {
     $('#example3').DataTable( {
+        "scrollY":        "200px",
+        "scrollX":        "1000px",
+        "scrollCollapse": true,
+        "paging":         false
+    } );
+} );
+
+ $(document).ready(function() {
+    $('#example4').DataTable( {
         "scrollY":        "200px",
         "scrollX":        "1000px",
         "scrollCollapse": true,

@@ -35,7 +35,7 @@
     </div>
     <div class="col-sm-3">
       <div class="field">
-        <%= f.text_field :relation_id,placeholder:"Relation Id" %>
+        <%= f.select :relation_master_id,all_relation_type,placeholder:"Relation Id" %>
       </div>
     </div>
     <div class="col-sm-3">
@@ -113,19 +113,25 @@
 
  $("#employee_nomination").validate({
     rules: {
-      "employee_nomination[name]":{
+      "employee_nomination[nomination_master_id]":{
         required: true
       },
-      "employee_nomination[name]":{
+      "employee_nomination[family_id]":{
+        required: true
+      },
+      "employee_nomination[nomination]":{
         required: true
       }
     },
     messages: {
-      "employee_nomination[name]":{
-        required: "Please specify name"
+      "employee_nomination[nomination_master_id]":{
+        required: "Please specify Nomination Master"
       },
-      "employee_nomination[name]":{
-        required: "Please specify name"
+      "employee_nomination[family_id]":{
+        required: "Please specify Family Member"
+      },
+      "employee_nomination[nomination]":{
+        required: "Please specify Nomination"
       }
     },
     errorPlacement: function(error, element) {

@@ -1,3 +1,11 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Resume List</h3>
+    </div>
+
+<p id="notice"><%= notice %></p>
+
+<div class="box-body">
 <%= bootstrap_form_for @selected_resume,url:{action:'is_confirm'} do |f| %>   
 <table id="example" class="table table-bordered table-hover table-condensed">
   <thead>
@@ -55,7 +63,7 @@
         </td>
         <td>
         <%= link_to '', selected_resume,class: 'btn btn-xs btn-default fa fa-eye' %>
-        <%= link_to '', edit_selected_resume_path(selected_resume),class: 'btn btn-success btn-xs fa fa-edit' %>
+        <%= link_to '', edit_selected_resume_path(selected_resume),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
         <%= link_to '', selected_resume, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
            <% if selected_resume.is_confirm == true %>
           <%= link_to ' Take Slot', new_interview_schedule_path(selected_resume.id),class: 'btn btn-xs btn-primary fa fa-check' %>
@@ -78,6 +86,8 @@
   </div>
 </div>
  <% end %>
+ </div>
+ </div>
 
 <script>
 $(document).ready(function() {

@@ -35,8 +35,12 @@ class InterviewSchedulesController < ApplicationController
 
   # GET /interview_schedules/1/edit
   def edit
+    # @interview_schedule = InterviewSchedule.find(params[:format])
+    # @selected_resume = SelectedResume.find(@interview_schedule.selected_resume_id)
+    # @interview_schedules = InterviewSchedule.where(selected_resume_id: @selected_resume.id)
   end
-
+  
+  
   # POST /interview_schedules
   # POST /interview_schedules.json
   def create
@@ -184,6 +188,6 @@ end
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def interview_schedule_params
-    params.require(:interview_schedule).permit(:interviewer_name, :selected_resume_id, :candidate_name2, :employee_id, :interview_schedule_id, :reporting_master_id, :email_id, :candidate_name, :interview_date, :interview_time, :location, :schedule_comments, :post_title, :interview_type, :interview_status)
+    params.require(:interview_schedule).permit(:interviewer_name,:candidate_name2,:selected_resume_id, :candidate_name2, :employee_id, :interview_schedule_id, :reporting_master_id, :email_id, :candidate_name, :interview_date, :interview_time, :location, :schedule_comments, :post_title, :interview_type, :interview_status)
   end
 end

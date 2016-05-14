@@ -1,13 +1,13 @@
 <div class="modal-dialog">
   <div class="modal-content">
     <div class="modal-body" style="height:1000px; max-height:100px; width:630px; max-width:630px;">
-     <%= bootstrap_form_for :vacancy_master,url:{action:"send_request_to_higher_authority", id: @vacancy_master.id},html: {id: 'vacancy_master'} do |f| %>
+     <%= bootstrap_form_for :particular_vacancy_request,url:{action:"confirm_candidate",id: @particular_vacancy_request.id},html: {id: 'particular_vacancy_request'} do |f| %>
         <div class="row">
           <div class="col-sm-6">
-            <%= f.select :reporting_master_id, all_reporting_master_list, {hide_label: true,include_blank: " Select Reporting Master"}, class: 'input_degree_stream_id' %>
+             <%= f.select :candidate_name, all_candidate_name2, {hide_label: true,include_blank: " Select Candidate Name"}, class: 'input_degree_stream_id' %>
           </div>
-          <div class="col-sm-2">
-            <%= f.submit "Approve & Send next", class: 'btn btn-sm btn-warning fa fa-modx' %>
+          <div class="col-sm-3">
+            <%= f.submit "Confirm Candidates", class: 'btn btn-sm btn-warning fa fa-modx' %>
           </div>
         </div>
       <% end %>
@@ -17,15 +17,15 @@
 </div>
 
 <script>
-$("#vacancy_master").validate({
+$("#particular_vacancy_request").validate({
     rules: {
-      "vacancy_master[reporting_master_id]":{
+      "particular_vacancy_request[candidate_name]":{
         required: true,
       }
     },
     messages: {
-      "vacancy_master[reporting_master_id]":{
-        required: "Please specify Reporting Master Name",
+      "particular_vacancy_request[candidate_name]":{
+        required: "Please specify Candidate Name",
       }
       
     },
@@ -35,5 +35,4 @@ $("#vacancy_master").validate({
     }
    });
 </script>
-
 

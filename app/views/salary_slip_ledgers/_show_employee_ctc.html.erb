@@ -1,5 +1,5 @@
 <div class="ajax-progress"></div>
-<% i = 0 %>
+  <% i = 0 %>
 <table id="example3" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
@@ -15,6 +15,9 @@
       <th>O.Allow</th>
       <th>S.Allow</th>
       <th>Wsh.Allow</th>
+      <th>PF ctc</th>
+      <th>ESIC ctc</th>
+      <th>Bonus ctc</th>
       <th>Total</th>
     </tr>
   </thead>
@@ -34,6 +37,11 @@
         <td><%= r.try(:actual_other) %></td>
         <td><%= r.try(:actual_special) %></td>
         <td><%= r.try(:actual_washing) %></td>
+
+        <td><%= r.try(:pf_ctc) %></td>
+        <td><%= r.try(:esic_ctc) %></td>
+        <td><%= r.try(:bonus_ctc) %></td>
+
         <td><%= r.try(:actual_total) %></td>
       </tr>
     <% end %>
@@ -50,8 +58,8 @@
     </tr>
   </tbody>
 </table>
-  <div class="col-sm-6">
-  <%= link_to " Print Salary Slip ", collect_ctc_salary_salary_slip_ledgers_path(bank_id: @bank,year: @year,month: @month, format: "pdf"), class: "btn btn-xl btn-info fa fa-print" %>
+<div class="col-sm-6">
+  <%= link_to " Print Salary Slip ", collect_ctc_salary_salary_slip_ledgers_path(format: "pdf"), class: "btn btn-xl btn-info fa fa-print" %>
 
-  <%= link_to " Excel Report ", collect_ctc_salary_salary_slip_ledgers_path(bank_id: @bank,year: @year,month: @month, format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+  <%= link_to " Excel Report ", collect_ctc_salary_salary_slip_ledgers_path(format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
 </div>

@@ -1,6 +1,7 @@
 class SelectedResume < ActiveRecord::Base
   belongs_to :degree
   belongs_to :vacancy_master
+  has_many :particular_vacancy_requests
   
   has_attached_file :avatar, path: ':rails_root/attachments_resume/:id/:style/:basename.:extension' 
   has_attached_file :passport_photo, styles: { medium: '300x300>', thumb: '100x100>' }, default_url: 'missing.png'

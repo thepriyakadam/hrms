@@ -9,8 +9,8 @@ class EmployeeNominationsController < ApplicationController
 
   # GET /employee_nominations/1
   # GET /employee_nominations/1.json
-  def show
-     @employee = @employee_nomination.employee
+  def show 
+   @employee = @employee_nomination.employee
   end
 
   # GET /employee_nominations/new
@@ -20,7 +20,7 @@ class EmployeeNominationsController < ApplicationController
 
   # GET /employee_nominations/1/edit
   def edit
-    @form = 'employee_namination'
+    @form = 'employee_nomination'
     @employee = @employee_nomination.employee
   end
 
@@ -79,6 +79,6 @@ class EmployeeNominationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def employee_nomination_params
-      params.require(:employee_nomination).permit(:nominational_master_id, :family_id, :nomination, :mental_illness, :minor, :guardian_name, :relation_id, :same_address, :address, :city, :district_id, :state_id, :country_id, :pin_code, :phone_no, :mobile_no, :email)
+      params.require(:employee_nomination).permit(:nomination_master_id, :family_id, :nomination, :mental_illness, :minor, :guardian_name, :relation_master_id, :same_address, :address, :city, :district_id, :state_id, :country_id, :pin_code, :phone_no, :mobile_no, :email)
     end
 end

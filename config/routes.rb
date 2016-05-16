@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     collection do 
     post :is_confirm
     get :new1
+    get :all_resume_list
     end
   end 
   resources :assigned_assets
@@ -114,6 +115,7 @@ Rails.application.routes.draw do
       get :sample_email
       post :is_confirm
       get :new1
+      get :edit1
     end
   end
   resources :vacancy_masters do
@@ -134,6 +136,8 @@ Rails.application.routes.draw do
       post :update_no_of_positions
       get :is_closed
       get :vacancy_resume
+      get :modal2
+      post :confirm_candidate
     end
   end
   resources :leave_c_offs do
@@ -470,6 +474,8 @@ Rails.application.routes.draw do
       get :select_month_year_form
       get :show_employee
       post :print_salary_slip_monthwise
+      get :salary_slip_costunit_wise
+      get :show_employee_costunit_wise
     end
    end
   
@@ -655,6 +661,7 @@ Rails.application.routes.draw do
       get :ajax_new_family
       get :ajax_show_textbox
       get :ajax_employee_nomination_detail
+      get :ajax_new_employee_nomination
       get :ajax_setup_payroll
       get :manager
       get :transfer_form

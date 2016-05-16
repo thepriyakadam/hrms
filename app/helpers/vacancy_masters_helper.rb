@@ -67,6 +67,14 @@ module VacancyMastersHelper
     end
   end
 
+  def all_candidate_name
+      SelectedResume.where(is_confirm: true).collect { |x| [x.name] }
+  end
+  
+  def all_candidate_name2
+      InterviewSchedule.where(is_confirm: true).collect { |x| [x.candidate_name] }
+  end
+
   def all_degree_list
     Degree.all.collect { |x| [x.name, x.id] }
  end

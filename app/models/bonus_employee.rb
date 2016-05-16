@@ -17,4 +17,17 @@ class BonusEmployee < ActiveRecord::Base
       end
     end
   end
+
+  def self.calculate_bonus(basic_amount)
+    amount = 0
+    bonus_master = BonusMaster.find_by_status(true)
+    unless bonus_master.nil?
+      if basic_amount <= bonus_master.limit_amount
+        amount = (basic_amount / 100 * bonus_master.bonus_persentage).round
+      else
+        amount = (bonus_master.limit_amount / 100 * bonus_master.bonus_persentage).round
+      end
+    end
+    amount
+  end
 end

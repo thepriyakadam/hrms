@@ -125,6 +125,15 @@ class SalarySlipLedgersController < ApplicationController
 
   def show_employee_ctc
     @reports = []
+    Employee.all.try(:each) do |e|
+      employee = Employee.find(e.id)
+      template = EmployeeTemplate.where(employee_id: e.id, is_active: true).take
+      if employee.nil? or template.nil?
+      else
+        ctc = SalaryReport.collect_ctc(employee,template)
+        @reports << ctc
+      end
+    end
   end
 
 

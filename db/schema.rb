@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160513111008) do
+ActiveRecord::Schema.define(version: 20160514043418) do
 
   create_table "accident_records", force: :cascade do |t|
     t.string   "code"
@@ -645,6 +645,7 @@ ActiveRecord::Schema.define(version: 20160513111008) do
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
     t.integer  "employee_id"
+    t.integer  "relation_master_id"
   end
 
   add_index "employee_nominations", ["country_id"], name: "index_employee_nominations_on_country_id"
@@ -653,6 +654,7 @@ ActiveRecord::Schema.define(version: 20160513111008) do
   add_index "employee_nominations", ["family_id"], name: "index_employee_nominations_on_family_id"
   add_index "employee_nominations", ["nomination_master_id"], name: "index_employee_nominations_on_nomination_master_id"
   add_index "employee_nominations", ["relation_id"], name: "index_employee_nominations_on_relation_id"
+  add_index "employee_nominations", ["relation_master_id"], name: "index_employee_nominations_on_relation_master_id"
   add_index "employee_nominations", ["state_id"], name: "index_employee_nominations_on_state_id"
 
   create_table "employee_physicals", force: :cascade do |t|
@@ -1295,6 +1297,7 @@ ActiveRecord::Schema.define(version: 20160513111008) do
     t.integer  "closed_position"
     t.integer  "interview_schedule_id"
     t.integer  "selected_resume_id"
+    t.string   "candidate_name"
   end
 
   add_index "particular_vacancy_requests", ["employee_designation_id"], name: "index_particular_vacancy_requests_on_employee_designation_id"

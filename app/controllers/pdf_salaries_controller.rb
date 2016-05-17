@@ -29,7 +29,7 @@ class PdfSalariesController < ApplicationController
       @cost_center = params[:cost_center]
       @employees = params[:employee_ids]
       @salaryslips = Salaryslip.where(month: params[:month],year: params[:year],employee_id: @employees)
-      @joining_details = JoiningDetail.where(cost_center_id: @cost_center).pluck(:employee_id)
+      @joining_details = JoiningDetail.where(cost_center_id: params[:cost_center]).pluck(:employee_id)
       @employees = Employee.where(id: @joining_details)
       @employees.try(:each) do |e|
       j = JoiningDetail.find_by_employee_id(e.id)

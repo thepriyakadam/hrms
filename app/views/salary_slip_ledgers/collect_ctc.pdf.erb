@@ -1,7 +1,12 @@
 <div class="ajax-progress"></div>
-  <% i = 0 %>
-<table id="example3" class="table table-bordered table-hover table-condensed">
+<% i = 0 %>
+<table style="border-collapse: collapse; font-size:30pt;" border=1 width=1000 cellpadding="15">
   <thead>
+    <tr>
+      <th colspan="6">
+        <center><strong>BHANDARI FOILS AND TUBES LTD.</strong></center>
+      </th>
+    </tr>
     <tr>
       <th>Sr.No</th>
       <th>Employee ID</th>
@@ -47,8 +52,11 @@
     <% end %>
   </tbody>
 </table>
-<div class="col-sm-6">
-  <%= link_to " Print Salary Slip ", collect_ctc_salary_salary_slip_ledgers_path(format: "pdf"), class: "btn btn-xl btn-info fa fa-print" %>
 
-  <%= link_to " Excel Report ", collect_ctc_salary_salary_slip_ledgers_path(format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
-</div>
+
+<style type="text/css">
+div.alwaysbreak { page-break-before: always; }
+div.nobreak:before { clear:both; }
+div.nobreak { page-break-inside: avoid; }
+</style>
+

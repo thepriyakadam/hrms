@@ -485,6 +485,7 @@ Rails.application.routes.draw do
       get :select_month_year_form
       get :show_employee
       get :employee_ctc
+      get :employee_monthly_ctc
       post :show_employee_ctc
       get :employee_salary_ledger
       post :print_salary_slip_monthwise

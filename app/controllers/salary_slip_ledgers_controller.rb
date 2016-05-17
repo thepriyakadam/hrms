@@ -1,5 +1,5 @@
 class SalarySlipLedgersController < ApplicationController
-  def cost_unit_wise  
+  def cost_unit_wise
   end
 
   def employee_salary_ledger

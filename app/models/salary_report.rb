@@ -1,5 +1,4 @@
 class SalaryReport
-
     attr_accessor :employee_name, :department_name, :code, :pf_no, :esic_no,
                   :actual_basic, :actual_da, :actual_hra, :actual_convenience, :actual_other, :actual_special, :actual_washing, :actual_total,
                   :earned_basic, :earned_da, :earned_hra, :earned_convenience, :earned_other, :earned_special, :earned_washing, :earned_total,
@@ -77,7 +76,7 @@ class SalaryReport
               when "Retention"
               sr.retention = d.calculated_amount
             end
-        end  
+        end
       
       sr.deduction_total =  deductable_items.sum(:calculated_amount).try(:to_i)
       sr.net_payable = sr.earned_total - sr.deduction_total.to_i
@@ -160,7 +159,7 @@ class SalaryReport
           #formula_item_calculated_amount = formula_item_actual_amount / wd.try(:day_in_month) * wd.try(:payable_day)
           #formula_total_calculated_amount += formula_item_calculated_amount
         end
-        deducted_actual_amount = (formula_total_actual_amount / 100 * master_esic.percentage).ceil
+        deducted_actual_amount = (formula_total_actual_amount / 100 * 4.75).ceil
         #deducted_calculated_amount = (formula_total_calculated_amount / 100 * master_esic.percentage).ceil
       else
         deducted_actual_amount = 0

@@ -1,6 +1,13 @@
-require 'query_report/helper'
 class SalarySlipLedgersController < ApplicationController
-  include QueryReport::Helper
+  def cost_unit_wise  
+  end
+
+  def employee_salary_ledger
+  end
+
+  def employee_ctc
+  end
+
   def show_employee
     @pdf = "category"
     @bank = Bank.find(params[:bank_id])
@@ -18,7 +25,6 @@ class SalarySlipLedgersController < ApplicationController
     @employees = Employee.where(id: final_emp_array)
     @employees.try(:each) do |e|
       j = JoiningDetail.find_by_employee_id(e.id)
-      #wd1 = Workingday.where('employee_id = ? and month_name = ? and year = ?', e.id, @month, @year.to_s).take
       sl1 = Salaryslip.where('employee_id = ? and month = ? and year = ?', e.id, @month, @year.to_s).take
       if j.nil? or e.nil? or sl1.nil?
       else
@@ -40,10 +46,6 @@ class SalarySlipLedgersController < ApplicationController
               margin:  { top:1,bottom:1,left:1,right:1 }
       end
     end
-  end
-
-  def cost_unit_wise
-    
   end
 
   def cost_unit_wise_salary
@@ -71,7 +73,6 @@ class SalarySlipLedgersController < ApplicationController
     @employees = Employee.where(id: final_emp_array)
     @employees.try(:each) do |e|
       j = JoiningDetail.find_by_employee_id(e.id)
-      #wd1 = Workingday.where('employee_id = ? and month_name = ? and year = ?', e.id, @month, @year.to_s).take
       sl1 = Salaryslip.where('employee_id = ? and month = ? and year = ?', e.id, @month, @year.to_s).take
       if j.nil? or e.nil? or sl1.nil?
       else
@@ -90,12 +91,9 @@ class SalarySlipLedgersController < ApplicationController
               orientation: 'Landscape',
               template: 'salary_slip_ledgers/bank_wise_salary.pdf.erb',
               show_as_html: params[:debug].present?,
-              margin:  {top:1,bottom:1,left:1,right:1 }
+              margin: {top:1,bottom:1,left:1,right:1 }
       end
     end
-  end
-
-  def employee_salary_ledger
   end
 
   def collect_salary
@@ -115,17 +113,19 @@ class SalarySlipLedgersController < ApplicationController
         layout: 'pdf.html',
         template: 'salary_slip_ledgers/collect_salary.pdf.erb',
         show_as_html: params[:debug].present?,
-        margin:  { top:1,bottom:1,left:1,right:1 }
+        margin: { top:1,bottom:1,left:1,right:1 }
       end
     end
   end
 
-  def employee_ctc
-  end
-
   def show_employee_ctc
     @reports = []
-    Employee.all.try(:each) do |e|
+    if params[:salary][:department_id].blank?
+      @employees = Employee.all
+    else
+      @employees = Employee.where(department_id: params[:salary][:department_id])
+    end
+    @employees.try(:each) do |e|
       employee = Employee.find(e.id)
       template = EmployeeTemplate.where(employee_id: e.id, is_active: true).take
       if employee.nil? or template.nil?
@@ -136,7 +136,6 @@ class SalarySlipLedgersController < ApplicationController
     end
   end
 
-
   def salary_ledger
     @reports = []
     @start_date = params[:start_date].to_date
@@ -146,7 +145,6 @@ class SalarySlipLedgersController < ApplicationController
     @salaryslips.try(:each) do |s|
       employee = Employee.find(s.employee_id)
       joining = JoiningDetail.find_by_employee_id(employee.id)
-      #workingday = Workingday.find_by_employee_id(employee.id)
       sr = SalaryReport.collect_data(employee,joining,s)
       @reports << sr
     end
@@ -161,7 +159,6 @@ class SalarySlipLedgersController < ApplicationController
         orientation: 'Landscape',
         template: 'salary_slip_ledgers/collect_employee_salary_ledger.pdf.erb',
         show_as_html: params[:debug].present?
-        #margin:  { top:1,bottom:1,left:1,right:1 }
       end
     end
   end

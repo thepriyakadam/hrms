@@ -495,6 +495,7 @@ Rails.application.routes.draw do
       get :bank_wise_net_amount
       get :collect_salary
       get :salary_ledger
+      post :show_monthly_ctc
     end
   end
 

@@ -153,35 +153,34 @@ class SalarySlipLedgersController < ApplicationController
   # end
 
   def show_monthly_ctc
-    @month, @year, @department = params[:month], params[:year], params[:department_id]
+    @month, @year, @department = params[:salary][:month], params[:salary][:year], params[:salary][:department_id]
     @reports = []
-    if params[:salary][:department_id].blank?
-      @employees = Employee.all
+    if @month.blank? or @year.blank? or @department.blank?
+      #@employees = Employee.all
     else
-      @employees = Employee.where(department_id: params[:salary][:department_id])
+      @employees = Employee.where(department_id: @department)
     end
     @employees.try(:each) do |e|
       employee = Employee.find(e.id)
-      template = EmployeeTemplate.where(employee_id: e.id, is_active: true).take
-      if employee.nil? or template.nil?
-        
+      salaryslip = Salaryslip.where('employee_id = ? and month = ? and year = ?', e.id, @month, @year.to_s).take
+      if employee.nil? or salaryslip.nil?
+          
       else
-        ctc = SalaryReport.collect_ctc(employee,template)
+        ctc = SalaryReport.collect_monthly_ctc(employee,salaryslip)
         @reports << ctc
       end
-
-      respond_to do |f|
-        f.js
-        f.xls {render template: 'salary_slip_ledgers/collect_ctc.xls.erb'}
-        f.html
-        f.pdf do
-          render pdf: 'salary_ledger',
-          layout: 'pdf.html',
-          orientation: 'Landscape',
-          template: 'salary_slip_ledgers/collect_ctc.pdf.erb',
-          show_as_html: params[:debug].present?
-          #margin:  { top:1,bottom:1,left:1,right:1 }
-        end
+    end
+    respond_to do |f|
+      f.js
+      f.xls {render template: 'salary_slip_ledgers/collect_ctc.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'salary_ledger',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'salary_slip_ledgers/collect_ctc.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
       end
     end
   end

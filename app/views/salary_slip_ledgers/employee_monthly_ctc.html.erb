@@ -7,6 +7,7 @@
   <div class="box-body">
     <%= bootstrap_form_for(:salary, url: { action: 'show_employee_ctc'},html: {id: "salary"},remote: true) do |f| %>
       <div class="row">
+      <div class="col-sm-3">
        <div class="field">
             <%= select :salary,:month, ['January','February','March','April','May','June','July','August','September','October','November','December'],{label: 'Select Month',include_blank: " Select Month"}, class: "form-control" %>
            </div>

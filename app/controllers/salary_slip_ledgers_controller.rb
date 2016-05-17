@@ -120,7 +120,8 @@ class SalarySlipLedgersController < ApplicationController
 
   def show_employee_ctc
     @reports = []
-    @employees = if params[:salary][:department_id].blank?
+    @department = params[:salary][:department_id]
+    @employees = if @department.blank?
                 Employee.all
               else
                 Employee.where(department_id: params[:salary][:department_id])

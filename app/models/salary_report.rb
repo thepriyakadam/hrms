@@ -23,32 +23,31 @@ class SalaryReport
         addable_items.each do |a|
             case a.salary_component.try(:name)
               when "Basic"
-              sr.actual_basic = a.actual_amount.round
-              sr.earned_basic = a.calculated_amount.round
+              sr.actual_basic = a.actual_amount
+              sr.earned_basic = a.calculated_amount
 
               when "DA"
-              sr.actual_da = a.actual_amount.round
-              sr.earned_da = a.calculated_amount.round
+              sr.actual_da = a.actual_amount
+              sr.earned_da = a.calculated_amount
 
               when "HRA"
-              sr.actual_hra = a.actual_amount.round
-              sr.earned_hra = a.calculated_amount.round
+              sr.actual_hra = a.actual_amount
+              sr.earned_hra = a.calculated_amount
 
               when "Convenience Allowance"
-              sr.actual_convenience = a.actual_amount.round
-              sr.earned_convenience = a.calculated_amount.round
-
+              sr.actual_convenience = a.actual_amount
+              sr.earned_convenience = a.calculated_amount
               when "Other Allowance"
-              sr.actual_other = a.actual_amount.round
-              sr.earned_other = a.calculated_amount.round
+              sr.actual_other = a.actual_amount
+              sr.earned_other = a.calculated_amount
 
               when "Special Allowance"
-              sr.actual_special = a.actual_amount.round
-              sr.earned_special = a.calculated_amount.round
+              sr.actual_special = a.actual_amount
+              sr.earned_special = a.calculated_amount
 
               when "Washing Allowance"
-              sr.actual_washing = a.actual_amount.round
-              sr.earned_washing = a.calculated_amount.round
+              sr.actual_washing = a.actual_amount
+              sr.earned_washing = a.calculated_amount
             end
         end
 
@@ -310,7 +309,7 @@ class SalaryReport
       end
     end
 
-    sr.actual_total = addable_items.sum(:monthly_amount).round
+    sr.actual_total = addable_items.sum(:annual_amount).round
 
     pf_ctc = calculate_pf_ctc(j, sr)
     esic_ctc = calculate_esic_ctc(j, sr)
@@ -318,8 +317,8 @@ class SalaryReport
     sr.pf_ctc = pf_ctc.to_i * 12
     sr.esic_ctc = esic_ctc.to_i * 12
 
-    bonus_amount = BonusEmployee.calculate_bonus(sr.actual_basic/12)
-    sr.bonus_ctc = bonus_amount.to_i * 12
+    bonus_amount = BonusEmployee.calculate_year_bonus(sr.actual_basic)
+    sr.bonus_ctc = bonus_amount.to_i
     sr
   end
 

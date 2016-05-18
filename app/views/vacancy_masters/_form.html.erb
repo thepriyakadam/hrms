@@ -113,7 +113,7 @@
             </div>
           </div>
         </div>
-         </div> 
+      </div> 
       <div class="row">
 
         <div class="col-sm-3">
@@ -162,33 +162,48 @@
   </div>
 <% end %>
 <script>
+$(function(){
+  $.validator.addMethod("numbersOnly", function (value, element) {
+    return this.optional(element) || /^[0-9]+$/i.test(value);
+}, "Please enter numbers only.");
+
 $("#vacancy_master").validate({
     rules: {
       "vacancy_master[company_location_id]":{
-        required: true,
-        maxlength: 30
+        required: true
       },
-      "vacancy_master[company_location_id]":{
+      "vacancy_master[no_of_position]":{
         required: true,
-        maxlength: 30
-      },
-      "vacancy_master[department_id]":{
-        required: true,
-        maxlength: 30
+        numbersOnly: true
       },
       "vacancy_master[department_id]":{
-        required: true,
-        maxlength: 30
+        required: true
+      },
+      "vacancy_master[vacancy_post_date]":{
+        required: true
+      },
+      "vacancy_master[reporting_master_id]":{
+        required: true
       }
     },
     messages: {
       "vacancy_master[company_location_id]":{
-        required: "Please specify Location Name",
-        maxlength: "Name allows upto 30 alphabets"
+        required: "Please specify Location Name"
+      },
+      "vacancy_master[no_of_position]":{
+        required: "Please specify No. of Positions"
       },
       "vacancy_master[department_id]":{
-        required: "Please specify Department Name",
-        maxlength: "Name allows upto 30 alphabets"
+        required: "Please specify Department Name"
+      },
+      "vacancy_master[vacancy_post_date]":{
+        required: "Please specify Vacancy Post Date"
+      },
+      "vacancy_master[vacancy_post_date]":{
+        required: "Please specify Vacancy Post Date"
+      },
+      "vacancy_master[reporting_master_id]":{
+        required: "Please specify Reporting Master Name"
       }
     },
     errorPlacement: function(error, element) {
@@ -196,4 +211,5 @@ $("#vacancy_master").validate({
      error.insertAfter(element.parent(element));
     }
    });
+});
 </script>

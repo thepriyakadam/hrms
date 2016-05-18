@@ -7,7 +7,7 @@ class SalaryslipsController < ApplicationController
       @flag = false
     else
       ActiveRecord::Base.transaction do
-        working_day = Workingday.find_by_employee_id(@employee.id)
+        working_day = Workingday.where(employee_id: @employee.id, month_name: @month, year: @year).take
 
         current_template = EmployeeTemplate.where('employee_id = ? and is_active = ?', @employee.id, true).take
         addable_salary_items = current_template.employee_salary_templates.where('is_deducted = ?', false)

@@ -9,8 +9,8 @@ class EmployeeNominationsController < ApplicationController
 
   # GET /employee_nominations/1
   # GET /employee_nominations/1.json
-  def show
-     @employee = @employee_nomination.employee
+  def show 
+   @employee = @employee_nomination.employee
   end
 
   # GET /employee_nominations/new
@@ -20,7 +20,7 @@ class EmployeeNominationsController < ApplicationController
 
   # GET /employee_nominations/1/edit
   def edit
-    @form = 'employee_namination'
+    @form = 'employee_nomination'
     @employee = @employee_nomination.employee
   end
 

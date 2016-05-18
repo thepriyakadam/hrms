@@ -394,7 +394,7 @@ class SalaryReport
       end
     end
       
-    sr.deduction_total =  deductable_items.sum(:calculated_amount).try(:to_i)
+    sr.deduction_total =  deductable_items.sum(:calculated_amount).to_i
     sr.net_payable = sr.earned_total - sr.deduction_total.to_i
     
     sr.cl_leave = wd.cl_leave.to_f

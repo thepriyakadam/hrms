@@ -121,10 +121,11 @@ class SalarySlipLedgersController < ApplicationController
   def show_employee_ctc
     @reports = []
     @department = params[:salary][:department_id]
+    rolewise_employee = Employee.collect_rolewise(current_user)
     @employees = if @department.blank?
-                Employee.all
+                Employee.where(id: rolewise_employee)
               else
-                Employee.where(department_id: params[:salary][:department_id])
+                Employee.where(department_id: params[:salary][:department_id], id: rolewise_employee)
               end
     @employees.try(:each) do |e|
       employee = Employee.find(e.id)
@@ -156,10 +157,11 @@ class SalarySlipLedgersController < ApplicationController
   def show_monthly_ctc
     @month, @year, @department = params[:salary][:month], params[:salary][:year], params[:salary][:department_id]
     @reports = []
+    rolewise_employee = Employee.collect_rolewise(current_user)
     if @month.blank? or @year.blank? or @department.blank?
       #@employees = Employee.all
     else
-      @employees = Employee.where(department_id: @department)
+      @employees = Employee.where(department_id: @department, id: rolewise_employee)
     end
     @employees.try(:each) do |e|
       employee = Employee.find(e.id)

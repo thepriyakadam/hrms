@@ -10,29 +10,35 @@ class AssignedAssetsController < ApplicationController
   # GET /assigned_assets/1
   # GET /assigned_assets/1.json
   def show
+    @employee = @assigned_asset.employee
   end
 
   # GET /assigned_assets/new
   def new
     @assigned_asset = AssignedAsset.new
-    @assigned_assets = AssignedAsset.all
+    @employee = Employee.find(params[:id])
   end
 
   # GET /assigned_assets/1/edit
   def edit
+     @form = 'assigned_asset'
+     @employee = @assigned_asset.employee
   end
 
   # POST /assigned_assets
   # POST /assigned_assets.json
   def create
     @assigned_asset = AssignedAsset.new(assigned_asset_params)
-    @assigned_assets = AssignedAsset.all
+    @employee = Employee.find(params[:assigned_asset][:employee_id])
     respond_to do |format|
       if @assigned_asset.save
-        @assigned_asset = AssignedAsset.new
+        format.html { redirect_to @assigned_asset, notice: 'Asset was successfully created.' }
+        format.json { render :show, status: :created, location: @assigned_asset }
+        @assigned_assets = @employee.assigned_assets
         format.js { @flag = true }
       else
-        flash.now[:alert] = 'Asset Already Exist.'
+        ormat.html { render :new }
+        format.json { render json: @assigned_asset.errors, status: :unprocessable_entity }
         format.js { @flag = false }
       end
     end
@@ -41,22 +47,29 @@ class AssignedAssetsController < ApplicationController
   # PATCH/PUT /assigned_assets/1
   # PATCH/PUT /assigned_assets/1.json
   def update
-    
+    @employee = Employee.find(params['assigned_asset']['employee_id'])
+    respond_to do |format|
       if @assigned_asset.update(assigned_asset_params)
-        @flag = true
-        @assigned_asset = AssignedAsset.new
-        @assigned_assets = AssignedAsset.all
+        # format.html { redirect_to @assigned_asset, notice: 'assigned asset was successfully updated.' }
+        # format.json { render :show, status: :ok, location: @assigned_asset }
+        @assigned_assets = @employee.assigned_assets
+        format.js { @flag = true }
       else
-        @flag = false
+        # format.html { render :edit }
+        # format.json { render json: @assigned_asset.errors, status: :unprocessable_entity }
+        format.js { @flag = false }
       end
+    end
   end
 
   # DELETE /assigned_assets/1
   # DELETE /assigned_assets/1.json
   def destroy
     @assigned_asset.destroy
-    flash[:notice] = "Deleted Successfully"
-    redirect_to new_assigned_asset_path
+    respond_to do |format|
+      format.html { redirect_to assigned_assets_url, notice: 'assigned asset was successfully destroyed.' }
+      format.json { head :no_content }
+    end
   end
 
   private

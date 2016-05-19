@@ -1,0 +1,79 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Employee:</strong>
+  <%= @employee_resignation.employee %>
+</p>
+
+<p>
+  <strong>Resignation date:</strong>
+  <%= @employee_resignation.resignation_date %>
+</p>
+
+<p>
+  <strong>Reason:</strong>
+  <%= @employee_resignation.reason %>
+</p>
+
+<p>
+  <strong>Is notice period:</strong>
+  <%= @employee_resignation.is_notice_period %>
+</p>
+
+<p>
+  <strong>Notice period:</strong>
+  <%= @employee_resignation.notice_period %>
+</p>
+
+<p>
+  <strong>Short notice period:</strong>
+  <%= @employee_resignation.short_notice_period %>
+</p>
+
+<p>
+  <strong>Tentative leaving date:</strong>
+  <%= @employee_resignation.tentative_leaving_date %>
+</p>
+
+<p>
+  <strong>Remark:</strong>
+  <%= @employee_resignation.remark %>
+</p>
+
+<p>
+  <strong>Exit interview date:</strong>
+  <%= @employee_resignation.exit_interview_date %>
+</p>
+
+<p>
+  <strong>Note:</strong>
+  <%= @employee_resignation.note %>
+</p>
+
+<p>
+  <strong>Leaving date:</strong>
+  <%= @employee_resignation.leaving_date %>
+</p>
+
+<p>
+  <strong>Settled on:</strong>
+  <%= @employee_resignation.settled_on %>
+</p>
+
+<p>
+  <strong>Has left:</strong>
+  <%= @employee_resignation.has_left %>
+</p>
+
+<p>
+  <strong>Notice served:</strong>
+  <%= @employee_resignation.notice_served %>
+</p>
+
+<p>
+  <strong>Rehired:</strong>
+  <%= @employee_resignation.rehired %>
+</p>
+
+<%= link_to 'Edit', edit_employee_resignation_path(@employee_resignation) %> |
+<%= link_to 'Back', employee_resignations_path %>

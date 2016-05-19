@@ -637,13 +637,13 @@ ActiveRecord::Schema.define(version: 20160519052729) do
     t.string   "city"
     t.integer  "district_id"
     t.integer  "state_id"
+    t.integer  "country_id"
     t.integer  "pin_code"
     t.integer  "phone_no"
     t.integer  "mobile_no"
     t.string   "email"
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
-    t.integer  "country_id"
     t.integer  "employee_id"
     t.integer  "relation_master_id"
   end

@@ -37,7 +37,7 @@
            <td>
            <!--  link_to '', interview_schedule,method: :delete,data:{confirm:'Are you sure?'},class: 'btn btn-sm btn-danger fa fa-close' %> -->
 
-            <%= link_to ' Reschedule', interview_reschedule_interview_schedules_path(id:interview_schedule.employee_id),class: 'btn btn-sm btn-info fa fa-envelope-o'  %>
+            <%= link_to ' Reschedule', interview_reschedule_interview_schedules_path(id:interview_schedule.id),class: 'btn btn-sm btn-info fa fa-envelope-o'  %>
             </td>
             <td>
               <% if interview_schedule.is_confirm == true %>
@@ -47,7 +47,7 @@
               <% end %>
             </td>
             <td>
-            <%= link_to ' Confirm Email',sample_email_to_interviewer_path(id:interview_schedule.employee_id),class: 'btn btn-sm btn-warning fa fa-check' %>
+            <%= link_to ' Confirm Email',sample_email_to_interviewer_path(interview_schedule),class: 'btn btn-sm btn-warning fa fa-check' %>
 <!--              link_to '',modal_interview_schedules_path,class: 'btn btn-sm btn-warning fa fa-modx',remote: true %>
  -->       </td>
         <td>

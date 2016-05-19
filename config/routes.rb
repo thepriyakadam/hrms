@@ -34,6 +34,10 @@ Rails.application.routes.draw do
       get :modal
       get :cancel_travel_request
       get :travel_request_list
+      get :edit_and_send_next_modal
+      patch :edit_and_send_next_modal_submit
+      get :edit_and_approve_modal
+      patch :edit_and_approve_modal_submit
     end
   end
   namespace :reports do

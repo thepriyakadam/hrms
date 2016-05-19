@@ -637,19 +637,17 @@ ActiveRecord::Schema.define(version: 20160518120252) do
     t.string   "city"
     t.integer  "district_id"
     t.integer  "state_id"
-    t.integer  "contry_id"
+    t.integer  "country_id"
     t.integer  "pin_code"
     t.integer  "phone_no"
     t.integer  "mobile_no"
     t.string   "email"
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
-    t.integer  "relation_master_id"
     t.integer  "employee_id"
-    t.integer  "country_id"
+    t.integer  "relation_master_id"
   end
 
-  add_index "employee_nominations", ["contry_id"], name: "index_employee_nominations_on_contry_id"
   add_index "employee_nominations", ["country_id"], name: "index_employee_nominations_on_country_id"
   add_index "employee_nominations", ["district_id"], name: "index_employee_nominations_on_district_id"
   add_index "employee_nominations", ["employee_id"], name: "index_employee_nominations_on_employee_id"

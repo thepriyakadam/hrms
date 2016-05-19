@@ -1,6 +1,16 @@
 require 'query_report/helper'
 class SalarySlipLedgersController < ApplicationController
   include QueryReport::Helper
+
+  def cost_unit_wise
+  end
+
+  def employee_salary_ledger
+  end
+
+  def employee_ctc
+  end
+
   def show_employee
     @pdf = "category"
     @bank = Bank.find(params[:bank_id])
@@ -125,7 +135,18 @@ class SalarySlipLedgersController < ApplicationController
 
   def show_employee_ctc
     @reports = []
+<<<<<<< HEAD
     Employee.all.try(:each) do |e|
+=======
+    @department = params[:salary][:department_id]
+    rolewise_employee = Employee.collect_rolewise(current_user)
+    @employees = if @department.blank?
+                Employee.where(id: rolewise_employee)
+              else
+                Employee.where(department_id: params[:salary][:department_id], id: rolewise_employee)
+              end
+    @employees.try(:each) do |e|
+>>>>>>> 2bbc1d7deff5764bb360c7d029a3c9d745e443fc
       employee = Employee.find(e.id)
       template = EmployeeTemplate.where(employee_id: e.id, is_active: true).take
       if employee.nil? or template.nil?
@@ -133,8 +154,45 @@ class SalarySlipLedgersController < ApplicationController
         ctc = SalaryReport.collect_ctc(employee,template)
         @reports << ctc
       end
+    end
+    respond_to do |f|
+      f.js
+      f.xls {render template: 'salary_slip_ledgers/collect_ctc.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'ctc',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'salary_slip_ledgers/collect_ctc.pdf.erb',
+        show_as_html: params[:debug].present?
+      end
+    end
+  end
 
-      respond_to do |f|
+  # def monthly_ctc_form
+    
+  # end
+
+  def show_monthly_ctc
+    @month, @year, @department = params[:salary][:month], params[:salary][:year], params[:salary][:department_id]
+    @reports = []
+    rolewise_employee = Employee.collect_rolewise(current_user)
+    if @month.blank? or @year.blank? or @department.blank?
+      #@employees = Employee.all
+    else
+      @employees = Employee.where(department_id: @department, id: rolewise_employee)
+    end
+    @employees.try(:each) do |e|
+      employee = Employee.find(e.id)
+      salaryslip = Salaryslip.where('employee_id = ? and month = ? and year = ?', e.id, @month, @year.to_s).take
+      if employee.nil? or salaryslip.nil?
+          
+      else
+        ctc = SalaryReport.collect_monthly_ctc(employee,salaryslip)
+        @reports << ctc
+      end
+    end
+    respond_to do |f|
       f.js
       f.xls {render template: 'salary_slip_ledgers/collect_ctc.xls.erb'}
       f.html
@@ -146,7 +204,6 @@ class SalarySlipLedgersController < ApplicationController
         show_as_html: params[:debug].present?
         #margin:  { top:1,bottom:1,left:1,right:1 }
       end
-    end
     end
   end
 

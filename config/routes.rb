@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :travel_options
   resources :training_plans
   resources :training_requests
   resources :selected_resumes  do
@@ -485,6 +486,7 @@ Rails.application.routes.draw do
       get :select_month_year_form
       get :show_employee
       get :employee_ctc
+      get :employee_monthly_ctc
       post :show_employee_ctc
       get :employee_salary_ledger
       post :print_salary_slip_monthwise
@@ -494,6 +496,7 @@ Rails.application.routes.draw do
       get :bank_wise_net_amount
       get :collect_salary
       get :salary_ledger
+      post :show_monthly_ctc
     end
   end
 

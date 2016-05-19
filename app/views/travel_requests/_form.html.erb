@@ -71,7 +71,7 @@
 
   <div class="col-sm-3">
     <div class="field">
-      <%= f.text_field :total_advance, label: 'Total Advance' %>
+      <%= f.text_field :total_advance, label: 'Total Advance', readonly:true %>
     </div>
   </div>
 </div>
@@ -86,7 +86,6 @@
   </div>
 </div>
 
-
 <div class="row">
   <div class="col-sm-3">
     <div class="actions">
@@ -99,3 +98,25 @@
 </div>
 </div>
 <% end %>
+
+<script type="text/javascript">
+  $(function(){
+    $('#travel_request_traveling_advance').on('input',function(){calculate_total();});
+    $("#travel_request_lodging_boarding_advance").on('input',function(){calculate_total();});
+    $("#travel_request_extra_advance").on('input',function(){calculate_total();});
+
+    function calculate_total(){
+      var lodging_advance = parseFloat($('#travel_request_lodging_boarding_advance').val());
+      var extra_advance = parseFloat($('#travel_request_extra_advance').val());
+      var traveling_advance = parseFloat($('#travel_request_traveling_advance').val());
+      var sum = "";
+      if (isNaN(lodging_advance) || isNaN(extra_advance) || isNaN(traveling_advance)) {
+        sum = ""
+      }
+      else{
+        sum = (lodging_advance + extra_advance + traveling_advance).toFixed(2);
+      }
+      $('#travel_request_total_advance').val(sum);
+    }
+  });
+</script>

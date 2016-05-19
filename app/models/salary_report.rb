@@ -23,32 +23,31 @@ class SalaryReport
         addable_items.each do |a|
             case a.salary_component.try(:name)
               when "Basic"
-              sr.actual_basic = a.actual_amount.round
-              sr.earned_basic = a.calculated_amount.round
+              sr.actual_basic = a.actual_amount
+              sr.earned_basic = a.calculated_amount
 
               when "DA"
-              sr.actual_da = a.actual_amount.round
-              sr.earned_da = a.calculated_amount.round
+              sr.actual_da = a.actual_amount
+              sr.earned_da = a.calculated_amount
 
               when "HRA"
-              sr.actual_hra = a.actual_amount.round
-              sr.earned_hra = a.calculated_amount.round
+              sr.actual_hra = a.actual_amount
+              sr.earned_hra = a.calculated_amount
 
               when "Convenience Allowance"
-              sr.actual_convenience = a.actual_amount.round
-              sr.earned_convenience = a.calculated_amount.round
-
+              sr.actual_convenience = a.actual_amount
+              sr.earned_convenience = a.calculated_amount
               when "Other Allowance"
-              sr.actual_other = a.actual_amount.round
-              sr.earned_other = a.calculated_amount.round
+              sr.actual_other = a.actual_amount
+              sr.earned_other = a.calculated_amount
 
               when "Special Allowance"
-              sr.actual_special = a.actual_amount.round
-              sr.earned_special = a.calculated_amount.round
+              sr.actual_special = a.actual_amount
+              sr.earned_special = a.calculated_amount
 
               when "Washing Allowance"
-              sr.actual_washing = a.actual_amount.round
-              sr.earned_washing = a.calculated_amount.round
+              sr.actual_washing = a.actual_amount
+              sr.earned_washing = a.calculated_amount
             end
         end
 
@@ -81,7 +80,6 @@ class SalaryReport
       sr.deduction_total =  deductable_items.sum(:calculated_amount).try(:to_i)
       sr.net_payable = sr.earned_total - sr.deduction_total.to_i
       
-      #sr.total_leave = wd.el_leave.to_f + wd.cl_leave.to_f + wd.coff_leave.to_f
       sr.cl_leave = wd.cl_leave.to_f
       sr.el_leave = wd.el_leave.to_f
       sr.lwp_leave = wd.lwp_leave.to_f + wd.esic_leave.to_f
@@ -92,11 +90,6 @@ class SalaryReport
       sr.holiday = wd.holiday_in_month.to_i
       sr.weekoff = wd.week_off_day
 
-      # pf_ctc = calculate_pf_ctc(j, wd, sr)
-      # esic_ctc = calculate_esic_ctc(j, wd, sr)
-
-      # sr.pf_ctc = pf_ctc
-      # sr.esic_ctc = esic_ctc
       sr
     end
 
@@ -281,51 +274,217 @@ class SalaryReport
     @sum.weekoff = array_weekoff.inject(0){|sum,x| sum + x }
 
     @sum
+  end
+
+  def self.collect_ctc(employee,template)
+    j = JoiningDetail.find_by_employee_id(employee.id)
+    addable_items = template.employee_salary_templates.where(is_deducted: false)
+    sr = SalaryReport.new
+    sr.employee_name = employee.try(:first_name).to_s + ' ' + employee.try(:last_name).to_s
+    sr.department_name = employee.department.try(:name)
+    sr.code = employee.manual_employee_code
+
+    addable_items.each do |a|
+      case a.salary_component.try(:name)
+        when "Basic"
+        sr.actual_basic = a.annual_amount
+
+        when "DA"
+        sr.actual_da = a.annual_amount
+
+        when "HRA"
+        sr.actual_hra = a.annual_amount
+
+        when "Convenience Allowance"
+        sr.actual_convenience = a.annual_amount
+
+        when "Other Allowance"
+        sr.actual_other = a.annual_amount
+
+        when "Special Allowance"
+        sr.actual_special = a.annual_amount
+
+        when "Washing Allowance"
+        sr.actual_washing = a.annual_amount
+      end
     end
 
-    def self.collect_ctc(employee,template)
-        j = JoiningDetail.find_by_employee_id(employee.id)
-        addable_items = template.employee_salary_templates.where(is_deducted: false)
-        sr = SalaryReport.new
-        sr.employee_name = employee.try(:first_name).to_s + ' ' + employee.try(:last_name).to_s
-        sr.department_name = employee.department.try(:name)
-        sr.code = employee.manual_employee_code
+    sr.actual_total = addable_items.sum(:annual_amount).round
 
-        addable_items.each do |a|
-            case a.salary_component.try(:name)
-              when "Basic"
-              sr.actual_basic = a.annual_amount.try(:round)
+    pf_ctc = calculate_pf_ctc(j, sr)
+    esic_ctc = calculate_esic_ctc(j, sr)
 
-              when "DA"
-              sr.actual_da = a.annual_amount.try(:round)
+    sr.pf_ctc = pf_ctc.to_i * 12
+    sr.esic_ctc = esic_ctc.to_i * 12
 
-              when "HRA"
-              sr.actual_hra = a.annual_amount.try(:round)
+    bonus_amount = BonusEmployee.calculate_year_bonus(sr.actual_basic)
+    sr.bonus_ctc = bonus_amount.to_i
+    sr
+  end
 
-              when "Convenience Allowance"
-              sr.actual_convenience = a.annual_amount.try(:round)
+  def self.collect_monthly_ctc(e, sl)
+    addable_items = SalaryslipComponent.where(salaryslip_id: sl.id, is_deducted: false, is_arrear: nil)
+    deductable_items = SalaryslipComponent.where(salaryslip_id: sl.id, is_deducted: true, is_arrear: nil)
+    j = JoiningDetail.find_by_employee_id(e.id)
 
-              when "Other Allowance"
-              sr.actual_other = a.annual_amount.try(:round)
+    wd = Workingday.find(sl.workingday_id)
+    sr = SalaryReport.new
+    sr.month = sl.month
+    sr.year = sl.year
+    sr.employee_name = e.try(:first_name).to_s + ' ' + e.try(:last_name).to_s
+    sr.department_name = e.department.try(:name)
+    sr.code = e.manual_employee_code
 
-              when "Special Allowance"
-              sr.actual_special = a.annual_amount.try(:round)
+    addable_items.each do |a|
+      case a.salary_component.try(:name)
+        when "Basic"
+        sr.actual_basic = a.actual_amount
+        sr.earned_basic = a.calculated_amount
 
-              when "Washing Allowance"
-              sr.actual_washing = a.annual_amount.try(:round)
-            end
+        when "DA"
+        sr.actual_da = a.actual_amount
+        sr.earned_da = a.calculated_amount
+
+        when "HRA"
+        sr.actual_hra = a.actual_amount
+        sr.earned_hra = a.calculated_amount
+
+        when "Convenience Allowance"
+        sr.actual_convenience = a.actual_amount
+        sr.earned_convenience = a.calculated_amount
+
+        when "Other Allowance"
+        sr.actual_other = a.actual_amount
+        sr.earned_other = a.calculated_amount
+
+        when "Special Allowance"
+        sr.actual_special = a.actual_amount
+        sr.earned_special = a.calculated_amount
+
+        when "Washing Allowance"
+        sr.actual_washing = a.actual_amount
+        sr.earned_washing = a.calculated_amount
+      end
+    end
+
+    sr.earned_total = addable_items.sum(:calculated_amount).round
+    sr.actual_total = addable_items.sum(:actual_amount).round
+        
+    deductable_items.each do |d|
+      case d.other_component_name
+        when "PF"
+        sr.pf = d.calculated_amount.to_i
+        when "ESIC"
+        sr.esic = d.calculated_amount.to_i
+        when "Income Tax"
+        sr.income_tax = d.calculated_amount
+        when "Prof. Tax"
+        sr.pt = d.calculated_amount
+        when "Advance"
+        sr.advance = d.calculated_amount.to_i
+        when "Society"
+        sr.society = d.calculated_amount
+        when "Food Deduction"
+        sr.food_deduction = d.calculated_amount.to_i
+        when "Mobile Deduction"
+        sr.mobile = d.calculated_amount
+        when "Retention"
+        sr.retention = d.calculated_amount
+      end
+    end
+      
+    sr.deduction_total =  deductable_items.sum(:calculated_amount).to_i
+    sr.net_payable = sr.earned_total - sr.deduction_total.to_i
+    
+    sr.cl_leave = wd.cl_leave.to_f
+    sr.el_leave = wd.el_leave.to_f
+    sr.lwp_leave = wd.lwp_leave.to_f + wd.esic_leave.to_f
+    sr.day_in_month = wd.day_in_month
+    sr.payable_day = wd.payable_day
+    sr.present_day = wd.present_day
+    sr.absent_day = wd.absent_day
+    sr.holiday = wd.holiday_in_month.to_i
+    sr.weekoff = wd.week_off_day
+
+    sr.actual_total = addable_items.sum(:actual_amount).round
+
+    pf_ctc = monthly_pf_ctc(j, wd, sr)
+    esic_ctc = monthly_esic_ctc(j, wd, sr)
+
+    sr.pf_ctc = pf_ctc
+    sr.esic_ctc = esic_ctc
+
+    bonus_amount = BonusEmployee.calculate_bonus(sr.earned_basic)
+    sr.bonus_ctc = bonus_amount
+    sr
+  end
+
+  def self.monthly_pf_ctc(j, wd, sr)
+    current_template = EmployeeTemplate.where('employee_id = ? and is_active = ?', j.employee_id, true).take
+    addable_salary_items = current_template.employee_salary_templates.where('is_deducted = ?', false)
+
+    @pf_master = PfMaster.where(is_active: true).take
+    if @pf_master.nil?
+    else
+      if @pf_master.is_pf
+        formula_item_actual_amount = 0
+        formula_item_calculated_amount = 0
+        formula_total_actual_amount = 0
+        formula_total_calculated_amount = 0
+
+        formula_string = @pf_master.base_component.split(',')
+        formula_string.try(:each) do |f|
+          formula_item = addable_salary_items.where(salary_component_id: f.to_i).take
+          formula_item_actual_amount = formula_item.monthly_amount
+          formula_item_actual_amount = 0 if formula_item_actual_amount.nil?
+          formula_total_actual_amount += formula_item_actual_amount
+          formula_item_calculated_amount = formula_item_actual_amount / wd.try(:day_in_month) * wd.try(:payable_day)
+          formula_total_calculated_amount += formula_item_calculated_amount
         end
 
-        sr.actual_total = addable_items.sum(:monthly_amount).round
-
-        pf_ctc = calculate_pf_ctc(j, sr)
-      esic_ctc = calculate_esic_ctc(j, sr)
-
-      sr.pf_ctc = pf_ctc.to_i * 12
-      sr.esic_ctc = esic_ctc.to_i * 12
-
-      bonus_amount = BonusEmployee.calculate_bonus(sr.actual_basic)
-      sr.bonus_ctc = bonus_amount.to_i * 12
-        sr
+        if j.select_pf == 'Yes'
+          deducted_actual_amount = (formula_total_actual_amount / 100 * @pf_master.percentage).round
+          deducted_calculated_amount = (formula_total_calculated_amount / 100 * @pf_master.percentage).round
+        elsif j.select_pf == 'Limit'
+          deducted_actual_amount = (j.pf_max_amount.to_f / 100 * @pf_master.percentage).round
+          deducted_calculated_amount = deducted_actual_amount
+        else
+          deducted_actual_amount = 0
+          deducted_calculated_amount = 0
+        end
+        deducted_calculated_amount
+      end
     end
+  end
+
+  def self.monthly_esic_ctc(j, wd, sr)
+    current_template = EmployeeTemplate.where('employee_id = ? and is_active = ?', j.employee_id, true).take
+    addable_salary_items = current_template.employee_salary_templates.where('is_deducted = ?', false)
+
+    formula_item_actual_amount = 0
+    formula_item_calculated_amount = 0
+    formula_total_actual_amount = 0
+    formula_total_calculated_amount = 0
+
+    master_esic = EsicMaster.first
+    unless master_esic.nil?
+      if master_esic.esic && sr.actual_total <= master_esic.max_limit && j.have_esic
+        formula_string = master_esic.base_component.split(',')
+        formula_string.try(:each) do |f|
+          formula_item = addable_salary_items.where(salary_component_id: f.to_i).take
+          formula_item_actual_amount = formula_item.monthly_amount
+          formula_item_actual_amount = 0 if formula_item_actual_amount.nil?
+          formula_total_actual_amount += formula_item_actual_amount
+          formula_item_calculated_amount = formula_item_actual_amount / wd.try(:day_in_month) * wd.try(:payable_day)
+          formula_total_calculated_amount += formula_item_calculated_amount
+        end
+        deducted_actual_amount = (formula_total_actual_amount / 100 * 4.75).ceil
+        deducted_calculated_amount = (formula_total_calculated_amount / 100 * master_esic.percentage).ceil
+      else
+        deducted_actual_amount = 0
+        deducted_calculated_amount = 0
+      end
+      deducted_calculated_amount
+    end
+  end
 end

@@ -3,17 +3,17 @@
   <div class="row">
    <div class="col-sm-3">
       <div class="form-group required">
-        <%= f.select :state_id,all_country,{label: 'State',include_blank: " Select State"} %>
+        <%= f.select :country_id,all_country,{label: 'Country',include_blank: " Select Country"} %>
       </div>
     </div>
     <div class="col-sm-3">
       <div class="form-group required">
-        <%= f.text_field :code, placeholder: 'Code' %>
+        <%= f.text_field :code, placeholder: 'e.g MH' %>
       </div>
     </div>
      <div class="col-sm-3">
       <div class="form-group required">
-        <%= f.text_field :name, placeholder: 'state Name' %>
+        <%= f.text_field :name, placeholder: 'e.g Maharashtra' %>
       </div>
     </div>
    <div class="col-sm-3">

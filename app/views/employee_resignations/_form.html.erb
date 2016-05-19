@@ -1,0 +1,77 @@
+<%= form_for(@employee_resignation) do |f| %>
+  <% if @employee_resignation.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@employee_resignation.errors.count, "error") %> prohibited this employee_resignation from being saved:</h2>
+
+      <ul>
+      <% @employee_resignation.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :employee_id %><br>
+    <%= f.text_field :employee_id %>
+  </div>
+  <div class="field">
+    <%= f.label :resignation_date %><br>
+    <%= f.date_select :resignation_date %>
+  </div>
+  <div class="field">
+    <%= f.label :reason %><br>
+    <%= f.text_field :reason %>
+  </div>
+  <div class="field">
+    <%= f.label :is_notice_period %><br>
+    <%= f.check_box :is_notice_period %>
+  </div>
+  <div class="field">
+    <%= f.label :notice_period %><br>
+    <%= f.text_field :notice_period %>
+  </div>
+  <div class="field">
+    <%= f.label :short_notice_period %><br>
+    <%= f.text_field :short_notice_period %>
+  </div>
+  <div class="field">
+    <%= f.label :tentative_leaving_date %><br>
+    <%= f.date_select :tentative_leaving_date %>
+  </div>
+  <div class="field">
+    <%= f.label :remark %><br>
+    <%= f.text_area :remark %>
+  </div>
+  <div class="field">
+    <%= f.label :exit_interview_date %><br>
+    <%= f.date_select :exit_interview_date %>
+  </div>
+  <div class="field">
+    <%= f.label :note %><br>
+    <%= f.text_area :note %>
+  </div>
+  <div class="field">
+    <%= f.label :leaving_date %><br>
+    <%= f.date_select :leaving_date %>
+  </div>
+  <div class="field">
+    <%= f.label :settled_on %><br>
+    <%= f.date_select :settled_on %>
+  </div>
+  <div class="field">
+    <%= f.label :has_left %><br>
+    <%= f.check_box :has_left %>
+  </div>
+  <div class="field">
+    <%= f.label :notice_served %><br>
+    <%= f.check_box :notice_served %>
+  </div>
+  <div class="field">
+    <%= f.label :rehired %><br>
+    <%= f.check_box :rehired %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

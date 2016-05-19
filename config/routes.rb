@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :employee_resignations
   resources :travel_options
   resources :training_plans
   resources :training_requests

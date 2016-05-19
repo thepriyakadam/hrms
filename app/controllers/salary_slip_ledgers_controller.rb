@@ -135,9 +135,6 @@ class SalarySlipLedgersController < ApplicationController
 
   def show_employee_ctc
     @reports = []
-<<<<<<< HEAD
-    Employee.all.try(:each) do |e|
-=======
     @department = params[:salary][:department_id]
     rolewise_employee = Employee.collect_rolewise(current_user)
     @employees = if @department.blank?
@@ -146,7 +143,6 @@ class SalarySlipLedgersController < ApplicationController
                 Employee.where(department_id: params[:salary][:department_id], id: rolewise_employee)
               end
     @employees.try(:each) do |e|
->>>>>>> 2bbc1d7deff5764bb360c7d029a3c9d745e443fc
       employee = Employee.find(e.id)
       template = EmployeeTemplate.where(employee_id: e.id, is_active: true).take
       if employee.nil? or template.nil?

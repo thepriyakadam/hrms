@@ -45,7 +45,7 @@ class EmployeeGoalsController < ApplicationController
   # PATCH/PUT /employee_goals/1.json
   def update
     @employee = Employee.find(@employee_goal.employee_id)
-    goal_weightage_sum = @employee_goal.goal_weightage_sum(@employee_goal)
+    goal_weightage_sum = @employee_goal.goal_weightage_sumdate(@employee_goal, params[:employee_goal][:goal_weightage])
     if goal_weightage_sum > 100
       @flag = false
     else
@@ -67,26 +67,12 @@ class EmployeeGoalsController < ApplicationController
 
   def subordinate_list
     current_login = Employee.find(current_user.employee_id)
-    @employees = current_login.subordinates 
+    @employees = current_login.subordinates
     session[:active_tab] ="performance"
   end
 
   def employee_list
-      @year = params[:year]
-      @employees = params[:employee_ids]
-     if current_user.class == Group
-      @employees = Employee.all
-    elsif current_user.class == Member
-      if current_user.role.name == 'Company'
-        @employees = Employee.all
-      elsif current_user.role.name == 'CompanyLocation'
-        @employees = Employee.where(company_location_id: current_user.company_location_id)
-      elsif current_user.role.name == 'Department'
-        @employees = Employee.where(department_id: current_user.department_id)
-      else current_user.role.name == 'Employee'
-           @employees = Employee.where(id: current_user.employee_id)
-      end
-    end
+    @employees = Employee.find_by_role(current_user)
   end
 
   def show_goal
@@ -97,25 +83,14 @@ class EmployeeGoalsController < ApplicationController
   end
 
   def is_confirm
-    #@employee_goal = EmployeeGoal.find(params[:id])
     @employee = Employee.find(params[:id])
-
     @employee_goal_ids = params[:employee_goal_ids]
     if @employee_goal_ids.nil?
-      flash[:alert] = "Please Select the Checkbox"
-      redirect_to new_employee_goal_path(@employee.id)
+      flash[:alert] = "Please Select Goal."
     else
-      @employee_goal_ids.each do |eid|
-      @employee_goal = EmployeeGoal.find(eid)
-      @employee_goal.update(is_confirm: true)
-
-      GoalRatingSheet.create(appraisee_id: @employee.id, employee_goal_id: @employee_goal.id)
-      
-      flash[:notice] = "Confirmed Successfully"
-    end 
-
-     redirect_to new_employee_goal_path( @employee.id) 
-  end
+      confirm_employee_goal
+    end
+    redirect_to new_employee_goal_path(@employee.id)
   end
 
   def send_email_to_employee
@@ -125,7 +100,6 @@ class EmployeeGoalsController < ApplicationController
     flash[:notice] = "Email sent Successfully"
     redirect_to new_employee_attribute_path(@employee.id) 
   end
-
 
   def show_employee
     @employee = Employee.new
@@ -180,27 +154,21 @@ class EmployeeGoalsController < ApplicationController
   end
 
   def is_confirm_all
-
-    #@employee_goal = EmployeeGoal.find(params[:id])
     @employee = Employee.all
-
     @employee_goal_ids = params[:employee_goal_ids]
     if @employee_goal_ids.nil?
       flash[:alert] = "Please Select the Checkbox"
       redirect_to new_employee_goal_path
     else
       @employee_goal_ids.each do |eid|
-      @employee_goal = EmployeeGoal.find(eid)
-      @employee_goal.update(is_confirm: true)
-
-      GoalRatingSheet.create(employee_goal_id: @employee_goal.id)
-      
-      flash[:notice] = "Confirmed Successfully"
-    end 
-     redirect_to new_employee_goal_path
+        @employee_goal = EmployeeGoal.find(eid)
+        @employee_goal.update(is_confirm: true)
+        GoalRatingSheet.create(employee_goal_id: @employee_goal.id)
+        flash[:notice] = "Confirmed Successfully"
+      end 
+      redirect_to new_employee_goal_path
+    end
   end
-  end
-
 
   private
 
@@ -213,4 +181,24 @@ class EmployeeGoalsController < ApplicationController
   def employee_goal_params
     params.require(:employee_goal).permit(:emp_head,:is_confirm, :period_id, :employee_id, :goal_perspective_id, :goal_measure, :target, :goal_weightage, :difficulty_level, :allign_to_supervisor, :appraisee_comment, :appraisee_rating, :appraiser_comment, :appraiser_rating)
   end
-end
+
+  def confirm_employee_goal
+    employee_goals = EmployeeGoal.where(id: @employee_goal_ids)
+    period_array = employee_goals.pluck(:period_id)
+    if period_array.uniq.length == 1
+      sum = employee_goals.sum(:goal_weightage)
+      if sum == 100
+        @employee_goal_ids.each do |eid|
+          @employee_goal = EmployeeGoal.find(eid)
+          @employee_goal.update(is_confirm: true)
+          GoalRatingSheet.create(appraisee_id: @employee.id, employee_goal_id: @employee_goal.id)
+        end
+        flash[:notice] = "Confirmed Successfully."
+      else
+        flash[:alert] = "Total goal weightage must be 100%."
+      end
+    else
+      flash[:alert] = "Please select uniq period."
+    end
+  end
+end # class end

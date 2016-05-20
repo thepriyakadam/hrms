@@ -30,7 +30,7 @@
               <td><%= goal_rating_sheet.employee_goal.difficulty_level %></td>
               <td><%= goal_rating_sheet.employee_goal.allign_to_supervisor %></td>
               
-              <td><%= text_field_tag 'appraisee_comment[]' %></td>
+              <td><%= text_field_tag 'appraisee_comment[]',"",{class: 'form-control'} %></td>
               <td><%= select_tag 'appraisee_rating_id[]',options_for_select(all_rating_type), {class: 'form-control', hide_label: true,include_blank: " Select Rating"} %></td>
               
               <%= hidden_field_tag 'employee_goal_id[]',{},value: goal_rating_sheet.id %>

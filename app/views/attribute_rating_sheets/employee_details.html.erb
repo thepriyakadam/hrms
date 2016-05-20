@@ -71,17 +71,20 @@
         <thead>
           <tr>
             <th>Degree</th>
+            <th>Qualification</th>
             <th>Year Of Passing</th>
-            <th>Marks</th>
-            <th>Qualification Category</th>
+            <th>Marks(%)</th>
+            
           </tr>
         </thead>
         <tbody>
         <% @qualifications.each do |q| %>
           <tr>
             <td><%= q.degree.name %></td>
-            <td><%= q.year.name.to_s+" / "+q.marks.to_s %></td>
             <td><%= q.degree_type.name %></td>
+            <td><%= q.year.name %></td>
+            <td><%= q.marks %></td>
+            
           </tr>
           <% end %>
         </tbody>

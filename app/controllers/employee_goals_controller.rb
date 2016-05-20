@@ -16,13 +16,13 @@ class EmployeeGoalsController < ApplicationController
   def new
     @employee_goal = EmployeeGoal.new
     @employee = Employee.find(params[:format])
-    @employee_goals = EmployeeGoal.where(employee_id: @employee.id)
+    @employee_goals = EmployeeGoal.where(employee_id: @employee.id, is_confirm: nil)
   end
 
   # GET /employee_goals/1/edit
   def edit
     @employee = Employee.find(@employee_goal.employee_id)
-    @employee_goals = EmployeeGoal.where(employee_id: @employee.id)
+    @employee_goals = EmployeeGoal.where(employee_id: @employee.id, is_confirm: nil)
   end
 
   # POST /employee_goals
@@ -36,7 +36,7 @@ class EmployeeGoalsController < ApplicationController
     else
       @employee_goal.save
       @employee_goal = EmployeeGoal.new
-      @employee_goals = EmployeeGoal.where(employee_id: @employee.id)
+      @employee_goals = EmployeeGoal.where(employee_id: @employee.id, is_confirm: nil)
       @flag = true
     end
   end
@@ -51,7 +51,7 @@ class EmployeeGoalsController < ApplicationController
     else
       @employee_goal.update(employee_goal_params)
       @employee_goal = EmployeeGoal.new
-      @employee_goals = EmployeeGoal.where(employee_id: @employee.id)
+      @employee_goals = EmployeeGoal.where(employee_id: @employee.id, is_confirm: nil)
       @flag = true
     end
   end
@@ -60,7 +60,7 @@ class EmployeeGoalsController < ApplicationController
   # DELETE /employee_goals/1.json
   def destroy
     @employee = Employee.find(@employee_goal.employee_id)
-    @employee_goals = EmployeeGoal.where(employee_id: @employee.id)
+    @employee_goals = EmployeeGoal.where(employee_id: @employee.id, is_confirm: nil)
     @employee_goal.destroy
     flash[:notice] = 'Deleted Successfully'
   end

@@ -101,7 +101,7 @@
         <th>Goal Weightage</th>
         <th>Difficulty Level</th>
         
-        <th>Allign To Supervisor</th>
+        <th>Aligned To Supervisor</th>
         <th>Appraisee Comment</th>
         <th>Appraisee Evaluation</th>
         <th>Appraiser Comment</th>
@@ -157,19 +157,19 @@
 <%= bootstrap_form_for @goal_rating_sheet,url:{action:'is_confirm_final',id: @employee.id} do |f| %>
 
   <div class="box-header with-border">
-    <h3 class="box-title">Goals</h3>
+    <h3 class="box-title">Goal List</h3>
   </div>
   <table id="example4" class="table table-bordered table-hover table-condensed">
     <thead>
       <tr>
         <th><input type="checkbox" id="selectAll" value="selectAll"></th>
-        <th>Goal Perspctive</th>
+        <th>Goal Perspective</th>
         <th>Goal Measure</th>
         <th>Target</th>
         <th>Goal Weightage</th>
         <th>Difficulty Level</th>
         
-        <th>Allign To Supervisor</th>
+        <th>Aligned To Supervisor</th>
         <th>Appraisee Comment</th>
         <th>Appraisee Evaluation</th>
         <th>Appraiser Comment</th>
@@ -231,7 +231,7 @@
     </div>
       </br>
  
-  <%= link_to 'Back', employee_list_goal_rating_sheets_path(@employee.id),class: 'btn btn-default btn-sm fa fa-arrow-left' %> 
+  <%= link_to ' Back', employee_list_goal_rating_sheets_path(@employee.id),class: 'btn btn-default btn-sm fa fa-arrow-left' %> 
 </div>
 </div>
 <% end %>

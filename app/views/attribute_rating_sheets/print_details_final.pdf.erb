@@ -80,13 +80,46 @@ div.nobreak{ page-break-inside: avoid;
         <% @qualifications.each do |q| %>
           <tr>
             <td><%= q.degree.name %></td>
+            <td><%= q.degree_type.name %></td>
             <td><%= q.year.name %></td>
             <td><%= q.marks %></td>
-            <td><%= q.degree_type.name %></td>
           </tr>
           <% end %>
         </tbody>
       </table><br>
+       <table id="tbl" style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
+    <thead>
+    <tr><th colspan="15"><strong><center> Attribute Details </center></strong></th></tr>
+      <tr>
+        <th colspan="1">Attribute & Definition</th>
+        <th>Weightage</th>
+        <th colspan="1">Appraisee Comment</th>
+        <th>Appraisee Evaluation</th>
+        <th colspan="1">Appraiser Comment</th>
+        <th>Appraiser Evaluation</th>
+        <th colspan="1">Reviewer Comment</th>
+        <th>Reviewer Evaluation</th>
+        <th colspan="1">Final Comment</th>
+        <th>Final Rating</th>
+      </tr>
+    </thead>
+     <tbody>
+      <% @attribute_rating_multiple_sheets.each do |a| %>
+        <tr>
+          <td colspan="1"><%= a.employee_attribute.attribute_master.name %></td>
+          <td><%= a.employee_attribute.weightage %></td>
+          <td colspan="1"><%= a.appraisee_comment %></td>
+          <td><%= a.appraisee_rating.try(:code) %></td>
+          <td colspan="1"><%= a.appraiser_comment %></td>
+          <td><%= a.appraiser_rating.try(:code) %></td>
+          <td colspan="1"><%= a.appraiser2_comment %></td>
+          <td><%= a.appraiser2_rating.try(:code) %></td>
+          <td colspan="1"><%= a.final_comment %></td>
+          <td><%= a.final_rating.try(:code) %></td>
+        </tr>
+        <% end %>
+      </tbody>
+  </table><br>
  
   <table id="tbl" style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
     <thead>
@@ -132,38 +165,6 @@ div.nobreak{ page-break-inside: avoid;
       </tbody>
   </table><br>
 
-   <table id="tbl" style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
-    <thead>
-    <tr><th colspan="14"><strong><center> Attribute Details </center></strong></th></tr>
-      <tr>
-        <th>Attribute & Definition</th>
-        <th>Weightage</th>
-        <th>Appraisee Comment</th>
-        <th>Appraisee Evaluation</th>
-        <th>Appraiser Comment</th>
-        <th>Appraiser Evaluation</th>
-        <th>Reviewer Comment</th>
-        <th>Reviewer Evaluation</th>
-        <th>Final Comment</th>
-        <th>Final Rating</th>
-      </tr>
-    </thead>
-     <tbody>
-      <% @attribute_rating_multiple_sheets.each do |a| %>
-        <tr>
-          <td><%= a.employee_attribute.attribute_master.name %></td>
-          <td><%= a.employee_attribute.weightage %></td>
-          <td><%= a.appraisee_comment %></td>
-          <td><%= a.appraisee_rating.try(:code) %></td>
-          <td><%= a.appraiser_comment %></td>
-          <td><%= a.appraiser_rating.try(:code) %></td>
-          <td><%= a.appraiser2_comment %></td>
-          <td><%= a.appraiser2_rating.try(:code) %></td>
-          <td><%= a.final_comment %></td>
-          <td><%= a.final_rating.try(:code) %></td>
-        </tr>
-        <% end %>
-      </tbody>
-  </table><br>
+  
 
  </div> 

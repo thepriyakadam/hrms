@@ -46,11 +46,12 @@
     </table>
    
     <div class="row">
-      <div class="col-sm-3">
+      <div class="col-sm-6">
         <div class="actions">
-          <%= link_to 'Created Goals & Attributes', show_list_employee_attributes_path(@employee.id),class: 'btn btn-warning btn-sm' %><br><br>
+          
           <%= f.submit "Confirm", class: 'btn btn-primary btn-sm' %> 
-          <%= link_to 'Back', new_employee_goal_path(@employee.id),class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+          <%= link_to 'Created Goals & Attributes', show_list_employee_attributes_path(@employee.id),class: 'btn btn-warning btn-sm' %>
+         <br> <br><%= link_to 'Back', new_employee_goal_path(@employee.id),class: 'btn btn-default btn-sm fa fa-arrow-left' %>
         </div>
       </div>
         

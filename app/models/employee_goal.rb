@@ -15,7 +15,12 @@ class EmployeeGoal < ActiveRecord::Base
   validates :period_id, presence: true
 
   def goal_weightage_sum(employee_goal)
-    previous_goals = EmployeeGoal.where(period_id: employee_goal.period_id, employee_id: employee_goal.employee_id)
+    previous_goals = EmployeeGoal.where(period_id: employee_goal.period_id, employee_id: employee_goal.employee_id, is_confirm: nil)
     previous_goals.sum(:goal_weightage) + employee_goal.goal_weightage
+  end
+
+  def goal_weightage_sumdate(employee_goal, goal_weightage)
+    previous_goals = EmployeeGoal.where(period_id: employee_goal.period_id, employee_id: employee_goal.employee_id, is_confirm: nil).where.not(id: employee_goal.id)
+    previous_goals.sum(:goal_weightage) + goal_weightage.to_i
   end
 end

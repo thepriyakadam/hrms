@@ -39,6 +39,10 @@ module EmployeesHelper
     emp.try(:first_name).to_s + ' ' + emp.try(:middle_name).to_s + ' ' + emp.try(:last_name).to_s
   end
 
+  def code_full_name(emp)
+    emp.try(:manual_employee_code).to_s+' '+emp.try(:first_name).to_s+' '+emp.try(:middle_name).to_s+' '+emp.try(:last_name).to_s
+  end
+
   def short_name(emp)
     emp.try(:first_name).to_s + ' ' + emp.try(:last_name).to_s
   end

@@ -1,59 +1,55 @@
-   <%= bootstrap_form_for @employee_goal,url:{action:'is_confirm',id: @employee.id} do |f| %>   
-      <table id="example2" class="table table-bordered table-hover table-condensed">
-        <thead>
-          <tr>
-            <th><input type="checkbox" id="selectAll" value="selectAll"></th>
-            <th>Period</th>
-            <th>Goal Perspective</th>
-            <th>Goal Measure</th>
-            <th>Target</th>
-            <th>Goal Weightage</th>
-            <th>Difficulty Level</th>
-            <th>Aligned To Supervisor</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @employee_goals.each do |e| %>
-          <tr>
-            <td>
-              <% if e.is_confirm == true %>
 
-              <% else %>
-                <%= check_box_tag "employee_goal_ids[]", e.id %>
-              <% end %>
-            </td>
+<h6>Goal List</h6>
+<%= bootstrap_form_for @employee_goal,url:{action:'is_confirm',id: @employee.id} do |f| %>   
+  <%= f.hidden_field :employee_id,value: @employee.id %>
+  <table id="example2" class="table table-bordered table-hover table-condensed">
+    <thead>
+      <tr>
+        <th><input type="checkbox" id="selectAll" value="selectAll"></th>
+        <th>Period</th>
+        <th>Goal Perspective</th>
+        <th>Goal Measure</th>
+        <th>Target/Unit</th>
+        <th>Goal Weightage(Total - <%=@employee_goals.sum(:goal_weightage)%>%)</th>
+        <th>Difficulty Level</th>
+        <th>Aligned To Supervisor</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @employee_goals.each do |e| %>
+        <tr>
+          <td><%= check_box_tag "employee_goal_ids[]", e.id unless e.is_confirm %></td>
             <td><%= e.period.title %> <%= e.period.start_date %> <%= e.period.end_date %></td>
-            <td><%= e.goal_perspective.name %></td>
-            <td><%= e.goal_measure %></td>
-            <td><%= e.target %></td>
-            <td><%= e.goal_weightage %></td>
-            <td><%= e.difficulty_level %></td>
-            <td><%= e.allign_to_supervisor %></td>
-            <td>
-              <% if e.is_confirm == true %>
-              <small class="label label-info">Confirmed</small>
-              <% else %>
-                <%= link_to '', edit_employee_goal_path(e) ,class: 'btn btn-xs btn-success fa fa-edit',remote:true  %>
-                <%= link_to '',  e, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-xs btn-danger fa fa-close' %>
-              <% end %>
-            </td>
-          </tr>
-          <% end %>
-           <%= f.hidden_field :employee_id,value: @employee.id %>
-        </tbody>
-      </table>
-      
-      <div class="row">
-        <div class="col-sm-3">
-          <div class="actions">
-            <%= f.submit "Confirm Goal", class: 'btn btn-primary btn-sm' %> 
-            <%= link_to 'Attribute', new_employee_attribute_path(@employee.id) , class: 'btn btn-warning btn-sm' %>
-          </div>
-        </div>
-      </div></br>
-    <%= link_to ' Back', subordinate_list_employee_goals_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
-  <% end %>
+          <td><%= e.period.title %></td>
+          <td><%= e.goal_perspective.name %></td>
+          <td><%= e.goal_measure %></td>
+          <td><%= e.target %></td>
+          <td><%= e.goal_weightage %></td>
+          <td><%= e.difficulty_level %></td>
+          <td><%= e.allign_to_supervisor %></td>
+          <td>
+            <% if e.is_confirm == true %>
+            <small class="label label-info">Confirmed</small>
+            <% else %>
+              <%= link_to '', edit_employee_goal_path(e) ,class: 'btn btn-xs btn-success fa fa-edit',remote:true  %>
+              <%= link_to '',  e, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-xs btn-danger fa fa-close' %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "Confirm Goal", class: 'btn btn-primary btn-sm' %> 
+        <%= link_to 'Attribute', new_employee_attribute_path(@employee.id) , class: 'btn btn-warning btn-sm' %>
+      </div>
+    </div>
+  </div></br>
+  <%= link_to ' Back', subordinate_list_employee_goals_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+<% end %>
 
 <script type="text/javascript">
   $(function () {

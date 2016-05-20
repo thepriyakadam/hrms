@@ -30,13 +30,14 @@ class EmployeeGoalsController < ApplicationController
   def create
     @employee_goal = EmployeeGoal.new(employee_goal_params)
     @employee = Employee.find(@employee_goal.employee_id)
-    if @employee_goal.save
-      @flag = true
+    goal_weightage_sum = @employee_goal.goal_weightage_sum(@employee_goal)
+    if goal_weightage_sum > 100
+      @flag = false
+    else
+      @employee_goal.save
       @employee_goal = EmployeeGoal.new
       @employee_goals = EmployeeGoal.where(employee_id: @employee.id)
-      # redirect_to new_employee_goal_path
-    else
-      @flag = false
+      @flag = true
     end
   end
 
@@ -44,12 +45,14 @@ class EmployeeGoalsController < ApplicationController
   # PATCH/PUT /employee_goals/1.json
   def update
     @employee = Employee.find(@employee_goal.employee_id)
-    if @employee_goal.update(employee_goal_params)
-      @flag = true
+    goal_weightage_sum = @employee_goal.goal_weightage_sum(@employee_goal)
+    if goal_weightage_sum > 100
+      @flag = false
+    else
+      @employee_goal.update(employee_goal_params)
       @employee_goal = EmployeeGoal.new
       @employee_goals = EmployeeGoal.where(employee_id: @employee.id)
-    else
-      @flag = false
+      @flag = true
     end
   end
 
@@ -66,7 +69,6 @@ class EmployeeGoalsController < ApplicationController
     current_login = Employee.find(current_user.employee_id)
     @employees = current_login.subordinates 
     session[:active_tab] ="performance"
-
   end
 
   def employee_list

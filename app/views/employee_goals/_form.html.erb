@@ -1,4 +1,5 @@
 <%= bootstrap_form_for(@employee_goal,html: {id: "employee_goal"},remote: true) do |f| %>
+<div id="error"></div>
   <%= f.hidden_field :employee_id,value: @employee.id %>
   <%= f.hidden_field :emp_head,value: current_user.employee_id %>
 
@@ -11,7 +12,7 @@
 
     <div class="col-sm-3">
       <div class="field">
-        <%= f.select :goal_perspective_id,all_goal_perspective_type,{label: 'Gaol Perspective',include_blank: "Select Goal Perspective"}%>
+        <%= f.select :goal_perspective_id,all_goal_perspective_type,{label: 'Goal Perspective',include_blank: "Select Goal Perspective"}%>
       </div>
     </div>
 
@@ -31,7 +32,7 @@
   <div class="row">
     <div class="col-sm-3">
       <div class="field">
-        <%= f.select :goal_weightage,["1","2","3","4","5"],{label: 'Goal Weightage', include_blank: "Select Goal Weightage"} %>
+        <%= f.text_field :goal_weightage, label: 'Goal Weightage' %>
       </div>
     </div>
 

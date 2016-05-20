@@ -37,15 +37,15 @@
   <div class="col-sm-6">
     <div class="box-header with-border">
     
-      <h3 class="box-title">Experience</h3>
+      <h3 class="box-title">Experience Details<h3>
     </div>
   <table class="table table-bordered table-hover table-condensed">
     <thead>
       <tr>
-	    	<th>Past Company</th>
+	    	<th>Previous Company</th>
         <th>Designation</th>
-        <th>Past Exp In Years</th>
-        <th>Past CTC</th>
+        <th>Previous Exp.(Years)</th>
+        <th>Previous CTC</th>
         <th>Current CTC</th>
       </tr>
     </thead>
@@ -70,17 +70,21 @@
       <table class="table table-bordered table-hover table-condensed">
         <thead>
           <tr>
-            <th>Degree/Deploma</th>
-            <th>Year Of Passing/marks%</th>
-            <th>Qualification Category</th>
+            <th>Degree</th>
+            <th>Qualification</th>
+            <th>Year Of Passing</th>
+            <th>Marks(%)</th>
+            
           </tr>
         </thead>
         <tbody>
         <% @qualifications.each do |q| %>
           <tr>
             <td><%= q.degree.name %></td>
-            <td><%= q.year.name.to_s+" / "+q.marks.to_s %></td>
             <td><%= q.degree_type.name %></td>
+            <td><%= q.year.name %></td>
+            <td><%= q.marks %></td>
+            
           </tr>
           <% end %>
         </tbody>
@@ -90,18 +94,18 @@
 </div>
 
 	<div class="box-header with-border">
-    <h3 class="box-title">Goals</h3>
+    <h3 class="box-title">Goal List</h3>
   </div>
 	 <table id="tbl" class="table table-bordered table-hover table-condensed">
     <thead>
       <tr>
-        <th>Goal Perspctive</th>
+        <th>Goal Perspective</th>
         <th>Goal Measure</th>
         <th>Target</th>
         <th>Goal Weightage</th>
         <th>Difficulty Level</th>
         
-        <th>Allign To Supervisor</th>
+        <th>Aligned To Supervisor</th>
         <th>Appraisee Comment</th>
         <th>Appraisee Evaluation</th>
         <th>Appraiser Comment</th>
@@ -128,7 +132,7 @@
   </table>
 
   <div class="box-header with-border">
-    <h3 class="box-title">Attributes</h3>
+    <h3 class="box-title">Attribute List</h3>
   </div>
   <table id="tbl" class="table table-bordered table-hover table-condensed">
     <thead>
@@ -155,7 +159,7 @@
     </tbody>
   </table>
 <hr>
-<%= link_to 'Back', subordinate_list_attribute_rating_sheets_path(@employee.id),class: 'btn btn-default btn-sm fa fa-arrow-left' %> |
+<%= link_to ' Back', subordinate_list_attribute_rating_sheets_path(@employee.id),class: 'btn btn-default btn-sm fa fa-arrow-left' %> |
 
  <%= link_to 'Print PDF', print_details_appraiser_attribute_rating_sheets_path(format: 'pdf',id:@employee.id ),class: 'btn btn-xl btn-warning', :target => '_blank' %><br><br>
 </div>

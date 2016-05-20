@@ -67,8 +67,8 @@ class EmployeeGoalsController < ApplicationController
 
   def subordinate_list
     current_login = Employee.find(current_user.employee_id)
-    @employees = current_login.subordinates
-    session[:active_tab] ="performance"
+    @employees = current_login.subordinates 
+    session[:active_tab] ="Performance"
   end
 
   def employee_list
@@ -78,7 +78,7 @@ class EmployeeGoalsController < ApplicationController
   def show_goal
     @employee_goal = EmployeeGoal.new
     @employee = Employee.find(params[:format])
-    @employee_goals = EmployeeGoal.where(employee_id: @employee.id) 
+    @employee_goals = EmployeeGoal.where(employee_id: @employee.id)
     @employee_attributes = EmployeeAttribute.where(employee_id: @employee.id)
   end
 

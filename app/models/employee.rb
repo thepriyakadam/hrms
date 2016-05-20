@@ -1,3 +1,4 @@
+
 class Employee < ActiveRecord::Base
   protokoll :employee_code, pattern: 'EMP#######'
   belongs_to :department
@@ -27,6 +28,7 @@ class Employee < ActiveRecord::Base
   has_many :families
   has_many :experiences
   has_many :skillsets
+  has_many :assigned_assets
   has_many :employee_salary_templates
   has_many :overtimes
   has_many :workingdays

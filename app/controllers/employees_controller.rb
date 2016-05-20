@@ -214,6 +214,16 @@ class EmployeesController < ApplicationController
     @skillset = Skillset.new
   end
 
+  def ajax_assigned_asset_detail
+    @assigned_asset = AssignedAsset.new
+    @employee = Employee.find(params[:id])
+  end
+  
+  def ajax_new_assigned_asset
+    @assigned_asset = AssignedAsset.new
+  end
+
+
   def ajax_certification_detail
     @certification = Certification.new
   end
@@ -249,6 +259,7 @@ class EmployeesController < ApplicationController
 
   def ajax_new_employee_nomination
     @employee_nomination = EmployeeNomination.new
+    @employee = Employee.find(params[:id])
   end
 
   def ajax_show_textbox

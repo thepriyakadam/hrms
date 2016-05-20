@@ -1,77 +1,170 @@
-<%= form_for(@employee_resignation) do |f| %>
-  <% if @employee_resignation.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@employee_resignation.errors.count, "error") %> prohibited this employee_resignation from being saved:</h2>
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title"> Employee Resignation </h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+<%= bootstrap_form_for(@employee_resignation,remote:true) do |f| %>
 
-      <ul>
-      <% @employee_resignation.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+    <div class="row">
+          <div class="col-sm-3">
+           <label>Resignation Date </label>
+          <div class="form-group required">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+            <%= f.text_field :resignation_date,hide_label: true,class: 'resignation_date'%>
+          </div>
+        </div>
+        </div>
+
+        <div class="col-sm-6">
+          <div class="field">
+            <%= f.text_field :reason %>
+          </div>
+        </div>
+        
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.check_box :is_notice_period %>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+       <div class="col-sm-3">
+         <div class="field">
+           <%= f.text_field :notice_period, label:'Notice Period' %>
+         </div>
+       </div>
+
+      <div class="col-sm-3">
+       <div class="field">
+         <%= f.text_field :short_notice_period, label:'Short Notice Period' %>
+       </div>
+      </div>
+
+      <div class="col-sm-3">
+       <label>Tentative Leaving Date</label>
+       <div class="field">
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="fa fa-calendar"></i>
+          </div>
+          <%= f.text_field :tentative_leaving_date,hide_label: true, class: 'tentative_leaving_date'%>
+        </div>
+       </div>
+      </div>
+      <div class="col-sm-3">
+       <div class="field">
+         <%= f.text_field :remark, label:'Remark' %>
+       </div>
+      </div>
     </div>
-  <% end %>
+    <div class="row">
+      <div class="col-sm-3">
+       <label>Interview Date</label>
+       <div class="field">
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="fa fa-calendar"></i>
+          </div>
+          <%= f.text_field :exit_interview_date,hide_label: true, class: 'exit_interview_date'%>
+        </div>
+       </div>
+      </div>
 
-  <div class="field">
-    <%= f.label :employee_id %><br>
-    <%= f.text_field :employee_id %>
-  </div>
-  <div class="field">
-    <%= f.label :resignation_date %><br>
-    <%= f.date_select :resignation_date %>
-  </div>
-  <div class="field">
-    <%= f.label :reason %><br>
-    <%= f.text_field :reason %>
-  </div>
-  <div class="field">
-    <%= f.label :is_notice_period %><br>
-    <%= f.check_box :is_notice_period %>
-  </div>
-  <div class="field">
-    <%= f.label :notice_period %><br>
-    <%= f.text_field :notice_period %>
-  </div>
-  <div class="field">
-    <%= f.label :short_notice_period %><br>
-    <%= f.text_field :short_notice_period %>
-  </div>
-  <div class="field">
-    <%= f.label :tentative_leaving_date %><br>
-    <%= f.date_select :tentative_leaving_date %>
-  </div>
-  <div class="field">
-    <%= f.label :remark %><br>
-    <%= f.text_area :remark %>
-  </div>
-  <div class="field">
-    <%= f.label :exit_interview_date %><br>
-    <%= f.date_select :exit_interview_date %>
-  </div>
-  <div class="field">
-    <%= f.label :note %><br>
-    <%= f.text_area :note %>
-  </div>
-  <div class="field">
-    <%= f.label :leaving_date %><br>
-    <%= f.date_select :leaving_date %>
-  </div>
-  <div class="field">
-    <%= f.label :settled_on %><br>
-    <%= f.date_select :settled_on %>
-  </div>
-  <div class="field">
-    <%= f.label :has_left %><br>
-    <%= f.check_box :has_left %>
-  </div>
-  <div class="field">
-    <%= f.label :notice_served %><br>
-    <%= f.check_box :notice_served %>
-  </div>
-  <div class="field">
-    <%= f.label :rehired %><br>
-    <%= f.check_box :rehired %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+      <div class="col-sm-3">
+       <div class="field">
+         <%= f.text_field :note, label:'Note' %>
+       </div>
+      </div>
+
+      <div class="col-sm-3">
+       <label>Leaving Date</label>
+       <div class="field">
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="fa fa-calendar"></i>
+          </div>
+          <%= f.text_field :leaving_date,hide_label: true, class: 'leaving_date'%>
+        </div>
+       </div>
+      </div>
+
+      <div class="col-sm-3">
+       <label>Settled On</label>
+       <div class="field">
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="fa fa-calendar"></i>
+          </div>
+          <%= f.text_field :settled_on,hide_label: true, class: 'settled_on'%>
+        </div>
+       </div>
+      </div>
+    </div>
+
+    <div class="row">
+     <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.check_box :has_left %>
+      </div>
+     </div>
+     <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.check_box :notice_served %>
+      </div>
+     </div>
+     <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.check_box :rehired %>
+      </div>
+     </div>
+   </div>
+
+   <div class="row">
+     <div class="col-sm-3">
+      <div class="actions">
+          <%= f.submit :class => class_name, data: { disable_with: data_info } %>
+      </div>
+     </div>
+   </div>
+  <% end %>
+    
+  </div><!-- /.box-body -->
+</div><!--box -->
+<script type="text/javascript">
+  $(function(){
+    $('.resignation_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-2:+25',
+    dateFormat: 'dd-mm-yy' });
+
+    $('.tentative_leaving_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-2:+25',
+    dateFormat: 'dd-mm-yy' });
+
+    $('.exit_interview_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-2:+25',
+    dateFormat: 'dd-mm-yy' });
+
+    $('.leaving_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-2:+25',
+    dateFormat: 'dd-mm-yy' });
+
+     $('.settled_on').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-2:+25',
+    dateFormat: 'dd-mm-yy' });
+
+  }); 
+</script>

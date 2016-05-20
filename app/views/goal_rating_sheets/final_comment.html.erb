@@ -34,15 +34,15 @@
 <div class="row">
   <div class="col-sm-6">
     <div class="box-header with-border">
-      <h3 class="box-title">Past Experience</h3>
+      <h3 class="box-title">Previous Experience</h3>
     </div>
   <table class="table table-bordered table-hover table-condensed">
     <thead>
       <tr>
-	    	<th>Past Company</th>
+	    	<th>Previous Company</th>
         <th>Designation</th>
-        <th>Past Exp In Years</th>
-        <th>Past CTC</th>
+        <th>Previous Exp.(Years)</th>
+        <th>Previous CTC</th>
         <th>Current CTC</th>
       </tr>
     </thead>
@@ -67,8 +67,9 @@
       <table class="table table-bordered table-hover table-condensed">
         <thead>
           <tr>
-            <th>Degree/Deploma</th>
-            <th>Year Of Passing/marks%</th>
+            <th>Degree</th>
+            <th>Year Of Passing </th>
+            <th>Marks</th>
             <th>Qualification Category</th>
           </tr>
         </thead>
@@ -76,7 +77,8 @@
         <% @qualifications.each do |q| %>
           <tr>
             <td><%= q.degree.name %></td>
-            <td><%= q.year.name.to_s+" / "+q.marks.to_s %></td>
+            <td><%= q.year.name %> </td>
+            <td><%= q.marks %></td>
             <td><%= q.degree_type.name %></td>
           </tr>
           <% end %>

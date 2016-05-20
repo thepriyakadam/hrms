@@ -1,3 +1,4 @@
+
 <h6>Goal List</h6>
 <%= bootstrap_form_for @employee_goal,url:{action:'is_confirm',id: @employee.id} do |f| %>   
   <%= f.hidden_field :employee_id,value: @employee.id %>
@@ -8,7 +9,7 @@
         <th>Period</th>
         <th>Goal Perspective</th>
         <th>Goal Measure</th>
-        <th>Target</th>
+        <th>Target/Unit</th>
         <th>Goal Weightage(Total - <%=@employee_goals.sum(:goal_weightage)%>%)</th>
         <th>Difficulty Level</th>
         <th>Aligned To Supervisor</th>
@@ -19,6 +20,7 @@
       <% @employee_goals.each do |e| %>
         <tr>
           <td><%= check_box_tag "employee_goal_ids[]", e.id unless e.is_confirm %></td>
+            <td><%= e.period.title %> <%= e.period.start_date %> <%= e.period.end_date %></td>
           <td><%= e.period.title %></td>
           <td><%= e.goal_perspective.name %></td>
           <td><%= e.goal_measure %></td>

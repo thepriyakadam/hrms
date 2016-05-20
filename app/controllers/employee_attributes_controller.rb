@@ -16,13 +16,13 @@ class EmployeeAttributesController < ApplicationController
   def new
     @employee_attribute = EmployeeAttribute.new
     @employee = Employee.find(params[:format])
-    @employee_attributes = EmployeeAttribute.where(employee_id: @employee.id)
+    @employee_attributes = EmployeeAttribute.where(employee_id: @employee.id, is_confirm: nil)
   end
 
   # GET /employee_attributes/1/edit
   def edit
     @employee = Employee.find(@employee_attribute.employee_id)
-    @employee_attributes = EmployeeAttribute.where(employee_id: @employee.id)
+    @employee_attributes = EmployeeAttribute.where(employee_id: @employee.id, is_confirm: nil)
   end
 
   # POST /employee_attributes
@@ -60,7 +60,7 @@ class EmployeeAttributesController < ApplicationController
   # DELETE /employee_attributes/1.json
   def destroy
     @employee = Employee.find(@employee_attribute.employee_id)
-    @employee_attributes = EmployeeAttribute.where(employee_id: @employee.id)
+    @employee_attributes = EmployeeAttribute.where(employee_id: @employee.id, is_confirm: nil)
     @employee_attribute.destroy
     flash[:alert] = 'Deleted Successfully'
   end
@@ -137,7 +137,7 @@ class EmployeeAttributesController < ApplicationController
   end
 
   def confirm_employee_attribute
-    employee_attribute = EmployeeAttribute.where(id: @@employee_attribute_ids)
+    employee_attribute = EmployeeAttribute.where(id: @employee_attribute_ids)
     period_array = employee_attribute.pluck(:performance_period_id)
     if period_array.uniq.length == 1
       sum = employee_attribute.sum(:weightage)

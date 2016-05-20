@@ -467,6 +467,7 @@ class AttributeRatingSheetsController < ApplicationController
                           :bottom => 10,
                           :left   => 12,
                           :right  => 12},
+               orientation: 'Landscape',
                template: 'attribute_rating_sheets/print_details_appraiser2.pdf.erb',
               :show_as_html => params[:debug].present?
       end

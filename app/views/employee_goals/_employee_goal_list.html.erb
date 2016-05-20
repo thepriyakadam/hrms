@@ -3,7 +3,7 @@
         <thead>
           <tr>
             <th><input type="checkbox" id="selectAll" value="selectAll"></th>
-            <th>Period</th>
+            
             <th>Goal Perspective</th>
             <th>Goal Measure</th>
             <th>Target</th>
@@ -23,7 +23,7 @@
                 <%= check_box_tag "employee_goal_ids[]", e.id %>
               <% end %>
             </td>
-            <td><%= e.period.title %></td>
+            
             <td><%= e.goal_perspective.name %></td>
             <td><%= e.goal_measure %></td>
             <td><%= e.target %></td>

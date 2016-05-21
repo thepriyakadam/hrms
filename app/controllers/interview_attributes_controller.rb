@@ -15,6 +15,7 @@ class InterviewAttributesController < ApplicationController
   # GET /interview_attributes/new
   def new
     @interview_attribute = InterviewAttribute.new
+    @interview_attributes = InterviewAttribute.all
   end
 
   # GET /interview_attributes/1/edit
@@ -24,15 +25,15 @@ class InterviewAttributesController < ApplicationController
   # POST /interview_attributes
   # POST /interview_attributes.json
   def create
-    @interview_attribute = InterviewAttribute.new(interview_attribute_params)
-
+   @interview_attribute = InterviewAttribute.new(interview_attribute_params)
+    @interview_attributes = InterviewAttribute.all
     respond_to do |format|
       if @interview_attribute.save
-        format.html { redirect_to @interview_attribute, notice: 'Interview attribute was successfully created.' }
-        format.json { render :show, status: :created, location: @interview_attribute }
+         @interview_attribute = InterviewAttribute.new
+        format.js { @flag = true }
       else
-        format.html { render :new }
-        format.json { render json: @interview_attribute.errors, status: :unprocessable_entity }
+        flash.now[:alert] = 'Interview Already Exist.'
+        format.js { @flag = false }
       end
     end
   end
@@ -40,25 +41,16 @@ class InterviewAttributesController < ApplicationController
   # PATCH/PUT /interview_attributes/1
   # PATCH/PUT /interview_attributes/1.json
   def update
-    respond_to do |format|
-      if @interview_attribute.update(interview_attribute_params)
-        format.html { redirect_to @interview_attribute, notice: 'Interview attribute was successfully updated.' }
-        format.json { render :show, status: :ok, location: @interview_attribute }
-      else
-        format.html { render :edit }
-        format.json { render json: @interview_attribute.errors, status: :unprocessable_entity }
-      end
-    end
+   @interview_attribute.update(interview_attribute_params)
+    @interview_attributes = InterviewAttribute.all
+    @interview_attribute = InterviewAttribute.new
   end
 
   # DELETE /interview_attributes/1
   # DELETE /interview_attributes/1.json
   def destroy
-    @interview_attribute.destroy
-    respond_to do |format|
-      format.html { redirect_to interview_attributes_url, notice: 'Interview attribute was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+   @interview_attribute.destroy
+    @interview_attributes = InterviewAttribute.all
   end
 
   private

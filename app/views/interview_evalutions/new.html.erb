@@ -1,5 +1,15 @@
-<h1>New Interview Evalution</h1>
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Interview Evaluation Master</h3>
+  </div><!-- /.box-header -->
+	<div class="box-body">
+		<div id="form">
+			<%= render 'form' %>	
+		</div>
+		
+		<div id="interview_evalution_li">
+			<%= render 'interview_evalution_list' %>
+		</div>
+	</div><!-- /.box-body -->
+</div><!-- /.box -->
 
-<%= render 'form' %>
-
-<%= link_to 'Back', interview_evalutions_path %>

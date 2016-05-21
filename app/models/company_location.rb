@@ -8,6 +8,7 @@ class CompanyLocation < ActiveRecord::Base
   has_many :employees
   has_many :departments
   has_many :vacancy_masters
+  has_many :vacancy_request_histories
 
   validates :manual_company_location_code, presence: true, uniqueness: { case_sensitive: false }
   validates :country_id, presence: true

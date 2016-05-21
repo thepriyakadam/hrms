@@ -4,7 +4,7 @@
     <h3 class="box-title">Employee Nomination Details</h3>
   </div><!-- /.box-header -->
 
-
+<% emp_family = Employee.find(@employee.id)%>
 <div class="box-body">
 <%= bootstrap_form_for(@employee_nomination,html: {id: "employee_nomination"},remote: true) do |f| %>
   <%= f.hidden_field :employee_id, value: @employee.id %>
@@ -16,7 +16,7 @@
     </div>
     <div class="col-sm-3">
       <div class="field">
-        <%= f.select :family_id,all_family_type,placeholder:"Family",include_blank: 'Select Family Member' %>
+        <%= f.select :family_id,all_family_type(emp_family),placeholder:"Family",include_blank: 'Select Family Member' %>
       </div>
     </div>
     <div class="col-sm-2">

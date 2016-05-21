@@ -135,7 +135,6 @@ class SalarySlipLedgersController < ApplicationController
 
   def show_employee_ctc
     @reports = []
-    Employee.all.try(:each) do |e|
     @department = params[:salary][:department_id]
     rolewise_employee = Employee.collect_rolewise(current_user)
     @employees = if @department.blank?

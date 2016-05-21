@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  resources :interview_decisions
+  resources :interview_attributes
+  resources :interview_evalutions
+  resources :training_topic_masters
   resources :employee_resignations
   resources :travel_options
   resources :training_plans

@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :interview_analyses
   resources :interview_decisions
   resources :interview_attributes
   resources :interview_evalutions

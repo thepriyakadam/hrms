@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160521092424) do
+ActiveRecord::Schema.define(version: 20160521102305) do
 
   create_table "accident_records", force: :cascade do |t|
     t.string   "code"
@@ -998,6 +998,21 @@ ActiveRecord::Schema.define(version: 20160521092424) do
   end
 
   add_index "instalments", ["advance_salary_id"], name: "index_instalments_on_advance_salary_id"
+
+  create_table "interview_analyses", force: :cascade do |t|
+    t.integer  "vacancy_request_history_id"
+    t.integer  "interview_evalution_id"
+    t.integer  "interview_attribute_id"
+    t.integer  "interview_decision_id"
+    t.text     "comment"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  add_index "interview_analyses", ["interview_attribute_id"], name: "index_interview_analyses_on_interview_attribute_id"
+  add_index "interview_analyses", ["interview_decision_id"], name: "index_interview_analyses_on_interview_decision_id"
+  add_index "interview_analyses", ["interview_evalution_id"], name: "index_interview_analyses_on_interview_evalution_id"
+  add_index "interview_analyses", ["vacancy_request_history_id"], name: "index_interview_analyses_on_vacancy_request_history_id"
 
   create_table "interview_attributes", force: :cascade do |t|
     t.string   "code"

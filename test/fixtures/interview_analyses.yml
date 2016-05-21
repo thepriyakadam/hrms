@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  vacancy_request_history_id: 
+  interview_evalution_id: 
+  interview_attribute_id: 
+  interview_decision_id: 
+  comment: MyText
+
+two:
+  vacancy_request_history_id: 
+  interview_evalution_id: 
+  interview_attribute_id: 
+  interview_decision_id: 
+  comment: MyText

@@ -481,7 +481,8 @@ class AttributeRatingSheetsController < ApplicationController
                layout: 'pdf.html',
                :orientation      => 'Landscape', # default , Landscape
                template: 'attribute_rating_sheets/print_details_final.pdf.erb',
-              :show_as_html => params[:debug].present?
+              :show_as_html => params[:debug].present?,
+               margin:  {top:1,bottom:1,left:1,right:1 }              
       end
     end  
   end

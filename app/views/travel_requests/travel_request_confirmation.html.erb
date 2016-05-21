@@ -30,8 +30,7 @@
     <% end %>
   </tbody>
 </table>
-    
-     <div class="row">
+    <div class="row">
       <div class="col-sm-2">Traveling Request Id</div>
       <div class="col-sm-6"><%= @travel_request.id %></div>
     </div>
@@ -83,16 +82,20 @@
       <div class="col-sm-2">Tour purpose</div>
       <div class="col-sm-6"><%=  @travel_request.tour_purpose %></div>
     </div>
-      <br>
-  <div id="myModal" class="modal fade"></div>
+    <br>
+<div id="myModal" class="modal fade"></div>
 <%= link_to 'Approve',approve_travel_request_travel_requests_path(@travel_request.id),class: 'btn btn-sm btn-info fa fa-check' %> |
 <%= link_to 'Reject',reject_travel_request_travel_requests_path(@travel_request.id),class: 'btn btn-sm btn-danger fa fa-trash' %>
 <%= link_to 'Approve & Send next',modal_travel_requests_path(@travel_request.id),class: 'btn btn btn-sm btn-success fa fa-modx',remote: true %>
+
+<%= link_to 'Edit and Approve', edit_and_send_next_modal_travel_requests_path(@travel_request.id),class: 'btn btn-sm btn-info fa fa-check', remote: true %>
+
+<%= link_to 'Edit and send next', edit_and_approve_modal_travel_requests_path(@travel_request.id),class: 'btn btn-sm btn-info fa fa-check', remote: true %>
     </div>
 </div>
 
 <script>
 $(document).ready(function() {
   $('#example').DataTable();
-} );
+});
 </script>

@@ -16,12 +16,12 @@ div.nobreak{ page-break-inside: avoid;
 <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
     <thead>
 	    <tr>
-	    	<th>Employee Id</th>
+	    	<th>Employee ID</th>
 	    	<th>Name</th>
         <th>Age</th>
 	    	<th>Department</th>
 	    	<th>Date Of Joining</th>
-	    	<th>Joining Grade</th>
+	    	<th>Grade</th>
 	    	<th>Current Designation</th> 
       </tr>
     </thead>
@@ -43,10 +43,10 @@ div.nobreak{ page-break-inside: avoid;
   <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
     <thead>
       <tr>
-	    	<th>Past Company</th>
+	    	<th>Privious Company</th>
         <th>Designation</th>
-        <th>Past Exp In Years</th>
-        <th>Past CTC</th>
+        <th>Privious Exp.(Years)</th>
+        <th>Privious CTC</th>
         <th>Current CTC</th>
       </tr>
     </thead>
@@ -66,17 +66,19 @@ div.nobreak{ page-break-inside: avoid;
 	<table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
         <thead>
           <tr>
-            <th>Degree/Deploma</th>
-            <th>Year Of Passing/marks%</th>
-            <th>Qualification Category</th>
+            <th>Degree</th>
+            <th>Qualification</th>
+            <th>Year Of Passing</th>
+            <th>Marks(%)</th>
           </tr>
         </thead>
         <tbody>
         <% @qualifications.each do |q| %>
           <tr>
             <td><%= q.degree.name %></td>
-            <td><%= q.year.name.to_s+" / "+q.marks.to_s %></td>
             <td><%= q.degree_type.name %></td>
+            <td><%= q.year.name %></td>
+            <td><%= q.marks %></td>
           </tr>
           <% end %>
         </tbody>
@@ -114,13 +116,13 @@ div.nobreak{ page-break-inside: avoid;
   <table id="tbl" style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
     <thead>
       <tr>
-        <th>Goal Perspctive</th>
+        <th>Goal Perspective</th>
         <th>Goal Measure</th>
-        <th>Target</th>
+        <th>Target/Unit</th>
         <th>Goal Weightage</th>
         <th>Difficulty Level</th>
         
-        <th>Allign To Supervisor</th>
+        <th>Aligned To Supervisor</th>
         <th>Appraisee Comment</th>
         <th>Appraisee Evaluation</th>
         <th>Appraiser Comment</th>

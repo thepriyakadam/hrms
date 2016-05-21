@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160512104401) do
+ActiveRecord::Schema.define(version: 20160512121825) do
 
   create_table "accident_records", force: :cascade do |t|
     t.string   "code"
@@ -1291,10 +1291,14 @@ ActiveRecord::Schema.define(version: 20160512104401) do
     t.string   "vacancy_name"
     t.boolean  "is_complete"
     t.integer  "closed_position"
+    t.integer  "interview_schedule_id"
+    t.integer  "selected_resume_id"
   end
 
   add_index "particular_vacancy_requests", ["employee_designation_id"], name: "index_particular_vacancy_requests_on_employee_designation_id"
   add_index "particular_vacancy_requests", ["employee_id"], name: "index_particular_vacancy_requests_on_employee_id"
+  add_index "particular_vacancy_requests", ["interview_schedule_id"], name: "index_particular_vacancy_requests_on_interview_schedule_id"
+  add_index "particular_vacancy_requests", ["selected_resume_id"], name: "index_particular_vacancy_requests_on_selected_resume_id"
   add_index "particular_vacancy_requests", ["vacancy_master_id"], name: "index_particular_vacancy_requests_on_vacancy_master_id"
 
   create_table "payment_modes", force: :cascade do |t|

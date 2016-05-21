@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160521102305) do
+ActiveRecord::Schema.define(version: 20160521125746) do
 
   create_table "accident_records", force: :cascade do |t|
     t.string   "code"
@@ -1702,6 +1702,14 @@ ActiveRecord::Schema.define(version: 20160521102305) do
     t.datetime "updated_at",  null: false
   end
 
+  create_table "travel_expence_types", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
+    t.string   "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
   create_table "travel_expences", force: :cascade do |t|
     t.integer  "travel_request_id"
     t.decimal  "total_advance_amount", precision: 15, scale: 2, default: 0.0
@@ -1714,6 +1722,14 @@ ActiveRecord::Schema.define(version: 20160521102305) do
   end
 
   add_index "travel_expences", ["travel_request_id"], name: "index_travel_expences_on_travel_request_id"
+
+  create_table "travel_modes", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
+    t.string   "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
 
   create_table "travel_options", force: :cascade do |t|
     t.string   "code"

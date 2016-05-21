@@ -1,37 +1,42 @@
-<%= form_for(@interview_analysis) do |f| %>
-  <% if @interview_analysis.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@interview_analysis.errors.count, "error") %> prohibited this interview_analysis from being saved:</h2>
+<div class="box box-default">
 
-      <ul>
-      <% @interview_analysis.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+  <div class="box-body">
+  <%= bootstrap_form_for(@interview_analysis,html: {id: 'interview_analysis'},remote:true) do |f| %>
+      <div class="row">
+
+       <div class="col-sm-3">
+        <div class="form-group required">
+          <%= f.text_field :interview_evalution_id,label:"Interview Evaluation",class: 'input_interview_evalution' %>
+        </div>
+      </div>
+
+       <div class="col-sm-3">
+        <div class="form-group required">
+         <%= f.text_field :interview_attribute_id,label:"Interview Attribute",class: 'input_interview_attribute' %>
+        </div>
+      </div>
+
+      <div class="col-sm-3">
+        <div class="form-group required">
+         <%= f.text_field :interview_decision_id,label:"Interview Decision",class: 'input_interview_decision' %>
+        </div>
+      </div>
+
+      <div class="col-sm-3">
+        <div class="field">
+         <%= f.text_field :comment ,label:"Comment",class: 'input_comment' %>
+        </div>
+      </div>
+      </div>
+
+       <div class="row">
+      <div class="col-sm-3">
+        <div class="actions">
+          <%= f.submit :class => class_name, data: { disable_with: data_info } %>
+        </div>
+      </div>
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :vacancy_request_history_id %><br>
-    <%= f.text_field :vacancy_request_history_id %>
-  </div>
-  <div class="field">
-    <%= f.label :interview_evalution_id %><br>
-    <%= f.text_field :interview_evalution_id %>
-  </div>
-  <div class="field">
-    <%= f.label :interview_attribute_id %><br>
-    <%= f.text_field :interview_attribute_id %>
-  </div>
-  <div class="field">
-    <%= f.label :interview_decision_id %><br>
-    <%= f.text_field :interview_decision_id %>
-  </div>
-  <div class="field">
-    <%= f.label :comment %><br>
-    <%= f.text_area :comment %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
+    </div>
   </div>
 <% end %>
+

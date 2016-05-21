@@ -1,19 +1,14 @@
-<p id="notice"><%= notice %></p>
-
-<h1>Listing Interview Analyses</h1>
-
-<table>
+<table id="example2" class="table table-bordered table-hover table-condensed">
   <thead>
-    <tr>
+    <tr>  
       <th>Vacancy request history</th>
       <th>Interview evalution</th>
       <th>Interview attribute</th>
       <th>Interview decision</th>
       <th>Comment</th>
-      <th colspan="3"></th>
+      <th>Action</th>
     </tr>
   </thead>
-
   <tbody>
     <% @interview_analyses.each do |interview_analysis| %>
       <tr>
@@ -22,14 +17,11 @@
         <td><%= interview_analysis.interview_attribute %></td>
         <td><%= interview_analysis.interview_decision %></td>
         <td><%= interview_analysis.comment %></td>
-        <td><%= link_to 'Show', interview_analysis %></td>
-        <td><%= link_to 'Edit', edit_interview_analysis_path(interview_analysis) %></td>
-        <td><%= link_to 'Destroy', interview_analysis, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td>
+          <%= link_to '', edit_interview_analysis_path(interview_analysis),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
+          <%= link_to '',  interview_analysis, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
+        </td>
       </tr>
     <% end %>
   </tbody>
 </table>
-
-<br>
-
-<%= link_to 'New Interview analysis', new_interview_analysis_path %>

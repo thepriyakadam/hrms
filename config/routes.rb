@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :travel_expence_types
+  resources :travel_modes
   resources :interview_analyses
   resources :interview_decisions
   resources :interview_attributes

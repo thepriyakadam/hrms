@@ -23,5 +23,6 @@ class RatingMaster < ActiveRecord::Base
 
   has_many :final_rating_goal_rating_sheets, class_name: "RatingMaster",
                           foreign_key: "final_rating_id"
+ validates :code, presence: true, uniqueness: { case_sensitive: false }
   
 end

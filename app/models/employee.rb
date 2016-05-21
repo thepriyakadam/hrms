@@ -11,6 +11,7 @@ class Employee < ActiveRecord::Base
   belongs_to :district
   belongs_to :religion
 
+  has_many :salaryslips
   has_many :employee_nominations
   has_many :awards
   has_many :certifications

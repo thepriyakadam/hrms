@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Accident Masters</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @accident_masters.each do |accident_master| %>
+      <tr>
+        <td><%= accident_master.code %></td>
+        <td><%= accident_master.name %></td>
+        <td><%= accident_master.description %></td>
+        <td><%= link_to 'Show', accident_master %></td>
+        <td><%= link_to 'Edit', edit_accident_master_path(accident_master) %></td>
+        <td><%= link_to 'Destroy', accident_master, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Accident master', new_accident_master_path %>

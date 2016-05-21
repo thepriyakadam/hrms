@@ -15,14 +15,14 @@
             <th>Target/Unit</th>
             <th>Weightage</th>
             <th>Difficulty Level</th>
-            <th>Align To Supervisor</th>
+            <th>Aligned To Supervisor</th>
             <th>Appraisee Comment</th>
             <th>Appraisee Rating</th>
           </tr>
         </thead>
         <tbody>
           <% @goal_rating_sheets.each do |goal_rating_sheet| %>
-            <tr>          
+            <tr>
               <td><%= goal_rating_sheet.employee_goal.goal_perspective.try(:name) %></td>
               <td><%= goal_rating_sheet.employee_goal.goal_measure %></td>
               <td><%= goal_rating_sheet.employee_goal.target %></td>

@@ -1,3 +1,4 @@
+
 class Employee < ActiveRecord::Base
   protokoll :employee_code, pattern: 'EMP#######'
   belongs_to :department
@@ -9,6 +10,8 @@ class Employee < ActiveRecord::Base
   belongs_to :state
   belongs_to :district
   belongs_to :religion
+
+  has_many :employee_nominations
   has_many :awards
   has_many :certifications
   has_many :interview_schedules
@@ -25,6 +28,7 @@ class Employee < ActiveRecord::Base
   has_many :families
   has_many :experiences
   has_many :skillsets
+  has_many :assigned_assets
   has_many :employee_salary_templates
   has_many :overtimes
   has_many :workingdays
@@ -101,20 +105,6 @@ class Employee < ActiveRecord::Base
     end
   end
 
-  def self.find_by_role(current_user)
-    if current_user.class == Group
-      Employee.all
-    else
-      if current_user.role.name == 'Company'
-        Employee.all
-      elsif current_user.role.name == 'CompanyLocation'
-        Employee.where(company_location_id: current_user.company_location_id)
-      elsif current_user.role.name == 'Employee'
-        Employee.where(id: current_user.employee_id)
-      end
-    end
-  end
-
   def add_department
     department = Department.find(department_id)
     company_location = department.company_location
@@ -135,6 +125,22 @@ class Employee < ActiveRecord::Base
         Employee.where(id: current_user.department_id).pluck(:id)
       elsif current_user.role.name == 'Employee'
         Employee.where(id: current_user.employee_id).pluck(:id)
+      end
+    end
+  end
+
+  private
+
+  def self.find_by_role(current_user)
+    if current_user.class == Group
+      Employee.all
+    else
+      if current_user.role.name == 'Company'
+        Employee.all
+      elsif current_user.role.name == 'CompanyLocation'
+        Employee.where(company_location_id: current_user.company_location_id)
+      elsif current_user.role.name == 'Employee'
+        Employee.where(id: current_user.employee_id)
       end
     end
   end

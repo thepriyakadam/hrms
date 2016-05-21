@@ -1,0 +1,72 @@
+<div class="ajax-progress"></div>
+<% i = 0 %>
+<table id="example3" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>No</th>
+      <th>Code</th>
+      <th>Name</th>
+      <th>Month</th>
+      
+      <th>Basic</th>
+      <th>DA</th>
+      <th>HRA</th>
+      <th>conv</th>
+      <th>O.Allow</th>
+      <th>S.Allow</th>
+      <th>Wsh.Allow</th>
+      <th>Gross</th>
+
+      <th>PF</th>
+      <th>ESIC</th>
+      <th>IT</th>
+      <th>PT</th>
+      <th>Adv.Sal</th>
+      <th>Society</th>
+      <th>Food</th>
+      <th>Mobile</th>
+      <th>Retention</th>
+      <th>Total Dedu</th>
+
+      <th>NET</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @reports.each do |r| %>
+      <tr>
+        <td><%= i = i+1 %></td>
+        <td><%= r.try(:code) %></td>
+        <td><%= r.try(:employee_name) %></td>
+        <td><%= r.try(:month) %></td>
+        
+        <td><%= r.try(:earned_basic) %></td>
+        <td><%= r.try(:earned_da) %></td>
+        <td><%= r.try(:earned_hra) %></td>
+
+        <td><%= r.try(:earned_convenience) %></td>
+        <td><%= r.try(:earned_other) %></td>
+        <td><%= r.try(:earned_special) %></td>
+        <td><%= r.try(:earned_washing) %></td>
+        <td><%= r.try(:earned_total) %></td>
+
+        <td><%= r.try(:pf) %></td>
+        <td><%= r.try(:esic) %></td>
+        <td><%= r.try(:income_tax) %></td>
+        <td><%= r.try(:pt) %></td>
+        <td><%= r.try(:advance) %></td>
+        <td><%= r.try(:society) %></td>
+
+        <td><%= r.try(:food_deduction) %></td>
+        <td><%= r.try(:mobile) %></td>
+        <td><%= r.try(:retention) %></td>
+        <td><%= r.try(:deduction_total) %></td>
+        <td><%= r.try(:net_payable) %></td>
+      </tr>
+      <% end %>
+  </tbody>
+</table>
+<div class="col-sm-6">
+  <%= link_to " Print Salary Slip ",salary_ledger_salary_slip_ledgers_path(employee_id: @employee, start_date: @start_date,end_date: @end_date, format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+
+  <%= link_to " Excel Report ",salary_ledger_salary_slip_ledgers_path(employee_id: @employee,start_date: @start_date,end_date: @end_date, format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+</div>

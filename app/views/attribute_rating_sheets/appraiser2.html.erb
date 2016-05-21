@@ -9,12 +9,12 @@
        
     <thead>
 	    <tr>
-	    	<th>Employee Id</th>
+	    	<th>Employee ID</th>
 	    	<th>Name</th>
         <th>Age</th>
 	    	<th>Department</th>
 	    	<th>Date Of Joining</th>
-	    	<th>Joining Grade</th>
+	    	<th>Grade</th>
 	    	<th>Current Designation</th> 
       </tr>
     </thead>
@@ -37,15 +37,15 @@
   <div class="col-sm-6">
     <div class="box-header with-border">
     
-      <h3 class="box-title">Past Experience</h3>
+      <h3 class="box-title">Previous Experience</h3>
     </div>
   <table class="table table-bordered table-hover table-condensed">
     <thead>
       <tr>
-	    	<th>Past Company</th>
+	    	<th>Company</th>
         <th>Designation</th>
-        <th>Past Exp In Years</th>
-        <th>Past CTC</th>
+        <th>Previous Exp.(Years)</th>
+        <th>Previous CTC</th>
         <th>Current CTC</th>
       </tr>
     </thead>
@@ -70,8 +70,9 @@
       <table class="table table-bordered table-hover table-condensed">
         <thead>
           <tr>
-            <th>Degree/Deploma</th>
-            <th>Year Of Passing/marks%</th>
+            <th>Degree</th>
+            <th>Year Of Passing</th>
+            <th>Marks</th>
             <th>Qualification Category</th>
           </tr>
         </thead>
@@ -140,9 +141,9 @@
   <% end %>
 <%= bootstrap_form_for @attribute_rating_sheet,url:{action:'is_confirm_appraiser2',id: @employee.id} do |f| %>
   <div class="box-header with-border">
-    <h3 class="box-title">Attributes</h3>
+    <h3 class="box-title">Attribute List</h3>
   </div>
-  <table id="example3" class="table table-bordered table-hover table-condensed">
+  <table id="example4" class="table table-bordered table-hover table-condensed">
     <thead>
       <tr>
         <th><input type="checkbox" id="selectAll" value="selectAll"></th>
@@ -220,6 +221,15 @@
 
  $(document).ready(function() {
     $('#example3').DataTable( {
+        "scrollY":        "200px",
+        "scrollX":        "1000px",
+        "scrollCollapse": true,
+        "paging":         false
+    } );
+} );
+
+ $(document).ready(function() {
+    $('#example4').DataTable( {
         "scrollY":        "200px",
         "scrollX":        "1000px",
         "scrollCollapse": true,

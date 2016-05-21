@@ -1,0 +1,63 @@
+<div class="box box-default">
+  <div class="box-body">
+<%= bootstrap_form_for(@employee_attribute,remote:true,html: {id: "employee_attribute"},url:{action:'create_attribute'}) do |f| %>
+
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.select :performance_period_id,all_period_type,{label: 'Period ',include_blank: " Select Period"}%>
+      </div>
+    </div>
+  </div>
+
+<table id="tbl" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Attribute & Definition</th>
+      <th>Weightage</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><%= f.select :attribute_master_id,all_attribute_type,{hide_label: true, include_blank: "Select Attribute & Definition" }%></td>
+      <td><%= f.select :weightage,["1","2","3","4","5"],{hide_label: true, include_blank: "Select Weightage"} %></td>
+           <%= f.hidden_field :emp_head,value: current_user.employee_id %>
+    </tr>   
+  </tbody>
+</table>
+  <div class= "row">
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "Create Attribute" ,class: "btn btn-primary btn-sm" %>
+      </div>
+    </div>
+  </div>
+  </div>
+</div>
+<% end %>
+
+
+<script type="text/javascript">
+  $("#employee_attribute").validate({
+    rules: {
+      "employee_attribute[attribute_master_id]":{
+        required: true
+      },
+      "employee_attribute[weightage]":{
+        required: true
+      }
+    },
+    messages: {
+      "employee_attribute[attribute_master_id]":{
+        required: "Please specify Attribute & Definition"
+      },
+      "employee_attribute[weightage]":{
+        required: "Please specify weightage"
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

@@ -7,4 +7,6 @@ class State < ActiveRecord::Base
   has_many :families
   has_many :capture_resumes
   has_many :employee_nominations
+  validates :code, presence: true, uniqueness: { case_sensitive: false }
+  validates :name, presence: true, uniqueness: { case_sensitive: false }
 end

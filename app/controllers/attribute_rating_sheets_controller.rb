@@ -433,9 +433,8 @@ class AttributeRatingSheetsController < ApplicationController
         render pdf: 'print_details_appraiser',
                layout: 'pdf.html',
                :page_height      => 1000,
-               :dpi              => '300',
                :margin           => {:top    => 10, # default 10 (mm)
-                          :bottom => 100,
+                          :bottom => 10,
                           :left   => 12,
                           :right  => 12},
                template: 'attribute_rating_sheets/print_details_appraiser.pdf.erb',
@@ -465,9 +464,10 @@ class AttributeRatingSheetsController < ApplicationController
                :page_height      => 1000,
                :dpi              => '300',
                :margin           => {:top    => 10, # default 10 (mm)
-                          :bottom => 100,
+                          :bottom => 10,
                           :left   => 12,
                           :right  => 12},
+               orientation: 'Landscape',
                template: 'attribute_rating_sheets/print_details_appraiser2.pdf.erb',
               :show_as_html => params[:debug].present?
       end

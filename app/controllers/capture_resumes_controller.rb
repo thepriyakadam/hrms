@@ -19,7 +19,6 @@ class CaptureResumesController < ApplicationController
     #byebug
     @capture_resume = CaptureResume.new
     @vacancy_master = VacancyMaster.find(params[:format])
-   
   end
 
 

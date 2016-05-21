@@ -4,7 +4,11 @@ class TravelRequestsController < ApplicationController
   # GET /travel_requests
   # GET /travel_requests.json
   def index
-    @travel_requests = TravelRequest.all
+    if current_user.role.name == 'Company'
+      @travel_requests = TravelRequest.all
+    else
+      @travel_requests = TravelRequest.where(employee_id: current_user.employee_id)
+    end
   end
 
   # GET /travel_requests/1
@@ -122,7 +126,23 @@ class TravelRequestsController < ApplicationController
   end
 
   def travel_request_list
-     @travel_requests = TravelRequest.all
+    @travel_requests = TravelRequest.all
+  end
+
+  def edit_and_send_next_modal
+    @travel_request = TravelRequest.find(params[:format])
+  end
+
+  def edit_and_send_next_modal_submit
+    
+  end
+
+  def edit_and_approve_modal
+    
+  end
+
+  def edit_and_approve_modal_submit
+    
   end
 
   private

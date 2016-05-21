@@ -1,29 +1,26 @@
-<%= form_for(@state) do |f| %>
-  <% if @state.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@state.errors.count, "error") %> prohibited this state from being saved:</h2>
 
-      <ul>
-      <% @state.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+<%= bootstrap_form_for(@state,html: {id: 'state'},remote:true) do |f| %>
+  <div class="row">
+   <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.select :country_id,all_country,{label: 'Country',include_blank: " Select Country"} %>
+      </div>
     </div>
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :code, placeholder: 'e.g MH' %>
+      </div>
+    </div>
+     <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :name, placeholder: 'e.g Maharashtra' %>
+      </div>
+    </div>
+   <div class="col-sm-3">
+   <label></label>
+      <div class="actions">
+        <%= f.submit "Create state" ,class: "btn btn-primary btn-sm" %>
+      </div>
+    </div>
+  </div>
   <% end %>
-
-  <div class="field">
-    <%= f.label :country_id %><br>
-    <%= f.text_field :country_id %>
-  </div>
-  <div class="field">
-    <%= f.label :code %><br>
-    <%= f.text_field :code %>
-  </div>
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>

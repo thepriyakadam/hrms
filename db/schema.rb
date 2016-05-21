@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160512121825) do
+ActiveRecord::Schema.define(version: 20160519052729) do
 
   create_table "accident_records", force: :cascade do |t|
     t.string   "code"
@@ -644,13 +644,17 @@ ActiveRecord::Schema.define(version: 20160512121825) do
     t.string   "email"
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
+    t.integer  "employee_id"
+    t.integer  "relation_master_id"
   end
 
   add_index "employee_nominations", ["country_id"], name: "index_employee_nominations_on_country_id"
   add_index "employee_nominations", ["district_id"], name: "index_employee_nominations_on_district_id"
+  add_index "employee_nominations", ["employee_id"], name: "index_employee_nominations_on_employee_id"
   add_index "employee_nominations", ["family_id"], name: "index_employee_nominations_on_family_id"
   add_index "employee_nominations", ["nomination_master_id"], name: "index_employee_nominations_on_nomination_master_id"
   add_index "employee_nominations", ["relation_id"], name: "index_employee_nominations_on_relation_id"
+  add_index "employee_nominations", ["relation_master_id"], name: "index_employee_nominations_on_relation_master_id"
   add_index "employee_nominations", ["state_id"], name: "index_employee_nominations_on_state_id"
 
   create_table "employee_physicals", force: :cascade do |t|
@@ -664,6 +668,28 @@ ActiveRecord::Schema.define(version: 20160512121825) do
   end
 
   add_index "employee_physicals", ["employee_id"], name: "index_employee_physicals_on_employee_id"
+
+  create_table "employee_resignations", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.date     "resignation_date"
+    t.string   "reason"
+    t.boolean  "is_notice_period"
+    t.string   "notice_period"
+    t.string   "short_notice_period"
+    t.date     "tentative_leaving_date"
+    t.text     "remark"
+    t.date     "exit_interview_date"
+    t.text     "note"
+    t.date     "leaving_date"
+    t.date     "settled_on"
+    t.boolean  "has_left"
+    t.boolean  "notice_served"
+    t.boolean  "rehired"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "employee_resignations", ["employee_id"], name: "index_employee_resignations_on_employee_id"
 
   create_table "employee_salary_templates", force: :cascade do |t|
     t.integer  "employee_id"
@@ -1293,6 +1319,7 @@ ActiveRecord::Schema.define(version: 20160512121825) do
     t.integer  "closed_position"
     t.integer  "interview_schedule_id"
     t.integer  "selected_resume_id"
+    t.string   "candidate_name"
   end
 
   add_index "particular_vacancy_requests", ["employee_designation_id"], name: "index_particular_vacancy_requests_on_employee_designation_id"
@@ -1640,6 +1667,36 @@ ActiveRecord::Schema.define(version: 20160512121825) do
 
   add_index "travel_expences", ["travel_request_id"], name: "index_travel_expences_on_travel_request_id"
 
+  create_table "travel_options", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
+    t.text     "discription"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "travel_request_histories", force: :cascade do |t|
+    t.integer  "travel_request_id"
+    t.date     "application_date"
+    t.date     "traveling_date"
+    t.string   "tour_purpose"
+    t.string   "place"
+    t.decimal  "traveling_advance"
+    t.decimal  "lodging_boarding_advance"
+    t.decimal  "food_advance"
+    t.decimal  "extra_advance"
+    t.decimal  "total_advance"
+    t.integer  "reporting_master_id"
+    t.string   "current_status"
+    t.integer  "travel_option_id"
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
+
+  add_index "travel_request_histories", ["reporting_master_id"], name: "index_travel_request_histories_on_reporting_master_id"
+  add_index "travel_request_histories", ["travel_option_id"], name: "index_travel_request_histories_on_travel_option_id"
+  add_index "travel_request_histories", ["travel_request_id"], name: "index_travel_request_histories_on_travel_request_id"
+
   create_table "travel_requests", force: :cascade do |t|
     t.integer  "employee_id"
     t.date     "application_date"
@@ -1654,10 +1711,12 @@ ActiveRecord::Schema.define(version: 20160512121825) do
     t.datetime "updated_at",                                                      null: false
     t.integer  "reporting_master_id"
     t.string   "current_status"
+    t.integer  "travel_option_id"
   end
 
   add_index "travel_requests", ["employee_id"], name: "index_travel_requests_on_employee_id"
   add_index "travel_requests", ["reporting_master_id"], name: "index_travel_requests_on_reporting_master_id"
+  add_index "travel_requests", ["travel_option_id"], name: "index_travel_requests_on_travel_option_id"
 
   create_table "universities", force: :cascade do |t|
     t.string   "code"

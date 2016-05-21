@@ -1,22 +1,19 @@
 <div class="box">
   <div class="box-header">
     <h3 class="box-title">Interview</h3>
-    <div class="pull-right">
-      <%= link_to "Interview Schedule", new_interview_schedule_path, class: 'btn btn-sm btn-primary' %> 
-    </div>
-    </div>
 <div class="box-body">
-<%= bootstrap_form_for @interview_schedule,url:{action:'is_confirm'} do |f| %>   
+<%= bootstrap_form_for InterviewSchedule.new,url:{action:'is_confirm'} do |f| %>   
 <table id="example" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
       <th><input type="checkbox" id="selectAll" value="selectAll"></th>
       <th>Job Title</th>
       <th>Candidate Name</th>
+      <!-- <th>Candidate Name2</th> -->
       <th>Interview Date</th>
       <th>Interview Time</th>
-      <th>Location</th>
       <th>Reschedule</th>
+      <th>Status</th>
       <th>Confirm</th>
       <th>Action</th>
     </tr>
@@ -25,25 +22,37 @@
   <tbody>
     <% @interview_schedules.each do |interview_schedule| %>
       <tr>
-        <td><%= check_box_tag "interview_schedule_ids[]", interview_schedule.id %></td>
+      <td>
+          <% if interview_schedule.is_confirm == true %>
+
+          <% else %>
+            <%= check_box_tag "interview_schedule_ids[]", interview_schedule.id %>
+          <% end %>
+        </td>
         <td><%= interview_schedule.interviewer_name %></td>
         <td><%= interview_schedule.candidate_name %></td>
+        <!-- <td><%= interview_schedule.candidate_name2 %></td> -->
         <td><%= interview_schedule.interview_date %></td>
         <td><%= interview_schedule.interview_time %></td>
-        <td><%= interview_schedule.location %></td>
-        
-        <td>
+           <td>
            <!--  link_to '', interview_schedule,method: :delete,data:{confirm:'Are you sure?'},class: 'btn btn-sm btn-danger fa fa-close' %> -->
 
-            <%= link_to ' Reschedule', interview_reschedule_interview_schedules_path(id:interview_schedule.employee_id),class: 'btn btn-sm btn-info fa fa-envelope-o'  %>
+            <%= link_to ' Reschedule', interview_reschedule_interview_schedules_path(id:interview_schedule.id),class: 'btn btn-sm btn-info fa fa-envelope-o'  %>
             </td>
             <td>
-            <%= link_to ' Confirm',sample_email_to_interviewer_path(id:interview_schedule.employee_id),class: 'btn btn-sm btn-warning fa fa-check' %>
+              <% if interview_schedule.is_confirm == true %>
+              <small class="label label-info">Interview Confirmed</small>
+              <% else %>
+              <small class="label label-warning">Not Yet Confirmed</small>
+              <% end %>
+            </td>
+            <td>
+            <%= link_to ' Confirm Email',sample_email_to_interviewer_path(interview_schedule),class: 'btn btn-sm btn-warning fa fa-check' %>
 <!--              link_to '',modal_interview_schedules_path,class: 'btn btn-sm btn-warning fa fa-modx',remote: true %>
  -->       </td>
- <td>
-            <%= link_to '', interview_schedule,class: 'btn btn-sm btn-default fa fa-eye' %>
-            <%= link_to '', edit_interview_schedule_path(interview_schedule),class: 'btn btn-sm btn-success fa fa-edit' %>
+        <td>
+          <%= link_to '', interview_schedule,class: 'btn btn-xs btn-default fa fa-eye' %>
+          <%= link_to '', edit_interview_schedule_path(interview_schedule),class: 'btn btn-success btn-xs fa fa-edit' %>
         </td>
       </tr>
     <% end %>
@@ -53,7 +62,7 @@
 <div class="row">
   <div class="col-sm-3">
     <div class="actions">
-      <%= f.submit "Confirm", class: 'btn btn-primary btn-sm' %> 
+      <%= f.submit "Confirm Interview", class: 'btn btn-primary btn-sm' %> 
       
     </div>
   </div>
@@ -62,9 +71,6 @@
      
 <br>
 <div id="myModal" class="modal fade"></div>
-
- 
-<%= link_to 'New Interview schedule', new_interview_schedule_path %>
 
 </div>
 </div>

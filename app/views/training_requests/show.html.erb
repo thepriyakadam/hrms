@@ -1,34 +1,40 @@
-<p id="notice"><%= notice %></p>
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Training Request</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+      <tr> 
+        <th colspan="2"></th>
+        <th colspan="2"></th>
+      </tr>
 
-<p>
-  <strong>Employee:</strong>
-  <%= @training_request.employee %>
-</p>
+      <tr>
+        <th><strong>Employee:</strong></th>
+        <td><%= @training_request.employee.manual_employee_code %> <%= full_name(@training_request.employee) %></td>
+      
+        <th><strong>Training topic:</strong></th>
+        <td><%= @training_request.training_topic %></td>
+      </tr>
 
-<p>
-  <strong>Training topic:</strong>
-  <%= @training_request.training_topic %>
-</p>
+      <tr>
+        <th><strong>Training period:</strong></th>
+        <td><%= @training_request.training_period %></td>
+     
+        <th><strong>Training date:</strong></th>
+        <td><%= @training_request.training_date %></td>
+      </tr>
 
-<p>
-  <strong>Training period:</strong>
-  <%= @training_request.training_period %>
-</p>
+      <tr>
+        <th><strong>Reporting master:</strong></th>
+        <td><%= @training_request.reporting_master_id %></td>
+     
+        <th><strong>Description:</strong></th>
+        <td><%= @training_request.description %></td>
+      </tr>
 
-<p>
-  <strong>Training date:</strong>
-  <%= @training_request.training_date %>
-</p>
-
-<p>
-  <strong>Reporting master:</strong>
-  <%= @training_request.reporting_master %>
-</p>
-
-<p>
-  <strong>Description:</strong>
-  <%= @training_request.description %>
-</p>
-
-<%= link_to 'Edit', edit_training_request_path(@training_request) %> |
-<%= link_to 'Back', training_requests_path %>
+    </table>
+      <%= link_to 'Edit', edit_training_request_path(@training_request),class: 'btn btn-success btn-sm fa fa-edit' %> |
+      <%= link_to 'Back', training_requests_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+  </div>
+</div>

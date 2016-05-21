@@ -8,7 +8,7 @@
     <table id="tbl" class="table table-bordered table-hover table-condensed">
     <thead>
       <tr>
-        <th>Employee Id</th>
+        <th>Employee ID</th>
         <th>Employee Name</th>
         <th>Department</th>
         <th>Designation</th>
@@ -25,7 +25,7 @@
       <% end %>
     </tbody>
   </table>
-
+ <h3 class="box-title">Appraiser Goal Rating</h3>
     <table id="example3" class="table table-bordered table-hover table-condensed">
     <thead>
       <tr>
@@ -60,7 +60,7 @@
           <td></td>
           <td></td>
           <% end %>
-          <td><%= text_field_tag 'appraiser_comment[]' %></td>
+          <td><%= text_field_tag 'appraiser_comment[]',"",{class: 'form-control'} %></td>
           <td>
           <%= select_tag 'appraiser_rating_id[]',options_for_select(all_rating_type), {class: 'form-control', hide_label: true,include_blank: " Select Rating"} %></td>
           <%= hidden_field_tag 'employee_goal_id[]',{},value: g.employee_goal.id %>
@@ -88,14 +88,16 @@
   <% end %> 
 <hr>
 
-<%= bootstrap_form_for @goal_rating_sheet,url:{action:'is_confirm_appraiser'} do |f| %> 
-  <table id="example3" class="table table-bordered table-hover table-condensed">
+<%= bootstrap_form_for @goal_rating_sheet,url:{action:'is_confirm_appraiser'} do |f| %>
+ <h3 class="box-title">Appraiser Goal Rating List</h3> 
+  <table id="example4" class="table table-bordered table-hover table-condensed">
     <thead>
       <tr>
         <th><input type="checkbox" id="selectAll" value="selectAll"></th>
+        <th>Period</th>
         <th>Goal Perspective</th>
         <th>Goal Measure</th>
-        <th>Target</th>
+        <th>Target/Unit</th>
         <th>Goal Weightage</th>
         <th>Difficulty Level</th>
         
@@ -117,6 +119,7 @@
               <%= check_box_tag "goal_rating_sheet_ids[]", g.id %> 
             <% end %>
           </td>
+          <td><%= g.employee_goal.period.title %></td>
           <td><%= g.employee_goal.goal_perspective.name %></td>
           <td><%= g.employee_goal.goal_measure %></td>
           <td><%= g.employee_goal.target %></td>
@@ -179,12 +182,22 @@
     });
   });
 
-   $(document).ready(function() {
+  $(document).ready(function() {
     $('#example3').DataTable( {
-        "scrollY":        "200px",
-        "scrollX":        "1000px",
-        "scrollCollapse": true,
-        "paging":         false
+      //"scrollY":        "200px",
+      "scrollX":        "1000px",
+      "scrollCollapse": true,
+      "paging":         true
     } );
-} );
+  } );
+ 
+ $(document).ready(function() {
+    $('#example4').DataTable( {
+      //"scrollY":        "200px",
+      "scrollX":        "1000px",
+      "scrollCollapse": true,
+      "paging":         true
+    } );
+  } );
+ 
 </script>

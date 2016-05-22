@@ -28,7 +28,8 @@ class LeaveCOffsController < ApplicationController
         @leave_c_offs = LeaveCOff.where(employee_id: @employees)
       end
     end
-    session[:active_tab] ="leave"
+    session[:active_tab] ="leavemanagement"
+    session[:active_tab1] ="assignleave"
   end
 
   # GET /leave_c_offs/1/edit

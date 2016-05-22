@@ -1,5 +1,7 @@
 class Reports::JoiningDetailsController < ApplicationController
   def new
+    session[:active_tab] = "employee"
+    session[:active_tab1] = "basicreport"
   end
 
   def collect_departments

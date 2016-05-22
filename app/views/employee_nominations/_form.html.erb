@@ -1,0 +1,152 @@
+<!-- SELECT2 EXAMPLE -->
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Employee Nomination Details</h3>
+  </div><!-- /.box-header -->
+
+<% emp_family = Employee.find(@employee.id)%>
+<div class="box-body">
+<%= bootstrap_form_for(@employee_nomination,html: {id: "employee_nomination"},remote: true) do |f| %>
+  <%= f.hidden_field :employee_id, value: @employee.id %>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.select :nomination_master_id,all_nomination_type,placeholder:"Nomination" %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.select :family_id,all_family_type(emp_family),placeholder:"Family",include_blank: 'Select Family Member' %>
+      </div>
+    </div>
+    <div class="col-sm-2">
+      <div class="field">
+        <%= f.text_field :nomination,placeholder:"Nomination" %>
+      </div>
+    </div>
+    <div class="col-sm-2">
+      <div class="field">
+        <%= f.check_box :mental_illness,hide_label:true %>
+      </div>
+    </div>
+     <div class="col-sm-2">
+      <div class="field">
+        <%= f.check_box :minor,inline_label: 'Remember me'%>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+   
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :guardian_name,placeholder:"Guardian Name" %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.select :relation_master_id,all_relation_type,placeholder:"Relation Id" %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.check_box :same_address %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :mobile_no,placeholder:"Mobile No" %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :address,placeholder:"Address" %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%=f.select :country_id, all_countries,{include_blank: "Please Select Country"},{onchange:"var a={id:$(this).val(), form : 'employee'}; $.get('/companies/collect_states',a,function(response){});"}%>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <div id="states">
+          <%= render 'companies/state_dropdown' %> 
+      </div> 
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group required">
+       <div id="district">
+         <%= render 'companies/city_dropdown' %>
+     </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :city,placeholder:"City" %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :pin_code,placeholder:"Pin Code" %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :phone_no,placeholder:"Phone No" %>
+      </div>
+    </div>
+    
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :email,placeholder:"Email" %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "create Employee Nomination", class: "btn btn-primary btn-sm" %>
+      </div>
+    </div>
+  </div>
+<% end %>
+</div>
+</div>
+
+<div id="employee_nomination_list"></div>
+
+<script type="text/javascript">
+ $("#employee_nomination").validate({
+    rules: {
+      "employee_nomination[nomination_master_id]":{
+        required: true
+      },
+      "employee_nomination[family_id]":{
+        required: true
+      },
+      "employee_nomination[nomination]":{
+        required: true
+      }
+    },
+    messages: {
+      "employee_nomination[nomination_master_id]":{
+        required: "Please specify Nomination Master"
+      },
+      "employee_nomination[family_id]":{
+        required: "Please specify Family Member"
+      },
+      "employee_nomination[nomination]":{
+        required: "Please specify Nomination"
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

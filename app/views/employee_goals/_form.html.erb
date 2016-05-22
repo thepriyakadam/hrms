@@ -1,39 +1,56 @@
-
 <%= bootstrap_form_for(@employee_goal,html: {id: "employee_goal"},remote: true) do |f| %>
+<div id="error" class="error text-center" style="color:red; background-color: pink;"></div>
+  <%= f.hidden_field :employee_id,value: @employee.id %>
+  <%= f.hidden_field :emp_head,value: current_user.employee_id %>
 
   <div class="row">
     <div class="col-sm-3">
       <div class="field">
-        <%= f.select :period_id,all_period_type,{label: 'Period ',include_blank: " Select Period"} %>
+        <%= f.select :period_id,all_period_type,{label: 'Period',include_blank: " Select Period"} %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.select :goal_perspective_id,all_goal_perspective_type,{label: 'Goal Perspective',include_blank: "Select Goal Perspective"}%>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :goal_measure,{label: 'Goal Measure',include_blank: "Select Goal Measure", placeholder: 'e.g. : Punctuality'} %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :target,{label: 'Goal Targets/Units', placeholder: 'e.g. : 100%'} %>
       </div>
     </div>
   </div>
 
-<table id="tbl" class="table table-bordered table-hover table-condensed">
-  <thead>
-    <tr>
-      <th>Goal Perspective</th>
-      <th>Goal Measure</th>
-      <th>Target</th>
-      <th>Goal Weightage</th>
-      <th>Difficulty Level</th>
-      <th>Allign To Supervisor</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><%= f.select :goal_perspective_id,all_goal_perspective_type,{hide_label: true,include_blank: "Select Goal Perspective"}%></td>
-      <td><%= f.text_field :goal_measure,{hide_label: true,include_blank: "Select Goal Measure", placeholder: 'e.g.:punctuality'} %></td>
-      <td><%= f.text_field :target,{hide_label: true, placeholder: 'e.g.:100%'} %></td>
-      <td><%= f.select :goal_weightage,["1","2","3","4","5"],{hide_label: true, include_blank: "Select Goal Weightage"} %></td>
-      <td><%= f.select :difficulty_level,["1","2","3"],{hide_label: true, include_blank: "Select Difficulty Level"} %></td>
-      <td><%= f.select :allign_to_supervisor,["Yes","No"],{hide_label: true,include_blank: "Allign To Supervisor"} %></td>
 
-        <%= f.hidden_field :employee_id,value: @employee.id %>
-        <%= f.hidden_field :emp_head,value: current_user.employee_id %>
-    </tr>   
-  </tbody>
-</table>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :goal_weightage, label: 'Goal Weightage(%)' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.select :difficulty_level,["1","2","3"],{label: 'Difficulty Level', include_blank: "Select Difficulty Level"} %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.select :allign_to_supervisor,["Yes","No"],{label: 'Aligned To Supervisor',include_blank: "Select Option"} %>
+      </div>
+    </div>
+  </div>
+
+
   <div class= "row">
     <div class="col-sm-3">
       <div class="actions">
@@ -41,10 +58,8 @@
       </div>
     </div>
   </div>
-  
 <% end %>
 <hr>
-
 <script type="text/javascript">
   $("#employee_goal").validate({
     rules: {
@@ -58,15 +73,14 @@
         required: true
       },
       "employee_goal[goal_weightage]":{
-        required: true
+        required: true,
+        numbersOnly:true,
+        range:[1,100]
       },
       "employee_goal[difficulty_level]":{
         required: true
       },
       "employee_goal[goal_perspective_id]":{
-        required: true
-      },
-      "employee_goal[goal_measure_id]":{
         required: true
       }
     },
@@ -75,22 +89,19 @@
         required: "Please specify Target"
       },
       "employee_goal[period_id]":{
-        required: "Please specify period id"
+        required: "Please specify period"
       },
       "employee_goal[goal_measure]":{
-        required: "Please specify Goal Measure"
+        required: "Please specify goal measure"
       },
       "employee_goal[goal_weightage]":{
-        required: "Please specify Goal Weightage"
+        required: "Please specify goal weightage"
       },
       "employee_goal[difficulty_level]":{
-        required: "Please specify Difficulty Level"
+        required: "Please specify difficulty level"
       },
       "employee_goal[goal_perspective_id]":{
-        required: "Please specify Goal Perspective"
-      },
-      "employee_goal[goal_measure_id]":{
-        required: "Please specify Goal Measure"
+        required: "Please specify goal perspective"
       }
     },
     errorPlacement: function(error, element) {

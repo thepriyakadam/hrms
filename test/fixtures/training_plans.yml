@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  training_date: 2016-05-12
+  topic: MyString
+  no_of_employee: MyString
+  trainer_name: MyString
+  no_of_days: MyString
+  no_of_hrs: MyString
+  place: MyString
+
+two:
+  training_date: 2016-05-12
+  topic: MyString
+  no_of_employee: MyString
+  trainer_name: MyString
+  no_of_days: MyString
+  no_of_hrs: MyString
+  place: MyString

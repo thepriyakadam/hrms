@@ -4,6 +4,10 @@
     </div><!-- /.box-header -->
  <div class="box-body">
   <%= bootstrap_form_for(@interview_schedule) do |f| %>
+  <%= f.hidden_field :selected_resume_id, value: @selected_resume.id  %>
+  <div>
+  <%= render 'show_selected_resume_detail' %>
+  </div>
   <div class="row">
     <div class="col-sm-3">
      <div class="form-group required">
@@ -13,25 +17,33 @@
 
     <div class="col-sm-3">
      <div class="form-group required">
-       <%= f.select :candidate_name, all_candidate_name,{label: 'Candidate Name',include_blank: " Select Candidate Name"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
+       <%= f.text_field :candidate_name,value: @selected_resume.name,readonly: true %>
      </div>
     </div>
+
+   <!--  <div class="col-sm-3">
+     <div class="form-group required">
+       <%= f.text_field :candidate_name2,label: "Candidate Name2" %>
+     </div>
+    </div> -->
 
     <div class="col-sm-3">
      <div class="form-group required">
       <%= f.select :employee_id, all_interviewer_name_list,{label: 'Interviewer Name',include_blank: " Select Interviewer Name"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
      </div>
     </div>
+ 
+  </div>
+  
+  <div class="row">
 
     <div class="col-sm-3">
      <div class="field">
       <%= f.text_field :email_id %>
      </div>
     </div>  
-  </div>
-  
-  <div class="row">
-  <div class="col-sm-3">
+
+    <div class="col-sm-3">
       <label>Interview Date: </label>
       <div class="form-group required">
         <div class="input-group">
@@ -63,22 +75,21 @@
       </div>
     </div>
 
+  </div>
+
+  <div class="row">
+  
     <div class="col-sm-3">
       <div class="field">
         <%= f.text_field :schedule_comments,label:'Schedule Comments' %>
       </div>
-    </div>
-
-    
-  </div>
-
-  <div class="row">
+    </div>  
 
   <div class="col-sm-3">
       <div class="field">
        <%= f.text_field :post_title,label:'Posting Title' %>
       </div>
-    </div>
+  </div>
 
     <div class="col-sm-3">
       <div class="form-group required">
@@ -104,7 +115,6 @@
   </div>
 </div>
 <% end %>
-
 <script type="text/javascript">
   $(document).ready(function() {
   $(".select2").select2();

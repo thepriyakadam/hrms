@@ -7,12 +7,12 @@
 	<table class="table table-bordered table-hover table-condensed">    
     <thead>
 	    <tr>
-	    	<th>Employee Id</th>
+	    	<th>Employee ID</th>
 	    	<th>Name</th>
         <th>Age</th>
 	    	<th>Department</th>
 	    	<th>Date Of Joining</th>
-	    	<th>Joining Grade</th>
+	    	<th>Grade</th>
 	    	<th>Current Designation</th> 
       </tr>
     </thead>
@@ -34,15 +34,15 @@
 <div class="row">
   <div class="col-sm-6">
     <div class="box-header with-border">
-      <h3 class="box-title">Past Experience</h3>
+      <h3 class="box-title">Previous Experience</h3>
     </div>
   <table class="table table-bordered table-hover table-condensed">
     <thead>
       <tr>
-	    	<th>Past Company</th>
+	    	<th>Previous Company</th>
         <th>Designation</th>
-        <th>Past Exp In Years</th>
-        <th>Past CTC</th>
+        <th>Previous Exp.(Years)</th>
+        <th>Previous CTC</th>
         <th>Current CTC</th>
       </tr>
     </thead>
@@ -67,8 +67,9 @@
       <table class="table table-bordered table-hover table-condensed">
         <thead>
           <tr>
-            <th>Degree/Deploma</th>
-            <th>Year Of Passing/marks%</th>
+            <th>Degree</th>
+            <th>Year Of Passing </th>
+            <th>Marks</th>
             <th>Qualification Category</th>
           </tr>
         </thead>
@@ -76,7 +77,8 @@
         <% @qualifications.each do |q| %>
           <tr>
             <td><%= q.degree.name %></td>
-            <td><%= q.year.name.to_s+" / "+q.marks.to_s %></td>
+            <td><%= q.year.name %> </td>
+            <td><%= q.marks %></td>
             <td><%= q.degree_type.name %></td>
           </tr>
           <% end %>
@@ -90,22 +92,22 @@
    <div class="box-header with-border">
     <h3 class="box-title">Goals</h3>
   </div>
-  <table id="tbl" class="table table-bordered table-hover table-condensed">
+  <table id="example3" class="table table-bordered table-hover table-condensed">
     <thead>
       <tr>
         <th>Goal Perspctive</th>
         <th>Goal Measure</th>
-        <th>Target</th>
+        <th>Target/Unit</th>
         <th>Goal Weightage</th>
         <th>Difficulty Level</th>
         
-        <th>Allign To Supervisor</th>
+        <th>Aligned To Supervisor</th>
         <th>Appraisee Comment</th>
-        <th>Appraisee Rating</th>
-        <th>Appraiser1 Comment</th>
-        <th>Appraiser1 Rating</th>
-        <th>Appraiser2 Comment</th>
-        <th>Appraiser2 Rating</th>
+        <th>Appraisee Evaluation</th>
+        <th>Appraiser Comment</th>
+        <th>Appraiser Evaluation</th>
+        <th>Reviewer Comment</th>
+        <th>Reviewer Evaluation</th>
         <th>Final Comment</th>
         <th>Final Rating</th>
       </tr>
@@ -126,8 +128,10 @@
           <td><%= g.appraiser_rating.try(:code) %></td>
           <td><%= g.appraiser2_comment %></td>
           <td><%= g.appraiser2_rating.try(:code) %></td>
+
           <td><%= text_field_tag 'final_comment[]'%></td>
-          <td><%= select_tag 'final_rating_id[]',options_for_select(all_rating_type) ,{class: 'form-control', hide_label: true} %></td>
+          <td><%= select_tag 'final_rating_id[]',options_for_select(all_rating_type) ,{class: 'form-control', hide_label: true,include_blank: " Select Rating"} %></td>
+
 
           <%= hidden_field_tag 'goal_rating_sheet_id[]', {},value: g.id %> 
           <%= hidden_field_tag :final_id_id, {},value: current_user.employee_id %>
@@ -153,25 +157,25 @@
 <%= bootstrap_form_for @goal_rating_sheet,url:{action:'is_confirm_final',id: @employee.id} do |f| %>
 
   <div class="box-header with-border">
-    <h3 class="box-title">Goals</h3>
+    <h3 class="box-title">Goal List</h3>
   </div>
-  <table id="tbl" class="table table-bordered table-hover table-condensed">
+  <table id="example4" class="table table-bordered table-hover table-condensed">
     <thead>
       <tr>
         <th><input type="checkbox" id="selectAll" value="selectAll"></th>
-        <th>Goal Perspctive</th>
+        <th>Goal Perspective</th>
         <th>Goal Measure</th>
-        <th>Target</th>
+        <th>Target/Unit</th>
         <th>Goal Weightage</th>
         <th>Difficulty Level</th>
         
-        <th>Allign To Supervisor</th>
+        <th>Aligned To Supervisor</th>
         <th>Appraisee Comment</th>
-        <th>Appraisee Rating</th>
-        <th>Appraiser1 Comment</th>
-        <th>Appraiser1 Rating</th>
-        <th>Appraiser2 Comment</th>
-        <th>Appraiser2 Rating</th>
+        <th>Appraisee Evaluation</th>
+        <th>Appraiser Comment</th>
+        <th>Appraiser Evaluation</th>
+        <th>Reviewer Comment</th>
+        <th>Reviewer Evaluation</th>
         <th>Final Comment</th>
         <th>Final Rating</th>
         <th>Action</th>
@@ -180,7 +184,13 @@
     <tbody>
       <% @goal_rating_sheets.each do |g| %>
         <tr>
-          <td><%= check_box_tag "goal_rating_sheet_ids[]", g.id %></td>
+          <td>
+            <% if g.is_confirm_final == true %>
+
+            <% else %>
+            <%= check_box_tag "goal_rating_sheet_ids[]", g.id %>
+            <% end %>
+          </td>
           <td><%= g.employee_goal.goal_perspective.name %></td>
           <td><%= g.employee_goal.goal_measure %></td>
           <td><%= g.employee_goal.target %></td>
@@ -200,7 +210,7 @@
             <% if g.is_confirm_final == true %>
             <small class="label label-info">Confirmed</small>
             <% else %>
-            <%= link_to '', edit_final_goal_rating_sheets_path(g) ,class: 'btn btn-xs btn-success fa fa-edit' %>
+            <%= link_to '', modal_final_goal_rating_sheets_path(g) ,class: 'btn btn-xs btn-success fa fa-edit',remote: true %>
             <% end %>
           </td>
           <%= hidden_field_tag 'goal_rating_sheet_id[]', {},value: g.id %> 
@@ -215,15 +225,18 @@
       <div class="col-sm-3">
         <div class="actions">
           <%= f.submit "Confirm", class: 'btn btn-primary btn-sm' %>
+           <%= link_to 'Attribute', final_comment_attribute_rating_sheets_path(@employee.id),class: 'btn btn-warning btn-sm' %> 
         </div>
       </div>
     </div>
       </br>
-  <%= link_to 'Attribute', final_comment_attribute_rating_sheets_path(@employee.id),class: 'btn btn-warning btn-sm' %> |
-  <%= link_to 'Back', employee_list_goal_rating_sheets_path(@employee.id),class: 'btn btn-default btn-sm fa fa-arrow-left' %> 
+ 
+  <%= link_to ' Back', employee_list_goal_rating_sheets_path(@employee.id),class: 'btn btn-default btn-sm fa fa-arrow-left' %> 
 </div>
 </div>
 <% end %>
+
+<div id="myModal" class="modal fade"></div>
 
 <script type="text/javascript">
   $(function () {
@@ -240,4 +253,22 @@
       } 
     });
   });
+
+  $(document).ready(function() {
+    $('#example3').DataTable( {
+        "scrollY":        "200px",
+        "scrollX":        "1000px",
+        "scrollCollapse": true,
+        "paging":         false
+    } );
+} );
+
+  $(document).ready(function() {
+    $('#example4').DataTable( {
+        "scrollY":        "200px",
+        "scrollX":        "1000px",
+        "scrollCollapse": true,
+        "paging":         false
+    } );
+} );
 </script>

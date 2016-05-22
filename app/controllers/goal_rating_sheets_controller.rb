@@ -12,13 +12,14 @@ class GoalRatingSheetsController < ApplicationController
   def show
   end
 
-  # GET /goal_rating_sheets/new  
+  # GET /goal_rating_sheets/new
   def new
     @goal_rating_sheet = GoalRatingSheet.new
-    @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: current_user.employee_id,appraisee_comment: nil)
     @goal_rting_sheets = EmployeeGoal.where(employee_id: current_user.employee_id).group(:employee_id)
     @employee_goals = EmployeeGoal.where(employee_id: current_user.employee_id,is_confirm: true)
-     @goal_rating_shets = GoalRatingSheet.where(appraisee_id: current_user.employee_id)
+    @period = @employee_goals.try(:first).try(:period)
+    @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: current_user.employee_id,appraisee_comment: nil)
+    @goal_rating_shets = GoalRatingSheet.where(appraisee_id: current_user.employee_id).where.not(appraisee_comment: nil)
   end
 
   # GET /goal_rating_sheets/1/edit
@@ -39,6 +40,7 @@ class GoalRatingSheetsController < ApplicationController
       emp = GoalRatingSheet.find(e)
       if c == ''
         flash[:alert] = 'Fill comments'
+      
       elsif r == ''
         flash[:alert] = 'Fill all the fields'
       else
@@ -75,8 +77,7 @@ class GoalRatingSheetsController < ApplicationController
     @employee = Employee.find(params[:format])
     @goal_ratings = GoalRatingSheet.where(appraisee_id: @employee.id,appraiser_comment: nil,is_confirm_appraisee: true)
     #@goal_ratings = GoalRatingSheet.where("appraisee_id = ? and (appraiser_comment = ? or appraiser_comment = ?)",@employee.id,nil,"")
-    @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: @employee.id,is_confirm_appraisee: true)
-
+    @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: @employee.id,is_confirm_appraisee: true).where.not(appraiser_comment: nil)
     @goal_rating_single_sheets = GoalRatingSheet.where(appraisee_id: @employee.id).group(:appraisee_id)
 
     @goal_rating_sheet = GoalRatingSheet.new
@@ -84,7 +85,6 @@ class GoalRatingSheetsController < ApplicationController
   end
 
   def appraiser_create
-    
     goal_rating_sheets = params[:goal_rating_sheet_id]
     # employee_goals = params[:employee_goal_id]
     comments = params[:appraiser_comment]
@@ -100,12 +100,9 @@ class GoalRatingSheetsController < ApplicationController
         # emp = EmployeeGoal.find(e)
         # goal_rating_sheet = GoalRatingSheet.find(e)
         goal_rating_sheet.update(appraiser_comment: c, appraiser_rating_id: r, appraiser_id: params[:appraiser_id])
-
       end
     end
-  
     @employee = Employee.find(params[:appraisee_id])
-    
     redirect_to appraiser_goal_rating_sheets_path(format: @employee.id)
   end
   
@@ -113,7 +110,7 @@ class GoalRatingSheetsController < ApplicationController
   def appraiser2
     #@goal_rating_sheet = GoalRatingSheet.new
     @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: params[:format],appraiser2_comment: nil,is_confirm_appraiser: true)
-    @goal_rating_shets = GoalRatingSheet.where(appraisee_id: params[:format],is_confirm_appraiser: true)
+    @goal_rating_shets = GoalRatingSheet.where(appraisee_id: params[:format],is_confirm_appraiser: true).where.not(appraiser2_comment: nil)
     @attribute_rating_sheets = AttributeRatingSheet.where(appraisee_id: params[:format]).group(:appraisee_id)
     @employee = Employee.find(params[:format])
     @qualifications = Qualification.where(employee_id: @employee.id)
@@ -147,7 +144,7 @@ class GoalRatingSheetsController < ApplicationController
 
   def final_comment
     @goal_rating_sheet = GoalRatingSheet.new
-    @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: params[:format],is_confirm_appraiser2: true)
+    @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: params[:format],is_confirm_appraiser2: true).where.not(final_comment: nil)
 
     @goal_ratings = GoalRatingSheet.where(appraisee_id: params[:format],final_comment: nil,is_confirm_appraiser2: true)
     @attribute_rating_sheets = AttributeRatingSheet.where(appraisee_id: params[:format]).group(:appraisee_id)
@@ -168,6 +165,7 @@ class GoalRatingSheetsController < ApplicationController
     current_login = Employee.find(current_user.employee_id)
     @employees = current_login.subordinates
     session[:active_tab] ="performance"
+    session[:active_tab1] ="appraiserevaluation"
   end
  
   def edit_appraiser
@@ -203,33 +201,32 @@ class GoalRatingSheetsController < ApplicationController
   # end
 
   def is_confirm_appraiser
-
+    @employee = Employee.find(params[:id])
     @goal_rating_sheet_ids = params[:goal_rating_sheet_ids]
     if @goal_rating_sheet_ids.nil?
-        flash[:alert] = "Please Select the Checkbox"
-        redirect_to new_goal_rating_sheet_path
-      else
-        @goal_rating_sheet_ids.each do |gid|
+      flash[:alert] = "Please select the goal ratings"
+    else
+      @goal_rating_sheet_ids.each do |gid|
         @goal_rating_sheet = GoalRatingSheet.find(gid)
         @goal_rating_sheet.update(is_confirm_appraiser: true)
         flash[:notice] = "Confirmed Successfully"
-      end  
-       redirect_to appraiser_goal_rating_sheets_path(@goal_rating_sheet.appraisee_id)
+      end
     end
+    redirect_to appraiser_goal_rating_sheets_path(@employee.id)
   end
  
   def is_confirm_appraisee
     @goal_rating_sheet_ids = params[:goal_rating_sheet_ids]
     if @goal_rating_sheet_ids.nil?
-        flash[:alert] = "Please Select the Checkbox"
-        redirect_to new_goal_rating_sheet_path
-      else
-        @goal_rating_sheet_ids.each do |gid|
+      flash[:alert] = "Please select the goal ratings."
+      redirect_to new_goal_rating_sheet_path
+    else
+      @goal_rating_sheet_ids.each do |gid|
         @goal_rating_sheet = GoalRatingSheet.find(gid)
         @goal_rating_sheet.update(is_confirm_appraisee: true)
-        flash[:notice] = "Confirmed Successfully"
+         flash[:notice] = "Confirmed Successfully"
       end  
-       redirect_to new_goal_rating_sheet_path
+      redirect_to new_goal_rating_sheet_path
     end  
   end
 
@@ -266,9 +263,7 @@ class GoalRatingSheetsController < ApplicationController
 
   end
 
-   def modal
-   end
- 
+  
  def appraisee_goal_list
    @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: current_user.employee_id)
  end
@@ -277,6 +272,7 @@ class GoalRatingSheetsController < ApplicationController
     current_login = Employee.find(current_user.employee_id)
     @employees = current_login.indirect_subordinates
     session[:active_tab] ="performance"
+    session[:active_tab1] ="appraiserevaluation"
   end
 
   def edit_appraiser2
@@ -318,6 +314,7 @@ class GoalRatingSheetsController < ApplicationController
       @employees = Employee.all
     end
   session[:active_tab] ="performance"
+  session[:active_tab1] ="appraiserevaluation"
   end
   
   def final_create
@@ -357,6 +354,50 @@ class GoalRatingSheetsController < ApplicationController
    
     redirect_to final_comment_goal_rating_sheets_path(format: @employee.id)
 
+  end
+
+  def modal
+    @goal_rating_sheet = GoalRatingSheet.find(params[:format])
+  end
+
+  def update_modal
+    @goal_rating_sheet = GoalRatingSheet.find(params[:id])
+    @goal_rating_sheet.update(goal_rating_sheet_params)
+    flash[:notice] = 'Updated Successfully'
+    redirect_to new_goal_rating_sheet_path
+  end
+
+  def modal_appraiser
+    @goal_rating_sheet = GoalRatingSheet.find(params[:format])
+  end
+
+  def update_appraiser_modal
+    @goal_rating_sheet = GoalRatingSheet.find(params[:id])
+    @goal_rating_sheet.update(goal_rating_sheet_params)
+    flash[:notice] = 'Updated Successfully'
+    redirect_to appraiser_goal_rating_sheets_path(@goal_rating_sheet.appraisee_id)
+  end
+
+  def modal_appraiser2
+    @goal_rating_sheet = GoalRatingSheet.find(params[:format])
+  end
+
+  def update_appraiser2_modal
+    @goal_rating_sheet = GoalRatingSheet.find(params[:id])
+    @goal_rating_sheet.update(goal_rating_sheet_params)
+    flash[:notice] = 'Updated Successfully'
+    redirect_to appraiser2_goal_rating_sheets_path(@goal_rating_sheet.appraisee_id)
+  end
+
+  def modal_final
+    @goal_rating_sheet = GoalRatingSheet.find(params[:format])
+  end
+
+  def update_final_modal
+    @goal_rating_sheet = GoalRatingSheet.find(params[:id])
+    @goal_rating_sheet.update(goal_rating_sheet_params)
+    flash[:notice] = 'Updated Successfully'
+    redirect_to final_comment_goal_rating_sheets_path(@goal_rating_sheet.appraisee_id)
   end
 
   private

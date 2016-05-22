@@ -31,9 +31,13 @@ class AdvanceSalariesController < ApplicationController
   # POST /advance_salaries.json
   def create
     @advance_salary = AdvanceSalary.new(advance_salary_params)
+    start_date = @advance_salary.advance_date
+    #end_date = start_date + @advance_salary.no_of_instalment.to_i
     for i in 1..@advance_salary.no_of_instalment.to_i
-      @advance_salary.instalments.build(instalment_amount: @advance_salary.instalment_amount)
+      @advance_salary.instalments.build(instalment_amount: @advance_salary.instalment_amount, instalment_date: start_date)
+      start_date = start_date.next_month
     end
+
     if @advance_salary.save
       flash[:notice] = 'Advance Salary created successfully.'
       redirect_to @advance_salary
@@ -91,8 +95,9 @@ class AdvanceSalariesController < ApplicationController
       elsif current_user.role.name == 'CompanyLocation'
         @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
         @advance_salaries = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
-      elsif current_user.role.name == 'SalaryAccount'
-        @advance_salaries = AdvanceSalary.all
+       elsif current_user.role.name == 'SalaryAccount'
+        @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+        @advance_salaries = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
       elsif current_user.role.name == 'Employee'
         @advance_salaries = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: current_user.employee_id)
       end

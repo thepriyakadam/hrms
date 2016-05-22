@@ -9,25 +9,25 @@
        
     <thead>
 	    <tr>
-	    	<th>Employee Id</th>
+	    	<th>Employee ID</th>
 	    	<th>Name</th>
         <th>Age</th>
 	    	<th>Department</th>
 	    	<th>Date Of Joining</th>
-	    	<th>Joining Grade</th>
+	    	<th>Grade</th>
 	    	<th>Current Designation</th> 
       </tr>
     </thead>
     <tbody>
       <% @attribute_rating_sheets.each do |a| %>
       <tr>
-        <td><%= a.appraisee.manual_employee_code %></td> 
-        <td><%= a.appraisee.first_name %></td>
-        <td><%= Time.now.year-a.appraisee.date_of_birth.year %></td>
-        <td><%= a.appraisee.department.name %></td>
+        <td><%= a.manual_employee_code %></td> 
+        <td><%= a.first_name %></td>
+        <td><%= Time.now.year-a.date_of_birth.year %></td>
+        <td><%= a.department.name %></td>
         <td><%= @joining_detail.joining_date %></td>
-        <td><%= @joining_detail.employee_grade.name %></td>
-        <td><%= @joining_detail.employee_designation.name %></td>
+        <td><%= @joining_detail.employee_grade.try(:name) %></td>
+        <td><%= @joining_detail.employee_designation.try(:name) %></td>
       </tr>
       <% end %>
     </tbody>
@@ -70,17 +70,19 @@
       <table class="table table-bordered table-hover table-condensed">
         <thead>
           <tr>
-            <th>Degree/Deploma</th>
-            <th>Year Of Passing/marks%</th>
-            <th>Qualification Category</th>
+            <th>Degree</th>
+            <th>Qualification</th>
+            <th>Year Of Passing</th>
+            <th>Marks(%)</th>
           </tr>
         </thead>
         <tbody>
         <% @qualifications.each do |q| %>
           <tr>
             <td><%= q.degree.name %></td>
-            <td><%= q.year.name.to_s+" / "+q.marks.to_s %></td>
             <td><%= q.degree_type.name %></td>
+            <td><%= q.year.name %></td>
+            <td><%= q.marks.to_s %></td>
           </tr>
           <% end %>
         </tbody>
@@ -94,19 +96,19 @@
   <table id="tbl" class="table table-bordered table-hover table-condensed">
     <thead>
       <tr>
-        <th>Goal Perspctive</th>
+        <th>Goal Perspective</th>
         <th>Goal Measure</th>
-        <th>Target</th>
+        <th>Target/Unit</th>
         <th>Goal Weightage</th>
         <th>Difficulty Level</th>
         
         <th>Allign To Supervisor</th>
         <th>Appraisee Comment</th>
-        <th>Appraisee Rating</th>
-        <th>Appraiser1 Comment</th>
-        <th>Appraiser1 Rating</th>
-        <th>Appraiser2 Comment</th>
-        <th>Appraiser2 Rating</th>
+        <th>Appraisee Evaluation</th>
+        <th>Appraiser Comment</th>
+        <th>Appraiser Evaluation</th>
+        <th>Reviewer Comment</th>
+        <th>Reviewer Evaluation</th>
         <th>Final Comment</th>
         <th>Final Rating</th>
       </tr>
@@ -143,11 +145,11 @@
         <th>Attribute & Definition</th>
         <th>Weightage</th>
         <th>Appraisee Comment</th>
-        <th>Appraisee Rating</th>
-        <th>Appraiser1 Comment</th>
-        <th>Appraiser1 Rating</th>
-        <th>Appraiser2 Comment</th>
-        <th>Appraiser2 Rating</th>
+        <th>Appraisee Evaluation</th>
+        <th>Appraiser Comment</th>
+        <th>Appraiser Evaluation</th>
+        <th>Reviewer Comment</th>
+        <th>Reviewer Evaluation</th>
         <th>Final Comment</th>
         <th>Final Rating</th>
       </tr>
@@ -169,8 +171,9 @@
         <% end %>
       </tbody>
     </table>
+    <hr>
+<%= link_to 'Back', employee_list_attribute_rating_sheets_path(@employee.id),class: 'btn btn-default btn-sm fa fa-arrow-left' %> |
 
-<%= link_to 'Back', employee_list_attribute_rating_sheets_path(@employee.id) %>
-
+<%= link_to 'Print PDF', print_details_final_attribute_rating_sheets_path(format: 'pdf',id:@employee.id ),class: 'btn btn-xl btn-warning', :target => '_blank' %><br>
   </div>
   </div>

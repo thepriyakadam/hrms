@@ -1,8 +1,36 @@
-
 Rails.application.routes.draw do
+
+  resources :accident_masters
+  resources :travel_expence_types
+  resources :travel_modes
+  resources :interview_analyses
+  resources :interview_decisions
+  resources :interview_attributes
+  resources :interview_evalutions
+  resources :training_topic_masters
+  resources :employee_resignations
+  resources :travel_options
+  resources :training_plans
+  resources :training_requests
+  resources :selected_resumes  do
+    collection do 
+    post :is_confirm
+    get :new1
+    get :all_resume_list
+    end
+  end 
+  resources :assigned_assets
+  resources :asset_types
+  resources :employee_nominations
+  resources :nomination_masters
+  resources :relation_masters
   resources :particular_vacancy_requests
   resources :travel_expences
-  resources :daily_bill_details 
+  resources :daily_bill_details do
+    collection do 
+    post :is_confirm
+    end
+  end 
   resources :travel_requests do
     collection do 
       get :daily_bill
@@ -14,6 +42,10 @@ Rails.application.routes.draw do
       get :modal
       get :cancel_travel_request
       get :travel_request_list
+      get :edit_and_send_next_modal
+      patch :edit_and_send_next_modal_submit
+      get :edit_and_approve_modal
+      patch :edit_and_approve_modal_submit
     end
   end
   namespace :reports do
@@ -88,7 +120,6 @@ Rails.application.routes.draw do
     end
   end
 
-
   resources :interview_schedules do
     collection do
       get :search_by_interview_date
@@ -97,6 +128,8 @@ Rails.application.routes.draw do
       post :send_email_to_candidate
       get :sample_email
       post :is_confirm
+      get :new1
+      get :edit1
     end
   end
   resources :vacancy_masters do
@@ -111,6 +144,14 @@ Rails.application.routes.draw do
       get :approve_vacancy
       get :approve_vacancy_list
       get :cancel_vacancy_request
+      get :particular_vacancy_request_list
+      get :approved_vacancy_list
+      get :modal1
+      post :update_no_of_positions
+      get :is_closed
+      get :vacancy_resume
+      get :modal2
+      post :confirm_candidate
     end
   end
   resources :leave_c_offs do
@@ -218,6 +259,20 @@ Rails.application.routes.draw do
       get :employee_final_details
       get :subordinate_list2
       get :employee_appraiser2_details
+      get :modal
+      patch :update_modal
+      get :modal_appraiser
+      patch :update_appraiser_modal
+      get :modal_appraiser2
+      patch :update_appraiser2_modal
+      get :modal_final
+      patch :update_final_modal
+      get :print_details_appraiser
+      get :print_details_final
+      get :print_details_appraiser2
+      get :send_email_to_appraiser
+      get :send_email_to_appraiser2
+      get :try
     end
   end
   resources :goal_rating_sheets do
@@ -232,7 +287,6 @@ Rails.application.routes.draw do
       get :appraiser
       post :appraiser_create
       get :appraisee_goal_list
-      get :modal
       get :subordinate_list2
       get :appraiser2
       post :appraiser2_create
@@ -245,7 +299,16 @@ Rails.application.routes.draw do
       patch :update_final
       post :is_confirm_final
       post :is_confirm_appraiser2
+      get :modal
+      patch :update_modal
+      get :modal_appraiser
+      patch :update_appraiser_modal
+      get :modal_appraiser2
+      patch :update_appraiser2_modal
+      get :modal_final
+      patch :update_final_modal
     end
+     
   end
   resources :employee_attributes do
     collection do
@@ -254,6 +317,10 @@ Rails.application.routes.draw do
       get :appraiser
       post :appraiser_create
       post :is_confirm
+      get :show_list
+      get :single_attribute
+      post :create_attribute
+      post :is_confirm_all
     end
   end
   resources :employee_goals do
@@ -262,6 +329,13 @@ Rails.application.routes.draw do
       post :is_confirm
       get :employee_list
       get :show_goal
+      get :send_email_to_employee
+      get :show_employee
+      post :print_detail
+      get :select_designation
+      get :single_goal
+      post :create_goal
+      post :is_confirm_all
     end
   end
 
@@ -274,6 +348,8 @@ Rails.application.routes.draw do
       get :show_leave_record
     end
   end
+  match 'selected_resumes/:id/download_resume/:id' => 'selected_resumes#download_resume', :via => [:get], :as => :download_resume
+  match 'selected_resumes/:id/download_image/:id' => 'selected_resumes#download_image', :via => [:get], :as => :download_image
 
   match 'capture_resumes/:id/download/:id' => 'capture_resumes#download', :via => [:get], :as => :download
   match 'capture_resumes/:id/download_photo/:id' => 'capture_resumes#download_photo', :via => [:get], :as => :download_photo
@@ -360,6 +436,7 @@ Rails.application.routes.draw do
   namespace :reports do
     get 'salaries/new'
     post 'salaries/date_range_report'
+    get 'salaries/download'
     # post 'salaries/department_wise'
     # get 'salaries/show'
     post 'salaries/ctc_yearly_report'
@@ -406,21 +483,35 @@ Rails.application.routes.draw do
   end
   
   resources :pdf_salaries do
-     collection do
-        get :employee_list_pdf
-        get :select_month_year_form
-        get :show_employee
-        post :print_salary_slip_monthwise
-     end
-   end  
+    collection do
+      get :employee_list_pdf
+      get :select_month_year_form
+      get :show_employee
+      post :print_salary_slip_monthwise
+      get :salary_slip_costunit_wise
+      get :show_employee_costunit_wise
+      post :print_salary_slip_cost_unitwise
+    end
+   end
   
   resources :salary_slip_ledgers do
-     collection do
-        get :select_month_year_form
-        get :show_employee
-        post :print_salary_slip_monthwise
-     end
-   end  
+    collection do
+      get :select_month_year_form
+      get :show_employee
+      get :employee_ctc
+      get :employee_monthly_ctc
+      post :show_employee_ctc
+      get :employee_salary_ledger
+      post :print_salary_slip_monthwise
+      get :cost_unit_wise
+      get :cost_unit_wise_salary
+      get :salary_report
+      get :bank_wise_net_amount
+      get :collect_salary
+      get :salary_ledger
+      post :show_monthly_ctc
+    end
+  end
 
   resources :instalments do
     collection do
@@ -440,7 +531,11 @@ Rails.application.routes.draw do
       get :generate_workingday
     end
   end
-  resources :shift_rotations
+  resources :shift_rotations do
+    collection do
+      get :collect_employee
+    end
+  end
   resources :employee_monthly_days do
     collection do
       get :find_employee_for_employee_monthly_day
@@ -582,7 +677,11 @@ Rails.application.routes.draw do
       get :ajax_family_detail
       get :ajax_new_family
       get :ajax_show_textbox
+      get :ajax_employee_nomination_detail
+      get :ajax_new_employee_nomination
       get :ajax_setup_payroll
+      get :ajax_new_assigned_asset
+      get :ajax_assigned_asset_detail
       get :manager
       get :transfer_form
       post :transfer_employee

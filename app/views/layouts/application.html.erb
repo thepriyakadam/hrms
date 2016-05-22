@@ -6,19 +6,17 @@
     <title>Hrms</title>
     <%= stylesheet_link_tag    'application' %>
     <%= javascript_include_tag 'application' %>
-    
-   <meta name="viewport" content="width=device-width, initial-scale=1">
-   <!-- <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css"> -->   
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css"> -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-
     <%= csrf_meta_tags %>
   </head>
   <body font-size="12px">
+    <div class="ajax-progress"></div>
     <% if user_signed_in? %>
       <body class="hold-transition skin-blue sidebar-mini">
         <div class="wrapper">

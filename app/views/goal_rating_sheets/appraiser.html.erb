@@ -4,11 +4,10 @@
   </div>
   <div class="box-body">
    <%= bootstrap_form_for(@goal_rating_sheet,url: {action: "appraiser_create"},html: {id: "goal_rating_sheet"}) do |f| %>
-
     <table id="tbl" class="table table-bordered table-hover table-condensed">
     <thead>
       <tr>
-        <th>Employee Id</th>
+        <th>Employee ID</th>
         <th>Employee Name</th>
         <th>Department</th>
         <th>Designation</th>
@@ -19,30 +18,31 @@
         <tr>
           <td><%= g.appraisee.manual_employee_code %></td>
           <td><%= g.appraisee.first_name %></td>
-          <td><%= g.appraisee.joining_detail.department.name %></td>
-          <td><%= g.appraisee.joining_detail.employee_designation.name %></td>
+          <td><%= g.appraisee.joining_detail.department.try(:name) %></td>
+          <td><%= g.appraisee.joining_detail.employee_designation.try(:name) %></td>
         </tr>
       <% end %>
     </tbody>
   </table>
-
-    <table id="tbl" class="table table-bordered table-hover table-condensed">
+  <h3 class="box-title">Appraiser Goal Rating</h3>
+    <table id="example3" class="table table-bordered table-hover table-condensed">
     <thead>
       <tr>
         <th>Period</th>
-        <th>Goal Perspctive</th>
+        <th>Goal Perspective</th>
         <th>Goal Measure</th>
         <th>Target</th>
         <th>Goal Weightage</th>
         <th>Difficulty Level</th>
-        <th>Allign To Supervisor</th>
+        <th>Aligned To Supervisor</th>
 
         <th>Appraisee Comment</th>
-        <th>Appraisee Rating</th>
+        <th>Appraisee Evaluation</th>
         <th>Appraiser Comment</th>
-        <th>Appraiser Rating</th>
+        <th>Appraiser Evaluation</th>
       </tr>
     </thead>
+
     <tbody>
       <% @goal_ratings.each do |g| %>
         <tr>
@@ -60,9 +60,9 @@
           <td></td>
           <td></td>
           <% end %>
-          <td><%= text_field_tag 'appraiser_comment[]' %></td>
+          <td><%= text_field_tag 'appraiser_comment[]',"",{class: 'form-control'} %></td>
           <td>
-          <%= select_tag 'appraiser_rating_id[]',options_for_select(all_rating_type), {class: 'form-control', hide_label: true} %></td>
+          <%= select_tag 'appraiser_rating_id[]',options_for_select(all_rating_type), {class: 'form-control', hide_label: true,include_blank: " Select Rating"} %></td>
           <%= hidden_field_tag 'employee_goal_id[]',{},value: g.employee_goal.id %>
           <%= hidden_field_tag 'goal_rating_sheet_id[]', {},value: g.id %> 
           <%= hidden_field_tag :appraisee_id, {},value: g.appraisee_id %>
@@ -83,65 +83,69 @@
         </div>
       </div>
   <% end %>
-  
-
   <% end %> 
 <hr>
-
-<%= bootstrap_form_for @goal_rating_sheet,url:{action:'is_confirm_appraiser'} do |f| %> 
-  <table id="tbl" class="table table-bordered table-hover table-condensed">
+<%= bootstrap_form_for @goal_rating_sheet,url:{action:'is_confirm_appraiser', id: @employee.id} do |f| %>
+ <h3 class="box-title">Appraiser Goal Rating List</h3> 
+  <table id="example4" class="table table-bordered table-hover table-condensed">
     <thead>
       <tr>
         <th><input type="checkbox" id="selectAll" value="selectAll"></th>
-        <th>Goal Perspctive</th>
+        <th>Period</th>
+        <th>Goal Perspective</th>
         <th>Goal Measure</th>
-        <th>Target</th>
+        <th>Target/Unit</th>
         <th>Goal Weightage</th>
         <th>Difficulty Level</th>
         
-        <th>Allign To Supervisor</th>
+        <th>Aligned To Supervisor</th>
         <th>Appraisee Comment</th>
-        <th>Appraisee Rating</th>
+        <th>Appraisee Evaluation</th>
         <th>Appraiser Comment</th>
-        <th>Appraiser Rating</th>
+        <th>Appraiser Evaluation</th>
         <th>Action</th>
       </tr>
     </thead>
     <tbody>
+      <% appraisee_sum = 0 %>
+      <% appraiser_sum = 0 %>
       <% @goal_rating_sheets.each do |g| %>
         <tr>
-          <td><%= check_box_tag "goal_rating_sheet_ids[]", g.id %></td>
+          <td><%= check_box_tag "goal_rating_sheet_ids[]", g.id unless g.is_confirm_appraiser %></td>
+          <td><%= g.employee_goal.period.title %></td>
           <td><%= g.employee_goal.goal_perspective.name %></td>
           <td><%= g.employee_goal.goal_measure %></td>
           <td><%= g.employee_goal.target %></td>
-          <td><%= g.employee_goal.goal_weightage %></td>
+          <td><%= weightage = g.employee_goal.goal_weightage %></td>
           <td><%= g.employee_goal.difficulty_level %></td>
           <td><%= g.employee_goal.allign_to_supervisor %></td>
 
           <% if g.is_confirm_appraisee == true %>
-          <td><%= g.appraisee_comment %></td>
-          <td><%= g.appraisee_rating.try(:code) %></td>
+            <td><%= g.appraisee_comment %></td>
+            <td><%= appraisee_rating = g.appraisee_rating.try(:code) %></td>
           <% else %>
-          <td></td>
-          <td></td>
+            <td></td>
+            <td></td>
           <% end %>
-          <td><%= g.appraiser_comment %></td>
-          <td><%= g.appraiser_rating.try(:code) %></td>
-           
+            <td><%= g.appraiser_comment %></td>
+            <td><%= appraiser_rating = g.appraiser_rating.try(:code) %></td>
+            <% appraisee_output = weightage * appraisee_rating.to_i / 100.to_f %>
+            <% appraisee_sum = appraisee_sum + appraisee_output %>
+            <% appraiser_output = weightage * appraiser_rating.to_i / 100.to_f %>
+            <% appraiser_sum = appraiser_sum + appraiser_output %>
           <td>
           <% if g.is_confirm_appraiser == true %>
           <small class="label label-info">Confirmed</small>
             <% else %>
-              <%= link_to '', edit_appraiser_goal_rating_sheets_path(g) ,class: 'btn btn-xs btn-success fa fa-edit' %>
-              
+              <%= link_to '', modal_appraiser_goal_rating_sheets_path(g) ,class: 'btn btn-xs btn-success fa fa-edit', remote: true %>    
             <% end %>
           </td>
-          
         </tr>
       <% end %>
     </tbody>
   </table>
-
+  <h3>Appraisee Rating = <%= appraisee_sum %></h3>
+  <h3>Appraiser Rating = <%= appraiser_sum %></h3>
     <div class="row">
       <div class="col-sm-3">
         <div class="actions">
@@ -150,12 +154,10 @@
         </div>
       </div>
     </div>
-
   </div>
   </div>
-   <% end %>
-   
-  
+  <% end %>
+  <div id="myModal" class="modal fade"></div>
 
 <script type="text/javascript">
   $(function () {
@@ -172,4 +174,22 @@
       } 
     });
   });
+
+  $(document).ready(function() {
+    $('#example3').DataTable( {
+      //"scrollY":        "200px",
+      "scrollX":        "1000px",
+      "scrollCollapse": true,
+      "paging":         true
+    } );
+  } );
+ 
+ $(document).ready(function() {
+    $('#example4').DataTable( {
+      //"scrollY":        "200px",
+      "scrollX":        "1000px",
+      "scrollCollapse": true,
+      "paging":         true
+    } );
+  } );
 </script>

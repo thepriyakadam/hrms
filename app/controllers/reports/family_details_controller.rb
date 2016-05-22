@@ -1,5 +1,7 @@
 class Reports::FamilyDetailsController < ApplicationController
   def new
+    session[:active_tab] = "employee"
+    session[:active_tab1] = "basicreport"
   end
 
   def family_detail_report

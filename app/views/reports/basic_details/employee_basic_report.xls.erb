@@ -99,18 +99,18 @@
 
         <Cell ss:Index="84"><Data ss:Type="String">Employee Previous Company Name 1 </Data></Cell>
         <Cell ss:Index="85"><Data ss:Type="String">Employee Previous Designation </Data></Cell>
-        <Cell ss:Index="86"><Data ss:Type="Decimal">Employee Previous Experience </Data></Cell>
-        <Cell ss:Index="87"><Data ss:Type="Decimal">Employee Previous CTC </Data></Cell>
+        <Cell ss:Index="86"><Data ss:Type="String">Employee Previous Experience </Data></Cell>
+        <Cell ss:Index="87"><Data ss:Type="String">Employee Previous CTC </Data></Cell>
 
         <Cell ss:Index="88"><Data ss:Type="String">Employee Previous Company Name 2 </Data></Cell>
         <Cell ss:Index="89"><Data ss:Type="String">Employee Previous Designation </Data></Cell>
-        <Cell ss:Index="90"><Data ss:Type="Decimal">Employee Previous Experience </Data></Cell>
-        <Cell ss:Index="91"><Data ss:Type="Decimal">Employee Previous CTC </Data></Cell>
+        <Cell ss:Index="90"><Data ss:Type="String">Employee Previous Experience </Data></Cell>
+        <Cell ss:Index="91"><Data ss:Type="String">Employee Previous CTC </Data></Cell>
 
          <Cell ss:Index="92"><Data ss:Type="String">Employee Previous Company Name 3 </Data></Cell>
         <Cell ss:Index="93"><Data ss:Type="String">Employee Previous Designation </Data></Cell>
-        <Cell ss:Index="94"><Data ss:Type="Decimal">Employee Previous Experience </Data></Cell>
-        <Cell ss:Index="95"><Data ss:Type="Decimal">Employee Previous CTC </Data></Cell>
+        <Cell ss:Index="94"><Data ss:Type="String">Employee Previous Experience </Data></Cell>
+        <Cell ss:Index="95"><Data ss:Type="String">Employee Previous CTC </Data></Cell>
 
         <Cell ss:Index="96"><Data ss:Type="String">Employee Skill 1</Data></Cell>
         <Cell ss:Index="97"><Data ss:Type="String">Employee Skill Level</Data></Cell>
@@ -306,7 +306,7 @@
 
 
           <Cell ss:Index="52"><Data ss:Type="String"><%= employee_bank_detail.try(:account_no) %></Data></Cell>
-          <Cell ss:Index="53"><Data ss:Type="String"><%= employee_bank_detail.try(:bank_name) %></Data></Cell>
+          <Cell ss:Index="53"><Data ss:Type="String"><%= employee_bank_detail.try(:bank).try(:name) %></Data></Cell>
           <Cell ss:Index="54"><Data ss:Type="String"><%= employee_bank_detail.try(:branch_name) %></Data></Cell>
           <Cell ss:Index="55"><Data ss:Type="String"><%= employee_bank_detail.try(:contact_no) %></Data></Cell>
           <Cell ss:Index="56"><Data ss:Type="String"><%= employee_bank_detail.try(:micr_code) %></Data></Cell>
@@ -384,15 +384,15 @@
           <Cell ss:Index="113"><Data ss:Type="String"><%= certification3.try(:description) %></Data></Cell>
 
           <Cell ss:Index="114"><Data ss:Type="String"><%= award1.try(:award_name) %></Data></Cell>
-          <Cell ss:Index="115"><Data ss:Type="Number"><%= award1.try(:year).try(:name) %></Data></Cell>
+          <Cell ss:Index="115"><Data ss:Type="String"><%= award1.try(:year).try(:name) %></Data></Cell>
           <Cell ss:Index="116"><Data ss:Type="String"><%= award1.try(:award_from) %></Data></Cell>
 
           <Cell ss:Index="117"><Data ss:Type="String"><%= award2.try(:award_name) %></Data></Cell>
-          <Cell ss:Index="118"><Data ss:Type="Number"><%= award2.try(:year).try(:name) %></Data></Cell>
+          <Cell ss:Index="118"><Data ss:Type="String"><%= award2.try(:year).try(:name) %></Data></Cell>
           <Cell ss:Index="119"><Data ss:Type="String"><%= award2.try(:award_from) %></Data></Cell>
 
           <Cell ss:Index="120"><Data ss:Type="String"><%= award3.try(:award_name) %></Data></Cell>
-          <Cell ss:Index="121"><Data ss:Type="Number"><%= award3.try(:year).try(:name) %></Data></Cell>
+          <Cell ss:Index="121"><Data ss:Type="String"><%= award3.try(:year).try(:name) %></Data></Cell>
           <Cell ss:Index="122"><Data ss:Type="String"><%= award3.try(:award_from) %></Data></Cell>
 
           <Cell ss:Index="123"><Data ss:Type="String"><%= family1.try(:relation) %></Data></Cell>

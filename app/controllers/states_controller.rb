@@ -15,6 +15,7 @@ class StatesController < ApplicationController
   # GET /states/new
   def new
     @state = State.new
+    @states = State.all
   end
 
   # GET /states/1/edit
@@ -25,14 +26,14 @@ class StatesController < ApplicationController
   # POST /states.json
   def create
     @state = State.new(state_params)
-
+    @states = State.all
     respond_to do |format|
       if @state.save
-        format.html { redirect_to @state, notice: 'State was successfully created.' }
-        format.json { render :show, status: :created, location: @state }
+        @state = State.new
+       format.js { @flag = true }
       else
-        format.html { render :new }
-        format.json { render json: @state.errors, status: :unprocessable_entity }
+        flash.now[:alert] = 'state Already Exist.'
+        format.js { @flag = false }
       end
     end
   end
@@ -40,25 +41,17 @@ class StatesController < ApplicationController
   # PATCH/PUT /states/1
   # PATCH/PUT /states/1.json
   def update
-    respond_to do |format|
-      if @state.update(state_params)
-        format.html { redirect_to @state, notice: 'State was successfully updated.' }
-        format.json { render :show, status: :ok, location: @state }
-      else
-        format.html { render :edit }
-        format.json { render json: @state.errors, status: :unprocessable_entity }
-      end
-    end
+     @state.update(state_params)
+     @states = State.all
+     @state = State.new
+
   end
 
   # DELETE /states/1
   # DELETE /states/1.json
   def destroy
     @state.destroy
-    respond_to do |format|
-      format.html { redirect_to states_url, notice: 'State was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    @states = State.all
   end
 
   private

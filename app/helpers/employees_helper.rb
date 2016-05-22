@@ -39,6 +39,10 @@ module EmployeesHelper
     emp.try(:first_name).to_s + ' ' + emp.try(:middle_name).to_s + ' ' + emp.try(:last_name).to_s
   end
 
+  def code_full_name(emp)
+    emp.try(:manual_employee_code).to_s+' '+emp.try(:first_name).to_s+' '+emp.try(:middle_name).to_s+' '+emp.try(:last_name).to_s
+  end
+
   def short_name(emp)
     emp.try(:first_name).to_s + ' ' + emp.try(:last_name).to_s
   end
@@ -49,8 +53,8 @@ module EmployeesHelper
     else
       if current_user.role.name == 'Company'
         Employee.all.collect { |e| [e.manual_employee_code + '  ' + e.first_name.to_s + ' ' + e.last_name.to_s, e.id] }
-      elsif current_user.role.name == 'CompanyLocation'
-        Employee.where(company_location_id: current_user.company_location_id).collect { |e| [e.manual_employee_code + '  ' + e.first_name.to_s + ' ' + e.last_name.to_s, e.id] }
+      elsif current_user.role.name == 'CompanyLocation' || current_user.role.name == "SalaryAccount"
+        Employee.where(company_location_id: current_user.company_location_id).collect { |e| [e.manual_employee_code + '  ' + e.first_name.to_s + ' ' + e.last_name.to_s, e.id] }  
       end
     end
   end

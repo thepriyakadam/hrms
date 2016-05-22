@@ -1,20 +1,10 @@
 class DistrictsController < ApplicationController
   before_action :set_district, only: [:show, :edit, :update, :destroy]
 
-  # GET /districts
-  # GET /districts.json
-  def index
-    @districts = District.all
-  end
-
-  # GET /districts/1
-  # GET /districts/1.json
-  def show
-  end
-
-  # GET /districts/new
+  
   def new
     @district = District.new
+    @districts = District.all
   end
 
   # GET /districts/1/edit
@@ -24,15 +14,15 @@ class DistrictsController < ApplicationController
   # POST /districts
   # POST /districts.json
   def create
-    @district = District.new(district_params)
-
+     @district = District.new(district_params)
+    @districts = District.all
     respond_to do |format|
       if @district.save
-        format.html { redirect_to @district, notice: 'District was successfully created.' }
-        format.json { render :show, status: :created, location: @district }
+        @district = District.new
+       format.js { @flag = true }
       else
-        format.html { render :new }
-        format.json { render json: @district.errors, status: :unprocessable_entity }
+        flash.now[:alert] = 'district Already Exist.'
+        format.js { @flag = false }
       end
     end
   end
@@ -40,25 +30,17 @@ class DistrictsController < ApplicationController
   # PATCH/PUT /districts/1
   # PATCH/PUT /districts/1.json
   def update
-    respond_to do |format|
-      if @district.update(district_params)
-        format.html { redirect_to @district, notice: 'District was successfully updated.' }
-        format.json { render :show, status: :ok, location: @district }
-      else
-        format.html { render :edit }
-        format.json { render json: @district.errors, status: :unprocessable_entity }
-      end
-    end
+     @district.update(district_params)
+     @districts = District.all
+     @district = District.new
+
   end
 
   # DELETE /districts/1
   # DELETE /districts/1.json
   def destroy
     @district.destroy
-    respond_to do |format|
-      format.html { redirect_to districts_url, notice: 'District was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    @districts = District.all
   end
 
   private

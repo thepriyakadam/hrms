@@ -1,65 +1,57 @@
-<%= bootstrap_form_for @attribute_rating_sheet,url:{action:'is_confirm_appraisee'} do |f| %>
+<%= bootstrap_form_for @attribute_rating_sheet,url:{action:'is_confirm_appraisee',id: current_user.employee_id} do |f| %>
 <div class="box">
   <div class="box-header">
     <h3 class="box-title">Employee Attribute Rating</h3>
-    <div class="pull-right">
-       <!-- link_to "New Attribute rating sheet", new_attribute_rating_sheet_path, class: 'btn btn-sm btn-primary' %>  -->
-    </div>
   </div>
   <div class="box-body">
-    <table id="example2" class="table table-bordered table-hover table-condensed">
-        <thead>
+    <table id="example3" class="table table-bordered table-hover table-condensed">
+      <thead>
+        <tr>
+          <th><input type="checkbox" id="selectAll" value="selectAll"></th>
+          <th>Attribute & Definition</th>
+          <th>Weightage</th>
+          <th>Appraisee comment</th>
+          <th>Appraisee Evaluation</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% sum = 0 %>
+        <% @attribute_rating_shets.each do |a| %>
           <tr>
-            <th><input type="checkbox" id="selectAll" value="selectAll"></th>
-            <th>Attribute & Definition</th>
-            <th>Weightage</th>
-            <th>Appraisee comment</th>
-            <th>Appraisee rating</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @attribute_rating_shets.each do |a| %>
-            <tr>
-              <% if a.employee_attribute.is_confirm == true %>
-                <td><%= check_box_tag "attribute_rating_sheet_ids[]", a.id %></td>
-                <td><%= a.employee_attribute.attribute_master.name %></td>
-                <td><%= a.employee_attribute.weightage %></td>
-                <td><%= a.appraisee_comment %></td>
-                <td><%= a.appraisee_rating_id %></td>
-                <td>
-                  <% if a.is_confirm_appraisee == true %>
-                  <small class="label label-info">Confirmed</small>
-                  <% else %>
-                  <%= link_to '', edit_attribute_rating_sheet_path(a),class: 'btn btn-success btn-xs fa fa-edit' %>
-                  
-                  <% end %>
-                </td>
+            <td><%= check_box_tag "attribute_rating_sheet_ids[]", a.id unless a.is_confirm_appraisee %></td>
+            <td><%= a.employee_attribute.attribute_master.name %></td>
+            <td><%= weightage = a.employee_attribute.weightage %></td>
+            <td><%= a.appraisee_comment %></td>
+            <td><%= rating = a.appraisee_rating.code %></td>
+            <% output = weightage * rating / 100.to_f %>
+            <% sum = sum + output %>
+            <td>
+              <% if a.is_confirm_appraisee %>
+                <small class="label label-info">Confirmed</small>
               <% else %>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <%= link_to '', modal_attribute_rating_sheets_path(a),class: 'btn btn-success btn-xs fa fa-edit',remote: true %>
               <% end %>
-
-            </tr>
-          <% end %>
-        </tbody>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
     </table>
+    <h3>Rating - <%= sum %> </h3>
       <div class="row">
         <div class="col-sm-3">
           <div class="actions">
             <%= f.submit "Confirm", class: 'btn btn-primary btn-sm' %>
-
             <%= link_to 'Back', new_goal_rating_sheet_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
           </div>
-        </div>
+        </div>    
       </div>
- 
-</div>
-</div>
+    </div>
+  </div>
 <% end %>
+
+<div id="myModal" class="modal fade"></div>
+
 <script type="text/javascript">
   $(function () {
     $('#selectAll').click(function() {
@@ -75,4 +67,13 @@
       } 
     });
   });
+
+  $(document).ready(function() {
+    $('#example3').DataTable( {
+        // "scrollY":        "200px",
+        "scrollX":        "1000px",
+        "scrollCollapse": true,
+        "paging":         false
+    } );
+} );
 </script>

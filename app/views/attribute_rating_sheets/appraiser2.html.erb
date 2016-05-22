@@ -69,7 +69,7 @@
               <th>Degree</th>
               <th>Year Of Passing</th>
               <th>Marks</th>
-              <th>Qualification Category</th>
+              <th>Qualification</th>
             </tr>
           </thead>
           <tbody>
@@ -77,6 +77,7 @@
               <tr>
                 <td><%= q.degree.name %></td>
                 <td><%= q.year.name.to_s+" / "+q.marks.to_s %></td>
+                <td><%= q.degree_type.name %></td>
                 <td><%= q.degree_type.name %></td>
               </tr>
             <% end %>
@@ -87,9 +88,9 @@
 
     <%= bootstrap_form_for(@attribute_rating_sheet,url:{action: "appraiser2_create", id: @employee.id}) do |f| %>
       <div class="box-header with-border">
-        <h3 class="box-title">Attributes</h3>
+        <h3 class="box-title">Attributes Comments and Ratings</h3>
       </div>
-      <table id="example3" class="table table-bordered table-hover table-condensed">
+      <table class="table table-bordered table-hover table-condensed">
         <thead>
           <tr>
             <th>Attribute & Definition</th>
@@ -111,7 +112,7 @@
               <td><%= a.appraisee_rating.try(:code) %></td>
               <td><%= a.appraiser_comment %></td>
               <td><%= a.appraiser_rating.try(:code) %></td> 
-              <td><%= text_field_tag 'appraiser2_comment[]' %></td>
+              <td><%= text_field_tag 'appraiser2_comment[]',"",class: "form-control" %></td>
               <td><%= select_tag 'appraiser2_rating_id[]',options_for_select(all_rating_type) ,{class: 'form-control', hide_label: true,include_blank: " Select Rating"} %></td>
               <%= hidden_field_tag 'attribute_rating_sheet_id[]', {},value: a.id %> 
                <%= hidden_field_tag :appraiser_2_id, {},value: current_user.employee_id %> 
@@ -133,9 +134,9 @@
 
     <%= bootstrap_form_for @attribute_rating_sheet,url:{action:'is_confirm_appraiser2',id: @employee.id} do |f| %>
       <div class="box-header with-border">
-        <h3 class="box-title">Attribute List</h3>
+        <h3 class="box-title">Attribute Confirmation</h3>
       </div>
-      <table id="example4" class="table table-bordered table-hover table-condensed">
+      <table class="table table-bordered table-hover table-condensed">
         <thead>
           <tr>
             <th><input type="checkbox" id="selectAll" value="selectAll"></th>
@@ -151,19 +152,31 @@
           </tr>
         </thead>
         <tbody>
+          <% appraisee_rating_sum = 0 %>
+          <% appraiser_rating_sum = 0 %>
+          <% appraiser2_rating_sum = 0 %>
+
           <% @attribute_rating_multi_sheets.each do |a| %>
             <tr>
               <td>
                 <%= check_box_tag "attribute_rating_sheet_ids[]", a.id unless a.is_confirm_appraiser2 %>
               </td>
               <td><%= a.employee_attribute.attribute_master.name %></td>
-              <td><%= a.employee_attribute.weightage %></td>
+              <td><%= weightage = a.employee_attribute.weightage %></td>
               <td><%= a.appraisee_comment %></td>
-              <td><%= a.appraisee_rating.try(:code) %></td>
+              <td><%= appraisee_rating = a.appraisee_rating.try(:code) %></td>
               <td><%= a.appraiser_comment %></td>
-              <td><%= a.appraiser_rating.try(:code)%></td> 
+              <td><%= appraiser_rating = a.appraiser_rating.try(:code)%></td> 
               <td><%= a.appraiser2_comment %></td>
-              <td><%= a.appraiser2_rating.try(:code) %></td>
+              <td><%= appraiser2_rating = a.appraiser2_rating.try(:code) %></td>
+              <% appraisee_rating_output = weightage * appraisee_rating.to_i / 100.to_f %>
+              <% appraiser_rating_output = weightage * appraiser_rating.to_i / 100.to_f %>
+              <% appraiser2_rating_output = weightage * appraiser2_rating.to_i / 100.to_f %>
+
+              <% appraisee_rating_sum = appraisee_rating_sum + appraisee_rating_output %>
+              <% appraiser_rating_sum = appraiser_rating_sum + appraiser_rating_output %>
+              <% appraiser2_rating_sum = appraiser2_rating_sum + appraiser2_rating_output %>
+
               <%= hidden_field_tag 'attribute_rating_sheet_id[]', {},value: a.id %> 
               <td>
                 <% if a.is_confirm_appraiser2 %>
@@ -176,7 +189,9 @@
           <% end %>
         </tbody>
       </table>
-
+      <h6>Appraisee Rating - <%= appraisee_rating_sum %></h6>
+      <h6>Appraiser Rating - <%= appraiser_rating_sum %></h6>
+      <h6>Reviewer Rating - <%= appraiser2_rating_sum %></h6>
       <div class="row">
         <div class="col-sm-3">
           <div class="actions">

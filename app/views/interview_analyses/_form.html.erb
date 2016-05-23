@@ -5,20 +5,23 @@
       <div class="row">
 
        <div class="col-sm-3">
+       <label>Interview Evaluation</label>
         <div class="form-group required">
-          <%= f.text_field :interview_evalution_id,label:"Interview Evaluation",class: 'input_interview_evalution' %>
+          <%= f.select :interview_evalution_id, all_interview_evaluation, {hide_label: true,include_blank: " Select Interview Evaluation"} %>
         </div>
       </div>
 
        <div class="col-sm-3">
+       <label>Interview Attribute</label>
         <div class="form-group required">
-         <%= f.text_field :interview_attribute_id,label:"Interview Attribute",class: 'input_interview_attribute' %>
+        <%= f.select :interview_attribute_id, all_interview_attribute, {hide_label: true,include_blank: " Select Interview Attribute"} %>
         </div>
       </div>
 
       <div class="col-sm-3">
+      <label>Interview Decision</label>
         <div class="form-group required">
-         <%= f.text_field :interview_decision_id,label:"Interview Decision",class: 'input_interview_decision' %>
+        <%= f.select :interview_decision_id, all_interview_decision, {hide_label: true,include_blank: " Select Interview Decision"} %>
         </div>
       </div>
 

@@ -175,6 +175,10 @@ end
   end
   end
 
+  def interviewee_list
+     @interview_schedules = InterviewSchedule.where(employee_id: current_user.employee_id)
+  end
+
 
   private
 

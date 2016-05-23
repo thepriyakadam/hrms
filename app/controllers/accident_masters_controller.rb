@@ -15,6 +15,7 @@ class AccidentMastersController < ApplicationController
   # GET /accident_masters/new
   def new
     @accident_master = AccidentMaster.new
+    @accident_masters = AccidentMaster.all
   end
 
   # GET /accident_masters/1/edit
@@ -25,14 +26,14 @@ class AccidentMastersController < ApplicationController
   # POST /accident_masters.json
   def create
     @accident_master = AccidentMaster.new(accident_master_params)
-
+    @accident_masters = AccidentMaster.all
     respond_to do |format|
       if @accident_master.save
-        format.html { redirect_to @accident_master, notice: 'Accident master was successfully created.' }
-        format.json { render :show, status: :created, location: @accident_master }
+         @accident_master = AccidentMaster.new
+        format.js { @flag = true }
       else
-        format.html { render :new }
-        format.json { render json: @accident_master.errors, status: :unprocessable_entity }
+        flash.now[:alert] = 'Accident Already Exist.'
+        format.js { @flag = false }
       end
     end
   end
@@ -40,25 +41,16 @@ class AccidentMastersController < ApplicationController
   # PATCH/PUT /accident_masters/1
   # PATCH/PUT /accident_masters/1.json
   def update
-    respond_to do |format|
-      if @accident_master.update(accident_master_params)
-        format.html { redirect_to @accident_master, notice: 'Accident master was successfully updated.' }
-        format.json { render :show, status: :ok, location: @accident_master }
-      else
-        format.html { render :edit }
-        format.json { render json: @accident_master.errors, status: :unprocessable_entity }
-      end
-    end
+    @accident_master.update(accident_master_params)
+    @accident_masters = AccidentMaster.all
+    @accident_master = AccidentMaster.new
   end
 
   # DELETE /accident_masters/1
   # DELETE /accident_masters/1.json
   def destroy
     @accident_master.destroy
-    respond_to do |format|
-      format.html { redirect_to accident_masters_url, notice: 'Accident master was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    @accident_masters = AccidentMaster.all
   end
 
   private

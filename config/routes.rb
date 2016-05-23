@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :training_topics
+  resources :employee_promotions
   resources :accident_masters
   resources :travel_expence_types
   resources :travel_modes

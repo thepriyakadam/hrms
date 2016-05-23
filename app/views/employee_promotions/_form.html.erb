@@ -1,0 +1,73 @@
+<div class="box box-default">
+    <div class="box-header with-border">
+      <h3 class="box-title">Create Employee Promotion</h3>
+    </div><!-- /.box-header -->
+ <div class="box-body">
+  <%= bootstrap_form_for(@employee_promotion) do |f| %>
+  
+  <div class="row">
+    <div class="col-sm-3">
+     <div class="form-group required">
+      <%= f.text_field :employee_id,label: 'Job Title' %>
+     </div>
+    </div>
+
+    <div class="col-sm-3">
+     <div class="form-group required">
+      <%= f.text_field :department_id %>
+     </div>
+    </div>
+
+    <div class="col-sm-3">
+     <div class="form-group required">
+      <%= f.text_field :employee_designation_id %>
+     </div>
+    </div>
+
+    <div class="col-sm-3">
+     <div class="form-group required">
+      <%= f.text_field :employee_grade_id %>
+     </div>
+    </div>
+
+    </div>
+
+     <div class="row">
+    <div class="col-sm-3">
+     <div class="form-group required">
+      <%= f.text_field :employee_category_id,label: 'Job Title' %>
+     </div>
+    </div>
+
+    <div class="col-sm-3">
+     <div class="form-group required">
+      <%= f.text_field :employee_ctc %>
+     </div>
+    </div>
+
+    <div class="col-sm-3">
+     <div class="form-group required">
+      <%= f.text_field :employee_justification %>
+     </div>
+    </div>
+
+    <div class="col-sm-3">
+     <div class="form-group required">
+      <%= f.text_field :employee_effective_from %>
+     </div>
+    </div>
+
+    </div>
+
+
+    <div class="col-sm-3">
+     <div class="form-group required">
+      <%= f.text_field :employee_effective_to %>
+     </div>
+    </div>
+
+
+
+  
+  
+<% end %>

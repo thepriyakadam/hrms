@@ -176,7 +176,7 @@ end
   end
 
   def interviewee_list
-     @interview_schedules = InterviewSchedule.where(employee_id: current_user.employee_id)
+     @interview_schedules = InterviewSchedule.where(employee_id: current_user.employee_id,is_confirm: true)
   end
 
 

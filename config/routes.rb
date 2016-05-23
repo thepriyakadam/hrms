@@ -132,6 +132,7 @@ Rails.application.routes.draw do
       post :is_confirm
       get :new1
       get :edit1
+      get :interviewee_list
     end
   end
   resources :vacancy_masters do

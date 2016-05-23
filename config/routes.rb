@@ -132,6 +132,7 @@ Rails.application.routes.draw do
       post :is_confirm
       get :new1
       get :edit1
+      get :interview_reschedule_list
       get :interviewee_list
     end
   end
@@ -155,6 +156,11 @@ Rails.application.routes.draw do
       get :vacancy_resume
       get :modal2
       post :confirm_candidate
+      get :modal3
+      patch :update_vacancy_details
+      get :vacancy_history_resume
+      get :approved_vacancy_request_history_list
+      get :particular_vacancy_request_list_history
     end
   end
   resources :leave_c_offs do

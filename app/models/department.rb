@@ -7,6 +7,7 @@ class Department < ActiveRecord::Base
   has_many :joining_details
   has_many :vacancy_masters
   has_many :shift_rotations
+  has_many :vacancy_request_histories
 
   validates :manual_department_code, presence: true, uniqueness: { case_sensitive: false }
   validates :name, presence: true

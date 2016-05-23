@@ -141,7 +141,14 @@ end
     #byebug
     @interview_schedule = InterviewSchedule.find(params[:id])
     @employee = Employee.find(@interview_schedule.employee_id)
-    @interview_reschedule = InterviewReschedule.new  
+    @interview_reschedule = InterviewReschedule.new
+  end
+
+  def interview_reschedule_list
+     puts "-------------------"
+     @interview_schedule = InterviewSchedule.find(params[:format])
+     @interview_reschedules = InterviewReschedule.all
+     @interview_reschedules = InterviewReschedule.where(interview_schedule_id: @interview_schedule.id)
   end
 
   def search_by_interview_date

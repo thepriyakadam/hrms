@@ -4,7 +4,7 @@ class CreateEmployeeGoals < ActiveRecord::Migration
       t.references :appraisee, index: true, foreign_key: true
       t.references :appraiser, index: true, foreign_key: true
       t.references :goal_perspective, index: true, foreign_key: true
-      t.references :goal_measure, index: true, foreign_key: true
+      t.string :goal_measure
 
       t.references :employee, index: true, foreign_key: true
       t.references :period, index: true, foreign_key: true

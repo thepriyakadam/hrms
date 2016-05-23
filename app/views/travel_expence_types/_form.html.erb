@@ -1,29 +1,25 @@
-<%= form_for(@travel_expence_type) do |f| %>
-  <% if @travel_expence_type.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@travel_expence_type.errors.count, "error") %> prohibited this travel_expence_type from being saved:</h2>
-
-      <ul>
-      <% @travel_expence_type.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+<%= bootstrap_form_for(@travel_expence_type,html: {id: 'travel_expence_type'},remote:true) do |f| %>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :code,hide_label:true, placeholder: 'Travel Expence Code ' %>
+      </div>
+    </div> 
+     <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :name,hide_label:true, placeholder: 'Travel Expence Type' %>
+      </div>
     </div>
-  <% end %>
+     <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :description,hide_label:true, placeholder: 'Description' %>
+      </div>
+    </div>
 
-  <div class="field">
-    <%= f.label :code %><br>
-    <%= f.text_field :code %>
-  </div>
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :description %><br>
-    <%= f.text_field :description %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit :class => class_name, data: { disable_with: data_info } %>
+      </div>
+    </div>
   </div>
 <% end %>

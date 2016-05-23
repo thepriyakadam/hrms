@@ -1,17 +1,18 @@
 <%= bootstrap_form_for(@employee_attribute,remote:true,html: {id: "employee_attribute"}) do |f| %>
-  <div id="error" class="error text-center" style="color:red; background-color: pink;"></div></br>
+  <div id="error" class="error text-center" style="color:red; background-color: pink;"></div>
+  </br>
   <%= f.hidden_field :employee_id,value: @employee.id %>
 
   <div class="row">
     <div class="col-sm-3">
       <div class="field">
-        <%= f.select :performance_period_id,all_period_type,{hide_label: true,include_blank: " Select Period"}%>
+        <%= f.select :performance_period_id, all_period_type,{hide_label: true,include_blank: " Select Period"}%>
       </div>
     </div>
 
     <div class="col-sm-5">
       <div class="field">
-        <%= f.select :attribute_master_id,all_attribute_type,{hide_label: true, include_blank: "Select Attribute & Definition" }%>
+        <%= f.select :attribute_master_id, all_attribute_type,{hide_label: true, include_blank: "Select Attribute & Definition" }%>
       </div>
     </div>
 
@@ -39,7 +40,9 @@
         required: true
       },
       "employee_attribute[weightage]":{
-        required: true
+        required: true,
+        numbersOnly:true,
+        range:[1,100]
       }
     },
     messages: {

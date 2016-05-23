@@ -19,7 +19,7 @@ div.nobreak{ page-break-inside: avoid;
           <td colspan="6">
            <center><strong>BHANDARI</strong></center> 
             <center><strong>BHANDARI FOILS AND TUBES LTD.</strong></center>
-            <center><small>Manufacturers of Stainless Steel Cold Rolled Coils, Tubes & Fitings</small></center><br><br>
+            <center><small>Manufacturers of Stainless Steel Cold Rolled Coils, Tubes & Fittings</small></center><br><br>
             
           </td>           
         </tr>
@@ -33,11 +33,11 @@ div.nobreak{ page-break-inside: avoid;
         </tr>
       
         <tr>
-          <th>Employee Code</th>
+          <th>Employee ID</th>
           <td><%= @employee.manual_employee_code%></td>
           <th>CL</th>        
           <td align="right"><%= @working_day.try(:cl_leave) %></td> 
-          <th style="text-align: right;">Month Day</th>        
+          <th style="text-align: right;">Monthly Days</th>        
           <td align="right"><%= @working_day.try(:day_in_month) %></td>            
         </tr>
         <tr>
@@ -61,7 +61,7 @@ div.nobreak{ page-break-inside: avoid;
           <td><%= @employee.joining_detail.try(:employee_designation).name %></td>
           <th>Advance Leave</th>    
           <td align="right"><%= 0 %></td>   
-           <th style="text-align: right;">Weekoff</th>    
+           <th style="text-align: right;">Week Off</th>    
           <td align="right"><%= @working_day.try(:week_off_day) %></td>                    
         </tr>
         <tr>
@@ -73,7 +73,7 @@ div.nobreak{ page-break-inside: avoid;
           <td align="right"><%= @working_day.try(:absent_day) %></td>       
         </tr>
         <tr>
-          <th>Contact No</th>
+          <th>Contact No.</th>
           <td><%= @employee.contact_no %></td>
           <th>LWP</th>    
           <td align="right"><%= @working_day.try(:lwp_leave) %></td>        

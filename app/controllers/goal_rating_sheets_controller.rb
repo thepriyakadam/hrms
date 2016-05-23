@@ -19,7 +19,7 @@ class GoalRatingSheetsController < ApplicationController
     @employee_goals = EmployeeGoal.where(employee_id: current_user.employee_id,is_confirm: true)
     @period = @employee_goals.try(:first).try(:period)
     @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: current_user.employee_id,appraisee_comment: nil)
-    @goal_rating_shets = GoalRatingSheet.where(appraisee_id: current_user.employee_id).where.not(appraisee_comment: nil)
+    @goal_rating_shets = GoalRatingSheet.where(appraisee_id: current_user.employee_id, is_confirm_appraisee: nil).where.not(appraisee_comment: nil)
   end
 
   # GET /goal_rating_sheets/1/edit

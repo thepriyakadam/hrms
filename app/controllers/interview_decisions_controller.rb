@@ -15,6 +15,7 @@ class InterviewDecisionsController < ApplicationController
   # GET /interview_decisions/new
   def new
     @interview_decision = InterviewDecision.new
+    @interview_decisions = InterviewDecision.all
   end
 
   # GET /interview_decisions/1/edit
@@ -25,14 +26,14 @@ class InterviewDecisionsController < ApplicationController
   # POST /interview_decisions.json
   def create
     @interview_decision = InterviewDecision.new(interview_decision_params)
-
+    @interview_decisions = InterviewDecision.all
     respond_to do |format|
       if @interview_decision.save
-        format.html { redirect_to @interview_decision, notice: 'Interview decision was successfully created.' }
-        format.json { render :show, status: :created, location: @interview_decision }
+         @interview_decision = InterviewDecision.new
+        format.js { @flag = true }
       else
-        format.html { render :new }
-        format.json { render json: @interview_decision.errors, status: :unprocessable_entity }
+        flash.now[:alert] = 'Interview Already Exist.'
+        format.js { @flag = false }
       end
     end
   end
@@ -40,25 +41,16 @@ class InterviewDecisionsController < ApplicationController
   # PATCH/PUT /interview_decisions/1
   # PATCH/PUT /interview_decisions/1.json
   def update
-    respond_to do |format|
-      if @interview_decision.update(interview_decision_params)
-        format.html { redirect_to @interview_decision, notice: 'Interview decision was successfully updated.' }
-        format.json { render :show, status: :ok, location: @interview_decision }
-      else
-        format.html { render :edit }
-        format.json { render json: @interview_decision.errors, status: :unprocessable_entity }
-      end
-    end
+    @interview_decision.update(interview_decision_params)
+    @interview_decisions = InterviewDecision.all
+    @interview_decision = InterviewDecision.new
   end
 
   # DELETE /interview_decisions/1
   # DELETE /interview_decisions/1.json
   def destroy
     @interview_decision.destroy
-    respond_to do |format|
-      format.html { redirect_to interview_decisions_url, notice: 'Interview decision was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    @interview_decision = InterviewDecision.all
   end
 
   private

@@ -15,6 +15,7 @@ class InterviewEvalutionsController < ApplicationController
   # GET /interview_evalutions/new
   def new
     @interview_evalution = InterviewEvalution.new
+    @interview_evalutions = InterviewEvalution.all
   end
 
   # GET /interview_evalutions/1/edit
@@ -25,43 +26,37 @@ class InterviewEvalutionsController < ApplicationController
   # POST /interview_evalutions.json
   def create
     @interview_evalution = InterviewEvalution.new(interview_evalution_params)
-
+    @interview_evalutions = InterviewEvalution.all
     respond_to do |format|
       if @interview_evalution.save
-        format.html { redirect_to @interview_evalution, notice: 'Interview evalution was successfully created.' }
-        format.json { render :show, status: :created, location: @interview_evalution }
+         @interview_evalution = InterviewEvalution.new
+        format.js { @flag = true }
       else
-        format.html { render :new }
-        format.json { render json: @interview_evalution.errors, status: :unprocessable_entity }
+        flash.now[:alert] = 'Interview Already Exist.'
+        format.js { @flag = false }
       end
     end
   end
+
 
   # PATCH/PUT /interview_evalutions/1
   # PATCH/PUT /interview_evalutions/1.json
   def update
-    respond_to do |format|
-      if @interview_evalution.update(interview_evalution_params)
-        format.html { redirect_to @interview_evalution, notice: 'Interview evalution was successfully updated.' }
-        format.json { render :show, status: :ok, location: @interview_evalution }
-      else
-        format.html { render :edit }
-        format.json { render json: @interview_evalution.errors, status: :unprocessable_entity }
-      end
-    end
+    @interview_evalution.update(interview_evalution_params)
+    @interview_evalutions = InterviewEvalution.all
+    @interview_evalution = InterviewEvalution.new
   end
+  
 
   # DELETE /interview_evalutions/1
   # DELETE /interview_evalutions/1.json
   def destroy
     @interview_evalution.destroy
-    respond_to do |format|
-      format.html { redirect_to interview_evalutions_url, notice: 'Interview evalution was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    @interview_evalutions = InterviewEvalution.all
   end
 
   private
+
     # Use callbacks to share common setup or constraints between actions.
     def set_interview_evalution
       @interview_evalution = InterviewEvalution.find(params[:id])

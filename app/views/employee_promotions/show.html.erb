@@ -1,0 +1,49 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Employee:</strong>
+  <%= @employee_promotion.employee %>
+</p>
+
+<p>
+  <strong>Department:</strong>
+  <%= @employee_promotion.department %>
+</p>
+
+<p>
+  <strong>Employee designation:</strong>
+  <%= @employee_promotion.employee_designation %>
+</p>
+
+<p>
+  <strong>Employee grade:</strong>
+  <%= @employee_promotion.employee_grade %>
+</p>
+
+<p>
+  <strong>Employee category:</strong>
+  <%= @employee_promotion.employee_category_id %>
+</p>
+
+<p>
+  <strong>Employee ctc:</strong>
+  <%= @employee_promotion.employee_ctc %>
+</p>
+
+<p>
+  <strong>Justification:</strong>
+  <%= @employee_promotion.justification %>
+</p>
+
+<p>
+  <strong>Effective from:</strong>
+  <%= @employee_promotion.effective_from %>
+</p>
+
+<p>
+  <strong>Effective to:</strong>
+  <%= @employee_promotion.effective_to %>
+</p>
+
+<%= link_to 'Edit', edit_employee_promotion_path(@employee_promotion) %> |
+<%= link_to 'Back', employee_promotions_path %>

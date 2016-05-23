@@ -1,0 +1,2 @@
+module InterviewDecisionsHelper
+end

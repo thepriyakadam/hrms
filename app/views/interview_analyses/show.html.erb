@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Vacancy request history:</strong>
+  <%= @interview_analysis.vacancy_request_history %>
+</p>
+
+<p>
+  <strong>Interview evalution:</strong>
+  <%= @interview_analysis.interview_evalution %>
+</p>
+
+<p>
+  <strong>Interview attribute:</strong>
+  <%= @interview_analysis.interview_attribute %>
+</p>
+
+<p>
+  <strong>Interview decision:</strong>
+  <%= @interview_analysis.interview_decision %>
+</p>
+
+<p>
+  <strong>Comment:</strong>
+  <%= @interview_analysis.comment %>
+</p>
+
+<%= link_to 'Edit', edit_interview_analysis_path(@interview_analysis) %> |
+<%= link_to 'Back', interview_analyses_path %>

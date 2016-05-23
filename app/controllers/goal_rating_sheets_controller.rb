@@ -12,7 +12,7 @@ class GoalRatingSheetsController < ApplicationController
   def show
   end
 
-  # GET /goal_rating_sheets/new  
+  # GET /goal_rating_sheets/new
   def new
     @goal_rating_sheet = GoalRatingSheet.new
     @goal_rting_sheets = EmployeeGoal.where(employee_id: current_user.employee_id).group(:employee_id)
@@ -85,7 +85,6 @@ class GoalRatingSheetsController < ApplicationController
   end
 
   def appraiser_create
-    
     goal_rating_sheets = params[:goal_rating_sheet_id]
     # employee_goals = params[:employee_goal_id]
     comments = params[:appraiser_comment]
@@ -101,12 +100,9 @@ class GoalRatingSheetsController < ApplicationController
         # emp = EmployeeGoal.find(e)
         # goal_rating_sheet = GoalRatingSheet.find(e)
         goal_rating_sheet.update(appraiser_comment: c, appraiser_rating_id: r, appraiser_id: params[:appraiser_id])
-
       end
     end
-  
     @employee = Employee.find(params[:appraisee_id])
-    
     redirect_to appraiser_goal_rating_sheets_path(format: @employee.id)
   end
   
@@ -205,33 +201,32 @@ class GoalRatingSheetsController < ApplicationController
   # end
 
   def is_confirm_appraiser
-
+    @employee = Employee.find(params[:id])
     @goal_rating_sheet_ids = params[:goal_rating_sheet_ids]
     if @goal_rating_sheet_ids.nil?
-        flash[:alert] = "Please Select the Checkbox"
-        redirect_to new_goal_rating_sheet_path
-      else
-        @goal_rating_sheet_ids.each do |gid|
+      flash[:alert] = "Please select the goal ratings"
+    else
+      @goal_rating_sheet_ids.each do |gid|
         @goal_rating_sheet = GoalRatingSheet.find(gid)
         @goal_rating_sheet.update(is_confirm_appraiser: true)
         flash[:notice] = "Confirmed Successfully"
-      end  
-       redirect_to appraiser_goal_rating_sheets_path(@goal_rating_sheet.appraisee_id)
+      end
     end
+    redirect_to appraiser_goal_rating_sheets_path(@employee.id)
   end
  
   def is_confirm_appraisee
     @goal_rating_sheet_ids = params[:goal_rating_sheet_ids]
     if @goal_rating_sheet_ids.nil?
-        flash[:alert] = "Please Select the Checkbox"
-        redirect_to new_goal_rating_sheet_path
-      else
-        @goal_rating_sheet_ids.each do |gid|
+      flash[:alert] = "Please select the goal ratings."
+      redirect_to new_goal_rating_sheet_path
+    else
+      @goal_rating_sheet_ids.each do |gid|
         @goal_rating_sheet = GoalRatingSheet.find(gid)
         @goal_rating_sheet.update(is_confirm_appraisee: true)
-        flash[:notice] = "Confirmed Successfully"
+         flash[:notice] = "Confirmed Successfully"
       end  
-       redirect_to new_goal_rating_sheet_path
+      redirect_to new_goal_rating_sheet_path
     end  
   end
 

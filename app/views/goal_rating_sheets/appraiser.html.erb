@@ -4,7 +4,6 @@
   </div>
   <div class="box-body">
    <%= bootstrap_form_for(@goal_rating_sheet,url: {action: "appraiser_create"},html: {id: "goal_rating_sheet"}) do |f| %>
-
     <table id="tbl" class="table table-bordered table-hover table-condensed">
     <thead>
       <tr>
@@ -25,7 +24,7 @@
       <% end %>
     </tbody>
   </table>
- <h3 class="box-title">Appraiser Goal Rating</h3>
+  <h3 class="box-title">Appraiser Goal Rating</h3>
     <table id="example3" class="table table-bordered table-hover table-condensed">
     <thead>
       <tr>
@@ -43,6 +42,7 @@
         <th>Appraiser Evaluation</th>
       </tr>
     </thead>
+
     <tbody>
       <% @goal_ratings.each do |g| %>
         <tr>
@@ -83,12 +83,9 @@
         </div>
       </div>
   <% end %>
-  
-
   <% end %> 
 <hr>
-
-<%= bootstrap_form_for @goal_rating_sheet,url:{action:'is_confirm_appraiser'} do |f| %>
+<%= bootstrap_form_for @goal_rating_sheet,url:{action:'is_confirm_appraiser', id: @employee.id} do |f| %>
  <h3 class="box-title">Appraiser Goal Rating List</h3> 
   <table id="example4" class="table table-bordered table-hover table-condensed">
     <thead>
@@ -110,47 +107,45 @@
       </tr>
     </thead>
     <tbody>
+      <% appraisee_sum = 0 %>
+      <% appraiser_sum = 0 %>
       <% @goal_rating_sheets.each do |g| %>
         <tr>
-          <td>
-            <% if g.is_confirm_appraiser == true %>
-          
-            <% else %>
-              <%= check_box_tag "goal_rating_sheet_ids[]", g.id %> 
-            <% end %>
-          </td>
+          <td><%= check_box_tag "goal_rating_sheet_ids[]", g.id unless g.is_confirm_appraiser %></td>
           <td><%= g.employee_goal.period.title %></td>
           <td><%= g.employee_goal.goal_perspective.name %></td>
           <td><%= g.employee_goal.goal_measure %></td>
           <td><%= g.employee_goal.target %></td>
-          <td><%= g.employee_goal.goal_weightage %></td>
+          <td><%= weightage = g.employee_goal.goal_weightage %></td>
           <td><%= g.employee_goal.difficulty_level %></td>
           <td><%= g.employee_goal.allign_to_supervisor %></td>
 
           <% if g.is_confirm_appraisee == true %>
-          <td><%= g.appraisee_comment %></td>
-          <td><%= g.appraisee_rating.try(:code) %></td>
+            <td><%= g.appraisee_comment %></td>
+            <td><%= appraisee_rating = g.appraisee_rating.try(:code) %></td>
           <% else %>
-          <td></td>
-          <td></td>
+            <td></td>
+            <td></td>
           <% end %>
-          <td><%= g.appraiser_comment %></td>
-          <td><%= g.appraiser_rating.try(:code) %></td>
-           
+            <td><%= g.appraiser_comment %></td>
+            <td><%= appraiser_rating = g.appraiser_rating.try(:code) %></td>
+            <% appraisee_output = weightage * appraisee_rating.to_i / 100.to_f %>
+            <% appraisee_sum = appraisee_sum + appraisee_output %>
+            <% appraiser_output = weightage * appraiser_rating.to_i / 100.to_f %>
+            <% appraiser_sum = appraiser_sum + appraiser_output %>
           <td>
           <% if g.is_confirm_appraiser == true %>
           <small class="label label-info">Confirmed</small>
             <% else %>
-              <%= link_to '', modal_appraiser_goal_rating_sheets_path(g) ,class: 'btn btn-xs btn-success fa fa-edit', remote: true %>
-              
+              <%= link_to '', modal_appraiser_goal_rating_sheets_path(g) ,class: 'btn btn-xs btn-success fa fa-edit', remote: true %>    
             <% end %>
           </td>
-          
         </tr>
       <% end %>
     </tbody>
   </table>
-
+  <h3>Appraisee Rating = <%= appraisee_sum %></h3>
+  <h3>Appraiser Rating = <%= appraiser_sum %></h3>
     <div class="row">
       <div class="col-sm-3">
         <div class="actions">
@@ -159,11 +154,9 @@
         </div>
       </div>
     </div>
-
   </div>
   </div>
-   <% end %>
-   
+  <% end %>
   <div id="myModal" class="modal fade"></div>
 
 <script type="text/javascript">
@@ -199,5 +192,4 @@
       "paging":         true
     } );
   } );
- 
 </script>

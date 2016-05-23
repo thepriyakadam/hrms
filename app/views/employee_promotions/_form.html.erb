@@ -8,25 +8,25 @@
   <div class="row">
     <div class="col-sm-3">
      <div class="form-group required">
-      <%= f.text_field :employee_id,label: 'Job Title' %>
+      <%= f.select :employee_id,all_employee_list,{include_blank: 'Select Employee',label: 'Employee'} %>
      </div>
     </div>
 
     <div class="col-sm-3">
-     <div class="form-group required">
-      <%= f.text_field :department_id %>
+     <div class="field">
+      <%= f.select :department_id,all_department_type_list1,{include_blank: 'Select Department',label: 'Department'} %>
      </div>
     </div>
 
     <div class="col-sm-3">
-     <div class="form-group required">
-      <%= f.text_field :employee_designation_id %>
+     <div class="field">
+      <%= f.select :employee_designation_id,all_employee_designation,{include_blank: 'Select Designation',label: 'Employee Designation'}  %>
      </div>
     </div>
 
     <div class="col-sm-3">
-     <div class="form-group required">
-      <%= f.text_field :employee_grade_id %>
+     <div class="field">
+      <%= f.select :employee_grade_id,all_employee_grade,{include_blank: 'Select Grade',label: 'Employee Grade'}  %>
      </div>
     </div>
 
@@ -34,40 +34,67 @@
 
      <div class="row">
     <div class="col-sm-3">
-     <div class="form-group required">
-      <%= f.text_field :employee_category_id,label: 'Job Title' %>
+     <div class="field">
+      <%= f.select :employee_category_id,all_employee_category,{include_blank: 'Select Category',label: 'Employee Category'} %>
      </div>
     </div>
 
     <div class="col-sm-3">
-     <div class="form-group required">
+     <div class="field">
       <%= f.text_field :employee_ctc %>
      </div>
     </div>
 
-    <div class="col-sm-3">
-     <div class="form-group required">
-      <%= f.text_field :employee_justification %>
-     </div>
+     <div class="col-sm-3">
+      <label>Effective From: </label>
+      <div class="field">
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="fa fa-calendar"></i>
+          </div>
+          <%= f.text_field :effective_from, hide_label: true, class: 'birth_date1'%>
+        </div>
+      </div>
     </div>
 
     <div class="col-sm-3">
-     <div class="form-group required">
-      <%= f.text_field :employee_effective_from %>
+      <label>Effective To: </label>
+      <div class="field">
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="fa fa-calendar"></i>
+          </div>
+          <%= f.text_field :effective_to, hide_label: true, class: 'birth_date1'%>
+        </div>
+      </div>
+    </div>
+    </div>
+
+    <div class="row">
+    <div class="col-sm-9">
+     <div class="field">
+      <%= f.text_field :justification %>
      </div>
     </div>
-
     </div>
 
-
-    <div class="col-sm-3">
-     <div class="form-group required">
-      <%= f.text_field :employee_effective_to %>
-     </div>
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="actions">
+          <%= f.submit :class => class_name, data: { disable_with: data_info } %> |
+          <%= link_to 'Back',employee_promotions_path,class: 'btn btn-default btn-sm'%>
+        </div>
+      </div>
     </div>
-
-
-
-  
   
 <% end %>
+
+<script type="text/javascript">
+  $(function(){
+    $('.birth_date1').datepicker({
+  changeYear:true,
+  changeMonth: true,
+  yearRange: '-100:+10',
+  dateFormat: 'dd-mm-yy' });
+  }); 
+</script>

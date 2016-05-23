@@ -90,7 +90,7 @@
       <div class="box-header with-border">
         <h3 class="box-title">Attributes Comments and Ratings</h3>
       </div>
-      <table class="table table-bordered table-hover table-condensed">
+      <table class="table table-bordered table-hover table-condensed example3">
         <thead>
           <tr>
             <th>Attribute & Definition</th>
@@ -136,7 +136,7 @@
       <div class="box-header with-border">
         <h3 class="box-title">Attribute Confirmation</h3>
       </div>
-      <table class="table table-bordered table-hover table-condensed">
+      <table class="table table-bordered table-hover table-condensed example3">
         <thead>
           <tr>
             <th><input type="checkbox" id="selectAll" value="selectAll"></th>
@@ -222,21 +222,11 @@
     });
   });
 
- $(document).ready(function() {
-    $('#example3').DataTable( {
-      "scrollY":        "200px",
-      "scrollX":        "1000px",
-      "scrollCollapse": true,
-      "paging":         false
-    } );
-} );
-
- $(document).ready(function() {
-    $('#example4').DataTable( {
-      "scrollY":        "200px",
-      "scrollX":        "1000px",
-      "scrollCollapse": true,
-      "paging":         false
-    } );
-} );
+  $(document).ready(function() {
+    $('.example3').DataTable( {
+      "scrollX":        "1200px",
+      "paging":         false,
+      "searching"       false
+    });
+  });
 </script>

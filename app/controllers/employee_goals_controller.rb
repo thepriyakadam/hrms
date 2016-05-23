@@ -98,7 +98,7 @@ class EmployeeGoalsController < ApplicationController
     @employee = Employee.find(@employee_goal.employee_id)
     EmployeeGoalMailer.send_email_to_employee(@employee_goal).deliver_now
     flash[:notice] = "Email sent Successfully"
-    redirect_to new_employee_attribute_path(@employee.id) 
+    redirect_to new_employee_attribute_path(@employee.id)
   end
 
   def show_employee

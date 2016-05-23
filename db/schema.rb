@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160523060506) do
+ActiveRecord::Schema.define(version: 20160523121643) do
 
   create_table "accident_masters", force: :cascade do |t|
     t.string   "code"
@@ -1693,6 +1693,26 @@ ActiveRecord::Schema.define(version: 20160523060506) do
   end
 
   add_index "states", ["country_id"], name: "index_states_on_country_id"
+
+  create_table "training_approvals", force: :cascade do |t|
+    t.integer  "training_request_id"
+    t.integer  "employee_id"
+    t.integer  "training_topic_master_id"
+    t.integer  "reporting_master_id"
+    t.string   "traininig_period"
+    t.date     "training_date"
+    t.string   "place"
+    t.string   "no_of_employee"
+    t.text     "description"
+    t.text     "justification"
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
+
+  add_index "training_approvals", ["employee_id"], name: "index_training_approvals_on_employee_id"
+  add_index "training_approvals", ["reporting_master_id"], name: "index_training_approvals_on_reporting_master_id"
+  add_index "training_approvals", ["training_request_id"], name: "index_training_approvals_on_training_request_id"
+  add_index "training_approvals", ["training_topic_master_id"], name: "index_training_approvals_on_training_topic_master_id"
 
   create_table "training_plans", force: :cascade do |t|
     t.date     "training_date"

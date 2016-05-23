@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :employee_promotions
   resources :accident_masters
   resources :travel_expence_types
   resources :travel_modes

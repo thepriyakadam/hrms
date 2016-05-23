@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160523054527) do
+ActiveRecord::Schema.define(version: 20160523060506) do
 
   create_table "accident_masters", force: :cascade do |t|
     t.string   "code"
@@ -1721,6 +1721,15 @@ ActiveRecord::Schema.define(version: 20160523054527) do
   add_index "training_requests", ["reporting_master_id"], name: "index_training_requests_on_reporting_master_id"
 
   create_table "training_topic_masters", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
+    t.text     "description"
+    t.boolean  "status"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "training_topics", force: :cascade do |t|
     t.string   "code"
     t.string   "name"
     t.text     "description"

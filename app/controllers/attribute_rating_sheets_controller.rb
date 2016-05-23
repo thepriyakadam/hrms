@@ -15,7 +15,7 @@ class AttributeRatingSheetsController < ApplicationController
   def new
     @attribute_rating_sheet = AttributeRatingSheet.new
     @attribute_rating_sheets = AttributeRatingSheet.where(appraisee_id: current_user.employee_id,appraisee_comment: nil)
-    @attribute_rating_shets = AttributeRatingSheet.where(appraisee_id: current_user.employee_id).where.not(appraisee_comment: nil)
+    @attribute_rating_shets = AttributeRatingSheet.where(appraisee_id: current_user.employee_id,is_confirm_appraisee: nil).where.not(appraisee_comment: nil)
     @employee_attributes = EmployeeAttribute.where(employee_id: current_user.employee_id,is_confirm: true)
   end
 
@@ -73,7 +73,7 @@ class AttributeRatingSheetsController < ApplicationController
   def appraiser
     @employee = Employee.find(params[:format])
     @employees = AttributeRatingSheet.where(appraisee_id: @employee.id).group(:appraisee_id)
-    @attribute_rating_sheets = AttributeRatingSheet.where(appraisee_id: @employee.id,is_confirm_appraisee: true).where.not(appraiser_comment: nil)
+    @attribute_rating_sheets = AttributeRatingSheet.where(appraisee_id: @employee.id,is_confirm_appraisee: nil).where.not(appraiser_comment: nil)
     @attribute_ratings = AttributeRatingSheet.where(appraisee_id: @employee.id, appraiser_comment: nil,is_confirm_appraisee: true)
     @attribute_rating_sheet = AttributeRatingSheet.new
   end
@@ -268,7 +268,7 @@ class AttributeRatingSheetsController < ApplicationController
     @experiences = Experience.where(employee_id: @employee.id)
     @ctc = EmployeeSalaryTemplate.where(employee_id: @employee.id).sum(:monthly_amount)
     @attribute_rating_multiple_sheets = AttributeRatingSheet.where(appraisee_id: params[:format],appraiser2_comment: nil,is_confirm_appraiser: true)
-    @attribute_rating_multi_sheets = AttributeRatingSheet.where(appraisee_id: params[:format],is_confirm_appraiser: true).where.not(appraiser2_comment: nil)
+    @attribute_rating_multi_sheets = AttributeRatingSheet.where(appraisee_id: params[:format],is_confirm_appraiser: nil).where.not(appraiser2_comment: nil)
     @attribute_rating_sheet = AttributeRatingSheet.new
   end
 

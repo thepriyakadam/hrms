@@ -15,6 +15,7 @@ class TravelModesController < ApplicationController
   # GET /travel_modes/new
   def new
     @travel_mode = TravelMode.new
+    @travel_modes = TravelMode.all
   end
 
   # GET /travel_modes/1/edit
@@ -25,14 +26,14 @@ class TravelModesController < ApplicationController
   # POST /travel_modes.json
   def create
     @travel_mode = TravelMode.new(travel_mode_params)
-
+    @travel_modes = TravelMode.all
     respond_to do |format|
       if @travel_mode.save
-        format.html { redirect_to @travel_mode, notice: 'Travel mode was successfully created.' }
-        format.json { render :show, status: :created, location: @travel_mode }
+         @travel_mode = TravelMode.new
+        format.js { @flag = true }
       else
-        format.html { render :new }
-        format.json { render json: @travel_mode.errors, status: :unprocessable_entity }
+        flash.now[:alert] = 'Travel Already Exist.'
+        format.js { @flag = false }
       end
     end
   end
@@ -40,25 +41,16 @@ class TravelModesController < ApplicationController
   # PATCH/PUT /travel_modes/1
   # PATCH/PUT /travel_modes/1.json
   def update
-    respond_to do |format|
-      if @travel_mode.update(travel_mode_params)
-        format.html { redirect_to @travel_mode, notice: 'Travel mode was successfully updated.' }
-        format.json { render :show, status: :ok, location: @travel_mode }
-      else
-        format.html { render :edit }
-        format.json { render json: @travel_mode.errors, status: :unprocessable_entity }
-      end
-    end
+    @travel_mode.update(travel_mode_params)
+    @travel_modes = TravelMode.all
+    @travel_mode = TravelMode.new
   end
 
   # DELETE /travel_modes/1
   # DELETE /travel_modes/1.json
   def destroy
     @travel_mode.destroy
-    respond_to do |format|
-      format.html { redirect_to travel_modes_url, notice: 'Travel mode was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    @travel_modes = TravelMode.all
   end
 
   private

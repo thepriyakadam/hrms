@@ -8,7 +8,7 @@
   <li class="treeview" id="company">
     <a href="">
       <!-- <i class="fa fa-user-plus"></i> <span>Create</span> <i class="fa fa-angle-left pull-right"></i> -->
-      <i class="fa fa-user-plus"></i><strong> <span><%= current_user.company_location.company.try(:name) %> Details</span></strong> <i class="fa fa-angle-left pull-right"></i></a>
+      <i class="fa fa-user-plus"></i> <span><%= current_user.company_location.company.try(:name) %> Details</span> <i class="fa fa-angle-left pull-right"></i></a>
     <ul class="treeview-menu" >
       <li><a href="/companies"><i class="fa fa-tags"></i> Companies</a></li>
       <li><a href="/company_locations"><i class="fa fa-tags"></i> Locations</a></li>
@@ -18,7 +18,7 @@
 
   <li class="treeview" id="employee">
     <a href="#">
-      <i class="glyphicon glyphicon-th-large"></i><strong> <span>Employee Management</span></strong>
+      <i class="glyphicon glyphicon-th-large"></i> <span>Employee Management</span>
       <i class="fa fa-angle-left pull-right"></i>
     </a>
     <ul class="treeview-menu" >
@@ -50,7 +50,7 @@
 
   <li class="treeview" id="selfservice">
     <a href="">
-      <i class="fa fa-user-plus"></i> <strong><span>Employee Self Service</span></strong><i class="fa fa-angle-left pull-right"></i>
+      <i class="fa fa-user-plus"></i> <span>Employee Self Service</span><i class="fa fa-angle-left pull-right"></i>
     </a>
     <ul class="treeview-menu">
       <li><a href="/self_services/employee"><i class="fa fa-tags"></i> Employees</a></li>
@@ -64,7 +64,7 @@
 
   <li class="treeview" id="master">
     <a href="#">
-      <i class="glyphicon glyphicon-th-large"></i><strong> <span> System Master </span></strong>
+      <i class="glyphicon glyphicon-th-large"></i> <span> System Master </span>
       <i class="fa fa-angle-left pull-right"></i>
     </a>
     <ul class="treeview-menu" >
@@ -148,7 +148,7 @@
 
   <li class="treeview" id="user">
     <a href="">
-      <i class="fa fa-user-plus"></i> <strong><span>User Administration</span></strong> <i class="fa fa-angle-left pull-right"></i>
+      <i class="fa fa-user-plus"></i> <span>User Administration</span> <i class="fa fa-angle-left pull-right"></i>
     </a>
     <ul class="treeview-menu">
       <li><a href="/reporting_masters/new"><i class="fa fa-tags"></i> Reporting Manager</a></li>
@@ -162,7 +162,7 @@
 
   <li class="treeview" id="leavemanagement">
     <a href="#">
-      <i class="glyphicon glyphicon-th-large"></i><strong> <span>Leave Management</span></strong>
+      <i class="glyphicon glyphicon-th-large"></i> <span>Leave Management</span>
       <i class="fa fa-angle-left pull-right"></i>
     </a>
     <ul class="treeview-menu" >
@@ -191,7 +191,7 @@
   
   <li class="treeview" id="payroll">
     <a href="#">
-      <i class="ionicons ion-social-usd"></i> <strong><span>Payroll Management</span></strong>
+      <i class="ionicons ion-social-usd"></i> <span>Payroll Management</span>
       <i class="fa fa-angle-left pull-right"></i>
     </a>
     <ul class="treeview-menu">
@@ -264,7 +264,7 @@
  
   <li class="treeview">
     <a href="">
-      <i class="ionicons ion-ios-time"></i><strong><span>Time Management</span> </strong><i class="fa fa-angle-left pull-right"></i>
+      <i class="ionicons ion-ios-time"></i><span>Time Management</span> <i class="fa fa-angle-left pull-right"></i>
     </a>
     <ul class="treeview-menu">
       <li><a href="/holidays/new"><i class="fa fa-tags"></i> Holiday </a></li>
@@ -277,7 +277,7 @@
 
     <li class="treeview" id="performance">
     <a href="#">
-      <i class="glyphicon glyphicon-th-large"></i><strong> <span>Performance Management</span></strong>
+      <i class="glyphicon glyphicon-th-large"></i> <span>Performance Management</span>
       <i class="fa fa-angle-left pull-right"></i>
     </a>
     <ul class="treeview-menu" >
@@ -310,7 +310,7 @@
 
    <li class="treeview" id="performance">
     <a href="#">
-      <i class="glyphicon glyphicon-th-large"></i><strong> <span>Recruitment Management</span></strong>
+      <i class="glyphicon glyphicon-th-large"></i> <span>Recruitment Management</span>
       <i class="fa fa-angle-left pull-right"></i>
     </a>
     <ul class="treeview-menu" >
@@ -336,7 +336,7 @@
   </li>
 
    <li class="treeview">
-    <a href=""><i class="fa fa-briefcase"></i><strong><span> Tours & Travels Expences </span></strong> <i class="fa fa-angle-left pull-right"></i></a>
+    <a href=""><i class="fa fa-briefcase"></i><span> Tours & Travels Expences </span><i class="fa fa-angle-left pull-right"></i></a>
     <ul class="treeview-menu">
       <li><a href="/travel_requests"><i class="fa fa-tags"></i> Travel Request </a></li>
       <li><a href="/travel_requests/travel_history"><i class="fa fa-tags"></i> Travel Approve/Reject </a></li>
@@ -347,7 +347,7 @@
    </li>
 
    <li class="treeview">
-    <a href=""><i class="fa fa-briefcase"></i> <strong><span> Training </span> </strong><i class="fa fa-angle-left pull-right"></i></a>
+    <a href=""><i class="fa fa-briefcase"></i> <span> Training </span> <i class="fa fa-angle-left pull-right"></i></a>
     <ul class="treeview-menu">
       <li><a href="/training_requests/new"><i class="fa fa-tags"></i> Training Request </a></li>
       <li><a href="/training_plans/new"><i class="fa fa-tags"></i> Training Plans </a></li>    

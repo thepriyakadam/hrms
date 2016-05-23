@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160521134145) do
+ActiveRecord::Schema.define(version: 20160523060506) do
 
   create_table "accident_masters", force: :cascade do |t|
     t.string   "code"
@@ -676,6 +676,25 @@ ActiveRecord::Schema.define(version: 20160521134145) do
   end
 
   add_index "employee_physicals", ["employee_id"], name: "index_employee_physicals_on_employee_id"
+
+  create_table "employee_promotions", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.integer  "department_id"
+    t.integer  "employee_designation_id"
+    t.integer  "employee_grade_id"
+    t.string   "employee_category_id"
+    t.string   "employee_ctc"
+    t.text     "justification"
+    t.date     "effective_from"
+    t.date     "effective_to"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  add_index "employee_promotions", ["department_id"], name: "index_employee_promotions_on_department_id"
+  add_index "employee_promotions", ["employee_designation_id"], name: "index_employee_promotions_on_employee_designation_id"
+  add_index "employee_promotions", ["employee_grade_id"], name: "index_employee_promotions_on_employee_grade_id"
+  add_index "employee_promotions", ["employee_id"], name: "index_employee_promotions_on_employee_id"
 
   create_table "employee_resignations", force: :cascade do |t|
     t.integer  "employee_id"
@@ -1702,6 +1721,15 @@ ActiveRecord::Schema.define(version: 20160521134145) do
   add_index "training_requests", ["reporting_master_id"], name: "index_training_requests_on_reporting_master_id"
 
   create_table "training_topic_masters", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
+    t.text     "description"
+    t.boolean  "status"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "training_topics", force: :cascade do |t|
     t.string   "code"
     t.string   "name"
     t.text     "description"

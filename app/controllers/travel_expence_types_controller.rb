@@ -15,6 +15,7 @@ class TravelExpenceTypesController < ApplicationController
   # GET /travel_expence_types/new
   def new
     @travel_expence_type = TravelExpenceType.new
+    @travel_expence_types = TravelExpenceType.all
   end
 
   # GET /travel_expence_types/1/edit
@@ -25,14 +26,14 @@ class TravelExpenceTypesController < ApplicationController
   # POST /travel_expence_types.json
   def create
     @travel_expence_type = TravelExpenceType.new(travel_expence_type_params)
-
+    @travel_expence_types = TravelExpenceType.all
     respond_to do |format|
       if @travel_expence_type.save
-        format.html { redirect_to @travel_expence_type, notice: 'Travel expence type was successfully created.' }
-        format.json { render :show, status: :created, location: @travel_expence_type }
+         @travel_expence_type = TravelExpenceType.new
+        format.js { @flag = true }
       else
-        format.html { render :new }
-        format.json { render json: @travel_expence_type.errors, status: :unprocessable_entity }
+        flash.now[:alert] = 'Travel Already Exist.'
+        format.js { @flag = false }
       end
     end
   end
@@ -40,25 +41,16 @@ class TravelExpenceTypesController < ApplicationController
   # PATCH/PUT /travel_expence_types/1
   # PATCH/PUT /travel_expence_types/1.json
   def update
-    respond_to do |format|
-      if @travel_expence_type.update(travel_expence_type_params)
-        format.html { redirect_to @travel_expence_type, notice: 'Travel expence type was successfully updated.' }
-        format.json { render :show, status: :ok, location: @travel_expence_type }
-      else
-        format.html { render :edit }
-        format.json { render json: @travel_expence_type.errors, status: :unprocessable_entity }
-      end
-    end
+   @travel_expence_type.update(travel_expence_type_params)
+    @travel_expence_types = TravelExpenceType.all
+    @travel_expence_type = TravelExpenceType.new
   end
 
   # DELETE /travel_expence_types/1
   # DELETE /travel_expence_types/1.json
   def destroy
-    @travel_expence_type.destroy
-    respond_to do |format|
-      format.html { redirect_to travel_expence_types_url, notice: 'Travel expence type was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+   @travel_expence_type.destroy
+   @travel_expence_types = TravelExpenceType.all
   end
 
   private

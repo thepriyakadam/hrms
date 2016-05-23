@@ -16,7 +16,7 @@ class EmployeeAttribute < ActiveRecord::Base
   end
 
   def attribute_weightage_sumdate(employee_attribute, goal_weightage)
-    previous_attributes = EmployeeAttribute.where(performance_period_id: employee_goal.performance_period_id, employee_id: employee_attribute.employee_id, is_confirm: nil).where.not(id: employee_goal.id)
+    previous_attributes = EmployeeAttribute.where(performance_period_id: employee_attribute.performance_period_id, employee_id: employee_attribute.employee_id, is_confirm: nil).where.not(id: employee_attribute.id)
     previous_attributes.sum(:weightage) + goal_weightage.to_i
   end
 end

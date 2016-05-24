@@ -1,0 +1,1 @@
+json.extract! @training_approval, :id, :training_request_id, :employee_id, :training_topic_master_id, :reporting_master_id, :traininig_period, :training_date, :place, :no_of_employee, :description, :justification, :created_at, :updated_at

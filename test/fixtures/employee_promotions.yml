@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  employee_id: 
+  department_id: 
+  employee_designation_id: 
+  employee_grade_id: 
+  employee_category_id: MyString
+  employee_ctc: MyString
+  justification: MyText
+  effective_from: 2016-05-23
+  effective_to: 2016-05-23
+
+two:
+  employee_id: 
+  department_id: 
+  employee_designation_id: 
+  employee_grade_id: 
+  employee_category_id: MyString
+  employee_ctc: MyString
+  justification: MyText
+  effective_from: 2016-05-23
+  effective_to: 2016-05-23

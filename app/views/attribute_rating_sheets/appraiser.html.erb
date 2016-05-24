@@ -4,137 +4,127 @@
   </div>
   <div class="box-body">
     <%= bootstrap_form_for(@attribute_rating_sheet,url:{action: "appraiser_create"},html: {id: "attribute_rating_sheet"}) do |f| %>
-
-    <table id="tbl" class="table table-bordered table-hover table-condensed">
-    <thead>
-      <tr>
-        <th>Employee Id</th>
-        <th>Employee Name</th>
-        <th>Department</th>
-        <th>Designation</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @employees.each do |g| %>
-        <tr>
-          <td><%= g.appraisee.manual_employee_code %></td>
-          <td><%= g.appraisee.first_name %></td>
-          <td><%= g.appraisee.department.try(:name) %></td>
-          <td><%= g.appraisee.joining_detail.employee_designation.try(:name) %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-
-
-    <table id="example3" class="table table-bordered table-hover table-condensed">
-      <thead>
-        <tr>
-          <th>Attribute & Definition</th>
-          <th>Weightage</th>
-          <th>Appraisee Comment</th>
-          <th>Appraisee Evaluation</th>
-          <th>Appraiser Comment</th>
-          <th>Appraiser Evaluation</th>
-        </tr>
-      </thead>
-      <tbody>
-      <%= console %>
-        <% @attribute_ratings.each do |a| %>
+      <table id="tbl" class="table table-bordered table-hover table-condensed">
+        <thead>
           <tr>
-            <td><%= a.employee_attribute.attribute_master.name %></td>
-            <td><%= a.employee_attribute.weightage %></td>
-            <% if a.is_confirm_appraisee == true %>
-            <td><%= a.appraisee_comment %></td>
-            <td><%= a.appraisee_rating.try(:code) %></td>
-            <% else %>
-            <td></td>
-            <td></td>
-            <% end %>
-            <td><%= text_field_tag 'appraiser_comment[]' %></td>
-            <td><%= select_tag 'appraiser_rating_id[]',options_for_select(all_rating_type) ,{class: 'form-control', hide_label: true,include_blank: " Select Rating" } %></td> 
-              <%= hidden_field_tag 'employee_goal_id[]',{},value: a.employee_attribute.id %>
-              <%= hidden_field_tag 'attribute_rating_sheet_id[]', {},value: a.id %> 
-              <%= hidden_field_tag :appraisee_id, {},value: a.appraisee_id %>
-              <%= hidden_field_tag :appraiser_id, {},value: current_user.employee_id %> 
+            <th>Employee ID</th>
+            <th>Employee Name</th>
+            <th>Department</th>
+            <th>Designation</th>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          <% @employees.each do |g| %>
+            <tr>
+              <td><%= g.appraisee.manual_employee_code %></td>
+              <td><%= g.appraisee.first_name %></td>
+              <td><%= g.appraisee.department.try(:name) %></td>
+              <td><%= g.appraisee.joining_detail.employee_designation.try(:name) %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
 
-    <% if @attribute_ratings.empty? %>
+      <h6>Attribute Rating and Comments</h6>
+      <table class="table table-bordered table-hover table-condensed">
+        <thead>
+          <tr>
+            <th>Attribute & Definition</th>
+            <th>Weightage</th>
+            <th>Appraisee Comment</th>
+            <th>Appraisee Evaluation</th>
+            <th>Appraiser Comment</th>
+            <th>Appraiser Evaluation</th>
+          </tr>
+        </thead>
 
-    <% else %>
+        <tbody>
+          <% @attribute_ratings.each do |a| %>
+            <tr>
+              <td><%= a.employee_attribute.attribute_master.name %></td>
+              <td><%= a.employee_attribute.weightage %></td>
+              <% if a.is_confirm_appraisee == true %>
+                <td><%= a.appraisee_comment %></td>
+                <td><%= a.appraisee_rating.try(:code) %></td>
+              <% else %>
+                <td></td>
+                <td></td>
+              <% end %>
+              <td><%= text_field_tag 'appraiser_comment[]',"",class: "form-control" %></td>
+              <td><%= select_tag 'appraiser_rating_id[]',options_for_select(all_rating_type) ,{class: 'form-control', hide_label: true,include_blank: " Select Rating" } %></td> 
+                <%= hidden_field_tag 'employee_goal_id[]',{},value: a.employee_attribute.id %>
+                <%= hidden_field_tag 'attribute_rating_sheet_id[]', {},value: a.id %>
+                <%= hidden_field_tag :appraisee_id, {},value: a.appraisee_id %>
+                <%= hidden_field_tag :appraiser_id, {},value: current_user.employee_id %>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+      <% unless @attribute_ratings.empty? %>
+        <div class="row">
+          <div class="col-sm-3">
+            <div class="actions">
+              <%= f.submit "Create Attribute Rating" , class: "btn btn-primary btn-sm" %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% end %><hr>
+
+    <h6>Attribute Confirmation</h6>
+    <%= bootstrap_form_for @attribute_rating_sheet,url:{action:'is_confirm_appraiser',id: @employee.id} do |f| %>
+      <table class="table table-bordered table-hover table-condensed">
+        <thead>
+          <tr>
+            <th><input type="checkbox" id="selectAll" value="selectAll"></th>
+            <th>Attribute & Definition</th>
+            <th>Weightage</th>
+            <th>Appraisee Comment</th>
+            <th>Appraisee Evaluation</th>
+            <th>Appraiser Comment</th>
+            <th>Appraiser Evaluation</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @attribute_rating_sheets.each do |a| %>
+            <tr>
+              <td><%= check_box_tag "attribute_rating_sheet_ids[]", a.id unless a.is_confirm_appraiser %></td>
+              <td><%= a.employee_attribute.attribute_master.name %></td>
+              <td><%= a.employee_attribute.weightage %></td>
+              
+              <% if a.is_confirm_appraisee %>
+                <td><%= a.appraisee_comment %></td>
+                <td><%= a.appraisee_rating.try(:code) %></td>
+              <% else %>
+                <td></td>
+                <td></td>
+              <% end %>
+
+              <td><%= a.appraiser_comment %></td>
+              <td><%= a.appraiser_rating.try(:code) %></td> 
+              <td>
+                <% if a.is_confirm_appraiser %>
+                  <small class="label label-info">Confirmed</small>
+                <% else %>
+                  <%= link_to '', modal_appraiser_attribute_rating_sheets_path(a) ,class: 'btn btn-xs btn-success fa fa-edit',remote: true %>
+                <% end %>
+              </td>  
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
       <div class="row">
         <div class="col-sm-3">
           <div class="actions">
-            <%= f.submit "Create Attribute Rating" , class: "btn btn-primary btn-sm" %>
+            <%= f.submit "Confirm", class: 'btn btn-primary btn-sm' %>
+            <%= link_to 'Back', appraiser_goal_rating_sheets_path(@employee.id),class: 'btn btn-default btn-sm fa fa-arrow-left'%>
           </div>
-        </div>
+        </div>  
       </div>
-    <% end %>
-<% end %>
-<hr>
-
-<%= bootstrap_form_for @attribute_rating_sheet,url:{action:'is_confirm_appraiser',id: @employee.id} do |f| %>
-<table id="example4" class="table table-bordered table-hover table-condensed">
-    <thead>
-      <tr>
-        <th><input type="checkbox" id="selectAll" value="selectAll"></th>
-        <th>Attribute & Definition</th>
-        <th>Weightage</th>
-        <th>Appraisee Comment</th>
-        <th>Appraisee Evaluation</th>
-        <th>Appraiser Comment</th>
-        <th>Appraiser Evaluation</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @attribute_rating_sheets.each do |a| %>
-        <tr>
-          <td>
-            <% if a.is_confirm_appraiser == true %>
-
-            <% else %>
-            <%= check_box_tag "attribute_rating_sheet_ids[]", a.id %>
-            <% end %>
-          </td>
-          <td><%= a.employee_attribute.attribute_master.name %></td>
-          <td><%= a.employee_attribute.weightage %></td>
-          
-          <% if a.is_confirm_appraisee == true %>
-          <td><%= a.appraisee_comment %></td>
-          <td><%= a.appraisee_rating.try(:code) %></td>
-          <% else %>
-          <td></td>
-          <td></td>
-          <% end %>
-          <td><%= a.appraiser_comment %></td>
-          <td><%= a.appraiser_rating.try(:code) %></td> 
-          <td>
-            <% if a.is_confirm_appraiser == true %>
-            <small class="label label-info">Confirmed</small>
-            <% else %>
-            <%= link_to '', modal_appraiser_attribute_rating_sheets_path(a) ,class: 'btn btn-xs btn-success fa fa-edit',remote: true %>
-            
-            <% end %>
-          </td>  
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-    <div class="row">
-      <div class="col-sm-3">
-        <div class="actions">
-          <%= f.submit "Confirm", class: 'btn btn-primary btn-sm' %>
-          <%= link_to 'Back', appraiser_goal_rating_sheets_path(@employee.id),class: 'btn btn-default btn-sm fa fa-arrow-left'%>
-        </div>
-      </div>
-      
     </div>
-</div>
-</div>
+  </div>
 <% end %>
 
 <div id="myModal" class="modal fade"></div>
@@ -154,22 +144,4 @@
       } 
     });
   });
-
- $(document).ready(function() {
-    $('#example3').DataTable( {
-        "scrollY":        "200px",
-        "scrollX":        "1000px",
-        "scrollCollapse": true,
-        "paging":         false
-    } );
-} );
-
- $(document).ready(function() {
-    $('#example4').DataTable( {
-        "scrollY":        "200px",
-        "scrollX":        "1000px",
-        "scrollCollapse": true,
-        "paging":         false
-    } );
-} );
 </script>

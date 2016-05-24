@@ -1,5 +1,16 @@
 Rails.application.routes.draw do
 
+  resources :training_approvals
+  resources :training_topics
+  resources :employee_promotions
+  resources :accident_masters
+  resources :travel_expence_types
+  resources :travel_modes
+  resources :interview_analyses
+  resources :interview_decisions
+  resources :interview_attributes
+  resources :interview_evalutions
+  resources :training_topic_masters
   resources :employee_resignations
   resources :travel_options
   resources :training_plans
@@ -672,6 +683,8 @@ Rails.application.routes.draw do
       get :ajax_employee_nomination_detail
       get :ajax_new_employee_nomination
       get :ajax_setup_payroll
+      get :ajax_new_assigned_asset
+      get :ajax_assigned_asset_detail
       get :manager
       get :transfer_form
       post :transfer_employee

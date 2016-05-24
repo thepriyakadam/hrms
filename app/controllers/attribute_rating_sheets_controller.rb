@@ -15,8 +15,7 @@ class AttributeRatingSheetsController < ApplicationController
   def new
     @attribute_rating_sheet = AttributeRatingSheet.new
     @attribute_rating_sheets = AttributeRatingSheet.where(appraisee_id: current_user.employee_id,appraisee_comment: nil)
-    @attribute_rating_shets = AttributeRatingSheet.where(appraisee_id: current_user.employee_id).where.not(appraisee_comment: nil)
-    
+    @attribute_rating_shets = AttributeRatingSheet.where(appraisee_id: current_user.employee_id,is_confirm_appraisee: nil).where.not(appraisee_comment: nil)
     @employee_attributes = EmployeeAttribute.where(employee_id: current_user.employee_id,is_confirm: true)
   end
 
@@ -74,9 +73,8 @@ class AttributeRatingSheetsController < ApplicationController
   def appraiser
     @employee = Employee.find(params[:format])
     @employees = AttributeRatingSheet.where(appraisee_id: @employee.id).group(:appraisee_id)
-    @attribute_rating_sheets = AttributeRatingSheet.where(appraisee_id: @employee.id,is_confirm_appraisee: true).where.not(appraiser_comment: nil)
+    @attribute_rating_sheets = AttributeRatingSheet.where(appraisee_id: @employee.id,is_confirm_appraisee: nil).where.not(appraiser_comment: nil)
     @attribute_ratings = AttributeRatingSheet.where(appraisee_id: @employee.id, appraiser_comment: nil,is_confirm_appraisee: true)
-    
     @attribute_rating_sheet = AttributeRatingSheet.new
   end
 
@@ -124,51 +122,42 @@ class AttributeRatingSheetsController < ApplicationController
   end
 
   def is_confirm_appraiser
-    
-     @attribute_rating_sheet_ids = params[:attribute_rating_sheet_ids]
+    @employee = Employee.find(params[:id])
+    @attribute_rating_sheet_ids = params[:attribute_rating_sheet_ids]
     if @attribute_rating_sheet_ids.nil?
-        flash[:alert] = "Please Select the Checkbox"
-        redirect_to attribute_rating_sheets_path
-      else
-        @attribute_rating_sheet_ids.each do |aid|
+      flash[:alert] = "Please Select the Checkbox"
+    else
+      @attribute_rating_sheet_ids.each do |aid|
         @attribute_rating_sheet = AttributeRatingSheet.find(aid)
         @attribute_rating_sheet.update(is_confirm_appraiser: true)
         flash[:notice] = "Confirmed Successfully"
-      end  
-
-    @employee = Employee.find(params[:id])
-    @attribute_rating_sheet = AttributeRatingSheet.find_by_appraisee_id(@employee.id)
-    @employee_attribute = EmployeeAttribute.where(employee_id: @employee.id)
-
-    AttributeRatingSheetMailer.send_email_to_appraiser2(@attribute_rating_sheet).deliver_now
-    flash[:notice] = "Email sent Successfully"
-    redirect_to appraiser_attribute_rating_sheets_path(@employee.id)
-
-
+      end
+      @attribute_rating_sheet = AttributeRatingSheet.find_by_appraisee_id(@employee.id)
+      @employee_attribute = EmployeeAttribute.where(employee_id: @employee.id)
+      #AttributeRatingSheetMailer.send_email_to_appraiser2(@attribute_rating_sheet).deliver_now
+      flash[:notice] = "Email sent Successfully"
     end
+    redirect_to appraiser_attribute_rating_sheets_path(format: @employee.id)
   end
 
   def is_confirm_appraisee
-
-     @attribute_rating_sheet_ids = params[:attribute_rating_sheet_ids]
+    @employee = Employee.find(params[:id])
+    @attribute_rating_sheet_ids = params[:attribute_rating_sheet_ids]
     if @attribute_rating_sheet_ids.nil?
-        flash[:alert] = "Please Select the Checkbox"
-        redirect_to attribute_rating_sheets_path
-      else
-        @attribute_rating_sheet_ids.each do |aid|
+      flash[:alert] = "Please Select the Checkbox"
+    else
+      @attribute_rating_sheet_ids.each do |aid|
         @attribute_rating_sheet = AttributeRatingSheet.find(aid)
         @attribute_rating_sheet.update(is_confirm_appraisee: true)
         flash[:notice] = "Confirmed Successfully"
       end  
-        @employee = Employee.find(params[:id])
-        @attribute_rating_sheet = AttributeRatingSheet.find_by_appraisee_id(@employee.id)
-        @employee_attribute = EmployeeAttribute.where(employee_id: @employee.id)
-
-        AttributeRatingSheetMailer.send_email_to_appraiser(@attribute_rating_sheet).deliver_now
-        flash[:notice] = "Email sent Successfully"
-        redirect_to new_attribute_rating_sheet_path
-
+      @attribute_rating_sheet = AttributeRatingSheet.find_by_appraisee_id(@employee.id)
+      @employee_attribute = EmployeeAttribute.where(employee_id: @employee.id)
+      #AttributeRatingSheetMailer.send_email_to_appraiser(@attribute_rating_sheet).deliver_now
+      flash[:notice] = "Email sent Successfully"
     end
+    #redirect_to appraiser_attribute_rating_sheets_path(format: @employee.id)
+    redirect_to new_attribute_rating_sheet_path
   end
 
    def is_confirm_final
@@ -279,7 +268,7 @@ class AttributeRatingSheetsController < ApplicationController
     @experiences = Experience.where(employee_id: @employee.id)
     @ctc = EmployeeSalaryTemplate.where(employee_id: @employee.id).sum(:monthly_amount)
     @attribute_rating_multiple_sheets = AttributeRatingSheet.where(appraisee_id: params[:format],appraiser2_comment: nil,is_confirm_appraiser: true)
-    @attribute_rating_multi_sheets = AttributeRatingSheet.where(appraisee_id: params[:format],is_confirm_appraiser: true).where.not(appraiser2_comment: nil)
+    @attribute_rating_multi_sheets = AttributeRatingSheet.where(appraisee_id: params[:format],is_confirm_appraiser: nil).where.not(appraiser2_comment: nil)
     @attribute_rating_sheet = AttributeRatingSheet.new
   end
 
@@ -417,7 +406,6 @@ class AttributeRatingSheetsController < ApplicationController
   end
 
   def print_details_appraiser
-
     @employee = Employee.find(params[:id])
     @attribute_rating_sheets = AttributeRatingSheet.where(appraisee_id: @employee.id ).group(:appraisee_id)
     @experiences = Experience.where(employee_id: @employee.id)
@@ -467,6 +455,7 @@ class AttributeRatingSheetsController < ApplicationController
                           :bottom => 10,
                           :left   => 12,
                           :right  => 12},
+               orientation: 'Landscape',
                template: 'attribute_rating_sheets/print_details_appraiser2.pdf.erb',
               :show_as_html => params[:debug].present?
       end
@@ -492,7 +481,8 @@ class AttributeRatingSheetsController < ApplicationController
                layout: 'pdf.html',
                :orientation      => 'Landscape', # default , Landscape
                template: 'attribute_rating_sheets/print_details_final.pdf.erb',
-              :show_as_html => params[:debug].present?
+              :show_as_html => params[:debug].present?,
+               margin:  {top:1,bottom:1,left:1,right:1 }              
       end
     end  
   end

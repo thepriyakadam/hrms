@@ -1,6 +1,7 @@
 <% if @flag %>
-$("#form").html("<%= j render 'form' %>");
-$("#employee_attribute_list").html("<%= j render 'employee_attribute_list' %>");
+	$("#form").html("<%= j render 'form' %>");
+	$("#employee_attribute_list").html("<%= j render 'employee_attribute_list' %>");
 <%else%>
   $("#form").html("<%= j render 'form' %>");
+  $("#error").html("Goal weightage percentage exceed.")
 <%end%>

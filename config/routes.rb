@@ -18,6 +18,7 @@ Rails.application.routes.draw do
     collection do
       get :training_request_list
       get :training_request_confirmation
+      get :approve_training_request
     end
   end
   resources :selected_resumes  do

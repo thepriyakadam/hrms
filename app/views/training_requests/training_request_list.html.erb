@@ -36,7 +36,7 @@
             <td><%= training_request.description %></td>
             <td><%= training_request.justification %></td>
             <td>
-           <%= link_to 'Approve / Reject',training_request_confirmation_training_requests_path,class: 'btn btn-sm btn-warning' %> 
+           <%= link_to 'Approve / Reject',training_request_confirmation_training_requests_path(training_request),class: 'btn btn-sm btn-warning' %> 
         </td>
           </tr>
         <% end %>

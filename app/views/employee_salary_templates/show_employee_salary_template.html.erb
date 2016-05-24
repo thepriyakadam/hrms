@@ -28,7 +28,7 @@
         <% @employee_salary_templates.each do |template| %>
           <tr>
            <td><%= template.try(:salary_component).try(:name)%></td>
-           <td><%= template.try(:is_deducted)%></td>
+           <td><%= template.try(:is_deducted) ? "Yes" : "No" %></td>
            <td><%= template.try(:parent_salary_component).try(:name)%></td>
            <td><%= template.try(:percentage)%></td>
            <td><%= template.try(:to_be_paid)%></td>

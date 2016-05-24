@@ -24,8 +24,8 @@
       <% end %>
     </tbody>
   </table>
-  <h3 class="box-title">Appraiser Goal Rating</h3>
-    <table id="example3" class="table table-bordered table-hover table-condensed">
+  <h6>Appraiser Goal Rating</h6>
+    <table class="table table-bordered table-hover table-condensed example3">
     <thead>
       <tr>
         <th>Period</th>
@@ -86,8 +86,8 @@
   <% end %> 
 <hr>
 <%= bootstrap_form_for @goal_rating_sheet,url:{action:'is_confirm_appraiser', id: @employee.id} do |f| %>
- <h3 class="box-title">Appraiser Goal Rating List</h3> 
-  <table id="example4" class="table table-bordered table-hover table-condensed">
+ <h6>Appraiser Goal Rating List</h6> 
+  <table class="table table-bordered table-hover table-condensed example3">
     <thead>
       <tr>
         <th><input type="checkbox" id="selectAll" value="selectAll"></th>
@@ -176,20 +176,10 @@
   });
 
   $(document).ready(function() {
-    $('#example3').DataTable( {
-      //"scrollY":        "200px",
-      "scrollX":        "1000px",
-      "scrollCollapse": true,
-      "paging":         true
-    } );
-  } );
- 
- $(document).ready(function() {
-    $('#example4').DataTable( {
-      //"scrollY":        "200px",
-      "scrollX":        "1000px",
-      "scrollCollapse": true,
-      "paging":         true
-    } );
-  } );
+    $('.example3').DataTable( {
+      "scrollX":        "1200px",
+      "paging":         false,
+      "searching":     false
+    });
+  });
 </script>

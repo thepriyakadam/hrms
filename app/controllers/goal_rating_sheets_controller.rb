@@ -18,7 +18,7 @@ class GoalRatingSheetsController < ApplicationController
     @goal_rting_sheets = EmployeeGoal.where(employee_id: current_user.employee_id).group(:employee_id)
     @employee_goals = EmployeeGoal.where(employee_id: current_user.employee_id,is_confirm: true)
     @period = @employee_goals.try(:first).try(:period)
-    @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: current_user.employee_id,appraisee_comment: nil)
+    @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: current_user.employee_id, appraisee_comment: nil)
     @goal_rating_shets = GoalRatingSheet.where(appraisee_id: current_user.employee_id, is_confirm_appraisee: nil).where.not(appraisee_comment: nil)
   end
 
@@ -73,8 +73,7 @@ class GoalRatingSheetsController < ApplicationController
   def appraiser
     @employee = Employee.find(params[:format])
     @goal_ratings = GoalRatingSheet.where(appraisee_id: @employee.id,appraiser_comment: nil,is_confirm_appraisee: true)
-    #@goal_ratings = GoalRatingSheet.where("appraisee_id = ? and (appraiser_comment = ? or appraiser_comment = ?)",@employee.id,nil,"")
-    @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: @employee.id,is_confirm_appraisee: nil).where.not(appraiser_comment: nil)
+    @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: @employee.id,is_confirm_appraisee: true, is_confirm_appraiser: nil).where.not(appraiser_comment: nil)
     @goal_rating_single_sheets = GoalRatingSheet.where(appraisee_id: @employee.id).group(:appraisee_id)
     @goal_rating_sheet = GoalRatingSheet.new
     @performance_periods = PerformancePeriod.all
@@ -102,7 +101,6 @@ class GoalRatingSheetsController < ApplicationController
     redirect_to appraiser_goal_rating_sheets_path(format: @employee.id)
   end
   
-
   def appraiser2
     #@goal_rating_sheet = GoalRatingSheet.new
     @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: params[:format],appraiser2_comment: nil,is_confirm_appraiser: true)
@@ -140,9 +138,16 @@ class GoalRatingSheetsController < ApplicationController
 
   def final_comment
     @goal_rating_sheet = GoalRatingSheet.new
-    @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: params[:format],is_confirm_appraiser2: true).where.not(final_comment: nil)
-
-    @goal_ratings = GoalRatingSheet.where(appraisee_id: params[:format],final_comment: nil,is_confirm_appraiser2: true)
+    
+    
+    @employee = Employee.find(params[:format])
+    if @employee.manager_2_id.nil?
+      @goal_ratings = GoalRatingSheet.where(appraisee_id: params[:format], final_comment: nil,is_confirm_appraiser: true)
+      @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: params[:format],is_confirm_appraiser: true).where.not(final_comment: nil)
+    else
+      @goal_ratings = GoalRatingSheet.where(appraisee_id: params[:format], final_comment: nil,is_confirm_appraiser2: true)
+      @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: params[:format],is_confirm_appraiser2: true).where.not(final_comment: nil)
+    end
     @attribute_rating_sheets = AttributeRatingSheet.where(appraisee_id: params[:format]).group(:appraisee_id)
     @employee = Employee.find(params[:format])
     @qualifications = Qualification.where(employee_id: @employee.id)

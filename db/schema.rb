@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160523121643) do
+ActiveRecord::Schema.define(version: 20160524160726) do
 
   create_table "accident_masters", force: :cascade do |t|
     t.string   "code"
@@ -31,11 +31,19 @@ ActiveRecord::Schema.define(version: 20160523121643) do
     t.string   "leave_date_range"
     t.string   "no_of_day"
     t.text     "description"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+    t.integer  "root_cause_master_id"
+    t.integer  "department_id"
+    t.string   "avatar_file_name"
+    t.string   "avatar_content_type"
+    t.integer  "avatar_file_size"
+    t.datetime "avatar_updated_at"
   end
 
+  add_index "accident_records", ["department_id"], name: "index_accident_records_on_department_id"
   add_index "accident_records", ["employee_id"], name: "index_accident_records_on_employee_id"
+  add_index "accident_records", ["root_cause_master_id"], name: "index_accident_records_on_root_cause_master_id"
 
   create_table "advance_salaries", force: :cascade do |t|
     t.integer  "employee_id"
@@ -1537,6 +1545,14 @@ ActiveRecord::Schema.define(version: 20160523121643) do
     t.string   "code"
     t.string   "name"
     t.string   "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "root_cause_masters", force: :cascade do |t|
+    t.integer  "code"
+    t.string   "name"
+    t.text     "description"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end

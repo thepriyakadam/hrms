@@ -138,8 +138,6 @@ class GoalRatingSheetsController < ApplicationController
 
   def final_comment
     @goal_rating_sheet = GoalRatingSheet.new
-    
-    
     @employee = Employee.find(params[:format])
     if @employee.manager_2_id.nil?
       @goal_ratings = GoalRatingSheet.where(appraisee_id: params[:format], final_comment: nil,is_confirm_appraiser: true)
@@ -239,7 +237,7 @@ class GoalRatingSheetsController < ApplicationController
         @goal_rating_sheet.update(is_confirm_final: true)
         flash[:notice] = "Confirmed Successfully"
       end  
-       redirect_to final_comment_goal_rating_sheets_path(format: @employee.id)
+      redirect_to final_comment_goal_rating_sheets_path(format: @employee.id)
     end  
   end
 
@@ -247,15 +245,15 @@ class GoalRatingSheetsController < ApplicationController
     @employee = Employee.find(params[:id])
     @goal_rating_sheet_ids = params[:goal_rating_sheet_ids]
     if @goal_rating_sheet_ids.nil?
-        flash[:alert] = "Please Select the Checkbox"
-        redirect_to appraiser2_goal_rating_sheets_path(format: @employee.id)
-      else
-        @goal_rating_sheet_ids.each do |gid|
+      flash[:alert] = "Please Select the Checkbox"
+      redirect_to appraiser2_goal_rating_sheets_path(format: @employee.id)
+    else
+      @goal_rating_sheet_ids.each do |gid|
         @goal_rating_sheet = GoalRatingSheet.find(gid)
         @goal_rating_sheet.update(is_confirm_appraiser2: true)
         flash[:notice] = "Confirmed Successfully"
       end  
-       redirect_to appraiser2_goal_rating_sheets_path(format: @employee.id)
+      redirect_to appraiser2_goal_rating_sheets_path(format: @employee.id)
     end
   end
 
@@ -338,15 +336,12 @@ class GoalRatingSheetsController < ApplicationController
   def update_final
     @goal_rating_sheet = GoalRatingSheet.find(params[:id])
     @employee = Employee.find(@goal_rating_sheet.appraisee_id)
-
     if @goal_rating_sheet.update(goal_rating_sheet_params)
       flash[:notice] = "Updated Successfully."
     else
       flash[:alert] = "Not Updated "
     end
-   
     redirect_to final_comment_goal_rating_sheets_path(format: @employee.id)
-
   end
 
   def modal

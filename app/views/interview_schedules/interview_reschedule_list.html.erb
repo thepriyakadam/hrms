@@ -16,13 +16,13 @@
   <tbody>
     <% @interview_reschedules.each do |interview_reschedule| %>
       <tr>
-        <td><%= interview_reschedule.interview_schedule.candidate_name %></td>
-        <td><%= interview_reschedule.employee.first_name %></td>
+        <td><%= %></td>
+        <td><%= interview_reschedule.employee.try(:first_name) %> <%= interview_reschedule.employee.try(:middle_name) %> <%= interview_reschedule.employee.try(:last_name) %></td>
         <td><%= interview_reschedule.interview_date %></td>
         <td><%= interview_reschedule.interview_time %></td>
-       </tr>
+      </tr>
       <% end %>
     </tbody>
   </table>
-</div>
+ </div>
 </div>

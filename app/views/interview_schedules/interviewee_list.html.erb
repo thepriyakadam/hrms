@@ -13,8 +13,7 @@
               <th>Candidate Name</th>
               <th>Interview Date</th>
               <th>Interview Time</th>
-              <th>Resume</th>
-              <th>Photo</th>
+              <th>Download Resume/Photo</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -28,7 +27,6 @@
                 <td><%= interview_schedule.interview_date %></td>
                 <td><%= interview_schedule.interview_time %></td>
                 <td><%= link_to '', resume_list_interview_schedules_path(interview_schedule),class: 'btn btn-xs fa fa-download' %></td>
-                <td><%= link_to '', resume_list_interview_schedules_path(interview_schedule),class: 'btn btn-xs fa fa-picture-o' %></td>
                 <td>
                   <%= link_to ' Feedback', new_interview_analysis_path(interview_schedule),class: 'btn btn-xs btn-success fa fa-comment' %>
                 </td>

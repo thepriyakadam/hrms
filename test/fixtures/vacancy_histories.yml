@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  vacancy_name: MyString
+  string: MyString
+  no_of_position: MyString
+  integer: MyString
+  description: MyString
+  text: MyString
+  vacancy_post_date: MyString
+  date: MyString
+  budget: MyString
+  string: MyString
+
+two:
+  vacancy_name: MyString
+  string: MyString
+  no_of_position: MyString
+  integer: MyString
+  description: MyString
+  text: MyString
+  vacancy_post_date: MyString
+  date: MyString
+  budget: MyString
+  string: MyString

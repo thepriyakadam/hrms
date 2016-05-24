@@ -134,6 +134,7 @@ Rails.application.routes.draw do
       get :edit1
       get :interview_reschedule_list
       get :interviewee_list
+      get :resume_list
     end
   end
   resources :vacancy_masters do

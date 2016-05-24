@@ -186,6 +186,12 @@ end
      @interview_schedules = InterviewSchedule.where(employee_id: current_user.employee_id,is_confirm: true)
   end
 
+  def resume_list
+     @selected_resume = SelectedResume.new
+     @interview_schedule = InterviewSchedule.find(params[:format])
+     @selected_resumes = SelectedResume.where(id: @interview_schedule.selected_resume_id)
+  end
+
 
   private
 

@@ -117,7 +117,7 @@ class GoalRatingSheetsController < ApplicationController
   def appraiser2_create
     @employee = Employee.find(params[:id])
     goal_rating_sheets = params[:goal_rating_sheet_id]
-    
+
     comments = params[:appraiser2_comment]
     ratings = params[:appraiser2_rating_id]
     final = goal_rating_sheets.zip(comments, ratings)

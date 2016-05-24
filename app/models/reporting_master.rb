@@ -4,5 +4,6 @@ class ReportingMaster < ActiveRecord::Base
   has_many :reporting_masters_vacancy_masters
   has_many :vacancy_masters, through: :reporting_masters_vacancy_masters 
   has_many :travel_requests
+  has_many :vacancy_request_histories
   validates :employee_id, presence: true, uniqueness: { case_sensitive: false }
 end

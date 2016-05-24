@@ -72,8 +72,10 @@ class TrainingRequestsController < ApplicationController
 
   def approve_training_request
     @training_request = TrainingRequest.find(params[:format])
-    @training_request.update(current_status: "Approved")
-    
+    @training_request.update(status: "Approved")
+    TrainingApproval.create(reporting_master_id: @training_request.reporting_master_id, training_request_id: @training_request.id, current_status: "Approved")
+    ReportingMastersTrainingRequest.create(reporting_master_id: @training_request.reporting_master_id, training_request_id: @training_request.id, training_status: "Approved")
+
     TrainingRequestMailer.approve_training_request_email(@training_request).deliver_now
     flash[:notice] = 'Training Request Approved'
     redirect_to training_request_list_training_requests_path

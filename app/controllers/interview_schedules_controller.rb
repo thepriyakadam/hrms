@@ -141,7 +141,14 @@ end
     #byebug
     @interview_schedule = InterviewSchedule.find(params[:id])
     @employee = Employee.find(@interview_schedule.employee_id)
-    @interview_reschedule = InterviewReschedule.new  
+    @interview_reschedule = InterviewReschedule.new
+  end
+
+  def interview_reschedule_list
+     puts "-------------------"
+     @interview_schedule = InterviewSchedule.find(params[:format])
+     @interview_reschedules = InterviewReschedule.all
+     @interview_reschedules = InterviewReschedule.where(interview_schedule_id: @interview_schedule.id)
   end
 
   def search_by_interview_date
@@ -173,6 +180,16 @@ end
     end 
      redirect_to interview_schedules_path
   end
+  end
+
+  def interviewee_list
+     @interview_schedules = InterviewSchedule.where(employee_id: current_user.employee_id,is_confirm: true)
+  end
+
+  def resume_list
+     @selected_resume = SelectedResume.new
+     @interview_schedule = InterviewSchedule.find(params[:format])
+     @selected_resumes = SelectedResume.where(id: @interview_schedule.selected_resume_id)
   end
 
 

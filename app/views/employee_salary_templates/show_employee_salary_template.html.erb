@@ -1,6 +1,9 @@
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title">Employee Salary Template</h3>
+    <h3 class="box-title">
+      Employee Salary Template -
+      <%= code_full_name(@employee_salary_templates.first.employee) %>
+    </h3>
     <div class="box-tools pull-right">
     </div>
   </div><!-- /.box-header -->
@@ -15,7 +18,7 @@
       <thead>
         <tr>
           <th>Salary Component</th>
-          <th>Is Deducted</th>
+          <th>Deducted</th>
           <th>Parent Component</th>
           <th>Percentage</th>
           <th>To Be Paid</th>
@@ -28,7 +31,7 @@
         <% @employee_salary_templates.each do |template| %>
           <tr>
            <td><%= template.try(:salary_component).try(:name)%></td>
-           <td><%= template.try(:is_deducted)%></td>
+           <td><%= template.try(:is_deducted) ? "Yes" : "No" %></td>
            <td><%= template.try(:parent_salary_component).try(:name)%></td>
            <td><%= template.try(:percentage)%></td>
            <td><%= template.try(:to_be_paid)%></td>

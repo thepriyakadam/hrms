@@ -12,7 +12,8 @@ class SelectedResumesController < ApplicationController
   def new
     @selected_resume = SelectedResume.new
     @vacancy_master = VacancyMaster.find(params[:format])
-    @selected_resumes = SelectedResume.where(vacancy_master_id: @vacancy_master.id)
+    # @selected_resumes = SelectedResume.where(vacancy_master_id: @vacancy_master.id)
+    @selected_resumes = SelectedResume.all
   end
 
   def new1

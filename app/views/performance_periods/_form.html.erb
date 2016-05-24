@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-sm-3">
       <div class="form-group required">
-        <%= f.text_field :title,label: 'Title', placeholder: 'Title' %>
+        <%= f.text_field :title,label: 'Periode', placeholder: 'Title' %>
       </div>
     </div>
 
@@ -40,7 +40,7 @@
   <div class="row">
     <div class="col-sm-3">
       <div class="form-group required">
-        <%= f.check_box :is_open,include_blank: "Is Open",label: 'Active' %>
+        <%= f.check_box :is_open,include_blank: "Open",label: 'Active' %>
       </div>
     </div>
   </div>
@@ -87,16 +87,16 @@
     },
     messages: {
       "performance_period[title]":{
-        required: "Please specify title"
+        required: "Please Specify Title"
       },
       "performance_period[description]":{
-        required: "Please specify description"
+        required: "Please Specify Description"
       },
       "performance_period[start_date]":{
-        required: "Please specify start_date"
+        required: "Please Specify Start_Date"
       },
       "performance_period[end_date]":{
-        required: "Please specify end_date"
+        required: "Please Specify End_Date"
       }
     },
     errorPlacement: function(error, element) {

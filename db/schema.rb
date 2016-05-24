@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160523060506) do
+ActiveRecord::Schema.define(version: 20160523105510) do
 
   create_table "accident_masters", force: :cascade do |t|
     t.string   "code"
@@ -1713,12 +1713,17 @@ ActiveRecord::Schema.define(version: 20160523060506) do
     t.date     "training_date"
     t.integer  "reporting_master_id"
     t.text     "description"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.integer  "training_topic_master_id"
+    t.integer  "no_of_employee"
+    t.string   "place"
+    t.text     "justification"
   end
 
   add_index "training_requests", ["employee_id"], name: "index_training_requests_on_employee_id"
   add_index "training_requests", ["reporting_master_id"], name: "index_training_requests_on_reporting_master_id"
+  add_index "training_requests", ["training_topic_master_id"], name: "index_training_requests_on_training_topic_master_id"
 
   create_table "training_topic_masters", force: :cascade do |t|
     t.string   "code"

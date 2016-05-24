@@ -13,7 +13,12 @@ Rails.application.routes.draw do
   resources :employee_resignations
   resources :travel_options
   resources :training_plans
-  resources :training_requests
+  resources :training_requests do
+    collection do
+      get :training_request_list
+      get :training_request_confirmation
+    end
+  end
   resources :selected_resumes  do
     collection do 
     post :is_confirm

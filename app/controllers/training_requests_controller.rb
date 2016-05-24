@@ -61,6 +61,13 @@ class TrainingRequestsController < ApplicationController
     end
   end
 
+  def training_request_list
+    @training_requests = TrainingRequest.where(reporting_master_id: current_user.employee_id)
+  end
+
+  def training_request_confirmation
+    
+  end
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_training_request
@@ -69,6 +76,6 @@ class TrainingRequestsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def training_request_params
-      params.require(:training_request).permit(:employee_id, :training_topic, :training_period, :training_date, :reporting_master_id, :description)
+      params.require(:training_request).permit(:no_of_employee,:place,:justification,:employee_id, :training_topic_master_id, :training_period, :training_date, :reporting_master_id, :description)
     end
 end

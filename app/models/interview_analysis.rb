@@ -3,4 +3,5 @@ class InterviewAnalysis < ActiveRecord::Base
   belongs_to :interview_evalution
   belongs_to :interview_attribute
   belongs_to :interview_decision
+  belongs_to :interview_schedule
 end

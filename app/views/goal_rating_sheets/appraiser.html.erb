@@ -54,11 +54,11 @@
           <td><%= g.employee_goal.difficulty_level %></td>
           <td><%= g.employee_goal.allign_to_supervisor %></td>
           <% if g.is_confirm_appraisee == true %>
-          <td><%= g.appraisee_comment %></td>
-          <td><%= g.appraisee_rating.try(:code) %></td>
+            <td><%= g.appraisee_comment %></td>
+            <td><%= g.appraisee_rating.try(:code) %></td>
           <% else %>
-          <td></td>
-          <td></td>
+            <td></td>
+            <td></td>
           <% end %>
           <td><%= text_field_tag 'appraiser_comment[]',"",{class: 'form-control'} %></td>
           <td>

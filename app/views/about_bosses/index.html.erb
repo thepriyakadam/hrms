@@ -22,7 +22,7 @@
         <td><%= about_boss.status %></td>
         <td><%= link_to 'Show', about_boss %></td>
         <td><%= link_to 'Edit', edit_about_boss_path(about_boss) %></td>
-        <td><%= link_to 'Destroy', about_boss, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Destroy', about_boss, method: :delete, data: { confirm: 'Are you sure?' } , remote:true%></td>
       </tr>
     <% end %>
   </tbody>

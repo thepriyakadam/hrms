@@ -25,6 +25,7 @@ class Employee < ActiveRecord::Base
   has_many :leave_status_records, class_name: 'LeaveStatusRecord', foreign_key: 'change_status_employee_id'
   has_many :employee_leav_balances
   has_many :overtime_salaries
+  has_many :vacancy_request_histories
   # accepts_nested_attributes_for :employee_leav_balances
   has_many :families
   has_many :experiences
@@ -44,6 +45,7 @@ class Employee < ActiveRecord::Base
   has_one :employee_bank_detail
   has_one :joining_detail
   has_many :employee_promotions
+  has_many :training_requests
   
   accepts_nested_attributes_for :joining_detail
   has_many :subordinates, class_name: 'Employee',

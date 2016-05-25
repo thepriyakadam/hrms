@@ -32,7 +32,7 @@
 
     </div>
 
-     <div class="row">
+    <div class="row">
     <div class="col-sm-3">
      <div class="field">
       <%= f.select :employee_category_id,all_employee_category,{include_blank: 'Select Category',label: 'Employee Category'} %>
@@ -75,6 +75,7 @@
      <div class="field">
       <%= f.text_field :justification %>
      </div>
+    </div>  
     </div>
     </div>
 
@@ -86,8 +87,7 @@
         </div>
       </div>
     </div>
-  
-<% end %>
+  <% end %>
 
 <script type="text/javascript">
   $(function(){

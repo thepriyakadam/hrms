@@ -14,7 +14,13 @@ Rails.application.routes.draw do
   resources :employee_resignations
   resources :travel_options
   resources :training_plans
-  resources :training_requests
+  resources :training_requests do
+    collection do
+      get :training_request_list
+      get :training_request_confirmation
+      get :approve_training_request
+    end
+  end
   resources :selected_resumes  do
     collection do 
     post :is_confirm
@@ -133,6 +139,9 @@ Rails.application.routes.draw do
       post :is_confirm
       get :new1
       get :edit1
+      get :interview_reschedule_list
+      get :interviewee_list
+      get :resume_list
     end
   end
   resources :vacancy_masters do
@@ -155,6 +164,11 @@ Rails.application.routes.draw do
       get :vacancy_resume
       get :modal2
       post :confirm_candidate
+      get :modal3
+      patch :update_vacancy_details
+      get :vacancy_history_resume
+      get :approved_vacancy_request_history_list
+      get :particular_vacancy_request_list_history
     end
   end
   resources :leave_c_offs do

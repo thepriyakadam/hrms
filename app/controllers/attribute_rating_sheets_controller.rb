@@ -43,7 +43,6 @@ class AttributeRatingSheetsController < ApplicationController
         flash[:notice] = 'Employee Attribute Created Successfully'
       end
     end
-
     redirect_to new_attribute_rating_sheet_path
   end
 
@@ -160,7 +159,7 @@ class AttributeRatingSheetsController < ApplicationController
     redirect_to new_attribute_rating_sheet_path
   end
 
-   def is_confirm_final
+  def is_confirm_final
     @employee = Employee.find(params[:id])
     @attribute_rating_sheet_ids = params[:attribute_rating_sheet_ids]
     if @attribute_rating_sheet_ids.nil?
@@ -191,7 +190,6 @@ class AttributeRatingSheetsController < ApplicationController
        redirect_to appraiser2_attribute_rating_sheets_path(@attribute_rating_sheet.appraisee_id)
     end  
   end
-
 
   # def employee_info
   #   @employee = Employee.find(params[:format])
@@ -250,8 +248,7 @@ class AttributeRatingSheetsController < ApplicationController
     @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
     @experiences = Experience.where(employee_id: @employee.id)
     @ctc = EmployeeSalaryTemplate.where(employee_id: @employee.id).sum(:monthly_amount)
-    @attribute_rating_multiple_sheets = AttributeRatingSheet.where(appraisee_id: params[:format], is_confirm_appraiser2: true) 
-   
+    @attribute_rating_multiple_sheets = AttributeRatingSheet.where(appraisee_id: params[:format], is_confirm_appraiser2: true)
     current_login = Employee.find(current_user.employee_id)
     @employees = current_login.indirect_subordinates
     session[:active_tab] ="performance"
@@ -262,7 +259,6 @@ class AttributeRatingSheetsController < ApplicationController
     @employee = Employee.find(params[:format])
     @attribute_rating_sheets = AttributeRatingSheet.where(appraisee_id: @employee.id).group(:appraisee_id)
     @attribute_ratings = AttributeRatingSheet.where(appraisee_id: @employee.id, appraiser_comment: nil)
-    
     @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
     @qualifications = Qualification.where(employee_id: @employee.id)
     @experiences = Experience.where(employee_id: @employee.id)
@@ -273,7 +269,6 @@ class AttributeRatingSheetsController < ApplicationController
   end
 
   def appraiser2_create
-
     attribute_rating_sheets = params[:attribute_rating_sheet_id]
     comments = params[:appraiser2_comment]
     ratings = params[:appraiser2_rating_id]
@@ -309,7 +304,6 @@ class AttributeRatingSheetsController < ApplicationController
 
   def final_create
      #@attribute_rating_sheet = AttributeRatingSheet.find(params[:id])
-     
     attribute_rating_sheets = params[:attribute_rating_sheet_id]
     comments = params[:final_comment]
     ratings = params[:final_rating_id]

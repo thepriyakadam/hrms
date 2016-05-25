@@ -1,20 +1,12 @@
 class ProfessionalTaxesController < ApplicationController
   before_action :set_professional_tax, only: [:show, :edit, :update, :destroy]
 
-  # GET /professional_taxes
-  # GET /professional_taxes.json
-  def index
-  end
-
-  # GET /professional_taxes/1
-  # GET /professional_taxes/1.json
-  def show
-  end
-
-  # GET /professional_taxes/new
+  
   def new
     @professional_tax = ProfessionalTax.new
     @professional_taxes = ProfessionalTax.all
+    session[:active_tab] ="master"
+    session[:active_tab1] ="payrollcomponents"
   end
 
   # GET /professional_taxes/1/edit

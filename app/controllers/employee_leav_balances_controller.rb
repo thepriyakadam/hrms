@@ -17,7 +17,7 @@ class EmployeeLeavBalancesController < ApplicationController
       end
     end
     session[:active_tab] ="leavemanagement"
-    session[:active_tab1] ="assignleave"
+    session[:active_tab1] ="leaveadministration"
   end
 
   # GET /employee_leav_balances/1

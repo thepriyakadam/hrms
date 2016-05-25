@@ -1,5 +1,12 @@
 Rails.application.routes.draw do
 
+
+  resources :exit_interviews
+  resources :about_companies
+  resources :about_bosses
+  resources :question_masters
+  resources :training_records
+
   resources :training_approvals
   resources :training_topics
   resources :employee_promotions
@@ -19,6 +26,7 @@ Rails.application.routes.draw do
       get :training_request_list
       get :training_request_confirmation
       get :approve_training_request
+      get :reject_training_request
     end
   end
   resources :selected_resumes  do

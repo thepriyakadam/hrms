@@ -5,6 +5,8 @@ class EmployeeGradesController < ApplicationController
   def new
     @employee_grade = EmployeeGrade.new
     @employee_grades = EmployeeGrade.all
+    session[:active_tab] ="master"
+    session[:active_tab1] ="employeeprofilesetup"
   end
 
   # GET /employee_grades/1/edit

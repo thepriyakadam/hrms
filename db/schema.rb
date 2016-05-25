@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160523121643) do
+ActiveRecord::Schema.define(version: 20160524141810) do
 
   create_table "accident_masters", force: :cascade do |t|
     t.string   "code"
@@ -1493,6 +1493,17 @@ ActiveRecord::Schema.define(version: 20160523121643) do
 
   add_index "reporting_masters", ["employee_id"], name: "index_reporting_masters_on_employee_id"
 
+  create_table "reporting_masters_training_reqs", force: :cascade do |t|
+    t.integer  "training_request_id"
+    t.integer  "reporting_master_id"
+    t.string   "training_status"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+  end
+
+  add_index "reporting_masters_training_reqs", ["reporting_master_id"], name: "index_reporting_masters_training_reqs_on_reporting_master_id"
+  add_index "reporting_masters_training_reqs", ["training_request_id"], name: "index_reporting_masters_training_reqs_on_training_request_id"
+
   create_table "reporting_masters_travel_requests", force: :cascade do |t|
     t.integer  "travel_request_id"
     t.integer  "reporting_master_id"
@@ -1711,6 +1722,7 @@ ActiveRecord::Schema.define(version: 20160523121643) do
     t.text     "justification"
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
+    t.string   "current_status"
   end
 
   add_index "training_approvals", ["employee_id"], name: "index_training_approvals_on_employee_id"
@@ -1737,12 +1749,18 @@ ActiveRecord::Schema.define(version: 20160523121643) do
     t.date     "training_date"
     t.integer  "reporting_master_id"
     t.text     "description"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.integer  "training_topic_master_id"
+    t.integer  "no_of_employee"
+    t.string   "place"
+    t.text     "justification"
+    t.string   "status"
   end
 
   add_index "training_requests", ["employee_id"], name: "index_training_requests_on_employee_id"
   add_index "training_requests", ["reporting_master_id"], name: "index_training_requests_on_reporting_master_id"
+  add_index "training_requests", ["training_topic_master_id"], name: "index_training_requests_on_training_topic_master_id"
 
   create_table "training_topic_masters", force: :cascade do |t|
     t.string   "code"

@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  training_request_id: 
+  reporting_master_id: 
+  training_status: MyString
+
+two:
+  training_request_id: 
+  reporting_master_id: 
+  training_status: MyString

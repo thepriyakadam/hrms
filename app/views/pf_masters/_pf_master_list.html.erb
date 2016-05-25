@@ -13,12 +13,12 @@
   <tbody>
    <% @pf_masters.each do |pf_master| %>
       <tr>
-        <td><%= pf_master.is_pf %></td>
+        <td><%= pf_master.is_pf ? "Yes" : "No" %></td>
         <td><%= pf_master.percentage %></td>
         <td><%= pf_master.date_effective %></td>
         <td><%= pf_master.min_limit %></td>
         <td><%= pf_master.base_component %></td>
-        <td><%= pf_master.is_active %></td>
+        <td><%= pf_master.is_active ? "Yes" : "No" %></td>
         <td>
           <%= link_to '', edit_pf_master_path(pf_master) ,class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
           <%= link_to '',  pf_master, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-xs btn-danger fa fa-close' %>

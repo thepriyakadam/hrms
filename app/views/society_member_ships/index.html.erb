@@ -25,7 +25,7 @@
         <tr>
           <td><%= society_member_ship.employee.try(:manual_employee_code) %></td>
           <td><%= full_name(society_member_ship.employee) %></td>
-          <td><%= society_member_ship.is_society_member %></td>
+          <td><%= society_member_ship.is_society_member ? "Yes" : "No" %></td>
           <td><%= society_member_ship.start_date %></td>
           <td><%= society_member_ship.amount %></td>
           <td>

@@ -4,6 +4,8 @@ class AdvanceTypesController < ApplicationController
   def new
     @advance_type = AdvanceType.new
     @advance_types = AdvanceType.all
+    session[:active_tab] ="master"
+    session[:active_tab1] ="payrollsetup"
   end
 
   # GET /advance_types/1/edit

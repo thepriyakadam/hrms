@@ -4,6 +4,8 @@ class DegreeStreamsController < ApplicationController
   def new
     @degree_stream = DegreeStream.new
     @degree_streams = DegreeStream.all
+    session[:active_tab] ="master"
+    session[:active_tab1] ="qualificationsetup"
   end
 
   # GET /degree_streams/1/edit

@@ -12,7 +12,7 @@
   <tbody>
     <% @esic_masters.each do |esic_master| %>
       <tr>
-        <td><%= esic_master.esic %></td>
+        <td><%= esic_master.esic ? "Yes" : "No" %></td>
         <td><%= esic_master.percentage %></td>
         <td><%= esic_master.date_effective %></td>
         <td><%= esic_master.max_limit %></td>

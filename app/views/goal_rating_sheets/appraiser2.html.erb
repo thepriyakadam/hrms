@@ -38,11 +38,10 @@
         <table class="table table-bordered table-hover table-condensed">
           <thead>
             <tr>
-      	    	<th>Company</th>
+      	    	<th>Previous Company</th>
               <th>Designation</th>
               <th>Previous Exp.(Years)</th>
-              <th>Previous CTC</th>
-              <th>Current CTC</th>
+              <th>CTC</th>
             </tr>
           </thead>
           <tbody>
@@ -52,7 +51,6 @@
                 <td><%= e.designation %></td>
                 <td><%= e.no_of_year %></td>
                 <td><%= e.ctc %></td>
-                <td><%= @ctc %></td>
               </tr>
             <% end %>
           </tbody>
@@ -89,7 +87,7 @@
     <%= bootstrap_form_for(:goal_rating_sheet,url:{action: "appraiser2_create",id: @employee.id}) do |f| %>
       <%= hidden_field_tag :appraiser_2_id, {},value: current_user.employee_id %>
     	<div class="box-header with-border">
-        <h3 class="box-title">Goals</h3>
+        <h3 class="box-title">Goals Comments and Ratings</h3>
       </div>
   	  <table class="table table-bordered table-hover table-condensed example3">
         <thead>
@@ -112,7 +110,7 @@
         <tbody>
           <% @goal_rating_sheets.each do |g| %>
             <tr>
-              <td><%= g.employee_goal.goal_perspective.name %></td>
+              <td><%= g.employee_goal.goal_perspective.try(:name) %></td>
               <td><%= g.employee_goal.goal_measure %></td>
               <td><%= g.employee_goal.target %></td>
               <td><%= g.employee_goal.goal_weightage %></td>
@@ -145,7 +143,7 @@
     <%= bootstrap_form_for :goal_rating_sheet,url:{action:'is_confirm_appraiser2',id: @employee.id} do |f| %>
       <%= hidden_field_tag :appraiser_2_id, {},value: current_user.employee_id %>
       <div class="box-header with-border">
-        <h3 class="box-title">Goal List</h3>
+        <h3 class="box-title">Goal Confirmation</h3>
       </div>
       <table class="table table-bordered table-hover table-condensed example3">
         <thead>
@@ -171,7 +169,7 @@
           <% @goal_rating_shets.each do |g| %>
             <tr>
               <td><%= check_box_tag "goal_rating_sheet_ids[]", g.id unless g.is_confirm_appraiser2 %></td>
-              <td><%= g.employee_goal.goal_perspective.name %></td>
+              <td><%= g.employee_goal.goal_perspective.try(:name) %></td>
               <td><%= g.employee_goal.goal_measure %></td>
               <td><%= g.employee_goal.target %></td>
               <td><%= g.employee_goal.goal_weightage %></td>

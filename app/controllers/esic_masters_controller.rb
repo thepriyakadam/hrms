@@ -5,7 +5,7 @@ class EsicMastersController < ApplicationController
     @esic_master = EsicMaster.new
     @esic_masters = EsicMaster.all
     session[:active_tab] ="master"
-    session[:active_tab1] ="setting"
+    session[:active_tab1] ="payrollcomponents"
   end
 
   # GET /esic_masters/1/edit

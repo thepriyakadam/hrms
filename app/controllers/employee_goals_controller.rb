@@ -64,9 +64,10 @@ class EmployeeGoalsController < ApplicationController
   end
 
   def subordinate_list
+    session[:active_tab] ="performancesetup"
     current_login = Employee.find(current_user.employee_id)
     @employees = current_login.subordinates 
-    session[:active_tab] ="Performance"
+    
   end
 
   def employee_list

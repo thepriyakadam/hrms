@@ -4,6 +4,8 @@ class PaymentModesController < ApplicationController
   def new
     @payment_mode = PaymentMode.new
     @payment_modes = PaymentMode.all
+    session[:active_tab] ="master"
+    session[:active_tab1] ="companymaster"
   end
 
   # GET /payment_modes/1/edit

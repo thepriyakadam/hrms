@@ -19,7 +19,7 @@ class GoalRatingSheetsController < ApplicationController
     @employee_goals = EmployeeGoal.where(employee_id: current_user.employee_id,is_confirm: true)
     @period = @employee_goals.try(:first).try(:period)
     @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: current_user.employee_id, appraisee_comment: nil)
-    @goal_rating_shets = GoalRatingSheet.where(appraisee_id: current_user.employee_id, is_confirm_appraisee: nil).where.not(appraisee_comment: nil)
+    @goal_rating_shets = GoalRatingSheet.where(appraisee_id: current_user.employee_id).where.not(appraisee_comment: nil)
   end
 
   # GET /goal_rating_sheets/1/edit
@@ -32,16 +32,13 @@ class GoalRatingSheetsController < ApplicationController
   def create
     goal_rating_sheet_ids = params[:employee_goal_id]
     comments = params[:appraisee_comment]
-    ratings = params[:appraisee_rating_id]
-    final = goal_rating_sheet_ids.zip(comments, ratings)
-    final.each do |e, c, r|
+    final = goal_rating_sheet_ids.zip(comments)
+    final.each do |e, c|
       emp = GoalRatingSheet.find(e)
       if c == ''
         flash[:alert] = 'Fill comments'
-      elsif r == ''
-        flash[:alert] = 'Fill all the fields'
       else
-        emp.update(appraisee_comment: c, appraisee_rating_id: r)
+        emp.update(appraisee_comment: c)
         flash[:notice] = 'Employee Goal Created Successfully'
       end
     end
@@ -386,6 +383,16 @@ class GoalRatingSheetsController < ApplicationController
     @goal_rating_sheet.update(goal_rating_sheet_params)
     flash[:notice] = 'Updated Successfully'
     redirect_to final_comment_goal_rating_sheets_path(@goal_rating_sheet.appraisee_id)
+  end
+
+  def appraiser1_approval
+     @employee = Employee.find(params[:format])
+     @employee_goals = EmployeeGoal.where(employee_id: @employee.id)
+  end
+
+  def appraiser1_subordinate
+    current_login = Employee.find(current_user.employee_id)
+    @employees = current_login.subordinates
   end
 
   private

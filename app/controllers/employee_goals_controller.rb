@@ -15,8 +15,7 @@ class EmployeeGoalsController < ApplicationController
   # GET /employee_goals/new
   def new
     @employee_goal = EmployeeGoal.new
-    @employee = Employee.find(params[:format])
-    @employee_goals = EmployeeGoal.where(employee_id: @employee.id, is_confirm: nil)
+    @employee_goals = EmployeeGoal.where(employee_id: current_user.employee_id)
   end
 
   # GET /employee_goals/1/edit
@@ -29,14 +28,13 @@ class EmployeeGoalsController < ApplicationController
   # POST /employee_goals.json
   def create
     @employee_goal = EmployeeGoal.new(employee_goal_params)
-    @employee = Employee.find(@employee_goal.employee_id)
     goal_weightage_sum = @employee_goal.goal_weightage_sum(@employee_goal)
     if goal_weightage_sum > 100
       @flag = false
     else
       @employee_goal.save
       @employee_goal = EmployeeGoal.new
-      @employee_goals = EmployeeGoal.where(employee_id: @employee.id, is_confirm: nil)
+      @employee_goals = EmployeeGoal.where(employee_id: current_user.employee_id)
       @flag = true
     end
   end
@@ -83,14 +81,13 @@ class EmployeeGoalsController < ApplicationController
   end
 
   def is_confirm
-    @employee = Employee.find(params[:id])
     @employee_goal_ids = params[:employee_goal_ids]
     if @employee_goal_ids.nil?
       flash[:alert] = "Please Select Goal."
     else
       confirm_employee_goal
     end
-    redirect_to new_employee_goal_path(@employee.id)
+    redirect_to new_employee_goal_path
   end
 
   def send_email_to_employee
@@ -174,7 +171,7 @@ class EmployeeGoalsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_employee_goal
-    @employee_goal = EmployeeGoal.find(params[:id])
+    #@employee_goal = EmployeeGoal.find(params[:id])
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
@@ -191,7 +188,7 @@ class EmployeeGoalsController < ApplicationController
         @employee_goal_ids.each do |eid|
           @employee_goal = EmployeeGoal.find(eid)
           @employee_goal.update(is_confirm: true)
-          GoalRatingSheet.create(appraisee_id: @employee.id, employee_goal_id: @employee_goal.id)
+          GoalRatingSheet.create(appraisee_id: current_user.employee_id, employee_goal_id: @employee_goal.id)
         end
         flash[:notice] = "Confirmed Successfully."
       else

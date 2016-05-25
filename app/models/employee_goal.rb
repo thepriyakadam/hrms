@@ -11,7 +11,7 @@ class EmployeeGoal < ActiveRecord::Base
   validates :goal_measure, presence: true
   validates :target, presence: true
   validates :goal_weightage, presence: true
-  validates :difficulty_level, presence: true
+  #validates :difficulty_level, presence: true
   validates :period_id, presence: true
 
   def goal_weightage_sum(employee_goal)

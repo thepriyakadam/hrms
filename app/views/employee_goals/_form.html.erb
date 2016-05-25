@@ -1,7 +1,7 @@
 <%= bootstrap_form_for(@employee_goal,html: {id: "employee_goal"},remote: true) do |f| %>
+
 <div id="error" class="error text-center" style="color:red; background-color: pink;"></div>
-  <%= f.hidden_field :employee_id,value: @employee.id %>
-  <%= f.hidden_field :emp_head,value: current_user.employee_id %>
+  <%= f.hidden_field :employee_id,value: current_user.employee_id  %>
 
   <div class="row">
     <div class="col-sm-3">
@@ -12,13 +12,13 @@
 
     <div class="col-sm-3">
       <div class="field">
-        <%= f.select :goal_perspective_id,all_goal_perspective_type,{label: 'Goal Perspective',include_blank: "Select Goal Perspective"}%>
+        <%= f.select :goal_perspective_id,all_goal_perspective_type,{label: 'Type Of Objective',include_blank: "Select Objective"}%>
       </div>
     </div>
 
     <div class="col-sm-3">
       <div class="field">
-        <%= f.text_field :goal_measure,{label: 'Goal Measure',include_blank: "Select Goal Measure", placeholder: 'e.g. : Punctuality'} %>
+        <%= f.text_field :goal_measure,{label: 'Particulars Of Objective',include_blank: "Select", placeholder: 'e.g. : Punctuality'} %>
       </div>
     </div>
 
@@ -33,13 +33,7 @@
   <div class="row">
     <div class="col-sm-3">
       <div class="field">
-        <%= f.text_field :goal_weightage, label: 'Goal Weightage(%)' %>
-      </div>
-    </div>
-
-    <div class="col-sm-3">
-      <div class="field">
-        <%= f.select :difficulty_level,["1","2","3"],{label: 'Difficulty Level', include_blank: "Select Difficulty Level"} %>
+        <%= f.text_field :goal_weightage, label: 'Weightage(%)' %>
       </div>
     </div>
 

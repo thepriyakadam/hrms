@@ -1,0 +1,33 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Subordinate List</h3>
+    <div class="pull-right">  
+    </div>
+  </div>
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+      <thead>
+        <tr>
+          <th>Period</th>
+          <th>Type Of Objective</th>
+          <th>Particular Of Objective</th>
+          <th>Target/Unit</th>
+          <th>Weightage(Total - <%=@employee_goals.sum(:goal_weightage)%>%)</th>
+          <th>Aligned To Supervisor</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @employee_goals.each do |e| %>
+          <tr>
+            <td><%= e.period.title %> <%= e.period.start_date %> <%= e.period.end_date %></td>
+            <td><%= e.goal_perspective.name %></td>
+            <td><%= e.goal_measure %></td>
+            <td><%= e.target %></td>
+            <td><%= e.goal_weightage %>%</td>
+            <td><%= e.allign_to_supervisor %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,16 +1,15 @@
 <h6>Goal List</h6>
-<%= bootstrap_form_for @employee_goal,url:{action:'is_confirm',id: @employee.id} do |f| %>
-  <%= f.hidden_field :employee_id,value: @employee.id %>
+<%= bootstrap_form_for @employee_goal,url:{action:'is_confirm'} do |f| %>
+  <%= f.hidden_field :employee_id,value: current_user.employee_id %>
   <table id="example2" class="table table-bordered table-hover table-condensed">
     <thead>
       <tr>
         <th><input type="checkbox" id="selectAll" value="selectAll"></th>
         <th>Period</th>
-        <th>Goal Perspective</th>
-        <th>Goal Measure</th>
+        <th>Type Of Objective</th>
+        <th>Particular Of Objective</th>
         <th>Target/Unit</th>
-        <th>Goal Weightage(Total - <%=@employee_goals.sum(:goal_weightage)%>%)</th>
-        <th>Difficulty Level</th>
+        <th>Weightage(Total - <%=@employee_goals.sum(:goal_weightage)%>%)</th>
         <th>Aligned To Supervisor</th>
         <th>Action</th>
       </tr>
@@ -24,7 +23,6 @@
           <td><%= e.goal_measure %></td>
           <td><%= e.target %></td>
           <td><%= e.goal_weightage %>%</td>
-          <td><%= e.difficulty_level %></td>
           <td><%= e.allign_to_supervisor %></td>
           <td>
             <% if e.is_confirm == true %>
@@ -42,11 +40,9 @@
     <div class="col-sm-3">
       <div class="actions">
         <%= f.submit "Confirm Goal", class: 'btn btn-primary btn-sm' %> 
-        <%= link_to 'Attribute', new_employee_attribute_path(@employee.id) , class: 'btn btn-warning btn-sm' %>
       </div>
     </div>
-  </div></br>
-  <%= link_to ' Back', subordinate_list_employee_goals_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+  </div>
 <% end %>
 
 <script type="text/javascript">

@@ -33,13 +33,11 @@
         <th>Goal Measure</th>
         <th>Target</th>
         <th>Goal Weightage</th>
-        <th>Difficulty Level</th>
         <th>Aligned To Supervisor</th>
 
-        <th>Appraisee Comment</th>
-        <th>Appraisee Evaluation</th>
-        <th>Appraiser Comment</th>
-        <th>Appraiser Evaluation</th>
+        <th>Self Comment</th>
+        <th>Appraiser1 Comment</th>
+        <th>Appraiser1 Evaluation</th>
       </tr>
     </thead>
 
@@ -51,11 +49,9 @@
           <td><%= g.employee_goal.goal_measure %></td>
           <td><%= g.employee_goal.target %></td>
           <td><%= g.employee_goal.goal_weightage %></td>
-          <td><%= g.employee_goal.difficulty_level %></td>
           <td><%= g.employee_goal.allign_to_supervisor %></td>
           <% if g.is_confirm_appraisee == true %>
             <td><%= g.appraisee_comment %></td>
-            <td><%= g.appraisee_rating.try(:code) %></td>
           <% else %>
             <td></td>
             <td></td>
@@ -96,18 +92,15 @@
         <th>Goal Measure</th>
         <th>Target/Unit</th>
         <th>Goal Weightage</th>
-        <th>Difficulty Level</th>
-        
+
         <th>Aligned To Supervisor</th>
-        <th>Appraisee Comment</th>
-        <th>Appraisee Evaluation</th>
-        <th>Appraiser Comment</th>
-        <th>Appraiser Evaluation</th>
+        <th>Self Comment</th>
+        <th>Appraiser1 Comment</th>
+        <th>Appraiser1 Evaluation</th>
         <th>Action</th>
       </tr>
     </thead>
     <tbody>
-      <% appraisee_sum = 0 %>
       <% appraiser_sum = 0 %>
       <% @goal_rating_sheets.each do |g| %>
         <tr>
@@ -117,20 +110,15 @@
           <td><%= g.employee_goal.goal_measure %></td>
           <td><%= g.employee_goal.target %></td>
           <td><%= weightage = g.employee_goal.goal_weightage %></td>
-          <td><%= g.employee_goal.difficulty_level %></td>
           <td><%= g.employee_goal.allign_to_supervisor %></td>
 
           <% if g.is_confirm_appraisee == true %>
             <td><%= g.appraisee_comment %></td>
-            <td><%= appraisee_rating = g.appraisee_rating.try(:code) %></td>
           <% else %>
-            <td></td>
             <td></td>
           <% end %>
             <td><%= g.appraiser_comment %></td>
             <td><%= appraiser_rating = g.appraiser_rating.try(:code) %></td>
-            <% appraisee_output = weightage * appraisee_rating.to_i / 100.to_f %>
-            <% appraisee_sum = appraisee_sum + appraisee_output %>
             <% appraiser_output = weightage * appraiser_rating.to_i / 100.to_f %>
             <% appraiser_sum = appraiser_sum + appraiser_output %>
           <td>
@@ -144,13 +132,12 @@
       <% end %>
     </tbody>
   </table>
-  <h3>Appraisee Rating = <%= appraisee_sum %></h3>
   <h3>Appraiser Rating = <%= appraiser_sum %></h3>
     <div class="row">
       <div class="col-sm-3">
         <div class="actions">
           <%= f.submit "Confirm", class: 'btn btn-primary btn-sm' %>
-          <%= link_to 'Attribute-Setting', appraiser_attribute_rating_sheets_path(@employee.id) , class: 'btn btn-warning btn-sm' %>
+          
         </div>
       </div>
     </div>

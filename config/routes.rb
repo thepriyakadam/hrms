@@ -326,6 +326,8 @@ Rails.application.routes.draw do
       patch :update_appraiser2_modal
       get :modal_final
       patch :update_final_modal
+      get :appraiser1_approval
+      get :appraiser1_subordinate
     end
      
   end

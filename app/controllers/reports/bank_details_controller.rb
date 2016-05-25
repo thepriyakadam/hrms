@@ -1,7 +1,7 @@
 class Reports::BankDetailsController < ApplicationController
   def new
-    session[:active_tab] = "employee"
-    session[:active_tab1] = "basicreport"
+    session[:active_tab] ="employeemanagement"
+    session[:active_tab1] ="employeereport"
   end
 
   def bank_detail_report

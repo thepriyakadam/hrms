@@ -5,6 +5,8 @@ class BonusMastersController < ApplicationController
   def new
     @bonus_master = BonusMaster.new
     @bonus_masters = BonusMaster.all
+    session[:active_tab] ="master"
+    session[:active_tab1] ="payrollcomponents"
   end
 
   # GET /bonus_masters/1/edit

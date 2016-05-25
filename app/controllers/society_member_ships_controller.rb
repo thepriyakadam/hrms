@@ -5,7 +5,8 @@ class SocietyMemberShipsController < ApplicationController
   # GET /society_member_ships.json
   def index
     @society_member_ships = SocietyMemberShip.all
-    session[:active_tab] = "employee"
+     session[:active_tab] ="employeemanagement"
+     session[:active_tab1] ="employeeprofile"
   end
 
   # GET /society_member_ships/1

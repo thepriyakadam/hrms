@@ -29,7 +29,7 @@ class LeaveCOffsController < ApplicationController
       end
     end
     session[:active_tab] ="leavemanagement"
-    session[:active_tab1] ="assignleave"
+    session[:active_tab1] ="leaveadministration"
   end
 
   # GET /leave_c_offs/1/edit

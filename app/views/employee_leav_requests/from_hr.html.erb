@@ -1,7 +1,7 @@
 <!--SELECT2 EXAMPLE -->
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title">Employee Leave Request for : <%= @employee.manual_employee_code %>  -   <%= @employee.first_name.to_s+" "+@employee.middle_name.to_s+" "+@employee.last_name.to_s %></h3>
+    <h3 class="box-title">Employee Leave Request For Employee - <%= @employee.manual_employee_code %>  (<%= @employee.first_name.to_s+" "+@employee.middle_name.to_s+" "+@employee.last_name.to_s %>)</h3>
   </div><!-- /.box-header -->
 
   <div class="box-body">
@@ -61,7 +61,7 @@
       <div class="col-sm-1"></div>
         <div class="col-sm-3">
           <div class="form-group required">
-            <%= f.select :leav_category_id, all_leav_category,{include_blank: 'Select leave category'} %>
+            <%= f.select :leav_category_id,all_leav_category,{include_blank: 'Select leave category'}%>
           </div>
         </div>
 
@@ -96,7 +96,7 @@
       <div class="col-sm-1"></div>
          <div class="col-sm-3">
           <div class="actions">
-            <%= f.submit :class => class_name, data: { disable_with: data_info } %>
+            <%= f.submit "Create Employee Leave Request",:class => class_name, data: { disable_with: data_info } %>
           </div>
         </div>
       </div>

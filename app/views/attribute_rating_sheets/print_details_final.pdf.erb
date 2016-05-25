@@ -44,13 +44,12 @@ div.nobreak{ page-break-inside: avoid;
 
    <table id="tbl" style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
     <thead>
-    <tr><th colspan="5"><strong><center> Experience Details </center></strong></th></tr>
+    <tr><th colspan="5"><strong><center>Previous Experience</center></strong></th></tr>
       <tr>
 	    	<th>Previous Company</th>
         <th>Designation</th>
         <th>Previous Exp.(Years)</th>
-        <th>Previous CTC</th>
-        <th>Current CTC</th>
+        <th>CTC</th>
       </tr>
     </thead>
     <tbody>
@@ -60,7 +59,6 @@ div.nobreak{ page-break-inside: avoid;
        <td><%= e.designation %></td>
        <td><%= e.no_of_year %></td>
        <td><%= e.ctc %></td>
-       <td><%= @ctc %></td>
       </tr>
       <% end %>
     </tbody>

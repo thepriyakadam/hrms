@@ -645,13 +645,13 @@ ActiveRecord::Schema.define(version: 20160524141810) do
     t.string   "city"
     t.integer  "district_id"
     t.integer  "state_id"
-    t.integer  "country_id"
     t.integer  "pin_code"
     t.integer  "phone_no"
     t.integer  "mobile_no"
     t.string   "email"
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
+    t.integer  "country_id"
     t.integer  "employee_id"
     t.integer  "relation_master_id"
   end
@@ -1034,11 +1034,13 @@ ActiveRecord::Schema.define(version: 20160524141810) do
     t.text     "comment"
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
+    t.integer  "interview_schedule_id"
   end
 
   add_index "interview_analyses", ["interview_attribute_id"], name: "index_interview_analyses_on_interview_attribute_id"
   add_index "interview_analyses", ["interview_decision_id"], name: "index_interview_analyses_on_interview_decision_id"
   add_index "interview_analyses", ["interview_evalution_id"], name: "index_interview_analyses_on_interview_evalution_id"
+  add_index "interview_analyses", ["interview_schedule_id"], name: "index_interview_analyses_on_interview_schedule_id"
   add_index "interview_analyses", ["vacancy_request_history_id"], name: "index_interview_analyses_on_vacancy_request_history_id"
 
   create_table "interview_attributes", force: :cascade do |t|
@@ -1386,12 +1388,14 @@ ActiveRecord::Schema.define(version: 20160524141810) do
     t.integer  "interview_schedule_id"
     t.integer  "selected_resume_id"
     t.string   "candidate_name"
+    t.integer  "vacancy_history_id"
   end
 
   add_index "particular_vacancy_requests", ["employee_designation_id"], name: "index_particular_vacancy_requests_on_employee_designation_id"
   add_index "particular_vacancy_requests", ["employee_id"], name: "index_particular_vacancy_requests_on_employee_id"
   add_index "particular_vacancy_requests", ["interview_schedule_id"], name: "index_particular_vacancy_requests_on_interview_schedule_id"
   add_index "particular_vacancy_requests", ["selected_resume_id"], name: "index_particular_vacancy_requests_on_selected_resume_id"
+  add_index "particular_vacancy_requests", ["vacancy_history_id"], name: "index_particular_vacancy_requests_on_vacancy_history_id"
   add_index "particular_vacancy_requests", ["vacancy_master_id"], name: "index_particular_vacancy_requests_on_vacancy_master_id"
 
   create_table "payment_modes", force: :cascade do |t|
@@ -1897,6 +1901,41 @@ ActiveRecord::Schema.define(version: 20160524141810) do
   add_index "vacancy_masters", ["employee_designation_id"], name: "index_vacancy_masters_on_employee_designation_id"
   add_index "vacancy_masters", ["employee_id"], name: "index_vacancy_masters_on_employee_id"
   add_index "vacancy_masters", ["reporting_master_id"], name: "index_vacancy_masters_on_reporting_master_id"
+
+  create_table "vacancy_request_histories", force: :cascade do |t|
+    t.integer  "vacancy_master_id"
+    t.string   "vacancy_name"
+    t.integer  "no_of_position"
+    t.text     "description"
+    t.date     "vacancy_post_date"
+    t.string   "budget"
+    t.integer  "department_id"
+    t.integer  "employee_designation_id"
+    t.integer  "company_location_id"
+    t.integer  "degree_id"
+    t.integer  "degree_1_id"
+    t.integer  "degree_2_id"
+    t.string   "experience"
+    t.string   "keyword"
+    t.string   "other_organization"
+    t.string   "industry"
+    t.integer  "reporting_master_id"
+    t.string   "current_status"
+    t.integer  "employee_id"
+    t.text     "justification"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  add_index "vacancy_request_histories", ["company_location_id"], name: "index_vacancy_request_histories_on_company_location_id"
+  add_index "vacancy_request_histories", ["degree_1_id"], name: "index_vacancy_request_histories_on_degree_1_id"
+  add_index "vacancy_request_histories", ["degree_2_id"], name: "index_vacancy_request_histories_on_degree_2_id"
+  add_index "vacancy_request_histories", ["degree_id"], name: "index_vacancy_request_histories_on_degree_id"
+  add_index "vacancy_request_histories", ["department_id"], name: "index_vacancy_request_histories_on_department_id"
+  add_index "vacancy_request_histories", ["employee_designation_id"], name: "index_vacancy_request_histories_on_employee_designation_id"
+  add_index "vacancy_request_histories", ["employee_id"], name: "index_vacancy_request_histories_on_employee_id"
+  add_index "vacancy_request_histories", ["reporting_master_id"], name: "index_vacancy_request_histories_on_reporting_master_id"
+  add_index "vacancy_request_histories", ["vacancy_master_id"], name: "index_vacancy_request_histories_on_vacancy_master_id"
 
   create_table "week_offs", force: :cascade do |t|
     t.string   "weekoff_date_range"

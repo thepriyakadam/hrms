@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :training_records
   resources :training_approvals
   resources :training_topics
   resources :employee_promotions

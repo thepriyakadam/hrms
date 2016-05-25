@@ -9,9 +9,9 @@
 <%= f.hidden_field :employee_id, value: current_user.employee_id %>
   <div class="row">
     <div class="col-sm-3">
-    <label>Training Topic</label>
+    <label>Training Course</label>
       <div class="form-group required">
-        <%= f.select :training_topic_master_id,all_training_topic,{hide_label: true,placeholder: 'Training Topic',include_blank: 'Select Training Topic'} %>
+        <%= f.select :training_topic_master_id,all_training_topic,{hide_label: true,placeholder: 'Training Course',include_blank: 'Select Training Course'} %>
       </div>
     </div>
     <div class="col-sm-3">
@@ -43,7 +43,7 @@
     
   <div class="row">
   <div class="col-sm-3">
-    <label>No Of Employee</label>
+    <label>No Of Employee (For Training)</label>
       <div class="form-group required">
         <%= f.text_field :no_of_employee,hide_label: true,placeholder: 'No Of Employee' %>
       </div>

@@ -10,4 +10,9 @@ class TrainingRequestMailer < ApplicationMailer
     mail(to: @employee.email, subject: 'Training Request Approved')
     end
 
+    def reject_training_request_email(training_request)
+    @travel_request = training_request
+    @employee = Employee.find(@training_request.employee_id)
+    mail(to: @employee.email, subject: 'Training Request Rejected')
+    end
 end

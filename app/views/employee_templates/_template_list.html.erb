@@ -19,7 +19,7 @@
             <small class="label label-info">Current Template</small>
           <% elsif t.is_active == false and t.start_date.nil? %>
 
-          <%= bootstrap_form_for :activate, url: { action: 'activate'} do |f| %>
+          <%= bootstrap_form_for :activate, url: { :controller=>"employee_templates", action: 'activate'} do |f| %>
             <%= f.text_field :activate_date,hide_label: true, class: 'ot_date' %>
             <%= f.hidden_field :id, value: t.id %>
             <%= f.hidden_field :employee_id, value: t.employee_id %>

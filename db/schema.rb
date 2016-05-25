@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160523121643) do
+ActiveRecord::Schema.define(version: 20160525093729) do
 
   create_table "accident_masters", force: :cascade do |t|
     t.string   "code"
@@ -714,9 +714,11 @@ ActiveRecord::Schema.define(version: 20160523121643) do
     t.boolean  "rehired"
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+    t.integer  "leaving_reason_id"
   end
 
   add_index "employee_resignations", ["employee_id"], name: "index_employee_resignations_on_employee_id"
+  add_index "employee_resignations", ["leaving_reason_id"], name: "index_employee_resignations_on_leaving_reason_id"
 
   create_table "employee_salary_templates", force: :cascade do |t|
     t.integer  "employee_id"
@@ -1213,6 +1215,14 @@ ActiveRecord::Schema.define(version: 20160523121643) do
 
   add_index "leave_status_records", ["change_status_employee_id"], name: "index_leave_status_records_on_change_status_employee_id"
   add_index "leave_status_records", ["employee_leav_request_id"], name: "index_leave_status_records_on_employee_leav_request_id"
+
+  create_table "leaving_reasons", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
+    t.text     "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
 
   create_table "members", force: :cascade do |t|
     t.string   "manual_member_code"

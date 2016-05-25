@@ -1,8 +1,13 @@
 Rails.application.routes.draw do
 
+  resources :leaving_reasons
   resources :training_approvals
   resources :training_topics
-  resources :employee_promotions
+  resources :employee_promotions do
+    collection do
+      get :collect_data
+    end
+  end
   resources :accident_masters
   resources :travel_expence_types
   resources :travel_modes

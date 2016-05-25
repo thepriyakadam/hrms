@@ -50,8 +50,8 @@
       </tr>
     </table>
 
-
-<%= link_to 'Approve',approve_training_request_training_requests_path(@training_request.id),class: 'btn btn-sm btn-info fa fa-check' %> |
+  <%= link_to 'Approve',approve_training_request_training_requests_path(@training_request.id),class: 'btn btn-sm btn-info fa fa-check' %> |
+  <%= link_to 'Reject',reject_training_request_training_requests_path(@training_request.id),class: 'btn btn-sm btn-danger fa fa-trash' %>
 
   </div>
 </div>

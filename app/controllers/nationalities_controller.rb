@@ -5,6 +5,8 @@ class NationalitiesController < ApplicationController
   def new
     @nationality = Nationality.new
     @nationalities = Nationality.all
+    session[:active_tab] ="master"
+    session[:active_tab1] ="employeeprofilesetup"
   end
 
   def edit

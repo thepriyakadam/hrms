@@ -17,7 +17,7 @@ class PerformancePeriodsController < ApplicationController
     @performance_period = PerformancePeriod.new
     @performance_periods = PerformancePeriod.all
     session[:active_tab] ="master"
-    session[:active_tab1] ="perform"
+    session[:active_tab1] ="performancemaster"
   end
 
   # GET /performance_periods/1/edit

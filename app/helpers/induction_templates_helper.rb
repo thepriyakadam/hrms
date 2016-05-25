@@ -1,0 +1,2 @@
+module InductionTemplatesHelper
+end

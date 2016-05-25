@@ -1,0 +1,2 @@
+module InductionMastersHelper
+end

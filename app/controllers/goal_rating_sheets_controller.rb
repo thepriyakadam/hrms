@@ -163,8 +163,7 @@ class GoalRatingSheetsController < ApplicationController
   def subordinate_list
     current_login = Employee.find(current_user.employee_id)
     @employees = current_login.subordinates
-    session[:active_tab] ="performance"
-    session[:active_tab1] ="appraiserevaluation"
+    session[:active_tab] ="performancesetup"
   end
  
   def edit_appraiser
@@ -264,8 +263,7 @@ class GoalRatingSheetsController < ApplicationController
   def subordinate_list2
     current_login = Employee.find(current_user.employee_id)
     @employees = current_login.indirect_subordinates
-    session[:active_tab] ="performance"
-    session[:active_tab1] ="appraiserevaluation"
+    session[:active_tab] ="performancesetup"
   end
 
   def edit_appraiser2
@@ -304,8 +302,7 @@ class GoalRatingSheetsController < ApplicationController
     else
       @employees = Employee.all
     end
-  session[:active_tab] ="performance"
-  session[:active_tab1] ="appraiserevaluation"
+    session[:active_tab] ="performancesetup"
   end
   
   def final_create

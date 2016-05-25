@@ -15,7 +15,7 @@ class PfMastersController < ApplicationController
   # GET /pf_masters/new
   def new
     session[:active_tab] ="master"
-    session[:active_tab1] ="setting"
+    session[:active_tab1] ="payrollcomponents"
     @pf_master = PfMaster.new
     @pf_masters = PfMaster.all
   end

@@ -4,6 +4,8 @@ class EmployeeCategoriesController < ApplicationController
   def new
     @employee_category = EmployeeCategory.new
     @employee_categories = EmployeeCategory.all
+    session[:active_tab] ="master"
+    session[:active_tab1] ="employeeprofilesetup"
   end
 
   # GET /employee_categories/1/edit

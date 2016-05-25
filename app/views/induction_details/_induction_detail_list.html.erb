@@ -1,6 +1,7 @@
 <table id="example2" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
+      <th>Sr.No</th>
       <th>Employee</th>
       <th>Start date</th>
       <th>Induction master</th>
@@ -10,11 +11,13 @@
   </thead>
 
   <tbody>
+  <% i = 0 %>
     <% @induction_details.each do |induction_detail| %>
       <tr>
-        <td><%= induction_detail.employee %></td>
+        <td><%= i=i+1 %></td>
+        <td><%= induction_detail.employee.first_name %> <%= induction_detail.employee.middle_name %> <%= induction_detail.employee.last_name %></td>
         <td><%= induction_detail.start_date %></td>
-        <td><%= induction_detail.induction_master %></td>
+        <td><%= induction_detail.induction_master.code %></td>
         <td><%= induction_detail.induction_completed %></td>
         <td>
           <%= link_to ' Edit Detail', edit_induction_detail_path(induction_detail),class: 'btn btn-sm btn-success btn-xs',remote:true %>

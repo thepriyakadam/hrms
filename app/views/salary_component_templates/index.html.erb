@@ -1,6 +1,9 @@
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title">Salary Template For</h3>
+    <h3 class="box-title">
+    Salary Template For
+      <%= @salary_template.code %>-<%= @salary_template.try(:description) %>
+	  </h3>
   </div><!-- /.box-header -->
 	<div class="box-body">
 		<div class="row">
@@ -8,9 +11,7 @@
 				<%=select :parent,:salary_component_id, all_salary_component,{include_blank: "Please Select Component"},{onchange:"var a={id:$(this).val(),s: '#{@salary_template.id}'}; $.get('/salary_component_templates/new',a,function(response){});",class: 'form-control'}%>
 			</div>
 			<div class="col-sm-8">
-				<p class="text-aqua"><%= @salary_template.code %>
-					<%= @salary_template.try(:description) %>
-				</p>
+				
 			</div>
 		</div><br>
 		<div id="form"></div><br>

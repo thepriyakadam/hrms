@@ -13,9 +13,19 @@ Rails.application.routes.draw do
   resources :induction_masters
   resources :induction_templates
   resources :root_cause_masters
+  resources :exit_interviews
+  resources :about_companies
+  resources :about_bosses
+  resources :question_masters
+  resources :training_records
+  resources :leaving_reasons
   resources :training_approvals
   resources :training_topics
-  resources :employee_promotions
+  resources :employee_promotions do
+    collection do
+      get :collect_data
+    end
+  end
   resources :accident_masters
   resources :travel_expence_types
   resources :travel_modes
@@ -27,12 +37,20 @@ Rails.application.routes.draw do
   resources :employee_resignations
   resources :travel_options
   resources :training_plans
-  resources :training_requests
+  resources :training_requests do
+    collection do
+      get :training_request_list
+      get :training_request_confirmation
+      get :approve_training_request
+      get :reject_training_request
+    end
+  end
   resources :selected_resumes  do
     collection do 
     post :is_confirm
     get :new1
     get :all_resume_list
+    post :create_new
     end
   end 
   resources :assigned_assets

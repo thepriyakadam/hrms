@@ -117,7 +117,7 @@ class GoalRatingSheetsController < ApplicationController
   def appraiser2_create
     @employee = Employee.find(params[:id])
     goal_rating_sheets = params[:goal_rating_sheet_id]
-    
+
     comments = params[:appraiser2_comment]
     ratings = params[:appraiser2_rating_id]
     final = goal_rating_sheets.zip(comments, ratings)
@@ -163,8 +163,7 @@ class GoalRatingSheetsController < ApplicationController
   def subordinate_list
     current_login = Employee.find(current_user.employee_id)
     @employees = current_login.subordinates
-    session[:active_tab] ="performance"
-    session[:active_tab1] ="appraiserevaluation"
+    session[:active_tab] ="performancesetup"
   end
  
   def edit_appraiser
@@ -264,8 +263,7 @@ class GoalRatingSheetsController < ApplicationController
   def subordinate_list2
     current_login = Employee.find(current_user.employee_id)
     @employees = current_login.indirect_subordinates
-    session[:active_tab] ="performance"
-    session[:active_tab1] ="appraiserevaluation"
+    session[:active_tab] ="performancesetup"
   end
 
   def edit_appraiser2
@@ -304,8 +302,7 @@ class GoalRatingSheetsController < ApplicationController
     else
       @employees = Employee.all
     end
-  session[:active_tab] ="performance"
-  session[:active_tab1] ="appraiserevaluation"
+    session[:active_tab] ="performancesetup"
   end
   
   def final_create

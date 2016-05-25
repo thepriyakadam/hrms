@@ -62,6 +62,7 @@ class InductionActivitiesController < ApplicationController
   def find_assigned_induction_template
     @induction_master = InductionMaster.find_by_code(params[:code])
     @induction_activities = InductionActivity.where(induction_master_id: @induction_master.id)
+    @induction_details = InductionDetail.where(induction_master_id: @induction_master.id)
     #puts @induction_activities.first.day
     
     # respond_to do |format|

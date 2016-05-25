@@ -62,11 +62,11 @@
           <% end %>
           <td><%= text_field_tag 'appraiser_comment[]',"",{class: 'form-control'} %></td>
           <td>
-          <%= select_tag 'appraiser_rating_id[]',options_for_select(all_rating_type), {class: 'form-control', hide_label: true,include_blank: " Select Rating"} %></td>
-          <%= hidden_field_tag 'employee_goal_id[]',{},value: g.employee_goal.id %>
-          <%= hidden_field_tag 'goal_rating_sheet_id[]', {},value: g.id %> 
-          <%= hidden_field_tag :appraisee_id, {},value: g.appraisee_id %>
-          <%= hidden_field_tag :appraiser_id, {},value: current_user.employee_id %>   
+            <%= select_tag 'appraiser_rating_id[]',options_for_select(all_rating_type), {class: 'form-control', hide_label: true,include_blank: " Select Rating"} %></td>
+            <%= hidden_field_tag 'employee_goal_id[]',{},value: g.employee_goal.id %>
+            <%= hidden_field_tag 'goal_rating_sheet_id[]', {},value: g.id %> 
+            <%= hidden_field_tag :appraisee_id, {},value: g.appraisee_id %>
+            <%= hidden_field_tag :appraiser_id, {},value: current_user.employee_id %>   
         </tr>
       <% end %>
     </tbody>

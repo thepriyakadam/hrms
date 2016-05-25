@@ -13,6 +13,24 @@
 
 ActiveRecord::Schema.define(version: 20160525151304) do
 
+  create_table "about_bosses", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
+    t.text     "description"
+    t.boolean  "status"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "about_companies", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
+    t.text     "description"
+    t.boolean  "status"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
   create_table "accident_masters", force: :cascade do |t|
     t.string   "code"
     t.string   "name"
@@ -722,9 +740,11 @@ ActiveRecord::Schema.define(version: 20160525151304) do
     t.boolean  "rehired"
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+    t.integer  "leaving_reason_id"
   end
 
   add_index "employee_resignations", ["employee_id"], name: "index_employee_resignations_on_employee_id"
+  add_index "employee_resignations", ["leaving_reason_id"], name: "index_employee_resignations_on_leaving_reason_id"
 
   create_table "employee_salary_templates", force: :cascade do |t|
     t.integer  "employee_id"
@@ -860,6 +880,17 @@ ActiveRecord::Schema.define(version: 20160525151304) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "exit_interviews", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.integer  "question_master_id"
+    t.text     "answer"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
+
+  add_index "exit_interviews", ["employee_id"], name: "index_exit_interviews_on_employee_id"
+  add_index "exit_interviews", ["question_master_id"], name: "index_exit_interviews_on_question_master_id"
 
   create_table "expencess_types", force: :cascade do |t|
     t.string   "code"
@@ -1273,6 +1304,14 @@ ActiveRecord::Schema.define(version: 20160525151304) do
   add_index "leave_status_records", ["change_status_employee_id"], name: "index_leave_status_records_on_change_status_employee_id"
   add_index "leave_status_records", ["employee_leav_request_id"], name: "index_leave_status_records_on_employee_leav_request_id"
 
+  create_table "leaving_reasons", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
+    t.text     "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
   create_table "members", force: :cascade do |t|
     t.string   "manual_member_code"
     t.integer  "role_id"
@@ -1518,6 +1557,14 @@ ActiveRecord::Schema.define(version: 20160525151304) do
   add_index "qualifications", ["university_id"], name: "index_qualifications_on_university_id"
   add_index "qualifications", ["year_id"], name: "index_qualifications_on_year_id"
 
+  create_table "question_masters", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
+    t.text     "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
   create_table "rating_masters", force: :cascade do |t|
     t.integer  "code"
     t.text     "description"
@@ -1551,6 +1598,17 @@ ActiveRecord::Schema.define(version: 20160525151304) do
   end
 
   add_index "reporting_masters", ["employee_id"], name: "index_reporting_masters_on_employee_id"
+
+  create_table "reporting_masters_training_reqs", force: :cascade do |t|
+    t.integer  "training_request_id"
+    t.integer  "reporting_master_id"
+    t.string   "training_status"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+  end
+
+  add_index "reporting_masters_training_reqs", ["reporting_master_id"], name: "index_reporting_masters_training_reqs_on_reporting_master_id"
+  add_index "reporting_masters_training_reqs", ["training_request_id"], name: "index_reporting_masters_training_reqs_on_training_request_id"
 
   create_table "reporting_masters_travel_requests", force: :cascade do |t|
     t.integer  "travel_request_id"
@@ -1778,6 +1836,7 @@ ActiveRecord::Schema.define(version: 20160525151304) do
     t.text     "justification"
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
+    t.string   "current_status"
   end
 
   add_index "training_approvals", ["employee_id"], name: "index_training_approvals_on_employee_id"
@@ -1797,6 +1856,20 @@ ActiveRecord::Schema.define(version: 20160525151304) do
     t.datetime "updated_at",     null: false
   end
 
+  create_table "training_records", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.integer  "training_topic_master_id"
+    t.date     "training_date"
+    t.string   "duration"
+    t.string   "location"
+    t.string   "trainer_name"
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
+
+  add_index "training_records", ["employee_id"], name: "index_training_records_on_employee_id"
+  add_index "training_records", ["training_topic_master_id"], name: "index_training_records_on_training_topic_master_id"
+
   create_table "training_requests", force: :cascade do |t|
     t.integer  "employee_id"
     t.string   "training_topic"
@@ -1804,12 +1877,18 @@ ActiveRecord::Schema.define(version: 20160525151304) do
     t.date     "training_date"
     t.integer  "reporting_master_id"
     t.text     "description"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.integer  "training_topic_master_id"
+    t.integer  "no_of_employee"
+    t.string   "place"
+    t.text     "justification"
+    t.string   "status"
   end
 
   add_index "training_requests", ["employee_id"], name: "index_training_requests_on_employee_id"
   add_index "training_requests", ["reporting_master_id"], name: "index_training_requests_on_reporting_master_id"
+  add_index "training_requests", ["training_topic_master_id"], name: "index_training_requests_on_training_topic_master_id"
 
   create_table "training_topic_masters", force: :cascade do |t|
     t.string   "code"

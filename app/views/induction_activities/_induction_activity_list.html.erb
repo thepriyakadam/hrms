@@ -1,6 +1,7 @@
 <table id="example2" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
+      <th>Sr.No</th>
       <th>Activity</th>
       <th>Day</th>
       <th>Duration(Hrs)</th>
@@ -11,8 +12,10 @@
   </thead>
 
   <tbody>
+  <% i = 0 %>
     <% @induction_activities.each do |induction_activity| %>
       <tr>
+        <td><%= i=i+1 %></td>
         <td><%= induction_activity.activity %></td>
         <td><%= induction_activity.day %></td>
         <td><%= induction_activity.duration %></td>

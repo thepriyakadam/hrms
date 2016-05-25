@@ -1,21 +1,12 @@
 class AssetTypesController < ApplicationController
   before_action :set_asset_type, only: [:show, :edit, :update, :destroy]
 
-  # GET /asset_types
-  # GET /asset_types.json
-  def index
-    @asset_types = AssetType.all
-  end
-
-  # GET /asset_types/1
-  # GET /asset_types/1.json
-  def show
-  end
-
-  # GET /asset_types/new
+  
   def new
     @asset_type = AssetType.new
     @asset_types = AssetType.all
+    session[:active_tab] ="master"
+    session[:active_tab1] ="assetmanagement"
   end
 
   # GET /asset_types/1/edit

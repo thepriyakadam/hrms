@@ -1,7 +1,7 @@
 <table id="example2" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr> 
-      <th>Company shift</th>
+      <th>Company Shift</th>
       <th>Department Name</th>
       <th>Start date</th>
       <th>End date</th>
@@ -12,7 +12,7 @@
     <% @shift_rotations.each do |shift_rotation| %>
       <tr>
         <td><%= shift_rotation.company_shift.try(:name) %></td>
-        <td><%= shift_rotation.department.name %></td>
+        <td><%= shift_rotation.department.try(:name) %></td>
         <td><%= shift_rotation.start_date %></td>
         <td><%= shift_rotation.end_date %></td>
         <td>

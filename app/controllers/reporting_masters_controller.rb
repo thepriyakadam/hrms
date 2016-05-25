@@ -4,7 +4,8 @@ class ReportingMastersController < ApplicationController
   def new
     @reporting_master = ReportingMaster.new
     @reporting_masters = ReportingMaster.all
-    session[:active_tab] ="user"
+    session[:active_tab] ="employeemanagement"
+    session[:active_tab1] ="useradministration"
   end
 
   # GET /reporting_masters/1/edit

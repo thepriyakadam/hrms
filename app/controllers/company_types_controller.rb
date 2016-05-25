@@ -5,6 +5,8 @@ class CompanyTypesController < ApplicationController
   def new
     @company_types = CompanyType.new
     @company_types = CompanyType.all
+    session[:active_tab] ="master"
+    session[:active_tab1] ="companymaster"
   end
 
   def edit

@@ -1,18 +1,21 @@
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title">Employee Details</h3>
+    <h3 class="box-title">Final Rating</h3>
   </div>
   <div class="box-body">
+    <div class="box-header with-border">
+      <h3 class="box-title">Employee Details</h3>
+    </div>
   	<table class="table table-bordered table-hover table-condensed">    
       <thead>
   	    <tr>
   	    	<th>Employee ID</th>
-  	    	<th>Name</th>
+  	    	<th>Employee Name</th>
           <th>Age</th>
   	    	<th>Department</th>
   	    	<th>Date Of Joining</th>
   	    	<th>Grade</th>
-  	    	<th>Current Designation</th> 
+  	    	<th>Current Designation</th>
         </tr>
       </thead>
       <tbody>
@@ -41,8 +44,7 @@
       	    	<th>Previous Company</th>
               <th>Designation</th>
               <th>Previous Exp.(Years)</th>
-              <th>Previous CTC</th>
-              <th>Current CTC</th>
+              <th>CTC</th>
             </tr>
           </thead>
           <tbody>
@@ -52,7 +54,6 @@
                 <td><%= e.designation %></td>
                 <td><%= e.no_of_year %></td>
                 <td><%= e.ctc %></td>
-                <td><%= @ctc %></td>
               </tr>
             <% end %>
           </tbody>
@@ -89,7 +90,7 @@
     <%= bootstrap_form_for(@goal_rating_sheet,url:{action: "final_create", id: @employee.id}) do |f| %>
       <%= hidden_field_tag :final_id_id, {},value: current_user.employee_id %>
       <div class="box-header with-border">
-        <h3 class="box-title">Goals</h3>
+        <h3 class="box-title">Goals Comments and Ratings</h3>
       </div>
       <table class="table table-bordered table-hover table-condensed example3 ">
         <thead>
@@ -150,7 +151,7 @@
     <%= bootstrap_form_for @goal_rating_sheet,url:{action:'is_confirm_final',id: @employee.id} do |f| %>
       <%= hidden_field_tag :final_id_id, {},value: current_user.employee_id %>
       <div class="box-header with-border">
-        <h3 class="box-title">Goal List</h3>
+        <h3 class="box-title">Goal Confirmation</h3>
       </div>
       <table class="table table-bordered table-hover table-condensed example3 ">
         <thead>

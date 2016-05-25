@@ -7,7 +7,7 @@
       <thead>
   	    <tr>
   	    	<th>Employee ID</th>
-  	    	<th>Name</th>
+  	    	<th>Employee Name</th>
           <th>Age</th>
   	    	<th>Department</th>
   	    	<th>Date Of Joining</th>
@@ -41,8 +41,7 @@
       	    	<th>Company</th>
               <th>Designation</th>
               <th>Previous Exp.(Years)</th>
-              <th>Previous CTC</th>
-              <th>Current CTC</th>
+              <th>CTC</th>
             </tr>
           </thead>
           <tbody>
@@ -52,7 +51,6 @@
                 <td><%= e.designation %></td>
                 <td><%= e.no_of_year %></td>
                 <td><%= e.ctc %></td>
-                <td><%= @ctc %></td>
               </tr>
             <% end %>
           </tbody>

@@ -5,6 +5,8 @@ class WellFairesController < ApplicationController
   def new
     @well_faire = WellFaire.new
     @well_faires = WellFaire.all
+    session[:active_tab] ="master"
+    session[:active_tab1] ="payrollcomponents"
   end
 
   # GET /well_faires/1/edit

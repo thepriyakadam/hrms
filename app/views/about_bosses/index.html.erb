@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing About Bosses</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Status</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @about_bosses.each do |about_boss| %>
+      <tr>
+        <td><%= about_boss.code %></td>
+        <td><%= about_boss.name %></td>
+        <td><%= about_boss.description %></td>
+        <td><%= about_boss.status %></td>
+        <td><%= link_to 'Show', about_boss %></td>
+        <td><%= link_to 'Edit', edit_about_boss_path(about_boss) %></td>
+        <td><%= link_to 'Destroy', about_boss, method: :delete, data: { confirm: 'Are you sure?' } , remote:true%></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New About boss', new_about_boss_path %>

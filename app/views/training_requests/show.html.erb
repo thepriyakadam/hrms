@@ -11,10 +11,10 @@
 
       <tr>
         <th><strong>Employee:</strong></th>
-        <td><%= @training_request.employee.manual_employee_code %> <%= full_name(@training_request.employee) %></td>
+        <td><%= @training_request.employee.try(:manual_employee_code) %> <%= full_name(@training_request.employee) %></td>
       
         <th><strong>Training topic:</strong></th>
-        <td><%= @training_request.training_topic %></td>
+        <td><%= @training_request.training_topic_master.try(:name) %></td>
       </tr>
 
       <tr>
@@ -28,9 +28,25 @@
       <tr>
         <th><strong>Reporting master:</strong></th>
         <td><%= @training_request.reporting_master_id %></td>
-     
+        
+        <th><strong>No Of Employee:</strong></th>
+        <td><%= @training_request.no_of_employee %></td>
+      </tr>
+
+      <tr>
+        <th><strong>Place:</strong></th>
+        <td><%= @training_request.place %></td>
+
         <th><strong>Description:</strong></th>
         <td><%= @training_request.description %></td>
+      </tr>
+
+      <tr>
+        <th><strong>Justification:</strong></th>
+        <td><%= @training_request.justification %></td>
+     
+        <th></th>
+        <td></td>
       </tr>
 
     </table>

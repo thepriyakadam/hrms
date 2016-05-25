@@ -9,8 +9,8 @@
        
     <thead>
 	    <tr>
-	    	<th>Employee Id</th>
-	    	<th>Name</th>
+	    	<th>Employee ID</th>
+	    	<th>Employee Name</th>
         <th>Age</th>
 	    	<th>Department</th>
 	    	<th>Date Of Joining</th>
@@ -37,7 +37,7 @@
   <div class="col-sm-6">
     <div class="box-header with-border">
     
-      <h3 class="box-title">Experience Details<h3>
+      <h3 class="box-title">Previous Experience<h3>
     </div>
   <table class="table table-bordered table-hover table-condensed">
     <thead>
@@ -45,8 +45,7 @@
 	    	<th>Previous Company</th>
         <th>Designation</th>
         <th>Previous Exp.(Years)</th>
-        <th>Previous CTC</th>
-        <th>Current CTC</th>
+        <th>CTC</th>
       </tr>
     </thead>
     <tbody>
@@ -56,7 +55,6 @@
        <td><%= e.designation %></td>
        <td><%= e.no_of_year %></td>
        <td><%= e.ctc %></td>
-       <td><%= @ctc %></td>
       </tr>
       <% end %>
     </tbody>

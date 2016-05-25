@@ -11,12 +11,13 @@
     <table id="example" class="table table-bordered table-hover table-condensed">
       <thead>
         <tr>
-          <th>Employee</th>
+          <th>Employee ID</th>
+          <th>Employee Name</th>
           <th>Training topic</th>
           <th>Training period</th>
           <th>Training date</th>
           <th>Reporting master</th>
-          <th>Description</th>
+          <th>No Of Employee</th>
           <th>Action</th>
         </tr>
       </thead>
@@ -24,12 +25,13 @@
       <tbody>
         <% @training_requests.each do |training_request| %>
           <tr>
-            <td><%= training_request.employee.manual_employee_code %> <%= full_name(training_request.employee) %> </td>
-            <td><%= training_request.training_topic %></td>
+            <td><%= training_request.employee.try(:manual_employee_code) %></td>
+            <td><%= full_name(training_request.employee) %> </td>
+            <td><%= training_request.training_topic_master.try(:name) %></td>
             <td><%= training_request.training_period %></td>
             <td><%= training_request.training_date %></td>
             <td><%= training_request.reporting_master_id %></td>
-            <td><%= training_request.description %></td>
+            <td><%= training_request.no_of_employee %></td>
             <td>
             <%= link_to '', edit_training_request_path(training_request) ,class: 'btn btn-xs btn-success fa fa-edit' %>
             <%= link_to '', training_request, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-xs btn-danger fa fa-close' %>

@@ -2,7 +2,7 @@
   <thead>
    <tr>
     	<th>Employees ID</th>
-      <th>Name</th>
+      <th>Employee Name</th>
     	<th>C_Off Date</th>
     	<th>Type</th>
    	  <th>Applicable Day</th>
@@ -19,7 +19,7 @@
       <td><%= leave_c_off.c_off_date %></td>
       <td><%= leave_c_off.c_off_type %></td>
       <td><%= leave_c_off.c_off_expire_day %></td>
-      <td><%= leave_c_off.expiry_status %></td>
+      <td><%= leave_c_off.expiry_status ? "Yes" : "No" %></td>
       <td>
           <%= link_to '', edit_leave_c_off_path(leave_c_off), class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
           <%= link_to '', leave_c_off, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-xs  btn-danger fa fa-close',remote:true %>

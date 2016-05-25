@@ -79,11 +79,12 @@ class InterviewSchedulesController < ApplicationController
 
     @interview_reschedule.interview_date = @interview_schedule.interview_date
     @interview_reschedule.interview_time = @interview_schedule.interview_time
+    @interview_reschedule.employee_id = @interview_schedule.employee_id
     @interview_reschedule.employee_id = params[:interview_reschedule][:employee_id]
     @interview_reschedule.interview_schedule_id = @interview_schedule.id
 
     @interview_reschedule.save
-    @interview_schedule.update(interview_date: params[:interview_reschedule][:interview_date], interview_time: params[:interview_reschedule][:interview_time])
+    @interview_schedule.update(interview_date: params[:interview_reschedule][:interview_date], interview_time: params[:interview_reschedule][:interview_time],employee_id: params[:interview_reschedule][:employee_id])
     if @interview_schedule.email_id.nil?
       flash[:alert] = 'Email not Available'
       redirect_to interview_schedules_path
@@ -147,7 +148,6 @@ end
   def interview_reschedule_list
      puts "-------------------"
      @interview_schedule = InterviewSchedule.find(params[:format])
-     @interview_reschedules = InterviewReschedule.all
      @interview_reschedules = InterviewReschedule.where(interview_schedule_id: @interview_schedule.id)
   end
 

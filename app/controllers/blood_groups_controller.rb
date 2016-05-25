@@ -5,6 +5,8 @@ class BloodGroupsController < ApplicationController
   def new
     @blood_group = BloodGroup.new
     @blood_groups = BloodGroup.all
+    session[:active_tab] ="master"
+    session[:active_tab1] ="employeeprofilesetup"
   end
 
   def edit

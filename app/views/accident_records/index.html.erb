@@ -32,7 +32,13 @@
         <td><%= accident_record.root_cause_master.try(:name) %>           
         <td><%= accident_record.esic_no %></td>
         <td><%= accident_record.case_type %></td>
-        <td><%= link_to '',download_jpg_path(id: accident_record.id),class: 'btn btn-xs fa fa-download' %></td>
+        <td>
+        <% if accident_record.avatar_file_name == nil %>
+           <small class="label label-default">Photo Not Available</small>
+            <% else %>
+            <%= link_to '',download_jpg_path(id: accident_record.id),class: 'btn btn-xs fa fa-download' %>
+            <% end %>
+        </td>
         <td>
           <%= link_to '', accident_record,class: 'btn btn-xs btn-default fa fa-eye' %>
         <!-- < link_to 'Edit', edit_accident_record_path(accident_record) %> -->

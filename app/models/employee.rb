@@ -11,6 +11,7 @@ class Employee < ActiveRecord::Base
   belongs_to :district
   belongs_to :religion
 
+
   has_many :salaryslips
   has_many :employee_nominations
   has_many :awards
@@ -26,6 +27,7 @@ class Employee < ActiveRecord::Base
   has_many :employee_leav_balances
   has_many :overtime_salaries
   has_many :vacancy_request_histories
+  has_many :induction_details
   # accepts_nested_attributes_for :employee_leav_balances
   has_many :families
   has_many :experiences

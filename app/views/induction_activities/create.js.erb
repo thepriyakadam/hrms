@@ -1,0 +1,6 @@
+<%if @flag == true %>
+  $("#form").html("<%= j render 'form' %>");
+  $("#induction_activity_li").html("<%= j render 'induction_activity_list' %>");
+<%else%>
+  $("#form").html("<%= j render 'form' %>");
+<%end%>

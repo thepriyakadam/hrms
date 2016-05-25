@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160524160726) do
+ActiveRecord::Schema.define(version: 20160525151304) do
 
   create_table "accident_masters", force: :cascade do |t|
     t.string   "code"
@@ -1022,6 +1022,57 @@ ActiveRecord::Schema.define(version: 20160524160726) do
     t.datetime "updated_at",   null: false
     t.boolean  "isweekend"
   end
+
+  create_table "induction_activities", force: :cascade do |t|
+    t.text     "activity"
+    t.string   "day"
+    t.integer  "duration"
+    t.integer  "employee_id"
+    t.integer  "induction_master_id"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+    t.string   "avatar_file_name"
+    t.string   "avatar_content_type"
+    t.integer  "avatar_file_size"
+    t.datetime "avatar_updated_at"
+    t.date     "start_date"
+    t.boolean  "induction_completed"
+  end
+
+  add_index "induction_activities", ["employee_id"], name: "index_induction_activities_on_employee_id"
+  add_index "induction_activities", ["induction_master_id"], name: "index_induction_activities_on_induction_master_id"
+
+  create_table "induction_details", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.date     "start_date"
+    t.integer  "induction_master_id"
+    t.boolean  "induction_completed"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+  end
+
+  add_index "induction_details", ["employee_id"], name: "index_induction_details_on_employee_id"
+  add_index "induction_details", ["induction_master_id"], name: "index_induction_details_on_induction_master_id"
+
+  create_table "induction_masters", force: :cascade do |t|
+    t.string   "code"
+    t.text     "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "induction_templates", force: :cascade do |t|
+    t.string   "template_no"
+    t.text     "description"
+    t.text     "activity"
+    t.integer  "day"
+    t.integer  "duration"
+    t.integer  "employee_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "induction_templates", ["employee_id"], name: "index_induction_templates_on_employee_id"
 
   create_table "instalments", force: :cascade do |t|
     t.integer  "advance_salary_id"

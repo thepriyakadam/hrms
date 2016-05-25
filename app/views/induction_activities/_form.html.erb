@@ -1,0 +1,51 @@
+<%= bootstrap_form_for(@induction_activity,html: {id: "induction_activity"},remote:true) do |f| %>
+<%= f.hidden_field :induction_master_id,value:@induction_master.id  %>
+<%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+
+ <div>
+  <%= render 'show_induction_master_list' %>
+  </div>
+
+ <!--  Template No:<td><%= @induction_master.code %></td>
+  Description:<td><%= @induction_master.description %></td> -->
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :activity,placeholder: 'Eg: Meeting with HR Manager' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :day,placeholder: 'Eg: 1,2,3' %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :duration,placeholder: 'In Hrs' %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+    <label>Contact Person</label>
+      <div class="form-group required">
+        <%= f.select :employee_id,all_employee_list,{hide_label: true,include_blank: " Select Employee"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
+      </div>
+    </div>
+  </div>
+<div class="row">
+  <div class="col-sm-3">
+    <div class="field">
+      <%= f.file_field :avatar,label: 'Document Upload' %>
+    </div>
+ </div>
+ </div><br>
+ 
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "Create Induction Activity", class: 'btn btn-primary btn-sm' %>
+         <%= link_to 'Back', induction_activities_path, class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+      </div>
+    </div>
+  </div>
+<% end %>

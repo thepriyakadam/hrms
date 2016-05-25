@@ -1,0 +1,36 @@
+<%= full_name(@employee) %>
+
+
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Employee Induction Plan</h3>
+    <div class="pull-right">  
+    </div>
+  </div>
+  <div class="box-body">
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Sr.No</th>
+      <th>Activity</th>
+      <th>Day</th>
+      <th>Duration(Hrs)</th>
+      <th>Contact Person</th>
+    </tr>
+  </thead>
+
+  <tbody>
+  <% i = 0 %>
+   <% @induction_activities.each do |induction_activity| %>
+      <tr>
+        <td><%= i=i+1 %></td>
+        <td><%= induction_activity.activity %></td>
+        <td><%= induction_activity.day %></td>
+        <td><%= induction_activity.duration %></td>
+        <td><%= full_name(induction_activity.employee) %></td>
+      </tr>
+      <% end %>
+  </tbody>
+</table>
+</div>
+</div>

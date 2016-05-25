@@ -19,7 +19,7 @@
 
         <div class="col-sm-6">
           <div class="field">
-            <%= f.text_field :reason, label: "Reason of Leaving" %>
+            <%= f.select :leaving_reason_id, all_leaving_reason, label: "Reason of Leaving" %>
           </div>
         </div>
         

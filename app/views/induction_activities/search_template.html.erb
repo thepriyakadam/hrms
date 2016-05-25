@@ -1,0 +1,48 @@
+ <div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Induction Templates</h3>
+  </div><!-- /.box-header -->
+ <div>
+    <%= render 'show_induction_detail' %> 
+ </div>
+<div class="box-body">
+ <div class="row">
+	    <div class="col-sm-3">
+	      <div class="field">
+	        <%= text_field :code,:hhh,{oninput:"var a={code:$(this).val()}; $.get('/induction_activities/find_assigned_induction_template',a,function(response){});",class: 'form-control',placeholder:'Search by Induction Template Code'} %>
+	      </div>
+	    </div>
+
+	 <!-- <div class="col-sm-3">
+          <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+               <%= text_field :start_date, hide_label: true, class: 'birth_date'%>
+            </div>
+          </div>
+        </div>  -->
+     <!--  <div class="col-sm-3">
+	     <div class="field">
+        < check_box :induction_completed, {}, true, false %>  
+        </div>
+        </div>  -->
+
+      <!-- <div class="col-sm-3">
+      <div class="actions">
+        < submit "Submit", class: 'btn btn-primary btn-sm' %>
+      </div>
+    </div> -->
+ </div>
+
+
+	  <br><br>
+
+
+<div id="induction_activity_details">
+	    
+</div>
+
+</div>
+</div>

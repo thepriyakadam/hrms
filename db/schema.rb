@@ -11,7 +11,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160524141810) do
+ActiveRecord::Schema.define(version: 20160525100159) do
+
+  create_table "about_bosses", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
+    t.text     "description"
+    t.boolean  "status"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "about_companies", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
+    t.text     "description"
+    t.boolean  "status"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
 
   create_table "accident_masters", force: :cascade do |t|
     t.string   "code"
@@ -645,13 +663,13 @@ ActiveRecord::Schema.define(version: 20160524141810) do
     t.string   "city"
     t.integer  "district_id"
     t.integer  "state_id"
+    t.integer  "country_id"
     t.integer  "pin_code"
     t.integer  "phone_no"
     t.integer  "mobile_no"
     t.string   "email"
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
-    t.integer  "country_id"
     t.integer  "employee_id"
     t.integer  "relation_master_id"
   end
@@ -852,6 +870,17 @@ ActiveRecord::Schema.define(version: 20160524141810) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "exit_interviews", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.integer  "question_master_id"
+    t.text     "answer"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
+
+  add_index "exit_interviews", ["employee_id"], name: "index_exit_interviews_on_employee_id"
+  add_index "exit_interviews", ["question_master_id"], name: "index_exit_interviews_on_question_master_id"
 
   create_table "expencess_types", force: :cascade do |t|
     t.string   "code"
@@ -1458,6 +1487,14 @@ ActiveRecord::Schema.define(version: 20160524141810) do
   add_index "qualifications", ["employee_id"], name: "index_qualifications_on_employee_id"
   add_index "qualifications", ["university_id"], name: "index_qualifications_on_university_id"
   add_index "qualifications", ["year_id"], name: "index_qualifications_on_year_id"
+
+  create_table "question_masters", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
+    t.text     "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
 
   create_table "rating_masters", force: :cascade do |t|
     t.integer  "code"

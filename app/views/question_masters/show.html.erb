@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @question_master.code %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @question_master.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @question_master.description %>
+</p>
+
+<%= link_to 'Edit', edit_question_master_path(@question_master) %> |
+<%= link_to 'Back', question_masters_path %>

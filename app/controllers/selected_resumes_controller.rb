@@ -18,7 +18,7 @@ class SelectedResumesController < ApplicationController
 
   def new1
     @selected_resume = SelectedResume.new
-
+    session[:active_tab] ="general_vacancy"
   end
 
   # def index
@@ -84,6 +84,7 @@ class SelectedResumesController < ApplicationController
   def destroy
     @selected_resume.destroy
     @selected_resumes = SelectedResume.all
+    # redirect_to root_url
     flash.now[:alert] = 'Resume Details Destroyed Successfully.'
   end
   
@@ -121,6 +122,7 @@ class SelectedResumesController < ApplicationController
   def all_resume_list
      @selected_resume = SelectedResume.new
      @selected_resumes = SelectedResume.where(vacancy_master_id: nil)
+     session[:active_tab] ="general_vac"
   end
 
 

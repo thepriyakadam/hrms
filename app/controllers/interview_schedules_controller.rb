@@ -31,6 +31,7 @@ class InterviewSchedulesController < ApplicationController
 
   def new1
     @interview_schedule = InterviewSchedule.new
+    session[:active_tab] ="general_vac"
   end
 
   # GET /interview_schedules/1/edit

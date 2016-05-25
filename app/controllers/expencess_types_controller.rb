@@ -5,6 +5,8 @@ class ExpencessTypesController < ApplicationController
   def new
     @expencess_type = ExpencessType.new
     @expencess_types = ExpencessType.all
+    session[:active_tab] ="master"
+    session[:active_tab1] ="payrollsetup"
   end
 
   # GET /expencess_types/1/edit

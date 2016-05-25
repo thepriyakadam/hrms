@@ -1,20 +1,12 @@
 class OvertimeMastersController < ApplicationController
   before_action :set_overtime_master, only: [:show, :edit, :update, :destroy]
 
-  # GET /overtime_masters
-  # GET /overtime_masters.json
-  def index
-  end
-
-  # GET /overtime_masters/1
-  # GET /overtime_masters/1.json
-  def show
-  end
-
-  # GET /overtime_masters/new
+ 
   def new
     @overtime_master = OvertimeMaster.new
     @overtime_masters = OvertimeMaster.all
+    session[:active_tab] ="master"
+    session[:active_tab1] ="payrollcomponents"
   end
 
   # GET /overtime_masters/1/edit

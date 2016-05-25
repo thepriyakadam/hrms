@@ -705,6 +705,7 @@ Rails.application.routes.draw do
   end
   resources :employees do
     collection do
+      get :graph
       get :assign_role
       post :submit_form
       get :basic_detail

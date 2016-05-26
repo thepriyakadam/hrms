@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160525151304) do
+ActiveRecord::Schema.define(version: 20160526051433) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -1774,6 +1774,7 @@ ActiveRecord::Schema.define(version: 20160525151304) do
     t.integer  "passport_photo_file_size"
     t.datetime "passport_photo_updated_at"
     t.boolean  "is_confirm"
+    t.string   "offer_letter_status"
   end
 
   add_index "selected_resumes", ["degree_id"], name: "index_selected_resumes_on_degree_id"

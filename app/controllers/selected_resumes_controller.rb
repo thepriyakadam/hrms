@@ -40,7 +40,7 @@ class SelectedResumesController < ApplicationController
     @selected_resumes = SelectedResume.all
       if @selected_resume.save
         @selected_resume = SelectedResume.new
-        flash.now[:alert] = 'Resume Details saved Successfully.'   
+        flash[:notice] = 'Resume Details saved Successfully.'   
       end
       # @vacancy_master = VacancyMaster.find(@selected_resume.vacancy_master_id)
       redirect_to root_url
@@ -51,7 +51,7 @@ class SelectedResumesController < ApplicationController
     @selected_resumes = SelectedResume.all
       if @selected_resume.save
         @selected_resume = SelectedResume.new
-        flash.now[:alert] = 'Resume Details saved Successfully.'
+        flash[:notice] = 'Resume Details saved Successfully.'
          
       end
       # @vacancy_master = VacancyMaster.find(@selected_resume.vacancy_master_id)

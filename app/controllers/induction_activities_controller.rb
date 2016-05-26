@@ -26,18 +26,28 @@ class InductionActivitiesController < ApplicationController
   # POST /induction_activities
   # POST /induction_activities.json
 
-   def create
-    @induction_activity = InductionActivity.new(induction_activity_params)
-    @induction_activities = InductionActivity.all
-    respond_to do |format|
-       if @induction_activity.save
-         @induction_activity = InductionActivity.new
-        format.js { @flag = true }
-      else
-        flash.now[:alert] = 'Induction Activity Already Exist.'
-        format.js { @flag = false }
+  #  def create
+  #   @induction_activity = InductionActivity.new(induction_activity_params)
+  #   @induction_activities = InductionActivity.all
+  #   respond_to do |format|
+  #      if @induction_activity.save
+  #        @induction_activity = InductionActivity.new
+  #       format.js { @flag = true }
+  #     else
+  #       flash.now[:alert] = 'Induction Activity Already Exist.'
+  #       format.js { @flag = false }
+  #     end
+  #   end
+  # end
+
+  def create
+     @induction_activity = InductionActivity.new(induction_activity_params)
+     @induction_activities = InductionActivity.all
+      if @induction_activity.save
+        @induction_activity = InductionActivity.new
+        flash[:notice] = 'Induction Activity saved Successfully.'
       end
-    end
+      redirect_to root_url
   end
 
    def update

@@ -56,6 +56,8 @@ Rails.application.routes.draw do
     get :new1
     get :all_resume_list
     post :create_new
+    get :modal
+    post :offer_letter
     end
   end 
   resources :assigned_assets

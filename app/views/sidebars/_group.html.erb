@@ -3,12 +3,12 @@
 <ul class="sidebar-menu">
   <li class="header">
     <Center> <strong> <% if current_user.class == Member %><%=  %>
-    <%else%><%= current_user.subdomain %> - <%= current_user.class %> <%end%>DASHBOARD</strong></Center>
+    <%else%><%= current_user.subdomain %> <%end%>DASHBOARD</strong></Center>
   </li>
   <li class="treeview" id="company">
     <a href="">
       <!-- <i class="fa fa-user-plus"></i> <span>Create</span> <i class="fa fa-angle-left pull-right"></i> -->
-      <i class="fa fa-user-plus"></i> <span><%= current_user.subdomain %> - <%= current_user.class %> Details</span> <i class="fa fa-angle-left pull-right"></i></a>
+      <i class="fa fa-user-plus"></i> <span><%= current_user.subdomain %> - <%= current_user.class %></span> <i class="fa fa-angle-left pull-right"></i></a>
     <ul class="treeview-menu" >
       <li><a href="/companies"><i class="fa fa-tags"></i> Companies</a></li>
             <li><a href="/company_locations"><i class="fa fa-tags"></i> Locations</a></li>

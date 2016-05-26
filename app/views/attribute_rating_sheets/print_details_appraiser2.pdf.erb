@@ -26,12 +26,12 @@ div.nobreak{ page-break-inside: avoid;
       </tr>
     </thead>
     <tbody>
-      <% @attribute_rating_sheets.each do |a| %>
+      <% @employee_details.each do |a| %>
       <tr>
-        <td><%= a.appraisee.manual_employee_code %></td> 
-        <td><%= a.appraisee.first_name %></td>
-        <td><%= Time.now.year-a.appraisee.date_of_birth.year %></td>
-        <td><%= a.appraisee.department.name %></td>
+        <td><%= a.manual_employee_code %></td> 
+        <td><%= a.first_name %></td>
+        <td><%= Time.now.year-a.date_of_birth.year %></td>
+        <td><%= a.department.try(:name) %></td>
         <td><%= @joining_detail.joining_date %></td>
         <td><%= @joining_detail.employee_grade.name %></td>
         <td><%= @joining_detail.employee_designation.name %></td>
@@ -46,7 +46,7 @@ div.nobreak{ page-break-inside: avoid;
 	    	<th>Privious Company</th>
         <th>Designation</th>
         <th>Privious Exp.(Years)</th>
-        <th>Privious CTC</th>
+        <th>CTC</th>
       </tr>
     </thead>
     <tbody>
@@ -82,35 +82,6 @@ div.nobreak{ page-break-inside: avoid;
         </tbody>
       </table><br>
 
-  <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
-    <thead>
-      <tr>
-        <th>Attribute & Definition</th>
-        <th>Weightage</th>
-        <th>Appraisee Comment</th>
-        <th>Appraisee Evaluation</th>
-        <th>Appraiser Comment</th>
-        <th>Appraiser Evaluation</th>
-        <th>Reviewer Comment</th>
-        <th>Reviewer Evaluation</th>
-      </tr>
-    </thead>
-     <tbody>
-      <% @attribute_rating_multiple_sheets.each do |a| %>
-        <tr>
-          <td><%= a.employee_attribute.attribute_master.name %></td>
-          <td><%= a.employee_attribute.weightage %></td>
-          <td><%= a.appraisee_comment %></td>
-          <td><%= a.appraisee_rating.try(:code) %></td>
-          <td><%= a.appraiser_comment %></td>
-          <td><%= a.appraiser_rating.try(:code) %></td>
-          <td><%= a.appraiser2_comment %></td>
-          <td><%= a.appraiser2_rating.try(:code) %></td>
-        </tr>
-        <% end %>
-      </tbody>
-  </table><br>
-
   <table id="tbl" style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
     <thead>
       <tr>
@@ -118,11 +89,9 @@ div.nobreak{ page-break-inside: avoid;
         <th>Goal Measure</th>
         <th>Target/Unit</th>
         <th>Goal Weightage</th>
-        <th>Difficulty Level</th>
         
         <th>Aligned To Supervisor</th>
         <th>Appraisee Comment</th>
-        <th>Appraisee Evaluation</th>
         <th>Appraiser Comment</th>
         <th>Appraiser Evaluation</th>
         <th>Reviewer Comment</th>
@@ -130,24 +99,22 @@ div.nobreak{ page-break-inside: avoid;
       </tr>
     </thead>
     <tbody>
-    <% @goal_rating_sheets.each do |g| %>
+      <% @goal_rating_sheets.each do |g| %>
         <tr>
           <td><%= g.employee_goal.goal_perspective.name %></td>
           <td><%= g.employee_goal.goal_measure %></td>
           <td><%= g.employee_goal.target %></td>
           <td><%= g.employee_goal.goal_weightage %></td>
-          <td><%= g.employee_goal.difficulty_level %></td>
           <td><%= g.employee_goal.allign_to_supervisor %></td>
 
           <td><%= g.appraisee_comment %></td>
-          <td><%= g.appraisee_rating.try(:code) %></td>
           <td><%= g.appraiser_comment %></td>
           <td><%= g.appraiser_rating.try(:code) %></td>
           <td><%= g.appraiser2_comment %></td>
           <td><%= g.appraiser2_rating.try(:code) %></td>
         </tr>
-        <% end %>
-      </tbody>
-  </table><br>
+      <% end %>
+    </tbody>
+  </table>
 
  </div> 

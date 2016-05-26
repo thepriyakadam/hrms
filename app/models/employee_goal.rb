@@ -6,6 +6,8 @@ class EmployeeGoal < ActiveRecord::Base
   belongs_to :period, class_name: 'PerformancePeriod'
   belongs_to :performance_period
   belongs_to :employee
+  belongs_to :appraiser2, class_name: 'Employee'
+  belongs_to :appraiser, class_name: 'Employee'
 
   validates :goal_perspective_id, presence: true
   validates :goal_measure, presence: true

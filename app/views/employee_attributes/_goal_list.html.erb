@@ -11,7 +11,6 @@
 				<th>Goal measure</th>
 				<th>Target</th>
 				<th>Goal weightage</th>
-				<th>Difficulty level</th>
 				<th>Allign To Supervisor</th>
 			</tr>
 		</thead>
@@ -22,33 +21,11 @@
 				<td><%= e.goal_measure %></td>
 				<td><%= e.target %></td>
 				<td><%= e.goal_weightage %></td>
-				<td><%= e.difficulty_level %></td>
 				<td><%= e.allign_to_supervisor %></td>
 			</tr>
 			<% end %>
 		</tbody>
 	</table>
 
-	<hr>
-	<h6> Attributes & Definition </h6>
-	<table id="example2" class="table table-bordered table-hover table-condensed">
-      <thead>
-        <tr>
-          <th>Attribute & Definition</th>
-          <th>Weightage</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @employee_attributes.each do |a| %>
-        <tr>
-          <td><%= a.attribute_master.name %></td>
-          <td><%= a.weightage %></td>
-        </tr>
-        <% end %>
-      </tbody>
-    </table>
-
-    
-<%= link_to 'Back', new_employee_attribute_path(@employee.id) ,class: 'btn btn-default btn-sm fa fa-arrow-left'%>
 </div>
 </div>

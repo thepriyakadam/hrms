@@ -85,6 +85,7 @@ div.nobreak{ page-break-inside: avoid;
           <% end %>
         </tbody>
       </table><br>
+
        <table id="tbl" style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
     <thead>
     <tr><th colspan="15"><strong><center> Attribute Details </center></strong></th></tr>
@@ -127,11 +128,9 @@ div.nobreak{ page-break-inside: avoid;
         <th>Goal Measure</th>
         <th>Target/Unit</th>
         <th>Goal Weightage</th>
-        <th>Difficulty Level</th>
         
         <th>Aligned To Supervisor</th>
         <th>Appraisee Comment</th>
-        <th>Appraisee Evaluation</th>
         <th>Appraiser Comment</th>
         <th>Appraiser Evaluation</th>
         <th>Reviewer Comment</th>
@@ -147,11 +146,9 @@ div.nobreak{ page-break-inside: avoid;
           <td><%= g.employee_goal.goal_measure %></td>
           <td><%= g.employee_goal.target %></td>
           <td><%= g.employee_goal.goal_weightage %></td>
-          <td><%= g.employee_goal.difficulty_level %></td>
           <td><%= g.employee_goal.allign_to_supervisor %></td>
 
           <td><%= g.appraisee_comment %></td>
-          <td><%= g.appraisee_rating.try(:code) %></td>
           <td><%= g.appraiser_comment %></td>
           <td><%= g.appraiser_rating.try(:code) %></td>
           <td><%= g.appraiser2_comment %></td>

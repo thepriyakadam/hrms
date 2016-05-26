@@ -241,7 +241,7 @@ class AttributeRatingSheetsController < ApplicationController
 
   def employee_appraiser2_details
 
-    @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: params[:format], is_confirm_appraiser2: true)
+    @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: params[:format], is_confirm_appraiser: true)
     @attribute_rating_sheets = Employee.where(id: params[:format]).group(:id)
     @employee = Employee.find(params[:format])
     @qualifications = Qualification.where(employee_id: @employee.id)
@@ -402,6 +402,8 @@ class AttributeRatingSheetsController < ApplicationController
   def print_details_appraiser
     @employee = Employee.find(params[:id])
     @attribute_rating_sheets = AttributeRatingSheet.where(appraisee_id: @employee.id ).group(:appraisee_id)
+    @employee_details = Employee.where(id: @employee.id)
+
     @experiences = Experience.where(employee_id: @employee.id)
     @qualifications = Qualification.where(employee_id: @employee.id)
     @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: @employee.id)
@@ -427,11 +429,11 @@ class AttributeRatingSheetsController < ApplicationController
 
 
   def print_details_appraiser2
-
     @employee = Employee.find(params[:id])
     @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: @employee.id)
     @attribute_rating_sheets = AttributeRatingSheet.where(appraisee_id: @employee.id).group(:appraisee_id)
-    
+    @employee_details = Employee.where(id: @employee.id)
+
     @qualifications = Qualification.where(employee_id: @employee.id)
     @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
     @experiences = Experience.where(employee_id: @employee.id)

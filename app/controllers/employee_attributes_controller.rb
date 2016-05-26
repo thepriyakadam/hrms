@@ -67,9 +67,8 @@ class EmployeeAttributesController < ApplicationController
 
   def show_list
     @employee_goal = EmployeeGoal.new
-    @employee = Employee.find(params[:format])
-    @employee_goals = EmployeeGoal.where(employee_id: @employee.id,is_confirm: true) 
-    @employee_attributes = EmployeeAttribute.where(employee_id: @employee.id,is_confirm: true)
+    @employee_goals = EmployeeGoal.where(employee_id: current_user.employee_id ,is_confirm: true) 
+    @employee_attributes = EmployeeAttribute.where(employee_id: current_user.employee_id,is_confirm: true)
   end
 
   def is_confirm
@@ -92,15 +91,15 @@ class EmployeeAttributesController < ApplicationController
   def create_attribute
     @employee = Employee.all
     @employees.each do |e|
-        @employee_attribute = EmployeeAttribute.new(employee_attribute_params)
-        @employee_attribute.employee_id = e.id
-        @employee_attribute.save
-        gr = GoalRatingSheet.new
-        gr.employee_attribute_id = @employee_attribute.id
-        gr.save
-        flash[:notice] = "Attributes set Successfully"
-        #@employee_attribute.update(is_confirm: true)
-      end
+      @employee_attribute = EmployeeAttribute.new(employee_attribute_params)
+      @employee_attribute.employee_id = e.id
+      @employee_attribute.save
+      gr = GoalRatingSheet.new
+      gr.employee_attribute_id = @employee_attribute.id
+      gr.save
+      flash[:notice] = "Attributes set Successfully"
+      #@employee_attribute.update(is_confirm: true)
+    end
     redirect_to single_attribute_employee_attributes_path
   end
 

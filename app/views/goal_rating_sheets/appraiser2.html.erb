@@ -96,11 +96,9 @@
             <th>Goal Measure</th>
             <th>Target/Unit</th>
             <th>Goal Weightage</th>
-            <th>Difficulty Level</th>
             <th>Aligned To Supervisor</th>
 
             <th>Appraisee Comment</th>
-            <th>Appraisee Evaluation</th>
             <th>Appraiser Comment</th>
             <th>Appraiser Evaluation</th>
             <th>Reviewer Comment</th>
@@ -114,11 +112,9 @@
               <td><%= g.employee_goal.goal_measure %></td>
               <td><%= g.employee_goal.target %></td>
               <td><%= g.employee_goal.goal_weightage %></td>
-              <td><%= g.employee_goal.difficulty_level %></td>
               <td><%= g.employee_goal.allign_to_supervisor %></td>
 
               <td><%= g.appraisee_comment %></td>
-              <td><%= g.appraisee_rating_id %></td>
               <td><%= g.appraiser_comment %></td>
               <td><%= g.appraiser_rating_id %></td>
               <td><%= text_field_tag 'appraiser2_comment[]',"",class: "form-control" %></td>
@@ -153,11 +149,9 @@
             <th>Goal Measure</th>
             <th>Target/Unit</th>
             <th>Goal Weightage</th>
-            <th>Difficulty Level</th>
             
             <th>Aligned To Supervisor</th>
             <th>Appraisee Comment</th>
-            <th>Appraisee Evaluation</th>
             <th>Appraiser Comment</th>
             <th>Appraiser Evaluation</th>
             <th>Reviewer Comment</th>
@@ -173,11 +167,9 @@
               <td><%= g.employee_goal.goal_measure %></td>
               <td><%= g.employee_goal.target %></td>
               <td><%= g.employee_goal.goal_weightage %></td>
-              <td><%= g.employee_goal.difficulty_level %></td>
               <td><%= g.employee_goal.allign_to_supervisor %></td>
 
               <td><%= g.appraisee_comment %></td>
-              <td><%= g.appraisee_rating.try(:code) %></td>
               <td><%= g.appraiser_comment %></td>
               <td><%= g.appraiser_rating.try(:code)%></td>
               <td><%= g.appraiser2_comment %></td>

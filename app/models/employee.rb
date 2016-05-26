@@ -77,6 +77,11 @@ class Employee < ActiveRecord::Base
   has_many :final_id_attribute_rating_sheets, class_name: "Employee",
                           foreign_key: "final_id_id"
                           
+  has_many :employee_goals, class_name: "Employee",
+                          foreign_key: "appraiser_id"
+
+  has_many :employee_goals, class_name: "Employee",
+                          foreign_key: "appraiser2_id"
   before_create :add_department
   before_update :add_department
 

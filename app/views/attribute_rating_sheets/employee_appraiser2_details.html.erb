@@ -97,11 +97,9 @@
         <th>Goal Measure</th>
         <th>Target/Unit</th>
         <th>Goal Weightage</th>
-        <th>Difficulty Level</th>
         
         <th>Aligned To Supervisor</th>
         <th>Appraisee Comment</th>
-        <th>Appraisee Evaluation</th>
         <th>Appraiser Comment</th>
         <th>Appraiser Evaluation</th>
         <th>Reviewer Comment</th>
@@ -115,11 +113,9 @@
           <td><%= g.employee_goal.goal_measure %></td>
           <td><%= g.employee_goal.target %></td>
           <td><%= g.employee_goal.goal_weightage %></td>
-          <td><%= g.employee_goal.difficulty_level %></td>
           <td><%= g.employee_goal.allign_to_supervisor %></td>
 
           <td><%= g.appraisee_comment %></td>
-          <td><%= g.appraisee_rating.try(:code) %></td>
           <td><%= g.appraiser_comment %></td>
           <td><%= g.appraiser_rating.try(:code)%></td>
           <td><%= g.appraiser2_comment %></td>
@@ -128,38 +124,6 @@
         <% end %>
       </tbody>
     </table>
-
-   <div class="box-header with-border">
-    <h3 class="box-title">Attribute List</h3>
-  </div>
-  <table id="tbl" class="table table-bordered table-hover table-condensed">
-    <thead>
-      <tr>
-        <th>Attribute & Definition</th>
-        <th>Weightage</th>
-        <th>Appraisee Comment</th>
-        <th>Appraisee Evaluation</th>
-        <th>Appraiser Comment</th>
-        <th>Appraiser Evaluation</th>
-        <th>Reviewer Comment</th>
-        <th>Reviewer Evaluation</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @attribute_rating_multiple_sheets.each do |a| %>
-        <tr>
-          <td><%= a.employee_attribute.attribute_master.name %></td>
-          <td><%= a.employee_attribute.weightage %></td>
-          <td><%= a.appraisee_comment %></td>
-          <td><%= a.appraisee_rating.try(:code) %></td>
-          <td><%= a.appraiser_comment %></td>
-          <td><%= a.appraiser_rating.try(:code)%></td> 
-          <td><%= a.appraiser2_comment %></td>
-          <td><%= a.appraiser2_rating.try(:code) %></td>
-        </tr>
-      <% end %>
-      </tbody>
-      </table>
       <hr>
     <%= link_to ' Back', subordinate_list2_attribute_rating_sheets_path(@employee.id),class: 'btn btn-default btn-sm fa fa-arrow-left' %> |
 

@@ -2,6 +2,7 @@
 
 <div id="error" class="error text-center" style="color:red; background-color: pink;"></div>
   <%= f.hidden_field :employee_id,value: current_user.employee_id  %>
+  <%= f.hidden_field :appraiser_id,value: current_user.employee.manager_id %>
 
   <div class="row">
     <div class="col-sm-3">

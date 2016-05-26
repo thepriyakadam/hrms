@@ -177,11 +177,12 @@ class EmployeeGoalsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def employee_goal_params
-    params.require(:employee_goal).permit(:emp_head,:is_confirm, :period_id, :employee_id, :goal_perspective_id, :goal_measure, :target, :goal_weightage, :difficulty_level, :allign_to_supervisor, :appraisee_comment, :appraisee_rating, :appraiser_comment, :appraiser_rating)
+    params.require(:employee_goal).permit(:appraiser,:appraiser2,:emp_head,:is_confirm, :period_id, :employee_id, :goal_perspective_id, :goal_measure, :target, :goal_weightage, :difficulty_level, :allign_to_supervisor, :appraisee_comment, :appraisee_rating, :appraiser_comment, :appraiser_rating)
   end
 
   def confirm_employee_goal
     employee_goals = EmployeeGoal.where(id: @employee_goal_ids)
+    @emp = EmployeeGoal.first
     period_array = employee_goals.pluck(:period_id)
     if period_array.uniq.length == 1
       sum = employee_goals.sum(:goal_weightage)
@@ -192,6 +193,8 @@ class EmployeeGoalsController < ApplicationController
           GoalRatingSheet.create(appraisee_id: current_user.employee_id, employee_goal_id: @employee_goal.id)
         end
         flash[:notice] = "Confirmed Successfully."
+        EmployeeGoalMailer.send_email_to_appraiser1(@emp).deliver_now
+        flash[:notice] = "Email Sent Successfully."
       else
         flash[:alert] = "Total goal weightage must be 100%."
       end

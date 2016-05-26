@@ -27,12 +27,12 @@ div.nobreak{ page-break-inside: avoid;
       </tr>
     </thead>
     <tbody>
-      <% @attribute_rating_sheets.each do |a| %>
+      <% @employee_details.each do |a| %>
       <tr>
-        <td><%= a.appraisee.manual_employee_code %></td> 
-        <td><%= a.appraisee.first_name %></td>
-        <td><%= Time.now.year-a.appraisee.date_of_birth.year %></td>
-        <td><%= a.appraisee.department.name %></td>
+        <td><%= a.manual_employee_code %></td> 
+        <td><%= a.first_name %></td>
+        <td><%= Time.now.year-a.date_of_birth.year %></td>
+        <td><%= a.department.try(:name) %></td>
         <td><%= @joining_detail.joining_date %></td>
         <td><%= @joining_detail.employee_grade.name %></td>
         <td><%= @joining_detail.employee_designation.name %></td>
@@ -63,24 +63,25 @@ div.nobreak{ page-break-inside: avoid;
 	</table><br>
 
 	<table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
-        <thead>
-          <tr>
-            <th>Degree</th>
-            <th>Qualification</th>
-            <th>Year Of Passing</th>
-            <th>Marks(%)</th>
-          </tr>
-        </thead>
-        <tbody>
-        <% @qualifications.each do |q| %>
-          <tr>
-            <td><%= q.degree.name %></td>
-            <td><%= q.year.name.to_s+" / "+q.marks.to_s %></td>
-            <td><%= q.degree_type.name %></td>
-          </tr>
-          <% end %>
-        </tbody>
-      </table><br>
+    <thead>
+      <tr>
+        <th>Degree</th>
+        <th>Qualification</th>
+        <th>Year Of Passing</th>
+        <th>Marks(%)</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @qualifications.each do |q| %>
+      <tr>
+        <td><%= q.degree.name %></td>
+        <td><%= q.degree_type.name %></td>
+        <td><%= q.year.name %></td>
+        <td><%= q.marks %></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table><br>
 
   <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
     <thead>
@@ -89,11 +90,9 @@ div.nobreak{ page-break-inside: avoid;
         <th>Goal Measure</th>
         <th>Target/Unit</th>
         <th>Goal Weightage</th>
-        <th>Difficulty Level</th>
-        
         <th>Aligned To Supervisor</th>
+        
         <th>Appraisee Comment</th>
-        <th>Appraisee Evaluation</th>
         <th>Appraiser Comment</th>
         <th>Appraiser Evaluation</th>
       </tr>
@@ -105,38 +104,11 @@ div.nobreak{ page-break-inside: avoid;
           <td><%= g.employee_goal.goal_measure %></td>
           <td><%= g.employee_goal.target %></td>
           <td><%= g.employee_goal.goal_weightage %></td>
-          <td><%= g.employee_goal.difficulty_level %></td>
           <td><%= g.employee_goal.allign_to_supervisor %></td>
 
           <td><%= g.appraisee_comment %></td>
-          <td><%= g.appraisee_rating.try(:code) %></td>
           <td><%= g.appraiser_comment %></td>
           <td><%= g.appraiser_rating.try(:code) %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-
-  <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
-    <thead>
-      <tr>
-        <th>Attribute & Definition</th>
-        <th>Weightage</th>
-        <th>Appraisee Comment</th>
-        <th>Appraisee Evaluation</th>
-        <th>Appraiser Comment</th>
-        <th>Appraiser Evaluation</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @attribute_rating_multiple_sheets.each do |a| %>
-        <tr>
-          <td><%= a.employee_attribute.attribute_master.name %></td>
-          <td><%= a.employee_attribute.weightage %></td>
-          <td><%= a.appraisee_comment %></td>
-          <td><%= a.appraisee_rating.try(:code) %></td>
-          <td><%= a.appraiser_comment %></td><br><br>
-          <td><%= a.appraiser_rating.try(:code) %></td>   
         </tr>
       <% end %>
     </tbody>

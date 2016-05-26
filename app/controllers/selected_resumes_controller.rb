@@ -18,7 +18,8 @@ class SelectedResumesController < ApplicationController
 
   def new1
     @selected_resume = SelectedResume.new
-    session[:active_tab] ="general_vacancy"
+    session[:active_tab] ="recruitment"
+    session[:active_tab1] ="general_vacancy"
   end
 
   # def index
@@ -33,21 +34,16 @@ class SelectedResumesController < ApplicationController
     @selected_resumes = SelectedResume.where(vacancy_master_id: @vacancy_master.id)
   end
 
-  # POST /selected_resumes
-  # POST /selec ted_resumes.json
+
   def create
     @selected_resume = SelectedResume.new(selected_resume_params)
     @selected_resumes = SelectedResume.all
-    respond_to do |format|
       if @selected_resume.save
         @selected_resume = SelectedResume.new
-        format.js { @flag = true }
-      else
-        flash.now[:alert] = 'Resume Details Saved Successfully.'
-        format.js { @flag = false }
+        flash.now[:alert] = 'Resume Details saved Successfully.'   
       end
+      # @vacancy_master = VacancyMaster.find(@selected_resume.vacancy_master_id)
       redirect_to root_url
-    end
   end
 
   def create_new
@@ -122,7 +118,8 @@ class SelectedResumesController < ApplicationController
   def all_resume_list
      @selected_resume = SelectedResume.new
      @selected_resumes = SelectedResume.where(vacancy_master_id: nil)
-     session[:active_tab] ="general_vac"
+     session[:active_tab] ="recruitment"
+     session[:active_tab1] ="general_vacancy"
   end
 
 

@@ -19,8 +19,9 @@ class VacancyMastersController < ApplicationController
           @vacancy_masters = VacancyMaster.where(current_status: "Pending")
         end
       end
-     end
-      session[:active_tab] ="recruitment"
+     end 
+    session[:active_tab] ="recruitment"
+    session[:active_tab1] ="particular_vacancy"  
   end
 
 
@@ -32,6 +33,8 @@ class VacancyMastersController < ApplicationController
   # GET /vacancy_masters/new
   def new
     @vacancy_master = VacancyMaster.new
+    session[:active_tab] ="recruitment"
+    session[:active_tab1] ="particular_vacancy"
   end
 
   def import
@@ -150,6 +153,7 @@ class VacancyMastersController < ApplicationController
     @vacancy_masters = VacancyMaster.where("reporting_master_id = ? and (current_status = ? or current_status = ?)",current_user.employee_id,"Pending","Approved & Send Next")
     # @vacancy_request_histories = VacancyRequestHistory.where("reporting_master_id = ? and (current_status = ? or current_status = ?)",current_user.employee_id,"Pending","Approved & Send Next")
     session[:active_tab] ="recruitment"
+    session[:active_tab1] ="particular_vacancy"
   end 
 
   def modal
@@ -267,6 +271,7 @@ class VacancyMastersController < ApplicationController
   def approve_vacancy_list
     @vacancy_masters = VacancyMaster.all
     session[:active_tab] ="recruitment"
+    session[:active_tab1] ="particular_vacancy"
   end
 
   # def cancel_vacancy_request
@@ -344,6 +349,7 @@ class VacancyMastersController < ApplicationController
   def vacancy_resume
       @vacancy_masters = VacancyMaster.all
       session[:active_tab] ="recruitment"
+      session[:active_tab1] ="particular_vacancy"
   end
 
   
@@ -392,7 +398,8 @@ class VacancyMastersController < ApplicationController
 
   def approved_vacancy_request_history_list
      @vacancy_request_histories = VacancyRequestHistory.where(employee_id: current_user.employee_id,current_status: "Approved")
-     session[:active_tab] ="performance"
+     session[:active_tab] ="recruitment"
+     session[:active_tab1] ="particular_vacancy"
   end
 
   private

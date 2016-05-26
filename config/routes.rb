@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
 
 
+  resources :company_events
+  resources :employee_task_to_dos
   resources :exit_interviews
   resources :about_companies
   resources :about_bosses

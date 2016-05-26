@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160526051433) do
+ActiveRecord::Schema.define(version: 20160526052958) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -323,6 +323,16 @@ ActiveRecord::Schema.define(version: 20160526051433) do
   add_index "companies", ["district_id"], name: "index_companies_on_district_id"
   add_index "companies", ["group_id"], name: "index_companies_on_group_id"
   add_index "companies", ["state_id"], name: "index_companies_on_state_id"
+
+  create_table "company_events", force: :cascade do |t|
+    t.text     "event_name"
+    t.date     "event_date"
+    t.string   "location"
+    t.boolean  "status"
+    t.string   "time"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "company_leavs", force: :cascade do |t|
     t.integer  "employee_grade_id"
@@ -788,6 +798,18 @@ ActiveRecord::Schema.define(version: 20160526051433) do
 
   add_index "employee_shifts_shift_rotations", ["employee_shift_id"], name: "index_employee_shifts_shift_rotations_on_employee_shift_id"
   add_index "employee_shifts_shift_rotations", ["shift_rotation_id"], name: "index_employee_shifts_shift_rotations_on_shift_rotation_id"
+
+  create_table "employee_task_to_dos", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.text     "task_name"
+    t.date     "task_date"
+    t.boolean  "status"
+    t.string   "time"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "employee_task_to_dos", ["employee_id"], name: "index_employee_task_to_dos_on_employee_id"
 
   create_table "employee_templates", force: :cascade do |t|
     t.integer  "employee_id"

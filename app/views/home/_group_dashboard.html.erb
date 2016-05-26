@@ -41,300 +41,480 @@
     </div><!-- /.info-box -->
   </div><!-- /.col -->
 </div><!-- /.row -->
+  <!-- Main row -->
+          <div class="row">
+            <!-- Left col -->
+            <section class="col-lg-7 connectedSortable">
+              <!-- Custom tabs (Charts with tabs)-->
 
-<div class="box">
-  <div class="box-header">
-    <h3 class="box-title">Employee List</h3>
-    <div class="pull-right">
-      <%= link_to "New Employee", new_employee_path, class: 'btn btn-sm btn-primary' %> 
-    </div>
-  </div><!-- /.box-header -->
-  <div class="box-body">
-    <table id="example1" class="table table-bordered table-hover table-condensed">
-    <thead>
-      <tr>
-      <th>Code</th>
-      <th>Employee Name</th>
-      <th>Department</th>
-      <th>Designation</th>
-      <th>Employement</th>
-      <th>Contact</th>
-      <th>Action</th>
-    </tr>
-  </thead>
+              <!-- TO DO List -->
+              <div class="box box-primary">
+                <div class="box-header">
+                  <i class="ion ion-clipboard"></i>
+                  <h3 class="box-title">To Do List</h3>
+                  <div class="box-tools pull-right">
+                    <ul class="pagination pagination-sm inline">
+                      <li><a href="#">&laquo;</a></li>
+                      <li><a href="#">1</a></li>
+                      <li><a href="#">2</a></li>
+                      <li><a href="#">3</a></li>
+                      <li><a href="#">&raquo;</a></li>
+                    </ul>
+                  </div>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                  <ul class="todo-list">
+                    <li>
+                      <!-- drag handle -->
+                      <span class="handle">
+                        <i class="fa fa-ellipsis-v"></i>
+                        <i class="fa fa-ellipsis-v"></i>
+                      </span>
+                      <!-- checkbox -->
+                      <input type="checkbox" value="" name="">
+                      <!-- todo text -->
+                      <span class="text">Time Line of show Production Sample to Client </span>
+                      <!-- Emphasis label -->
+                      <small class="label label-warning"><i class="fa fa-clock-o"></i> 2 days</small>
+                      <!-- General tools such as edit or delete-->
+                      <div class="tools">
+                        <i class="fa fa-edit"></i>
+                        <i class="fa fa-trash-o"></i>
+                      </div>
+                    </li>
+                    <li>
+                      <span class="handle">
+                        <i class="fa fa-ellipsis-v"></i>
+                        <i class="fa fa-ellipsis-v"></i>
+                      </span>
+                      <input type="checkbox" value="" name="">
+                      <span class="text">Meeting With Manager Regarding Client Review </span>
+                      <small class="label label-info"><i class="fa fa-clock-o"></i> 4 days</small>
+                      <div class="tools">
+                        <i class="fa fa-edit"></i>
+                        <i class="fa fa-trash-o"></i>
+                      </div>
+                    </li>
+                    <li>
+                      <span class="handle">
+                        <i class="fa fa-ellipsis-v"></i>
+                        <i class="fa fa-ellipsis-v"></i>
+                      </span>
+                      <input type="checkbox" value="" name="">
+                      <span class="text">Birthday of Boss</span>
+                      <small class="label label-success"><i class="fa fa-clock-o"></i> 7 day</small>
+                      <div class="tools">
+                        <i class="fa fa-edit"></i>
+                        <i class="fa fa-trash-o"></i>
+                      </div>
+                    </li>
+                   
+                    <li>
+                      <span class="handle">
+                        <i class="fa fa-ellipsis-v"></i>
+                        <i class="fa fa-ellipsis-v"></i>
+                      </span>
+                      <input type="checkbox" value="" name="">
+                      <span class="text">Meeting With Boss Regarding Production and Marketing</span>
+                      <small class="label label-default"><i class="fa fa-clock-o"></i> 1 month</small>
+                      <div class="tools">
+                        <i class="fa fa-edit"></i>
+                        <i class="fa fa-trash-o"></i>
+                      </div>
+                    </li>
 
-  <tbody>
-    <% @employees.each do |employee| %>
-      <tr>
-        <td><%= employee.manual_employee_code %></td>
-        <td><%= full_name(employee) %></td>
-        <td><%= employee.try(:company_location).try(:name) %> - <%= employee.try(:department).try(:name) %></td>
-        <td> <%= employee.joining_detail.try(:employee_designation).try(:name) %></td>
-        <td><%= employee.employee_type.try(:name) %>
-        <td><%= employee.try(:contact_no) %></td>
-        <td>
-          <%= link_to '', employee,class: 'btn btn-sm btn-default fa fa-eye' %>
-        </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-</div>
-</div>
+                     <li>
+                      <span class="handle">
+                        <i class="fa fa-ellipsis-v"></i>
+                        <i class="fa fa-ellipsis-v"></i>
+                      </span>
+                      <input type="checkbox" value="" name="">
+                      <span class="text">Holiday Plan with Family </span>
+                      <small class="label label-default"><i class="fa fa-clock-o"></i> 2 month</small>
+                      <div class="tools">
+                        <i class="fa fa-edit"></i>
+                        <i class="fa fa-trash-o"></i>
+                      </div>
+                    </li>
+                  </ul>
+                </div><!-- /.box-body -->
+                <div class="box-footer clearfix no-border">
+                  <button class="btn btn-default pull-right"><i class="fa fa-plus"></i> Add Task</button>
+                </div>
+              </div><!-- /.box -->
+
+              <!-- TABLE: LATEST ORDERS -->
+              <div class="box box-info">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Events</h3>
+                  <div class="box-tools pull-right">
+                    <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                  </div>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                  <div class="table-responsive">
+                    <table class="table no-margin">
+                      <thead>
+                        <tr>
+                          <th>Date</th>
+                          <th>Event</th>
+                          <th>Status</th>
+                          <!-- <th>Popularity</th> -->
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td><a href="pages/examples/invoice.html">10 June 2016</a></td>
+                          <td>Call of Duty IV</td>
+                          <td><span class="label label-success">Shipped</span></td>
+                          <!-- <td><div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div></td> -->
+                        </tr>
+                        <tr>
+                          <td><a href="pages/examples/invoice.html">OR1848</a></td>
+                          <td>Samsung Smart TV</td>
+                          <td><span class="label label-warning">Pending</span></td>
+                          <!-- <td><div class="sparkbar" data-color="#f39c12" data-height="20">90,80,-90,70,61,-83,68</div></td> -->
+                        </tr>
+                        <tr>
+                          <td><a href="pages/examples/invoice.html">OR7429</a></td>
+                          <td>iPhone 6 Plus</td>
+                          <td><span class="label label-danger">Delivered</span></td>
+                          <!-- <td><div class="sparkbar" data-color="#f56954" data-height="20">90,-80,90,70,-61,83,63</div></td> -->
+                        </tr>
+                        <tr>
+                          <td><a href="pages/examples/invoice.html">OR7429</a></td>
+                          <td>Samsung Smart TV</td>
+                          <td><span class="label label-info">Processing</span></td>
+                          <!-- <td><div class="sparkbar" data-color="#00c0ef" data-height="20">90,80,-90,70,-61,83,63</div></td> -->
+                        </tr>
+                        <tr>
+                          <td><a href="pages/examples/invoice.html">OR1848</a></td>
+                          <td>Samsung Smart TV</td>
+                          <td><span class="label label-warning">Pending</span></td>
+                          <!-- <td><div class="sparkbar" data-color="#f39c12" data-height="20">90,80,-90,70,61,-83,68</div></td> -->
+                        </tr>
+                        <tr>
+                          <td><a href="pages/examples/invoice.html">OR7429</a></td>
+                          <td>iPhone 6 Plus</td>
+                          <td><span class="label label-danger">Delivered</span></td>
+                          <!-- <td><div class="sparkbar" data-color="#f56954" data-height="20">90,-80,90,70,-61,83,63</div></td> -->
+                        </tr>
+                        <tr>
+                          <td><a href="pages/examples/invoice.html">OR9842</a></td>
+                          <td>Call of Duty IV</td>
+                          <td><span class="label label-success">Shipped</span></td>
+                          <!-- <td><div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div></td> -->
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div><!-- /.table-responsive -->
+                </div><!-- /.box-body -->
+                <div class="box-footer clearfix">
+                  <a href="javascript::;" class="btn btn-sm btn-info btn-flat pull-left">Place New Order</a>
+                  <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a>
+                </div><!-- /.box-footer -->
+              </div><!-- /.box -->
+            </section><!-- /.Left col -->
+            <!-- right col (We are only adding the ID to make the widgets sortable)-->
+            <section class="col-lg-5 connectedSortable">
+              <div class="row">
+                <div class="col-md-12">
+                  <!-- USERS LIST -->
+                  <div class="box box-danger">
+                    <div class="box-header with-border">
+                      <h3 class="box-title">Todays Birthday</h3>
+                      <div class="box-tools pull-right">
+                        <span class="label label-danger">8 Birthaday</span>
+                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                      </div>
+                    </div><!-- /.box-header -->
+                    <div class="box-body no-padding">
+                      <ul class="users-list clearfix">
+                        <li>
+                          <img src="dist/img/user1-128x128.jpg" alt="User Image">
+                          <a class="users-list-name" href="#">Alexander Pierce</a>
+                          <span class="users-list-date">Today</span>
+                        </li>
+                        <li>
+                          <img src="dist/img/user8-128x128.jpg" alt="User Image">
+                          <a class="users-list-name" href="#">Norman</a>
+                          <span class="users-list-date">Yesterday</span>
+                        </li>
+                        <li>
+                          <img src="dist/img/user7-128x128.jpg" alt="User Image">
+                          <a class="users-list-name" href="#">Jane</a>
+                          <span class="users-list-date">12 Jan</span>
+                        </li>
+                        <li>
+                          <img src="dist/img/user6-128x128.jpg" alt="User Image">
+                          <a class="users-list-name" href="#">John</a>
+                          <span class="users-list-date">12 Jan</span>
+                        </li>
+                        <li>
+                          <img src="dist/img/user2-160x160.jpg" alt="User Image">
+                          <a class="users-list-name" href="#">Alexander</a>
+                          <span class="users-list-date">13 Jan</span>
+                        </li>
+                        <li>
+                          <img src="dist/img/user5-128x128.jpg" alt="User Image">
+                          <a class="users-list-name" href="#">Sarah</a>
+                          <span class="users-list-date">14 Jan</span>
+                        </li>
+                        <li>
+                          <img src="dist/img/user4-128x128.jpg" alt="User Image">
+                          <a class="users-list-name" href="#">Nora</a>
+                          <span class="users-list-date">15 Jan</span>
+                        </li>
+                        <li>
+                          <img src="dist/img/user3-128x128.jpg" alt="User Image">
+                          <a class="users-list-name" href="#">Nadia</a>
+                          <span class="users-list-date">15 Jan</span>
+                        </li>
+                      </ul><!-- /.users-list -->
+                    </div><!-- /.box-body -->
+                    <div class="box-footer text-center">
+                      <a href="javascript::" class="uppercase">View All Users</a>
+                    </div><!-- /.box-footer -->
+                  </div><!--/.box -->
 
 
+              <!-- PRODUCT LIST -->
+              <div class="box box-primary">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Recently Join Employee</h3>
+                  <div class="box-tools pull-right">
+                    <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                  </div>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                  <ul class="products-list product-list-in-box">
+                    <li class="item">
+                      <div class="product-img">
+                        <img src="images/user.jpg" alt=" ">
+                      </div>
+                      <div class="product-info">
+                        <a href="javascript::;" class="product-title">Sachin Patel<span class="label label-warning pull-right">12 May 2016</span></a>
+                        <span class="product-description">
+                          Assistent Manager
+                        </span>
+                      </div>
+                    </li><!-- /.item -->
+                    <li class="item">
+                      <div class="product-img">
+                        <img src="images/user.jpg" alt=" ">
+                      </div>
+                      <div class="product-info">
+                        <a href="javascript::;" class="product-title">Balaji Joshi<span class="label label-info pull-right">5 May 2016</span></a>
+                        <span class="product-description">
+                          HR Head
+                        </span>
+                      </div>
+                    </li><!-- /.item -->
+                    <li class="item">
+                      <div class="product-img">
+                        <img src="images/user.jpg" alt=" ">
+                      </div>
+                      <div class="product-info">
+                        <a href="javascript::;" class="product-title">Mahesh Sharma<span class="label label-info pull-right">2 May 2016</span></a>
+                        <span class="product-description">
+                          Engineer
+                        </span>
+                      </div>
+                    </li><!-- /.item -->
+                   <li class="item">
+                      <div class="product-img">
+                        <img src="images/User-girl.png" alt=" ">
+                      </div>
+                      <div class="product-info">
+                        <a href="javascript::;" class="product-title">Tanuja Patel<span class="label label-info pull-right">1 May 2016</span></a>
+                        <span class="product-description">
+                          HR
+                        </span>
+                      </div>
+                    </li><!-- /.item -->
+                  </ul>
+                </div><!-- /.box-body -->
+                <div class="box-footer text-center">
+                  <a href="javascript::;" class="uppercase">View All </a>
+                </div><!-- /.box-footer -->
+              </div><!-- /.box -->
+                </div><!-- /.col -->
+              </div><!-- /.row -->
 
-<script type="text/javascript">
-  $(function () {
+            </section><!-- right col -->
+          </div><!-- /.row (main row) -->
 
-  'use strict';
+        </section><!-- /.content -->
+      </div><!-- /.content-wrapper -->
+     
 
-  /* ChartJS
-   * -------
-   * Here we will create a few charts using ChartJS
-   */
+      <!-- Control Sidebar -->
+      <aside class="control-sidebar control-sidebar-dark">
+        <!-- Create the tabs -->
+        <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+          <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
+          <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content">
+          <!-- Home tab content -->
+          <div class="tab-pane" id="control-sidebar-home-tab">
+            <h3 class="control-sidebar-heading">Recent Activity</h3>
+            <ul class="control-sidebar-menu">
+              <li>
+                <a href="javascript::;">
+                  <i class="menu-icon fa fa-birthday-cake bg-red"></i>
+                  <div class="menu-info">
+                    <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
+                    <p>Will be 23 on April 24th</p>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="javascript::;">
+                  <i class="menu-icon fa fa-user bg-yellow"></i>
+                  <div class="menu-info">
+                    <h4 class="control-sidebar-subheading">Frodo Updated His Profile</h4>
+                    <p>New phone +1(800)555-1234</p>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="javascript::;">
+                  <i class="menu-icon fa fa-envelope-o bg-light-blue"></i>
+                  <div class="menu-info">
+                    <h4 class="control-sidebar-subheading">Nora Joined Mailing List</h4>
+                    <p>nora@example.com</p>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="javascript::;">
+                  <i class="menu-icon fa fa-file-code-o bg-green"></i>
+                  <div class="menu-info">
+                    <h4 class="control-sidebar-subheading">Cron Job 254 Executed</h4>
+                    <p>Execution time 5 seconds</p>
+                  </div>
+                </a>
+              </li>
+            </ul><!-- /.control-sidebar-menu -->
 
-  //-----------------------
-  //- MONTHLY SALES CHART -
-  //-----------------------
+            <h3 class="control-sidebar-heading">Tasks Progress</h3>
+            <ul class="control-sidebar-menu">
+              <li>
+                <a href="javascript::;">
+                  <h4 class="control-sidebar-subheading">
+                    Custom Template Design
+                    <span class="label label-danger pull-right">70%</span>
+                  </h4>
+                  <div class="progress progress-xxs">
+                    <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="javascript::;">
+                  <h4 class="control-sidebar-subheading">
+                    Update Resume
+                    <span class="label label-success pull-right">95%</span>
+                  </h4>
+                  <div class="progress progress-xxs">
+                    <div class="progress-bar progress-bar-success" style="width: 95%"></div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="javascript::;">
+                  <h4 class="control-sidebar-subheading">
+                    Laravel Integration
+                    <span class="label label-warning pull-right">50%</span>
+                  </h4>
+                  <div class="progress progress-xxs">
+                    <div class="progress-bar progress-bar-warning" style="width: 50%"></div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="javascript::;">
+                  <h4 class="control-sidebar-subheading">
+                    Back End Framework
+                    <span class="label label-primary pull-right">68%</span>
+                  </h4>
+                  <div class="progress progress-xxs">
+                    <div class="progress-bar progress-bar-primary" style="width: 68%"></div>
+                  </div>
+                </a>
+              </li>
+            </ul><!-- /.control-sidebar-menu -->
 
-  // Get context with jQuery - using jQuery's .get() method.
-  var salesChartCanvas = $("#salesChart").get(0).getContext("2d");
-  // This will get the first returned node in the jQuery collection.
-  var salesChart = new Chart(salesChartCanvas);
+          </div><!-- /.tab-pane -->
+          <!-- Stats tab content -->
+          <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div><!-- /.tab-pane -->
+          <!-- Settings tab content -->
+          <div class="tab-pane" id="control-sidebar-settings-tab">
+            <form method="post">
+              <h3 class="control-sidebar-heading">General Settings</h3>
+              <div class="form-group">
+                <label class="control-sidebar-subheading">
+                  Report panel usage
+                  <input type="checkbox" class="pull-right" checked>
+                </label>
+                <p>
+                  Some information about this general settings option
+                </p>
+              </div><!-- /.form-group -->
 
-  var salesChartData = {
-    labels: ["January", "February", "March", "April", "May", "June", "July"],
-    datasets: [
-      {
-        label: "Electronics",
-        fillColor: "rgb(210, 214, 222)",
-        strokeColor: "rgb(210, 214, 222)",
-        pointColor: "rgb(210, 214, 222)",
-        pointStrokeColor: "#c1c7d1",
-        pointHighlightFill: "#fff",
-        pointHighlightStroke: "rgb(220,220,220)",
-        data: [65, 59, 80, 81, 56, 55, 40]
-      },
-      {
-        label: "Digital Goods",
-        fillColor: "rgba(60,141,188,0.9)",
-        strokeColor: "rgba(60,141,188,0.8)",
-        pointColor: "#3b8bba",
-        pointStrokeColor: "rgba(60,141,188,1)",
-        pointHighlightFill: "#fff",
-        pointHighlightStroke: "rgba(60,141,188,1)",
-        data: [28, 48, 40, 19, 86, 27, 90]
-      }
-    ]
-  };
+              <div class="form-group">
+                <label class="control-sidebar-subheading">
+                  Allow mail redirect
+                  <input type="checkbox" class="pull-right" checked>
+                </label>
+                <p>
+                  Other sets of options are available
+                </p>
+              </div><!-- /.form-group -->
 
-  var salesChartOptions = {
-    //Boolean - If we should show the scale at all
-    showScale: true,
-    //Boolean - Whether grid lines are shown across the chart
-    scaleShowGridLines: false,
-    //String - Colour of the grid lines
-    scaleGridLineColor: "rgba(0,0,0,.05)",
-    //Number - Width of the grid lines
-    scaleGridLineWidth: 1,
-    //Boolean - Whether to show horizontal lines (except X axis)
-    scaleShowHorizontalLines: true,
-    //Boolean - Whether to show vertical lines (except Y axis)
-    scaleShowVerticalLines: true,
-    //Boolean - Whether the line is curved between points
-    bezierCurve: true,
-    //Number - Tension of the bezier curve between points
-    bezierCurveTension: 0.3,
-    //Boolean - Whether to show a dot for each point
-    pointDot: false,
-    //Number - Radius of each point dot in pixels
-    pointDotRadius: 4,
-    //Number - Pixel width of point dot stroke
-    pointDotStrokeWidth: 1,
-    //Number - amount extra to add to the radius to cater for hit detection outside the drawn point
-    pointHitDetectionRadius: 20,
-    //Boolean - Whether to show a stroke for datasets
-    datasetStroke: true,
-    //Number - Pixel width of dataset stroke
-    datasetStrokeWidth: 2,
-    //Boolean - Whether to fill the dataset with a color
-    datasetFill: true,
-    //String - A legend template
+              <div class="form-group">
+                <label class="control-sidebar-subheading">
+                  Expose author name in posts
+                  <input type="checkbox" class="pull-right" checked>
+                </label>
+                <p>
+                  Allow the user to show his name in blog posts
+                </p>
+              </div><!-- /.form-group -->
+
+              <h3 class="control-sidebar-heading">Chat Settings</h3>
+
+              <div class="form-group">
+                <label class="control-sidebar-subheading">
+                  Show me as online
+                  <input type="checkbox" class="pull-right" checked>
+                </label>
+              </div><!-- /.form-group -->
+
+              <div class="form-group">
+                <label class="control-sidebar-subheading">
+                  Turn off notifications
+                  <input type="checkbox" class="pull-right">
+                </label>
+              </div><!-- /.form-group -->
+
+              <div class="form-group">
+                <label class="control-sidebar-subheading">
+                  Delete chat history
+                  <a href="javascript::;" class="text-red pull-right"><i class="fa fa-trash-o"></i></a>
+                </label>
+              </div><!-- /.form-group -->
+            </form>
+          </div><!-- /.tab-pane -->
+        </div>
+      </aside><!-- /.control-sidebar -->
+      <!-- Add the sidebar's background. This div must be placed
+           immediately after the control sidebar -->
+      <div class="control-sidebar-bg"></div>
+    </div><!-- ./wrapper -->
     
-    //Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
-    maintainAspectRatio: true,
-    //Boolean - whether to make the chart responsive to window resizing
-    responsive: true
-  };
-
-  //Create the line chart
-  salesChart.Line(salesChartData, salesChartOptions);
-
-  //---------------------------
-  //- END MONTHLY SALES CHART -
-  //---------------------------
-
-  //-------------
-  //- PIE CHART -
-  //-------------
-  // Get context with jQuery - using jQuery's .get() method.
-  var pieChartCanvas = $("#pieChart").get(0).getContext("2d");
-  var pieChart = new Chart(pieChartCanvas);
-  var PieData = [
-    {
-      value: 700,
-      color: "#f56954",
-      highlight: "#f56954",
-      label: "Chrome"
-    },
-    {
-      value: 500,
-      color: "#00a65a",
-      highlight: "#00a65a",
-      label: "IE"
-    },
-    {
-      value: 400,
-      color: "#f39c12",
-      highlight: "#f39c12",
-      label: "FireFox"
-    },
-    {
-      value: 600,
-      color: "#00c0ef",
-      highlight: "#00c0ef",
-      label: "Safari"
-    },
-    {
-      value: 300,
-      color: "#3c8dbc",
-      highlight: "#3c8dbc",
-      label: "Opera"
-    },
-    {
-      value: 100,
-      color: "#d2d6de",
-      highlight: "#d2d6de",
-      label: "Navigator"
-    }
-  ];
-  var pieOptions = {
-    //Boolean - Whether we should show a stroke on each segment
-    segmentShowStroke: true,
-    //String - The colour of each segment stroke
-    segmentStrokeColor: "#fff",
-    //Number - The width of each segment stroke
-    segmentStrokeWidth: 1,
-    //Number - The percentage of the chart that we cut out of the middle
-    percentageInnerCutout: 50, // This is 0 for Pie charts
-    //Number - Amount of animation steps
-    animationSteps: 100,
-    //String - Animation easing effect
-    animationEasing: "easeOutBounce",
-    //Boolean - Whether we animate the rotation of the Doughnut
-    animateRotate: true,
-    //Boolean - Whether we animate scaling the Doughnut from the centre
-    animateScale: false,
-    //Boolean - whether to make the chart responsive to window resizing
-    responsive: true,
-    // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
-    maintainAspectRatio: false,
-    //String - A legend template
-    
-    //String - A tooltip template
-    
-  };
-  //Create pie or douhnut chart
-  // You can switch between pie and douhnut using the method below.
-  pieChart.Doughnut(PieData, pieOptions);
-  //-----------------
-  //- END PIE CHART -
-  //-----------------
-
-  /* jVector Maps
-   * ------------
-   * Create a world map with markers
-   */
-  $('#world-map-markers').vectorMap({
-    map: 'world_mill_en',
-    normalizeFunction: 'polynomial',
-    hoverOpacity: 0.7,
-    hoverColor: false,
-    backgroundColor: 'transparent',
-    regionStyle: {
-      initial: {
-        fill: 'rgba(210, 214, 222, 1)',
-        "fill-opacity": 1,
-        stroke: 'none',
-        "stroke-width": 0,
-        "stroke-opacity": 1
-      },
-      hover: {
-        "fill-opacity": 0.7,
-        cursor: 'pointer'
-      },
-      selected: {
-        fill: 'yellow'
-      },
-      selectedHover: {
-      }
-    },
-    markerStyle: {
-      initial: {
-        fill: '#00a65a',
-        stroke: '#111'
-      }
-    },
-    markers: [
-      {latLng: [22.786276, 76.748081], name: 'Siya'},
-      {latLng: [22.94, 76.02], name: 'Dewas'}
-    ]
-  });
-
-  /* SPARKLINE CHARTS
-   * ----------------
-   * Create a inline charts with spark line
-   */
-
-  //-----------------
-  //- SPARKLINE BAR -
-  //-----------------
-  $('.sparkbar').each(function () {
-    var $this = $(this);
-    $this.sparkline('html', {
-      type: 'bar',
-      height: $this.data('height') ? $this.data('height') : '30',
-      barColor: $this.data('color')
-    });
-  });
-
-  //-----------------
-  //- SPARKLINE PIE -
-  //-----------------
-  $('.sparkpie').each(function () {
-    var $this = $(this);
-    $this.sparkline('html', {
-      type: 'pie',
-      height: $this.data('height') ? $this.data('height') : '90',
-      sliceColors: $this.data('color')
-    });
-  });
-
-  //------------------
-  //- SPARKLINE LINE -
-  //------------------
-  $('.sparkline').each(function () {
-    var $this = $(this);
-    $this.sparkline('html', {
-      type: 'line',
-      height: $this.data('height') ? $this.data('height') : '90',
-      width: '100%',
-      lineColor: $this.data('linecolor'),
-      fillColor: $this.data('fillcolor'),
-      spotColor: $this.data('spotcolor')
-    });
-  });
-});
-
-</script>

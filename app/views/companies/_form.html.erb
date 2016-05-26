@@ -7,17 +7,7 @@
   <div class="box-body">
   <div id="dynamicDropdown"></div>
     <%= bootstrap_form_for(@company,html: {id: 'company'}) do |f| %>
-    <% if @company.errors.any? %>
-      <div id="error_explanation">
-        <h2><%= pluralize(@company.errors.count, "error") %> prohibited this user from being saved:</h2>
-
-        <ul>
-        <% @company.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-        </ul>
-      </div>
-    <% end %>
+   
   
       <div class="row">
         <div class="col-sm-3">
@@ -55,11 +45,12 @@
      
       <div class="row">
         <div class="col-sm-3">
+        <div class="form-group required">
           <div class="field">
            <%= f.text_field :registration_no,label: 'Registration No' %>
           </div>
         </div>
-        
+        </div>
         <div class="col-sm-3">
           <div class="form-group required">
             <%= f.text_field :contact_no,label: 'Contact No',placeholder: "Without Space" %>

@@ -1,17 +1,36 @@
 Rails.application.routes.draw do
 
-
   resources :company_events
   resources :employee_task_to_dos
+
+  resources :leaving_reasons
+  resources :training_records
+  resources :induction_details
+  resources :induction_activities do
+    collection do 
+    get :employee_list
+    get :search_template
+    get :find_assigned_induction_template
+    get :all_induction_document_download
+    post :induction_activity
+    end
+  end 
+  resources :induction_masters
+  resources :induction_templates
+  resources :root_cause_masters
   resources :exit_interviews
   resources :about_companies
   resources :about_bosses
   resources :question_masters
   resources :training_records
-
+  resources :leaving_reasons
   resources :training_approvals
   resources :training_topics
-  resources :employee_promotions
+  resources :employee_promotions do
+    collection do
+      get :collect_data
+    end
+  end
   resources :accident_masters
   resources :travel_expence_types
   resources :travel_modes
@@ -36,6 +55,7 @@ Rails.application.routes.draw do
     post :is_confirm
     get :new1
     get :all_resume_list
+    post :create_new
     end
   end 
   resources :assigned_assets
@@ -377,6 +397,9 @@ Rails.application.routes.draw do
   end
   match 'selected_resumes/:id/download_resume/:id' => 'selected_resumes#download_resume', :via => [:get], :as => :download_resume
   match 'selected_resumes/:id/download_image/:id' => 'selected_resumes#download_image', :via => [:get], :as => :download_image
+  match 'accident_records/:id/download_jpg/:id' => 'accident_records#download_jpg', :via => [:get], :as => :download_jpg
+  match 'induction_activities/:id/download_document/:id' => 'induction_activities#download_document', :via => [:get], :as => :download_document
+
 
   match 'capture_resumes/:id/download/:id' => 'capture_resumes#download', :via => [:get], :as => :download
   match 'capture_resumes/:id/download_photo/:id' => 'capture_resumes#download_photo', :via => [:get], :as => :download_photo
@@ -685,6 +708,7 @@ Rails.application.routes.draw do
   end
   resources :employees do
     collection do
+      get :graph
       get :assign_role
       post :submit_form
       get :basic_detail

@@ -3,30 +3,23 @@
     <h3 class="box-title"> Employee Resignation </h3>
   </div><!-- /.box-header -->
   <div class="box-body">
-<%= bootstrap_form_for(@employee_resignation,remote:true) do |f| %>
-
-    <div class="row">
-          <div class="col-sm-3">
-           <label>Resignation Date </label>
+    <%= bootstrap_form_for(@employee_resignation,remote:true) do |f| %>
+      <div class="row">
+        <div class="col-sm-3">
+          <label>Resignation Date </label>
           <div class="form-group required">
-          <div class="input-group">
-            <div class="input-group-addon">
-              <i class="fa fa-calendar"></i>
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <%= f.text_field :resignation_date,hide_label: true,class: 'resignation_date'%>
             </div>
-            <%= f.text_field :resignation_date,hide_label: true,class: 'resignation_date'%>
           </div>
-        </div>
         </div>
 
         <div class="col-sm-6">
           <div class="field">
-            <%= f.text_field :reason %>
-          </div>
-        </div>
-        
-        <div class="col-sm-3">
-          <div class="form-group required">
-            <%= f.check_box :is_notice_period %>
+            <%= f.select :leaving_reason_id, all_leaving_reason, label: "Reason of Leaving" %>
           </div>
         </div>
       </div>
@@ -34,7 +27,7 @@
       <div class="row">
        <div class="col-sm-3">
          <div class="field">
-           <%= f.text_field :notice_period, label:'Notice Period' %>
+           <%= f.text_field :notice_period, label:'Notice Period (in days)' %>
          </div>
        </div>
 
@@ -45,7 +38,7 @@
       </div>
 
       <div class="col-sm-3">
-       <label>Tentative Leaving Date</label>
+       <label>Requested Releaving Date</label>
        <div class="field">
         <div class="input-group">
           <div class="input-group-addon">
@@ -106,23 +99,13 @@
     </div>
 
     <div class="row">
-     <div class="col-sm-3">
-      <div class="form-group required">
-        <%= f.check_box :has_left %>
+      <div class="col-sm-6">
+        <div class="field">
+          <%= f.text_area :reason, label: "Exit Interview" %>
+        </div>
       </div>
-     </div>
-     <div class="col-sm-3">
-      <div class="form-group required">
-        <%= f.check_box :notice_served %>
-      </div>
-     </div>
-     <div class="col-sm-3">
-      <div class="form-group required">
-        <%= f.check_box :rehired %>
-      </div>
-     </div>
-   </div>
-
+    </div>
+    
    <div class="row">
      <div class="col-sm-3">
       <div class="actions">

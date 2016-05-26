@@ -1,5 +1,15 @@
-<h1>New About Company</h1>
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">About Company Master</h3>
+  </div><!-- /.box-header -->
+	<div class="box-body">
+		<div id="form">
+			<%= render 'form' %>	
+		</div>
+		
+		<div id="about_company_li">
+			<%= render 'about_company_list' %>
+		</div>
+	</div><!-- /.box-body -->
+</div><!-- /.box -->
 
-<%= render 'form' %>
-
-<%= link_to 'Back', about_companies_path %>

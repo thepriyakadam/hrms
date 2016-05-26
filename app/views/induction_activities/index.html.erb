@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Induction Activities</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Activity</th>
+      <th>Day</th>
+      <th>Duration</th>
+      <th>Employee</th>
+      <th>Induction master</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @induction_activities.each do |induction_activity| %>
+      <tr>
+        <td><%= induction_activity.activity %></td>
+        <td><%= induction_activity.day %></td>
+        <td><%= induction_activity.duration %></td>
+        <td><%= induction_activity.employee %></td>
+        <td><%= induction_activity.induction_master %></td>
+        <td><%= link_to 'Show', induction_activity %></td>
+        <td><%= link_to 'Edit', edit_induction_activity_path(induction_activity) %></td>
+        <td><%= link_to 'Destroy', induction_activity, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Induction activity', new_induction_activity_path %>

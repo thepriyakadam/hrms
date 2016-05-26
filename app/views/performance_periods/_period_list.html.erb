@@ -1,11 +1,11 @@
 <table id="example2" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>  
-      <th>Title</th>
+      <th>Period</th>
       <th>Description</th>
       <th>Start Date</th>
       <th>End Date</th>
-      <th>Is Open</th>
+      <th>Open/Close</th>
       <th>Action</th>
     </tr>
   </thead>
@@ -16,7 +16,7 @@
         <td><%= performance_period.description %></td>
         <td><%= performance_period.start_date %></td>
         <td><%= performance_period.end_date %></td>
-        <td><%= performance_period.is_open ? "Yes" : "No" %></td>
+        <td><%= performance_period.is_open ? "Open" : "Close" %></td>
         <td>
           <%= link_to '', edit_performance_period_path(performance_period),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
         </td>

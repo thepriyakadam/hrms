@@ -1,8 +1,10 @@
 <div class="box box-default">
+<div class="box-header with-border">
+      <h3 class="box-title">Create Candidate Profile</h3>
+    </div>
  
 <div class="box-body">
-<%= bootstrap_form_for(@selected_resume) do |f| %>
-<%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+<%= bootstrap_form_for @selected_resume,url:{action:"create_new"} do |f| %>
 <div class="row">
   <div class="col-sm-3">
     <div class="form-group required">
@@ -12,7 +14,7 @@
 
    <div class="col-sm-3">
     <div class="form-group required">
-      <%= f.text_field :contact_no,label: 'Contact No' %>
+      <%= f.text_field :contact_no,label: 'Contact No.' %>
     </div>
   </div>
 
@@ -44,7 +46,7 @@
 
   <div class="col-sm-3">
     <div class="field">
-      <%= f.text_field :email_id, label: 'Email Id' %>
+      <%= f.text_field :email_id, label: 'Email ID' %>
     </div>
   </div>
 

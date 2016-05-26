@@ -4,11 +4,11 @@
     <tr>
       <th><input type="checkbox" id="selectAll" value="selectAll"></th>
       <th>Name</th>
-      <th>Contact no</th>
+      <th>Contact No.</th>
       <th>Degree</th>
-      <th>Ctc</th>
+      <th>CTC</th>
       <th>Experience</th>
-      <th>Notice period</th>
+      <th>Notice Period</th>
       <th>Confirmed</th>
       <th>Download Resume</th>
       <th>Download Image</th>
@@ -55,7 +55,6 @@
         </td>
         <td>
         <%= link_to '', selected_resume,class: 'btn btn-xs btn-default fa fa-eye' %>
-        <%= link_to '', edit_selected_resume_path(selected_resume),class: 'btn btn-success btn-xs fa fa-edit' %>
         <%= link_to '', selected_resume, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
            <% if selected_resume.is_confirm == true %>
           <%= link_to ' Take Interview', new_interview_schedule_path(selected_resume.id),class: 'btn btn-xs btn-primary fa fa-check' %>

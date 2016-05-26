@@ -1,5 +1,13 @@
-<h1>New Company Event</h1>
-
-<%= render 'form' %>
-
-<%= link_to 'Back', company_events_path %>
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Create Company Events</h3>
+  </div><!-- /.box-header -->
+    <div class="box-body">
+	    <div id="form">
+	      <%= render 'form' %>
+	  	</div>
+	  	<div id="company_event_list">
+	    	<%= render 'company_event_list' %>
+			</div>
+   	</div>
+</div>

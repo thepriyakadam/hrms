@@ -122,6 +122,22 @@ class SelectedResumesController < ApplicationController
      session[:active_tab1] ="general_vacancy"
   end
 
+  def offer_letter
+      puts "-----------------"
+      # byebug
+      # @vacancy_master = VacancyMaster.find(params[:id])
+      @selected_resume = SelectedResume.find(params[:id])
+      @offer_letter_status = params[:selected_resume][:offer_letter_status]
+      #@particular_vacancy_request = ParticularVacancyRequest.where(vacancy_master_id: @particular_vacancy_request.id)
+      @selected_resume.update(offer_letter_status: @offer_letter_status)
+      flash[:notice] = "Offer Letter Status updated Successfully"
+      redirect_to root_url
+  end
+
+  def modal
+     @selected_resume = SelectedResume.find(params[:format])
+  end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

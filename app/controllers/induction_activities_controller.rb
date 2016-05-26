@@ -63,16 +63,6 @@ class InductionActivitiesController < ApplicationController
     @induction_master = InductionMaster.find_by_code(params[:code])
     @induction_activities = InductionActivity.where(induction_master_id: @induction_master.id)
     @induction_details = InductionDetail.where(induction_master_id: @induction_master.id)
-    #puts @induction_activities.first.day
-    
-    # respond_to do |format|
-    #   if @induction_activities.nil?
-    #     format.js { @flag = true }
-    #   else
-    #     @induction_master_id = @induction_master.id
-    #     format.js { @flag = false }
-    #   end
-    # end
   end
 
   def download_document

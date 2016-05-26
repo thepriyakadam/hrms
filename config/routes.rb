@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :leaving_reasons
+  resources :training_records
   resources :induction_details
   resources :induction_activities do
     collection do 
@@ -705,6 +707,7 @@ Rails.application.routes.draw do
   end
   resources :employees do
     collection do
+      get :graph
       get :assign_role
       post :submit_form
       get :basic_detail

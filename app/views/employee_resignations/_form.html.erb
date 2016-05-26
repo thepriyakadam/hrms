@@ -22,12 +22,6 @@
             <%= f.select :leaving_reason_id, all_leaving_reason, label: "Reason of Leaving" %>
           </div>
         </div>
-        
-        <div class="col-sm-3">
-          <div class="form-group required">
-            <%= f.check_box :is_notice_period %>
-          </div>
-        </div>
       </div>
 
       <div class="row">
@@ -105,18 +99,13 @@
     </div>
 
     <div class="row">
-     <div class="col-sm-3">
-      <div class="form-group required">
-        <%= f.check_box :has_left %>
+      <div class="col-sm-6">
+        <div class="field">
+          <%= f.text_area :reason, label: "Exit Interview" %>
+        </div>
       </div>
-     </div>
-     <div class="col-sm-3">
-      <div class="form-group required">
-        <%= f.check_box :notice_served %>
-      </div>
-     </div>
-   </div>
-
+    </div>
+    
    <div class="row">
      <div class="col-sm-3">
       <div class="actions">

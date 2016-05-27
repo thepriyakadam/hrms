@@ -3,12 +3,12 @@
 <ul class="sidebar-menu">
   <li class="header">
     <Center> <strong> <% if current_user.class == Member %><%=  %>
-    <%else%><%= current_user.subdomain %> - <%= current_user.class %> <%end%>DASHBOARD</strong></Center>
+    <%else%><%= current_user.subdomain %> <%end%>DASHBOARD</strong></Center>
   </li>
   <li class="treeview" id="company">
     <a href="">
       <!-- <i class="fa fa-user-plus"></i> <span>Create</span> <i class="fa fa-angle-left pull-right"></i> -->
-      <i class="fa fa-user-plus"></i> <span><%= current_user.subdomain %> - <%= current_user.class %> Details</span> <i class="fa fa-angle-left pull-right"></i></a>
+      <i class="fa fa-user-plus"></i> <span><%= current_user.subdomain %> - <%= current_user.class %></span> <i class="fa fa-angle-left pull-right"></i></a>
     <ul class="treeview-menu" >
       <li><a href="/companies"><i class="fa fa-tags"></i> Companies</a></li>
             <li><a href="/company_locations"><i class="fa fa-tags"></i> Locations</a></li>
@@ -315,7 +315,7 @@
     </a>
     <ul class="treeview-menu" >
       <li id="appraiserevaluation">
-        <a href="#"><i class="fa fa-edit"></i>Profile Database (W/O Vacancy)<i class="fa fa-angle-left pull-right"></i></a>
+        <a href="#"><i class="fa fa-edit"></i> Candidate Profile<i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
         <li><a href="/selected_resumes/new1"><i class="fa fa-tags"></i> Candidate Profile </a></li>
         <li><a href="/interview_schedules/new1"><i class="fa fa-tags"></i> Interview Schedule </a></li>
@@ -323,7 +323,7 @@
         </ul>
       </li> 
       <li id="performancereport">
-      <a href="#"><i class="fa fa-edit"></i>Profile Database (Against Vacancy)<i class="fa fa-angle-left pull-right"></i></a>
+      <a href="#"><i class="fa fa-edit"></i>Vacancy Profile<i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
         <li><a href="/vacancy_masters"><i class="fa fa-tags"></i> Create Vacancy </a></li>
         <li><a href="/vacancy_masters/vacancy_history"><i class="fa fa-tags"></i> Vacancy Approve / Reject </a></li>

@@ -15,6 +15,7 @@ class CompanyEventsController < ApplicationController
   # GET /company_events/new
   def new
     @company_event = CompanyEvent.new
+    @company_events = CompanyEvent.all
   end
 
   # GET /company_events/1/edit
@@ -23,32 +24,28 @@ class CompanyEventsController < ApplicationController
 
   # POST /company_events
   # POST /company_events.json
+
   def create
     @company_event = CompanyEvent.new(company_event_params)
-
-    respond_to do |format|
       if @company_event.save
-        format.html { redirect_to @company_event, notice: 'Company event was successfully created.' }
-        format.json { render :show, status: :created, location: @company_event }
+        @flag = true
+        @company_event = CompanyEvent.new
+        @company_events = CompanyEvent.all
       else
-        format.html { render :new }
-        format.json { render json: @company_event.errors, status: :unprocessable_entity }
+        @flag = false
       end
-    end
   end
 
   # PATCH/PUT /company_events/1
   # PATCH/PUT /company_events/1.json
   def update
-    respond_to do |format|
       if @company_event.update(company_event_params)
-        format.html { redirect_to @company_event, notice: 'Company event was successfully updated.' }
-        format.json { render :show, status: :ok, location: @company_event }
+        @flag = true
+        @company_event = CompanyEvent.new
+        @company_events = CompanyEvent.all
       else
-        format.html { render :edit }
-        format.json { render json: @company_event.errors, status: :unprocessable_entity }
+        @flag = false
       end
-    end
   end
 
   # DELETE /company_events/1
@@ -69,6 +66,6 @@ class CompanyEventsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def company_event_params
-      params.require(:company_event).permit(:event_name, :event_date, :location, :status, :time)
+      params.require(:company_event).permit(:event_name, :event_date, :description, :location, :status, :time)
     end
 end

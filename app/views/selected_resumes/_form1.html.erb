@@ -4,8 +4,7 @@
     </div>
  
 <div class="box-body">
-<%= bootstrap_form_for(@selected_resume) do |f| %>
-<%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+<%= bootstrap_form_for @selected_resume,url:{action:"create_new"} do |f| %>
 <div class="row">
   <div class="col-sm-3">
     <div class="form-group required">

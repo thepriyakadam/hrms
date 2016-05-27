@@ -31,6 +31,8 @@ class InterviewSchedulesController < ApplicationController
 
   def new1
     @interview_schedule = InterviewSchedule.new
+    session[:active_tab] ="recruitment"
+    session[:active_tab1] ="general_vacancy"
   end
 
   # GET /interview_schedules/1/edit
@@ -184,6 +186,8 @@ end
 
   def interviewee_list
      @interview_schedules = InterviewSchedule.where(employee_id: current_user.employee_id,is_confirm: true)
+     session[:active_tab] ="recruitment"
+     session[:active_tab1] ="particular_vacancy"
   end
 
   def resume_list

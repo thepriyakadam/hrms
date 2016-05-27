@@ -17,6 +17,14 @@
     </tr>
 
     <tr>
+      <th><strong>Department</strong></th>
+      <td><%= @accident_record.department.name %></td>
+
+      <th><strong>Root Cause</strong></th>
+      <td><%= @accident_record.root_cause_master.name %></td>
+    </tr>
+
+    <tr>
       <th><strong>Accident date</strong></th>
       <td><%= @accident_record.accident_date %></td>
 

@@ -55,12 +55,16 @@
         </td>
         <td>
         <%= link_to '', selected_resume,class: 'btn btn-xs btn-default fa fa-eye' %>
-        <%= link_to '', edit_selected_resume_path(selected_resume),class: 'btn btn-success btn-xs fa fa-edit' %>
         <%= link_to '', selected_resume, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
            <% if selected_resume.is_confirm == true %>
           <%= link_to ' Take Interview', new_interview_schedule_path(selected_resume.id),class: 'btn btn-xs btn-primary fa fa-check' %>
           <% else %>
           <small class="label label-default">Not Yet Confirmed</small>
+          <% end %>
+          <div id="myModal" class="modal fade"></div>
+          <% if selected_resume.is_confirm == true %>
+        <!--   link_to ' Offer Letter',modal_selected_resumes_path(selected_resume),class: 'btn btn btn-sm btn-default fa fa-modx',remote: true %> -->
+          <% else %>
           <% end %>
         </td>
         </td>
@@ -68,6 +72,8 @@
     <% end %>
   </tbody>
 </table>
+
+<div id="myModal2" class="modal fade"></div>
 
 <div class="row">
   <div class="col-sm-3">

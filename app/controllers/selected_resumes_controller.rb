@@ -18,6 +18,8 @@ class SelectedResumesController < ApplicationController
 
   def new1
     @selected_resume = SelectedResume.new
+    session[:active_tab] ="recruitment"
+    session[:active_tab1] ="general_vacancy"
   end
 
   # def index
@@ -32,23 +34,30 @@ class SelectedResumesController < ApplicationController
     @selected_resumes = SelectedResume.where(vacancy_master_id: @vacancy_master.id)
   end
 
-  # POST /selected_resumes
-  # POST /selec ted_resumes.json
+
   def create
     @selected_resume = SelectedResume.new(selected_resume_params)
-
     @selected_resumes = SelectedResume.all
-    respond_to do |format|
-       if @selected_resume.save
+      if @selected_resume.save
         @selected_resume = SelectedResume.new
-        format.js { @flag = true }
-      else
-        flash.now[:alert] = 'Resume Details Saved Successfully.'
-        format.js { @flag = false }
-        end
-    end
+        flash[:notice] = 'Resume Details saved Successfully.'   
+      end
+      # @vacancy_master = VacancyMaster.find(@selected_resume.vacancy_master_id)
+      redirect_to root_url
   end
 
+  def create_new
+    @selected_resume = SelectedResume.new(selected_resume_params)
+    @selected_resumes = SelectedResume.all
+      if @selected_resume.save
+        @selected_resume = SelectedResume.new
+        flash[:notice] = 'Resume Details saved Successfully.'
+         
+      end
+      # @vacancy_master = VacancyMaster.find(@selected_resume.vacancy_master_id)
+      redirect_to root_url
+  end
+  
   # PATCH/PUT /selected_resumes/1
   # PATCH/PUT /selected_resumes/1.json
  
@@ -71,6 +80,7 @@ class SelectedResumesController < ApplicationController
   def destroy
     @selected_resume.destroy
     @selected_resumes = SelectedResume.all
+    # redirect_to root_url
     flash.now[:alert] = 'Resume Details Destroyed Successfully.'
   end
   
@@ -108,6 +118,24 @@ class SelectedResumesController < ApplicationController
   def all_resume_list
      @selected_resume = SelectedResume.new
      @selected_resumes = SelectedResume.where(vacancy_master_id: nil)
+     session[:active_tab] ="recruitment"
+     session[:active_tab1] ="general_vacancy"
+  end
+
+  def offer_letter
+      puts "-----------------"
+      # byebug
+      # @vacancy_master = VacancyMaster.find(params[:id])
+      @selected_resume = SelectedResume.find(params[:id])
+      @offer_letter_status = params[:selected_resume][:offer_letter_status]
+      #@particular_vacancy_request = ParticularVacancyRequest.where(vacancy_master_id: @particular_vacancy_request.id)
+      @selected_resume.update(offer_letter_status: @offer_letter_status)
+      flash[:notice] = "Offer Letter Status updated Successfully"
+      redirect_to root_url
+  end
+
+  def modal
+     @selected_resume = SelectedResume.find(params[:format])
   end
 
 

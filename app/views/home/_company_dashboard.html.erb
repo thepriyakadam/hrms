@@ -158,7 +158,8 @@
                       <thead>
                         <tr>
                           <th>Date</th>
-                          <th>Event</th>
+                          <th>Event Name</th>
+                          <th>Event Detail</th>
                           <th>Status</th>
                           <!-- <th>Popularity</th> -->
                         </tr>
@@ -168,6 +169,7 @@
                         <tr>
                           <td><%= e.event_date %></td>
                           <td><%= e.event_name %></td>
+                          <td><%= e.description %></td>
                           <td>
                             <% if e.status %>
                               <span class="label label-success">Active</span>

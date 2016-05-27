@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160527084359) do
+ActiveRecord::Schema.define(version: 20160527120440) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -415,16 +415,18 @@ ActiveRecord::Schema.define(version: 20160527084359) do
     t.integer  "travel_request_id"
     t.date     "expence_date"
     t.string   "e_place"
-    t.decimal  "travel_expence",       precision: 15, scale: 2, default: 0.0
-    t.decimal  "local_travel_expence", precision: 15, scale: 2, default: 0.0
-    t.decimal  "lodging_expence",      precision: 15, scale: 2, default: 0.0
-    t.decimal  "boarding_expence",     precision: 15, scale: 2, default: 0.0
-    t.decimal  "other_expence",        precision: 15, scale: 2, default: 0.0
-    t.datetime "created_at",                                                  null: false
-    t.datetime "updated_at",                                                  null: false
+    t.decimal  "travel_expence",         precision: 15, scale: 2, default: 0.0
+    t.decimal  "local_travel_expence",   precision: 15, scale: 2, default: 0.0
+    t.decimal  "lodging_expence",        precision: 15, scale: 2, default: 0.0
+    t.decimal  "boarding_expence",       precision: 15, scale: 2, default: 0.0
+    t.decimal  "other_expence",          precision: 15, scale: 2, default: 0.0
+    t.datetime "created_at",                                                    null: false
+    t.datetime "updated_at",                                                    null: false
     t.boolean  "is_confirm"
+    t.integer  "travel_expence_type_id"
   end
 
+  add_index "daily_bill_details", ["travel_expence_type_id"], name: "index_daily_bill_details_on_travel_expence_type_id"
   add_index "daily_bill_details", ["travel_request_id"], name: "index_daily_bill_details_on_travel_request_id"
 
   create_table "definitions", force: :cascade do |t|
@@ -2006,10 +2008,12 @@ ActiveRecord::Schema.define(version: 20160527084359) do
     t.integer  "reporting_master_id"
     t.string   "current_status"
     t.integer  "travel_option_id"
+    t.integer  "travel_mode_id"
   end
 
   add_index "travel_requests", ["employee_id"], name: "index_travel_requests_on_employee_id"
   add_index "travel_requests", ["reporting_master_id"], name: "index_travel_requests_on_reporting_master_id"
+  add_index "travel_requests", ["travel_mode_id"], name: "index_travel_requests_on_travel_mode_id"
   add_index "travel_requests", ["travel_option_id"], name: "index_travel_requests_on_travel_option_id"
 
   create_table "universities", force: :cascade do |t|

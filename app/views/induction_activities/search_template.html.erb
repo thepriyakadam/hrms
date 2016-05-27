@@ -1,18 +1,33 @@
  <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title">Induction Templates</h3>
+    <h3 class="box-title">Assign Induction Template To Employee</h3>
+    <div class="box-tools pull-right">
+      <%= link_to 'Back', employee_list_induction_activities_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+    </div>
   </div><!-- /.box-header -->
 <div class="box-body">
+
+<table class="table table-bordered table-hover">
+      <tr>
+        <th>Employee ID</th>
+        <th>Employee Name</th>
+      </tr>
+      <tr>
+        <td><%= @employee.manual_employee_code %></td>
+        <td><%= full_name(@employee) %></td>
+      </tr>
+    </table><br><br>
+
  <div class="row">
 	    <div class="col-sm-3">
 	      <div class="field">
-	        <%= text_field :code,:hhh,{oninput:"var a={code:$(this).val()}; $.get('/induction_activities/find_assigned_induction_template',a,function(response){});",class: 'form-control',placeholder:'Search by Induction Template Code'} %>
+	      
+	        <%= select :id,:hhh, all_induction_template,{include_blank: "Please Select Template"},{onchange:"var a={id:$(this).val(),employee_id : '#{@employee.id}'}; $.get('/induction_activities/find_assigned_induction_template',a,function(response){});",class: 'form-control'} %>
+
+	      
 	      </div>
 	    </div>
- </div>
-
-
-	  <br><br>
+ </div><br><br>
 
 
 <div id="induction_activity_details">

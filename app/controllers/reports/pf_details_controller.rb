@@ -1,5 +1,7 @@
 class Reports::PfDetailsController < ApplicationController
   def new
+    session[:active_tab] ="payroll"
+    session[:active_tab1] ="deductionreport"
   end
 
   def pf_detail_report

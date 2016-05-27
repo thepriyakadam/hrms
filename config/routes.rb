@@ -13,6 +13,7 @@ Rails.application.routes.draw do
     get :find_assigned_induction_template
     get :all_induction_document_download
     post :induction_activity
+    get :induction_activity_download_list
     end
   end 
   resources :induction_masters

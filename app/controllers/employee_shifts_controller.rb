@@ -18,6 +18,7 @@ class EmployeeShiftsController < ApplicationController
     @employee_shift = EmployeeShift.new
     @employees = Employee.all
     @rotations = ShiftRotation.all
+    session[:active_tab] ="timemgmt"
     # @employees = Employee.joins("LEFT JOIN employee_shifts on employees.id = employee_shifts.employee_id where employee_shifts.employee_id is null")
   end
 

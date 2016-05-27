@@ -66,13 +66,35 @@ class InductionActivitiesController < ApplicationController
   end
 
   def search_template
-    
+     @employee = Employee.find(params[:format])
   end
 
-  def find_assigned_induction_template
-    @induction_master = InductionMaster.find_by_code(params[:code])
-    @induction_activities = InductionActivity.where(induction_master_id: @induction_master.id)
-    @induction_details = InductionDetail.where(induction_master_id: @induction_master.id)
+  # def find_assigned_induction_template
+  #   @employee_id = params[:employee_id]
+  # #   if params[:id] == ''
+  # #     @flag = false
+  # #   else
+  #   @induction_master = InductionMaster.find_by_code(params[:code])
+  #   @induction_activities = InductionActivity.where(induction_master_id: @induction_master.id)
+  #   @induction_details = InductionDetail.where(induction_master_id: @induction_master.id)
+  # end
+
+  # def assign_new_template
+  #   @employee_id = params[:employee_id]
+  #   if params[:id] == ''
+  #     @flag = false
+  #   else
+  #     @induction_master = InductionMaster.find_by_code(params[:code])
+  #     unless InductionMaster.exists?(code: @induction_master.id)
+  #       @flag = true
+  #     end
+  #   end
+  # end
+
+   def find_assigned_induction_template
+       @induction_master = InductionMaster.find(params[:id])
+       @induction_activities = InductionActivity.where(induction_master_id: @induction_master.id)
+       @induction_details = InductionDetail.where(induction_master_id: @induction_master.id)
   end
 
   def download_document
@@ -87,6 +109,12 @@ class InductionActivitiesController < ApplicationController
     
     @induction_activity = InductionActivity.find(params[:format])
     # @induction_act
+
+  end
+
+  def induction_activity_download_list
+
+     
 
   end
 

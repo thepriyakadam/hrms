@@ -15,7 +15,7 @@
     <% @induction_details.each do |induction_detail| %>
       <tr>
         <td><%= i=i+1 %></td>
-        <td><%= induction_detail.employee.first_name %> <%= induction_detail.employee.middle_name %> <%= induction_detail.employee.last_name %></td>
+        <td><%= induction_detail.employee.try(:first_name) %> <%= induction_detail.employee.try(:middle_name) %> <%= induction_detail.employee.try(:last_name) %></td>
         <td><%= induction_detail.start_date %></td>
         <td><%= induction_detail.induction_master.code %></td>
         <td><%= induction_detail.induction_completed %></td>

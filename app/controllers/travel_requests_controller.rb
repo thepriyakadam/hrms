@@ -9,6 +9,7 @@ class TravelRequestsController < ApplicationController
     else
       @travel_requests = TravelRequest.where(employee_id: current_user.employee_id)
     end
+    session[:active_tab] ="travelmgmt"
   end
 
   # GET /travel_requests/1
@@ -76,10 +77,13 @@ class TravelRequestsController < ApplicationController
     else
       @travel_requests = TravelRequest.where(employee_id: current_user.employee_id)
     end
+    session[:active_tab] ="travelmgmt"
   end
 
   def travel_history
-     @travel_requests = TravelRequest.where(reporting_master_id: current_user.employee_id, current_status: "Pending")  
+     @travel_requests = TravelRequest.where(reporting_master_id: current_user.employee_id, current_status: "Pending")
+     session[:active_tab] ="travelmgmt"
+
   end
 
   def travel_request_confirmation
@@ -127,6 +131,7 @@ class TravelRequestsController < ApplicationController
 
   def travel_request_list
     @travel_requests = TravelRequest.all
+    session[:active_tab] ="travelmgmt"
   end
 
   def edit_and_send_next_modal

@@ -1,9 +1,9 @@
 <%= bootstrap_form_for(@company_event,remote: true,html: {id: "company_event"}) do |f| %>
   
   <div class="row">
-    <div class="col-sm-3">
+    <div class="col-sm-6">
       <div class="form-group required">
-        <%= f.text_area :event_name %>
+        <%= f.text_field :event_name %>
       </div>
     </div>
 
@@ -19,18 +19,27 @@
       </div>
     </div>
 
+   <div class="col-sm-3">     
+      <div class="field">
+        <%= f.text_field :time %>
+      </div>
+    </div>
+    </div>
+
+   <div class="row">
     <div class="col-sm-3">
       <div class="field">
         <%= f.text_field :location %>
       </div>
     </div>
-    <div class="col-sm-3">     
+
+    <div class="col-sm-6">
       <div class="field">
-        <%= f.text_field :time %>
+        <%= f.text_field :description %>
       </div>
     </div>
-  </div>
-  <div class="row">
+   
+  
     <div class="col-sm-3">
       <div class="field">
         <%= f.check_box :status %>

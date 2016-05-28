@@ -4,7 +4,7 @@
     </div>
  
 <div class="box-body">
-<%= bootstrap_form_for @selected_resume,url:{action:"create_new"} do |f| %>
+<%= bootstrap_form_for @selected_resume,html: {id: 'selected_resume'},url:{action:"create_new"} do |f| %>
 <div class="row">
   <div class="col-sm-3">
     <div class="form-group required">
@@ -39,25 +39,25 @@
 
 <div class="row">
   <div class="col-sm-3">
-    <div class="field">
+    <div class="form-group required">
       <%= f.text_field :ctc, label: 'CTC' %>
     </div>
   </div>
 
   <div class="col-sm-3">
-    <div class="field">
+    <div class="form-group required">
       <%= f.text_field :email_id, label: 'Email ID' %>
     </div>
   </div>
 
   <div class="col-sm-3">
-    <div class="field">
+    <div class="form-group required">
       <%= f.text_field :experience, label: 'Experience' %>
     </div>
   </div>
 
   <div class="col-sm-3">
-    <div class="field">
+    <div class="form-group required">
       <%= f.text_field :notice_period, label: 'Notice Period' %>
     </div>
   </div>
@@ -104,7 +104,7 @@ $("#selected_resume").validate({
       },
       "selected_resume[skillset]":{
         required: true
-      }
+      },
     },
     messages: {
       "selected_resume[name]":{

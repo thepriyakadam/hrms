@@ -188,28 +188,29 @@ $("#vacancy_master").validate({
     },
     messages: {
       "vacancy_master[company_location_id]":{
-        required: "Please specify Location Name"
+        required: "Please Specify Location Name"
       },
       "vacancy_master[no_of_position]":{
-        required: "Please specify No. of Positions"
+        required: "Please Specify No. of Positions"
       },
       "vacancy_master[department_id]":{
-        required: "Please specify Department Name"
+        required: "Please Specify Department Name"
       },
       "vacancy_master[vacancy_post_date]":{
-        required: "Please specify Vacancy Post Date"
+        required: "Please Specify Vacancy Post Date"
       },
       "vacancy_master[vacancy_post_date]":{
-        required: "Please specify Vacancy Post Date"
+        required: "Please Specify Vacancy Post Date"
       },
       "vacancy_master[reporting_master_id]":{
-        required: "Please specify Reporting Master Name"
+        required: "Please Specify Reporting Master Name"
       }
     },
     errorPlacement: function(error, element) {
      error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
      error.insertAfter(element.parent(element));
     }
+    
    });
 });
 </script>

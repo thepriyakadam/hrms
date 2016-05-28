@@ -66,6 +66,6 @@ class CompanyEventsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def company_event_params
-      params.require(:company_event).permit(:event_name, :event_date, :location, :status, :time)
+      params.require(:company_event).permit(:event_name, :event_date, :description, :location, :status, :time)
     end
 end

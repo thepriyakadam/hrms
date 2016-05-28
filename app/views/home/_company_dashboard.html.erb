@@ -88,7 +88,8 @@
                       <thead>
                         <tr>
                           <th>Date</th>
-                          <th>Event</th>
+                          <th>Event Name</th>
+                          <th>Event Detail</th>
                           <th>Status</th>
                           <!-- <th>Popularity</th> -->
                         </tr>
@@ -98,6 +99,7 @@
                         <tr>
                           <td><%= e.event_date %></td>
                           <td><%= e.event_name %></td>
+                          <td><%= e.description %></td>
                           <td>
                             <% if e.status %>
                               <span class="label label-success">Active</span>
@@ -113,8 +115,8 @@
                   </div><!-- /.table-responsive -->
                 </div><!-- /.box-body -->
                 <div class="box-footer clearfix">
-                  <a href="javascript::;" class="btn btn-sm btn-info btn-flat pull-left">Place New Order</a>
-                  <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a>
+                  <!-- <a href="javascript::;" class="btn btn-sm btn-info btn-flat pull-left">Place New Order</a>
+                  <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a> -->
                 </div><!-- /.box-footer -->
               </div><!-- /.box -->
             </section><!-- /.Left col -->
@@ -127,7 +129,7 @@
                     <div class="box-header with-border">
                       <h3 class="box-title">Todays Birthday</h3>
                       <div class="box-tools pull-right">
-                        <span class="label label-danger"> Birthadays</span>
+                        <span class="label label-danger"> Birth Days</span>
                         <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                         <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
                       </div>
@@ -414,4 +416,3 @@
            immediately after the control sidebar -->
       <div class="control-sidebar-bg"></div>
     </div><!-- ./wrapper -->
-    

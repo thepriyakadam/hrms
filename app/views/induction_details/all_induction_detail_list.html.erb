@@ -25,7 +25,7 @@
         <td><%= induction_detail.employee.try(:first_name) %> <%= induction_detail.employee.try(:middle_name) %> <%= induction_detail.employee.try(:last_name) %></td>
         <td><%= induction_detail.start_date %></td>
         <td><%= induction_detail.induction_master.code %></td>
-        <td><%= induction_detail.induction_completed %></td>
+        <td><%= induction_detail.induction_completed ? "Yes" : "No" %></td>
         <td>
           <% if induction_detail.induction_completed == false %>
             <small class="label label-primary">Not Yet Completed</small>

@@ -60,6 +60,17 @@ class InterviewSchedulesController < ApplicationController
     end
   end
 
+  # def create_new
+  #   @interview_schedule = InterviewSchedule.new(interview_schedule_params)
+  #    @interview_schedules = InterviewSchedule.all
+  #     if @interview_schedule.save
+  #       @interview_schedule = InterviewSchedule.new
+  #     end
+  #     # @vacancy_master = VacancyMaster.find(@selected_resume.vacancy_master_id)
+  #     redirect_to new1_interview_schedule_path
+  #     flash[:notice] = 'Interview schedule was successfully created.'
+  # end
+
   # PATCH/PUT /interview_schedules/1
   # PATCH/PUT /interview_schedules/1.json
   def update

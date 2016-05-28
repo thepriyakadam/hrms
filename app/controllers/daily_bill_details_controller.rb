@@ -107,6 +107,6 @@ end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def daily_bill_detail_params
-      params.require(:daily_bill_detail).permit(:is_confirm,:travel_request_id, :expence_date, :e_place, :travel_expence, :local_travel_expence, :lodging_expence, :boarding_expence, :other_expence)
+      params.require(:daily_bill_detail).permit(:is_confirm, :travel_expence_type_id, :travel_request_id, :expence_date, :e_place, :travel_expence )
     end
 end

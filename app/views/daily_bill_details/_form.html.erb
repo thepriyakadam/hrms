@@ -19,40 +19,15 @@
           <%= f.text_field :e_place, label: 'E Place',class: 'input_e_place'  %>
         </div>
       </div>
-
-      <div class="col-sm-3">
+       <div class="col-sm-3">
         <div class="field">
-          <%= f.text_field :travel_expence, label: 'Travel Expence',class: 'input_travel_expence'  %>
+          <%= f.select :travel_expence_type_id,all_travel_expence_type, label: 'Travel Expence',class: 'input_travel_expence'  %>
         </div>
       </div>
+      
+
     </div>
-
-    <div class="row">
-      <div class="col-sm-3">
-        <div class="field">
-          <%= f.text_field :local_travel_expence, label: 'Local Travel Expence',class: 'input_local_travel_expence'  %>
-        </div>
-      </div>
-
-      <div class="col-sm-3">
-        <div class="field">
-          <%= f.text_field :lodging_expence, label: 'Lodging Expence',class: 'input_lodging_expence'  %>
-        </div>
-      </div>
-    
-      <div class="col-sm-3">
-        <div class="field">
-          <%= f.text_field :boarding_expence, label: 'Boarding Expence',class: 'input_boarding_expence'  %>
-        </div>
-      </div>
-
-      <div class="col-sm-3">
-        <div class="field">
-          <%= f.text_field :other_expence, label: 'Other Expence',class: 'input_other_expence'  %>
-        </div>
-      </div>
     </div>
-  </div>
 
   <% unless params['controller'] == 'daily_bill_details' and params['action'] == 'edit' %>
     <div class="row">
@@ -131,10 +106,10 @@
       },
       messages: {
         "daily_bill_detail[expence_date]":{
-          required: "Please specify Expence Date"
+          required: "Please Specify Expence Date"
         },
         "daily_bill_detail[e_place]":{
-          required: "Please specify E Place"
+          required: "Please Specify E Place"
         }
       },
       errorPlacement: function(error, element) {

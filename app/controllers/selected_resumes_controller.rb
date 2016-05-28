@@ -40,23 +40,22 @@ class SelectedResumesController < ApplicationController
     @selected_resumes = SelectedResume.all
       if @selected_resume.save
         @selected_resume = SelectedResume.new
-        flash[:notice] = 'Resume Details saved Successfully.'   
       end
       # @vacancy_master = VacancyMaster.find(@selected_resume.vacancy_master_id)
       redirect_to root_url
+      flash[:notice] = 'Resume Details saved Successfully.'  
   end
 
-  def create_new
-    @selected_resume = SelectedResume.new(selected_resume_params)
-    @selected_resumes = SelectedResume.all
-      if @selected_resume.save
-        @selected_resume = SelectedResume.new
-        flash[:notice] = 'Resume Details saved Successfully.'
-         
-      end
-      # @vacancy_master = VacancyMaster.find(@selected_resume.vacancy_master_id)
-      redirect_to root_url
-  end
+  # def create_new
+  #   @selected_resume = SelectedResume.new(selected_resume_params)
+  #   @selected_resumes = SelectedResume.all
+  #     if @selected_resume.save
+  #       @selected_resume = SelectedResume.new
+  #     end
+  #     # @vacancy_master = VacancyMaster.find(@selected_resume.vacancy_master_id)
+  #     redirect_to root_url
+  #     flash[:notice] = 'Resume Details saved Successfully.'  
+  # end
   
   # PATCH/PUT /selected_resumes/1
   # PATCH/PUT /selected_resumes/1.json

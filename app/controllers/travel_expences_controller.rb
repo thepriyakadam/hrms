@@ -5,6 +5,7 @@ class TravelExpencesController < ApplicationController
   # GET /travel_expences.json
   def index
     @travel_expences = TravelExpence.all
+    session[:active_tab] ="travelmgmt"
   end
 
   # GET /travel_expences/1

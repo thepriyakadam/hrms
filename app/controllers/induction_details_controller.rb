@@ -64,6 +64,19 @@ class InductionDetailsController < ApplicationController
     @induction_details = InductionDetail.all
   end
 
+  def all_induction_detail_list
+   @induction_details = InductionDetail.all
+   session[:active_tab] ="induction"
+  end
+
+  def confirm
+    @induction_detail = InductionDetail.find(params[:format])
+    @induction_detail.update(induction_completed: true)
+    redirect_to all_induction_detail_list_induction_details_path
+    flash[:notice] = 'induction Confirmed Successfully'
+  end
+
+
 
 
   private

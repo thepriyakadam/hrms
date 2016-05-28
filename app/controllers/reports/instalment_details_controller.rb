@@ -1,5 +1,7 @@
 class Reports::InstalmentDetailsController < ApplicationController
   def new
+    session[:active_tab] ="payroll"
+    session[:active_tab1] ="deductionreport"
   end
 
   def instalment_detail_report

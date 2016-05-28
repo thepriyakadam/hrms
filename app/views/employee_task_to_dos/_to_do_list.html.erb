@@ -1,15 +1,12 @@
 <ul class="todo-list">
 <% @employee_task_to_dos.each do |e| %>
   <li>
-    <span class="text"><%= e.employee_id %></span>
-    <span class="text"><%= e.task_name %></span>
-    <span class="text"><%= e.task_date %></span>
-    <span class="text"><%= e.time %></span>
-    <span class="text"><%= e.status %></span>
+    <%= e.task_date %>  <%= e.task_name %>    <%= e.status %>
     
-    <small class="label label-warning"><i class="fa fa-clock-o"></i> 2 days</small>
+    <small class="label label-warning"><i class="fa fa-clock-o"></i> <%= e.time %> </small>
     <!-- General tools such as edit or delete-->
     <%= link_to "Edit" , edit_employee_task_to_do_path(e),remote: true %>
   </li>
  <% end %>
 </ul>
+

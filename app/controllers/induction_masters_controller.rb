@@ -45,9 +45,9 @@ class InductionMastersController < ApplicationController
      @induction_masters = InductionMaster.all
       if @induction_master.save
         @induction_master = InductionMaster.new
-        flash[:notice] = 'Induction Master saved Successfully.'   
       end
       redirect_to new_induction_master_path
+      flash[:notice] = 'Induction Master saved Successfully.'   
   end
 
 

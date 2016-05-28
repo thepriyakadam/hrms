@@ -4,7 +4,7 @@ class EmployeeTaskToDosController < ApplicationController
   # GET /employee_task_to_dos
   # GET /employee_task_to_dos.json
   def index
-    @employee_task_to_dos = EmployeeTaskToDo.all
+    @employee_task_to_dos = EmployeeTaskToDo.where(status: true)
   end
 
   # GET /employee_task_to_dos/1
@@ -19,6 +19,7 @@ class EmployeeTaskToDosController < ApplicationController
 
   # GET /employee_task_to_dos/1/edit
   def edit
+    @employee_task_to_dos = EmployeeTaskToDo.where(status: true)
   end
 
   # POST /employee_task_to_dos
@@ -26,28 +27,20 @@ class EmployeeTaskToDosController < ApplicationController
   def create
     @employee_task_to_do = EmployeeTaskToDo.new(employee_task_to_do_params)
 
-    respond_to do |format|
       if @employee_task_to_do.save
-        format.html { redirect_to @employee_task_to_do, notice: 'Employee task to do was successfully created.' }
-        format.json { render :show, status: :created, location: @employee_task_to_do }
+        @employee_task_to_dos = EmployeeTaskToDo.where(status: true)
       else
-        format.html { render :new }
-        format.json { render json: @employee_task_to_do.errors, status: :unprocessable_entity }
-      end
+      
     end
   end
 
   # PATCH/PUT /employee_task_to_dos/1
   # PATCH/PUT /employee_task_to_dos/1.json
   def update
-    respond_to do |format|
-      if @employee_task_to_do.update(employee_task_to_do_params)
-        format.html { redirect_to @employee_task_to_do, notice: 'Employee task to do was successfully updated.' }
-        format.json { render :show, status: :ok, location: @employee_task_to_do }
-      else
-        format.html { render :edit }
-        format.json { render json: @employee_task_to_do.errors, status: :unprocessable_entity }
-      end
+    if @employee_task_to_do.update(employee_task_to_do_params)
+      @employee_task_to_dos = EmployeeTaskToDo.where(status: true)
+    else
+      
     end
   end
 

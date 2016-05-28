@@ -5,7 +5,12 @@ Rails.application.routes.draw do
 
   resources :leaving_reasons
   resources :training_records
-  resources :induction_details
+  resources :induction_details do
+    collection do 
+    get :all_induction_detail_list
+    get :confirm
+    end
+  end 
   resources :induction_activities do
     collection do 
     get :employee_list
@@ -14,6 +19,7 @@ Rails.application.routes.draw do
     get :all_induction_document_download
     post :induction_activity
     get :induction_activity_download_list
+    post :create_induction_detail
     end
   end 
   resources :induction_masters
@@ -402,7 +408,7 @@ Rails.application.routes.draw do
   match 'selected_resumes/:id/download_image/:id' => 'selected_resumes#download_image', :via => [:get], :as => :download_image
   match 'accident_records/:id/download_jpg/:id' => 'accident_records#download_jpg', :via => [:get], :as => :download_jpg
   match 'induction_activities/:id/download_document/:id' => 'induction_activities#download_document', :via => [:get], :as => :download_document
-
+  match 'induction_masters/:id/download_induction_document/:id' => 'induction_masters#download_induction_document', :via => [:get], :as => :download_induction_document
 
   match 'capture_resumes/:id/download/:id' => 'capture_resumes#download', :via => [:get], :as => :download
   match 'capture_resumes/:id/download_photo/:id' => 'capture_resumes#download_photo', :via => [:get], :as => :download_photo

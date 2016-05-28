@@ -1,0 +1,44 @@
+<div class="box">
+  <div class="box-header"><h3>Induction Detail List</h3>
+    <div class="pull-right">  
+    </div>
+  </div>
+  <div class="box-body">
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Sr.No</th>
+      <th>Employee</th>
+      <th>Start date</th>
+      <th>Induction master</th>
+      <th>Induction completed</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+  <% i = 0 %>
+    <% @induction_details.each do |induction_detail| %>
+      <tr>
+        <td><%= i=i+1 %></td>
+        <td><%= induction_detail.employee.try(:first_name) %> <%= induction_detail.employee.try(:middle_name) %> <%= induction_detail.employee.try(:last_name) %></td>
+        <td><%= induction_detail.start_date %></td>
+        <td><%= induction_detail.induction_master.code %></td>
+        <td><%= induction_detail.induction_completed %></td>
+        <td>
+          <% if induction_detail.induction_completed == false %>
+            <small class="label label-primary">Not Yet Completed</small>
+            <%= link_to 'Confirm Induction',confirm_induction_details_path(induction_detail), class: 'btn btn-xs btn-info' %>
+            <% elsif induction_detail.induction_completed == true %>
+            <small class="label label-primary">Induction Completed</small>
+             <% else %>
+            <% end %>
+        </td>
+        <td>   <%= link_to 'Show', induction_detail,class: 'btn btn-xs btn-info fa fa-check' %>  </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+ </div>
+</div>

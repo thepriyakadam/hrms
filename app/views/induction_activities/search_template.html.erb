@@ -20,17 +20,18 @@
 
  <div class="row">
 	    <div class="col-sm-3">
-	      <div class="field">
-	      
-	        <%= select :id,:hhh, all_induction_template,{include_blank: "Please Select Template"},{onchange:"var a={id:$(this).val(),employee_id : '#{@employee.id}'}; $.get('/induction_activities/find_assigned_induction_template',a,function(response){});",class: 'form-control'} %>
-
-	      
+         <div class="field">
+	        <%= select :id,:hhh, all_induction_template,{include_blank: "Please Select Template"},{onchange:"var a={id:$(this).val(),employee_id : '#{@employee.id}'}; $.get('/induction_activities/find_assigned_induction_template',a,function(response){});",class: 'form-control'} %>      
 	      </div>
 	    </div>
  </div><br><br>
 
 
 <div id="induction_activity_details">
+	    
+</div>
+
+<div id="induction_document_download_details">
 	    
 </div>
 

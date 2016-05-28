@@ -1,6 +1,7 @@
 class HomeController < ApplicationController
   # load_and_authorize_resource
   def index
+    @employee_task_to_dos = EmployeeTaskToDo.where(status: true)
     @companies = Company.all
     @company_locations = CompanyLocation.all
     @departments = Department.all

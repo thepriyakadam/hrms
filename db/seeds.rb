@@ -82,60 +82,60 @@
 
 # #####################################################################################################3
 
-require 'rubygems'
-require 'roo'
-company_type_array = ['Information Technology','Finance','Chemical','Production']
+# require 'rubygems'
+# require 'roo'
+# company_type_array = ['Information Technology','Finance','Chemical','Production']
 
-company_type_array.each do |ct|
-  company_type = CompanyType.find_or_initialize_by(name: ct)
-  company_type.name = ct
-  company_type.save
-end
+# company_type_array.each do |ct|
+#   company_type = CompanyType.find_or_initialize_by(name: ct)
+#   company_type.name = ct
+#   company_type.save
+# end
 
-emp_type = ['Temporary','Permanent']
-emp_type.each do |e|
-  EmployeeType.create(name: e)
-end
+# emp_type = ['Temporary','Permanent']
+# emp_type.each do |e|
+#   EmployeeType.create(name: e)
+# end
 
-natinality = ['Indian','US','UK']
-natinality.each do |n|
-  Nationality.create(name: n)
-end
+# natinality = ['Indian','US','UK']
+# natinality.each do |n|
+#   Nationality.create(name: n)
+# end
 
-blood_group = ['A+','B+','AB+','O+','A-','B-','AB-','O-']
-blood_group.each do |d|
-  BloodGroup.create(name: d)
-end
+# blood_group = ['A+','B+','AB+','O+','A-','B-','AB-','O-']
+# blood_group.each do |d|
+#   BloodGroup.create(name: d)
+# end
 
-employee_grade = ['G1','G2','G3','G4']
-employee_grade.each do |d|
-  EmployeeGrade.create(name: d)
-end
+# employee_grade = ['G1','G2','G3','G4']
+# employee_grade.each do |d|
+#   EmployeeGrade.create(name: d)
+# end
 
-roles = ['Company','CompanyLocation','Department','Employee']
-roles.each do |r|
-  Role.create(name: r)
-end
+# roles = ['Company','CompanyLocation','Department','Employee']
+# roles.each do |r|
+#   Role.create(name: r)
+# end
 
-degrees =['SSC','HSC','DEPLOMA','ITI','BA','BSC','BCA','B.COM','BE','B.TECH','BBA','MA','MSC','MCA','M.COM','ME','M.TECH','MBA']
-degrees.each do |d|
-  Degree.create(name:d)
-end
+# degrees =['SSC','HSC','DEPLOMA','ITI','BA','BSC','BCA','B.COM','BE','B.TECH','BBA','MA','MSC','MCA','M.COM','ME','M.TECH','MBA']
+# degrees.each do |d|
+#   Degree.create(name:d)
+# end
 
-degree_types =['SSC','HSC','DEPLOMA','Under Graduation','Post Graduation','Ph.ed']
-degree_types.each do |d|
-  DegreeType.create(name:d)
-end
+# degree_types =['SSC','HSC','DEPLOMA','Under Graduation','Post Graduation','Ph.ed']
+# degree_types.each do |d|
+#   DegreeType.create(name:d)
+# end
 
-degree_streams =['Electrical','Mechanical','IT','COMPUTER']
-degree_streams.each do |d|
-  DegreeStream.create(name:d)
-end
+# degree_streams =['Electrical','Mechanical','IT','COMPUTER']
+# degree_streams.each do |d|
+#   DegreeStream.create(name:d)
+# end
 
-puts 'Year Started...'
-for i in 1960..Date.today.year
-  Year.create(name:i)
-end
+# puts 'Year Started...'
+# for i in 1960..Date.today.year
+#   Year.create(name:i)
+# end
 
 # puts 'Countries Started...'
 # CS.countries.each {|k,v| Country.create(code: k, name: v)}

@@ -5,6 +5,7 @@ class EmployeePromotionsController < ApplicationController
   # GET /employee_promotions.json
   def index
     @employee_promotions = EmployeePromotion.all
+     session[:active_tab] ="promotionmanagement"
   end
 
   # GET /employee_promotions/1

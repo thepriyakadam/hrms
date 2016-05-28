@@ -118,21 +118,39 @@
 </script>
 
 <script>
-$("#selected_resume").validate({
+$("#interview_schedule").validate({
     rules: {
-      "selected_resume[name]":{
+      "interview_schedule[interviewer_name]":{
         required: true
               },
-      "selected_resume[degree_id]":{
+      "interview_schedule[employee_id]":{
+        required: true
+      },
+      "interview_schedule[candidate_name]":{
+        required: true
+      },
+      "interview_schedule[location]":{
+        required: true
+      },
+      "interview_schedule[interview_type]":{
         required: true
       }
     },
     messages: {
-      "selected_resume[name]":{
+      "interview_schedule[name]":{
         required: "Please specify Name"
       },
-      "selected_resume[degree_id]":{
-        required: "Please specify Qualification"
+      "interview_schedule[employee_id]":{
+        required: "Please specify Employee Name"
+      },
+      "interview_schedule[candidate_name]":{
+        required: "Please specify Candidate Name"
+      },
+      "interview_schedule[location]":{
+        required: "Please specify Location"
+      },
+      "interview_schedule[interview_type]":{
+        required: "Please specify Interview Type"
       }
     },
     errorPlacement: function(error, element) {

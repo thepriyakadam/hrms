@@ -4,7 +4,7 @@ class EmployeeTaskToDosController < ApplicationController
   # GET /employee_task_to_dos
   # GET /employee_task_to_dos.json
   def index
-    @employee_task_to_dos = EmployeeTaskToDo.where(status: true)
+    @employee_task_to_dos = EmployeeTaskToDo.all
   end
 
   # GET /employee_task_to_dos/1
@@ -19,18 +19,19 @@ class EmployeeTaskToDosController < ApplicationController
 
   # GET /employee_task_to_dos/1/edit
   def edit
-    @employee_task_to_dos = EmployeeTaskToDo.where(status: true)
+    @employee_task_to_dos = EmployeeTaskToDo.all
   end
 
   # POST /employee_task_to_dos
   # POST /employee_task_to_dos.json
   def create
     @employee_task_to_do = EmployeeTaskToDo.new(employee_task_to_do_params)
-
       if @employee_task_to_do.save
-        @employee_task_to_dos = EmployeeTaskToDo.where(status: true)
+        @employee_task_to_dos = EmployeeTaskToDo.all
+        @employee_task_to_do = EmployeeTaskToDo.new
+        @flag = true
       else
-      
+        @flag = false
     end
   end
 
@@ -38,7 +39,7 @@ class EmployeeTaskToDosController < ApplicationController
   # PATCH/PUT /employee_task_to_dos/1.json
   def update
     if @employee_task_to_do.update(employee_task_to_do_params)
-      @employee_task_to_dos = EmployeeTaskToDo.where(status: true)
+      @employee_task_to_dos = EmployeeTaskToDo.all
     else
       
     end

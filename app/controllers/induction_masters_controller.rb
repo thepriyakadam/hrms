@@ -48,7 +48,6 @@ class InductionMastersController < ApplicationController
       end
       redirect_to new_induction_master_path
       flash[:notice] = 'Induction Master saved Successfully.'   
-
   end
 
 

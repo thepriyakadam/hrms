@@ -150,4 +150,47 @@ class Employee < ActiveRecord::Base
       end
     end
   end
+
+  def self.dashboard
+    if current_user.class == Group
+      Employee.all
+    else
+      if current_user.role.name == 'Company'
+        Employee.all
+      elsif current_user.role.name == 'CompanyLocation'
+        Employee.where(company_location_id: current_user.company_location_id)
+      elsif current_user.role.name == 'Employee'
+        Employee.where(id: current_user.employee_id)
+      end
+    end
+  end
 end
+
+
+    # @companies = Company.all
+    # @company_locations = CompanyLocation.all
+    # @departments = Department.all
+    # #@employees = Employee.all
+    # if current_user.class == Member
+    #   if current_user.role.name == 'Employee'
+    #     @employee = Employee.find(current_user.employee_id)
+    #     #redirect_to home_index_path
+    #   elsif current_user.role.name == 'CompanyLocation'
+    #     @employees = Employee.where(company_location_id: current_user.company_location_id)
+    #   elsif current_user.role.name == 'Department'
+    #     @employees = Employee.where(department_id: current_user.department_id)
+    #   elsif current_user.role.name == 'Company'
+    #     @employees = Employee.all
+    #   elsif current_user.role.name == 'Supervisor'
+    #     @emp = Employee.find(current_user.employee_id)
+    #     # @employees_indirect = @emp.indirect_subordinates
+    #     # @employees_direct = @emp.subordinates
+    #     @employees = @emp.subordinates
+    #   elsif current_user.role.name == 'SalaryAccount'
+    #     @employee = Employee.find(current_user.employee_id)
+    #   end
+    # else
+    #   @employees = Employee.all
+    # end
+
+

@@ -1,11 +1,7 @@
 
 <%= bootstrap_form_for(@employee_task_to_do,remote: true,html: {id: "employee_task_to_do"}) do |f| %>
+  <%= f.hidden_field :employee_id, value: current_user.employee_id%>
   <div class="row">
-    <div class="col-sm-6">
-      <div class="field">
-        <%= f.select :employee_id, all_employee_list,{hide_label: true,include_blank: " Select Employee" }%>
-      </div>
-    </div>
     <div class="col-sm-6">
       <div class="field">
         <%= f.text_field :task_name,hide_label: true,placeholder: 'Task Name' %>

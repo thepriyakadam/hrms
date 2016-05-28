@@ -44,10 +44,10 @@ class InductionMastersController < ApplicationController
      @induction_master = InductionMaster.new(induction_master_params)
      @induction_masters = InductionMaster.all
       if @induction_master.save
-        @selected_resume = SelectedResume.new
+        @induction_master = InductionMaster.new
         flash[:notice] = 'Induction Master saved Successfully.'   
       end
-      redirect_to root_url
+      redirect_to new_induction_master_path
   end
 
 

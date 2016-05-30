@@ -1,5 +1,5 @@
 class InterviewReschedule < ActiveRecord::Base
-  has_many :interview_schedules
+  belongs_to :interview_schedule
   belongs_to :employee
 
   validates :interview_date, presence: true

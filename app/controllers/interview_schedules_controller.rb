@@ -117,8 +117,8 @@ class InterviewSchedulesController < ApplicationController
       flash[:alert] = 'Email not Available'
       redirect_to interview_schedules_path
     else
-      InterviewScheduleMailer.sample_email_to_interviewer(@interview_schedule).deliver_now
-      InterviewScheduleMailer.confirmation_email_to_candidate(@interview_schedule).deliver_now
+      # InterviewScheduleMailer.sample_email_to_interviewer(@interview_schedule).deliver_now
+      # InterviewScheduleMailer.confirmation_email_to_candidate(@interview_schedule).deliver_now
       flash[:notice] = 'Email Sent Successfully'
       redirect_to interview_schedules_path
   end
@@ -188,8 +188,10 @@ end
     else
       @interview_schedule_ids.each do |eid|
       @interview_schedule = InterviewSchedule.find(eid)
-      @interview_schedule.update(is_confirm: true)      
-      flash[:notice] = "Confirmed Successfully"
+      @interview_schedule.update(is_confirm: true) 
+      InterviewScheduleMailer.sample_email_to_interviewer(@interview_schedule).deliver_now
+      InterviewScheduleMailer.confirmation_email_to_candidate(@interview_schedule).deliver_now     
+      flash[:notice] = "Confirmed Successfully & Email also sent"
     end 
      redirect_to interview_schedules_path
   end

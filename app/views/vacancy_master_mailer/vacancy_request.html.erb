@@ -8,7 +8,7 @@
     <p> 
       This is to inform you that you have a New Vacancy Request .
       Details for New Vacancy Request is given below.<br><br>
-       1. <b>Reporting Master Name :-</b> <%= @employee.first_name.to_s %> <%= @employee.last_name.to_s %> <%= @employee.middle_name.to_s %><br><br>
+       1. <b>Reporting Manager Name :-</b> <%= @employee.first_name.to_s %> <%= @employee.last_name.to_s %> <%= @employee.middle_name.to_s %><br><br>
        2. <b>Employee Name :-</b> <%= @emp.employee.first_name.to_s %> <%= @emp.employee.last_name.to_s %> <%= @emp.employee.middle_name.to_s %><br><br>
        3. <b>Company Location :-</b> <%= @vacancy_master.company_location.try(:name) %><br><br>
        4. <b>Department Name :-</b> <%= @vacancy_master.department.try(:name) %><br><br>

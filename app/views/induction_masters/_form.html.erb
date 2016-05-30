@@ -28,13 +28,14 @@
 
   </div>
 <% end %>
-<script>
-$("#induction_master").validate({
+
+<script type="text/javascript">
+
+ $("#induction_master").validate({
     rules: {
       "induction_master[code]":{
         required: true
-              }
-    },
+      }
     messages: {
       "induction_master[code]":{
         required: "Please specify Code"
@@ -46,3 +47,4 @@ $("#induction_master").validate({
     }
    });
 </script>
+

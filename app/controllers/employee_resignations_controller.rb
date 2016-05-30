@@ -5,7 +5,7 @@ class EmployeeResignationsController < ApplicationController
   # GET /employee_resignations.json
   def index
     @employee_resignations = EmployeeResignation.all
-
+    
   end
 
   # GET /employee_resignations/1

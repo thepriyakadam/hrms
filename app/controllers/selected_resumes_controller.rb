@@ -46,19 +46,19 @@ class SelectedResumesController < ApplicationController
       flash[:notice] = 'Resume Details saved Successfully.'  
   end
 
-  # def create_new
-  #   @selected_resume = SelectedResume.new(selected_resume_params)
+  def create_new
+    @selected_resume = SelectedResume.new(selected_resume_params)
 
-  #   respond_to do |format|
-  #     if @selected_resume.save
-  #       format.html { redirect_to @selected_resume, notice: 'Candidate Profile  was successfully created.' }
-  #       format.json { render :show, status: :created, location: @selected_resume }
-  #     else
-  #       format.html { render :new }
-  #       format.json { render json: @selected_resume.errors, status: :unprocessable_entity }
-  #     end
-  #   end
-  # end
+    respond_to do |format|
+      if @selected_resume.save
+        format.html { redirect_to @selected_resume, notice: 'Candidate Profile  was successfully created.' }
+        format.json { render :show, status: :created, location: @selected_resume }
+      else
+        format.html { render :new }
+        format.json { render json: @selected_resume.errors, status: :unprocessable_entity }
+      end
+    end
+  end
 
   #   def create
   #    @induction_master = InductionMaster.new(selected_resume_params)
@@ -169,7 +169,7 @@ class SelectedResumesController < ApplicationController
 
   def all_resume_list
      @selected_resume = SelectedResume.new
-     @selected_resumes = SelectedResume.where(vacancy_master_id: nil)
+     @selected_resumes = SelectedResume.all
      session[:active_tab] ="recruitment"
      session[:active_tab1] ="general_vacancy"
   end

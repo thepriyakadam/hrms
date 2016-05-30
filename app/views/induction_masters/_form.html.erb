@@ -28,3 +28,31 @@
 
   </div>
 <% end %>
+<script type="text/javascript">
+
+ $("#induction_master").validate({
+    rules: {
+      "induction_master[code]":{
+        required: true
+      },
+      {
+      "induction_master[description]":{
+        required: true
+      }
+    },
+    messages: {
+      "induction_master[name]":{
+        required: "Please Specify Name"
+      },
+      {
+      "induction_master[description]":{
+        required: "Please Specify Description"
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>
+

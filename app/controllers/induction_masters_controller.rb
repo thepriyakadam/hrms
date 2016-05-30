@@ -40,14 +40,28 @@ class InductionMastersController < ApplicationController
   #   end
   # end
 
-    def create
-     @induction_master = InductionMaster.new(induction_master_params)
-     @induction_masters = InductionMaster.all
+  # def create
+  #    @induction_master = InductionMaster.new(induction_master_params)
+  #    @induction_masters = InductionMaster.all
+  #     if @induction_master.save
+  #       @induction_master = InductionMaster.new
+  #     end
+  #     redirect_to new_induction_master_path
+  #     flash[:notice] = 'Induction Master saved Successfully.'   
+  # end
+
+  def create
+    @induction_master = InductionMaster.new(induction_master_params)
+    @induction_masters = InductionMaster.all
+    respond_to do |format|
       if @induction_master.save
         @induction_master = InductionMaster.new
+        format.js { @flag = true }
+      else
+        flash.now[:alert] = 'Induction Master Already Exist'
+        format.js { @flag = false }
       end
-      redirect_to new_induction_master_path
-      flash[:notice] = 'Induction Master saved Successfully.'   
+    end
   end
 
 

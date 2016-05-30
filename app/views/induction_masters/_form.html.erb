@@ -1,4 +1,4 @@
-<%= bootstrap_form_for(@induction_master,html: {id: 'induction_master'}) do |f| %>
+<%= bootstrap_form_for(@induction_master,html: {id: 'induction_master'},remote:true) do |f| %>
 <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
   <div class="row">
     <div class="col-sm-3">
@@ -35,18 +35,10 @@
     rules: {
       "induction_master[code]":{
         required: true
-      },
-
-      "induction_master[description]":{
-        required: true
       }
-    },
     messages: {
       "induction_master[code]":{
         required: "Please specify Code"
-      },
-      "induction_master[description]":{
-        required: "Please specify Description"
       }
     },
     errorPlacement: function(error, element) {

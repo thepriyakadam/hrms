@@ -18,6 +18,8 @@
       <th>Experience</th>
       <th>Notice period</th>
       <th>Confirmed</th>
+      <!-- <th>File Name</th>
+      <th>Image Name</th> -->
       <th>Download Resume</th>
       <th>Download Image</th>
       <th>Action</th>
@@ -47,6 +49,8 @@
             <small class="label label-default">Not Yet Confirmed</small>
             <% end %>
         </td>
+        <!-- <td><%= selected_resume.avatar_file_name %></td>
+        <td><%= selected_resume.passport_photo_file_name %></td> -->
        <td>
          <% if selected_resume.avatar_file_name == nil %>
            <small class="label label-default">Resume Not Available</small>

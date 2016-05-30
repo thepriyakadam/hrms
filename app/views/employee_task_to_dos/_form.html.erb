@@ -2,14 +2,13 @@
 <%= bootstrap_form_for(@employee_task_to_do,remote: true,html: {id: "employee_task_to_do"}) do |f| %>
   <%= f.hidden_field :employee_id, value: current_user.employee_id%>
   <div class="row">
-    <div class="col-sm-6">
+    <div class="col-sm-5">
       <div class="field">
         <%= f.text_field :task_name,hide_label: true,placeholder: 'Task Name' %>
       </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="col-sm-6">
+
+    <div class="col-sm-3">
       <div class="field">
         <div class="input-group">
           <div class="input-group-addon">
@@ -20,20 +19,20 @@
       </div>
     </div>
 
-    <div class="col-sm-6">
+    <div class="col-sm-2">
       <div class="field">
-        <%= f.text_field :time,hide_label: true,placeholder: 'Time'%>
+        <%= f.text_field :task_time,hide_label: true,placeholder: 'Time'%>
       </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="col-sm-6">
+ 
+    <div class="col-sm-2">
       <div class="field">
-        <%= f.check_box :status ,label: "Active/Inactive" %>
+        <%= f.check_box :status ,label: "Status" %>
       </div>
     </div>
-    
-    <div class="col-sm-3">
+    </div>
+    <div class="row">
+    <div class="col-sm-2">
       <div class="actions">
         <%= f.submit "Create Employee Task", class:'btn btn-primary btn-sm' %>
       </div>

@@ -69,7 +69,7 @@
 <div class="row">
  <div class="col-sm-3">
     <div class="field">
-      <%= f.file_field :avatar,label: 'Resume Upload' %>
+      <%= f.file_field :avatar,label: 'Resume Upload(only docx,pdf)' %>
     </div>
  </div>
 
@@ -98,13 +98,7 @@ $("#selected_resume").validate({
       "selected_resume[name]":{
         required: true
               },
-      "selected_resume[contact_no]":{
-        required: true
-      },
       "selected_resume[degree_id]":{
-        required: true
-      },
-      "selected_resume[skillset]":{
         required: true
       }
     },
@@ -112,14 +106,8 @@ $("#selected_resume").validate({
       "selected_resume[name]":{
         required: "Please specify Name"
       },
-      "selected_resume[contact_no]":{
-        required: "Please specify Contact No"
-      },
       "selected_resume[degree_id]":{
         required: "Please specify Qualification"
-      },
-      "selected_resume[skillset]":{
-        required: "Please specify Skillset"
       }
     },
     errorPlacement: function(error, element) {
@@ -128,6 +116,3 @@ $("#selected_resume").validate({
     }
    });
 </script>
-
-
-

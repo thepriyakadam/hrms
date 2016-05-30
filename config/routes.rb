@@ -181,6 +181,7 @@ Rails.application.routes.draw do
       get :interview_reschedule_list
       get :interviewee_list
       get :resume_list
+      post :create_new
     end
   end
   resources :vacancy_masters do

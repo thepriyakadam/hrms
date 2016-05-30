@@ -22,7 +22,7 @@
       <td><%= @induction_detail.induction_master.code %></td>
 
       <th><strong>Status</strong></th>
-      <td><%= @induction_detail.induction_completed %></td>
+      <td><%= @induction_detail.induction_completed ? "Yes" : "No" %></td>
     </tr>
     
   </table>

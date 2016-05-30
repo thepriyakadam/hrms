@@ -49,3 +49,39 @@
     </div>
   </div>
 <% end %>
+<script>
+$("#induction_activity").validate({
+    rules: {
+      "induction_activity[activity]":{
+        required: true
+              },
+      "induction_activity[day]":{
+        required: true
+      },
+      "induction_activity[duration]":{
+        required: true
+      },
+      "induction_activity[employee_id]":{
+        required: true
+      }
+    },
+    messages: {
+      "induction_activity[activity]":{
+        required: "Please specify Activity"
+      },
+      "induction_activity[day]":{
+        required: "Please specify Day"
+      },
+      "induction_activity[duration]":{
+        required: "Please specify duration"
+      },
+      "induction_activity[employee_id]":{
+        required: "Please specify Contact Person Name"
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

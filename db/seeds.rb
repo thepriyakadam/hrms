@@ -1,5 +1,5 @@
-require 'rubygems'
-require 'roo'
+# require 'rubygems'
+# require 'roo'
 
 # ex = Roo::Excel.new("#{Rails.root}/public/employee_salary_template_dewas.xls")
 # ex.default_sheet = ex.sheets[0]
@@ -84,13 +84,13 @@ require 'roo'
 
 # require 'rubygems'
 # require 'roo'
-# # company_type_array = ['Information Technology','Finance','Chemical','Production']
+# company_type_array = ['Information Technology','Finance','Chemical','Production']
 
-# # company_type_array.each do |ct|
-# #   company_type = CompanyType.find_or_initialize_by(name: ct)
-# #   company_type.name = ct
-# #   company_type.save
-# # end
+# company_type_array.each do |ct|
+#   company_type = CompanyType.find_or_initialize_by(name: ct)
+#   company_type.name = ct
+#   company_type.save
+# end
 
 # emp_type = ['Temporary','Permanent']
 # emp_type.each do |e|
@@ -107,10 +107,10 @@ require 'roo'
 #   BloodGroup.create(name: d)
 # end
 
-# # employee_grade = ['G1','G2','G3','G4']
-# # employee_grade.each do |d|
-# #   EmployeeGrade.create(name: d)
-# # end
+# employee_grade = ['G1','G2','G3','G4']
+# employee_grade.each do |d|
+#   EmployeeGrade.create(name: d)
+# end
 
 # roles = ['Company','CompanyLocation','Department','Employee']
 # roles.each do |r|
@@ -143,6 +143,8 @@ require 'roo'
 # CS.states(:in).each {|k,v| c = Country.find_by_code('IN'); c.states.create(code: k,name: v)}
 # puts 'District Started...'
 # CS.states(:in).each {|k,v| s = State.find_by_code(k); CS.cities(k,:in).each {|c| s.districts.create(name: c)}}
+
+
 
 ###############################################################################################
 # puts "Starting ..."
@@ -248,40 +250,40 @@ require 'roo'
 
 ###############################################################################################
 
-ex = Roo::Excel.new("#{Rails.root}/public/workingday.xls")
-ex.default_sheet = ex.sheets[17]
-i = 1
-gross_salary = 0
-ActiveRecord::Base.transaction do
-#2.upto(372) do |line|
-2.upto(91) do |line|
-  puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
-  @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
-  unless @employee.nil?
-    Workingday.new do |w|
-      w.employee_id = @employee.id
-      w.month_name = ex.cell(line,'B')
-      w.year = ex.cell(line,'C').to_i
+# ex = Roo::Excel.new("#{Rails.root}/public/workingday.xls")
+# ex.default_sheet = ex.sheets[17]
+# i = 1
+# gross_salary = 0
+# ActiveRecord::Base.transaction do
+# #2.upto(372) do |line|
+# 2.upto(91) do |line|
+#   puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
+#   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
+#   unless @employee.nil?
+#     Workingday.new do |w|
+#       w.employee_id = @employee.id
+#       w.month_name = ex.cell(line,'B')
+#       w.year = ex.cell(line,'C').to_i
 
-      w.lwp_leave = ex.cell(line, 'D').to_i
-      w.cl_leave = ex.cell(line, 'E').to_i
-      w.el_leave = ex.cell(line, 'F').to_i
-      w.esic_leave = ex.cell(line, 'G').to_i
+#       w.lwp_leave = ex.cell(line, 'D').to_i
+#       w.cl_leave = ex.cell(line, 'E').to_i
+#       w.el_leave = ex.cell(line, 'F').to_i
+#       w.esic_leave = ex.cell(line, 'G').to_i
 
-      w.day_in_month = ex.cell(line, 'H')
-      w.present_day = ex.cell(line, 'I')
-      w.holiday_in_month = ex.cell(line, 'J')
+#       w.day_in_month = ex.cell(line, 'H')
+#       w.present_day = ex.cell(line, 'I')
+#       w.holiday_in_month = ex.cell(line, 'J')
 
-      w.week_off_day = ex.cell(line, 'K')
-      w.absent_day = ex.cell(line, 'L')
-      w.payable_day = ex.cell(line, 'M')
-      w.save!
-    end
-    puts "#{i} Record inserted.-----------------------------------------------"
-    i = i+1
-  end
-end
-end
+#       w.week_off_day = ex.cell(line, 'K')
+#       w.absent_day = ex.cell(line, 'L')
+#       w.payable_day = ex.cell(line, 'M')
+#       w.save!
+#     end
+#     puts "#{i} Record inserted.-----------------------------------------------"
+#     i = i+1
+#   end
+# end
+# end
 #####################################################################
 # ex = Roo::Excel.new("#{Rails.root}/public/Workingdaya.xls")
 # #ex.default_sheet = ex.sheets[6] #dewas jan

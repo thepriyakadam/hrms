@@ -40,23 +40,75 @@ class SelectedResumesController < ApplicationController
     @selected_resumes = SelectedResume.all
       if @selected_resume.save
         @selected_resume = SelectedResume.new
-        flash[:notice] = 'Resume Details saved Successfully.'   
       end
       # @vacancy_master = VacancyMaster.find(@selected_resume.vacancy_master_id)
       redirect_to root_url
+      flash[:notice] = 'Resume Details saved Successfully.'  
   end
 
-  def create_new
-    @selected_resume = SelectedResume.new(selected_resume_params)
-    @selected_resumes = SelectedResume.all
-      if @selected_resume.save
-        @selected_resume = SelectedResume.new
-        flash[:notice] = 'Resume Details saved Successfully.'
-         
-      end
-      # @vacancy_master = VacancyMaster.find(@selected_resume.vacancy_master_id)
-      redirect_to root_url
-  end
+  # def create_new
+  #   @selected_resume = SelectedResume.new(selected_resume_params)
+
+  #   respond_to do |format|
+  #     if @selected_resume.save
+  #       format.html { redirect_to @selected_resume, notice: 'Candidate Profile  was successfully created.' }
+  #       format.json { render :show, status: :created, location: @selected_resume }
+  #     else
+  #       format.html { render :new }
+  #       format.json { render json: @selected_resume.errors, status: :unprocessable_entity }
+  #     end
+  #   end
+  # end
+
+  #   def create
+  #    @induction_master = InductionMaster.new(selected_resume_params)
+  #    @induction_masters = InductionMaster.all
+  #     if @induction_master.save
+  #       @induction_master = InductionMaster.new
+  #     end
+  #     redirect_to new_induction_master_path
+  #     flash[:notice] = 'Induction Master saved Successfully.'   
+  # end
+
+  # def create
+  #   @selected_resume = SelectedResume.new(selected_resume_params)
+  #    @selected_resumes = SelectedResume.all
+  #   respond_to do |format|
+  #     if @selected_resume.save
+  #       @selected_resume = SelectedResume.new
+  #       format.html { redirect_to @selected_resume, notice: 'Interview schedule was successfully created.' }
+  #       format.json { render :show, status: :created, location: @selected_resume }
+  #     else
+  #       format.html { render :new }
+  #       format.json { render json: @selected_resume.errors, status: :unprocessable_entity }
+  #     end
+  #   end
+  # end
+
+  # def create
+  #   @selected_resume = SelectedResume.new(selected_resume_params)
+
+  #   respond_to do |format|
+  #     if @selected_resume.save
+  #       format.html { redirect_to @interview_schedule, notice: 'Interview schedule was successfully created.' }
+  #       format.json { render :show, status: :created, location: @interview_schedule }
+  #     else
+  #       format.html { render :new }
+  #       format.json { render json: @interview_schedule.errors, status: :unprocessable_entity }
+  #     end
+  #   end
+  # end
+
+  # def create_new
+  #   @selected_resume = SelectedResume.new(selected_resume_params)
+  #   @selected_resumes = SelectedResume.all
+  #     if @selected_resume.save
+  #       @selected_resume = SelectedResume.new
+  #     end
+  #     # @vacancy_master = VacancyMaster.find(@selected_resume.vacancy_master_id)
+  #     redirect_to root_url
+  #     flash[:notice] = 'Resume Details saved Successfully.'  
+  # end
   
   # PATCH/PUT /selected_resumes/1
   # PATCH/PUT /selected_resumes/1.json

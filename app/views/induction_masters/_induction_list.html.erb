@@ -3,6 +3,7 @@
     <tr>
       <th>Code</th>
       <th>Description</th>
+      <th>File Name</th>
       <th>Action</th>
       <th>Download</th>
     </tr>
@@ -13,6 +14,7 @@
       <tr>
         <td><%= induction_master.code %></td>
         <td><%= induction_master.description %></td>
+        <td><%= induction_master.avatar_file_name %></td>
         <td>
           <%= link_to ' Edit Template Detail', edit_induction_master_path(induction_master),class: 'btn btn-sm btn-success btn-xs',remote:true %>
           <%= link_to ' Assign Induction Activity',new_induction_activity_path(induction_master.id),class: 'btn btn-xs btn-primary' %>

@@ -40,7 +40,7 @@
           <div class="input-group-addon">
             <i class="fa fa-calendar"></i>
           </div>
-          <%= f.text_field :interview_date, hide_label: true, class: 'Interview_Date'%>
+          <%= f.text_field :interview_date, hide_label: true, class: 'Interview_Date',class: 'interview_date'%>
         </div>
       </div>
     </div>
@@ -151,4 +151,13 @@ $("#interview_schedule").validate({
      error.insertAfter(element.parent(element));
     }
    });
+</script>
+<script type="text/javascript">
+  $(function(){
+    $('.interview_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:-0',
+    dateFormat: 'dd-mm-yy' });
+  }); 
 </script>

@@ -4,13 +4,7 @@ class SelectedResume < ActiveRecord::Base
   has_many :particular_vacancy_requests
 
   validates :name, presence: true
-  validates :contact_no, presence: true
-  validates :skillset, presence: true
   validates :degree_id, presence: true
-  validates :ctc, presence: true
-  validates :email_id, presence: true
-  validates :experience, presence: true
-  validates :notice_period, presence: true
   
   has_attached_file :avatar, path: ':rails_root/vacancy_resume/attachments/:style/:basename.:extension' 
   has_attached_file :passport_photo, styles: { medium: '300x300>', thumb: '100x100>' }, default_url: 'missing.png'

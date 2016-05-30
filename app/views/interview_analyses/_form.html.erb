@@ -43,4 +43,39 @@
     </div>
   </div>
 <% end %>
+<script>
+$("#interview_analysis").validate({
+    rules: {
+      "interview_analysis[interview_evalution_id]":{
+        required: true
+              },
+      "interview_analysis[interview_attribute_id]":{
+        required: true
+      },
+      ,
+      "interview_analysis[interview_decision_id]":{
+        required: true
+      },
+      ,
+      "interview_analysis[comment]":{
+        required: true
+      }
+    },
+    messages: {
+      "interview_analysis[interview_evalution_id]":{
+        required: "Please Interview Evaluation"
+      },
+      "induction_master[interview_attribute_id]":{
+        required: "Please specify Interview Attribute"
+      },
+      "induction_master[interview_decision_id]":{
+        required: "Please specify Interview Decision"
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>
 

@@ -111,6 +111,9 @@ class LeaveCOffsController < ApplicationController
       column(:c_off_type, sortable: true, &:c_off_type)
       column(:c_off_expire_day, sortable: true, &:c_off_expire_day)
       column(:expiry_status, sortable: true, &:expiry_status)
+      column(:is_taken, sortable:true, &:is_taken)
+      column(:expiry_date, sortable:true, &:expiry_date)
+      column(:leave_count, sortable:true, &:leave_count)
     end
   end
 

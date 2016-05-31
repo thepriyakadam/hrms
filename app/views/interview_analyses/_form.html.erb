@@ -27,7 +27,7 @@
       </div>
 
       <div class="col-sm-3">
-        <div class="field">
+        <div class="form-group required">
          <%= f.text_field :comment ,label:"Comment" %>
         </div>
       </div>
@@ -53,11 +53,9 @@ $("#interview_analysis").validate({
       "interview_analysis[interview_attribute_id]":{
         required: true
       },
-      ,
       "interview_analysis[interview_decision_id]":{
         required: true
       },
-      ,
       "interview_analysis[comment]":{
         required: true
       }
@@ -66,11 +64,14 @@ $("#interview_analysis").validate({
       "interview_analysis[interview_evalution_id]":{
         required: "Please Interview Evaluation"
       },
-      "induction_master[interview_attribute_id]":{
+      "interview_analysis[interview_attribute_id]":{
         required: "Please specify Interview Attribute"
       },
-      "induction_master[interview_decision_id]":{
+      "interview_analysis[interview_decision_id]":{
         required: "Please specify Interview Decision"
+      },
+      "interview_analysis[comment]":{
+        required: "Please specify Comment"
       }
     },
     errorPlacement: function(error, element) {

@@ -189,19 +189,15 @@ class EmployeeLeavRequestsController < ApplicationController
     reporter(EmployeeLeavRequest.filter_records(current_user), template_class: PdfReportTemplate) do
       filter :start_date, type: :date
       #filter(:current_status, :enum, :select => [["Pending",0], ["FirstApproved",2], ["SecondApproved",3], ["FirstRejected",4],["SecondRejected",5],["Cancelled",1]])
-      column(:manual_employee_code, sortable: true) { |employee_leav_request| employee_leav_request.employee.try(:manual_employee_code) }
-      column(:first_name, sortable: true) { |employee_leav_request| full_name(employee_leav_request.employee) }
-      column(:middle_name, sortable: true) { |employee_leav_request| employee_leav_request.employee.try(:middle_name) }
-      column(:last_name, sortable: true) { |employee_leav_request| employee_leav_request.employee.try(:last_name) }
-      # column(:date_range,sortable: true) { |employee_leav_request| employee_leav_request.date_range }
-      column(:start_date, sortable: true) { |employee_leav_request| employee_leav_request.start_date.to_date }
-      column(:end_date, sortable: true) { |employee_leav_request| employee_leav_request.end_date.to_date }
-      column(:leav_category_id, sortable: true) { |employee_leav_request| employee_leav_request.leav_category.try(:name) }
-      column(:leave_type, sortable: true, &:leave_type)
-      column(:current_status, sortable: true, &:current_status)
-      column(:leave_count, sortable: true, &:leave_count)
-      column(:reason, sortable: true, &:reason)
-      column(:company_location, sortable: true) { |employee_leav_request| employee_leav_request.employee.try(:company_location).try(:name) }
+      column(:Employee_ID, sortable: true) { |employee_leav_request| employee_leav_request.employee.try(:manual_employee_code) }
+      column(:Employee_Name, sortable: true) { |employee_leav_request| full_name(employee_leav_request.employee) }
+      column(:From, sortable: true) { |employee_leav_request| employee_leav_request.start_date.to_date }
+      column(:To, sortable: true) { |employee_leav_request| employee_leav_request.end_date.to_date }
+      column(:Leave_Category, sortable: true) { |employee_leav_request| employee_leav_request.leav_category.try(:name) }
+      column(:Leave_Type, sortable: true, &:leave_type)
+      column(:Status, sortable: true, &:current_status)
+      column(:No_OF_Day, sortable: true, &:leave_count)
+      column(:Reason, sortable: true, &:reason)
     end
     session[:active_tab] ="leavemanagement"
     session[:active_tab1] ="leavereport"

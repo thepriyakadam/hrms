@@ -78,7 +78,7 @@ class LeaveCOffsController < ApplicationController
         end
       end
       ActiveRecord::Base.transaction do
-        puts @leave_c_off.leave_count
+        #puts @leave_c_off.leave_count
         @leave_c_off.save
         @employee_leave_balance.save
       end

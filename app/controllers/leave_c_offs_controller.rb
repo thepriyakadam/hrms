@@ -105,12 +105,15 @@ class LeaveCOffsController < ApplicationController
     @leave_c_offs = LeaveCOff.all
     reporter(@leave_c_offs, template_class: PdfReportTemplate) do
       filter :c_off_date, type: :date
-      column(:manual_employee_code, sortable: true) { |leave_c_off| leave_c_off.employee.try(:manual_employee_code) }
-      column(:first_name, sortable: true) { |leave_c_off| full_name(leave_c_off.employee) }
-      column(:c_off_date, sortable: true, &:c_off_date)
-      column(:c_off_type, sortable: true, &:c_off_type)
-      column(:c_off_expire_day, sortable: true, &:c_off_expire_day)
-      column(:expiry_status, sortable: true, &:expiry_status)
+      column(:Employee_ID, sortable: true) { |leave_c_off| leave_c_off.employee.try(:manual_employee_code) }
+      column(:Employee_Name, sortable: true) { |leave_c_off| full_name(leave_c_off.employee) }
+      column(:Date, sortable: true, &:c_off_date)
+      column(:Type, sortable: true, &:c_off_type)
+      column(:Expire_Day, sortable: true, &:c_off_expire_day)
+      column(:Status, sortable: true, &:expiry_status)
+      column(:Taken, sortable:true, &:is_taken)
+      column(:Expire_Date, sortable:true, &:expiry_date)
+      column(:No_OF_COff, sortable:true, &:leave_count)
     end
   end
 

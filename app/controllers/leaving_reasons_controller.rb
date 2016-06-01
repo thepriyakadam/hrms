@@ -15,6 +15,7 @@ class LeavingReasonsController < ApplicationController
   # GET /leaving_reasons/new
   def new
     @leaving_reason = LeavingReason.new
+    @leaving_reasons = LeavingReason.all
   end
 
   # GET /leaving_reasons/1/edit
@@ -25,14 +26,14 @@ class LeavingReasonsController < ApplicationController
   # POST /leaving_reasons.json
   def create
     @leaving_reason = LeavingReason.new(leaving_reason_params)
-
+    @leaving_reasons = LeavingReason.all
     respond_to do |format|
       if @leaving_reason.save
-        format.html { redirect_to @leaving_reason, notice: 'Leaving reason was successfully created.' }
-        format.json { render :show, status: :created, location: @leaving_reason }
+         @leaving_reason = LeavingReason.new
+        format.js { @flag = true }
       else
-        format.html { render :new }
-        format.json { render json: @leaving_reason.errors, status: :unprocessable_entity }
+        flash.now[:alert] = 'Leaving Already Exist.'
+        format.js { @flag = false }
       end
     end
   end
@@ -40,25 +41,17 @@ class LeavingReasonsController < ApplicationController
   # PATCH/PUT /leaving_reasons/1
   # PATCH/PUT /leaving_reasons/1.json
   def update
-    respond_to do |format|
-      if @leaving_reason.update(leaving_reason_params)
-        format.html { redirect_to @leaving_reason, notice: 'Leaving reason was successfully updated.' }
-        format.json { render :show, status: :ok, location: @leaving_reason }
-      else
-        format.html { render :edit }
-        format.json { render json: @leaving_reason.errors, status: :unprocessable_entity }
-      end
-    end
+   
+    @leaving_reason.update(leaving_reason_params)
+    @leaving_reasons = LeavingReason.all
+    @leaving_reason = LeavingReason.new
   end
 
   # DELETE /leaving_reasons/1
   # DELETE /leaving_reasons/1.json
   def destroy
     @leaving_reason.destroy
-    respond_to do |format|
-      format.html { redirect_to leaving_reasons_url, notice: 'Leaving reason was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    @leaving_reasons = LeavingReason.all
   end
 
   private

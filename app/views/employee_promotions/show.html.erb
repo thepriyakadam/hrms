@@ -11,7 +11,7 @@
 
     <tr>
       <th><strong>Employee</strong></th>
-      <td><%= @employee_promotion.employee.try(:first_name) %></td>
+      <td><%= @employee_promotion.employee.try(:first_name) %> <%= @employee_promotion.employee.try(:middle_name) %> <%= @employee_promotion.employee.try(:last_name) %></td>
     
       <th><strong>Department</strong></th>
       <td><%= @employee_promotion.department.try(:name) %></td>
@@ -34,19 +34,16 @@
     </tr>
 
     <tr>
-      <th><strong>Justification</strong></th>
-      <td><%= @employee_promotion.justification %></td>
-    
       <th><strong>Effective From</strong></th>
       <td><%= @employee_promotion.effective_from %></td>
+
+      <th><strong>Effective To</strong></th>
+      <td><%= @employee_promotion.effective_to %></td>
     </tr>
 
     <tr>
-      <th><strong>Effective To</strong></th>
-      <td><%= @employee_promotion.effective_to %></td>
-
-      <th></th>
-      <td></td>
+      <th><strong>Justification</strong></th>
+      <td colspan="3"><%= @employee_promotion.justification %></td>
     </tr>
 
     </table>

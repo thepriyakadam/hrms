@@ -17,7 +17,6 @@
         <th>Grade</th>
         <th>Category</th>
         <th>Effective From</th>
-        <th>Effective To</th>
         <th>Action</th>
       </tr>
     </thead>
@@ -32,7 +31,6 @@
           <td><%= employee_promotion.employee_grade.try(:name) %></td>
           <td><%= employee_promotion.employee_category.try(:name) %></td>
           <td><%= employee_promotion.effective_from %></td>
-          <td><%= employee_promotion.effective_to %></td>
           <td>
             <%= link_to '', employee_promotion,class: 'btn btn-default btn-xs fa fa-eye' %>
             <%= link_to '', edit_employee_promotion_path(employee_promotion),class: 'btn btn-xs btn-success fa fa-edit' %>

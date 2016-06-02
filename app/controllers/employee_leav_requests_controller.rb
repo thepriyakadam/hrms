@@ -81,6 +81,7 @@ class EmployeeLeavRequestsController < ApplicationController
         elsif type == 'C.Off'
           @employee_leav_request.leave_status_records.build(change_status_employee_id: current_user.employee_id, status: 'Pending', change_date: Date.today)
           if @employee_leav_request.save
+            #@employee_leav_request.manage_coff(@employee_leav_request)
             @employee_leav_request.minus_leave(@employee_leav_request)
             if @employee.manager.email.nil? || @employee.manager.email == ''
               flash[:notice] = 'Send request without email.'

@@ -1,0 +1,65 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Induction Detail List</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+    <tr> 
+      <th colspan="2"></th>
+      <th colspan="2"></th>
+    </tr>
+
+    <tr>
+      <th><strong>Employee</strong></th>
+      <td><%= @induction_detail.employee.try(:first_name) %> <%= @induction_detail.employee.try(:middle_name) %> <%= @induction_detail.employee.try(:last_name) %></td>
+
+      <th><strong>Start Date</strong></th>
+      <td><%= @induction_detail.start_date %></td>
+    </tr>
+
+    <tr>
+      <th><strong>Induction Template Code</strong></th>
+      <td><%= @induction_detail.induction_master.code %></td>
+
+      <th><strong>Status</strong></th>
+      <td><%= @induction_detail.induction_completed ? "Yes" : "No" %></td>
+    </tr>
+    
+  </table>
+    </div>
+
+<div>
+  <table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Sr.No</th>
+      <th>Activity</th>
+      <th>Day</th>
+      <th>Duration(Hrs)</th>
+      <th>Contact Person</th>
+<!--       <th>Download</th>
+ -->    </tr>
+  </thead>
+
+  <tbody>
+  <% i = 0 %>
+   <% @induction_activities.each do |induction_activity| %>
+      <tr>
+        <td><%= i=i+1 %></td>
+        <td><%= induction_activity.activity %></td>
+        <td><%= induction_activity.day %></td>
+        <td><%= induction_activity.duration %></td>
+        <td><%= full_name(induction_activity.employee) %></td>
+        <!-- <td>
+            if induction_activity.avatar_file_name == nil %>
+           <small class="label label-default">Document Not Available</small>
+             < else %>
+             <center>< link_to '',download_document_path(id: induction_activity.id),class: 'btn btn-xs btn-primary fa fa-download' %></center>
+              end %>
+        </td> -->
+      </tr>
+      <% end %>
+  </tbody>
+</table>
+</div>
+  </div>

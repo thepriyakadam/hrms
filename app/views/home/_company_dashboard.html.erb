@@ -173,6 +173,7 @@
     <!-- right col (We are only adding the ID to make the widgets sortable)-->
     <section class="col-lg-5 connectedSortable">
       <div class="row">
+
         <div class="col-md-12">
           <!-- USERS LIST -->
           <div class="box box-danger">
@@ -185,18 +186,34 @@
               </div>
             </div><!-- /.box-header -->
             <div class="box-body no-padding">
-          <!--     <ul class="users-list clearfix">
-                <li>
-                  <img src="dist/img/user1-128x128.jpg" alt="User Image">
-                  <a class="users-list-name" href="#">Alexander Pierce</a>
-                  <span class="users-list-date">Today</span>
-                </li>
-               
-              </ul><!-- /.users-list -->
+             <ul class="users-list clearfix">
+                
+            <% date = Date.today %>
+             <% @employees = Employee.where("strftime('%d/%m', date_of_birth) = ?", date.strftime('%d/%m')) %>
+            <% if @employees.empty? %>
+              <p>Today is No BirthDay</p>
+            <%else%>
+              <%@employees.each do |e|%>
+              <li>
+                 <img src="images/user.jpg" alt=" ">
+                 <p><%= full_name(e) %> </p>
+                 <span class="users-list-date">Today</span>
+              <%end%>  
+              </li>    
+            <%end%>
+            </ul><!-- /.users-list -->
             </div><!-- /.box-body -->
-            <div class="box-footer text-center">
-              <a href="javascript::" class="uppercase">View All Birthdays</a>
-            </div><!-- /.box-footer -->
+            <center><span class="label label-info"> Tomorrow's Birthday</span>
+            <% date = Date.today + 1 %>
+            <% @employees = Employee.where("strftime('%d/%m', date_of_birth) = ?", date.strftime('%d/%m')) %>
+            <% if @employees.empty? %>
+              <p>No BirthDay</p>
+            <%else%>
+              <%@employees.each do |e|%>
+                <p> <%= full_name(e) %> </p>
+              <%end%>
+            <%end%>
+            </center>
           </div><!--/.box -->
 
       <!-- PRODUCT LIST -->
@@ -210,53 +227,21 @@
         </div><!-- /.box-header -->
         <div class="box-body">
           <ul class="products-list product-list-in-box">
-            <li class="item">
-             
-              <div class="product-info">
-                <a href="javascript::;" class="product-title">Sachin Patel</a>
-                <!-- <span class="product-description">
-                  Assistent Manager
-                </span> -->
-              </div>
-            </li><!-- /.item -->
-            <li class="item">
-              <div class="product-img">
-                <img src="images/user.jpg" alt=" ">
-              </div>
-              <div class="product-info">
-                <a href="javascript::;" class="product-title">Balaji Joshi<span class="label label-info pull-right">5 May 2016</span></a>
-                <span class="product-description">
-                  HR Head
-                </span>
-              </div>
-            </li><!-- /.item -->
-            <li class="item">
-              <div class="product-img">
-                <img src="images/user.jpg" alt=" ">
-              </div>
-              <div class="product-info">
-                <a href="javascript::;" class="product-title">Mahesh Sharma<span class="label label-info pull-right">2 May 2016</span></a>
-                <span class="product-description">
-                  Engineer
-                </span>
-              </div>
-            </li><!-- /.item -->
-           <li class="item">
-              <div class="product-img">
-                <img src="images/User-girl.png" alt=" ">
-              </div>
-              <div class="product-info">
-                <a href="javascript::;" class="product-title">Tanuja Patel<span class="label label-info pull-right">1 May 2016</span></a>
-                <span class="product-description">
-                  HR
-                </span>
-              </div>
+            
+                <% JoiningDetail.all.order("id desc").limit(5).each do |j| %>
+                <li class="item">
+                <div class="product-img">
+                   <img src="images/user.jpg" alt=" ">
+                </div>
+                <div class="product-info">
+                  <a href="javascript::;" class="product-title"><%= j.employee.try(:first_name) %> <%= j.employee.try(:middle_name) %> <%= j.employee.try(:last_name) %></a>
+                  <span class="label label-info pull-right"><%= j.joining_date %></span>
+                  <span class="product-description"><%= j.employee_designation.try(:name) %></span>
+                  </div>
+                <% end %>
             </li><!-- /.item -->
           </ul>
         </div><!-- /.box-body -->
-        <div class="box-footer text-center">
-          <a href="javascript::;" class="uppercase">View All </a>
-        </div><!-- /.box-footer -->
       </div><!-- /.box -->
       </div><!-- /.col -->
       </div><!-- /.row -->

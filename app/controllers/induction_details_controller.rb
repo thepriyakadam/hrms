@@ -10,6 +10,7 @@ class InductionDetailsController < ApplicationController
   # GET /induction_details/1
   # GET /induction_details/1.json
   def show
+    @induction_activities = InductionActivity.where(induction_master_id: @induction_detail.induction_master_id)
   end
 
   # GET /induction_details/new

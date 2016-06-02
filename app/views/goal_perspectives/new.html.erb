@@ -1,14 +1,5 @@
-<div class="box box-default">
-    <div class="box-header with-border">
-      <h3 class="box-title">Create Goal Perspective</h3>
-    </div><!-- /.box-header -->
-  <div class="box-body">
-	  <div id="form">
-	    <%= render 'form' %>
-	  </div>
+<h1>New Goal Perspective</h1>
 
-	  <div id="goal_perspective_list">
-			<%= render 'goal_perspective_list' %>
-		</div>
-  </div>
-</div>
+<%= render 'form' %>
+
+<%= link_to 'Back', goal_perspectives_path %>

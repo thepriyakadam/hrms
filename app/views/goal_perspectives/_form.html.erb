@@ -1,35 +1,21 @@
-<%= bootstrap_form_for(@goal_perspective, remote: true,html: {id: "goal_perspective"}) do |f| %>
-  <div class="row">
-    <div class="col-sm-3">
-      <div class="form-group required">
-        <%= f.text_field :name,hide_label:true, placeholder: 'Goal Perspective' %>
-      </div>
-    </div>
+<%= form_for(@goal_perspective) do |f| %>
+  <% if @goal_perspective.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@goal_perspective.errors.count, "error") %> prohibited this goal_perspective from being saved:</h2>
 
-    <div class="col-sm-3">
-      <div class="actions">
-        <%= f.submit "Create Goal Perspective",class: 'btn btn-primary btn-sm'%>
-      </div>
+      <ul>
+      <% @goal_perspective.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
     </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
   </div>
 <% end %>
-
-<script type="text/javascript">
-
- $("#goal_perspective").validate({
-    rules: {
-      "goal_perspective[name]":{
-        required: true
-      }
-    },
-    messages: {
-      "goal_perspective[name]":{
-        required: "Please specify name"
-      }
-    },
-    errorPlacement: function(error, element) {
-     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
-     error.insertAfter(element.parent(element));
-    }
-   });
-</script>

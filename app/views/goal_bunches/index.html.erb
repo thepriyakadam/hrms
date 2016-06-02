@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Goal Bunches</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Period</th>
+      <th>Employee</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @goal_bunches.each do |goal_bunch| %>
+      <tr>
+        <td><%= goal_bunch.period %></td>
+        <td><%= goal_bunch.employee %></td>
+        <td><%= link_to 'Show', goal_bunch %></td>
+        <td><%= link_to 'Edit', edit_goal_bunch_path(goal_bunch) %></td>
+        <td><%= link_to 'Destroy', goal_bunch, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Goal bunch', new_goal_bunch_path %>

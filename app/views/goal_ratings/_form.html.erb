@@ -1,0 +1,72 @@
+<%= bootstrap_form_for(@goal_rating,html: {id: "goal_rating"},remote:true, goal_bunch_id: @goal_bunch.id) do |f| %>
+
+  <%= f.hidden_field :goal_bunch_id, value: @goal_bunch.id  %>
+  <%= f.hidden_field :goal_setter_id, value: current_user.employee_id  %>
+  <%= f.hidden_field :appraisee_id, value: @goal_bunch.employee_id  %>
+  <%= f.hidden_field :appraiser_id, value: @goal_bunch.employee.manager_id %>
+
+    <div class="row">
+      <div class="col-sm-3">
+      <label>Goal Perspective</label>
+        <div class="form-group required">
+          <%= f.select :goal_perspective_id,all_goal_perspective,{hide_label:true, include_blank: 'Select Goal'}  %>
+        </div>
+      </div>
+      <div class="col-sm-3">
+      <label>Goal Weightage</label>
+        <div class="form-group required">
+          <%= f.number_field :goal_weightage,hide_label:true,placeholder: 'Goal Weightage' %>
+        </div>
+      </div>
+      <div class="col-sm-3">
+      <label>Goal Measure</label>
+        <div class="form-group required">
+          <%= f.text_field :goal_measure,hide_label:true,placeholder: 'Goal Measure'  %>
+        </div>
+      </div>
+      <div class="col-sm-3">
+      <label>Target</label>
+        <div class="form-group required">
+          <%= f.text_field :target,hide_label:true,placeholder: 'Target/Unit'  %>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="field">
+          <%= f.select :aligned,["Yes","No"],{label: 'Aligned To Supervisor',include_blank: "Select Option"} %>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="actions">
+          <%= f.submit "Create Goal", class: 'btn btn-primary btn-sm' %>
+        </div>
+      </div>
+    </div>
+<% end %>
+<script type="text/javascript">
+  $("#goal_rating").validate({
+    rules: {
+      "goal_rating[goal_perspective_id]":{
+        required: true
+      },
+      "goal_rating[goal_weightage]":{
+        required: true
+      }
+    },
+    messages: {
+      "goal_rating[goal_perspective_id]":{
+        required: "Please specify Goal Perspective"
+      },
+      "goal_rating[goal_weightage]":{
+        required: "Please specify Weightage"
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160526141920) do
+ActiveRecord::Schema.define(version: 20160530055749) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -967,6 +967,38 @@ ActiveRecord::Schema.define(version: 20160526141920) do
   add_index "food_deductions", ["employee_id"], name: "index_food_deductions_on_employee_id"
   add_index "food_deductions", ["food_coupan_master_id"], name: "index_food_deductions_on_food_coupan_master_id"
 
+  create_table "goal_bunches", force: :cascade do |t|
+    t.integer  "period_id"
+    t.integer  "employee_id"
+    t.boolean  "goal_confirm"
+    t.integer  "appraisee_id"
+    t.text     "appraisee_comment"
+    t.boolean  "appraisee_confirm"
+    t.integer  "appraiser_id"
+    t.string   "appraiser_rating"
+    t.text     "appraiser_comment"
+    t.boolean  "appraiser_confirm"
+    t.integer  "reviewer_id"
+    t.text     "review_comment"
+    t.integer  "reviewer_rating_id"
+    t.boolean  "reviewer_confirm"
+    t.integer  "final_id"
+    t.text     "final_comment"
+    t.integer  "final_rating_id"
+    t.boolean  "final_confirm"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
+
+  add_index "goal_bunches", ["appraisee_id"], name: "index_goal_bunches_on_appraisee_id"
+  add_index "goal_bunches", ["appraiser_id"], name: "index_goal_bunches_on_appraiser_id"
+  add_index "goal_bunches", ["employee_id"], name: "index_goal_bunches_on_employee_id"
+  add_index "goal_bunches", ["final_id"], name: "index_goal_bunches_on_final_id"
+  add_index "goal_bunches", ["final_rating_id"], name: "index_goal_bunches_on_final_rating_id"
+  add_index "goal_bunches", ["period_id"], name: "index_goal_bunches_on_period_id"
+  add_index "goal_bunches", ["reviewer_id"], name: "index_goal_bunches_on_reviewer_id"
+  add_index "goal_bunches", ["reviewer_rating_id"], name: "index_goal_bunches_on_reviewer_rating_id"
+
   create_table "goal_measures", force: :cascade do |t|
     t.text     "name"
     t.datetime "created_at", null: false
@@ -1013,6 +1045,33 @@ ActiveRecord::Schema.define(version: 20160526141920) do
   add_index "goal_rating_sheets", ["final_id_id"], name: "index_goal_rating_sheets_on_final_id_id"
   add_index "goal_rating_sheets", ["final_rating_id"], name: "index_goal_rating_sheets_on_final_rating_id"
   add_index "goal_rating_sheets", ["performance_period_id"], name: "index_goal_rating_sheets_on_performance_period_id"
+
+  create_table "goal_ratings", force: :cascade do |t|
+    t.integer  "goal_bunch_id"
+    t.integer  "goal_perspective_id"
+    t.integer  "goal_weightage"
+    t.string   "goal_measure"
+    t.string   "target"
+    t.string   "aligned"
+    t.integer  "goal_setter_id"
+    t.integer  "appraisee_id"
+    t.text     "appraisee_comment"
+    t.integer  "appraiser_id"
+    t.text     "appraiser_comment"
+    t.integer  "appraiser_rating_id"
+    t.integer  "reviewer_id"
+    t.text     "reviewer_comment"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+  end
+
+  add_index "goal_ratings", ["appraisee_id"], name: "index_goal_ratings_on_appraisee_id"
+  add_index "goal_ratings", ["appraiser_id"], name: "index_goal_ratings_on_appraiser_id"
+  add_index "goal_ratings", ["appraiser_rating_id"], name: "index_goal_ratings_on_appraiser_rating_id"
+  add_index "goal_ratings", ["goal_bunch_id"], name: "index_goal_ratings_on_goal_bunch_id"
+  add_index "goal_ratings", ["goal_perspective_id"], name: "index_goal_ratings_on_goal_perspective_id"
+  add_index "goal_ratings", ["goal_setter_id"], name: "index_goal_ratings_on_goal_setter_id"
+  add_index "goal_ratings", ["reviewer_id"], name: "index_goal_ratings_on_reviewer_id"
 
   create_table "groups", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -1320,6 +1379,35 @@ ActiveRecord::Schema.define(version: 20160526141920) do
     t.datetime "updated_at",  null: false
   end
 
+  create_table "overall_ratings", force: :cascade do |t|
+    t.integer  "goal_rating_sheet_id"
+    t.integer  "employee_id"
+    t.integer  "ro1_id"
+    t.integer  "ro2_id"
+    t.integer  "final_id"
+    t.integer  "ro1_rating_id"
+    t.text     "ro1_comment"
+    t.integer  "ro2_rating_id"
+    t.text     "ro2_comment"
+    t.integer  "final_rating_id"
+    t.text     "final_comment"
+    t.boolean  "promotion"
+    t.decimal  "increement_amount"
+    t.decimal  "final_ctc"
+    t.text     "appraisee_comment"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
+  add_index "overall_ratings", ["employee_id"], name: "index_overall_ratings_on_employee_id"
+  add_index "overall_ratings", ["final_id"], name: "index_overall_ratings_on_final_id"
+  add_index "overall_ratings", ["final_rating_id"], name: "index_overall_ratings_on_final_rating_id"
+  add_index "overall_ratings", ["goal_rating_sheet_id"], name: "index_overall_ratings_on_goal_rating_sheet_id"
+  add_index "overall_ratings", ["ro1_id"], name: "index_overall_ratings_on_ro1_id"
+  add_index "overall_ratings", ["ro1_rating_id"], name: "index_overall_ratings_on_ro1_rating_id"
+  add_index "overall_ratings", ["ro2_id"], name: "index_overall_ratings_on_ro2_id"
+  add_index "overall_ratings", ["ro2_rating_id"], name: "index_overall_ratings_on_ro2_rating_id"
+
   create_table "overtime_daily_records", force: :cascade do |t|
     t.integer  "employee_id"
     t.date     "ot_daily_date"
@@ -1449,6 +1537,15 @@ ActiveRecord::Schema.define(version: 20160526141920) do
     t.datetime "updated_at",  null: false
   end
 
+  create_table "periods", force: :cascade do |t|
+    t.string   "name"
+    t.date     "from"
+    t.date     "to"
+    t.boolean  "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "pf_masters", force: :cascade do |t|
     t.boolean  "is_pf"
     t.decimal  "percentage",     precision: 4,  scale: 2
@@ -1503,6 +1600,13 @@ ActiveRecord::Schema.define(version: 20160526141920) do
   create_table "rating_masters", force: :cascade do |t|
     t.integer  "code"
     t.text     "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "ratings", force: :cascade do |t|
+    t.string   "value"
+    t.text     "discription"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end

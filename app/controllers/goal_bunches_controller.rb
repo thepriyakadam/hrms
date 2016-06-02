@@ -131,11 +131,15 @@ class GoalBunchesController < ApplicationController
     @employees = current_login.subordinates
   end
 
-
-
   def appraisee_comment
     @employee = Employee.find(current_user.employee_id)
     @goal_bunches = GoalBunch.where(employee_id: @employee.id)
+
+    @employees = Employee.where(id: @employee.id)
+    @qualifications = Qualification.where(employee_id: @employee.id)
+    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
+    @experiences = Experience.where(employee_id: @employee.id)
+    @ctc = EmployeeSalaryTemplate.where(employee_id: @employee.id).sum(:monthly_amount)
 
     @self_goal_ratings = GoalRating.where(appraisee_id: current_user.employee_id).where.not(appraisee_comment: nil)
     @goal_rating = GoalRating.new
@@ -155,6 +159,13 @@ class GoalBunchesController < ApplicationController
   def appraiser_comment
     @employee = Employee.find(params[:id])
     @goal_bunches = GoalBunch.where(employee_id: @employee.id)
+
+
+    @employees = Employee.where(id: @employee.id)
+    @qualifications = Qualification.where(employee_id: @employee.id)
+    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
+    @experiences = Experience.where(employee_id: @employee.id)
+    @ctc = EmployeeSalaryTemplate.where(employee_id: @employee.id).sum(:monthly_amount)
 
     @appraiser_goal_ratings = GoalRating.where(appraisee_id: @employee.id).where.not(appraiser_comment: nil)
     @goal_rating = GoalRating.new
@@ -215,6 +226,13 @@ class GoalBunchesController < ApplicationController
   def reviewer_comment
     @employee = Employee.find(params[:id])
     @goal_bunches = GoalBunch.where(employee_id: @employee.id)
+
+
+    @employees = Employee.where(id: @employee.id)
+    @qualifications = Qualification.where(employee_id: @employee.id)
+    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
+    @experiences = Experience.where(employee_id: @employee.id)
+    @ctc = EmployeeSalaryTemplate.where(employee_id: @employee.id).sum(:monthly_amount)
 
     @reviewer_goal_ratings = GoalRating.where(appraisee_id: @employee.id).where.not(reviewer_comment: nil)
     @goal_rating = GoalRating.new

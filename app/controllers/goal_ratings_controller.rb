@@ -122,7 +122,7 @@ class GoalRatingsController < ApplicationController
   
   def send_mail_to_appraiser
     @emp = GoalRating.first
-    GoalRatingMailer.send_email_to_appraiser(@emp).deliver_now
+    GoalRatingMailer.send_email_to_appraiser().deliver_now
   end
 
   private

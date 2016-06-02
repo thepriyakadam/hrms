@@ -998,6 +998,41 @@ ActiveRecord::Schema.define(version: 20160601110412) do
   add_index "food_deductions", ["employee_id"], name: "index_food_deductions_on_employee_id"
   add_index "food_deductions", ["food_coupan_master_id"], name: "index_food_deductions_on_food_coupan_master_id"
 
+<<<<<<< HEAD
+=======
+  create_table "goal_bunches", force: :cascade do |t|
+    t.integer  "period_id"
+    t.integer  "employee_id"
+    t.boolean  "goal_confirm"
+    t.integer  "appraisee_id"
+    t.text     "appraisee_comment"
+    t.boolean  "appraisee_confirm"
+    t.integer  "appraiser_id"
+    t.string   "appraiser_rating"
+    t.text     "appraiser_comment"
+    t.boolean  "appraiser_confirm"
+    t.integer  "reviewer_id"
+    t.text     "review_comment"
+    t.integer  "reviewer_rating_id"
+    t.boolean  "reviewer_confirm"
+    t.integer  "final_id"
+    t.text     "final_comment"
+    t.integer  "final_rating_id"
+    t.boolean  "final_confirm"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
+
+  add_index "goal_bunches", ["appraisee_id"], name: "index_goal_bunches_on_appraisee_id"
+  add_index "goal_bunches", ["appraiser_id"], name: "index_goal_bunches_on_appraiser_id"
+  add_index "goal_bunches", ["employee_id"], name: "index_goal_bunches_on_employee_id"
+  add_index "goal_bunches", ["final_id"], name: "index_goal_bunches_on_final_id"
+  add_index "goal_bunches", ["final_rating_id"], name: "index_goal_bunches_on_final_rating_id"
+  add_index "goal_bunches", ["period_id"], name: "index_goal_bunches_on_period_id"
+  add_index "goal_bunches", ["reviewer_id"], name: "index_goal_bunches_on_reviewer_id"
+  add_index "goal_bunches", ["reviewer_rating_id"], name: "index_goal_bunches_on_reviewer_rating_id"
+
+>>>>>>> 35177ca36803613d4424ab504721662aaef6d897
   create_table "goal_measures", force: :cascade do |t|
     t.text     "name"
     t.datetime "created_at", null: false
@@ -1045,6 +1080,36 @@ ActiveRecord::Schema.define(version: 20160601110412) do
   add_index "goal_rating_sheets", ["final_rating_id"], name: "index_goal_rating_sheets_on_final_rating_id"
   add_index "goal_rating_sheets", ["performance_period_id"], name: "index_goal_rating_sheets_on_performance_period_id"
 
+<<<<<<< HEAD
+=======
+  create_table "goal_ratings", force: :cascade do |t|
+    t.integer  "goal_bunch_id"
+    t.integer  "goal_perspective_id"
+    t.integer  "goal_weightage"
+    t.string   "goal_measure"
+    t.string   "target"
+    t.string   "aligned"
+    t.integer  "goal_setter_id"
+    t.integer  "appraisee_id"
+    t.text     "appraisee_comment"
+    t.integer  "appraiser_id"
+    t.text     "appraiser_comment"
+    t.integer  "appraiser_rating_id"
+    t.integer  "reviewer_id"
+    t.text     "reviewer_comment"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+  end
+
+  add_index "goal_ratings", ["appraisee_id"], name: "index_goal_ratings_on_appraisee_id"
+  add_index "goal_ratings", ["appraiser_id"], name: "index_goal_ratings_on_appraiser_id"
+  add_index "goal_ratings", ["appraiser_rating_id"], name: "index_goal_ratings_on_appraiser_rating_id"
+  add_index "goal_ratings", ["goal_bunch_id"], name: "index_goal_ratings_on_goal_bunch_id"
+  add_index "goal_ratings", ["goal_perspective_id"], name: "index_goal_ratings_on_goal_perspective_id"
+  add_index "goal_ratings", ["goal_setter_id"], name: "index_goal_ratings_on_goal_setter_id"
+  add_index "goal_ratings", ["reviewer_id"], name: "index_goal_ratings_on_reviewer_id"
+
+>>>>>>> 35177ca36803613d4424ab504721662aaef6d897
   create_table "groups", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
@@ -1545,6 +1610,18 @@ ActiveRecord::Schema.define(version: 20160601110412) do
     t.datetime "updated_at",  null: false
   end
 
+<<<<<<< HEAD
+=======
+  create_table "periods", force: :cascade do |t|
+    t.string   "name"
+    t.date     "from"
+    t.date     "to"
+    t.boolean  "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+>>>>>>> 35177ca36803613d4424ab504721662aaef6d897
   create_table "pf_masters", force: :cascade do |t|
     t.boolean  "is_pf"
     t.decimal  "percentage",     precision: 4,  scale: 2
@@ -1603,6 +1680,16 @@ ActiveRecord::Schema.define(version: 20160601110412) do
     t.datetime "updated_at",  null: false
   end
 
+<<<<<<< HEAD
+=======
+  create_table "ratings", force: :cascade do |t|
+    t.string   "value"
+    t.text     "discription"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+>>>>>>> 35177ca36803613d4424ab504721662aaef6d897
   create_table "relation_masters", force: :cascade do |t|
     t.string   "code"
     t.string   "name"

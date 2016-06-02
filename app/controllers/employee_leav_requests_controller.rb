@@ -81,6 +81,7 @@ class EmployeeLeavRequestsController < ApplicationController
         elsif type == 'C.Off'
           @employee_leav_request.leave_status_records.build(change_status_employee_id: current_user.employee_id, status: 'Pending', change_date: Date.today)
           if @employee_leav_request.save
+            #@employee_leav_request.manage_coff(@employee_leav_request)
             @employee_leav_request.minus_leave(@employee_leav_request)
             if @employee.manager.email.nil? || @employee.manager.email == ''
               flash[:notice] = 'Send request without email.'
@@ -202,6 +203,15 @@ class EmployeeLeavRequestsController < ApplicationController
       column(:leave_count, sortable: true, &:leave_count)
       column(:reason, sortable: true, &:reason)
       column(:company_location, sortable: true) { |employee_leav_request| employee_leav_request.employee.try(:company_location).try(:name) }
+      column(:Employee_ID, sortable: true) { |employee_leav_request| employee_leav_request.employee.try(:manual_employee_code) }
+      column(:Employee_Name, sortable: true) { |employee_leav_request| full_name(employee_leav_request.employee) }
+      column(:From, sortable: true) { |employee_leav_request| employee_leav_request.start_date.to_date }
+      column(:To, sortable: true) { |employee_leav_request| employee_leav_request.end_date.to_date }
+      column(:Leave_Category, sortable: true) { |employee_leav_request| employee_leav_request.leav_category.try(:name) }
+      column(:Leave_Type, sortable: true, &:leave_type)
+      column(:Status, sortable: true, &:current_status)
+      column(:No_OF_Day, sortable: true, &:leave_count)
+      column(:Reason, sortable: true, &:reason)
     end
     session[:active_tab] ="leavemanagement"
     session[:active_tab1] ="leavereport"

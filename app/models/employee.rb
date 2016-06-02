@@ -1,4 +1,3 @@
-
 class Employee < ActiveRecord::Base
   protokoll :employee_code, pattern: 'EMP#######'
   belongs_to :department
@@ -11,7 +10,7 @@ class Employee < ActiveRecord::Base
   belongs_to :district
   belongs_to :religion
 
-
+  has_many :leav_c_offs
   has_many :salaryslips
   has_many :employee_nominations
   has_many :awards
@@ -165,32 +164,3 @@ class Employee < ActiveRecord::Base
     end
   end
 end
-
-
-    # @companies = Company.all
-    # @company_locations = CompanyLocation.all
-    # @departments = Department.all
-    # #@employees = Employee.all
-    # if current_user.class == Member
-    #   if current_user.role.name == 'Employee'
-    #     @employee = Employee.find(current_user.employee_id)
-    #     #redirect_to home_index_path
-    #   elsif current_user.role.name == 'CompanyLocation'
-    #     @employees = Employee.where(company_location_id: current_user.company_location_id)
-    #   elsif current_user.role.name == 'Department'
-    #     @employees = Employee.where(department_id: current_user.department_id)
-    #   elsif current_user.role.name == 'Company'
-    #     @employees = Employee.all
-    #   elsif current_user.role.name == 'Supervisor'
-    #     @emp = Employee.find(current_user.employee_id)
-    #     # @employees_indirect = @emp.indirect_subordinates
-    #     # @employees_direct = @emp.subordinates
-    #     @employees = @emp.subordinates
-    #   elsif current_user.role.name == 'SalaryAccount'
-    #     @employee = Employee.find(current_user.employee_id)
-    #   end
-    # else
-    #   @employees = Employee.all
-    # end
-
-

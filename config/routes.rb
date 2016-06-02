@@ -675,6 +675,7 @@ Rails.application.routes.draw do
   resources :employee_leav_balances do
     collection do
       get :collect_employee_for_leave
+      get :employee_leave_balance
     end
   end
   resources :leav_rejecteds

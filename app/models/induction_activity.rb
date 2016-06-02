@@ -1,6 +1,7 @@
 class InductionActivity < ActiveRecord::Base
   belongs_to :employee
   belongs_to :induction_master
+  has_many :induction_details
 
   validates :activity, presence: true
   validates :day, presence: true

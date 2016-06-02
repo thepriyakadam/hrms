@@ -42,282 +42,226 @@
     </div><!-- /.info-box -->
   </div><!-- /.col -->
 </div><!-- /.row -->
+<!-- TO DO List -->
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="box">
+        <div class="box-header">
+          <i class="ion ion-clipboard"></i>
+          <h3 class="box-title">To Do List</h3>
+          <div class="box-tools">
+          <%= link_to "Add Task",new_employee_task_to_do_path, remote:true, class: "btn btn-primary btn-sm pull" %>
+           <!--  <div class="input-group" style="width: 150px;">
+              <input type="text" name="table_search" class="form-control input-sm pull-right" placeholder="Search">
+              <div class="input-group-btn">
+                <button class="btn btn-sm btn-default"><i class="fa fa-search"></i></button>
+              </div>
+            </div> -->
+          </div>
+        </div><!-- /.box-header -->
+        <div class="box-body table-responsive no-padding">
+         <div id="to_do_form"></div>
+         <div id="to_do_list"><%= render "employee_task_to_dos/to_do_list" %></div>
+        </div><!-- /.box-body -->
+      </div><!-- /.box -->
+    </div>
+  </div>
   <!-- Main row -->
-          <div class="row">
-            <!-- Left col -->
-            <section class="col-lg-7 connectedSortable">
-              <!-- Custom tabs (Charts with tabs)-->
+  <div class="row">
+    <!-- Left col -->
+    <section class="col-lg-7 connectedSortable">
+      <!-- Custom tabs (Charts with tabs)-->
+      <div class="row">
+        <div class="col-md-6">
+          <!-- USERS LIST -->
+          <div class="box box-danger">
+            <div class="box-header with-border">
+              <h3 class="box-title">Employee Self Services</h3>
+              <div class="box-tools pull-right">
+                <!-- <span class="label label-danger">8 New Members</span> -->
+                <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div><!-- /.box-header -->
+            <div class="box-body no-padding">
+              <ul class="nav nav-pills nav-stacked">
+            <li><a href="/self_services/employee"><i class="fa fa-tags"></i> Employees</a></li>
+              <li><a href="/self_services/employee_template"><i class="fa fa-tags"> </i> Salary Structure </a></li>
+              <li><a href="/self_services/attendance"><i class="fa fa-tags"></i>Attendance</a></li>
+              <li><a href="/self_services/salaryslip"><i class="fa fa-tags"></i>Salaryslips</a></li>
+              <li><a href="/self_services/advance"><i class="fa fa-tags"></i>Advance & Instalment</a></li>
+              <li><a href="/goal_rating_sheets/new"><i class="fa fa-tags"></i> Self Rating </a></li>
+          </ul>
+            </div><!-- /.box-body -->
+          </div><!--/.box -->
+        </div><!-- /.col -->
+         <div class="col-md-6">
+          <!-- USERS LIST -->
+          <div class="box box-danger">
+            <div class="box-header with-border">
+              <h3 class="box-title">Travel Management</h3>
+              <div class="box-tools pull-right">
+                <!-- <span class="label label-danger">8 New Members</span> -->
+                <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div><!-- /.box-header -->
+            <div class="box-body no-padding">
+              <ul class="nav nav-pills nav-stacked">
+            <li><a href="/travel_requests"><i class="fa fa-tags"></i>Travel Request </a></li>
+            <li><a href="/travel_requests/travel_history"><i class="fa fa-tags"></i> Travel Approve/Reject </a></li>
+            <li><a href="/travel_requests/travel_request_list"><i class="fa fa-tags"></i> Travel Request List </a></li>
+            <li><a href="/travel_requests/daily_bill"><i class="fa fa-tags"></i> Daily Expences </a></li>
+            <li><a href="/travel_expences"><i class="fa fa-tags"></i> Travel Expences </a></li>  
+          </ul>
+            </div><!-- /.box-body -->
+          </div><!--/.box -->
+        </div><!-- /.col -->
 
-              <!-- TO DO List -->
-              <div class="box box-primary">
-                <div class="box-header">
-                  <i class="ion ion-clipboard"></i>
-                  <h3 class="box-title">To Do List</h3>
-                  <div class="box-tools pull-right">
-                    <ul class="pagination pagination-sm inline">
-                      <li><a href="#">&laquo;</a></li>
-                      <li><a href="#">1</a></li>
-                      <li><a href="#">2</a></li>
-                      <li><a href="#">3</a></li>
-                      <li><a href="#">&raquo;</a></li>
-                    </ul>
-                  </div>
-                </div><!-- /.box-header -->
-                <div class="box-body">
-                  <div id="to_do_form"></div>
-                  <div id="to_do_list"><%= render "employee_task_to_dos/to_do_list" %></div>
-                </div><!-- /.box-body -->
-                <div class="box-footer clearfix no-border">
-                <%= link_to "Add Task",new_employee_task_to_do_path, remote:true, class: "btn btn-default btn-sm pull" %>
-                  
-                </div>
-              </div><!-- /.box -->
+      </div><!-- /.row -->
 
-              <div class="row">
-                
-
-                <div class="col-md-6">
-                  <!-- USERS LIST -->
-                  <div class="box box-danger">
-                    <div class="box-header with-border">
-                      <h3 class="box-title">Employee Self Services</h3>
-                      <div class="box-tools pull-right">
-                        <!-- <span class="label label-danger">8 New Members</span> -->
-                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                        <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                      </div>
-                    </div><!-- /.box-header -->
-                    <div class="box-body no-padding">
-                      <ul class="nav nav-pills nav-stacked">
-                    <li><a href="/self_services/employee"><i class="fa fa-tags"></i> Employees</a></li>
-                      <li><a href="/self_services/employee_template"><i class="fa fa-tags"> </i> Salary Structure </a></li>
-                      <li><a href="/self_services/attendance"><i class="fa fa-tags"></i>Attendance</a></li>
-                      <li><a href="/self_services/salaryslip"><i class="fa fa-tags"></i>Salaryslips</a></li>
-                      <li><a href="/self_services/advance"><i class="fa fa-tags"></i>Advance & Instalment</a></li>
-                      <li><a href="/goal_rating_sheets/new"><i class="fa fa-tags"></i> Self Rating </a></li>
-                  </ul>
-                    </div><!-- /.box-body -->
-                  </div><!--/.box -->
-                </div><!-- /.col -->
-                <div class="col-md-6">
-                  <!-- USERS LIST -->
-                  <div class="box box-danger">
-                    <div class="box-header with-border">
-                      <h3 class="box-title">Latest Members</h3>
-                      <div class="box-tools pull-right">
-                        <span class="label label-danger">8 New Members</span>
-                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                        <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                      </div>
-                    </div><!-- /.box-header -->
-                    <div class="box-body no-padding">
-                      <ul class="users-list clearfix">
-                        <li>
-                          <img src="dist/img/user1-128x128.jpg" alt="User Image">
-                          <a class="users-list-name" href="#">Alexander Pierce</a>
-                          <span class="users-list-date">Today</span>
-                        </li>
-                      </ul><!-- /.users-list -->
-                    </div><!-- /.box-body -->
-                    <div class="box-footer text-center">
-                      <a href="javascript::" class="uppercase">View All Users</a>
-                    </div><!-- /.box-footer -->
-                  </div><!--/.box -->
-                </div><!-- /.col -->
-
-              </div><!-- /.row -->
-
-              <!-- TABLE: LATEST ORDERS -->
-              <div class="box box-info">
-                <div class="box-header with-border">
-                  <h3 class="box-title">Events</h3>
-                  <div class="box-tools pull-right">
-                    <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                    <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                  </div>
-                </div><!-- /.box-header -->
-                <div class="box-body">
-                  <div class="table-responsive">
-                    <table class="table no-margin">
-                      <thead>
-                        <tr>
-                          <th>Event Date</th>
-                          <th>Event Name</th>
-                          <th>Event Detail</th>
-                          <th>Status</th>
-                          <!-- <th>Popularity</th> -->
-                        </tr>
-                      </thead>
-                      <tbody>
-                      <% CompanyEvent.try(:all).try(:each) do |e| %>
-                        <tr>
-                          <td><%= e.event_date %></td>
-                          <td><%= e.event_name %></td>
-                          <td><%= e.description %></td>
-                          <td>
-                            <% if e.status %>
-                              <span class="label label-success">Active</span>
-                            <%else%>
-                              <span class="label label-danger">Inactive</span>
-                            <%end%>
-                          </td>
-                          <!-- <td><div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div></td> -->
-                        </tr>
-                      <% end %>
-                      </tbody>
-                    </table>
-                  </div><!-- /.table-responsive -->
-                </div><!-- /.box-body -->
-                <div class="box-footer clearfix">
-                  <!-- <a href="javascript::;" class="btn btn-sm btn-info btn-flat pull-left">Place New Order</a>
-                  <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a> -->
-                </div><!-- /.box-footer -->
-              </div><!-- /.box -->
-            </section><!-- /.Left col -->
-            <!-- right col (We are only adding the ID to make the widgets sortable)-->
-            <section class="col-lg-5 connectedSortable">
-              <div class="row">
-                <div class="col-md-12">
-                  <!-- USERS LIST -->
-                  <div class="box box-danger">
-                    <div class="box-header with-border">
-                      <h3 class="box-title">Todays Birthday</h3>
-                      <div class="box-tools pull-right">
-                        <span class="label label-danger"> Birth Days</span>
-                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                        <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                      </div>
-                    </div><!-- /.box-header -->
-                    <div class="box-body no-padding">
-                  <!--     <ul class="users-list clearfix">
-                        <li>
-                          <img src="dist/img/user1-128x128.jpg" alt="User Image">
-                          <a class="users-list-name" href="#">Alexander Pierce</a>
-                          <span class="users-list-date">Today</span>
-                        </li>
-                       
-                      </ul><!-- /.users-list -->
-                    </div><!-- /.box-body -->
-                    <div class="box-footer text-center">
-                      <a href="javascript::" class="uppercase">View All Birthdays</a>
-                    </div><!-- /.box-footer -->
-                  </div><!--/.box -->
-
-                  <!-- USERS LIST -->
-                  <div class="box box-danger">
-                    <div class="box-header with-border">
-                      <h3 class="box-title">Employee Self Services</h3>
-                      <div class="box-tools pull-right">
-                        <!-- <span class="label label-danger"> Birthadays</span> -->
-                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                        <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                      </div>
-                    </div><!-- /.box-header -->
-                    <div class="box-body no-padding">
-                   <ul class="users-list clearfix">
-                      <li><a href="/self_services/employee"><i class="fa fa-tags"></i> Employees</a></li>
-                      <li><a href="/self_services/employee_template"><i class="fa fa-tags"> </i> Salary Structure </a></li>
-                      <li><a href="/self_services/attendance"><i class="fa fa-tags"></i>Attendance</a></li>
-                      <li><a href="/self_services/salaryslip"><i class="fa fa-tags"></i>Salaryslips</a></li>
-                      <li><a href="/self_services/advance"><i class="fa fa-tags"></i>Advance & Instalment</a></li>
-                      <li><a href="/goal_rating_sheets/new"><i class="fa fa-tags"></i> Self Rating </a></li>
-                       
-                      </ul><!-- /.users-list -->
-                    </div><!-- /.box-body --> 
-                    <div class="box-footer text-center">
-                      <a href="javascript::" class="uppercase">View All Birthdays</a>
-                    </div><!-- /.box-footer -->
-                  </div><!--/.box -->
-
-                  <div class="box box-default">
-                <div class="box-header with-border">
-                  <h3 class="box-title">Browser Usage</h3>
-                  <div class="box-tools pull-right">
-                    <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                    <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                  </div>
-                </div><!-- /.box-header -->
+      <!-- TABLE: LATEST ORDERS -->
+      <div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title">Events</h3>
+          <div class="box-tools pull-right">
+            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+          </div>
+        </div><!-- /.box-header -->
+        <div class="box-body">
+          <div class="table-responsive">
+            <table class="table no-margin">
+              <thead>
+                <tr>
+                  <th>Event Date</th>
+                  <th>Event Name</th>
+                  <th>Event Detail</th>
+                  <th>Status</th>
+                  <!-- <th>Popularity</th> -->
+                </tr>
+              </thead>
+              <tbody>
+              <% CompanyEvent.try(:all).try(:each) do |e| %>
+                <tr>
+                  <td><%= e.event_date %></td>
+                  <td><%= e.event_name %></td>
+                  <td><%= e.description %></td>
+                  <td>
+                    <% if e.status %>
+                      <span class="label label-success">Active</span>
+                    <%else%>
+                      <span class="label label-danger">Inactive</span>
+                    <%end%>
+                  </td>
+                  <!-- <td><div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div></td> -->
+                </tr>
+              <% end %>
+              </tbody>
+            </table>
+          </div><!-- /.table-responsive -->
+        </div><!-- /.box-body -->
+        <div class="box-footer clearfix">
+          <!-- <a href="javascript::;" class="btn btn-sm btn-info btn-flat pull-left">Place New Order</a>
+          <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a> -->
+        </div><!-- /.box-footer -->
+      </div><!-- /.box -->
+    </section><!-- /.Left col -->
+    <!-- right col (We are only adding the ID to make the widgets sortable)-->
+    <section class="col-lg-5 connectedSortable">
+      <div class="row">
+        <div class="col-md-12">
+          <!-- USERS LIST -->
+          <div class="box box-danger">
+            <div class="box-header with-border">
+              <h3 class="box-title">Todays Birthday</h3>
+              <div class="box-tools pull-right">
+                <span class="label label-danger"> Birth Days</span>
+                <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div><!-- /.box-header -->
+            <div class="box-body no-padding">
+          <!--     <ul class="users-list clearfix">
+                <li>
+                  <img src="dist/img/user1-128x128.jpg" alt="User Image">
+                  <a class="users-list-name" href="#">Alexander Pierce</a>
+                  <span class="users-list-date">Today</span>
+                </li>
                
-                <div class="box-footer no-padding">
-                  <ul class="nav nav-pills nav-stacked">
-                    <li><a href="/self_services/employee"><i class="fa fa-tags"></i> Employees</a></li>
-                      <li><a href="/self_services/employee_template"><i class="fa fa-tags"> </i> Salary Structure </a></li>
-                      <li><a href="/self_services/attendance"><i class="fa fa-tags"></i>Attendance</a></li>
-                      <li><a href="/self_services/salaryslip"><i class="fa fa-tags"></i>Salaryslips</a></li>
-                      <li><a href="/self_services/advance"><i class="fa fa-tags"></i>Advance & Instalment</a></li>
-                      <li><a href="/goal_rating_sheets/new"><i class="fa fa-tags"></i> Self Rating </a></li>
-                    <li><a href="#">India <span class="pull-right text-green"><i class="fa fa-angle-up"></i> 4%</span></a></li>
-                    <li><a href="#">China <span class="pull-right text-yellow"><i class="fa fa-angle-left"></i> 0%</span></a></li>
-                  </ul>
-                </div><!-- /.footer -->
-              </div><!-- /.box -->
+              </ul><!-- /.users-list -->
+            </div><!-- /.box-body -->
+            <div class="box-footer text-center">
+              <a href="javascript::" class="uppercase">View All Birthdays</a>
+            </div><!-- /.box-footer -->
+          </div><!--/.box -->
 
+      <!-- PRODUCT LIST -->
+      <div class="box box-primary">
+        <div class="box-header with-border">
+          <h3 class="box-title">Newly Joined Employees</h3>
+          <div class="box-tools pull-right">
+            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+          </div>
+        </div><!-- /.box-header -->
+        <div class="box-body">
+          <ul class="products-list product-list-in-box">
+            <li class="item">
+             
+              <div class="product-info">
+                <a href="javascript::;" class="product-title">Sachin Patel</a>
+                <!-- <span class="product-description">
+                  Assistent Manager
+                </span> -->
+              </div>
+            </li><!-- /.item -->
+            <li class="item">
+              <div class="product-img">
+                <img src="images/user.jpg" alt=" ">
+              </div>
+              <div class="product-info">
+                <a href="javascript::;" class="product-title">Balaji Joshi<span class="label label-info pull-right">5 May 2016</span></a>
+                <span class="product-description">
+                  HR Head
+                </span>
+              </div>
+            </li><!-- /.item -->
+            <li class="item">
+              <div class="product-img">
+                <img src="images/user.jpg" alt=" ">
+              </div>
+              <div class="product-info">
+                <a href="javascript::;" class="product-title">Mahesh Sharma<span class="label label-info pull-right">2 May 2016</span></a>
+                <span class="product-description">
+                  Engineer
+                </span>
+              </div>
+            </li><!-- /.item -->
+           <li class="item">
+              <div class="product-img">
+                <img src="images/User-girl.png" alt=" ">
+              </div>
+              <div class="product-info">
+                <a href="javascript::;" class="product-title">Tanuja Patel<span class="label label-info pull-right">1 May 2016</span></a>
+                <span class="product-description">
+                  HR
+                </span>
+              </div>
+            </li><!-- /.item -->
+          </ul>
+        </div><!-- /.box-body -->
+        <div class="box-footer text-center">
+          <a href="javascript::;" class="uppercase">View All </a>
+        </div><!-- /.box-footer -->
+      </div><!-- /.box -->
+      </div><!-- /.col -->
+      </div><!-- /.row -->
+    </section><!-- right col -->
+  </div><!-- /.row (main row) -->
+ </section><!-- /.content -->
+</div><!-- /.content-wrapper -->
 
-              <!-- PRODUCT LIST -->
-              <div class="box box-primary">
-                <div class="box-header with-border">
-                  <h3 class="box-title">Recently Join Employee</h3>
-                  <div class="box-tools pull-right">
-                    <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                    <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                  </div>
-                </div><!-- /.box-header -->
-                <div class="box-body">
-                  <ul class="products-list product-list-in-box">
-                    <li class="item">
-                     
-                      <div class="product-info">
-                        <a href="javascript::;" class="product-title">Sachin Patel</a>
-                        <!-- <span class="product-description">
-                          Assistent Manager
-                        </span> -->
-                      </div>
-                    </li><!-- /.item -->
-                    <li class="item">
-                      <div class="product-img">
-                        <img src="images/user.jpg" alt=" ">
-                      </div>
-                      <div class="product-info">
-                        <a href="javascript::;" class="product-title">Balaji Joshi<span class="label label-info pull-right">5 May 2016</span></a>
-                        <span class="product-description">
-                          HR Head
-                        </span>
-                      </div>
-                    </li><!-- /.item -->
-                    <li class="item">
-                      <div class="product-img">
-                        <img src="images/user.jpg" alt=" ">
-                      </div>
-                      <div class="product-info">
-                        <a href="javascript::;" class="product-title">Mahesh Sharma<span class="label label-info pull-right">2 May 2016</span></a>
-                        <span class="product-description">
-                          Engineer
-                        </span>
-                      </div>
-                    </li><!-- /.item -->
-                   <li class="item">
-                      <div class="product-img">
-                        <img src="images/User-girl.png" alt=" ">
-                      </div>
-                      <div class="product-info">
-                        <a href="javascript::;" class="product-title">Tanuja Patel<span class="label label-info pull-right">1 May 2016</span></a>
-                        <span class="product-description">
-                          HR
-                        </span>
-                      </div>
-                    </li><!-- /.item -->
-                  </ul>
-                </div><!-- /.box-body -->
-                <div class="box-footer text-center">
-                  <a href="javascript::;" class="uppercase">View All </a>
-                </div><!-- /.box-footer -->
-              </div><!-- /.box -->
-              </div><!-- /.col -->
-              </div><!-- /.row -->
-            </section><!-- right col -->
-          </div><!-- /.row (main row) -->
-        </section><!-- /.content -->
-      </div><!-- /.content-wrapper -->
       <!-- Control Sidebar -->
       <aside class="control-sidebar control-sidebar-dark">
         <!-- Create the tabs -->

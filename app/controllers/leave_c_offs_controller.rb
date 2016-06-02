@@ -2,7 +2,7 @@ require 'query_report/helper' # need to require the helper
 
 class LeaveCOffsController < ApplicationController
   before_action :set_leave_c_off, only: [:show, :edit, :update, :destroy]
-
+  
   # GET /leave_c_offs
   # GET /leave_c_offs.json
   include QueryReport::Helper # need to include it
@@ -78,7 +78,6 @@ class LeaveCOffsController < ApplicationController
         end
       end
       ActiveRecord::Base.transaction do
-        puts @leave_c_off.leave_count
         @leave_c_off.save
         @employee_leave_balance.save
       end

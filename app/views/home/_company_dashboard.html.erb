@@ -176,45 +176,79 @@
 
         <div class="col-md-12">
           <!-- USERS LIST -->
-          <div class="box box-danger">
-            <div class="box-header with-border">
-              <h3 class="box-title">Todays Birthday</h3>
-              <div class="box-tools pull-right">
-                <span class="label label-danger"> Birth Days</span>
-                <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
-            </div><!-- /.box-header -->
-            <div class="box-body no-padding">
-             <ul class="users-list clearfix">
-                
-            <% date = Date.today %>
+
+        <div class="box box-primary">
+        <div class="box-header with-border">
+          <h3 class="box-title">Todays Birthday</h3>
+          <div class="box-tools pull-right">
+            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+          </div>
+        </div><!-- /.box-header -->
+        <div class="box-body">
+          <ul class="products-list product-list-in-box">
+            
+              <% date = Date.today %>
              <% @employees = Employee.where("strftime('%d/%m', date_of_birth) = ?", date.strftime('%d/%m')) %>
             <% if @employees.empty? %>
               <p>Today is No BirthDay</p>
             <%else%>
               <%@employees.each do |e|%>
-              <li>
-                 <img src="images/user.jpg" alt=" ">
-                 <p><%= full_name(e) %> </p>
-                 <span class="users-list-date">Today</span>
-              <%end%>  
-              </li>    
+                <li class="item">
+                <div class="product-img">
+                   <img src="images/user.jpg" alt=" ">
+                </div>
+                <div class="product-info">
+                  <a href="javascript::;" class="product-title"><%= full_name(e) %></a>
+                  <span class="label label-success pull-right">Happy Birthday</span>
+                  <span class="users-list-date"><%= e.contact_no %></span>
+                  </div>
+                <% end %>
+            </li><!-- /.item -->
             <%end%>
-            </ul><!-- /.users-list -->
-            </div><!-- /.box-body -->
-            <center><span class="label label-info"> Tomorrow's Birthday</span>
+          </ul>
+        </div><!-- /.box-body -->
+      </div><!-- /.box -->
+          
+          <!-- USERS LIST -->
+          <div class="box box-default collapsed-box">
+          <div class="box box-info">
+            <div class="box-header with-border">
+              <h3 class="box-title">Tomorrow's Birthday</h3>
+              <div class="box-tools pull-right">
+                <span class="label label-success"> BirthDay's</span>
+                 <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
+                <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div><!-- /.box-header -->
+            <div class="box-body no-padding">
             <% date = Date.today + 1 %>
             <% @employees = Employee.where("strftime('%d/%m', date_of_birth) = ?", date.strftime('%d/%m')) %>
             <% if @employees.empty? %>
               <p>No BirthDay</p>
             <%else%>
+            <table  class="table table-bordered table-hover table-condensed">
+            <thead>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Contact No</th>
+            </thead>
+            </thead>
+            <tbody>
               <%@employees.each do |e|%>
-                <p> <%= full_name(e) %> </p>
+              <tr>
+              <td><%= e.manual_employee_code %></td>
+              <td><%= full_name(e) %></td>
+              <td><%= e.contact_no %></td>
+              </tr>
               <%end%>
+              </tbody>
+              </table>
             <%end%>
-            </center>
+            </div><!-- /.box-body -->
           </div><!--/.box -->
+          </div>
+
 
       <!-- PRODUCT LIST -->
       <div class="box box-primary">

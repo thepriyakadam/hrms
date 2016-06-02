@@ -3,8 +3,8 @@ class InductionMaster < ActiveRecord::Base
 	has_many :induction_details
 	validates :code, presence: true, uniqueness: { case_sensitive: false }
 	validates :description, presence: true
-	has_attached_file :avatar, path: ':rails_root/attachments/induction/:style/:basename.:extension' 
-
+	has_attached_file :avatar, path: ':rails_root/attach_induction/:style/:basename.:extension' 
+	
     validates_attachment_size :avatar, less_than: 2.megabytes
 	validates_attachment :avatar, content_type: { content_type: %w(application/pdf application/msword application/msexcel application/vnd.openxmlformats-officedocument.wordprocessingml.document) }
 end

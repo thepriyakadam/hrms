@@ -1,14 +1,15 @@
-<div class="box box-default">
-  <div class="box-header with-border">
-    <h3 class="box-title">Induction Detail List</h3>
-  </div><!-- /.box-header -->
-  <div class="box-body">
-    <table id="example2" class="table table-bordered table-hover table-condensed">
-    <tr> 
-      <th colspan="2"></th>
-      <th colspan="2"></th>
-    </tr>
-
+<style>
+th {
+    text-align: left;
+}
+</style>
+<style>
+   table {
+  page-break-inside: avoid; 
+}
+</style>
+    <h2><strong>Induction Details</strong></h2><br><br>
+    <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
     <tr>
       <th><strong>Employee</strong></th>
       <td><%= @induction_detail.employee.try(:first_name) %> <%= @induction_detail.employee.try(:middle_name) %> <%= @induction_detail.employee.try(:last_name) %></td>
@@ -23,13 +24,10 @@
 
       <th><strong>Status</strong></th>
       <td><%= @induction_detail.induction_completed ? "Yes" : "No" %></td>
-    </tr>
-    
-  </table>
-    </div>
+    </tr>  
+  </table><br><br>
 
-<div>
-  <table id="example2" class="table table-bordered table-hover table-condensed">
+  <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
   <thead>
     <tr>
       <th>Sr.No</th>
@@ -61,5 +59,3 @@
       <% end %>
   </tbody>
 </table>
-</div>
-  </div>

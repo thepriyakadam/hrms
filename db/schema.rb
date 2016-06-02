@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160528063928) do
+ActiveRecord::Schema.define(version: 20160601110412) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -1833,6 +1833,26 @@ ActiveRecord::Schema.define(version: 20160528063928) do
   end
 
   add_index "skillsets", ["employee_id"], name: "index_skillsets_on_employee_id"
+
+  create_table "slip_informations", force: :cascade do |t|
+    t.integer  "salaryslip_id"
+    t.integer  "cost_center_id"
+    t.integer  "department_id"
+    t.string   "contact_no"
+    t.string   "esic_no"
+    t.string   "pf_no"
+    t.string   "uan_no"
+    t.decimal  "cl"
+    t.decimal  "el"
+    t.decimal  "c_off"
+    t.decimal  "advance"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  add_index "slip_informations", ["cost_center_id"], name: "index_slip_informations_on_cost_center_id"
+  add_index "slip_informations", ["department_id"], name: "index_slip_informations_on_department_id"
+  add_index "slip_informations", ["salaryslip_id"], name: "index_slip_informations_on_salaryslip_id"
 
   create_table "society_member_ships", force: :cascade do |t|
     t.boolean  "is_society_member"

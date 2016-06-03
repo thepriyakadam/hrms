@@ -154,12 +154,17 @@
     <div class="row">
       <div class="col-sm-3">
         <div class="actions">
-          <% unless @goal_bunch.nil? %>
-            <% if @goal_bunch.reviewer_confirm == true %>
-            <% else %>
-            <%= link_to 'Overall Comment', modal_reviewer_overall_goal_bunches_path(goal_bunch_id: @goal_bunch.id), class: 'btn btn-warning btn-sm',remote: true %>
+
+          <% unless @goal_ratings.empty? %>
+          <% else %>
+            <% unless @goal_bunch.nil? %>
+              <% if @goal_bunch.reviewer_confirm == true %>
+              <% else %>
+              <%= link_to 'Overall Comment', modal_reviewer_overall_goal_bunches_path(goal_bunch_id: @goal_bunch.id), class: 'btn btn-warning btn-sm',remote: true %>
+              <% end %>
             <% end %>
           <% end %>
+
         </div>
       </div>
     </div>
@@ -193,13 +198,19 @@
     </tbody>
   </table>
 
-  <div class="row">
-    <div class="col-sm-3">
-      <div class="actions">
-        <%= f.submit "Confirm", class: 'btn btn-primary btn-sm' %>
-      </div>
-    </div>
-  </div>
+    <% unless @goal_bunch.nil? %>
+      <% if @goal_bunch.review_comment == nil %>
+      <% else %>
+        <div class="row">
+          <div class="col-sm-3">
+            <div class="actions">
+              <%= f.submit "Confirm", class: 'btn btn-primary btn-sm' %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+    
 <% end %>
 
 </div>

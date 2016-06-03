@@ -121,8 +121,10 @@ class GoalRatingsController < ApplicationController
   end
   
   def send_mail_to_appraiser
-    @emp = GoalRating.first
-    GoalRatingMailer.send_email_to_appraiser().deliver_now
+    @emp = GoalRating.find(73)
+    GoalRatingMailer.send_email_to_appraiser(@emp).deliver_now
+    flash[:notice] = "Mail Sent Successfully"
+    redirect_to root_url
   end
 
   private

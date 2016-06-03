@@ -110,7 +110,7 @@
   </div><!-- /.box-header -->
   <div class="box-body">
   <%= bootstrap_form_for GoalBunch.new,url:{action:'appraiser_comment_confirm',id: @employee.id} do |f| %>
-    <table id="example2" class="table table-bordered table-hover table-condensed">
+    <table class="table table-bordered table-hover table-condensed">
       <thead>
         <tr>
           <th>Goal Perspective</th>
@@ -146,57 +146,68 @@
         <% end %>
       </tbody>
     </table>
-  <div class="row">
-    <div class="col-sm-3">
-      <div class="actions">
-      <% unless @goal_bunch.nil? %>
-        <% if @goal_bunch.appraiser_confirm == true %>
-        <% else %>
-        <%= link_to 'Overall Comment', modal_appraiser_overall_goal_bunches_path(goal_bunch_id: @goal_bunch.id), class: 'btn btn-warning btn-sm',remote: true %>
-        <% end %>
-      <% end %>
-      </div>
-    </div>
-  </div>
-<% end %>
+    
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="actions">
 
-
-<div class="box-header with-border">
-  <h3 class="box-title">Overall Comment</h3>
-</div>
-<%= bootstrap_form_for GoalBunch.new,url:{action:'appraiser_overall_comment_confirm',emp_id: @employee.id} do |f| %>
- <table id="example2" class="table table-bordered table-hover table-condensed">
-    <thead>
-      <tr>
-        <th><input type="checkbox" id="selectAll" value="selectAll"></th>
-        <th>Overall Comment</th>
-      </tr>
-    </thead>
-    <tbody>
-    <% @goal_bunches.each do |goal_bunch| %>
-      <tr>
-        <td>
-          <% if goal_bunch.appraiser_confirm == true %>
+          <% unless @goal_ratings.empty? %>
           <% else %>
-          <%= check_box_tag "goal_bunch_ids[]", goal_bunch.id %>
+            <% unless @goal_bunch.nil? %>
+              <% if @goal_bunch.appraiser_confirm == true %>
+              <% else %>
+              <%= link_to 'Overall Comment', modal_appraiser_overall_goal_bunches_path(goal_bunch_id: @goal_bunch.id), class: 'btn btn-warning btn-sm',remote: true %>
+              <% end %>
+            <% end %>
           <% end %>
-        </td>
-        <td><%= goal_bunch.appraiser_comment %></td>
-      </tr>
-      <% end %>
-    </tbody>
-  </table>
 
-  <div class="row">
-    <div class="col-sm-3">
-      <div class="actions">
-        <%= f.submit "Confirm", class: 'btn btn-primary btn-sm' %>
+        </div>
       </div>
     </div>
-  </div>
-<% end %>
+  <% end %>
 
-</div>
+
+  <div class="box-header with-border">
+    <h3 class="box-title">Overall Comment</h3>
+  </div>
+  <%= bootstrap_form_for GoalBunch.new,url:{action:'appraiser_overall_comment_confirm',emp_id: @employee.id} do |f| %>
+    <table class="table table-bordered table-hover table-condensed">
+      <thead>
+        <tr>
+          <th><input type="checkbox" id="selectAll" value="selectAll"></th>
+          <th>Overall Comment</th>
+        </tr>
+      </thead>
+      <tbody>
+      <% @goal_bunches.each do |goal_bunch| %>
+        <tr>
+          <td>
+            <% if goal_bunch.appraiser_confirm == true %>
+            <% else %>
+            <%= check_box_tag "goal_bunch_ids[]", goal_bunch.id %>
+            <% end %>
+          </td>
+          <td><%= goal_bunch.appraiser_comment %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <% unless @goal_bunch.nil? %>
+      <% if @goal_bunch.appraiser_comment == nil %>
+      <% else %>
+        <div class="row">
+          <div class="col-sm-3">
+            <div class="actions">
+              <%= f.submit "Confirm", class: 'btn btn-primary btn-sm' %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+
+  <% end %>
+  </div>
 </div>
 
 </div>

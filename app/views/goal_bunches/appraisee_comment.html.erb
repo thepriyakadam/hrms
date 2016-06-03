@@ -107,7 +107,7 @@
   </div><!-- /.box-header -->
   <div class="box-body">
   <%= bootstrap_form_for GoalBunch.new,url:{action:'self_comment_confirm'} do |f| %>
-    <table id="example2" class="table table-bordered table-hover table-condensed">
+    <table class="table table-bordered table-hover table-condensed">
       <thead>
         <tr>
           <th>Goal Perspective</th>
@@ -144,10 +144,13 @@
   <div class="row">
     <div class="col-sm-3">
       <div class="actions">
-        <% unless @goal_bunch.nil? %>
-          <% if @goal_bunch.appraisee_confirm == true %>
-          <% else %>
-          <%= link_to 'Overall Comment', modal_self_overall_goal_bunches_path(goal_bunch_id: @goal_bunch.id),class: 'btn btn-warning btn-sm',remote: true %>
+        <% unless @goal_ratings.empty? %>
+        <% else %>
+          <% unless @goal_bunch.nil? %>
+            <% if @goal_bunch.appraisee_confirm == true %>
+            <% else %>
+            <%= link_to 'Overall Comment', modal_self_overall_goal_bunches_path(goal_bunch_id: @goal_bunch.id),class: 'btn btn-warning btn-sm',remote: true %>
+            <% end %>
           <% end %>
         <% end %>
       </div>
@@ -161,7 +164,7 @@
   <h3 class="box-title">Overall Comment</h3>
 </div>
 <%= bootstrap_form_for GoalBunch.new,url:{action:'self_overall_comment_confirm'} do |f| %>
- <table id="example2" class="table table-bordered table-hover table-condensed">
+ <table class="table table-bordered table-hover table-condensed">
     <thead>
       <tr>
         <th><input type="checkbox" id="selectAll" value="selectAll"></th>
@@ -183,13 +186,16 @@
     </tbody>
   </table>
 
-  <div class="row">
-    <div class="col-sm-3">
-      <div class="actions">
-        <%= f.submit "Confirm", class: 'btn btn-primary btn-sm' %>
+    <% if @goal_bunch.appraisee_comment == nil %>
+    <% else %>
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="actions">
+            <%= f.submit "Confirm", class: 'btn btn-primary btn-sm' %>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
+    <% end %>
 <% end %>
 
 </div>

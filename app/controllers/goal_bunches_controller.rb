@@ -76,6 +76,8 @@ class GoalBunchesController < ApplicationController
 
       @goal_bunch.update(goal_confirm: true)      
       flash[:notice] = "Confirmed Successfully"
+        GoalBunchMailer.send_email_to_appraisee(@goal_bunch).deliver_now
+        flash[:notice] = "Email Send Successfully"
       end
     end
       redirect_to goal_approval_goal_bunches_path(id: @employee.id)
@@ -131,11 +133,15 @@ class GoalBunchesController < ApplicationController
     @employees = current_login.subordinates
   end
 
-
-
   def appraisee_comment
     @employee = Employee.find(current_user.employee_id)
     @goal_bunches = GoalBunch.where(employee_id: @employee.id)
+
+    @employees = Employee.where(id: @employee.id)
+    @qualifications = Qualification.where(employee_id: @employee.id)
+    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
+    @experiences = Experience.where(employee_id: @employee.id)
+    @ctc = EmployeeSalaryTemplate.where(employee_id: @employee.id).sum(:monthly_amount)
 
     @self_goal_ratings = GoalRating.where(appraisee_id: current_user.employee_id).where.not(appraisee_comment: nil)
     @goal_rating = GoalRating.new
@@ -156,6 +162,13 @@ class GoalBunchesController < ApplicationController
     @employee = Employee.find(params[:id])
     @goal_bunches = GoalBunch.where(employee_id: @employee.id)
 
+
+    @employees = Employee.where(id: @employee.id)
+    @qualifications = Qualification.where(employee_id: @employee.id)
+    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
+    @experiences = Experience.where(employee_id: @employee.id)
+    @ctc = EmployeeSalaryTemplate.where(employee_id: @employee.id).sum(:monthly_amount)
+
     @appraiser_goal_ratings = GoalRating.where(appraisee_id: @employee.id).where.not(appraiser_comment: nil)
     @goal_rating = GoalRating.new
     
@@ -165,7 +178,7 @@ class GoalBunchesController < ApplicationController
       flash[:alert] = "Not Confirmed By Appraisee"
     else
       @goal_ratings = @goal_bunch.goal_ratings.where(appraiser_comment: nil)
-
+      
     end
     #@goal_ratings = GoalRating.where(appraisee_id: @employee.id,appraiser_comment: nil)
     
@@ -216,13 +229,20 @@ class GoalBunchesController < ApplicationController
     @employee = Employee.find(params[:id])
     @goal_bunches = GoalBunch.where(employee_id: @employee.id)
 
+
+    @employees = Employee.where(id: @employee.id)
+    @qualifications = Qualification.where(employee_id: @employee.id)
+    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
+    @experiences = Experience.where(employee_id: @employee.id)
+    @ctc = EmployeeSalaryTemplate.where(employee_id: @employee.id).sum(:monthly_amount)
+
     @reviewer_goal_ratings = GoalRating.where(appraisee_id: @employee.id).where.not(reviewer_comment: nil)
     @goal_rating = GoalRating.new
 
     @goal_bunch = GoalBunch.where(employee_id: @employee.id, appraiser_confirm: true).take
     if @goal_bunch.nil?
       @goal_ratings = []
-      flash[:alert] = "Not Confirmed By Appraisee"
+      flash[:alert] = "Not Confirmed By Appraiser"
     else
       @goal_ratings = @goal_bunch.goal_ratings.where(reviewer_comment: nil)
     end
@@ -316,7 +336,7 @@ class GoalBunchesController < ApplicationController
         @goal_bunch_ids.each do |eid|
         @goal_bunch = GoalBunch.find(eid)
 
-        @goal_bunch.update(final_confirm: true)      
+        @goal_bunch.update(final_confirm: true, final_id: params[:final_id])      
         flash[:notice] = "Confirmed Successfully"
         end
       end
@@ -389,6 +409,8 @@ class GoalBunchesController < ApplicationController
 
         @goal_bunch.update(appraisee_confirm: true)      
         flash[:notice] = "Confirmed Successfully"
+          GoalBunchMailer.send_email_to_appraiser(@goal_bunch).deliver_now
+          flash[:notice] = "Email Send Successfully"
         end
       end
     redirect_to appraisee_comment_goal_bunches_path
@@ -418,6 +440,8 @@ class GoalBunchesController < ApplicationController
 
         @goal_bunch.update(appraiser_confirm: true)      
         flash[:notice] = "Confirmed Successfully"
+          GoalBunchMailer.send_email_to_reviewer(@goal_bunch).deliver_now
+          flash[:notice] = "Email Send Successfully"
         end
       end
     redirect_to appraiser_comment_goal_bunches_path(id: @employee.id)

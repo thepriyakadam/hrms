@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160601110412) do
+ActiveRecord::Schema.define(version: 20160603074402) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -1696,6 +1696,16 @@ ActiveRecord::Schema.define(version: 20160601110412) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
+
+  create_table "salary_comp_mappings", force: :cascade do |t|
+    t.integer  "salary_component_id"
+    t.integer  "erp_account_code"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+    t.string   "map_type"
+  end
+
+  add_index "salary_comp_mappings", ["salary_component_id"], name: "index_salary_comp_mappings_on_salary_component_id"
 
   create_table "salary_component_templates", force: :cascade do |t|
     t.string   "manual_template_code"

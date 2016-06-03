@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :salary_comp_mappings
   resources :company_events
   resources :employee_task_to_dos
 

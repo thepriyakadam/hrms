@@ -299,7 +299,7 @@ class VacancyMastersController < ApplicationController
 
   def particular_vacancy_request_list_history
     @vacancy_request_history = VacancyRequestHistory.find(params[:format])
-    @particular_vacancy_requests = ParticularVacancyRequest.where(vacancy_master_id: @vacancy_request_history.id)
+    @particular_vacancy_requests = ParticularVacancyRequest.all
     session[:active_tab] ="recruitment"
   end
 

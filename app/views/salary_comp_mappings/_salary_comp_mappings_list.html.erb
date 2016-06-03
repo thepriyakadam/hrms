@@ -1,0 +1,25 @@
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Salary component</th>
+      <th>Erp account code</th>
+      <th>Type</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @salary_comp_mappings.each do |salary_comp_mapping| %>
+      <tr>
+        <td><%= salary_comp_mapping.salary_component.try(:name) %></td>
+        <td><%= salary_comp_mapping.erp_account_code %></td>
+        <td><%= salary_comp_mapping.map_type %></td>
+        <td>
+          <%= link_to '', edit_salary_comp_mapping_path(salary_comp_mapping),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
+          <%= link_to '',  salary_comp_mapping, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'New Salary comp mapping', new_salary_comp_mapping_path %>

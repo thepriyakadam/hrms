@@ -11,8 +11,9 @@
       <i class="fa fa-user-plus"></i> <span><%= current_user.company_location.company.try(:name) %> Details</span> <i class="fa fa-angle-left pull-right"></i></a>
     <ul class="treeview-menu" >
       <li><a href="/companies"><i class="fa fa-tags"></i> Companies</a></li>
-            <li><a href="/company_locations"><i class="fa fa-tags"></i> Locations</a></li>
-            <li><a href="/departments/new"><i class="fa fa-tags"></i> Departments</a></li>
+      <li><a href="/company_locations"><i class="fa fa-tags"></i> Locations</a></li>
+      <li><a href="/departments/new"><i class="fa fa-tags"></i> Departments</a></li>
+      <li><a href="/company_events/new"><i class="fa fa-tags"></i> Company Events</a></li>
     </ul>
   </li>
   <li class="treeview" id="master">
@@ -37,8 +38,8 @@
         <a href="#"><i class="fa fa-edit"></i> Payroll Setup Component <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
           <li><a href="/advance_types/new"><i class="fa fa-tags"></i> Advance Type </a></li>
-          <li><a href="/expencess_types/new"><i class="fa fa-tags"></i> Expencess Type </a></li>
-          <li><a href="/food_coupan_masters/new"><i class="fa fa-tags"></i> Food Coupan Type </a></li>
+          <li><a href="/expencess_types/new"><i class="fa fa-tags"></i> Expences Type </a></li>
+          <li><a href="/food_coupan_masters/new"><i class="fa fa-tags"></i> Food Coupon Type </a></li>
         </ul>
       </li>
 
@@ -53,7 +54,7 @@
           <li><a href="/bonus_masters/new"><i class="fa fa-tags"></i> Bonus Master </a></li>
           <li><a href="/retention_moneys/new"><i class="fa fa-tags"></i> Retention Money </a></li>
         </ul>
-       </li>
+      </li>
 
        <li id="employeeprofilesetup">
         <a href="#"><i class="fa fa-edit"></i> Employee Profile Setup <i class="fa fa-angle-left pull-right"></i></a>
@@ -62,7 +63,7 @@
           <li><a href="/employee_types/new"><i class="fa fa-tags"></i> Employment Type</a></li>
           <li><a href="/employee_categories/new"><i class="fa fa-tags"></i> Employee Category</a></li>
           <li><a href="/employee_designations/new"><i class="fa fa-tags"></i> Designation</a></li>
-          <li><a href="/roles/new"><i class="fa fa-tags"></i> System Role </a></li>
+          <li><a href="/roles/new"><i class="fa fa-tags"></i> User Role </a></li>
           <li><a href="/nationalities/new"><i class="fa fa-tags"></i> Nationality</a></li>
           <li><a href="/reserved_categories/new"><i class="fa fa-tags"></i> Reserved Category</a></li>
           <li><a href="/religions/new"><i class="fa fa-tags"></i> Religion</a></li>
@@ -95,14 +96,46 @@
         </ul>
        </li>
 
+       <li>
+        <a href="#"><i class="fa fa-edit"></i> Travel Setup <i class="fa fa-angle-left pull-right"></i></a>
+        <ul class="treeview-menu">
+           <li><a href="/travel_expence_types/new"><i class="fa fa-tags"></i> Travel Expence Type </a></li>
+           <li><a href="/travel_modes/new"><i class="fa fa-tags"></i> Travel Mode </a></li>
+           <li><a href="/travel_options/new"><i class="fa fa-tags"></i> Travel Options </a></li>
+        </ul>
+       </li>
+
+       <li>
+        <a href="#"><i class="fa fa-edit"></i> Accident Master<i class="fa fa-angle-left pull-right"></i></a>
+        <ul class="treeview-menu">
+           <li><a href="/root_cause_masters/new"><i class="fa fa-tags"></i> Root Cause </a></li>
+        </ul>
+       </li>
+
        <li id="performancemaster">
-       <li id="perform">
         <a href="#"><i class="fa fa-edit"></i> Performance Master <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
           <li><a href="/goal_perspectives/new"><i class="fa fa-tags"></i>Type Of Objective</a></li>
           <li><a href="/performance_periods/new"><i class="fa fa-tags"></i>Performance Peroid</a></li>
           <li><a href="/rating_masters/new"><i class="fa fa-tags"></i> Rating Setup </a></li>
         </ul>
+
+        <li id="interview_master_setup">
+        <a href="#"><i class="fa fa-edit"></i> Interview Master <i class="fa fa-angle-left pull-right"></i></a>
+        <ul class="treeview-menu">
+           <li><a href="/interview_attributes/new"><i class="fa fa-tags"></i>Interview Attributes </a></li>
+           <li><a href="/interview_decisions/new"><i class="fa fa-tags"></i>Interview Decisions </a></li>
+           <li><a href="/interview_evalutions/new"><i class="fa fa-tags"></i>Interview Evaluations </a></li>
+        </ul>
+       </li>
+        <li id="interview_master_setup">
+        <a href="#"><i class="fa fa-edit"></i> Exit Interview Master <i class="fa fa-angle-left pull-right"></i></a>
+        <ul class="treeview-menu">
+           <li><a href="/question_masters/new"><i class="fa fa-tags"></i>Question Master </a></li>
+           <li><a href="/about_companies/new"><i class="fa fa-tags"></i> About Company </a></li>
+           <li><a href="/about_bosses/new"><i class="fa fa-tags"></i>About Boss </a></li>
+        </ul>
+       </li>
       </li> 
       </ul>
   </li>
@@ -113,14 +146,21 @@
       <i class="fa fa-angle-left pull-right"></i>
     </a>
     <ul class="treeview-menu" >
-     <li class="treeview" id="employeeprofile">
+    <li class="treeview" id="employeeprofile">
         <a href="#"><i class="fa fa-edit"></i> Employee Profile <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
         <li><a href="/employees"><i class="fa fa-tags"></i> Employees </a></li>
-        <li><a href="/society_member_ships"><i class="fa fa-tags"> </i> Employee Membership</a></li>
         </ul>
-      </li> 
-      <li class="treeview" id="useradministration">
+    </li>
+    <li class="treeview" id="employeeprofile">
+        <a href="#"><i class="fa fa-edit"></i> Employee Induction <i class="fa fa-angle-left pull-right"></i></a>
+        <ul class="treeview-menu">
+        <li><a href="/induction_masters/new"><i class="fa fa-tags"></i> Induction Template Master</a></li>
+        <li><a href="/induction_activities/employee_list"><i class="fa fa-tags"> </i> Employee Induction Plan </a></li>
+        <li><a href="/induction_details/all_induction_detail_list"><i class="fa fa-tags"> </i> Induction Confirmation </a></li>
+        </ul>
+    </li> 
+    <li class="treeview" id="useradministration">
     <a href="">
       <i class="fa fa-user-plus"></i> <span>User Administration</span> <i class="fa fa-angle-left pull-right"></i>
     </a>
@@ -132,12 +172,14 @@
       <li><a href="/employees/manager"><i class="fa fa-tags"></i>Update Reporting Manager</a></li>
       <!-- <li><a href="/employees/transfer_employee_list"><i class="fa fa-tags"></i>Transfer Employee</a></li> -->
     </ul>
-  </li>
+    </li>
+
 
       <li class="treeview" id="employeereport">
         <a href="#"><i class="fa fa-edit"></i> Reports <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
         <li><a href="/reports/basic_details/new"><i class="fa fa-tags"></i>Employee Details</a></li>
+      <!-- <li><a href="/reports/basic_details/employee_list"><i class="fa fa-tags"></i>Employee Selective</a></li> -->      
         <li><a href="/reports/basic_details/employee_list"><i class="fa fa-tags"></i>Employee Selective</a></li>
         <li><a href="/reports/joining_details/new"><i class="fa fa-tags"></i>Joining Details</a></li>
         <li><a href="/reports/bank_details/new"><i class="fa fa-tags"></i>Bank Details</a></li>
@@ -152,21 +194,6 @@
       </li> 
     </ul>
   </li>
-
-  <li class="treeview" id="selfservice">
-    <a href="">
-      <i class="fa fa-user-plus"></i> <span>Employee Self Service</span><i class="fa fa-angle-left pull-right"></i>
-    </a>
-    <ul class="treeview-menu">
-      <li><a href="/self_services/employee"><i class="fa fa-tags"></i> Employees</a></li>
-      <li><a href="/self_services/employee_template"><i class="fa fa-tags"> </i> Salary Structure </a></li>
-      <li><a href="/self_services/attendance"><i class="fa fa-tags"></i>Attendance</a></li>
-      <li><a href="/self_services/salaryslip"><i class="fa fa-tags"></i>Salaryslips</a></li>
-      <li><a href="/self_services/advance"><i class="fa fa-tags"></i>Advance & Instalment</a></li>
-      <li><a href="/goal_rating_sheets/new"><i class="fa fa-tags"></i> Self Rating </a></li>
-    </ul>
-  </li>
-
   <li class="treeview" id="leavemanagement">
     <a href="#">
       <i class="glyphicon glyphicon-th-large"></i> <span>Leave Management</span>
@@ -185,13 +212,16 @@
         <a href="#"><i class="fa fa-edit"></i> Leave Requests  <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
         <li><a href="/employee_leav_requests/employee_list"><i class="fa fa-tags"></i>Create Leave Request</a></li>
-        <li><a href="/employee_leav_requests/approved_or_rejected_leave_request"><i class="fa fa-tags"></i>Approve/Reject Leave</a></li>
+        <li><a href="/employee_leav_requests/approved_or_rejected_leave_request"><i class="fa fa-tags"></i>Leave Approval</a></li>
         </ul>
       </li>
        <li class="treeview" id="leavereport">
         <a href="#"><i class="fa fa-edit"></i> Reports  <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
          <li><a href="/employee_leav_requests/search_by_start_date"><i class="fa fa-tags"></i>Leave Report</a></li>
+         <li><a href="/leave_c_offs/search_by_c_off_date"><i class="fa fa-tags"></i>C_Off Report</a></li>
+         <li><a href="/employee_leav_balances/employee_leave_balance"><i class="fa fa-tags"></i>Leave Balance Report</a></li>
+
         </ul>
       </li>  
     </ul>
@@ -220,6 +250,7 @@
         <li><a href="/instalments"><i class="fa fa-tags"> </i>Instalment</a></li>
         <li><a href="/food_deductions"><i class="fa fa-tags"> </i>Food Deduction</a></li>
         <li><a href="/monthly_expences"><i class="fa fa-tags"> </i>Monthly Expences</a></li>
+        <li><a href="/society_member_ships"><i class="fa fa-tags"> </i> Employee Membership</a></li>
         </ul>
       </li>
       <li id="salaryprocess">
@@ -255,7 +286,7 @@
         <li><a href="/salary_slip_ledgers/employee_monthly_ctc"><i class="fa fa-tags"> </i>Monthly CTC Report </a></li>
         </ul>
       </li>
-      <li>
+      <li id="deductionreport">
         <a href="#"><i class="fa fa-edit"></i>Deduction Report <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
         <li><a href="/reports/advance_salaries/new"><i class="fa fa-tags"> </i>Advance Salary Report</a></li>
@@ -269,7 +300,7 @@
     </ul>
   </li>
  
-  <li class="treeview">
+  <li class="treeview" id="timemgmt">
     <a href="">
       <i class="ionicons ion-ios-time"></i><span> Time Management </span> <i class="fa fa-angle-left pull-right"></i>
     </a>
@@ -286,48 +317,83 @@
     <a href="">
       <i class="ionicons ion-ios-time"></i><span> Performance </span> <i class="fa fa-angle-left pull-right"></i>
     </a>
-    <ul class="treeview-menu">
-      <li><a href="/goal_bunches/new"><i class="fa fa-tags"></i> Set Goal </a></li>
-      <li><a href="/goal_bunches/subordinate_list"><i class="fa fa-tags"></i> Goal Approval </a></li>
-      <li><a href="/goal_bunches/appraisee_comment"><i class="fa fa-tags"></i> Self Comment</a></li>
-      <li><a href="/goal_bunches/appraiser_subordinate"><i class="fa fa-tags"></i> Appraiser Comment</a></li>
-      <li><a href="/goal_bunches/reviewer_subordinate"><i class="fa fa-tags"></i> Reviewer Comment</a></li>
-      <li><a href="/goal_bunches/employee_list"><i class="fa fa-tags"></i> Final Comment</a></li>
-      <li><a href="/goal_bunches/final_employee_list"><i class="fa fa-tags"></i> Print </a></li>
+    <ul class="treeview-menu" >
+     
+        <li><a href="/employee_goals/subordinate_list"><i class="fa fa-tags"></i> Set Goals & Attributes </a></li>
+        <!-- <li><a href="/employee_goals/employee_list"><i class="fa fa-tags"></i> HR Set Goals & Attributes </a></li>
+        <li><a href="/employee_goals/single_goal"><i class="fa fa-tags"></i>All Goals & Attributes </a></li> -->
+      
+        <li><a href="/goal_rating_sheets/subordinate_list"><i class="fa fa-tags"></i> Appraiser Evaluation </a></li>
+        <li><a href="/goal_rating_sheets/subordinate_list2"><i class="fa fa-tags"></i>Reviewer Comment </a></li>
+        <li><a href="/goal_rating_sheets/employee_list"><i class="fa fa-tags"></i> Final Rating </a></li>  
+       
+      <li id="performancereport">
+      <a href="#"><i class="fa fa-edit"></i> Performance Reports <i class="fa fa-angle-left pull-right"></i></a>
+        <ul class="treeview-menu">
+       <li><a href="/attribute_rating_sheets/subordinate_list"><i class="fa fa-tags"></i> Employee Evaluation </a></li>
+       <li><a href="/attribute_rating_sheets/subordinate_list2"><i class="fa fa-tags"></i> Employee Review </a></li>
+       <li><a href="/attribute_rating_sheets/employee_list"><i class="fa fa-tags"></i> Final Evaluation Report </a></li>
+       <!-- <li><a href="/employee_goals/show_employee"><i class="fa fa-tags"></i> Print </a></li> -->
+        </ul>
+      </li> 
     </ul>
    </li>
 
+    <li class="treeview" id="promotionmanagement">
+    <a href="">
+      <i class="ionicons ion-ios-time"></i><span> Promotion Management </span> <i class="fa fa-angle-left pull-right"></i>
+    </a>
+    <ul class="treeview-menu">
+      <li><a href="/employee_promotions"><i class="fa fa-tags"></i> Employee Promotion </a></li>
+     
+    </ul>
+   </li>
+   <li class="treeview" id="resignationmanagement">
+    <a href="">
+      <i class="ionicons ion-ios-time"></i><span> Resignation Management </span> <i class="fa fa-angle-left pull-right"></i>
+    </a>
+    <ul class="treeview-menu">
+      <li><a href="/employee_resignations/new"><i class="fa fa-tags"></i> Employee Resignation </a></li>
+      <li><a href="/exit_interviews/new"><i class="fa fa-tags"></i> Employee Exit Interview</a></li>
+     
+    </ul>
+   </li>
+   
+   
 
-
-   <li class="treeview" id="performance">
+   <li class="treeview" id="recruitment">
     <a href="#">
-      <i class="glyphicon glyphicon-th-large"></i> <span>Recruitment Management</span>
+      <i class="fa fa-list-alt"></i> <span>Recruitment Management</span>
       <i class="fa fa-angle-left pull-right"></i>
     </a>
     <ul class="treeview-menu" >
-      <li id="appraiserevaluation">
-        <a href="#"><i class="fa fa-edit"></i> General Vacancy  <i class="fa fa-angle-left pull-right"></i></a>
+      <li id="general_vacancy">
+        <a href="#"><i class="fa fa-edit"></i>Candidate Profile <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
         <li><a href="/selected_resumes/new1"><i class="fa fa-tags"></i> Candidate Profile </a></li>
-        <li><a href="/interview_schedules/new1"><i class="fa fa-tags"></i> Interview Schedule </a></li>
         <li><a href="/selected_resumes/all_resume_list"><i class="fa fa-tags"></i> Resume Shortlist </a></li>
+        <li><a href="/interview_schedules/new1"><i class="fa fa-tags"></i> General Interview Schedule </a></li>
+        <li><a href="/interview_schedules"><i class="fa fa-tags"></i> Interview List </a></li>
         </ul>
       </li> 
-      <li id="performancereport">
-      <a href="#"><i class="fa fa-edit"></i> Particular Vancany <i class="fa fa-angle-left pull-right"></i></a>
+      
+      <li id="particular_vacancy">
+      <a href="#"><i class="fa fa-edit"></i> Vacancy Profile <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
-        <li><a href="/vacancy_masters"><i class="fa fa-tags"></i> Create Vacancy </a></li>
+        <li><a href="/vacancy_masters/new"><i class="fa fa-tags"></i> Create Vacancy </a></li>
+        <li><a href="/vacancy_masters"><i class="fa fa-tags"></i> Cancel Request </a></li>
         <li><a href="/vacancy_masters/vacancy_history"><i class="fa fa-tags"></i> Vacancy Approve / Reject </a></li>
         <li><a href="/vacancy_masters/approve_vacancy_list"><i class="fa fa-tags"></i> Vacancy List </a></li>
         <li><a href="/vacancy_masters/vacancy_resume"><i class="fa fa-tags"></i> Candidate Profile</a></li>
-        <li><a href="/vacancy_masters/approved_vacancy_list"><i class="fa fa-tags"></i> Approved Vacancy List </a></li>
+        <li><a href="/vacancy_masters/approved_vacancy_request_history_list"><i class="fa fa-tags"></i> Approved Vacancy List </a></li>
         <li><a href="/vacancy_masters/vacancy_resume"><i class="fa fa-tags"></i> Capture Resume</a></li>
+         <li><a href="/interview_schedules/interviewee_list"><i class="fa fa-tags"></i> Interview Resume</a></li>
         </ul>
       </li> 
     </ul>
   </li>
 
-   <li class="treeview">
+   <li class="treeview" id="travelmgmt">
     <a href=""><i class="fa fa-briefcase"></i><span> Travel Management </span><i class="fa fa-angle-left pull-right"></i></a>
     <ul class="treeview-menu">
       <li><a href="/travel_requests"><i class="fa fa-tags"></i>Travel Request </a></li>
@@ -354,10 +420,23 @@
       <li><a href="/accident_records"><i class="fa fa-tags"></i> Accident Record </a></li>
     </ul>
    </li>
+
+   <li class="treeview" id="selfservice">
+    <a href="">
+      <i class="fa fa-user-plus"></i> <span>Employee Self Service</span><i class="fa fa-angle-left pull-right"></i>
+    </a>
+    <ul class="treeview-menu">
+      <li><a href="/self_services/employee"><i class="fa fa-tags"></i> Employees</a></li>
+      <li><a href="/self_services/employee_template"><i class="fa fa-tags"> </i> Salary Structure </a></li>
+      <li><a href="/self_services/attendance"><i class="fa fa-tags"></i>Attendance</a></li>
+      <li><a href="/self_services/salaryslip"><i class="fa fa-tags"></i>Salaryslips</a></li>
+      <li><a href="/self_services/advance"><i class="fa fa-tags"></i>Advance & Instalment</a></li>
+      <li><a href="/goal_rating_sheets/new"><i class="fa fa-tags"></i> Self Rating </a></li>
+    </ul>
+  </li>
 </ul>
 
 <script typgre="text/javascript">
-
   <% unless session[:active_tab].nil? %>
   document.getElementById("<%= session[:active_tab] %>").classList.add("active");
   <%end%>

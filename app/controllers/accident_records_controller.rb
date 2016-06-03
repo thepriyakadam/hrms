@@ -67,6 +67,14 @@ class AccidentRecordsController < ApplicationController
     @esic_no = @joining_detail.employee_efic_no
   end
 
+  def download_jpg
+    @accident_record = AccidentRecord.find(params[:id])
+    send_file @accident_record.avatar.path,
+              filename: @accident_record.avatar_file_name,
+              type: @accident_record.avatar_content_type,
+              disposition: 'attachment'
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -76,6 +84,6 @@ class AccidentRecordsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def accident_record_params
-    params.require(:accident_record).permit(:code, :employee_id, :accident_date, :esic_no, :case_type, :type_of_injury, :leave_date_range, :no_of_day, :description)
+    params.require(:accident_record).permit(:avatar, :department_id, :root_cause_master_id, :code, :employee_id, :accident_date, :esic_no, :case_type, :type_of_injury, :leave_date_range, :no_of_day, :description)
   end
 end

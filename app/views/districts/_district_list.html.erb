@@ -3,6 +3,7 @@
   <thead>
     <tr>  
       <th>State</th>
+      <th>ID</th>
       <th>Code</th>
       <th>Name</th>
       <th>Action</th>
@@ -12,6 +13,7 @@
     <% @districts.each do |district| %>
       <tr>
         <td><%= district.state.try(:name) %></td>
+        <td><%= district.id %></td>
         <td><%= district.code %></td>
         <td><%= district.name %></td>
         <td> <!-- link_to '', state,class: 'btn btn-xs btn-default fa fa-eye',remote:true  %> -->

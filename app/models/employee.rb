@@ -1,4 +1,3 @@
-
 class Employee < ActiveRecord::Base
   protokoll :employee_code, pattern: 'EMP#######'
   belongs_to :department
@@ -11,6 +10,7 @@ class Employee < ActiveRecord::Base
   belongs_to :district
   belongs_to :religion
 
+  has_many :leav_c_offs
   has_many :salaryslips
   has_many :employee_nominations
   has_many :awards
@@ -26,6 +26,7 @@ class Employee < ActiveRecord::Base
   has_many :employee_leav_balances
   has_many :overtime_salaries
   has_many :vacancy_request_histories
+  has_many :induction_details
   # accepts_nested_attributes_for :employee_leav_balances
   has_many :families
   has_many :experiences
@@ -123,6 +124,20 @@ class Employee < ActiveRecord::Base
   private
 
   def self.find_by_role(current_user)
+    if current_user.class == Group
+      Employee.all
+    else
+      if current_user.role.name == 'Company'
+        Employee.all
+      elsif current_user.role.name == 'CompanyLocation'
+        Employee.where(company_location_id: current_user.company_location_id)
+      elsif current_user.role.name == 'Employee'
+        Employee.where(id: current_user.employee_id)
+      end
+    end
+  end
+
+  def self.dashboard
     if current_user.class == Group
       Employee.all
     else

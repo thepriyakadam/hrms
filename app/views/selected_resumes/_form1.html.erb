@@ -1,7 +1,10 @@
 <div class="box box-default">
+<div class="box-header with-border">
+      <h3 class="box-title">Create Candidate Profile</h3>
+    </div>
  
 <div class="box-body">
-<%= bootstrap_form_for(@selected_resume) do |f| %>
+<%= bootstrap_form_for @selected_resume,html: {id: 'selected_resume'},url:{action:'create_new'} do |f| %>
 <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
 <div class="row">
   <div class="col-sm-3">
@@ -11,13 +14,13 @@
   </div>
 
    <div class="col-sm-3">
-    <div class="form-group required">
-      <%= f.text_field :contact_no,label: 'Contact No' %>
+    <div class="field">
+      <%= f.text_field :contact_no,label: 'Contact No.' %>
     </div>
   </div>
 
   <div class="col-sm-3">
-      <div class="form-group required">
+      <div class="field">
         <%= f.text_field :skillset,label: 'Skillset' %>
       </div>
   </div>
@@ -44,7 +47,7 @@
 
   <div class="col-sm-3">
     <div class="field">
-      <%= f.text_field :email_id, label: 'Email Id' %>
+      <%= f.text_field :email_id, label: 'Email ID' %>
     </div>
   </div>
 
@@ -65,13 +68,13 @@
 <div class="row">
  <div class="col-sm-3">
     <div class="field">
-      <%= f.file_field :avatar,label: 'Resume Upload' %>
+      <%= f.file_field :avatar,label: 'Resume Upload(only docx,pdf)' %>
     </div>
  </div>
 
  <div class="col-sm-3">
       <div class="field">
-        <%= f.file_field :passport_photo,label: 'Photo Upload' %>
+        <%= f.file_field :passport_photo,label: 'Photo Upload(only jpeg,jpg,png)' %>
       </div>
     </div>
   </div>  
@@ -94,13 +97,7 @@ $("#selected_resume").validate({
       "selected_resume[name]":{
         required: true
               },
-      "selected_resume[contact_no]":{
-        required: true
-      },
       "selected_resume[degree_id]":{
-        required: true
-      },
-      "selected_resume[skillset]":{
         required: true
       }
     },
@@ -108,14 +105,8 @@ $("#selected_resume").validate({
       "selected_resume[name]":{
         required: "Please specify Name"
       },
-      "selected_resume[contact_no]":{
-        required: "Please specify Contact No"
-      },
       "selected_resume[degree_id]":{
         required: "Please specify Qualification"
-      },
-      "selected_resume[skillset]":{
-        required: "Please specify Skillset"
       }
     },
     errorPlacement: function(error, element) {

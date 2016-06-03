@@ -110,3 +110,6 @@ gem 'email_verifier'
 #excel
 gem 'axlsx', '~> 2.0'
 gem "axlsx_rails"
+
+#Chart
+gem "chartkick"

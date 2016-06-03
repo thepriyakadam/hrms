@@ -1,0 +1,6 @@
+<% if @flag %>
+$("#to_do_list").html("<%= j render 'to_do_list' %>");
+$("#to_do_form").html("");
+<%else%>
+$("#to_do_form").html("<%= j render 'form' %>");
+<%end%>

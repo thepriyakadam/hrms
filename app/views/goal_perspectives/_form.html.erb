@@ -19,3 +19,26 @@
     <%= f.submit %>
   </div>
 <% end %>
+<<<<<<< HEAD
+
+<script type="text/javascript">
+
+ $("#goal_perspective").validate({
+    rules: {
+      "goal_perspective[name]":{
+        required: true
+      }
+    },
+    messages: {
+      "goal_perspective[name]":{
+        required: "Please Specify Name"
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>
+=======
+>>>>>>> 35177ca36803613d4424ab504721662aaef6d897

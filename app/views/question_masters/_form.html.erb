@@ -1,29 +1,25 @@
-<%= form_for(@question_master) do |f| %>
-  <% if @question_master.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@question_master.errors.count, "error") %> prohibited this question_master from being saved:</h2>
-
-      <ul>
-      <% @question_master.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+<%= bootstrap_form_for(@question_master,html: {id: 'question_master'},remote:true) do |f| %>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :code,hide_label:true, placeholder: 'Question No.' %>
+      </div>
+    </div> 
+     <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_area :name,hide_label:true, placeholder: 'Question' %>
+      </div>
     </div>
-  <% end %>
+     <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :description,hide_label:true, placeholder: 'Description' %>
+      </div>
+    </div>
 
-  <div class="field">
-    <%= f.label :code %><br>
-    <%= f.text_field :code %>
-  </div>
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :description %><br>
-    <%= f.text_area :description %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "Create Question",:class => class_name, data: { disable_with: data_info } %>
+      </div>
+    </div>
   </div>
 <% end %>

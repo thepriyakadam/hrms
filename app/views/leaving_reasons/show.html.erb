@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @leaving_reason.code %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @leaving_reason.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @leaving_reason.description %>
+</p>
+
+<%= link_to 'Edit', edit_leaving_reason_path(@leaving_reason) %> |
+<%= link_to 'Back', leaving_reasons_path %>

@@ -3,13 +3,9 @@
   <thead>
     <tr>  
       <th><input type="checkbox" id="selectAll" value="selectAll"></th>
-      <th>Expence date</th>
-      <th>E place</th>
-      <th>Travel expence</th>
-      <th>Local travel expence</th>
-      <th>Lodging expence</th>
-      <th>Boarding expence</th>
-      <th>Other expence</th>
+      <th>Expence Date</th>
+      <th>E Place</th>
+      <th>Travel Expence</th>
       <th>Action</th>
     </tr>
   </thead>
@@ -26,10 +22,7 @@
         <td><%= daily_bill_detail.expence_date %></td>
         <td><%= daily_bill_detail.e_place %></td>
         <td><%= daily_bill_detail.travel_expence %></td>
-        <td><%= daily_bill_detail.local_travel_expence %></td>
-        <td><%= daily_bill_detail.lodging_expence %></td>
-        <td><%= daily_bill_detail.boarding_expence %></td>
-        <td><%= daily_bill_detail.other_expence %></td>
+       
         <td>
           <% if daily_bill_detail.is_confirm == true %>
             <small class="label label-info">Confirmed</small>

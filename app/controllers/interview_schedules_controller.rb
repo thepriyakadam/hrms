@@ -31,6 +31,8 @@ class InterviewSchedulesController < ApplicationController
 
   def new1
     @interview_schedule = InterviewSchedule.new
+    session[:active_tab] ="recruitment"
+    session[:active_tab1] ="general_vacancy"
   end
 
   # GET /interview_schedules/1/edit
@@ -57,6 +59,17 @@ class InterviewSchedulesController < ApplicationController
       end
     end
   end
+
+  # def create_new
+  #   @interview_schedule = InterviewSchedule.new(interview_schedule_params)
+  #    @interview_schedules = InterviewSchedule.all
+  #     if @interview_schedule.save
+  #       @interview_schedule = InterviewSchedule.new
+  #     end
+  #     # @vacancy_master = VacancyMaster.find(@selected_resume.vacancy_master_id)
+  #     redirect_to new1_interview_schedule_path
+  #     flash[:notice] = 'Interview schedule was successfully created.'
+  # end
 
   # PATCH/PUT /interview_schedules/1
   # PATCH/PUT /interview_schedules/1.json
@@ -104,8 +117,8 @@ class InterviewSchedulesController < ApplicationController
       flash[:alert] = 'Email not Available'
       redirect_to interview_schedules_path
     else
-      InterviewScheduleMailer.sample_email_to_interviewer(@interview_schedule).deliver_now
-      InterviewScheduleMailer.confirmation_email_to_candidate(@interview_schedule).deliver_now
+      # InterviewScheduleMailer.sample_email_to_interviewer(@interview_schedule).deliver_now
+      # InterviewScheduleMailer.confirmation_email_to_candidate(@interview_schedule).deliver_now
       flash[:notice] = 'Email Sent Successfully'
       redirect_to interview_schedules_path
   end
@@ -175,8 +188,10 @@ end
     else
       @interview_schedule_ids.each do |eid|
       @interview_schedule = InterviewSchedule.find(eid)
-      @interview_schedule.update(is_confirm: true)      
-      flash[:notice] = "Confirmed Successfully"
+      @interview_schedule.update(is_confirm: true) 
+      InterviewScheduleMailer.sample_email_to_interviewer(@interview_schedule).deliver_now
+      InterviewScheduleMailer.confirmation_email_to_candidate(@interview_schedule).deliver_now     
+      flash[:notice] = "Confirmed Successfully & Email also sent"
     end 
      redirect_to interview_schedules_path
   end
@@ -184,6 +199,8 @@ end
 
   def interviewee_list
      @interview_schedules = InterviewSchedule.where(employee_id: current_user.employee_id,is_confirm: true)
+     session[:active_tab] ="recruitment"
+     session[:active_tab1] ="particular_vacancy"
   end
 
   def resume_list

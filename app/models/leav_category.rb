@@ -5,4 +5,5 @@ class LeavCategory < ActiveRecord::Base
   has_many :particular_leave_records
 
   validates :name, presence: true, uniqueness: { case_sensitive: false }
+  validates :code, presence: true, uniqueness: { case_sensitive: false }
 end

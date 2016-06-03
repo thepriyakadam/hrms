@@ -1,5 +1,7 @@
 class Reports::AdvanceSalariesController < ApplicationController
   def new
+    session[:active_tab] ="payroll"
+    session[:active_tab1] ="deductionreport"
   end
 
   def advance_salary_report

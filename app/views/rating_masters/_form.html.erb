@@ -1,0 +1,41 @@
+<%= bootstrap_form_for(@rating_master, remote: true,html: {id: "rating_master"}) do |f| %>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :code,hide_label:true, placeholder: 'Code' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :description,hide_label:true, placeholder: 'Description' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "Create Rating",class: 'btn btn-primary btn-sm'%>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<script type="text/javascript">
+
+  $("#rating_master").validate({
+    rules: {
+      "rating_master[code]":{
+        required: true
+      }
+    },
+    messages: {
+      "rating_master[code]":{
+        required: "Please Specify Code"
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

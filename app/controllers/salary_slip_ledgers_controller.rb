@@ -125,7 +125,7 @@ class SalarySlipLedgersController < ApplicationController
         layout: 'pdf.html',
         template: 'salary_slip_ledgers/collect_salary.pdf.erb',
         show_as_html: params[:debug].present?,
-        margin:  { top:1,bottom:1,left:1,right:1 }
+        margin:  { top:13,bottom:13,left:13,right:13 }
       end
     end
   end

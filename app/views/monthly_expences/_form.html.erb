@@ -32,7 +32,7 @@
 
           <div class="col-sm-3">
             <div class="field">
-             <%= f.select :expencess_type_id, all_expencess_type,{include_blank: " Select Expence Type"}, class: 'input_expencess_type_id' %>
+             <%= f.select :expencess_type_id, all_expencess_type,{ label:'Expence Type',include_blank: " Select Expence Type"}, class: 'input_expencess_type_id' %>
             </div>
           </div>
           <div class="col-sm-3">
@@ -58,7 +58,7 @@
       <div class="row">
         <div class="col-sm-3">
           <div class="actions">
-            <%= f.submit :class => class_name, data: { disable_with: data_info } %>
+            <%= f.submit "Create Monthly Expence",:class => class_name, data: { disable_with: data_info } %>
           </div>
         </div>
     </div>

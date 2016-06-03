@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :company_events
   resources :employee_task_to_dos
 
+
   resources :leaving_reasons
   resources :training_records
   resources :induction_details do
@@ -27,6 +28,68 @@ Rails.application.routes.draw do
   resources :induction_masters
   resources :induction_templates
   resources :root_cause_masters
+
+  resources :goal_ratings do
+    collection do
+      get :self_modal
+      patch :update_self_modal
+      get :appraiser_modal
+      patch :update_appraiser_modal
+      get :reviewer_modal
+      patch :update_reviewer_modal
+      get :goal_modal
+      patch :update_goal_modal
+      get :print_department
+      get :show_employee
+      post :send_mail_to_appraiser
+    end
+  end
+  resources :goal_bunches do
+    collection do
+      get :goal_approval
+      post :appraiser_confirm
+      get :appraisee_comment
+      post :self_comment
+      post :self_comment_confirm
+      get :appraiser_subordinate
+      get :appraiser_comment
+      post :appraiser_create
+      post :appraiser_comment_confirm
+      get :subordinate_list
+      get :reviewer_comment
+      post :reviewer_create
+      post :reviewer_comment_confirm
+      get :reviewer_subordinate
+      get :employee_list
+      get :final_comment
+      patch :final_create
+      get :final_modal
+      patch :update_final_modal
+      post :final_comment_confirm
+      get :final_detail
+      get :final_employee_list
+      get :print_final_detail
+      get :modal_self_overall
+      post :self_overall_comment_create
+      post :self_overall_comment_confirm
+      get :modal_appraiser_overall
+      post :appraiser_overall_comment_create
+      post :appraiser_overall_comment_confirm
+      get :modal_reviewer_overall
+      post :reviewer_overall_comment_create
+      post :reviewer_overall_comment_confirm
+    end
+  end
+  resources :goal_perspectives
+  resources :ratings
+  resources :periods
+  resources :overall_ratings do
+    collection do 
+      get :modal_self
+      patch :update_modal_self
+    end
+  end
+
   resources :exit_interviews
   resources :about_companies
   resources :about_bosses
@@ -119,7 +182,6 @@ Rails.application.routes.draw do
   get 'welfare_details/new'
   end
 
-  resources :rating_masters
   namespace :reports do
     get 'overtime_salary_details/new'
     post 'overtime_salary_details/overtime_montly_detail_report'
@@ -291,7 +353,6 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :performance_periods
   resources :attribute_rating_sheets do
     collection do
       get :edit_appraiser
@@ -366,6 +427,8 @@ Rails.application.routes.draw do
       patch :update_appraiser2_modal
       get :modal_final
       patch :update_final_modal
+      get :appraiser1_approval
+      get :appraiser1_subordinate
     end
      
   end
@@ -395,13 +458,12 @@ Rails.application.routes.draw do
       get :single_goal
       post :create_goal
       post :is_confirm_all
+      get :appraiser1_approval
+      get :appraiser1_subordinate
     end
   end
 
   resources :definitions
-  resources :attribute_masters
-  resources :goal_measures
-  resources :goal_perspectives
   resources :particular_leave_records do
     collection do
       get :show_leave_record

@@ -76,6 +76,8 @@ Rails.application.routes.draw do
       get :modal_reviewer_overall
       post :reviewer_overall_comment_create
       post :reviewer_overall_comment_confirm
+      get :modal_period
+      post :modal_period_create
     end
   end
   resources :goal_perspectives

@@ -409,8 +409,13 @@ class GoalBunchesController < ApplicationController
 
         @goal_bunch.update(appraisee_confirm: true)      
         flash[:notice] = "Confirmed Successfully"
+      end
+
+        if @goal_bunch.employee.manager_id.try(:email_id).nil?
+          flash[:alert] = 'Email not Available'
+        else
           GoalBunchMailer.send_email_to_appraiser(@goal_bunch).deliver_now
-          flash[:notice] = "Email Send Successfully"
+          flash[:notice] = "Email Sent Successfully"
         end
       end
     redirect_to appraisee_comment_goal_bunches_path
@@ -475,6 +480,17 @@ class GoalBunchesController < ApplicationController
         end
       end
     redirect_to reviewer_comment_goal_bunches_path(id: @employee.id)
+  end
+
+  def modal_period
+    @goal_bunch = GoalBunch.find(params[:format])
+  end
+
+  def modal_period_create
+    @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
+    @goal_bunch.update(goal_bunch_params)
+    flash[:notice] = 'Updated Successfully'
+    redirect_to new_goal_bunch_path
   end
 
   private

@@ -158,8 +158,6 @@
   </div>
 <% end %>
 
-
-
 <div class="box-header with-border">
   <h3 class="box-title">Overall Comment</h3>
 </div>
@@ -186,15 +184,17 @@
     </tbody>
   </table>
 
-    <% if @goal_bunch.appraisee_comment == nil %>
-    <% else %>
-      <div class="row">
-        <div class="col-sm-3">
-          <div class="actions">
-            <%= f.submit "Confirm", class: 'btn btn-primary btn-sm' %>
+    <% unless @goal_bunch.nil? %>
+      <% if @goal_bunch.appraisee_comment == nil %>
+      <% else %>
+        <div class="row">
+          <div class="col-sm-3">
+            <div class="actions">
+              <%= f.submit "Confirm", class: 'btn btn-primary btn-sm' %>
+            </div>
           </div>
         </div>
-      </div>
+      <% end %>
     <% end %>
 <% end %>
 

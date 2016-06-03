@@ -1,0 +1,22 @@
+<table class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>  
+      <th>Period</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @goal_bunches.each do |goal_bunch| %>
+      <tr>
+        <td><%= goal_bunch.period.name %></td>
+        <td>
+           <!-- link_to '', edit_goal_bunch_path(goal_bunch),class: 'btn btn-xs btn-success fa fa-edit',remote:true %> -->
+           <% if goal_bunch.employee_id == current_user.employee_id %>
+           <%= link_to 'Create Goals', new_goal_rating_path(id: goal_bunch),class: 'btn btn-xs btn-info'%>
+           <% else %>
+           <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

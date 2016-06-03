@@ -57,27 +57,14 @@ class Employee < ActiveRecord::Base
                                    foreign_key: 'manager_2_id'
   belongs_to :manager_2, class_name: 'Employee'
 
-  has_many :appraisee_goal_rating_sheets, class_name: 'Employee',
-                                          foreign_key: 'appraisee_id'
-
-  has_many :appraisee_attribute_rating_sheets, class_name: "Employee",
-                          foreign_key: "appraisee_id"
-
-  has_many :appraiser_attribute_rating_sheets, class_name: "Employee",
+  has_many :goal_ratings, class_name: "Employee",
                           foreign_key: "appraiser_id"
 
-  has_many :appraiser_2_goal_rating_sheets, class_name: "Employee",
-                          foreign_key: "appraiser_2_id"
+  has_many :goal_ratings, class_name: "Employee",
+                          foreign_key: "appraisee_id"
 
-  has_many :final_id_goal_rating_sheets, class_name: "Employee",
-                          foreign_key: "final_id_id"
-
-  has_many :appraiser_2_attribute_rating_sheets, class_name: "Employee",
-                          foreign_key: "appraiser_2_id"
-
-  has_many :final_id_attribute_rating_sheets, class_name: "Employee",
-                          foreign_key: "final_id_id"
-                          
+  has_many :goal_ratings, class_name: "Employee",
+                          foreign_key: "reviewer_id"
   before_create :add_department
   before_update :add_department
 

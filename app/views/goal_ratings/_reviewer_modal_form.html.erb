@@ -4,12 +4,13 @@
 
       <%= bootstrap_form_for @goal_rating,url:{action: "update_reviewer_modal",goal_rating_id:@goal_rating.id} do |f| %>
         <div class="row">
-          <div class="col-sm-4">
-            <%= f.text_field :reviewer_comment,hide_label:true, placeholder: "comment" %>    
+          <div class="col-sm-9">
+            <label>Reviewer Comment</label>
+              <%= f.text_field :reviewer_comment,hide_label:true, placeholder: "comment" %>    
           </div>
           
-          <div class="col-sm-2">
-            <%= f.submit "Update", class: 'btn btn-success btn-sm' %>
+          <div class="col-sm-2" style="padding-top:20px;">
+              <%= f.submit "Update", class: 'btn btn-success btn-sm' %>
           </div>
         </div>
       <% end %>

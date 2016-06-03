@@ -1,5 +1,61 @@
 <div class="box box-default">
   <div class="box-header with-border">
+    <h3 class="box-title">Employee Details</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+<table class="table table-bordered table-hover table-condensed">     
+  <thead>
+    <tr>
+      <th>Employee Id</th>
+      <th>Name</th>
+      <th>Age</th>
+      <th>Department</th>
+      <th>Date Of Joining</th>
+      <th>Grade</th>
+      <th>Current Designation</th> 
+    </tr>
+  </thead>
+  <tbody>
+    <% @employees.each do |a| %>
+    <tr>
+      <td><%= a.manual_employee_code %></td> 
+      <td><%= a.first_name %></td>
+      <td><%=  %></td>
+      <td><%= a.department.name %></td>
+      <td><%= @joining_detail.joining_date %></td>
+      <td><%= @joining_detail.employee_grade.name %></td>
+      <td><%= @joining_detail.employee_designation.name %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<div class="box-header with-border">
+  <h3 class="box-title">Qualification Details</h3>
+</div>
+<table class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Degree</th>
+      <th>Year Of Passing</th>
+      <th>Marks</th>
+      <th>Qualification</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @qualifications.each do |q| %>
+      <tr>
+        <td><%= q.degree.name %></td>
+        <td><%= q.year.name%> </td>
+        <td><%= q.marks %></td>
+        <td><%= q.degree_type.name %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<div class="box box-default">
+  <div class="box-header with-border">
     <h3 class="box-title">Goal Rating</h3>
   </div><!-- /.box-header -->
   <div class="box-body">
@@ -98,12 +154,17 @@
     <div class="row">
       <div class="col-sm-3">
         <div class="actions">
-          <% unless @goal_bunch.nil? %>
-            <% if @goal_bunch.reviewer_confirm == true %>
-            <% else %>
-            <%= link_to 'Overall Comment', modal_reviewer_overall_goal_bunches_path(goal_bunch_id: @goal_bunch.id), class: 'btn btn-warning btn-sm',remote: true %>
+
+          <% unless @goal_ratings.empty? %>
+          <% else %>
+            <% unless @goal_bunch.nil? %>
+              <% if @goal_bunch.reviewer_confirm == true %>
+              <% else %>
+              <%= link_to 'Overall Comment', modal_reviewer_overall_goal_bunches_path(goal_bunch_id: @goal_bunch.id), class: 'btn btn-warning btn-sm',remote: true %>
+              <% end %>
             <% end %>
           <% end %>
+
         </div>
       </div>
     </div>
@@ -137,13 +198,19 @@
     </tbody>
   </table>
 
-  <div class="row">
-    <div class="col-sm-3">
-      <div class="actions">
-        <%= f.submit "Confirm", class: 'btn btn-primary btn-sm' %>
-      </div>
-    </div>
-  </div>
+    <% unless @goal_bunch.nil? %>
+      <% if @goal_bunch.review_comment == nil %>
+      <% else %>
+        <div class="row">
+          <div class="col-sm-3">
+            <div class="actions">
+              <%= f.submit "Confirm", class: 'btn btn-primary btn-sm' %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+    
 <% end %>
 
 </div>

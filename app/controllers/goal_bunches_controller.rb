@@ -489,6 +489,19 @@ class GoalBunchesController < ApplicationController
     redirect_to new_goal_bunch_path
   end
 
+  def xl_sheet_print
+    puts "---------------------------------------------------------"
+    # byebug
+    @employee = Employee.find(params[:id])
+    @employees = Employee.where(id: @employee.id)
+    @qualifications = Qualification.where(employee_id: @employee.id)
+    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
+    @experiences = Experience.where(employee_id: @employee.id)
+    @ctc = EmployeeSalaryTemplate.where(employee_id: @employee.id).sum(:monthly_amount)
+    @goal_ratings = GoalRating.where(appraisee_id: @employee.id)
+    @goal_bunches = GoalBunch.where(employee_id: @employee.id)                                 
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_goal_bunch

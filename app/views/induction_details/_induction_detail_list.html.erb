@@ -17,7 +17,7 @@
         <td><%= i=i+1 %></td>
         <td><%= induction_detail.employee.try(:first_name) %> <%= induction_detail.employee.try(:middle_name) %> <%= induction_detail.employee.try(:last_name) %></td>
         <td><%= induction_detail.start_date %></td>
-        <td><%= induction_detail.induction_master.code %></td>
+        <td><%= induction_detail.induction_master.try(:code) %></td>
         <td><%= induction_detail.induction_completed %></td>
         <td>
           <%= link_to ' Edit Detail', edit_induction_detail_path(induction_detail),class: 'btn btn-sm btn-success btn-xs',remote:true %>

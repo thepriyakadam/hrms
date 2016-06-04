@@ -75,10 +75,10 @@ class GoalBunchesController < ApplicationController
       @goal_bunch = GoalBunch.find(eid)
 
       @goal_bunch.update(goal_confirm: true)      
-      flash[:notice] = "Confirmed Successfully"
-        GoalBunchMailer.send_email_to_appraisee(@goal_bunch).deliver_now
+      flash[:notice] = "Confirmed Successfully"  
+    end
+       GoalBunchMailer.send_email_to_appraisee(@goal_bunch).deliver_now
         flash[:notice] = "Email Send Successfully"
-      end
     end
       redirect_to goal_approval_goal_bunches_path(id: @employee.id)
   end
@@ -410,13 +410,9 @@ class GoalBunchesController < ApplicationController
         @goal_bunch.update(appraisee_confirm: true)      
         flash[:notice] = "Confirmed Successfully"
       end
-
-        if @goal_bunch.employee.manager_id.try(:email_id).nil?
-          flash[:alert] = 'Email not Available'
-        else
-          GoalBunchMailer.send_email_to_appraiser(@goal_bunch).deliver_now
-          flash[:notice] = "Email Sent Successfully"
-        end
+        GoalBunchMailer.send_email_to_appraiser(@goal_bunch).deliver_now
+        flash[:notice] = "Email Sent Successfully"
+        
       end
     redirect_to appraisee_comment_goal_bunches_path
   end
@@ -445,9 +441,9 @@ class GoalBunchesController < ApplicationController
 
         @goal_bunch.update(appraiser_confirm: true)      
         flash[:notice] = "Confirmed Successfully"
-          GoalBunchMailer.send_email_to_reviewer(@goal_bunch).deliver_now
-          flash[:notice] = "Email Send Successfully"
         end
+        GoalBunchMailer.send_email_to_reviewer(@goal_bunch).deliver_now
+        flash[:notice] = "Email Sent Successfully"
       end
     redirect_to appraiser_comment_goal_bunches_path(id: @employee.id)
   end

@@ -1,25 +1,40 @@
-<%= form_for(@rating) do |f| %>
-  <% if @rating.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@rating.errors.count, "error") %> prohibited this rating from being saved:</h2>
-
-      <ul>
-      <% @rating.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+<%= bootstrap_form_for(@rating,html: {id: 'rating'},remote:true) do |f| %>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :value,hide_label:true, placeholder: 'Rating' %>
+      </div>
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :value %><br>
-    <%= f.text_field :value %>
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_area :discription,hide_label:true, placeholder: 'Description' %>
+      </div>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :discription %><br>
-    <%= f.text_area :discription %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "Create Rating", class: 'btn btn-sm btn-primary' %>
+      </div>
+    </div>
   </div>
 <% end %>
+
+<script>
+$("#rating").validate({
+    rules: {
+      "rating[value]":{
+        required: true
+      }
+    },
+    messages: {
+      "rating[value]":{
+        required: "Please Specify Rating"
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

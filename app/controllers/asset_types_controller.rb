@@ -44,7 +44,7 @@ class AssetTypesController < ApplicationController
   def destroy
     @asset_type.destroy
     flash[:notice] = "Deleted Successfully"
-     redirect_to new_asset_type_path
+    redirect_to new_asset_type_path
   end
 
   private

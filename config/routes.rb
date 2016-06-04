@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :salary_comp_mappings
   resources :company_events
   resources :employee_task_to_dos
 
@@ -10,6 +11,7 @@ Rails.application.routes.draw do
     collection do 
     get :all_induction_detail_list
     get :confirm
+    post :print_induction_details
     end
   end 
   resources :induction_activities do
@@ -76,6 +78,8 @@ Rails.application.routes.draw do
       get :modal_reviewer_overall
       post :reviewer_overall_comment_create
       post :reviewer_overall_comment_confirm
+      get :modal_period
+      post :modal_period_create
     end
   end
   resources :goal_perspectives

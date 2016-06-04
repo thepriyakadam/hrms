@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160601110412) do
+ActiveRecord::Schema.define(version: 20160604051919) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -1772,6 +1772,16 @@ ActiveRecord::Schema.define(version: 20160601110412) do
     t.datetime "updated_at",  null: false
   end
 
+  create_table "salary_comp_mappings", force: :cascade do |t|
+    t.integer  "salary_component_id"
+    t.integer  "erp_account_code"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+    t.string   "map_type"
+  end
+
+  add_index "salary_comp_mappings", ["salary_component_id"], name: "index_salary_comp_mappings_on_salary_component_id"
+
   create_table "salary_component_templates", force: :cascade do |t|
     t.string   "manual_template_code"
     t.integer  "salary_template_id"
@@ -1979,9 +1989,12 @@ ActiveRecord::Schema.define(version: 20160601110412) do
     t.string   "no_of_days"
     t.string   "no_of_hrs"
     t.string   "place"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.integer  "training_topic_master_id"
   end
+
+  add_index "training_plans", ["training_topic_master_id"], name: "index_training_plans_on_training_topic_master_id"
 
   create_table "training_records", force: :cascade do |t|
     t.integer  "employee_id"

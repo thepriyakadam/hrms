@@ -24,7 +24,7 @@
         <% @training_plans.each do |training_plan| %>
           <tr>
             <td><%= training_plan.training_date %></td>
-            <td><%= training_plan.topic %></td>
+            <td><%= training_plan.training_topic_master.try(:name) %></td>
             <td><%= training_plan.no_of_employee %></td>
             <td><%= training_plan.trainer_name %></td>
             <td><%= training_plan.no_of_days %></td>

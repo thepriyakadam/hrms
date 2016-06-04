@@ -37,6 +37,7 @@ class SelectedResumesController < ApplicationController
 
   def create
     @selected_resume = SelectedResume.new(selected_resume_params)
+    # @vacancy_master = VacancyMaster.find(params[:format])
     @selected_resumes = SelectedResume.all
       if @selected_resume.save
         @selected_resume = SelectedResume.new

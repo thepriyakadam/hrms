@@ -6,17 +6,17 @@
         <%= f.select :period_id,all_period_type,{hide_label:true, include_blank: 'Select Period'} %>
       </div>
     </div>
-    
   </div>
-  <div class="row">
-    <div class="col-sm-3">
-      <div class="actions">
-        <%= f.submit "Create" , class: 'btn btn-primary btn-sm' %>
+
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="actions">
+          <%= f.submit "Create" , class: 'btn btn-primary btn-sm' %>
+        </div>
       </div>
     </div>
-  </div>
-<% end %>
 
+<% end %>
 <script type="text/javascript">
   $("#goal_bunch").validate({
     rules: {

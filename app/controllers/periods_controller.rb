@@ -31,8 +31,9 @@ class PeriodsController < ApplicationController
 	end
 
 	def destroy
-    @period.destroy
-    @periods = Period.all
+		@period.destroy
+    flash[:notice] = "Deleted Successfully"
+    redirect_to periods_path
 	end
 
 	private

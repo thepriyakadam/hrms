@@ -32,9 +32,9 @@
         <td>
             <% if vacancy_master.current_status == "Pending" %>
              <%= link_to '', cancel_vacancy_request_vacancy_masters_path(vacancy_master), data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-xs fa fa-trash' %>
-             <% elsif vacancy_master.current_status == "Approved" %>
+              <% elsif vacancy_master.current_status == "Approved" %>
               <small class="label label-primary">Approved</small>
-             <% elsif vacancy_master.current_status == "Reject" %>
+              <% elsif vacancy_master.current_status == "Reject" %>
               <small class="label label-danger">Reject</small>
               <% elsif vacancy_master.current_status == "Approved & Send Next" %>
               <small class="label label-info">Approved & Send Next</small>

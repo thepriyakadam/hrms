@@ -26,8 +26,8 @@
        <td><%= vacancy_request_history.employee_designation.try(:name) %></td>
         <td><%= vacancy_request_history.company_location.try(:name) %> - <%= vacancy_request_history.department.try(:name) %></td>
         <td><%= vacancy_request_history.degree.try(:name) %></td>
-        <td><%=  %></td>
-        <td> <%=  %></td>
+        <td><%= %></td>
+        <td> <%= %></td>
         <td><%= vacancy_request_history.no_of_position %></td>
         <td>
             <% if vacancy_request_history.current_status == "Pending" %>

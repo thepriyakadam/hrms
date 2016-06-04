@@ -1,5 +1,5 @@
 <%= bootstrap_form_for @selected_resume,url:{action:'is_confirm'} do |f| %>   
-<table id="example" class="table table-bordered table-hover table-condensed">
+<table class="table table-bordered table-hover table-condensed example3">
   <thead>
     <tr>
       <th><input type="checkbox" id="selectAll" value="selectAll"></th>
@@ -40,7 +40,12 @@
             <small class="label label-default">Not Yet Confirmed</small>
             <% end %>
         </td>
-        <td><%= selected_resume.offer_letter_status %></td>
+        <td><%= selected_resume.offer_letter_status %> <div id="myModal" class="modal fade"></div>
+          <% if selected_resume.is_confirm == true %>
+          <%= link_to ' Offer Letter',modal_selected_resumes_path(selected_resume),class: 'btn btn btn-sm btn-default fa fa-modx',remote: true %>
+          <% else %>
+          <% end %>
+          </td>
        <td>
          <% if selected_resume.avatar_file_name == nil %>
            <small class="label label-default">Resume Not Available</small>
@@ -59,15 +64,11 @@
         <%= link_to '', selected_resume,class: 'btn btn-xs btn-default fa fa-eye' %>
         <%= link_to '', selected_resume, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
            <% if selected_resume.is_confirm == true %>
-          <%= link_to ' Take Interview', new_interview_schedule_path(selected_resume.id),class: 'btn btn-xs btn-primary fa fa-check' %>
+          <%= link_to ' Interview', new_interview_schedule_path(selected_resume.id),class: 'btn btn-xs btn-primary fa fa-check' %>
           <% else %>
           <small class="label label-default">Not Yet Confirmed</small>
           <% end %>
-          <div id="myModal" class="modal fade"></div>
-          <% if selected_resume.is_confirm == true %>
-          <%= link_to ' Offer Letter',modal_selected_resumes_path(selected_resume),class: 'btn btn btn-sm btn-default fa fa-modx',remote: true %>
-          <% else %>
-          <% end %>
+          
         </td>
         </td>
       </tr>
@@ -87,11 +88,7 @@
 </div>
  <% end %>
 
-<script>
-$(document).ready(function() {
-    $('#example').DataTable();
-} );
-</script>
+
 
 <script type="text/javascript">
   $(function () {
@@ -106,6 +103,14 @@ $(document).ready(function() {
           this.checked = false;                        
         });
       } 
+    });
+  });
+
+  $(document).ready(function() {
+    $('.example3').DataTable( {
+      "scrollX":        "1200px",
+      "paging":         false,
+      "searching":     false
     });
   });
 </script>

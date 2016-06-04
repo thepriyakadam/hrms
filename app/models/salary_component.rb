@@ -6,6 +6,7 @@ class SalaryComponent < ActiveRecord::Base
   has_many :salaryslip_components
   has_many :salary_component_templates
   has_many :employee_arrear_items
+  has_many :salary_comp_mappings
   has_many :parent_salary_component_templates, class_name: 'SalaryComponentTemplate',
                                                foreign_key: 'parent_salary_component_id'
   has_many :children, class_name: 'SalaryComponent',

@@ -64,7 +64,8 @@ class InductionActivitiesController < ApplicationController
 
   def employee_list
      @employees = Employee.all
-     session[:active_tab] ="induction"
+     session[:active_tab] ="employeemanagement"
+     session[:active_tab1] ="employeeinduction"
   end
 
   def search_template

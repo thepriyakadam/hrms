@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160601110412) do
+ActiveRecord::Schema.define(version: 20160604051919) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -601,12 +601,8 @@ ActiveRecord::Schema.define(version: 20160601110412) do
     t.string   "allign_to_supervisor"
     t.boolean  "is_confirm"
     t.string   "emp_head"
-    t.integer  "appraiser_id"
-    t.integer  "appraiser2_id"
   end
 
-  add_index "employee_goals", ["appraiser2_id"], name: "index_employee_goals_on_appraiser2_id"
-  add_index "employee_goals", ["appraiser_id"], name: "index_employee_goals_on_appraiser_id"
   add_index "employee_goals", ["employee_id"], name: "index_employee_goals_on_employee_id"
   add_index "employee_goals", ["goal_perspective_id"], name: "index_employee_goals_on_goal_perspective_id"
   add_index "employee_goals", ["period_id"], name: "index_employee_goals_on_period_id"
@@ -1479,35 +1475,6 @@ ActiveRecord::Schema.define(version: 20160601110412) do
     t.datetime "updated_at",  null: false
   end
 
-  create_table "overall_ratings", force: :cascade do |t|
-    t.integer  "goal_rating_sheet_id"
-    t.integer  "employee_id"
-    t.integer  "ro1_id"
-    t.integer  "ro2_id"
-    t.integer  "final_id"
-    t.integer  "ro1_rating_id"
-    t.text     "ro1_comment"
-    t.integer  "ro2_rating_id"
-    t.text     "ro2_comment"
-    t.integer  "final_rating_id"
-    t.text     "final_comment"
-    t.boolean  "promotion"
-    t.decimal  "increement_amount"
-    t.decimal  "final_ctc"
-    t.text     "appraisee_comment"
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
-  end
-
-  add_index "overall_ratings", ["employee_id"], name: "index_overall_ratings_on_employee_id"
-  add_index "overall_ratings", ["final_id"], name: "index_overall_ratings_on_final_id"
-  add_index "overall_ratings", ["final_rating_id"], name: "index_overall_ratings_on_final_rating_id"
-  add_index "overall_ratings", ["goal_rating_sheet_id"], name: "index_overall_ratings_on_goal_rating_sheet_id"
-  add_index "overall_ratings", ["ro1_id"], name: "index_overall_ratings_on_ro1_id"
-  add_index "overall_ratings", ["ro1_rating_id"], name: "index_overall_ratings_on_ro1_rating_id"
-  add_index "overall_ratings", ["ro2_id"], name: "index_overall_ratings_on_ro2_id"
-  add_index "overall_ratings", ["ro2_rating_id"], name: "index_overall_ratings_on_ro2_rating_id"
-
   create_table "overtime_daily_records", force: :cascade do |t|
     t.integer  "employee_id"
     t.date     "ot_daily_date"
@@ -1805,6 +1772,16 @@ ActiveRecord::Schema.define(version: 20160601110412) do
     t.datetime "updated_at",  null: false
   end
 
+  create_table "salary_comp_mappings", force: :cascade do |t|
+    t.integer  "salary_component_id"
+    t.integer  "erp_account_code"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+    t.string   "map_type"
+  end
+
+  add_index "salary_comp_mappings", ["salary_component_id"], name: "index_salary_comp_mappings_on_salary_component_id"
+
   create_table "salary_component_templates", force: :cascade do |t|
     t.string   "manual_template_code"
     t.integer  "salary_template_id"
@@ -2012,9 +1989,12 @@ ActiveRecord::Schema.define(version: 20160601110412) do
     t.string   "no_of_days"
     t.string   "no_of_hrs"
     t.string   "place"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.integer  "training_topic_master_id"
   end
+
+  add_index "training_plans", ["training_topic_master_id"], name: "index_training_plans_on_training_topic_master_id"
 
   create_table "training_records", force: :cascade do |t|
     t.integer  "employee_id"

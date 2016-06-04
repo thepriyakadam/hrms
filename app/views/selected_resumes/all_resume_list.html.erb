@@ -69,7 +69,7 @@
         <%= link_to '', selected_resume,class: 'btn btn-xs btn-default fa fa-eye' %>
         <!--= link_to '', selected_resume, method: :delete, data: { confirm: 'Are you sure?'},class: 'btn btn-danger btn-xs fa fa-close' %>-->
            <% if selected_resume.is_confirm == true %>
-          <%= link_to ' Take Interview', new_interview_schedule_path(selected_resume.id),class: 'btn btn-xs btn-primary fa fa-check' %>
+          <%= link_to ' Schedule Interview', new_interview_schedule_path(selected_resume.id),class: 'btn btn-xs btn-primary fa fa-check' %>
           <% else %>
           <small class="label label-default">Not Yet Confirmed</small>
           <% end %>

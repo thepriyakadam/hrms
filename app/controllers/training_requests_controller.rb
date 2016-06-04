@@ -15,6 +15,7 @@ class TrainingRequestsController < ApplicationController
   # GET /training_requests/new
   def new
     @training_request = TrainingRequest.new
+    session[:active_tab] ="trainingmgmt"
   end
 
   # GET /training_requests/1/edit
@@ -63,6 +64,7 @@ class TrainingRequestsController < ApplicationController
 
   def training_request_list
     @training_requests = TrainingRequest.where(reporting_master_id: current_user.employee_id)
+    session[:active_tab] ="trainingmgmt"
   end
 
   def training_request_confirmation

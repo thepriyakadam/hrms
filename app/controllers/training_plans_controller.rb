@@ -15,6 +15,7 @@ class TrainingPlansController < ApplicationController
   # GET /training_plans/new
   def new
     @training_plan = TrainingPlan.new
+    session[:active_tab] ="trainingmgmt"
   end
 
   # GET /training_plans/1/edit
@@ -69,6 +70,6 @@ class TrainingPlansController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def training_plan_params
-      params.require(:training_plan).permit(:training_date, :topic, :no_of_employee, :trainer_name, :no_of_days, :no_of_hrs, :place)
+      params.require(:training_plan).permit(:training_date, :training_topic_master_id, :topic, :no_of_employee, :trainer_name, :no_of_days, :no_of_hrs, :place)
     end
 end

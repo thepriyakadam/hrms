@@ -14,7 +14,7 @@
         <td><%= @training_plan.training_date %></td>
       
         <th><strong>Topic:</strong></th>
-        <td><%= @training_plan.topic %></td>
+        <td><%= @training_plan.training_topic_master.try(:name) %></td>
       </tr>
 
       <tr>

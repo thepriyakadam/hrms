@@ -15,6 +15,7 @@ class GoalPerspectivesController < ApplicationController
   # GET /goal_perspectives/new
   def new
     @goal_perspective = GoalPerspective.new
+    @goal_perspectives = GoalPerspective.all
   end
 
   # GET /goal_perspectives/1/edit
@@ -25,14 +26,14 @@ class GoalPerspectivesController < ApplicationController
   # POST /goal_perspectives.json
   def create
     @goal_perspective = GoalPerspective.new(goal_perspective_params)
-
+    @goal_perspectives = GoalPerspective.all
     respond_to do |format|
       if @goal_perspective.save
-        format.html { redirect_to @goal_perspective, notice: 'Goal perspective was successfully created.' }
-        format.json { render :show, status: :created, location: @goal_perspective }
+        @goal_perspective = GoalPerspective.new
+        format.js { @flag = true }
       else
-        format.html { render :new }
-        format.json { render json: @goal_perspective.errors, status: :unprocessable_entity }
+        flash.now[:alert] = 'Goal Perspective Already Exist.'
+        format.js { @flag = false }
       end
     end
   end
@@ -40,25 +41,16 @@ class GoalPerspectivesController < ApplicationController
   # PATCH/PUT /goal_perspectives/1
   # PATCH/PUT /goal_perspectives/1.json
   def update
-    respond_to do |format|
-      if @goal_perspective.update(goal_perspective_params)
-        format.html { redirect_to @goal_perspective, notice: 'Goal perspective was successfully updated.' }
-        format.json { render :show, status: :ok, location: @goal_perspective }
-      else
-        format.html { render :edit }
-        format.json { render json: @goal_perspective.errors, status: :unprocessable_entity }
-      end
-    end
+    @goal_perspective.update(goal_perspective_params)
+    @goal_perspective = GoalPerspective.new
+    @goal_perspectives = GoalPerspective.all
   end
 
   # DELETE /goal_perspectives/1
   # DELETE /goal_perspectives/1.json
   def destroy
     @goal_perspective.destroy
-    respond_to do |format|
-      format.html { redirect_to goal_perspectives_url, notice: 'Goal perspective was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    @goal_perspectives = GoalPerspective.all
   end
 
   private

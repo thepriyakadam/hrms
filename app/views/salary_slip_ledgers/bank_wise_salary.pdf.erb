@@ -101,15 +101,15 @@
         <td><%= r.try(:holiday) %></td>
         <td><%= r.try(:weekoff) %></td>
 
-        <td><%= r.try(:earned_basic) %></td>
-        <td><%= r.try(:earned_da) %></td>
-        <td><%= r.try(:earned_hra) %></td>
+        <td><%= r.try(:earned_basic).round %></td>
+        <td><%= r.try(:earned_da).round %></td>
+        <td><%= r.try(:earned_hra).round %></td>
 
-        <td><%= r.try(:earned_convenience) %></td>
-        <td><%= r.try(:earned_other) %></td>
-        <td><%= r.try(:earned_special) %></td>
-        <td><%= r.try(:earned_washing) %></td>
-        <td><%= r.try(:earned_total) %></td>
+        <td><%= r.try(:earned_convenience).round %></td>
+        <td><%= r.try(:earned_other).round %></td>
+        <td><%= r.try(:earned_special).round %></td>
+        <td><%= r.try(:earned_washing).round %></td>
+        <td><%= r.try(:earned_total).round %></td>
 
         <td><%= r.try(:pf) %></td>
         <td><%= r.try(:esic) %></td>
@@ -149,14 +149,14 @@
       <td><%= @sum.holiday %></td>
       <td><%= @sum.weekoff %></td>
 
-      <td><%= @sum.earned_basic %></td>
-      <td><%= @sum.earned_da %></td>
-      <td><%= @sum.earned_hra %></td>
-      <td><%= @sum.earned_convenience %></td>
-      <td><%= @sum.earned_other %></td>
-      <td><%= @sum.earned_special %></td>
-      <td><%= @sum.earned_washing %></td>
-      <td><%= @sum.earned_total %></td>
+      <td><%= @sum.earned_basic.round %></td>
+      <td><%= @sum.earned_da.round %></td>
+      <td><%= @sum.earned_hra.round %></td>
+      <td><%= @sum.earned_convenience.round %></td>
+      <td><%= @sum.earned_other.round %></td>
+      <td><%= @sum.earned_special.round %></td>
+      <td><%= @sum.earned_washing.round %></td>
+      <td><%= @sum.earned_total.round %></td>
 
       <td><%= @sum.pf %></td>
       <td><%= @sum.esic %></td>

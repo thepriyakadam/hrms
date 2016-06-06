@@ -73,7 +73,7 @@ class GoalRatingsController < ApplicationController
     @goal_rating = GoalRating.find(params[:goal_rating_id])
     @goal_rating.update(goal_rating_params)
     flash[:notice] = 'Updated Successfully'
-    redirect_to appraisee_comment_goal_bunches_path
+    redirect_to appraisee_comment_goal_bunches_path(emp_id: @goal_rating.appraisee_id, id: @goal_rating.goal_bunch_id)
   end
 
   def appraiser_modal
@@ -84,7 +84,7 @@ class GoalRatingsController < ApplicationController
     @goal_rating = GoalRating.find(params[:goal_rating_id])
     @goal_rating.update(goal_rating_params)
     flash[:notice] = 'Updated Successfully'
-    redirect_to appraiser_comment_goal_bunches_path(id: @goal_rating.appraisee_id)
+    redirect_to appraiser_comment_goal_bunches_path(emp_id: @goal_rating.appraisee_id, id: @goal_rating.goal_bunch_id)
   end
 
   def reviewer_modal
@@ -95,7 +95,7 @@ class GoalRatingsController < ApplicationController
     @goal_rating = GoalRating.find(params[:goal_rating_id])
     @goal_rating.update(goal_rating_params)
     flash[:notice] = 'Updated Successfully'
-    redirect_to reviewer_comment_goal_bunches_path(id: @goal_rating.appraisee_id)
+    redirect_to reviewer_comment_goal_bunches_path(emp_id: @goal_rating.appraisee_id, id: @goal_rating.goal_bunch_id)
   end
 
   def goal_modal
@@ -106,7 +106,7 @@ class GoalRatingsController < ApplicationController
     @goal_rating = GoalRating.find(params[:goal_rating_id])
     @goal_rating.update(goal_rating_params)
     flash[:notice] = 'Updated Successfully'
-    redirect_to goal_approval_goal_bunches_path(id: @goal_rating.appraisee_id)
+    redirect_to goal_approval_goal_bunches_path(emp_id: @goal_rating.appraisee_id, id: @goal_rating.goal_bunch_id)
   end
 
   def print_department

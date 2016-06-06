@@ -143,7 +143,7 @@ class GoalBunchesController < ApplicationController
     @experiences = Experience.where(employee_id: @employee.id)
     @ctc = EmployeeSalaryTemplate.where(employee_id: @employee.id).sum(:monthly_amount)
 
-    @self_goal_ratings = GoalRating.where(appraisee_id: current_user.employee_id).where.not(appraisee_comment: nil)
+    @self_goal_ratings = GoalRating.where(appraisee_id: current_user.employee_id, goal_bunch_id: @goal_bunch_id.id).where.not(appraisee_comment: nil)
     @goal_rating = GoalRating.new
 
     @goal_bunch = GoalBunch.where(employee_id: current_user.employee_id, goal_confirm: true, id: @goal_bunch_id.id).take
@@ -175,7 +175,7 @@ class GoalBunchesController < ApplicationController
     @experiences = Experience.where(employee_id: @employee.id)
     @ctc = EmployeeSalaryTemplate.where(employee_id: @employee.id).sum(:monthly_amount)
 
-    @appraiser_goal_ratings = GoalRating.where(appraisee_id: @employee.id).where.not(appraiser_comment: nil)
+    @appraiser_goal_ratings = GoalRating.where(appraisee_id: @employee.id, goal_bunch_id: @goal_bunch_id.id).where.not(appraiser_comment: nil)
     @goal_rating = GoalRating.new
     
     @goal_bunch = GoalBunch.where(employee_id: @employee.id, appraisee_confirm: true, id: @goal_bunch_id.id).take
@@ -242,7 +242,7 @@ class GoalBunchesController < ApplicationController
     @experiences = Experience.where(employee_id: @employee.id)
     @ctc = EmployeeSalaryTemplate.where(employee_id: @employee.id).sum(:monthly_amount)
 
-    @reviewer_goal_ratings = GoalRating.where(appraisee_id: @employee.id).where.not(reviewer_comment: nil)
+    @reviewer_goal_ratings = GoalRating.where(appraisee_id: @employee.id,goal_bunch_id: @goal_bunch_id.id).where.not(reviewer_comment: nil)
     @goal_rating = GoalRating.new
 
     @goal_bunch = GoalBunch.where(employee_id: @employee.id, appraiser_confirm: true, id: @goal_bunch_id.id).take
@@ -294,7 +294,8 @@ class GoalBunchesController < ApplicationController
   end
 
   def final_comment
-    @employee = Employee.find(params[:id])
+    @employee = Employee.find(params[:emp_id])
+    @goal_bunch_id = GoalBunch.find(params[:id])
 
     goal_bunch_check = GoalBunch.where(employee_id: @employee.id, appraiser_confirm: true).take
     if goal_bunch_check.nil?
@@ -308,8 +309,9 @@ class GoalBunchesController < ApplicationController
     @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
     @experiences = Experience.where(employee_id: @employee.id)
     @ctc = EmployeeSalaryTemplate.where(employee_id: @employee.id).sum(:monthly_amount)
-    @goal_ratings = GoalRating.where(appraisee_id: @employee.id)
-    @goal_bunches = GoalBunch.where(employee_id: @employee.id)
+
+    @goal_ratings = GoalRating.where(appraisee_id: @employee.id, goal_bunch_id: @goal_bunch_id.id)
+    @goal_bunches = GoalBunch.where(employee_id: @employee.id,id: @goal_bunch_id.id)
     @goal_bunch = GoalBunch.find_by_employee_id(@employee.id)
   end
 
@@ -318,7 +320,7 @@ class GoalBunchesController < ApplicationController
     @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
     @goal_bunch.update(goal_bunch_params)
     flash[:notice] = "final comment added Successfully"
-    redirect_to final_comment_goal_bunches_path(id: @employee.id)
+    redirect_to final_comment_goal_bunches_path(emp_id: @employee.id, id:@goal_bunch.id)
     #redirect_to root_url
   end 
 
@@ -330,11 +332,11 @@ class GoalBunchesController < ApplicationController
     @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
     @goal_bunch.update(goal_bunch_params)
     flash[:notice] = 'Updated Successfully'
-    redirect_to final_comment_goal_bunches_path(id: @goal_bunch.employee_id)
+    redirect_to final_comment_goal_bunches_path(emp_id: @goal_bunch.employee_id, id: @goal_bunch.id)
   end
 
   def final_comment_confirm
-    @employee = Employee.find(params[:id])
+    @employee = Employee.find(params[:emp_id])
     @goal_bunch_ids = params[:goal_bunch_ids]
       if @goal_bunch_ids.nil?
         flash[:alert] = "Please Select the Checkbox"
@@ -346,7 +348,8 @@ class GoalBunchesController < ApplicationController
         flash[:notice] = "Confirmed Successfully"
         end
       end
-    redirect_to final_comment_goal_bunches_path(id: @employee.id)
+      @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
+    redirect_to final_comment_goal_bunches_path(emp_id: @employee.id,id: @goal_bunch.id)
   end
 
   def final_employee_list
@@ -354,26 +357,28 @@ class GoalBunchesController < ApplicationController
   end
 
   def final_detail
-    @employee = Employee.find(params[:id])
+    @employee = Employee.find(params[:emp_id])
+    @goal_bunch = GoalBunch.find(params[:id])
     @employees = Employee.where(id: @employee.id)
     @qualifications = Qualification.where(employee_id: @employee.id)
     @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
     @experiences = Experience.where(employee_id: @employee.id)
     @ctc = EmployeeSalaryTemplate.where(employee_id: @employee.id).sum(:monthly_amount)
-    @goal_ratings = GoalRating.where(appraisee_id: @employee.id)
-    @goal_bunches = GoalBunch.where(employee_id: @employee.id)
+    @goal_ratings = GoalRating.where(appraisee_id: @employee.id, goal_bunch_id: @goal_bunch.id)
+    @goal_bunches = GoalBunch.where(employee_id: @employee.id).group(:employee_id)
   end
 
   def print_final_detail
-    @employee = Employee.find(params[:id])
+    @employee = Employee.find(params[:emp_id])
+    @goal_bunch = GoalBunch.find(params[:id])
     @employees = Employee.where(id: @employee.id).group(:id)
 
     @qualifications = Qualification.where(employee_id: @employee.id)
     @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
     @experiences = Experience.where(employee_id: @employee.id)
     @ctc = EmployeeSalaryTemplate.where(employee_id: @employee.id).sum(:monthly_amount)
-    @goal_ratings = GoalRating.where(appraisee_id: @employee.id)
-    @goal_bunches = GoalBunch.where(employee_id: @employee.id)
+    @goal_ratings = GoalRating.where(appraisee_id: @employee.id, goal_bunch_id: @goal_bunch.id)
+    @goal_bunches = GoalBunch.where(employee_id: @employee.id, id: @goal_bunch.id).group(:employee_id)
 
     respond_to do |format|
       format.html
@@ -528,6 +533,16 @@ class GoalBunchesController < ApplicationController
   end
 
   def period_list_reviewer
+    @employee = Employee.find(params[:id])
+    @goal_bunches = GoalBunch.where(employee_id: @employee.id)
+  end
+
+  def period_list_final
+    @employee = Employee.find(params[:id])
+    @goal_bunches = GoalBunch.where(employee_id: @employee.id)
+  end
+
+  def period_list_print
     @employee = Employee.find(params[:id])
     @goal_bunches = GoalBunch.where(employee_id: @employee.id)
   end

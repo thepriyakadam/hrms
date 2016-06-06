@@ -85,6 +85,8 @@ Rails.application.routes.draw do
       get :period_list_appraisee
       get :period_list_appraiser
       get :period_list_reviewer
+      get :period_list_final
+      get :period_list_print
     end
   end
   resources :goal_perspectives

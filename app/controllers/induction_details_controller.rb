@@ -10,6 +10,7 @@ class InductionDetailsController < ApplicationController
   # GET /induction_details/1
   # GET /induction_details/1.json
   def show
+    @induction_activities = InductionActivity.where(induction_master_id: @induction_detail.induction_master_id)
   end
 
   # GET /induction_details/new
@@ -66,7 +67,8 @@ class InductionDetailsController < ApplicationController
 
   def all_induction_detail_list
    @induction_details = InductionDetail.all
-   session[:active_tab] ="induction"
+   session[:active_tab] ="employeemanagement"
+   session[:active_tab1] ="employeeinduction"
   end
 
   def confirm
@@ -76,7 +78,28 @@ class InductionDetailsController < ApplicationController
     flash[:notice] = 'induction Confirmed Successfully'
   end
 
-
+  def print_induction_details
+     puts "-----------------"
+    @induction_detail = InductionDetail.find(params[:id])
+    # @induction_details = InductionDetail.where(id: @induction_detail.id)
+    @induction_activities = InductionActivity.where(induction_master_id: @induction_detail.induction_master_id)
+     respond_to do |format|
+        format.html
+        format.pdf do
+        render :pdf => 'print_induction_details',
+        layout: '/layouts/pdf.html.erb',
+        :template => 'induction_details/print_induction_details.pdf.erb',
+        :orientation      => 'Landscape', # default , Landscape
+        :page_height      => 1000,
+        :dpi              => '300',
+        :margin           => {:top    => 20, # default 10 (mm)
+                      :bottom => 20,
+                      :left   => 20,
+                      :right  => 20},
+        :show_as_html => params[:debug].present?
+      end
+    end
+  end
 
 
   private

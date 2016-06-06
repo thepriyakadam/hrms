@@ -19,10 +19,7 @@
             </div>
           </div>
         </div>
-         <div class="col-sm-2">
-          <%= f.submit "Create Induction Plan" %>
-         </div>
-<% end %><br><br>
+         
 <div class="box-body">
 <table id="example2" class="table table-bordered table-hover table-condensed">
   <thead>
@@ -55,7 +52,11 @@
       </tr>
       <% end %>
   </tbody>
-</table>
+</table><br><br>
+  <div class="col-sm-2">
+    <%= f.submit "Create Induction Plan" %>
+  </div>
+<% end %>
 </div>
 </div>
 
@@ -72,25 +73,13 @@
 $(function(){
 $("#induction_detail").validate({
     rules: {
-      "induction_detail[employee_id]":{
-        required: true
-      },
       "induction_detail[start_date]":{
-        required: true
-              },
-      "induction_detail[induction_master_id]":{
         required: true
       }
     },
     messages: {
-      "induction_detail[employee_id]":{
-        required: "Please specify Employee Name"
-      },
       "induction_detail[start_date]":{
-        required: "Please specify Induction Start Date"
-      },
-      "induction_detail[induction_master_id]":{
-        required: "Please specify Induction Template"
+        required: "Please specify Start Date"
       }
     },
     errorPlacement: function(error, element) {

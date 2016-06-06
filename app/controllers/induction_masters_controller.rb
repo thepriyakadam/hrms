@@ -16,7 +16,8 @@ class InductionMastersController < ApplicationController
   def new
     @induction_master = InductionMaster.new
     @induction_masters = InductionMaster.all
-    session[:active_tab] ="induction"
+    session[:active_tab] ="employeemanagement"
+    session[:active_tab1] ="employeeinduction"
   end
 
   # GET /induction_masters/1/edit

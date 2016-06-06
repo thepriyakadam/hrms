@@ -17,4 +17,7 @@ class VacancyRequestHistory < ActiveRecord::Base
   has_many :indirect_subordinates, class_name: 'VacancyRequestHistory',
                                    foreign_key: 'degree_2_id'
   belongs_to :degree_2, class_name: 'Degree'
+
+  has_many :particular_vacancy_requests, class_name: 'VacancyRequestHistory',
+                          foreign_key: 'vacancy_history_id'
 end

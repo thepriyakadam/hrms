@@ -1,14 +1,10 @@
+<%= form_for :pdf_salaries, url: { action: 'print_induction_details',format: 'pdf',id: @induction_detail.id},:html => {:target => '_blank'} do |f| %>
 <div class="box box-default">
   <div class="box-header with-border">
     <h3 class="box-title">Induction Detail List</h3>
   </div><!-- /.box-header -->
   <div class="box-body">
     <table id="example2" class="table table-bordered table-hover table-condensed">
-    <tr> 
-      <th colspan="2"></th>
-      <th colspan="2"></th>
-    </tr>
-
     <tr>
       <th><strong>Employee</strong></th>
       <td><%= @induction_detail.employee.try(:first_name) %> <%= @induction_detail.employee.try(:middle_name) %> <%= @induction_detail.employee.try(:last_name) %></td>
@@ -18,7 +14,7 @@
     </tr>
 
     <tr>
-      <th><strong>Induction master</strong></th>
+      <th><strong>Induction Template Code</strong></th>
       <td><%= @induction_detail.induction_master.code %></td>
 
       <th><strong>Status</strong></th>
@@ -27,4 +23,13 @@
     
   </table>
     </div>
+
+    <div>
+      <%= render 'induction_activity_list' %>
+    </div>
+  
   </div>
+  <div class="col-sm-3">
+    <%= f.submit "Print Induction Detail",class: "btn btn-xl btn-warning fa fa-print" %>
+  </div>
+  <% end %>

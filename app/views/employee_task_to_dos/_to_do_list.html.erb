@@ -9,6 +9,7 @@
 
 	<% @employee_task_to_dos.each do |e| %>
 	<tr>
+	  <td><%= e.task_date %></td>
 	  <td><span class="label label-primary"><%= e.task_date %></span></td>
 	  <td><%= e.task_name %></td>
 	  <td><span class="label label-success"><%= e.status %></span></td>

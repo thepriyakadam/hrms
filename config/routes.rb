@@ -225,6 +225,11 @@ Rails.application.routes.draw do
     post 'advance_salaries/advance_salary_report'
   end
 
+  namespace :views do
+    get 'pdf_salaries/excel_report'
+    post 'pdf_salaries/print_salary_slip_excel'
+  end
+
   resources :week_offs
   resources :employee_leav_request_reports, only: [:index]
 
@@ -617,6 +622,8 @@ Rails.application.routes.draw do
       get :salary_slip_costunit_wise
       get :show_employee_costunit_wise
       post :print_salary_slip_cost_unitwise
+      get :excel_report
+      post :print_salary_slip_excel
     end
    end
   

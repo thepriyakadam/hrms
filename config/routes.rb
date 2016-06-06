@@ -145,6 +145,7 @@ Rails.application.routes.draw do
   resources :daily_bill_details do
     collection do 
     post :is_confirm
+    get :print_daily_bill
     end
   end 
   resources :travel_requests do

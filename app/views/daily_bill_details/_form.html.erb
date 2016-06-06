@@ -21,10 +21,14 @@
       </div>
        <div class="col-sm-3">
         <div class="field">
-          <%= f.select :travel_expence_type_id,all_travel_expence_type, label: 'Travel Expence',class: 'input_travel_expence'  %>
+          <%= f.select :travel_expence_type_id,all_travel_expence_type,{label: 'Travel Expence Type',include_blank: "select Travel Type"},class: 'input_travel_expence'  %>
         </div>
       </div>
-      
+      <div class="col-sm-3">
+        <div class="field">
+          <%= f.text_field :travel_expence,label: 'Travel Expence',class: 'input_travel_expence'  %>
+        </div>
+      </div>
 
     </div>
     </div>

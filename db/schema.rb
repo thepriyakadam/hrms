@@ -807,7 +807,7 @@ ActiveRecord::Schema.define(version: 20160601110412) do
     t.text     "task_name"
     t.date     "task_date"
     t.boolean  "status"
-    t.time     "task_time"
+    t.string   "time"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end

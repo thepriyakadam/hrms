@@ -75,6 +75,10 @@ class PdfSalariesController < ApplicationController
     @employees = Employee.where(id: @salaryslips, department_id: department)
   end
   
+  def print_salary_slip_excel
+    puts "-------------"
+    @salaryslips = Salaryslip.all
+  end
 
   def employee_list_pdf
     # @employees = Employee.all

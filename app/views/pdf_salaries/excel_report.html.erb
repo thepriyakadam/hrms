@@ -1,0 +1,16 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Salary Slip Excel</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+  <%= bootstrap_form_for(:pdf_salaries, url: { action: 'print_salary_slip_excel',format: 'xls'}) do |f| %>
+
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "Download Excel", class: "btn btn-sm btn-warning" %>
+      </div>
+    </div>
+
+</div>
+</div>
+<% end %>

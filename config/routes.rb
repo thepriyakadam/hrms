@@ -227,8 +227,13 @@ Rails.application.routes.draw do
   end
 
   namespace :views do
+
     get 'goal_bunches/final_detail'
     post 'goal_bunches/xl_sheet_print'
+
+    get 'pdf_salaries/excel_report'
+    post 'pdf_salaries/print_salary_slip_excel'
+
   end
 
   resources :week_offs
@@ -623,6 +628,8 @@ Rails.application.routes.draw do
       get :salary_slip_costunit_wise
       get :show_employee_costunit_wise
       post :print_salary_slip_cost_unitwise
+      get :excel_report
+      post :print_salary_slip_excel
     end
    end
   

@@ -16,6 +16,8 @@ class GoalPerspectivesController < ApplicationController
   def new
     @goal_perspective = GoalPerspective.new
     @goal_perspectives = GoalPerspective.all
+    session[:active_tab] = "master"
+    session[:active_tab1] = "performancemaster"
   end
 
   # GET /goal_perspectives/1/edit

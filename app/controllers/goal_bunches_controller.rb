@@ -16,6 +16,8 @@ class GoalBunchesController < ApplicationController
   def new
     @goal_bunch = GoalBunch.new
     @goal_bunches = GoalBunch.all
+    session[:active_tab] ="performancemgmt"
+   
   end
 
   # GET /goal_bunches/1/edit

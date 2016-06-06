@@ -119,6 +119,11 @@
       <% end %>
     </tbody>
   </table>
+  
+
+  <% if  @goal_bunch.nil? %>
+  <center><p class="text-warning"> No Goal Bunch Available </p></center> 
+  <% else %>
 
 <%= bootstrap_form_for(@goal_bunch,url:{action: "final_create",employee_id: @employee.id,goal_bunch_id: @goal_bunch.id}) do |f| %>
 <%= hidden_field_tag :final_id, {},value: current_user.employee_id %>
@@ -208,6 +213,7 @@
   <% end %>
   </div>
 </div>
+<% end %>
 
 <div id="myModal" class="modal fade"></div>
 <script type="text/javascript">

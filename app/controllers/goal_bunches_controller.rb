@@ -490,7 +490,6 @@ class GoalBunchesController < ApplicationController
   end
 
   def xl_sheet_print
-    puts "---------------------------------------------------------"
     # byebug
     @employee = Employee.find(params[:id])
     @employees = Employee.where(id: @employee.id)

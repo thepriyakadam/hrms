@@ -80,6 +80,7 @@ Rails.application.routes.draw do
       post :reviewer_overall_comment_confirm
       get :modal_period
       post :modal_period_create
+      post :xl_sheet_print
     end
   end
   resources :goal_perspectives
@@ -226,8 +227,13 @@ Rails.application.routes.draw do
   end
 
   namespace :views do
+
+    get 'goal_bunches/final_detail'
+    post 'goal_bunches/xl_sheet_print'
+
     get 'pdf_salaries/excel_report'
     post 'pdf_salaries/print_salary_slip_excel'
+
   end
 
   resources :week_offs

@@ -1,4 +1,4 @@
-<%= bootstrap_form_for GoalRating.new,url:{action:'send_mail_to_appraiser'} do |f| %>
+<%= bootstrap_form_for GoalRating.new,url:{action:'send_mail_to_appraiser',goal_bunch_id: @goal_bunch.id} do |f| %>
 
 <table class="table table-bordered table-hover table-condensed">
   <thead>
@@ -34,7 +34,7 @@
   <div class="row">
     <div class="col-sm-3">
       <div class="actions">
-        <!-- f.submit "Send Mail", class: 'btn btn-primary btn-sm' %> -->
+       <%= f.submit "Send Mail", class: 'btn btn-primary btn-sm' %>
       </div>
     </div>
   </div>

@@ -22,7 +22,7 @@
         <td><%= e.first_name %> <%= e.middle_name %> <%= e.last_name %> </td>
         <td><%= e.company_location.try(:name) %> - <%= e.department.try(:name) %></td> 
         <td><%= e.joining_detail.employee_designation.try(:name) %></td>
-        <td><%= link_to 'Comment For Employee', reviewer_comment_goal_bunches_path(id: e) ,class: 'btn btn-xs btn-info' %></td>
+        <td><%= link_to 'Reviewer Comment', reviewer_comment_goal_bunches_path(id: e) ,class: 'btn btn-xs btn-info' %></td>
         </tr>
         <% end %>
       </tbody>

@@ -121,10 +121,11 @@ class GoalRatingsController < ApplicationController
   end
   
   def send_mail_to_appraiser
-    @emp = GoalRating.find(73)
+    @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
+    @emp = Employee.find(current_user.employee.manager_id)
     GoalRatingMailer.send_email_to_appraiser(@emp).deliver_now
     flash[:notice] = "Mail Sent Successfully"
-    redirect_to root_url
+    redirect_to new_goal_rating_path(id: @goal_bunch.id)
   end
 
   private

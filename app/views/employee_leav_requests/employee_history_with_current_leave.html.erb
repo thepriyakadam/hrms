@@ -49,20 +49,24 @@
         </table>
       </div>
     </div>
+    <tr>
     <div class="row">
-      <div class="col-sm-2">Name</div>
+      <th><div class="col-sm-2">Name</div></th>
       <div class="col-sm-6"><%= full_name(@employee) %></div>
     </div>
+    </tr>
+    <tr>
     <div class="row">
-      <div class="col-sm-2">Leave Category</div>
+     <th><div class="col-sm-2">Leave Category</div></th>
       <div class="col-sm-6"><%= @current_request.leav_category.name %></div>
     </div>
+    </tr>
     <div class="row">
       <div class="col-sm-2">Leave Type</div>
       <div class="col-sm-6"><%= @current_request.leave_type %></div>
     </div>
     <div class="row">
-      <div class="col-sm-2">No of Day</div>
+      <div class="col-sm-2">No. of Day</div>
       <div class="col-sm-6"><%= @current_request.leave_count %></div>
     </div>
     <div class="row">

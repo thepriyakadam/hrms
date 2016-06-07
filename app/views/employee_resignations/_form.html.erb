@@ -3,7 +3,7 @@
     <h3 class="box-title"> Employee Resignation </h3>
   </div><!-- /.box-header -->
   <div class="box-body">
-    <%= bootstrap_form_for(@employee_resignation,remote:true) do |f| %>
+    <%= bootstrap_form_for(@employee_resignation) do |f| %>
       <div class="row">
         <div class="col-sm-3">
           <label>Resignation Date </label>
@@ -17,12 +17,20 @@
           </div>
         </div>
 
-        <div class="col-sm-6">
+        <div class="col-sm-3">
           <div class="field">
-            <%= f.select :leaving_reason_id, all_leaving_reason, label: "Reason of Leaving" %>
+          <%= f.select :leaving_reason_id, all_leaving_reason,{label: 'Reason of Leaving',include_blank: " Select Reason of Leaving"} %>
+          </div>
+        </div>
+
+         <div class="col-sm-3">
+          <div class="field">
+          <%= f.select :employee_id, all_employee_list,{label: 'Employee ID',include_blank: " Select Employee ID"} %>
           </div>
         </div>
       </div>
+
+
 
       <div class="row">
        <div class="col-sm-3">

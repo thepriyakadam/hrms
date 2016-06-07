@@ -65,6 +65,13 @@ class GoalBunchesController < ApplicationController
   def goal_approval
     @goal_bunch_id = GoalBunch.find(params[:id])
     @employee = Employee.find(params[:emp_id])
+    
+    @employees = Employee.where(id: @employee.id)
+    @qualifications = Qualification.where(employee_id: @employee.id)
+    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
+    @experiences = Experience.where(employee_id: @employee.id)
+    @ctc = EmployeeSalaryTemplate.where(employee_id: @employee.id).sum(:monthly_amount)
+
     @goal_ratings = GoalRating.where(appraisee_id: @employee.id, goal_bunch_id: @goal_bunch_id)
   end
 

@@ -1,55 +1,46 @@
-<p id="notice"><%= notice %></p>
 
-<h1>Listing Employee Resignations</h1>
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Listing Employee Resignation</h3>
+    <div class="pull-right">
+      <%= link_to "Create Employee Resignation", new_employee_resignation_path, class: 'btn btn-primary' %> 
+    </div>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example1" class="table table-bordered table-hover table-condensed'">
+      <thead>
+        <tr>
+          <th>Employee ID</th>
+          <th>Resignation Date</th>
+          <th>Reason</th>
+          <th>Leaving Date</th>
+          <th>Notice Period</th>
+          <th>Short Notice Period</th>
+          <th>Exit Interview Date</th>
+          <th>Action</th>
+       </tr>
+      </thead>
 
-<table>
-  <thead>
-    <tr>
-      <th>Employee</th>
-      <th>Resignation date</th>
-      <th>Reason</th>
-      <th>Is notice period</th>
-      <th>Notice period</th>
-      <th>Short notice period</th>
-      <th>Tentative leaving date</th>
-      <th>Remark</th>
-      <th>Exit interview date</th>
-      <th>Note</th>
-      <th>Leaving date</th>
-      <th>Settled on</th>
-      <th>Has left</th>
-      <th>Notice served</th>
-      <th>Rehired</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+      <tbody>
+        <% @employee_resignations.each do |employee_resignation| %>
+          <tr>
+            <td><%= employee_resignation.employee.try(:manual_employee_code) %></td>
+            <td><%= employee_resignation.resignation_date %></td>
+            <td><%= employee_resignation.reason %></td>
+            <td><%= employee_resignation.leaving_date %></td>
+            <td><%= employee_resignation.notice_period %></td>
+            <td><%= employee_resignation.short_notice_period %></td>
+            <td><%= employee_resignation.exit_interview_date %></td>
+            
 
-  <tbody>
-    <% @employee_resignations.each do |employee_resignation| %>
-      <tr>
-        <td><%= employee_resignation.employee %></td>
-        <td><%= employee_resignation.resignation_date %></td>
-        <td><%= employee_resignation.reason %></td>
-        <td><%= employee_resignation.is_notice_period %></td>
-        <td><%= employee_resignation.notice_period %></td>
-        <td><%= employee_resignation.short_notice_period %></td>
-        <td><%= employee_resignation.tentative_leaving_date %></td>
-        <td><%= employee_resignation.remark %></td>
-        <td><%= employee_resignation.exit_interview_date %></td>
-        <td><%= employee_resignation.note %></td>
-        <td><%= employee_resignation.leaving_date %></td>
-        <td><%= employee_resignation.settled_on %></td>
-        <td><%= employee_resignation.has_left %></td>
-        <td><%= employee_resignation.notice_served %></td>
-        <td><%= employee_resignation.rehired %></td>
-        <td><%= link_to 'Show', employee_resignation %></td>
-        <td><%= link_to 'Edit', edit_employee_resignation_path(employee_resignation) %></td>
-        <td><%= link_to 'Destroy', employee_resignation, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
+            <td><%= link_to '', employee_resignation, class: 'btn btn-default fa fa-eye btn-sm' %>
+            <%= link_to '', edit_employee_resignation_path(employee_resignation), class: 'btn btn-sm btn-success fa fa-edit' %>
+            <%= link_to '', employee_resignation, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-sm btn-danger fa fa-close' %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
 <br>
 
-<%= link_to 'New Employee resignation', new_employee_resignation_path %>

@@ -1,79 +1,113 @@
-<p id="notice"><%= notice %></p>
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Employee Resignation</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed'">
+    
 
-<p>
-  <strong>Employee:</strong>
-  <%= @employee_resignation.employee %>
-</p>
 
-<p>
-  <strong>Resignation date:</strong>
-  <%= @employee_resignation.resignation_date %>
-</p>
+<tr>
+ <th><strong>Employee ID</strong></th>
+ <td><%= @employee_resignation.employee.try (:manual_employee_code )%></td>
+ 
+</tr>
 
-<p>
-  <strong>Reason:</strong>
-  <%= @employee_resignation.reason %>
-</p>
+<tr>
+  <th><strong>Resignation Date</strong></th>
+  <td><%= @employee_resignation.resignation_date %></td>
+ 
+</tr>
 
-<p>
-  <strong>Is notice period:</strong>
-  <%= @employee_resignation.is_notice_period %>
-</p>
+<tr>
+  <th><strong>Reason</strong></th>
+  <td><%= @employee_resignation.reason %></td>
+  
 
-<p>
-  <strong>Notice period:</strong>
-  <%= @employee_resignation.notice_period %>
-</p>
+</tr>
 
-<p>
-  <strong>Short notice period:</strong>
-  <%= @employee_resignation.short_notice_period %>
-</p>
+<tr>
+  <th><strong>Is Notice Period</strong></th>
+  <td><%= @employee_resignation.is_notice_period %></td>
+  
+</tr>
 
-<p>
-  <strong>Tentative leaving date:</strong>
-  <%= @employee_resignation.tentative_leaving_date %>
-</p>
+<tr>
+ <th><strong>Notice period:</strong></th>
+  <td><%= @employee_resignation.notice_period %></td>
+  
+</tr>
 
-<p>
-  <strong>Remark:</strong>
-  <%= @employee_resignation.remark %>
-</p>
+<tr>
+  <th><strong>Short notice period:</strong></th>
+  <td><%= @employee_resignation.short_notice_period %></td>
+  
+</tr>
 
-<p>
-  <strong>Exit interview date:</strong>
-  <%= @employee_resignation.exit_interview_date %>
-</p>
+<tr>
+ <th><strong>Tentative leaving date</strong></th>
+ <td><%= @employee_resignation.tentative_leaving_date %></td>
+ 
 
-<p>
-  <strong>Note:</strong>
-  <%= @employee_resignation.note %>
-</p>
+</tr>
 
-<p>
-  <strong>Leaving date:</strong>
-  <%= @employee_resignation.leaving_date %>
-</p>
+<tr>
+  <th><strong>Remark:</strong></th>
+ <td><%= @employee_resignation.remark %></td>
+ 
 
-<p>
-  <strong>Settled on:</strong>
-  <%= @employee_resignation.settled_on %>
-</p>
+</tr>
 
-<p>
-  <strong>Has left:</strong>
-  <%= @employee_resignation.has_left %>
-</p>
+<tr>
+ <th><strong>Exit interview date:</strong></th>
+  <td><%= @employee_resignation.exit_interview_date %></td>
+  
+</tr>
 
-<p>
-  <strong>Notice served:</strong>
-  <%= @employee_resignation.notice_served %>
-</p>
+<tr>
+ <th><strong>Note:</strong></th>
+  <td><%= @employee_resignation.note %></td>
+ 
 
-<p>
-  <strong>Rehired:</strong>
-  <%= @employee_resignation.rehired %>
-</p>
+</tr>
 
-<%= link_to 'Edit', edit_employee_resignation_path(@employee_resignation) %> |
-<%= link_to 'Back', employee_resignations_path %>
+<tr>
+  <th><strong>Leaving date:</strong></th>
+  <td><%= @employee_resignation.leaving_date %></td>
+  
+
+</tr>
+
+<tr>
+ <th><strong>Settled on:</strong></th>
+ <td><%= @employee_resignation.settled_on %></td>
+
+
+</tr>
+
+<tr>
+  <th><strong>Has left:</strong></th>
+ <td><%= @employee_resignation.has_left %></td>
+ 
+</tr>
+
+<tr>
+  <th><strong>Notice served</strong></th>
+ <td><%= @employee_resignation.notice_served %></td>
+
+</tr>
+
+<tr>
+  <th><strong>Rehired</strong></th>
+  <td><%= @employee_resignation.rehired %></td>
+ 
+
+</tr>
+
+</table>
+<%= link_to 'Edit', edit_employee_resignation_path(@employee_resignation),class: 'btn btn-success btn-sm fa fa-edit' %> |
+<%= link_to 'Back', employee_resignations_path,class: 'btn btn-primary fa fa-arrow-left' %>
+
+
+</div>
+</div>

@@ -76,7 +76,6 @@ class PdfSalariesController < ApplicationController
   end
   
   def print_salary_slip_excel
-    puts "-------------"
     @salaryslips = Salaryslip.all
   end
 

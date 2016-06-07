@@ -77,6 +77,10 @@
     <% end %>
   </tbody>
 </table>
+  
+  <% if  @goal_bunch.nil? %>
+  <center><p class="text-warning"> No Goal Bunch Available </p></center> 
+  <% else %>
 
 <div class="box box-default">
   <div class="box-header with-border">
@@ -237,8 +241,10 @@
     
 <% end %>
 
+<% end %>
 </div>
 </div>
+
 <div id="myModal" class="modal fade"></div>
 <script type="text/javascript">
   $(function () {

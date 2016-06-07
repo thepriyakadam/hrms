@@ -78,6 +78,10 @@
     </tbody>
   </table>
 
+  <% if  @goal_bunch.nil? %>
+  <center><p class="text-warning"> No Goal Bunch Available </p></center> 
+  <% else %>
+
 <div class="box box-default">
   <div class="box-header with-border">
     <h3 class="box-title">Goal Rating</h3>
@@ -220,7 +224,10 @@
       <% end %>
     <% end %>
 <% end %>
+
+<% end %>
   <br>
+
    <%= link_to 'Back',period_list_appraisee_goal_bunches_path(id: @employee.id),class: 'btn btn-sm btn-default'%>
 </div>
 </div>

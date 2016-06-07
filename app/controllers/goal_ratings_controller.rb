@@ -18,7 +18,6 @@ class GoalRatingsController < ApplicationController
     @goal_rating = GoalRating.new
     @goal_ratings = GoalRating.where(goal_bunch_id: @goal_bunch.id)
     @goal_bunches = GoalBunch.all
-
   end
 
   # GET /goal_ratings/1/edit
@@ -31,14 +30,16 @@ class GoalRatingsController < ApplicationController
   def create
     @goal_bunch = GoalBunch.find(params[:goal_rating][:goal_bunch_id])
     @goal_rating = GoalRating.new(goal_rating_params)
+    goal_weightage_sum = @goal_rating.goal_weightage_sum(@goal_bunch, @goal_rating)
 
-      if @goal_rating.save
-        @flag = true
-        @goal_rating = GoalRating.new
-        @goal_ratings = GoalRating.where(goal_bunch_id: @goal_bunch.id)
-      else
-        @flag = false
-      end
+    if goal_weightage_sum <= 100
+      @goal_rating.save
+      @flag = true
+      @goal_rating = GoalRating.new
+      @goal_ratings = GoalRating.where(goal_bunch_id: @goal_bunch.id)
+    else
+      @flag = false
+    end
   end
 
   # PATCH/PUT /goal_ratings/1

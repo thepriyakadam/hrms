@@ -378,8 +378,8 @@ class GoalBunchesController < ApplicationController
                :dpi              => '300',
                :margin           => {:top    => 10, # default 10 (mm)
                           :bottom => 10,
-                          :left   => 12,
-                          :right  => 12},
+                          :left   => 14,
+                          :right  => 14},
                orientation: 'Landscape',
                template: 'goal_bunches/print_final_detail.pdf.erb',
               :show_as_html => params[:debug].present?

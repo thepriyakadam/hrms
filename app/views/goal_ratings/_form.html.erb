@@ -4,7 +4,6 @@
   <%= f.hidden_field :goal_setter_id, value: current_user.employee_id  %>
   <%= f.hidden_field :appraisee_id, value: @goal_bunch.employee_id  %>
   <%= f.hidden_field :appraiser_id, value: @goal_bunch.employee.manager_id %>
-
     <div class="row">
       <div class="col-sm-3">
       <label>Goal Perspective</label>
@@ -53,6 +52,14 @@
         required: true
       },
       "goal_rating[goal_weightage]":{
+        required: true,
+        numbersOnly:true,
+        range:[1,100]
+      },
+      "goal_rating[goal_measure]":{
+        required: true
+      },
+      "goal_rating[target]":{
         required: true
       }
     },
@@ -62,6 +69,12 @@
       },
       "goal_rating[goal_weightage]":{
         required: "Please specify Weightage"
+      },
+      "goal_rating[goal_measure]":{
+        required: "Please specify Goal Measure"
+      },
+      "goal_rating[target]":{
+        required: "Please specify Target"
       }
     },
     errorPlacement: function(error, element) {

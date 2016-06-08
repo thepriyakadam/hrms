@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160604051919) do
+ActiveRecord::Schema.define(version: 20160604051920) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -807,7 +807,7 @@ ActiveRecord::Schema.define(version: 20160604051919) do
     t.text     "task_name"
     t.date     "task_date"
     t.boolean  "status"
-    t.string   "time"
+    t.time     "task_time"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
@@ -2123,6 +2123,7 @@ ActiveRecord::Schema.define(version: 20160604051919) do
     t.string   "current_status"
     t.integer  "travel_option_id"
     t.integer  "travel_mode_id"
+    t.boolean  "is_confirm"
   end
 
   add_index "travel_requests", ["employee_id"], name: "index_travel_requests_on_employee_id"

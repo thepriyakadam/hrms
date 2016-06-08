@@ -145,6 +145,7 @@ Rails.application.routes.draw do
   resources :daily_bill_details do
     collection do 
     post :is_confirm
+    get :print_daily_bill
     end
   end 
   resources :travel_requests do
@@ -162,6 +163,7 @@ Rails.application.routes.draw do
       patch :edit_and_send_next_modal_submit
       get :edit_and_approve_modal
       patch :edit_and_approve_modal_submit
+      get :is_confirm
     end
   end
   namespace :reports do

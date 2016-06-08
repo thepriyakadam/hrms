@@ -150,6 +150,13 @@ class TravelRequestsController < ApplicationController
     
   end
 
+  def is_confirm
+    @travel_request = TravelRequest.find(params[:travel_id])
+    @travel_request.update(is_confirm: true)
+    flash[:notice] = "Confirmed !"
+    redirect_to daily_bill_travel_requests_path
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_travel_request

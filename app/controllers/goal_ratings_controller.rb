@@ -18,7 +18,6 @@ class GoalRatingsController < ApplicationController
     @goal_rating = GoalRating.new
     @goal_ratings = GoalRating.where(goal_bunch_id: @goal_bunch.id)
     @goal_bunches = GoalBunch.all
-
   end
 
   # GET /goal_ratings/1/edit
@@ -31,14 +30,15 @@ class GoalRatingsController < ApplicationController
   def create
     @goal_bunch = GoalBunch.find(params[:goal_rating][:goal_bunch_id])
     @goal_rating = GoalRating.new(goal_rating_params)
-
-      if @goal_rating.save
-        @flag = true
-        @goal_rating = GoalRating.new
-        @goal_ratings = GoalRating.where(goal_bunch_id: @goal_bunch.id)
-      else
-        @flag = false
-      end
+    goal_weightage_sum = @goal_rating.goal_weightage_sum(@goal_bunch, @goal_rating)
+    if goal_weightage_sum <= 100
+      @goal_rating.save
+      @flag = true
+      @goal_rating = GoalRating.new
+      @goal_ratings = GoalRating.where(goal_bunch_id: @goal_bunch.id)
+    else
+      @flag = false
+    end
   end
 
   # PATCH/PUT /goal_ratings/1
@@ -122,9 +122,14 @@ class GoalRatingsController < ApplicationController
   
   def send_mail_to_appraiser
     @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
-    @emp = Employee.find(current_user.employee.manager_id)
-    GoalRatingMailer.send_email_to_appraiser(@emp).deliver_now
-    flash[:notice] = "Mail Sent Successfully"
+    sum = @goal_bunch.goal_ratings.sum(:goal_weightage)
+    if sum == 100
+      @emp = Employee.find(current_user.employee.manager_id)
+      GoalRatingMailer.send_email_to_appraiser(@emp).deliver_now
+      flash[:notice] = "Mail Sent Successfully"
+    else
+      flash[:alert] = "Goal weightage sum should be 100"
+    end
     redirect_to new_goal_rating_path(id: @goal_bunch.id)
   end
 

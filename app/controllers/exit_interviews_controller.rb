@@ -16,6 +16,7 @@ class ExitInterviewsController < ApplicationController
   def new
     @exit_interview = ExitInterview.new
     @exit_interviews = ExitInterview.all
+    session[:active_tab] = "resignationmanagement"
   end
 
   # GET /exit_interviews/1/edit

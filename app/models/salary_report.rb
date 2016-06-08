@@ -14,7 +14,7 @@ class SalaryReport
         sr = SalaryReport.new
         sr.month = sl.month
         sr.year = sl.year
-        sr.employee_name = e.try(:first_name).to_s + ' ' + e.try(:last_name).to_s
+        sr.employee_name = e.try(:first_name).to_s + ' ' + e.try(:middle_name).to_s + ' ' + e.try(:last_name).to_s
         sr.department_name = e.department.try(:name)
         sr.code = e.manual_employee_code
         sr.pf_no = j.employee_pf_no
@@ -280,7 +280,7 @@ class SalaryReport
     j = JoiningDetail.find_by_employee_id(employee.id)
     addable_items = template.employee_salary_templates.where(is_deducted: false)
     sr = SalaryReport.new
-    sr.employee_name = employee.try(:first_name).to_s + ' ' + employee.try(:last_name).to_s
+    sr.employee_name = employee.try(:first_name).to_s + ' ' + employee.try(:middle_name).to_s + ' ' + employee.try(:last_name).to_s
     sr.department_name = employee.department.try(:name)
     sr.code = employee.manual_employee_code
 
@@ -331,7 +331,7 @@ class SalaryReport
     sr = SalaryReport.new
     sr.month = sl.month
     sr.year = sl.year
-    sr.employee_name = e.try(:first_name).to_s + ' ' + e.try(:last_name).to_s
+    sr.employee_name = e.try(:first_name).to_s + ' ' + e.try(:middle_name).to_s + ' ' + e.try(:last_name).to_s
     sr.department_name = e.department.try(:name)
     sr.code = e.manual_employee_code
 

@@ -124,7 +124,7 @@ class GoalRatingsController < ApplicationController
     @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
     sum = @goal_bunch.goal_ratings.sum(:goal_weightage)
     if sum == 100
-      @emp = Employee.find(current_user.employee.manager_id)
+      @emp = Employee.find(current_user.employee_id)
       GoalRatingMailer.send_email_to_appraiser(@emp).deliver_now
       flash[:notice] = "Mail Sent Successfully"
     else

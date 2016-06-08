@@ -330,7 +330,8 @@ class GoalBunchesController < ApplicationController
 
     @goal_ratings = GoalRating.where(appraisee_id: @employee.id, goal_bunch_id: @goal_bunch_id.id)
     @goal_bunches = GoalBunch.where(employee_id: @employee.id,id: @goal_bunch_id.id)
-    @goal_bunch = GoalBunch.find_by_employee_id(@employee.id)
+     @goal_bunch = GoalBunch.find_by_employee_id(@employee.id)
+    #@goal_bunch = GoalBunch.where(employee_id: @employee.id,id: @goal_bunch_id.id)
   end
 
   def final_create
@@ -627,6 +628,46 @@ class GoalBunchesController < ApplicationController
     @goal_bunches = GoalBunch.where(employee_id: @employee.id,id: @goal_bunch.id)                                 
   end
 
+  def xl_appraisee_detail
+    @employee = Employee.find(current_user.employee_id)
+    @goal_bunch = GoalBunch.find(params[:id])
+
+    @employees = Employee.where(id: @employee.id)
+    @qualifications = Qualification.where(employee_id: @employee.id)
+    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
+    @experiences = Experience.where(employee_id: @employee.id)
+    @ctc = EmployeeSalaryTemplate.where(employee_id: @employee.id).sum(:monthly_amount)
+
+    @goal_ratings = GoalRating.where(appraisee_id: @employee.id,goal_bunch_id: @goal_bunch.id)
+    @goal_bunches = GoalBunch.where(employee_id: @employee.id,id: @goal_bunch.id)                                 
+  end
+
+  def xl_appraiser_detail
+    @employee = Employee.find(params[:emp_id])
+    @goal_bunch = GoalBunch.find(params[:id])
+
+    @employees = Employee.where(id: @employee.id)
+    @qualifications = Qualification.where(employee_id: @employee.id)
+    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
+    @experiences = Experience.where(employee_id: @employee.id)
+    @ctc = EmployeeSalaryTemplate.where(employee_id: @employee.id).sum(:monthly_amount)
+    @goal_ratings = GoalRating.where(appraisee_id: @employee.id,goal_bunch_id: @goal_bunch.id)
+    @goal_bunches = GoalBunch.where(employee_id: @employee.id,id: @goal_bunch.id)                              
+  end
+
+  def xl_reviewer_detail
+    @employee = Employee.find(params[:emp_id])
+    @goal_bunch = GoalBunch.find(params[:id])
+
+    @employees = Employee.where(id: @employee.id)
+    @qualifications = Qualification.where(employee_id: @employee.id)
+    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
+    @experiences = Experience.where(employee_id: @employee.id)
+    @ctc = EmployeeSalaryTemplate.where(employee_id: @employee.id).sum(:monthly_amount)
+    @goal_ratings = GoalRating.where(appraisee_id: @employee.id,goal_bunch_id: @goal_bunch.id)
+    @goal_bunches = GoalBunch.where(employee_id: @employee.id,id: @goal_bunch.id)                                 
+  end
+
   def goal_period_list
     @employee = Employee.find(params[:id])
     @goal_bunches = GoalBunch.where(employee_id: @employee.id)
@@ -655,6 +696,66 @@ class GoalBunchesController < ApplicationController
   def period_list_print
     @employee = Employee.find(params[:id])
     @goal_bunches = GoalBunch.where(employee_id: @employee.id)
+  end
+
+  def subordinate_list_for_appraisee
+    current_login = Employee.find(current_user.employee_id)
+    @employees = current_login.subordinates
+  end
+
+  def period_appraisee
+    @employee = Employee.find(params[:id])
+    @goal_bunches = GoalBunch.where(employee_id: @employee.id)
+  end
+
+  def subordinate_list_for_reviewer
+    current_login = Employee.find(current_user.employee_id)
+    @employees = current_login.indirect_subordinates
+  end
+
+  def period_reviewer
+    @employee = Employee.find(params[:id])
+    @goal_bunches = GoalBunch.where(employee_id: @employee.id)
+  end
+  
+  def period_for_appraisee
+    @employee = Employee.find(current_user.employee_id)
+    @goal_bunches = GoalBunch.where(employee_id: @employee.id)
+  end
+
+  def all_emp_list_print
+    @goal_bunch = GoalBunch.new
+    @goal_bunches = GoalBunch.all
+  end
+
+  def print_emp_list_pdf
+    goal_bunch_ids = params[:goal_bunch_ids]
+    @goal_bunches = []
+    goal_bunch_ids.each do |g|
+      emp = GoalBunch.find(g)
+      @goal_bunches << emp
+    end
+  end
+
+  def print_all_emp_detail
+   @goal_bunches = GoalBunch.find(params[:id])
+
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render pdf: 'print_all_emp_detail',
+               layout: 'pdf.html',
+               :page_height      => 1000,
+               :dpi              => '300',
+               :margin           => {:top    => 10, # default 10 (mm)
+                          :bottom => 10,
+                          :left   => 14,
+                          :right  => 14},
+               orientation: 'Landscape',
+               template: 'goal_bunches/print_all_emp_detail.pdf.erb',
+              :show_as_html => params[:debug].present?
+      end
+    end  
   end
 
   private

@@ -122,66 +122,80 @@
   <h3 class="box-title">Overall List</h3>
 </div>
    <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
-   <thead>
-      <tr>
-        <th>Self Comment</th>
-        <th>Appraiser Comment</th>
-        <th>Appraiser Rating</th>
-        <th>Reviewer Comment</th>
-        <th>Reviewer Rating</th>
-        <th>Final Comment</th>
-        <th>Final Rating</th>
-      </tr>
-    </thead>
-    <tbody>
+   <tbody>
       <% @goal_bunches.each do |goal_bunch| %>
         <tr>
+          <th>Self Comment</th>
           <td><%= goal_bunch.appraisee_comment %></td>
+        </tr>
+        <tr>
+          <th>Appraiser Comment</th>
           <td><%= goal_bunch.appraiser_comment %></td>
+        </tr>
+        <tr>
+          <th>Appraiser Rating</th>
           <td><%=  %></td>
+        </tr>
+        <tr>
+          <th>Reviewer Comment</th>
           <td><%= goal_bunch.review_comment %></td>
+        </tr>
+        <tr>
+          <th>Reviewer Rating</th>
           <td><%= goal_bunch.reviewer_rating_id %></td>
+        </tr>
+        <tr>
+          <th>Final Comment</th>
           <td><%= goal_bunch.final_comment %></td>
+        </tr>
+        <tr>
+          <th>Final Rating</th>
           <td><%= goal_bunch.final_rating_id %></td>
         </tr> 
       <% end %>
     </tbody>
   </table>
 
-<%= bootstrap_form_for(@goal_bunch,html: {id: 'goal_bunch'},url:{action: "final_create",employee_id: @employee.id,goal_bunch_id: @goal_bunch.id}) do |f| %>
-<%= hidden_field_tag :final_id, {},value: current_user.employee_id %>
-
-<div class="box-header with-border">
-  <h3 class="box-title">Final Comment</h3>
-</div>
-  <div class="row">
-    <div class="col-sm-9">
-      <div class="field">
-      <%= f.text_field :final_comment,hide_label:true, placeholder: 'Final Comment' %>
-      </div>
-    </div>
-    <div class="col-sm-3">
-      <div class="field">
-      <%= f.select :final_rating_id,all_rating_type,{hide_label:true, include_blank: 'Select Rating'} %>
-      </div>
-    </div>
-  </div>
-
   <% if @goal_bunch.final_comment == nil %>
-      <% if @goal_bunch.final_confirm == true %>
-      <% else %>
-        <div class="row">
-          <div class="col-sm-3">
-            <div class="actions">
-              <%= f.submit "Create" , class: "btn btn-primary btn-sm" %>
-            </div>
+
+    <%= bootstrap_form_for(@goal_bunch,html: {id: 'goal_bunch'},url:{action: "final_create",employee_id: @employee.id,goal_bunch_id: @goal_bunch.id}) do |f| %>
+    <%= hidden_field_tag :final_id, {},value: current_user.employee_id %>
+
+    <div class="box-header with-border">
+      <h3 class="box-title">Final Comment</h3>
+    </div>
+      <div class="row">
+        <div class="col-sm-9">
+          <div class="field">
+          <%= f.text_field :final_comment,hide_label:true, placeholder: 'Final Comment' %>
           </div>
         </div>
-      <% end %>
+        <div class="col-sm-3">
+          <div class="field">
+          <%= f.select :final_rating_id,all_rating_type,{hide_label:true, include_blank: 'Select Rating'} %>
+          </div>
+        </div>
+      </div>
+
+      <% if @goal_bunch.final_comment == nil %>
+          <% if @goal_bunch.final_confirm == true %>
+          <% else %>
+            <div class="row">
+              <div class="col-sm-3">
+                <div class="actions">
+                  <%= f.submit "Create" , class: "btn btn-primary btn-sm" %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+      <% else %>
+      <% end %>  
+    <% end %>
+
   <% else %>
+  </br>
+  <pre> <center>Comment Created</center> </pre>
   <% end %>
-  
-<% end %>
 
 
 <div class="box-header with-border">
@@ -201,24 +215,23 @@
     <tbody>
       <% @goal_bunches.each do |goal_bunch| %>
         <tr>
-          <td>
             <% if goal_bunch.final_confirm == true %>
+            <td></td>
             <% else %>
-            <%= check_box_tag "goal_bunch_ids[]", goal_bunch.id %>
+            <td><%= check_box_tag "goal_bunch_ids[]", goal_bunch.id %></td>
             <% end %>
-          </td>
           <td><%= goal_bunch.final_comment %></td>
           <td><%= goal_bunch.final_rating_id %></td>
-          <td>
+          
             <% if goal_bunch.final_comment == nil %>
+            <td></td>
             <% else %>
               <% if goal_bunch.final_confirm == true %>
-              <small class="label label-info">Confirmed</small>
+              <td><small class="label label-info">Confirmed</small></td>
               <% else %>
-              <%= link_to '', final_modal_goal_bunches_path(goal_bunch),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
+              <td><%= link_to '', final_modal_goal_bunches_path(goal_bunch),class: 'btn btn-xs btn-success fa fa-edit',remote:true %></td>
               <% end %>
             <% end %>
-          </td>
         </tr>
       <% end %>
     </tbody>

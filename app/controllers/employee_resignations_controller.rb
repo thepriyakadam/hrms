@@ -16,6 +16,7 @@ class EmployeeResignationsController < ApplicationController
   # GET /employee_resignations/new
   def new
     @employee_resignation = EmployeeResignation.new
+    session[:active_tab] ="employeeresignation"
   end
 
   # GET /employee_resignations/1/edit

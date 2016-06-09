@@ -417,6 +417,36 @@ class GoalBunchesController < ApplicationController
     end  
   end
 
+  def print_appraisee_detail
+    @employee = Employee.find(params[:emp_id])
+    @goal_bunch = GoalBunch.find(params[:id])
+    @employees = Employee.where(id: @employee.id).group(:id)
+
+    @qualifications = Qualification.where(employee_id: @employee.id)
+    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
+    @experiences = Experience.where(employee_id: @employee.id)
+    @ctc = EmployeeSalaryTemplate.where(employee_id: @employee.id).sum(:monthly_amount)
+     @goal_ratings = GoalRating.where(appraisee_id: @employee.id, goal_bunch_id: @goal_bunch.id)
+    @goal_bunches = GoalBunch.where(employee_id: @employee.id, id: @goal_bunch.id).group(:employee_id)
+
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render pdf: 'print_appraisee_detail',
+               layout: 'pdf.html',
+               :page_height      => 1000,
+               :dpi              => '300',
+               :margin           => {:top    => 10, # default 10 (mm)
+                          :bottom => 10,
+                          :left   => 14,
+                          :right  => 14},
+               orientation: 'Landscape',
+               template: 'goal_bunches/print_appraisee_detail.pdf.erb',
+              :show_as_html => params[:debug].present?
+      end
+    end  
+  end
+
   def modal_self_overall
     @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
   end

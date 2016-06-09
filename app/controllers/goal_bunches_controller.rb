@@ -15,9 +15,8 @@ class GoalBunchesController < ApplicationController
   # GET /goal_bunches/new
   def new
     @goal_bunch = GoalBunch.new
-    @goal_bunches = GoalBunch.all
-    session[:active_tab] ="performancemgmt"
-   
+    @goal_bunches = GoalBunch.all 
+    session[:active_tab] ="selfservice"
   end
 
   # GET /goal_bunches/1/edit
@@ -60,6 +59,7 @@ class GoalBunchesController < ApplicationController
   def subordinate_list
     current_login = Employee.find(current_user.employee_id)
     @employees = current_login.subordinates
+    session[:active_tab] ="performancemgmt"
   end
 
   def goal_approval
@@ -106,6 +106,7 @@ class GoalBunchesController < ApplicationController
     # @goal_ratings = GoalRating.where(appraisee_id: current_user.employee_id,appraisee_comment: nil)
     @self_goal_ratings = GoalRating.where(appraisee_id: current_user.employee_id).where.not(appraisee_comment: nil)
     @goal_rating = GoalRating.new
+    session[:active_tab] ="selfservice"
   end
 
   def self_comment
@@ -141,6 +142,16 @@ class GoalBunchesController < ApplicationController
     redirect_to appraisee_comment_goal_bunches_path
   end
 
+<<<<<<< HEAD
+
+  def appraiser_subordinate
+    current_login = Employee.find(current_user.employee_id)
+    @employees = current_login.subordinates
+    session[:active_tab] ="performancemgmt"
+  end
+
+=======
+>>>>>>> e33d27f098bb287df36b727cb3995d4586387db2
   def appraisee_comment
     @employee = Employee.find(current_user.employee_id)
     @goal_bunch_id = GoalBunch.find(params[:id]) 
@@ -239,6 +250,7 @@ class GoalBunchesController < ApplicationController
   def reviewer_subordinate
     current_login = Employee.find(current_user.employee_id)
     @employees = current_login.indirect_subordinates
+    session[:active_tab] ="performancemgmt"
   end
   
   def reviewer_comment
@@ -300,6 +312,7 @@ class GoalBunchesController < ApplicationController
 
   def employee_list
     @employees = Employee.all
+    session[:active_tab] ="performancemgmt"
   end
 
   def final_comment
@@ -363,6 +376,7 @@ class GoalBunchesController < ApplicationController
 
   def final_employee_list
     @employees = Employee.all
+    session[:active_tab] ="performancemgmt"
   end
 
   def final_detail

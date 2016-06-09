@@ -1,14 +1,22 @@
 <table class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>  
+      <th>Base</th>
       <th>Period</th>
+      <th>Employee</th>
+      <th>Appriser</th>
+      <th>Reviewr</th>
       <th>Action</th>
     </tr>
   </thead>
   <tbody>
     <% @goal_bunches.each do |goal_bunch| %>
       <tr>
-        <td><%= goal_bunch.period.try(:name) %> <%= goal_bunch.period.try(:from) %> <%= goal_bunch.period.try(:to) %> - <%= goal_bunch.employee.try(:first_name) %> <%= goal_bunch.employee.try(:last_name) %>  </td>
+        <td> <%= goal_bunch.period.try(:name) %></td>
+        <td> From: <%= goal_bunch.period.try(:from) %> To: <%= goal_bunch.period.try(:to) %> </td>
+        <td> <%= goal_bunch.employee.try(:first_name) %> <%= goal_bunch.employee.try(:middle_name) %> <%= goal_bunch.employee.try(:last_name) %>  </td>
+        <td> <%= goal_bunch.employee.manager.try(:first_name) %> <%= goal_bunch.employee.manager.try(:middle_name) %> <%= goal_bunch.employee.manager.try(:last_name) %>  </td>
+        <td> <%= goal_bunch.employee.manager_2.try(:first_name) %> <%= goal_bunch.employee.manager_2.try(:middle_name) %> <%= goal_bunch.employee.manager_2.try(:last_name) %>  </td>
         <td>
            <!-- link_to '', edit_goal_bunch_path(goal_bunch),class: 'btn btn-xs btn-success fa fa-edit',remote:true %> -->
             <!-- link_to '', modal_period_goal_bunches_path(goal_bunch),class: 'btn btn-xs btn-success fa fa-edit',remote:true %> -->
@@ -16,7 +24,7 @@
             <small class="label label-info">Goal Created</small>
           <% else %>
             <% if goal_bunch.employee_id == current_user.employee_id %>
-              <%= link_to 'Create Goals', new_goal_rating_path(id: goal_bunch),class: 'btn btn-xs btn-info'%>
+              <%= link_to 'Set Goals', new_goal_rating_path(id: goal_bunch),class: 'btn btn-xs btn-primary'%>
             <% else %>
             <% end %>
           <% end %>

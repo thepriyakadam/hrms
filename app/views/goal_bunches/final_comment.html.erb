@@ -23,7 +23,7 @@
           <td><%= a.manual_employee_code %></td> 
           <td><%= a.first_name %> <%= a.middle_name %> <%= a.last_name %></td>
           <td><%=  %></td>
-          <td><%= a.department.name %></td>
+          <td><%= a.department.try(:name) %></td>
           <td><%= @joining_detail.joining_date %></td>
           <td><%= @joining_detail.employee_grade.name %></td>
           <td><%= @joining_detail.employee_designation.name %></td>
@@ -32,34 +32,6 @@
       </tbody>
     </table>
 
-  <div class="row">
-    <div class="col-sm-6">
-      <div class="box-header with-border">
-        <h3 class="box-title">Previous Experience</h3>
-      </div>
-      <table class="table table-bordered table-hover table-condensed">
-        <thead>
-          <tr>
-            <th>Previous Company</th>
-            <th>Designation</th>
-            <th>Previous Exp.(Years)</th>
-            <th>CTC</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @experiences.each do |e| %>
-            <tr>
-              <td><%= e.company_name %></td>
-              <td><%= e.designation %></td>
-              <td><%= e.no_of_year %></td>
-              <td><%= e.ctc %></td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
-
-  <div class="col-sm-6">
     <div class="box-header with-border">
       <h3 class="box-title">Qualification Details</h3>
     </div>
@@ -83,8 +55,30 @@
         <% end %>
       </tbody>
     </table>
-  </div>
-</div>
+
+    <div class="box-header with-border">
+      <h3 class="box-title">Previous Experience</h3>
+    </div>
+    <table class="table table-bordered table-hover table-condensed">
+      <thead>
+        <tr>
+          <th>Previous Company</th>
+          <th>Designation</th>
+          <th>Previous Exp.(Years)</th>
+          <th>CTC</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @experiences.each do |e| %>
+          <tr>
+            <td><%= e.company_name %></td>
+            <td><%= e.designation %></td>
+            <td><%= e.no_of_year %></td>
+            <td><%= e.ctc %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
 
 <div class="box-header with-border">
   <h3 class="box-title">Goals List</h3>
@@ -120,10 +114,39 @@
     </tbody>
   </table>
   
-
   <% if  @goal_bunch.nil? %>
   <center><p class="text-warning"> No Goal Bunch Available </p></center> 
   <% else %>
+
+   <div class="box-header with-border">
+  <h3 class="box-title">Overall List</h3>
+</div>
+   <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
+   <thead>
+      <tr>
+        <th>Self Comment</th>
+        <th>Appraiser Comment</th>
+        <th>Appraiser Rating</th>
+        <th>Reviewer Comment</th>
+        <th>Reviewer Rating</th>
+        <th>Final Comment</th>
+        <th>Final Rating</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @goal_bunches.each do |goal_bunch| %>
+        <tr>
+          <td><%= goal_bunch.appraisee_comment %></td>
+          <td><%= goal_bunch.appraiser_comment %></td>
+          <td><%=  %></td>
+          <td><%= goal_bunch.review_comment %></td>
+          <td><%= goal_bunch.reviewer_rating_id %></td>
+          <td><%= goal_bunch.final_comment %></td>
+          <td><%= goal_bunch.final_rating_id %></td>
+        </tr> 
+      <% end %>
+    </tbody>
+  </table>
 
 <%= bootstrap_form_for(@goal_bunch,html: {id: 'goal_bunch'},url:{action: "final_create",employee_id: @employee.id,goal_bunch_id: @goal_bunch.id}) do |f| %>
 <%= hidden_field_tag :final_id, {},value: current_user.employee_id %>

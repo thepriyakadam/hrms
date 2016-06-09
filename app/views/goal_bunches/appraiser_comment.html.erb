@@ -237,8 +237,10 @@
   <% end %>
   </div>
 </div>
+<%= link_to 'Print Report', print_appraiser_detail_goal_bunches_path(format: 'pdf',emp_id:@employee.id,id: @goal_bunch.id ),class: "btn btn-xl btn-info fa fa-print", :target => '_blank' %>
 
 <% end %>
+
 <%= link_to 'Back',period_list_appraiser_goal_bunches_path(id: @employee.id),class: 'btn btn-sm btn-default'%>
 </div>
 </div>

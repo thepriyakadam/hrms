@@ -128,7 +128,7 @@
         </tr>
         <tr>
           <th>Appraiser Rating</th>
-          <td><%= goal_bunch.appraiser_comment %></td>
+          <td><%=  %></td>
         </tr>
         <tr>
           <th>Reviewer Comment</th>
@@ -151,7 +151,7 @@
   </table>
   <hr>
 
-  <%= bootstrap_form_for(:goal_bunches, url: { action: 'xl_sheet_print',format: 'xls',id: @employee.id}) do |f| %>
+  <%= bootstrap_form_for(:goal_bunches, url: { action: 'xl_sheet_print',format: 'xls',emp_id: @employee.id,id: @goal_bunch.id}) do |f| %>
 
      <div class="row">
       <div class="col-sm-6">

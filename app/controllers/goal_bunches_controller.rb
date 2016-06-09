@@ -15,7 +15,7 @@ class GoalBunchesController < ApplicationController
   # GET /goal_bunches/new
   def new
     @goal_bunch = GoalBunch.new
-    @goal_bunches = GoalBunch.all 
+    @goal_bunches = GoalBunch.where(employee_id: current_user.employee_id)
     session[:active_tab] ="selfservice"
   end
 
@@ -141,8 +141,6 @@ class GoalBunchesController < ApplicationController
       end
     redirect_to appraisee_comment_goal_bunches_path
   end
-
-
 
   def appraiser_subordinate
     current_login = Employee.find(current_user.employee_id)
@@ -386,7 +384,7 @@ class GoalBunchesController < ApplicationController
     @experiences = Experience.where(employee_id: @employee.id)
     @ctc = EmployeeSalaryTemplate.where(employee_id: @employee.id).sum(:monthly_amount)
     @goal_ratings = GoalRating.where(appraisee_id: @employee.id, goal_bunch_id: @goal_bunch.id)
-    @goal_bunches = GoalBunch.where(employee_id: @employee.id).group(:employee_id)
+    @goal_bunches = GoalBunch.where(employee_id: @employee.id, id: @goal_bunch.id).group(:employee_id)
   end
 
   def print_final_detail
@@ -527,15 +525,16 @@ class GoalBunchesController < ApplicationController
   end
 
   def xl_sheet_print
-    # byebug
-    @employee = Employee.find(params[:id])
+    @employee = Employee.find(params[:emp_id])
+    @goal_bunch = GoalBunch.find(params[:id])
+
     @employees = Employee.where(id: @employee.id)
     @qualifications = Qualification.where(employee_id: @employee.id)
     @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
     @experiences = Experience.where(employee_id: @employee.id)
     @ctc = EmployeeSalaryTemplate.where(employee_id: @employee.id).sum(:monthly_amount)
     @goal_ratings = GoalRating.where(appraisee_id: @employee.id)
-    @goal_bunches = GoalBunch.where(employee_id: @employee.id)                                 
+    @goal_bunches = GoalBunch.where(employee_id: @employee.id,id: @goal_bunch.id)                                 
   end
 
   def goal_period_list

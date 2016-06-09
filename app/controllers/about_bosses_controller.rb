@@ -16,6 +16,9 @@ class AboutBossesController < ApplicationController
   def new
     @about_boss = AboutBoss.new
     @about_bosses = AboutBoss.all
+    session[:active_tab] ="master"
+    session[:active_tab1] = "exit_interview_master_setup"
+
   end
 
   # GET /about_bosses/1/edit

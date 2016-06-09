@@ -142,7 +142,7 @@ class GoalBunchesController < ApplicationController
     redirect_to appraisee_comment_goal_bunches_path
   end
 
-<<<<<<< HEAD
+
 
   def appraiser_subordinate
     current_login = Employee.find(current_user.employee_id)
@@ -150,8 +150,7 @@ class GoalBunchesController < ApplicationController
     session[:active_tab] ="performancemgmt"
   end
 
-=======
->>>>>>> e33d27f098bb287df36b727cb3995d4586387db2
+
   def appraisee_comment
     @employee = Employee.find(current_user.employee_id)
     @goal_bunch_id = GoalBunch.find(params[:id]) 

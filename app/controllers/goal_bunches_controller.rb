@@ -141,7 +141,7 @@ class GoalBunchesController < ApplicationController
       end
     redirect_to appraisee_comment_goal_bunches_path
   end
-
+  
   def appraiser_subordinate
     current_login = Employee.find(current_user.employee_id)
     @employees = current_login.subordinates

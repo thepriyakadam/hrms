@@ -14,11 +14,11 @@ class RatingsController < ApplicationController
   # POST /ratings
   # POST /ratings.json
   def create
-    @rating = Rating.new(rating_params)
+   @rating = Rating.new(rating_params)
     @ratings = Rating.all
     respond_to do |format|
       if @rating.save
-        @rating = Rating.new
+         @rating = Rating.new
         format.js { @flag = true }
       else
         flash.now[:alert] = 'Rating Already Exist.'

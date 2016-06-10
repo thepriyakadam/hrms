@@ -81,6 +81,15 @@ Rails.application.routes.draw do
       get :modal_period
       post :modal_period_create
       post :xl_sheet_print
+      get :goal_period_list
+      get :period_list_appraisee
+      get :period_list_appraiser
+      get :period_list_reviewer
+      get :period_list_final
+      get :period_list_print
+      get :print_appraisee_detail
+      get :print_appraiser_detail
+      get :print_reviewer_detail
     end
   end
   resources :goal_perspectives

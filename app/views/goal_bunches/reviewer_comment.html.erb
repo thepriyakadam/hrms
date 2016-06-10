@@ -30,6 +30,30 @@
   </tbody>
 </table>
 
+  <div class="box-header with-border">
+    <h3 class="box-title">Previous Experience</h3>
+  </div>
+  <table class="table table-bordered table-hover table-condensed">
+    <thead>
+      <tr>
+        <th>Previous Company</th>
+        <th>Designation</th>
+        <th>Previous Exp.(Years)</th>
+        <th>CTC</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @experiences.each do |e| %>
+        <tr>
+          <td><%= e.company_name %></td>
+          <td><%= e.designation %></td>
+          <td><%= e.no_of_year %></td>
+          <td><%= e.ctc %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
 <div class="box-header with-border">
   <h3 class="box-title">Qualification Details</h3>
 </div>
@@ -53,13 +77,17 @@
     <% end %>
   </tbody>
 </table>
+  
+  <% if  @goal_bunch.nil? %>
+  <center><p class="text-warning"> No Goal Bunch Available </p></center> 
+  <% else %>
 
 <div class="box box-default">
   <div class="box-header with-border">
     <h3 class="box-title">Goal Rating</h3>
   </div><!-- /.box-header -->
   <div class="box-body">
-  <%= bootstrap_form_for @goal_rating,url:{action:'reviewer_create',id: @employee.id} do |f| %>
+  <%= bootstrap_form_for @goal_rating,url:{action:'reviewer_create',emp_id: @employee.id,goal_bunch_id: @goal_bunch_id.id} do |f| %>
   <%= hidden_field_tag :reviewer_id, {},value: current_user.employee_id %> 
     <table class="table table-bordered table-hover table-condensed">
       <thead>
@@ -170,51 +198,54 @@
     </div>
   <% end %>
 
-  <div class="box-header with-border">
+<div class="box-header with-border">
   <h3 class="box-title">Overall Comment</h3>
 </div>
-<%= bootstrap_form_for GoalBunch.new,url:{action:'reviewer_overall_comment_confirm',emp_id: @employee.id} do |f| %>
- <table class="table table-bordered table-hover table-condensed">
-    <thead>
-      <tr>
-        <th><input type="checkbox" id="selectAll" value="selectAll"></th>
-        <th>Overall Comment</th>
-        <th>Overall Rating</th>
-      </tr>
-    </thead>
-    <tbody>
-    <% @goal_bunches.each do |goal_bunch| %>
-      <tr>
-        <td>
-          <% if goal_bunch.reviewer_confirm == true %>
-          <% else %>
-          <%= check_box_tag "goal_bunch_ids[]", goal_bunch.id %>
-          <% end %>
-        </td>
-        <td><%= goal_bunch.review_comment %></td>
-        <td><%= goal_bunch.reviewer_rating_id %></td>
-      </tr>
-      <% end %>
-    </tbody>
-  </table>
+  <%= bootstrap_form_for GoalBunch.new,url:{action:'reviewer_overall_comment_confirm',emp_id: @employee.id,goal_bunch_id: @goal_bunch.id} do |f| %>
+    <table class="table table-bordered table-hover table-condensed">
+      <thead>
+        <tr>
+          <th><input type="checkbox" id="selectAll" value="selectAll"></th>
+          <th>Overall Comment</th>
+          <th>Overall Rating</th>
+        </tr>
+      </thead>
+      <tbody>
+      <% @goal_bunches.each do |goal_bunch| %>
+        <tr>
+          <td>
+            <% if goal_bunch.reviewer_confirm == true %>
+            <% else %>
+            <%= check_box_tag "goal_bunch_ids[]", goal_bunch.id %>
+            <% end %>
+          </td>
+          <td><%= goal_bunch.review_comment %></td>
+          <td><%= goal_bunch.reviewer_rating_id %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
 
-    <% unless @goal_bunch.nil? %>
-      <% if @goal_bunch.review_comment == nil %>
-      <% else %>
-        <div class="row">
-          <div class="col-sm-3">
-            <div class="actions">
-              <%= f.submit "Confirm", class: 'btn btn-primary btn-sm' %>
+      <% unless @goal_bunch.nil? %>
+        <% if @goal_bunch.review_comment == nil %>
+        <% else %>
+          <div class="row">
+            <div class="col-sm-3">
+              <div class="actions">
+                <%= f.submit "Confirm", class: 'btn btn-primary btn-sm' %>
+              </div>
             </div>
           </div>
-        </div>
+        <% end %>
       <% end %>
+      
     <% end %>
-    
+<br>
+<%= link_to 'Print Report', print_reviewer_detail_goal_bunches_path(format: 'pdf',emp_id:@employee.id,id: @goal_bunch.id ),class: "btn btn-xl btn-info fa fa-print", :target => '_blank' %>
 <% end %>
+</div>
+</div>
 
-</div>
-</div>
 <div id="myModal" class="modal fade"></div>
 <script type="text/javascript">
   $(function () {

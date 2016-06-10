@@ -209,6 +209,63 @@ end
      @selected_resumes = SelectedResume.where(id: @interview_schedule.selected_resume_id)
   end
 
+  def print_interviewee_list
+    # byebug
+    # @interview_schedule = InterviewSchedule.find(params[:format])
+    @interview_schedule_ids = params[:interview_schedule_ids]
+    @interview_schedules = InterviewSchedule.where(employee_id: current_user.employee_id,is_confirm: true)
+     respond_to do |format|
+        format.html
+        format.pdf do
+        render :pdf => 'print_interviewee_list',
+        layout: '/layouts/pdf.html.erb',
+        :template => 'interview_schedules/print_interviewee_list.pdf.erb',
+        :orientation      => 'Landscape', # default , Landscape
+        :page_height      => 1000,
+        :dpi              => '300',
+        :margin           => {:top    => 20, # default 10 (mm)
+                      :bottom => 20,
+                      :left   => 20,
+                      :right  => 20},
+        :show_as_html => params[:debug].present?
+      end
+    end
+  end
+
+  def all_interview_schedule_list
+     @interview_schedules = InterviewSchedule.all
+  end
+ 
+  def final_report
+    # byebug
+    @interview_schedule = InterviewSchedule.find(params[:format])
+    @interview_schedules = InterviewSchedule.where(id: @interview_schedule.id)
+    @interview_analyses = InterviewAnalysis.where(interview_schedule_id: @interview_schedule.id)
+  end
+
+  def print_final_report
+     puts "----------------------"
+     # byebug
+     @interview_schedule = InterviewSchedule.find(params[:id])
+     @interview_schedules = InterviewSchedule.where(id: @interview_schedule.id)
+     @interview_analyses = InterviewAnalysis.where(interview_schedule_id: @interview_schedule.id)
+     respond_to do |format|
+        format.html
+        format.pdf do
+        render :pdf => 'print_final_report',
+        layout: '/layouts/pdf.html.erb',
+        :template => 'interview_schedules/print_final_report.pdf.erb',
+        :orientation      => 'Landscape', # default , Landscape
+        :page_height      => 1000,
+        :dpi              => '300',
+        :margin           => {:top    => 20, # default 10 (mm)
+                      :bottom => 20,
+                      :left   => 20,
+                      :right  => 20},
+        :show_as_html => params[:debug].present?
+      end
+    end
+  end
 
   private
 

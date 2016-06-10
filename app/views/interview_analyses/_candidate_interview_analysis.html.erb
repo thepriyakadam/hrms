@@ -1,6 +1,8 @@
+<%= form_for :interview_analyses, url: { action: 'print_interview_analysis_list',format: 'pdf',id: @interview_schedule.id},:html => {:target => '_blank'} do |f| %>
 <table id="example2" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
+      
       <th>Interview evalution</th>
       <th>Interview attribute</th>
       <th>Interview decision</th>
@@ -11,6 +13,7 @@
   <tbody>
     <% @interview_analyses.each do |interview_analysis| %>
       <tr>
+        
         <td><%= interview_analysis.interview_evalution.name %></td>
         <td><%= interview_analysis.interview_attribute.name %></td>
         <td><%= interview_analysis.interview_decision.name %></td>
@@ -20,6 +23,11 @@
           <%= link_to '',  interview_analysis, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
         </td>
       </tr>
+      
     <% end %>
   </tbody>
 </table>
+<div class="col-sm-3">
+  <%= f.submit "Print",class: "btn btn-xl btn-warning fa fa-print" %>
+</div>
+<% end %>

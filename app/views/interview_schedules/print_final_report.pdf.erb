@@ -1,0 +1,56 @@
+<style>
+  th {
+      text-align: left;
+  }
+  </style>
+  <style>
+     table {
+    page-break-inside: avoid; 
+  }
+</style>
+<center><h3 class="box-title">Final Report</h3></center><br>
+<table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
+  <thead>
+    <tr>
+<!--       <th>ID</th>
+ -->      <th>Job Title</th>
+      <th>Candidate Name</th>
+      <th>Interviewer Name</th>
+      <th>Interview Date</th>
+      <th>Interview Time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @interview_schedules.each do |interview_schedule| %>
+      <tr>
+<!--         <td><%= interview_schedule.id %></td>
+ -->        <td><%= interview_schedule.interviewer_name %></td>
+        <td><%= interview_schedule.candidate_name %></td>
+        <td><%= interview_schedule.employee.first_name+' '+interview_schedule.employee.middle_name+' '+interview_schedule.employee.last_name %></td>
+        <td><%= interview_schedule.interview_date %></td>
+        <td><%= interview_schedule.interview_time %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table><br><br>
+
+<table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
+  <thead>
+    <tr> 
+      <th>Interview Evalution</th>
+      <th>Interview Attribute</th>
+      <th>Interview Decision</th>
+      <th>Comment</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @interview_analyses.each do |interview_analysis| %>
+      <tr> 
+        <td><%= interview_analysis.interview_evalution.name %></td>
+        <td><%= interview_analysis.interview_attribute.name %></td>
+        <td><%= interview_analysis.interview_decision.name %></td>
+        <td><%= interview_analysis.comment %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

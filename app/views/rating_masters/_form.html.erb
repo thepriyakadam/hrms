@@ -1,4 +1,4 @@
-<%= bootstrap_form_for(@rating_master, remote: true) do |f| %>
+<%= bootstrap_form_for(@rating_master, remote: true,html: {id: "rating_master"}) do |f| %>
   <div class="row">
     <div class="col-sm-3">
       <div class="form-group required">
@@ -30,7 +30,7 @@
     },
     messages: {
       "rating_master[code]":{
-        required: "Please specify code"
+        required: "Please Specify Code"
       }
     },
     errorPlacement: function(error, element) {

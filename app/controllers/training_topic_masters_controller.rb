@@ -15,6 +15,9 @@ class TrainingTopicMastersController < ApplicationController
   # GET /training_topic_masters/new
   def new
     @training_topic_master = TrainingTopicMaster.new
+    @training_topic_masters = TrainingTopicMaster.all
+    session[:active_tab] = "master"
+    session[:active_tab1] = "training"  
   end
 
   # GET /training_topic_masters/1/edit
@@ -25,14 +28,14 @@ class TrainingTopicMastersController < ApplicationController
   # POST /training_topic_masters.json
   def create
     @training_topic_master = TrainingTopicMaster.new(training_topic_master_params)
-
+    @training_topic_masters = TrainingTopicMaster.all
     respond_to do |format|
       if @training_topic_master.save
-        format.html { redirect_to @training_topic_master, notice: 'Training topic master was successfully created.' }
-        format.json { render :show, status: :created, location: @training_topic_master }
+         @training_topic_master = TrainingTopicMaster.new
+        format.js { @flag = true }
       else
-        format.html { render :new }
-        format.json { render json: @training_topic_master.errors, status: :unprocessable_entity }
+        flash.now[:alert] = 'Training Already Exist.'
+        format.js { @flag = false }
       end
     end
   end
@@ -40,25 +43,16 @@ class TrainingTopicMastersController < ApplicationController
   # PATCH/PUT /training_topic_masters/1
   # PATCH/PUT /training_topic_masters/1.json
   def update
-    respond_to do |format|
-      if @training_topic_master.update(training_topic_master_params)
-        format.html { redirect_to @training_topic_master, notice: 'Training topic master was successfully updated.' }
-        format.json { render :show, status: :ok, location: @training_topic_master }
-      else
-        format.html { render :edit }
-        format.json { render json: @training_topic_master.errors, status: :unprocessable_entity }
-      end
-    end
+    @training_topic_master.update(training_topic_master_params)
+    @training_topic_masters = TrainingTopicMaster.all
+    @training_topic_master = TrainingTopicMaster.new
   end
 
   # DELETE /training_topic_masters/1
   # DELETE /training_topic_masters/1.json
   def destroy
     @training_topic_master.destroy
-    respond_to do |format|
-      format.html { redirect_to training_topic_masters_url, notice: 'Training topic master was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+   @training_topic_masters = TrainingTopicMaster.all
   end
 
   private

@@ -10,17 +10,17 @@
     </tr>
 
  <tr> 
-  <th><strong>Job Title:</strong></th>
+  <th><strong>Job Title</strong></th>
   <td><%= @interview_schedule.interviewer_name %></td>
 
-   <th><strong>Candidate Name:</strong></th>
+   <th><strong>Candidate Name</strong></th>
   <td><%= @interview_schedule.candidate_name.to_s %></td>
 
-  <th><strong>Interviewer Name:</strong></th>
+  <th><strong>Interviewer Name</strong></th>
   <td><%= @interview_schedule.employee.try(:manual_employee_code)+' '+@interview_schedule.employee.try(:first_name)+' '+@interview_schedule.employee.try(:last_name) %></td>
  
 
-  <th><strong>Email Id:</strong></th>
+  <th><strong>Email ID</strong></th>
   <td><%= @interview_schedule.email_id %></td>
 </tr>
 
@@ -31,19 +31,19 @@
   <th><strong>Interview Time</strong></th>
   <td><%= @interview_schedule.interview_time %></td>
 
-  <th><strong>Location:</strong></th>
+  <th><strong>Location</strong></th>
   <td><%= @interview_schedule.location %></td>
 
-  <th><strong>Schedulecomments:</strong></th>
+  <th><strong>Schedule Comments</strong></th>
   <td><%= @interview_schedule.schedule_comments %></td>
 </tr>
 
 <tr>
   
-  <th><strong>Postingtitle:</strong></th>
+  <th><strong>Posting Title</strong></th>
   <td><%= @interview_schedule.post_title %></td>
 
-  <th><strong>Type:</strong></th>
+  <th><strong>Type</strong></th>
   <td><%= @interview_schedule.interview_type %></td>
 
   <th></th>

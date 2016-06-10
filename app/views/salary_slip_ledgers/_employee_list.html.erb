@@ -13,8 +13,8 @@
     </tr>
 
     <tr>
-      <th>No</th>
-      <th>Code</th>
+      <th>Sr. No.</th>
+      <th>ID</th>
       <th>Name</th>
       <th>Department</th>
       <th>PF No</th>
@@ -72,15 +72,15 @@
         <td><%= r.try(:pf_no) %></td>
         <td><%= r.try(:esic_no) %></td>
 
-        <td><%= r.try(:actual_basic) %></td>
-        <td><%= r.try(:actual_da) %></td>
-        <td><%= r.try(:actual_hra) %></td>
+        <td><%= r.try(:actual_basic).round %></td>
+        <td><%= r.try(:actual_da).round %></td>
+        <td><%= r.try(:actual_hra).round %></td>
 
-        <td><%= r.try(:actual_convenience) %></td>
-        <td><%= r.try(:actual_other) %></td>
-        <td><%= r.try(:actual_special) %></td>
-        <td><%= r.try(:actual_washing) %></td>
-        <td><%= r.try(:actual_total) %></td>
+        <td><%= r.try(:actual_convenience).round %></td>
+        <td><%= r.try(:actual_other).round %></td>
+        <td><%= r.try(:actual_special).round %></td>
+        <td><%= r.try(:actual_washing).round %></td>
+        <td><%= r.try(:actual_total).round %></td>
 
         <td><%= r.try(:cl_leave) %></td>
         <td><%= r.try(:el_leave) %></td>
@@ -92,15 +92,15 @@
         <td><%= r.try(:holiday) %></td>
         <td><%= r.try(:weekoff) %></td>
 
-        <td><%= r.try(:earned_basic) %></td>
-        <td><%= r.try(:earned_da) %></td>
-        <td><%= r.try(:earned_hra) %></td>
+        <td><%= r.try(:earned_basic).round %></td>
+        <td><%= r.try(:earned_da).round %></td>
+        <td><%= r.try(:earned_hra).round %></td>
 
-        <td><%= r.try(:earned_convenience) %></td>
-        <td><%= r.try(:earned_other) %></td>
-        <td><%= r.try(:earned_special) %></td>
-        <td><%= r.try(:earned_washing) %></td>
-        <td><%= r.try(:earned_total) %></td>
+        <td><%= r.try(:earned_convenience).round %></td>
+        <td><%= r.try(:earned_other).round %></td>
+        <td><%= r.try(:earned_special).round %></td>
+        <td><%= r.try(:earned_washing).round %></td>
+        <td><%= r.try(:earned_total).round %></td>
 
         <td><%= r.try(:pf) %></td>
         <td><%= r.try(:esic) %></td>
@@ -112,8 +112,8 @@
         <td><%= r.try(:food_deduction) %></td>
         <td><%= r.try(:mobile) %></td>
         <td><%= r.try(:retention) %></td>
-        <td><%= r.try(:deduction_total) %></td>
-        <td><%= r.try(:net_payable) %></td>
+        <td><%= r.try(:deduction_total).round %></td>
+        <td><%= r.try(:net_payable).round %></td>
         <td><%=  %></td>
       </tr>
     <% end %>
@@ -126,14 +126,14 @@
       <td></td>
       <td></td>
 
-      <td><%= @sum.actual_basic %></td>
-      <td><%= @sum.actual_da %></td>
-      <td><%= @sum.actual_hra %></td>
-      <td><%= @sum.actual_convenience %></td>
-      <td><%= @sum.actual_other %></td>
-      <td><%= @sum.actual_special %></td>
-      <td><%= @sum.actual_washing %></td>
-      <td><%= @sum.actual_total %></td>
+      <td><%= @sum.actual_basic.round %></td>
+      <td><%= @sum.actual_da.round %></td>
+      <td><%= @sum.actual_hra.round %></td>
+      <td><%= @sum.actual_convenience.round %></td>
+      <td><%= @sum.actual_other.round %></td>
+      <td><%= @sum.actual_special.round %></td>
+      <td><%= @sum.actual_washing.round %></td>
+      <td><%= @sum.actual_total.round %></td>
 
       
       <td><%= @sum.cl_leave %></td>
@@ -145,14 +145,14 @@
       <td><%= @sum.holiday %></td>
       <td><%= @sum.weekoff %></td>
 
-      <td><%= @sum.earned_basic %></td>
-      <td><%= @sum.earned_da %></td>
-      <td><%= @sum.earned_hra %></td>
-      <td><%= @sum.earned_convenience %></td>
-      <td><%= @sum.earned_other %></td>
-      <td><%= @sum.earned_special %></td>
-      <td><%= @sum.earned_washing %></td>
-      <td><%= @sum.earned_total %></td>
+      <td><%= @sum.earned_basic.round %></td>
+      <td><%= @sum.earned_da.round %></td>
+      <td><%= @sum.earned_hra.round %></td>
+      <td><%= @sum.earned_convenience.round %></td>
+      <td><%= @sum.earned_other.round %></td>
+      <td><%= @sum.earned_special.round %></td>
+      <td><%= @sum.earned_washing.round %></td>
+      <td><%= @sum.earned_total.round %></td>
 
       <td><%= @sum.pf %></td>
       <td><%= @sum.esic %></td>
@@ -165,7 +165,7 @@
       <td><%= @sum.retention %></td>
       <td><%= @sum.deduction_total %></td>
 
-      <td><%= @sum.net_payable %></td>
+      <td><%= @sum.net_payable.round.round %></td>
       <td>SIGN</td>
     </tr>
   </tbody>

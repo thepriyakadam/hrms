@@ -5,6 +5,7 @@ class EmployeePromotionsController < ApplicationController
   # GET /employee_promotions.json
   def index
     @employee_promotions = EmployeePromotion.all
+     session[:active_tab] ="promotionmanagement"
   end
 
   # GET /employee_promotions/1
@@ -59,6 +60,11 @@ class EmployeePromotionsController < ApplicationController
       format.html { redirect_to employee_promotions_url, notice: 'Employee promotion was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def collect_data
+    @employee = Employee.find(params[:employee_id])
+    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
   end
 
   private

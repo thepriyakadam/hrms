@@ -285,7 +285,7 @@ $("#company_type").validate({
     },
     messages: {
       "company_type[name]":{
-        required: "Please specify company Name",
+        required: "Please Specify Company Type",
         maxlength: "Name allows upto 30 alphabets"
       }
     },
@@ -343,7 +343,7 @@ $("#department_type").validate({
     },
     messages: {
       "department_type[name]":{
-        required: "Please specify Dept Name"
+        required: "Please specify Dept Type"
       }
     },
     errorPlacement: function(error, element) {
@@ -467,7 +467,7 @@ $("#employee_grade").validate({
     },
     messages: {
       "employee_grade[name]":{
-        required: "Please specify Employee Name"
+        required: "Please Specify Employee Grade"
       }
     },
     errorPlacement: function(error, element) {
@@ -820,7 +820,7 @@ $("#employee_type").validate({
     },
     messages: {
       "employee_type[name]":{
-        required: "Please specify Employee Name",
+        required: "Please Specify Employee Type",
         maxlength: "Name allows upto 30 alphabets"
       }
     },

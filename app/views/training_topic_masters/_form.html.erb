@@ -1,33 +1,25 @@
-<%= form_for(@training_topic_master) do |f| %>
-  <% if @training_topic_master.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@training_topic_master.errors.count, "error") %> prohibited this training_topic_master from being saved:</h2>
-
-      <ul>
-      <% @training_topic_master.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+<%= bootstrap_form_for(@training_topic_master,html: {id: 'training_topic_master'},remote:true) do |f| %>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :code,hide_label:true, placeholder: 'Training Course Code ' %>
+      </div>
+    </div> 
+     <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :name,hide_label:true, placeholder: 'Training Course Type' %>
+      </div>
     </div>
-  <% end %>
+     <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :description,hide_label:true, placeholder: 'Description' %>
+      </div>
+    </div>
 
-  <div class="field">
-    <%= f.label :code %><br>
-    <%= f.text_field :code %>
-  </div>
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :description %><br>
-    <%= f.text_area :description %>
-  </div>
-  <div class="field">
-    <%= f.label :status %><br>
-    <%= f.text_field :status %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "Create Training Course", class: 'btn btn-sm btn-primary' %>
+      </div>
+    </div>
   </div>
 <% end %>

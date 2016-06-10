@@ -241,7 +241,7 @@ class SalaryslipsController < ApplicationController
           @instalment_array.each do |ia|
             deducted_actual_amount = deducted_actual_amount + ia.advance_salary.instalment_amount
             deducted_calculated_amount = deducted_calculated_amount + deducted_actual_amount          
-            ia.update(is_complete: true)
+            Instalment.find(ia).update(is_complete: true)
           end
           SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: deducted_actual_amount, calculated_amount: deducted_calculated_amount, is_deducted: true, other_component_name: 'Advance')
         end
@@ -403,6 +403,7 @@ class SalaryslipsController < ApplicationController
     @deducted_salary_components = SalaryslipComponent.where('is_deducted = ? and salaryslip_id = ?', true, @salaryslip.id)
     @working_day = Workingday.find(@salaryslip.workingday_id)
     @employee = Employee.find(@salaryslip.employee_id)
+    # @employee_leav_balance = EmployeeLeavBalance.find_by()
     @advance_salary = AdvanceSalary.find_by_employee_id(@employee.id)
     unless @advance_salary.nil?
       @instalments = @advance_salary.instalments
@@ -783,7 +784,6 @@ class SalaryslipsController < ApplicationController
                 SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: w.amount, calculated_amount: w.amount, is_deducted: true, other_component_name: 'Well Faire')
               end
             end
-            
           end
 
           society = SocietyMemberShip.find_by_employee_id(@employee.id)
@@ -811,8 +811,8 @@ class SalaryslipsController < ApplicationController
             deducted_actual_amount = 0
             @instalment_array.each do |ia|
               deducted_actual_amount = deducted_actual_amount + ia.advance_salary.instalment_amount
-              deducted_calculated_amount = deducted_calculated_amount + deducted_actual_amount          
-              ia.update(is_complete: true)
+              deducted_calculated_amount = deducted_calculated_amount + deducted_actual_amount         
+              Instalment.find(ia).update(is_complete: true)
             end
             SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: deducted_actual_amount, calculated_amount: deducted_calculated_amount, is_deducted: true, other_component_name: 'Advance')
           end
@@ -913,7 +913,6 @@ class SalaryslipsController < ApplicationController
         SalaryslipComponent.where(salaryslip_id: @salaryslip.id).destroy_all
         flash[:notice] = "Revert successfully"
       end
-
     redirect_to revert_salary_salaryslips_path
   end
 end

@@ -9,9 +9,9 @@
 <%= f.hidden_field :employee_id, value: current_user.employee_id %>
   <div class="row">
     <div class="col-sm-3">
-    <label>Training Topic</label>
+    <label>Training Course</label>
       <div class="form-group required">
-        <%= f.text_field :training_topic,hide_label: true,placeholder: 'Training Topic' %>
+        <%= f.select :training_topic_master_id,all_training_topic,{hide_label: true,placeholder: 'Training Course',include_blank: 'Select Training Course'} %>
       </div>
     </div>
     <div class="col-sm-3">
@@ -28,13 +28,13 @@
         <div class="input-group-addon">
           <i class="fa fa-calendar"></i>
         </div>
-        <%= f.text_field :training_date, hide_label: true,class: 'birth_date'%>
+        <%= f.text_field :training_date, hide_label: true,class: 'birth_date1'%>
       </div>
     </div>
   </div>
 
     <div class="col-sm-3">
-    <label>Reporting Master</label>
+    <label>Request To</label>
       <div class="form-group required">
         <%= f.select :reporting_master_id,all_reporting_master_list,{hide_label: true,include_blank: " Select Reporting Master"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
       </div>
@@ -42,12 +42,34 @@
     </div>
     
   <div class="row">
+  <div class="col-sm-3">
+    <label>No. Of Employee (For Training)</label>
+      <div class="form-group required">
+        <%= f.text_field :no_of_employee,hide_label: true,placeholder: 'No Of Employee' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+    <label>Place</label>
+      <div class="form-group required">
+        <%= f.text_field :place,hide_label: true,placeholder: 'Place' %>
+      </div>
+    </div>
+
     <div class="col-sm-3">
     <label>Description</label>
       <div class="field">
         <%= f.text_area :description,hide_label: true,placeholder: 'Description' %>
       </div>
     </div>
+
+    <div class="col-sm-3">
+    <label>Justification</label>
+      <div class="form-group required">
+        <%= f.text_area :justification,hide_label: true,placeholder: 'Justification' %>
+      </div>
+    </div>
+
   </div>
   <div class="row">
     <div class="col-sm-3">
@@ -98,4 +120,10 @@
      error.insertAfter(element.parent(element));
     }
    });
+
+  $('.birth_date1').datepicker({
+  changeYear:true,
+  changeMonth: true,
+  yearRange: '-100:+10',
+  dateFormat: 'dd-mm-yy' });
 </script>

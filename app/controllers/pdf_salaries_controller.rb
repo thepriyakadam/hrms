@@ -53,6 +53,8 @@ class PdfSalariesController < ApplicationController
   end
 
   def show_employee_costunit_wise
+    session[:active_tab] ="payroll"
+    session[:active_tab1] ="salaryreport"
       @month = params[:month]
       @year = params[:year]
       cost_center = params[:cost_center]
@@ -62,6 +64,7 @@ class PdfSalariesController < ApplicationController
       @employees.try(:each) do |e|
       j = JoiningDetail.find_by_employee_id(e.id)
     end
+
   end
 
   def show_employee
@@ -70,11 +73,20 @@ class PdfSalariesController < ApplicationController
     department = params[:department_id]
     @salaryslips = Salaryslip.where(month: @month, year: @year.to_s).pluck(:employee_id)
     @employees = Employee.where(id: @salaryslips, department_id: department)
+    #byebug
   end
   
+  def print_salary_slip_excel
+    @salaryslips = Salaryslip.all
+  end
 
   def employee_list_pdf
     # @employees = Employee.all
+  end
+
+  def select_month_year_form
+    session[:active_tab] ="payroll"
+    session[:active_tab1] ="salaryreport"
   end
 
 end

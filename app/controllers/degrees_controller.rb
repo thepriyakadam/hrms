@@ -4,6 +4,8 @@ class DegreesController < ApplicationController
   def new
     @degree = Degree.new
     @degrees = Degree.all
+    session[:active_tab] ="master"
+    session[:active_tab1] ="qualificationsetup"
   end
 
   # GET /degrees/1/edit

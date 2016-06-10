@@ -1,10 +1,11 @@
 class HomeController < ApplicationController
   # load_and_authorize_resource
   def index
+    @employee_task_to_dos = EmployeeTaskToDo.where(status: true)
     @companies = Company.all
     @company_locations = CompanyLocation.all
     @departments = Department.all
-    @employees = Employee.all
+    #@employees = Employee.all
     if current_user.class == Member
       if current_user.role.name == 'Employee'
         @employee = Employee.find(current_user.employee_id)
@@ -29,7 +30,8 @@ class HomeController < ApplicationController
   end
 
   def created_user
-    session[:active_tab] ="user"
+    session[:active_tab] ="employeemanagement"
+    session[:active_tab1] ="useradministration"
     if current_user.class == Group
       @employees = Employee.joins('INNER JOIN members on employees.id = members.employee_id')
     else

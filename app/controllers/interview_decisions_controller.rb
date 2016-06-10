@@ -16,6 +16,8 @@ class InterviewDecisionsController < ApplicationController
   def new
     @interview_decision = InterviewDecision.new
     @interview_decisions = InterviewDecision.all
+    session[:active_tab] ="master"
+    session[:active_tab1] ="interview_master_setup"
   end
 
   # GET /interview_decisions/1/edit

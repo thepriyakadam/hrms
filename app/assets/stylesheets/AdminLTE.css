@@ -3184,6 +3184,10 @@ table.text-center th {
 .login-page,
 .register-page {
   background: #d2d6de;
+  /*background-image: url("img3.jpg");*/
+ /* background-image: url("img5.jpg");*/
+  /*  background-image: url("img4.jpg");*/
+  /*background-image: url("effectiveHR.jpg");*/
 }
 .login-box,
 .register-box {

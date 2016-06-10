@@ -1,6 +1,9 @@
+require 'query_report/helper'  # need to require the helper
+
 class EmployeeLeavBalancesController < ApplicationController
   before_action :set_employee_leav_balance, only: [:show, :edit, :update, :destroy]
   load_and_authorize_resource
+  include QueryReport::Helper  # need to include it
   # GET /employee_leav_balances
   # GET /employee_leav_balances.json
   def index
@@ -17,7 +20,7 @@ class EmployeeLeavBalancesController < ApplicationController
       end
     end
     session[:active_tab] ="leavemanagement"
-    session[:active_tab1] ="assignleave"
+    session[:active_tab1] ="leaveadministration"
   end
 
   # GET /employee_leav_balances/1
@@ -79,6 +82,23 @@ class EmployeeLeavBalancesController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def employee_leave_balance
+    reporter(@employee_leav_balances, template_class: PdfReportTemplate) do
+      # filter :manual_employee_code, type: :string
+      #filter(:current_status, :enum, :select => [["Pending",0], ["FirstApproved",2], ["SecondApproved",3], ["FirstRejected",4],["SecondRejected",5],["Cancelled",1]])
+      column(:Employee_ID, sortable: true) { |employee_leav_balance| employee_leav_balance.employee.try(:manual_employee_code) }
+      column(:Employee_Name, sortable: true) { |employee_leav_balance| full_name(employee_leav_balance.employee) }
+      column(:Leave_Category, sortable:true){|employee_leav_balance| employee_leav_balance.leav_category.try(:name)}
+      column(:Leave_Balance, sortable:true){|employee_leav_balance| employee_leav_balance.try(:no_of_leave)}
+      column(:Expiry_Date, sortable:true){|employee_leav_balance| employee_leav_balance.try(:expiry_date)}
+      column(:Toata_Leave, sortable:true){|employee_leav_balance| employee_leav_balance.try(:total_leave)}
+
+    end
+    
+  end
+
+
 
   def collect_employee_for_leave
     if params[:leav_category_id] == ''

@@ -1,3 +1,3 @@
 class GoalPerspective < ActiveRecord::Base
-  has_many :employee_goals
+	has_many :goal_ratings
 end

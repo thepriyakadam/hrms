@@ -13,9 +13,9 @@
       <li><a href="/employees"><i class="fa fa-tags"></i> Employees</a></li>
     </ul>
   </li>
-  <li class="treeview">
+  <li class="treeview" id="selfservice">
     <a href="">
-      <i class="fa fa-user-plus"></i> <span>Employee Self Service</span> 
+      <i class="fa fa-user-plus"></i> <span>Employee Self Service</span><i class="fa fa-angle-left pull-right"></i>
     </a>
     <ul class="treeview-menu">
       <li><a href="/self_services/employee"><i class="fa fa-tags"></i> Employees</a></li>
@@ -23,7 +23,8 @@
       <li><a href="/self_services/attendance"><i class="fa fa-tags"></i>Attendance</a></li>
       <li><a href="/self_services/salaryslip"><i class="fa fa-tags"></i>Salaryslips</a></li>
       <li><a href="/self_services/advance"><i class="fa fa-tags"></i>Advance & Instalment</a></li>
-      <li><a href="/goal_rating_sheets/new"><i class="fa fa-tags"></i>Self Rating </a></li>
+      <li><a href="/goal_bunches/new"><i class="fa fa-tags"></i> Set Goal </a></li>
+      <li><a href="/goal_bunches/period_list_appraisee"><i class="fa fa-tags"></i> Self Rating </a></li>
     </ul>
   </li>
 
@@ -37,38 +38,29 @@
       <li><a href="/employee_leav_requests/approved_or_rejected_leave_request"><i class="fa fa-tags"></i>Approve/Reject Leave</a></li>
     </ul>
   </li>
-
-    <li class="treeview">
+  
+   <li class="treeview" id="performancemgmt">
     <a href="">
-      <i class="ionicons ion-ios-time"></i><span><span>  Time Management </span></span> <i class="fa fa-angle-left pull-right"></i>
+      <i class="ionicons ion-ios-time"></i><span> Performance Management </span> <i class="fa fa-angle-left pull-right"></i>
     </a>
-    <ul class="treeview-menu">
-      <li><a href="/employee_shifts"><i class="fa fa-tags"></i> Assign Employee To Shift </a></li>
+    <ul class="treeview-menu" >
+      <li><a href="/goal_bunches/subordinate_list"><i class="fa fa-tags"></i> Goal Approval </a></li>
+      <li><a href="/goal_bunches/appraiser_subordinate"><i class="fa fa-tags"></i> Appraiser Comment</a></li>
+      <li><a href="/goal_bunches/reviewer_subordinate"><i class="fa fa-tags"></i> Reviewer Comment</a></li>
     </ul>
    </li>
 
-   <li class="treeview">
-    <a href="">
-      <i class="ionicons ion-ios-time"></i><span><span>  Performance Management </span></span> <i class="fa fa-angle-left pull-right"></i>
-    </a>
-
-     <ul class="treeview-menu">
-      <li><a href="/employee_goals/subordinate_list"><i class="fa fa-tags"></i> Set Goals & Attributes </a></li>
-  
-      <li><a href="/goal_rating_sheets/subordinate_list"><i class="fa fa-tags"></i> Appraiser Rating </a></li>
-
-      <li><a href="/goal_rating_sheets/subordinate_list2"><i class="fa fa-tags"></i> Appraiser2 Rating </a></li>
-      <li><a href="/goal_rating_sheets/employee_list"><i class="fa fa-tags"></i> Final Rating </a></li>
-      <li><a href="/attribute_rating_sheets/subordinate_list"><i class="fa fa-tags"></i> Employee Details </a></li>
-      <li><a href="/attribute_rating_sheets/subordinate_list2"><i class="fa fa-tags"></i> Employee Appraiser2 Details </a></li>
-      <li><a href="/attribute_rating_sheets/employee_list"><i class="fa fa-tags"></i> Employee Final Details </a></li>
-      <li><a href="/employee_goals/employee_list"><i class="fa fa-tags"></i> HR </a></li>
-
-      <li><a href="/employee_goals/show_employee"><i class="fa fa-tags"></i> Print </a></li>
-      
-      </ul>
-   <!--  <ul class="treeview-menu">
-    <li><a href="/attribute_rating_sheets/subordinate_list"><i class="fa fa-tags"></i> Employee Details </a></li>
-    </ul> -->
-  </li>
 </ul>
+
+
+<script typgre="text/javascript">
+  <% unless session[:active_tab].nil? %>
+  document.getElementById("<%= session[:active_tab] %>").classList.add("active");
+  <%end%>
+  <% unless session[:active_tab1].nil? %>
+  document.getElementById("<%= session[:active_tab1] %>").classList.add("active");
+  <%end%>
+  <% unless session[:active_tab2].nil? %>
+  document.getElementById("<%= session[:active_tab2] %>").classList.add("active");
+  <%end%>
+</script>

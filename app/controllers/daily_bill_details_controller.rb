@@ -82,7 +82,6 @@ end
 
 
   def is_confirm
-    
     @travel_request = TravelRequest.find(params[:qwe])
     @daily_bill_detail_ids = params[:daily_bill_detail_ids]
     if @daily_bill_detail_ids.nil?
@@ -99,6 +98,28 @@ end
     end
   end
 
+  def print_daily_bill
+    @travel_request = TravelRequest.find(params[:qwe])
+    @daily_bill_details = DailyBillDetail.where(travel_request_id: @travel_request.id)
+
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render pdf: 'print_daily_bill',
+               layout: 'pdf.html',
+               :page_height      => 1000,
+               :dpi              => '300',
+               :margin           => {:top    => 10, # default 10 (mm)
+                          :bottom => 10,
+                          :left   => 12,
+                          :right  => 12},
+               orientation: 'Landscape',
+               template: 'daily_bill_details/print_daily_bill.pdf.erb',
+              :show_as_html => params[:debug].present?
+      end
+    end  
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_daily_bill_detail
@@ -107,6 +128,6 @@ end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def daily_bill_detail_params
-      params.require(:daily_bill_detail).permit(:is_confirm,:travel_request_id, :expence_date, :e_place, :travel_expence, :local_travel_expence, :lodging_expence, :boarding_expence, :other_expence)
+      params.require(:daily_bill_detail).permit(:is_confirm, :travel_expence_type_id, :travel_request_id, :expence_date, :e_place, :travel_expence )
     end
 end

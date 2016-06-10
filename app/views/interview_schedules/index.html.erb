@@ -1,6 +1,6 @@
 <div class="box">
   <div class="box-header">
-    <h3 class="box-title">Interview</h3>
+    <h3 class="box-title">Interview Schedule List ( Without Resume )</h3>
 <div class="box-body">
 <%= bootstrap_form_for InterviewSchedule.new,url:{action:'is_confirm'} do |f| %>   
 <table id="example" class="table table-bordered table-hover table-condensed">
@@ -9,12 +9,14 @@
       <th><input type="checkbox" id="selectAll" value="selectAll"></th>
       <th>Job Title</th>
       <th>Candidate Name</th>
+      <th>Interviewer Name</th>
       <!-- <th>Candidate Name2</th> -->
       <th>Interview Date</th>
       <th>Interview Time</th>
       <th>Reschedule</th>
       <th>Status</th>
-      <th>Confirm</th>
+<!--       <th>Confirm</th>
+ -->      <th>Reschedule List</th>
       <th>Action</th>
     </tr>
   </thead>
@@ -31,29 +33,33 @@
         </td>
         <td><%= interview_schedule.interviewer_name %></td>
         <td><%= interview_schedule.candidate_name %></td>
+        <td><%= interview_schedule.employee.first_name+' '+interview_schedule.employee.middle_name+' '+interview_schedule.employee.last_name %></td>
         <!-- <td><%= interview_schedule.candidate_name2 %></td> -->
         <td><%= interview_schedule.interview_date %></td>
         <td><%= interview_schedule.interview_time %></td>
            <td>
            <!--  link_to '', interview_schedule,method: :delete,data:{confirm:'Are you sure?'},class: 'btn btn-sm btn-danger fa fa-close' %> -->
 
-            <%= link_to ' Reschedule', interview_reschedule_interview_schedules_path(id:interview_schedule.id),class: 'btn btn-sm btn-info fa fa-envelope-o'  %>
+            <%= link_to ' Reschedule', interview_reschedule_interview_schedules_path(id:interview_schedule.id),class: 'btn btn-xs btn-success fa fa-envelope-o'  %>
             </td>
             <td>
               <% if interview_schedule.is_confirm == true %>
               <small class="label label-info">Interview Confirmed</small>
               <% else %>
-              <small class="label label-warning">Not Yet Confirmed</small>
+              <small class="label label-danger">Not Yet Confirmed</small>
               <% end %>
             </td>
-            <td>
-            <%= link_to ' Confirm Email',sample_email_to_interviewer_path(interview_schedule),class: 'btn btn-sm btn-warning fa fa-check' %>
+           <!--  <td> -->
+            <!--< link_to ' Confirm Email',sample_email_to_interviewer_path(interview_schedule),class: 'btn btn-xs btn-warning fa fa-check' %>-->
 <!--              link_to '',modal_interview_schedules_path,class: 'btn btn-sm btn-warning fa fa-modx',remote: true %>
- -->       </td>
+ -->      <!--  </td> -->
+             <td>
+              <%= link_to ' List',interview_reschedule_list_interview_schedules_path(interview_schedule),class: 'btn btn-xs btn-primary fa fa-sticky-note-o' %>
+            </td>
         <td>
           <%= link_to '', interview_schedule,class: 'btn btn-xs btn-default fa fa-eye' %>
-          <%= link_to '', edit_interview_schedule_path(interview_schedule),class: 'btn btn-success btn-xs fa fa-edit' %>
         </td>
+          <!--= link_to '', edit_interview_schedule_path(interview_schedule),class: 'btn btn-success btn-xs fa fa-edit' %>-->
       </tr>
     <% end %>
   </tbody>
@@ -62,8 +68,7 @@
 <div class="row">
   <div class="col-sm-3">
     <div class="actions">
-      <%= f.submit "Confirm Interview", class: 'btn btn-primary btn-sm' %> 
-      
+      <%= f.submit "Confirm Interview", class: 'btn btn-primary btn-sm' %>
     </div>
   </div>
 </div>

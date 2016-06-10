@@ -1,5 +1,7 @@
 class Reports::FoodDeductionDetailsController < ApplicationController
   def new
+    session[:active_tab] ="payroll"
+    session[:active_tab1] ="deductionreport"
   end
 
   def food_deduction_detail_report

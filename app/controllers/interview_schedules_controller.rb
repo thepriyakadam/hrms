@@ -31,6 +31,8 @@ class InterviewSchedulesController < ApplicationController
 
   def new1
     @interview_schedule = InterviewSchedule.new
+    session[:active_tab] ="recruitment"
+    session[:active_tab1] ="general_vacancy"
   end
 
   # GET /interview_schedules/1/edit
@@ -58,6 +60,17 @@ class InterviewSchedulesController < ApplicationController
     end
   end
 
+  # def create_new
+  #   @interview_schedule = InterviewSchedule.new(interview_schedule_params)
+  #    @interview_schedules = InterviewSchedule.all
+  #     if @interview_schedule.save
+  #       @interview_schedule = InterviewSchedule.new
+  #     end
+  #     # @vacancy_master = VacancyMaster.find(@selected_resume.vacancy_master_id)
+  #     redirect_to new1_interview_schedule_path
+  #     flash[:notice] = 'Interview schedule was successfully created.'
+  # end
+
   # PATCH/PUT /interview_schedules/1
   # PATCH/PUT /interview_schedules/1.json
   def update
@@ -79,11 +92,12 @@ class InterviewSchedulesController < ApplicationController
 
     @interview_reschedule.interview_date = @interview_schedule.interview_date
     @interview_reschedule.interview_time = @interview_schedule.interview_time
+    @interview_reschedule.employee_id = @interview_schedule.employee_id
     @interview_reschedule.employee_id = params[:interview_reschedule][:employee_id]
     @interview_reschedule.interview_schedule_id = @interview_schedule.id
 
     @interview_reschedule.save
-    @interview_schedule.update(interview_date: params[:interview_reschedule][:interview_date], interview_time: params[:interview_reschedule][:interview_time])
+    @interview_schedule.update(interview_date: params[:interview_reschedule][:interview_date], interview_time: params[:interview_reschedule][:interview_time],employee_id: params[:interview_reschedule][:employee_id])
     if @interview_schedule.email_id.nil?
       flash[:alert] = 'Email not Available'
       redirect_to interview_schedules_path
@@ -103,8 +117,8 @@ class InterviewSchedulesController < ApplicationController
       flash[:alert] = 'Email not Available'
       redirect_to interview_schedules_path
     else
-      InterviewScheduleMailer.sample_email_to_interviewer(@interview_schedule).deliver_now
-      InterviewScheduleMailer.confirmation_email_to_candidate(@interview_schedule).deliver_now
+      # InterviewScheduleMailer.sample_email_to_interviewer(@interview_schedule).deliver_now
+      # InterviewScheduleMailer.confirmation_email_to_candidate(@interview_schedule).deliver_now
       flash[:notice] = 'Email Sent Successfully'
       redirect_to interview_schedules_path
   end
@@ -141,7 +155,13 @@ end
     #byebug
     @interview_schedule = InterviewSchedule.find(params[:id])
     @employee = Employee.find(@interview_schedule.employee_id)
-    @interview_reschedule = InterviewReschedule.new  
+    @interview_reschedule = InterviewReschedule.new
+  end
+
+  def interview_reschedule_list
+     puts "-------------------"
+     @interview_schedule = InterviewSchedule.find(params[:format])
+     @interview_reschedules = InterviewReschedule.where(interview_schedule_id: @interview_schedule.id)
   end
 
   def search_by_interview_date
@@ -168,11 +188,25 @@ end
     else
       @interview_schedule_ids.each do |eid|
       @interview_schedule = InterviewSchedule.find(eid)
-      @interview_schedule.update(is_confirm: true)      
-      flash[:notice] = "Confirmed Successfully"
+      @interview_schedule.update(is_confirm: true) 
+      InterviewScheduleMailer.sample_email_to_interviewer(@interview_schedule).deliver_now
+      InterviewScheduleMailer.confirmation_email_to_candidate(@interview_schedule).deliver_now     
+      flash[:notice] = "Confirmed Successfully & Email also sent"
     end 
      redirect_to interview_schedules_path
   end
+  end
+
+  def interviewee_list
+     @interview_schedules = InterviewSchedule.where(employee_id: current_user.employee_id,is_confirm: true)
+     session[:active_tab] ="recruitment"
+     session[:active_tab1] ="particular_vacancy"
+  end
+
+  def resume_list
+     @selected_resume = SelectedResume.new
+     @interview_schedule = InterviewSchedule.find(params[:format])
+     @selected_resumes = SelectedResume.where(id: @interview_schedule.selected_resume_id)
   end
 
 

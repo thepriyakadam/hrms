@@ -26,7 +26,7 @@ class SalaryComponentsController < ApplicationController
       else
         flash.now[:alert] = 'Salary Component is Already Exist.'
         format.js { @flag = false }
-        end
+      end
     end
   end
 

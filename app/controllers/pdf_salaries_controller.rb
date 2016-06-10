@@ -73,10 +73,10 @@ class PdfSalariesController < ApplicationController
     department = params[:department_id]
     @salaryslips = Salaryslip.where(month: @month, year: @year.to_s).pluck(:employee_id)
     @employees = Employee.where(id: @salaryslips, department_id: department)
+    #byebug
   end
   
   def print_salary_slip_excel
-    puts "-------------"
     @salaryslips = Salaryslip.all
   end
 

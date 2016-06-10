@@ -79,7 +79,7 @@
       <% @salaryslips.each do |slip| %>
         <% employee = slip.employee %>
         <% joining = employee.joining_detail %>
-        <% bank = employee.employee_bank_detail %>
+        <% bankdetail = employee.employee_bank_detail %>
         <% workingday = slip.workingday %>
         <Row>
           <Cell ss:Index="1"><Data ss:Type="String"><%= i=i+1 %></Data></Cell>
@@ -92,8 +92,8 @@
           <Cell ss:Index="7"><Data ss:Type="String"><%= slip.year %></Data></Cell>
           <Cell ss:Index="8"><Data ss:Type="String"><%= slip.month %></Data></Cell>
           <Cell ss:Index="9"><Data ss:Type="String"><%= joining.employee_category.try(:name) %></Data></Cell>
-          <Cell ss:Index="10"><Data ss:Type="String"><%= bank.try(:account_no) %></Data></Cell>
-          <Cell ss:Index="11"><Data ss:Type="String"><%= bank.try(:bank_name) %></Data></Cell>
+          <Cell ss:Index="10"><Data ss:Type="String"><%= bankdetail.try(:account_no) %></Data></Cell>
+          <Cell ss:Index="11"><Data ss:Type="String"><%= bankdetail.try(:bank).try(:name) %></Data></Cell>
           <Cell ss:Index="12"><Data ss:Type="String"><%= joining.try(:payment_mode).try(:name) %></Data></Cell>
           <Cell ss:Index="13"><Data ss:Type="String"><%= joining.try(:employee_pf_no) %></Data></Cell>
           <Cell ss:Index="14"><Data ss:Type="String"><%= joining.try(:employee_efic_no) %></Data></Cell>

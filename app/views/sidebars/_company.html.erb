@@ -89,14 +89,14 @@
            <li><a href="/asset_types/new"><i class="fa fa-tags"></i>Asset Type </a></li>
         </ul>
        </li>
-       <li>
+       <li id="training">
         <a href="#"><i class="fa fa-edit"></i> Training <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
           <li><a href="/training_topic_masters/new"><i class="fa fa-tags"></i> Training Course </a></li>
         </ul>
        </li>
 
-       <li>
+       <li id="travel">
         <a href="#"><i class="fa fa-edit"></i> Travel Setup <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
            <li><a href="/travel_expence_types/new"><i class="fa fa-tags"></i> Travel Expence Type </a></li>
@@ -105,7 +105,7 @@
         </ul>
        </li>
 
-       <li>
+       <li id="accident">
         <a href="#"><i class="fa fa-edit"></i> Accident Master<i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
            <li><a href="/root_cause_masters/new"><i class="fa fa-tags"></i> Root Cause </a></li>
@@ -134,6 +134,7 @@
            <li><a href="/question_masters/new"><i class="fa fa-tags"></i>Question Master </a></li>
            <li><a href="/about_companies/new"><i class="fa fa-tags"></i> About Company </a></li>
            <li><a href="/about_bosses/new"><i class="fa fa-tags"></i>About Boss </a></li>
+           <li><a href="/about_bosses/new"><i class="fa fa-tags"></i>Leaving Reason Master </a></li>
         </ul>
        </li>
       </li> 
@@ -192,6 +193,20 @@
         <li><a href="/reports/family_details/new"><i class="fa fa-tags"></i>Family Details</a></li>
         </ul>
       </li> 
+    </ul>
+  </li>
+  <li class="treeview" id="selfservice">
+    <a href="">
+      <i class="fa fa-user-plus"></i> <span>Employee Self Service</span><i class="fa fa-angle-left pull-right"></i>
+    </a>
+    <ul class="treeview-menu">
+      <li><a href="/self_services/employee"><i class="fa fa-tags"></i> Employees</a></li>
+      <li><a href="/self_services/employee_template"><i class="fa fa-tags"> </i> Salary Structure </a></li>
+      <li><a href="/self_services/attendance"><i class="fa fa-tags"></i>Attendance</a></li>
+      <li><a href="/self_services/salaryslip"><i class="fa fa-tags"></i>Salaryslips</a></li>
+      <li><a href="/self_services/advance"><i class="fa fa-tags"></i>Advance & Instalment</a></li>
+      <li><a href="/goal_bunches/new"><i class="fa fa-tags"></i> Set Goal </a></li>
+      <li><a href="/goal_bunches/period_list_appraisee"><i class="fa fa-tags"></i> Self Rating </a></li>
     </ul>
   </li>
   <li class="treeview" id="leavemanagement">
@@ -313,11 +328,12 @@
     </ul>
    </li>
 
-    <li class="treeview">
+    <li class="treeview" id="performancemgmt">
     <a href="">
-      <i class="ionicons ion-ios-time"></i><span> Performance </span> <i class="fa fa-angle-left pull-right"></i>
+      <i class="ionicons ion-ios-time"></i><span> Performance Management </span> <i class="fa fa-angle-left pull-right"></i>
     </a>
-    <ul class="treeview-menu">
+
+    <ul class="treeview-menu" >
       <li><a href="/goal_bunches/subordinate_list"><i class="fa fa-tags"></i> Goal Approval </a></li>
       <li><a href="/goal_bunches/appraiser_subordinate"><i class="fa fa-tags"></i> Appraiser Comment</a></li>
       <li><a href="/goal_bunches/reviewer_subordinate"><i class="fa fa-tags"></i> Reviewer Comment</a></li>
@@ -371,7 +387,6 @@
         <li><a href="/vacancy_masters"><i class="fa fa-tags"></i> Cancel Request </a></li>
         <li><a href="/vacancy_masters/vacancy_history"><i class="fa fa-tags"></i> Vacancy Approve / Reject </a></li>
         <li><a href="/vacancy_masters/approve_vacancy_list"><i class="fa fa-tags"></i> Vacancy List </a></li>
-        <li><a href="/vacancy_masters/vacancy_resume"><i class="fa fa-tags"></i> Candidate Profile</a></li>
         <li><a href="/vacancy_masters/approved_vacancy_request_history_list"><i class="fa fa-tags"></i> Approved Vacancy List </a></li>
         <li><a href="/vacancy_masters/vacancy_resume"><i class="fa fa-tags"></i> Capture Resume</a></li>
          <li><a href="/interview_schedules/interviewee_list"><i class="fa fa-tags"></i> Interview Resume</a></li>
@@ -407,6 +422,7 @@
       <li><a href="/accident_records"><i class="fa fa-tags"></i> Accident Record </a></li>
     </ul>
    </li>
+<<<<<<< HEAD
 
    <li class="treeview" id="selfservice">
     <a href="">
@@ -422,6 +438,8 @@
       <li><a href="/goal_bunches/appraisee_comment"><i class="fa fa-tags"></i> Self Rating </a></li>
     </ul>
   </li>
+=======
+>>>>>>> 843d35e5413a7e7ce56a3d148d56a9f48ea535e6
 </ul>
 
 <script typgre="text/javascript">

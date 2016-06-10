@@ -21,7 +21,7 @@
       <td><%= a.manual_employee_code %></td> 
       <td><%= a.first_name %></td>
       <td><%=  %></td>
-      <td><%= a.department.name %></td>
+      <td><%= a.department.try(:name) %></td>
       <td><%= @joining_detail.joining_date %></td>
       <td><%= @joining_detail.employee_grade.name %></td>
       <td><%= @joining_detail.employee_designation.name %></td>
@@ -98,7 +98,7 @@
     <tbody>
       <% @goal_ratings.each do |goal_rating| %>
         <tr>
-          <td><%= goal_rating.goal_perspective.name %></td>
+          <td><%= goal_rating.goal_perspective.try(:name) %></td>
           <td><%= goal_rating.goal_weightage %></td>
           <td><%= goal_rating.goal_measure %></td>
           <td><%= goal_rating.target %></td>
@@ -128,7 +128,7 @@
         </tr>
         <tr>
           <th>Appraiser Rating</th>
-          <td><%= goal_bunch.appraiser_comment %></td>
+          <td><%=  %></td>
         </tr>
         <tr>
           <th>Reviewer Comment</th>
@@ -149,8 +149,20 @@
       <% end %>
     </tbody>
   </table>
+  <hr>
 
-<hr>
-<%= link_to 'Print PDF', print_final_detail_goal_bunches_path(format: 'pdf',id:@employee.id ),class: 'btn btn-xl btn-warning', :target => '_blank' %><br>
+  <%= bootstrap_form_for(:goal_bunches, url: { action: 'xl_sheet_print',format: 'xls',emp_id: @employee.id,id: @goal_bunch.id}) do |f| %>
+
+     <div class="row">
+      <div class="col-sm-6">
+        <div class="actions">
+        <%= link_to 'Print Report', print_final_detail_goal_bunches_path(format: 'pdf',emp_id:@employee.id,id: @goal_bunch.id ),class: "btn btn-xl btn-info fa fa-print", :target => '_blank' %>
+
+        <%= f.submit "Excel Report", class: "btn btn-xl btn-success fa fa-print" %>
+        </div>
+      </div>
+    </div>
+    
+  </div>
 </div>
-</div>
+<% end %>

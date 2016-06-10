@@ -18,7 +18,6 @@ class GoalRatingsController < ApplicationController
     @goal_rating = GoalRating.new
     @goal_ratings = GoalRating.where(goal_bunch_id: @goal_bunch.id)
     @goal_bunches = GoalBunch.all
-
   end
 
   # GET /goal_ratings/1/edit
@@ -31,14 +30,15 @@ class GoalRatingsController < ApplicationController
   def create
     @goal_bunch = GoalBunch.find(params[:goal_rating][:goal_bunch_id])
     @goal_rating = GoalRating.new(goal_rating_params)
-
-      if @goal_rating.save
-        @flag = true
-        @goal_rating = GoalRating.new
-        @goal_ratings = GoalRating.where(goal_bunch_id: @goal_bunch.id)
-      else
-        @flag = false
-      end
+    goal_weightage_sum = @goal_rating.goal_weightage_sum(@goal_bunch, @goal_rating)
+    if goal_weightage_sum <= 100
+      @goal_rating.save
+      @flag = true
+      @goal_rating = GoalRating.new
+      @goal_ratings = GoalRating.where(goal_bunch_id: @goal_bunch.id)
+    else
+      @flag = false
+    end
   end
 
   # PATCH/PUT /goal_ratings/1
@@ -73,7 +73,7 @@ class GoalRatingsController < ApplicationController
     @goal_rating = GoalRating.find(params[:goal_rating_id])
     @goal_rating.update(goal_rating_params)
     flash[:notice] = 'Updated Successfully'
-    redirect_to appraisee_comment_goal_bunches_path
+    redirect_to appraisee_comment_goal_bunches_path(emp_id: @goal_rating.appraisee_id, id: @goal_rating.goal_bunch_id)
   end
 
   def appraiser_modal
@@ -84,7 +84,7 @@ class GoalRatingsController < ApplicationController
     @goal_rating = GoalRating.find(params[:goal_rating_id])
     @goal_rating.update(goal_rating_params)
     flash[:notice] = 'Updated Successfully'
-    redirect_to appraiser_comment_goal_bunches_path(id: @goal_rating.appraisee_id)
+    redirect_to appraiser_comment_goal_bunches_path(emp_id: @goal_rating.appraisee_id, id: @goal_rating.goal_bunch_id)
   end
 
   def reviewer_modal
@@ -95,7 +95,7 @@ class GoalRatingsController < ApplicationController
     @goal_rating = GoalRating.find(params[:goal_rating_id])
     @goal_rating.update(goal_rating_params)
     flash[:notice] = 'Updated Successfully'
-    redirect_to reviewer_comment_goal_bunches_path(id: @goal_rating.appraisee_id)
+    redirect_to reviewer_comment_goal_bunches_path(emp_id: @goal_rating.appraisee_id, id: @goal_rating.goal_bunch_id)
   end
 
   def goal_modal
@@ -106,7 +106,7 @@ class GoalRatingsController < ApplicationController
     @goal_rating = GoalRating.find(params[:goal_rating_id])
     @goal_rating.update(goal_rating_params)
     flash[:notice] = 'Updated Successfully'
-    redirect_to goal_approval_goal_bunches_path(id: @goal_rating.appraisee_id)
+    redirect_to goal_approval_goal_bunches_path(emp_id: @goal_rating.appraisee_id, id: @goal_rating.goal_bunch_id)
   end
 
   def print_department
@@ -121,10 +121,16 @@ class GoalRatingsController < ApplicationController
   end
   
   def send_mail_to_appraiser
-    @emp = GoalRating.find(73)
-    GoalRatingMailer.send_email_to_appraiser(@emp).deliver_now
-    flash[:notice] = "Mail Sent Successfully"
-    redirect_to root_url
+    @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
+    sum = @goal_bunch.goal_ratings.sum(:goal_weightage)
+    if sum == 100
+      @emp = Employee.find(current_user.employee.manager_id)
+      GoalRatingMailer.send_email_to_appraiser(@emp).deliver_now
+      flash[:notice] = "Mail Sent Successfully"
+    else
+      flash[:alert] = "Goal weightage sum should be 100"
+    end
+    redirect_to new_goal_rating_path(id: @goal_bunch.id)
   end
 
   private

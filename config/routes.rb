@@ -80,6 +80,16 @@ Rails.application.routes.draw do
       post :reviewer_overall_comment_confirm
       get :modal_period
       post :modal_period_create
+      post :xl_sheet_print
+      get :goal_period_list
+      get :period_list_appraisee
+      get :period_list_appraiser
+      get :period_list_reviewer
+      get :period_list_final
+      get :period_list_print
+      get :print_appraisee_detail
+      get :print_appraiser_detail
+      get :print_reviewer_detail
     end
   end
   resources :goal_perspectives
@@ -144,6 +154,7 @@ Rails.application.routes.draw do
   resources :daily_bill_details do
     collection do 
     post :is_confirm
+    get :print_daily_bill
     end
   end 
   resources :travel_requests do
@@ -161,6 +172,7 @@ Rails.application.routes.draw do
       patch :edit_and_send_next_modal_submit
       get :edit_and_approve_modal
       patch :edit_and_approve_modal_submit
+      get :is_confirm
     end
   end
   namespace :reports do
@@ -226,8 +238,13 @@ Rails.application.routes.draw do
   end
 
   namespace :views do
+
+    get 'goal_bunches/final_detail'
+    post 'goal_bunches/xl_sheet_print'
+
     get 'pdf_salaries/excel_report'
     post 'pdf_salaries/print_salary_slip_excel'
+
   end
 
   resources :week_offs

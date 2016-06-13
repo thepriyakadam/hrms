@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :interview_rounds
+  resources :interview_types
   resources :salary_comp_mappings
   resources :company_events
   resources :employee_task_to_dos
@@ -278,6 +280,7 @@ Rails.application.routes.draw do
       get :all_interview_schedule_list
       get :final_report
       post :print_final_report
+      get :interview_round_list
     end
   end
   resources :vacancy_masters do

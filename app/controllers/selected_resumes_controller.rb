@@ -200,6 +200,6 @@ class SelectedResumesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def selected_resume_params
-      params.require(:selected_resume).permit(:name, :contact_no, :avatar, :passport_photo, :skillset, :degree_id, :ctc, :email_id, :experience, :notice_period, :vacancy_master_id)
+      params.require(:selected_resume).permit(:name, :contact_no, :avatar, :passport_photo, :job_title, :skillset, :degree_id, :ctc, :email_id, :experience, :notice_period, :vacancy_master_id)
     end
 end

@@ -14,8 +14,8 @@
  -->              <th>Sr.No</th>
               <th>Candidate Name</th>
               <th>Interview Date</th>
-              <th>Interview Time</th>
               <th>Download Resume/Photo</th>
+              <th>Interview Rounds</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -30,8 +30,8 @@
                 <td><%= i=i+1 %></td>
                 <td><%= interview_schedule.candidate_name %></td>
                 <td><%= interview_schedule.interview_date %></td>
-                <td><%= interview_schedule.interview_time %></td>
                 <td><%= link_to '', resume_list_interview_schedules_path(interview_schedule),class: 'btn btn-xs fa fa-download' %></td>
+                <td><%= link_to ' Interview Round',interview_round_list_interview_schedules_path(interview_schedule),class: 'btn btn-xs btn-primary' %></td>
                 <td>
                   <%= link_to ' Feedback', new_interview_analysis_path(interview_schedule),class: 'btn btn-xs btn-success fa fa-comment' %>
                   <!--  < link_to 'Print', print_interviewee_list_interview_schedules_path(format: 'pdf',id:interview_schedule.id ),class: "btn btn-xl btn-info fa fa-print", :target => '_blank' %> -->

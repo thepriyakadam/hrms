@@ -3,6 +3,6 @@ class ParticularVacancyRequest < ActiveRecord::Base
   belongs_to :employee
   belongs_to :interview_schedule
   belongs_to :selected_resume
-  belongs_to :vacancy_history,class_name: "VacancyRequestHistory"
+  belongs_to :vacancy_request_history,class_name: "VacancyRequestHistory"
   
 end

@@ -164,22 +164,6 @@ end
      @interview_reschedules = InterviewReschedule.where(interview_schedule_id: @interview_schedule.id)
   end
 
-  def search_by_interview_date
-    @interview_schedules = InterviewSchedule.all
-    reporter(@interview_schedules, template_class: PdfReportTemplate) do
-      filter :interview_date, type: :date
-      column :interviewer_name, sortable: true
-      column :candidate_name, sortable: true
-      column :interview_date, sortable: true
-      column :interview_time, sortable: true
-      column :location, sortable: true
-      column :schedule_comments, sortable: true
-      column :post_title, sortable: true
-      column :interview_type, sortable: true
-      column :interview_status, sortable: true
-    end
-  end
-
   def is_confirm
     @interview_schedule_ids = params[:interview_schedule_ids]
     if @interview_schedule_ids.nil?
@@ -198,7 +182,7 @@ end
   end
 
   def interviewee_list
-     @interview_schedules = InterviewSchedule.where(employee_id: current_user.employee_id,is_confirm: true)
+     @interview_schedules = InterviewSchedule.all
      session[:active_tab] ="recruitment"
      session[:active_tab1] ="particular_vacancy"
   end
@@ -234,6 +218,8 @@ end
 
   def all_interview_schedule_list
      @interview_schedules = InterviewSchedule.all
+     session[:active_tab] ="recruitment"
+     session[:active_tab1] ="general_vacancy"
   end
  
   def final_report
@@ -241,6 +227,9 @@ end
     @interview_schedule = InterviewSchedule.find(params[:format])
     @interview_schedules = InterviewSchedule.where(id: @interview_schedule.id)
     @interview_analyses = InterviewAnalysis.where(interview_schedule_id: @interview_schedule.id)
+    @interview_rounds = InterviewRound.where(interview_schedule_id: @interview_schedule.id)
+    session[:active_tab] ="recruitment"
+    session[:active_tab1] ="general_vacancy"
   end
 
   def print_final_report
@@ -249,6 +238,7 @@ end
      @interview_schedule = InterviewSchedule.find(params[:id])
      @interview_schedules = InterviewSchedule.where(id: @interview_schedule.id)
      @interview_analyses = InterviewAnalysis.where(interview_schedule_id: @interview_schedule.id)
+     @interview_rounds = InterviewRound.where(interview_schedule_id: @interview_schedule.id)
      respond_to do |format|
         format.html
         format.pdf do
@@ -267,6 +257,11 @@ end
     end
   end
 
+  def interview_round_list
+    @interview_schedule = InterviewSchedule.find(params[:format])
+    @interview_rounds = InterviewRound.where(interview_schedule_id: @interview_schedule.id,employee_id: current_user.employee_id)
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -280,6 +275,6 @@ end
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def interview_schedule_params
-    params.require(:interview_schedule).permit(:interviewer_name,:candidate_name2,:selected_resume_id, :candidate_name2, :employee_id, :interview_schedule_id, :reporting_master_id, :email_id, :candidate_name, :interview_date, :interview_time, :location, :schedule_comments, :post_title, :interview_type, :interview_status)
+    params.require(:interview_schedule).permit(:selected_resume_id, :employee_id, :interview_schedule_id, :email_id, :candidate_name, :interview_date, :location, :job_title)
   end
 end

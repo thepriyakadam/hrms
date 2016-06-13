@@ -42,6 +42,9 @@ Rails.application.routes.draw do
       get :print_department
       get :show_employee
       post :send_mail_to_appraiser
+      get :subordinate_list_goal_wise
+      post :print_subordinate_list
+      post :all_subordinate_list
     end
   end
   resources :goal_bunches do
@@ -98,9 +101,9 @@ Rails.application.routes.draw do
       get :subordinate_list_for_reviewer
       get :period_reviewer
       get :period_for_appraisee
-      get :all_emp_list_print
-      post :print_emp_list_pdf
-      get :print_all_emp_detail
+      post :print_emp_list
+      post :all_emp_list
+      get :emp_list_goal_wise
     end
   end
   resources :goal_perspectives

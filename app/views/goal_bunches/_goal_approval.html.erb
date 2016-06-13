@@ -3,7 +3,7 @@
     <h3 class="box-title">Goal Confirmation</h3>
   </div><!-- /.box-header -->
   <div class="box-body">
-  <%= bootstrap_form_for GoalBunch.new,url:{action:'appraiser_confirm',id: @employee.id,goal_bunch_id: @goal_bunch_id.id} do |f| %>  
+  <%= bootstrap_form_for GoalBunch.new,url:{action:'appraiser_confirm',id: @employee.id,goal_bunch_id: @goal_bunch_id.id},remote: true do |f| %>  
 
   <div class="box-header with-border">
   <h3 class="box-title">Employee Details</h3>

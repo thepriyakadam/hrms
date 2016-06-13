@@ -1,6 +1,6 @@
 <div class="box box-default">
   <div class="box-body">
-      <%= form_for :goal_bunches, url: { action: 'print_emp_list_pdf'},:html => {:target => '_blank'} do |f| %>
+  <%= form_for :goal_bunches, url: { action: 'all_emp_list'},:html => {:target => '_blank'} do |f| %>
       <table id="example1" class="table table-bordered table-hover table-condensed">
         <thead>
           <tr>
@@ -30,7 +30,7 @@
         <div class="col-sm-3">
           <%= f.submit "Print Employee Detail",class: "btn btn-xl btn-warning fa fa-print" %>
         </div>
-    <% end %>
+    <% end %>    
   </div>
 </div>
 

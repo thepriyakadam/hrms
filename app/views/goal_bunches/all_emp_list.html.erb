@@ -1,10 +1,9 @@
 <div class="box box-default">
   <div class="box-body">
 
+   <%= link_to " Print excel ",all_emp_list_goal_bunches_path(format: "xls",goal_bunch_ids: @goal_bunches),method: :post, class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
     <% @goal_bunches.each do |g|  %>
 
-      <%= link_to 'Print Report', print_all_emp_detail_goal_bunches_path(format: 'pdf',emp_id:g.employee_id,id: g ),class: "btn btn-xl btn-info fa fa-print" %>
-      
       <center><h3>Employee Performance Detail</h3></center>
       <% employee = Employee.find(g.employee_id) %>
       <% joining_detail = JoiningDetail.find_by_employee_id(g.employee_id) %>
@@ -27,10 +26,10 @@
             <td><%= employee.manual_employee_code %></td> 
             <td><%= full_name(employee) %></td>
             <td><%=  %></td>
-            <td><%= employee.department.name %></td>
+            <td><%= employee.department.try(:name) %></td>
             <td><%= joining_detail.joining_date %></td>
-            <td><%= joining_detail.employee_grade.name %></td>
-            <td><%= joining_detail.employee_designation.name %></td>
+            <td><%= joining_detail.employee_grade.try(:name) %></td>
+            <td><%= joining_detail.employee_designation.try(:name) %></td>
           </tr>
         </tbody>
       </table>

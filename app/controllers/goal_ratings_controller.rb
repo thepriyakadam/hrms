@@ -133,6 +133,27 @@ class GoalRatingsController < ApplicationController
     redirect_to new_goal_rating_path(id: @goal_bunch.id)
   end
 
+   def subordinate_list_goal_wise
+  end
+
+  def print_subordinate_list
+    current_login = Employee.find(current_user.employee_id)
+    @period = Period.find(params[:salary][:period_id])
+    goal_bunches = GoalBunch.where(period_id: @period.id).pluck(:employee_id)
+    subordinates = current_login.subordinates.pluck(:id)
+    total_employee = goal_bunches & subordinates
+    @employees = Employee.where(id: total_employee)
+  end
+
+  def all_subordinate_list
+    employee_ids = params[:employee_ids]
+    @employees = []
+    employee_ids.each do |e|
+      emp = Employee.find(e)
+      @employees << emp
+    end 
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_goal_rating

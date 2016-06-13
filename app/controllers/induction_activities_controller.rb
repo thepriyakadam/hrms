@@ -48,7 +48,7 @@ class InductionActivitiesController < ApplicationController
         @induction_activity = InductionActivity.new
         flash[:notice] = 'Induction Activity saved Successfully.'
       end
-      redirect_to root_url
+      redirect_to new_induction_activity_path(format: 1)
   end
 
    def update
@@ -95,10 +95,10 @@ class InductionActivitiesController < ApplicationController
   # end
 
    def find_assigned_induction_template
-       @employee = Employee.find(params[:employee_id])
-       @induction_master = InductionMaster.find(params[:id])
-       @induction_activities = InductionActivity.where(induction_master_id: @induction_master.id)
-       @induction_details = InductionDetail.where(induction_master_id: @induction_master.id)
+    @employee = Employee.find(params[:employee_id])
+    @induction_master = InductionMaster.find(params[:id])
+    @induction_activities = InductionActivity.where(induction_master_id: @induction_master.id)
+    @induction_details = InductionDetail.where(induction_master_id: @induction_master.id)
   end
 
   def download_document
@@ -110,17 +110,8 @@ class InductionActivitiesController < ApplicationController
   end
 
   def induction_activity
-    
     @induction_activity = InductionActivity.find(params[:format])
-    # @induction_act
-
   end
-
-  # def induction_activity_download_list
-
-  #    @induction_activities = InductionActivity.all
-
-  # end
 
   def create_induction_detail
     @induction_master = InductionMaster.find(params[:id])
@@ -130,31 +121,6 @@ class InductionActivitiesController < ApplicationController
     flash[:notice] = 'Induction Details was saved Successfully.'
     redirect_to employee_list_induction_activities_path
   end
-
-  #  def send_email_to_candidate
-  #   @interview_reschedule = InterviewReschedule.new
-  #   @interview_schedule = InterviewSchedule.find(params[:interview_reschedule][:interview_schedule_id])
-
-  #   @interview_reschedule.interview_date = @interview_schedule.interview_date
-  #   @interview_reschedule.interview_time = @interview_schedule.interview_time
-  #   @interview_reschedule.employee_id = @interview_schedule.employee_id
-  #   @interview_reschedule.employee_id = params[:interview_reschedule][:employee_id]
-  #   @interview_reschedule.interview_schedule_id = @interview_schedule.id
-
-  #   @interview_reschedule.save
-  #   @interview_schedule.update(interview_date: params[:interview_reschedule][:interview_date], interview_time: params[:interview_reschedule][:interview_time],employee_id: params[:interview_reschedule][:employee_id])
-  #   if @interview_schedule.email_id.nil?
-  #     flash[:alert] = 'Email not Available'
-  #     redirect_to interview_schedules_path
-  #   else
-  #     InterviewScheduleMailer.sample_email_to_candidate(@interview_schedule).deliver_now
-  #     flash[:notice] = 'Email Sent Successfully'
-  #     redirect_to interview_schedules_path
-  #     @interview_reschedule = InterviewReschedule.new(interview_reschedule_params)
-  #   # @interview_reschedule.save
-  #   end
-  # end
-
 
   private
     # Use callbacks to share common setup or constraints between actions.

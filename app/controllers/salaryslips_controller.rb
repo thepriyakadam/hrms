@@ -399,8 +399,8 @@ class SalaryslipsController < ApplicationController
   def show_salaryslip
     @instalment_array = []
     @salaryslip = Salaryslip.find(params[:format])
-    @addable_salary_components = SalaryslipComponent.where('is_deducted = ? and salaryslip_id = ?', false, @salaryslip.id)
-    @deducted_salary_components = SalaryslipComponent.where('is_deducted = ? and salaryslip_id = ?', true, @salaryslip.id)
+    @addable_salary_components = SalaryslipComponent.where('is_deducted = ? and salaryslip_id = ?', false, @salaryslip.id).where(is_arrear: nil)
+    @deducted_salary_components = SalaryslipComponent.where('is_deducted = ? and salaryslip_id = ?', true, @salaryslip.id).where(is_arrear: nil)
     @working_day = Workingday.find(@salaryslip.workingday_id)
     @employee = Employee.find(@salaryslip.employee_id)
     # @employee_leav_balance = EmployeeLeavBalance.find_by()

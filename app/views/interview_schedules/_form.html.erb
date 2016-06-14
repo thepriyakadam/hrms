@@ -3,7 +3,7 @@
       <h3 class="box-title">Create Interview Schedule</h3>
     </div><!-- /.box-header -->
  <div class="box-body">
-  <%= bootstrap_form_for(@interview_schedule,html: {id: 'interview_schedule'}) do |f| %>
+ <%= bootstrap_form_for @interview_schedule,html: {id: 'selected_resume'},abc: @selected_resume.id do |f| %>
   <%= f.hidden_field :selected_resume_id, value: @selected_resume.id  %>
   <%= f.hidden_field :employee_id, :value => current_user.employee_id %>
   <div>
@@ -55,7 +55,7 @@
       <%= f.submit "Create Interview Schedule",class: "btn btn-primary btn-sm" %>
       </div>
     </div>
-   </div>
+  </div>
   </div>
 </div>
 <% end %>

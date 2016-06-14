@@ -45,19 +45,17 @@ class InterviewSchedulesController < ApplicationController
   
   # POST /interview_schedules
   # POST /interview_schedules.json
-  def create
-    @interview_schedule = InterviewSchedule.new(interview_schedule_params)
-
-    respond_to do |format|
+  
+   def create
+     @interview_schedule = InterviewSchedule.new(interview_schedule_params)
       if @interview_schedule.save
+       @selected_resume = SelectedResume.find(@interview_schedule.selected_resume_id)
+       @selected_resume.update(status: "Interview Scheduled") 
         InterviewScheduleMailer.sample_email(@interview_schedule).deliver_now
-        format.html { redirect_to @interview_schedule, notice: 'Interview schedule was successfully created.' }
-        format.json { render :show, status: :created, location: @interview_schedule }
-      else
-        format.html { render :new }
-        format.json { render json: @interview_schedule.errors, status: :unprocessable_entity }
+        @interview_schedule = InterviewSchedule.new
       end
-    end
+      redirect_to interview_schedules_path
+      flash[:notice] = 'Interview Schedule was saved Successfully.'   
   end
 
   # def create_new

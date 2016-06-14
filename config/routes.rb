@@ -149,6 +149,8 @@ Rails.application.routes.draw do
     post :create_new
     get :modal
     post :offer_letter
+    get :modal_change_status
+    post :update_status
     end
   end 
   resources :assigned_assets

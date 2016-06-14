@@ -539,6 +539,18 @@ ActiveRecord::Schema.define(version: 20160613092931) do
 
   add_index "employee_arrears", ["employee_id"], name: "index_employee_arrears_on_employee_id"
 
+  create_table "employee_attendances", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.date     "day"
+    t.string   "present"
+    t.time     "in"
+    t.time     "out"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "employee_attendances", ["employee_id"], name: "index_employee_attendances_on_employee_id"
+
   create_table "employee_attributes", force: :cascade do |t|
     t.integer  "attribute_master_id"
     t.integer  "weightage"

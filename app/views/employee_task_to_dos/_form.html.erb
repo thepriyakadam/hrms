@@ -2,8 +2,7 @@
 <%= bootstrap_form_for(@employee_task_to_do,remote: true,html: {id: "employee_task_to_do"}) do |f| %>
   <%= f.hidden_field :employee_id, value: current_user.employee_id%>
 
-  <div class="row">
-    <div class="col-sm-5">
+
     <div class="col-sm-3">
       <div class="field">
         <%= f.text_field :task_name,hide_label: true,placeholder: 'Task Name' %>
@@ -21,49 +20,39 @@
       </div>
     </div>
 
+
     <div class="col-sm-2">
       <div class="field">
-        <%= f.text_field :task_time,hide_label: true,placeholder: 'Time'%>
+        <div class="bootstrap-timepicker">
+          <div class="form-group">
+            <!-- <label>Time picker:</label> -->
+            <div class="input-group">
+              <!-- <input type="text" class="form-control timepicker"> -->
+              <div class="input-group-addon">
+                <i class="fa fa-clock-o"></i>
+              </div>
+              <%= f.text_field :task_time,hide_label: true, class: "timepicker", placeholder: 'Time'%>
+            </div><!-- /.input group -->
+          </div><!-- /.form group -->
+        </div>
       </div>
     </div>
  
-    <div class="col-sm-2">
-    <!-- time Picker -->
-    <div class="col-sm-2">
-    <div class="field">
-    <div class="bootstrap-timepicker">
-      <div class="form-group">
-        <!-- <label>Time picker:</label> -->
-        <div class="input-group">
-          <!-- <input type="text" class="form-control timepicker"> -->
-          <div class="input-group-addon">
-            <i class="fa fa-clock-o"></i>
-          </div>
-          <%= f.text_field :task_time,hide_label: true, class: "timepicker", placeholder: 'Time'%>
-        </div><!-- /.input group -->
-      </div><!-- /.form group -->
-    </div>
-    </div>
-    </div>
- 
+
+   
     <div class="col-sm-1">
       <div class="field">
         <%= f.check_box :status ,label: "Status" %>
       </div>
     </div>
-    </div>
-    <div class="row">
-    
+
     <div class="col-sm-2">
       <div class="actions">
         <%= f.submit "Create Task", class:'btn btn-primary btn-sm' %>
       </div>
     </div>
-  </div>
 <% end %>
 <script type="text/javascript">
-
-
  $("#employee_task_to_do").validate({
     rules: {
       "employee_task_to_do[task_name]":{
@@ -89,8 +78,8 @@
     dateFormat: 'dd-mm-yy' });
 
     //Timepicker
-        $(".timepicker").timepicker({
-          showInputs: false
-        });
+    $(".timepicker").timepicker({
+      showInputs: false
+    });
   }); 
 </script>

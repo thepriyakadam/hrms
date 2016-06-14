@@ -1,6 +1,12 @@
 Rails.application.routes.draw do
 
 
+  resources :overall_ratings do
+    collection do 
+      get :modal_self
+      patch :update_modal_self
+    end
+  end
   resources :exit_interviews
   resources :about_companies
   resources :about_bosses
@@ -363,6 +369,8 @@ Rails.application.routes.draw do
       get :single_goal
       post :create_goal
       post :is_confirm_all
+      get :appraiser1_approval
+      get :appraiser1_subordinate
     end
   end
 

@@ -20,6 +20,7 @@ class GoalRatingSheetsController < ApplicationController
     @period = @employee_goals.try(:first).try(:period)
     @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: current_user.employee_id, appraisee_comment: nil)
     @goal_rating_shets = GoalRatingSheet.where(appraisee_id: current_user.employee_id).where.not(appraisee_comment: nil)
+
   end
 
   # GET /goal_rating_sheets/1/edit
@@ -101,9 +102,10 @@ class GoalRatingSheetsController < ApplicationController
   def appraiser2
     #@goal_rating_sheet = GoalRatingSheet.new
     @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: params[:format],appraiser2_comment: nil,is_confirm_appraiser: true)
-    @goal_rating_shets = GoalRatingSheet.where(appraisee_id: params[:format],is_confirm_appraiser: nil).where.not(appraiser2_comment: nil)
+    @goal_rating_shets = GoalRatingSheet.where(appraisee_id: params[:format]).where.not(appraiser2_comment: nil)
     @attribute_rating_sheets = AttributeRatingSheet.where(appraisee_id: params[:format]).group(:appraisee_id)
     @employee = Employee.find(params[:format])
+    @employee_details = Employee.where(id: @employee.id)
     @qualifications = Qualification.where(employee_id: @employee.id)
     @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
     @experiences = Experience.where(employee_id: @employee.id)
@@ -194,6 +196,7 @@ class GoalRatingSheetsController < ApplicationController
   def is_confirm_appraiser
     @employee = Employee.find(params[:id])
     @goal_rating_sheet_ids = params[:goal_rating_sheet_ids]
+    @emp = GoalRatingSheet.first
     if @goal_rating_sheet_ids.nil?
       flash[:alert] = "Please select the goal ratings"
     else
@@ -201,6 +204,8 @@ class GoalRatingSheetsController < ApplicationController
         @goal_rating_sheet = GoalRatingSheet.find(gid)
         @goal_rating_sheet.update(is_confirm_appraiser: true)
         flash[:notice] = "Confirmed Successfully"
+        GoalRatingSheetMailer.send_email_to_appraiser2(@emp).deliver_now
+         flash[:notice] = "Email Send Successfully"
       end
     end
     redirect_to appraiser_goal_rating_sheets_path(@employee.id)
@@ -208,6 +213,7 @@ class GoalRatingSheetsController < ApplicationController
  
   def is_confirm_appraisee
     @goal_rating_sheet_ids = params[:goal_rating_sheet_ids]
+    @emp = GoalRatingSheet.first
     if @goal_rating_sheet_ids.nil?
       flash[:alert] = "Please select the goal ratings."
       redirect_to new_goal_rating_sheet_path
@@ -216,6 +222,8 @@ class GoalRatingSheetsController < ApplicationController
         @goal_rating_sheet = GoalRatingSheet.find(gid)
         @goal_rating_sheet.update(is_confirm_appraisee: true)
         flash[:notice] = "Confirmed Successfully"
+        GoalRatingSheetMailer.send_email_to_appraiser1(@emp).deliver_now
+         flash[:notice] = "Email Send Successfully"
       end
       redirect_to new_goal_rating_sheet_path
     end
@@ -385,6 +393,7 @@ class GoalRatingSheetsController < ApplicationController
   def appraiser1_approval
      @employee = Employee.find(params[:format])
      @employee_goals = EmployeeGoal.where(employee_id: @employee.id)
+     @employee_goal = EmployeeGoal.new
   end
 
   def appraiser1_subordinate
@@ -392,6 +401,7 @@ class GoalRatingSheetsController < ApplicationController
     @employees = current_login.subordinates
   end
 
+  
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -401,6 +411,6 @@ class GoalRatingSheetsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def goal_rating_sheet_params
-    params.require(:goal_rating_sheet).permit(:final_id,:appraiser_2_id,:final_comment,:final_rating_id,:appraiser2_comment,:appraiser2_rating_id,:is_confirm_final,:is_confirm_appraiser2,:is_confirm,:appraisee_id, :appraiser_id, :employee_goal_id, :allign_to_supervisor, :appraisee_comment, :appraisee_rating_id, :appraiser_comment, :appraiser_rating_id)
+    params.require(:goal_rating_sheet).permit(:final_id,:appraiser_2_id,:final_comment,:final_rating_id,:appraiser2_comment,:appraiser2_rating_id,:is_confirm_final,:is_confirm_appraiser2,:is_confirm,:appraisee_id, :appraiser_id, :employee_goal_id, :allign_to_supervisor, :appraisee_comment, :appraisee_rating_id, :appraiser_comment,:performance_period_id, :appraiser_rating_id)
   end
 end

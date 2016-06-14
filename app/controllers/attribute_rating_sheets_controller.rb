@@ -432,12 +432,12 @@ class AttributeRatingSheetsController < ApplicationController
     @employee = Employee.find(params[:id])
     @goal_rating_sheets = GoalRatingSheet.where(appraisee_id: @employee.id)
     @attribute_rating_sheets = AttributeRatingSheet.where(appraisee_id: @employee.id).group(:appraisee_id)
-    @employee_details = Employee.where(id: @employee.id)
-
     @qualifications = Qualification.where(employee_id: @employee.id)
     @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
     @experiences = Experience.where(employee_id: @employee.id)
     @ctc = EmployeeSalaryTemplate.where(employee_id: @employee.id).sum(:monthly_amount)
+
+    @employee_details = Employee.where(id: @employee.id)
     @attribute_rating_multiple_sheets = AttributeRatingSheet.where(appraisee_id: @employee.id) 
     
     respond_to do |format|

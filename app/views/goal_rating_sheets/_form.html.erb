@@ -31,15 +31,18 @@
               
               <%= hidden_field_tag 'employee_goal_id[]',{},value: goal_rating_sheet.id %>
               <%= hidden_field_tag :appraisee_id, {},value: current_user.employee_id %>
+
             </tr>
           <% end %>
         </tbody>
       </table>
+       <div id="myModal" class="modal fade"></div>
       <% unless @goal_rating_sheets.empty? %>
         <div class="row">
           <div class="col-sm-3">
             <div class="actions">
               <%= f.submit "Create Goal Rating" ,class: "btn btn-primary btn-sm"%>
+              <%= link_to "Overall Rating", modal_self_overall_ratings_path(@goal_rating_sheet.id),class: "btn btn-primary btn-sm",remote: true  %>
             </div>
           </div>
         </div>

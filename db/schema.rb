@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160526141920) do
+ActiveRecord::Schema.define(version: 20160527103832) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -1319,6 +1319,35 @@ ActiveRecord::Schema.define(version: 20160526141920) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
+
+  create_table "overall_ratings", force: :cascade do |t|
+    t.integer  "goal_rating_sheet_id"
+    t.integer  "employee_id"
+    t.integer  "ro1_id"
+    t.integer  "ro2_id"
+    t.integer  "final_id"
+    t.integer  "ro1_rating_id"
+    t.text     "ro1_comment"
+    t.integer  "ro2_rating_id"
+    t.text     "ro2_comment"
+    t.integer  "final_rating_id"
+    t.text     "final_comment"
+    t.boolean  "promotion"
+    t.decimal  "increement_amount"
+    t.decimal  "final_ctc"
+    t.text     "appraisee_comment"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
+  add_index "overall_ratings", ["employee_id"], name: "index_overall_ratings_on_employee_id"
+  add_index "overall_ratings", ["final_id"], name: "index_overall_ratings_on_final_id"
+  add_index "overall_ratings", ["final_rating_id"], name: "index_overall_ratings_on_final_rating_id"
+  add_index "overall_ratings", ["goal_rating_sheet_id"], name: "index_overall_ratings_on_goal_rating_sheet_id"
+  add_index "overall_ratings", ["ro1_id"], name: "index_overall_ratings_on_ro1_id"
+  add_index "overall_ratings", ["ro1_rating_id"], name: "index_overall_ratings_on_ro1_rating_id"
+  add_index "overall_ratings", ["ro2_id"], name: "index_overall_ratings_on_ro2_id"
+  add_index "overall_ratings", ["ro2_rating_id"], name: "index_overall_ratings_on_ro2_rating_id"
 
   create_table "overtime_daily_records", force: :cascade do |t|
     t.integer  "employee_id"

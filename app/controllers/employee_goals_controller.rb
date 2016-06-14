@@ -15,7 +15,7 @@ class EmployeeGoalsController < ApplicationController
   # GET /employee_goals/new
   def new
     @employee_goal = EmployeeGoal.new
-    @employee_goals = EmployeeGoal.where(employee_id: current_user.employee_id)
+    @employee_goals = EmployeeGoal.where(employee_id: current_user.employee_id, is_confirm: nil)
   end
 
   # GET /employee_goals/1/edit
@@ -34,7 +34,7 @@ class EmployeeGoalsController < ApplicationController
     else
       @employee_goal.save
       @employee_goal = EmployeeGoal.new
-      @employee_goals = EmployeeGoal.where(employee_id: current_user.employee_id)
+      @employee_goals = EmployeeGoal.where(employee_id: current_user.employee_id, is_confirm: nil)
       @flag = true
     end
   end
@@ -88,7 +88,7 @@ class EmployeeGoalsController < ApplicationController
     else
       confirm_employee_goal
     end
-    redirect_to new_employee_goal_path
+    redirect_to root_url
   end
 
   def send_email_to_employee
@@ -168,16 +168,27 @@ class EmployeeGoalsController < ApplicationController
     end
   end
 
+   def appraiser1_approval
+     @employee = Employee.find(params[:format])
+     @employee_goals = EmployeeGoal.where(employee_id: @employee.id)
+     @employee_goal = EmployeeGoal.new
+  end
+
+  def appraiser1_subordinate
+    current_login = Employee.find(current_user.employee_id)
+    @employees = current_login.subordinates
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
   def set_employee_goal
-    #@employee_goal = EmployeeGoal.find(params[:id])
+    @employee_goal = EmployeeGoal.find(params[:id])
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def employee_goal_params
-    params.require(:employee_goal).permit(:appraiser,:appraiser2,:emp_head,:is_confirm, :period_id, :employee_id, :goal_perspective_id, :goal_measure, :target, :goal_weightage, :difficulty_level, :allign_to_supervisor, :appraisee_comment, :appraisee_rating, :appraiser_comment, :appraiser_rating)
+    params.require(:employee_goal).permit(:appraiser_id,:appraiser2_id,:emp_head,:is_confirm, :period_id, :employee_id, :goal_perspective_id, :goal_measure, :target, :goal_weightage, :difficulty_level, :allign_to_supervisor, :appraisee_comment, :appraisee_rating, :appraiser_comment, :appraiser_rating)
   end
 
   def confirm_employee_goal
@@ -190,7 +201,7 @@ class EmployeeGoalsController < ApplicationController
         @employee_goal_ids.each do |eid|
           @employee_goal = EmployeeGoal.find(eid)
           @employee_goal.update(is_confirm: true)
-          GoalRatingSheet.create(appraisee_id: current_user.employee_id, employee_goal_id: @employee_goal.id)
+          GoalRatingSheet.create(appraisee_id: @employee_goal.employee_id,appraiser_id: @employee_goal.appraiser_id,appraiser_2_id: @employee_goal.appraiser2_id,employee_goal_id: @employee_goal.id)
         end
         flash[:notice] = "Confirmed Successfully."
         EmployeeGoalMailer.send_email_to_appraiser1(@emp).deliver_now

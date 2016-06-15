@@ -26,18 +26,32 @@ class InterviewRoundsController < ApplicationController
 
   # POST /interview_rounds
   # POST /interview_rounds.json
+  
+  # def create
+  #   @interview_round = InterviewRound.new(interview_round_params)
+  #   @interview_rounds = InterviewRound.all
+  #   respond_to do |format|
+  #     if @interview_round.save
+  #        @interview_round = InterviewRound.new
+         
+  #       format.js { @flag = true }
+  #     else
+  #       flash.now[:alert] = 'Interview Already Exist.'
+  #       format.js { @flag = false }
+  #     end
+  #   end
+  # end
+
   def create
-    @interview_round = InterviewRound.new(interview_round_params)
-    @interview_rounds = InterviewRound.all
-    respond_to do |format|
+     @interview_round = InterviewRound.new(interview_round_params)
+     @interview_rounds = InterviewRound.all
       if @interview_round.save
-         @interview_round = InterviewRound.new
-        format.js { @flag = true }
-      else
-        flash.now[:alert] = 'Interview Already Exist.'
-        format.js { @flag = false }
+        InterviewRoundMailer.send_email_to_interviewer(@interview_round).deliver_now
+        InterviewRoundMailer.send_email_to_candidate(@interview_round).deliver_now
+        @interview_round = InterviewRound.new
       end
-    end
+      # redirect_to interview_schedules_path
+      # flash[:notice] = 'Interview Schedule was saved Successfully & Email also Sent'   
   end
 
 
@@ -46,6 +60,8 @@ class InterviewRoundsController < ApplicationController
 
   def update
     @interview_round.update(interview_round_params)
+    InterviewRoundMailer.send_email_to_interviewer(@interview_round).deliver_now
+    InterviewRoundMailer.send_email_to_candidate(@interview_round).deliver_now
     @interview_rounds = InterviewRound.all
     @interview_round = InterviewRound.new
   end

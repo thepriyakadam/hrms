@@ -171,6 +171,7 @@ class SelectedResumesController < ApplicationController
   def all_resume_list
      @selected_resume = SelectedResume.new
      @selected_resumes = SelectedResume.all
+     flash[:notice] = "Confirmed Successfully"
      session[:active_tab] ="recruitment"
      session[:active_tab1] ="general_vacancy"
   end

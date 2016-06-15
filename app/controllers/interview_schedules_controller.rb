@@ -50,12 +50,12 @@ class InterviewSchedulesController < ApplicationController
      @interview_schedule = InterviewSchedule.new(interview_schedule_params)
       if @interview_schedule.save
        @selected_resume = SelectedResume.find(@interview_schedule.selected_resume_id)
-       @selected_resume.update(status: "Interview Scheduled") 
+       @selected_resume.update(status: "Interview Scheduled")
         InterviewScheduleMailer.sample_email(@interview_schedule).deliver_now
         @interview_schedule = InterviewSchedule.new
       end
       redirect_to interview_schedules_path
-      flash[:notice] = 'Interview Schedule was saved Successfully.'   
+      flash[:notice] = 'Interview Scheduled Successfully & Email also Sent.'   
   end
 
   # def create_new
@@ -122,6 +122,7 @@ class InterviewSchedulesController < ApplicationController
   end
   end
 
+  
   def sample_email
     @interview_schedule = InterviewSchedule.find_by_employee_id(params[:id])
     @employee = Employee.find(@interview_schedule.employee_id)
@@ -171,7 +172,7 @@ end
       @interview_schedule_ids.each do |eid|
       @interview_schedule = InterviewSchedule.find(eid)
       @interview_schedule.update(is_confirm: true) 
-      InterviewScheduleMailer.sample_email_to_interviewer(@interview_schedule).deliver_now
+      # InterviewScheduleMailer.sample_email_to_interviewer(@interview_schedule).deliver_now
       InterviewScheduleMailer.confirmation_email_to_candidate(@interview_schedule).deliver_now     
       flash[:notice] = "Confirmed Successfully & Email also sent"
     end 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160611124314) do
+ActiveRecord::Schema.define(version: 20160614072206) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -819,7 +819,7 @@ ActiveRecord::Schema.define(version: 20160611124314) do
     t.text     "task_name"
     t.date     "task_date"
     t.boolean  "status"
-    t.time     "task_time"
+    t.string   "time"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
@@ -1271,29 +1271,46 @@ ActiveRecord::Schema.define(version: 20160611124314) do
   add_index "interview_reschedules", ["employee_id"], name: "index_interview_reschedules_on_employee_id"
   add_index "interview_reschedules", ["interview_schedule_id"], name: "index_interview_reschedules_on_interview_schedule_id"
 
-  create_table "interview_schedules", force: :cascade do |t|
-    t.string   "interviewer_name"
-    t.string   "candidate_name"
+  create_table "interview_rounds", force: :cascade do |t|
+    t.integer  "interview_schedule_id"
+    t.integer  "employee_id"
+    t.integer  "interview_type_id"
     t.date     "interview_date"
     t.time     "interview_time"
     t.string   "location"
-    t.text     "schedule_comments"
+    t.text     "schedule_comment"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+  end
+
+  add_index "interview_rounds", ["employee_id"], name: "index_interview_rounds_on_employee_id"
+  add_index "interview_rounds", ["interview_schedule_id"], name: "index_interview_rounds_on_interview_schedule_id"
+  add_index "interview_rounds", ["interview_type_id"], name: "index_interview_rounds_on_interview_type_id"
+
+  create_table "interview_schedules", force: :cascade do |t|
+    t.string   "candidate_name"
+    t.date     "interview_date"
+    t.string   "location"
     t.string   "post_title"
-    t.string   "interview_type"
-    t.string   "interview_status"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
-    t.integer  "reporting_master_id"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
     t.string   "email_id"
     t.integer  "employee_id"
     t.boolean  "is_confirm"
     t.integer  "selected_resume_id"
-    t.string   "candidate_name2"
+    t.string   "job_title"
   end
 
   add_index "interview_schedules", ["employee_id"], name: "index_interview_schedules_on_employee_id"
-  add_index "interview_schedules", ["reporting_master_id"], name: "index_interview_schedules_on_reporting_master_id"
   add_index "interview_schedules", ["selected_resume_id"], name: "index_interview_schedules_on_selected_resume_id"
+
+  create_table "interview_types", force: :cascade do |t|
+    t.integer  "code"
+    t.string   "name"
+    t.text     "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
 
   create_table "joining_details", force: :cascade do |t|
     t.integer  "employee_id"
@@ -1901,8 +1918,9 @@ ActiveRecord::Schema.define(version: 20160611124314) do
     t.string   "passport_photo_content_type"
     t.integer  "passport_photo_file_size"
     t.datetime "passport_photo_updated_at"
-    t.boolean  "is_confirm"
     t.string   "offer_letter_status"
+    t.string   "job_title"
+    t.string   "status"
   end
 
   add_index "selected_resumes", ["degree_id"], name: "index_selected_resumes_on_degree_id"
@@ -2165,7 +2183,6 @@ ActiveRecord::Schema.define(version: 20160611124314) do
     t.integer  "degree_id"
     t.string   "experience"
     t.string   "keyword"
-    t.string   "others"
     t.string   "other_organization"
     t.string   "industry"
     t.integer  "degree_1_id"

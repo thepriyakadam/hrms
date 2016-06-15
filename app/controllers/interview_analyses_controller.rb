@@ -75,6 +75,28 @@ class InterviewAnalysesController < ApplicationController
       @interview_analyses = InterviewAnalysis.all
     end
 
+    def print_interview_analysis_list
+    # byebug
+    @interview_schedule =InterviewSchedule.find(params[:id])
+    @interview_analyses = InterviewAnalysis.all
+     respond_to do |format|
+        format.html
+        format.pdf do
+        render :pdf => 'print_interview_analysis_list',
+        layout: '/layouts/pdf.html.erb',
+        :template => 'interview_analyses/print_interview_analysis_list.pdf.erb',
+        :orientation      => 'Landscape', # default , Landscape
+        :page_height      => 1000,
+        :dpi              => '300',
+        :margin           => {:top    => 20, # default 10 (mm)
+                      :bottom => 20,
+                      :left   => 20,
+                      :right  => 20},
+        :show_as_html => params[:debug].present?
+      end
+    end
+  end
+
     private
       # Use callbacks to share common setup or constraints between actions.
       def set_interview_analysis

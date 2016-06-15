@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :interview_rounds
+  resources :interview_types
   resources :employee_attendances
   resources :salary_comp_mappings
   resources :company_events
@@ -133,7 +135,11 @@ Rails.application.routes.draw do
   resources :accident_masters
   resources :travel_expence_types
   resources :travel_modes
-  resources :interview_analyses
+  resources :interview_analyses do
+    collection do
+      post :print_interview_analysis_list
+    end
+  end
   resources :interview_decisions
   resources :interview_attributes
   resources :interview_evalutions
@@ -157,6 +163,8 @@ Rails.application.routes.draw do
     post :create_new
     get :modal
     post :offer_letter
+    get :modal_change_status
+    post :update_status
     end
   end 
   resources :assigned_assets
@@ -285,6 +293,11 @@ Rails.application.routes.draw do
       get :interviewee_list
       get :resume_list
       post :create_new
+      post :print_interviewee_list
+      get :all_interview_schedule_list
+      get :final_report
+      post :print_final_report
+      get :interview_round_list
     end
   end
   resources :vacancy_masters do

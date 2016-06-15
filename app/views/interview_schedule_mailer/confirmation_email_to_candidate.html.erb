@@ -7,7 +7,7 @@
      <h4>Interview Confirmation Details</h4>
     <p>
        Dear <%= @interview_schedule.candidate_name %><br><br>
-       This is with reference with your resume we are confirming your interview details.<br><br>
+       This is with reference with your resume we are confirming your interview details for the position <b><%= @interview_schedule.job_title %></b><br><br>
        1. <b>Date :-</b> <%= @interview_schedule.interview_date %><br><br>
        2. <b>Address :-</b> <%= @interview_schedule.location %><br><br>
        3. <b>Contact Person:-</b> <%= @employee.first_name.to_s %> <%= @employee.last_name.to_s %>-<%= @employee.optinal_contact_no.to_s %>

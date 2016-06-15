@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160604051920) do
+ActiveRecord::Schema.define(version: 20160615092744) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -538,6 +538,18 @@ ActiveRecord::Schema.define(version: 20160604051920) do
   end
 
   add_index "employee_arrears", ["employee_id"], name: "index_employee_arrears_on_employee_id"
+
+  create_table "employee_attendances", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.date     "day"
+    t.string   "present"
+    t.time     "in"
+    t.time     "out"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "employee_attendances", ["employee_id"], name: "index_employee_attendances_on_employee_id"
 
   create_table "employee_attributes", force: :cascade do |t|
     t.integer  "attribute_master_id"
@@ -1817,6 +1829,16 @@ ActiveRecord::Schema.define(version: 20160604051920) do
   end
 
   add_index "salary_components", ["parent_id"], name: "index_salary_components_on_parent_id"
+
+  create_table "salary_map_saps", force: :cascade do |t|
+    t.integer  "salary_component_id"
+    t.string   "account_code"
+    t.boolean  "is_debit"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+  end
+
+  add_index "salary_map_saps", ["salary_component_id"], name: "index_salary_map_saps_on_salary_component_id"
 
   create_table "salary_templates", force: :cascade do |t|
     t.string   "code"

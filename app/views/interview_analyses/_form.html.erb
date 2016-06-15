@@ -1,29 +1,43 @@
-<div class="box box-default">
 
   <div class="box-body">
   <%= bootstrap_form_for(@interview_analysis,html: {id: 'interview_analysis'},remote:true) do |f| %>
   <%= f.hidden_field :interview_schedule_id,value:@interview_schedule.id  %>
       <div class="row">
 
+      <div class="col-sm-3">
+        <label>Interview Evaluation</label>
+          <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <%= link_to "", new_interview_evalution_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+              </div>
+               <%= f.select :interview_evalution_id, all_interview_evaluation, {hide_label: true,include_blank: " Select Interview Evaluation"} %>
+            </div>
+          </div>
+      </div>
+
        <div class="col-sm-3">
-       <label>Interview Evaluation</label>
-        <div class="form-group required">
-          <%= f.select :interview_evalution_id, all_interview_evaluation, {hide_label: true,include_blank: " Select Interview Evaluation"} %>
-        </div>
+        <label>Interview Attribute</label>
+          <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <%= link_to "", new_interview_attribute_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+              </div>
+               <%= f.select :interview_attribute_id, all_interview_attribute, {hide_label: true,include_blank: " Select Interview Attribute"} %>
+            </div>
+          </div>
       </div>
 
-      <div class="col-sm-3">
-       <label>Interview Attribute</label>
-        <div class="form-group required">
-        <%= f.select :interview_attribute_id, all_interview_attribute, {hide_label: true,include_blank: " Select Interview Attribute"} %>
-        </div>
-      </div>
-
-      <div class="col-sm-3">
-      <label>Interview Decision</label>
-        <div class="form-group required">
-        <%= f.select :interview_decision_id, all_interview_decision, {hide_label: true,include_blank: " Select Interview Decision"} %>
-        </div>
+       <div class="col-sm-3">
+        <label>Interview Decision</label>
+          <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <%= link_to "", new_interview_decision_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+              </div>
+               <%= f.select :interview_decision_id, all_interview_decision, {hide_label: true,include_blank: " Select Interview Decision"} %>
+            </div>
+          </div>
       </div>
 
       <div class="col-sm-3">
@@ -41,7 +55,6 @@
       </div>
     </div>
     </div>
-  </div>
 <% end %>
 
 <script>

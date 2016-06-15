@@ -251,12 +251,16 @@
 ###############################################################################################
 
 ex = Roo::Excel.new("#{Rails.root}/public/workingday.xls")
+
 ex.default_sheet = ex.sheets[20]
+
 i = 1
 gross_salary = 0
 ActiveRecord::Base.transaction do
 #2.upto(372) do |line|
+
 2.upto(91) do |line|
+
   puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
   unless @employee.nil?

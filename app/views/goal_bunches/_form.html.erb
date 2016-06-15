@@ -1,4 +1,4 @@
-<%= bootstrap_form_for(@goal_bunch,html: {id: 'goal_bunch'},remote:true) do |f| %>
+<%= bootstrap_form_for(GoalBunch.new,html: {id: 'goal_bunch'},remote:true) do |f| %>
 <%= f.hidden_field :employee_id, value: current_user.employee_id  %>
   <div class="row">
     <div class="col-sm-3">

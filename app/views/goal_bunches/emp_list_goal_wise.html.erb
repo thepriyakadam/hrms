@@ -1,15 +1,15 @@
 <!--SELECT2 EXAMPLE -->
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title">Employee CTC Report</h3>
+    <h3 class="box-title">Employee Goal Wise Report</h3>
   </div><!-- /.box-header -->
 
   <div class="box-body">
-    <%= bootstrap_form_for(:salary, url: { action: 'show_employee_ctc'},html: {id: "salary"},remote: true) do |f| %>
+    <%= bootstrap_form_for(:salary, url: { action: 'print_emp_list'},html: {id: "salary"},remote: true) do |f| %>
       <div class="row">
         <div class="col-sm-3">
           <div class="form-group required">
-            <%= select :salary, :department_id, all_department_list,{label: 'Department',include_blank: " Select Department"},{class: "form-control"} %>
+            <%= select :salary, :period_id, all_period_type,{label: 'Goal Bunch',include_blank: " Select Goal Bunch"},{class: "form-control"} %>
           </div>
         </div>
   
@@ -20,12 +20,12 @@
         </div>
       </div><br>
     <% end %>
-      <div class="ajax-progress"></div>
-      <div class="row">
-        <div class="col-sm-12">
-          <div id="employee_list"></div>    
-        </div>
+    <div class="ajax-progress"></div>
+    <div class="row">
+      <div class="col-sm-12">
+        <div id="employee_list"></div>    
       </div>
+    </div>
   </div><!-- /.box-body -->
 </div><!-- /.box -->
 

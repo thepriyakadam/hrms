@@ -2,6 +2,7 @@
 <%= bootstrap_form_for(@employee_task_to_do,remote: true,html: {id: "employee_task_to_do"}) do |f| %>
   <%= f.hidden_field :employee_id, value: current_user.employee_id%>
 
+
     <div class="col-sm-3">
       <div class="field">
         <%= f.text_field :task_name,hide_label: true,placeholder: 'Task Name' %>
@@ -19,7 +20,7 @@
       </div>
     </div>
 
-    <!-- time Picker -->
+
     <div class="col-sm-2">
       <div class="field">
         <div class="bootstrap-timepicker">
@@ -37,11 +38,14 @@
       </div>
     </div>
  
+
+   
     <div class="col-sm-1">
       <div class="field">
         <%= f.check_box :status ,label: "Status" %>
       </div>
     </div>
+
     <div class="col-sm-2">
       <div class="actions">
         <%= f.submit "Create Task", class:'btn btn-primary btn-sm' %>

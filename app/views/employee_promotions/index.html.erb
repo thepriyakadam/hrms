@@ -26,7 +26,7 @@
         <tr>
           <td><%= employee_promotion.employee.try(:manual_employee_code) %></td>
           <td><%= employee_promotion.employee.try(:first_name) %> <%= employee_promotion.employee.try(:middle_name) %> <%= employee_promotion.employee.try(:last_name) %></td>
-          <td><%= employee_promotion.employee.company_location.try(:name) %> - <%= employee_promotion.employee.department.try(:name) %></td>
+          <td><%= employee_promotion.employee.try(:company_location).try(:name) %> - <%= employee_promotion.employee.try(:department).try(:name) %></td>
           <td><%= employee_promotion.employee_designation.try(:name) %></td>
           <td><%= employee_promotion.employee_grade.try(:name) %></td>
           <td><%= employee_promotion.employee_category.try(:name) %></td>

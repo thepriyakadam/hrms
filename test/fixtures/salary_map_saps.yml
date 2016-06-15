@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  salary_component_id: 
+  account_code: MyString
+  is_debit: false
+
+two:
+  salary_component_id: 
+  account_code: MyString
+  is_debit: false

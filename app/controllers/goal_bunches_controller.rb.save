@@ -77,28 +77,22 @@ class GoalBunchesController < ApplicationController
 
   def appraiser_confirm
     @goal_bunch_id = GoalBunch.find(params[:goal_bunch_id])
+
     @employee = Employee.find(params[:id])
-
-    @employees = Employee.where(id: @employee.id)
-    @qualifications = Qualification.where(employee_id: @employee.id)
-    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
-    @experiences = Experience.where(employee_id: @employee.id)
-    @ctc = EmployeeSalaryTemplate.where(employee_id: @employee.id).sum(:monthly_amount)
-    @goal_ratings = GoalRating.where(appraisee_id: @employee.id, goal_bunch_id: @goal_bunch_id)
-
     @goal_rating_ids = params[:goal_rating_ids]
     if @goal_rating_ids.nil?
-      @flag = false
+      flash[:alert] = "Please Select the Checkbox"
     else
       @goal_rating_ids.each do |eid|
       @goal_bunch = GoalBunch.find(eid)
 
-      @goal_bunch.update(goal_confirm: true) 
-      end
-      GoalBunchMailer.send_email_to_appraisee(@goal_bunch).deliver_now
-      @flag = true
+      @goal_bunch.update(goal_confirm: true)      
+      flash[:notice] = "Confirmed Successfully"  
     end
-      #redirect_to goal_approval_goal_bunches_path(emp_id: @employee.id,id: @goal_bunch_id.id)
+       GoalBunchMailer.send_email_to_appraisee(@goal_bunch).deliver_now
+        flash[:notice] = "Email Send Successfully"
+    end
+      redirect_to goal_approval_goal_bunches_path(emp_id: @employee.id,id: @goal_bunch_id.id)
   end
 
   def appraisee_comment
@@ -729,11 +723,8 @@ class GoalBunchesController < ApplicationController
     @goal_bunches = GoalBunch.where(employee_id: @employee.id)
   end
 
-  def emp_list_goal_wise
-  end
-
   def print_emp_list
-    @goal_bunches = GoalBunch.where(period_id: params[:salary][:period_id])
+    @goal_bunches = GoalBunch.all
   end
 
   def all_emp_list
@@ -742,8 +733,48 @@ class GoalBunchesController < ApplicationController
     goal_bunch_ids.each do |g|
       emp = GoalBunch.find(g)
       @goal_bunches << emp
-    end  
+    end
   end
+
+  # def print_emp_list_pdf
+  #   goal_bunch_ids = params[:goal_bunch_ids]
+  #   @goal_bunches = []
+  #   goal_bunch_ids.each do |g|
+  #     emp = GoalBunch.find(g)
+  #     @goal_bunches << emp
+  #   end
+  # end
+
+  # def print_all_emp_detail
+  #  @goal_bunches = GoalBunch.find(params[:id])
+
+  #   respond_to do |format|
+  #     format.html
+  #     format.pdf do
+  #       render pdf: 'print_all_emp_detail',
+  #              layout: 'pdf.html',
+  #              :page_height      => 1000,
+  #              :dpi              => '300',
+  #              :margin           => {:top    => 10, # default 10 (mm)
+  #                         :bottom => 10,
+  #                         :left   => 14,
+  #                         :right  => 14},
+  #              orientation: 'Landscape',
+  #              template: 'goal_bunches/print_all_emp_detail.pdf.erb',
+  #             :show_as_html => params[:debug].present?
+  #     end
+  #   end  
+  # end
+
+  # def xl_print_for_all
+  #   goal_bunch_ids = params[:goal_bunch_ids]
+  #   @goal_bunches = []
+  #   goal_bunch_ids.each do |g|
+  #     emp = GoalBunch.find(g)
+  #     @goal_bunches << emp
+  #   end
+  #   @goal_bunches = GoalBunch.find(params[:id])
+  # end
 
   private
     # Use callbacks to share common setup or constraints between actions.

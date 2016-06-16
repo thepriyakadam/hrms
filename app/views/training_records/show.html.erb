@@ -10,26 +10,26 @@
       </tr>
 
       <tr>
-        <th><strong>Employee:</strong></th>
+        <th><strong>Employee</strong></th>
         <td><%= @training_record.employee.manual_employee_code %> <%= @training_record.employee.first_name %> <%= @training_record.employee.last_name %></td>
      
-        <th><strong>Training topic master:</strong></th>
+        <th><strong>Training Topic Master</strong></th>
         <td><%= @training_record.training_topic_master.try(:name) %></td>
       </tr>
 
       <tr>
-        <th><strong>Training date:</strong></th>
+        <th><strong>Training Date</strong></th>
         <td><%= @training_record.training_date %></td>
       
-        <th><strong>Duration:</strong></th>
+        <th><strong>Duration</strong></th>
         <td><%= @training_record.duration %></td>
       </tr>
 
       <tr>
-        <th><strong>Location:</strong></th>
+        <th><strong>Location</strong></th>
         <td><%= @training_record.location %></td>
      
-        <th><strong>Trainer name:</strong></th>
+        <th><strong>Trainer Name</strong></th>
         <td><%= @training_record.trainer_name %></td>
       </tr>
     </table>

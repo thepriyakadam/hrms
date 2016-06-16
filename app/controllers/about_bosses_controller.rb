@@ -15,6 +15,10 @@ class AboutBossesController < ApplicationController
   # GET /about_bosses/new
   def new
     @about_boss = AboutBoss.new
+    @about_bosses = AboutBoss.all
+    session[:active_tab] ="master"
+    session[:active_tab1] = "exit_interview_master_setup"
+
   end
 
   # GET /about_bosses/1/edit
@@ -25,14 +29,14 @@ class AboutBossesController < ApplicationController
   # POST /about_bosses.json
   def create
     @about_boss = AboutBoss.new(about_boss_params)
-
+    @about_bosses = AboutBoss.all
     respond_to do |format|
       if @about_boss.save
-        format.html { redirect_to @about_boss, notice: 'About boss was successfully created.' }
-        format.json { render :show, status: :created, location: @about_boss }
+         @about_boss = AboutBoss.new
+        format.js { @flag = true }
       else
-        format.html { render :new }
-        format.json { render json: @about_boss.errors, status: :unprocessable_entity }
+        flash.now[:alert] = 'About Already Exist.'
+        format.js { @flag = false }
       end
     end
   end
@@ -40,25 +44,16 @@ class AboutBossesController < ApplicationController
   # PATCH/PUT /about_bosses/1
   # PATCH/PUT /about_bosses/1.json
   def update
-    respond_to do |format|
-      if @about_boss.update(about_boss_params)
-        format.html { redirect_to @about_boss, notice: 'About boss was successfully updated.' }
-        format.json { render :show, status: :ok, location: @about_boss }
-      else
-        format.html { render :edit }
-        format.json { render json: @about_boss.errors, status: :unprocessable_entity }
-      end
-    end
+    @about_boss.update(about_boss_params)
+    @about_bosses = AboutBoss.all
+    @about_boss = AboutBoss.new
   end
 
   # DELETE /about_bosses/1
   # DELETE /about_bosses/1.json
   def destroy
     @about_boss.destroy
-    respond_to do |format|
-      format.html { redirect_to about_bosses_url, notice: 'About boss was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    @about_bosses = AboutBoss.all
   end
 
   private

@@ -15,6 +15,9 @@ class QuestionMastersController < ApplicationController
   # GET /question_masters/new
   def new
     @question_master = QuestionMaster.new
+    @question_masters = QuestionMaster.all
+    session[:active_tab] ="master"
+    session[:active_tab1] ="exit_interview_master_setup"
   end
 
   # GET /question_masters/1/edit
@@ -24,15 +27,15 @@ class QuestionMastersController < ApplicationController
   # POST /question_masters
   # POST /question_masters.json
   def create
-    @question_master = QuestionMaster.new(question_master_params)
-
+     @question_master = QuestionMaster.new(question_master_params)
+    @question_masters = QuestionMaster.all
     respond_to do |format|
       if @question_master.save
-        format.html { redirect_to @question_master, notice: 'Question master was successfully created.' }
-        format.json { render :show, status: :created, location: @question_master }
+         @question_master = QuestionMaster.new
+        format.js { @flag = true }
       else
-        format.html { render :new }
-        format.json { render json: @question_master.errors, status: :unprocessable_entity }
+        flash.now[:alert] = 'Question Already Exist.'
+        format.js { @flag = false }
       end
     end
   end
@@ -40,25 +43,16 @@ class QuestionMastersController < ApplicationController
   # PATCH/PUT /question_masters/1
   # PATCH/PUT /question_masters/1.json
   def update
-    respond_to do |format|
-      if @question_master.update(question_master_params)
-        format.html { redirect_to @question_master, notice: 'Question master was successfully updated.' }
-        format.json { render :show, status: :ok, location: @question_master }
-      else
-        format.html { render :edit }
-        format.json { render json: @question_master.errors, status: :unprocessable_entity }
-      end
-    end
+    @question_master.update(question_master_params)
+   @question_master = QuestionMaster.new
+   @question_masters = QuestionMaster.all
   end
 
   # DELETE /question_masters/1
   # DELETE /question_masters/1.json
   def destroy
     @question_master.destroy
-    respond_to do |format|
-      format.html { redirect_to question_masters_url, notice: 'Question master was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    @question_masters = QuestionMaster.all
   end
 
   private

@@ -15,6 +15,7 @@ class TrainingRecordsController < ApplicationController
   # GET /training_records/new
   def new
     @training_record = TrainingRecord.new
+    session[:active_tab] ="trainingmgmt"
   end
 
   # GET /training_records/1/edit

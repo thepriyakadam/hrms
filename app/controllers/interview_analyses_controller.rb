@@ -54,35 +54,57 @@ class InterviewAnalysesController < ApplicationController
   #   end
   # end
 
-  def update
-    @interview_analysis.update(interview_analysis_params)
-    @interview_analyses = InterviewAnalysis.all
-    @interview_analysis = InterviewAnalysis.new
-  end
-
-  # DELETE /interview_analyses/1
-  # DELETE /interview_analyses/1.json
-  # def destroy
-  #   @interview_analysis.destroy
-  #   respond_to do |format|
-  #     format.html { redirect_to interview_analyses_url, notice: 'Interview analysis was successfully destroyed.' }
-  #     format.json { head :no_content }
-  #   end
-  # end
-
-  def destroy
-    @interview_analysis.destroy
-    @interview_analyses = InterviewAnalysis.all
-  end
-
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_interview_analysis
-      @interview_analysis = InterviewAnalysis.find(params[:id])
+    def update
+      @interview_analysis.update(interview_analysis_params)
+      @interview_analyses = InterviewAnalysis.all
+      @interview_analysis = InterviewAnalysis.new
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def interview_analysis_params
-      params.require(:interview_analysis).permit(:interview_schedule_id,:vacancy_request_history_id, :interview_evalution_id, :interview_attribute_id, :interview_decision_id, :comment)
+    # DELETE /interview_analyses/1
+    # DELETE /interview_analyses/1.json
+    # def destroy
+    #   @interview_analysis.destroy
+    #   respond_to do |format|
+    #     format.html { redirect_to interview_analyses_url, notice: 'Interview analysis was successfully destroyed.' }
+    #     format.json { head :no_content }
+    #   end
+    # end
+
+    def destroy
+      @interview_analysis.destroy
+      @interview_analyses = InterviewAnalysis.all
     end
-end
+
+    def print_interview_analysis_list
+    # byebug
+    @interview_schedule =InterviewSchedule.find(params[:id])
+    @interview_analyses = InterviewAnalysis.all
+     respond_to do |format|
+        format.html
+        format.pdf do
+        render :pdf => 'print_interview_analysis_list',
+        layout: '/layouts/pdf.html.erb',
+        :template => 'interview_analyses/print_interview_analysis_list.pdf.erb',
+        :orientation      => 'Landscape', # default , Landscape
+        :page_height      => 1000,
+        :dpi              => '300',
+        :margin           => {:top    => 20, # default 10 (mm)
+                      :bottom => 20,
+                      :left   => 20,
+                      :right  => 20},
+        :show_as_html => params[:debug].present?
+      end
+    end
+  end
+
+    private
+      # Use callbacks to share common setup or constraints between actions.
+      def set_interview_analysis
+        @interview_analysis = InterviewAnalysis.find(params[:id])
+      end
+
+      # Never trust parameters from the scary internet, only allow the white list through.
+      def interview_analysis_params
+          params.require(:interview_analysis).permit(:interview_schedule_id,:vacancy_request_history_id, :interview_evalution_id, :interview_attribute_id, :interview_decision_id, :comment)
+      end
+  end

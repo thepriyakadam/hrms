@@ -15,6 +15,8 @@ class ExitInterviewsController < ApplicationController
   # GET /exit_interviews/new
   def new
     @exit_interview = ExitInterview.new
+    @exit_interviews = ExitInterview.all
+    session[:active_tab] = "resignationmanagement"
   end
 
   # GET /exit_interviews/1/edit
@@ -24,15 +26,15 @@ class ExitInterviewsController < ApplicationController
   # POST /exit_interviews
   # POST /exit_interviews.json
   def create
-    @exit_interview = ExitInterview.new(exit_interview_params)
-
+   @exit_interview = ExitInterview.new(exit_interview_params)
+    @exit_interviews = ExitInterview.all
     respond_to do |format|
       if @exit_interview.save
-        format.html { redirect_to @exit_interview, notice: 'Exit interview was successfully created.' }
-        format.json { render :show, status: :created, location: @exit_interview }
+         @exit_interview = ExitInterview.new
+        format.js { @flag = true }
       else
-        format.html { render :new }
-        format.json { render json: @exit_interview.errors, status: :unprocessable_entity }
+        flash.now[:alert] = 'Interview Already Exist.'
+        format.js { @flag = false }
       end
     end
   end
@@ -40,25 +42,16 @@ class ExitInterviewsController < ApplicationController
   # PATCH/PUT /exit_interviews/1
   # PATCH/PUT /exit_interviews/1.json
   def update
-    respond_to do |format|
-      if @exit_interview.update(exit_interview_params)
-        format.html { redirect_to @exit_interview, notice: 'Exit interview was successfully updated.' }
-        format.json { render :show, status: :ok, location: @exit_interview }
-      else
-        format.html { render :edit }
-        format.json { render json: @exit_interview.errors, status: :unprocessable_entity }
-      end
-    end
+   @exit_interview.update(exit_interview_params)
+   @exit_interview = ExitInterview.new
+   @exit_interviews = ExitInterview.all
   end
 
   # DELETE /exit_interviews/1
   # DELETE /exit_interviews/1.json
   def destroy
     @exit_interview.destroy
-    respond_to do |format|
-      format.html { redirect_to exit_interviews_url, notice: 'Exit interview was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    @exit_interviews = ExitInterview.all
   end
 
   private

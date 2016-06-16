@@ -4,6 +4,7 @@ class ShiftRotationsController < ApplicationController
   def new
     @shift_rotation = ShiftRotation.new
     @shift_rotations = ShiftRotation.all
+    session[:active_tab] ="timemgmt"
   end
 
   # GET /shift_rotations/1/edit
@@ -43,6 +44,7 @@ class ShiftRotationsController < ApplicationController
   end
 
   def collect_employee
+    
     @shift_rotation = ShiftRotation.find(params[:id])
     @employees_array = ShiftRotation.collect_array(@shift_rotation)
     @employees = Employee.where(employee_id: @employees_array)

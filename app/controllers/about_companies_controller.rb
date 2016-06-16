@@ -15,6 +15,9 @@ class AboutCompaniesController < ApplicationController
   # GET /about_companies/new
   def new
     @about_company = AboutCompany.new
+    @about_companies = AboutCompany.all
+    session[:active_tab] ="master"
+    session[:active_tab1] = "exit_interview_master_setup"
   end
 
   # GET /about_companies/1/edit
@@ -25,14 +28,14 @@ class AboutCompaniesController < ApplicationController
   # POST /about_companies.json
   def create
     @about_company = AboutCompany.new(about_company_params)
-
+    @about_companies = AboutCompany.all
     respond_to do |format|
       if @about_company.save
-        format.html { redirect_to @about_company, notice: 'About company was successfully created.' }
-        format.json { render :show, status: :created, location: @about_company }
+         @about_company = AboutCompany.new
+        format.js { @flag = true }
       else
-        format.html { render :new }
-        format.json { render json: @about_company.errors, status: :unprocessable_entity }
+        flash.now[:alert] = 'About Already Exist.'
+        format.js { @flag = false }
       end
     end
   end
@@ -40,25 +43,16 @@ class AboutCompaniesController < ApplicationController
   # PATCH/PUT /about_companies/1
   # PATCH/PUT /about_companies/1.json
   def update
-    respond_to do |format|
-      if @about_company.update(about_company_params)
-        format.html { redirect_to @about_company, notice: 'About company was successfully updated.' }
-        format.json { render :show, status: :ok, location: @about_company }
-      else
-        format.html { render :edit }
-        format.json { render json: @about_company.errors, status: :unprocessable_entity }
-      end
-    end
+    @about_company.update(about_company_params)
+    @about_companies = AboutCompany.all
+    @about_company = AboutCompany.new
   end
 
   # DELETE /about_companies/1
   # DELETE /about_companies/1.json
   def destroy
     @about_company.destroy
-    respond_to do |format|
-      format.html { redirect_to about_companies_url, notice: 'About company was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    @about_companies = AboutCompany.all
   end
 
   private

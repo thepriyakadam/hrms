@@ -3,21 +3,15 @@
      <tr>
       <th>Job Title</th>
       <th>Candidate Name</th>
-      <!-- <th>Candidate Name2</th> -->
-      <th>Interviewer Name</th>
       <th>Interview Date</th>
-      <th>Interviewtime</th>
       <th>Location</th>
       </tr>
       </thead>
       <tbody>
   <tr>
-        <td><%= @interview_schedule.interviewer_name %></td>
+        <td><%= @interview_schedule.job_title %></td>
         <td><%= @interview_schedule.candidate_name %></td>
-        <!-- <td><%= @interview_schedule.candidate_name2 %></td> -->
-        <td><%= @interview_schedule.employee.try(:manual_employee_code)+' '+@interview_schedule.employee.try(:first_name)+' '+@interview_schedule.employee.try(:last_name) %></td>
         <td><%= @interview_schedule.interview_date %></td>
-        <td><%= @interview_schedule.interview_time %></td>
         <td><%= @interview_schedule.location %></td>
   </tr>
   </tbody>

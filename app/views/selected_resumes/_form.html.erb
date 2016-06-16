@@ -1,4 +1,3 @@
-<div class="box box-default">
  
 <div class="box-body">
 <%= bootstrap_form_for(@selected_resume,html: {id: 'selected_resume'},remote:true) do |f| %>
@@ -15,13 +14,13 @@
   </div>
 
    <div class="col-sm-3">
-    <div class="form-group required">
-      <%= f.text_field :contact_no,label: 'Contact No' %>
+    <div class="field">
+      <%= f.text_field :contact_no,label: 'Contact No.' %>
     </div>
   </div>
 
   <div class="col-sm-3">
-      <div class="form-group required">
+      <div class="field">
         <%= f.text_field :skillset,label: 'Skillset' %>
       </div>
   </div>
@@ -40,6 +39,12 @@
   </div>
 
 <div class="row">
+
+ <div class="col-sm-3">
+    <div class="field">
+    <%= f.text_field :job_title,value: @vacancy_master.vacancy_name,readonly: true, label: 'Job Title' %>
+    </div>
+  </div>
   <div class="col-sm-3">
     <div class="field">
       <%= f.text_field :ctc, label: 'CTC' %>
@@ -58,28 +63,26 @@
     </div>
   </div>
 
-  <div class="col-sm-3">
+</div>
+<div class="row">
+ <div class="col-sm-3">
     <div class="field">
       <%= f.text_field :notice_period, label: 'Notice Period' %>
     </div>
   </div>
 
-</div>
-
-<div class="row">
- <div class="col-sm-3">
+  <div class="col-sm-3">
     <div class="field">
-      <%= f.file_field :avatar,label: 'Resume Upload' %>
+      <%= f.file_field :avatar,label: 'Resume Upload(only docx,pdf)' %>
     </div>
  </div>
 
  <div class="col-sm-3">
       <div class="field">
-        <%= f.file_field :passport_photo,label: 'Photo Upload' %>
+        <%= f.file_field :passport_photo,label: 'Photo Upload(only jpeg,jpg,png)' %>
       </div>
     </div>
-  </div>  
-
+</div>
 
 <div class="row">
   <div class="col-sm-3">
@@ -90,7 +93,6 @@
 </div>
 
 </div>
-</div>
 <% end %>
 <script>
 $("#selected_resume").validate({
@@ -98,13 +100,7 @@ $("#selected_resume").validate({
       "selected_resume[name]":{
         required: true
               },
-      "selected_resume[contact_no]":{
-        required: true
-      },
       "selected_resume[degree_id]":{
-        required: true
-      },
-      "selected_resume[skillset]":{
         required: true
       }
     },
@@ -112,14 +108,8 @@ $("#selected_resume").validate({
       "selected_resume[name]":{
         required: "Please specify Name"
       },
-      "selected_resume[contact_no]":{
-        required: "Please specify Contact No"
-      },
       "selected_resume[degree_id]":{
         required: "Please specify Qualification"
-      },
-      "selected_resume[skillset]":{
-        required: "Please specify Skillset"
       }
     },
     errorPlacement: function(error, element) {
@@ -128,6 +118,3 @@ $("#selected_resume").validate({
     }
    });
 </script>
-
-
-

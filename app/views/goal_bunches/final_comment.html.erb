@@ -1,0 +1,293 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Employee Details</h3>
+    <div class="pull-right">  
+    </div>
+  </div>
+  <div class="box-body">
+   <table class="table table-bordered table-hover table-condensed">     
+      <thead>
+        <tr>
+          <th>Employee Id</th>
+          <th>Name</th>
+          <th>Age</th>
+          <th>Department</th>
+          <th>Date Of Joining</th>
+          <th>Grade</th>
+          <th>Current Designation</th> 
+        </tr>
+      </thead>
+      <tbody>
+        <% @employees.each do |a| %>
+        <tr>
+          <td><%= a.manual_employee_code %></td> 
+          <td><%= a.first_name %> <%= a.middle_name %> <%= a.last_name %></td>
+          <td><%=  %></td>
+          <td><%= a.department.try(:name) %></td>
+          <td><%= @joining_detail.joining_date %></td>
+          <td><%= @joining_detail.employee_grade.name %></td>
+          <td><%= @joining_detail.employee_designation.name %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <div class="box-header with-border">
+      <h3 class="box-title">Qualification Details</h3>
+    </div>
+    <table class="table table-bordered table-hover table-condensed">
+      <thead>
+        <tr>
+          <th>Degree</th>
+          <th>Year Of Passing</th>
+          <th>Marks</th>
+          <th>Qualification</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @qualifications.each do |q| %>
+          <tr>
+            <td><%= q.degree.name %></td>
+            <td><%= q.year.name%> </td>
+            <td><%= q.marks %></td>
+            <td><%= q.degree_type.name %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <div class="box-header with-border">
+      <h3 class="box-title">Previous Experience</h3>
+    </div>
+    <table class="table table-bordered table-hover table-condensed">
+      <thead>
+        <tr>
+          <th>Previous Company</th>
+          <th>Designation</th>
+          <th>Previous Exp.(Years)</th>
+          <th>CTC</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @experiences.each do |e| %>
+          <tr>
+            <td><%= e.company_name %></td>
+            <td><%= e.designation %></td>
+            <td><%= e.no_of_year %></td>
+            <td><%= e.ctc %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+<div class="box-header with-border">
+  <h3 class="box-title">Goals List</h3>
+</div>
+  <table class="table table-bordered table-hover table-condensed">
+    <thead>
+      <tr>
+        <th>Goal Perspective</th>
+        <th>Goal Weightage</th>
+        <th>Goal Measure</th>
+        <th>Target/Unit</th>
+        <th>Aligned</th>
+        <th>Self Comment</th>
+        <th>Appraiser Comment</th>
+        <th>Appraiser Rating</th>
+        <th>Reviewer Comment</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @goal_ratings.each do |goal_rating| %>
+        <tr>
+          <td><%= goal_rating.goal_perspective.name %></td>
+          <td><%= goal_rating.goal_weightage %></td>
+          <td><%= goal_rating.goal_measure %></td>
+          <td><%= goal_rating.target %></td>
+          <td><%= goal_rating.aligned %></td>
+          <td><%= goal_rating.appraisee_comment %></td>
+          <td><%= goal_rating.appraiser_comment %></td>
+          <td><%= goal_rating.appraiser_rating_id %></td>
+          <td><%= goal_rating.reviewer_comment %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  
+  <% if  @goal_bunch.nil? %>
+  <center><p class="text-warning"> No Goal Bunch Available </p></center> 
+  <% else %>
+
+   <div class="box-header with-border">
+  <h3 class="box-title">Overall List</h3>
+</div>
+   <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
+   <tbody>
+      <% @goal_bunches.each do |goal_bunch| %>
+        <tr>
+          <th>Self Comment</th>
+          <td><%= goal_bunch.appraisee_comment %></td>
+        </tr>
+        <tr>
+          <th>Appraiser Comment</th>
+          <td><%= goal_bunch.appraiser_comment %></td>
+        </tr>
+        <tr>
+          <th>Appraiser Rating</th>
+          <td><%=  %></td>
+        </tr>
+        <tr>
+          <th>Reviewer Comment</th>
+          <td><%= goal_bunch.review_comment %></td>
+        </tr>
+        <tr>
+          <th>Reviewer Rating</th>
+          <td><%= goal_bunch.reviewer_rating_id %></td>
+        </tr>
+        <tr>
+          <th>Final Comment</th>
+          <td><%= goal_bunch.final_comment %></td>
+        </tr>
+        <tr>
+          <th>Final Rating</th>
+          <td><%= goal_bunch.final_rating_id %></td>
+        </tr> 
+      <% end %>
+    </tbody>
+  </table>
+
+  <% if @goal_bunch.final_comment == nil %>
+
+    <%= bootstrap_form_for(@goal_bunch,html: {id: 'goal_bunch'},url:{action: "final_create",employee_id: @employee.id,goal_bunch_id: @goal_bunch.id}) do |f| %>
+    <%= hidden_field_tag :final_id, {},value: current_user.employee_id %>
+
+    <div class="box-header with-border">
+      <h3 class="box-title">Final Comment</h3>
+    </div>
+      <div class="row">
+        <div class="col-sm-9">
+          <div class="field">
+          <%= f.text_field :final_comment,hide_label:true, placeholder: 'Final Comment' %>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="field">
+          <%= f.select :final_rating_id,all_rating_type,{hide_label:true, include_blank: 'Select Rating'} %>
+          </div>
+        </div>
+      </div>
+
+      <% if @goal_bunch.final_comment == nil %>
+          <% if @goal_bunch.final_confirm == true %>
+          <% else %>
+            <div class="row">
+              <div class="col-sm-3">
+                <div class="actions">
+                  <%= f.submit "Create" , class: "btn btn-primary btn-sm" %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+      <% else %>
+      <% end %>  
+    <% end %>
+
+  <% else %>
+  </br>
+  <pre> <center>Comment Created</center> </pre>
+  <% end %>
+
+
+<div class="box-header with-border">
+  <h3 class="box-title">Created Final Comment</h3>
+</div>
+<%= bootstrap_form_for GoalBunch.new,url:{action:'final_comment_confirm',emp_id: @employee.id,goal_bunch_id: @goal_bunch.id} do |f| %>
+<%= hidden_field_tag :final_id, {},value: current_user.employee_id %>
+  <table class="table table-bordered table-hover table-condensed">
+    <thead>
+      <tr>
+        <th><input type="checkbox" id="selectAll" value="selectAll"></th>
+        <th>Final Comment</th>
+        <th>Final Rating</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @goal_bunches.each do |goal_bunch| %>
+        <tr>
+            <% if goal_bunch.final_confirm == true %>
+            <td></td>
+            <% else %>
+            <td><%= check_box_tag "goal_bunch_ids[]", goal_bunch.id %></td>
+            <% end %>
+          <td><%= goal_bunch.final_comment %></td>
+          <td><%= goal_bunch.final_rating_id %></td>
+          
+            <% if goal_bunch.final_comment == nil %>
+            <td></td>
+            <% else %>
+              <% if goal_bunch.final_confirm == true %>
+              <td><small class="label label-info">Confirmed</small></td>
+              <% else %>
+              <td><%= link_to '', final_modal_goal_bunches_path(goal_bunch),class: 'btn btn-xs btn-success fa fa-edit',remote:true %></td>
+              <% end %>
+            <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+     <div class="row">
+      <div class="col-sm-3">
+        <div class="actions">
+          <% if @goal_bunch.final_comment == nil %>
+          <% else %>
+            <%= f.submit "Confirm", class: 'btn btn-primary btn-sm' %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+  </div>
+</div>
+<% end %>
+
+<div id="myModal" class="modal fade"></div>
+<script type="text/javascript">
+  $(function () {
+    $('#selectAll').click(function() {
+      if (this.checked) {
+        $(':checkbox').each(function() {
+          this.checked = true;                       
+        });
+      } 
+      else {
+        $(':checkbox').each(function() {
+          this.checked = false;                        
+        });
+      } 
+    });
+  });
+
+  $("#goal_bunch").validate({
+    rules: {
+      "goal_bunch[final_comment]":{
+        required: true
+      },
+      "goal_bunch[final_rating_id]":{
+        required: true
+      }
+    },
+    messages: {
+      "goal_bunch[final_comment]":{
+        required: "Please specify Final Comment"
+      },
+      "goal_bunch[final_rating_id]":{
+        required: "Please specify Final Rating"
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

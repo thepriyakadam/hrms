@@ -1,6 +1,7 @@
 <table id="example2" class="table table-bordered table-hover table-condensed'">
   <thead>
-    <tr>  
+    <tr> 
+      <th>ID</th> 
       <th>Code</th>
       <th>Name</th>
       <th>Action</th>
@@ -9,6 +10,7 @@
   <tbody>
     <% @countries.each do |country| %>
       <tr>
+      <td><%= country.id %></td>
         <td><%= country.code %></td>
         <td><%= country.name %></td>
         <td> <!-- link_to '', country,class: 'btn btn-xs btn-default fa fa-eye',remote:true %> -->

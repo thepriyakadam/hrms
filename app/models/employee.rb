@@ -1,4 +1,3 @@
-
 class Employee < ActiveRecord::Base
   protokoll :employee_code, pattern: 'EMP#######'
   belongs_to :department
@@ -11,6 +10,7 @@ class Employee < ActiveRecord::Base
   belongs_to :district
   belongs_to :religion
 
+  has_many :leav_c_offs
   has_many :salaryslips
   has_many :employee_nominations
   has_many :awards
@@ -26,6 +26,7 @@ class Employee < ActiveRecord::Base
   has_many :employee_leav_balances
   has_many :overtime_salaries
   has_many :vacancy_request_histories
+  has_many :induction_details
   # accepts_nested_attributes_for :employee_leav_balances
   has_many :families
   has_many :experiences
@@ -46,6 +47,7 @@ class Employee < ActiveRecord::Base
   has_one :joining_detail
   has_many :employee_promotions
   has_many :training_requests
+  has_many :interview_rounds
   
   accepts_nested_attributes_for :joining_detail
   has_many :subordinates, class_name: 'Employee',
@@ -56,32 +58,14 @@ class Employee < ActiveRecord::Base
                                    foreign_key: 'manager_2_id'
   belongs_to :manager_2, class_name: 'Employee'
 
-  has_many :appraisee_goal_rating_sheets, class_name: 'Employee',
-                                          foreign_key: 'appraisee_id'
+  has_many :goal_ratings, class_name: "Employee",
+                          foreign_key: "appraiser_id"
 
-  has_many :appraisee_attribute_rating_sheets, class_name: "Employee",
+  has_many :goal_ratings, class_name: "Employee",
                           foreign_key: "appraisee_id"
 
-  has_many :appraiser_attribute_rating_sheets, class_name: "Employee",
-                          foreign_key: "appraiser_id"
-
-  has_many :appraiser_2_goal_rating_sheets, class_name: "Employee",
-                          foreign_key: "appraiser_2_id"
-
-  has_many :final_id_goal_rating_sheets, class_name: "Employee",
-                          foreign_key: "final_id_id"
-
-  has_many :appraiser_2_attribute_rating_sheets, class_name: "Employee",
-                          foreign_key: "appraiser_2_id"
-
-  has_many :final_id_attribute_rating_sheets, class_name: "Employee",
-                          foreign_key: "final_id_id"
-                          
-  has_many :employee_goals, class_name: "Employee",
-                          foreign_key: "appraiser_id"
-
-  has_many :employee_goals, class_name: "Employee",
-                          foreign_key: "appraiser2_id"
+  has_many :goal_ratings, class_name: "Employee",
+                          foreign_key: "reviewer_id"
   before_create :add_department
   before_update :add_department
 
@@ -141,6 +125,20 @@ class Employee < ActiveRecord::Base
   private
 
   def self.find_by_role(current_user)
+    if current_user.class == Group
+      Employee.all
+    else
+      if current_user.role.name == 'Company'
+        Employee.all
+      elsif current_user.role.name == 'CompanyLocation'
+        Employee.where(company_location_id: current_user.company_location_id)
+      elsif current_user.role.name == 'Employee'
+        Employee.where(id: current_user.employee_id)
+      end
+    end
+  end
+
+  def self.dashboard
     if current_user.class == Group
       Employee.all
     else

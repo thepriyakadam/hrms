@@ -15,6 +15,8 @@
         <td><%= nomination_master.description %></td>
         <td>
           <%= link_to '', edit_nomination_master_path(nomination_master),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
+          <%= link_to '',  nomination_master, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
+        </td>
         </td>
       </tr>
     <% end %>

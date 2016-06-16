@@ -1,5 +1,5 @@
-require 'rubygems'
-require 'roo'
+# require 'rubygems'
+# require 'roo'
 
 # ex = Roo::Excel.new("#{Rails.root}/public/employee_salary_template_dewas.xls")
 # ex.default_sheet = ex.sheets[0]
@@ -84,13 +84,13 @@ require 'roo'
 
 # require 'rubygems'
 # require 'roo'
-# # company_type_array = ['Information Technology','Finance','Chemical','Production']
+# company_type_array = ['Information Technology','Finance','Chemical','Production']
 
-# # company_type_array.each do |ct|
-# #   company_type = CompanyType.find_or_initialize_by(name: ct)
-# #   company_type.name = ct
-# #   company_type.save
-# # end
+# company_type_array.each do |ct|
+#   company_type = CompanyType.find_or_initialize_by(name: ct)
+#   company_type.name = ct
+#   company_type.save
+# end
 
 # emp_type = ['Temporary','Permanent']
 # emp_type.each do |e|
@@ -107,10 +107,10 @@ require 'roo'
 #   BloodGroup.create(name: d)
 # end
 
-# # employee_grade = ['G1','G2','G3','G4']
-# # employee_grade.each do |d|
-# #   EmployeeGrade.create(name: d)
-# # end
+# employee_grade = ['G1','G2','G3','G4']
+# employee_grade.each do |d|
+#   EmployeeGrade.create(name: d)
+# end
 
 # roles = ['Company','CompanyLocation','Department','Employee']
 # roles.each do |r|
@@ -143,6 +143,8 @@ require 'roo'
 # CS.states(:in).each {|k,v| c = Country.find_by_code('IN'); c.states.create(code: k,name: v)}
 # puts 'District Started...'
 # CS.states(:in).each {|k,v| s = State.find_by_code(k); CS.cities(k,:in).each {|c| s.districts.create(name: c)}}
+
+
 
 ###############################################################################################
 # puts "Starting ..."
@@ -249,12 +251,16 @@ require 'roo'
 ###############################################################################################
 
 ex = Roo::Excel.new("#{Rails.root}/public/workingday.xls")
-ex.default_sheet = ex.sheets[17]
+
+ex.default_sheet = ex.sheets[20]
+
 i = 1
 gross_salary = 0
 ActiveRecord::Base.transaction do
 #2.upto(372) do |line|
+
 2.upto(91) do |line|
+
   puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
   unless @employee.nil?

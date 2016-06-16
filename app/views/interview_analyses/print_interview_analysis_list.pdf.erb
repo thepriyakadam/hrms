@@ -1,0 +1,31 @@
+<style>
+th {
+    text-align: left;
+}
+</style>
+<style>
+   table {
+  page-break-inside: avoid; 
+}
+</style>
+<h2><strong>Interview Analysis List</strong></h2><br><br>
+<table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
+  <thead>
+    <tr>
+      <th>Interview Evalution</th>
+      <th>Interview Attribute</th>
+      <th>Interview Decision</th>
+      <th>Comment</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @interview_analyses.each do |interview_analysis| %>
+      <tr>
+        <td><%= interview_analysis.interview_evalution.try(:name) %></td>
+        <td><%= interview_analysis.interview_attribute.try(:name) %></td>
+        <td><%= interview_analysis.interview_decision.try(:name) %></td>
+        <td><%= interview_analysis.comment %></td>
+      </tr>   
+    <% end %>
+  </tbody>
+</table>

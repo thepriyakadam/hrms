@@ -21,7 +21,7 @@
 
     <div class="col-sm-3">
       <div class="form-group required">
-        <%= f.text_field :topic,placeholder: 'Topic' %>
+        <%= f.select :training_topic_master_id, all_training_course, {label: 'Topic',include_blank: " Select Topics"} %>
       </div>
     </div>
     <div class="col-sm-3">
@@ -60,7 +60,7 @@
       </div>
     </div>
   </div>
-    <% end %>
+<% end %>
 
 
 <script type="text/javascript">
@@ -70,7 +70,7 @@
       "training_plan[training_date]":{
         required: true
       },
-      "training_plan[topic]":{
+      "training_plan[training_topic_master_id]":{
         required: true
       },
       "training_plan[no_of_employee]":{
@@ -84,7 +84,7 @@
       "training_plan[training_date]":{
         required: "Please specify Training Date"
       },
-      "training_plan[topic]":{
+      "training_plan[training_topic_master_id]":{
         required: "Please specify Topic"
       },
       "training_plan[no_of_employee]":{

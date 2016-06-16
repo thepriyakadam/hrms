@@ -1,5 +1,124 @@
 Rails.application.routes.draw do
 
+  resources :salary_map_saps
+  resources :interview_rounds
+  resources :interview_types
+  resources :employee_attendances
+  resources :salary_comp_mappings
+  resources :company_events
+  resources :employee_task_to_dos
+
+
+  resources :leaving_reasons
+  resources :training_records
+  resources :induction_details do
+    collection do 
+    get :all_induction_detail_list
+    get :confirm
+    post :print_induction_details
+    end
+  end 
+  resources :induction_activities do
+    collection do 
+    get :employee_list
+    get :search_template
+    get :find_assigned_induction_template
+    get :all_induction_document_download
+    post :induction_activity
+    get :induction_activity_download_list
+    post :create_induction_detail
+    end
+  end 
+  resources :induction_masters
+  resources :induction_templates
+  resources :root_cause_masters
+
+  resources :goal_ratings do
+    collection do
+      get :self_modal
+      patch :update_self_modal
+      get :appraiser_modal
+      patch :update_appraiser_modal
+      get :reviewer_modal
+      patch :update_reviewer_modal
+      get :goal_modal
+      patch :update_goal_modal
+      get :print_department
+      get :show_employee
+      post :send_mail_to_appraiser
+      get :subordinate_list_goal_wise
+      post :print_subordinate_list
+      post :all_subordinate_list
+    end
+  end
+  resources :goal_bunches do
+    collection do
+      get :goal_approval
+      post :appraiser_confirm
+      get :appraisee_comment
+      post :self_comment
+      post :self_comment_confirm
+      get :appraiser_subordinate
+      get :appraiser_comment
+      post :appraiser_create
+      post :appraiser_comment_confirm
+      get :subordinate_list
+      get :reviewer_comment
+      post :reviewer_create
+      post :reviewer_comment_confirm
+      get :reviewer_subordinate
+      get :employee_list
+      get :final_comment
+      patch :final_create
+      get :final_modal
+      patch :update_final_modal
+      post :final_comment_confirm
+      get :final_detail
+      get :final_employee_list
+      get :print_final_detail
+      get :modal_self_overall
+      post :self_overall_comment_create
+      post :self_overall_comment_confirm
+      get :modal_appraiser_overall
+      post :appraiser_overall_comment_create
+      post :appraiser_overall_comment_confirm
+      get :modal_reviewer_overall
+      post :reviewer_overall_comment_create
+      post :reviewer_overall_comment_confirm
+      get :modal_period
+      post :modal_period_create
+      post :xl_sheet_print
+      get :goal_period_list
+      get :period_list_appraisee
+      get :period_list_appraiser
+      get :period_list_reviewer
+      get :period_list_final
+      get :period_list_print
+      get :print_appraisee_detail
+      get :print_appraiser_detail
+      get :print_reviewer_detail
+      get :xl_appraisee_detail
+      get :xl_appraiser_detail
+      get :xl_reviewer_detail
+      get :subordinate_list_for_appraisee
+      get :period_appraisee
+      get :subordinate_list_for_reviewer
+      get :period_reviewer
+      get :period_for_appraisee
+      post :print_emp_list
+      post :all_emp_list
+      get :emp_list_goal_wise
+    end
+  end
+  resources :goal_perspectives
+  resources :ratings
+  resources :periods
+  resources :overall_ratings do
+    collection do 
+      get :modal_self
+      patch :update_modal_self
+    end
+  end
 
   resources :overall_ratings do
     collection do 
@@ -12,14 +131,22 @@ Rails.application.routes.draw do
   resources :about_bosses
   resources :question_masters
   resources :training_records
-
+  resources :leaving_reasons
   resources :training_approvals
   resources :training_topics
-  resources :employee_promotions
+  resources :employee_promotions do
+    collection do
+      get :collect_data
+    end
+  end
   resources :accident_masters
   resources :travel_expence_types
   resources :travel_modes
-  resources :interview_analyses
+  resources :interview_analyses do
+    collection do
+      post :print_interview_analysis_list
+    end
+  end
   resources :interview_decisions
   resources :interview_attributes
   resources :interview_evalutions
@@ -40,6 +167,11 @@ Rails.application.routes.draw do
     post :is_confirm
     get :new1
     get :all_resume_list
+    post :create_new
+    get :modal
+    post :offer_letter
+    get :modal_change_status
+    post :update_status
     end
   end 
   resources :assigned_assets
@@ -52,6 +184,7 @@ Rails.application.routes.draw do
   resources :daily_bill_details do
     collection do 
     post :is_confirm
+    get :print_daily_bill
     end
   end 
   resources :travel_requests do
@@ -69,6 +202,7 @@ Rails.application.routes.draw do
       patch :edit_and_send_next_modal_submit
       get :edit_and_approve_modal
       patch :edit_and_approve_modal_submit
+      get :is_confirm
     end
   end
   namespace :reports do
@@ -92,7 +226,6 @@ Rails.application.routes.draw do
   get 'welfare_details/new'
   end
 
-  resources :rating_masters
   namespace :reports do
     get 'overtime_salary_details/new'
     post 'overtime_salary_details/overtime_montly_detail_report'
@@ -134,6 +267,16 @@ Rails.application.routes.draw do
     post 'advance_salaries/advance_salary_report'
   end
 
+  namespace :views do
+
+    get 'goal_bunches/final_detail'
+    post 'goal_bunches/xl_sheet_print'
+
+    get 'pdf_salaries/excel_report'
+    post 'pdf_salaries/print_salary_slip_excel'
+
+  end
+
   resources :week_offs
   resources :employee_leav_request_reports, only: [:index]
 
@@ -156,6 +299,12 @@ Rails.application.routes.draw do
       get :interview_reschedule_list
       get :interviewee_list
       get :resume_list
+      post :create_new
+      post :print_interviewee_list
+      get :all_interview_schedule_list
+      get :final_report
+      post :print_final_report
+      get :interview_round_list
     end
   end
   resources :vacancy_masters do
@@ -263,7 +412,6 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :performance_periods
   resources :attribute_rating_sheets do
     collection do
       get :edit_appraiser
@@ -375,9 +523,6 @@ Rails.application.routes.draw do
   end
 
   resources :definitions
-  resources :attribute_masters
-  resources :goal_measures
-  resources :goal_perspectives
   resources :particular_leave_records do
     collection do
       get :show_leave_record
@@ -385,6 +530,9 @@ Rails.application.routes.draw do
   end
   match 'selected_resumes/:id/download_resume/:id' => 'selected_resumes#download_resume', :via => [:get], :as => :download_resume
   match 'selected_resumes/:id/download_image/:id' => 'selected_resumes#download_image', :via => [:get], :as => :download_image
+  match 'accident_records/:id/download_jpg/:id' => 'accident_records#download_jpg', :via => [:get], :as => :download_jpg
+  match 'induction_activities/:id/download_document/:id' => 'induction_activities#download_document', :via => [:get], :as => :download_document
+  match 'induction_masters/:id/download_induction_document/:id' => 'induction_masters#download_induction_document', :via => [:get], :as => :download_induction_document
 
   match 'capture_resumes/:id/download/:id' => 'capture_resumes#download', :via => [:get], :as => :download
   match 'capture_resumes/:id/download_photo/:id' => 'capture_resumes#download_photo', :via => [:get], :as => :download_photo
@@ -526,6 +674,8 @@ Rails.application.routes.draw do
       get :salary_slip_costunit_wise
       get :show_employee_costunit_wise
       post :print_salary_slip_cost_unitwise
+      get :excel_report
+      post :print_salary_slip_excel
     end
    end
   
@@ -650,6 +800,7 @@ Rails.application.routes.draw do
   resources :employee_leav_balances do
     collection do
       get :collect_employee_for_leave
+      get :employee_leave_balance
     end
   end
   resources :leav_rejecteds
@@ -693,6 +844,7 @@ Rails.application.routes.draw do
   end
   resources :employees do
     collection do
+      get :graph
       get :assign_role
       post :submit_form
       get :basic_detail

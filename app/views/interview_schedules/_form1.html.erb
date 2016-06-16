@@ -3,36 +3,34 @@
       <h3 class="box-title">Create Interview Schedule</h3>
     </div><!-- /.box-header -->
  <div class="box-body">
-  <%= bootstrap_form_for(@interview_schedule) do |f| %>
+ <%= bootstrap_form_for @interview_schedule,html: {id: 'interview_schedule'} do |f| %>
   <div class="row">
     <div class="col-sm-3">
      <div class="form-group required">
-      <%= f.text_field :interviewer_name,label: 'Job Title' %>
+      <%= f.text_field :job_title,label: 'Job Title' %>
      </div>
     </div>
 
     <div class="col-sm-3">
      <div class="form-group required">
-       <%= f.text_field :candidate_name,label: "Candidate Name" %>
+       <%= f.text_field :candidate_name %>
      </div>
     </div>
 
-    <div class="col-sm-3">
-     <div class="form-group required">
-      <%= f.select :employee_id, all_interviewer_name_list,{label: 'Interviewer Name',include_blank: " Select Interviewer Name"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
-     </div>
-    </div>
-
-    <div class="col-sm-3">
+     <div class="col-sm-3">
      <div class="field">
       <%= f.text_field :email_id %>
      </div>
     </div>  
- 
+
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :location,label:'Location' %>
+      </div>
+    </div>
   </div>
   
   <div class="row">
-
     <div class="col-sm-3">
       <label>Interview Date: </label>
       <div class="form-group required">
@@ -43,56 +41,7 @@
           <%= f.text_field :interview_date, hide_label: true, class: 'interview_date'%>
         </div>
       </div>
-    </div>
-  
-    <div class="col-sm-3">
-      <div class="bootstrap-timepicker">
-       <div class="form-group required">
-       <label>Interview Time</label>
-        <div class="input-group">
-         <%= f.text_field :interview_time,hide_label:true, class: 'form-control timepicker' %>
-        <div class="input-group-addon">
-        <i class="fa fa-clock-o"></i>
-        </div>
-        </div><!-- /.input group -->
-       </div><!-- /.form group -->
-      </div>
-    </div>
-
-    <div class="col-sm-3">
-      <div class="form-group required">
-        <%= f.text_field :location,label:'Location' %>
-      </div>
-    </div>
-
-    <div class="col-sm-3">
-      <div class="field">
-        <%= f.text_field :schedule_comments,label:'Schedule Comments' %>
-      </div>
     </div> 
-
-  </div>
-
-  <div class="row">
-  
-  <div class="col-sm-3">
-      <div class="field">
-       <%= f.text_field :post_title,label:'Posting Title' %>
-      </div>
-  </div>
-
-    <div class="col-sm-3">
-      <div class="form-group required">
-        <%= f.select :interview_type, ['Internal Interview','General Interview','Online Interview','Telephonic Interview','Technical Round','HR','GD','Level1 Interview','Level2 Interview','Level3 Interview','Level4 Interview'],{label: 'Type',include_blank: " Select Interview Type"} %>
-      </div>
-    </div>
-
-<!-- 
-    <div class="col-sm-3">
-      <div class="field">
-      <%= f.text_field :interview_status,label:'Interview Status' %>
-      </div>
-    </div> -->
   </div>
   
   <div class="row">
@@ -101,7 +50,7 @@
       <%= f.submit "Create Interview Schedule",class: "btn btn-primary btn-sm" %>
       </div>
     </div>
-   </div>
+  </div>
   </div>
 </div>
 <% end %>
@@ -109,4 +58,55 @@
   $(document).ready(function() {
   $(".select2").select2();
 });
+</script>
+<script>
+$("#interview_schedule").validate({
+    rules: {
+      "interview_schedule[interviewer_name]":{
+        required: true
+              },
+      "interview_schedule[employee_id]":{
+        required: true
+      },
+      "interview_schedule[candidate_name]":{
+        required: true
+      },
+      "interview_schedule[location]":{
+        required: true
+      },
+      "interview_schedule[interview_type]":{
+        required: true
+      }
+    },
+    messages: {
+      "interview_schedule[name]":{
+        required: "Please specify Name"
+      },
+      "interview_schedule[employee_id]":{
+        required: "Please specify Employee Name"
+      },
+      "interview_schedule[candidate_name]":{
+        required: "Please specify Candidate Name"
+      },
+      "interview_schedule[location]":{
+        required: "Please specify Location"
+      },
+      "interview_schedule[interview_type]":{
+        required: "Please specify Interview Type"
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>
+<script type="text/javascript">
+  $(function(){
+    $('.interview_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:-0',
+    dateFormat: 'dd-mm-yy' });
+  }); 
 </script>

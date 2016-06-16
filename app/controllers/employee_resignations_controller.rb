@@ -5,6 +5,7 @@ class EmployeeResignationsController < ApplicationController
   # GET /employee_resignations.json
   def index
     @employee_resignations = EmployeeResignation.all
+    
   end
 
   # GET /employee_resignations/1
@@ -15,6 +16,7 @@ class EmployeeResignationsController < ApplicationController
   # GET /employee_resignations/new
   def new
     @employee_resignation = EmployeeResignation.new
+    session[:active_tab] ="employeeresignation"
   end
 
   # GET /employee_resignations/1/edit
@@ -26,29 +28,25 @@ class EmployeeResignationsController < ApplicationController
   def create
     @employee_resignation = EmployeeResignation.new(employee_resignation_params)
 
-    respond_to do |format|
+    
       if @employee_resignation.save
-        format.html { redirect_to @employee_resignation, notice: 'Employee resignation was successfully created.' }
-        format.json { render :show, status: :created, location: @employee_resignation }
+         redirect_to employee_resignations_path
+        
       else
-        format.html { render :new }
-        format.json { render json: @employee_resignation.errors, status: :unprocessable_entity }
-      end
+         render :new 
+
+        
     end
   end
 
   # PATCH/PUT /employee_resignations/1
   # PATCH/PUT /employee_resignations/1.json
   def update
-    respond_to do |format|
-      if @employee_resignation.update(employee_resignation_params)
-        format.html { redirect_to @employee_resignation, notice: 'Employee resignation was successfully updated.' }
-        format.json { render :show, status: :ok, location: @employee_resignation }
-      else
-        format.html { render :edit }
-        format.json { render json: @employee_resignation.errors, status: :unprocessable_entity }
-      end
-    end
+    @employee_resignation.update(employee_resignation_params)
+    @employee_resignations = EmployeeResignation.all
+     @employee_resignation = EmployeeResignation.new
+     flash[:notice]= "Updated successfully"
+     redirect_to employee_resignations_path
   end
 
   # DELETE /employee_resignations/1

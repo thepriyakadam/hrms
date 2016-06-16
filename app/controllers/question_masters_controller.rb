@@ -16,6 +16,8 @@ class QuestionMastersController < ApplicationController
   def new
     @question_master = QuestionMaster.new
     @question_masters = QuestionMaster.all
+    session[:active_tab] ="master"
+    session[:active_tab1] ="exit_interview_master_setup"
   end
 
   # GET /question_masters/1/edit

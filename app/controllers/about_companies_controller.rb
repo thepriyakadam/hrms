@@ -16,6 +16,8 @@ class AboutCompaniesController < ApplicationController
   def new
     @about_company = AboutCompany.new
     @about_companies = AboutCompany.all
+    session[:active_tab] ="master"
+    session[:active_tab1] = "exit_interview_master_setup"
   end
 
   # GET /about_companies/1/edit

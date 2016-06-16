@@ -1,0 +1,31 @@
+<style>
+	th {
+	    text-align: left;
+	}
+	</style>
+	<style>
+	   table {
+	  page-break-inside: avoid; 
+	}
+</style>
+       <h2><strong>Interviewee List</strong></h2><br><br>
+        <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
+          <thead>
+            <tr>
+              <th>Sr.No</th>
+              <th>Candidate Name</th>
+              <th>Interview Date</th>
+            </tr>
+          </thead>
+
+          <tbody>
+          <% i = 0 %>
+            <% @interview_schedules.each do |interview_schedule| %>
+              <tr>
+                <td><%= i=i+1 %></td>
+                <td><%= interview_schedule.candidate_name %></td>
+                <td><%= interview_schedule.interview_date %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>

@@ -161,7 +161,7 @@ class SelectedResumesController < ApplicationController
     else
       @selected_resume_ids.each do |eid|
       @selected_resume = SelectedResume.find(eid)
-      @selected_resume.update(is_confirm: true)      
+      @selected_resume.update(status: "Shortlisted") 
       flash[:notice] = "Confirmed Successfully"
     end 
      redirect_to root_url
@@ -171,6 +171,7 @@ class SelectedResumesController < ApplicationController
   def all_resume_list
      @selected_resume = SelectedResume.new
      @selected_resumes = SelectedResume.all
+     flash[:notice] = "Confirmed Successfully"
      session[:active_tab] ="recruitment"
      session[:active_tab1] ="general_vacancy"
   end
@@ -191,6 +192,19 @@ class SelectedResumesController < ApplicationController
      @selected_resume = SelectedResume.find(params[:format])
   end
 
+  def modal_change_status
+    @selected_resume = SelectedResume.find(params[:format])
+  end
+
+  def update_status
+    puts "----------------------------------"
+    @selected_resume = SelectedResume.find(params[:id])
+    @current_status = params[:selected_resume][:status]
+    @selected_resume.update(status: @current_status)
+    flash[:notice] = "Interview Status updated Successfully"
+    redirect_to root_url
+  end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -200,6 +214,6 @@ class SelectedResumesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def selected_resume_params
-      params.require(:selected_resume).permit(:name, :contact_no, :avatar, :passport_photo, :skillset, :degree_id, :ctc, :email_id, :experience, :notice_period, :vacancy_master_id)
+      params.require(:selected_resume).permit(:name, :contact_no, :avatar, :passport_photo, :job_title, :skillset, :degree_id, :ctc, :email_id, :experience, :notice_period, :vacancy_master_id)
     end
 end

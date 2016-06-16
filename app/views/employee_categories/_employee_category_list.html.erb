@@ -1,6 +1,7 @@
 <table id="example2" class="table table-bordered table-hover table-condensed'">
     <thead>
       <tr>
+      <th>Code</th>
       <th>Name</th>
       <th>Description</th>
       <th>Action</th>
@@ -10,6 +11,7 @@
   <tbody>
     <% @employee_categories.each do |employee_category| %>
       <tr>
+        <td><%= employee_category.code %></td>
         <td><%= employee_category.name %></td>
         <td><%= employee_category.description %></td>
         <td>

@@ -1,4 +1,11 @@
 class SalaryslipComponentsController < ApplicationController
+  skip_before_filter :authenticate!
+
+  def index
+    @salaryslip_components = SalaryslipComponent.limit(50)
+    @maps = SalaryMapSap.all
+  end
+
   def edit
     @salaryslip_component = SalaryslipComponent.find(params[:id])
   end

@@ -9,9 +9,7 @@
       <tr>
         <th>Sr.No</th>
         <th>Candidate Name</th>
-        <th>Interviewer Name</th>
         <th>Interview Date</th>
-        <th>Interview Time</th>
       </tr>
     </thead>
   <tbody>
@@ -20,9 +18,7 @@
       <tr>
         <td><%= i=i+1 %></td>
         <td><%= interview_reschedule.interview_schedule.candidate_name %></td>
-        <td><%= interview_reschedule.employee.try(:first_name) %> <%= interview_reschedule.employee.try(:middle_name) %> <%= interview_reschedule.employee.try(:last_name) %></td>
         <td><%= interview_reschedule.interview_date %></td>
-        <td><%= interview_reschedule.interview_time %></td>
       </tr>
       <% end %>
     </tbody>

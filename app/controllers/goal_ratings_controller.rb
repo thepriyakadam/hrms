@@ -124,13 +124,34 @@ class GoalRatingsController < ApplicationController
     @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
     sum = @goal_bunch.goal_ratings.sum(:goal_weightage)
     if sum == 100
-      @emp = Employee.find(current_user.employee.manager_id)
+      @emp = Employee.find(current_user.employee_id)
       GoalRatingMailer.send_email_to_appraiser(@emp).deliver_now
       flash[:notice] = "Mail Sent Successfully"
     else
       flash[:alert] = "Goal weightage sum should be 100"
     end
     redirect_to new_goal_rating_path(id: @goal_bunch.id)
+  end
+
+   def subordinate_list_goal_wise
+  end
+
+  def print_subordinate_list
+    current_login = Employee.find(current_user.employee_id)
+    @period = Period.find(params[:salary][:period_id])
+    goal_bunches = GoalBunch.where(period_id: @period.id).pluck(:employee_id)
+    subordinates = current_login.subordinates.pluck(:id)
+    total_employee = goal_bunches & subordinates
+    @employees = Employee.where(id: total_employee)
+  end
+
+  def all_subordinate_list
+    employee_ids = params[:employee_ids]
+    @employees = []
+    employee_ids.each do |e|
+      emp = Employee.find(e)
+      @employees << emp
+    end 
   end
 
   private

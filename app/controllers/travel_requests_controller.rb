@@ -4,11 +4,7 @@ class TravelRequestsController < ApplicationController
   # GET /travel_requests
   # GET /travel_requests.json
   def index
-    if current_user.role.name == 'Company'
-      @travel_requests = TravelRequest.all
-    else
-      @travel_requests = TravelRequest.where(employee_id: current_user.employee_id)
-    end
+    @travel_requests = TravelRequest.where(employee_id: current_user.employee_id)
     session[:active_tab] ="travelmgmt"
   end
 
@@ -81,8 +77,9 @@ class TravelRequestsController < ApplicationController
   end
 
   def travel_history
-     @travel_requests = TravelRequest.where(reporting_master_id: current_user.employee_id, current_status: "Pending")
-     session[:active_tab] ="travelmgmt"
+    @travel_requests = TravelRequest.where("reporting_master_id = ? and (current_status = ? or current_status = ?)",current_user.employee_id,"Pending","Approved & Send Next")
+    #@travel_requests = TravelRequest.where(reporting_master_id: current_user.employee_id)
+    session[:active_tab] ="travelmgmt"
 
   end
 
@@ -112,7 +109,7 @@ class TravelRequestsController < ApplicationController
   def send_request_to_higher_authority
     @travel_request = TravelRequest.find(params[:id])
     @travel_request.update(current_status: "Approved & Send Next")
-    ReportingMastersTravelRequest.create(travel_request_id: @travel_request.id, reporting_master_id: current_user.employee_id, travel_status: "Approved & Send Next")
+    ReportingMastersTravelRequest.create(travel_request_id: @travel_request.id, reporting_master_id: params[:travel_request][:reporting_master_id] , travel_status: "Approved & Send Next")
     flash[:notice] = 'Vacancy Send to Higher Authority'
     redirect_to travel_history_travel_requests_path
   end
@@ -130,7 +127,11 @@ class TravelRequestsController < ApplicationController
   end
 
   def travel_request_list
-    @travel_requests = TravelRequest.all
+     if current_user.role.name == 'Company'
+      @travel_requests = TravelRequest.all
+    else
+      @travel_requests = TravelRequest.where(employee_id: current_user.employee_id)
+    end
     session[:active_tab] ="travelmgmt"
   end
 

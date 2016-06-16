@@ -12,10 +12,10 @@
       <th>Email Id</th>
       <th>Location</th>
       <th>Interview Date</th>
-      <th>Reschedule</th>
-      <th>Status</th>
-      <th>Reschedule List</th>
-      <th>Interview Round</th>
+<!--       <th>Reschedule</th>
+ -->      <th>Status</th>
+<!--       <th>Reschedule List</th>
+ -->      <th>Interview Round</th>
       <th>Action</th>
     </tr>
   </thead>
@@ -35,11 +35,11 @@
         <td><%= interview_schedule.email_id %></td>
         <td><%= interview_schedule.location %></td>
         <td><%= interview_schedule.interview_date %></td>
-           <td>
+          <!--  <td> -->
            <!--  link_to '', interview_schedule,method: :delete,data:{confirm:'Are you sure?'},class: 'btn btn-sm btn-danger fa fa-close' %> -->
 
-            <%= link_to ' Reschedule', interview_reschedule_interview_schedules_path(id:interview_schedule.id),class: 'btn btn-xs btn-success fa fa-envelope-o'  %>
-            </td>
+            <!--< link_to ' Reschedule', interview_reschedule_interview_schedules_path(id:interview_schedule.id),class: 'btn btn-xs btn-success fa fa-envelope-o'  %>-->
+            <!-- </td> -->
             <td>
               <% if interview_schedule.is_confirm == true %>
               <small class="label label-info">Interview Confirmed</small>
@@ -51,9 +51,9 @@
             <!--< link_to ' Confirm Email',sample_email_to_interviewer_path(interview_schedule),class: 'btn btn-xs btn-warning fa fa-check' %>-->
 <!--              link_to '',modal_interview_schedules_path,class: 'btn btn-sm btn-warning fa fa-modx',remote: true %>
  -->      <!--  </td> -->
-             <td>
-              <%= link_to ' List',interview_reschedule_list_interview_schedules_path(interview_schedule),class: 'btn btn-xs btn-primary fa fa-sticky-note-o' %>
-            </td>
+             <!-- <td>
+              < link_to ' List',interview_reschedule_list_interview_schedules_path(interview_schedule),class: 'btn btn-xs btn-primary fa fa-sticky-note-o' %>
+            </td> -->
             <td>
               <%= link_to ' Interview Round', new_interview_round_path(interview_schedule.id),class: 'btn btn-xs btn-primary' %>
             </td>

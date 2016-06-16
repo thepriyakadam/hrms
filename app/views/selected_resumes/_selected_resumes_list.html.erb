@@ -40,7 +40,7 @@
             <small class="label label-primary">Shortlisted</small>
             <% elsif selected_resume.status == "Interview Scheduled" %>
             <small class="label label-primary">Interview Scheduled</small>
-            <%= link_to ' Update Status',modal_change_status_selected_resumes_path(selected_resume),class: 'btn btn btn-sm btn-default fa fa-modx',remote: true %>
+            <%= link_to '',modal_change_status_selected_resumes_path(selected_resume),class: 'btn btn btn-sm btn-default fa fa-info',remote: true %>
             <% elsif selected_resume.status == "Interview Rescheduled" %>
             <small class="label label-default">Interview Rescheduled</small>
             <%= link_to ' Update Status',modal_change_status_selected_resumes_path(selected_resume),class: 'btn btn btn-sm btn-default fa fa-modx',remote: true %>
@@ -93,7 +93,6 @@
   <div class="col-sm-3">
     <div class="actions">
       <%= f.submit "Confirm", class: 'btn btn-primary btn-sm' %> 
-      
     </div>
   </div>
 </div>

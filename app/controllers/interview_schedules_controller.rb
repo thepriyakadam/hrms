@@ -46,16 +46,16 @@ class InterviewSchedulesController < ApplicationController
   # POST /interview_schedules
   # POST /interview_schedules.json
   
-   def create
-     @interview_schedule = InterviewSchedule.new(interview_schedule_params)
-      if @interview_schedule.save
-       @selected_resume = SelectedResume.find(@interview_schedule.selected_resume_id)
-       @selected_resume.update(status: "Interview Scheduled")
-        InterviewScheduleMailer.sample_email(@interview_schedule).deliver_now
-        @interview_schedule = InterviewSchedule.new
-      end
-      redirect_to interview_schedules_path
-      flash[:notice] = 'Interview Scheduled Successfully & Email also Sent.'   
+  def create
+   @interview_schedule = InterviewSchedule.new(interview_schedule_params)
+    if @interview_schedule.save
+     @selected_resume = SelectedResume.find(@interview_schedule.selected_resume_id)
+     @selected_resume.update(status: "Interview Scheduled")
+      InterviewScheduleMailer.sample_email(@interview_schedule).deliver_now
+      @interview_schedule = InterviewSchedule.new
+    end
+    redirect_to interview_schedules_path
+    flash[:notice] = 'Interview Scheduled Successfully & Email also Sent.'   
   end
 
   # def create_new

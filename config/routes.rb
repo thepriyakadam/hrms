@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :circulars
   resources :salary_map_saps
   resources :interview_rounds
   resources :interview_types
@@ -532,6 +533,8 @@ Rails.application.routes.draw do
   match 'capture_resumes/:id/download_photo/:id' => 'capture_resumes#download_photo', :via => [:get], :as => :download_photo
   match 'interview_schedules/:id/send_email_to_candidate/:id' => 'interview_schedules#send_email_to_candidate', :via => [:get], :as => :send_email_to_candidate
   match 'interview_schedules/:id/sample_email_to_interviewer/:id' => 'interview_schedules#sample_email_to_interviewer', :via => [:get], :as => :sample_email_to_interviewer
+
+  match 'circulars/:id/download_documents/:id' => 'circulars#download_documents', :via => [:get], :as => :download_documents
 
   resources :leave_c_offs
   resources :overtime_month_records

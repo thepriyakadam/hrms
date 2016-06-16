@@ -42,7 +42,7 @@
             <small class="label label-primary">Interview Scheduled</small>
             <%= link_to ' Update Status',modal_change_status_selected_resumes_path(selected_resume),class: 'btn btn btn-sm btn-default fa fa-modx',remote: true %>
             <% elsif selected_resume.status == "Interview Rescheduled" %>
-            <small class="label label-danger">Interview Rescheduled</small>
+            <small class="label label-default">Interview Rescheduled</small>
             <%= link_to ' Update Status',modal_change_status_selected_resumes_path(selected_resume),class: 'btn btn btn-sm btn-default fa fa-modx',remote: true %>
             <% else %>
             <small class="label label-default">Not Yet Shortlisted</small>
@@ -56,14 +56,15 @@
           <% else %>
           <% end %>
           </td>
-       <td>
+        <td>
          <% if selected_resume.avatar_file_name == nil %>
            <small class="label label-default">Resume Not Available</small>
              <% else %>
              <center><%= link_to '',download_resume_path(id: selected_resume.id),class: 'btn btn-xs fa fa-download' %>
-             <% end %></center>
-          </td>
-          <td>
+             <% end %>
+             </center>
+        </td>
+        <td>
           <% if selected_resume.passport_photo_file_name == nil %>
               <small class="label label-default">Image Not Available</small>
               <% else %>
@@ -75,10 +76,11 @@
         <%= link_to '', selected_resume, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
            <% if selected_resume.status == "Shortlisted" %>
           <%= link_to ' Interview', new_interview_schedule_path(selected_resume.id),class: 'btn btn-xs btn-primary fa fa-check' %>
+          <% elsif selected_resume.status == "Interview Rescheduled" %>
+          <%= link_to ' Interview', new_interview_schedule_path(selected_resume.id),class: 'btn btn-xs btn-primary fa fa-check' %>
           <% else %>
           <% end %>
           
-        </td>
         </td>
       </tr>
     <% end %>
@@ -95,7 +97,7 @@
     </div>
   </div>
 </div>
- <% end %>
+<% end %>
 
 
 

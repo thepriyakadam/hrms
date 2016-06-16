@@ -5,7 +5,6 @@ class SalaryMapSapsController < ApplicationController
   # GET /salary_map_saps.json
   def index
     @salary_map_saps = SalaryMapSap.all
-   
   end
 
   # GET /salary_map_saps/1
@@ -54,10 +53,9 @@ class SalaryMapSapsController < ApplicationController
   # DELETE /salary_map_saps/1.json
   def destroy
     @salary_map_sap.destroy
-     @salary_map_saps = SalaryMapSap.all
-    end
+    @salary_map_saps = SalaryMapSap.all
+  end
  
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_salary_map_sap

@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :salary_map_saps
   resources :interview_rounds
   resources :interview_types
   resources :employee_attendances

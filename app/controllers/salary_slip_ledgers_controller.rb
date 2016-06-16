@@ -182,7 +182,7 @@ class SalarySlipLedgersController < ApplicationController
       employee = Employee.find(e.id)
       salaryslip = Salaryslip.where('employee_id = ? and month = ? and year = ?', e.id, @month, @year.to_s).take
       if employee.nil? or salaryslip.nil?
-          
+        
       else
         ctc = SalaryReport.collect_monthly_ctc(employee,salaryslip)
         @reports << ctc

@@ -1,7 +1,7 @@
 <table id="example2" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>  
-      <th>Date</th>
+      <th>Circular Date</th>
       <th>Subject</th>
       <th>Download</th>
       <th>Action</th>
@@ -16,7 +16,7 @@
            <% if circular.avatar_file_name == nil %>
            <small class="label label-default">Document Not Available</small>
              <% else %>
-             <%= link_to '',download_documents_path(id: circular.id),class: 'btn btn-xs fa fa-download' %>
+             <%= link_to ' Document',download_documents_path(id: circular.id),class: 'btn btn-xs btn btn-info fa fa-download' %>
              <% end %>
         </td>
         <td>

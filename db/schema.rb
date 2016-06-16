@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160615092744) do
+ActiveRecord::Schema.define(version: 20160616070304) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -292,6 +292,17 @@ ActiveRecord::Schema.define(version: 20160615092744) do
 
   add_index "certifications", ["employee_id"], name: "index_certifications_on_employee_id"
   add_index "certifications", ["year_id"], name: "index_certifications_on_year_id"
+
+  create_table "circulars", force: :cascade do |t|
+    t.date     "date"
+    t.string   "subject"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+    t.string   "avatar_file_name"
+    t.string   "avatar_content_type"
+    t.integer  "avatar_file_size"
+    t.datetime "avatar_updated_at"
+  end
 
   create_table "companies", force: :cascade do |t|
     t.integer  "group_id"

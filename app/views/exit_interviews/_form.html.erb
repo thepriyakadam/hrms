@@ -1,11 +1,6 @@
 <%= bootstrap_form_for(@exit_interview,html: {id: 'exit_interview'},remote:true) do |f| %>
-  <div class="row">
-    <div class="col-sm-3">
-      <div class="form-group required">
-        <%= f.select :employee_id, employee_list_for_food_deduction, {label: 'Employee ',include_blank: " Select Employee"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"}  %>
-      </div>
-    </div>
-  </div>
+<%= f.hidden_field :employee_id, :value => current_user.employee_id %>
+  
   <div class="row">
     <div class="col-sm-5">
       <div class="form-group required">

@@ -1,7 +1,8 @@
 class SalaryslipComponentsController < ApplicationController
 
   def index
-    @salaryslip_components = SalaryslipComponent.limit(50)  
+    @salaryslip_components = SalaryslipComponent.limit(50)
+    @maps = SalaryMapSap.all
   end
 
   def edit

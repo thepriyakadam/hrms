@@ -1,4 +1,5 @@
 class SalaryslipComponentsController < ApplicationController
+  skip_before_filter :authenticate!
 
   def index
     @salaryslip_components = SalaryslipComponent.limit(50)

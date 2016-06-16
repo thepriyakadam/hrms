@@ -26,7 +26,15 @@ class EmployeePromotionsController < ApplicationController
   # POST /employee_promotions.json
   def create
     @employee_promotion = EmployeePromotion.new(employee_promotion_params)
-
+    @employee_id = params[:employee_promotion][:employee_id]
+    @department_id = params[:employee_promotion][:department_id]
+    @employee_designation_id = params[:employee_promotion][:employee_designation_id]
+    @employee_grade_id = params[:employee_promotion][:employee_grade_id]
+    @employee_category_id = params[:employee_promotion][:employee_category_id]
+    @employee = Employee.find(@employee_id)
+    @employee.update(department_id: @department_id)
+    @joining_detail= JoiningDetail.find_by_employee_id(@employee_id)
+    @joining_detail.update(employee_designation_id: @employee_designation_id,employee_grade_id: @employee_grade_id,employee_category_id: @employee_category_id)
     respond_to do |format|
       if @employee_promotion.save
         format.html { redirect_to @employee_promotion, notice: 'Employee promotion was successfully created.' }
@@ -43,6 +51,15 @@ class EmployeePromotionsController < ApplicationController
   def update
     respond_to do |format|
       if @employee_promotion.update(employee_promotion_params)
+        @employee_id = params[:employee_promotion][:employee_id]
+    @department_id = params[:employee_promotion][:department_id]
+    @employee_designation_id = params[:employee_promotion][:employee_designation_id]
+    @employee_grade_id = params[:employee_promotion][:employee_grade_id]
+    @employee_category_id = params[:employee_promotion][:employee_category_id]
+    @employee = Employee.find(@employee_id)
+    @employee.update(department_id: @department_id)
+    @joining_detail= JoiningDetail.find_by_employee_id(@employee_id)
+    @joining_detail.update(employee_designation_id: @employee_designation_id,employee_grade_id: @employee_grade_id,employee_category_id: @employee_category_id)
         format.html { redirect_to @employee_promotion, notice: 'Employee promotion was successfully updated.' }
         format.json { render :show, status: :ok, location: @employee_promotion }
       else

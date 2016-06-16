@@ -2,6 +2,7 @@ class HomeController < ApplicationController
   # load_and_authorize_resource
   def index
     @employee_task_to_dos = EmployeeTaskToDo.where(employee_id: current_user.employee_id)
+    @circulars = Circular.all
     @companies = Company.all
     @company_locations = CompanyLocation.all
     @departments = Department.all

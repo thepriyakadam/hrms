@@ -7,7 +7,7 @@
   <div class="row">
     <div class="col-sm-3">
      <div class="form-group required">
-      <%= f.text_field :job_title,label: 'Job Title' %>
+      <%= f.text_field :job_title,value: @selected_resume.job_title,readonly: true,label: 'Job Title' %>
      </div>
     </div>
 

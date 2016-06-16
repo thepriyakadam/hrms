@@ -47,6 +47,7 @@ class Employee < ActiveRecord::Base
   has_one :joining_detail
   has_many :employee_promotions
   has_many :training_requests
+  has_many :interview_rounds
   
   accepts_nested_attributes_for :joining_detail
   has_many :subordinates, class_name: 'Employee',

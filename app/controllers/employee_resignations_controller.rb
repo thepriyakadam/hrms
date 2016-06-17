@@ -28,8 +28,9 @@ class EmployeeResignationsController < ApplicationController
   # POST /employee_resignations.json
   def create
     @employee_resignation = EmployeeResignation.new(employee_resignation_params)
-
-    
+    EmployeeResignationMailer.send_email_to_reporting_manager(@employee_resignation).deliver_now
+      
+       flash[:notice]= "Email Sent Successfully"
       if @employee_resignation.save
          redirect_to employee_resignations_path
         

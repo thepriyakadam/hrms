@@ -53,11 +53,9 @@ class NominationMastersController < ApplicationController
   # DELETE /nomination_masters/1
   # DELETE /nomination_masters/1.json
   def destroy
-    @nomination_master.destroy
-    respond_to do |format|
-      format.html { redirect_to nomination_masters_url, notice: 'Nomination master was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+   @nomination_master.destroy
+    @nomination_masters = NominationMaster.all
+    
   end
 
   private

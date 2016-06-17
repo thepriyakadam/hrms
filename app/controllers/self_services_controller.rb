@@ -23,12 +23,12 @@ class SelfServicesController < ApplicationController
   end
 
   def advance
-    @advance_salary = AdvanceSalary.find_by_employee_id(current_user.employee_id)
-    if @advance_salary.nil?
+    @advance_salaries = AdvanceSalary.where(employee_id: current_user.employee_id)
+    if @advance_salaries.nil?
       flash[:alert] = 'Advance Salary not taken.'
       redirect_to root_url
     else
-      @instalments = @advance_salary.instalments
+      # @instalments = @advance_salary.instalments
     end
     session[:active_tab] ="selfservice"
   end

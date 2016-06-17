@@ -45,19 +45,17 @@ class InterviewSchedulesController < ApplicationController
   
   # POST /interview_schedules
   # POST /interview_schedules.json
+  
   def create
-    @interview_schedule = InterviewSchedule.new(interview_schedule_params)
-
-    respond_to do |format|
-      if @interview_schedule.save
-        InterviewScheduleMailer.sample_email(@interview_schedule).deliver_now
-        format.html { redirect_to @interview_schedule, notice: 'Interview schedule was successfully created.' }
-        format.json { render :show, status: :created, location: @interview_schedule }
-      else
-        format.html { render :new }
-        format.json { render json: @interview_schedule.errors, status: :unprocessable_entity }
-      end
+   @interview_schedule = InterviewSchedule.new(interview_schedule_params)
+    if @interview_schedule.save
+     @selected_resume = SelectedResume.find(@interview_schedule.selected_resume_id)
+     @selected_resume.update(status: "Interview Scheduled")
+      InterviewScheduleMailer.sample_email(@interview_schedule).deliver_now
+      @interview_schedule = InterviewSchedule.new
     end
+    redirect_to interview_schedules_path
+    flash[:notice] = 'Interview Scheduled Successfully & Email also Sent.'   
   end
 
   # def create_new
@@ -124,6 +122,7 @@ class InterviewSchedulesController < ApplicationController
   end
   end
 
+  
   def sample_email
     @interview_schedule = InterviewSchedule.find_by_employee_id(params[:id])
     @employee = Employee.find(@interview_schedule.employee_id)
@@ -164,22 +163,6 @@ end
      @interview_reschedules = InterviewReschedule.where(interview_schedule_id: @interview_schedule.id)
   end
 
-  def search_by_interview_date
-    @interview_schedules = InterviewSchedule.all
-    reporter(@interview_schedules, template_class: PdfReportTemplate) do
-      filter :interview_date, type: :date
-      column :interviewer_name, sortable: true
-      column :candidate_name, sortable: true
-      column :interview_date, sortable: true
-      column :interview_time, sortable: true
-      column :location, sortable: true
-      column :schedule_comments, sortable: true
-      column :post_title, sortable: true
-      column :interview_type, sortable: true
-      column :interview_status, sortable: true
-    end
-  end
-
   def is_confirm
     @interview_schedule_ids = params[:interview_schedule_ids]
     if @interview_schedule_ids.nil?
@@ -189,7 +172,7 @@ end
       @interview_schedule_ids.each do |eid|
       @interview_schedule = InterviewSchedule.find(eid)
       @interview_schedule.update(is_confirm: true) 
-      InterviewScheduleMailer.sample_email_to_interviewer(@interview_schedule).deliver_now
+      # InterviewScheduleMailer.sample_email_to_interviewer(@interview_schedule).deliver_now
       InterviewScheduleMailer.confirmation_email_to_candidate(@interview_schedule).deliver_now     
       flash[:notice] = "Confirmed Successfully & Email also sent"
     end 
@@ -198,7 +181,7 @@ end
   end
 
   def interviewee_list
-     @interview_schedules = InterviewSchedule.where(employee_id: current_user.employee_id,is_confirm: true)
+     @interview_schedules = InterviewSchedule.all
      session[:active_tab] ="recruitment"
      session[:active_tab1] ="particular_vacancy"
   end
@@ -209,6 +192,74 @@ end
      @selected_resumes = SelectedResume.where(id: @interview_schedule.selected_resume_id)
   end
 
+  def print_interviewee_list
+    # byebug
+    # @interview_schedule = InterviewSchedule.find(params[:format])
+    @interview_schedule_ids = params[:interview_schedule_ids]
+    @interview_schedules = InterviewSchedule.where(employee_id: current_user.employee_id,is_confirm: true)
+     respond_to do |format|
+        format.html
+        format.pdf do
+        render :pdf => 'print_interviewee_list',
+        layout: '/layouts/pdf.html.erb',
+        :template => 'interview_schedules/print_interviewee_list.pdf.erb',
+        :orientation      => 'Landscape', # default , Landscape
+        :page_height      => 1000,
+        :dpi              => '300',
+        :margin           => {:top    => 20, # default 10 (mm)
+                      :bottom => 20,
+                      :left   => 20,
+                      :right  => 20},
+        :show_as_html => params[:debug].present?
+      end
+    end
+  end
+
+  def all_interview_schedule_list
+     @interview_schedules = InterviewSchedule.all
+     session[:active_tab] ="recruitment"
+     session[:active_tab1] ="general_vacancy"
+  end
+ 
+  def final_report
+    # byebug
+    @interview_schedule = InterviewSchedule.find(params[:format])
+    @interview_schedules = InterviewSchedule.where(id: @interview_schedule.id)
+    @interview_analyses = InterviewAnalysis.where(interview_schedule_id: @interview_schedule.id)
+    @interview_rounds = InterviewRound.where(interview_schedule_id: @interview_schedule.id)
+    session[:active_tab] ="recruitment"
+    session[:active_tab1] ="general_vacancy"
+  end
+
+  def print_final_report
+     puts "----------------------"
+     # byebug
+     @interview_schedule = InterviewSchedule.find(params[:id])
+     @interview_schedules = InterviewSchedule.where(id: @interview_schedule.id)
+     @interview_analyses = InterviewAnalysis.where(interview_schedule_id: @interview_schedule.id)
+     @interview_rounds = InterviewRound.where(interview_schedule_id: @interview_schedule.id)
+     respond_to do |format|
+        format.html
+        format.pdf do
+        render :pdf => 'print_final_report',
+        layout: '/layouts/pdf.html.erb',
+        :template => 'interview_schedules/print_final_report.pdf.erb',
+        :orientation      => 'Landscape', # default , Landscape
+        :page_height      => 1000,
+        :dpi              => '300',
+        :margin           => {:top    => 20, # default 10 (mm)
+                      :bottom => 20,
+                      :left   => 20,
+                      :right  => 20},
+        :show_as_html => params[:debug].present?
+      end
+    end
+  end
+
+  def interview_round_list
+    @interview_schedule = InterviewSchedule.find(params[:format])
+    @interview_rounds = InterviewRound.where(interview_schedule_id: @interview_schedule.id,employee_id: current_user.employee_id)
+  end
 
   private
 
@@ -223,6 +274,6 @@ end
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def interview_schedule_params
-    params.require(:interview_schedule).permit(:interviewer_name,:candidate_name2,:selected_resume_id, :candidate_name2, :employee_id, :interview_schedule_id, :reporting_master_id, :email_id, :candidate_name, :interview_date, :interview_time, :location, :schedule_comments, :post_title, :interview_type, :interview_status)
+    params.require(:interview_schedule).permit(:selected_resume_id, :employee_id, :interview_schedule_id, :email_id, :candidate_name, :interview_date, :location, :job_title)
   end
 end

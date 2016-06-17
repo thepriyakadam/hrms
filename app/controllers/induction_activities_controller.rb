@@ -48,7 +48,7 @@ class InductionActivitiesController < ApplicationController
         @induction_activity = InductionActivity.new
         flash[:notice] = 'Induction Activity saved Successfully.'
       end
-      redirect_to new_induction_activity_path(format: 1)
+      redirect_to new_induction_master_path
   end
 
    def update

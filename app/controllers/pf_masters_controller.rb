@@ -42,11 +42,9 @@ class PfMastersController < ApplicationController
   # PATCH/PUT /pf_masters/1
   # PATCH/PUT /pf_masters/1.json
   def update
-    @components = params[:components]
     respond_to do |format|
-      @pf_master.base_component = PfMaster.create_string(@components)
       if @pf_master.update(pf_master_params)
-        format.html { redirect_to @pf_master, notice: 'Pf master was successfully updated.' }
+        format.html { redirect_to pf_masters_path, notice: 'PF Master was successfully updated.' }
         format.json { render :show, status: :ok, location: @pf_master }
       else
         format.html { render :edit }

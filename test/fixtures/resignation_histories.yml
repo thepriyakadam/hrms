@@ -1,0 +1,39 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  employee_resignation_id: 
+  reporting_master_id: 
+  resignation_date: 2016-06-16
+  reason: MyString
+  is_notice_period: false
+  notice_period: MyString
+  short_notice_period: MyString
+  tentative_leaving_date: 2016-06-16
+  remark: MyText
+  exit_interview_date: 2016-06-16
+  note: MyText
+  leaving_date: 2016-06-16
+  settled_on: 2016-06-16
+  has_left: false
+  notice_served: false
+  rehired: false
+  leaving_reason_id: 1
+
+two:
+  employee_resignation_id: 
+  reporting_master_id: 
+  resignation_date: 2016-06-16
+  reason: MyString
+  is_notice_period: false
+  notice_period: MyString
+  short_notice_period: MyString
+  tentative_leaving_date: 2016-06-16
+  remark: MyText
+  exit_interview_date: 2016-06-16
+  note: MyText
+  leaving_date: 2016-06-16
+  settled_on: 2016-06-16
+  has_left: false
+  notice_served: false
+  rehired: false
+  leaving_reason_id: 1

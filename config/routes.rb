@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
 
+
+  resources :circulars
+
+  resources :salary_map_saps
+  resources :interview_rounds
+  resources :interview_types
   resources :employee_attendances
   resources :salary_comp_mappings
   resources :company_events
@@ -117,7 +123,11 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :exit_interviews
+  resources :exit_interviews  do
+    collection do
+      post :print_exit_interview
+    end
+  end
   resources :about_companies
   resources :about_bosses
   resources :question_masters
@@ -128,17 +138,29 @@ Rails.application.routes.draw do
   resources :employee_promotions do
     collection do
       get :collect_data
+      post :print_employee_promotion
+      get :promotion_history
+      get :employee_list
     end
   end
   resources :accident_masters
   resources :travel_expence_types
   resources :travel_modes
-  resources :interview_analyses
+  resources :interview_analyses do
+    collection do
+      post :print_interview_analysis_list
+    end
+  end
   resources :interview_decisions
   resources :interview_attributes
   resources :interview_evalutions
   resources :training_topic_masters
-  resources :employee_resignations
+
+  resources :employee_resignations do
+    collection do
+      get :employee_resignation_list
+      end
+  end
   resources :travel_options
   resources :training_plans
   resources :training_requests do
@@ -157,6 +179,8 @@ Rails.application.routes.draw do
     post :create_new
     get :modal
     post :offer_letter
+    get :modal_change_status
+    post :update_status
     end
   end 
   resources :assigned_assets
@@ -285,6 +309,11 @@ Rails.application.routes.draw do
       get :interviewee_list
       get :resume_list
       post :create_new
+      post :print_interviewee_list
+      get :all_interview_schedule_list
+      get :final_report
+      post :print_final_report
+      get :interview_round_list
     end
   end
   resources :vacancy_masters do
@@ -518,6 +547,8 @@ Rails.application.routes.draw do
   match 'capture_resumes/:id/download_photo/:id' => 'capture_resumes#download_photo', :via => [:get], :as => :download_photo
   match 'interview_schedules/:id/send_email_to_candidate/:id' => 'interview_schedules#send_email_to_candidate', :via => [:get], :as => :send_email_to_candidate
   match 'interview_schedules/:id/sample_email_to_interviewer/:id' => 'interview_schedules#sample_email_to_interviewer', :via => [:get], :as => :sample_email_to_interviewer
+
+  match 'circulars/:id/download_documents/:id' => 'circulars#download_documents', :via => [:get], :as => :download_documents
 
   resources :leave_c_offs
   resources :overtime_month_records

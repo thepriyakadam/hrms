@@ -85,8 +85,8 @@ class EmployeePromotionsController < ApplicationController
   end
 
   def print_employee_promotion
-      @employee_promotion = params[:employee_promotion_ids]
-      @employee_promotions = EmployeePromotion.where(id: @employee_promotion)
+      @employee = Employee.find(params[:id])
+      @employee_promotions = EmployeePromotion.where(employee_id: params[:id])
             respond_to do |format|
             format.html
             format.pdf do
@@ -106,6 +106,7 @@ class EmployeePromotionsController < ApplicationController
   end
 
   def promotion_history
+    @employee = Employee.find(params[:id])
     @employee_promotions = EmployeePromotion.where(employee_id: params[:id])
   end
 

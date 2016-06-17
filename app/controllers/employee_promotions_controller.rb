@@ -50,8 +50,8 @@ class EmployeePromotionsController < ApplicationController
   # PATCH/PUT /employee_promotions/1.json
   def update
     respond_to do |format|
-      if @employee_promotion.update(employee_promotion_params)
-        @employee_id = params[:employee_promotion][:employee_id]
+  if @employee_promotion.update(employee_promotion_params)
+    @employee_id = params[:employee_promotion][:employee_id]
     @department_id = params[:employee_promotion][:department_id]
     @employee_designation_id = params[:employee_promotion][:employee_designation_id]
     @employee_grade_id = params[:employee_promotion][:employee_grade_id]
@@ -82,6 +82,35 @@ class EmployeePromotionsController < ApplicationController
   def collect_data
     @employee = Employee.find(params[:employee_id])
     @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
+  end
+
+  def print_employee_promotion
+      @employee_promotion = params[:employee_promotion_ids]
+      @employee_promotions = EmployeePromotion.where(id: @employee_promotion)
+            respond_to do |format|
+            format.html
+            format.pdf do
+            render :pdf => 'print_employee_promotion',
+            layout: '/layouts/pdf.html.erb',
+            :template => 'employee_promotions/print_employee_promotion.pdf.erb',
+            :orientation      => 'Landscape', # default , Landscape
+            :page_height      => 1000,
+            :dpi              => '300',
+            :margin           => {:top    => 10, # default 10 (mm)
+                          :bottom => 10,
+                          :left   => 20,
+                          :right  => 20},
+            :show_as_html => params[:debug].present?
+          end
+        end
+  end
+
+  def promotion_history
+    @employee_promotions = EmployeePromotion.where(employee_id: params[:id])
+  end
+
+  def employee_list
+      @employees = Employee.all
   end
 
   private

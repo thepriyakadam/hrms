@@ -214,66 +214,83 @@ Rails.application.routes.draw do
       get :is_confirm
     end
   end
-  namespace :reports do
-  get 'monthly_expences_details/new'
-  end
+  
 
   namespace :reports do
-  get 'society_membership_details/new'
-  end
+    get 'monthly_expences_details/new'
 
-  namespace :reports do
-  get 'retention_money_details/new'
-  end
+    get 'society_membership_details/new'
 
-  namespace :reports do
-  get 'professional_tax_details/new'
-  post 'professional_tax_details/professional_tax_detail_report'
-  end
-
-  namespace :reports do
-  get 'welfare_details/new'
-  end
-
-  namespace :reports do
-    get 'overtime_salary_details/new'
-    post 'overtime_salary_details/overtime_montly_detail_report'
-  end
-
-  namespace :reports do
     get 'overtime_salary_details/daily'
     post 'overtime_salary_details/overtime_daily_detail_report'
 
-  end
-
-  namespace :reports do
     get 'food_deduction_details/new'
     post 'food_deduction_details/food_deduction_detail_report'
-  end
 
-  namespace :reports do
     get 'ctc_details/new'
     post 'ctc_details/ctc_detail_report'
-  end
 
-  namespace :reports do
+    get 'overtime_salary_details/new'
+    post 'overtime_salary_details/overtime_montly_detail_report'
+
+    get 'professional_tax_details/new'
+    post 'professional_tax_details/professional_tax_detail_report'
+
+    get 'retention_money_details/new'
+
+    get 'welfare_details/new'
+
     get 'esic_details/new'
     post 'esic_details/esic_detail_report'
-  end
 
-  namespace :reports do
     get 'pf_details/new'
     post 'pf_details/pf_detail_report'
-  end
 
-  namespace :reports do
     get 'instalment_details/new'
     post 'instalment_details/instalment_detail_report'
-  end
 
-  namespace :reports do
     get 'advance_salaries/new'
     post 'advance_salaries/advance_salary_report'
+
+    get 'family_details/new'
+    post 'family_details/family_detail_report'
+ 
+    get 'physical_details/new'
+    post 'physical_details/physical_detail_report'
+ 
+    get 'award_details/new'
+    post 'award_details/award_detail_report'
+ 
+    get 'certification_details/new'
+    post 'certification_details/certification_detail_report'
+  
+    get 'skillset_details/new'
+    post 'skillset_details/skillset_detail_report'
+ 
+    get 'experience_details/new'
+    post 'experience_details/experience_detail_report'
+  
+    get 'qualification_details/new'
+    post 'qualification_details/qualification_detail_report'
+  
+    get 'bank_details/new'
+    post 'bank_details/bank_detail_report'
+
+    get 'joining_details/new'
+    post 'joining_details/joining_detail_report'
+    get 'joining_details/collect_departments'
+
+    get 'basic_details/new'
+    post 'basic_details/employee_basic_report'
+    get 'basic_details/collect_departments'
+    get 'basic_details/employee_list'
+
+    get 'salaries/new'
+    post 'salaries/date_range_report'
+    get 'salaries/download'
+    
+    post 'salaries/ctc_yearly_report'
+    get 'salaries/ctc_yearly'
   end
 
   namespace :views do
@@ -357,62 +374,6 @@ Rails.application.routes.draw do
       get :advance
       get :attendance
     end
-  end
-
-  namespace :reports do
-    get 'family_details/new'
-    post 'family_details/family_detail_report'
-  end
-
-  namespace :reports do
-    get 'physical_details/new'
-    post 'physical_details/physical_detail_report'
-  end
-
-  namespace :reports do
-    get 'award_details/new'
-    post 'award_details/award_detail_report'
-  end
-
-  namespace :reports do
-    get 'certification_details/new'
-    post 'certification_details/certification_detail_report'
-  end
-
-  namespace :reports do
-    get 'skillset_details/new'
-    post 'skillset_details/skillset_detail_report'
-  end
-
-  namespace :reports do
-    get 'experience_details/new'
-    post 'experience_details/experience_detail_report'
-  end
-
-  namespace :reports do
-    get 'qualification_details/new'
-    post 'qualification_details/qualification_detail_report'
-  end
-
-  namespace :reports do
-    get 'bank_details/new'
-    post 'bank_details/bank_detail_report'
-  end
-
-  namespace :reports do
-  get 'joining_details/new'
-  post 'joining_details/joining_detail_report'
-  get 'joining_details/collect_departments'
-  end
-
-  namespace :reports do
-  get 'basic_details/new'
-  post 'basic_details/employee_basic_report'
-  get 'basic_details/collect_departments'
-  get 'basic_details/employee_list'
-  end
-
-  namespace :reports do
   end
 
   resources :accident_records do
@@ -627,20 +588,7 @@ Rails.application.routes.draw do
     end
   end
   resources :retention_moneys
-  namespace :reports do
-    get 'salaries/new'
-    post 'salaries/date_range_report'
-    get 'salaries/download'
-    # post 'salaries/department_wise'
-    # get 'salaries/show'
-    post 'salaries/ctc_yearly_report'
-    get 'salaries/ctc_yearly'
-    # post 'employee_reports/basic_detail_report'
-    # get 'employee_reports/show'
-    # post 'basic_detail/basic_detail_report'
-    # get 'basic_detail/new'
-  end
-
+ 
   resources :payment_modes
   resources :excel_exports do
     collection do

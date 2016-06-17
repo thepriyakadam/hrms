@@ -1,16 +1,4 @@
 <%= form_for(@employee_attendance) do |f| %>
-  <% if @employee_attendance.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@employee_attendance.errors.count, "error") %> prohibited this employee_attendance from being saved:</h2>
-
-      <ul>
-      <% @employee_attendance.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
   <div class="field">
     <%= f.label :employee_id %><br>
     <%= f.text_field :employee_id %>

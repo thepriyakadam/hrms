@@ -277,7 +277,7 @@ class VacancyMastersController < ApplicationController
   #     @vacancy_master = VacancyMaster.find(params[:format])
   # end
   
-
+￼
   def cancel_vacancy_request
     @vacancy_master = VacancyMaster.find(params[:format])
     len = @vacancy_master.no_of_position

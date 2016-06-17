@@ -1,17 +1,8 @@
 <div class="box">
   <div class="box-header">
-    <h3 class="box-title">Employee Promotion History</h3>  
+    Promotion History of <%= @employee_promotions.first.try(:employee).try(:manual_employee_code) %> <%= full_name(@employee_promotions.first.try(:employee)) %>
   </div><!-- /.box-header -->
-  <div class="box-header with-border">
-
-  <h6 class="box-title"> Employee Name: <%= full_name(@employee_promotions.first.try(:employee)) %></h6>
-  
-    <div class="pull-right"></div>
-  </div>
-   <div class="box-header with-border">
-  
-    <div class="pull-right"></div>
-  </div><!-- /.box-header -->
+ 
   <div class="box-body">
     <table id="example2" class="table table-bordered table-hover table-condensed">
     <thead>
@@ -44,4 +35,3 @@
   </table>
   </div>
   </div>
- 

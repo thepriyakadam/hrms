@@ -1,0 +1,125 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Resignation Confirmation List</h3>
+    <div class="pull-right">
+    </div>
+    </div>
+<div class="box-body">
+<table id="example" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Employee ID</th>
+      <th>Resignation Date</th>
+      <th>Reason</th>
+      <th>Is Notice Period</th>
+      <th>Notice period</th>
+      <th>Short notice period</th>
+      <th>Tentative leaving date</th>
+    </tr>
+  </thead>
+
+  <tbody>
+      <% @employee_resignations.each do |employee_resignation| %>
+      <tr>
+        <td><%= employee_resignation.employee.first_name+' '+employee_resignation.employee.middle_name+' '+employee_resignation.employee.last_name %></td>
+        <td><%= employee_resignation.resignation_date %></td>
+        <td><%= employee_resignation.reason %></td>
+        <td><%= employee_resignation.is_notice_period %></td>
+        <td><%= employee_resignation.notice_period %></td>
+        <td><%= employee_resignation.short_notice_period %></td>
+        <td><%= employee_resignation.tentative_leaving_date %></td>
+      </tr>
+      <% end %>
+  </tbody>
+</table>
+  <div class="box-header">
+    <h3 class="box-title">Employee Resignation Details</h3>
+    <div class="pull-right">
+    </div>
+  </div>
+<div>
+<table id="example" class="table table-bordered table-hover table-condensed">
+  <tbody>
+    <tr>
+      <td><b>Employee ID</b></td>
+      <td><%= @employee_resignation.id %></td>
+    </tr>
+    <tr>
+      <td><b>Resignation Date</b></td>
+      <td><%= @employee_resignation.resignation_date %></td>
+    </tr>
+    <tr>
+      <td><b>Reason</b></td>
+      <td><%= @employee_resignation.reason %></td>
+    </tr>
+    <tr>
+      <td><b>Is Notice Period</b></td>
+      <td><%= @employee_resignation.is_notice_period %></td>
+    </tr>
+    <tr>
+      <td><b>Notice period</b></td>
+      <td><%= @employee_resignation.notice_period %></td>
+    </tr>
+    <tr>
+      <td><b>Short notice period</b></td>
+      <td><%= @employee_resignation.short_notice_period %></td>
+    </tr>
+    <tr>
+      <td><b>Tentative leaving date</b></td>
+      <td><%= @employee_resignation.tentative_leaving_date %></td>
+    </tr>
+    <tr>
+      <td><b>Remark</b></td>
+      <td><%= @employee_resignation.remark %></td>
+    </tr>
+    <tr>
+      <td><b>Exit interview date</b></td>
+      <td><%= @employee_resignation.exit_interview_date %></td>
+    </tr>
+    <tr>
+      <td><b>Note</b></td>
+      <td><%= @employee_resignation.note %></td>
+    </tr>
+    <tr>
+      <td><b>Leaving date</b></td>
+      <td><%= @employee_resignation.leaving_date %></td>
+    </tr>
+    <tr>
+      <td><b>Settled on</b></td>
+      <td><%= @employee_resignation.settled_on %></td>
+    </tr>
+    <tr>
+      <td><b>Has left</b></td>
+      <td><%= @employee_resignation.has_left %></td>
+    </tr>
+    <tr>
+      <td><b>Notice served</b></td>
+      <td><%= @employee_resignation.notice_served %></td>
+    </tr>
+    <tr>
+      <td><b>Rehired</b></td>
+      <td><%= @employee_resignation.rehired %></td>
+    </tr>
+    
+  </tbody>
+</table>
+
+<%= link_to 'Approve',employee_resignation_confirmation_employee_resignations_path(@employee_resignation),class: 'btn btn-sm btn-primary fa fa-check' %> | 
+
+
+
+
+   
+    </div>
+</div>
+</div>
+
+
+
+
+
+<script>
+$(document).ready(function() {
+    $('#example').DataTable();
+} );
+</script>

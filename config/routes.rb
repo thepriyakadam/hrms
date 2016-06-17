@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
 
+
   resources :circulars
+
   resources :salary_map_saps
   resources :interview_rounds
   resources :interview_types
@@ -121,7 +123,11 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :exit_interviews
+  resources :exit_interviews  do
+    collection do
+      post :print_exit_interview
+    end
+  end
   resources :about_companies
   resources :about_bosses
   resources :question_masters
@@ -149,7 +155,12 @@ Rails.application.routes.draw do
   resources :interview_attributes
   resources :interview_evalutions
   resources :training_topic_masters
-  resources :employee_resignations
+
+  resources :employee_resignations do
+    collection do
+      get :employee_resignation_list
+      end
+  end
   resources :travel_options
   resources :training_plans
   resources :training_requests do

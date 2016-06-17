@@ -17,6 +17,7 @@ class EmployeeResignationsController < ApplicationController
   def new
     @employee_resignation = EmployeeResignation.new
     session[:active_tab] ="employeeresignation"
+    
   end
 
   # GET /employee_resignations/1/edit
@@ -59,6 +60,11 @@ class EmployeeResignationsController < ApplicationController
     end
   end
 
+  def employee_resignation_list
+     @employee_resignations = EmployeeResignation.all
+     session[:active_tab] ="employeeresignation"
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_employee_resignation
@@ -67,6 +73,6 @@ class EmployeeResignationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def employee_resignation_params
-      params.require(:employee_resignation).permit(:employee_id, :resignation_date, :reason, :is_notice_period, :notice_period, :short_notice_period, :tentative_leaving_date, :remark, :exit_interview_date, :note, :leaving_date, :settled_on, :has_left, :notice_served, :rehired)
+      params.require(:employee_resignation).permit(:employee_id, :reporting_master_id, :resignation_date, :reason, :is_notice_period, :notice_period, :short_notice_period, :tentative_leaving_date, :remark, :exit_interview_date, :note, :leaving_date, :settled_on, :has_left, :notice_served, :rehired)
     end
 end

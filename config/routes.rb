@@ -138,9 +138,10 @@ Rails.application.routes.draw do
   resources :employee_promotions do
     collection do
       get :collect_data
-      post :print_employee_promotion
       get :promotion_history
       get :employee_list
+      get :print_promotion_excel
+      get :print_employee_promotion
     end
   end
   resources :accident_masters
@@ -300,6 +301,9 @@ Rails.application.routes.draw do
 
     get 'pdf_salaries/excel_report'
     post 'pdf_salaries/print_salary_slip_excel'
+
+    get 'employee_promotions/promotion_history'
+    post 'employee_promotions/print_promotion_excel'
 
   end
 

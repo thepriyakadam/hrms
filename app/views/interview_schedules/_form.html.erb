@@ -74,3 +74,45 @@
     dateFormat: 'dd-mm-yy' });
   }); 
 </script>
+<script>
+$("#interview_schedule").validate({
+    rules: {
+      "interview_schedule[interviewer_name]":{
+        required: true
+              },
+      "interview_schedule[employee_id]":{
+        required: true
+      },
+      "interview_schedule[candidate_name]":{
+        required: true
+      },
+      "interview_schedule[location]":{
+        required: true
+      },
+      "interview_schedule[interview_type]":{
+        required: true
+      }
+    },
+    messages: {
+      "interview_schedule[name]":{
+        required: "Please specify Name"
+      },
+      "interview_schedule[employee_id]":{
+        required: "Please specify Employee Name"
+      },
+      "interview_schedule[candidate_name]":{
+        required: "Please specify Candidate Name"
+      },
+      "interview_schedule[location]":{
+        required: "Please specify Location"
+      },
+      "interview_schedule[interview_type]":{
+        required: "Please specify Interview Type"
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

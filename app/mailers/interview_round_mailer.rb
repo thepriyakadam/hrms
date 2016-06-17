@@ -5,7 +5,7 @@ class InterviewRoundMailer < ApplicationMailer
   	  @interview_round = InterviewRound.find(interview_round.id)
   	  @employee = Employee.find(@interview_round.employee_id)
   	  @interview_schedule = InterviewSchedule.find(interview_round.interview_schedule_id)
-  	  attachments.inline['logo1.jpg'] = File.read("#{Rails.root}/app/assets/images/logo.png")
+  	  # attachments.inline['logo1.jpg'] = File.read("#{Rails.root}/app/assets/images/logo.png")
       mail(to: @employee.email, subject: 'Interview Schedule')
   end
 

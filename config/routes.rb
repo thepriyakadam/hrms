@@ -138,6 +138,9 @@ Rails.application.routes.draw do
   resources :employee_promotions do
     collection do
       get :collect_data
+      post :print_employee_promotion
+      get :promotion_history
+      get :employee_list
     end
   end
   resources :accident_masters

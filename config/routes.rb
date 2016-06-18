@@ -123,11 +123,19 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :overall_ratings do
+    collection do 
+      get :modal_self
+      patch :update_modal_self
+    end
+  end
+ 
   resources :exit_interviews  do
     collection do
       post :print_exit_interview
     end
   end
+
   resources :about_companies
   resources :about_bosses
   resources :question_masters

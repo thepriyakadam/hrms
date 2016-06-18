@@ -27,7 +27,4 @@ class EmployeeResignationMailer < ApplicationMailer
      end
 
 
-
-
-
 end

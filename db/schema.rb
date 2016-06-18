@@ -422,6 +422,24 @@ ActiveRecord::Schema.define(version: 20160617104631) do
 
   add_index "custom_auto_increments", ["counter_model_name"], name: "index_custom_auto_increments_on_counter_model_name"
 
+  create_table "daily_bill_detail_histories", force: :cascade do |t|
+    t.integer  "daily_bill_detail_id"
+    t.integer  "travel_expence_type_id"
+    t.string   "expence_date"
+    t.string   "date"
+    t.string   "e_place"
+    t.string   "string"
+    t.string   "travel_expence"
+    t.string   "decimal"
+    t.string   "is_confirm"
+    t.string   "boolean"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "daily_bill_detail_histories", ["daily_bill_detail_id"], name: "index_daily_bill_detail_histories_on_daily_bill_detail_id"
+  add_index "daily_bill_detail_histories", ["travel_expence_type_id"], name: "index_daily_bill_detail_histories_on_travel_expence_type_id"
+
   create_table "daily_bill_details", force: :cascade do |t|
     t.integer  "travel_request_id"
     t.date     "expence_date"
@@ -833,7 +851,7 @@ ActiveRecord::Schema.define(version: 20160617104631) do
     t.text     "task_name"
     t.date     "task_date"
     t.boolean  "status"
-    t.string   "time"
+    t.time     "task_time"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
@@ -1517,6 +1535,35 @@ ActiveRecord::Schema.define(version: 20160617104631) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
+
+  create_table "overall_ratings", force: :cascade do |t|
+    t.integer  "goal_rating_sheet_id"
+    t.integer  "employee_id"
+    t.integer  "ro1_id"
+    t.integer  "ro2_id"
+    t.integer  "final_id"
+    t.integer  "ro1_rating_id"
+    t.text     "ro1_comment"
+    t.integer  "ro2_rating_id"
+    t.text     "ro2_comment"
+    t.integer  "final_rating_id"
+    t.text     "final_comment"
+    t.boolean  "promotion"
+    t.decimal  "increement_amount"
+    t.decimal  "final_ctc"
+    t.text     "appraisee_comment"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
+  add_index "overall_ratings", ["employee_id"], name: "index_overall_ratings_on_employee_id"
+  add_index "overall_ratings", ["final_id"], name: "index_overall_ratings_on_final_id"
+  add_index "overall_ratings", ["final_rating_id"], name: "index_overall_ratings_on_final_rating_id"
+  add_index "overall_ratings", ["goal_rating_sheet_id"], name: "index_overall_ratings_on_goal_rating_sheet_id"
+  add_index "overall_ratings", ["ro1_id"], name: "index_overall_ratings_on_ro1_id"
+  add_index "overall_ratings", ["ro1_rating_id"], name: "index_overall_ratings_on_ro1_rating_id"
+  add_index "overall_ratings", ["ro2_id"], name: "index_overall_ratings_on_ro2_id"
+  add_index "overall_ratings", ["ro2_rating_id"], name: "index_overall_ratings_on_ro2_rating_id"
 
   create_table "overtime_daily_records", force: :cascade do |t|
     t.integer  "employee_id"
@@ -2243,6 +2290,7 @@ ActiveRecord::Schema.define(version: 20160617104631) do
     t.integer  "degree_id"
     t.string   "experience"
     t.string   "keyword"
+    t.string   "others"
     t.string   "other_organization"
     t.string   "industry"
     t.integer  "degree_1_id"

@@ -51,7 +51,7 @@ class EmployeeResignationsController < ApplicationController
       if @employee_resignation.save
         
         ReportingMastersResign.create(reporting_master_id: @employee_resignation.reporting_master_id, employee_resignation_id: @employee_resignation.id,resignation_status: @employee_resignation.resign_status)
-        EmployeeResignationMailer.resignation_request(@employee_resignation).deliver_now
+        EmployeeResignationMailer.send_email_to_reporting_manager(@employee_resignation).deliver_now
         format.html { redirect_to @employee_resignation, notice: 'Employee Resignation created successfully.' }
         format.json { render :show, status: :created, location: @employee_resignation }
       else
@@ -89,7 +89,30 @@ class EmployeeResignationsController < ApplicationController
   def resignation_history
      @employee_resignations = EmployeeResignation.where("reporting_master_id = ? and (resign_status = ? or resign_status = ?)",current_user.employee_id,"Pending","Approved & Send Next")
   end
+  
+  def resignation_history
+     @employee_resignations = EmployeeResignation.where("reporting_master_id = ? and (resign_status = ? or resign_status = ?)",current_user.employee_id,"Pending","Approved & Send Next")
+  end
 
+  def employee_resignation_confirmation
+        @employee_resignation = EmployeeResignation.find(params[:format])
+        @employee_resignations = EmployeeResignation.where(reporting_master_id: current_user.employee_id)
+  end
+  
+  def approve_resignation
+    @employee_resignation = EmployeeResignation.find(params[:format])
+    @employee_resignation.update(resign_status: "Approved")
+    ReportingMastersEmployeeResignation.create(employee_resignation_id: @employee_resignation.id, reporting_master_id: current_user.employee_id, resign_status: "Approved")
+   
+   EmployeeResignationMailer.approve_vacancy_email(@employee_resignation).deliver_now
+    flash[:notice] = 'Employee Resignation Approved'
+    redirect_to resignation_history_employee_resignations_path 
+
+    end
+
+
+
+<<<<<<< HEAD
   def employee_resignation_confirmation
     @employee_resignation = EmployeeResignation.find(params[:format])
     @employee_resignations = EmployeeResignation.where(reporting_master_id: current_user.employee_id)
@@ -137,6 +160,8 @@ class EmployeeResignationsController < ApplicationController
 
 
 
+=======
+>>>>>>> 63b27a2b3dcfe93674aa6b2a44fc08e17508b23a
     private
     # Use callbacks to share common setup or constraints between actions.
     def set_employee_resignation

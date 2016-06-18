@@ -164,7 +164,9 @@ class VacancyMastersController < ApplicationController
     @vacancy_master = VacancyMaster.find(params[:format])
   end
 
+
   def send_request_to_higher_authority
+    puts ".................."
     @vacancy_master = VacancyMaster.find(params[:id])
     @particular_vacancy_requests = ParticularVacancyRequest.where(vacancy_master_id: @vacancy_master.id)
     # len = @vacancy_master.no_of_position
@@ -277,7 +279,7 @@ class VacancyMastersController < ApplicationController
   #     @vacancy_master = VacancyMaster.find(params[:format])
   # end
   
-￼
+
   def cancel_vacancy_request
     @vacancy_master = VacancyMaster.find(params[:format])
     len = @vacancy_master.no_of_position
@@ -352,10 +354,12 @@ class VacancyMastersController < ApplicationController
 
   
   def modal2  
+    puts "--------------------"
     @particular_vacancy_request = ParticularVacancyRequest.find(params[:format])
   end
 
   def confirm_candidate
+      puts "-----------------"
       # byebug
       # @vacancy_master = VacancyMaster.find(params[:id])
       @particular_vacancy_request = ParticularVacancyRequest.find(params[:id])
@@ -371,6 +375,7 @@ class VacancyMastersController < ApplicationController
   end
 
   def update_vacancy_details
+     puts "---------------"
      # @particular_vacancy_requests = ParticularVacancyRequest.where(vacancy_master_id: @vacancy_master.id)
      @vacancy_master = VacancyMaster.find(params[:id])
      @vacancy_request_history = VacancyRequestHistory.new(vacancy_request_history_params)

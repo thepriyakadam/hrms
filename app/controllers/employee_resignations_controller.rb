@@ -16,8 +16,7 @@ class EmployeeResignationsController < ApplicationController
   # GET /employee_resignations/new
   def new
     @employee_resignation = EmployeeResignation.new
-    session[:active_tab] ="employeeresignation"
-    
+    session[:active_tab] ="resignationmanagement"  
   end
 
   # GET /employee_resignations/1/edit
@@ -67,9 +66,9 @@ class EmployeeResignationsController < ApplicationController
   def update
     @employee_resignation.update(employee_resignation_params)
     @employee_resignations = EmployeeResignation.all
-     @employee_resignation = EmployeeResignation.new
-     flash[:notice]= "Updated successfully"
-     redirect_to employee_resignations_path
+    @employee_resignation = EmployeeResignation.new
+    flash[:notice]= "Updated successfully"
+    redirect_to employee_resignations_path
   end
 
   # DELETE /employee_resignations/1
@@ -84,7 +83,11 @@ class EmployeeResignationsController < ApplicationController
 
   def employee_resignation_list
      @employee_resignations = EmployeeResignation.all
-     session[:active_tab] ="employeeresignation"
+     session[:active_tab] ="resignationmanagement"
+  end
+  
+  def resignation_history
+     @employee_resignations = EmployeeResignation.where("reporting_master_id = ? and (resign_status = ? or resign_status = ?)",current_user.employee_id,"Pending","Approved & Send Next")
   end
   
   def resignation_history
@@ -106,6 +109,52 @@ class EmployeeResignationsController < ApplicationController
     redirect_to resignation_history_employee_resignations_path 
 
     end
+
+
+  def employee_resignation_confirmation
+    @employee_resignation = EmployeeResignation.find(params[:format])
+    @employee_resignations = EmployeeResignation.where(reporting_master_id: current_user.employee_id)
+  end
+
+  def approve_resignation
+    @employee_resignation = EmployeeResignation.find(params[:format])
+    @employee_resignation.update(resign_status: "Approved")
+    EmployeeResignationMailer.approve_resignation_email(@employee_resignation).deliver_now
+    ReportingMastersResign.create(employee_resignation_id: @employee_resignation.id, reporting_master_id: current_user.employee_id, resignation_status: "Approved")
+    flash[:notice] = 'Employee Resignation Approved Successfully'
+    redirect_to resignation_history_employee_resignations_path
+  end
+
+  def reject_employee_resignation
+    @employee_resignation = EmployeeResignation.find(params[:format])
+    @employee_resignation.update(resign_status: "Rejected")
+    EmployeeResignationMailer.reject_resignation_email(@employee_resignation).deliver_now
+    ReportingMastersResign.create(employee_resignation_id: @employee_resignation.id, reporting_master_id: current_user.employee_id, resignation_status: "Rejected")
+    flash[:alert] = 'Resignation Request Rejected'
+    redirect_to resignation_history_employee_resignations_path
+  end
+
+  def send_request_to_higher_authority
+    puts ".................."
+    @employee_resignation = EmployeeResignation.find(params[:id])
+    @employee_resignation.update(resign_status: "Approved & Send Next",reporting_master_id: params[:employee_resignation][:reporting_master_id])
+    ReportingMastersResign.create(employee_resignation_id: @employee_resignation.id, reporting_master_id: params[:employee_resignation][:reporting_master_id], resignation_status: "Approved & Send Next")
+    flash[:notice] = 'Resignation Details Send to Higher Authority For Approval'
+    redirect_to resignation_history_employee_resignations_path
+  end
+
+  def cancel_resignation_request
+     @employee_resignation = EmployeeResignation.find(params[:format])
+     @employee_resignation.update(resign_status: "Cancelled")
+     ReportingMastersResign.create(employee_resignation_id: @employee_resignation.id, reporting_master_id: current_user.employee_id, resignation_status: "Cancelled")
+     flash[:notice] = 'Vacancy Request Cancelled'
+    redirect_to employee_resignations_path
+  end
+
+  def modal
+    @employee_resignation = EmployeeResignation.find(params[:format])
+  end
+
 
 
 

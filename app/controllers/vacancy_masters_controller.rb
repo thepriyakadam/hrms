@@ -164,7 +164,9 @@ class VacancyMastersController < ApplicationController
     @vacancy_master = VacancyMaster.find(params[:format])
   end
 
+
   def send_request_to_higher_authority
+    puts ".................."
     @vacancy_master = VacancyMaster.find(params[:id])
     @particular_vacancy_requests = ParticularVacancyRequest.where(vacancy_master_id: @vacancy_master.id)
     # len = @vacancy_master.no_of_position
@@ -198,7 +200,7 @@ class VacancyMastersController < ApplicationController
 
   def reject_vacancy
     @vacancy_master = VacancyMaster.find(params[:format])
-    @vacancy_master.update(current_status: "Rejected")
+    # @vacancy_master.update(current_status: "Approved")
     ReportingMastersVacancyMaster.create(vacancy_master_id: @vacancy_master.id, reporting_master_id: current_user.employee_id, vacancy_status: "Approved")
     VacancyRequestHistory.create(vacancy_master_id: @vacancy_master.id, vacancy_name: @vacancy_master.vacancy_name,no_of_position: @vacancy_master.no_of_position,description: @vacancy_master.description,vacancy_post_date: @vacancy_master.vacancy_post_date,budget: @vacancy_master.budget,department_id: @vacancy_master.department_id,employee_designation_id: @vacancy_master.employee_designation_id,company_location_id: @vacancy_master.company_location_id,degree_id: @vacancy_master.degree_id,degree_1_id: @vacancy_master.degree_1_id,degree_2_id: @vacancy_master.degree_2_id,experience: @vacancy_master.experience,keyword: @vacancy_master.keyword,other_organization: @vacancy_master.other_organization,industry: @vacancy_master.industry,reporting_master_id: @vacancy_master.reporting_master_id,current_status: @vacancy_master.current_status,employee_id: @vacancy_master.employee_id,justification: @vacancy_master.justification,current_status: "Rejected")
     # @vacancy_master.no_of_position.times do 
@@ -218,6 +220,7 @@ class VacancyMastersController < ApplicationController
     flash[:alert] = 'Vacancy Request Rejected'
     redirect_to vacancy_history_vacancy_masters_path
   end
+
 
   # def approve_vacancy
   #   @vacancy_master = VacancyMaster.find(params[:format])
@@ -276,7 +279,7 @@ class VacancyMastersController < ApplicationController
   #     @vacancy_master = VacancyMaster.find(params[:format])
   # end
   
-￼
+
   def cancel_vacancy_request
     @vacancy_master = VacancyMaster.find(params[:format])
     len = @vacancy_master.no_of_position
@@ -351,10 +354,12 @@ class VacancyMastersController < ApplicationController
 
   
   def modal2  
+    puts "--------------------"
     @particular_vacancy_request = ParticularVacancyRequest.find(params[:format])
   end
 
   def confirm_candidate
+      puts "-----------------"
       # byebug
       # @vacancy_master = VacancyMaster.find(params[:id])
       @particular_vacancy_request = ParticularVacancyRequest.find(params[:id])
@@ -370,6 +375,7 @@ class VacancyMastersController < ApplicationController
   end
 
   def update_vacancy_details
+     puts "---------------"
      # @particular_vacancy_requests = ParticularVacancyRequest.where(vacancy_master_id: @vacancy_master.id)
      @vacancy_master = VacancyMaster.find(params[:id])
      @vacancy_request_history = VacancyRequestHistory.new(vacancy_request_history_params)

@@ -25,6 +25,7 @@ class VacancyMastersController < ApplicationController
   end
 
 
+
   # GET /vacancy_masters/1
   # GET /vacancy_masters/1.json
   def show

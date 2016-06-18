@@ -172,6 +172,10 @@ Rails.application.routes.draw do
       get :resignation_history
       get :employee_resignation_confirmation
       get :approve_resignation
+      get :reject_employee_resignation
+      post :send_request_to_higher_authority
+      get :modal
+      get :cancel_resignation_request
   end
 end
   resources :travel_options

@@ -111,8 +111,6 @@ class EmployeeResignationsController < ApplicationController
     end
 
 
-
-<<<<<<< HEAD
   def employee_resignation_confirmation
     @employee_resignation = EmployeeResignation.find(params[:format])
     @employee_resignations = EmployeeResignation.where(reporting_master_id: current_user.employee_id)
@@ -160,8 +158,6 @@ class EmployeeResignationsController < ApplicationController
 
 
 
-=======
->>>>>>> 63b27a2b3dcfe93674aa6b2a44fc08e17508b23a
     private
     # Use callbacks to share common setup or constraints between actions.
     def set_employee_resignation

@@ -11,6 +11,14 @@
           <%= f.select :goal_perspective_id,all_goal_perspective,{hide_label:true, include_blank: 'Select Goal'}  %>
         </div>
       </div>
+
+      <div class="col-sm-3">
+      <label>Attribute</label>
+        <div class="form-group required">
+          <%= f.select :attribute_id,all_attribute_type,{hide_label:true, include_blank: 'Select Attribute'}  %>
+        </div>
+      </div>
+
       <div class="col-sm-3">
       <label>Goal Weightage</label>
         <div class="form-group required">
@@ -23,14 +31,16 @@
           <%= f.text_field :goal_measure,hide_label:true,placeholder: 'Goal Measure'  %>
         </div>
       </div>
+      </div>
+
+    <div class="row">
       <div class="col-sm-3">
       <label>Target</label>
         <div class="form-group required">
           <%= f.text_field :target,hide_label:true,placeholder: 'Target/Unit'  %>
         </div>
       </div>
-    </div>
-    <div class="row">
+
       <div class="col-sm-3">
         <div class="field">
           <%= f.select :aligned,["Yes","No"],{label: 'Aligned To Supervisor',include_blank: "Select Option"} %>

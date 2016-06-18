@@ -654,6 +654,7 @@ class GoalBunchesController < ApplicationController
     @experiences = Experience.where(employee_id: @employee.id)
     @ctc = EmployeeSalaryTemplate.where(employee_id: @employee.id).sum(:monthly_amount)
 
+    @employee_promotions = EmployeePromotion.where(employee_id: @employee.id)
     @goal_ratings = GoalRating.where(appraisee_id: @employee.id,goal_bunch_id: @goal_bunch.id)
     @goal_bunches = GoalBunch.where(employee_id: @employee.id,id: @goal_bunch.id)                                 
   end
@@ -662,6 +663,7 @@ class GoalBunchesController < ApplicationController
     @employee = Employee.find(params[:emp_id])
     @goal_bunch = GoalBunch.find(params[:id])
 
+    #@employee_promotions = EmployeePromotion.where(employee_id: @employee.id)
     @employees = Employee.where(id: @employee.id)
     @qualifications = Qualification.where(employee_id: @employee.id)
     @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)

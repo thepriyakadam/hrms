@@ -43,6 +43,8 @@ class CircularsController < ApplicationController
     @circular.update(circular_params)
     @circulars = Circular.all
     @circular = Circular.new
+    redirect_to new_circular_path
+    flash[:notice] = 'Circular was Updated Successfully'   
   end
 
   # DELETE /circulars/1

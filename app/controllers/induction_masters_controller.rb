@@ -73,6 +73,7 @@ class InductionMastersController < ApplicationController
     @induction_master.update(induction_master_params)
     @induction_masters = InductionMaster.all
     @induction_master = InductionMaster.new
+    redirect_to new_induction_master_path
   end
 
   # DELETE /induction_masters/1

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160617104631) do
+ActiveRecord::Schema.define(version: 20160618095321) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -168,6 +168,15 @@ ActiveRecord::Schema.define(version: 20160617104631) do
   add_index "attribute_rating_sheets", ["employee_attribute_id"], name: "index_attribute_rating_sheets_on_employee_attribute_id"
   add_index "attribute_rating_sheets", ["final_id_id"], name: "index_attribute_rating_sheets_on_final_id_id"
   add_index "attribute_rating_sheets", ["final_rating_id"], name: "index_attribute_rating_sheets_on_final_rating_id"
+
+  create_table "attributes", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
+    t.text     "definition"
+    t.boolean  "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "awards", force: :cascade do |t|
     t.integer  "employee_id"
@@ -1143,11 +1152,13 @@ ActiveRecord::Schema.define(version: 20160617104631) do
     t.text     "reviewer_comment"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
+    t.integer  "attribute_id"
   end
 
   add_index "goal_ratings", ["appraisee_id"], name: "index_goal_ratings_on_appraisee_id"
   add_index "goal_ratings", ["appraiser_id"], name: "index_goal_ratings_on_appraiser_id"
   add_index "goal_ratings", ["appraiser_rating_id"], name: "index_goal_ratings_on_appraiser_rating_id"
+  add_index "goal_ratings", ["attribute_id"], name: "index_goal_ratings_on_attribute_id"
   add_index "goal_ratings", ["goal_bunch_id"], name: "index_goal_ratings_on_goal_bunch_id"
   add_index "goal_ratings", ["goal_perspective_id"], name: "index_goal_ratings_on_goal_perspective_id"
   add_index "goal_ratings", ["goal_setter_id"], name: "index_goal_ratings_on_goal_setter_id"

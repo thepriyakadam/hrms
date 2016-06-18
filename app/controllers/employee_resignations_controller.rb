@@ -26,17 +26,39 @@ class EmployeeResignationsController < ApplicationController
 
   # POST /employee_resignations
   # POST /employee_resignations.json
+
+  # def create
+  #   @employee_resignation = EmployeeResignation.new(employee_resignation_params)
+      
+  #      flash[:notice]= "Email Sent Successfully"
+  #     if @employee_resignation.save
+        
+
+  #        redirect_to employee_resignations_path
+        
+  #     else
+  #        render :new 
+
+        
+  #   end
+  # end
+
   def create
     @employee_resignation = EmployeeResignation.new(employee_resignation_params)
-
     
+    @employee_resignation.resign_status = "Pending"
+ 
+    respond_to do |format|
       if @employee_resignation.save
-         redirect_to employee_resignations_path
         
+        ReportingMastersResign.create(reporting_master_id: @employee_resignation.reporting_master_id, employee_resignation_id: @employee_resignation.id,resignation_status: @employee_resignation.resign_status)
+        EmployeeResignationMailer.send_email_to_reporting_manager(@employee_resignation).deliver_now
+        format.html { redirect_to @employee_resignation, notice: 'Employee Resignation created successfully.' }
+        format.json { render :show, status: :created, location: @employee_resignation }
       else
-         render :new 
-
-        
+        format.html { render :new }
+        format.json { render json: @employee_resignation.errors, status: :unprocessable_entity }
+      end
     end
   end
 
@@ -64,8 +86,30 @@ class EmployeeResignationsController < ApplicationController
      @employee_resignations = EmployeeResignation.all
      session[:active_tab] ="employeeresignation"
   end
+  
+  def resignation_history
+     @employee_resignations = EmployeeResignation.where("reporting_master_id = ? and (resign_status = ? or resign_status = ?)",current_user.employee_id,"Pending","Approved & Send Next")
+  end
 
-  private
+  def employee_resignation_confirmation
+        @employee_resignation = EmployeeResignation.find(params[:format])
+        @employee_resignations = EmployeeResignation.where(reporting_master_id: current_user.employee_id)
+  end
+  
+  def approve_resignation
+    @employee_resignation = EmployeeResignation.find(params[:format])
+    @employee_resignation.update(resign_status: "Approved")
+    ReportingMastersEmployeeResignation.create(employee_resignation_id: @employee_resignation.id, reporting_master_id: current_user.employee_id, resign_status: "Approved")
+   
+   EmployeeResignationMailer.approve_vacancy_email(@employee_resignation).deliver_now
+    flash[:notice] = 'Employee Resignation Approved'
+    redirect_to resignation_history_employee_resignations_path 
+
+    end
+
+
+
+    private
     # Use callbacks to share common setup or constraints between actions.
     def set_employee_resignation
       @employee_resignation = EmployeeResignation.find(params[:id])
@@ -73,6 +117,6 @@ class EmployeeResignationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def employee_resignation_params
-      params.require(:employee_resignation).permit(:employee_id, :reporting_master_id, :resignation_date, :reason, :is_notice_period, :notice_period, :short_notice_period, :tentative_leaving_date, :remark, :exit_interview_date, :note, :leaving_date, :settled_on, :has_left, :notice_served, :rehired)
+      params.require(:employee_resignation).permit(:employee_id, :resign_status,:reporting_master_id, :resignation_date, :reason, :is_notice_period, :notice_period, :short_notice_period, :tentative_leaving_date, :remark, :exit_interview_date, :note, :leaving_date, :settled_on, :has_left, :notice_served, :rehired)
     end
 end

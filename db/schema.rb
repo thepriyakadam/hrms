@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160616133220) do
+ActiveRecord::Schema.define(version: 20160617104631) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -801,6 +801,7 @@ ActiveRecord::Schema.define(version: 20160616133220) do
     t.datetime "updated_at",             null: false
     t.integer  "leaving_reason_id"
     t.integer  "reporting_master_id"
+    t.string   "resign_status"
   end
 
   add_index "employee_resignations", ["employee_id"], name: "index_employee_resignations_on_employee_id"
@@ -1820,6 +1821,17 @@ ActiveRecord::Schema.define(version: 20160616133220) do
   end
 
   add_index "reporting_masters", ["employee_id"], name: "index_reporting_masters_on_employee_id"
+
+  create_table "reporting_masters_resigns", force: :cascade do |t|
+    t.integer  "employee_resignation_id"
+    t.integer  "reporting_master_id"
+    t.string   "resignation_status"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  add_index "reporting_masters_resigns", ["employee_resignation_id"], name: "index_reporting_masters_resigns_on_employee_resignation_id"
+  add_index "reporting_masters_resigns", ["reporting_master_id"], name: "index_reporting_masters_resigns_on_reporting_master_id"
 
   create_table "reporting_masters_training_reqs", force: :cascade do |t|
     t.integer  "training_request_id"

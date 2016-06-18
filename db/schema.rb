@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160616070304) do
+ActiveRecord::Schema.define(version: 20160617104631) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -134,6 +134,7 @@ ActiveRecord::Schema.define(version: 20160616070304) do
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text     "definition"
   end
 
   create_table "attribute_rating_sheets", force: :cascade do |t|
@@ -422,6 +423,24 @@ ActiveRecord::Schema.define(version: 20160616070304) do
 
   add_index "custom_auto_increments", ["counter_model_name"], name: "index_custom_auto_increments_on_counter_model_name"
 
+  create_table "daily_bill_detail_histories", force: :cascade do |t|
+    t.integer  "daily_bill_detail_id"
+    t.integer  "travel_expence_type_id"
+    t.string   "expence_date"
+    t.string   "date"
+    t.string   "e_place"
+    t.string   "string"
+    t.string   "travel_expence"
+    t.string   "decimal"
+    t.string   "is_confirm"
+    t.string   "boolean"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "daily_bill_detail_histories", ["daily_bill_detail_id"], name: "index_daily_bill_detail_histories_on_daily_bill_detail_id"
+  add_index "daily_bill_detail_histories", ["travel_expence_type_id"], name: "index_daily_bill_detail_histories_on_travel_expence_type_id"
+
   create_table "daily_bill_details", force: :cascade do |t|
     t.integer  "travel_request_id"
     t.date     "expence_date"
@@ -624,8 +643,12 @@ ActiveRecord::Schema.define(version: 20160616070304) do
     t.string   "allign_to_supervisor"
     t.boolean  "is_confirm"
     t.string   "emp_head"
+    t.integer  "appraiser_id"
+    t.integer  "appraiser2_id"
   end
 
+  add_index "employee_goals", ["appraiser2_id"], name: "index_employee_goals_on_appraiser2_id"
+  add_index "employee_goals", ["appraiser_id"], name: "index_employee_goals_on_appraiser_id"
   add_index "employee_goals", ["employee_id"], name: "index_employee_goals_on_employee_id"
   add_index "employee_goals", ["goal_perspective_id"], name: "index_employee_goals_on_goal_perspective_id"
   add_index "employee_goals", ["period_id"], name: "index_employee_goals_on_period_id"
@@ -777,10 +800,13 @@ ActiveRecord::Schema.define(version: 20160616070304) do
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
     t.integer  "leaving_reason_id"
+    t.integer  "reporting_master_id"
+    t.string   "resign_status"
   end
 
   add_index "employee_resignations", ["employee_id"], name: "index_employee_resignations_on_employee_id"
   add_index "employee_resignations", ["leaving_reason_id"], name: "index_employee_resignations_on_leaving_reason_id"
+  add_index "employee_resignations", ["reporting_master_id"], name: "index_employee_resignations_on_reporting_master_id"
 
   create_table "employee_salary_templates", force: :cascade do |t|
     t.integer  "employee_id"
@@ -1515,6 +1541,35 @@ ActiveRecord::Schema.define(version: 20160616070304) do
     t.datetime "updated_at",  null: false
   end
 
+  create_table "overall_ratings", force: :cascade do |t|
+    t.integer  "goal_rating_sheet_id"
+    t.integer  "employee_id"
+    t.integer  "ro1_id"
+    t.integer  "ro2_id"
+    t.integer  "final_id"
+    t.integer  "ro1_rating_id"
+    t.text     "ro1_comment"
+    t.integer  "ro2_rating_id"
+    t.text     "ro2_comment"
+    t.integer  "final_rating_id"
+    t.text     "final_comment"
+    t.boolean  "promotion"
+    t.decimal  "increement_amount"
+    t.decimal  "final_ctc"
+    t.text     "appraisee_comment"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
+  add_index "overall_ratings", ["employee_id"], name: "index_overall_ratings_on_employee_id"
+  add_index "overall_ratings", ["final_id"], name: "index_overall_ratings_on_final_id"
+  add_index "overall_ratings", ["final_rating_id"], name: "index_overall_ratings_on_final_rating_id"
+  add_index "overall_ratings", ["goal_rating_sheet_id"], name: "index_overall_ratings_on_goal_rating_sheet_id"
+  add_index "overall_ratings", ["ro1_id"], name: "index_overall_ratings_on_ro1_id"
+  add_index "overall_ratings", ["ro1_rating_id"], name: "index_overall_ratings_on_ro1_rating_id"
+  add_index "overall_ratings", ["ro2_id"], name: "index_overall_ratings_on_ro2_id"
+  add_index "overall_ratings", ["ro2_rating_id"], name: "index_overall_ratings_on_ro2_rating_id"
+
   create_table "overtime_daily_records", force: :cascade do |t|
     t.integer  "employee_id"
     t.date     "ot_daily_date"
@@ -1634,6 +1689,28 @@ ActiveRecord::Schema.define(version: 20160616070304) do
     t.datetime "updated_at",  null: false
   end
 
+  create_table "performance_activities", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
+    t.text     "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "performance_calendars", force: :cascade do |t|
+    t.integer  "period_id"
+    t.integer  "performance_activity_id"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.integer  "performance_period_id"
+  end
+
+  add_index "performance_calendars", ["performance_activity_id"], name: "index_performance_calendars_on_performance_activity_id"
+  add_index "performance_calendars", ["performance_period_id"], name: "index_performance_calendars_on_performance_period_id"
+  add_index "performance_calendars", ["period_id"], name: "index_performance_calendars_on_period_id"
+
   create_table "performance_periods", force: :cascade do |t|
     t.string   "title"
     t.date     "start_date"
@@ -1745,6 +1822,17 @@ ActiveRecord::Schema.define(version: 20160616070304) do
 
   add_index "reporting_masters", ["employee_id"], name: "index_reporting_masters_on_employee_id"
 
+  create_table "reporting_masters_resigns", force: :cascade do |t|
+    t.integer  "employee_resignation_id"
+    t.integer  "reporting_master_id"
+    t.string   "resignation_status"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  add_index "reporting_masters_resigns", ["employee_resignation_id"], name: "index_reporting_masters_resigns_on_employee_resignation_id"
+  add_index "reporting_masters_resigns", ["reporting_master_id"], name: "index_reporting_masters_resigns_on_reporting_master_id"
+
   create_table "reporting_masters_training_reqs", force: :cascade do |t|
     t.integer  "training_request_id"
     t.integer  "reporting_master_id"
@@ -1785,6 +1873,31 @@ ActiveRecord::Schema.define(version: 20160616070304) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
+
+  create_table "resignation_histories", force: :cascade do |t|
+    t.integer  "employee_resignation_id"
+    t.integer  "reporting_master_id"
+    t.date     "resignation_date"
+    t.string   "reason"
+    t.boolean  "is_notice_period"
+    t.string   "notice_period"
+    t.string   "short_notice_period"
+    t.date     "tentative_leaving_date"
+    t.text     "remark"
+    t.date     "exit_interview_date"
+    t.text     "note"
+    t.date     "leaving_date"
+    t.date     "settled_on"
+    t.boolean  "has_left"
+    t.boolean  "notice_served"
+    t.boolean  "rehired"
+    t.integer  "leaving_reason_id"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  add_index "resignation_histories", ["employee_resignation_id"], name: "index_resignation_histories_on_employee_resignation_id"
+  add_index "resignation_histories", ["reporting_master_id"], name: "index_resignation_histories_on_reporting_master_id"
 
   create_table "retention_moneys", force: :cascade do |t|
     t.boolean  "have_retention"

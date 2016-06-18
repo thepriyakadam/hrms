@@ -144,14 +144,20 @@ class GoalRatingsController < ApplicationController
     total_employee = goal_bunches & subordinates
     @employees = Employee.where(id: total_employee)
   end
-
+ 
   def all_subordinate_list
     employee_ids = params[:employee_ids]
-    @employees = []
-    employee_ids.each do |e|
-      emp = Employee.find(e)
-      @employees << emp
-    end 
+      if employee_ids.nil?
+        flash[:alert] = "Please Select the Checkbox"
+        @employees = []
+        redirect_to subordinate_list_goal_wise_goal_ratings_path
+      else
+      @employees = []
+      employee_ids.each do |e|
+        emp = Employee.find(e)
+        @employees << emp
+      end 
+    end
   end
 
   private

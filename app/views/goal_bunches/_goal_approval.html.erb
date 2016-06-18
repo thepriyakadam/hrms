@@ -84,6 +84,36 @@
   </table>
 
   <div class="box-header with-border">
+    <h3 class="box-title">Promotion Details</h3>
+  </div>
+  <table class="table table-bordered table-hover table-condensed">
+    <thead>
+      <tr>
+        <th>Department</th>
+        <th>Designation</th>
+        <th>Grade</th>
+        <th>Category</th>
+        <th>CTC</th>
+        <th>From</th>
+        <th>To</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @employee_promotions.each do |employee_promotion| %>
+        <tr>
+          <td><%= employee_promotion.employee.try(:company_location).try(:name) %> - <%= employee_promotion.employee.try(:department).try(:name) %></td>
+          <td><%= employee_promotion.employee_designation.try(:name) %></td>
+          <td><%= employee_promotion.employee_grade.try(:name) %></td>
+          <td><%= employee_promotion.employee_category.try(:name) %></td>
+          <td><%= employee_promotion.try(:ctc) %></td>
+          <td><%= employee_promotion.effective_from %></td>
+          <td><%= employee_promotion.effective_to %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <div class="box-header with-border">
     <h3 class="box-title">Goal List</h3>
   </div>
     <table class="table table-bordered table-hover table-condensed">
@@ -127,7 +157,7 @@
   <div class="row">
     <div class="col-sm-3">
       <div class="actions">
-        <%= f.submit "Confirm", class: 'btn btn-primary btn-sm' %> |
+        <%= f.submit "Confirm", data: { confirm: 'Are you sure?',remote:true }, class: 'btn btn-primary btn-sm' %> |
         <%= link_to 'Back',goal_period_list_goal_bunches_path(id: @employee.id),class: 'btn btn-sm btn-default'%>
       </div>
     </div>

@@ -54,30 +54,61 @@
     </tbody>
   </table>
 
-<div class="box-header with-border">
-  <h3 class="box-title">Qualification Details</h3>
-</div>
-<table class="table table-bordered table-hover table-condensed">
-  <thead>
-    <tr>
-      <th>Degree</th>
-      <th>Year Of Passing</th>
-      <th>Marks</th>
-      <th>Qualification</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @qualifications.each do |q| %>
+  <div class="box-header with-border">
+    <h3 class="box-title">Qualification Details</h3>
+  </div>
+  <table class="table table-bordered table-hover table-condensed">
+    <thead>
       <tr>
-        <td><%= q.degree.name %></td>
-        <td><%= q.year.name%> </td>
-        <td><%= q.marks %></td>
-        <td><%= q.degree_type.name %></td>
+        <th>Degree</th>
+        <th>Year Of Passing</th>
+        <th>Marks</th>
+        <th>Qualification</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <% @qualifications.each do |q| %>
+        <tr>
+          <td><%= q.degree.name %></td>
+          <td><%= q.year.name%> </td>
+          <td><%= q.marks %></td>
+          <td><%= q.degree_type.name %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 
+  
+  <div class="box-header with-border">
+    <h3 class="box-title">Promotion Details</h3>
+  </div>
+  <table class="table table-bordered table-hover table-condensed">
+    <thead>
+      <tr>
+        <th>Department</th>
+        <th>Designation</th>
+        <th>Grade</th>
+        <th>Category</th>
+        <th>CTC</th>
+        <th>From</th>
+        <th>To</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @employee_promotions.each do |employee_promotion| %>
+        <tr>
+          <td><%= employee_promotion.employee.try(:company_location).try(:name) %> - <%= employee_promotion.employee.try(:department).try(:name) %></td>
+          <td><%= employee_promotion.employee_designation.try(:name) %></td>
+          <td><%= employee_promotion.employee_grade.try(:name) %></td>
+          <td><%= employee_promotion.employee_category.try(:name) %></td>
+          <td><%= employee_promotion.try(:ctc) %></td>
+          <td><%= employee_promotion.effective_from %></td>
+          <td><%= employee_promotion.effective_to %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  
 
   <% if  @goal_bunch.nil? %>
   <center><p class="text-warning"> No Goal Bunch Available </p></center> 

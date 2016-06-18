@@ -5,7 +5,7 @@ class EmployeePromotionsController < ApplicationController
   # GET /employee_promotions.json
   def index
     @employee_promotions = EmployeePromotion.all
-     session[:active_tab] ="promotionmanagement"
+    session[:active_tab] ="promotionmanagement"
   end
 
   # GET /employee_promotions/1
@@ -33,7 +33,7 @@ class EmployeePromotionsController < ApplicationController
     @employee_category_id = params[:employee_promotion][:employee_category_id]
     @employee = Employee.find(@employee_id)
     @employee.update(department_id: @department_id)
-    @joining_detail= JoiningDetail.find(@employee_id)
+    @joining_detail= JoiningDetail.find_by_employee_id(@employee_id)
     @joining_detail.update(employee_designation_id: @employee_designation_id,employee_grade_id: @employee_grade_id,employee_category_id: @employee_category_id)
     respond_to do |format|
       if @employee_promotion.save
@@ -50,7 +50,16 @@ class EmployeePromotionsController < ApplicationController
   # PATCH/PUT /employee_promotions/1.json
   def update
     respond_to do |format|
-      if @employee_promotion.update(employee_promotion_params)
+    if @employee_promotion.update(employee_promotion_params)
+    @employee_id = params[:employee_promotion][:employee_id]
+    @department_id = params[:employee_promotion][:department_id]
+    @employee_designation_id = params[:employee_promotion][:employee_designation_id]
+    @employee_grade_id = params[:employee_promotion][:employee_grade_id]
+    @employee_category_id = params[:employee_promotion][:employee_category_id]
+    @employee = Employee.find(@employee_id)
+    @employee.update(department_id: @department_id)
+    @joining_detail= JoiningDetail.find_by_employee_id(@employee_id)
+    @joining_detail.update(employee_designation_id: @employee_designation_id,employee_grade_id: @employee_grade_id,employee_category_id: @employee_category_id)
         format.html { redirect_to @employee_promotion, notice: 'Employee promotion was successfully updated.' }
         format.json { render :show, status: :ok, location: @employee_promotion }
       else
@@ -73,6 +82,43 @@ class EmployeePromotionsController < ApplicationController
   def collect_data
     @employee = Employee.find(params[:employee_id])
     @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
+  end
+
+  def print_employee_promotion
+      @employee = Employee.find(params[:id])
+      @employee_promotions = EmployeePromotion.where(employee_id: params[:id])
+            respond_to do |f|
+            f.js
+            f.html
+            f.pdf do
+              render pdf: 'print_employee_promotion',
+              layout: 'pdf.html',
+              template: 'employee_promotions/print_employee_promotion.pdf.erb',
+              show_as_html: params[:debug].present?,
+              margin:  { top:13,bottom:13,left:13,right:13 }
+            end
+          end
+     end
+
+
+  def promotion_history
+    @employee = Employee.find(params[:id])
+    @employee_promotions = EmployeePromotion.where(employee_id: params[:id])
+  end
+
+  def employee_list
+      @employees = Employee.all
+  end
+
+  def print_promotion_excel
+    # byebug
+    @employee = Employee.find(params[:id])
+    @employee_promotions = EmployeePromotion.where(employee_id: params[:id])
+    respond_to do |f|
+      f.js
+      f.xls {render template: 'employee_promotions/print_promotion_excel.xls.erb'}
+      f.html
+    end
   end
 
   private

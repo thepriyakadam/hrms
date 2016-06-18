@@ -79,7 +79,7 @@ class InductionDetailsController < ApplicationController
   end
 
   def print_induction_details
-     puts "-----------------"
+    
     @induction_detail = InductionDetail.find(params[:id])
     # @induction_details = InductionDetail.where(id: @induction_detail.id)
     @induction_activities = InductionActivity.where(induction_master_id: @induction_detail.induction_master_id)

@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  daily_bill_detail_id: 
+  travel_expence_type_id: 
+  expence_date: MyString
+  date: MyString
+  e_place: MyString
+  string: MyString
+  travel_expence: MyString
+  decimal: MyString
+  is_confirm: MyString
+  boolean: MyString
+
+two:
+  daily_bill_detail_id: 
+  travel_expence_type_id: 
+  expence_date: MyString
+  date: MyString
+  e_place: MyString
+  string: MyString
+  travel_expence: MyString
+  decimal: MyString
+  is_confirm: MyString
+  boolean: MyString

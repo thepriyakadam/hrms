@@ -2,9 +2,9 @@
 <!-- sidebar menu: : style can be found in sidebar.less -->
 <ul class="sidebar-menu">
   <li class="header">
-  <Center> <strong><% if current_user.class == Member %>
+  <a href="/home"><Center> <strong><% if current_user.class == Member %>
   <%= current_user.company_location.company.try(:name) %> <%= current_user.company_location.try(:name) %> <%= current_user.department.try(:name) %>
-  <%else%><%= current_user.subdomain %><%end%></li></strong></Center>
+  <%else%><%= current_user.subdomain %><%end%></li></strong></Center></a>
   <li class="active treeview">
     <a href="">
       <i class="fa fa-user-plus"></i> <span>Employee Management</span> 
@@ -50,23 +50,6 @@
       <li><a href="/goal_bunches/reviewer_subordinate"><i class="fa fa-tags"></i> Reviewer Comment</a></li>
     </ul>
    </li>
-
-<<<<<<< HEAD
-   <li class="treeview">
-    <a href="">
-      <i class="ionicons ion-ios-time"></i><span> Performance </span> <i class="fa fa-angle-left pull-right"></i>
-    </a>
-    <ul class="treeview-menu">
-      <li><a href="/goal_bunches/subordinate_list"><i class="fa fa-tags"></i> Goal Approval </a></li>
-      <li><a href="/goal_bunches/appraiser_subordinate"><i class="fa fa-tags"></i> Appraiser Comment</a></li>
-      <li><a href="/goal_bunches/reviewer_subordinate"><i class="fa fa-tags"></i> Reviewer Comment</a></li>
-      <li><a href="/goal_bunches/employee_list"><i class="fa fa-tags"></i> Final Comment</a></li>
-      <li><a href="/goal_bunches/final_employee_list"><i class="fa fa-tags"></i> Print </a></li>
-    </ul>
-   </li>
-
-</ul>
-=======
 </ul>
 
 
@@ -81,4 +64,3 @@
   document.getElementById("<%= session[:active_tab2] %>").classList.add("active");
   <%end%>
 </script>
->>>>>>> 843d35e5413a7e7ce56a3d148d56a9f48ea535e6

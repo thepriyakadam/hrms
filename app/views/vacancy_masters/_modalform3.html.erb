@@ -1,6 +1,6 @@
-<div class="modal-dialog">
+<div class="modal-dialog" style="height:1000px; max-height:100px; width:1000px; max-width:1400px;">
   <div class="modal-content">
-    <div class="modal-body">
+<div class="modal-body" >
      <%= bootstrap_form_for @vacancy_master,url:{action:"update_vacancy_details",id:@vacancy_master.id} do |f| %>
      <%= f.hidden_field :vacancy_master_id,value:@vacancy_master.id  %>
      

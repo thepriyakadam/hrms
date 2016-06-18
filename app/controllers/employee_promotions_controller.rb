@@ -5,7 +5,7 @@ class EmployeePromotionsController < ApplicationController
   # GET /employee_promotions.json
   def index
     @employee_promotions = EmployeePromotion.all
-     session[:active_tab] ="promotionmanagement"
+    session[:active_tab] ="promotionmanagement"
   end
 
   # GET /employee_promotions/1
@@ -50,7 +50,7 @@ class EmployeePromotionsController < ApplicationController
   # PATCH/PUT /employee_promotions/1.json
   def update
     respond_to do |format|
-  if @employee_promotion.update(employee_promotion_params)
+    if @employee_promotion.update(employee_promotion_params)
     @employee_id = params[:employee_promotion][:employee_id]
     @department_id = params[:employee_promotion][:department_id]
     @employee_designation_id = params[:employee_promotion][:employee_designation_id]

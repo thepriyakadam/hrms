@@ -3,12 +3,10 @@
     <h3 class="box-title">Employee Promotion List</h3>
     
   </div><!-- /.box-header -->
-  <%= form_for :employee_promotion, url: { action: 'print_employee_promotion',format: 'pdf'},:html => {:target => '_blank'} do |f| %>
   <div class="box-body">
-    <table id="example2" class="table table-bordered table-hover table-condensed">
+    <table id="example1" class="table table-bordered table-hover table-condensed">
     <thead>
       <tr>
-        <th><input type="checkbox" id="selectAll" value="selectAll"></th>
         <th>Employee ID</th>
         <th>Employee Name</th>
         <th>Department</th>
@@ -20,9 +18,6 @@
     <tbody>
       <% @employee_promotions.each do |employee_promotion| %>
         <tr>
-         <td>
-            <%= check_box_tag "employee_promotion_ids[]", employee_promotion.id %>
-        </td>
           <td><%= employee_promotion.employee.try(:manual_employee_code) %></td>
           <td><%= employee_promotion.employee.try(:first_name) %> <%= employee_promotion.employee.try(:middle_name) %> <%= employee_promotion.employee.try(:last_name) %></td>
           <td><%= employee_promotion.employee.try(:company_location).try(:name) %> - <%= employee_promotion.employee.try(:department).try(:name) %></td>
@@ -36,28 +31,8 @@
   </table>
   </div>
   </div>
-
-  <div class="row">
-  <div class="col-sm-3">
-    <div class="actions">
-      <%= f.submit "Print Promotion Details", class: 'btn btn-primary btn-sm' %>
-    </div>
-  </div>
-</div>
-<% end %>
-<script type="text/javascript">
+  <script type="text/javascript">
   $(function () {
-    $('#selectAll').click(function() {
-      if (this.checked) {
-        $(':checkbox').each(function() {
-          this.checked = true;                       
-        });
-      } 
-      else {
-        $(':checkbox').each(function() {
-          this.checked = false;                        
-        });
-      } 
-    });
+    $('#example1').Datatable();
   });
 </script>

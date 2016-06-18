@@ -160,8 +160,15 @@ Rails.application.routes.draw do
   resources :employee_resignations do
     collection do
       get :employee_resignation_list
-      end
+      get :resignation_history
+      get :employee_resignation_confirmation
+      get :approve_resignation
+      get :reject_employee_resignation
+      post :send_request_to_higher_authority
+      get :modal
+      get :cancel_resignation_request
   end
+end
   resources :travel_options
   resources :training_plans
   resources :training_requests do

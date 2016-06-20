@@ -15,7 +15,7 @@
       <div class="col-sm-3">
       <label>Attribute</label>
         <div class="form-group required">
-          <%= f.select :attribute_id,all_attribute_type,{hide_label:true, include_blank: 'Select Attribute'}  %>
+          <%= f.select :attribute_master_id,all_attribute_type,{hide_label:true, include_blank: 'Select Attribute'}  %>
         </div>
       </div>
 
@@ -58,9 +58,9 @@
 <script type="text/javascript">
   $("#goal_rating").validate({
     rules: {
-      "goal_rating[goal_perspective_id]":{
-        required: true
-      },
+      // "goal_rating[goal_perspective_id]":{
+      //   required: true
+      // },
       "goal_rating[goal_weightage]":{
         required: true,
         numbersOnly:true,
@@ -74,9 +74,9 @@
       }
     },
     messages: {
-      "goal_rating[goal_perspective_id]":{
-        required: "Please specify Goal Perspective"
-      },
+      // "goal_rating[goal_perspective_id]":{
+      //   required: "Please specify Goal Perspective"
+      // },
       "goal_rating[goal_weightage]":{
         required: "Please specify Weightage"
       },

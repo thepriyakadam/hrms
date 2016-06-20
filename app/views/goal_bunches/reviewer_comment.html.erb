@@ -167,7 +167,7 @@
         </tr>
       </thead>
       <tbody>
-        <% @goal_ratings.each do |goal_rating| %>
+        <% @goal_attribute_ratings.each do |goal_rating| %>
           <tr>
             <td><%= goal_rating.attribute_master.try(:name) %></td>
             <td><%= goal_rating.goal_weightage %></td>
@@ -259,7 +259,7 @@
         </tr>
       </thead>
       <tbody>
-        <% @reviewer_goal_ratings.each do |goal_rating| %>
+        <% @reviewer_attribute_ratings.each do |goal_rating| %>
           <tr>
             
             <td><%= goal_rating.attribute_master.try(:name) %></td>

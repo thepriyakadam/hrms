@@ -16,7 +16,8 @@ class GoalRatingsController < ApplicationController
   def new
     @goal_bunch = GoalBunch.find(params[:id])
     @goal_rating = GoalRating.new
-    @goal_ratings = GoalRating.where(goal_bunch_id: @goal_bunch.id)
+    @goal_ratings = GoalRating.where(goal_bunch_id: @goal_bunch.id, goal_type: 'Goal')
+    @goal_attribute_ratings = GoalRating.where("goal_type = 'Attribute'")
     @goal_bunches = GoalBunch.all
   end
 
@@ -35,7 +36,9 @@ class GoalRatingsController < ApplicationController
       @goal_rating.save
       @flag = true
       @goal_rating = GoalRating.new
-      @goal_ratings = GoalRating.where(goal_bunch_id: @goal_bunch.id)
+      #@goal_ratings = GoalRating.where(goal_bunch_id: @goal_bunch.id)
+      @goal_ratings = GoalRating.where(goal_bunch_id: @goal_bunch.id, goal_type: 'Goal')
+      @goal_attribute_ratings = GoalRating.where("goal_type = 'Attribute'")
     else
       @flag = false
     end
@@ -49,7 +52,8 @@ class GoalRatingsController < ApplicationController
     if @goal_rating.update(goal_rating_params)
       @flag = true
       @goal_rating = GoalRating.new
-      @goal_ratings = GoalRating.where(goal_bunch_id: @goal_bunch.id)
+      @goal_ratings = GoalRating.where(goal_bunch_id: @goal_bunch.id, goal_type: 'Goal')
+      @goal_attribute_ratings = GoalRating.where("goal_type = 'Attribute'")
     else
       @flag = false
     end
@@ -171,6 +175,6 @@ class GoalRatingsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def goal_rating_params
-      params.require(:goal_rating).permit(:attribute_master_id,:goal_bunch_id, :goal_perspective_id, :goal_weightage, :goal_measure, :target, :aligned, :goal_setter_id, :appraisee_id, :appraisee_comment, :appraiser_id, :appraiser_comment, :appraiser_rating_id, :reviewer_id, :reviewer_comment)
+      params.require(:goal_rating).permit(:attribute_master_id,:goal_bunch_id, :goal_perspective_id, :goal_weightage, :goal_measure, :target, :aligned, :goal_setter_id, :appraisee_id, :appraisee_comment, :appraiser_id, :appraiser_comment, :appraiser_rating_id, :reviewer_id, :reviewer_comment,:goal_type)
     end
 end

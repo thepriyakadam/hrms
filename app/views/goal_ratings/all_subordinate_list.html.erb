@@ -79,7 +79,7 @@
         </table>
         <br>
 
-        <% goal_rating = GoalRating.find_by_appraisee_id(e) %>
+        <% goal_rating = GoalRating.where(appraisee_id: e.id, goal_type: 'Goal') %>
         <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
           <thead>
           <tr><th colspan="9"><center>Performance Record</center></th></tr>

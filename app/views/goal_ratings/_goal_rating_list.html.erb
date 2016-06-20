@@ -1,4 +1,6 @@
 <%= bootstrap_form_for GoalRating.new,url:{action:'send_mail_to_appraiser',goal_bunch_id: @goal_bunch.id} do |f| %>
+
+<!-- < if @goal_rating.goal_type == 'Goal' %> -->
  <div class="row">
     <div class="col-sm-6">
 <table class="table table-bordered table-hover table-condensed">
@@ -33,6 +35,9 @@
   </tbody>
 </table>
 </div>
+
+<!-- < elsif @goal_rating.goal_type == 'Attribute' %> -->
+
 <div class="col-sm-6">
 <table class="table table-bordered table-hover table-condensed">
   <thead>
@@ -47,7 +52,7 @@
     </tr>
   </thead>
   <tbody>
-    <% @goal_ratings.each do |goal_rating| %>
+    <% @goal_attribute_ratings.each do |goal_rating| %>
       <tr>
         <td><%= goal_rating.attribute_master.try(:name) %></td>
         <td><%= goal_rating.goal_weightage %></td>
@@ -67,6 +72,9 @@
 </table>
 </div>
 </div>
+
+<!-- < else %>
+< end %> -->
 
   <div class="row">
     <div class="col-sm-3">

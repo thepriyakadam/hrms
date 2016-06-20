@@ -5,6 +5,9 @@
   <%= f.hidden_field :appraisee_id, value: @goal_bunch.employee_id  %>
   <%= f.hidden_field :appraiser_id, value: @goal_bunch.employee.manager_id %>
     <div class="row">
+    <div class="col-sm-3">
+        <%= f.select :type,["Goal","Attribute"],{label: 'Select Option',include_blank: "Select Option"} %>
+      </div>
       <div class="col-sm-3">
       <label>Goal Perspective</label>
         <div class="form-group required">
@@ -25,15 +28,16 @@
           <%= f.text_field :goal_weightage,hide_label:true,placeholder: 'Goal Weightage' %>
         </div>
       </div>
+     
+      </div>
+
+    <div class="row">
       <div class="col-sm-3">
       <label>Goal Measure</label>
         <div class="form-group required">
           <%= f.text_field :goal_measure,hide_label:true,placeholder: 'Goal Measure'  %>
         </div>
       </div>
-      </div>
-
-    <div class="row">
       <div class="col-sm-3">
       <label>Target</label>
         <div class="form-group required">
@@ -92,4 +96,22 @@
      error.insertAfter(element.parent(element));
     }
    });
+</script>
+<script type="text/javascript">
+  $(function(){
+    $('#salary_component_template_parent_salary_component_id').on('change', function() {
+      enabled_percent_textbox();
+    });
+
+    function enabled_percent_textbox(){
+      var parent_salary_component_id = parseInt($("#salary_component_template_parent_salary_component_id").val());
+      if(isNaN(parent_salary_component_id)){
+        $("#salary_component_template_percentage").val("");
+        //$("#salary_component_template_percentage").prop('disabled', true);
+      }
+      else{
+        $("#salary_component_template_percentage").prop('disabled', false);
+      }
+    }
+  });
 </script>

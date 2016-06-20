@@ -1,13 +1,4 @@
-<div class="box">
-  <div class="box-header">
-    <h3 class="box-title">Confirmation List</h3>
-    <div class="pull-right">
-    </div>
-  </div>
-
-<div class="box-body">
-
-    <table id="example1" class="table table-bordered table-hover table-condensed">
+   <table class="table table-bordered table-hover table-condensed">
       <thead>
         <tr>
           <th>Employee ID</th>
@@ -18,27 +9,22 @@
           <th>Reporting Master</th>
           <th>No. Of Employee</th>
           <th>Place</th>
-          <th>Action</th>
         </tr>
       </thead>
 
       <tbody>
-        <% @training_requests.each do |training_request| %>
+        <% @training_plans.each do |training_request| %>
           <tr>
             <td><%= training_request.employee.try(:manual_employee_code) %></td>
-            <td> <%= full_name(training_request.employee) %> </td>
+            <td><%= full_name(training_request.employee) %> </td>
             <td><%= training_request.training_topic_master.try(:name) %></td>
             <td><%= training_request.training_period %></td>
             <td><%= training_request.training_date %></td>
             <td><%= training_request.reporting_master_id %></td>
             <td><%= training_request.no_of_employee %></td>
             <td><%= training_request.place %></td>
-              
-            <td><%= link_to 'Training Plan', new_training_plan_path(id:training_request),class: 'btn btn-xs btn-primary' %> </td>
-            
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
-  </div>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    

@@ -142,6 +142,37 @@
     </tbody>
   </table>
 
+  <table class="table table-bordered table-hover table-condensed">
+    <thead>
+      <tr>
+        <th>Attribute</th>
+        <th>Goal Weightage</th>
+        <th>Goal Measure</th>
+        <th>Target/Unit</th>
+        <th>Aligned</th>
+        <th>Self Comment</th>
+        <th>Appraiser Comment</th>
+        <th>Appraiser Rating</th>
+        <th>Reviewer Comment</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @goal_ratings.each do |goal_rating| %>
+        <tr>
+          <td><%= goal_rating.attribute_master.try(:name) %></td>
+          <td><%= goal_rating.goal_weightage %></td>
+          <td><%= goal_rating.goal_measure %></td>
+          <td><%= goal_rating.target %></td>
+          <td><%= goal_rating.aligned %></td>
+          <td><%= goal_rating.appraisee_comment %></td>
+          <td><%= goal_rating.appraiser_comment %></td>
+          <td><%= goal_rating.appraiser_rating_id %></td>
+          <td><%= goal_rating.reviewer_comment %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
   <div class="box-header with-border">
   <h3 class="box-title">Overall List</h3>
 </div>

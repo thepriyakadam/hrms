@@ -860,7 +860,7 @@ ActiveRecord::Schema.define(version: 20160618095321) do
     t.text     "task_name"
     t.date     "task_date"
     t.boolean  "status"
-    t.string   "time"
+    t.time     "task_time"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
@@ -2301,6 +2301,7 @@ ActiveRecord::Schema.define(version: 20160618095321) do
     t.integer  "degree_id"
     t.string   "experience"
     t.string   "keyword"
+    t.string   "others"
     t.string   "other_organization"
     t.string   "industry"
     t.integer  "degree_1_id"

@@ -3,6 +3,15 @@
     <h3 class="box-title">Set Goals And Attribute</h3>
   </div><!-- /.box-header -->
 	<div class="box-body">
+	<div class="row">
+			<div class="col-sm-3">
+				<%=select :parent, :select_s,['Goal','Attribute'],{include_blank: " Select Option"} %>
+			</div>
+			<div class="col-sm-8">
+				
+			</div>
+		</div><br>
+
 		<div id="form">
 			<%= render 'form' %>	
 		</div>

@@ -172,6 +172,7 @@ end
       get :training_request_confirmation
       get :approve_training_request
       get :reject_training_request
+      get :confirmation_list
     end
   end
   resources :selected_resumes  do

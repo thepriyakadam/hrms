@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160617104631) do
+ActiveRecord::Schema.define(version: 20160620104935) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -2082,8 +2082,10 @@ ActiveRecord::Schema.define(version: 20160617104631) do
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
     t.integer  "training_topic_master_id"
+    t.integer  "training_request_id"
   end
 
+  add_index "training_plans", ["training_request_id"], name: "index_training_plans_on_training_request_id"
   add_index "training_plans", ["training_topic_master_id"], name: "index_training_plans_on_training_topic_master_id"
 
   create_table "training_records", force: :cascade do |t|

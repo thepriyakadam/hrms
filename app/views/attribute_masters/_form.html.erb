@@ -1,10 +1,10 @@
-<%= form_for(@attribute) do |f| %>
-  <% if @attribute.errors.any? %>
+<%= form_for(@attribute_master) do |f| %>
+  <% if @attribute_master.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@attribute.errors.count, "error") %> prohibited this attribute from being saved:</h2>
+      <h2><%= pluralize(@attribute_master.errors.count, "error") %> prohibited this attribute_master from being saved:</h2>
 
       <ul>
-      <% @attribute.errors.full_messages.each do |message| %>
+      <% @attribute_master.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
       </ul>

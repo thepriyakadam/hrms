@@ -1,6 +1,6 @@
-class CreateAttributes < ActiveRecord::Migration
+class CreateAttributeMasters < ActiveRecord::Migration
   def change
-    create_table :attributes do |t|
+    create_table :attribute_masters do |t|
       t.string :code
       t.string :name
       t.text :definition

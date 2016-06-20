@@ -58,9 +58,32 @@
         <Cell ss:Index="39"><Data ss:Type="String">Employee Previous Designation </Data></Cell>
         <Cell ss:Index="40"><Data ss:Type="String">Employee Previous Experience </Data></Cell>
         <Cell ss:Index="41"><Data ss:Type="String">Employee Previous CTC </Data></Cell>
+        
+        <Cell ss:Index="42"><Data ss:Type="String">Department </Data></Cell>
+        <Cell ss:Index="43"><Data ss:Type="String">Designation </Data></Cell>
+        <Cell ss:Index="44"><Data ss:Type="String">Grade </Data></Cell>
+        <Cell ss:Index="45"><Data ss:Type="String">Category </Data></Cell>
+        <Cell ss:Index="46"><Data ss:Type="String">CTC </Data></Cell>
+        <Cell ss:Index="47"><Data ss:Type="String">From </Data></Cell>
+        <Cell ss:Index="48"><Data ss:Type="String">To </Data></Cell>
 
+        <Cell ss:Index="49"><Data ss:Type="String">Department </Data></Cell>
+        <Cell ss:Index="50"><Data ss:Type="String">Designation </Data></Cell>
+        <Cell ss:Index="51"><Data ss:Type="String">Grade </Data></Cell>
+        <Cell ss:Index="52"><Data ss:Type="String">Category </Data></Cell>
+        <Cell ss:Index="53"><Data ss:Type="String">CTC </Data></Cell>
+        <Cell ss:Index="54"><Data ss:Type="String">From </Data></Cell>
+        <Cell ss:Index="55"><Data ss:Type="String">To </Data></Cell>
 
-        <Cell ss:Index="42"><Data ss:Type="String">Employee Self Comment </Data></Cell>
+        <Cell ss:Index="56"><Data ss:Type="String">Department </Data></Cell>
+        <Cell ss:Index="57"><Data ss:Type="String">Designation </Data></Cell>
+        <Cell ss:Index="58"><Data ss:Type="String">Grade </Data></Cell>
+        <Cell ss:Index="59"><Data ss:Type="String">Category </Data></Cell>
+        <Cell ss:Index="60"><Data ss:Type="String">CTC </Data></Cell>
+        <Cell ss:Index="61"><Data ss:Type="String">From </Data></Cell>
+        <Cell ss:Index="62"><Data ss:Type="String">To </Data></Cell>
+
+        <Cell ss:Index="63"><Data ss:Type="String">Employee Self Comment </Data></Cell>
         </Row>
 
         <% i = 0 %>
@@ -74,6 +97,10 @@
         <% experience1 = Experience.where(employee_id: employee.id).last(3).first %>
         <% experience2 = Experience.where(employee_id: employee.id).last(3).second %>
         <% experience3 = Experience.where(employee_id: employee.id).last(3).third %>
+
+        <% employee_promotion1 = EmployeePromotion.where(employee_id: employee.id).last(3).first %>
+        <% employee_promotion2 = EmployeePromotion.where(employee_id: employee.id).last(3).second %>
+        <% employee_promotion3 = EmployeePromotion.where(employee_id: employee.id).last(3).third %>
 
         <% goal_bunch = GoalBunch.find_by_employee_id(employee.id) %>
 
@@ -126,13 +153,37 @@
           <Cell ss:Index="36"><Data ss:Type="String"><%= experience2.try(:no_of_year) %></Data></Cell>
           <Cell ss:Index="37"><Data ss:Type="String"><%= experience2.try(:ctc) %></Data></Cell>
 
-
           <Cell ss:Index="38"><Data ss:Type="String"><%= experience3.try(:company_name) %></Data></Cell>
           <Cell ss:Index="39"><Data ss:Type="String"><%= experience3.try(:designation) %></Data></Cell>
           <Cell ss:Index="40"><Data ss:Type="String"><%= experience3.try(:no_of_year) %></Data></Cell>
           <Cell ss:Index="41"><Data ss:Type="String"><%= experience3.try(:ctc) %></Data></Cell>
           
-          <Cell ss:Index="42"><Data ss:Type="String"><%= goal_bunch.try(:appraisee_comment) %></Data></Cell>
+
+          <Cell ss:Index="42"><Data ss:Type="String"><%= employee_promotion1.try(:employee).try(:company_location).try(:name) %>- <%= employee_promotion1.try(:employee).try(:department).try(:name)%></Data></Cell>
+          <Cell ss:Index="43"><Data ss:Type="String"><%= employee_promotion1.try(:employee_designation).try(:name)%></Data></Cell>
+          <Cell ss:Index="44"><Data ss:Type="String"><%= employee_promotion1.try(:employee_grade).try(:name) %></Data></Cell>
+          <Cell ss:Index="45"><Data ss:Type="String"><%= employee_promotion1.try(:employee_category).try(:name) %></Data></Cell>
+          <Cell ss:Index="46"><Data ss:Type="String"><%= employee_promotion1.try(:ctc) %></Data></Cell>
+          <Cell ss:Index="47"><Data ss:Type="String"><%= employee_promotion1.try(:effective_from) %></Data></Cell>
+          <Cell ss:Index="48"><Data ss:Type="String"><%= employee_promotion1.try(:effective_to) %></Data></Cell>
+
+          <Cell ss:Index="49"><Data ss:Type="String"><%= employee_promotion2.try(:employee).try(:company_location).try(:name) %>- <%= employee_promotion2.try(:employee).try(:department).try(:name) %></Data></Cell>
+          <Cell ss:Index="50"><Data ss:Type="String"><%= employee_promotion2.try(:employee_designation).try(:name)%></Data></Cell>
+          <Cell ss:Index="51"><Data ss:Type="String"><%= employee_promotion2.try(:employee_grade).try(:name) %></Data></Cell>
+          <Cell ss:Index="52"><Data ss:Type="String"><%= employee_promotion2.try(:employee_category).try(:name) %></Data></Cell>
+          <Cell ss:Index="53"><Data ss:Type="String"><%= employee_promotion2.try(:ctc) %></Data></Cell>
+          <Cell ss:Index="54"><Data ss:Type="String"><%= employee_promotion2.try(:effective_from) %></Data></Cell>
+          <Cell ss:Index="55"><Data ss:Type="String"><%= employee_promotion2.try(:effective_to) %></Data></Cell>
+
+          <Cell ss:Index="56"><Data ss:Type="String"><%= employee_promotion3.try(:employee).try(:company_location).try(:name) %>- <%= employee_promotion3.try(:employee).try(:department).try(:name)%></Data></Cell>
+          <Cell ss:Index="57"><Data ss:Type="String"><%= employee_promotion3.try(:employee_designation).try(:name)%></Data></Cell>
+          <Cell ss:Index="58"><Data ss:Type="String"><%= employee_promotion3.try(:employee_grade).try(:name) %></Data></Cell>
+          <Cell ss:Index="59"><Data ss:Type="String"><%= employee_promotion3.try(:employee_category).try(:name) %></Data></Cell>
+          <Cell ss:Index="60"><Data ss:Type="String"><%= employee_promotion3.try(:ctc) %></Data></Cell>
+          <Cell ss:Index="61"><Data ss:Type="String"><%= employee_promotion3.try(:effective_from) %></Data></Cell>
+          <Cell ss:Index="62"><Data ss:Type="String"><%= employee_promotion3.try(:effective_to) %></Data></Cell>
+          
+          <Cell ss:Index="63"><Data ss:Type="String"><%= goal_bunch.try(:appraisee_comment) %></Data></Cell>
      </Row><!-- Row -->
       <% end %><!-- slip -->
     </Table>

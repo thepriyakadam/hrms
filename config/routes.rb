@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-
+  resources :attribute_masters
   resources :circulars
 
   resources :salary_map_saps
@@ -52,6 +52,7 @@ Rails.application.routes.draw do
       get :subordinate_list_goal_wise
       post :print_subordinate_list
       post :all_subordinate_list
+      get :performance_type
     end
   end
   resources :goal_bunches do
@@ -123,11 +124,19 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :overall_ratings do
+    collection do 
+      get :modal_self
+      patch :update_modal_self
+    end
+  end
+ 
   resources :exit_interviews  do
     collection do
       post :print_exit_interview
     end
   end
+
   resources :about_companies
   resources :about_bosses
   resources :question_masters
@@ -138,9 +147,10 @@ Rails.application.routes.draw do
   resources :employee_promotions do
     collection do
       get :collect_data
-      post :print_employee_promotion
       get :promotion_history
       get :employee_list
+      get :print_promotion_excel
+      get :print_employee_promotion
     end
   end
   resources :accident_masters
@@ -162,6 +172,10 @@ Rails.application.routes.draw do
       get :resignation_history
       get :employee_resignation_confirmation
       get :approve_resignation
+      get :reject_employee_resignation
+      post :send_request_to_higher_authority
+      get :modal
+      get :cancel_resignation_request
   end
 end
   resources :travel_options
@@ -304,6 +318,9 @@ end
 
     get 'pdf_salaries/excel_report'
     post 'pdf_salaries/print_salary_slip_excel'
+
+    get 'employee_promotions/promotion_history'
+    post 'employee_promotions/print_promotion_excel'
 
   end
 

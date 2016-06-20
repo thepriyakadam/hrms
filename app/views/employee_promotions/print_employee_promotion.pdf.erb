@@ -1,4 +1,4 @@
-<table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
+<table style="border-collapse: collapse;" border=1 width=1200 class="table table-bordered table-hover">
     <thead>
       <tr><td colspan="7"> <center><strong>BHANDARI FOILS AND TUBES LTD.</strong></center>
         <center><small>Promotion Histroy</small></center>
@@ -10,8 +10,8 @@
         <th>Grade</th>
         <th>Category</th>
         <th>CTC</th>
-        <th>Effective From</th>
-        <th>Effective To</th>
+        <th>From</th>
+        <th>To</th>  
        </tr>
     </thead>
 
@@ -25,6 +25,10 @@
           <td><%= employee_promotion.try(:ctc) %></td>
           <td><%= employee_promotion.effective_from %></td>
           <td><%= employee_promotion.effective_to %></td>
+        </tr>
+        <tr>
+        
+        <td colspan="7"><strong>justification : </strong><%= employee_promotion.justification %></td>
         </tr>
       <% end %>
     </tbody>

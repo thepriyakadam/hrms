@@ -1,9 +1,11 @@
 <div class="box">
   <div class="box-header">
-  <%= form_for :employee_promotion, url: { action: 'print_employee_promotion',format: 'pdf',id: @employee.id},:html => {:target => '_blank'} do |f| %>
-
-    Promotion History of <%= @employee_promotions.first.try(:employee).try(:manual_employee_code) %> <%= full_name(@employee_promotions.first.try(:employee)) %>
+   <h3 class="box-title"> Promotion History of <%= @employee_promotions.first.try(:employee).try(:manual_employee_code) %> <%= full_name(@employee_promotions.first.try(:employee)) %></h3>
   </div><!-- /.box-header -->
+    <div class="pull-right">
+    <%= link_to " Print Report ", print_employee_promotion_employee_promotions_path(id: @employee.id, format: "pdf"), class: "btn btn-xl btn-info fa fa-print",:target => "_blank" %>
+      <%= link_to " Excel Report ", print_promotion_excel_employee_promotions_path(id: @employee.id, format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+    </div>
  
   <div class="box-body">
     <table id="example2" class="table table-bordered table-hover table-condensed">
@@ -19,7 +21,6 @@
         <th>Effective To</th>
       </tr>
     </thead>
-
     <tbody>
       <% @employee_promotions.each do |employee_promotion| %>
         <tr>
@@ -37,12 +38,3 @@
   </table>
   </div>
   </div>
-
-   <div class="row">
-  <div class="col-sm-3">
-    <div class="actions">
-      <%= f.submit "Print Promotion Details", class: 'btn btn-primary btn-sm' %>
-    </div>
-  </div>
-</div>
-<% end %>

@@ -8,7 +8,11 @@
 <table id="example" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
+
+      <th>Employee Name</th>
+
       <th>Employee ID</th>
+
       <th>Resignation Date</th>
       <th>Reason</th>
       <th>Is Notice Period</th>
@@ -41,10 +45,25 @@
 <table id="example" class="table table-bordered table-hover table-condensed">
   <tbody>
     <tr>
+
+      <td><b>Resignation Code</b></td>
+      <td><%= @employee_resignation.id %></td>
+    </tr>
+    <tr>
+      <td><b>Request By</b></td>
+      <td><%= @employee_resignation.employee.first_name+' '+@employee_resignation.employee.middle_name+' '+@employee_resignation.employee.last_name %></td>
+    </tr>
+    <tr>
+      <td><b>Approved By</b></td>
+      <td><%= @employee_resignation.reporting_master_id %></td>
+    </tr>
+    <tr>
+
       <td><b>Employee ID</b></td>
       <td><%= @employee_resignation.id %></td>
     </tr>
     <tr>
+
       <td><b>Resignation Date</b></td>
       <td><%= @employee_resignation.resignation_date %></td>
     </tr>
@@ -103,11 +122,23 @@
     
   </tbody>
 </table>
+<div id="myModal" class="modal fade"></div>
+<%= link_to 'Approve',approve_resignation_employee_resignations_path(@employee_resignation),class: 'btn btn-sm btn-primary fa fa-check' %> |
+<%= link_to 'Reject',reject_employee_resignation_employee_resignations_path(@employee_resignation),class: 'btn btn-sm btn-danger fa fa-trash' %> |
+<%= link_to 'Approve & Send next',modal_employee_resignations_path(@employee_resignation.id),class: 'btn btn btn-sm btn-success fa fa-modx',remote: true %>  
+
 
 <%= link_to 'Approve',employee_resignation_confirmation_employee_resignations_path(@employee_resignation),class: 'btn btn-sm btn-primary fa fa-check' %> | 
+
 </div>
 </div>
 </div>
+
+    </div>
+</div>
+</div>
+
+
 <script>
 $(document).ready(function() {
     $('#example').DataTable();

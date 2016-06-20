@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  resources :attributes
+  resources :attribute_masters
   resources :circulars
 
   resources :salary_map_saps

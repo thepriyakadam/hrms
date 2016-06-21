@@ -1,0 +1,33 @@
+<%= form_for(@attribute_master) do |f| %>
+  <% if @attribute_master.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@attribute_master.errors.count, "error") %> prohibited this attribute_master from being saved:</h2>
+
+      <ul>
+      <% @attribute_master.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :code %><br>
+    <%= f.text_field :code %>
+  </div>
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :definition %><br>
+    <%= f.text_area :definition %>
+  </div>
+  <div class="field">
+    <%= f.label :status %><br>
+    <%= f.check_box :status %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

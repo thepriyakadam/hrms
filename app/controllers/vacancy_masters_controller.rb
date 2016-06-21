@@ -4,6 +4,7 @@ class VacancyMastersController < ApplicationController
 
   # GET /vacancy_masters
   # GET /vacancy_masters.json
+  require "builder"
   include QueryReport::Helper # need to include it
   def index
       respond_to do |format|
@@ -24,6 +25,11 @@ class VacancyMastersController < ApplicationController
     session[:active_tab1] ="particular_vacancy"  
   end
 
+  def gen_xml
+    xml = ::Builder::XmlMarkup.new( :indent => 2 )
+    @vacancy_masters=VacancyMaster.find(:all)
+  end
+  
 
   # GET /vacancy_masters/1
   # GET /vacancy_masters/1.json

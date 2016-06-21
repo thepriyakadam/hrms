@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-
+  resources :attribute_masters
   resources :circulars
 
   resources :salary_map_saps
@@ -52,6 +52,7 @@ Rails.application.routes.draw do
       get :subordinate_list_goal_wise
       post :print_subordinate_list
       post :all_subordinate_list
+      get :performance_type
     end
   end
   resources :goal_bunches do
@@ -377,6 +378,7 @@ end
       get :vacancy_history_resume
       get :approved_vacancy_request_history_list
       get :particular_vacancy_request_list_history
+      get :gen_xml
     end
   end
   resources :leave_c_offs do

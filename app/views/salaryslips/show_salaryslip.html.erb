@@ -10,7 +10,7 @@
     <table class="table table-bordered table-hover table-condensed">
       <thead>
         <tr>
-          <td colspan="6">
+          <td colspan="7">
            <center><strong>BHANDARI</strong></center> 
             <center><strong>BHANDARI FOILS AND TUBES LTD.</strong></center>
             <center><small> Manufacturers of Stainless Steel Cold Rolled Coils, Tubes & Fittings</small></center>
@@ -20,8 +20,8 @@
           <td colspan="2">Salary Slip : <%= @salaryslip.month%> - <%= @salaryslip.year%></td>
           <td>Leave Type</td>
           <td>Leave</td>  
-          <td>Balance</td>        
-          <td colspan="2"></td>            
+          <td>Balance</td>   
+          <td colspan="2"></td>
         </tr>
         <tr>
           <th>Employee ID</th>
@@ -44,8 +44,8 @@
           <td align="right"><%= @working_day.try(:present_day) %></td>
         </tr>
         <tr>
-          <th>Joining Date</th>
-          <td><%= @employee.joining_detail.try(:joining_date) %></td>
+          <th>Department</th>
+          <td><%= @employee.department.try(:name) %></td>
           <th>C.off</th>        
           <td align="right"><%= @working_day.try(:coff_leave) %></td>
           <td align="right"><%= @working_day.try(:el_leave) %></td>      
@@ -62,8 +62,8 @@
           <td align="right"><%= @working_day.try(:week_off_day) %></td>                    
         </tr>
         <tr>
-          <th>Employement</th>
-          <td><%= @employee.employee_type.try(:name) %></td>
+          <th>Unit</th>
+          <td><%= @employee.joining_detail.cost_center.try(:name) %></td>
           <th>ESIC Leave</th>        
           <td align="right"><%= @working_day.try(:esic_leave) %></td> 
           <td align="right"><%= 0 %></td>   

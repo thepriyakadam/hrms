@@ -184,7 +184,7 @@
       </tbody>
     </table>
 
-    <% unless @goal_ratings.empty? %>
+    <% unless @goal_ratings.empty? && @goal_attribute_ratings.empty? %>
       <div class="row">
         <div class="col-sm-3">
           <div class="actions">
@@ -287,7 +287,7 @@
       <div class="col-sm-3">
         <div class="actions">
 
-          <% unless @goal_ratings.empty? %>
+          <% unless @goal_ratings.empty? && @goal_attribute_ratings.empty? %>
           <% else %>
             <% unless @goal_bunch.nil? %>
               <% if @goal_bunch.reviewer_confirm == true %>

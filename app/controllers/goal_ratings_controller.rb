@@ -17,7 +17,7 @@ class GoalRatingsController < ApplicationController
     @goal_bunch = GoalBunch.find(params[:id])
     @goal_rating = GoalRating.new
     @goal_ratings = GoalRating.where(goal_bunch_id: @goal_bunch.id, goal_type: 'Goal')
-    @goal_attribute_ratings = GoalRating.where("goal_type = 'Attribute'")
+    @goal_attribute_ratings = GoalRating.where("goal_bunch_id = ? AND goal_type = ?", @goal_bunch.id ,'Attribute')
     @goal_bunches = GoalBunch.all
   end
 
@@ -38,7 +38,7 @@ class GoalRatingsController < ApplicationController
       @goal_rating = GoalRating.new
       #@goal_ratings = GoalRating.where(goal_bunch_id: @goal_bunch.id)
       @goal_ratings = GoalRating.where(goal_bunch_id: @goal_bunch.id, goal_type: 'Goal')
-      @goal_attribute_ratings = GoalRating.where("goal_type = 'Attribute'")
+      @goal_attribute_ratings = GoalRating.where("goal_bunch_id = ? AND goal_type = ?", @goal_bunch.id ,'Attribute')
     else
       @flag = false
     end
@@ -53,7 +53,7 @@ class GoalRatingsController < ApplicationController
       @flag = true
       @goal_rating = GoalRating.new
       @goal_ratings = GoalRating.where(goal_bunch_id: @goal_bunch.id, goal_type: 'Goal')
-      @goal_attribute_ratings = GoalRating.where("goal_type = 'Attribute'")
+      @goal_attribute_ratings = GoalRating.where("goal_bunch_id = ? AND goal_type = ?", @goal_bunch.id ,'Attribute')
     else
       @flag = false
     end
@@ -160,6 +160,7 @@ class GoalRatingsController < ApplicationController
       employee_ids.each do |e|
         emp = Employee.find(e)
         @employees << emp
+        @goal_bunch = Employee.find(e)
       end 
     end
   end

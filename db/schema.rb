@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160620064939) do
+ActiveRecord::Schema.define(version: 20160621055818) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -2087,6 +2087,10 @@ ActiveRecord::Schema.define(version: 20160620064939) do
     t.decimal  "advance"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+    t.decimal  "cl_b"
+    t.decimal  "el_b"
+    t.decimal  "c_off_b"
+    t.decimal  "advance_b"
   end
 
   add_index "slip_informations", ["cost_center_id"], name: "index_slip_informations_on_cost_center_id"
@@ -2113,6 +2117,14 @@ ActiveRecord::Schema.define(version: 20160620064939) do
   end
 
   add_index "states", ["country_id"], name: "index_states_on_country_id"
+
+  create_table "trainees", force: :cascade do |t|
+    t.integer  "training_plan_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "trainees", ["training_plan_id"], name: "index_trainees_on_training_plan_id"
 
   create_table "training_approvals", force: :cascade do |t|
     t.integer  "training_request_id"

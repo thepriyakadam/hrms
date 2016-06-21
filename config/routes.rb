@@ -212,6 +212,8 @@ end
     collection do 
     post :is_confirm
     get :print_daily_bill
+    get :daily_bill_history
+    get :daily_bill_request_confirmation
     end
   end 
   resources :travel_requests do

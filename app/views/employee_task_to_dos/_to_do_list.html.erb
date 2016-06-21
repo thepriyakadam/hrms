@@ -1,20 +1,17 @@
 <table class="table table-hover">
-	<tr>
-	  <th>Date</th>
-	  <th>Task</th>
-	  <th>Status</th>
-	  <th>Time</th>
-	  <th>Action</th>
-	</tr>
+<tr>
+  <th>Date</th>
+  <th>Task</th>
+  <th>Status</th>
+  <th>Time</th>
+</tr>
 
-	<% @employee_task_to_dos.each do |e| %>
-	<tr>
-	  <td><%= e.task_date %></td>
-	  <td><span class="label label-primary"><%= e.task_date %></span></td>
-	  <td><%= e.task_name %></td>
-	  <td><span class="label label-success"><%= e.status %></span></td>
-	  <td><span class="label label-info"><%= e.task_time %></span></td>
-	  <td></td>
-	</tr>
-	<% end %>
+<% @employee_task_to_dos.each do |e| %>
+<tr>
+  <td><span class="label label-primary"><%= e.task_date %></span></td>
+  <td><%= e.task_name %></td>
+  <td><span class="label label-success"><%= e.status %></span></td>
+  <td><span class="label label-info"><%= e.task_time %></span></td>
+</tr>
+<% end %>
 </table>

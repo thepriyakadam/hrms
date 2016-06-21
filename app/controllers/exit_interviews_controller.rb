@@ -15,8 +15,8 @@ class ExitInterviewsController < ApplicationController
   # GET /exit_interviews/new
   def new
     @exit_interview = ExitInterview.new
-    @exit_interviews = ExitInterview.all
-    session[:active_tab] = "resignationmanagement"
+    @exit_interviews = ExitInterview.where(employee_id: current_user.employee_id).group(:employee_id)
+    session[:active_tab1] ="employeeresignation"
   end
 
   # GET /exit_interviews/1/edit
@@ -52,6 +52,27 @@ class ExitInterviewsController < ApplicationController
   def destroy
     @exit_interview.destroy
     @exit_interviews = ExitInterview.all
+  end
+
+  def print_exit_interview
+    @emps = ExitInterview.where(employee_id: current_user.employee_id).group(:employee_id)
+    @exit_interviews = ExitInterview.all
+    respond_to do |format|
+        format.html
+        format.pdf do
+        render :pdf => 'print_exit_interview',
+        layout: '/layouts/pdf.html.erb',
+        :template => 'exit_interviews/print_exit_interview.pdf.erb',
+        :orientation      => 'Landscape', # default , Landscape
+        :page_height      => 1000,
+        :dpi              => '300',
+        :margin           => {:top    => 20, # default 10 (mm)
+                      :bottom => 20,
+                      :left   => 20,
+                      :right  => 20},
+        :show_as_html => params[:debug].present?
+      end
+    end
   end
 
   private

@@ -87,6 +87,39 @@
         </table>
         <br>
 
+        <% employee_promotion = EmployeePromotion.find_by_employee_id(g.employee_id) %>
+      <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
+        <thead>
+        <tr><th colspan="7"><center>Promotion Detail</center></th></tr>
+          <tr>
+          
+            <th>Department</th>
+            <th>Designation</th>
+            <th>Grade</th>
+            <th>Category</th>
+            <th>CTC</th>
+            <th>From</th>
+            <th>To</th>
+          </tr>
+        </thead>
+        <tbody>
+            <tr>
+              <td><%= employee_promotion.employee.try(:company_location).try(:name) %> - <%= employee_promotion.employee.try(:department).try(:name) %></td>
+              <td><%= employee_promotion.employee_designation.try(:name) %></td>
+              <td><%= employee_promotion.employee_grade.try(:name) %></td>
+              <td><%= employee_promotion.employee_category.try(:name) %></td>
+              <td><%= employee_promotion.try(:ctc) %></td>
+              <td><%= employee_promotion.effective_from %></td>
+              <td><%= employee_promotion.effective_to %></td>
+            </tr>
+        </tbody>
+      </table>
+      <br>
+
+    <% if  @goal_bunch.nil? %>
+    <center><p class="text-warning"> No Goal Bunch Available </p></center> 
+    <% else %>
+
         <% goal_rating = GoalRating.find_by_appraisee_id(g.employee_id) %>
         <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
           <thead>
@@ -181,6 +214,7 @@
         </tbody>
       </table>
       </div>
+    <% end %>
   <% end %>
 
 </div>

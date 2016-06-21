@@ -34,15 +34,17 @@
             <%= f.select :employee_grade_id,all_employee_grade,{include_blank: 'Select Grade',label: 'Employee Grade'}  %>
           </div>
         </div>
-      </div>
 
-      <div class="row">
         <div class="col-sm-3">
           <div class="field">
             <%= f.select :employee_category_id,all_employee_category,{include_blank: 'Select Category',label: 'Employee Category'} %>
           </div>
         </div>
 
+      </div>
+
+      <div class="row">
+       
         <div class="col-sm-3">
           <div class="field">
             <%= f.text_field :employee_ctc %>
@@ -86,7 +88,7 @@
         <div class="col-sm-3">
           <div class="actions">
             <%= f.submit :class => class_name, data: { disable_with: data_info } %> |
-            <%= link_to 'Back',employee_promotions_path,class: 'btn btn-default btn-sm'%>
+            <%= link_to 'Back',employee_list_employee_promotions_path,class: 'btn btn-default btn-sm'%>
           </div>
         </div>
       </div>

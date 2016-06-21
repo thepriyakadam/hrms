@@ -144,16 +144,25 @@ class GoalRatingsController < ApplicationController
     total_employee = goal_bunches & subordinates
     @employees = Employee.where(id: total_employee)
   end
-
+ 
   def all_subordinate_list
     employee_ids = params[:employee_ids]
-    @employees = []
-    employee_ids.each do |e|
-      emp = Employee.find(e)
-      @employees << emp
-    end 
+      if employee_ids.nil?
+        flash[:alert] = "Please Select the Checkbox"
+        @employees = []
+        redirect_to subordinate_list_goal_wise_goal_ratings_path
+      else
+      @employees = []
+      employee_ids.each do |e|
+        emp = Employee.find(e)
+        @employees << emp
+      end 
+    end
   end
 
+  def performance_type
+  end
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_goal_rating
@@ -162,6 +171,6 @@ class GoalRatingsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def goal_rating_params
-      params.require(:goal_rating).permit(:goal_bunch_id, :goal_perspective_id, :goal_weightage, :goal_measure, :target, :aligned, :goal_setter_id, :appraisee_id, :appraisee_comment, :appraiser_id, :appraiser_comment, :appraiser_rating_id, :reviewer_id, :reviewer_comment)
+      params.require(:goal_rating).permit(:attribute_master_id,:goal_bunch_id, :goal_perspective_id, :goal_weightage, :goal_measure, :target, :aligned, :goal_setter_id, :appraisee_id, :appraisee_comment, :appraiser_id, :appraiser_comment, :appraiser_rating_id, :reviewer_id, :reviewer_comment)
     end
 end

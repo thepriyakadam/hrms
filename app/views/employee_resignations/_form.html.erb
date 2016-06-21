@@ -4,6 +4,15 @@
   </div><!-- /.box-header -->
   <div class="box-body">
     <%= bootstrap_form_for(@employee_resignation) do |f| %>
+    <!--< f.hidden_field :employee_id, :value => current_user.employee_id %>-->
+     
+      <div class="row">
+      <div class="col-sm-3">
+          <div class="field">
+          <%= f.select :employee_id, all_employee_list,{label: 'Employee Name',include_blank: " Select Employee Name"} %>    
+          </div>
+        </div>
+       </div> 
       <div class="row">
         <div class="col-sm-3">
           <label>Resignation Date </label>
@@ -19,15 +28,15 @@
 
         <div class="col-sm-3">
           <div class="field">
-          <%= f.select :leaving_reason_id, all_leaving_reason,{label: 'Reason of Leaving',include_blank: " Select Reason of Leaving"} %>
+           <%= f.select :leaving_reason_id, all_leaving_reason,{label: 'Reason of Leaving',include_blank: " Select Reason of Leaving"} %>
           </div>
         </div>
 
-         <div class="col-sm-3">
+        <!--  <div class="col-sm-3">
           <div class="field">
-          <%= f.select :employee_id, all_employee_list,{label: 'Employee ID',include_blank: " Select Employee ID"} %>
+          < f.select :reporting_master_id, all_reporting_master_list,{label: 'Request To',include_blank: " Select Reporting Manager"} %>    
           </div>
-        </div>
+        </div> -->
       </div>
 
 

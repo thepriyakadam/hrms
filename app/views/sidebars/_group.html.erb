@@ -2,8 +2,8 @@
 <!-- sidebar menu: : style can be found in sidebar.less -->
 <ul class="sidebar-menu">
   <li class="header">
-    <Center> <strong> <% if current_user.class == Member %><%=  %>
-    <%else%><%= current_user.subdomain %> <%end%>DASHBOARD</strong></Center>
+   <a href="/home"> <Center> <strong> <% if current_user.class == Member %><%=  %>
+    <%else%><%= current_user.subdomain %> <%end%>DASHBOARD</strong></Center></a>
   </li>
   <li class="treeview" id="company">
     <a href="">
@@ -346,21 +346,6 @@
       <li><a href="/accident_records"><i class="fa fa-tags"></i> Accident Record </a></li>
     </ul>
    </li>
-
-   <li class="treeview" id="selfservice">
-    <a href="">
-      <i class="fa fa-user-plus"></i> <span>Employee Self Service</span><i class="fa fa-angle-left pull-right"></i>
-    </a>
-    <ul class="treeview-menu">
-      <li><a href="/self_services/employee"><i class="fa fa-tags"></i> Employees</a></li>
-      <li><a href="/self_services/employee_template"><i class="fa fa-tags"> </i> Salary Structure </a></li>
-      <li><a href="/self_services/attendance"><i class="fa fa-tags"></i>Attendance</a></li>
-      <li><a href="/self_services/salaryslip"><i class="fa fa-tags"></i>Salaryslips</a></li>
-      <li><a href="/self_services/advance"><i class="fa fa-tags"></i>Advance & Instalment</a></li>
-      <li><a href="/goal_bunches/new"><i class="fa fa-tags"></i> Set Goal </a></li>
-      <li><a href="/goal_bunches/appraisee_comment"><i class="fa fa-tags"></i> Self Rating</a></li>
-    </ul>
-  </li>
 </ul>
 
 <script typgre="text/javascript">

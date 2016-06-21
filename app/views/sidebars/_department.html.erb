@@ -2,9 +2,9 @@
 <!-- sidebar menu: : style can be found in sidebar.less -->
 <ul class="sidebar-menu">
   <li class="header">
-  <Center> <strong><% if current_user.class == Member %>
+ <a href="/home"> <Center> <strong><% if current_user.class == Member %>
   <%= current_user.company_location.company.try(:name) %> <%= current_user.company_location.try(:name) %> <%= current_user.department.try(:name) %>
-  <%else%><%= current_user.subdomain %><%end%></li></strong></Center>
+  <%else%><%= current_user.subdomain %><%end%></li></strong></Center></a>
   <li class="treeview">
     <a href="">
       <i class="fa fa-user-plus"></i> <span>Employee Management</span> 
@@ -25,7 +25,7 @@
       <li><a href="/self_services/salaryslip"><i class="fa fa-tags"></i>Salaryslips</a></li>
       <li><a href="/self_services/advance"><i class="fa fa-tags"></i>Advance & Instalment</a></li>
       <li><a href="/goal_bunches/new"><i class="fa fa-tags"></i> Set Goal </a></li>
-      <li><a href="/goal_bunches/appraisee_comment"><i class="fa fa-tags"></i> Self Rating </a></li>
+      <li><a href="/goal_bunches/period_list_appraisee"><i class="fa fa-tags"></i> Self Evaluation </a></li>
     </ul>
   </li>
 
@@ -56,7 +56,7 @@
     </a>
     <ul class="treeview-menu">
       <li><a href="/goal_bunches/subordinate_list"><i class="fa fa-tags"></i> Goal Approval </a></li>
-      <li><a href="/goal_bunches/appraiser_subordinate"><i class="fa fa-tags"></i> Appraiser Comment</a></li>
+      <li><a href="/goal_bunches/appraiser_subordinate"><i class="fa fa-tags"></i> Appraiser Evaluation</a></li>
       <li><a href="/goal_bunches/reviewer_subordinate"><i class="fa fa-tags"></i> Reviewer Comment</a></li>
       <li><a href="/goal_bunches/employee_list"><i class="fa fa-tags"></i> Final Comment</a></li>
       <li><a href="/goal_bunches/final_employee_list"><i class="fa fa-tags"></i> Print </a></li>

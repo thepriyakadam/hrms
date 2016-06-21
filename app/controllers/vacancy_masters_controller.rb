@@ -29,7 +29,6 @@ class VacancyMastersController < ApplicationController
     xml = ::Builder::XmlMarkup.new( :indent => 2 )
     @vacancy_masters=VacancyMaster.find(:all)
   end
-  
 
   # GET /vacancy_masters/1
   # GET /vacancy_masters/1.json

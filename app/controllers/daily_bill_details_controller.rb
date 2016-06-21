@@ -120,6 +120,11 @@ end
     end  
   end
 
+  # @c1 = ReportingMastersTravelRequest.find(@daily_bill_detail.reporting_master_id)
+  # @daily_bill_details = DailyBillDetail.where("travel_request_id = ?",@c1.travel_request_id)
+
+  # @daily_bill_details = DailyBillDetail.where(travel_request_id: @c1.travel_request_id)
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_daily_bill_detail

@@ -379,6 +379,7 @@ end
       get :vacancy_history_resume
       get :approved_vacancy_request_history_list
       get :particular_vacancy_request_list_history
+      get :gen_xml
     end
   end
   resources :leave_c_offs do

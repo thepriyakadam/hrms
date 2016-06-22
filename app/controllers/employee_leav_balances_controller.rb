@@ -7,7 +7,7 @@ class EmployeeLeavBalancesController < ApplicationController
   # GET /employee_leav_balances
   # GET /employee_leav_balances.json
   def index
-    @employee_leav_balance = EmployeeLeavBalance.new
+    # @employee_leav_balance = EmployeeLeavBalance.new
     if current_user.class == Group
       @employee_leav_balances = EmployeeLeavBalance.all
     else
@@ -90,9 +90,7 @@ class EmployeeLeavBalancesController < ApplicationController
       column(:Leave_Balance, sortable:true){|employee_leav_balance| employee_leav_balance.try(:no_of_leave)}
       column(:Expiry_Date, sortable:true){|employee_leav_balance| employee_leav_balance.try(:expiry_date)}
       column(:Toata_Leave, sortable:true){|employee_leav_balance| employee_leav_balance.try(:total_leave)}
-
-    end
-    
+    end    
   end
 
   def collect_employee_for_leave
@@ -122,13 +120,15 @@ class EmployeeLeavBalancesController < ApplicationController
   end
 
   def leave_balance_modal
-     puts "--------------------------------------"
      @employee_leav_balance = EmployeeLeavBalance.find(params[:format])
+     @leav_category = LeavCategory.find(@employee_leav_balance.leav_category_id)
   end
 
   def update_leave_balance
-     # byebug
-     puts "--------------------------------------"
+     @employee_leav_balance = EmployeeLeavBalance.find(params[:id])
+     @employee_leav_balance.update(employee_leav_balance_params)
+     flash[:notice] = 'Leave Balance Updated Successfully'
+     redirect_to employee_leav_balances_path
   end
 
   private

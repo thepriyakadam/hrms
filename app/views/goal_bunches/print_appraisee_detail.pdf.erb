@@ -118,7 +118,8 @@ div.nobreak{ page-break-inside: avoid;
 
     <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
       <thead>
-      <tr><th colspan="9"><center>Performance Record</center></th></tr>
+      <tr><th colspan="6"><center>Performance Record</center></th></tr>
+      <tr><th colspan="6">Goals</th></tr>
         <tr>
           <th>Goal Perspective</th>
           <th>Goal Weightage</th>
@@ -140,6 +141,31 @@ div.nobreak{ page-break-inside: avoid;
           </tr>
         <% end %>
       </tbody>
+
+      <thead>
+      <tr><th colspan="6">Attributes</th></tr>
+        <tr>
+          <th>Attribute</th>
+          <th>Goal Weightage</th>
+          <th>Goal Measure</th>
+          <th>Target/Unit</th>
+          <th>Aligned</th>
+          <th>Self Comment</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @goal_attribute_ratings.each do |goal_rating| %>
+          <tr>
+            <td><%= goal_rating.attribute_master.try(:name) %></td>
+            <td><%= goal_rating.goal_weightage %></td>
+            <td><%= goal_rating.goal_measure %></td>
+            <td><%= goal_rating.target %></td>
+            <td><%= goal_rating.aligned %></td>
+            <td><%= goal_rating.appraisee_comment %></td>
+          </tr>
+        <% end %>
+      </tbody>
+
     </table>
 
     <br>

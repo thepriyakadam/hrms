@@ -8,4 +8,6 @@ class GoalBunch < ActiveRecord::Base
   belongs_to :final
   belongs_to :final_rating
   has_many :goal_ratings
+
+  validates_uniqueness_of :period_id, :scope => :employee_id
 end

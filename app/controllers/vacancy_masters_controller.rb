@@ -1,11 +1,8 @@
-require 'query_report/helper' # need to require the helper
 class VacancyMastersController < ApplicationController
   before_action :set_vacancy_master, only: [:show, :edit, :update, :destroy]
 
   # GET /vacancy_masters
   # GET /vacancy_masters.json
-  require "builder"
-  include QueryReport::Helper # need to include it
   def index
       respond_to do |format|
       format.html
@@ -25,11 +22,6 @@ class VacancyMastersController < ApplicationController
     session[:active_tab1] ="particular_vacancy"  
   end
 
-  def gen_xml
-    xml = ::Builder::XmlMarkup.new( :indent => 2 )
-    @vacancy_masters=VacancyMaster.find(:all)
-  end
-
   # GET /vacancy_masters/1
   # GET /vacancy_masters/1.json
   def show
@@ -38,13 +30,8 @@ class VacancyMastersController < ApplicationController
   # GET /vacancy_masters/new
   def new
     @vacancy_master = VacancyMaster.new
-    session[:active_tab] ="recruitment"
-    session[:active_tab1] ="particular_vacancy"
-  end
-
-  def import
-    VacancyMaster.import(params[:file])
-    redirect_to root_url, notice: 'Vacancy Master imported successfully........!'
+    # session[:active_tab] ="recruitment"
+    # session[:active_tab1] ="particular_vacancy"
   end
 
   # GET /vacancy_masters/1/edit

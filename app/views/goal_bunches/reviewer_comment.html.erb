@@ -152,7 +152,39 @@
       </tbody>
     </table>
 
-    <% unless @goal_ratings.empty? %>
+    <table class="table table-bordered table-hover table-condensed">
+      <thead>
+        <tr>
+          <th>Attribute</th>
+          <th>Goal weightage</th>
+          <th>Goal measure</th>
+          <th>Target</th>
+          <th>Aligned</th>
+          <th>Self Comment</th>
+          <th>Appraiser Comment</th>
+          <th>Appraiser Rating</th>
+          <th>Reviewer Comment</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @goal_attribute_ratings.each do |goal_rating| %>
+          <tr>
+            <td><%= goal_rating.attribute_master.try(:name) %></td>
+            <td><%= goal_rating.goal_weightage %></td>
+            <td><%= goal_rating.goal_measure %></td>
+            <td><%= goal_rating.target %></td>
+            <td><%= goal_rating.aligned %></td>
+            <td><%= goal_rating.appraisee_comment %></td>
+            <td><%= goal_rating.appraiser_comment %></td>
+            <td><%= goal_rating.appraiser_rating_id %></td>
+            <td><%= text_field_tag 'reviewer_comments[]',"",class: "form-control" %></td>
+            <%= hidden_field_tag 'goal_rating_ids[]',"",value: goal_rating.id %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <% unless @goal_ratings.empty? && @goal_attribute_ratings.empty? %>
       <div class="row">
         <div class="col-sm-3">
           <div class="actions">
@@ -210,11 +242,52 @@
         <% end %>
       </tbody>
     </table>
+
+    <table class="table table-bordered table-hover table-condensed">
+      <thead>
+        <tr>
+          <th>Attribute</th>
+          <th>Goal weightage</th>
+          <th>Goal measure</th>
+          <th>Target</th>
+          <th>Aligned</th>
+          <th>Self Comment</th>
+          <th>Appraiser Comment</th>
+          <th>Appraiser Rating</th>
+          <th>Reviewer Comment</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @reviewer_attribute_ratings.each do |goal_rating| %>
+          <tr>
+            
+            <td><%= goal_rating.attribute_master.try(:name) %></td>
+            <td><%= goal_rating.goal_weightage %></td>
+            <td><%= goal_rating.goal_measure %></td>
+            <td><%= goal_rating.target %></td>
+            <td><%= goal_rating.aligned %></td>
+            <td><%= goal_rating.appraisee_comment %></td>
+            <td><%= goal_rating.appraiser_comment %></td>
+            <td><%= goal_rating.appraiser_rating_id %></td>
+            <td><%= goal_rating.reviewer_comment %></td>
+            <td>
+              <% if @goal_bunch.reviewer_confirm == true %>
+              <small class="label label-info">Confirmed</small>
+              <% else %>
+              <%= link_to '', reviewer_modal_goal_ratings_path(goal_rating),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
     <div class="row">
       <div class="col-sm-3">
         <div class="actions">
 
-          <% unless @goal_ratings.empty? %>
+          <% unless @goal_ratings.empty? && @goal_attribute_ratings.empty? %>
           <% else %>
             <% unless @goal_bunch.nil? %>
               <% if @goal_bunch.reviewer_confirm == true %>

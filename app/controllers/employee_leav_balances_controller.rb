@@ -37,6 +37,7 @@ class EmployeeLeavBalancesController < ApplicationController
 
   # GET /employee_leav_balances/1/edit
   def edit
+    @leav_category = LeavCategory.find(@employee_leav_balance.leav_category_id)
   end
 
   # POST /employee_leav_balances
@@ -61,17 +62,12 @@ class EmployeeLeavBalancesController < ApplicationController
   # PATCH/PUT /employee_leav_balances/1
   # PATCH/PUT /employee_leav_balances/1.json
   def update
-    respond_to do |format|
       if @employee_leav_balance.update(employee_leav_balance_params)
-        # format.html { redirect_to @employee_leav_balance, notice: 'Employee leav balance was successfully updated.' }
-        # format.json { render :show, status: :ok, location: @employee_leav_balance }
-        format.js { @flag = true }
+        @flag = true
       else
-        # format.html { render :edit }
-        # format.json { render json: @employee_leav_balance.errors, status: :unprocessable_entity }
-        format.js { @flag = true }
+       @flag = false
       end
-    end
+    redirect_to employee_leav_balance_path
   end
 
   # DELETE /employee_leav_balances/1

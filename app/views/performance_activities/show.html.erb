@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @performance_activity.code %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @performance_activity.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @performance_activity.description %>
+</p>
+
+<%= link_to 'Edit', edit_performance_activity_path(@performance_activity) %> |
+<%= link_to 'Back', performance_activities_path %>

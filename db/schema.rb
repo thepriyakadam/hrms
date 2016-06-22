@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160622093650) do
+ActiveRecord::Schema.define(version: 20160622131114) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -1721,11 +1721,9 @@ ActiveRecord::Schema.define(version: 20160622093650) do
     t.date     "end_date"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
-    t.integer  "performance_period_id"
   end
 
   add_index "performance_calendars", ["performance_activity_id"], name: "index_performance_calendars_on_performance_activity_id"
-  add_index "performance_calendars", ["performance_period_id"], name: "index_performance_calendars_on_performance_period_id"
   add_index "performance_calendars", ["period_id"], name: "index_performance_calendars_on_period_id"
 
   create_table "performance_periods", force: :cascade do |t|

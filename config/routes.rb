@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :performance_calendars
+  resources :performance_activities
   resources :attribute_masters
   resources :circulars
 

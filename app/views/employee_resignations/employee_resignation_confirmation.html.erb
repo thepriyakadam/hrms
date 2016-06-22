@@ -42,6 +42,7 @@
 <table id="example" class="table table-bordered table-hover table-condensed">
   <tbody>
     <tr>
+
       <td><b>Resignation Code</b></td>
       <td><%= @employee_resignation.id %></td>
     </tr>
@@ -122,9 +123,10 @@
 <%= link_to 'Approve & Send next',modal_employee_resignations_path(@employee_resignation.id),class: 'btn btn btn-sm btn-success fa fa-modx',remote: true %>  
 <%= link_to 'Approve',employee_resignation_confirmation_employee_resignations_path(@employee_resignation),class: 'btn btn-sm btn-primary fa fa-check' %> | 
 
-    </div>
 </div>
 </div>
+</div>
+
 <script>
 $(document).ready(function() {
     $('#example').DataTable();

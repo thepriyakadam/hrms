@@ -120,6 +120,10 @@ end
     end  
   end
 
+  def daily_bill_request_confirmation
+    @daily_bill_details = DailyBillDetail.all
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_daily_bill_detail

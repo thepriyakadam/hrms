@@ -6,7 +6,7 @@
   <%= f.hidden_field :appraiser_id, value: @goal_bunch.employee.manager_id %>
     <div class="row">
     <div class="col-sm-3">
-        <%= f.select :type,["Goal","Attribute"],{label: 'Select Option',include_blank: "Select Option"} %>
+        <%= f.select :goal_type,["Goal","Attribute"],{label: 'Select Option',include_blank: "Select Option"} %>
       </div>
       <div class="col-sm-3">
       <label>Goal Perspective</label>

@@ -1,6 +1,6 @@
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title">Training Request</h3>
+    <h3 class="box-title">Training Request Confirmation </h3>
   </div><!-- /.box-header -->
   <div class="box-body">
     <table id="example2" class="table table-bordered table-hover table-condensed">
@@ -10,18 +10,18 @@
       </tr>
 
       <tr>
-        <th><strong>Employee</strong></th>
+        <th><strong>Employee ID</strong></th>
         <td><%= @training_request.employee.try(:manual_employee_code) %></td>
       
-        <th><strong>Training topic</strong></th>
+        <th><strong>Training Topic</strong></th>
         <td><%= @training_request.training_topic_master.try(:name) %></td>
       </tr>
 
       <tr>
-        <th><strong>Training period</strong></th>
+        <th><strong>Training Period</strong></th>
         <td><%= @training_request.training_period %></td>
      
-        <th><strong>Training date</strong></th>
+        <th><strong>Training Date</strong></th>
         <td><%= @training_request.training_date %></td>
       </tr>
 
@@ -29,7 +29,7 @@
         <th><strong>Request To</strong></th>
         <td><%= @training_request.reporting_master_id %></td>
         
-        <th><strong>No Of Employee</strong></th>
+        <th><strong>No. Of Employee</strong></th>
         <td><%= @training_request.no_of_employee %></td>
       </tr>
 
@@ -52,6 +52,6 @@
 
   <%= link_to 'Approve',approve_training_request_training_requests_path(@training_request.id),class: 'btn btn-sm btn-info fa fa-check' %> |
   <%= link_to 'Reject',reject_training_request_training_requests_path(@training_request.id),class: 'btn btn-sm btn-danger fa fa-trash' %>
-
+    </td>
   </div>
 </div>

@@ -15,6 +15,7 @@ class AttributeMastersController < ApplicationController
   # GET /attribute_masters/new
   def new
     @attribute_master = AttributeMaster.new
+    @attribute_masters = AttributeMaster.all
   end
 
   # GET /attribute_masters/1/edit
@@ -24,15 +25,15 @@ class AttributeMastersController < ApplicationController
   # POST /attribute_masters
   # POST /attribute_masters.json
   def create
-    @attribute_master = AttributeMaster.new(attribute_master_params)
-
+     @attribute_master = AttributeMaster.new(attribute_master_params)
+    @attribute_masters = AttributeMaster.all
     respond_to do |format|
       if @attribute_master.save
-        format.html { redirect_to @attribute_master, notice: 'Attribute master was successfully created.' }
-        format.json { render :show, status: :created, location: @attribute_master }
+         @attribute_master = AttributeMaster.new
+        format.js { @flag = true }
       else
-        format.html { render :new }
-        format.json { render json: @attribute_master.errors, status: :unprocessable_entity }
+        flash.now[:alert] = 'Attribute Already Exist.'
+        format.js { @flag = false }
       end
     end
   end
@@ -40,25 +41,16 @@ class AttributeMastersController < ApplicationController
   # PATCH/PUT /attribute_masters/1
   # PATCH/PUT /attribute_masters/1.json
   def update
-    respond_to do |format|
-      if @attribute_master.update(attribute_master_params)
-        format.html { redirect_to @attribute_master, notice: 'Attribute master was successfully updated.' }
-        format.json { render :show, status: :ok, location: @attribute_master }
-      else
-        format.html { render :edit }
-        format.json { render json: @attribute_master.errors, status: :unprocessable_entity }
-      end
-    end
+      @attribute_master.update(attribute_master_params)
+      @attribute_master = AttributeMaster.new
+      @attribute_masters = AttributeMaster.all  
   end
 
   # DELETE /attribute_masters/1
   # DELETE /attribute_masters/1.json
   def destroy
     @attribute_master.destroy
-    respond_to do |format|
-      format.html { redirect_to attribute_masters_url, notice: 'Attribute master was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    @attribute_masters = AttributeMaster.all
   end
 
   private

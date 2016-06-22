@@ -63,7 +63,10 @@ class InductionActivitiesController < ApplicationController
   end
 
   def employee_list
+    puts '----------------------------------------------------------'
      @employees = Employee.all
+     # @employee = Employee.find(params[:emp_id])
+     # @induction_details = InductionDetail.where(employee_id: @employee.id)
      session[:active_tab] ="employeemanagement"
      session[:active_tab1] ="employeeinduction"
   end

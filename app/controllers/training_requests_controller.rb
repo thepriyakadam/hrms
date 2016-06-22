@@ -82,6 +82,14 @@ class TrainingRequestsController < ApplicationController
     redirect_to training_request_list_training_requests_path
   end
 
+
+
+  def confirmation_list
+   @training_requests = TrainingRequest.where(employee_id: current_user.employee_id,status:"Approved")
+   
+  end
+
+
   def reject_training_request
     @training_request = TrainingRequest.find(params[:format])
     @training_request.update(status: "Reject")

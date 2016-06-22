@@ -171,15 +171,6 @@ ActiveRecord::Schema.define(version: 20160621055818) do
   add_index "attribute_rating_sheets", ["final_id_id"], name: "index_attribute_rating_sheets_on_final_id_id"
   add_index "attribute_rating_sheets", ["final_rating_id"], name: "index_attribute_rating_sheets_on_final_rating_id"
 
-  create_table "attributes", force: :cascade do |t|
-    t.string   "code"
-    t.string   "name"
-    t.text     "definition"
-    t.boolean  "status"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "awards", force: :cascade do |t|
     t.integer  "employee_id"
     t.string   "award_name"
@@ -2158,8 +2149,10 @@ ActiveRecord::Schema.define(version: 20160621055818) do
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
     t.integer  "training_topic_master_id"
+    t.integer  "training_request_id"
   end
 
+  add_index "training_plans", ["training_request_id"], name: "index_training_plans_on_training_request_id"
   add_index "training_plans", ["training_topic_master_id"], name: "index_training_plans_on_training_topic_master_id"
 
   create_table "training_records", force: :cascade do |t|

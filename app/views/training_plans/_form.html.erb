@@ -5,6 +5,7 @@
   <div class="box-body">
 
 <%= bootstrap_form_for(@training_plan,html: {id: "training_plan"}) do |f| %>
+<%= f.hidden_field :training_request_id, :value => current_user.employee_id %>
 
   <div class="row">
     <div class="col-sm-3">

@@ -8,8 +8,8 @@
 <table id="example" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
-      <th>Employee Name</th>
       <th>Employee ID</th>
+      <th>Employee Name</th>
       <th>Resignation Date</th>
       <th>Reason</th>
       <th>Is Notice Period</th>
@@ -22,7 +22,8 @@
   <tbody>
       <% @employee_resignations.each do |employee_resignation| %>
       <tr>
-        <td><%= employee_resignation.employee.first_name+' '+employee_resignation.employee.middle_name+' '+employee_resignation.employee.last_name %></td>
+      <td><%= employee_resignation.employee.try(:manual_employee_code) %></td>
+        <td><%= employee_resignation.employee.try(:first_name) %><%= employee_resignation.employee.try(:middle_name) %> <%= employee_resignation.employee.try(:last_name) %></td>
         <td><%= employee_resignation.resignation_date %></td>
         <td><%= employee_resignation.reason %></td>
         <td><%= employee_resignation.is_notice_period %></td>

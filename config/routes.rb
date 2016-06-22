@@ -53,6 +53,8 @@ Rails.application.routes.draw do
       post :print_subordinate_list
       post :all_subordinate_list
       get :performance_type
+      get :attribute_modal
+      patch :update_attribute_modal
     end
   end
   resources :goal_bunches do

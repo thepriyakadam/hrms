@@ -7,6 +7,7 @@ class EmployeeLeavBalancesController < ApplicationController
   # GET /employee_leav_balances
   # GET /employee_leav_balances.json
   def index
+    @employee_leav_balance = EmployeeLeavBalance.new
     if current_user.class == Group
       @employee_leav_balances = EmployeeLeavBalance.all
     else
@@ -98,8 +99,6 @@ class EmployeeLeavBalancesController < ApplicationController
     
   end
 
-
-
   def collect_employee_for_leave
     if params[:leav_category_id] == ''
       @flag = false
@@ -124,6 +123,16 @@ class EmployeeLeavBalancesController < ApplicationController
       @flag = true
       @employee_leav_balance = EmployeeLeavBalance.new
     end
+  end
+
+  def leave_balance_modal
+     puts "--------------------------------------"
+     @employee_leav_balance = EmployeeLeavBalance.find(params[:format])
+  end
+
+  def update_leave_balance
+     # byebug
+     puts "--------------------------------------"
   end
 
   private

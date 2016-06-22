@@ -1144,6 +1144,7 @@ ActiveRecord::Schema.define(version: 20160621055818) do
     t.integer  "attribute_id"
     t.integer  "attribute_master_id"
     t.string   "type"
+    t.string   "goal_type"
   end
 
   add_index "goal_ratings", ["appraisee_id"], name: "index_goal_ratings_on_appraisee_id"

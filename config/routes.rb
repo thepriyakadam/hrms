@@ -188,6 +188,7 @@ end
       get :training_request_confirmation
       get :approve_training_request
       get :reject_training_request
+      get :confirmation_list
     end
   end
   resources :selected_resumes  do
@@ -213,6 +214,8 @@ end
     collection do 
     post :is_confirm
     get :print_daily_bill
+    get :daily_bill_history
+    get :daily_bill_request_confirmation
     end
   end 
   resources :travel_requests do

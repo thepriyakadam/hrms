@@ -96,7 +96,7 @@ class TravelRequestsController < ApplicationController
     @travel_requests = TravelRequest.where(reporting_master_id: current_user.employee_id)
   end
 
-  def approve_travel_request
+def approve_travel_request
     @travel_request = TravelRequest.find(params[:format])
     @travel_request.update(current_status: "Approved")
     ReportingMastersTravelRequest.create(reporting_master_id: @travel_request.reporting_master_id, travel_request_id: @travel_request.id, travel_status: "Approved")

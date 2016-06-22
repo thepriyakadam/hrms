@@ -358,7 +358,7 @@ class GoalBunchesController < ApplicationController
     @goal_ratings = GoalRating.where(appraisee_id: @employee.id,goal_bunch_id: @goal_bunch_id.id, goal_type: 'Goal')
     @goal_attribute_ratings = GoalRating.where("goal_bunch_id = ? AND goal_type = ?", @goal_bunch_id.id ,'Attribute')
 
-    @goal_bunches = GoalBunch.where(employee_id: @employee.id,id: @goal_bunch_id.id)
+    @goal_bunches = GoalBunch.where(employee_id: @employee.id,reviewer_confirm: true, id: @goal_bunch_id.id)
      @goal_bunch = GoalBunch.find_by_employee_id(@employee.id)
     #@goal_bunch = GoalBunch.where(employee_id: @employee.id,id: @goal_bunch_id.id)
   end

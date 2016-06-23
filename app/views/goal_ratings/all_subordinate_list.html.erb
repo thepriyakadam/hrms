@@ -1,7 +1,7 @@
 <div class="box box-default">
   <div class="box-body">
 
-    <%= link_to " Print excel ",all_subordinate_list_goal_ratings_path(format: "xls",employee_ids: @employees),method: :post, class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+    <%= link_to " Print excel ",all_subordinate_list_goal_ratings_path(format: "xls",employee_ids: @employees,goal_bunch_id: @goal_bunch_id.id),method: :post, class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
 
     <% @employees.each do |e|  %>
       <center><h3>Employee Performance Detail</h3></center>
@@ -10,8 +10,8 @@
         <% @experiences = Experience.where(employee_id: e) %>
         <% @qualifications = Qualification.where(employee_id: e) %>
         <% @employee_promotions = EmployeePromotion.where(employee_id: e) %>
-        <% @goal_ratings = GoalRating.where("appraisee_id = ? AND goal_type= ?" , e.id,'Goal') %>
-        <% @attribute_ratings = GoalRating.where("appraisee_id = ? AND goal_type= ?" , e.id,'Attribute') %>
+        <% @goal_ratings = GoalRating.where(goal_bunch_id: @goal_bunch_id.id,appraisee_id: e.id, goal_type: 'Goal') %>
+        <% @attribute_ratings = GoalRating.where(goal_bunch_id: @goal_bunch_id.id,appraisee_id: e.id, goal_type: 'Attribute') %>
 
       <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">    
         <thead>

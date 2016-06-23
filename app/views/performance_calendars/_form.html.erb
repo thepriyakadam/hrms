@@ -1,0 +1,33 @@
+<%= form_for(@performance_calendar) do |f| %>
+  <% if @performance_calendar.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@performance_calendar.errors.count, "error") %> prohibited this performance_calendar from being saved:</h2>
+
+      <ul>
+      <% @performance_calendar.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :period_id %><br>
+    <%= f.text_field :period_id %>
+  </div>
+  <div class="field">
+    <%= f.label :performance_activity_id %><br>
+    <%= f.text_field :performance_activity_id %>
+  </div>
+  <div class="field">
+    <%= f.label :start_date %><br>
+    <%= f.date_select :start_date %>
+  </div>
+  <div class="field">
+    <%= f.label :end_date %><br>
+    <%= f.date_select :end_date %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Performance Calendars</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Period</th>
+      <th>Performance activity</th>
+      <th>Start date</th>
+      <th>End date</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @performance_calendars.each do |performance_calendar| %>
+      <tr>
+        <td><%= performance_calendar.period %></td>
+        <td><%= performance_calendar.performance_activity %></td>
+        <td><%= performance_calendar.start_date %></td>
+        <td><%= performance_calendar.end_date %></td>
+        <td><%= link_to 'Show', performance_calendar %></td>
+        <td><%= link_to 'Edit', edit_performance_calendar_path(performance_calendar) %></td>
+        <td><%= link_to 'Destroy', performance_calendar, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Performance calendar', new_performance_calendar_path %>

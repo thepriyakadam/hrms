@@ -8,6 +8,7 @@
 <div class="box-body">
 <%= bootstrap_form_for(@employee_nomination,html: {id: "employee_nomination"},remote: true) do |f| %>
   <%= f.hidden_field :employee_id, value: @employee.id %>
+  <div class="option">
   <div class="row">
     <div class="col-sm-3">
       <div class="field">
@@ -34,6 +35,8 @@
         <%= f.check_box :minor,inline_label: 'Remember me'%>
       </div>
     </div>
+  </div>
+  </div>
   </div>
   <div class="row">
    
@@ -99,8 +102,7 @@
       <div class="field">
         <%= f.text_field :phone_no,placeholder:"Phone No" %>
       </div>
-    </div>
-    
+    </div>  
     <div class="col-sm-3">
       <div class="field">
         <%= f.text_field :email,placeholder:"Email" %>

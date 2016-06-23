@@ -193,7 +193,11 @@ Rails.application.routes.draw do
   end
 end
   resources :travel_options
-  resources :training_plans
+  resources :training_plans  do
+    collection do
+      post :create_records
+    end
+  end
   resources :training_requests do
     collection do
       get :training_request_list

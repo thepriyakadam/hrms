@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160623041859) do
+ActiveRecord::Schema.define(version: 20160623134245) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -758,12 +758,14 @@ ActiveRecord::Schema.define(version: 20160623041859) do
     t.datetime "updated_at",           null: false
     t.integer  "employee_id"
     t.integer  "relation_master_id"
+    t.integer  "illness_type_id"
   end
 
   add_index "employee_nominations", ["country_id"], name: "index_employee_nominations_on_country_id"
   add_index "employee_nominations", ["district_id"], name: "index_employee_nominations_on_district_id"
   add_index "employee_nominations", ["employee_id"], name: "index_employee_nominations_on_employee_id"
   add_index "employee_nominations", ["family_id"], name: "index_employee_nominations_on_family_id"
+  add_index "employee_nominations", ["illness_type_id"], name: "index_employee_nominations_on_illness_type_id"
   add_index "employee_nominations", ["nomination_master_id"], name: "index_employee_nominations_on_nomination_master_id"
   add_index "employee_nominations", ["relation_id"], name: "index_employee_nominations_on_relation_id"
   add_index "employee_nominations", ["relation_master_id"], name: "index_employee_nominations_on_relation_master_id"
@@ -1210,6 +1212,14 @@ ActiveRecord::Schema.define(version: 20160623041859) do
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
     t.boolean  "isweekend"
+  end
+
+  create_table "illness_types", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
+    t.text     "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "induction_activities", force: :cascade do |t|
@@ -2164,6 +2174,7 @@ ActiveRecord::Schema.define(version: 20160623041859) do
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
     t.integer  "employee_id"
+    t.text     "feedback"
   end
 
   add_index "trainees", ["employee_id"], name: "index_trainees_on_employee_id"

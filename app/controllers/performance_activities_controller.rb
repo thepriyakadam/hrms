@@ -1,6 +1,9 @@
 class PerformanceActivitiesController < ApplicationController
   before_action :set_performance_activity, only: [:show, :edit, :update, :destroy]
 
+  def index
+  end
+  
   def new
     @performance_activity = PerformanceActivity.new
     @performance_activities = PerformanceActivity.all
@@ -29,25 +32,16 @@ class PerformanceActivitiesController < ApplicationController
   # PATCH/PUT /performance_activities/1
   # PATCH/PUT /performance_activities/1.json
   def update
-    respond_to do |format|
-      if @performance_activity.update(performance_activity_params)
-        format.html { redirect_to @performance_activity, notice: 'Performance activity was successfully updated.' }
-        format.json { render :show, status: :ok, location: @performance_activity }
-      else
-        format.html { render :edit }
-        format.json { render json: @performance_activity.errors, status: :unprocessable_entity }
-      end
-    end
+    @performance_activity.update(performance_activity_params)
+    @performance_activity = PerformanceActivity.new
+    @performance_activities = PerformanceActivity.all   
   end
 
   # DELETE /performance_activities/1
   # DELETE /performance_activities/1.json
   def destroy
     @performance_activity.destroy
-    respond_to do |format|
-      format.html { redirect_to performance_activities_url, notice: 'Performance activity was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    @performance_activities = PerformanceActivity.all 
   end
 
   private

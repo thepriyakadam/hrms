@@ -19,6 +19,9 @@ class GoalRatingsController < ApplicationController
     @goal_ratings = GoalRating.where(goal_bunch_id: @goal_bunch.id, goal_type: 'Goal')
     @goal_attribute_ratings = GoalRating.where("goal_bunch_id = ? AND goal_type = ?", @goal_bunch.id ,'Attribute')
     @goal_bunches = GoalBunch.all
+    #byebug  
+    #@performance_calendar = PerformanceCalendar.where(period_id: @goal_bunch.id)
+    #@performance_calendars = PerformanceCalendar.where(start_date: @performance_calendar.start_date , end_date: @performance_calendar.end_date )
   end
 
   # GET /goal_ratings/1/edit
@@ -186,6 +189,20 @@ class GoalRatingsController < ApplicationController
   def performance_type
   end
   
+  def training_request
+    @goal_ratings = GoalRating.all
+  end
+
+  def create_attribute_training
+    byebug
+   @employee = Employee.find(params[:emp_id])
+   @training_topic_master_id = params[:training_topic_master_id]
+   @goal_rating = GoalRating.find_by(appraisee_id: @employee.id).update(training_topic_master_id: @training_topic_master_id.id)
+  end
+
+  def create_goal_training
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_goal_rating

@@ -60,6 +60,9 @@ Rails.application.routes.draw do
       get :performance_type
       get :attribute_modal
       patch :update_attribute_modal
+      get :training_request
+      post :create_attribute_training
+      post :create_goal_training
     end
   end
   resources :goal_bunches do

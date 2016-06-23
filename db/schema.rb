@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160623041859) do
+ActiveRecord::Schema.define(version: 20160623052807) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -170,15 +170,6 @@ ActiveRecord::Schema.define(version: 20160623041859) do
   add_index "attribute_rating_sheets", ["employee_attribute_id"], name: "index_attribute_rating_sheets_on_employee_attribute_id"
   add_index "attribute_rating_sheets", ["final_id_id"], name: "index_attribute_rating_sheets_on_final_id_id"
   add_index "attribute_rating_sheets", ["final_rating_id"], name: "index_attribute_rating_sheets_on_final_rating_id"
-
-  create_table "attributes", force: :cascade do |t|
-    t.string   "code"
-    t.string   "name"
-    t.text     "definition"
-    t.boolean  "status"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
 
   create_table "awards", force: :cascade do |t|
     t.integer  "employee_id"
@@ -640,6 +631,7 @@ ActiveRecord::Schema.define(version: 20160623041859) do
     t.text     "tomorrow_plan"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
+    t.date     "day"
   end
 
   add_index "employee_daily_activities", ["employee_id"], name: "index_employee_daily_activities_on_employee_id"

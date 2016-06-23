@@ -1,0 +1,32 @@
+ <div class="box box-default">
+    <div class="box-header with-border">
+        <h3 class="box-title">Employee Details</h3> 
+    </div><!-- /.box-header -->
+        <div class="box-body"> 
+ <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">  
+  <thead>
+    
+    <tr>
+      
+      <th>Employee ID</th>
+      <th>Name</th>
+      <th>Department</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @employees.each do |e|  %>
+    <tr>
+      
+      <td><%= e.manual_employee_code %></td> 
+      <td><%= full_name(e) %></td>
+      <td><%= e.department.try(:name) %></td>
+    </tr>
+   
+
+  <% end %>
+  </tbody>
+</table>
+</div>
+</div>
+

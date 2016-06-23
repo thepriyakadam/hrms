@@ -4,7 +4,7 @@ class EmployeeDailyActivitiesController < ApplicationController
   # GET /employee_daily_activities
   # GET /employee_daily_activities.json
   def index
-    @employee_daily_activities = EmployeeDailyActivity.all
+    @employee_daily_activities = EmployeeDailyActivity.where(employee_id: current_user.employee_id)
   end
 
   # GET /employee_daily_activities/1
@@ -15,7 +15,7 @@ class EmployeeDailyActivitiesController < ApplicationController
   # GET /employee_daily_activities/new
   def new
     @employee_daily_activity = EmployeeDailyActivity.new
-    @employee_daily_activities = EmployeeDailyActivity.all
+    @employee_daily_activities = EmployeeDailyActivity.where(employee_id: current_user.employee_id)
     
   end
 
@@ -27,7 +27,7 @@ class EmployeeDailyActivitiesController < ApplicationController
   # POST /employee_daily_activities.json
   def create
    @employee_daily_activity = EmployeeDailyActivity.new(employee_daily_activity_params)
-    @employee_daily_activities = EmployeeDailyActivity.all
+    @employee_daily_activities = EmployeeDailyActivity.where(employee_id: current_user.employee_id)
     respond_to do |format|
       if @employee_daily_activity.save
         @employee_daily_activity = EmployeeDailyActivity.new
@@ -45,7 +45,7 @@ class EmployeeDailyActivitiesController < ApplicationController
   
    def update
     @employee_daily_activity.update(employee_daily_activity_params)
-    @employee_daily_activities = EmployeeDailyActivity.all
+    @employee_daily_activities = EmployeeDailyActivity.where(employee_id: current_user.employee_id)
     @employee_daily_activity = EmployeeDailyActivity.new
   end
 
@@ -53,7 +53,12 @@ class EmployeeDailyActivitiesController < ApplicationController
   # DELETE /employee_daily_activities/1.json
   def destroy
     @employee_daily_activity.destroy
-    @employee_daily_activities = EmployeeDailyActivity.all
+    @employee_daily_activities = EmployeeDailyActivity.where(employee_id: current_user.employee_id)
+  end
+
+  def employee_details
+    @employees = Employee.where(department_id: current_user.department_id)
+
   end
 
   private

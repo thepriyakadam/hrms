@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :illness_types
   resources :employee_daily_activities
   resources :project_masters
   resources :attribute_masters

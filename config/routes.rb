@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :illness_types
   resources :performance_calendars
   resources :performance_activities
 

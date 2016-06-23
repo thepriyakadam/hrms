@@ -15,6 +15,8 @@ class ProjectMastersController < ApplicationController
   # GET /project_masters/new
   def new
     @project_master = ProjectMaster.new
+    @project_masters = ProjectMaster.all
+
   end
 
   # GET /project_masters/1/edit
@@ -24,15 +26,15 @@ class ProjectMastersController < ApplicationController
   # POST /project_masters
   # POST /project_masters.json
   def create
-    @project_master = ProjectMaster.new(project_master_params)
-
+     @project_master = ProjectMaster.new(project_master_params)
+    @project_masters = ProjectMaster.all
     respond_to do |format|
       if @project_master.save
-        format.html { redirect_to @project_master, notice: 'Project master was successfully created.' }
-        format.json { render :show, status: :created, location: @project_master }
+         @project_master = ProjectMaster.new
+        format.js { @flag = true }
       else
-        format.html { render :new }
-        format.json { render json: @project_master.errors, status: :unprocessable_entity }
+        flash.now[:alert] = 'Project Already Exist.'
+        format.js { @flag = false }
       end
     end
   end
@@ -40,25 +42,16 @@ class ProjectMastersController < ApplicationController
   # PATCH/PUT /project_masters/1
   # PATCH/PUT /project_masters/1.json
   def update
-    respond_to do |format|
-      if @project_master.update(project_master_params)
-        format.html { redirect_to @project_master, notice: 'Project master was successfully updated.' }
-        format.json { render :show, status: :ok, location: @project_master }
-      else
-        format.html { render :edit }
-        format.json { render json: @project_master.errors, status: :unprocessable_entity }
-      end
-    end
+    @project_master.update(project_master_params)
+    @project_masters = ProjectMaster.all
+    @project_master = ProjectMaster.new
   end
 
   # DELETE /project_masters/1
   # DELETE /project_masters/1.json
   def destroy
     @project_master.destroy
-    respond_to do |format|
-      format.html { redirect_to project_masters_url, notice: 'Project master was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    @project_masters = ProjectMaster.all
   end
 
   private

@@ -1,5 +1,15 @@
-<h1>New Illness Type</h1>
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Illness Type Master</h3>
+  </div><!-- /.box-header -->
+	<div class="box-body">
+		<div id="form">
+			<%= render 'form' %>	
+		</div>
+		
+		<div id="illness_type_li">
+			<%= render 'illness_type_list' %>
+		</div>
+	</div><!-- /.box-body -->
+</div><!-- /.box -->
 
-<%= render 'form' %>
-
-<%= link_to 'Back', illness_types_path %>

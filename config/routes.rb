@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
 
   resources :illness_types
+  resources :performance_calendars
+  resources :performance_activities
+
   resources :employee_daily_activities
   resources :project_masters
   resources :attribute_masters
@@ -56,6 +59,8 @@ Rails.application.routes.draw do
       post :print_subordinate_list
       post :all_subordinate_list
       get :performance_type
+      get :attribute_modal
+      patch :update_attribute_modal
     end
   end
   resources :goal_bunches do

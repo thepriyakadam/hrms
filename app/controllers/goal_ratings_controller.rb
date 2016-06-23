@@ -113,6 +113,17 @@ class GoalRatingsController < ApplicationController
     redirect_to goal_approval_goal_bunches_path(emp_id: @goal_rating.appraisee_id, id: @goal_rating.goal_bunch_id)
   end
 
+  def attribute_modal
+    @goal_rating = GoalRating.find(params[:format])
+  end
+
+  def update_attribute_modal
+    @goal_rating = GoalRating.find(params[:goal_rating_id])
+    @goal_rating.update(goal_rating_params)
+    flash[:notice] = 'Updated Successfully'
+    redirect_to goal_approval_goal_bunches_path(emp_id: @goal_rating.appraisee_id, id: @goal_rating.goal_bunch_id)
+  end
+  
   def print_department
   end
 
@@ -127,6 +138,8 @@ class GoalRatingsController < ApplicationController
   def send_mail_to_appraiser
     @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
     sum = @goal_bunch.goal_ratings.sum(:goal_weightage)
+
+    @gol_bunch = GoalBunch.find_by(id: @goal_bunch.id).update(goal_confirm: false)
     if sum == 100
       @emp = Employee.find(current_user.employee_id)
       GoalRatingMailer.send_email_to_appraiser(@emp).deliver_now
@@ -142,7 +155,10 @@ class GoalRatingsController < ApplicationController
 
   def print_subordinate_list
     current_login = Employee.find(current_user.employee_id)
+
     @period = Period.find(params[:salary][:period_id])
+    @goal_bunch = GoalBunch.find_by(period_id: @period.id)
+
     goal_bunches = GoalBunch.where(period_id: @period.id).pluck(:employee_id)
     subordinates = current_login.subordinates.pluck(:id)
     total_employee = goal_bunches & subordinates
@@ -150,6 +166,7 @@ class GoalRatingsController < ApplicationController
   end
  
   def all_subordinate_list
+    @goal_bunch_id = GoalBunch.find(params[:goal_bunch_id])
     employee_ids = params[:employee_ids]
       if employee_ids.nil?
         flash[:alert] = "Please Select the Checkbox"
@@ -161,6 +178,7 @@ class GoalRatingsController < ApplicationController
         emp = Employee.find(e)
         @employees << emp
         @goal_bunch = Employee.find(e)
+        #@goal_bunch = GoalBunch.find(params[:id])
       end 
     end
   end

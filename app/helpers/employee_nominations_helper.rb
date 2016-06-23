@@ -7,6 +7,10 @@ module EmployeeNominationsHelper
     employee.families.collect { |x| [x.f_name, x.id] }
   end
 
+  def all_illness_type
+     IllnessType.all.collect {|r| [r.name, r.id]}
+  end
+
   def all_relation_type
   	RelationMaster.all.collect {|r| [r.name, r.id]}
   end

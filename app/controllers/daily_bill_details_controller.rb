@@ -120,6 +120,14 @@ end
     end  
   end
 
+ 
+  
+  def daily_bill_history
+    # @daily_bill_details = DailyBillDetail.all
+    @c1 = ReportingMastersTravelRequest.find_by_travel_request_id(@daily_bill_detail.travel_request_id)
+    @daily_bill_details = DailyBillDetail.where("travel_request_id = ?",@c1.travel_request_id)
+  end
+
   def daily_bill_request_confirmation
     @daily_bill_details = DailyBillDetail.all
   end

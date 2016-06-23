@@ -782,12 +782,16 @@ end
   end
   resources :employee_bank_details
   resources :leav_cancelleds
+
   resources :employee_leav_balances do
     collection do
       get :collect_employee_for_leave
       get :employee_leave_balance
+      get :leave_balance_modal
+      patch :update_leave_balance
     end
   end
+  
   resources :leav_rejecteds
   resources :leav_approveds
   resources :employee_leav_requests do

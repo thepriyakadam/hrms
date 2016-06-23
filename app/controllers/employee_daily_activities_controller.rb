@@ -61,6 +61,11 @@ class EmployeeDailyActivitiesController < ApplicationController
 
   end
 
+  def daily_show_activity_list
+    @employee = Employee.find(params[:emp_id])
+    @employee_daily_activities = EmployeeDailyActivity.where(employee_id: @employee.id)
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_employee_daily_activity

@@ -32,7 +32,7 @@
         <td><%= travel_request.traveling_date %></td>
         <td><%= travel_request.place %></td>
         <td><%= travel_request.total_advance %></td>
-         <td>
+        <td>
             <%= link_to 'Show', travel_request,class: 'btn btn-xs btn-info fa fa-check' %>
             <% if travel_request.current_status == "Pending" %>
              <%= link_to '', cancel_travel_request_travel_requests_path(travel_request),data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-xs fa fa-trash' %>

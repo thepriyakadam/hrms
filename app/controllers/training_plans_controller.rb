@@ -30,6 +30,7 @@ class TrainingPlansController < ApplicationController
   # POST /training_plans.json
   def create
     @training_plan = TrainingPlan.new(training_plan_params)
+    # @employees = Trainee.new(trainee_params)
 
     respond_to do |format|
       if @training_plan.save
@@ -71,7 +72,9 @@ class TrainingPlansController < ApplicationController
     def set_training_plan
       @training_plan = TrainingPlan.find(params[:id])
     end
-
+    # def trainee_params
+    #   params.require(:trainee).permit(:training_plan_id,:employee_id)
+    # end
     # Never trust parameters from the scary internet, only allow the white list through.
     def training_plan_params
       params.require(:training_plan).permit(:training_date,:training_request_id, :training_topic_master_id, :topic, :no_of_employee, :trainer_name, :no_of_days, :no_of_hrs, :place)

@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :employee_daily_activities
+  resources :project_masters
   resources :attribute_masters
   resources :circulars
 
@@ -186,6 +188,7 @@ end
       get :training_request_confirmation
       get :approve_training_request
       get :reject_training_request
+      get :confirmation_list
     end
   end
   resources :selected_resumes  do
@@ -211,6 +214,8 @@ end
     collection do 
     post :is_confirm
     get :print_daily_bill
+    get :daily_bill_history
+    get :daily_bill_request_confirmation
     end
   end 
   resources :travel_requests do
@@ -777,12 +782,16 @@ end
   end
   resources :employee_bank_details
   resources :leav_cancelleds
+
   resources :employee_leav_balances do
     collection do
       get :collect_employee_for_leave
       get :employee_leave_balance
+      get :leave_balance_modal
+      patch :update_leave_balance
     end
   end
+  
   resources :leav_rejecteds
   resources :leav_approveds
   resources :employee_leav_requests do

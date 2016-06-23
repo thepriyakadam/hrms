@@ -30,8 +30,8 @@ class TravelRequestsController < ApplicationController
 
     respond_to do |format|
       if @travel_request.save
-        ReportingMastersTravelRequest.create(reporting_master_id: @travel_request.reporting_master_id, travel_request_id: @travel_request.id, travel_status: "Pending")
-        TravelRequestHistory.create(travel_request_id: @travel_request.id,application_date: @travel_request.application_date,traveling_date: @travel_request.traveling_date, tour_purpose: @travel_request.tour_purpose, place: @travel_request.place,total_advance: @travel_request.total_advance,reporting_master_id: @travel_request.reporting_master_id, travel_option_id: @travel_request.travel_option_id)
+        # ReportingMastersTravelRequest.create(reporting_master_id: @travel_request.reporting_master_id, travel_request_id: @travel_request.id, travel_status: "Pending")
+        # TravelRequestHistory.create(travel_request_id: @travel_request.id,application_date: @travel_request.application_date,traveling_date: @travel_request.traveling_date, tour_purpose: @travel_request.tour_purpose, place: @travel_request.place,total_advance: @travel_request.total_advance,reporting_master_id: @travel_request.reporting_master_id, travel_option_id: @travel_request.travel_option_id)
         TravelRequestMailer.travel_request(@travel_request).deliver_now
         format.html { redirect_to @travel_request, notice: 'Travel request was successfully created.' }
         format.json { render :show, status: :created, location: @travel_request }
@@ -81,22 +81,14 @@ class TravelRequestsController < ApplicationController
     @travel_requests = TravelRequest.where("reporting_master_id = ? and (current_status = ? or current_status = ?)",current_user.employee_id,"Pending","Approved & Send Next")
     #@travel_requests = TravelRequest.where(reporting_master_id: current_user.employee_id)
     session[:active_tab] ="travelmgmt"
-
   end
-
-  # def vacancy_history
-  #   @vacancy_masters = VacancyMaster.where("reporting_master_id = ? and (current_status = ? or current_status = ?)",current_user.employee_id,"Pending","Approved & Send Next")
-  #   # @vacancy_request_histories = VacancyRequestHistory.where("reporting_master_id = ? and (current_status = ? or current_status = ?)",current_user.employee_id,"Pending","Approved & Send Next")
-  #   session[:active_tab] ="recruitment"
-  #   session[:active_tab1] ="particular_vacancy"
-  # end 
 
   def travel_request_confirmation
     @travel_request = TravelRequest.find(params[:format])
     @travel_requests = TravelRequest.where(reporting_master_id: current_user.employee_id)
   end
 
-  def approve_travel_request
+def approve_travel_request
     @travel_request = TravelRequest.find(params[:format])
     @travel_request.update(current_status: "Approved")
     ReportingMastersTravelRequest.create(reporting_master_id: @travel_request.reporting_master_id, travel_request_id: @travel_request.id, travel_status: "Approved")

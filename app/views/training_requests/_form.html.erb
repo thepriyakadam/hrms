@@ -14,13 +14,7 @@
         <%= f.select :training_topic_master_id,all_training_topic,{hide_label: true,placeholder: 'Training Course',include_blank: 'Select Training Course'} %>
       </div>
     </div>
-    <div class="col-sm-3">
-    <label>Training Period</label>
-      <div class="form-group required">
-        <%= f.text_field :training_period,hide_label: true,placeholder: 'Training Period' %>
-      </div>
-    </div>
-
+  
     <div class="col-sm-3">
     <div class="form-group required">
      <label>Training Date</label>
@@ -39,15 +33,16 @@
         <%= f.select :reporting_master_id,all_reporting_master_list,{hide_label: true,include_blank: " Select Reporting Master"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
       </div>
     </div>
-    </div>
-    
-  <div class="row">
-  <div class="col-sm-3">
+    <div class="col-sm-3">
     <label>No. Of Employee (For Training)</label>
       <div class="form-group required">
         <%= f.text_field :no_of_employee,hide_label: true,placeholder: 'No Of Employee' %>
       </div>
     </div>
+    </div>
+    
+  <div class="row">
+  
 
     <div class="col-sm-3">
     <label>Place</label>
@@ -56,20 +51,20 @@
       </div>
     </div>
 
-    <div class="col-sm-3">
+    <div class="col-sm-4">
     <label>Description</label>
       <div class="field">
-        <%= f.text_area :description,hide_label: true,placeholder: 'Description' %>
+        <%= f.text_field :description,hide_label: true,placeholder: 'Description' %>
       </div>
     </div>
-
-    <div class="col-sm-3">
+   <!--  </div>
+    <div class="row"> -->
+    <div class="col-sm-5">
     <label>Justification</label>
       <div class="form-group required">
-        <%= f.text_area :justification,hide_label: true,placeholder: 'Justification' %>
+        <%= f.text_field :justification,hide_label: true,placeholder: 'Justification' %>
       </div>
     </div>
-
   </div>
   <div class="row">
     <div class="col-sm-3">

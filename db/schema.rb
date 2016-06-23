@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160622093650) do
+ActiveRecord::Schema.define(version: 20160623041859) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -632,6 +632,18 @@ ActiveRecord::Schema.define(version: 20160622093650) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
+
+  create_table "employee_daily_activities", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.integer  "project_master_id"
+    t.text     "today_activity"
+    t.text     "tomorrow_plan"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
+  add_index "employee_daily_activities", ["employee_id"], name: "index_employee_daily_activities_on_employee_id"
+  add_index "employee_daily_activities", ["project_master_id"], name: "index_employee_daily_activities_on_project_master_id"
 
   create_table "employee_designations", force: :cascade do |t|
     t.string   "code"
@@ -1741,6 +1753,14 @@ ActiveRecord::Schema.define(version: 20160622093650) do
     t.decimal  "march_month", precision: 15, scale: 2, default: 0.0
     t.datetime "created_at",                                         null: false
     t.datetime "updated_at",                                         null: false
+  end
+
+  create_table "project_masters", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
+    t.text     "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "qualifications", force: :cascade do |t|

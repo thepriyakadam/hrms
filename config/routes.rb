@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :employee_daily_activities
+  resources :project_masters
   resources :attribute_masters
   resources :circulars
 

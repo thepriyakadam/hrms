@@ -1,20 +1,9 @@
 class PerformanceActivitiesController < ApplicationController
   before_action :set_performance_activity, only: [:show, :edit, :update, :destroy]
 
-  # GET /performance_activities
-  # GET /performance_activities.json
-  def index
-    @performance_activities = PerformanceActivity.all
-  end
-
-  # GET /performance_activities/1
-  # GET /performance_activities/1.json
-  def show
-  end
-
-  # GET /performance_activities/new
   def new
     @performance_activity = PerformanceActivity.new
+    @performance_activities = PerformanceActivity.all
   end
 
   # GET /performance_activities/1/edit
@@ -25,14 +14,14 @@ class PerformanceActivitiesController < ApplicationController
   # POST /performance_activities.json
   def create
     @performance_activity = PerformanceActivity.new(performance_activity_params)
-
+    @performance_activities = PerformanceActivity.all
     respond_to do |format|
       if @performance_activity.save
-        format.html { redirect_to @performance_activity, notice: 'Performance activity was successfully created.' }
-        format.json { render :show, status: :created, location: @performance_activity }
+        @performance_activity = PerformanceActivity.new
+        format.js { @flag = true }
       else
-        format.html { render :new }
-        format.json { render json: @performance_activity.errors, status: :unprocessable_entity }
+        flash.now[:alert] = 'Performance Activity Already Exist.'
+        format.js { @flag = false }
       end
     end
   end

@@ -1,29 +1,24 @@
-<%= form_for(@performance_activity) do |f| %>
-  <% if @performance_activity.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@performance_activity.errors.count, "error") %> prohibited this performance_activity from being saved:</h2>
-
-      <ul>
-      <% @performance_activity.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+<%= bootstrap_form_for(@performance_activity,remote:true) do |f| %>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+          <%= f.text_field :code,hide_label:true, placeholder: 'Code' %>
+      </div>
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :code %><br>
-    <%= f.text_field :code %>
-  </div>
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :description %><br>
-    <%= f.text_area :description %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :name,hide_label:true, placeholder: 'Performance Activity' %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_area :description,hide_label:true, placeholder: 'Description' %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "Create Activity",:class => class_name %>
+      </div>
+    </div>
   </div>
 <% end %>

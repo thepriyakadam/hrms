@@ -1,9 +1,16 @@
 Rails.application.routes.draw do
 
+  resources :illness_types
   resources :performance_calendars
   resources :performance_activities
 
-  resources :employee_daily_activities
+  resources :employee_daily_activities do
+    collection do 
+    get :employee_details
+    get :daily_show_activity_list
+   
+    end
+  end 
   resources :project_masters
   resources :attribute_masters
   resources :circulars
@@ -63,6 +70,11 @@ Rails.application.routes.draw do
       get :training_request
       post :create_attribute_training
       post :create_goal_training
+      get :period_and_topic_wise_list
+      get :period_topic_wise_employee
+      post :send_request_for_training
+      post :training_plan_create
+      get :modal_training_plan
     end
   end
   resources :goal_bunches do
@@ -189,7 +201,12 @@ Rails.application.routes.draw do
   end
 end
   resources :travel_options
-  resources :training_plans
+  resources :training_plans  do
+    collection do
+      post :create_records
+      post :training_plan_create
+    end
+  end
   resources :training_requests do
     collection do
       get :training_request_list

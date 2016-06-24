@@ -30,9 +30,13 @@ class TrainingPlansController < ApplicationController
   # POST /training_plans.json
   def create
     @training_plan = TrainingPlan.new(training_plan_params)
-
+    # byebug
     respond_to do |format|
       if @training_plan.save
+        @employee_ids = params[:employee_ids]
+        @employee_ids.each do |eid|
+        Trainee.create(employee_id: eid,training_plan_id: @training_plan.id)
+      end
         format.html { redirect_to @training_plan, notice: 'Training plan was successfully created.' }
         format.json { render :show, status: :created, location: @training_plan }
       else
@@ -41,6 +45,7 @@ class TrainingPlansController < ApplicationController
       end
     end
   end
+
 
   # PATCH/PUT /training_plans/1
   # PATCH/PUT /training_plans/1.json
@@ -66,12 +71,19 @@ class TrainingPlansController < ApplicationController
     end
   end
 
+  def training_plan_create
+    @training_plan = TrainingPlan.new(training_plan_params)
+    @training_plan.save
+    flash[:notice] = "Created successfully"
+    # training_plan = TrainingPlan.create(training_plan_params)
+    redirect_to period_and_topic_wise_list_goal_ratings_path
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_training_plan
       @training_plan = TrainingPlan.find(params[:id])
     end
-
     # Never trust parameters from the scary internet, only allow the white list through.
     def training_plan_params
       params.require(:training_plan).permit(:training_date,:training_request_id, :training_topic_master_id, :topic, :no_of_employee, :trainer_name, :no_of_days, :no_of_hrs, :place)

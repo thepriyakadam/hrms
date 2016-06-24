@@ -80,6 +80,6 @@ class EmployeeNominationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def employee_nomination_params
-      params.require(:employee_nomination).permit(:employee_id,:nomination_master_id, :family_id, :nomination, :mental_illness, :minor, :guardian_name, :relation_master_id, :same_address, :address, :city, :district_id, :state_id, :country_id, :pin_code, :phone_no, :mobile_no, :email)
+      params.require(:employee_nomination).permit(:employee_id,:illness_type_id,:nomination_master_id, :family_id, :nomination, :mental_illness, :minor, :guardian_name, :relation_master_id, :same_address, :address, :city, :district_id, :state_id, :country_id, :pin_code, :phone_no, :mobile_no, :email)
     end
 end

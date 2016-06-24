@@ -20,7 +20,7 @@
         <td><%= trainee.employee.try(:first_name) %> <%= trainee.employee.try(:middle_name) %> <%= trainee.employee.try(:last_name) %></td>
         <td><%= trainee.feedback %></td>
         <div id="myModal" class="modal fade"></div>
-        <td><%= link_to ' Update Feedback',modal_feedback_training_plans_path(trainee),class: 'btn btn btn-xs btn-success fa fa-modx',remote: true %>
+        <td><%= link_to ' Give Feedback',modal_feedback_training_plans_path(trainee),class: 'btn btn btn-xs btn-success fa fa-modx',remote: true %>
           <%= link_to '', training_details_list_training_plans_path(trainee),class: 'btn btn-xs btn-default fa fa-eye' %>
         </td>
       </tr>

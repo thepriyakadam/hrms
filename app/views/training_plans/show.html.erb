@@ -6,7 +6,7 @@
     <table id="example2" class="table table-bordered table-hover table-condensed">
 
       <tr>
-        <th><strong>Training date:</strong></th>
+        <th><strong>Training Date:</strong></th>
         <td><%= @training_plan.training_date %></td>
       
         <th><strong>Topic:</strong></th>
@@ -14,18 +14,18 @@
       </tr>
 
       <tr>
-        <th><strong>No of employee:</strong></th>
+        <th><strong>No of Employee:</strong></th>
         <td><%= @training_plan.no_of_employee %></td>
       
-        <th><strong>Trainer name:</strong></th>
+        <th><strong>Trainer Name:</strong></th>
         <td><%= @training_plan.trainer_name %></td>
       </tr>
 
       <p>
-        <th><strong>No of days:</strong></th>
+        <th><strong>No of Days:</strong></th>
         <td><%= @training_plan.no_of_days %></td>
       
-        <th><strong>No of hrs:</strong></th>
+        <th><strong>No of Hrs:</strong></th>
         <td><%= @training_plan.no_of_hrs %></td>
       </p>
 
@@ -40,7 +40,7 @@
     <div>
       <%= render 'trainee' %>
     </div>
-     <%= link_to " Print Training Report ", print_training_details_training_plans_path(id: @training_plan.id, format: "pdf"), class: "btn btn-xl btn-info fa fa-print",:target => "_blank" %>  
+      <%= link_to " Print Training Report ", print_training_details_training_plans_path(id: @training_plan.id, format: "pdf"), class: "btn btn-xl btn-info fa fa-print",:target => "_blank" %>  
       <%= link_to 'Back', training_plans_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
   </div>
 </div>

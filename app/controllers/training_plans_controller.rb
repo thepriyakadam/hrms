@@ -5,11 +5,13 @@ class TrainingPlansController < ApplicationController
   # GET /training_plans.json
   def index
     @training_plans = TrainingPlan.all
+    session[:active_tab] ="trainingmgmt"
   end
 
   # GET /training_plans/1
   # GET /training_plans/1.json
   def show
+    @trainees = Trainee.where(training_plan_id: @training_plan.id)
   end
 
   # GET /training_plans/new
@@ -71,10 +73,53 @@ class TrainingPlansController < ApplicationController
     end
   end
 
+  def print_training_details
+    @training_plan = TrainingPlan.find(params[:id])
+    @trainees = Trainee.where(training_plan_id: @training_plan.id)
+            respond_to do |f|
+            f.js
+            f.html
+            f.pdf do
+              render pdf: 'print_training_details',
+              layout: 'pdf.html',
+              :orientation      => 'Landscape', # default , Landscape,
+              template: 'training_plans/print_training_details.pdf.erb',
+              show_as_html: params[:debug].present?,
+              margin:  { top:13,bottom:13,left:13,right:13 }
+            end
+          end
+  end
+
+  def trainee_list
+     @trainees = Trainee.all
+     session[:active_tab] ="selfservice"
+  end
+
+  def modal_feedback
+    @trainee = Trainee.find(params[:format])
+  end
+
+  def update_feedback
+     @trainee = Trainee.find(params[:id])
+     @feedback = params[:trainee][:feedback]
+     @trainee.update(feedback: @feedback)
+     flash[:notice] = 'Feedback Updated Successfully'
+     redirect_to trainee_list_training_plans_path
+  end
+
+  def training_details_list
+    # byebug
+    @trainee = Trainee.find(params[:format])
+    @training_plans = TrainingPlan.where(id: @trainee.training_plan_id)
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_training_plan
       @training_plan = TrainingPlan.find(params[:id])
+    end
+    def trainee_params
+      params.require(:trainee).permit(:training_plan_id,:employee_id,:feedback)
     end
     # Never trust parameters from the scary internet, only allow the white list through.
     def training_plan_params

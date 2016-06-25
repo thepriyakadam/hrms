@@ -198,9 +198,9 @@ class GoalRatingsController < ApplicationController
     #byebug
     @employee = Employee.find(params[:emp_id])
     @training_topic_master_id = params[:training_topic_master_id]
-    @attribute_master_id = params[:attribute_id]
+    @goal_rating_id = params[:goal_rating_id]
 
-    @attribute_rating = GoalRating.where(attribute_master_id: @attribute_master_id, appraisee_id: @employee.id,goal_type: 'Attribute').update_all(training_topic_master_id: @training_topic_master_id)
+    @attribute_rating = GoalRating.where(id: @goal_rating_id, appraisee_id: @employee.id,goal_type: 'Attribute').update_all(training_topic_master_id: @training_topic_master_id)
     flash[:notice] = "Created Successfully"
     redirect_to training_request_goal_ratings_path
   end
@@ -208,9 +208,9 @@ class GoalRatingsController < ApplicationController
   def create_goal_training
     @employee = Employee.find(params[:emp_id])
     @training_topic_master_id = params[:training_topic_master_id]
-    @goal_perspective_id = params[:goal_id]
+    @goal_rating_id = params[:goal_rating_id]
 
-    @goal_rating = GoalRating.where(goal_perspective_id: @goal_perspective_id,appraisee_id: @employee.id,goal_type: 'Goal').update_all(training_topic_master_id: @training_topic_master_id)
+    @goal_rating = GoalRating.where(id: @goal_rating_id,appraisee_id: @employee.id,goal_type: 'Goal').update_all(training_topic_master_id: @training_topic_master_id)
     flash[:notice] = "Created Successfully"
     redirect_to training_request_goal_ratings_path
   end

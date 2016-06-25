@@ -21,7 +21,7 @@
         <tbody>
           <% @goal_ratings.each do |a| %>
           <tr>
-          <%= bootstrap_form_for :login, url: {action: 'create_goal_training',emp_id: a.appraisee_id,goal_id: a.goal_perspective_id}, html: {id: 'login'} do |f| %> 
+          <%= bootstrap_form_for :login, url: {action: 'create_goal_training',emp_id: a.appraisee_id,goal_rating_id: a.id}, html: {id: 'login'} do |f| %> 
             <td><%= a.appraisee.manual_employee_code %></td> 
             <td><%= a.appraisee.first_name %> <%= a.appraisee.middle_name %> <%= a.appraisee.last_name %></td>
             <td><%= a.goal_perspective.try(:name) %></td>
@@ -50,7 +50,7 @@
         <tbody>
           <% @attribute_ratings.each do |a| %>
           <tr>
-          <%= bootstrap_form_for :login, url: {action: 'create_attribute_training',emp_id: a.appraisee_id,attribute_id:  a.attribute_master_id}, html: {id: 'login'} do |f| %> 
+          <%= bootstrap_form_for :login, url: {action: 'create_attribute_training',emp_id: a.appraisee_id,goal_rating_id: a.id}, html: {id: 'login'} do |f| %> 
             <td><%= a.appraisee.manual_employee_code %></td> 
             <td><%= a.appraisee.first_name %> <%= a.appraisee.middle_name %> <%= a.appraisee.last_name %></td>
             <td><%= a.attribute_master.try(:name) %></td>

@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     collection do 
     get :employee_details
     get :daily_show_activity_list
+    get :activity_report
    
     end
   end 

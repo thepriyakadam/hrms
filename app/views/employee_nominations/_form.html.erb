@@ -10,10 +10,16 @@
   <%= f.hidden_field :employee_id, value: @employee.id %>
   <div class="row">
     <div class="col-sm-3">
-      <div class="field">
-         <%= f.select :nomination_master_id,all_nomination_type,{label: 'Nomination Type',include_blank: " Select Nomination Option"} %>
+      <label>Nomination Type</label>
+        <div class="form-group required">
+         <div class="input-group">
+        <div class="input-group-addon">
+                <%= link_to "", new_nomination_master_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+              </div>
+          <%= f.select :nomination_master_id, all_nomination_type,{hide_label: true,include_blank: " Select Nomination Option"}%>
+        </div>
+        </div>
       </div>
-    </div>
     </div>
     <div class="row">
     <div class="col-sm-3">
@@ -27,11 +33,16 @@
       </div>
     </div>
     <div class="col-sm-3">
-    <label>Illness Type</label>
-      <div class="field">
-      <%= f.select :illness_type_id,all_illness_type,{hide_label: true,include_blank: " Select Illness Type"} %>   
+      <label>Illness Type</label>
+        <div class="form-group required">
+         <div class="input-group">
+        <div class="input-group-addon">
+                <%= link_to "", new_illness_type_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+              </div>
+          <%= f.select :illness_type_id, all_illness_type,{hide_label: true,include_blank: " Select Illness Type"}%>
+        </div>
+        </div>
       </div>
-    </div>
      <div class="col-sm-2">
       <div class="field">
         <%= f.check_box :minor,inline_label: 'Remember me',class: 'showHideCheck' %>
@@ -47,10 +58,16 @@
       </div>
     </div>
     <div class="col-sm-3">
-      <div class="field">
-      <%= f.select :relation_master_id,all_relation_type,{label:"Relation(Nomminee's)",include_blank: " Select Relation"} %>
+      <label>Relation(Nomminee's)</label>
+        <div class="form-group required">
+         <div class="input-group">
+        <div class="input-group-addon">
+                <%= link_to "", new_relation_master_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+              </div>
+          <%= f.select :relation_master_id, all_relation_type,{hide_label: true,include_blank: " Select Relation"}%>
+        </div>
+        </div>
       </div>
-    </div>
     <div class="col-sm-3">
       <div class="field">
         <%= f.text_field :mobile_no,placeholder:"Mobile No" %>

@@ -15,6 +15,7 @@ class IllnessTypesController < ApplicationController
   # GET /illness_types/new
   def new
     @illness_type = IllnessType.new
+    @illness_types = IllnessType.all
   end
 
   # GET /illness_types/1/edit
@@ -25,14 +26,15 @@ class IllnessTypesController < ApplicationController
   # POST /illness_types.json
   def create
     @illness_type = IllnessType.new(illness_type_params)
+    @illness_types = IllnessType.all
 
     respond_to do |format|
       if @illness_type.save
-        format.html { redirect_to @illness_type, notice: 'Illness type was successfully created.' }
-        format.json { render :show, status: :created, location: @illness_type }
+         @illness_type = IllnessType.new
+        format.json { @flag=true }
       else
-        format.html { render :new }
-        format.json { render json: @illness_type.errors, status: :unprocessable_entity }
+        flash.now[:alert] = 'Illness Already exit '
+        format.js { @flag=false}
       end
     end
   end
@@ -40,25 +42,16 @@ class IllnessTypesController < ApplicationController
   # PATCH/PUT /illness_types/1
   # PATCH/PUT /illness_types/1.json
   def update
-    respond_to do |format|
-      if @illness_type.update(illness_type_params)
-        format.html { redirect_to @illness_type, notice: 'Illness type was successfully updated.' }
-        format.json { render :show, status: :ok, location: @illness_type }
-      else
-        format.html { render :edit }
-        format.json { render json: @illness_type.errors, status: :unprocessable_entity }
-      end
-    end
+    @illness_type.update(illness_type_params)
+    @illness_type = IllnessType.new
+    @illness_types = IllnessType.all
   end
 
   # DELETE /illness_types/1
   # DELETE /illness_types/1.json
   def destroy
     @illness_type.destroy
-    respond_to do |format|
-      format.html { redirect_to illness_types_url, notice: 'Illness type was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    @illness_types = IllnessType.all
   end
 
   private

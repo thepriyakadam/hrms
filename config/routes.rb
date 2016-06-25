@@ -196,6 +196,11 @@ end
   resources :training_plans  do
     collection do
       post :create_records
+      get :print_training_details
+      get :trainee_list
+      get :modal_feedback
+      post :update_feedback
+      get :training_details_list
     end
   end
   resources :training_requests do

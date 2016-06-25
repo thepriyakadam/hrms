@@ -1,10 +1,5 @@
-<div class="box box-default">
-  <div class="box-header with-border">
-    <h3 class="box-title">Training Plan</h3>
-  </div><!-- /.box-header -->
-  <div class="box-body">
-    <table id="example2" class="table table-bordered table-hover table-condensed">
-
+    <h2><strong>Training Details</strong></h2><br><br>
+    <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
       <tr>
         <th><strong>Training Date:</strong></th>
         <td><%= @training_plan.training_date %></td>
@@ -36,11 +31,23 @@
         <th></th>
         <td></td>
       </tr>
-    </table>
-    <div>
-      <%= render 'trainee' %>
-    </div>
-      <%= link_to " Print Training Report ", print_training_details_training_plans_path(id: @training_plan.id, format: "pdf"), class: "btn btn-xl btn-info fa fa-print",:target => "_blank" %>  
-      <%= link_to 'Back', training_plans_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
-  </div>
-</div>
+    </table><br><br>
+
+    <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
+    <thead>
+    <tr>
+      <th>Sr.No</th>
+      <th>Employee Name</th>
+      <th>Signature</th>
+  </thead>
+  <tbody>
+  <% i = 0 %>
+   <% @trainees.each do |trainee| %>
+      <tr>
+        <td><%= i=i+1 %></td>
+        <td><%= trainee.employee.try(:first_name) %> <%= trainee.employee.try(:middle_name) %> <%=trainee.employee.try(:last_name) %></td>
+        <td></td>
+      </tr>
+      <% end %>
+  </tbody>
+</table>

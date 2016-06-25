@@ -82,7 +82,7 @@ class TrainingPlansController < ApplicationController
             f.pdf do
               render pdf: 'print_training_details',
               layout: 'pdf.html',
-              :orientation      => 'Landscape', # default , Landscape,
+              # :orientation      => 'Landscape', # default , Landscape,
               template: 'training_plans/print_training_details.pdf.erb',
               show_as_html: params[:debug].present?,
               margin:  { top:13,bottom:13,left:13,right:13 }

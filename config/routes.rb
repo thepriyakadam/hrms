@@ -68,6 +68,14 @@ Rails.application.routes.draw do
       get :performance_type
       get :attribute_modal
       patch :update_attribute_modal
+      get :training_request
+      post :create_attribute_training
+      post :create_goal_training
+      get :period_and_topic_wise_list
+      get :period_topic_wise_employee
+      post :send_request_for_training
+      post :training_plan_create
+      get :modal_training_plan
     end
   end
   resources :goal_bunches do
@@ -197,6 +205,7 @@ end
   resources :training_plans  do
     collection do
       post :create_records
+      post :training_plan_create
       get :print_training_details
       get :trainee_list
       get :modal_feedback

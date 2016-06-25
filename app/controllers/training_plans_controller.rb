@@ -73,40 +73,6 @@ class TrainingPlansController < ApplicationController
     end
   end
 
-
- # @training_plan = TrainingPlan.new(training_plan_params)
- #    # byebug
- #    respond_to do |format|
- #      if @training_plan.save
- #        @employee_ids = params[:employee_ids]
- #        @employee_ids.each do |eid|
- #        Trainee.create(employee_id: eid,training_plan_id: @training_plan.id)
- #      end
- #        format.html { redirect_to @training_plan, notice: 'Training plan was successfully created.' }
- #        format.json { render :show, status: :created, location: @training_plan }
- #      else
- #        format.html { render :new }
- #        format.json { render json: @training_plan.errors, status: :unprocessable_entity }
- #      end
- #    end
-
-
-  def training_plan_create
-    @training_plan = TrainingPlan.new(training_plan_params)
-    @appraisee_id = params[:appraisee_id]
-
-      if @training_plan.save
-        @goal_rating_ids = params[:goal_rating_ids]
-        @goal_rating_ids.each do |e|
-        Trainee.create(employee_id: e,training_plan_id: @training_plan.id)
-        end
-        flash[:notice] = 'Training plan was successfully created.'
-      else
-    end
-    flash[:notice] = "Created successfully"
-    # training_plan = TrainingPlan.create(training_plan_params)
-    redirect_to period_and_topic_wise_list_goal_ratings_path
-
   def print_training_details
     @training_plan = TrainingPlan.find(params[:id])
     @trainees = Trainee.where(training_plan_id: @training_plan.id)
@@ -116,7 +82,7 @@ class TrainingPlansController < ApplicationController
             f.pdf do
               render pdf: 'print_training_details',
               layout: 'pdf.html',
-              # :orientation      => 'Landscape', # default , Landscape,
+              :orientation      => 'Landscape', # default , Landscape,
               template: 'training_plans/print_training_details.pdf.erb',
               show_as_html: params[:debug].present?,
               margin:  { top:13,bottom:13,left:13,right:13 }

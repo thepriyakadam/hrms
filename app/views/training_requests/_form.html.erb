@@ -8,12 +8,17 @@
 
 <%= f.hidden_field :employee_id, value: current_user.employee_id %>
   <div class="row">
-    <div class="col-sm-3">
-    <label>Training Course</label>
-      <div class="form-group required">
-        <%= f.select :training_topic_master_id,all_training_topic,{hide_label: true,placeholder: 'Training Course',include_blank: 'Select Training Course'} %>
+     <div class="col-sm-3">
+      <label>Training Course</label>
+        <div class="form-group required">
+         <div class="input-group">
+        <div class="input-group-addon">
+                <%= link_to "", new_training_topic_master_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+              </div>
+          <%= f.select :training_topic_master_id, all_training_topic,{hide_label: true,include_blank: " Select Training Course"}%>
+        </div>
+        </div>
       </div>
-    </div>
   
     <div class="col-sm-3">
     <div class="form-group required">

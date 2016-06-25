@@ -9,6 +9,7 @@ class Employee < ActiveRecord::Base
   belongs_to :state
   belongs_to :district
   belongs_to :religion
+  has_many :trainees
 
   has_many :leav_c_offs
   has_many :salaryslips
@@ -48,6 +49,7 @@ class Employee < ActiveRecord::Base
   has_many :employee_promotions
   has_many :training_requests
   has_many :interview_rounds
+  has_many :goal_bunches
   
   accepts_nested_attributes_for :joining_detail
   has_many :subordinates, class_name: 'Employee',

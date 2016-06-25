@@ -1,6 +1,6 @@
-<div class="ajax-progress"></div>
+<!-- <div class="ajax-progress"></div> -->
 
-<%= bootstrap_form_for GoalRating.new,url:{action:'send_request_for_training'} do |f| %>  
+<!-- < bootstrap_form_for GoalRating.new,url:{action:'send_request_for_training'} do |f| %>   -->
 	<table class="table table-bordered table-hover table-condensed">
 	  <thead>
 	    <tr>
@@ -12,28 +12,17 @@
 	  <tbody>
 	  	<% @goal_ratings.each do |e|  %>
 		    <tr>
-		    	<td><%= check_box_tag "goal_rating_ids[]", e.id %></td>
+		    	<td><%= check_box_tag "goal_rating_ids[]", e.appraisee_id %></td>
 		      <td><%= e.appraisee_id %></td> 
 		      <td><%= e.appraisee.try(:first_name) %> <%= e.appraisee.try(:last_name) %></td>
 		      <%= hidden_field_tag "period_id[]", value: e.goal_bunch.period_id %>
+		      <%= hidden_field_tag "appraisee_id[]", value: e.appraisee_id %>
 		    </tr>
 	    <% end %>
 	  </tbody>
 	</table>
 
-	<%= link_to 'Training Plan', modal_training_plan_goal_ratings_path(goal_bunch_id: @goal_bunch.id),class: 'btn btn-xs btn-success',remote: true %>
-	<br><br>
-
-	<div class="row">
-	  <div class="col-sm-3">
-	    <div class="actions">
-	      <%= f.submit "send request", class: 'btn btn-primary btn-sm' %>
-	    </div>
-	  </div>
-	</div>
-<% end %>
-
-<div id="myModal" class="modal fade"></div>
+<!-- <div id="myModal" class="modal fade"></div> -->
    <script type="text/javascript">
   $(function () {
     $('#selectAll').click(function() {

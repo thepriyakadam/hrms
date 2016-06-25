@@ -71,9 +71,37 @@ class TrainingPlansController < ApplicationController
     end
   end
 
+
+
+ # @training_plan = TrainingPlan.new(training_plan_params)
+ #    # byebug
+ #    respond_to do |format|
+ #      if @training_plan.save
+ #        @employee_ids = params[:employee_ids]
+ #        @employee_ids.each do |eid|
+ #        Trainee.create(employee_id: eid,training_plan_id: @training_plan.id)
+ #      end
+ #        format.html { redirect_to @training_plan, notice: 'Training plan was successfully created.' }
+ #        format.json { render :show, status: :created, location: @training_plan }
+ #      else
+ #        format.html { render :new }
+ #        format.json { render json: @training_plan.errors, status: :unprocessable_entity }
+ #      end
+ #    end
+
+
   def training_plan_create
     @training_plan = TrainingPlan.new(training_plan_params)
-    @training_plan.save
+    @appraisee_id = params[:appraisee_id]
+
+      if @training_plan.save
+        @goal_rating_ids = params[:goal_rating_ids]
+        @goal_rating_ids.each do |e|
+        Trainee.create(employee_id: e,training_plan_id: @training_plan.id)
+        end
+        flash[:notice] = 'Training plan was successfully created.'
+      else
+    end
     flash[:notice] = "Created successfully"
     # training_plan = TrainingPlan.create(training_plan_params)
     redirect_to period_and_topic_wise_list_goal_ratings_path

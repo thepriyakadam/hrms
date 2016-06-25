@@ -194,17 +194,6 @@ class GoalRatingsController < ApplicationController
     @attribute_ratings = GoalRating.where(goal_type: 'Attribute',training_topic_master_id: nil)
   end
 
-  def create_attribute_training
-    #byebug
-    @employee = Employee.find(params[:emp_id])
-    @training_topic_master_id = params[:training_topic_master_id]
-    @attribute_master_id = params[:attribute_id]
-
-    @attribute_rating = GoalRating.where(attribute_master_id: @attribute_master_id, appraisee_id: @employee.id,goal_type: 'Attribute').update_all(training_topic_master_id: @training_topic_master_id)
-    flash[:notice] = "Created Successfully"
-    redirect_to training_request_goal_ratings_path
-  end
-
   def create_goal_training
     @employee = Employee.find(params[:emp_id])
     @training_topic_master_id = params[:training_topic_master_id]
@@ -215,10 +204,23 @@ class GoalRatingsController < ApplicationController
     redirect_to training_request_goal_ratings_path
   end
 
+  def create_attribute_training
+    #byebug
+    @employee = Employee.find(params[:emp_id])
+    @training_topic_master_id = params[:training_topic_master_id]
+    @attribute_master_id = params[:attribute_id]
+
+    @attribute_rating = GoalRating.where(attribute_master_id: @attribute_master_id, appraisee_id: @employee.id,goal_type: 'Attribute').update_all(training_topic_master_id: @training_topic_master_id)
+    flash[:notice] = "Created Successfully"
+    redirect_to training_request_goal_ratings_path
+  end
+  
   def period_and_topic_wise_list
   end
 
   def period_topic_wise_employee
+    @training_plan = TrainingPlan.new
+    #@appraisee_id = params[:appraisee_id]
     @goal_bunch = GoalBunch.find_by_period_id(params[:period_id])
     @training_topic_master_id = params[:training_topic_master_id]
     @goal_ratings = GoalRating.where(goal_bunch_id: @goal_bunch.id,training_topic_master_id: @training_topic_master_id)

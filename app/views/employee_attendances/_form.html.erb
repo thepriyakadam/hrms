@@ -1,11 +1,21 @@
-<%= form_for(@employee_attendance) do |f| %>
+<%= bootstrap_form_for(@employee_attendance) do |f| %>
+ <div class="row">
+  <div class="col-sm-3">
   <div class="field">
-    <%= f.label :employee_id %><br>
-    <%= f.text_field :employee_id %>
+    <%= f.select :department_id, all_department %>
   </div>
-  <div class="field">
-    <%= f.label :day %><br>
-    <%= f.date_select :day %>
+  </div>
+  <div class="col-sm-3">
+    <label>Date </label>
+    <div class="form-group required">
+    <div class="input-group">
+      <div class="input-group-addon">
+        <i class="fa fa-calendar"></i>
+      </div>
+      <%= f.text_field :day,hide_label: true,class: 'day_date'%>
+    </div>
+  </div>
+  </div>
   </div>
   <div class="field">
     <%= f.label :present %><br>
@@ -23,3 +33,15 @@
     <%= f.submit %>
   </div>
 <% end %>
+
+<script type="text/javascript">
+  $(function(){
+    $('.day_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:-0',
+    dateFormat: 'dd-mm-yy' });
+
+    });
+
+    </script>

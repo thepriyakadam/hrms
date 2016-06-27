@@ -51,20 +51,9 @@ class QualificationsController < ApplicationController
   # PATCH/PUT /qualifications/1
   # PATCH/PUT /qualifications/1.json
   def update
-    respond_to do |format|
-      @employee = Employee.find(params['qualification']['employee_id'])
-      if @qualification.update(qualification_params)
-
-        # format.html { redirect_to @qualification, notice: 'Qualification was successfully updated.' }
-        # format.json { render :show, status: :ok, location: @qualification }
-        @qualifications = @employee.qualifications
-        format.js { @flag = true }
-      else
-        # format.html { render :edit }
-        # format.json { render json: @qualification.errors, status: :unprocessable_entity }
-        format.js { @flag = false }
-      end
-    end
+    @qualification.update(qualification_params)
+    @qualifications = Qualification.all
+    @qualification = Qualification.new
   end
 
   # DELETE /qualifications/1

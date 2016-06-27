@@ -49,7 +49,7 @@ $(document).ready(function(){
 <div class="box-body">
 
 <%= bootstrap_form_for(@qualification,html: {id: 'qualification'},remote:true) do |f| %>
-  <%= f.hidden_field :employee_id, value: @employee.id %>
+<%= f.hidden_field :employee_id, value: @employee.id %>
     <div id="entry1" class="clonedInput ">
       <div class="row">
         <div class="col-sm-3">
@@ -72,7 +72,7 @@ $(document).ready(function(){
     
         <div class="col-sm-2">
           <div class="field">
-            <%= f.text_field :marks, label: 'Marks(%)', class: 'input_marks' %>
+            <%= f.text_field :marks, label: 'Marks(CGPA / %)', class: 'input_marks' %>
           </div>
         </div>
     </div>    

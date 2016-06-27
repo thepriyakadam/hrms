@@ -7,7 +7,6 @@
   </li>
   <li class="treeview" id="company">
     <a href="">
-      <!-- <i class="fa fa-user-plus"></i> <span>Create</span> <i class="fa fa-angle-left pull-right"></i> -->
       <i class="fa fa-user-plus"></i> <span><%= current_user.company_location.company.try(:name) %> Details</span> <i class="fa fa-angle-left pull-right"></i></a>
     <ul class="treeview-menu" >
       <li><a href="/companies"><i class="fa fa-tags"></i> Companies</a></li>
@@ -71,6 +70,7 @@
           <li><a href="/relation_masters/new"><i class="fa fa-tags"></i>Relation </a></li>
           <li><a href="/blood_groups/new"><i class="fa fa-tags"></i> Blood Group</a></li>
           <li><a href="/nomination_masters/new"><i class="fa fa-tags"></i>Nomination Type </a></li>
+          <li><a href="/illness_types/new"><i class="fa fa-tags"></i>Illness Type </a></li>
         </ul>
        </li>
 
@@ -119,6 +119,7 @@
           <li><a href="/goal_perspectives/new"><i class="fa fa-tags"></i>Type Of Objective</a></li>
           <li><a href="/periods"><i class="fa fa-tags"></i>Performance Peroid</a></li>
           <li><a href="/ratings/new"><i class="fa fa-tags"></i> Rating Setup </a></li>
+          <li><a href="/performance_activities/new"><i class="fa fa-tags"></i> Performance Activity </a></li>
         </ul>
 
         <li id="interview_master_setup">
@@ -139,6 +140,9 @@
            <li><a href="/leaving_reasons/new"><i class="fa fa-tags"></i>Leaving Reason Master </a></li>
         </ul>
        </li>
+        <li id="project_master_setup">
+        <li><a href="/project_masters/new"><i class="fa fa-tags"></i>Project Master </a></li>
+       </li>
       </li> 
       </ul>
   </li>
@@ -158,14 +162,14 @@
     <li class="treeview" id="employeeinduction">
         <a href="#"><i class="fa fa-edit"></i> Employee Induction <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
-        <li><a href="/induction_masters/new"><i class="fa fa-tags"></i> Induction Template Master</a></li>
-        <li><a href="/induction_activities/employee_list"><i class="fa fa-tags"> </i> Employee Induction Plan </a></li>
+        <li><a href="/induction_masters/new"><i class="fa fa-tags"></i> Induction Template</a></li>
+        <li><a href="/induction_activities/employee_list"><i class="fa fa-tags"> </i> Induction Plan </a></li>
         <li><a href="/induction_details/all_induction_detail_list"><i class="fa fa-tags"> </i> Induction Confirmation </a></li>
         </ul>
     </li> 
     <li class="treeview" id="useradministration">
     <a href="">
-      <i class="fa fa-user-plus"></i> <span>User Administration</span> <i class="fa fa-angle-left pull-right"></i>
+      <i class="fa fa-user-plus"></i> <span> User Administration</span> <i class="fa fa-angle-left pull-right"></i>
     </a>
     <ul class="treeview-menu">
       <li><a href="/reporting_masters/new"><i class="fa fa-tags"></i> Reporting Manager</a></li>
@@ -211,6 +215,8 @@
       <li><a href="/self_services/advance"><i class="fa fa-tags"></i>Advance & Instalment</a></li>
       <li><a href="/goal_bunches/new"><i class="fa fa-tags"></i> Set Goal </a></li>
       <li><a href="/goal_bunches/period_list_appraisee"><i class="fa fa-tags"></i> Self Evaluation </a></li>
+      <li><a href="/employee_daily_activities/new"><i class="fa fa-tags"></i> Daily Activity </a></li>
+      <li><a href="/training_plans/trainee_list"><i class="fa fa-tags"></i> Training Feedback </a></li>
     </ul>
   </li>
   <li class="treeview" id="leavemanagement">
@@ -338,7 +344,6 @@
     </a>
 
     <ul class="treeview-menu" >
-
       <li><a href="/goal_bunches/subordinate_list"><i class="fa fa-tags"></i> Goal Approval </a></li>
       <li><a href="/goal_bunches/appraiser_subordinate"><i class="fa fa-tags"></i> Appraiser Evaluation</a></li>
       <li><a href="/goal_bunches/reviewer_subordinate"><i class="fa fa-tags"></i> Reviewer Comment</a></li>
@@ -349,6 +354,9 @@
       <li><a href="/goal_bunches/final_employee_list"><i class="fa fa-tags"></i> Final Report </a></li>
       <li><a href="/goal_bunches/emp_list_goal_wise"><i class="fa fa-tags"></i> All Employee Detail </a></li>
       <li><a href="/goal_ratings/subordinate_list_goal_wise"><i class="fa fa-tags"></i>Team Member Report</a></li>
+      <li><a href="/performance_calendars/new"><i class="fa fa-tags"></i>Calendar</a></li>
+      <li><a href="/goal_ratings/training_request"><i class="fa fa-tags"></i>Training Request</a></li>
+      <li><a href="/goal_ratings/period_and_topic_wise_list"><i class="fa fa-tags"></i>Employees For Training</a></li>
     </ul>
    </li>
 
@@ -419,9 +427,9 @@
     <a href=""><i class="fa fa-briefcase"></i> <span> Training Management </span> <i class="fa fa-angle-left pull-right"></i></a>
     <ul class="treeview-menu">
       <li><a href="/training_requests/new"><i class="fa fa-tags"></i> Training Request </a></li>
-      <li><a href="/training_plans/new"><i class="fa fa-tags"></i> Training Plans </a></li>
-      <li><a href="/training_records/new"><i class="fa fa-tags"></i> Training Records </a></li>
-      <li><a href="/training_requests/training_request_list"><i class="fa fa-tags"></i> Training Approve/Reject </a></li>    
+      <li><a href="/training_requests/training_request_list"><i class="fa fa-tags"></i> Training Approve/Reject </a></li>
+      <li><a href="/training_requests/confirmation_list"><i class="fa fa-tags"></i> Training Plan </a></li>
+      <li><a href="/training_plans"><i class="fa fa-tags"></i> Training Plan List </a></li>
     </ul>
    </li>
 
@@ -431,21 +439,6 @@
       <li><a href="/accident_records"><i class="fa fa-tags"></i> Accident Record </a></li>
     </ul>
    </li>
-
-   <li class="treeview" id="selfservice">
-    <a href="">
-      <i class="fa fa-user-plus"></i> <span>Employee Self Service</span><i class="fa fa-angle-left pull-right"></i>
-    </a>
-    <ul class="treeview-menu">
-      <li><a href="/self_services/employee"><i class="fa fa-tags"></i> Employees</a></li>
-      <li><a href="/self_services/employee_template"><i class="fa fa-tags"> </i> Salary Structure </a></li>
-      <li><a href="/self_services/attendance"><i class="fa fa-tags"></i>Attendance</a></li>
-      <li><a href="/self_services/salaryslip"><i class="fa fa-tags"></i>Salaryslips</a></li>
-      <li><a href="/self_services/advance"><i class="fa fa-tags"></i>Advance & Instalment</a></li>
-      <li><a href="/goal_bunches/new"><i class="fa fa-tags"></i> Set Goal </a></li>
-      <li><a href="/goal_bunches/appraisee_comment"><i class="fa fa-tags"></i> Self Rating </a></li>
-    </ul>
-  </li>
 </ul>
 
 <script typgre="text/javascript">

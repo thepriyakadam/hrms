@@ -1,8 +1,6 @@
 <%if @flag == true %>
 $("#form").html("<%= j render 'form' %>");
-$("#goal_approval").html("<%= j render 'goal_approval' %>");
-	
+$("#performance_activity_list").html("<%= j render 'performance_activity_list' %>");
 <%else%>
   $("#form").html("<%= j render 'form' %>");
-  alert("Please Select the Checkbox.");
 <%end%>

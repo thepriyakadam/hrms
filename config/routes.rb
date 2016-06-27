@@ -1,5 +1,18 @@
 Rails.application.routes.draw do
 
+  resources :illness_types
+  resources :performance_calendars
+  resources :performance_activities
+
+  resources :employee_daily_activities do
+    collection do 
+    get :employee_details
+    get :daily_show_activity_list
+    get :activity_report
+   
+    end
+  end 
+  resources :project_masters
   resources :attribute_masters
   resources :circulars
 
@@ -53,6 +66,16 @@ Rails.application.routes.draw do
       post :print_subordinate_list
       post :all_subordinate_list
       get :performance_type
+      get :attribute_modal
+      patch :update_attribute_modal
+      get :training_request
+      post :create_attribute_training
+      post :create_goal_training
+      get :period_and_topic_wise_list
+      get :period_topic_wise_employee
+      post :send_request_for_training
+      post :training_plan_create
+      get :modal_training_plan
     end
   end
   resources :goal_bunches do
@@ -179,13 +202,24 @@ Rails.application.routes.draw do
   end
 end
   resources :travel_options
-  resources :training_plans
+  resources :training_plans  do
+    collection do
+      post :create_records
+      post :training_plan_create
+      get :print_training_details
+      get :trainee_list
+      get :modal_feedback
+      post :update_feedback
+      get :training_details_list
+    end
+  end
   resources :training_requests do
     collection do
       get :training_request_list
       get :training_request_confirmation
       get :approve_training_request
       get :reject_training_request
+      get :confirmation_list
     end
   end
   resources :selected_resumes  do
@@ -211,6 +245,8 @@ end
     collection do 
     post :is_confirm
     get :print_daily_bill
+    get :daily_bill_history
+    get :daily_bill_request_confirmation
     end
   end 
   resources :travel_requests do
@@ -777,12 +813,16 @@ end
   end
   resources :employee_bank_details
   resources :leav_cancelleds
+
   resources :employee_leav_balances do
     collection do
       get :collect_employee_for_leave
       get :employee_leave_balance
+      get :leave_balance_modal
+      patch :update_leave_balance
     end
   end
+  
   resources :leav_rejecteds
   resources :leav_approveds
   resources :employee_leav_requests do

@@ -22,7 +22,7 @@
         </td>
         <td><%= daily_bill_detail.expence_date %></td>
         <td><%= daily_bill_detail.e_place %></td>
-        <td><%= daily_bill_detail.travel_expence_type.name %></td>
+        <td><%= daily_bill_detail.travel_expence_type.try(:name) %></td>
         <td><%= daily_bill_detail.travel_expence %></td>       
         <td>
           <% if daily_bill_detail.is_confirm == true %>
@@ -44,7 +44,8 @@
         <%= f.submit "Confirm", class: 'btn btn-primary btn-sm' %> |
 
         <%= link_to 'Print PDF', print_daily_bill_daily_bill_details_path(format: 'pdf',qwe:@travel_request.id ),class: 'btn btn-xl btn-warning',:target => '_blank' %><br>
-        <br><br>
+        <%= link_to 'Send Request',class: 'btn btn-xl btn-warning' %><br>
+        <br>
         <%= link_to 'Back', daily_bill_travel_requests_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
 
       </div>

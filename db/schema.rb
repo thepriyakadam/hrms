@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160621055818) do
+ActiveRecord::Schema.define(version: 20160625182131) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -577,10 +577,12 @@ ActiveRecord::Schema.define(version: 20160621055818) do
     t.string   "present"
     t.time     "in"
     t.time     "out"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.integer  "department_id"
   end
 
+  add_index "employee_attendances", ["department_id"], name: "index_employee_attendances_on_department_id"
   add_index "employee_attendances", ["employee_id"], name: "index_employee_attendances_on_employee_id"
 
   create_table "employee_attributes", force: :cascade do |t|
@@ -623,6 +625,19 @@ ActiveRecord::Schema.define(version: 20160621055818) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
+
+  create_table "employee_daily_activities", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.integer  "project_master_id"
+    t.text     "today_activity"
+    t.text     "tomorrow_plan"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.date     "day"
+  end
+
+  add_index "employee_daily_activities", ["employee_id"], name: "index_employee_daily_activities_on_employee_id"
+  add_index "employee_daily_activities", ["project_master_id"], name: "index_employee_daily_activities_on_project_master_id"
 
   create_table "employee_designations", force: :cascade do |t|
     t.string   "code"
@@ -737,12 +752,14 @@ ActiveRecord::Schema.define(version: 20160621055818) do
     t.datetime "updated_at",           null: false
     t.integer  "employee_id"
     t.integer  "relation_master_id"
+    t.integer  "illness_type_id"
   end
 
   add_index "employee_nominations", ["country_id"], name: "index_employee_nominations_on_country_id"
   add_index "employee_nominations", ["district_id"], name: "index_employee_nominations_on_district_id"
   add_index "employee_nominations", ["employee_id"], name: "index_employee_nominations_on_employee_id"
   add_index "employee_nominations", ["family_id"], name: "index_employee_nominations_on_family_id"
+  add_index "employee_nominations", ["illness_type_id"], name: "index_employee_nominations_on_illness_type_id"
   add_index "employee_nominations", ["nomination_master_id"], name: "index_employee_nominations_on_nomination_master_id"
   add_index "employee_nominations", ["relation_id"], name: "index_employee_nominations_on_relation_id"
   add_index "employee_nominations", ["relation_master_id"], name: "index_employee_nominations_on_relation_master_id"
@@ -1064,8 +1081,9 @@ ActiveRecord::Schema.define(version: 20160621055818) do
     t.text     "final_comment"
     t.integer  "final_rating_id"
     t.boolean  "final_confirm"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.integer  "performance_calendar_id"
   end
 
   add_index "goal_bunches", ["appraisee_id"], name: "index_goal_bunches_on_appraisee_id"
@@ -1073,6 +1091,7 @@ ActiveRecord::Schema.define(version: 20160621055818) do
   add_index "goal_bunches", ["employee_id"], name: "index_goal_bunches_on_employee_id"
   add_index "goal_bunches", ["final_id"], name: "index_goal_bunches_on_final_id"
   add_index "goal_bunches", ["final_rating_id"], name: "index_goal_bunches_on_final_rating_id"
+  add_index "goal_bunches", ["performance_calendar_id"], name: "index_goal_bunches_on_performance_calendar_id"
   add_index "goal_bunches", ["period_id"], name: "index_goal_bunches_on_period_id"
   add_index "goal_bunches", ["reviewer_id"], name: "index_goal_bunches_on_reviewer_id"
   add_index "goal_bunches", ["reviewer_rating_id"], name: "index_goal_bunches_on_reviewer_rating_id"
@@ -1139,11 +1158,14 @@ ActiveRecord::Schema.define(version: 20160621055818) do
     t.integer  "appraiser_rating_id"
     t.integer  "reviewer_id"
     t.text     "reviewer_comment"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
     t.integer  "attribute_id"
     t.integer  "attribute_master_id"
     t.string   "type"
+    t.string   "goal_type"
+    t.integer  "performance_calendar_id"
+    t.integer  "training_topic_master_id"
   end
 
   add_index "goal_ratings", ["appraisee_id"], name: "index_goal_ratings_on_appraisee_id"
@@ -1154,7 +1176,9 @@ ActiveRecord::Schema.define(version: 20160621055818) do
   add_index "goal_ratings", ["goal_bunch_id"], name: "index_goal_ratings_on_goal_bunch_id"
   add_index "goal_ratings", ["goal_perspective_id"], name: "index_goal_ratings_on_goal_perspective_id"
   add_index "goal_ratings", ["goal_setter_id"], name: "index_goal_ratings_on_goal_setter_id"
+  add_index "goal_ratings", ["performance_calendar_id"], name: "index_goal_ratings_on_performance_calendar_id"
   add_index "goal_ratings", ["reviewer_id"], name: "index_goal_ratings_on_reviewer_id"
+  add_index "goal_ratings", ["training_topic_master_id"], name: "index_goal_ratings_on_training_topic_master_id"
 
   create_table "groups", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -1188,6 +1212,14 @@ ActiveRecord::Schema.define(version: 20160621055818) do
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
     t.boolean  "isweekend"
+  end
+
+  create_table "illness_types", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
+    t.text     "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "induction_activities", force: :cascade do |t|
@@ -1692,6 +1724,26 @@ ActiveRecord::Schema.define(version: 20160621055818) do
     t.datetime "updated_at",  null: false
   end
 
+  create_table "performance_activities", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
+    t.text     "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "performance_calendars", force: :cascade do |t|
+    t.integer  "period_id"
+    t.integer  "performance_activity_id"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  add_index "performance_calendars", ["performance_activity_id"], name: "index_performance_calendars_on_performance_activity_id"
+  add_index "performance_calendars", ["period_id"], name: "index_performance_calendars_on_period_id"
+
   create_table "performance_periods", force: :cascade do |t|
     t.string   "title"
     t.date     "start_date"
@@ -1731,6 +1783,14 @@ ActiveRecord::Schema.define(version: 20160621055818) do
     t.decimal  "march_month", precision: 15, scale: 2, default: 0.0
     t.datetime "created_at",                                         null: false
     t.datetime "updated_at",                                         null: false
+  end
+
+  create_table "project_masters", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
+    t.text     "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "qualifications", force: :cascade do |t|
@@ -2113,8 +2173,11 @@ ActiveRecord::Schema.define(version: 20160621055818) do
     t.integer  "training_plan_id"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
+    t.integer  "employee_id"
+    t.text     "feedback"
   end
 
+  add_index "trainees", ["employee_id"], name: "index_trainees_on_employee_id"
   add_index "trainees", ["training_plan_id"], name: "index_trainees_on_training_plan_id"
 
   create_table "training_approvals", force: :cascade do |t|
@@ -2149,8 +2212,10 @@ ActiveRecord::Schema.define(version: 20160621055818) do
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
     t.integer  "training_topic_master_id"
+    t.integer  "training_request_id"
   end
 
+  add_index "training_plans", ["training_request_id"], name: "index_training_plans_on_training_request_id"
   add_index "training_plans", ["training_topic_master_id"], name: "index_training_plans_on_training_topic_master_id"
 
   create_table "training_records", force: :cascade do |t|

@@ -16,8 +16,12 @@ class GoalRatingsController < ApplicationController
   def new
     @goal_bunch = GoalBunch.find(params[:id])
     @goal_rating = GoalRating.new
-    @goal_ratings = GoalRating.where(goal_bunch_id: @goal_bunch.id)
+    @goal_ratings = GoalRating.where(goal_bunch_id: @goal_bunch.id, goal_type: 'Goal')
+    @goal_attribute_ratings = GoalRating.where("goal_bunch_id = ? AND goal_type = ?", @goal_bunch.id ,'Attribute')
     @goal_bunches = GoalBunch.all
+    #byebug  
+    #@performance_calendar = PerformanceCalendar.where(period_id: @goal_bunch.id)
+    #@performance_calendars = PerformanceCalendar.where(start_date: @performance_calendar.start_date , end_date: @performance_calendar.end_date )
   end
 
   # GET /goal_ratings/1/edit
@@ -35,7 +39,9 @@ class GoalRatingsController < ApplicationController
       @goal_rating.save
       @flag = true
       @goal_rating = GoalRating.new
-      @goal_ratings = GoalRating.where(goal_bunch_id: @goal_bunch.id)
+      #@goal_ratings = GoalRating.where(goal_bunch_id: @goal_bunch.id)
+      @goal_ratings = GoalRating.where(goal_bunch_id: @goal_bunch.id, goal_type: 'Goal')
+      @goal_attribute_ratings = GoalRating.where("goal_bunch_id = ? AND goal_type = ?", @goal_bunch.id ,'Attribute')
     else
       @flag = false
     end
@@ -49,7 +55,8 @@ class GoalRatingsController < ApplicationController
     if @goal_rating.update(goal_rating_params)
       @flag = true
       @goal_rating = GoalRating.new
-      @goal_ratings = GoalRating.where(goal_bunch_id: @goal_bunch.id)
+      @goal_ratings = GoalRating.where(goal_bunch_id: @goal_bunch.id, goal_type: 'Goal')
+      @goal_attribute_ratings = GoalRating.where("goal_bunch_id = ? AND goal_type = ?", @goal_bunch.id ,'Attribute')
     else
       @flag = false
     end
@@ -109,6 +116,17 @@ class GoalRatingsController < ApplicationController
     redirect_to goal_approval_goal_bunches_path(emp_id: @goal_rating.appraisee_id, id: @goal_rating.goal_bunch_id)
   end
 
+  def attribute_modal
+    @goal_rating = GoalRating.find(params[:format])
+  end
+
+  def update_attribute_modal
+    @goal_rating = GoalRating.find(params[:goal_rating_id])
+    @goal_rating.update(goal_rating_params)
+    flash[:notice] = 'Updated Successfully'
+    redirect_to goal_approval_goal_bunches_path(emp_id: @goal_rating.appraisee_id, id: @goal_rating.goal_bunch_id)
+  end
+  
   def print_department
   end
 
@@ -123,6 +141,8 @@ class GoalRatingsController < ApplicationController
   def send_mail_to_appraiser
     @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
     sum = @goal_bunch.goal_ratings.sum(:goal_weightage)
+
+    @gol_bunch = GoalBunch.find_by(id: @goal_bunch.id).update(goal_confirm: false)
     if sum == 100
       @emp = Employee.find(current_user.employee_id)
       GoalRatingMailer.send_email_to_appraiser(@emp).deliver_now
@@ -138,7 +158,10 @@ class GoalRatingsController < ApplicationController
 
   def print_subordinate_list
     current_login = Employee.find(current_user.employee_id)
+
     @period = Period.find(params[:salary][:period_id])
+    @goal_bunch = GoalBunch.find_by(period_id: @period.id)
+
     goal_bunches = GoalBunch.where(period_id: @period.id).pluck(:employee_id)
     subordinates = current_login.subordinates.pluck(:id)
     total_employee = goal_bunches & subordinates
@@ -146,6 +169,7 @@ class GoalRatingsController < ApplicationController
   end
  
   def all_subordinate_list
+    @goal_bunch_id = GoalBunch.find(params[:goal_bunch_id])
     employee_ids = params[:employee_ids]
       if employee_ids.nil?
         flash[:alert] = "Please Select the Checkbox"
@@ -156,6 +180,8 @@ class GoalRatingsController < ApplicationController
       employee_ids.each do |e|
         emp = Employee.find(e)
         @employees << emp
+        @goal_bunch = Employee.find(e)
+        #@goal_bunch = GoalBunch.find(params[:id])
       end 
     end
   end
@@ -163,6 +189,56 @@ class GoalRatingsController < ApplicationController
   def performance_type
   end
   
+  def training_request
+    @goal_ratings = GoalRating.where(goal_type: 'Goal',training_topic_master_id: nil)
+    @attribute_ratings = GoalRating.where(goal_type: 'Attribute',training_topic_master_id: nil)
+  end
+
+  def create_attribute_training
+    #byebug
+    @employee = Employee.find(params[:emp_id])
+    @training_topic_master_id = params[:training_topic_master_id]
+    @goal_rating_id = params[:goal_rating_id]
+
+    @attribute_rating = GoalRating.where(id: @goal_rating_id, appraisee_id: @employee.id,goal_type: 'Attribute').update_all(training_topic_master_id: @training_topic_master_id)
+    flash[:notice] = "Created Successfully"
+    redirect_to training_request_goal_ratings_path
+  end
+
+  def create_goal_training
+    @employee = Employee.find(params[:emp_id])
+    @training_topic_master_id = params[:training_topic_master_id]
+    @goal_rating_id = params[:goal_rating_id]
+
+    @goal_rating = GoalRating.where(id: @goal_rating_id,appraisee_id: @employee.id,goal_type: 'Goal').update_all(training_topic_master_id: @training_topic_master_id)
+    flash[:notice] = "Created Successfully"
+    redirect_to training_request_goal_ratings_path
+  end
+
+  def period_and_topic_wise_list
+  end
+
+  def period_topic_wise_employee
+    @training_plan = TrainingPlan.new
+    #@appraisee_id = params[:appraisee_id]
+    @goal_bunch = GoalBunch.find_by_period_id(params[:period_id])
+    @training_topic_master_id = params[:training_topic_master_id]
+    @goal_ratings = GoalRating.where(goal_bunch_id: @goal_bunch.id,training_topic_master_id: @training_topic_master_id)
+    #@goal_ratings = GoalRating.all
+  end
+
+  def send_request_for_training
+  end
+
+  def modal_training_plan
+    @goal_bunch_id = GoalBunch.find(params[:goal_bunch_id])
+    @goal_rating = GoalRating.where(goal_bunch_id: @goal_bunch_id.id)
+    #redirect_to period_and_topic_wise_list_goal_ratings_path
+  end
+
+  def training_plan_create
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_goal_rating
@@ -171,6 +247,6 @@ class GoalRatingsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def goal_rating_params
-      params.require(:goal_rating).permit(:attribute_master_id,:goal_bunch_id, :goal_perspective_id, :goal_weightage, :goal_measure, :target, :aligned, :goal_setter_id, :appraisee_id, :appraisee_comment, :appraiser_id, :appraiser_comment, :appraiser_rating_id, :reviewer_id, :reviewer_comment)
+      params.require(:goal_rating).permit(:attribute_master_id,:goal_bunch_id, :goal_perspective_id, :goal_weightage, :goal_measure, :target, :aligned, :goal_setter_id, :appraisee_id, :appraisee_comment, :appraiser_id, :appraiser_comment, :appraiser_rating_id, :reviewer_id, :reviewer_comment,:goal_type)
     end
 end

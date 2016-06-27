@@ -1,33 +1,58 @@
-<%= form_for(@performance_calendar) do |f| %>
-  <% if @performance_calendar.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@performance_calendar.errors.count, "error") %> prohibited this performance_calendar from being saved:</h2>
-
-      <ul>
-      <% @performance_calendar.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+<%= bootstrap_form_for(@performance_calendar,remote:true) do |f| %>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.select :period_id,all_period_type,{label: 'Period',include_blank: " Select Period"}  %>
+      </div>
     </div>
-  <% end %>
 
-  <div class="field">
-    <%= f.label :period_id %><br>
-    <%= f.text_field :period_id %>
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.select :performance_activity_id,all_activity_type,{label: 'Performance Activity',include_blank: " Select Performance Activity"}  %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <label>Start Date: </label>
+      <div class="form-group required">
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="fa fa-calendar"></i>
+          </div>
+          <%= f.text_field :start_date, hide_label: true, class: 'birth_date1'%>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <label>End Date: </label>
+      <div class="form-group required">
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="fa fa-calendar"></i>
+          </div>
+          <%= f.text_field :end_date, hide_label: true, class: 'birth_date1'%>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :performance_activity_id %><br>
-    <%= f.text_field :performance_activity_id %>
-  </div>
-  <div class="field">
-    <%= f.label :start_date %><br>
-    <%= f.date_select :start_date %>
-  </div>
-  <div class="field">
-    <%= f.label :end_date %><br>
-    <%= f.date_select :end_date %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
+
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "Create Calendar",:class => class_name %>
+      </div>
+    </div>
   </div>
 <% end %>
+<br> 
+
+<script type="text/javascript">
+  $(function(){
+    $('.birth_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:+1',
+    dateFormat: 'dd-mm-yy' });
+  }); 
+</script>

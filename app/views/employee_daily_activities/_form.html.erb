@@ -3,7 +3,8 @@
 
     <!--< f.hidden_field :employee_id, :value => current_user.employee_id %>-->
         <div class="row">
-        <div class="col-sm-3">
+        
+        <div class="col-sm-4">
           <label>Date </label>
           <div class="form-group required">
             <div class="input-group">
@@ -16,21 +17,22 @@
           </div>
         </div>
         
-        <div class="col-sm-3">
+        <div class="col-sm-4">
           <div class="field">
            <%= f.select :project_master_id, project_master,{label: 'Project',include_blank: " Select Project Master"} %>
           </div>
         </div>
+        
         </div>
 
         <div class="row">
-        <div class="col-sm-3">
+        <div class="col-sm-4">
          <div class="field">
            <%= f.text_area :today_activity, label:'Today Activity' %>
          </div>
        </div>
 
-      <div class="col-sm-3">
+      <div class="col-sm-4">
        <div class="field">
          <%= f.text_area :tomorrow_plan, label:'Tomorrow Plan' %>
        </div>

@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     collection do 
     get :employee_details
     get :daily_show_activity_list
+    get :activity_report
    
     end
   end 
@@ -31,6 +32,8 @@ Rails.application.routes.draw do
     get :all_induction_detail_list
     get :confirm
     post :print_induction_details
+    get :update_date_modal
+    post :update_date
     end
   end 
   resources :induction_activities do
@@ -67,6 +70,14 @@ Rails.application.routes.draw do
       get :performance_type
       get :attribute_modal
       patch :update_attribute_modal
+      get :training_request
+      post :create_attribute_training
+      post :create_goal_training
+      get :period_and_topic_wise_list
+      get :period_topic_wise_employee
+      post :send_request_for_training
+      post :training_plan_create
+      get :modal_training_plan
     end
   end
   resources :goal_bunches do
@@ -196,6 +207,7 @@ end
   resources :training_plans  do
     collection do
       post :create_records
+      post :training_plan_create
       get :print_training_details
       get :trainee_list
       get :modal_feedback
@@ -843,7 +855,12 @@ end
     end
   end
   resources :skillsets
-  resources :experiences
+  resources :experiences  do
+    collection do
+      get :modal_experience
+      post :update_experience
+    end
+  end
   resources :certifications
   resources :qualifications
   resources :families do

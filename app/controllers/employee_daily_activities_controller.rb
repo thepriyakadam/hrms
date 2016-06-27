@@ -1,5 +1,7 @@
+require 'query_report/helper'  # need to require the helper
 class EmployeeDailyActivitiesController < ApplicationController
   before_action :set_employee_daily_activity, only: [:show, :edit, :update, :destroy]
+include QueryReport::Helper
 
   # GET /employee_daily_activities
   # GET /employee_daily_activities.json
@@ -64,6 +66,18 @@ class EmployeeDailyActivitiesController < ApplicationController
   def daily_show_activity_list
     @employee = Employee.find(params[:emp_id])
     @employee_daily_activities = EmployeeDailyActivity.where(employee_id: @employee.id)
+  end
+
+  def activity_report
+    reporter(EmployeeDailyActivity.all, template_class: PdfReportTemplate) do
+    filter :start_date, type: :date
+    filter :employee_name, type: :string
+    column(:Employee_ID, sortable: true) { |employee_daily_activity| employee_daily_activity.employee.try(:manual_employee_code) }
+    column(:Employee_Name, sortable: true) { |employee_daily_activity| full_name(employee_daily_activity.employee) }
+    column(:Designation, sortable: true) { |employee_daily_activity| employee_daily_activity.employee.joining_detail.employee_designation.name }
+    column(:Today_Activity, sortable: true)
+    column(:Tommorow_Activity, sortable: true)
+    end
   end
 
   private

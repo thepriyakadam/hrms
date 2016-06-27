@@ -12,6 +12,7 @@
       <th>Start Date</th>
       <th>Induction Template Code</th>
       <th>Induction Completed</th>
+      <th>End Date</th>
       <th>Status</th>
       <th>Action</th>
     </tr>
@@ -26,6 +27,7 @@
         <td><%= induction_detail.start_date %></td>
         <td><%= induction_detail.induction_master.code %></td>
         <td><%= induction_detail.induction_completed ? "Yes" : "No" %></td>
+        <td><%= induction_detail.end_date %></td>
         <td>
           <% if induction_detail.induction_completed == false %>
             <small class="label label-primary">Not Yet Completed</small>
@@ -35,7 +37,10 @@
              <% else %>
             <% end %>
         </td>
-        <td>   <%= link_to 'Show', induction_detail,class: 'btn btn-xs btn-info fa fa-check' %>  </td>
+        <div id="myModal" class="modal fade"></div>
+        <td><%= link_to 'Show', induction_detail,class: 'btn btn-xs btn-info fa fa-check' %>
+          <%= link_to ' Update',update_date_modal_induction_details_path(induction_detail),class: 'btn btn btn-xs btn-success fa fa-modx',remote: true %>
+        </td>
       </tr>
     <% end %>
   </tbody>

@@ -1,6 +1,6 @@
 <div class="box box-default">
   <div class="box-header with-border">
-    <h6 class="box-title">Employee Experience Details :  <%= code_full_name(@qualifications.first.employee) %></h6>
+    <h6 class="box-title">Employee Experience Details - <%= code_full_name(@experiences.first.employee) %></h6>
     <div class="box-tools pull-right">
       <%= link_to "Add Experience", ajax_new_experience_employees_path(id: @employee.id), class: 'btn btn-sm btn-primary',remote:true %>
       <%= link_to 'Back', employees_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>

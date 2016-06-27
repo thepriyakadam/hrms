@@ -66,6 +66,17 @@ class QualificationsController < ApplicationController
     end
   end
 
+  def modal
+    @qualification = Qualification.find(params[:format])
+  end
+
+  def update_qualification
+    @qualification = Qualification.find(params[:id])
+    @qualification.update(qualification_params)
+    flash[:notice] = 'Qualification Updated Successfully'
+    redirect_to root_url
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

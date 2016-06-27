@@ -94,29 +94,28 @@ $(document).ready(function(){
            <%= f.select :university_id, all_university,{include_blank: " Select University/Institute",label:"University/Institute"},class: 'input_university_id' %>
           </div>
         </div>
-
-  
-
       </div>
+      <hr>
     </div>
-    <% unless params['controller'] == 'qualifications' and params['action'] == 'edit' %>  
+
+    <!-- < unless params['controller'] == 'qualifications' and params['action'] == 'edit' %>  
       <div class="row">
 
        <div class="col-sm-3">
-       <!--<%= f.submit "+", class: 'btn btn-success btn-primary btn-sm fa fa-user-plus btn btn-success' %>-->
+       <f.submit "+", class: 'btn btn-success btn-primary btn-sm fa fa-user-plus btn btn-success' %>
        <span class="icon-input-btn"><span class="glyphicon glyphicon-plus"></span>
           <input type="button" class="btn btn-sm btn-primary btn-success" id="btnAdd" value="Additional Qualifications"></span>
         </div>
 
          <div class="col-sm-3">
-        <!--<%= f.submit "-", class: 'btn btn-primary fa fa-user-minus' %>-->
+        < f.submit "-", class: 'btn btn-primary fa fa-user-minus' %>
         <span class="icon-input-btn"><span class="glyphicon glyphicon-minus"></span>
           <input type="button" id="btnDel" value="Remove Above Qualification" class="btn btn-sm btn-danger">
         </div>
 
       </div><br>
-    <% end %>  
-
+    < end %>  
+ -->
     <div class="row">
       <div class="col-sm-3">
         <div class="actions">

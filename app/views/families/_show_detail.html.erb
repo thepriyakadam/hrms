@@ -1,6 +1,6 @@
 <div class="box box-default">
   <div class="box-header with-border">
-    <h6 class="box-title">Employee Family Members : <%= @family.employee.try(:manual_employee_code) %> - Name : <%= @family.employee.try(:first_name) %> <%= @family.employee.try(:middle_name) %> <%= @family.employee.try(:last_name) %></h6>
+    <h6 class="box-title">Employee Family Member List - <%= code_full_name(@families.first.employee) %></h6>
     <div class="box-tools pull-right">
       <%= link_to 'Back', employees_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
       <%= link_to "Add Member", ajax_new_family_employees_path(id: @employee.id), class: 'btn btn-primary',remote:true %>

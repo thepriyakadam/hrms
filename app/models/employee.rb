@@ -10,6 +10,7 @@ class Employee < ActiveRecord::Base
   belongs_to :district
   belongs_to :religion
 
+  has_many :employee_attendances
   has_many :leav_c_offs
   has_many :salaryslips
   has_many :employee_nominations

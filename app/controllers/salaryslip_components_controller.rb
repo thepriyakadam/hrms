@@ -7,6 +7,7 @@ class SalaryslipComponentsController < ApplicationController
     respond_to do |format|
       format.xml { send_data render_to_string(:index), :filename => 'mydoc.xml', :type=>"application/xml", :disposition => 'attachment' }
     end
+    
   end
 
   def edit

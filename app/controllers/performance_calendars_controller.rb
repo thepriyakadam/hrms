@@ -15,6 +15,7 @@ class PerformanceCalendarsController < ApplicationController
   # GET /performance_calendars/new
   def new
     @performance_calendar = PerformanceCalendar.new
+    @performance_calendars = PerformanceCalendar.all
   end
 
   # GET /performance_calendars/1/edit
@@ -25,14 +26,14 @@ class PerformanceCalendarsController < ApplicationController
   # POST /performance_calendars.json
   def create
     @performance_calendar = PerformanceCalendar.new(performance_calendar_params)
-
+    @performance_calendars = PerformanceCalendar.all
     respond_to do |format|
       if @performance_calendar.save
-        format.html { redirect_to @performance_calendar, notice: 'Performance calendar was successfully created.' }
-        format.json { render :show, status: :created, location: @performance_calendar }
+        @performance_calendar = PerformanceCalendar.new
+        format.js { @flag = true }
       else
-        format.html { render :new }
-        format.json { render json: @performance_calendar.errors, status: :unprocessable_entity }
+         flash.now[:alert] = 'Performance Calendar Already Exist.'
+        format.js { @flag = false }
       end
     end
   end
@@ -40,25 +41,16 @@ class PerformanceCalendarsController < ApplicationController
   # PATCH/PUT /performance_calendars/1
   # PATCH/PUT /performance_calendars/1.json
   def update
-    respond_to do |format|
-      if @performance_calendar.update(performance_calendar_params)
-        format.html { redirect_to @performance_calendar, notice: 'Performance calendar was successfully updated.' }
-        format.json { render :show, status: :ok, location: @performance_calendar }
-      else
-        format.html { render :edit }
-        format.json { render json: @performance_calendar.errors, status: :unprocessable_entity }
-      end
-    end
+    @performance_calendar.update(performance_calendar_params)
+    @performance_calendar = PerformanceCalendar.new
+    @performance_calendars = PerformanceCalendar.all
   end
 
   # DELETE /performance_calendars/1
   # DELETE /performance_calendars/1.json
   def destroy
     @performance_calendar.destroy
-    respond_to do |format|
-      format.html { redirect_to performance_calendars_url, notice: 'Performance calendar was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    @performance_calendars = PerformanceCalendar.all
   end
 
   private

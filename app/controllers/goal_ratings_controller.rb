@@ -19,6 +19,9 @@ class GoalRatingsController < ApplicationController
     @goal_ratings = GoalRating.where(goal_bunch_id: @goal_bunch.id, goal_type: 'Goal')
     @goal_attribute_ratings = GoalRating.where("goal_bunch_id = ? AND goal_type = ?", @goal_bunch.id ,'Attribute')
     @goal_bunches = GoalBunch.all
+    #byebug  
+    #@performance_calendar = PerformanceCalendar.where(period_id: @goal_bunch.id)
+    #@performance_calendars = PerformanceCalendar.where(start_date: @performance_calendar.start_date , end_date: @performance_calendar.end_date )
   end
 
   # GET /goal_ratings/1/edit
@@ -186,6 +189,56 @@ class GoalRatingsController < ApplicationController
   def performance_type
   end
   
+  def training_request
+    @goal_ratings = GoalRating.where(goal_type: 'Goal',training_topic_master_id: nil)
+    @attribute_ratings = GoalRating.where(goal_type: 'Attribute',training_topic_master_id: nil)
+  end
+
+  def create_attribute_training
+    #byebug
+    @employee = Employee.find(params[:emp_id])
+    @training_topic_master_id = params[:training_topic_master_id]
+    @goal_rating_id = params[:goal_rating_id]
+
+    @attribute_rating = GoalRating.where(id: @goal_rating_id, appraisee_id: @employee.id,goal_type: 'Attribute').update_all(training_topic_master_id: @training_topic_master_id)
+    flash[:notice] = "Created Successfully"
+    redirect_to training_request_goal_ratings_path
+  end
+
+  def create_goal_training
+    @employee = Employee.find(params[:emp_id])
+    @training_topic_master_id = params[:training_topic_master_id]
+    @goal_rating_id = params[:goal_rating_id]
+
+    @goal_rating = GoalRating.where(id: @goal_rating_id,appraisee_id: @employee.id,goal_type: 'Goal').update_all(training_topic_master_id: @training_topic_master_id)
+    flash[:notice] = "Created Successfully"
+    redirect_to training_request_goal_ratings_path
+  end
+
+  def period_and_topic_wise_list
+  end
+
+  def period_topic_wise_employee
+    @training_plan = TrainingPlan.new
+    #@appraisee_id = params[:appraisee_id]
+    @goal_bunch = GoalBunch.find_by_period_id(params[:period_id])
+    @training_topic_master_id = params[:training_topic_master_id]
+    @goal_ratings = GoalRating.where(goal_bunch_id: @goal_bunch.id,training_topic_master_id: @training_topic_master_id)
+    #@goal_ratings = GoalRating.all
+  end
+
+  def send_request_for_training
+  end
+
+  def modal_training_plan
+    @goal_bunch_id = GoalBunch.find(params[:goal_bunch_id])
+    @goal_rating = GoalRating.where(goal_bunch_id: @goal_bunch_id.id)
+    #redirect_to period_and_topic_wise_list_goal_ratings_path
+  end
+
+  def training_plan_create
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_goal_rating

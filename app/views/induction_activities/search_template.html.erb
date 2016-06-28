@@ -11,17 +11,23 @@
       <tr>
         <th>Employee ID</th>
         <th>Employee Name</th>
+        <th>Department</th>
+        <th>Designation</th>
+        <th>Contact No</th>
       </tr>
       <tr>
         <td><%= @employee.manual_employee_code %></td>
         <td><%= full_name(@employee) %></td>
+        <td><%= @employee.company_location.try(:name) %> - <%= @employee.department.try(:name) %></td>
+        <td><%= @employee.joining_detail.try(:employee_designation).try(:name)%></td>
+        <td><%= @employee.contact_no %></td>
       </tr>
     </table><br><br>
 
  <div class="row">
 	    <div class="col-sm-3">
          <div class="field">
-	        <%= select :id,:hhh, all_induction_template,{include_blank: "Please Select Template"},{onchange:"var a={id:$(this).val(),employee_id : '#{@employee.id}'}; $.get('/induction_activities/find_assigned_induction_template',a,function(response){});",class: 'form-control'} %>      
+	        <%= select :id,:hhh, all_induction_template2,{include_blank: "Please Select Template"},{onchange:"var a={id:$(this).val(),employee_id : '#{@employee.id}'}; $.get('/induction_activities/find_assigned_induction_template',a,function(response){});",class: 'form-control'} %>      
 	      </div>
 	    </div>
  </div><br><br>

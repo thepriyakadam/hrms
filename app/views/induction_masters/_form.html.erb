@@ -3,12 +3,12 @@
   <div class="row">
     <div class="col-sm-3">
       <div class="form-group required">
-        <%= f.text_field :code,hide_label:true, placeholder: 'Template Code' %>
+        <%= f.text_field :code,label: 'Code' %>
       </div>
     </div> 
      <div class="col-sm-3">
       <div class="form-group required">
-        <%= f.text_field :description,hide_label:true, placeholder: 'Description' %>
+        <%= f.text_field :description,label: 'Description' %>
       </div>
     </div>
 
@@ -30,7 +30,6 @@
 <% end %>
 
 <script type="text/javascript">
-
  $("#induction_master").validate({
     rules: {
       "induction_master[code]":{

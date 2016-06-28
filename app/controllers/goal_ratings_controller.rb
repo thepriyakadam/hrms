@@ -18,10 +18,7 @@ class GoalRatingsController < ApplicationController
     @goal_rating = GoalRating.new
     @goal_ratings = GoalRating.where(goal_bunch_id: @goal_bunch.id, goal_type: 'Goal')
     @goal_attribute_ratings = GoalRating.where("goal_bunch_id = ? AND goal_type = ?", @goal_bunch.id ,'Attribute')
-    @goal_bunches = GoalBunch.all
-    #byebug  
-    #@performance_calendar = PerformanceCalendar.where(period_id: @goal_bunch.id)
-    #@performance_calendars = PerformanceCalendar.where(start_date: @performance_calendar.start_date , end_date: @performance_calendar.end_date )
+    @goal_bunches = GoalBunch.all    
   end
 
   # GET /goal_ratings/1/edit
@@ -36,6 +33,11 @@ class GoalRatingsController < ApplicationController
     @goal_rating = GoalRating.new(goal_rating_params)
     goal_weightage_sum = @goal_rating.goal_weightage_sum(@goal_bunch, @goal_rating)
     if goal_weightage_sum <= 100
+      if params[:flag] == "Goal"
+        @goal_rating.goal_perspective_id = params[:common][:id]
+      else
+        @goal_rating.attribute_master_id = params[:common][:id]
+      end
       @goal_rating.save
       @flag = true
       @goal_rating = GoalRating.new
@@ -241,6 +243,14 @@ class GoalRatingsController < ApplicationController
   end
 
   def training_plan_create
+  end
+
+  def select_dropdown
+    if params[:goal_type] == "Goal"
+      @flag = true
+    else
+      @flag = false
+    end
   end
 
   private

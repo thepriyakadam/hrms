@@ -51,8 +51,9 @@ class GoalRatingsController < ApplicationController
   # PATCH/PUT /goal_ratings/1.json
   def update
     @goal_bunch = GoalBunch.find(params[:goal_rating][:goal_bunch_id])
-
-    if @goal_rating.update(goal_rating_params)
+    goal_weightage_sum = @goal_rating.goal_weightage_sumdate(@goal_bunch, @goal_rating.goal_weightage)
+      if goal_weightage_sum <= 100
+      @goal_rating.update(goal_rating_params)
       @flag = true
       @goal_rating = GoalRating.new
       @goal_ratings = GoalRating.where(goal_bunch_id: @goal_bunch.id, goal_type: 'Goal')
@@ -153,7 +154,7 @@ class GoalRatingsController < ApplicationController
     redirect_to new_goal_rating_path(id: @goal_bunch.id)
   end
 
-   def subordinate_list_goal_wise
+  def subordinate_list_goal_wise
   end
 
   def print_subordinate_list
@@ -199,7 +200,6 @@ class GoalRatingsController < ApplicationController
     @employee = Employee.find(params[:emp_id])
     @training_topic_master_id = params[:training_topic_master_id]
     @goal_rating_id = params[:goal_rating_id]
-
     @attribute_rating = GoalRating.where(id: @goal_rating_id, appraisee_id: @employee.id,goal_type: 'Attribute').update_all(training_topic_master_id: @training_topic_master_id)
     flash[:notice] = "Created Successfully"
     redirect_to training_request_goal_ratings_path
@@ -209,7 +209,6 @@ class GoalRatingsController < ApplicationController
     @employee = Employee.find(params[:emp_id])
     @training_topic_master_id = params[:training_topic_master_id]
     @goal_rating_id = params[:goal_rating_id]
-
     @goal_rating = GoalRating.where(id: @goal_rating_id,appraisee_id: @employee.id,goal_type: 'Goal').update_all(training_topic_master_id: @training_topic_master_id)
     flash[:notice] = "Created Successfully"
     redirect_to training_request_goal_ratings_path
@@ -220,11 +219,16 @@ class GoalRatingsController < ApplicationController
 
   def period_topic_wise_employee
     @training_plan = TrainingPlan.new
-    #@appraisee_id = params[:appraisee_id]
-    @goal_bunch = GoalBunch.find_by_period_id(params[:period_id])
+    #@attribute_master_id = params[:attribute_master_id]
+    @period = Period.find(params[:period_id])
+    @goal_bunches = GoalBunch.where(period_id: @period.id)
+    ids = []
+    @goal_bunch = @goal_bunches.each do |g|
+      ids << g.id
+    end
     @training_topic_master_id = params[:training_topic_master_id]
-    @goal_ratings = GoalRating.where(goal_bunch_id: @goal_bunch.id,training_topic_master_id: @training_topic_master_id)
-    #@goal_ratings = GoalRating.all
+    # @goal_ratings = GoalRating.where(goal_bunch_id: ids,training_topic_master_id: @training_topic_master_id).where(is_assigned: nil)
+    @goal_ratings = GoalRating.where(goal_bunch_id: ids,training_topic_master_id: @training_topic_master_id)
   end
 
   def send_request_for_training

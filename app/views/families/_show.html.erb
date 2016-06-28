@@ -1,8 +1,9 @@
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title">Employee Family Members Details</h3>
+    
+    <h6 class="box-title">Employee Family Member Details </h6>
     <div class="box-tools pull-right">
-      <%= link_to "Add Family Member", ajax_new_family_employees_path(id: @employee.id), class: 'btn btn-primary',remote:true %>
+      <%= link_to "Add Member", ajax_new_family_employees_path(id: @employee.id), class: 'btn btn-primary',remote:true %>
       <%= link_to 'Back',ajax_family_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-default fa fa-arrow-left',remote:true%>
     </div>
   </div><!-- /.box-header -->

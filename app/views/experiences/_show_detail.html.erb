@@ -22,7 +22,8 @@
         <td><%= experience.no_of_year %></td>
         <td><%= experience.ctc %></td>
         <td>
-           <%= link_to '', edit_experience_path(experience),class: 'btn btn-sm btn-success fa fa-edit',remote:true %>
+         <div id="myModal" class="modal fade"></div>
+           <%= link_to '',modal_experience_experiences_path(experience),class: 'btn btn-sm btn-success fa fa-edit',remote: true %>
           <!-- link_to '', experience, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-sm btn-danger fa fa-close'  -->
         </td>
       </tr>

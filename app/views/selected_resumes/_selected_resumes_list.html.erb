@@ -72,8 +72,11 @@
               <% end %>
         </td>
         <td>
+        <div id="myModal" class="modal fade"></div>
+
         <%= link_to '', selected_resume,class: 'btn btn-xs btn-default fa fa-eye' %>
         <%= link_to '', selected_resume, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
+        <%= link_to '',modal_profile_update_selected_resumes_path(selected_resume),class: 'btn btn btn-sm btn-default fa fa-modx',remote: true %>
            <% if selected_resume.status == "Shortlisted" %>
           <%= link_to ' Interview', new_interview_schedule_path(selected_resume.id),class: 'btn btn-xs btn-primary fa fa-check' %>
           <% elsif selected_resume.status == "Interview Rescheduled" %>

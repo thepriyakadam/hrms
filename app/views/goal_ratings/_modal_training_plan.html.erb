@@ -1,5 +1,4 @@
 <div class="ajax-progress"></div>
-
     	<%= bootstrap_form_for(@training_plan,html: {id: "training_plan"},url:{controller: 'training_plans',action:'training_plan_create',appraisee_id: @appraisee_id}) do |f| %>
 
     	<%=  f.hidden_field :training_topic_master_id, value: @training_topic_master_id %>

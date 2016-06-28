@@ -232,6 +232,8 @@ end
     post :offer_letter
     get :modal_change_status
     post :update_status
+    get :modal_profile_update
+    post :update_profile
     end
   end 
   resources :assigned_assets

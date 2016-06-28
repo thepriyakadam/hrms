@@ -20,10 +20,17 @@
         </div>
       </div>
       <div class="col-sm-3">
+      <label>Department Type</label>
         <div class="form-group required">
-          <%= f.select :department_type_id, all_department_type,{label: 'Department Type',include_blank: " Select Department Type"}%>
+         <div class="input-group">
+        <div class="input-group-addon">
+                <%= link_to "", new_department_type_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+              </div>
+          <%= f.select :department_type_id, all_department_type,{hide_label: true,include_blank: " Select Department Type"}%>
+        </div>
         </div>
       </div>
+
       <div class="col-sm-3">
         <div class="field">
          <%= f.text_field :contact_no ,label:"Contact No"%>

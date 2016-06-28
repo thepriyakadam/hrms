@@ -1,0 +1,71 @@
+<div class="box box-default">
+<div class="box-header with-border">
+    <h3 class="box-title">Training Record</h3>
+  </div>
+  <div class="box-body">
+
+<%= bootstrap_form_for(@training_record) do |f| %>
+  
+  <div class="row">
+    <div class="col-sm-3">
+      <label>Employee ID</label>
+        <div class="field">
+          <%= f.select :employee_id, all_employee_list,{hide_label: true,include_blank:'Select Employee'} %>
+        </div>
+      </div>
+    <div class="col-sm-3">
+      <label>Training Course</label>
+      <div class="field">
+        <%= f.select :training_topic_master_id,all_training_topic,{hide_label: true,placeholder: 'Training Course',include_blank:'Select Course'} %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <label>Training Date</label>
+      <div class="form-group required">
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="fa fa-calendar"></i>
+          </div>
+          <%= f.text_field :training_date,hide_label: true,class: 'birth_date'%>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="row">
+    <div class="col-sm-3">
+      <label>Duration</label>
+      <div class="field">
+        <%= f.text_field :duration,hide_label: true,placeholder: 'Training Duration' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <label>Location</label>
+      <div class="field">
+        <%= f.text_field :location,hide_label: true,placeholder: 'Training Location' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <label>Trainer Name</label>
+      <div class="field">
+        <%= f.text_field :trainer_name,hide_label: true,placeholder: 'Trainer Name' %>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "Create Training Record" , class: 'btn btn-sm btn-primary' %> |
+        <%= link_to 'Back', training_records_path, class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+      </div>
+    </div>
+  </div>
+
+  </div>
+  </div>
+    <% end %>

@@ -1,0 +1,39 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Resume Capture for Vacancy</h3>
+    <div class="pull-right"></div>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <div class="row">
+      <div class="col-sm-12">
+        <table id="example" class="table table-bordered table-hover table-condensed">
+          <thead>
+            <tr>
+              <th>Job Title</th>
+              <th>No. of Position</th>
+              <th>Department</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% @vacancy_request_histories.each do |vacancy_request_history| %>
+              <tr>
+                <td><%= vacancy_request_history.vacancy_name %></td>
+                <td><%= vacancy_request_history.no_of_position %></td>
+                <td><%= vacancy_request_history.company_location.try(:name) %> <%= vacancy_request_history.department.try(:name) %></td>
+                <td>
+                  <%= link_to 'Resume',new_selected_resume_path(vacancy_request_history.id),class: 'btn btn-sm btn-primary' %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+</div>
+
+<script>
+$(document).ready(function() {
+    $('#example').DataTable();
+} );
+</script>

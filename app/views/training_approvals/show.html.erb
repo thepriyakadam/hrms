@@ -1,0 +1,54 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Training request:</strong>
+  <%= @training_approval.training_request %>
+</p>
+
+<p>
+  <strong>Employee:</strong>
+  <%= @training_approval.employee %>
+</p>
+
+<p>
+  <strong>Training topic master:</strong>
+  <%= @training_approval.training_topic_master %>
+</p>
+
+<p>
+  <strong>Reporting master:</strong>
+  <%= @training_approval.reporting_master %>
+</p>
+
+<p>
+  <strong>Traininig period:</strong>
+  <%= @training_approval.traininig_period %>
+</p>
+
+<p>
+  <strong>Training date:</strong>
+  <%= @training_approval.training_date %>
+</p>
+
+<p>
+  <strong>Place:</strong>
+  <%= @training_approval.place %>
+</p>
+
+<p>
+  <strong>No of employee:</strong>
+  <%= @training_approval.no_of_employee %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @training_approval.description %>
+</p>
+
+<p>
+  <strong>Justification:</strong>
+  <%= @training_approval.justification %>
+</p>
+
+<%= link_to 'Edit', edit_training_approval_path(@training_approval) %> |
+<%= link_to 'Back', training_approvals_path %>

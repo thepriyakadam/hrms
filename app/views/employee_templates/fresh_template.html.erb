@@ -1,6 +1,6 @@
 <div class="box">
   <div class="box-header">
-    <h3 class="box-title">Assign Template To Employee</h3>
+    <h3 class="box-title">Employee Salary Break Up</h3>
     <div class="pull-right">
       
     </div>
@@ -9,7 +9,7 @@
     <table id="example1" class="table table-bordered table-hover table-condensed">
       <thead>
         <tr>
-          <th>Employee Id</th>
+          <th>Employee ID</th>
           <th>Employee Name</th>
           <th>Department</th>
           <th>Designation</th>
@@ -23,13 +23,13 @@
             <td><%= employee.try(:manual_employee_code) %></td>
             <td><%= full_name(employee) %></td>
             <td><%= employee.company_location.try(:name) %> - <%= employee.department.try(:name) %> </td>
-            <td><%= employee.joining_detail.employee_designation.try(:name) %> </td>
+            <td><%= employee.joining_detail.try(:employee_designation).try(:name) %> </td>
             <td>
-            <% if have_template(employee) %>
-              <%= link_to 'Create Template', fresh_employee_templates_path(employee),class: 'btn btn-sm btn-warning fa fa-check' %>
-            <% else %>
-              <%= link_to 'View Template', show_employee_salary_template_employee_salary_templates_path(employee),class: 'btn btn-sm btn-info fa fa-check' %>
-            <% end %>
+              <% if have_template(employee) %>
+                <%= link_to 'Create Template', fresh_employee_templates_path(employee),class: 'btn btn-sm btn-warning fa fa-check' %>
+              <% else %>
+                <%= link_to 'View Template', show_employee_salary_template_employee_salary_templates_path(employee),class: 'btn btn-sm btn-info fa fa-check' %>
+              <% end %>
             </td>
           </tr>
         <% end %>

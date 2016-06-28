@@ -97,6 +97,8 @@ class OvertimeSalariesController < ApplicationController
   end
 
   def select_month_year_form
+    session[:active_tab] ="payroll"
+    session[:active_tab1] ="overtime"
   end
 
   def collect_employee
@@ -211,12 +213,20 @@ class OvertimeSalariesController < ApplicationController
     @overtime_salaries = OvertimeSalary.where("strftime('%m/%Y' , ot_date) = ? ", date.strftime('%m/%Y'))
     
     @overtime_salaries_id = params[:overtime_salaries_id]
+
+    if @overtime_salaries_id.nil?
+      flash[:alert] = "Please Select Employees"
+      redirect_to revert_overtime_overtime_salaries_path
+    else
+
     @overtime_salaries_id.each do |oid|
      @overtime_salary = OvertimeSalary.find(oid)
     end
     @overtime_salary.destroy
+    flash[:notice] = "Revert successfully"
 
     redirect_to revert_overtime_overtime_salaries_path
+    end
   end
 
   private

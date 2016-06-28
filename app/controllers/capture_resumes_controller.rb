@@ -5,6 +5,7 @@ class CaptureResumesController < ApplicationController
   # GET /capture_resumes.json
   def index
     @capture_resumes = CaptureResume.all
+    @vacancy_master = VacancyMaster.find(params[:format])
     session[:active_tab] ="recruitment"
   end
 
@@ -15,8 +16,12 @@ class CaptureResumesController < ApplicationController
 
   # GET /capture_resumes/new
   def new
+    #byebug
     @capture_resume = CaptureResume.new
+    @vacancy_master = VacancyMaster.find(params[:format])
   end
+
+
 
   # GET /capture_resumes/1/edit
   def edit

@@ -1,0 +1,39 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  period_id: 
+  employee_id: 
+  appraisee_id: 
+  appraisee_comment: MyText
+  appraisee_confirm: false
+  appraiser_id: 
+  appraiser_rating: MyString
+  appraiser_comment: MyText
+  appraiser_confirm: false
+  reviewer_id: 
+  reviewer_comment_id: 
+  reviewer_rating_id: 
+  reviewer_confirm: false
+  final_id: 
+  final_comment: MyText
+  final_rating_id: 
+  final_confirm: false
+
+two:
+  period_id: 
+  employee_id: 
+  appraisee_id: 
+  appraisee_comment: MyText
+  appraisee_confirm: false
+  appraiser_id: 
+  appraiser_rating: MyString
+  appraiser_comment: MyText
+  appraiser_confirm: false
+  reviewer_id: 
+  reviewer_comment_id: 
+  reviewer_rating_id: 
+  reviewer_confirm: false
+  final_id: 
+  final_comment: MyText
+  final_rating_id: 
+  final_confirm: false

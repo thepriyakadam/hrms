@@ -26,7 +26,6 @@ class AccidentRecordsController < ApplicationController
   # POST /accident_records.json
   def create
     @accident_record = AccidentRecord.new(accident_record_params)
-
     respond_to do |format|
       if @accident_record.save
         format.html { redirect_to @accident_record, notice: 'Accident record was successfully created.' }
@@ -66,7 +65,14 @@ class AccidentRecordsController < ApplicationController
     @employee = Employee.find(params[:id])
     @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
     @esic_no = @joining_detail.employee_efic_no
-    
+  end
+
+  def download_jpg
+    @accident_record = AccidentRecord.find(params[:id])
+    send_file @accident_record.avatar.path,
+              filename: @accident_record.avatar_file_name,
+              type: @accident_record.avatar_content_type,
+              disposition: 'attachment'
   end
 
   private
@@ -78,6 +84,6 @@ class AccidentRecordsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def accident_record_params
-    params.require(:accident_record).permit(:code, :employee_id, :accident_date, :esic_no, :case_type, :type_of_injury, :leave_date_range, :no_of_day, :description)
+    params.require(:accident_record).permit(:avatar, :department_id, :root_cause_master_id, :code, :employee_id, :accident_date, :esic_no, :case_type, :type_of_injury, :leave_date_range, :no_of_day, :description)
   end
 end

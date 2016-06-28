@@ -1,11 +1,11 @@
 <table id="example2" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>  
-      <th>Is over time</th>
+      <th>Over Time</th>
       <th>Day</th>
-      <th>Company hrs</th>
-      <th>Ot rate</th>
-      <th>Is esic</th>
+      <th>Company Hours</th>
+      <th>OT Rate</th>
+      <th>ESIC</th>
       <th>Status</th>
       <th>Action</th>
     </tr>
@@ -13,12 +13,12 @@
   <tbody>
    <% @overtime_masters.each do |overtime_master| %>
       <tr>
-        <td><%= overtime_master.is_over_time %></td>
+        <td><%= overtime_master.is_over_time ? "Active" : "Inactive" %></td>
         <td><%= overtime_master.day %></td>
         <td><%= overtime_master.company_hrs %></td>
         <td><%= overtime_master.ot_rate %></td>
-        <td><%= overtime_master.is_esic %></td>
-        <td><%= overtime_master.status %></td>
+        <td><%= overtime_master.is_esic ? "Yes" : "No" %></td>
+        <td><%= overtime_master.status ? "Active" : "Inactive" %></td>
         <td>
           <%= link_to '', edit_overtime_master_path(overtime_master) ,class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
           <%= link_to '',  overtime_master, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-xs btn-danger fa fa-close' %>

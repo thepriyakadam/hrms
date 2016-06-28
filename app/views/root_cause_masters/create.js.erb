@@ -1,0 +1,6 @@
+<%if @flag == true %>
+  $("#form").html("<%= j render 'form' %>");
+  $("#root_cause_li").html("<%= j render 'root_cause_list' %>");
+<%else%>
+  $("#form").html("<%= j render 'form' %>");
+<%end%>

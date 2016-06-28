@@ -57,6 +57,9 @@ class EmployeeBankDetailsController < ApplicationController
     end
   end
 
+
+
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -66,6 +69,6 @@ class EmployeeBankDetailsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def employee_bank_detail_params
-    params.require(:employee_bank_detail).permit(:employee_id, :account_no, :bank_name, :branch_name, :address, :contact_no, :micr_code, :branch_code, :ifsc_code)
+    params.require(:employee_bank_detail).permit(:employee_id, :account_no, :bank_id, :branch_name, :address, :contact_no, :micr_code, :branch_code, :ifsc_code)
   end
 end

@@ -15,6 +15,8 @@ class RetentionMoneysController < ApplicationController
   def new
     @retention_money = RetentionMoney.new
     @retention_moneys = RetentionMoney.all
+    session[:active_tab] ="master"
+    session[:active_tab1] ="payrollcomponents"
   end
 
   # GET /retention_moneys/1/edit

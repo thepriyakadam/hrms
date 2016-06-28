@@ -1,29 +1,26 @@
-<%= form_for(@district) do |f| %>
-  <% if @district.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@district.errors.count, "error") %> prohibited this district from being saved:</h2>
 
-      <ul>
-      <% @district.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+<%= bootstrap_form_for(@district,html: {id: 'district'},remote:true) do |f| %>
+  <div class="row">
+   <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.select :state_id,all_state,{label: 'State',include_blank: " Select State"} %>
+      </div>
     </div>
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :code, placeholder: 'Code' %>
+      </div>
+    </div>
+     <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :name, placeholder: 'district Name' %>
+      </div>
+    </div>
+   <div class="col-sm-3">
+   <label></label>
+      <div class="actions">
+        <%= f.submit "Create District" ,class: "btn btn-primary btn-sm" %>
+      </div>
+    </div>
+  </div>
   <% end %>
-
-  <div class="field">
-    <%= f.label :state_id %><br>
-    <%= f.text_field :state_id %>
-  </div>
-  <div class="field">
-    <%= f.label :code %><br>
-    <%= f.text_field :code %>
-  </div>
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>

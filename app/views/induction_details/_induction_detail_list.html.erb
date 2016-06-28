@@ -1,0 +1,31 @@
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Sr.No</th>
+      <th>Employee</th>
+      <th>Start date</th>
+      <th>Induction Template</th>
+      <th>Induction completed</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+  <% i = 0 %>
+    <% @induction_details.each do |induction_detail| %>
+      <tr>
+        <td><%= i=i+1 %></td>
+        <td><%= induction_detail.employee.try(:first_name) %> <%= induction_detail.employee.try(:middle_name) %> <%= induction_detail.employee.try(:last_name) %></td>
+        <td><%= induction_detail.start_date %></td>
+        <td><%= induction_detail.induction_master.try(:code) %></td>
+        <td><%= induction_detail.induction_completed %></td>
+        <td>
+          <%= link_to ' Edit Detail', edit_induction_detail_path(induction_detail),class: 'btn btn-sm btn-success btn-xs',remote:true %>
+          <%= link_to ' Destroy', induction_detail, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-xs btn-danger',remote:true %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>

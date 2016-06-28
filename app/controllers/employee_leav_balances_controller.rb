@@ -1,9 +1,13 @@
+require 'query_report/helper'  # need to require the helper
+
 class EmployeeLeavBalancesController < ApplicationController
   before_action :set_employee_leav_balance, only: [:show, :edit, :update, :destroy]
   load_and_authorize_resource
+  include QueryReport::Helper  # need to include it
   # GET /employee_leav_balances
   # GET /employee_leav_balances.json
   def index
+    # @employee_leav_balance = EmployeeLeavBalance.new
     if current_user.class == Group
       @employee_leav_balances = EmployeeLeavBalance.all
     else
@@ -16,7 +20,8 @@ class EmployeeLeavBalancesController < ApplicationController
         @employee_leav_balances = EmployeeLeavBalance.where(employee_id: current_user.employee_id)
       end
     end
-    session[:active_tab] ="leave"
+    session[:active_tab] ="leavemanagement"
+    session[:active_tab1] ="leaveadministration"
   end
 
   # GET /employee_leav_balances/1
@@ -32,6 +37,7 @@ class EmployeeLeavBalancesController < ApplicationController
 
   # GET /employee_leav_balances/1/edit
   def edit
+    @leav_category = LeavCategory.find(@employee_leav_balance.leav_category_id)
   end
 
   # POST /employee_leav_balances
@@ -56,17 +62,12 @@ class EmployeeLeavBalancesController < ApplicationController
   # PATCH/PUT /employee_leav_balances/1
   # PATCH/PUT /employee_leav_balances/1.json
   def update
-    respond_to do |format|
       if @employee_leav_balance.update(employee_leav_balance_params)
-        # format.html { redirect_to @employee_leav_balance, notice: 'Employee leav balance was successfully updated.' }
-        # format.json { render :show, status: :ok, location: @employee_leav_balance }
-        format.js { @flag = true }
+        @flag = true
       else
-        # format.html { render :edit }
-        # format.json { render json: @employee_leav_balance.errors, status: :unprocessable_entity }
-        format.js { @flag = true }
+       @flag = false
       end
-    end
+    redirect_to employee_leav_balance_path
   end
 
   # DELETE /employee_leav_balances/1
@@ -77,6 +78,19 @@ class EmployeeLeavBalancesController < ApplicationController
       format.html { redirect_to employee_leav_balances_url, notice: 'Employee leav balance was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def employee_leave_balance
+    reporter(@employee_leav_balances, template_class: PdfReportTemplate) do
+      # filter :manual_employee_code, type: :string
+      #filter(:current_status, :enum, :select => [["Pending",0], ["FirstApproved",2], ["SecondApproved",3], ["FirstRejected",4],["SecondRejected",5],["Cancelled",1]])
+      column(:Employee_ID, sortable: true) { |employee_leav_balance| employee_leav_balance.employee.try(:manual_employee_code) }
+      column(:Employee_Name, sortable: true) { |employee_leav_balance| full_name(employee_leav_balance.employee) }
+      column(:Leave_Category, sortable:true){|employee_leav_balance| employee_leav_balance.leav_category.try(:name)}
+      column(:Leave_Balance, sortable:true){|employee_leav_balance| employee_leav_balance.try(:no_of_leave)}
+      column(:Expiry_Date, sortable:true){|employee_leav_balance| employee_leav_balance.try(:expiry_date)}
+      column(:Toata_Leave, sortable:true){|employee_leav_balance| employee_leav_balance.try(:total_leave)}
+    end    
   end
 
   def collect_employee_for_leave
@@ -103,6 +117,18 @@ class EmployeeLeavBalancesController < ApplicationController
       @flag = true
       @employee_leav_balance = EmployeeLeavBalance.new
     end
+  end
+
+  def leave_balance_modal
+     @employee_leav_balance = EmployeeLeavBalance.find(params[:format])
+     @leav_category = LeavCategory.find(@employee_leav_balance.leav_category_id)
+  end
+
+  def update_leave_balance
+     @employee_leav_balance = EmployeeLeavBalance.find(params[:id])
+     @employee_leav_balance.update(employee_leav_balance_params)
+     flash[:notice] = 'Leave Balance Updated Successfully'
+     redirect_to employee_leav_balances_path
   end
 
   private

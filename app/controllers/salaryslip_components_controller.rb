@@ -1,4 +1,15 @@
 class SalaryslipComponentsController < ApplicationController
+  skip_before_filter :authenticate!
+
+  def index
+    @salaryslip_components = SalaryslipComponent.limit(50)
+    @maps = SalaryMapSap.all
+    respond_to do |format|
+      format.xml { send_data render_to_string(:index), :filename => 'mydoc.xml', :type=>"application/xml", :disposition => 'attachment' }
+    end
+    
+  end
+
   def edit
     @salaryslip_component = SalaryslipComponent.find(params[:id])
   end

@@ -1,0 +1,75 @@
+<style>
+th {
+    text-align: left;
+}
+</style>
+<style>
+   table {
+  page-break-inside: avoid; 
+}
+</style>
+    <h2><strong>Induction Details</strong></h2><br><br>
+    <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
+    <tr>
+      <th><strong>Employee ID</strong></th>
+      <td><%= @induction_detail.employee.manual_employee_code %></td>
+
+      <th><strong>Employee</strong></th>
+      <td><%= @induction_detail.employee.try(:first_name) %> <%= @induction_detail.employee.try(:middle_name) %> <%= @induction_detail.employee.try(:last_name) %></td>
+    </tr>
+    <tr>
+      <th><strong>Department</strong></th>
+      <td><%= @induction_detail.employee.company_location.try(:name) %> - <%= @induction_detail.employee.department.try(:name) %></td>
+
+      <th><strong>Designation</strong></th>
+      <td><%= @induction_detail.employee.joining_detail.try(:employee_designation).try(:name)%></td>
+
+    </tr>
+    <tr>
+      <th><strong>Start Date</strong></th>
+      <td><%= @induction_detail.start_date %></td>
+  
+      <th><strong>Induction Template Code</strong></th>
+      <td><%= @induction_detail.induction_master.code %></td>
+    </tr>
+
+    <tr>
+      <th><strong>Status</strong></th>
+      <td><%= @induction_detail.induction_completed ? "Yes" : "No" %></td>
+      <th></th>
+      <td></td>
+    </tr>  
+  </table><br><br>
+
+  <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
+  <thead>
+    <tr>
+      <th>Sr.No</th>
+      <th>Activity</th>
+      <th>Day</th>
+      <th>Duration(Hrs)</th>
+      <th>Contact Person</th>
+<!--       <th>Download</th>
+ -->    </tr>
+  </thead>
+
+  <tbody>
+  <% i = 0 %>
+   <% @induction_activities.each do |induction_activity| %>
+      <tr>
+        <td><%= i=i+1 %></td>
+        <td><%= induction_activity.activity %></td>
+        <td><%= induction_activity.day %></td>
+        <td><%= induction_activity.duration %></td>
+        <td><%= full_name(induction_activity.employee) %></td>
+        <!-- <td>
+            if induction_activity.avatar_file_name == nil %>
+           <small class="label label-default">Document Not Available</small>
+             < else %>
+             <center>< link_to '',download_document_path(id: induction_activity.id),class: 'btn btn-xs btn-primary fa fa-download' %></center>
+              end %>
+        </td> -->
+      </tr>
+      <% end %>
+  </tbody>
+</table>

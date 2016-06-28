@@ -2,16 +2,11 @@
   <div class="row">
     <div class="col-sm-3">
       <div class="field">
-        <%= label "employee_leav_balance","Leav Category"%>
-        <%= text_field "employee_leav_balance","category_name", value: @leav_category.try(:name), class: "form-control", readonly:true %>
+        <%= label "employee_leav_balance","Leave Category"%>
+        <%= text_field "employee_leav_balance","category_name", value: @leav_category.try(:name),class: "form-control", readonly:true %>
       </div>
     </div>
-    <%= f.hidden_field :leav_category_id, value: @leav_category.try(:id) %>
-    <div class="col-sm-3">
-      <div class="field">
-        <%= f.text_field :no_of_leave %>
-      </div>
-    </div>
+    
 
     <div class="col-sm-3">
       <div class="field">
@@ -34,12 +29,12 @@
         <thead>
           <tr>
             <th><input type="checkbox" id="selectAll" value="selectAll"></th>
-            <th>ID</th>
-            <th>Name</th>
+            <th>Employee ID</th>
+            <th>Employee Name</th>
             <th>Department</th>
             <th>Designation</th>
             <th>Employement</th>
-            <th>Contact</th>
+            <th>Contact No.</th>
           </tr>
         </thead>
 
@@ -64,7 +59,7 @@
   <div class="row">
     <div class="col-sm-3">
       <div class="actions">
-        <%= f.submit :class => class_name, data: { disable_with: data_info } %>
+        <%= f.submit "Create Employee Leave Balance",:class => class_name, data: { disable_with: data_info } %>
       </div>
     </div>
   </div>

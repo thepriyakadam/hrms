@@ -4,6 +4,8 @@ class EmployeeCategoriesController < ApplicationController
   def new
     @employee_category = EmployeeCategory.new
     @employee_categories = EmployeeCategory.all
+    session[:active_tab] ="master"
+    session[:active_tab1] ="employeeprofilesetup"
   end
 
   # GET /employee_categories/1/edit
@@ -14,13 +16,13 @@ class EmployeeCategoriesController < ApplicationController
   # POST /employee_categories.json
   def create
     @employee_category = EmployeeCategory.new(employee_category_params)
+    @employee_categories = EmployeeCategory.all
     if @employee_category.save
       @flag = true
       @employee_category = EmployeeCategory.new
     else
       @flag = false
     end
-    @employee_categories = EmployeeCategory.all
   end
 
   # PATCH/PUT /employee_categories/1

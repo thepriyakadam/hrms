@@ -4,6 +4,8 @@ class CostCentersController < ApplicationController
   def new
     @cost_center = CostCenter.new
     @cost_centers = CostCenter.all
+    session[:active_tab] ="master"
+    session[:active_tab1] ="companymaster"
   end
 
   # GET /cost_centers/1/edit

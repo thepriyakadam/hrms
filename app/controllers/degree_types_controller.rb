@@ -4,6 +4,8 @@ class DegreeTypesController < ApplicationController
   def new
     @degree_type = DegreeType.new
     @degree_types = DegreeType.all
+    session[:active_tab] ="master"
+    session[:active_tab1] ="qualificationsetup"
   end
 
   # GET /degree_types/1/edit

@@ -9,7 +9,7 @@
       <div class="row">
 
        <div class="col-sm-3">
-          <div class="field">
+          <div class="form-group required">
              <%= f.text_field :other_organization,label: 'Organization'%>
           </div>
         </div>
@@ -31,7 +31,7 @@
 
           <div class="col-sm-3">
           <div class="field">
-            <div class="field">
+            <div class="form-group required">
               <%= f.select :company_location_id, role_location_list,{label: 'Location',include_blank: " Select Location"} %>
             </div>
           </div>
@@ -42,7 +42,7 @@
 
          <div class="col-sm-3">
           <div class="field">
-            <div class="field">
+            <div class="form-group required">
               <%= f.select :department_id, all_department_type_list2,{label: 'Department',include_blank: " Select Department"} %>
             </div>
           </div>
@@ -85,12 +85,12 @@
         </div>      
     
         <div class="col-sm-3">
-          <div class="form-group required">
+          <div class="field">
              <%= f.text_field :keyword,label: 'Keyword'%>
           </div>
         </div>  
 
-            <div class="col-sm-3">
+        <div class="col-sm-3">
           <label>Educational Qualification 1</label>
           <div class="form-group required">
             <div class="input-group">
@@ -113,7 +113,8 @@
             </div>
           </div>
         </div>
-         </div> 
+      </div>
+      
       <div class="row">
 
         <div class="col-sm-3">
@@ -132,7 +133,7 @@
         <div class="col-sm-3">
         <label>Vacancy Approval</label>
             <div class="form-group required">
-              <%= f.select :reporting_master_id,all_reporting_master_list,{hide_label: true,include_blank: " Select Reporting Master"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
+              <%= f.select :reporting_master_id,all_reporting_master_list,{hide_label: true,include_blank: " Select Reporting Person"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
             </div>
         </div>
        </div>  
@@ -162,38 +163,67 @@
   </div>
 <% end %>
 <script>
+$(function(){
+  $.validator.addMethod("numbersOnly", function (value, element) {
+    return this.optional(element) || /^[0-9]+$/i.test(value);
+}, "Please enter numbers only.");
+
 $("#vacancy_master").validate({
     rules: {
       "vacancy_master[company_location_id]":{
-        required: true,
-        maxlength: 30
+        required: true
       },
-      "vacancy_master[company_location_id]":{
+      "vacancy_master[other_organization]":{
+        required: true
+      },
+      "vacancy_master[no_of_position]":{
         required: true,
-        maxlength: 30
+        numbersOnly: true
+      },
+      "vacancy_master[employee_designation_id]":{
+        required: true
       },
       "vacancy_master[department_id]":{
-        required: true,
-        maxlength: 30
+        required: true
       },
-      "vacancy_master[department_id]":{
-        required: true,
-        maxlength: 30
+      "vacancy_master[vacancy_post_date]":{
+        required: true
+      },
+      "vacancy_master[reporting_master_id]":{
+        required: true
       }
     },
     messages: {
       "vacancy_master[company_location_id]":{
-        required: "Please specify Location Name",
-        maxlength: "Name allows upto 30 alphabets"
+        required: "Please Specify Location Name"
+      },
+      "vacancy_master[other_organization]":{
+        required: "Please Specify Organization Name"
+      },
+      "vacancy_master[no_of_position]":{
+        required: "Please Specify No. of Positions"
+      },
+      "vacancy_master[employee_designation_id]":{
+        required: "Please Specify Job Title"
       },
       "vacancy_master[department_id]":{
-        required: "Please specify Department Name",
-        maxlength: "Name allows upto 30 alphabets"
+        required: "Please Specify Department Name"
+      },
+      "vacancy_master[vacancy_post_date]":{
+        required: "Please Specify Vacancy Post Date"
+      },
+      "vacancy_master[vacancy_post_date]":{
+        required: "Please Specify Vacancy Post Date"
+      },
+      "vacancy_master[reporting_master_id]":{
+        required: "Please Specify Reporting Master Name"
       }
     },
     errorPlacement: function(error, element) {
      error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
      error.insertAfter(element.parent(element));
     }
+    
    });
+});
 </script>

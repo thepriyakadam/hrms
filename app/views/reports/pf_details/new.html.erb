@@ -1,7 +1,7 @@
 <!--SELECT2 EXAMPLE -->
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title">Employee PF Report</h3>
+    <h3 class="box-title">Employee Monthly PF Report</h3>
   </div><!-- /.box-header -->
 
   <div class="box-body">
@@ -24,9 +24,7 @@
           <%= select :salary, :company_location_id, all_company_location,{label: 'Company Location',include_blank: " Select Company Location"}, class: "form-control" %>
           </div>
         </div>
-        </div>
-
-        <div class="row">
+       
         <div class="col-sm-3">
           <div class="actions">
             <%= f.submit "Download Excel", class: "btn btn-sm btn-warning" %>

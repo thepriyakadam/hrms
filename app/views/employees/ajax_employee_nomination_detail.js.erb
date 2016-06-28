@@ -1,0 +1,6 @@
+<% if EmployeeNomination.exists?(employee_id: params[:id]) %>
+<% @employee_nominations = EmployeeNomination.where("employee_id = ?", params[:id]) %>
+$('#info').html("<%= j render 'employee_nominations/show_detail' %>");
+<%else%>
+$('#info').html("<%= j render 'employee_nominations/form' %>");
+<%end%>

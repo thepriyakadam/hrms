@@ -90,7 +90,7 @@
       <footer class="main-footer">
         <!-- To the right -->
         <div class="pull-right hidden-xs">
-          Anything you want
+          
         </div>
         <!-- Default to the left -->
         <strong> Copyright © 2015 <a href="#">HRMSONE</a>.</strong> All Right Reserved.| Powered By : Indiba Consultancy Services.
@@ -123,7 +123,7 @@
                         <p> <%= full_name(e) %> </p>
                       <%end%>
                       <% if current_user.try(:role).try(:name) == 'Company'%>
-                        <%= link_to 'Send Birthday Wishes', birthday_email_employees_path,class: 'btn btn-xl btn-warning' %>
+                        <!-- link_to 'Send Birthday Wishes', birthday_email_employees_path,class: 'btn btn-xl btn-warning' -->
                       <% end %>
                     <%end%>
                     <br>
@@ -143,8 +143,7 @@
                 </a>
               </li>
             </ul><!-- /.control-sidebar-menu --><br>
-           <!--  <%= link_to 'Send Birthday Wishes', birthday_email_employees_path,class: 'btn btn-xl btn-warning' %><br><br> -->
-            <%= link_to 'Send Birthday Invitation', birthday_invitation_employees_path,class: 'btn btn-xl btn-warning' %>
+            <!-- link_to 'Send Birthday Invitation', birthday_invitation_employees_path,class: 'btn btn-xl btn-warning' -->
             <!-- <h3 class="control-sidebar-heading">Event's </h3>
             <ul class="control-sidebar-menu">
               <li>

@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
-  before_action :authenticate!
+  before_action :authenticate! #, exept: :salaryslip_components.xml
   # before_action :check_subdomain
   before_action :configure_devise_permitted_parameters, if: :devise_controller?
   helper_method :user_signed_in?
@@ -38,14 +38,19 @@ class ApplicationController < ActionController::Base
   #   redirect_to amain_path
   # end
 
-  # rescue_from ActiveRecord::RecordNotFound do |_exc|
-  #   if request.xhr?
-  #     render js: "alert('Sorry! Record not found');"
-  #   else
-  #     flash[:alert] = 'Sorry! Record not found'
-  #     redirect_to root_url
-  #   end
-  # end
+  rescue_from ActiveRecord::RecordNotFound do |_exc|
+    if request.xhr?
+      render js: "alert('Sorry! Record not found');"
+    else
+      flash[:alert] = 'Sorry! Record not found'
+      #redirect_to root_url
+      prev = Rails.application.routes.recognize_path(request.referrer)
+      puts prev
+      puts "-------------------------"
+      puts params
+      redirect_to url_for(:controller => prev[:controller], :action => prev[:action_name], :id => 1)
+    end
+  end
 
   # rescue_from ActiveRecord::ActiveRecordError do |_exc|
   #   if request.xhr?
@@ -60,7 +65,7 @@ class ApplicationController < ActionController::Base
     if request.xhr?
       render js: "alert('Sorry! Transaction Rollbacked Record Invalid');"
     else
-      flash[:alert] = 'Sorry! Transaction Rollbacked Record Invalid #{_exc.message}'
+      flash[:alert] = 'Sorry! Transaction Rollbacked Record Invalid'
       redirect_to root_url
     end
   end

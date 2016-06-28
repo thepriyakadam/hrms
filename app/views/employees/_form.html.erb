@@ -9,7 +9,7 @@
       <div class="row">
         <div class="col-sm-3">
           <div class="form-group required">
-           <%= f.text_field :manual_employee_code,label: 'Employee Code',placeholder: "Employee Code"%>
+           <%= f.text_field :manual_employee_code,label: 'Employee ID',placeholder: "Employee ID"%>
            </div>
         </div>
       </div>
@@ -49,26 +49,26 @@
 
          <div class="col-sm-3">
           <div class="field">
-           <%= f.text_field :adhar_no, label: 'Aadhaar No',placeholder: "e.g : 123456789012" %>
+           <%= f.text_field :adhar_no, label: 'Aadhaar No.',placeholder: "e.g : 123456789012" %>
           </div>
         </div>
 
         <div class="col-sm-3">
           <div class="field">
-            <%= f.text_field :pan_no, label: 'PAN Card No',placeholder: "e.g : ABCDE12345B" %>
+            <%= f.text_field :pan_no, label: 'PAN Card No.',placeholder: "e.g : ABCDE12345B" %>
           </div>
         </div>
 
         <div class="col-sm-3">
           <div class="field">
-           <%= f.text_field :licence_no, label: 'Driving Licence No' %>
+           <%= f.text_field :licence_no, label: 'Driving Licence No.' %>
           </div>
         </div>
       </div>
       <div class="row">
         <div class="col-sm-3">
           <div class="field">
-           <%= f.text_field :contact_no,label: 'Contact No' %>
+           <%= f.text_field :contact_no,label: 'Contact No.' %>
           </div>
         </div>
         <div class="col-sm-3">
@@ -135,20 +135,35 @@
          <div class="row">
           <div class="col-sm-3">
             <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <%= link_to "", new_country_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+              </div>
               <%=f.select :country_id, all_countries,{include_blank: "Please Select Country"},{onchange:"var a={id:$(this).val(), form : 'employee'}; $.get('/companies/collect_states',a,function(response){});"}%>
+            </div>
             </div>
           </div>
           <div class="col-sm-3">
             <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <%= link_to "", new_state_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+              </div>
               <div id="states">
                 <%= render 'companies/state_dropdown' %> 
             </div> 
             </div>
+            </div>
           </div>
           <div class="col-sm-3">
             <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <%= link_to "", new_district_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+              </div>
              <div id="district">
                <%= render 'companies/city_dropdown' %>
+           </div>
            </div>
             </div>
           </div>

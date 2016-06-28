@@ -5,7 +5,7 @@ class CompanyShiftsController < ApplicationController
   def new
     @company_shift = CompanyShift.new
     @company_shifts = CompanyShift.all
-    session[:active_tab] = "company"
+    session[:active_tab] ="timemgmt"
   end
 
   # GET /company_shifts/1/edit

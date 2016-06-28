@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Template no:</strong>
+  <%= @induction_template.template_no %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @induction_template.description %>
+</p>
+
+<p>
+  <strong>Activity:</strong>
+  <%= @induction_template.activity %>
+</p>
+
+<p>
+  <strong>Day:</strong>
+  <%= @induction_template.day %>
+</p>
+
+<p>
+  <strong>Duration:</strong>
+  <%= @induction_template.duration %>
+</p>
+
+<p>
+  <strong>Employee:</strong>
+  <%= @induction_template.employee %>
+</p>
+
+<%= link_to 'Edit', edit_induction_template_path(@induction_template) %> |
+<%= link_to 'Back', induction_templates_path %>

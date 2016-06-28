@@ -3,6 +3,7 @@
   <thead>
     <tr>
       <th><input type="checkbox" id="selectAll" value="selectAll"></th>
+      <th>Employee ID</th>
       <th>Employee Name</th>
       <th>Actual Gross Salary</th>
       <th>Actual Total Deduction</th>
@@ -14,6 +15,7 @@
     <% @salaryslips.each do |s| %>
       <tr>
         <td><%= check_box_tag "salaryslip_ids[]", s.id %></td>
+        <td><%= s.employee.try(:manual_employee_code) %></td>
         <td><%= full_name(s.employee) %></td>
         <td><%= s.actual_gross_salary %></td>
         <td><%= s.actual_total_deduction %></td>
@@ -23,7 +25,7 @@
     <% end %>
   </tbody>
 </table>
-<%= f.submit "Destroy Salary Slip" , class: 'btn btn-primary btn-sm' %>
+<%= f.submit "Revert Salary Slip" , class: 'btn btn-primary btn-sm' %>
 <% end %>
 
 <script type="text/javascript">
@@ -39,4 +41,6 @@ $('#selectAll').click(function() {
     });
   } 
 });
+
+$("#example1").DataTable();
 </script>

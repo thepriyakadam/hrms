@@ -1,5 +1,7 @@
 class Reports::AwardDetailsController < ApplicationController
   def new
+    session[:active_tab] ="employeemanagement"
+    session[:active_tab1] ="employeereport"
   end
   
   def award_detail_report

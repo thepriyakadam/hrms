@@ -69,6 +69,6 @@ class ParticularVacancyRequestsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def particular_vacancy_request_params
-      params.require(:particular_vacancy_request).permit(:vacancy_master_id, :employee_id, :open_date, :closed_date, :fulfillment_date, :status)
+      params.require(:particular_vacancy_request).permit(:vacancy_master_id, :vacancy_history_id, :employee_id, :open_date, :closed_date, :fulfillment_date, :status)
     end
 end

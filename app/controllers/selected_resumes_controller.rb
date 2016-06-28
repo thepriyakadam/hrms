@@ -207,6 +207,17 @@ class SelectedResumesController < ApplicationController
     redirect_to root_url
   end
 
+  def modal_profile_update
+  @selected_resume = SelectedResume.find(params[:format])
+  end
+
+  def update_profile
+    @selected_resume = SelectedResume.find(params[:id])
+    @selected_resume.update(selected_resume_params)
+    flash[:notice] = 'Resume Updated Successfully'
+    redirect_to root_url
+  end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

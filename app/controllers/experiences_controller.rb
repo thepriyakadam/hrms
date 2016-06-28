@@ -76,6 +76,17 @@ class ExperiencesController < ApplicationController
     end
   end
 
+  def modal_experience
+    @experience = Experience.find(params[:format])
+  end
+
+  def update_experience
+     @experience = Experience.find(params[:id])
+     @experience.update(experience_params)
+     flash[:notice] = 'Experience Details Updated Successfully'
+     redirect_to root_url
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

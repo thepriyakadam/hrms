@@ -1,0 +1,5 @@
+<% if @flag %>
+$("#dropdown").html("<%= j render 'goal_dropdown' %>");
+<% else %>
+$("#dropdown").html("<%= j render 'attribute_dropdown' %>");
+<% end %>

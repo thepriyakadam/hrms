@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160625182131) do
+ActiveRecord::Schema.define(version: 20160627073417) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -170,6 +170,15 @@ ActiveRecord::Schema.define(version: 20160625182131) do
   add_index "attribute_rating_sheets", ["employee_attribute_id"], name: "index_attribute_rating_sheets_on_employee_attribute_id"
   add_index "attribute_rating_sheets", ["final_id_id"], name: "index_attribute_rating_sheets_on_final_id_id"
   add_index "attribute_rating_sheets", ["final_rating_id"], name: "index_attribute_rating_sheets_on_final_rating_id"
+
+  create_table "attributes", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
+    t.text     "definition"
+    t.boolean  "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "awards", force: :cascade do |t|
     t.integer  "employee_id"
@@ -660,8 +669,12 @@ ActiveRecord::Schema.define(version: 20160625182131) do
     t.string   "allign_to_supervisor"
     t.boolean  "is_confirm"
     t.string   "emp_head"
+    t.integer  "appraiser_id"
+    t.integer  "appraiser2_id"
   end
 
+  add_index "employee_goals", ["appraiser2_id"], name: "index_employee_goals_on_appraiser2_id"
+  add_index "employee_goals", ["appraiser_id"], name: "index_employee_goals_on_appraiser_id"
   add_index "employee_goals", ["employee_id"], name: "index_employee_goals_on_employee_id"
   add_index "employee_goals", ["goal_perspective_id"], name: "index_employee_goals_on_goal_perspective_id"
   add_index "employee_goals", ["period_id"], name: "index_employee_goals_on_period_id"
@@ -1162,10 +1175,10 @@ ActiveRecord::Schema.define(version: 20160625182131) do
     t.datetime "updated_at",               null: false
     t.integer  "attribute_id"
     t.integer  "attribute_master_id"
-    t.string   "type"
     t.string   "goal_type"
     t.integer  "performance_calendar_id"
     t.integer  "training_topic_master_id"
+    t.boolean  "is_assigned"
   end
 
   add_index "goal_ratings", ["appraisee_id"], name: "index_goal_ratings_on_appraisee_id"

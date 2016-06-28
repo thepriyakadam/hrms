@@ -4,46 +4,46 @@
 
     	<%=  f.hidden_field :training_topic_master_id, value: @training_topic_master_id %>
         <div class="row">
-			    <div class="col-sm-3">
-			      <label>Training Date</label>
-			      <div class="form-group required">
-			        <div class="input-group">
-			          <div class="input-group-addon">
-			            <i class="fa fa-calendar"></i>
-			          </div>
-			          <%= f.text_field :training_date, hide_label: true,class: 'birth_date'%>
-			        </div>
-			      </div>
-			    </div>
+	    <div class="col-sm-3">
+	      <label>Training Date</label>
+	      <div class="form-group required">
+	        <div class="input-group">
+	          <div class="input-group-addon">
+	            <i class="fa fa-calendar"></i>
+	          </div>
+	          <%= f.text_field :training_date, hide_label: true,class: 'birth_date'%>
+	        </div>
+	      </div>
+	    </div>
 
-			    <div class="col-sm-3">
-			      <div class="form-group required">
-			        <%= f.text_field :no_of_employee,placeholder: 'No of Employee' %>
-			      </div>
-			    </div>
-			    <div class="col-sm-3">
-			      <div class="form-group required">
-			        <%= f.text_field :trainer_name,placeholder: 'Trainer Name' %>
-			      </div>
-			    </div>
-			  </div>
-			  <div class="row">
-			    <div class="col-sm-3">
-			      <div class="field">
-			        <%= f.text_field :no_of_days,placeholder: 'No of Days' %>
-			      </div>
-			    </div>
-			    <div class="col-sm-3">
-			      <div class="field">
-			        <%= f.text_field :no_of_hrs,placeholder: 'No of Hours' %>
-			      </div>
-			    </div>
-			    <div class="col-sm-3">
-			      <div class="field">
-			        <%= f.text_field :place,placeholder: 'Place' %>
-			      </div>
-			    </div>
-			  </div>
+	    <div class="col-sm-3">
+	      <div class="form-group required">
+	        <%= f.text_field :no_of_employee,placeholder: 'No of Employee' %>
+	      </div>
+	    </div>
+	    <div class="col-sm-3">
+	      <div class="form-group required">
+	        <%= f.text_field :trainer_name,placeholder: 'Trainer Name' %>
+	      </div>
+	    </div>
+	  </div>
+	  <div class="row">
+	    <div class="col-sm-3">
+	      <div class="field">
+	        <%= f.text_field :no_of_days,placeholder: 'No of Days' %>
+	      </div>
+	    </div>
+	    <div class="col-sm-3">
+	      <div class="field">
+	        <%= f.text_field :no_of_hrs,placeholder: 'No of Hours' %>
+	      </div>
+	    </div>
+	    <div class="col-sm-3">
+	      <div class="field">
+	        <%= f.text_field :place,placeholder: 'Place' %>
+	      </div>
+	    </div>
+	  </div>
 
 		<div>
       <%= render 'employee_list' %>

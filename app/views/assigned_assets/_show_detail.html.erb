@@ -1,8 +1,9 @@
 <div class="box box-default">
   <div class="box-header with-border">
+  <h6 class="box-title">Employee Asset Details - <%= code_full_name(@assigned_assets.first.employee) %></h6>
     <div class="box-tools pull-right">
       <%= link_to 'Back', employees_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
-      <%= link_to "Add Member", ajax_new_assigned_asset_employees_path(id: @employee.id), class: 'btn btn-primary',remote:true %>
+      <%= link_to "Assign Asset", ajax_new_assigned_asset_employees_path(id: @employee.id), class: 'btn btn-primary',remote:true %>
     </div>
   </div><!-- /.box-header -->
   <div class="box-body">
@@ -27,7 +28,7 @@
 	<% @assigned_assets.each do |assigned_asset| %>
       <tr>
         
-        <td><%= assigned_asset.asset_type %></td>
+        <td><%= assigned_asset.asset_type.try(:name) %></td>
         <td><%= assigned_asset.assets_detail %></td>
         <td><%= assigned_asset.assets_id %></td>
         <td><%= assigned_asset.assets_value %></td>
@@ -38,7 +39,7 @@
         <td><%= assigned_asset.remarks %></td>
         <td>
         	<%= link_to '', edit_assigned_asset_path(assigned_asset),class: 'btn btn-success btn-sm fa fa-edit',remote:true %>
-          <%= link_to '', assigned_asset, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-sm fa fa-close' %>
+          <!-- < link_to '', assigned_asset, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-sm fa fa-close' %> -->
         </td>
       </tr>
     <% end %>

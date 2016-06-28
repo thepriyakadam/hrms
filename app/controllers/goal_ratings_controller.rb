@@ -51,8 +51,9 @@ class GoalRatingsController < ApplicationController
   # PATCH/PUT /goal_ratings/1.json
   def update
     @goal_bunch = GoalBunch.find(params[:goal_rating][:goal_bunch_id])
-
-    if @goal_rating.update(goal_rating_params)
+    goal_weightage_sum = @goal_rating.goal_weightage_sumdate(@goal_bunch, @goal_rating.goal_weightage)
+      if goal_weightage_sum <= 100
+      @goal_rating.update(goal_rating_params)
       @flag = true
       @goal_rating = GoalRating.new
       @goal_ratings = GoalRating.where(goal_bunch_id: @goal_bunch.id, goal_type: 'Goal')

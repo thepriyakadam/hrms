@@ -1,4 +1,3 @@
-
 	<table class="table table-bordered table-hover table-condensed">
 	  <thead>
 	    <tr>
@@ -12,7 +11,7 @@
 	  <tbody>
 	  	<% @goal_ratings.each do |e|  %>
 		    <tr>
-		    	<td><%= check_box_tag "goal_rating_ids[]", e.appraisee_id %></td>
+		      <td><%= check_box_tag "goal_rating_ids[]", e.appraisee_id %></td>
 		      <td><%= e.appraisee_id %></td> 
 		      <td><%= e.appraisee.try(:first_name) %> <%= e.appraisee.try(:last_name) %></td>
 		      <td><%= e.attribute_master.try(:name) %></td>

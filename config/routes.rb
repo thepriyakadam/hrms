@@ -234,6 +234,8 @@ end
     post :offer_letter
     get :modal_change_status
     post :update_status
+    get :modal_profile_update
+    post :update_profile
     end
   end 
   resources :assigned_assets
@@ -862,7 +864,12 @@ end
     end
   end
   resources :certifications
-  resources :qualifications
+  resources :qualifications do
+    collection do
+      get :modal
+      post :update_qualification
+     end
+   end
   resources :families do
     collection do
       get :ajax_show_handicap_type_textbox

@@ -200,6 +200,10 @@ class GoalRatingsController < ApplicationController
     @employee = Employee.find(params[:emp_id])
     @training_topic_master_id = params[:training_topic_master_id]
     @goal_rating_id = params[:goal_rating_id]
+<<<<<<< HEAD
+=======
+
+>>>>>>> 55ae9a22bb0be95e8cfbcf099b69b70ea90ec502
     @attribute_rating = GoalRating.where(id: @goal_rating_id, appraisee_id: @employee.id,goal_type: 'Attribute').update_all(training_topic_master_id: @training_topic_master_id)
     flash[:notice] = "Created Successfully"
     redirect_to training_request_goal_ratings_path
@@ -209,6 +213,10 @@ class GoalRatingsController < ApplicationController
     @employee = Employee.find(params[:emp_id])
     @training_topic_master_id = params[:training_topic_master_id]
     @goal_rating_id = params[:goal_rating_id]
+<<<<<<< HEAD
+=======
+
+>>>>>>> 55ae9a22bb0be95e8cfbcf099b69b70ea90ec502
     @goal_rating = GoalRating.where(id: @goal_rating_id,appraisee_id: @employee.id,goal_type: 'Goal').update_all(training_topic_master_id: @training_topic_master_id)
     flash[:notice] = "Created Successfully"
     redirect_to training_request_goal_ratings_path
@@ -219,6 +227,7 @@ class GoalRatingsController < ApplicationController
 
   def period_topic_wise_employee
     @training_plan = TrainingPlan.new
+<<<<<<< HEAD
     #@attribute_master_id = params[:attribute_master_id]
     @period = Period.find(params[:period_id])
     @goal_bunches = GoalBunch.where(period_id: @period.id)
@@ -229,6 +238,13 @@ class GoalRatingsController < ApplicationController
     @training_topic_master_id = params[:training_topic_master_id]
     # @goal_ratings = GoalRating.where(goal_bunch_id: ids,training_topic_master_id: @training_topic_master_id).where(is_assigned: nil)
     @goal_ratings = GoalRating.where(goal_bunch_id: ids,training_topic_master_id: @training_topic_master_id)
+=======
+    #@appraisee_id = params[:appraisee_id]
+    @goal_bunch = GoalBunch.find_by_period_id(params[:period_id])
+    @training_topic_master_id = params[:training_topic_master_id]
+    @goal_ratings = GoalRating.where(goal_bunch_id: @goal_bunch.id,training_topic_master_id: @training_topic_master_id)
+    #@goal_ratings = GoalRating.all
+>>>>>>> 55ae9a22bb0be95e8cfbcf099b69b70ea90ec502
   end
 
   def send_request_for_training

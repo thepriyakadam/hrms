@@ -855,7 +855,12 @@ end
   resources :skillsets
   resources :experiences
   resources :certifications
-  resources :qualifications
+  resources :qualifications do
+    collection do
+      get :modal
+      post :update_qualification
+     end
+   end
   resources :families do
     collection do
       get :ajax_show_handicap_type_textbox

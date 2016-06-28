@@ -1,12 +1,21 @@
+<<<<<<< HEAD
 
+=======
+<!-- <div class="ajax-progress"></div> -->
+
+<!-- < bootstrap_form_for GoalRating.new,url:{action:'send_request_for_training'} do |f| %>   -->
+>>>>>>> 55ae9a22bb0be95e8cfbcf099b69b70ea90ec502
 	<table class="table table-bordered table-hover table-condensed">
 	  <thead>
 	    <tr>
 	      <th><input type="checkbox" id="selectAll" value="selectAll"></th>
 	    	<th>Employee ID</th>
 		    <th>Name</th>
+<<<<<<< HEAD
 		    <th>Attribute</th>
 		    <th>Rating</th>
+=======
+>>>>>>> 55ae9a22bb0be95e8cfbcf099b69b70ea90ec502
 		  </tr>
 		</thead>
 	  <tbody>
@@ -15,17 +24,27 @@
 		    	<td><%= check_box_tag "goal_rating_ids[]", e.appraisee_id %></td>
 		      <td><%= e.appraisee_id %></td> 
 		      <td><%= e.appraisee.try(:first_name) %> <%= e.appraisee.try(:last_name) %></td>
+<<<<<<< HEAD
 		      <td><%= e.attribute_master.try(:name) %></td>
 		      <td><%= e.appraiser_rating_id %></td>
 		      <%= hidden_field_tag "period_id[]", value: e.goal_bunch.period_id %>
 		      <%= hidden_field_tag "appraisee_id[]", value: e.appraisee_id %>
 		      <%= hidden_field_tag "attribute_master_id[]", value: e.attribute_master_id %>
+=======
+		      <%= hidden_field_tag "period_id[]", value: e.goal_bunch.period_id %>
+		      <%= hidden_field_tag "appraisee_id[]", value: e.appraisee_id %>
+>>>>>>> 55ae9a22bb0be95e8cfbcf099b69b70ea90ec502
 		    </tr>
 	    <% end %>
 	  </tbody>
 	</table>
 
+<<<<<<< HEAD
 <script type="text/javascript">
+=======
+<!-- <div id="myModal" class="modal fade"></div> -->
+   <script type="text/javascript">
+>>>>>>> 55ae9a22bb0be95e8cfbcf099b69b70ea90ec502
   $(function () {
     $('#selectAll').click(function() {
       if (this.checked) {

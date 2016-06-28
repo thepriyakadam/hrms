@@ -223,6 +223,7 @@ class EmployeesController < ApplicationController
   
   def ajax_new_assigned_asset
     @assigned_asset = AssignedAsset.new
+     @employee = Employee.find(params[:id])
   end
 
 

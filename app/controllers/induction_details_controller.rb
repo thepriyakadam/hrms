@@ -73,7 +73,7 @@ class InductionDetailsController < ApplicationController
 
   def confirm
     @induction_detail = InductionDetail.find(params[:format])
-    @induction_detail.update(induction_completed: true)
+    @induction_detail.update(induction_completed: true,end_date: Time.zone.now.to_date)
     redirect_to all_induction_detail_list_induction_details_path
     flash[:notice] = 'induction Confirmed Successfully'
   end
@@ -102,6 +102,26 @@ class InductionDetailsController < ApplicationController
     end
   end
 
+  def update_date_modal
+     @induction_detail = InductionDetail.find(params[:format])
+  end
+
+  def update_date
+    @induction_detail = InductionDetail.find(params[:id])
+    @end_date = params[:induction_detail][:end_date]
+    @induction_detail.update(end_date: @end_date)
+    flash[:notice] = 'End Date Updated Successfully'
+    redirect_to all_induction_detail_list_induction_details_path
+  end
+
+  def update_feedback
+     @trainee = Trainee.find(params[:id])
+     @feedback = params[:trainee][:feedback]
+     @trainee.update(feedback: @feedback)
+     flash[:notice] = 'Feedback Updated Successfully'
+     redirect_to trainee_list_training_plans_path
+  end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -111,6 +131,6 @@ class InductionDetailsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def induction_detail_params
-      params.require(:induction_detail).permit(:employee_id, :start_date, :induction_master_id, :induction_completed)
+      params.require(:induction_detail).permit(:employee_id, :start_date, :end_date, :induction_master_id, :induction_completed)
     end
 end

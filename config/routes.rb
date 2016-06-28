@@ -32,6 +32,8 @@ Rails.application.routes.draw do
     get :all_induction_detail_list
     get :confirm
     post :print_induction_details
+    get :update_date_modal
+    post :update_date
     end
   end 
   resources :induction_activities do
@@ -859,7 +861,12 @@ end
     end
   end
   resources :skillsets
-  resources :experiences
+  resources :experiences  do
+    collection do
+      get :modal_experience
+      post :update_experience
+    end
+  end
   resources :certifications
   resources :qualifications do
     collection do

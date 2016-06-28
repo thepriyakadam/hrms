@@ -15,13 +15,21 @@ th {
 
     <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
     <tr>
+      
       <th><strong>Employee</strong></th>
       <td><%= @induction_detail.employee.try(:first_name) %> <%= @induction_detail.employee.try(:middle_name) %> <%= @induction_detail.employee.try(:last_name) %></td>
 
-     
     </tr>
-
     <tr>
+      <th><strong>Department</strong></th>
+      <td><%= @induction_detail.employee.company_location.try(:name) %> - <%= @induction_detail.employee.department.try(:name) %></td>
+
+      <th><strong>Designation</strong></th>
+      <td><%= @induction_detail.employee.joining_detail.try(:employee_designation).try(:name)%></td>
+
+    </tr>
+    <tr>
+
       <th><strong>Date Of Joining</strong></th>
       <td><%= @induction_detail.employee.joining_detail.joining_date %></td>
 
@@ -31,7 +39,14 @@ th {
      
 
       
-    </tr>  
+
+     
+  
+      </tr>
+
+
+   
+     
   </table><br><br>
 
   <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">

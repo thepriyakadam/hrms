@@ -1,20 +1,14 @@
-<style>
-th {
-    text-align: left;
-}
-</style>
-<style>
-   table {
-  page-break-inside: avoid; 
-}
-</style>
-    <h2><strong><center>INDUCTION SCHEDULE</center></strong></h2><br><br>
-    <div style="float:right;">
-       <td><%= @induction_detail.induction_master.try(:code) %> - <%= @induction_detail.induction_master.try(:description) %></td>
-    </div>
-
-    <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
+ <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
     <tr>
+ <th colspan="5">
+        <center><strong>BHANDARI FOILS AND TUBES LTD.</strong></center><br>
+        <center><strong>Induction Schedule</strong></center>
+        <center><small></small></center>   
+      </th>
+      </tr>
+   <tr>
+     <th><strong>Employee Id</strong></th>
+      <td><%= @induction_detail.employee.manual_employee_code %></td>
       
       <th><strong>Employee</strong></th>
       <td><%= @induction_detail.employee.try(:first_name) %> <%= @induction_detail.employee.try(:middle_name) %> <%= @induction_detail.employee.try(:last_name) %></td>
@@ -30,22 +24,14 @@ th {
     </tr>
     <tr>
 
+
       <th><strong>Date Of Joining</strong></th>
       <td><%= @induction_detail.employee.joining_detail.joining_date %></td>
 
        <th><strong>Induction Start Date</strong></th>
       <td><%= @induction_detail.start_date %></td>
+   </tr>
 
-     
-
-      
-
-     
-  
-      </tr>
-
-
-   
      
   </table><br><br>
 

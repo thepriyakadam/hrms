@@ -3,20 +3,21 @@
 <table style="border-collapse: collapse; font-size:30pt;" border=1 width=1000 cellpadding="15">
   <thead>
     <tr>
-      <th colspan="21">
+      <th colspan="22">
         <center><strong>BHANDARI FOILS AND TUBES LTD.</strong></center>
         <center><small></small></center>
         <center><small>Employee Monthly Salary For The Month <%= @month %> - <%= @year %></small></center>   
       </th>
     </tr>
     <tr>
-      <th colspan="5" align="left"> Employee ID: <%= @reports.first.try(:code) %> </th>
+      <th colspan="6" align="left"> Employee ID: <%= @reports.first.try(:code) %> </th>
       <th colspan="10" align="left">Employee Name: <%= @reports.first.try(:employee_name) %> </th>
       <th colspan="6" align="left">Designation: </th>
     </tr>
      <tr>
       <th>Sr.No</th>
       <th>Month</th>
+      <th>Payble Day</th>
       
       <th>Basic</th>
       <th>DA</th>
@@ -46,31 +47,58 @@
       <tr>
        <td><%= i = i+1 %></td>
        <td><%= r.try(:month) %> <%= r.try(:year) %></td>
-        
-        <td><%= r.try(:earned_basic) %></td>
-        <td><%= r.try(:earned_da) %></td>
-        <td><%= r.try(:earned_hra) %></td>
 
-        <td><%= r.try(:earned_convenience) %></td>
-        <td><%= r.try(:earned_other) %></td>
-        <td><%= r.try(:earned_special) %></td>
-        <td><%= r.try(:earned_washing) %></td>
-        <td><%= r.try(:earned_total) %></td>
+        <td><%= r.try(:payable_day) %></td>
+        <td><%= r.try(:earned_basic).round %></td>
+        <td><%= r.try(:earned_da).round %></td>
+        <td><%= r.try(:earned_hra).round %></td>
+
+        <td><%= r.try(:earned_convenience).round %></td>
+        <td><%= r.try(:earned_other).round %></td>
+        <td><%= r.try(:earned_special).round %></td>
+        <td><%= r.try(:earned_washing).round %></td>
+        <td><%= r.try(:earned_total).round %></td>
 
         <td><%= r.try(:pf) %></td>
         <td><%= r.try(:esic) %></td>
         <td><%= r.try(:income_tax) %></td>
         <td><%= r.try(:pt) %></td>
         <td><%= r.try(:advance) %></td>
-        <td><%= r.try(:society) %></td>
+        <td><%= r.try(:society).round %></td>
 
         <td><%= r.try(:food_deduction) %></td>
         <td><%= r.try(:mobile) %></td>
         <td><%= r.try(:retention) %></td>
-        <td><%= r.try(:deduction_total) %></td>
-        <td><%= r.try(:net_payable) %></td>
+        <td><%= r.try(:deduction_total).round %></td>
+        <td><%= r.try(:net_payable).round %></td>
       </tr>
     <% end %>
+    <tr>
+      <th></th>
+      <th></th>
+      <th><%= @sum.payable_day.round %></th>
+      <th><%= @sum.earned_basic.round %></th>
+      <th><%= @sum.earned_da.round %></th>
+      <th><%= @sum.earned_hra.round %></th>
+      <th><%= @sum.earned_convenience.round %></th>
+      <th><%= @sum.earned_other.round %></th>
+      <th><%= @sum.earned_special.round %></th>
+      <th><%= @sum.earned_washing.round %></th>
+      <th><%= @sum.earned_total.round %></th>
+
+      <th><%= @sum.pf %></th>
+      <th><%= @sum.esic %></th>
+      <th><%= @sum.income_tax %></th>
+      <th><%= @sum.pt %></th>
+      <th><%= @sum.advance %></th>
+      <th><%= @sum.society %></th>
+      <th><%= @sum.food_deduction %></th>
+      <th><%= @sum.mobile %></th>
+      <th><%= @sum.retention %></th>
+      <th><%= @sum.deduction_total %></th>
+
+      <th><%= @sum.net_payable.round.round %></th>
+      </tr>
   </tbody>
 </table>
 

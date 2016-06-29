@@ -49,9 +49,8 @@ class EmployeeResignationsController < ApplicationController
  
     respond_to do |format|
       if @employee_resignation.save
-        
         ReportingMastersResign.create(reporting_master_id: @employee_resignation.reporting_master_id, employee_resignation_id: @employee_resignation.id,resignation_status: @employee_resignation.resign_status)
-        EmployeeResignationMailer.send_email_to_reporting_manager(@employee_resignation).deliver_now
+        # EmployeeResignationMailer.send_email_to_reporting_manager(@employee_resignation).deliver_now
         format.html { redirect_to @employee_resignation, notice: 'Employee Resignation created successfully.' }
         format.json { render :show, status: :created, location: @employee_resignation }
       else
@@ -153,6 +152,9 @@ class EmployeeResignationsController < ApplicationController
 
   def modal
     @employee_resignation = EmployeeResignation.find(params[:format])
+  end
+
+  def send_email_to_reporting_manager
   end
 
 

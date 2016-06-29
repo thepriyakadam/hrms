@@ -125,6 +125,19 @@ class InductionActivitiesController < ApplicationController
     redirect_to employee_list_induction_activities_path
   end
 
+
+  def modal_induction_activity
+    @induction_activity = InductionActivity.find(params[:format])
+  end
+
+
+  def update_induction
+     @induction_activity = InductionActivity.find(params[:id])
+    @induction_activity.update(induction_activity_params)
+    flash[:notice] = 'Activity Updated Successfully'
+    redirect_to root_url
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_induction_activity

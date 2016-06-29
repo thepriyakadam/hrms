@@ -53,6 +53,7 @@ Rails.application.routes.draw do
 
   resources :goal_ratings do
     collection do
+      get :select_dropdown
       get :self_modal
       patch :update_self_modal
       get :appraiser_modal

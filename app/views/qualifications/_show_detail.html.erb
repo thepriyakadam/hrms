@@ -29,7 +29,7 @@
           <td><%= qualification.college %></td>
           <td><%= qualification.university.try(:name) %></td>
           <td>
-          <div id="myModal" class="modal fade"></div>
+         
            
              <%= link_to ' ',modal_qualifications_path(qualification),class: 'btn btn-success btn-sm fa fa-edit',remote: true %>
           </td>
@@ -38,5 +38,6 @@
       </table>
   </div><!-- /.box -->
 </div>
+ <div id="myModal" class="modal fade"></div>
 
 

@@ -72,9 +72,14 @@ class QualificationsController < ApplicationController
 
   def update_qualification
     @qualification = Qualification.find(params[:id])
-    @qualification.update(qualification_params)
-    flash[:notice] = 'Qualification Updated Successfully'
-    redirect_to root_url
+    @employee = Employee.find(@qualification.employee_id)
+    if @qualification.update(qualification_params)
+      @qualifications = Qualification.where(employee_id:@employee.id)
+      @flag = true
+    else
+      @qualifications = Qualification.where(employee_id:@employee.id)
+      @flag = false 
+    end
   end
 
   private

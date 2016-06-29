@@ -22,7 +22,7 @@
            </thead>
           <% @total_leaves.each do |l| %>
           <tr>
-          <th><%= l.leav_category.name %></th>
+          <th><%= l.leav_category.try(:name) %></th>
           <td><%= l.no_of_leave %></td>
           </tr>
           <% end %>

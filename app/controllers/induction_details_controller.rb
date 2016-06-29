@@ -81,6 +81,7 @@ class InductionDetailsController < ApplicationController
   def print_induction_details
     
     @induction_detail = InductionDetail.find(params[:id])
+    @induction_details = InductionDetail.all
     # @induction_details = InductionDetail.where(id: @induction_detail.id)
     @induction_activities = InductionActivity.where(induction_master_id: @induction_detail.induction_master_id)
      respond_to do |format|

@@ -12,7 +12,7 @@
       <th>Employee Name</th>
       <th>Resignation Date</th>
       <th>Reason</th>
-      <th>Is Notice Period</th>
+    
       <th>Notice period</th>
       <th>Short notice period</th>
       <th>Tentative leaving date</th>
@@ -26,7 +26,7 @@
         <td><%= employee_resignation.employee.try(:first_name) %><%= employee_resignation.employee.try(:middle_name) %> <%= employee_resignation.employee.try(:last_name) %></td>
         <td><%= employee_resignation.resignation_date %></td>
         <td><%= employee_resignation.reason %></td>
-        <td><%= employee_resignation.is_notice_period %></td>
+       
         <td><%= employee_resignation.notice_period %></td>
         <td><%= employee_resignation.short_notice_period %></td>
         <td><%= employee_resignation.tentative_leaving_date %></td>

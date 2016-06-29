@@ -76,6 +76,7 @@ class Employee < ActiveRecord::Base
   validates :first_name, presence: true
   # validate  :email_regex
   validates :permanent_address, presence: true
+  validates :company_location_id,presence: true
   # validates :country_id, :presence => true
   # validates :state_id, :presence => true
   # validates :district_id, :presence => true

@@ -5,7 +5,7 @@
         <center><strong>Induction Schedule</strong></center>
         <center><small></small></center>   
       </th>
-      </tr>
+    </tr>
    <tr>
      <th><strong>Employee Id</strong></th>
       <td><%= @induction_detail.employee.manual_employee_code %></td>
@@ -20,11 +20,9 @@
 
       <th><strong>Designation</strong></th>
       <td><%= @induction_detail.employee.joining_detail.try(:employee_designation).try(:name)%></td>
-
     </tr>
+
     <tr>
-
-
       <th><strong>Date Of Joining</strong></th>
       <td><%= @induction_detail.employee.joining_detail.joining_date %></td>
 
@@ -32,7 +30,6 @@
       <td><%= @induction_detail.start_date %></td>
    </tr>
 
-     
   </table><br><br>
 
   <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">

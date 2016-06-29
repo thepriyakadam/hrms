@@ -241,7 +241,13 @@ end
     post :update_profile
     end
   end 
-  resources :assigned_assets
+  resources :assigned_assets do
+    collection do 
+    post :update_asset
+    get :modal
+    
+    end
+  end 
   resources :asset_types
   resources :employee_nominations
   resources :nomination_masters

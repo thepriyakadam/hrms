@@ -62,8 +62,8 @@ class EmployeeAttendancesController < ApplicationController
 
   def department_wise_employee_list
     @department = Department.where(id: params[:salary][:department_id])
-    @employees = Employee.where(department_id: @department)
-    
+    @date = params[:current][:day].to_date
+    @employees = Employee.filter_by_date_and_department(@date,@department)
     @employee_attendance = EmployeeAttendance.new
   end
     

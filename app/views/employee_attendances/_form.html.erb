@@ -7,14 +7,25 @@
       <%= bootstrap_form_for(:salary, url: { action: 'department_wise_employee_list'},html: {id: "salary"},remote: true) do |f| %>
         <div class="row">
           <div class="col-sm-3">
-          <label>Department</label>
+            <label>Department</label>
             <div class="field">
               <%= select :salary, :department_id, all_department,{hide_label: true, include_blank: 'Select Department'},{class: "form-control"} %>
             </div>
           </div>
-         
+
           <div class="col-sm-3">
-          <label></label>
+            <label>Date </label>
+            <div class="form-group required">
+              <div class="input-group">
+                <div class="input-group-addon">
+                  <i class="fa fa-calendar"></i>
+                </div>
+                <%= text_field :current, :day,hide_label: true,class: 'day_date form-control'%>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
             <div class="actions">
               <%= f.submit "Create Employee Attendance" ,class: 'btn btn-primary btn-sm', id: "buttonCtc" %>
             </div>
@@ -38,4 +49,13 @@
       $('.ajax-progress').show();
       $("#salary").submit();
     })
+
+    $(function(){
+      $('.day_date').datepicker({
+      changeYear:true,
+      changeMonth: true,
+      yearRange: '-200:-0',
+      dateFormat: 'dd-mm-yy' });
+    });
+
   </script>

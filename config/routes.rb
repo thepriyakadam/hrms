@@ -150,7 +150,7 @@ Rails.application.routes.draw do
       post :print_emp_list
       post :all_emp_list
       get :emp_list_goal_wise
-      
+      get :goal_bunch_list
     end
   end
   resources :goal_perspectives

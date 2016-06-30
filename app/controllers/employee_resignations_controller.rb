@@ -49,9 +49,8 @@ class EmployeeResignationsController < ApplicationController
  
     respond_to do |format|
       if @employee_resignation.save
-        
         ReportingMastersResign.create(reporting_master_id: @employee_resignation.reporting_master_id, employee_resignation_id: @employee_resignation.id,resignation_status: @employee_resignation.resign_status)
-        EmployeeResignationMailer.send_email_to_reporting_manager(@employee_resignation).deliver_now
+        # EmployeeResignationMailer.send_email_to_reporting_manager(@employee_resignation).deliver_now
         format.html { redirect_to @employee_resignation, notice: 'Employee Resignation created successfully.' }
         format.json { render :show, status: :created, location: @employee_resignation }
       else
@@ -155,6 +154,9 @@ class EmployeeResignationsController < ApplicationController
     @employee_resignation = EmployeeResignation.find(params[:format])
   end
 
+  def send_email_to_reporting_manager
+  end
+
 
 
 
@@ -166,6 +168,6 @@ class EmployeeResignationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def employee_resignation_params
-      params.require(:employee_resignation).permit(:employee_id, :resign_status,:reporting_master_id, :resignation_date, :reason, :is_notice_period, :notice_period, :short_notice_period, :tentative_leaving_date, :remark, :exit_interview_date, :note, :leaving_date, :settled_on, :has_left, :notice_served, :rehired)
+      params.require(:employee_resignation).permit(:employee_id, :resign_status,:reporting_master_id, :resignation_date, :reason, :is_notice_period, :notice_period, :short_notice_period, :tentative_leaving_date, :remark, :exit_interview_date, :note, :leaving_date, :settled_on, :has_left, :notice_served, :rehired , :leaving_reason_id)
     end
 end

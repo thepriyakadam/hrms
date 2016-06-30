@@ -1,15 +1,8 @@
-<!-- SELECT2 EXAMPLE -->
-<div class="box box-default">
-  <div class="box-header with-border">
-    <h3 class="box-title">Employee Asset Details</h3>
-  </div><!-- /.box-header -->
-
-
-<div class="box-body">
-<%= bootstrap_form_for(@assigned_asset,html: {id: 'assigned_asset'},remote:true) do |f| %>
-<%= f.hidden_field :employee_id, value: @employee.id %>
-
-  <div class="row">
+<div class="modal-dialog"  style="height:9000px; max-height:900px; width:850px; max-width:850px;">
+  <div class="modal-content">
+    <div class="modal-body">
+    <%= bootstrap_form_for :assigned_asset,url:{action:"update_asset",id: @assigned_asset.id} do |f| %>
+       <div class="row">
     <div class="col-sm-3">
       <div class="field">
         <%= f.select :asset_type_id,all_asset_type,{include_blank: " Assest Type"} %>
@@ -47,7 +40,7 @@
           <div class="input-group-addon">
             <i class="fa fa-calendar"></i>
           </div>
-          <%= f.text_field :issue_date, hide_label: true, class: 'issue_date'%>
+          <%= f.date_field :issue_date, hide_label: true%>
         </div>
       </div>
     </div>
@@ -58,7 +51,7 @@
           <div class="input-group-addon">
             <i class="fa fa-calendar"></i>
           </div>
-          <%= f.text_field :valid_till, hide_label: true, class: 'valid_till_date'%>
+          <%= f.date_field :valid_till, hide_label: true%>
         </div>
       </div>
     </div>
@@ -69,7 +62,7 @@
         <div class="input-group-addon">
           <i class="fa fa-calendar"></i>
         </div>
-        <%= f.text_field :returned_on, hide_label: true, class: 'returned_on_date'%>
+        <%= f.date_field :returned_on, hide_label: true%>
       </div>
     </div>
   </div>
@@ -91,9 +84,10 @@
   </div>
   </div>
   </div>
+  </div>
+  <% end %>
 
-<% end %>
-<script type="text/javascript">
+  <script type="text/javascript">
   $(function(){
     $('.issue_date').datepicker({
     changeYear:true,
@@ -113,36 +107,7 @@
     yearRange: '-2:+25',
     dateFormat: 'dd-mm-yy' });
   }); 
-
-
- $("#assigned_asset").validate({
-    rules: {
-      "assigned_asset[employee_id]":{
-        required: true
-      },
-      "assigned_asset[asset_type_id]":{
-        required: true
-      },
-      "assigned_asset[issue_date]":{
-        required: true
-      }
-    },
-    messages: {
-      "assigned_asset[employee_id]":{
-        required: "Please specify employee_id"
-      },
-      "assigned_asset[asset_type_id]":{
-        required: "Please specify asset_type_id"
-      },
-      "assigned_asset[issue_date]":{
-        required: "Please specify issue_date"
-      }
-    },
-    errorPlacement: function(error, element) {
-     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
-     error.insertAfter(element.parent(element));
-    }
-   });
-
-
 </script>
+         
+
+  

@@ -5,32 +5,20 @@
   <%= f.hidden_field :appraisee_id, value: @goal_bunch.employee_id  %>
   <%= f.hidden_field :appraiser_id, value: @goal_bunch.employee.manager_id %>
     <div class="row">
-    <div class="col-sm-3">
-    <label>Performance Type</label>
-        <%= f.select :goal_type,["Goal","Attribute"],{hide_label:true,include_blank: "Select Option"} %>
-      </div>
       <div class="col-sm-3">
-      <label>Goal Perspective</label>
-        <div class="form-group required">
-          <%= f.select :goal_perspective_id,all_goal_perspective,{hide_label:true, include_blank: 'Select Goal'}  %>
-        </div>
+        <label>Performance Type</label>
+        <%= f.select :goal_type,["Goal","Attribute"],{hide_label:true,include_blank: "Select Option"},{onchange:"var a={goal_type:$(this).val()}; $.get('/goal_ratings/select_dropdown',a,function(response){});",class: 'form-control'} %>
       </div>
 
+      <div id="dropdown"></div>
+      
       <div class="col-sm-3">
-      <label>Attribute</label>
-        <div class="form-group required">
-          <%= f.select :attribute_master_id,all_attribute_type,{hide_label:true, include_blank: 'Select Attribute'}  %>
-        </div>
+        <label>Weightage</label>
+          <div class="form-group required">
+            <%= f.text_field :goal_weightage,hide_label:true,placeholder: 'Weightage' %>
+          </div>
       </div>
-
-      <div class="col-sm-3">
-      <label>Weightage</label>
-        <div class="form-group required">
-          <%= f.text_field :goal_weightage,hide_label:true,placeholder: 'Weightage' %>
-        </div>
-      </div>
-     
-      </div>
+    </div>
 
     <div class="row">
       <div class="col-sm-3">

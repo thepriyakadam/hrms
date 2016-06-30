@@ -11,7 +11,7 @@
 
     <tr>
       <th><strong>Travel Request</strong></th>
-      <td><%= @travel_expence.travel_request %></td>
+      <td><%= @travel_expence.travel_request.try(:name) %></td>
     
       <th><strong>Total Advance Amount</strong></th>
       <td><%= @travel_expence.total_advance_amount %></td>

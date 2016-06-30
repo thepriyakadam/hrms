@@ -22,17 +22,15 @@ class YearsController < ApplicationController
   
   def create
     @year = Year.new(year_params)
-    @years = Year.all
-    respond_to do |format|
-      if year.save
-         year = Year.new
-        format.js { @flag = true }
+      if @year.save
+         @year = Year.new
+         @years = Year.all
+         @flag=true 
       else
-        flash.now[:alert] = 'Year Already Exist.'
-        format.js { @flag = false }
+         @flag=false
       end
-    end
   end
+
 
   # PATCH/PUT /about_bosses/1
   # PATCH/PUT /about_bosses/1.json

@@ -61,6 +61,25 @@ class EmployeeAttendancesController < ApplicationController
     end
   end
 
+  def department_wise_employee_list
+    @department = Department.where(id: params[:salary][:department_id])
+    @employees = Employee.where(department_id: @department)
+    @employee_attendance = EmployeeAttendance.new
+  end
+    
+  def create_employee_attendance
+    @employee_ids = params[:employee_ids]
+    day = params[:employee_attendances][:day]
+    present = params[:employee_attendances][:present]
+    in_time = params[:employee_attendances][:in_time]
+    out = params[:employee_attendances][:out_time]
+    @employee_ids.each do |eid|
+    EmployeeAttendance.create(employee_id: eid,day: day,present: present,in_time: in_time,out_time: out)
+    end
+    flash[:notice] = "Created successfully"
+    redirect_to new_employee_attendance_path
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_employee_attendance
@@ -69,6 +88,6 @@ class EmployeeAttendancesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def employee_attendance_params
-      params.require(:employee_attendance).permit(:employee_id, :day, :present, :in, :out)
+      params.require(:employee_attendance).permit(:employee_id, :day, :present, :in_time, :out_time)
     end
 end

@@ -1,0 +1,98 @@
+<div class="box box-default">
+  <div class="box-body">
+    <%= form_for :employee_attendances, url: { action: 'create_employee_attendance',department_id: @department} do |f| %>
+      <table id="example1" class="table table-bordered table-hover table-condensed">
+        <thead>
+          <tr>
+            <th><input type="checkbox" id="selectAll" value="selectAll"></th>
+            <th>Employee ID</th>
+            <th>Employee Name</th>
+            <th>Department</th>
+            <th>Designation</th>
+            <th>Contact No.</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @employees.each do |e| %>
+            <tr>
+              <td><%= check_box_tag "employee_ids[]",e.id %></td>
+              <td><%= e.manual_employee_code %></td>
+              <td><%= e.first_name %><%= e.middle_name %><%= e.last_name %></td>
+              <td><%= e.try(:department).try(:name)%></td>
+              <td><%= e.try(:joining_detail).try(:employee_designation).try(:name) %></td>
+              <td><%= e.contact_no %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <br>
+
+      <div class="row">
+        <div class="col-sm-3">
+          <label>Date </label>
+          <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <%= f.text_field :day,hide_label: true,class: 'day_date'%>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-2">
+        <label>Present </label>
+          <div class="field">
+            <%= f.text_field :present,hide_label: true,placeholder: "Present" %>
+          </div>
+        </div>
+        <div class="col-sm-2">
+        <label>In Time </label>
+          <div class="field">
+            <%= f.datetime_select :in_time,hide_label: true,placeholder: "In Time" %>
+          </div>
+        </div>
+        <div class="col-sm-2">
+        <label>Out Time </label>
+          <div class="field">
+            <%= f.datetime_select :out_time,hide_label: true,placeholder: "Out Time" %>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-3">
+        <label></label>
+          <div class="actions">
+            <%= f.submit "Create Employee Attendance" ,class: 'btn btn-primary btn-sm' %>
+          </div>
+        </div>
+      </div>
+      <br>
+    </div>
+  </div>
+
+  <% end %>
+
+  <script type="text/javascript">
+  $('#selectAll').click(function() {
+    if (this.checked) {
+      $(':checkbox').each(function() {
+        this.checked = true;                       
+      });
+    } 
+    else {
+      $(':checkbox').each(function() {
+        this.checked = false;                        
+      });
+    } 
+  });
+
+  $(function(){
+          $('.day_date').datepicker({
+          changeYear:true,
+          changeMonth: true,
+          yearRange: '-200:-0',
+          dateFormat: 'dd-mm-yy' });
+
+          });
+
+  </script>

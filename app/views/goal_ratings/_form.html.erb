@@ -7,7 +7,7 @@
     <div class="row">
       <div class="col-sm-3">
         <label>Performance Type</label>
-        <%= f.select :goal_type,["Goal","Attribute"],{hide_label:true,include_blank: "Select Option"},{onchange:"var a={goal_type:$(this).val()}; $.get('/goal_ratings/select_dropdown',a,function(response){});",class: 'form-control'} %>
+        <%= f.select :goal_type,["Goal","Attribute"],{hide_label:true,include_blank: "Select Type"},{onchange:"var a={goal_type:$(this).val()}; $.get('/goal_ratings/select_dropdown',a,function(response){});",class: 'form-control'} %>
       </div>
 
       <div id="dropdown"></div>
@@ -18,15 +18,15 @@
             <%= f.text_field :goal_weightage,hide_label:true,placeholder: 'Weightage' %>
           </div>
       </div>
-    </div>
-
-    <div class="row">
       <div class="col-sm-3">
       <label>Measure</label>
         <div class="form-group required">
           <%= f.text_field :goal_measure,hide_label:true,placeholder: 'Measure'  %>
         </div>
       </div>
+    </div>
+
+    <div class="row">
       <div class="col-sm-3">
       <label>Target</label>
         <div class="form-group required">
@@ -54,6 +54,9 @@
       // "goal_rating[goal_perspective_id]":{
       //   required: true
       // },
+      // "goal_rating[attribute_master_id]":{
+      //   required: true
+      // },
       "goal_rating[goal_weightage]":{
         required: true,
         numbersOnly:true,
@@ -69,6 +72,9 @@
     messages: {
       // "goal_rating[goal_perspective_id]":{
       //   required: "Please specify Goal Perspective"
+      // },
+      // "goal_rating[attribute_master_id]":{
+      //   required: "Please specify Attribute"
       // },
       "goal_rating[goal_weightage]":{
         required: "Please specify Weightage"

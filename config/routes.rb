@@ -19,7 +19,13 @@ Rails.application.routes.draw do
   resources :salary_map_saps
   resources :interview_rounds
   resources :interview_types
-  resources :employee_attendances
+  resources :employee_attendances do
+    collection do
+      post :department_wise_employee_list
+      post :all_emp_list
+      post :create_employee_attendance
+    end
+  end
   resources :salary_comp_mappings
   resources :company_events
   resources :employee_task_to_dos
@@ -79,6 +85,10 @@ Rails.application.routes.draw do
       post :send_request_for_training
       post :training_plan_create
       get :modal_training_plan
+      get :goal_set_modal
+      patch :update_goal_set_modal
+      get :attribute_set_modal
+      patch :update_attribute_set_modal
     end
   end
   resources :goal_bunches do
@@ -138,6 +148,7 @@ Rails.application.routes.draw do
       post :print_emp_list
       post :all_emp_list
       get :emp_list_goal_wise
+      
     end
   end
   resources :goal_perspectives

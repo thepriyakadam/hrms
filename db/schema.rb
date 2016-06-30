@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160629065100) do
+ActiveRecord::Schema.define(version: 20160630094223) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -549,11 +549,11 @@ ActiveRecord::Schema.define(version: 20160629065100) do
     t.integer  "employee_id"
     t.date     "day"
     t.string   "present"
-    t.time     "in"
-    t.time     "out"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
     t.integer  "department_id"
+    t.datetime "in_time"
+    t.datetime "out_time"
   end
 
   add_index "employee_attendances", ["department_id"], name: "index_employee_attendances_on_department_id"
@@ -666,6 +666,7 @@ ActiveRecord::Schema.define(version: 20160629065100) do
     t.datetime "updated_at",       null: false
     t.date     "expiry_date"
     t.string   "total_leave"
+    t.boolean  "is_confirm"
   end
 
   add_index "employee_leav_balances", ["company_leav_id"], name: "index_employee_leav_balances_on_company_leav_id"

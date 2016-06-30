@@ -846,6 +846,7 @@ end
       get :employee_leave_balance
       get :leave_balance_modal
       patch :update_leave_balance
+      get :is_confirm_leave
     end
   end
   

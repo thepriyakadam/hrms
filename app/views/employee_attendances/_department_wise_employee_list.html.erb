@@ -1,37 +1,15 @@
 <div class="box box-default">
   <div class="box-body">
-    <%= form_for :employee_attendances, url: { action: 'create_employee_attendance',department_id: @department} do |f| %>
-    
+
+    <%= bootstrap_form_for :employee_attendances, url: { action: 'create_employee_attendance',department_id: @department} do |f| %>
       <div class="row">
-        <div class="col-sm-3">
-          <label>Date </label>
-          <div class="form-group required">
-            <div class="input-group">
-              <div class="input-group-addon">
-                <i class="fa fa-calendar"></i>
-              </div>
-              <%= f.text_field :day,hide_label: true,class: 'day_date' %>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-3">
+        <div class="col-sm-2">
         <label>Present </label>
           <div class="field">
-            <%= f.text_field :present,hide_label: true,placeholder: "Present" %>
+            <%= f.select :present,['Present','Half Day','Absent'],{hide_label: true,include_blank: "Select Activity"} %>
+            <%= f.hidden_field :day, value: @date %>
           </div>
-        </div>
-        <!-- <div class="col-sm-2">
-        <label>In Time </label>
-          <div class="field">
-            < f.datetime_select :in_time,hide_label: true,placeholder: "In Time" %>
-          </div>
-        </div>
-        <div class="col-sm-2">
-        <label>Out Time </label>
-          <div class="field">
-            < f.datetime_select :out_time,hide_label: true,placeholder: "Out Time" %>
-          </div>
-        </div> -->
+        </div> 
       </div>
 
       <table id="example1" class="table table-bordered table-hover table-condensed">
@@ -60,7 +38,6 @@
       </table>
       <div class="row">
         <div class="col-sm-3">
-        <label></label>
           <div class="actions">
             <%= f.submit "Create Attendance" ,class: 'btn btn-primary btn-sm' %>
           </div>
@@ -69,30 +46,19 @@
       <br>
     </div>
   </div>
-
   <% end %>
 
-  <script type="text/javascript">
+<script type="text/javascript">
   $('#selectAll').click(function() {
     if (this.checked) {
       $(':checkbox').each(function() {
-        this.checked = true;                       
+        this.checked = true;        
       });
-    } 
+    }
     else {
       $(':checkbox').each(function() {
-        this.checked = false;                        
+        this.checked = false;
       });
-    } 
+    }
   });
-
-  $(function(){
-          $('.day_date').datepicker({
-          changeYear:true,
-          changeMonth: true,
-          yearRange: '-200:-0',
-          dateFormat: 'dd-mm-yy' });
-
-          });
-
-  </script>
+</script>

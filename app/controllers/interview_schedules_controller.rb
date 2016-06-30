@@ -277,3 +277,14 @@ end
     params.require(:interview_schedule).permit(:selected_resume_id, :employee_id, :interview_schedule_id, :email_id, :candidate_name, :interview_date, :location, :job_title)
   end
 end
+
+def modal_schedule_list
+  @interview_schedule = InterviewSchedule.find(params[:id])
+end
+
+def update_interview_schedule
+   @interview_schedule = InterviewSchedule.find(params[:id])
+    @interview_schedule.update(interview_schedule_params)
+    flash[:notice] = 'Interview Updated Successfully'
+    redirect_to root_url
+  end

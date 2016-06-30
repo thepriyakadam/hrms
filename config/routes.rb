@@ -51,6 +51,8 @@ Rails.application.routes.draw do
     post :induction_activity
     get :induction_activity_download_list
     post :create_induction_detail
+    get :modal_induction_activity
+    post :update_induction
     end
   end 
   resources :induction_masters
@@ -250,7 +252,13 @@ end
     post :update_profile
     end
   end 
-  resources :assigned_assets
+  resources :assigned_assets do
+    collection do 
+    post :update_asset
+    get :modal
+    
+    end
+  end 
   resources :asset_types
   resources :employee_nominations
   resources :nomination_masters
@@ -403,6 +411,8 @@ end
       get :final_report
       post :print_final_report
       get :interview_round_list
+      get :modal_schedule_list
+      post :update_interview_schedule
     end
   end
   resources :vacancy_masters do

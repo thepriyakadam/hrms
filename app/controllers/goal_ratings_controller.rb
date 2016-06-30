@@ -142,6 +142,7 @@ class GoalRatingsController < ApplicationController
   end
   
   def send_mail_to_appraiser
+    # byebug
     @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
     sum = @goal_bunch.goal_ratings.sum(:goal_weightage)
 
@@ -251,6 +252,26 @@ class GoalRatingsController < ApplicationController
     else
       @flag = false
     end
+  end
+
+  def goal_set_modal
+    @goal_rating = GoalRating.find(params[:format])
+  end
+
+  def update_goal_set_modal
+    #byebug
+    @goal_rating = GoalRating.find(params[:id])
+    @goal_rating.update(goal_rating_params)
+    flash[:notice] = 'Updated Successfully'
+    redirect_to new_goal_ratings_path(id: @goal_rating.goal_bunch_id)
+  end
+
+  def attribute_set_modal
+    @goal_rating = GoalRating.find(params[:format])
+  end
+
+  def update_attribute_set_modal
+    
   end
 
   private

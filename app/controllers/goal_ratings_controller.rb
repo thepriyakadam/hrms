@@ -253,6 +253,29 @@ class GoalRatingsController < ApplicationController
     end
   end
 
+  def goal_set_modal
+    @goal_rating = GoalRating.find(params[:format])
+  end
+
+  def update_goal_set_modal
+    @goal_rating = GoalRating.find(params[:goal_rating_id])
+    @goal_rating.update(goal_rating_params)
+    flash[:notice] = 'Updated Successfully'
+    redirect_to new_goal_ratings_path(id: @goal_rating.goal_bunch_id)
+  end
+
+  def attribute_set_modal
+    @goal_rating = GoalRating.find(params[:format])
+  end
+
+  def update_attribute_set_modal
+    puts '----------------------------------------------------------'
+    @goal_rating = GoalRating.find(params[:goal_rating_id])
+    @goal_rating.update(goal_rating_params)
+    flash[:notice] = 'Updated Successfully'
+    redirect_to new_goal_ratings_path(id: @goal_rating.goal_bunch_id)
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_goal_rating

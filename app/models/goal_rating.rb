@@ -22,5 +22,4 @@ class GoalRating < ActiveRecord::Base
     previous_goals = EmployeeGoal.where(period_id: employee_goal.period_id, employee_id: employee_goal.employee_id, is_confirm: nil)
     previous_goals.sum(:goal_weightage) + goal_weightage.to_i
   end
-  
 end

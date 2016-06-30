@@ -32,7 +32,11 @@
          <td>
             <div id="myModal1" class="modal fade"></div>
             <%= link_to '', employee_leav_balance,class: 'btn btn-xs btn-default fa fa-eye' %>
-            <%= link_to '',leave_balance_modal_employee_leav_balances_path(employee_leav_balance),class: 'btn btn btn-xs btn-success fa fa-edit',remote: true %>
+              <% if employee_leav_balance.is_confirm == true %>
+              <% else %>
+                <%= link_to '',leave_balance_modal_employee_leav_balances_path(employee_leav_balance),class: 'btn btn btn-xs btn-success fa fa-edit',remote: true %>
+                <%= link_to '', is_confirm_leave_employee_leav_balances_path(emp_leav_bal_id: employee_leav_balance ),class: 'btn btn-xs btn-info fa fa-eye' %>
+              <% end %>
           </td>
         </tr>
       <% end %>

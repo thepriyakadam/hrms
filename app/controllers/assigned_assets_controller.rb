@@ -72,6 +72,18 @@ class AssignedAssetsController < ApplicationController
     end
   end
 
+  def update_asset
+     @assigned_asset = AssignedAsset.find(params[:id])
+    @assigned_asset.update(assigned_asset_params)
+    flash[:notice] = 'Assets Updated Successfully'
+    redirect_to root_url
+  end
+
+  def modal
+    @assigned_asset = AssignedAsset.find(params[:format])
+
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_assigned_asset

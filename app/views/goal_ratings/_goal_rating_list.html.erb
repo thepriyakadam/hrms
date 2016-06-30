@@ -27,7 +27,7 @@
           <% if goal_rating.goal_bunch.goal_confirm == true %>
           <small class="label label-info">Confirmed</small>
           <% else %>
-          <%= link_to '', edit_goal_rating_path(id: goal_rating,goal_bunch_id: @goal_ratings.first.goal_bunch_id),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
+          <%= link_to '', goal_set_modal_goal_ratings_path(goal_rating),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
             <!-- < link_to '', edit_goal_rating_path(id: goal_rating,goal_bunch_id: @goal_ratings.goal_bunch_id),class: 'btn btn-xs btn-success fa fa-edit',remote:true %> -->
           <% end %>
         </td>
@@ -64,7 +64,7 @@
           <% if goal_rating.goal_bunch.goal_confirm == true %>
           <small class="label label-info">Confirmed</small>
           <% else %>
-            <%= link_to '', edit_goal_rating_path(id: goal_rating,goal_bunch_id: @goal_ratings.first.goal_bunch_id),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
+            <%= link_to '', attribute_set_modal_goal_ratings_path(goal_rating),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
           <% end %>
         </td>
       </tr>
@@ -76,7 +76,7 @@
 
 <!-- < else %>
 < end %> -->
-
+<div id="myModal" class="modal fade"></div>
   <div class="row">
     <div class="col-sm-3">
       <div class="actions">

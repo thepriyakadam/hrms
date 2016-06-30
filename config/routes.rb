@@ -19,7 +19,13 @@ Rails.application.routes.draw do
   resources :salary_map_saps
   resources :interview_rounds
   resources :interview_types
-  resources :employee_attendances
+  resources :employee_attendances do
+    collection do
+      post :department_wise_employee_list
+      post :all_emp_list
+      post :create_employee_attendance
+    end
+  end
   resources :salary_comp_mappings
   resources :company_events
   resources :employee_task_to_dos
@@ -45,6 +51,8 @@ Rails.application.routes.draw do
     post :induction_activity
     get :induction_activity_download_list
     post :create_induction_detail
+    get :modal_induction_activity
+    post :update_induction
     end
   end 
   resources :induction_masters
@@ -79,6 +87,10 @@ Rails.application.routes.draw do
       post :send_request_for_training
       post :training_plan_create
       get :modal_training_plan
+      get :goal_set_modal
+      patch :update_goal_set_modal
+      get :attribute_set_modal
+      patch :update_attribute_set_modal
     end
   end
   resources :goal_bunches do
@@ -138,6 +150,7 @@ Rails.application.routes.draw do
       post :print_emp_list
       post :all_emp_list
       get :emp_list_goal_wise
+      
     end
   end
   resources :goal_perspectives
@@ -239,7 +252,13 @@ end
     post :update_profile
     end
   end 
-  resources :assigned_assets
+  resources :assigned_assets do
+    collection do 
+    post :update_asset
+    get :modal
+    
+    end
+  end 
   resources :asset_types
   resources :employee_nominations
   resources :nomination_masters
@@ -392,6 +411,8 @@ end
       get :final_report
       post :print_final_report
       get :interview_round_list
+      get :modal_schedule_list
+      post :update_interview_schedule
     end
   end
   resources :vacancy_masters do

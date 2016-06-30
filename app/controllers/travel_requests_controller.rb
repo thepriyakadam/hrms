@@ -88,14 +88,14 @@ class TravelRequestsController < ApplicationController
     @travel_requests = TravelRequest.where(reporting_master_id: current_user.employee_id)
   end
 
-def approve_travel_request
-    @travel_request = TravelRequest.find(params[:format])
-    @travel_request.update(current_status: "Approved")
-    ReportingMastersTravelRequest.create(reporting_master_id: @travel_request.reporting_master_id, travel_request_id: @travel_request.id, travel_status: "Approved")
-    TravelRequestMailer.approve_travel_request_email(@travel_request).deliver_now
-    flash[:notice] = 'Travel Request Approved'
-    redirect_to travel_history_travel_requests_path
-  end
+  def approve_travel_request
+      @travel_request = TravelRequest.find(params[:format])
+      @travel_request.update(current_status: "Approved")
+      ReportingMastersTravelRequest.create(reporting_master_id: @travel_request.reporting_master_id, travel_request_id: @travel_request.id, travel_status: "Approved")
+      TravelRequestMailer.approve_travel_request_email(@travel_request).deliver_now
+      flash[:notice] = 'Travel Request Approved'
+      redirect_to travel_history_travel_requests_path
+    end
 
   def reject_travel_request
     @travel_request = TravelRequest.find(params[:format])

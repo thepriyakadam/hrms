@@ -94,15 +94,11 @@ class EmployeesController < ApplicationController
   def create
     @employee = Employee.new(employee_params)
     authorize! :create, @employee
-    respond_to do |format|
       if @employee.save
-        format.html { redirect_to @employee, notice: 'Employee was successfully created.' }
-        format.json { render :show, status: :created, location: @employee }
+        redirect_to @employee    
       else
-        format.html { render :new }
-        format.json { render json: @employee.errors, status: :unprocessable_entity }
+        render :new
       end
-    end
   end
 
   # PATCH/PUT /employees/1

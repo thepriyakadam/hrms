@@ -38,14 +38,7 @@
         <td><%= assigned_asset.returned_on %></td>
         <td><%= assigned_asset.remarks %></td>
         <td>
-
-
-         <div id="myModal" class="modal fade"></div>
-           
-             <%= link_to ' ',modal_assigned_assets_path(assigned_asset),class: 'btn btn-success btn-sm fa fa-edit',remote: true %>
-
-        	
-          <!-- < link_to '', assigned_asset, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-sm fa fa-close' %> -->
+            <%= link_to ' ',modal_assigned_assets_path(assigned_asset),class: 'btn btn-success btn-sm fa fa-edit',remote: true %>
         </td>
       </tr>
     <% end %>
@@ -53,6 +46,8 @@
 </table>
 </div>
 </div>
+
+<div id="myModal" class="modal fade"></div>
 
 <script type="text/javascript">
   $(document).ready(function() {

@@ -74,9 +74,14 @@ class AssignedAssetsController < ApplicationController
 
   def update_asset
      @assigned_asset = AssignedAsset.find(params[:id])
-    @assigned_asset.update(assigned_asset_params)
-    flash[:notice] = 'Assets Updated Successfully'
-    redirect_to root_url
+    @employee = Employee.find(@assigned_asset.employee_id)
+    if @assigned_asset.update(assigned_asset_params)
+      @assigned_assets = AssignedAsset.where(employee_id:@employee.id)
+      @flag = true
+    else
+      @assigned_assets = AssignedAsset.where(employee_id:@employee.id)
+      @flag = false 
+    end
   end
 
   def modal

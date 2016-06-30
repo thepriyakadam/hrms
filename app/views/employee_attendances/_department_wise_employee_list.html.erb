@@ -1,6 +1,17 @@
 <div class="box box-default">
   <div class="box-body">
+
     <%= bootstrap_form_for :employee_attendances, url: { action: 'create_employee_attendance',department_id: @department} do |f| %>
+      <div class="row">
+        <div class="col-sm-2">
+        <label>Present </label>
+          <div class="field">
+            <%= f.select :present,['Present','Half Day','Absent'],{hide_label: true,include_blank: "Select Activity"} %>
+            <%= f.hidden_field :day, value: @date %>
+          </div>
+        </div> 
+      </div>
+
       <table id="example1" class="table table-bordered table-hover table-condensed">
         <thead>
           <tr>
@@ -25,21 +36,10 @@
           <% end %>
         </tbody>
       </table>
-      <br>
-
-      <div class="row">
-        <div class="col-sm-2">
-        <label>Present </label>
-          <div class="field">
-            <%= f.select :present,['Present','Half Day','Absent'],{hide_label: true,include_blank: "Select Activity"} %>
-            <%= f.hidden_field :day, value: @date %>
-          </div>
-        </div>
-      </div>
       <div class="row">
         <div class="col-sm-3">
           <div class="actions">
-            <%= f.submit "Create Employee Attendance" ,class: 'btn btn-primary btn-sm' %>
+            <%= f.submit "Create Attendance" ,class: 'btn btn-primary btn-sm' %>
           </div>
         </div>
       </div>

@@ -71,10 +71,8 @@ class EmployeeAttendancesController < ApplicationController
     @employee_ids = params[:employee_ids]
     day = params[:employee_attendances][:day]
     present = params[:employee_attendances][:present]
-    in_time = params[:employee_attendances][:in_time]
-    out = params[:employee_attendances][:out_time]
     @employee_ids.each do |eid|
-    EmployeeAttendance.create(employee_id: eid,day: day,present: present,in_time: in_time,out_time: out)
+    EmployeeAttendance.create(employee_id: eid,day: day,present: present)
     end
     flash[:notice] = "Created successfully"
     redirect_to new_employee_attendance_path

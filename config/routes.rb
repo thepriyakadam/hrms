@@ -3,7 +3,8 @@ Rails.application.routes.draw do
   resources :illness_types
   resources :performance_calendars
   resources :performance_activities
-
+  resources :years do 
+    end
   resources :employee_daily_activities do
     collection do 
     get :employee_details
@@ -245,7 +246,7 @@ end
     collection do 
     post :update_asset
     get :modal
-    
+    get :update_asset
     end
   end 
   resources :asset_types

@@ -1,6 +1,39 @@
 <div class="box box-default">
   <div class="box-body">
     <%= form_for :employee_attendances, url: { action: 'create_employee_attendance',department_id: @department} do |f| %>
+    
+      <div class="row">
+        <div class="col-sm-3">
+          <label>Date </label>
+          <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <%= f.text_field :day,hide_label: true,class: 'day_date' %>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3">
+        <label>Present </label>
+          <div class="field">
+            <%= f.text_field :present,hide_label: true,placeholder: "Present" %>
+          </div>
+        </div>
+        <!-- <div class="col-sm-2">
+        <label>In Time </label>
+          <div class="field">
+            < f.datetime_select :in_time,hide_label: true,placeholder: "In Time" %>
+          </div>
+        </div>
+        <div class="col-sm-2">
+        <label>Out Time </label>
+          <div class="field">
+            < f.datetime_select :out_time,hide_label: true,placeholder: "Out Time" %>
+          </div>
+        </div> -->
+      </div>
+
       <table id="example1" class="table table-bordered table-hover table-condensed">
         <thead>
           <tr>
@@ -25,44 +58,11 @@
           <% end %>
         </tbody>
       </table>
-      <br>
-
-      <div class="row">
-        <div class="col-sm-3">
-          <label>Date </label>
-          <div class="form-group required">
-            <div class="input-group">
-              <div class="input-group-addon">
-                <i class="fa fa-calendar"></i>
-              </div>
-              <%= f.text_field :day,hide_label: true,class: 'day_date'%>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-2">
-        <label>Present </label>
-          <div class="field">
-            <%= f.text_field :present,hide_label: true,placeholder: "Present" %>
-          </div>
-        </div>
-        <div class="col-sm-2">
-        <label>In Time </label>
-          <div class="field">
-            <%= f.datetime_select :in_time,hide_label: true,placeholder: "In Time" %>
-          </div>
-        </div>
-        <div class="col-sm-2">
-        <label>Out Time </label>
-          <div class="field">
-            <%= f.datetime_select :out_time,hide_label: true,placeholder: "Out Time" %>
-          </div>
-        </div>
-      </div>
       <div class="row">
         <div class="col-sm-3">
         <label></label>
           <div class="actions">
-            <%= f.submit "Create Employee Attendance" ,class: 'btn btn-primary btn-sm' %>
+            <%= f.submit "Create Attendance" ,class: 'btn btn-primary btn-sm' %>
           </div>
         </div>
       </div>

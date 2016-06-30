@@ -25,7 +25,6 @@ class EmployeeAttendancesController < ApplicationController
   # POST /employee_attendances.json
   def create
     @employee_attendance = EmployeeAttendance.new(employee_attendance_params)
-
     respond_to do |format|
       if @employee_attendance.save
         format.html { redirect_to @employee_attendance, notice: 'Employee attendance was successfully created.' }
@@ -63,7 +62,8 @@ class EmployeeAttendancesController < ApplicationController
 
   def department_wise_employee_list
     @department = Department.where(id: params[:salary][:department_id])
-    @employees = Employee.where(department_id: @department)
+    @date = params[:current][:day].to_date
+    @employees = Employee.filter_by_date_and_department(@date,@department)
     @employee_attendance = EmployeeAttendance.new
   end
     
@@ -79,13 +79,13 @@ class EmployeeAttendancesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_employee_attendance
-      @employee_attendance = EmployeeAttendance.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_employee_attendance
+    @employee_attendance = EmployeeAttendance.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def employee_attendance_params
-      params.require(:employee_attendance).permit(:employee_id, :day, :present, :in_time, :out_time)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def employee_attendance_params
+    params.require(:employee_attendance).permit(:employee_id, :day, :present, :in_time, :out_time)
+  end
 end

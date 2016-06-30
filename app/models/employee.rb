@@ -155,4 +155,11 @@ class Employee < ActiveRecord::Base
       end
     end
   end
+
+  
+  def self.filter_by_date_and_department(date, department)
+    @attendances = EmployeeAttendance.where(day: date).pluck(:employee_id)
+    @departments = Employee.where(department_id: department).pluck(:id)
+    Employee.where(id: @departments - @attendances)  
+  end
 end

@@ -1,6 +1,6 @@
 <div class="box box-default">
   <div class="box-body">
-    <%= form_for :employee_attendances, url: { action: 'create_employee_attendance',department_id: @department} do |f| %>
+    <%= bootstrap_form_for :employee_attendances, url: { action: 'create_employee_attendance',department_id: @department} do |f| %>
       <table id="example1" class="table table-bordered table-hover table-condensed">
         <thead>
           <tr>

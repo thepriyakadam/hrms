@@ -260,7 +260,6 @@ class GoalRatingsController < ApplicationController
   end
 
   def update_goal_set_modal
-    #byebug
     @goal_rating = GoalRating.find(params[:goal_rating_id])
     @goal_rating.update(goal_rating_params)
     flash[:notice] = 'Updated Successfully'

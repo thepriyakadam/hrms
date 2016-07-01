@@ -91,9 +91,10 @@ Rails.application.routes.draw do
       get :goal_set_modal
       patch :update_goal_set_modal
       get :attribute_set_modal
-      patch :update_attribute_set_modal
+      post :update_attribute_set_modal
     end
   end
+  #post 'goal_ratings/update_goal_set_modal'
   resources :goal_bunches do
     collection do
       get :goal_approval

@@ -241,7 +241,13 @@ end
     post :update_profile
     end
   end 
-  resources :assigned_assets
+  resources :assigned_assets do
+    collection do 
+    post :update_asset
+    get :modal
+    
+    end
+  end 
   resources :asset_types
   resources :employee_nominations
   resources :nomination_masters
@@ -254,6 +260,8 @@ end
     get :print_daily_bill
     get :daily_bill_history
     get :daily_bill_request_confirmation
+    post :approve_request
+    get :approved_daily_bill_details
     end
   end 
   resources :travel_requests do

@@ -41,19 +41,18 @@ Rails.application.configure do
   # config.action_view.raise_on_missing_translations = true
 
   # Root url
-  config.action_mailer.default_url_options = { host: '52.77.252.130' }
-  #config.domain = 'lvh.me'
-  #config.action_mailer.perform_deliveries = true,
-
+  config.action_mailer.default_url_options = { host: '192.168.0.62', port: 3000 }
+  # config.domain = 'lvh.me'
+  # config.action_mailer.perform_deliveries = true,
   ActionMailer::Base.delivery_method = :smtp
 
   ActionMailer::Base.smtp_settings = {
-    :address => 'smtp.gmail.com',
-    :port => 587,
-    :domain => '54.169.221.82',
-    :user_name => 'ca@indiba.in',
-    :password => 'caservice',
-    :authentication => :plain
+    address: 'mail.bhandarigroup.in',
+    port: 25,
+    domain: '192.168.0.62',
+    user_name: 'hrmsdws-bhandarigroup',
+    password: 'hrms1234',
+    authentication: :plain
   }
 
   # Paperclip setup

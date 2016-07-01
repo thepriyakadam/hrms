@@ -8,19 +8,18 @@
           <tr>
            
             <th>Date</th>
+            <th>Employee Name</th>
             <th>Project</th>
             <th>Day activity</th>
             <th>Next Day Plan</th>
-            <th>Action</th>
           </tr>
         </thead>
-
         <tbody>
           <% @employee_daily_activities.each do |employee_daily_activity| %>
             <tr>
 
-              
               <td><%= employee_daily_activity.day %></td>
+              <td><%= full_name(employee_daily_activity.employee)%></td>
               <td><%= employee_daily_activity.project_master.try(:name) %></td>
               <td><%= employee_daily_activity.today_activity %></td>
               <td><%= employee_daily_activity.tomorrow_plan %></td>
@@ -28,6 +27,8 @@
               
                <%= link_to 'Employee',employee_details_employee_daily_activities_path(employee_daily_activity.id),class: 'btn btn-xs btn-primary' %>
 
+             <!--  < link_to '', edit_employee_daily_activity_path(employee_daily_activity) ,class: 'btn btn-xs btn-success fa fa-edit',remote: true %>
+ -->        
 <!--                <= link_to 'Employee',employee_details_employee_daily_activities_path(employee_daily_activity.id),class: 'btn btn-xs btn-primary' %>
  -->
 

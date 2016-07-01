@@ -15,7 +15,7 @@ class InductionActivitiesController < ApplicationController
   # GET /induction_activities/new
   def new
     @induction_activity = InductionActivity.new
-    @induction_master = InductionMaster.find(params[:format])
+    @induction_master = InductionMaster.find(params[:induction_master_id])
     @induction_activities = InductionActivity.where(induction_master_id: @induction_master.id)
   end
 
@@ -42,13 +42,14 @@ class InductionActivitiesController < ApplicationController
   # end
 
   def create
-     @induction_activity = InductionActivity.new(induction_activity_params)
-     @induction_activities = InductionActivity.all
+    @induction_activity = InductionActivity.new(induction_activity_params)
+    @induction_activities = InductionActivity.all
       if @induction_activity.save
         @induction_activity = InductionActivity.new
         flash[:notice] = 'Induction Activity saved Successfully.'
       end
-      redirect_to new_induction_master_path
+      @induction_master_id = InductionMaster.find(params[:induction_activity][:induction_master_id])
+      redirect_to new_induction_activity_path(induction_master_id: @induction_master_id.id)
   end
 
    def update
@@ -63,7 +64,6 @@ class InductionActivitiesController < ApplicationController
   end
 
   def employee_list
-    puts '----------------------------------------------------------'
      @employees = Employee.all
      # @employee = Employee.find(params[:emp_id])
      # @induction_details = InductionDetail.where(employee_id: @employee.id)

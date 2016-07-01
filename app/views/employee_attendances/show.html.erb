@@ -15,15 +15,6 @@
   <%= @employee_attendance.present %>
 </p>
 
-<p>
-  <strong>In:</strong>
-  <%= @employee_attendance.in %>
-</p>
-
-<p>
-  <strong>Out:</strong>
-  <%= @employee_attendance.out %>
-</p>
 
 <%= link_to 'Edit', edit_employee_attendance_path(@employee_attendance) %> |
 <%= link_to 'Back', employee_attendances_path %>

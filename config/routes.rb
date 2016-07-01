@@ -3,7 +3,8 @@ Rails.application.routes.draw do
   resources :illness_types
   resources :performance_calendars
   resources :performance_activities
-
+  resources :years do 
+    end
   resources :employee_daily_activities do
     collection do 
     get :employee_details
@@ -150,7 +151,7 @@ Rails.application.routes.draw do
       post :print_emp_list
       post :all_emp_list
       get :emp_list_goal_wise
-      
+      get :goal_bunch_list
     end
   end
   resources :goal_perspectives
@@ -256,7 +257,7 @@ end
     collection do 
     post :update_asset
     get :modal
-    
+    get :update_asset
     end
   end 
   resources :asset_types

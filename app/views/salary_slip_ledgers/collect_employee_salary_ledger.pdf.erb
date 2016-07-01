@@ -6,7 +6,7 @@
       <th colspan="22">
         <center><strong>BHANDARI FOILS AND TUBES LTD.</strong></center>
         <center><small></small></center>
-        <center><small>Employee Monthly Salary For The Month <%= @month %> - <%= @year %></small></center>   
+        <center><small>Employee Monthly Salary For The Year <%= @month %> - <%= @year %></small></center>   
       </th>
     </tr>
     <tr>
@@ -97,7 +97,7 @@
       <th><%= @sum.retention %></th>
       <th><%= @sum.deduction_total %></th>
 
-      <th><%= @sum.net_payable.round.round %></th>
+      <th><%= @sum.net_payable.round %></th>
       </tr>
   </tbody>
 </table>

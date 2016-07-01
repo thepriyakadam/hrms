@@ -3,6 +3,7 @@
     <div class="modal-body">
 
       <%= bootstrap_form_for @goal_rating,url:{action: "update_goal_modal",goal_rating_id:@goal_rating.id} do |f| %>
+      
         <div class="row">
           <div class="col-sm-4">
           <label>Goal Perspective</label>
@@ -19,7 +20,7 @@
         </div>
         <div class="row">
           <div class="col-sm-4">
-        <label>Target/Unit</label>
+          <label>Target/Unit</label>
             <%= f.text_field :target,hide_label:true, placeholder: "Target/Unit" %>    
           </div>
           <div class="col-sm-4">

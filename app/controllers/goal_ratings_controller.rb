@@ -15,8 +15,9 @@ class GoalRatingsController < ApplicationController
   # GET /goal_ratings/new
   def new
     @goal_bunch = GoalBunch.find(params[:id])
+    @employee = Employee.find(params[:emp_id])
     @goal_rating = GoalRating.new
-    @goal_ratings = GoalRating.where(goal_bunch_id: @goal_bunch.id, goal_type: 'Goal')
+    @goal_ratings = GoalRating.where(appraisee_id: @employee.id,goal_bunch_id: @goal_bunch.id, goal_type: 'Goal')
     @goal_attribute_ratings = GoalRating.where("goal_bunch_id = ? AND goal_type = ?", @goal_bunch.id ,'Attribute')
     @goal_bunches = GoalBunch.all    
   end
@@ -260,7 +261,7 @@ class GoalRatingsController < ApplicationController
 
   def update_goal_set_modal
     #byebug
-    @goal_rating = GoalRating.find(params[:id])
+    @goal_rating = GoalRating.find(params[:goal_rating_id])
     @goal_rating.update(goal_rating_params)
     flash[:notice] = 'Updated Successfully'
     redirect_to new_goal_ratings_path(id: @goal_rating.goal_bunch_id)
@@ -271,7 +272,10 @@ class GoalRatingsController < ApplicationController
   end
 
   def update_attribute_set_modal
-    
+    @goal_rating = GoalRating.find(params[:goal_rating_id])
+    @goal_rating.update(goal_rating_params)
+    flash[:notice] = 'Updated Successfully'
+    redirect_to new_goal_ratings_path(id: @goal_rating.goal_bunch_id)
   end
 
   private

@@ -28,8 +28,8 @@ class SlipInformation < ActiveRecord::Base
         elsif b.leav_category.name == "C.Off"
           s.c_off_b = b.no_of_leave
         end
-        s.save
       end
+      s.save
   	end
   end
 end

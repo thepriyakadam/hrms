@@ -6,6 +6,7 @@
   <thead>
     <tr>
       <th>Employee</th>
+      <th>Employee Name</th>
       <th>Day</th>
       <th>Present</th>
       <th colspan="3"></th>
@@ -15,7 +16,8 @@
   <tbody>
     <% @employee_attendances.each do |employee_attendance| %>
       <tr>
-        <td><%= employee_attendance.employee %></td>
+        <td><%= employee_attendance.employee.try(:manual_employee_code) %></td>
+        <td><%= employee_attendance.employee.try(:first_name) %> <%= employee_attendance.employee.try(:middle_name) %> <%= employee_attendance.employee.try(:last_name) %></td>
         <td><%= employee_attendance.day %></td>
         <td><%= employee_attendance.present %></td>
         <td><%= link_to 'Show', employee_attendance %></td>

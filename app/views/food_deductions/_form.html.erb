@@ -20,7 +20,7 @@
               <div class="input-group-addon">
                 <i class="fa fa-calendar"></i>
               </div>
-              <%= f.text_field :food_date,hide_label: true, class: 'food_coupon_date'%>
+              <%= f.text_field :food_date,hide_label: true, class: 'food_date'%>
             </div>
           </div>
         </div>
@@ -71,7 +71,7 @@
 
 <script type="text/javascript">
   $(function(){
-    $('.food_coupan_date').datepicker({
+    $('.food_date').datepicker({
     changeYear:true,
     changeMonth: true,
     yearRange: '-200:-0',
@@ -110,6 +110,9 @@
   $("#food_deduction").validate({
   rules: {
     "food_deduction[employee_id]":{
+      required: true
+    },
+    "food_deduction[return_coupan]":{
       required: true
     },
     "food_deduction[food_date]":{

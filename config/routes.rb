@@ -92,6 +92,8 @@ Rails.application.routes.draw do
       patch :update_goal_set_modal
       get :attribute_set_modal
       patch :update_attribute_set_modal
+      get :trainee_list
+      post :print_employee_detail
     end
   end
   resources :goal_bunches do

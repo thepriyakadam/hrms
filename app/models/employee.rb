@@ -9,7 +9,9 @@ class Employee < ActiveRecord::Base
   belongs_to :state
   belongs_to :district
   belongs_to :religion
+  has_many :trainees
 
+  has_many :employee_attendances
   has_many :leav_c_offs
   has_many :salaryslips
   has_many :employee_nominations
@@ -48,6 +50,7 @@ class Employee < ActiveRecord::Base
   has_many :employee_promotions
   has_many :training_requests
   has_many :interview_rounds
+  has_many :goal_bunches
   
   accepts_nested_attributes_for :joining_detail
   has_many :subordinates, class_name: 'Employee',
@@ -73,6 +76,7 @@ class Employee < ActiveRecord::Base
   validates :first_name, presence: true
   # validate  :email_regex
   validates :permanent_address, presence: true
+  validates :company_location_id,presence: true
   # validates :country_id, :presence => true
   # validates :state_id, :presence => true
   # validates :district_id, :presence => true
@@ -150,5 +154,12 @@ class Employee < ActiveRecord::Base
         Employee.where(id: current_user.employee_id)
       end
     end
+  end
+
+  
+  def self.filter_by_date_and_department(date, department)
+    @attendances = EmployeeAttendance.where(day: date).pluck(:employee_id)
+    @departments = Employee.where(department_id: department).pluck(:id)
+    Employee.where(id: @departments - @attendances)  
   end
 end

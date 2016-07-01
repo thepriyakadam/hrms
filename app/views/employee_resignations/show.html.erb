@@ -4,8 +4,6 @@
   </div><!-- /.box-header -->
   <div class="box-body">
     <table id="example2" class="table table-bordered table-hover table-condensed'">
-    
-
 
 <tr>
  <th><strong>Employee ID</strong></th>
@@ -20,17 +18,21 @@
 </tr>
 
 <tr>
+ <th><strong>Leaving Reason</strong></th>
+ <td><%= @employee_resignation.leaving_reason.try(:name)%></td>
+
+
+</tr>
+
+
+<tr>
   <th><strong>Reason</strong></th>
   <td><%= @employee_resignation.reason %></td>
   
 
 </tr>
 
-<tr>
-  <th><strong>Is Notice Period</strong></th>
-  <td><%= @employee_resignation.is_notice_period %></td>
-  
-</tr>
+
 
 <tr>
  <th><strong>Notice period:</strong></th>
@@ -85,24 +87,9 @@
 
 </tr>
 
-<tr>
-  <th><strong>Has left:</strong></th>
- <td><%= @employee_resignation.has_left %></td>
- 
-</tr>
 
-<tr>
-  <th><strong>Notice served</strong></th>
- <td><%= @employee_resignation.notice_served %></td>
 
-</tr>
 
-<tr>
-  <th><strong>Rehired</strong></th>
-  <td><%= @employee_resignation.rehired %></td>
- 
-
-</tr>
 
 </table>
 <%= link_to 'Edit', edit_employee_resignation_path(@employee_resignation),class: 'btn btn-success btn-sm fa fa-edit' %> |

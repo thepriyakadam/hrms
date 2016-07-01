@@ -7,6 +7,7 @@ class EmployeeLeavBalancesController < ApplicationController
   # GET /employee_leav_balances
   # GET /employee_leav_balances.json
   def index
+    # @employee_leav_balance = EmployeeLeavBalance.new
     if current_user.class == Group
       @employee_leav_balances = EmployeeLeavBalance.all
     else
@@ -36,6 +37,7 @@ class EmployeeLeavBalancesController < ApplicationController
 
   # GET /employee_leav_balances/1/edit
   def edit
+    @leav_category = LeavCategory.find(@employee_leav_balance.leav_category_id)
   end
 
   # POST /employee_leav_balances
@@ -60,17 +62,12 @@ class EmployeeLeavBalancesController < ApplicationController
   # PATCH/PUT /employee_leav_balances/1
   # PATCH/PUT /employee_leav_balances/1.json
   def update
-    respond_to do |format|
       if @employee_leav_balance.update(employee_leav_balance_params)
-        # format.html { redirect_to @employee_leav_balance, notice: 'Employee leav balance was successfully updated.' }
-        # format.json { render :show, status: :ok, location: @employee_leav_balance }
-        format.js { @flag = true }
+        @flag = true
       else
-        # format.html { render :edit }
-        # format.json { render json: @employee_leav_balance.errors, status: :unprocessable_entity }
-        format.js { @flag = true }
+       @flag = false
       end
-    end
+    redirect_to employee_leav_balance_path
   end
 
   # DELETE /employee_leav_balances/1
@@ -93,12 +90,8 @@ class EmployeeLeavBalancesController < ApplicationController
       column(:Leave_Balance, sortable:true){|employee_leav_balance| employee_leav_balance.try(:no_of_leave)}
       column(:Expiry_Date, sortable:true){|employee_leav_balance| employee_leav_balance.try(:expiry_date)}
       column(:Toata_Leave, sortable:true){|employee_leav_balance| employee_leav_balance.try(:total_leave)}
-
-    end
-    
+    end    
   end
-
-
 
   def collect_employee_for_leave
     if params[:leav_category_id] == ''
@@ -126,6 +119,25 @@ class EmployeeLeavBalancesController < ApplicationController
     end
   end
 
+  def leave_balance_modal
+     @employee_leav_balance = EmployeeLeavBalance.find(params[:format])
+     @leav_category = LeavCategory.find(@employee_leav_balance.leav_category_id)
+  end
+
+  def update_leave_balance
+     @employee_leav_balance = EmployeeLeavBalance.find(params[:id])
+     @employee_leav_balance.update(employee_leav_balance_params)
+     flash[:notice] = 'Leave Balance Updated Successfully'
+     redirect_to employee_leav_balances_path
+  end
+
+  def is_confirm_leave
+    @employee_leav_balance = EmployeeLeavBalance.find(params[:emp_leav_bal_id])
+    EmployeeLeavBalance.where(id: @employee_leav_balance.id).update_all(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to employee_leav_balances_path
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -135,6 +147,6 @@ class EmployeeLeavBalancesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def employee_leav_balance_params
-    params.require(:employee_leav_balance).permit(:employee_id, :leav_category_id, :no_of_leave, :total_leave, :expiry_date)
+    params.require(:employee_leav_balance).permit(:is_confirm,:employee_id, :leav_category_id, :no_of_leave, :total_leave, :expiry_date)
   end
 end

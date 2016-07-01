@@ -22,7 +22,7 @@
       <tbody>
         <% @training_records.each do |training_record| %>
           <tr>
-            <td><%= training_record.employee.manual_employee_code %> <%= training_record.employee.first_name %> <%= training_record.employee.last_name %></td>
+            <td><%= training_record.employee.try(:manual_employee_code) %> <%= training_record.employee.try(:first_name) %> <%= training_record.employee.try(:last_name) %></td>
             <td><%= training_record.training_topic_master.try(:name) %></td>
             <td><%= training_record.training_date %></td>
             <td><%= training_record.duration %></td>

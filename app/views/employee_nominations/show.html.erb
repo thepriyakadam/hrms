@@ -1,0 +1,77 @@
+<div class="box box-default">
+<div class="box-header with-border">
+    <h3 class="box-title">Employee Name: <%= @employee.first_name+' '+@employee.middle_name+' '+@employee.last_name %></h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+   <table id="example2" class="table table-bordered table-hover table-condensed">
+    
+ <tr>    
+  <th><strong>Nomination Type</strong></th>
+  <td><%= @employee_nomination.nomination_master.try(:name) %></td>
+
+  <th><strong>Family</strong></th>
+  <td><%= @employee_nomination.family.f_name %> <%= @employee_nomination.family.m_name %> <%= @employee_nomination.family.l_name %></td>
+  </tr>
+
+  <tr>
+  <th><strong>Nomination</strong></th>
+  <td><%= @employee_nomination.nomination %></td>
+
+  <th><strong>Illness Type</strong></th>
+  <td><%= @employee_nomination.illness_type.try(:name) %></td>
+  </tr>
+<tr>
+  <th><strong>Minor</strong></th>
+  <td><%= @employee_nomination.minor %></td>
+
+  <th><strong>Guardian Name</strong></th>
+  <td><%= @employee_nomination.guardian_name %></td>
+</tr>
+
+<tr>
+  <th><strong>Relation Type</strong></th>
+  <td><%= @employee_nomination.relation_master.try(:name) %></td>
+
+  <th><strong>Address</strong></th>
+  <td><%= @employee_nomination.address %></td>
+</tr>
+
+<tr>
+  <th><strong>City</strong></th>
+  <td><%= @employee_nomination.city %></td>
+
+  <th><strong>District</strong></th>
+  <td><%= @employee_nomination.district.try(:name) %></td>
+</tr>
+
+<tr>
+  <th><strong>State</strong></th>
+  <td><%= @employee_nomination.state.try(:name) %></td>
+
+  <th><strong>Country</strong></th>
+  <td><%= @employee_nomination.country.try(:name) %></td>
+</tr>
+
+<tr>
+  <th><strong>Pin Code</strong></th>
+  <td><%= @employee_nomination.pin_code %></td>
+
+  <th><strong>Phone No.</strong></th>
+  <td><%= @employee_nomination.phone_no %></td>
+</tr>
+
+<tr>
+  <th><strong>Mobile No.</strong></th>
+  <td><%= @employee_nomination.mobile_no %></td>
+ 
+ <th><strong>Email:</strong></th>
+  <td><%= @employee_nomination.try(:email) %></td>
+  </tr>
+
+     <!--   < link_to '', edit_employee_nomination_path(employee_nomination) ,class: 'btn btn-xs btn-success fa fa-edit',remote:true  %> -->
+        <!--   < link_to '', employee_nomination, method: :delete, data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-danger fa fa-close' %> -->   
+    </tbody>
+  </table>
+<%= link_to 'Back', employees_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+  </div><!-- /.box -->
+</div>

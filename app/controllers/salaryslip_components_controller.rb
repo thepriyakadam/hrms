@@ -4,6 +4,10 @@ class SalaryslipComponentsController < ApplicationController
   def index
     @salaryslip_components = SalaryslipComponent.limit(50)
     @maps = SalaryMapSap.all
+    respond_to do |format|
+      format.xml { send_data render_to_string(:index), :filename => 'mydoc.xml', :type=>"application/xml", :disposition => 'attachment' }
+    end
+    
   end
 
   def edit

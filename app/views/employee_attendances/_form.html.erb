@@ -1,25 +1,61 @@
-<%= form_for(@employee_attendance) do |f| %>
-  <div class="field">
-    <%= f.label :employee_id %><br>
-    <%= f.text_field :employee_id %>
-  </div>
-  <div class="field">
-    <%= f.label :day %><br>
-    <%= f.date_select :day %>
-  </div>
-  <div class="field">
-    <%= f.label :present %><br>
-    <%= f.text_field :present %>
-  </div>
-  <div class="field">
-    <%= f.label :in %><br>
-    <%= f.time_select :in %>
-  </div>
-  <div class="field">
-    <%= f.label :out %><br>
-    <%= f.time_select :out %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+  <div class="box box-default">
+    <div class="box-header with-border">
+      <h3 class="box-title">Attendance</h3>
+    </div><!-- /.box-header -->
+    <div class="box-body">
+
+      <%= bootstrap_form_for(:salary, url: { action: 'department_wise_employee_list'},html: {id: "salary"},remote: true) do |f| %>
+        <div class="row">
+          <div class="col-sm-3">
+            <label>Department</label>
+            <div class="field">
+              <%= select :salary, :department_id, all_department,{hide_label: true, include_blank: 'Select Department'},{class: "form-control"} %>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <label>Date </label>
+            <div class="form-group required">
+              <div class="input-group">
+                <div class="input-group-addon">
+                  <i class="fa fa-calendar"></i>
+                </div>
+                <%= text_field :current, :day,hide_label: true,class: 'day_date form-control'%>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="actions">
+              <%= f.submit "Create Attendance" ,class: 'btn btn-primary btn-sm', id: "buttonCtc" %>
+            </div>
+          </div>
+        </div>
+        <br>
+      <% end %>
+
+      <div class="ajax-progress"></div>
+      <div class="row">
+        <div class="col-sm-12">
+          <div id="employee_list"></div>    
+        </div>
+      </div>
+
+    </div><!-- /.box-body -->
+  </div><!-- /.box -->
+
+  <script type="text/javascript">
+    $("#buttonCtc").click(function(){
+      $('.ajax-progress').show();
+      $("#salary").submit();
+    })
+
+    $(function(){
+      $('.day_date').datepicker({
+      changeYear:true,
+      changeMonth: true,
+      yearRange: '-200:-0',
+      dateFormat: 'dd-mm-yy' });
+    });
+
+  </script>

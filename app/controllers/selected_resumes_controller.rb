@@ -37,6 +37,7 @@ class SelectedResumesController < ApplicationController
 
   def create
     @selected_resume = SelectedResume.new(selected_resume_params)
+    @vacancy_master = VacancyMaster.find(@selected_resume.vacancy_master_id)
     # @vacancy_master = VacancyMaster.find(params[:format])
     @selected_resumes = SelectedResume.all
       if @selected_resume.save
@@ -154,17 +155,18 @@ class SelectedResumesController < ApplicationController
   end
 
   def is_confirm
-    # @vacancy_master = VacancyMaster.find(params[:format])
+    @vacancy_master = VacancyMaster.find(params[:abc])
     @selected_resume_ids = params[:selected_resume_ids]
     if @selected_resume_ids.nil?
       flash[:alert] = "Please Select the Checkbox"
+      redirect_to new_selected_resume_path(@vacancy_master.id)
     else
       @selected_resume_ids.each do |eid|
       @selected_resume = SelectedResume.find(eid)
       @selected_resume.update(status: "Shortlisted") 
       flash[:notice] = "Confirmed Successfully"
     end 
-     redirect_to root_url
+     redirect_to new_selected_resume_path(@vacancy_master.id)
   end
   end
 
@@ -202,6 +204,17 @@ class SelectedResumesController < ApplicationController
     @current_status = params[:selected_resume][:status]
     @selected_resume.update(status: @current_status)
     flash[:notice] = "Interview Status updated Successfully"
+    redirect_to root_url
+  end
+
+  def modal_profile_update
+  @selected_resume = SelectedResume.find(params[:format])
+  end
+
+  def update_profile
+    @selected_resume = SelectedResume.find(params[:id])
+    @selected_resume.update(selected_resume_params)
+    flash[:notice] = 'Resume Updated Successfully'
     redirect_to root_url
   end
 

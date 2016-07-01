@@ -51,20 +51,9 @@ class QualificationsController < ApplicationController
   # PATCH/PUT /qualifications/1
   # PATCH/PUT /qualifications/1.json
   def update
-    respond_to do |format|
-      @employee = Employee.find(params['qualification']['employee_id'])
-      if @qualification.update(qualification_params)
-
-        # format.html { redirect_to @qualification, notice: 'Qualification was successfully updated.' }
-        # format.json { render :show, status: :ok, location: @qualification }
-        @qualifications = @employee.qualifications
-        format.js { @flag = true }
-      else
-        # format.html { render :edit }
-        # format.json { render json: @qualification.errors, status: :unprocessable_entity }
-        format.js { @flag = false }
-      end
-    end
+    @qualification.update(qualification_params)
+    @qualifications = Qualification.all
+    @qualification = Qualification.new
   end
 
   # DELETE /qualifications/1
@@ -74,6 +63,22 @@ class QualificationsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to qualifications_url, notice: 'Qualification was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  def modal
+    @qualification = Qualification.find(params[:format])
+  end
+
+  def update_qualification
+    @qualification = Qualification.find(params[:id])
+    @employee = Employee.find(@qualification.employee_id)
+    if @qualification.update(qualification_params)
+      @qualifications = Qualification.where(employee_id:@employee.id)
+      @flag = true
+    else
+      @qualifications = Qualification.where(employee_id:@employee.id)
+      @flag = false 
     end
   end
 

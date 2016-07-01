@@ -4,8 +4,15 @@
   </div><!-- /.box-header -->
   <div class="box-body">
     <%= bootstrap_form_for(@employee_resignation) do |f| %>
-    <%= f.hidden_field :employee_id, :value => current_user.employee_id %>
+    <!--< f.hidden_field :employee_id, :value => current_user.employee_id %>-->
+     
       <div class="row">
+      <div class="col-sm-3">
+          <div class="field">
+          <%= f.select :employee_id, all_active_employee_with_code,{label: 'Employee Name',include_blank: " Select Employee Name"} %>    
+          </div>
+        </div>
+       
         <div class="col-sm-3">
           <label>Resignation Date </label>
           <div class="form-group required">
@@ -20,27 +27,27 @@
 
         <div class="col-sm-3">
           <div class="field">
-          <%= f.select :leaving_reason_id, all_leaving_reason,{label: 'Reason of Leaving',include_blank: " Select Reason of Leaving"} %>
+           <%= f.select :leaving_reason_id, all_leaving_reason,{label: 'Reason of Leaving',include_blank: " Select Reason of Leaving"} %>
           </div>
         </div>
 
-         <div class="col-sm-3">
+        <!--  <div class="col-sm-3">
           <div class="field">
-          <%= f.select :reporting_master_id, all_reporting_master_list,{label: 'Request To',include_blank: " Select Reporting Manager"} %>
-            
+          < f.select :reporting_master_id, all_reporting_master_list,{label: 'Request To',include_blank: " Select Reporting Manager"} %>    
           </div>
-        </div>
-      </div>
-
-
-
-      <div class="row">
-       <div class="col-sm-3">
+        </div> -->
+        <div class="col-sm-3">
          <div class="field">
            <%= f.text_field :notice_period, label:'Notice Period (in days)' %>
          </div>
        </div>
 
+      </div>
+
+
+
+      <div class="row">
+       
       <div class="col-sm-3">
        <div class="field">
          <%= f.text_field :short_notice_period, label:'Short Notice Period' %>
@@ -63,8 +70,6 @@
          <%= f.text_field :remark, label:'Remark' %>
        </div>
       </div>
-    </div>
-    <div class="row">
       <div class="col-sm-3">
        <label>Interview Date</label>
        <div class="field">
@@ -76,7 +81,8 @@
         </div>
        </div>
       </div>
-
+    </div>
+    <div class="row">
       <div class="col-sm-3">
        <div class="field">
          <%= f.text_field :note, label:'Note' %>

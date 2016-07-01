@@ -63,7 +63,10 @@ class InductionActivitiesController < ApplicationController
   end
 
   def employee_list
+    puts '----------------------------------------------------------'
      @employees = Employee.all
+     # @employee = Employee.find(params[:emp_id])
+     # @induction_details = InductionDetail.where(employee_id: @employee.id)
      session[:active_tab] ="employeemanagement"
      session[:active_tab1] ="employeeinduction"
   end
@@ -120,6 +123,19 @@ class InductionActivitiesController < ApplicationController
     InductionDetail.create(start_date: @induction_det,employee_id: @emp,induction_master_id:@induction_master.id,induction_completed: :false)
     flash[:notice] = 'Induction Details was saved Successfully.'
     redirect_to employee_list_induction_activities_path
+  end
+
+
+  def modal_induction_activity
+    @induction_activity = InductionActivity.find(params[:format])
+  end
+
+
+  def update_induction
+     @induction_activity = InductionActivity.find(params[:id])
+    @induction_activity.update(induction_activity_params)
+    flash[:notice] = 'Activity Updated Successfully'
+    redirect_to root_url
   end
 
   private

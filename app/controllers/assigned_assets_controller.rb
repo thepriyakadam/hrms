@@ -72,6 +72,23 @@ class AssignedAssetsController < ApplicationController
     end
   end
 
+  def update_asset
+     @assigned_asset = AssignedAsset.find(params[:id])
+    @employee = Employee.find(@assigned_asset.employee_id)
+    if @assigned_asset.update(assigned_asset_params)
+      @assigned_assets = AssignedAsset.where(employee_id:@employee.id)
+      @flag = true
+    else
+      @assigned_assets = AssignedAsset.where(employee_id:@employee.id)
+      @flag = false 
+    end
+  end
+
+  def modal
+    @assigned_asset = AssignedAsset.find(params[:format])
+
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_assigned_asset

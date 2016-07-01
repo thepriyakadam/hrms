@@ -22,7 +22,7 @@
       <tbody>
         <% @travel_expences.each do |travel_expence| %>
           <tr>
-            <td><%= travel_expence.travel_request_id %></td>
+            <td><%= travel_expence.travel_request.try(:name) %></td>
             <td><%= travel_expence.total_advance_amount %></td>
             <td><%= travel_expence.total_expence_amount %></td>
             <td><%= travel_expence.remaining_amount %></td>

@@ -131,6 +131,13 @@ class EmployeeLeavBalancesController < ApplicationController
      redirect_to employee_leav_balances_path
   end
 
+  def is_confirm_leave
+    @employee_leav_balance = EmployeeLeavBalance.find(params[:emp_leav_bal_id])
+    EmployeeLeavBalance.where(id: @employee_leav_balance.id).update_all(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to employee_leav_balances_path
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -140,6 +147,6 @@ class EmployeeLeavBalancesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def employee_leav_balance_params
-    params.require(:employee_leav_balance).permit(:employee_id, :leav_category_id, :no_of_leave, :total_leave, :expiry_date)
+    params.require(:employee_leav_balance).permit(:is_confirm,:employee_id, :leav_category_id, :no_of_leave, :total_leave, :expiry_date)
   end
 end

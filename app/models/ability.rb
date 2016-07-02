@@ -28,11 +28,13 @@ class Ability
         can :manage, EmployeeLeavRequest
       elsif user.role.name == 'Employee'
         can :read, Employee, id: user.employee_id
-        can :read, [JoiningDetail, EmployeeBankDetail, Qualification, Experience, Skillset, EmployeePhysical, Family, GoalBunch, GoalRating]
+        can :read, [JoiningDetail, EmployeeBankDetail, Qualification, Experience, Skillset, EmployeePhysical, Family]
         can :manage, EmployeeLeavRequest, employee_id: user.employee_id
         can :read, EmployeeTemplate, employee_id: user.employee_id
         can :read, AdvanceSalary, employee_id: user.employee_id
         can :read, Attendance, employee_id: user.employee_id
+        can :manage, GoalBunch, employee_id: user.employee_id
+        can :manage, GoalRating, appraisee_id: user.employee_id
       elsif user.role.name == 'SalaryAccount'
         can :read, Employee
         can :manage, EmployeeLeavRequest

@@ -28,7 +28,7 @@ div.nobreak{ page-break-inside: avoid;
       <tr>
         <td><%= daily_bill_detail.expence_date %></td>
         <td><%= daily_bill_detail.e_place %></td>
-        <td><%= daily_bill_detail.travel_expence_type.name %></td>
+        <td><%= daily_bill_detail.travel_expence_type.try(:name) %></td>
         <td><%= daily_bill_detail.travel_expence %></td>
       </tr>
     <% end %>

@@ -281,6 +281,26 @@ class GoalRatingsController < ApplicationController
     redirect_to new_goal_rating_path(id: @goal_bunch.id, emp_id:@employee.id)
   end
 
+  def trainee_list
+    @trainees = Trainee.all
+  end
+
+  def print_employee_detail
+    trainee_ids = params[:trainee_ids]
+      if trainee_ids.nil?
+        flash[:alert] = "Please Select the Checkbox"
+        @trainees = []
+        redirect_to trainee_list_goal_ratings_path
+      else
+      @trainees = []
+      trainee_ids.each do |t|
+        emp = Trainee.find(t)
+        @trainees << emp
+        #@goal_bunch = Employee.find(e)
+        end 
+      end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_goal_rating

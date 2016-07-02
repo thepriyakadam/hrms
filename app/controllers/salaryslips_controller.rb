@@ -687,6 +687,7 @@ class SalaryslipsController < ApplicationController
             ss.save!
           end
           @salaryslip = Salaryslip.last
+          SlipInformation.create_salaryslip_information(@salaryslip, @employee, working_day)
           @salaryslip_component_array.each do |sa|
             sa.salaryslip_id = @salaryslip.id
             sa.employee_template_id = current_template.id
@@ -842,6 +843,7 @@ class SalaryslipsController < ApplicationController
             SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: ai.actual_amount, calculated_amount: arrear_calculated_amount, is_deducted: ai.is_deducted, is_arrear: true, salary_component_id: ai.salary_component_id)
           end
           # current template nil
+          
         end # employee_ids loop
       end
       flash[:notice] = 'All Salary processed.'

@@ -1,4 +1,4 @@
-<%= bootstrap_form_for GoalRating.new,url:{action:'send_mail_to_appraiser',id: @employee.id,goal_bunch_id: @goal_bunch.id} do |f| %>
+<%= bootstrap_form_for @goal_rating,url:{action:'send_mail_to_appraiser',id: @employee.id,goal_bunch_id: @goal_bunch.id} do |f| %>
 
 <!-- < if @goal_rating.goal_type == 'Goal' %> -->
  <div class="row">
@@ -74,9 +74,6 @@
 </div>
 </div>
 
-<!-- < else %>
-< end %> -->
-<div id="myModal" class="modal fade"></div>
   <div class="row">
     <div class="col-sm-3">
       <div class="actions">
@@ -85,3 +82,4 @@
     </div>
   </div>
 <% end %>
+<div id="myModal" class="modal fade"></div>

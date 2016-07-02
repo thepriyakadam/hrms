@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160701114346) do
+ActiveRecord::Schema.define(version: 20160702070306) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -170,15 +170,6 @@ ActiveRecord::Schema.define(version: 20160701114346) do
   add_index "attribute_rating_sheets", ["employee_attribute_id"], name: "index_attribute_rating_sheets_on_employee_attribute_id"
   add_index "attribute_rating_sheets", ["final_id_id"], name: "index_attribute_rating_sheets_on_final_id_id"
   add_index "attribute_rating_sheets", ["final_rating_id"], name: "index_attribute_rating_sheets_on_final_rating_id"
-
-  create_table "attributes", force: :cascade do |t|
-    t.string   "code"
-    t.string   "name"
-    t.text     "definition"
-    t.boolean  "status"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
 
   create_table "awards", force: :cascade do |t|
     t.integer  "employee_id"
@@ -1179,6 +1170,7 @@ ActiveRecord::Schema.define(version: 20160701114346) do
     t.integer  "performance_calendar_id"
     t.integer  "training_topic_master_id"
     t.boolean  "is_assigned"
+    t.boolean  "is_hide"
   end
 
   add_index "goal_ratings", ["appraisee_id"], name: "index_goal_ratings_on_appraisee_id"
@@ -2227,8 +2219,10 @@ ActiveRecord::Schema.define(version: 20160701114346) do
     t.datetime "updated_at",               null: false
     t.integer  "training_topic_master_id"
     t.integer  "training_request_id"
+    t.integer  "period_id"
   end
 
+  add_index "training_plans", ["period_id"], name: "index_training_plans_on_period_id"
   add_index "training_plans", ["training_request_id"], name: "index_training_plans_on_training_request_id"
   add_index "training_plans", ["training_topic_master_id"], name: "index_training_plans_on_training_topic_master_id"
 

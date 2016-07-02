@@ -12,7 +12,6 @@
       
       <th><strong>Employee</strong></th>
       <td><%= @induction_detail.employee.try(:first_name) %> <%= @induction_detail.employee.try(:middle_name) %> <%= @induction_detail.employee.try(:last_name) %></td>
-
     </tr>
     <tr>
       <th><strong>Department</strong></th>
@@ -28,6 +27,13 @@
 
        <th><strong>Induction Start Date</strong></th>
       <td><%= @induction_detail.start_date %></td>
+   </tr>
+   <tr>
+      <th><strong>Induction End Date</strong></th>
+      <td><%= @induction_detail.end_date %></td>
+
+      <th><strong></strong></th>
+      <td></td>
    </tr>
 
   </table><br><br>

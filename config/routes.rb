@@ -274,6 +274,8 @@ end
     get :print_daily_bill
     get :daily_bill_history
     get :daily_bill_request_confirmation
+    post :approve_request
+    get :approved_daily_bill_details
     end
   end 
   resources :travel_requests do

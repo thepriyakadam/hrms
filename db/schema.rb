@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160701134431) do
+ActiveRecord::Schema.define(version: 20160702070306) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -1190,6 +1190,7 @@ ActiveRecord::Schema.define(version: 20160701134431) do
     t.integer  "performance_calendar_id"
     t.integer  "training_topic_master_id"
     t.boolean  "is_assigned"
+    t.boolean  "is_hide"
   end
 
   add_index "goal_ratings", ["appraisee_id"], name: "index_goal_ratings_on_appraisee_id"

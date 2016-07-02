@@ -1,6 +1,8 @@
+require 'query_report/helper'
 class GoalBunchesController < ApplicationController
   before_action :set_goal_bunch, only: [:show, :edit, :update, :destroy]
-
+  load_and_authorize_resource
+ include QueryReport::Helper  # need to include it
   # GET /goal_bunches
   # GET /goal_bunches.json
   def index
@@ -795,6 +797,24 @@ class GoalBunchesController < ApplicationController
   def goal_bunch_list
     @employee = Employee.find(params[:id])
     @goal_bunches = GoalBunch.where(employee_id: @employee.id)
+  end
+
+  
+
+  def set_goal_list
+    reporter(@goal_bunches, template_class: PdfReportTemplate) do
+      #filter :employee_id, type: :string
+      # filter(:current_status, :enum, :select => [["Pending",0],["Cancelled",1],["FirstApproved",2],["SecondApproved",3],["FirstRejected",4],["SecondRejected",5]])
+      column(:Employee_ID, sortable: true) { |goal_bunch| goal_bunch.employee.try(:manual_employee_code) }
+      column(:Emploee_name, sortable: true) { |goal_bunch| full_name(goal_bunch.employee) }
+      # column :is_pending
+      # column :is_cancelled
+      # column :is_first_approved
+      # column :is_second_approved
+      # column :is_first_rejected
+      # column :is_second_rejected
+      #column :current_status
+    end
   end
 
   private

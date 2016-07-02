@@ -15,6 +15,7 @@
               <th>Start Date</th>
               <th>End Date</th>
               <th>Status</th>
+              <th>Action</th>
             </tr>
           </thead>
 
@@ -44,7 +45,11 @@
                         <small class="label label-info">Else</small>
                     <%end%>
                   <%end%>
-                </td>  
+                </td> 
+                 <td>
+                  <%= link_to 'Approve', employee_history_with_current_leave_employee_leav_requests_path(employee_leav_request),class: 'btn btn-sm btn-warning' %>
+                   <%= link_to 'Reject', first_reject_leave_status_record_path(@current_request.id), data: { confirm: 'Are you sure?' },class: 'btn btn-sm btn-danger fa fa-trash' %>
+                </td> 
               </tr>
             <% end %>
           </tbody>
@@ -52,7 +57,7 @@
       </div>
     </div>
     
-    <div class="row">
+   <!--  <div class="row">
       <div class="col-sm-2">Name</div>
       <div class="col-sm-6"><%= full_name(@employee) %></div>
     </div>
@@ -77,8 +82,8 @@
     </div>
     <div class="row">
       <div class="col-sm-2">Reason</div>
-      <div class="col-sm-6"><%= @current_request.try(:reason) %></div>
-    </div>
+      <div class="col-sm-6"><= @current_request.try(:reason) %></div>
+    </div> -->
     <% if @current_request.current_status == "Pending" %>
       <%= link_to 'Approve', first_approve_leave_status_record_path(@current_request.id), data: { confirm: 'Are you sure?' },class: 'btn btn-sm btn-info fa fa-check' %>
       <%= link_to 'Reject', first_reject_leave_status_record_path(@current_request.id), data: { confirm: 'Are you sure?' },class: 'btn btn-sm btn-danger fa fa-trash' %>

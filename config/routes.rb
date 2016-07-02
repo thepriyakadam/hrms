@@ -92,8 +92,11 @@ Rails.application.routes.draw do
       patch :update_goal_set_modal
       get :attribute_set_modal
       patch :update_attribute_set_modal
+      get :trainee_list
+      post :print_employee_detail
     end
   end
+  #post 'goal_ratings/update_goal_set_modal'
   resources :goal_bunches do
     collection do
       get :goal_approval
@@ -152,6 +155,8 @@ Rails.application.routes.draw do
       post :all_emp_list
       get :emp_list_goal_wise
       get :goal_bunch_list
+      get :set_goal_list
+      
     end
   end
   resources :goal_perspectives
@@ -272,6 +277,8 @@ end
     get :print_daily_bill
     get :daily_bill_history
     get :daily_bill_request_confirmation
+    post :approve_request
+    get :approved_daily_bill_details
     end
   end 
   resources :travel_requests do

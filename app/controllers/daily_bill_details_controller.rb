@@ -30,15 +30,13 @@ class DailyBillDetailsController < ApplicationController
 
   def create
     @daily_bill_detail = DailyBillDetail.new(daily_bill_detail_params)
+    # byebug
     @travel_request = TravelRequest.find(@daily_bill_detail.travel_request_id)
-  
+
        ActiveRecord::Base.transaction do
         respond_to do |format|
-          if @daily_bill_detail.save
-            len = params['daily_bill_detail'].length - 7
-          for i in 2..len
-            DailyBillDetail.create(travel_request_id: params['daily_bill_detail']['travel_request_id'], expence_date: params['daily_bill_detail'][i.to_s]['expence_date'], e_place: params['daily_bill_detail'][i.to_s]['e_place'], travel_expence: params['daily_bill_detail'][i.to_s]['travel_expence'],local_travel_expence: params['daily_bill_detail'][i.to_s]['local_travel_expence'],lodging_expence: params['daily_bill_detail'][i.to_s]['lodging_expence'],boarding_expence: params['daily_bill_detail'][i.to_s]['boarding_expence'],other_expence: params['daily_bill_detail'][i.to_s]['other_expence'])
-          end
+    if @daily_bill_detail.save
+        @daily_bill_detail.update(reporting_master_id: @travel_request.reporting_master_id)
         @daily_bill_details = DailyBillDetail.where(travel_request_id: @travel_request.id)
         format.html { redirect_to @daily_bill_detail, notice: 'Daily Bill was successfully created.' }
         format.json { render :show, status: :created, location: @daily_bill_detail }
@@ -120,16 +118,41 @@ end
     end  
   end
 
- 
-  
+  # def daily_bill_history
+  #   # @daily_bill_details = DailyBillDetail.all
+  #   @c1 = ReportingMastersTravelRequest.find_by_travel_request_id(@daily_bill_detail.travel_request_id)
+  #   @daily_bill_details = DailyBillDetail.where("travel_request_id = ?",@c1.travel_request_id)
+  # end
+
   def daily_bill_history
-    # @daily_bill_details = DailyBillDetail.all
-    @c1 = ReportingMastersTravelRequest.find_by_travel_request_id(@daily_bill_detail.travel_request_id)
-    @daily_bill_details = DailyBillDetail.where("travel_request_id = ?",@c1.travel_request_id)
-  end
+    @daily_bill_details = DailyBillDetail.where(reporting_master_id: current_user.employee_id,is_confirm: true)
+    session[:active_tab] ="travelmgmt" 
+  end 
 
   def daily_bill_request_confirmation
-    @daily_bill_details = DailyBillDetail.all
+    @daily_bill_details = DailyBillDetail.where(reporting_master_id: current_user.employee_id)
+    session[:active_tab] ="travelmgmt"
+  end
+
+  def approve_request
+    @daily_bill_detail_ids = params[:daily_bill_detail_ids]
+    if @daily_bill_detail_ids.nil?
+      flash[:alert] = "Please Select the Checkbox"
+      redirect_to daily_bill_history_daily_bill_details_path
+    else
+      @daily_bill_detail_ids.each do |did|
+      @daily_bill_detail = DailyBillDetail.find(did)
+      @daily_bill_detail.update(request_status: "Approved") 
+      flash[:notice] = "Approved Successfully"
+    end 
+     redirect_to daily_bill_history_daily_bill_details_path
+  end
+  session[:active_tab] ="travelmgmt"
+  end
+
+  def approved_daily_bill_details
+    @daily_bill_details = DailyBillDetail.where(request_status: "Approved")
+    session[:active_tab] ="travelmgmt"
   end
 
   private
@@ -140,6 +163,6 @@ end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def daily_bill_detail_params
-      params.require(:daily_bill_detail).permit(:is_confirm, :travel_expence_type_id, :travel_request_id, :expence_date, :e_place, :travel_expence )
+      params.require(:daily_bill_detail).permit(:is_confirm, :request_status,:travel_expence_type_id, :travel_request_id, :expence_date, :e_place, :travel_expence )
     end
 end

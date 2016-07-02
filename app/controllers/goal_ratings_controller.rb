@@ -231,6 +231,7 @@ class GoalRatingsController < ApplicationController
       ids << g.id
     end
     @training_topic_master_id = params[:training_topic_master_id]
+    @period_id = params[:period_id]
     # @goal_ratings = GoalRating.where(goal_bunch_id: ids,training_topic_master_id: @training_topic_master_id).where(is_assigned: nil)
     @goal_ratings = GoalRating.where(goal_bunch_id: ids,training_topic_master_id: @training_topic_master_id)
   end

@@ -33,6 +33,8 @@ class Ability
         can :read, EmployeeTemplate, employee_id: user.employee_id
         can :read, AdvanceSalary, employee_id: user.employee_id
         can :read, Attendance, employee_id: user.employee_id
+        can :manage, GoalBunch, employee_id: user.employee_id
+        can :manage, GoalRating, appraisee_id: user.employee_id
       elsif user.role.name == 'SalaryAccount'
         can :read, Employee
         can :manage, EmployeeLeavRequest

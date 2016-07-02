@@ -1,4 +1,4 @@
-<%= bootstrap_form_for(@daily_bill_detail,remote:true) do |f| %>
+<%= bootstrap_form_for(@daily_bill_detail,id:@travel_request.id,remote: true) do |f| %>
   <%= f.hidden_field :travel_request_id, value:@travel_request.id  %>
   <div id="entry1" class="clonedInput">
     <div class="row">

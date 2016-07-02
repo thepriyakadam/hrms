@@ -12,7 +12,6 @@
       <th>Expence Date</th>
       <th>E Place</th>
 
-      <th>Travel Expence</th>
       <th>Local Travel Expence </th>
       <th> Lodging Expence</th>
 
@@ -25,15 +24,14 @@
   <tbody>
       <% @daily_bill_details.each do |daily_bill_detail| %>
       <tr>
-        <td><%= daily_bill_detail.travel_request %></td>
+        <td><%= daily_bill_detail.travel_request_id %></td>
         <td><%= daily_bill_detail.expence_date %></td>
         <td><%= daily_bill_detail.e_place %></td>
-        <td><%= daily_bill_detail.travel_expence_type.try(:name) %></td>
         <td><%= daily_bill_detail.local_travel_expence %></td>
         <td><%= daily_bill_detail.lodging_expence %></td>
         <td><%= daily_bill_detail.boarding_expence %></td>
         <td><%= daily_bill_detail.other_expence %></td>
-        <td><%= daily_bill_detail.travel_expence_type %></td>
+        <td><%= daily_bill_detail.travel_expence_type.try(:name) %></td>
       </tr>
       <% end %>
   </tbody>

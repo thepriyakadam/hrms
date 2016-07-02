@@ -578,11 +578,11 @@ ActiveRecord::Schema.define(version: 20160701114346) do
     t.integer  "employee_id"
     t.date     "day"
     t.string   "present"
-    t.time     "in"
-    t.time     "out"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
     t.integer  "department_id"
+    t.datetime "in_time"
+    t.datetime "out_time"
   end
 
   add_index "employee_attendances", ["department_id"], name: "index_employee_attendances_on_department_id"
@@ -686,6 +686,7 @@ ActiveRecord::Schema.define(version: 20160701114346) do
     t.datetime "updated_at",       null: false
     t.date     "expiry_date"
     t.string   "total_leave"
+    t.boolean  "is_confirm"
   end
 
   add_index "employee_leav_balances", ["company_leav_id"], name: "index_employee_leav_balances_on_company_leav_id"
@@ -874,7 +875,7 @@ ActiveRecord::Schema.define(version: 20160701114346) do
     t.text     "task_name"
     t.date     "task_date"
     t.boolean  "status"
-    t.string   "time"
+    t.time     "task_time"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
@@ -2379,6 +2380,7 @@ ActiveRecord::Schema.define(version: 20160701114346) do
     t.integer  "degree_id"
     t.string   "experience"
     t.string   "keyword"
+    t.string   "others"
     t.string   "other_organization"
     t.string   "industry"
     t.integer  "degree_1_id"

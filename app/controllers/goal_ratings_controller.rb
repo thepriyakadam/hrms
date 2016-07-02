@@ -31,6 +31,7 @@ class GoalRatingsController < ApplicationController
   # POST /goal_ratings.json
   def create
     @goal_bunch = GoalBunch.find(params[:goal_rating][:goal_bunch_id])
+    @employee = Employee.find(@goal_bunch.employee_id)
     @goal_rating = GoalRating.new(goal_rating_params)
     goal_weightage_sum = @goal_rating.goal_weightage_sum(@goal_bunch, @goal_rating)
     if goal_weightage_sum <= 100

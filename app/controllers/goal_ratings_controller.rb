@@ -36,8 +36,10 @@ class GoalRatingsController < ApplicationController
     if goal_weightage_sum <= 100
       if params[:flag] == "Goal"
         @goal_rating.goal_perspective_id = params[:common][:id]
+        @dropdown = true
       else
         @goal_rating.attribute_master_id = params[:common][:id]
+        @dropdown = false
       end
       @goal_rating.save
       @flag = true
@@ -260,11 +262,11 @@ class GoalRatingsController < ApplicationController
   end
 
   def update_goal_set_modal
-    #byebug
-    @goal_rating = GoalRating.find(params[:goal_rating_id])
+    @goal_rating = GoalRating.find(params[:format])
+    @employee = Employee.find(@goal_rating.appraisee_id)
+    @goal_bunch = GoalBunch.find(@goal_rating.goal_bunch_id)
     @goal_rating.update(goal_rating_params)
-    flash[:notice] = 'Updated Successfully'
-    redirect_to new_goal_ratings_path(id: @goal_rating.goal_bunch_id)
+    redirect_to new_goal_rating_path(id: @goal_bunch.id, emp_id:@employee.id)
   end
 
   def attribute_set_modal
@@ -272,10 +274,11 @@ class GoalRatingsController < ApplicationController
   end
 
   def update_attribute_set_modal
-    @goal_rating = GoalRating.find(params[:goal_rating_id])
+    @goal_rating = GoalRating.find(params[:format])
+    @employee = Employee.find(@goal_rating.appraisee_id)
+    @goal_bunch = GoalBunch.find(@goal_rating.goal_bunch_id)
     @goal_rating.update(goal_rating_params)
-    flash[:notice] = 'Updated Successfully'
-    redirect_to new_goal_ratings_path(id: @goal_rating.goal_bunch_id)
+    redirect_to new_goal_rating_path(id: @goal_bunch.id, emp_id:@employee.id)
   end
 
   def trainee_list

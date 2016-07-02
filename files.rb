@@ -25,7 +25,8 @@ Dir.chdir(ARGV[0]) do
 	destroy.puts('$("#form").html("<%= j render \'form\' %>")')
 	destroy.close
 
-	system 'sudo cp index.html.erb list.html.erb'
+	system 'sudo cp index.html.erb _list.html.erb'
+	system 'sudo chmod 777 _list.html.erb'
 
 	index = File.new("index.html.erb", "w")
 	index.puts('<div class="box box-default">')

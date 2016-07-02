@@ -843,6 +843,7 @@ class SalaryslipsController < ApplicationController
           end
           # current template nil
         end # employee_ids loop
+        SlipInformation.create_salaryslip_information(@salaryslip, @employee)
       end
       flash[:notice] = 'All Salary processed.'
       redirect_to select_month_year_form_salaryslips_path

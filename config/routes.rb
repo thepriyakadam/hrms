@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :currency_masters
   resources :illness_types
   resources :performance_calendars
   resources :performance_activities
@@ -276,6 +277,7 @@ end
     get :daily_bill_request_confirmation
     post :approve_request
     get :approved_daily_bill_details
+    get :travel_request_list
     end
   end 
   resources :travel_requests do
@@ -598,6 +600,9 @@ end
   match 'interview_schedules/:id/sample_email_to_interviewer/:id' => 'interview_schedules#sample_email_to_interviewer', :via => [:get], :as => :sample_email_to_interviewer
 
   match 'circulars/:id/download_documents/:id' => 'circulars#download_documents', :via => [:get], :as => :download_documents
+
+  match 'daily_bill_details/:id/download_doc/:id' => 'daily_bill_details#download_doc', :via => [:get], :as => :download_doc
+  match 'daily_bill_details/:id/download_pics/:id' => 'daily_bill_details#download_pics', :via => [:get], :as => :download_pics
 
   resources :leave_c_offs
   resources :overtime_month_records

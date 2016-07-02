@@ -96,6 +96,7 @@ Rails.application.routes.draw do
       post :print_employee_detail
     end
   end
+  #post 'goal_ratings/update_goal_set_modal'
   resources :goal_bunches do
     collection do
       get :goal_approval

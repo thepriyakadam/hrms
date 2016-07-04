@@ -18,8 +18,9 @@ class TrainingPlansController < ApplicationController
   def new
     @training_plan = TrainingPlan.new
     #@training_requests = TrainingRequest.all
-    @employees = Employee.where(department_id: current_user.department_id)
+    # @employees = Employee.where(department_id: current_user.department_id)
     @training_request = TrainingRequest.find(params[:id])
+    @training_requests = TrainingRequest.where(status: "Approved")
     @training_plans = TrainingPlan.where(training_request_id: @training_request.id)
     session[:active_tab] ="trainingmgmt"
   end

@@ -40,7 +40,7 @@ Rails.application.routes.draw do
     collection do 
     get :all_induction_detail_list
     get :confirm
-    post :print_induction_details
+    get :print_induction_details
     get :update_date_modal
     post :update_date
     end
@@ -282,6 +282,8 @@ end
     post :approve_request
     get :approved_daily_bill_details
     get :travel_request_list
+    get :edit_and_send_next_modal
+    post :edit_and_send_next
     end
   end 
   resources :travel_requests do

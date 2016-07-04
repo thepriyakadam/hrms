@@ -128,7 +128,6 @@ class TrainingPlansController < ApplicationController
         #GoalRating.where(appraisee_id: eid,attribute_master_id: @attribute_master_id.id).update_all(is_assigned: true)
         flash[:notice] = "Created Successfully"
       end
-    end
       redirect_to period_and_topic_wise_list_goal_ratings_path
   end
 
@@ -142,6 +141,6 @@ class TrainingPlansController < ApplicationController
     end
     # Never trust parameters from the scary internet, only allow the white list through.
     def training_plan_params
-      params.require(:training_plan).permit(:training_date,:training_request_id, :training_topic_master_id, :topic, :no_of_employee, :trainer_name, :no_of_days, :no_of_hrs, :place)
+      params.require(:training_plan).permit(:period_id,:training_date,:training_request_id, :training_topic_master_id, :topic, :no_of_employee, :trainer_name, :no_of_days, :no_of_hrs, :place)
     end
 end

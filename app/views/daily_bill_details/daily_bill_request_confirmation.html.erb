@@ -5,9 +5,11 @@
     </div>
     </div>
 <div class="box-body">
+<%= bootstrap_form_for DailyBillDetail.new,url:{action:'approve_request'} do |f| %>
 <table id="example" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
+      <th><input type="checkbox" id="selectAll" value="selectAll"></th>
       <th>Travel Request ID</th>
       <th>Expence Date</th>
       <th>E Place</th>
@@ -18,12 +20,16 @@
       <th>Boarding Expence</th>
       <th>Other Expence</th>
       <th>Travel Expence Type ID</th>
+      <th>Status</th>
     </tr>
   </thead>
 
   <tbody>
       <% @daily_bill_details.each do |daily_bill_detail| %>
       <tr>
+        <td>
+            <%= check_box_tag "daily_bill_detail_ids[]", daily_bill_detail.id %>
+        </td>
         <td><%= daily_bill_detail.travel_request_id %></td>
         <td><%= daily_bill_detail.expence_date %></td>
         <td><%= daily_bill_detail.e_place %></td>
@@ -32,10 +38,20 @@
         <td><%= daily_bill_detail.boarding_expence %></td>
         <td><%= daily_bill_detail.other_expence %></td>
         <td><%= daily_bill_detail.travel_expence_type.try(:name) %></td>
+        <td><%= daily_bill_detail.request_status %></td>
       </tr>
       <% end %>
   </tbody>
 </table>
+
+<div class="row">
+  <div class="col-sm-3">
+    <div class="actions">
+      <%= f.submit "Approve Request", class: 'btn btn-primary btn-sm' %>
+    </div>
+  </div>
+</div>
+<% end %>
   <div class="box-header">
     <h3 class="box-title">Daily Bill Request Details</h3>
     <div class="pull-right">
@@ -53,6 +69,24 @@ $(document).ready(function() {
     $('#example').DataTable();
 } );
 </script>
+
+<script type="text/javascript">
+  $(function () {
+    $('#selectAll').click(function() {
+      if (this.checked) {
+        $(':checkbox').each(function() {
+          this.checked = true;                       
+        });
+      } 
+      else {
+        $(':checkbox').each(function() {
+          this.checked = false;                        
+        });
+      } 
+    });
+  });
+</script>
+
 
 
 

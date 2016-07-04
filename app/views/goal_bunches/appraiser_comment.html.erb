@@ -198,7 +198,8 @@
     <h3 class="box-title">Created Goal Rating</h3>
   </div><!-- /.box-header -->
   <div class="box-body">
-  <%= bootstrap_form_for GoalBunch.new,url:{action:'appraiser_comment_confirm',id: @employee.id} do |f| %>
+  <%= bootstrap_form_for GoalBunch.new,url:{action:'appraiser_comment_confirm',id: @employee.id,goal_bunch_id: @goal_bunch_id.id} do |f| %>
+
     <table class="table table-bordered table-hover table-condensed">
       <thead>
         <tr>
@@ -214,16 +215,17 @@
         </tr>
       </thead>
       <tbody>
+        <% appraiser_goal_sum = 0 %>
         <% @appraiser_goal_ratings.each do |goal_rating| %>
           <tr>
             <td><%= goal_rating.goal_perspective.try(:name) %></td>
-            <td><%= goal_rating.goal_weightage %></td>
+            <td><%= weightage = goal_rating.goal_weightage %></td>
             <td><%= goal_rating.goal_measure %></td>
             <td><%= goal_rating.target %></td>
             <td><%= goal_rating.aligned %></td>
             <td><%= goal_rating.appraisee_comment %></td>
             <td><%= goal_rating.appraiser_comment %></td>
-            <td><%= goal_rating.appraiser_rating_id %></td>
+            <td><%= appraiser_rating = goal_rating.appraiser_rating_id %></td>
             <td>
               <% if @goal_bunch.appraiser_confirm == true %>
               <small class="label label-info">Confirmed</small>
@@ -231,11 +233,14 @@
               <%= link_to '',appraiser_modal_goal_ratings_path(goal_rating),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
               <% end %>
             </td>
+            <% appraiser_output = weightage * appraiser_rating.to_i / 100.to_f %>
+            <% appraiser_goal_sum = appraiser_goal_sum + appraiser_output %>
           </tr>
         <% end %>
       </tbody>
     </table>
-    
+    <h3>Appraiser Rating For Goal= <%= appraiser_goal_sum %></h3>
+
      <table class="table table-bordered table-hover table-condensed">
       <thead>
         <tr>
@@ -251,16 +256,17 @@
         </tr>
       </thead>
       <tbody>
+        <% appraiser_attribute_sum = 0 %>
         <% @appraiser_attribute_ratings.each do |goal_rating| %>
           <tr>
             <td><%= goal_rating.attribute_master.try(:name) %></td>
-            <td><%= goal_rating.goal_weightage %></td>
+            <td><%= weightage = goal_rating.goal_weightage %></td>
             <td><%= goal_rating.goal_measure %></td>
             <td><%= goal_rating.target %></td>
             <td><%= goal_rating.aligned %></td>
             <td><%= goal_rating.appraisee_comment %></td>
             <td><%= goal_rating.appraiser_comment %></td>
-            <td><%= goal_rating.appraiser_rating_id %></td>
+            <td><%= appraiser_rating = goal_rating.appraiser_rating_id %></td>
             <td>
               <% if @goal_bunch.appraiser_confirm == true %>
               <small class="label label-info">Confirmed</small>
@@ -268,10 +274,13 @@
               <%= link_to '',appraiser_modal_goal_ratings_path(goal_rating),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
               <% end %>
             </td>
+            <% appraiser_output = weightage * appraiser_rating.to_i / 100.to_f %>
+            <% appraiser_attribute_sum = appraiser_attribute_sum + appraiser_output %>
           </tr>
         <% end %>
       </tbody>
     </table>
+    <h3>Appraiser Rating For Attribute= <%= appraiser_attribute_sum %></h3>
 
     <div class="row">
       <div class="col-sm-3">
@@ -318,7 +327,7 @@
         <% end %>
       </tbody>
     </table>
-
+    
     <% unless @goal_bunch.nil? %>
       <% if @goal_bunch.appraiser_comment == nil %>
       <% else %>
@@ -339,7 +348,7 @@
 
 <% end %>
 
-<%= link_to 'Back',period_list_appraiser_goal_bunches_path(id: @employee.id),class: 'btn btn-sm btn-default'%>
+<%= link_to 'Back',period_list_appraiser_goal_bunches_path(emp_id: @employee.id),class: 'btn btn-sm btn-default'%>
 </div>
 </div>
 <div id="myModal" class="modal fade"></div>

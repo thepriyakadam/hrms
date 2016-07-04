@@ -286,6 +286,7 @@ end
     post :edit_and_send_next
     get :comment_modal
     post :update_comment
+    post :reject_request
     end
   end 
   resources :travel_requests do

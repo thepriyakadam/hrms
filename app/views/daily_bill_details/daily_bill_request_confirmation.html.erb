@@ -6,6 +6,7 @@
     </div>
 <div class="box-body">
 <%= bootstrap_form_for DailyBillDetail.new,url:{action:'approve_request'} do |f| %>
+<%= bootstrap_form_for DailyBillDetail.new,url:{action:'reject_request'} do |r| %>
 <table id="example" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
@@ -53,9 +54,11 @@
   <div class="col-sm-3">
     <div class="actions">
       <%= f.submit "Approve Request", class: 'btn btn-primary btn-sm' %>
+      <%= r.submit "Reject Request", class: 'btn btn-danger btn-sm' %>
     </div>
   </div>
 </div>
+<% end %>
 <% end %>
   <div class="box-header">
     <h3 class="box-title">Daily Bill Request Details</h3>

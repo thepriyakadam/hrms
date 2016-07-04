@@ -40,8 +40,10 @@
         <td><%= daily_bill_detail.other_expence %></td>
         <td><%= daily_bill_detail.travel_expence_type.try(:name) %></td>
         <td><%= daily_bill_detail.request_status %></td>
-        <td><div id="myModal" class="modal fade"></div>
-        <%= link_to 'Edit and send next', edit_and_send_next_modal_daily_bill_details_path(daily_bill_detail),class: 'btn btn-sm btn-info fa fa-check', remote: true %></td>
+        <td>
+        <%= link_to 'Edit & Send Next', edit_and_send_next_modal_daily_bill_details_path(daily_bill_detail),class: 'btn btn-sm btn-info fa fa-check', remote: true %>
+        <%= link_to 'Comment', comment_modal_daily_bill_details_path(daily_bill_detail),class: 'btn btn-sm btn-info fa fa-check', remote: true %>
+        </td>
       </tr>
       <% end %>
   </tbody>
@@ -89,7 +91,5 @@ $(document).ready(function() {
     });
   });
 </script>
-
-
-
-
+<div id="myModal" class="modal fade"></div>
+ <div id="myModal1" class="modal fade"></div>

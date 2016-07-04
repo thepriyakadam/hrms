@@ -40,7 +40,7 @@ Rails.application.routes.draw do
     collection do 
     get :all_induction_detail_list
     get :confirm
-    post :print_induction_details
+    get :print_induction_details
     get :update_date_modal
     post :update_date
     end

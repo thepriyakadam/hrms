@@ -21,6 +21,7 @@
       <th>Other Expence</th>
       <th>Travel Expence Type ID</th>
       <th>Status</th>
+      <th>Action</th>
     </tr>
   </thead>
 
@@ -39,6 +40,8 @@
         <td><%= daily_bill_detail.other_expence %></td>
         <td><%= daily_bill_detail.travel_expence_type.try(:name) %></td>
         <td><%= daily_bill_detail.request_status %></td>
+        <td><div id="myModal" class="modal fade"></div>
+        <%= link_to 'Edit and send next', edit_and_send_next_modal_daily_bill_details_path(daily_bill_detail),class: 'btn btn-sm btn-info fa fa-check', remote: true %></td>
       </tr>
       <% end %>
   </tbody>

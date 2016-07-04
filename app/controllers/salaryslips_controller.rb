@@ -896,12 +896,10 @@ class SalaryslipsController < ApplicationController
     @year = params[:year]
     date = Date.new(@year.to_i,Workingday.months[@month])
     @salaryslip_ids = params[:salaryslip_ids]
-
-      if @salaryslip_ids.nil?
-        flash[:alert] = "Please Select Employees"
-        redirect_to revert_salary_salaryslips_path
-      else
-
+    if @salaryslip_ids.nil?
+      flash[:alert] = "Please Select Employees"
+      redirect_to revert_salary_salaryslips_path
+    else
       @salaryslip_ids.each do |sid|
         @salaryslip = Salaryslip.find(sid)
         @bonus_employees = BonusEmployee.where("strftime('%m/%Y', bonus_date) = ? and employee_id = ?", date.strftime('%m/%Y'), @salaryslip.employee_id)
@@ -915,8 +913,7 @@ class SalaryslipsController < ApplicationController
         SalaryslipComponent.where(salaryslip_id: @salaryslip.id).destroy_all
         flash[:notice] = "Revert successfully"
       end
-    redirect_to revert_salary_salaryslips_path
+      redirect_to revert_salary_salaryslips_path
+    end
   end
 end
-end
-

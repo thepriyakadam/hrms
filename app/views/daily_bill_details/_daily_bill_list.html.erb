@@ -7,6 +7,9 @@
       <th>E Place</th>
       <th>Travel Expence Type</th>
       <th>Travel Expence</th>
+      <th>Currency</th>
+      <th>Download Doc</th>
+      <th>Download Image</th>
       <th>Action</th>
     </tr>
   </thead>
@@ -23,7 +26,22 @@
         <td><%= daily_bill_detail.expence_date %></td>
         <td><%= daily_bill_detail.e_place %></td>
         <td><%= daily_bill_detail.travel_expence_type.try(:name) %></td>
-        <td><%= daily_bill_detail.travel_expence %></td>       
+        <td><%= daily_bill_detail.travel_expence %></td>
+        <td><%= daily_bill_detail.currency_master.try(:code) %> <%= daily_bill_detail.currency_master.try(:description) %></td>
+        <td>
+           <% if daily_bill_detail.avatar_file_file_name == nil %>
+           <small class="label label-default">Document Not Available</small>
+             <% else %>
+             <%= link_to '',download_doc_path(id: daily_bill_detail.id),class: 'btn btn-xs fa fa-download' %>
+             <% end %>
+        </td>
+        <td>
+           <% if daily_bill_detail.passport_photo_file_name == nil %>
+           <small class="label label-default">Image Not Available</small>
+             <% else %>
+             <%= link_to '',download_pics_path(id: daily_bill_detail.id),class: 'btn btn-xs fa fa-picture-o' %>
+             <% end %>
+        </td>            
         <td>
           <% if daily_bill_detail.is_confirm == true %>
             <small class="label label-info">Confirmed</small>

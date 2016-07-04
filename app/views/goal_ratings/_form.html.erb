@@ -51,9 +51,9 @@
 <script type="text/javascript">
   $("#goal_rating").validate({
     rules: {
-      // "goal_rating[goal_perspective_id]":{
-      //   required: true
-      // },
+      "goal_rating[goal_type]":{
+        required: true
+      },
       // "goal_rating[attribute_master_id]":{
       //   required: true
       // },
@@ -67,9 +67,9 @@
       }
     },
     messages: {
-      // "goal_rating[goal_perspective_id]":{
-      //   required: "Please specify Goal Perspective"
-      // },
+      "goal_rating[goal_type]":{
+        required: "Please specify Goal Type"
+      },
       // "goal_rating[attribute_master_id]":{
       //   required: "Please specify Attribute"
       // },

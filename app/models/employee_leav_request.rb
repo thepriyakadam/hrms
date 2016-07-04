@@ -104,6 +104,8 @@ class EmployeeLeavRequest < ActiveRecord::Base
   end
 
   def permit
+    puts "************************************************************"
     puts self.start_date
+    puts "************************************************************"
   end
 end

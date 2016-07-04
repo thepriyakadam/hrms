@@ -95,8 +95,12 @@ class EmployeesController < ApplicationController
     @employee = Employee.new(employee_params)
     authorize! :create, @employee
       if @employee.save
+
         redirect_to @employee    
       else
+        byebug
+        puts @employee.
+        p "------------------------------------"
         render :new
       end
   end

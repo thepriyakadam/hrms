@@ -4,20 +4,14 @@ class EmployeeLeavRequestsController < ApplicationController
   load_and_authorize_resource
   include QueryReport::Helper  # need to include it
 
-  # GET /employee_leav_requests
-  # GET /employee_leav_requests.json
   def index
     @employee_leav_requests = EmployeeLeavRequest.where('employee_id = ?', current_user.try(:employee_id))
     @employee_leav_balances = EmployeeLeavBalance.where(employee_id: current_user.employee_id)
-    # @employee_leav_requests = EmployeeLeavRequest.all
   end
 
-  # GET /employee_leav_requests/1
-  # GET /employee_leav_requests/1.json
   def show
   end
 
-  # GET /employee_leav_requests/new
   def new
     @employee_leav_request = EmployeeLeavRequest.new
     @employee = Employee.find(current_user.employee_id)
@@ -26,12 +20,9 @@ class EmployeeLeavRequestsController < ApplicationController
     @leave_c_offs = LeaveCOff.where(employee_id: @employee.id)
   end
 
-  # GET /employee_leav_requests/1/edit
   def edit
   end
 
-  # POST /employee_leav_requests
-  # POST /employee_leav_requests.json
   def create
     @employee_leav_request = EmployeeLeavRequest.new(employee_leav_request_params)
     @employee = Employee.find(@employee_leav_request.employee_id)
@@ -79,6 +70,7 @@ class EmployeeLeavRequestsController < ApplicationController
           flash.now[:alert] = 'Leave Time Expired.'
           render :new
         elsif type == 'C.Off'
+          permit = @employee_leav_request.permit
           @employee_leav_request.leave_status_records.build(change_status_employee_id: current_user.employee_id, status: 'Pending', change_date: Date.today)
           if @employee_leav_request.save
             #@employee_leav_request.manage_coff(@employee_leav_request)
@@ -112,8 +104,6 @@ class EmployeeLeavRequestsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /employee_leav_requests/1
-  # PATCH/PUT /employee_leav_requests/1.json
   def update
     respond_to do |format|
       if @employee_leav_request.update(employee_leav_request_params)
@@ -126,8 +116,6 @@ class EmployeeLeavRequestsController < ApplicationController
     end
   end
 
-  # DELETE /employee_leav_requests/1
-  # DELETE /employee_leav_requests/1.json
   def destroy
     @employee_leav_request.destroy
     respond_to do |format|
@@ -201,8 +189,8 @@ class EmployeeLeavRequestsController < ApplicationController
       column(:No_OF_Day, sortable: true, &:leave_count)
       column(:Reason, sortable: true, &:reason)
     end
-    session[:active_tab] ="leavemanagement"
-    session[:active_tab1] ="leavereport"
+    session[:active_tab] = "leavemanagement"
+    session[:active_tab1] = "leavereport"
   end
 
   def search_by_is_pending_date

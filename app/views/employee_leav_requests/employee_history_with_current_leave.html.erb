@@ -15,13 +15,18 @@
               <th>Start Date</th>
               <th>End Date</th>
               <th>Status</th>
+            <!--   <th>Action</th> -->
             </tr>
           </thead>
 
           <tbody>
             <% @employee_leav_requests.each do |employee_leav_request| %>
               <tr>
+                <% if @current_request.id == employee_leav_request.id %>
+                <td><font color='red'>*</font><%= employee_leav_request.employee.try(:manual_employee_code) %></td>
+                <%else%>
                 <td><%= employee_leav_request.employee.try(:manual_employee_code) %></td>
+                <%end%>
                 <td><%= employee_leav_request.leav_category.try(:name) %></td>
                 <td><%= employee_leav_request.leave_type %></td>
                 <td><%= employee_leav_request.leave_count %></td>
@@ -44,15 +49,17 @@
                         <small class="label label-info">Else</small>
                     <%end%>
                   <%end%>
-                </td>  
+                </td> 
               </tr>
             <% end %>
           </tbody>
         </table>
       </div>
     </div>
-    
-    <div class="row">
+   <div class="row">
+    <div class="col-sm-12"><strong> <font color='red'>Note - * Row is the latest row to approve/reject </font></strong></div>
+    </div><br>
+      <div class="row">
       <div class="col-sm-2">Name</div>
       <div class="col-sm-6"><%= full_name(@employee) %></div>
     </div>
@@ -78,7 +85,7 @@
     <div class="row">
       <div class="col-sm-2">Reason</div>
       <div class="col-sm-6"><%= @current_request.try(:reason) %></div>
-    </div>
+    </div> 
     <% if @current_request.current_status == "Pending" %>
       <%= link_to 'Approve', first_approve_leave_status_record_path(@current_request.id), data: { confirm: 'Are you sure?' },class: 'btn btn-sm btn-info fa fa-check' %>
       <%= link_to 'Reject', first_reject_leave_status_record_path(@current_request.id), data: { confirm: 'Are you sure?' },class: 'btn btn-sm btn-danger fa fa-trash' %>
@@ -90,6 +97,3 @@
     <% end %>
   </div>
 </div>
-
-
-      

@@ -83,7 +83,7 @@ class GoalBunchesController < ApplicationController
 
   def appraiser_confirm
     @goal_bunch_id = GoalBunch.find(params[:goal_bunch_id])
-    @employee = Employee.find(params[:id])
+    @employee = Employee.find(params[:emp_id])
 
     @employees = Employee.where(id: @employee.id)
     @qualifications = Qualification.where(employee_id: @employee.id)
@@ -204,7 +204,6 @@ class GoalBunchesController < ApplicationController
     @goal_bunch_id = GoalBunch.find(params[:id]) 
     @goal_bunches = GoalBunch.where(employee_id: @employee.id, id: @goal_bunch_id.id)
 
-
     @employee_promotions = EmployeePromotion.where(employee_id: current_user.employee_id)
     @employees = Employee.where(id: @employee.id)
     @qualifications = Qualification.where(employee_id: @employee.id)
@@ -234,6 +233,8 @@ class GoalBunchesController < ApplicationController
     goal_rating_ids = params[:goal_rating_ids]
     comments = params[:appraiser_comments]
     ratings = params[:appraiser_ratings]
+
+    @goal_bunch_id = GoalBunch.find(params[:goal_bunch_id])
     final = goal_rating_ids.zip(comments, ratings)
     final.each do |e, c, r|
       goal_rating = GoalRating.find(e)
@@ -245,21 +246,22 @@ class GoalBunchesController < ApplicationController
         goal_rating.update(appraiser_comment: c, appraiser_rating_id: r)
          flash[:notice] = 'Comment & Rating Created Successfully'
       end
+      #GoalBunch.where(id: @goal_bunch_id.id).update_all(appraiser_rating: appraiser_rating)
     end
-    @goal_bunch_id = GoalBunch.find(params[:goal_bunch_id])
     redirect_to appraiser_comment_goal_bunches_path(emp_id: @employee.id,id: @goal_bunch_id.id)
   end
 
   def appraiser_comment_confirm
     @employee = Employee.find(params[:id])
     @goal_rating_ids = params[:goal_rating_ids]
+
       if @goal_rating_ids.nil?
         flash[:alert] = "Please Select the Checkbox"
       else
         @goal_rating_ids.each do |eid|
         @goal_bunch = GoalBunch.find(eid)
-
-        @goal_bunch.update(appraiser_confirm: true)      
+ 
+        @goal_bunch.update(appraiser_confirm: true)    
         flash[:notice] = "Confirmed Successfully"
         end
       end
@@ -717,7 +719,7 @@ class GoalBunchesController < ApplicationController
   end
 
   def goal_period_list
-    @employee = Employee.find(params[:id])
+    @employee = Employee.find(params[:format])
     @goal_bunches = GoalBunch.where(employee_id: @employee.id)
   end
   
@@ -727,17 +729,17 @@ class GoalBunchesController < ApplicationController
   end
 
   def period_list_appraiser
-    @employee = Employee.find(params[:id])
+    @employee = Employee.find(params[:emp_id])
     @goal_bunches = GoalBunch.where(employee_id: @employee.id)
   end
 
   def period_list_reviewer
-    @employee = Employee.find(params[:id])
+    @employee = Employee.find(params[:emp_id])
     @goal_bunches = GoalBunch.where(employee_id: @employee.id)
   end
 
   def period_list_final
-    @employee = Employee.find(params[:id])
+    @employee = Employee.find(params[:emp_id])
     @goal_bunches = GoalBunch.where(employee_id: @employee.id)
   end
 
@@ -752,7 +754,7 @@ class GoalBunchesController < ApplicationController
   end
 
   def period_appraisee
-    @employee = Employee.find(params[:id])
+    @employee = Employee.find(params[:emp_id])
     @goal_bunches = GoalBunch.where(employee_id: @employee.id)
   end
 
@@ -762,7 +764,7 @@ class GoalBunchesController < ApplicationController
   end
 
   def period_reviewer
-    @employee = Employee.find(params[:id])
+    @employee = Employee.find(params[:emp_id])
     @goal_bunches = GoalBunch.where(employee_id: @employee.id)
   end
   
@@ -798,8 +800,6 @@ class GoalBunchesController < ApplicationController
     @employee = Employee.find(params[:id])
     @goal_bunches = GoalBunch.where(employee_id: @employee.id)
   end
-
-  
 
   def set_goal_list
     reporter(@goal_bunches, template_class: PdfReportTemplate) do

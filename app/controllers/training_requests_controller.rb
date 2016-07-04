@@ -15,6 +15,8 @@ class TrainingRequestsController < ApplicationController
   # GET /training_requests/new
   def new
     @training_request = TrainingRequest.new
+    #@training_requests = TrainingRequest.all
+    @employees = Employee.where(department_id: current_user.department_id)
     session[:active_tab] ="trainingmgmt"
   end
 
@@ -29,6 +31,10 @@ class TrainingRequestsController < ApplicationController
     @training_request.status = "Pending"
     respond_to do |format|
       if @training_request.save
+        @employee_ids = params[:employee_ids]
+        @employee_ids.each do |eid|
+        TraineeRequest.create(employee_id: eid,training_request_id: @training_request.id)
+      end
         format.html { redirect_to @training_request, notice: 'Training request was successfully created.' }
         format.json { render :show, status: :created, location: @training_request }
       else

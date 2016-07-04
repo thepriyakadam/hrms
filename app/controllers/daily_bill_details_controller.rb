@@ -130,7 +130,9 @@ end
   end 
 
   def daily_bill_request_confirmation
-    @daily_bill_details = DailyBillDetail.where(reporting_master_id: current_user.employee_id)
+    @travel_request = TravelRequest.find(params[:format])
+    # @travel_request = TravelRequest.find(@daily_bill_detail.travel_request_id)
+    @daily_bill_details = DailyBillDetail.where(reporting_master_id: current_user.employee_id,travel_request_id: @travel_request.id)
     session[:active_tab] ="travelmgmt"
   end
 
@@ -145,7 +147,7 @@ end
       @daily_bill_detail.update(request_status: "Approved") 
       flash[:notice] = "Approved Successfully"
     end 
-     redirect_to daily_bill_history_daily_bill_details_path
+     redirect_to travel_request_list_daily_bill_details_path
   end
   session[:active_tab] ="travelmgmt"
   end
@@ -153,6 +155,26 @@ end
   def approved_daily_bill_details
     @daily_bill_details = DailyBillDetail.where(request_status: "Approved")
     session[:active_tab] ="travelmgmt"
+  end
+
+  def download_doc
+    @daily_bill_detail = DailyBillDetail.find(params[:id])
+    send_file @daily_bill_detail.avatar_file.path,
+              filename: @daily_bill_detail.avatar_file_file_name,
+              type: @daily_bill_detail.avatar_file_content_type,
+              disposition: 'attachment'
+  end
+
+  def download_pics
+    @daily_bill_detail = DailyBillDetail.find(params[:id])
+    send_file @daily_bill_detail.passport_photo.path,
+              filename: @daily_bill_detail.passport_photo_file_name,
+              type: @daily_bill_detail.passport_photo_content_type,
+              disposition: 'attachment'
+  end
+
+   def travel_request_list
+     @travel_requests = TravelRequest.where(reporting_master_id: current_user.employee_id)
   end
 
   private
@@ -163,6 +185,6 @@ end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def daily_bill_detail_params
-      params.require(:daily_bill_detail).permit(:is_confirm, :request_status,:travel_expence_type_id, :travel_request_id, :expence_date, :e_place, :travel_expence )
+      params.require(:daily_bill_detail).permit(:is_confirm, :avatar_file,:passport_photo,:currency_master_id,:request_status,:travel_expence_type_id, :travel_request_id, :expence_date, :e_place, :travel_expence )
     end
 end

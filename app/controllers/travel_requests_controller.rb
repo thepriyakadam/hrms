@@ -189,6 +189,10 @@ class TravelRequestsController < ApplicationController
     redirect_to daily_bill_travel_requests_path
   end
 
+  def travel_request_list
+     @travel_requests = TravelRequest.where(reporting_master_id: current_user.employee_id)
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_travel_request

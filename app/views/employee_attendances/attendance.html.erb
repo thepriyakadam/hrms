@@ -7,20 +7,18 @@
   </div><!-- /.box-header -->
   <div class="box-body">
     <div id="comments">
-
       <table id="example3" class="table table-bordered table-hover table-condensed">
         <thead>
           <tr>
             <th>Employee Name</th>
-         
-            
+            <th><%= @employee_attendances.first.day %>
           </tr>
         </thead>
 
         <tbody>
-        <tr><th><%= @employee_attendances.first.employee.try(:manual_employee_code) %></th>
+        <tr>
           <% @employee_attendances.each do |employee_attendance| %>
-             <th>Day</th>
+            <th><%= employee_attendance.employee.try(:manual_employee_code) %></th>
              <td><%= employee_attendance.present %></td>
             </tr>
           <% end %>

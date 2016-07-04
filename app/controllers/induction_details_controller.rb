@@ -79,10 +79,8 @@ class InductionDetailsController < ApplicationController
   end
 
   def print_induction_details
-    
     @induction_detail = InductionDetail.find(params[:id])
     @induction_details = InductionDetail.all
-    # @induction_details = InductionDetail.where(id: @induction_detail.id)
     @induction_activities = InductionActivity.where(induction_master_id: @induction_detail.induction_master_id)
      respond_to do |format|
         format.html
@@ -121,7 +119,6 @@ class InductionDetailsController < ApplicationController
      flash[:notice] = 'Feedback Updated Successfully'
      redirect_to trainee_list_training_plans_path
   end
-
 
   private
     # Use callbacks to share common setup or constraints between actions.

@@ -12,46 +12,15 @@
         <thead>
           <tr>
             <th>Employee Name</th>
-          </tr>
-          <tr>
-            <th>Day</th>
+         
+            
           </tr>
         </thead>
 
         <tbody>
+        <tr><th><%= @employee_attendances.first.employee.try(:manual_employee_code) %></th>
           <% @employee_attendances.each do |employee_attendance| %>
-            <tr>
-             <td><%= full_name(employee_attendance.employee) %></td>
-             <td><%= employee_attendance.present %></td>
-             <td><%= employee_attendance.present %></td>
-             <td><%= employee_attendance.present %></td>
-             <td><%= employee_attendance.present %></td>
-             <td><%= employee_attendance.present %></td>
-             <td><%= employee_attendance.present %></td>
-             <td><%= employee_attendance.present %></td>
-             <td><%= employee_attendance.present %></td>
-             <td><%= employee_attendance.present %></td>
-             <td><%= employee_attendance.present %></td>
-             <td><%= employee_attendance.present %></td>
-             <td><%= employee_attendance.present %></td>
-             <td><%= employee_attendance.present %></td>
-             <td><%= employee_attendance.present %></td>
-             <td><%= employee_attendance.present %></td>
-             <td><%= employee_attendance.present %></td>
-             <td><%= employee_attendance.present %></td>
-             <td><%= employee_attendance.present %></td>
-             <td><%= employee_attendance.present %></td>
-             <td><%= employee_attendance.present %></td>
-             <td><%= employee_attendance.present %></td>
-             <td><%= employee_attendance.present %></td>
-             <td><%= employee_attendance.present %></td>
-             <td><%= employee_attendance.present %></td>
-             <td><%= employee_attendance.present %></td>
-             <td><%= employee_attendance.present %></td>
-             <td><%= employee_attendance.present %></td>
-             <td><%= employee_attendance.present %></td>
-             <td><%= employee_attendance.present %></td>
-             <td><%= employee_attendance.present %></td>
+             <th>Day</th>
              <td><%= employee_attendance.present %></td>
             </tr>
           <% end %>

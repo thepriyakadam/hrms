@@ -26,6 +26,7 @@ Rails.application.routes.draw do
       post :department_wise_employee_list
       post :all_emp_list
       post :create_employee_attendance
+      get :attendance
     end
   end
   resources :salary_comp_mappings

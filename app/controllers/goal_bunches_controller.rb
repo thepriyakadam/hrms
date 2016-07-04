@@ -744,7 +744,7 @@ class GoalBunchesController < ApplicationController
   end
 
   def period_list_print
-    @employee = Employee.find(params[:id])
+    @employee = Employee.find(params[:emp_id])
     @goal_bunches = GoalBunch.where(employee_id: @employee.id)
   end
 

@@ -70,7 +70,7 @@ class EmployeeLeavRequestsController < ApplicationController
           flash.now[:alert] = 'Leave Time Expired.'
           render :new
         elsif type == 'C.Off'
-          permit = @employee_leav_request.permit
+          @employee_leav_request.permit
           @employee_leav_request.leave_status_records.build(change_status_employee_id: current_user.employee_id, status: 'Pending', change_date: Date.today)
           if @employee_leav_request.save
             #@employee_leav_request.manage_coff(@employee_leav_request)

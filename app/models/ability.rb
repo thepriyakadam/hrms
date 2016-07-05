@@ -42,6 +42,7 @@ class Ability
         can :read, Employee
         can :manage, EmployeeLeavRequest
         can :manage, AdvanceSalary
+        can :manage, [GoalBunch, GoalRating]
       elsif user.role.name == 'Account'
         can :read, Employee
         can :manage, EmployeeLeavRequest

@@ -21,12 +21,10 @@ class GoalRating < ActiveRecord::Base
     previous_weightage + goal_rating.goal_weightage
   end
 
-  def goal_weightage_sumdate(goal_bunch, goal_weightage)
+  def goal_weightage_sumdate(goal_bunch, goal_weightage, params)
     previous_goals = GoalRating.where(goal_bunch: goal_bunch.id)
-    puts "-------------------------------------------------------------"
-    puts previous_goals.sum(:goal_weightage)
-    puts goal_weightage.to_i
-    puts "-------------------------------------------------------------"
-    previous_goals.sum(:goal_weightage) + goal_weightage.to_i
+    prev_total = previous_goals.sum(:goal_weightage) - goal_weightage.to_i
+    prev_total + params[:goal_rating][:goal_weightage]
+    byebug
   end
 end

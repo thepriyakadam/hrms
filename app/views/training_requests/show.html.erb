@@ -52,6 +52,12 @@
       </tr>
 
     </table>
+  <div class="box-header with-border">
+    <h3 class="box-title">Employee's Who are Going To Attend Training</h3>
+  </div>
+    <div>
+       <%= render 'trainee_request' %>
+    </div>
       <%= link_to 'Edit', edit_training_request_path(@training_request),class: 'btn btn-success btn-sm fa fa-edit' %> |
       <%= link_to 'Back', training_requests_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
   </div>

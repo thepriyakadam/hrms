@@ -2,7 +2,7 @@
   <div class="modal-content">
     <div class="modal-body">
 
-      <%= bootstrap_form_for(:goal_bunch,url:{action:'self_overall_comment_create',employee_id: current_user.employee_id,goal_bunch_id: @goal_bunch.id}) do |f| %>
+      <%= bootstrap_form_for(:goal_bunch,url:{action:'self_overall_comment_create',employee_id: current_user.employee_id,goal_bunch_id: @goal_bunch.id},html: {id: 'goal_bunch'}) do |f| %>
         <div class="row">
           <div class="col-sm-9">
           <label>Overall Comment</label>
@@ -21,3 +21,22 @@
     </div>
   </div>
 </div>
+
+<script type="text/javascript">
+  $("#goal_bunch").validate({
+    rules: {
+      "goal_bunch[appraisee_comment]":{
+        required: true
+      }
+    },
+    messages: {
+      "goal_bunch[appraisee_comment]":{
+        required: "Please specify Appraisee Comment"
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

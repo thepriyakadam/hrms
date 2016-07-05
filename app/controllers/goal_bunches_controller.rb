@@ -136,7 +136,7 @@ class GoalBunchesController < ApplicationController
         flash[:alert] = 'Fill comments'
       else
         goal_rating.update(appraisee_comment: c)
-        flash[:notice] = 'Employee Goal Created Successfully'
+        flash[:notice] = 'Self Comments Created Successfully'
       end
     end
     @goal_bunch_id = GoalBunch.find(params[:goal_bunch_id])

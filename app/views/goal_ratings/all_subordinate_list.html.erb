@@ -1,7 +1,8 @@
 <div class="box box-default">
   <div class="box-body">
 
-    <%= link_to " Print excel ",all_subordinate_list_goal_ratings_path(format: "xls",employee_ids: @employees,goal_bunch_id: @goal_bunch_id.id),method: :post, class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+    <%= link_to " Print excel ",all_subordinate_list_goal_ratings_path(format: "xls",employee_ids: @employees,goal_bunch_id: @goal_bunch_id.id),method: :post, class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %> |
+    <%= link_to 'Back',subordinate_list_goal_wise_goal_ratings_path,class: 'btn btn-sm btn-default'%>
 
     <% @employees.each do |e|  %>
       <center><h3>Employee Performance Detail</h3></center>

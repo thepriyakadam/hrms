@@ -57,7 +57,7 @@ class GoalRatingsController < ApplicationController
   # PATCH/PUT /goal_ratings/1.json
   def update
     @goal_bunch = GoalBunch.find(params[:goal_rating][:goal_bunch_id])
-    goal_weightage_sum = @goal_rating.goal_weightage_sumdate(@goal_bunch, @goal_rating.goal_weightage)
+    goal_weightage_sum = @goal_rating.goal_weightage_sumdate(@goal_bunch, @goal_rating.goal_weightage, params)
       if goal_weightage_sum <= 100
       @goal_rating.update(goal_rating_params)
       @flag = true
@@ -150,17 +150,16 @@ class GoalRatingsController < ApplicationController
     @employee = Employee.find(current_user.employee_id)
     @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
     sum = @goal_bunch.goal_ratings.sum(:goal_weightage)
-
-    
     if sum == 100
       @emp = Employee.find(current_user.employee_id)
       GoalRatingMailer.send_email_to_appraiser(@emp).deliver_now
       @gol_bunch = GoalBunch.find_by(id: @goal_bunch.id).update(goal_confirm: false)
       flash[:notice] = "Mail Sent Successfully"
+      redirect_to new_goal_bunch_path
     else
       flash[:alert] = "Goal weightage sum should be 100"
-    end
-    redirect_to new_goal_rating_path(id: @goal_bunch.id, emp_id: @employee.id)
+      redirect_to new_goal_rating_path(id: @goal_bunch.id, emp_id: @employee.id)
+    end 
   end
 
   def subordinate_list_goal_wise
@@ -269,7 +268,17 @@ class GoalRatingsController < ApplicationController
     @goal_rating = GoalRating.find(params[:format])
     @employee = Employee.find(@goal_rating.appraisee_id)
     @goal_bunch = GoalBunch.find(@goal_rating.goal_bunch_id)
-    @goal_rating.update(goal_rating_params)
+    #@goal_rating.update(goal_rating_params)
+
+    @goal_bunch = GoalBunch.find(params[:goal_rating][:goal_bunch_id])
+    goal_weightage_sum = @goal_rating.goal_weightage_sumdate(@goal_bunch, @goal_rating.goal_weightage, params)
+      if goal_weightage_sum <= 100
+      @goal_rating.update(goal_rating_params)
+      flash[:notice] = "update sucuss"
+    else
+      flash[:alert] = "update failed"
+    end
+
     redirect_to new_goal_rating_path(id: @goal_bunch.id, emp_id:@employee.id)
   end
 
@@ -290,14 +299,14 @@ class GoalRatingsController < ApplicationController
   end
 
   def print_employee_detail
-    trainee_ids = params[:trainee_ids]
-      if trainee_ids.nil?
+    @trainee_ids = params[:trainee_ids]
+      if @trainee_ids.nil?
         flash[:alert] = "Please Select the Checkbox"
         @trainees = []
         redirect_to trainee_list_goal_ratings_path
       else
       @trainees = []
-      trainee_ids.each do |t|
+      @trainee_ids.each do |t|
         emp = Trainee.find(t)
         @trainees << emp
         #@goal_bunch = Employee.find(e)
@@ -305,7 +314,24 @@ class GoalRatingsController < ApplicationController
       end
   end
 
-  private
+  def all_emp_list
+    @trainees = Trainee.find(params[:trainee_ids])
+     respond_to do |format|
+      # format.js
+      # format.html
+      # format.xls {render template: 'salary_slip_ledgers/show_employee.xls.erb'}
+      format.pdf do
+        render pdf: 'all_emp_list',
+              layout: 'pdf.html',
+              orientation: 'Landscape',
+              template: 'goal_ratings/all_emp_list.pdf.erb',
+              show_as_html: params[:debug].present?,
+              margin:  { top:1,bottom:1,left:1,right:1 }
+      end
+    end
+  end
+
+    private
     # Use callbacks to share common setup or constraints between actions.
     def set_goal_rating
       @goal_rating = GoalRating.find(params[:id])

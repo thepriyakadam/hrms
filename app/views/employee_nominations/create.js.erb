@@ -1,5 +1,2 @@
-<% if @flag == true %>
-	$("#info").html("<%= j render 'show_detail' %>");      
-<% else %>
-	$("#info").html("<%= j render 'employee_nomination/form' %>");      
-<% end %>
+$("#form").html("<%= j render 'form' %>");
+$("#employee_nomination_list").html("<%= j render 'employee_nomination_list' %>");

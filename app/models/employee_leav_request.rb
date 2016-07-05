@@ -60,7 +60,7 @@ class EmployeeLeavRequest < ActiveRecord::Base
             if c.leave_count == 0.5
               request.leave_count = request.leave_count - 0.5
               c.leave_count = c.leave_count - 0.5
-              c.is_taken = true  
+              c.is_taken = true
               c.save
             else
               request.leave_count = request.leave_count - 1
@@ -101,11 +101,5 @@ class EmployeeLeavRequest < ActiveRecord::Base
                                     EmployeeLeavRequest.where(employee_id: current_user.employee_id)
                                   end
                                 end
-  end
-
-  def permit
-    puts "************************************************************"
-    puts self.start_date
-    puts "************************************************************"
   end
 end

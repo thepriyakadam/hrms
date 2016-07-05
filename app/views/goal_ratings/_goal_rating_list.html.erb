@@ -74,15 +74,16 @@
   </div>
 </div>
 
-    <% if @goal_bunch.goal_confirm == true %>
-    <% else %>
-      <div class="row">
-        <div class="col-sm-3">
-          <div class="actions">
-           <%= f.submit "Send For Confirmation", class: 'btn btn-primary btn-sm' %>
-          </div>
+  <% if @goal_bunch.goal_confirm == false %>
+  <small class="label label-info">Request has been send for Confirmation</small>
+  <% else %>
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="actions">
+         <%= f.submit "Send For Confirmation", class: 'btn btn-primary btn-sm' %> |
+          <%= link_to 'Back',new_goal_bunch_path,class: 'btn btn-sm btn-default'%>
         </div>
       </div>
-    <% end %>
+    </div>
+  <% end %>
 <% end %>
-<div id="myModal" class="modal fade"></div>

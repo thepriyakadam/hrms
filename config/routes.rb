@@ -96,6 +96,7 @@ Rails.application.routes.draw do
       patch :update_attribute_set_modal
       get :trainee_list
       post :print_employee_detail
+      get :all_emp_list
     end
   end
   #post 'goal_ratings/update_goal_set_modal'
@@ -284,6 +285,9 @@ end
     get :travel_request_list
     get :edit_and_send_next_modal
     post :edit_and_send_next
+    get :comment_modal
+    post :update_comment
+    post :reject_request
     end
   end 
   resources :travel_requests do

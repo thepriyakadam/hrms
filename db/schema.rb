@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160702120512) do
+ActiveRecord::Schema.define(version: 20160705071615) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -478,6 +478,7 @@ ActiveRecord::Schema.define(version: 20160702120512) do
     t.text     "remarks"
     t.integer  "currency_master_id"
     t.boolean  "is_sent"
+    t.text     "comment"
   end
 
   add_index "daily_bill_details", ["currency_master_id"], name: "index_daily_bill_details_on_currency_master_id"
@@ -2159,16 +2160,8 @@ ActiveRecord::Schema.define(version: 20160702120512) do
     t.string   "esic_no"
     t.string   "pf_no"
     t.string   "uan_no"
-    t.decimal  "cl"
-    t.decimal  "el"
-    t.decimal  "c_off"
-    t.decimal  "advance"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
-    t.decimal  "cl_b"
-    t.decimal  "el_b"
-    t.decimal  "c_off_b"
-    t.decimal  "advance_b"
   end
 
   add_index "slip_informations", ["cost_center_id"], name: "index_slip_informations_on_cost_center_id"
@@ -2500,12 +2493,16 @@ ActiveRecord::Schema.define(version: 20160702120512) do
     t.decimal  "payable_day"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
-    t.string   "lwp_leave"
-    t.string   "cl_leave"
-    t.string   "el_leave"
-    t.string   "esic_leave"
-    t.string   "coff_leave"
-    t.integer  "month"
+    t.decimal  "lwp_leave"
+    t.decimal  "cl_leave"
+    t.decimal  "el_leave"
+    t.decimal  "esic_leave"
+    t.decimal  "coff_leave"
+    t.decimal  "advance_leave"
+    t.decimal  "cl_balance"
+    t.decimal  "el_balance"
+    t.decimal  "coff_balance"
+    t.decimal  "advance_balance"
   end
 
   add_index "workingdays", ["employee_id"], name: "index_workingdays_on_employee_id"

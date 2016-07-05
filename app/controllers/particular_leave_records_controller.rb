@@ -14,10 +14,10 @@ class ParticularLeaveRecordsController < ApplicationController
       column(:Employee_ID, sortable: true) { |particular_leave_record| particular_leave_record.employee.try(:manual_employee_code) }
       column(:Employee_Name, sortable: true) { |particular_leave_record| full_name(particular_leave_record.employee) }
       column :employee_leav_request_id
-      column :leave_date
-      column :is_full
+      column(:leave_date, sortable: true) { |particular_leave_record| particular_leave_record.leave_date.to_date }
+      column :is_full, sortable: true
       column(:Leave_Category, sortable: true) { |particular_leave_record| particular_leave_record.leav_category.try(:name) }
-      column :is_cancel_after_approve
+      column :is_cancel_after_approve, sortable: true
     end
  end
 

@@ -69,6 +69,20 @@ class GoalRatingsController < ApplicationController
     end
   end
 
+  def update_goal_set_modal
+    @goal_rating = GoalRating.find(params[:format])
+    @employee = Employee.find(@goal_rating.appraisee_id)
+    @goal_bunch = GoalBunch.find(@goal_rating.goal_bunch_id)
+    goal_weightage_sum = @goal_rating.goal_weightage_sumdate(@goal_bunch, @goal_rating.goal_weightage, params)
+      if goal_weightage_sum <= 100
+        @goal_rating.update(goal_rating_params)
+        flash[:notice] = "Goal setting updated successfully."
+      else
+        flash[:alert] = "Goal weightage addition should be 100."
+      end
+    redirect_to new_goal_rating_path(id: @goal_bunch.id, emp_id:@employee.id)
+  end
+
   # DELETE /goal_ratings/1
   # DELETE /goal_ratings/1.json
   def destroy
@@ -264,13 +278,7 @@ class GoalRatingsController < ApplicationController
     @goal_rating = GoalRating.find(params[:format])
   end
 
-  def update_goal_set_modal
-    @goal_rating = GoalRating.find(params[:format])
-    @employee = Employee.find(@goal_rating.appraisee_id)
-    @goal_bunch = GoalBunch.find(@goal_rating.goal_bunch_id)
-    @goal_rating.update(goal_rating_params)
-    redirect_to new_goal_rating_path(id: @goal_bunch.id, emp_id:@employee.id)
-  end
+  
 
   def attribute_set_modal
     @goal_rating = GoalRating.find(params[:format])
@@ -280,7 +288,13 @@ class GoalRatingsController < ApplicationController
     @goal_rating = GoalRating.find(params[:format])
     @employee = Employee.find(@goal_rating.appraisee_id)
     @goal_bunch = GoalBunch.find(@goal_rating.goal_bunch_id)
-    @goal_rating.update(goal_rating_params)
+    goal_weightage_sum = @goal_rating.goal_weightage_sumdate(@goal_bunch, @goal_rating.goal_weightage, params)
+      if goal_weightage_sum <= 100
+        @goal_rating.update(goal_rating_params)
+        flash[:notice] = "Goal setting updated successfully."
+      else
+        flash[:alert] = "Goal weightage addition should be 100."
+      end
     redirect_to new_goal_rating_path(id: @goal_bunch.id, emp_id:@employee.id)
   end
 

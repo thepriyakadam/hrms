@@ -20,5 +20,5 @@ class ParticularLeaveRecordsController < ApplicationController
       column :is_cancel_after_approve, sortable: true
     end
  end
-
 end
+

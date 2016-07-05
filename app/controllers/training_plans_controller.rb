@@ -117,12 +117,15 @@ class TrainingPlansController < ApplicationController
 
   def training_plan_create
     @training_plan = TrainingPlan.new(training_plan_params)
+    training_topic_master_id = params[:training_topic_master_id]
     #@attribute_master_id = AttributeMaster.find(params[:attribute_master_id])
     @training_plan.save
       @goal_rating_ids = params[:goal_rating_ids]
       @goal_rating_ids.each do |eid|
       Trainee.create(employee_id: eid,training_plan_id: @training_plan.id)
-      
+
+      GoalRating.where(appraisee_id: eid,training_topic_master_id: training_topic_master_id ).update_all(is_hide: true)
+        
         # @goal_rating = params[:goal_rating]
         # @goal_rating.each do |gid|
         # GoalRating.where(appraisee_id: eid,id: gid).update_all(is_hide: true)

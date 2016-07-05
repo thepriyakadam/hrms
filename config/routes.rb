@@ -1,6 +1,12 @@
 Rails.application.routes.draw do
 
-  resources :setting_masters
+  resources :date_formats do
+    collection do 
+    get :active
+    post :activee
+    end
+  end 
+  resources :email_configs
   resources :weekoff_masters
   resources :currency_masters
   resources :illness_types

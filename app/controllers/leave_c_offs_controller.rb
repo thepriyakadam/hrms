@@ -104,7 +104,7 @@ class LeaveCOffsController < ApplicationController
     @leave_c_offs = LeaveCOff.all
     reporter(@leave_c_offs, template_class: PdfReportTemplate) do
       filter :c_off_date, type: :date
-       column(:Employee_Code, sortable: true) { |leave_c_off| leave_c_off.employee_id }
+      column(:Employee_Code, sortable: true) { |leave_c_off| leave_c_off.employee_id }
       column(:Employee_ID, sortable: true) { |leave_c_off| leave_c_off.employee.try(:manual_employee_code) }
       column(:Employee_Name, sortable: true) { |leave_c_off| full_name(leave_c_off.employee) }
       column(:Date, sortable: true, &:c_off_date)

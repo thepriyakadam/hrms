@@ -60,7 +60,7 @@ class EmployeeLeavRequest < ActiveRecord::Base
             if c.leave_count == 0.5
               request.leave_count = request.leave_count - 0.5
               c.leave_count = c.leave_count - 0.5
-              c.is_taken = true  
+              c.is_taken = true
               c.save
             else
               request.leave_count = request.leave_count - 1
@@ -103,9 +103,26 @@ class EmployeeLeavRequest < ActiveRecord::Base
                                 end
   end
 
-  def permit
-    puts "************************************************************"
-    puts self.start_date
-    puts "************************************************************"
-  end
+  # def permit
+  #   puts "************************************************************"
+  #   puts self.start_date
+  #   puts "************************************************************"
+  #   balance = EmployeeLeavBalance.where(employee_id: self.employee_id, leav_category_id: self.leav_category_id).take
+  #   if balance.no_of_leave <= 0 or self.leave_count > balance.no_of_leave
+  #     flash[:alert] = "You have not coff balance."
+  #   else
+  #     coffs = LeaveCOff.where(employee_id: self.employee_id, is_taken: false).order("expiry_date desc")
+  #     coffs.each do |c|
+  #       if c.expiry_status
+  #         if c.expiry_date >= self.end_date
+
+  #         else
+
+  #         end
+  #       else
+
+  #       end
+  #     end  
+  #   end
+  # end
 end

@@ -38,4 +38,5 @@ ex.default_sheet = ex.sheets[0]
     workingday.el_balance = ex.cell(line,'H').to_f
     workingday.save
   end
+
 end

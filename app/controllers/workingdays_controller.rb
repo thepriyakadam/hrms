@@ -102,6 +102,7 @@ class WorkingdaysController < ApplicationController
       workingday.present_day = Attendance.where(attendance_date: @date.beginning_of_month..@date.end_of_month, employee_id: e.id).count
       workingday.total_leave = ParticularLeaveRecord.where(leave_date: @date.beginning_of_month..@date.end_of_month, employee_id: e.id).count
       workingday.holiday_in_month = Holiday.where(holiday_date: @date.beginning_of_month..@date.end_of_month).count
+      workingday.week_off_day = WeekoffMaster.day(@date)
       workingday.employee_id = e.id
       @workingdays << workingday
     end

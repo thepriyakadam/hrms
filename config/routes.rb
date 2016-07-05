@@ -596,6 +596,7 @@ end
   resources :particular_leave_records do
     collection do
       get :show_leave_record
+      get :search_by_leave_date
     end
   end
   match 'selected_resumes/:id/download_resume/:id' => 'selected_resumes#download_resume', :via => [:get], :as => :download_resume

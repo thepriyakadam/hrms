@@ -177,6 +177,62 @@ end
      @travel_requests = TravelRequest.where(reporting_master_id: current_user.employee_id)
   end
 
+  def edit_and_send_next_modal
+     @daily_bill_detail = DailyBillDetail.find(params[:format])
+  end
+
+  def edit_and_send_next
+     puts "----------------------"
+     @daily_bill_detail = DailyBillDetail.find(params[:id])
+  end
+
+  def edit_and_send_next
+    @daily_bill_detail = DailyBillDetail.find(params[:id])
+    @daily_bill_detail.update(daily_bill_detail_params)
+    flash[:notice] = "Updated successfully"
+    redirect_to travel_request_list_daily_bill_details_path
+  end
+
+  # def edit_and_send_next_modal_submit
+  #   @travel_request = TravelRequest.find(params[:id])
+  #   @travel_request.update(travel_request_params)
+  #   TravelRequestHistory.create(travel_request_id: @travel_request.id,application_date: @travel_request.application_date,traveling_date: @travel_request.traveling_date, tour_purpose: @travel_request.tour_purpose, place: @travel_request.place,total_advance: @travel_request.total_advance,reporting_master_id: @travel_request.reporting_master_id, travel_option_id: @travel_request.travel_option_id)
+  #   ReportingMastersTravelRequest.create(travel_request_id: @travel_request.id, reporting_master_id: @travel_request.reporting_master_id, travel_status: "Edit & Send Next")
+  #   flash[:notice] = "Updated successfully"
+  #   redirect_to travel_history_travel_requests_path
+  # end
+
+  def comment_modal
+     @daily_bill_detail = DailyBillDetail.find(params[:format])
+  end
+
+  def update_comment
+     # byebug
+     @daily_bill_detail = DailyBillDetail.find(params[:id])
+     @comment = params[:daily_bill_detail][:comment]
+     @daily_bill_detail.update(comment: @comment)
+     flash[:notice] = 'Comment Updated Successfully'
+     redirect_to travel_request_list_daily_bill_details_path
+  end
+
+
+  def reject_request
+    byebug
+    @daily_bill_detail_ids = params[:daily_bill_detail_ids]
+    if @daily_bill_detail_ids.nil?
+      flash[:alert] = "Please Select the Checkbox"
+      redirect_to daily_bill_history_daily_bill_details_path
+    else
+      @daily_bill_detail_ids.each do |did|
+      @daily_bill_detail = DailyBillDetail.find(did)
+      @daily_bill_detail.update(request_status: "Rejected") 
+      flash[:alert] = "Rejected Successfully"
+    end 
+     redirect_to travel_request_list_daily_bill_details_path
+  end
+  session[:active_tab] ="travelmgmt"
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_daily_bill_detail
@@ -185,6 +241,6 @@ end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def daily_bill_detail_params
-      params.require(:daily_bill_detail).permit(:is_confirm, :avatar_file,:passport_photo,:currency_master_id,:request_status,:travel_expence_type_id, :travel_request_id, :expence_date, :e_place, :travel_expence )
+      params.require(:daily_bill_detail).permit(:is_confirm, :comment,:avatar_file,:reporting_master_id,:passport_photo,:currency_master_id,:request_status,:travel_expence_type_id, :travel_request_id, :expence_date, :e_place, :travel_expence )
     end
 end

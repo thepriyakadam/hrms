@@ -147,18 +147,19 @@ class GoalRatingsController < ApplicationController
   
   def send_mail_to_appraiser
     # byebug
+    @employee = Employee.find(current_user.employee_id)
     @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
     sum = @goal_bunch.goal_ratings.sum(:goal_weightage)
-
-    @gol_bunch = GoalBunch.find_by(id: @goal_bunch.id).update(goal_confirm: false)
     if sum == 100
       @emp = Employee.find(current_user.employee_id)
       GoalRatingMailer.send_email_to_appraiser(@emp).deliver_now
+      @gol_bunch = GoalBunch.find_by(id: @goal_bunch.id).update(goal_confirm: false)
       flash[:notice] = "Mail Sent Successfully"
+      redirect_to new_goal_bunch_path
     else
       flash[:alert] = "Goal weightage sum should be 100"
-    end
-    redirect_to new_goal_rating_path(id: @goal_bunch.id)
+      redirect_to new_goal_rating_path(id: @goal_bunch.id, emp_id: @employee.id)
+    end 
   end
 
   def subordinate_list_goal_wise
@@ -298,14 +299,14 @@ class GoalRatingsController < ApplicationController
   end
 
   def print_employee_detail
-    trainee_ids = params[:trainee_ids]
-      if trainee_ids.nil?
+    @trainee_ids = params[:trainee_ids]
+      if @trainee_ids.nil?
         flash[:alert] = "Please Select the Checkbox"
         @trainees = []
         redirect_to trainee_list_goal_ratings_path
       else
       @trainees = []
-      trainee_ids.each do |t|
+      @trainee_ids.each do |t|
         emp = Trainee.find(t)
         @trainees << emp
         #@goal_bunch = Employee.find(e)
@@ -313,7 +314,12 @@ class GoalRatingsController < ApplicationController
       end
   end
 
-  private
+  def all_emp_list
+    @trainees = Trainee.find(params[:trainee_ids])
+
+  end
+
+    private
     # Use callbacks to share common setup or constraints between actions.
     def set_goal_rating
       @goal_rating = GoalRating.find(params[:id])

@@ -6,6 +6,7 @@
     </div>
 <div class="box-body">
 <%= bootstrap_form_for DailyBillDetail.new,url:{action:'approve_request'} do |f| %>
+<%= bootstrap_form_for DailyBillDetail.new,url:{action:'reject_request'} do |r| %>
 <table id="example" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
@@ -21,6 +22,7 @@
       <th>Other Expence</th>
       <th>Travel Expence Type ID</th>
       <th>Status</th>
+      <th>Action</th>
     </tr>
   </thead>
 
@@ -39,6 +41,10 @@
         <td><%= daily_bill_detail.other_expence %></td>
         <td><%= daily_bill_detail.travel_expence_type.try(:name) %></td>
         <td><%= daily_bill_detail.request_status %></td>
+        <td>
+        <!--<= link_to 'Edit & Send Next', edit_and_send_next_modal_daily_bill_details_path(daily_bill_detail),class: 'btn btn-sm btn-info fa fa-check', remote: true %>-->
+        <%= link_to 'Comment', comment_modal_daily_bill_details_path(daily_bill_detail),class: 'btn btn-sm btn-info fa fa-check', remote: true %>
+        </td>
       </tr>
       <% end %>
   </tbody>
@@ -48,9 +54,11 @@
   <div class="col-sm-3">
     <div class="actions">
       <%= f.submit "Approve Request", class: 'btn btn-primary btn-sm' %>
+      <%= r.submit "Reject Request", class: 'btn btn-danger btn-sm' %>
     </div>
   </div>
 </div>
+<% end %>
 <% end %>
   <div class="box-header">
     <h3 class="box-title">Daily Bill Request Details</h3>
@@ -86,7 +94,5 @@ $(document).ready(function() {
     });
   });
 </script>
-
-
-
-
+<div id="myModal" class="modal fade"></div>
+ <div id="myModal1" class="modal fade"></div>

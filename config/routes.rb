@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :setting_masters
   resources :weekoff_masters
   resources :currency_masters
   resources :illness_types

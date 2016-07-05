@@ -1,60 +1,8 @@
-<div class="modal-dialog"  style="height:9000px; max-height:900px; width:850px; max-width:850px;">
+<div class="modal-dialog"  style="height:500px; max-height:100px; width:350px; max-width:350px;">
   <div class="modal-content">
     <div class="modal-body">
     <%= bootstrap_form_for :assigned_asset,url:{action:"update_asset",id: @assigned_asset.id},remote:true do |f| %>
-       <div class="row">
-    <div class="col-sm-3">
-      <div class="field">
-        <%= f.select :asset_type_id,all_asset_type,{include_blank: " Assest Type"} %>
-      </div>
-    </div>
-    <div class="col-sm-3">
-      <div class="field">
-        <%= f.text_field :assets_detail,placeholder:"Assest Detail" %>
-      </div>
-    </div>
-    <div class="col-sm-3">
-      <div class="field">
-        <%= f.text_field :assets_id,placeholder:"Assest Id" %>
-      </div>
-    </div>
-
-    <div class="col-sm-3">
-      <div class="field">
-        <%= f.text_field :assets_value,placeholder:"Assest Value" %>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    
-    <div class="col-sm-3">
-      <div class="field">
-        <%= f.text_field :assest_status,placeholder:"Assest Status" %>
-      </div>
-    </div>
-
-    <div class="col-sm-3">
-      <label>Issue Date: </label>
-      <div class="field">
-        <div class="input-group">
-          <div class="input-group-addon">
-            <i class="fa fa-calendar"></i>
-          </div>
-          <%= f.date_field :issue_date, hide_label: true%>
-        </div>
-      </div>
-    </div>
-    <div class="col-sm-3">
-      <label>Valid Till: </label>
-      <div class="field">
-        <div class="input-group">
-          <div class="input-group-addon">
-            <i class="fa fa-calendar"></i>
-          </div>
-          <%= f.date_field :valid_till, hide_label: true%>
-        </div>
-      </div>
-    </div>
+       <div class="row"> 
      <div class="col-sm-3">
     <label>Returned On: </label>
     <div class="field">
@@ -66,19 +14,15 @@
       </div>
     </div>
   </div>
-  </div>
-
-<div class="row">
-    <div class="col-sm-6">
-      <div class="field">
-        <%= f.text_field :remarks,placeholder:"Remarks" %>
-      </div>
-    </div>
-  </div>
+  </div><br><br>
   <div class="row">
     <div class="col-sm-3">
       <div class="actions">
+<<<<<<< HEAD
+        <%= f.submit "Create", class: "btn btn-primary btn-sm" %>
+=======
         <%= f.submit "Update", class: "btn btn-primary btn-sm" %>
+>>>>>>> 0196fbb40bdc0fb2dc90ec0856ee97183c70b11d
       </div>
     </div>
   </div>
@@ -89,18 +33,6 @@
 
   <script type="text/javascript">
   $(function(){
-    $('.issue_date').datepicker({
-    changeYear:true,
-    changeMonth: true,
-    yearRange: '-2:+25',
-    dateFormat: 'dd-mm-yy' });
-
-    $('.valid_till_date').datepicker({
-    changeYear:true,
-    changeMonth: true,
-    yearRange: '-2:+25',
-    dateFormat: 'dd-mm-yy' });
-
     $('.returned_on_date').datepicker({
     changeYear:true,
     changeMonth: true,

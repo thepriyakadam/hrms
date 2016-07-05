@@ -7,7 +7,7 @@
     <div class="row">
       <div class="col-sm-3">
         <label>Performance Type</label>
-        <%= f.select :goal_type,["Goal","Attribute"],{hide_label:true,include_blank: "Select Type"},{onchange:"var a={goal_type:$(this).val()}; $.get('/goal_ratings/select_dropdown',a,function(response){});",class: 'form-control'} %>
+        <%= f.select :goal_type,["Goal"],{hide_label:true,include_blank: "Select Type"},{onchange:"var a={goal_type:$(this).val()}; $.get('/goal_ratings/select_dropdown',a,function(response){});",class: 'form-control'} %>
       </div>
 
       <div id="dropdown"></div>
@@ -51,9 +51,9 @@
 <script type="text/javascript">
   $("#goal_rating").validate({
     rules: {
-      // "goal_rating[goal_perspective_id]":{
-      //   required: true
-      // },
+      "goal_rating[goal_type]":{
+        required: true
+      },
       // "goal_rating[attribute_master_id]":{
       //   required: true
       // },
@@ -70,9 +70,9 @@
       }
     },
     messages: {
-      // "goal_rating[goal_perspective_id]":{
-      //   required: "Please specify Goal Perspective"
-      // },
+      "goal_rating[goal_type]":{
+        required: "Please specify Goal Type"
+      },
       // "goal_rating[attribute_master_id]":{
       //   required: "Please specify Attribute"
       // },

@@ -197,7 +197,7 @@
         </tr>
         <tr>
           <th>Appraiser Rating</th>
-          <td><%=  %></td>
+          <td><%= goal_bunch.try(:appraiser_rating) %></td>
         </tr>
         <tr>
           <th>Reviewer Comment</th>
@@ -314,8 +314,10 @@
       </div>
     </div>
   <% end %>
+  <br>
+  <%= link_to 'Back',period_list_final_goal_bunches_path(emp_id: @employee.id),class: 'btn btn-sm btn-default'%>
   </div>
-</div>
+  </div>
 <% end %>
 
 <div id="myModal" class="modal fade"></div>

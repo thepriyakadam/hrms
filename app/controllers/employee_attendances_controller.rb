@@ -4,7 +4,7 @@ class EmployeeAttendancesController < ApplicationController
   # GET /employee_attendances
   # GET /employee_attendances.json
   def index
-    @employee_attendances = EmployeeAttendance.all
+    @employee_attendances = EmployeeAttendance.group("strftime('%Y',day)")
   end
 
   # GET /employee_attendances/1
@@ -76,6 +76,18 @@ class EmployeeAttendancesController < ApplicationController
     end
     flash[:notice] = "Created successfully"
     redirect_to new_employee_attendance_path
+  end
+
+  def attendance
+    @year = params[:year]
+    @month = params[:month]
+    date = Date.new(@year.to_i, Workingday.months[@month])
+    @employee_attendances = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", date.strftime('%m/%Y'))
+    
+    #@employee = Employee.find(current_user.employee_id)
+    #@employee_attendances = EmployeeAttendance.where(employee_id: @employee.id)
+
+    #@employee_attendances = EmployeeAttendance.all
   end
 
   private

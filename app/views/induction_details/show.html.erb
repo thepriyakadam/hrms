@@ -1,4 +1,3 @@
-<%= form_for :pdf_salaries, url: { action: 'print_induction_details',format: 'pdf',id: @induction_detail.id},:html => {:target => '_blank'} do |f| %>
 <div class="box box-default">
   <div class="box-header with-border">
     <h3 class="box-title">Induction Detail List</h3>
@@ -6,9 +5,16 @@
   <div class="box-body">
     <table id="example2" class="table table-bordered table-hover table-condensed">
     <tr>
-      <th><strong>Employee ID</strong></th>
+      <th colspan="5">
+        <center><strong>BHANDARI FOILS AND TUBES LTD.</strong></center><br>
+        <center><strong>Induction Schedule</strong></center>
+        <center><small></small></center>   
+      </th>
+    </tr>
+   <tr>
+     <th><strong>Employee Id</strong></th>
       <td><%= @induction_detail.employee.manual_employee_code %></td>
-
+      
       <th><strong>Employee</strong></th>
       <td><%= @induction_detail.employee.try(:first_name) %> <%= @induction_detail.employee.try(:middle_name) %> <%= @induction_detail.employee.try(:last_name) %></td>
     </tr>
@@ -18,31 +24,31 @@
 
       <th><strong>Designation</strong></th>
       <td><%= @induction_detail.employee.joining_detail.try(:employee_designation).try(:name)%></td>
-
     </tr>
+
     <tr>
-      <th><strong>Start Date</strong></th>
+      <th><strong>Date Of Joining</strong></th>
+      <td><%= @induction_detail.employee.joining_detail.joining_date %></td>
+
+      <th><strong>Induction Start Date</strong></th>
       <td><%= @induction_detail.start_date %></td>
-  
-      <th><strong>Induction Template Code</strong></th>
-      <td><%= @induction_detail.induction_master.code %></td>
-    </tr>
+   </tr>
 
     <tr>
-      <th><strong>Status</strong></th>
-      <td><%= @induction_detail.induction_completed ? "Yes" : "No" %></td>
-      <th></th>
-      <td></td>
-    </tr>  
-  </table>
-    </div>
+      <th><strong>Induction End Date</strong></th>
+      <td><%= @induction_detail.end_date %></td>
 
-    <div>
-      <%= render 'induction_activity_list' %>
-    </div>
+      <th><strong></strong></th>
+      <td></td>
+   </tr>
+  </table><br><br>
+  </div>
+
+  <div>
+    <%= render 'induction_activity_list' %>
+  </div>
   
   </div>
   <div class="col-sm-3">
-    <%= f.submit "Print Induction Detail",class: "btn btn-xl btn-warning fa fa-print" %>
+    <%= link_to "Print",print_induction_details_induction_details_path(id: @induction_detail.id, format: "pdf"), class: "btn btn-xl btn-success fa fa-print" %>
   </div>
-  <% end %>

@@ -18,7 +18,7 @@
       <th>Assest status</th>
       <th>Issue date</th>
       <th>Valid till</th>
-      <th>Returned on</th>
+      <th>Returned on</th> 
       <th>Remarks</th>
       <th>Action</th>
     </tr>
@@ -35,10 +35,10 @@
         <td><%= assigned_asset.assest_status %></td>
         <td><%= assigned_asset.issue_date %></td>
         <td><%= assigned_asset.valid_till %></td>
-        <td><%= assigned_asset.returned_on %></td>
+        <td><%= assigned_asset.returned_on %></td> 
         <td><%= assigned_asset.remarks %></td>
         <td>
-            <%= link_to ' ',modal_assigned_assets_path(assigned_asset),class: 'btn btn-success btn-sm fa fa-edit',remote: true %>
+             <%= link_to ' ',modal_assigned_assets_path(assigned_asset),class: 'btn btn-success btn-sm fa fa-edit',remote: true %>
         </td>
       </tr>
     <% end %>

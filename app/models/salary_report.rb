@@ -314,6 +314,7 @@ class SalaryReport
     pf_ctc = calculate_pf_ctc(j, sr)
     esic_ctc = calculate_esic_ctc(j, sr)
 
+
     sr.pf_ctc = pf_ctc.to_i * 12
     sr.esic_ctc = esic_ctc.to_i * 12
 

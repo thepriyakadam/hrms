@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :currency_masters
   resources :illness_types
   resources :performance_calendars
   resources :performance_activities
@@ -25,6 +26,7 @@ Rails.application.routes.draw do
       post :department_wise_employee_list
       post :all_emp_list
       post :create_employee_attendance
+      get :attendance
     end
   end
   resources :salary_comp_mappings
@@ -38,7 +40,7 @@ Rails.application.routes.draw do
     collection do 
     get :all_induction_detail_list
     get :confirm
-    post :print_induction_details
+    get :print_induction_details
     get :update_date_modal
     post :update_date
     end
@@ -92,8 +94,12 @@ Rails.application.routes.draw do
       patch :update_goal_set_modal
       get :attribute_set_modal
       patch :update_attribute_set_modal
+      get :trainee_list
+      post :print_employee_detail
+      get :all_emp_list
     end
   end
+  #post 'goal_ratings/update_goal_set_modal'
   resources :goal_bunches do
     collection do
       get :goal_approval
@@ -152,6 +158,8 @@ Rails.application.routes.draw do
       post :all_emp_list
       get :emp_list_goal_wise
       get :goal_bunch_list
+      get :set_goal_list
+      
     end
   end
   resources :goal_perspectives
@@ -272,6 +280,14 @@ end
     get :print_daily_bill
     get :daily_bill_history
     get :daily_bill_request_confirmation
+    post :approve_request
+    get :approved_daily_bill_details
+    get :travel_request_list
+    get :edit_and_send_next_modal
+    post :edit_and_send_next
+    get :comment_modal
+    post :update_comment
+    post :reject_request
     end
   end 
   resources :travel_requests do
@@ -594,6 +610,9 @@ end
   match 'interview_schedules/:id/sample_email_to_interviewer/:id' => 'interview_schedules#sample_email_to_interviewer', :via => [:get], :as => :sample_email_to_interviewer
 
   match 'circulars/:id/download_documents/:id' => 'circulars#download_documents', :via => [:get], :as => :download_documents
+
+  match 'daily_bill_details/:id/download_doc/:id' => 'daily_bill_details#download_doc', :via => [:get], :as => :download_doc
+  match 'daily_bill_details/:id/download_pics/:id' => 'daily_bill_details#download_pics', :via => [:get], :as => :download_pics
 
   resources :leave_c_offs
   resources :overtime_month_records

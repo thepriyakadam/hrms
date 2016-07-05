@@ -1,6 +1,6 @@
-<%= bootstrap_form_for(@daily_bill_detail,remote:true) do |f| %>
+<%= bootstrap_form_for(@daily_bill_detail,id:@travel_request.id,remote: true) do |f| %>
+<%= hidden_field_tag :authenticity_token, form_authenticity_token %>
   <%= f.hidden_field :travel_request_id, value:@travel_request.id  %>
-  <div id="entry1" class="clonedInput">
     <div class="row">
        <div class="col-sm-3">
         <label>Expence Date </label>
@@ -16,7 +16,7 @@
 
       <div class="col-sm-3">
         <div class="field">
-          <%= f.text_field :e_place, label: 'E Place',class: 'input_e_place'  %>
+          <%= f.text_field :e_place, label: 'Place',class: 'input_e_place'  %>
         </div>
       </div>
        <div class="col-sm-3">
@@ -29,9 +29,31 @@
           <%= f.text_field :travel_expence,label: 'Travel Expence',class: 'input_travel_expence'  %>
         </div>
       </div>
+    </div>
+    <div class="row">
+    <div class="col-sm-3">
+          <label>Currency</label>
+          <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <%= link_to "", currency_masters_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+              </div>
+               <%= f.select :currency_master_id, all_currency, {hide_label: true,include_blank: " Select Currency Type"} %>
+            </div>
+          </div>
+        </div>
+    <div class="col-sm-3">
+    <div class="field">
+      <%= f.file_field :avatar_file,label: 'Document(only docx,pdf)' %>
+    </div>
+   </div>
 
+   <div class="col-sm-3">
+    <div class="field">
+      <%= f.file_field :passport_photo,label: 'Image(only jpeg,jpg,png)' %>
     </div>
-    </div>
+   </div>
+   </div>
 
    <!-- unless params['controller'] == 'daily_bill_details' and params['action'] == 'edit' %> -->
     <!-- <div class="row">

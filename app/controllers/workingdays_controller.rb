@@ -141,7 +141,7 @@ class WorkingdaysController < ApplicationController
 
   def create_working_day
     @date = params[:date].to_date
-    @employees = Employee.all
+    @employees = Employee.limit(5)
     @employees.each do |e|
       workingday = Workingday.new
       if e.joining_detail.nil?
@@ -163,6 +163,8 @@ class WorkingdaysController < ApplicationController
       workingday.absent_day = workingday.holiday_in_month.to_i + workingday.week_off_day.to_i + workingday.total_leave.to_f
       workingday.present_day = workingday.day_in_month.to_i - workingday.absent_day
       workingday.employee_id = e.id
+      workingday.month_name = @date.strftime("%B")
+      workingday.year = @date.strftime("%Y")
       workingday.save
     end
     flash[:notice] = 'Working Days Saved successfully'

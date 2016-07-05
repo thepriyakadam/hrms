@@ -10,6 +10,7 @@ class TrainingRequestsController < ApplicationController
   # GET /training_requests/1
   # GET /training_requests/1.json
   def show
+    @trainee_requests = TraineeRequest.where(training_request_id: @training_request.id)
   end
 
   # GET /training_requests/new

@@ -103,9 +103,12 @@ class WorkingdaysController < ApplicationController
       workingday.total_leave = ParticularLeaveRecord.where(leave_date: @date.beginning_of_month..@date.end_of_month, employee_id: e.id).count
       workingday.holiday_in_month = Holiday.where(holiday_date: @date.beginning_of_month..@date.end_of_month).count
       workingday.week_off_day = WeekoffMaster.day(@date)
-      workingday.absent_day = workingday.holiday_in_month.to_i + workingday.week_off_day.to_i + workingday.total_leave.to_f
+      workingday.absent_day = workingday.total_leave.to_f
       workingday.present_day = workingday.day_in_month.to_i - workingday.absent_day
       workingday.employee_id = e.id
+      lc = LeavCategory.find_by_name("LWP Leave")
+      workingday.lwp_leave = ParticularLeaveRecord.where(leave_date: @date.beginning_of_month..@date.end_of_month, employee_id: e.id, leav_category_id: lc.id).count
+      workingday.payable_day = workingday.present_day.to_f - workingday.lwp_leave.to_f
       @workingdays << workingday
     end
   end
@@ -132,7 +135,7 @@ class WorkingdaysController < ApplicationController
       workingday.total_leave = ParticularLeaveRecord.where(leave_date: @date.beginning_of_month..@date.end_of_month, employee_id: e.id).count
       workingday.holiday_in_month = Holiday.where(holiday_date: @date.beginning_of_month..@date.end_of_month).count
       workingday.week_off_day = WeekoffMaster.day(@date)
-      workingday.absent_day = workingday.holiday_in_month.to_i + workingday.week_off_day.to_i + workingday.total_leave.to_f
+      workingday.absent_day = workingday.total_leave.to_f
       workingday.present_day = workingday.day_in_month.to_i - workingday.absent_day
       workingday.employee_id = e.id
       @workingdays << workingday
@@ -160,7 +163,7 @@ class WorkingdaysController < ApplicationController
       workingday.total_leave = ParticularLeaveRecord.where(leave_date: @date.beginning_of_month..@date.end_of_month, employee_id: e.id).count
       workingday.holiday_in_month = Holiday.where(holiday_date: @date.beginning_of_month..@date.end_of_month).count
       workingday.week_off_day = WeekoffMaster.day(@date)
-      workingday.absent_day = workingday.holiday_in_month.to_i + workingday.week_off_day.to_i + workingday.total_leave.to_f
+      workingday.absent_day = workingday.total_leave.to_f
       workingday.present_day = workingday.day_in_month.to_i - workingday.absent_day
       workingday.employee_id = e.id
       workingday.month_name = @date.strftime("%B")

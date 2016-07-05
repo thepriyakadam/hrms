@@ -29,6 +29,7 @@ ex.default_sheet = ex.sheets[4]
 #   puts "Starting Record #{ex.cell(line,'A')}---------------"
 #   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
 
+
 #   workingday = Workingday.where(month_name: "May", year: "2016", employee_id: @employee.id).take
 #   unless workingday.nil?
 #     workingday.cl_leave = ex.cell(line,'E').to_f

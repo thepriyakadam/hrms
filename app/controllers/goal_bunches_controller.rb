@@ -68,6 +68,7 @@ class GoalBunchesController < ApplicationController
   def goal_approval
     @goal_bunch_id = GoalBunch.find(params[:id])
     @employee = Employee.find(params[:emp_id])
+    @period =  Period.find(params[:period_id])
     
     @employees = Employee.where(id: @employee.id)
     @qualifications = Qualification.where(employee_id: @employee.id)

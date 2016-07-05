@@ -23,20 +23,20 @@ require 'roo'
 #   end
 # end
 
-ex = Roo::Excel.new("#{Rails.root}/public/slip2.xls")
-ex.default_sheet = ex.sheets[1]
-4.upto(372) do |line|
+ex = Roo::Excel.new("#{Rails.root}/public/slip.xls")
+ex.default_sheet = ex.sheets[0]
+2.upto(356) do |line|
   puts "Starting Record #{ex.cell(line,'A')}---------------"
   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
-  unless @employee.nil?
-    workingday = Workingday.where(month_name: "February", year: "2016", employee_id: @employee.id).take
-    unless workingday.nil?
-      workingday.cl_leave = ex.cell(line,'E').to_f
-      workingday.el_leave = ex.cell(line,'F').to_f
 
-      workingday.cl_balance = ex.cell(line,'G').to_f
-      workingday.el_balance = ex.cell(line,'H').to_f
-      workingday.save
-    end
-  end  
+  workingday = Workingday.where(month_name: "January", year: "2016", employee_id: @employee.id).take
+  unless workingday.nil?
+    workingday.cl_leave = ex.cell(line,'E').to_f
+    workingday.el_leave = ex.cell(line,'F').to_f
+
+    workingday.cl_balance = ex.cell(line,'G').to_f
+    workingday.el_balance = ex.cell(line,'H').to_f
+    workingday.save
+  end
+
 end

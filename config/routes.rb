@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :weekoff_masters
   resources :currency_masters
   resources :illness_types
   resources :performance_calendars

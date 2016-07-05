@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160705071615) do
+ActiveRecord::Schema.define(version: 20160705150641) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -170,15 +170,6 @@ ActiveRecord::Schema.define(version: 20160705071615) do
   add_index "attribute_rating_sheets", ["employee_attribute_id"], name: "index_attribute_rating_sheets_on_employee_attribute_id"
   add_index "attribute_rating_sheets", ["final_id_id"], name: "index_attribute_rating_sheets_on_final_id_id"
   add_index "attribute_rating_sheets", ["final_rating_id"], name: "index_attribute_rating_sheets_on_final_rating_id"
-
-  create_table "attributes", force: :cascade do |t|
-    t.string   "code"
-    t.string   "name"
-    t.text     "definition"
-    t.boolean  "status"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
 
   create_table "awards", force: :cascade do |t|
     t.integer  "employee_id"
@@ -906,7 +897,7 @@ ActiveRecord::Schema.define(version: 20160705071615) do
     t.text     "task_name"
     t.date     "task_date"
     t.boolean  "status"
-    t.time     "task_time"
+    t.string   "time"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
@@ -2417,7 +2408,6 @@ ActiveRecord::Schema.define(version: 20160705071615) do
     t.integer  "degree_id"
     t.string   "experience"
     t.string   "keyword"
-    t.string   "others"
     t.string   "other_organization"
     t.string   "industry"
     t.integer  "degree_1_id"
@@ -2480,6 +2470,12 @@ ActiveRecord::Schema.define(version: 20160705071615) do
   end
 
   add_index "week_offs", ["employee_id"], name: "index_week_offs_on_employee_id"
+
+  create_table "weekoff_masters", force: :cascade do |t|
+    t.string   "day"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "well_faires", force: :cascade do |t|
     t.string   "month"

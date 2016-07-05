@@ -316,7 +316,19 @@ class GoalRatingsController < ApplicationController
 
   def all_emp_list
     @trainees = Trainee.find(params[:trainee_ids])
-
+     respond_to do |format|
+      # format.js
+      # format.html
+      # format.xls {render template: 'salary_slip_ledgers/show_employee.xls.erb'}
+      format.pdf do
+        render pdf: 'all_emp_list',
+              layout: 'pdf.html',
+              orientation: 'Landscape',
+              template: 'goal_ratings/all_emp_list.pdf.erb',
+              show_as_html: params[:debug].present?,
+              margin:  { top:1,bottom:1,left:1,right:1 }
+      end
+    end
   end
 
     private

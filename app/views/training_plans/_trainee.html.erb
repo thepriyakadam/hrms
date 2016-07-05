@@ -4,6 +4,7 @@
     <tr>
       <th>Sr.No</th>
       <th>Employee Name</th>
+      <th>Contact No</th>
       <th>Signature</th>
   </thead>
   <tbody>
@@ -12,6 +13,7 @@
       <tr>
         <td><%= i=i+1 %></td>
         <td><%= trainee.employee.try(:first_name) %> <%= trainee.employee.try(:middle_name) %> <%=trainee.employee.try(:last_name) %></td>
+        <td><%= trainee.employee.try(:contact_no) %></td>
         <td></td>
       </tr>
       <% end %>

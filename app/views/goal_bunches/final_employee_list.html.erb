@@ -22,7 +22,7 @@
         <td><%= e.first_name %> <%= e.middle_name %> <%= e.last_name %> </td>
         <td><%= e.company_location.try(:name) %> - <%= e.department.try(:name) %></td> 
         <td><%= e.joining_detail.try(:employee_designation).try(:name) %></td>
-        <td><%= link_to 'Goal Bunch', period_list_print_goal_bunches_path(emp_id: e) ,class: 'btn btn-xs btn-info' %></td>
+        <td><%= link_to 'Show Goal List', period_list_print_goal_bunches_path(emp_id: e) ,class: 'btn btn-xs btn-info' %></td>
       </tr>
         <% end %>
       </tbody>

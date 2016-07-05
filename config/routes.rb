@@ -785,6 +785,8 @@ end
       get :employees
       get :search_month_year
       get :generate_workingday
+      get :print_working_day
+      get :create_working_day
     end
   end
   resources :shift_rotations do

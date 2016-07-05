@@ -99,12 +99,74 @@ class WorkingdaysController < ApplicationController
           end
         end
       end
-      workingday.present_day = Attendance.where(attendance_date: @date.beginning_of_month..@date.end_of_month, employee_id: e.id).count
+      #workingday.present_day = Attendance.where(attendance_date: @date.beginning_of_month..@date.end_of_month, employee_id: e.id).count
       workingday.total_leave = ParticularLeaveRecord.where(leave_date: @date.beginning_of_month..@date.end_of_month, employee_id: e.id).count
       workingday.holiday_in_month = Holiday.where(holiday_date: @date.beginning_of_month..@date.end_of_month).count
+      workingday.week_off_day = WeekoffMaster.day(@date)
+      workingday.absent_day = workingday.holiday_in_month.to_i + workingday.week_off_day.to_i + workingday.total_leave.to_f
+      workingday.present_day = workingday.day_in_month.to_i - workingday.absent_day
       workingday.employee_id = e.id
       @workingdays << workingday
     end
+  end
+
+  def print_working_day
+    @date = params[:date].to_date
+    @workingdays = []
+    @employees = Employee.all
+    @employees.each do |e|
+      workingday = Workingday.new
+      if e.joining_detail.nil?
+
+      else
+        if e.joining_detail.employee_category.nil?
+        else
+          if e.joining_detail.employee_category.name == 'Worker'
+            workingday.day_in_month = 26
+          else
+            workingday.day_in_month = @date.end_of_month.day
+          end
+        end
+      end
+      #workingday.present_day = Attendance.where(attendance_date: @date.beginning_of_month..@date.end_of_month, employee_id: e.id).count
+      workingday.total_leave = ParticularLeaveRecord.where(leave_date: @date.beginning_of_month..@date.end_of_month, employee_id: e.id).count
+      workingday.holiday_in_month = Holiday.where(holiday_date: @date.beginning_of_month..@date.end_of_month).count
+      workingday.week_off_day = WeekoffMaster.day(@date)
+      workingday.absent_day = workingday.holiday_in_month.to_i + workingday.week_off_day.to_i + workingday.total_leave.to_f
+      workingday.present_day = workingday.day_in_month.to_i - workingday.absent_day
+      workingday.employee_id = e.id
+      @workingdays << workingday
+    end
+  end
+
+  def create_working_day
+    @date = params[:date].to_date
+    @employees = Employee.all
+    @employees.each do |e|
+      workingday = Workingday.new
+      if e.joining_detail.nil?
+
+      else
+        if e.joining_detail.employee_category.nil?
+        else
+          if e.joining_detail.employee_category.name == 'Worker'
+            workingday.day_in_month = 26
+          else
+            workingday.day_in_month = @date.end_of_month.day
+          end
+        end
+      end
+      #workingday.present_day = Attendance.where(attendance_date: @date.beginning_of_month..@date.end_of_month, employee_id: e.id).count
+      workingday.total_leave = ParticularLeaveRecord.where(leave_date: @date.beginning_of_month..@date.end_of_month, employee_id: e.id).count
+      workingday.holiday_in_month = Holiday.where(holiday_date: @date.beginning_of_month..@date.end_of_month).count
+      workingday.week_off_day = WeekoffMaster.day(@date)
+      workingday.absent_day = workingday.holiday_in_month.to_i + workingday.week_off_day.to_i + workingday.total_leave.to_f
+      workingday.present_day = workingday.day_in_month.to_i - workingday.absent_day
+      workingday.employee_id = e.id
+      workingday.save
+    end
+    flash[:notice] = 'Working Days Saved successfully'
+    redirect_to search_month_year_workingdays_path
   end
 
   private

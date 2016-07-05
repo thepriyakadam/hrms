@@ -2,7 +2,7 @@
   <div class="box-header">
     <h3 class="box-title">Employee Training Plan Detail</h3>
     <div class="pull-right">
-      <%= link_to " Print ",all_emp_list_goal_ratings_path(format: 'pdf',trainee_id: @trainee_ids),method: :post, class: "btn btn-sm btn-info fa fa-print", :target => "_blank" %>
+      <%= link_to " Print ",all_emp_list_goal_ratings_path(format: 'pdf',trainee_ids: @trainees), class: "btn btn-sm btn-info fa fa-print" %>
     </div> 
   </div>
 

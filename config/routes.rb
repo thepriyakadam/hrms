@@ -1,5 +1,12 @@
 Rails.application.routes.draw do
 
+  resources :date_formats do
+    collection do 
+    get :active
+    post :activee
+    end
+  end 
+  resources :email_configs
   resources :weekoff_masters
   resources :currency_masters
   resources :illness_types
@@ -778,6 +785,8 @@ end
       get :employees
       get :search_month_year
       get :generate_workingday
+      get :print_working_day
+      get :create_working_day
     end
   end
   resources :shift_rotations do

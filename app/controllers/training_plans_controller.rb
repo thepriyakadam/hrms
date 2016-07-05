@@ -122,7 +122,7 @@ class TrainingPlansController < ApplicationController
       @goal_rating_ids = params[:goal_rating_ids]
       @goal_rating_ids.each do |eid|
       Trainee.create(employee_id: eid,training_plan_id: @training_plan.id)
-
+      
         # @goal_rating = params[:goal_rating]
         # @goal_rating.each do |gid|
         # GoalRating.where(appraisee_id: eid,id: gid).update_all(is_hide: true)

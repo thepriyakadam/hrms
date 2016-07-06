@@ -106,8 +106,8 @@ class WorkingdaysController < ApplicationController
       workingday.absent_day = workingday.total_leave.to_f
       workingday.present_day = workingday.day_in_month.to_i - workingday.absent_day
       workingday.employee_id = e.id
-      lc = LeavCategory.find_by_name("LWP Leave")
-      workingday.lwp_leave = ParticularLeaveRecord.where(leave_date: @date.beginning_of_month..@date.end_of_month, employee_id: e.id, leav_category_id: lc.id).count
+      lc = LeavCategory.where(is_payble: false).pluck(:id)
+      workingday.lwp_leave = ParticularLeaveRecord.where(leave_date: @date.beginning_of_month..@date.end_of_month, employee_id: e.id, leav_category_id: lc).count
       workingday.payable_day = workingday.present_day.to_f - workingday.lwp_leave.to_f
       @workingdays << workingday
     end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160705195945) do
+ActiveRecord::Schema.define(version: 20160705235546) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -1502,6 +1502,7 @@ ActiveRecord::Schema.define(version: 20160705195945) do
     t.string   "description"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.boolean  "is_payble"
   end
 
   create_table "leav_rejecteds", force: :cascade do |t|

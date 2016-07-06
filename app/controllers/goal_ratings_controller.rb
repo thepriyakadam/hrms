@@ -265,20 +265,10 @@ class GoalRatingsController < ApplicationController
   end
 
   def update_goal_set_modal
-    @goal_rating = GoalRating.find(params[:format])
+    @goal_rating = GoalRating.find(params[:goal_id])
     @employee = Employee.find(@goal_rating.appraisee_id)
     @goal_bunch = GoalBunch.find(@goal_rating.goal_bunch_id)
-    #@goal_rating.update(goal_rating_params)
-
-    @goal_bunch = GoalBunch.find(params[:goal_rating][:goal_bunch_id])
-    goal_weightage_sum = @goal_rating.goal_weightage_sumdate(@goal_bunch, @goal_rating.goal_weightage, params)
-      if goal_weightage_sum <= 100
       @goal_rating.update(goal_rating_params)
-      flash[:notice] = "update sucuss"
-    else
-      flash[:alert] = "update failed"
-    end
-
     redirect_to new_goal_rating_path(id: @goal_bunch.id, emp_id:@employee.id)
   end
 

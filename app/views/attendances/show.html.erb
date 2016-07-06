@@ -4,7 +4,6 @@
   </div><!-- /.box-header -->
   <div class="box-body">
     <table class="table table-bordered table-hover table-condensed">
-
      <tr>
       <th><strong>Shift</strong></th>
       <td><%= @attendance.try(:employee_shift).try(:company_shift).try(:name) %></td>
@@ -36,9 +35,7 @@
       <th><strong>Total Hours</strong></th>
       <td><%= @attendance.total_hrs %></td>
      </tr>
-
     </table>
-
     <%= link_to 'Edit', edit_attendance_path(@attendance),class: 'btn btn-success fa fa-edit btn-sm' %> 
     <%= link_to 'Back', attendances_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
   </div><!-- /.box-body -->

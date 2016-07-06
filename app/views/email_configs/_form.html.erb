@@ -1,0 +1,59 @@
+<%= bootstrap_form_for(@email_config,remote: true) do |f| %>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :url_host, hide_label: true,placeholder: "URL Host"%>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :url_port, hide_label: true,placeholder: "URL Port"%>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :delivery_method, hide_label: true,placeholder: "Delivery Method"%>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :address, hide_label: true,placeholder: "Address "%>
+      </div>
+    </div>
+    </div>
+    <div class="row">
+     <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :port, hide_label: true,placeholder: "Port"%>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :username, hide_label: true,placeholder: "Username"%>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :pwd, hide_label: true,placeholder: "Password"%>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :authentication, hide_label: true,placeholder: "Authentication"%>
+      </div>
+    </div>
+
+    </div> 
+    <div class="row">
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "Create Email Configuration", class: "btn btn-primary btn-sm" %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+

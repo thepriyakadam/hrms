@@ -17,6 +17,8 @@ class DailyBillDetailsController < ApplicationController
     @daily_bill_detail = DailyBillDetail.new
     @travel_request = TravelRequest.find(params[:format])
     @daily_bill_details = DailyBillDetail.where(travel_request_id: @travel_request.id)
+    session[:active_tab] = "master"
+    session[:active_tab1] ="daily_bill_master_setup"
   end
 
   # GET /daily_bill_details/1/edit

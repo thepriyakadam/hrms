@@ -17,9 +17,7 @@ class VacancyMastersController < ApplicationController
           @vacancy_masters = VacancyMaster.where(current_status: "Pending")
         end
       end
-     end 
-    session[:active_tab] ="recruitment"
-    session[:active_tab1] ="particular_vacancy"  
+     end
   end
 
   # GET /vacancy_masters/1
@@ -30,8 +28,8 @@ class VacancyMastersController < ApplicationController
   # GET /vacancy_masters/new
   def new
     @vacancy_master = VacancyMaster.new
-    # session[:active_tab] ="recruitment"
-    # session[:active_tab1] ="particular_vacancy"
+     session[:active_tab] ="recruitment"
+     session[:active_tab1] ="particular_vacancy"
   end
 
   # GET /vacancy_masters/1/edit

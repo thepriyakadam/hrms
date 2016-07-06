@@ -18,7 +18,8 @@ include QueryReport::Helper
   def new
     @employee_daily_activity = EmployeeDailyActivity.new
     @employee_daily_activities = EmployeeDailyActivity.where(employee_id: current_user.employee_id)
-    
+    session[:active_tab] = "selfservice"
+    session[:active_tab1] = "daily_activity"
   end
 
   # GET /employee_daily_activities/1/edit
@@ -60,12 +61,16 @@ include QueryReport::Helper
 
   def employee_details
     @employees = Employee.where(department_id: current_user.department_id)
+    session[:active_tab] = "selfservice"
+    session[:active_tab1] = "daily_activity"
 
   end
 
   def daily_show_activity_list
     @employee = Employee.find(params[:emp_id])
     @employee_daily_activities = EmployeeDailyActivity.where(employee_id: @employee.id)
+     session[:active_tab] = "selfservice"
+     session[:active_tab1] = "daily_activity"
   end
 
   def activity_report

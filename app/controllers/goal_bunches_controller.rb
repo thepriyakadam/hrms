@@ -815,6 +815,7 @@ class GoalBunchesController < ApplicationController
       # column :is_first_rejected
       # column :is_second_rejected
       #column :current_status
+      session[:active_tab] = "performancemgmt"
     end
   end
 

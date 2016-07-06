@@ -1,7 +1,8 @@
 <table id="example1" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
-      <th>Employee</th>
+      <th>Employee No</th>
+      <th>Employee Name</th>
       <th>Day In Month</th>
       <th>Present Day</th>
       <th>Total Leave</th>
@@ -16,6 +17,7 @@
      <% @workingdays.each do |workingday| %>
       <tr>
         <td><%= workingday.employee.try(:manual_employee_code) %></td>
+        <td><%= full_name(workingday.employee) %></td>
         <td><%= workingday.day_in_month %></td>
         <td><%= workingday.present_day %></td>
         <td><%= workingday.total_leave %></td>
@@ -27,6 +29,10 @@
     <% end %>
   </tbody>
 </table>
+
+<%= link_to "Print Working Day Report", print_working_day_workingdays_path(date: @date, format: "xls"), class: "btn btn-xl btn-info fa fa-print",:target => "_blank" %>
+
+<%= link_to "Create Working Day", create_working_day_workingdays_path(date: @date), class: "btn btn-sm btn-primary" %>
 
 <script type="text/javascript">
   $("#example1").DataTable();

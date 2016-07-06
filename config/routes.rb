@@ -1,5 +1,13 @@
 Rails.application.routes.draw do
 
+  resources :date_formats do
+    collection do 
+    get :active
+    post :activee
+    end
+  end 
+  resources :email_configs
+  resources :weekoff_masters
   resources :currency_masters
   resources :illness_types
   resources :performance_calendars
@@ -596,6 +604,7 @@ end
   resources :particular_leave_records do
     collection do
       get :show_leave_record
+      get :search_by_leave_date
     end
   end
   match 'selected_resumes/:id/download_resume/:id' => 'selected_resumes#download_resume', :via => [:get], :as => :download_resume
@@ -776,6 +785,8 @@ end
       get :employees
       get :search_month_year
       get :generate_workingday
+      get :print_working_day
+      get :create_working_day
     end
   end
   resources :shift_rotations do

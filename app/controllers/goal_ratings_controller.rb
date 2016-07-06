@@ -69,6 +69,20 @@ class GoalRatingsController < ApplicationController
     end
   end
 
+  def update_goal_set_modal
+    @goal_rating = GoalRating.find(params[:format])
+    @employee = Employee.find(@goal_rating.appraisee_id)
+    @goal_bunch = GoalBunch.find(@goal_rating.goal_bunch_id)
+    goal_weightage_sum = @goal_rating.goal_weightage_sumdate(@goal_bunch, @goal_rating.goal_weightage, params)
+      if goal_weightage_sum <= 100
+        @goal_rating.update(goal_rating_params)
+        flash[:notice] = "Goal setting updated successfully."
+      else
+        flash[:alert] = "Goal weightage addition should be 100."
+      end
+    redirect_to new_goal_rating_path(id: @goal_bunch.id, emp_id:@employee.id)
+  end
+
   # DELETE /goal_ratings/1
   # DELETE /goal_ratings/1.json
   def destroy
@@ -237,7 +251,7 @@ class GoalRatingsController < ApplicationController
     @training_topic_master_id = params[:training_topic_master_id]
     @period_id = params[:period_id]
     # @goal_ratings = GoalRating.where(goal_bunch_id: ids,training_topic_master_id: @training_topic_master_id).where(is_assigned: nil)
-    @goal_ratings = GoalRating.where(goal_bunch_id: ids,training_topic_master_id: @training_topic_master_id)
+    @goal_ratings = GoalRating.where(goal_bunch_id: ids,training_topic_master_id: @training_topic_master_id).where(is_hide: nil)
   end
 
   def send_request_for_training
@@ -264,6 +278,7 @@ class GoalRatingsController < ApplicationController
     @goal_rating = GoalRating.find(params[:format])
   end
 
+
   def update_goal_set_modal
     @goal_rating = GoalRating.find(params[:goal_id])
     @employee = Employee.find(@goal_rating.appraisee_id)
@@ -280,7 +295,13 @@ class GoalRatingsController < ApplicationController
     @goal_rating = GoalRating.find(params[:format])
     @employee = Employee.find(@goal_rating.appraisee_id)
     @goal_bunch = GoalBunch.find(@goal_rating.goal_bunch_id)
-    @goal_rating.update(goal_rating_params)
+    goal_weightage_sum = @goal_rating.goal_weightage_sumdate(@goal_bunch, @goal_rating.goal_weightage, params)
+      if goal_weightage_sum <= 100
+        @goal_rating.update(goal_rating_params)
+        flash[:notice] = "Goal setting updated successfully."
+      else
+        flash[:alert] = "Goal weightage addition should be 100."
+      end
     redirect_to new_goal_rating_path(id: @goal_bunch.id, emp_id:@employee.id)
   end
 

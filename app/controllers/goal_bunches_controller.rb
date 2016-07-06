@@ -19,7 +19,8 @@ class GoalBunchesController < ApplicationController
     @goal_bunch = GoalBunch.new
     @goal_bunches = GoalBunch.where(employee_id: current_user.employee_id)
     #@period_id = params[:period_id]
-    session[:active_tab] ="selfservice"
+    session[:active_tab] ="performancemgmt"
+    session[:active_tab1] ="perform_cycle"
   end
 
   # GET /goal_bunches/1/edit
@@ -63,6 +64,7 @@ class GoalBunchesController < ApplicationController
     current_login = Employee.find(current_user.employee_id)
     @employees = current_login.subordinates
     session[:active_tab] ="performancemgmt"
+    session[:active_tab1] ="perform_cycle"
   end
 
   def goal_approval
@@ -198,6 +200,8 @@ class GoalBunchesController < ApplicationController
   def appraiser_subordinate
     current_login = Employee.find(current_user.employee_id)
     @employees = current_login.subordinates
+    session[:active_tab] ="performancemgmt"
+    session[:active_tab1] ="perform_cycle"
   end
 
   def appraiser_comment
@@ -273,6 +277,7 @@ class GoalBunchesController < ApplicationController
     current_login = Employee.find(current_user.employee_id)
     @employees = current_login.indirect_subordinates
     session[:active_tab] ="performancemgmt"
+    session[:active_tab1] ="perform_cycle"
   end
   
   def reviewer_comment
@@ -339,6 +344,7 @@ class GoalBunchesController < ApplicationController
   def employee_list
     @employees = Employee.all
     session[:active_tab] ="performancemgmt"
+    session[:active_tab1] ="perform_cycle"
   end
 
   def final_comment
@@ -408,6 +414,7 @@ class GoalBunchesController < ApplicationController
   def final_employee_list
     @employees = Employee.all
     session[:active_tab] ="performancemgmt"
+    session[:active_tab1] ="perform_report"
   end
 
   def final_detail
@@ -727,6 +734,8 @@ class GoalBunchesController < ApplicationController
   def period_list_appraisee
     @employee = Employee.find(current_user.employee_id)
     @goal_bunches = GoalBunch.where(employee_id: @employee.id)
+    session[:active_tab] ="performancemgmt"
+    session[:active_tab1] ="perform_cycle"
   end
 
   def period_list_appraiser
@@ -752,6 +761,8 @@ class GoalBunchesController < ApplicationController
   def subordinate_list_for_appraisee
     current_login = Employee.find(current_user.employee_id)
     @employees = current_login.subordinates
+    session[:active_tab] ="performancemgmt"
+    session[:active_tab1] ="perform_report"
   end
 
   def period_appraisee
@@ -762,6 +773,8 @@ class GoalBunchesController < ApplicationController
   def subordinate_list_for_reviewer
     current_login = Employee.find(current_user.employee_id)
     @employees = current_login.indirect_subordinates
+    session[:active_tab] ="performancemgmt"
+    session[:active_tab1] ="perform_report"
   end
 
   def period_reviewer
@@ -772,9 +785,13 @@ class GoalBunchesController < ApplicationController
   def period_for_appraisee
     @employee = Employee.find(current_user.employee_id)
     @goal_bunches = GoalBunch.where(employee_id: @employee.id)
+    session[:active_tab] ="performancemgmt"
+    session[:active_tab1] ="perform_cycle"
   end
 
   def emp_list_goal_wise
+    session[:active_tab] ="performancemgmt"
+    session[:active_tab1] ="perform_report"
   end
 
   def print_emp_list

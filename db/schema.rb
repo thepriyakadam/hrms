@@ -2150,15 +2150,6 @@ ActiveRecord::Schema.define(version: 20160705195945) do
   add_index "selected_resumes", ["degree_id"], name: "index_selected_resumes_on_degree_id"
   add_index "selected_resumes", ["vacancy_master_id"], name: "index_selected_resumes_on_vacancy_master_id"
 
-  create_table "setting_masters", force: :cascade do |t|
-    t.string   "date"
-    t.string   "precision"
-    t.string   "timeformat"
-    t.string   "email"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "shift_rotations", force: :cascade do |t|
     t.integer  "company_shift_id"
     t.date     "start_date"

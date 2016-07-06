@@ -123,14 +123,8 @@ class TrainingPlansController < ApplicationController
       @goal_rating_ids = params[:goal_rating_ids]
       @goal_rating_ids.each do |eid|
       Trainee.create(employee_id: eid,training_plan_id: @training_plan.id)
-
-      GoalRating.where(appraisee_id: eid,training_topic_master_id: training_topic_master_id ).update_all(is_hide: true)
-        
-        # @goal_rating = params[:goal_rating]
-        # @goal_rating.each do |gid|
-        # GoalRating.where(appraisee_id: eid,id: gid).update_all(is_hide: true)
-        
-        #GoalRating.where(appraisee_id: eid,attribute_master_id: @attribute_master_id.id).update_all(is_assigned: true)
+      
+      GoalRating.where(appraisee_id: eid,training_topic_master_id: training_topic_master_id).update_all(is_hide: true)
         flash[:notice] = "Created Successfully"
       end
       redirect_to period_and_topic_wise_list_goal_ratings_path

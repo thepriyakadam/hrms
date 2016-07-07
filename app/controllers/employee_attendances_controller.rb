@@ -5,6 +5,7 @@ class EmployeeAttendancesController < ApplicationController
   # GET /employee_attendances.json
   def index
     @employee_attendances = EmployeeAttendance.group("strftime('%Y',day)")
+    session[:active_tab] = "timemgmt"
   end
 
   # GET /employee_attendances/1

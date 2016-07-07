@@ -87,6 +87,7 @@ class GoalBunchesController < ApplicationController
   def appraiser_confirm
     @goal_bunch_id = GoalBunch.find(params[:goal_bunch_id])
     @employee = Employee.find(params[:emp_id])
+    @period = Period.find(params[:period_id])
 
     @employees = Employee.where(id: @employee.id)
     @qualifications = Qualification.where(employee_id: @employee.id)
@@ -109,7 +110,7 @@ class GoalBunchesController < ApplicationController
       GoalBunchMailer.send_email_to_appraisee(@goal_bunch).deliver_now
       #@flag = true
     end
-      redirect_to goal_approval_goal_bunches_path(emp_id: @employee.id,id: @goal_bunch_id.id)
+      redirect_to goal_approval_goal_bunches_path(emp_id: @employee.id,id: @goal_bunch_id.id,period_id: @period.id)
   end
 
   # def appraisee_comment
@@ -589,7 +590,7 @@ class GoalBunchesController < ApplicationController
         flash[:notice] = "Confirmed Successfully"
       end
         GoalBunchMailer.send_email_to_appraiser(@goal_bunch).deliver_now
-        flash[:notice] = "Email Sent Successfully"
+        flash[:notice] = "Self Evaluation Confirmed Email Sent Successfully"
         
       end
       @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
@@ -623,7 +624,7 @@ class GoalBunchesController < ApplicationController
         flash[:notice] = "Confirmed Successfully"
         end
         GoalBunchMailer.send_email_to_reviewer(@goal_bunch).deliver_now
-        flash[:notice] = "Email Sent Successfully"
+        flash[:notice] = "Appraiser Evaluation Confirmed Email Sent Successfully"
       end
       @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
     redirect_to appraiser_comment_goal_bunches_path(emp_id: @employee.id,id: @goal_bunch.id)

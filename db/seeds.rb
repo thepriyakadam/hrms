@@ -1,5 +1,6 @@
 require 'roo'
 
+
 # ex = Roo::Excel.new("#{Rails.root}/public/slip.xls")
 # ex.default_sheet = ex.sheets[0]
 # 2.upto(356) do |line|
@@ -36,31 +37,15 @@ ActiveRecord::Base.transaction do
 2.upto(370) do |line|
 
   puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
-
   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
-  unless @employee.nil?
-    Workingday.new do |w|
-      w.employee_id = @employee.id
-      w.month_name = ex.cell(line,'B')
-      w.year = ex.cell(line,'C').to_i
 
-      w.lwp_leave = ex.cell(line, 'D').to_i
-      w.cl_leave = ex.cell(line, 'E').to_i
-      w.el_leave = ex.cell(line, 'F').to_i
-      w.esic_leave = ex.cell(line, 'G').to_i
+  workingday = Workingday.where(month_name: "May", year: "2016", employee_id: @employee.id).take
+  unless workingday.nil?
+    workingday.cl_leave = ex.cell(line,'B').to_f
+    workingday.el_leave = ex.cell(line,'C').to_f
 
-      w.day_in_month = ex.cell(line, 'H')
-      w.present_day = ex.cell(line, 'I')
-      w.holiday_in_month = ex.cell(line, 'J')
-
-      w.week_off_day = ex.cell(line, 'K')
-      w.absent_day = ex.cell(line, 'L')
-      w.payable_day = ex.cell(line, 'M')
-      w.save!
-    end
-    puts "#{i} Record inserted.-----------------------------------------------"
-    i = i+1
+    workingday.cl_balance = ex.cell(line,'D').to_f
+    workingday.el_balance = ex.cell(line,'E').to_f
+    workingday.save
   end
-end
-
 end

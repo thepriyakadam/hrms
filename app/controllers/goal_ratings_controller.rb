@@ -177,6 +177,8 @@ class GoalRatingsController < ApplicationController
   end
 
   def subordinate_list_goal_wise
+    session[:active_tab] ="performancemgmt"
+    session[:active_tab1] ="perform_report"
   end
 
   def print_subordinate_list
@@ -215,6 +217,8 @@ class GoalRatingsController < ApplicationController
   def training_request
     @goal_ratings = GoalRating.where(goal_type: 'Goal',training_topic_master_id: nil)
     @attribute_ratings = GoalRating.where(goal_type: 'Attribute',training_topic_master_id: nil)
+    session[:active_tab] ="performancemgmt"
+    session[:active_tab1] ="perform_cycle"
   end
 
   def create_attribute_training
@@ -237,6 +241,8 @@ class GoalRatingsController < ApplicationController
   end
 
   def period_and_topic_wise_list
+    session[:active_tab] ="performancemgmt"
+    session[:active_tab1] ="perform_report"
   end
 
   def period_topic_wise_employee
@@ -307,6 +313,8 @@ class GoalRatingsController < ApplicationController
 
   def trainee_list
     @trainees = Trainee.all
+    session[:active_tab] ="performancemgmt"
+    session[:active_tab1] ="perform_report"
   end
 
   def print_employee_detail

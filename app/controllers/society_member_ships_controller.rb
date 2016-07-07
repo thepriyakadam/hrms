@@ -6,7 +6,7 @@ class SocietyMemberShipsController < ApplicationController
   def index
     @society_member_ships = SocietyMemberShip.all
      session[:active_tab] ="payroll"
-     session[:active_tab1] ="deductionreport"
+     session[:active_tab1] ="montlyamount"
   end
 
   # GET /society_member_ships/1

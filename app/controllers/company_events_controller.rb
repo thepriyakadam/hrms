@@ -16,6 +16,7 @@ class CompanyEventsController < ApplicationController
   def new
     @company_event = CompanyEvent.new
     @company_events = CompanyEvent.all
+    session[:active_tab] = "company"
   end
 
   # GET /company_events/1/edit

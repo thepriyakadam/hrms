@@ -171,6 +171,15 @@ ActiveRecord::Schema.define(version: 20160705195945) do
   add_index "attribute_rating_sheets", ["final_id_id"], name: "index_attribute_rating_sheets_on_final_id_id"
   add_index "attribute_rating_sheets", ["final_rating_id"], name: "index_attribute_rating_sheets_on_final_rating_id"
 
+  create_table "attributes", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
+    t.text     "definition"
+    t.boolean  "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "awards", force: :cascade do |t|
     t.integer  "employee_id"
     t.string   "award_name"

@@ -27,7 +27,6 @@ class DegreesController < ApplicationController
       end
     end
 end
-
   # PATCH/PUT /degrees/1
   # PATCH/PUT /degrees/1.json
   def update

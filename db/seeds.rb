@@ -1,15 +1,14 @@
 require 'roo'
+ex = Roo::Excel.new("#{Rails.root}/public/jun.xls")
 
-ex = Roo::Excel.new("#{Rails.root}/public/june.xls")
-
-ex.default_sheet = ex.sheets[0]
+ex.default_sheet = ex.sheets[1]
 
 i = 1
 gross_salary = 0
 ActiveRecord::Base.transaction do
 #2.upto(372) do |line|
 
-2.upto(370) do |line|
+2.upto(369) do |line|
 
   puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
@@ -31,11 +30,11 @@ ActiveRecord::Base.transaction do
       w.week_off_day = ex.cell(line, 'K')
       w.absent_day = ex.cell(line, 'L')
       w.payable_day = ex.cell(line, 'M')
+      w.coff_leave = ex.cell(line, 'N')
       w.save!
     end
     puts "#{i} Record inserted.-----------------------------------------------"
     i = i+1
   end
 end
-
 end

@@ -25,15 +25,12 @@ require 'roo'
 # end
 
 
-ex = Roo::Excel.new("#{Rails.root}/public/june.xls")
+ex = Roo::Excel.new("#{Rails.root}/public/leave siya.xls")
 ex.default_sheet = ex.sheets[0]
-i = 1
-gross_salary = 0
-ActiveRecord::Base.transaction do
-2.upto(369) do |line|
+2.upto(93) do |line|
   puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
-  workingday = Workingday.where(month_name: "May", year: "2016", employee_id: @employee.id).take
+  workingday = Workingday.where(month_name: "January", year: "2016", employee_id: @employee.id).take
   unless workingday.nil?
     workingday.cl_leave = ex.cell(line,'B').to_f
     workingday.el_leave = ex.cell(line,'C').to_f

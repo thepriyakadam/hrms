@@ -28,7 +28,6 @@ class NominationMastersController < ApplicationController
   # POST /nomination_masters.json
   def create
     @nomination_master = NominationMaster.new(nomination_master_params)
-
       if @nomination_master.save
         @flag = true
         @nomination_master = NominationMaster.new
@@ -53,9 +52,8 @@ class NominationMastersController < ApplicationController
   # DELETE /nomination_masters/1
   # DELETE /nomination_masters/1.json
   def destroy
-   @nomination_master.destroy
-    @nomination_masters = NominationMaster.all
-    
+     @nomination_master.destroy
+     @nomination_masters = NominationMaster.all
   end
 
   private

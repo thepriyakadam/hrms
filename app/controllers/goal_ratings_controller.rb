@@ -127,25 +127,31 @@ class GoalRatingsController < ApplicationController
   end
 
   def goal_modal
-    @goal_rating = GoalRating.find(params[:format])
+    @goal_rating = GoalRating.find(params[:goal_rating_id])
+    @period = Period.find(params[:period_id])
   end
 
   def update_goal_modal
     @goal_rating = GoalRating.find(params[:goal_rating_id])
+    @period = Period.find(params[:period_id])
+
     @goal_rating.update(goal_rating_params)
     flash[:notice] = 'Updated Successfully'
-    redirect_to goal_approval_goal_bunches_path(emp_id: @goal_rating.appraisee_id, id: @goal_rating.goal_bunch_id)
+    redirect_to goal_approval_goal_bunches_path(emp_id: @goal_rating.appraisee_id, id: @goal_rating.goal_bunch_id,period_id: @period.id)
   end
 
   def attribute_modal
-    @goal_rating = GoalRating.find(params[:format])
+    @goal_rating = GoalRating.find(params[:goal_rating_id])
+    @period = Period.find(params[:period_id])
   end
 
   def update_attribute_modal
     @goal_rating = GoalRating.find(params[:goal_rating_id])
+    @period = Period.find(params[:period_id])
+    
     @goal_rating.update(goal_rating_params)
     flash[:notice] = 'Updated Successfully'
-    redirect_to goal_approval_goal_bunches_path(emp_id: @goal_rating.appraisee_id, id: @goal_rating.goal_bunch_id)
+    redirect_to goal_approval_goal_bunches_path(emp_id: @goal_rating.appraisee_id, id: @goal_rating.goal_bunch_id,period_id: @period.id)
   end
   
   def print_department
@@ -177,6 +183,8 @@ class GoalRatingsController < ApplicationController
   end
 
   def subordinate_list_goal_wise
+    session[:active_tab] ="performancemgmt"
+    session[:active_tab1] ="perform_report"
   end
 
   def print_subordinate_list
@@ -215,6 +223,8 @@ class GoalRatingsController < ApplicationController
   def training_request
     @goal_ratings = GoalRating.where(goal_type: 'Goal',training_topic_master_id: nil)
     @attribute_ratings = GoalRating.where(goal_type: 'Attribute',training_topic_master_id: nil)
+    session[:active_tab] ="performancemgmt"
+    session[:active_tab1] ="perform_cycle"
   end
 
   def create_attribute_training
@@ -237,6 +247,8 @@ class GoalRatingsController < ApplicationController
   end
 
   def period_and_topic_wise_list
+    session[:active_tab] ="performancemgmt"
+    session[:active_tab1] ="perform_report"
   end
 
   def period_topic_wise_employee
@@ -300,6 +312,8 @@ class GoalRatingsController < ApplicationController
 
   def trainee_list
     @trainees = Trainee.all
+    session[:active_tab] ="performancemgmt"
+    session[:active_tab1] ="perform_report"
   end
 
   def print_employee_detail

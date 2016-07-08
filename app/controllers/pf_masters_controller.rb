@@ -55,12 +55,10 @@ class PfMastersController < ApplicationController
 
   # DELETE /pf_masters/1
   # DELETE /pf_masters/1.json
+
   def destroy
     @pf_master.destroy
-    respond_to do |format|
-      format.html { redirect_to pf_masters_url, notice: 'Pf master was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    @pf_masters = PfMaster.all
   end
 
   private

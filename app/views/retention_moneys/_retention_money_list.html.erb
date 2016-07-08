@@ -16,8 +16,8 @@
         <td><%= retention_money.no_of_month %></td>
         <td><%= retention_money.description %></td>
         <td>
-          <%= link_to '', edit_retention_money_path(retention_money),class: 'btn btn-sm btn-success fa fa-edit',remote:true %>
-          <%= link_to '',  retention_money, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-sm btn-danger fa fa-close' %>
+          <%= link_to '', edit_retention_money_path(retention_money),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
+          <%= link_to '',  retention_money, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-xs btn-danger fa fa-close' %>
         </td>
       </tr>
     <% end %>

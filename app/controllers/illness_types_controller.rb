@@ -3,9 +3,6 @@ class IllnessTypesController < ApplicationController
 
   # GET /illness_types
   # GET /illness_types.json
-  def index
-    @illness_types = IllnessType.all
-  end
 
   # GET /illness_types/1
   # GET /illness_types/1.json

@@ -1,13 +1,13 @@
 <div class="modal-dialog">
   <div class="modal-content">
-    <div class="modal-body" style="height:1000px; max-height:120px; width:630px; max-width:630px;">
-     <%= bootstrap_form_for :trainee,url:{action:"update_feedback",id: @trainee.id},html: {id: 'trainee'} do |f| %>
+    <div class="modal-body" style="height:1000px; max-height:100px; width:630px; max-width:630px;">
+     <%= bootstrap_form_for :training_request,url:{action:"approve_training_request",id: @training_request.id},html: {id: 'training_request'} do |f| %>
         <div class="row">
           <div class="col-sm-6">
-            <%= f.text_area :feedback,label: 'Feedback' %>
+            <%= f.text_field :comment,label: 'Comment' %>
           </div>
-          <div class="col-sm-3" style="padding-top:60px;">
-            <%= f.submit "Update Feedback", class: 'btn btn-sm btn-warning fa fa-modx' %>
+          <div class="col-sm-3" style="padding-top:20px;">
+            <%= f.submit "Update Comment", class: 'btn btn-sm btn-primary fa fa-modx' %>
           </div>
         </div>
       <% end %>

@@ -2,7 +2,7 @@ class SalaryReport
     attr_accessor :employee_name, :department_name, :code, :pf_no, :esic_no,
                   :actual_basic, :actual_da, :actual_hra, :actual_convenience, :actual_other, :actual_special, :actual_washing, :actual_total,
                   :earned_basic, :earned_da, :earned_hra, :earned_convenience, :earned_other, :earned_special, :earned_washing, :earned_total,
-                  :pf, :esic, :income_tax, :pt, :advance, :society, :food_deduction, :mobile, :retention, :deduction_total, :net_payable,
+                  :pf, :esic, :income_tax, :pt, :advance, :society, :food_deduction, :mobile, :retention, :welfair, :deduction_total, :net_payable,
                   :total_leave, :cl_leave, :el_leave, :lwp_leave, :day_in_month, :payable_day, :present_day, :absent_day, :holiday, :weekoff, :month, :year,
                   :pf_ctc, :esic_ctc, :bonus_ctc
 
@@ -74,6 +74,8 @@ class SalaryReport
               sr.mobile = d.calculated_amount
               when "Retention"
               sr.retention = d.calculated_amount
+              when "Well Faire"
+              sr.welfair = d.calculated_amount
             end
         end
       
@@ -240,6 +242,9 @@ class SalaryReport
     array_retention = reports.collect {|r| r.try(:retention)}.compact
     @sum.retention = array_retention.inject(0){|sum,x| sum + x }
 
+    array_wf = reports.collect {|r| r.try(:welfair)}.compact
+    @sum.welfair = array_wf.inject(0){|sum,x| sum + x }
+
     array_deduction_total = reports.collect {|r| r.try(:deduction_total)}.compact
     @sum.deduction_total = array_deduction_total.inject(0){|sum,x| sum + x }
 
@@ -391,6 +396,8 @@ class SalaryReport
         sr.mobile = d.calculated_amount
         when "Retention"
         sr.retention = d.calculated_amount
+        when "Well Faire"
+        sr.welfair = d.calculated_amount
       end
     end
       

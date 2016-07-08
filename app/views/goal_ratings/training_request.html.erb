@@ -1,6 +1,6 @@
 <div class="box">
   <div class="box-header">
-    <h3 class="box-title">Employee List</h3>
+    <h3 class="box-title">Training Assessment</h3>
     <div class="pull-right">  
     </div>
   </div>
@@ -10,7 +10,7 @@
         <thead>
         <tr><td colspan="6"><center> Employee Goal Details for Training </center></td></tr>
           <tr>
-            <th>Employee Id</th>
+            <th>Employee ID</th>
             <th>Name</th>
             <th>Goal</th>
             <th>Rating</th>
@@ -27,7 +27,7 @@
             <td><%= a.goal_perspective.try(:name) %></td>
             <td><%= a.appraiser_rating_id %></td>
             <td><%= select_tag :training_topic_master_id,options_for_select(all_training_topic),{class: "form-control",include_blanck: "Select Training Topic",hide_label: true,value: a.training_topic_master_id} %></td>
-            <td><%= f.submit "+", class: 'btn btn-info btn-sm fa fa-user-plus' %></td>
+            <td><%= f.submit "Confirm Training", class: 'btn btn-info btn-sm fa fa-user-plus' %></td>
             <% end %>
           </tr>
           <% end %>
@@ -39,7 +39,7 @@
         <thead>
         <tr><td colspan="6"><center> Employee Attribute Details for Training </center></td></tr>
           <tr>
-            <th>Employee Id</th>
+            <th>Employee ID</th>
             <th>Name</th>
             <th>Attribute</th>
             <th>Rating</th>
@@ -56,7 +56,7 @@
             <td><%= a.attribute_master.try(:name) %></td>
             <td><%= a.appraiser_rating_id %></td>
             <td><%= select_tag :training_topic_master_id,options_for_select(all_training_topic),{class: "form-control",include_blanck: "Select Training Topic",hide_label: true,value: a.training_topic_master_id} %></td>
-            <td><%= f.submit "+", class: 'btn btn-info btn-sm fa fa-user-plus' %></td>
+            <td><%= f.submit "Confirm Training", class: 'btn btn-info btn-sm fa fa-user-plus' %></td>
             <% end %>
           </tr>
           <% end %>

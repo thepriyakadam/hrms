@@ -30,18 +30,15 @@
               <div class="input-group-addon">
                 <i class="fa fa-clock-o"></i>
               </div>
-              <%= f.text_field :time,hide_label: true, class: "timepicker", placeholder: 'Time'%>
+              <%= f.text_field :task_time,hide_label: true, class: "timepicker", placeholder: 'Time'%>
             </div><!-- /.input group -->
           </div><!-- /.form group -->
         </div>
       </div>
     </div>
- 
-
-   
     <div class="col-sm-1">
       <div class="field">
-        <%= f.check_box :status ,label: "Status" %>
+        <%= f.check_box :status ,label: "Active" %>
       </div>
     </div>
 

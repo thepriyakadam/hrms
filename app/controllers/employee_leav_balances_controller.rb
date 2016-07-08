@@ -89,7 +89,7 @@ class EmployeeLeavBalancesController < ApplicationController
       column(:Leave_Category, sortable:true){|employee_leav_balance| employee_leav_balance.leav_category.try(:name)}
       column(:Leave_Balance, sortable:true){|employee_leav_balance| employee_leav_balance.try(:no_of_leave)}
       column(:Expiry_Date, sortable:true){|employee_leav_balance| employee_leav_balance.try(:expiry_date)}
-      column(:Toata_Leave, sortable:true){|employee_leav_balance| employee_leav_balance.try(:total_leave)}
+      column(:Total_Leave, sortable:true){|employee_leav_balance| employee_leav_balance.try(:total_leave)}
     end    
   end
 

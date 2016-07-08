@@ -1,4 +1,3 @@
-
 <%= bootstrap_form_for(@employee_task_to_do,remote: true,html: {id: "employee_task_to_do"}) do |f| %>
   <%= f.hidden_field :employee_id, value: current_user.employee_id%>
 

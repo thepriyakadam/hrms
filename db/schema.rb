@@ -292,13 +292,6 @@ ActiveRecord::Schema.define(version: 20160705195945) do
   add_index "capture_resumes", ["state_id"], name: "index_capture_resumes_on_state_id"
   add_index "capture_resumes", ["vacancy_master_id"], name: "index_capture_resumes_on_vacancy_master_id"
 
-  create_table "cars", force: :cascade do |t|
-    t.string   "name"
-    t.string   "color"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "certifications", force: :cascade do |t|
     t.integer  "employee_id"
     t.integer  "year_id"
@@ -722,12 +715,8 @@ ActiveRecord::Schema.define(version: 20160705195945) do
     t.string   "allign_to_supervisor"
     t.boolean  "is_confirm"
     t.string   "emp_head"
-    t.integer  "appraiser_id"
-    t.integer  "appraiser2_id"
   end
 
-  add_index "employee_goals", ["appraiser2_id"], name: "index_employee_goals_on_appraiser2_id"
-  add_index "employee_goals", ["appraiser_id"], name: "index_employee_goals_on_appraiser_id"
   add_index "employee_goals", ["employee_id"], name: "index_employee_goals_on_employee_id"
   add_index "employee_goals", ["goal_perspective_id"], name: "index_employee_goals_on_goal_perspective_id"
   add_index "employee_goals", ["period_id"], name: "index_employee_goals_on_period_id"

@@ -1,12 +1,12 @@
 <div class="modal-dialog">
   <div class="modal-content">
-    <div class="modal-body" style="height:1000px; max-height:100px; width:630px; max-width:630px;">
+    <div class="modal-body" style="height:1000px; max-height:120px; width:630px; max-width:630px;">
      <%= bootstrap_form_for :training_request,url:{action:"approve_training_request",id: @training_request.id},html: {id: 'training_request'} do |f| %>
         <div class="row">
           <div class="col-sm-6">
-            <%= f.text_field :comment,label: 'Comment' %>
+            <%= f.text_area :comment,label: 'Comment',placeholder: "Please Enter Reason For Approval/Reject" %>
           </div>
-          <div class="col-sm-3" style="padding-top:20px;">
+          <div class="col-sm-3" style="padding-top:40px;">
             <%= f.submit "Update Comment", class: 'btn btn-sm btn-primary fa fa-modx' %>
           </div>
         </div>
@@ -16,15 +16,15 @@
   </div>
 </div>
 <script>
-$("#trainee").validate({
+$("#training_request").validate({
     rules: {
-      "trainee[feedback]":{
+      "training_request[comment]":{
         required: true,
       }
     },
     messages: {
-      "trainee[feedback]":{
-        required: "Please Specify Feedback",
+      "training_request[comment]":{
+        required: "Please Specify Comment",
       }
       
     },

@@ -93,7 +93,7 @@ class TrainingPlansController < ApplicationController
   end
 
   def trainee_list
-     @trainees = Trainee.all
+     @trainees = Trainee.where(employee_id: current_user.employee_id)
      session[:active_tab] ="selfservice"
   end
 

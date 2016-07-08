@@ -17,7 +17,17 @@
         <td><%= pf_master.percentage %></td>
         <td><%= pf_master.date_effective %></td>
         <td><%= pf_master.min_limit %></td>
-        <td><%= pf_master.base_component %></td>
+        <td>
+          <% i = 0 %>
+          <% pf_master.base_component.split(",").each do |e| %>
+            <% if i == 0 %>
+              <%= SalaryComponent.find(e.to_i).name %>
+            <% else %>
+              + <%= SalaryComponent.find(e.to_i).name %>
+            <% end %>
+            <% i = i + 1 %>
+          <% end %>
+        </td>
         <td><%= pf_master.is_active ? "Yes" : "No" %></td>
         <td>
           <%= link_to '', edit_pf_master_path(pf_master) ,class: 'btn btn-xs btn-success fa fa-edit',remote:true %>

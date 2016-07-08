@@ -250,9 +250,11 @@ end
     collection do
       get :training_request_list
       get :training_request_confirmation
-      get :approve_training_request
-      get :reject_training_request
+      post :approve_training_request
+      post :reject_training_request
       get :confirmation_list
+      get :modal_approver_comment
+      get :modal_reject_comment
     end
   end
   resources :selected_resumes  do

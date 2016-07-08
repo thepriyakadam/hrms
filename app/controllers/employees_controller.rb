@@ -241,6 +241,7 @@ class EmployeesController < ApplicationController
 
   def ajax_physical_detail
     @employee_physical = EmployeePhysical.new
+    puts '--------------------------------------------------------------------------------'
   end
 
   def ajax_family_detail

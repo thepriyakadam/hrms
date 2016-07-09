@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160705195945) do
+ActiveRecord::Schema.define(version: 20160708113856) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -918,7 +918,7 @@ ActiveRecord::Schema.define(version: 20160705195945) do
     t.text     "task_name"
     t.date     "task_date"
     t.boolean  "status"
-    t.time     "task_time"
+    t.string   "time"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
@@ -2150,6 +2150,15 @@ ActiveRecord::Schema.define(version: 20160705195945) do
   add_index "selected_resumes", ["degree_id"], name: "index_selected_resumes_on_degree_id"
   add_index "selected_resumes", ["vacancy_master_id"], name: "index_selected_resumes_on_vacancy_master_id"
 
+  create_table "setting_masters", force: :cascade do |t|
+    t.string   "date"
+    t.string   "precision"
+    t.string   "timeformat"
+    t.string   "email"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "shift_rotations", force: :cascade do |t|
     t.integer  "company_shift_id"
     t.date     "start_date"
@@ -2254,7 +2263,6 @@ ActiveRecord::Schema.define(version: 20160705195945) do
 
   create_table "training_plans", force: :cascade do |t|
     t.date     "training_date"
-    t.string   "topic"
     t.string   "no_of_employee"
     t.string   "trainer_name"
     t.string   "no_of_days"
@@ -2287,7 +2295,6 @@ ActiveRecord::Schema.define(version: 20160705195945) do
 
   create_table "training_requests", force: :cascade do |t|
     t.integer  "employee_id"
-    t.string   "training_topic"
     t.string   "training_period"
     t.date     "training_date"
     t.integer  "reporting_master_id"
@@ -2299,6 +2306,7 @@ ActiveRecord::Schema.define(version: 20160705195945) do
     t.string   "place"
     t.text     "justification"
     t.string   "status"
+    t.text     "comment"
   end
 
   add_index "training_requests", ["employee_id"], name: "index_training_requests_on_employee_id"
@@ -2429,7 +2437,6 @@ ActiveRecord::Schema.define(version: 20160705195945) do
     t.integer  "degree_id"
     t.string   "experience"
     t.string   "keyword"
-    t.string   "others"
     t.string   "other_organization"
     t.string   "industry"
     t.integer  "degree_1_id"

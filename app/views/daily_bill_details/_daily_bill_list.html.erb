@@ -3,10 +3,10 @@
   <thead>
     <tr>  
       <th><input type="checkbox" id="selectAll" value="selectAll"></th>
-      <th>Expence Date</th>
+      <th>Expense Date</th>
       <th>E Place</th>
-      <th>Travel Expence Type</th>
-      <th>Travel Expence</th>
+      <th>Travel Expense Type</th>
+      <th>Travel Expense</th>
       <th>Currency</th>
       <th>Download Doc</th>
       <th>Download Image</th>
@@ -62,8 +62,8 @@
         <%= f.submit "Confirm", class: 'btn btn-primary btn-sm' %> |
 
         <%= link_to 'Print PDF', print_daily_bill_daily_bill_details_path(format: 'pdf',qwe:@travel_request.id ),class: 'btn btn-xl btn-warning',:target => '_blank' %><br>
-        <%= link_to 'Send Request',class: 'btn btn-xl btn-warning' %><br>
-        <br>
+       <!--  <= link_to 'Send Request',class: 'btn btn-xl btn-warning' %><br>
+        <br> -->
         <%= link_to 'Back', daily_bill_travel_requests_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
 
       </div>

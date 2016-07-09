@@ -214,6 +214,10 @@ class GoalBunchesController < ApplicationController
 
     @appraiser_goal_ratings = GoalRating.where(appraisee_id: @employee.id, goal_bunch_id: @goal_bunch_id.id, goal_type: 'Goal').where.not(appraiser_comment: nil)
     @appraiser_attribute_ratings = GoalRating.where("goal_bunch_id = ? AND goal_type = ?", @goal_bunch_id.id ,'Attribute').where.not(appraiser_comment: nil)
+
+    appraiser_goal_sum = GoalRating.appraiser_goal_sum(@appraiser_goal_ratings)
+    appraiser_attribute_sum = GoalRating.appraiser_attribute_sum(@appraiser_attribute_ratings)
+
     @goal_rating = GoalRating.new
     
     @goal_bunch = GoalBunch.where(employee_id: @employee.id, appraisee_confirm: true, id: @goal_bunch_id.id).take

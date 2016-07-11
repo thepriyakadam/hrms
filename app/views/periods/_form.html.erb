@@ -32,9 +32,9 @@
     </div>
 
     <div class="col-sm-3">
-      <label></label>
+      <label>Status: </label>
       <div class="field">
-        <%= f.check_box :status %>
+        <%= f.check_box :status, label: 'Active'%>
       </div>
     </div>
   </div>
@@ -46,7 +46,7 @@
       </div>
     </div>
   </div>
-
+<br>
 <% end %>
 
 <script type="text/javascript">

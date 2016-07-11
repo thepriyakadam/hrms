@@ -1,5 +1,6 @@
 require 'roo'
 
+
 # ex = Roo::Excel.new("#{Rails.root}/public/slip.xls")
 # ex.default_sheet = ex.sheets[0]
 # 2.upto(356) do |line|
@@ -23,20 +24,23 @@ require 'roo'
 #   end
 # end
 
-ex = Roo::Excel.new("#{Rails.root}/public/slip.xls")
-ex.default_sheet = ex.sheets[0]
-2.upto(356) do |line|
-  puts "Starting Record #{ex.cell(line,'A')}---------------"
+
+ex = Roo::Excel.new("#{Rails.root}/public/leave.xls")
+
+ex.default_sheet = ex.sheets[5]
+
+3.upto(370) do |line|
+
+  puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
 
-  workingday = Workingday.where(month_name: "January", year: "2016", employee_id: @employee.id).take
+  workingday = Workingday.where(month_name: "June", year: "2016", employee_id: @employee.id).take
   unless workingday.nil?
-    workingday.cl_leave = ex.cell(line,'E').to_f
-    workingday.el_leave = ex.cell(line,'F').to_f
+    workingday.cl_leave = ex.cell(line,'D').to_f
+    workingday.el_leave = ex.cell(line,'E').to_f
 
-    workingday.cl_balance = ex.cell(line,'G').to_f
-    workingday.el_balance = ex.cell(line,'H').to_f
+    workingday.cl_balance = ex.cell(line,'F').to_f
+    workingday.el_balance = ex.cell(line,'G').to_f
     workingday.save
   end
-
 end

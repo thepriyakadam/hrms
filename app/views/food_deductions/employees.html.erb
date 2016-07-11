@@ -26,7 +26,7 @@
       <% @food_deductions.each do |food_deduction| %>
         <tr>
           <td><%= food_deduction.employee.try(:manual_employee_code) %></td>
-          <td><%= food_deduction.employee.try(:first_name) %> <%= food_deduction.employee.try(:last_name) %></td>
+          <td><%= full_name(food_deduction.employee) %></td>
           <td><%= food_deduction.food_date %></td>
           <td><%= food_deduction.no_of_coupan %></td>
           <td><%= food_deduction.return_coupan %></td>

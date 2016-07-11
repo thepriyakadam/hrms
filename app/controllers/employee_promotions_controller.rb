@@ -108,6 +108,7 @@ class EmployeePromotionsController < ApplicationController
 
   def employee_list
       @employees = Employee.all
+      session[:active_tab] = "promotionmanagement"
   end
 
   def print_promotion_excel

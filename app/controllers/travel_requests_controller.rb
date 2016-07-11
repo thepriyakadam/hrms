@@ -148,12 +148,12 @@ class TravelRequestsController < ApplicationController
   end
 
   def travel_request_list
-     if current_user.role.name == 'Company'
+    if current_user.role.name= 'Company'
       @travel_requests = TravelRequest.all
     else
       @travel_requests = TravelRequest.where(employee_id: current_user.employee_id)
     end
-    session[:active_tab] ="travelmgmt"
+    session[:active_tab]="travelmgmt"
   end
 
   def edit_and_send_next_modal
@@ -189,9 +189,9 @@ class TravelRequestsController < ApplicationController
     redirect_to daily_bill_travel_requests_path
   end
 
-  def travel_request_list
-     @travel_requests = TravelRequest.where(reporting_master_id: current_user.employee_id)
-  end
+  # def travel_request_list
+  #    @travel_requests = TravelRequest.where(reporting_master_id: current_user.employee_id)
+  # end
 
   private
     # Use callbacks to share common setup or constraints between actions.

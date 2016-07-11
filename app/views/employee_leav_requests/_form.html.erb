@@ -60,20 +60,20 @@
       <div class="row">
       <div class="col-sm-1"></div>
         <div class="col-sm-3">
-          <div class="field">
+          <div class="form-group required">
             <%= f.select :leav_category_id, all_leav_category %>
           </div>
         </div>
 
         <div class="col-sm-3">
-          <div class="field">
+          <div class="form-group required">
            <%= f.select :leave_type, ['Full Day','Half Day'] %>
           </div>
         </div>
 
         <div class="col-sm-4">
         <label>Date Range </label>
-          <div class="form-group">
+          <div class="form-group required">
             <div class="input-group">
               <div class="input-group-addon">
                 <i class="fa fa-calendar"></i>
@@ -86,7 +86,7 @@
       <div class="row">
       <div class="col-sm-1"></div>
         <div class="col-sm-9">
-          <div class="field">
+          <div class="form-group required">
             <%= f.text_area :reason %>
           </div>
         </div>
@@ -107,9 +107,44 @@
 </div><!-- /.box -->
 
 <script type="text/javascript">
+$("#employee_leav_request").validate({
+    rules: {
+      "employee_leav_request[leav_category_id]":{
+        required: true
+      },
+      "employee_leav_request[leave_type]":{
+        required: true
+      },
+      "employee_leav_request[date_range]":{
+        required: true
+      },
+      "employee_leav_request[reason]":{
+        required: true
+      }
+    },
+    messages: {
+      "employee_leav_request[leav_category_id]":{
+        required: "Please specify leave category."
+      },
+      "employee_leav_request[leave_type]":{
+        required: "Please specify leave type."
+      },
+      "employee_leav_request[date_range]":{
+        required: "Please specify date range."
+      },
+      "employee_leav_request[reason]":{
+        required: "Please specify reason."
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+  });
   $(function(){
     $('#reservationtime').on('click', function() {
     
     });
+
   });
 </script>

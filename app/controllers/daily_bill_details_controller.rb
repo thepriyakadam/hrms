@@ -142,7 +142,7 @@ end
     @daily_bill_detail_ids = params[:daily_bill_detail_ids]
     if @daily_bill_detail_ids.nil?
       flash[:alert] = "Please Select the Checkbox"
-      redirect_to daily_bill_history_daily_bill_details_path
+      redirect_to travel_request_list_daily_bill_details_path
     else
       @daily_bill_detail_ids.each do |did|
       @daily_bill_detail = DailyBillDetail.find(did)

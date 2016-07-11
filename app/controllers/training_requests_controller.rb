@@ -104,7 +104,7 @@ class TrainingRequestsController < ApplicationController
 
 
   def confirmation_list
-   @training_requests = TrainingRequest.where(employee_id: current_user.employee_id,status:"Approved")  
+   @training_requests = TrainingRequest.where(status:"Approved")  
   end
 
 

@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  resources :cars
+  resources :company_policies
   resources :date_formats do
     collection do 
     get :active
@@ -625,6 +625,7 @@ end
 
   match 'daily_bill_details/:id/download_doc/:id' => 'daily_bill_details#download_doc', :via => [:get], :as => :download_doc
   match 'daily_bill_details/:id/download_pics/:id' => 'daily_bill_details#download_pics', :via => [:get], :as => :download_pics
+  match 'company_policies/:id/download_docs/:id' => 'company_policies#download_docs', :via => [:get], :as => :download_docs
 
   resources :leave_c_offs
   resources :overtime_month_records

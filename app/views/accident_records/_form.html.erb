@@ -85,7 +85,7 @@
 
       <div class="col-sm-3">
         <div class="field">
-            <%= f.text_field :no_of_day,label: 'No of Days' %>
+            <%= f.text_field :no_of_day,label: 'No. of Days' %>
           </div>
         </div>
         <div class="col-sm-6">
@@ -98,7 +98,7 @@
       <div class="row">
        <div class="col-sm-3">
       <div class="field">
-        <%= f.file_field :avatar,label: 'Photo Upload' %>
+        <%= f.file_field :avatar,label: 'Upload Photo' %>
       </div>
       </div> 
       </div><br>
@@ -106,7 +106,9 @@
       <div class="row">
         <div class="col-sm-3">
           <div class="actions">
-            <%= f.submit :class => class_name, data: { disable_with: data_info } %>
+            <%= f.submit'Create Accident Record', :class => class_name, data: { disable_with: data_info } %>
+            <%= link_to 'Back', accident_records_path,class:'btn btn-sm btn-default fa fa-arrow-left' %>
+
           </div>
         </div>
     </div>

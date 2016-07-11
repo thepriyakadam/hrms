@@ -21,7 +21,7 @@
         <th><strong>Training Period</strong></th>
         <td><%= @training_request.training_period %></td>
      
-        <th><strong>Training Date</strong></th>
+        <th><strong>Request Date</strong></th>
         <td><%= @training_request.training_date %></td>
       </tr>
 
@@ -72,8 +72,8 @@
   </tbody>
 </table><br>
   
-  <%= link_to 'Approve',modal_approver_comment_training_requests_path(@training_request.id),class: 'btn btn-sm btn-info fa fa-check',remote: true %> |
-  <%= link_to 'Reject',modal_reject_comment_training_requests_path(@training_request.id),class: 'btn btn-sm btn-danger fa fa-trash',remote: true %>
+  <%= link_to ' Comment & Approve',modal_approver_comment_training_requests_path(@training_request.id),class: 'btn btn-sm btn-info fa fa-check',remote: true %> |
+  <%= link_to ' Comment & Reject',modal_reject_comment_training_requests_path(@training_request.id),class: 'btn btn-sm btn-danger fa fa-trash',remote: true %>
     </td>
   </div>
 </div>

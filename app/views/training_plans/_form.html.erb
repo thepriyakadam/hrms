@@ -23,8 +23,8 @@
         <div class="form-group required">
          <div class="input-group">
         <div class="input-group-addon">
-                <%= link_to "", new_training_topic_master_path,class: "fa fa-plus fa-success",:target => "_blank" %>
-              </div>
+            <%= link_to "", new_training_topic_master_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+        </div>
           <%= f.select :training_topic_master_id, all_training_course,{hide_label: true,include_blank: " Select Topics"}%>
         </div>
         </div>
@@ -42,9 +42,9 @@
   </div>
   <div class="row">
     <div class="col-sm-3">
-      <div class="field">
+    <div class="field">
         <%= f.text_field :no_of_days,placeholder: 'No of Days' %>
-      </div>
+    </div>
     </div>
     <div class="col-sm-3">
       <div class="field">

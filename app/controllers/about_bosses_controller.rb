@@ -4,6 +4,7 @@ class AboutBossesController < ApplicationController
   # GET /about_bosses
   # GET /about_bosses.json
   def index
+    @about_boss = AboutBoss.new
     @about_bosses = AboutBoss.all
   end
 

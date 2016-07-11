@@ -11,7 +11,7 @@
         <thead>
           <tr>
             <th>Employee Name</th>
-            <th><%= @employee_attendances.first.day %>
+            <th><%= @employee_attendances.first.try(:day) %>
           </tr>
         </thead>
 

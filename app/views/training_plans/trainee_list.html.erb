@@ -8,7 +8,8 @@
   <thead>
     <tr>
       <th>Sr.No</th>
-      <th>Employee Name</th>
+      <th>Training Topic</th>
+      <th>Trainer Name</th>
       <th>Feedback</th>
       <th>Action</th>
   </thead>
@@ -17,11 +18,12 @@
    <% @trainees.each do |trainee| %>
       <tr>
         <td><%= i=i+1 %></td>
-        <td><%= trainee.employee.try(:first_name) %> <%= trainee.employee.try(:middle_name) %> <%= trainee.employee.try(:last_name) %></td>
+        <td><%= trainee.training_plan.training_topic_master.try(:name) %></td>
+        <td><%= trainee.training_plan.trainer_name %></td>
         <td><%= trainee.feedback %></td>
         <div id="myModal" class="modal fade"></div>
         <td><%= link_to ' Give Feedback',modal_feedback_training_plans_path(trainee),class: 'btn btn btn-xs btn-success fa fa-modx',remote: true %>
-          <%= link_to '', training_details_list_training_plans_path(trainee),class: 'btn btn-xs btn-default fa fa-eye' %>
+          <!--<= link_to '', training_details_list_training_plans_path(trainee),class: 'btn btn-xs btn-default fa fa-eye' %>-->
         </td>
       </tr>
       <% end %>

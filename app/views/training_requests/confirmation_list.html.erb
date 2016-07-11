@@ -18,6 +18,7 @@
           <th>Reporting Master</th>
           <th>No. Of Employee</th>
           <th>Place</th>
+          <th>Comment</th>
           <th>Status</th>
           <th>Action</th>
         </tr>
@@ -34,7 +35,7 @@
             <td><%= training_request.reporting_master_id %></td>
             <td><%= training_request.no_of_employee %></td>
             <td><%= training_request.place %></td>
-            
+            <td><%= training_request.comment %></td>
             <td>
               <% if training_request.status == "Pending" %>
                 <%= link_to 'Approve / Reject',training_request_confirmation_training_requests_path(training_request),class: 'btn btn-sm btn-warning' %> 

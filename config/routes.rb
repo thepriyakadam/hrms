@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :cars
   resources :date_formats do
     collection do 
     get :active

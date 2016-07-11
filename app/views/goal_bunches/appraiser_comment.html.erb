@@ -111,7 +111,7 @@
   
 
   <% if  @goal_bunch.nil? %>
-  <center><p class="text-warning"> No Goal Bunch Available </p></center> 
+  <center><p class="text-warning"> No Goals Available </p></center> 
   <% else %>
 
 <div class="box box-default">
@@ -124,8 +124,8 @@
       <thead>
         <tr>
           <th>Goal Perspective</th>
-          <th>Goal Weightage</th>
-          <th>Goal Measure</th>
+          <th>Weightage</th>
+          <th>Measure</th>
           <th>Target/Unit</th>
           <th>Aligned</th>
           <th>Self Comment</th>
@@ -142,7 +142,7 @@
             <td><%= goal_rating.target %></td>
             <td><%= goal_rating.aligned %></td>
             <td><%= goal_rating.appraisee_comment %></td>
-            <td><%= text_field_tag 'appraiser_comments[]',"",class: "form-control" %></td>
+            <td><%= text_field_tag 'appraiser_comments[]',"",class: "form-control",autofocus: true %></td>
             <td><%= select_tag 'appraiser_ratings[]',options_for_select(all_rating_type),{class: "form-control", hide_label: true,include_blank: " Select Rating"} %></td>
             <%= hidden_field_tag 'goal_rating_ids[]',"",value: goal_rating.id %>
           </tr>
@@ -154,8 +154,8 @@
       <thead>
         <tr>
           <th>Attribute</th>
-          <th>Goal Weightage</th>
-          <th>Goal Measure</th>
+          <th>Weightage</th>
+          <th>Measure</th>
           <th>Target/Unit</th>
           <th>Aligned</th>
           <th>Self Comment</th>
@@ -204,8 +204,8 @@
       <thead>
         <tr>
           <th>Goal Perspective</th>
-          <th>Goal Weightage</th>
-          <th>Goal Measure</th>
+          <th>Weightage</th>
+          <th>Measure</th>
           <th>Target/Unit</th>
           <th>Aligned</th>
           <th>Self Comment</th>
@@ -245,8 +245,8 @@
       <thead>
         <tr>
           <th>Attribute</th>
-          <th>Goal Weightage</th>
-          <th>Goal Measure</th>
+          <th>Weightage</th>
+          <th>Measure</th>
           <th>Target/Unit</th>
           <th>Aligned</th>
           <th>Self Comment</th>
@@ -350,7 +350,7 @@
 
 <% end %>
 
-<%= link_to 'Back',period_list_appraiser_goal_bunches_path(emp_id: @employee.id),class: 'btn btn-sm btn-default'%>
+<%= link_to 'Back',period_list_appraiser_goal_bunches_path(emp_id: @employee.id),class: 'btn btn-sm btn-default fa fa-arrow-left' %>
 </div>
 </div>
 <div id="myModal" class="modal fade"></div>

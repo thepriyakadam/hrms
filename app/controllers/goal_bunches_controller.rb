@@ -265,7 +265,7 @@ class GoalBunchesController < ApplicationController
       else
         @goal_rating_ids.each do |eid|
         @goal_bunch = GoalBunch.find(eid)
- 
+
         @goal_bunch.update(appraiser_confirm: true)    
         flash[:notice] = "Confirmed Successfully"
         end

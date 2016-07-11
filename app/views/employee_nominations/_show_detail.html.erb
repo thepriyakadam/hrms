@@ -21,7 +21,7 @@
   <tbody>
     <% @employee_nominations.each do |employee_nomination| %>
       <tr>
-        <td><%= employee_nomination.nomination_master.name %></td>
+        <td><%= employee_nomination.nomination_master.try(:name) %></td>
         <td><%= employee_nomination.family.f_name %> <%= employee_nomination.family.m_name %> <%= employee_nomination.family.l_name %></td>
         <td><%= employee_nomination.nomination %></td>
         <td>

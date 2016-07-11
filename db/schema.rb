@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160705195945) do
+ActiveRecord::Schema.define(version: 20160709092553) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -170,6 +170,15 @@ ActiveRecord::Schema.define(version: 20160705195945) do
   add_index "attribute_rating_sheets", ["employee_attribute_id"], name: "index_attribute_rating_sheets_on_employee_attribute_id"
   add_index "attribute_rating_sheets", ["final_id_id"], name: "index_attribute_rating_sheets_on_final_id_id"
   add_index "attribute_rating_sheets", ["final_rating_id"], name: "index_attribute_rating_sheets_on_final_rating_id"
+
+  create_table "attributes", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
+    t.text     "definition"
+    t.boolean  "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "awards", force: :cascade do |t|
     t.integer  "employee_id"
@@ -382,6 +391,19 @@ ActiveRecord::Schema.define(version: 20160705195945) do
   add_index "company_locations", ["country_id"], name: "index_company_locations_on_country_id"
   add_index "company_locations", ["district_id"], name: "index_company_locations_on_district_id"
   add_index "company_locations", ["state_id"], name: "index_company_locations_on_state_id"
+
+  create_table "company_policies", force: :cascade do |t|
+    t.string   "name"
+    t.date     "effective_from"
+    t.date     "effective_to"
+    t.boolean  "status"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+    t.string   "document_file_name"
+    t.string   "document_content_type"
+    t.integer  "document_file_size"
+    t.datetime "document_updated_at"
+  end
 
   create_table "company_shifts", force: :cascade do |t|
     t.string   "code"
@@ -2254,7 +2276,6 @@ ActiveRecord::Schema.define(version: 20160705195945) do
 
   create_table "training_plans", force: :cascade do |t|
     t.date     "training_date"
-    t.string   "topic"
     t.string   "no_of_employee"
     t.string   "trainer_name"
     t.string   "no_of_days"
@@ -2287,7 +2308,6 @@ ActiveRecord::Schema.define(version: 20160705195945) do
 
   create_table "training_requests", force: :cascade do |t|
     t.integer  "employee_id"
-    t.string   "training_topic"
     t.string   "training_period"
     t.date     "training_date"
     t.integer  "reporting_master_id"
@@ -2299,6 +2319,7 @@ ActiveRecord::Schema.define(version: 20160705195945) do
     t.string   "place"
     t.text     "justification"
     t.string   "status"
+    t.text     "comment"
   end
 
   add_index "training_requests", ["employee_id"], name: "index_training_requests_on_employee_id"

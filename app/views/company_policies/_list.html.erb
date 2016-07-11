@@ -5,7 +5,7 @@
       <th>Effective from</th>
       <th>Effective to</th>
       <th>Status</th>
-      <th>Document</th>
+      <th>Download Document</th>
       <th>Action</th>
     </tr>
   </thead>
@@ -17,11 +17,16 @@
         <td><%= company_policy.effective_from %></td>
         <td><%= company_policy.effective_to %></td>
         <td><%= company_policy.status %></td>
-        <td><%=  %></td>
+        <td>
+           <% if company_policy.document_file_name == nil %>
+           <small class="label label-default">Document Not Available</small>
+             <% else %>
+             <%= link_to ' Document',download_docs_path(id: company_policy.id),class: 'btn btn-xs btn btn-info fa fa-download' %>
+             <% end %>
+        </td>
         <td>
          <%= link_to '', edit_company_policy_path(company_policy),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
-          <%= link_to '',  company_policy, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-xs fa fa-close',remote:true %>
-          
+         <%= link_to '',  company_policy, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-xs fa fa-close',remote:true %>
         </td>
       </tr>
     <% end %>

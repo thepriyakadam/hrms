@@ -3,9 +3,6 @@ class IllnessTypesController < ApplicationController
 
   # GET /illness_types
   # GET /illness_types.json
-  def index
-    @illness_types = IllnessType.all
-  end
 
   # GET /illness_types/1
   # GET /illness_types/1.json
@@ -26,17 +23,13 @@ class IllnessTypesController < ApplicationController
   # POST /illness_types.json
   def create
     @illness_type = IllnessType.new(illness_type_params)
-    @illness_types = IllnessType.all
-
-    respond_to do |format|
       if @illness_type.save
          @illness_type = IllnessType.new
-        format.json { @flag=true }
+         @illness_types = IllnessType.all
+         @flag=true 
       else
-        flash.now[:alert] = 'Illness Already exit '
-        format.js { @flag=false}
+         @flag=false
       end
-    end
   end
 
   # PATCH/PUT /illness_types/1

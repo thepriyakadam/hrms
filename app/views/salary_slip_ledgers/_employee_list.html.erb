@@ -7,7 +7,7 @@
       <th colspan="8"><center> SALARY DETAILS</center></th>
       <th colspan="8"><center> WORKING DAYS</center></th>
       <th colspan="8"><center> EARNED SALARY</center></th>
-      <th colspan="10"><center>DEDUCTION</center></th>
+      <th colspan="11"><center>DEDUCTION</center></th>
       <th><center> NET </center></th>
       <th><center> SIGN </center></th>
     </tr>
@@ -56,6 +56,7 @@
       <th>Food</th>
       <th>Mobile</th>
       <th>Retention</th>
+      <th>WF</th>
       <th>Total Dedu</th>
 
       <th>NET</th>
@@ -112,6 +113,7 @@
         <td><%= r.try(:food_deduction) %></td>
         <td><%= r.try(:mobile) %></td>
         <td><%= r.try(:retention) %></td>
+        <td><%= r.try(:welfair) %></td>
         <td><%= r.try(:deduction_total).round %></td>
         <td><%= r.try(:net_payable).round %></td>
         <td><%=  %></td>
@@ -163,6 +165,7 @@
       <td><%= @sum.food_deduction %></td>
       <td><%= @sum.mobile %></td>
       <td><%= @sum.retention %></td>
+      <td><%= @sum.welfair %></td>
       <td><%= @sum.deduction_total %></td>
 
       <td><%= @sum.net_payable.round.round %></td>

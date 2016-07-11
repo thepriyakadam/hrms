@@ -5,47 +5,76 @@
     </div>
     </div>
 <div class="box-body">
+<%= bootstrap_form_for DailyBillDetail.new,url:{action:'approve_request'} do |f| %>
+<%= bootstrap_form_for DailyBillDetail.new,url:{action:'reject_request'} do |r| %>
 <table id="example" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
+      <th><input type="checkbox" id="selectAll" value="selectAll"></th>
       <th>Travel Request ID</th>
-      <th>Expence Date</th>
-      <th>E Place</th>
+      <th>Expense Date</th>
+      <th>Place</th>
 
-      <th>Travel Expence</th>
-      <th>Local Travel Expence </th>
-      <th> Lodging Expence</th>
+      <th>Local Travel Expense </th>
+      <th>Lodging Expense</th>
 
-      <th>Boarding Expence</th>
-      <th>Other Expence</th>
-      <th>Travel Expence Type ID</th>
+      <th>Boarding Expense</th>
+      <th>Other Expense</th>
+      <th>Travel Expense Type ID</th>
+      <th>Comment</th>
+      <th>Status</th>
+      <th>Action</th>
     </tr>
   </thead>
 
   <tbody>
       <% @daily_bill_details.each do |daily_bill_detail| %>
       <tr>
-        <td><%= daily_bill_detail.travel_request %></td>
+        <td>
+            <%= check_box_tag "daily_bill_detail_ids[]", daily_bill_detail.id %>
+        </td>
+        <td><%= daily_bill_detail.travel_request_id %></td>
         <td><%= daily_bill_detail.expence_date %></td>
         <td><%= daily_bill_detail.e_place %></td>
-        <td><%= daily_bill_detail.travel_expence_type.try(:name) %></td>
         <td><%= daily_bill_detail.local_travel_expence %></td>
         <td><%= daily_bill_detail.lodging_expence %></td>
         <td><%= daily_bill_detail.boarding_expence %></td>
         <td><%= daily_bill_detail.other_expence %></td>
-        <td><%= daily_bill_detail.travel_expence_type %></td>
+        <td><%= daily_bill_detail.travel_expence_type.try(:name) %></td>
+        <td><%= daily_bill_detail.comment %></td>
+        <td>
+            <% if daily_bill_detail.request_status == "Approved" %>
+            <small class="label label-success">Approved</small>
+            <% else %>
+            <% end %>
+        </td>       
+        <td>
+        <!--<= link_to 'Edit & Send Next', edit_and_send_next_modal_daily_bill_details_path(daily_bill_detail),class: 'btn btn-sm btn-info fa fa-check', remote: true %>-->
+        <%= link_to 'Comment', comment_modal_daily_bill_details_path(daily_bill_detail),class: 'btn btn-sm btn-info fa fa-check', remote: true %>
+        <%= link_to 'Reject', reject_request_daily_bill_details_path(daily_bill_detail),class: 'btn btn-sm btn-danger' %>
+        </td>
       </tr>
       <% end %>
   </tbody>
 </table>
+
+<div class="row">
+  <div class="col-sm-3">
+    <div class="actions">
+      <%= f.submit "Approve Request", class: 'btn btn-info btn-sm' %>
+      <%= r.submit "Reject Request", class: 'btn btn-danger btn-sm' %>
+    </div>
+  </div>
+</div>
+<% end %>
+<% end %>
   <div class="box-header">
     <h3 class="box-title">Daily Bill Request Details</h3>
     <div class="pull-right">
     </div>
   </div>
 <div>
-    
-    </div>
+</div>
 </div>
 </div>
 
@@ -56,5 +85,21 @@ $(document).ready(function() {
 } );
 </script>
 
-
-
+<script type="text/javascript">
+  $(function () {
+    $('#selectAll').click(function() {
+      if (this.checked) {
+        $(':checkbox').each(function() {
+          this.checked = true;                       
+        });
+      } 
+      else {
+        $(':checkbox').each(function() {
+          this.checked = false;                        
+        });
+      } 
+    });
+  });
+</script>
+<div id="myModal" class="modal fade"></div>
+<div id="myModal1" class="modal fade"></div>

@@ -2,12 +2,12 @@
   <div class="row">
     <div class="col-sm-3">
       <div class="form-group required">
-        <%= f.text_field :code,hide_label:true, placeholder: 'Travel Expence Code ' %>
+        <%= f.text_field :code,hide_label:true, placeholder: 'Travel Expense Code ' %>
       </div>
     </div> 
      <div class="col-sm-3">
       <div class="form-group required">
-        <%= f.text_field :name,hide_label:true, placeholder: 'Travel Expence Type' %>
+        <%= f.text_field :name,hide_label:true, placeholder: 'Travel Expense Type' %>
       </div>
     </div>
      <div class="col-sm-3">
@@ -18,7 +18,7 @@
 
     <div class="col-sm-3">
       <div class="actions">
-        <%= f.submit :class => class_name, data: { disable_with: data_info } %>
+        <%= f.submit "Create Travel Expense Type", class: 'btn btn-primary btn-sm' %>
       </div>
     </div>
   </div>

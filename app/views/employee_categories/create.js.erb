@@ -1,7 +1,6 @@
-<% if @flag== true %>
-$("#form").html("<%= j render 'form' %>");
-$("#employee_category").html("<%= j render 'employee_category_list'%>");
+<%if @flag == true %>
+  $("#form").html("<%= j render 'form' %>");
+  $("#employee_category").html("<%= j render 'employee_category_list' %>");
 <%else%>
-$("#form").html("<%= j render 'form' %>");
-$("#employee_category").html("<%= j render 'employee_category_list'%>");
-<% end %>
+  $("#form").html("<%= j render 'form' %>");
+<%end%>

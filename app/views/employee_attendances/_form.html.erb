@@ -25,7 +25,7 @@
             </div>
           </div>
 
-          <div class="col-sm-3">
+          <div class="col-sm-3" style="padding-top:20px;">
             <div class="actions">
               <%= f.submit "Create Attendance" ,class: 'btn btn-primary btn-sm', id: "buttonCtc" %>
             </div>
@@ -59,3 +59,31 @@
     });
 
   </script>
+
+  <script>
+$("#salary").validate({
+    rules: {
+      "salary[department_id]":{
+        required: true,
+      },
+      {
+      "salary[day]":{
+        required: true,
+      }
+    },
+    messages: {
+      "salary[department_id]":{
+        required: "Please specify Department Name",
+      },
+      "salary[day]":{
+        required: "Please specify Day",
+      }
+      
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>
+

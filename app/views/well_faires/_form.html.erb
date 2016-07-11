@@ -10,7 +10,7 @@
 
     <div class="col-sm-3">
       <div class="field">
-        <div class="form-group required">
+        <div class="field">
         <%= f.text_field :amount %>
         </div>
       </div>
@@ -19,7 +19,7 @@
     <div class="col-sm-3">
       <div class="field">
         <div class="form-group required">
-      <%= f.select :status,['Active','Inactive'],{label: 'Select Option',include_blank: " Select Option"} %>
+      <%= f.select :status,['Active','Inactive'],{label: 'Status',include_blank: " Select status"} %>
         </div>
       </div>
     </div>

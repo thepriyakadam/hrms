@@ -18,8 +18,10 @@ class TrainingPlansController < ApplicationController
   def new
     @training_plan = TrainingPlan.new
     #@training_requests = TrainingRequest.all
-    @employees = Employee.where(department_id: current_user.department_id)
+    # @employees = Employee.where(department_id: current_user.department_id)
     @training_request = TrainingRequest.find(params[:id])
+    @trainee_requests = TraineeRequest.where(training_request_id: @training_request.id)
+    # @training_requests = TrainingRequest.where(status: "Approved")
     @training_plans = TrainingPlan.where(training_request_id: @training_request.id)
     session[:active_tab] ="trainingmgmt"
   end
@@ -91,7 +93,7 @@ class TrainingPlansController < ApplicationController
   end
 
   def trainee_list
-     @trainees = Trainee.all
+     @trainees = Trainee.where(employee_id: current_user.employee_id)
      session[:active_tab] ="selfservice"
   end
 
@@ -115,14 +117,16 @@ class TrainingPlansController < ApplicationController
 
   def training_plan_create
     @training_plan = TrainingPlan.new(training_plan_params)
+    training_topic_master_id = params[:training_topic_master_id]
     #@attribute_master_id = AttributeMaster.find(params[:attribute_master_id])
     @training_plan.save
       @goal_rating_ids = params[:goal_rating_ids]
       @goal_rating_ids.each do |eid|
       Trainee.create(employee_id: eid,training_plan_id: @training_plan.id)
-      #GoalRating.where(appraisee_id: eid,attribute_master_id: @attribute_master_id.id).update_all(is_assigned: true)
-      flash[:notice] = "Created Successfully"
-    end
+      
+      GoalRating.where(appraisee_id: eid,training_topic_master_id: training_topic_master_id).update_all(is_hide: true)
+        flash[:notice] = "Created Successfully"
+      end
       redirect_to period_and_topic_wise_list_goal_ratings_path
   end
 
@@ -136,6 +140,6 @@ class TrainingPlansController < ApplicationController
     end
     # Never trust parameters from the scary internet, only allow the white list through.
     def training_plan_params
-      params.require(:training_plan).permit(:training_date,:training_request_id, :training_topic_master_id, :topic, :no_of_employee, :trainer_name, :no_of_days, :no_of_hrs, :place)
+      params.require(:training_plan).permit(:period_id,:training_date,:training_request_id, :training_topic_master_id, :topic, :no_of_employee, :trainer_name, :no_of_days, :no_of_hrs, :place)
     end
 end

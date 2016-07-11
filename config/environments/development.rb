@@ -44,7 +44,6 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: '192.168.0.62', port: 3000 }
   # config.domain = 'lvh.me'
   # config.action_mailer.perform_deliveries = true,
-
   ActionMailer::Base.delivery_method = :smtp
 
   ActionMailer::Base.smtp_settings = {
@@ -55,6 +54,7 @@ Rails.application.configure do
     password: 'hrms1234',
     authentication: :plain
   }
+
   # Paperclip setup
   # Paperclip.options[:command_path] = "/usr/local/bin/convert"
   # Paperclip.options[:command_path] = "/home/rk/.rvm/gems/ruby-2.2.2/bin/convert"

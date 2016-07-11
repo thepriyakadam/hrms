@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160629113712) do
+ActiveRecord::Schema.define(version: 20160709092553) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -392,6 +392,19 @@ ActiveRecord::Schema.define(version: 20160629113712) do
   add_index "company_locations", ["district_id"], name: "index_company_locations_on_district_id"
   add_index "company_locations", ["state_id"], name: "index_company_locations_on_state_id"
 
+  create_table "company_policies", force: :cascade do |t|
+    t.string   "name"
+    t.date     "effective_from"
+    t.date     "effective_to"
+    t.boolean  "status"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+    t.string   "document_file_name"
+    t.string   "document_content_type"
+    t.integer  "document_file_size"
+    t.datetime "document_updated_at"
+  end
+
   create_table "company_shifts", force: :cascade do |t|
     t.string   "code"
     t.string   "name"
@@ -425,6 +438,14 @@ ActiveRecord::Schema.define(version: 20160629113712) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "currency_masters", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
+    t.text     "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
   create_table "custom_auto_increments", force: :cascade do |t|
     t.string   "counter_model_name"
     t.integer  "counter",            default: 0
@@ -456,19 +477,44 @@ ActiveRecord::Schema.define(version: 20160629113712) do
     t.integer  "travel_request_id"
     t.date     "expence_date"
     t.string   "e_place"
-    t.decimal  "travel_expence",         precision: 15, scale: 2, default: 0.0
-    t.decimal  "local_travel_expence",   precision: 15, scale: 2, default: 0.0
-    t.decimal  "lodging_expence",        precision: 15, scale: 2, default: 0.0
-    t.decimal  "boarding_expence",       precision: 15, scale: 2, default: 0.0
-    t.decimal  "other_expence",          precision: 15, scale: 2, default: 0.0
-    t.datetime "created_at",                                                    null: false
-    t.datetime "updated_at",                                                    null: false
+    t.decimal  "travel_expence",              precision: 15, scale: 2, default: 0.0
+    t.decimal  "local_travel_expence",        precision: 15, scale: 2, default: 0.0
+    t.decimal  "lodging_expence",             precision: 15, scale: 2, default: 0.0
+    t.decimal  "boarding_expence",            precision: 15, scale: 2, default: 0.0
+    t.decimal  "other_expence",               precision: 15, scale: 2, default: 0.0
+    t.datetime "created_at",                                                         null: false
+    t.datetime "updated_at",                                                         null: false
     t.boolean  "is_confirm"
     t.integer  "travel_expence_type_id"
+    t.integer  "reporting_master_id"
+    t.string   "request_status"
+    t.text     "remark"
+    t.string   "passport_photo_file_name"
+    t.string   "passport_photo_content_type"
+    t.integer  "passport_photo_file_size"
+    t.datetime "passport_photo_updated_at"
+    t.string   "avatar_file_file_name"
+    t.string   "avatar_file_content_type"
+    t.integer  "avatar_file_file_size"
+    t.datetime "avatar_file_updated_at"
+    t.text     "remarks"
+    t.integer  "currency_master_id"
+    t.boolean  "is_sent"
+    t.text     "comment"
   end
 
+  add_index "daily_bill_details", ["currency_master_id"], name: "index_daily_bill_details_on_currency_master_id"
+  add_index "daily_bill_details", ["reporting_master_id"], name: "index_daily_bill_details_on_reporting_master_id"
   add_index "daily_bill_details", ["travel_expence_type_id"], name: "index_daily_bill_details_on_travel_expence_type_id"
   add_index "daily_bill_details", ["travel_request_id"], name: "index_daily_bill_details_on_travel_request_id"
+
+  create_table "date_formats", force: :cascade do |t|
+    t.string   "name"
+    t.string   "value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean  "is_active"
+  end
 
   create_table "definitions", force: :cascade do |t|
     t.text     "name"
@@ -532,6 +578,19 @@ ActiveRecord::Schema.define(version: 20160629113712) do
   end
 
   add_index "districts", ["state_id"], name: "index_districts_on_state_id"
+
+  create_table "email_configs", force: :cascade do |t|
+    t.string   "url_host"
+    t.integer  "url_port"
+    t.string   "delivery_method"
+    t.string   "address"
+    t.integer  "port"
+    t.string   "username"
+    t.string   "pwd"
+    t.string   "authentication"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
 
   create_table "employee_annual_salaries", force: :cascade do |t|
     t.integer  "employee_id"
@@ -692,6 +751,7 @@ ActiveRecord::Schema.define(version: 20160629113712) do
     t.datetime "updated_at",       null: false
     t.date     "expiry_date"
     t.string   "total_leave"
+    t.boolean  "is_confirm"
   end
 
   add_index "employee_leav_balances", ["company_leav_id"], name: "index_employee_leav_balances_on_company_leav_id"
@@ -1175,6 +1235,7 @@ ActiveRecord::Schema.define(version: 20160629113712) do
     t.integer  "performance_calendar_id"
     t.integer  "training_topic_master_id"
     t.boolean  "is_assigned"
+    t.boolean  "is_hide"
   end
 
   add_index "goal_ratings", ["appraisee_id"], name: "index_goal_ratings_on_appraisee_id"
@@ -1899,8 +1960,10 @@ ActiveRecord::Schema.define(version: 20160629113712) do
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
     t.string   "travel_status"
+    t.integer  "daily_bill_id"
   end
 
+  add_index "reporting_masters_travel_requests", ["daily_bill_id"], name: "index_reporting_masters_travel_requests_on_daily_bill_id"
   add_index "reporting_masters_travel_requests", ["reporting_master_id"], name: "index_reporting_masters_travel_requests_on_reporting_master_id"
   add_index "reporting_masters_travel_requests", ["travel_request_id"], name: "index_reporting_masters_travel_requests_on_travel_request_id"
 
@@ -2140,16 +2203,8 @@ ActiveRecord::Schema.define(version: 20160629113712) do
     t.string   "esic_no"
     t.string   "pf_no"
     t.string   "uan_no"
-    t.decimal  "cl"
-    t.decimal  "el"
-    t.decimal  "c_off"
-    t.decimal  "advance"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
-    t.decimal  "cl_b"
-    t.decimal  "el_b"
-    t.decimal  "c_off_b"
-    t.decimal  "advance_b"
   end
 
   add_index "slip_informations", ["cost_center_id"], name: "index_slip_informations_on_cost_center_id"
@@ -2176,6 +2231,16 @@ ActiveRecord::Schema.define(version: 20160629113712) do
   end
 
   add_index "states", ["country_id"], name: "index_states_on_country_id"
+
+  create_table "trainee_requests", force: :cascade do |t|
+    t.integer  "training_request_id"
+    t.integer  "employee_id"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+  end
+
+  add_index "trainee_requests", ["employee_id"], name: "index_trainee_requests_on_employee_id"
+  add_index "trainee_requests", ["training_request_id"], name: "index_trainee_requests_on_training_request_id"
 
   create_table "trainees", force: :cascade do |t|
     t.integer  "training_plan_id"
@@ -2211,7 +2276,6 @@ ActiveRecord::Schema.define(version: 20160629113712) do
 
   create_table "training_plans", force: :cascade do |t|
     t.date     "training_date"
-    t.string   "topic"
     t.string   "no_of_employee"
     t.string   "trainer_name"
     t.string   "no_of_days"
@@ -2221,8 +2285,10 @@ ActiveRecord::Schema.define(version: 20160629113712) do
     t.datetime "updated_at",               null: false
     t.integer  "training_topic_master_id"
     t.integer  "training_request_id"
+    t.integer  "period_id"
   end
 
+  add_index "training_plans", ["period_id"], name: "index_training_plans_on_period_id"
   add_index "training_plans", ["training_request_id"], name: "index_training_plans_on_training_request_id"
   add_index "training_plans", ["training_topic_master_id"], name: "index_training_plans_on_training_topic_master_id"
 
@@ -2242,7 +2308,6 @@ ActiveRecord::Schema.define(version: 20160629113712) do
 
   create_table "training_requests", force: :cascade do |t|
     t.integer  "employee_id"
-    t.string   "training_topic"
     t.string   "training_period"
     t.date     "training_date"
     t.integer  "reporting_master_id"
@@ -2254,6 +2319,7 @@ ActiveRecord::Schema.define(version: 20160629113712) do
     t.string   "place"
     t.text     "justification"
     t.string   "status"
+    t.text     "comment"
   end
 
   add_index "training_requests", ["employee_id"], name: "index_training_requests_on_employee_id"
@@ -2354,6 +2420,7 @@ ActiveRecord::Schema.define(version: 20160629113712) do
     t.integer  "travel_option_id"
     t.integer  "travel_mode_id"
     t.boolean  "is_confirm"
+    t.text     "comment"
   end
 
   add_index "travel_requests", ["employee_id"], name: "index_travel_requests_on_employee_id"
@@ -2447,6 +2514,12 @@ ActiveRecord::Schema.define(version: 20160629113712) do
 
   add_index "week_offs", ["employee_id"], name: "index_week_offs_on_employee_id"
 
+  create_table "weekoff_masters", force: :cascade do |t|
+    t.string   "day"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "well_faires", force: :cascade do |t|
     t.string   "month"
     t.decimal  "amount",     precision: 15, scale: 2, default: 0.0
@@ -2468,12 +2541,16 @@ ActiveRecord::Schema.define(version: 20160629113712) do
     t.decimal  "payable_day"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
-    t.string   "lwp_leave"
-    t.string   "cl_leave"
-    t.string   "el_leave"
-    t.string   "esic_leave"
-    t.string   "coff_leave"
-    t.integer  "month"
+    t.decimal  "lwp_leave"
+    t.decimal  "cl_leave"
+    t.decimal  "el_leave"
+    t.decimal  "esic_leave"
+    t.decimal  "coff_leave"
+    t.decimal  "advance_leave"
+    t.decimal  "cl_balance"
+    t.decimal  "el_balance"
+    t.decimal  "coff_balance"
+    t.decimal  "advance_balance"
   end
 
   add_index "workingdays", ["employee_id"], name: "index_workingdays_on_employee_id"

@@ -12,8 +12,8 @@
       <li><a href="/companies"><i class="fa fa-tags"></i> Companies</a></li>
       <li><a href="/company_locations"><i class="fa fa-tags"></i> Locations</a></li>
       <li><a href="/departments/new"><i class="fa fa-tags"></i> Departments</a></li>
-      <li><a href="/company_events/new"><i class="fa fa-tags"></i> Company Events</a></li>
-      <li><a href="/circulars/new"><i class="fa fa-tags"></i> Circular</a></li>
+      <li><a href="/company_events/new"><i class="fa fa-tags"></i> Events</a></li>
+      <li><a href="/circulars/new"><i class="fa fa-tags"></i> Circular/Information</a></li>
     </ul>
   </li>
   <li class="treeview" id="master">
@@ -35,10 +35,10 @@
       </li>
 
       <li id="payrollsetup">
-        <a href="#"><i class="fa fa-edit"></i> Payroll Setup Component <i class="fa fa-angle-left pull-right"></i></a>
+        <a href="#"><i class="fa fa-edit"></i> Payroll Component Setup <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
           <li><a href="/advance_types/new"><i class="fa fa-tags"></i> Advance Type </a></li>
-          <li><a href="/expencess_types/new"><i class="fa fa-tags"></i> Expences Type </a></li>
+          <li><a href="/expencess_types/new"><i class="fa fa-tags"></i> Expenses Type </a></li>
           <li><a href="/food_coupan_masters/new"><i class="fa fa-tags"></i> Food Coupon Type </a></li>
         </ul>
       </li>
@@ -65,12 +65,12 @@
           <li><a href="/employee_designations/new"><i class="fa fa-tags"></i> Designation</a></li>
           <li><a href="/roles/new"><i class="fa fa-tags"></i> User Role </a></li>
           <li><a href="/nationalities/new"><i class="fa fa-tags"></i> Nationality</a></li>
-          <li><a href="/reserved_categories/new"><i class="fa fa-tags"></i> Reserved Category</a></li>
+          <li><a href="/reserved_categories/new"><i class="fa fa-tags"></i> Reservation Category</a></li>
           <li><a href="/religions/new"><i class="fa fa-tags"></i> Religion</a></li>
-          <li><a href="/relation_masters/new"><i class="fa fa-tags"></i>Relation </a></li>
+          <li><a href="/relation_masters/new"><i class="fa fa-tags"></i> Relation </a></li>
           <li><a href="/blood_groups/new"><i class="fa fa-tags"></i> Blood Group</a></li>
-          <li><a href="/nomination_masters/new"><i class="fa fa-tags"></i>Nomination Type </a></li>
-          <li><a href="/illness_types/new"><i class="fa fa-tags"></i>Illness Type </a></li>
+          <li><a href="/nomination_masters/new"><i class="fa fa-tags"></i> Nomination Type </a></li>
+          <li><a href="/illness_types/new"><i class="fa fa-tags"></i> Illness Type </a></li>
         </ul>
        </li>
 
@@ -81,6 +81,7 @@
           <li><a href="/degree_types/new"><i class="fa fa-tags"></i>Qualification Level</a></li>
           <li><a href="/degree_streams/new"><i class="fa fa-tags"></i>Specialization</a></li>
           <li><a href="/universities/new"><i class="fa fa-tags"></i>University/Institution</a></li>
+          <li><a href="/years/new"><i class="fa fa-tags"></i>Passout Year</a></li>
         </ul>
        </li>
 
@@ -100,7 +101,7 @@
        <li id="travel">
         <a href="#"><i class="fa fa-edit"></i> Travel Setup <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
-           <li><a href="/travel_expence_types/new"><i class="fa fa-tags"></i> Travel Expence Type </a></li>
+           <li><a href="/travel_expence_types/new"><i class="fa fa-tags"></i> Travel Expense Type </a></li>
            <li><a href="/travel_modes/new"><i class="fa fa-tags"></i> Travel Mode </a></li>
            <li><a href="/travel_options/new"><i class="fa fa-tags"></i> Travel Options </a></li>
         </ul>
@@ -114,12 +115,14 @@
        </li>
 
        <li id="performancemaster">
-        <a href="#"><i class="fa fa-edit"></i> Performance Master <i class="fa fa-angle-left pull-right"></i></a>
+        <a href="#"><i class="fa fa-edit"></i> Performance Management <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
-          <li><a href="/goal_perspectives/new"><i class="fa fa-tags"></i>Type Of Objective</a></li>
-          <li><a href="/periods"><i class="fa fa-tags"></i>Performance Peroid</a></li>
-          <li><a href="/ratings/new"><i class="fa fa-tags"></i> Rating Setup </a></li>
-          <li><a href="/performance_activities/new"><i class="fa fa-tags"></i> Performance Activity </a></li>
+          <li><a href="/periods"><i class="fa fa-tags"></i>Performance Period</a></li>
+          <li><a href="/performance_activities/new"><i class="fa fa-tags"></i>Performance Activity </a></li>
+          <li><a href="/performance_calendars/new"><i class="fa fa-tags"></i>Performance Calendar</a></li>
+          <li><a href="/goal_perspectives/new"><i class="fa fa-tags"></i>Goal Perspective</a></li>
+          <li><a href="/attribute_masters/new"><i class="fa fa-tags"></i>Attribute Definition</a></li>
+          <li><a href="/ratings/new"><i class="fa fa-tags"></i>Ratings Setup </a></li>
         </ul>
 
         <li id="interview_master_setup">
@@ -140,6 +143,12 @@
            <li><a href="/leaving_reasons/new"><i class="fa fa-tags"></i>Leaving Reason Master </a></li>
         </ul>
        </li>
+       <li id="daily_bill_master_setup">
+        <a href="#"><i class="fa fa-edit"></i> Daily Bill Master <i class="fa fa-angle-left pull-right"></i></a>
+        <ul class="treeview-menu">
+           <li><a href="/currency_masters"><i class="fa fa-tags"></i>Currency Master </a></li>
+        </ul>
+       </li>
         <li id="project_master_setup">
         <li><a href="/project_masters/new"><i class="fa fa-tags"></i>Project Master </a></li>
        </li>
@@ -156,7 +165,7 @@
     <li class="treeview" id="employeeprofile">
         <a href="#"><i class="fa fa-edit"></i> Employee Profile <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
-        <li><a href="/employees"><i class="fa fa-tags"></i> Employees </a></li>
+        <li><a href="/employees"><i class="fa fa-tags"></i> Employee </a></li>
         </ul>
     </li>
     <li class="treeview" id="employeeinduction">
@@ -174,9 +183,9 @@
     <ul class="treeview-menu">
       <li><a href="/reporting_masters/new"><i class="fa fa-tags"></i> Reporting Manager</a></li>
       <li><a href="/employees/assign_role"><i class="fa fa-tags"></i> Create New User</a></li>
-      <li><a href="/home/created_user"><i class="fa fa-tags"></i>View Users</a></li>
-      <li><a href="/roles/role_edit_list"><i class="fa fa-tags"></i>Update User Role</a></li>
-      <li><a href="/employees/manager"><i class="fa fa-tags"></i>Update Reporting Manager</a></li>
+      <li><a href="/home/created_user"><i class="fa fa-tags"></i> View Users</a></li>
+      <li><a href="/roles/role_edit_list"><i class="fa fa-tags"></i> Update User Role</a></li>
+      <li><a href="/employees/manager"><i class="fa fa-tags"></i> Update Reporting Manager</a></li>
       <!-- <li><a href="/employees/transfer_employee_list"><i class="fa fa-tags"></i>Transfer Employee</a></li> -->
     </ul>
     </li>
@@ -211,12 +220,18 @@
       <li><a href="/self_services/employee_template"><i class="fa fa-tags"> </i> Salary Structure </a></li>
 
       <li><a href="/self_services/attendance"><i class="fa fa-tags"></i>Attendance</a></li>
-      <li><a href="/self_services/salaryslip"><i class="fa fa-tags"></i>Salaryslips</a></li>
-      <li><a href="/self_services/advance"><i class="fa fa-tags"></i>Advance & Instalment</a></li>
-      <li><a href="/goal_bunches/new"><i class="fa fa-tags"></i> Set Goal </a></li>
-      <li><a href="/goal_bunches/period_list_appraisee"><i class="fa fa-tags"></i> Self Evaluation </a></li>
-      <li><a href="/employee_daily_activities/new"><i class="fa fa-tags"></i> Daily Activity </a></li>
-      <li><a href="/training_plans/trainee_list"><i class="fa fa-tags"></i> Training Feedback </a></li>
+      <li><a href="/self_services/salaryslip"><i class="fa fa-tags"></i>Salary Slip</a></li>
+      <li><a href="/self_services/advance"><i class="fa fa-tags"></i>Advance & Installment</a></li>
+
+      <li id="daily_activity">
+        <a href="#"><i class="fa fa-edit"></i> Daily Activity <i class="fa fa-angle-left pull-right"></i></a>
+        <ul class="treeview-menu" >
+        <li><a href="/employee_daily_activities/new"><i class="fa fa-tags"></i>Employee Daily Activity</a></li>
+           <li><a href="/employee_daily_activities/employee_details"><i class="fa fa-tags"></i>Employee Details</a></li>
+        </ul>
+      </li>
+<!--       <li><a href="/employee_daily_activities/new"><i class="fa fa-tags"></i> Daily Activity </a></li>
+ -->      <li><a href="/training_plans/trainee_list"><i class="fa fa-tags"></i> Training Feedback </a></li>
     </ul>
   </li>
   <li class="treeview" id="leavemanagement">
@@ -244,7 +259,7 @@
         <a href="#"><i class="fa fa-edit"></i> Reports  <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
          <li><a href="/employee_leav_requests/search_by_start_date"><i class="fa fa-tags"></i>Leave Report</a></li>
-         <li><a href="/leave_c_offs/search_by_c_off_date"><i class="fa fa-tags"></i>C_Off Report</a></li>
+         <li><a href="/leave_c_offs/search_by_c_off_date"><i class="fa fa-tags"></i>C.Off Report</a></li>
          <li><a href="/employee_leav_balances/employee_leave_balance"><i class="fa fa-tags"></i>Leave Balance Report</a></li>
 
         </ul>
@@ -272,7 +287,7 @@
         <a href="#"><i class="fa fa-edit"></i>Periodic Components <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
         <li><a href="/advance_salaries"><i class="fa fa-tags"> </i>Salary Advance</a></li>
-        <li><a href="/instalments"><i class="fa fa-tags"> </i>Instalment</a></li>
+        <li><a href="/instalments"><i class="fa fa-tags"> </i>Installment</a></li>
         <li><a href="/food_deductions"><i class="fa fa-tags"> </i>Food Deduction</a></li>
         <li><a href="/monthly_expences"><i class="fa fa-tags"> </i>Monthly Expences</a></li>
         <li><a href="/society_member_ships"><i class="fa fa-tags"> </i> Employee Membership</a></li>
@@ -282,6 +297,7 @@
         <a href="#"><i class="fa fa-edit"></i> Salary Processing <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
         <li><a href="/workingdays"><i class="fa fa-tags"> </i>Attendace Update </a></li>
+        <li><a href="/workingdays"><i class="fa fa-tags"> </i>Attendace Update(Auto) </a></li>
         <li><a href="/employee_salary_templates/salary_template"><i class="fa fa-tags"> </i>Salary Process Individual </a></li>
         <li><a href="/salaryslips/select_month_year_form"><i class="fa fa-tags"> </i>Salary Process Mass  </a></li>
         <li><a href="/salaryslips/revert_salary"><i class="fa fa-tags"> </i>Salary Reversal </a></li>
@@ -303,7 +319,7 @@
         <li><a href="/pdf_salaries/select_month_year_form"><i class="fa fa-tags"> </i>Department Wise Slip</a></li>
          <li><a href="/pdf_salaries/salary_slip_costunit_wise"><i class="fa fa-tags"> </i>Cost Unit Wise Slip</a></li>
         <li><a href="/reports/salaries/new"><i class="fa fa-tags"> </i>Monthly Salary Report</a></li>
-        <li><a href="/salary_slip_ledgers/select_month_year_form"><i class="fa fa-tags"> </i>Bank Wise s Report</a></li>
+        <li><a href="/salary_slip_ledgers/select_month_year_form"><i class="fa fa-tags"> </i>Bank Wise Report</a></li>
         <li><a href="/salary_slip_ledgers/cost_unit_wise"><i class="fa fa-tags"> </i>Unit Wise  Report</a></li>
         <li><a href="/salary_slip_ledgers/bank_wise_net_amount"><i class="fa fa-tags"> </i>Bank Wise Net Salary </a></li>
         <li><a href="/salary_slip_ledgers/employee_salary_ledger"><i class="fa fa-tags"> </i>Salary Ledger </a></li>
@@ -330,43 +346,56 @@
       <i class="ionicons ion-ios-time"></i><span> Time Management </span> <i class="fa fa-angle-left pull-right"></i>
     </a>
     <ul class="treeview-menu">
-      <li><a href="/holidays/new"><i class="fa fa-tags"></i> Holiday Setup </a></li>
+     <li><a href="/employee_attendances"><i class="fa fa-tags"></i> Attendance </a></li>
+      <!-- <li><a href="/holidays/new"><i class="fa fa-tags"></i> Holiday Setup </a></li>
       <li><a href="/company_shifts/new"><i class="fa fa-tags"></i> Shifts Maintenance </a></li>
       <li><a href="/shift_rotations/new"><i class="fa fa-tags"></i> Shift Rotation </a></li>
       <li><a href="/employee_shifts"><i class="fa fa-tags"></i> Employee Shift Assignment </a></li>
-      <li><a href="/attendances"><i class="fa fa-tags"></i> Employee Attendance </a></li>
+      <li><a href="/attendances"><i class="fa fa-tags"></i> Employee Attendance </a></li> -->
     </ul>
    </li>
 
-    <li class="treeview" id="performancemgmt">
-    <a href="">
-      <i class="ionicons ion-ios-time"></i><span> Performance Management </span> <i class="fa fa-angle-left pull-right"></i>
+  <li class="treeview" id="performancemgmt">
+    <a href="#">
+      <i class="fa fa-list-alt"></i> <span>Performance Management</span>
+      <i class="fa fa-angle-left pull-right"></i>
     </a>
-
     <ul class="treeview-menu" >
-      <li><a href="/goal_bunches/subordinate_list"><i class="fa fa-tags"></i> Goal Approval </a></li>
-      <li><a href="/goal_bunches/appraiser_subordinate"><i class="fa fa-tags"></i> Appraiser Evaluation</a></li>
-      <li><a href="/goal_bunches/reviewer_subordinate"><i class="fa fa-tags"></i> Reviewer Comment</a></li>
-      <li><a href="/goal_bunches/employee_list"><i class="fa fa-tags"></i> Final Comment</a></li>
-      <li><a href="/goal_bunches/period_for_appraisee"><i class="fa fa-tags"></i> Appraisee Report</a></li>
-      <li><a href="/goal_bunches/subordinate_list_for_appraisee"><i class="fa fa-tags"></i> Appraiser Report</a></li>
-      <li><a href="/goal_bunches/subordinate_list_for_reviewer"><i class="fa fa-tags"></i> Reviewer Report</a></li>
-      <li><a href="/goal_bunches/final_employee_list"><i class="fa fa-tags"></i> Final Report </a></li>
-      <li><a href="/goal_bunches/emp_list_goal_wise"><i class="fa fa-tags"></i> All Employee Detail </a></li>
-      <li><a href="/goal_ratings/subordinate_list_goal_wise"><i class="fa fa-tags"></i>Team Member Report</a></li>
-      <li><a href="/performance_calendars/new"><i class="fa fa-tags"></i>Calendar</a></li>
-      <li><a href="/goal_ratings/training_request"><i class="fa fa-tags"></i>Training Request</a></li>
-      <li><a href="/goal_ratings/period_and_topic_wise_list"><i class="fa fa-tags"></i>Employees For Training</a></li>
+      <li id="perform_cycle">
+        <a href="#"><i class="fa fa-edit"></i>Performance Cycle <i class="fa fa-angle-left pull-right"></i></a>
+        <ul class="treeview-menu">
+        <li><a href="/goal_bunches/new"><i class="fa fa-tags"></i> Goal Setting </a></li>
+        <li><a href="/goal_bunches/subordinate_list"><i class="fa fa-tags"></i> Goal Approval </a></li>
+        <li><a href="/goal_bunches/period_list_appraisee"><i class="fa fa-tags"></i> Self Evaluation </a></li>
+        <li><a href="/goal_bunches/appraiser_subordinate"><i class="fa fa-tags"></i> Appraiser Evaluation </a></li>
+        <li><a href="/goal_bunches/reviewer_subordinate"><i class="fa fa-tags"></i> Reviewer Evaluation  </a></li>
+        <li><a href="/goal_bunches/employee_list"><i class="fa fa-tags"></i> Final Evaluation  </a></li>
+        <li><a href="/goal_ratings/training_request"><i class="fa fa-tags"></i>Training Assessment</a></li>
+        <li><a href="/goal_ratings/period_and_topic_wise_list"><i class="fa fa-tags"></i>Training Plan</a></li>
+        </ul>
+      </li> 
+      
+      <li id="perform_report">
+      <a href="#"><i class="fa fa-edit"></i> Reports <i class="fa fa-angle-left pull-right"></i></a>
+        <ul class="treeview-menu">
+         <li><a href="/goal_bunches/emp_list_goal_wise"><i class="fa fa-tags"></i> Employee Wise Detail </a></li>
+        <li><a href="/goal_ratings/subordinate_list_goal_wise"><i class="fa fa-tags"></i>Team Wise Detail</a>
+        <li><a href="/goal_bunches/period_for_appraisee"><i class="fa fa-tags"></i> Appraisee Report</a></li>
+        <li><a href="/goal_bunches/subordinate_list_for_appraisee"><i class="fa fa-tags"></i> Appraiser Report</a></li>
+        <li><a href="/goal_bunches/subordinate_list_for_reviewer"><i class="fa fa-tags"></i> Reviewer Report</a></li>
+        <li><a href="/goal_bunches/final_employee_list"><i class="fa fa-tags"></i> Final Report </a></li></li>
+        <li><a href="/goal_ratings/trainee_list"><i class="fa fa-tags"></i>Training Plan Report</a></li>
+        </ul>
+      </li> 
     </ul>
-   </li>
+  </li>
 
     <li class="treeview" id="promotionmanagement">
     <a href="">
       <i class="ionicons ion-ios-time"></i><span> Promotion Management </span> <i class="fa fa-angle-left pull-right"></i>
     </a>
     <ul class="treeview-menu">
-      <li><a href="/employee_promotions/employee_list"><i class="fa fa-tags"></i> Employee Promotion </a></li>
-       <li><a href="/employee_promotions"><i class="fa fa-tags"></i> Promotion History </a></li>
+       <li><a href="/employee_promotions/employee_list"><i class="fa fa-tags"></i> Promotion History </a></li>
     </ul>
    </li>
    <li class="treeview" id="resignationmanagement">
@@ -418,8 +447,11 @@
       <li><a href="/travel_requests"><i class="fa fa-tags"></i>Travel Request </a></li>
       <li><a href="/travel_requests/travel_history"><i class="fa fa-tags"></i> Travel Approve/Reject </a></li>
       <li><a href="/travel_requests/travel_request_list"><i class="fa fa-tags"></i> Travel Request List </a></li>
-      <li><a href="/travel_requests/daily_bill"><i class="fa fa-tags"></i> Daily Expences </a></li>
-      <li><a href="/travel_expences"><i class="fa fa-tags"></i> Travel Expences </a></li>   
+      <li><a href="/travel_requests/daily_bill"><i class="fa fa-tags"></i> Daily Expenses </a></li>
+       <li><a href="/daily_bill_details/daily_bill_history"><i class="fa fa-tags"></i> Daily Bill Approval </a></li>
+       <li><a href="/daily_bill_details/travel_request_list"><i class="fa fa-tags"></i> Daily Bill Approve/Reject </a></li>
+      <li><a href="/daily_bill_details/approved_daily_bill_details"><i class="fa fa-tags"></i> Daily Bill Approval List </a></li>
+      <li><a href="/travel_expences"><i class="fa fa-tags"></i> Travel Expenses </a></li>   
     </ul>
    </li>
 
@@ -428,7 +460,7 @@
     <ul class="treeview-menu">
       <li><a href="/training_requests/new"><i class="fa fa-tags"></i> Training Request </a></li>
       <li><a href="/training_requests/training_request_list"><i class="fa fa-tags"></i> Training Approve/Reject </a></li>
-      <li><a href="/training_requests/confirmation_list"><i class="fa fa-tags"></i> Training Plan </a></li>
+      <li><a href="/training_requests/confirmation_list"><i class="fa fa-tags"></i> Training Plan Confirmation </a></li>
       <li><a href="/training_plans"><i class="fa fa-tags"></i> Training Plan List </a></li>
     </ul>
    </li>

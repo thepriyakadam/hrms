@@ -2,7 +2,7 @@
 <!-- SELECT2 EXAMPLE -->
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title">Employee Monthly Expences</h3>
+    <h3 class="box-title">Monthly Expences</h3>
   </div><!-- /.box-header -->
   
   <div class="box-body">
@@ -59,6 +59,7 @@
         <div class="col-sm-3">
           <div class="actions">
             <%= f.submit "Create Monthly Expence",:class => class_name, data: { disable_with: data_info } %>
+            <%= link_to 'Back', monthly_expences_path,class: 'btn btn-sm btn-default fa fa-arrow-left' %>
           </div>
         </div>
     </div>
@@ -122,10 +123,10 @@ $("#monthly_expence").validate({
     "monthly_expence[expencess_type_id]":{
       required: true
     },
-    "monthly_expence[expence_date]":{
+    "monthly_expence[amount]":{
       required: true
     },
-    "monthly_expence[amount]":{
+    "monthly_expence[expence_date]":{
       required: true
     }
   },

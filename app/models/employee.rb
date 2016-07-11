@@ -52,7 +52,7 @@ class Employee < ActiveRecord::Base
   has_many :interview_rounds
   has_many :goal_bunches
   
-  accepts_nested_attributes_for :joining_detail
+  #accepts_nested_attributes_for :joining_detail
   has_many :subordinates, class_name: 'Employee',
                           foreign_key: 'manager_id'
   belongs_to :manager, class_name: 'Employee'
@@ -74,15 +74,11 @@ class Employee < ActiveRecord::Base
 
   validates :manual_employee_code, presence: true, uniqueness: { case_sensitive: false }
   validates :first_name, presence: true
-  # validate  :email_regex
   validates :permanent_address, presence: true
-  validates :company_location_id,presence: true
-  # validates :country_id, :presence => true
-  # validates :state_id, :presence => true
-  # validates :district_id, :presence => true
-
-  validate :adhar_no_regex
-  validate :pan_no_regex
+  validates :department_id,presence: true
+  
+  # validate :adhar_no_regex
+  # validate :pan_no_regex
 
   def adhar_no_regex
     if adhar_no.present? && !adhar_no.match(/[0-9]{12}/)

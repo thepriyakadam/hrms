@@ -211,6 +211,8 @@
       <% end %>
     </tbody>
   </table>
+  <br>
+<%= link_to 'Back',period_list_print_goal_bunches_path(emp_id: @employee.id),class: 'btn btn-sm btn-default'%>
   <hr>
 
   <%= bootstrap_form_for(:goal_bunches, url: { action: 'xl_sheet_print',format: 'xls',emp_id: @employee.id,id: @goal_bunch.id}) do |f| %>

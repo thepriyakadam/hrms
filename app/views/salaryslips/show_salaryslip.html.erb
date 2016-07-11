@@ -28,7 +28,7 @@
           <td><%= @employee.manual_employee_code%></td>
           <th>CL</th>        
           <td align="right"><%= @working_day.try(:cl_leave) %></td> 
-          <td align="right"><%= @working_day.try(:cl_leave) %></td> 
+          <td align="right"><%= @working_day.try(:cl_balance) %></td> 
           <th>Monthly Days</th>        
           <td align="right"><%= @working_day.try(:day_in_month) %></td>            
         </tr>
@@ -39,7 +39,7 @@
           <td><%= full_name(@employee) %></td>
           <th>EL</th>        
           <td align="right"><%= @working_day.try(:el_leave) %></td>
-          <td align="right"><%= @working_day.try(:el_leave) %></td>
+          <td align="right"><%= @working_day.try(:el_balance) %></td>
           <th>Working Days</th>
           <td align="right"><%= @working_day.try(:present_day) %></td>
         </tr>
@@ -48,7 +48,7 @@
           <td><%= @employee.department.try(:name) %></td>
           <th>C.off</th>        
           <td align="right"><%= @working_day.try(:coff_leave) %></td>
-          <td align="right"><%= @working_day.try(:el_leave) %></td>      
+          <td align="right"><%= @working_day.try(:coff_balance) %></td>      
           <th>Holidays</th>        
           <td align="right"><%= @working_day.try(:holiday_in_month) %></td>   
         </tr>
@@ -58,8 +58,8 @@
           <th>Advance Leave</th>    
           <td align="right"><%= 0 %></td>   
           <td align="right"><%= 0 %></td>
-           <th>Week Off</th>    
-          <td align="right"><%= @working_day.try(:week_off_day) %></td>                    
+          <th>Week Off</th>    
+          <td align="right"><%= @working_day.try(:week_off_day) %></td>
         </tr>
         <tr>
           <th>Unit</th>

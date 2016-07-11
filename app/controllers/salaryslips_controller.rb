@@ -687,6 +687,7 @@ class SalaryslipsController < ApplicationController
             ss.save!
           end
           @salaryslip = Salaryslip.last
+          SlipInformation.create_salaryslip_information(@salaryslip, @employee, working_day)
           @salaryslip_component_array.each do |sa|
             sa.salaryslip_id = @salaryslip.id
             sa.employee_template_id = current_template.id
@@ -842,6 +843,7 @@ class SalaryslipsController < ApplicationController
             SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: ai.actual_amount, calculated_amount: arrear_calculated_amount, is_deducted: ai.is_deducted, is_arrear: true, salary_component_id: ai.salary_component_id)
           end
           # current template nil
+          
         end # employee_ids loop
       end
       flash[:notice] = 'All Salary processed.'
@@ -894,12 +896,10 @@ class SalaryslipsController < ApplicationController
     @year = params[:year]
     date = Date.new(@year.to_i,Workingday.months[@month])
     @salaryslip_ids = params[:salaryslip_ids]
-
-      if @salaryslip_ids.nil?
-        flash[:alert] = "Please Select Employees"
-        redirect_to revert_salary_salaryslips_path
-      else
-
+    if @salaryslip_ids.nil?
+      flash[:alert] = "Please Select Employees"
+      redirect_to revert_salary_salaryslips_path
+    else
       @salaryslip_ids.each do |sid|
         @salaryslip = Salaryslip.find(sid)
         @bonus_employees = BonusEmployee.where("strftime('%m/%Y', bonus_date) = ? and employee_id = ?", date.strftime('%m/%Y'), @salaryslip.employee_id)
@@ -911,10 +911,9 @@ class SalaryslipsController < ApplicationController
         @bonus_employees.destroy_all
         @salaryslip.destroy 
         SalaryslipComponent.where(salaryslip_id: @salaryslip.id).destroy_all
-        flash[:notice] = "Revert successfully"
       end
-    redirect_to revert_salary_salaryslips_path
+      flash[:alert] = "Revert successfully"
+      redirect_to revert_salary_salaryslips_path
+    end
   end
 end
-end
-

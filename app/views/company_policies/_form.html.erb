@@ -1,0 +1,72 @@
+<div class="box box-default">
+   <div class="box-body"> 
+   <%= bootstrap_form_for(@company_policy,html: {id: 'company_policy'},remote:true) do |f| %> 
+        <div class="row">
+          <div class="col-sm-3">
+            <div class="form-group required">
+             <%= f.text_field :name %>
+            </div>
+          </div>
+    <div class="col-sm-3">
+       <label>Effective From</label>
+      <div class="field">
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="fa fa-calendar"></i>
+          </div>
+          <%= f.text_field :effective_from,hide_label: true, class: 'effective_from'%>
+        </div>
+      </div>
+    </div>
+ <div class="col-sm-3">
+       <label>Effective To</label>
+      <div class="field">
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="fa fa-calendar"></i>
+          </div>
+          <%= f.text_field :effective_to,hide_label: true, class: 'effective_to'%>
+        </div>
+      </div>
+    </div>
+          <div class="col-sm-3">
+            <div class="field">
+      <%= f.select :status,[['Active','true'],['Inactive','false']],{label: 'Status',include_blank: " Select Status"} %>
+    </div>
+      </div>
+         </div>
+        <br>
+        <div class="row">
+          <div class="col-sm-3">
+            <div class="field">
+              <%= f.file_field :document,label: 'Document(doc,docx,pdf only)' %>
+            </div>
+          </div>
+        
+         <div class="col-sm-">
+          <div class="actions">
+            <%= f.submit'Create Company Policy', class: 'btn btn-primary btn-sm' %> |
+          </div>
+          </div>
+      <% end %>
+      </div>
+        </div>
+        </div>
+<script>     
+    $(function(){
+    $('.effective_from').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:-0',
+    dateFormat: 'dd-mm-yy' });
+  });
+</script>
+<script>
+   $(function(){
+    $('.effective_to').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:-0',
+    dateFormat: 'dd-mm-yy' });
+  });
+</script>

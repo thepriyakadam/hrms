@@ -4,20 +4,14 @@ class EmployeeLeavRequestsController < ApplicationController
   load_and_authorize_resource
   include QueryReport::Helper  # need to include it
 
-  # GET /employee_leav_requests
-  # GET /employee_leav_requests.json
   def index
     @employee_leav_requests = EmployeeLeavRequest.where('employee_id = ?', current_user.try(:employee_id))
     @employee_leav_balances = EmployeeLeavBalance.where(employee_id: current_user.employee_id)
-    # @employee_leav_requests = EmployeeLeavRequest.all
   end
 
-  # GET /employee_leav_requests/1
-  # GET /employee_leav_requests/1.json
   def show
   end
 
-  # GET /employee_leav_requests/new
   def new
     @employee_leav_request = EmployeeLeavRequest.new
     @employee = Employee.find(current_user.employee_id)
@@ -26,12 +20,9 @@ class EmployeeLeavRequestsController < ApplicationController
     @leave_c_offs = LeaveCOff.where(employee_id: @employee.id)
   end
 
-  # GET /employee_leav_requests/1/edit
   def edit
   end
 
-  # POST /employee_leav_requests
-  # POST /employee_leav_requests.json
   def create
     @employee_leav_request = EmployeeLeavRequest.new(employee_leav_request_params)
     @employee = Employee.find(@employee_leav_request.employee_id)
@@ -87,7 +78,7 @@ class EmployeeLeavRequestsController < ApplicationController
               flash[:notice] = 'Send request without email.'
             else
               flash[:notice] = 'Leave Request sent successfully.'
-              LeaveRequestMailer.pending(@employee_leav_request).deliver_now
+              #LeaveRequestMailer.pending(@employee_leav_request).deliver_now
             end
             redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
           else
@@ -112,8 +103,6 @@ class EmployeeLeavRequestsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /employee_leav_requests/1
-  # PATCH/PUT /employee_leav_requests/1.json
   def update
     respond_to do |format|
       if @employee_leav_request.update(employee_leav_request_params)
@@ -126,8 +115,6 @@ class EmployeeLeavRequestsController < ApplicationController
     end
   end
 
-  # DELETE /employee_leav_requests/1
-  # DELETE /employee_leav_requests/1.json
   def destroy
     @employee_leav_request.destroy
     respond_to do |format|
@@ -172,7 +159,7 @@ class EmployeeLeavRequestsController < ApplicationController
     @employee_leav_request = EmployeeLeavRequest.new
     @total_leaves = EmployeeLeavBalance.where('employee_id = ?', @employee.id)
     @remain_leaves = EmployeeLeavRequest.joins(:leav_approved)
-    @leave_c_offs = LeaveCOff.where(employee_id: @employee.id, is_taken: false)
+    @leave_c_offs = LeaveCOff.where(employee_id: @employee.id, is_taken: false).order("expiry_date desc")
   end
 
   def hr_view_request
@@ -190,19 +177,21 @@ class EmployeeLeavRequestsController < ApplicationController
     reporter(EmployeeLeavRequest.filter_records(current_user), template_class: PdfReportTemplate) do
       filter :start_date, type: :date
       filter :current_status, type: :string
-      column(:Employee_ID, sortable: true) { |employee_leav_request| employee_leav_request.employee.try(:manual_employee_code) }
+      column(:ID, sortable: true) { |employee_leav_request| employee_leav_request.employee.try(:manual_employee_code) }
       column(:Employee_Name, sortable: true) { |employee_leav_request| full_name(employee_leav_request.employee) }
       column(:Designation, sortable: true) { |employee_leav_request| employee_leav_request.employee.joining_detail.employee_designation.name }
       column(:From, sortable: true) { |employee_leav_request| employee_leav_request.start_date.to_date }
       column(:To, sortable: true) { |employee_leav_request| employee_leav_request.end_date.to_date }
       column(:Leave_Category, sortable: true) { |employee_leav_request| employee_leav_request.leav_category.try(:name) }
+      column(:Apply_Date, sortable: true) { |employee_leav_request| employee_leav_request.created_at }
       column(:Leave_Type, sortable: true, &:leave_type)
       column(:Status, sortable: true, &:current_status)
       column(:No_OF_Day, sortable: true, &:leave_count)
       column(:Reason, sortable: true, &:reason)
+
     end
-    session[:active_tab] ="leavemanagement"
-    session[:active_tab1] ="leavereport"
+    session[:active_tab] = "leavemanagement"
+    session[:active_tab1] = "leavereport"
   end
 
   def search_by_is_pending_date

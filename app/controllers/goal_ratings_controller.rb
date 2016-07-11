@@ -135,9 +135,15 @@ class GoalRatingsController < ApplicationController
     @goal_rating = GoalRating.find(params[:goal_rating_id])
     @period = Period.find(params[:period_id])
 
-    @goal_rating.update(goal_rating_params)
-    flash[:notice] = 'Updated Successfully'
-    redirect_to goal_approval_goal_bunches_path(emp_id: @goal_rating.appraisee_id, id: @goal_rating.goal_bunch_id,period_id: @period.id)
+    @goal_bunch = GoalBunch.find(@goal_rating.goal_bunch_id)
+    goal_weightage_sum = @goal_rating.goal_weightage_sumdate(@goal_bunch, @goal_rating.goal_weightage, params)
+    if goal_weightage_sum <= 100
+      @goal_rating.update(goal_rating_params)
+      flash[:notice] = 'Updated Successfully'
+    else
+        flash[:alert] = "Goal weightage addition should be 100."
+    end
+      redirect_to goal_approval_goal_bunches_path(emp_id: @goal_rating.appraisee_id, id: @goal_rating.goal_bunch_id,period_id: @period.id)
   end
 
   def attribute_modal
@@ -166,7 +172,6 @@ class GoalRatingsController < ApplicationController
   end
   
   def send_mail_to_appraiser
-    # byebug
     @employee = Employee.find(current_user.employee_id)
     @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
     sum = @goal_bunch.goal_ratings.sum(:goal_weightage)

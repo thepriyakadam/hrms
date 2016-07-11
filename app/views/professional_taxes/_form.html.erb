@@ -1,7 +1,7 @@
 <%= bootstrap_form_for(@professional_tax,remote:true) do |f| %>
   <div class="row">
     <div class="col-sm-3">
-      <div class="field">
+      <div class="form-group required">
        <%= f.select :is_pt,['Yes','No'],{label: 'PT Option',include_blank: " Select PT"} %>
       </div>
     </div>

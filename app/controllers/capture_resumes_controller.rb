@@ -5,8 +5,7 @@ class CaptureResumesController < ApplicationController
   # GET /capture_resumes.json
   def index
     @capture_resumes = CaptureResume.all
-    @vacancy_master = VacancyMaster.find(params[:format])
-    session[:active_tab] ="recruitment"
+    # @vacancy_master = VacancyMaster.find(params[:format])
   end
 
   # GET /capture_resumes/1
@@ -18,7 +17,9 @@ class CaptureResumesController < ApplicationController
   def new
     #byebug
     @capture_resume = CaptureResume.new
-    @vacancy_master = VacancyMaster.find(params[:format])
+    # @vacancy_master = VacancyMaster.find(params[:format])
+    session[:active_tab] ="recruitment"
+    session[:active_tab1] ="candidate_regist"
   end
 
 
@@ -34,7 +35,7 @@ class CaptureResumesController < ApplicationController
 
     respond_to do |format|
       if @capture_resume.save
-        format.html { redirect_to @capture_resume, notice: 'Capture resume was successfully created.' }
+        format.html { redirect_to @capture_resume, notice: 'Candidate Registered Successfully.' }
         format.json { render :show, status: :created, location: @capture_resume }
       else
         format.html { render :new }
@@ -48,7 +49,7 @@ class CaptureResumesController < ApplicationController
   def update
     respond_to do |format|
       if @capture_resume.update(capture_resume_params)
-        format.html { redirect_to @capture_resume, notice: 'Capture resume was successfully updated.' }
+        format.html { redirect_to @capture_resume, notice: 'Candidate Registration Details was successfully updated.' }
         format.json { render :show, status: :ok, location: @capture_resume }
       else
         format.html { render :edit }

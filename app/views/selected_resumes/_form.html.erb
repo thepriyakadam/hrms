@@ -1,6 +1,6 @@
  
 <div class="box-body">
-<%= bootstrap_form_for(@selected_resume,html: {id: 'selected_resume'},remote:true) do |f| %>
+<%= bootstrap_form_for(@selected_resume,html: {id: "selected_resume"},vacancy_master_id: @vacancy_master.id) do |f| %>
 <%= f.hidden_field :vacancy_master_id,value:@vacancy_master.id  %>
 <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
 <div>

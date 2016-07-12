@@ -1,6 +1,6 @@
 <div class="box">
   <div class="box-header">
-    <h3 class="box-title">Approved Daily Bill Details</h3>
+    <h3 class="box-title">Approved Expense Claim Details</h3>
 <div class="box-body">
 <table id="example2" class="table table-bordered table-hover table-condensed">
   <thead>
@@ -9,6 +9,8 @@
       <th>E Place</th>
       <th>Travel Expense Type</th>
       <th>Request Status</th>
+      <th>Download Doc</th>
+      <th>Download Image</th>
     </tr>
   </thead>
   <tbody>
@@ -23,7 +25,21 @@
               <small class="label label-info">Approved</small>
               <% else %>
               <% end %>
-        </td>  
+        </td>
+        <td>
+           <% if daily_bill_detail.avatar_file_file_name == nil %>
+           <small class="label label-default">Document Not Available</small>
+             <% else %>
+             <%= link_to '',download_doc_path(id: daily_bill_detail.id),class: 'btn btn-xs fa fa-download' %>
+             <% end %>
+        </td>
+        <td>
+           <% if daily_bill_detail.passport_photo_file_name == nil %>
+           <small class="label label-default">Image Not Available</small>
+             <% else %>
+             <%= link_to '',download_pics_path(id: daily_bill_detail.id),class: 'btn btn-xs fa fa-picture-o' %>
+             <% end %>
+        </td>           
       </tr>
     <% end %>
   </tbody>

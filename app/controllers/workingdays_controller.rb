@@ -27,7 +27,6 @@ class WorkingdaysController < ApplicationController
   # POST /workingdays.json
   def create
     @workingday = Workingday.new(workingday_params)
-
     respond_to do |format|
       if @workingday.save
         format.html { redirect_to @workingday, notice: 'Workingday was successfully created.' }
@@ -88,7 +87,6 @@ class WorkingdaysController < ApplicationController
     @employees.each do |e|
       workingday = Workingday.new
       if e.joining_detail.nil?
-
       else
         if e.joining_detail.employee_category.nil?
         else
@@ -108,7 +106,7 @@ class WorkingdaysController < ApplicationController
       workingday.employee_id = e.id
       lc = LeavCategory.where(is_payble: false).pluck(:id)
       workingday.lwp_leave = ParticularLeaveRecord.where(leave_date: @date.beginning_of_month..@date.end_of_month, employee_id: e.id, leav_category_id: lc).count
-      workingday.payable_day = workingday.present_day.to_f - workingday.lwp_leave.to_f
+      workingday.payable_day = workingday.day_in_month - workingday.lwp_leave.to_f
       @workingdays << workingday
     end
   end

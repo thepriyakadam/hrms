@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160708170350) do
+ActiveRecord::Schema.define(version: 20160709092554) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -389,6 +389,19 @@ ActiveRecord::Schema.define(version: 20160708170350) do
   add_index "company_locations", ["country_id"], name: "index_company_locations_on_country_id"
   add_index "company_locations", ["district_id"], name: "index_company_locations_on_district_id"
   add_index "company_locations", ["state_id"], name: "index_company_locations_on_state_id"
+
+  create_table "company_policies", force: :cascade do |t|
+    t.string   "name"
+    t.date     "effective_from"
+    t.date     "effective_to"
+    t.boolean  "status"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+    t.string   "document_file_name"
+    t.string   "document_content_type"
+    t.integer  "document_file_size"
+    t.datetime "document_updated_at"
+  end
 
   create_table "company_shifts", force: :cascade do |t|
     t.string   "code"

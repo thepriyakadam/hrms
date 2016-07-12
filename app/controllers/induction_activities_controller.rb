@@ -132,7 +132,7 @@ class InductionActivitiesController < ApplicationController
 
 
   def update_induction
-     @induction_activity = InductionActivity.find(params[:id])
+    @induction_activity = InductionActivity.find(params[:id])
     @induction_activity.update(induction_activity_params)
     flash[:notice] = 'Activity Updated Successfully'
     redirect_to root_url

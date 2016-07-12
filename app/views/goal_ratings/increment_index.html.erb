@@ -1,68 +1,63 @@
 <div class="box">
   <div class="box-header">
-    <h3 class="box-title">Increment Salary</h3>
+    <h3 class="box-title">Revision Simulation</h3>
   </div><!-- /.box-header -->
   <div class="box-body">
   <%= bootstrap_form_for(:salary, url: { action: 'all_employee_list'},html: {id: "salary"},remote: true) do |f| %>
   	<div class="row">
       <div class="col-sm-2">
+      <label>Performance Period</label>
         <div class="field">
          <%= select :salary, :period_id, all_period_type,{label: 'Period',include_blank: " Select Period"},{class: "form-control"} %>
         </div>
       </div>
     </div>
     <br>
+    <h5>Revision Level(%)</h5>
     <div class="row">
+    <div class="col-sm-1">
+    <h6>Company</h6>
+    </div>
       <div class="col-sm-2">
         <div class="field">
         	<%= f.text_field :company, hide_label: true,placeholder: 'Company' %>
     		</div>
     	</div>
-
-    	<div class="col-sm-2">
-        <div class="field">
-        	<%= f.text_field :company_factor, hide_label: true,placeholder: 'Company Factor' %>
-    		</div>
-    	</div>
     </div>
     <div class="row">
+    <div class="col-sm-1">
+    <h6>Department</h6>
+    </div>
     	<div class="col-sm-2">
         <div class="field">
         	<%= f.text_field :department, hide_label: true,placeholder: 'Department' %>
     		</div>
     	</div>
-
-    	<div class="col-sm-2">
-        <div class="field">
-        	<%= f.text_field :department_factor, hide_label: true,placeholder: 'Department Factor' %>
-    		</div>
-    	</div>
     </div>
     <div class="row">
+    <div class="col-sm-1">
+    <h6>Location</h6>
+    </div>
     	<div class="col-sm-2">
         <div class="field">
         	<%= f.text_field :location, hide_label: true,placeholder: 'Location' %>
     		</div>
     	</div>
-
+    </div>
+    <br>
+   	<!-- <div class="row">
     	<div class="col-sm-2">
+    	<label>Max Rating</label>
         <div class="field">
-        	<%= f.text_field :location_factor, hide_label: true,placeholder: 'Location Factor' %>
+        	<%= @rating.value %>
     		</div>
     	</div>
-    </div>
-   	<div class="row">
-    	<div class="col-sm-2">
-        <div class="field">
-        	<%= f.text_field :max_rating, value: @rating.value %>
-    		</div>
-    	</div>
-    </div>
-
+    </div> -->
+    <br>
     <div class="row">
      <div class="col-sm-3">
         <div class="actions">
-          <%= f.submit "Submit", class: "btn btn-sm btn-warning", id: "buttonCtc" %>
+          <%= f.submit "Simulation", class: "btn btn-sm btn-warning", id: "buttonCtc" %>
         </div>
       </div>
     </div><br>

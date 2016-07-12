@@ -360,8 +360,11 @@ class GoalRatingsController < ApplicationController
 
   def all_employee_list
     @period = Period.find(params[:salary][:period_id])
+    @company = params[:salary][:company]
+    @department = params[:salary][:department]
+    @location = params[:salary][:location]
+    @rating = Rating.last
     @goal_bunches = GoalBunch.where(period_id: @period.id)
-    puts '---------------------------------------------------------------------'
   end
 
     private

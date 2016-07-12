@@ -354,6 +354,16 @@ class GoalRatingsController < ApplicationController
     end
   end
 
+  def increment_index
+    @rating = Rating.last
+  end
+
+  def all_employee_list
+    @period = Period.find(params[:salary][:period_id])
+    @goal_bunches = GoalBunch.where(period_id: @period.id)
+    puts '---------------------------------------------------------------------'
+  end
+
     private
     # Use callbacks to share common setup or constraints between actions.
     def set_goal_rating

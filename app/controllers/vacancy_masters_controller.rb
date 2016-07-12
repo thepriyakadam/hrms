@@ -192,7 +192,7 @@ class VacancyMastersController < ApplicationController
   end
 
   def vacancy_resume
-      @vacancy_masters = VacancyMaster.all
+      @vacancy_masters = VacancyMaster.where("employee_id = ? and (current_status = ? or current_status = ?)",current_user.employee_id,"Approved","Edit And Approved")
       session[:active_tab] ="recruitment"
       session[:active_tab1] ="particular_vacancy"
   end
@@ -219,15 +219,17 @@ class VacancyMastersController < ApplicationController
   def update_vacancy_details
      puts "---------------"
      @vacancy_master = VacancyMaster.find(params[:id])
+     @vacancy_master.update(current_status: "Edit And Approved")
      @vacancy_request_history = VacancyRequestHistory.new(vacancy_request_history_params)
      @vacancy_request_history.save
-     @vacancy_request_history.update(current_status: "Approved")
-     flash[:notice] = "Vacancy Details Updated Successfully"
+     VacancyRequestHistory.create(vacancy_master_id: @vacancy_master.id, vacancy_name: @vacancy_master.vacancy_name,no_of_position: @vacancy_master.no_of_position,description: @vacancy_master.description,vacancy_post_date: @vacancy_master.vacancy_post_date,budget: @vacancy_master.budget,department_id: @vacancy_master.department_id,employee_designation_id: @vacancy_master.employee_designation_id,company_location_id: @vacancy_master.company_location_id,degree_id: @vacancy_master.degree_id,degree_1_id: @vacancy_master.degree_1_id,degree_2_id: @vacancy_master.degree_2_id,keyword: @vacancy_master.keyword,other_organization: @vacancy_master.other_organization,industry: @vacancy_master.industry,reporting_master_id: @vacancy_master.reporting_master_id,current_status: @vacancy_master.current_status,employee_id: @vacancy_master.employee_id,justification: @vacancy_master.justification,current_status: "Edit And Approved")
+     ReportingMastersVacancyMaster.create(vacancy_master_id: @vacancy_master.id, reporting_master_id: current_user.employee_id, vacancy_status: "Edit And Approved")
+     flash[:notice] = "Vacancy Details Updated & Approved Successfully"
      redirect_to vacancy_history_vacancy_masters_path
   end
 
   def approved_vacancy_request_history_list
-     @vacancy_request_histories = VacancyRequestHistory.where(employee_id: current_user.employee_id,current_status: "Approved")
+     @vacancy_request_histories = VacancyRequestHistory.where("employee_id = ? and (current_status = ? or current_status = ?)",current_user.employee_id,"Approved","Edit And Approved")
      session[:active_tab] ="recruitment"
      session[:active_tab1] ="particular_vacancy"
   end

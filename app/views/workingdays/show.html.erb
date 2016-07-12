@@ -9,11 +9,11 @@
     <table id="example2" class="table table-bordered table-hover table-condensed">
 
     <tr>
-    <th> <strong>Employee Code</strong></th>
+    <th> <strong>Employee ID</strong></th>
     <td><%= @workingday.employee.try(:manual_employee_code) %></td>
 
     <th><strong>Employee Name</strong></th>
-    <td><%= @workingday.employee.first_name %><%= @workingday.employee.middle_name %><%= @workingday.employee.last_name %></td>
+    <td><%= @workingday.employee.try(:first_name) %><%= @workingday.employee.try(:middle_name) %><%= @workingday.employee.try(:last_name) %></td>
     </tr>
     <tr>
 
@@ -49,7 +49,7 @@
     </tr>
     
     <tr>
-    <th><strong>COFF Leave</strong></th>
+    <th><strong>C.OFF Leave</strong></th>
     <td><%= @workingday.coff_leave %></td>
 
     <th><strong>Total Leave</strong></th>

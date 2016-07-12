@@ -25,7 +25,7 @@
             <% @interview_schedules.each do |interview_schedule| %>
               <tr>
               <!-- <td>
-                  <%= check_box_tag "interview_schedule_ids[]", interview_schedule.id %>
+                  <= check_box_tag "interview_schedule_ids[]", interview_schedule.id %>
               </td> -->
                 <td><%= i=i+1 %></td>
                 <td><%= interview_schedule.candidate_name %></td>
@@ -33,7 +33,7 @@
                 <td><%= link_to '', resume_list_interview_schedules_path(interview_schedule),class: 'btn btn-xs fa fa-download' %></td>
                 <td><%= link_to ' Interview Round',interview_round_list_interview_schedules_path(interview_schedule),class: 'btn btn-xs btn-primary' %></td>
                 <td>
-                  <%= link_to ' Feedback', new_interview_analysis_path(interview_schedule),class: 'btn btn-xs btn-success fa fa-comment' %>
+                  <%= link_to ' Feedback', new_interview_analysis_path(abc: interview_schedule.id),class: 'btn btn-xs btn-success fa fa-comment' %>
                   <!--  < link_to 'Print', print_interviewee_list_interview_schedules_path(format: 'pdf',id:interview_schedule.id ),class: "btn btn-xl btn-info fa fa-print", :target => '_blank' %> -->
                 </td>
               </tr>

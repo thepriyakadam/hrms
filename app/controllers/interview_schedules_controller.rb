@@ -8,6 +8,7 @@ class InterviewSchedulesController < ApplicationController
   include QueryReport::Helper # need to include it
   def index
     @interview_schedules = InterviewSchedule.all
+    
     respond_to do |format|
       format.html
       format.pdf do

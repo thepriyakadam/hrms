@@ -34,6 +34,8 @@
              <%= link_to '', cancel_vacancy_request_vacancy_masters_path(vacancy_request_history), data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-xs fa fa-trash' %>
              <% elsif vacancy_request_history.current_status == "Approved" %>
               <small class="label label-primary">Approved</small>
+              <% elsif vacancy_request_history.current_status == "Edit And Approved" %>
+              <small class="label label-primary">Edit And Approved</small>
              <% elsif vacancy_request_history.current_status == "Reject" %>
               <small class="label label-danger">Reject</small>
               <% elsif vacancy_request_history.current_status == "Approved & Send Next" %>

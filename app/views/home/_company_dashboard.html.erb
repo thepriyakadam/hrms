@@ -245,7 +245,7 @@
                    <img src="images/user.jpg" alt=" ">
                 </div>
                 <div class="product-info">
-                  <a href="javascript::;" class="product-title"><%= full_name(e) %></a>
+                  <%= full_name(e) %>
                   <span class="label label-success pull-right">Happy Birthday</span>
                   <span class="users-list-date"><%= e.contact_no %></span>
                   </div>
@@ -262,7 +262,7 @@
             <div class="box-header with-border">
               <h3 class="box-title">Tomorrow's Birthday</h3>
               <div class="box-tools pull-right">
-                <span class="label label-success"> BirthDay's</span>
+               <!--  <span class="label label-success"> BirthDay's</span> -->
                  <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
                 <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
               </div>
@@ -314,7 +314,7 @@
                    <img src="images/user.jpg" alt=" ">
                 </div>
                 <div class="product-info">
-                  <a href="javascript::;" class="product-title"><%= j.employee.try(:first_name) %> <%= j.employee.try(:middle_name) %> <%= j.employee.try(:last_name) %></a>
+                  <%= j.employee.try(:first_name) %> <%= j.employee.try(:middle_name) %> <%= j.employee.try(:last_name) %>
                   <span class="label label-info pull-right"><%= j.joining_date %></span>
                   <span class="product-description"><%= j.employee_designation.try(:name) %></span>
                   </div>

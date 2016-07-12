@@ -295,7 +295,14 @@ class GoalRatingsController < ApplicationController
     @goal_rating = GoalRating.find(params[:format])
   end
 
-  
+
+  def update_goal_set_modal
+    @goal_rating = GoalRating.find(params[:goal_id])
+    @employee = Employee.find(@goal_rating.appraisee_id)
+    @goal_bunch = GoalBunch.find(@goal_rating.goal_bunch_id)
+      @goal_rating.update(goal_rating_params)
+    redirect_to new_goal_rating_path(id: @goal_bunch.id, emp_id:@employee.id)
+  end
 
   def attribute_set_modal
     @goal_rating = GoalRating.find(params[:format])

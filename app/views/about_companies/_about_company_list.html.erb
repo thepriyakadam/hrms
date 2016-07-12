@@ -4,6 +4,7 @@
       <th>Code</th>
       <th>Name</th>
       <th>Description</th>
+      <th>Status</th>
       <th>Action</th>
     </tr>
   </thead>
@@ -13,6 +14,7 @@
         <td><%= about_company.code %></td>
         <td><%= about_company.name %></td>
         <td><%= about_company.description %></td>
+        <td><%= about_company.status %></td>
         <td>
           <%= link_to '', edit_about_company_path(about_company),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
           <%= link_to '',  about_company, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>

@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :company_policies
   resources :date_formats do
     collection do 
     get :active
@@ -250,9 +251,11 @@ end
     collection do
       get :training_request_list
       get :training_request_confirmation
-      get :approve_training_request
-      get :reject_training_request
+      post :approve_training_request
+      post :reject_training_request
       get :confirmation_list
+      get :modal_approver_comment
+      get :modal_reject_comment
     end
   end
   resources :selected_resumes  do
@@ -622,6 +625,7 @@ end
 
   match 'daily_bill_details/:id/download_doc/:id' => 'daily_bill_details#download_doc', :via => [:get], :as => :download_doc
   match 'daily_bill_details/:id/download_pics/:id' => 'daily_bill_details#download_pics', :via => [:get], :as => :download_pics
+  match 'company_policies/:id/download_docs/:id' => 'company_policies#download_docs', :via => [:get], :as => :download_docs
 
   resources :leave_c_offs
   resources :overtime_month_records

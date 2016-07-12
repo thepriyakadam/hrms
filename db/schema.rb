@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160705235546) do
+ActiveRecord::Schema.define(version: 20160709092553) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -155,15 +155,6 @@ ActiveRecord::Schema.define(version: 20160705235546) do
   add_index "attribute_rating_sheets", ["appraiser_id"], name: "index_attribute_rating_sheets_on_appraiser_id"
   add_index "attribute_rating_sheets", ["employee_attribute_id"], name: "index_attribute_rating_sheets_on_employee_attribute_id"
 
-  create_table "attributes", force: :cascade do |t|
-    t.string   "code"
-    t.string   "name"
-    t.text     "definition"
-    t.boolean  "status"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "awards", force: :cascade do |t|
     t.integer  "employee_id"
     t.string   "award_name"
@@ -266,13 +257,6 @@ ActiveRecord::Schema.define(version: 20160705235546) do
   add_index "capture_resumes", ["state_id"], name: "index_capture_resumes_on_state_id"
   add_index "capture_resumes", ["vacancy_master_id"], name: "index_capture_resumes_on_vacancy_master_id"
 
-  create_table "cars", force: :cascade do |t|
-    t.string   "name"
-    t.string   "color"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "certifications", force: :cascade do |t|
     t.integer  "employee_id"
     t.integer  "year_id"
@@ -372,6 +356,19 @@ ActiveRecord::Schema.define(version: 20160705235546) do
   add_index "company_locations", ["country_id"], name: "index_company_locations_on_country_id"
   add_index "company_locations", ["district_id"], name: "index_company_locations_on_district_id"
   add_index "company_locations", ["state_id"], name: "index_company_locations_on_state_id"
+
+  create_table "company_policies", force: :cascade do |t|
+    t.string   "name"
+    t.date     "effective_from"
+    t.date     "effective_to"
+    t.boolean  "status"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+    t.string   "document_file_name"
+    t.string   "document_content_type"
+    t.integer  "document_file_size"
+    t.datetime "document_updated_at"
+  end
 
   create_table "company_shifts", force: :cascade do |t|
     t.string   "code"
@@ -702,18 +699,9 @@ ActiveRecord::Schema.define(version: 20160705235546) do
     t.integer  "employee_id"
     t.string   "allign_to_supervisor"
     t.boolean  "is_confirm"
-<<<<<<< HEAD
   end
 
   add_index "employee_goals", ["appraisee_id"], name: "index_employee_goals_on_appraisee_id"
-=======
-    t.string   "emp_head"
-    t.integer  "appraiser_id"
-    t.integer  "appraiser2_id"
-  end
-
-  add_index "employee_goals", ["appraiser2_id"], name: "index_employee_goals_on_appraiser2_id"
->>>>>>> 2815e209b0e0885ab6d5fc2d922bdea2382197e2
   add_index "employee_goals", ["appraiser_id"], name: "index_employee_goals_on_appraiser_id"
   add_index "employee_goals", ["employee_id"], name: "index_employee_goals_on_employee_id"
   add_index "employee_goals", ["goal_measure_id"], name: "index_employee_goals_on_goal_measure_id"
@@ -2239,7 +2227,6 @@ ActiveRecord::Schema.define(version: 20160705235546) do
 
   create_table "training_plans", force: :cascade do |t|
     t.date     "training_date"
-    t.string   "topic"
     t.string   "no_of_employee"
     t.string   "trainer_name"
     t.string   "no_of_days"
@@ -2272,7 +2259,6 @@ ActiveRecord::Schema.define(version: 20160705235546) do
 
   create_table "training_requests", force: :cascade do |t|
     t.integer  "employee_id"
-    t.string   "training_topic"
     t.string   "training_period"
     t.date     "training_date"
     t.integer  "reporting_master_id"
@@ -2284,6 +2270,7 @@ ActiveRecord::Schema.define(version: 20160705235546) do
     t.string   "place"
     t.text     "justification"
     t.string   "status"
+    t.text     "comment"
   end
 
   add_index "training_requests", ["employee_id"], name: "index_training_requests_on_employee_id"

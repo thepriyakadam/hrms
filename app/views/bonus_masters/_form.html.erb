@@ -3,22 +3,22 @@
    
     <div class="col-sm-3">
       <div class="form-group required">       
-        <%= f.select :is_bouns,[['Yes','true'],['No','false']],{label: 'Overtime Option',include_blank: " Select Overtime Option"} %>
+        <%= f.select :is_bouns,[['Yes','true'],['No','false']],{label: 'Bonus Option',include_blank: " Select Bonus Option"} %>
       </div>
     </div>
      <div class="col-sm-3">
-      <div class="form-group required">
+      <div class="field">
         <%= f.text_field :limit_amount,label: 'Limit Amount' %>
       </div>
     </div>
      <div class="col-sm-3">
-      <div class="form-group required">
+      <div class="field">
         <%= f.text_field :bonus_persentage,label:'Bonus Percentage' %>
       </div>
     </div>
      <div class="col-sm-3">
       <div class="form-group required">       
-        <%= f.select :status,[['Active','true'],['Inactive','false']],{label: 'OT Status',include_blank: " Select Status Option"} %>
+        <%= f.select :status,[['Active','true'],['Inactive','false']],{label: 'Status',include_blank: " Select Status Option"} %>
       </div>
     </div>
   </div>
@@ -31,6 +31,7 @@
     </div>
   </div>
 <% end %>
+<br>
 
 <script type="text/javascript">
 

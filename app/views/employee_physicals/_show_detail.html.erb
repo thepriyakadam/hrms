@@ -1,6 +1,6 @@
 <div class="box box-default">
   <div class="box-header with-border">
-     <h6 class="box-title">Employee Physical Details - <%= code_full_name(@employee_physicals.first.employee) %></h6>
+     <h6 class="box-title">Employee Physical Details - <%= code_full_name(@employee_physicals.try(:first).try(:employee)) %></h6>
     <div class="box-tools pull-right">
       <%= link_to 'Edit',  edit_employee_physical_path(@employee_physical),class: 'btn btn-sm btn-success fa fa-edit',remote:true %>
       <%= link_to 'Back', employees_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>

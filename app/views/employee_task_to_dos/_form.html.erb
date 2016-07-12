@@ -1,4 +1,3 @@
-
 <%= bootstrap_form_for(@employee_task_to_do,remote: true,html: {id: "employee_task_to_do"}) do |f| %>
   <%= f.hidden_field :employee_id, value: current_user.employee_id%>
 
@@ -37,12 +36,9 @@
         </div>
       </div>
     </div>
- 
-
-   
     <div class="col-sm-1">
       <div class="field">
-        <%= f.check_box :status ,label: "Status" %>
+        <%= f.check_box :status ,label: "Active" %>
       </div>
     </div>
 

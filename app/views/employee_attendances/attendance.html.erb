@@ -11,20 +11,23 @@
         <thead>
           <tr>
             <th>Employee Name</th>
-            <th><%= @employee_attendances.first.try(:day) %>
+            <% for i in 1..@day %>
+              <td><%= i %></td>
+            <%end%>
           </tr>
         </thead>
 
         <tbody>
-        <tr>
-          <% @employee_attendances.each do |employee_attendance| %>
-            <th><%= employee_attendance.employee.try(:manual_employee_code) %></th>
-             <td><%= employee_attendance.present %></td>
+          <% @employees.each do |e|%>
+            <tr>
+              <th><%= full_name(e) %></th>
+              <% for i in 1..@day %>
+                <td><%= 'P' %></td>
+              <%end%>
             </tr>
-          <% end %>
+          <%end%>
         </tbody>
       </table>
-
     </div>
   </div>
 </div>

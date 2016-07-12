@@ -10,8 +10,8 @@
 
     <div class="row">
       <div class="col-sm-3">
-        <div class="field">
-         <%= f.select :company_location_id, all_company_location,{label: 'Department Location',include_blank: " Select Department Location"} %>
+        <div class="form-group required">
+         <%= f.select :company_location_id, all_company_with_location,{label: 'Department Location',include_blank: " Select Department Location"} %>
         </div>
       </div>
       <div class="col-sm-3">

@@ -199,7 +199,7 @@
                    <img src="images/user.jpg" alt=" ">
                 </div>
                 <div class="product-info">
-                  <a href="javascript::;" class="product-title"><%= full_name(e) %></a>
+                 <%= full_name(e) %>
                   <span class="label label-success pull-right">Happy Birthday</span>
                   <span class="users-list-date"><%= e.contact_no %></span>
                   </div>
@@ -268,7 +268,7 @@
                    <img src="images/user.jpg" alt=" ">
                 </div>
                 <div class="product-info">
-                  <a href="javascript::;" class="product-title"><%= j.employee.try(:first_name) %> <%= j.employee.try(:middle_name) %> <%= j.employee.try(:last_name) %></a>
+                  <%= j.employee.try(:first_name) %> <%= j.employee.try(:middle_name) %> <%= j.employee.try(:last_name) %>
                   <span class="label label-info pull-right"><%= j.joining_date %></span>
                   <span class="product-description"><%= j.employee_designation.try(:name) %></span>
                   </div>

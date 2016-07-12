@@ -15,7 +15,7 @@
 
         <div class="row">
           <div class="col-sm-3">
-            <div class="form-group required">
+            <div class="field">
              <%= f.select :company_id, all_company,{label: 'Company Select',include_blank: " Select Company"} %>
             </div>
           </div>
@@ -33,7 +33,7 @@
           </div>
           <div class="col-sm-3">
             <div class="field">
-              <%= f.text_field :contact_no,label:"Contact No" %>
+              <%= f.text_field :contact_no,label:"Contact No." %>
             </div>
           </div>
         </div>

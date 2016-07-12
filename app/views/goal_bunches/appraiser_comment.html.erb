@@ -3,7 +3,7 @@
     <h3 class="box-title">Employee Details</h3>
   </div><!-- /.box-header -->
   <div class="box-body">
-<table class="table table-bordered table-hover table-condensed">     
+<table class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
       <th>Employee Id</th>
@@ -12,7 +12,7 @@
       <th>Department</th>
       <th>Date Of Joining</th>
       <th>Grade</th>
-      <th>Current Designation</th> 
+      <th>Current Designation</th>
     </tr>
   </thead>
   <tbody>
@@ -29,7 +29,6 @@
     <% end %>
   </tbody>
 </table>
-
   <div class="box-header with-border">
     <h3 class="box-title">Previous Experience</h3>
   </div>
@@ -53,7 +52,6 @@
       <% end %>
     </tbody>
   </table>
-
   <div class="box-header with-border">
     <h3 class="box-title">Qualification Details</h3>
   </div>
@@ -78,7 +76,6 @@
     </tbody>
   </table>
 
-  
   <div class="box-header with-border">
     <h3 class="box-title">Promotion Details</h3>
   </div>
@@ -109,9 +106,8 @@
     </tbody>
   </table>
   
-
   <% if  @goal_bunch.nil? %>
-  <center><p class="text-warning"> No Goal Bunch Available </p></center> 
+  <center><p class="text-warning"> No Goals Available </p></center> 
   <% else %>
 
 <div class="box box-default">
@@ -124,8 +120,8 @@
       <thead>
         <tr>
           <th>Goal Perspective</th>
-          <th>Goal Weightage</th>
-          <th>Goal Measure</th>
+          <th>Weightage</th>
+          <th>Measure</th>
           <th>Target/Unit</th>
           <th>Aligned</th>
           <th>Self Comment</th>
@@ -142,7 +138,7 @@
             <td><%= goal_rating.target %></td>
             <td><%= goal_rating.aligned %></td>
             <td><%= goal_rating.appraisee_comment %></td>
-            <td><%= text_field_tag 'appraiser_comments[]',"",class: "form-control" %></td>
+            <td><%= text_field_tag 'appraiser_comments[]',"",class: "form-control",autofocus: true %></td>
             <td><%= select_tag 'appraiser_ratings[]',options_for_select(all_rating_type),{class: "form-control", hide_label: true,include_blank: " Select Rating"} %></td>
             <%= hidden_field_tag 'goal_rating_ids[]',"",value: goal_rating.id %>
           </tr>
@@ -154,8 +150,8 @@
       <thead>
         <tr>
           <th>Attribute</th>
-          <th>Goal Weightage</th>
-          <th>Goal Measure</th>
+          <th>Weightage</th>
+          <th>Measure</th>
           <th>Target/Unit</th>
           <th>Aligned</th>
           <th>Self Comment</th>
@@ -204,8 +200,8 @@
       <thead>
         <tr>
           <th>Goal Perspective</th>
-          <th>Goal Weightage</th>
-          <th>Goal Measure</th>
+          <th>Weightage</th>
+          <th>Measure</th>
           <th>Target/Unit</th>
           <th>Aligned</th>
           <th>Self Comment</th>
@@ -239,14 +235,14 @@
         <% end %>
       </tbody>
     </table>
-    <h3>Appraiser Rating For Goal= <%= appraiser_goal_sum %></h3>
 
+    <h3>Appraiser Rating For Goal= <%= appraiser_goal_sum %></h3>
      <table class="table table-bordered table-hover table-condensed">
       <thead>
         <tr>
           <th>Attribute</th>
-          <th>Goal Weightage</th>
-          <th>Goal Measure</th>
+          <th>Weightage</th>
+          <th>Measure</th>
           <th>Target/Unit</th>
           <th>Aligned</th>
           <th>Self Comment</th>
@@ -280,14 +276,12 @@
         <% end %>
       </tbody>
     </table>
-    <h3>Appraiser Rating For Attribute= <%= appraiser_attribute_sum %></h3>
-
+    <h3>Appraiser Rating For Attribute = <%= appraiser_attribute_sum %></h3>
       <h3>Overall = <%= appraiser_attribute_sum + appraiser_goal_sum /2 %></h3>
       <!-- < f.text_field :appraiser_rating, value: appraiser_attribute_sum + appraiser_goal_sum / 2 %> -->
     <div class="row">
       <div class="col-sm-3">
         <div class="actions">
-
           <% unless @goal_ratings.empty? && @goal_attribute_ratings.empty? %>
           <% else %>
             <% unless @goal_bunch.nil? %>
@@ -297,12 +291,10 @@
               <% end %>
             <% end %>
           <% end %>
-
         </div>
       </div>
     </div>
   <% end %>
-
 
   <div class="box-header with-border">
     <h3 class="box-title">Overall Comment</h3>
@@ -342,15 +334,12 @@
         </div>
       <% end %>
     <% end %>
-
   <% end %>
   </div>
 </div>
-
-
 <% end %>
 
-<%= link_to 'Back',period_list_appraiser_goal_bunches_path(emp_id: @employee.id),class: 'btn btn-sm btn-default'%>
+<%= link_to 'Back',period_list_appraiser_goal_bunches_path(emp_id: @employee.id),class: 'btn btn-sm btn-default fa fa-arrow-left' %>
 </div>
 </div>
 <div id="myModal" class="modal fade"></div>

@@ -61,7 +61,7 @@
       <div class="actions">
         <%= f.submit "Confirm", class: 'btn btn-primary btn-sm' %> |
 
-        <%= link_to 'Print PDF', print_daily_bill_daily_bill_details_path(format: 'pdf',qwe:@travel_request.id ),class: 'btn btn-xl btn-warning',:target => '_blank' %><br>
+        <%= link_to 'Print PDF', print_daily_bill_daily_bill_details_path(format: 'pdf',qwe:@travel_request.id ),class: 'btn btn-sm btn-warning',:target => '_blank' %><br><br>
        <!--  <= link_to 'Send Request',class: 'btn btn-xl btn-warning' %><br>
         <br> -->
         <%= link_to 'Back', daily_bill_travel_requests_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>

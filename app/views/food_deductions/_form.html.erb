@@ -14,13 +14,13 @@
         </div>
 
         <div class="col-sm-3">
-          <label>Date</label>
           <div class="form-group required">
+         <!--  <label>Date</label> -->
             <div class="input-group">
               <div class="input-group-addon">
                 <i class="fa fa-calendar"></i>
               </div>
-              <%= f.text_field :food_date,hide_label: true, class: 'food_date'%>
+              <%= f.text_field :food_date, class: 'food_date',label:'Date'%>
             </div>
           </div>
         </div>
@@ -32,7 +32,7 @@
         </div>
 
         <div class="col-sm-3">
-          <div class="field">
+          <div class="form-group required">
             <%= f.text_field :return_coupan, placeholder: 'Return Food Coupon',label:'Return Coupon'%>
           </div>
         </div>

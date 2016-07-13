@@ -11,7 +11,7 @@ class SelectedResumesController < ApplicationController
   # GET /selected_resumes/new
   def new
     @selected_resume = SelectedResume.new
-    @vacancy_master = VacancyMaster.find(params[:format])
+    @vacancy_master = VacancyMaster.find(params[:vacancy_master_id])
     # @selected_resumes = SelectedResume.where(vacancy_master_id: @vacancy_master.id)
     @selected_resumes = SelectedResume.all
   end
@@ -35,17 +35,19 @@ class SelectedResumesController < ApplicationController
   end
 
 
+  
+
   def create
-    @selected_resume = SelectedResume.new(selected_resume_params)
-    @vacancy_master = VacancyMaster.find(@selected_resume.vacancy_master_id)
-    # @vacancy_master = VacancyMaster.find(params[:format])
-    @selected_resumes = SelectedResume.all
+     @selected_resume = SelectedResume.new(selected_resume_params)
+     @vacancy_master = VacancyMaster.find(@selected_resume.vacancy_master_id)
+     @selected_resumes = SelectedResume.all
       if @selected_resume.save
         @selected_resume = SelectedResume.new
+        flash[:notice] = 'Resume Details saved Successfully.'  
       end
-      # @vacancy_master = VacancyMaster.find(@selected_resume.vacancy_master_id)
-      redirect_to root_url
-      flash[:notice] = 'Resume Details saved Successfully.'  
+      # byebug
+      @vacancy_master_id = VacancyMaster.find(params[:selected_resume][:vacancy_master_id])
+      redirect_to new_selected_resume_path(vacancy_master_id: @vacancy_master_id.id)
   end
 
   def create_new
@@ -155,18 +157,18 @@ class SelectedResumesController < ApplicationController
   end
 
   def is_confirm
-    @vacancy_master = VacancyMaster.find(params[:abc])
+    @vacancy_master = VacancyMaster.find(params[:vacancy_master_id])
     @selected_resume_ids = params[:selected_resume_ids]
     if @selected_resume_ids.nil?
       flash[:alert] = "Please Select the Checkbox"
-      redirect_to new_selected_resume_path(@vacancy_master.id)
+      redirect_to new_selected_resume_path(vacancy_master_id: @vacancy_master.id)
     else
       @selected_resume_ids.each do |eid|
       @selected_resume = SelectedResume.find(eid)
       @selected_resume.update(status: "Shortlisted") 
       flash[:notice] = "Confirmed Successfully"
     end 
-     redirect_to new_selected_resume_path(@vacancy_master.id)
+     redirect_to new_selected_resume_path(vacancy_master_id: @vacancy_master.id)
   end
   end
 

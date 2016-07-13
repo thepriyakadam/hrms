@@ -29,19 +29,26 @@
         </div>
       </div>
     </div>
-          <div class="col-sm-3">
-            <div class="field">
-      <%= f.select :status,[['Active','true'],['Inactive','false']],{label: 'Status',include_blank: " Select Status"} %>
-    </div>
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.select :status,[['Active','true'],['Inactive','false']],{label: 'Status',include_blank: " Select Status"} %>
       </div>
-         </div>
+     </div>
+    </div>
         <br>
         <div class="row">
+        <div class="col-sm-6">
+            <div class="field">
+              <%= f.text_area :description,label: 'Description' %>
+            </div>
+          </div>
+
           <div class="col-sm-3">
             <div class="field">
               <%= f.file_field :document,label: 'Document(doc,docx,pdf only)' %>
             </div>
           </div>
+           </div>
         
          <div class="col-sm-">
           <div class="actions">
@@ -49,7 +56,7 @@
           </div>
           </div>
       <% end %>
-      </div>
+     
         </div>
 <script>     
     $(function(){

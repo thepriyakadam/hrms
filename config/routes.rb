@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
 
-  resources :company_policies
+  resources :company_policies do
+    collection do
+      get :active_policies_list
+    end
+  end
   resources :date_formats do
     collection do 
     get :active

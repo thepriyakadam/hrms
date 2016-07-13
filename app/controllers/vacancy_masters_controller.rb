@@ -151,7 +151,7 @@ class VacancyMastersController < ApplicationController
   end
 
   def approve_vacancy_list
-    @vacancy_masters = VacancyMaster.all
+    @vacancy_masters = VacancyMaster.order("id")
     session[:active_tab] ="recruitment"
     session[:active_tab1] ="particular_vacancy"
   end

@@ -14,9 +14,10 @@ class InterviewAnalysesController < ApplicationController
 
   # GET /interview_analyses/new
   def new
+    # byebug
     @interview_analysis = InterviewAnalysis.new
-    @interview_analyses = InterviewAnalysis.all
-    @interview_schedule = InterviewSchedule.find(params[:format])
+    @interview_schedule = InterviewSchedule.find(params[:abc])
+    @interview_analyses = InterviewAnalysis.where(interview_schedule_id: @interview_schedule.id)
   end
 
   # GET /interview_analyses/1/edit
@@ -29,15 +30,13 @@ class InterviewAnalysesController < ApplicationController
   def create
     @interview_analysis = InterviewAnalysis.new(interview_analysis_params)
     @interview_analyses = InterviewAnalysis.all
-    respond_to do |format|
       if @interview_analysis.save
-         @interview_analysis = InterviewAnalysis.new
-        format.js { @flag = true }
-      else
-        flash.now[:alert] = 'Interview Already Exist.'
-        format.js { @flag = false }
+        @interview_analysis = InterviewAnalysis.new
+        flash[:notice] = 'Interview Analysis Details saved Successfully.'
       end
-    end
+      # byebug
+      @interview_schedule_id = InterviewSchedule.find(params[:interview_analysis][:interview_schedule_id])
+      redirect_to new_interview_analysis_path(abc: @interview_schedule_id.id)
   end
 
   # PATCH/PUT /interview_analyses/1
@@ -72,7 +71,8 @@ class InterviewAnalysesController < ApplicationController
 
     def destroy
       @interview_analysis.destroy
-      @interview_analyses = InterviewAnalysis.all
+      @interview_schedule = InterviewSchedule.find(params[:abc])
+      @interview_analyses = InterviewAnalysis.where(interview_schedule_id: @interview_schedule.id)
     end
 
     def print_interview_analysis_list

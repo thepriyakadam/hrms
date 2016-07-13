@@ -14,9 +14,10 @@ class InterviewRoundsController < ApplicationController
 
   # GET /interview_rounds/new
   def new
+    # byebug
     @interview_round = InterviewRound.new
-    @interview_rounds = InterviewRound.all
-    @interview_schedule = InterviewSchedule.find(params[:format])
+    # @interview_rounds = InterviewRound.all
+    @interview_schedule = InterviewSchedule.find(params[:interview_schedule_id])
     @interview_rounds = InterviewRound.where(interview_schedule_id: @interview_schedule.id)
   end
 
@@ -42,16 +43,30 @@ class InterviewRoundsController < ApplicationController
   #   end
   # end
 
+  # def create
+  #    @interview_round = InterviewRound.new(interview_round_params)
+  #    @interview_rounds = InterviewRound.all
+  #     if @interview_round.save
+  #       InterviewRoundMailer.send_email_to_interviewer(@interview_round).deliver_now
+  #       InterviewRoundMailer.send_email_to_candidate(@interview_round).deliver_now
+  #       @interview_round = InterviewRound.new
+  #     end
+  #     # redirect_to interview_schedules_path
+  #     # flash[:notice] = 'Interview Schedule was saved Successfully & Email also Sent'   
+  # end
+
   def create
-     @interview_round = InterviewRound.new(interview_round_params)
-     @interview_rounds = InterviewRound.all
+    @interview_round = InterviewRound.new(interview_round_params)
+    @interview_rounds = InterviewRound.all
       if @interview_round.save
         InterviewRoundMailer.send_email_to_interviewer(@interview_round).deliver_now
         InterviewRoundMailer.send_email_to_candidate(@interview_round).deliver_now
         @interview_round = InterviewRound.new
+        flash[:notice] = 'Interview Round saved Successfully.'
       end
-      # redirect_to interview_schedules_path
-      # flash[:notice] = 'Interview Schedule was saved Successfully & Email also Sent'   
+      # byebug
+      @interview_schedule_id = InterviewSchedule.find(params[:interview_round][:interview_schedule_id])
+      redirect_to new_interview_round_path(interview_schedule_id: @interview_schedule_id.id)
   end
 
 
@@ -70,7 +85,7 @@ class InterviewRoundsController < ApplicationController
   # DELETE /interview_rounds/1.json
   def destroy
     @interview_round.destroy
-    @interview_rounds = InterviewRound.all
+    @interview_rounds = InterviewRound.where(interview_schedule_id: @interview_schedule.id)
   end
 
   private

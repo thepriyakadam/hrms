@@ -3,6 +3,7 @@
     <center><h3 class="box-title">Interview Schedule Report</h3></center><br>
 <div class="box-body">
 <%= form_for :interview_schedule, url: { action: 'print_final_report',format: 'pdf',id: @interview_schedule.id},:html => {:target => '_blank'} do |f| %>
+<h4 class="box-title">Interview Schedule Details</h4><br>
 <table class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
@@ -26,29 +27,7 @@
       </tr>
   </tbody>
 </table><br><br>
-
-<table class="table table-bordered table-hover table-condensed">
-  <thead>
-    <tr> 
-      <th>Interview Evaluation</th>
-      <th>Interview Attribute</th>
-      <th>Interview Decision</th>
-      <th>Comment</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @interview_analyses.each do |interview_analysis| %>
-      <tr> 
-        <td><%= interview_analysis.interview_evalution.try(:name) %></td>
-        <td><%= interview_analysis.interview_attribute.try(:name) %></td>
-        <td><%= interview_analysis.interview_decision.try(:name) %></td>
-        <td><%= interview_analysis.comment %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-<% end %>   
-
+<h4 class="box-title">Interview Rounds</h4><br>
 <table class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
@@ -76,9 +55,31 @@
     <% end %>
   </tbody>
 </table>  
+<h4 class="box-title">Interview Analysis</h4><br>
+<table class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr> 
+      <th>Interview Evaluation</th>
+      <th>Interview Attribute</th>
+      <th>Interview Decision</th>
+      <th>Comment</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @interview_analyses.each do |interview_analysis| %>
+      <tr> 
+        <td><%= interview_analysis.interview_evalution.try(:name) %></td>
+        <td><%= interview_analysis.interview_attribute.try(:name) %></td>
+        <td><%= interview_analysis.interview_decision.try(:name) %></td>
+        <td><%= interview_analysis.comment %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<% end %>   
 <br>
 <div class="col-sm-3">
-    <%= f.submit "Print Interviewee Detail",class: "btn btn-xl btn-warning fa fa-print" %>
+    <%= f.submit " Print Report",class: "btn btn-xl btn-info fa fa-print" %>
   </div>
 </div>
 </div>

@@ -52,7 +52,6 @@ class SelectedResumesController < ApplicationController
 
   def create_new
     @selected_resume = SelectedResume.new(selected_resume_params)
-
     respond_to do |format|
       if @selected_resume.save
         format.html { redirect_to @selected_resume, notice: 'Candidate Profile  was successfully created.' }
@@ -170,7 +169,7 @@ class SelectedResumesController < ApplicationController
       flash[:notice] = "Confirmed Successfully"
     end 
      redirect_to new_selected_resume_path(vacancy_master_id: @vacancy_master.id)
-  end
+   end
   end
 
   def all_resume_list

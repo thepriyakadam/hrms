@@ -16,7 +16,7 @@
         <td><%= company_policy.name %></td>
         <td><%= company_policy.effective_from %></td>
         <td><%= company_policy.effective_to %></td>
-        <td><%= company_policy.status %></td>
+        <td><%= company_policy.status ? "Active" : "Inactive" %></td>
         <td>
            <% if company_policy.document_file_name == nil %>
            <small class="label label-default">Document Not Available</small>

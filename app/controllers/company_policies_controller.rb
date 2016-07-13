@@ -32,6 +32,7 @@ class CompanyPoliciesController < ApplicationController
     @company_policy.update(company_policy_params)
     @company_policies = CompanyPolicy.all
     @company_policy = CompanyPolicy.new
+    redirect_to company_policies_path
   end
 
 	 def destroy

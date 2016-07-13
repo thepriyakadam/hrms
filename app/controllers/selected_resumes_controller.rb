@@ -11,9 +11,9 @@ class SelectedResumesController < ApplicationController
   # GET /selected_resumes/new
   def new
     @selected_resume = SelectedResume.new
-    @vacancy_master = VacancyMaster.find(params[:format])
-    # @selected_resumes = SelectedResume.where(vacancy_master_id: @vacancy_master.id)
-    @selected_resumes = SelectedResume.all
+    # byebug
+    @vacancy_master = VacancyMaster.find(params[:vacancy_master_id])
+    @selected_resumes = SelectedResume.where(vacancy_master_id: @vacancy_master.id)
   end
 
   def new1
@@ -35,22 +35,23 @@ class SelectedResumesController < ApplicationController
   end
 
 
+  
+
   def create
-    @selected_resume = SelectedResume.new(selected_resume_params)
-    @vacancy_master = VacancyMaster.find(@selected_resume.vacancy_master_id)
-    # @vacancy_master = VacancyMaster.find(params[:format])
-    @selected_resumes = SelectedResume.all
+     @selected_resume = SelectedResume.new(selected_resume_params)
+     @vacancy_master = VacancyMaster.find(@selected_resume.vacancy_master_id)
+     @selected_resumes = SelectedResume.where(vacancy_master_id: @vacancy_master.id)
       if @selected_resume.save
         @selected_resume = SelectedResume.new
+        flash[:notice] = 'Resume Details saved Successfully.'  
       end
-      # @vacancy_master = VacancyMaster.find(@selected_resume.vacancy_master_id)
-      redirect_to root_url
-      flash[:notice] = 'Resume Details saved Successfully.'  
+      # byebug
+      @vacancy_master_id = VacancyMaster.find(params[:selected_resume][:vacancy_master_id])
+      redirect_to new_selected_resume_path(vacancy_master_id: @vacancy_master_id.id)
   end
 
   def create_new
     @selected_resume = SelectedResume.new(selected_resume_params)
-
     respond_to do |format|
       if @selected_resume.save
         format.html { redirect_to @selected_resume, notice: 'Candidate Profile  was successfully created.' }
@@ -133,7 +134,8 @@ class SelectedResumesController < ApplicationController
   # DELETE /selected_resumes/1.json
   def destroy
     @selected_resume.destroy
-    @selected_resumes = SelectedResume.all
+    @vacancy_master = VacancyMaster.find(params[:vacancy_master_id])
+    @selected_resumes = SelectedResume.where(vacancy_master_id: @vacancy_master.id)
     # redirect_to root_url
     flash.now[:alert] = 'Resume Details Destroyed Successfully.'
   end
@@ -155,19 +157,19 @@ class SelectedResumesController < ApplicationController
   end
 
   def is_confirm
-    @vacancy_master = VacancyMaster.find(params[:abc])
+    @vacancy_master = VacancyMaster.find(params[:vacancy_master_id])
     @selected_resume_ids = params[:selected_resume_ids]
     if @selected_resume_ids.nil?
       flash[:alert] = "Please Select the Checkbox"
-      redirect_to new_selected_resume_path(@vacancy_master.id)
+      redirect_to new_selected_resume_path(vacancy_master_id: @vacancy_master.id)
     else
       @selected_resume_ids.each do |eid|
       @selected_resume = SelectedResume.find(eid)
       @selected_resume.update(status: "Shortlisted") 
       flash[:notice] = "Confirmed Successfully"
     end 
-     redirect_to new_selected_resume_path(@vacancy_master.id)
-  end
+     redirect_to new_selected_resume_path(vacancy_master_id: @vacancy_master.id)
+   end
   end
 
   def all_resume_list

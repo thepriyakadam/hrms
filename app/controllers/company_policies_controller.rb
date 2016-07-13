@@ -7,30 +7,35 @@ class CompanyPoliciesController < ApplicationController
   end
 
    # GET /about_bosses/new
-  def new
-    @company_policy = CompanyPolicy.new
-    @company_policies = CompanyPolicy.all
-  end
+  # def new
+  #   @company_policy = CompanyPolicy.new
+  #   @company_policies = CompanyPolicy.all
+  # end
 
-	 def create
-      @company_policy = CompanyPolicy.new(company_policy_params)
+	def create
+     @company_policy = CompanyPolicy.new(company_policy_params)
+     @company_policies = CompanyPolicy.all
       if @company_policy.save
         @company_policy = CompanyPolicy.new
       end
+      flash[:notice] = 'Company Policy saved Successfully.' 
       redirect_to company_policies_path
-      flash[:notice] = 'Company Policy was saved Successfully'   
+        
+  end
+
+  def active_policies_list
+    @company_policies = CompanyPolicy.all
   end
 
 	def edit
 	end
 
-	def update
-	    if @company_policy.update(company_policy_params)
-	    @company_policies = CompanyPolicy.all
-	    redirect_to company_policies_path
-	    flash[:notice] = 'Company Policy was updated Successfully'   
-    end
-   end
+ def update
+    @company_policy.update(company_policy_params)
+    @company_policies = CompanyPolicy.all
+    @company_policy = CompanyPolicy.new
+    redirect_to company_policies_path
+  end
 
 	 def destroy
 	    @company_policy.destroy
@@ -52,6 +57,6 @@ class CompanyPoliciesController < ApplicationController
 	  end
 
     def company_policy_params
-      params.require(:company_policy).permit(:name, :effective_from, :effective_to, :status, :document)
+      params.require(:company_policy).permit(:name, :effective_from, :effective_to, :status, :document, :description)
 	  end
 end

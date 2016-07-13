@@ -60,7 +60,8 @@ class InductionActivitiesController < ApplicationController
 
   def destroy
     @induction_activity.destroy
-    @induction_activities = InductionActivity.all
+    @induction_master = InductionMaster.find(params[:induction_master_id])
+    @induction_activities = InductionActivity.where(induction_master_id: @induction_master.id)
   end
 
   def employee_list

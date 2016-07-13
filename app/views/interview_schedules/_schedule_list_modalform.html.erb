@@ -1,7 +1,7 @@
 <div class="modal-dialog" style="height:1000px; max-height:100px; width:1000px; max-width:1400px;">
   <div class="modal-content">
 <div class="modal-body" >
-     <%= bootstrap_form_for :interview_schedule,url:{action:"update_interview_schedule"} do |f| %> 
+     <%= bootstrap_form_for :interview_schedule,url:{action:"update_interview_schedule",id: @interview_schedule.id} do |f| %> 
      <div class="row">
        <div class="col-sm-3">
         <label>Email Id </label>

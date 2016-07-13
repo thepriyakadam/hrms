@@ -10,12 +10,13 @@
           <thead>
             <tr>
               <th>Organization</th>
-              <th>To Be Approved By</th>
+              <th>Approver</th>
               <th>Job Title</th>
               <th>Vacancy Name</th>
               <th>Company Location</th>
               <th>Department</th>
               <th>Educational Qualification</th>
+              <th>Date</th>
               <th>No. of Position</th>
               <th>Experience</th>
               <th>Status</th>
@@ -33,6 +34,7 @@
                 <td><%= vacancy_master.company_location.try(:name) %></td>
                 <td><%= vacancy_master.department.try(:name) %></td>
                 <td><%= vacancy_master.degree.try(:name) %></td>
+                <td><%= vacancy_master.created_at.to_date %></td>
                 <td><%= vacancy_master.no_of_position %></td>
                 <td><%= vacancy_master.experience %></td>
                 <td>

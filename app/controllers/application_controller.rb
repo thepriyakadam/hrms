@@ -162,20 +162,24 @@ class ApplicationController < ActionController::Base
   def configure_devise_permitted_parameters
     registration_params = [:subdomain, :email, :password, :password_confirmation]
     if params[:action] == 'update'
-      devise_parameter_sanitizer.for(:account_update) do |u|
+      #devise_parameter_sanitizer.for(:account_update) do |u|
+      devise_parameter_sanitizer.permit(:account_update) do |u|
         u.permit(registration_params << :current_password, :avatar)
       end
     elsif params[:action] == 'create'
-      devise_parameter_sanitizer.for(:sign_up) do |u|
+      #devise_parameter_sanitizer.for(:sign_up) do |u|
+      devise_parameter_sanitizer.permit(:sign_up) do |u|
         u.permit(registration_params)
       end
     end
 
     if params[:controller] == 'members/sessions' && params[:action] == 'new'
       # devise_parameter_sanitizer.for(:sign_in) { |u| u.permit(:login, :member_code, :email, :password, :remember_me) }
-      devise_parameter_sanitizer.for(:sign_in) { |u| u.permit(:login, :manual_member_code, :email, :password, :remember_me) }
+      #devise_parameter_sanitizer.for(:sign_in) { |u| u.permit(:login, :manual_member_code, :email, :password, :remember_me) }
+      devise_parameter_sanitizer.permit(:sign_in, keys: [:login, :manual_member_code, :email, :password, :remember_me])
     else
-      devise_parameter_sanitizer.for(:sign_in) { |u| u.permit(:email, :password, :remember_me) }
+      #devise_parameter_sanitizer.for(:sign_in) { |u| u.permit(:email, :password, :remember_me) }
+      devise_parameter_sanitizer.permit(:sign_in, keys: [:email, :password, :remember_me])
     end
   end
 end

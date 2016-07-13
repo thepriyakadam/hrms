@@ -3,7 +3,6 @@
     <h3 class="box-title">Employee Attendance</h3>
     <div class="pull-right">
     </div>
-    
   </div><!-- /.box-header -->
   <div class="box-body">
     <div id="comments">
@@ -22,7 +21,17 @@
             <tr>
               <th><%= full_name(e) %></th>
               <% for i in 1..@day %>
-                <td><%= 'P' %></td>
+
+              <% a= ParticularLeaveRecord.where("strftime('%m/%Y', leave_date) = ? and employee_id = ?", "01/05/2016".to_date.strftime('%m/%Y'),e.id).pluck("leave_date")%>  
+              
+              <% b = a.map {|aa| aa.strftime("%d")}%>
+                <% b.each do |bbb|%>
+                <%if false %>
+                <%else%>
+                <%end%>
+                  <td><%= 'L' %></td>
+                <%end%>
+
               <%end%>
             </tr>
           <%end%>

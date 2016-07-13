@@ -55,12 +55,12 @@
               < link_to ' List',interview_reschedule_list_interview_schedules_path(interview_schedule),class: 'btn btn-xs btn-primary fa fa-sticky-note-o' %>
             </td> -->
             <td>
-              <%= link_to ' Interview Round', new_interview_round_path(interview_schedule.id),class: 'btn btn-xs btn-primary' %>
+              <%= link_to ' Interview Round', new_interview_round_path(interview_schedule_id: interview_schedule.id),class: 'btn btn-xs btn-primary' %>
             </td>
         <td>
          <div id="myModal1" class="modal fade"></div>
           <%= link_to '', interview_schedule,class: 'btn btn-xs btn-default fa fa-eye' %>
-          <%= link_to '',modal_schedule_list_interview_schedules_path(interview_schedule),class: 'btn btn-success btn-sm fa fa-edit',remote: true %>
+          <%= link_to '',modal_schedule_list_interview_schedules_path(interview_schedule),class: 'btn btn-success btn-xs fa fa-edit',remote: true %>
         </td>
           <!--= link_to '', edit_interview_schedule_path(interview_schedule),class: 'btn btn-success btn-xs fa fa-edit' %>-->
       </tr>

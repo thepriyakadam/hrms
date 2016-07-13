@@ -60,7 +60,8 @@ class InductionActivitiesController < ApplicationController
 
   def destroy
     @induction_activity.destroy
-    @induction_activities = InductionActivity.all
+    @induction_master = InductionMaster.find(params[:induction_master_id])
+    @induction_activities = InductionActivity.where(induction_master_id: @induction_master.id)
   end
 
   def employee_list
@@ -132,7 +133,7 @@ class InductionActivitiesController < ApplicationController
 
 
   def update_induction
-     @induction_activity = InductionActivity.find(params[:id])
+    @induction_activity = InductionActivity.find(params[:id])
     @induction_activity.update(induction_activity_params)
     flash[:notice] = 'Activity Updated Successfully'
     redirect_to root_url

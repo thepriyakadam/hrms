@@ -29,21 +29,20 @@
         </div>
       </div>
     </div>
-          <div class="col-sm-3">
-            <div class="field">
-      <%= f.select :status,[['Active','true'],['Inactive','false']],{label: 'Status',include_blank: " Select Status"} %>
-    </div>
+         <div class="col-sm-1">
+      <label>Status </label>
+      <div class="field">
+        <%= f.check_box :status, label: 'Active'%>
       </div>
-         </div>
-        <br>
-        <div class="row">
-          <div class="col-sm-3">
+    </div>
+          <div class="col-sm-2">
             <div class="field">
               <%= f.file_field :document,label: 'Document(doc,docx,pdf only)' %>
             </div>
           </div>
-        
-         <div class="col-sm-">
+          </div>
+        <div class="row">
+         <div class="col-sm-3">
           <div class="actions">
             <%= f.submit'Create Company Policy', class: 'btn btn-primary btn-sm' %>
           </div>

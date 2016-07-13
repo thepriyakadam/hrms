@@ -23,7 +23,9 @@ class CompanyPoliciesController < ApplicationController
         
   end
 
-
+  def active_policies_list
+    @company_policies = CompanyPolicy.all
+  end
 
 	def edit
 	end
@@ -32,6 +34,7 @@ class CompanyPoliciesController < ApplicationController
     @company_policy.update(company_policy_params)
     @company_policies = CompanyPolicy.all
     @company_policy = CompanyPolicy.new
+    redirect_to company_policies_path
   end
 
 	 def destroy
@@ -54,6 +57,6 @@ class CompanyPoliciesController < ApplicationController
 	  end
 
     def company_policy_params
-      params.require(:company_policy).permit(:name, :effective_from, :effective_to, :status, :document)
+      params.require(:company_policy).permit(:name, :effective_from, :effective_to, :status, :document, :description)
 	  end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160709092554) do
+ActiveRecord::Schema.define(version: 20160713103049) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -394,6 +394,7 @@ ActiveRecord::Schema.define(version: 20160709092554) do
     t.string   "document_content_type"
     t.integer  "document_file_size"
     t.datetime "document_updated_at"
+    t.text     "description"
   end
 
   create_table "company_shifts", force: :cascade do |t|
@@ -931,9 +932,9 @@ ActiveRecord::Schema.define(version: 20160709092554) do
     t.text     "task_name"
     t.date     "task_date"
     t.boolean  "status"
-    t.time     "task_time"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.time     "task_time"
   end
 
   add_index "employee_task_to_dos", ["employee_id"], name: "index_employee_task_to_dos_on_employee_id"
@@ -2164,6 +2165,15 @@ ActiveRecord::Schema.define(version: 20160709092554) do
   add_index "selected_resumes", ["degree_id"], name: "index_selected_resumes_on_degree_id"
   add_index "selected_resumes", ["vacancy_master_id"], name: "index_selected_resumes_on_vacancy_master_id"
 
+  create_table "setting_masters", force: :cascade do |t|
+    t.string   "date"
+    t.string   "precision"
+    t.string   "timeformat"
+    t.string   "email"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "shift_rotations", force: :cascade do |t|
     t.integer  "company_shift_id"
     t.date     "start_date"
@@ -2227,12 +2237,15 @@ ActiveRecord::Schema.define(version: 20160709092554) do
   create_table "trainee_requests", force: :cascade do |t|
     t.integer  "training_request_id"
     t.integer  "employee_id"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.integer  "training_topic_master_id"
+    t.boolean  "is_complete"
   end
 
   add_index "trainee_requests", ["employee_id"], name: "index_trainee_requests_on_employee_id"
   add_index "trainee_requests", ["training_request_id"], name: "index_trainee_requests_on_training_request_id"
+  add_index "trainee_requests", ["training_topic_master_id"], name: "index_trainee_requests_on_training_topic_master_id"
 
   create_table "trainees", force: :cascade do |t|
     t.integer  "training_plan_id"
@@ -2442,7 +2455,6 @@ ActiveRecord::Schema.define(version: 20160709092554) do
     t.integer  "degree_id"
     t.string   "experience"
     t.string   "keyword"
-    t.string   "others"
     t.string   "other_organization"
     t.string   "industry"
     t.integer  "degree_1_id"

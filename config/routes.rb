@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
 
-  resources :company_policies
+  resources :company_policies do
+    collection do
+      get :active_policies_list
+    end
+  end
   resources :date_formats do
     collection do 
     get :active
@@ -245,6 +249,7 @@ end
       get :modal_feedback
       post :update_feedback
       get :training_details_list
+      get :training_topic_wise_search
     end
   end
   resources :training_requests do

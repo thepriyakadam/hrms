@@ -18,7 +18,7 @@
           < image_tag attachments['logo1.jpg'].url %>
        </div>  -->
       With Regards,<br><br>
-        BFTL HR
+        <%= current_user.employee.company_location.company.description %>
      </p>
   </body>
 </html>

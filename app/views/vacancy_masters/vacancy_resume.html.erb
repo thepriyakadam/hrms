@@ -23,7 +23,7 @@
                 <td><%= vacancy_master.no_of_position %></td>
                 <td><%= vacancy_master.company_location.try(:name) %> <%= vacancy_master.department.try(:name) %></td>
                 <td>
-                  <%= link_to 'Resume',new_selected_resume_path(vacancy_master.id),class: 'btn btn-sm btn-primary' %>
+                  <%= link_to 'Resume',new_selected_resume_path(vacancy_master_id: vacancy_master.id),class: 'btn btn-sm btn-primary' %>
                 </td>
               </tr>
             <% end %>

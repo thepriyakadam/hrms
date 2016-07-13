@@ -7,4 +7,6 @@ class ReportingMaster < ActiveRecord::Base
   has_many :vacancy_request_histories
   has_many :daily_bill_details
   validates :employee_id, presence: true, uniqueness: { case_sensitive: false }
-end
+ end
+
+ 

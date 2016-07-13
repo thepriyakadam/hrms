@@ -18,6 +18,7 @@
       <th>Total No. Of Position</th>
       <th>Total No. Of Approved Position</th>
       <th>Cancel Request</th>
+      <th>Action</th>
     </tr>
   </thead>
   <tbody>
@@ -43,6 +44,9 @@
               <small class="label label-success">Revert</small>
           <% end %>
         </td>
+        <td>
+        <%= link_to '', vacancy_master,class: 'btn btn-xs btn-default fa fa-eye' %>
+        </td>
         <!-- <td> -->
          <!-- link_to ' Vacancy Request', particular_vacancy_request_list_vacancy_masters_path(vacancy_master),class: 'btn btn-xs btn-default' %> -->
 <!--           < link_to '', edit_vacancy_master_path(vacancy_master),class: 'btn btn-sm btn-success fa fa-edit' %>
@@ -52,10 +56,6 @@
     <% end %>
   </tbody>
 </table>
-<p>
-  Download:
-  <%= link_to "CSV", vacancy_masters_path(format: "csv") %>
-</p>
 </div>
 </div>
 <script>

@@ -12,25 +12,28 @@ class CompanyPoliciesController < ApplicationController
     @company_policies = CompanyPolicy.all
   end
 
-	 def create
-      @company_policy = CompanyPolicy.new(company_policy_params)
+	def create
+    @company_policy = CompanyPolicy.new(company_policy_params)
+    @company_policies = CompanyPolicy.all
+    respond_to do |format|
       if @company_policy.save
-        @company_policy = CompanyPolicy.new
+         @company_policy = CompanyPolicy.new
+        format.js { @flag = true }
+      else
+        flash.now[:alert] = 'About Already Exist.'
+        format.js { @flag = false }
       end
-      redirect_to company_policies_path
-      flash[:notice] = 'Company Policy was saved Successfully'   
+    end
   end
 
 	def edit
 	end
 
-	def update
-	    if @company_policy.update(company_policy_params)
-	    @company_policies = CompanyPolicy.all
-	    redirect_to company_policies_path
-	    flash[:notice] = 'Company Policy was updated Successfully'   
-    end
-   end
+ def update
+    @company_policy.update(company_policy_params)
+    @company_policies = CompanyPolicy.all
+    @company_policy = CompanyPolicy.new
+  end
 
 	 def destroy
 	    @company_policy.destroy

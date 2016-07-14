@@ -178,8 +178,8 @@ class ApplicationController < ActionController::Base
       #devise_parameter_sanitizer.for(:sign_in) { |u| u.permit(:login, :manual_member_code, :email, :password, :remember_me) }
       devise_parameter_sanitizer.permit(:sign_in, keys: [:login, :manual_member_code, :email, :password, :remember_me])
     else
-      #devise_parameter_sanitizer.for(:sign_in) { |u| u.permit(:email, :password, :remember_me) }
-      devise_parameter_sanitizer.permit(:sign_in, keys: [:email, :password, :remember_me])
+     #devise_parameter_sanitizer.for(:sign_in) { |u| u.permit(:email, :password, :remember_me) }
+     devise_parameter_sanitizer.permit(:sign_in, keys: [:email, :password, :remember_me])
     end
   end
 end

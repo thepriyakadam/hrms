@@ -1,9 +1,9 @@
-<%= form_for :interview_analyses, url: { action: 'print_interview_analysis_list',format: 'pdf',id: @interview_schedule.id},:html => {:target => '_blank'} do |f| %>
+<%= form_for :interview_analyses, url: { action: 'print_interview_analysis_list',format: 'pdf',interview_round_id: @interview_round.id},:html => {:target => '_blank'} do |f| %>
 <table id="example2" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
       
-      <th>Interview evalution</th>
+      <th>Interview valution</th>
       <th>Interview attribute</th>
       <th>Interview decision</th>
       <th>Comment</th>

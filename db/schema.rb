@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160713120654) do
+ActiveRecord::Schema.define(version: 20160714101056) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -1327,11 +1327,13 @@ ActiveRecord::Schema.define(version: 20160713120654) do
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
     t.integer  "interview_schedule_id"
+    t.integer  "interview_round_id"
   end
 
   add_index "interview_analyses", ["interview_attribute_id"], name: "index_interview_analyses_on_interview_attribute_id"
   add_index "interview_analyses", ["interview_decision_id"], name: "index_interview_analyses_on_interview_decision_id"
   add_index "interview_analyses", ["interview_evalution_id"], name: "index_interview_analyses_on_interview_evalution_id"
+  add_index "interview_analyses", ["interview_round_id"], name: "index_interview_analyses_on_interview_round_id"
   add_index "interview_analyses", ["interview_schedule_id"], name: "index_interview_analyses_on_interview_schedule_id"
   add_index "interview_analyses", ["vacancy_request_history_id"], name: "index_interview_analyses_on_vacancy_request_history_id"
 

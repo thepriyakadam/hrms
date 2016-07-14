@@ -15,7 +15,7 @@
        4. <b>Address :-</b> <%= @interview_schedule.location %><br><br>
       
         With Regards,<br><br>
-        BFTL HR
+       <%= current_user.employee.company_location.company.description %>
      </p>
   </body>
 </html>

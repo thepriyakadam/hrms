@@ -1,6 +1,6 @@
 <div class="box box-default">
     <div class="box-header with-border">
-      <h3 class="box-title">Create Interview Schedule</h3>
+      <h3 class="box-title">Schedule Interview </h3>
     </div><!-- /.box-header -->
  <div class="box-body">
  <%= bootstrap_form_for @interview_schedule,html: {id: 'selected_resume'},abc: @selected_resume.id do |f| %>
@@ -24,7 +24,7 @@
 
      <div class="col-sm-3">
      <div class="field">
-      <%= f.text_field :email_id %>
+      <%= f.text_field :email_id,value: @selected_resume.email_id %>
      </div>
     </div>  
 

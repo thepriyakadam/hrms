@@ -17,6 +17,7 @@ class InterviewSchedulesController < ApplicationController
       end
     end
     session[:active_tab] ="recruitment"
+    session[:active_tab1] = "general_vacancy"
   end
 
   # GET /interview_schedules/1

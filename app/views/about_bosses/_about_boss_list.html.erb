@@ -13,7 +13,7 @@
         <td><%= about_boss.code %></td>
         <td><%= about_boss.name %></td>
         <td><%= about_boss.description %></td>
-         <td><%= about_boss.status%></td>
+         <td><%= about_boss.status ? "Active" : "Inactive" %></td>
         <td>
           <%= link_to '', edit_about_boss_path(about_boss),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
           <%= link_to '',  about_boss, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-xs fa fa-close',remote:true %>

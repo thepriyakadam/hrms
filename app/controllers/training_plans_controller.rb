@@ -37,9 +37,9 @@ class TrainingPlansController < ApplicationController
     # byebug
     respond_to do |format|
       if @training_plan.save
-        @employee_ids = params[:employee_ids]
-        @employee_ids.each do |eid|
-        Trainee.create(employee_id: eid,training_plan_id: @training_plan.id)
+        @trainee_request_ids = params[:trainee_request_ids]
+        @trainee_request_ids.each do |tid|
+        Trainee.create(employee_id: tid,training_plan_id: @training_plan.id)
       end
         format.html { redirect_to @training_plan, notice: 'Training plan was successfully created.' }
         format.json { render :show, status: :created, location: @training_plan }
@@ -128,6 +128,16 @@ class TrainingPlansController < ApplicationController
         flash[:notice] = "Created Successfully"
       end
       redirect_to period_and_topic_wise_list_goal_ratings_path
+  end
+
+  def training_topic_wise_search
+
+  end
+
+  def show_traineerequest_list
+     @training_plan =TrainingPlan.new
+     @training_topic_master = TrainingTopicMaster.find(params[:training_topic_master_id])
+     @trainee_requests =TraineeRequest.where(training_topic_master_id: @training_topic_master.id)
   end
 
   private

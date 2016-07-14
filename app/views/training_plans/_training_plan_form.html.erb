@@ -1,34 +1,31 @@
-<div class="box box-default">
-
-  <div class="box-body">
-
 <%= bootstrap_form_for(@training_plan,html: {id: "training_plan"}) do |f| %>
 <%= f.hidden_field :training_request_id, :value => current_user.employee_id %>
+<%= f.hidden_field :training_topic_master_id,value:@training_topic_master.id  %>
 
   <div class="row">
     <div class="col-sm-3">
-      <!-- <label>Training Date</label> -->
+     <!--  <label>Training Date</label> -->
       <div class="form-group required">
         <div class="input-group">
           <div class="input-group-addon">
             <i class="fa fa-calendar"></i>
           </div>
-          <%= f.text_field :training_date,label: 'Training Date',class: 'birth_date'%>
+          <%= f.text_field :training_date, label: 'Training Date',class: 'passport_issue_date'%>
         </div>
       </div>
     </div>
     
-    <div class="col-sm-3">
-     <!--  <label>Topic</label> -->
+   <!--  <div class="col-sm-3">
+      <label>Topic</label>
         <div class="form-group required">
          <div class="input-group">
         <div class="input-group-addon">
-            <%= link_to "", new_training_topic_master_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+            <= link_to "", new_training_topic_master_path,class: "fa fa-plus fa-success",:target => "_blank" %>
         </div>
-          <%= f.select :training_topic_master_id, all_training_course,{label: 'Topic',include_blank: " Select Topics"}%>
+          <= f.select :training_topic_master_id, all_training_course,{hide_label: true,include_blank: " Select Topics"}%>
         </div>
         </div>
-      </div>
+      </div> -->
     <div class="col-sm-3">
       <div class="form-group required">
         <%= f.text_field :no_of_employee,placeholder: 'No of Employee' %>
@@ -39,13 +36,13 @@
         <%= f.text_field :trainer_name,placeholder: 'Trainer Name' %>
       </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="col-sm-3">
+     <div class="col-sm-3">
     <div class="field">
         <%= f.text_field :no_of_days,placeholder: 'No of Days' %>
     </div>
     </div>
+  </div>
+  <div class="row">
     <div class="col-sm-3">
       <div class="field">
         <%= f.text_field :no_of_hrs,placeholder: 'No of Hours' %>
@@ -57,10 +54,7 @@
       </div>
     </div>
   </div>
-   <!-- <div>
-      <= render 'employee_list' %>
-    </div> -->
-  <div>
+   <div>
       <%= render 'trainee_request_list' %>
   </div>
   <div class="row">
@@ -71,8 +65,17 @@
       </div>
     </div>
   </div>
-<% end %>
+  <% end %><br>
 
+  <script type="text/javascript">
+  $(function(){
+    $('.passport_issue_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:+25',
+    dateFormat: 'dd-mm-yy' });
+  }); 
+</script>
 
 <script type="text/javascript">
 

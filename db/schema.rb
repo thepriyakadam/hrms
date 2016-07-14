@@ -283,6 +283,13 @@ ActiveRecord::Schema.define(version: 20160713065422) do
   add_index "capture_resumes", ["state_id"], name: "index_capture_resumes_on_state_id"
   add_index "capture_resumes", ["vacancy_master_id"], name: "index_capture_resumes_on_vacancy_master_id"
 
+  create_table "cars", force: :cascade do |t|
+    t.string   "name"
+    t.string   "age"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "certifications", force: :cascade do |t|
     t.integer  "employee_id"
     t.integer  "year_id"

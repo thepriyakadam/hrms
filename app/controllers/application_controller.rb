@@ -162,12 +162,26 @@ class ApplicationController < ActionController::Base
   def configure_devise_permitted_parameters
     registration_params = [:subdomain, :email, :password, :password_confirmation]
     if params[:action] == 'update'
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
       #devise_parameter_sanitizer.for(:account_update) do |u|
+>>>>>>> ebb046a345f8bdecd68f517245ac4e29b22becb5
+=======
+      #devise_parameter_sanitizer.for(:account_update) do |u|
+>>>>>>> e324f9e224cfa81d9aab24b27654e611ea92c7b4
       devise_parameter_sanitizer.permit(:account_update) do |u|
         u.permit(registration_params << :current_password, :avatar)
       end
     elsif params[:action] == 'create'
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
       #devise_parameter_sanitizer.for(:sign_up) do |u|
+>>>>>>> ebb046a345f8bdecd68f517245ac4e29b22becb5
+=======
+      #devise_parameter_sanitizer.for(:sign_up) do |u|
+>>>>>>> e324f9e224cfa81d9aab24b27654e611ea92c7b4
       devise_parameter_sanitizer.permit(:sign_up) do |u|
         u.permit(registration_params)
       end
@@ -178,8 +192,18 @@ class ApplicationController < ActionController::Base
       #devise_parameter_sanitizer.for(:sign_in) { |u| u.permit(:login, :manual_member_code, :email, :password, :remember_me) }
       devise_parameter_sanitizer.permit(:sign_in, keys: [:login, :manual_member_code, :email, :password, :remember_me])
     else
+<<<<<<< HEAD
+<<<<<<< HEAD
      #devise_parameter_sanitizer.for(:sign_in) { |u| u.permit(:email, :password, :remember_me) }
      devise_parameter_sanitizer.permit(:sign_in, keys: [:email, :password, :remember_me])
+=======
+      #devise_parameter_sanitizer.for(:sign_in) { |u| u.permit(:email, :password, :remember_me) }
+      devise_parameter_sanitizer.permit(:sign_in, keys: [:email, :password, :remember_me])
+>>>>>>> ebb046a345f8bdecd68f517245ac4e29b22becb5
+=======
+     #devise_parameter_sanitizer.for(:sign_in) { |u| u.permit(:email, :password, :remember_me) }
+     devise_parameter_sanitizer.permit(:sign_in, keys: [:email, :password, :remember_me])
+>>>>>>> e324f9e224cfa81d9aab24b27654e611ea92c7b4
     end
   end
 end

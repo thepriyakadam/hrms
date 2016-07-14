@@ -4,6 +4,7 @@ class InterviewAnalysis < ActiveRecord::Base
   belongs_to :interview_attribute
   belongs_to :interview_decision
   belongs_to :interview_schedule
+  belongs_to :interview_round
   
   validates :interview_evalution_id, presence: true
   validates :interview_attribute_id, presence: true

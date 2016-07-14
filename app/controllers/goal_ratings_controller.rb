@@ -356,6 +356,9 @@ class GoalRatingsController < ApplicationController
 
   def increment_index
     @rating = Rating.last
+    # @company = params[:salary][:company]
+    # @department = params[:salary][:department]
+    # @location = params[:salary][:location]
   end
 
   def all_employee_list
@@ -363,6 +366,11 @@ class GoalRatingsController < ApplicationController
     @company = params[:salary][:company]
     @department = params[:salary][:department]
     @location = params[:salary][:location]
+
+    @company_name = params[:salary][:company_name]
+    @department_name = params[:salary][:department_name]
+    @location_name = params[:salary][:location_name]
+
     @rating = Rating.last
     @goal_bunches = GoalBunch.where(period_id: @period.id)
   end

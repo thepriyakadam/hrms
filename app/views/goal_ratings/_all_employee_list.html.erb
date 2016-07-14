@@ -1,3 +1,4 @@
+
 <div class="box">
   <div class="box-header">
     <h3 class="box-title">Employee List</h3>
@@ -42,8 +43,8 @@
             <td><%= basic = b.annual_amount %></td>
             <td><%= e.final_rating_id %></td>
             <% great = great + basic %>
-            
             <% ci =  @company.to_f / @rating.value.to_f %>
+
             <% c = e.final_rating_id.to_f * b.annual_amount.to_f * ci.to_f/100 %>
             <td><%= c %></td>
             <td><%= company_revised = b.annual_amount + c %></td>

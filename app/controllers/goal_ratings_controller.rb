@@ -372,7 +372,7 @@ class GoalRatingsController < ApplicationController
     end
   end
 
-  def increment_index
+    def increment_index
     @rating = Rating.last
     # @company = params[:salary][:company]
     # @department = params[:salary][:department]
@@ -385,15 +385,15 @@ class GoalRatingsController < ApplicationController
     @department = params[:salary][:department]
     @location = params[:salary][:location]
 
-    # @company_name = params[:salary][:company_name]
-    # @department_name = params[:salary][:department_name]
-    # @location_name = params[:salary][:location_name]
+    @company_name = params[:salary][:company_name]
+    @department_name = params[:salary][:department_name]
+    @location_name = params[:salary][:location_name]
 
     @rating = Rating.last
-    #@goal_bunches = GoalBunch.joins("INNER JOIN employees on employees.id = goal_bunches.employee_id where employees.department_id = @department_name.id and employees.company_location_id = @location_name.id")
-
     @goal_bunches = GoalBunch.where(period_id: @period.id)
   end
+
+
 
     private
     # Use callbacks to share common setup or constraints between actions.

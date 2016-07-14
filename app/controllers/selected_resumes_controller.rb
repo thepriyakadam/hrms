@@ -175,7 +175,6 @@ class SelectedResumesController < ApplicationController
   def all_resume_list
      @selected_resume = SelectedResume.new
      @selected_resumes = SelectedResume.all
-     flash[:notice] = "Confirmed Successfully"
      session[:active_tab] ="recruitment"
      session[:active_tab1] ="general_vacancy"
   end
@@ -218,6 +217,11 @@ class SelectedResumesController < ApplicationController
     @selected_resume.update(selected_resume_params)
     flash[:notice] = 'Resume Updated Successfully'
     redirect_to root_url
+  end
+
+  def part_resume
+     @vacancy_master = VacancyMaster.find(params[:vacancy_master_id])
+     @selected_resumes = SelectedResume.where(vacancy_master_id: @vacancy_master.id)
   end
 
 

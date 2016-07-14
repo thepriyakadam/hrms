@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160713120654) do
+ActiveRecord::Schema.define(version: 20160714152715) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -706,6 +706,20 @@ ActiveRecord::Schema.define(version: 20160713120654) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
+
+  create_table "employee_documents", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.string   "name"
+    t.boolean  "status"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+    t.string   "document_file_name"
+    t.string   "document_content_type"
+    t.integer  "document_file_size"
+    t.datetime "document_updated_at"
+  end
+
+  add_index "employee_documents", ["employee_id"], name: "index_employee_documents_on_employee_id"
 
   create_table "employee_goals", force: :cascade do |t|
     t.integer  "goal_perspective_id"
@@ -1445,6 +1459,33 @@ ActiveRecord::Schema.define(version: 20160713120654) do
     t.datetime "updated_at",  null: false
   end
 
+  create_table "investment_declarations", force: :cascade do |t|
+    t.date     "date"
+    t.integer  "investment_head_id"
+    t.decimal  "amount"
+    t.integer  "employee_id"
+    t.boolean  "status"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+    t.string   "document_file_name"
+    t.string   "document_content_type"
+    t.integer  "document_file_size"
+    t.datetime "document_updated_at"
+  end
+
+  add_index "investment_declarations", ["employee_id"], name: "index_investment_declarations_on_employee_id"
+  add_index "investment_declarations", ["investment_head_id"], name: "index_investment_declarations_on_investment_head_id"
+
+  create_table "investment_heads", force: :cascade do |t|
+    t.integer  "section_id"
+    t.text     "description"
+    t.decimal  "limit"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "investment_heads", ["section_id"], name: "index_investment_heads_on_section_id"
+
   create_table "joining_details", force: :cascade do |t|
     t.integer  "employee_id"
     t.date     "joining_date"
@@ -2136,6 +2177,14 @@ ActiveRecord::Schema.define(version: 20160713120654) do
   add_index "salaryslips", ["employee_template_id"], name: "index_salaryslips_on_employee_template_id"
   add_index "salaryslips", ["salary_template_id"], name: "index_salaryslips_on_salary_template_id"
   add_index "salaryslips", ["workingday_id"], name: "index_salaryslips_on_workingday_id"
+
+  create_table "sections", force: :cascade do |t|
+    t.string   "code"
+    t.text     "description"
+    t.boolean  "status"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
 
   create_table "selected_resumes", force: :cascade do |t|
     t.string   "name"

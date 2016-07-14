@@ -10,6 +10,7 @@ class InterviewRoundsController < ApplicationController
   # GET /interview_rounds/1
   # GET /interview_rounds/1.json
   def show
+     @interview_analyses = InterviewAnalysis.where(interview_round_id: @interview_round.id)
   end
 
   # GET /interview_rounds/new

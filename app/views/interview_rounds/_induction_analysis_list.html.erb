@@ -1,35 +1,51 @@
 <table id="example2" class="table table-bordered table-hover table-condensed">
-   <tr> 
-      <th colspan="2"></th>
-      <th colspan="2"></th>
-    </tr>
-
 <tr> 
   <th><strong>Interview Evaluation</strong></th>
-  <td><%= @interview_analysis.employee.first_name+' '+@interview_round.employee.middle_name+' '+@interview_round.employee.last_name %></td>
+  <td><%=  %></td>
 
   <th><strong>Interview Type</strong></th>
-  <td><%= @interview_round.interview_type.try(:name) %></td>
+  <td><%= @interview_analysis.interview_attribute.try(:name) %></td>
 </tr>
 
 <tr> 
-  <th><strong>Interview Date</strong></th>
-  <td><%= @interview_round.interview_date %></td>
+  <th><strong>Interview Decision</strong></th>
+  <td><%= @interview_analysis.interview_decision %></td>
 
-  <th><strong>Interview Time</strong></th>
-  <td><%= @interview_round.interview_time %></td>
+  <th><strong>Comment</strong></th>
+  <td><%= @interview_analysis.comment %></td>
 </tr>
 
-<tr> 
-  <th><strong>Location</strong></th>
-  <td><%= @interview_round.location %></td>
+</table>
 
-  <th><strong>Schedule Comments</strong></th>
-  <td><%= @interview_round.schedule_comment %></td>
-</tr>
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Sr.No</th>
+      <th>Activity</th>
+      <th>Day</th>
+      <th>Duration(Hrs)</th>
+      <th>Contact Person</th>
+<!--       <th>Download</th>
+ -->    </tr>
+  </thead>
 
-<div>
-    <%= render 'induction_analysis_list' %>
-  </div>
-
+  <tbody>
+  <% i = 0 %>
+   <% @induction_activities.each do |induction_activity| %>
+      <tr>
+        <td><%= i=i+1 %></td>
+        <td><%= induction_activity.activity %></td>
+        <td><%= induction_activity.day %></td>
+        <td><%= induction_activity.duration %></td>
+        <td><%= full_name(induction_activity.employee) %></td>
+        <!-- <td>
+            if induction_activity.avatar_file_name == nil %>
+           <small class="label label-default">Document Not Available</small>
+             < else %>
+             <center>< link_to '',download_document_path(id: induction_activity.id),class: 'btn btn-xs btn-primary fa fa-download' %></center>
+              end %>
+        </td> -->
+      </tr>
+      <% end %>
+  </tbody>
 </table>

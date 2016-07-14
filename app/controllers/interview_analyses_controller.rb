@@ -35,7 +35,7 @@ class InterviewAnalysesController < ApplicationController
     @interview_analyses = InterviewAnalysis.all
       if @interview_analysis.save
         @interview_analysis = InterviewAnalysis.new
-        flash[:notice] = 'Interview Analysis Details saved Successfully.'
+        flash[:notice] = 'Interview Evaluation Details saved Successfully.'
       end
       # byebug
       @interview_round_id = InterviewRound.find(params[:interview_analysis][:interview_round_id])
@@ -79,8 +79,10 @@ class InterviewAnalysesController < ApplicationController
 
     def print_interview_analysis_list
     # byebug
-    @interview_schedule =InterviewSchedule.find(params[:id])
-    @interview_analyses = InterviewAnalysis.all
+    # @interview_schedule =InterviewSchedule.find(params[:id])
+    # @interview_analyses = InterviewAnalysis.all
+    @interview_round = InterviewRound.find(params[:interview_round_id])
+    @interview_analyses = InterviewAnalysis.where(interview_round_id: @interview_round.id)
      respond_to do |format|
         format.html
         format.pdf do

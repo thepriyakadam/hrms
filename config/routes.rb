@@ -280,6 +280,7 @@ end
     post :update_status
     get :modal_profile_update
     post :update_profile
+    get :part_resume
     end
   end 
   resources :assigned_assets do
@@ -479,6 +480,7 @@ end
       get :approved_vacancy_request_history_list
       get :particular_vacancy_request_list_history
       get :gen_xml
+      get :vacancy_profile
     end
   end
   resources :leave_c_offs do

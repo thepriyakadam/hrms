@@ -18,11 +18,11 @@
     <div class="col-sm-1">
     <h6>Company</h6>
     </div>
-      <div class="col-sm-2">
+      <!-- <div class="col-sm-2">
         <div class="field">
-          <%= f.select :company_name,all_company,{hide_label: true,include_blank: " Select company"}  %>
+          <= f.select :company_name,all_company,{hide_label: true,include_blank: " Select company"}  %>
         </div>
-      </div>
+      </div> -->
       <div class="col-sm-2">
         <div class="field">
         	<%= f.text_field :company, hide_label: true,placeholder: 'Company'%>
@@ -34,11 +34,11 @@
     <div class="col-sm-1">
     <h6>Location</h6>
     </div>
-      <div class="col-sm-2">
+<!--       <div class="col-sm-2">
         <div class="field">
-          <%= f.select :location_name,all_company_location,{hide_label: true,include_blank: " Select Location"}  %>
+          <= f.select :location_name,all_company_location,{hide_label: true,include_blank: " Select Location"}  %>
         </div>
-      </div>
+      </div> -->
     	<div class="col-sm-2">
         <div class="field">
         	<%= f.text_field :location, hide_label: true,placeholder: 'Location' %>
@@ -50,11 +50,11 @@
     <div class="col-sm-1">
     <h6>Department</h6>
     </div>
-      <div class="col-sm-2">
+<!--       <div class="col-sm-2">
         <div class="field">
-          <%= f.select :department_name,all_department_list,{hide_label: true,include_blank: " Select Department"}  %>
+          <= f.select :department_name,all_department_list,{hide_label: true,include_blank: " Select Department"}  %>
         </div>
-      </div>
+      </div> -->
       <div class="col-sm-2">
         <div class="field">
           <%= f.text_field :department, hide_label: true,placeholder: 'Department' %>

@@ -174,9 +174,8 @@ class GoalRatingsController < ApplicationController
   
   def send_mail_to_appraiser
     @employee = Employee.find(current_user.employee_id)
-    #@goal_bunch = GoalBunch.find(params[:goal_bunch_id])
+    @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
 
-    GoalRating.create(period_id: @goal_bunch.period_id)
     sum = @goal_bunch.goal_ratings.sum(:goal_weightage)
     if sum == 100
       @emp = Employee.find(current_user.employee_id)
@@ -386,9 +385,9 @@ class GoalRatingsController < ApplicationController
     @department = params[:salary][:department]
     @location = params[:salary][:location]
 
-    @company_name = params[:salary][:company_name]
-    @department_name = params[:salary][:department_name]
-    @location_name = params[:salary][:location_name]
+    # @company_name = params[:salary][:company_name]
+    # @department_name = params[:salary][:department_name]
+    # @location_name = params[:salary][:location_name]
 
     @rating = Rating.last
     #@goal_bunches = GoalBunch.joins("INNER JOIN employees on employees.id = goal_bunches.employee_id where employees.department_id = @department_name.id and employees.company_location_id = @location_name.id")

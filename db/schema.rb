@@ -1369,11 +1369,13 @@ ActiveRecord::Schema.define(version: 20160714111509) do
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
     t.integer  "interview_schedule_id"
+    t.integer  "interview_round_id"
   end
 
   add_index "interview_analyses", ["interview_attribute_id"], name: "index_interview_analyses_on_interview_attribute_id"
   add_index "interview_analyses", ["interview_decision_id"], name: "index_interview_analyses_on_interview_decision_id"
   add_index "interview_analyses", ["interview_evalution_id"], name: "index_interview_analyses_on_interview_evalution_id"
+  add_index "interview_analyses", ["interview_round_id"], name: "index_interview_analyses_on_interview_round_id"
   add_index "interview_analyses", ["interview_schedule_id"], name: "index_interview_analyses_on_interview_schedule_id"
   add_index "interview_analyses", ["vacancy_request_history_id"], name: "index_interview_analyses_on_vacancy_request_history_id"
 
@@ -2237,12 +2239,15 @@ ActiveRecord::Schema.define(version: 20160714111509) do
   create_table "trainee_requests", force: :cascade do |t|
     t.integer  "training_request_id"
     t.integer  "employee_id"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.integer  "training_topic_master_id"
+    t.boolean  "is_complete"
   end
 
   add_index "trainee_requests", ["employee_id"], name: "index_trainee_requests_on_employee_id"
   add_index "trainee_requests", ["training_request_id"], name: "index_trainee_requests_on_training_request_id"
+  add_index "trainee_requests", ["training_topic_master_id"], name: "index_trainee_requests_on_training_topic_master_id"
 
   create_table "trainees", force: :cascade do |t|
     t.integer  "training_plan_id"
@@ -2525,7 +2530,7 @@ ActiveRecord::Schema.define(version: 20160714111509) do
   create_table "well_faires", force: :cascade do |t|
     t.string   "month"
     t.decimal  "amount",     precision: 15, scale: 2, default: 0.0
-    t.string   "status"
+    t.boolean  "status"
     t.datetime "created_at",                                        null: false
     t.datetime "updated_at",                                        null: false
   end

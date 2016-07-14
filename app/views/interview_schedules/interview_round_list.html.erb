@@ -11,6 +11,8 @@
       <th>Interview time</th>
       <th>Location</th>
       <th>Schedule comment</th>
+      <th>Analysis</th>
+      <th>Show</th>
     </tr>
   </thead>
   <tbody>
@@ -22,6 +24,12 @@
         <td><%= interview_round.interview_time %></td>
         <td><%= interview_round.location %></td>
         <td><%= interview_round.schedule_comment %></td>
+        <td>
+            <%= link_to ' Analysis', new_interview_analysis_path(interview_round_id: interview_round.id),class: 'btn btn-xs btn-success fa fa-comment' %>
+        </td>
+        <td>
+        <%= link_to '', interview_round,class: 'btn btn-xs btn-default fa fa-eye' %>
+        </td>
       </tr>
     <% end %>
   </tbody>

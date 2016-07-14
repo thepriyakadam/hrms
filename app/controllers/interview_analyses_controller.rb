@@ -74,7 +74,6 @@ class InterviewAnalysesController < ApplicationController
 
     def destroy
       @interview_analysis.destroy
-      @interview_schedule = InterviewSchedule.find(params[:abc])
       @interview_analyses = InterviewAnalysis.where(interview_schedule_id: @interview_schedule.id)
     end
 

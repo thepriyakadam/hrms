@@ -2,13 +2,14 @@ class HomeController < ApplicationController
   # load_and_authorize_resource
   def index
     
+    @employee_task_to_dos = EmployeeTaskToDo.where(employee_id: current_user.employee_id, status: true)
     @circulars = Circular.all
+    @company_policies = CompanyPolicy.all
     @companies = Company.all
     @company_locations = CompanyLocation.all
     @departments = Department.all
     #@employees = Employee.all
     if current_user.class == Member
-      @employee_task_to_dos = EmployeeTaskToDo.where(employee_id: current_user.employee_id)
       if current_user.role.name == 'Employee'
         @employee = Employee.find(current_user.employee_id)
         #redirect_to home_index_path
@@ -27,7 +28,7 @@ class HomeController < ApplicationController
         @employee = Employee.find(current_user.employee_id)
       end
     else
-      @employee_task_to_dos = EmployeeTaskToDo.limit(10)
+      #@employee_task_to_dos = EmployeeTaskToDo.where(employee_id: current_user.employee_id, status: true)
       @employees = Employee.all
     end
   end

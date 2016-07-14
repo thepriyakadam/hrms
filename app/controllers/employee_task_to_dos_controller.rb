@@ -38,11 +38,8 @@ class EmployeeTaskToDosController < ApplicationController
   # PATCH/PUT /employee_task_to_dos/1
   # PATCH/PUT /employee_task_to_dos/1.json
   def update
-    if @employee_task_to_do.update(employee_task_to_do_params)
-      @employee_task_to_dos = EmployeeTaskToDo.where(employee_id: current_user.employee_id)
-    else
-      
-    end
+    @employee_task_to_do.update(employee_task_to_do_params)
+    @employee_task_to_dos = EmployeeTaskToDo.where(employee_id: current_user.employee_id)
   end
 
   # DELETE /employee_task_to_dos/1

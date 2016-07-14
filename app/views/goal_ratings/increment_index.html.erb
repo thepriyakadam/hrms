@@ -4,7 +4,7 @@
   </div><!-- /.box-header -->
   <div class="box-body">
   <%= bootstrap_form_for(:salary, url: { action: 'all_employee_list'},html: {id: "salary"},remote: true) do |f| %>
-  	<div class="row">
+    <div class="row">
       <div class="col-sm-2">
       <label>Performance Period</label>
         <div class="field">
@@ -25,9 +25,9 @@
       </div>
       <div class="col-sm-2">
         <div class="field">
-        	<%= f.text_field :company, hide_label: true,placeholder: 'Company'%>
-    		</div>
-    	</div>
+          <%= f.text_field :company, hide_label: true,placeholder: 'Company'%>
+        </div>
+      </div>
     </div>
    
     <div class="row">
@@ -39,11 +39,11 @@
           <%= f.select :location_name,all_company_location,{hide_label: true,include_blank: " Select Location"}  %>
         </div>
       </div>
-    	<div class="col-sm-2">
+      <div class="col-sm-2">
         <div class="field">
-        	<%= f.text_field :location, hide_label: true,placeholder: 'Location' %>
-    		</div>
-    	</div>
+          <%= f.text_field :location, hide_label: true,placeholder: 'Location' %>
+        </div>
+      </div>
     </div>
     
      <div class="row">
@@ -62,13 +62,13 @@
       </div>
     </div>
     <br>
-   	<!-- <div class="row">
-    	<div class="col-sm-2">
-    	<label>Max Rating</label>
+    <!-- <div class="row">
+      <div class="col-sm-2">
+      <label>Max Rating</label>
         <div class="field">
-        	<%= @rating.value %>
-    		</div>
-    	</div>
+          <%= @rating.value %>
+        </div>
+      </div>
     </div> -->
     <br>
     <div class="row">
@@ -95,3 +95,4 @@ $("#buttonCtc").click(function(){
   $("#salary").submit();
 })
 </script>
+

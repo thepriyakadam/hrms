@@ -197,6 +197,12 @@ class VacancyMastersController < ApplicationController
       session[:active_tab1] ="particular_vacancy"
   end
 
+  def vacancy_profile
+
+    @vacancy_masters = VacancyMaster.where("employee_id = ? and (current_status = ? or current_status = ?)",current_user.employee_id,"Approved","Edit And Approved")
+
+  end
+
   
   def modal2  
     puts "--------------------"
@@ -230,6 +236,12 @@ class VacancyMastersController < ApplicationController
 
   def approved_vacancy_request_history_list
      @vacancy_request_histories = VacancyRequestHistory.where("employee_id = ? and (current_status = ? or current_status = ?)",current_user.employee_id,"Approved","Edit And Approved")
+     session[:active_tab] ="recruitment"
+     session[:active_tab1] ="particular_vacancy"
+  end
+
+  def vacancy_profile
+     @vacancy_masters = VacancyMaster.where("employee_id = ? and (current_status = ? or current_status = ?)",current_user.employee_id,"Approved","Edit And Approved")
      session[:active_tab] ="recruitment"
      session[:active_tab1] ="particular_vacancy"
   end

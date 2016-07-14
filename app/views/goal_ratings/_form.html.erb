@@ -4,10 +4,12 @@
   <%= f.hidden_field :goal_setter_id, value: current_user.employee_id  %>
   <%= f.hidden_field :appraisee_id, value: @goal_bunch.employee_id  %>
   <%= f.hidden_field :appraiser_id, value: @goal_bunch.employee.manager_id %>
+  <%= f.hidden_field :period_id, value: @goal_bunch.period_id %>
+
     <div class="row">
       <div class="col-sm-3">
         <div class="form-group required">
-        <%= f.select :goal_type,["Goal"],{label: 'Performance Type',include_blank: "Select Type"},{onchange:"var a={goal_type:$(this).val()}; $.get('/goal_ratings/select_dropdown',a,function(response){});",class: 'form-control'} %>
+        <%= f.select :goal_type,["Goal","Attribute"],{label: 'Performance Type',include_blank: "Select Type"},{onchange:"var a={goal_type:$(this).val()}; $.get('/goal_ratings/select_dropdown',a,function(response){});",class: 'form-control'} %>
 
       </div>
     </div>

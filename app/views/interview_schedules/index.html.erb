@@ -2,11 +2,11 @@
   <div class="box-header">
     <h3 class="box-title">Interview Schedule List</h3>
 <div class="box-body">
-<%= bootstrap_form_for InterviewSchedule.new,url:{action:'is_confirm'} do |f| %>   
+<!--<= bootstrap_form_for InterviewSchedule.new,url:{action:'is_confirm'} do |f| %>-->
 <table id="example" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
-      <th><input type="checkbox" id="selectAll" value="selectAll"></th>
+      <!-- <th><input type="checkbox" id="selectAll" value="selectAll"></th> -->
       <th>Job Title</th>
       <th>Candidate Name</th>
       <th>Email Id</th>
@@ -23,13 +23,13 @@
   <tbody>
     <% @interview_schedules.each do |interview_schedule| %>
       <tr>
-      <td>
-          <% if interview_schedule.is_confirm == true %>
+      <!-- <td>
+          < if interview_schedule.is_confirm == true %>
 
-          <% else %>
-            <%= check_box_tag "interview_schedule_ids[]", interview_schedule.id %>
-          <% end %>
-        </td>
+          < else %>
+            <= check_box_tag "interview_schedule_ids[]", interview_schedule.id %>
+          < end %>
+        </td> -->
         <td><%= interview_schedule.job_title %></td>
         <td><%= interview_schedule.candidate_name %></td>
         <td><%= interview_schedule.email_id %></td>
@@ -60,7 +60,7 @@
         <td>
          <div id="myModal1" class="modal fade"></div>
           <%= link_to '', interview_schedule,class: 'btn btn-xs btn-default fa fa-eye' %>
-          <%= link_to '',modal_schedule_list_interview_schedules_path(interview_schedule),class: 'btn btn-success btn-xs fa fa-edit',remote: true %>
+          <!--<= link_to '',modal_schedule_list_interview_schedules_path(interview_schedule),class: 'btn btn-success btn-xs fa fa-edit',remote: true %>-->
         </td>
           <!--= link_to '', edit_interview_schedule_path(interview_schedule),class: 'btn btn-success btn-xs fa fa-edit' %>-->
       </tr>
@@ -68,14 +68,14 @@
   </tbody>
 </table>
 
-<div class="row">
+<!-- <div class="row">
   <div class="col-sm-3">
     <div class="actions">
-      <%= f.submit "Confirm Interview", class: 'btn btn-primary btn-sm' %>
+      <= f.submit "Confirm Interview", class: 'btn btn-primary btn-sm' %>
     </div>
   </div>
 </div>
-<% end %>
+< end %> -->
      
 <br>
 <div id="myModal" class="modal fade"></div>

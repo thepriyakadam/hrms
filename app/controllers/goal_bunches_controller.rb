@@ -220,8 +220,8 @@ class GoalBunchesController < ApplicationController
     @appraiser_goal_ratings = GoalRating.where(appraisee_id: @employee.id, goal_bunch_id: @goal_bunch_id.id, goal_type: 'Goal').where.not(appraiser_comment: nil)
     @appraiser_attribute_ratings = GoalRating.where("goal_bunch_id = ? AND goal_type = ?", @goal_bunch_id.id ,'Attribute').where.not(appraiser_comment: nil)
 
-     appraiser_goal_sum = GoalRating.appraiser_goal_sum(@appraiser_goal_ratings)
-     appraiser_attribute_sum = GoalRating.appraiser_attribute_sum(@appraiser_attribute_ratings)
+     # appraiser_goal_sum = GoalRating.appraiser_goal_sum(@appraiser_goal_ratings)
+     # appraiser_attribute_sum = GoalRating.appraiser_attribute_sum(@appraiser_attribute_ratings)
 
     @goal_rating = GoalRating.new
     
@@ -826,10 +826,13 @@ class GoalBunchesController < ApplicationController
 
   def set_goal_list
     reporter(@goal_bunches, template_class: PdfReportTemplate) do
-      #filter :employee_id, type: :string
+      #filter :final_rating_id, type: :integer
       # filter(:current_status, :enum, :select => [["Pending",0],["Cancelled",1],["FirstApproved",2],["SecondApproved",3],["FirstRejected",4],["SecondRejected",5]])
       column(:Employee_ID, sortable: true) { |goal_bunch| goal_bunch.employee.try(:manual_employee_code) }
       column(:Emploee_name, sortable: true) { |goal_bunch| full_name(goal_bunch.employee) }
+      column(:Appraiser_ID, sortable: true) { |goal_bunch| goal_bunch.appraiser_id }
+      column(:Reviewer_ID, sortable: true) { |goal_bunch| goal_bunch.reviewer_id }
+      column(:Final_Rating, sortable: true) { |goal_bunch| goal_bunch.try(:final_rating_id) }
       # column :is_pending
       # column :is_cancelled
       # column :is_first_approved

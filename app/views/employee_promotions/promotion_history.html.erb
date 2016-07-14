@@ -11,6 +11,7 @@
     <table id="example2" class="table table-bordered table-hover table-condensed">
     <thead>
       <tr>
+        <th>Promotion</th>
         <th>Department</th>
         <th>Grade</th>
         <th>Designation</th>
@@ -22,8 +23,10 @@
       </tr>
     </thead>
     <tbody>
+      <% i= 0 %>
       <% @employee_promotions.each do |employee_promotion| %>
         <tr>
+          <th><%= i= i+1 %></th>
           <td><%= employee_promotion.employee.try(:company_location).try(:name) %> - <%= employee_promotion.employee.try(:department).try(:name) %></td>
           <td><%= employee_promotion.employee_grade.name %></td>
           <td><%= employee_promotion.employee_designation.name %></td>

@@ -33,6 +33,7 @@ class GoalRatingsController < ApplicationController
     @goal_bunch = GoalBunch.find(params[:goal_rating][:goal_bunch_id])
     @employee = Employee.find(@goal_bunch.employee_id)
     @goal_rating = GoalRating.new(goal_rating_params)
+    #GoalRating.create(period_id: @goal_bunch.period_id)
     goal_weightage_sum = @goal_rating.goal_weightage_sum(@goal_bunch, @goal_rating)
     if goal_weightage_sum <= 100
       if params[:flag] == "Goal"
@@ -174,6 +175,7 @@ class GoalRatingsController < ApplicationController
   def send_mail_to_appraiser
     @employee = Employee.find(current_user.employee_id)
     @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
+
     sum = @goal_bunch.goal_ratings.sum(:goal_weightage)
     if sum == 100
       @emp = Employee.find(current_user.employee_id)
@@ -225,9 +227,18 @@ class GoalRatingsController < ApplicationController
   def performance_type
   end
   
+  def period_for_training
+    @periods = Period.all
+  end
+
   def training_request
-    @goal_ratings = GoalRating.where(goal_type: 'Goal',training_topic_master_id: nil)
-    @attribute_ratings = GoalRating.where(goal_type: 'Attribute',training_topic_master_id: nil)
+    @period = Period.find(params[:period_id])
+    #@goal_bunch = GoalBunch.find_by(period_id: @period_id.id)
+    # @goal_ratings = GoalBunch.joins("INNER JOIN goal_ratings on goal_bunches.id = goal_ratings.goal_bunch_id where goal_bunches.period_id = 1")
+    #@goal_ratings = GoalRating.joins("INNER JOIN goal_bunches on goal_ratings.goal_bunch_id = goal_bunches.id where goal_bunches.period_id = @period.id,goal_bunches.goal_type = 'Goal' ")
+    @goal_ratings = GoalRating.where(period_id: @period.id, goal_type: 'Goal',training_topic_master_id: nil)
+    #@attribute_ratings = GoalRating.joins("INNER JOIN goal_bunches on goal_ratings.goal_bunch_id = goal_bunches.id where goal_bunches.period_id = @period.id")
+    @attribute_ratings = GoalRating.where(period_id: @period.id,goal_type: 'Attribute',training_topic_master_id: nil)
     session[:active_tab] ="performancemgmt"
     session[:active_tab1] ="perform_cycle"
   end
@@ -361,7 +372,7 @@ class GoalRatingsController < ApplicationController
     end
   end
 
-  def increment_index
+    def increment_index
     @rating = Rating.last
     # @company = params[:salary][:company]
     # @department = params[:salary][:department]
@@ -382,6 +393,8 @@ class GoalRatingsController < ApplicationController
     @goal_bunches = GoalBunch.where(period_id: @period.id)
   end
 
+
+
     private
     # Use callbacks to share common setup or constraints between actions.
     def set_goal_rating
@@ -390,6 +403,6 @@ class GoalRatingsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def goal_rating_params
-      params.require(:goal_rating).permit(:is_hide,:attribute_master_id,:goal_bunch_id, :goal_perspective_id, :goal_weightage, :goal_measure, :target, :aligned, :goal_setter_id, :appraisee_id, :appraisee_comment, :appraiser_id, :appraiser_comment, :appraiser_rating_id, :reviewer_id, :reviewer_comment,:goal_type)
+      params.require(:goal_rating).permit(:period_id,:is_hide,:attribute_master_id,:goal_bunch_id, :goal_perspective_id, :goal_weightage, :goal_measure, :target, :aligned, :goal_setter_id, :appraisee_id, :appraisee_comment, :appraiser_id, :appraiser_comment, :appraiser_rating_id, :reviewer_id, :reviewer_comment,:goal_type)
     end
 end

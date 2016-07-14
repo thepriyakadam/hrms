@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160713065422) do
+ActiveRecord::Schema.define(version: 20160714111509) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -1248,6 +1248,7 @@ ActiveRecord::Schema.define(version: 20160713065422) do
     t.integer  "training_topic_master_id"
     t.boolean  "is_assigned"
     t.boolean  "is_hide"
+    t.integer  "period_id"
   end
 
   add_index "goal_ratings", ["appraisee_id"], name: "index_goal_ratings_on_appraisee_id"
@@ -1259,6 +1260,7 @@ ActiveRecord::Schema.define(version: 20160713065422) do
   add_index "goal_ratings", ["goal_perspective_id"], name: "index_goal_ratings_on_goal_perspective_id"
   add_index "goal_ratings", ["goal_setter_id"], name: "index_goal_ratings_on_goal_setter_id"
   add_index "goal_ratings", ["performance_calendar_id"], name: "index_goal_ratings_on_performance_calendar_id"
+  add_index "goal_ratings", ["period_id"], name: "index_goal_ratings_on_period_id"
   add_index "goal_ratings", ["reviewer_id"], name: "index_goal_ratings_on_reviewer_id"
   add_index "goal_ratings", ["training_topic_master_id"], name: "index_goal_ratings_on_training_topic_master_id"
 
@@ -1380,11 +1382,13 @@ ActiveRecord::Schema.define(version: 20160713065422) do
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
     t.integer  "interview_schedule_id"
+    t.integer  "interview_round_id"
   end
 
   add_index "interview_analyses", ["interview_attribute_id"], name: "index_interview_analyses_on_interview_attribute_id"
   add_index "interview_analyses", ["interview_decision_id"], name: "index_interview_analyses_on_interview_decision_id"
   add_index "interview_analyses", ["interview_evalution_id"], name: "index_interview_analyses_on_interview_evalution_id"
+  add_index "interview_analyses", ["interview_round_id"], name: "index_interview_analyses_on_interview_round_id"
   add_index "interview_analyses", ["interview_schedule_id"], name: "index_interview_analyses_on_interview_schedule_id"
   add_index "interview_analyses", ["vacancy_request_history_id"], name: "index_interview_analyses_on_vacancy_request_history_id"
 
@@ -2248,12 +2252,15 @@ ActiveRecord::Schema.define(version: 20160713065422) do
   create_table "trainee_requests", force: :cascade do |t|
     t.integer  "training_request_id"
     t.integer  "employee_id"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.integer  "training_topic_master_id"
+    t.boolean  "is_complete"
   end
 
   add_index "trainee_requests", ["employee_id"], name: "index_trainee_requests_on_employee_id"
   add_index "trainee_requests", ["training_request_id"], name: "index_trainee_requests_on_training_request_id"
+  add_index "trainee_requests", ["training_topic_master_id"], name: "index_trainee_requests_on_training_topic_master_id"
 
   create_table "trainees", force: :cascade do |t|
     t.integer  "training_plan_id"
@@ -2536,7 +2543,7 @@ ActiveRecord::Schema.define(version: 20160713065422) do
   create_table "well_faires", force: :cascade do |t|
     t.string   "month"
     t.decimal  "amount",     precision: 15, scale: 2, default: 0.0
-    t.string   "status"
+    t.boolean  "status"
     t.datetime "created_at",                                        null: false
     t.datetime "updated_at",                                        null: false
   end

@@ -250,6 +250,8 @@ end
       post :update_feedback
       get :training_details_list
       get :training_topic_wise_search
+      get :show_traineerequest_list
+      get :_trainee_request_list
     end
   end
   resources :training_requests do

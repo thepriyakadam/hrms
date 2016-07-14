@@ -1,29 +1,27 @@
-<div class="box-body">
-<table id="example1" class="table table-bordered table-hover table-condensed">
-  <thead>
-    <tr>
-      <th><input type="checkbox" id="selectAll" value="selectAll"></th>
-      <th>Employee ID</th>
-      <th>Employee Name</th>
-      <th>Contact No</th>
-      </tr>
-  </thead>
+  <div class="box-header with-border">
+    <h3 class="box-title">Employee's Who are Going To Attend Training</h3>
+  </div>
+  <div class="box-body">
+    <table id="example" class="table table-bordered table-hover table-condensed">
+      <thead>
+        <tr>
+          <th><input type="checkbox" id="selectAll" value="selectAll"></th>
+          <th>Employee ID</th>
+        </tr>
+      </thead>
 
-  <tbody>
-  <% i = 0 %>
-   <% @trainee_requests.each do |trainee_request| %>
-      <tr>
-        <td><%= check_box_tag "employee_ids[]", trainee_request.employee_id %></td>
-        <td><%= trainee_request.employee.try(:manual_employee_code) %></td>
-        <td> <%= full_name(trainee_request.employee) %> </td>
-        <td><%= trainee_request.employee.try(:contact_no) %></td>
-      </tr>
-      <% end %>
-  </tbody>
-</table>
-</div>
+      <tbody>
+        <% @trainee_requests.each do |trainee_request| %>
+          <tr>
+            <td><%= check_box_tag "trainee_request_ids[]", trainee_request.employee_id %></td>
+            <td><%= trainee_request.employee.first_name %> <%= trainee_request.employee.middle_name %> <%= trainee_request.employee.last_name %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div><br><br>
 
-<script type="text/javascript">
+  <script type="text/javascript">
   $(function () {
     $('#selectAll').click(function() {
       if (this.checked) {
@@ -40,8 +38,3 @@
   });
 </script>
 
-<script type="text/javascript">
-  $(function () {
-    $('#example1').Datatable();
-  });
-</script>

@@ -19,7 +19,7 @@
         <td><%= interview_analysis.comment %></td>
         <td>
           <%= link_to '', edit_interview_analysis_path(interview_analysis),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
-          <%= link_to '',  interview_analysis, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
+          <%= link_to '',  interview_analysis, method: :delete, data: { confirm: 'Are you sure?'},class: 'btn btn-danger btn-xs fa fa-close',remote:true %>
         </td>
       </tr> 
     <% end %>

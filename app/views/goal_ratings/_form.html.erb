@@ -7,7 +7,8 @@
     <div class="row">
       <div class="col-sm-3">
         <div class="form-group required">
-        <%= f.select :goal_type,["Goal","Attribute"],{label: 'Performance Type',include_blank: "Select Type"},{onchange:"var a={goal_type:$(this).val()}; $.get('/goal_ratings/select_dropdown',a,function(response){});",class: 'form-control'} %>
+        <%= f.select :goal_type,["Goal"],{label: 'Performance Type',include_blank: "Select Type"},{onchange:"var a={goal_type:$(this).val()}; $.get('/goal_ratings/select_dropdown',a,function(response){});",class: 'form-control'} %>
+
       </div>
     </div>
 
@@ -62,9 +63,6 @@
       },
       "goal_rating[goal_measure]":{
         required: true
-      },
-      "goal_rating[target]":{
-        required: true
       }
     },
     messages: {
@@ -79,9 +77,6 @@
       },
       "goal_rating[goal_measure]":{
         required: "Please specify Goal Measure"
-      },
-      "goal_rating[target]":{
-        required: "Please specify Target"
       }
     },
     errorPlacement: function(error, element) {

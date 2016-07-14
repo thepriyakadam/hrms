@@ -8,6 +8,7 @@ class InterviewSchedulesController < ApplicationController
   include QueryReport::Helper # need to include it
   def index
     @interview_schedules = InterviewSchedule.all
+    
     respond_to do |format|
       format.html
       format.pdf do
@@ -261,6 +262,20 @@ end
     @interview_rounds = InterviewRound.where(interview_schedule_id: @interview_schedule.id,employee_id: current_user.employee_id)
   end
 
+  def modal_schedule_list
+    @interview_schedule = InterviewSchedule.find(params[:format])
+  end
+
+   def update_interview_schedule
+     @interview_schedule = InterviewSchedule.find(params[:id])
+     @email_id = params[:interview_schedule][:email_id]
+     @location = params[:interview_schedule][:location]
+     @interview_date = params[:interview_schedule][:interview_date]
+     @trainee.update(email_id: @email_id,location: @location,interview_date: @interview_date)
+     flash[:notice] = 'Interview Details Updated Successfully'
+     redirect_to interview_schedules_path
+    end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -277,14 +292,3 @@ end
     params.require(:interview_schedule).permit(:selected_resume_id, :employee_id, :interview_schedule_id, :email_id, :candidate_name, :interview_date, :location, :job_title)
   end
 end
-
-def modal_schedule_list
-  @interview_schedule = InterviewSchedule.find(params[:id])
-end
-
-def update_interview_schedule
-   @interview_schedule = InterviewSchedule.find(params[:id])
-    @interview_schedule.update(interview_schedule_params)
-    flash[:notice] = 'Interview Updated Successfully'
-    redirect_to root_url
-  end

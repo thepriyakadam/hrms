@@ -35,7 +35,7 @@
           <div class="field">
           <table class="table table-bordered table-hover table-condensed'">
            <thead>
-            <tr><center><th colspan="3"><center> C_Off Balance </center></th></tr>
+            <tr><center><th colspan="3"><center> C.Off Balance </center></th></tr>
             <tr>
               <th>Date</th>
               <th>Type</th>
@@ -72,13 +72,13 @@
         </div>
 
         <div class="col-sm-4">
-        <label>Date Range </label>
-          <div class="form-group required">
+         <div class="form-group required">
+     <!--    <label>Date Range </label> -->
             <div class="input-group">
               <div class="input-group-addon">
                 <i class="fa fa-calendar"></i>
               </div>
-              <%= f.text_field :date_range, hide_label: true,class: "pull-right active",id: "reservationtime" %>
+              <%= f.text_field :date_range,class: "pull-right active",label:'Date Range',id: "reservationtime" %>
             </div><!-- /.input group -->
           </div>
         </div>

@@ -1,6 +1,6 @@
 
   <div class="box-body">
-  <%= bootstrap_form_for(@interview_analysis,html: {id: 'interview_analysis'},remote:true) do |f| %>
+  <%= bootstrap_form_for(@interview_analysis,html: {id: 'interview_analysis'},abc: @interview_schedule.id) do |f| %>
   <%= f.hidden_field :interview_schedule_id,value:@interview_schedule.id  %>
       <div class="row">
 

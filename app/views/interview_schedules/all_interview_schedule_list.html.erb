@@ -7,6 +7,7 @@
     <tr>
       <th>Sr.No</th>
       <th>Candidate Name</th>
+      <th>Location</th>
       <th>Action</th>
     </tr>
   </thead>
@@ -17,6 +18,7 @@
       <tr>
         <td><%= i=i+1 %></td>
         <td><%= interview_schedule.candidate_name %></td>
+        <td><%= interview_schedule.location %></td>
         <td><%= link_to ' Report',final_report_interview_schedules_path(interview_schedule),class: 'btn btn-xs btn-primary' %></td>
       </tr>
     <% end %>

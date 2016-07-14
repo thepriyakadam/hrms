@@ -12,8 +12,8 @@
       <th>Job Title</th>
       <th>Department</th>
       <th>Qualification</th>
-      <th>No. Of Open</th>
-      <th>No. of Closed</th>
+      <!-- <th>No. Of Open</th>
+      <th>No. of Closed</th> -->
       <th>Total No. Of Position</th>
       <th>Current Status</th>
       <th>Action</th>
@@ -26,14 +26,16 @@
        <td><%= vacancy_request_history.vacancy_name %></td>
         <td><%= vacancy_request_history.company_location.try(:name) %> - <%= vacancy_request_history.department.try(:name) %></td>
         <td><%= vacancy_request_history.degree.try(:name) %></td>
-        <td><%=  %></td>
-        <td><%=  %></td>
+        <!-- <td><%=  %></td>
+        <td><%=  %></td> -->
         <td><%= vacancy_request_history.no_of_position %></td>
         <td>
             <% if vacancy_request_history.current_status == "Pending" %>
              <%= link_to '', cancel_vacancy_request_vacancy_masters_path(vacancy_request_history), data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-xs fa fa-trash' %>
              <% elsif vacancy_request_history.current_status == "Approved" %>
               <small class="label label-primary">Approved</small>
+              <% elsif vacancy_request_history.current_status == "Edit And Approved" %>
+              <small class="label label-primary">Edit And Approved</small>
              <% elsif vacancy_request_history.current_status == "Reject" %>
               <small class="label label-danger">Reject</small>
               <% elsif vacancy_request_history.current_status == "Approved & Send Next" %>

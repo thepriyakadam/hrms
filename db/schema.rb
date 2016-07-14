@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160713065422) do
+ActiveRecord::Schema.define(version: 20160713120654) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -2187,12 +2187,15 @@ ActiveRecord::Schema.define(version: 20160713065422) do
   create_table "trainee_requests", force: :cascade do |t|
     t.integer  "training_request_id"
     t.integer  "employee_id"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.integer  "training_topic_master_id"
+    t.boolean  "is_complete"
   end
 
   add_index "trainee_requests", ["employee_id"], name: "index_trainee_requests_on_employee_id"
   add_index "trainee_requests", ["training_request_id"], name: "index_trainee_requests_on_training_request_id"
+  add_index "trainee_requests", ["training_topic_master_id"], name: "index_trainee_requests_on_training_topic_master_id"
 
   create_table "trainees", force: :cascade do |t|
     t.integer  "training_plan_id"
@@ -2475,7 +2478,7 @@ ActiveRecord::Schema.define(version: 20160713065422) do
   create_table "well_faires", force: :cascade do |t|
     t.string   "month"
     t.decimal  "amount",     precision: 15, scale: 2, default: 0.0
-    t.string   "status"
+    t.boolean  "status"
     t.datetime "created_at",                                        null: false
     t.datetime "updated_at",                                        null: false
   end

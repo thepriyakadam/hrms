@@ -34,7 +34,7 @@ class TrainingRequestsController < ApplicationController
       if @training_request.save
         @employee_ids = params[:employee_ids]
         @employee_ids.each do |eid|
-        TraineeRequest.create(employee_id: eid,training_request_id: @training_request.id)
+        TraineeRequest.create(employee_id: eid,training_request_id: @training_request.id,training_topic_master_id: @training_request.training_topic_master_id)
       end
         format.html { redirect_to @training_request, notice: 'Training request was successfully created.' }
         format.json { render :show, status: :created, location: @training_request }

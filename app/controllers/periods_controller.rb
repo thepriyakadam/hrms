@@ -27,6 +27,7 @@ class PeriodsController < ApplicationController
 	@period.update(period_params)
     @period = Period.new
     @periods = Period.all
+    #redirect_to periods_path
 	end
 
 	def destroy

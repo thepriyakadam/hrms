@@ -95,6 +95,7 @@ Rails.application.routes.draw do
       get :performance_type
       get :attribute_modal
       patch :update_attribute_modal
+      get :period_for_training
       get :training_request
       post :create_attribute_training
       post :create_goal_training
@@ -251,6 +252,9 @@ end
       get :modal_feedback
       post :update_feedback
       get :training_details_list
+      get :training_topic_wise_search
+      get :show_traineerequest_list
+      get :_trainee_request_list
     end
   end
   resources :training_requests do

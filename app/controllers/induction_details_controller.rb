@@ -82,7 +82,7 @@ class InductionDetailsController < ApplicationController
     @induction_detail = InductionDetail.find(params[:id])
     # byebug
     @c1 = Employee.find(@induction_detail.employee_id)
-    @companies = Company.where( : @c1.id)
+    # @companies = Company.where( : @c1.id)
     @induction_details = InductionDetail.all
     @induction_activities = InductionActivity.where(induction_master_id: @induction_detail.induction_master_id)
      respond_to do |format|

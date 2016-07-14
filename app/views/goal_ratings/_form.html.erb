@@ -4,6 +4,8 @@
   <%= f.hidden_field :goal_setter_id, value: current_user.employee_id  %>
   <%= f.hidden_field :appraisee_id, value: @goal_bunch.employee_id  %>
   <%= f.hidden_field :appraiser_id, value: @goal_bunch.employee.manager_id %>
+  <%= f.hidden_field :period_id, value: @goal_bunch.period_id %>
+
     <div class="row">
       <div class="col-sm-3">
         <div class="form-group required">

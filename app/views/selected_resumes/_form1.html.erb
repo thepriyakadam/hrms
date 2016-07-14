@@ -26,13 +26,13 @@
   </div>
     
   <div class="col-sm-3">
-      <label>Educational Qualification</label>
+    <!--   <label>Educational Qualification</label> -->
       <div class="form-group required">
         <div class="input-group">
           <div class="input-group-addon">
             <%= link_to "", new_degree_path,class: "fa fa-plus fa-success",:target => "_blank" %>
           </div>
-          <%= f.select :degree_id, all_degree_list,{hide_label: true,include_blank: " Select Qualification"} %>
+          <%= f.select :degree_id, all_degree_list,{label: 'Educational Qualification',include_blank: " Select Qualification"} %>
         </div>
       </div>
     </div>

@@ -1,4 +1,4 @@
-<%= bootstrap_form_for(@bonus_master,html: {id: 'bonus_master'},remote:true) do |f| %>
+<%= bootstrap_form_for(@bonus_master,html: {id: 'bonus_master'},remote: true) do |f| %>
   <div class="row">
    
     <div class="col-sm-3">
@@ -17,8 +17,9 @@
       </div>
     </div>
      <div class="col-sm-3">
-      <div class="form-group required">       
-        <%= f.select :status,[['Active','true'],['Inactive','false']],{label: 'Status',include_blank: " Select Status Option"} %>
+     <label>Status</label>
+      <div class="field">       
+        <%= f.check_box :status,label:'Active' %>
       </div>
     </div>
   </div>
@@ -46,10 +47,10 @@ $("#bonus_master").validate({
     },
     "bonus_master[bonus_persentage]":{
       required: true
-    },
-    "bonus_master[status]":{
-      required: true
     }
+    // "bonus_master[status]":{
+    //   required: true
+    // }
   },
   
   errorPlacement: function(error, element) {

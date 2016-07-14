@@ -4,6 +4,7 @@ class CompanyPoliciesController < ApplicationController
   def index
     @company_policies = CompanyPolicy.all
     @company_policy = CompanyPolicy.new
+    session[:active_tab] = 'company'
   end
 
    # GET /about_bosses/new

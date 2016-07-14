@@ -39,13 +39,13 @@
     </div>
 
     <div class="col-sm-3">
-      <label>Date Of Application </label>
+     <!--  <label>Date Of Application </label> -->
       <div class="form-group required">
         <div class="input-group">
           <div class="input-group-addon">
             <i class="fa fa-calendar"></i>
          </div>
-            <%= f.text_field :date_of_application, hide_label: true, class: 'birth_date'%>
+            <%= f.text_field :date_of_application,label: 'Date Of Application', class: 'birth_date'%>
         </div>
       </div>
     </div>
@@ -79,7 +79,7 @@
         </div>
 
       <div class="col-sm-3">
-          <div class="form-group required">
+          <div class="field">
           <%= f.text_field :job_title,label:'Job Title' %>
           </div>
       </div>

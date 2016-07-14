@@ -15,7 +15,18 @@ class BonusMastersController < ApplicationController
 
   # POST /bonus_masters
   # POST /bonus_masters.json
-  def create
+#   def create
+#     @bonus_master = BonusMaster.new(bonus_master_params)
+#     @bonus_masters = BonusMaster.all
+#       if @bonus_master.save
+#         @bonus_master = BonusMaster.new
+#       else
+#         flash.now[:alert] = 'Bonus Master Already Exist.'
+#         redirect_to new_bonus_master_path
+#   end
+# end
+
+def create
     @bonus_master = BonusMaster.new(bonus_master_params)
     @bonus_masters = BonusMaster.all
     respond_to do |format|
@@ -28,9 +39,17 @@ class BonusMastersController < ApplicationController
       end
     end
   end
-
   # PATCH/PUT /bonus_masters/1
   # PATCH/PUT /bonus_masters/1.json
+  
+  # def update
+  #   @bonus_master.update(bonus_master_params)
+  #   @bonus_masters = BonusMaster.all
+  #   @bonus_master = BonusMaster.new
+  #   redirect_to new_bonus_master_path
+
+  # end
+
   def update
     @bonus_master.update(bonus_master_params)
     @bonus_masters = BonusMaster.all

@@ -61,13 +61,13 @@
       <div class="col-sm-1"></div>
         <div class="col-sm-3">
           <div class="form-group required">
-            <%= f.select :leav_category_id, all_leav_category %>
+            <%= f.select :leav_category_id, all_leav_category,label: 'Leave Category' %>
           </div>
         </div>
 
         <div class="col-sm-3">
           <div class="form-group required">
-           <%= f.select :leave_type, ['Full Day','Half Day'] %>
+           <%= f.select :leave_type, ['Full Day','Half Day'],label: 'Leave Type' %>
           </div>
         </div>
 
@@ -93,19 +93,18 @@
         </div>
      
       <div class="row">
-      <div class="col-sm-1"></div>
+        <div class="col-sm-1"></div>
          <div class="col-sm-3">
           <div class="actions">
             <%= f.submit'Create Employee Leave Request', :class => class_name, data: { disable_with: data_info } %>
             <%= link_to ' Back', employee_leav_requests_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
             </div>
-            </div>
-            </div>
+          </div>
+        </div>
       </div>
     <% end %>
   </div><!-- /.box-body -->
-</div><!-- /.box -->
-
+<br>
 <script type="text/javascript">
 $("#employee_leav_request").validate({
     rules: {

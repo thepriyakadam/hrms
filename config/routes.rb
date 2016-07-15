@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :reward_owners
+  resources :recognition_types
   resources :company_policies do
     collection do
       get :active_policies_list

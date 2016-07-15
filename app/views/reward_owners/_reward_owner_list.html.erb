@@ -1,0 +1,25 @@
+<table class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+    	<th>Code</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+
+    <tbody>
+    <% @reward_owners.each do |reward_owner| %>
+      <tr>
+        <td><%= reward_owner.code %></td>
+        <td><%= reward_owner.name %></td>
+        <td><%= reward_owner.description %></td>
+        <td><%= reward_owner.status %></td>
+        <td>
+          <%= link_to '', edit_reward_owner_path(reward_owner),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
+          <%= link_to '',  reward_owner, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-xs btn-danger fa fa-close' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

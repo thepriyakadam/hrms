@@ -43,18 +43,6 @@ class RewardTypesController < ApplicationController
 
   # PATCH/PUT /reward_types/1
   # PATCH/PUT /reward_types/1.json
-  def update
-    respond_to do |format|
-      if @reward_type.update(reward_type_params)
-        format.html { redirect_to @reward_type, notice: 'Reward type was successfully updated.' }
-        format.json { render :show, status: :ok, location: @reward_type }
-      else
-        format.html { render :edit }
-        format.json { render json: @reward_type.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-  
 
   def update
     @reward_type.update(reward_type_params)

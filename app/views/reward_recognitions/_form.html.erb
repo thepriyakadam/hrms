@@ -1,37 +1,54 @@
-<%= form_for(@reward_recognition) do |f| %>
-  <% if @reward_recognition.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@reward_recognition.errors.count, "error") %> prohibited this reward_recognition from being saved:</h2>
+<%= bootstrap_form_for(@reward_recognition,html: {id: 'reward_recognition'}) do |f| %>
+  <div class="row">
+   
+    <div class="col-sm-3">
+        <label>Reward Type</label>
+          <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <%= link_to "", new_reward_type_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+              </div>
+               <%= f.select :reward_type_id, all_reward_type, {hide_label: true,include_blank: " Select Reward Type"} %>
+            </div>
+          </div>
+      </div>
 
-      <ul>
-      <% @reward_recognition.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+     <div class="col-sm-3">
+      <div class="field">
+       <%= f.select :r_type, ['Reward','Recognition'],{label: 'Type',include_blank: " Select Type"} %>
+      </div>
     </div>
-  <% end %>
 
-  <div class="field">
-    <%= f.label :reward_type_id %><br>
-    <%= f.text_field :reward_type_id %>
+     <div class="col-sm-3">
+        <label>Reward Owner</label>
+          <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <%= link_to "", new_reward_owner_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+              </div>
+               <%= f.select :reward_owner_id, all_reward_owner, {hide_label: true,include_blank: " Select Reward Owner"} %>
+            </div>
+          </div>
+      </div>
+
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_area :cost_unit,label: 'Description',placeholder: 'Decription' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :communication,label: 'Communication',placeholder: 'Communication' %>
+      </div>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :type %><br>
-    <%= f.text_field :type %>
-  </div>
-  <div class="field">
-    <%= f.label :reward_owner_id %><br>
-    <%= f.text_field :reward_owner_id %>
-  </div>
-  <div class="field">
-    <%= f.label :cost_unit %><br>
-    <%= f.text_field :cost_unit %>
-  </div>
-  <div class="field">
-    <%= f.label :communication %><br>
-    <%= f.text_field :communication %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit'Create Reward Recognition', :class => class_name, data: { disable_with: data_info } %>
+      </div>
+    </div>
 <% end %>
+

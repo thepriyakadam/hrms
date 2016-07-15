@@ -13,8 +13,10 @@ class RewardRecognitionsController < ApplicationController
   end
 
   # GET /reward_recognitions/new
+
   def new
     @reward_recognition = RewardRecognition.new
+    @reward_recognitions = RewardRecognition.all
   end
 
   # GET /reward_recognitions/1/edit
@@ -23,43 +25,51 @@ class RewardRecognitionsController < ApplicationController
 
   # POST /reward_recognitions
   # POST /reward_recognitions.json
-  def create
-    @reward_recognition = RewardRecognition.new(reward_recognition_params)
 
-    respond_to do |format|
-      if @reward_recognition.save
-        format.html { redirect_to @reward_recognition, notice: 'Reward recognition was successfully created.' }
-        format.json { render :show, status: :created, location: @reward_recognition }
-      else
-        format.html { render :new }
-        format.json { render json: @reward_recognition.errors, status: :unprocessable_entity }
-      end
-    end
-  end
+ # def create
+ #    @reward_recognition = RewardRecognition.new(reward_recognition_params)
+ #    @reward_recognitions = RewardRecognition.all
+ #    respond_to do |format|
+ #      if @reward_recognition.save
+ #        @reward_recognition = RewardRecognition.new
+ #        format.js { @flag = true }
+ #      else
+ #        flash.now[:alert] = 'Reward Recognition Already Exist.'
+ #        format.js { @flag = false }
+ #      end
+ #    end
+ #  end
 
+
+ def create
+      @reward_recognition = RewardRecognition.new(reward_recognition_params)
+      @reward_recognitions = RewardRecognition.all
+       if @reward_recognition.save
+         @reward_recognition = RewardRecognition.new
+       end
+       flash[:notice] = 'Reward Recognition saved Successfully.' 
+       redirect_to new_reward_recognition_path
+        
+   end
   # PATCH/PUT /reward_recognitions/1
   # PATCH/PUT /reward_recognitions/1.json
+
   def update
-    respond_to do |format|
-      if @reward_recognition.update(reward_recognition_params)
-        format.html { redirect_to @reward_recognition, notice: 'Reward recognition was successfully updated.' }
-        format.json { render :show, status: :ok, location: @reward_recognition }
-      else
-        format.html { render :edit }
-        format.json { render json: @reward_recognition.errors, status: :unprocessable_entity }
-      end
-    end
+    @reward_recognition.update(reward_recognition_params)
+    @reward_recognitions = RewardRecognition.all
+    @reward_recognition = RewardRecognition.new
+    redirect_to new_reward_recognition_path
   end
 
   # DELETE /reward_recognitions/1
   # DELETE /reward_recognitions/1.json
-  def destroy
+  
+
+   def destroy
     @reward_recognition.destroy
-    respond_to do |format|
-      format.html { redirect_to reward_recognitions_url, notice: 'Reward recognition was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    @reward_recognitions = RewardRecognition.all
   end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -69,6 +79,6 @@ class RewardRecognitionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def reward_recognition_params
-      params.require(:reward_recognition).permit(:reward_type_id, :type, :reward_owner_id, :cost_unit, :communication)
+      params.require(:reward_recognition).permit(:reward_type_id, :r_type, :reward_owner_id, :cost_unit, :communication)
     end
 end

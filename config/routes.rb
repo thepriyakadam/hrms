@@ -1,11 +1,8 @@
 Rails.application.routes.draw do
 
-<<<<<<< HEAD
   resources :rewards_pals
-=======
   resources :rewards_allocations
   resources :reward_allocations
->>>>>>> aad3fa8344c174529df6181e2c12552dac2779b5
   resources :reward_recognitions
   resources :reward_types
   resources :reward_owners

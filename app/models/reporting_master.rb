@@ -6,6 +6,7 @@ class ReportingMaster < ActiveRecord::Base
   has_many :travel_requests
   has_many :vacancy_request_histories
   has_many :daily_bill_details
+  has_many :rewards_allocations
   validates :employee_id, presence: true, uniqueness: { case_sensitive: false }
  end
 

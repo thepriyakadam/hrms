@@ -1,14 +1,12 @@
 <div class="box box-default">
 <div class="box-header with-border">
-    <h3 class="box-title">Interview Rounds</h3>
+    <h3 class="box-title">Interview Report</h3>
   </div><!-- /.box-header -->
  <div class="box-body">
-   <table id="example2" class="table table-bordered table-hover table-condensed">
-   <tr> 
-      <th colspan="2"></th>
-      <th colspan="2"></th>
-    </tr>
+ 
+    <%= render 'interview_schedule_list' %>
 
+<table id="example2" class="table table-bordered table-hover table-condensed">
 <tr> 
   <th><strong>Employee Name</strong></th>
   <td><%= @interview_round.employee.first_name+' '+@interview_round.employee.middle_name+' '+@interview_round.employee.last_name %></td>
@@ -33,9 +31,7 @@
   <td><%= @interview_round.schedule_comment %></td>
 </tr>
 
-<div>
     <%= render 'induction_analysis_list' %>
-  </div>
 
 </table>
 

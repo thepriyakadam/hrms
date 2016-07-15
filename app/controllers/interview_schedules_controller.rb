@@ -260,7 +260,8 @@ end
 
   def interview_round_list
     @interview_schedule = InterviewSchedule.find(params[:format])
-    @interview_rounds = InterviewRound.where(interview_schedule_id: @interview_schedule.id,employee_id: current_user.employee_id)
+    # @interview_rounds = InterviewRound.where(interview_schedule_id: @interview_schedule.id,employee_id: current_user.employee_id)
+    @interview_rounds = InterviewRound.where(interview_schedule_id: @interview_schedule.id)
   end
 
   def modal_schedule_list

@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Recognition Types</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Status</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @recognition_types.each do |recognition_type| %>
+      <tr>
+        <td><%= recognition_type.code %></td>
+        <td><%= recognition_type.name %></td>
+        <td><%= recognition_type.description %></td>
+        <td><%= recognition_type.status %></td>
+        <td><%= link_to 'Show', recognition_type %></td>
+        <td><%= link_to 'Edit', edit_recognition_type_path(recognition_type) %></td>
+        <td><%= link_to 'Destroy', recognition_type, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Recognition type', new_recognition_type_path %>

@@ -15,6 +15,7 @@ class RewardsAllocationsController < ApplicationController
   # GET /rewards_allocations/new
   def new
     @rewards_allocation = RewardsAllocation.new
+    @rewards_allocations = RewardsAllocation.all
   end
 
   # GET /rewards_allocations/1/edit
@@ -25,14 +26,15 @@ class RewardsAllocationsController < ApplicationController
   # POST /rewards_allocations.json
   def create
     @rewards_allocation = RewardsAllocation.new(rewards_allocation_params)
+    @rewards_allocations = RewardsAllocation.all
 
     respond_to do |format|
       if @rewards_allocation.save
-        format.html { redirect_to @rewards_allocation, notice: 'Rewards allocation was successfully created.' }
-        format.json { render :show, status: :created, location: @rewards_allocation }
+        @rewards_allocation = RewardsAllocation.new
+        format.js { @flag = true }
       else
-        format.html { render :new }
-        format.json { render json: @rewards_allocation.errors, status: :unprocessable_entity }
+        flash.now[:alert] = 'Reward Allocation was Successfully created.'
+        format.js { @flag = false }
       end
     end
   end
@@ -40,25 +42,16 @@ class RewardsAllocationsController < ApplicationController
   # PATCH/PUT /rewards_allocations/1
   # PATCH/PUT /rewards_allocations/1.json
   def update
-    respond_to do |format|
-      if @rewards_allocation.update(rewards_allocation_params)
-        format.html { redirect_to @rewards_allocation, notice: 'Rewards allocation was successfully updated.' }
-        format.json { render :show, status: :ok, location: @rewards_allocation }
-      else
-        format.html { render :edit }
-        format.json { render json: @rewards_allocation.errors, status: :unprocessable_entity }
-      end
-    end
+    @rewards_allocation.update(rewards_allocation_params)
+    @rewards_allocation = RewardsAllocation.new
+    @rewards_allocations = RewardsAllocation.all 
   end
 
   # DELETE /rewards_allocations/1
   # DELETE /rewards_allocations/1.json
   def destroy
     @rewards_allocation.destroy
-    respond_to do |format|
-      format.html { redirect_to rewards_allocations_url, notice: 'Rewards allocation was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    @rewards_allocations = RewardsAllocation.all
   end
 
   private

@@ -1,5 +1,16 @@
 Rails.application.routes.draw do
 
+  resources :rewards_allocations
+  resources :reward_allocations
+  resources :reward_recognitions
+  resources :reward_types
+  resources :reward_owners
+  resources :recognition_types
+
+  resources :investment_declarations
+  resources :investment_heads
+  resources :sections
+  resources :employee_documents
   resources :company_policies do
     collection do
       get :active_policies_list
@@ -280,6 +291,7 @@ end
     post :update_status
     get :modal_profile_update
     post :update_profile
+    get :part_resume
     end
   end 
   resources :assigned_assets do
@@ -479,6 +491,7 @@ end
       get :approved_vacancy_request_history_list
       get :particular_vacancy_request_list_history
       get :gen_xml
+      get :vacancy_profile
     end
   end
   resources :leave_c_offs do
@@ -636,7 +649,7 @@ end
   match 'daily_bill_details/:id/download_doc/:id' => 'daily_bill_details#download_doc', :via => [:get], :as => :download_doc
   match 'daily_bill_details/:id/download_pics/:id' => 'daily_bill_details#download_pics', :via => [:get], :as => :download_pics
   match 'company_policies/:id/download_docs/:id' => 'company_policies#download_docs', :via => [:get], :as => :download_docs
-
+  match 'employee_documents/:id/download_emp/:id' => 'employee_documents#download_emp', :via => [:get], :as => :download_emp
   resources :leave_c_offs
   resources :overtime_month_records
 

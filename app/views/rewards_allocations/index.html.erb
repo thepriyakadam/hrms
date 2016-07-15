@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Rewards Allocations</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Reward type</th>
+      <th>Department</th>
+      <th>Reporting master</th>
+      <th>From</th>
+      <th>To</th>
+      <th>Allocated qty</th>
+      <th>Cost</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @rewards_allocations.each do |rewards_allocation| %>
+      <tr>
+        <td><%= rewards_allocation.reward_type %></td>
+        <td><%= rewards_allocation.department %></td>
+        <td><%= rewards_allocation.reporting_master %></td>
+        <td><%= rewards_allocation.from %></td>
+        <td><%= rewards_allocation.to %></td>
+        <td><%= rewards_allocation.allocated_qty %></td>
+        <td><%= rewards_allocation.cost %></td>
+        <td><%= link_to 'Show', rewards_allocation %></td>
+        <td><%= link_to 'Edit', edit_rewards_allocation_path(rewards_allocation) %></td>
+        <td><%= link_to 'Destroy', rewards_allocation, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Rewards allocation', new_rewards_allocation_path %>

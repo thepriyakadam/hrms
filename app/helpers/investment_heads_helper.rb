@@ -1,0 +1,2 @@
+module InvestmentHeadsHelper
+end

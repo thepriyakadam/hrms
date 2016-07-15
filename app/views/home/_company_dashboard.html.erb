@@ -280,7 +280,7 @@
               <%@employees.each do |e|%>
                 <li class="item">
                 <div class="product-img">
-                   <img src="images/user.jpg" alt=" ">
+                   
                 </div>
                 <div class="product-info">
                   <%= full_name(e) %>
@@ -348,9 +348,16 @@
             
                 <% JoiningDetail.all.order("id desc").limit(5).each do |j| %>
                 <li class="item">
-               <!--  <div class="product-img">
+                 <div class="product-img">
+
+                 <%unless j.nil? or j.employee.nil? or j.employee.member.nil? or j.employee.member.avatar.nil? %>
+                  <%= image_tag j.employee.member.avatar.url(:medium),class: "img-circle"%>
+                  <%else%>
                    <img src="images/user.jpg" alt=" ">
-                </div> -->
+                  <%end%>
+
+                  
+                </div> 
                 <div class="product-info">
                   <%= j.employee.try(:first_name) %> <%= j.employee.try(:middle_name) %> <%= j.employee.try(:last_name) %>
                   <span class="label label-info pull-right"><%= j.joining_date %></span>

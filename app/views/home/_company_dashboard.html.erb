@@ -279,9 +279,9 @@
             <%else%>
               <%@employees.each do |e|%>
                 <li class="item">
-                <div class="product-img">
-                   
-                </div>
+                 <div class="product-img">
+                   <img src="images/user.jpg" alt=" ">
+                </div> 
                 <div class="product-info">
                   <%= full_name(e) %>
                   <span class="label label-success pull-right">Happy Birthday</span>
@@ -355,11 +355,9 @@
                   <%else%>
                    <img src="images/user.jpg" alt=" ">
                   <%end%>
-
-                  
                 </div> 
                 <div class="product-info">
-                  <%= j.employee.try(:first_name) %> <%= j.employee.try(:middle_name) %> <%= j.employee.try(:last_name) %>
+                  <%= j.employee.try(:manual_employee_code) %> <%= j.employee.try(:first_name) %> <%= j.employee.try(:middle_name) %> <%= j.employee.try(:last_name) %>
                   <span class="label label-info pull-right"><%= j.joining_date %></span>
                   <span class="product-description"><%= j.employee_designation.try(:name) %></span>
                   </div>

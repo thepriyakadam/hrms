@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Reward type:</strong>
+  <%= @rewards_allocation.reward_type %>
+</p>
+
+<p>
+  <strong>Department:</strong>
+  <%= @rewards_allocation.department %>
+</p>
+
+<p>
+  <strong>Reporting master:</strong>
+  <%= @rewards_allocation.reporting_master %>
+</p>
+
+<p>
+  <strong>From:</strong>
+  <%= @rewards_allocation.from %>
+</p>
+
+<p>
+  <strong>To:</strong>
+  <%= @rewards_allocation.to %>
+</p>
+
+<p>
+  <strong>Allocated qty:</strong>
+  <%= @rewards_allocation.allocated_qty %>
+</p>
+
+<p>
+  <strong>Cost:</strong>
+  <%= @rewards_allocation.cost %>
+</p>
+
+<%= link_to 'Edit', edit_rewards_allocation_path(@rewards_allocation) %> |
+<%= link_to 'Back', rewards_allocations_path %>

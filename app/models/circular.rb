@@ -1,6 +1,6 @@
 class Circular < ActiveRecord::Base
    
-   has_attached_file :avatar,
+  has_attached_file :avatar,
   :path => "attachments/attach_circulars/:basename.:extension"
 
   # validates_attachment_presence :avatar

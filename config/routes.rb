@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :reward_types
   resources :reward_owners
   resources :recognition_types
+
   resources :investment_declarations
   resources :investment_heads
   resources :sections

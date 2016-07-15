@@ -1,29 +1,35 @@
-<%= form_for(@investment_head) do |f| %>
-  <% if @investment_head.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@investment_head.errors.count, "error") %> prohibited this investment_head from being saved:</h2>
+<div class="box box-default">
+   <div class="box-body"> 
+    <%= bootstrap_form_for(@investment_head,html: {id: 'investment_head'},remote:true) do |f| %>
+      <div class="row">
+        <div class="col-sm-3">
+            <div class="form-group required">
+               <%= f.select :section_id, section_all, {label:'Section',include_blank: " Select Section"} %>
+            </div>
+        </div>
+            <div class="col-sm-3">
+            <div class="field">
+              <%= f.text_field :description,label:'Description', placeholder: 'Description' %>
+            </div>
+          </div>
 
-      <ul>
-      <% @investment_head.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+            <div class="col-sm-3">
+     <label>Status</label>
+      <div class="field">       
+        <%= f.check_box :status,label:'Active' %>
+      </div>
     </div>
-  <% end %>
+          </div>
+           <div class="row">
+          <div class="col-sm-3">
+            <div class="actions">
+              <%= f.submit 'Create Investment Head',:class => class_name, data: { disable_with: data_info } %>
+            </div>
+          </div>
+        </div>
+    <div>
+</div>
+</div>
+</div>
 
-  <div class="field">
-    <%= f.label :section_id %><br>
-    <%= f.text_field :section_id %>
-  </div>
-  <div class="field">
-    <%= f.label :description %><br>
-    <%= f.text_area :description %>
-  </div>
-  <div class="field">
-    <%= f.label :limit %><br>
-    <%= f.text_field :limit %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+      <% end %>

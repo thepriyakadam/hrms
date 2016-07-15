@@ -52,6 +52,7 @@ class Employee < ActiveRecord::Base
   has_many :interview_rounds
   has_many :goal_bunches
   has_many :employee_documents
+  has_many :employee_declarations
   
   #accepts_nested_attributes_for :joining_detail
   has_many :subordinates, class_name: 'Employee',

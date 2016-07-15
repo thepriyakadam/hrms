@@ -16,6 +16,7 @@ class EmployeeDocumentsController < ApplicationController
   def new
     @employee_document = EmployeeDocument.new
     @employee_documents = EmployeeDocument.all
+    session[:active_tab] = "company"
   end
 
   # GET /employee_documents/1/edit

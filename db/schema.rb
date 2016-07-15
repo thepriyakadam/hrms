@@ -2068,6 +2068,15 @@ ActiveRecord::Schema.define(version: 20160715042318) do
     t.datetime "updated_at",                              null: false
   end
 
+  create_table "reward_allocations", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
+    t.text     "description"
+    t.boolean  "status"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
   create_table "reward_owners", force: :cascade do |t|
     t.string   "code"
     t.string   "name"
@@ -2098,6 +2107,22 @@ ActiveRecord::Schema.define(version: 20160715042318) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
+
+  create_table "rewards_allocations", force: :cascade do |t|
+    t.integer  "reward_type_id"
+    t.integer  "department_id"
+    t.integer  "reporting_master_id"
+    t.date     "from"
+    t.date     "to"
+    t.string   "allocated_qty"
+    t.decimal  "cost"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+  end
+
+  add_index "rewards_allocations", ["department_id"], name: "index_rewards_allocations_on_department_id"
+  add_index "rewards_allocations", ["reporting_master_id"], name: "index_rewards_allocations_on_reporting_master_id"
+  add_index "rewards_allocations", ["reward_type_id"], name: "index_rewards_allocations_on_reward_type_id"
 
   create_table "rewards_pals", force: :cascade do |t|
     t.integer  "employee_id"

@@ -26,29 +26,33 @@ class PfMastersController < ApplicationController
 
   # POST /pf_masters
   # POST /pf_masters.json
-   def create
-     @components = params[:components]
-     @pf_masters = PfMaster.all
-     @pf_master = PfMaster.new(pf_master_params)
-     @pf_master.base_component = PfMaster.create_string(@components)
-     if @pf_master.save
-       @flag = true
-       @pf_master = PfMaster.new
-     else
-       @flag = false
-     end
-   end
 
+ 
   # def create
-  #    @pf_master = PfMaster.new(pf_master_params)
-  #    @pf_masters = PfMaster.all
-  #     if @pf_master.save
-  #       @pf_master = PfMaster.new
-  #     end
-  #     flash[:notice] = 'PF Master saved Successfully.' 
-  #     redirect_to new_pf_master_path
-        
+  #   @components = params[:components]
+  #   @pf_masters = PfMaster.all
+  #   @pf_master = PfMaster.new(pf_master_params)
+  #   @pf_master.base_component = PfMaster.create_string(@components)
+  #   if @pf_master.save
+  #     @flag = true
+  #     @pf_master = PfMaster.new
+  #   else
+  #     @flag = false
+  #   end
   # end
+
+  def create
+    @pf_master = PfMaster.new(pf_master_params)
+    @pf_masters = PfMaster.all
+     if @pf_master.save
+       @pf_master = PfMaster.new
+     end
+     flash[:notice] = 'Employee Document saved Successfully.' 
+     redirect_to new_pf_master_path
+       
+ end
+
+
 
   # PATCH/PUT /pf_masters/1
   # PATCH/PUT /pf_masters/1.json

@@ -1,0 +1,45 @@
+<%= form_for(@rewards_allocation) do |f| %>
+  <% if @rewards_allocation.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@rewards_allocation.errors.count, "error") %> prohibited this rewards_allocation from being saved:</h2>
+
+      <ul>
+      <% @rewards_allocation.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :reward_type_id %><br>
+    <%= f.text_field :reward_type_id %>
+  </div>
+  <div class="field">
+    <%= f.label :department_id %><br>
+    <%= f.text_field :department_id %>
+  </div>
+  <div class="field">
+    <%= f.label :reporting_master_id %><br>
+    <%= f.text_field :reporting_master_id %>
+  </div>
+  <div class="field">
+    <%= f.label :from %><br>
+    <%= f.date_select :from %>
+  </div>
+  <div class="field">
+    <%= f.label :to %><br>
+    <%= f.date_select :to %>
+  </div>
+  <div class="field">
+    <%= f.label :allocated_qty %><br>
+    <%= f.text_field :allocated_qty %>
+  </div>
+  <div class="field">
+    <%= f.label :cost %><br>
+    <%= f.text_field :cost %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

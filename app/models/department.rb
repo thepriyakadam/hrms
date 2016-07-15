@@ -10,6 +10,7 @@ class Department < ActiveRecord::Base
   has_many :vacancy_request_histories
   has_many :employee_promotions
   has_many :accident_records
+  has_many :rewards_allocations
   
   validates :manual_department_code, presence: true, uniqueness: { case_sensitive: false }
   validates :name, presence: true

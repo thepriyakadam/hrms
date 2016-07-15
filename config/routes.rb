@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :rewards_pals
   resources :reward_recognitions
   resources :reward_types
   resources :reward_owners

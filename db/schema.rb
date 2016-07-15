@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160715034115) do
+ActiveRecord::Schema.define(version: 20160715042318) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -2079,12 +2079,12 @@ ActiveRecord::Schema.define(version: 20160715034115) do
 
   create_table "reward_recognitions", force: :cascade do |t|
     t.integer  "reward_type_id"
-    t.string   "type"
     t.integer  "reward_owner_id"
     t.string   "cost_unit"
     t.string   "communication"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+    t.string   "r_type"
   end
 
   add_index "reward_recognitions", ["reward_owner_id"], name: "index_reward_recognitions_on_reward_owner_id"
@@ -2098,6 +2098,21 @@ ActiveRecord::Schema.define(version: 20160715034115) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
+
+  create_table "rewards_pals", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.date     "date"
+    t.text     "purpose"
+    t.integer  "reward_type_id"
+    t.string   "qty"
+    t.integer  "reporting_master_id"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+  end
+
+  add_index "rewards_pals", ["employee_id"], name: "index_rewards_pals_on_employee_id"
+  add_index "rewards_pals", ["reporting_master_id"], name: "index_rewards_pals_on_reporting_master_id"
+  add_index "rewards_pals", ["reward_type_id"], name: "index_rewards_pals_on_reward_type_id"
 
   create_table "roles", force: :cascade do |t|
     t.string   "code"

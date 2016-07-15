@@ -1,5 +1,14 @@
-<h1>New Investment Declaration</h1>
-
-<%= render 'form' %>
-
-<%= link_to 'Back', investment_declarations_path %>
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Investment Declaration</h3>
+  </div><!-- /.box-header -->
+	<div class="box-body">
+		<div id="form">
+			<%= render 'form' %>	
+		</div>
+		
+		<div id="investment_declaration_list">
+			<%= render 'investment_declaration_list' %>
+		</div>
+	</div><!-- /.box-body -->
+</div><!-- /.box -->

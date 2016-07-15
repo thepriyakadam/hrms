@@ -1,5 +1,14 @@
-<h1>New Investment Head</h1>
-
-<%= render 'form' %>
-
-<%= link_to 'Back', investment_heads_path %>
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Investment Head</h3>
+  </div><!-- /.box-header -->
+	<div class="box-body">
+		<div id="form">
+			<%= render 'form' %>	
+		</div>
+		
+		<div id="investment_head_list">
+			<%= render 'investment_head_list' %>
+		</div>
+	</div><!-- /.box-body -->
+</div><!-- /.box -->

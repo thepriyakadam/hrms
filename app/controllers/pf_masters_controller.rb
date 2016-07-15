@@ -26,6 +26,8 @@ class PfMastersController < ApplicationController
 
   # POST /pf_masters
   # POST /pf_masters.json
+
+ 
   # def create
   #   @components = params[:components]
   #   @pf_masters = PfMaster.all

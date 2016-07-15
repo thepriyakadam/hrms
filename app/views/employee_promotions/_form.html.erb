@@ -45,48 +45,44 @@
       </div>
 
       <div class="row">
-       
         <div class="col-sm-3">
+        <label>Employee CTC </label>
           <div class="field">
-            <%= f.text_field :employee_ctc %>
+            <%= f.text_field :employee_ctc, hide_label: true %>
           </div>
         </div>
 
         <div class="col-sm-3">
-          <label>Effective From: </label>
+          <label>Effective From </label>
           <div class="field">
             <div class="input-group">
               <div class="input-group-addon">
                 <i class="fa fa-calendar"></i>
               </div>
-              <%= f.text_field :effective_from, hide_label: true, class: 'birth_date1'%>
+              <%= f.text_field :effective_from, hide_label: true, class: 'effective_from'%>
             </div>
           </div>
         </div>
+        <div class="col-sm-6">
+          <div class="field">
+            <%= f.text_field :justification %>
+          </div>
+        </div> 
 
-        <div class="col-sm-3">
+        <!-- <div class="col-sm-3">
           <label>Effective To: </label>
           <div class="field">
             <div class="input-group">
               <div class="input-group-addon">
                 <i class="fa fa-calendar"></i>
               </div>
-              <%= f.text_field :effective_to, hide_label: true, class: 'birth_date1'%>
+              <= f.text_field :effective_to, hide_label: true, class: 'birth_date1'%>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
-
       <div class="row">
-        <div class="col-sm-9">
-          <div class="field">
-            <%= f.text_field :justification %>
-          </div>
-        </div>  
-      </div>
-
-      <div class="row">
-        <div class="col-sm-3">
+        <div class="col-sm-6">
           <div class="actions">
             <%= f.submit'Create Employee Promotion', :class => class_name, data: { disable_with: data_info } %> |
             <%= link_to 'Back',employee_list_employee_promotions_path,class: 'btn btn-default btn-sm fa fa-arrow-left'%>
@@ -99,7 +95,7 @@
 
 <script type="text/javascript">
   $(function(){
-    $('.birth_date1').datepicker({
+    $('.effective_from').datepicker({
       changeYear:true,
       changeMonth: true,
       yearRange: '-100:+10',

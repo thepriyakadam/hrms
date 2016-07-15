@@ -4,6 +4,7 @@ class InvestmentHeadsController < ApplicationController
   # GET /investment_heads
   # GET /investment_heads.json
   def index
+     @investment_head = InvestmentHead.new
     @investment_heads = InvestmentHead.all
   end
 
@@ -15,6 +16,7 @@ class InvestmentHeadsController < ApplicationController
   # GET /investment_heads/new
   def new
     @investment_head = InvestmentHead.new
+    @investment_heads = InvestmentHead.all
   end
 
   # GET /investment_heads/1/edit
@@ -25,14 +27,14 @@ class InvestmentHeadsController < ApplicationController
   # POST /investment_heads.json
   def create
     @investment_head = InvestmentHead.new(investment_head_params)
-
+    @investment_heads = InvestmentHead.all
     respond_to do |format|
       if @investment_head.save
-        format.html { redirect_to @investment_head, notice: 'Investment head was successfully created.' }
-        format.json { render :show, status: :created, location: @investment_head }
+         @investment_head = InvestmentHead.new
+        format.js { @flag = true }
       else
-        format.html { render :new }
-        format.json { render json: @investment_head.errors, status: :unprocessable_entity }
+        flash.now[:alert] = 'Investment Already Exist.'
+        format.js { @flag = false }
       end
     end
   end
@@ -40,25 +42,18 @@ class InvestmentHeadsController < ApplicationController
   # PATCH/PUT /investment_heads/1
   # PATCH/PUT /investment_heads/1.json
   def update
-    respond_to do |format|
-      if @investment_head.update(investment_head_params)
-        format.html { redirect_to @investment_head, notice: 'Investment head was successfully updated.' }
-        format.json { render :show, status: :ok, location: @investment_head }
-      else
-        format.html { render :edit }
-        format.json { render json: @investment_head.errors, status: :unprocessable_entity }
-      end
-    end
+    @investment_head.update(investment_head_params)
+    @investment_head = InvestmentHead.new
+    @investment_heads = InvestmentHead.all
+      
   end
 
   # DELETE /investment_heads/1
   # DELETE /investment_heads/1.json
   def destroy
     @investment_head.destroy
-    respond_to do |format|
-      format.html { redirect_to investment_heads_url, notice: 'Investment head was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+     @investment_head = InvestmentHead.new
+    @investment_heads = InvestmentHead.all
   end
 
   private

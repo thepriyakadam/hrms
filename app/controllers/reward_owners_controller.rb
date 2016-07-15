@@ -1,20 +1,10 @@
 class RewardOwnersController < ApplicationController
   before_action :set_reward_owner, only: [:show, :edit, :update, :destroy]
 
-  # GET /reward_owners
-  # GET /reward_owners.json
-  def index
-    @reward_owners = RewardOwner.all
-  end
-
-  # GET /reward_owners/1
-  # GET /reward_owners/1.json
-  def show
-  end
-
   # GET /reward_owners/new
   def new
     @reward_owner = RewardOwner.new
+    @reward_owners = RewardOwner.all
   end
 
   # GET /reward_owners/1/edit
@@ -25,14 +15,15 @@ class RewardOwnersController < ApplicationController
   # POST /reward_owners.json
   def create
     @reward_owner = RewardOwner.new(reward_owner_params)
+    @reward_owners = RewardOwner.all
 
     respond_to do |format|
       if @reward_owner.save
-        format.html { redirect_to @reward_owner, notice: 'Reward owner was successfully created.' }
-        format.json { render :show, status: :created, location: @reward_owner }
+        @reward_owner = RewardOwner.new
+        format.js { @flag = true }
       else
-        format.html { render :new }
-        format.json { render json: @reward_owner.errors, status: :unprocessable_entity }
+        flash.now[:alert] = 'Reward Owner Already Exist.'
+        format.js { @flag = false }
       end
     end
   end
@@ -40,25 +31,16 @@ class RewardOwnersController < ApplicationController
   # PATCH/PUT /reward_owners/1
   # PATCH/PUT /reward_owners/1.json
   def update
-    respond_to do |format|
-      if @reward_owner.update(reward_owner_params)
-        format.html { redirect_to @reward_owner, notice: 'Reward owner was successfully updated.' }
-        format.json { render :show, status: :ok, location: @reward_owner }
-      else
-        format.html { render :edit }
-        format.json { render json: @reward_owner.errors, status: :unprocessable_entity }
-      end
-    end
+    @reward_owner.update(reward_owner_params)
+    @reward_owner = RewardOwner.new
+    @reward_owners = RewardOwner.all
   end
 
   # DELETE /reward_owners/1
   # DELETE /reward_owners/1.json
   def destroy
     @reward_owner.destroy
-    respond_to do |format|
-      format.html { redirect_to reward_owners_url, notice: 'Reward owner was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    @reward_owners = RewardOwner.all
   end
 
   private

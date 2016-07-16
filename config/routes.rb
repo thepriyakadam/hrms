@@ -125,6 +125,7 @@ Rails.application.routes.draw do
       get :all_emp_list
       get :increment_index
       post :all_employee_list
+      post :print_employee_list
     end
   end
   #post 'goal_ratings/update_goal_set_modal'

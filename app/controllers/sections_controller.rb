@@ -4,6 +4,7 @@ class SectionsController < ApplicationController
   # GET /sections
   # GET /sections.json
   def index
+    @section = Section.new
     @sections = Section.all
   end
 
@@ -15,6 +16,7 @@ class SectionsController < ApplicationController
   # GET /sections/new
   def new
     @section = Section.new
+     @sections = Section.all
   end
 
   # GET /sections/1/edit
@@ -24,15 +26,15 @@ class SectionsController < ApplicationController
   # POST /sections
   # POST /sections.json
   def create
-    @section = Section.new(section_params)
-
+     @section = Section.new(section_params)
+    @sections = Section.all
     respond_to do |format|
       if @section.save
-        format.html { redirect_to @section, notice: 'Section was successfully created.' }
-        format.json { render :show, status: :created, location: @section }
+         @section = Section.new
+        format.js { @flag = true }
       else
-        format.html { render :new }
-        format.json { render json: @section.errors, status: :unprocessable_entity }
+        flash.now[:alert] = 'Section Already Exist.'
+        format.js { @flag = false }
       end
     end
   end
@@ -40,24 +42,18 @@ class SectionsController < ApplicationController
   # PATCH/PUT /sections/1
   # PATCH/PUT /sections/1.json
   def update
-    respond_to do |format|
-      if @section.update(section_params)
-        format.html { redirect_to @section, notice: 'Section was successfully updated.' }
-        format.json { render :show, status: :ok, location: @section }
-      else
-        format.html { render :edit }
-        format.json { render json: @section.errors, status: :unprocessable_entity }
-      end
-    end
+    @section.update(section_params)
+    @section = Section.new
+    @sections = Section.all
+       
   end
 
   # DELETE /sections/1
   # DELETE /sections/1.json
   def destroy
     @section.destroy
-    respond_to do |format|
-      format.html { redirect_to sections_url, notice: 'Section was successfully destroyed.' }
-      format.json { head :no_content }
+    @sections = Section.all
+  
     end
   end
 
@@ -71,4 +67,3 @@ class SectionsController < ApplicationController
     def section_params
       params.require(:section).permit(:code, :description, :status)
     end
-end

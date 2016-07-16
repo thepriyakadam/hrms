@@ -2,16 +2,16 @@
 <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
   <div class="row">
     <div class="col-sm-3">
-          <label>Circular Date </label>
-          <div class="form-group required">
-            <div class="input-group">
-              <div class="input-group-addon">
-                <i class="fa fa-calendar"></i>
-              </div>
-               <%= f.text_field :date, hide_label: true, class: 'date',placeholder: 'Date'%>
-            </div>
+      <label>Circular Date: </label>
+      <div class="form-group required">
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="fa fa-calendar"></i>
           </div>
-        </div>   
+          <%= f.text_field :date, hide_label: true, class: 'interview_date'%>
+        </div>
+      </div>
+    </div> 
      <div class="col-sm-3">
       <div class="form-group required">
         <%= f.text_field :subject, label: 'Subject' %>
@@ -33,14 +33,13 @@
 <% end %>
 <script type="text/javascript">
   $(function(){
-    $('.date').datepicker({
+    $('.interview_date').datepicker({
     changeYear:true,
     changeMonth: true,
     yearRange: '-200:-0',
     dateFormat: 'dd-mm-yy' });
   }); 
 </script>
-
 <script>
 $("#circular").validate({
     rules: {

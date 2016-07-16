@@ -35,7 +35,7 @@ Dir.chdir(ARGV[0]) do
 	index.puts('</div><!-- /.box-header -->')
 	index.puts('<div class="box-body">')
 	index.puts('<div id="form"><%= render \'form\' %></div>')
-	index.puts('<div id="list"><%= render \'list\' %></div>')	
+	index.puts('<div id="list"><%= render \'list\' %></div>')
 	index.puts('</div><!-- /.box-body -->')
 	index.puts('</div><!-- /.box -->')
 	index.close

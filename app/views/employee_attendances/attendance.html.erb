@@ -21,28 +21,46 @@
           <% @employees.each do |e| %>
             <tr>
               <th><%= full_name(e) %></th>
-              <% attendance_records = EmployeeAttendance.where("strftime('%m/%Y', day) = ? and employee_id = ?", @date.strftime('%m/%Y'), e.id) %>
-
-              <% attendance_records.each do |a| %>
-                <% exist[a.day] = a.present %>
-              <% end %>
-
-              <% leave_records = ParticularLeaveRecord.where("strftime('%m/%Y', leave_date) = ? and employee_id = ?", @date.strftime('%m/%Y'), e.id) %>
-
-              <% leave_records.each do |l| %>
-                <% exist[l.leave_date] = "L" %>
-              <% end %>
-
-              <% holidays = Holiday.where("strftime('%m/%Y', holiday_date) = ?", @date.strftime('%m/%Y')) %>
-
-              <% holidays.each do |h| %>
-                <% exist[h.holiday_date] = "H" %>
-              <% end %>
 
               <% start_date = @date.beginning_of_month %>
               <% end_date = @date.end_of_month %>
-              
-              <% exist.each do |k,v|%>
+
+              <% start_date.step(end_date).each do |d| %>
+                <% flag = 0 %>
+                <% attendance_records = EmployeeAttendance.where("strftime('%m/%Y', day) = ? and employee_id = ?", @date.strftime('%m/%Y'), e.id) %>
+
+                <% attendance_records.each do |a| %>
+                  <% if d == a.day %>
+                    <% flag = 1 %>
+                    <% exist[a.day] = a.present %>
+                  <% end %>
+                <% end %>
+
+                <% leave_records = ParticularLeaveRecord.where("strftime('%m/%Y', leave_date) = ? and employee_id = ?", @date.strftime('%m/%Y'), e.id) %>
+
+                <% leave_records.each do |l| %>
+                  <% if d == l.leave_date and flag == 0 %>
+                    <% flag = 1 %>
+                    <% exist[l.leave_date] = "L" %>
+                  <% end %>
+                <% end %>
+
+                <% holidays = Holiday.where("strftime('%m/%Y', holiday_date) = ?", @date.strftime('%m/%Y')) %>
+
+                <% holidays.each do |h| %>
+                  <% if d == h.holiday_date and flag == 0 %>
+                    <% flag = 1 %>
+                    <% exist[h.holiday_date] = "H" %>
+                  <% end %>
+                <% end %>
+
+                <% if flag == 0 %>
+                  <% exist[d] = "" %>
+                <% end %>
+              <% end %>
+
+              <% sorted_exists = Hash[exist.sort] %>
+              <% sorted_exists.each do |k,v|%>
                 <td><%= v %></td>
               <%end%>
             </tr>

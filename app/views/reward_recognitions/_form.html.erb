@@ -1,4 +1,4 @@
-<%= bootstrap_form_for(@reward_recognition,html: {id: 'reward_recognition'},remote:true) do |f| %>
+<%= bootstrap_form_for(@reward_recognition,html: {id: 'reward_recognition'}) do |f| %>
   <div class="row">
    
     <div class="col-sm-3">
@@ -14,8 +14,8 @@
       </div>
 
      <div class="col-sm-3">
-      <div class="form-group required">
-      <%= f.select :r_type, ['Reward','Recognition'],{label: 'Type',include_blank: " Select Type"} %>
+      <div class="field">
+       <%= f.select :r_type, ['Reward','Recognition'],{label: 'Type',include_blank: " Select Type"} %>
       </div>
     </div>
 

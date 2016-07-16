@@ -26,20 +26,31 @@ class RewardRecognitionsController < ApplicationController
   # POST /reward_recognitions
   # POST /reward_recognitions.json
 
- def create
-    @reward_recognition = RewardRecognition.new(reward_recognition_params)
-    @reward_recognitions = RewardRecognition.all
-    respond_to do |format|
-      if @reward_recognition.save
-        @reward_recognition = RewardRecognition.new
-        format.js { @flag = true }
-      else
-        flash.now[:alert] = 'Reward Recognition Already Exist.'
-        format.js { @flag = false }
-      end
-    end
-  end
+ # def create
+ #    @reward_recognition = RewardRecognition.new(reward_recognition_params)
+ #    @reward_recognitions = RewardRecognition.all
+ #    respond_to do |format|
+ #      if @reward_recognition.save
+ #        @reward_recognition = RewardRecognition.new
+ #        format.js { @flag = true }
+ #      else
+ #        flash.now[:alert] = 'Reward Recognition Already Exist.'
+ #        format.js { @flag = false }
+ #      end
+ #    end
+ #  end
 
+
+ def create
+      @reward_recognition = RewardRecognition.new(reward_recognition_params)
+      @reward_recognitions = RewardRecognition.all
+       if @reward_recognition.save
+         @reward_recognition = RewardRecognition.new
+       end
+       flash[:notice] = 'Reward Recognition saved Successfully.' 
+       redirect_to new_reward_recognition_path
+        
+   end
   # PATCH/PUT /reward_recognitions/1
   # PATCH/PUT /reward_recognitions/1.json
 
@@ -47,6 +58,7 @@ class RewardRecognitionsController < ApplicationController
     @reward_recognition.update(reward_recognition_params)
     @reward_recognitions = RewardRecognition.all
     @reward_recognition = RewardRecognition.new
+    redirect_to new_reward_recognition_path
   end
 
   # DELETE /reward_recognitions/1

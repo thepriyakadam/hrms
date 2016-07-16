@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160715042318) do
+ActiveRecord::Schema.define(version: 20160716102118) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -965,6 +965,27 @@ ActiveRecord::Schema.define(version: 20160715042318) do
 
   add_index "employee_templates", ["employee_id"], name: "index_employee_templates_on_employee_id"
   add_index "employee_templates", ["salary_template_id"], name: "index_employee_templates_on_salary_template_id"
+
+  create_table "employee_transfers", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.integer  "reporting_master_id"
+    t.integer  "employee_designation_id"
+    t.integer  "employee_category_id"
+    t.integer  "company_id"
+    t.integer  "company_location_id"
+    t.integer  "department_id"
+    t.text     "justification"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  add_index "employee_transfers", ["company_id"], name: "index_employee_transfers_on_company_id"
+  add_index "employee_transfers", ["company_location_id"], name: "index_employee_transfers_on_company_location_id"
+  add_index "employee_transfers", ["department_id"], name: "index_employee_transfers_on_department_id"
+  add_index "employee_transfers", ["employee_category_id"], name: "index_employee_transfers_on_employee_category_id"
+  add_index "employee_transfers", ["employee_designation_id"], name: "index_employee_transfers_on_employee_designation_id"
+  add_index "employee_transfers", ["employee_id"], name: "index_employee_transfers_on_employee_id"
+  add_index "employee_transfers", ["reporting_master_id"], name: "index_employee_transfers_on_reporting_master_id"
 
   create_table "employee_types", force: :cascade do |t|
     t.string   "code"
@@ -1968,6 +1989,17 @@ ActiveRecord::Schema.define(version: 20160715042318) do
     t.datetime "updated_at",  null: false
   end
 
+  create_table "reporting_employee_transfers", force: :cascade do |t|
+    t.integer  "employee_transfer_id"
+    t.integer  "reporting_master_id"
+    t.string   "status"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
+  add_index "reporting_employee_transfers", ["employee_transfer_id"], name: "index_reporting_employee_transfers_on_employee_transfer_id"
+  add_index "reporting_employee_transfers", ["reporting_master_id"], name: "index_reporting_employee_transfers_on_reporting_master_id"
+
   create_table "reporting_masters", force: :cascade do |t|
     t.string   "code"
     t.string   "name"
@@ -2472,6 +2504,29 @@ ActiveRecord::Schema.define(version: 20160715042318) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
+
+  create_table "transfer_histories", force: :cascade do |t|
+    t.integer  "employee_transfer_id"
+    t.integer  "employee_id"
+    t.integer  "reporting_master_id"
+    t.integer  "employee_designation_id"
+    t.integer  "employee_category_id"
+    t.integer  "company_id"
+    t.integer  "company_location_id"
+    t.integer  "department_id"
+    t.text     "justification"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  add_index "transfer_histories", ["company_id"], name: "index_transfer_histories_on_company_id"
+  add_index "transfer_histories", ["company_location_id"], name: "index_transfer_histories_on_company_location_id"
+  add_index "transfer_histories", ["department_id"], name: "index_transfer_histories_on_department_id"
+  add_index "transfer_histories", ["employee_category_id"], name: "index_transfer_histories_on_employee_category_id"
+  add_index "transfer_histories", ["employee_designation_id"], name: "index_transfer_histories_on_employee_designation_id"
+  add_index "transfer_histories", ["employee_id"], name: "index_transfer_histories_on_employee_id"
+  add_index "transfer_histories", ["employee_transfer_id"], name: "index_transfer_histories_on_employee_transfer_id"
+  add_index "transfer_histories", ["reporting_master_id"], name: "index_transfer_histories_on_reporting_master_id"
 
   create_table "travel_expence_types", force: :cascade do |t|
     t.string   "code"

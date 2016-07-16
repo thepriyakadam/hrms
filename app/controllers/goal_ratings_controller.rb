@@ -385,12 +385,14 @@ class GoalRatingsController < ApplicationController
     @department = params[:salary][:department]
     @location = params[:salary][:location]
 
+    #byebug
     @company_name = params[:salary][:company_name]
     @department_name = params[:salary][:department_name]
     @location_name = params[:salary][:location_name]
 
     @rating = Rating.last
-    @goal_bunches = GoalBunch.where(period_id: @period.id)
+    #@goal_bunches = GoalBunch.where(period_id: @period.id)
+    @goal_bunches = GoalBunch.joins("INNER JOIN employees ON employees.id = goal_bunches.employee_id").where("employees.department_id = ? AND employees.company_location_id = ? AND employees.company_id = ? AND goal_bunches.period_id = ?" , @department_name,@location_name,@company_name,@period.id)
   end
 
 

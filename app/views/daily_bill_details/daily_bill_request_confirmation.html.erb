@@ -14,9 +14,6 @@
       <th>Travel Request ID</th>
       <th>Expense Date</th>
       <th>Place</th>
-      <th>Local Travel Expense </th>
-      <th>Lodging Expense</th>
-      <th>Boarding Expense</th>
       <th>Other Expense</th>
       <th>Travel Expense Type ID</th>
       <th>Comment</th>
@@ -38,9 +35,6 @@
         <td><%= daily_bill_detail.travel_request_id %></td>
         <td><%= daily_bill_detail.expence_date %></td>
         <td><%= daily_bill_detail.e_place %></td>
-        <td><%= daily_bill_detail.local_travel_expence %></td>
-        <td><%= daily_bill_detail.lodging_expence %></td>
-        <td><%= daily_bill_detail.boarding_expence %></td>
         <td><%= daily_bill_detail.other_expence %></td>
         <td><%= daily_bill_detail.travel_expence_type.try(:name) %></td>
         <td><%= daily_bill_detail.comment %></td>

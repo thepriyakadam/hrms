@@ -77,50 +77,12 @@
 <% end %>
 
 <script type="text/javascript">
-  $(document).ready(function() {
+ $(function(){
     $('.input_expence_date').datepicker({
     changeYear:true,
     changeMonth: true,
-    yearRange: '-200:-0',
+    yearRange: '-200:+1',
     dateFormat: 'dd-mm-yy' });
-
-    $('#btnAdd').click(function () {
-      var num     = $('.clonedInput').length,
-          newNum  = new Number(num + 1),      
-          newElem = $('#entry' + num).clone().attr('id', 'entry' + newNum).fadeIn('slow'); 
-      newElem.find('.input_expence_date').attr('name','daily_bill_detail['+ newNum +'][expence_date]').attr('id', newNum + '_daily_bill_detail_expence_date').val('');
-      newElem.find('.input_e_place').attr('name','daily_bill_detail['+ newNum +'][e_place]').attr('id', newNum + '_daily_bill_detail_e_place').val('');
-      newElem.find('.input_travel_expence').attr('name','daily_bill_detail['+ newNum +'][travel_expence]').attr('id', newNum + '_daily_bill_detail_travel_expence').val('');
-      newElem.find('.input_local_travel_expence').attr('name','daily_bill_detail['+ newNum +'][local_travel_expence]').attr('id', newNum + '_daily_bill_detail_local_travel_expence').val('');
-      newElem.find('.input_lodging_expence').attr('name','daily_bill_detail['+ newNum +'][lodging_expence]').attr('id', newNum + '_daily_bill_detail_lodging_expence').val('');
-      newElem.find('.input_boarding_expence').attr('name','daily_bill_detail['+ newNum +'][boarding_expence]').attr('id', newNum + '_daily_bill_detail_boarding_expence').val('');
-      newElem.find('.input_other_expence').attr('name','daily_bill_detail['+ newNum +'][other_expence]').attr('id', newNum + '_daily_bill_detail_other_expence').val('');
-      
-      $('#entry' + num).after(newElem);
-      $('#ID' + newNum + '_title').focus();
-      $('#btnDel').attr('disabled', false);
-      if (newNum == 5)
-      $('#btnAdd').attr('disabled', true).prop('value', "You've reached the limit");
-    });
-
-    $('#btnDel').click(function () {
-      if (confirm("Are you sure you wish to remove this section? This cannot be undone."))
-        {
-          var num = $('.clonedInput').length;
-          $('#entry' + num).slideUp('slow', function () {$(this).remove();
-              if (num -1 === 1)
-          $('#btnDel').attr('disabled', true);
-          $('#btnAdd').attr('disabled', false).prop('value', "+ Additional Experiences");});
-        }
-      return false;
-    });
-    $('#btnAdd').attr('disabled', false);
-    $('#btnDel').attr('disabled', true);
-
-    $(document).on("focus", ".input_expence_date", function(){
-      $(this).datepicker();
-    });
-
     $("#daily_bill_detail").validate({
       rules: {
         "daily_bill_detail[expence_date]":{

@@ -84,7 +84,7 @@ class EmployeeAttendancesController < ApplicationController
     @month = params[:month]
     @date = Date.new(@year.to_i, Workingday.months[@month])
     @day = @date.end_of_month.day
-    @employees = Employee.limit(10)
+    @employees = Employee.where(id: [4621, 4621, 4621, 4693, 4693, 4693, 4697, 4697, 4697, 4816, 4816, 4816, 4817, 4817, 4817, 4823, 4823, 4823, 4910, 4910, 4910, 4935, 4935, 4935, 4964, 4964, 4964, 5044, 5044, 5044, 5055, 5055, 5055, 5121, 5121, 5121])
     #@employee_attendances = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", date.strftime('%m/%Y'))
     
     #@employee = Employee.find(current_user.employee_id)

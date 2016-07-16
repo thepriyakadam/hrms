@@ -153,7 +153,7 @@ end
   end
 
   def interview_reschedule
-    byebug
+    # byebug
     @interview_schedule = InterviewSchedule.find(params[:id])
     @employee = Employee.find(@interview_schedule.employee_id)
     @interview_reschedule = InterviewReschedule.new

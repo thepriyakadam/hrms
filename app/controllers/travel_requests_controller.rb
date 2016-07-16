@@ -69,12 +69,12 @@ class TravelRequestsController < ApplicationController
 
 
   def daily_bill
-    if current_user.role.name == 'Company'
-      @travel_requests = TravelRequest.all
-    else
+    # if current_user.role.name == 'Company'
+    #   @travel_requests = TravelRequest.all
+    # else
       @travel_requests = TravelRequest.where(employee_id: current_user.employee_id)
-    end
-    session[:active_tab] ="travelmgmt"
+    # end
+    # session[:active_tab] ="travelmgmt"
   end
 
   def travel_history
@@ -91,6 +91,7 @@ class TravelRequestsController < ApplicationController
   def approve_travel_request
       @travel_request = TravelRequest.find(params[:format])
       @travel_request.update(current_status: "Approved")
+      TravelRequestHistory.create(travel_request_id: @travel_request.id,application_date: @travel_request.application_date,traveling_date: @travel_request.traveling_date, tour_purpose: @travel_request.tour_purpose, place: @travel_request.place,total_advance: @travel_request.total_advance,reporting_master_id: @travel_request.reporting_master_id, travel_option_id: @travel_request.travel_option_id)
       ReportingMastersTravelRequest.create(reporting_master_id: @travel_request.reporting_master_id, travel_request_id: @travel_request.id, travel_status: "Approved")
       TravelRequestMailer.approve_travel_request_email(@travel_request).deliver_now
       flash[:notice] = 'Travel Request Approved'
@@ -100,6 +101,7 @@ class TravelRequestsController < ApplicationController
   def reject_travel_request
     @travel_request = TravelRequest.find(params[:format])
     @travel_request.update(current_status: "Reject")
+    TravelRequestHistory.create(travel_request_id: @travel_request.id,application_date: @travel_request.application_date,traveling_date: @travel_request.traveling_date, tour_purpose: @travel_request.tour_purpose, place: @travel_request.place,total_advance: @travel_request.total_advance,reporting_master_id: @travel_request.reporting_master_id, travel_option_id: @travel_request.travel_option_id)
     ReportingMastersTravelRequest.create(reporting_master_id: @travel_request.reporting_master_id, travel_request_id: @travel_request.id, travel_status: "Reject")
     TravelRequestMailer.reject_travel_request_email(@travel_request).deliver_now
     flash[:alert] = 'Travel Request Rejected'
@@ -148,11 +150,11 @@ class TravelRequestsController < ApplicationController
   end
 
   def travel_request_list
-    if current_user.role.name= 'Company'
-      @travel_requests = TravelRequest.all
-    else
+    # if current_user.role.name= 'Company'
+    #   @travel_requests = TravelRequest.all
+    # else
       @travel_requests = TravelRequest.where(employee_id: current_user.employee_id)
-    end
+    # end
     session[:active_tab]="travelmgmt"
   end
 
@@ -161,12 +163,34 @@ class TravelRequestsController < ApplicationController
   end
 
   def edit_and_send_next_modal_submit
-    @travel_request = TravelRequest.find(params[:id])
-    @travel_request.update(travel_request_params)
-    TravelRequestHistory.create(travel_request_id: @travel_request.id,application_date: @travel_request.application_date,traveling_date: @travel_request.traveling_date, tour_purpose: @travel_request.tour_purpose, place: @travel_request.place,total_advance: @travel_request.total_advance,reporting_master_id: @travel_request.reporting_master_id, travel_option_id: @travel_request.travel_option_id)
+
+    @travel_request = TravelRequest.find(params[:abc])
+    @travel_request_history = TravelRequestHistory.new
+    # @travel_request_history = TravelRequestHistory.find(@travel_request.id)
+    # byebug
+    @travel_request = TravelRequest.find(params[:travel_request_history][:travel_request_id])
+    
+    @travel_request_history.application_date = @travel_request.application_date
+    @travel_request_history.traveling_date = @travel_request.traveling_date
+    @travel_request_history.tour_purpose = @travel_request.tour_purpose
+    @travel_request_history.place = @travel_request.place
+    @travel_request_history.total_advance = @travel_request.total_advance
+    @travel_request_history.reporting_master_id = @travel_request.reporting_master_id
+    @travel_request_history.current_status = @travel_request.current_status
+    @travel_request_history.travel_option_id = @travel_request.travel_option_id
+    @travel_request_history.travel_request_id = @travel_request.id
+
+    @travel_request_history.save
+    @travel_request.update(application_date: params[:travel_request_history][:application_date], traveling_date: params[:travel_request_history][:traveling_date],tour_purpose: params[:travel_request_history][:tour_purpose],place: params[:travel_request_history][:place],total_advance: params[:travel_request_history][:total_advance],reporting_master_id: params[:travel_request_history][:reporting_master_id],current_status: params[:travel_request_history][:current_status],travel_option_id: params[:travel_request_history][:travel_option_id])
+    @travel_request_history = TravelRequestHistory.new(travel_request_history_params)
+    redirect_to root_url
+    flash[:notice] = 'Travel Request Approved Successfully.'   
+
+    # @travel_request.update(travel_request_params)
+    # TravelRequestHistory.create(travel_request_id: @travel_request.id,application_date: @travel_request.application_date,traveling_date: @travel_request.traveling_date, tour_purpose: @travel_request.tour_purpose, place: @travel_request.place,total_advance: @travel_request.total_advance,reporting_master_id: @travel_request.reporting_master_id, travel_option_id: @travel_request.travel_option_id)
     ReportingMastersTravelRequest.create(travel_request_id: @travel_request.id, reporting_master_id: @travel_request.reporting_master_id, travel_status: "Edit & Send Next")
-    flash[:notice] = "Updated successfully"
-    redirect_to travel_history_travel_requests_path
+    # flash[:notice] = "Updated successfully"
+    # redirect_to travel_history_travel_requests_path
   end
 
   def edit_and_approve_modal
@@ -174,6 +198,7 @@ class TravelRequestsController < ApplicationController
   end
 
   def edit_and_approve_modal_submit
+    # byebug
     @travel_request = TravelRequest.find(params[:id])
     @travel_request.update(travel_request_params)
     TravelRequestHistory.create(travel_request_id: @travel_request.id,application_date: @travel_request.application_date,traveling_date: @travel_request.traveling_date, tour_purpose: @travel_request.tour_purpose, place: @travel_request.place,total_advance: @travel_request.total_advance,reporting_master_id: @travel_request.reporting_master_id, travel_option_id: @travel_request.travel_option_id)
@@ -181,6 +206,8 @@ class TravelRequestsController < ApplicationController
     flash[:notice] = 'Travel Request Approved'
     redirect_to travel_history_travel_requests_path
   end
+
+
 
   def is_confirm
     @travel_request = TravelRequest.find(params[:travel_id])
@@ -197,6 +224,10 @@ class TravelRequestsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_travel_request
       @travel_request = TravelRequest.find(params[:id])
+    end
+
+    def travel_request_history_params
+      params.require(:travel_request_history).permit(:travel_request_id, :employee_id, :current_status,:reporting_master_id, :application_date, :traveling_date, :tour_purpose, :place, :traveling_advance, :lodging_boarding_advance, :extra_advance, :travel_option_id, :travel_mode_id, :total_advance)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

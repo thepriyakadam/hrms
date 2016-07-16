@@ -11,14 +11,11 @@
   <thead>
     <tr>
       <th><input type="checkbox" id="selectAll" value="selectAll"></th>
-      <th>Travel Request ID</th>
+      <th>Request ID</th>
       <th>Expense Date</th>
       <th>Place</th>
-      <th>Local Travel Expense </th>
-      <th>Lodging Expense</th>
-      <th>Boarding Expense</th>
-      <th>Other Expense</th>
-      <th>Travel Expense Type ID</th>
+      <th>Expense Type</th>
+      <th>Amount</th>
       <th>Comment</th>
       <th>Status</th>
       <th>Image</th>
@@ -38,11 +35,9 @@
         <td><%= daily_bill_detail.travel_request_id %></td>
         <td><%= daily_bill_detail.expence_date %></td>
         <td><%= daily_bill_detail.e_place %></td>
-        <td><%= daily_bill_detail.local_travel_expence %></td>
-        <td><%= daily_bill_detail.lodging_expence %></td>
-        <td><%= daily_bill_detail.boarding_expence %></td>
-        <td><%= daily_bill_detail.other_expence %></td>
+       
         <td><%= daily_bill_detail.travel_expence_type.try(:name) %></td>
+        <td><%= daily_bill_detail.travel_expence %></td>
         <td><%= daily_bill_detail.comment %></td>
         <td>
             <% if daily_bill_detail.request_status == "Approved" %>
@@ -66,7 +61,7 @@
         </td>
         <td>
         <!--<= link_to 'Edit & Send Next', edit_and_send_next_modal_daily_bill_details_path(daily_bill_detail),class: 'btn btn-sm btn-info fa fa-check', remote: true %>-->
-        <%= link_to 'Comment', comment_modal_daily_bill_details_path(daily_bill_detail),class: 'btn btn-xs btn-info fa fa-check', remote: true %>
+        <%= link_to 'Comment', comment_modal_daily_bill_details_path(daily_bill_detail_id: daily_bill_detail.id),class: 'btn btn-xs btn-info fa fa-check', remote: true %>
         <!--<= link_to 'Reject', reject_request_daily_bill_details_path(daily_bill_detail),class: 'btn btn-xs btn-danger' %>-->
         </td>
       </tr>

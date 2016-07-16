@@ -22,6 +22,7 @@
         <td>
           <%= link_to '', edit_interview_round_path(interview_round),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
           <%= link_to '',  interview_round, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
+          <%= link_to ' Reschedule', interview_round_reschedule_interview_rounds_path(id:interview_round.id),class: 'btn btn-xs btn-success fa fa-envelope-o'  %>
         </td>
       </tr>
     <% end %>

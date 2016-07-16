@@ -41,8 +41,8 @@
 
               <% start_date = @date.beginning_of_month %>
               <% end_date = @date.end_of_month %>
-              
-              <% exist.each do |k,v|%>
+              <% sorted_exists = Hash[exist.sort] %>
+              <% sorted_exists.each do |k,v|%>
                 <td><%= v %></td>
               <%end%>
             </tr>

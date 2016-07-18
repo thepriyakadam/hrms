@@ -1,5 +1,4 @@
-<div class="box box-default">
-   <div class="box-body"> 
+ 
 <%= bootstrap_form_for(@about_company,html: {id: 'about_company'},remote:true) do |f| %>
   <div class="row">
     <div class="col-sm-3">
@@ -30,8 +29,6 @@
         <%= f.submit 'Create About Company',:class => class_name, data: { disable_with: data_info } %>
       </div>
     </div>
-  </div>
-  </div>
   </div>
 
 <% end %>

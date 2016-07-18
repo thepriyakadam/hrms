@@ -1,7 +1,7 @@
 <div class="modal-dialog"  style="height:2000px; max-height:400px; width:530px; max-width:530px;">
   <div class="modal-content">
     <div class="modal-body">
-    <%= bootstrap_form_for :induction_activity,url:{action:"update_induction",id: @induction_activity.id} do |f| %>
+    <%= bootstrap_form_for :induction_activity,url:{action:"update_induction",id: @induction_activity.id,induction_master_id: @induction_master.id} do |f| %>
         <div class="row">
     <div class="col-sm-4">
       <div class="form-group required">

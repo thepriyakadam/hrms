@@ -44,7 +44,12 @@ Rails.application.routes.draw do
   resources :circulars
 
   resources :salary_map_saps
-  resources :interview_rounds
+  resources :interview_rounds do
+    collection do
+      get :interview_round_reschedule
+      post :reschedule_interview
+    end
+  end
   resources :interview_types
   resources :employee_attendances do
     collection do
@@ -336,7 +341,7 @@ end
       get :cancel_travel_request
       get :travel_request_list
       get :edit_and_send_next_modal
-      patch :edit_and_send_next_modal_submit
+      post :edit_and_send_next_modal_submit
       get :edit_and_approve_modal
       patch :edit_and_approve_modal_submit
       get :is_confirm

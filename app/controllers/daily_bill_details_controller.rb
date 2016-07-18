@@ -15,7 +15,7 @@ class DailyBillDetailsController < ApplicationController
   # GET /daily_bill_details/new
   def new
     @daily_bill_detail = DailyBillDetail.new
-    @travel_request = TravelRequest.find(params[:format])
+    @travel_request = TravelRequest.find(params[:travel_request_id])
     @daily_bill_details = DailyBillDetail.where(travel_request_id: @travel_request.id)
     session[:active_tab] = "master"
     session[:active_tab1] ="daily_bill_master_setup"
@@ -32,7 +32,7 @@ class DailyBillDetailsController < ApplicationController
 
   def create
     @daily_bill_detail = DailyBillDetail.new(daily_bill_detail_params)
-    # byebug
+
     @travel_request = TravelRequest.find(@daily_bill_detail.travel_request_id)
 
        ActiveRecord::Base.transaction do
@@ -51,6 +51,20 @@ class DailyBillDetailsController < ApplicationController
     end
   end
 end
+
+def create
+    @daily_bill_detail = DailyBillDetail.new(daily_bill_detail_params)
+    @travel_request = TravelRequest.find(@daily_bill_detail.travel_request_id)
+      if @daily_bill_detail.save
+        @daily_bill_detail.update(reporting_master_id: @travel_request.reporting_master_id)
+        @daily_bill_details = DailyBillDetail.where(travel_request_id: @travel_request.id)
+        @daily_bill_detail = DailyBillDetail.new
+        flash[:notice] = 'Daily Bill Detail saved Successfully.'
+      end
+      # byebug
+      @travel_request_id = TravelRequest.find(params[:daily_bill_detail][:travel_request_id])
+      redirect_to new_daily_bill_detail_path(travel_request_id: @travel_request_id.id)
+  end
 
   # PATCH/PUT /daily_bill_details/1
   # PATCH/PUT /daily_bill_details/1.json
@@ -205,16 +219,16 @@ end
   # end
 
   def comment_modal
-     @daily_bill_detail = DailyBillDetail.find(params[:format])
+     @daily_bill_detail = DailyBillDetail.find(params[:daily_bill_detail_id])
   end
 
   def update_comment
      # byebug
-     @daily_bill_detail = DailyBillDetail.find(params[:id])
+     @daily_bill_detail = DailyBillDetail.find(params[:daily_bill_detail_id])
      @comment = params[:daily_bill_detail][:comment]
      @daily_bill_detail.update(comment: @comment)
      flash[:notice] = 'Comment Updated Successfully'
-     redirect_to travel_request_list_daily_bill_details_path
+     redirect_to daily_bill_request_confirmation_daily_bill_details_path(daily_bill_detail_id: @daily_bill_detail.id)
   end
 
 

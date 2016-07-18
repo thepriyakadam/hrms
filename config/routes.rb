@@ -12,6 +12,9 @@ Rails.application.routes.draw do
       patch :update_transfer_details
     end
   end
+  resources :due_details
+  resources :due_templates
+  resources :employee_transfers
   resources :rewards_pals
   resources :rewards_allocations
   resources :reward_allocations
@@ -670,6 +673,8 @@ end
   match 'company_policies/:id/download_docs/:id' => 'company_policies#download_docs', :via => [:get], :as => :download_docs
   match 'employee_documents/:id/download_emp/:id' => 'employee_documents#download_emp', :via => [:get], :as => :download_emp
   match 'investment_declarations/:id/investment_document/:id' => 'investment_declarations#investment_document', :via => [:get], :as => :investment_document
+  match 'due_templates/:id/download_due_tempalte_documents/:id' => 'due_templates#download_due_tempalte_documents', :via => [:get], :as => :download_due_tempalte_documents
+  
   resources :leave_c_offs
   resources :overtime_month_records
 

@@ -1,16 +1,15 @@
 <div class="box box-default">
   <div class="box-header with-border">
-    <h6 class="box-title">Interview Round of : <%= @interview_schedule.try(:candidate_name) %></h6>
-
+    <h3 class="box-title">Due Details</h3>
   </div><!-- /.box-header -->
 	<div class="box-body">
 		<div id="form">
 			<%= render 'form' %>	
 		</div>
 		
-		<div id="interview_round_li">
-			<%= render 'interview_round_list' %>
+		<div id="due_details_li">
+			<%= render 'due_details_list' %>
 		</div>
-		
 	</div><!-- /.box-body -->
 </div><!-- /.box -->
+

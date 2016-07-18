@@ -32,7 +32,7 @@ class DailyBillDetailsController < ApplicationController
 
   def create
     @daily_bill_detail = DailyBillDetail.new(daily_bill_detail_params)
-    # byebug
+
     @travel_request = TravelRequest.find(@daily_bill_detail.travel_request_id)
 
        ActiveRecord::Base.transaction do

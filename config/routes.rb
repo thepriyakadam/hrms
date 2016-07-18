@@ -1,6 +1,17 @@
 Rails.application.routes.draw do
 
-  resources :employee_transfers
+  resources :employee_transfers do
+    collection do
+      get :transfer_request
+      get :employee_transfer_confirmation
+      get :approve_transfer
+      get :reject_transfer
+      get :modal_approve
+      post :send_request_to_higher_authority
+      get :modal_edit
+      patch :update_transfer_details
+    end
+  end
   resources :rewards_pals
   resources :rewards_allocations
   resources :reward_allocations

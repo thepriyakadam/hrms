@@ -20,28 +20,23 @@
       <tr>
         <th><strong>Training Topic</strong></th>
         <td><%= @training_request.training_topic_master.try(:name) %></td>
-
-        <th><strong>Training Period</strong></th>
-        <td><%= @training_request.training_period %></td>   
-      </tr>
-
-      <tr>
+ 
         <th><strong>Request Date</strong></th>
         <td><%= @training_request.training_date %></td>
+      </tr>
+      <tr>
 
         <th><strong>Reporting Manager</strong></th>
         <td><%= @training_request.reporting_master_id %></td>   
-      </tr>
-
-      <tr>
+      
         <th><strong>No Of Employee</strong></th>
         <td><%= @training_request.no_of_employee %></td>
+      </tr>
+      <tr>
 
         <th><strong>Place</strong></th>
         <td><%= @training_request.place %></td>
-      </tr>
-
-      <tr>
+      
         <th><strong>Description</strong></th>
         <td colspan="3"><%= @training_request.description %></td>
       </tr>
@@ -49,6 +44,7 @@
       <tr>
         <th><strong>Justification</strong></th>
         <td colspan="3"><%= @training_request.justification %></td>
+
       </tr>
 
     </table>

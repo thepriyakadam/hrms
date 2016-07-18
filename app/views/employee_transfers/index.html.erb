@@ -31,9 +31,9 @@
         <td><%= employee_transfer.employee.try(:department).try(:name) %></td>
         <td><%= employee_transfer.justification %></td>
         <td>
-        <%= link_to '', employee_transfer,class:'btn btn-xs btn-default fa fa-eye' %>
-        <%= link_to '', edit_employee_transfer_path(employee_transfer),class:'btn-success btn-sm fa fa-edit' %>
-       <%= link_to '', employee_transfer, method: :delete, data: { confirm: 'Are you sure?' },class:'btn-danger btn-sm fa fa-close' %>
+        <!-- <= link_to '', employee_transfer,class:'btn btn-xs btn-default fa fa-eye' %> -->
+        <%= link_to '', edit_employee_transfer_path(employee_transfer),class:'btn-success btn-xs fa fa-edit' %>
+       <%= link_to '', employee_transfer, method: :delete, data: { confirm: 'Are you sure?' },class:'btn-danger btn-xs fa fa-close' %>
        </td>
       </tr>
     <% end %>

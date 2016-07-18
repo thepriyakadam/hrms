@@ -1,0 +1,2 @@
+module DueTemplatesHelper
+end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160713065422) do
+ActiveRecord::Schema.define(version: 20160715042318) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -707,6 +707,20 @@ ActiveRecord::Schema.define(version: 20160713065422) do
     t.datetime "updated_at",  null: false
   end
 
+  create_table "employee_documents", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.string   "name"
+    t.boolean  "status"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+    t.string   "document_file_name"
+    t.string   "document_content_type"
+    t.integer  "document_file_size"
+    t.datetime "document_updated_at"
+  end
+
+  add_index "employee_documents", ["employee_id"], name: "index_employee_documents_on_employee_id"
+
   create_table "employee_goals", force: :cascade do |t|
     t.integer  "goal_perspective_id"
     t.string   "target"
@@ -1228,6 +1242,7 @@ ActiveRecord::Schema.define(version: 20160713065422) do
     t.integer  "training_topic_master_id"
     t.boolean  "is_assigned"
     t.boolean  "is_hide"
+    t.integer  "period_id"
   end
 
   add_index "goal_ratings", ["appraisee_id"], name: "index_goal_ratings_on_appraisee_id"
@@ -1239,6 +1254,7 @@ ActiveRecord::Schema.define(version: 20160713065422) do
   add_index "goal_ratings", ["goal_perspective_id"], name: "index_goal_ratings_on_goal_perspective_id"
   add_index "goal_ratings", ["goal_setter_id"], name: "index_goal_ratings_on_goal_setter_id"
   add_index "goal_ratings", ["performance_calendar_id"], name: "index_goal_ratings_on_performance_calendar_id"
+  add_index "goal_ratings", ["period_id"], name: "index_goal_ratings_on_period_id"
   add_index "goal_ratings", ["reviewer_id"], name: "index_goal_ratings_on_reviewer_id"
   add_index "goal_ratings", ["training_topic_master_id"], name: "index_goal_ratings_on_training_topic_master_id"
 
@@ -1360,11 +1376,13 @@ ActiveRecord::Schema.define(version: 20160713065422) do
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
     t.integer  "interview_schedule_id"
+    t.integer  "interview_round_id"
   end
 
   add_index "interview_analyses", ["interview_attribute_id"], name: "index_interview_analyses_on_interview_attribute_id"
   add_index "interview_analyses", ["interview_decision_id"], name: "index_interview_analyses_on_interview_decision_id"
   add_index "interview_analyses", ["interview_evalution_id"], name: "index_interview_analyses_on_interview_evalution_id"
+  add_index "interview_analyses", ["interview_round_id"], name: "index_interview_analyses_on_interview_round_id"
   add_index "interview_analyses", ["interview_schedule_id"], name: "index_interview_analyses_on_interview_schedule_id"
   add_index "interview_analyses", ["vacancy_request_history_id"], name: "index_interview_analyses_on_vacancy_request_history_id"
 
@@ -1444,6 +1462,33 @@ ActiveRecord::Schema.define(version: 20160713065422) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
+
+  create_table "investment_declarations", force: :cascade do |t|
+    t.date     "date"
+    t.integer  "investment_head_id"
+    t.decimal  "amount"
+    t.integer  "employee_id"
+    t.boolean  "status"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+    t.string   "document_file_name"
+    t.string   "document_content_type"
+    t.integer  "document_file_size"
+    t.datetime "document_updated_at"
+  end
+
+  add_index "investment_declarations", ["employee_id"], name: "index_investment_declarations_on_employee_id"
+  add_index "investment_declarations", ["investment_head_id"], name: "index_investment_declarations_on_investment_head_id"
+
+  create_table "investment_heads", force: :cascade do |t|
+    t.integer  "section_id"
+    t.text     "description"
+    t.decimal  "limit"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "investment_heads", ["section_id"], name: "index_investment_heads_on_section_id"
 
   create_table "joining_details", force: :cascade do |t|
     t.integer  "employee_id"
@@ -1898,6 +1943,15 @@ ActiveRecord::Schema.define(version: 20160713065422) do
     t.datetime "updated_at",  null: false
   end
 
+  create_table "recognition_types", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
+    t.text     "description"
+    t.boolean  "status"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
   create_table "relation_masters", force: :cascade do |t|
     t.string   "code"
     t.string   "name"
@@ -2013,6 +2067,77 @@ ActiveRecord::Schema.define(version: 20160713065422) do
     t.datetime "created_at",                              null: false
     t.datetime "updated_at",                              null: false
   end
+
+  create_table "reward_allocations", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
+    t.text     "description"
+    t.boolean  "status"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "reward_owners", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
+    t.text     "description"
+    t.boolean  "status"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "reward_recognitions", force: :cascade do |t|
+    t.integer  "reward_type_id"
+    t.integer  "reward_owner_id"
+    t.string   "cost_unit"
+    t.string   "communication"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.string   "r_type"
+  end
+
+  add_index "reward_recognitions", ["reward_owner_id"], name: "index_reward_recognitions_on_reward_owner_id"
+  add_index "reward_recognitions", ["reward_type_id"], name: "index_reward_recognitions_on_reward_type_id"
+
+  create_table "reward_types", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
+    t.text     "description"
+    t.boolean  "status"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "rewards_allocations", force: :cascade do |t|
+    t.integer  "reward_type_id"
+    t.integer  "department_id"
+    t.integer  "reporting_master_id"
+    t.date     "from"
+    t.date     "to"
+    t.string   "allocated_qty"
+    t.decimal  "cost"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+  end
+
+  add_index "rewards_allocations", ["department_id"], name: "index_rewards_allocations_on_department_id"
+  add_index "rewards_allocations", ["reporting_master_id"], name: "index_rewards_allocations_on_reporting_master_id"
+  add_index "rewards_allocations", ["reward_type_id"], name: "index_rewards_allocations_on_reward_type_id"
+
+  create_table "rewards_pals", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.date     "date"
+    t.text     "purpose"
+    t.integer  "reward_type_id"
+    t.string   "qty"
+    t.integer  "reporting_master_id"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+  end
+
+  add_index "rewards_pals", ["employee_id"], name: "index_rewards_pals_on_employee_id"
+  add_index "rewards_pals", ["reporting_master_id"], name: "index_rewards_pals_on_reporting_master_id"
+  add_index "rewards_pals", ["reward_type_id"], name: "index_rewards_pals_on_reward_type_id"
 
   create_table "roles", force: :cascade do |t|
     t.string   "code"
@@ -2137,6 +2262,14 @@ ActiveRecord::Schema.define(version: 20160713065422) do
   add_index "salaryslips", ["salary_template_id"], name: "index_salaryslips_on_salary_template_id"
   add_index "salaryslips", ["workingday_id"], name: "index_salaryslips_on_workingday_id"
 
+  create_table "sections", force: :cascade do |t|
+    t.string   "code"
+    t.text     "description"
+    t.boolean  "status"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
   create_table "selected_resumes", force: :cascade do |t|
     t.string   "name"
     t.string   "contact_no"
@@ -2228,12 +2361,15 @@ ActiveRecord::Schema.define(version: 20160713065422) do
   create_table "trainee_requests", force: :cascade do |t|
     t.integer  "training_request_id"
     t.integer  "employee_id"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.integer  "training_topic_master_id"
+    t.boolean  "is_complete"
   end
 
   add_index "trainee_requests", ["employee_id"], name: "index_trainee_requests_on_employee_id"
   add_index "trainee_requests", ["training_request_id"], name: "index_trainee_requests_on_training_request_id"
+  add_index "trainee_requests", ["training_topic_master_id"], name: "index_trainee_requests_on_training_topic_master_id"
 
   create_table "trainees", force: :cascade do |t|
     t.integer  "training_plan_id"
@@ -2516,7 +2652,7 @@ ActiveRecord::Schema.define(version: 20160713065422) do
   create_table "well_faires", force: :cascade do |t|
     t.string   "month"
     t.decimal  "amount",     precision: 15, scale: 2, default: 0.0
-    t.string   "status"
+    t.boolean  "status"
     t.datetime "created_at",                                        null: false
     t.datetime "updated_at",                                        null: false
   end

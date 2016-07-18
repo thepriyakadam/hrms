@@ -1,13 +1,10 @@
-<div class="box box-default">
-   <div class="box-body">
-<%= bootstrap_form_for(@period,html: {id: 'period'},remote:true) do |f| %>
+<%= bootstrap_form_for(@period,remote:true) do |f| %>
   <div class="row">
     <div class="col-sm-3">
-    <div class="form-group required">
     <label>Period</label> 
+    <div class="form-group required">
         <%= f.text_field :name,hide_label:true, placeholder: 'Name' %>
       </div>
-    </div>
     </div>
 
     <div class="col-sm-3">
@@ -34,22 +31,24 @@
       </div>
     </div>
 
+
     <div class="col-sm-3">
-      <label>Status: </label>
+      <label>Status </label>
       <div class="field">
         <%= f.check_box :status, label: 'Active'%>
       </div>
     </div>
   </div>
-
+  
   <div class="row">
     <div class="col-sm-3">
       <div class="actions">
-        <%= f.submit "Create Period", class: 'btn btn-primary btn-sm' %>
+        <%= f.submit "Create Period",:class => class_name %>
       </div>
     </div>
   </div>
-  </div>
+  <br>
+
 <% end %>
 
 <script type="text/javascript">

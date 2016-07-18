@@ -1,5 +1,17 @@
 Rails.application.routes.draw do
 
+  resources :rewards_pals
+  resources :rewards_allocations
+  resources :reward_allocations
+  resources :reward_recognitions
+  resources :reward_types
+  resources :reward_owners
+  resources :recognition_types
+
+  resources :investment_declarations
+  resources :investment_heads
+  resources :sections
+  resources :employee_documents
   resources :company_policies do
     collection do
       get :active_policies_list
@@ -95,6 +107,7 @@ Rails.application.routes.draw do
       get :performance_type
       get :attribute_modal
       patch :update_attribute_modal
+      get :period_for_training
       get :training_request
       post :create_attribute_training
       post :create_goal_training
@@ -110,6 +123,8 @@ Rails.application.routes.draw do
       get :trainee_list
       post :print_employee_detail
       get :all_emp_list
+      get :increment_index
+      post :all_employee_list
     end
   end
   #post 'goal_ratings/update_goal_set_modal'
@@ -249,6 +264,9 @@ end
       get :modal_feedback
       post :update_feedback
       get :training_details_list
+      get :training_topic_wise_search
+      get :show_traineerequest_list
+      get :_trainee_request_list
     end
   end
   resources :training_requests do
@@ -274,6 +292,7 @@ end
     post :update_status
     get :modal_profile_update
     post :update_profile
+    get :part_resume
     end
   end 
   resources :assigned_assets do
@@ -473,6 +492,7 @@ end
       get :approved_vacancy_request_history_list
       get :particular_vacancy_request_list_history
       get :gen_xml
+      get :vacancy_profile
     end
   end
   resources :leave_c_offs do
@@ -630,7 +650,8 @@ end
   match 'daily_bill_details/:id/download_doc/:id' => 'daily_bill_details#download_doc', :via => [:get], :as => :download_doc
   match 'daily_bill_details/:id/download_pics/:id' => 'daily_bill_details#download_pics', :via => [:get], :as => :download_pics
   match 'company_policies/:id/download_docs/:id' => 'company_policies#download_docs', :via => [:get], :as => :download_docs
-
+  match 'employee_documents/:id/download_emp/:id' => 'employee_documents#download_emp', :via => [:get], :as => :download_emp
+  match 'investment_declarations/:id/investment_document/:id' => 'investment_declarations#investment_document', :via => [:get], :as => :investment_document
   resources :leave_c_offs
   resources :overtime_month_records
 

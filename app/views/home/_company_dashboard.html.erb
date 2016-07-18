@@ -51,12 +51,6 @@
           <h3 class="box-title">To Do List</h3>
           <div class="box-tools">
           <%= link_to "Add Task",new_employee_task_to_do_path, remote:true, class: "btn btn-info btn-sm pull" %>
-           <!--  <div class="input-group" style="width: 150px;">
-              <input type="text" name="table_search" class="form-control input-sm pull-right" placeholder="Search">
-              <div class="input-group-btn">
-                <button class="btn btn-sm btn-default"><i class="fa fa-search"></i></button>
-              </div>
-            </div> -->
           </div>
         </div><!-- /.box-header -->
         <div class="box-body table-responsive no-padding">
@@ -168,11 +162,10 @@
 
       </div><!-- /.row -->
 
-
       <!-- TABLE: LATEST ORDERS -->
       <div class="box box-info">
         <div class="box-header with-border">
-          <h3 class="box-title">Events</h3>
+          <h3 class="box-title">Company Events</h3>
           <div class="box-tools pull-right">
             <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
             <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -215,6 +208,51 @@
           <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a> -->
         </div><!-- /.box-footer -->
       </div><!-- /.box -->
+
+            <!-- TABLE: LATEST ORDERS -->
+      <div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title">Policy Corner</h3>
+          <div class="box-tools pull-right">
+            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+          </div>
+        </div><!-- /.box-header -->
+        <div class="box-body">
+          <div class="table-responsive">
+            <table id="example1" class="table no-margin">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Download Document</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <% @company_policies.each do |company_policy| %>
+              <tr>
+                <td><%= company_policy.name %></td>
+                <td><%= company_policy.description %></td>
+                <td>
+                   <% if company_policy.document_file_name == nil %>
+                   <small class="label label-default">Document Not Available</small>
+                     <% else %>
+                     <%= link_to ' Document',download_docs_path(id: company_policy.id),class: 'btn btn-xs btn btn-info fa fa-download' %>
+                     <% end %>
+                  </td>
+                </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div><!-- /.table-responsive -->
+        </div><!-- /.box-body -->
+        <div class="box-footer clearfix">
+          <!-- <a href="javascript::;" class="btn btn-sm btn-info btn-flat pull-left">Place New Order</a>
+          <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a> -->
+        </div><!-- /.box-footer -->
+      </div><!-- /.box -->
+
     </section><!-- /.Left col -->
     <!-- right col (We are only adding the ID to make the widgets sortable)-->
     <section class="col-lg-5 connectedSortable">
@@ -241,9 +279,14 @@
             <%else%>
               <%@employees.each do |e|%>
                 <li class="item">
-                <div class="product-img">
+                  <div class="product-img">
+
+                 <%unless e.nil? or e.member.nil? or e.member.avatar.nil? %>
+                  <%= image_tag e.member.avatar.url(:medium),class: "img-circle"%>
+                  <%else%>
                    <img src="images/user.jpg" alt=" ">
-                </div>
+                  <%end%>
+                </div> 
                 <div class="product-info">
                   <%= full_name(e) %>
                   <span class="label label-success pull-right">Happy Birthday</span>
@@ -310,11 +353,16 @@
             
                 <% JoiningDetail.all.order("id desc").limit(5).each do |j| %>
                 <li class="item">
-                <div class="product-img">
+                 <div class="product-img">
+
+                 <%unless j.nil? or j.employee.nil? or j.employee.member.nil? or j.employee.member.avatar.nil? %>
+                  <%= image_tag j.employee.member.avatar.url(:medium),class: "img-circle"%>
+                  <%else%>
                    <img src="images/user.jpg" alt=" ">
-                </div>
+                  <%end%>
+                </div> 
                 <div class="product-info">
-                  <%= j.employee.try(:first_name) %> <%= j.employee.try(:middle_name) %> <%= j.employee.try(:last_name) %>
+                  <%= j.employee.try(:manual_employee_code) %> <%= j.employee.try(:first_name) %> <%= j.employee.try(:middle_name) %> <%= j.employee.try(:last_name) %>
                   <span class="label label-info pull-right"><%= j.joining_date %></span>
                   <span class="product-description"><%= j.employee_designation.try(:name) %></span>
                   </div>

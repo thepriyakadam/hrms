@@ -91,7 +91,7 @@ class InterviewRoundsController < ApplicationController
   end
 
   def interview_round_reschedule
-    # byebug
+
     @interview_round = InterviewRound.find(params[:id])
     @employee = Employee.find(@interview_round.employee_id)
     @interview_round_reschedule = InterviewRoundReschedule.new

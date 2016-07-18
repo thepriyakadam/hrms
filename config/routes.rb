@@ -1,5 +1,19 @@
 Rails.application.routes.draw do
 
+  resources :employee_transfers do
+    collection do
+      get :transfer_request
+      get :employee_transfer_confirmation
+      get :approve_transfer
+      get :reject_transfer
+      get :modal_approve
+      post :send_request_to_higher_authority
+      get :modal_edit
+      patch :update_transfer_details
+    end
+  end
+  resources :due_details
+  resources :due_templates
   resources :employee_transfers
   resources :rewards_pals
   resources :rewards_allocations
@@ -131,6 +145,7 @@ Rails.application.routes.draw do
       get :all_emp_list
       get :increment_index
       post :all_employee_list
+      post :print_employee_list
     end
   end
   #post 'goal_ratings/update_goal_set_modal'
@@ -658,6 +673,8 @@ end
   match 'company_policies/:id/download_docs/:id' => 'company_policies#download_docs', :via => [:get], :as => :download_docs
   match 'employee_documents/:id/download_emp/:id' => 'employee_documents#download_emp', :via => [:get], :as => :download_emp
   match 'investment_declarations/:id/investment_document/:id' => 'investment_declarations#investment_document', :via => [:get], :as => :investment_document
+  match 'due_templates/:id/download_due_tempalte_documents/:id' => 'due_templates#download_due_tempalte_documents', :via => [:get], :as => :download_due_tempalte_documents
+  
   resources :leave_c_offs
   resources :overtime_month_records
 

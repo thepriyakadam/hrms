@@ -13,7 +13,7 @@
       <th>Employee Name</th>
       <th>Department</th>
       <th>Designation</th>
-      <th>Employement</th>
+      <th>Employment</th>
       <th>Category</th>
       <th>Contact No.</th>
       <th>Action</th>
@@ -26,9 +26,9 @@
         <td><%= employee.manual_employee_code %></td>
         <td><%= full_name(employee) %></td>
         <td><%= employee.try(:company_location).try(:name) %> - <%= employee.try(:department).try(:name) %></td>
-        <td> <%= employee.joining_detail.try(:employee_designation).try(:name) %></td>
+        <td><%= employee.joining_detail.try(:employee_designation).try(:name) %></td>
         <td><%= employee.employee_type.try(:name) %>
-        <td> <%= employee.joining_detail.try(:employee_category).try(:name) %></td>
+        <td><%= employee.joining_detail.try(:employee_category).try(:name) %></td>
         <td><%= employee.try(:contact_no) %></td>
         <td>
           <%= link_to '', employee,class: 'btn btn-sm btn-default fa fa-eye' %>

@@ -2,6 +2,7 @@ Rails.application.routes.draw do
 
   resources :due_details
   resources :due_templates
+  resources :employee_transfers
   resources :rewards_pals
   resources :rewards_allocations
   resources :reward_allocations

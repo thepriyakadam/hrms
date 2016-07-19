@@ -2,23 +2,20 @@
 
   <div class="row">
     <div class="col-sm-3">
-    <label>Reward Type</label> 
-      <div class="field">
-        <%= f.select :reward_type_id,all_reward_type,{hide_label:true, include_blank: 'Select Reward Type'} %>
+      <div class="form-group required">
+        <%= f.select :reward_type_id,all_reward_type,{label: 'Reward Type', include_blank: 'Select Reward Type'} %>
       </div>
     </div>
 
     <div class="col-sm-3">
-    <label>Department</label>
-      <div class="field">
-        <%= f.select :department_id,all_department_list,{hide_label:true, include_blank: 'Select Department'} %>
+      <div class="form-group required">
+        <%= f.select :department_id,all_department_list,{label: 'Department', include_blank: 'Select Department'} %>
       </div>
     </div>
 
     <div class="col-sm-3">
-    <label>Reporting Manager</label>
-      <div class="field">
-        <%= f.select :reporting_master_id,all_reporting_master_list,{hide_label:true, include_blank: 'Select Reporting Manager'} %>
+      <div class="form-group required">
+        <%= f.select :reporting_master_id,all_reporting_master_list,{label: 'Reporting Manager', include_blank: 'Select Reporting Manager'} %>
       </div>
     </div>
 

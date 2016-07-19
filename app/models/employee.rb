@@ -54,6 +54,8 @@ class Employee < ActiveRecord::Base
   has_many :employee_documents
   has_many :employee_declarations
   has_many :reward_pals
+  has_many :interview_rounds
+  has_many :interview_round_reschedules
   
   #accepts_nested_attributes_for :joining_detail
   has_many :subordinates, class_name: 'Employee',

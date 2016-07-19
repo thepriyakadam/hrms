@@ -114,7 +114,6 @@ class VacancyMastersController < ApplicationController
 
 
   def send_request_to_higher_authority
-    puts ".................."
     @vacancy_master = VacancyMaster.find(params[:id])
     @particular_vacancy_requests = ParticularVacancyRequest.where(vacancy_master_id: @vacancy_master.id)
     @particular_vacancy_requests.each do |p|
@@ -223,7 +222,6 @@ class VacancyMastersController < ApplicationController
   end
 
   def update_vacancy_details
-     puts "---------------"
      @vacancy_master = VacancyMaster.find(params[:id])
      @vacancy_master.update(current_status: "Edit And Approved")
      @vacancy_request_history = VacancyRequestHistory.new(vacancy_request_history_params)

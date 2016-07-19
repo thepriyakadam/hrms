@@ -15,6 +15,7 @@ class RecognitionTypesController < ApplicationController
   # GET /recognition_types/new
   def new
     @recognition_type = RecognitionType.new
+    @recognition_types = RecognitionType.all
   end
 
   # GET /recognition_types/1/edit
@@ -25,14 +26,14 @@ class RecognitionTypesController < ApplicationController
   # POST /recognition_types.json
   def create
     @recognition_type = RecognitionType.new(recognition_type_params)
+    @recognition_types = RecognitionType.all
 
     respond_to do |format|
       if @recognition_type.save
-        format.html { redirect_to @recognition_type, notice: 'Recognition type was successfully created.' }
-        format.json { render :show, status: :created, location: @recognition_type }
+        format.js { @flag = true }
       else
-        format.html { render :new }
-        format.json { render json: @recognition_type.errors, status: :unprocessable_entity }
+        flash.now[:alert] = 'Recognition Type was Successfully created.'
+        format.js { @flag = false }
       end
     end
   end
@@ -40,25 +41,16 @@ class RecognitionTypesController < ApplicationController
   # PATCH/PUT /recognition_types/1
   # PATCH/PUT /recognition_types/1.json
   def update
-    respond_to do |format|
-      if @recognition_type.update(recognition_type_params)
-        format.html { redirect_to @recognition_type, notice: 'Recognition type was successfully updated.' }
-        format.json { render :show, status: :ok, location: @recognition_type }
-      else
-        format.html { render :edit }
-        format.json { render json: @recognition_type.errors, status: :unprocessable_entity }
-      end
-    end
+    @recognition_type.update(recognition_type_params)
+    @recognition_type = RecognitionType.new
+    @recognition_types = RecognitionType.all
   end
 
   # DELETE /recognition_types/1
   # DELETE /recognition_types/1.json
   def destroy
     @recognition_type.destroy
-    respond_to do |format|
-      format.html { redirect_to recognition_types_url, notice: 'Recognition type was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    @recognition_types = RecognitionType.all
   end
 
   private

@@ -14,7 +14,7 @@
   <tbody>
     <% @rewards_pals.each do |rewards_pal| %>
       <tr>
-        <td><%= rewards_pal.employee.first_name %> <%= rewards_pal.employee.middle_name %> <%= rewards_pal.employee.last_name %></td>
+        <td><%= rewards_pal.employee.try(:first_name) %> <%= rewards_pal.employee.try(:middle_name) %> <%= rewards_pal.employee.try(:last_name) %></td>
         <td><%= rewards_pal.date %></td>
         <td><%= rewards_pal.purpose %></td>
         <td><%= rewards_pal.reward_type.try(:name) %></td>

@@ -21,15 +21,15 @@
         <% exist = {} %>
           <% @employees.each do |e| %>
             <tr>
-              <th><%= e.manual_employee_code %></th>
-              <th><%= full_name(e) %></th>
+              <th><%= e.employee.manual_employee_code %></th>
+              <th><%= full_name(e.employee) %></th>
 
               <% start_date = @date.beginning_of_month %>
               <% end_date = @date.end_of_month %>
 
               <% start_date.step(end_date).each do |d| %>
                 <% flag = 0 %>
-                <% attendance_records = EmployeeAttendance.where("strftime('%m/%Y', day) = ? and employee_id = ?", @date.strftime('%m/%Y'), e.id) %>
+                <% attendance_records = EmployeeAttendance.where("strftime('%m/%Y', day) = ? and employee_id = ?", @date.strftime('%m/%Y'), e.employee_id) %>
 
                 <% attendance_records.each do |a| %>
                   <% if d == a.day %>

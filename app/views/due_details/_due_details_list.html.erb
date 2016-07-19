@@ -1,3 +1,5 @@
+<div class="box-body">
+<%= bootstrap_form_for @due_detail,url:{action:'is_confirm',due_template_id: @due_template.id} do |f| %>  
 <table id="example2" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
@@ -25,6 +27,17 @@
     <% end %>
   </tbody>
 </table>
+ <div class="row">
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "Confirm", class: 'btn btn-primary btn-sm' %><br><br>
+        <%= f.select :reporting_master_id,all_resignation_list, {hide_label: true,include_blank: "Select Employee"} %>
+      </div>
+    </div>
+  </div>
+ </div>
+ </div>
+<% end %> 
 
 <script type="text/javascript">
   $(function () {

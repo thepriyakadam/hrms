@@ -61,6 +61,32 @@ class DueDetailsController < ApplicationController
      @employee_resignations = EmployeeResignation.all
   end
 
+  def is_confirm
+    @due_detail_ids = params[:due_detail_ids]
+    if @due_detail_ids.nil?
+      flash[:alert] = "Please Select the Checkbox"
+      redirect_to root_url
+    else
+      @due_detail_ids.each do |did|
+      @due_detail = DueDetail.find(did)
+      @due_detail.update(is_confirmed: true) 
+      # InterviewScheduleMailer.sample_email_to_interviewer(@interview_schedule).deliver_now
+      flash[:notice] = "Confirmed Successfully"
+    end 
+     redirect_to root_url
+  end
+  end
+
+  def due_detail_history
+     @due_details = DueDetail.where(reporting_master_id: current_user.employee_id,is_confirmed: true)
+  end
+
+  def show_due_template_list
+     # byebug
+     @due_detail = DueDetail.find(params[:due_detail_id])
+     @due_templates = DueTemplate.where(due_detail_id: @due_detail.id)
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_due_detail

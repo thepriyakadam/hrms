@@ -1,0 +1,31 @@
+
+<!--SELECT2 EXAMPLE -->
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Select Employee</h3>
+  </div><!-- /.box-header -->
+
+  <div class="box-body">
+    <%= bootstrap_form_for :employee, url: { action: "display_certificate" } do |f| %>
+      <div class="row">
+      <div class="col-sm-3">
+          <div class="field">
+          <%= f.select :employee, all_employee_list,{include_blank: 'Select Employee'},{ class: "form-control"}%>
+          </div>
+      </div>
+
+     <div class="col-sm-3">
+          <div class="field">
+            <%= f.select :certificate, ['Character','Leaving','Service','Acceptance Of Resignation'],{label: 'Select Certificate',include_blank: " Select Cetificate"}, class: "form-control" %>
+           </div>
+        </div>
+      <div class="col-sm-3">
+        <div class="actions">
+          <%= f.submit "Select Employee", class: "btn btn-sm btn-warning" %>
+        </div>
+      </div>
+      </div>
+    <% end %>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->
+

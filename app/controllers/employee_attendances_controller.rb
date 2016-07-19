@@ -16,6 +16,7 @@ class EmployeeAttendancesController < ApplicationController
   # GET /employee_attendances/new
   def new
     @employee_attendance = EmployeeAttendance.new
+    session[:active_tab] = "timemgmt"
   end
 
   # GET /employee_attendances/1/edit

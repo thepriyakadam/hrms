@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  salary_component_id: 
+  erp_account_code: 1
+  type: 
+
+two:
+  salary_component_id: 
+  erp_account_code: 1
+  type: 

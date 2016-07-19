@@ -24,7 +24,8 @@ class EmployeesController < ApplicationController
       @employees = Employee.all
     end
 
-      session[:active_tab] = "employee"
+      session[:active_tab] ="employeemanagement"
+      session[:active_tab1] ="employeeprofile"
   end
 
   def report
@@ -93,15 +94,11 @@ class EmployeesController < ApplicationController
   def create
     @employee = Employee.new(employee_params)
     authorize! :create, @employee
-    respond_to do |format|
       if @employee.save
-        format.html { redirect_to @employee, notice: 'Employee was successfully created.' }
-        format.json { render :show, status: :created, location: @employee }
+        redirect_to @employee    
       else
-        format.html { render :new }
-        format.json { render json: @employee.errors, status: :unprocessable_entity }
+        render :new
       end
-    end
   end
 
   # PATCH/PUT /employees/1
@@ -142,7 +139,8 @@ class EmployeesController < ApplicationController
     @all_employee_list = ReportingMaster.all.collect { |e| [e.try(:employee).try(:manual_employee_code).try(:to_s) + ' ' + e.try(:employee).try(:first_name).try(:to_s) + ' ' + e.try(:employee).try(:last_name).try(:to_s), e.try(:employee).id] }
     @all_role_list = Role.all.collect { |r| [r.name, r.id] }
 
-    session[:active_tab] ="user"
+    session[:active_tab] ="employeemanagement"
+    session[:active_tab1] ="useradministration"
   end
 
   def submit_form
@@ -214,6 +212,17 @@ class EmployeesController < ApplicationController
     @skillset = Skillset.new
   end
 
+  def ajax_assigned_asset_detail
+    @assigned_asset = AssignedAsset.new
+    @employee = Employee.find(params[:id])
+  end
+  
+  def ajax_new_assigned_asset
+    @assigned_asset = AssignedAsset.new
+     @employee = Employee.find(params[:id])
+  end
+
+
   def ajax_certification_detail
     @certification = Certification.new
   end
@@ -232,6 +241,7 @@ class EmployeesController < ApplicationController
 
   def ajax_physical_detail
     @employee_physical = EmployeePhysical.new
+    puts '--------------------------------------------------------------------------------'
   end
 
   def ajax_family_detail
@@ -242,13 +252,24 @@ class EmployeesController < ApplicationController
     @family = Family.new
   end
 
+  def ajax_employee_nomination_detail
+    @employee_nomination = EmployeeNomination.new
+    @employee = Employee.find(params[:id])
+  end
+
+  def ajax_new_employee_nomination
+    @employee_nomination = EmployeeNomination.new
+    @employee = Employee.find(params[:id])
+  end
+
   def ajax_show_textbox
     @value = params[:value]
   end
 
   def manager
     @employees = Employee.all
-    session[:active_tab] ="user"
+    session[:active_tab] ="employeemanagement"
+    session[:active_tab1] ="useradministration"
   end
 
   def edit_manager
@@ -294,7 +315,7 @@ class EmployeesController < ApplicationController
 
   def transfer_employee_list
     @employees = Employee.all
-    session[:active_tab] ="user"
+    
   end
 
   private

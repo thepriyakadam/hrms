@@ -1,0 +1,6 @@
+<%if @flag == true %>
+$("#form").html("<%= j render 'form' %>");
+$("#goal_rating_list").html("<%= j render 'goal_rating_list' %>");
+<%else%>
+  alert("Goal weightage sum should be 100");
+<%end%>

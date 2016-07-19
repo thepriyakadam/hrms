@@ -27,7 +27,10 @@ class EmployeeLeavRequest < ActiveRecord::Base
   def minus_leave(employee_leav_request)
     leave_balance = EmployeeLeavBalance.where(employee_id: employee_leav_request.employee_id, leav_category_id: employee_leav_request.leav_category_id).take
     unless leave_balance.nil?
-      leave_balance.no_of_leave = leave_balance.no_of_leave.to_i - employee_leav_request.leave_count.to_f
+      leave_balance.no_of_leave.to_f
+      employee_leav_request.leave_count.to_f
+      leave_balance.no_of_leave = leave_balance.no_of_leave.to_f - employee_leav_request.leave_count.to_f
+      #leave_balance.no_of_leave = leave_balance.no_of_leave.to_f - employee_leav_request.leave_count.to_f
       leave_balance.save
     end
   end
@@ -57,7 +60,7 @@ class EmployeeLeavRequest < ActiveRecord::Base
             if c.leave_count == 0.5
               request.leave_count = request.leave_count - 0.5
               c.leave_count = c.leave_count - 0.5
-              c.is_taken = true  
+              c.is_taken = true
               c.save
             else
               request.leave_count = request.leave_count - 1
@@ -79,6 +82,7 @@ class EmployeeLeavRequest < ActiveRecord::Base
       end
     end
   end
+
 
   def self.filter_records(current_user)
     @employee_leave_requests =  if current_user.class == Group

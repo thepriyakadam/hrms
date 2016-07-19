@@ -14,26 +14,26 @@
         </div>
 
         <div class="col-sm-3">
-          <label>Date</label>
           <div class="form-group required">
+         <!--  <label>Date</label> -->
             <div class="input-group">
               <div class="input-group-addon">
                 <i class="fa fa-calendar"></i>
               </div>
-              <%= f.text_field :food_date,hide_label: true, class: 'food_coupan_date'%>
+              <%= f.text_field :food_date, class: 'food_date',label:'Date'%>
             </div>
           </div>
         </div>
 
         <div class="col-sm-3">
           <div class="form-group required">
-            <%= f.text_field :no_of_coupan, placeholder: 'No.of Food Coupan' %>
+            <%= f.text_field :no_of_coupan, placeholder: 'No. of Food Coupon',label: 'No. Of Coupon' %>
           </div>
         </div>
 
         <div class="col-sm-3">
-          <div class="field">
-            <%= f.text_field :return_coupan, placeholder: 'Return Food Coupan' %>
+          <div class="form-group required">
+            <%= f.text_field :return_coupan, placeholder: 'Return Food Coupon',label:'Return Coupon'%>
           </div>
         </div>
       </div>
@@ -41,13 +41,13 @@
       <div class="row">
         <div class="col-sm-3">
           <div class="field">
-            <%= f.text_field :total_coupan, placeholder: 'Total Food Coupan', readonly:true %>
+            <%= f.text_field :total_coupan, placeholder: 'Total Food Coupon',label:'Total Coupon' , readonly:true %>
           </div>
         </div>
 
         <div class="col-sm-3">
           <div class="form-group required">
-            <%= f.select :food_coupan_master_id, all_food_coupan_master,{include_blank: " Select Coupan Type"},{onchange:"var a={id:$(this).val(),total_coupan:$('#food_deduction_total_coupan').val()}; $.get('/food_deductions/calculate_food_deduction_amount',a,function(response){});",class: 'form-control'} %>
+            <%= f.select :food_coupan_master_id, all_food_coupan_master,{label:'Food Coupon Master',include_blank: " Select Coupon Type"},{onchange:"var a={id:$(this).val(),total_coupan:$('#food_deduction_total_coupan').val()}; $.get('/food_deductions/calculate_food_deduction_amount',a,function(response){});",class: 'form-control'} %>
           </div>
         </div>
 
@@ -61,7 +61,13 @@
       <div class="row">
         <div class="col-sm-3">
           <div class="actions">
-            <%= f.submit :class => class_name, data: { disable_with: data_info } %>
+            <%= f.submit "Create Food Deduction",:class => class_name, data: { disable_with: data_info } %>
+            <%= link_to 'Back', food_deductions_path ,class: 'btn btn-sm btn-default fa fa-arrow-left'%>
+            </div>
+            </div>
+            </div>
+            </div>
+            </div>
           </div>
         </div>
       </div>
@@ -71,7 +77,7 @@
 
 <script type="text/javascript">
   $(function(){
-    $('.food_coupan_date').datepicker({
+    $('.food_date').datepicker({
     changeYear:true,
     changeMonth: true,
     yearRange: '-200:-0',
@@ -110,6 +116,9 @@
   $("#food_deduction").validate({
   rules: {
     "food_deduction[employee_id]":{
+      required: true
+    },
+    "food_deduction[return_coupan]":{
       required: true
     },
     "food_deduction[food_date]":{

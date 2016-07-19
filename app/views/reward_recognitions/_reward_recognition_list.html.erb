@@ -1,0 +1,28 @@
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Reward type</th>
+      <th>Type</th>
+      <th>Reward owner</th>
+      <th>Description</th>
+      <th>Communication</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @reward_recognitions.each do |reward_recognition| %>
+      <tr>
+        <td><%= reward_recognition.reward_type.try(:name) %></td>
+        <td><%= reward_recognition.r_type %></td>
+        <td><%= reward_recognition.reward_owner.try(:name) %></td>
+        <td><%= reward_recognition.cost_unit %></td>
+        <td><%= reward_recognition.communication %></td>
+        <td>
+          <%= link_to '', edit_reward_recognition_path(reward_recognition),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
+          <%= link_to '',  reward_recognition, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

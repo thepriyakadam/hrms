@@ -1,4 +1,4 @@
-<%= bootstrap_form_for(@well_faire,remote:true) do |f| %>
+<%= bootstrap_form_for(@well_faire) do |f| %>
   <div class="row">
     <div class="col-sm-3">
       <div class="field">
@@ -10,24 +10,23 @@
 
     <div class="col-sm-3">
       <div class="field">
-        <div class="form-group required">
+        <div class="field">
         <%= f.text_field :amount %>
         </div>
       </div>
     </div>
 
-    <div class="col-sm-3">
+    <div class="col-sm-1">
+      <label>Status </label>
       <div class="field">
-        <div class="form-group required">
-      <%= f.select :status,['Active','Inactive'],{label: 'Select Option',include_blank: " Select Option"} %>
-        </div>
+        <%= f.check_box :status, label: 'Active'%>
       </div>
     </div>
 
     <div class="col-sm-3">
     <label></label>
       <div class="actions">
-        <%= f.submit :class => class_name %>
+        <%= f.submit "Create Welfare",:class => class_name %>
       </div>
     </div>
   </div>

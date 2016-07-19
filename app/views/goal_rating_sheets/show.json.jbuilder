@@ -1,1 +1,0 @@
-json.extract! @goal_rating_sheet, :id, :appraisee_id, :appraiser_id, :employee_goal_id, :allign_to_supervisor, :appraisee_comment, :appraisee_rating, :appraiser_comment, :appraiser_rating, :created_at, :updated_at

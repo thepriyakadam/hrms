@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Employee:</strong>
+  <%= @employee_task_to_do.employee %>
+</p>
+
+<p>
+  <strong>Task name:</strong>
+  <%= @employee_task_to_do.task_name %>
+</p>
+
+<p>
+  <strong>Task date:</strong>
+  <%= @employee_task_to_do.task_date %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @employee_task_to_do.status %>
+</p>
+
+<p>
+  <strong>Time:</strong>
+  <%= @employee_task_to_do.task_time %>
+</p>
+
+<%= link_to 'Edit', edit_employee_task_to_do_path(@employee_task_to_do) %> |
+<%= link_to 'Back', employee_task_to_dos_path %>

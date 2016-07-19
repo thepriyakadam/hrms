@@ -1,0 +1,24 @@
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @root_cause_masters.each do |root_cause_master| %>
+      <tr>
+        <td><%= root_cause_master.code %></td>
+        <td><%= root_cause_master.name %></td>
+        <td><%= root_cause_master.description %></td>
+        <td>
+          <%= link_to '', edit_root_cause_master_path(root_cause_master),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
+          <%= link_to '',  root_cause_master, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

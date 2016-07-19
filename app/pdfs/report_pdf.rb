@@ -13,19 +13,18 @@ class ReportPdf < Prawn::Document
     table interview_schedule_rows, width: 550
 
     font_style = :bold
-   end
+  end
 
   def interview_schedule_rows
     [['#', 'Interviewer Name', 'Email ID', 'Candidate Name']] +
       @interview_schedules.map do |interview_schedule|
         [interview_schedule.id, interview_schedule.interviewer_name, interview_schedule.email_id, interview_schedule.candidate_name]
-      end
+    end
   end
 
   def initialize(employees)
     super()
     @employees = employees
-
     table_content
   end
 

@@ -6,16 +6,16 @@
   <body>
      <h4>Interview Schedule Details</h4>
     <p>
-       Dear <%= @interview_schedule.candidate_name %><br><br>
-       This is with reference with your resume we have organize your interview for the position of  <%= @interview_schedule.post_title %> as details given below.<br><br>
-       1 Date :- <%= @interview_schedule.interview_date %><br><br>
-       2 Time :- <%= @interview_schedule.interview_time %><br><br>
-       3 Address :- <%= @interview_schedule.location %><br><br>
-       4 Contact Person:- <%= @employee.first_name.to_s %> <%= @employee.last_name.to_s %>-<%= @employee.optinal_contact_no.to_s %> <%= @employee.contact_no.to_s %>
+       Dear,<br> <%= @interview_schedule.candidate_name.to_s %><br><br>
+       This is with reference with your resume we have organize your interview for the position of  <b><%= @interview_schedule.post_title %></b> as details given below.<br><br>
+       1. <b>Date :-</b> <%= @interview_schedule.interview_date %><br><br>
+       2. <b>Address :-</b> <%= @interview_schedule.location %><br><br>
+       3. <b>Contact Person Name :-</b> <%= @employee.first_name.to_s %> <%= @employee.last_name.to_s %> <%= @employee.middle_name.to_s %><br><br>
+       4.  <b>Mobile No:-</b> <%= @employee.contact_no.to_s %><br><br>
       <div class="row">
         <div class="col-sm-5">
             With Regards,<br><br>
-            BFTL HR
+            HR 
         </div>
       </div>
     </p>

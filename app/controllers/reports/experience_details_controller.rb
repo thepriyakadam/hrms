@@ -1,5 +1,7 @@
 class Reports::ExperienceDetailsController < ApplicationController
   def new
+    session[:active_tab] ="employeemanagement"
+    session[:active_tab1] ="employeereport"
   end
 
   def experience_detail_report

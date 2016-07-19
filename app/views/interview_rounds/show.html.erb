@@ -1,0 +1,41 @@
+<div class="box box-default">
+<div class="box-header with-border">
+    <h3 class="box-title">Interview Report</h3>
+  </div><!-- /.box-header -->
+ <div class="box-body">
+ 
+    <%= render 'interview_schedule_list' %>
+
+<table id="example2" class="table table-bordered table-hover table-condensed">
+<tr> 
+  <th><strong>Employee Name</strong></th>
+  <td><%= @interview_round.employee.first_name+' '+@interview_round.employee.middle_name+' '+@interview_round.employee.last_name %></td>
+
+  <th><strong>Interview Type</strong></th>
+  <td><%= @interview_round.interview_type.try(:name) %></td>
+</tr>
+
+<tr> 
+  <th><strong>Interview Date</strong></th>
+  <td><%= @interview_round.interview_date %></td>
+
+  <th><strong>Interview Time</strong></th>
+  <td><%= @interview_round.interview_time %></td>
+</tr>
+
+<tr> 
+  <th><strong>Location</strong></th>
+  <td><%= @interview_round.location %></td>
+
+  <th><strong>Schedule Comments</strong></th>
+  <td><%= @interview_round.schedule_comment %></td>
+</tr>
+
+    <%= render 'induction_analysis_list' %>
+
+</table>
+
+<%= link_to 'Edit', edit_interview_round_path(@interview_round) %> |
+<%= link_to 'Back', interview_rounds_path %>
+</div>
+</div>

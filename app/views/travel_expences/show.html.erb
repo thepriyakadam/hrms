@@ -10,26 +10,26 @@
     </tr>
 
     <tr>
-      <th><strong>Travel request:</strong></th>
-      <td><%= @travel_expence.travel_request %></td>
+      <th><strong>Travel Request</strong></th>
+      <td><%= @travel_expence.travel_request.try(:name) %></td>
     
-      <th><strong>Total advance amount:</strong></th>
+      <th><strong>Total Advance Amount</strong></th>
       <td><%= @travel_expence.total_advance_amount %></td>
     </tr>
 
     <tr>
-      <th><strong>Total expence amount:</strong></th>
+      <th><strong>Total Expense Amount</strong></th>
       <td><%= @travel_expence.total_expence_amount %></td>
     
-      <th><strong>Remaining amount:</strong></th>
+      <th><strong>Remaining Amount</strong></th>
       <td><%= @travel_expence.remaining_amount %></td>
     </tr>
 
     <tr>
-      <th><strong>Employee amount:</strong></th>
+      <th><strong>Employee Amount</strong></th>
       <td><%= @travel_expence.employee_amount %></td>
     
-      <th><strong>Company amount:</strong></th>
+      <th><strong>Company Amount</strong></th>
       <td><%= @travel_expence.company_amount %></td>
     </tr>
   </table>

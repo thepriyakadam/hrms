@@ -1,0 +1,2 @@
+module InterviewAttributesHelper
+end

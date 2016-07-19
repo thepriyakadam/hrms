@@ -1,0 +1,11 @@
+$(".ajax-progress").hide();
+$("#employee_list").html("<%= j render 'show_employee_salary_ledger' %>")
+
+$(document).ready(function() {
+    $('#example3').DataTable( {
+      //"scrollY":        "200px",
+      "scrollX":        "1000px",
+      "scrollCollapse": true,
+      "paging":         true
+    } );
+  } );

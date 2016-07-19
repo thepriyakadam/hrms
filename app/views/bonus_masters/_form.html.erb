@@ -1,24 +1,25 @@
-<%= bootstrap_form_for(@bonus_master,html: {id: 'bonus_master'},remote:true) do |f| %>
+<%= bootstrap_form_for(@bonus_master,html: {id: 'bonus_master'},remote: true) do |f| %>
   <div class="row">
    
     <div class="col-sm-3">
       <div class="form-group required">       
-        <%= f.select :is_bouns,[['Yes','true'],['No','false']],{label: 'Overtime Option',include_blank: " Select Overtime Option"} %>
+        <%= f.select :is_bouns,[['Yes','true'],['No','false']],{label: 'Bonus Option',include_blank: " Select Bonus Option"} %>
       </div>
     </div>
      <div class="col-sm-3">
-      <div class="form-group required">
+      <div class="field">
         <%= f.text_field :limit_amount,label: 'Limit Amount' %>
       </div>
     </div>
      <div class="col-sm-3">
-      <div class="form-group required">
-        <%= f.text_field :bonus_persentage,label:'Bonus Persentage' %>
+      <div class="field">
+        <%= f.text_field :bonus_persentage,label:'Bonus Percentage' %>
       </div>
     </div>
      <div class="col-sm-3">
-      <div class="form-group required">       
-        <%= f.select :status,[['Active','true'],['Inactive','false']],{label: 'OT Status',include_blank: " Select Status Option"} %>
+     <label>Status</label>
+      <div class="field">       
+        <%= f.check_box :status,label:'Active' %>
       </div>
     </div>
   </div>
@@ -26,11 +27,13 @@
   <div class="row">
     <div class="col-sm-3">
       <div class="actions">
-        <%= f.submit :class => class_name %>
+        <%= f.submit"Create Bonus Master", :class => class_name %>
       </div>
     </div>
   </div>
+  
 <% end %>
+<br>
 
 <script type="text/javascript">
 
@@ -44,10 +47,10 @@ $("#bonus_master").validate({
     },
     "bonus_master[bonus_persentage]":{
       required: true
-    },
-    "bonus_master[status]":{
-      required: true
     }
+    // "bonus_master[status]":{
+    //   required: true
+    // }
   },
   
   errorPlacement: function(error, element) {

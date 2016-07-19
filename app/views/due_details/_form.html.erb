@@ -1,0 +1,49 @@
+<%= bootstrap_form_for(@due_detail,html: {id: 'due_detail'},due_template_id: @due_template.id) do |f| %>
+<%= f.hidden_field :due_template_id, value: @due_template.id  %>
+  <div class="row">
+     <div class="col-sm-3">
+          <div class="form-group required">
+          <%= f.select :reporting_master_id,all_reporting_master_list,{label: 'Reporting Manager',include_blank: " Select Reporting Manager"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
+            </div>
+        </div>
+
+    <div class="col-sm-3">
+     <label>Status</label>
+      <div class="form-group required">
+        <%= f.check_box :status,label: 'Active' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+    <label></label>
+      <div class="actions">
+        <%= f.submit "Create Due Detail ",:class => class_name,  data: { disable_with: data_info } %>
+      </div>
+    </div>
+
+  </div>
+<% end %>
+
+<script>
+$("#due_detail").validate({
+    rules: {
+      "due_detail[reporting_master_id]":{
+        required: true,
+      }
+    },
+    messages: {
+      "due_detail[reporting_master_id]":{
+        required: "Please specify Reporting Manager",
+      }
+      
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>
+
+
+
+

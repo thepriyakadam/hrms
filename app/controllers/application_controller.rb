@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
-  before_action :authenticate!
+  before_action :authenticate! #, exept: :salaryslip_components.xml
   # before_action :check_subdomain
   before_action :configure_devise_permitted_parameters, if: :devise_controller?
   helper_method :user_signed_in?
@@ -38,14 +38,19 @@ class ApplicationController < ActionController::Base
   #   redirect_to amain_path
   # end
 
-  # rescue_from ActiveRecord::RecordNotFound do |_exc|
-  #   if request.xhr?
-  #     render js: "alert('Sorry! Record not found');"
-  #   else
-  #     flash[:alert] = 'Sorry! Record not found'
-  #     redirect_to root_url
-  #   end
-  # end
+  rescue_from ActiveRecord::RecordNotFound do |_exc|
+    if request.xhr?
+      render js: "alert('Sorry! Record not found');"
+    else
+      flash[:alert] = 'Sorry! Record not found'
+      #redirect_to root_url
+      prev = Rails.application.routes.recognize_path(request.referrer)
+      puts prev
+      puts "-------------------------"
+      puts params
+      redirect_to url_for(:controller => prev[:controller], :action => prev[:action_name], :id => 1)
+    end
+  end
 
   # rescue_from ActiveRecord::ActiveRecordError do |_exc|
   #   if request.xhr?
@@ -60,7 +65,7 @@ class ApplicationController < ActionController::Base
     if request.xhr?
       render js: "alert('Sorry! Transaction Rollbacked Record Invalid');"
     else
-      flash[:alert] = 'Sorry! Transaction Rollbacked Record Invalid #{_exc.message}'
+      flash[:alert] = 'Sorry! Transaction Rollbacked Record Invalid'
       redirect_to root_url
     end
   end
@@ -157,20 +162,24 @@ class ApplicationController < ActionController::Base
   def configure_devise_permitted_parameters
     registration_params = [:subdomain, :email, :password, :password_confirmation]
     if params[:action] == 'update'
-      devise_parameter_sanitizer.for(:account_update) do |u|
+      #devise_parameter_sanitizer.for(:account_update) do |u|
+      devise_parameter_sanitizer.permit(:account_update) do |u|
         u.permit(registration_params << :current_password, :avatar)
       end
     elsif params[:action] == 'create'
-      devise_parameter_sanitizer.for(:sign_up) do |u|
+      #devise_parameter_sanitizer.for(:sign_up) do |u|
+      devise_parameter_sanitizer.permit(:sign_up) do |u|
         u.permit(registration_params)
       end
     end
 
     if params[:controller] == 'members/sessions' && params[:action] == 'new'
       # devise_parameter_sanitizer.for(:sign_in) { |u| u.permit(:login, :member_code, :email, :password, :remember_me) }
-      devise_parameter_sanitizer.for(:sign_in) { |u| u.permit(:login, :manual_member_code, :email, :password, :remember_me) }
+      #devise_parameter_sanitizer.for(:sign_in) { |u| u.permit(:login, :manual_member_code, :email, :password, :remember_me) }
+      devise_parameter_sanitizer.permit(:sign_in, keys: [:login, :manual_member_code, :email, :password, :remember_me])
     else
-      devise_parameter_sanitizer.for(:sign_in) { |u| u.permit(:email, :password, :remember_me) }
+     #devise_parameter_sanitizer.for(:sign_in) { |u| u.permit(:email, :password, :remember_me) }
+     devise_parameter_sanitizer.permit(:sign_in, keys: [:email, :password, :remember_me])
     end
   end
 end

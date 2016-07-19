@@ -5,10 +5,10 @@
   <div class="box-body">
     <div class="row">
       <div class="col-sm-3">
-        <%= select :employee_leav_balance,:leav_category_id, all_leav_category,{include_blank: " Select Leave"},{onchange:"var a={leav_category_id:$(this).val()}; $.get('/employee_leav_balances/collect_employee_for_leave',a,function(response){});",class: 'form-control'} %>    
+        <%= select :employee_leav_balance,:leav_category_id, all_leav_category,{label:'Leave Category',include_blank: " Select Leave"},{onchange:"var a={leav_category_id:$(this).val()}; $.get('/employee_leav_balances/collect_employee_for_leave',a,function(response){});",class: 'form-control'} %>    
       </div>
     </div>
     <div id="form"></div>
   </div><!-- /.box-body -->
 </div><!-- /.box -->
-<%= link_to 'Back', employee_leav_balances_path,class: 'btn btn-sm btn-default' %>
+<%= link_to 'Back', employee_leav_balances_path,class: 'btn btn-sm btn-default fa fa-arrow' %>

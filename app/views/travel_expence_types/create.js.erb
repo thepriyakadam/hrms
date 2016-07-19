@@ -1,0 +1,6 @@
+<%if @flag == true %>
+  $("#form").html("<%= j render 'form' %>");
+  $("#travel_expence_type_li").html("<%= j render 'travel_expence_type_list' %>");
+<%else%>
+  $("#form").html("<%= j render 'form' %>");
+<%end%>

@@ -2,7 +2,7 @@
 <!-- SELECT2 EXAMPLE -->
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title">Employee Monthly Expences</h3>
+    <h3 class="box-title">Monthly Expenses</h3>
   </div><!-- /.box-header -->
   
   <div class="box-body">
@@ -19,24 +19,24 @@
       <div id="entry1" class="clonedInput">
         <div class="row">
           <div class="col-sm-3">
-            <label> Date </label>
+           <!--  <label> Date </label> -->
             <div class="form-group required">
               <div class="input-group">
                 <div class="input-group-addon">
                   <i class="fa fa-calendar"></i>
                 </div>
-                <%= f.text_field :expence_date,hide_label: true, class: 'input_expence_date'%>
+                <%= f.text_field :expence_date,class: 'input_expence_date',label:'Date'%>
               </div>
             </div>
           </div>
 
           <div class="col-sm-3">
-            <div class="field">
-             <%= f.select :expencess_type_id, all_expencess_type,{include_blank: " Select Expence Type"}, class: 'input_expencess_type_id' %>
+            <div class="form-group required">
+             <%= f.select :expencess_type_id, all_expencess_type,{ label:'Expense Type',include_blank: " Select Expense Type"}, class: 'input_expencess_type_id' %>
             </div>
           </div>
           <div class="col-sm-3">
-            <div class="form-group required">
+            <div class="field">
               <%= f.text_field :amount,label: 'Amount',placeholder: "Amount", class: 'input_amount'%>
             </div>
           </div>
@@ -58,7 +58,8 @@
       <div class="row">
         <div class="col-sm-3">
           <div class="actions">
-            <%= f.submit :class => class_name, data: { disable_with: data_info } %>
+            <%= f.submit "Create Monthly Expense",:class => class_name, data: { disable_with: data_info } %>
+            <%= link_to 'Back', monthly_expences_path,class: 'btn btn-sm btn-default fa fa-arrow-left' %>
           </div>
         </div>
     </div>
@@ -122,10 +123,10 @@ $("#monthly_expence").validate({
     "monthly_expence[expencess_type_id]":{
       required: true
     },
-    "monthly_expence[expence_date]":{
+    "monthly_expence[amount]":{
       required: true
     },
-    "monthly_expence[amount]":{
+    "monthly_expence[expence_date]":{
       required: true
     }
   },

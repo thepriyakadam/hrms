@@ -10,17 +10,17 @@
     </tr>
 
     <tr>
-    	<th><strong>Employee:</strong></th>
+    	<th><strong>Employee</strong></th>
     	<td><%= @employee_leav_balance.employee.try(:manual_employee_code) %></td>
 
-      <th><strong>Employee:</strong></th>
+      <th><strong>Employee</strong></th>
       <td><%= @employee_leav_balance.employee.try(:first_name) %> <%= @employee_leav_balance.employee.try(:middle_name) %> <%= @employee_leav_balance.employee.try(:last_name) %></td>
     </tr>
     <tr>
-    	<th><strong>Leave category:</strong></th>
+    	<th><strong>Leave Category</strong></th>
     	<td><%= @employee_leav_balance.leav_category.try(:name) %></td>
    
-    	<th><strong>No of leave:</strong></th>
+    	<th><strong>No. of Leave</strong></th>
     	<td> <%= @employee_leav_balance.no_of_leave %></td>
     </tr>
 

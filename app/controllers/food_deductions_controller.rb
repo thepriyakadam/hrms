@@ -66,7 +66,7 @@ class FoodDeductionsController < ApplicationController
   def calculate_food_deduction_amount
     total_coupan = params[:total_coupan].to_i
     food_coupan = FoodCoupanMaster.find(params[:id])
-    price = food_coupan.price.to_i
+    price = food_coupan.price.to_f
     @amount = price * total_coupan
   end
 

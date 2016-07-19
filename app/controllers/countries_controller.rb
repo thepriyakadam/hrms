@@ -1,20 +1,14 @@
 class CountriesController < ApplicationController
   before_action :set_country, only: [:show, :edit, :update, :destroy]
 
-  # GET /countries
-  # GET /countries.json
-  def index
-    @countries = Country.all
-  end
-
-  # GET /countries/1
-  # GET /countries/1.json
+  
   def show
   end
 
   # GET /countries/new
   def new
     @country = Country.new
+    @countries = Country.all
   end
 
   # GET /countries/1/edit
@@ -25,14 +19,14 @@ class CountriesController < ApplicationController
   # POST /countries.json
   def create
     @country = Country.new(country_params)
-
+    @countries = Country.all
     respond_to do |format|
       if @country.save
-        format.html { redirect_to @country, notice: 'Country was successfully created.' }
-        format.json { render :show, status: :created, location: @country }
+        @country = Country.new
+       format.js { @flag = true }
       else
-        format.html { render :new }
-        format.json { render json: @country.errors, status: :unprocessable_entity }
+        flash.now[:alert] = 'Country Already Exist.'
+        format.js { @flag = false }
       end
     end
   end
@@ -40,25 +34,17 @@ class CountriesController < ApplicationController
   # PATCH/PUT /countries/1
   # PATCH/PUT /countries/1.json
   def update
-    respond_to do |format|
-      if @country.update(country_params)
-        format.html { redirect_to @country, notice: 'Country was successfully updated.' }
-        format.json { render :show, status: :ok, location: @country }
-      else
-        format.html { render :edit }
-        format.json { render json: @country.errors, status: :unprocessable_entity }
-      end
-    end
+     @country.update(country_params)
+     @countries = Country.all
+     @country = Country.new
+
   end
 
   # DELETE /countries/1
   # DELETE /countries/1.json
   def destroy
     @country.destroy
-    respond_to do |format|
-      format.html { redirect_to countries_url, notice: 'Country was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    @countries = Country.all
   end
 
   private

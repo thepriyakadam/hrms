@@ -1,0 +1,36 @@
+<style>
+th {
+    text-align: left;
+}
+tr {
+    page-break-inside: avoid;
+}
+div.alwaysbreak { page-break-before: always; }
+div.nobreak:before { clear:both; }
+div.nobreak{ page-break-inside: avoid;
+  /* http://code.google.com/p/wkhtmltopdf/issues/detail?id=9#c21 */
+}
+</style>
+<div>
+<center><h3>Expense Claim Detail</h3></center>
+
+<table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
+  <thead>
+    <tr>
+      <th>Expense Date</th>
+      <th>E Place</th>
+      <th>Travel Expense Type</th>
+      <th>Travel Expense</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @daily_bill_details.each do |daily_bill_detail| %>
+      <tr>
+        <td><%= daily_bill_detail.expence_date %></td>
+        <td><%= daily_bill_detail.e_place %></td>
+        <td><%= daily_bill_detail.travel_expence_type.try(:name) %></td>
+        <td><%= daily_bill_detail.travel_expence %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

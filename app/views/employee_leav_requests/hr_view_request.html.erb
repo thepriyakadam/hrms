@@ -1,12 +1,13 @@
 <div class="box">
   <div class="box-header">
-    <h3 class="box-title">Employee Leave Request : 
+    <h3 class="box-title">Employee Leave Request - 
     <%= full_name(@employee_leav_requests.try(:first).try(:employee)) %></h3>
   </div><!-- /.box-header -->
   <div class="box-body">
   <div id="leave_request">
     <%= render 'leave_request_list' %>
   </div>
+
+<%= link_to 'Back', employee_list_employee_leav_requests_path,class: 'btn btn-sm btn-default fa fa-arrow-left' %>
 </div>
 </div>
-<%= link_to 'Back', employee_list_employee_leav_requests_path,class: 'btn btn-sm btn-default' %>

@@ -1,13 +1,17 @@
+<center><h3><%= @date.strftime('%B-%Y')%></h3></center>
 <table id="example1" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
-      <th>Employee</th>
-      <th>Day in Month</th>
-      <th>Present Day</th>
+      <th><input type="checkbox" id="selectAll" value="selectAll"></th>
+      <th>Employee No</th>
+      <th>Employee Name</th>
+      <th>Day In Month</th>
       <th>Total Leave</th>
-      <th>Holiday in Month</th>
+      <th>Non pay Leave</th>
+      <th>Holiday In Month</th>
       <th>Week off Day</th>
       <th>Absent Day</th>
+      <th>Present Day</th>
       <th>Payable Day</th>
     </tr>
   </thead>
@@ -15,19 +19,39 @@
   <tbody>
      <% @workingdays.each do |workingday| %>
       <tr>
+        <td><%= check_box_tag "workingdays[]", workingday.id %></td>
         <td><%= workingday.employee.try(:manual_employee_code) %></td>
+        <td><%= full_name(workingday.employee) %></td>
         <td><%= workingday.day_in_month %></td>
-        <td><%= workingday.present_day %></td>
         <td><%= workingday.total_leave %></td>
+        <td><%= workingday.lwp_leave %></td>
         <td><%= workingday.holiday_in_month %></td>
         <td><%= workingday.week_off_day %></td>
         <td><%= workingday.absent_day %></td>
+        <td><%= workingday.present_day %></td>
         <td><%= workingday.payable_day %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
+<%= link_to "Xls", print_working_day_workingdays_path(date: @date, format: "xls"), class: "btn btn-xl btn-success fa fa-print",:target => "_blank" %>
+
+<%= link_to "Confirm Payble Days", create_working_day_workingdays_path(date: @date), class: "btn btn-sm btn-primary" %>
+
 <script type="text/javascript">
   $("#example1").DataTable();
+
+$('#selectAll').click(function() {
+  if (this.checked) {
+    $(':checkbox').each(function() {
+      this.checked = true;                       
+    });
+  } 
+  else {
+    $(':checkbox').each(function() {
+      this.checked = false;                        
+    });
+  } 
+});
 </script>

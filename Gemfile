@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.4'
 # Use mysql as the database for Active Record
-# gem 'mysql2', '~> 0.3.18'
+#gem 'mysql2', '~> 0.3.18'
 gem 'sqlite3'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
@@ -20,6 +20,8 @@ gem 'bootstrap-datepicker-rails'
 gem 'awesome_print'
 gem 'datagrid', '~> 1.4', '>= 1.4.1'
 
+gem 'paperclip', '~> 4.3', '>= 4.3.6'
+
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
@@ -34,7 +36,7 @@ gem 'prawn', '~> 1.3.0'
 gem 'pdfkit', '~> 0.8.2'
 # Provides binaries for WKHTMLTOPDF project in an easily accessible package.
 
-gem 'wicked_pdf', '~> 1.0', '>= 1.0.5'
+gem 'wicked_pdf', '~> 1.0', '>= 1.0.6'
 
 gem 'wkhtmltopdf-binary', '~> 0.9.9.3'
 
@@ -50,6 +52,9 @@ gem 'wkhtmltopdf-binary', '~> 0.9.9.3'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
+  gem 'cucumber-rails', :require => false
+  # database_cleaner is not required, but highly recommended
+  gem 'database_cleaner'
 end
 
 group :development do
@@ -83,7 +88,6 @@ gem 'rails-erd'
 gem 'protokoll'
 
 # Image processing
-gem 'paperclip', '~> 4.3'
 
 # country And State Name
 # gem 'country_state_select', '~> 2.0.0'
@@ -105,3 +109,11 @@ gem 'yaml_db'
 
 #gem 'mail'
 gem 'email_verifier'
+
+#excel
+gem 'axlsx', '~> 2.0'
+gem "axlsx_rails"
+
+#Chart
+gem "chartkick"
+

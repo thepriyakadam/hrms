@@ -4,20 +4,14 @@ class EmployeeLeavRequestsController < ApplicationController
   load_and_authorize_resource
   include QueryReport::Helper  # need to include it
 
-  # GET /employee_leav_requests
-  # GET /employee_leav_requests.json
   def index
     @employee_leav_requests = EmployeeLeavRequest.where('employee_id = ?', current_user.try(:employee_id))
     @employee_leav_balances = EmployeeLeavBalance.where(employee_id: current_user.employee_id)
-    # @employee_leav_requests = EmployeeLeavRequest.all
   end
 
-  # GET /employee_leav_requests/1
-  # GET /employee_leav_requests/1.json
   def show
   end
 
-  # GET /employee_leav_requests/new
   def new
     @employee_leav_request = EmployeeLeavRequest.new
     @employee = Employee.find(current_user.employee_id)
@@ -26,12 +20,9 @@ class EmployeeLeavRequestsController < ApplicationController
     @leave_c_offs = LeaveCOff.where(employee_id: @employee.id)
   end
 
-  # GET /employee_leav_requests/1/edit
   def edit
   end
 
-  # POST /employee_leav_requests
-  # POST /employee_leav_requests.json
   def create
     @employee_leav_request = EmployeeLeavRequest.new(employee_leav_request_params)
     @employee = Employee.find(@employee_leav_request.employee_id)
@@ -81,12 +72,13 @@ class EmployeeLeavRequestsController < ApplicationController
         elsif type == 'C.Off'
           @employee_leav_request.leave_status_records.build(change_status_employee_id: current_user.employee_id, status: 'Pending', change_date: Date.today)
           if @employee_leav_request.save
+            #@employee_leav_request.manage_coff(@employee_leav_request)
             @employee_leav_request.minus_leave(@employee_leav_request)
             if @employee.manager.email.nil? || @employee.manager.email == ''
               flash[:notice] = 'Send request without email.'
             else
               flash[:notice] = 'Leave Request sent successfully.'
-              LeaveRequestMailer.pending(@employee_leav_request).deliver_now
+              #LeaveRequestMailer.pending(@employee_leav_request).deliver_now
             end
             redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
           else
@@ -111,8 +103,6 @@ class EmployeeLeavRequestsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /employee_leav_requests/1
-  # PATCH/PUT /employee_leav_requests/1.json
   def update
     respond_to do |format|
       if @employee_leav_request.update(employee_leav_request_params)
@@ -125,8 +115,6 @@ class EmployeeLeavRequestsController < ApplicationController
     end
   end
 
-  # DELETE /employee_leav_requests/1
-  # DELETE /employee_leav_requests/1.json
   def destroy
     @employee_leav_request.destroy
     respond_to do |format|
@@ -144,7 +132,8 @@ class EmployeeLeavRequestsController < ApplicationController
       @first_approved_employee_leav_requests = EmployeeLeavRequest.where(is_first_approved: true, is_second_approved: nil, is_second_rejected: nil, is_cancelled: nil, second_reporter_id: current_user.employee_id)
     end
     # @employee_leav_requests = EmployeeLeavRequest.joins("LEFT JOIN leav_approveds ON employee_leav_requests.id = leav_approveds.employee_leav_request_id LEFT JOIN leav_cancelleds ON employee_leav_requests.id = leav_cancelleds.employee_leav_request_id LEFT JOIN leav_rejecteds ON employee_leav_requests.id = leav_rejecteds.employee_leav_request_id where leav_approveds.id IS NULL AND leav_rejecteds.id IS NULL AND leav_cancelleds.id IS NULL")
-     session[:active_tab] ="leave"
+    session[:active_tab] ="leavemanagement"
+    session[:active_tab1] ="leaverequest"
   end
 
   def employee_list
@@ -161,7 +150,8 @@ class EmployeeLeavRequestsController < ApplicationController
            @employees = Employee.where(id: current_user.employee_id)
       end
     end
-    session[:active_tab] ="leave"
+    session[:active_tab] ="leavemanagement"
+    session[:active_tab1] ="leaverequest"
   end
 
   def from_hr
@@ -169,7 +159,7 @@ class EmployeeLeavRequestsController < ApplicationController
     @employee_leav_request = EmployeeLeavRequest.new
     @total_leaves = EmployeeLeavBalance.where('employee_id = ?', @employee.id)
     @remain_leaves = EmployeeLeavRequest.joins(:leav_approved)
-    @leave_c_offs = LeaveCOff.where(employee_id: @employee.id, is_taken: false)
+    @leave_c_offs = LeaveCOff.where(employee_id: @employee.id, is_taken: false).order("expiry_date desc")
   end
 
   def hr_view_request
@@ -186,47 +176,36 @@ class EmployeeLeavRequestsController < ApplicationController
   def search_by_start_date
     reporter(EmployeeLeavRequest.filter_records(current_user), template_class: PdfReportTemplate) do
       filter :start_date, type: :date
-      # filter(:current_status, :enum, :select => [["Pending",0], ["FirstApproved",2], ["SecondApproved",3], ["FirstRejected",4],["SecondRejected",5],["Cancelled",1]])
-      column(:manual_employee_code, sortable: true) { |employee_leav_request| employee_leav_request.employee.try(:manual_employee_code) }
-      column(:first_name, sortable: true) { |employee_leav_request| employee_leav_request.employee.try(:first_name) }
-      column(:middle_name, sortable: true) { |employee_leav_request| employee_leav_request.employee.try(:middle_name) }
-      column(:last_name, sortable: true) { |employee_leav_request| employee_leav_request.employee.try(:last_name) }
-      # column(:date_range,sortable: true) { |employee_leav_request| employee_leav_request.date_range }
-      column(:start_date, sortable: true) { |employee_leav_request| employee_leav_request.start_date.to_date }
-      column(:end_date, sortable: true) { |employee_leav_request| employee_leav_request.end_date.to_date }
-      column(:leav_category_id, sortable: true) { |employee_leav_request| employee_leav_request.leav_category.try(:name) }
-      column(:leave_type, sortable: true, &:leave_type)
-      column(:current_status, sortable: true, &:current_status)
-      column(:leave_count, sortable: true, &:leave_count)
-      column(:reason, sortable: true, &:reason)
-      column(:company_location, sortable: true) { |employee_leav_request| employee_leav_request.employee.try(:company_location).try(:name) }
-    end
-  end
+      filter :current_status, type: :string
+      column(:ID, sortable: true) { |employee_leav_request| employee_leav_request.employee.try(:manual_employee_code) }
+      column(:Employee_Name, sortable: true) { |employee_leav_request| full_name(employee_leav_request.employee) }
+      column(:Designation, sortable: true) { |employee_leav_request| employee_leav_request.employee.joining_detail.employee_designation.name }
+      column(:From, sortable: true) { |employee_leav_request| employee_leav_request.start_date.to_date }
+      column(:To, sortable: true) { |employee_leav_request| employee_leav_request.end_date.to_date }
+      column(:Leave_Category, sortable: true) { |employee_leav_request| employee_leav_request.leav_category.try(:name) }
+      column(:Apply_Date, sortable: true) { |employee_leav_request| employee_leav_request.created_at }
+      column(:Leave_Type, sortable: true, &:leave_type)
+      column(:Status, sortable: true, &:current_status)
+      column(:No_OF_Day, sortable: true, &:leave_count)
+      column(:Reason, sortable: true, &:reason)
 
-  def search_by_end_date
-    reporter(@employee_leav_requests, template_class: PdfReportTemplate) do
-      filter :end_date, type: :date
-      column(:manual_employee_code, sortable: true) { |employee_leav_request| employee_leav_request.employee.try(:manual_employee_code) }
-      column(:date_range, sortable: true, &:date_range)
-      column(:start_date, sortable: true) { |employee_leav_request| employee_leav_request.start_date.to_date }
-      column(:end_date, sortable: true) { |employee_leav_request| employee_leav_request.end_date.to_date }
-      column(:leav_category_id, sortable: true) { |employee_leav_request| employee_leav_request.leav_category.try(:name) }
-      column(:leave_type, sortable: true, &:leave_type)
-      column(:reason, sortable: true, &:reason)
     end
+    session[:active_tab] = "leavemanagement"
+    session[:active_tab1] = "leavereport"
   end
 
   def search_by_is_pending_date
     reporter(@employee_leav_requests, template_class: PdfReportTemplate) do
       filter :current_status, type: :string
-      column(:manual_employee_code, sortable: true) { |employee_leav_request| employee_leav_request.employee.try(:manual_employee_code) }
-      column(:employee_id, sortable: true) { |employee_leav_request| full_name(employee_leav_request.employee) }
-      column :is_pending
-      column :is_cancelled
-      column :is_first_approved
-      column :is_second_approved
-      column :is_first_rejected
-      column :is_second_rejected
+      # filter(:current_status, :enum, :select => [["Pending",0],["Cancelled",1],["FirstApproved",2],["SecondApproved",3],["FirstRejected",4],["SecondRejected",5]])
+      column(:Employee_ID, sortable: true) { |employee_leav_request| employee_leav_request.employee.try(:manual_employee_code) }
+      column(:Emploee_name, sortable: true) { |employee_leav_request| full_name(employee_leav_request.employee) }
+      # column :is_pending
+      # column :is_cancelled
+      # column :is_first_approved
+      # column :is_second_approved
+      # column :is_first_rejected
+      # column :is_second_rejected
       column :current_status
     end
   end

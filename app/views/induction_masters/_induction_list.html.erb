@@ -1,0 +1,33 @@
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Description</th>
+      <th>Action</th>
+      <th>Induction Document</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @induction_masters.each do |induction_master| %>
+      <tr>
+        <td><%= induction_master.code %></td>
+        <td><%= induction_master.description %></td>
+        <td>
+          <%= link_to ' Edit Template Detail', edit_induction_master_path(induction_master),class: 'btn btn-sm btn-success btn-xs',remote:true %>
+          <%= link_to ' Assign Induction Activity',new_induction_activity_path(induction_master_id: induction_master.id),class: 'btn btn-xs btn-primary' %>
+        </td>
+        <td>
+        <% if induction_master.avatar_file_name == nil %>
+              <small class="label label-default">Document Not Available</small>
+              <% else %>
+              <%= link_to '',download_induction_document_path(id: induction_master.id),class: 'btn btn-xs btn-primary fa fa-download' %>
+              <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+

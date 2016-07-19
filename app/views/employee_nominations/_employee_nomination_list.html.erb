@@ -1,0 +1,64 @@
+<table id="example3" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+    	<th>Nominational Type</th>
+      <th>Family</th>
+      <th>Nomination</th>
+      <th>Mental Illness</th>
+      <th>Minor</th>
+      <th>Guardian Name</th>
+      <th>Relation</th>
+      <th>Same Address</th>
+      <th>Address</th>
+      <th>City</th>
+      <th>District</th>
+      <th>State</th>
+      <th>Country</th>
+      <th>Pin Code</th>
+      <th>Phone No.</th>
+      <th>Mobile No.</th>
+      <th>Email</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+  	<% @employee_nominations.each do |employee_nomination| %>
+	    <tr>
+	      <td><%= employee_nomination.nominational_master %></td>
+	      <td><%= employee_nomination.family %></td>
+	      <td><%= employee_nomination.nomination %></td>
+	      <td><%= employee_nomination.mental_illness %></td>
+	      <td><%= employee_nomination.minor %></td>
+	      <td><%= employee_nomination.guardian_name %></td>
+	      <td><%= employee_nomination.relation %></td>
+	      <td><%= employee_nomination.same_address %></td>
+	      <td><%= employee_nomination.address %></td>
+	      <td><%= employee_nomination.city %></td>
+	      <td><%= employee_nomination.district %></td>
+	      <td><%= employee_nomination.state %></td>
+	      <td><%= employee_nomination.country %></td>
+	      <td><%= employee_nomination.pin_code %></td>
+	      <td><%= employee_nomination.phone_no %></td>
+	      <td><%= employee_nomination.mobile_no %></td>
+	      <td><%= employee_nomination.email %></td>
+	      <td>
+	      	<%= link_to '', edit_employee_nomination_path(employee_nomination) ,class: 'btn btn-xs btn-success fa fa-edit',remote:true  %>
+          <%= link_to '', employee_nomination, method: :delete, data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-danger fa fa-close' %>
+
+	      </td>
+	    </tr>
+  	<% end %>
+  </tbody>
+</table>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#example3').DataTable( {
+        "scrollY":        "200px",
+        "scrollX":        "1000px",
+        "scrollCollapse": true,
+        "paging":         false
+    } );
+} );
+</script>

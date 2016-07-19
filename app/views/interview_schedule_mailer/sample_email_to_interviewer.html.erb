@@ -6,16 +6,16 @@
   <body>
      <h4>Interview Confirmation</h4>
     <p>
-       Dear,  <%= @employee.first_name.to_s %> <%= @employee.last_name.to_s %>-<%= @employee.optinal_contact_no.to_s %><br><br>
-      This is to inform you that you need to take an Interview for the position <%= @interview_schedule.post_title %>.
+       Dear,<br>  <%= @employee.first_name.to_s %> <%= @employee.last_name.to_s %>-<%= @employee.optinal_contact_no.to_s %><br><br>
+      This is to inform you that you need to take an Interview for the position <b><%= @interview_schedule.post_title %></b>.
        Details for interview is given below.<br><br>
-       1 Candidate Name :- <%= @interview_schedule.candidate_name %><br><br>
-       2 Date :- <%= @interview_schedule.interview_date %><br><br>
-       3 Time :- <%= @interview_schedule.interview_time %><br><br>
-       4 Address :- <%= @interview_schedule.location %><br><br>
+       1. <b>Candidate Name :-</b> <%= @interview_schedule.candidate_name %><br><br>
+       2. <b>Date :-</b> <%= @interview_schedule.interview_date %><br><br>
+       3. <b>Time :-</b> <%= @interview_schedule.interview_time %><br><br>
+       4. <b>Address :-</b> <%= @interview_schedule.location %><br><br>
       
         With Regards,<br><br>
-        BFTL HR
+        HR 
      </p>
   </body>
 </html>

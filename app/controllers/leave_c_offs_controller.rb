@@ -2,7 +2,7 @@ require 'query_report/helper' # need to require the helper
 
 class LeaveCOffsController < ApplicationController
   before_action :set_leave_c_off, only: [:show, :edit, :update, :destroy]
-
+  
   # GET /leave_c_offs
   # GET /leave_c_offs.json
   include QueryReport::Helper # need to include it
@@ -28,7 +28,8 @@ class LeaveCOffsController < ApplicationController
         @leave_c_offs = LeaveCOff.where(employee_id: @employees)
       end
     end
-    session[:active_tab] ="leave"
+    session[:active_tab] ="leavemanagement"
+    session[:active_tab1] ="leaveadministration"
   end
 
   # GET /leave_c_offs/1/edit
@@ -77,7 +78,6 @@ class LeaveCOffsController < ApplicationController
         end
       end
       ActiveRecord::Base.transaction do
-        puts @leave_c_off.leave_count
         @leave_c_off.save
         @employee_leave_balance.save
       end
@@ -104,12 +104,16 @@ class LeaveCOffsController < ApplicationController
     @leave_c_offs = LeaveCOff.all
     reporter(@leave_c_offs, template_class: PdfReportTemplate) do
       filter :c_off_date, type: :date
-      column(:manual_employee_code, sortable: true) { |leave_c_off| leave_c_off.employee.try(:manual_employee_code) }
-      column(:first_name, sortable: true) { |leave_c_off| full_name(leave_c_off.employee) }
-      column(:c_off_date, sortable: true, &:c_off_date)
-      column(:c_off_type, sortable: true, &:c_off_type)
-      column(:c_off_expire_day, sortable: true, &:c_off_expire_day)
-      column(:expiry_status, sortable: true, &:expiry_status)
+      # column(:Employee_Code, sortable: true) { |leave_c_off| leave_c_off.employee_id }
+      column(:Employee_ID, sortable: true) { |leave_c_off| leave_c_off.employee.try(:manual_employee_code) }
+      column(:Employee_Name, sortable: true) { |leave_c_off| full_name(leave_c_off.employee) }
+      column(:Date, sortable: true, &:c_off_date)
+      column(:Type, sortable: true, &:c_off_type)
+      column(:Expire_Day, sortable: true, &:c_off_expire_day)
+      column(:Status, sortable: true, &:expiry_status)
+      column(:Taken, sortable:true, &:is_taken)
+      column(:Expire_Date, sortable:true, &:expiry_date)
+      column(:No_OF_COff, sortable:true, &:leave_count)
     end
   end
 

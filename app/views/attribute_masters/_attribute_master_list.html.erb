@@ -1,0 +1,25 @@
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>  
+      <th>Code</th>
+      <th>Name</th>
+      <th>Definition</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @attribute_masters.each do |attribute_master| %>
+      <tr>
+        <td><%= attribute_master.code %></td>
+        <td><%= attribute_master.name %></td>
+        <td><%= attribute_master.definition %></td>
+        <td><%= attribute_master.status ? "Active" : "Inactive" %></td>
+        <td>
+          <%= link_to '', edit_attribute_master_path(attribute_master),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
+          <%= link_to '',  attribute_master, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

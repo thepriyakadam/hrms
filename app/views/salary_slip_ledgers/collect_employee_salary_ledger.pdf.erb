@@ -1,0 +1,109 @@
+<div class="ajax-progress"></div>
+<% i = 0 %>
+<table style="border-collapse: collapse; font-size:30pt;" border=1 width=1000 cellpadding="15">
+  <thead>
+    <tr>
+      <th colspan="22">
+        <center><strong>BHANDARI FOILS AND TUBES LTD.</strong></center>
+        <center><small></small></center>
+        <center><small>Employee Monthly Salary For The Year <%= @month %> - <%= @year %></small></center>   
+      </th>
+    </tr>
+    <tr>
+      <th colspan="6" align="left"> Employee ID: <%= @reports.first.try(:code) %> </th>
+      <th colspan="10" align="left">Employee Name: <%= @reports.first.try(:employee_name) %> </th>
+      <th colspan="6" align="left">Designation: </th>
+    </tr>
+     <tr>
+      <th>Sr.No</th>
+      <th>Month</th>
+      <th>Payble Day</th>
+      
+      <th>Basic</th>
+      <th>DA</th>
+      <th>HRA</th>
+      <th>conv</th>
+      <th>O.Allow</th>
+      <th>S.Allow</th>
+      <th>Wsh.Allow</th>
+      <th>Gross</th>
+
+      <th>PF</th>
+      <th>ESIC</th>
+      <th>IT</th>
+      <th>PT</th>
+      <th>Adv.Sal</th>
+      <th>Society</th>
+      <th>Food</th>
+      <th>Mobile</th>
+      <th>Retention</th>
+      <th>Total Dedu</th>
+
+      <th>NET</th>
+    </tr>
+    </thead>
+    <tbody>
+     <% @reports.each do |r| %>
+      <tr>
+       <td><%= i = i+1 %></td>
+       <td><%= r.try(:month) %> <%= r.try(:year) %></td>
+
+        <td><%= r.try(:payable_day) %></td>
+        <td><%= r.try(:earned_basic).round %></td>
+        <td><%= r.try(:earned_da).round %></td>
+        <td><%= r.try(:earned_hra).round %></td>
+
+        <td><%= r.try(:earned_convenience).round %></td>
+        <td><%= r.try(:earned_other).round %></td>
+        <td><%= r.try(:earned_special).round %></td>
+        <td><%= r.try(:earned_washing).round %></td>
+        <td><%= r.try(:earned_total).round %></td>
+
+        <td><%= r.try(:pf) %></td>
+        <td><%= r.try(:esic) %></td>
+        <td><%= r.try(:income_tax) %></td>
+        <td><%= r.try(:pt) %></td>
+        <td><%= r.try(:advance) %></td>
+        <td><%= r.try(:society) %></td>
+
+        <td><%= r.try(:food_deduction) %></td>
+        <td><%= r.try(:mobile) %></td>
+        <td><%= r.try(:retention) %></td>
+        <td><%= r.try(:deduction_total).round %></td>
+        <td><%= r.try(:net_payable).round %></td>
+      </tr>
+    <% end %>
+    <tr>
+      <th></th>
+      <th></th>
+      <th><%= @sum.payable_day.round %></th>
+      <th><%= @sum.earned_basic.round %></th>
+      <th><%= @sum.earned_da.round %></th>
+      <th><%= @sum.earned_hra.round %></th>
+      <th><%= @sum.earned_convenience.round %></th>
+      <th><%= @sum.earned_other.round %></th>
+      <th><%= @sum.earned_special.round %></th>
+      <th><%= @sum.earned_washing.round %></th>
+      <th><%= @sum.earned_total.round %></th>
+
+      <th><%= @sum.pf %></th>
+      <th><%= @sum.esic %></th>
+      <th><%= @sum.income_tax %></th>
+      <th><%= @sum.pt %></th>
+      <th><%= @sum.advance %></th>
+      <th><%= @sum.society %></th>
+      <th><%= @sum.food_deduction %></th>
+      <th><%= @sum.mobile %></th>
+      <th><%= @sum.retention %></th>
+      <th><%= @sum.deduction_total %></th>
+
+      <th><%= @sum.net_payable.round %></th>
+      </tr>
+  </tbody>
+</table>
+
+<style type="text/css">
+div.alwaysbreak { page-break-before: always; }
+div.nobreak:before { clear:both; }
+div.nobreak { page-break-inside: avoid; }
+</style>

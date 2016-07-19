@@ -4,6 +4,8 @@ class EmployeeDesignationsController < ApplicationController
   def new
     @employee_designation = EmployeeDesignation.new
     @employee_designations = EmployeeDesignation.all
+    session[:active_tab] ="master"
+    session[:active_tab1] ="employeeprofilesetup"
   end
 
   # GET /employee_designations/1/edit

@@ -5,6 +5,8 @@ class WellFairesController < ApplicationController
   def new
     @well_faire = WellFaire.new
     @well_faires = WellFaire.all
+    session[:active_tab] ="master"
+    session[:active_tab1] ="payrollcomponents"
   end
 
   # GET /well_faires/1/edit
@@ -12,19 +14,14 @@ class WellFairesController < ApplicationController
   end
 
   # POST /well_faires
-  # POST /well_faires.json
   def create
-    @well_faire = WellFaire.new(well_faire_params)
-    @well_faires = WellFaire.all
-    respond_to do |format|
+     @well_faire = WellFaire.new(well_faire_params)
+     @well_faires = WellFaire.all
       if @well_faire.save
         @well_faire = WellFaire.new
-        format.js { @flag = true }
-      else
-        flash.now[:alert] = 'wellfaire is Already Exist.'
-        format.js { @flag = false }
       end
-    end
+      flash[:notice] = 'Wellfare saved Successfully.' 
+      redirect_to new_well_faire_path    
   end
 
   # PATCH/PUT /well_faires/1
@@ -33,6 +30,7 @@ class WellFairesController < ApplicationController
     @well_faire.update(well_faire_params)
     @well_faires = WellFaire.all
     @well_faire = WellFaire.new
+     redirect_to new_well_faire_path
   end
 
   # DELETE /well_faires/1

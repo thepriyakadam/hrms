@@ -2,7 +2,7 @@
 <!-- SELECT2 EXAMPLE -->
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title">Society Member Ship</h3>
+    <h3 class="box-title">Employee Membership</h3>
   </div><!-- /.box-header -->
   
   <div class="box-body">
@@ -38,7 +38,8 @@
         <div class="row">
         <div class="col-sm-3">
           <div class="actions">
-            <%= f.submit :class => class_name, data: { disable_with: data_info } %>
+            <%= f.submit "New Membership",:class => class_name, data: { disable_with: data_info } %>
+            <%= link_to 'Back', society_member_ships_path,class: 'btn btn-sm btn-default fa fa-arrow-left' %>
           </div>
         </div>
     </div>

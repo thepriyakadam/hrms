@@ -1,5 +1,15 @@
 class Reports::SalariesController < ApplicationController
   def new
+    session[:active_tab] ="payroll"
+    session[:active_tab1] ="salaryreport"
+  end
+
+  def download
+    @payments = Salaryslip.all
+    # respond_to do |format|
+    #   format.xlsx {render xlsx: 'download',filename: "payments.xlsx"}
+    # end
+    #render xlsx: "create", template: "api/reports/create"
   end
 
   def date_range_report

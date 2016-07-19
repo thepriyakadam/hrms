@@ -6,4 +6,5 @@ class RewardsAllocation < ActiveRecord::Base
 	validates :reward_type_id, presence: true
 	validates :department_id, presence: true
 	validates :reporting_master_id, presence: true
+	validates :allocated_qty, presence: true
 end

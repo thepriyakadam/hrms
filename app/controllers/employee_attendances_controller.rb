@@ -83,6 +83,8 @@ class EmployeeAttendancesController < ApplicationController
   def attendance
     @year = params[:year]
     @month = params[:month]
+    #@employee = params[:salary][:employee_id]
+
     @date = Date.new(@year.to_i, Workingday.months[@month])
     @day = @date.end_of_month.day
     #@employees = Employee.all

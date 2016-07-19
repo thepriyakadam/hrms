@@ -729,7 +729,12 @@ end
       get :employees
     end
   end
-  resources :reporting_masters
+  resources :reporting_masters do
+    collection do
+      get :update_reporting_manager
+      post :update_manager
+    end
+  end
   resources :leave_status_records do
     collection do
       get :cancel_after_approve

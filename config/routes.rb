@@ -443,6 +443,8 @@ end
     
     post 'salaries/ctc_yearly_report'
     get 'salaries/ctc_yearly'
+    get 'certificate/new'
+    post 'certificate/show_joining_date'
   end
 
   namespace :views do

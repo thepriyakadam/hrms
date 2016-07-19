@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160718052304) do
+ActiveRecord::Schema.define(version: 20160718065930) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -171,15 +171,6 @@ ActiveRecord::Schema.define(version: 20160718052304) do
   add_index "attribute_rating_sheets", ["final_id_id"], name: "index_attribute_rating_sheets_on_final_id_id"
   add_index "attribute_rating_sheets", ["final_rating_id"], name: "index_attribute_rating_sheets_on_final_rating_id"
 
-  create_table "attributes", force: :cascade do |t|
-    t.string   "code"
-    t.string   "name"
-    t.text     "definition"
-    t.boolean  "status"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "awards", force: :cascade do |t|
     t.integer  "employee_id"
     t.string   "award_name"
@@ -291,13 +282,6 @@ ActiveRecord::Schema.define(version: 20160718052304) do
   add_index "capture_resumes", ["employee_designation_id"], name: "index_capture_resumes_on_employee_designation_id"
   add_index "capture_resumes", ["state_id"], name: "index_capture_resumes_on_state_id"
   add_index "capture_resumes", ["vacancy_master_id"], name: "index_capture_resumes_on_vacancy_master_id"
-
-  create_table "cars", force: :cascade do |t|
-    t.string   "name"
-    t.string   "color"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
 
   create_table "certifications", force: :cascade do |t|
     t.integer  "employee_id"
@@ -587,6 +571,39 @@ ActiveRecord::Schema.define(version: 20160718052304) do
 
   add_index "districts", ["state_id"], name: "index_districts_on_state_id"
 
+  create_table "due_details", force: :cascade do |t|
+    t.integer  "due_employee_template_id"
+    t.integer  "reporting_master_id"
+    t.boolean  "status"
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
+
+  add_index "due_details", ["due_employee_template_id"], name: "index_due_details_on_due_employee_template_id"
+  add_index "due_details", ["reporting_master_id"], name: "index_due_details_on_reporting_master_id"
+
+  create_table "due_employee_templates", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.integer  "due_template_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "due_employee_templates", ["due_template_id"], name: "index_due_employee_templates_on_due_template_id"
+  add_index "due_employee_templates", ["employee_id"], name: "index_due_employee_templates_on_employee_id"
+
+  create_table "due_templates", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
+    t.boolean  "status"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+    t.string   "document_file_name"
+    t.string   "document_content_type"
+    t.integer  "document_file_size"
+    t.datetime "document_updated_at"
+  end
+
   create_table "email_configs", force: :cascade do |t|
     t.string   "url_host"
     t.integer  "url_port"
@@ -750,12 +767,8 @@ ActiveRecord::Schema.define(version: 20160718052304) do
     t.string   "allign_to_supervisor"
     t.boolean  "is_confirm"
     t.string   "emp_head"
-    t.integer  "appraiser_id"
-    t.integer  "appraiser2_id"
   end
 
-  add_index "employee_goals", ["appraiser2_id"], name: "index_employee_goals_on_appraiser2_id"
-  add_index "employee_goals", ["appraiser_id"], name: "index_employee_goals_on_appraiser_id"
   add_index "employee_goals", ["employee_id"], name: "index_employee_goals_on_employee_id"
   add_index "employee_goals", ["goal_perspective_id"], name: "index_employee_goals_on_goal_perspective_id"
   add_index "employee_goals", ["period_id"], name: "index_employee_goals_on_period_id"

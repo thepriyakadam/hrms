@@ -8,7 +8,7 @@
     <label>Reporting Manager 2</label>
       <%= f.select :manager_2_id,(@managers.present? ? (@managers.collect {|b| [b.employee.first_name+' '+b.employee.middle_name+' '+b.employee.last_name,b.employee_id]}) : {}),{include_blank: "Select Repoting Officer 2",hide_label:true},class: "form-control"%>
     </div>
-    <div class="col-sm-2">
+    <div class="col-sm-2" style="padding-top:20px;">
       <%= f.submit "Update", class: 'btn btn-success btn-sm' %>
     </div>
   </div>

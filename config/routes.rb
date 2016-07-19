@@ -1,11 +1,27 @@
 Rails.application.routes.draw do
 
+<<<<<<< HEAD
   resources :due_actions
   resources :due_details do
     collection do
       get :all_employee_resignation_list
     end
   end
+=======
+  resources :employee_transfers do
+    collection do
+      get :transfer_request
+      get :employee_transfer_confirmation
+      get :approve_transfer
+      get :reject_transfer
+      get :modal_approve
+      post :send_request_to_higher_authority
+      get :modal_edit
+      patch :update_transfer_details
+    end
+  end
+  resources :due_details
+>>>>>>> 4292cf1730bd021e38be2014ba4b56f173511fcf
   resources :due_templates
   resources :employee_transfers
   resources :rewards_pals
@@ -138,6 +154,7 @@ Rails.application.routes.draw do
       get :all_emp_list
       get :increment_index
       post :all_employee_list
+      post :print_employee_list
     end
   end
   #post 'goal_ratings/update_goal_set_modal'

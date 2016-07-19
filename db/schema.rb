@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160718052304) do
+ActiveRecord::Schema.define(version: 20160718065930) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -586,6 +586,39 @@ ActiveRecord::Schema.define(version: 20160718052304) do
   end
 
   add_index "districts", ["state_id"], name: "index_districts_on_state_id"
+
+  create_table "due_details", force: :cascade do |t|
+    t.integer  "due_employee_template_id"
+    t.integer  "reporting_master_id"
+    t.boolean  "status"
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
+
+  add_index "due_details", ["due_employee_template_id"], name: "index_due_details_on_due_employee_template_id"
+  add_index "due_details", ["reporting_master_id"], name: "index_due_details_on_reporting_master_id"
+
+  create_table "due_employee_templates", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.integer  "due_template_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "due_employee_templates", ["due_template_id"], name: "index_due_employee_templates_on_due_template_id"
+  add_index "due_employee_templates", ["employee_id"], name: "index_due_employee_templates_on_employee_id"
+
+  create_table "due_templates", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
+    t.boolean  "status"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+    t.string   "document_file_name"
+    t.string   "document_content_type"
+    t.integer  "document_file_size"
+    t.datetime "document_updated_at"
+  end
 
   create_table "email_configs", force: :cascade do |t|
     t.string   "url_host"

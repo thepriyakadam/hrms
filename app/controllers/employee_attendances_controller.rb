@@ -93,6 +93,34 @@ class EmployeeAttendancesController < ApplicationController
     #@employee_attendances = EmployeeAttendance.all
   end
 
+  def revert_attendance
+  end
+
+  def show_employee
+    @department_id = params[:salary][:department_id]
+    @day = params[:salary][:day]
+    @present = params[:salary][:present]
+    @employee_attendances = EmployeeAttendance.where("day = ? AND present = ?", @day.to_date, @present)
+  end
+
+  def destroy_employee_attendance
+    @department_id = params[:department_id]
+    @day = params[:day]
+    @present = params[:present]
+    @employee_attendance_ids = params[:employee_attendance_ids]
+    if @employee_attendance_ids.nil?
+      flash[:alert] = "Please Select Employees"
+      redirect_to revert_attendance_employee_attendances_path
+    else
+      @employee_attendance_ids.each do |eid|
+        @employee_attendance = EmployeeAttendance.find(eid)
+        EmployeeAttendance.where(id: eid).destroy_all
+      end
+      flash[:alert] = "Revert successfully"
+      redirect_to revert_attendance_employee_attendances_path
+    end
+  end
+
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_employee_attendance

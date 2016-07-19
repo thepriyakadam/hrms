@@ -7,4 +7,8 @@ class InvestmentDeclaration < ActiveRecord::Base
 
   validates_attachment_size :document, less_than: 2.megabytes
   validates_attachment :document, content_type: { content_type: %w(application/pdf application/msword application/msexcel application/vnd.openxmlformats-officedocument.wordprocessingml.document) }
+  validates :investment_head_id, presence: true
+  validates :employee_id, presence: true
+  validates :amount, presence: true
+  validates :date, presence: true
 end

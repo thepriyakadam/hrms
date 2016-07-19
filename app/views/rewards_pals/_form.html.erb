@@ -7,31 +7,29 @@
     </div> 
 
     <div class="col-sm-3">
-      <label>Date: </label>
       <div class="form-group required">
         <div class="input-group">
           <div class="input-group-addon">
             <i class="fa fa-calendar"></i>
           </div>
-          <%= f.text_field :date, hide_label: true, class: 'interview_date'%>
+          <%= f.text_field :date, label: 'Date', class: 'interview_date'%>
         </div>
       </div>
     </div>
 
      <div class="col-sm-3">
-      <div class="field">
+          <div class="form-group required">
         <%= f.text_field :purpose,label: 'Purpose' %>
       </div>
       </div>
 
     <div class="col-sm-3">
-        <label>Reward Type</label>
           <div class="form-group required">
             <div class="input-group">
               <div class="input-group-addon">
                 <%= link_to "", new_reward_type_path,class: "fa fa-plus fa-success",:target => "_blank" %>
               </div>
-               <%= f.select :reward_type_id, all_reward_type, {hide_label: true,include_blank: " Select Reward Type"} %>
+               <%= f.select :reward_type_id, all_reward_type, {label: 'Reward Type' ,include_blank: " Select Reward Type"} %>
             </div>
           </div>
       </div>
@@ -43,7 +41,7 @@
   <div class="row">
 
     <div class="col-sm-3">
-    <div class="field">
+      <div class="form-group required">
         <%= f.text_field :qty,label: 'Qty' %>
     </div>
     </div>
@@ -72,5 +70,47 @@
     yearRange: '-200:-0',
     dateFormat: 'dd-mm-yy' });
   }); 
+
+  $("#rewards_pal").validate({
+    rules: {
+      "rewards_pal[employee_id]":{
+        required: true,
+      },
+       "rewards_pal[purpose]":{
+        required: true,
+      },
+       "rewards_pal[reward_type_id]":{
+        required: true,
+      },
+       "rewards_pal[date]":{
+        required: true,
+      },
+      "rewards_pal[qty]":{
+        required: true,
+      }
+    },
+    messages: {
+      "rewards_pal[employee_id]":{
+        required: "Please Specify employee_id",
+      },
+      "rewards_pal[purpose]":{
+        required: "Please Specify purpose",
+      },
+      "rewards_pal[reward_type_id]":{
+        required: "Please Specify reward_type_id",
+      },
+      "rewards_pal[date]":{
+        required: "Please Specify date",
+      },
+      "rewards_pal[qty]":{
+        required: "Please Specify qty",
+      }
+      
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
 </script>
 

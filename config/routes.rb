@@ -72,6 +72,9 @@ Rails.application.routes.draw do
       post :all_emp_list
       post :create_employee_attendance
       get :attendance
+      get :revert_attendance
+      post :show_employee
+      post :destroy_employee_attendance
     end
   end
   resources :salary_comp_mappings

@@ -128,15 +128,18 @@ class InductionActivitiesController < ApplicationController
 
 
   def modal_induction_activity
-    @induction_activity = InductionActivity.find(params[:format])
+    #byebug
+    @induction_activity = InductionActivity.find(params[:induction_activity_id])
+    @induction_master = InductionMaster.find(params[:induction_master_id])
   end
 
 
   def update_induction
     @induction_activity = InductionActivity.find(params[:id])
     @induction_activity.update(induction_activity_params)
+    @induction_master = InductionMaster.find(params[:induction_master_id])
     flash[:notice] = 'Activity Updated Successfully'
-    redirect_to root_url
+    redirect_to new_induction_activity_path(induction_master_id: @induction_master.id)
   end
 
   private

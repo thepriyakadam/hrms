@@ -84,13 +84,41 @@ class EmployeeAttendancesController < ApplicationController
     @month = params[:month]
     @date = Date.new(@year.to_i, Workingday.months[@month])
     @day = @date.end_of_month.day
-    @employees = Employee.where(id: [4621, 4621, 4621, 4693, 4693, 4693, 4697, 4697, 4697, 4816, 4816, 4816, 4817, 4817, 4817, 4823, 4823, 4823, 4910, 4910, 4910, 4935, 4935, 4935, 4964, 4964, 4964, 5044, 5044, 5044, 5055, 5055, 5055, 5121, 5121, 5121])
-    #@employee_attendances = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", date.strftime('%m/%Y'))
+    #@employees = Employee.all
+    @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y'))
     
     #@employee = Employee.find(current_user.employee_id)
     #@employee_attendances = EmployeeAttendance.where(employee_id: @employee.id)
 
     #@employee_attendances = EmployeeAttendance.all
+  end
+
+  def revert_attendance
+  end
+
+  def show_employee
+    @department_id = params[:salary][:department_id]
+    @day = params[:salary][:day]
+    @present = params[:salary][:present]
+    @employee_attendances = EmployeeAttendance.where("day = ? AND present = ?", @day.to_date, @present)
+  end
+
+  def destroy_employee_attendance
+    @department_id = params[:department_id]
+    @day = params[:day]
+    @present = params[:present]
+    @employee_attendance_ids = params[:employee_attendance_ids]
+    if @employee_attendance_ids.nil?
+      flash[:alert] = "Please Select Employees"
+      redirect_to revert_attendance_employee_attendances_path
+    else
+      @employee_attendance_ids.each do |eid|
+        @employee_attendance = EmployeeAttendance.find(eid)
+        EmployeeAttendance.where(id: eid).destroy_all
+      end
+      flash[:alert] = "Revert successfully"
+      redirect_to revert_attendance_employee_attendances_path
+    end
   end
 
   private

@@ -90,10 +90,40 @@ class InterviewRoundsController < ApplicationController
     @interview_rounds = InterviewRound.where(interview_schedule_id: @interview_schedule.id)
   end
 
+  def interview_round_reschedule
+
+    @interview_round = InterviewRound.find(params[:id])
+    @employee = Employee.find(@interview_round.employee_id)
+    @interview_round_reschedule = InterviewRoundReschedule.new
+  end
+
+  def reschedule_interview
+    @interview_round_reschedule = InterviewRoundReschedule.new
+    @interview_round = InterviewRound.find(params[:interview_round_reschedule][:interview_round_id])
+
+    @interview_round_reschedule.interview_date = @interview_round.interview_date
+    @interview_round_reschedule.interview_time = @interview_round.interview_time
+    @interview_round_reschedule.employee_id = @interview_round.employee_id
+    @interview_round_reschedule.location = @interview_round.location
+    @interview_round_reschedule.interview_type_id = @interview_round.interview_type_id
+    @interview_round_reschedule.employee_id = params[:interview_round_reschedule][:employee_id]
+    @interview_round_reschedule.interview_round_id = @interview_round.id
+
+    @interview_round_reschedule.save
+    @interview_round.update(interview_date: params[:interview_round_reschedule][:interview_date], interview_time: params[:interview_round_reschedule][:interview_time],employee_id: params[:interview_round_reschedule][:employee_id],location: params[:interview_round_reschedule][:location],interview_type_id: params[:interview_round_reschedule][:interview_type_id])
+    @interview_round_reschedule = InterviewRoundReschedule.new(interview_round_reschedule_params)
+    redirect_to root_url
+    flash[:notice] = 'Interview Round Rescheduled Successfully.'   
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_interview_round
       @interview_round = InterviewRound.find(params[:id])
+    end
+
+    def interview_round_reschedule_params
+      params.require(:interview_round_reschedule).permit(:interview_round_id, :employee_id, :interview_type_id, :interview_date, :interview_time, :location)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

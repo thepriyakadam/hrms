@@ -16,6 +16,7 @@ class EmployeeAttendancesController < ApplicationController
   # GET /employee_attendances/new
   def new
     @employee_attendance = EmployeeAttendance.new
+    session[:active_tab] = "timemgmt"
   end
 
   # GET /employee_attendances/1/edit
@@ -82,6 +83,8 @@ class EmployeeAttendancesController < ApplicationController
   def attendance
     @year = params[:year]
     @month = params[:month]
+    #@employee = params[:salary][:employee_id]
+
     @date = Date.new(@year.to_i, Workingday.months[@month])
     @day = @date.end_of_month.day
     #@employees = Employee.all
@@ -91,6 +94,34 @@ class EmployeeAttendancesController < ApplicationController
     #@employee_attendances = EmployeeAttendance.where(employee_id: @employee.id)
 
     #@employee_attendances = EmployeeAttendance.all
+  end
+
+  def revert_attendance
+  end
+
+  def show_employee
+    @department_id = params[:salary][:department_id]
+    @day = params[:salary][:day]
+    @present = params[:salary][:present]
+    @employee_attendances = EmployeeAttendance.where("day = ? AND present = ?", @day.to_date, @present)
+  end
+
+  def destroy_employee_attendance
+    @department_id = params[:department_id]
+    @day = params[:day]
+    @present = params[:present]
+    @employee_attendance_ids = params[:employee_attendance_ids]
+    if @employee_attendance_ids.nil?
+      flash[:alert] = "Please Select Employees"
+      redirect_to revert_attendance_employee_attendances_path
+    else
+      @employee_attendance_ids.each do |eid|
+        @employee_attendance = EmployeeAttendance.find(eid)
+        EmployeeAttendance.where(id: eid).destroy_all
+      end
+      flash[:alert] = "Revert successfully"
+      redirect_to revert_attendance_employee_attendances_path
+    end
   end
 
   private

@@ -37,7 +37,7 @@ class InterviewAnalysesController < ApplicationController
         @interview_analysis = InterviewAnalysis.new
         flash[:notice] = 'Interview Evaluation Details saved Successfully.'
       end
-      # byebug
+      
       @interview_round_id = InterviewRound.find(params[:interview_analysis][:interview_round_id])
       redirect_to new_interview_analysis_path(interview_round_id: @interview_round_id.id)
   end

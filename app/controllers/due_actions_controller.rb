@@ -15,8 +15,10 @@ class DueActionsController < ApplicationController
   # GET /due_actions/new
   def new
     @due_action = DueAction.new
-    @due_detail = DueDetail.find(params[:due_detail_id])
-    @due_actions = DueAction.where(due_detail_id: @due_detail.id)
+    # @due_detail = DueDetail.find(params[:due_detail_id])
+    @due_employee_detail = DueEmployeeDetail.find(params[:format])
+    # @due_actions = DueAction.where(due_detail_id: @due_detail.id)
+    @due_actions = DueAction.all
   end
 
   # GET /due_actions/1/edit

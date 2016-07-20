@@ -1,5 +1,6 @@
 class DueTemplate < ActiveRecord::Base
    has_many :due_details
+   has_many :due_employee_details
    has_attached_file :document,
   :path => "attachments/attach_due_templates/:basename.:extension"
 

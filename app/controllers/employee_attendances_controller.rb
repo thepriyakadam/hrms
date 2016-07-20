@@ -88,7 +88,7 @@ class EmployeeAttendancesController < ApplicationController
     @date = Date.new(@year.to_i, Workingday.months[@month])
     @day = @date.end_of_month.day
     #@employees = Employee.all
-    @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y'))
+    @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).group(:employee_id)
     
     #@employee = Employee.find(current_user.employee_id)
     #@employee_attendances = EmployeeAttendance.where(employee_id: @employee.id)

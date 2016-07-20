@@ -14,8 +14,10 @@ class DueDetailsController < ApplicationController
 
   # GET /due_details/new
   def new
+    # byebug
     @due_detail = DueDetail.new
-    @due_details = DueDetail.all
+    @due_template = DueTemplate.find(params[:due_template_id])
+    @due_details = DueDetail.where(due_template_id: @due_template.id)
   end
 
   # GET /due_details/1/edit
@@ -31,7 +33,8 @@ class DueDetailsController < ApplicationController
       if @due_detail.save
         @due_detail = DueDetail.new
       end
-      redirect_to new_due_detail_path
+      @due_template_id = DueTemplate.find(params[:due_detail][:due_template_id])
+      redirect_to new_due_detail_path(due_template_id: @due_template_id.id)
       flash[:notice] = 'Due Detail created Successfully.'   
   end
 
@@ -54,6 +57,36 @@ class DueDetailsController < ApplicationController
     @due_details = DueDetail.all
   end
 
+  def all_employee_resignation_list
+     @employee_resignations = EmployeeResignation.all
+  end
+
+  def is_confirm
+    @due_detail_ids = params[:due_detail_ids]
+    if @due_detail_ids.nil?
+      flash[:alert] = "Please Select the Checkbox"
+      redirect_to root_url
+    else
+      @due_detail_ids.each do |did|
+      @due_detail = DueDetail.find(did)
+      @due_detail.update(is_confirmed: true) 
+      # InterviewScheduleMailer.sample_email_to_interviewer(@interview_schedule).deliver_now
+      flash[:notice] = "Confirmed Successfully"
+    end 
+     redirect_to root_url
+  end
+  end
+
+  def due_detail_history
+     @due_details = DueDetail.where(reporting_master_id: current_user.employee_id,is_confirmed: true)
+  end
+
+  def show_due_template_list
+     # byebug
+     @due_detail = DueDetail.find(params[:due_detail_id])
+     @due_templates = DueTemplate.where(due_detail_id: @due_detail.id)
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_due_detail
@@ -62,6 +95,6 @@ class DueDetailsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def due_detail_params
-      params.require(:due_detail).permit(:due_employee_template_id, :reporting_master_id, :status)
+      params.require(:due_detail).permit(:due_employee_template_id, :reporting_master_id, :status, :due_template_id)
     end
 end

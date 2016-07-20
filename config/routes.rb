@@ -1,5 +1,15 @@
 Rails.application.routes.draw do
 
+  resources :due_actions
+  resources :due_details do
+    collection do
+      get :all_employee_resignation_list
+      get :due_detail_history
+      post :is_confirm
+      get :all_due_template
+      get :show_due_template_list
+    end
+  end
   resources :employee_transfers do
     collection do
       get :transfer_request

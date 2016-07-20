@@ -43,7 +43,7 @@
                 <% leave_records.each do |l| %>
                   <% if d == l.leave_date and flag == 0 %>
                     <% flag = 1 %>
-                    <% exist[l.leave_date] = "L" %>
+                    <% exist[l.leave_date] = l.leav_category.name %>
                   <% end %>
                 <% end %>
 

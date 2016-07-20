@@ -1,5 +1,15 @@
 Rails.application.routes.draw do
 
+  resources :due_actions
+  resources :due_details do
+    collection do
+      get :all_employee_resignation_list
+      get :due_detail_history
+      post :is_confirm
+      get :all_due_template
+      get :show_due_template_list
+    end
+  end
   resources :employee_transfers do
     collection do
       get :transfer_request
@@ -443,6 +453,8 @@ end
     
     post 'salaries/ctc_yearly_report'
     get 'salaries/ctc_yearly'
+    get 'certificate/new'
+    post 'certificate/show_joining_date'
   end
 
   namespace :views do
@@ -727,7 +739,12 @@ end
       get :employees
     end
   end
-  resources :reporting_masters
+  resources :reporting_masters do
+    collection do
+      get :update_reporting_manager
+      post :update_manager
+    end
+  end
   resources :leave_status_records do
     collection do
       get :cancel_after_approve

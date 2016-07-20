@@ -5,18 +5,6 @@
     </div>
   </div><!-- /.box-header -->
   <div class="box-body">
-    <div id="comments">
-      <table id="example3" class="table table-bordered table-hover table-condensed">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Employee Name</th>
-            <% for i in 1..@day %>
-              <td><%= i %></td>
-            <%end%>
-          </tr>
-        </thead>
-
         <tbody>
         <% exist = {} %>
           <% @employees.each do |e| %>

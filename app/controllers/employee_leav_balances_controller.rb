@@ -62,11 +62,11 @@ class EmployeeLeavBalancesController < ApplicationController
   # PATCH/PUT /employee_leav_balances/1
   # PATCH/PUT /employee_leav_balances/1.json
   def update
-      if @employee_leav_balance.update(employee_leav_balance_params)
-        @flag = true
-      else
-       @flag = false
-      end
+    if @employee_leav_balance.update(employee_leav_balance_params)
+      @flag = true
+    else
+     @flag = false
+    end
     redirect_to employee_leav_balance_path
   end
 

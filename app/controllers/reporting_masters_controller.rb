@@ -1,6 +1,9 @@
 class ReportingMastersController < ApplicationController
   before_action :set_reporting_master, only: [:show, :edit, :update, :destroy]
 
+  def index
+  end
+
   def new
     @reporting_master = ReportingMaster.new
     @reporting_masters = ReportingMaster.all
@@ -56,8 +59,20 @@ class ReportingMastersController < ApplicationController
     @reporting_master1 = params[:salary][:employee_id_1]
     @reporting_master2 = params[:salary][:employee_id_2]
 
-    Employee.where(manager_id: @reporting_master1).update_all(manager_id: @reporting_master2)
-    Employee.where(manager_2_id: @reporting_master1).update_all(manager_2_id: @reporting_master2)
+    employee_ids = params[:employee_ids]
+      if employee_ids.nil?
+        flash[:alert] = "Please Select the Checkbox"
+      else
+        employee_ids.each do |e|
+        emp = Employee.find(e)
+        emp_manager = Employee.find(emp.manager_id)
+        emp_manager_2 = Employee.find(emp.manager_2_id)
+
+        ManagerHistory.create(employee_id: emp.id,manager_id: emp_manager.id,manager_2_id: emp_manager_2.id)
+        Employee.where(manager_id: @reporting_master1,id: emp.id).update_all(manager_id: @reporting_master2)
+        Employee.where(manager_2_id: @reporting_master1,id: emp.id).update_all(manager_2_id: @reporting_master2)
+        end
+      end
     flash[:notice] = "Updated Successfully"
     redirect_to update_reporting_manager_reporting_masters_path
   end

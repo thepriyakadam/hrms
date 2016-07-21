@@ -44,7 +44,7 @@ class LeaveStatusRecordsController < ApplicationController
           @employee_leav_request.update(is_first_approved: true, current_status: 'FinalApproved')
           @employee_leav_request.create_single_record_for_leave(@employee_leav_request)
            for i in @employee_leav_request.start_date.to_date..@employee_leav_request.end_date.to_date
-             EmployeeAttendance.create(employee_id: @employee_leav_request.employee_id, day: i, present: "Leave")
+             EmployeeAttendance.create(employee_id: @employee_leav_request.employee_id, day: i, present: "L")
            end
           @employee_leav_request.manage_coff(@employee_leav_request)
           # @employee_leav_request.minus_leave(@employee_leav_request)
@@ -98,7 +98,7 @@ class LeaveStatusRecordsController < ApplicationController
         @employee_leav_request.update(is_second_approved: true, current_status: 'FinalApproved')
         @employee_leav_request.create_single_record_for_leave(@employee_leav_request)
          for i in @employee_leav_request.start_date.to_date..@employee_leav_request.end_date.to_date
-           EmployeeAttendance.create(employee_id: @employee_leav_request.employee_id, day: i, present: "Leave")
+           EmployeeAttendance.create(employee_id: @employee_leav_request.employee_id, day: i, present: "L")
          end
         @employee_leav_request.manage_coff(@employee_leav_request)
         # @employee_leav_request.minus_leave(@employee_leav_request)
@@ -170,12 +170,14 @@ class LeaveStatusRecordsController < ApplicationController
     @particular_leave_record = ParticularLeaveRecord.find(params[:format])
     @particular_leave_record.is_cancel_after_approve = true
 
+    EmployeeAttendance.where("employee_id = ? AND day = ?", @particular_leave_record.employee_id,@particular_leave_record.leave_date.to_date).destroy_all
     @employee_leav_balance = EmployeeLeavBalance.where(employee_id: @particular_leave_record.employee_id, leav_category_id: @particular_leave_record.leav_category_id).take
     if @particular_leave_record.is_full
       @employee_leav_balance.no_of_leave = @employee_leav_balance.no_of_leave.to_f + 1
     else
       @employee_leav_balance.no_of_leave = @employee_leav_balance.no_of_leave.to_f + 0.5
     end
+
     ActiveRecord::Base.transaction do
       @employee_leav_balance.save
       @particular_leave_record.save

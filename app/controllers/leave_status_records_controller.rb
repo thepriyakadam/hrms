@@ -43,9 +43,9 @@ class LeaveStatusRecordsController < ApplicationController
         if @leave_status.save
           @employee_leav_request.update(is_first_approved: true, current_status: 'FinalApproved')
           @employee_leav_request.create_single_record_for_leave(@employee_leav_request)
-           for i in @employee_leav_request.start_date.to_date..@employee_leav_request.end_date.to_date
-             EmployeeAttendance.create(employee_id: @employee_leav_request.employee_id, day: i, present: "Leave")
-           end
+          for i in @employee_leav_request.start_date.to_date..@employee_leav_request.end_date.to_date
+            EmployeeAttendance.create(employee_id: @employee_leav_request.employee_id, day: i, present: "Leave")
+          end
           @employee_leav_request.manage_coff(@employee_leav_request)
           # @employee_leav_request.minus_leave(@employee_leav_request)
           if @employee_leav_request.employee.email.nil? || @employee_leav_request.employee.email == ''

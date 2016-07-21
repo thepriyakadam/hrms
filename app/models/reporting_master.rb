@@ -10,6 +10,7 @@ class ReportingMaster < ActiveRecord::Base
   has_many :rewards_allocations
   has_many :due_details
   has_many :employee_transfers
+  has_many :due_employee_details
   validates :employee_id, presence: true, uniqueness: { case_sensitive: false }
  end
 

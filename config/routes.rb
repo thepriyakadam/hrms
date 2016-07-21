@@ -8,6 +8,10 @@ Rails.application.routes.draw do
       post :is_confirm
       get :all_due_template
       get :show_due_template_list
+      post :create_due_employee_detail
+      get :employee_due_detail_history
+      get :all_employee_due_detail
+      post :is_confirm_employee_due
     end
   end
   resources :employee_transfers do
@@ -36,7 +40,12 @@ Rails.application.routes.draw do
   resources :investment_declarations
   resources :investment_heads
   resources :sections
-  resources :employee_documents
+  resources :employee_documents do
+    collection do
+      get :form16
+    end
+  end
+
   resources :company_policies do
     collection do
       get :active_policies_list

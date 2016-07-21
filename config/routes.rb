@@ -8,6 +8,10 @@ Rails.application.routes.draw do
       post :is_confirm
       get :all_due_template
       get :show_due_template_list
+      post :create_due_employee_detail
+      get :employee_due_detail_history
+      get :all_employee_due_detail
+      post :is_confirm_employee_due
     end
   end
   resources :employee_transfers do

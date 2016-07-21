@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160719091404) do
+ActiveRecord::Schema.define(version: 20160720130301) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -576,11 +576,13 @@ ActiveRecord::Schema.define(version: 20160719091404) do
     t.string   "name"
     t.text     "remark"
     t.decimal  "amount"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.integer  "due_employee_detail_id"
   end
 
   add_index "due_actions", ["due_detail_id"], name: "index_due_actions_on_due_detail_id"
+  add_index "due_actions", ["due_employee_detail_id"], name: "index_due_actions_on_due_employee_detail_id"
 
   create_table "due_details", force: :cascade do |t|
     t.integer  "due_employee_template_id"
@@ -595,6 +597,23 @@ ActiveRecord::Schema.define(version: 20160719091404) do
   add_index "due_details", ["due_employee_template_id"], name: "index_due_details_on_due_employee_template_id"
   add_index "due_details", ["due_template_id"], name: "index_due_details_on_due_template_id"
   add_index "due_details", ["reporting_master_id"], name: "index_due_details_on_reporting_master_id"
+
+  create_table "due_employee_details", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.integer  "due_template_id"
+    t.integer  "due_employee_template_id"
+    t.integer  "due_detail_id"
+    t.integer  "reporting_master_id"
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.boolean  "is_confirmed"
+  end
+
+  add_index "due_employee_details", ["due_detail_id"], name: "index_due_employee_details_on_due_detail_id"
+  add_index "due_employee_details", ["due_employee_template_id"], name: "index_due_employee_details_on_due_employee_template_id"
+  add_index "due_employee_details", ["due_template_id"], name: "index_due_employee_details_on_due_template_id"
+  add_index "due_employee_details", ["employee_id"], name: "index_due_employee_details_on_employee_id"
+  add_index "due_employee_details", ["reporting_master_id"], name: "index_due_employee_details_on_reporting_master_id"
 
   create_table "due_employee_templates", force: :cascade do |t|
     t.integer  "employee_id"

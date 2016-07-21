@@ -58,21 +58,22 @@ class ReportingMastersController < ApplicationController
   def update_manager
     @reporting_master1 = params[:salary][:employee_id_1]
     @reporting_master2 = params[:salary][:employee_id_2]
+    @effec_date = params[:salary][:effec_date]
 
     employee_ids = params[:employee_ids]
       if employee_ids.nil?
         flash[:alert] = "Please Select the Checkbox"
       else
         employee_ids.each do |e|
-        emp = Employee.find(e)
-        emp_manager = Employee.find(emp.manager_id)
-        emp_manager_2 = Employee.find(emp.manager_2_id)
+          emp = Employee.find(e)
+          Employee.where(manager_id: @reporting_master1,id: emp.id).update_all(manager_id: @reporting_master2)
+          Employee.where(manager_2_id: @reporting_master1,id: emp.id).update_all(manager_2_id: @reporting_master2)
 
-        ManagerHistory.create(employee_id: emp.id,manager_id: emp_manager.id,manager_2_id: emp_manager_2.id)
-        Employee.where(manager_id: @reporting_master1,id: emp.id).update_all(manager_id: @reporting_master2)
-        Employee.where(manager_2_id: @reporting_master1,id: emp.id).update_all(manager_2_id: @reporting_master2)
+          @manager_history = ManagerHistory.where("employee_id = ? AND manager_id = ? AND manager_2_id = ?", emp.id,emp.manager_id,emp.manager_2_id)
+
+          ManagerHistory.create(employee_id: emp.id,manager_id: emp.manager_id,manager_2_id: emp.manager_2_id,effective_from: @manager_history.effective_to.to_date,effective_to: @effec_date.to_date)
+          end
         end
-      end
     flash[:notice] = "Updated Successfully"
     redirect_to update_reporting_manager_reporting_masters_path
   end

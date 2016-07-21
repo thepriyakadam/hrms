@@ -4,6 +4,7 @@
       <th>Code</th>
       <th>Name</th>
       <th>Status</th>
+      <th>Download</th>
     </tr>
   </thead>
   <tbody>
@@ -12,6 +13,13 @@
         <td><%= due_template.try(:code) %></td>
         <td><%= due_template.try(:name) %></td>
         <td><%= due_template.status ? "Active" : "Inactive" %></td>
+        <td>
+           <% if due_template.document_file_name == nil %>
+           <small class="label label-default">Document Not Available</small>
+             <% else %>
+             <%= link_to ' Document',download_due_tempalte_documents_path(id: due_template.id),class: 'btn btn-xs btn btn-info fa fa-download' %>
+             <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>

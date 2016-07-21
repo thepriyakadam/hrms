@@ -12,14 +12,18 @@
       <th>Request To</th>
       <th>Traveling Date</th>
       <th>Place</th>
-      <th>Total Advance</th>
+      <th>Advance</th>
     </tr>
   </thead>
 
   <tbody>
     <% @travel_requests.each do |travel_request| %>
       <tr>
+        <% if @travel_request.id == travel_request.id %>
+        <td><font color='red'> * </font><%= travel_request.employee.try(:manual_employee_code) %></td>
+        <%else%>
         <td><%= travel_request.employee.try(:manual_employee_code) %></td>
+        <%end%>
         <td><%= travel_request.employee.try(:first_name) %> <%= travel_request.employee.try(:middle_name) %> <%= travel_request.employee.try(:last_name) %></td>
         <td><%= travel_request.employee.company_location.try(:name) %> - <%= travel_request.employee.department.try(:name) %></td>
         <td><%= travel_request.reporting_master_id %></td>
@@ -30,6 +34,9 @@
     <% end %>
   </tbody>
 </table>
+ <div class="row">
+    <div class="col-sm-12"><strong> <font color='red'>Note - * Row is the latest row to approve/reject </font></strong></div>
+    </div><br>
     <div class="row">
       <div class="col-sm-2">Traveling Request ID</div>
       <div class="col-sm-6"><%= @travel_request.id %></div>
@@ -63,19 +70,7 @@
       <div class="col-sm-6"><%=  @travel_request.place %></div>
     </div>
     <div class="row">
-      <div class="col-sm-2">Traveling Advance</div>
-      <div class="col-sm-6"><%=  @travel_request.traveling_advance %></div>
-    </div>
-    <div class="row">
-      <div class="col-sm-2">Lodging Boarding Advance</div>
-      <div class="col-sm-6"><%=  @travel_request.lodging_boarding_advance %></div>
-    </div>
-    <div class="row">
-      <div class="col-sm-2">Extra Advance</div>
-      <div class="col-sm-6"><%=  @travel_request.extra_advance %></div>
-    </div>
-    <div class="row">
-      <div class="col-sm-2">Total Advance</div>
+      <div class="col-sm-2">Advance</div>
       <div class="col-sm-6"><%=  @travel_request.total_advance %></div>
     </div>
     <div class="row">

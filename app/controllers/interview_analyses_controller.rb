@@ -14,9 +14,13 @@ class InterviewAnalysesController < ApplicationController
 
   # GET /interview_analyses/new
   def new
+    # byebug
     @interview_analysis = InterviewAnalysis.new
-    @interview_analyses = InterviewAnalysis.all
-    @interview_schedule = InterviewSchedule.find(params[:format])
+    # @interview_schedule = InterviewSchedule.find(params[:abc])
+    # byebug
+    @interview_round = InterviewRound.find(params[:interview_round_id])
+    # @interview_analyses = InterviewAnalysis.where(interview_round_id: @interview_round.id)
+    @interview_analyses = InterviewAnalysis.where(interview_round_id: @interview_round.id)
   end
 
   # GET /interview_analyses/1/edit
@@ -29,15 +33,12 @@ class InterviewAnalysesController < ApplicationController
   def create
     @interview_analysis = InterviewAnalysis.new(interview_analysis_params)
     @interview_analyses = InterviewAnalysis.all
-    respond_to do |format|
       if @interview_analysis.save
-         @interview_analysis = InterviewAnalysis.new
-        format.js { @flag = true }
-      else
-        flash.now[:alert] = 'Interview Already Exist.'
-        format.js { @flag = false }
+        @interview_analysis = InterviewAnalysis.new
+        flash[:notice] = 'Interview Evaluation Details saved Successfully.'
       end
-    end
+      @interview_round_id = InterviewRound.find(params[:interview_analysis][:interview_round_id])
+      redirect_to new_interview_analysis_path(interview_round_id: @interview_round_id.id)
   end
 
   # PATCH/PUT /interview_analyses/1
@@ -72,13 +73,15 @@ class InterviewAnalysesController < ApplicationController
 
     def destroy
       @interview_analysis.destroy
-      @interview_analyses = InterviewAnalysis.all
+      @interview_analyses = InterviewAnalysis.where(interview_schedule_id: @interview_schedule.id)
     end
 
     def print_interview_analysis_list
     # byebug
-    @interview_schedule =InterviewSchedule.find(params[:id])
-    @interview_analyses = InterviewAnalysis.all
+    # @interview_schedule =InterviewSchedule.find(params[:id])
+    # @interview_analyses = InterviewAnalysis.all
+    @interview_round = InterviewRound.find(params[:interview_round_id])
+    @interview_analyses = InterviewAnalysis.where(interview_round_id: @interview_round.id)
      respond_to do |format|
         format.html
         format.pdf do
@@ -105,6 +108,6 @@ class InterviewAnalysesController < ApplicationController
 
       # Never trust parameters from the scary internet, only allow the white list through.
       def interview_analysis_params
-          params.require(:interview_analysis).permit(:interview_schedule_id,:vacancy_request_history_id, :interview_evalution_id, :interview_attribute_id, :interview_decision_id, :comment)
+          params.require(:interview_analysis).permit(:interview_schedule_id,:interview_round_id,:vacancy_request_history_id, :interview_evalution_id, :interview_attribute_id, :interview_decision_id, :comment)
       end
   end

@@ -19,11 +19,11 @@
 		      <%= hidden_field_tag "period_id[]", value: e.goal_bunch.period_id %>
 		      <%= hidden_field_tag "appraisee_id[]", value: e.appraisee_id %>
 		      <%= hidden_field_tag "attribute_master_id[]", value: e.attribute_master_id %>
+		      <%= hidden_field_tag "goal_rating[]", value: e.id %>
 		    </tr>
 	    <% end %>
 	  </tbody>
 	</table>
-
 <script type="text/javascript">
   $(function () {
     $('#selectAll').click(function() {

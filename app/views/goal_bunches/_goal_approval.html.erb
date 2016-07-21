@@ -3,7 +3,7 @@
     <h3 class="box-title">Goal Confirmation</h3>
   </div><!-- /.box-header -->
   <div class="box-body">
-  <%= bootstrap_form_for GoalBunch.new,url:{action:'appraiser_confirm',id: @employee.id,goal_bunch_id: @goal_bunch_id.id} do |f| %>  
+  <%= bootstrap_form_for GoalBunch.new,url:{action:'appraiser_confirm',emp_id: @employee.id,goal_bunch_id: @goal_bunch_id.id,period_id: @period.id} do |f| %>  
 
   <div class="box-header with-border">
   <h3 class="box-title">Employee Details</h3>
@@ -115,6 +115,7 @@
 
   <% if @goal_bunch_id.goal_confirm == false %>
 
+    <h5>Period : <%= @period.try(:name) %> <%= @period.try(:from) %> <%= @period.try(:to) %></h5>
       <div class="box-header with-border">
         <h3 class="box-title">Goal List</h3>
       </div>
@@ -148,7 +149,7 @@
                   <% if goal_rating.goal_bunch.goal_confirm == true %>
                     <small class="label label-info">Confirmed</small>
                   <% else %>
-                    <%= link_to '', goal_modal_goal_ratings_path(goal_rating),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
+                    <%= link_to '', goal_modal_goal_ratings_path(goal_rating_id: goal_rating,period_id: @period.id),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
                   <% end %>
                 </td>
               </tr>
@@ -156,7 +157,10 @@
           </tbody>
         </table>
 
-         <table class="table table-bordered table-hover table-condensed">
+      <div class="box-header with-border">
+      <h3 class="box-title">Attribute List</h3>
+      </div>
+        <table class="table table-bordered table-hover table-condensed">
           <thead>
             <tr>
               <th><input type="checkbox" id="selectAll" value="selectAll"></th>
@@ -186,7 +190,7 @@
                   <% if goal_rating.goal_bunch.goal_confirm == true %>
                     <small class="label label-info">Confirmed</small>
                   <% else %>
-                    <%= link_to '', attribute_modal_goal_ratings_path(goal_rating),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
+                    <%= link_to '', attribute_modal_goal_ratings_path(goal_rating_id: goal_rating,period_id: @period.id),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
                   <% end %>
                 </td>
               </tr>
@@ -201,7 +205,7 @@
         <div class="col-sm-3">
           <div class="actions">
             <%= f.submit "Confirm",class: 'btn btn-primary btn-sm' %> |
-            <%= link_to 'Back',goal_period_list_goal_bunches_path(id: @employee.id),class: 'btn btn-sm btn-default'%>
+            <%= link_to 'Back',goal_period_list_goal_bunches_path(@employee.id),class: 'btn btn-sm btn-default fa fa-arrow-left'%>
           </div>
         </div>
       </div>

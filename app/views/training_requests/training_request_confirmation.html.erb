@@ -18,40 +18,55 @@
       </tr>
 
       <tr>
-        <th><strong>Training Period</strong></th>
-        <td><%= @training_request.training_period %></td>
-     
-        <th><strong>Training Date</strong></th>
+        <th><strong>Request Date</strong></th>
         <td><%= @training_request.training_date %></td>
-      </tr>
-
-      <tr>
+      
         <th><strong>Request To</strong></th>
         <td><%= @training_request.reporting_master_id %></td>
-        
+      </tr>
+      <tr>
         <th><strong>No. Of Employee</strong></th>
         <td><%= @training_request.no_of_employee %></td>
-      </tr>
-
-      <tr>
+      
         <th><strong>Place</strong></th>
         <td><%= @training_request.place %></td>
-
+      </tr>
+      <tr>
         <th><strong>Description</strong></th>
         <td><%= @training_request.description %></td>
-      </tr>
-
-      <tr>
+      
         <th><strong>Justification</strong></th>
         <td><%= @training_request.justification %></td>
-     
-        <th></th>
-        <td></td>
       </tr>
-    </table>
+    </table><br>
+<div class="box-header with-border">
+    <h3 class="box-title">Employee's Who are Going To Attend Training</h3>
+  </div>
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Employee ID</th>
+      <th>Employee Name</th>
+      <th>Contact No</th>
+      </tr>
+  </thead>
 
-  <%= link_to 'Approve',approve_training_request_training_requests_path(@training_request.id),class: 'btn btn-sm btn-info fa fa-check' %> |
-  <%= link_to 'Reject',reject_training_request_training_requests_path(@training_request.id),class: 'btn btn-sm btn-danger fa fa-trash' %>
+  <tbody>
+   <% @trainee_requests.each do |trainee_request| %>
+      <tr>
+        <td><%= trainee_request.employee.try(:manual_employee_code) %></td>
+        <td><%= full_name(trainee_request.employee) %> </td>
+        <td><%= trainee_request.employee.try(:contact_no) %></td>
+      </tr>
+      <% end %>
+  </tbody>
+</table><br>
+  
+  <%= link_to ' Comment & Approve',modal_approver_comment_training_requests_path(@training_request.id),class: 'btn btn-sm btn-info fa fa-check',remote: true %> |
+  <%= link_to ' Comment & Reject',modal_reject_comment_training_requests_path(@training_request.id),class: 'btn btn-sm btn-danger fa fa-trash',remote: true %>
     </td>
   </div>
 </div>
+
+<div id="myModal1" class="modal fade"></div>
+<div id="myModal2" class="modal fade"></div>

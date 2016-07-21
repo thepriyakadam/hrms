@@ -12,15 +12,15 @@ div.nobreak{ page-break-inside: avoid;
 }
 </style>
 <div>
-<center><h3>Daily Bill Detail</h3></center>
+<center><h3>Expense Claim Detail</h3></center>
 
 <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
   <thead>
     <tr>
-      <th>Expence Date</th>
-      <th>E Place</th>
-      <th>Travel Expence Type</th>
-      <th>Travel Expence</th>
+      <th>Expense Date</th>
+      <th>Place</th>
+      <th>Travel Expense Type</th>
+      <th>Travel Expense</th>
     </tr>
   </thead>
   <tbody>
@@ -28,7 +28,7 @@ div.nobreak{ page-break-inside: avoid;
       <tr>
         <td><%= daily_bill_detail.expence_date %></td>
         <td><%= daily_bill_detail.e_place %></td>
-        <td><%= daily_bill_detail.travel_expence_type.name %></td>
+        <td><%= daily_bill_detail.travel_expence_type.try(:name) %></td>
         <td><%= daily_bill_detail.travel_expence %></td>
       </tr>
     <% end %>

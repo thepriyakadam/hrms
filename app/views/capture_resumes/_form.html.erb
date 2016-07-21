@@ -1,11 +1,10 @@
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title">Capture Resume</h3>
+    <h3 class="box-title">Candidate Registrations</h3>
   </div>
 
 <div class="box-body">
 <%= bootstrap_form_for(@capture_resume,html: { multipart: true}) do |f| %>
-`
 <div>
  <%= render 'show_vacancy_detail' %>
  </div>
@@ -40,13 +39,13 @@
     </div>
 
     <div class="col-sm-3">
-      <label>Date Of Application </label>
+     <!--  <label>Date Of Application </label> -->
       <div class="form-group required">
         <div class="input-group">
           <div class="input-group-addon">
             <i class="fa fa-calendar"></i>
          </div>
-            <%= f.text_field :date_of_application, hide_label: true, class: 'birth_date'%>
+            <%= f.text_field :date_of_application,label: 'Date Of Application', class: 'birth_date'%>
         </div>
       </div>
     </div>
@@ -80,21 +79,16 @@
         </div>
 
       <div class="col-sm-3">
-          <div class="form-group required">
-            <div class="input-group">
-              <%= f.select :job_title, all_job_title,{label: 'Job Title',include_blank: " Select Job Title"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
-            </div>
+          <div class="field">
+          <%= f.text_field :job_title,label:'Job Title' %>
           </div>
       </div>
 
-       <div class="col-sm-3">
-         <label>Job Title2</label>
-          <div class="form-group required">
-            <div class="input-group">
-              <%= f.select :employee_designation_id,all_employee_designation,{hide_label: true,include_blank: " Select Job Title"} %>
-            </div>
-          </div>
-        </div>
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :employee_designation_id,label:'Employee Designation' %>
+      </div>
+    </div>
 
     <div class="col-sm-3">
       <div class="field">
@@ -255,14 +249,14 @@
   </div>
   
   <div class="row">
-        <div class="col-sm-3">
+        <!-- <div class="col-sm-3">
          <label>Interview Date </label>
             <div class="field">
               <div class="input-group">
                <div class="input-group-addon">
                <i class="fa fa-calendar"></i>
                </div>
-               <%= f.text_field :interview_date, hide_label: true, class: 'birth_date'%>
+               <= f.text_field :interview_date, hide_label: true, class: 'birth_date'%>
               </div>
             </div>
         </div>
@@ -272,14 +266,14 @@
                <div class="form-group required">
                <label>Interview Time</label>
                   <div class="input-group">
-                   <%= f.text_field :interview_time,hide_label:true, class: 'form-control timepicker' %>
+                   <= f.text_field :interview_time,hide_label:true, class: 'form-control timepicker' %>
                     <div class="input-group-addon">
                      <i class="fa fa-clock-o"></i>
                   </div>
-                 </div><!-- /.input group -->
-               </div><!-- /.form group -->
+                 </div>
+               </div>
              </div>
-         </div>
+         </div> -->
         
           <div class="col-sm-3">
             <div class="field">

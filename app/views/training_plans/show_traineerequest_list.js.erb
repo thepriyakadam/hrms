@@ -1,0 +1,13 @@
+<% unless @flag %>
+	<% unless TrainingTopicMaster.exists?(id: @training_topic_master.id) %>
+	    $("#training_plan_frm").html("<%= j render 'training_plan_form' %>")
+	<% else %>
+		$("#message").html("<center><p class='text-red'>Topic already assign you can update it.</p></center>")
+		$("#training_plan_frm").html("<%= j render 'training_plan_form' %>")
+	<% end %>
+<% else %>
+	
+<% end %>
+
+
+

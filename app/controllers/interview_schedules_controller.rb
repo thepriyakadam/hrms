@@ -8,6 +8,7 @@ class InterviewSchedulesController < ApplicationController
   include QueryReport::Helper # need to include it
   def index
     @interview_schedules = InterviewSchedule.all
+    
     respond_to do |format|
       format.html
       format.pdf do
@@ -16,6 +17,7 @@ class InterviewSchedulesController < ApplicationController
       end
     end
     session[:active_tab] ="recruitment"
+    session[:active_tab1] = "general_vacancy"
   end
 
   # GET /interview_schedules/1
@@ -151,7 +153,7 @@ end
   end
 
   def interview_reschedule
-    #byebug
+    # byebug
     @interview_schedule = InterviewSchedule.find(params[:id])
     @employee = Employee.find(@interview_schedule.employee_id)
     @interview_reschedule = InterviewReschedule.new
@@ -258,8 +260,23 @@ end
 
   def interview_round_list
     @interview_schedule = InterviewSchedule.find(params[:format])
-    @interview_rounds = InterviewRound.where(interview_schedule_id: @interview_schedule.id,employee_id: current_user.employee_id)
+    # @interview_rounds = InterviewRound.where(interview_schedule_id: @interview_schedule.id,employee_id: current_user.employee_id)
+    @interview_rounds = InterviewRound.where(interview_schedule_id: @interview_schedule.id)
   end
+
+  def modal_schedule_list
+    @interview_schedule = InterviewSchedule.find(params[:format])
+  end
+
+   def update_interview_schedule
+     @interview_schedule = InterviewSchedule.find(params[:id])
+     @email_id = params[:interview_schedule][:email_id]
+     @location = params[:interview_schedule][:location]
+     @interview_date = params[:interview_schedule][:interview_date]
+     @trainee.update(email_id: @email_id,location: @location,interview_date: @interview_date)
+     flash[:notice] = 'Interview Details Updated Successfully'
+     redirect_to interview_schedules_path
+    end
 
   private
 

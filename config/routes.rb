@@ -1,9 +1,65 @@
 Rails.application.routes.draw do
 
+  resources :due_actions
+  resources :due_details do
+    collection do
+      get :all_employee_resignation_list
+      get :due_detail_history
+      post :is_confirm
+      get :all_due_template
+      get :show_due_template_list
+      post :create_due_employee_detail
+      get :employee_due_detail_history
+      get :all_employee_due_detail
+      post :is_confirm_employee_due
+    end
+  end
+  resources :employee_transfers do
+    collection do
+      get :transfer_request
+      get :employee_transfer_confirmation
+      get :approve_transfer
+      get :reject_transfer
+      get :modal_approve
+      post :send_request_to_higher_authority
+      get :modal_edit
+      patch :update_transfer_details
+    end
+  end
+  resources :due_details
+  resources :due_templates
+  resources :employee_transfers
+  resources :rewards_pals
+  resources :rewards_allocations
+  resources :reward_allocations
+  resources :reward_recognitions
+  resources :reward_types
+  resources :reward_owners
+  resources :recognition_types
+
+  resources :investment_declarations
+  resources :investment_heads
+  resources :sections
+  resources :employee_documents
+  resources :company_policies do
+    collection do
+      get :active_policies_list
+    end
+  end
+  resources :date_formats do
+    collection do 
+    get :active
+    post :activee
+    end
+  end 
+  resources :email_configs
+  resources :weekoff_masters
+  resources :currency_masters
   resources :illness_types
   resources :performance_calendars
   resources :performance_activities
-
+  resources :years do 
+    end
   resources :employee_daily_activities do
     collection do 
     get :employee_details
@@ -17,9 +73,24 @@ Rails.application.routes.draw do
   resources :circulars
 
   resources :salary_map_saps
-  resources :interview_rounds
+  resources :interview_rounds do
+    collection do
+      get :interview_round_reschedule
+      post :reschedule_interview
+    end
+  end
   resources :interview_types
-  resources :employee_attendances
+  resources :employee_attendances do
+    collection do
+      post :department_wise_employee_list
+      post :all_emp_list
+      post :create_employee_attendance
+      get :attendance
+      get :revert_attendance
+      post :show_employee
+      post :destroy_employee_attendance
+    end
+  end
   resources :salary_comp_mappings
   resources :company_events
   resources :employee_task_to_dos
@@ -31,7 +102,7 @@ Rails.application.routes.draw do
     collection do 
     get :all_induction_detail_list
     get :confirm
-    post :print_induction_details
+    get :print_induction_details
     get :update_date_modal
     post :update_date
     end
@@ -45,6 +116,8 @@ Rails.application.routes.draw do
     post :induction_activity
     get :induction_activity_download_list
     post :create_induction_detail
+    get :modal_induction_activity
+    post :update_induction
     end
   end 
   resources :induction_masters
@@ -53,6 +126,7 @@ Rails.application.routes.draw do
 
   resources :goal_ratings do
     collection do
+      get :select_dropdown
       get :self_modal
       patch :update_self_modal
       get :appraiser_modal
@@ -70,6 +144,7 @@ Rails.application.routes.draw do
       get :performance_type
       get :attribute_modal
       patch :update_attribute_modal
+      get :period_for_training
       get :training_request
       post :create_attribute_training
       post :create_goal_training
@@ -78,8 +153,19 @@ Rails.application.routes.draw do
       post :send_request_for_training
       post :training_plan_create
       get :modal_training_plan
+      get :goal_set_modal
+      patch :update_goal_set_modal
+      get :attribute_set_modal
+      patch :update_attribute_set_modal
+      get :trainee_list
+      post :print_employee_detail
+      get :all_emp_list
+      get :increment_index
+      post :all_employee_list
+      post :print_employee_list
     end
   end
+  #post 'goal_ratings/update_goal_set_modal'
   resources :goal_bunches do
     collection do
       get :goal_approval
@@ -137,6 +223,9 @@ Rails.application.routes.draw do
       post :print_emp_list
       post :all_emp_list
       get :emp_list_goal_wise
+      get :goal_bunch_list
+      get :set_goal_list
+      
     end
   end
   resources :goal_perspectives
@@ -213,15 +302,20 @@ end
       get :modal_feedback
       post :update_feedback
       get :training_details_list
+      get :training_topic_wise_search
+      get :show_traineerequest_list
+      get :_trainee_request_list
     end
   end
   resources :training_requests do
     collection do
       get :training_request_list
       get :training_request_confirmation
-      get :approve_training_request
-      get :reject_training_request
+      post :approve_training_request
+      post :reject_training_request
       get :confirmation_list
+      get :modal_approver_comment
+      get :modal_reject_comment
     end
   end
   resources :selected_resumes  do
@@ -236,9 +330,16 @@ end
     post :update_status
     get :modal_profile_update
     post :update_profile
+    get :part_resume
     end
   end 
-  resources :assigned_assets
+  resources :assigned_assets do
+    collection do 
+    post :update_asset
+    get :modal
+    get :update_asset
+    end
+  end 
   resources :asset_types
   resources :employee_nominations
   resources :nomination_masters
@@ -251,6 +352,14 @@ end
     get :print_daily_bill
     get :daily_bill_history
     get :daily_bill_request_confirmation
+    post :approve_request
+    get :approved_daily_bill_details
+    get :travel_request_list
+    get :edit_and_send_next_modal
+    post :edit_and_send_next
+    get :comment_modal
+    post :update_comment
+    post :reject_request
     end
   end 
   resources :travel_requests do
@@ -265,7 +374,7 @@ end
       get :cancel_travel_request
       get :travel_request_list
       get :edit_and_send_next_modal
-      patch :edit_and_send_next_modal_submit
+      post :edit_and_send_next_modal_submit
       get :edit_and_approve_modal
       patch :edit_and_approve_modal_submit
       get :is_confirm
@@ -348,6 +457,8 @@ end
     
     post 'salaries/ctc_yearly_report'
     get 'salaries/ctc_yearly'
+    get 'certificate/new'
+    post 'certificate/show_joining_date'
   end
 
   namespace :views do
@@ -391,6 +502,8 @@ end
       get :final_report
       post :print_final_report
       get :interview_round_list
+      get :modal_schedule_list
+      post :update_interview_schedule
     end
   end
   resources :vacancy_masters do
@@ -419,6 +532,7 @@ end
       get :approved_vacancy_request_history_list
       get :particular_vacancy_request_list_history
       get :gen_xml
+      get :vacancy_profile
     end
   end
   resources :leave_c_offs do
@@ -557,6 +671,7 @@ end
   resources :particular_leave_records do
     collection do
       get :show_leave_record
+      get :search_by_leave_date
     end
   end
   match 'selected_resumes/:id/download_resume/:id' => 'selected_resumes#download_resume', :via => [:get], :as => :download_resume
@@ -572,6 +687,13 @@ end
 
   match 'circulars/:id/download_documents/:id' => 'circulars#download_documents', :via => [:get], :as => :download_documents
 
+  match 'daily_bill_details/:id/download_doc/:id' => 'daily_bill_details#download_doc', :via => [:get], :as => :download_doc
+  match 'daily_bill_details/:id/download_pics/:id' => 'daily_bill_details#download_pics', :via => [:get], :as => :download_pics
+  match 'company_policies/:id/download_docs/:id' => 'company_policies#download_docs', :via => [:get], :as => :download_docs
+  match 'employee_documents/:id/download_emp/:id' => 'employee_documents#download_emp', :via => [:get], :as => :download_emp
+  match 'investment_declarations/:id/investment_document/:id' => 'investment_declarations#investment_document', :via => [:get], :as => :investment_document
+  match 'due_templates/:id/download_due_tempalte_documents/:id' => 'due_templates#download_due_tempalte_documents', :via => [:get], :as => :download_due_tempalte_documents
+  
   resources :leave_c_offs
   resources :overtime_month_records
 
@@ -621,7 +743,13 @@ end
       get :employees
     end
   end
-  resources :reporting_masters
+  resources :reporting_masters do
+    collection do
+      get :update_reporting_manager
+      post :update_manager
+      get :show_employee
+    end
+  end
   resources :leave_status_records do
     collection do
       get :cancel_after_approve
@@ -734,6 +862,8 @@ end
       get :employees
       get :search_month_year
       get :generate_workingday
+      get :print_working_day
+      get :create_working_day
     end
   end
   resources :shift_rotations do
@@ -824,6 +954,7 @@ end
       get :employee_leave_balance
       get :leave_balance_modal
       patch :update_leave_balance
+      get :is_confirm_leave
     end
   end
   

@@ -110,7 +110,7 @@
   </table>
   
   <% if  @goal_bunch.nil? %>
-  <center><p class="text-warning"> No Goal Bunch Available </p></center> 
+  <center><p class="text-warning"> No Goals Available </p></center> 
   <% else %>
 
 <div class="box box-default">
@@ -124,8 +124,8 @@
       <thead>
         <tr>
           <th>Goal perspective</th>
-          <th>Goal weightage</th>
-          <th>Goal measure</th>
+          <th>Weightage</th>
+          <th>Measure</th>
           <th>Target</th>
           <th>Aligned</th>
           <th>Self Comment</th>
@@ -145,7 +145,7 @@
             <td><%= goal_rating.appraisee_comment %></td>
             <td><%= goal_rating.appraiser_comment %></td>
             <td><%= goal_rating.appraiser_rating_id %></td>
-            <td><%= text_field_tag 'reviewer_comments[]',"",class: "form-control" %></td>
+            <td><%= text_field_tag 'reviewer_comments[]',"",class: "form-control",autofocus: true %></td>
             <%= hidden_field_tag 'goal_rating_ids[]',"",value: goal_rating.id %>
           </tr>
         <% end %>
@@ -156,8 +156,8 @@
       <thead>
         <tr>
           <th>Attribute</th>
-          <th>Goal weightage</th>
-          <th>Goal measure</th>
+          <th>Weightage</th>
+          <th>Measure</th>
           <th>Target</th>
           <th>Aligned</th>
           <th>Self Comment</th>
@@ -207,8 +207,8 @@
       <thead>
         <tr>
           <th>Goal perspective</th>
-          <th>Goal weightage</th>
-          <th>Goal measure</th>
+          <th>Weightage</th>
+          <th>Measure</th>
           <th>Target</th>
           <th>Aligned</th>
           <th>Self Comment</th>
@@ -247,8 +247,8 @@
       <thead>
         <tr>
           <th>Attribute</th>
-          <th>Goal weightage</th>
-          <th>Goal measure</th>
+          <th>Weightage</th>
+          <th>Measure</th>
           <th>Target</th>
           <th>Aligned</th>
           <th>Self Comment</th>
@@ -342,9 +342,12 @@
           </div>
         <% end %>
       <% end %>
-      
+      <br>
     <% end %>
 <% end %>
+  <%= link_to 'Back',period_list_reviewer_goal_bunches_path(emp_id: @employee.id),class: 'btn btn-sm btn-default fa fa-arrow-left
+  +++-
+  '%>
 </div>
 </div>
 

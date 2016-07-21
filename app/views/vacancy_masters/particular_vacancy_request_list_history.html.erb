@@ -1,4 +1,4 @@
-<div class="box">
+123<div class="box">
   <div class="box-header with-border">
     <div class="pull-right"></div>
     <h3>Vacancy Request List</h3><br>
@@ -37,6 +37,8 @@
                   <% if particular_vacancy_request.status == "Pending" %>
                     <small class="label label-default">Pending</small>
                    <% elsif particular_vacancy_request.status == "Approved" %>
+                    <small class="label label-primary">Approved</small>
+                    <% elsif particular_vacancy_request.status == "Edit And Approved" %>
                     <small class="label label-primary">Approved</small>
                    <% elsif particular_vacancy_request.status == "Reject" %>
                     <small class="label label-danger">Reject</small>

@@ -51,12 +51,6 @@
           <h3 class="box-title">To Do List</h3>
           <div class="box-tools">
           <%= link_to "Add Task",new_employee_task_to_do_path, remote:true, class: "btn btn-info btn-sm pull" %>
-           <!--  <div class="input-group" style="width: 150px;">
-              <input type="text" name="table_search" class="form-control input-sm pull-right" placeholder="Search">
-              <div class="input-group-btn">
-                <button class="btn btn-sm btn-default"><i class="fa fa-search"></i></button>
-              </div>
-            </div> -->
           </div>
         </div><!-- /.box-header -->
         <div class="box-body table-responsive no-padding">
@@ -73,6 +67,51 @@
   <div class="row">
     <!-- Left col -->
     <section class="col-lg-7 connectedSortable">
+       <!-- TABLE: LATEST ORDERS -->
+      <div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title">Circulars List</h3>
+          <div class="box-tools pull-right">
+            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+          </div>
+        </div><!-- /.box-header -->
+        <div class="box-body">
+          <div class="table-responsive">
+            <table class="table no-margin">
+              <thead>
+                <tr>
+                 <th>Date</th>
+                 <th>Subject</th>
+                 <th>Download</th>
+                  <!-- <th>Popularity</th> -->
+                </tr>
+              </thead>
+              <tbody>
+              <% Circular.try(:all).try(:each) do |circular| %>
+                <tr>
+                   <td><%= circular.date %></td>
+                   <td><%= circular.subject %></td>
+                  <td>
+                     <% if circular.avatar_file_name == nil %>
+                     <small class="label label-default">Document Not Available</small>
+                       <% else %>
+                       <%= link_to ' Document',download_documents_path(id: circular.id),class: 'btn btn-xs btn btn-info fa fa-download' %>
+                       <% end %>
+                  </td>
+                  <!-- <td><div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div></td> -->
+                </tr>
+              <% end %>
+              </tbody>
+            </table>
+          </div><!-- /.table-responsive -->
+        </div><!-- /.box-body -->
+        <div class="box-footer clearfix">
+          <!-- <a href="javascript::;" class="btn btn-sm btn-info btn-flat pull-left">Place New Order</a>
+          <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a> -->
+        </div><!-- /.box-footer -->
+      </div><!-- /.box -->
+
       <!-- Custom tabs (Charts with tabs)-->
       <div class="row">
         <div class="col-md-6">
@@ -91,7 +130,7 @@
             <li><a href="/self_services/employee"><i class="fa fa-tags"></i> Employees</a></li>
               <li><a href="/self_services/employee_template"><i class="fa fa-tags"> </i> Salary Structure </a></li>
               <li><a href="/self_services/attendance"><i class="fa fa-tags"></i>Attendance</a></li>
-              <li><a href="/self_services/salaryslip"><i class="fa fa-tags"></i>Salaryslips</a></li>
+              <li><a href="/self_services/salaryslip"><i class="fa fa-tags"></i>Salary Slip</a></li>
               <li><a href="/self_services/advance"><i class="fa fa-tags"></i>Advance & Instalment</a></li>
               <li><a href="/goal_rating_sheets/new"><i class="fa fa-tags"></i> Self Rating </a></li>
           </ul>
@@ -114,7 +153,7 @@
             <li><a href="/travel_requests"><i class="fa fa-tags"></i>Travel Request </a></li>
             <li><a href="/travel_requests/travel_history"><i class="fa fa-tags"></i> Travel Approve/Reject </a></li>
             <li><a href="/travel_requests/travel_request_list"><i class="fa fa-tags"></i> Travel Request List </a></li>
-            <li><a href="/travel_requests/daily_bill"><i class="fa fa-tags"></i> Daily Expences </a></li>
+            <li><a href="/travel_requests/daily_bill"><i class="fa fa-tags"></i> Expenses Claim </a></li>
             <li><a href="/travel_expences"><i class="fa fa-tags"></i> Travel Expences </a></li>  
           </ul>
             </div><!-- /.box-body -->
@@ -126,7 +165,7 @@
       <!-- TABLE: LATEST ORDERS -->
       <div class="box box-info">
         <div class="box-header with-border">
-          <h3 class="box-title">Events</h3>
+          <h3 class="box-title">Company Events</h3>
           <div class="box-tools pull-right">
             <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
             <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -169,6 +208,51 @@
           <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a> -->
         </div><!-- /.box-footer -->
       </div><!-- /.box -->
+
+            <!-- TABLE: LATEST ORDERS -->
+      <div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title">Policy Corner</h3>
+          <div class="box-tools pull-right">
+            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+          </div>
+        </div><!-- /.box-header -->
+        <div class="box-body">
+          <div class="table-responsive">
+            <table id="example1" class="table no-margin">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Download Document</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <% @company_policies.each do |company_policy| %>
+              <tr>
+                <td><%= company_policy.name %></td>
+                <td><%= company_policy.description %></td>
+                <td>
+                   <% if company_policy.document_file_name == nil %>
+                   <small class="label label-default">Document Not Available</small>
+                     <% else %>
+                     <%= link_to ' Document',download_docs_path(id: company_policy.id),class: 'btn btn-xs btn btn-info fa fa-download' %>
+                     <% end %>
+                  </td>
+                </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div><!-- /.table-responsive -->
+        </div><!-- /.box-body -->
+        <div class="box-footer clearfix">
+          <!-- <a href="javascript::;" class="btn btn-sm btn-info btn-flat pull-left">Place New Order</a>
+          <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a> -->
+        </div><!-- /.box-footer -->
+      </div><!-- /.box -->
+
     </section><!-- /.Left col -->
     <!-- right col (We are only adding the ID to make the widgets sortable)-->
     <section class="col-lg-5 connectedSortable">
@@ -179,7 +263,7 @@
 
         <div class="box box-primary">
         <div class="box-header with-border">
-          <h3 class="box-title">Todays Birthday</h3>
+          <h3 class="box-title">Today's Birthday</h3>
           <div class="box-tools pull-right">
             <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
             <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -195,11 +279,11 @@
             <%else%>
               <%@employees.each do |e|%>
                 <li class="item">
-                <div class="product-img">
+                 <div class="product-img">
                    <img src="images/user.jpg" alt=" ">
-                </div>
+                </div> 
                 <div class="product-info">
-                  <a href="javascript::;" class="product-title"><%= full_name(e) %></a>
+                  <%= full_name(e) %>
                   <span class="label label-success pull-right">Happy Birthday</span>
                   <span class="users-list-date"><%= e.contact_no %></span>
                   </div>
@@ -216,7 +300,7 @@
             <div class="box-header with-border">
               <h3 class="box-title">Tomorrow's Birthday</h3>
               <div class="box-tools pull-right">
-                <span class="label label-success"> BirthDay's</span>
+               <!--  <span class="label label-success"> BirthDay's</span> -->
                  <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
                 <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
               </div>
@@ -264,11 +348,16 @@
             
                 <% JoiningDetail.all.order("id desc").limit(5).each do |j| %>
                 <li class="item">
-                <div class="product-img">
+                 <div class="product-img">
+
+                 <%unless j.nil? or j.employee.nil? or j.employee.member.nil? or j.employee.member.avatar.nil? %>
+                  <%= image_tag j.employee.member.avatar.url(:medium),class: "img-circle"%>
+                  <%else%>
                    <img src="images/user.jpg" alt=" ">
-                </div>
+                  <%end%>
+                </div> 
                 <div class="product-info">
-                  <a href="javascript::;" class="product-title"><%= j.employee.try(:first_name) %> <%= j.employee.try(:middle_name) %> <%= j.employee.try(:last_name) %></a>
+                  <%= j.employee.try(:manual_employee_code) %> <%= j.employee.try(:first_name) %> <%= j.employee.try(:middle_name) %> <%= j.employee.try(:last_name) %>
                   <span class="label label-info pull-right"><%= j.joining_date %></span>
                   <span class="product-description"><%= j.employee_designation.try(:name) %></span>
                   </div>

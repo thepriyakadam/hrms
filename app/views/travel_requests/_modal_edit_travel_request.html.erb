@@ -5,15 +5,15 @@
           <h3 class="box-title">Travel Request</h3>
         </div>
         <div class="box-body">
-        <%= bootstrap_form_for(@travel_request,url:{action:"edit_and_send_next_modal_submit", id: @travel_request.id}) do |f| %>
+        <%= bootstrap_form_for(TravelRequestHistory.new,url:{action:"edit_and_send_next_modal_submit",abc: @travel_request.id}) do |f| %>
 
-          <%= f.hidden_field :employee_id, value: @travel_request.employee_id %>
+          <%= f.hidden_field :travel_request_id, value: @travel_request.id %>
 
         <div class="row">
           <div class="col-sm-3">
             <label>Request To </label>
             <div class="field">
-              <%= f.select :reporting_master_id,all_reporting_master_list1,{hide_label: true,include_blank: " Select Reporting Master"}%>
+              <%= f.select :reporting_master_id,all_reporting_master_list1,{hide_label: true,include_blank: " Select Reporting Manager"}%>
             </div>
           </div>
 
@@ -37,12 +37,13 @@
             </div>
 
 
-            <div class="col-sm-3">
+           <!--  <div class="col-sm-3">
             <label>Travel Mode</label>
               <div class="form-group required">
-                <%= f.select :travel_mode_id,all_travel_mode,{hide_label: true,placeholder: 'Travel mode',include_blank: 'Select Travel mode'} %>
+                <= f.select :travel_mode_id,all_travel_mode,{hide_label: true,placeholder: 'Travel mode',include_blank: 'Select Travel mode'} %>
               </div>
-            </div>
+            </div> -->
+
           </div>
 
 

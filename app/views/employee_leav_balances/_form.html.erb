@@ -6,11 +6,11 @@
         <%= text_field "employee_leav_balance","category_name", value: @leav_category.try(:name),class: "form-control", readonly:true %>
       </div>
     </div>
-    
+    <%= hidden_field "employee_leav_balance","leav_category_id", value: @leav_category.id%>
 
     <div class="col-sm-3">
       <div class="field">
-        <%= f.text_field :total_leave, readonly: true %>
+        <%= f.text_field :total_leave %>
       </div>
     </div>
     

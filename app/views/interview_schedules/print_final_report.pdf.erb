@@ -9,6 +9,7 @@
   }
 </style>
 <center><h3 class="box-title">Final Report</h3></center><br>
+<h4 class="box-title">Interview Schedule Details</h4>
 <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
   <thead>
     <tr>
@@ -34,28 +35,7 @@
     <% end %>
   </tbody>
 </table><br><br>
-
-<table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
-  <thead>
-    <tr> 
-      <th>Interview Evaluation</th>
-      <th>Interview Attribute</th>
-      <th>Interview Decision</th>
-      <th>Comment</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @interview_analyses.each do |interview_analysis| %>
-      <tr> 
-        <td><%= interview_analysis.interview_evalution.try(:name) %></td>
-        <td><%= interview_analysis.interview_attribute.try(:name) %></td>
-        <td><%= interview_analysis.interview_decision.try(:name) %></td>
-        <td><%= interview_analysis.comment %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table><br><br>
-
+<h4 class="box-title">Interview Rounds</h4>
 <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
   <thead>
     <tr>
@@ -83,3 +63,25 @@
     <% end %>
   </tbody>
 </table>  
+<h4 class="box-title">Interview Analysis</h4>
+<table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
+  <thead>
+    <tr> 
+      <th>Evaluation Criteria</th>
+      <th>Skillset</th>
+      <th>Evaluation</th>
+      <th>Comment</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @interview_analyses.each do |interview_analysis| %>
+      <tr> 
+        <td><%= interview_analysis.interview_evalution.try(:name) %></td>
+        <td><%= interview_analysis.interview_attribute.try(:name) %></td>
+        <td><%= interview_analysis.interview_decision.try(:name) %></td>
+        <td><%= interview_analysis.comment %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table><br><br>
+

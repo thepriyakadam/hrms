@@ -4,45 +4,34 @@
   <%= f.hidden_field :goal_setter_id, value: current_user.employee_id  %>
   <%= f.hidden_field :appraisee_id, value: @goal_bunch.employee_id  %>
   <%= f.hidden_field :appraiser_id, value: @goal_bunch.employee.manager_id %>
-    <div class="row">
-    <div class="col-sm-3">
-    <label>Performance Type</label>
-        <%= f.select :goal_type,["Goal","Attribute"],{hide_label:true,include_blank: "Select Option"} %>
-      </div>
-      <div class="col-sm-3">
-      <label>Goal Perspective</label>
-        <div class="form-group required">
-          <%= f.select :goal_perspective_id,all_goal_perspective,{hide_label:true, include_blank: 'Select Goal'}  %>
-        </div>
-      </div>
-
-      <div class="col-sm-3">
-      <label>Attribute</label>
-        <div class="form-group required">
-          <%= f.select :attribute_master_id,all_attribute_type,{hide_label:true, include_blank: 'Select Attribute'}  %>
-        </div>
-      </div>
-
-      <div class="col-sm-3">
-      <label>Weightage</label>
-        <div class="form-group required">
-          <%= f.text_field :goal_weightage,hide_label:true,placeholder: 'Weightage' %>
-        </div>
-      </div>
-     
-      </div>
+  <%= f.hidden_field :period_id, value: @goal_bunch.period_id %>
 
     <div class="row">
       <div class="col-sm-3">
-      <label>Measure</label>
         <div class="form-group required">
-          <%= f.text_field :goal_measure,hide_label:true,placeholder: 'Measure'  %>
-        </div>
+        <%= f.select :goal_type,["Goal","Attribute"],{label: 'Performance Type',include_blank: "Select Type"},{onchange:"var a={goal_type:$(this).val()}; $.get('/goal_ratings/select_dropdown',a,function(response){});",class: 'form-control'} %>
+
+      </div>
+    </div>
+
+      <div id="dropdown"></div>
+      
+      <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.text_field :goal_weightage,{label: 'Weightage',placeholder: 'Weightage'} %>
+          </div>
       </div>
       <div class="col-sm-3">
-      <label>Target</label>
         <div class="form-group required">
-          <%= f.text_field :target,hide_label:true,placeholder: 'Target/Unit'  %>
+          <%= f.text_field :goal_measure,{label: 'Measure',placeholder: 'Measure'} %>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="form-group required">
+          <%= f.text_field :target,{label: 'Target',placeholder: 'Target/Unit'} %>
         </div>
       </div>
 
@@ -55,7 +44,7 @@
     <div class="row">
       <div class="col-sm-3">
         <div class="actions">
-          <%= f.submit "Create Goal", class: 'btn btn-primary btn-sm' %>
+          <%= f.submit "Create Goal/Attribute", class: 'btn btn-primary btn-sm ' %>
         </div>
       </div>
     </div>
@@ -63,7 +52,10 @@
 <script type="text/javascript">
   $("#goal_rating").validate({
     rules: {
-      // "goal_rating[goal_perspective_id]":{
+      "goal_rating[goal_type]":{
+        required: true
+      },
+      // "goal_rating[attribute_master_id]":{
       //   required: true
       // },
       "goal_rating[goal_weightage]":{
@@ -73,23 +65,20 @@
       },
       "goal_rating[goal_measure]":{
         required: true
-      },
-      "goal_rating[target]":{
-        required: true
       }
     },
     messages: {
-      // "goal_rating[goal_perspective_id]":{
-      //   required: "Please specify Goal Perspective"
+      "goal_rating[goal_type]":{
+        required: "Please specify Goal Type"
+      },
+      // "goal_rating[attribute_master_id]":{
+      //   required: "Please specify Attribute"
       // },
       "goal_rating[goal_weightage]":{
         required: "Please specify Weightage"
       },
       "goal_rating[goal_measure]":{
         required: "Please specify Goal Measure"
-      },
-      "goal_rating[target]":{
-        required: "Please specify Target"
       }
     },
     errorPlacement: function(error, element) {

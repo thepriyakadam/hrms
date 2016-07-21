@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  employee_id: 
+  date: 2016-07-15
+  purpose: MyText
+  reward_type_id: 
+  qty: MyString
+  reporting_master_id: 
+
+two:
+  employee_id: 
+  date: 2016-07-15
+  purpose: MyText
+  reward_type_id: 
+  qty: MyString
+  reporting_master_id: 

@@ -2,7 +2,7 @@
 <header class="main-header">
 
 <!-- Logo -->
-<a href="" class="logo">
+<a href="/home" class="logo">
   <!-- mini logo for sidebar mini 50x50 pixels -->
   <span class="logo-mini"><b>I</b>HR</span>
   <!-- logo for regular state and mobile devices -->
@@ -12,7 +12,7 @@
 <!-- Header Navbar -->
 <nav class="navbar navbar-static-top" role="navigation">
   <!-- Sidebar toggle button-->
-  <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+  <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button" title="Side Bar">
     <span class="sr-only">Toggle navigation</span>
   </a>
   <!-- Navbar Right Menu -->
@@ -21,8 +21,8 @@
       <!-- Messages: style can be found in dropdown.less-->
       <li class="dropdown messages-menu">
         <!-- Menu toggle button -->
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-          <i class="fa fa-envelope-o"></i>
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="Messages">
+          <i class="fa fa-envelope-o" ></i>
           <span class="label label-success"> </span>
         </a>
         <ul class="dropdown-menu">
@@ -57,8 +57,8 @@
       <!-- Notifications Menu -->
       <li class="dropdown notifications-menu">
         <!-- Menu toggle button -->
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-          <i class="fa fa-bell-o"></i>
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="Notification">
+          <i class="fa fa-bell-o" ></i>
           <span class="label label-warning"></span>
         </a>
         <ul class="dropdown-menu">
@@ -79,7 +79,7 @@
       <!-- Tasks Menu -->
       <li class="dropdown tasks-menu">
         <!-- Menu Toggle Button -->
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="Task">
           <i class="fa fa-flag-o"></i>
           <span class="label label-danger"></span>
         </a>
@@ -114,7 +114,7 @@
       <!-- User Account Menu -->
       <li class="dropdown user user-menu">
         <!-- Menu Toggle Button -->
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" title = "Profile Setup">
           <!-- The user image in the navbar-->
           <%= image_tag current_user.avatar.url(:thumb),class: "img-circle", alt: "/images/icons/avatar2.png",size: "25x25" %>
           <span class="hidden-xs"> 
@@ -197,7 +197,7 @@
       </li>
       <!-- Control Sidebar Toggle Button -->
       <li>
-        <a href="#" data-toggle="control-sidebar">
+        <a href="#" data-toggle="control-sidebar" title = "Recent Activity">
           <i class="fa fa-gears"></i>
           <!-- <i class="fa fa-gears"></i>
           <i class="fa fa-cog fa-spin fa-spin fa-2x "></i> -->

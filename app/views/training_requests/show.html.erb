@@ -20,28 +20,23 @@
       <tr>
         <th><strong>Training Topic</strong></th>
         <td><%= @training_request.training_topic_master.try(:name) %></td>
-
-        <th><strong>Training Period</strong></th>
-        <td><%= @training_request.training_period %></td>   
-      </tr>
-
-      <tr>
-        <th><strong>Training Date</strong></th>
+ 
+        <th><strong>Request Date</strong></th>
         <td><%= @training_request.training_date %></td>
-
-        <th><strong>Reporting Master</strong></th>
-        <td><%= @training_request.reporting_master_id %></td>   
       </tr>
-
       <tr>
+
+        <th><strong>Reporting Manager</strong></th>
+        <td><%= @training_request.reporting_master_id %></td>   
+      
         <th><strong>No Of Employee</strong></th>
         <td><%= @training_request.no_of_employee %></td>
+      </tr>
+      <tr>
 
         <th><strong>Place</strong></th>
         <td><%= @training_request.place %></td>
-      </tr>
-
-      <tr>
+      
         <th><strong>Description</strong></th>
         <td colspan="3"><%= @training_request.description %></td>
       </tr>
@@ -49,9 +44,16 @@
       <tr>
         <th><strong>Justification</strong></th>
         <td colspan="3"><%= @training_request.justification %></td>
+
       </tr>
 
     </table>
+  <div class="box-header with-border">
+    <h3 class="box-title">Employee's Who are Going To Attend Training</h3>
+  </div>
+    <div>
+       <%= render 'trainee_request' %>
+    </div>
       <%= link_to 'Edit', edit_training_request_path(@training_request),class: 'btn btn-success btn-sm fa fa-edit' %> |
       <%= link_to 'Back', training_requests_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
   </div>

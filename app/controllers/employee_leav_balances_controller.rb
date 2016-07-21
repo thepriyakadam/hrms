@@ -62,11 +62,11 @@ class EmployeeLeavBalancesController < ApplicationController
   # PATCH/PUT /employee_leav_balances/1
   # PATCH/PUT /employee_leav_balances/1.json
   def update
-      if @employee_leav_balance.update(employee_leav_balance_params)
-        @flag = true
-      else
-       @flag = false
-      end
+    if @employee_leav_balance.update(employee_leav_balance_params)
+      @flag = true
+    else
+     @flag = false
+    end
     redirect_to employee_leav_balance_path
   end
 
@@ -89,7 +89,7 @@ class EmployeeLeavBalancesController < ApplicationController
       column(:Leave_Category, sortable:true){|employee_leav_balance| employee_leav_balance.leav_category.try(:name)}
       column(:Leave_Balance, sortable:true){|employee_leav_balance| employee_leav_balance.try(:no_of_leave)}
       column(:Expiry_Date, sortable:true){|employee_leav_balance| employee_leav_balance.try(:expiry_date)}
-      column(:Toata_Leave, sortable:true){|employee_leav_balance| employee_leav_balance.try(:total_leave)}
+      column(:Total_Leave, sortable:true){|employee_leav_balance| employee_leav_balance.try(:total_leave)}
     end    
   end
 
@@ -131,6 +131,13 @@ class EmployeeLeavBalancesController < ApplicationController
      redirect_to employee_leav_balances_path
   end
 
+  def is_confirm_leave
+    @employee_leav_balance = EmployeeLeavBalance.find(params[:emp_leav_bal_id])
+    EmployeeLeavBalance.where(id: @employee_leav_balance.id).update_all(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to employee_leav_balances_path
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -140,6 +147,6 @@ class EmployeeLeavBalancesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def employee_leav_balance_params
-    params.require(:employee_leav_balance).permit(:employee_id, :leav_category_id, :no_of_leave, :total_leave, :expiry_date)
+    params.require(:employee_leav_balance).permit(:is_confirm,:employee_id, :leav_category_id, :no_of_leave, :total_leave, :expiry_date)
   end
 end

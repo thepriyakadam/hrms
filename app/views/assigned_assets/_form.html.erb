@@ -10,11 +10,6 @@
 <%= f.hidden_field :employee_id, value: @employee.id %>
 
   <div class="row">
-    <!-- <div class="col-sm-3">
-      <div class="field">
-        < f.select :employee_id,all_employee_list,{include_blank: " Select Employee"} %>
-      </div>
-    </div> -->
     <div class="col-sm-3">
       <div class="field">
         <%= f.select :asset_type_id,all_asset_type,{include_blank: " Assest Type"} %>
@@ -67,17 +62,17 @@
         </div>
       </div>
     </div>
-     <div class="col-sm-3">
+    <!-- <div class="col-sm-3">
     <label>Returned On: </label>
     <div class="field">
       <div class="input-group">
         <div class="input-group-addon">
           <i class="fa fa-calendar"></i>
         </div>
-        <%= f.text_field :returned_on, hide_label: true, class: 'returned_on_date'%>
+        <= f.text_field :returned_on, hide_label: true, class: 'returned_on_date'%>
       </div>
     </div>
-  </div>
+  </div> -->
   </div>
 
 <div class="row">
@@ -107,12 +102,6 @@
     dateFormat: 'dd-mm-yy' });
 
     $('.valid_till_date').datepicker({
-    changeYear:true,
-    changeMonth: true,
-    yearRange: '-2:+25',
-    dateFormat: 'dd-mm-yy' });
-
-    $('.returned_on_date').datepicker({
     changeYear:true,
     changeMonth: true,
     yearRange: '-2:+25',

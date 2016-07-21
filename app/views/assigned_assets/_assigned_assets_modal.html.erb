@@ -1,0 +1,43 @@
+<div class="modal-dialog"  style="height:500px; max-height:100px; width:350px; max-width:350px;">
+  <div class="modal-content">
+    <div class="modal-body">
+    <%= bootstrap_form_for :assigned_asset,url:{action:"update_asset",id: @assigned_asset.id},remote:true do |f| %>
+       <div class="row"> 
+     <div class="col-sm-3">
+    <label>Returned On </label>
+    <div class="field">
+      <div class="input-group">
+        <div class="input-group-addon">
+          <i class="fa fa-calendar"></i>
+        </div>
+        <%= f.date_field :returned_on, hide_label: true%>
+      </div>
+    </div>
+  </div>
+  </div><br><br>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="actions">
+
+        <%= f.submit "Update", class: "btn btn-success btn-sm" %>
+
+      </div>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  <% end %>
+
+  <script type="text/javascript">
+  $(function(){
+    $('.returned_on_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-2:+25',
+    dateFormat: 'dd-mm-yy' });
+  }); 
+</script>
+         
+
+  

@@ -1,0 +1,57 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Employee List For Revert Attendance</h3>
+  </div>
+   <%= bootstrap_form_for(:salary, url: { action: 'show_employee'}, remote: true) do |f| %>
+  <div class="box-body">
+  	  <div class="row">
+        <div class="col-sm-3">
+          <label>Department </label>
+          <div class="field">
+            <%= select :salary,:department_id, all_department,{hide_label: true, include_blank: 'Select Department'},{class: "form-control"} %>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <label>Date </label>
+          <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <%= text_field :salary,:day,hide_label: true,class: 'day_date form-control'%>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-2">
+        <label>Present </label>
+          <div class="field">
+            <%= select :salary,:present,['P','1/2','W','A'],{hide_label: true,include_blank: "Select Option"} ,{class: "form-control"}%>
+          </div>
+        </div> 
+        <div class="col-sm-3" style="padding-top:20px;">
+          <div class="actions">
+            <%= f.submit "Employees For Revert Attendance" ,class: 'btn btn-primary btn-sm' %>
+          </div>
+        </div>
+      </div><br>
+
+    <div id="all_employee"></div>
+  </div>
+</div>
+<% end %>
+<script type="text/javascript">
+
+    $("#buttonCtc").click(function(){
+      $('.ajax-progress').show();
+      $("#salary").submit();
+    })
+
+    $(function(){
+      $('.day_date').datepicker({
+      changeYear:true,
+      changeMonth: true,
+      yearRange: '-200:-0',
+      dateFormat: 'dd-mm-yy' });
+    });
+
+  </script>

@@ -3,10 +3,13 @@
   <thead>
     <tr>  
       <th><input type="checkbox" id="selectAll" value="selectAll"></th>
-      <th>Expence Date</th>
-      <th>E Place</th>
-      <th>Travel Expence Type</th>
-      <th>Travel Expence</th>
+      <th>Expense Date</th>
+      <th>Place</th>
+      <th>Travel Expense Type</th>
+      <th>Travel Expense</th>
+      <th>Currency</th>
+      <th>Download Doc</th>
+      <th>Download Image</th>
       <th>Action</th>
     </tr>
   </thead>
@@ -23,7 +26,22 @@
         <td><%= daily_bill_detail.expence_date %></td>
         <td><%= daily_bill_detail.e_place %></td>
         <td><%= daily_bill_detail.travel_expence_type.try(:name) %></td>
-        <td><%= daily_bill_detail.travel_expence %></td>       
+        <td><%= daily_bill_detail.travel_expence %></td>
+        <td><%= daily_bill_detail.currency_master.try(:name) %> <%= daily_bill_detail.currency_master.try(:description) %></td>
+        <td>
+           <% if daily_bill_detail.avatar_file_file_name == nil %>
+           <small class="label label-default">Document Not Available</small>
+             <% else %>
+             <%= link_to '',download_doc_path(id: daily_bill_detail.id),class: 'btn btn-xs fa fa-download' %>
+             <% end %>
+        </td>
+        <td>
+           <% if daily_bill_detail.passport_photo_file_name == nil %>
+           <small class="label label-default">Image Not Available</small>
+             <% else %>
+             <%= link_to '',download_pics_path(id: daily_bill_detail.id),class: 'btn btn-xs fa fa-picture-o' %>
+             <% end %>
+        </td>            
         <td>
           <% if daily_bill_detail.is_confirm == true %>
             <small class="label label-info">Confirmed</small>
@@ -43,9 +61,9 @@
       <div class="actions">
         <%= f.submit "Confirm", class: 'btn btn-primary btn-sm' %> |
 
-        <%= link_to 'Print PDF', print_daily_bill_daily_bill_details_path(format: 'pdf',qwe:@travel_request.id ),class: 'btn btn-xl btn-warning',:target => '_blank' %><br>
-        <%= link_to 'Send Request',class: 'btn btn-xl btn-warning' %><br>
-        <br>
+        <%= link_to 'Print PDF', print_daily_bill_daily_bill_details_path(format: 'pdf',qwe:@travel_request.id ),class: 'btn btn-sm btn-warning',:target => '_blank' %><br><br>
+       <!--  <= link_to 'Send Request',class: 'btn btn-xl btn-warning' %><br>
+        <br> -->
         <%= link_to 'Back', daily_bill_travel_requests_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
 
       </div>

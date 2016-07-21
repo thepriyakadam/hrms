@@ -43,6 +43,24 @@ class ReportingMastersController < ApplicationController
     @reporting_masters = ReportingMaster.all
   end
 
+  def update_reporting_manager
+  end
+
+  def show_employee
+    @reporting_master1 = params[:employee_id_1]
+
+    @employees = Employee.where("manager_id = ? OR manager_2_id = ?",@reporting_master1,@reporting_master1 )
+  end
+
+  def update_manager
+    @reporting_master1 = params[:salary][:employee_id_1]
+    @reporting_master2 = params[:salary][:employee_id_2]
+
+    Employee.where(manager_id: @reporting_master1).update_all(manager_id: @reporting_master2)
+    Employee.where(manager_2_id: @reporting_master1).update_all(manager_2_id: @reporting_master2)
+    flash[:notice] = "Updated Successfully"
+    redirect_to update_reporting_manager_reporting_masters_path
+  end
   private
 
   # Use callbacks to share common setup or constraints between actions.

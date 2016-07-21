@@ -15,7 +15,7 @@ class InductionActivitiesController < ApplicationController
   # GET /induction_activities/new
   def new
     @induction_activity = InductionActivity.new
-    @induction_master = InductionMaster.find(params[:format])
+    @induction_master = InductionMaster.find(params[:induction_master_id])
     @induction_activities = InductionActivity.where(induction_master_id: @induction_master.id)
   end
 
@@ -42,13 +42,14 @@ class InductionActivitiesController < ApplicationController
   # end
 
   def create
-     @induction_activity = InductionActivity.new(induction_activity_params)
-     @induction_activities = InductionActivity.all
+    @induction_activity = InductionActivity.new(induction_activity_params)
+    @induction_activities = InductionActivity.all
       if @induction_activity.save
         @induction_activity = InductionActivity.new
         flash[:notice] = 'Induction Activity saved Successfully.'
       end
-      redirect_to new_induction_master_path
+      @induction_master_id = InductionMaster.find(params[:induction_activity][:induction_master_id])
+      redirect_to new_induction_activity_path(induction_master_id: @induction_master_id.id)
   end
 
    def update
@@ -59,11 +60,11 @@ class InductionActivitiesController < ApplicationController
 
   def destroy
     @induction_activity.destroy
-    @induction_activities = InductionActivity.all
+    @induction_master = InductionMaster.find(params[:induction_master_id])
+    @induction_activities = InductionActivity.where(induction_master_id: @induction_master.id)
   end
 
   def employee_list
-    puts '----------------------------------------------------------'
      @employees = Employee.all
      # @employee = Employee.find(params[:emp_id])
      # @induction_details = InductionDetail.where(employee_id: @employee.id)
@@ -123,6 +124,22 @@ class InductionActivitiesController < ApplicationController
     InductionDetail.create(start_date: @induction_det,employee_id: @emp,induction_master_id:@induction_master.id,induction_completed: :false)
     flash[:notice] = 'Induction Details was saved Successfully.'
     redirect_to employee_list_induction_activities_path
+  end
+
+
+  def modal_induction_activity
+    #byebug
+    @induction_activity = InductionActivity.find(params[:induction_activity_id])
+    @induction_master = InductionMaster.find(params[:induction_master_id])
+  end
+
+
+  def update_induction
+    @induction_activity = InductionActivity.find(params[:id])
+    @induction_activity.update(induction_activity_params)
+    @induction_master = InductionMaster.find(params[:induction_master_id])
+    flash[:notice] = 'Activity Updated Successfully'
+    redirect_to new_induction_activity_path(induction_master_id: @induction_master.id)
   end
 
   private

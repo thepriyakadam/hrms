@@ -9,7 +9,7 @@
       <th>Assest status</th>
       <th>Issue date</th>
       <th>Valid till</th>
-      <th>Returned on</th>
+     <!--  <th>Returned on</th> -->
       <th>Remarks</th>
       <th>Action</th>
     </tr>
@@ -26,8 +26,8 @@
         <td><%= assigned_asset.assest_status %></td>
         <td><%= assigned_asset.issue_date %></td>
         <td><%= assigned_asset.valid_till %></td>
-        <td><%= assigned_asset.returned_on %></td>
-        <td><%= assigned_asset.remarks %></td>
+<!--         <td><%= assigned_asset.returned_on %></td>
+ -->        <td><%= assigned_asset.remarks %></td>
         <td>
         	<%= link_to '', edit_assigned_asset_path(assigned_asset),class: 'btn btn-success btn-sm fa fa-edit',remote:true %>
          <!--  < link_to '', assigned_asset, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-sm fa fa-close' %> -->

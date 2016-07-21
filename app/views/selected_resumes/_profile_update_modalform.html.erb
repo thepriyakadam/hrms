@@ -1,7 +1,7 @@
 <div class="modal-dialog"  style="height:2000px; max-height:500px; width:830px; max-width:830px;">
   <div class="modal-content">
     <div class="modal-body">
-     <%= bootstrap_form_for :selected_resume,url:{action:"update_profile",id: @selected_resume.id},html: {id: 'selected_resume'} do |f| %>
+     <%= bootstrap_form_for :selected_resume,url:{action:"update_profile"},html: {id: 'selected_resume'} do |f| %>
         <div class="row">
   <div class="col-sm-3">
     <div class="form-group required">
@@ -82,7 +82,7 @@
 
 <div class="row">
  <div class="col-sm-3">
-            <%= f.submit "Update Interview Status", class: 'btn btn-sm btn-warning fa fa-modx' %>
+            <%= f.submit "Update Profile", class: 'btn btn-sm btn-warning fa fa-modx' %>
           </div>
           </div>
 

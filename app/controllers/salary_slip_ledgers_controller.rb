@@ -217,7 +217,7 @@ class SalarySlipLedgersController < ApplicationController
       sr = SalaryReport.collect_data(employee,joining,s)
       @reports << sr
     end
-
+    @sum = SalaryReport.create_sum(@reports)
     respond_to do |f|
       f.js
       f.xls {render template: 'salary_slip_ledgers/collect_employee_salary_ledger.xls.erb'}

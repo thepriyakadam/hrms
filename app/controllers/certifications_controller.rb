@@ -11,6 +11,7 @@ class CertificationsController < ApplicationController
   # GET /certifications/1.json
   def show
   end
+  
 
   # GET /certifications/new
   def new

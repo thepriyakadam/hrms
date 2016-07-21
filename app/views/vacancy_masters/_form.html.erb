@@ -10,16 +10,14 @@
 
        <div class="col-sm-3">
           <div class="form-group required">
-             <%= f.text_field :other_organization,label: 'Organization'%>
+             <%= f.text_field :other_organization,label: 'Organization',value: current_user.employee.company_location.company.description%>
           </div>
         </div>
 
         <div class="col-sm-3">
-         <label>Job Title</label>
-          <div class="form-group required">
-            <div class="input-group">
-              <%= f.select :employee_designation_id,all_employee_designation,{hide_label: true,include_blank: " Select Job Title"} %>
-            </div>
+         <div class="form-group required">
+       <!--   <label>Job Title</label> -->
+              <%= f.select :employee_designation_id,all_employee_designation,{label: 'Job Title',include_blank: " Select Job Title"} %>
           </div>
         </div>
 
@@ -73,13 +71,14 @@
       <div class="row">
 
         <div class="col-sm-3">
-          <label>Vacancy Fulfillment Date </label>
           <div class="form-group required">
+          <!-- <label>Vacancy Fulfillment Date </label> -->
+        
             <div class="input-group">
               <div class="input-group-addon">
                 <i class="fa fa-calendar"></i>
               </div>
-               <%= f.text_field :vacancy_post_date, hide_label: true, class: 'birth_date'%>
+               <%= f.text_field :vacancy_post_date, label: 'Vacancy Fulfillment Date', class: 'birth_date'%>
             </div>
           </div>
         </div>      
@@ -131,9 +130,9 @@
        
        
         <div class="col-sm-3">
-        <label>Vacancy Approval</label>
-            <div class="form-group required">
-              <%= f.select :reporting_master_id,all_reporting_master_list,{hide_label: true,include_blank: " Select Reporting Person"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
+          <div class="form-group required">
+       <!--  <label>Vacancy Approval</label> -->
+          <%= f.select :reporting_master_id,all_reporting_master_list,{label: 'Vacancy Approval',include_blank: " Select Reporting Person"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
             </div>
         </div>
        </div>  
@@ -156,6 +155,7 @@
         <div class="col-sm-3">
           <div class="actions">
             <%= f.submit "Create Vacancy",class: "btn btn-primary btn-sm" %>
+            <%= link_to 'Back', vacancy_masters_path,class:"btn btn-sm btn-default fa fa-arrow-left" %>
           </div>
         </div>
       </div>

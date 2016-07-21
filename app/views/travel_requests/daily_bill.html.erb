@@ -30,7 +30,7 @@
         <td><%= travel_request.place %></td>
         <td><%= travel_request.total_advance %></td>
         <td>
-            <%= link_to 'Daily Bill Detail', new_daily_bill_detail_path(travel_request.id),class: 'btn btn-info btn-sm' %>
+            <%= link_to 'Expense Claim Detail', new_daily_bill_detail_path(travel_request_id: travel_request.id),class: 'btn btn-info btn-sm' %>
             <% if travel_request.is_confirm == true %>
             <small class="label label-primary">Confirmed</small>
             <% else %>

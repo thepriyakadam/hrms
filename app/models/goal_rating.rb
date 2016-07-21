@@ -13,14 +13,17 @@ class GoalRating < ActiveRecord::Base
   belongs_to :appraiser, class_name: 'Employee'
   belongs_to :reviewer, class_name: 'Employee'
 
+  #validates :goal_perspective_id, presence: true
+  #validates :attribute_master_id, presence: true
+
   def goal_weightage_sum(goal_bunch, goal_rating)
     previous_weightage = goal_bunch.goal_ratings.sum(:goal_weightage)
     previous_weightage + goal_rating.goal_weightage
   end
 
-  def goal_weightage_sumdate(employee_goal, goal_weightage)
-    previous_goals = EmployeeGoal.where(period_id: employee_goal.period_id, employee_id: employee_goal.employee_id, is_confirm: nil)
-    previous_goals.sum(:goal_weightage) + goal_weightage.to_i
+  def goal_weightage_sumdate(goal_bunch, goal_weightage, params)
+    previous_goals = GoalRating.where(goal_bunch: goal_bunch.id)
+    prev_total = previous_goals.sum(:goal_weightage) - goal_weightage.to_i
+    prev_total + params[:goal_rating][:goal_weightage].to_i
   end
-  
 end

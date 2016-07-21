@@ -1,0 +1,38 @@
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Url host</th>
+      <th>Url port</th>
+      <th>Delivery method</th>
+      <th>Address</th>
+      <th>Port</th>
+      <th>Username</th>
+      <th>Pwd</th>
+      <th>Authentication</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @email_configs.each do |email_config| %>
+      <tr>
+        <td><%= email_config.url_host %></td>
+        <td><%= email_config.url_port %></td>
+        <td><%= email_config.delivery_method %></td>
+        <td><%= email_config.address %></td>
+        <td><%= email_config.port %></td>
+        <td><%= email_config.username %></td>
+        <td><%= email_config.pwd %></td>
+        <td><%= email_config.authentication %></td>
+        <td>
+          <%= link_to '', edit_email_config_path(email_config),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
+          <%= link_to '', email_config, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-xs btn-danger fa fa-close',remote: true %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Email config', new_email_config_path %>

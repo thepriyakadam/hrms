@@ -3,6 +3,7 @@ class HomeController < ApplicationController
   def index
     @employee_task_to_dos = EmployeeTaskToDo.where(employee_id: current_user.try(:employee_id))
     @circulars = Circular.all
+    @company_policies = CompanyPolicy.all
     @companies = Company.all
     @company_locations = CompanyLocation.all
     @departments = Department.all
@@ -11,7 +12,7 @@ class HomeController < ApplicationController
       if current_user.role.name == 'Employee'
         @employee = Employee.find(current_user.employee_id)
         #redirect_to home_index_path
-      elsif current_user.role.name == 'CompanyLocation'
+      elsif current_user.role.try(:name) == 'CompanyLocation'
         @employees = Employee.where(company_location_id: current_user.company_location_id)
       elsif current_user.role.name == 'Department'
         @employees = Employee.where(department_id: current_user.department_id)
@@ -26,6 +27,7 @@ class HomeController < ApplicationController
         @employee = Employee.find(current_user.employee_id)
       end
     else
+      #@employee_task_to_dos = EmployeeTaskToDo.where(employee_id: current_user.employee_id, status: true)
       @employees = Employee.all
     end
   end

@@ -26,18 +26,33 @@ class PfMastersController < ApplicationController
 
   # POST /pf_masters
   # POST /pf_masters.json
+
+ 
+  # def create
+  #   @components = params[:components]
+  #   @pf_masters = PfMaster.all
+  #   @pf_master = PfMaster.new(pf_master_params)
+  #   @pf_master.base_component = PfMaster.create_string(@components)
+  #   if @pf_master.save
+  #     @flag = true
+  #     @pf_master = PfMaster.new
+  #   else
+  #     @flag = false
+  #   end
+  # end
+
   def create
-    @components = params[:components]
-    @pf_masters = PfMaster.all
     @pf_master = PfMaster.new(pf_master_params)
-    @pf_master.base_component = PfMaster.create_string(@components)
-    if @pf_master.save
-      @flag = true
-      @pf_master = PfMaster.new
-    else
-      @flag = false
-    end
-  end
+    @pf_masters = PfMaster.all
+     if @pf_master.save
+       @pf_master = PfMaster.new
+     end
+     flash[:notice] = 'Employee Document saved Successfully.' 
+     redirect_to new_pf_master_path
+       
+ end
+
+
 
   # PATCH/PUT /pf_masters/1
   # PATCH/PUT /pf_masters/1.json
@@ -55,12 +70,10 @@ class PfMastersController < ApplicationController
 
   # DELETE /pf_masters/1
   # DELETE /pf_masters/1.json
+
   def destroy
     @pf_master.destroy
-    respond_to do |format|
-      format.html { redirect_to pf_masters_url, notice: 'Pf master was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    @pf_masters = PfMaster.all
   end
 
   private

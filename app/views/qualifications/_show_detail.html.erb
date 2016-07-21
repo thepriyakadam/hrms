@@ -29,10 +29,8 @@
           <td><%= qualification.college %></td>
           <td><%= qualification.university.try(:name) %></td>
           <td>
-          <div id="myModal" class="modal fade"></div>
-            <!--  link_to '', edit_qualification_path(qualification),class: 'btn btn-sm btn-success fa fa-edit',remote:true %>
-             link_to '', qualification, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-sm fa fa-close' %> -->
-             
+         
+           
              <%= link_to ' ',modal_qualifications_path(qualification),class: 'btn btn-success btn-sm fa fa-edit',remote: true %>
           </td>
       </tr>
@@ -40,5 +38,6 @@
       </table>
   </div><!-- /.box -->
 </div>
+ 
 
 

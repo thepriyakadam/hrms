@@ -10,11 +10,14 @@ class TrainingRequestsController < ApplicationController
   # GET /training_requests/1
   # GET /training_requests/1.json
   def show
+    @trainee_requests = TraineeRequest.where(training_request_id: @training_request.id)
   end
 
   # GET /training_requests/new
   def new
     @training_request = TrainingRequest.new
+    #@training_requests = TrainingRequest.all
+    @employees = Employee.where(department_id: current_user.department_id)
     session[:active_tab] ="trainingmgmt"
   end
 
@@ -29,6 +32,10 @@ class TrainingRequestsController < ApplicationController
     @training_request.status = "Pending"
     respond_to do |format|
       if @training_request.save
+        @employee_ids = params[:employee_ids]
+        @employee_ids.each do |eid|
+        TraineeRequest.create(employee_id: eid,training_request_id: @training_request.id,training_topic_master_id: @training_request.training_topic_master_id)
+      end
         format.html { redirect_to @training_request, notice: 'Training request was successfully created.' }
         format.json { render :show, status: :created, location: @training_request }
       else
@@ -70,33 +77,47 @@ class TrainingRequestsController < ApplicationController
   def training_request_confirmation
     @training_request = TrainingRequest.find(params[:format])
     @training_requests = TrainingRequest.where(reporting_master_id: current_user.employee_id)
+    @trainee_requests =TraineeRequest.where(training_request_id: @training_request.id)
   end
 
   def approve_training_request
-    @training_request = TrainingRequest.find(params[:format])
+    @training_request = TrainingRequest.find(params[:id])
     @training_request.update(status: "Approved")
     TrainingApproval.create(training_request_id: @training_request.id,employee_id: @training_request.employee_id, training_topic_master_id: @training_request.training_topic_master_id,reporting_master_id: @training_request.reporting_master_id,traininig_period: @training_request.training_period,training_date: @training_request.training_date,place: @training_request.place,no_of_employee: @training_request.no_of_employee,description: @training_request.description,justification: @training_request.justification,current_status: "Approved")
     ReportingMastersTrainingReq.create(reporting_master_id: @training_request.reporting_master_id, training_request_id: @training_request.id, training_status: "Approved")
+
+     @comment = params[:training_request][:comment]
+     @training_request.update(comment: @comment)
+     flash[:notice] = 'Comment Updated Successfully'
+     redirect_to training_request_list_training_requests_path
     #TrainingRequestMailer.approve_training_request_email(@training_request).deliver_now
-    flash[:notice] = 'Training Request Approved'
-    redirect_to training_request_list_training_requests_path
+  end
+
+  def modal_approver_comment
+     @training_request = TrainingRequest.find(params[:format])
+  end
+
+  def modal_reject_comment
+     @training_request = TrainingRequest.find(params[:format])
   end
 
 
 
   def confirmation_list
-   @training_requests = TrainingRequest.where(employee_id: current_user.employee_id,status:"Approved")  
+   @training_requests = TrainingRequest.where(status:"Approved")  
   end
 
 
   def reject_training_request
-    @training_request = TrainingRequest.find(params[:format])
+    @training_request = TrainingRequest.find(params[:id])
     @training_request.update(status: "Reject")
     TrainingApproval.create(training_request_id: @training_request.id,employee_id: @training_request.employee_id, training_topic_master_id: @training_request.training_topic_master_id,reporting_master_id: @training_request.reporting_master_id,traininig_period: @training_request.training_period,training_date: @training_request.training_date,place: @training_request.place,no_of_employee: @training_request.no_of_employee,description: @training_request.description,justification: @training_request.justification,current_status: "Reject")
     ReportingMastersTrainingReq.create(reporting_master_id: @training_request.reporting_master_id, training_request_id: @training_request.id, training_status: "Reject")
     #TrainingRequestMailer.reject_training_request_email(@training_request).deliver_now
     
-    flash[:alert] = 'Training Request Rejected'
+    @comment = params[:training_request][:comment]
+    @training_request.update(comment: @comment)
+    flash[:alert] = 'Comment Updated Successfully'
     redirect_to training_request_list_training_requests_path
   end
 

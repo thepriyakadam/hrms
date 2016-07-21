@@ -1,9 +1,9 @@
-<%= bootstrap_form_for(@daily_bill_detail,remote:true) do |f| %>
+<%= bootstrap_form_for(@daily_bill_detail,id:@travel_request.id,travel_request_id: @travel_request.id) do |f| %>
+<%= hidden_field_tag :authenticity_token, form_authenticity_token %>
   <%= f.hidden_field :travel_request_id, value:@travel_request.id  %>
-  <div id="entry1" class="clonedInput">
     <div class="row">
        <div class="col-sm-3">
-        <label>Expence Date </label>
+        <label>Expense Date </label>
         <div class="field">
           <div class="input-group">
             <div class="input-group-addon">
@@ -16,7 +16,7 @@
 
       <div class="col-sm-3">
         <div class="field">
-          <%= f.text_field :e_place, label: 'E Place',class: 'input_e_place'  %>
+          <%= f.text_field :e_place, label: 'Place',class: 'input_e_place'  %>
         </div>
       </div>
        <div class="col-sm-3">
@@ -26,12 +26,34 @@
       </div>
       <div class="col-sm-3">
         <div class="field">
-          <%= f.text_field :travel_expence,label: 'Travel Expence',class: 'input_travel_expence'  %>
+          <%= f.text_field :travel_expence,label: 'Travel Expense',class: 'input_travel_expence'  %>
         </div>
       </div>
+    </div>
+    <div class="row">
+    <div class="col-sm-3">
+          <label>Currency</label>
+          <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <%= link_to "", currency_masters_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+              </div>
+               <%= f.select :currency_master_id, all_currency, {hide_label: true,include_blank: " Select Currency Type"} %>
+            </div>
+          </div>
+        </div>
+    <div class="col-sm-3">
+    <div class="field">
+      <%= f.file_field :avatar_file,label: 'Document(only docx,pdf)' %>
+    </div>
+   </div>
 
+   <div class="col-sm-3">
+    <div class="field">
+      <%= f.file_field :passport_photo,label: 'Image(only jpeg,jpg,png)' %>
     </div>
-    </div>
+   </div>
+   </div>
 
    <!-- unless params['controller'] == 'daily_bill_details' and params['action'] == 'edit' %> -->
     <!-- <div class="row">
@@ -48,57 +70,19 @@
   <div class="row">
     <div class="col-sm-3">
       <div class="actions">
-        <%= f.submit "Create Daily Bill Detail",:class => class_name, data: { disable_with: data_info }  %>
+        <%= f.submit "Create Expense Claim Detail",:class => class_name, data: { disable_with: data_info }  %>
       </div>
     </div>
   </div>
 <% end %>
 
 <script type="text/javascript">
-  $(document).ready(function() {
+ $(function(){
     $('.input_expence_date').datepicker({
     changeYear:true,
     changeMonth: true,
-    yearRange: '-200:-0',
+    yearRange: '-200:+1',
     dateFormat: 'dd-mm-yy' });
-
-    $('#btnAdd').click(function () {
-      var num     = $('.clonedInput').length,
-          newNum  = new Number(num + 1),      
-          newElem = $('#entry' + num).clone().attr('id', 'entry' + newNum).fadeIn('slow'); 
-      newElem.find('.input_expence_date').attr('name','daily_bill_detail['+ newNum +'][expence_date]').attr('id', newNum + '_daily_bill_detail_expence_date').val('');
-      newElem.find('.input_e_place').attr('name','daily_bill_detail['+ newNum +'][e_place]').attr('id', newNum + '_daily_bill_detail_e_place').val('');
-      newElem.find('.input_travel_expence').attr('name','daily_bill_detail['+ newNum +'][travel_expence]').attr('id', newNum + '_daily_bill_detail_travel_expence').val('');
-      newElem.find('.input_local_travel_expence').attr('name','daily_bill_detail['+ newNum +'][local_travel_expence]').attr('id', newNum + '_daily_bill_detail_local_travel_expence').val('');
-      newElem.find('.input_lodging_expence').attr('name','daily_bill_detail['+ newNum +'][lodging_expence]').attr('id', newNum + '_daily_bill_detail_lodging_expence').val('');
-      newElem.find('.input_boarding_expence').attr('name','daily_bill_detail['+ newNum +'][boarding_expence]').attr('id', newNum + '_daily_bill_detail_boarding_expence').val('');
-      newElem.find('.input_other_expence').attr('name','daily_bill_detail['+ newNum +'][other_expence]').attr('id', newNum + '_daily_bill_detail_other_expence').val('');
-      
-      $('#entry' + num).after(newElem);
-      $('#ID' + newNum + '_title').focus();
-      $('#btnDel').attr('disabled', false);
-      if (newNum == 5)
-      $('#btnAdd').attr('disabled', true).prop('value', "You've reached the limit");
-    });
-
-    $('#btnDel').click(function () {
-      if (confirm("Are you sure you wish to remove this section? This cannot be undone."))
-        {
-          var num = $('.clonedInput').length;
-          $('#entry' + num).slideUp('slow', function () {$(this).remove();
-              if (num -1 === 1)
-          $('#btnDel').attr('disabled', true);
-          $('#btnAdd').attr('disabled', false).prop('value', "+ Additional Experiences");});
-        }
-      return false;
-    });
-    $('#btnAdd').attr('disabled', false);
-    $('#btnDel').attr('disabled', true);
-
-    $(document).on("focus", ".input_expence_date", function(){
-      $(this).datepicker();
-    });
-
     $("#daily_bill_detail").validate({
       rules: {
         "daily_bill_detail[expence_date]":{

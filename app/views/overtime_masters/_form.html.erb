@@ -12,14 +12,14 @@
       </div>
     </div>
      <div class="col-sm-3">
-      <div class="form-group required">
+      <div class="field">
         <%= f.text_field :company_hrs,label:'Company Hours' %>
       </div>
     </div>
   </div>
   <div class="row">
     <div class="col-sm-3">
-      <div class="form-group required">
+      <div class="field">
         <%= f.text_field :ot_rate ,label: 'Rate' %>
       </div>
     </div>
@@ -28,9 +28,10 @@
         <%= f.select :is_esic,[['Yes','true'],['No','false']],{label: 'ESIC Option',include_blank: " Select ESIC Option"} %>
       </div>
     </div>
-     <div class="col-sm-3">
-      <div class="form-group required">       
-        <%= f.select :status,[['Active','true'],['Inactive','false']],{label: 'OT Status',include_blank: " Select Status Option"} %>
+     <div class="col-sm-1">
+      <label>Status </label>
+      <div class="field">
+        <%= f.check_box :status, label: 'Active'%>
       </div>
     </div>
   </div>
@@ -43,6 +44,7 @@
     </div>
   </div>
 <% end %>
+<br>
 
 <script type="text/javascript">
 
@@ -63,9 +65,9 @@ $("#overtime_master").validate({
     "overtime_master[is_esic]":{
       required: true
     },
-    "overtime_master[status]":{
-      required: true
-    }
+    // "overtime_master[status]":{
+    //   required: true
+    // }
   },
   
   errorPlacement: function(error, element) {

@@ -51,8 +51,13 @@ class Employee < ActiveRecord::Base
   has_many :training_requests
   has_many :interview_rounds
   has_many :goal_bunches
+  has_many :employee_documents
+  has_many :employee_declarations
+  has_many :reward_pals
+  has_many :interview_rounds
+  has_many :interview_round_reschedules
   
-  accepts_nested_attributes_for :joining_detail
+  #accepts_nested_attributes_for :joining_detail
   has_many :subordinates, class_name: 'Employee',
                           foreign_key: 'manager_id'
   belongs_to :manager, class_name: 'Employee'
@@ -74,14 +79,11 @@ class Employee < ActiveRecord::Base
 
   validates :manual_employee_code, presence: true, uniqueness: { case_sensitive: false }
   validates :first_name, presence: true
-  # validate  :email_regex
   validates :permanent_address, presence: true
-  # validates :country_id, :presence => true
-  # validates :state_id, :presence => true
-  # validates :district_id, :presence => true
-
-  validate :adhar_no_regex
-  validate :pan_no_regex
+  validates :department_id,presence: true
+  
+  # validate :adhar_no_regex
+  # validate :pan_no_regex
 
   def adhar_no_regex
     if adhar_no.present? && !adhar_no.match(/[0-9]{12}/)
@@ -153,5 +155,12 @@ class Employee < ActiveRecord::Base
         Employee.where(id: current_user.employee_id)
       end
     end
+  end
+
+  
+  def self.filter_by_date_and_department(date, department)
+    @attendances = EmployeeAttendance.where(day: date).pluck(:employee_id)
+    @departments = Employee.where(department_id: department).pluck(:id)
+    Employee.where(id: @departments - @attendances)  
   end
 end

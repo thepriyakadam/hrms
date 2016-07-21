@@ -3,7 +3,7 @@
 <table style="border-collapse: collapse; font-size:30pt;" border=1 width=1000 cellpadding="15">
   <thead>
     <tr>
-      <th colspan="36">
+      <th colspan="37">
         <center><strong>BHANDARI FOILS AND TUBES LTD.</strong></center>
         <center><small><%= Bank.find(@bank).name %></small></center>
         <center><small>Employee Monthly Salary For The Month <%= @month %> - <%= @year %></small></center>   
@@ -13,7 +13,7 @@
       <th colspan="8"><center> SALARY DETAILS</center></th>
       <th colspan="8"><center> WORKING DAYS</center></th>
       <th colspan="8"><center> EARNED SALARY</center></th>
-      <th colspan="10"><center>DEDUCTION</center></th>
+      <th colspan="11"><center>DEDUCTION</center></th>
       <th><center> NET </center></th>
       <th><center> SIGN </center></th>
     </tr>
@@ -27,16 +27,16 @@
       <th>S.Allow</th>
       <th>Wsh.Allow</th>
       <th>Total</th>
-
+      
+      <th>PD</th>
+      <th>WOff</th>
       <th>CL</th>
       <th>EL</th>
       <th>LWP</th>
-      <th>Payable</th>
-      <th>PD</th>
-      <th>AD</th>
       <th>HD</th>
-      <th>WOff</th>
-
+      <th>AD</th>
+      <th>Payable</th>
+    
       <th>Basic</th>
       <th>DA</th>
       <th>HRA</th>
@@ -55,6 +55,7 @@
       <th>Food</th>
       <th>Mobile</th>
       <th>Retention</th>
+      <th>WF</th>
       <th>Total Dedu</th>
 
       <th>NET</th>
@@ -91,16 +92,16 @@
         <td><%= r.try(:actual_washing) %></td>
         <td><%= r.try(:actual_total) %></td>
 
+
+        <td><%= r.try(:present_day) %></td>
+        <td><%= r.try(:weekoff) %></td>
         <td><%= r.try(:cl_leave) %></td>
         <td><%= r.try(:el_leave) %></td>
-
         <td><%= r.try(:lwp_leave) %></td>
-        <td><%= r.try(:payable_day) %></td>
-        <td><%= r.try(:present_day) %></td>
-        <td><%= r.try(:absent_day) %></td>
         <td><%= r.try(:holiday) %></td>
-        <td><%= r.try(:weekoff) %></td>
-
+        <td><%= r.try(:absent_day) %></td>
+        <td><%= r.try(:payable_day) %></td>
+       
         <td><%= r.try(:earned_basic).round %></td>
         <td><%= r.try(:earned_da).round %></td>
         <td><%= r.try(:earned_hra).round %></td>
@@ -121,6 +122,7 @@
         <td><%= r.try(:food_deduction) %></td>
         <td><%= r.try(:mobile) %></td>
         <td><%= r.try(:retention) %></td>
+        <td><%= r.try(:welfair) %></td>
         <td><%= r.try(:deduction_total) %></td>
         <td><%= r.try(:net_payable) %></td>
         <td><%=  %></td>
@@ -140,14 +142,17 @@
       <td><%= @sum.actual_washing %></td>
       <td><%= @sum.actual_total %></td>
 
+      
+      
+      <td><%= @sum.present_day %></td>
+      <td><%= @sum.weekoff %></td>
       <td><%= @sum.cl_leave %></td>
       <td><%= @sum.el_leave %></td>
       <td><%= @sum.lwp_leave %></td>
-      <td><%= @sum.payable_day %></td>
-      <td><%= @sum.present_day %></td>
-      <td><%= @sum.absent_day %></td>
       <td><%= @sum.holiday %></td>
-      <td><%= @sum.weekoff %></td>
+      <td><%= @sum.absent_day %></td>
+      <td><%= @sum.payable_day %></td>
+      
 
       <td><%= @sum.earned_basic.round %></td>
       <td><%= @sum.earned_da.round %></td>
@@ -167,6 +172,7 @@
       <td><%= @sum.food_deduction %></td>
       <td><%= @sum.mobile %></td>
       <td><%= @sum.retention %></td>
+      <td><%= @sum.welfair %></td>
       <td><%= @sum.deduction_total %></td>
 
       <td><%= @sum.net_payable %></td>

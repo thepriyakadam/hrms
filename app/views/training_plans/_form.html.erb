@@ -7,25 +7,25 @@
 
   <div class="row">
     <div class="col-sm-3">
-      <label>Training Date</label>
+      <!-- <label>Training Date</label> -->
       <div class="form-group required">
         <div class="input-group">
           <div class="input-group-addon">
             <i class="fa fa-calendar"></i>
           </div>
-          <%= f.text_field :training_date, hide_label: true,class: 'birth_date'%>
+          <%= f.text_field :training_date,label: 'Training Date',class: 'birth_date'%>
         </div>
       </div>
     </div>
     
     <div class="col-sm-3">
-      <label>Topic</label>
+     <!--  <label>Topic</label> -->
         <div class="form-group required">
          <div class="input-group">
         <div class="input-group-addon">
-                <%= link_to "", new_training_topic_master_path,class: "fa fa-plus fa-success",:target => "_blank" %>
-              </div>
-          <%= f.select :training_topic_master_id, all_training_course,{hide_label: true,include_blank: " Select Topics"}%>
+            <%= link_to "", new_training_topic_master_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+        </div>
+          <%= f.select :training_topic_master_id, all_training_course,{label: 'Topic',include_blank: " Select Topics"}%>
         </div>
         </div>
       </div>
@@ -42,9 +42,9 @@
   </div>
   <div class="row">
     <div class="col-sm-3">
-      <div class="field">
+    <div class="field">
         <%= f.text_field :no_of_days,placeholder: 'No of Days' %>
-      </div>
+    </div>
     </div>
     <div class="col-sm-3">
       <div class="field">
@@ -57,9 +57,12 @@
       </div>
     </div>
   </div>
-   <div>
-      <%= render 'employee_list' %>
-    </div>
+   <!-- <div>
+      <= render 'employee_list' %>
+    </div> -->
+  <div>
+      <%= render 'trainee_request_list' %>
+  </div>
   <div class="row">
     <div class="col-sm-3">
       <div class="actions">

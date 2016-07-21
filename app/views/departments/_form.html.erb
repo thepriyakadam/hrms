@@ -2,7 +2,7 @@
   <%= bootstrap_form_for(@department,html: {id: 'department'},remote: true) do |f| %>
     <div class="row">
       <div class="col-sm-3">
-        <div class="form-group required">
+        <div class="field">
          <%= f.text_field :manual_department_code,label: 'Department Code',placeholder: "Department Code"%>
          </div>
       </div>
@@ -11,7 +11,7 @@
     <div class="row">
       <div class="col-sm-3">
         <div class="form-group required">
-         <%= f.select :company_location_id, all_company_location,{label: 'Department Location',include_blank: " Select Department Location"} %>
+         <%= f.select :company_location_id, all_company_with_location,{label: 'Department Location',include_blank: " Select Department Location"} %>
         </div>
       </div>
       <div class="col-sm-3">
@@ -33,7 +33,7 @@
 
       <div class="col-sm-3">
         <div class="field">
-         <%= f.text_field :contact_no ,label:"Contact No"%>
+         <%= f.text_field :contact_no ,label:"Contact No."%>
         </div>
       </div>
     </div>

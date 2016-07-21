@@ -1,5 +1,17 @@
 Rails.application.routes.draw do
 
+  
+
+  get 'download_pdf/index'
+
+  get 'download_pdf/zip'
+
+  get 'download_pdf/pdf'
+
+  get 'download_pdf/doc'
+
+
+
   resources :due_actions
   resources :due_details do
     collection do

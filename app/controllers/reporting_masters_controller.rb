@@ -69,9 +69,10 @@ class ReportingMastersController < ApplicationController
           Employee.where(manager_id: @reporting_master1,id: emp.id).update_all(manager_id: @reporting_master2)
           Employee.where(manager_2_id: @reporting_master1,id: emp.id).update_all(manager_2_id: @reporting_master2)
 
-          @manager_history = ManagerHistory.where("employee_id = ? AND manager_id = ? AND manager_2_id = ?", emp.id,emp.manager_id,emp.manager_2_id)
-
-          ManagerHistory.create(employee_id: emp.id,manager_id: emp.manager_id,manager_2_id: emp.manager_2_id,effective_from: @manager_history.effective_to.to_date,effective_to: @effec_date.to_date)
+          #@manager_history = ManagerHistory.where("employee_id = ? AND manager_id = ? AND manager_2_id = ?", emp.id,emp.manager_id,emp.manager_2_id)
+          @employee = Employee.find(emp.id)
+          ManagerHistory.create(employee_id: emp.id,manager_id: @employee.manager_id,manager_2_id: @employee.manager_2_id,effective_to: @effec_date.to_date)
+          #@manager_history = ManagerHistory.where("employee_id = ? AND manager_id = ? AND manager_2_id = ?", emp.id,@employee.manager_id,@employee.manager_2_id)
           end
         end
     flash[:notice] = "Updated Successfully"

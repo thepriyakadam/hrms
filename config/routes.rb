@@ -747,6 +747,7 @@ end
     collection do
       get :update_reporting_manager
       post :update_manager
+      get :show_employee
     end
   end
   resources :leave_status_records do

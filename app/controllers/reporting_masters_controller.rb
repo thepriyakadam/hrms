@@ -46,6 +46,12 @@ class ReportingMastersController < ApplicationController
   def update_reporting_manager
   end
 
+  def show_employee
+    @reporting_master1 = params[:employee_id_1]
+
+    @employees = Employee.where("manager_id = ? OR manager_2_id = ?",@reporting_master1,@reporting_master1 )
+  end
+
   def update_manager
     @reporting_master1 = params[:salary][:employee_id_1]
     @reporting_master2 = params[:salary][:employee_id_2]

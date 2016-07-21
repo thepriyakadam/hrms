@@ -1,5 +1,6 @@
 <!--<= bootstrap_form_for(@due_action,html: {id: 'due_action'},due_detail_id: @due_detail.id) do |f| %>-->
-<%= bootstrap_form_for(@due_action,html: {id: 'due_action'}) do |f| %>
+<%= bootstrap_form_for(@due_action,html: {id: 'due_action'},due_employee_detail_id: @due_employee_detail.id) do |f| %>
+<%= f.hidden_field :due_employee_detail_id, value: @due_employee_detail.id  %>
 <!--<= f.hidden_field :due_detail_id, value: @due_detail.id  %>-->
   <div class="row">
     <div class="col-sm-3">

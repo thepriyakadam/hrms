@@ -16,9 +16,9 @@ class DueActionsController < ApplicationController
   def new
     @due_action = DueAction.new
     # @due_detail = DueDetail.find(params[:due_detail_id])
-    @due_employee_detail = DueEmployeeDetail.find(params[:format])
+    @due_employee_detail = DueEmployeeDetail.find(params[:due_employee_detail_id])
     # @due_actions = DueAction.where(due_detail_id: @due_detail.id)
-    @due_actions = DueAction.all
+    @due_actions = DueAction.where(due_employee_detail_id: @due_employee_detail.id)
   end
 
   # GET /due_actions/1/edit
@@ -33,10 +33,10 @@ class DueActionsController < ApplicationController
      @due_actions = DueAction.all
       if @due_action.save
         @due_action = DueAction.new
+        flash[:notice] = 'Due Action created Successfully.'   
       end
-      @due_detail_id = DueDetail.find(params[:due_action][:due_detail_id])
-      redirect_to new_due_action_path(due_detail_id: @due_detail_id.id)
-      flash[:notice] = 'Due Action created Successfully.'   
+      @due_employee_detail_id = DueEmployeeDetail.find(params[:due_action][:due_employee_detail_id])
+      redirect_to new_due_action_path(due_employee_detail_id: @due_employee_detail_id.id)
   end
 
   # PATCH/PUT /due_actions/1
@@ -46,11 +46,9 @@ class DueActionsController < ApplicationController
   def update
     @due_action.update(due_action_params)
     @due_action = DueAction.new
-    @due_detail = DueDetail.find(params[:due_detail_id])
-    @due_actions = DueAction.where(due_detail_id: @due_detail.id)
-    @due_detail_id = DueDetail.find(params[:due_action][:due_detail_id])
-    redirect_to new_due_action_path(due_detail_id: @due_detail_id.id)
-    flash[:notice] = 'Due Detail updated Successfully.'   
+    @due_employee_detail = DueEmployeeDetail.find(params[:due_employee_detail_id])
+    @due_actions = DueAction.where(due_employee_detail_id: @due_employee_detail.id)
+    flash[:notice] = 'Due Action updated Successfully.'   
   end
 
   # DELETE /due_actions/1
@@ -69,6 +67,6 @@ class DueActionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def due_action_params
-      params.require(:due_action).permit(:due_detail_id, :name, :remark, :amount, :due_detail_id)
+      params.require(:due_action).permit(:due_detail_id, :name, :remark, :amount, :due_detail_id, :due_employee_detail_id)
     end
 end

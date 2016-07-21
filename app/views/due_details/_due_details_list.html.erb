@@ -3,8 +3,8 @@
 <table id="example2" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
-      <th><input type="checkbox" id="selectAll" value="selectAll"></th>
-<!--       <th>Due Employee Template</th>
+<!--       <th><input type="checkbox" id="selectAll" value="selectAll"></th>
+ --><!--       <th>Due Employee Template</th>
  -->      <th>Reporting Manager</th>
       <th>Status</th>
       <th>Action</th>
@@ -14,14 +14,14 @@
   <tbody>
     <% @due_details.each do |due_detail| %>
       <tr>
-        <td><%= check_box_tag "due_detail_ids[]", due_detail.reporting_master_id %></td>
-<!--         <td><%= due_detail.due_employee_template %></td>
+<!--         <td><= check_box_tag "due_detail_ids[]", due_detail.reporting_master_id %></td>
+ --><!--         <td><%= due_detail.due_employee_template %></td>
  -->        <td><%= due_detail.reporting_master_id %></td>
         <td><%= due_detail.status ? "Active" : "Inactive" %></td>
         <td>
           <%= link_to '', edit_due_detail_path(due_detail),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
           <%= link_to '',  due_detail, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
-          <%= link_to ' Assign Due Action', new_due_action_path(due_detail_id: due_detail.id),class: 'btn btn-xs btn-primary' %>
+          <!--<= link_to ' Assign Due Action', new_due_action_path(due_detail_id: due_detail.id),class: 'btn btn-xs btn-primary' %>-->
         </td>
       </tr>
     <% end %>
@@ -30,8 +30,8 @@
  <div class="row">
     <div class="col-sm-3">
       <div class="actions">
-        <%= f.submit "Confirm", class: 'btn btn-primary btn-sm' %><br><br>
-        <%= f.select :reporting_master_id,all_resignation_list, {hide_label: true,include_blank: "Select Employee"} %>
+<!--         <= f.submit "Confirm", class: 'btn btn-primary btn-sm' %><br><br>
+ -->        <!--<= f.select :reporting_master_id,all_resignation_list, {hide_label: true,include_blank: "Select Employee"} %>-->
       </div>
     </div>
   </div>

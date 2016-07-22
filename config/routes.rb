@@ -111,6 +111,7 @@ Rails.application.routes.draw do
       post :show_employee
       post :destroy_employee_attendance
       post :department_wise_emp
+      get :monthly_attendance
     end
   end
   resources :salary_comp_mappings

@@ -148,7 +148,7 @@ def create
   def daily_bill_request_confirmation
     @travel_request = TravelRequest.find(params[:format])
     # @travel_request = TravelRequest.find(@daily_bill_detail.travel_request_id)
-    @daily_bill_details = DailyBillDetail.where(reporting_master_id: current_user.employee_id,travel_request_id: @travel_request.id)
+    @daily_bill_details = DailyBillDetail.where(reporting_master_id: current_user.employee_id,travel_request_id: @travel_request.id,is_confirm: true)
     session[:active_tab] ="travelmgmt"
   end
 
@@ -198,7 +198,6 @@ def create
   end
 
   def edit_and_send_next
-     puts "----------------------"
      @daily_bill_detail = DailyBillDetail.find(params[:id])
   end
 

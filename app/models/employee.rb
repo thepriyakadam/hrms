@@ -11,6 +11,7 @@ class Employee < ActiveRecord::Base
   belongs_to :religion
   has_many :trainees
 
+  has_many :reporting_masters
   has_many :employee_attendances
   has_many :leav_c_offs
   has_many :salaryslips

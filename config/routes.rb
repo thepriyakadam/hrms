@@ -94,6 +94,7 @@ Rails.application.routes.draw do
     collection do
       get :interview_round_reschedule
       post :reschedule_interview
+      get :interview_reschedule_list
     end
   end
   resources :interview_types

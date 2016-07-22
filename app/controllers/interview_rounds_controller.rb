@@ -91,7 +91,6 @@ class InterviewRoundsController < ApplicationController
   end
 
   def interview_round_reschedule
-
     @interview_round = InterviewRound.find(params[:id])
     @employee = Employee.find(@interview_round.employee_id)
     @interview_round_reschedule = InterviewRoundReschedule.new
@@ -114,6 +113,11 @@ class InterviewRoundsController < ApplicationController
     @interview_round_reschedule = InterviewRoundReschedule.new(interview_round_reschedule_params)
     redirect_to root_url
     flash[:notice] = 'Interview Round Rescheduled Successfully.'   
+  end
+
+  def interview_reschedule_list
+     @interview_round = InterviewRound.find(params[:format])
+     @interview_round_reschedules = InterviewRoundReschedule.where(interview_round_id: @interview_round.id)
   end
 
   private

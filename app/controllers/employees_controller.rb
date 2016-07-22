@@ -288,8 +288,11 @@ class EmployeesController < ApplicationController
     @employee = Employee.find(params[:id])
     @employee.manager_id = params[:employee][:manager_id]
     @employee.manager_2_id = params[:employee][:manager_2_id]
+    @effec_date = params[:employee][:effec_date]
+    
     if @employee.save
       @employees = Employee.all
+      ManagerHistory.create(employee_id: @employee.id,manager_id: @employee.manager_id,manager_2_id: @employee.manager_2_id,effective_from: @effec_date.to_date)
       @flag = true
     else
       @flag = false

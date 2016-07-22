@@ -9,7 +9,7 @@
           <div class="col-sm-3">
             <label>Department</label>
             <div class="form-group required">
-              <%= select :salary, :department_id, all_department,{hide_label: true, include_blank: 'Select Department'},{class: "form-control"} %>
+              <%= select :salary, :department_id, all_department_type_list1, {include_blank: "Select Department"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
             </div>
           </div>
 

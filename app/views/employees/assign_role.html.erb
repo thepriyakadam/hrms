@@ -16,7 +16,8 @@
 		  </thead>
 		  <tbody>
 		    <% @employees.each do |employee| %>
-					<%= bootstrap_form_for :login, url: {action: 'submit_form'}, html: {id: 'login'} do |f| %>    
+					<%= bootstrap_form_for :login, url: {action: 'submit_form'}, html: {id: 'login'} do |f| %>  
+          <%= f.hidden_field :effec_date, value: Date.today %>  
 			      <tr>
 			      	<td><%= employee.manual_employee_code %></td>
 			        <td><%= employee.first_name %> <%= employee.middle_name %> <%= employee.last_name %></td>
@@ -26,7 +27,6 @@
 			        <td><%= f.select :manager_id, @all_employee_list,hide_label:true, prompt:true %></td>
 
 			        <td><%= f.select :manager_2_id, @all_employee_list,hide_label:true, prompt:true %></td>
-			        
 			        <td><%= f.submit "+", class: 'btn btn-primary btn-sm fa fa-user-plus' %></td>
 			      </tr>
 		     	<% end %>

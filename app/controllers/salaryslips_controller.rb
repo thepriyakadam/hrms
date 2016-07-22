@@ -912,7 +912,7 @@ class SalaryslipsController < ApplicationController
         @salaryslip.destroy 
         SalaryslipComponent.where(salaryslip_id: @salaryslip.id).destroy_all
       end
-      flash[:alert] = "Revert successfully"
+      flash[:notice] = "Revert successfully"
       redirect_to revert_salary_salaryslips_path
     end
   end

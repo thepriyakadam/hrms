@@ -18,7 +18,7 @@ def certificate_print
      respond_to do |format|
         format.html
         format.pdf do
-        if @certificate == "Character" 	
+        @certificate == "Character" 	
         render :pdf => 'certificate_print',
         layout: '/layouts/pdf.html.erb',
         :template => 'reports/certificate/certificate_print.pdf.erb',
@@ -32,5 +32,4 @@ def certificate_print
         :show_as_html => params[:debug].present?
         end
         end
-    end
 end

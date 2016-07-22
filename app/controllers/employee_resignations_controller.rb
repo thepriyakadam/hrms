@@ -16,7 +16,8 @@ class EmployeeResignationsController < ApplicationController
   # GET /employee_resignations/new
   def new
     @employee_resignation = EmployeeResignation.new
-    session[:active_tab] ="resignationmanagement"  
+    session[:active_tab] ="resignationmanagement"
+    session[:active_tab1] = "resign"  
   end
 
   # GET /employee_resignations/1/edit
@@ -83,6 +84,7 @@ class EmployeeResignationsController < ApplicationController
   def employee_resignation_list
      @employee_resignations = EmployeeResignation.all
      session[:active_tab] ="resignationmanagement"
+      session[:active_tab1] = "resign"  
   end
   
   def resignation_history

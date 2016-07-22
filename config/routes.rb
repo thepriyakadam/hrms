@@ -24,6 +24,9 @@ Rails.application.routes.draw do
       get :employee_due_detail_history
       get :all_employee_due_detail
       post :is_confirm_employee_due
+      get :due_employee_detail_list
+      get :due_action_list
+      get :emp_resignation
     end
   end
   resources :employee_transfers do
@@ -108,6 +111,7 @@ Rails.application.routes.draw do
       post :show_employee
       post :destroy_employee_attendance
       post :department_wise_emp
+      get :monthly_attendance
     end
   end
   resources :salary_comp_mappings

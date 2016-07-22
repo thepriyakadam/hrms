@@ -16,7 +16,7 @@ class ExitInterviewsController < ApplicationController
   def new
     @exit_interview = ExitInterview.new
     @exit_interviews = ExitInterview.where(employee_id: current_user.employee_id).group(:employee_id)
-    session[:active_tab1] ="employeeresignation"
+    session[:active_tab] ="employeeresignation"
   end
 
   # GET /exit_interviews/1/edit

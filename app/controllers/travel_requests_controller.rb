@@ -69,12 +69,7 @@ class TravelRequestsController < ApplicationController
 
 
   def daily_bill
-    # if current_user.role.name == 'Company'
-    #   @travel_requests = TravelRequest.all
-    # else
-      @travel_requests = TravelRequest.where(employee_id: current_user.employee_id)
-    # end
-    # session[:active_tab] ="travelmgmt"
+      @travel_requests = TravelRequest.where("employee_id = ? and (current_status = ? or current_status = ?)",current_user.employee_id,"Approved","Approved & Send Next")
   end
 
   def travel_history

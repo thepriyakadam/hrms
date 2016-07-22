@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160720130301) do
+ActiveRecord::Schema.define(version: 20160721102648) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -1712,6 +1712,20 @@ ActiveRecord::Schema.define(version: 20160720130301) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
+
+  create_table "manager_histories", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.integer  "manager_id"
+    t.integer  "manager_2_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.date     "effective_from"
+    t.date     "effective_to"
+  end
+
+  add_index "manager_histories", ["employee_id"], name: "index_manager_histories_on_employee_id"
+  add_index "manager_histories", ["manager_2_id"], name: "index_manager_histories_on_manager_2_id"
+  add_index "manager_histories", ["manager_id"], name: "index_manager_histories_on_manager_id"
 
   create_table "members", force: :cascade do |t|
     t.string   "manual_member_code"

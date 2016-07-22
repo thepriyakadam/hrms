@@ -26,6 +26,7 @@
             <td><%= employee_resignation.notice_period %></td>
             <td>
                <%= link_to ' Assign Template', all_due_template_due_details_path(employee_resignation),class: 'btn btn-xs btn-primary' %>
+               <%= link_to ' View Template', due_employee_detail_list_due_details_path(employee_resignation),class: 'btn btn-xs btn-warning' %>
             </td>
           </tr>
         <% end %>

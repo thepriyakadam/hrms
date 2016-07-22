@@ -23,11 +23,42 @@
     <div class="col-sm-3">
     <label></label>
       <div class="actions">
-        <%= f.submit "Create Due Action ",:class => class_name,  data: { disable_with: data_info } %>
+        <%= f.submit "Create No Due Action" ,class: 'btn btn-sm btn-primary' %>
       </div>
     </div>
 
   </div>
 <% end %><br>
 
+<script>
+$("#due_action").validate({
+    rules: {
+      "due_action[name]":{
+        required: true,
+      },
+      "due_action[remark]":{
+        required: true,
+      },
+      "due_action[amount]":{
+        required: true,
+      }
+    },
+    messages: {
+      "due_action[name]":{
+        required: "Please specify Name",
+      },
+      "due_action[remark]":{
+        required: "Please specify Remark",
+      },
+      "due_action[amount]":{
+        required: "Please specify Amount",
+      }
+      
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>
 

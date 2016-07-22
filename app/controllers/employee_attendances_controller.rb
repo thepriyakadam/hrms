@@ -63,7 +63,8 @@ class EmployeeAttendancesController < ApplicationController
   end
 
   def department_wise_employee_list
-    @department = Department.where(id: params[:salary][:department_id])
+    #@department = Department.where(id: params[:salary][:department_id])
+    @department = params[:salary][:department_id]
     @date = params[:current][:day].to_date
     @employees = Employee.filter_by_date_and_department(@date,@department)
     @employee_attendance = EmployeeAttendance.new
@@ -73,8 +74,10 @@ class EmployeeAttendancesController < ApplicationController
     @employee_ids = params[:employee_ids]
     day = params[:employee_attendances][:day]
     present = params[:employee_attendances][:present]
+    department = params[:employee_attendances][:department_id]
+
     @employee_ids.each do |eid|
-    EmployeeAttendance.create(employee_id: eid,day: day,present: present)
+    EmployeeAttendance.create(employee_id: eid,day: day,present: present,department_id: department)
     end
     flash[:notice] = "Created successfully"
     redirect_to new_employee_attendance_path
@@ -103,7 +106,7 @@ class EmployeeAttendancesController < ApplicationController
     @department_id = params[:salary][:department_id]
     @day = params[:salary][:day]
     @present = params[:salary][:present]
-    @employee_attendances = EmployeeAttendance.where("day = ? AND present = ?", @day.to_date, @present)
+    @employee_attendances = EmployeeAttendance.where("day = ? AND present = ? AND department_id = ?", @day.to_date, @present,@department_id)
   end
 
   def destroy_employee_attendance

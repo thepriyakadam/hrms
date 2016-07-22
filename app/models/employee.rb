@@ -56,6 +56,7 @@ class Employee < ActiveRecord::Base
   has_many :reward_pals
   has_many :interview_rounds
   has_many :interview_round_reschedules
+  has_many :manager_histories
   
   #accepts_nested_attributes_for :joining_detail
   has_many :subordinates, class_name: 'Employee',
@@ -74,6 +75,12 @@ class Employee < ActiveRecord::Base
 
   has_many :goal_ratings, class_name: "Employee",
                           foreign_key: "reviewer_id"
+
+  has_many :manager_histories, class_name: "Employee",
+                          foreign_key: "manager_id"
+  has_many :manager_histories, class_name: "Employee",
+                          foreign_key: "manager_2_id"
+
   before_create :add_department
   before_update :add_department
 

@@ -5,9 +5,9 @@
 <table id="example2" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
+     <th>No Dues Owner</th>
+     <th>No Dues Template</th>
      <th>Employee Name</th>
-     <th>Reporting Manager</th>
-     <th>Due Template</th>
      <th>Action</th>
     </tr>
   </thead>
@@ -19,7 +19,7 @@
        <td><%= due_employee_detail.reporting_master_id %></td>
        <td><%= due_employee_detail.due_template.try(:name) %></td>
         <td>
-          <%= link_to ' Assign Due Action', new_due_action_path(due_employee_detail_id: due_employee_detail.id),class: 'btn btn-xs btn-primary' %>
+          <%= link_to ' Assign No Dues Action', new_due_action_path(due_employee_detail_id: due_employee_detail.id),class: 'btn btn-xs btn-primary' %>
         </td>
       </tr>
     <% end %>

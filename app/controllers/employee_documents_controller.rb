@@ -59,7 +59,7 @@ class EmployeeDocumentsController < ApplicationController
               type: @employee_document.document_content_type,
               disposition: 'attachment'
   end
-  
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_employee_document

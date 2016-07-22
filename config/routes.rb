@@ -94,6 +94,7 @@ Rails.application.routes.draw do
     collection do
       get :interview_round_reschedule
       post :reschedule_interview
+      get :interview_reschedule_list
     end
   end
   resources :interview_types
@@ -106,6 +107,7 @@ Rails.application.routes.draw do
       get :revert_attendance
       post :show_employee
       post :destroy_employee_attendance
+      post :department_wise_emp
     end
   end
   resources :salary_comp_mappings

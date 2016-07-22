@@ -5,6 +5,7 @@
       <th><input type="checkbox" id="selectAll" value="selectAll"></th>
       <th>Employee ID</th>
       <th>Employee Name</th>
+      <th>Department</th>
     </tr>
   </thead>
   <tbody>
@@ -13,6 +14,7 @@
         <td><%= check_box_tag "employee_attendance_ids[]", e.id %></td>
         <td><%= e.employee.try(:manual_employee_code) %></td>
         <td><%= full_name(e.employee) %></td>
+        <td><%= e.employee.try(:department).try(:name) %></td>
       </tr>
     <% end %>
   </tbody>

@@ -24,22 +24,16 @@ class DueDetailsController < ApplicationController
   def edit
   end
 
-  # POST /due_details
-  # POST /due_details.json
-
   def create
-     @due_detail = DueDetail.new(due_detail_params)
-     @due_details = DueDetail.all
-      if @due_detail.save
-        @due_detail = DueDetail.new
-      end
-      @due_template_id = DueTemplate.find(params[:due_detail][:due_template_id])
-      redirect_to new_due_detail_path(due_template_id: @due_template_id.id)
-      flash[:notice] = 'Due Detail created Successfully.'   
+    @due_detail = DueDetail.new(due_detail_params)
+    @due_details = DueDetail.all
+    if @due_detail.save
+      @due_detail = DueDetail.new
+    end
+    @due_template_id = DueTemplate.find(params[:due_detail][:due_template_id])
+    flash[:notice] = 'Due Detail created Successfully.'   
+    redirect_to new_due_detail_path(due_template_id: @due_template_id.id)
   end
-
-  # PATCH/PUT /due_details/1
-  # PATCH/PUT /due_details/1.json
 
   def update
     @due_detail.update(due_detail_params)
@@ -48,9 +42,6 @@ class DueDetailsController < ApplicationController
     redirect_to new_due_detail_path
     flash[:notice] = 'Due Detail updated Successfully.'   
   end
-
-  # DELETE /due_details/1
-  # DELETE /due_details/1.json
 
   def destroy
     @due_detail.destroy
@@ -145,6 +136,6 @@ class DueDetailsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def due_detail_params
-      params.require(:due_detail).permit(:due_employee_template_id, :reporting_master_id, :status, :due_template_id)
+      params.require(:due_detail).permit(:reporting_master_id, :due_employee_template_id, :status, :due_template_id)
     end
 end

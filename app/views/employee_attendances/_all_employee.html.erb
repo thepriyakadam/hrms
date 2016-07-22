@@ -6,6 +6,8 @@
       <th>Employee ID</th>
       <th>Employee Name</th>
       <th>Department</th>
+      <th>Designation</th>
+      <th>Contact No</th>
     </tr>
   </thead>
   <tbody>
@@ -14,7 +16,9 @@
         <td><%= check_box_tag "employee_attendance_ids[]", e.id %></td>
         <td><%= e.employee.try(:manual_employee_code) %></td>
         <td><%= full_name(e.employee) %></td>
-        <td><%= e.employee.try(:department).try(:name) %></td>
+        <td><%= e.employee.department.try(:name) %></td>
+         <td><%= e.employee.try(:joining_detail).try(:employee_designation).try(:name) %></td>
+         <td><%= e.employee.try(:contact_no) %></td>
       </tr>
     <% end %>
   </tbody>

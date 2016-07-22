@@ -106,6 +106,7 @@ Rails.application.routes.draw do
       get :revert_attendance
       post :show_employee
       post :destroy_employee_attendance
+      post :department_wise_emp
     end
   end
   resources :salary_comp_mappings

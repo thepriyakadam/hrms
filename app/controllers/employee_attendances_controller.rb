@@ -86,17 +86,11 @@ class EmployeeAttendancesController < ApplicationController
   def attendance
     @year = params[:year]
     @month = params[:month]
-    #@department = params[:department_id]
+    @department = params[:department_id]
 
     @date = Date.new(@year.to_i, Workingday.months[@month])
     @day = @date.end_of_month.day
-    #@employees = Employee.all
     @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).group(:employee_id)
-    
-    #@employee = Employee.find(current_user.employee_id)
-    #@employee_attendances = EmployeeAttendance.where(employee_id: @employee.id)
-
-    #@employee_attendances = EmployeeAttendance.all
   end
 
   def revert_attendance
@@ -125,6 +119,17 @@ class EmployeeAttendancesController < ApplicationController
       flash[:alert] = "Revert successfully"
       redirect_to revert_attendance_employee_attendances_path
     end
+  end
+
+  def department_wise_emp
+    @year = params[:year]
+    @month = params[:month]
+    @department = params[:salary][:department_id]
+
+    @date = Date.new(@year.to_i, Workingday.months[@month])
+    @day = @date.end_of_month.day
+    @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ? AND department_id = ?", @date.strftime('%m/%Y'),@department).group(:employee_id)
+    
   end
 
   private

@@ -16,7 +16,8 @@
       <tr>
 <!--         <td><= check_box_tag "due_detail_ids[]", due_detail.reporting_master_id %></td>
  --><!--         <td><%= due_detail.due_employee_template %></td>
- -->        <td><%= due_detail.reporting_master_id %></td>
+
+ -->        <td><%= full_name(due_detail.reporting_masters.first.employee) %></td>
         <td><%= due_detail.status ? "Active" : "Inactive" %></td>
         <td>
           <%= link_to '', edit_due_detail_path(due_detail),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>

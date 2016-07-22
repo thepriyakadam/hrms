@@ -15,7 +15,7 @@
   <tbody>
     <% @due_employee_details.each do |due_employee_detail| %>
       <tr>
-       <td><%= due_employee_detail.reporting_master_id %></td>
+       <td><%= full_name(due_employee_detail.reporting_master.employee) %></td>
        <td><%= due_employee_detail.due_template_id %></td>
        <td><%= due_employee_detail.employee.first_name+' '+due_employee_detail.employee.middle_name+' '+due_employee_detail.employee.last_name %></td>
         <td>

@@ -16,7 +16,8 @@ class DueTemplatesController < ApplicationController
   def new
     @due_template = DueTemplate.new
     @due_templates = DueTemplate.all
-    session[:active_tab] ="no_due_mgmt"
+    session[:active_tab] = "resignationmanagement"
+    session[:active_tab1] ="no_due_mgmt"
   end
 
   # GET /due_templates/1/edit

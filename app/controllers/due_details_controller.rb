@@ -88,12 +88,13 @@ class DueDetailsController < ApplicationController
     # byebug
     # @due_employee_detail = DueEmployeeDetail.new(due_employee_detail_params)
     @emp = params[:due_employee_detail][:employee_id]
+    @due_template = params[:due_template_id][:hhh]
     # @due_employee_detail.save
     @due_detail_ids = params[:due_detail_ids]
     @due_detail_ids.each do |did|
-    DueEmployeeDetail.create(reporting_master_id: did,employee_id: @emp)
+    DueEmployeeDetail.create(reporting_master_id: did,employee_id: @emp,due_template_id: @due_template,is_confirmed: true)
     end
-    flash[:notice] = "Created Successfully"
+    flash[:notice] = "Created Successfully & Request Also Sent"
     redirect_to root_url
   end
 
@@ -104,7 +105,7 @@ class DueDetailsController < ApplicationController
   end
 
   def all_employee_due_detail
-     @due_employee_details = DueEmployeeDetail.all
+     @due_employee_details = DueEmployeeDetail.where(is_confirmed: nil)
      session[:active_tab] ="no_due_mgmt"
   end
 
@@ -122,6 +123,23 @@ class DueDetailsController < ApplicationController
     end 
      redirect_to root_url
   end
+  end
+
+  def due_employee_detail_list
+     # @due_employee_details = DueEmployeeDetail.where(is_confirmed: true)
+     @employee_resignation = EmployeeResignation.find(params[:format])
+     @employee = Employee.find(@employee_resignation.employee_id)
+     @due_employee_details = DueEmployeeDetail.where(employee_id: @employee.id,is_confirmed: true)
+  end
+
+  def due_action_list
+    @due_employee_detail = DueEmployeeDetail.find(params[:format])
+    @due_actions = DueAction.where(due_employee_detail_id: @due_employee_detail.id)
+  end
+
+
+  def emp_resignation
+    @employee_resignations = EmployeeResignation.all
   end
 
   private

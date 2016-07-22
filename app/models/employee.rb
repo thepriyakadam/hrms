@@ -58,6 +58,7 @@ class Employee < ActiveRecord::Base
   has_many :interview_rounds
   has_many :interview_round_reschedules
   has_many :manager_histories
+  has_many :due_employee_details
   
   #accepts_nested_attributes_for :joining_detail
   has_many :subordinates, class_name: 'Employee',

@@ -1,4 +1,5 @@
 <%= bootstrap_form_for @employee,url: {action: 'update_manager', id: @employee.id},remote:true do |f| %>
+<%= f.hidden_field :effec_date, value: Date.today %>
   <div class="row">
     <div class="col-sm-4">
     <label>Reporting Manager 1</label>

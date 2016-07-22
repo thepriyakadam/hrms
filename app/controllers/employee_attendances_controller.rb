@@ -16,6 +16,7 @@ class EmployeeAttendancesController < ApplicationController
   # GET /employee_attendances/new
   def new
     @employee_attendance = EmployeeAttendance.new
+    session[:active_tab] = "timemgmt"
   end
 
   # GET /employee_attendances/1/edit
@@ -62,7 +63,8 @@ class EmployeeAttendancesController < ApplicationController
   end
 
   def department_wise_employee_list
-    @department = Department.where(id: params[:salary][:department_id])
+    #@department = Department.where(id: params[:salary][:department_id])
+    @department = params[:salary][:department_id]
     @date = params[:current][:day].to_date
     @employees = Employee.filter_by_date_and_department(@date,@department)
     @employee_attendance = EmployeeAttendance.new
@@ -72,8 +74,10 @@ class EmployeeAttendancesController < ApplicationController
     @employee_ids = params[:employee_ids]
     day = params[:employee_attendances][:day]
     present = params[:employee_attendances][:present]
+    department = params[:employee_attendances][:department_id]
+
     @employee_ids.each do |eid|
-    EmployeeAttendance.create(employee_id: eid,day: day,present: present)
+    EmployeeAttendance.create(employee_id: eid,day: day,present: present,department_id: department)
     end
     flash[:notice] = "Created successfully"
     redirect_to new_employee_attendance_path
@@ -82,15 +86,11 @@ class EmployeeAttendancesController < ApplicationController
   def attendance
     @year = params[:year]
     @month = params[:month]
+    @department = params[:department_id]
+
     @date = Date.new(@year.to_i, Workingday.months[@month])
     @day = @date.end_of_month.day
-    #@employees = Employee.all
-    @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y'))
-    
-    #@employee = Employee.find(current_user.employee_id)
-    #@employee_attendances = EmployeeAttendance.where(employee_id: @employee.id)
-
-    #@employee_attendances = EmployeeAttendance.all
+    @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).group(:employee_id)
   end
 
   def revert_attendance
@@ -100,7 +100,7 @@ class EmployeeAttendancesController < ApplicationController
     @department_id = params[:salary][:department_id]
     @day = params[:salary][:day]
     @present = params[:salary][:present]
-    @employee_attendances = EmployeeAttendance.where("day = ? AND present = ?", @day.to_date, @present)
+    @employee_attendances = EmployeeAttendance.where("day = ? AND present = ? AND department_id = ?", @day.to_date, @present,@department_id)
   end
 
   def destroy_employee_attendance
@@ -119,6 +119,17 @@ class EmployeeAttendancesController < ApplicationController
       flash[:alert] = "Revert successfully"
       redirect_to revert_attendance_employee_attendances_path
     end
+  end
+
+  def department_wise_emp
+    @year = params[:year]
+    @month = params[:month]
+    @department = params[:salary][:department_id]
+
+    @date = Date.new(@year.to_i, Workingday.months[@month])
+    @day = @date.end_of_month.day
+    @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ? AND department_id = ?", @date.strftime('%m/%Y'),@department).group(:employee_id)
+    
   end
 
   private

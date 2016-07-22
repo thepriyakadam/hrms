@@ -85,7 +85,7 @@ class WorkingdaysController < ApplicationController
     @month = @date.strftime("%B")
     @year = @date.strftime("%Y")
     @existing = Workingday.where(month_name: @month, year: @year).pluck(:employee_id)
-    @all_employees = Employee.all.pluck(:id)
+    @all_employees = Employee.where(status: "Active").pluck(:id)
     @employees = @all_employees - @existing
 
     @workingdays = []

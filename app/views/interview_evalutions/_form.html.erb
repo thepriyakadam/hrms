@@ -2,12 +2,12 @@
   <div class="row">
     <div class="col-sm-3">
       <div class="form-group required">
-        <%= f.text_field :code,hide_label:true, placeholder: 'Interview Evaluation Code' %>
+        <%= f.text_field :code,hide_label:true, placeholder: ' Evaluation Criteria Code' %>
       </div>
     </div> 
      <div class="col-sm-3">
       <div class="form-group required">
-        <%= f.text_field :name,hide_label:true, placeholder: 'Interview Evaluation Type' %>
+        <%= f.text_field :name,hide_label:true, placeholder: ' Evaluation Criteria Type' %>
       </div>
     </div>
      <div class="col-sm-3">
@@ -18,7 +18,7 @@
 
     <div class="col-sm-3">
       <div class="actions">
-        <%= f.submit "Create Interview Evaluation",:class => class_name, data: { disable_with: data_info } %>
+        <%= f.submit "Create Evaluation Criteria " ,class: 'btn btn-sm btn-primary' %>
       </div>
     </div>
   </div>

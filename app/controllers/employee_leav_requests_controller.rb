@@ -183,7 +183,8 @@ class EmployeeLeavRequestsController < ApplicationController
       column(:From, sortable: true) { |employee_leav_request| employee_leav_request.start_date.to_date }
       column(:To, sortable: true) { |employee_leav_request| employee_leav_request.end_date.to_date }
       column(:Leave_Category, sortable: true) { |employee_leav_request| employee_leav_request.leav_category.try(:name) }
-      column(:Apply_Date, sortable: true) { |employee_leav_request| employee_leav_request.created_at }
+      column(:Apply_Date, sortable: true) { |employee_leav_request| employee_leav_request.created_at.to_date }
+      column(:Apply_Time, sortable: true) { |employee_leav_request| employee_leav_request.created_at }
       column(:Leave_Type, sortable: true, &:leave_type)
       column(:Status, sortable: true, &:current_status)
       column(:No_OF_Day, sortable: true, &:leave_count)

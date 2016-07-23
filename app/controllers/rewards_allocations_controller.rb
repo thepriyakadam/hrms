@@ -16,6 +16,9 @@ class RewardsAllocationsController < ApplicationController
   def new
     @rewards_allocation = RewardsAllocation.new
     @rewards_allocations = RewardsAllocation.all
+  session[:active_tab] = "performancemgmt"
+    session[:active_tab1] = "reward"
+
   end
 
   # GET /rewards_allocations/1/edit

@@ -1,7 +1,7 @@
 <div class="box box-default">
   <div class="box-header with-border">
     <h3 class="box-title">Select Employee</h3>
-  </div><!-- /.box-header -->
+  </div>
 <%= bootstrap_form_for :salary, url: { action: "show_joining_date" },remote: true do |f| %>
   <div class="box-body">
     
@@ -30,9 +30,7 @@
        <div id="address_proof"></div>
        <div id="character_certificate"></div>
        <div id="service_certificate"></div>
-
-     <!--  <= link_to " Print Certificate ", reports_certificate_print_path(id:@employee, format: "pdf"), class: "btn btn-xl btn-info fa fa-print",:target => "_blank" %>   
- -->
-      <% end %>
+    <%end%>
   </div>
-</div><!-- /.box -->
+  </div> 
+ 

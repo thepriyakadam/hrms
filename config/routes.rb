@@ -339,6 +339,10 @@ end
       get :confirmation_list
       get :modal_approver_comment
       get :modal_reject_comment
+      get :department_wise_search
+      get :show_dept_wise_form
+      get :_employee_list
+      patch :create_dept_wise_request
     end
   end
   resources :selected_resumes  do

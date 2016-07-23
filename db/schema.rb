@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160721102648) do
+ActiveRecord::Schema.define(version: 20160723105713) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -2543,6 +2543,8 @@ ActiveRecord::Schema.define(version: 20160721102648) do
     t.integer  "training_topic_master_id"
     t.integer  "training_request_id"
     t.integer  "period_id"
+    t.string   "trainer_num"
+    t.text     "about_trainer"
   end
 
   add_index "training_plans", ["period_id"], name: "index_training_plans_on_period_id"

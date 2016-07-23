@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160721102648) do
+ActiveRecord::Schema.define(version: 20160723053923) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -607,12 +607,14 @@ ActiveRecord::Schema.define(version: 20160721102648) do
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
     t.boolean  "is_confirmed"
+    t.integer  "employee_resignation_id"
   end
 
   add_index "due_employee_details", ["due_detail_id"], name: "index_due_employee_details_on_due_detail_id"
   add_index "due_employee_details", ["due_employee_template_id"], name: "index_due_employee_details_on_due_employee_template_id"
   add_index "due_employee_details", ["due_template_id"], name: "index_due_employee_details_on_due_template_id"
   add_index "due_employee_details", ["employee_id"], name: "index_due_employee_details_on_employee_id"
+  add_index "due_employee_details", ["employee_resignation_id"], name: "index_due_employee_details_on_employee_resignation_id"
   add_index "due_employee_details", ["reporting_master_id"], name: "index_due_employee_details_on_reporting_master_id"
 
   create_table "due_employee_templates", force: :cascade do |t|

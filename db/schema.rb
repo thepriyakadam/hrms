@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160721102648) do
+ActiveRecord::Schema.define(version: 20160723062632) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -981,6 +981,7 @@ ActiveRecord::Schema.define(version: 20160721102648) do
     t.datetime "created_at",                                                        null: false
     t.datetime "updated_at",                                                        null: false
     t.integer  "employee_template_id"
+    t.boolean  "is_confirm"
   end
 
   add_index "employee_salary_templates", ["employee_id"], name: "index_employee_salary_templates_on_employee_id"

@@ -911,6 +911,7 @@ end
       get :salary_template
       get :find_employee_for_salary
       post :save_data
+      post :is_confirm_employee_template
     end
   end
   resources :salary_component_templates

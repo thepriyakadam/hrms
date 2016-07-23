@@ -33,3 +33,8 @@ class SelfServicesController < ApplicationController
     session[:active_tab] ="selfservice"
   end
 end
+
+def employee_resignation
+  @employee_resignation = EmployeeResignation.all
+
+end

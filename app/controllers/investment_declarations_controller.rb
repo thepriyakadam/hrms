@@ -35,7 +35,7 @@ class InvestmentDeclarationsController < ApplicationController
         @investment_declaration = InvestmentDeclaration.new
       end
       redirect_to new_investment_declaration_path
-      flash[:notice] = 'Investment Declaration was saved Successfully'   
+      flash[:notice] = 'Investment Declaration is saved Successfully'   
   end
 
   # PATCH/PUT /investment_declarations/1
@@ -46,7 +46,7 @@ class InvestmentDeclarationsController < ApplicationController
     @investment_declaration = InvestmentDeclaration.new
     @investment_declarations = InvestmentDeclaration.all
     redirect_to new_investment_declaration_path
-    flash[:notice] = 'Investment Declaration was Updated Successfully'   
+    flash[:notice] = 'Investment Declaration is Updated Successfully'   
   end
 
   # DELETE /investment_declarations/1

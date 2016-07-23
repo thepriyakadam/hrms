@@ -5,6 +5,7 @@ class RewardsPalsController < ApplicationController
   # GET /rewards_pals.json
   def index
     @rewards_pals = RewardsPal.all
+     
   end
 
   # GET /rewards_pals/1
@@ -17,6 +18,8 @@ class RewardsPalsController < ApplicationController
   def new
     @rewards_pal = RewardsPal.new
     @rewards_pals = RewardsPal.all
+    session[:active_tab] = "performancemgmt"
+    session[:active_tab1] = "reward"
   end
 
   # GET /rewards_pals/1/edit

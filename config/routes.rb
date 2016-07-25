@@ -16,6 +16,9 @@ Rails.application.routes.draw do
       get :employee_due_detail_history
       get :all_employee_due_detail
       post :is_confirm_employee_due
+      get :due_employee_detail_list
+      get :due_action_list
+      get :emp_resignation
     end
   end
 
@@ -37,7 +40,6 @@ Rails.application.routes.draw do
   resources :employee_transfers
   resources :rewards_pals
   resources :rewards_allocations
-  resources :reward_allocations
   resources :reward_recognitions
   resources :reward_types
   resources :reward_owners
@@ -105,6 +107,7 @@ Rails.application.routes.draw do
       post :show_employee
       post :destroy_employee_attendance
       post :department_wise_emp
+      get :monthly_attendance
     end
   end
   resources :salary_comp_mappings
@@ -332,6 +335,10 @@ end
       get :confirmation_list
       get :modal_approver_comment
       get :modal_reject_comment
+      get :department_wise_search
+      get :show_dept_wise_form
+      get :_employee_list
+      patch :create_dept_wise_request
     end
   end
   resources :selected_resumes  do

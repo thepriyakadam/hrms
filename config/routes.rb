@@ -476,6 +476,8 @@ end
     post 'basic_details/employee_basic_report'
     get 'basic_details/collect_departments'
     get 'basic_details/employee_list'
+    get 'basic_details/select_department'
+    post 'basic_details/list_of_employee'
 
     get 'salaries/new'
     post 'salaries/date_range_report'

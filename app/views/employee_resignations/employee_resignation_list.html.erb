@@ -18,12 +18,12 @@
       <tbody>
         <% @employee_resignations.each do |g| %>
         <tr>
-        <td> <%= g.employee.try(:first_name) %> <%= g.employee.try(:middle_name) %> <%= g.employee.try(:last_name) %>  </td>
-        <td><%= g.employee.try(:company_location).try(:name) %> - <%= g.employee.department.try(:name) %></td> 
-         <td><%= g.employee.contact_no %></td>
-        <td><%= g.employee.joining_detail.employee_designation.try(:name) %></td>
-        <td> <%= link_to '', g,class: 'btn btn-xs btn-default fa fa-eye' %> 
-         <%= link_to 'Exit Interview', new_exit_interview_path(g),class: 'btn btn-xs btn-primary' %> </td>
+          <td> <%= g.employee.try(:first_name) %> <%= g.employee.try(:middle_name) %> <%= g.employee.try(:last_name) %>  </td>
+          <td><%= g.employee.try(:company_location).try(:name) %> - <%= g.employee.try(:department).try(:name) %></td> 
+          <td><%= g.employee.try(:contact_no) %></td>
+          <td><%= g.employee.try(:joining_detail).try(:employee_designation).try(:name) %></td>
+          <td> <%= link_to '', g,class: 'btn btn-xs btn-default fa fa-eye' %> 
+           <%= link_to 'Exit Interview', new_exit_interview_path(g),class: 'btn btn-xs btn-primary' %> </td>
         </tr>
         <% end %>
       </tbody>

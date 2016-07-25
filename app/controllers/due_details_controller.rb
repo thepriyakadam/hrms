@@ -115,13 +115,13 @@ class DueDetailsController < ApplicationController
       redirect_to root_url
     else
       @due_employee_detail_ids.each do |did|
-      @due_employee_detail = DueEmployeeDetail.find(did)
-      @due_employee_detail.update(is_confirmed: true) 
-      # InterviewScheduleMailer.sample_email_to_interviewer(@interview_schedule).deliver_now
-      flash[:notice] = "Confirmed Successfully"
-    end 
-     redirect_to root_url
-  end
+        @due_employee_detail = DueEmployeeDetail.find(did)
+        @due_employee_detail.update(is_confirmed: true) 
+        # InterviewScheduleMailer.sample_email_to_interviewer(@interview_schedule).deliver_now
+        flash[:notice] = "Confirmed Successfully"
+      end
+      redirect_to root_url
+    end
   end
 
   private

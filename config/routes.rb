@@ -1,16 +1,8 @@
 Rails.application.routes.draw do
-
-  
-
   get 'download_pdf/index'
-
   get 'download_pdf/zip'
-
   get 'download_pdf/pdf'
-
   get 'download_pdf/doc'
-
-
 
   resources :due_actions
   resources :due_details do
@@ -29,6 +21,7 @@ Rails.application.routes.draw do
       get :emp_resignation
     end
   end
+
   resources :employee_transfers do
     collection do
       get :transfer_request
@@ -41,12 +34,12 @@ Rails.application.routes.draw do
       patch :update_transfer_details
     end
   end
+
   resources :due_details
   resources :due_templates
   resources :employee_transfers
   resources :rewards_pals
   resources :rewards_allocations
-  resources :reward_allocations
   resources :reward_recognitions
   resources :reward_types
   resources :reward_owners
@@ -66,26 +59,29 @@ Rails.application.routes.draw do
       get :active_policies_list
     end
   end
+
   resources :date_formats do
     collection do 
     get :active
     post :activee
     end
   end 
+
   resources :email_configs
   resources :weekoff_masters
   resources :currency_masters
   resources :illness_types
   resources :performance_calendars
   resources :performance_activities
+  
   resources :years do 
-    end
+  end
+
   resources :employee_daily_activities do
     collection do 
-    get :employee_details
-    get :daily_show_activity_list
-    get :activity_report
-   
+      get :employee_details
+      get :daily_show_activity_list
+      get :activity_report
     end
   end 
   resources :project_masters
@@ -339,6 +335,10 @@ end
       get :confirmation_list
       get :modal_approver_comment
       get :modal_reject_comment
+      get :department_wise_search
+      get :show_dept_wise_form
+      get :_employee_list
+      patch :create_dept_wise_request
     end
   end
   resources :selected_resumes  do
@@ -880,26 +880,33 @@ end
       get :advances
     end
   end
+
   resources :workingdays do
     collection do
       get :employees
       get :search_month_year
       get :generate_workingday
-      get :print_working_day
-      get :create_working_day
+      post :print_working_day
+      post :create_working_day
+      get :search_month_year_xls
+      get :generate_workingday_xls
     end
   end
+
   resources :shift_rotations do
     collection do
       get :collect_employee
     end
   end
+
   resources :employee_monthly_days do
     collection do
       get :find_employee_for_employee_monthly_day
     end
   end
+
   resources :holidays
+
   resources :employee_salary_templates do
     collection do
       get :find_employee_for_assign_template
@@ -914,6 +921,7 @@ end
       post :save_data
     end
   end
+  
   resources :salary_component_templates
   resources :salary_templates
   resources :religions

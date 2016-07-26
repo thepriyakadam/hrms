@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160723105713) do
+ActiveRecord::Schema.define(version: 20160726055056) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -1247,15 +1247,25 @@ ActiveRecord::Schema.define(version: 20160723105713) do
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
     t.integer  "performance_calendar_id"
+    t.boolean  "r_promotion"
+    t.boolean  "r_increment"
+    t.integer  "r_designation_id"
+    t.decimal  "r_ctc"
+    t.boolean  "f_promotion"
+    t.boolean  "f_increment"
+    t.integer  "f_designation_id"
+    t.decimal  "f_ctc"
   end
 
   add_index "goal_bunches", ["appraisee_id"], name: "index_goal_bunches_on_appraisee_id"
   add_index "goal_bunches", ["appraiser_id"], name: "index_goal_bunches_on_appraiser_id"
   add_index "goal_bunches", ["employee_id"], name: "index_goal_bunches_on_employee_id"
+  add_index "goal_bunches", ["f_designation_id"], name: "index_goal_bunches_on_f_designation_id"
   add_index "goal_bunches", ["final_id"], name: "index_goal_bunches_on_final_id"
   add_index "goal_bunches", ["final_rating_id"], name: "index_goal_bunches_on_final_rating_id"
   add_index "goal_bunches", ["performance_calendar_id"], name: "index_goal_bunches_on_performance_calendar_id"
   add_index "goal_bunches", ["period_id"], name: "index_goal_bunches_on_period_id"
+  add_index "goal_bunches", ["r_designation_id"], name: "index_goal_bunches_on_r_designation_id"
   add_index "goal_bunches", ["reviewer_id"], name: "index_goal_bunches_on_reviewer_id"
   add_index "goal_bunches", ["reviewer_rating_id"], name: "index_goal_bunches_on_reviewer_rating_id"
 

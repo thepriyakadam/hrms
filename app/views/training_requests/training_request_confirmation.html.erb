@@ -22,7 +22,7 @@
         <td><%= @training_request.training_date %></td>
       
         <th><strong>Request To</strong></th>
-        <td><%= @training_request.reporting_master_id %></td>
+        <td><%= @employee.try(:first_name) %> <%= @employee.try(:middle_name) %> <%= @employee.try(:last_name) %></td>
       </tr>
       <tr>
         <th><strong>No. Of Employee</strong></th>

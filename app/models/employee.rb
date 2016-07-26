@@ -23,6 +23,7 @@ class Employee < ActiveRecord::Base
   has_many :interview_reschedules
   has_many :qualifications
   has_many :employee_leav_requests
+  has_many :reporting_masters, class_name: 'ReportingMaster', foreign_key: 'reporting_master_id'
   has_many :first_reporters, class_name: 'EmployeeLeavRequest', foreign_key: 'first_reporter_id'
   has_many :second_reporters, class_name: 'EmployeeLeavRequest', foreign_key: 'second_reporter_id'
   has_many :leave_status_records, class_name: 'LeaveStatusRecord', foreign_key: 'change_status_employee_id'

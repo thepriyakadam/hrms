@@ -27,7 +27,7 @@
         <td><%= travel_request.employee.try(:manual_employee_code) %></td>
         <td><%= travel_request.employee.try(:first_name) %> <%= travel_request.employee.try(:middle_name) %> <%= travel_request.employee.try(:last_name) %></td>
         <td><%= travel_request.employee.company_location.try(:name) %> - <%= travel_request.employee.department.try(:name) %></td>
-        <td><%= travel_request.reporting_master_id %></td>
+        <td><%= travel_request.reporting_master.employee.try(:first_name) %> <%= travel_request.reporting_master.employee.try(:middle_name) %> <%= travel_request.reporting_master.employee.try(:last_name) %></td>
         <td><%= travel_request.traveling_date %></td>
         <td><%= travel_request.place %></td>
         <td><%= travel_request.total_advance %></td>

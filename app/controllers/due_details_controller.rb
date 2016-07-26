@@ -50,7 +50,8 @@ class DueDetailsController < ApplicationController
 
   def all_employee_resignation_list
      @employee_resignations = EmployeeResignation.all
-     session[:active_tab] ="no_due_mgmt"
+     session[:active_tab] = "resignationmanagement"
+    session[:active_tab1] ="no_due_mgmt"
   end
 
   def is_confirm
@@ -94,18 +95,20 @@ class DueDetailsController < ApplicationController
     DueEmployeeDetail.create(reporting_master_id: did,employee_id: @emp,due_template_id: @due_template,is_confirmed: true)
     end
     flash[:notice] = "Created Successfully & Request Also Sent to the Selected Due Owner."
-    redirect_to all_employee_resignation_list
+    redirect_to all_employee_resignation_list_due_details_path
   end
 
 
   def employee_due_detail_history
     @due_employee_details = DueEmployeeDetail.where(reporting_master_id: current_user.employee_id,is_confirmed: true)
-    session[:active_tab] ="no_due_mgmt"
+    session[:active_tab] = "resignationmanagement"
+    session[:active_tab1] ="no_due_mgmt"
   end
 
   def all_employee_due_detail
      @due_employee_details = DueEmployeeDetail.where(is_confirmed: nil)
-     session[:active_tab] ="no_due_mgmt"
+      session[:active_tab] = "resignationmanagement"
+    session[:active_tab1] ="no_due_mgmt"
   end
 
   def is_confirm_employee_due

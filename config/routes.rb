@@ -46,7 +46,6 @@ Rails.application.routes.draw do
   resources :employee_transfers
   resources :rewards_pals
   resources :rewards_allocations
-  resources :reward_allocations
   resources :reward_recognitions
   resources :reward_types
   resources :reward_owners
@@ -111,6 +110,7 @@ Rails.application.routes.draw do
       post :show_employee
       post :destroy_employee_attendance
       post :department_wise_emp
+      get :monthly_attendance
     end
   end
   resources :salary_comp_mappings

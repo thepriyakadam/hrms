@@ -36,6 +36,7 @@ class TrainingRequestsController < ApplicationController
       if @training_request.save
         @employee_ids = params[:employee_ids]
         @employee_ids.each do |eid|
+        @emp_total = @employee_ids.count
         TraineeRequest.create(employee_id: eid,training_request_id: @training_request.id,training_topic_master_id: @training_request.training_topic_master_id)
       end
         format.html { redirect_to @training_request, notice: 'Training request was successfully created.' }
@@ -127,6 +128,18 @@ class TrainingRequestsController < ApplicationController
     redirect_to training_request_list_training_requests_path
   end
 
+  def department_wise_search
+  end
+
+  def show_dept_wise_form
+    @training_request = TrainingRequest.new
+    @department = Department.find(params[:department_id])
+    @employees = Employee.where(department_id: @department.id)
+  end
+
+  def create_dept_wise_request
+  end
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_training_request

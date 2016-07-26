@@ -4,6 +4,7 @@ class ReportingMaster < ActiveRecord::Base
   has_many :reporting_masters_vacancy_masters
   has_many :vacancy_masters, :through =>:reporting_masters_vacancy_masters 
   has_many :travel_requests
+  has_many :training_requests
   has_many :vacancy_request_histories
   has_many :daily_bill_details
   has_many :reward_pals

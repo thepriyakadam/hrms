@@ -10,4 +10,5 @@ module QueryReportLinkHelper
   def query_report_string_filter(current_status, value, options = {})
     text_field_tag current_status, value, options
   end
+    
 end

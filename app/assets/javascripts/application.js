@@ -89,11 +89,11 @@ $(function(){
 });
 
 Date.format = "yyyy-mm-dd"
-$(document).ready(function() {
-  sh_highlightDocument();
-  $('.date_filter').datePicker({startDate: '2010-01-01'});
-  $("#dp-popup").addClass("dp-popup")
-})
+// $(document).ready(function() {
+//   sh_highlightDocument();
+//   $('.date_filter').datePicker({startDate: '2010-01-01'});
+//   $("#dp-popup").addClass("dp-popup")
+// })
 
 // Datepicker
 $(function(){

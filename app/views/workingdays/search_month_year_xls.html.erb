@@ -3,11 +3,10 @@
   <div class="box-header">
     <h3 class="box-title">Attendance Update</h3>
     <div class="pull-right">
-      <%= link_to "Xls Report", search_month_year_xls_workingdays_path, class: "btn btn-success btn-sm" %>
+      <%= link_to "Confirm Attendance", search_month_year_workingdays_path, class: "btn btn-success btn-sm" %>
     </div>
   </div><!-- /.box-header -->
   <div class="box-body">
-
     <div class="row">
       <div class="col-sm-3">
         <label>Stop Payment Request</label>
@@ -17,13 +16,15 @@
       </div>
 
       <div class="col-sm-3">
-      <label>Select Month and Year</label>
+        <label>Select Month and Year</label>
         <div class="field">
-          <%= text_field :workingday,:date,{onchange:'var a={date:$(this).val(),stop:$("#workingday_stop").val()}; $.get("/workingdays/generate_workingday",a,function(response){});',class: 'form-control workingday_date',placeholder:'Select Month and Year'} %>
+          <%= text_field :workingday,:date,{onchange:"var a={date:$(this).val(),stop:$('#workingday_stop').val()}; $.get('/workingdays/generate_workingday_xls',a,function(response){});",class: 'form-control workingday_date',placeholder:'Select Month and Year'} %>
         </div>
       </div>
     </div><br>
     <ol></ol>
-    <div id="all_employee_workingday"></div>
+    <div id="all_employee_workingday">
+    </div>
+    
   </div><!-- /.box-body -->
 </div><!-- /.box -->

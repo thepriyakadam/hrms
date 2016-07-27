@@ -1,5 +1,17 @@
 Rails.application.routes.draw do
 
+  
+
+  get 'download_pdf/index'
+
+  get 'download_pdf/zip'
+
+  get 'download_pdf/pdf'
+
+  get 'download_pdf/doc'
+
+
+
   resources :due_actions
   resources :due_details do
     collection do
@@ -40,7 +52,12 @@ Rails.application.routes.draw do
   resources :investment_declarations
   resources :investment_heads
   resources :sections
-  resources :employee_documents
+  resources :employee_documents do
+    collection do
+      get :form16
+    end
+  end
+
   resources :company_policies do
     collection do
       get :active_policies_list
@@ -77,6 +94,7 @@ Rails.application.routes.draw do
     collection do
       get :interview_round_reschedule
       post :reschedule_interview
+      get :interview_reschedule_list
     end
   end
   resources :interview_types
@@ -89,6 +107,7 @@ Rails.application.routes.draw do
       get :revert_attendance
       post :show_employee
       post :destroy_employee_attendance
+      post :department_wise_emp
     end
   end
   resources :salary_comp_mappings

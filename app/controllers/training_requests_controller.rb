@@ -11,6 +11,8 @@ class TrainingRequestsController < ApplicationController
   # GET /training_requests/1.json
   def show
     @trainee_requests = TraineeRequest.where(training_request_id: @training_request.id)
+    @reporting_master = ReportingMaster.find(@training_request.reporting_master_id)
+    @employee = Employee.find(@reporting_master.employee_id)
   end
 
   # GET /training_requests/new
@@ -71,13 +73,17 @@ class TrainingRequestsController < ApplicationController
   end
 
   def training_request_list
-    @training_requests = TrainingRequest.where(reporting_master_id: current_user.employee_id)
+    @reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
+    @training_requests = TrainingRequest.where(reporting_master_id: @reporting_masters)
     session[:active_tab] ="trainingmgmt"
   end
 
   def training_request_confirmation
     @training_request = TrainingRequest.find(params[:format])
-    @training_requests = TrainingRequest.where(reporting_master_id: current_user.employee_id)
+    reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
+    @reporting_master = ReportingMaster.find(@training_request.reporting_master_id)
+    @employee = Employee.find(@reporting_master.employee_id)
+    @training_requests = TrainingRequest.where(reporting_master_id: reporting_masters)
     @trainee_requests =TraineeRequest.where(training_request_id: @training_request.id)
   end
 

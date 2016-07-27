@@ -63,7 +63,6 @@ class DueDetailsController < ApplicationController
       @due_detail_ids.each do |did|
       @due_detail = DueDetail.find(did)
       @due_detail.update(is_confirmed: true) 
-      # InterviewScheduleMailer.sample_email_to_interviewer(@interview_schedule).deliver_now
       flash[:notice] = "Confirmed Successfully"
     end 
      redirect_to root_url
@@ -95,8 +94,8 @@ class DueDetailsController < ApplicationController
     @due_detail_ids.each do |did|
     DueEmployeeDetail.create(reporting_master_id: did,employee_id: @emp,due_template_id: @due_template,is_confirmed: true)
     end
-    flash[:notice] = "Created Successfully & Request Also Sent"
-    redirect_to root_url
+    flash[:notice] = "Created Successfully & Request Also Sent to the Selected Due Owner."
+    redirect_to all_employee_resignation_list_due_details_path
   end
 
 
@@ -133,6 +132,7 @@ class DueDetailsController < ApplicationController
      @employee_resignation = EmployeeResignation.find(params[:format])
      @employee = Employee.find(@employee_resignation.employee_id)
      @due_employee_details = DueEmployeeDetail.where(employee_id: @employee.id,is_confirmed: true)
+     @due_actions = DueAction.all
   end
 
   def due_action_list

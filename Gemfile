@@ -87,8 +87,6 @@ gem 'rails-erd'
 # Auto increement
 gem 'protokoll'
 
-# Image processing
-
 # country And State Name
 # gem 'country_state_select', '~> 2.0.0'
 # gem 'countries'
@@ -106,7 +104,6 @@ gem 'time_difference'
 gem 'roo'
 gem 'yaml_db'
 
-
 #gem 'mail'
 gem 'email_verifier'
 
@@ -116,4 +113,3 @@ gem "axlsx_rails"
 
 #Chart
 gem "chartkick"
-

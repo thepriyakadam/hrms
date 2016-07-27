@@ -60,7 +60,7 @@ module EmployeesHelper
       if current_user.role.name == 'Company'
         Employee.all.collect { |e| [e.manual_employee_code + '  ' + e.first_name.to_s + ' ' + e.last_name.to_s, e.id] }
       elsif current_user.role.name == 'CompanyLocation' || current_user.role.name == "SalaryAccount"
-        Employee.where(company_location_id: current_user.company_location_id).collect { |e| [e.manual_employee_code + '  ' + e.first_name.to_s + ' ' + e.last_name.to_s, e.id] }  
+        Employee.where(company_location_id: current_user.company_location_id).collect { |e| [e.manual_employee_code + '  ' + e.first_name.to_s + ' ' + e.last_name.to_s, e.id] }
       end
     end
   end

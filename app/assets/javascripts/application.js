@@ -95,7 +95,6 @@ $(document).ready(function() {
   $("#dp-popup").addClass("dp-popup")
 })
 
-
 // Datepicker
 $(function(){
   $('.company_start_date').datepicker({
@@ -158,5 +157,3 @@ $(function(){
   yearRange: '-10:+50',
   dateFormat: 'dd-mm-yy' });  
 });
-
-

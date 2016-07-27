@@ -36,4 +36,20 @@ module EmployeeAttendancesHelper
     end
     Hash[exist.sort]
 	end
+
+  def count_day(day,employee)
+    e = Employee.find(employee)
+    if e.joining_detail.nil?
+    else
+      if e.joining_detail.employee_category.nil?
+      else
+        if e.joining_detail.employee_category.name == 'Worker'
+          day_in_month = 26
+        else
+          day_in_month = day
+        end
+      end
+    end
+    day_in_month
+  end
 end

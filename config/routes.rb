@@ -107,6 +107,7 @@ Rails.application.routes.draw do
       post :show_employee
       post :destroy_employee_attendance
       post :department_wise_emp
+      post :create_attendance
       get :monthly_attendance
     end
   end

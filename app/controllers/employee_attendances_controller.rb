@@ -76,10 +76,14 @@ class EmployeeAttendancesController < ApplicationController
     present = params[:employee_attendances][:present]
     department = params[:employee_attendances][:department_id]
 
-    @employee_ids.each do |eid|
-      EmployeeAttendance.create(employee_id: eid,day: day,present: present,department_id: department)
+    if @employee_ids.nil?
+      flash[:alert] = "Please Select the Checkbox"
+    else
+      @employee_ids.each do |eid|
+      EmployeeAttendance.create(employee_id: eid,day: day,present: present,department_id: department)  
+      flash[:notice] = "Created successfully"
+      end
     end
-    flash[:notice] = "Created successfully"
     redirect_to new_employee_attendance_path
   end
 

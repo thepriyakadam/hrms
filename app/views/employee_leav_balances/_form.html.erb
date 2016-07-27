@@ -7,10 +7,15 @@
       </div>
     </div>
     <%= hidden_field "employee_leav_balance","leav_category_id", value: @leav_category.id%>
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :no_of_leave %>
+      </div>
+    </div>
 
     <div class="col-sm-3">
       <div class="field">
-        <%= f.text_field :total_leave %>
+        <%= f.text_field :total_leave, readonly:true %>
       </div>
     </div>
     

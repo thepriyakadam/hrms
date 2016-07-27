@@ -5,8 +5,8 @@
       <th>Date</th>
       <th>Purpose</th>
       <th>Reward type</th>
-      <th>Qty</th>
-      <th>Reporting Manager</th>
+      <th>Quantity</th>
+      <th>Approval</th>
       <th>Action</th>
     </tr>
   </thead>
@@ -19,7 +19,7 @@
         <td><%= rewards_pal.purpose %></td>
         <td><%= rewards_pal.reward_type.try(:name) %></td>
         <td><%= rewards_pal.qty %></td>
-        <td><%= rewards_pal.reporting_master_id %></td>
+        <td><%= full_name(rewards_pal.reporting_master.employee) %></td>
         <td>
           <%= link_to '', edit_rewards_pal_path(rewards_pal),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
           <%= link_to '',  rewards_pal, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>

@@ -1,4 +1,5 @@
 <center><h3><%= @date.strftime('%B-%Y')%></h3></center>
+<%= form_for :workingday, url: { action: "create_working_day", date: @date } do |f| %>
 <table id="example1" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
@@ -17,9 +18,9 @@
   </thead>
 
   <tbody>
-     <% @workingdays.each do |workingday| %>
+    <% @workingdays.each do |workingday| %>
       <tr>
-        <td><%= check_box_tag "workingdays[]", workingday.id %></td>
+        <td><%= check_box_tag "ids[]", workingday.employee_id %></td>
         <td><%= workingday.employee.try(:manual_employee_code) %></td>
         <td><%= full_name(workingday.employee) %></td>
         <td><%= workingday.day_in_month %></td>
@@ -34,10 +35,8 @@
     <% end %>
   </tbody>
 </table>
-
-<%= link_to "Xls", print_working_day_workingdays_path(date: @date, format: "xls"), class: "btn btn-xl btn-success fa fa-print",:target => "_blank" %>
-
-<%= link_to "Confirm Payble Days", create_working_day_workingdays_path(date: @date), class: "btn btn-sm btn-primary" %>
+<%= f.submit "Confirm Payble Day", class: "btn btn-sm btn-primary" %>
+<%end%>
 
 <script type="text/javascript">
   $("#example1").DataTable();

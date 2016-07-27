@@ -7,8 +7,8 @@
   <thead>
     <tr>
      <th><input type="checkbox" id="selectAll" value="selectAll"></th>
-     <th>Reporting Manager</th>
-     <th>Due Template</th>
+     <th>No Dues Owner</th>
+     <th>No Dues Template</th>
      <th>Employee Name</th>
     </tr>
   </thead>
@@ -18,7 +18,7 @@
       <tr>
        <td><%= check_box_tag "due_employee_detail_ids[]", due_employee_detail.id %></td>
        <td><%= due_employee_detail.reporting_master_id %></td>
-       <td><%= due_employee_detail.due_template_id %></td>
+       <td><%= due_employee_detail.due_template.try(:name) %></td>
        <td><%= due_employee_detail.employee.first_name+' '+due_employee_detail.employee.middle_name+' '+due_employee_detail.employee.last_name %></td>
  
       </tr>

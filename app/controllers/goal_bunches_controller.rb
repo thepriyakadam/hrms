@@ -207,7 +207,7 @@ class GoalBunchesController < ApplicationController
 
   def appraiser_comment
     @employee = Employee.find(params[:emp_id])
-    @goal_bunch_id = GoalBunch.find(params[:id]) 
+    @goal_bunch_id = GoalBunch.find(params[:goal_id]) 
     @goal_bunches = GoalBunch.where(employee_id: @employee.id, id: @goal_bunch_id.id)
 
     @employee_promotions = EmployeePromotion.where(employee_id: current_user.employee_id)
@@ -258,7 +258,7 @@ class GoalBunchesController < ApplicationController
       end
       #GoalBunch.where(id: @goal_bunch_id.id).update_all(appraiser_rating: appraiser_rating)
     end
-    redirect_to appraiser_comment_goal_bunches_path(emp_id: @employee.id,id: @goal_bunch_id.id)
+    redirect_to appraiser_comment_goal_bunches_path(emp_id: @employee.id,goal_id: @goal_bunch_id.id)
   end
 
   def appraiser_comment_confirm
@@ -374,8 +374,10 @@ class GoalBunchesController < ApplicationController
     @goal_ratings = GoalRating.where(appraisee_id: @employee.id,goal_bunch_id: @goal_bunch_id.id, goal_type: 'Goal')
     @goal_attribute_ratings = GoalRating.where("goal_bunch_id = ? AND goal_type = ?", @goal_bunch_id.id ,'Attribute')
 
-    @goal_bunches = GoalBunch.where(employee_id: @employee.id,reviewer_confirm: true, id: @goal_bunch_id.id)
-     @goal_bunch = GoalBunch.find_by_employee_id(@employee.id)
+    #@goal_bunches = GoalBunch.where(employee_id: @employee.id,reviewer_confirm: true,id: @goal_bunch_id.id)
+
+    @goal_bunches = GoalBunch.where(employee_id: @employee.id,id: @goal_bunch_id.id)
+    @goal_bunch = GoalBunch.find_by_employee_id(@employee.id)
     #@goal_bunch = GoalBunch.where(employee_id: @employee.id,id: @goal_bunch_id.id)
   end
 
@@ -612,7 +614,7 @@ class GoalBunchesController < ApplicationController
     comment = params[:goal_bunch][:appraiser_comment]
     @goal_bunch.update(appraiser_comment: comment,appraiser_id: params[:employee_id])
     flash[:notice] = "Overall Comment Created Successfully"
-    redirect_to appraiser_comment_goal_bunches_path(emp_id: @goal_bunch.employee_id,id: @goal_bunch.id)
+    redirect_to appraiser_comment_goal_bunches_path(emp_id: @goal_bunch.employee_id,goal_id: @goal_bunch.id)
   end
 
   def appraiser_overall_comment_confirm
@@ -627,11 +629,15 @@ class GoalBunchesController < ApplicationController
         @goal_bunch.update(appraiser_confirm: true)      
         flash[:notice] = "Confirmed Successfully"
         end
-        GoalBunchMailer.send_email_to_reviewer(@goal_bunch).deliver_now
-        flash[:notice] = "Appraiser Evaluation Confirmed Email Sent Successfully"
+          if @employee.manager_2_id == nil
+            flash[:notice] = "No Reviewer Available"
+          else
+            GoalBunchMailer.send_email_to_reviewer(@goal_bunch).deliver_now
+            flash[:notice] = "Appraiser Evaluation Confirmed Email Sent Successfully"
+          end
       end
-      @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
-    redirect_to appraiser_comment_goal_bunches_path(emp_id: @employee.id,id: @goal_bunch.id)
+      @goal_bunch_id = GoalBunch.find(params[:goal_bunch_id])
+    redirect_to appraiser_comment_goal_bunches_path(emp_id: @employee.id,goal_id: @goal_bunch_id.id)
   end
 
   def modal_reviewer_overall
@@ -641,9 +647,14 @@ class GoalBunchesController < ApplicationController
   def reviewer_overall_comment_create
     @employee = Employee.find(current_user.employee_id)
     @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
+
     comment = params[:goal_bunch][:review_comment]
     rating = params[:goal_bunch][:reviewer_rating_id]
-    @goal_bunch.update(review_comment: comment,reviewer_rating_id: rating,reviewer_id: @employee.id)
+    promotion = params[:goal_bunch][:r_promotion]
+    increment = params[:goal_bunch][:r_increment]
+    designation = params[:goal_bunch][:r_designation_id]
+    ctc = params[:goal_bunch][:r_ctc]
+    @goal_bunch.update(review_comment: comment,reviewer_rating_id: rating,reviewer_id: @employee.id,r_promotion: promotion,r_increment: increment,r_designation_id: designation,r_ctc: ctc)
     flash[:notice] = "Overall Comment/Rating Created Successfully"
     redirect_to reviewer_comment_goal_bunches_path(emp_id: @goal_bunch.employee_id,id: @goal_bunch.id)
   end
@@ -852,6 +863,6 @@ class GoalBunchesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def goal_bunch_params
-      params.require(:goal_bunch).permit(:goal_confirm,:period_id, :employee_id, :appraisee_id, :appraisee_comment, :appraisee_confirm, :appraiser_id, :appraiser_rating, :appraiser_comment, :appraiser_confirm, :reviewer_id, :review_comment, :reviewer_rating_id, :reviewer_confirm, :final_id, :final_comment, :final_rating_id, :final_confirm)
+      params.require(:goal_bunch).permit(:f_promotion,:f_increment,:f_designation_id,:f_ctc,:goal_confirm,:period_id, :employee_id, :appraisee_id, :appraisee_comment, :appraisee_confirm, :appraiser_id, :appraiser_rating, :appraiser_comment, :appraiser_confirm, :reviewer_id, :review_comment, :reviewer_rating_id, :reviewer_confirm, :final_id, :final_comment, :final_rating_id, :final_confirm)
     end
 end

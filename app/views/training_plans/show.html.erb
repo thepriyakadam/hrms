@@ -21,13 +21,21 @@
         <td><%= @training_plan.trainer_name %></td>
       </tr>
 
-      <p>
+      <tr>
+        <th><strong>Contact No:</strong></th>
+        <td><%= @training_plan.trainer_num %></td>
+      
+        <th><strong>About Trainer:</strong></th>
+        <td><%= @training_plan.about_trainer %></td>
+      </tr>
+
+      <tr>
         <th><strong>No of Days:</strong></th>
         <td><%= @training_plan.no_of_days %></td>
       
         <th><strong>No of Hrs:</strong></th>
         <td><%= @training_plan.no_of_hrs %></td>
-      </p>
+      </tr>
 
       <tr>
         <th><strong>Place:</strong></th>

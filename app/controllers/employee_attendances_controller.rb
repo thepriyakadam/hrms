@@ -77,7 +77,7 @@ class EmployeeAttendancesController < ApplicationController
     department = params[:employee_attendances][:department_id]
 
     @employee_ids.each do |eid|
-    EmployeeAttendance.create(employee_id: eid,day: day,present: present,department_id: department)
+      EmployeeAttendance.create(employee_id: eid,day: day,present: present,department_id: department)
     end
     flash[:notice] = "Created successfully"
     redirect_to new_employee_attendance_path
@@ -129,7 +129,30 @@ class EmployeeAttendancesController < ApplicationController
     @date = Date.new(@year.to_i, Workingday.months[@month])
     @day = @date.end_of_month.day
     @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ? AND department_id = ?", @date.strftime('%m/%Y'),@department).group(:employee_id)
-    
+  end
+
+  def monthly_attendance
+    @year = params[:year]
+    @month = params[:month]
+    @date = Date.new(@year.to_i, Workingday.months[@month])
+    @day = @date.end_of_month.day    
+    @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ? and is_confirm = ?", @date.strftime('%m/%Y'),false).group(:employee_id)
+  end
+
+  def create_attendance
+    @employees = params[:employees]
+    @attendances = params[:attendances]
+    @attendances.each do |a|
+      att = EmployeeAttendance.find(a)
+      att.update(is_confirm: true)
+    end
+    arr = []
+    @employees.each do |e|
+      arr << params[e]
+    end
+    params.permit!
+    Workingday.create(arr)
+    redirect_to employee_attendances_path
   end
 
   private

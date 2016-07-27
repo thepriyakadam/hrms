@@ -24,22 +24,16 @@ class DueDetailsController < ApplicationController
   def edit
   end
 
-  # POST /due_details
-  # POST /due_details.json
-
   def create
-     @due_detail = DueDetail.new(due_detail_params)
-     @due_details = DueDetail.all
-      if @due_detail.save
-        @due_detail = DueDetail.new
-      end
-      @due_template_id = DueTemplate.find(params[:due_detail][:due_template_id])
-      redirect_to new_due_detail_path(due_template_id: @due_template_id.id)
-      flash[:notice] = 'Due Detail created Successfully.'   
+    @due_detail = DueDetail.new(due_detail_params)
+    @due_details = DueDetail.all
+    if @due_detail.save
+      @due_detail = DueDetail.new
+    end
+    @due_template_id = DueTemplate.find(params[:due_detail][:due_template_id])
+    flash[:notice] = 'Due Detail created Successfully.'   
+    redirect_to new_due_detail_path(due_template_id: @due_template_id.id)
   end
-
-  # PATCH/PUT /due_details/1
-  # PATCH/PUT /due_details/1.json
 
   def update
     @due_detail.update(due_detail_params)
@@ -49,9 +43,6 @@ class DueDetailsController < ApplicationController
     flash[:notice] = 'Due Detail updated Successfully.'   
   end
 
-  # DELETE /due_details/1
-  # DELETE /due_details/1.json
-
   def destroy
     @due_detail.destroy
     @due_details = DueDetail.all
@@ -59,7 +50,8 @@ class DueDetailsController < ApplicationController
 
   def all_employee_resignation_list
      @employee_resignations = EmployeeResignation.all
-     session[:active_tab] ="no_due_mgmt"
+     session[:active_tab] = "resignationmanagement"
+    session[:active_tab1] ="no_due_mgmt"
   end
 
   def is_confirm
@@ -71,7 +63,6 @@ class DueDetailsController < ApplicationController
       @due_detail_ids.each do |did|
       @due_detail = DueDetail.find(did)
       @due_detail.update(is_confirmed: true) 
-      # InterviewScheduleMailer.sample_email_to_interviewer(@interview_schedule).deliver_now
       flash[:notice] = "Confirmed Successfully"
     end 
      redirect_to root_url
@@ -97,24 +88,27 @@ class DueDetailsController < ApplicationController
     # byebug
     # @due_employee_detail = DueEmployeeDetail.new(due_employee_detail_params)
     @emp = params[:due_employee_detail][:employee_id]
+    @due_template = params[:due_template_id][:hhh]
     # @due_employee_detail.save
     @due_detail_ids = params[:due_detail_ids]
     @due_detail_ids.each do |did|
-    DueEmployeeDetail.create(reporting_master_id: did,employee_id: @emp)
+    DueEmployeeDetail.create(reporting_master_id: did,employee_id: @emp,due_template_id: @due_template,is_confirmed: true)
     end
-    flash[:notice] = "Created Successfully"
-    redirect_to root_url
+    flash[:notice] = "Created Successfully & Request Also Sent to the Selected Due Owner."
+    redirect_to all_employee_resignation_list_due_details_path
   end
 
 
   def employee_due_detail_history
     @due_employee_details = DueEmployeeDetail.where(reporting_master_id: current_user.employee_id,is_confirmed: true)
-    session[:active_tab] ="no_due_mgmt"
+    session[:active_tab] = "resignationmanagement"
+    session[:active_tab1] ="no_due_mgmt"
   end
 
   def all_employee_due_detail
-     @due_employee_details = DueEmployeeDetail.all
-     session[:active_tab] ="no_due_mgmt"
+     @due_employee_details = DueEmployeeDetail.where(is_confirmed: nil)
+      session[:active_tab] = "resignationmanagement"
+    session[:active_tab1] ="no_due_mgmt"
   end
 
   def is_confirm_employee_due
@@ -124,13 +118,31 @@ class DueDetailsController < ApplicationController
       redirect_to root_url
     else
       @due_employee_detail_ids.each do |did|
-      @due_employee_detail = DueEmployeeDetail.find(did)
-      @due_employee_detail.update(is_confirmed: true) 
-      # InterviewScheduleMailer.sample_email_to_interviewer(@interview_schedule).deliver_now
-      flash[:notice] = "Confirmed Successfully"
-    end 
-     redirect_to root_url
+        @due_employee_detail = DueEmployeeDetail.find(did)
+        @due_employee_detail.update(is_confirmed: true) 
+        # InterviewScheduleMailer.sample_email_to_interviewer(@interview_schedule).deliver_now
+        flash[:notice] = "Confirmed Successfully"
+      end
+      redirect_to root_url
+    end
   end
+
+  def due_employee_detail_list
+     # @due_employee_details = DueEmployeeDetail.where(is_confirmed: true)
+     @employee_resignation = EmployeeResignation.find(params[:format])
+     @employee = Employee.find(@employee_resignation.employee_id)
+     @due_employee_details = DueEmployeeDetail.where(employee_id: @employee.id,is_confirmed: true)
+     @due_actions = DueAction.all
+  end
+
+  def due_action_list
+    @due_employee_detail = DueEmployeeDetail.find(params[:format])
+    @due_actions = DueAction.where(due_employee_detail_id: @due_employee_detail.id)
+  end
+
+
+  def emp_resignation
+    @employee_resignations = EmployeeResignation.all
   end
 
   private
@@ -145,6 +157,6 @@ class DueDetailsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def due_detail_params
-      params.require(:due_detail).permit(:due_employee_template_id, :reporting_master_id, :status, :due_template_id)
+      params.require(:due_detail).permit(:reporting_master_id, :due_employee_template_id, :status, :due_template_id)
     end
 end

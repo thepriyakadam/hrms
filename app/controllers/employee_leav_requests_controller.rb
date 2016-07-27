@@ -176,7 +176,8 @@ class EmployeeLeavRequestsController < ApplicationController
   def search_by_start_date
     reporter(EmployeeLeavRequest.filter_records(current_user), template_class: PdfReportTemplate) do
       filter :start_date, type: :date
-      filter :current_status, type: :string
+      # filter :current_status, type: :string
+      column(:Request_ID, sortable: true) { |employee_leav_request| employee_leav_request.id }
       column(:ID, sortable: true) { |employee_leav_request| employee_leav_request.employee.try(:manual_employee_code) }
       column(:Employee_Name, sortable: true) { |employee_leav_request| full_name(employee_leav_request.employee) }
       column(:Designation, sortable: true) { |employee_leav_request| employee_leav_request.employee.joining_detail.employee_designation.name }
@@ -188,7 +189,6 @@ class EmployeeLeavRequestsController < ApplicationController
       column(:Status, sortable: true, &:current_status)
       column(:No_OF_Day, sortable: true, &:leave_count)
       column(:Reason, sortable: true, &:reason)
-
     end
     session[:active_tab] = "leavemanagement"
     session[:active_tab1] = "leavereport"

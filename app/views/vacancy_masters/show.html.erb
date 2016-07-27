@@ -13,7 +13,7 @@
   <th><strong>Vacancy No.</strong></th>
   <td><%= @vacancy_master.id %></td>
    <th><strong>Request To</strong></th>
-  <td><%= @vacancy_master.reporting_master_id %></td>
+  <td><%= @employee.try(:first_name) %> <%= @employee.try(:middle_name) %> <%= @employee.try(:last_name) %> </td>
   </tr>
 
   <tr>

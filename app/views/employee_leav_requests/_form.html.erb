@@ -1,7 +1,10 @@
 <!--SELECT2 EXAMPLE -->
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title">Employee Leave Request</h3>
+    <h3 class="box-title">Leave Request - <%= @employee.manual_employee_code %>  (<%= @employee.first_name %> <%= @employee.middle_name %> <%=@employee.last_name %>) </h3>
+
+       First Approval : <%= @employee.manager.try(:first_name) %> <%= @employee.manager.try(:middle_name) %> <%= @employee.manager.try(:last_name) %>
+       Final Approval : <%= @employee.manager_2.try(:first_name) %> <%= @employee.manager_2.try(:middle_name) %> <%= @employee.manager_2.try(:last_name) %>
   </div><!-- /.box-header -->
 
   <div class="box-body">

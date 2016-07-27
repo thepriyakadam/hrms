@@ -8,22 +8,13 @@
 
     <%= f.hidden_field :employee_id, value: current_user.employee_id %>
     <%= f.hidden_field :no_of_employee, value: @emp_total %>
+    <%= f.hidden_field :training_date, value: Date.today %>
+
       <div class="row">
         <div class="col-sm-3">
           <div class="form-group required">
             <div class="input-group">
               <%= f.select :training_topic_master_id, all_training_topic,{label: 'Training Course',include_blank: " Select Training Course"}%>
-            </div>
-          </div>
-        </div>
-      
-        <div class="col-sm-3">
-          <div class="form-group required">
-            <div class="input-group">
-              <div class="input-group-addon">
-                <i class="fa fa-calendar"></i>
-              </div>
-                <%= f.text_field :training_date, label: 'Request Date',class: 'birth_date1'%>
             </div>
           </div>
         </div>
@@ -34,20 +25,21 @@
           </div>
         </div>
 
-        <div class="col-sm-3">
+        <div class="col-sm-2">
           <div class="form-group required">
             <%= f.text_field :place,placeholder: 'Place',label: 'Place' %>
           </div>
         </div>
-      </div>
-      <div class="row">
+    
         <div class="col-sm-4">
           <div class="field">
             <%= f.text_field :description,placeholder: 'Description',label: 'Description' %>
           </div>
         </div>
+      </div>
 
-        <div class="col-sm-5">
+      <div class="row">
+        <div class="col-sm-7">
           <div class="field">
              <%= f.text_field :justification,label: 'Justification'%>
           </div>
@@ -68,6 +60,7 @@
     <% end %>
   </div>
 </div>
+
 
 <script type="text/javascript">
 

@@ -11,7 +11,7 @@
     </tr>
   </thead>
   <tbody>
-  <% @employees.each do |e|  %>
+  <% @employees.where(status: "Active").each do |e|  %>
     <tr>
       <td><%= check_box_tag "employee_ids[]", e.id %></td>
       <td><%= e.manual_employee_code %></td> 

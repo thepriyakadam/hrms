@@ -1,5 +1,5 @@
 <center><h3><%= @date.strftime('%B-%Y')%></h3></center>
-<%= form_for :workingday, url: { action: "create_working_day", date: @date } do |f| %>
+<%= form_for :workingday, url: { action: "print_working_day", format: "xls", date: @date } do |f| %>
 <table id="example1" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
@@ -35,7 +35,7 @@
     <% end %>
   </tbody>
 </table>
-<%= f.submit "Confirm Payble Day", class: "btn btn-sm btn-primary" %>
+<%= f.submit "Xls Report", class: "btn btn-xl btn-success fa fa-print" %>
 <%end%>
 
 <script type="text/javascript">

@@ -1,0 +1,37 @@
+<div class="box box-default">
+<div class="box-header with-border">
+    <h3 class="box-title">Daily Bill Details</h3>
+  </div><!-- /.box-header -->
+ <div class="box-body">
+   <table id="example2" class="table table-bordered table-hover table-condensed">
+  <tr>
+  <th><strong>Expense Date</strong></th>
+  <td><%= @daily_bill_detail.expence_date %></td>
+   <th><strong>Place</strong></th>
+  <td><%= @daily_bill_detail.e_place %></td>
+  </tr>
+
+  <tr>
+  <th><strong>Expense Amount</strong></th>
+  <td><%= @daily_bill_detail.travel_expence %></td>
+   <th><strong>Expense Type</strong></th>
+  <td><%= @daily_bill_detail.travel_expence_type.try(:name) %></td>
+  </tr>
+
+  <tr>
+  <th><strong>Request To</strong></th>
+  <td><%= @employee.try(:first_name) %> <%= @employee.try(:middle_name) %> <%= @employee.try(:last_name) %></td>
+  <th><strong>Remark</strong></th>
+  <td><%= @daily_bill_detail.remarks %></td>
+  </tr>
+
+<tr> 
+  <th><strong>Comment</strong></th>
+  <td><%= @daily_bill_detail.comment %></td>
+  <th><strong>Currency Type</strong></th>
+  <td><%= @daily_bill_detail.currency_master.try(:name) %></td>
+</tr>
+
+</table>
+</div>
+</div>

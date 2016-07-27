@@ -1,32 +1,41 @@
-<%= bootstrap_form_for(@daily_bill_detail,id:@travel_request.id,travel_request_id: @travel_request.id) do |f| %>
+<%= bootstrap_form_for(@daily_bill_detail,id:@travel_request.id,html: {id: "daily_bill_detail"},travel_request_id: @travel_request.id) do |f| %>
 <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
   <%= f.hidden_field :travel_request_id, value:@travel_request.id  %>
+  <div>
+  <%= render 'show_travel_request' %>
+</div>
+
+<% if @daily_bill_detail.is_confirm == true %>
+    <small class="label label-default">Daily Bill Already Confirmed</small>
+    <% else %>
     <div class="row">
+
        <div class="col-sm-3">
-        <label>Expense Date </label>
-        <div class="field">
-          <div class="input-group">
-            <div class="input-group-addon">
-              <i class="fa fa-calendar"></i>
+          <div class="form-group required">
+          <!-- <label>Vacancy Fulfillment Date </label> -->
+           <label>Expense Date </label>
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+               <%= f.text_field :expence_date, hide_label: true,class: 'input_expence_date'%>
             </div>
-            <%= f.text_field :expence_date, hide_label: true, class: 'input_expence_date' %>
           </div>
-        </div>
-      </div>
+        </div>      
 
       <div class="col-sm-3">
-        <div class="field">
+        <div class="form-group required">
           <%= f.text_field :e_place, label: 'Place',class: 'input_e_place'  %>
         </div>
       </div>
        <div class="col-sm-3">
-        <div class="field">
-          <%= f.select :travel_expence_type_id,all_travel_expence_type,{label: 'Travel Expence Type',include_blank: "select Travel Type"},class: 'input_travel_expence'  %>
+        <div class="form-group required">
+          <%= f.select :travel_expence_type_id,all_travel_expence_type,{label: 'Expence Type',include_blank: "Select Expense Type"},class: 'input_travel_expence'  %>
         </div>
       </div>
       <div class="col-sm-3">
-        <div class="field">
-          <%= f.text_field :travel_expence,label: 'Travel Expense',class: 'input_travel_expence'  %>
+        <div class="form-group required">
+          <%= f.text_field :travel_expence,label: 'Expense Amount',class: 'input_travel_expence'  %>
         </div>
       </div>
     </div>
@@ -75,6 +84,8 @@
     </div>
   </div>
 <% end %>
+             <% end %>
+
 
 <script type="text/javascript">
  $(function(){
@@ -90,6 +101,12 @@
         },
         "daily_bill_detail[e_place]":{
           required: true
+        },
+        "daily_bill_detail[travel_expence_type_id]":{
+          required: true
+        },
+        "daily_bill_detail[travel_expence]":{
+          required: true
         }
       },
       messages: {
@@ -98,6 +115,12 @@
         },
         "daily_bill_detail[e_place]":{
           required: "Please Specify E Place"
+        },
+        "daily_bill_detail[travel_expence_type_id]":{
+          required: "Please Specify Travel Expense Type"
+        },
+        "daily_bill_detail[travel_expence]":{
+          required: "Please Specify Travelling Amount"
         }
       },
       errorPlacement: function(error, element) {

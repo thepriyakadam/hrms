@@ -27,7 +27,7 @@
       <tr>
 
         <th><strong>Reporting Manager</strong></th>
-        <td><%= @training_request.reporting_master_id %></td>   
+        <td><%= @employee.try(:first_name) %> <%= @employee.try(:middle_name) %> <%= @employee.try(:last_name) %></td>   
       
         <th><strong>No Of Employee</strong></th>
         <td><%= @training_request.no_of_employee %></td>

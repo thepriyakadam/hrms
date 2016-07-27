@@ -39,9 +39,9 @@ class TrainingRequestsController < ApplicationController
         @employee_ids = params[:employee_ids]
         @employee_ids.each do |eid|
         @emp_total = @employee_ids.count
-        @reporting_master = params[:training_request][:reporting_master_id]
-        @rep_master = ReportingMaster.find(@reporting_master)
-        TrainingRequest.where(id: @training_request.id).update_all(no_of_employee: @emp_total,reporting_master_id: @rep_master.employee_id)
+        # @reporting_master = params[:training_request][:reporting_master_id]
+        # @rep_master = ReportingMaster.find(@reporting_master)
+        TrainingRequest.where(id: @training_request.id).update_all(no_of_employee: @emp_total)
         TraineeRequest.create(employee_id: eid,training_request_id: @training_request.id,training_topic_master_id: @training_request.training_topic_master_id)
       end
         format.html { redirect_to @training_request, notice: 'Training request was successfully created.' }

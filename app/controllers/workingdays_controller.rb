@@ -80,14 +80,63 @@ class WorkingdaysController < ApplicationController
   def search_month_year
   end
 
+  def search_month_year_xls
+  end
+
   def generate_workingday
+    @is_stop = params[:stop]
     @date = params[:date].to_date
     @month = @date.strftime("%B")
     @year = @date.strftime("%Y")
     @existing = Workingday.where(month_name: @month, year: @year).pluck(:employee_id)
     @all_employees = Employee.where(status: "Active").pluck(:id)
-    @employees = @all_employees - @existing
+    if @is_stop == "Yes"
+      @employee_resignations = EmployeeResignation.where(is_stop_pay_request: true).pluck(:employee_id)
+    else
+      @employee_resignations = EmployeeResignation.where(is_stop_pay_request: false).pluck(:employee_id)
+    end
+    @employees = @all_employees - (@existing + @employee_resignations)
+    @workingdays = []
+    @employees.each do |ee|
+      workingday = Workingday.new
+      e = Employee.find(ee)
+      if e.joining_detail.nil?
+      else
+        if e.joining_detail.employee_category.nil?
+        else
+          if e.joining_detail.employee_category.name == 'Worker'
+            workingday.day_in_month = 26
+          else
+            workingday.day_in_month = @date.end_of_month.day
+          end
+        end
+      end
+      workingday.total_leave = ParticularLeaveRecord.where(leave_date: @date.beginning_of_month..@date.end_of_month, employee_id: e.id).count
+      workingday.holiday_in_month = Holiday.where(holiday_date: @date.beginning_of_month..@date.end_of_month).count
+      workingday.week_off_day = WeekoffMaster.day(@date)
+      workingday.absent_day = workingday.total_leave.to_f
+      workingday.present_day = workingday.day_in_month.to_i - workingday.absent_day
+      workingday.employee_id = e.id
+      lc = LeavCategory.where(is_payble: false).pluck(:id)
+      workingday.lwp_leave = ParticularLeaveRecord.where(leave_date: @date.beginning_of_month..@date.end_of_month, employee_id: e.id, leav_category_id: lc).count
+      workingday.payable_day = workingday.day_in_month.to_i - workingday.lwp_leave.to_f
+      @workingdays << workingday
+    end
+  end
 
+  def generate_workingday_xls
+    @is_stop = params[:stop]
+    @date = params[:date].to_date
+    @month = @date.strftime("%B")
+    @year = @date.strftime("%Y")
+    @existing = Workingday.where(month_name: @month, year: @year).pluck(:employee_id)
+    @all_employees = Employee.where(status: "Active").pluck(:id)
+    if @is_stop == "Yes"
+      @employee_resignations = EmployeeResignation.where(is_stop_pay_request: true).pluck(:employee_id)
+    else
+      @employee_resignations = EmployeeResignation.where(is_stop_pay_request: false).pluck(:employee_id)
+    end
+    @employees = @all_employees - (@existing + @employee_resignations)
     @workingdays = []
     @employees.each do |ee|
       workingday = Workingday.new
@@ -117,14 +166,10 @@ class WorkingdaysController < ApplicationController
   end
 
   def print_working_day
-   @date = params[:date].to_date
-    @month = @date.strftime("%B")
-    @year = @date.strftime("%Y")
-    @existing = Workingday.where(month_name: @month, year: @year).pluck(:employee_id)
-    @all_employees = Employee.all.pluck(:id)
-    @employees = @all_employees - @existing
-
+    @date = params[:date].to_date
+    @employees = params[:ids]
     @workingdays = []
+
     @employees.each do |ee|
       workingday = Workingday.new
       e = Employee.find(ee)
@@ -152,13 +197,8 @@ class WorkingdaysController < ApplicationController
   end
 
   def create_working_day
-   @date = params[:date].to_date
-    @month = @date.strftime("%B")
-    @year = @date.strftime("%Y")
-    @existing = Workingday.where(month_name: @month, year: @year).pluck(:employee_id)
-    @all_employees = Employee.all.pluck(:id)
-    @employees = @all_employees - @existing
-
+    @date = params[:date].to_date
+    @employees = params[:ids]
     @workingdays = []
     @employees.each do |ee|
       workingday = Workingday.new

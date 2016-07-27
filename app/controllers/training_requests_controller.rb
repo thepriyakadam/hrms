@@ -11,6 +11,8 @@ class TrainingRequestsController < ApplicationController
   # GET /training_requests/1.json
   def show
     @trainee_requests = TraineeRequest.where(training_request_id: @training_request.id)
+    @reporting_master = ReportingMaster.find(@training_request.reporting_master_id)
+    @employee = Employee.find(@reporting_master.employee_id)
   end
 
   # GET /training_requests/new
@@ -30,11 +32,16 @@ class TrainingRequestsController < ApplicationController
   def create
     @training_request = TrainingRequest.new(training_request_params)
     @training_request.status = "Pending"
+    #@reporting_master = params[:training_request][:reporting_master_id]
+    #@rep_master = ReportingMaster.where(id: @reporting_master)
     respond_to do |format|
       if @training_request.save
         @employee_ids = params[:employee_ids]
         @employee_ids.each do |eid|
         @emp_total = @employee_ids.count
+        # @reporting_master = params[:training_request][:reporting_master_id]
+        # @rep_master = ReportingMaster.find(@reporting_master)
+        TrainingRequest.where(id: @training_request.id).update_all(no_of_employee: @emp_total)
         TraineeRequest.create(employee_id: eid,training_request_id: @training_request.id,training_topic_master_id: @training_request.training_topic_master_id)
       end
         format.html { redirect_to @training_request, notice: 'Training request was successfully created.' }
@@ -71,13 +78,17 @@ class TrainingRequestsController < ApplicationController
   end
 
   def training_request_list
-    @training_requests = TrainingRequest.where(reporting_master_id: current_user.employee_id)
+    @reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
+    @training_requests = TrainingRequest.where(reporting_master_id: @reporting_masters)
     session[:active_tab] ="trainingmgmt"
   end
 
   def training_request_confirmation
     @training_request = TrainingRequest.find(params[:format])
-    @training_requests = TrainingRequest.where(reporting_master_id: current_user.employee_id)
+    reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
+    @reporting_master = ReportingMaster.find(@training_request.reporting_master_id)
+    @employee = Employee.find(@reporting_master.employee_id)
+    @training_requests = TrainingRequest.where(reporting_master_id: reporting_masters)
     @trainee_requests =TraineeRequest.where(training_request_id: @training_request.id)
   end
 
@@ -129,9 +140,6 @@ class TrainingRequestsController < ApplicationController
     @training_request = TrainingRequest.new
     @department = Department.find(params[:department_id])
     @employees = Employee.where(department_id: @department.id)
-  end
-
-  def create_dept_wise_request
   end
   
   private

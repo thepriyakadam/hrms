@@ -12,10 +12,9 @@
         <tr>
           <th>Employee ID</th>
           <th>Employee Name</th>
-          <th>Training Topic</th>
-          <th>Training Period</th>
-          <th>Training Date</th>
-          <th>Reporting Master</th>
+          <th>Topic</th>
+          <th>Date</th>
+          <th>Request To</th>
           <th>No. Of Employee</th>
           <th>Place</th>
           <th>Comment</th>
@@ -30,7 +29,6 @@
             <td><%= training_request.employee.try(:manual_employee_code) %></td>
             <td> <%= full_name(training_request.employee) %> </td>
             <td><%= training_request.training_topic_master.try(:name) %></td>
-            <td><%= training_request.training_period %></td>
             <td><%= training_request.training_date %></td>
             <td><%= training_request.reporting_master_id%></td>
             <td><%= training_request.no_of_employee %></td>
@@ -45,8 +43,8 @@
                   <small class="label label-danger">Reject</small>
               <% end %>
             </td>
-              
-            <td><%= link_to 'Training Plan', training_topic_wise_search_training_plans_path(id:training_request),class: 'btn btn-xs btn-primary' %> </td>
+              <td><%= link_to '', training_request,class: 'btn btn-sm btn-default fa fa-eye' %></td>
+            
             
             </tr>
           <% end %>

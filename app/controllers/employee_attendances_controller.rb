@@ -76,10 +76,14 @@ class EmployeeAttendancesController < ApplicationController
     present = params[:employee_attendances][:present]
     department = params[:employee_attendances][:department_id]
 
-    @employee_ids.each do |eid|
-    EmployeeAttendance.create(employee_id: eid,day: day,present: present,department_id: department)
+    if @employee_ids.nil?
+      flash[:alert] = "Please Select the Checkbox"
+    else
+      @employee_ids.each do |eid|
+      EmployeeAttendance.create(employee_id: eid,day: day,present: present,department_id: department)  
+      flash[:notice] = "Created successfully"
+      end
     end
-    flash[:notice] = "Created successfully"
     redirect_to new_employee_attendance_path
   end
 
@@ -125,7 +129,6 @@ class EmployeeAttendancesController < ApplicationController
     @year = params[:year]
     @month = params[:month]
     @department = params[:salary][:department_id]
-
     @date = Date.new(@year.to_i, Workingday.months[@month])
     @day = @date.end_of_month.day
     @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ? AND department_id = ?", @date.strftime('%m/%Y'),@department).group(:employee_id)
@@ -134,11 +137,25 @@ class EmployeeAttendancesController < ApplicationController
   def monthly_attendance
     @year = params[:year]
     @month = params[:month]
-    @department = params[:department_id]
-
     @date = Date.new(@year.to_i, Workingday.months[@month])
-    @day = @date.end_of_month.day
-    @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).group(:employee_id)
+    @day = @date.end_of_month.day    
+    @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ? and is_confirm = ?", @date.strftime('%m/%Y'),false).group(:employee_id)
+  end
+
+  def create_attendance
+    @employees = params[:employees]
+    @attendances = params[:attendances]  
+    @attendances.each do |a|
+      att = EmployeeAttendance.find(a)
+      att.update(is_confirm: true)
+    end
+    arr = []
+    @employees.each do |e|
+      arr << params[e]
+    end
+    params.permit!
+    Workingday.create(arr)
+    redirect_to employee_attendances_path
   end
 
   private

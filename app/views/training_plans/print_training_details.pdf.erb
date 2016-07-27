@@ -16,23 +16,37 @@
       </tr>
 
       <tr>
-        <th><strong> Time </strong></th>
-        <td> <%= @training_plan.no_of_hrs %></td>
-     
+        <th><strong> No of Employee </strong></th>
+        <td> <%= @training_plan.no_of_employee %></td>
+
         <th><strong> Place </strong></th>
         <td> <%= @training_plan.place %></td>
       </tr>
       <tr>
+        <th><strong>No of Days:</strong></th>
+        <td><%= @training_plan.no_of_days %></td>
+
+        <th><strong> Time(In Hrs) </strong></th>
+        <td> <%= @training_plan.no_of_hrs %></td>
+      </tr>
+      <tr>
         <th><strong> Trainer / Faculty</strong></th>
         <td> <%= @training_plan.trainer_name %></td>
-      
+
+        <th><strong>About Trainer:</strong></th>
+        <td><%= @training_plan.about_trainer %></td>
+      </tr>
+      <tr>
+       <th><strong>Contact No:</strong></th>
+        <td><%= @training_plan.trainer_num %></td>
+
         <th><strong> Sign </strong></th>
         <td><%= %></td>
       </tr>
       <tr><td colspan="4"></td></tr>
     </table>
 
-    <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
+<table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
     <thead>
     <tr>
       <th>Sr.No</th>

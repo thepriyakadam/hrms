@@ -10,7 +10,7 @@ class VacancyMaster < ActiveRecord::Base
   has_many :vacancy_request_histories
   has_many :particular_vacancy_requests
   has_many :reporting_masters_vacancy_masters
-  has_many :reporting_masters, through: :reporting_masters_vacancy_masters
+  has_many :reporting_masters, :through =>:reporting_masters_vacancy_masters 
 
   has_many :subordinates, class_name: 'VacancyMaster',
                           foreign_key: 'degree_1_id'

@@ -15,8 +15,9 @@
       <th>Travel Request Id</th> 
       <th>Expense Date</th>
       <th>Place</th>
-      <th>Travel Expense Type</th>
+      <th>Expense Type</th>
       <th>Request Status</th>
+      <th>Action</th>
     </tr>
   </thead>
   <tbody>
@@ -37,7 +38,10 @@
               <small class="label label-info">Approved</small>
               <% else %>
               <% end %>
-        </td>  
+        </td>
+         <td>
+           <%= link_to '', daily_bill_detail,class: 'btn btn-sm btn-default fa fa-eye' %>
+        </td>
       </tr>
     <% end %>
   </tbody>

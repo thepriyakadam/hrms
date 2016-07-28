@@ -143,17 +143,12 @@ class EmployeeAttendancesController < ApplicationController
   end
 
   def create_attendance
-    @employees = params[:employees]
-    @attendances = params[:attendances]  
-    @attendances.each do |a|
-      att = EmployeeAttendance.find(a)
-      att.update(is_confirm: true)
-    end
-    arr = []
+    params.permit!
+    @employees, @attendances, arr = params[:employees], params[:attendances], []
     @employees.each do |e|
       arr << params[e]
     end
-    params.permit!
+    EmployeeAttendance.where(id: @attendances).update_all(is_confirm: true)
     Workingday.create(arr)
     redirect_to employee_attendances_path
   end

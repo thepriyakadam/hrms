@@ -6,15 +6,107 @@ class CertificatesController < ApplicationController
   end
 
   def show_joining_date
-    @employee = Employee.find(params[:salary][:employee])
+    @employee = Employee.find(params[:salary][:employee_id])
     @certificate = params[:salary][:certificate]
     @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
   end
 
   def certificate_print
-    @employee = Employee.find(params[:salary][:employee])
+    @employee = Employee.find(params[:salary][:employee_id])
     @certificate = params[:salary][:certificate]
     @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
   end
-end
 
+ def address_proof
+    @employee = Employee.find(params[:salary][:employee_id])
+    @certificate = params[:salary][:certificate]
+    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
+    respond_to do |format|
+        format.html
+        format.pdf do
+        render :pdf => 'certificate_print',
+        layout: '/layouts/pdf.html.erb',
+        :template => 'certificates/certificate_print.pdf.erb',
+        :orientation      => 'Landscape', # default , Landscape
+        :page_height      => 1000,
+        :dpi              => '300',
+        :margin           => {:top    => 20, # default 10 (mm)
+                      :bottom => 20,
+                      :left   => 20,
+                      :right  => 20},
+        :show_as_html => params[:debug].present?
+        end
+        end
+  end
+
+  def character_certificate
+    @employee = Employee.find(params[:salary][:employee_id])
+    @certificate = params[:salary][:certificate]
+    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
+    respond_to do |format|
+        format.html
+        format.pdf do
+        render :pdf => 'certificate_print',
+        layout: '/layouts/pdf.html.erb',
+        :template => 'certificates/certificate_print.pdf.erb',
+        :orientation      => 'Landscape', # default , Landscape
+        :page_height      => 1000,
+        :dpi              => '300',
+        :margin           => {:top    => 20, # default 10 (mm)
+                      :bottom => 20,
+                      :left   => 20,
+                      :right  => 20},
+        :show_as_html => params[:debug].present?
+        end
+        end
+  end
+
+
+  def display_certificate
+    # byebug
+    @employee = Employee.find(params[:salary][:employee_id])
+    @certificate = params[:salary][:certificate]
+    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
+    respond_to do |format|
+        format.html
+        format.pdf do
+        render :pdf => 'certificate_print',
+        layout: '/layouts/pdf.html.erb',
+        :template => 'certificates/certificate_print.pdf.erb',
+        :orientation      => 'Landscape', # default , Landscape
+        :page_height      => 1000,
+        :dpi              => '300',
+        :margin           => {:top    => 20, # default 10 (mm)
+                      :bottom => 20,
+                      :left   => 20,
+                      :right  => 20},
+        :show_as_html => params[:debug].present?
+        end
+        end
+  end
+
+
+  def service_certificate
+    @employee = Employee.find(params[:salary][:employee_id])
+    @certificate = params[:salary][:certificate]
+    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
+    respond_to do |format|
+        format.html
+        format.pdf do
+        render :pdf => 'certificate_print',
+        layout: '/layouts/pdf.html.erb',
+        :template => 'certificates/certificate_print.pdf.erb',
+        :orientation      => 'Landscape', # default , Landscape
+        :page_height      => 1000,
+        :dpi              => '300',
+        :margin           => {:top    => 20, # default 10 (mm)
+                      :bottom => 20,
+                      :left   => 20,
+                      :right  => 20},
+        :show_as_html => params[:debug].present?
+        end
+        end
+  end
+
+
+end

@@ -95,8 +95,8 @@ def create
   def print_daily_bill
     @travel_request = TravelRequest.find(params[:qwe])
     @employee = Employee.find(@travel_request.employee_id)
-    @reporting_master = ReportingMaster.find(@daily_bill_detail.reporting_master_id)
-    @employee1 = Employee.find(@reporting_master.employee_id)
+    # @reporting_master = ReportingMaster.find(@daily_bill_detail.reporting_master_id)
+    # @employee1 = Employee.find(@reporting_master.employee_id)
     @daily_bill_details = DailyBillDetail.where(travel_request_id: @travel_request.id)
 
     respond_to do |format|

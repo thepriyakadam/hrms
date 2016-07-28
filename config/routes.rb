@@ -8,6 +8,7 @@ Rails.application.routes.draw do
    resources :certificates do
     collection do
       get :new
+      # get :show_joining_date
       post :certificate_print
     end
    end

@@ -7,9 +7,9 @@
       <%= bootstrap_form_for(:salary, url: { action: 'department_wise_employee_list'},html: {id: "salary"},remote: true) do |f| %>
         <div class="row">
           <div class="col-sm-3">
-            <label>Department</label>
+            <label>Cost Center</label>
             <div class="form-group required">
-              <%= select :salary, :department_id, all_department_type_list1, {include_blank: "Select Department"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
+              <%= select :salary, :name, all_cost_center, {include_blank: "Select Cost Center"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
             </div>
           </div>
 
@@ -20,7 +20,7 @@
                 <div class="input-group-addon">
                   <i class="fa fa-calendar"></i>
                 </div>
-                <%= text_field :current, :day,hide_label: true,class: 'day_date form-control'%>
+                <%= text_field :salary, :day,hide_label: true,class: 'day_date form-control'%>
               </div>
             </div>
           </div>
@@ -52,17 +52,17 @@
 
      $("#salary").validate({
     rules: {
-      "salary[department_id]":{
-        required: true
-      },
+      // "salary[department_id]":{
+      //   required: true
+      // },
       "salary[day]":{
         required: true
       }
     },
     messages: {
-      "salary[department_id]":{
-        required: "Please Select Department"
-      },
+      // "salary[department_id]":{
+      //   required: "Please Select Department"
+      // },
       "salary[day]":{
         required: "Please specify Date"
       }

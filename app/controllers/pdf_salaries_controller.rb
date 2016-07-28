@@ -3,8 +3,17 @@ class PdfSalariesController < ApplicationController
     def print_salary_slip_monthwise
       @month = params[:month]
       @year = params[:year]
+      @cost_center = params[:cost_center]
       @employees = params[:employee_ids]
-      @salaryslips = Salaryslip.where(month: params[:month],year: params[:year],employee_id: @employees)
+      # @salaryslips = Salaryslip.where(month:  @month,year: @year)
+      @joining_details = JoiningDetail.where(cost_center_id: @cost_center).pluck(:employee_id)
+      @salaryslips = Salaryslip.where(month:  @month,year: @year.to_s,employee_id: @joining_details)
+
+
+      # @month = params[:month]
+      # @year = params[:year]
+      # @employees = params[:employee_ids]
+      # @salaryslips = Salaryslip.where(month: params[:month],year: params[:year],employee_id: @employees)
             respond_to do |format|
             format.html
             format.pdf do
@@ -55,14 +64,21 @@ class PdfSalariesController < ApplicationController
   def show_employee_costunit_wise
     session[:active_tab] ="payroll"
     session[:active_tab1] ="salaryreport"
+      # byebug
       @month = params[:month]
       @year = params[:year]
       @cost_center = params[:cost_center]
       # @employees = params[:employee_ids]
-      @salaryslips = Salaryslip.where(month: params[:month],year: params[:year])
-      @joining_details = JoiningDetail.where(cost_center_id: params[:cost_center]).uniq.pluck(:employee_id)
-      @salaryslips = Salaryslip.where(employee_id: @joining_details)
+      # @salaryslips = Salaryslip.where(month:  @month,year: @year)
+      @joining_details = JoiningDetail.where(cost_center_id: @cost_center).pluck(:employee_id)
+      @salaryslips = Salaryslip.where(month:  @month,year: @year.to_s,employee_id: @joining_details)
   end
+
+   # @month = params[:month]
+   #  @year = params[:year]
+   #  department = params[:department_id]
+   #  @salaryslips = Salaryslip.where(month: @month, year: @year.to_s).pluck(:employee_id)
+   #  @employees = Employee.where(id: @salaryslips, department_id: department)
 
 
 # def show_employee_costunit_wise
@@ -115,11 +131,13 @@ class PdfSalariesController < ApplicationController
 
  
   def show_employee
-    @month = params[:month]
-    @year = params[:year]
-    department = params[:department_id]
-    @salaryslips = Salaryslip.where(month: @month, year: @year.to_s).pluck(:employee_id)
-    @employees = Employee.where(id: @salaryslips, department_id: department)
+      @month = params[:month]
+      @year = params[:year]
+      @department = params[:department_id]
+      # @employees = params[:employee_ids]
+      # @salaryslips = Salaryslip.where(month:  @month,year: @year)
+      @employees = Employee.where(department_id: @department).pluck(:id)
+      @salaryslips = Salaryslip.where(month:  @month,year: @year.to_s,employee_id: @employees)
     #byebug
   end
   

@@ -18,35 +18,6 @@ class Workingday < ActiveRecord::Base
   # validates :absent_day, :presence => true
   # validates :payable_day, :presence => true
 
-  def self.day(i)
-    case i
-    when 1
-      31
-    when 2
-      28
-    when 3
-      31
-    when 4
-      30
-    when 5
-      31
-    when 6
-      30
-    when 7
-      31
-    when 8
-      31
-    when 9
-      30
-    when 10
-      31
-    when 11
-      30
-    when 12
-      31
-    end
-  end
-
   def self.find_by_role(workingdays, current_user)
     if current_user.class == Group
       Employee.where(id: workingdays)
@@ -57,5 +28,36 @@ class Workingday < ActiveRecord::Base
         Employee.where(id: workingdays, company_location_id: current_user.company_location_id)
       end
     end
+  end
+
+  def self.collect_attendance(date, employees)
+    workingdays_data_structure = []
+    employees.each do |ee|
+      workingday = Workingday.new
+      e = Employee.find(ee)
+      lc = LeavCategory.where(is_payble: false).pluck(:id)
+      workingday.day_in_month = workingday.create_day_in_month(e,date)
+      workingday.total_leave = ParticularLeaveRecord.where(leave_date: date.beginning_of_month..date.end_of_month, employee_id: e.id).count
+      workingday.holiday_in_month = Holiday.where(holiday_date: date.beginning_of_month..date.end_of_month).count
+      workingday.week_off_day = WeekoffMaster.day(date)
+      workingday.absent_day = workingday.total_leave.to_f
+      workingday.present_day = workingday.day_in_month.to_i - workingday.absent_day
+      workingday.employee_id = e.id
+      workingday.lwp_leave = ParticularLeaveRecord.where(leave_date: date.beginning_of_month..date.end_of_month, employee_id: e.id, leav_category_id: lc).count
+      workingday.payable_day = workingday.day_in_month.to_i - workingday.lwp_leave.to_f
+      workingdays_data_structure << workingday
+    end
+    workingdays_data_structure
+  end
+
+  def create_day_in_month(e,date)
+    if e.joining_detail.nil?
+    else
+      if e.joining_detail.employee_category.nil?
+      else
+        day = e.joining_detail.employee_category.name == 'Worker' ? 26 : date.end_of_month.day
+      end
+    end
+    day
   end
 end

@@ -63,7 +63,6 @@ include QueryReport::Helper
     @employees = Employee.where(department_id: current_user.department_id)
     session[:active_tab] = "selfservice"
     session[:active_tab1] = "daily_activity"
-
   end
 
   def daily_show_activity_list

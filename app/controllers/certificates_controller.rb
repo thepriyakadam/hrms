@@ -63,9 +63,8 @@ class CertificatesController < ApplicationController
 
 
   def display_certificate
-    # byebug
-    @employee = Employee.find(params[:salary][:employee_id])
-    @certificate = params[:salary][:certificate]
+    @employee = Employee.find(params[:employee_id])
+    @certificate = [:certificate]
     @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
     respond_to do |format|
         format.html

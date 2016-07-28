@@ -9,7 +9,10 @@ Rails.application.routes.draw do
     collection do
       # get :show_joining_date
       post :certificate_print
-      get :address_pdf
+      get :address_proof
+      get :character_certificate
+      get :display_certificate
+      get :service_certificate
     end
    end
   resources :due_actions

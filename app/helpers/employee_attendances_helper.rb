@@ -52,4 +52,28 @@ module EmployeeAttendancesHelper
     end
     day_in_month
   end
+
+  def present_day_count(exist)
+    exist.select {|k,v| v == "P" }.count
+  end
+
+  def total_leave_count(exist)
+    exist.select {|k,v| v == "L" }.count
+  end
+
+  def holiday_in_month_count(exist)
+    exist.select {|k,v| v == "H" }.count
+  end
+
+  def week_of_day_count(exist)
+    exist.select {|k,v| v == "W" }.count
+  end
+
+  def absent_day_count(exist)
+    exist.select {|k,v| v == "A" }.count
+  end
+
+  def payable_day_count(exist)
+    exist.select {|k,v| v == "P" }.count
+  end
 end

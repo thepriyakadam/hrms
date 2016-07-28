@@ -65,7 +65,7 @@ class EmployeeAttendancesController < ApplicationController
   def department_wise_employee_list
     #@department = Department.where(id: params[:salary][:department_id])
     @department = params[:salary][:department_id]
-    @date = params[:current][:day].to_date
+    @date = params[:salary][:day].to_date
     @employees = Employee.filter_by_date_and_department(@date,@department)
     @employee_attendance = EmployeeAttendance.new
   end
@@ -138,7 +138,7 @@ class EmployeeAttendancesController < ApplicationController
     @year = params[:year]
     @month = params[:month]
     @date = Date.new(@year.to_i, Workingday.months[@month])
-    @day = @date.end_of_month.day    
+    @day = @date.end_of_month.day
     @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ? and is_confirm = ?", @date.strftime('%m/%Y'),false).group(:employee_id)
   end
 

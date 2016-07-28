@@ -65,7 +65,7 @@ class EmployeeAttendancesController < ApplicationController
   def department_wise_employee_list
     #@department = Department.where(id: params[:salary][:department_id])
     @department = params[:salary][:department_id]
-    @date = params[:current][:day].to_date
+    @date = params[:salary][:day].to_date
     @employees = Employee.filter_by_date_and_department(@date,@department)
     @employee_attendance = EmployeeAttendance.new
   end
@@ -76,10 +76,14 @@ class EmployeeAttendancesController < ApplicationController
     present = params[:employee_attendances][:present]
     department = params[:employee_attendances][:department_id]
 
-    @employee_ids.each do |eid|
-      EmployeeAttendance.create(employee_id: eid,day: day,present: present,department_id: department)
+    if @employee_ids.nil?
+      flash[:alert] = "Please Select the Checkbox"
+    else
+      @employee_ids.each do |eid|
+      EmployeeAttendance.create(employee_id: eid,day: day,present: present,department_id: department)  
+      flash[:notice] = "Created successfully"
+      end
     end
-    flash[:notice] = "Created successfully"
     redirect_to new_employee_attendance_path
   end
 

@@ -985,6 +985,7 @@ ActiveRecord::Schema.define(version: 20160727071026) do
     t.datetime "created_at",                                                        null: false
     t.datetime "updated_at",                                                        null: false
     t.integer  "employee_template_id"
+    t.boolean  "is_confirm"
   end
 
   add_index "employee_salary_templates", ["employee_id"], name: "index_employee_salary_templates_on_employee_id"

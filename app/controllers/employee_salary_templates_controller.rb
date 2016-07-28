@@ -46,6 +46,7 @@ class EmployeeSalaryTemplatesController < ApplicationController
   end
 
   def show_employee_salary_template
+    # @employee = Employee.find(params[:format])
     @current_template = EmployeeTemplate.where(employee_id: params[:format], is_active: true).take
     #@current_template = EmployeeTemplate.find(params[:format])
     authorize! :show, @current_template
@@ -148,6 +149,28 @@ class EmployeeSalaryTemplatesController < ApplicationController
     end
   end
 
+   def is_confirm_employee_template
+
+    # @employee = Employee.find(params[:id])
+     @template_ids = params[:template_ids]
+    if @template_ids.nil?
+      flash[:alert] = "Please Select the Checkbox"
+      redirect_to fresh_template_employee_templates_path
+      # redirect_to show_employee_salary_template_employee_salary_templates_path(id: @employee.id)
+    else
+      @template_ids.each do |did|
+      @employee_salary_template = EmployeeSalaryTemplate.find(did)
+      @employee_salary_template.update(is_confirm: true) 
+      # InterviewScheduleMailer.sample_email_to_interviewer(@interview_schedule).deliver_now
+      flash[:notice] = "Confirmed Successfully" 
+    end 
+    redirect_to fresh_template_employee_templates_path
+    # redirect_to show_employee_salary_template_employee_salary_templates_path(id: @employee.id)
+  end
+ end
+ 
+
+
   def modal
   end
 
@@ -159,6 +182,6 @@ class EmployeeSalaryTemplatesController < ApplicationController
   private
 
   def employee_salary_template_params
-    params.require(:employee_salary_template).permit(:monthly_amount, :annual_amount)
+    params.require(:employee_salary_template).permit(:monthly_amount, :annual_amount , :is_confirm)
   end
 end

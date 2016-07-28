@@ -4,9 +4,23 @@ class EmployeeResignationsController < ApplicationController
   # GET /employee_resignations
   # GET /employee_resignations.json
   def index
-    @employee_resignations = EmployeeResignation.all
-  end
+    respond_to do |format|
+      format.html
+      format.csv { send_data @employee_resignations.to_csv }
+      format.xls
+    if current_user.class == Member
+        if current_user.role.name == 'Department'
+          @employee_resignations = EmployeeResignation.where(employee_id: current_user.employee_id)
+        elsif current_user.role.name == 'CompanyLocation'
+          @employee_resignations = EmployeeResignation.where(company_location_id: current_user.company_location_id)
+        elsif current_user.role.name == 'Company'
+          @employee_resignations = EmployeeResignation.where(resign_status: "Pending")
+        end
+      end
+    end
 
+  end
+  
   # GET /employee_resignations/1
   # GET /employee_resignations/1.json
   def show
@@ -23,14 +37,14 @@ class EmployeeResignationsController < ApplicationController
   def edit
   end
 
+
   def create
     @employee_resignation = EmployeeResignation.new(employee_resignation_params)
     @employee_resignation.resign_status = "Pending"
-
     respond_to do |format|
       if @employee_resignation.save
-        ReportingMastersResign.create(reporting_master_id: @employee_resignation.reporting_master_id, employee_resignation_id: @employee_resignation.id,resignation_status: @employee_resignation.resign_status)
-        # EmployeeResignationMailer.send_email_to_reporting_manager(@employee_resignation).deliver_now
+         ReportingMastersResign.create(reporting_master_id: @employee_resignation.reporting_master_id, employee_resignation_id: @employee_resignation.id,resignation_status: @employee_resignation.resign_status)
+        # EmployeeResignationMailer.employee_resignation(@employee_resignation).deliver_now
         format.html { redirect_to @employee_resignation, notice: 'Employee Resignation created successfully.' }
         format.json { render :show, status: :created, location: @employee_resignation }
       else
@@ -40,6 +54,9 @@ class EmployeeResignationsController < ApplicationController
     end
   end
 
+
+
+  
   # PATCH/PUT /employee_resignations/1
   # PATCH/PUT /employee_resignations/1.json
   def update
@@ -64,10 +81,6 @@ class EmployeeResignationsController < ApplicationController
     @employee_resignations = EmployeeResignation.all
     session[:active_tab] ="resignationmanagement"
     session[:active_tab1] = "resign"  
-  end
-  
-  def resignation_history
-    @employee_resignations = EmployeeResignation.where("reporting_master_id = ? and (resign_status = ? or resign_status = ?)",current_user.employee_id,"Pending","Approved & Send Next")
   end
   
   def resignation_history
@@ -107,7 +120,7 @@ class EmployeeResignationsController < ApplicationController
     @employee_resignation.update(resign_status: "Rejected")
     EmployeeResignationMailer.reject_resignation_email(@employee_resignation).deliver_now
     ReportingMastersResign.create(employee_resignation_id: @employee_resignation.id, reporting_master_id: current_user.employee_id, resignation_status: "Rejected")
-    flash[:alert] = 'Resignation Request Rejected'
+    flash[:alert] = 'Resignation Rejected'
     redirect_to resignation_history_employee_resignations_path
   end
 
@@ -120,10 +133,10 @@ class EmployeeResignationsController < ApplicationController
   end
 
   def cancel_resignation_request
-    @employee_resignation = EmployeeResignation.find(params[:format])
-    @employee_resignation.update(resign_status: "Cancelled")
-    ReportingMastersResign.create(employee_resignation_id: @employee_resignation.id, reporting_master_id: current_user.employee_id, resignation_status: "Cancelled")
-    flash[:notice] = 'Vacancy Request Cancelled'
+     @employee_resignation = EmployeeResignation.find(params[:format])
+     @employee_resignation.update(resign_status: "Cancelled")
+     ReportingMastersResign.create(employee_resignation_id: @employee_resignation.id, reporting_master_id: current_user.employee_id, resignation_status: "Cancelled")
+     flash[:notice] = 'Resignation Cancelled'
     redirect_to employee_resignations_path
   end
 

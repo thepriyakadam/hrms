@@ -13,6 +13,7 @@
             <th><input type="checkbox" id="selectAll" value="selectAll"></th>
             <th>ID</th>
             <th>Employee Name</th>
+            <th>Department</th>
             <% for i in 1..@day %>
               <th><%= i %></th>
             <%end%>
@@ -25,6 +26,7 @@
               <td><%= check_box_tag "employees[]", e.employee_id %></td>
               <td><%= e.employee.manual_employee_code %></td>
               <td><%= full_name(e.employee) %></td>
+              <td><%= e.employee.joining_detail.try(:department).try(:name) %></td>
               <% sorted_exists = calculate_attendance(@date, exist, e)%>
               <% sorted_exists.each do |k,v|%>
                 <td><%= v %></td>
@@ -36,6 +38,7 @@
             <%= hidden_field e.employee_id, 'month_name', value: @date.strftime("%B") %>
             <%= hidden_field e.employee_id, 'year', value: @date.strftime("%Y") %>
             <%= hidden_field e.employee_id, 'day_in_month', value: count_day(@day,e.employee_id) %>
+            <%= hidden_field e.employee_id, 'year', value: @date.strftime("%Y") %>
             <% exist.clear %>
           <%end%>
         </tbody>

@@ -34,7 +34,7 @@
             
             <td>
               <% if training_request.status == "Pending" %>
-                <%= link_to 'Approve / Reject',training_request_confirmation_training_requests_path(training_request),class: 'btn btn-sm btn-warning' %> 
+                <%= link_to 'Approve / Reject',training_request_confirmation_training_requests_path(training_request_id: training_request.id),class: 'btn btn-sm btn-warning' %> 
                   <% elsif training_request.status == "Approved" %>
                   <small class="label label-primary">Approved</small>
               <% else %>

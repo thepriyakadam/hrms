@@ -84,7 +84,7 @@ class TrainingRequestsController < ApplicationController
   end
 
   def training_request_confirmation
-    @training_request = TrainingRequest.find(params[:format])
+    @training_request = TrainingRequest.find(params[:training_request_id])
     reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
     @reporting_master = ReportingMaster.find(@training_request.reporting_master_id)
     @employee = Employee.find(@reporting_master.employee_id)
@@ -93,7 +93,7 @@ class TrainingRequestsController < ApplicationController
   end
 
   def approve_training_request
-    @training_request = TrainingRequest.find(params[:id])
+    @training_request = TrainingRequest.find(params[:training_request_id])
     @training_request.update(status: "Approved")
     TrainingApproval.create(training_request_id: @training_request.id,employee_id: @training_request.employee_id, training_topic_master_id: @training_request.training_topic_master_id,reporting_master_id: @training_request.reporting_master_id,traininig_period: @training_request.training_period,training_date: @training_request.training_date,place: @training_request.place,no_of_employee: @training_request.no_of_employee,description: @training_request.description,justification: @training_request.justification,current_status: "Approved")
     ReportingMastersTrainingReq.create(reporting_master_id: @training_request.reporting_master_id, training_request_id: @training_request.id, training_status: "Approved")
@@ -101,31 +101,31 @@ class TrainingRequestsController < ApplicationController
     @trainee_request_ids = params[:trainee_request_ids]
     if @trainee_request_ids.nil?
       flash[:alert] = "Please Select the Checkbox"
-      redirect_to interview_schedules_path
+      redirect_to training_request_list_training_requests_path
     else
       @trainee_request_ids.each do |tid|
       @trainee_request = TraineeRequest.find(tid)
-      @trainee_request.update(is_complete: "Approved") 
+      @trainee_request.update(is_complete: true) 
       # InterviewScheduleMailer.sample_email_to_interviewer(@interview_schedule).deliver_now
       flash[:notice] = "Approved Successfully"
-      redirect_to interview_schedules_path
     end 
+    redirect_to training_request_list_training_requests_path
   end
 
-     @comment = params[:training_request][:comment]
-     @training_request.update(comment: @comment)
-     flash[:notice] = 'Comment Updated Successfully'
-    #TrainingRequestMailer.approve_training_request_email(@training_request).deliver_now
+    #  @comment = params[:training_request][:comment]
+    #  @training_request.update(comment: @comment)
+    #  flash[:notice] = 'Comment Updated Successfully'
+    # TrainingRequestMailer.approve_training_request_email(@training_request).deliver_now
   end
 
-  def modal_approver_comment
-     @training_request = TrainingRequest.find(params[:format])
-     reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
-    @reporting_master = ReportingMaster.find(@training_request.reporting_master_id)
-    @employee = Employee.find(@reporting_master.employee_id)
-    @training_requests = TrainingRequest.where(reporting_master_id: reporting_masters)
-    @trainee_requests =TraineeRequest.where(training_request_id: @training_request.id)
-  end
+  # def modal_approver_comment
+  #    @training_request = TrainingRequest.find(params[:format])
+  #    reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
+  #   @reporting_master = ReportingMaster.find(@training_request.reporting_master_id)
+  #   @employee = Employee.find(@reporting_master.employee_id)
+  #   @training_requests = TrainingRequest.where(reporting_master_id: reporting_masters)
+  #   @trainee_requests =TraineeRequest.where(training_request_id: @training_request.id)
+  # end
 
   def modal_reject_comment
      @training_request = TrainingRequest.find(params[:format])

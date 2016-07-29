@@ -343,7 +343,7 @@ end
     collection do
       get :training_request_list
       get :training_request_confirmation
-      post :approve_training_request
+      get :approve_training_request
       post :reject_training_request
       get :confirmation_list
       get :modal_approver_comment

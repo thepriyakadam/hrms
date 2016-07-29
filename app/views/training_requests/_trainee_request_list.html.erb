@@ -1,3 +1,4 @@
+<!--<= bootstrap_form_for TraineeRequest.new,url:{action:'approve_training_request',id: @training_request.id} do |f| %>-->
 <table id="example" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
@@ -19,6 +20,20 @@
       <% end %>
   </tbody>
 </table><br>
+
+<!-- <div class="row">
+  <div class="col-sm-3">
+    <div class="actions">
+      <= f.submit "Approve", class: 'btn btn-sm btn-info fa fa-check' %>
+    </div>
+  </div>
+</div>
+< end %> -->
+
+<%= link_to ' Comment & Approve',approve_training_request_training_requests_path(training_request_id: @training_request.id),class: 'btn btn-sm btn-info fa fa-check' %>  |
+
+ <%= link_to ' Comment & Reject',modal_reject_comment_training_requests_path(@training_request.id),class: 'btn btn-sm btn-danger fa fa-trash',remote: true %>
+
 
 <script type="text/javascript">
   $(function () {

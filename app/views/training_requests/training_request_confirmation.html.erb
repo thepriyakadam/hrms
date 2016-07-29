@@ -3,12 +3,7 @@
     <h3 class="box-title">Training Request Confirmation </h3>
   </div><!-- /.box-header -->
   <div class="box-body">
-    <table id="example2" class="table table-bordered table-hover table-condensed">
-      <tr> 
-        <th colspan="2"></th>
-        <th colspan="2"></th>
-      </tr>
-
+    <table class="table table-bordered table-hover table-condensed">
       <tr>
         <th><strong>Employee ID</strong></th>
         <td><%= @training_request.employee.try(:manual_employee_code) %></td>

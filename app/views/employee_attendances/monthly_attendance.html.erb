@@ -6,13 +6,13 @@
     </div>
   </div><!-- /.box-header -->
   <div class="box-body">
-    <%= bootstrap_form_for :temp, url: {action: "create_attendance"} do |f| %>
+    <%= bootstrap_form_for :temp, url: {action: "create_attendance", date: @date} do |f| %>
       <table class="table table-bordered table-hover table-condensed">
         <thead>
           <tr>
             <th><input type="checkbox" id="selectAll" value="selectAll"></th>
             <th>ID</th>
-            <!-- <th>Employee Name</th> -->
+            <th>Employee Name</th>
             <th>Department</th>
             <% for i in 1..@day %>
               <th><%= i %></th>
@@ -25,7 +25,7 @@
             <tr>
               <td><%= check_box_tag "employees[]", e.employee_id %></td>
               <td><%= e.employee.manual_employee_code %></td>
-              <!-- <td>< full_name(e.employee) %></td> -->
+              <td><%= full_name(e.employee) %></td>
               <td><%= e.employee.try(:department).try(:name) %></td>
               <% sorted_exists = calculate_attendance(@date, exist, e)%>
               <% sorted_exists.each do |k,v|%>
@@ -38,9 +38,10 @@
             <%= hidden_field e.employee_id, 'year', value: @date.strftime("%Y") %>
             <%= hidden_field e.employee_id, 'day_in_month', value: count_day(@day,e.employee_id) %>
             <%= hidden_field e.employee_id, 'year', value: @date.strftime("%Y") %>
-
             <%= hidden_field e.employee_id, 'present_day', value: present_day_count(exist) %>
             <%= hidden_field e.employee_id, 'total_leave', value: total_leave_count(exist) %>
+            <%= hidden_field e.employee_id, 'lwp_leave', value: lwp_leave_count(exist) %>
+            <%= hidden_field e.employee_id, 'pay_leave', value: pay_leave_count(exist) %>
             <%= hidden_field e.employee_id, 'holiday_in_month', value: holiday_in_month_count(exist) %>
             <%= hidden_field e.employee_id, 'week_off_day', value: week_of_day_count(exist) %>
             <%= hidden_field e.employee_id, 'absent_day', value: absent_day_count(exist) %>
@@ -49,7 +50,7 @@
           <%end%>
         </tbody>
       </table>
-      <%=f.submit%>
+      <%= f.submit "Confirm Workingdays", class: "btn btn-sm btn-primary" %>
     <%end%>
   </div>
 </div>
@@ -58,13 +59,13 @@
   $('#selectAll').click(function() {
     if (this.checked) {
       $(':checkbox').each(function() {
-        this.checked = true;                        
+        this.checked = true;
       });
-    } 
+    }
     else {
       $(':checkbox').each(function() {
-        this.checked = false;                        
+        this.checked = false;
       });
-    } 
+    }
   });
 </script>

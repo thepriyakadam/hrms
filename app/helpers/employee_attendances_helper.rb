@@ -69,7 +69,7 @@ module EmployeeAttendancesHelper
     exist.select {|k,v| v == "H" }.count
   end
 
-  def week_of_day_count(exist)
+  def week_off_day_count(exist)
     exist.select {|k,v| v == "W" }.count
   end
 
@@ -87,5 +87,9 @@ module EmployeeAttendancesHelper
 
   def pay_leave_count(exist)
     exist.select {|k,v| v == "L" }.count
+  end
+
+  def half_leave_count(exist)
+    exist.select {|k,v| v == "1/2" }.count/2
   end
 end

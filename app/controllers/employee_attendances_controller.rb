@@ -1,5 +1,6 @@
 class EmployeeAttendancesController < ApplicationController
   before_action :set_employee_attendance, only: [:show, :edit, :update, :destroy]
+  before_action :check_params, only: [:create_attendance]
 
   # GET /employee_attendances
   # GET /employee_attendances.json
@@ -64,9 +65,21 @@ class EmployeeAttendancesController < ApplicationController
 
   def department_wise_employee_list
     #@department = Department.where(id: params[:salary][:department_id])
-    @department = params[:salary][:department_id]
+    #@department = params[:salary][:department_id]
+    @costcenter = params[:salary][:name]
     @date = params[:salary][:day].to_date
-    @employees = Employee.filter_by_date_and_department(@date,@department)
+    
+    #@employee = Employee.where(department_id: @department).pluck(:id)
+    @attendance = EmployeeAttendance.where(day: @date).pluck(:employee_id)
+    @costcenter = JoiningDetail.where(cost_center_id: @costcenter).pluck(:employee_id)
+    @employees = Employee.where(id: @attendance,id: @costcenter)
+
+    # if @department = ""
+    # @employees = Employee.filter_by_date_and_costcenter(@date,@department,@costcenter)
+    # else
+    # @employees = Employee.filter_by_date_and_department(@date,@department,@costcenter)
+    # end
+
     @employee_attendance = EmployeeAttendance.new
   end
     
@@ -74,13 +87,16 @@ class EmployeeAttendancesController < ApplicationController
     @employee_ids = params[:employee_ids]
     day = params[:employee_attendances][:day]
     present = params[:employee_attendances][:present]
-    department = params[:employee_attendances][:department_id]
+    #department = params[:employee_attendances][:department_id]
+
+    @employee = Employee.where(id: @employee_ids)
 
     if @employee_ids.nil?
       flash[:alert] = "Please Select the Checkbox"
     else
       @employee_ids.each do |eid|
-      EmployeeAttendance.create(employee_id: eid,day: day,present: present,department_id: department)  
+        @emp = Employee.find_by_id(eid)
+      EmployeeAttendance.create(employee_id: eid,day: day,present: present,department_id: @emp.department_id)  
       flash[:notice] = "Created successfully"
       end
     end
@@ -135,26 +151,20 @@ class EmployeeAttendancesController < ApplicationController
   end
 
   def monthly_attendance
-    @year = params[:year]
-    @month = params[:month]
+    @year, @month = params[:year], params[:month]
     @date = Date.new(@year.to_i, Workingday.months[@month])
     @day = @date.end_of_month.day
     @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ? and is_confirm = ?", @date.strftime('%m/%Y'),false).group(:employee_id)
   end
 
   def create_attendance
-    @employees = params[:employees]
-    @attendances = params[:attendances]  
-    @attendances.each do |a|
-      att = EmployeeAttendance.find(a)
-      att.update(is_confirm: true)
-    end
-    arr = []
-    @employees.each do |e|
-      arr << params[e]
-    end
+    @employees, @attendances, work_data_structure, @date = params[:employees], params[:attendances], [], params[:date]
     params.permit!
-    Workingday.create(arr)
+    @employees.each do |e|
+      work_data_structure << params[e]
+    end
+    EmployeeAttendance.where(employee_id: @employees).where("strftime('%m/%Y', day) = ? and is_confirm = ?", @date.to_date.strftime('%m/%Y'),false).update_all(is_confirm: true)
+    Workingday.create(work_data_structure)
     redirect_to employee_attendances_path
   end
 
@@ -162,6 +172,13 @@ class EmployeeAttendancesController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_employee_attendance
     @employee_attendance = EmployeeAttendance.find(params[:id])
+  end
+
+  def check_params
+    if params[:employees].nil?
+      flash[:alert] = "Please Select employees checkbox."
+      redirect_to root_url
+    end
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

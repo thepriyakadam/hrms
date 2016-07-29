@@ -1,7 +1,7 @@
 module EmployeeAttendancesHelper
 	def calculate_attendance(date, exist, e)
 		start_date = date.beginning_of_month 
-    end_date = date.end_of_month 
+    end_date = date.end_of_month
 
     start_date.step(end_date).each do |d| 
       flag = 0 
@@ -18,9 +18,13 @@ module EmployeeAttendancesHelper
       leave_records.each do |l| 
         if d == l.leave_date and flag == 0 
           flag = 1 
-          exist[l.leave_date] = "L" 
+          if l.leav_category.is_payble
+            exist[l.leave_date] = "L"
+          else
+            exist[l.leave_date] = "LWP"
+          end
         end 
-      end 
+      end
 
       holidays = Holiday.where("strftime('%m/%Y', holiday_date) = ?", date.strftime('%m/%Y')) 
       holidays.each do |h| 
@@ -51,5 +55,37 @@ module EmployeeAttendancesHelper
       end
     end
     day_in_month
+  end
+
+  def present_day_count(exist)
+    exist.select {|k,v| v == "P" }.count
+  end
+
+  def total_leave_count(exist)
+    exist.select {|k,v| v == "L" or v == "LWP" }.count
+  end
+
+  def holiday_in_month_count(exist)
+    exist.select {|k,v| v == "H" }.count
+  end
+
+  def week_of_day_count(exist)
+    exist.select {|k,v| v == "W" }.count
+  end
+
+  def absent_day_count(exist)
+    exist.select {|k,v| v == "A" }.count
+  end
+
+  def payable_day_count(exist)
+    exist.select {|k,v| v == "P" }.count
+  end
+
+  def lwp_leave_count(exist)
+    exist.select {|k,v| v == "LWP" }.count
+  end
+
+  def pay_leave_count(exist)
+    exist.select {|k,v| v == "L" }.count
   end
 end

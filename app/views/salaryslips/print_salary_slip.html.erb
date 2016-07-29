@@ -1,3 +1,4 @@
+          <td align="right"><%= @working_day.try(:esic_leave) %></td>    
 <style>
 th {
     text-align: left;
@@ -19,8 +20,7 @@ div.nobreak{ page-break-inside: avoid;
           <td colspan="6">
            <center><strong>BHANDARI</strong></center> 
             <center><strong>BHANDARI FOILS AND TUBES LTD.</strong></center>
-            <center><small>Manufacturers of Stainless Steel Cold Rolled Coils, Tubes & Fitings</small></center><br><br>
-            
+            <center><small>Manufacturers of Stainless Steel Cold Rolled Coils, Tubes & Fitings</small></center><br><br>  
           </td>           
         </tr>
       </thead>
@@ -68,7 +68,6 @@ div.nobreak{ page-break-inside: avoid;
           <th>Employement</th>
           <td><%= @employee.employee_type.try(:name) %></td>
           <th>ESIC Leave</th>        
-          <td align="right"><%= @working_day.try(:esic_leave) %></td>    
            <th style="text-align: right;">Absent Days</th>
           <td align="right"><%= @working_day.try(:absent_day) %></td>       
         </tr>
@@ -89,8 +88,7 @@ div.nobreak{ page-break-inside: avoid;
           <td align="right"><%= @employee.joining_detail.try(:employee_uan_no) %></td>
         </tr>
       </tbody>
-    </table><br><br>
-
+    </table>
     
        <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
       <thead>

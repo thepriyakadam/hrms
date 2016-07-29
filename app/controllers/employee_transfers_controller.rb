@@ -4,7 +4,7 @@ class EmployeeTransfersController < ApplicationController
   # GET /employee_transfers
   # GET /employee_transfers.json
   def index
-    @employee_transfers = EmployeeTransfer.all
+    @employee_transfers = EmployeeTransfer.where(employee_id: current_user.employee_id)
   end
 
   # GET /employee_transfers/1
@@ -65,7 +65,8 @@ class EmployeeTransfersController < ApplicationController
   end
 
   def transfer_request
-    @employee_transfers = EmployeeTransfer.where("reporting_master_id = ? and (current_status = ? or current_status = ?)",current_user.employee_id,"Pending","Approved & Send Next")
+    reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
+    @employee_transfers = EmployeeTransfer.where("reporting_master_id = ? and (current_status = ? or current_status = ?)",reporting_masters,"Pending","Approved & Send Next")
   end
 
   def employee_transfer_confirmation

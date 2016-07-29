@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160728072434) do
+ActiveRecord::Schema.define(version: 20160729065754) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -2472,8 +2472,18 @@ ActiveRecord::Schema.define(version: 20160728072434) do
     t.string   "esic_no"
     t.string   "pf_no"
     t.string   "uan_no"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.decimal  "lwp_leave"
+    t.decimal  "cl_leave"
+    t.decimal  "el_leave"
+    t.decimal  "esic_leave"
+    t.decimal  "coff_leave"
+    t.decimal  "advance_leave"
+    t.decimal  "cl_balance"
+    t.decimal  "el_balance"
+    t.decimal  "coff_balance"
+    t.decimal  "advance_balance"
   end
 
   add_index "slip_informations", ["cost_center_id"], name: "index_slip_informations_on_cost_center_id"
@@ -2840,16 +2850,6 @@ ActiveRecord::Schema.define(version: 20160728072434) do
     t.decimal  "payable_day"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
-    t.decimal  "lwp_leave"
-    t.decimal  "cl_leave"
-    t.decimal  "el_leave"
-    t.decimal  "esic_leave"
-    t.decimal  "coff_leave"
-    t.decimal  "advance_leave"
-    t.decimal  "cl_balance"
-    t.decimal  "el_balance"
-    t.decimal  "coff_balance"
-    t.decimal  "advance_balance"
   end
 
   add_index "workingdays", ["employee_id"], name: "index_workingdays_on_employee_id"

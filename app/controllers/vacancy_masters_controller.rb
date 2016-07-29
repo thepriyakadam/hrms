@@ -158,8 +158,8 @@ class VacancyMastersController < ApplicationController
 
   def approve_vacancy_list
     @vacancy_masters = VacancyMaster.order("id")
-    @reporting_master = ReportingMaster.find(@vacancy_master.reporting_master_id)
-    @employee = Employee.find(@reporting_master.employee_id)
+    # @reporting_master = ReportingMaster.find(@vacancy_master.reporting_master_id)
+    # @employee = Employee.find(@reporting_master.employee_id)
     session[:active_tab] ="recruitment"
     session[:active_tab1] ="particular_vacancy"
   end

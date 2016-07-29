@@ -1,9 +1,9 @@
 <div class="box-body">
 
-  <div style="width: 700px; height: 700px;
+  <div style="width: 420px; height: 500px;
           padding: 10px;
           border: 5px solid gray;
-          margin: 10;">
+          margin: 0;">
     <div style="float:right;">Date - <%= Time.zone.now.to_date %> </div><br><br>
 
       <b><center>TO WHOM SO EVER IT MAY CONCERN</center></b><br><br>
@@ -16,7 +16,5 @@
 
       <P>HR</P>
     
-   <!--   <= link_to " Print Certificate ", showing_joining_date_print_certificate_path(@employee,format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>   -->
   </div>
 </div>
-<%= link_to "Print Certificate",display_certificate_certificates_path(employee_id: @employee.id, certificate: @certificate, format: "pdf"),:target => "_blank" %>

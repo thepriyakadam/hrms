@@ -101,8 +101,7 @@ class LeaveCOffsController < ApplicationController
   end
 
   def search_by_c_off_date
-    @leave_c_offs = LeaveCOff.all
-    reporter(@leave_c_offs, template_class: PdfReportTemplate) do
+    reporter(LeaveCOff.filter_records(current_user), template_class: PdfReportTemplate) do
       filter :c_off_date, type: :date
       # column(:Employee_Code, sortable: true) { |leave_c_off| leave_c_off.employee_id }
       column(:Employee_ID, sortable: true) { |leave_c_off| leave_c_off.employee.try(:manual_employee_code) }
@@ -114,6 +113,7 @@ class LeaveCOffsController < ApplicationController
       column(:Taken, sortable:true, &:is_taken)
       column(:Expire_Date, sortable:true, &:expiry_date)
       column(:No_OF_COff, sortable:true, &:leave_count)
+      column(:Location, sortable: true) { |leave_c_off| leave_c_off.employee.try(:company_location).try(:name) }
     end
   end
 

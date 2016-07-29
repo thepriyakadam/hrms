@@ -166,11 +166,23 @@ class Employee < ActiveRecord::Base
       end
     end
   end
-
   
-  def self.filter_by_date_and_department(date, department)
+  def self.filter_by_date_and_department(date, department,costcenter)
     @attendances = EmployeeAttendance.where(day: date).pluck(:employee_id)
     @departments = Employee.where(department_id: department).pluck(:id)
-    Employee.where(id: @departments - @attendances)  
+    @joining_details = JoiningDetail.where(cost_center_id: costcenter).pluck(:employee_id)
+    Employee.where(id: @departments - @joining_details - @attendances)  
   end
+
+  def self.filter_by_date_and_costcenter(date,department,costcenter)
+    @attendances = EmployeeAttendance.where(day: date).pluck(:employee_id)
+    @departments = Employee.where(department_id: department).pluck(:id)
+    @joining_details = JoiningDetail.where(cost_center_id: costcenter).pluck(:employee_id)
+    Employee.where(id: @joining_details - @attendances)  
+  end
+  # def self.filter_by_date_and_department(date, department)
+  #   @attendances = EmployeeAttendance.where(day: date).pluck(:employee_id)
+  #   @departments = Employee.where(department_id: department).pluck(:id)
+  #   Employee.where(id: @departments - @attendances)  
+  # end
 end

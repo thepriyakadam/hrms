@@ -6,7 +6,7 @@ class CertificatesController < ApplicationController
   end
 
   def show_joining_date
-    @employee = Employee.find(params[:salary][:employee_id])
+    @employee = Employee.find(params[:employee_id])
     @certificate = params[:salary][:certificate]
     @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
   end
@@ -18,15 +18,15 @@ class CertificatesController < ApplicationController
   end
 
  def address_proof
-    @employee = Employee.find(params[:salary][:employee_id])
-    @certificate = params[:salary][:certificate]
+    @employee = Employee.find(params[:employee_id])
+    @certificate = [:certificate]
     @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
     respond_to do |format|
         format.html
         format.pdf do
         render :pdf => 'certificate_print',
         layout: '/layouts/pdf.html.erb',
-        :template => 'certificates/certificate_print.pdf.erb',
+        :template => 'certificates/certificate_print_address.pdf.erb',
         :orientation      => 'Landscape', # default , Landscape
         :page_height      => 1000,
         :dpi              => '300',
@@ -40,15 +40,15 @@ class CertificatesController < ApplicationController
   end
 
   def character_certificate
-    @employee = Employee.find(params[:salary][:employee_id])
-    @certificate = params[:salary][:certificate]
+    @employee = Employee.find(params[:employee_id])
+    @certificate = [:certificate]
     @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
     respond_to do |format|
         format.html
         format.pdf do
         render :pdf => 'certificate_print',
         layout: '/layouts/pdf.html.erb',
-        :template => 'certificates/certificate_print.pdf.erb',
+        :template => 'certificates/certificate_print_character.pdf.erb',
         :orientation      => 'Landscape', # default , Landscape
         :page_height      => 1000,
         :dpi              => '300',
@@ -71,7 +71,7 @@ class CertificatesController < ApplicationController
         format.pdf do
         render :pdf => 'certificate_print',
         layout: '/layouts/pdf.html.erb',
-        :template => 'certificates/certificate_print.pdf.erb',
+        :template => 'certificates/certificate_print_display.pdf.erb',
         :orientation      => 'Landscape', # default , Landscape
         :page_height      => 1000,
         :dpi              => '300',
@@ -86,15 +86,15 @@ class CertificatesController < ApplicationController
 
 
   def service_certificate
-    @employee = Employee.find(params[:salary][:employee_id])
-    @certificate = params[:salary][:certificate]
+    @employee = Employee.find(params[:employee_id])
+    @certificate = [:certificate]
     @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
     respond_to do |format|
         format.html
         format.pdf do
         render :pdf => 'certificate_print',
         layout: '/layouts/pdf.html.erb',
-        :template => 'certificates/certificate_print.pdf.erb',
+        :template => 'certificates/certificate_print_service.pdf.erb',
         :orientation      => 'Landscape', # default , Landscape
         :page_height      => 1000,
         :dpi              => '300',

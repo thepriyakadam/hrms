@@ -233,6 +233,7 @@ class GoalRatingsController < ApplicationController
 
   def training_request
     @period = Period.find(params[:period_id])
+    @period_id = @period.id
     #@goal_bunch = GoalBunch.find_by(period_id: @period_id.id)
     # @goal_ratings = GoalBunch.joins("INNER JOIN goal_ratings on goal_bunches.id = goal_ratings.goal_bunch_id where goal_bunches.period_id = 1")
     #@goal_ratings = GoalRating.joins("INNER JOIN goal_bunches on goal_ratings.goal_bunch_id = goal_bunches.id where goal_bunches.period_id = @period.id,goal_bunches.goal_type = 'Goal' ")
@@ -244,22 +245,23 @@ class GoalRatingsController < ApplicationController
   end
 
   def create_attribute_training
-    #byebug
+    @period_id = Period.find(params[:period_id])
     @employee = Employee.find(params[:emp_id])
     @training_topic_master_id = params[:training_topic_master_id]
     @goal_rating_id = params[:goal_rating_id]
     @attribute_rating = GoalRating.where(id: @goal_rating_id, appraisee_id: @employee.id,goal_type: 'Attribute').update_all(training_topic_master_id: @training_topic_master_id)
     flash[:notice] = "Created Successfully"
-    redirect_to training_request_goal_ratings_path
+    redirect_to training_request_goal_ratings_path(period_id: @period_id)
   end
 
   def create_goal_training
+    @period_id = Period.find(params[:period_id])
     @employee = Employee.find(params[:emp_id])
     @training_topic_master_id = params[:training_topic_master_id]
     @goal_rating_id = params[:goal_rating_id]
     @goal_rating = GoalRating.where(id: @goal_rating_id,appraisee_id: @employee.id,goal_type: 'Goal').update_all(training_topic_master_id: @training_topic_master_id)
     flash[:notice] = "Created Successfully"
-    redirect_to training_request_goal_ratings_path
+    redirect_to training_request_goal_ratings_path(period_id: @period_id)
   end
 
   def period_and_topic_wise_list

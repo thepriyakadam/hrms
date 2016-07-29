@@ -11,6 +11,8 @@ class TrainingRequestsController < ApplicationController
   # GET /training_requests/1.json
   def show
     @trainee_requests = TraineeRequest.where(training_request_id: @training_request.id)
+    @reporting_master = ReportingMaster.find(@training_request.reporting_master_id)
+    @employee = Employee.find(@reporting_master.employee_id)
   end
 
   # GET /training_requests/new
@@ -30,10 +32,16 @@ class TrainingRequestsController < ApplicationController
   def create
     @training_request = TrainingRequest.new(training_request_params)
     @training_request.status = "Pending"
+    #@reporting_master = params[:training_request][:reporting_master_id]
+    #@rep_master = ReportingMaster.where(id: @reporting_master)
     respond_to do |format|
       if @training_request.save
         @employee_ids = params[:employee_ids]
         @employee_ids.each do |eid|
+        @emp_total = @employee_ids.count
+        # @reporting_master = params[:training_request][:reporting_master_id]
+        # @rep_master = ReportingMaster.find(@reporting_master)
+        TrainingRequest.where(id: @training_request.id).update_all(no_of_employee: @emp_total)
         TraineeRequest.create(employee_id: eid,training_request_id: @training_request.id,training_topic_master_id: @training_request.training_topic_master_id)
       end
         format.html { redirect_to @training_request, notice: 'Training request was successfully created.' }
@@ -70,13 +78,17 @@ class TrainingRequestsController < ApplicationController
   end
 
   def training_request_list
-    @training_requests = TrainingRequest.where(reporting_master_id: current_user.employee_id)
+    @reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
+    @training_requests = TrainingRequest.where(reporting_master_id: @reporting_masters)
     session[:active_tab] ="trainingmgmt"
   end
 
   def training_request_confirmation
     @training_request = TrainingRequest.find(params[:format])
-    @training_requests = TrainingRequest.where(reporting_master_id: current_user.employee_id)
+    reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
+    @reporting_master = ReportingMaster.find(@training_request.reporting_master_id)
+    @employee = Employee.find(@reporting_master.employee_id)
+    @training_requests = TrainingRequest.where(reporting_master_id: reporting_masters)
     @trainee_requests =TraineeRequest.where(training_request_id: @training_request.id)
   end
 
@@ -85,16 +97,34 @@ class TrainingRequestsController < ApplicationController
     @training_request.update(status: "Approved")
     TrainingApproval.create(training_request_id: @training_request.id,employee_id: @training_request.employee_id, training_topic_master_id: @training_request.training_topic_master_id,reporting_master_id: @training_request.reporting_master_id,traininig_period: @training_request.training_period,training_date: @training_request.training_date,place: @training_request.place,no_of_employee: @training_request.no_of_employee,description: @training_request.description,justification: @training_request.justification,current_status: "Approved")
     ReportingMastersTrainingReq.create(reporting_master_id: @training_request.reporting_master_id, training_request_id: @training_request.id, training_status: "Approved")
+    # byebug
+    @trainee_request_ids = params[:trainee_request_ids]
+    if @trainee_request_ids.nil?
+      flash[:alert] = "Please Select the Checkbox"
+      redirect_to interview_schedules_path
+    else
+      @trainee_request_ids.each do |tid|
+      @trainee_request = TraineeRequest.find(tid)
+      @trainee_request.update(is_complete: "Approved") 
+      # InterviewScheduleMailer.sample_email_to_interviewer(@interview_schedule).deliver_now
+      flash[:notice] = "Approved Successfully"
+      redirect_to interview_schedules_path
+    end 
+  end
 
      @comment = params[:training_request][:comment]
      @training_request.update(comment: @comment)
      flash[:notice] = 'Comment Updated Successfully'
-     redirect_to training_request_list_training_requests_path
     #TrainingRequestMailer.approve_training_request_email(@training_request).deliver_now
   end
 
   def modal_approver_comment
      @training_request = TrainingRequest.find(params[:format])
+     reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
+    @reporting_master = ReportingMaster.find(@training_request.reporting_master_id)
+    @employee = Employee.find(@reporting_master.employee_id)
+    @training_requests = TrainingRequest.where(reporting_master_id: reporting_masters)
+    @trainee_requests =TraineeRequest.where(training_request_id: @training_request.id)
   end
 
   def modal_reject_comment
@@ -121,6 +151,15 @@ class TrainingRequestsController < ApplicationController
     redirect_to training_request_list_training_requests_path
   end
 
+  def department_wise_search
+  end
+
+  def show_dept_wise_form
+    @training_request = TrainingRequest.new
+    @department = Department.find(params[:department_id])
+    @employees = Employee.where(department_id: @department.id)
+  end
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_training_request

@@ -23,6 +23,7 @@ class Employee < ActiveRecord::Base
   has_many :interview_reschedules
   has_many :qualifications
   has_many :employee_leav_requests
+  has_many :reporting_masters, class_name: 'ReportingMaster', foreign_key: 'reporting_master_id'
   has_many :first_reporters, class_name: 'EmployeeLeavRequest', foreign_key: 'first_reporter_id'
   has_many :second_reporters, class_name: 'EmployeeLeavRequest', foreign_key: 'second_reporter_id'
   has_many :leave_status_records, class_name: 'LeaveStatusRecord', foreign_key: 'change_status_employee_id'
@@ -165,11 +166,23 @@ class Employee < ActiveRecord::Base
       end
     end
   end
-
   
-  def self.filter_by_date_and_department(date, department)
+  def self.filter_by_date_and_department(date, department,costcenter)
     @attendances = EmployeeAttendance.where(day: date).pluck(:employee_id)
     @departments = Employee.where(department_id: department).pluck(:id)
-    Employee.where(id: @departments - @attendances)  
+    @joining_details = JoiningDetail.where(cost_center_id: costcenter).pluck(:employee_id)
+    Employee.where(id: @departments - @joining_details - @attendances)  
   end
+
+  def self.filter_by_date_and_costcenter(date,department,costcenter)
+    @attendances = EmployeeAttendance.where(day: date).pluck(:employee_id)
+    @departments = Employee.where(department_id: department).pluck(:id)
+    @joining_details = JoiningDetail.where(cost_center_id: costcenter).pluck(:employee_id)
+    Employee.where(id: @joining_details - @attendances)  
+  end
+  # def self.filter_by_date_and_department(date, department)
+  #   @attendances = EmployeeAttendance.where(day: date).pluck(:employee_id)
+  #   @departments = Employee.where(department_id: department).pluck(:id)
+  #   Employee.where(id: @departments - @attendances)  
+  # end
 end

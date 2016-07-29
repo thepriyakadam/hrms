@@ -67,6 +67,20 @@ class EmployeeAttendancesController < ApplicationController
     @department = params[:salary][:department_id]
     @date = params[:salary][:day].to_date
     @employees = Employee.filter_by_date_and_department(@date,@department)
+    #@department = params[:salary][:department_id]
+    @costcenter = params[:salary][:name]
+    @date = params[:salary][:day].to_date
+    
+    #@employee = Employee.where(department_id: @department).pluck(:id)
+    @attendance = EmployeeAttendance.where(day: @date).pluck(:employee_id)
+    @costcenter = JoiningDetail.where(cost_center_id: @costcenter).pluck(:employee_id)
+    @employees = Employee.where(id: @attendance,id: @costcenter)
+
+    # if @department = ""
+    # @employees = Employee.filter_by_date_and_costcenter(@date,@department,@costcenter)
+    # else
+    # @employees = Employee.filter_by_date_and_department(@date,@department,@costcenter)
+    # end
     @employee_attendance = EmployeeAttendance.new
   end
     
@@ -74,12 +88,19 @@ class EmployeeAttendancesController < ApplicationController
     @employee_ids = params[:employee_ids]
     day = params[:employee_attendances][:day]
     present = params[:employee_attendances][:present]
-    department = params[:employee_attendances][:department_id]
+    #department = params[:employee_attendances][:department_id]
 
-    @employee_ids.each do |eid|
-    EmployeeAttendance.create(employee_id: eid,day: day,present: present,department_id: department)
+    @employee = Employee.where(id: @employee_ids)
+
+    if @employee_ids.nil?
+      flash[:alert] = "Please Select the Checkbox"
+    else
+      @employee_ids.each do |eid|
+        @emp = Employee.find_by_id(eid)
+      EmployeeAttendance.create(employee_id: eid,day: day,present: present,department_id: @emp.department_id)  
+      flash[:notice] = "Created successfully"
+      end
     end
-    flash[:notice] = "Created successfully"
     redirect_to new_employee_attendance_path
   end
 
@@ -125,7 +146,6 @@ class EmployeeAttendancesController < ApplicationController
     @year = params[:year]
     @month = params[:month]
     @department = params[:salary][:department_id]
-
     @date = Date.new(@year.to_i, Workingday.months[@month])
     @day = @date.end_of_month.day
     @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ? AND department_id = ?", @date.strftime('%m/%Y'),@department).group(:employee_id)
@@ -134,11 +154,20 @@ class EmployeeAttendancesController < ApplicationController
   def monthly_attendance
     @year = params[:year]
     @month = params[:month]
-    @department = params[:department_id]
-
     @date = Date.new(@year.to_i, Workingday.months[@month])
     @day = @date.end_of_month.day
-    @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).group(:employee_id)
+    @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ? and is_confirm = ?", @date.strftime('%m/%Y'),false).group(:employee_id)
+  end
+
+  def create_attendance
+    params.permit!
+    @employees, @attendances, arr = params[:employees], params[:attendances], []
+    @employees.each do |e|
+      arr << params[e]
+    end
+    EmployeeAttendance.where(id: @attendances).update_all(is_confirm: true)
+    Workingday.create(arr)
+    redirect_to employee_attendances_path
   end
 
   private

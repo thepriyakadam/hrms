@@ -11,16 +11,55 @@ div.nobreak{ page-break-inside: avoid;
   /* http://code.google.com/p/wkhtmltopdf/issues/detail?id=9#c21 */
 }
 </style>
-<div>
-<center><h3>Expense Claim Detail</h3></center>
+<table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
+    <tr> 
+    <th colspan="7">
+        <center><strong><%= current_user.employee.company_location.company.description %></strong></center>
+        <center><small>Expense Claim</small></center>
+        <center><small></small></center>   
+      </th>
+    </tr>
+       <tr>
+        <td colspan="4"> Employee ID : <%= @employee.manual_employee_code %>  </td>
+         
+
+        <td colspan="4"> Employee Name : 
+        <%= @employee.try(:first_name) %> <%= @employee.try(:middle_name) %> <%= @employee.try(:last_name) %></td>
+      </tr>
+      <tr>
+        <td colspan="4"> Department Name : <%= @employee.department.try(:name) %></td>
+        
+     
+        <td colspan="4"> Designation : <%= @employee.joining_detail.employee_designation.try(:name) %> </td>
+       
+      </tr>
+    </table>
+
+<table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
+  <tbody>
+  <tr><th colspan="8"><center>Travel Request Detail</center></th></tr>
+    <tr>
+      <td colspan="4">Approver : <%= @employee1.try(:first_name) %> <%= @employee1.try(:middle_name) %> <%= @employee1.try(:last_name) %></td>
+      <td colspan="4">Traveling Date : <%= @travel_request.traveling_date %></td>
+      </tr>
+      <tr>
+      <td colspan="4">Place : <%= @travel_request.place %></td>
+      <td colspan="4">Total Advance : <%= @travel_request.total_advance %></td>
+    </tr>
+  </tbody>
+</table>
 
 <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
   <thead>
+  <tr><th colspan="8"><center>Expense Claim Detail</center></th></tr>
     <tr>
       <th>Expense Date</th>
       <th>Place</th>
-      <th>Travel Expense Type</th>
-      <th>Travel Expense</th>
+      <th>Expense Type</th>
+      <th>Expense Amount</th>
+      <th>Remark</th>
+      <th colspan="2">Comment</th>
+      <th>Currency Type</th>
     </tr>
   </thead>
   <tbody>
@@ -30,6 +69,9 @@ div.nobreak{ page-break-inside: avoid;
         <td><%= daily_bill_detail.e_place %></td>
         <td><%= daily_bill_detail.travel_expence_type.try(:name) %></td>
         <td><%= daily_bill_detail.travel_expence %></td>
+        <td><%= daily_bill_detail.remarks %></td>
+        <td colspan="2"><%= daily_bill_detail.comment %></td>
+        <td><%= daily_bill_detail.currency_master.try(:name) %></td>
       </tr>
     <% end %>
   </tbody>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160721102648) do
+ActiveRecord::Schema.define(version: 20160728072434) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -607,12 +607,14 @@ ActiveRecord::Schema.define(version: 20160721102648) do
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
     t.boolean  "is_confirmed"
+    t.integer  "employee_resignation_id"
   end
 
   add_index "due_employee_details", ["due_detail_id"], name: "index_due_employee_details_on_due_detail_id"
   add_index "due_employee_details", ["due_employee_template_id"], name: "index_due_employee_details_on_due_employee_template_id"
   add_index "due_employee_details", ["due_template_id"], name: "index_due_employee_details_on_due_template_id"
   add_index "due_employee_details", ["employee_id"], name: "index_due_employee_details_on_employee_id"
+  add_index "due_employee_details", ["employee_resignation_id"], name: "index_due_employee_details_on_employee_resignation_id"
   add_index "due_employee_details", ["reporting_master_id"], name: "index_due_employee_details_on_reporting_master_id"
 
   create_table "due_employee_templates", force: :cascade do |t|
@@ -701,11 +703,12 @@ ActiveRecord::Schema.define(version: 20160721102648) do
     t.integer  "employee_id"
     t.date     "day"
     t.string   "present"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
     t.integer  "department_id"
     t.datetime "in_time"
     t.datetime "out_time"
+    t.boolean  "is_confirm",    default: false
   end
 
   add_index "employee_attendances", ["department_id"], name: "index_employee_attendances_on_department_id"
@@ -958,6 +961,7 @@ ActiveRecord::Schema.define(version: 20160721102648) do
     t.integer  "leaving_reason_id"
     t.integer  "reporting_master_id"
     t.string   "resign_status"
+    t.boolean  "is_stop_pay_request"
   end
 
   add_index "employee_resignations", ["employee_id"], name: "index_employee_resignations_on_employee_id"
@@ -981,6 +985,7 @@ ActiveRecord::Schema.define(version: 20160721102648) do
     t.datetime "created_at",                                                        null: false
     t.datetime "updated_at",                                                        null: false
     t.integer  "employee_template_id"
+    t.boolean  "is_confirm"
   end
 
   add_index "employee_salary_templates", ["employee_id"], name: "index_employee_salary_templates_on_employee_id"
@@ -1247,15 +1252,25 @@ ActiveRecord::Schema.define(version: 20160721102648) do
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
     t.integer  "performance_calendar_id"
+    t.boolean  "r_promotion"
+    t.boolean  "r_increment"
+    t.integer  "r_designation_id"
+    t.decimal  "r_ctc"
+    t.boolean  "f_promotion"
+    t.boolean  "f_increment"
+    t.integer  "f_designation_id"
+    t.decimal  "f_ctc"
   end
 
   add_index "goal_bunches", ["appraisee_id"], name: "index_goal_bunches_on_appraisee_id"
   add_index "goal_bunches", ["appraiser_id"], name: "index_goal_bunches_on_appraiser_id"
   add_index "goal_bunches", ["employee_id"], name: "index_goal_bunches_on_employee_id"
+  add_index "goal_bunches", ["f_designation_id"], name: "index_goal_bunches_on_f_designation_id"
   add_index "goal_bunches", ["final_id"], name: "index_goal_bunches_on_final_id"
   add_index "goal_bunches", ["final_rating_id"], name: "index_goal_bunches_on_final_rating_id"
   add_index "goal_bunches", ["performance_calendar_id"], name: "index_goal_bunches_on_performance_calendar_id"
   add_index "goal_bunches", ["period_id"], name: "index_goal_bunches_on_period_id"
+  add_index "goal_bunches", ["r_designation_id"], name: "index_goal_bunches_on_r_designation_id"
   add_index "goal_bunches", ["reviewer_id"], name: "index_goal_bunches_on_reviewer_id"
   add_index "goal_bunches", ["reviewer_rating_id"], name: "index_goal_bunches_on_reviewer_rating_id"
 
@@ -2543,6 +2558,8 @@ ActiveRecord::Schema.define(version: 20160721102648) do
     t.integer  "training_topic_master_id"
     t.integer  "training_request_id"
     t.integer  "period_id"
+    t.string   "trainer_num"
+    t.text     "about_trainer"
   end
 
   add_index "training_plans", ["period_id"], name: "index_training_plans_on_period_id"
@@ -2702,6 +2719,7 @@ ActiveRecord::Schema.define(version: 20160721102648) do
     t.integer  "travel_mode_id"
     t.boolean  "is_confirm"
     t.text     "comment"
+    t.text     "daily_bill_status"
   end
 
   add_index "travel_requests", ["employee_id"], name: "index_travel_requests_on_employee_id"

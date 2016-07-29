@@ -10,6 +10,8 @@ class DailyBillDetailsController < ApplicationController
   # GET /daily_bill_details/1
   # GET /daily_bill_details/1.json
   def show
+    @reporting_master = ReportingMaster.find(@daily_bill_detail.reporting_master_id)
+    @employee = Employee.find(@reporting_master.employee_id)
   end
 
   # GET /daily_bill_details/new
@@ -29,28 +31,6 @@ class DailyBillDetailsController < ApplicationController
 
   # POST /daily_bill_details
   # POST /daily_bill_details.json
-
-  def create
-    @daily_bill_detail = DailyBillDetail.new(daily_bill_detail_params)
-
-    @travel_request = TravelRequest.find(@daily_bill_detail.travel_request_id)
-
-       ActiveRecord::Base.transaction do
-        respond_to do |format|
-    if @daily_bill_detail.save
-        @daily_bill_detail.update(reporting_master_id: @travel_request.reporting_master_id)
-        @daily_bill_details = DailyBillDetail.where(travel_request_id: @travel_request.id)
-        format.html { redirect_to @daily_bill_detail, notice: 'Daily Bill was successfully created.' }
-        format.json { render :show, status: :created, location: @daily_bill_detail }
-        format.js { @flag = true }
-      else
-        format.html { render :new }
-        format.json { render json: @daily_bill_detail.errors, status: :unprocessable_entity }
-        format.js { @flag = false }
-      end
-    end
-  end
-end
 
 def create
     @daily_bill_detail = DailyBillDetail.new(daily_bill_detail_params)
@@ -96,11 +76,11 @@ def create
 
 
   def is_confirm
-    @travel_request = TravelRequest.find(params[:qwe])
+    @travel_request = TravelRequest.find(params[:travel_request_id])
     @daily_bill_detail_ids = params[:daily_bill_detail_ids]
     if @daily_bill_detail_ids.nil?
       flash[:alert] = "Please Select the Checkbox"
-      redirect_to new_daily_bill_detail_path(@travel_request.id)
+      redirect_to new_daily_bill_detail_path(travel_request_id: @travel_request.id)
     else
       @daily_bill_detail_ids.each do |did|
       @daily_bill_detail = DailyBillDetail.find(did)
@@ -108,12 +88,15 @@ def create
       
       flash[:notice] = "Confirmed Successfully"
     end 
-      redirect_to new_daily_bill_detail_path(@travel_request.id)
+      redirect_to new_daily_bill_detail_path(travel_request_id: @travel_request.id)
     end
   end
 
   def print_daily_bill
     @travel_request = TravelRequest.find(params[:qwe])
+    @employee = Employee.find(@travel_request.employee_id)
+    # @reporting_master = ReportingMaster.find(@daily_bill_detail.reporting_master_id)
+    # @employee1 = Employee.find(@reporting_master.employee_id)
     @daily_bill_details = DailyBillDetail.where(travel_request_id: @travel_request.id)
 
     respond_to do |format|
@@ -141,14 +124,18 @@ def create
   # end
 
   def daily_bill_history
-    @daily_bill_details = DailyBillDetail.where(reporting_master_id: current_user.employee_id,is_confirm: true)
+    @reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
+    @daily_bill_details = DailyBillDetail.where(reporting_master_id: @reporting_masters,is_confirm: true)
     session[:active_tab] ="travelmgmt" 
   end 
 
   def daily_bill_request_confirmation
     @travel_request = TravelRequest.find(params[:format])
+    reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
+    @reporting_master = ReportingMaster.find(@travel_request.reporting_master_id)
+    @employee = Employee.find(@reporting_master.employee_id)
     # @travel_request = TravelRequest.find(@daily_bill_detail.travel_request_id)
-    @daily_bill_details = DailyBillDetail.where(reporting_master_id: current_user.employee_id,travel_request_id: @travel_request.id,is_confirm: true)
+    @daily_bill_details = DailyBillDetail.where(reporting_master_id: reporting_masters,travel_request_id: @travel_request.id,is_confirm: true)
     session[:active_tab] ="travelmgmt"
   end
 
@@ -190,7 +177,8 @@ def create
   end
 
    def travel_request_list
-     @travel_requests = TravelRequest.where(reporting_master_id: current_user.employee_id)
+     reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
+     @travel_requests = TravelRequest.where(reporting_master_id: reporting_masters)
   end
 
   def edit_and_send_next_modal

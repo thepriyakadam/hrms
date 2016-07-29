@@ -1,6 +1,7 @@
 class EmployeeResignation < ActiveRecord::Base
   belongs_to :employee
   belongs_to :leaving_reason
+  has_many :due_employee_details
 
   validates :resignation_date,presence:true
  
@@ -9,5 +10,11 @@ class EmployeeResignation < ActiveRecord::Base
   has_many :reporting_masters_resign
   has_many :reporting_masters, through: :reporting_masters_resign
 
-  
+	def self.stop_payment_request(is_stop)
+	  @employee_resignations =  if is_stop == "Yes"
+													      EmployeeResignation.where(is_stop_pay_request: true).pluck(:employee_id)
+													    else
+													      EmployeeResignation.where(is_stop_pay_request: false).pluck(:employee_id)
+													    end
+	end
 end

@@ -2,7 +2,7 @@
   <div class="box-body">
 
     <%= bootstrap_form_for :employee_attendances,html: {id: "employee_attendances"}, url: { action: 'create_employee_attendance'} do |f| %>
-    <%= f.hidden_field :department_id, value: @department %>
+    <!-- <= f.hidden_field :department_id, value: @department %> -->
       <div class="row">
         <div class="col-sm-2">
         <label>Present </label>
@@ -33,10 +33,12 @@
               <td><%= e.try(:department).try(:name)%></td>
               <td><%= e.try(:joining_detail).try(:employee_designation).try(:name) %></td>
               <td><%= e.contact_no %></td>
+              <%= f.hidden_field :department_id, value: e.department_id %>
             </tr>
           <% end %>
         </tbody>
       </table>
+      
       <div class="row">
         <div class="col-sm-3">
           <div class="actions">

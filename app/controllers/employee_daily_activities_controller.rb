@@ -61,7 +61,7 @@ include QueryReport::Helper
 
   def employee_details
     # @employees = Employee.where(department_id: current_user.department_id)
-    @employee = Employee.all
+    @employees = Employee.all
     session[:active_tab] = "selfservice"
     session[:active_tab1] = "daily_activity"
   end

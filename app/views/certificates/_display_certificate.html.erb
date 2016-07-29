@@ -19,3 +19,4 @@
    <!--   <= link_to " Print Certificate ", showing_joining_date_print_certificate_path(@employee,format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>   -->
   </div>
 </div>
+<%= link_to "Print Certificate",display_certificate_certificates_path(employee_id: @employee.id, certificate: @certificate, format: "pdf")%>

@@ -297,6 +297,8 @@ Rails.application.routes.draw do
       get :employee_list
       get :print_promotion_excel
       get :print_employee_promotion
+      get :display_certificate
+      get :print_certificate
     end
   end
   resources :accident_masters
@@ -906,6 +908,7 @@ end
       post :create_working_day
       get :search_month_year_xls
       get :generate_workingday_xls
+      post :is_confirm_workingday
     end
   end
 

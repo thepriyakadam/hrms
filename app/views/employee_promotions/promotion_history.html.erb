@@ -20,6 +20,7 @@
         <th>Justification</th>
         <th>Effective From</th>
         <th>Effective To</th>
+        <th>Action</th>
       </tr>
     </thead>
     <tbody>
@@ -35,6 +36,7 @@
           <td><%= employee_promotion.justification %></td>
           <td><%= employee_promotion.effective_from %></td>
           <td><%= employee_promotion.effective_to %></td>
+          <td><%= link_to '', display_certificate_employee_promotions_path(emp_promotion_id: employee_promotion.id),class: 'btn btn-default btn-xs fa fa-certificate' %></td> 
         </tr>
       <% end %>
     </tbody>

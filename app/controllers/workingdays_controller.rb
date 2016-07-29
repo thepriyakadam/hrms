@@ -133,6 +133,28 @@ class WorkingdaysController < ApplicationController
     redirect_to search_month_year_workingdays_path
   end
 
+
+
+   def is_confirm_workingday
+
+    # @employee = Employee.find(params[:id])
+     @workingday_ids = params[:workingday_ids]
+    if @workingday_ids.nil?
+      flash[:alert] = "Please Select the Checkbox"
+      redirect_to workingdays_path
+      # redirect_to show_employee_salary_template_employee_salary_templates_path(id: @employee.id)
+    else
+      @workingday_ids.each do |did|
+      @workingday = Workingday.find(did)
+      @workingday.update(is_confirm: true) 
+      # InterviewScheduleMailer.sample_email_to_interviewer(@interview_schedule).deliver_now
+      flash[:notice] = "Confirmed Successfully" 
+    end 
+    redirect_to workingdays_path
+    # redirect_to show_employee_salary_template_employee_salary_templates_path(id: @employee.id)
+  end
+ end
+ 
   private
 
   # Use callbacks to share common setup or constraints between actions.

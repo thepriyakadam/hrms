@@ -1,5 +1,6 @@
 class EmployeeAttendancesController < ApplicationController
   before_action :set_employee_attendance, only: [:show, :edit, :update, :destroy]
+  before_action :check_params, only: [:create_attendance]
 
   # GET /employee_attendances
   # GET /employee_attendances.json
@@ -135,21 +136,20 @@ class EmployeeAttendancesController < ApplicationController
   end
 
   def monthly_attendance
-    @year = params[:year]
-    @month = params[:month]
+    @year, @month = params[:year], params[:month]
     @date = Date.new(@year.to_i, Workingday.months[@month])
     @day = @date.end_of_month.day
     @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ? and is_confirm = ?", @date.strftime('%m/%Y'),false).group(:employee_id)
   end
 
   def create_attendance
+    @employees, @attendances, work_data_structure, @date = params[:employees], params[:attendances], [], params[:date]
     params.permit!
-    @employees, @attendances, arr = params[:employees], params[:attendances], []
     @employees.each do |e|
-      arr << params[e]
+      work_data_structure << params[e]
     end
-    EmployeeAttendance.where(id: @attendances).update_all(is_confirm: true)
-    Workingday.create(arr)
+    EmployeeAttendance.where(employee_id: @employees).where("strftime('%m/%Y', day) = ? and is_confirm = ?", @date.to_date.strftime('%m/%Y'),false).update_all(is_confirm: true)
+    Workingday.create(work_data_structure)
     redirect_to employee_attendances_path
   end
 
@@ -157,6 +157,13 @@ class EmployeeAttendancesController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_employee_attendance
     @employee_attendance = EmployeeAttendance.find(params[:id])
+  end
+
+  def check_params
+    if params[:employees].nil?
+      flash[:alert] = "Please Select employees checkbox."
+      redirect_to root_url
+    end
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

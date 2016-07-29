@@ -44,6 +44,8 @@ Rails.application.routes.draw do
       post :send_request_to_higher_authority
       get :modal_edit
       patch :update_transfer_details
+      get :modal_edit_and_send_next
+      post :update_and_send_next_transfer_details
     end
   end
 

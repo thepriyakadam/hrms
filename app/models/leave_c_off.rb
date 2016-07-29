@@ -1,9 +1,9 @@
 class LeaveCOff < ActiveRecord::Base
   belongs_to :employee
 
-   def self.filter_records(current_user)
-    @leave_c_offs =  if current_user.class == Group
-    LeaveCOff.all
+def self.filter_records(current_user)
+@leave_c_offs =  if current_user.class == Group
+LeaveCOff.all
   elsif current_user.class == Member
     if current_user.role.name == "Company"
       @employees = Employee.where(company_id: current_user.company_id)

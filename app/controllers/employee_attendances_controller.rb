@@ -154,22 +154,17 @@ class EmployeeAttendancesController < ApplicationController
     @year = params[:year]
     @month = params[:month]
     @date = Date.new(@year.to_i, Workingday.months[@month])
-    @day = @date.end_of_month.day    
+    @day = @date.end_of_month.day
     @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ? and is_confirm = ?", @date.strftime('%m/%Y'),false).group(:employee_id)
   end
 
   def create_attendance
-    @employees = params[:employees]
-    @attendances = params[:attendances]  
-    @attendances.each do |a|
-      att = EmployeeAttendance.find(a)
-      att.update(is_confirm: true)
-    end
-    arr = []
+    params.permit!
+    @employees, @attendances, arr = params[:employees], params[:attendances], []
     @employees.each do |e|
       arr << params[e]
     end
-    params.permit!
+    EmployeeAttendance.where(id: @attendances).update_all(is_confirm: true)
     Workingday.create(arr)
     redirect_to employee_attendances_path
   end

@@ -1,9 +1,20 @@
 Rails.application.routes.draw do
+
   get 'download_pdf/index'
   get 'download_pdf/zip'
   get 'download_pdf/pdf'
   get 'download_pdf/doc'
 
+   resources :certificates do
+    collection do
+      # get :show_joining_date
+      post :certificate_print
+      get :address_proof
+      get :character_certificate
+      get :display_certificate
+      get :service_certificate
+    end
+   end
   resources :due_actions
   resources :due_details do
     collection do
@@ -483,8 +494,9 @@ end
     
     post 'salaries/ctc_yearly_report'
     get 'salaries/ctc_yearly'
-    get 'certificate/new'
-    post 'certificate/show_joining_date'
+    
+  #   get 'certificate/new'
+  #   post 'certificate/certificate_print'
   end
 
   namespace :views do
@@ -922,6 +934,7 @@ end
       get :salary_template
       get :find_employee_for_salary
       post :save_data
+      post :is_confirm_employee_template
     end
   end
   

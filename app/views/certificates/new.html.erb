@@ -2,14 +2,14 @@
   <div class="box-header with-border">
     <h3 class="box-title">Select Employee</h3>
   </div>
-  <%= bootstrap_form_for :salary, url: { action: 'certificate_print',format: 'pdf',id: @employee},:html => {:target => '_blank'} do |f| %>
-    
+  <%= bootstrap_form_for :salary, url: { action: 'certificate_print',id: @employee}, remote:true do |f| %>
+
   <div class="box-body">
 
       <div class="row">
       <div class="col-sm-3">
           <div class="field">
-          <%= select :salary,:employee, all_employee_list,{include_blank: 'Select Employee'},{ class: "form-control"}%>
+          <%= select :salary,:employee_id, all_employee_list,{include_blank: 'Select Employee'},{ class: "form-control"}%>
           </div>
       </div>
 
@@ -21,16 +21,16 @@
 
       <div class="col-sm-3">
         <div class="actions">
-<!--           <= f.submit "Select Employee", class: "btn btn-sm btn-primary" %> 
- -->          <%= f.submit "Print ",class: "btn btn-xl btn-warning fa fa-print" %>
+         <%= f.submit "Select Employee", class: "btn btn-sm btn-primary" %> 
+         <!--  <= f.submit "Print ",class: "btn btn-xl btn-warning fa fa-print" %> -->
          </div>
         </div>
       <%end%>
       </div>
-      <br><br>
+   <br><br>
        <div id="display_certificate"></div>
        <div id="address_proof"></div>
        <div id="character_certificate"></div>
-       <div id="service_certificate"></div>
+       <div id="service_certificate"></div> 
   </div>
   </div> 

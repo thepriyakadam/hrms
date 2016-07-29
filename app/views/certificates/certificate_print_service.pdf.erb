@@ -1,9 +1,9 @@
 <div class="box-body">
 
- <div style="width: 700px; height: 700px;
-          padding: 10px;
-          border: 5px solid gray;
-          margin: 10;">
+<div style="width: 420px; height: 500px;
+    padding: 10px;
+    border: 5px solid gray;
+    margin: 0;">
   <div style="float:right;">Date - <%= Time.zone.now.to_date %> </div><br><br>
 
   <b><center>SERVICE CERTIFICATE</center></b><br><br>
@@ -47,4 +47,3 @@
 
 </div>
 </div>
-<%= link_to "Print",service_certificate_certificates_path(employee_id: @employee.id, certificate: @certificate,format: "pdf"),:target => "_blank"%>

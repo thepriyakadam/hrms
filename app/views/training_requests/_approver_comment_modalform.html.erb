@@ -1,6 +1,6 @@
-<div class="modal-dialog">
+<div class="modal-dialog" style="height:3000px; max-height:120px; width:630px; max-width:630px;">
   <div class="modal-content">
-    <div class="modal-body" style="height:1000px; max-height:120px; width:630px; max-width:630px;">
+    <div class="modal-body">
      <%= bootstrap_form_for :training_request,url:{action:"approve_training_request",id: @training_request.id},html: {id: 'training_request'} do |f| %>
         <div class="row">
           <div class="col-sm-6">
@@ -11,9 +11,48 @@
           </div>
         </div>
       <% end %>
+       <table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th><input type="checkbox" id="selectAll" value="selectAll"></th>
+      <th>Employee ID</th>
+      <th>Employee Name</th>
+      <th>Contact No</th>
+      </tr>
+  </thead>
+
+  <tbody>
+   <% @trainee_requests.each do |trainee_request| %>
+      <tr>
+        <td><%= check_box_tag "trainee_request_ids[]", trainee_request.id %></td>
+        <td><%= trainee_request.employee.try(:manual_employee_code) %></td>
+        <td><%= full_name(trainee_request.employee) %> </td>
+        <td><%= trainee_request.employee.try(:contact_no) %></td>
+      </tr>
+      <% end %>
+  </tbody>
       <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
     </div>
   </div>
+
+</table><br>
+
+<script type="text/javascript">
+  $(function () {
+    $('#selectAll').click(function() {
+      if (this.checked) {
+        $(':checkbox').each(function() {
+          this.checked = true;                       
+        });
+      } 
+      else {
+        $(':checkbox').each(function() {
+          this.checked = false;                        
+        });
+      } 
+    });
+  });
+</script>
 </div>
 <script>
 $("#training_request").validate({

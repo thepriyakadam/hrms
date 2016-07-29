@@ -5,7 +5,7 @@
   </div><!-- /.box-header -->
 <!-- <div style="float:right;">
   <%= link_to 'Print Salary Slip',print_salary_slip_monthwise_pdf_salaries_path(format: 'pdf',month: "January",year: "2016"), class: 'btn btn-xl btn-warning fa fa-print', :target => '_blank' %><br>
-</div>< -->br>
+</div>< --><br>
   
   <div class="box-body">
     <table id="example1" class="table table-bordered table-hover">
@@ -23,7 +23,7 @@
     <% @employees.each do |employee| %>
       <tr>
         <td><%= employee.manual_employee_code %></td>
-        <td><%= employee.first_name.to_s+' '+employee.middle_name.to_s+' '+employee.last_name.to_s %></td>
+        <td><%= full_name(employee)%></td>
         <td><%= employee.contact_no %></td>
         <td><%= employee.email %></td>
         <td>

@@ -125,8 +125,10 @@ class TrainingPlansController < ApplicationController
     @training_plan.save
       @goal_rating_ids = params[:goal_rating_ids]
       @goal_rating_ids.each do |eid|
+        @emp_total = @goal_rating_ids.count
+        TrainingPlan.where(id: @training_plan.id).update_all(no_of_employee: @emp_total)
+
       Trainee.create(employee_id: eid,training_plan_id: @training_plan.id)
-      
       GoalRating.where(appraisee_id: eid,training_topic_master_id: training_topic_master_id).update_all(is_hide: true)
         flash[:notice] = "Created Successfully"
       end
@@ -134,7 +136,6 @@ class TrainingPlansController < ApplicationController
   end
 
   def training_topic_wise_search
-
   end
 
   def show_traineerequest_list

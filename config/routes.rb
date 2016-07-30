@@ -340,15 +340,16 @@ end
       get :training_details_list
       get :training_topic_wise_search
       get :show_traineerequest_list
-      get :_trainee_request_list
+      get :trainee_request_list
+      post :confirm_employee_for_training
     end
   end
   resources :training_requests do
     collection do
       get :training_request_list
       get :training_request_confirmation
-      get :approve_training_request
-      post :reject_training_request
+      post :approve_training_request
+      get :reject_training_request
       get :confirmation_list
       get :modal_approver_comment
       get :modal_reject_comment
@@ -356,6 +357,7 @@ end
       get :show_dept_wise_form
       get :_employee_list
       patch :create_dept_wise_request
+      post :comment
     end
   end
   resources :selected_resumes  do

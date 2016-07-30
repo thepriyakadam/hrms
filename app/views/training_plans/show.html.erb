@@ -3,7 +3,7 @@
     <h3 class="box-title">Training Plan</h3>
   </div><!-- /.box-header -->
   <div class="box-body">
-    <table id="example2" class="table table-bordered table-hover table-condensed">
+    <table class="table table-bordered table-hover table-condensed">
 
       <tr>
         <th><strong>Training Date:</strong></th>
@@ -51,7 +51,6 @@
     <div>
       <%= render 'trainee' %>
     </div>
-      <%= link_to " Print Training Report ", print_training_details_training_plans_path(id: @training_plan.id, format: "pdf"), class: "btn btn-xl btn-info fa fa-print",:target => "_blank" %>  
-      <%= link_to 'Back', training_plans_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+      
   </div>
 </div>

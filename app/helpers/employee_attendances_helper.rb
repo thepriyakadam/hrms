@@ -23,7 +23,7 @@ module EmployeeAttendancesHelper
           else
             exist[l.leave_date] = "LWP"
           end
-        end 
+        end
       end
 
       holidays = Holiday.where("strftime('%m/%Y', holiday_date) = ?", date.strftime('%m/%Y')) 

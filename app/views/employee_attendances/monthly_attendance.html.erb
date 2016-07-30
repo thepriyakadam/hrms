@@ -13,7 +13,6 @@
             <th><input type="checkbox" id="selectAll" value="selectAll"></th>
             <th>ID</th>
             <th>Employee Name</th>
-            <th>Department</th>
             <% for i in 1..@day %>
               <th><%= i %></th>
             <%end%>
@@ -28,7 +27,6 @@
 
               <td><%= full_name(e.employee) %></td>
 
-              <td><%= e.employee.try(:department).try(:name) %></td>
               <% sorted_exists = calculate_attendance(@date, exist, e)%>
               <% sorted_exists.each do |k,v|%>
                 <td><%= v %></td>
@@ -39,8 +37,13 @@
             <% holiday_in_month = holiday_in_month_count(exist) %>
             <% week_off_day = week_off_day_count(exist) %>
             <% pay_leave = pay_leave_count(exist) %>
+
+            <% full_leave = full_leave_count(exist) %>
             <% half_leave = half_leave_count(exist) %>
-            
+
+            <!-- < half_leave_date = half_leave_date_count(exist) %> -->
+            <%= half_leave_date_cross_check = half_leave_date_cross_check_count(e.employee_id, @date) %>
+
             <% payable_day = present_day.to_f + holiday_in_month.to_f + week_off_day.to_f + pay_leave.to_f + payable_day.to_f + half_leave.to_f %>
 
             <%= hidden_field_tag "attendances[]", e.id %>

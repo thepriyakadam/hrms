@@ -93,7 +93,7 @@ class EmployeeAttendancesController < ApplicationController
     else
       @employee_ids.each do |eid|
         @emp = Employee.find_by_id(eid)
-      EmployeeAttendance.create(employee_id: eid,day: day,present: present,department_id: @emp.department_id)  
+      EmployeeAttendance.create(employee_id: eid,day: day,present: present,department_id: @emp.department_id, is_confirm: false)  
       flash[:notice] = "Created successfully"
       end
     end
@@ -152,6 +152,7 @@ class EmployeeAttendancesController < ApplicationController
     @date = Date.new(@year.to_i, Workingday.months[@month])
     @day = @date.end_of_month.day
     @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ? and is_confirm = ?", @date.strftime('%m/%Y'),false).group(:employee_id)
+    byebug
   end
 
   def create_attendance

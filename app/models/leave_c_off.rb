@@ -1,6 +1,5 @@
 class LeaveCOff < ActiveRecord::Base
   belongs_to :employee
-
 def self.filter_records(current_user)
 @leave_c_offs =  if current_user.class == Group
 LeaveCOff.all

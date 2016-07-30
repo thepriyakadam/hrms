@@ -25,7 +25,9 @@
             <tr>
               <td><%= check_box_tag "employees[]", e.employee_id %></td>
               <td><%= e.employee.manual_employee_code %></td>
+
               <td><%= full_name(e.employee) %></td>
+
               <td><%= e.employee.try(:department).try(:name) %></td>
               <% sorted_exists = calculate_attendance(@date, exist, e)%>
               <% sorted_exists.each do |k,v|%>
@@ -35,7 +37,7 @@
 
             <% present_day = present_day_count(exist) %>
             <% holiday_in_month = holiday_in_month_count(exist) %>
-            <% week_off_day = week_of_day_count(exist) %>
+            <% week_off_day = week_off_day_count(exist) %>
             <% pay_leave = pay_leave_count(exist) %>
             <% half_leave = half_leave_count(exist) %>
             

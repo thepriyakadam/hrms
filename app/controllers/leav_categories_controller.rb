@@ -28,8 +28,8 @@ class LeavCategoriesController < ApplicationController
 
   def update
     @leav_category.update(leav_category_params)
-    @leav_categories = LeavCategory.all
     @leav_category = LeavCategory.new
+    @leav_categories = LeavCategory.all
   end
 
   def destroy

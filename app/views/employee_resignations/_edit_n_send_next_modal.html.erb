@@ -1,7 +1,7 @@
 <div class="modal-dialog"  style="height:3000px; max-height:100px; width:1200px; max-width:630px;">
   <div class="modal-content">
     <div class="modal-body">
-     <%= bootstrap_form_for :employee_resignation,url:{action:"edit_n_send", id: @employee_resignation.id},html: {id: 'employee_resignation'} do |f| %>
+     <%= bootstrap_form_for :employee_resignation,url:{action:"edit_n_send", resignation_id: @employee_resignation.id} do |f| %>
      <%= f.hidden_field :employee_resignation_id, value: @employee_resignation.id %>
 
      <div class="row">
@@ -130,7 +130,6 @@
       </div>
     
       <% end %>
-     <button type="button" class="close" data-dismiss="modal">&times;</button>
     </div>
   </div>
 </div>

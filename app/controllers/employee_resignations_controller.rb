@@ -140,7 +140,7 @@ class EmployeeResignationsController < ApplicationController
   end
 
   def edit_n_send
-    @employee_resignation = EmployeeResignation.find(params[:id])
+    @employee_resignation = EmployeeResignation.find(params[:resignation_id])
     @resignation_history = ResignationHistory.new
     @employee_resignation = EmployeeResignation.find(params[:employee_resignation][:employee_resignation_id])
     
@@ -163,9 +163,9 @@ class EmployeeResignationsController < ApplicationController
     @resignation_history.employee_resignation_id = @employee_resignation.id
     #@resignation_history.is_stop_pay_request = @employee_resignation.is_stop_pay_request
                         
-    @resignation_history.save
+    #@resignation_history.save
     @employee_resignation.update(employee_id: params[:employee_resignation][:employee_id], reporting_master_id: params[:employee_resignation][:reporting_master_id],leaving_reason_id: params[:employee_resignation][:leaving_reason_id],resignation_date: params[:employee_resignation][:resignation_date],notice_period: params[:employee_resignation][:notice_period],short_notice_period: params[:employee_resignation][:short_notice_period],tentative_leaving_date: params[:employee_resignation][:tentative_leaving_date],remark: params[:employee_resignation][:remark],exit_interview_date: params[:employee_resignation][:exit_interview_date],note: params[:employee_resignation][:note],leaving_date: params[:employee_resignation][:leaving_date],settled_on: params[:employee_resignation][:settled_on],is_stop_pay_request: params[:employee_resignation][:is_stop_pay_request],reason: params[:employee_resignation][:reason])
-    @resignation_history = ResignationHistory.new(resignation_history_params)
+    #@resignation_history = ResignationHistory.new(resignation_history_params)
     redirect_to root_url
     flash[:notice] = ' Request Approved Successfully.'   
 

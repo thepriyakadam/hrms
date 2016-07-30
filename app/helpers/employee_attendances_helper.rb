@@ -1,17 +1,17 @@
 module EmployeeAttendancesHelper
 	def calculate_attendance(date, exist, e)
-		start_date = date.beginning_of_month 
+		start_date = date.beginning_of_month
     end_date = date.end_of_month
 
-    start_date.step(end_date).each do |d| 
-      flag = 0 
+    start_date.step(end_date).each do |d|
+      flag = 0
 
-      attendance_records = EmployeeAttendance.where("strftime('%m/%Y', day) = ? and employee_id = ?", date.strftime('%m/%Y'), e.employee_id) 
-      attendance_records.each do |a| 
-        if d == a.day 
-          flag = 1 
-          exist[a.day] = a.present 
-        end 
+      attendance_records = EmployeeAttendance.where("strftime('%m/%Y', day) = ? and employee_id = ?", date.strftime('%m/%Y'), e.employee_id)
+      attendance_records.each do |a|
+        if d == a.day
+          flag = 1
+          exist[a.day] = a.present
+        end
       end
 
       leave_records = ParticularLeaveRecord.where("strftime('%m/%Y', leave_date) = ? and employee_id = ?", date.strftime('%m/%Y'), e.id) 
@@ -61,10 +61,6 @@ module EmployeeAttendancesHelper
     exist.select {|k,v| v == "P" }.count
   end
 
-  def total_leave_count(exist)
-    exist.select {|k,v| v == "L" or v == "LWP" }.count
-  end
-
   def holiday_in_month_count(exist)
     exist.select {|k,v| v == "H" }.count
   end
@@ -81,6 +77,10 @@ module EmployeeAttendancesHelper
     exist.select {|k,v| v == "P" }.count
   end
 
+  def total_leave_count(exist)
+    exist.select {|k,v| v == "L" or v == "LWP" }.count
+  end
+
   def lwp_leave_count(exist)
     exist.select {|k,v| v == "LWP" }.count
   end
@@ -91,5 +91,17 @@ module EmployeeAttendancesHelper
 
   def half_leave_count(exist)
     exist.select {|k,v| v == "1/2" }.count/2
+  end
+
+  def full_leave_count(exist)
+    exist.select {|k,v| v == "L" }.count/2
+  end
+
+  def half_leave_date_count(exist)
+    exist.select {|k,v| v == "1/2" }.keys
+  end
+
+  def half_leave_date_cross_check_count(employee_id, date)
+    ParticularLeaveRecord.where("strftime('%m/%Y', leave_date) = ? and employee_id = ? and is_full = ?", date.strftime('%m/%Y'), employee_id, false).pluck(:leave_date)
   end
 end

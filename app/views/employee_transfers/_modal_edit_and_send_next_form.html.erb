@@ -4,14 +4,14 @@
         <div class="box-header with-border">
           <h3 class="box-title">Transfer Request</h3>
         </div>
-        <%= bootstrap_form_for(TransferHistory.new,url:{action:"update_and_send_next_transfer_details",emp_transfer_id: @employee_transfer.id}) do |f| %>
+        <%= bootstrap_form_for(:employee_transfer,url:{action:"update_and_send_next_transfer_details",emp_transfer_id: @employee_transfer.id}) do |f| %>
         
       <%= f.hidden_field :employee_transfer_id, value: @employee_transfer.id %>
       <div class="row">
         <div class="col-sm-3">
           <label>Request To </label>
           <div class="field">
-            <%= f.select :reporting_master_id,all_reporting_master_list1,{hide_label: true,include_blank: " Select Reporting Manager"}%>
+            <%= f.select :reporting_master_id,all_reporting_master_list,{hide_label: true,include_blank: " Select Reporting Manager"}%>
           </div>
         </div>
 

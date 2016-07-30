@@ -64,8 +64,6 @@ class EmployeeAttendancesController < ApplicationController
   end
 
   def department_wise_employee_list
-    #@department = Department.where(id: params[:salary][:department_id])
-    #@department = params[:salary][:department_id]
     @costcenter = params[:salary][:name]
     @date = params[:salary][:day].to_date
     
@@ -79,7 +77,6 @@ class EmployeeAttendancesController < ApplicationController
     # else
     # @employees = Employee.filter_by_date_and_department(@date,@department,@costcenter)
     # end
-
     @employee_attendance = EmployeeAttendance.new
   end
     
@@ -96,7 +93,7 @@ class EmployeeAttendancesController < ApplicationController
     else
       @employee_ids.each do |eid|
         @emp = Employee.find_by_id(eid)
-      EmployeeAttendance.create(employee_id: eid,day: day,present: present,department_id: @emp.department_id)  
+      EmployeeAttendance.create(employee_id: eid,day: day,present: present,department_id: @emp.department_id, is_confirm: false)  
       flash[:notice] = "Created successfully"
       end
     end

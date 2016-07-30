@@ -3,7 +3,6 @@ class LeaveCOff < ActiveRecord::Base
 def self.filter_records(current_user)
 @leave_c_offs =  if current_user.class == Group
 LeaveCOff.all
->>>>>>> f88e4ff1b861855be9bc7f8384402049d140429d
   elsif current_user.class == Member
     if current_user.role.name == "Company"
       @employees = Employee.where(company_id: current_user.company_id)

@@ -326,6 +326,8 @@ Rails.application.routes.draw do
       post :send_request_to_higher_authority
       get :modal
       get :cancel_resignation_request
+      get :edit_n_send_next_modal
+      post :edit_n_send
   end
 end
   resources :travel_options

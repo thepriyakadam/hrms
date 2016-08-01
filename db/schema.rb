@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160730094325) do
+ActiveRecord::Schema.define(version: 20160730094606) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -2196,6 +2196,7 @@ ActiveRecord::Schema.define(version: 20160730094325) do
     t.integer  "leaving_reason_id"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
+    t.string   "resign_status"
   end
 
   add_index "resignation_histories", ["employee_resignation_id"], name: "index_resignation_histories_on_employee_resignation_id"
@@ -2530,6 +2531,7 @@ ActiveRecord::Schema.define(version: 20160730094325) do
     t.datetime "updated_at",       null: false
     t.integer  "employee_id"
     t.text     "feedback"
+    t.boolean  "is_complete"
   end
 
   add_index "trainees", ["employee_id"], name: "index_trainees_on_employee_id"

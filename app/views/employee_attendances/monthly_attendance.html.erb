@@ -44,7 +44,7 @@
 
             <!-- < half_leave_date = half_leave_date_count(exist) %> -->
             <% half_leave_date_cross_check = half_leave_date_cross_check_count(e.employee_id, @date) %>
-            <% half_day = half_leave_date_cross_check/2 %>
+            <% half_day = half_leave_date_cross_check.count/2 %>
 
             <% payable_day = present_day.to_f + holiday_in_month.to_f + week_off_day.to_f + pay_leave.to_f + payable_day.to_f + half_day.to_f %>
 

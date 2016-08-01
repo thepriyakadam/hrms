@@ -83,6 +83,10 @@ class TrainingRequestsController < ApplicationController
     session[:active_tab] ="trainingmgmt"
   end
 
+  def all_training_request_list
+
+  end
+
   def training_request_confirmation
     @training_request = TrainingRequest.find(params[:training_request_id])
     reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
@@ -93,7 +97,7 @@ class TrainingRequestsController < ApplicationController
   end
 
   def approve_training_request
-    @training_request = TrainingRequest.find(params[:training_request_id])
+    @training_request = TrainingRequest.find(params[:id])
     @training_request.update(status: "Approved")
     TrainingApproval.create(training_request_id: @training_request.id,employee_id: @training_request.employee_id, training_topic_master_id: @training_request.training_topic_master_id,reporting_master_id: @training_request.reporting_master_id,traininig_period: @training_request.training_period,training_date: @training_request.training_date,place: @training_request.place,no_of_employee: @training_request.no_of_employee,description: @training_request.description,justification: @training_request.justification,current_status: "Approved")
     ReportingMastersTrainingReq.create(reporting_master_id: @training_request.reporting_master_id, training_request_id: @training_request.id, training_status: "Approved")
@@ -107,7 +111,7 @@ class TrainingRequestsController < ApplicationController
       @trainee_request = TraineeRequest.find(tid)
       @trainee_request.update(is_complete: true) 
       # InterviewScheduleMailer.sample_email_to_interviewer(@interview_schedule).deliver_now
-      flash[:notice] = "Approved Successfully"
+      flash[:notice] = "Training Request Approved Successfully"
     end 
     redirect_to training_request_list_training_requests_path
   end
@@ -131,6 +135,14 @@ class TrainingRequestsController < ApplicationController
      @training_request = TrainingRequest.find(params[:format])
   end
 
+  def comment
+     @training_request = TrainingRequest.find(params[:training_request_id])
+     @comment = params[:training_request][:comment]
+     @training_request.update(comment: @comment)
+     redirect_to training_request_confirmation_training_requests_path(training_request_id: @training_request.id)
+     flash[:notice] = 'Comment Updated Successfully'
+  end
+
 
 
   def confirmation_list
@@ -139,15 +151,15 @@ class TrainingRequestsController < ApplicationController
 
 
   def reject_training_request
-    @training_request = TrainingRequest.find(params[:id])
+    @training_request = TrainingRequest.find(params[:format])
     @training_request.update(status: "Reject")
     TrainingApproval.create(training_request_id: @training_request.id,employee_id: @training_request.employee_id, training_topic_master_id: @training_request.training_topic_master_id,reporting_master_id: @training_request.reporting_master_id,traininig_period: @training_request.training_period,training_date: @training_request.training_date,place: @training_request.place,no_of_employee: @training_request.no_of_employee,description: @training_request.description,justification: @training_request.justification,current_status: "Reject")
     ReportingMastersTrainingReq.create(reporting_master_id: @training_request.reporting_master_id, training_request_id: @training_request.id, training_status: "Reject")
     #TrainingRequestMailer.reject_training_request_email(@training_request).deliver_now
     
-    @comment = params[:training_request][:comment]
-    @training_request.update(comment: @comment)
-    flash[:alert] = 'Comment Updated Successfully'
+    # @comment = params[:training_request][:comment]
+    # @training_request.update(comment: @comment)
+    flash[:alert] = 'Training Request Rejected Successfully'
     redirect_to training_request_list_training_requests_path
   end
 

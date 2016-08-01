@@ -31,7 +31,7 @@
         </div>
 
          <div class="col-sm-3">
-          <div class="field">
+          <div class="form-group required">
           <%= f.select :reporting_master_id, all_reporting_master_list, {include_blank: "Select Approval",label:"Request To"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>    
           </div>
         </div> 
@@ -176,10 +176,18 @@
       "employee_resignation[employee_id]":{
         required: true,
       }
+    }
+    "employee_resignation[reporting_master_id]":{
+        required: true,
+      }
     },
     messages: {
       "employee_resignation[employee_id]":{
         required: "Please select Employee Name",
+      }
+    }
+     "employee_resignation[reporting_master_id]":{
+        required: "Please select Reporting Manager",
       }
     },
     errorPlacement: function(error, element) {

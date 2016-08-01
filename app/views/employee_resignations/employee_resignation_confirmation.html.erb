@@ -47,7 +47,7 @@
     </tr>
     <tr>
       <td><b>Request By</b></td>
-      <td><%= @employee_resignation.employee.first_name+' '+@employee_resignation.employee.middle_name+' '+@employee_resignation.employee.last_name %></td>
+      <td><%= full_name(@employee_resignation.employee) %></td>
     </tr>
     <tr>
       <td><b>Approved By</b></td>
@@ -117,11 +117,12 @@
   </tbody>
 </table>
 <div id="myModal" class="modal fade"></div>
+<div id="myModal1" class="modal fade"></div>
 <%= link_to 'Approve',approve_resignation_employee_resignations_path(@employee_resignation),class: 'btn btn-sm btn-primary fa fa-check' %> |
 <%= link_to 'Reject',reject_employee_resignation_employee_resignations_path(@employee_resignation),class: 'btn btn-sm btn-danger fa fa-trash' %> |
 <%= link_to 'Approve & Send next',modal_employee_resignations_path(@employee_resignation.id),class: 'btn btn btn-sm btn-success fa fa-modx',remote: true %>  
-<%= link_to 'Approve',employee_resignation_confirmation_employee_resignations_path(@employee_resignation),class: 'btn btn-sm btn-primary fa fa-check' %> | 
-
+ <%= link_to 'Edit & Send Next',edit_n_send_next_modal_employee_resignations_path(@employee_resignation.id),class: 'btn btn-sm btn-primary fa fa-check',remote: true %> | 
+ 
 </div>
 </div>
 </div>

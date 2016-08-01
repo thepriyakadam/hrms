@@ -5,6 +5,7 @@
       <%= link_to "Add Employee Attendance", new_employee_attendance_path, class: 'btn btn-primary' %> 
     </div>
   </div><!-- /.box-header -->
+
   <div class="box-body">
     <%= bootstrap_form_for :temp, url: {action: "create_attendance", date: @date} do |f| %>
       <table class="table table-bordered table-hover table-condensed">
@@ -66,7 +67,7 @@
         </tbody>
       </table>
       <%= f.submit "Confirm Workingdays", class: "btn btn-sm btn-primary" %>
-    <%end%>
+    <% end %>
   </div>
 </div>
 

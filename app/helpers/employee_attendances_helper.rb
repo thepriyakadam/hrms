@@ -17,7 +17,7 @@ module EmployeeAttendancesHelper
       leave_records = ParticularLeaveRecord.where("strftime('%m/%Y', leave_date) = ? and employee_id = ?", date.strftime('%m/%Y'), e.id) 
       leave_records.each do |l| 
         if d == l.leave_date and flag == 0 
-          flag = 1 
+          flag = 1
           if l.leav_category.is_payble
             exist[l.leave_date] = "L"
           else

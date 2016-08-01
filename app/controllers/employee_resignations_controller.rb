@@ -182,6 +182,51 @@ class EmployeeResignationsController < ApplicationController
   def send_email_to_reporting_manager
   end
 
+  def emp_resignation_history
+    @employee_resignations = EmployeeResignation.all
+  end
+
+  def show_resignation_detail
+    @employee_resignation_id = EmployeeResignation.find_by_employee_id(params[:emp_id])
+    #@employee_resignation = EmployeeResignation.where(employee_id: @employee_resignation_id.employee_id)
+    @resignation_histories = ResignationHistory.where(employee_resignation_id: @employee_resignation_id.id)
+  end
+
+  def print_resignation_detail
+    @employee = Employee.find(params[:emp_id])
+    @employee_resignation = EmployeeResignation.find(params[:resignation_id])
+    @employees = Employee.where(id: @employee.id).group(:id)
+    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
+    @employee_resignation_id = EmployeeResignation.find_by_employee_id(params[:emp_id])
+    @resignation_histories = ResignationHistory.where(employee_resignation_id: @employee_resignation_id.id)
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render pdf: 'print_resignation_detail',
+               layout: 'pdf.html',
+               :page_height      => 1000,
+               :dpi              => '300',
+               :margin           => {:top    => 10, # default 10 (mm)
+                          :bottom => 10,
+                          :left   => 14,
+                          :right  => 14},
+               orientation: 'Landscape',
+               template: 'employee_resignations/print_resignation_detail.pdf.erb',
+              :show_as_html => params[:debug].present?
+      end
+    end  
+  end
+
+  def xl_resignation_detail
+    @employee = Employee.find(params[:emp_id])
+    @employee_resignation = EmployeeResignation.find(params[:resignation_id])
+    @employees = Employee.where(id: @employee.id)
+    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
+    @experiences = Experience.where(employee_id: @employee.id)
+    @employee_resignation_id = EmployeeResignation.find_by_employee_id(params[:emp_id])
+    @resignation_histories = ResignationHistory.where(employee_resignation_id: @employee_resignation_id.id)
+  end
+
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_employee_resignation

@@ -210,9 +210,7 @@ class TravelRequestsController < ApplicationController
     flash[:notice] = 'Travel Request Approved'
     redirect_to travel_history_travel_requests_path
   end
-
-
-
+  
   def is_confirm
     @travel_request = TravelRequest.find(params[:travel_id])
     @travel_request.update(is_confirm: true)

@@ -108,7 +108,7 @@ class EmployeeAttendancesController < ApplicationController
     #@employee_attendances = EmployeeAttendance.filter_by_date_and_costcenter_and_present(@day, @costcenter_id, @present)
 
     @costcenter = JoiningDetail.where(cost_center_id: @costcenter_id).pluck(:employee_id)
-    @employee_attendances = EmployeeAttendance.where(present: @present ,employee_id: @costcenter).where(day: @day.to_date)
+    @employee_attendances = EmployeeAttendance.where(present: @present ,employee_id: @costcenter).where(day: @day.to_date,is_confirm: "false")
   end
 
   def destroy_employee_attendance

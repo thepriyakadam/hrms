@@ -11,7 +11,7 @@
               <%= select :salary, :name, all_cost_center, {include_blank: "Select Cost Center"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
             </div>
           </div>
-          
+
           <div class="col-sm-3">
             <label>Date </label>
             <div class="form-group required">
@@ -19,7 +19,7 @@
                 <div class="input-group-addon">
                   <i class="fa fa-calendar"></i>
                 </div>
-                <%= text_field :salary, :day,hide_label: true,class: 'day_date'%>
+                <%= text_field :salary,:day,hide_label: true,class: 'day_date form-control'%>
               </div>
             </div>
           </div>

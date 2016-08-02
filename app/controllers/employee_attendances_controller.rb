@@ -64,19 +64,8 @@ class EmployeeAttendancesController < ApplicationController
   end
 
   def department_wise_employee_list
-    @costcenter = params[:salary][:name]
-    @date = params[:salary][:day].to_date
-    
-    #@employee = Employee.where(department_id: @department).pluck(:id)
-    @attendance = EmployeeAttendance.where(day: @date).pluck(:employee_id)
-    @costcenter = JoiningDetail.where(cost_center_id: @costcenter).pluck(:employee_id)
-    @employees = Employee.where(id: @attendance,id: @costcenter)
-
-    # if @department = ""
-    # @employees = Employee.filter_by_date_and_costcenter(@date,@department,@costcenter)
-    # else
-    # @employees = Employee.filter_by_date_and_department(@date,@department,@costcenter)
-    # end
+    @costcenter, @date = params[:salary][:name], params[:salary][:day].to_date
+    @employees = Employee.filter_by_date_and_costcenter(@date, @costcenter)
     @employee_attendance = EmployeeAttendance.new
   end
     

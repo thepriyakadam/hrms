@@ -103,14 +103,17 @@ class EmployeeAttendancesController < ApplicationController
   end
 
   def show_employee
-    @department_id = params[:salary][:department_id]
+    @costcenter_id = params[:salary][:costcenter_id]
     @day = params[:salary][:day]
     @present = params[:salary][:present]
-    @employee_attendances = EmployeeAttendance.where("day = ? AND present = ? AND department_id = ?", @day.to_date, @present,@department_id)
+    #@employee_attendances = EmployeeAttendance.filter_by_date_and_costcenter_and_present(@day, @costcenter_id, @present)
+
+    @costcenter = JoiningDetail.where(cost_center_id: @costcenter_id).pluck(:employee_id)
+    @employee_attendances = EmployeeAttendance.where(present: @present ,employee_id: @costcenter).where(day: @day.to_date)
   end
 
   def destroy_employee_attendance
-    @department_id = params[:department_id]
+    @costcenter_id = params[:costcenter_id]
     @day = params[:day]
     @present = params[:present]
     @employee_attendance_ids = params[:employee_attendance_ids]
@@ -159,15 +162,11 @@ class EmployeeAttendancesController < ApplicationController
 
   def show_costcenter_wise_attendance
     @year, @month = params[:year], params[:month]
-    @costcenter =params[:costcenter]
-
-    # @attendance = EmployeeAttendance.where(day: @date).pluck(:employee_id)
-    # @costcenter = JoiningDetail.where(cost_center_id: @costcenter).pluck(:employee_id)
-    # @employees = Employee.where(id: @attendance,id: @costcenter)
-
+    @costcenter_id =params[:costcenter]
+    @costcenter = JoiningDetail.where(cost_center_id: @costcenter_id).pluck(:employee_id)
     @date = Date.new(@year.to_i, Workingday.months[@month])
     @day = @date.end_of_month.day
-    @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ? and is_confirm = ? and department_id = ?", @date.strftime('%m/%Y'),false,@department_id).group(:employee_id)
+    @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ? AND employee_id = ?", @date.to_date.strftime('%m/%Y'),@costcenter)
   end 
 
   private
@@ -180,7 +179,7 @@ class EmployeeAttendancesController < ApplicationController
     if params[:employees].nil?
       flash[:alert] = "Please Select employees checkbox."
       redirect_to root_url
-    end
+    end 
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

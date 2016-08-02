@@ -4,10 +4,10 @@
      <%= bootstrap_form_for :daily_bill_detail,url:{controller: "daily_bill_details",action:"update_comment",daily_bill_detail_id: @daily_bill_detail.id} do |f| %>
         <div class="row">
           <div class="col-sm-6">
-            <%= f.text_field :comment,hide_label: true%>
+            <%= f.text_area :comment,hide_label: true%>
           </div>
-          <div class="col-sm-3">
-            <%= f.submit "Update Comment", class: 'btn btn-sm btn-warning fa fa-modx' %>
+          <div class="col-sm-3" style="padding-top:30px;">
+            <%= f.submit " Comment", class: 'btn btn-sm btn-warning fa fa-modx' %>
           </div>
         </div>
       <% end %>

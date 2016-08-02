@@ -19,6 +19,11 @@ class DailyBillDetailsController < ApplicationController
     @daily_bill_detail = DailyBillDetail.new
     @travel_request = TravelRequest.find(params[:travel_request_id])
     @daily_bill_details = DailyBillDetail.where(travel_request_id: @travel_request.id)
+
+
+    reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
+    @reporting_master = ReportingMaster.find(@travel_request.reporting_master_id)
+    @employee = Employee.find(@reporting_master.employee_id)
     session[:active_tab] = "master"
     session[:active_tab1] ="daily_bill_master_setup"
   end
@@ -38,6 +43,10 @@ def create
       if @daily_bill_detail.save
         @daily_bill_detail.update(reporting_master_id: @travel_request.reporting_master_id)
         @daily_bill_details = DailyBillDetail.where(travel_request_id: @travel_request.id)
+        # c1 = @daily_bill_details.sum(:travel_expence).to_i 
+        # DailyBillDetail.where(id: @daily_bill_detail.id).update_all(e_place: c1)
+        c1 = @daily_bill_details.sum(:travel_expence).to_i
+        TravelRequest.where(id: @travel_request.id).update_all(expense: c1)
         @daily_bill_detail = DailyBillDetail.new
         flash[:notice] = 'Daily Bill Detail saved Successfully.'
       end
@@ -95,6 +104,9 @@ def create
   def print_daily_bill
     @travel_request = TravelRequest.find(params[:qwe])
     @employee = Employee.find(@travel_request.employee_id)
+    reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
+    @reporting_master = ReportingMaster.find(@travel_request.reporting_master_id)
+    @employee = Employee.find(@reporting_master.employee_id)
     # @reporting_master = ReportingMaster.find(@daily_bill_detail.reporting_master_id)
     # @employee1 = Employee.find(@reporting_master.employee_id)
     @daily_bill_details = DailyBillDetail.where(travel_request_id: @travel_request.id)
@@ -134,10 +146,42 @@ def create
     reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
     @reporting_master = ReportingMaster.find(@travel_request.reporting_master_id)
     @employee = Employee.find(@reporting_master.employee_id)
+    # @c1 = @reporting_masters_travel_requests.count
+    # for i in 1..c1
+       
+    # end
     # @travel_request = TravelRequest.find(@daily_bill_detail.travel_request_id)
+    @reporting_masters_travel_request = ReportingMastersTravelRequest.find_by_travel_request_id(params[:format])
+    @reporting_masters_travel_requests = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,reporting_master_id: @reporting_masters_travel_request.reporting_master_id).first
+
     @daily_bill_details = DailyBillDetail.where(reporting_master_id: reporting_masters,travel_request_id: @travel_request.id,is_confirm: true)
-    session[:active_tab] ="travelmgmt"
+    session[:active_tab] ="travelmgmt" 
   end
+
+  def approve_and_send_next
+
+  end
+
+
+  # def create_employee_attendance
+  #   @employee_ids = params[:employee_ids]
+  #   day = params[:employee_attendances][:day]
+  #   present = params[:employee_attendances][:present]
+  #   #department = params[:employee_attendances][:department_id]
+
+  #   @employee = Employee.where(id: @employee_ids)
+
+  #   if @employee_ids.nil?
+  #     flash[:alert] = "Please Select the Checkbox"
+  #   else
+  #     @employee_ids.each do |eid|
+  #       @emp = Employee.find_by_id(eid)
+  #     EmployeeAttendance.create(employee_id: eid,day: day,present: present,department_id: @emp.department_id, is_confirm: false)  
+  #     flash[:notice] = "Created successfully"
+  #     end
+  #   end
+  #   redirect_to new_employee_attendance_path
+  # end
 
   def approve_request
     @daily_bill_detail_ids = params[:daily_bill_detail_ids]
@@ -218,6 +262,46 @@ def create
      redirect_to daily_bill_request_confirmation_daily_bill_details_path(daily_bill_detail_id: @daily_bill_detail.id)
   end
 
+  def approve_and_send_next
+     # byebug
+     @daily_bill_detail = DailyBillDetail.new
+     @travel_request = TravelRequest.find(params[:format])
+     # @reporting_masters_travel_request = ReportingMastersTravelRequest.find(@travel_request.travel_request_id)
+     # reporting_masters_travel_requests = ReportingMastersTravelRequest.find_by_reporting_master_id()
+     # @reporting_masters_travel_request = ReportingMastersTravelRequest.find(@travel_request.employee_id)
+    c1 = @reporting_masters_travel_requests
+    for i in 1..c1
+      DailyBillDetail.where(id: @travel_request.id).update_all(request_status: "Approved & Send Next") 
+    end
+    # @travel_request = TravelRequest.find(@daily_bill_detail.travel_request_id)
+    @reporting_masters_travel_request = ReportingMastersTravelRequest.find_by_travel_request_id(params[:format])
+    @reporting_masters_travel_requests = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,reporting_master_id: @reporting_masters_travel_request.reporting_master_id).first
+  end
+  
+
+
+  def create
+    @vacancy_master = VacancyMaster.new(vacancy_master_params)
+    # @vacancy = Department.find(@vacancy_master.department_id)
+    # @vacancy_master.company_location_id = @vacancy.company_location_id
+    @vacancy_master.current_status = "Pending"
+  
+    respond_to do |format|
+      if @vacancy_master.save
+        len = @vacancy_master.no_of_position
+        for i in 1..len
+        ParticularVacancyRequest.create(vacancy_master_id: @vacancy_master.id,employee_id: @vacancy_master.employee_id,employee_designation_id: @vacancy_master.employee_designation_id,vacancy_name: @vacancy_master.vacancy_name,fulfillment_date: @vacancy_master.vacancy_post_date,status: "Pending")
+        end
+        ReportingMastersVacancyMaster.create(reporting_master_id: @vacancy_master.reporting_master_id, vacancy_master_id: @vacancy_master.id, vacancy_status: "Pending")
+        VacancyMasterMailer.vacancy_request(@vacancy_master).deliver_now
+        format.html { redirect_to @vacancy_master, notice: 'Vacancy created successfully.' }
+        format.json { render :show, status: :created, location: @vacancy_master }
+      else
+        format.html { render :new }
+        format.json { render json: @vacancy_master.errors, status: :unprocessable_entity }
+      end
+    end
+  end
 
   # def reject_request
   #   @daily_bill_detail_ids = params[:daily_bill_detail_ids]

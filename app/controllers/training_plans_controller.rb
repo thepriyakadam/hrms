@@ -41,12 +41,17 @@ class TrainingPlansController < ApplicationController
           flash[:alert] = "Please Select the Checkbox"
         else
           @trainee_request_ids.each do |tid|
+          # @emp = Employee.find_by_id(tid)
+          # @trainee_request = TraineeRequest.find(tid)
           @training_plan.save
           @emp_total = @trainee_request_ids.count
           TrainingPlan.where(id: @training_plan.id).update_all(no_of_employee: @emp_total)
           Trainee.create(employee_id: tid,training_plan_id: @training_plan.id)
           end
         end
+        TrainingPlanMailer.send_email_to_trainer(@training_plan).deliver_now     
+        # TrainingPlanMailer.confirmation_email_to_employee(@emp).deliver_now     
+        flash[:notice] = 'Training Plan Created Successfully'
         redirect_to training_topic_wise_search_training_plans_path
   end
 
@@ -136,6 +141,7 @@ class TrainingPlansController < ApplicationController
   end
 
   def show_traineerequest_list
+     # byebug
      @training_plan =TrainingPlan.new
      @training_topic_master = TrainingTopicMaster.find(params[:training_topic_master_id])
      @trainee_requests =TraineeRequest.where(training_topic_master_id: @training_topic_master.id,is_complete: true)
@@ -166,6 +172,6 @@ class TrainingPlansController < ApplicationController
     end
     # Never trust parameters from the scary internet, only allow the white list through.
     def training_plan_params
-      params.require(:training_plan).permit(:about_trainer,:trainer_num,:period_id,:training_date,:training_request_id, :training_topic_master_id, :topic, :no_of_employee, :trainer_name, :no_of_days, :no_of_hrs, :place)
+      params.require(:training_plan).permit(:about_trainer,:trainer_num,:period_id,:training_date,:training_request_id, :training_topic_master_id, :topic, :no_of_employee, :trainer_name, :no_of_days, :no_of_hrs, :place,:trainer_email)
     end
 end

@@ -165,6 +165,22 @@ class EmployeeAttendancesController < ApplicationController
     redirect_to employee_attendances_path
   end
 
+  def costcenter_wise_attendance
+  end
+
+  def show_costcenter_wise_attendance
+    @year, @month = params[:year], params[:month]
+    @costcenter =params[:costcenter]
+
+    # @attendance = EmployeeAttendance.where(day: @date).pluck(:employee_id)
+    # @costcenter = JoiningDetail.where(cost_center_id: @costcenter).pluck(:employee_id)
+    # @employees = Employee.where(id: @attendance,id: @costcenter)
+
+    @date = Date.new(@year.to_i, Workingday.months[@month])
+    @day = @date.end_of_month.day
+    @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ? and is_confirm = ? and department_id = ?", @date.strftime('%m/%Y'),false,@department_id).group(:employee_id)
+  end 
+
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_employee_attendance

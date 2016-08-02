@@ -123,8 +123,8 @@ Rails.application.routes.draw do
       post :department_wise_emp
       post :create_attendance
       get :monthly_attendance
-      get :department_wise_attendance
-      get :show_department_wise_attendance
+      get :costcenter_wise_attendance
+      get :show_costcenter_wise_attendance
     end
   end
   resources :salary_comp_mappings

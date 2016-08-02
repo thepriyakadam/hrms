@@ -64,19 +64,8 @@ class EmployeeAttendancesController < ApplicationController
   end
 
   def department_wise_employee_list
-    @costcenter = params[:salary][:name]
-    @date = params[:salary][:day].to_date
-    
-    #@employee = Employee.where(department_id: @department).pluck(:id)
-    @attendance = EmployeeAttendance.where(day: @date).pluck(:employee_id)
-    @costcenter = JoiningDetail.where(cost_center_id: @costcenter).pluck(:employee_id)
-    @employees = Employee.where(id: @attendance,id: @costcenter)
-
-    # if @department = ""
-    # @employees = Employee.filter_by_date_and_costcenter(@date,@department,@costcenter)
-    # else
-    # @employees = Employee.filter_by_date_and_department(@date,@department,@costcenter)
-    # end
+    @costcenter, @date = params[:salary][:name], params[:salary][:day].to_date
+    @employees = Employee.filter_by_date_and_costcenter(@date, @costcenter, current_user)
     @employee_attendance = EmployeeAttendance.new
   end
     
@@ -104,7 +93,6 @@ class EmployeeAttendancesController < ApplicationController
     @year = params[:year]
     @month = params[:month]
     @department = params[:department_id]
-
     @date = Date.new(@year.to_i, Workingday.months[@month])
     @day = @date.end_of_month.day
     @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).group(:employee_id)
@@ -114,14 +102,17 @@ class EmployeeAttendancesController < ApplicationController
   end
 
   def show_employee
-    @department_id = params[:salary][:department_id]
+    @costcenter_id = params[:salary][:costcenter_id]
     @day = params[:salary][:day]
     @present = params[:salary][:present]
-    @employee_attendances = EmployeeAttendance.where("day = ? AND present = ? AND department_id = ?", @day.to_date, @present,@department_id)
+    #@employee_attendances = EmployeeAttendance.filter_by_date_and_costcenter_and_present(@day, @costcenter_id, @present)
+
+    @costcenter = JoiningDetail.where(cost_center_id: @costcenter_id).pluck(:employee_id)
+    @employee_attendances = EmployeeAttendance.where(present: @present ,employee_id: @costcenter).where(day: @day.to_date,is_confirm: "false")
   end
 
   def destroy_employee_attendance
-    @department_id = params[:department_id]
+    @costcenter_id = params[:costcenter_id]
     @day = params[:day]
     @present = params[:present]
     @employee_attendance_ids = params[:employee_attendance_ids]
@@ -152,6 +143,7 @@ class EmployeeAttendancesController < ApplicationController
     @date = Date.new(@year.to_i, Workingday.months[@month])
     @day = @date.end_of_month.day
     @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ? and is_confirm = ?", @date.strftime('%m/%Y'),false).group(:employee_id)
+
   end
 
   def create_attendance
@@ -165,6 +157,18 @@ class EmployeeAttendancesController < ApplicationController
     redirect_to employee_attendances_path
   end
 
+  def costcenter_wise_attendance
+  end
+
+  def show_costcenter_wise_attendance
+    @year, @month = params[:year], params[:month]
+    @costcenter_id =params[:costcenter]
+    @costcenter = JoiningDetail.where(cost_center_id: @costcenter_id).pluck(:employee_id)
+    @date = Date.new(@year.to_i, Workingday.months[@month])
+    @day = @date.end_of_month.day
+    @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ? AND employee_id = ?", @date.to_date.strftime('%m/%Y'),@costcenter)
+  end 
+
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_employee_attendance
@@ -175,7 +179,7 @@ class EmployeeAttendancesController < ApplicationController
     if params[:employees].nil?
       flash[:alert] = "Please Select employees checkbox."
       redirect_to root_url
-    end
+    end 
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

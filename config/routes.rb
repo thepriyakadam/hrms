@@ -123,6 +123,8 @@ Rails.application.routes.draw do
       post :department_wise_emp
       post :create_attendance
       get :monthly_attendance
+      get :costcenter_wise_attendance
+      get :show_costcenter_wise_attendance
     end
   end
   resources :salary_comp_mappings
@@ -328,6 +330,10 @@ Rails.application.routes.draw do
       get :cancel_resignation_request
       get :edit_n_send_next_modal
       post :edit_n_send
+      get :emp_resignation_history
+      get :show_resignation_detail
+      get :print_resignation_detail
+      get :xl_resignation_detail
   end
 end
   resources :travel_options
@@ -597,6 +603,9 @@ end
       get :salaryslip
       get :advance
       get :attendance
+      get :employee_resignation
+      get :resignation_history
+      get :show_resignation_detail
     end
   end
 
@@ -1101,6 +1110,8 @@ end
       get :report
       get :birthday_email
       get :birthday_invitation
+      get :employee_list_for_revert
+      get :revert_employee
     end
     member do
       get :edit_manager

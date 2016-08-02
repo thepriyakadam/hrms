@@ -13,7 +13,7 @@ class CaptureResume < ActiveRecord::Base
   has_attached_file :avatar, path: ':rails_root/attachments/:id/:style/:basename.:extension'
   
   has_attached_file :passport_photo, styles: { medium: '300x300>', thumb: '100x100>' }, default_url: 'missing.png'
-  validates_attachment_content_type :passport_photo, content_type: /\Aimage\/.*\Z/
+  validates_attachment_content_type :passport_photo, :content_type => /\Aimage\/.*\Z/,:message => 'only (png/gif/jpeg) images'
   # validates_attachment_presence :avatar
   validates_attachment_size :avatar, less_than: 2.megabytes
   validates_attachment :avatar, content_type: { content_type: %w(application/pdf application/msword application/msexcel application/vnd.openxmlformats-officedocument.wordprocessingml.document) }

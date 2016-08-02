@@ -1,4 +1,4 @@
-<%= bootstrap_form_for TraineeRequest.new,url:{action:'approve_training_request',id: @training_request.id} do |f| %>
+<%= bootstrap_form_for TraineeRequest.new,url:{action:'approve_training_request',training_request_id: @training_request.id} do |f| %>
 <table id="example" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>

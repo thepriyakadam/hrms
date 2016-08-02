@@ -34,25 +34,44 @@ class TrainingRequestsController < ApplicationController
     @training_request.status = "Pending"
     #@reporting_master = params[:training_request][:reporting_master_id]
     #@rep_master = ReportingMaster.where(id: @reporting_master)
-    respond_to do |format|
-      if @training_request.save
-        @employee_ids = params[:employee_ids]
-        @employee_ids.each do |eid|
-        @emp_total = @employee_ids.count
-        # @reporting_master = params[:training_request][:reporting_master_id]
-        # @rep_master = ReportingMaster.find(@reporting_master)
-        TrainingRequest.where(id: @training_request.id).update_all(no_of_employee: @emp_total)
-        TraineeRequest.create(employee_id: eid,training_request_id: @training_request.id,training_topic_master_id: @training_request.training_topic_master_id)
-      end
-        format.html { redirect_to @training_request, notice: 'Training request was successfully created.' }
-        format.json { render :show, status: :created, location: @training_request }
-      else
-        format.html { render :new }
-        format.json { render json: @training_request.errors, status: :unprocessable_entity }
-      end
-    end
+    @employee_ids = params[:employee_ids]
+     if @employee_ids.nil?
+          flash[:alert] = "Please Select the Checkbox"
+          redirect_to new_training_request_path
+        else
+          @employee_ids.each do |eid|
+          @training_request.save
+          @emp_total = @employee_ids.count
+          TrainingRequest.where(id: @training_request.id).update_all(no_of_employee: @emp_total)
+          TraineeRequest.create(employee_id: eid,training_request_id: @training_request.id,training_topic_master_id: @training_request.training_topic_master_id)
+          end
+          flash[:notice] = 'Training Request Created Successfully'
+          redirect_to new_training_request_path
+        end
   end
 
+  def create_department_wise_training_request
+    @training_request = TrainingRequest.new(training_request_params)
+    @training_request.status = "Pending"
+    #@reporting_master = params[:training_request][:reporting_master_id]
+    #@rep_master = ReportingMaster.where(id: @reporting_master)
+    @employee_ids = params[:employee_ids]
+     if @employee_ids.nil?
+          flash[:alert] = "Please Select the Checkbox"
+          redirect_to department_wise_search_training_requests_path
+        else
+          @employee_ids.each do |eid|
+          @training_request.save
+          @emp_total = @employee_ids.count
+          TrainingRequest.where(id: @training_request.id).update_all(no_of_employee: @emp_total)
+          TraineeRequest.create(employee_id: eid,training_request_id: @training_request.id,training_topic_master_id: @training_request.training_topic_master_id)
+          end
+          flash[:notice] = 'Training Request Created Successfully'
+          redirect_to department_wise_search_training_requests_path
+        end
+  end
+
+  
   # PATCH/PUT /training_requests/1
   # PATCH/PUT /training_requests/1.json
   def update
@@ -97,7 +116,7 @@ class TrainingRequestsController < ApplicationController
   end
 
   def approve_training_request
-    @training_request = TrainingRequest.find(params[:id])
+    @training_request = TrainingRequest.find(params[:training_request_id])
     @training_request.update(status: "Approved")
     TrainingApproval.create(training_request_id: @training_request.id,employee_id: @training_request.employee_id, training_topic_master_id: @training_request.training_topic_master_id,reporting_master_id: @training_request.reporting_master_id,traininig_period: @training_request.training_period,training_date: @training_request.training_date,place: @training_request.place,no_of_employee: @training_request.no_of_employee,description: @training_request.description,justification: @training_request.justification,current_status: "Approved")
     ReportingMastersTrainingReq.create(reporting_master_id: @training_request.reporting_master_id, training_request_id: @training_request.id, training_status: "Approved")
@@ -105,17 +124,16 @@ class TrainingRequestsController < ApplicationController
     @trainee_request_ids = params[:trainee_request_ids]
     if @trainee_request_ids.nil?
       flash[:alert] = "Please Select the Checkbox"
-      redirect_to training_request_list_training_requests_path
+      redirect_to training_request_confirmation_training_requests_path(training_request_id: @training_request.id)
     else
       @trainee_request_ids.each do |tid|
       @trainee_request = TraineeRequest.find(tid)
       @trainee_request.update(is_complete: true) 
       # InterviewScheduleMailer.sample_email_to_interviewer(@interview_schedule).deliver_now
-      flash[:notice] = "Training Request Approved Successfully"
     end 
+    flash[:notice] = "Training Request Approved Successfully"
     redirect_to training_request_list_training_requests_path
   end
-
     #  @comment = params[:training_request][:comment]
     #  @training_request.update(comment: @comment)
     #  flash[:notice] = 'Comment Updated Successfully'

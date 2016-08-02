@@ -364,6 +364,7 @@ end
       get :_employee_list
       patch :create_dept_wise_request
       post :comment
+      post :create_department_wise_training_request
     end
   end
   resources :selected_resumes  do

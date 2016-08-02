@@ -24,25 +24,29 @@
       <tr>
         <th><strong>Contact No:</strong></th>
         <td><%= @training_plan.trainer_num %></td>
-      
+        
         <th><strong>About Trainer:</strong></th>
-        <td><%= @training_plan.about_trainer %></td>
+        <td><%= @training_plan.trainer_email %></td>
+        
       </tr>
 
       <tr>
+        <th><strong>About Trainer:</strong></th>
+        <td><%= @training_plan.about_trainer %></td>
+
         <th><strong>No of Days:</strong></th>
         <td><%= @training_plan.no_of_days %></td>
       
-        <th><strong>No of Hrs:</strong></th>
-        <td><%= @training_plan.no_of_hrs %></td>
       </tr>
 
       <tr>
+
+        <th><strong>No of Hrs:</strong></th>
+        <td><%= @training_plan.no_of_hrs %></td>
+
         <th><strong>Place:</strong></th>
         <td><%= @training_plan.place %></td>
 
-        <th></th>
-        <td></td>
       </tr>
     </table>
     <div class="box-header with-border">

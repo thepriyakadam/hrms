@@ -21,12 +21,12 @@
 			      <tr>
 			      	<td><%= employee.manual_employee_code %></td>
 			        <td><%= employee.first_name %> <%= employee.middle_name %> <%= employee.last_name %></td>
-			        <td><%= f.select :role_id, @all_role_list,hide_label:true,prompt:true %>
+			        <td><%= f.select :role_id, all_role_list,{hide_label:true,include_blank: "Please Select Role"},prompt:true %>
 			   				<%= f.hidden_field :employee_id, value: employee.id %>
 			        </td>
-			        <td><%= f.select :manager_id, @all_employee_list,hide_label:true, prompt:true %></td>
+			        <td><%= f.select :manager_id, all_reporting_master_list1,{hide_label:true,include_blank: " Select Reporting Manager"},prompt:true %></td>
 
-			        <td><%= f.select :manager_2_id, @all_employee_list,hide_label:true, prompt:true %></td>
+			        <td><%= f.select :manager_2_id, all_reporting_master_list1,{hide_label:true,include_blank: " Select Reporting Manager"}, prompt:true %></td>
 			        <td><%= f.submit "+", class: 'btn btn-primary btn-sm fa fa-user-plus' %></td>
 			      </tr>
 		     	<% end %>

@@ -32,9 +32,20 @@ class SelfServicesController < ApplicationController
     end
     session[:active_tab] ="selfservice"
   end
+
+  def employee_resignation
+    @employee_resignation = EmployeeResignation.new
+    @employee_resignations = EmployeeResignation.where(employee_id: current_user.employee_id)
+  end
+
+  def resignation_history
+    @employee_resignations = EmployeeResignation.where(employee_id: current_user.employee_id)
+  end
+
+  def show_resignation_detail
+    @employee_resignation_id = EmployeeResignation.find_by_employee_id(params[:emp_id])
+    @resignation_histories = ResignationHistory.where(employee_resignation_id: @employee_resignation_id.id)
+  end
+
 end
 
-def employee_resignation
-  @employee_resignation = EmployeeResignation.all
-
-end

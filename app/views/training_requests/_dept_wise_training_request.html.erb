@@ -3,7 +3,7 @@
 </div>
   <div class="box-body">
 
-<%= bootstrap_form_for(@training_request,html: {id: "training_request"}) do |f| %>
+<%= bootstrap_form_for(@training_request,html: {id: "training_request"},url:{action:"create_department_wise_training_request"}) do |f| %>
 
     <%= f.hidden_field :employee_id, value: current_user.employee_id %>
     <%= f.hidden_field :no_of_employee, value: @emp_total %>

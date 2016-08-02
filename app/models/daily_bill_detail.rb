@@ -10,8 +10,7 @@ class DailyBillDetail < ActiveRecord::Base
   validates :travel_expence, presence: true
 
   has_attached_file :passport_photo, styles: { medium: '300x300>', thumb: '100x100>' }, default_url: 'missing.png'
-  validates_attachment_content_type :passport_photo, content_type: /\Aimage\/.*\Z/
-
+  validates_attachment_content_type :passport_photo, :content_type => /\Aimage\/.*\Z/,:message => 'only (png/gif/jpeg) images'
   has_attached_file :avatar_file,
   :path => "attachments/attach_daily_bills/:basename.:extension"
 

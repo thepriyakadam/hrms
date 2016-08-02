@@ -64,19 +64,8 @@ class EmployeeAttendancesController < ApplicationController
   end
 
   def department_wise_employee_list
-    @costcenter = params[:salary][:name]
-    @date = params[:salary][:day].to_date
-    
-    #@employee = Employee.where(department_id: @department).pluck(:id)
-    @attendance = EmployeeAttendance.where(day: @date).pluck(:employee_id)
-    @costcenter = JoiningDetail.where(cost_center_id: @costcenter).pluck(:employee_id)
-    @employees = Employee.where(id: @attendance,id: @costcenter)
-
-    # if @department = ""
-    # @employees = Employee.filter_by_date_and_costcenter(@date,@department,@costcenter)
-    # else
-    # @employees = Employee.filter_by_date_and_department(@date,@department,@costcenter)
-    # end
+    @costcenter, @date = params[:salary][:name], params[:salary][:day].to_date
+    @employees = Employee.filter_by_date_and_costcenter(@date, @costcenter)
     @employee_attendance = EmployeeAttendance.new
   end
     
@@ -165,6 +154,22 @@ class EmployeeAttendancesController < ApplicationController
     Workingday.create(work_data_structure)
     redirect_to employee_attendances_path
   end
+
+  def costcenter_wise_attendance
+  end
+
+  def show_costcenter_wise_attendance
+    @year, @month = params[:year], params[:month]
+    @costcenter =params[:costcenter]
+
+    # @attendance = EmployeeAttendance.where(day: @date).pluck(:employee_id)
+    # @costcenter = JoiningDetail.where(cost_center_id: @costcenter).pluck(:employee_id)
+    # @employees = Employee.where(id: @attendance,id: @costcenter)
+
+    @date = Date.new(@year.to_i, Workingday.months[@month])
+    @day = @date.end_of_month.day
+    @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ? and is_confirm = ? and department_id = ?", @date.strftime('%m/%Y'),false,@department_id).group(:employee_id)
+  end 
 
   private
   # Use callbacks to share common setup or constraints between actions.

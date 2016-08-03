@@ -151,9 +151,9 @@ def create
        
     # end
     # @travel_request = TravelRequest.find(@daily_bill_detail.travel_request_id)
-    @reporting_masters_travel_request = ReportingMastersTravelRequest.find_by_travel_request_id(params[:format])
-    @reporting_masters_travel_requests = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,reporting_master_id: @reporting_masters_travel_request.reporting_master_id).first
-
+    # @reporting_masters_travel_request = ReportingMastersTravelRequest.find_by_reporting_master_id(params[:format])
+    @reporting_masters_travel_requests = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id).third
+    # @reporting_masters_travel_requests = ReportingMastersTravelRequest.all
     @daily_bill_details = DailyBillDetail.where(reporting_master_id: reporting_masters,travel_request_id: @travel_request.id,is_confirm: true)
     session[:active_tab] ="travelmgmt" 
   end
@@ -269,39 +269,41 @@ def create
      # @reporting_masters_travel_request = ReportingMastersTravelRequest.find(@travel_request.travel_request_id)
      # reporting_masters_travel_requests = ReportingMastersTravelRequest.find_by_reporting_master_id()
      # @reporting_masters_travel_request = ReportingMastersTravelRequest.find(@travel_request.employee_id)
-    c1 = @reporting_masters_travel_requests
-    for i in 1..c1
-      DailyBillDetail.where(id: @travel_request.id).update_all(request_status: "Approved & Send Next") 
-    end
-    # @travel_request = TravelRequest.find(@daily_bill_detail.travel_request_id)
-    @reporting_masters_travel_request = ReportingMastersTravelRequest.find_by_travel_request_id(params[:format])
-    @reporting_masters_travel_requests = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,reporting_master_id: @reporting_masters_travel_request.reporting_master_id).first
-  end
-  
-
-
-  def create
-    @vacancy_master = VacancyMaster.new(vacancy_master_params)
-    # @vacancy = Department.find(@vacancy_master.department_id)
-    # @vacancy_master.company_location_id = @vacancy.company_location_id
-    @vacancy_master.current_status = "Pending"
-  
-    respond_to do |format|
-      if @vacancy_master.save
-        len = @vacancy_master.no_of_position
-        for i in 1..len
-        ParticularVacancyRequest.create(vacancy_master_id: @vacancy_master.id,employee_id: @vacancy_master.employee_id,employee_designation_id: @vacancy_master.employee_designation_id,vacancy_name: @vacancy_master.vacancy_name,fulfillment_date: @vacancy_master.vacancy_post_date,status: "Pending")
-        end
-        ReportingMastersVacancyMaster.create(reporting_master_id: @vacancy_master.reporting_master_id, vacancy_master_id: @vacancy_master.id, vacancy_status: "Pending")
-        VacancyMasterMailer.vacancy_request(@vacancy_master).deliver_now
-        format.html { redirect_to @vacancy_master, notice: 'Vacancy created successfully.' }
-        format.json { render :show, status: :created, location: @vacancy_master }
-      else
-        format.html { render :new }
-        format.json { render json: @vacancy_master.errors, status: :unprocessable_entity }
+      c1 = @reporting_masters_travel_requests
+      for i in 1..c1
+        DailyBillDetail.where(id: @travel_request.id).update_all(request_status: "Approved & Send Next") 
       end
-    end
+      # @travel_request = TravelRequest.find(@daily_bill_detail.travel_request_id)
+      @reporting_masters_travel_request = ReportingMastersTravelRequest.find_by_travel_request_id(params[:format])
+      @reporting_masters_travel_requests = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,reporting_master_id: @reporting_masters_travel_request.reporting_master_id).last
+      # @reporting_masters_travel_requests = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,reporting_master_id: @reporting_masters_travel_request.reporting_master_id).last
+
   end
+  
+
+
+  # def create
+  #   @vacancy_master = VacancyMaster.new(vacancy_master_params)
+  #   # @vacancy = Department.find(@vacancy_master.department_id)
+  #   # @vacancy_master.company_location_id = @vacancy.company_location_id
+  #   @vacancy_master.current_status = "Pending"
+  
+  #   respond_to do |format|
+  #     if @vacancy_master.save
+  #       len = @vacancy_master.no_of_position
+  #       for i in 1..len
+  #       ParticularVacancyRequest.create(vacancy_master_id: @vacancy_master.id,employee_id: @vacancy_master.employee_id,employee_designation_id: @vacancy_master.employee_designation_id,vacancy_name: @vacancy_master.vacancy_name,fulfillment_date: @vacancy_master.vacancy_post_date,status: "Pending")
+  #       end
+  #       ReportingMastersVacancyMaster.create(reporting_master_id: @vacancy_master.reporting_master_id, vacancy_master_id: @vacancy_master.id, vacancy_status: "Pending")
+  #       VacancyMasterMailer.vacancy_request(@vacancy_master).deliver_now
+  #       format.html { redirect_to @vacancy_master, notice: 'Vacancy created successfully.' }
+  #       format.json { render :show, status: :created, location: @vacancy_master }
+  #     else
+  #       format.html { render :new }
+  #       format.json { render json: @vacancy_master.errors, status: :unprocessable_entity }
+  #     end
+  #   end
+  # end
 
   # def reject_request
   #   @daily_bill_detail_ids = params[:daily_bill_detail_ids]

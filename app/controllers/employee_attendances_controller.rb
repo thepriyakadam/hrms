@@ -166,7 +166,7 @@ class EmployeeAttendancesController < ApplicationController
     @costcenter = JoiningDetail.where(cost_center_id: @costcenter_id).pluck(:employee_id)
     @date = Date.new(@year.to_i, Workingday.months[@month])
     @day = @date.end_of_month.day
-    @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ? AND employee_id = ?", @date.to_date.strftime('%m/%Y'),@costcenter)
+    @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ? AND employee_id = ?", @date.strftime('%m/%Y').to_date,@costcenter)
   end 
 
   private

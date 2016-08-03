@@ -74,9 +74,7 @@ class EmployeeAttendancesController < ApplicationController
     day = params[:employee_attendances][:day]
     present = params[:employee_attendances][:present]
     #department = params[:employee_attendances][:department_id]
-
     @employee = Employee.where(id: @employee_ids)
-
     if @employee_ids.nil?
       flash[:alert] = "Please Select the Checkbox"
     else

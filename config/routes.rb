@@ -411,6 +411,7 @@ end
     get :comment_modal
     post :update_comment
     post :reject_request
+    get :approve_and_send_next
     end
   end 
   resources :travel_requests do

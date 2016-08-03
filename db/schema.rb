@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160801111028) do
+ActiveRecord::Schema.define(version: 20160802100120) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -470,10 +470,6 @@ ActiveRecord::Schema.define(version: 20160801111028) do
     t.date     "expence_date"
     t.string   "e_place"
     t.decimal  "travel_expence",              precision: 15, scale: 2, default: 0.0
-    t.decimal  "local_travel_expence",        precision: 15, scale: 2, default: 0.0
-    t.decimal  "lodging_expence",             precision: 15, scale: 2, default: 0.0
-    t.decimal  "boarding_expence",            precision: 15, scale: 2, default: 0.0
-    t.decimal  "other_expence",               precision: 15, scale: 2, default: 0.0
     t.datetime "created_at",                                                         null: false
     t.datetime "updated_at",                                                         null: false
     t.boolean  "is_confirm"
@@ -2475,16 +2471,16 @@ ActiveRecord::Schema.define(version: 20160801111028) do
     t.string   "uan_no"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
-    t.decimal  "lwp_leave"
     t.decimal  "cl_leave"
-    t.decimal  "el_leave"
-    t.decimal  "esic_leave"
-    t.decimal  "coff_leave"
-    t.decimal  "advance_leave"
     t.decimal  "cl_balance"
+    t.decimal  "el_leave"
     t.decimal  "el_balance"
+    t.decimal  "coff_leave"
     t.decimal  "coff_balance"
+    t.decimal  "advance_leave"
     t.decimal  "advance_balance"
+    t.decimal  "lwp_leave"
+    t.decimal  "esic_leave"
   end
 
   add_index "slip_informations", ["cost_center_id"], name: "index_slip_informations_on_cost_center_id"
@@ -2698,16 +2694,12 @@ ActiveRecord::Schema.define(version: 20160801111028) do
     t.date     "traveling_date"
     t.string   "tour_purpose"
     t.string   "place"
-    t.decimal  "traveling_advance"
-    t.decimal  "lodging_boarding_advance"
-    t.decimal  "food_advance"
-    t.decimal  "extra_advance"
     t.decimal  "total_advance"
     t.integer  "reporting_master_id"
     t.string   "current_status"
     t.integer  "travel_option_id"
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
   end
 
   add_index "travel_request_histories", ["reporting_master_id"], name: "index_travel_request_histories_on_reporting_master_id"
@@ -2720,12 +2712,9 @@ ActiveRecord::Schema.define(version: 20160801111028) do
     t.date     "traveling_date"
     t.text     "tour_purpose"
     t.string   "place"
-    t.decimal  "traveling_advance",        precision: 15, scale: 2, default: 0.0
-    t.decimal  "lodging_boarding_advance", precision: 15, scale: 2, default: 0.0
-    t.decimal  "extra_advance",            precision: 15, scale: 2, default: 0.0
-    t.decimal  "total_advance",            precision: 15, scale: 2, default: 0.0
-    t.datetime "created_at",                                                      null: false
-    t.datetime "updated_at",                                                      null: false
+    t.decimal  "total_advance",       precision: 15, scale: 2, default: 0.0
+    t.datetime "created_at",                                                 null: false
+    t.datetime "updated_at",                                                 null: false
     t.integer  "reporting_master_id"
     t.string   "current_status"
     t.integer  "travel_option_id"
@@ -2733,6 +2722,7 @@ ActiveRecord::Schema.define(version: 20160801111028) do
     t.boolean  "is_confirm"
     t.text     "comment"
     t.text     "daily_bill_status"
+    t.decimal  "expense"
   end
 
   add_index "travel_requests", ["employee_id"], name: "index_travel_requests_on_employee_id"
@@ -2853,8 +2843,18 @@ ActiveRecord::Schema.define(version: 20160801111028) do
     t.decimal  "payable_day"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
-    t.boolean  "is_confirm"
+    t.decimal  "lwp_leave"
+    t.decimal  "cl_leave"
+    t.decimal  "el_leave"
+    t.decimal  "esic_leave"
+    t.decimal  "coff_leave"
+    t.decimal  "advance_leave"
+    t.decimal  "cl_balance"
+    t.decimal  "el_balance"
+    t.decimal  "coff_balance"
+    t.decimal  "advance_balance"
     t.decimal  "pay_leave"
+    t.boolean  "is_confirm"
   end
 
   add_index "workingdays", ["employee_id"], name: "index_workingdays_on_employee_id"

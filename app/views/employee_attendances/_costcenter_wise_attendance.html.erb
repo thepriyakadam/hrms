@@ -14,6 +14,7 @@
             <th><input type="checkbox" id="selectAll" value="selectAll"></th>
             <th>ID</th>
             <th>Employee Name</th>
+            <th>Cost Center</th>
             <% for i in 1..@day %>
               <th><%= i %></th>
             <%end%>
@@ -25,8 +26,8 @@
             <tr>
               <td><%= check_box_tag "employees[]", e.employee_id %></td>
               <td><%= e.employee.manual_employee_code %></td>
-
               <td><%= full_name(e.employee) %></td>
+               <td><%= e.employee.joining_detail.try(:cost_center).try(:name) %></td>
 
               <% sorted_exists = calculate_attendance(@date, exist, e)%>
               <% sorted_exists.each do |k,v|%>

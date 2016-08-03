@@ -16,7 +16,6 @@
       <th>Request To</th>
       <th>Traveling Date</th>
       <th>Place</th>
-      <th>Total Advance</th>
       <th>Action</th>
     </tr>
   </thead>
@@ -30,9 +29,23 @@
         <td><%= travel_request.reporting_master.employee.try(:first_name) %> <%= travel_request.reporting_master.employee.try(:middle_name) %> <%= travel_request.reporting_master.employee.try(:last_name) %></td>
         <td><%= travel_request.traveling_date %></td>
         <td><%= travel_request.place %></td>
-        <td><%= travel_request.total_advance %></td>
         <td>
-           <%= link_to 'Approve / Reject',travel_request_confirmation_travel_requests_path(travel_request),class: 'btn btn-sm btn-warning' %> 
+              <% if travel_request.current_status == "Pending" %>
+                <%= link_to 'Approve / Reject',travel_request_confirmation_travel_requests_path(travel_request),class: 'btn btn-sm btn-warning' %> 
+                  <% elsif travel_request.current_status == "Approved" %>
+                  <small class="label label-primary">Approved</small>
+                   <%= link_to '', travel_request,class: 'btn btn-sm btn-default fa fa-eye' %>
+                  <% elsif travel_request.current_status == "Approved & Send Next" %>
+                  <small class="label label-primary">Approved & Send Next</small>
+                   <%= link_to '', travel_request,class: 'btn btn-sm btn-default fa fa-eye' %>
+                  <% elsif travel_request.current_status == "Edit & Send Next" %>
+                  <small class="label label-primary">Edit & Send Next</small>
+                  <%= link_to '', travel_request,class: 'btn btn-sm btn-default fa fa-eye' %>
+              <% else %>
+              <% end %>
+          </td>
+        <td>
+           
         </td>
       </tr>
     <% end %>

@@ -606,13 +606,17 @@ class GoalBunchesController < ApplicationController
 
   def modal_appraiser_overall
     @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
+    @appraiser_overall = params[:appraiser_overall]
   end
 
   def appraiser_overall_comment_create
     @employee = Employee.find(current_user.employee_id)
     @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
+    @appraiser_overall = params[:appraiser_overall]
+
     comment = params[:goal_bunch][:appraiser_comment]
     @goal_bunch.update(appraiser_comment: comment,appraiser_id: params[:employee_id])
+    @goal_bunch.update(appraiser_rating: @appraiser_overall)
     flash[:notice] = "Overall Comment Created Successfully"
     redirect_to appraiser_comment_goal_bunches_path(emp_id: @goal_bunch.employee_id,goal_id: @goal_bunch.id)
   end

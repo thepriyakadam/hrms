@@ -236,7 +236,7 @@
       </tbody>
     </table>
 
-    <h6>Appraiser Rating For Goal= <%= appraiser_goal_sum %></h6>
+    <h6>Appraiser Rating For Goal= <%= appraiser_goal_sum.round(4) %></h6>
      <table class="table table-bordered table-hover table-condensed">
       <thead>
         <tr>
@@ -276,9 +276,10 @@
         <% end %>
       </tbody>
     </table>
-    <h6>Appraiser Rating For Attribute = <%= appraiser_attribute_sum %></h6>
-       <h6>Overall = <%= appraiser_attribute_sum + appraiser_goal_sum /2 %></h6>
-      <!-- < f.text_field :appraiser_rating, value: appraiser_attribute_sum + appraiser_goal_sum / 2 %> -->
+    <h6>Appraiser Rating For Attribute = <%= appraiser_attribute_sum.round(4) %></h6>
+       <h6>Overall = <%= (appraiser_attribute_sum + appraiser_goal_sum /2).round(4) %></h6>
+       <% @Overall = (appraiser_attribute_sum + appraiser_goal_sum /2).round(4) %>
+      <!-- <= f.hidden_field :appraiser_overall, value: appraiser_attribute_sum + appraiser_goal_sum / 2 %> -->
     <div class="row">
       <div class="col-sm-3">
         <div class="actions">
@@ -287,7 +288,7 @@
             <% unless @goal_bunch.nil? %>
               <% if @goal_bunch.appraiser_confirm == true %>
               <% else %>
-              <%= link_to 'Overall Comment', modal_appraiser_overall_goal_bunches_path(goal_bunch_id: @goal_bunch.id), class: 'btn btn-warning btn-sm',remote: true %>
+              <%= link_to 'Overall Comment', modal_appraiser_overall_goal_bunches_path(goal_bunch_id: @goal_bunch.id,appraiser_overall: @Overall), class: 'btn btn-warning btn-sm',remote: true %>
               <% end %>
             <% end %>
           <% end %>

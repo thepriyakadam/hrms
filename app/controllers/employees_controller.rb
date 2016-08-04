@@ -166,7 +166,7 @@ class EmployeesController < ApplicationController
       if user.save
         employee.update_attributes(manager_id: params["login"]["manager_id"], manager_2_id: params["login"]["manager_2_id"])
 
-        ManagerHistory.create(employee_id: employee.id,manager_id: params["login"]["manager_id"],manager_2_id: params["login"]["manager_2_id"],effective_to: params["login"]["effec_date"])
+        ManagerHistory.create(employee_id: employee.id,manager_id: params["login"]["manager_id"],manager_2_id: params["login"]["manager_2_id"],effective_from: params["login"]["effec_date"])
         
         flash[:notice] = "Employee assigned successfully."
         redirect_to assign_role_employees_path
@@ -292,7 +292,10 @@ class EmployeesController < ApplicationController
     
     if @employee.save
       @employees = Employee.all
-      ManagerHistory.create(employee_id: @employee.id,manager_id: @employee.manager_id,manager_2_id: @employee.manager_2_id,effective_from: @effec_date.to_date)
+      @mngr = ManagerHistory.create(employee_id: @employee.id,manager_id: @employee.manager_id,manager_2_id: @employee.manager_2_id,effective_from: @effec_date.to_date)
+      @manager = ManagerHistory.where(employee_id: @employee.id).last(2).first
+      ManagerHistory.where(employee_id: @manager.employee_id).update_all(effective_to: @mngr.effective_from)
+
       @flag = true
     else
       @flag = false

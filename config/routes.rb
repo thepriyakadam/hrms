@@ -406,12 +406,12 @@ end
     post :approve_request
     get :approved_daily_bill_details
     get :travel_request_list
-    get :edit_and_send_next_modal
-    post :edit_and_send_next
     get :comment_modal
     post :update_comment
-    post :reject_request
+    get :reject_request
     get :approve_and_send_next
+    get :approve_and_send_next_modal
+    post :approve_n_send_next
     end
   end 
   resources :travel_requests do

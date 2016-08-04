@@ -185,6 +185,8 @@ def create
   #   redirect_to new_employee_attendance_path
   # end
 
+
+
   def approve_request
     @daily_bill_detail_ids = params[:daily_bill_detail_ids]
     if @daily_bill_detail_ids.nil?
@@ -228,21 +230,52 @@ def create
      @travel_requests = TravelRequest.all
   end
 
-  def edit_and_send_next_modal
+  def approve_and_send_next_modal
      @daily_bill_detail = DailyBillDetail.find(params[:format])
-     @reporting_masters_travel_request = ReportingMastersTravelRequest.find_by_travel_request_id(params[:format])
+     # @reporting_masters_travel_request = ReportingMastersTravelRequest.find_by_travel_request_id(params[:format])
+  end
+  
+
+  def approve_n_send_next
+      @daily_bill_detail = DailyBillDetail.find(params[:id])
+      # byebug
+      @travel_request = TravelRequest.find(@daily_bill_detail.travel_request_id)
+      @daily_bill_detail.update(request_status: "Approved & Send Next",reporting_master_id: params[:daily_bill_detail][:reporting_master_id])
+     # @reporting_masters_travel_request = ReportingMastersTravelRequest.find(@travel_request.travel_request_id)
+     # reporting_masters_travel_requests = ReportingMastersTravelRequest.find_by_reporting_master_id()
+     # @reporting_masters_travel_request = ReportingMastersTravelRequest.find(@travel_request.employee_id)
+      # c2 = @reporting_masters_travel_requests.reporting_master.first.employee.try(:first_name)
+
+      # @reporting_masters_travel_requests = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id).first
+
+      # @reporting_masters_travel_request = ReportingMastersTravelRequest.find_by_reporting_master_id(params[:format])
+      # c1 = @reporting_masters_travel_requests
+      # c1 = @reporting_masters_travel_requests = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id).count
+      # for i in 1..c1
+      # DailyBillDetail.where(travel_request_id: @travel_request.id).update_all(request_status: "Approved & Send Next",reporting_master_id: @reporting_masters_travel_requests.reporting_master_id)
+
+      # DailyBillDetail.where(id: @daily_bill_detail.id).update_all(request_status: "Approved & Send Next",reporting_master_id: @reporting_masters_travel_requests.reporting_master_id)
+      @reporting_master_id = params[:daily_bill_detail][:reporting_master_id]
+      ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id).update_all(status: true)
+      # flash[:notice] = 'Daily Bill Request Send To Higher Authority For Approval'
+      # redirect_to travel_request_list_daily_bill_details_path
+      # TravelRequestHistory.create(travel_request_id: @travel_request.id,application_date: @travel_request.application_date,traveling_date: @travel_request.traveling_date, tour_purpose: @travel_request.tour_purpose, place: @travel_request.place,total_advance: @travel_request.total_advance,reporting_master_id: @travel_request.reporting_master_id, travel_option_id: @travel_request.travel_option_id,current_status: "Approved & Send Next")
+      # ReportingMastersTravelRequest.create(travel_request_id: @travel_request.id, reporting_master_id: params[:travel_request][:reporting_master_id] , travel_status: "Approved & Send Next")
+      flash[:notice] = 'Travel Request Send to Higher Authority for Approval'
+      redirect_to travel_history_travel_requests_path
   end
 
-  def edit_and_send_next
-     @daily_bill_detail = DailyBillDetail.find(params[:id])
-  end
 
-  def edit_and_send_next
-    @daily_bill_detail = DailyBillDetail.find(params[:id])
-    @daily_bill_detail.update(daily_bill_detail_params)
-    flash[:notice] = "Updated successfully"
-    redirect_to travel_request_list_daily_bill_details_path
-  end
+  # def edit_and_send_next
+  #    @daily_bill_detail = DailyBillDetail.find(params[:id])
+  # end
+
+  # def edit_and_send_next
+  #   @daily_bill_detail = DailyBillDetail.find(params[:id])
+  #   @daily_bill_detail.update(daily_bill_detail_params)
+  #   flash[:notice] = "Updated successfully"
+  #   redirect_to travel_request_list_daily_bill_details_path
+  # end
 
   # def edit_and_send_next_modal_submit
   #   @travel_request = TravelRequest.find(params[:id])

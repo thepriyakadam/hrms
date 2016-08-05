@@ -1,6 +1,4 @@
 require 'roo'
-
-
 # ex = Roo::Excel.new("#{Rails.root}/public/slip.xls")
 # ex.default_sheet = ex.sheets[0]
 # 2.upto(356) do |line|
@@ -23,6 +21,4 @@ require 'roo'
 #     end
 #   end
 # end
-
-
 end

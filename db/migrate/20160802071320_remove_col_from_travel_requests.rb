@@ -13,7 +13,5 @@ class RemoveColFromTravelRequests < ActiveRecord::Migration
     remove_column :daily_bill_details, :lodging_expence
     remove_column :daily_bill_details, :boarding_expence
     remove_column :daily_bill_details, :other_expence
-
-
-end
+  end
 end

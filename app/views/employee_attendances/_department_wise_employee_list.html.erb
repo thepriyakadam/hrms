@@ -5,7 +5,7 @@
     <!-- <= f.hidden_field :department_id, value: @department %> -->
       <div class="row">
         <div class="col-sm-2">
-        <label>Present </label>
+        <label>Select Attendance </label>
           <div class="field">
             <%= f.select :present,['P','1/2','W','A'],{hide_label: true,include_blank: "Select Option"} %>
             <%= f.hidden_field :day, value: @date %>
@@ -52,6 +52,7 @@
   <% end %>
 
 <script type="text/javascript">
+$("#example1").DataTable();
   $('#selectAll').click(function() {
     if (this.checked) {
       $(':checkbox').each(function() {

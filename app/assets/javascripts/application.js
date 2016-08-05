@@ -19,7 +19,6 @@
 
 //= require_tree .
 
-
 // $(function () {
 //   setTimeout(updateComments, 10000);
 // });

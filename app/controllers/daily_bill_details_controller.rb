@@ -158,6 +158,7 @@ def create
     # end
     # @travel_request = TravelRequest.find(@daily_bill_detail.travel_request_id)
     # @reporting_masters_travel_request = ReportingMastersTravelRequest.find_by_reporting_master_id(params[:format])
+    @reporting_masters_travel_requests1 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id)
     @reporting_masters_travel_requests = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id).second
     # @reporting_masters_travel_requests1 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id).first
 
@@ -315,12 +316,13 @@ def create
      # @reporting_masters_travel_request = ReportingMastersTravelRequest.find(@travel_request.employee_id)
       # c2 = @reporting_masters_travel_requests.reporting_master.first.employee.try(:first_name)
      # @reporting_masters_travel_requests = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id)
-     if @reporting_masters_travel_requests = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,status: nil).first
-      # @reporting_masters_travel_requests = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,status: nil).first
-      DailyBillDetail.where(id: @daily_bill_detail.id).update_all(request_status: "Approved & Send Next",reporting_master_id: @reporting_masters_travel_requests.reporting_master_id)
-      ReportingMastersTravelRequest.where(reporting_master_id: @reporting_masters_travel_requests.reporting_master_id).update_all(status: "true")
 
-     elsif @reporting_masters_travel_requests1 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,status: nil).second
+     # if @reporting_masters_travel_requests = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,status: nil).first
+     #  # @reporting_masters_travel_requests = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,status: nil).first
+     #  DailyBillDetail.where(id: @daily_bill_detail.id).update_all(request_status: "Approved & Send Next",reporting_master_id: @reporting_masters_travel_requests.reporting_master_id)
+     #  ReportingMastersTravelRequest.where(reporting_master_id: @reporting_masters_travel_requests.reporting_master_id).update_all(status: "true")
+
+     if @reporting_masters_travel_requests1 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,status: nil).second
       # @reporting_masters_travel_requests1 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,status: nil).second
       DailyBillDetail.where(id: @daily_bill_detail.id).update_all(request_status: "Approved & Send Next",reporting_master_id: @reporting_masters_travel_requests1.reporting_master_id)
       ReportingMastersTravelRequest.where(reporting_master_id: @reporting_masters_travel_requests1.reporting_master_id).update_all(status: "true")

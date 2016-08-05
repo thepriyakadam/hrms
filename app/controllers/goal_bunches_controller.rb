@@ -516,8 +516,8 @@ class GoalBunchesController < ApplicationController
     @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
     @experiences = Experience.where(employee_id: @employee.id)
     @ctc = EmployeeSalaryTemplate.where(employee_id: @employee.id).sum(:monthly_amount)
-     @goal_ratings = GoalRating.where(appraisee_id: @employee.id, goal_bunch_id: @goal_bunch.id, goal_type: 'Goal')
-     @goal_attribute_ratings = GoalRating.where("goal_bunch_id = ? AND goal_type = ?", @goal_bunch.id ,'Attribute')
+    @goal_ratings = GoalRating.where(appraisee_id: @employee.id, goal_bunch_id: @goal_bunch.id, goal_type: 'Goal')
+    @goal_attribute_ratings = GoalRating.where("goal_bunch_id = ? AND goal_type = ?", @goal_bunch.id ,'Attribute')
 
     @goal_bunches = GoalBunch.where(employee_id: @employee.id, id: @goal_bunch.id).group(:employee_id)
     respond_to do |format|
@@ -857,6 +857,47 @@ class GoalBunchesController < ApplicationController
       #column :current_status
       session[:active_tab] = "performancemgmt"
     end
+  end
+
+  def appraisee_detail_for_print
+    @employee = Employee.find(params[:emp_id])
+    @goal_bunch = GoalBunch.find(params[:id])
+    @employees = Employee.where(id: @employee.id).group(:id)
+    @employee_promotions = EmployeePromotion.where(employee_id: @employee.id)
+    @qualifications = Qualification.where(employee_id: @employee.id)
+    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
+    @experiences = Experience.where(employee_id: @employee.id)
+    @goal_ratings = GoalRating.where(appraisee_id: @employee.id, goal_bunch_id: @goal_bunch.id, goal_type: 'Goal')
+    @goal_attribute_ratings = GoalRating.where("goal_bunch_id = ? AND goal_type = ?", @goal_bunch.id ,'Attribute')
+    @goal_bunches = GoalBunch.where(employee_id: @employee.id, id: @goal_bunch.id).group(:employee_id)
+  end
+
+  def appraiser_detail_for_print
+    @employee = Employee.find(params[:emp_id])
+    @goal_bunch = GoalBunch.find(params[:id])
+    @employees = Employee.where(id: @employee.id).group(:id)
+    @employee_promotions = EmployeePromotion.where(employee_id: @employee.id)
+    @qualifications = Qualification.where(employee_id: @employee.id)
+    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
+    @experiences = Experience.where(employee_id: @employee.id)
+    @ctc = EmployeeSalaryTemplate.where(employee_id: @employee.id).sum(:monthly_amount)
+    @goal_ratings = GoalRating.where(appraisee_id: @employee.id, goal_bunch_id: @goal_bunch.id, goal_type: 'Goal')
+    @goal_attribute_ratings = GoalRating.where("goal_bunch_id = ? AND goal_type = ?", @goal_bunch.id ,'Attribute')
+    @goal_bunches = GoalBunch.where(employee_id: @employee.id, id: @goal_bunch.id).group(:employee_id)
+  end
+
+  def reviewer_detail_for_print
+    @employee = Employee.find(params[:emp_id])
+    @goal_bunch = GoalBunch.find(params[:id])
+    @employees = Employee.where(id: @employee.id).group(:id)
+    @employee_promotions = EmployeePromotion.where(employee_id: @employee.id)
+    @qualifications = Qualification.where(employee_id: @employee.id)
+    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
+    @experiences = Experience.where(employee_id: @employee.id)
+    @ctc = EmployeeSalaryTemplate.where(employee_id: @employee.id).sum(:monthly_amount)  
+    @goal_ratings = GoalRating.where(appraisee_id: @employee.id, goal_bunch_id: @goal_bunch.id, goal_type: 'Goal')
+    @goal_attribute_ratings = GoalRating.where("goal_bunch_id = ? AND goal_type = ?", @goal_bunch.id ,'Attribute')
+    @goal_bunches = GoalBunch.where(employee_id: @employee.id, id: @goal_bunch.id).group(:employee_id)
   end
 
   private

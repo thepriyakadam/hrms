@@ -189,11 +189,11 @@
       <% @goal_bunches.each do |goal_bunch| %>
         <tr>
           <th>Self Comment</th>
-          <td><%= goal_bunch.appraisee_comment %></td>
+          <td><%= goal_bunch.try(:appraisee_comment) %></td>
         </tr>
         <tr>
           <th>Appraiser Comment</th>
-          <td><%= goal_bunch.appraiser_comment %></td>
+          <td><%= goal_bunch.try(:appraiser_comment) %></td>
         </tr>
         <tr>
           <th>Appraiser Rating</th>
@@ -201,19 +201,19 @@
         </tr>
         <tr>
           <th>Reviewer Comment</th>
-          <td><%= goal_bunch.review_comment %></td>
+          <td><%= goal_bunch.try(:review_comment) %></td>
         </tr>
         <tr>
           <th>Reviewer Rating</th>
-          <td><%= goal_bunch.reviewer_rating_id %></td>
+          <td><%= goal_bunch.try(:reviewer_rating_id) %></td>
         </tr>
         <tr>
           <th>Final Comment</th>
-          <td><%= goal_bunch.final_comment %></td>
+          <td><%= goal_bunch.try(:final_comment) %></td>
         </tr>
         <tr>
           <th>Final Rating</th>
-          <td><%= goal_bunch.final_rating_id %></td>
+          <td><%= goal_bunch.try(:final_rating_id) %></td>
         </tr> 
       <% end %>
     </tbody>

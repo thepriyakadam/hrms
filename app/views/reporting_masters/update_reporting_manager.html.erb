@@ -10,13 +10,13 @@
   <div class="row">
     <div class="col-sm-3">
       <div class="form-group required">
-         <%= select :salary,:employee_id_1, all_reporting_master_list, {label: 'Reporting Manager ',include_blank: " Select Reporting Manager"},{onchange:"var a={employee_id_1:$(this).val()}; $.get('/reporting_masters/show_employee',a,function(response){});",class: 'form-control'} %>
+         <%= select :salary,:employee_id_1, all_reporting_master_list1, {label: 'Reporting Manager ',include_blank: " Select Reporting Manager"},{onchange:"var a={employee_id_1:$(this).val()}; $.get('/reporting_masters/show_employee',a,function(response){});",class: 'form-control'} %>
       </div>
     </div>
     
     <div class="col-sm-3">
       <div class="form-group required">
-         <%= select :salary,:employee_id_2, all_reporting_master_list, {label: 'New Reporting Manager',include_blank: " Select Reporting Manager"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"}  %>
+         <%= select :salary,:employee_id_2, all_reporting_master_list1, {label: 'New Reporting Manager',include_blank: " Select Reporting Manager"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"}  %>
       </div>
     </div>
 
@@ -26,7 +26,6 @@
       </div>
     </div>
   </div>
-  
     <div id="all_employee"></div>
 <% end %>
 </div>

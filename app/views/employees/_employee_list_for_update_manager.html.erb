@@ -17,8 +17,8 @@
         <td><%= e.first_name %> <%= e.middle_name %> <%= e.last_name %></td> 
         <td><%= e.member.try(:company_location).try(:name) %></td>
         <td><%= e.member.try(:role).try(:name) %></td>
-        <td><%= e.manager_id %></td>
-        <td><%= e.manager_2_id %></td>
+        <td><%= e.manager.try(:first_name) %> <%= e.manager.try(:middle_name) %> <%= e.manager.try(:last_name) %></td>
+        <td><%= e.manager_2.try(:first_name) %> <%= e.manager_2.try(:middle_name) %> <%= e.manager_2.try(:last_name) %></td>
         <td><%= link_to "", edit_manager_employee_path(e), class: "btn btn-success btn-xs fa fa-edit", remote:true %></td>
       </tr> 
     <% end %>

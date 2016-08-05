@@ -261,6 +261,9 @@ Rails.application.routes.draw do
       get :emp_list_goal_wise
       get :goal_bunch_list
       get :set_goal_list
+      get :appraisee_detail_for_print
+      get :appraiser_detail_for_print
+      get :reviewer_detail_for_print
       
     end
   end

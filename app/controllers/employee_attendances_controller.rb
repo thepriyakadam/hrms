@@ -142,7 +142,7 @@ class EmployeeAttendancesController < ApplicationController
     @day = @date.end_of_month.day
     @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ? and is_confirm = ?", @date.strftime('%m/%Y'),false).group(:employee_id)
   end
-
+                                
   def create_attendance
     @employees, @attendances, work_data_structure, @date = params[:employees], params[:attendances], [], params[:date]
     params.permit!
@@ -163,7 +163,7 @@ class EmployeeAttendancesController < ApplicationController
     @costcenter = JoiningDetail.where(cost_center_id: @costcenter_id).pluck(:employee_id)
     @date = Date.new(@year.to_i, Workingday.months[@month])
     @day = @date.end_of_month.day
-    @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ? AND employee_id = ?", @date.to_date.strftime('%m/%Y'),@costcenter)
+    @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).where(employee_id: @costcenter).group(:employee_id)
   end 
 
   private

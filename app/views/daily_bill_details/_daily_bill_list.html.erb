@@ -41,6 +41,7 @@
              <% else %>
              <%= link_to '',download_pics_path(id: daily_bill_detail.id),class: 'btn btn-xs fa fa-picture-o' %>
              <% end %>
+             <%= image_tag daily_bill_detail.passport_photo.url, :size => "20x20" %>
         </td>            
         <td>
           <% if daily_bill_detail.is_confirm == true %>
@@ -53,6 +54,7 @@
             <small class="label label-success">Approved</small>
             <% else %>
             <% end %>
+            <%= link_to '', daily_bill_detail,class: 'btn btn-xs btn-default fa fa-eye' %>
         </td>
 
       </tr>

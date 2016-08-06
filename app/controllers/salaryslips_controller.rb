@@ -42,12 +42,14 @@ class SalaryslipsController < ApplicationController
             da_actual_amount = addable_actual_amount
             da_calculated_amount = addable_calculated_amount
           end
+
           @addable_salaryslip_item = SalaryslipComponent.new do |sc|
             sc.salary_component_id = item.salary_component_id
             sc.actual_amount = addable_actual_amount
             sc.calculated_amount = addable_calculated_amount
             sc.is_deducted = false
           end
+
           @salaryslip_component_array << @addable_salaryslip_item
         end
 
@@ -218,7 +220,7 @@ class SalaryslipsController < ApplicationController
         end
 
         @salaryslip = Salaryslip.last
-
+        SlipInformation.create_salaryslip_information(@salaryslip, @employee, working_day)
         @salaryslip_component_array.each do |sa|
           sa.salaryslip_id = @salaryslip.id
           sa.employee_template_id = current_template.id
@@ -909,7 +911,7 @@ class SalaryslipsController < ApplicationController
           i.update(is_complete: false)
         end
         @bonus_employees.destroy_all
-        @salaryslip.destroy 
+        @salaryslip.destroy
         SalaryslipComponent.where(salaryslip_id: @salaryslip.id).destroy_all
       end
       flash[:notice] = "Revert successfully"

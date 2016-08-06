@@ -1,20 +1,13 @@
-<div class="box">
-  <div class="box-header">
-    <h3 class="box-title">Employee Attendance</h3>
-    <div class="pull-right">
-      <%= link_to "Add Employee Attendance", new_employee_attendance_path, class: 'btn btn-primary' %> 
-    </div>
-  </div><!-- /.box-header -->
+<div class="ajax-process"></div> 
+<h1 align="center"><center><strong>BHANDARI FOILS AND TUBES LTD.</strong></center></h1>
+<h1> Employee Attendance - <%= @month %>/<%= @year %></h1>
 
-  <div class="box-body">
-    <%= bootstrap_form_for :temp, url: {action: "create_attendance", date: @date} do |f| %>
-      <table class="table table-bordered table-hover table-condensed">
+     <%= bootstrap_form_for :temp, url: {action: "create_attendance", date: @date} do |f| %>
+      <table style="border-collapse: collapse; font-size:20pt;" border=1 width=900 cellpadding="25">
         <thead>
           <tr>
-            <th><input type="checkbox" id="selectAll" value="selectAll"></th>
             <th>ID</th>
             <th>Employee Name</th>
-            <th>Cost Center</th>
             <% for i in 1..@day %>
               <th><%= i %></th>
             <%end%>
@@ -24,11 +17,8 @@
           <% exist = {} %>
           <% @employees.each do |e| %>
             <tr>
-              <td><%= check_box_tag "employees[]", e.employee_id %></td>
               <td><%= e.employee.manual_employee_code %></td>
               <td><%= full_name(e.employee) %></td>
-               <td><%= e.employee.joining_detail.try(:cost_center).try(:name) %></td>
-
               <% sorted_exists = calculate_attendance(@date, exist, e)%>
               <% sorted_exists.each do |k,v|%>
                 <td><%= v %></td>
@@ -39,7 +29,6 @@
             <% holiday_in_month = holiday_in_month_count(exist) %>
             <% week_off_day = week_off_day_count(exist) %>
             
-
             <% full_pay_leave = full_pay_leave_count(exist) %>
             <% half_pay_leave = half_pay_leave_count(exist) %>
 
@@ -70,35 +59,7 @@
           <%end%>
         </tbody>
       </table>
-      <%= f.submit "Confirm Workingdays", class: "btn btn-sm btn-primary" %>
     <% end %>
   </div>
-</div>
 
 
-<% leave_records = ParticularLeaveRecord.where("strftime('%m/%Y', leave_date) = ? and employee_id = ?", @date.strftime('%m/%Y'), 4668) %>
-<%= leave_records.count %>
-<% leave_records.each do |l| %>
-    <%= l.leav_category.is_payble %>
-    <% if l.leav_category.is_payble %>
-      <%= l.id %>
-    <% else %>lll
-      <%= l.id %>lwp
-    <% end %>
-<% end %>
-
-
-<script type="text/javascript">
-  $('#selectAll').click(function() {
-    if (this.checked) {
-      $(':checkbox').each(function() {
-        this.checked = true;
-      });
-    }
-    else {
-      $(':checkbox').each(function() {
-        this.checked = false;
-      });
-    }
-  });
-</script>

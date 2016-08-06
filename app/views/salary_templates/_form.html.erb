@@ -1,4 +1,4 @@
-<%= bootstrap_form_for :salary_template,html: {id: 'salary_template'} do |f| %>
+<%= bootstrap_form_for @salary_template,html: {id: 'salary_template'}, remote: true do |f| %>
   <div class="row">
     <div class="col-sm-3">
       <div class="form-group required">

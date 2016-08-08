@@ -621,13 +621,19 @@ class SalaryslipsController < ApplicationController
             if @pf_master.is_pf
               formula_string = @pf_master.base_component.split(',')
               formula_string.try(:each) do |f|
-                formula_item = addable_salary_items.where(salary_component_id: f.to_i).take
-                formula_item_actual_amount = formula_item.monthly_amount
-                formula_item_actual_amount = 0 if formula_item_actual_amount.nil?
-                formula_total_actual_amount += formula_item_actual_amount
+                begin    
+                  formula_item = addable_salary_items.where(salary_component_id: f.to_i).take
+                  #byebug if formula_item.nil?
+                  formula_item_actual_amount = formula_item.monthly_amount
+                  formula_item_actual_amount = 0 if formula_item_actual_amount.nil?
+                  formula_total_actual_amount += formula_item_actual_amount
 
-                formula_item_calculated_amount = formula_item_actual_amount / working_day.try(:day_in_month) * working_day.try(:payable_day)
-                formula_total_calculated_amount += formula_item_calculated_amount
+                  formula_item_calculated_amount = formula_item_actual_amount / working_day.try(:day_in_month) * working_day.try(:payable_day)
+                  formula_total_calculated_amount += formula_item_calculated_amount
+                rescue NoMethodError
+                  flash[:alert] = 'Salary Component is not available in tamplate of #{@employee.manual_employee_code}.'
+                  #redirect_to select_month_year_form_salaryslips_path
+                end
               end
 
               if @employee.joining_detail.select_pf == 'Yes'
@@ -707,12 +713,18 @@ class SalaryslipsController < ApplicationController
             if @pf_master.is_pf
               formula_string = @pf_master.base_component.split(',')
               formula_string.try(:each) do |f|
-                formula_item = addable_salary_items.where(salary_component_id: f.to_i).take
-                formula_item_actual_amount = formula_item.monthly_amount
-                formula_item_actual_amount = 0 if formula_item_actual_amount.nil?
-                formula_total_actual_amount += formula_item_actual_amount
-                formula_item_calculated_amount = formula_item_actual_amount / working_day.try(:day_in_month) * working_day.try(:payable_day)
-                formula_total_calculated_amount += formula_item_calculated_amount
+                begin
+                  formula_item = addable_salary_items.where(salary_component_id: f.to_i).take
+                  formula_item_actual_amount = formula_item.monthly_amount
+                  formula_item_actual_amount = 0 if formula_item_actual_amount.nil?
+                  formula_total_actual_amount += formula_item_actual_amount
+                  formula_item_calculated_amount = formula_item_actual_amount / working_day.try(:day_in_month) * working_day.try(:payable_day)
+                  formula_total_calculated_amount += formula_item_calculated_amount
+                rescue NoMethodError
+                  @salary_component = SalaryComponent.find(f.to_i)
+                  flash[:alert] = "#{@salary_component.name} is not available in tamplate of #{@employee.manual_employee_code}."
+                  #redirect_to select_month_year_form_salaryslips_path
+                end
               end
 
               if @employee.joining_detail.select_pf == 'Yes'

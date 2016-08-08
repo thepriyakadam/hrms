@@ -168,24 +168,29 @@ class LeaveStatusRecordsController < ApplicationController
 
   def cancel_after_approve
     @particular_leave_record = ParticularLeaveRecord.find(params[:format])
-    @particular_leave_record.is_cancel_after_approve = true
+    @flag = @particular_leave_record.salary_processed?
+    if @flag.nil?
+      @particular_leave_record.is_cancel_after_approve = true
 
-    EmployeeAttendance.where("employee_id = ? AND day = ?", @particular_leave_record.employee_id,@particular_leave_record.leave_date.to_date).destroy_all
-    @employee_leav_balance = EmployeeLeavBalance.where(employee_id: @particular_leave_record.employee_id, leav_category_id: @particular_leave_record.leav_category_id).take
-    if @particular_leave_record.is_full
-      @employee_leav_balance.no_of_leave = @employee_leav_balance.no_of_leave.to_f + 1
-    else
-      @employee_leav_balance.no_of_leave = @employee_leav_balance.no_of_leave.to_f + 0.5
-    end
-    EmployeeAttendance.where(employee_leav_request_id: @employee_leav_request.id).destroy_all
-    ActiveRecord::Base.transaction do
-      @employee_leav_balance.save
-      @particular_leave_record.save
-      if @particular_leave_record.employee_leav_request.leav_category.name == "C.Off"
-        @particular_leave_record.rollback_coff(@particular_leave_record)
+      EmployeeAttendance.where("employee_id = ? AND day = ?", @particular_leave_record.employee_id,@particular_leave_record.leave_date.to_date).destroy_all
+      @employee_leav_balance = EmployeeLeavBalance.where(employee_id: @particular_leave_record.employee_id, leav_category_id: @particular_leave_record.leav_category_id).take
+      if @particular_leave_record.is_full
+        @employee_leav_balance.no_of_leave = @employee_leav_balance.no_of_leave.to_f + 1
+      else
+        @employee_leav_balance.no_of_leave = @employee_leav_balance.no_of_leave.to_f + 0.5
       end
+      EmployeeAttendance.where(employee_leav_request_id: @employee_leav_request.id).destroy_all
+      ActiveRecord::Base.transaction do
+        @employee_leav_balance.save
+        @particular_leave_record.save
+        if @particular_leave_record.employee_leav_request.leav_category.name == "C.Off"
+          @particular_leave_record.rollback_coff(@particular_leave_record)
+        end
+      end
+      flash[:notice] = 'Leave Cancelled Successfully.'
+    else
+      flash[:notice] = 'Salary is processed you cannot cancel the leave.'
     end
-    flash[:notice] = 'Leave Cancelled Successfully.'
     redirect_to show_leave_record_particular_leave_records_path(format: @particular_leave_record.employee_leav_request_id)
   end
 

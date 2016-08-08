@@ -13,15 +13,15 @@ module EmployeeAttendancesHelper
         unless exist.key?(d)
           if leave_record.leav_category.is_payble
             if leave_record.is_full
-              exist[d] = "L"
+              exist[d] = "*********************"
             else
-              exist[d] = "L/2"
+              exist[d] = "-------"
             end
           else
             if leave_record.is_full
-              exist[d] = "LWP"
+              exist[d] = "^^^^^^"
             else
-              exist[d] = "LWP/2"
+              exist[d] = "////////"
             end
           end
         end

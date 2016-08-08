@@ -104,7 +104,6 @@ class EmployeeAttendancesController < ApplicationController
     @day = params[:salary][:day]
     @present = params[:salary][:present]
     #@employee_attendances = EmployeeAttendance.filter_by_date_and_costcenter_and_present(@day, @costcenter_id, @present)
-
     @costcenter = JoiningDetail.where(cost_center_id: @costcenter_id).pluck(:employee_id)
     @employee_attendances = EmployeeAttendance.where(present: @present ,employee_id: @costcenter).where(day: @day.to_date,is_confirm: "false")
   end
@@ -140,7 +139,7 @@ class EmployeeAttendancesController < ApplicationController
     @year, @month = params[:year], params[:month]
     @date = Date.new(@year.to_i, Workingday.months[@month])
     @day = @date.end_of_month.day
-    @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ? and is_confirm = ?", @date.strftime('%m/%Y'),false).group(:employee_id)
+    @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).group(:employee_id)
   end
                                 
   def create_attendance

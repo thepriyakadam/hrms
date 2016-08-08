@@ -86,20 +86,44 @@ class EmployeeLeavRequest < ActiveRecord::Base
 
   def self.filter_records(current_user)
     @employee_leave_requests =  if current_user.class == Group
-    EmployeeLeavRequest.all
-  elsif current_user.class == Member
-    if current_user.role.name == "Company"
-      @employees = Employee.where(company_id: current_user.company_id)
-      EmployeeLeavRequest.where(employee_id: @employees)
-    elsif current_user.role.name == "CompanyLocation"
-      @employees = Employee.where(company_location_id: current_user.company_location_id)
-      EmployeeLeavRequest.where(employee_id: @employees)  
-    elsif current_user.role.name == "Department"
-      @employees = Employee.where(department_id: current_user.department_id)
-      EmployeeLeavRequest.where(employee_id: @employees)
-    elsif current_user.role.name == "Employee"
-      EmployeeLeavRequest.where(employee_id: current_user.employee_id)
-    end
+                                  EmployeeLeavRequest.all
+                                elsif current_user.class == Member
+                                  if current_user.role.name == "Company"
+                                    @employees = Employee.where(company_id: current_user.company_id)
+                                    EmployeeLeavRequest.where(employee_id: @employees)
+                                  elsif current_user.role.name == "CompanyLocation"
+                                    @employees = Employee.where(company_location_id: current_user.company_location_id)
+                                    EmployeeLeavRequest.where(employee_id: @employees)  
+                                  elsif current_user.role.name == "Department"
+                                    @employees = Employee.where(department_id: current_user.department_id)
+                                    EmployeeLeavRequest.where(employee_id: @employees)
+                                  elsif current_user.role.name == "Employee"
+                                    EmployeeLeavRequest.where(employee_id: current_user.employee_id)
+                                  end
+                                end
   end
+
+  def create_attendance
+    if self.leav_category.is_payble
+      if self.leave_type == "Full Day"
+        for i in self.start_date.to_date..self.end_date.to_date
+          EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: self.leav_category.code.to_s, count: 1, employee_leav_request_id: self.id)
+        end
+      else
+        for i in self.start_date.to_date..self.start_date.to_date
+          EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: self.leav_category.code.to_s+"HD", count: 1, employee_leav_request_id: self.id)
+        end
+      end
+    else
+      if self.leave_type == "Full Day"
+        for i in self.start_date.to_date..self.end_date.to_date
+          EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: self.leav_category.code.to_s, count: 0, employee_leav_request_id: self.id)
+        end
+      else
+        for i in self.start_date.to_date..self.start_date.to_date
+          EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: self.leav_category.code.to_s+"HD", count: 0.5, employee_leav_request_id: self.id)
+        end
+      end
+    end
   end
 end

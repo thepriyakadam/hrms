@@ -51,6 +51,7 @@ class WorkingdaysController < ApplicationController
   end
 
   def employees
+    @workingday = Workingday.where(year: params[:year],month_name: params[:month])
     if current_user.class == Group
       @workingdays = Workingday.where(year: params[:year], month_name: params[:month])
     else

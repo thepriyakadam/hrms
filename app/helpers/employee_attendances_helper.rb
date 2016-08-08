@@ -2,41 +2,41 @@ module EmployeeAttendancesHelper
 	def calculate_attendance(date, exist, e)
 		start_date = date.beginning_of_month
     end_date = date.end_of_month
-
     start_date.step(end_date).each do |d|
-      flag = 0
+      attendance_record = EmployeeAttendance.where(day: d, employee_id: e.employee_id, is_confirm: false).take
+      unless attendance_record.nil?
+        exist[d] = attendance_record.present
+      end
 
-      attendance_records = EmployeeAttendance.where("strftime('%m/%Y', day) = ? and employee_id = ?", date.strftime('%m/%Y'), e.employee_id)
-      attendance_records.each do |a|
-        if d == a.day
-          flag = 1
-          exist[a.day] = a.present
+      # leave_record = ParticularLeaveRecord.where(leave_date: d.in_time_zone, employee_id: e.employee_id).take
+      # unless leave_record.nil?
+      #   unless exist.key?(d)
+      #     if leave_record.leav_category.is_payble
+      #       if leave_record.is_full
+      #         exist[d] = "*********************"
+      #       else
+      #         exist[d] = "-------"
+      #       end
+      #     else
+      #       if leave_record.is_full
+      #         exist[d] = "^^^^^^"
+      #       else
+      #         exist[d] = "////////"
+      #       end
+      #     end
+      #   end
+      # end
+
+      unless exist.key?(d)
+        holiday = Holiday.find_by(holiday_date: d)
+        unless holiday.nil?
+          exist[d] = "H"
         end
       end
 
-      leave_records = ParticularLeaveRecord.where("strftime('%m/%Y', leave_date) = ? and employee_id = ?", date.strftime('%m/%Y'), e.id) 
-      leave_records.each do |l| 
-        if d == l.leave_date and flag == 0 
-          flag = 1 
-          if l.leav_category.is_payble
-            exist[l.leave_date] = "L"
-          else
-            exist[l.leave_date] = "LWP"
-          end
-        end
+      unless exist.key?(d)
+        exist[d] = ""
       end
-
-      holidays = Holiday.where("strftime('%m/%Y', holiday_date) = ?", date.strftime('%m/%Y')) 
-      holidays.each do |h| 
-        if d == h.holiday_date and flag == 0 
-          flag = 1 
-          exist[h.holiday_date] = "H" 
-        end 
-      end 
-
-      if flag == 0 
-        exist[d] = "" 
-      end 
     end
     Hash[exist.sort]
 	end
@@ -81,20 +81,20 @@ module EmployeeAttendancesHelper
     exist.select {|k,v| v == "L" or v == "LWP" }.count
   end
 
-  def lwp_leave_count(exist)
-    exist.select {|k,v| v == "LWP" }.count
+  def half_pay_leave_count(exist)
+    exist.select {|k,v| v == "P/2" }.count/2
   end
 
-  def pay_leave_count(exist)
+  def full_pay_leave_count(exist)
     exist.select {|k,v| v == "L" }.count
   end
 
-  def half_leave_count(exist)
-    exist.select {|k,v| v == "1/2" }.count/2
+  def half_lwp_leave_count(exist)
+    exist.select {|k,v| v == "LWP/2" }.count/2
   end
 
-  def full_leave_count(exist)
-    exist.select {|k,v| v == "L" }.count/2
+  def full_lwp_leave_count(exist)
+    exist.select {|k,v| v == "LWP" }.count
   end
 
   def half_leave_date_count(exist)

@@ -6,7 +6,7 @@ class YearsController < ApplicationController
     @year = Year.all
   end
 
-  def show
+  ref show
   end
 
  
@@ -32,7 +32,7 @@ class YearsController < ApplicationController
   end
 
 
-  # PATCH/PUT /about_bosses/1
+  # PAT
   # PATCH/PUT /about_bosses/1.json
   def update
     @year.update(year_params)
@@ -57,4 +57,3 @@ class YearsController < ApplicationController
     def year_params
       params.require(:year).permit(:name)
     end
-end

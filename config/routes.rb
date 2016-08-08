@@ -123,6 +123,10 @@ Rails.application.routes.draw do
       post :department_wise_emp
       post :create_attendance
       get :monthly_attendance
+      get :costcenter_wise_attendance
+      get :show_costcenter_wise_attendance
+      get :employee_slip
+      get :employee_slip_xls
     end
   end
   resources :salary_comp_mappings
@@ -328,6 +332,10 @@ Rails.application.routes.draw do
       get :cancel_resignation_request
       get :edit_n_send_next_modal
       post :edit_n_send
+      get :emp_resignation_history
+      get :show_resignation_detail
+      get :print_resignation_detail
+      get :xl_resignation_detail
   end
 end
   resources :travel_options
@@ -342,15 +350,16 @@ end
       get :training_details_list
       get :training_topic_wise_search
       get :show_traineerequest_list
-      get :_trainee_request_list
+      get :trainee_request_list
+      post :confirm_employee_for_training
     end
   end
   resources :training_requests do
     collection do
       get :training_request_list
       get :training_request_confirmation
-      get :approve_training_request
-      post :reject_training_request
+      post :approve_training_request
+      get :reject_training_request
       get :confirmation_list
       get :modal_approver_comment
       get :modal_reject_comment
@@ -358,6 +367,8 @@ end
       get :show_dept_wise_form
       get :_employee_list
       patch :create_dept_wise_request
+      post :comment
+      post :create_department_wise_training_request
     end
   end
   resources :selected_resumes  do
@@ -402,6 +413,7 @@ end
     get :comment_modal
     post :update_comment
     post :reject_request
+    get :approve_and_send_next
     end
   end 
   resources :travel_requests do
@@ -593,6 +605,9 @@ end
       get :salaryslip
       get :advance
       get :attendance
+      get :employee_resignation
+      get :resignation_history
+      get :show_resignation_detail
     end
   end
 
@@ -1097,6 +1112,8 @@ end
       get :report
       get :birthday_email
       get :birthday_invitation
+      get :employee_list_for_revert
+      get :revert_employee
     end
     member do
       get :edit_manager

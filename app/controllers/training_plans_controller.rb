@@ -35,22 +35,24 @@ class TrainingPlansController < ApplicationController
   def create
     @training_plan = TrainingPlan.new(training_plan_params)
     # byebug
-    respond_to do |format|
-      if @training_plan.save
         @trainee_request_ids = params[:trainee_request_ids]
-        @trainee_request_ids.each do |tid|
 
-        @emp_total = @trainee_request_ids.count
-        TrainingPlan.where(id: @training_plan.id).update_all(no_of_employee: @emp_total)
-        Trainee.create(employee_id: tid,training_plan_id: @training_plan.id)
-      end
-        format.html { redirect_to @training_plan, notice: 'Training plan was successfully created.' }
-        format.json { render :show, status: :created, location: @training_plan }
-      else
-        format.html { render :new }
-        format.json { render json: @training_plan.errors, status: :unprocessable_entity }
-      end
-    end
+        if @trainee_request_ids.nil?
+          flash[:alert] = "Please Select the Checkbox"
+        else
+          @trainee_request_ids.each do |tid|
+          # @emp = Employee.find_by_id(tid)
+          # @trainee_request = TraineeRequest.find(tid)
+          @training_plan.save
+          @emp_total = @trainee_request_ids.count
+          TrainingPlan.where(id: @training_plan.id).update_all(no_of_employee: @emp_total)
+          Trainee.create(employee_id: tid,training_plan_id: @training_plan.id)
+          end
+        end
+        TrainingPlanMailer.send_email_to_trainer(@training_plan).deliver_now     
+        # TrainingPlanMailer.confirmation_email_to_employee(@emp).deliver_now     
+        flash[:notice] = 'Training Plan Created Successfully'
+        redirect_to training_topic_wise_search_training_plans_path
   end
 
 
@@ -80,7 +82,7 @@ class TrainingPlansController < ApplicationController
 
   def print_training_details
     @training_plan = TrainingPlan.find(params[:id])
-    @trainees = Trainee.where(training_plan_id: @training_plan.id)
+    @trainees = Trainee.where(training_plan_id: @training_plan.id,is_complete: true)
             respond_to do |f|
             f.js
             f.html
@@ -96,7 +98,7 @@ class TrainingPlansController < ApplicationController
   end
 
   def trainee_list
-     @trainees = Trainee.where(employee_id: current_user.employee_id)
+     @trainees = Trainee.where(employee_id: current_user.employee_id,is_complete: true)
      session[:active_tab] ="selfservice"
   end
 
@@ -139,9 +141,25 @@ class TrainingPlansController < ApplicationController
   end
 
   def show_traineerequest_list
+     # byebug
      @training_plan =TrainingPlan.new
      @training_topic_master = TrainingTopicMaster.find(params[:training_topic_master_id])
-     @trainee_requests =TraineeRequest.where(training_topic_master_id: @training_topic_master.id)
+     @trainee_requests =TraineeRequest.where(training_topic_master_id: @training_topic_master.id,is_complete: true)
+  end
+
+  def confirm_employee_for_training
+    @trainee_ids = params[:trainee_ids]
+    if @trainee_ids.nil?
+      flash[:alert] = "Please Select the Checkbox"
+      redirect_to training_plans_path
+    else
+      @trainee_ids.each do |tid|
+      @trainee = Trainee.find(tid)
+      @trainee.update(is_complete: true) 
+      flash[:notice] = "List Confirmed Successfully"
+    end 
+     redirect_to training_plans_path
+  end
   end
 
   private
@@ -154,6 +172,6 @@ class TrainingPlansController < ApplicationController
     end
     # Never trust parameters from the scary internet, only allow the white list through.
     def training_plan_params
-      params.require(:training_plan).permit(:about_trainer,:trainer_num,:period_id,:training_date,:training_request_id, :training_topic_master_id, :topic, :no_of_employee, :trainer_name, :no_of_days, :no_of_hrs, :place)
+      params.require(:training_plan).permit(:about_trainer,:trainer_num,:period_id,:training_date,:training_request_id, :training_topic_master_id, :topic, :no_of_employee, :trainer_name, :no_of_days, :no_of_hrs, :place,:trainer_email)
     end
 end

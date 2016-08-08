@@ -4,7 +4,8 @@ class SalaryReport
                   :earned_basic, :earned_da, :earned_hra, :earned_convenience, :earned_other, :earned_special, :earned_washing, :earned_total,
                   :pf, :esic, :income_tax, :pt, :advance, :society, :food_deduction, :mobile, :retention, :welfair, :deduction_total, :net_payable,
                   :total_leave, :cl_leave, :el_leave, :lwp_leave, :day_in_month, :payable_day, :present_day, :absent_day, :holiday, :weekoff, :month, :year,
-                  :pf_ctc, :esic_ctc, :bonus_ctc
+                  :pf_ctc, :esic_ctc, :bonus_ctc, :actual_driver, :actual_medical, :actual_child_edu, :actual_mra, :earned_driver, :earned_medical, :earned_child_edu,
+                  :earned_mra
 
     def self.collect_data(e, j, sl)
         addable_items = SalaryslipComponent.where(salaryslip_id: sl.id, is_deducted: false, is_arrear: nil)
@@ -37,6 +38,7 @@ class SalaryReport
               when "Convenience Allowance"
               sr.actual_convenience = a.actual_amount
               sr.earned_convenience = a.calculated_amount
+
               when "Other Allowance"
               sr.actual_other = a.actual_amount
               sr.earned_other = a.calculated_amount
@@ -48,6 +50,22 @@ class SalaryReport
               when "Washing Allowance"
               sr.actual_washing = a.actual_amount
               sr.earned_washing = a.calculated_amount
+
+              when "Driver Allowance"
+              sr.actual_driver = a.actual_amount
+              sr.earned_driver = a.calculated_amount
+
+              when "Medical Allowance"
+              sr.actual_medical = a.actual_amount
+              sr.earned_medical = a.calculated_amount
+
+              when "Child Education Allowance"
+              sr.actual_child_edu = a.actual_amount
+              sr.earned_child_edu = a.calculated_amount
+
+              when "Reimbursement of Medical Allowance"
+              sr.actual_mra = a.actual_amount
+              sr.earned_mra = a.calculated_amount            
             end
         end
 
@@ -187,6 +205,19 @@ class SalaryReport
     array_actual_washing = reports.collect {|r| r.try(:actual_washing)}.compact
     @sum.actual_washing = array_actual_washing.inject(0){|sum,x| sum + x }
 
+    array_actual_driver = reports.collect {|r| r.try(:actual_driver)}.compact
+    @sum.actual_driver = array_actual_driver.inject(0){|sum,x| sum + x}
+
+    array_actual_medical = reports.collect {|r| r.try(:actual_medical)}.compact
+    @sum.actual_medical = array_actual_medical.inject(0){|sum,x| sum + x}
+
+    array_actual_child_edu = reports.collect {|r| r.try(:actual_child_edu)}.compact
+    @sum.actual_child_edu = array_actual_child_edu.inject(0){|sum,x| sum + x}
+
+    array_actual_mra = reports.collect {|r| r.try(:actual_mra)}.compact
+    @sum.actual_mra = array_actual_mra.inject(0){|sum,x| sum + x}
+
+
     array_actual_total = reports.collect {|r| r.try(:actual_total)}.compact
     @sum.actual_total = array_actual_total.inject(0){|sum,x| sum + x }
 
@@ -211,6 +242,18 @@ class SalaryReport
 
     array_earned_washing = reports.collect {|r| r.try(:earned_washing)}.compact
     @sum.earned_washing = array_earned_washing.inject(0){|sum,x| sum + x }
+
+    array_earned_driver = reports.collect {|r| r.try(:earned_driver)}.compact
+    @sum.earned_driver = array_earned_driver.inject(0){|sum,x| sum + x}
+
+    array_earned_medical = reports.collect {|r| r.try(:earned_medical)}.compact
+    @sum.earned_medical = array_earned_medical.inject(0){|sum,x| sum + x}
+
+    array_earned_child_edu = reports.collect {|r| r.try(:earned_child_edu)}.compact
+    @sum.earned_child_edu = array_earned_child_edu.inject(0){|sum,x| sum + x}
+
+    array_earned_mra = reports.collect {|r| r.try(:earned_mra)}.compact
+    @sum.earned_mra = array_earned_mra.inject(0){|sum,x| sum + x}
 
     array_earned_total = reports.collect {|r| r.try(:earned_total)}.compact
     @sum.earned_total = array_earned_total.inject(0){|sum,x| sum + x }
@@ -260,7 +303,7 @@ class SalaryReport
     array_el_leave = reports.collect {|r| r.try(:el_leave)}.compact
     @sum.el_leave = array_el_leave.inject(0){|sum,x| sum + x }
 
-        array_lwp_leave = reports.collect {|r| r.try(:lwp_leave)}.compact
+    array_lwp_leave = reports.collect {|r| r.try(:lwp_leave)}.compact
     @sum.lwp_leave = array_lwp_leave.inject(0){|sum,x| sum + x.to_i }
 
     array_payable_day = reports.collect {|r| r.try(:payable_day)}.compact
@@ -311,6 +354,19 @@ class SalaryReport
 
         when "Washing Allowance"
         sr.actual_washing = a.annual_amount
+
+        when "Driver Allowance"
+        sr.actual_driver = a.actual_amount
+
+        when "Medical Allowance"
+        sr.actual_medical = a.actual_amount
+
+        when "Child Education Allowance"
+        sr.actual_child_edu = a.actual_amount
+
+        when "Reimbursement of Medical Allowance"
+        sr.actual_mra = a.actual_amount
+
       end
     end
 
@@ -370,6 +426,24 @@ class SalaryReport
         when "Washing Allowance"
         sr.actual_washing = a.actual_amount
         sr.earned_washing = a.calculated_amount
+
+        when "Driver Allowance"
+        sr.actual_driver = a.actual_amount
+        sr.earned_driver = a.calculated_amount
+
+        when "Medical Allowance"
+        sr.actual_medical = a.actual_amount
+        sr.earned_medical = a.calculated_amount
+
+        when "Child Education Allowance"
+        sr.actual_child_edu = a.actual_amount
+        sr.earned_child_edu = a.calculated_amount
+
+        when "Reimbursement of Medical Allowance"
+        sr.actual_mra = a.actual_amount
+        sr.earned_mra = a.calculated_amount 
+
+
       end
     end
 

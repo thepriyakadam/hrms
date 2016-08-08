@@ -43,10 +43,11 @@ class LeaveStatusRecordsController < ApplicationController
         if @leave_status.save
           @employee_leav_request.update(is_first_approved: true, current_status: 'FinalApproved')
           @employee_leav_request.create_single_record_for_leave(@employee_leav_request)
-           for i in @employee_leav_request.start_date.to_date..@employee_leav_request.end_date.to_date
-             EmployeeAttendance.create(employee_id: @employee_leav_request.employee_id, day: i, present: "L")
-           end
           @employee_leav_request.manage_coff(@employee_leav_request)
+          @employee_leav_request.create_attendance
+
+          
+
           # @employee_leav_request.minus_leave(@employee_leav_request)
           if @employee_leav_request.employee.email.nil? || @employee_leav_request.employee.email == ''
             flash[:notice] = 'Leave Approved Successfully without email.'
@@ -97,10 +98,9 @@ class LeaveStatusRecordsController < ApplicationController
       if @leave_status.save
         @employee_leav_request.update(is_second_approved: true, current_status: 'FinalApproved')
         @employee_leav_request.create_single_record_for_leave(@employee_leav_request)
-         for i in @employee_leav_request.start_date.to_date..@employee_leav_request.end_date.to_date
-           EmployeeAttendance.create(employee_id: @employee_leav_request.employee_id, day: i, present: "L")
-         end
         @employee_leav_request.manage_coff(@employee_leav_request)
+        @employee_leav_request.create_attendance
+
         # @employee_leav_request.minus_leave(@employee_leav_request)
         if @employee_leav_request.employee.email.nil? || @employee_leav_request.employee.email == ''
           flash[:notice] = 'Leave Approved Successfully without mail.'
@@ -177,7 +177,7 @@ class LeaveStatusRecordsController < ApplicationController
     else
       @employee_leav_balance.no_of_leave = @employee_leav_balance.no_of_leave.to_f + 0.5
     end
-
+    EmployeeAttendance.where(employee_leav_request_id: @employee_leav_request.id).destroy_all
     ActiveRecord::Base.transaction do
       @employee_leav_balance.save
       @particular_leave_record.save

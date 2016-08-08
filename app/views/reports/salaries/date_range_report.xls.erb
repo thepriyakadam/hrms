@@ -150,7 +150,7 @@
               <% if item.other_component_name == "PF" %>
                 <Cell ss:Index="31"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
               <% elsif item.other_component_name == "ESIC" %>
-                <Cell ss:Index="32"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
+                <Cell ss:Index="32"><Data ss:Type="Number"><%= item.calculated_amount.ceil %></Data></Cell>
               <% elsif item.other_component_name == "Prof. Tax" %>
                 <Cell ss:Index="33"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
               <% elsif item.other_component_name == "Retention" %>

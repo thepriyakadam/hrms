@@ -403,7 +403,7 @@ end
     get :print_daily_bill
     get :daily_bill_history
     get :daily_bill_request_confirmation
-    post :approve_request
+    get :approve_request
     get :approved_daily_bill_details
     get :travel_request_list
     get :comment_modal

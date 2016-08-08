@@ -3,6 +3,7 @@ class SalaryslipComponentsController < ApplicationController
 
   def index
     @salaryslip_components = SalaryslipComponent.limit(50)
+    @salary_components = SalaryComponent.all
     @maps = SalaryMapSap.all
     respond_to do |format|
       format.xml { send_data render_to_string(:index), :filename => 'mydoc.xml', :type=>"application/xml", :disposition => 'attachment' }

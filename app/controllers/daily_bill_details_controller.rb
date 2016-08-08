@@ -210,6 +210,8 @@ def create
   session[:active_tab] ="travelmgmt"
   end
 
+  
+
   def approved_daily_bill_details
     @daily_bill_details = DailyBillDetail.where(request_status: "Approved")
     session[:active_tab] ="travelmgmt"
@@ -332,7 +334,7 @@ def create
       DailyBillDetail.where(id: @daily_bill_detail.id).update_all(request_status: "Approved & Send Next",reporting_master_id: @reporting_masters_travel_requests2.reporting_master_id)
       ReportingMastersTravelRequest.where(reporting_master_id: @reporting_masters_travel_requests2.reporting_master_id).update_all(status: "true")
 
-      elsif @reporting_masters_travel_requests3 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,status: nil).third
+      elsif @reporting_masters_travel_requests3 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,status: nil).fourth
       # @reporting_masters_travel_requests2 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,status: nil).third
       DailyBillDetail.where(id: @daily_bill_detail.id).update_all(request_status: "Approved & Send Next",reporting_master_id: @reporting_masters_travel_requests3.reporting_master_id)
       ReportingMastersTravelRequest.where(reporting_master_id: @reporting_masters_travel_requests3.reporting_master_id).update_all(status: "true")
@@ -399,6 +401,14 @@ def create
   # end
   # session[:active_tab] ="travelmgmt"
   # end
+
+  def approve_request
+    # byebug
+    @daily_bill_detail = DailyBillDetail.find(params[:format])
+    @daily_bill_detail.update(request_status: "Approved")
+    flash[:alert] = 'Daily Bill Request Approved'
+    redirect_to travel_request_list_daily_bill_details_path
+  end
 
   def reject_request
     # byebug

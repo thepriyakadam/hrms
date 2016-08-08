@@ -36,8 +36,9 @@
                 <%= link_to 'Approve / Reject', employee_resignation_confirmation_employee_resignations_path(employee_resignation),class: 'btn btn-sm btn-warning' %> 
                   <% elsif employee_resignation.resign_status == "Approved" %>
                   <small class="label label-primary">Approved</small>
+                  <% elsif employee_resignation.resign_status == "Approved & Send Next" %>
+                <%= link_to 'Approve / Reject', employee_resignation_confirmation_employee_resignations_path(employee_resignation),class: 'btn btn-sm btn-warning' %> 
               <% else %>
-                  <small class="label label-danger">Reject</small>
               <% end %>
           </td>
            

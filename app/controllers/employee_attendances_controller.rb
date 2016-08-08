@@ -165,6 +165,35 @@ class EmployeeAttendancesController < ApplicationController
     @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).where(employee_id: @costcenter).group(:employee_id)
   end 
 
+  def employee_slip
+    @year, @month = params[:year], params[:month]
+    @date = Date.new(@year.to_i, Workingday.months[@month])
+    @day = @date.end_of_month.day
+    @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ? and is_confirm = ?", @date.strftime('%m/%Y'),false).group(:employee_id)
+    respond_to do |format|
+      format.json
+      format.pdf do
+        render pdf: 'employee_attendance',
+              layout: 'pdf.html',
+              orientation: 'Landscape',
+              template: 'employee_attendances/employee_attendance.pdf.erb',
+              show_as_html: params[:debug].present?,
+              margin:  { top:1,bottom:1,left:1,right:1 }
+            end
+         end
+  end
+
+  def employee_slip_xls
+    @year, @month = params[:year], params[:month]
+    @date = Date.new(@year.to_i, Workingday.months[@month])
+    @day = @date.end_of_month.day
+    @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ? and is_confirm = ?", @date.strftime('%m/%Y'),false).group(:employee_id)
+    respond_to do |format|
+      format.xls {render template: 'employee_attendances/employee_attendance.xls.erb'}
+    end
+  end
+
+
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_employee_attendance

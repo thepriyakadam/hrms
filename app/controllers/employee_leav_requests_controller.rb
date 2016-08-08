@@ -45,8 +45,8 @@ class EmployeeLeavRequestsController < ApplicationController
         @employee_leav_request.leave_count = 0.5
       end
       @emp_leave_bal = EmployeeLeavBalance.where('employee_id = ? AND leav_category_id = ?', @employee.id, @employee_leav_request.leav_category_id).take
-      type = LeavCategory.find(@employee_leav_request.leav_category_id).name
-      if type == "LWP Leave" or type == "ESIC Leave"
+      type = LeavCategory.find(@employee_leav_request.leav_category_id).is_payble
+      if type == false
         @employee_leav_request.save
         @employee_leav_request.leave_status_records.build(change_status_employee_id: current_user.employee_id,status: "Pending", change_date: Date.today)
         if @employee.manager.email.nil? or @employee.manager.email == ""
@@ -69,7 +69,7 @@ class EmployeeLeavRequestsController < ApplicationController
           @total_leaves = EmployeeLeavBalance.where('employee_id = ?', @employee.id)
           flash.now[:alert] = 'Leave Time Expired.'
           render :new
-        elsif type == 'C.Off'
+        elsif type == true
           @employee_leav_request.leave_status_records.build(change_status_employee_id: current_user.employee_id, status: 'Pending', change_date: Date.today)
           if @employee_leav_request.save
             #@employee_leav_request.manage_coff(@employee_leav_request)

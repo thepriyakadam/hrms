@@ -8,25 +8,6 @@ module EmployeeAttendancesHelper
         exist[d] = attendance_record.present
       end
 
-      # leave_record = ParticularLeaveRecord.where(leave_date: d.in_time_zone, employee_id: e.employee_id).take
-      # unless leave_record.nil?
-      #   unless exist.key?(d)
-      #     if leave_record.leav_category.is_payble
-      #       if leave_record.is_full
-      #         exist[d] = "*********************"
-      #       else
-      #         exist[d] = "-------"
-      #       end
-      #     else
-      #       if leave_record.is_full
-      #         exist[d] = "^^^^^^"
-      #       else
-      #         exist[d] = "////////"
-      #       end
-      #     end
-      #   end
-      # end
-
       unless exist.key?(d)
         holiday = Holiday.find_by(holiday_date: d)
         unless holiday.nil?
@@ -57,53 +38,53 @@ module EmployeeAttendancesHelper
     day_in_month
   end
 
-  def present_day_count(exist)
-    exist.select {|k,v| v == "P" }.count
-  end
+  # def present_day_count(exist)
+  #   exist.select {|k,v| v == "P" }.count
+  # end
 
-  def holiday_in_month_count(exist)
-    exist.select {|k,v| v == "H" }.count
-  end
+  # def holiday_in_month_count(exist)
+  #   exist.select {|k,v| v == "H" }.count
+  # end
 
-  def week_off_day_count(exist)
-    exist.select {|k,v| v == "W" }.count
-  end
+  # def week_off_day_count(exist)
+  #   exist.select {|k,v| v == "W" }.count
+  # end
 
-  def absent_day_count(exist)
-    exist.select {|k,v| v == "A" }.count
-  end
+  # def absent_day_count(exist)
+  #   exist.select {|k,v| v == "A" }.count
+  # end
 
-  def payable_day_count(exist)
-    exist.select {|k,v| v == "P" }.count
-  end
+  # def payable_day_count(exist)
+  #   exist.select {|k,v| v == "P" }.count
+  # end
 
-  def total_leave_count(exist)
-    exist.select {|k,v| v == "L" or v == "LWP" }.count
-  end
+  # def total_leave_count(exist)
+  #   exist.select {|k,v| v == "L" or v == "LWP" }.count
+  # end
 
-  def half_pay_leave_count(exist)
-    exist.select {|k,v| v == "P/2" }.count/2
-  end
+  # def half_pay_leave_count(exist)
+  #   exist.select {|k,v| v == "P/2" }.count/2
+  # end
 
-  def full_pay_leave_count(exist)
-    exist.select {|k,v| v == "L" }.count
-  end
+  # def full_pay_leave_count(exist)
+  #   exist.select {|k,v| v == "L" }.count
+  # end
 
-  def half_lwp_leave_count(exist)
-    exist.select {|k,v| v == "LWP/2" }.count/2
-  end
+  # def half_lwp_leave_count(exist)
+  #   exist.select {|k,v| v == "LWP/2" }.count/2
+  # end
 
-  def full_lwp_leave_count(exist)
-    exist.select {|k,v| v == "LWP" }.count
-  end
+  # def full_lwp_leave_count(exist)
+  #   exist.select {|k,v| v == "LWP" }.count
+  # end
 
-  def half_leave_date_count(exist)
-    exist.select {|k,v| v == "1/2" }.keys
-  end
+  # def half_leave_date_count(exist)
+  #   exist.select {|k,v| v == "1/2" }.keys
+  # end
 
-  def half_leave_date_cross_check_count(employee_id, date)
-    ParticularLeaveRecord.where("strftime('%m/%Y', leave_date) = ? and employee_id = ? and is_full = ?", date.strftime('%m/%Y'), employee_id, false).pluck(:leave_date)
-  end
+  # def half_leave_date_cross_check_count(employee_id, date)
+  #   ParticularLeaveRecord.where("strftime('%m/%Y', leave_date) = ? and employee_id = ? and is_full = ?", date.strftime('%m/%Y'), employee_id, false).pluck(:leave_date)
+  # end
 
   def employee_existence(date, e)
     flag = false

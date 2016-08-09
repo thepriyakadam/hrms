@@ -1,6 +1,5 @@
 class EmployeeLeavRequest < ActiveRecord::Base
   enum current_status: [:Pending, :Cancelled, :FirstApproved, :FinalApproved, :Rejected]
-  before_create :manage_date
   belongs_to :employee
   belongs_to :leav_category
   has_one :leav_cancelled
@@ -128,9 +127,19 @@ class EmployeeLeavRequest < ActiveRecord::Base
     end
   end
 
-  def manage_date
-    date_arr = date_range.split('-')
-    self.start_date = date_arr[0].rstrip
-    self.end_date = date_arr[1].lstrip
+  def is_holiday?
+    flag = 0
+    for i in self.start_date.to_date..self.end_date.to_date
+      flag = Holiday.exists?(holiday_date: i)
+    end
+    flag
+  end
+
+  def is_present?
+    flag = 0
+    for i in self.start_date.to_date..self.end_date.to_date
+      flag = EmployeeAttendance.exists?(day: i, employee_id: self.employee_id)
+    end
+    flag
   end
 end

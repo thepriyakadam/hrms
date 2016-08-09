@@ -1,5 +1,6 @@
 class EmployeeLeavRequest < ActiveRecord::Base
   enum current_status: [:Pending, :Cancelled, :FirstApproved, :FinalApproved, :Rejected]
+  before_create :manage_date
   belongs_to :employee
   belongs_to :leav_category
   has_one :leav_cancelled
@@ -125,5 +126,11 @@ class EmployeeLeavRequest < ActiveRecord::Base
         end
       end
     end
+  end
+
+  def manage_date
+    date_arr = date_range.split('-')
+    self.start_date = date_arr[0].rstrip
+    self.end_date = date_arr[1].lstrip
   end
 end

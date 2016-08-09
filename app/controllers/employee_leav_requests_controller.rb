@@ -25,10 +25,11 @@ class EmployeeLeavRequestsController < ApplicationController
 
   def create
     @employee_leav_request = EmployeeLeavRequest.new(employee_leav_request_params)
+    byebug
     @employee = Employee.find(@employee_leav_request.employee_id)
-    date_arr = params['employee_leav_request']['date_range'].split('-')
-    @employee_leav_request.start_date = date_arr[0].rstrip
-    @employee_leav_request.end_date = date_arr[1].lstrip
+    # date_arr = params['employee_leav_request']['date_range'].split('-')
+    # @employee_leav_request.start_date = date_arr[0].rstrip
+    # @employee_leav_request.end_date = date_arr[1].lstrip
     @leave_c_offs = LeaveCOff.where(employee_id: @employee.id)
 
     if @employee.manager_id.nil?

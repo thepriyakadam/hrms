@@ -104,4 +104,15 @@ module EmployeeAttendancesHelper
   def half_leave_date_cross_check_count(employee_id, date)
     ParticularLeaveRecord.where("strftime('%m/%Y', leave_date) = ? and employee_id = ? and is_full = ?", date.strftime('%m/%Y'), employee_id, false).pluck(:leave_date)
   end
+
+  def employee_existence(date, e)
+    flag = false
+    @requests = EmployeeLeavRequest.where("strftime('%m/%Y', start_date) = ? and strftime('%m/%Y', end_date) = ? and employee_id = ?", date.strftime('%m/%Y'), date.strftime('%m/%Y'), e.id)
+    @requests.each do |r|
+      if ((r.start_date.to_date..r.end_date.to_date) === date.to_date)
+        flag = true
+      end
+    end
+    flag
+  end
 end

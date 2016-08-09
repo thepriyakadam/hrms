@@ -8,24 +8,24 @@ module EmployeeAttendancesHelper
         exist[d] = attendance_record.present
       end
 
-      leave_record = ParticularLeaveRecord.where(leave_date: d.in_time_zone, employee_id: e.employee_id).take
-      unless leave_record.nil?
-        unless exist.key?(d)
-          if leave_record.leav_category.is_payble
-            if leave_record.is_full
-              exist[d] = "L"
-            else
-              exist[d] = "L/2"
-            end
-          else
-            if leave_record.is_full
-              exist[d] = "LWP"
-            else
-              exist[d] = "LWP/2"
-            end
-          end
-        end
-      end
+      # leave_record = ParticularLeaveRecord.where(leave_date: d.in_time_zone, employee_id: e.employee_id).take
+      # unless leave_record.nil?
+      #   unless exist.key?(d)
+      #     if leave_record.leav_category.is_payble
+      #       if leave_record.is_full
+      #         exist[d] = "*********************"
+      #       else
+      #         exist[d] = "-------"
+      #       end
+      #     else
+      #       if leave_record.is_full
+      #         exist[d] = "^^^^^^"
+      #       else
+      #         exist[d] = "////////"
+      #       end
+      #     end
+      #   end
+      # end
 
       unless exist.key?(d)
         holiday = Holiday.find_by(holiday_date: d)

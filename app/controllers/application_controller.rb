@@ -38,19 +38,19 @@ class ApplicationController < ActionController::Base
   #   redirect_to amain_path
   # end
 
-  rescue_from ActiveRecord::RecordNotFound do |_exc|
-    if request.xhr?
-      render js: "alert('Sorry! Record not found');"
-    else
-      flash[:alert] = 'Sorry! Record not found'
-      #redirect_to root_url
-      prev = Rails.application.routes.recognize_path(request.referrer)
-      puts prev
-      puts "-------------------------"
-      puts params
-      redirect_to url_for(:controller => prev[:controller], :action => prev[:action_name], :id => 1)
-    end
-  end
+  # rescue_from ActiveRecord::RecordNotFound do |_exc|
+  #   if request.xhr?
+  #     render js: "alert('Sorry! Record not found');"
+  #   else
+  #     flash[:alert] = 'Sorry! Record not found'
+  #     #redirect_to root_url
+  #     prev = Rails.application.routes.recognize_path(request.referrer)
+  #     puts prev
+  #     puts "-------------------------"
+  #     puts params
+  #     redirect_to url_for(:controller => prev[:controller], :action => prev[:action_name], :id => 1)
+  #   end
+  # end
 
   # rescue_from ActiveRecord::ActiveRecordError do |_exc|
   #   if request.xhr?

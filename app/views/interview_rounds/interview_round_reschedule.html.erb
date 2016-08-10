@@ -4,7 +4,7 @@
     </div><!-- /.box-header -->
  <div class="box-body">
  
- <%= bootstrap_form_for(@interview_round_reschedule,html: {id: 'interview_round_reschedule'},url:{action:"reschedule_interview"}) do |f| %>
+ <%= bootstrap_form_for(@interview_round_reschedule,html: {id: 'interview_round_reschedule'},url:{action:"reschedule_interview",interview_schedule_id: @interview_schedule.id}) do |f| %>
  <%= f.hidden_field :employee_id, value: @employee.id %>
  <%= f.hidden_field :interview_round_id, value: @interview_round.id %>
 <!--  <div>

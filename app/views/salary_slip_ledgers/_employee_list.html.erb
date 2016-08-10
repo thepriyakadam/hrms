@@ -81,14 +81,14 @@
         <td><%= r.try(:pf_no) %></td>
         <td><%= r.try(:esic_no) %></td>
 
-        <td><%= r.try(:actual_basic) %></td>
+        <td><%= r.try(:actual_basic).round %></td>
         <td><%= r.try(:actual_da) %></td>
         <td><%= r.try(:actual_hra) %></td>
         <td><%= r.try(:actual_convenience) %></td>
         <td><%= r.try(:actual_other) %></td>
         <td><%= r.try(:actual_special) %></td>
         <td><%= r.try(:actual_washing) %></td>
-        <td><%= r.try(:actual_driver) %></td>
+        <td><%= r.try(:actual_driver).try(:round) %></td>
         <td><%= r.try(:actual_medical) %></td>
         <td><%= r.try(:actual_child_edu) %></td>
         <td><%= r.try(:actual_mra) %></td>
@@ -112,7 +112,7 @@
         <td><%= r.try(:earned_other).round %></td>
         <td><%= r.try(:earned_special).round %></td>
         <td><%= r.try(:earned_washing).round %></td>
-        <td><%= r.try(:earned_driver) %></td>
+        <td><%= r.try(:earned_driver).try(:round) %></td>
         <td><%= r.try(:earned_medical) %></td>
         <td><%= r.try(:earned_child_edu) %></td>
         <td><%= r.try(:earned_mra) %></td>
@@ -156,7 +156,6 @@
       <td><%= @sum.actual_child_edu.round %></td>
       <td><%= @sum.actual_mra.round %></td>
       <td><%= @sum.actual_total.round %></td>
-
       
       <td><%= @sum.cl_leave %></td>
       <td><%= @sum.el_leave %></td>

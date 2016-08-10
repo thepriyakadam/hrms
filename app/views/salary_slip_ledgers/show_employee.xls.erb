@@ -77,20 +77,20 @@
         <Cell ss:Index="5"><Data ss:Type="String"><%= r.try(:pf_no) %></Data></Cell>
         <Cell ss:Index="6"><Data ss:Type="String"><%= r.try(:esic_no) %></Data></Cell>
       
-        <Cell ss:Index="7"><Data ss:Type="Number"><%= r.try(:actual_basic) %></Data></Cell>
-        <Cell ss:Index="8"><Data ss:Type="Number"><%= r.try(:actual_da) %></Data></Cell>
-        <Cell ss:Index="9"><Data ss:Type="Number"><%= r.try(:actual_hra) %></Data></Cell>
+        <Cell ss:Index="7"><Data ss:Type="Number"><%= r.try(:actual_basic)try(:round) %></Data></Cell>
+        <Cell ss:Index="8"><Data ss:Type="Number"><%= r.try(:actual_da)try(:round) %></Data></Cell>
+        <Cell ss:Index="9"><Data ss:Type="Number"><%= r.try(:actual_hra)try(:round) %></Data></Cell>
 
-        <Cell ss:Index="10"><Data ss:Type="Number"><%= r.try(:actual_convenience) %></Data></Cell>
-        <Cell ss:Index="11"><Data ss:Type="Number"><%= r.try(:actual_other) %></Data></Cell>
-        <Cell ss:Index="12"><Data ss:Type="Number"><%= r.try(:actual_special) %></Data></Cell>
-        <Cell ss:Index="13"><Data ss:Type="Number"><%= r.try(:actual_washing) %></Data></Cell>
-        <Cell ss:Index="14"><Data ss:Type="Number"><%= r.try(:actual_driver) %></Data></Cell>
-        <Cell ss:Index="15"><Data ss:Type="Number"><%= r.try(:actual_medical) %></Data></Cell>
-        <Cell ss:Index="16"><Data ss:Type="Number"><%= r.try(:actual_child_edu) %></Data></Cell>
-        <Cell ss:Index="17"><Data ss:Type="Number"><%= r.try(:actual_mra) %></Data></Cell>
+        <Cell ss:Index="10"><Data ss:Type="Number"><%= r.try(:actual_convenience)try(:round) %></Data></Cell>
+        <Cell ss:Index="11"><Data ss:Type="Number"><%= r.try(:actual_other)try(:round) %></Data></Cell>
+        <Cell ss:Index="12"><Data ss:Type="Number"><%= r.try(:actual_special)try(:round) %></Data></Cell>
+        <Cell ss:Index="13"><Data ss:Type="Number"><%= r.try(:actual_washing)try(:round) %></Data></Cell>
+        <Cell ss:Index="14"><Data ss:Type="Number"><%= r.try(:actual_driver)try(:round) %></Data></Cell>
+        <Cell ss:Index="15"><Data ss:Type="Number"><%= r.try(:actual_medical)try(:round) %></Data></Cell>
+        <Cell ss:Index="16"><Data ss:Type="Number"><%= r.try(:actual_child_edu)try(:round) %></Data></Cell>
+        <Cell ss:Index="17"><Data ss:Type="Number"><%= r.try(:actual_mra)try(:round) %></Data></Cell>
 
-        <Cell ss:Index="18"><Data ss:Type="Number"><%= r.try(:actual_total).round %></Data></Cell>
+        <Cell ss:Index="18"><Data ss:Type="Number"><%= r.try(:actual_total).try(:round) %></Data></Cell>
 
         <Cell ss:Index="19"><Data ss:Type="Number"><%= r.try(:cl_leave) %></Data></Cell>
         <Cell ss:Index="20"><Data ss:Type="Number"><%= r.try(:el_leave) %></Data></Cell>
@@ -102,19 +102,19 @@
         <Cell ss:Index="25"><Data ss:Type="Number"><%= r.try(:holiday) %></Data></Cell>
         <Cell ss:Index="26"><Data ss:Type="Number"><%= r.try(:weekoff) %></Data></Cell>
 
-        <Cell ss:Index="27"><Data ss:Type="Number"><%= r.try(:earned_basic) %></Data></Cell>
-        <Cell ss:Index="28"><Data ss:Type="Number"><%= r.try(:earned_da) %></Data></Cell>
-        <Cell ss:Index="29"><Data ss:Type="Number"><%= r.try(:earned_hra) %></Data></Cell>
+        <Cell ss:Index="27"><Data ss:Type="Number"><%= r.try(:earned_basic).try(:round) %></Data></Cell>
+        <Cell ss:Index="28"><Data ss:Type="Number"><%= r.try(:earned_da).try(:round) %></Data></Cell>
+        <Cell ss:Index="29"><Data ss:Type="Number"><%= r.try(:earned_hra).try(:round) %></Data></Cell>
 
-        <Cell ss:Index="30"><Data ss:Type="Number"><%= r.try(:earned_convenience) %></Data></Cell>
-        <Cell ss:Index="31"><Data ss:Type="Number"><%= r.try(:earned_other) %></Data></Cell>
-        <Cell ss:Index="32"><Data ss:Type="Number"><%= r.try(:earned_special) %></Data></Cell>
-        <Cell ss:Index="33"><Data ss:Type="Number"><%= r.try(:earned_washing) %></Data></Cell>
-        <Cell ss:Index="34"><Data ss:Type="Number"><%= r.try(:earned_driver) %></Data></Cell>
-        <Cell ss:Index="35"><Data ss:Type="Number"><%= r.try(:earned_medical) %></Data></Cell>
-        <Cell ss:Index="36"><Data ss:Type="Number"><%= r.try(:earned_child_edu) %></Data></Cell>
-        <Cell ss:Index="37"><Data ss:Type="Number"><%= r.try(:earned_mra) %></Data></Cell>
-        <Cell ss:Index="38"><Data ss:Type="Number"><%= r.try(:earned_total).round %></Data></Cell>
+        <Cell ss:Index="30"><Data ss:Type="Number"><%= r.try(:earned_convenience).try(:round) %></Data></Cell>
+        <Cell ss:Index="31"><Data ss:Type="Number"><%= r.try(:earned_other).try(:round) %></Data></Cell>
+        <Cell ss:Index="32"><Data ss:Type="Number"><%= r.try(:earned_special).try(:round) %></Data></Cell>
+        <Cell ss:Index="33"><Data ss:Type="Number"><%= r.try(:earned_washing).try(:round) %></Data></Cell>
+        <Cell ss:Index="34"><Data ss:Type="Number"><%= r.try(:earned_driver).try(:round) %></Data></Cell>
+        <Cell ss:Index="35"><Data ss:Type="Number"><%= r.try(:earned_medical).try(:round) %></Data></Cell>
+        <Cell ss:Index="36"><Data ss:Type="Number"><%= r.try(:earned_child_edu).try(:round) %></Data></Cell>
+        <Cell ss:Index="37"><Data ss:Type="Number"><%= r.try(:earned_mra).try(:round) %></Data></Cell>
+        <Cell ss:Index="38"><Data ss:Type="Number"><%= r.try(:earned_total).try(:round) %></Data></Cell>
 
         <Cell ss:Index="39"><Data ss:Type="Number"><%= r.try(:pf) %></Data></Cell>
         <Cell ss:Index="40"><Data ss:Type="Number"><%= r.try(:esic) %></Data></Cell>

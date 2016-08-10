@@ -1,4 +1,4 @@
-<div class="ajax-progress"></div>
+try(:<div )class="ajax-progress"></div>
 <% i = 0 %>
 <table style="border-collapse: collapse; font-size:30pt;" border=1 width=1000 cellpadding="15">
   <thead>
@@ -49,15 +49,15 @@
        <td><%= r.try(:month) %> <%= r.try(:year) %></td>
 
         <td><%= r.try(:payable_day) %></td>
-        <td><%= r.try(:earned_basic).round %></td>
-        <td><%= r.try(:earned_da).round %></td>
-        <td><%= r.try(:earned_hra).round %></td>
+        <td><%= r.try(:earned_basic).try(:round) %></td>
+        <td><%= r.try(:earned_da).try(:round) %></td>
+        <td><%= r.try(:earned_hra).try(:round) %></td>
 
-        <td><%= r.try(:earned_convenience).round %></td>
-        <td><%= r.try(:earned_other).round %></td>
-        <td><%= r.try(:earned_special).round %></td>
-        <td><%= r.try(:earned_washing).round %></td>
-        <td><%= r.try(:earned_total).round %></td>
+        <td><%= r.try(:earned_convenience).try(:round) %></td>
+        <td><%= r.try(:earned_other).try(:round) %></td>
+        <td><%= r.try(:earned_special).try(:round) %></td>
+        <td><%= r.try(:earned_washing).try(:round) %></td>
+        <td><%= r.try(:earned_total).try(:round) %></td>
 
         <td><%= r.try(:pf) %></td>
         <td><%= r.try(:esic) %></td>
@@ -69,22 +69,22 @@
         <td><%= r.try(:food_deduction) %></td>
         <td><%= r.try(:mobile) %></td>
         <td><%= r.try(:retention) %></td>
-        <td><%= r.try(:deduction_total).round %></td>
-        <td><%= r.try(:net_payable).round %></td>
+        <td><%= r.try(:deduction_total).try(:round) %></td>
+        <td><%= r.try(:net_payable).try(:round) %></td>
       </tr>
     <% end %>
     <tr>
       <th></th>
       <th></th>
-      <th><%= @sum.payable_day.round %></th>
-      <th><%= @sum.earned_basic.round %></th>
-      <th><%= @sum.earned_da.round %></th>
-      <th><%= @sum.earned_hra.round %></th>
-      <th><%= @sum.earned_convenience.round %></th>
-      <th><%= @sum.earned_other.round %></th>
-      <th><%= @sum.earned_special.round %></th>
-      <th><%= @sum.earned_washing.round %></th>
-      <th><%= @sum.earned_total.round %></th>
+      <th><%= @sum.payable_day.try(:round) %></th>
+      <th><%= @sum.earned_basic.try(:round) %></th>
+      <th><%= @sum.earned_da.try(:round) %></th>
+      <th><%= @sum.earned_hra.try(:round) %></th>
+      <th><%= @sum.earned_convenience.try(:round) %></th>
+      <th><%= @sum.earned_other.try(:round) %></th>
+      <th><%= @sum.earned_special.try(:round) %></th>
+      <th><%= @sum.earned_washing.try(:round) %></th>
+      <th><%= @sum.earned_total.try(:round) %></th>
 
       <th><%= @sum.pf %></th>
       <th><%= @sum.esic %></th>
@@ -97,7 +97,7 @@
       <th><%= @sum.retention %></th>
       <th><%= @sum.deduction_total %></th>
 
-      <th><%= @sum.net_payable.round %></th>
+      <th><%= @sum.net_payable.try(:round) %></th>
       </tr>
   </tbody>
 </table>

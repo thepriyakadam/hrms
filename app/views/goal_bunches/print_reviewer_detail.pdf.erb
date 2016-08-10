@@ -185,23 +185,23 @@ div.nobreak{ page-break-inside: avoid;
         <tr><th colspan="2"><center>Overall Performance Detail</center></th></tr>
           <tr>
             <th>Self Comment</th>
-            <td><%= goal_bunch.appraisee_comment %></td>
+            <td><%= goal_bunch.try(:appraisee_comment) %></td>
           </tr>
           <tr>
           <th>Appraiser Comment</th>
-          <td><%= goal_bunch.appraiser_comment %></td>
+          <td><%= goal_bunch.try(:appraiser_comment) %></td>
         </tr>
         <tr>
           <th>Appraiser Rating</th>
-          <td><%= %></td>
+          <td><%= goal_bunch.try(:appraiser_rating) %></td>
         </tr>
         <tr>
           <th>Reviewer Comment</th>
-          <td><%= goal_bunch.review_comment %></td>
+          <td><%= goal_bunch.try(:review_comment) %></td>
         </tr>
         <tr>
           <th>Reviewer Rating</th>
-          <td><%= goal_bunch.reviewer_rating_id %></td>
+          <td><%= goal_bunch.try(:reviewer_rating_id) %></td>
         </tr>
         <% end %>
       </tbody>

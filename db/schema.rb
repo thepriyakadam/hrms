@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160805110143) do
+ActiveRecord::Schema.define(version: 20160805121851) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -1679,6 +1679,8 @@ ActiveRecord::Schema.define(version: 20160805110143) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.boolean  "is_payble"
+    t.decimal  "from"
+    t.decimal  "to"
   end
 
   create_table "leav_rejecteds", force: :cascade do |t|
@@ -2150,6 +2152,7 @@ ActiveRecord::Schema.define(version: 20160805110143) do
     t.datetime "updated_at",          null: false
     t.string   "travel_status"
     t.integer  "daily_bill_id"
+    t.boolean  "status"
   end
 
   add_index "reporting_masters_travel_requests", ["daily_bill_id"], name: "index_reporting_masters_travel_requests_on_daily_bill_id"
@@ -2856,8 +2859,8 @@ ActiveRecord::Schema.define(version: 20160805110143) do
     t.decimal  "el_balance"
     t.decimal  "coff_balance"
     t.decimal  "advance_balance"
-    t.decimal  "pay_leave"
     t.boolean  "is_confirm"
+    t.decimal  "pay_leave"
   end
 
   add_index "workingdays", ["employee_id"], name: "index_workingdays_on_employee_id"

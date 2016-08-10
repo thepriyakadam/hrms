@@ -5,6 +5,8 @@
       <th>Code</th> 
       <th>Name</th>
       <th>Description</th>
+      <th>From</th>
+      <th>To</th>
       <th>Is Payble</th> 
       <th>Action</th>
     </tr>
@@ -15,6 +17,8 @@
          <td><%= leav_category.code %></td> 
         <td><%= leav_category.name %></td>
         <td><%= leav_category.description %></td>
+        <td><%= leav_category.from %></td>
+        <td><%= leav_category.to %></td>
         <td><%= leav_category.is_payble ? "Yes" : "No" %></td> 
         <td>
           <%= link_to '', edit_leav_category_path(leav_category),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>

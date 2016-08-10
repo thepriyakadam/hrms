@@ -244,7 +244,6 @@ class EmployeesController < ApplicationController
 
   def ajax_physical_detail
     @employee_physical = EmployeePhysical.new
-    puts '--------------------------------------------------------------------------------'
   end
 
   def ajax_family_detail
@@ -294,7 +293,7 @@ class EmployeesController < ApplicationController
       @employees = Employee.all
       @mngr = ManagerHistory.create(employee_id: @employee.id,manager_id: @employee.manager_id,manager_2_id: @employee.manager_2_id,effective_from: @effec_date.to_date)
       @manager = ManagerHistory.where(employee_id: @employee.id).last(2).first
-      ManagerHistory.where(employee_id: @manager.employee_id).update_all(effective_to: @mngr.effective_from)
+      ManagerHistory.where(id: @manager.id).update_all(effective_to: @mngr.effective_from)
 
       @flag = true
     else
@@ -307,7 +306,6 @@ class EmployeesController < ApplicationController
   end
 
   def transfer_employee
-    # byebug
     @department = Department.find(params[:employee][:department_id])
     @company_location = CompanyLocation.find(@department.company_location_id)
     @company = Company.find(@company_location.company_id)

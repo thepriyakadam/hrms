@@ -85,6 +85,12 @@ class Employee < ActiveRecord::Base
   has_many :manager_histories, class_name: "Employee",
                           foreign_key: "manager_2_id"
 
+  # has_many :reporting_masters, class_name: "Employee",
+  #                         foreign_key: "manager_id"
+
+  # has_many :reporting_masters, class_name: "Employee",
+  #                         foreign_key: "manager_2_id"
+
   before_create :add_department
   before_update :add_department
 

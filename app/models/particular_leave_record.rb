@@ -74,4 +74,9 @@ class ParticularLeaveRecord < ActiveRecord::Base
     end
   end
   end
+
+  def salary_processed?
+    @date = self.leave_date
+    Workingday.where(employee_id: self.employee_id, month_name: @date.strftime("%B") , year: @date.strftime("%Y").to_s).take
+  end
 end

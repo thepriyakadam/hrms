@@ -253,7 +253,7 @@
           <% formula_string = @pf_master.base_component.split(",") %>
           <% formula_string.try(:each) do |f| %>
             <% formula_item = @addable_salary_items.where(salary_component_id: f.to_i).take %>
-            <% formula_item_actual_amount = formula_item.monthly_amount %>
+            <% formula_item_actual_amount = formula_item.try(:monthly_amount) %>
             <% formula_item_actual_amount = 0 if formula_item_actual_amount.nil? %>
             <% formula_total_actual_amount = formula_total_actual_amount + formula_item_actual_amount %>
             <% formula_item_calculated_amount = formula_item_actual_amount / @working_day.try(:day_in_month) * @working_day.try(:payable_day) %>

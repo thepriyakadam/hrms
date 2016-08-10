@@ -125,6 +125,8 @@ Rails.application.routes.draw do
       get :monthly_attendance
       get :costcenter_wise_attendance
       get :show_costcenter_wise_attendance
+      get :employee_slip
+      get :employee_slip_xls
     end
   end
   resources :salary_comp_mappings

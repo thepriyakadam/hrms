@@ -65,8 +65,15 @@ class EmployeeAttendancesController < ApplicationController
 
   def department_wise_employee_list
     @costcenter, @date = params[:salary][:name], params[:salary][:day].to_date
-    @employees = Employee.filter_by_date_and_costcenter(@date, @costcenter, current_user)
-    @employee_attendance = EmployeeAttendance.new
+    if Holiday.exists?(holiday_date: @date)
+      @holiday_flag = true
+      @holiday = Holiday.find_by(holiday_date: @date)
+    else
+      @holiday_flag = false
+      @employees = Employee.filter_by_date_and_costcenter(@date, @costcenter, current_user)
+      @employee_attendance = EmployeeAttendance.new
+    end
+    
   end
     
   def create_employee_attendance
@@ -104,7 +111,6 @@ class EmployeeAttendancesController < ApplicationController
     @day = params[:salary][:day]
     @present = params[:salary][:present]
     #@employee_attendances = EmployeeAttendance.filter_by_date_and_costcenter_and_present(@day, @costcenter_id, @present)
-
     @costcenter = JoiningDetail.where(cost_center_id: @costcenter_id).pluck(:employee_id)
     @employee_attendances = EmployeeAttendance.where(present: @present ,employee_id: @costcenter).where(day: @day.to_date,is_confirm: "false")
   end
@@ -140,8 +146,7 @@ class EmployeeAttendancesController < ApplicationController
     @year, @month = params[:year], params[:month]
     @date = Date.new(@year.to_i, Workingday.months[@month])
     @day = @date.end_of_month.day
-    @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ? and is_confirm = ?", @date.strftime('%m/%Y'),false).group(:employee_id)
-
+    @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).group(:employee_id)
   end
                                 
   def create_attendance
@@ -166,6 +171,35 @@ class EmployeeAttendancesController < ApplicationController
     @day = @date.end_of_month.day
     @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).where(employee_id: @costcenter).group(:employee_id)
   end 
+
+  def employee_slip
+    @year, @month = params[:year], params[:month]
+    @date = Date.new(@year.to_i, Workingday.months[@month])
+    @day = @date.end_of_month.day
+    @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ? and is_confirm = ?", @date.strftime('%m/%Y'),false).group(:employee_id)
+    respond_to do |format|
+      format.json
+      format.pdf do
+        render pdf: 'employee_attendance',
+              layout: 'pdf.html',
+              orientation: 'Landscape',
+              template: 'employee_attendances/employee_attendance.pdf.erb',
+              show_as_html: params[:debug].present?,
+              margin:  { top:1,bottom:1,left:1,right:1 }
+            end
+         end
+  end
+
+  def employee_slip_xls
+    @year, @month = params[:year], params[:month]
+    @date = Date.new(@year.to_i, Workingday.months[@month])
+    @day = @date.end_of_month.day
+    @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ? and is_confirm = ?", @date.strftime('%m/%Y'),false).group(:employee_id)
+    respond_to do |format|
+      format.xls {render template: 'employee_attendances/employee_attendance.xls.erb'}
+    end
+  end
+
 
   private
   # Use callbacks to share common setup or constraints between actions.

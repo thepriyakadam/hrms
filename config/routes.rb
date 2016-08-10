@@ -408,15 +408,15 @@ end
     get :print_daily_bill
     get :daily_bill_history
     get :daily_bill_request_confirmation
-    post :approve_request
+    get :approve_request
     get :approved_daily_bill_details
     get :travel_request_list
-    get :edit_and_send_next_modal
-    post :edit_and_send_next
     get :comment_modal
     post :update_comment
-    post :reject_request
+    get :reject_request
     get :approve_and_send_next
+    get :approve_and_send_next_modal
+    post :approve_n_send_next
     end
   end 
   resources :travel_requests do
@@ -564,6 +564,7 @@ end
       get :interview_round_list
       get :modal_schedule_list
       post :update_interview_schedule
+      patch :create_new
     end
   end
   resources :vacancy_masters do
@@ -855,7 +856,12 @@ end
   end
   resources :employee_categories
   resources :other_salary_components
-  resources :salaryslip_components
+  resources :salaryslip_components do
+    collection do
+      post :xml_print
+      post :index
+    end
+  end
   resources :salaryslips do
     collection do
       post :save_data

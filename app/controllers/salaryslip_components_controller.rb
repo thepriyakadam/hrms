@@ -2,11 +2,29 @@ class SalaryslipComponentsController < ApplicationController
   skip_before_filter :authenticate!
 
   def index
+    # byebug
+    @month = params[:month]
+    @year = params[:year]
     @salaryslip_components = SalaryslipComponent.limit(50)
+    # @salary_components = SalaryComponent.all
     @maps = SalaryMapSap.all
     respond_to do |format|
       format.xml { send_data render_to_string(:index), :filename => 'mydoc.xml', :type=>"application/xml", :disposition => 'attachment' }
-    end
+  end
+
+  def xml_print
+    # byebug
+    @month = params[:month]
+    @year = params[:year]
+    @maps = SalaryMapSap.all
+    # @salaryslip_components = SalaryslipComponent.limit(50)
+                                                                                                          
+    respond_to do |format|
+    format.xml { send_data render_to_string(:index), :filename => 'mydoc.xml', :type=>"application/xml", :disposition => 'attachment' }
+    # @salary_components = SalaryComponent.all
+    @maps = SalaryMapSap.all
+  end
+end
     
   end
 
@@ -36,9 +54,9 @@ class SalaryslipComponentsController < ApplicationController
       end
     end
   end
-
+  
   private
-
+  
   # Never trust parameters from the scary internet, only allow the white list through.
   def salaryslip_component_params
     params.require(:salaryslip_component).permit(:salaryslip_id, :salary_component_id, :actual_amount, :calculated_amount, :is_deducted, :other_component_name)

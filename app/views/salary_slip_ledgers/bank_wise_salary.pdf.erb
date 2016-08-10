@@ -116,14 +116,14 @@
         <td><%= r.try(:absent_day) %></td>
         <td><%= r.try(:payable_day) %></td>
        
-        <td><%= r.try(:earned_basic).round %></td>
-        <td><%= r.try(:earned_da).round %></td>
-        <td><%= r.try(:earned_hra).round %></td>
+        <td><%= r.try(:earned_basic) %></td>
+        <td><%= r.try(:earned_da) %></td>
+        <td><%= r.try(:earned_hra) %></td>
 
-        <td><%= r.try(:earned_convenience).round %></td>
-        <td><%= r.try(:earned_other).round %></td>
-        <td><%= r.try(:earned_special).round %></td>
-        <td><%= r.try(:earned_washing).round %></td>
+        <td><%= r.try(:earned_convenience) %></td>
+        <td><%= r.try(:earned_other) %></td>
+        <td><%= r.try(:earned_special) %></td>
+        <td><%= r.try(:earned_washing) %></td>
         <td><%= r.try(:earned_driver) %></td>
         <td><%= r.try(:earned_medical) %></td>
         <td><%= r.try(:earned_child_edu) %></td>
@@ -176,17 +176,17 @@
       <td><%= @sum.payable_day %></td>
       
 
-      <td><%= @sum.earned_basic.round %></td>
-      <td><%= @sum.earned_da.round %></td>
-      <td><%= @sum.earned_hra.round %></td>
-      <td><%= @sum.earned_convenience.round %></td>
-      <td><%= @sum.earned_other.round %></td>
-      <td><%= @sum.earned_special.round %></td>
-      <td><%= @sum.earned_washing.round %></td>
-      <td><%= @sum.earned_driver.round %></td>
-      <td><%= @sum.earned_medical.round %></td>
-      <td><%= @sum.earned_child_edu.round %></td>
-      <td><%= @sum.earned_mra.round %></td>
+      <td><%= @sum.earned_basic %></td>
+      <td><%= @sum.earned_da %></td>
+      <td><%= @sum.earned_hra %></td>
+      <td><%= @sum.earned_convenience %></td>
+      <td><%= @sum.earned_other %></td>
+      <td><%= @sum.earned_special %></td>
+      <td><%= @sum.earned_washing %></td>
+      <td><%= @sum.earned_driver %></td>
+      <td><%= @sum.earned_medical %></td>
+      <td><%= @sum.earned_child_edu %></td>
+      <td><%= @sum.earned_mra %></td>
       <td><%= @sum.earned_total.round %></td>
 
       <td><%= @sum.pf %></td>

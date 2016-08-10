@@ -916,17 +916,14 @@ class SalaryslipsController < ApplicationController
     else
       @salaryslip_ids.each do |sid|
         @salaryslip = Salaryslip.find(sid)
-        @bonus_employees = BonusEmployee.where("strftime('%m/%Y', bonus_date) = ? and employee_id = ?", date.strftime('%m/%Y'), @salaryslip.employee_id)
-        
-        @instalments = Instalment.where("strftime('%m/%Y' , instalment_date) = ? ", date.strftime('%m/%Y'))
-        @instalments.each do |i|
-          i.update(is_complete: false)
-        end
+        @bonus_employees = BonusEmployee.where("strftime('%m/%Y', bonus_date) = ? and employee_id = ?", date.strftime('%m/%Y'), @salaryslip.employee_id)        
+        Instalment.where("strftime('%m/%Y' , instalment_date) = ? ", date.strftime('%m/%Y')).update_all(is_complete: false) 
         @bonus_employees.destroy_all
-        @salaryslip.destroy
         SalaryslipComponent.where(salaryslip_id: @salaryslip.id).destroy_all
+        @salaryslip.destroy
         @workingdays = Workingday.where(employee_id: @salaryslip.employee_id, month_name: date.strftime("%B"), year: date.strftime("%Y"))
         @workingdays.destroy_all
+        EmployeeAttendance.where("strftime('%m/%Y', day) = ?", date.strftime('%m/%Y')).update_all(is_confirm: false)
       end
       flash[:notice] = "Revert successfully"
       redirect_to revert_salary_salaryslips_path

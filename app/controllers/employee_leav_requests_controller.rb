@@ -30,6 +30,7 @@ class EmployeeLeavRequestsController < ApplicationController
     @employee_leav_request.start_date = date_arr[0].rstrip
     @employee_leav_request.end_date = date_arr[1].lstrip
     @leave_c_offs = LeaveCOff.where(employee_id: @employee.id)
+    @leav_category = LeavCategory.find(@employee_leav_request.leav_category_id)
 
     if @employee.manager_id.nil?
       flash[:alert] = 'First Reporter not set.'
@@ -46,7 +47,9 @@ class EmployeeLeavRequestsController < ApplicationController
       end
       @emp_leave_bal = EmployeeLeavBalance.where('employee_id = ? AND leav_category_id = ?', @employee.id, @employee_leav_request.leav_category_id).take
       type = LeavCategory.find(@employee_leav_request.leav_category_id).is_payble
+      
       if type == false
+
         @employee_leav_request.save
         @employee_leav_request.leave_status_records.build(change_status_employee_id: current_user.employee_id,status: "Pending", change_date: Date.today)
         if @employee.manager.email.nil? or @employee.manager.email == ""
@@ -64,7 +67,28 @@ class EmployeeLeavRequestsController < ApplicationController
         elsif @employee_leav_request.leave_count.to_f > @emp_leave_bal.try(:no_of_leave).to_f
           @total_leaves = EmployeeLeavBalance.where('employee_id = ?', @employee.id)
           flash.now[:alert] = 'Not Allowed. You exceed the leave limit.'
+          render :new 
+
+        elsif @leav_category.from.nil? or @leav_category.to.nil?
+          @employee_leav_request.leave_status_records.build(change_status_employee_id: current_user.employee_id, status: 'Pending', change_date: Date.today)
+          if @employee_leav_request.save
+            @employee_leav_request.minus_leave(@employee_leav_request)
+            if @employee.manager.email.nil? || @employee.manager.email == ''
+              flash[:notice] = 'Send request without email.'
+            else
+              flash[:notice] = 'Leave Request sent successfully.'
+              LeaveRequestMailer.pending(@employee_leav_request).deliver_now
+            end
+            redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
+          else
+            render :new
+          end
+        elsif
+          @employee_leav_request.leave_count < @leav_category.from or @employee_leav_request.leave_count > @leav_category.to 
+          @total_leaves = EmployeeLeavBalance.where('employee_id = ?', @employee.id)
+          flash.now[:alert] = 'You are not in limit.'
           render :new
+
         elsif @employee_leav_request.end_date < @emp_leave_bal.expiry_date && @emp_leave_bal.expiry_date < Date.today
           @total_leaves = EmployeeLeavBalance.where('employee_id = ?', @employee.id)
           flash.now[:alert] = 'Leave Time Expired.'
@@ -84,6 +108,7 @@ class EmployeeLeavRequestsController < ApplicationController
           else
             render :new
           end
+
         else
           @employee_leav_request.leave_status_records.build(change_status_employee_id: current_user.employee_id, status: 'Pending', change_date: Date.today)
           if @employee_leav_request.save

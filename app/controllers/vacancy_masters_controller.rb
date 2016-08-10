@@ -48,6 +48,7 @@ class VacancyMastersController < ApplicationController
     respond_to do |format|
       if @vacancy_master.save 
         ReportingMastersVacancyMaster.create(reporting_master_id: @vacancy_master.reporting_master_id, vacancy_master_id: @vacancy_master.id, vacancy_status: @vacancy_master.current_status)
+        VacancyRequestHistory.create(vacancy_master_id: @vacancy_master.id, vacancy_name: @vacancy_master.vacancy_name,no_of_position: @vacancy_master.no_of_position,description: @vacancy_master.description,vacancy_post_date: @vacancy_master.vacancy_post_date,budget: @vacancy_master.budget,department_id: @vacancy_master.department_id,employee_designation_id: @vacancy_master.employee_designation_id,company_location_id: @vacancy_master.company_location_id,degree_id: @vacancy_master.degree_id,degree_1_id: @vacancy_master.degree_1_id,degree_2_id: @vacancy_master.degree_2_id,experience: @vacancy_master.experience,keyword: @vacancy_master.keyword,other_organization: @vacancy_master.other_organization,industry: @vacancy_master.industry,reporting_master_id: @vacancy_master.reporting_master_id,current_status: @vacancy_master.current_status,employee_id: @vacancy_master.employee_id,justification: @vacancy_master.justification)
         VacancyMasterMailer.vacancy_request(@vacancy_master).deliver_now
         format.html { redirect_to @vacancy_master, notice: 'Vacancy created successfully.' }
         format.json { render :show, status: :created, location: @vacancy_master }
@@ -104,8 +105,10 @@ class VacancyMastersController < ApplicationController
   end
 
   def vacancy_history
-    reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
-    @vacancy_masters = VacancyMaster.where("reporting_master_id = ? and (current_status = ? or current_status = ?)",reporting_masters,"Pending","Approved & Send Next")
+    # reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
+    # @vacancy_masters = VacancyMaster.where("reporting_master_id = ? and (current_status = ? or current_status = ?)",reporting_masters,"Pending","Approved & Send Next")
+    @reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
+    @vacancy_masters = VacancyMaster.where(reporting_master_id: @reporting_masters)
     session[:active_tab] ="recruitment"
     session[:active_tab1] ="particular_vacancy"
   end 
@@ -151,7 +154,7 @@ class VacancyMastersController < ApplicationController
     @vacancy_master.no_of_position.times do 
       ParticularVacancyRequest.create(vacancy_master_id: @vacancy_master.id,employee_id: @vacancy_master.employee_id,employee_designation_id: @vacancy_master.employee_designation_id,vacancy_name: @vacancy_master.vacancy_name,fulfillment_date: @vacancy_master.vacancy_post_date,status: "Approved",open_date: Time.zone.now.to_date,vacancy_history_id: @c1.id)
   end
-    VacancyMasterMailer.approve_vacancy_email(@vacancy_master).deliver_now
+    # VacancyMasterMailer.approve_vacancy_email(@vacancy_master).deliver_now
     flash[:notice] = 'Vacancy Request Approved'
     redirect_to vacancy_history_vacancy_masters_path
   end
@@ -169,6 +172,7 @@ class VacancyMastersController < ApplicationController
     len = @vacancy_master.no_of_position
     @vacancy_master.update(current_status: "Cancelled")
     ReportingMastersVacancyMaster.create(vacancy_master_id: @vacancy_master.id, reporting_master_id: current_user.employee_id, vacancy_status: "Cancelled")
+    VacancyRequestHistory.create(vacancy_master_id: @vacancy_master.id, vacancy_name: @vacancy_master.vacancy_name,no_of_position: @vacancy_master.no_of_position,description: @vacancy_master.description,vacancy_post_date: @vacancy_master.vacancy_post_date,budget: @vacancy_master.budget,department_id: @vacancy_master.department_id,employee_designation_id: @vacancy_master.employee_designation_id,company_location_id: @vacancy_master.company_location_id,degree_id: @vacancy_master.degree_id,degree_1_id: @vacancy_master.degree_1_id,degree_2_id: @vacancy_master.degree_2_id,experience: @vacancy_master.experience,keyword: @vacancy_master.keyword,other_organization: @vacancy_master.other_organization,industry: @vacancy_master.industry,reporting_master_id: @vacancy_master.reporting_master_id,current_status: @vacancy_master.current_status,employee_id: @vacancy_master.employee_id,justification: @vacancy_master.justification)
     VacancyMasterMailer.cancel_vacancy_email(@vacancy_master).deliver_now
     flash[:notice] = 'Vacancy Request Cancelled'
     redirect_to vacancy_masters_path

@@ -3,7 +3,7 @@
       <h3 class="box-title">Create Interview Schedule</h3>
     </div><!-- /.box-header -->
  <div class="box-body">
- <%= bootstrap_form_for @interview_schedule,html: {id: 'interview_schedule'} do |f| %>
+ <%= bootstrap_form_for @interview_schedule,html: {id: 'interview_schedule'},url:{action:"create_new"} do |f| %>
   <div class="row">
     <div class="col-sm-3">
      <div class="field">

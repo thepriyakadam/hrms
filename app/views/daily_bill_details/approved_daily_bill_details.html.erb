@@ -7,10 +7,11 @@
     <tr>  
       <th>Expense Date</th>
       <th>Place</th>
-      <th>Travel Expense Type</th>
+      <th>Expense Type</th>
       <th>Request Status</th>
-      <th>Download Doc</th>
-      <th>Download Image</th>
+      <th>Document</th>
+      <th>Image</th>
+      <th>Action</th>
     </tr>
   </thead>
   <tbody>
@@ -28,18 +29,21 @@
         </td>
         <td>
            <% if daily_bill_detail.avatar_file_file_name == nil %>
-           <small class="label label-default">Document Not Available</small>
+           <small class="label label-warning">Not Available</small>
              <% else %>
              <%= link_to '',download_doc_path(id: daily_bill_detail.id),class: 'btn btn-xs fa fa-download' %>
              <% end %>
         </td>
         <td>
            <% if daily_bill_detail.passport_photo_file_name == nil %>
-           <small class="label label-default">Image Not Available</small>
+           <small class="label label-warning">Not Available</small>
              <% else %>
              <%= link_to '',download_pics_path(id: daily_bill_detail.id),class: 'btn btn-xs fa fa-picture-o' %>
              <% end %>
-        </td>           
+        </td>  
+        <td>
+           <%= link_to '', daily_bill_detail,class: 'btn btn-sm btn-default fa fa-eye' %>
+        </td>
       </tr>
     <% end %>
   </tbody>

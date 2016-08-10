@@ -5,20 +5,20 @@ class Reports::CertificateController < ApplicationController
   end
 
 def show_joining_date
-  	@employee = Employee.find(params[:salary][:employee])
-  	@certificate = params[:salary][:certificate]
-  	@joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
+    @employee = Employee.find(params[:salary][:employee])
+    @certificate = params[:salary][:certificate]
+    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
   end
 end
 
 def certificate_print
-  	@employee = Employee.find(params[:salary][:employee])
-  	@certificate = params[:salary][:certificate]
-  	@joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
+  # byebug
+    @employee = Employee.find(params[:salary][:employee])
+    @certificate = params[:salary][:certificate]
+    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
      respond_to do |format|
         format.html
         format.pdf do
-        @certificate == "Character" 	
         render :pdf => 'certificate_print',
         layout: '/layouts/pdf.html.erb',
         :template => 'reports/certificate/certificate_print.pdf.erb',

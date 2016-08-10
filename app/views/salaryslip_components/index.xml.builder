@@ -7,37 +7,41 @@ xml.BOM do
     end
     xml.JournalEntries do
       xml.row do
-        xml.ReferenceDate Date.today
-        xml.TaxDate Date.today
-        xml.VatDate Date.today
-        xml.DueDate Date.today
+        xml.ReferenceDate  
+        xml.TaxDate Time.now.strftime("%Y%m%d")
+        xml.VatDate Time.now.strftime("%Y%m%d")
+        xml.DueDate Time.now.strftime("%Y%m%d")
       end
     end
     @maps.each do |m|
-      @salary_components = SalaryslipComponent.where(salary_component_id: m.salary_component_id).limit(3)
-      xml.JournalEntries_Lines do
+      @salary_components = SalaryslipComponent.where(salary_component_id: m.salary_component_id).limit(1)
+      # @salary_components = SalaryslipComponent.where(salary_component_id: m.salary_component_id)
+      xml.JournalEntries_Lines
         @salary_components.each do |c|
           xml.row do
             employee = Employee.find(c.salaryslip.employee_id)
             joining = JoiningDetail.find_by_employee_id(employee.id)
-            xml.CostingCode2 employee.manual_employee_code
+            xml.EmployeeCode employee.manual_employee_code
             xml.AccountCode m.account_code
+            xml.ComponentName m.salary_component.try(:name)
+            xml.CalculatedNetSalary c.salaryslip.calculated_net_salary.round
+            # xml.SalarySlipDate c.salaryslip.month_year
 
             if c.is_deducted
-              xml.Credit c.calculated_amount
+              xml.Credit c.calculated_amount.round
               xml.Debit "0"
             else
               xml.Credit "0"
-              xml.Debit c.calculated_amount
+              xml.Debit c.calculated_amount.round
             end
             xml.VatLine "N"
-            xml.DueDate Date.today
-            xml.TaxDate Date.today
+            xml.DueDate Time.now.strftime("%Y%m%d")
+            xml.TaxDate Time.now.strftime("%Y%m%d")
 
-            xml.CostingCode joining.cost_center.name
-          end
+            xml.CostingCentre joining.cost_center.try(:name)
+            xml.DepartmentName joining.department.try(:name)
         end
-      end  
+      end
     end
-  end    
+  end
 end

@@ -23,6 +23,7 @@ class Employee < ActiveRecord::Base
   has_many :interview_reschedules
   has_many :qualifications
   has_many :employee_leav_requests
+  has_many :reporting_masters, class_name: 'ReportingMaster', foreign_key: 'reporting_master_id'
   has_many :first_reporters, class_name: 'EmployeeLeavRequest', foreign_key: 'first_reporter_id'
   has_many :second_reporters, class_name: 'EmployeeLeavRequest', foreign_key: 'second_reporter_id'
   has_many :leave_status_records, class_name: 'LeaveStatusRecord', foreign_key: 'change_status_employee_id'
@@ -59,6 +60,7 @@ class Employee < ActiveRecord::Base
   has_many :interview_round_reschedules
   has_many :manager_histories
   has_many :due_employee_details
+  has_many :employee_promotions
   
   #accepts_nested_attributes_for :joining_detail
   has_many :subordinates, class_name: 'Employee',
@@ -165,11 +167,12 @@ class Employee < ActiveRecord::Base
       end
     end
   end
-
   
-  def self.filter_by_date_and_department(date, department)
+  def self.filter_by_date_and_costcenter(date, costcenter, current_user)
     @attendances = EmployeeAttendance.where(day: date).pluck(:employee_id)
-    @departments = Employee.where(department_id: department).pluck(:id)
-    Employee.where(id: @departments - @attendances)  
+    @joining_details = JoiningDetail.where(cost_center_id: costcenter).pluck(:employee_id)
+    @roles = collect_rolewise(current_user)
+    finals = (@joining_details - @attendances) & @roles
+    Employee.where(id: finals)
   end
 end

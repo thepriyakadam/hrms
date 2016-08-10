@@ -55,4 +55,28 @@ class ParticularLeaveRecord < ActiveRecord::Base
     end
     request.save
   end
+
+  def self.filter_records(current_user)
+  @particular_leave_records =  if current_user.class == Group
+  ParticularLeaveRecord.all
+  elsif current_user.class == Member
+    if current_user.role.name == "Company"
+      @employees = Employee.where(company_id: current_user.company_id)
+      ParticularLeaveRecord.where(employee_id: @employees)
+    elsif current_user.role.name == "CompanyLocation"
+      @employees = Employee.where(company_location_id: current_user.company_location_id)
+      ParticularLeaveRecord.where(employee_id: @employees)  
+    elsif current_user.role.name == "Department"
+      @employees = Employee.where(department_id: current_user.department_id)
+      ParticularLeaveRecord.where(employee_id: @employees)
+    elsif current_user.role.name == "Employee"
+      ParticularLeaveRecord.where(employee_id: current_user.employee_id)
+    end
+  end
+  end
+
+  def salary_processed?
+    @date = self.leave_date
+    Workingday.where(employee_id: self.employee_id, month_name: @date.strftime("%B") , year: @date.strftime("%Y").to_s).take
+  end
 end

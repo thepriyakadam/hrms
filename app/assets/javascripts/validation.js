@@ -396,6 +396,9 @@ $("#employee").validate({
         maxlength: 13,
         mobileNo: true
       },
+      "employee[status]":{
+        required: true
+      },
       "employee[email]":{
         loginRegex: true
       },
@@ -427,13 +430,13 @@ $("#employee").validate({
       "employee[country_id]":{
         required: "Please Specify Country"
       },
-      "company[state_id]":{
+      "employee[state_id]":{
         required: "Please Specify State"
       },
       "employee[city]":{
         maxlength: "Enter the City upto 30 char max"
       },
-      "company[district_id]":{
+      "employee[district_id]":{
         required: "Please Specify District"
       },
       "employee[pin_code]":{
@@ -441,6 +444,9 @@ $("#employee").validate({
       },
       "employee[contact_no]":{
         maxlength: "Enter the Correct contact number"
+      },
+      "employee[status]":{
+        required: "Please Specify State"
       },
       "employee[email]":{
         required: "Please Specify Email ID"

@@ -40,6 +40,9 @@ gem 'wicked_pdf', '~> 1.0', '>= 1.0.6'
 
 gem 'wkhtmltopdf-binary', '~> 0.9.9.3'
 
+#inline edit
+gem 'best_in_place', '~> 3.0.1'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
@@ -87,8 +90,6 @@ gem 'rails-erd'
 # Auto increement
 gem 'protokoll'
 
-# Image processing
-
 # country And State Name
 # gem 'country_state_select', '~> 2.0.0'
 # gem 'countries'
@@ -106,7 +107,6 @@ gem 'time_difference'
 gem 'roo'
 gem 'yaml_db'
 
-
 #gem 'mail'
 gem 'email_verifier'
 
@@ -116,4 +116,3 @@ gem "axlsx_rails"
 
 #Chart
 gem "chartkick"
-

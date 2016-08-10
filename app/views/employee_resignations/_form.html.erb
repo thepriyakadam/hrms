@@ -4,18 +4,17 @@
   </div><!-- /.box-header -->
   <div class="box-body">
     <%= bootstrap_form_for(@employee_resignation,html: {id: 'employee_resignation'}) do |f| %>
-    <!--< f.hidden_field :employee_id, :value => current_user.employee_id %>-->
+    <%= f.hidden_field :employee_id, :value => current_user.employee_id %>
      
       <div class="row">
       <div class="col-sm-3">
           <div class="form-group required">
-          <%= f.select :employee_id, all_active_employee_with_code,{label: 'Employee Name',include_blank: " Select Employee Name"} %>    
+          <%= f.select :employee_id, all_active_employee_with_code, {include_blank: "Select Employee"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>    
           </div>
         </div>
-       
+     
         <div class="col-sm-3">
         <div class="form-group required">
-          <!-- <label>Resignation Date </label> -->
             <div class="input-group">
               <div class="input-group-addon">
                 <i class="fa fa-calendar"></i>
@@ -31,26 +30,24 @@
           </div>
         </div>
 
-        <!--  <div class="col-sm-3">
-          <div class="field">
-          < f.select :reporting_master_id, all_reporting_master_list,{label: 'Request To',include_blank: " Select Reporting Manager"} %>    
+         <div class="col-sm-3">
+          <div class="form-group required">
+          <%= f.select :reporting_master_id, all_reporting_master_list, {include_blank: "Select Approval",label:"Request To"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>    
           </div>
-        </div> -->
-        <div class="col-sm-3">
+        </div> 
+       
+      </div>
+      <div class="row">
+
+       <div class="col-sm-3">
          <div class="field">
            <%= f.text_field :notice_period, label:'Notice Period (in days)' %>
          </div>
        </div>
-
-      </div>
-
-
-
-      <div class="row">
        
       <div class="col-sm-3">
        <div class="field">
-         <%= f.text_field :short_notice_period, label:'Short Notice Period' %>
+         <%= f.text_field :short_notice_period, label:'Short Notice Period (in days)' %>
        </div>
       </div>
 
@@ -69,7 +66,9 @@
        <div class="field">
          <%= f.text_field :remark, label:'Remark' %>
        </div>
-      </div>
+      </div></div>
+
+      <div class="row">
       <div class="col-sm-3">
        <label>Exit Interview Date</label>
        <div class="field">
@@ -81,8 +80,8 @@
         </div>
        </div>
       </div>
-    </div>
-    <div class="row">
+    
+  
       <div class="col-sm-3">
        <div class="field">
          <%= f.text_field :note, label:'Note' %>
@@ -140,6 +139,7 @@
     
   </div><!-- /.box-body -->
 </div><!--box -->
+
 <script type="text/javascript">
   $(function(){
     $('.resignation_date').datepicker({
@@ -174,19 +174,30 @@
 
     $("#employee_resignation").validate({
     rules: {
+      "employee_resignation[reporting_master_id]":{
+        required: true
+      },
       "employee_resignation[employee_id]":{
-        required: true,
+        required: true
+      },
+      "employee_resignation[resignation_date]":{
+        required: true
       }
     },
     messages: {
+      "employee_resignation[reporting_master_id]":{
+        required: "Please specify Reporting Manager"
+      },
       "employee_resignation[employee_id]":{
-        required: "Please select Employee Name",
+        required: "Please specify Employee"
+      },
+      "employee_resignation[resignation_date]":{
+        required: "Please specify Date"
       }
     },
     errorPlacement: function(error, element) {
-      error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
-      error.insertAfter(element.parent(element));
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
     }
-  });
-}); 
+   });
 </script>

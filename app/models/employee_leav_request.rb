@@ -7,6 +7,7 @@ class EmployeeLeavRequest < ActiveRecord::Base
   has_one :leav_rejected
   has_many :leave_status_records
   has_many :particular_leave_records
+  has_many :employee_attendances
 
   belongs_to :first_reporter, class_name: 'Employee'
   belongs_to :second_reporter, class_name: 'Employee'
@@ -83,7 +84,6 @@ class EmployeeLeavRequest < ActiveRecord::Base
     end
   end
 
-
   def self.filter_records(current_user)
     @employee_leave_requests =  if current_user.class == Group
                                   EmployeeLeavRequest.all
@@ -101,5 +101,45 @@ class EmployeeLeavRequest < ActiveRecord::Base
                                     EmployeeLeavRequest.where(employee_id: current_user.employee_id)
                                   end
                                 end
+  end
+
+  def create_attendance
+    if self.leav_category.is_payble
+      if self.leave_type == "Full Day"
+        for i in self.start_date.to_date..self.end_date.to_date
+          EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: self.leav_category.code.to_s, count: 1, employee_leav_request_id: self.id)
+        end
+      else
+        for i in self.start_date.to_date..self.start_date.to_date
+          EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: self.leav_category.code.to_s+"HD", count: 1, employee_leav_request_id: self.id)
+        end
+      end
+    else
+      if self.leave_type == "Full Day"
+        for i in self.start_date.to_date..self.end_date.to_date
+          EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: self.leav_category.code.to_s, count: 0, employee_leav_request_id: self.id)
+        end
+      else
+        for i in self.start_date.to_date..self.start_date.to_date
+          EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: self.leav_category.code.to_s+"HD", count: 0.5, employee_leav_request_id: self.id)
+        end
+      end
+    end
+  end
+
+  def is_holiday?
+    flag = 0
+    for i in self.start_date.to_date..self.end_date.to_date
+      flag = Holiday.exists?(holiday_date: i)
+    end
+    flag
+  end
+
+  def is_present?
+    flag = 0
+    for i in self.start_date.to_date..self.end_date.to_date
+      flag = EmployeeAttendance.exists?(day: i, employee_id: self.employee_id)
+    end
+    flag
   end
 end

@@ -17,7 +17,6 @@
         <tbody>
           <% @employee_daily_activities.each do |employee_daily_activity| %>
             <tr>
-
               <td><%= employee_daily_activity.day %></td>
               <td><%= full_name(employee_daily_activity.employee)%></td>
               <td><%= employee_daily_activity.project_master.try(:name) %></td>

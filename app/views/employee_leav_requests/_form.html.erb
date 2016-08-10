@@ -1,15 +1,32 @@
 <!--SELECT2 EXAMPLE -->
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title">Employee Leave Request</h3>
+    <h3 class="box-title">Leave Request
   </div><!-- /.box-header -->
 
   <div class="box-body">
     <%= bootstrap_form_for(@employee_leav_request,html: {id: 'employee_leav_request'}) do |f| %>
      <%= f.hidden_field :employee_id, value: @employee.id %>
      <div class="row">
-        <div class="col-sm-1"></div>
-        <div class="col-sm-5">
+      <div class="col-sm-12">
+        <div class="field">
+         <table class="table table-bordered table-hover table-condensed'">
+           <thead>
+           <tr><center><td colspan="4"><center>Initiate Leave Request For Employee : <%= @employee.manual_employee_code %>  <%= @employee.first_name %> <%= @employee.middle_name %> <%=@employee.last_name %>  </center></td></tr>
+            <tr>
+              <th><center> Manager 1 :</center></th>
+              <td><%= @employee.manager.try(:first_name) %> <%= @employee.manager.try(:middle_name) %> <%= @employee.manager.try(:last_name) %></td>
+              <th><center>Manager 2 :</center></th>
+              <td><%= @employee.manager_2.try(:first_name) %> <%= @employee.manager_2.try(:middle_name) %> <%= @employee.manager_2.try(:last_name) %></td>
+            </tr>
+           </thead>
+         </table>
+        </div>
+      </div>
+    </div>
+     <div class="row">
+       
+        <div class="col-sm-6">
           <div class="field">
          
           <table class="table table-bordered table-hover table-condensed'">
@@ -31,7 +48,7 @@
         </div>
 
         
-        <div class="col-sm-5">
+        <div class="col-sm-6">
           <div class="field">
           <table class="table table-bordered table-hover table-condensed'">
            <thead>
@@ -52,26 +69,24 @@
           </table>
           </div>
         </div>
-        <div class="col-sm-1"></div>
-
       </div>
       <hr>
 
       <div class="row">
-      <div class="col-sm-1"></div>
-        <div class="col-sm-3">
+      
+        <div class="col-sm-2">
           <div class="form-group required">
             <%= f.select :leav_category_id, all_leav_category,label: 'Leave Category' %>
           </div>
         </div>
 
-        <div class="col-sm-3">
+        <div class="col-sm-2">
           <div class="form-group required">
            <%= f.select :leave_type, ['Full Day','Half Day'],label: 'Leave Type' %>
           </div>
         </div>
 
-        <div class="col-sm-4">
+        <div class="col-sm-3">
          <div class="form-group required">
      <!--    <label>Date Range </label> -->
             <div class="input-group">
@@ -82,21 +97,19 @@
             </div><!-- /.input group -->
           </div>
         </div>
-      </div>
-      <div class="row">
-      <div class="col-sm-1"></div>
-        <div class="col-sm-9">
+        <div class="col-sm-5">
           <div class="form-group required">
-            <%= f.text_area :reason %>
+            <%= f.text_field :reason %>
           </div>
         </div>
-        </div>
+      </div>
+     <br>
      
       <div class="row">
-        <div class="col-sm-1"></div>
-         <div class="col-sm-3">
+        
+         <div class="col-sm-6">
           <div class="actions">
-            <%= f.submit'Create Employee Leave Request', :class => class_name, data: { disable_with: data_info } %>
+            <%= f.submit'Create Leave Request', :class => class_name, data: { disable_with: data_info } %>
             <%= link_to ' Back', employee_leav_requests_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
             </div>
           </div>

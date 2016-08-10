@@ -6,7 +6,7 @@ include QueryReport::Helper
   # GET /employee_daily_activities
   # GET /employee_daily_activities.json
   def index
-    @employee_daily_activities = EmployeeDailyActivity.where(employee_id: current_user.employee_id)
+    @employee_daily_activities = EmployeeDailyActivity.where(employee_id: current_user.employee_id).order("day asc")
   end
 
   # GET /employee_daily_activities/1
@@ -17,7 +17,7 @@ include QueryReport::Helper
   # GET /employee_daily_activities/new
   def new
     @employee_daily_activity = EmployeeDailyActivity.new
-    @employee_daily_activities = EmployeeDailyActivity.where(employee_id: current_user.employee_id)
+    @employee_daily_activities = EmployeeDailyActivity.where(employee_id: current_user.employee_id).order("day asc")
     session[:active_tab] = "selfservice"
     session[:active_tab1] = "daily_activity"
   end
@@ -29,8 +29,8 @@ include QueryReport::Helper
   # POST /employee_daily_activities
   # POST /employee_daily_activities.json
   def create
-   @employee_daily_activity = EmployeeDailyActivity.new(employee_daily_activity_params)
-    @employee_daily_activities = EmployeeDailyActivity.where(employee_id: current_user.employee_id)
+    @employee_daily_activity = EmployeeDailyActivity.new(employee_daily_activity_params)
+    @employee_daily_activities = EmployeeDailyActivity.where(employee_id: current_user.employee_id).order("day asc")
     respond_to do |format|
       if @employee_daily_activity.save
         @employee_daily_activity = EmployeeDailyActivity.new
@@ -48,7 +48,7 @@ include QueryReport::Helper
   
    def update
     @employee_daily_activity.update(employee_daily_activity_params)
-    @employee_daily_activities = EmployeeDailyActivity.where(employee_id: current_user.employee_id)
+    @employee_daily_activities = EmployeeDailyActivity.where(employee_id: current_user.employee_id).order("day asc")
     @employee_daily_activity = EmployeeDailyActivity.new
   end
 
@@ -56,7 +56,7 @@ include QueryReport::Helper
   # DELETE /employee_daily_activities/1.json
   def destroy
     @employee_daily_activity.destroy
-    @employee_daily_activities = EmployeeDailyActivity.where(employee_id: current_user.employee_id)
+    @employee_daily_activities = EmployeeDailyActivity.where(employee_id: current_user.employee_id).order("day asc")
   end
 
   def employee_details

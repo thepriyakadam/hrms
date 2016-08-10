@@ -152,7 +152,7 @@ class TravelRequestsController < ApplicationController
     @travel_request = TravelRequest.find(params[:format])
     @travel_request.update(current_status: "Cancelled")
     TravelRequestHistory.create(travel_request_id: @travel_request.id,application_date: @travel_request.application_date,traveling_date: @travel_request.traveling_date, tour_purpose: @travel_request.tour_purpose, place: @travel_request.place,total_advance: @travel_request.total_advance,reporting_master_id: @travel_request.reporting_master_id, travel_option_id: @travel_request.travel_option_id,current_status: "Cancelled")
-    ReportingMastersTravelRequest.create(travel_request_id: @travel_request.id, reporting_master_id: current_user.employee_id, travel_status: "Cancelled")
+    ReportingMastersTravelRequest.create(travel_request_id: @travel_request.id, reporting_master_id: @travel_request.reporting_master_id, travel_status: "Cancelled")
     flash[:notice] = 'Travel Request Cancelled'
     redirect_to travel_requests_path
   end

@@ -144,7 +144,6 @@ class VacancyMastersController < ApplicationController
   end
 
   def approve_vacancy
-    byebug
     @vacancy_master = VacancyMaster.find(params[:format])
     @vacancy_master.update(current_status: "Approved")
     ReportingMastersVacancyMaster.create(vacancy_master_id: @vacancy_master.id, reporting_master_id: current_user.employee_id, vacancy_status: "Approved")

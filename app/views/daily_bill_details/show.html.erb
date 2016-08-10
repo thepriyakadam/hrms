@@ -31,8 +31,9 @@
   <th><strong>Currency Type</strong></th>
   <td><%= @daily_bill_detail.currency_master.try(:name) %></td>
 </tr>
-
 </table>
+<%= image_tag @daily_bill_detail.passport_photo.url, :size => "100x100" %><br><br>
+
 <%= link_to 'Back', daily_bill_travel_requests_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
 </div>
 </div>

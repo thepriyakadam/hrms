@@ -39,7 +39,7 @@ div.nobreak{ page-break-inside: avoid;
   <tbody>
   <tr><th colspan="8"><center>Travel Request Detail</center></th></tr>
     <tr>
-      <td colspan="4">Approver : <%= @employee1.try(:first_name) %> <%= @employee1.try(:middle_name) %> <%= @employee1.try(:last_name) %></td>
+      <td colspan="4">Approver : <%= @employee.try(:first_name) %> <%= @employee.try(:middle_name) %> <%= @employee.try(:last_name) %></td>
       <td colspan="4">Traveling Date : <%= @travel_request.traveling_date %></td>
       </tr>
       <tr>
@@ -74,5 +74,13 @@ div.nobreak{ page-break-inside: avoid;
         <td><%= daily_bill_detail.currency_master.try(:name) %></td>
       </tr>
     <% end %>
+     <tr>
+          <th>Total</th>
+          <td></td>
+          <td></td>   
+          <td><%= @daily_bill_details.sum(:travel_expence) %></td>
+          <td></td><td colspan ="2"></td>
+          <td></td>
+    </tr>    
   </tbody>
 </table>

@@ -12,6 +12,7 @@ class ReportingMaster < ActiveRecord::Base
   has_many :due_details
   has_many :employee_transfers
   has_many :due_employee_details
+  has_many :employee_resignations
   belongs_to :reporting_master, class_name: 'Employee'
   validates :employee_id, presence: true, uniqueness: { case_sensitive: false }
  end

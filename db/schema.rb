@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160729123115) do
+ActiveRecord::Schema.define(version: 20160805110143) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -444,10 +444,6 @@ ActiveRecord::Schema.define(version: 20160729123115) do
     t.date     "expence_date"
     t.string   "e_place"
     t.decimal  "travel_expence",              precision: 15, scale: 2, default: 0.0
-    t.decimal  "local_travel_expence",        precision: 15, scale: 2, default: 0.0
-    t.decimal  "lodging_expence",             precision: 15, scale: 2, default: 0.0
-    t.decimal  "boarding_expence",            precision: 15, scale: 2, default: 0.0
-    t.decimal  "other_expence",               precision: 15, scale: 2, default: 0.0
     t.datetime "created_at",                                                         null: false
     t.datetime "updated_at",                                                         null: false
     t.boolean  "is_confirm"
@@ -677,16 +673,19 @@ ActiveRecord::Schema.define(version: 20160729123115) do
     t.integer  "employee_id"
     t.date     "day"
     t.string   "present"
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+    t.datetime "created_at",                                                       null: false
+    t.datetime "updated_at",                                                       null: false
     t.integer  "department_id"
     t.datetime "in_time"
     t.datetime "out_time"
-    t.boolean  "is_confirm",    default: false
+    t.boolean  "is_confirm",                                       default: false
+    t.decimal  "count",                    precision: 5, scale: 2
+    t.integer  "employee_leav_request_id"
   end
 
   add_index "employee_attendances", ["department_id"], name: "index_employee_attendances_on_department_id"
   add_index "employee_attendances", ["employee_id"], name: "index_employee_attendances_on_employee_id"
+  add_index "employee_attendances", ["employee_leav_request_id"], name: "index_employee_attendances_on_employee_leav_request_id"
 
   create_table "employee_attributes", force: :cascade do |t|
     t.integer  "appraisee_id"
@@ -2111,6 +2110,7 @@ ActiveRecord::Schema.define(version: 20160729123115) do
     t.datetime "updated_at",          null: false
     t.string   "travel_status"
     t.integer  "daily_bill_id"
+    t.boolean  "status"
   end
 
   add_index "reporting_masters_travel_requests", ["daily_bill_id"], name: "index_reporting_masters_travel_requests_on_daily_bill_id"
@@ -2156,6 +2156,7 @@ ActiveRecord::Schema.define(version: 20160729123115) do
     t.integer  "leaving_reason_id"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
+    t.string   "resign_status"
   end
 
   add_index "resignation_histories", ["employee_resignation_id"], name: "index_resignation_histories_on_employee_resignation_id"
@@ -2490,6 +2491,7 @@ ActiveRecord::Schema.define(version: 20160729123115) do
     t.datetime "updated_at",       null: false
     t.integer  "employee_id"
     t.text     "feedback"
+    t.boolean  "is_complete"
   end
 
   add_index "trainees", ["employee_id"], name: "index_trainees_on_employee_id"
@@ -2530,6 +2532,7 @@ ActiveRecord::Schema.define(version: 20160729123115) do
     t.integer  "period_id"
     t.string   "trainer_num"
     t.text     "about_trainer"
+    t.string   "trainer_email"
   end
 
   add_index "training_plans", ["period_id"], name: "index_training_plans_on_period_id"
@@ -2655,16 +2658,12 @@ ActiveRecord::Schema.define(version: 20160729123115) do
     t.date     "traveling_date"
     t.string   "tour_purpose"
     t.string   "place"
-    t.decimal  "traveling_advance"
-    t.decimal  "lodging_boarding_advance"
-    t.decimal  "food_advance"
-    t.decimal  "extra_advance"
     t.decimal  "total_advance"
     t.integer  "reporting_master_id"
     t.string   "current_status"
     t.integer  "travel_option_id"
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
   end
 
   add_index "travel_request_histories", ["reporting_master_id"], name: "index_travel_request_histories_on_reporting_master_id"
@@ -2677,12 +2676,9 @@ ActiveRecord::Schema.define(version: 20160729123115) do
     t.date     "traveling_date"
     t.text     "tour_purpose"
     t.string   "place"
-    t.decimal  "traveling_advance",        precision: 15, scale: 2, default: 0.0
-    t.decimal  "lodging_boarding_advance", precision: 15, scale: 2, default: 0.0
-    t.decimal  "extra_advance",            precision: 15, scale: 2, default: 0.0
-    t.decimal  "total_advance",            precision: 15, scale: 2, default: 0.0
-    t.datetime "created_at",                                                      null: false
-    t.datetime "updated_at",                                                      null: false
+    t.decimal  "total_advance",       precision: 15, scale: 2, default: 0.0
+    t.datetime "created_at",                                                 null: false
+    t.datetime "updated_at",                                                 null: false
     t.integer  "reporting_master_id"
     t.string   "current_status"
     t.integer  "travel_option_id"
@@ -2690,6 +2686,7 @@ ActiveRecord::Schema.define(version: 20160729123115) do
     t.boolean  "is_confirm"
     t.text     "comment"
     t.text     "daily_bill_status"
+    t.decimal  "expense"
   end
 
   add_index "travel_requests", ["employee_id"], name: "index_travel_requests_on_employee_id"
@@ -2821,6 +2818,7 @@ ActiveRecord::Schema.define(version: 20160729123115) do
     t.decimal  "coff_balance"
     t.decimal  "advance_balance"
     t.decimal  "pay_leave"
+    t.boolean  "is_confirm"
   end
 
   add_index "workingdays", ["employee_id"], name: "index_workingdays_on_employee_id"

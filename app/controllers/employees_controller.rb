@@ -136,8 +136,8 @@ class EmployeesController < ApplicationController
         @employees = Employee.joins("LEFT JOIN members on members.employee_id = employees.id where members.employee_id is null and employees.company_location_id = #{current_user.company_location_id}")
       end
     end
-    @all_employee_list = ReportingMaster.all.collect { |e| [e.try(:employee).try(:manual_employee_code).try(:to_s) + ' ' + e.try(:employee).try(:first_name).try(:to_s) + ' ' + e.try(:employee).try(:last_name).try(:to_s), e.try(:employee).id] }
-    @all_role_list = Role.all.collect { |r| [r.name, r.id] }
+    # @all_employee_list = ReportingMaster.all.collect { |e| [e.try(:employee).try(:manual_employee_code).try(:to_s) + ' ' + e.try(:employee).try(:first_name).try(:to_s) + ' ' + e.try(:employee).try(:last_name).try(:to_s), e.try(:employee).id] }
+    # @all_role_list = Role.all.collect { |r| [r.name, r.id] }
 
     session[:active_tab] ="employeemanagement"
     session[:active_tab1] ="useradministration"
@@ -166,7 +166,7 @@ class EmployeesController < ApplicationController
       if user.save
         employee.update_attributes(manager_id: params["login"]["manager_id"], manager_2_id: params["login"]["manager_2_id"])
 
-        ManagerHistory.create(employee_id: employee.id,manager_id: params["login"]["manager_id"],manager_2_id: params["login"]["manager_2_id"],effective_to: params["login"]["effec_date"])
+        ManagerHistory.create(employee_id: employee.id,manager_id: params["login"]["manager_id"],manager_2_id: params["login"]["manager_2_id"],effective_from: params["login"]["effec_date"])
         
         flash[:notice] = "Employee assigned successfully."
         redirect_to assign_role_employees_path
@@ -292,7 +292,10 @@ class EmployeesController < ApplicationController
     
     if @employee.save
       @employees = Employee.all
-      ManagerHistory.create(employee_id: @employee.id,manager_id: @employee.manager_id,manager_2_id: @employee.manager_2_id,effective_from: @effec_date.to_date)
+      @mngr = ManagerHistory.create(employee_id: @employee.id,manager_id: @employee.manager_id,manager_2_id: @employee.manager_2_id,effective_from: @effec_date.to_date)
+      @manager = ManagerHistory.where(employee_id: @employee.id).last(2).first
+      ManagerHistory.where(employee_id: @manager.employee_id).update_all(effective_to: @mngr.effective_from)
+
       @flag = true
     else
       @flag = false
@@ -320,8 +323,18 @@ class EmployeesController < ApplicationController
   end
 
   def transfer_employee_list
-    @employees = Employee.all
-    
+    @employees = Employee.all 
+  end
+
+  def employee_list_for_revert
+    @employees = Employee.where(status: "Inactive")
+  end
+
+  def revert_employee
+    @employee = Employee.find(params[:emp_id])
+    Employee.where(id: @employee.id).destroy_all
+    flash[:notice] = "Revert Successfully"
+    redirect_to employee_list_for_revert_employees_path
   end
 
   private

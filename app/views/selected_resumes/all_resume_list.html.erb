@@ -15,8 +15,8 @@
       <th>Notice Period</th>
       <th>Status</th>
       <th>Offer Letter Status</th>
-      <th>Download Resume</th>
-      <th>Download Image</th>
+     <!--  <th>Download Resume</th>
+      <th>Download Image</th> -->
       <th>Action</th>
     </tr>
   </thead>
@@ -60,20 +60,21 @@
           <% else %>
           <% end %>
           </td>
-       <td>
-         <% if selected_resume.avatar_file_name == nil %>
+      <!--  <td>
+         <if selected_resume.avatar_file_name == nil %>
            <small class="label label-default">Resume Not Available</small>
-             <% else %>
-             <center><%= link_to '',download_resume_path(id: selected_resume.id),class: 'btn btn-xs fa fa-download' %>
-             <% end %></center>
-          </td>
-          <td>
-          <% if selected_resume.passport_photo_file_name == nil %>
+             <else %>
+             <center><= link_to '',download_resume_path(id: selected_resume.id),class: 'btn btn-xs fa fa-download' %>
+             <end %></center>
+          </td> -->
+          <!-- <td>
+          < if selected_resume.passport_photo_file_name == nil %>
               <small class="label label-default">Image Not Available</small>
-              <% else %>
-              <center><%= link_to '',download_image_path(id: selected_resume.id),class: 'btn btn-xs fa fa-picture-o' %></center>
-              <% end %>
-        </td>
+              < else %>
+              <center><= link_to '',download_image_path(id: selected_resume.id),class: 'btn btn-xs fa fa-picture-o' %></center>
+              < end %>
+        </td> -->
+        
         <td>
         <%= link_to '', selected_resume,class: 'btn btn-xs btn-default fa fa-eye' %>
         <%= link_to '', selected_resume, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>

@@ -2857,8 +2857,8 @@ ActiveRecord::Schema.define(version: 20160805110143) do
     t.decimal  "el_balance"
     t.decimal  "coff_balance"
     t.decimal  "advance_balance"
-    t.decimal  "pay_leave"
     t.boolean  "is_confirm"
+    t.decimal  "pay_leave"
   end
 
   add_index "workingdays", ["employee_id"], name: "index_workingdays_on_employee_id"

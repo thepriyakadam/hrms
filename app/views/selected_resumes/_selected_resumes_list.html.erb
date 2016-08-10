@@ -11,8 +11,8 @@
       <th>Notice Period</th>
       <th>Status</th>
       <th>Offer Letter Status</th>
-      <th>Download Resume</th>
-      <th>Download Image</th>
+      <th>Resume</th>
+      <th>Image</th>
       <th>Action</th>
     </tr>
   </thead>
@@ -58,7 +58,7 @@
           </td>
         <td>
          <% if selected_resume.avatar_file_name == nil %>
-           <small class="label label-default">Resume Not Available</small>
+           <small class="label label-default">Not Available</small>
              <% else %>
              <center><%= link_to '',download_resume_path(id: selected_resume.id),class: 'btn btn-xs fa fa-download' %>
              <% end %>
@@ -66,7 +66,7 @@
         </td>
         <td>
           <% if selected_resume.passport_photo_file_name == nil %>
-              <small class="label label-default">Image Not Available</small>
+              <small class="label label-default">Not Available</small>
               <% else %>
               <center><%= link_to '',download_image_path(id: selected_resume.id),class: 'btn btn-xs fa fa-picture-o' %></center>
               <% end %>

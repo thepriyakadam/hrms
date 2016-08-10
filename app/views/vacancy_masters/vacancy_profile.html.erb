@@ -24,8 +24,9 @@
               <tr>
                 <td><%= vacancy_master.id %></td>
                 <td><%= vacancy_master.vacancy_name %></td>
-                <td><%= vacancy_master.company_location.try(:name) %> <%= vacancy_master.department.try(:name) %></td>
-                <td><%= vacancy_master.no_of_position %></td>
+                 <td><%= vacancy_master.no_of_position %></td>
+                <td><%= vacancy_master.company_location.try(:name) %> - <%= vacancy_master.department.try(:name) %></td>
+               
                 <td><%= vacancy_master.experience %></td>
                 <td><%= vacancy_master.justification %></td>
                 <td>

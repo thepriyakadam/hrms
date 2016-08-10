@@ -925,6 +925,8 @@ class SalaryslipsController < ApplicationController
         @bonus_employees.destroy_all
         @salaryslip.destroy
         SalaryslipComponent.where(salaryslip_id: @salaryslip.id).destroy_all
+        @workingdays = Workingday.where(employee_id: @salaryslip.employee_id, month_name: date.strftime("%B"), year: date.strftime("%Y"))
+        @workingdays.destroy_all
       end
       flash[:notice] = "Revert successfully"
       redirect_to revert_salary_salaryslips_path

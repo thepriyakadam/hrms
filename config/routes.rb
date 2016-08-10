@@ -561,6 +561,7 @@ end
       get :interview_round_list
       get :modal_schedule_list
       post :update_interview_schedule
+      patch :create_new
     end
   end
   resources :vacancy_masters do
@@ -852,7 +853,12 @@ end
   end
   resources :employee_categories
   resources :other_salary_components
-  resources :salaryslip_components
+  resources :salaryslip_components do
+    collection do
+      post :xml_print
+      post :index
+    end
+  end
   resources :salaryslips do
     collection do
       post :save_data

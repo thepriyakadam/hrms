@@ -7,16 +7,18 @@ xml.BOM do
     end
     xml.JournalEntries do
       xml.row do
-        xml.ReferenceDate  
+        xml.ReferenceDate Time.now.strftime("%Y%m%d")
         xml.TaxDate Time.now.strftime("%Y%m%d")
         xml.VatDate Time.now.strftime("%Y%m%d")
         xml.DueDate Time.now.strftime("%Y%m%d")
+        xml.TransactionCode
+        xml.Series 17
       end
     end
+    xml.JournalEntriesLines do
     @maps.each do |m|
       @salary_components = SalaryslipComponent.where(salary_component_id: m.salary_component_id).limit(1)
       # @salary_components = SalaryslipComponent.where(salary_component_id: m.salary_component_id)
-      xml.JournalEntries_Lines
         @salary_components.each do |c|
           xml.row do
             employee = Employee.find(c.salaryslip.employee_id)
@@ -25,6 +27,9 @@ xml.BOM do
             xml.AccountCode m.account_code
             xml.ComponentName m.salary_component.try(:name)
             xml.CalculatedNetSalary c.salaryslip.calculated_net_salary.round
+            xml.row do
+            if c.is_deducted
+            xml.OtherComponent c.other_component_name
             # xml.SalarySlipDate c.salaryslip.month_year
 
             if c.is_deducted
@@ -38,10 +43,12 @@ xml.BOM do
             xml.DueDate Time.now.strftime("%Y%m%d")
             xml.TaxDate Time.now.strftime("%Y%m%d")
 
-            xml.CostingCentre joining.cost_center.try(:name)
-            xml.DepartmentName joining.department.try(:name)
+            xml.CostingCode joining.cost_center.try(:name)
+            xml.CostingCode2 joining.department.try(:name)
         end
       end
     end
   end
+end
+end
 end

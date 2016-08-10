@@ -16,7 +16,7 @@
             <td><%= check_box_tag "employee_ids[]", employee.id %></td>
             <td><%= employee.manual_employee_code %></td>
             <td><%= full_name(employee) %></td>
-            <td><%= employee.manager_id %></td>
+            <td><%= employee.manager.try(:first_name) %> <%= employee.manager.try(:middle_name) %> <%= employee.manager.try(:last_name) %></td>
           </tr>
         <% end %>
       </tbody>
@@ -40,7 +40,7 @@
             <td><%= check_box_tag "employee_ids[]", employee.id %></td>
             <td><%= employee.manual_employee_code %></td>
             <td><%= full_name(employee) %></td>
-            <td><%= employee.manager_2_id %></td>
+            <td><%= employee.manager_2.try(:first_name) %> <%= employee.manager_2.try(:middle_name) %> <%= employee.manager_2.try(:last_name) %></td>
           </tr>
         <% end %>
       </tbody>

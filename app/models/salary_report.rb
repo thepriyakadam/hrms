@@ -441,9 +441,7 @@ class SalaryReport
 
         when "Reimbursement of Medical Allowance"
         sr.actual_mra = a.actual_amount
-        sr.earned_mra = a.calculated_amount 
-
-
+        sr.earned_mra = a.calculated_amount
       end
     end
 

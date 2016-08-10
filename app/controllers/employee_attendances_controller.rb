@@ -65,8 +65,15 @@ class EmployeeAttendancesController < ApplicationController
 
   def department_wise_employee_list
     @costcenter, @date = params[:salary][:name], params[:salary][:day].to_date
-    @employees = Employee.filter_by_date_and_costcenter(@date, @costcenter, current_user)
-    @employee_attendance = EmployeeAttendance.new
+    if Holiday.exists?(holiday_date: @date)
+      @holiday_flag = true
+      @holiday = Holiday.find_by(holiday_date: @date)
+    else
+      @holiday_flag = false
+      @employees = Employee.filter_by_date_and_costcenter(@date, @costcenter, current_user)
+      @employee_attendance = EmployeeAttendance.new
+    end
+    
   end
     
   def create_employee_attendance
@@ -145,11 +152,10 @@ class EmployeeAttendancesController < ApplicationController
   def create_attendance
     @employees, @attendances, work_data_structure, @date = params[:employees], params[:attendances], [], params[:date]
     params.permit!
-    @employees.each do |e|
-      work_data_structure << params[e]
-    end
+    @employees.each { |e| work_data_structure << params[e] }
     EmployeeAttendance.where(employee_id: @employees).where("strftime('%m/%Y', day) = ? and is_confirm = ?", @date.to_date.strftime('%m/%Y'),false).update_all(is_confirm: true)
     Workingday.create(work_data_structure)
+    flash[:notice] = "Workingday successfully saved."
     redirect_to employee_attendances_path
   end
 

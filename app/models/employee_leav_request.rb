@@ -126,4 +126,20 @@ class EmployeeLeavRequest < ActiveRecord::Base
       end
     end
   end
+
+  def is_holiday?
+    flag = 0
+    for i in self.start_date.to_date..self.end_date.to_date
+      flag = Holiday.exists?(holiday_date: i)
+    end
+    flag
+  end
+
+  def is_present?
+    flag = 0
+    for i in self.start_date.to_date..self.end_date.to_date
+      flag = EmployeeAttendance.exists?(day: i, employee_id: self.employee_id)
+    end
+    flag
+  end
 end

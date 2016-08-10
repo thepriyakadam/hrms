@@ -2150,6 +2150,7 @@ ActiveRecord::Schema.define(version: 20160805110143) do
     t.datetime "updated_at",          null: false
     t.string   "travel_status"
     t.integer  "daily_bill_id"
+    t.boolean  "status"
   end
 
   add_index "reporting_masters_travel_requests", ["daily_bill_id"], name: "index_reporting_masters_travel_requests_on_daily_bill_id"
@@ -2856,8 +2857,8 @@ ActiveRecord::Schema.define(version: 20160805110143) do
     t.decimal  "el_balance"
     t.decimal  "coff_balance"
     t.decimal  "advance_balance"
-    t.boolean  "is_confirm"
     t.decimal  "pay_leave"
+    t.boolean  "is_confirm"
   end
 
   add_index "workingdays", ["employee_id"], name: "index_workingdays_on_employee_id"

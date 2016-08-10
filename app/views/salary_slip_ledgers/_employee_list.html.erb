@@ -81,18 +81,18 @@
         <td><%= r.try(:pf_no) %></td>
         <td><%= r.try(:esic_no) %></td>
 
-        <td><%= r.try(:actual_basic).round %></td>
-        <td><%= r.try(:actual_da).round %></td>
-        <td><%= r.try(:actual_hra).round %></td>
-        <td><%= r.try(:actual_convenience).round %></td>
-        <td><%= r.try(:actual_other).round %></td>
-        <td><%= r.try(:actual_special).round %></td>
-        <td><%= r.try(:actual_washing).round %></td>
+        <td><%= r.try(:actual_basic) %></td>
+        <td><%= r.try(:actual_da) %></td>
+        <td><%= r.try(:actual_hra) %></td>
+        <td><%= r.try(:actual_convenience) %></td>
+        <td><%= r.try(:actual_other) %></td>
+        <td><%= r.try(:actual_special) %></td>
+        <td><%= r.try(:actual_washing) %></td>
         <td><%= r.try(:actual_driver) %></td>
         <td><%= r.try(:actual_medical) %></td>
         <td><%= r.try(:actual_child_edu) %></td>
         <td><%= r.try(:actual_mra) %></td>
-        <td><%= r.try(:actual_total).round %></td>
+        <td><%= r.try(:actual_total) %></td>
 
         <td><%= r.try(:cl_leave) %></td>
         <td><%= r.try(:el_leave) %></td>
@@ -105,7 +105,7 @@
         <td><%= r.try(:weekoff) %></td>
 
         <td><%= r.try(:earned_basic).round %></td>
-        <td><%= r.try(:earned_da).round %></td>
+        <td><%= r.try(:earned_da) %></td>
         <td><%= r.try(:earned_hra).round %></td>
 
         <td><%= r.try(:earned_convenience).round %></td>

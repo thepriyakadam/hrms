@@ -152,11 +152,10 @@ class EmployeeAttendancesController < ApplicationController
   def create_attendance
     @employees, @attendances, work_data_structure, @date = params[:employees], params[:attendances], [], params[:date]
     params.permit!
-    @employees.each do |e|
-      work_data_structure << params[e]
-    end
+    @employees.each { |e| work_data_structure << params[e] }
     EmployeeAttendance.where(employee_id: @employees).where("strftime('%m/%Y', day) = ? and is_confirm = ?", @date.to_date.strftime('%m/%Y'),false).update_all(is_confirm: true)
     Workingday.create(work_data_structure)
+    flash[:notice] = "Workingday successfully saved."
     redirect_to employee_attendances_path
   end
 

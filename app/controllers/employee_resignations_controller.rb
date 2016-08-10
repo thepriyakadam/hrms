@@ -87,16 +87,43 @@ class EmployeeResignationsController < ApplicationController
   def resignation_history
     @reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
     @employee_resignations = EmployeeResignation.where(reporting_master_id: @reporting_masters)
+    session[:active_tab] ="resignationmanagement"
+    session[:active_tab1] = "resign"  
     # reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
     # @employee_resignations = EmployeeResignation.where("reporting_master_id = ? and (resign_status = ? or resign_status = ?)",reporting_masters,"Pending","Approved & Send Next")
   end
 
+  def print_resignation_detail
+    @employee = Employee.find(params[:emp_id])
+    @employee_resignation = EmployeeResignation.find(params[:resignation_id])
+    @employees = Employee.where(id: @employee.id).group(:id)
+    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
+    @employee_resignation_id = EmployeeResignation.find_by_employee_id(params[:emp_id])
+    @resignation_histories = ResignationHistory.where(employee_resignation_id: @employee_resignation_id.id)
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render pdf: 'print_resignation_detail',
+               layout: 'pdf.html',
+               :page_height      => 1000,
+               :dpi              => '300',
+               :margin           => {:top    => 10, # default 10 (mm)
+                          :bottom => 10,
+                          :left   => 14,
+                          :right  => 14},
+               orientation: 'Landscape',
+               template: 'employee_resignations/print_resignation_detail.pdf.erb',
+              :show_as_html => params[:debug].present?
+      end
+    end  
+  end
+
   def employee_resignation_confirmation
      reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
-    @employee_resignation = EmployeeResignation.find(params[:format])
+     @employee_resignation = EmployeeResignation.find(params[:format])
      @reporting_master = ReportingMaster.find(@employee_resignation.reporting_master_id)
      @employee = Employee.find(@reporting_master.employee_id)
-    @employee_resignations = EmployeeResignation.where(reporting_master_id: reporting_masters)
+     @employee_resignations = EmployeeResignation.where(reporting_master_id: reporting_masters)
   end
 
   def approve_resignation
@@ -107,6 +134,8 @@ class EmployeeResignationsController < ApplicationController
     ResignationHistory.create(employee_resignation_id: @employee_resignation.id,resign_status: @employee_resignation.resign_status,reporting_master_id: @employee_resignation.reporting_master_id,resignation_date: @employee_resignation.resignation_date,reason: @employee_resignation.reason,is_notice_period: @employee_resignation.is_notice_period,notice_period: @employee_resignation.notice_period,short_notice_period: @employee_resignation.short_notice_period,tentative_leaving_date: @employee_resignation.tentative_leaving_date,remark: @employee_resignation.remark,exit_interview_date: @employee_resignation.exit_interview_date,note: @employee_resignation.note,leaving_date: @employee_resignation.leaving_date,settled_on: @employee_resignation.settled_on,has_left: @employee_resignation.has_left,notice_served: @employee_resignation.notice_served,rehired: @employee_resignation.rehired,leaving_reason_id: @employee_resignation.leaving_reason_id)
     flash[:notice] = 'Employee Resignation Approved'
     redirect_to resignation_history_employee_resignations_path 
+    session[:active_tab] ="resignationmanagement"
+    session[:active_tab1] = "resign"  
   end
 
   def reject_employee_resignation
@@ -133,6 +162,10 @@ class EmployeeResignationsController < ApplicationController
      ReportingMastersResign.create(employee_resignation_id: @employee_resignation.id, reporting_master_id: current_user.employee_id, resignation_status: "Cancelled")
      flash[:notice] = 'Resignation Cancelled'
     redirect_to employee_resignations_path
+  end
+
+  def emp_resignation_history
+    @employee_resignations = EmployeeResignation.all
   end
 
   def edit_n_send_next_modal
@@ -164,15 +197,14 @@ class EmployeeResignationsController < ApplicationController
     #@resignation_history.is_stop_pay_request = @employee_resignation.is_stop_pay_request
                         
     #@resignation_history.save
-    @employee_resignation.update(employee_id: params[:employee_resignation][:employee_id], reporting_master_id: params[:employee_resignation][:reporting_master_id],leaving_reason_id: params[:employee_resignation][:leaving_reason_id],resignation_date: params[:employee_resignation][:resignation_date],notice_period: params[:employee_resignation][:notice_period],short_notice_period: params[:employee_resignation][:short_notice_period],tentative_leaving_date: params[:employee_resignation][:tentative_leaving_date],remark: params[:employee_resignation][:remark],exit_interview_date: params[:employee_resignation][:exit_interview_date],note: params[:employee_resignation][:note],leaving_date: params[:employee_resignation][:leaving_date],settled_on: params[:employee_resignation][:settled_on],is_stop_pay_request: params[:employee_resignation][:is_stop_pay_request],reason: params[:employee_resignation][:reason],resign_status: "Edit & Send Next")
-    ReportingMastersResign.create(employee_resignation_id: @employee_resignation.id, reporting_master_id: params[:employee_resignation][:reporting_master_id], resignation_status: "Edit & Send Next")
-    ResignationHistory.create(employee_resignation_id: @employee_resignation.id,resign_status: @employee_resignation.resign_status,reporting_master_id: @employee_resignation.reporting_master_id,resignation_date: @employee_resignation.resignation_date,reason: @employee_resignation.reason,is_notice_period: @employee_resignation.is_notice_period,notice_period: @employee_resignation.notice_period,short_notice_period: @employee_resignation.short_notice_period,tentative_leaving_date: @employee_resignation.tentative_leaving_date,remark: @employee_resignation.remark,exit_interview_date: @employee_resignation.exit_interview_date,note: @employee_resignation.note,leaving_date: @employee_resignation.leaving_date,settled_on: @employee_resignation.settled_on,has_left: @employee_resignation.has_left,notice_served: @employee_resignation.notice_served,rehired: @employee_resignation.rehired,leaving_reason_id: @employee_resignation.leaving_reason_id,resign_status: "Edit & Send Next")
+    @employee_resignation.update(employee_id: params[:employee_resignation][:employee_id], reporting_master_id: params[:employee_resignation][:reporting_master_id],leaving_reason_id: params[:employee_resignation][:leaving_reason_id],resignation_date: params[:employee_resignation][:resignation_date],notice_period: params[:employee_resignation][:notice_period],short_notice_period: params[:employee_resignation][:short_notice_period],tentative_leaving_date: params[:employee_resignation][:tentative_leaving_date],remark: params[:employee_resignation][:remark],exit_interview_date: params[:employee_resignation][:exit_interview_date],note: params[:employee_resignation][:note],leaving_date: params[:employee_resignation][:leaving_date],settled_on: params[:employee_resignation][:settled_on],is_stop_pay_request: params[:employee_resignation][:is_stop_pay_request],reason: params[:employee_resignation][:reason])
     #@resignation_history = ResignationHistory.new(resignation_history_params)
     redirect_to root_url
-    flash[:notice] = ' Request Approved Successfully.'   
+    flash[:notice] = ' Request Edited And Send Next Successfully.'   
 
     # @travel_request.update(travel_request_params)
     # TravelRequestHistory.create(travel_request_id: @travel_request.id,application_date: @travel_request.application_date,traveling_date: @travel_request.traveling_date, tour_purpose: @travel_request.tour_purpose, place: @travel_request.place,total_advance: @travel_request.total_advance,reporting_master_id: @travel_request.reporting_master_id, travel_option_id: @travel_request.travel_option_id)
+    ReportingMastersResign.create(employee_resignation_id: @employee_resignation.id, reporting_master_id: params[:employee_resignation][:reporting_master_id], resignation_status: "Edit & Send Next")
   end
 
   def modal
@@ -180,51 +212,6 @@ class EmployeeResignationsController < ApplicationController
   end
 
   def send_email_to_reporting_manager
-  end
-
-  def emp_resignation_history
-    @employee_resignations = EmployeeResignation.all
-  end
-
-  def show_resignation_detail
-    @employee_resignation_id = EmployeeResignation.find_by_employee_id(params[:emp_id])
-    #@employee_resignation = EmployeeResignation.where(employee_id: @employee_resignation_id.employee_id)
-    @resignation_histories = ResignationHistory.where(employee_resignation_id: @employee_resignation_id.id)
-  end
-
-  def print_resignation_detail
-    @employee = Employee.find(params[:emp_id])
-    @employee_resignation = EmployeeResignation.find(params[:resignation_id])
-    @employees = Employee.where(id: @employee.id).group(:id)
-    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
-    @employee_resignation_id = EmployeeResignation.find_by_employee_id(params[:emp_id])
-    @resignation_histories = ResignationHistory.where(employee_resignation_id: @employee_resignation_id.id)
-    respond_to do |format|
-      format.html
-      format.pdf do
-        render pdf: 'print_resignation_detail',
-               layout: 'pdf.html',
-               :page_height      => 1000,
-               :dpi              => '300',
-               :margin           => {:top    => 10, # default 10 (mm)
-                          :bottom => 10,
-                          :left   => 14,
-                          :right  => 14},
-               orientation: 'Landscape',
-               template: 'employee_resignations/print_resignation_detail.pdf.erb',
-              :show_as_html => params[:debug].present?
-      end
-    end  
-  end
-
-  def xl_resignation_detail
-    @employee = Employee.find(params[:emp_id])
-    @employee_resignation = EmployeeResignation.find(params[:resignation_id])
-    @employees = Employee.where(id: @employee.id)
-    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
-    @experiences = Experience.where(employee_id: @employee.id)
-    @employee_resignation_id = EmployeeResignation.find_by_employee_id(params[:emp_id])
-    @resignation_histories = ResignationHistory.where(employee_resignation_id: @employee_resignation_id.id)
   end
 
   private

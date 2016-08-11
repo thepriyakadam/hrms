@@ -59,7 +59,18 @@ module EmployeeAttendancesHelper
   end
 
   def total_leave_count(exist)
-    exist.select {|k,v| v == "L" or v == "LWP" }.count
+    leave = LeavCategory.all.collect {|c| c.code }
+    exist.select {|k,v| leave.member?(v)}.count
+  end
+
+  def pay_leave_count(exist)
+    leave = LeavCategory.where(is_payble: true).collect {|c| c.code }
+    exist.select {|k,v| leave.member?(v)}.count
+  end
+
+  def non_pay_leave_count(exist)
+    leave = LeavCategory.where(is_payble: false).collect {|c| c.code }
+    exist.select {|k,v| leave.member?(v)}.count
   end
 
   def half_pay_leave_count(exist)

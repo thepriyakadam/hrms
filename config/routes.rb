@@ -387,6 +387,7 @@ end
     get :modal_profile_update
     post :update_profile
     get :part_resume
+    post :is_confirm_resume
     end
   end 
   resources :assigned_assets do

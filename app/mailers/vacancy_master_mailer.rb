@@ -46,9 +46,10 @@ class VacancyMasterMailer < ApplicationMailer
   end
 
   def cancel_vacancy_email(vacancy_master)
-    @vacancy_master = vacancy_master
-    @reporting_master = Employee.find(vacancy_master.reporting_master_id)
-    @employee = Employee.find(@vacancy_master.employee_id)
+    @reporting_master = ReportingMaster.find(vacancy_master.reporting_master_id)
+    @employee = Employee.find(@reporting_master.employee_id)
+    @vacancy_master = VacancyMaster.find(vacancy_master.id)
+    @emp = VacancyMaster.find_by_employee_id(vacancy_master.employee_id)
     mail(to: @employee.email, subject: 'Vacancy Cancel Request')
   end
   

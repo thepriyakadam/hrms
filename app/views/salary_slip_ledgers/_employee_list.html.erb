@@ -81,6 +81,20 @@
         <td><%= r.try(:pf_no) %></td>
         <td><%= r.try(:esic_no) %></td>
 
+<<<<<<< HEAD
+        <td><%= r.try(:actual_basic).round %></td>
+        <td><%= r.try(:actual_da) %></td>
+        <td><%= r.try(:actual_hra) %></td>
+        <td><%= r.try(:actual_convenience) %></td>
+        <td><%= r.try(:actual_other) %></td>
+        <td><%= r.try(:actual_special) %></td>
+        <td><%= r.try(:actual_washing) %></td>
+        <td><%= r.try(:actual_driver).try(:round) %></td>
+        <td><%= r.try(:actual_medical) %></td>
+        <td><%= r.try(:actual_child_edu) %></td>
+        <td><%= r.try(:actual_mra) %></td>
+        <td><%= r.try(:actual_total) %></td>
+=======
         <td><%= r.try(:actual_basic)..try(:round) %></td>
         <td><%= r.try(:actual_da).try(:round) %></td>
         <td><%= r.try(:actual_hra).try(:round) %></td>
@@ -93,6 +107,7 @@
         <td><%= r.try(:actual_child_edu).try(:round) %></td>
         <td><%= r.try(:actual_mra).try(:round) %></td>
         <td><%= r.try(:actual_total).try(:round) %></td>
+>>>>>>> a74cc6450ca32043d35232987929266db0e6f855
 
         <td><%= r.try(:cl_leave) %></td>
         <td><%= r.try(:el_leave) %></td>
@@ -108,6 +123,16 @@
         <td><%= r.try(:earned_da).try(:round) %></td>
         <td><%= r.try(:earned_hra).try(:round) %></td>
 
+<<<<<<< HEAD
+        <td><%= r.try(:earned_convenience).round %></td>
+        <td><%= r.try(:earned_other).round %></td>
+        <td><%= r.try(:earned_special).round %></td>
+        <td><%= r.try(:earned_washing).round %></td>
+        <td><%= r.try(:earned_driver).try(:round) %></td>
+        <td><%= r.try(:earned_medical) %></td>
+        <td><%= r.try(:earned_child_edu) %></td>
+        <td><%= r.try(:earned_mra) %></td>
+=======
         <td><%= r.try(:earned_convenience).try(:round) %></td>
         <td><%= r.try(:earned_other).try(:round) %></td>
         <td><%= r.try(:earned_special).try(:round) %></td>
@@ -116,6 +141,7 @@
         <td><%= r.try(:earned_medical).try(:round) %></td>
         <td><%= r.try(:earned_child_edu).try(:round) %></td>
         <td><%= r.try(:earned_mra).try(:round) %></td>
+>>>>>>> a74cc6450ca32043d35232987929266db0e6f855
 
         <td><%= r.try(:earned_total).try(:round) %></td>
 
@@ -144,6 +170,20 @@
       <td></td>
       <td></td>
 
+<<<<<<< HEAD
+      <td><%= @sum.actual_basic.round %></td>
+      <td><%= @sum.actual_da.round %></td>
+      <td><%= @sum.actual_hra.round %></td>
+      <td><%= @sum.actual_convenience.round %></td>
+      <td><%= @sum.actual_other.round %></td>
+      <td><%= @sum.actual_special.round %></td>
+      <td><%= @sum.actual_washing.round %></td>
+      <td><%= @sum.actual_driver.round %></td>
+      <td><%= @sum.actual_medical.round %></td>
+      <td><%= @sum.actual_child_edu.round %></td>
+      <td><%= @sum.actual_mra.round %></td>
+      <td><%= @sum.actual_total.round %></td>
+=======
       <td><%= @sum.actual_basic.try(:round) %></td>
       <td><%= @sum.actual_da.try(:round) %></td>
       <td><%= @sum.actual_hra.try(:round) %></td>
@@ -156,6 +196,7 @@
       <td><%= @sum.actual_child_edu.try(:round) %></td>
       <td><%= @sum.actual_mra.try(:round) %></td>
       <td><%= @sum.actual_total.try(:round) %></td>
+>>>>>>> a74cc6450ca32043d35232987929266db0e6f855
       
       <td><%= @sum.cl_leave %></td>
       <td><%= @sum.el_leave %></td>

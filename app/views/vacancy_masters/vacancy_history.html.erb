@@ -36,8 +36,8 @@
                     <%= link_to 'Approve / Reject', vacancy_request_confirmation_vacancy_masters_path(vacancy_master),class: 'btn btn-sm btn-warning' %>
                     <% elsif vacancy_master.current_status == "Approved & Send Next" %>
                     <%= link_to 'Approve / Reject', vacancy_request_confirmation_vacancy_masters_path(vacancy_master),class: 'btn btn-sm btn-warning' %>
-                    <% elsif vacancy_master.current_status == "Edit & Send Next" %>
-                    <%= link_to 'Approve / Reject', vacancy_request_confirmation_vacancy_masters_path(vacancy_master),class: 'btn btn-sm btn-warning' %>
+                    <% elsif vacancy_master.current_status == "Edit And Approved" %>
+                   <small class="label label-primary">Edit And Approved</small>
                     <% elsif vacancy_master.current_status == "Approved" %>
                     <small class="label label-primary">Approved</small>
                     <% else %>

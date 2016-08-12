@@ -37,6 +37,7 @@
       </div>
     </div>
 
+
     <div class="col-sm-3">
      <div class="form-group required">
       <%= f.select :employee_id, all_interviewer_name_list,{label: 'Interviewer Name',include_blank: " Select Interviewer Name"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
@@ -44,21 +45,21 @@
     </div>
 
     <div class="col-sm-3">
-        <label>Interview Type</label>
-          <div class="form-group required">
-            <div class="input-group">
-              <div class="input-group-addon">
-                <%= link_to "", new_interview_type_path,class: "fa fa-plus fa-success",:target => "_blank" %>
-              </div>
-               <%= f.select :interview_type_id, all_interview_type, {hide_label: true,include_blank: " Select Interviewer Type"} %>
+      <label>Interview Type</label>
+        <div class="form-group required">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <%= link_to "", new_interview_type_path,class: "fa fa-plus fa-success",:target => "_blank" %>
             </div>
+             <%= f.select :interview_type_id, all_interview_type, {hide_label: true,include_blank: " Select Interviewer Type"} %>
           </div>
+        </div>
     </div>
 
      <div class="col-sm-3">
-     <div class="form-group required">
-      <%= f.text_field :location,label:'Location' %>
-     </div>
+       <div class="form-group required">
+        <%= f.text_field :location,label:'Location' %>
+       </div>
     </div>
     </div>
     

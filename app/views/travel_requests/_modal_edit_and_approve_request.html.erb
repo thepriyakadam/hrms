@@ -11,13 +11,6 @@
 
         <div class="row">
           <div class="col-sm-3">
-            <label>Request To </label>
-            <div class="field">
-              <%= f.select :reporting_master_id,all_reporting_master_list1,{hide_label: true,include_blank: " Select Reporting Master"}%>
-            </div>
-          </div>
-
-          <div class="col-sm-3">
             <label>Application Date </label>
             <div class="field">
               <div class="input-group">
@@ -43,10 +36,7 @@
                 <%= f.select :travel_mode_id,all_travel_mode,{hide_label: true,placeholder: 'Travel mode',include_blank: 'Select Travel mode'} %>
               </div>
             </div>
-          </div>
 
-
-        <div class="row">
           <div class="col-sm-3">
             <label>Traveling Date </label>
             <div class="field">
@@ -58,8 +48,10 @@
               </div>
             </div>
           </div>
+        </div>
 
 
+        <div class="row">
           <div class="col-sm-3">
             <div class="field">
               <div class="form-group required">
@@ -81,10 +73,8 @@
               </div>
             </div>
           </div>
-        </div>
 
-        <div class="row">
-          <div class="col-sm-3">
+          <div class="col-sm-3" style="padding-top:20px;">
             <div class="actions">
               <%= f.submit "Update Travel Request",:class => class_name, data: { disable_with: data_info }  %>
               <!-- link_to 'Back', travel_request_confirmation_travel_requests_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %> -->

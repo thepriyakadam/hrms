@@ -161,7 +161,6 @@ end
   end
 
   def interview_reschedule_list
-     puts "-------------------"
      @interview_schedule = InterviewSchedule.find(params[:format])
      @interview_reschedules = InterviewReschedule.where(interview_schedule_id: @interview_schedule.id)
   end

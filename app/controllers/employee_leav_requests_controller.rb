@@ -32,7 +32,8 @@ class EmployeeLeavRequestsController < ApplicationController
     @leave_c_offs = LeaveCOff.where(employee_id: @employee.id)
     @leav_category = LeavCategory.find(@employee_leav_request.leav_category_id)
     date_range = params['employee_leav_request']['date_range']
-    
+    @emp_leav_req = EmployeeLeavRequest.where(employee_id: @employee.id, date_range: date_range)
+
     if @employee_leav_request.is_holiday?
       flash[:alert] = "Your Leave Request has holiday."
       redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
@@ -43,11 +44,12 @@ class EmployeeLeavRequestsController < ApplicationController
       if @employee.manager_id.nil?
         flash[:alert] = 'First Reporter not set.'
         redirect_to root_url
+        
       else
         @employee_leav_request.first_reporter_id = @employee.manager_id
         # @employee_leav_request.second_reporter_id = @employee.manager_2_id
         @employee_leav_request.is_pending = true
-        @employee_leav_request.current_status = 'Pending'
+        @employee_leav_request.current_status1 = 'Pending'
         if @employee_leav_request.leave_type == 'Full Day'
           @employee_leav_request.leave_count = (@employee_leav_request.end_date.to_date - @employee_leav_request.start_date.to_date).to_f + 1
         else
@@ -251,7 +253,7 @@ class EmployeeLeavRequestsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def employee_leav_request_params
-    params.require(:employee_leav_request).permit(:employee_id, :leav_category_id, :leave_type, :date_range, :start_date, :end_date, :reason)
+    params.require(:employee_leav_request).permit(:current_status,:current_status1,:employee_id, :leav_category_id, :leave_type, :date_range, :start_date, :end_date, :reason)
   end
 end
 

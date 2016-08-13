@@ -45,6 +45,8 @@ class TrainingRequestsController < ApplicationController
           TrainingRequest.where(id: @training_request.id).update_all(no_of_employee: @emp_total)
           TraineeRequest.create(employee_id: eid,training_request_id: @training_request.id,training_topic_master_id: @training_request.training_topic_master_id)
           end
+          TrainingApproval.create(training_request_id: @training_request.id,employee_id: @training_request.employee_id, training_topic_master_id: @training_request.training_topic_master_id,reporting_master_id: @training_request.reporting_master_id,traininig_period: @training_request.training_period,training_date: @training_request.training_date,place: @training_request.place,no_of_employee: @training_request.no_of_employee,description: @training_request.description,justification: @training_request.justification,current_status: @training_request.status)
+
           flash[:notice] = 'Training Request Created Successfully'
           redirect_to new_training_request_path
         end
@@ -66,6 +68,7 @@ class TrainingRequestsController < ApplicationController
           TrainingRequest.where(id: @training_request.id).update_all(no_of_employee: @emp_total)
           TraineeRequest.create(employee_id: eid,training_request_id: @training_request.id,training_topic_master_id: @training_request.training_topic_master_id)
           end
+          TrainingApproval.create(training_request_id: @training_request.id,employee_id: @training_request.employee_id, training_topic_master_id: @training_request.training_topic_master_id,reporting_master_id: @training_request.reporting_master_id,traininig_period: @training_request.training_period,training_date: @training_request.training_date,place: @training_request.place,no_of_employee: @training_request.no_of_employee,description: @training_request.description,justification: @training_request.justification,current_status: @training_request.status)
           flash[:notice] = 'Training Request Created Successfully'
           redirect_to department_wise_search_training_requests_path
         end
@@ -160,8 +163,6 @@ class TrainingRequestsController < ApplicationController
      redirect_to training_request_confirmation_training_requests_path(training_request_id: @training_request.id)
      flash[:notice] = 'Comment Updated Successfully'
   end
-
-
 
   def confirmation_list
    @training_requests = TrainingRequest.where(status:"Approved")  

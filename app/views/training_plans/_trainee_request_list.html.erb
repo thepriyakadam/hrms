@@ -13,7 +13,7 @@
       <tbody>
         <% @trainee_requests.each do |trainee_request| %>
           <tr>
-            <td><%= check_box_tag "trainee_request_ids[]", trainee_request.employee_id %></td>
+            <td><%= check_box_tag "trainee_request_ids[]", trainee_request.id %></td>
             <td><%= trainee_request.employee.first_name %> <%= trainee_request.employee.middle_name %> <%= trainee_request.employee.last_name %></td>
           </tr>
         <% end %>

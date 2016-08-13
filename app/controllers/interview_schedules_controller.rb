@@ -56,8 +56,15 @@ class InterviewSchedulesController < ApplicationController
       InterviewScheduleMailer.sample_email(@interview_schedule).deliver_now
       @interview_schedule = InterviewSchedule.new
     end
-    redirect_to interview_schedules_path
-    flash[:notice] = 'Interview Scheduled Successfully & Email also Sent.'   
+    if @interview_schedule.email_id.nil?
+      flash[:alert] = 'Interview Scheduled Successfully without Email'
+      redirect_to interview_schedules_path
+    else
+      InterviewScheduleMailer.sample_email_to_candidate(@interview_schedule).deliver_now
+      flash[:notice] = 'Interview Scheduled Successfully & Email also Sent.'
+      redirect_to interview_schedules_path
+    # @interview_reschedule.save
+    end
   end
 
   def create_new
@@ -66,10 +73,15 @@ class InterviewSchedulesController < ApplicationController
       if @interview_schedule.save
         @interview_schedule = InterviewSchedule.new
       end
-      # @vacancy_master = VacancyMaster.find(@selected_resume.vacancy_master_id)
-      # InterviewScheduleMailer.sample_email(@interview_schedule).deliver_now
+      if @interview_schedule.email_id.nil?
+      flash[:alert] = 'Interview Scheduled Successfully without Email'
       redirect_to interview_schedules_path
+       else
+      InterviewScheduleMailer.sample_email_to_candidate(@interview_schedule).deliver_now
       flash[:notice] = 'Interview Scheduled Successfully & Email also Sent.'
+      redirect_to interview_schedules_path
+    # @interview_reschedule.save
+    end
   end
 
   # PATCH/PUT /interview_schedules/1

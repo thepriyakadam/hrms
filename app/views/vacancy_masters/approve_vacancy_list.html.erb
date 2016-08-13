@@ -43,8 +43,10 @@
                 <small class="label label-info">Approved & Send Next</small>
                 <% elsif vacancy_master.current_status == "Cancelled" %>
                 <small class="label label-danger">Cancelled</small>
+                <% elsif vacancy_master.current_status == "Edit And Approved" %>
+                <small class="label label-success">Edit And Approve</small>
                 <% else %>
-                 <small class="label label-success">Revert</small>
+                 <small class="label label-success">No Status</small>
                 <% end %>
                 </td>
                 <td>

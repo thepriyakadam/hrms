@@ -196,7 +196,7 @@ class SelectedResumesController < ApplicationController
   end
 
   def offer_letter
-      puts "-----------------"
+      # puts "-----------------"
       # byebug
       # @vacancy_master = VacancyMaster.find(params[:id])
       @selected_resume = SelectedResume.find(params[:id])
@@ -213,15 +213,17 @@ class SelectedResumesController < ApplicationController
 
   def modal_change_status
     @selected_resume = SelectedResume.find(params[:format])
+    @vacancy_master = VacancyMaster.find(params[:vacancy_master_id])
   end
 
   def update_status
-    puts "----------------------------------"
+    # puts "----------------------------------"
     @selected_resume = SelectedResume.find(params[:id])
+    @vacancy_master = VacancyMaster.find(params[:vacancy_master_id])
     @current_status = params[:selected_resume][:status]
     @selected_resume.update(status: @current_status)
     flash[:notice] = "Interview Status updated Successfully"
-    redirect_to root_url
+    redirect_to new_selected_resume_path(vacancy_master_id: @vacancy_master.id)
   end
 
   def modal_profile_update

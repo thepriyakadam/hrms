@@ -14,8 +14,7 @@
               <th>Job Title</th>
               <th>Department</th>
               <th>Qualification</th>
-              <th>No. of position</th>
-              <th>Experience</th>
+              <th>Status</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -28,21 +27,23 @@
                 <td><%= vacancy_master.vacancy_name %></td>
                 <td><%= vacancy_master.company_location.try(:name) %> - <%= vacancy_master.department.try(:name) %></td>
                 <td><%= vacancy_master.degree.try(:name) %></td>
-                <td><%= vacancy_master.no_of_position %></td>
                 
-                <td><%= vacancy_master.experience %></td>
                  <td>
                     <% if vacancy_master.current_status == "Pending" %>
-                    <%= link_to 'Approve / Reject', vacancy_request_confirmation_vacancy_masters_path(vacancy_master),class: 'btn btn-sm btn-warning' %>
+                    <%= link_to 'Approve / Reject', vacancy_request_confirmation_vacancy_masters_path(vacancy_master),class: 'btn btn-xs btn-warning' %>
                     <% elsif vacancy_master.current_status == "Approved & Send Next" %>
-                    <%= link_to 'Approve / Reject', vacancy_request_confirmation_vacancy_masters_path(vacancy_master),class: 'btn btn-sm btn-warning' %>
+                    <%= link_to 'Approve / Reject', vacancy_request_confirmation_vacancy_masters_path(id: vacancy_master.id),class: 'btn btn-xs btn-warning' %>
                     <% elsif vacancy_master.current_status == "Edit And Approved" %>
-                   <small class="label label-primary">Edit And Approved</small>
+                   <small class="label label-success">Edit And Approved</small>
                     <% elsif vacancy_master.current_status == "Approved" %>
                     <small class="label label-primary">Approved</small>
                     <% else %>
-                    <%= link_to 'Approve / Reject', vacancy_request_confirmation_vacancy_masters_path(vacancy_master),class: 'btn btn-sm btn-warning' %>
+                    <%= link_to 'Approve / Reject', vacancy_request_confirmation_vacancy_masters_path(id: vacancy_master.id),class: 'btn btn-xs btn-warning' %>
                     <% end %>
+                  </td>
+                  <td>
+                  <%= link_to 'Show', vacancy_master,class: 'btn btn-xs btn-primary ' %>
+                    <%= link_to 'History',vacancy_history_list_vacancy_masters_path(id: vacancy_master.id),class: 'btn btn-xs btn-primary' %>
                   </td>
               </tr>
             <% end %>

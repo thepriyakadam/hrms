@@ -1,0 +1,52 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Vacancy Request History List</h3>
+    </div>
+
+<p id="notice"><%= notice %></p>
+
+<div class="box-body">
+<table id="example" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Approved By</th>
+      <th>Date</th>
+      <th>Time</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @vacancy_request_histories.each do |vacancy_request_history| %>
+       <tr>
+                <td><%= vacancy_request_history.reporting_master.employee.try(:first_name) %> <%= vacancy_request_history.reporting_master.employee.try(:middle_name) %> <%= vacancy_request_history.reporting_master.employee.try(:last_name) %></td>
+                <td><%= vacancy_request_history.created_at.to_date %></td>
+                <td><%= vacancy_request_history.created_at %></td>
+                 <td>
+                    <% if vacancy_request_history.current_status == "Pending" %>
+                    <small class="label label-primary">Pending</small>
+                    <% elsif vacancy_request_history.current_status == "Approved & Send Next" %>
+                    <small class="label label-primary">Approved & Send Next</small>
+                    <% elsif vacancy_request_history.current_status == "Edit And Approved" %>
+                    <small class="label label-primary">Edit And Approved</small>
+                    <% elsif vacancy_request_history.current_status == "Approved" %>
+                    <small class="label label-primary">Approved</small>
+                    <% else %>
+                    <% end %>
+                  </td>
+                  <td><%= link_to '', show_vacancy_request_history_vacancy_masters_path(vacancy_request_history,vacancy_master_id: @vacancy_master.id),class: 'btn btn-xs btn-default fa fa-eye' %></td>
+              </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= link_to 'Back', vacancy_history_vacancy_masters_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+ </div>
+</div>
+
+<script>
+$(document).ready(function() {
+    $('#example').DataTable();
+} );
+</script>
+

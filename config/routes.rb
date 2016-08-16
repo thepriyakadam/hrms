@@ -387,6 +387,7 @@ end
     get :modal_profile_update
     post :update_profile
     get :part_resume
+    post :is_confirm_resume
     end
   end 
   resources :assigned_assets do
@@ -588,12 +589,14 @@ end
       get :modal2
       post :confirm_candidate
       get :modal3
-      patch :update_vacancy_details
+      post :update_vacancy_details
       get :vacancy_history_resume
       get :approved_vacancy_request_history_list
       get :particular_vacancy_request_list_history
       get :gen_xml
       get :vacancy_profile
+      get :vacancy_history_list
+      get :show_vacancy_request_history
     end
   end
   resources :leave_c_offs do

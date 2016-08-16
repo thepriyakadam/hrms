@@ -164,8 +164,8 @@ class SalaryslipsController < ApplicationController
               deducted_actual_amount = (formula_total_actual_amount / 100 * @pf_master.percentage).round
               deducted_calculated_amount = (formula_total_calculated_amount / 100 * @pf_master.percentage).round
             elsif @employee.joining_detail.select_pf == 'Limit'
-              deducted_actual_amount = (@employee.joining_detail.pf_max_amount.to_f / 100 * @pf_master.percentage).round
-              deducted_calculated_amount = deducted_actual_amount
+             deducted_actual_amount = (@employee.joining_detail.pf_max_amount.to_f / 100 * @pf_master.percentage).round
+             deducted_calculated_amount = deducted_actual_amount
             else
               deducted_actual_amount = 0
               deducted_calculated_amount = 0
@@ -640,8 +640,8 @@ class SalaryslipsController < ApplicationController
                 deducted_actual_amount = (formula_total_actual_amount / 100 * @pf_master.percentage).round
                 deducted_calculated_amount = (formula_total_calculated_amount / 100 * @pf_master.percentage).round
               elsif @employee.joining_detail.select_pf == 'Limit'
-                deducted_actual_amount = (@employee.joining_detail.pf_max_amount.to_f / 100 * @pf_master.percentage).round
-                deducted_calculated_amount = deducted_actual_amount
+               deducted_actual_amount = (@employee.joining_detail.pf_max_amount.to_f / 100 * @pf_master.percentage).round
+               deducted_calculated_amount = deducted_actual_amount
               else
                 deducted_actual_amount = 0
                 deducted_calculated_amount = 0

@@ -23,7 +23,7 @@ class TravelRequestMailer < ApplicationMailer
  
     def reject_travel_request_email(travel_request)
     @travel_request = travel_request
-    @reporting_master = Employee.find(travel_request.reporting_master_id)
+    @reporting_master = Employee.find(travel_request.reporting_master.employee_id)
     @travel_request = TravelRequest.find(travel_request.id)
     @employee = Employee.find(@travel_request.employee_id)
     @emp = TravelRequest.find_by_employee_id(travel_request.employee_id)

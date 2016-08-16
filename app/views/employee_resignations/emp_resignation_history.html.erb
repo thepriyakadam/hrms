@@ -20,7 +20,7 @@
             <td><%= employee_resignation.employee.try(:manual_employee_code) %></td>
             <td><%= full_name(employee_resignation.employee)%></td>
             <td>
-              <%= link_to '', show_resignation_detail_employee_resignations_path(emp_id: employee_resignation.employee_id), class: 'btn btn-default fa fa-eye btn-sm' %>
+              <%= link_to '', show_resignation_detail_employee_resignations_path(emp_id: employee_resignation.employee_id,resignation_id: employee_resignation.id), class: 'btn btn-default fa fa-eye btn-sm' %>
             </td>
           </tr>
           <% end %>

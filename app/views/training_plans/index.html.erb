@@ -12,8 +12,6 @@
           <th>Topic</th>
           <th>No of employee</th>
           <th>Trainer Name</th>
-          <th>No of Days</th>
-          <th>No of Hrs</th>
           <th>Place</th> 
           <th>Action</th>
         </tr>
@@ -28,8 +26,6 @@
             <td><%= training_plan.training_topic_master.try(:name) %></td>
             <td><%= training_plan.no_of_employee %></td>
             <td><%= training_plan.trainer_name %></td>
-            <td><%= training_plan.no_of_days %></td>
-            <td><%= training_plan.no_of_hrs %></td>
             <td><%= training_plan.place %></td>
             <td>
             <%= link_to '', training_plan,class: 'btn btn-xs btn-default fa fa-eye' %>

@@ -87,17 +87,20 @@ class InterviewRoundsController < ApplicationController
   # DELETE /interview_rounds/1.json
   def destroy
     @interview_round.destroy
+    @interview_schedule = InterviewSchedule.find(params[:interview_schedule_id])
     @interview_rounds = InterviewRound.where(interview_schedule_id: @interview_schedule.id)
   end
 
   def interview_round_reschedule
     @interview_round = InterviewRound.find(params[:id])
+    @interview_schedule = InterviewSchedule.find(params[:interview_schedule_id])
     @employee = Employee.find(@interview_round.employee_id)
     @interview_round_reschedule = InterviewRoundReschedule.new
   end
 
   def reschedule_interview
     @interview_round_reschedule = InterviewRoundReschedule.new
+    @interview_schedule = InterviewSchedule.find(params[:interview_schedule_id])
     @interview_round = InterviewRound.find(params[:interview_round_reschedule][:interview_round_id])
 
     @interview_round_reschedule.interview_date = @interview_round.interview_date
@@ -111,7 +114,7 @@ class InterviewRoundsController < ApplicationController
     @interview_round_reschedule.save
     @interview_round.update(interview_date: params[:interview_round_reschedule][:interview_date], interview_time: params[:interview_round_reschedule][:interview_time],employee_id: params[:interview_round_reschedule][:employee_id],location: params[:interview_round_reschedule][:location],interview_type_id: params[:interview_round_reschedule][:interview_type_id])
     @interview_round_reschedule = InterviewRoundReschedule.new(interview_round_reschedule_params)
-    redirect_to root_url
+    redirect_to new_interview_round_path(interview_schedule_id: @interview_schedule.id)
     flash[:notice] = 'Interview Round Rescheduled Successfully.'   
   end
 

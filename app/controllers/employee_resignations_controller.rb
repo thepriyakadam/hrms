@@ -24,6 +24,8 @@ class EmployeeResignationsController < ApplicationController
   # GET /employee_resignations/1
   # GET /employee_resignations/1.json
   def show
+  @reporting_master = ReportingMaster.find(@employee_resignation.reporting_master_id)
+  @employee = Employee.find(@reporting_master.employee_id)
   end
 
   # GET /employee_resignations/new
@@ -123,7 +125,7 @@ class EmployeeResignationsController < ApplicationController
      @employee_resignation = EmployeeResignation.find(params[:format])
      @reporting_master = ReportingMaster.find(@employee_resignation.reporting_master_id)
      @employee = Employee.find(@reporting_master.employee_id)
-     @employee_resignations = EmployeeResignation.where(reporting_master_id: reporting_masters)
+     @employee_resignations = EmployeeResignation.where(reporting_master_id: reporting_masters,employee_id: @employee_resignation.employee_id)
   end
 
   def approve_resignation
@@ -168,6 +170,12 @@ class EmployeeResignationsController < ApplicationController
     @employee_resignations = EmployeeResignation.all
   end
 
+  def show_resignation_detail
+    @employee_id = Employee.find(params[:emp_id])
+    @employee_resignation_id = EmployeeResignation.find(params[:resignation_id])
+    @resignation_histories = ResignationHistory.where(employee_resignation_id: @employee_resignation_id.id)
+  end
+
   def edit_n_send_next_modal
     @employee_resignation = EmployeeResignation.find(params[:format])
   end
@@ -199,7 +207,7 @@ class EmployeeResignationsController < ApplicationController
     #@resignation_history.save
     @employee_resignation.update(employee_id: params[:employee_resignation][:employee_id], reporting_master_id: params[:employee_resignation][:reporting_master_id],leaving_reason_id: params[:employee_resignation][:leaving_reason_id],resignation_date: params[:employee_resignation][:resignation_date],notice_period: params[:employee_resignation][:notice_period],short_notice_period: params[:employee_resignation][:short_notice_period],tentative_leaving_date: params[:employee_resignation][:tentative_leaving_date],remark: params[:employee_resignation][:remark],exit_interview_date: params[:employee_resignation][:exit_interview_date],note: params[:employee_resignation][:note],leaving_date: params[:employee_resignation][:leaving_date],settled_on: params[:employee_resignation][:settled_on],is_stop_pay_request: params[:employee_resignation][:is_stop_pay_request],reason: params[:employee_resignation][:reason])
     #@resignation_history = ResignationHistory.new(resignation_history_params)
-    redirect_to root_url
+    redirect_to resignation_history_employee_resignations_path
     flash[:notice] = ' Request Edited And Send Next Successfully.'   
 
     # @travel_request.update(travel_request_params)
@@ -213,6 +221,7 @@ class EmployeeResignationsController < ApplicationController
 
   def send_email_to_reporting_manager
   end
+
 
   private
   # Use callbacks to share common setup or constraints between actions.

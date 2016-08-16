@@ -81,7 +81,8 @@
         <td><%= r.try(:pf_no) %></td>
         <td><%= r.try(:esic_no) %></td>
 
-        <td><%= r.try(:actual_basic).try(:round) %></td>
+
+        <td><%= r.try(:actual_basic)..try(:round) %></td>
         <td><%= r.try(:actual_da).try(:round) %></td>
         <td><%= r.try(:actual_hra).try(:round) %></td>
         <td><%= r.try(:actual_convenience).try(:round) %></td>
@@ -107,7 +108,6 @@
         <td><%= r.try(:earned_basic).try(:round) %></td>
         <td><%= r.try(:earned_da).try(:round) %></td>
         <td><%= r.try(:earned_hra).try(:round) %></td>
-
         <td><%= r.try(:earned_convenience).try(:round) %></td>
         <td><%= r.try(:earned_other).try(:round) %></td>
         <td><%= r.try(:earned_special).try(:round) %></td>
@@ -116,7 +116,6 @@
         <td><%= r.try(:earned_medical).try(:round) %></td>
         <td><%= r.try(:earned_child_edu).try(:round) %></td>
         <td><%= r.try(:earned_mra).try(:round) %></td>
-
         <td><%= r.try(:earned_total).try(:round) %></td>
 
         <td><%= r.try(:pf) %></td>
@@ -143,6 +142,7 @@
       <td></td>
       <td></td>
       <td></td>
+
 
       <td><%= @sum.actual_basic.try(:round) %></td>
       <td><%= @sum.actual_da.try(:round) %></td>

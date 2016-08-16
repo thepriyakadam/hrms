@@ -195,9 +195,9 @@ end
   end
 
   def interviewee_list
-     @interview_schedules = InterviewSchedule.all
-     session[:active_tab] ="recruitment"
-     session[:active_tab1] ="particular_vacancy"
+    @interview_schedules = InterviewSchedule.all
+    session[:active_tab] = "recruitment"
+    session[:active_tab1] = "general_vacancy"
   end
 
   def resume_list

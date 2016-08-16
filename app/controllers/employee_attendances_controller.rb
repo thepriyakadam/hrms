@@ -72,8 +72,7 @@ class EmployeeAttendancesController < ApplicationController
       @holiday_flag = false
       @employees = Employee.filter_by_date_and_costcenter(@date, @costcenter, current_user)
       @employee_attendance = EmployeeAttendance.new
-    end
-    
+    end  
   end
     
   def create_employee_attendance

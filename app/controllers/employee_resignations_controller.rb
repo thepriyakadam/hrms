@@ -24,6 +24,8 @@ class EmployeeResignationsController < ApplicationController
   # GET /employee_resignations/1
   # GET /employee_resignations/1.json
   def show
+  @reporting_master = ReportingMaster.find(@employee_resignation.reporting_master_id)
+  @employee = Employee.find(@reporting_master.employee_id)
   end
 
   # GET /employee_resignations/new

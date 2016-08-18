@@ -49,7 +49,7 @@ class EmployeeLeavRequestsController < ApplicationController
         @employee_leav_request.first_reporter_id = @employee.manager_id
         # @employee_leav_request.second_reporter_id = @employee.manager_2_id
         @employee_leav_request.is_pending = true
-        @employee_leav_request.current_status1 = 'Pending'
+        @employee_leav_request.current_status = 'Pending'
         if @employee_leav_request.leave_type == 'Full Day'
           @employee_leav_request.leave_count = (@employee_leav_request.end_date.to_date - @employee_leav_request.start_date.to_date).to_f + 1
         else

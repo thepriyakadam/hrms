@@ -15,21 +15,12 @@ xml.BOM do
         xml.Series 17
       end
     end
+
     xml.JournalEntriesLines do
     @salary_components.each do |s|
-      # @salary_components = SalaryslipComponent.where("salary_component_id = ? or (other_component_name = ? or other_component_name = ? or other_component_name = ?)",m.salary_component_id,"ESIC","PF","Food Deduction").limit(1)
-      # @salaryslip_components = SalaryslipComponent.where(is_deducted: true , salary_component_id: s.salary_component_id)
-      @salaryslips = Salaryslip.where(month: "February")
+      @salaryslips = Salaryslip.where(month: "February").limit(1)
       @salaryslips.each do |e|
-        @salaryslip_components = SalaryslipComponent.where(is_deducted: true ,salary_component_id: s.id,salaryslip_id: e.id.to_i)
-      # @c1 = SalaryslipComponent.where(salary_component_id: s.id)
-      # @salaryslips = Salaryslip.where(id: @c1.salaryslip_id)
-      # @salaryslip_month = Salaryslip.where(id: @salaryslips.id,month: "January")
-      # @salaryslip_components = SalaryslipComponent.where(salaryslip_id: @salaryslip_month.id,salary_component_id: s.id)
-
-      # @salaryslip_components = Salaryslip.joins(:salaryslip_components).where(salaryslip.month = "January")
-             # @salaryslip_components =Salaryslip.joins(:salaryslip_components).where(['month = ?', 'January'])
-
+        @salaryslip_components = SalaryslipComponent.where(salary_component_id: s.id,salaryslip_id: e.id.to_i)
         @salaryslip_components.each do |c|
           xml.row do
             employee = Employee.find(c.salaryslip.employee_id)
@@ -37,121 +28,153 @@ xml.BOM do
             xml.EmployeeCode employee.manual_employee_code
             xml.AccountCode s.account_code
             xml.ComponentName s.try(:name)
-            xml.Month c.salaryslip.month
-            xml.Year c.salaryslip.year
-            xml.Value c.calculated_amount.round
-            # xml.OtherComponent c.other_component_name
-            xml.row do
-           
+          
+              if c.is_deducted == true
+                xml.Value c.calculated_amount.round
+                xml.Debit "0"
+              else
+                xml.Credit "0"
+                xml.Debit c.calculated_amount.round
+              end
+                xml.VatLine "N"
+                xml.DueDate Time.now.strftime("%Y%m%d")
+                xml.TaxDate Time.now.strftime("%Y%m%d")
+                xml.CostingCode joining.cost_center.try(:name)
+                xml.CostingCode2 joining.department.try(:name)
+          end
+        end
+      end
+    end
+    end
 
-            if c.is_deducted == true
-              xml.dfsdfddf c.calculated_amount.round
-              xml.Value c.calculated_amount.round
-              # xml.OtherComponent c.other_component_name
-              xml.Debit "0"
-            else
-              xml.Credit "0"
-              xml.Debit c.calculated_amount.round
-            end
+  @salaryslips = Salaryslip.where(month: "February").limit(1)
+
+    @salaryslips.each do |e|
+      s = SalaryComponent.find(12)
+      # e = SalaryComponent.find(13)
+      # f = SalaryComponent.find(15)
+      # i = SalaryComponent.find(14)
+      # o = SalaryComponent.find(16)
+      # p = SalaryComponent.find(17)
+      # so = SalaryComponent.find(18)
+      # sl = SalaryComponent.find(19)
+      # r = SalaryComponent.find(20)
+      # w = SalaryComponent.find(22)
+      # m = SalaryComponent.find(23)
+
+      sc = SalaryComponent.new
+      sc_1 = SalaryComponent.where(is_deducted:true).first
+      sc_2 = SalaryComponent.where(is_deducted:true).second
+      sc_3 = SalaryComponent.where(is_deducted:true).third
+      sc_4 = SalaryComponent.where(is_deducted:true).fourth
+      sc_5 = SalaryComponent.where(is_deducted:true).fifth
+      # sc_6 = SalaryComponent.where(is_deducted:true).sixth
+      # sc_7 = SalaryComponent.where(is_deducted:true).seventh
+      # sc_8 = SalaryComponent.where(is_deducted:true).eighth
+      # sc_9 = SalaryComponent.where(is_deducted:true).nineth
+
+      # s = SalaryComponent.where(name: "PF")
+      # e = SalaryComponent.where(name: "ESIC")
+      # f = SalaryComponent.where(name: "Food Deduction")
+      # i = SalaryComponent.where(name: "Income Tax")
+      # o = SalaryComponent.where(name: "Other Deduction")
+      # p = SalaryComponent.where(name: "Prof. Tax")
+      # so = SalaryComponent.where(name: "Society")
+      # sl = SalaryComponent.where(name: "Society Loan")
+      # r = SalaryComponent.where(name: "Retaintion")
+      # w = SalaryComponent.where(name: "Welfair")
+      # m = SalaryComponent.where(name: "Mobile Deduction")
+
+        deductable_items = SalaryslipComponent.where(is_deducted: true,salary_component_id: nil,salaryslip_id: e.id.to_i)
+        deductable_items.each do |d|
+
+          xml.row do
+            employee = Employee.find(e.employee_id)
+            joining = JoiningDetail.find_by_employee_id(employee.id)
+            xml.EmployeeCode employee.manual_employee_code
+           
+          if sc_1.try(:name).to_s && d.other_component_name.to_s == "PF"
+            xml.AccountCode sc_1.account_code
+            xml.Debit d.calculated_amount
+            xml.OtherComponentName d.other_component_name
+          elsif sc_2.try(:name).to_s && d.other_component_name.to_s == "ESIC"
+             xml.AccountCode sc_2.account_code
+             xml.Debit d.calculated_amount
+             xml.OtherComponentName d.other_component_name
+          elsif sc_3.try(:name).to_s && d.other_component_name.to_s == "Food Deduction"
+             xml.AccountCode sc_4.account_code
+             xml.Debit d.calculated_amount
+             xml.OtherComponentName d.other_component_name
+          # elsif sc_5.try(:name).to_s && d.other_component_name.to_s == "Income Tax"
+          #    xml.AccountCode sc_5.account_code
+          #    xml.Value d.calculated_amount
+          #    xml.OtherComponentName d.other_component_name
+          elsif sc_4.try(:name).to_s && d.other_component_name.to_s == "Other Deduction"
+             xml.AccountCode sc_4.account_code
+             xml.Value d.calculated_amount
+             xml.OtherComponentName d.other_component_name
+          elsif sc_5.try(:name).to_s && d.other_component_name.to_s == "Prof. Tax"
+             xml.AccountCode sc_5.account_code
+             xml.Value d.calculated_amount
+             xml.OtherComponentName d.other_component_name
+          # elsif sc_6.try(:name).to_s && d.other_component_name.to_s == "Society"
+          #    xml.AccountCode sc_6.account_code
+          #    xml.Value d.calculated_amount
+          #    xml.OtherComponentName d.other_component_name
+          # elsif sc_9.try(:name).to_s && d.other_component_name.to_s == "Society Loan"
+          #    xml.AccountCode sc.account_code
+          #    xml.Value d.calculated_amount
+          #    xml.OtherComponentName d.other_component_name
+          # elsif sc_7.try(:name).to_s && d.other_component_name.to_s == "Retaintion"
+          #    xml.AccountCode sc_7.account_code
+          #    xml.Value d.calculated_amount
+          #    xml.OtherComponentName d.other_component_name
+          # elsif sc_8.try(:name).to_s && d.other_component_name.to_s == "Welfair"
+          #    xml.AccountCode sc_8.account_code
+          #    xml.Value d.calculated_amount
+          #    xml.OtherComponentName d.other_component_name
+          # elsif sc_9.try(:name).to_s && d.other_component_name.to_s == "Mobile Deduction"
+          #    xml.AccountCode sc_1.account_code
+          #    xml.Value d.calculated_amount
+          #    xml.OtherComponentName d.other_component_name
+          else
+            # puts "--------------------------------------------"
+          end
+          if d.is_deducted == true
+
+            xml.Debit "0"
+            xml.Credit d.calculated_amount.round
+          else
+            xml.Credit "0"
+            xml.Debit d.calculated_amount.round
+          end
+          xml.VatLine "N"
+          xml.DueDate Time.now.strftime("%Y%m%d")
+          xml.TaxDate Time.now.strftime("%Y%m%d")
+          xml.CostingCode joining.cost_center.try(:name)
+          xml.CostingCode2 joining.department.try(:name)
+        end
+      end
+    end
+
+    xml.JournalEntriesLines do
+      @salaryslips = Salaryslip.where(month: "February").limit(1)
+      @salaryslips.each do |e|
+          xml.row do
+            employee = Employee.find(e.employee_id)
+            joining = JoiningDetail.find_by_employee_id(employee.id)
+            xml.EmployeeCode employee.manual_employee_code
+            
+            xml.CalculatedNetSalary e.calculated_net_salary.round
+            xml.AccountCode "120004"
             xml.VatLine "N"
             xml.DueDate Time.now.strftime("%Y%m%d")
             xml.TaxDate Time.now.strftime("%Y%m%d")
-            
             xml.CostingCode joining.cost_center.try(:name)
             xml.CostingCode2 joining.department.try(:name)
-        end
-      end
-       xml.CalculatedNetSalary c.salaryslip.calculated_net_salary.round
-    end
-   end
-  end
-end
-end
-
- 
-  
-        sc = SalaryComponent.new
-            deductable_items = SalaryslipComponent.where(is_deducted: true, is_arrear: nil,salary_component_id: nil,salaryslip_id: 5244)
-            deductable_items.each do |d|
-            xml.row do
-            # employee = Employee.find(c.salaryslip.employee_id)
-            # joining = JoiningDetail.find_by_employee_id(employee.id)
-            # xml.EmployeeCode employee.manual_employee_code
-            # xml.AccountCode m.account_code
-            # xml.ComponentName m.salary_component.try(:name)
-            # xml.AccountCode m.account_code
-            # xml.Month c.salaryslip.month
-            # xml.Year c.salaryslip.year
-
-            # # case d.other_component_name
-            # #   when "PF" && sc.try(:name)d.calculated_amount.to_i
-
-              
-            # #   when "ESIC"
-            # #   d.calculated_amount.to_i
-            # #   when "Income Tax"
-            # #   sr.income_tax = d.calculated_amount
-            # #   when "Prof. Tax"
-            # #   sr.pt = d.calculated_amount
-            # #   when "Advance"
-            # #   sr.advance = d.calculated_amount.to_i
-            # #   when "Society"
-            # #   sr.society = d.calculated_amount
-            # #   when "Food Deduction"
-            # #   sr.food_deduction = d.calculated_amount.to_i
-            # #   when "Mobile Deduction"
-            # #   sr.mobile = d.calculated_amount
-            # #   when "Retention"
-            # #   sr.retention = d.calculated_amount
-            # #   when "Well Faire"
-            # #   sr.welfair = d.calculated_amount
-            # # end
-
-            if sc.try(:name).to_s && d.other_component_name.to_s == "PF"
-               xml.Value d.calculated_amount
-               xml.OtherComponentName d.other_component_name
-               # xml.EmployeeCode employee.manual_employee_code
-            elsif sc.try(:name).to_s && d.other_component_name.to_s == "ESIC"
-               xml.Value d.calculated_amount
-               xml.OtherComponentName d.other_component_name
-               # xml.EmployeeCode employee.manual_employee_code
-            elsif sc.try(:name).to_s && d.other_component_name.to_s == "Food Deduction"
-               xml.Value d.calculated_amount
-               xml.OtherComponentName d.other_component_name
-            elsif sc.try(:name).to_s && d.other_component_name.to_s == "Income Tax"
-               xml.Value d.calculated_amount
-               xml.OtherComponentName d.other_component_name
-            elsif sc.try(:name).to_s && d.other_component_name.to_s == "Other Deduction"
-               xml.Value d.calculated_amount
-               xml.OtherComponentName d.other_component_name
-            elsif sc.try(:name).to_s && d.other_component_name.to_s == "Prof. Tax"
-               xml.Value d.calculated_amount
-               xml.OtherComponentName d.other_component_name
-            elsif sc.try(:name).to_s && d.other_component_name.to_s == "Society"
-               xml.Value d.calculated_amount
-               xml.OtherComponentName d.other_component_name
-            elsif sc.try(:name).to_s && d.other_component_name.to_s == "Society Loan"
-               xml.Value d.calculated_amount
-               xml.OtherComponentName d.other_component_name
-            elsif sc.try(:name).to_s && d.other_component_name.to_s == "Retaintion"
-               xml.Value d.calculated_amount
-               xml.OtherComponentName d.other_component_name
-            elsif sc.try(:name).to_s && d.other_component_name.to_s == "Welfair"
-               xml.Value d.calculated_amount
-               xml.OtherComponentName d.other_component_name
-            elsif sc.try(:name).to_s && d.other_component_name.to_s == "Mobile Deduction"
-               xml.Value d.calculated_amount
-               xml.OtherComponentName d.other_component_name
-
-               # xml.EmployeeCode employee.manual_employee_code
-            # elsif sc.try(:name) && c.other_component_name == "PF"
-            #    xml.Value c. calculated_amount
-            # elsif sc.try(:name) && c.other_component_name == "PF"
-            #    xml.Value c. calculated_amount
-            else
-              # puts "--------------------------------------------"
-            end
           end
+      end
+    end
 
   end
 end

@@ -33,7 +33,7 @@ class PdfSalariesController < ApplicationController
       @salary1 = params[:salaryslip_ids]
       @joining_details = JoiningDetail.where(cost_center_id: @cost_center).pluck(:employee_id)
       @salaryslips = Salaryslip.where(month:  @month,year: @year.to_s,employee_id: @salary1)
-
+      
         respond_to do |format|
         format.html
         format.pdf do

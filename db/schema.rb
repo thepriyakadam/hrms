@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160811103137) do
+ActiveRecord::Schema.define(version: 20160817071523) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -2341,9 +2341,10 @@ ActiveRecord::Schema.define(version: 20160811103137) do
     t.boolean  "is_deducted"
     t.string   "code"
     t.string   "description"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
     t.integer  "parent_id"
+    t.string   "account_code"
   end
 
   add_index "salary_components", ["parent_id"], name: "index_salary_components_on_parent_id"

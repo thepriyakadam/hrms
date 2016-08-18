@@ -155,7 +155,7 @@ class VacancyMastersController < ApplicationController
     @vacancy_master.no_of_position.times do 
       ParticularVacancyRequest.create(vacancy_master_id: @vacancy_master.id,employee_id: @vacancy_master.employee_id,employee_designation_id: @vacancy_master.employee_designation_id,vacancy_name: @vacancy_master.vacancy_name,fulfillment_date: @vacancy_master.vacancy_post_date,status: "Approved",open_date: Time.zone.now.to_date,vacancy_history_id: @c1.id)
   end
-    # VacancyMasterMailer.approve_vacancy_email(@vacancy_master).deliver_now
+    VacancyMasterMailer.approve_vacancy_email(@vacancy_master).deliver_now
     flash[:notice] = 'Vacancy Request Approved'
     redirect_to vacancy_history_vacancy_masters_path
   end
@@ -255,7 +255,7 @@ class VacancyMastersController < ApplicationController
 
   def update_vacancy_details
     # byebug
-    @vacancy_master = VacancyMaster.find(params[:id])
+    @vacancy_master = VacancyMaster.find(params[:vacancy_master_id])
     @vacancy_request_history = VacancyRequestHistory.new   
     @vacancy_master = VacancyMaster.find(params[:vacancy_request_history][:vacancy_master_id])
     
@@ -281,7 +281,7 @@ class VacancyMastersController < ApplicationController
     
     @vacancy_request_history.save
     # byebug
-    @vacancy_master.update(employee_designation_id: params[:vacancy_request_history][:employee_designation_id], justification: params[:vacancy_request_history][:justification],employee_id: params[:vacancy_request_history][:employee_id],current_status: params[:vacancy_request_history][:current_status],experience: params[:vacancy_request_history][:experience],degree_1_id: params[:vacancy_request_history][:degree_1_id],degree_2_id: params[:vacancy_request_history][:degree_2_id],reporting_master_id: params[:vacancy_request_history][:reporting_master_id],keyword: params[:vacancy_request_history][:keyword],other_organization: params[:vacancy_request_history][:other_organization],department_id: params[:vacancy_request_history][:department_id],degree_id: params[:vacancy_request_history][:degree_id],company_location_id: params[:vacancy_request_history][:company_location_id],vacancy_name: params[:vacancy_request_history][:vacancy_name],no_of_position: params[:vacancy_request_history][:no_of_position],description: params[:vacancy_request_history][:description],vacancy_post_date: params[:vacancy_request_history][:vacancy_post_date],budget: params[:vacancy_request_history][:budget],current_status: "Edit And Approved")
+    @vacancy_master.update(employee_designation_id: params[:vacancy_request_history][:employee_designation_id], justification: params[:vacancy_request_history][:justification],employee_id: params[:vacancy_request_history][:employee_id],experience: params[:vacancy_request_history][:experience],degree_1_id: params[:vacancy_request_history][:degree_1_id],degree_2_id: params[:vacancy_request_history][:degree_2_id],reporting_master_id: params[:vacancy_request_history][:reporting_master_id],keyword: params[:vacancy_request_history][:keyword],other_organization: params[:vacancy_request_history][:other_organization],department_id: params[:vacancy_request_history][:department_id],degree_id: params[:vacancy_request_history][:degree_id],company_location_id: params[:vacancy_request_history][:company_location_id],vacancy_name: params[:vacancy_request_history][:vacancy_name],no_of_position: params[:vacancy_request_history][:no_of_position],description: params[:vacancy_request_history][:description],vacancy_post_date: params[:vacancy_request_history][:vacancy_post_date],budget: params[:vacancy_request_history][:budget],current_status: "Edit And Approved")
     @vacancy_request_history = VacancyRequestHistory.new(vacancy_request_history_params)
     ReportingMastersVacancyMaster.create(vacancy_master_id: @vacancy_master.id, reporting_master_id: @vacancy_master.reporting_master_id, vacancy_status: "Edit And Approved")
     redirect_to vacancy_history_vacancy_masters_path

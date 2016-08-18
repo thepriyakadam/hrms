@@ -16,7 +16,7 @@ class ParticularLeaveRecordsController < ApplicationController
       column(:Employee_Name, sortable: true) { |particular_leave_record| full_name(particular_leave_record.employee) }
       column(:Leave_date, sortable: true) { |particular_leave_record| particular_leave_record.leave_date.to_date }
       column :Is_full, sortable: true, &:is_full
-      column(:Leave_Category, sortable: true) { |particular_leave_record| particular_leave_record.leav_category.try(:name) }
+      column(:Leave_Category, sortable: true) { |particular_leave_record| particular_leave_record.leav_category.try(:description) }
       column(:Approved_date, sortable: true) { |particular_leave_record| particular_leave_record.created_at.to_date }
       column(:Approved_Time, sortable: true) { |particular_leave_record| particular_leave_record.created_at }
       column(:Location, sortable: true) { |particular_leave_record| particular_leave_record.employee.try(:company_location).try(:name) }

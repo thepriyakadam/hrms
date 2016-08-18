@@ -44,12 +44,12 @@ class EmployeeLeavRequestsController < ApplicationController
       if @employee.manager_id.nil?
         flash[:alert] = 'First Reporter not set.'
         redirect_to root_url
-        
+
       else
         @employee_leav_request.first_reporter_id = @employee.manager_id
         # @employee_leav_request.second_reporter_id = @employee.manager_2_id
         @employee_leav_request.is_pending = true
-        @employee_leav_request.current_status1 = 'Pending'
+        @employee_leav_request.current_status = 'Pending'
         if @employee_leav_request.leave_type == 'Full Day'
           @employee_leav_request.leave_count = (@employee_leav_request.end_date.to_date - @employee_leav_request.start_date.to_date).to_f + 1
         else
@@ -84,7 +84,7 @@ class EmployeeLeavRequestsController < ApplicationController
               if @employee.manager.email.nil? || @employee.manager.email == ''
                 flash[:notice] = 'Send request without email.'
               else
-                flash[:notice] = 'Leave Request sent successfully.'
+                flash[:notice] = 'Leave Request sent successfully..'
                 LeaveRequestMailer.pending(@employee_leav_request).deliver_now
               end
               redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
@@ -109,7 +109,7 @@ class EmployeeLeavRequestsController < ApplicationController
               if @employee.manager.email.nil? || @employee.manager.email == ''
                 flash[:notice] = 'Send request without email.'
               else
-                flash[:notice] = 'Leave Request sent successfully.'
+                flash[:notice] = 'Leave Request sent successfully !.'
                 #LeaveRequestMailer.pending(@employee_leav_request).deliver_now
               end
               redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
@@ -123,7 +123,7 @@ class EmployeeLeavRequestsController < ApplicationController
               if @employee.manager.email.nil? || @employee.manager.email == ''
                 flash[:notice] = 'Send request without email.'
               else
-                flash[:notice] = 'Leave Request sent successfully.'
+                flash[:notice] = 'Leave Request sent successfully !'
                 LeaveRequestMailer.pending(@employee_leav_request).deliver_now
               end
               redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
@@ -216,7 +216,7 @@ class EmployeeLeavRequestsController < ApplicationController
       column(:Designation, sortable: true) { |employee_leav_request| employee_leav_request.employee.joining_detail.employee_designation.name }
       column(:From, sortable: true) { |employee_leav_request| employee_leav_request.start_date.to_date }
       column(:To, sortable: true) { |employee_leav_request| employee_leav_request.end_date.to_date }
-      column(:Leave_Category, sortable: true) { |employee_leav_request| employee_leav_request.leav_category.try(:name) }
+      column(:Leave_Category, sortable: true) { |employee_leav_request| employee_leav_request.leav_category.try(:description) }
       column(:Apply_Date, sortable: true) { |employee_leav_request| employee_leav_request.created_at.to_date }
       column(:Apply_Time, sortable: true) { |employee_leav_request| employee_leav_request.created_at }
       column(:Leave_Type, sortable: true, &:leave_type)

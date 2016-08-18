@@ -60,6 +60,15 @@ class EmployeeDocumentsController < ApplicationController
               disposition: 'attachment'
   end
 
+
+  def download_pic
+    @employee_document = EmployeeDocument.find(params[:id])
+    send_file @employee_document.image.path,
+              filename: @employee_document.image_file_name,
+              type: @employee_document.image_content_type,
+              disposition: 'attachment'
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_employee_document
@@ -68,7 +77,7 @@ class EmployeeDocumentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def employee_document_params
-      params.require(:employee_document).permit(:employee_id, :name, :status , :document)
+      params.require(:employee_document).permit(:employee_id, :name, :status , :document , :image)
     end
 
   end

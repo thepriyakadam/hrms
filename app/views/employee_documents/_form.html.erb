@@ -1,4 +1,4 @@
- <%= bootstrap_form_for(@employee_document,html: {id: 'employee_document'},remote:true) do |f| %>
+ <%= bootstrap_form_for(@employee_document,html: {id: 'employee_document'}) do |f| %>
     <%= hidden_field_tag :authenticity_token, form_authenticity_token %> 
       <div class="row">
         <div class="col-sm-3">
@@ -17,6 +17,12 @@
               <%= f.file_field :document,label: 'Document(doc,docx,pdf only)' %>
             </div>
            </div>
+
+          <div class="col-sm-3">
+            <div class="field">
+             <%= f.file_field :image,label: 'Upload Photo(only jpeg,jpg,png)' %>
+            </div>
+          </div>
 
             <div class="col-sm-3">
             <label>Status</label>

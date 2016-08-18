@@ -6,7 +6,7 @@
   <body>
      <h4>Interview Confirmation</h4>
     <p>
-       Dear,<br>  <%= @employee.first_name.to_s %> <%= @employee.last_name.to_s %>-<%= @employee.optinal_contact_no.to_s %><br><br>
+       Dear <%= @employee.first_name.to_s %> <%= @employee.last_name.to_s %>-<%= @employee.optinal_contact_no.to_s %>,<br><br>
       This is to inform you that you need to take an Interview for the position <b><%= @interview_schedule.post_title %></b>.
        Details for interview is given below.<br><br>
        1. <b>Candidate Name :-</b> <%= @interview_schedule.candidate_name %><br><br>

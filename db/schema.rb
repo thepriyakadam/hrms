@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160811103137) do
+ActiveRecord::Schema.define(version: 20160816125736) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -785,6 +785,10 @@ ActiveRecord::Schema.define(version: 20160811103137) do
     t.string   "document_content_type"
     t.integer  "document_file_size"
     t.datetime "document_updated_at"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
   end
 
   add_index "employee_documents", ["employee_id"], name: "index_employee_documents_on_employee_id"

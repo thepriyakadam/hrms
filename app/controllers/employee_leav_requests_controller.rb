@@ -34,6 +34,17 @@ class EmployeeLeavRequestsController < ApplicationController
     date_range = params['employee_leav_request']['date_range']
     @emp_leav_req = EmployeeLeavRequest.where(employee_id: @employee.id, date_range: date_range)
 
+    for i in @employee_leav_request.start_date.to_date..@employee_leav_request.end_date.to_date
+      @employee_leav_request.leave_records.build(employee_id: @employee_leav_request.employee_id,employee_leav_request_id: @employee_leav_request.id,status: "Pending", day: i)
+    end
+
+    # for i in @employee_leav_request.start_date.to_date..@employee_leav_request.end_date.to_date
+    #   if @employee_leav_request.leave_records.where(employee_id: @employee_leav_request.employee_id,day: i)
+    #      flash[:alert] = "Your Leave already available!"
+    #    else
+    #    end
+    # end
+
     if @employee_leav_request.is_holiday?
       flash[:alert] = "Your Leave Request has holiday."
       redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
@@ -43,6 +54,8 @@ class EmployeeLeavRequestsController < ApplicationController
     elsif @employee_leav_request.is_available?
       flash[:alert] = "Your Leave Request already has attendance available !!"
       redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
+
+
     # elsif @emp_leav_req.current_status = 'Pending'
     #   flash[:alert] = "Your Leave Request already has attendance available !"
     #   redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
@@ -50,6 +63,9 @@ class EmployeeLeavRequestsController < ApplicationController
       if @employee.manager_id.nil?
         flash[:alert] = 'First Reporter not set.'
         redirect_to root_url
+      # elsif @employee_leav_request.is_available?
+      #   flash[:alert] = "Your Leave Request already has attendance available !!"
+      #   redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
 
       else
         @employee_leav_request.first_reporter_id = @employee.manager_id

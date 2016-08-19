@@ -8,6 +8,7 @@ class EmployeeLeavRequest < ActiveRecord::Base
   has_many :leave_status_records
   has_many :particular_leave_records
   has_many :employee_attendances
+  has_many :leave_records
 
   belongs_to :first_reporter, class_name: 'Employee'
   belongs_to :second_reporter, class_name: 'Employee'
@@ -146,7 +147,7 @@ class EmployeeLeavRequest < ActiveRecord::Base
   def is_available?
     flag = 0
     for i in self.start_date.to_date..self.end_date.to_date
-      flag = EmployeeLeavRequest.exists?(start_date: self.start_date,end_date: self.end_date,employee_id: self.employee_id)
+      flag = LeaveRecord.exists?(day: i,employee_id: self.employee_id)
     end
     flag
   end

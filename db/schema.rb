@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160817071523) do
+ActiveRecord::Schema.define(version: 20160819073114) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -1713,6 +1713,18 @@ ActiveRecord::Schema.define(version: 20160817071523) do
   end
 
   add_index "leave_c_offs", ["employee_id"], name: "index_leave_c_offs_on_employee_id"
+
+  create_table "leave_records", force: :cascade do |t|
+    t.date     "day"
+    t.string   "status"
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.integer  "employee_leav_request_id"
+    t.integer  "employee_id"
+  end
+
+  add_index "leave_records", ["employee_id"], name: "index_leave_records_on_employee_id"
+  add_index "leave_records", ["employee_leav_request_id"], name: "index_leave_records_on_employee_leav_request_id"
 
   create_table "leave_status_records", force: :cascade do |t|
     t.integer  "employee_leav_request_id"

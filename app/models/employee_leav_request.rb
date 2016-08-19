@@ -150,7 +150,7 @@ class EmployeeLeavRequest < ActiveRecord::Base
   def is_available?
     flag = 0
     for i in self.start_date.to_date..self.end_date.to_date
-      flag = EmployeeLeavRequest.exists?(start_date: i, employee_id: self.employee_id)
+      flag = EmployeeLeavRequest.exists?(start_date: self.start_date,end_date: self.end_date,employee_id: self.employee_id)
     end
     flag
   end

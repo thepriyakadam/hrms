@@ -40,6 +40,12 @@ class EmployeeLeavRequestsController < ApplicationController
     elsif @employee_leav_request.is_present?
       flash[:alert] = "Your Leave Request already has attendance."
       redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
+    elsif @employee_leav_request.is_available?
+      flash[:alert] = "Your Leave Request already has attendance available !!"
+      redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
+    # elsif @emp_leav_req.current_status = 'Pending'
+    #   flash[:alert] = "Your Leave Request already has attendance available !"
+    #   redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
     else
       if @employee.manager_id.nil?
         flash[:alert] = 'First Reporter not set.'

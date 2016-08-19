@@ -47,5 +47,12 @@ class SelfServicesController < ApplicationController
     @resignation_histories = ResignationHistory.where(employee_resignation_id: @employee_resignation_id.id)
   end
 
+  def employee_transfer
+    @employee_transfer = EmployeeTransfer.new
+    @employee_transfers = EmployeeTransfer.where(employee_id: current_user.employee_id)
+    session[:active_tab] = "selfservice"
+  end
+
+
 end
 

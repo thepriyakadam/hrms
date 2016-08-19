@@ -615,6 +615,7 @@ end
       get :employee_resignation
       get :resignation_history
       get :show_resignation_detail
+      get :employee_transfer
     end
   end
 

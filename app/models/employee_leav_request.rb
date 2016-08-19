@@ -108,21 +108,25 @@ class EmployeeLeavRequest < ActiveRecord::Base
     if self.leav_category.is_payble
       if self.leave_type == "Full Day"
         for i in self.start_date.to_date..self.end_date.to_date
+
           EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: self.leav_category.name.to_s, count: 1, employee_leav_request_id: self.id,department_id: self.employee.try(:department_id))
         end
       else
         for i in self.start_date.to_date..self.start_date.to_date
           EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: self.leav_category.name.to_s+"HD", count: 1, employee_leav_request_id: self.id,department_id: self.employee.try(:department_id))
+
         end
       end
     else
       if self.leave_type == "Full Day"
         for i in self.start_date.to_date..self.end_date.to_date
+
           EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: self.leav_category.name.to_s, count: 0, employee_leav_request_id: self.id,department_id: self.employee.try(:department_id))
         end
       else
         for i in self.start_date.to_date..self.start_date.to_date
           EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: self.leav_category.name.to_s+"HD", count: 0.5, employee_leav_request_id: self.id,department_id: self.employee.try(:department_id))
+
         end
       end
     end

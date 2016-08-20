@@ -13,6 +13,8 @@ class EmployeeLeavRequest < ActiveRecord::Base
   belongs_to :first_reporter, class_name: 'Employee'
   belongs_to :second_reporter, class_name: 'Employee'
 
+  #validates :date_range, uniqueness: { scope: [:date_range, :employee_id] }
+
   # CURRENT_STATUSS = [["Pending",0], ["FirstApproved",2], ["SecondApproved",3], ["FirstRejected",4],["SecondRejected",5],["Cancelled",1]]
   # validates_inclusion_of :current_status, :in => CURRENT_STATUSS
 
@@ -155,4 +157,13 @@ class EmployeeLeavRequest < ActiveRecord::Base
     end
     flag
   end
+
+  def is_exist?
+    flag = 0
+    for i in self.start_date.to_date..self.end_date.to_date
+      LeaveRecord.exists?(i)
+    end
+    flag
+  end
+
 end

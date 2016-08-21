@@ -61,6 +61,7 @@ class Employee < ActiveRecord::Base
   has_many :manager_histories
   has_many :due_employee_details
   has_many :employee_promotions
+  has_many :leave_records
   
   #accepts_nested_attributes_for :joining_detail
   has_many :subordinates, class_name: 'Employee',
@@ -84,6 +85,12 @@ class Employee < ActiveRecord::Base
                           foreign_key: "manager_id"
   has_many :manager_histories, class_name: "Employee",
                           foreign_key: "manager_2_id"
+
+  # has_many :reporting_masters, class_name: "Employee",
+  #                         foreign_key: "manager_id"
+
+  # has_many :reporting_masters, class_name: "Employee",
+  #                         foreign_key: "manager_2_id"
 
   before_create :add_department
   before_update :add_department

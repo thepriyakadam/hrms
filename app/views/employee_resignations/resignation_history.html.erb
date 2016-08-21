@@ -1,4 +1,3 @@
-
 <div class="box">
   <div class="box-header">
     <h3 class="box-title">Employee Resignation Approval</h3>
@@ -17,6 +16,7 @@
           <th>Notice Period</th>
           <th>Short Notice Period</th>
           <th>Exit Interview Date</th>
+          <th>Status</th>
           <th>Action</th>
        </tr>
       </thead>
@@ -33,18 +33,22 @@
             <td><%= employee_resignation.exit_interview_date %></td>
             <td>
               <% if employee_resignation.resign_status == "Pending" %>
-                <%= link_to 'Approve / Reject', employee_resignation_confirmation_employee_resignations_path(employee_resignation),class: 'btn btn-sm btn-warning' %> 
+                 <small class="label label-primary">Pending</small>
               <% elsif employee_resignation.resign_status == "Approved" %>
                   <small class="label label-primary">Approved</small>
               <% elsif employee_resignation.resign_status == "Edit & Send Next" %>
                   <small class="label label-info">Send Next To Higher Authority</small>
               <% elsif employee_resignation.resign_status == "Approved & Send Next" %>
                   <small class="label label-info">Approved & Send Next</small>
+              <% elsif employee_resignation.resign_status == "Edit & Approved" %>
+                  <small class="label label-info">Edited & Approved</small>
               <% else %>
                   <small class="label label-danger">Rejected</small>
               <% end %>
-          </td>
-           
+            </td>
+            <td>
+              <%= link_to 'Approve / Reject', employee_resignation_confirmation_employee_resignations_path(employee_resignation),class: 'btn btn-sm btn-warning' %>
+            </td>
           </tr>
         <% end %>
       </tbody>
@@ -54,4 +58,3 @@
 </div>
 </div>
 <br>
-

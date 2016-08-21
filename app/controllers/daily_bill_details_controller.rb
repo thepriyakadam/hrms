@@ -17,6 +17,7 @@ class DailyBillDetailsController < ApplicationController
   # GET /daily_bill_details/new
   def new
     @daily_bill_detail = DailyBillDetail.new
+    
     @travel_request = TravelRequest.find(params[:travel_request_id])
     @daily_bill_details = DailyBillDetail.where(travel_request_id: @travel_request.id)
 
@@ -61,17 +62,15 @@ def create
   # PATCH/PUT /daily_bill_details/1.json
 
   def update
-    respond_to do |format|
       @travel_request = TravelRequest.find(@daily_bill_detail.travel_request_id)
 
       if @daily_bill_detail.update(daily_bill_detail_params)
-        
         @daily_bill_details =  @travel_request.daily_bill_details
-         format.js { @flag = true }
+        flash[:notice] = "Updated successfully"
       else
-        format.js { @flag = false }
+        flash[:alert] = "not updated"
       end
-    end
+      redirect_to new_daily_bill_detail_path(travel_request_id: @travel_request.id)
   end
 
 
@@ -194,21 +193,21 @@ def create
 
 
 
-  def approve_request
-    @daily_bill_detail_ids = params[:daily_bill_detail_ids]
-    if @daily_bill_detail_ids.nil?
-      flash[:alert] = "Please Select the Checkbox"
-      redirect_to travel_request_list_daily_bill_details_path
-    else
-      @daily_bill_detail_ids.each do |did|
-      @daily_bill_detail = DailyBillDetail.find(did)
-      @daily_bill_detail.update(request_status: "Approved") 
-      flash[:notice] = "Approved Successfully"
-    end 
-     redirect_to travel_request_list_daily_bill_details_path
-  end
-  session[:active_tab] ="travelmgmt"
-  end
+  # def approve_request
+  #   @daily_bill_detail_ids = params[:daily_bill_detail_ids]
+  #   if @daily_bill_detail_ids.nil?
+  #     flash[:alert] = "Please Select the Checkbox"
+  #     redirect_to travel_request_list_daily_bill_details_path
+  #   else
+  #     @daily_bill_detail_ids.each do |did|
+  #     @daily_bill_detail = DailyBillDetail.find(did)
+  #     @daily_bill_detail.update(request_status: "Approved") 
+  #     flash[:notice] = "Approved Successfully"
+  #   end 
+  #    redirect_to travel_request_list_daily_bill_details_path
+  # end
+  # session[:active_tab] ="travelmgmt"
+  # end
 
   
 

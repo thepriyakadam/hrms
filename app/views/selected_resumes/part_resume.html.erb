@@ -8,9 +8,9 @@
       <th>Name</th>
       <th>Contact No.</th>
       <th>Degree</th>
-      <th>Expected CTC</th>
+      <!-- <th>Expected CTC</th>
       <th>Experience</th>
-      <th>Notice Period</th>
+      <th>Notice Period</th> -->
       <th>Status</th>
       <th>Download Resume</th>
       <th>Download Image</th>
@@ -24,9 +24,9 @@
         <td><%= selected_resume.name %></td>
         <td><%= selected_resume.contact_no %></td>
         <td><%= selected_resume.degree.try(:name) %></td>
-        <td><%= selected_resume.ctc %></td>
+        <!-- <td><%= selected_resume.ctc %></td>
         <td><%= selected_resume.experience %></td>
-        <td><%= selected_resume.notice_period %></td>
+        <td><%= selected_resume.notice_period %></td> -->
         <td>
           <div id="myModal1" class="modal fade"></div>
           <% if selected_resume.status == "Shortlisted" %>
@@ -60,7 +60,8 @@
       </tr>
     <% end %>
   </tbody>
-</table>
+</table><br>
+<%= link_to 'Back', vacancy_profile_vacancy_masters_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
  </div>
  </div>
  </div>
@@ -80,14 +81,6 @@
           this.checked = false;                        
         });
       } 
-    });
-  });
-
-  $(document).ready(function() {
-    $('.example3').DataTable( {
-      "scrollX":        "1200px",
-      "paging":         false,
-      "searching":     false
     });
   });
 </script>

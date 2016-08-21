@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160805110143) do
+ActiveRecord::Schema.define(version: 20160817071523) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -763,6 +763,10 @@ ActiveRecord::Schema.define(version: 20160805110143) do
     t.string   "document_content_type"
     t.integer  "document_file_size"
     t.datetime "document_updated_at"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
   end
 
   add_index "employee_documents", ["employee_id"], name: "index_employee_documents_on_employee_id"
@@ -836,6 +840,7 @@ ActiveRecord::Schema.define(version: 20160805110143) do
     t.integer  "current_status"
     t.integer  "first_reporter_id"
     t.integer  "second_reporter_id"
+    t.string   "current_status1"
   end
 
   add_index "employee_leav_requests", ["employee_id"], name: "index_employee_leav_requests_on_employee_id"
@@ -1646,6 +1651,8 @@ ActiveRecord::Schema.define(version: 20160805110143) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.boolean  "is_payble"
+    t.decimal  "from"
+    t.decimal  "to"
   end
 
   create_table "leav_rejecteds", force: :cascade do |t|
@@ -2298,9 +2305,10 @@ ActiveRecord::Schema.define(version: 20160805110143) do
     t.boolean  "is_deducted"
     t.string   "code"
     t.string   "description"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
     t.integer  "parent_id"
+    t.string   "account_code"
   end
 
   add_index "salary_components", ["parent_id"], name: "index_salary_components_on_parent_id"
@@ -2817,8 +2825,8 @@ ActiveRecord::Schema.define(version: 20160805110143) do
     t.decimal  "el_balance"
     t.decimal  "coff_balance"
     t.decimal  "advance_balance"
-    t.decimal  "pay_leave"
     t.boolean  "is_confirm"
+    t.decimal  "pay_leave"
   end
 
   add_index "workingdays", ["employee_id"], name: "index_workingdays_on_employee_id"

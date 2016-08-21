@@ -6,6 +6,11 @@
 
       <%= f.hidden_field :employee_id, value: current_user.employee_id %>
       <div class="row">
+       <div class="col-sm-3">
+          <div class="form-group required">
+          <%= f.select :employee_id, all_active_employee_with_code, {include_blank: "Select Employee"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>    
+          </div>
+        </div>
         <div class="col-sm-3">
           <div class="form-group required">
          <!--  <label>Vacancy Approval</label> -->
@@ -18,33 +23,36 @@
             <%= f.select :employee_designation_id,all_employee_designation,{include_blank: 'Select Designation',label: 'Employee Designation'},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"}  %>
           </div>
         </div>
-
+    
         <div class="col-sm-3">
           <div class="field">
             <%= f.select :employee_category_id,all_employee_category,{include_blank: 'Select Category',label: 'Employee Category'} %>
           </div>
         </div>
+      </div>
 
+     <div class="row">
         <div class="col-sm-3">
           <div class="field">
             <%= f.select :company_id, all_company,{label: 'Company Select',include_blank: " Select Company"} %>
           </div>
         </div>
-      </div>
-      <div class="row">
+      
         <div class="col-sm-3">
           <div class="field">
             <%= f.select :company_location_id, all_company_with_location,{label: 'Department Location',include_blank: " Select Department Location"} %>
           </div>
         </div>
+     
 
-   
         <div class="col-sm-3">
           <div class="field">
             <%= f.select :department_id,all_department_type_list1,{include_blank: 'Select Department',label: 'Department'},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
           </div>
         </div>
+        </div>
 
+      <div class="row">
         <div class="col-sm-6">
           <div class="field">
             <%= f.text_area :justification %>

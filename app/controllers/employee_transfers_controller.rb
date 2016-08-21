@@ -15,6 +15,7 @@ class EmployeeTransfersController < ApplicationController
   # GET /employee_transfers/new
   def new
     @employee_transfer = EmployeeTransfer.new
+    session[:active_tab] = "transfer"
   end
 
   # GET /employee_transfers/1/edit
@@ -36,6 +37,7 @@ class EmployeeTransfersController < ApplicationController
       else
         format.html { render :new }
         format.json { render json: @employee_transfer.errors, status: :unprocessable_entity }
+
       end
     end
   end
@@ -107,7 +109,7 @@ class EmployeeTransfersController < ApplicationController
     TransferHistory.create(employee_transfer_id: @employee_transfer.id,employee_id: @employee_transfer.employee_id,reporting_master_id: @employee_transfer.reporting_master_id,employee_designation_id: @employee_transfer.employee_designation_id,employee_category_id: @employee_transfer.employee_category_id,company_id: @employee_transfer.company_id,company_location_id: @employee_transfer.company_location_id,department_id: @employee_transfer.department_id,justification: @employee_transfer.justification,current_status: @employee_transfer.current_status)
     ReportingEmployeeTransfer.create(reporting_master_id: @employee_transfer.reporting_master_id, employee_transfer_id: @employee_transfer.id, status: @employee_transfer.current_status) 
     EmployeeTransferMailer.approve_and_send_next(@employee_transfer).deliver_now
-    flash[:notice] = 'Vacancy Send to Higher Authority'
+    flash[:notice] = 'Employee Transfer Send to Higher Authority'
     redirect_to transfer_request_employee_transfers_path
   end
 
@@ -121,7 +123,8 @@ class EmployeeTransfersController < ApplicationController
     TransferHistory.create(employee_transfer_id: @employee_transfer.id,employee_id: @employee_transfer.employee_id,reporting_master_id: @employee_transfer.reporting_master_id,employee_designation_id: @employee_transfer.employee_designation_id,employee_category_id: @employee_transfer.employee_category_id,company_id: @employee_transfer.company_id,company_location_id: @employee_transfer.company_location_id,department_id: @employee_transfer.department_id,justification: @employee_transfer.justification,current_status: @employee_transfer.current_status)
     #@employee_transfer.update(current_status: "Edit & Approved",employee_designation_id:  params[:employee_transfer][:employee_designation_id],employee_category_id: params[:employee_transfer][:employee_category_id],company_id: params[:employee_transfer][:company_id],company_location_id: params[:employee_transfer][:company_location_id],department_id: params[:employee_transfer][:department_id],justification: params[:employee_transfer][:justification])
     ReportingEmployeeTransfer.create(reporting_master_id: @employee_transfer.reporting_master_id, employee_transfer_id: @employee_transfer.id, status: @employee_transfer.current_status)
-     
+    EmployeeTransferMailer.edit_and_approve(@employee_transfer).deliver_now
+ 
     flash[:notice] = "Transfer Details Updated & Approved Successfully"
     redirect_to transfer_request_employee_transfers_path
   end
@@ -153,7 +156,10 @@ class EmployeeTransfersController < ApplicationController
     TransferHistory.create(employee_transfer_id: @employee_transfer.id,employee_id: @employee_transfer.employee_id,reporting_master_id: @employee_transfer.reporting_master_id,employee_designation_id: @employee_transfer.employee_designation_id,employee_category_id: @employee_transfer.employee_category_id,company_id: @employee_transfer.company_id,company_location_id: @employee_transfer.company_location_id,department_id: @employee_transfer.department_id,justification: @employee_transfer.justification,current_status: @employee_transfer.current_status)
     redirect_to transfer_request_employee_transfers_path
     ReportingEmployeeTransfer.create(employee_transfer_id: @employee_transfer.id, reporting_master_id: @employee_transfer.reporting_master_id, status: "Edit & Send Next")
-    flash[:notice] = 'Transfer Request Successfully Updated & send to Higher Authority.'   
+    EmployeeTransferMailer.edit_and_send_next(@employee_transfer).deliver_now
+
+    flash[:notice] = 'Transfer Request Successfully Updated & send to Higher Authority.'  
+
   end
 
   private

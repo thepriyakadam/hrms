@@ -46,8 +46,6 @@ class LeaveStatusRecordsController < ApplicationController
           @employee_leav_request.manage_coff(@employee_leav_request)
           @employee_leav_request.create_attendance
 
-          
-
           # @employee_leav_request.minus_leave(@employee_leav_request)
           if @employee_leav_request.employee.email.nil? || @employee_leav_request.employee.email == ''
             flash[:notice] = 'Leave Approved Successfully without email.'
@@ -168,6 +166,7 @@ class LeaveStatusRecordsController < ApplicationController
 
   def cancel_after_approve
     @particular_leave_record = ParticularLeaveRecord.find(params[:format])
+    @employee_leav_request = EmployeeLeavRequest.find_by_employee_id(@particular_leave_record.employee_id)
     @flag = @particular_leave_record.salary_processed?
     if @flag.nil?
       @particular_leave_record.is_cancel_after_approve = true

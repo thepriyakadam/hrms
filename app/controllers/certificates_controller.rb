@@ -3,6 +3,8 @@ class CertificatesController < ApplicationController
   end
   
   def new
+    session[:active_tab] = "employeemanagement"
+    session[:active_tab1] = "certificates"
   end
 
   def show_joining_date

@@ -6,7 +6,7 @@
   <body>
      <h4>Interview Reschedule</h4>
     <p>
-       Dear, <br><%= @interview_schedule.candidate_name %><br><br>
+       Dear <%= @interview_schedule.candidate_name %>,<br><br>
       This is to inform you that your interview for the position <b><%= @interview_schedule.post_title %></b> has been rescheduled due to some reason.Details for interview timing is given below.<br><br>
        1. <b>Date :-</b> <%= @interview_schedule.interview_date %><br><br>
        2. <b>Time :-</b> <%= @interview_schedule.interview_time %><br><br>

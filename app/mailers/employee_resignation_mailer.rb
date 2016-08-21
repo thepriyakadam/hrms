@@ -17,7 +17,7 @@ class EmployeeResignationMailer < ApplicationMailer
 	    mail(to: @employee.email, subject: 'Resignation Approve Request')
     end
     
-     def reject_resignation_email(employee_resignation)
+    def reject_resignation_email(employee_resignation)
 	     @employee_resignation = employee_resignation
 	     @reporting_master = Employee.find(employee_resignation.reporting_master_id)
 	     @employee_resignation = EmployeeResignation.find(employee_resignation.id)
@@ -25,6 +25,17 @@ class EmployeeResignationMailer < ApplicationMailer
 	     @emp = EmployeeResignation.find_by_employee_id(employee_resignation.employee_id)
 	     mail(to: @employee.email, subject: 'Resignation Request Rejected')
      end
+
+    def edit_and_approve(employee_resignation)
+        @employee_resignation = employee_resignation
+        @reporting_master = Employee.find(employee_resignation.reporting_master.employee_id)
+        @employee_resignation = EmployeeTransfer.find(employee_resignation.id)
+        @employee = Employee.find(@employee_resignation.employee_id)
+        @emp = EmployeeTransfer.find_by_employee_id(employee_resignation.employee_id)
+        mail(to: @employee.email, subject: ' Resignation Updated And Approved ')
+    end
+
+
 
 
 end

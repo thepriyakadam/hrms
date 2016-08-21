@@ -54,15 +54,20 @@
 
    <div><%= render 'trainee_request_list' %></div>
 
-  <div class="row">
-    <div class="col-sm-3">
-      <div class="actions">
-        <%= f.submit "Create Training Plan", class: 'btn btn-primary btn-sm' %>
-        <%= link_to 'Back', training_plans_path, class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+  <!-- < if @trainee_requests.nil? %>
+    <h6><center>Request Not Approved Yet</center></h6>
+    < else %> -->
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="actions">
+            <%= f.submit "Create Training Plan", class: 'btn btn-primary btn-sm' %>
+            <%= link_to 'Back', training_plans_path, class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-  <% end %><br>
+  
+  <!-- < end %> -->
+      <% end %><br>
 
   <script type="text/javascript">
   $(function(){

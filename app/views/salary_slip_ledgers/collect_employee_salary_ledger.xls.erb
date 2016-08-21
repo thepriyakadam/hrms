@@ -44,15 +44,15 @@
         <Cell ss:Index="1"><Data ss:Type="String"><%= r.try(:employee_name) %></Data></Cell>
         <Cell ss:Index="1"><Data ss:Type="String"><%= r.try(:month) %></Data></Cell>
         
-        <Cell ss:Index="1"><Data ss:Type="Number"><%= r.try(:earned_basic).round %></Data></Cell>
-        <Cell ss:Index="1"><Data ss:Type="Number"><%= r.try(:earned_da).round %></Data></Cell>
-        <Cell ss:Index="1"><Data ss:Type="Number"><%= r.try(:earned_hra).round %></Data></Cell>
+        <Cell ss:Index="1"><Data ss:Type="Number"><%= r.try(:earned_basic).try(:round) %></Data></Cell>
+        <Cell ss:Index="1"><Data ss:Type="Number"><%= r.try(:earned_da).try(:round) %></Data></Cell>
+        <Cell ss:Index="1"><Data ss:Type="Number"><%= r.try(:earned_hra).try(:round) %></Data></Cell>
 
-        <Cell ss:Index="1"><Data ss:Type="Number"><%= r.try(:earned_convenience).round %></Data></Cell>
-        <Cell ss:Index="1"><Data ss:Type="Number"><%= r.try(:earned_other).round %></Data></Cell>
-        <Cell ss:Index="1"><Data ss:Type="Number"><%= r.try(:earned_special).round %></Data></Cell>
-        <Cell ss:Index="1"><Data ss:Type="Number"><%= r.try(:earned_washing).round %></Data></Cell>
-        <Cell ss:Index="1"><Data ss:Type="Number"><%= r.try(:earned_total).round %></Data></Cell>
+        <Cell ss:Index="1"><Data ss:Type="Number"><%= r.try(:earned_convenience).try(:round) %></Data></Cell>
+        <Cell ss:Index="1"><Data ss:Type="Number"><%= r.try(:earned_other).try(:round) %></Data></Cell>
+        <Cell ss:Index="1"><Data ss:Type="Number"><%= r.try(:earned_special).try(:round) %></Data></Cell>
+        <Cell ss:Index="1"><Data ss:Type="Number"><%= r.try(:earned_washing).try(:round) %></Data></Cell>
+        <Cell ss:Index="1"><Data ss:Type="Number"><%= r.try(:earned_total).try(:round) %></Data></Cell>
 
         <Cell ss:Index="1"><Data ss:Type="Number"><%= r.try(:pf) %></Data></Cell>
         <Cell ss:Index="1"><Data ss:Type="Number"><%= r.try(:esic) %></Data></Cell>

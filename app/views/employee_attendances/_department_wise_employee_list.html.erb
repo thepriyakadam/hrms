@@ -6,7 +6,7 @@
         <div class="col-sm-2">
         <label>Select Attendance </label>
           <div class="field">
-            <%= f.select :present,['P','1/2','W','A'],{hide_label: true,include_blank: "Select Option"} %>
+            <%= f.select :present,['P','W','A'],{hide_label: true,include_blank: "Select Option"} %>
             <%= f.hidden_field :day, value: @date %>
           </div>
         </div>

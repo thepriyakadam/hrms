@@ -3,7 +3,7 @@ module EmployeeAttendancesHelper
 		start_date = date.beginning_of_month
     end_date = date.end_of_month
     start_date.step(end_date).each do |d|
-      attendance_record = EmployeeAttendance.where(day: d, employee_id: e.employee_id, is_confirm: false).take
+      attendance_record = EmployeeAttendance.where(day: d, employee_id: e.employee_id).take
       unless attendance_record.nil?
         exist[d] = attendance_record.present
       end

@@ -14,7 +14,6 @@
           <th>Employee Name</th>
           <th>Topic</th>
           <th>Request Date</th>
-          <th>Request To</th>
           <th>No. Of Trainee</th>
           <th>Place</th>
           <th>Action</th>
@@ -28,7 +27,6 @@
             <td> <%= full_name(training_request.employee) %> </td>
             <td><%= training_request.training_topic_master.try(:name) %></td>
             <td><%= training_request.training_date %></td>
-            <td><%= training_request.reporting_master.employee.try(:first_name) %> <%= training_request.reporting_master.employee.try(:middle_name) %> <%= training_request.reporting_master.employee.try(:last_name) %></td>
             <td><%= training_request.no_of_employee %></td>
             <td><%= training_request.place %></td>
             

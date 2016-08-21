@@ -1,130 +1,130 @@
 class SalaryReport
-    attr_accessor :employee_name, :department_name, :code, :pf_no, :esic_no,
-                  :actual_basic, :actual_da, :actual_hra, :actual_convenience, :actual_other, :actual_special, :actual_washing, :actual_total,
-                  :earned_basic, :earned_da, :earned_hra, :earned_convenience, :earned_other, :earned_special, :earned_washing, :earned_total,
-                  :pf, :esic, :income_tax, :pt, :advance, :society, :food_deduction, :mobile, :retention, :welfair, :deduction_total, :net_payable,
-                  :total_leave, :cl_leave, :el_leave, :lwp_leave, :day_in_month, :payable_day, :present_day, :absent_day, :holiday, :weekoff, :month, :year,
-                  :pf_ctc, :esic_ctc, :bonus_ctc, :actual_driver, :actual_medical, :actual_child_edu, :actual_mra, :earned_driver, :earned_medical, :earned_child_edu,
-                  :earned_mra
+  attr_accessor :employee_name, :department_name, :code, :pf_no, :esic_no,
+                :actual_basic, :actual_da, :actual_hra, :actual_convenience, :actual_other, :actual_special, :actual_washing, :actual_total,
+                :earned_basic, :earned_da, :earned_hra, :earned_convenience, :earned_other, :earned_special, :earned_washing, :earned_total,
+                :pf, :esic, :income_tax, :pt, :advance, :society, :food_deduction, :mobile, :retention, :welfair, :deduction_total, :net_payable,
+                :total_leave, :cl_leave, :el_leave, :lwp_leave, :day_in_month, :payable_day, :present_day, :absent_day, :holiday, :weekoff, :month, :year,
+                :pf_ctc, :esic_ctc, :bonus_ctc, :actual_driver, :actual_medical, :actual_child_edu, :actual_mra, :earned_driver, :earned_medical, :earned_child_edu,
+                :earned_mra
 
-    def self.collect_data(e, j, sl)
-        addable_items = SalaryslipComponent.where(salaryslip_id: sl.id, is_deducted: false, is_arrear: nil)
-        deductable_items = SalaryslipComponent.where(salaryslip_id: sl.id, is_deducted: true, is_arrear: nil)
+  def self.collect_data(e, j, sl)
+    addable_items = SalaryslipComponent.where(salaryslip_id: sl.id, is_deducted: false, is_arrear: nil)
+    deductable_items = SalaryslipComponent.where(salaryslip_id: sl.id, is_deducted: true, is_arrear: nil)
 
-        wd = Workingday.find(sl.workingday_id)
-        sr = SalaryReport.new
-        sr.month = sl.month
-        sr.year = sl.year
-        sr.employee_name = e.try(:first_name).to_s + ' ' + e.try(:middle_name).to_s + ' ' + e.try(:last_name).to_s
-        sr.department_name = e.department.try(:name)
-        sr.code = e.manual_employee_code
-        sr.pf_no = j.employee_pf_no
-        sr.esic_no = j.employee_efic_no
+    wd = Workingday.find(sl.workingday_id)
+    sr = SalaryReport.new
+    sr.month = sl.month
+    sr.year = sl.year
+    sr.employee_name = e.try(:first_name).to_s + ' ' + e.try(:middle_name).to_s + ' ' + e.try(:last_name).to_s
+    sr.department_name = e.department.try(:name)
+    sr.code = e.manual_employee_code
+    sr.pf_no = j.employee_pf_no
+    sr.esic_no = j.employee_efic_no
 
-        addable_items.each do |a|
-            case a.salary_component.try(:name)
-              when "Basic"
-              sr.actual_basic = a.actual_amount
-              sr.earned_basic = a.calculated_amount
+    addable_items.each do |a|
+      case a.salary_component.try(:name)
+        when "Basic"
+        sr.actual_basic = a.actual_amount
+        sr.earned_basic = a.calculated_amount
 
-              when "DA"
-              sr.actual_da = a.actual_amount
-              sr.earned_da = a.calculated_amount
+        when "DA"
+        sr.actual_da = a.actual_amount
+        sr.earned_da = a.calculated_amount
 
-              when "HRA"
-              sr.actual_hra = a.actual_amount
-              sr.earned_hra = a.calculated_amount
+        when "HRA"
+        sr.actual_hra = a.actual_amount
+        sr.earned_hra = a.calculated_amount
 
-              when "Convenience Allowance"
-              sr.actual_convenience = a.actual_amount
-              sr.earned_convenience = a.calculated_amount
+        when "Convenience Allowance"
+        sr.actual_convenience = a.actual_amount
+        sr.earned_convenience = a.calculated_amount
 
-              when "Other Allowance"
-              sr.actual_other = a.actual_amount
-              sr.earned_other = a.calculated_amount
+        when "Other Allowance"
+        sr.actual_other = a.actual_amount
+        sr.earned_other = a.calculated_amount
 
-              when "Special Allowance"
-              sr.actual_special = a.actual_amount
-              sr.earned_special = a.calculated_amount
+        when "Special Allowance"
+        sr.actual_special = a.actual_amount
+        sr.earned_special = a.calculated_amount
 
-              when "Washing Allowance"
-              sr.actual_washing = a.actual_amount
-              sr.earned_washing = a.calculated_amount
+        when "Washing Allowance"
+        sr.actual_washing = a.actual_amount
+        sr.earned_washing = a.calculated_amount
 
-              when "Driver Allowance"
-              sr.actual_driver = a.actual_amount
-              sr.earned_driver = a.calculated_amount
+        when "Driver Allowance"
+        sr.actual_driver = a.actual_amount
+        sr.earned_driver = a.calculated_amount
 
-              when "Medical Allowance"
-              sr.actual_medical = a.actual_amount
-              sr.earned_medical = a.calculated_amount
+        when "Medical Allowance"
+        sr.actual_medical = a.actual_amount
+        sr.earned_medical = a.calculated_amount
 
-              when "Child Education Allowance"
-              sr.actual_child_edu = a.actual_amount
-              sr.earned_child_edu = a.calculated_amount
+        when "Child Education Allowance"
+        sr.actual_child_edu = a.actual_amount
+        sr.earned_child_edu = a.calculated_amount
 
-              when "Reimbursement of Medical Allowance"
-              sr.actual_mra = a.actual_amount
-              sr.earned_mra = a.calculated_amount            
-            end
-        end
-
-      sr.earned_total = addable_items.sum(:calculated_amount).round
-      sr.actual_total = addable_items.sum(:actual_amount).round
-        
-        deductable_items.each do |d|
-            case d.other_component_name
-              when "PF"
-              sr.pf = d.calculated_amount.to_i
-              when "ESIC"
-              sr.esic = d.calculated_amount.to_i
-              when "Income Tax"
-              sr.income_tax = d.calculated_amount
-              when "Prof. Tax"
-              sr.pt = d.calculated_amount
-              when "Advance"
-              sr.advance = d.calculated_amount.to_i
-              when "Society"
-              sr.society = d.calculated_amount
-              when "Food Deduction"
-              sr.food_deduction = d.calculated_amount.to_i
-              when "Mobile Deduction"
-              sr.mobile = d.calculated_amount
-              when "Retention"
-              sr.retention = d.calculated_amount
-              when "Well Faire"
-              sr.welfair = d.calculated_amount
-            end
-        end
-      
-      sr.deduction_total =  deductable_items.sum(:calculated_amount).try(:to_i)
-      sr.net_payable = sr.earned_total - sr.deduction_total.to_i
-      
-      sr.cl_leave = wd.cl_leave.to_f
-      sr.el_leave = wd.el_leave.to_f
-      sr.lwp_leave = wd.lwp_leave.to_f + wd.esic_leave.to_f
-      sr.day_in_month = wd.day_in_month
-      sr.payable_day = wd.payable_day
-      sr.present_day = wd.present_day
-      sr.absent_day = wd.absent_day
-      sr.holiday = wd.holiday_in_month.to_i
-      sr.weekoff = wd.week_off_day
-
-      sr
+        when "Reimbursement of Medical Allowance"
+        sr.actual_mra = a.actual_amount
+        sr.earned_mra = a.calculated_amount
+      end
     end
 
-    def self.calculate_pf_ctc(j, sr)
-        current_template = EmployeeTemplate.where('employee_id = ? and is_active = ?', j.employee_id, true).take
+    sr.earned_total = addable_items.sum(:calculated_amount).round
+    sr.actual_total = addable_items.sum(:actual_amount).round
+    
+    deductable_items.each do |d|
+      case d.other_component_name
+        when "PF"
+        sr.pf = d.calculated_amount.to_i
+        when "ESIC"
+        sr.esic = d.calculated_amount.to_i
+        when "Income Tax"
+        sr.income_tax = d.calculated_amount
+        when "Prof. Tax"
+        sr.pt = d.calculated_amount
+        when "Advance"
+        sr.advance = d.calculated_amount.to_i
+        when "Society"
+        sr.society = d.calculated_amount
+        when "Food Deduction"
+        sr.food_deduction = d.calculated_amount.to_i
+        when "Mobile Deduction"
+        sr.mobile = d.calculated_amount
+        when "Retention"
+        sr.retention = d.calculated_amount
+        when "Well Faire"
+        sr.welfair = d.calculated_amount
+      end
+    end
+  
+    sr.deduction_total =  deductable_items.sum(:calculated_amount).try(:to_i)
+    sr.net_payable = sr.earned_total - sr.deduction_total.to_i
+    
+    sr.cl_leave = wd.cl_leave.to_f
+    sr.el_leave = wd.el_leave.to_f
+    sr.lwp_leave = wd.lwp_leave.to_f + wd.esic_leave.to_f
+    sr.day_in_month = wd.day_in_month
+    sr.payable_day = wd.payable_day
+    sr.present_day = wd.present_day
+    sr.absent_day = wd.absent_day
+    sr.holiday = wd.holiday_in_month.to_i
+    sr.weekoff = wd.week_off_day
+
+    sr
+  end
+
+  def self.calculate_pf_ctc(j, sr)
+    current_template = EmployeeTemplate.where('employee_id = ? and is_active = ?', j.employee_id, true).take
     addable_salary_items = current_template.employee_salary_templates.where('is_deducted = ?', false)
 
-      @pf_master = PfMaster.where(is_active: true).take
+    @pf_master = PfMaster.where(is_active: true).take
     if @pf_master.nil?
     else
       if @pf_master.is_pf
-          formula_item_actual_amount = 0
-            #formula_item_calculated_amount = 0
-            formula_total_actual_amount = 0
-            #formula_total_calculated_amount = 0
+        formula_item_actual_amount = 0
+        #formula_item_calculated_amount = 0
+        formula_total_actual_amount = 0
+        #formula_total_calculated_amount = 0
 
         formula_string = @pf_master.base_component.split(',')
         formula_string.try(:each) do |f|
@@ -149,13 +149,13 @@ class SalaryReport
         deducted_actual_amount
       end
     end
-    end
+  end
 
-    def self.calculate_esic_ctc(j, sr)
-        current_template = EmployeeTemplate.where('employee_id = ? and is_active = ?', j.employee_id, true).take
+  def self.calculate_esic_ctc(j, sr)
+    current_template = EmployeeTemplate.where('employee_id = ? and is_active = ?', j.employee_id, true).take
     addable_salary_items = current_template.employee_salary_templates.where('is_deducted = ?', false)
 
-        formula_item_actual_amount = 0
+    formula_item_actual_amount = 0
     #formula_item_calculated_amount = 0
     formula_total_actual_amount = 0
     #formula_total_calculated_amount = 0
@@ -180,11 +180,11 @@ class SalaryReport
       end
       deducted_actual_amount
     end
-    end
+  end
 
-    def self.create_sum(reports)
-        @sum = SalaryReport.new
-        array_actual_basic = reports.collect {|r| r.try(:actual_basic)}.compact
+  def self.create_sum(reports)
+    @sum = SalaryReport.new
+    array_actual_basic = reports.collect {|r| r.try(:actual_basic)}.compact
     @sum.actual_basic = array_actual_basic.inject(0){|sum,x| sum + x }
 
     array_actual_da = reports.collect {|r| r.try(:actual_da)}.compact
@@ -366,7 +366,6 @@ class SalaryReport
 
         when "Reimbursement of Medical Allowance"
         sr.actual_mra = a.actual_amount
-
       end
     end
 
@@ -374,7 +373,6 @@ class SalaryReport
 
     pf_ctc = calculate_pf_ctc(j, sr)
     esic_ctc = calculate_esic_ctc(j, sr)
-
 
     sr.pf_ctc = pf_ctc.to_i * 12
     sr.esic_ctc = esic_ctc.to_i * 12

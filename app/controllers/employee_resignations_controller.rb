@@ -57,9 +57,6 @@ class EmployeeResignationsController < ApplicationController
     end
   end
 
-
-
-  
   # PATCH/PUT /employee_resignations/1
   # PATCH/PUT /employee_resignations/1.json
   def update
@@ -163,7 +160,7 @@ class EmployeeResignationsController < ApplicationController
      @employee_resignation.update(resign_status: "Cancelled")
      ReportingMastersResign.create(employee_resignation_id: @employee_resignation.id, reporting_master_id: current_user.employee_id, resignation_status: "Cancelled")
      flash[:notice] = 'Resignation Cancelled'
-    redirect_to employee_resignations_path
+     redirect_to employee_resignations_path
   end
 
   def emp_resignation_history
@@ -177,6 +174,57 @@ class EmployeeResignationsController < ApplicationController
   end
 
   def edit_n_send_next_modal
+    @employee_resignation = EmployeeResignation.find(params[:format])
+  end
+
+  # def edit_n_approve
+  #   # byebug
+  #   @employee_resignation = EmployeeResignation.find(params[:resignation_id])
+  #   @employee_resignation.update(resign_status: "Edit & Approved",employee_id: params[:employee_resignation][:employee_id],resign_status: params[:employee_resignation][:resign_status],reporting_master_id: params[:employee_resignation][:reporting_master_id],resignation_date: params[:employee_resignation][:resignation_date],reason: params[:employee_resignation][:reason],is_notice_period: params[:employee_resignation][:is_notice_period],notice_period: params[:employee_resignation][:notice_period],short_notice_period: params[:employee_resignation][:short_notice_period],tentative_leaving_date: params[:employee_resignation][:tentative_leaving_date],remark: params[:employee_resignation][:remark],exit_interview_date: params[:employee_resignation][:exit_interview_date],note: params[:employee_resignation][:note],leaving_date: params[:employee_resignation][:leaving_date],settled_on: params[:employee_resignation][:settled_on],has_left: params[:employee_resignation][:has_left],notice_served: params[:employee_resignation][:notice_served],rehired: params[:employee_resignation][:rehired],leaving_reason_id: params[:employee_resignation][:leaving_reason_id],is_stop_pay_request: params[:employee_resignation][:is_stop_pay_request])
+  #   ResignationHistory.create(employee_resignation_id: @employee_resignation.id,reporting_master_id: @employee_resignation.reporting_master_id,resignation_date: @employee_resignation.resignation_date,reason: @employee_resignation.reason,is_notice_period: @employee_resignation.is_notice_period,notice_period: @employee_resignation.notice_period,short_notice_period: @employee_resignation.short_notice_period,tentative_leaving_date: @employee_resignation.tentative_leaving_date,remark: @employee_resignation.remark,exit_interview_date: @employee_resignation.exit_interview_date,note: @employee_resignation.note,leaving_date: @employee_resignation.leaving_date,settled_on: @employee_resignation.settled_on,has_left: @employee_resignation.has_left,notice_served: @employee_resignation.notice_served,rehired: @employee_resignation.rehired,leaving_reason_id: @employee_resignation.leaving_reason_id,resign_status: @employee_resignation.resign_status)
+  #   ReportingEmployeeResignation.create(reporting_master_id: @employee_resignation.reporting_master_id, employee_resignation_id: @employee_resignation.id, status: @employee_resignation.resign_status)
+  #   EmployeeResignationMailer.edit_and_approve(@employee_resignation).deliver_now
+ 
+  #   flash[:notice] = "Resignation Details Updated & Approved Successfully"
+  #   redirect_to resignation_history_employee_resignations_path
+  # end
+
+    def edit_n_approve
+    @employee_resignation = EmployeeResignation.find(params[:resignation_id])
+    @resignation_history = ResignationHistory.new
+    @employee_resignation = EmployeeResignation.find(params[:employee_resignation][:employee_resignation_id])
+    
+    @resignation_history.reporting_master_id = @employee_resignation.reporting_master_id
+    @resignation_history.resignation_date = @employee_resignation.resignation_date
+    @resignation_history.reason = @employee_resignation.reason
+    @resignation_history.is_notice_period = @employee_resignation.is_notice_period
+    @resignation_history.notice_period = @employee_resignation.notice_period
+    @resignation_history.short_notice_period = @employee_resignation.short_notice_period
+    @resignation_history.tentative_leaving_date = @employee_resignation.tentative_leaving_date
+    @resignation_history.remark = @employee_resignation.remark
+    @resignation_history.exit_interview_date = @employee_resignation.exit_interview_date
+    @resignation_history.note = @employee_resignation.note
+    @resignation_history.leaving_date = @employee_resignation.leaving_date
+    @resignation_history.settled_on = @employee_resignation.settled_on
+    @resignation_history.has_left = @employee_resignation.has_left
+    @resignation_history.notice_served = @employee_resignation.notice_served
+    @resignation_history.rehired = @employee_resignation.rehired
+    @resignation_history.leaving_reason_id = @employee_resignation.leaving_reason_id
+    @resignation_history.employee_resignation_id = @employee_resignation.id
+    #@resignation_history.is_stop_pay_request = @employee_resignation.is_stop_pay_request
+                        
+    #@resignation_history.save
+    @employee_resignation.update(employee_id: params[:employee_resignation][:employee_id], reporting_master_id: params[:employee_resignation][:reporting_master_id],leaving_reason_id: params[:employee_resignation][:leaving_reason_id],resignation_date: params[:employee_resignation][:resignation_date],notice_period: params[:employee_resignation][:notice_period],short_notice_period: params[:employee_resignation][:short_notice_period],tentative_leaving_date: params[:employee_resignation][:tentative_leaving_date],remark: params[:employee_resignation][:remark],exit_interview_date: params[:employee_resignation][:exit_interview_date],note: params[:employee_resignation][:note],leaving_date: params[:employee_resignation][:leaving_date],settled_on: params[:employee_resignation][:settled_on],is_stop_pay_request: params[:employee_resignation][:is_stop_pay_request],reason: params[:employee_resignation][:reason])
+    #@resignation_history = ResignationHistory.new(resignation_history_params)
+    redirect_to resignation_history_employee_resignations_path
+    flash[:notice] = ' Resignation Edited And Approved Successfully.'   
+
+    # @travel_request.update(travel_request_params)
+    # TravelRequestHistory.create(travel_request_id: @travel_request.id,application_date: @travel_request.application_date,traveling_date: @travel_request.traveling_date, tour_purpose: @travel_request.tour_purpose, place: @travel_request.place,total_advance: @travel_request.total_advance,reporting_master_id: @travel_request.reporting_master_id, travel_option_id: @travel_request.travel_option_id)
+    ReportingMastersResign.create(employee_resignation_id: @employee_resignation.id, reporting_master_id: params[:employee_resignation][:reporting_master_id], resignation_status: "Edit & Approved")
+  end
+
+  def edit_n_approve_modal
     @employee_resignation = EmployeeResignation.find(params[:format])
   end
 

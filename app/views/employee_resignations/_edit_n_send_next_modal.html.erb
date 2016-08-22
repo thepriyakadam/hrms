@@ -1,4 +1,4 @@
-<div class="modal-dialog"  style="height:5000px; max-height:4000px; width:1500px; max-width:1000px;">
+<div class="modal-dialog" style="height:900px; max-height:1000px; width:800px; max-width:900px;">
   <div class="modal-content">
     <div class="modal-body">
      <%= bootstrap_form_for :employee_resignation,url:{action:"edit_n_send", resignation_id: @employee_resignation.id} do |f| %>
@@ -17,7 +17,7 @@
               <div class="input-group-addon">
                 <i class="fa fa-calendar"></i>
               </div>
-              <%= f.text_field :resignation_date,class: 'resignation_date',label:'Resignation Date'%>
+              <%= f.text_field :resignation_date,class: 'resignation',label:'Resignation Date'%>
             </div>
           </div>
         </div>
@@ -128,9 +128,11 @@
       </div>
     </div>
       <% end %>
-    </div>
-  </div>
+    
+  
+
 </div>
+</div></div>
 
 <script>
 $("#employee_resignation").validate({
@@ -151,5 +153,37 @@ $("#employee_resignation").validate({
     }
    });
 </script>
+<script type="text/javascript">
+  $(function(){
+    $('.resignation').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:-0',
+    dateFormat: 'dd-mm-yy' });
 
+    $('.tentative_leaving_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:+50',
+    dateFormat: 'dd-mm-yy' });
 
+    $('.exit_interview_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-100:-0',
+    dateFormat: 'dd-mm-yy' });
+
+    $('.leaving_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-1:+150',
+    dateFormat: 'dd-mm-yy' });
+
+    $('.settled_on').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-1:+150',
+    dateFormat: 'dd-mm-yy' });
+
+  }); 
+</script>

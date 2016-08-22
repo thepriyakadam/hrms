@@ -40,6 +40,8 @@
                   <small class="label label-info">Send Next To Higher Authority</small>
               <% elsif employee_resignation.resign_status == "Approved & Send Next" %>
                   <small class="label label-info">Approved & Send Next</small>
+              <% elsif employee_resignation.resign_status == "Edit & Approved" %>
+                  <small class="label label-info">Edited & Approved</small>
               <% else %>
                   <small class="label label-danger">Rejected</small>
               <% end %>

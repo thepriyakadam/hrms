@@ -96,6 +96,7 @@ class LeaveStatusRecordsController < ApplicationController
       if @leave_status.save
         @employee_leav_request.update(is_second_approved: true, current_status: 'FinalApproved')
         @employee_leav_request.create_single_record_for_leave(@employee_leav_request)
+        byebug
         @employee_leav_request.manage_coff(@employee_leav_request)
         @employee_leav_request.create_attendance
 

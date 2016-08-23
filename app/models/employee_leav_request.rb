@@ -65,8 +65,8 @@ class EmployeeLeavRequest < ActiveRecord::Base
               request.leave_count = request.leave_count - 0.5
               c.leave_count = c.leave_count - 0.5
               #c.is_taken = true
-              c.update(is_taken: true)
               c.save
+              c.update(is_taken: true)
             else
               request.leave_count = request.leave_count - 1
               c.leave_count = c.leave_count - 1
@@ -152,9 +152,14 @@ class EmployeeLeavRequest < ActiveRecord::Base
   end
 
   def is_available?
-    flag = 0
-    for i in self.start_date.to_date..self.end_date.to_date
-      flag = LeaveRecord.exists?(day: i,employee_id: self.employee_id)
+    flag = false
+    leave_records = LeaveRecord.where(employee_id: self.employee_id)
+    leave_records.each do |l|
+      for i in self.start_date.to_date..self.end_date.to_date
+        if i ==  l.day
+          flag = true
+        end
+      end
     end
     flag
   end

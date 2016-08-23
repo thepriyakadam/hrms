@@ -9,6 +9,7 @@ class Employee < ActiveRecord::Base
   belongs_to :state
   belongs_to :district
   belongs_to :religion
+  belongs_to :employee_resignation
   has_many :trainees
 
   has_many :reporting_masters

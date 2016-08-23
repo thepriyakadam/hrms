@@ -43,7 +43,7 @@ class SelectedResumesController < ApplicationController
      @selected_resumes = SelectedResume.where(vacancy_master_id: @vacancy_master.id)
       if @selected_resume.save
         @selected_resume = SelectedResume.new
-        flash[:notice] = 'Resume Details saved Successfully.'  
+        flash[:notice] = 'Resume Details Saved Successfully.'  
       end
       # byebug
       @vacancy_master_id = VacancyMaster.find(params[:selected_resume][:vacancy_master_id])
@@ -54,7 +54,7 @@ class SelectedResumesController < ApplicationController
     @selected_resume = SelectedResume.new(selected_resume_params)
     respond_to do |format|
       if @selected_resume.save
-        format.html { redirect_to @selected_resume, notice: 'Candidate Profile  was successfully created.' }
+        format.html { redirect_to @selected_resume, notice: 'Candidate Profile Successfully Created.' }
         format.json { render :show, status: :created, location: @selected_resume }
       else
         format.html { render :new }
@@ -203,7 +203,7 @@ class SelectedResumesController < ApplicationController
       @offer_letter_status = params[:selected_resume][:offer_letter_status]
       #@particular_vacancy_request = ParticularVacancyRequest.where(vacancy_master_id: @particular_vacancy_request.id)
       @selected_resume.update(offer_letter_status: @offer_letter_status)
-      flash[:notice] = "Offer Letter Status updated Successfully"
+      flash[:notice] = "Offer Letter Status Updated Successfully"
       redirect_to root_url
   end
 
@@ -222,7 +222,7 @@ class SelectedResumesController < ApplicationController
     @vacancy_master = VacancyMaster.find(params[:vacancy_master_id])
     @current_status = params[:selected_resume][:status]
     @selected_resume.update(status: @current_status)
-    flash[:notice] = "Interview Status updated Successfully"
+    flash[:notice] = "Interview Status Updated Successfully"
     redirect_to new_selected_resume_path(vacancy_master_id: @vacancy_master.id)
   end
 

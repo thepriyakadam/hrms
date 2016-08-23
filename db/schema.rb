@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160817071523) do
+ActiveRecord::Schema.define(version: 20160819073114) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -1714,6 +1714,18 @@ ActiveRecord::Schema.define(version: 20160817071523) do
 
   add_index "leave_c_offs", ["employee_id"], name: "index_leave_c_offs_on_employee_id"
 
+  create_table "leave_records", force: :cascade do |t|
+    t.date     "day"
+    t.string   "status"
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.integer  "employee_leav_request_id"
+    t.integer  "employee_id"
+  end
+
+  add_index "leave_records", ["employee_id"], name: "index_leave_records_on_employee_id"
+  add_index "leave_records", ["employee_leav_request_id"], name: "index_leave_records_on_employee_leav_request_id"
+
   create_table "leave_status_records", force: :cascade do |t|
     t.integer  "employee_leav_request_id"
     t.integer  "change_status_employee_id"
@@ -2865,8 +2877,8 @@ ActiveRecord::Schema.define(version: 20160817071523) do
     t.decimal  "el_balance"
     t.decimal  "coff_balance"
     t.decimal  "advance_balance"
-    t.boolean  "is_confirm"
     t.decimal  "pay_leave"
+    t.boolean  "is_confirm"
   end
 
   add_index "workingdays", ["employee_id"], name: "index_workingdays_on_employee_id"

@@ -6,7 +6,8 @@ class YearsController < ApplicationController
     @year = Year.all
   end
 
-  ref show
+  def show
+
   end
 
  
@@ -57,3 +58,4 @@ class YearsController < ApplicationController
     def year_params
       params.require(:year).permit(:name)
     end
+end

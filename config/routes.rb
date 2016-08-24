@@ -339,6 +339,8 @@ Rails.application.routes.draw do
       get :show_resignation_detail
       get :print_resignation_detail
       get :xl_resignation_detail
+      post :edit_n_approve
+      get :edit_n_approve_modal
   end
 end
   resources :travel_options
@@ -615,6 +617,7 @@ end
       get :employee_resignation
       get :resignation_history
       get :show_resignation_detail
+      get :employee_transfer
     end
   end
 

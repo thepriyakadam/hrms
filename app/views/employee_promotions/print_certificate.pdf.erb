@@ -1,14 +1,10 @@
 <div class="box-body">
-
-<!--  <div style="width: 700px; height: 700px;
-          padding: 10px;
-          border: 5px solid gray;
-          margin: 10;"> -->
   <div style="float:right;">Date - <%= Time.zone.now.to_date %> </div><br><br>
 
-  <b><center>PROMOTION CERTIFICATE</center></b><br><br>
-  <table id="example2" class="table table-bordered table-hover table-condensed'">
-  <tr>
+  <b><b><center>PROMOTION CERTIFICATE</center></b></b><br><br>
+  <table style="border-collapse: collapse; font-size:15pt;" border=1 width=1000 cellpadding="6">
+
+    <tr>
       <th><strong>Employee Name</strong></th>
       <td><%= @employee_promotion.employee.try(:first_name) %> <%= @employee_promotion.employee.try(:middle_name) %> <%= @employee_promotion.employee.try(:last_name) %></td>
     
@@ -51,3 +47,8 @@
 </div>
 <!-- </div>
  -->
+ <style type="text/css">
+div.alwaysbreak { page-break-before: always; }
+div.nobreak:before { clear:both; }
+div.nobreak { page-break-inside: avoid; }
+</style>

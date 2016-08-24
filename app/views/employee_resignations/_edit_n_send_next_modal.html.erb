@@ -1,4 +1,4 @@
-<div class="modal-dialog"  style="height:5000px; max-height:4000px; width:1500px; max-width:1000px;">
+<div class="modal-dialog" style="height:900px; max-height:1000px; width:800px; max-width:900px;">
   <div class="modal-content">
     <div class="modal-body">
      <%= bootstrap_form_for :employee_resignation,url:{action:"edit_n_send", resignation_id: @employee_resignation.id} do |f| %>
@@ -7,20 +7,18 @@
       <div class="row">
         <div class="col-sm-3">
           <div class="form-group required">
-            <%= f.select :employee_id, all_active_employee_with_code, {include_blank: "Select Employee"} %>    
+<!--             <= f.select :employee_id, all_active_employee_with_code, {include_blank: "Select Employee"},readonly: true %> 
+ -->            
+             <%= f.text_field :employee_id,label:'Employee Name',value: full_name(@employee_resignation.employee),readonly: true %>   
           </div>
         </div>
      
         <div class="col-sm-3">
           <div class="form-group required">
-            <div class="input-group">
-              <div class="input-group-addon">
-                <i class="fa fa-calendar"></i>
-              </div>
-              <%= f.text_field :resignation_date,class: 'resignation_date',label:'Resignation Date'%>
+              <%= f.text_field :resignation_date,class: 'resignation',label:'Resignation Date'%>
             </div>
           </div>
-        </div>
+       
 
         <div class="col-sm-3">
           <div class="field">
@@ -50,13 +48,9 @@
       <div class="col-sm-3">
        <label>Requested Releaving Date</label>
        <div class="field">
-        <div class="input-group">
-          <div class="input-group-addon">
-            <i class="fa fa-calendar"></i>
-          </div>
+        
           <%= f.text_field :tentative_leaving_date,hide_label: true, class: 'tentative_leaving_date'%>
         </div>
-       </div>
       </div>
       <div class="col-sm-3">
        <div class="field">
@@ -69,13 +63,8 @@
       <div class="col-sm-3">
        <label>Exit Interview Date</label>
        <div class="field">
-        <div class="input-group">
-          <div class="input-group-addon">
-            <i class="fa fa-calendar"></i>
-          </div>
           <%= f.text_field :exit_interview_date,hide_label: true, class: 'exit_interview_date'%>
         </div>
-       </div>
       </div>
     
   
@@ -88,25 +77,16 @@
       <div class="col-sm-3">
        <label>Leaving Date</label>
        <div class="field">
-        <div class="input-group">
-          <div class="input-group-addon">
-            <i class="fa fa-calendar"></i>
-          </div>
+        
           <%= f.text_field :leaving_date,hide_label: true, class: 'leaving_date'%>
         </div>
-       </div>
       </div>
 
       <div class="col-sm-3">
         <label>Settled On</label>
         <div class="field">
-          <div class="input-group">
-            <div class="input-group-addon">
-              <i class="fa fa-calendar"></i>
-            </div>
             <%= f.text_field :settled_on,hide_label: true, class: 'settled_on'%>
           </div>
-        </div>
       </div>
     </div>
 
@@ -128,9 +108,11 @@
       </div>
     </div>
       <% end %>
-    </div>
-  </div>
+    
+  
+
 </div>
+</div></div>
 
 <script>
 $("#employee_resignation").validate({
@@ -151,5 +133,37 @@ $("#employee_resignation").validate({
     }
    });
 </script>
+<script type="text/javascript">
+  $(function(){
+    $('.resignation').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:-0',
+    dateFormat: 'dd-mm-yy' });
 
+    $('.tentative_leaving_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:+50',
+    dateFormat: 'dd-mm-yy' });
 
+    $('.exit_interview_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-100:-0',
+    dateFormat: 'dd-mm-yy' });
+
+    $('.leaving_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-1:+150',
+    dateFormat: 'dd-mm-yy' });
+
+    $('.settled_on').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-1:+150',
+    dateFormat: 'dd-mm-yy' });
+
+  }); 
+</script>

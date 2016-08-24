@@ -7,20 +7,18 @@
       <div class="row">
         <div class="col-sm-3">
           <div class="form-group required">
-            <%= f.select :employee_id, all_active_employee_with_code, {include_blank: "Select Employee"} %>    
+<!--             <= f.select :employee_id, all_active_employee_with_code, {include_blank: "Select Employee"},readonly: true %> 
+ -->            
+             <%= f.text_field :employee_id,label:'Employee Name',value: full_name(@employee_resignation.employee),readonly: true %>   
           </div>
         </div>
      
         <div class="col-sm-3">
           <div class="form-group required">
-            <div class="input-group">
-              <div class="input-group-addon">
-                <i class="fa fa-calendar"></i>
-              </div>
               <%= f.text_field :resignation_date,class: 'resignation',label:'Resignation Date'%>
             </div>
           </div>
-        </div>
+       
 
         <div class="col-sm-3">
           <div class="field">
@@ -50,13 +48,9 @@
       <div class="col-sm-3">
        <label>Requested Releaving Date</label>
        <div class="field">
-        <div class="input-group">
-          <div class="input-group-addon">
-            <i class="fa fa-calendar"></i>
-          </div>
+        
           <%= f.text_field :tentative_leaving_date,hide_label: true, class: 'tentative_leaving_date'%>
         </div>
-       </div>
       </div>
       <div class="col-sm-3">
        <div class="field">
@@ -69,13 +63,8 @@
       <div class="col-sm-3">
        <label>Exit Interview Date</label>
        <div class="field">
-        <div class="input-group">
-          <div class="input-group-addon">
-            <i class="fa fa-calendar"></i>
-          </div>
           <%= f.text_field :exit_interview_date,hide_label: true, class: 'exit_interview_date'%>
         </div>
-       </div>
       </div>
     
   
@@ -88,25 +77,16 @@
       <div class="col-sm-3">
        <label>Leaving Date</label>
        <div class="field">
-        <div class="input-group">
-          <div class="input-group-addon">
-            <i class="fa fa-calendar"></i>
-          </div>
+        
           <%= f.text_field :leaving_date,hide_label: true, class: 'leaving_date'%>
         </div>
-       </div>
       </div>
 
       <div class="col-sm-3">
         <label>Settled On</label>
         <div class="field">
-          <div class="input-group">
-            <div class="input-group-addon">
-              <i class="fa fa-calendar"></i>
-            </div>
             <%= f.text_field :settled_on,hide_label: true, class: 'settled_on'%>
           </div>
-        </div>
       </div>
     </div>
 

@@ -64,8 +64,9 @@ class EmployeeLeavRequest < ActiveRecord::Base
             if c.leave_count == 0.5
               request.leave_count = request.leave_count - 0.5
               c.leave_count = c.leave_count - 0.5
-              c.is_taken = true
+              #c.is_taken = true
               c.save
+              c.update(is_taken: true)
             else
               request.leave_count = request.leave_count - 1
               c.leave_count = c.leave_count - 1
@@ -89,21 +90,21 @@ class EmployeeLeavRequest < ActiveRecord::Base
 
   def self.filter_records(current_user)
     @employee_leave_requests =  if current_user.class == Group
-                                  EmployeeLeavRequest.all
-                                elsif current_user.class == Member
-                                  if current_user.role.name == "Company"
-                                    @employees = Employee.where(company_id: current_user.company_id)
-                                    EmployeeLeavRequest.where(employee_id: @employees)
-                                  elsif current_user.role.name == "CompanyLocation"
-                                    @employees = Employee.where(company_location_id: current_user.company_location_id)
-                                    EmployeeLeavRequest.where(employee_id: @employees)  
-                                  elsif current_user.role.name == "Department"
-                                    @employees = Employee.where(department_id: current_user.department_id)
-                                    EmployeeLeavRequest.where(employee_id: @employees)
-                                  elsif current_user.role.name == "Employee"
-                                    EmployeeLeavRequest.where(employee_id: current_user.employee_id)
-                                  end
-                                end
+      EmployeeLeavRequest.all
+    elsif current_user.class == Member
+      if current_user.role.name == "Company"
+        @employees = Employee.where(company_id: current_user.company_id)
+        EmployeeLeavRequest.where(employee_id: @employees)
+      elsif current_user.role.name == "CompanyLocation"
+        @employees = Employee.where(company_location_id: current_user.company_location_id)
+        EmployeeLeavRequest.where(employee_id: @employees)  
+      elsif current_user.role.name == "Department"
+        @employees = Employee.where(department_id: current_user.department_id)
+        EmployeeLeavRequest.where(employee_id: @employees)
+      elsif current_user.role.name == "Employee"
+        EmployeeLeavRequest.where(employee_id: current_user.employee_id)
+      end
+    end
   end
 
   def create_attendance
@@ -151,9 +152,14 @@ class EmployeeLeavRequest < ActiveRecord::Base
   end
 
   def is_available?
-    flag = 0
-    for i in self.start_date.to_date..self.end_date.to_date
-      flag = LeaveRecord.exists?(day: i,employee_id: self.employee_id)
+    flag = false
+    leave_records = LeaveRecord.where(employee_id: self.employee_id)
+    leave_records.each do |l|
+      for i in self.start_date.to_date..self.end_date.to_date
+        if i ==  l.day
+          flag = true
+        end
+      end
     end
     flag
   end
@@ -161,7 +167,7 @@ class EmployeeLeavRequest < ActiveRecord::Base
   def is_exist?
     flag = 0
     for i in self.start_date.to_date..self.end_date.to_date
-      LeaveRecord.exists?(i)
+      flag = LeaveRecord.exists?(day: i,employee_id: self.employee_id)
     end
     flag
   end

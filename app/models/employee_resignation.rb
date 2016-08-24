@@ -1,5 +1,5 @@
 class EmployeeResignation < ActiveRecord::Base
-  belongs_to :employee
+  has_many :employee
   belongs_to :leaving_reason
   has_many :due_employee_details
 

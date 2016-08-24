@@ -50,7 +50,7 @@ class VacancyMastersController < ApplicationController
         ReportingMastersVacancyMaster.create(reporting_master_id: @vacancy_master.reporting_master_id, vacancy_master_id: @vacancy_master.id, vacancy_status: @vacancy_master.current_status)
         VacancyRequestHistory.create(vacancy_master_id: @vacancy_master.id, vacancy_name: @vacancy_master.vacancy_name,no_of_position: @vacancy_master.no_of_position,description: @vacancy_master.description,vacancy_post_date: @vacancy_master.vacancy_post_date,budget: @vacancy_master.budget,department_id: @vacancy_master.department_id,employee_designation_id: @vacancy_master.employee_designation_id,company_location_id: @vacancy_master.company_location_id,degree_id: @vacancy_master.degree_id,degree_1_id: @vacancy_master.degree_1_id,degree_2_id: @vacancy_master.degree_2_id,experience: @vacancy_master.experience,keyword: @vacancy_master.keyword,other_organization: @vacancy_master.other_organization,industry: @vacancy_master.industry,reporting_master_id: @vacancy_master.reporting_master_id,current_status: @vacancy_master.current_status,employee_id: @vacancy_master.employee_id,justification: @vacancy_master.justification)
         VacancyMasterMailer.vacancy_request(@vacancy_master).deliver_now
-        format.html { redirect_to @vacancy_master, notice: 'Vacancy created successfully.' }
+        format.html { redirect_to @vacancy_master, notice: 'Vacancy Created Successfully.' }
         format.json { render :show, status: :created, location: @vacancy_master }
       else
         format.html { render :new }
@@ -66,7 +66,7 @@ class VacancyMastersController < ApplicationController
       if @vacancy_master.update(vacancy_master_params)
          
         VacancyMasterMailer.vacancy_request(@vacancy_master).deliver_now
-        format.html { redirect_to @vacancy_master, notice: 'Vacancy was successfully updated.' }
+        format.html { redirect_to @vacancy_master, notice: 'Vacancy Updated Successfully .' }
         format.json { render :show, status: :ok, location: @vacancy_master }
       else
         format.html { render :edit }
@@ -79,7 +79,7 @@ class VacancyMastersController < ApplicationController
   def destroy
     @vacancy_master.destroy
     respond_to do |format|
-      format.html { redirect_to vacancy_masters_url, notice: 'Vacancy was successfully destroyed.' }
+      format.html { redirect_to vacancy_masters_url, notice: 'Vacancy Destroyed Successfully' }
       format.json { head :no_content }
     end
   end
@@ -176,7 +176,7 @@ class VacancyMastersController < ApplicationController
     VacancyRequestHistory.create(vacancy_master_id: @vacancy_master.id, vacancy_name: @vacancy_master.vacancy_name,no_of_position: @vacancy_master.no_of_position,description: @vacancy_master.description,vacancy_post_date: @vacancy_master.vacancy_post_date,budget: @vacancy_master.budget,department_id: @vacancy_master.department_id,employee_designation_id: @vacancy_master.employee_designation_id,company_location_id: @vacancy_master.company_location_id,degree_id: @vacancy_master.degree_id,degree_1_id: @vacancy_master.degree_1_id,degree_2_id: @vacancy_master.degree_2_id,experience: @vacancy_master.experience,keyword: @vacancy_master.keyword,other_organization: @vacancy_master.other_organization,industry: @vacancy_master.industry,reporting_master_id: @vacancy_master.reporting_master_id,current_status: @vacancy_master.current_status,employee_id: @vacancy_master.employee_id,justification: @vacancy_master.justification)
 
     if @vacancy_master.employee.email.nil?
-      flash[:alert] = 'Vacancy Request Cancelled without Email'
+      flash[:alert] = 'Vacancy Request Cancelled Without Email'
       redirect_to vacancy_masters_path
     else
       VacancyMasterMailer.cancel_vacancy_email(@vacancy_master).deliver_now

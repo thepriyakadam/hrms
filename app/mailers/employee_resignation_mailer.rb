@@ -1,8 +1,7 @@
 class EmployeeResignationMailer < ApplicationMailer
-
-
-	def resignation_request(employee_resignation)
-	    @employee = Employee.find(employee_resignation.reporting_master_id)
+    def resignation_request(employee_resignation)
+        @reporting_master = ReportingMaster.find(employee_resignation.reporting_master_id)
+	    @employee = Employee.find(@reporting_master.employee_id)
 	    @employee_resignation = EmployeeResignation.find(employee_resignation.id)
 	    @emp = EmployeeResignation.find_by_employee_id(employee_resignation.employee_id)
 	    mail(to: @employee.email, subject: 'Resignation Request')
@@ -10,7 +9,7 @@ class EmployeeResignationMailer < ApplicationMailer
 	
 	def approve_resignation_email(employee_resignation)
 	    @employee_resignation = employee_resignation
-	    @reporting_master = Employee.find(employee_resignation.reporting_master_id)
+	    @reporting_master = Employee.find(employee_resignation.reporting_master.employee_id)
 	    @employee_resignation = EmployeeResignation.find(employee_resignation.id)
 	    @employee = Employee.find(@employee_resignation.employee_id)
 	    @emp = EmployeeResignation.find_by_employee_id(employee_resignation.employee_id)
@@ -19,19 +18,40 @@ class EmployeeResignationMailer < ApplicationMailer
     
     def reject_resignation_email(employee_resignation)
 	     @employee_resignation = employee_resignation
-	     @reporting_master = Employee.find(employee_resignation.reporting_master_id)
+	     @reporting_master = Employee.find(employee_resignation.reporting_master.employee_id)
 	     @employee_resignation = EmployeeResignation.find(employee_resignation.id)
 	     @employee = Employee.find(@employee_resignation.employee_id)
 	     @emp = EmployeeResignation.find_by_employee_id(employee_resignation.employee_id)
 	     mail(to: @employee.email, subject: 'Resignation Request Rejected')
-     end
+    end
+
+
+   def edit_and_send_next(employee_resignation)
+    @employee_resignation = employee_resignation
+    @reporting_master = Employee.find(employee_resignation.reporting_master.employee_id)
+    @employee_resignation = EmployeeResignation.find(employee_resignation.id)
+    @employee = Employee.find(@employee_resignation.employee_id)
+    @emp = EmployeeResignation.find_by_employee_id(employee_resignation.employee_id)
+    mail(to: @reporting_master.email, subject: 'Resignation Request Edited And Sent To Higher Authority Request')
+  end
+
+
+   def approve_and_send_next(employee_resignation)
+    @employee_resignation = employee_resignation
+    @reporting_master = Employee.find(employee_resignation.reporting_master.employee_id)
+    @employee_resignation = EmployeeResignation.find(employee_resignation.id)
+    @employee = Employee.find(@employee_resignation.employee_id)
+    @emp = EmployeeResignation.find_by_employee_id(employee_resignation.employee_id)
+    mail(to: @reporting_master.email, subject: 'Resignation Request Approved And Sent To Higher Authority Request')
+  end
+
 
     def edit_and_approve(employee_resignation)
         @employee_resignation = employee_resignation
         @reporting_master = Employee.find(employee_resignation.reporting_master.employee_id)
-        @employee_resignation = EmployeeTransfer.find(employee_resignation.id)
+        @employee_resignation = EmployeeResignation.find(employee_resignation.id)
         @employee = Employee.find(@employee_resignation.employee_id)
-        @emp = EmployeeTransfer.find_by_employee_id(employee_resignation.employee_id)
+        @emp = EmployeeResignation.find_by_employee_id(employee_resignation.employee_id)
         mail(to: @employee.email, subject: ' Resignation Updated And Approved ')
     end
 

@@ -335,6 +335,28 @@ class EmployeesController < ApplicationController
     redirect_to employee_list_for_revert_employees_path
   end
 
+  def all_emp_list
+     @employees = Employee.all
+     session[:active_tab] ="employeemanagement"
+     session[:active_tab1] ="useradministration"
+  end
+
+  def update_status
+    @employee_ids = params[:employee_ids]
+    @status = params[:employee][:status]
+    if @employee_ids.nil?
+      flash[:alert] = "Please Select the Checkbox"
+      redirect_to all_emp_list_employees_path
+    else
+      @employee_ids.each do |eid|
+      @employee = Employee.find(eid)
+      @employee.update(status: @status) 
+      flash[:notice] = "Status Updated Successfully"
+    end 
+     redirect_to all_emp_list_employees_path
+  end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

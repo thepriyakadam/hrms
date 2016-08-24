@@ -1130,6 +1130,8 @@ end
       get :birthday_invitation
       get :employee_list_for_revert
       get :revert_employee
+      get :all_emp_list
+      post :update_status
     end
     member do
       get :edit_manager

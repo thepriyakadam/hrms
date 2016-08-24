@@ -39,31 +39,29 @@ class EmployeeLeavRequestsController < ApplicationController
       @employee_leav_request.leave_records.build(employee_id: @employee_leav_request.employee_id,employee_leav_request_id: @employee_leav_request.id,status: "Pending", day: i)
     end
 
+    # for i in @employee_leav_request.start_date.to_date..@employee_leav_request.end_date.to_date
+    #   @leave_record = LeaveRecord.where(employee_id: @employee_leav_request.employee_id,day: i)
+    #   if @leave_record.present?
+    #     flash[:alert] = "Request already has attendance !"
+    #   end
+    # end
+
     if @employee_leav_request.is_holiday?
       flash[:alert] = "Your Leave Request has holiday."
       redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
-    elsif @employee_leav_request.is_present?
-      flash[:alert] = "Your Leave Request already has attendance."
-      redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
+    # elsif @employee_leav_request.is_present?
+    #   flash[:alert] = "Your Leave Request already has attendance."
+    #   redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
     # elsif @employee_leav_request.is_exist?
     #     flash[:alert] = "Request already has attendance !!"
     #   redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
     elsif @employee_leav_request.is_available?
       flash[:alert] = "Your Leave Request already has attendance available !!"
       redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
-
-
-    # elsif @emp_leav_req.current_status = 'Pending'
-    #   flash[:alert] = "Your Leave Request already has attendance available !"
-    #   redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
     else
       if @employee.manager_id.nil?
-        flash[:alert] = 'First Reporter not set.'
+        flash[:alert] = 'First Reporter not set'
         redirect_to root_url
-      # elsif @employee_leav_request.is_available?
-      #   flash[:alert] = "Your Leave Request already has attendance available !!"
-      #   redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
-
       else
         @employee_leav_request.first_reporter_id = @employee.manager_id
         # @employee_leav_request.second_reporter_id = @employee.manager_2_id
@@ -116,6 +114,7 @@ class EmployeeLeavRequestsController < ApplicationController
             flash.now[:alert] = 'You are not in limit.'
             render :new
 
+            #@leave_coff = LeaveCOff.where(employee_id: @employee.id)
           elsif @employee_leav_request.end_date < @emp_leave_bal.expiry_date && @emp_leave_bal.expiry_date < Date.today
             @total_leaves = EmployeeLeavBalance.where('employee_id = ?', @employee.id)
             flash.now[:alert] = 'Leave Time Expired.'

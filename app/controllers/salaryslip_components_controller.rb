@@ -13,7 +13,7 @@ class SalaryslipComponentsController < ApplicationController
       respond_to do |format|
       format.xml { send_data render_to_string(:index), :filename => 'mydoc.xml', :type=>"application/xml", :disposition => 'attachment' }
       # redirect_to root_url
-      flash[:danger] = "Salaryslip  processed"
+      flash[:alert] = "Salaryslip  processed"
       end
     else
     flash[:danger] = "Salaryslip not yet processed"

@@ -18,7 +18,6 @@ xml.BOM do
 
   xml.JournalEntriesLines do
     @salary_components.each do |s|
-      # @salaryslips = Salaryslip.where(month: "September").limit(1)
        @salaryslips.each do |e|
         @salaryslip_components = SalaryslipComponent.where(salary_component_id: s.id,salaryslip_id: e.id.to_i)
         @salaryslip_components.each do |c|
@@ -27,7 +26,6 @@ xml.BOM do
             joining = JoiningDetail.find_by_employee_id(employee.id)
             xml.EmployeeCode employee.manual_employee_code
             xml.AccountCode s.account_code
-            # xml.Month e.month
             xml.ComponentName s.try(:name)
               if c.is_deducted == true
                 xml.Credit c.calculated_amount.round
@@ -46,18 +44,14 @@ xml.BOM do
       end
     end
   
-    
-    # @salary_component_1=SalaryComponent.find_by(name: "Net Salary")
     @salary_component_1=SalaryComponent.where(name: "Net Salary")
     @salary_component_1.each do |s|
-    # @salaryslips = Salaryslip.where(month: "September").limit(1)
       @salaryslips.each do |e|
           xml.row do
             employee = Employee.find(e.employee_id)
             joining = JoiningDetail.find_by_employee_id(employee.id)
             xml.EmployeeCode employee.manual_employee_code
             xml.AccountCode s.account_code
-            # xml.Month e.month
             xml.ComponentName s.try(:name)
               if s.is_deducted == true 
                 xml.Credit e.calculated_net_salary.round

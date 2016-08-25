@@ -5,7 +5,7 @@
 
 <p id="notice"><%= notice %></p>
 <div class="box-body">
-<%= bootstrap_form_for Employee.new,url:{action:'update_status'} do |f| %>
+<%= bootstrap_form_for Employee.new,url:{action:'update_status'},html: {id: 'employee'} do |f| %>
 <div class="row">
   <div class="col-sm-4">
     <%= select :employee,:status,['Active','Inactive'],{label: 'Status',include_blank: " Select Status"}, class: "form-control" %>
@@ -47,6 +47,25 @@
 </div>
 <% end %>
 
+<script>
+$("#employee").validate({
+    rules: {
+      "employee[status]":{
+        required: true,
+      }
+    },
+    messages: {
+      "employee[status]":{
+        required: "Please Specify Status",
+      }
+      
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>
 
 <script type="text/javascript">
   $(function () {

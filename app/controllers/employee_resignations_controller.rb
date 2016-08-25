@@ -256,6 +256,9 @@ class EmployeeResignationsController < ApplicationController
     @employee_resignation = EmployeeResignation.find(params[:format])
   end
 
+  def send_email_to_reporting_manager
+  end
+
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_employee_resignation

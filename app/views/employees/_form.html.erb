@@ -1,11 +1,13 @@
 <div class="box box-default">
   <div class="box-header with-border">
     <h3 class="box-title">Create Employee</h3>
-  </div><!-- /.box-header -->
+  
+  <div class="pull-right">
+   <h3 class="box-title"><font color='red'>*Last Employee ID : <%= Employee.last.try(:manual_employee_code) %> </font></h3>
+   </div>
+   </div><!-- /.box-header -->
   <div class="box-body">
     <%= bootstrap_form_for(@employee,html: {id: 'employee'}) do |f| %>
-      
-        
       <div class="row">
         <div class="col-sm-3">
           <div class="form-group required">

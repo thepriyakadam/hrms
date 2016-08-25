@@ -1,5 +1,6 @@
 class EmployeeResignation < ActiveRecord::Base
   belongs_to :employee
+  belongs_to :reporting_master
   belongs_to :leaving_reason
   has_many :due_employee_details
 
@@ -8,8 +9,8 @@ class EmployeeResignation < ActiveRecord::Base
   validates :employee_id,presence:true
   validates :reporting_master_id,presence:true
   
-  has_many :reporting_masters_resign
-  has_many :reporting_masters, through: :reporting_masters_resign
+  # has_many :reporting_masters_resign
+  # has_many :reporting_masters, through: :reporting_masters_resign
 
 	def self.stop_payment_request(is_stop)
 	  @employee_resignations =  if is_stop == "Yes"

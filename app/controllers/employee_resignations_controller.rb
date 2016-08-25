@@ -10,7 +10,7 @@ class EmployeeResignationsController < ApplicationController
       format.xls
       @employee_resignations = EmployeeResignation.where(resign_status: "Pending")
     end
-
+  
   end
   
   # GET /employee_resignations/1
@@ -171,11 +171,12 @@ class EmployeeResignationsController < ApplicationController
     @resignation_histories = ResignationHistory.where(employee_resignation_id: @employee_resignation_id.id)
   end
 
-  def edit_n_send_next_modal
+
+  def edit_n_approve_modal
     @employee_resignation = EmployeeResignation.find(params[:format])
-    @reporting_master = ReportingMaster.find(@employee_resignation.reporting_master_id)
-    @employee = Employee.find(@reporting_master.employee_id)
-  end 
+  end
+
+
   
   def edit_n_approve
     @employee_resignation = EmployeeResignation.find(params[:resignation_id])
@@ -213,11 +214,16 @@ class EmployeeResignationsController < ApplicationController
     ReportingMastersResign.create(employee_resignation_id: @employee_resignation.id, reporting_master_id: params[:employee_resignation][:reporting_master_id], resignation_status: "Edit & Approved")
   end
 
-  def edit_n_approve_modal
+  def edit_n_send_next_modal
+    # byebug
     @employee_resignation = EmployeeResignation.find(params[:format])
-  end
+    @reporting_master = ReportingMaster.find(@employee_resignation.reporting_master_id)
+    @employee = Employee.find(@reporting_master.employee_id)
+  end 
+  
 
   def edit_n_send
+    # byebug
     @employee_resignation = EmployeeResignation.find(params[:resignation_id])
     @resignation_history = ResignationHistory.new
     @employee_resignation = EmployeeResignation.find(params[:employee_resignation][:employee_resignation_id])
@@ -225,6 +231,7 @@ class EmployeeResignationsController < ApplicationController
     @resignation_history.reporting_master_id = @employee_resignation.reporting_master_id
     @resignation_history.resignation_date = @employee_resignation.resignation_date
     @resignation_history.reason = @employee_resignation.reason
+    @resignation_history.employee_id = @employee_resignation.employee_id
     @resignation_history.is_notice_period = @employee_resignation.is_notice_period
     @resignation_history.notice_period = @employee_resignation.notice_period
     @resignation_history.short_notice_period = @employee_resignation.short_notice_period
@@ -245,7 +252,7 @@ class EmployeeResignationsController < ApplicationController
 
     redirect_to resignation_history_employee_resignations_path
     flash[:notice] = ' Request Edited And Send Next Successfully.'   
-    ReportingMastersResign.create(reporting_master_id: @employee_resignation.reporting_master_id, employee_resignation_id: @employee_resignation.id, resignation_status: @employee_resignation.resign_status)
+    # ReportingMastersResign.create(reporting_master_id: @employee_resignation.reporting_master_id, employee_resignation_id: @employee_resignation.id, resignation_status: @employee_resignation.resign_status)
     EmployeeResignationMailer.edit_and_send_next(@employee_resignation).deliver_now
 
     ReportingMastersResign.create(employee_resignation_id: @employee_resignation.id, reporting_master_id: params[:employee_resignation][:reporting_master_id], resignation_status: "Edit & Send Next")

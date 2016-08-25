@@ -35,6 +35,15 @@ class EmployeeResignationMailer < ApplicationMailer
     mail(to: @reporting_master.email, subject: 'Resignation Request Edited And Sent To Higher Authority Request')
   end
 
+  # def edit_and_send_next(employee_transfer)
+  #   @employee_transfer = employee_transfer
+  #   @reporting_master = Employee.find(employee_transfer.reporting_master.employee_id)
+  #   @employee_transfer = EmployeeTransfer.find(employee_transfer.id)
+  #   @employee = Employee.find(@employee_transfer.employee_id)
+  #   @emp = EmployeeTransfer.find_by_employee_id(employee_transfer.employee_id)
+  #   mail(to: @reporting_master.email, subject: 'Transfer Request Edited And Sent To Higher Authority Request')
+  # end
+
 
    def approve_and_send_next(employee_resignation)
     @employee_resignation = employee_resignation

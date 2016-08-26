@@ -153,7 +153,7 @@ class EmployeeLeavRequest < ActiveRecord::Base
 
   def is_available?
     flag = false
-    leave_records = LeaveRecord.where(employee_id: self.employee_id)
+    leave_records = LeaveRecord.where(employee_id: self.employee_id,status: 'Pending')
     leave_records.each do |l|
       for i in self.start_date.to_date..self.end_date.to_date
         if i ==  l.day
@@ -164,10 +164,28 @@ class EmployeeLeavRequest < ActiveRecord::Base
     flag
   end
 
-  def is_exist?
-    flag = 0
-    for i in self.start_date.to_date..self.end_date.to_date
-      flag = LeaveRecord.exists?(day: i,employee_id: self.employee_id)
+  def is_available1?
+    flag = false
+    leave_records = LeaveRecord.where(employee_id: self.employee_id,status: 'FirstApproved')
+    leave_records.each do |l|
+      for i in self.start_date.to_date..self.end_date.to_date
+        if i ==  l.day
+          flag = true
+        end
+      end
+    end
+    flag
+  end
+
+  def is_available2?
+    flag = false
+    leave_records = LeaveRecord.where(employee_id: self.employee_id,status: 'FinalApproved')
+    leave_records.each do |l|
+      for i in self.start_date.to_date..self.end_date.to_date
+        if i ==  l.day
+          flag = true
+        end
+      end
     end
     flag
   end

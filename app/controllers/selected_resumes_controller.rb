@@ -43,7 +43,7 @@ class SelectedResumesController < ApplicationController
      @selected_resumes = SelectedResume.where(vacancy_master_id: @vacancy_master.id)
       if @selected_resume.save
         @selected_resume = SelectedResume.new
-        flash[:notice] = 'Resume Details saved Successfully.'  
+        flash[:notice] = 'Resume Details Saved Successfully.'  
       end
       # byebug
       @vacancy_master_id = VacancyMaster.find(params[:selected_resume][:vacancy_master_id])
@@ -54,7 +54,7 @@ class SelectedResumesController < ApplicationController
     @selected_resume = SelectedResume.new(selected_resume_params)
     respond_to do |format|
       if @selected_resume.save
-        format.html { redirect_to @selected_resume, notice: 'Candidate Profile  was successfully created.' }
+        format.html { redirect_to @selected_resume, notice: 'Candidate Profile Successfully Created.' }
         format.json { render :show, status: :created, location: @selected_resume }
       else
         format.html { render :new }
@@ -172,22 +172,38 @@ class SelectedResumesController < ApplicationController
    end
   end
 
+  def is_confirm_resume
+    @selected_resume_ids = params[:selected_resume_ids]
+    if @selected_resume_ids.nil?
+      flash[:alert] = "Please Select the Checkbox"
+      redirect_to all_resume_list_selected_resumes_path
+    else
+      @selected_resume_ids.each do |eid|
+      @selected_resume = SelectedResume.find(eid)
+      @selected_resume.update(status: "Shortlisted") 
+      flash[:notice] = "Confirmed Successfully"
+    end 
+     redirect_to all_resume_list_selected_resumes_path
+   end
+  end
+
   def all_resume_list
      @selected_resume = SelectedResume.new
-     @selected_resumes = SelectedResume.all
+     @selected_resumes = SelectedResume.where(vacancy_master_id: nil)
+     # @selected_resumes = SelectedResume.all
      session[:active_tab] ="recruitment"
      session[:active_tab1] ="general_vacancy"
   end
 
   def offer_letter
-      puts "-----------------"
+      # puts "-----------------"
       # byebug
       # @vacancy_master = VacancyMaster.find(params[:id])
       @selected_resume = SelectedResume.find(params[:id])
       @offer_letter_status = params[:selected_resume][:offer_letter_status]
       #@particular_vacancy_request = ParticularVacancyRequest.where(vacancy_master_id: @particular_vacancy_request.id)
       @selected_resume.update(offer_letter_status: @offer_letter_status)
-      flash[:notice] = "Offer Letter Status updated Successfully"
+      flash[:notice] = "Offer Letter Status Updated Successfully"
       redirect_to root_url
   end
 
@@ -197,26 +213,30 @@ class SelectedResumesController < ApplicationController
 
   def modal_change_status
     @selected_resume = SelectedResume.find(params[:format])
+    @vacancy_master = VacancyMaster.find(params[:vacancy_master_id])
   end
 
   def update_status
-    puts "----------------------------------"
+    # puts "----------------------------------"
     @selected_resume = SelectedResume.find(params[:id])
+    @vacancy_master = VacancyMaster.find(params[:vacancy_master_id])
     @current_status = params[:selected_resume][:status]
     @selected_resume.update(status: @current_status)
-    flash[:notice] = "Interview Status updated Successfully"
-    redirect_to root_url
+    flash[:notice] = "Interview Status Updated Successfully"
+    redirect_to new_selected_resume_path(vacancy_master_id: @vacancy_master.id)
   end
 
   def modal_profile_update
   @selected_resume = SelectedResume.find(params[:format])
+  @vacancy_master = VacancyMaster.find(params[:vacancy_master_id])
   end
 
   def update_profile
+    @vacancy_master = VacancyMaster.find(params[:vacancy_master_id])
     @selected_resume = SelectedResume.find(params[:id])
     @selected_resume.update(selected_resume_params)
     flash[:notice] = 'Resume Updated Successfully'
-    redirect_to root_url
+    redirect_to new_selected_resume_path(vacancy_master_id: @vacancy_master.id)
   end
 
   def part_resume

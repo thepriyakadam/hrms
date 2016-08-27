@@ -129,7 +129,6 @@ class EmployeePromotionsController < ApplicationController
   end
   
   def print_certificate
-    # byebug
      @employee_promotion = EmployeePromotion.find(params[:emp_promotion_id])
      @employee_promotions = EmployeePromotion.where(id: @employee_promotion.id)
      respond_to do |format|
@@ -146,7 +145,7 @@ class EmployeePromotionsController < ApplicationController
                       :left   => 20,
                       :right  => 20},
         :show_as_html => params[:debug].present?
-        end
+     end
         end
   end
 

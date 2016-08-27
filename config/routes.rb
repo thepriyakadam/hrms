@@ -339,6 +339,8 @@ Rails.application.routes.draw do
       get :show_resignation_detail
       get :print_resignation_detail
       get :xl_resignation_detail
+      post :edit_n_approve
+      get :edit_n_approve_modal
   end
 end
   resources :travel_options
@@ -387,6 +389,7 @@ end
     get :modal_profile_update
     post :update_profile
     get :part_resume
+    post :is_confirm_resume
     end
   end 
   resources :assigned_assets do
@@ -588,12 +591,14 @@ end
       get :modal2
       post :confirm_candidate
       get :modal3
-      patch :update_vacancy_details
+      post :update_vacancy_details
       get :vacancy_history_resume
       get :approved_vacancy_request_history_list
       get :particular_vacancy_request_list_history
       get :gen_xml
       get :vacancy_profile
+      get :vacancy_history_list
+      get :show_vacancy_request_history
     end
   end
   resources :leave_c_offs do
@@ -612,6 +617,7 @@ end
       get :employee_resignation
       get :resignation_history
       get :show_resignation_detail
+      get :employee_transfer
     end
   end
 
@@ -755,6 +761,7 @@ end
   match 'daily_bill_details/:id/download_pics/:id' => 'daily_bill_details#download_pics', :via => [:get], :as => :download_pics
   match 'company_policies/:id/download_docs/:id' => 'company_policies#download_docs', :via => [:get], :as => :download_docs
   match 'employee_documents/:id/download_emp/:id' => 'employee_documents#download_emp', :via => [:get], :as => :download_emp
+  match 'employee_documents/:id/download_pic/:id' => 'employee_documents#download_pic', :via => [:get], :as => :download_pic
   match 'investment_declarations/:id/investment_document/:id' => 'investment_declarations#investment_document', :via => [:get], :as => :investment_document
   match 'due_templates/:id/download_due_tempalte_documents/:id' => 'due_templates#download_due_tempalte_documents', :via => [:get], :as => :download_due_tempalte_documents
   
@@ -1123,6 +1130,8 @@ end
       get :birthday_invitation
       get :employee_list_for_revert
       get :revert_employee
+      get :all_emp_list
+      post :update_status
     end
     member do
       get :edit_manager

@@ -95,7 +95,7 @@
     </tr>
      <tr>
       <th><strong>Retention</strong></th>
-      <td><%= @joining_detail.have_retention %></td>
+      <td><%= @joining_detail.have_retention ? "Yes" : "No" %></td>
 
       <th><strong>Retirement Date</strong></th>
       <td><%= @joining_detail.retirement_date %></td>
@@ -103,7 +103,7 @@
 
      <tr>
       <th><strong>Reserved Category</strong></th>
-      <td><%= @joining_detail.reserved_category_id %></td>
+      <td><%= @joining_detail.reserved_category.try(:name) %></td>
 
       <th></th>
       <td></td>

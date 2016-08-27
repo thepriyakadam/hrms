@@ -1,11 +1,11 @@
 class TrainingPlanMailer < ApplicationMailer
    
-  #  def confirmation_email_to_employee(trainee_request)
-  #   @trainee_request = trainee_request
-  #   @trainee_request = TraineeRequest.find(trainee_request.id)
-  #   @employee = Employee.find(@trainee_request.employee_id)
-  #   mail(to: @trainee_request.email_id, subject: 'Training Plan Confirmation')
-  # end
+    def confirmation_email_to_employee(trainee_request)
+      @trainee_request = trainee_request
+      @trainee_request = TraineeRequest.find(trainee_request.id)
+      @employee = Employee.find(@trainee_request.employee_id)
+      mail(to: @employee.email, subject: 'Training Plan Confirmation')
+   end
 
     def send_email_to_trainer(training_plan)
   	  @training_plan = training_plan

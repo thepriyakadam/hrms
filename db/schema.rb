@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160805121851) do
+ActiveRecord::Schema.define(version: 20160825065859) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -785,6 +785,10 @@ ActiveRecord::Schema.define(version: 20160805121851) do
     t.string   "document_content_type"
     t.integer  "document_file_size"
     t.datetime "document_updated_at"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
   end
 
   add_index "employee_documents", ["employee_id"], name: "index_employee_documents_on_employee_id"
@@ -853,6 +857,7 @@ ActiveRecord::Schema.define(version: 20160805121851) do
     t.integer  "current_status"
     t.integer  "first_reporter_id"
     t.integer  "second_reporter_id"
+    t.string   "current_status1"
   end
 
   add_index "employee_leav_requests", ["employee_id"], name: "index_employee_leav_requests_on_employee_id"
@@ -1709,6 +1714,18 @@ ActiveRecord::Schema.define(version: 20160805121851) do
 
   add_index "leave_c_offs", ["employee_id"], name: "index_leave_c_offs_on_employee_id"
 
+  create_table "leave_records", force: :cascade do |t|
+    t.date     "day"
+    t.string   "status"
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.integer  "employee_leav_request_id"
+    t.integer  "employee_id"
+  end
+
+  add_index "leave_records", ["employee_id"], name: "index_leave_records_on_employee_id"
+  add_index "leave_records", ["employee_leav_request_id"], name: "index_leave_records_on_employee_leav_request_id"
+
   create_table "leave_status_records", force: :cascade do |t|
     t.integer  "employee_leav_request_id"
     t.integer  "change_status_employee_id"
@@ -2199,8 +2216,10 @@ ActiveRecord::Schema.define(version: 20160805121851) do
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
     t.string   "resign_status"
+    t.integer  "employee_id"
   end
 
+  add_index "resignation_histories", ["employee_id"], name: "index_resignation_histories_on_employee_id"
   add_index "resignation_histories", ["employee_resignation_id"], name: "index_resignation_histories_on_employee_resignation_id"
   add_index "resignation_histories", ["reporting_master_id"], name: "index_resignation_histories_on_reporting_master_id"
 
@@ -2340,9 +2359,10 @@ ActiveRecord::Schema.define(version: 20160805121851) do
     t.boolean  "is_deducted"
     t.string   "code"
     t.string   "description"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
     t.integer  "parent_id"
+    t.string   "account_code"
   end
 
   add_index "salary_components", ["parent_id"], name: "index_salary_components_on_parent_id"
@@ -2859,8 +2879,8 @@ ActiveRecord::Schema.define(version: 20160805121851) do
     t.decimal  "el_balance"
     t.decimal  "coff_balance"
     t.decimal  "advance_balance"
-    t.decimal  "pay_leave"
     t.boolean  "is_confirm"
+    t.decimal  "pay_leave"
   end
 
   add_index "workingdays", ["employee_id"], name: "index_workingdays_on_employee_id"

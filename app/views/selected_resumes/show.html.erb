@@ -49,7 +49,7 @@
    <td><%= @selected_resume.status %></td>
 </tr>
 
-<tr>
+<!-- <tr>
    <th>Offer Letter Status</th>
    <td><%= @selected_resume.offer_letter_status %></td>
 </tr>
@@ -62,9 +62,13 @@
 <tr>
   <th>Download Image</th>
   <td><%= @selected_resume.passport_photo_file_name %></td>
-</tr>
+</tr> -->
+
+
 
 </table>
+
+<%= image_tag @selected_resume.passport_photo.url, :size => "100x100" %><br><br>
 
 </div>
 </div>

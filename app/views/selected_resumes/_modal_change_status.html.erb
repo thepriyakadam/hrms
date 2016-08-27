@@ -1,7 +1,7 @@
 <div class="modal-dialog">
   <div class="modal-content">
     <div class="modal-body" style="height:1000px; max-height:100px; width:630px; max-width:630px;">
-      <%= bootstrap_form_for :selected_resume,url:{action:"update_status",id: @selected_resume.id},html: {id: 'selected_resume'} do |f| %>
+      <%= bootstrap_form_for :selected_resume,url:{action:"update_status",id: @selected_resume.id,vacancy_master_id: @vacancy_master.id},html: {id: 'selected_resume'} do |f| %>
         <div class="row">
         <center>
           <div class="col-sm-6">

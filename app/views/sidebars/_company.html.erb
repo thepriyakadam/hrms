@@ -186,6 +186,7 @@
       <i class="fa fa-user-plus"></i> <span> User Administration </span> <i class="fa fa-angle-left pull-right"></i>
     </a>
     <ul class="treeview-menu">
+      <li><a href="/employees/all_emp_list"><i class="fa fa-tags"></i> Access Control </a></li>
       <li><a href="/reporting_masters/new"><i class="fa fa-tags"></i> Reporting Manager </a></li>
       <li><a href="/employees/assign_role"><i class="fa fa-tags"></i> Create New User </a></li>
       <li><a href="/home/created_user"><i class="fa fa-tags"></i> View Users </a></li>
@@ -248,6 +249,7 @@
       </li>
 <!--       <li><a href="/employee_daily_activities/new"><i class="fa fa-tags"></i> Daily Activity </a></li>
  -->      <li><a href="/training_plans/trainee_list"><i class="fa fa-tags"></i> Training Feedback </a></li>
+  <li><a href="/self_services/employee_transfer"><i class="fa fa-tags"></i> Employee Transfer </a></li>
     </ul>
   </li>
   <li class="treeview" id="leavemanagement">
@@ -361,6 +363,7 @@
         <li><a href="/salary_slip_ledgers/employee_salary_ledger"><i class="fa fa-tags"> </i>Salary Ledger </a></li>
         <li><a href="/salary_slip_ledgers/employee_ctc"><i class="fa fa-tags"> </i>CTC Report </a></li>
         <li><a href="/salary_slip_ledgers/employee_monthly_ctc"><i class="fa fa-tags"> </i>Monthly CTC Report </a></li>
+        <li><a href="/salaryslip_components/new"><i class="fa fa-tags"> </i>XML Integration Report </a></li>
         </ul>
       </li>
       <li id="deductionreport">
@@ -382,7 +385,9 @@
       <i class="ionicons ion-ios-time"></i><span> Time Management </span> <i class="fa fa-angle-left pull-right"></i>
     </a>
     <ul class="treeview-menu">
+     <li><a href="/holidays/new"><i class="fa fa-tags"></i> Holiday Setup </a></li>
      <li><a href="/employee_attendances"><i class="fa fa-tags"></i> Add Attendance </a></li>
+     <li><a href="/employee_attendances/costcenter_wise_attendance"><i class="fa fa-tags"></i> Show Attendance </a></li>
      <li><a href="/employee_attendances/revert_attendance"><i class="fa fa-tags"></i> Revert Attendance </a></li>
     
       <!-- <li><a href="/holidays/new"><i class="fa fa-tags"></i> Holiday Setup </a></li>
@@ -447,7 +452,7 @@
     </ul>
    </li>
 
-    <li class="treeview" id="promotionmanagement">
+    <li class="treeview" id="transfer">
     <a href="">
       <i class="ionicons ion-ios-time"></i><span> Transfer Management </span> <i class="fa fa-angle-left pull-right"></i>
     </a>
@@ -466,7 +471,7 @@
        <li class="treeview" id="leaveadministration"> <a href="#"><i class="fa fa-edit"></i>Employee Resignation <i class="fa fa-angle-left pull-right"></i></a>
        <ul class="treeview-menu">
       <li><a href="/employee_resignations/new"><i class="fa fa-tags"></i> Resignation </a></li>
-       <li><a href="/employee_resignations/resignation_history"><i class="fa fa-tags"></i> Approve And Reject </a></li> 
+       <li><a href="/employee_resignations/resignation_history"><i class="fa fa-tags"></i> Approve/Reject </a></li> 
       <li><a href="/employee_resignations/emp_resignation_history"><i class="fa fa-tags"></i> History </a></li>
       <li><a href="/employee_resignations/employee_resignation_list"><i class="fa fa-tags"></i> Exit Interview </a></li>
        </ul>
@@ -496,21 +501,22 @@
         <li><a href="/vacancy_masters/vacancy_history"><i class="fa fa-tags"></i> Approve Vacancy </a></li>
         <li><a href="/vacancy_masters"><i class="fa fa-tags"></i> Cancel Vacancy </a></li> 
         <li><a href="/vacancy_masters/approve_vacancy_list"><i class="fa fa-tags"></i> Vacancy List </a></li>
-        <li><a href="/vacancy_masters/approved_vacancy_request_history_list"><i class="fa fa-tags"></i> Approved Vacancy List </a></li>
+        <!-- <li><a href="/vacancy_masters/approved_vacancy_request_history_list"><i class="fa fa-tags"></i> Approved Vacancy List </a></li> -->
+        <li><a href="/vacancy_masters/approved_vacancy_list"><i class="fa fa-tags"></i> Approved Vacancy List </a></li>
          <li><a href="/vacancy_masters/vacancy_resume"><i class="fa fa-tags"></i> Candidate Profile </a></li>
         <li><a href="/vacancy_masters/vacancy_profile"><i class="fa fa-tags"></i> Vacancywise Profile </a></li>
-         <li><a href="/interview_schedules/interviewee_list"><i class="fa fa-tags"></i> Interview Schedule</a></li>
-        </ul>
+<!--          <li><a href="/interview_schedules"><i class="fa fa-tags"></i> Interview Schedule List</a></li>
+ -->        </ul>
       </li>
       <li id="general_vacancy">
         <a href="#"><i class="fa fa-edit"></i>Candidate Profile <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
         <li><a href="/selected_resumes/new1"><i class="fa fa-tags"></i> Candidate Profile </a></li>
-        <li><a href="/selected_resumes/all_resume_list"><i class="fa fa-tags"></i> All Resume Shortlist </a></li>
+        <li><a href="/selected_resumes/all_resume_list"><i class="fa fa-tags"></i> Resume Shortlist </a></li>
         <li><a href="/interview_schedules/new1"><i class="fa fa-tags"></i> Interview Schedule </a></li>
-        <li><a href="/interview_schedules"><i class="fa fa-tags"></i> Interview List </a></li>
-        <li><a href="/interview_schedules/all_interview_schedule_list"><i class="fa fa-tags"></i> Report </a></li>
+        <li><a href="/interview_schedules"><i class="fa fa-tags"></i> Interview Round </a></li>
         <li><a href="/interview_schedules/interviewee_list"><i class="fa fa-tags"></i> Interviewee List </a></li>
+        <li><a href="/interview_schedules/all_interview_schedule_list"><i class="fa fa-tags"></i> Report </a></li>
         </ul>
       </li>   
        <li id="candidate_regist">

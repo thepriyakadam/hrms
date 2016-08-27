@@ -53,10 +53,20 @@ class LeaveCOffsController < ApplicationController
           @employee_leave_balance.total_leave = @employee_leave_balance.total_leave.to_f + 1
           @employee_leave_balance.no_of_leave = @employee_leave_balance.no_of_leave.to_f + 1
           @leave_c_off.leave_count = 1
+          @employee_leave_balance.update(expiry_date: @leave_c_off.expiry_date)
+
+          @leave_c_off.each do |l|
+            if l.expiry_date > Date.today
+              LeaveCOff.find(id: l.id).update(is_expire: true)
+              @employee_leave_balance.no_of_leave = @employee_leave_balance.no_of_leave.to_f - 1
+            else
+            end
+          end
         else
           @employee_leave_balance.total_leave = @employee_leave_balance.total_leave.to_f + 0.5
           @employee_leave_balance.no_of_leave = @employee_leave_balance.no_of_leave.to_f + 0.5
           @leave_c_off.leave_count = 0.5
+          @employee_leave_balance.update(expiry_date: @leave_c_off.expiry_date)
         end
       else
         @employee_leave_balance = EmployeeLeavBalance.new do |b|

@@ -7,7 +7,7 @@
       <div class="row">
         <div class="col-sm-3">
           <div class="form-group required">
-             <%= f.text_field :employee_id,label:'Employee Name',value: full_name(@employee_resignation.employee),readonly: true %>   
+             <%= f.text_field :employee_id,label:'Employee Name',value: @employee_resignation.employee.first_name+''+@employee_resignation.employee.middle_name+''+@employee_resignation.employee.last_name,readonly: true %>   
           </div>
         </div>
      

@@ -175,7 +175,7 @@ class TravelRequestsController < ApplicationController
     @travel_request = TravelRequest.find(params[:abc])
     @travel_request_history = TravelRequestHistory.new
     # @travel_request_history = TravelRequestHistory.find(@travel_request.id)
-    byebug
+    # byebug
     @travel_request = TravelRequest.find(params[:travel_request_history][:travel_request_id])
     
     @travel_request_history.application_date = @travel_request.application_date
@@ -199,11 +199,12 @@ class TravelRequestsController < ApplicationController
   end
 
   def edit_and_approve_modal
+    # byebug
     @travel_request = TravelRequest.find(params[:format])
   end
 
   def edit_and_approve_modal_submit
-    # byebug
+
     @travel_request = TravelRequest.find(params[:abc])
     @travel_request_history = TravelRequestHistory.new
     # @travel_request_history = TravelRequestHistory.find(@travel_request.id)
@@ -224,9 +225,9 @@ class TravelRequestsController < ApplicationController
     @travel_request.update(application_date: params[:travel_request_history][:application_date], traveling_date: params[:travel_request_history][:traveling_date],tour_purpose: params[:travel_request_history][:tour_purpose],place: params[:travel_request_history][:place],total_advance: params[:travel_request_history][:total_advance],reporting_master_id: params[:travel_request_history][:reporting_master_id],current_status: params[:travel_request_history][:current_status],travel_option_id: params[:travel_request_history][:travel_option_id],current_status: "Edit & Send Next")
     # @travel_request_history = TravelRequestHistory.new(travel_request_history_params)
     # @travel_request.update(travel_request_params)
-    TravelRequestHistory.create(travel_request_id: @travel_request.id,application_date: @travel_request.application_date,traveling_date: @travel_request.traveling_date, tour_purpose: @travel_request.tour_purpose, place: @travel_request.place,total_advance: @travel_request.total_advance,reporting_master_id: @travel_request.reporting_master_id, travel_option_id: @travel_request.travel_option_id,current_status: "Edit & Send Next")
-    ReportingMastersTravelRequest.create(travel_request_id: @travel_request.id, reporting_master_id: @travel_request.reporting_master_id, travel_status: "Edit & Approved")
-    flash[:notice] = 'Travel Request Edited & Approved Successfully'
+    TravelRequestHistory.create(travel_request_id: @travel_request.id,reporting_master_id: @travel_request.reporting_master_id,application_date: @travel_request.application_date,traveling_date: @travel_request.traveling_date, tour_purpose: @travel_request.tour_purpose, place: @travel_request.place,total_advance: @travel_request.total_advance,reporting_master_id: @travel_request.reporting_master_id, travel_option_id: @travel_request.travel_option_id,current_status: "Edit & Send Next")
+    ReportingMastersTravelRequest.create(travel_request_id: @travel_request.id, reporting_master_id: @travel_request.reporting_master_id, travel_status: "Edit & Send Next")
+    flash[:notice] = 'Travel Request Edited & Approved Successfully.'
     redirect_to travel_history_travel_requests_path
   end
 

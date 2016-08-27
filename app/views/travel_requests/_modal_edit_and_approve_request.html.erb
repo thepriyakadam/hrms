@@ -14,7 +14,7 @@
 
         <div class="col-sm-3">
           <div class="field">
-          <%= f.text_field :reporting_master_id, label:'Request To',value: @travel_request.reporting_master.employee.try(:first_name)+''+@travel_request.reporting_master.employee.try(:middle_name)+''+@travel_request.reporting_master.employee.try(:last_name),readonly: true %>   
+          <%= f.text_field :reporting_master_id, label:'Request To',value: @travel_request.reporting_master.employee.first_name+' '+@travel_request.reporting_master.employee.middle_name+' '+@travel_request.reporting_master.employee.last_name,readonly: true %>   
           </div>
         </div>   
 
@@ -38,12 +38,12 @@
             </div>
 
 
-            <div class="col-sm-3">
+           <!--  <div class="col-sm-3">
             <label>Travel Mode</label>
               <div class="form-group required">
-                <%= f.select :travel_mode_id,all_travel_mode,{hide_label: true,placeholder: 'Travel mode',include_blank: 'Select Travel mode'} %>
+                <= f.select :travel_mode_id,all_travel_mode,{hide_label: true,placeholder: 'Travel mode',include_blank: 'Select Travel mode'} %>
               </div>
-            </div>
+            </div> -->
 
           
         </div>

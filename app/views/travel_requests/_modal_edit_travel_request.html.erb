@@ -10,6 +10,13 @@
           <%= f.hidden_field :travel_request_id, value: @travel_request.id %>
 
         <div class="row">
+
+         <div class="col-sm-3">
+          <div class="form-group required">
+             <%= f.text_field :employee_id,label:'Employee Name',value: full_name(@travel_request.employee),readonly: true %>   
+          </div>
+        </div>
+        
           <div class="col-sm-3">
             <label>Request To </label>
             <div class="field">

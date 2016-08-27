@@ -87,6 +87,8 @@ def create
 
   def is_confirm
     @travel_request = TravelRequest.find(params[:travel_request_id])
+    TravelRequest.where(id: @travel_request.id).update_all(daily_bill_status: "true")
+
     @daily_bill_detail_ids = params[:daily_bill_detail_ids]
     if @daily_bill_detail_ids.nil?
       flash[:alert] = "Please Select the Checkbox"
@@ -233,9 +235,8 @@ def create
   end
 
    def travel_request_list
-     # reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
-     # @travel_requests = TravelRequest.where(reporting_master_id: reporting_masters)
-     @travel_requests = TravelRequest.all
+     reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
+     @travel_requests = TravelRequest.where(daily_bill_status: "true",reporting_master_id: reporting_masters)
   end
 
   def approve_and_send_next_modal

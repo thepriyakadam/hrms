@@ -271,7 +271,7 @@ class EmployeeResignationsController < ApplicationController
     redirect_to resignation_history_employee_resignations_path
     flash[:notice] = ' Request Edited And Send Next Successfully.'   
     # ReportingMastersResign.create(reporting_master_id: @employee_resignation.reporting_master_id, employee_resignation_id: @employee_resignation.id, resignation_status: @employee_resignation.resign_status)
-    # EmployeeResignationMailer.edit_and_send_next(@employee_resignation).deliver_now
+    EmployeeResignationMailer.edit_and_send_next(@employee_resignation).deliver_now
 
     ReportingMastersResign.create(employee_resignation_id: @employee_resignation.id, reporting_master_id: params[:employee_resignation][:reporting_master_id], resignation_status: "Edit & Send Next")
   end

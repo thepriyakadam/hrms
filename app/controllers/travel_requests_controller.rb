@@ -74,8 +74,8 @@ class TravelRequestsController < ApplicationController
 
 
   def daily_bill
-     @travel_requests = TravelRequest.where(employee_id: current_user.employee_id)
-      # @travel_requests = TravelRequest.where("employee_id = ? and (current_status = ? or current_status = ?)",current_user.employee_id,"Approved","Approved & Send Next")
+     # @travel_requests = TravelRequest.where(employee_id: current_user.employee_id)
+      @travel_requests = TravelRequest.where("employee_id = ? and (current_status = ?)",current_user.employee_id,"Approved")
   end
 
   def travel_history

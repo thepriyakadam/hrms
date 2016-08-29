@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160825065859) do
+ActiveRecord::Schema.define(version: 20160827064407) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -2726,9 +2726,13 @@ ActiveRecord::Schema.define(version: 20160825065859) do
     t.integer  "travel_option_id"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
+    t.integer  "travel_mode_id"
+    t.integer  "employee_id"
   end
 
+  add_index "travel_request_histories", ["employee_id"], name: "index_travel_request_histories_on_employee_id"
   add_index "travel_request_histories", ["reporting_master_id"], name: "index_travel_request_histories_on_reporting_master_id"
+  add_index "travel_request_histories", ["travel_mode_id"], name: "index_travel_request_histories_on_travel_mode_id"
   add_index "travel_request_histories", ["travel_option_id"], name: "index_travel_request_histories_on_travel_option_id"
   add_index "travel_request_histories", ["travel_request_id"], name: "index_travel_request_histories_on_travel_request_id"
 

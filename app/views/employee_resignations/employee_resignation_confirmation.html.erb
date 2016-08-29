@@ -55,7 +55,7 @@
     </tr>
     <tr>
       <td><b>Employee ID</b></td>
-      <td><%= @employee_resignation.id %></td>
+      <td><%= @employee_resignation.employee.try(:manual_employee_code) %></td>
     </tr>
     <tr>
       <td><b>Resignation Date</b></td>

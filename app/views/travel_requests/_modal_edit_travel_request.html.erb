@@ -16,7 +16,7 @@
              <%= f.text_field :employee_id,label:'Employee Name',value: full_name(@travel_request.employee),readonly: true %>   
           </div>
         </div>
-        
+
           <div class="col-sm-3">
             <label>Request To </label>
             <div class="field">
@@ -43,18 +43,19 @@
               </div>
             </div>
 
-
-           <!--  <div class="col-sm-3">
-            <label>Travel Mode</label>
-              <div class="form-group required">
-                <= f.select :travel_mode_id,all_travel_mode,{hide_label: true,placeholder: 'Travel mode',include_blank: 'Select Travel mode'} %>
-              </div>
-            </div> -->
-
           </div>
 
 
         <div class="row">
+
+         <div class="col-sm-3">
+            <label>Travel Mode</label>
+              <div class="form-group required">
+                <%= f.select :travel_mode_id,all_travel_mode,{hide_label: true,placeholder: 'Travel mode',include_blank: 'Select Travel mode'} %>
+              </div>
+            </div>
+
+
           <div class="col-sm-3">
             <label>Traveling Date </label>
             <div class="field">
@@ -81,17 +82,18 @@
               <%= f.text_field :total_advance, label: 'Total Advance' %>
             </div>
           </div>
+        </div>
 
-          <div class="col-sm-3">
+        <div class="row">
+
+         <div class="col-sm-3">
             <div class="field">
               <div class="form-group required">
                 <%= f.text_field :tour_purpose, label: 'Tour Purpose' %>
               </div>
             </div>
           </div>
-        </div>
 
-        <div class="row">
           <div class="col-sm-3">
             <div class="actions">
               <%= f.submit "Update Travel Request",:class => class_name, data: { disable_with: data_info }  %>

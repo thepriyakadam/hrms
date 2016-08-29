@@ -53,10 +53,14 @@ class LeaveCOffsController < ApplicationController
           @employee_leave_balance.total_leave = @employee_leave_balance.total_leave.to_f + 1
           @employee_leave_balance.no_of_leave = @employee_leave_balance.no_of_leave.to_f + 1
           @leave_c_off.leave_count = 1
+          @employee_leave_balance.update(expiry_date: @leave_c_off.expiry_date)
+
         else
           @employee_leave_balance.total_leave = @employee_leave_balance.total_leave.to_f + 0.5
           @employee_leave_balance.no_of_leave = @employee_leave_balance.no_of_leave.to_f + 0.5
           @leave_c_off.leave_count = 0.5
+          @employee_leave_balance.update(expiry_date: @leave_c_off.expiry_date)
+          
         end
       else
         @employee_leave_balance = EmployeeLeavBalance.new do |b|
@@ -79,7 +83,6 @@ class LeaveCOffsController < ApplicationController
       end
       ActiveRecord::Base.transaction do
         @leave_c_off.save
-        
         @employee_leave_balance.save
       end
     end

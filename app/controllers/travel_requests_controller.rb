@@ -256,7 +256,7 @@ class TravelRequestsController < ApplicationController
     end
 
     def travel_request_history_params
-      params.require(:travel_request_history).permit(:travel_request_id, :employee_id, :current_status,:reporting_master_id, :application_date, :traveling_date, :tour_purpose, :place, :traveling_advance, :lodging_boarding_advance, :extra_advance, :travel_option_id, :travel_mode_id, :total_advance)
+      params.require(:travel_request_history).permit(:status, :travel_request_id, :employee_id, :current_status,:reporting_master_id, :application_date, :traveling_date, :tour_purpose, :place, :traveling_advance, :lodging_boarding_advance, :extra_advance, :travel_option_id, :travel_mode_id, :total_advance)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

@@ -420,6 +420,7 @@ end
     get :approve_and_send_next
     get :approve_and_send_next_modal
     post :approve_n_send_next
+    get :travel_request_history_list
     end
   end 
   resources :travel_requests do

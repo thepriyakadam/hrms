@@ -87,7 +87,8 @@ def create
 
   def is_confirm
     @travel_request = TravelRequest.find(params[:travel_request_id])
-    TravelRequest.where(id: @travel_request.id).update_all(daily_bill_status: "true")
+    # TravelRequest.where(id: @travel_request.id).update_all(daily_bill_status: "true")
+    TravelRequestHistory.where(travel_request_id: @travel_request.id).update_all(daily_bill_status: "true")
 
     @daily_bill_detail_ids = params[:daily_bill_detail_ids]
     if @daily_bill_detail_ids.nil?
@@ -150,6 +151,7 @@ def create
 
   def daily_bill_request_confirmation
     @travel_request = TravelRequest.find(params[:format])
+    # @travel_request_hisory = TravelRequestHistory.find(params[:format])
     reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
     @reporting_master = ReportingMaster.find(@travel_request.reporting_master_id)
     @employee = Employee.find(@reporting_master.employee_id)
@@ -162,10 +164,10 @@ def create
     @reporting_masters_travel_requests1 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id)
     @reporting_masters_travel_requests = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id).second
     # @reporting_masters_travel_requests1 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id).first
-
+    
     # @reporting_masters_travel_requests = ReportingMastersTravelRequest.all
     @daily_bill_details = DailyBillDetail.where(reporting_master_id: reporting_masters,travel_request_id: @travel_request.id,is_confirm: true)
-    session[:active_tab] ="travelmgmt" 
+    session[:active_tab] ="travelmgmt"
   end
 
   def approve_and_send_next
@@ -237,6 +239,14 @@ def create
    def travel_request_list
      reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
      @travel_requests = TravelRequest.where(daily_bill_status: "true",reporting_master_id: reporting_masters)
+     # @travel_request_histories = TravelRequestHistory.where(daily_bill_status: "true",reporting_master_id: reporting_masters)
+
+  end
+
+  def travel_request_history_list
+     reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
+     # @travel_requests = TravelRequest.where(daily_bill_status: "true",reporting_master_id: reporting_masters)
+     @travel_request_histories = TravelRequestHistory.where(daily_bill_status: "true",reporting_master_id: reporting_masters)
   end
 
   def approve_and_send_next_modal

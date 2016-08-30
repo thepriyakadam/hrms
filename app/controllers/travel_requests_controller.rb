@@ -36,7 +36,7 @@ class TravelRequestsController < ApplicationController
        # @rep_master = ReportingMaster.find(@reporting_master)
        # TravelRequest.where(id: @travel_request.id).update_all(reporting_master_id: @rep_master.employee_id)
         ReportingMastersTravelRequest.create(reporting_master_id: @travel_request.reporting_master_id, travel_request_id: @travel_request.id, travel_status: "Pending")
-        TravelRequestHistory.create(travel_request_id: @travel_request.id,application_date: @travel_request.application_date,traveling_date: @travel_request.traveling_date, tour_purpose: @travel_request.tour_purpose, place: @travel_request.place,total_advance: @travel_request.total_advance,reporting_master_id: @travel_request.reporting_master_id, travel_option_id: @travel_request.travel_option_id,current_status: "Pending")
+        TravelRequestHistory.create(employee_id: @travel_request.employee_id,travel_request_id: @travel_request.id,application_date: @travel_request.application_date,traveling_date: @travel_request.traveling_date, tour_purpose: @travel_request.tour_purpose, place: @travel_request.place,total_advance: @travel_request.total_advance,reporting_master_id: @travel_request.reporting_master_id, travel_option_id: @travel_request.travel_option_id,current_status: "Pending")
         TravelRequestMailer.travel_request(@travel_request).deliver_now
         format.html { redirect_to @travel_request, notice: 'Travel request was successfully created.' }
         format.json { render :show, status: :created, location: @travel_request }
@@ -98,17 +98,17 @@ class TravelRequestsController < ApplicationController
   def approve_travel_request
       @travel_request = TravelRequest.find(params[:format])
       @travel_request.update(current_status: "Approved")
-      TravelRequestHistory.create(travel_request_id: @travel_request.id,employee_id: @travel_request.id,application_date: @travel_request.application_date,traveling_date: @travel_request.traveling_date, tour_purpose: @travel_request.tour_purpose, place: @travel_request.place,total_advance: @travel_request.total_advance,reporting_master_id: @travel_request.reporting_master_id, travel_option_id: @travel_request.travel_option_id,current_status: "Approved")
+      TravelRequestHistory.create(employee_id: @travel_request.employee_id,travel_request_id: @travel_request.id,application_date: @travel_request.application_date,traveling_date: @travel_request.traveling_date, tour_purpose: @travel_request.tour_purpose, place: @travel_request.place,total_advance: @travel_request.total_advance,reporting_master_id: @travel_request.reporting_master_id, travel_option_id: @travel_request.travel_option_id,current_status: "Approved")
       ReportingMastersTravelRequest.create(reporting_master_id: @travel_request.reporting_master_id, travel_request_id: @travel_request.id, travel_status: "Approved")
       TravelRequestMailer.approve_travel_request_email(@travel_request).deliver_now
       flash[:notice] = 'Travel Request Approved'
       redirect_to travel_history_travel_requests_path
-    end
+  end
 
   def reject_travel_request
     @travel_request = TravelRequest.find(params[:format])
     @travel_request.update(current_status: "Reject")
-    TravelRequestHistory.create(travel_request_id: @travel_request.id,employee_id: @travel_request.id,application_date: @travel_request.application_date,traveling_date: @travel_request.traveling_date, tour_purpose: @travel_request.tour_purpose, place: @travel_request.place,total_advance: @travel_request.total_advance,reporting_master_id: @travel_request.reporting_master_id, travel_option_id: @travel_request.travel_option_id,current_status: "Reject")
+    TravelRequestHistory.create(employee_id: @travel_request.employee_id,travel_request_id: @travel_request.id,employee_id: @travel_request.id,application_date: @travel_request.application_date,traveling_date: @travel_request.traveling_date, tour_purpose: @travel_request.tour_purpose, place: @travel_request.place,total_advance: @travel_request.total_advance,reporting_master_id: @travel_request.reporting_master_id, travel_option_id: @travel_request.travel_option_id,current_status: "Reject")
     ReportingMastersTravelRequest.create(reporting_master_id: @travel_request.reporting_master_id, travel_request_id: @travel_request.id, travel_status: "Reject")
     TravelRequestMailer.reject_travel_request_email(@travel_request).deliver_now
     flash[:alert] = 'Travel Request Rejected'
@@ -120,7 +120,7 @@ class TravelRequestsController < ApplicationController
     # @travel_request.update(current_status: "Approved & Send Next")
 
     @travel_request.update(current_status: "Approved & Send Next",reporting_master_id: params[:travel_request][:reporting_master_id])
-    TravelRequestHistory.create(travel_request_id: @travel_request.id,employee_id: @travel_request.id,application_date: @travel_request.application_date,traveling_date: @travel_request.traveling_date, tour_purpose: @travel_request.tour_purpose, place: @travel_request.place,total_advance: @travel_request.total_advance,reporting_master_id: @travel_request.reporting_master_id, travel_option_id: @travel_request.travel_option_id,current_status: "Approved & Send Next")
+    TravelRequestHistory.create(employee_id: @travel_request.employee_id,travel_request_id: @travel_request.id,application_date: @travel_request.application_date,traveling_date: @travel_request.traveling_date, tour_purpose: @travel_request.tour_purpose, place: @travel_request.place,total_advance: @travel_request.total_advance,reporting_master_id: @travel_request.reporting_master_id, travel_option_id: @travel_request.travel_option_id,current_status: "Approved & Send Next")
     ReportingMastersTravelRequest.create(travel_request_id: @travel_request.id, reporting_master_id: params[:travel_request][:reporting_master_id] , travel_status: "Approved & Send Next")
     flash[:notice] = 'Travel Request Send to Higher Authority for Approval'
     redirect_to travel_history_travel_requests_path
@@ -151,7 +151,7 @@ class TravelRequestsController < ApplicationController
   def cancel_travel_request
     @travel_request = TravelRequest.find(params[:format])
     @travel_request.update(current_status: "Cancelled")
-    TravelRequestHistory.create(travel_request_id: @travel_request.id,application_date: @travel_request.application_date,traveling_date: @travel_request.traveling_date, tour_purpose: @travel_request.tour_purpose, place: @travel_request.place,total_advance: @travel_request.total_advance,reporting_master_id: @travel_request.reporting_master_id, travel_option_id: @travel_request.travel_option_id,current_status: "Cancelled")
+    TravelRequestHistory.create(employee_id: @travel_request.employee_id,travel_request_id: @travel_request.id,application_date: @travel_request.application_date,traveling_date: @travel_request.traveling_date, tour_purpose: @travel_request.tour_purpose, place: @travel_request.place,total_advance: @travel_request.total_advance,reporting_master_id: @travel_request.reporting_master_id, travel_option_id: @travel_request.travel_option_id,current_status: "Cancelled")
     ReportingMastersTravelRequest.create(travel_request_id: @travel_request.id, reporting_master_id: @travel_request.reporting_master_id, travel_status: "Cancelled")
     flash[:notice] = 'Travel Request Cancelled'
     redirect_to travel_requests_path
@@ -191,7 +191,7 @@ class TravelRequestsController < ApplicationController
     @travel_request.update(reporting_master_id: params[:travel_request_history][:reporting_master_id],application_date: params[:travel_request_history][:application_date], traveling_date: params[:travel_request_history][:traveling_date],tour_purpose: params[:travel_request_history][:tour_purpose],place: params[:travel_request_history][:place],total_advance: params[:travel_request_history][:total_advance],reporting_master_id: params[:travel_request_history][:reporting_master_id],current_status: params[:travel_request_history][:current_status],travel_option_id: params[:travel_request_history][:travel_option_id],current_status: "Edit & Send Next")
     # @travel_request_history = TravelRequestHistory.new(travel_request_history_params)
     # @travel_request.update(travel_request_params)
-    TravelRequestHistory.create(travel_request_id: @travel_request.id,application_date: @travel_request.application_date,traveling_date: @travel_request.traveling_date, tour_purpose: @travel_request.tour_purpose, place: @travel_request.place,total_advance: @travel_request.total_advance,reporting_master_id: @travel_request.reporting_master_id, travel_option_id: @travel_request.travel_option_id,current_status: "Edit & Send Next")
+    TravelRequestHistory.create(employee_id: @travel_request.employee_id,travel_request_id: @travel_request.id,application_date: @travel_request.application_date,traveling_date: @travel_request.traveling_date, tour_purpose: @travel_request.tour_purpose, place: @travel_request.place,total_advance: @travel_request.total_advance,reporting_master_id: @travel_request.reporting_master_id, travel_option_id: @travel_request.travel_option_id,current_status: "Edit & Send Next")
     ReportingMastersTravelRequest.create(travel_request_id: @travel_request.id, reporting_master_id: @travel_request.reporting_master_id, travel_status: "Edit & Send Next")
     flash[:notice] = 'Travel Request Edited & Send to Higher Authority For Approval.'
     redirect_to travel_history_travel_requests_path

@@ -89,6 +89,6 @@ class ReportingMastersController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def reporting_master_params
-    params.require(:reporting_master).permit(:code, :name, :description, :employee_id)
+    params.require(:reporting_master).permit(:is_expences, :code, :name, :description, :employee_id)
   end
 end

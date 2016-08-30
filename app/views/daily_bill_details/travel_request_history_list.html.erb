@@ -1,0 +1,40 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Travel Request</h3>
+    </div>
+
+<div class="box-body">
+
+<table id="example" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Employee ID</th>
+      <th>Employee Name</th>
+<!--       <th>Department</th>
+ -->      <th>Request To</th>
+      <th>Traveling Date</th>
+      <th>Place</th>
+      <th>Total Advance</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @travel_request_histories.each do |travel_request_history| %>
+      <tr>
+        <td><%= travel_request_history.employee.try(:manual_employee_code) %></td>
+        <td><%= travel_request_history.employee.try(:first_name) %> <%= travel_request_history.employee.try(:middle_name) %> <%= travel_request_history.employee.try(:last_name) %></td>
+<!--         <td><= travel_request_history.employee.company_location.try(:name) %> - <= travel_request_history.employee.department.try(:name) %></td>
+ -->        <td><%= travel_request_history.reporting_master.employee.try(:first_name) %> <%= travel_request_history.reporting_master.employee.try(:middle_name) %> <%= travel_request_history.reporting_master.employee.try(:last_name) %></td>
+        <td><%= travel_request_history.traveling_date %></td>
+        <td><%= travel_request_history.place %></td>
+        <td><%= travel_request_history.total_advance %></td>
+        <td>
+         <%= link_to 'Approve / Reject', daily_bill_request_confirmation_daily_bill_details_path(travel_request_history),class: 'btn btn-sm btn-warning' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
+</div>

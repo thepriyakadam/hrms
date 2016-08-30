@@ -5,11 +5,19 @@
           <h3 class="box-title">Travel Request</h3>
         </div>
         <div class="box-body">
-        <%= bootstrap_form_for(@travel_request,url:{action:"edit_and_approve_modal_submit", id: @travel_request.id}) do |f| %>
+        <%= bootstrap_form_for(TravelRequestHistory.new,url:{action:"edit_and_approve_modal_submit", abc: @travel_request.id}) do |f| %>
 
-          <%= f.hidden_field :employee_id, value: @travel_request.employee_id %>
+          <!--<= f.hidden_field :employee_id, value: @travel_request.employee_id %>-->
+          <%= f.hidden_field :travel_request_id, value: @travel_request.id %>
 
         <div class="row">
+
+        <div class="col-sm-3">
+          <div class="field">
+          <%= f.text_field :reporting_master_id, label:'Request To',value: @travel_request.reporting_master.employee.try(:first_name)+''+@travel_request.reporting_master.employee.try(:middle_name)+''+@travel_request.reporting_master.employee.try(:last_name),readonly: true %>   
+          </div>
+        </div>   
+
           <div class="col-sm-3">
             <label>Application Date </label>
             <div class="field">
@@ -37,7 +45,13 @@
               </div>
             </div>
 
-          <div class="col-sm-3">
+          
+        </div>
+
+
+        <div class="row">
+
+        <div class="col-sm-3">
             <label>Traveling Date </label>
             <div class="field">
               <div class="input-group">
@@ -48,10 +62,7 @@
               </div>
             </div>
           </div>
-        </div>
 
-
-        <div class="row">
           <div class="col-sm-3">
             <div class="field">
               <div class="form-group required">
@@ -73,8 +84,10 @@
               </div>
             </div>
           </div>
-
-          <div class="col-sm-3" style="padding-top:20px;">
+        </div>
+       
+       <div class="row">
+        <div class="col-sm-3" style="padding-top:20px;">
             <div class="actions">
               <%= f.submit "Update Travel Request",:class => class_name, data: { disable_with: data_info }  %>
               <!-- link_to 'Back', travel_request_confirmation_travel_requests_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %> -->

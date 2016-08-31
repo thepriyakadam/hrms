@@ -94,13 +94,13 @@ class Employee < ActiveRecord::Base
   # has_many :reporting_masters, class_name: "Employee",
   #                         foreign_key: "manager_2_id"
 
-  before_create :add_department
-  before_update :add_department
+  # before_create :add_department
+  # before_update :add_department
 
   validates :manual_employee_code, presence: true, uniqueness: { case_sensitive: false }
   validates :first_name, presence: true
-  validates :permanent_address, presence: true
-  validates :department_id,presence: true
+  # validates :permanent_address, presence: true
+  # validates :department_id,presence: true
   
   # validate :adhar_no_regex
   # validate :pan_no_regex

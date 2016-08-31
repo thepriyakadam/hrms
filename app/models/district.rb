@@ -6,5 +6,17 @@ class District < ActiveRecord::Base
   has_many :families
   has_many :capture_resumes
   has_many :employee_nominations
-  validates :name, presence: true, uniqueness: { case_sensitive: false }
+  # validates :name, presence: true, uniqueness: { case_sensitive: false }
+
+  def self.filter_records(current_user)
+    @disticts =  if current_user.class == Group
+    District.all
+    elsif current_user.class == Member
+    if current_user.role.name == "Company"
+    District.all
+    elsif current_user.role.name == "CompanyLocation"
+    District.all
+    end
+  end
+  end
 end

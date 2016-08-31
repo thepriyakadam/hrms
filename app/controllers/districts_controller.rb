@@ -1,5 +1,7 @@
+require 'query_report/helper'  # need to require the helper
 class DistrictsController < ApplicationController
   before_action :set_district, only: [:show, :edit, :update, :destroy]
+  include QueryReport::Helper  # need to include it
 
   
   def new
@@ -42,6 +44,16 @@ class DistrictsController < ApplicationController
     @district.destroy
     @districts = District.all
   end
+
+   def list_district
+    reporter(District.filter_records(current_user), template_class: PdfReportTemplate) do
+      column(:ID, sortable: true) { |district| district.id }
+      column(:SID, sortable: true) { |district| district.state_id }
+      column(:Code, sortable: true) { |district| district.code }
+      column(:Name, sortable: true) { |district| district.name }
+    end
+  end
+
 
   private
 

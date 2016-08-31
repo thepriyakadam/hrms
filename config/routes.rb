@@ -636,6 +636,8 @@ end
     
     post 'salaries/ctc_yearly_report'
     get 'salaries/ctc_yearly'
+
+
     
   #   get 'certificate/new'
   #   post 'certificate/certificate_print'
@@ -1208,6 +1210,28 @@ end
       get :is_confirm
     end
   end
+  resources :universities
+  resources :degree_streams
+  resources :degree_types
+  resources :districts do
+    collection do
+      get :list_district
+    end
+    end
+  resources :states do
+    collection do
+      get :list_state
+    end
+    end
+
+  resources :countries do
+    collection do
+      get :list_country
+    end
+    end
+  resources :employee_designations
+  resources :cost_centers
+  resources :degrees
   resources :attendances do
     collection do
       get :attendance_details

@@ -44,7 +44,9 @@
             <% # half_lwp_leave = half_lwp_leave_count(exist) %>
 
             <% # lwp_leave = full_lwp_leave + half_lwp_leave %>
-
+            <% workingday = [] %>
+            <% workingday = create_leave(@date, e) %>
+            
             <% payable_day = present_day.to_f + holiday_in_month.to_f + week_off_day.to_f %>
 
             <%= hidden_field_tag "attendances[]", e.id %>
@@ -55,8 +57,8 @@
             <%= hidden_field e.employee_id, 'year', value: @date.strftime("%Y") %>
             <%= hidden_field e.employee_id, 'present_day', value: present_day %>
             <%= hidden_field e.employee_id, 'total_leave', value: total_leave_count(exist) %>
-            <%= hidden_field e.employee_id, 'nonpay_leave', value: non_pay_leave_count(@date, e) %>
-            <%= hidden_field e.employee_id, 'pay_leave', value: pay_leave_count(@date, e) %>
+            <%= hidden_field e.employee_id, 'nonpay_leave', value: workingday[3] %>
+            <%= hidden_field e.employee_id, 'pay_leave', value: workingday[2] %>
             <%= hidden_field e.employee_id, 'holiday_in_month', value: holiday_in_month %>
             <%= hidden_field e.employee_id, 'week_off_day', value: week_off_day %>
             <%= hidden_field e.employee_id, 'absent_day', value: absent_day_count(exist) %>

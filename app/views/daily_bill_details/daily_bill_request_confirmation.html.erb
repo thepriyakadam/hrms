@@ -13,20 +13,12 @@
 <%= render 'show_reporting_masters_travel_request' %>
 </div>
 
-<% if @reporting_masters_travel_requests2.status == nil %>
-    <small class="label label-success">Not Yet Approved So pls wait.........</small>
-<% elsif @reporting_masters_travel_requests2.status == nil %>
-    <small class="label label-success">Not Yet Approved So pls wait.........</small>
-<% elsif @reporting_masters_travel_requests2.status == nil %>
-    <small class="label label-success">Not Yet Approved So pls wait.........</small>
-<% elsif @reporting_masters_travel_requests2.status == nil %>
-    <small class="label label-success">Not Yet Approved So pls wait.........</small>
-<% else %>
+
 <table id="example" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
 <!--       <th><input type="checkbox" id="selectAll" value="selectAll"></th>
- -->      <th>Request ID</th>
+ -->
       <th>Expense Date</th>
       <th>Place</th>
       <th>Expense Type</th>
@@ -47,7 +39,6 @@
             <= check_box_tag "daily_bill_detail_ids[]", daily_bill_detail.id %>
             < end %>
         </td> -->
-        <td><%= daily_bill_detail.travel_request_id %></td>
         <td><%= daily_bill_detail.expence_date %></td>
         <td><%= daily_bill_detail.e_place %></td>
         <td><%= daily_bill_detail.travel_expence_type.try(:name) %></td>
@@ -86,10 +77,9 @@
             <%= link_to '', daily_bill_detail,class: 'btn btn-sm btn-default fa fa-eye' %>
         </td>
       </tr>
-    
+    <% end %>
       <tr>
           <th>Total</th>
-          <td></td>
           <td></td>
           <td></td>
           <td><%= @daily_bill_details.sum(:travel_expence) %></td>
@@ -100,20 +90,18 @@
       </tr>
   </tbody>
 </table>
-<% end %>
+
 <% end %>
 <div class="row">
   <div class="col-sm-6">
     <div class="actions">
-     <%= link_to 'Approve & Send Next',approve_and_send_next_daily_bill_details_path(@travel_request.id),class: 'btn btn-sm btn-primary' %>
+     <%= link_to 'Approve & Send Next',approve_and_send_next_daily_bill_details_path(@travel_request.id),class: 'btn btn-sm btn-primary' %> |
+     <%= link_to 'Reject',reject_request_daily_bill_details_path(@travel_request.id),class: 'btn btn-sm btn-danger' %>
      </div>
   </div>
 </div>
-<% end %>
 
 
-<div>
-</div>
 </div>
 </div>
 

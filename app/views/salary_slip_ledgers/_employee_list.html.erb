@@ -82,7 +82,7 @@
         <td><%= r.try(:esic_no) %></td>
 
 
-        <td><%= r.try(:actual_basic)..try(:round) %></td>
+        <td><%= r.try(:actual_basic).try(:round) %></td>
         <td><%= r.try(:actual_da).try(:round) %></td>
         <td><%= r.try(:actual_hra).try(:round) %></td>
         <td><%= r.try(:actual_convenience).try(:round) %></td>

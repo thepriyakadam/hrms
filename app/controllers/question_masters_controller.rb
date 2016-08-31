@@ -55,6 +55,13 @@ class QuestionMastersController < ApplicationController
     @question_masters = QuestionMaster.all
   end
 
+  def is_confirm
+    @question_master = QuestionMaster.find(params[:question_master])
+    QuestionMaster.find(@question_master.id).update(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to new_question_master_path
+  end
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_question_master
@@ -63,6 +70,6 @@ class QuestionMastersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def question_master_params
-      params.require(:question_master).permit(:code, :name, :description)
+      params.require(:question_master).permit(:is_confirm,:code, :name, :description)
     end
 end

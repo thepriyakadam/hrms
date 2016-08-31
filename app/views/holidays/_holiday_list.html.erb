@@ -16,8 +16,12 @@
         <td><%= holiday.description %></td>
         <td><%= holiday.holiday_date %></td>
         <td>
-          <%= link_to '', edit_holiday_path(holiday),class: 'btn btn-success btn-sm fa fa-edit',remote:true %>
-          <%= link_to '',  holiday, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-sm fa fa-close' %>
+          <% if holiday.is_taken == true %>
+            <small class= "label label-primary">Taken</small>
+          <% else %>
+            <%= link_to '', edit_holiday_path(holiday),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
+            <%= link_to '',  holiday, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
+          <% end %>
         </td>
       </tr>
     <% end %>

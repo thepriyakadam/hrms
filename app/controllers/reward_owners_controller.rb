@@ -43,6 +43,13 @@ class RewardOwnersController < ApplicationController
     @reward_owners = RewardOwner.all
   end
 
+  def is_confirm
+    @reward_owner = RewardOwner.find(params[:reward_owner])
+    RewardOwner.find(@reward_owner.id).update(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to new_reward_owner_path
+  end
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_reward_owner
@@ -51,6 +58,6 @@ class RewardOwnersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def reward_owner_params
-      params.require(:reward_owner).permit(:code, :name, :description, :status)
+      params.require(:reward_owner).permit(:is_confirm,:code, :name, :description, :status)
     end
 end

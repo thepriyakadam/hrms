@@ -53,6 +53,13 @@ class TravelModesController < ApplicationController
     @travel_modes = TravelMode.all
   end
 
+  def is_confirm
+    @travel_mode = TravelMode.find(params[:travel_mode])
+    TravelMode.find(@travel_mode.id).update(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to new_travel_mode_path
+  end
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_travel_mode
@@ -61,6 +68,6 @@ class TravelModesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def travel_mode_params
-      params.require(:travel_mode).permit(:code, :name, :description)
+      params.require(:travel_mode).permit(:is_confirm,:code, :name, :description)
     end
 end

@@ -57,6 +57,13 @@ class AboutBossesController < ApplicationController
     @about_bosses = AboutBoss.all
   end
 
+  def is_confirm
+    @about_boss = AboutBoss.find(params[:about_boss])
+    AboutBoss.find(@about_boss.id).update(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to new_about_boss_path
+  end
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_about_boss
@@ -65,6 +72,6 @@ class AboutBossesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def about_boss_params
-      params.require(:about_boss).permit(:code, :name, :description, :status)
+      params.require(:about_boss).permit(:is_confirm,:code, :name, :description, :status)
     end
 end

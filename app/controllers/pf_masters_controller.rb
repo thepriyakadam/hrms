@@ -76,6 +76,12 @@ class PfMastersController < ApplicationController
     @pf_masters = PfMaster.all
   end
 
+  def is_confirm
+    @pf_master = PfMaster.find(params[:pf_master])
+    PfMaster.find(@pf_master.id).update(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to new_pf_master_path
+  end
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -85,6 +91,6 @@ class PfMastersController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def pf_master_params
-    params.require(:pf_master).permit(:is_pf, :percentage, :date_effective, :min_limit, :base_component, :is_active)
+    params.require(:pf_master).permit(:is_confirm,:is_pf, :percentage, :date_effective, :min_limit, :base_component, :is_active)
   end
 end

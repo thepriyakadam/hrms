@@ -58,6 +58,13 @@ class RewardTypesController < ApplicationController
     @reward_types = RewardType.all
   end
 
+  def is_confirm
+    @reward_type = RewardType.find(params[:reward_type])
+    RewardType.find(@reward_type.id).update(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to new_reward_type_path
+  end
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_reward_type
@@ -66,6 +73,6 @@ class RewardTypesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def reward_type_params
-      params.require(:reward_type).permit(:code, :name, :description, :status)
+      params.require(:reward_type).permit(:is_confirm,:code, :name, :description, :status)
     end
 end

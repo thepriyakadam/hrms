@@ -42,6 +42,13 @@ class DegreesController < ApplicationController
     @degrees = Degree.all
   end
 
+  def is_confirm
+    @degree = Degree.find(params[:degree])
+    Degree.find(@degree.id).update(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to new_degree_path
+  end
+  
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -51,6 +58,6 @@ class DegreesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def degree_params
-    params.require(:degree).permit(:name)
+    params.require(:degree).permit(:is_confirm,:name)
   end
 end

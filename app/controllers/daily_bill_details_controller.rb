@@ -258,8 +258,8 @@ def create
       ReportingMastersTravelRequest.where(reporting_master_id: @reporting_masters_travel_requests2.reporting_master_id).update_all(status: "true")
       TravelRequest.where(id: @travel_request.id).update_all(reporting_master_id: @reporting_masters_travel_requests3.reporting_master_id)
       flash[:notice] = 'Daily Bill Request Send To Higher Authority For Approval'
-
-      elsif @reporting_masters_travel_requests3 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,status: nil)[2]
+     
+     elsif @reporting_masters_travel_requests3 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,status: nil)[2]
       ReportingMastersTravelRequest.where(reporting_master_id: @reporting_masters_travel_requests3.reporting_master_id).update_all(status: "true")
       TravelRequest.where(id: @travel_request.id).update_all(reporting_master_id: @reporting_masters_travel_requests4.reporting_master_id)
       flash[:notice] = 'Daily Bill Request Send To Higher Authority For Approval'
@@ -298,30 +298,6 @@ def create
     end
       redirect_to travel_request_list_daily_bill_details_path
   end
-
-  # def approve_request
-  #   @daily_bill_detail_ids = params[:daily_bill_detail_ids]
-  #   if @daily_bill_detail_ids.nil?
-  #     flash[:alert] = "Please Select the Checkbox"
-  #     redirect_to travel_request_list_daily_bill_details_path
-  #   else
-  #     @daily_bill_detail_ids.each do |did|
-  #     @daily_bill_detail = DailyBillDetail.find(did)
-  #     @daily_bill_detail.update(request_status: "Approved") 
-  #     flash[:notice] = "Approved Successfully"
-  #   end 
-  #    redirect_to travel_request_list_daily_bill_details_path
-  # end
-  # session[:active_tab] ="travelmgmt"
-  # end
-  
-  # def approve_request
-  #   # byebug
-  #   @daily_bill_detail = DailyBillDetail.find(params[:format])
-  #   @daily_bill_detail.update(request_status: "Approved")
-  #   flash[:alert] = 'Daily Bill Request Approved'
-  #   redirect_to travel_request_list_daily_bill_details_path
-  # end
 
   def reject_request
     # byebug

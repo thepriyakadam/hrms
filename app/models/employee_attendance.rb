@@ -2,7 +2,6 @@ class EmployeeAttendance < ActiveRecord::Base
   belongs_to :employee
   belongs_to :employee_leav_request
 
-
   def is_holiday?
   	 a = self.day
   	start_date = a.beginning_of_month

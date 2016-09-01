@@ -124,8 +124,18 @@ class LeaveCOffsController < ApplicationController
   # DELETE /leave_c_offs/1
   # DELETE /leave_c_offs/1.json
   def destroy
-    @leave_c_off.destroy
     @leave_c_offs = LeaveCOff.all
+    leav_category = LeavCategory.find_by_name('C.Off')
+    @employee_leave_balance = EmployeeLeavBalance.where(employee_id: @leave_c_off.employee_id,leav_category_id: leav_category.id).take
+    
+    if @leave_c_off.c_off_type == 'Full Day'
+      @employee_leave_balance.total_leave = @employee_leave_balance.total_leave.to_f - 1
+      @employee_leave_balance.no_of_leave = @employee_leave_balance.no_of_leave.to_f - 1
+    else
+      @employee_leave_balance.total_leave = @employee_leave_balance.total_leave.to_f - 0.5
+      @employee_leave_balance.no_of_leave = @employee_leave_balance.no_of_leave.to_f - 0.5
+    end
+      @leave_c_off.destroy
   end
 
   def search_by_c_off_date

@@ -55,6 +55,13 @@ class TrainingTopicMastersController < ApplicationController
    @training_topic_masters = TrainingTopicMaster.all
   end
 
+  def is_confirm
+    @training_topic_master = TrainingTopicMaster.find(params[:training_topic_master])
+    TrainingTopicMaster.find(@training_topic_master.id).update(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to new_training_topic_master_path
+  end
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_training_topic_master
@@ -63,6 +70,6 @@ class TrainingTopicMastersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def training_topic_master_params
-      params.require(:training_topic_master).permit(:code, :name, :description, :status)
+      params.require(:training_topic_master).permit(:is_confirm,:code, :name, :description, :status)
     end
 end

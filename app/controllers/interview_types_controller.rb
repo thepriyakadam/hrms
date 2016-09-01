@@ -57,6 +57,13 @@ class InterviewTypesController < ApplicationController
     @interview_types = InterviewType.all
   end
 
+  def is_confirm
+    @interview_type = InterviewType.find(params[:interview_type])
+    InterviewType.find(@interview_type.id).update(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to new_interview_type_path
+  end
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_interview_type
@@ -65,6 +72,6 @@ class InterviewTypesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def interview_type_params
-      params.require(:interview_type).permit(:code, :name, :description)
+      params.require(:interview_type).permit(:is_confirm,:code, :name, :description)
     end
 end

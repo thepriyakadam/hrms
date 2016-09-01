@@ -73,15 +73,47 @@ module EmployeeAttendancesHelper
   #   exist.select {|k,v| leave.member?(v)}.count
   # end
 
-  def pay_leave_count(date, employee)
-    leave = LeavCategory.where(is_payble: true).collect {|c| c.code }
-    EmployeeAttendance.where("strftime('%m/%Y',day) = ?", date.strftime('%m/%Y')).where(employee_id: employee.employee_id,present:leave).sum(:count).to_f
-  end
+  # def pay_leave_count(date, employee)
+  #   leave = LeavCategory.where(is_payble: true).collect {|c| c.code }
+  #   EmployeeAttendance.where("strftime('%m/%Y',day) = ?", date.strftime('%m/%Y')).where(employee_id: employee.employee_id,present:leave).sum(:count).to_f
+  # end
 
-  def non_pay_leave_count(date, employee)
-    leave = LeavCategory.where(is_payble: false).collect {|c| c.code }
-    EmployeeAttendance.where("strftime('%m/%Y',day) = ?", date.strftime('%m/%Y')).where(employee_id: employee.employee_id,present:leave).sum(:count).to_f
-  end  
+  # def non_pay_leave_count(date, employee)
+  #   leave = LeavCategory.where(is_payble: false).collect {|c| c.code }
+  #   EmployeeAttendance.where("strftime('%m/%Y',day) = ?", date.strftime('%m/%Y')).where(employee_id: employee.employee_id,present:leave).sum(:count).to_f
+  # end
+
+  def create_leave(date,employee)
+    arr = []
+    attendances = EmployeeAttendance.where("strftime('%m/%Y',day) = ?", date.strftime('%m/%Y')).where(employee_id: employee.employee_id).where.not(employee_leav_request_id: nil)
+    half_leave = 0
+    full_leave = 0
+    pay_leave = 0
+    non_pay_leave = 0
+    attendances.each do |a|
+      if a.employee_leav_request.leave_type == "Full Day"
+        full_leave = full_leave + 1
+        if a.employee_leav_request.leav_category.is_payble
+          pay_leave = pay_leave + 1
+        else
+          non_pay_leave = non_pay_leave + 1
+        end
+      else
+        half_leave = half_leave + 0.5
+        if a.employee_leav_request.leav_category.is_payble
+          pay_leave = pay_leave + 0.5
+        else
+          non_pay_leave = non_pay_leave + 0.5
+        end
+      end
+      
+    end
+    arr << half_leave
+    arr << full_leave
+    arr << pay_leave
+    arr << non_pay_leave
+    arr
+  end
 
   # def half_pay_leave_count(exist)
   #   exist.select {|k,v| v == "P/2" }.count/2

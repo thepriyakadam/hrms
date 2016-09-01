@@ -57,6 +57,13 @@ class InterviewEvalutionsController < ApplicationController
     @interview_evalutions = InterviewEvalution.all
   end
 
+  def is_confirm
+    @interview_evalution = InterviewEvalution.find(params[:interview_evalution])
+    InterviewEvalution.find(@interview_evalution.id).update(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to new_interview_evalution_path
+  end
+  
   private
 
     # Use callbacks to share common setup or constraints between actions.
@@ -66,6 +73,6 @@ class InterviewEvalutionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def interview_evalution_params
-      params.require(:interview_evalution).permit(:code, :name, :description)
+      params.require(:interview_evalution).permit(:is_confirm,:code, :name, :description)
     end
 end

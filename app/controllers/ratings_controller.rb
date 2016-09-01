@@ -42,6 +42,13 @@ class RatingsController < ApplicationController
     @ratings = Rating.all
   end
 
+  def is_confirm
+    @rating = Rating.find(params[:rating])
+    Rating.find(@rating.id).update(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to new_rating_path
+  end
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_rating
@@ -50,6 +57,6 @@ class RatingsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def rating_params
-      params.require(:rating).permit(:value, :discription)
+      params.require(:rating).permit(:is_confirm,:value, :discription)
     end
 end

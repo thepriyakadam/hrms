@@ -1,7 +1,7 @@
+require 'query_report/helper'  # need to require the helper
 class CountriesController < ApplicationController
   before_action :set_country, only: [:show, :edit, :update, :destroy]
-
-  
+   include QueryReport::Helper  # need to include it
   def show
   end
 
@@ -45,6 +45,13 @@ class CountriesController < ApplicationController
   def destroy
     @country.destroy
     @countries = Country.all
+  end
+  def list_country
+    reporter(Country.filter_records(current_user), template_class: PdfReportTemplate) do
+      column(:ID, sortable: true) { |country| country.id }
+      column(:Code, sortable: true) { |country| country.code }
+      column(:Name, sortable: true) { |country| country.name }
+    end
   end
 
   private

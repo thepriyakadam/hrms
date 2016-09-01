@@ -43,6 +43,12 @@ class PaymentModesController < ApplicationController
     @payment_modes = PaymentMode.all
   end
 
+  def is_confirm
+    @payment_mode = PaymentMode.find(params[:payment_mode])
+    PaymentMode.find(@payment_mode.id).update(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to new_payment_mode_path
+  end
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -52,6 +58,6 @@ class PaymentModesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def payment_mode_params
-    params.require(:payment_mode).permit(:code, :name, :description)
+    params.require(:payment_mode).permit(:is_confirm,:code, :name, :description)
   end
 end

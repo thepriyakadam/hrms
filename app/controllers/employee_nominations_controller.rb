@@ -30,18 +30,19 @@ class EmployeeNominationsController < ApplicationController
   def create
     @employee_nomination = EmployeeNomination.new(employee_nomination_params)
     @employee = Employee.find(params[:employee_nomination][:employee_id])
-    respond_to do |format|
-      if @employee_nomination.save
-        format.html { redirect_to @employee_nomination, notice: 'Nominies was successfully created.' }
-        format.json { render :show, status: :created, location: @employee_nomination }
-        @employee_nominations = @employee.employee_nominations
-        format.js { @flag = true }
+
+    @nomination_master = NominationMaster.find(params[:employee_nomination][:nomination_master_id])
+    nomination_sum = @employee_nomination.nomination_sum(@nomination_master,@employee_nomination,@employee)
+      if nomination_sum > 100
+        flash[:alert] = "Nomination sum should be less then or equal to 100%"
+        @flag = false
+        redirect_to employees_path(@employee.id)
       else
-        format.html { render :new }
-        format.json { render json: @employee_nomination.errors, status: :unprocessable_entity }
-        format.js { @flag = false }
+        @employee_nomination.save
+        @employee_nominations = @employee.employee_nominations
+        @flag = true
+        redirect_to employees_path(@employee.id)
       end
-    end
   end
   
   # PATCH/PUT /employee_nominations/1

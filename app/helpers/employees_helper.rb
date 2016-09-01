@@ -7,8 +7,6 @@ module EmployeesHelper
   Employee.where(status: "Active").collect {|e| [e.try(:manual_employee_code).to_s + ' ' + e.try(:first_name).to_s+ ' ' + e.try(:middle_name).to_s + ' ' + e.try(:last_name).to_s, e.id]}
   end
 
-
-
   def all_blood_group
     BloodGroup.all.collect { |x| [x.name, x.id] }
   end

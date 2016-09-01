@@ -115,6 +115,7 @@ def create
     reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
     @reporting_master = ReportingMaster.find(@travel_request.reporting_master_id)
     @employee = Employee.find(@reporting_master.employee_id)
+    @travel_expences = TravelExpence.where(travel_request_id: @travel_request.id)
     # @reporting_master = ReportingMaster.find(@daily_bill_detail.reporting_master_id)
     # @employee1 = Employee.find(@reporting_master.employee_id)
     @daily_bill_details = DailyBillDetail.where(travel_request_id: @travel_request.id)
@@ -248,6 +249,20 @@ def create
 
      # @reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
      #  ReportingMastersTravelRequest.where(id: @travel_request.id,reporting_master_id: @reporting_masters).update_all(travel_status: "Approved")
+
+    c1 = @travel_request.total_advance - @travel_request.expense
+
+    if ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id).pluck(:status).last == true  && ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id).pluck(:travel_status).last == "Approved"
+      TravelExpence.where(travel_request_id: @travel_request.id).update_all(total_expence_amount: @travel_request.expense,remaining_amount: c1)
+    else
+      flash[:notice] = 'Not Yet Approved'
+    end
+
+    if c1<0
+       TravelExpence.where(travel_request_id: @travel_request.id).update_all(employee_amount: c1.abs)
+      else
+        TravelExpence.where(travel_request_id: @travel_request.id).update_all(company_amount: c1.abs)
+    end
 
      if @reporting_masters_travel_requests1 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,status: nil)[0]
       ReportingMastersTravelRequest.where(reporting_master_id: @reporting_masters_travel_requests1.reporting_master_id).update_all(status: "true")

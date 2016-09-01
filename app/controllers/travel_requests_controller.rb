@@ -100,8 +100,13 @@ class TravelRequestsController < ApplicationController
       @travel_request.update(current_status: "Approved")
       TravelRequestHistory.create(employee_id: @travel_request.employee_id,travel_request_id: @travel_request.id,application_date: @travel_request.application_date,traveling_date: @travel_request.traveling_date, tour_purpose: @travel_request.tour_purpose, place: @travel_request.place,total_advance: @travel_request.total_advance,reporting_master_id: @travel_request.reporting_master_id, travel_option_id: @travel_request.travel_option_id,current_status: "Approved")
       # ReportingMastersTravelRequest.create(reporting_master_id: @travel_request.reporting_master_id, travel_request_id: @travel_request.id)
-      @reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
-      ReportingMastersTravelRequest.where(reporting_master_id: @reporting_masters).update_all(travel_status: "Approved")
+      # @reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
+      @reporting_masters = ReportingMaster.where(employee_id: current_user.employee_id).pluck(:id)
+      ReportingMastersTravelRequest.where(reporting_master_id: @reporting_masters,travel_request_id: @travel_request.id).update_all(travel_status: "Approved")
+      TravelExpence.create(travel_request_id: @travel_request.id,total_advance_amount: @travel_request.total_advance)
+      # @reporting_masters_travel_requests = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,reporting_master_id: @reporting_masters)
+      # @reporting_masters_travel_requests.update(travel_status: "Approved")
+      # ReportingMastersTravelRequest.where(reporting_master_id: @reporting_masters).update_all(travel_status: "Approved")
       TravelRequestMailer.approve_travel_request_email(@travel_request).deliver_now
       flash[:notice] = 'Travel Request Approved'
       redirect_to travel_history_travel_requests_path
@@ -111,7 +116,9 @@ class TravelRequestsController < ApplicationController
     @travel_request = TravelRequest.find(params[:format])
     @travel_request.update(current_status: "Reject")
     TravelRequestHistory.create(employee_id: @travel_request.employee_id,travel_request_id: @travel_request.id,employee_id: @travel_request.id,application_date: @travel_request.application_date,traveling_date: @travel_request.traveling_date, tour_purpose: @travel_request.tour_purpose, place: @travel_request.place,total_advance: @travel_request.total_advance,reporting_master_id: @travel_request.reporting_master_id, travel_option_id: @travel_request.travel_option_id,current_status: "Reject")
-    ReportingMastersTravelRequest.create(reporting_master_id: @travel_request.reporting_master_id, travel_request_id: @travel_request.id, travel_status: "Reject")
+    # ReportingMastersTravelRequest.create(reporting_master_id: @travel_request.reporting_master_id, travel_request_id: @travel_request.id, travel_status: "Reject")
+    @reporting_masters = ReportingMaster.where(employee_id: current_user.employee_id).pluck(:id)
+    ReportingMastersTravelRequest.where(reporting_master_id: @reporting_masters,travel_request_id: @travel_request.id).update_all(travel_status: "Reject")
     TravelRequestMailer.reject_travel_request_email(@travel_request).deliver_now
     flash[:alert] = 'Travel Request Rejected'
     redirect_to travel_history_travel_requests_path
@@ -124,75 +131,12 @@ class TravelRequestsController < ApplicationController
     @travel_request.update(current_status: "Approved & Send Next",reporting_master_id: params[:travel_request][:reporting_master_id])
     TravelRequestHistory.create(employee_id: @travel_request.employee_id,travel_request_id: @travel_request.id,application_date: @travel_request.application_date,traveling_date: @travel_request.traveling_date, tour_purpose: @travel_request.tour_purpose, place: @travel_request.place,total_advance: @travel_request.total_advance,reporting_master_id: @travel_request.reporting_master_id, travel_option_id: @travel_request.travel_option_id,current_status: "Approved & Send Next")
     ReportingMastersTravelRequest.create(travel_request_id: @travel_request.id, reporting_master_id: params[:travel_request][:reporting_master_id])
-    @reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
-    # @travel_requests = TravelRequest.where(reporting_master_id: @reporting_masters)
-    ReportingMastersTravelRequest.where(reporting_master_id: @reporting_masters).update_all(travel_status: "Approved & Send Next")
-
-    # @reporting_masters_travel_requests1 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,travel_status: nil)[0]
-    # @reporting_masters_travel_requests2 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,travel_status: nil)[1]
-    # @reporting_masters_travel_requests3 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,travel_status: nil)[2]
-    # @reporting_masters_travel_requests4 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,travel_status: nil)[3]
-    # @reporting_masters_travel_requests5 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,travel_status: nil)[4]
-    # @reporting_masters_travel_requests6 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,travel_status: nil)[5]
-    # @reporting_masters_travel_requests7 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,travel_status: nil)[6]
-    # @reporting_masters_travel_requests8 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,travel_status: nil)[7]
-
-
-    #  if @reporting_masters_travel_requests1 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,travel_status: nil)[0]
-    #   ReportingMastersTravelRequest.where(reporting_master_id: @reporting_masters_travel_requests1.reporting_master_id).update_all(travel_status: "Approved & Send Next")
-    #   flash[:notice] = 'Daily Bill Request_1'
-
-    #  elsif @reporting_masters_travel_requests2 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,travel_status: nil)[1]
-    #   ReportingMastersTravelRequest.where(reporting_master_id: @reporting_masters_travel_requests2.reporting_master_id).update_all(travel_status: "Approved & Send Next")
-    #   flash[:notice] = 'Daily Bill Request_2'
-
-    #   elsif @reporting_masters_travel_requests3 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,travel_status: nil)[2]
-    #   ReportingMastersTravelRequest.where(reporting_master_id: @reporting_masters_travel_requests3.reporting_master_id).update_all(travel_status: "Approved & Send Next")
-    #   flash[:notice] = 'Daily Bill Request_3'
-
-    #   elsif @reporting_masters_travel_requests4 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,travel_status: nil)[3]
-    #   ReportingMastersTravelRequest.where(reporting_master_id: @reporting_masters_travel_requests4.reporting_master_id).update_all(travel_status: "Approved & Send Next")
-    #   flash[:notice] = 'Daily Bill Request_4'
-
-    #   elsif @reporting_masters_travel_requests5 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,travel_status: nil)[4]
-    #   ReportingMastersTravelRequest.where(reporting_master_id: @reporting_masters_travel_requests5.reporting_master_id).update_all(travel_status: "Approved & Send Next")
-    #   flash[:notice] = 'Daily Bill Request_5'
-
-    #   elsif @reporting_masters_travel_requests6 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,status: nil)[5]
-    #   ReportingMastersTravelRequest.where(reporting_master_id: @reporting_masters_travel_requests6.reporting_master_id).update_all(travel_status: "Approved & Send Next")
-    #   flash[:notice] = 'Daily Bill Request_6'
-
-    #   elsif @reporting_masters_travel_requests7 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,travel_status: nil)[6]
-    #   ReportingMastersTravelRequest.where(reporting_master_id: @reporting_masters_travel_requests7.reporting_master_id).update_all(travel_status: "Approved & Send Next")
-    #   flash[:notice] = 'Daily Bill Request_7'
-
-    #   elsif @reporting_masters_travel_requests8 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,travel_status: nil)[7]
-    #   ReportingMastersTravelRequest.where(reporting_master_id: @reporting_masters_travel_requests8.reporting_master_id).update_all(travel_status: "Approved & Send Next")
-    #   flash[:notice] = 'Daily Bill Request_8'
-    # else
-    #   flash[:alert] = 'No Reporting Manager is present'
-    #end
+    # @reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
+    @reporting_masters = ReportingMaster.where(employee_id: current_user.employee_id).pluck(:id)
+    ReportingMastersTravelRequest.where(reporting_master_id: @reporting_masters,travel_request_id: @travel_request.id).update_all(travel_status: "Approved & Send Next")
     flash[:notice] = 'Travel Request Send to Higher Authority for Approval'
     redirect_to travel_history_travel_requests_path
   end
-
-  # def send_request_to_higher_authority
-  #   @vacancy_master = VacancyMaster.find(params[:id])
-  #   @particular_vacancy_requests = ParticularVacancyRequest.where(vacancy_master_id: @vacancy_master.id)
-  #   # len = @vacancy_master.no_of_position
-  #   #   for i in 1..len
-  #   #    ParticularVacancyRequest.create(vacancy_master_id: @vacancy_master.id,employee_id: @vacancy_master.employee_id,employee_designation_id: @vacancy_master.employee_designation_id,vacancy_name: @vacancy_master.vacancy_name,fulfillment_date: @vacancy_master.vacancy_post_date,status: "Approved & Send Next")
-  #   #   end
-  #   @particular_vacancy_requests.each do |p|
-  #     p.update(status: "Approved & Send Next")
-  #   end 
-  #   VacancyMasterMailer.approve_and_send_next_email(@vacancy_master).deliver_now
-  #   @vacancy_master.update(current_status: "Approved & Send Next",reporting_master_id: params[:vacancy_master][:reporting_master_id])
-  #   VacancyRequestHistory.create(vacancy_master_id: @vacancy_master.id, vacancy_name: @vacancy_master.vacancy_name,no_of_position: @vacancy_master.no_of_position,description: @vacancy_master.description,vacancy_post_date: @vacancy_master.vacancy_post_date,budget: @vacancy_master.budget,department_id: @vacancy_master.department_id,employee_designation_id: @vacancy_master.employee_designation_id,company_location_id: @vacancy_master.company_location_id,degree_id: @vacancy_master.degree_id,degree_1_id: @vacancy_master.degree_1_id,degree_2_id: @vacancy_master.degree_2_id,experience: @vacancy_master.experience,keyword: @vacancy_master.keyword,other_organization: @vacancy_master.other_organization,industry: @vacancy_master.industry,reporting_master_id: @vacancy_master.reporting_master_id,current_status: @vacancy_master.current_status,employee_id: @vacancy_master.employee_id,justification: @vacancy_master.justification)
-  #   ReportingMastersVacancyMaster.create(vacancy_master_id: @vacancy_master.id, reporting_master_id: params[:vacancy_master][:reporting_master_id], vacancy_status: "Approved & Send Next")
-  #   flash[:notice] = 'Vacancy Send to Higher Authority'
-  #   redirect_to vacancy_history_vacancy_masters_path
-  # end
 
   def modal
      @travel_request = TravelRequest.find(params[:format])
@@ -279,14 +223,7 @@ class TravelRequestsController < ApplicationController
     redirect_to travel_history_travel_requests_path
   end
 
-  # def edit_and_approve_modal_submit
-  #   @travel_request = TravelRequest.find(params[:id])
-  #   @travel_request.update(current_status: "Edit & Approved")
-  #   TravelRequestHistory.create(travel_request_id: @travel_request.id,application_date: @travel_request.application_date,traveling_date: @travel_request.traveling_date, tour_purpose: @travel_request.tour_purpose, place: @travel_request.place,total_advance: @travel_request.total_advance,reporting_master_id: @travel_request.reporting_master_id, travel_option_id: @travel_request.travel_option_id,current_status: @travel_request.current_status)
-  #   ReportingMastersTravelRequest.create(reporting_master_id: @travel_request.reporting_master_id, travel_request_id: @travel_request.id, travel_status: "Edit And Approved")
-  #   flash[:notice] = 'Travel Request Edited & Approved Successfully'
-  #   redirect_to travel_history_travel_requests_path
-  # end
+
   
   def is_confirm
     @travel_request = TravelRequest.find(params[:travel_id])

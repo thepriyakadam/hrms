@@ -81,12 +81,27 @@ class EmployeeAttendancesController < ApplicationController
     present = params[:employee_attendances][:present]
     #department = params[:employee_attendances][:department_id]
     @employee = Employee.where(id: @employee_ids)
+    
+    # @employee_ids.each do |e|
+    #   @employee_attendance = EmployeeAttendance.where(employee_id: e)
+
+    #   if @employee_attendance.is_holiday?
+    #     start_date = day.beginning_of_month
+    #     end_date = day.end_of_month
+    #     start_date.step(end_date).each do |d|
+    #      Holiday.find_by(holiday_date: d).update(is_taken: true)
+    #     end
+    #   else
+    #   end
+    # end
+
     if @employee_ids.nil?
       flash[:alert] = "Please Select the Checkbox"
     else
       @employee_ids.each do |eid|
         @emp = Employee.find_by_id(eid)
       EmployeeAttendance.create(employee_id: eid,day: day,present: present,department_id: @emp.department_id, is_confirm: false)  
+      #Holiday.where(holiday_date: day).update_all(is_taken: true)
       flash[:notice] = "Created successfully"
       end
     end

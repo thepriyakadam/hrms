@@ -35,6 +35,13 @@ class PeriodsController < ApplicationController
     @periods = Period.all
 	end
 
+  def is_confirm
+    @period = Period.find(params[:period])
+    Period.find(@period.id).update(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to periods_path
+  end
+
 	private
 
     def set_period
@@ -42,6 +49,6 @@ class PeriodsController < ApplicationController
 	 end
 
     def period_params
-      params.require(:period).permit(:name, :from, :to, :status)
+      params.require(:period).permit(:is_confirm,:name, :from, :to, :status)
 	 end
 end

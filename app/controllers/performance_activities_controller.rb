@@ -44,6 +44,13 @@ class PerformanceActivitiesController < ApplicationController
     @performance_activities = PerformanceActivity.all 
   end
 
+  def is_confirm
+    @performance_activity = PerformanceActivity.find(params[:performance_activity])
+    PerformanceActivity.find(@performance_activity.id).update(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to new_performance_activity_path
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_performance_activity
@@ -52,6 +59,6 @@ class PerformanceActivitiesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def performance_activity_params
-      params.require(:performance_activity).permit(:code, :name, :description)
+      params.require(:performance_activity).permit(:is_confirm,:code, :name, :description)
     end
 end

@@ -43,6 +43,13 @@ class UniversitiesController < ApplicationController
     @universities = University.all
   end
 
+  def is_confirm
+    @university = University.find(params[:university])
+    University.find(@university.id).update(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to new_university_path
+  end
+  
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -52,6 +59,6 @@ class UniversitiesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def university_params
-    params.require(:university).permit(:name)
+    params.require(:university).permit(:is_confirm,:name)
   end
 end

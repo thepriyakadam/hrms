@@ -56,6 +56,13 @@ class ProjectMastersController < ApplicationController
     @project_masters = ProjectMaster.all
   end
 
+  def is_confirm
+    @project_master = ProjectMaster.find(params[:project_master])
+    ProjectMaster.find(@project_master.id).update(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to new_project_master_path
+  end
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_project_master
@@ -64,6 +71,6 @@ class ProjectMastersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def project_master_params
-      params.require(:project_master).permit(:code, :name, :description)
+      params.require(:project_master).permit(:is_confirm,:code, :name, :description)
     end
 end

@@ -53,6 +53,13 @@ class PerformanceCalendarsController < ApplicationController
     @performance_calendars = PerformanceCalendar.all
   end
 
+  def is_confirm
+    @performance_calendar = PerformanceCalendar.find(params[:performance_calendar])
+    PerformanceCalendar.find(@performance_calendar.id).update(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to new_performance_calendar_path
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_performance_calendar
@@ -61,6 +68,6 @@ class PerformanceCalendarsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def performance_calendar_params
-      params.require(:performance_calendar).permit(:period_id, :performance_activity_id, :start_date, :end_date)
+      params.require(:performance_calendar).permit(:is_confirm,:period_id, :performance_activity_id, :start_date, :end_date)
     end
 end

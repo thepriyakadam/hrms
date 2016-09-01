@@ -3,6 +3,7 @@ class DailyBillDetail < ActiveRecord::Base
   belongs_to :travel_expence_type
   belongs_to :reporting_masters
   belongs_to :currency_master
+  belongs_to :employee
   has_many :daily_bill_detail_histories
   has_many :reportiong_masters_travel_requests
   validates :expence_date, presence: true

@@ -553,7 +553,7 @@ end
       get :edit_and_send_next_modal
       post :edit_and_send_next_modal_submit
       get :edit_and_approve_modal
-      patch :edit_and_approve_modal_submit
+      post :edit_and_approve_modal_submit
       get :is_confirm
     end
   end

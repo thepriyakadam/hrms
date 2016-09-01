@@ -44,6 +44,13 @@ class OvertimeMastersController < ApplicationController
     @overtime_masters = OvertimeMaster.all
   end
 
+  def is_confirm
+    @overtime_master = OvertimeMaster.find(params[:overtime_master])
+    OvertimeMaster.find(@overtime_master.id).update(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to new_overtime_master_path
+  end
+  
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -53,6 +60,6 @@ class OvertimeMastersController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def overtime_master_params
-    params.require(:overtime_master).permit(:is_over_time, :day, :company_hrs, :ot_rate, :is_esic, :status)
+    params.require(:overtime_master).permit(:is_confirm,:is_over_time, :day, :company_hrs, :ot_rate, :is_esic, :status)
   end
 end

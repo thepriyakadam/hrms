@@ -89,6 +89,13 @@ class RootCauseMastersController < ApplicationController
     @root_cause_masters = RootCauseMaster.all
   end
 
+  def is_confirm
+    @root_cause_master = RootCauseMaster.find(params[:root_cause_master])
+    RootCauseMaster.find(@root_cause_master.id).update(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to new_root_cause_master_path
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_root_cause_master
@@ -97,6 +104,6 @@ class RootCauseMastersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def root_cause_master_params
-      params.require(:root_cause_master).permit(:code, :name, :description)
+      params.require(:root_cause_master).permit(:is_confirm,:code, :name, :description)
     end
 end

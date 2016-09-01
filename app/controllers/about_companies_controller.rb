@@ -55,6 +55,13 @@ class AboutCompaniesController < ApplicationController
     @about_companies = AboutCompany.all
   end
 
+  def is_confirm
+    @about_company = AboutCompany.find(params[:about_company])
+    AboutCompany.find(@about_company.id).update(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to new_about_company_path
+  end
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_about_company
@@ -63,6 +70,6 @@ class AboutCompaniesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def about_company_params
-      params.require(:about_company).permit(:code, :name, :description, :status)
+      params.require(:about_company).permit(:is_confirm,:code, :name, :description, :status)
     end
 end

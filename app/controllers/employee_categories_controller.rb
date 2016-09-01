@@ -41,6 +41,13 @@ class EmployeeCategoriesController < ApplicationController
     @employee_categories = EmployeeCategory.all
   end
 
+  def is_confirm
+    @employee_category = EmployeeCategory.find(params[:employee_category])
+    EmployeeCategory.find(@employee_category.id).update(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to new_employee_category_path
+  end
+  
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -50,6 +57,6 @@ class EmployeeCategoriesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def employee_category_params
-    params.require(:employee_category).permit(:code, :name, :description)
+    params.require(:employee_category).permit(:is_confirm,:code, :name, :description)
   end
 end

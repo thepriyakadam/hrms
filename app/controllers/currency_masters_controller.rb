@@ -35,7 +35,15 @@ class CurrencyMastersController < ApplicationController
 	def destroy
     @currency_master.destroy
     @currency_masters = CurrencyMaster.all
+    redirect_to currency_masters_path
 	end
+
+	def is_confirm
+    @currency_master = CurrencyMaster.find(params[:currency_master])
+    CurrencyMaster.find(@currency_master.id).update(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to currency_masters_path
+  end
 
 	private
 
@@ -44,6 +52,6 @@ class CurrencyMastersController < ApplicationController
 	  end
 
     def currency_master_params
-      params.require(:currency_master).permit(:code, :name, :description)
+      params.require(:currency_master).permit(:is_confirm,:code, :name, :description)
 	  end
 end

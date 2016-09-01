@@ -44,6 +44,13 @@ class ReligionsController < ApplicationController
     @religions = Religion.all
   end
 
+  def is_confirm
+    @religion = Religion.find(params[:religion])
+    Religion.find(@religion.id).update(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to new_religion_path
+  end
+  
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -53,6 +60,6 @@ class ReligionsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def religion_params
-    params.require(:religion).permit(:name, :code, :description)
+    params.require(:religion).permit(:is_confirm,:name, :code, :description)
   end
 end

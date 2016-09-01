@@ -37,6 +37,13 @@ class BloodGroupsController < ApplicationController
     @blood_groups = BloodGroup.all
   end
 
+  def is_confirm
+    @blood_group = BloodGroup.find(params[:blood_group])
+    BloodGroup.find(@blood_group.id).update(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to new_blood_group_path
+  end
+  
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -46,6 +53,6 @@ class BloodGroupsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def blood_group_params
-    params.require(:blood_group).permit(:name)
+    params.require(:blood_group).permit(:is_confirm,:name)
   end
 end

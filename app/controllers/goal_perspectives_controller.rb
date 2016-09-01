@@ -55,6 +55,13 @@ class GoalPerspectivesController < ApplicationController
     @goal_perspectives = GoalPerspective.all
   end
 
+  def is_confirm
+    @goal_perspective = GoalPerspective.find(params[:goal_perspective])
+    GoalPerspective.find(@goal_perspective.id).update(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to new_goal_perspective_path
+  end
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_goal_perspective
@@ -63,6 +70,6 @@ class GoalPerspectivesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def goal_perspective_params
-      params.require(:goal_perspective).permit(:name)
+      params.require(:goal_perspective).permit(:is_confirm,:name)
     end
 end

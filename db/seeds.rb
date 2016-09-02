@@ -396,7 +396,12 @@ Employee.new do |e|
   e.gender = ex.cell(line,'Y')
   @religion = Religion.find_by_name(ex.cell(line,'Z'))
   e.religion_id = @religion.id unless @religion.nil?
-  
+  @depart = Departmnet.find_by_name(ex.cell(line,'AA'))
+  e.department_id @depart.id unless @depart.nil?
+  @company_loc = CompanyLocation.find_by_name(ex.cell(line,'AB'))
+  e.company_location_id @company_loc.id unless @company_loc.nil?
+  @comp = Company.find_by_name(ex.cell(line,'AC'))
+  e.company_id @comp.id unless @comp.nil?
   e.save!
 end
 end

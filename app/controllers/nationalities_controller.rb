@@ -37,6 +37,13 @@ class NationalitiesController < ApplicationController
     @nationalities = Nationality.all
   end
 
+  def is_confirm
+    @nationality = Nationality.find(params[:nationality])
+    Nationality.find(@nationality.id).update(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to new_nationality_path
+  end
+  
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -46,6 +53,6 @@ class NationalitiesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def nationality_params
-    params.require(:nationality).permit(:name)
+    params.require(:nationality).permit(:is_confirm,:name)
   end
 end

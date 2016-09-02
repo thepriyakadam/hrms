@@ -56,6 +56,13 @@ class NominationMastersController < ApplicationController
      @nomination_masters = NominationMaster.all
   end
 
+  def is_confirm
+    @nomination_master = NominationMaster.find(params[:nomination_master])
+    NominationMaster.find(@nomination_master.id).update(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to new_nomination_master_path
+  end
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_nomination_master
@@ -64,6 +71,6 @@ class NominationMastersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def nomination_master_params
-      params.require(:nomination_master).permit(:code, :name, :description)
+      params.require(:nomination_master).permit(:is_confirm,:code, :name, :description)
     end
 end

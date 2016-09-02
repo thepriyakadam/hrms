@@ -44,6 +44,12 @@ class ExpencessTypesController < ApplicationController
     @expencess_types = ExpencessType.all
   end
 
+  def is_confirm
+    @expencess_type = ExpencessType.find(params[:expencess_type])
+    ExpencessType.find(@expencess_type.id).update(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to new_expencess_type_path
+  end
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -53,6 +59,6 @@ class ExpencessTypesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def expencess_type_params
-    params.require(:expencess_type).permit(:code, :name, :description)
+    params.require(:expencess_type).permit(:is_confirm,:code, :name, :description)
   end
 end

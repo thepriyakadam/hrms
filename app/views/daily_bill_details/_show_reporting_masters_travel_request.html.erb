@@ -22,6 +22,9 @@
             <td>
               <% if a.status == true %>
               <small class="label label-success">Confirmed & Send Next</small>
+              <% elsif a.status == false %>
+              <small class="label label-danger">Rejected</small>
+              <% else %>
               <% end %>
   	        </td>
           </tr>

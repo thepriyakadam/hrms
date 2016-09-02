@@ -44,6 +44,12 @@ class BanksController < ApplicationController
     @banks = Bank.all
   end
 
+  def is_confirm
+    @bank = Bank.find(params[:bank])
+    Bank.find(@bank.id).update(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to new_bank_path
+  end
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -53,6 +59,6 @@ class BanksController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def bank_params
-    params.require(:bank).permit(:name, :code, :description)
+    params.require(:bank).permit(:is_confirm,:name, :code, :description)
   end
 end

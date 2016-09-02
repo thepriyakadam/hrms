@@ -43,6 +43,12 @@ class FoodCoupanMastersController < ApplicationController
     @food_coupan_masters = FoodCoupanMaster.all
   end
 
+  def is_confirm
+    @food_coupan_master = FoodCoupanMaster.find(params[:food_coupan_master])
+    FoodCoupanMaster.find(@food_coupan_master.id).update(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to new_food_coupan_master_path
+  end
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -52,6 +58,6 @@ class FoodCoupanMastersController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def food_coupan_master_params
-    params.require(:food_coupan_master).permit(:code, :name, :description, :price)
+    params.require(:food_coupan_master).permit(:is_confirm,:code, :name, :description, :price)
   end
 end

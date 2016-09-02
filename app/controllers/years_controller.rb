@@ -48,6 +48,13 @@ class YearsController < ApplicationController
     @years = Year.all
   end
 
+  def is_confirm
+    @year = Year.find(params[:year])
+    Year.find(@year.id).update(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to new_year_path
+  end
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_year
@@ -56,6 +63,6 @@ class YearsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def year_params
-      params.require(:year).permit(:name)
+      params.require(:year).permit(:is_confirm,:name)
     end
 end

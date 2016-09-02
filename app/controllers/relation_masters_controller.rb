@@ -52,10 +52,15 @@ class RelationMastersController < ApplicationController
   # DELETE /relation_masters/1.json
   def destroy
     @relation_master.destroy
-    respond_to do |format|
-      format.html { redirect_to relation_masters_url, notice: 'Relation master was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    @relation_masters = RelationMaster.all
+    redirect_to new_relation_master_path
+  end
+
+  def is_confirm
+    @relation_master = RelationMaster.find(params[:relation_master])
+    RelationMaster.find(@relation_master.id).update(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to new_relation_master_path
   end
 
   private
@@ -66,6 +71,6 @@ class RelationMastersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def relation_master_params
-      params.require(:relation_master).permit(:code, :name, :description)
+      params.require(:relation_master).permit(:is_confirm,:code, :name, :description)
     end
 end

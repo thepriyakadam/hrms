@@ -71,7 +71,7 @@
 
         <% if daily_bill_detail.request_status == "Approved" %>
             <% elsif daily_bill_detail.request_status == nil %>
-            <%= link_to 'Comment', comment_modal_daily_bill_details_path(daily_bill_detail_id: daily_bill_detail.id),class: 'btn btn-xs btn-info fa fa-check', remote: true %>
+            <%= link_to 'Comment', comment_modal_daily_bill_details_path(@travel_request.id),class: 'btn btn-xs btn-info fa fa-check', remote: true %>
             <% else %>
             <% end %>
             <%= link_to '', daily_bill_detail,class: 'btn btn-sm btn-default fa fa-eye' %>
@@ -95,8 +95,11 @@
 <div class="row">
   <div class="col-sm-6">
     <div class="actions">
-     <%= link_to 'Approve & Send Next',approve_and_send_next_daily_bill_details_path(@travel_request.id),class: 'btn btn-sm btn-primary' %> |
-     <%= link_to 'Reject',reject_request_daily_bill_details_path(@travel_request.id),class: 'btn btn-sm btn-danger' %>
+     <%= link_to 'Approve & Send Next',comment_modal_daily_bill_details_path(@travel_request.id),class: 'btn btn-sm btn-primary',remote: true %> 
+     <% if @dbl = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id).pluck(:status).last == nil && @dbl1 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id).pluck(:travel_status).last == "Approved" %>
+     | <%= link_to 'Reject',reject_request_daily_bill_details_path(@travel_request.id),class: 'btn btn-sm btn-danger' %>
+     <% else %>
+     <% end %>
      </div>
   </div>
 </div>

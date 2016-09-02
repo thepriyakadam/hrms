@@ -43,6 +43,13 @@ class EmployeeDesignationsController < ApplicationController
     @employee_designations = EmployeeDesignation.all
   end
 
+  def is_confirm
+    @employee_designation = EmployeeDesignation.find(params[:employee_designation])
+    EmployeeDesignation.find(@employee_designation.id).update(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to new_employee_designation_path
+  end
+  
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -52,6 +59,6 @@ class EmployeeDesignationsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def employee_designation_params
-    params.require(:employee_designation).permit(:name)
+    params.require(:employee_designation).permit(:is_confirm,:name)
   end
 end

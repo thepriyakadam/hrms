@@ -43,6 +43,12 @@ class CostCentersController < ApplicationController
     @cost_centers = CostCenter.all
   end
 
+  def is_confirm
+    @cost_center = CostCenter.find(params[:cost_center])
+    CostCenter.find(@cost_center.id).update(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to new_cost_center_path
+  end
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -52,6 +58,6 @@ class CostCentersController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def cost_center_params
-    params.require(:cost_center).permit(:name)
+    params.require(:cost_center).permit(:is_confirm,:name)
   end
 end

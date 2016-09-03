@@ -15,8 +15,13 @@
         <td><%= root_cause_master.name %></td>
         <td><%= root_cause_master.description %></td>
         <td>
-          <%= link_to '', edit_root_cause_master_path(root_cause_master),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
-          <%= link_to '',  root_cause_master, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
+          <% if root_cause_master.is_confirm == true %>
+            <small class= "label label-primary">Confirmed</small>
+          <% else %>
+            <%= link_to '', edit_root_cause_master_path(root_cause_master),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
+            <%= link_to '',  root_cause_master, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
+            <%= link_to '', is_confirm_root_cause_masters_path(root_cause_master: root_cause_master),data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-info fa fa-check' %>
+          <% end %>
         </td>
       </tr>
     <% end %>

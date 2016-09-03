@@ -44,6 +44,13 @@ class ReservedCategoriesController < ApplicationController
     @reserved_categories = ReservedCategory.all
   end
 
+  def is_confirm
+    @reserved_category = ReservedCategory.find(params[:reserved_category])
+    ReservedCategory.find(@reserved_category.id).update(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to new_reserved_category_path
+  end
+  
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -53,6 +60,6 @@ class ReservedCategoriesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def reserved_category_params
-    params.require(:reserved_category).permit(:code, :name, :description)
+    params.require(:reserved_category).permit(:is_confirm,:code, :name, :description)
   end
 end

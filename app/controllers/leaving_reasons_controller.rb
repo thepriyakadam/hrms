@@ -56,6 +56,13 @@ class LeavingReasonsController < ApplicationController
     @leaving_reasons = LeavingReason.all
   end
 
+  def is_confirm
+    @leaving_reason = LeavingReason.find(params[:leaving_reason])
+    LeavingReason.find(@leaving_reason.id).update(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to new_leaving_reason_path
+  end
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_leaving_reason
@@ -64,6 +71,6 @@ class LeavingReasonsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def leaving_reason_params
-      params.require(:leaving_reason).permit(:code, :name, :description)
+      params.require(:leaving_reason).permit(:is_confirm,:code, :name, :description)
     end
 end

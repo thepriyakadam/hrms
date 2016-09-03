@@ -63,6 +63,13 @@ def create
     @bonus_masters = BonusMaster.all
   end
 
+  def is_confirm
+    @bonus_master = BonusMaster.find(params[:bonus_master])
+    BonusMaster.find(@bonus_master.id).update(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to new_bonus_master_path
+  end
+  
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -72,6 +79,6 @@ def create
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def bonus_master_params
-    params.require(:bonus_master).permit(:is_bouns, :limit_amount, :bonus_persentage, :status)
+    params.require(:bonus_master).permit(:is_confirm,:is_bouns, :limit_amount, :bonus_persentage, :status)
   end
 end

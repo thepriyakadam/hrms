@@ -1,5 +1,7 @@
+require 'query_report/helper'  # need to require the helper
 class StatesController < ApplicationController
   before_action :set_state, only: [:show, :edit, :update, :destroy]
+  include QueryReport::Helper  # need to include it
 
   # GET /states
   # GET /states.json
@@ -21,6 +23,7 @@ class StatesController < ApplicationController
   # GET /states/1/edit
   def edit
   end
+
 
   # POST /states
   # POST /states.json
@@ -52,6 +55,15 @@ class StatesController < ApplicationController
   def destroy
     @state.destroy
     @states = State.all
+  end
+
+  def list_state
+    reporter(State.filter_records(current_user), template_class: PdfReportTemplate) do
+      column(:ID, sortable: true) { |state| state.id }
+      column(:Code, sortable: true) { |state| state.code }
+      column(:Name, sortable: true) { |state| state.name }
+      column(:ci, sortable: true) { |state| state.try(:country_id) }
+    end
   end
 
   private

@@ -14,8 +14,13 @@
         <td><%= performance_activity.name %></td>
         <td><%= performance_activity.description %></td>
         <td>
-          <%= link_to '', edit_performance_activity_path(performance_activity) ,class: 'btn btn-sm btn-success btn-xs fa fa-edit',remote:true %>
-          <%= link_to '',  performance_activity, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-xs btn-danger fa fa-close' %>
+          <% if performance_activity.is_confirm == true %>
+            <small class= "label label-primary">Confirmed</small>
+          <% else %>
+            <%= link_to '', edit_performance_activity_path(performance_activity) ,class: 'btn btn-sm btn-success btn-xs fa fa-edit',remote:true %>
+            <%= link_to '',  performance_activity, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-xs btn-danger fa fa-close' %>
+            <%= link_to '', is_confirm_performance_activities_path(performance_activity: performance_activity),data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-info fa fa-check' %>
+          <% end %>
         </td>
       </tr>
     <% end %>

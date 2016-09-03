@@ -40,6 +40,13 @@ class WellFairesController < ApplicationController
     @well_faires = WellFaire.all
   end
 
+  def is_confirm
+    @well_faire = WellFaire.find(params[:well_faire])
+    WellFaire.find(@well_faire.id).update(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to new_well_faire_path
+  end
+  
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -49,6 +56,6 @@ class WellFairesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def well_faire_params
-    params.require(:well_faire).permit(:month, :amount, :status)
+    params.require(:well_faire).permit(:is_confirm,:month, :amount, :status)
   end
 end

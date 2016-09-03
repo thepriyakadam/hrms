@@ -45,7 +45,7 @@ class HolidaysController < ApplicationController
 
   def assign_to_employee
     holiday = Holiday.find(params[:format])
-    holiday.update(is_loaded: true)
+    holiday.update(is_send: true)
     Employee.all.each do |e|
       EmployeeAttendance.create(employee_id: e.id, day: holiday.holiday_date, present: "H", department_id: e.department_id, is_confirm: false, count: 1)
     end

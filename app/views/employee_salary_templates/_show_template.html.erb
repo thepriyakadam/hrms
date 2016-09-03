@@ -236,7 +236,6 @@
         }
       }
       function calculate_difference(){
-        console.log("----------------------------------------");
         var monthly_amount = parseFloat($('#monthly_amount_<%= item.try(:salary_component_id) %>').val()); 
         
         var old_monthly_amount = parseFloat($('#old_monthly_amount_<%= item.try(:salary_component_id) %>').val());
@@ -252,4 +251,3 @@
     });
   <% end %>
 </script>
-

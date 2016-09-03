@@ -58,8 +58,8 @@ div.nobreak{ page-break-inside: avoid;
       <th>Place</th>
       <th>Type</th>
       <th>Amount</th>
-      <th colspan="2">Comment</th>
-      <th>Currency</th>
+<!--       <th colspan="2">Comment</th>
+ -->      <th>Currency</th>
     </tr>
   </thead>
   <tbody>
@@ -69,8 +69,8 @@ div.nobreak{ page-break-inside: avoid;
         <td><%= daily_bill_detail.e_place %></td>
         <td><%= daily_bill_detail.travel_expence_type.try(:name) %></td>
         <td><%= daily_bill_detail.travel_expence %></td>
-        <td colspan="2"><%= daily_bill_detail.comment %></td>
-        <td><%= daily_bill_detail.currency_master.try(:name) %></td>
+<!--         <td colspan="2"><%= daily_bill_detail.comment %></td>
+ -->        <td><%= daily_bill_detail.currency_master.try(:name) %></td>
       </tr>
     <% end %>
      <tr>

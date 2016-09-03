@@ -1,9 +1,9 @@
-<%= bootstrap_form_for @daily_bill_detail,url:{action:'is_confirm',travel_request_id: @travel_request.id} do |f| %>
+<%= bootstrap_form_for @daily_bill_detail do |f| %>
     <table id="example2" class="table table-bordered table-hover table-condensed">
       <thead>
         <tr>  
-          <th><input type="checkbox" id="selectAll" value="selectAll"></th>
-          <th>Expense Date</th>
+<!--           <th><input type="checkbox" id="selectAll" value="selectAll"></th>
+ -->          <th>Expense Date</th>
           <th>Place</th>
           <th>Expense Type</th>
           <th>Expense Amount</th>
@@ -16,10 +16,10 @@
       <tbody>
         <% @daily_bill_details.each do |daily_bill_detail| %>
           <tr>
-            <td>
-              <% if daily_bill_detail.is_confirm == true %>
-              <% else %><%= check_box_tag "daily_bill_detail_ids[]",daily_bill_detail.id %><% end %>
-            </td>
+          <!--   <td>
+              < if daily_bill_detail.is_confirm == true %>
+              < else %><= check_box_tag "daily_bill_detail_ids[]",daily_bill_detail.id %>< end %>
+            </td> -->
             <td><%= daily_bill_detail.expence_date %></td>
             <td><%= daily_bill_detail.e_place %></td>
             <td><%= daily_bill_detail.travel_expence_type.try(:name) %></td>
@@ -57,7 +57,6 @@
               <th>Total</th>
               <td></td>
               <td></td>
-              <td></td>
               <td><%= @daily_bill_details.sum(:travel_expence) %></td>
               <td></td>
               <td></td>
@@ -68,36 +67,19 @@
     </table>
   
     <div class="row">
-      <div class="col-sm-3">
+      <div class="col-sm-9">
         <div class="actions">
         <% if @travel_request.is_confirm == true %>
         <% else %>
-          <%= f.submit "Confirm", class: 'btn btn-primary btn-sm',data: { confirm: 'Are you sure?' } %> |
+        <%= link_to 'Confirm',is_confirm_daily_bill_details_path(travel_request_id: @travel_request.id),class: 'btn btn-primary btn-sm',data: { confirm: 'Are you sure?' } %>
+          <!--<= f.submit "Confirm", class: 'btn btn-primary btn-sm',data: { confirm: 'Are you sure?' } %>--> |
         <% end %>
 
-          <%= link_to 'Print PDF', print_daily_bill_daily_bill_details_path(format: 'pdf',qwe:@travel_request.id ),class: 'btn btn-sm btn-warning',:target => '_blank' %><br><br>
-         <!--  <= link_to 'Send Request',class: 'btn btn-xl btn-warning' %><br>
-          <br> -->
+          <%= link_to 'Print PDF', print_daily_bill_daily_bill_details_path(format: 'pdf',qwe:@travel_request.id ),class: 'btn btn-sm btn-warning',:target => '_blank' %>
+         
           <%= link_to 'Back', daily_bill_travel_requests_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
 
         </div>
       </div>
     </div>
   <% end %>
-
-<script type="text/javascript">
-  $(function () {
-    $('#selectAll').click(function() {
-      if (this.checked) {
-        $(':checkbox').each(function() {
-          this.checked = true;                       
-        });
-      } 
-      else {
-        $(':checkbox').each(function() {
-          this.checked = false;                        
-        });
-      } 
-    });
-  });
-</script>

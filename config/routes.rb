@@ -523,7 +523,8 @@ end
   resources :travel_expences
   resources :daily_bill_details do
     collection do 
-    post :is_confirm
+    # post :is_confirm
+    get :is_confirm
     get :print_daily_bill
     get :daily_bill_history
     get :daily_bill_request_confirmation

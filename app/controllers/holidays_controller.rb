@@ -35,7 +35,7 @@ class HolidaysController < ApplicationController
     @holidays = Holiday.all
     @holiday = Holiday.new
   end
-
+  
   # DELETE /holidays/1
   # DELETE /holidays/1.json
   def destroy

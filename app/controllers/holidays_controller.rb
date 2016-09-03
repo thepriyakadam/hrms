@@ -35,7 +35,7 @@ class HolidaysController < ApplicationController
     @holidays = Holiday.all
     @holiday = Holiday.new
   end
-  
+
   # DELETE /holidays/1
   # DELETE /holidays/1.json
   def destroy
@@ -46,7 +46,7 @@ class HolidaysController < ApplicationController
   def assign_to_employee
     holiday = Holiday.find(params[:format])
     holiday.update(is_send: true)
-    Employee.all.each do |e|
+    Employee.where(status: 'Active').each do |e|
       EmployeeAttendance.create(employee_id: e.id, day: holiday.holiday_date, present: "H", department_id: e.department_id, is_confirm: false, count: 1)
     end
     @holidays = Holiday.all

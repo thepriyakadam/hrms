@@ -1,0 +1,41 @@
+<div class="box box-default">
+   <div class="box-body"> 
+<%= bootstrap_form_for(@issue_tracker_access, remote:true) do |f| %>
+<div class="col-sm-3">
+  <div class="group">
+        <%= f.text_field :name,label:'Name', placeholder: 'Name' %>
+  </div>
+</div>
+
+<div class="col-sm-3">
+  <div class="form-group required">
+        <%= f.select :role,['Admin','Co-ordinator'],{include_blank: "Select Role"} %>
+  </div>
+</div>
+
+<div class="col-sm-3">
+  <div class="form-group required">
+      <%= f.select :employee_id,employee_list_for_food_deduction,{include_blank: "Select Employee"} %>
+  </div>
+</div>
+
+<div class="col-sm-1">
+    <label>Status</label>
+    <%= f.check_box :status,label:'Active' %>
+</div>
+ 
+<div class="col-sm-2">
+  <div class="form-group required">
+    <label>Is Confirm</label>
+      <%= f.check_box :is_confirm,label:'Confirm', placeholder: 'Confirm'%>
+  </div>
+</div>
+
+<div class="col-sm-3">
+  <div class="actions">
+    <%= f.submit'Create Issue Tracker Access',:class => class_name, data: { disable_with: data_info } %>
+  </div>
+</div>
+</div>
+</div>
+<% end %>

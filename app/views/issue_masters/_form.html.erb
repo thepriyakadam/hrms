@@ -1,0 +1,41 @@
+<%= form_for(@issue_master) do |f| %>
+  <% if @issue_master.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@issue_master.errors.count, "error") %> prohibited this issue_master from being saved:</h2>
+
+      <ul>
+      <% @issue_master.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :issue_tracker_group_id %><br>
+    <%= f.text_field :issue_tracker_group_id %>
+  </div>
+  <div class="field">
+    <%= f.label :issue_type_id %><br>
+    <%= f.text_field :issue_type_id %>
+  </div>
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :description %><br>
+    <%= f.text_field :description %>
+  </div>
+  <div class="field">
+    <%= f.label :status %><br>
+    <%= f.check_box :status %>
+  </div>
+  <div class="field">
+    <%= f.label :is_confirm %><br>
+    <%= f.check_box :is_confirm %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

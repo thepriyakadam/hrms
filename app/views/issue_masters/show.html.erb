@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Issue tracker group:</strong>
+  <%= @issue_master.issue_tracker_group %>
+</p>
+
+<p>
+  <strong>Issue type:</strong>
+  <%= @issue_master.issue_type %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @issue_master.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @issue_master.description %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @issue_master.status %>
+</p>
+
+<p>
+  <strong>Is confirm:</strong>
+  <%= @issue_master.is_confirm %>
+</p>
+
+<%= link_to 'Edit', edit_issue_master_path(@issue_master) %> |
+<%= link_to 'Back', issue_masters_path %>

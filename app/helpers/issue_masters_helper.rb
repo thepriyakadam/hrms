@@ -1,0 +1,2 @@
+module IssueMastersHelper
+end

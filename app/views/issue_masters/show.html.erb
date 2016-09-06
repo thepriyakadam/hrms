@@ -1,34 +1,47 @@
-<p id="notice"><%= notice %></p>
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Issue Tracker</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+  <table id="example2" class="table table-bordered table-hover table-condensed'">
 
-<p>
-  <strong>Issue tracker group:</strong>
-  <%= @issue_master.issue_tracker_group %>
-</p>
 
-<p>
-  <strong>Issue type:</strong>
-  <%= @issue_master.issue_type %>
-</p>
+<tr>
+ <th><strong>Issue Tracker Group</strong></th>
+ <td> <%= @issue_master.issue_tracker_group %></td>
+ 
+</tr>
 
-<p>
-  <strong>Name:</strong>
-  <%= @issue_master.name %>
-</p>
+<tr>
+  <th><strong>Issue Type</strong></th>
+  <td><%= @issue_master.issue_type %></td>
+</tr>
 
-<p>
-  <strong>Description:</strong>
-  <%= @issue_master.description %>
-</p>
+<tr>
+  <th><strong>Name</strong></th>
+  <td><%= @issue_master.name %></td>
+</tr>
 
-<p>
-  <strong>Status:</strong>
-  <%= @issue_master.status %>
-</p>
+<tr>
+  <th><strong>Description</strong></th>
+  <td><%= @issue_master.description %></td>
+</tr>
 
-<p>
-  <strong>Is confirm:</strong>
-  <%= @issue_master.is_confirm %>
-</p>
+<tr>
+  <th><strong>Status</strong></th>
+  <td><%= @issue_master.status %></td>
+</tr>
 
-<%= link_to 'Edit', edit_issue_master_path(@issue_master) %> |
-<%= link_to 'Back', issue_masters_path %>
+<tr>
+  <th><strong>Is Confirm</strong>
+  <td><%= @issue_master.is_confirm %></td>
+</tr>
+
+
+</table>
+<%= link_to 'Edit',  edit_issue_master_path(@issue_master),class: 'btn btn-success btn-sm fa fa-edit' %> |
+<%= link_to 'Back', issue_masters_path,class: 'btn btn-primary fa fa-arrow-left' %>
+
+
+</div>
+</div>

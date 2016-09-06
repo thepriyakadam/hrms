@@ -15,6 +15,7 @@ class IssueMastersController < ApplicationController
   # GET /issue_masters/new
   def new
     @issue_master = IssueMaster.new
+    @issue_masters = IssueMaster.all
   end
 
   # GET /issue_masters/1/edit
@@ -24,15 +25,15 @@ class IssueMastersController < ApplicationController
   # POST /issue_masters
   # POST /issue_masters.json
   def create
-    @issue_master = IssueMaster.new(issue_master_params)
-
+   @issue_master = IssueMaster.new(issue_master_params)
+    @issue_masters = IssueMaster.all
     respond_to do |format|
       if @issue_master.save
-        format.html { redirect_to @issue_master, notice: 'Issue master was successfully created.' }
-        format.json { render :show, status: :created, location: @issue_master }
+         @issue_master = IssueMaster.new
+        format.js { @flag = true }
       else
-        format.html { render :new }
-        format.json { render json: @issue_master.errors, status: :unprocessable_entity }
+        flash.now[:alert] = 'Master Already Exist.'
+        format.js { @flag = false }
       end
     end
   end
@@ -40,25 +41,16 @@ class IssueMastersController < ApplicationController
   # PATCH/PUT /issue_masters/1
   # PATCH/PUT /issue_masters/1.json
   def update
-    respond_to do |format|
-      if @issue_master.update(issue_master_params)
-        format.html { redirect_to @issue_master, notice: 'Issue master was successfully updated.' }
-        format.json { render :show, status: :ok, location: @issue_master }
-      else
-        format.html { render :edit }
-        format.json { render json: @issue_master.errors, status: :unprocessable_entity }
-      end
-    end
+    @issue_master.update(issue_master_params)
+    @issue_master = IssueMaster.new
+    @issue_masters = IssueMaster.all 
   end
 
   # DELETE /issue_masters/1
   # DELETE /issue_masters/1.json
   def destroy
     @issue_master.destroy
-    respond_to do |format|
-      format.html { redirect_to issue_masters_url, notice: 'Issue master was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    @issue_masters = IssueMaster.all
   end
 
   private

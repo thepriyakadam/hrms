@@ -1,57 +1,86 @@
-<%= form_for(@issue_request) do |f| %>
-  <% if @issue_request.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@issue_request.errors.count, "error") %> prohibited this issue_request from being saved:</h2>
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title"> Employee Resignation </h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <%= bootstrap_form_for(@issue_request) do |f| %>
+     <%= f.hidden_field :employee_id, :value => current_user.employee_id %>
 
-      <ul>
-      <% @issue_request.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :issue_master_id %><br>
+ <div class="row">
+      <div class="col-sm-3">
+          <div class="form-group required">
     <%= f.text_field :issue_master_id %>
   </div>
-  <div class="field">
-    <%= f.label :issue_tracker_member_id %><br>
+  </div>
+
+   <div class="col-sm-3">
+          <div class="form-group required">
     <%= f.text_field :issue_tracker_member_id %>
   </div>
-  <div class="field">
-    <%= f.label :issue_tracker_group_id %><br>
-    <%= f.text_field :issue_tracker_group_id %>
   </div>
-  <div class="field">
-    <%= f.label :description %><br>
+
+   <div class="col-sm-3">
+          <div class="form-group required">
+    <%= f.text_field :issue_tracker_group_id,all_issue_tracker_group,{include_blank: "Select Group"} %>
+  </div>
+  </div>
+
+  <div class="col-sm-3">
+          <div class="form-group required">
     <%= f.text_field :description %>
   </div>
-  <div class="field">
-    <%= f.label :date %><br>
-    <%= f.date_select :date %>
   </div>
-  <div class="field">
-    <%= f.label :time %><br>
+
+
+   <div class="col-sm-3">
+        <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <%= f.text_field :date,class: 'issue',label:'Date'%>
+            </div>
+          </div>
+        </div>
+
+  <div class="col-sm-3">
+          <div class="form-group required">
     <%= f.time_select :time %>
   </div>
-  <div class="field">
-    <%= f.label :employee_id %><br>
-    <%= f.text_field :employee_id %>
   </div>
-  <div class="field">
-    <%= f.label :issue_priority %><br>
+
+  <!-- <div class="field">
+    <= f.label :employee_id %><br>
+    <= f.text_field :employee_id %>
+  </div> -->
+
+  <div class="col-sm-3">
+          <div class="form-group required">
     <%= f.text_field :issue_priority %>
   </div>
-  <div class="field">
-    <%= f.label :status_id %><br>
-    <%= f.text_field :status_id %>
   </div>
-  <div class="field">
-    <%= f.label :is_confirm_id %><br>
-    <%= f.text_field :is_confirm_id %>
+
+   <div class="col-sm-3">
+    <label>Status</label>
+       <%= f.check_box :status,label:'Active' %>
+</div>
+    
+   <div class="col-sm-3">
+    <div class="form-group required">
+     <label>Is Confirm</label>
+       <%= f.check_box :is_confirm,label:'Confirm', placeholder: 'Confirm'%>
+    </div>
   </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+
+  <div class="row">
+     <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit 'Create Issue Request',class: "btn btn-primary btn-sm"  %>
+        <%= link_to 'Back', issue_requests_path,class: 'btn btn-sm btn-default fa fa-arrow-left' %>
+      </div>
+     </div>
+   </div>
+  <% end %>
+    
+  </div><!-- /.box-body -->
+</div><

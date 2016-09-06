@@ -1406,6 +1406,8 @@ end
       post :update_status
       get :ajax_employee_document_detail
       get :ajax_new_employee_document
+      get :collect_company_location
+      get :collect_department
     end
     member do
       get :edit_manager

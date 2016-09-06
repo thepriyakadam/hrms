@@ -2,6 +2,7 @@ class Employee < ActiveRecord::Base
   protokoll :employee_code, pattern: 'EMP#######'
   belongs_to :department
   belongs_to :company_location
+  belongs_to :company
   belongs_to :nationality
   belongs_to :blood_group
   belongs_to :employee_type

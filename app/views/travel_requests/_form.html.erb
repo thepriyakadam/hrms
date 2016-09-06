@@ -3,7 +3,7 @@
     <h3 class="box-title">Travel Request</h3>
   </div>
   <div class="box-body">
-<%= bootstrap_form_for(@travel_request) do |f| %>
+<%= bootstrap_form_for(@travel_request,html: {id: 'travel_request'}) do |f| %>
 
   <%= f.hidden_field :employee_id, value: current_user.employee_id %>
   <%= f.hidden_field :application_date, value: Time.zone.now.to_date %>
@@ -11,8 +11,8 @@
 <div class="row">
   <div class="col-sm-3">
     <label>Request To </label>
-    <div class="field">
-      <%= f.select :reporting_master_id,all_reporting_master_expences_list,{hide_label: true,include_blank: " Select Reporting Manager"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
+    <div class="form-group required">
+      <%= f.select :reporting_master_id,all_reporting_master_list,{hide_label: true,include_blank: " Select Reporting Manager"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
     </div>
   </div>
 
@@ -33,13 +33,13 @@
     </div>
 
   <div class="col-sm-3">
-    <label>Traveling Date </label>
-    <div class="field">
+<!--     <label>Traveling Date </label>
+ -->    <div class="form-group required">
       <div class="input-group">
         <div class="input-group-addon">
           <i class="fa fa-calendar"></i>
         </div>
-        <%= f.text_field :traveling_date, hide_label: true, class: 'traveling_date'%>
+        <%= f.text_field :traveling_date, label: 'Traveling Date', class: 'traveling_date'%>
       </div>
     </div>
   </div>
@@ -82,27 +82,6 @@
 </div>
 <% end %>
 
-<!-- <script type="text/javascript">
-  $(function(){
-    $('#travel_request_traveling_advance').on('input',function(){calculate_total();});
-    $("#travel_request_lodging_boarding_advance").on('input',function(){calculate_total();});
-    $("#travel_request_extra_advance").on('input',function(){calculate_total();});
-
-    function calculate_total(){
-      var lodging_advance = parseFloat($('#travel_request_lodging_boarding_advance').val());
-      var extra_advance = parseFloat($('#travel_request_extra_advance').val());
-      var traveling_advance = parseFloat($('#travel_request_traveling_advance').val());
-      var sum = "";
-      if (isNaN(lodging_advance) || isNaN(extra_advance) || isNaN(traveling_advance)) {
-        sum = ""
-      }
-      else{
-        sum = (lodging_advance + extra_advance + traveling_advance).toFixed(2);
-      }
-      $('#travel_request_total_advance').val(sum);
-    }
-  });
-</script> -->
 <script type="text/javascript">
   $(function(){
     $('.application_date').datepicker({
@@ -117,4 +96,42 @@
     yearRange: '-200:-0',
     dateFormat: 'dd-mm-yy' });
     });
+</script>
+
+<script>
+$("#travel_request").validate({
+    rules: {
+      "travel_request[reporting_master_id]":{
+        required: true,
+      },
+      "travel_request[place]":{
+        required: true,
+      },
+      "travel_request[tour_purpose]":{
+        required: true,
+      },
+      "travel_request[traveling_date]":{
+        required: true,
+      }
+    },
+    messages: {
+      "travel_request[reporting_master_id]":{
+        required: "Please specify Reporting Manager Name",
+      },
+      "travel_request[place]":{
+        required: "Please specify Place",
+      },
+      "travel_request[tour_purpose]":{
+        required: "Please specify Tour Purpose",
+      },
+      "travel_request[traveling_date]":{
+        required: "Please specify Travelling Date",
+      }
+      
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
 </script>

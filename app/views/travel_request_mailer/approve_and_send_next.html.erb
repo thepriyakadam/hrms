@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+     <h4>Travel Request Approved & Send Next</h4>
+    <p>    
+      This is to inform your Travel Request has been Approved,details for vacancy is given below.<br><br>
+       1 Employee Name :- <%= @emp.employee.first_name.to_s %> <%= @emp.employee.last_name.to_s %> <%= @emp.employee.middle_name.to_s %><br><br>
+       2 Traveling Date :-  <%= @travel_request.traveling_date %><br><br>
+       3 Tour Purpose :- <%= @travel_request.tour_purpose %><br><br>
+       4 Place :- <%= @travel_request.place %><br><br>
+       5 Advance Amount :- <%= @travel_request.total_advance %><br><br>
+        With Regards,<br><br>
+         HR
+     </p>
+  </body>
+</html>

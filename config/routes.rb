@@ -523,7 +523,8 @@ end
   resources :travel_expences
   resources :daily_bill_details do
     collection do 
-    post :is_confirm
+    # post :is_confirm
+    get :is_confirm
     get :print_daily_bill
     get :daily_bill_history
     get :daily_bill_request_confirmation
@@ -533,7 +534,7 @@ end
     get :comment_modal
     post :update_comment
     get :reject_request
-    get :approve_and_send_next
+    post :approve_and_send_next
     get :approve_and_send_next_modal
     post :approve_n_send_next
     get :travel_request_history_list
@@ -1075,6 +1076,7 @@ end
       post :print_salary_slip_cost_unitwise
       get :excel_report
       post :print_salary_slip_excel
+      get :dynamic_dropdown
     end
    end
   

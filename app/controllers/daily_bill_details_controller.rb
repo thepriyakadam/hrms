@@ -38,7 +38,7 @@ class DailyBillDetailsController < ApplicationController
   # POST /daily_bill_details
   # POST /daily_bill_details.json
 
-def create
+  def create
     @daily_bill_detail = DailyBillDetail.new(daily_bill_detail_params)
     @travel_request = TravelRequest.find(@daily_bill_detail.travel_request_id)
       if @daily_bill_detail.save

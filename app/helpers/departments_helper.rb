@@ -22,5 +22,4 @@ module DepartmentsHelper
       end
     end
   end
-
 end

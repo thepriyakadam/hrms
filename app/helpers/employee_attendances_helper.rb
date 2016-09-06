@@ -9,13 +9,6 @@ module EmployeeAttendancesHelper
       end
 
       unless exist.key?(d)
-        holiday = Holiday.find_by(holiday_date: d)
-        unless holiday.nil?
-          exist[d] = "H"
-        end
-      end
-
-      unless exist.key?(d)
         exist[d] = ""
       end
     end

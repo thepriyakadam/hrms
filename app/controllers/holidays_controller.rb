@@ -43,6 +43,15 @@ class HolidaysController < ApplicationController
     @holidays = Holiday.all
   end
 
+  def assign_to_employee
+    holiday = Holiday.find(params[:format])
+    holiday.update(is_send: true)
+    Employee.where(status: 'Active').each do |e|
+      EmployeeAttendance.create(employee_id: e.id, day: holiday.holiday_date, present: "H", department_id: e.department_id, is_confirm: false, count: 1)
+    end
+    @holidays = Holiday.all
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

@@ -9,7 +9,7 @@
     <table id="example1" class="table table-bordered table-hover table-condensed">
       <thead>
         <tr>
-          <th>Employee ID</th>
+          <th>ID</th>
           <th>Employee Name</th>
           <th>Department</th>
           <th>Category</th>
@@ -22,11 +22,11 @@
           <tr>
             <td><%= employee.try(:manual_employee_code) %></td>
             <td><%= full_name(employee) %></td>
-            <td><%= employee.company_location.try(:name) %> - <%= employee.department.try(:name) %></td>
+            <td><%= employee.department.try(:name) %></td>
             <td><%= employee.joining_detail.try(:employee_category).try(:name) %></td>
             <td>
-              <%= link_to 'Increment Salary', new_employee_salary_template_path(id: employee),class: 'btn btn-sm btn-primary fa fa-check' %>
-              <%= link_to 'Assigned Salary Brakeup', template_list_employee_templates_path(employee),class: 'btn btn-sm btn-info fa fa-check' %>
+              <%= link_to 'Increment Salary', new_employee_salary_template_path(id: employee),class: 'btn btn-sm btn-primary ' %>
+              <%= link_to 'View Salary Brakeup', template_list_employee_templates_path(employee),class: 'btn btn-sm btn-info ' %>
             </td>
           </tr>
         <% end %>

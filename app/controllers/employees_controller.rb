@@ -93,8 +93,10 @@ class EmployeesController < ApplicationController
   # POST /employees.json
   def create
     @employee = Employee.new(employee_params)
+    @department = Department.find(@employee.department_id)
     authorize! :create, @employee
       if @employee.save
+        @employee.update(company_location_id: @department.company_location_id,company_id: @department.company_location.company_id)
         redirect_to @employee    
       else
         render :new
@@ -104,7 +106,7 @@ class EmployeesController < ApplicationController
   # PATCH/PUT /employees/1
   # PATCH/PUT /employees/1.json
   def update
-    respond_to do |format|
+     respond_to do |format|
       if @employee.update(employee_params)
         format.html { redirect_to @employee, notice: 'Employee was successfully updated.' }
         format.json { render :show, status: :ok, location: @employee }
@@ -266,6 +268,18 @@ class EmployeesController < ApplicationController
 
   def ajax_show_textbox
     @value = params[:value]
+  end
+
+  def ajax_employee_document_detail
+    @employee_document = EmployeeDocument.new
+    @employee = Employee.find(params[:id])
+    #@employee_documents = EmployeeDocument.all
+  end
+
+  def ajax_new_employee_document
+    @employee_document = EmployeeDocument.new
+    @employee = Employee.find(params[:id])
+    #@employee_documents = EmployeeDocument.all
   end
 
   def manager

@@ -841,26 +841,22 @@ class SalaryslipsController < ApplicationController
           end
 
           @monthly_expences = MonthlyExpence.where(employee_id: @employee.id, expence_date: date.all_month)
-            @salary_component=SalaryComponent.find_by(name: "Mobile Deduction")
-            @salary_comp=SalaryComponent.find_by(name: "Other Deduction")
-            @salary_compon=SalaryComponent.find_by(name: "Income Tax")
+          @salary_component=SalaryComponent.find_by(name: "Mobile Deduction")
+          @salary_comp=SalaryComponent.find_by(name: "Other Deduction")
+          @salary_compon=SalaryComponent.find_by(name: "Income Tax")
 
-            @monthly_expences.try(:each) do |m|
+          @monthly_expences.try(:each) do |m|
             deducted_actual_amount = 0
             deducted_calculated_amount = m.amount
 
             if m.expencess_type.name == @salary_component.name
-            SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: deducted_actual_amount, calculated_amount: deducted_calculated_amount, is_deducted: true, other_component_name: m.expencess_type.name,salary_component_id:  @salary_component.id)
-            
+              SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: deducted_actual_amount, calculated_amount: deducted_calculated_amount, is_deducted: true, other_component_name: m.expencess_type.name,salary_component_id:  @salary_component.id)
             elsif m.expencess_type.name == @salary_comp.name
-            SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: deducted_actual_amount, calculated_amount: deducted_calculated_amount, is_deducted: true, other_component_name: m.expencess_type.name,salary_component_id:  @salary_comp.id)
-            
+              SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: deducted_actual_amount, calculated_amount: deducted_calculated_amount, is_deducted: true, other_component_name: m.expencess_type.name,salary_component_id:  @salary_comp.id)
             elsif m.expencess_type.name == @salary_compon.name
-            SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: deducted_actual_amount, calculated_amount: deducted_calculated_amount, is_deducted: true, other_component_name: m.expencess_type.name,salary_component_id:  @salary_compon.id)
-            
-            else
+              SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: deducted_actual_amount, calculated_amount: deducted_calculated_amount, is_deducted: true, other_component_name: m.expencess_type.name,salary_component_id:  @salary_compon.id)
             end
-             end
+          end
 
 
           BonusEmployee.create_bonus(basic_calculated_amount, @employee.id, date)

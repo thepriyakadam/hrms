@@ -1136,7 +1136,11 @@ end
     end
   end
 
-  resources :holidays
+  resources :holidays do
+    collection do
+      get :assign_to_employee
+    end
+  end
 
   resources :employee_salary_templates do
     collection do
@@ -1373,6 +1377,8 @@ end
       get :revert_employee
       get :all_emp_list
       post :update_status
+      get :ajax_employee_document_detail
+      get :ajax_new_employee_document
     end
     member do
       get :edit_manager

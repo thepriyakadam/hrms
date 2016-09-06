@@ -1,0 +1,29 @@
+<%= form_for(@issue_locker) do |f| %>
+  <% if @issue_locker.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@issue_locker.errors.count, "error") %> prohibited this issue_locker from being saved:</h2>
+
+      <ul>
+      <% @issue_locker.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :issue_request_id %><br>
+    <%= f.text_field :issue_request_id %>
+  </div>
+  <div class="field">
+    <%= f.label :employee_id %><br>
+    <%= f.text_field :employee_id %>
+  </div>
+  <div class="field">
+    <%= f.label :status %><br>
+    <%= f.check_box :status %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

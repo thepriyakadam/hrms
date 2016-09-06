@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  issue_request_id: 
+  employee_id: 
+  status: false
+
+two:
+  issue_request_id: 
+  employee_id: 
+  status: false

@@ -1,5 +1,32 @@
 Rails.application.routes.draw do
 
+  resources :issue_histories
+  resources :access_issue_requests
+  resources :issue_locker_histories
+  resources :issue_lockers
+  resources :issue_requests
+  resources :issue_masters
+  resources :issue_types do
+    collection do
+      get :is_confirm
+    end
+   end
+  resources :issue_tracker_accesses do
+    collection do
+      get :is_confirm
+    end
+   end
+  resources :issue_tracker_members do
+    collection do
+      get :is_confirm
+    end
+   end
+  resources :issue_tracker_groups do
+    collection do
+      get :is_confirm
+
+  end
+end
   get 'download_pdf/index'
   get 'download_pdf/zip'
   get 'download_pdf/pdf'

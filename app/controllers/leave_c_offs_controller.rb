@@ -43,7 +43,6 @@ class LeaveCOffsController < ApplicationController
     if @leave_c_off.is_present?
       redirect_to new_leave_c_off_path
       flash[:alert] = "Your COff already set for that day"
-
     else
         @leave_c_off = LeaveCOff.new(leave_c_off_params)
         @leave_c_offs = LeaveCOff.all

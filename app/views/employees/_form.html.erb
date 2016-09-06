@@ -200,7 +200,23 @@
         <div class="col-sm-3">
           <div class="field">
             <div class="field">
-              <%= f.select :department_id, all_department_list,{label: 'Location',include_blank: " Select Location"} %>
+              <%= f.select :company_id, all_company,{label: 'Location',include_blank: " Select Company"} %>
+            </div>
+          </div>
+        </div> 
+
+        <div class="col-sm-3">
+          <div class="field">
+            <div class="field">
+              <%= f.select :company_location_id, all_company_with_location,{label: 'Location',include_blank: " Select Location"} %>
+            </div>
+          </div>
+        </div> 
+
+        <div class="col-sm-3">
+          <div class="field">
+            <div class="field">
+              <%= f.select :department_id, all_department_list,{label: 'Location',include_blank: " Select Department"} %>
             </div>
           </div>
         </div> 

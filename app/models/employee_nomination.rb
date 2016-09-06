@@ -13,5 +13,4 @@ class EmployeeNomination < ActiveRecord::Base
   	previous_nomination = nomination_master.employee_nominations.sum(:nomination)
   	previous_nomination + employee_nomination.nomination
   end
-
 end

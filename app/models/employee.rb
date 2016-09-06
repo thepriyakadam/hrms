@@ -64,6 +64,8 @@ class Employee < ActiveRecord::Base
   has_many :employee_promotions
   has_many :leave_records
   has_many :travel_request_histories
+  has_many :daily_bill_details
+  has_many :travel_requests
   
   #accepts_nested_attributes_for :joining_detail
   has_many :subordinates, class_name: 'Employee',

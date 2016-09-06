@@ -1076,6 +1076,7 @@ end
       post :print_salary_slip_cost_unitwise
       get :excel_report
       post :print_salary_slip_excel
+      get :dynamic_dropdown
     end
    end
   

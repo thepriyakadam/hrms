@@ -84,6 +84,40 @@ div.nobreak{ page-break-inside: avoid;
 </table>
 <br>
 <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
+      <thead>
+        <tr>
+        <th>Sr.No</th>
+        <th>Approver ID</th>
+        <th>Approver Name</th>
+        <th>Travel Request Status</th>
+        <th>Comment</th>
+        <th>Expence Claim Status</th>
+       </tr>
+      </thead>
+
+      <tbody>
+        <% i = 0 %>
+        <% @reporting_masters_travel_requests1.each do |a| %>
+          <tr>
+            <td><%= i=i+1 %></td>
+            <td><%= a.reporting_master.employee.manual_employee_code %></td>
+            <td><%= a.reporting_master.employee.try(:first_name) %> <%= a.reporting_master.employee.try(:middle_name) %> <%= a.reporting_master.employee.try(:last_name) %></td>
+            <td><%= a.travel_status %></td>
+            <td><%= a.daily_bill_comment %></td>
+            <td>
+              <% if a.status == true %>
+              <small class="label label-success">Confirmed & Send Next</small>
+              <% elsif a.status == false %>
+              <small class="label label-danger">Rejected</small>
+              <% else %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+</table>
+<br>
+<table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
   <thead>
   <tr><th colspan="8"><center>Travel Expence Detail</center></th></tr>
   </thead>

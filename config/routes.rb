@@ -478,6 +478,7 @@ end
       patch :create_dept_wise_request
       post :comment
       post :create_department_wise_training_request
+      post :approve_and_send_next
     end
   end
   resources :selected_resumes  do

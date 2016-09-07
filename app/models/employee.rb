@@ -2,6 +2,7 @@ class Employee < ActiveRecord::Base
   protokoll :employee_code, pattern: 'EMP#######'
   belongs_to :department
   belongs_to :company_location
+  belongs_to :company
   belongs_to :nationality
   belongs_to :blood_group
   belongs_to :employee_type
@@ -64,6 +65,8 @@ class Employee < ActiveRecord::Base
   has_many :employee_promotions
   has_many :leave_records
   has_many :travel_request_histories
+  has_many :daily_bill_details
+  has_many :travel_requests
   
   #accepts_nested_attributes_for :joining_detail
   has_many :subordinates, class_name: 'Employee',

@@ -197,13 +197,42 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-sm-3">
-          <div class="field">
-            <div class="field">
-              <%= f.select :department_id, all_department_list,{label: 'Location',include_blank: " Select Location"} %>
+          <div class="col-sm-3">
+            <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <%= link_to "", new_company_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+              </div>
+              <%=f.select :company_id, all_company,{include_blank: "Please Select Company"},{onchange:"var a={id:$(this).val(), form : 'employee'}; $.get('/employees/collect_company_location',a,function(response){});"}%>
+            </div>
             </div>
           </div>
-        </div> 
+
+          <div class="col-sm-3">
+            <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <%= link_to "", new_company_location_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+              </div>
+              <div id="company_location">
+                <%= render 'employees/company_location_dropdown' %> 
+            </div> 
+            </div>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <%= link_to "", new_department_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+              </div>
+              <div id="department">
+                <%= render 'employees/department_dropdown' %> 
+            </div> 
+            </div>
+            </div>
+          </div>
       </div>
 
       <div class="row">

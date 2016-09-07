@@ -86,8 +86,17 @@ class EmployeesController < ApplicationController
     @states = @country.states
     @state = @employee.state
     @cities = @state.districts
+
+    @company = @employee.company
+    @company_locations = @company.company_locations
+    @company_location = @employee.company_location
+    @departments = @company_location.departments
+
+
     @form = 'employee'
   end
+
+   
 
   # POST /employees
   # POST /employees.json
@@ -106,7 +115,7 @@ class EmployeesController < ApplicationController
   # PATCH/PUT /employees/1
   # PATCH/PUT /employees/1.json
   def update
-    respond_to do |format|
+     respond_to do |format|
       if @employee.update(employee_params)
         format.html { redirect_to @employee, notice: 'Employee was successfully updated.' }
         format.json { render :show, status: :ok, location: @employee }
@@ -370,6 +379,30 @@ class EmployeesController < ApplicationController
      redirect_to all_emp_list_employees_path
   end
   end
+
+  # def collect_states
+  #   @country = Country.find(params[:id])
+  #   @states = @country.states
+  #   @form = params[:form]
+  # end
+
+  def collect_company_location
+    @company = Company.find(params[:id])
+    @company_locations = @company.company_locations
+    @form = params[:form]
+  end
+
+  def collect_department
+     @company_location = CompanyLocation.find(params[:id])
+     @departments = @company_location.departments
+     @form = params[:form]
+  end
+
+  # def collect_cities
+  #   @state = State.find(params[:id])
+  #   @cities = @state.districts
+  #   @form = params[:form]
+  # end
 
   private
 

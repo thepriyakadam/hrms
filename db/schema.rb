@@ -2217,6 +2217,7 @@ ActiveRecord::Schema.define(version: 20160903102739) do
     t.string   "travel_status"
     t.integer  "daily_bill_id"
     t.boolean  "status"
+    t.text     "daily_bill_comment"
   end
 
   add_index "reporting_masters_travel_requests", ["daily_bill_id"], name: "index_reporting_masters_travel_requests_on_daily_bill_id"

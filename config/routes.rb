@@ -4,7 +4,11 @@ Rails.application.routes.draw do
   resources :access_issue_requests
   resources :issue_locker_histories
   resources :issue_lockers
-  resources :issue_requests
+  resources :issue_requests do
+    collection do
+      get :is_confirm
+    end
+   end
   resources :issue_masters
   resources :issue_types do
     collection do

@@ -5,4 +5,5 @@ class IssueRequest < ActiveRecord::Base
   belongs_to :employee
   belongs_to :status
   belongs_to :is_confirm
+  has_many :issue_lockers
 end

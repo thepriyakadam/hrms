@@ -16,6 +16,7 @@ class IssueTrackerMembersController < ApplicationController
   def new
     @issue_tracker_member = IssueTrackerMember.new
     @issue_tracker_members = IssueTrackerMember.all
+    session[:active_tab] = "issuetracker"
   end
 
   # GET /issue_tracker_members/1/edit
@@ -59,7 +60,6 @@ class IssueTrackerMembersController < ApplicationController
     flash[:notice] = "Confirmed Successfully"
     redirect_to new_issue_tracker_member_path
   end
-  
 
   private
     # Use callbacks to share common setup or constraints between actions.

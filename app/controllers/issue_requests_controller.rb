@@ -21,20 +21,16 @@ class IssueRequestsController < ApplicationController
   def edit
   end
 
+
   # POST /issue_requests
   # POST /issue_requests.json
   def create
     @issue_request = IssueRequest.new(issue_request_params)
-
-    respond_to do |format|
       if @issue_request.save
-        format.html { redirect_to @issue_request, notice: 'Issue request was successfully created.' }
-        format.json { render :show, status: :created, location: @issue_request }
-      else
-        format.html { render :new }
-        format.json { render json: @issue_request.errors, status: :unprocessable_entity }
+        IssueRequestMailer.issue_tracker_group_email(@issue_request).deliver_now
+        flash[:notice] = 'Issue request was successfully saved Successfully.'
       end
-    end
+        redirect_to new_issue_request_path
   end
 
   # PATCH/PUT /issue_requests/1
@@ -59,6 +55,17 @@ class IssueRequestsController < ApplicationController
       format.html { redirect_to issue_requests_url, notice: 'Issue request was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  
+  def is_confirm
+    @issue_request = IssueRequest.find(params[:issue_request])
+    IssueRequest.find(@issue_request.id).update(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to new_issue_request_path
+  end
+
+  def mail_to_group
   end
 
   private

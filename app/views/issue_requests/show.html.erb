@@ -1,54 +1,64 @@
-<p id="notice"><%= notice %></p>
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Issue Request</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed'">
+
+<tr>
+  <th><strong>Issue Master</strong></th>
+  <td><%= @issue_request.issue_master.try(:name) %></td>
+</tr>
+
+<tr>
+  <th><strong>Issue Tracker Member</strong></th>
+  <td><%= @issue_request.issue_tracker_member_id %></td>
+</tr>
 
 <p>
-  <strong>Issue master:</strong>
-  <%= @issue_request.issue_master %>
+  <th><strong>Issue Tracker Group</strong></th>
+  <td><%= @issue_request.issue_tracker_group.try(:name) %></td>
 </p>
 
-<p>
-  <strong>Issue tracker member:</strong>
-  <%= @issue_request.issue_tracker_member %>
-</p>
+<tr>
+  <th><strong>Description</strong></th>
+  <td><%= @issue_request.description %></td>
+</tr>
 
-<p>
-  <strong>Issue tracker group:</strong>
-  <%= @issue_request.issue_tracker_group %>
-</p>
+<tr>
+  <th><strong>Date</strong></th>
+  <td><%= @issue_request.date %></td>
+</tr>
 
-<p>
-  <strong>Description:</strong>
-  <%= @issue_request.description %>
-</p>
+<tr>
+  <th><strong>Time</strong></th>
+  <td><%= @issue_request.time %></td>
+</tr>
 
-<p>
-  <strong>Date:</strong>
-  <%= @issue_request.date %>
-</p>
+<!-- <tr>
+  <th><strong>Request By</strong></th>
+  <td><= @issue_request.employee.try(:first_name) %> <= @issue_request.employee.try(:middle_name) %> <= @issue_request.employee.try(:last_name) %></td>
+</tr> -->
 
-<p>
-  <strong>Time:</strong>
-  <%= @issue_request.time %>
-</p>
+<tr>
+  <th><strong>Issue Priority</strong></th>
+  <td><%= @issue_request.issue_priority %></td>
+</tr>
 
-<p>
-  <strong>Employee:</strong>
-  <%= @issue_request.employee %>
-</p>
+<tr>
+  <th><strong>Status</strong>
+  <td><%= @issue_request.status %></td>
+</tr>
 
-<p>
-  <strong>Issue priority:</strong>
-  <%= @issue_request.issue_priority %>
-</p>
+<tr>
+  <th><strong>Is Confirm</strong></th>
+  <td><%= @issue_request.is_confirm %></td>
+</tr>
 
-<p>
-  <strong>Status:</strong>
-  <%= @issue_request.status %>
-</p>
+</table>
+<%= link_to 'Edit', edit_issue_request_path(@issue_request),class: 'btn btn-success btn-sm fa fa-edit' %> |
+<%= link_to 'Back', issue_requests_path,class: 'btn btn-primary fa fa-arrow-left' %>
 
-<p>
-  <strong>Is confirm:</strong>
-  <%= @issue_request.is_confirm %>
-</p>
 
-<%= link_to 'Edit', edit_issue_request_path(@issue_request) %> |
-<%= link_to 'Back', issue_requests_path %>
+</div>
+</div>

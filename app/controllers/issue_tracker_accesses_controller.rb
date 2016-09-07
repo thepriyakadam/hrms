@@ -16,7 +16,7 @@ class IssueTrackerAccessesController < ApplicationController
   def new
     @issue_tracker_access = IssueTrackerAccess.new
     @issue_tracker_accesses = IssueTrackerAccess.all
-
+    session[:active_tab] = "issuetracker"
   end
 
   # GET /issue_tracker_accesses/1/edit

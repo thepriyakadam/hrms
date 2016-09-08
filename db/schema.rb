@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160907102455) do
+ActiveRecord::Schema.define(version: 20160908093902) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -2204,6 +2204,7 @@ ActiveRecord::Schema.define(version: 20160907102455) do
     t.string   "training_status"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
+    t.string   "employee_training"
   end
 
   add_index "reporting_masters_training_reqs", ["reporting_master_id"], name: "index_reporting_masters_training_reqs_on_reporting_master_id"

@@ -10,7 +10,7 @@ class TrainingRequestsController < ApplicationController
   # GET /training_requests/1
   # GET /training_requests/1.json
   def show
-    @trainee_requests = TraineeRequest.where(training_request_id: @training_request.id)
+    @trainee_requests = TraineeRequest.where(training_request_id: @training_request.id,is_complete: :true)
     @reporting_master = ReportingMaster.find(@training_request.reporting_master_id)
     @employee = Employee.find(@reporting_master.employee_id)
   end
@@ -44,10 +44,9 @@ class TrainingRequestsController < ApplicationController
           @emp_total = @employee_ids.count
           TrainingRequest.where(id: @training_request.id).update_all(no_of_employee: @emp_total)
           TraineeRequest.create(employee_id: eid,training_request_id: @training_request.id,training_topic_master_id: @training_request.training_topic_master_id)
-          end
           TrainingApproval.create(training_request_id: @training_request.id,employee_id: @training_request.employee_id, training_topic_master_id: @training_request.training_topic_master_id,reporting_master_id: @training_request.reporting_master_id,traininig_period: @training_request.training_period,training_date: @training_request.training_date,place: @training_request.place,no_of_employee: @training_request.no_of_employee,description: @training_request.description,justification: @training_request.justification,current_status: @training_request.status)
           ReportingMastersTrainingReq.create(reporting_master_id: @training_request.reporting_master_id, training_request_id: @training_request.id)
-
+          end
           flash[:notice] = 'Training Request Created Successfully'
           redirect_to new_training_request_path
         end
@@ -147,24 +146,53 @@ class TrainingRequestsController < ApplicationController
   #   # TrainingRequestMailer.approve_training_request_email(@training_request).deliver_now
   # end
 
-  def approve_and_send_next
+#   def approve_and_send_next
+#      @training_request = TrainingRequest.find(params[:training_request_id])
+#      @rep = params[:training_request][:reporting_master_id]
+#      @training_request.update(status: "Approved & Send Next",reporting_master_id: @rep)
+#      TrainingApproval.create(training_request_id: @training_request.id,employee_id: @training_request.employee_id, training_topic_master_id: @training_request.training_topic_master_id,reporting_master_id: @training_request.reporting_master_id,traininig_period: @training_request.training_period,training_date: @training_request.training_date,place: @training_request.place,no_of_employee: @training_request.no_of_employee,description: @training_request.description,justification: @training_request.justification,current_status: "Approved & Send Next")
+#      ReportingMastersTrainingReq.create(reporting_master_id: @training_request.reporting_master_id, training_request_id: @training_request.id)
+#      @reporting_masters = ReportingMaster.where(employee_id: current_user.employee_id).pluck(:id)
+#      ReportingMastersTrainingReq.where(reporting_master_id: @reporting_masters,training_request_id: @training_request.id).update_all(training_status: "Approved & Send Next")
+#      @trainee_request_ids = params[:trainee_request_ids]
+#     if @trainee_request_ids.nil?
+#       flash[:alert] = "Please Select the Checkbox"
+#       redirect_to training_request_confirmation_training_requests_path(training_request_id: @training_request.id,reporting_master_id: @rep)
+#     else
+#       @trainee_request_ids.each do |tid|
+#       @emp_total = @trainee_request_ids.count
+#       TrainingRequest.where(id: @training_request.id).update_all(no_of_employee: @emp_total)
+#       @trainee_request = TraineeRequest.find(tid)
+#       @trainee_request.update(reporting_master_id: @rep)
+#       # InterviewScheduleMailer.sample_email_to_interviewer(@interview_schedule).deliver_now
+#     end 
+#     flash[:notice] = "Training Request Send To Higher Authority For Approval"
+#     redirect_to training_request_list_training_requests_path
+#   end
+# end
+
+def approve_and_send_next
      @training_request = TrainingRequest.find(params[:training_request_id])
      @rep = params[:training_request][:reporting_master_id]
-     @training_request.update(status: "Approved & Send Next",reporting_master_id: @rep)
-     TrainingApproval.create(training_request_id: @training_request.id,employee_id: @training_request.employee_id, training_topic_master_id: @training_request.training_topic_master_id,reporting_master_id: @training_request.reporting_master_id,traininig_period: @training_request.training_period,training_date: @training_request.training_date,place: @training_request.place,no_of_employee: @training_request.no_of_employee,description: @training_request.description,justification: @training_request.justification,current_status: "Approved & Send Next")
-     ReportingMastersTrainingReq.create(reporting_master_id: @training_request.reporting_master_id, training_request_id: @training_request.id)
-     @reporting_masters = ReportingMaster.where(employee_id: current_user.employee_id).pluck(:id)
-     ReportingMastersTrainingReq.where(reporting_master_id: @reporting_masters,training_request_id: @training_request.id).update_all(training_status: "Approved & Send Next")
-     @trainee_request_ids = params[:trainee_request_ids]
+      @training_request.update(status: "Approved & Send Next",reporting_master_id: @rep) 
+      @trainee_request_ids = params[:trainee_request_ids]
+      @emp_total = @trainee_request_ids.count
+      TrainingRequest.where(id: @training_request.id).update_all(no_of_employee: @emp_total)
+      TrainingApproval.create(training_request_id: @training_request.id,employee_id: @training_request.employee_id, training_topic_master_id: @training_request.training_topic_master_id,reporting_master_id: @training_request.reporting_master_id,traininig_period: @training_request.training_period,training_date: @training_request.training_date,place: @training_request.place,no_of_employee: @training_request.no_of_employee,description: @training_request.description,justification: @training_request.justification,current_status: "Approved & Send Next")
+      ReportingMastersTrainingReq.create(reporting_master_id: @training_request.reporting_master_id, training_request_id: @training_request.id)
+      @reporting_masters = ReportingMaster.where(employee_id: current_user.employee_id).pluck(:id)
+      ReportingMastersTrainingReq.where(reporting_master_id: @reporting_masters,training_request_id: @training_request.id).update_all(training_status: "Approved & Send Next")
+      TraineeRequest.where(reporting_master_id: @reporting_masters,training_request_id: @training_request.id).update_all(reporting_master_id: nil)
+      c1 = @trainee_request_ids.map { |i| i.to_s }.join(",")
+      ReportingMastersTrainingReq.where(reporting_master_id: @reporting_masters,training_request_id: @training_request.id).update_all(employee_training: c1)
     if @trainee_request_ids.nil?
       flash[:alert] = "Please Select the Checkbox"
       redirect_to training_request_confirmation_training_requests_path(training_request_id: @training_request.id,reporting_master_id: @rep)
     else
       @trainee_request_ids.each do |tid|
-      @emp_total = @trainee_request_ids.count
-      TrainingRequest.where(id: @training_request.id).update_all(no_of_employee: @emp_total)
       @trainee_request = TraineeRequest.find(tid)
       @trainee_request.update(reporting_master_id: @rep)
+      
       # InterviewScheduleMailer.sample_email_to_interviewer(@interview_schedule).deliver_now
     end 
     flash[:notice] = "Training Request Send To Higher Authority For Approval"
@@ -196,14 +224,31 @@ end
    @training_requests = TrainingRequest.where(status:"Approved")  
   end
 
+  def approve_training_request
+    @training_request = TrainingRequest.find(params[:format])
+    @training_request.update(status: "Approved",no_of_employee: @training_request.no_of_employee)
+    TrainingApproval.create(training_request_id: @training_request.id,employee_id: @training_request.employee_id, training_topic_master_id: @training_request.training_topic_master_id,reporting_master_id: @training_request.reporting_master_id,traininig_period: @training_request.training_period,training_date: @training_request.training_date,place: @training_request.place,no_of_employee: @training_request.no_of_employee,description: @training_request.description,justification: @training_request.justification,current_status: "Approved")
+    # ReportingMastersTrainingReq.create(reporting_master_id: @training_request.reporting_master_id, training_request_id: @training_request.id, training_status: "Reject")
+    @reporting_masters = ReportingMaster.where(employee_id: current_user.employee_id).pluck(:id)
+    ReportingMastersTrainingReq.where(reporting_master_id: @reporting_masters,training_request_id: @training_request.id).update_all(training_status: "Approved")
+    TraineeRequest.where(reporting_master_id: @reporting_masters,training_request_id: @training_request.id,).update_all(is_complete: :true)
+    #TrainingRequestMailer.reject_training_request_email(@training_request).deliver_now
+    
+    # @comment = params[:training_request][:comment]
+    # @training_request.update(comment: @comment)
+    flash[:notice] = 'Training Request Approved'
+    redirect_to training_request_list_training_requests_path
+  end
+
 
   def reject_training_request
     @training_request = TrainingRequest.find(params[:format])
-    @training_request.update(status: "Rejected")
-    TrainingApproval.create(training_request_id: @training_request.id,employee_id: @training_request.employee_id, training_topic_master_id: @training_request.training_topic_master_id,reporting_master_id: @training_request.reporting_master_id,traininig_period: @training_request.training_period,training_date: @training_request.training_date,place: @training_request.place,no_of_employee: @training_request.no_of_employee,description: @training_request.description,justification: @training_request.justification,current_status: "Reject")
+    @training_request.update(status: "Rejected",no_of_employee: @training_request.no_of_employee)
+    TrainingApproval.create(training_request_id: @training_request.id,employee_id: @training_request.employee_id, training_topic_master_id: @training_request.training_topic_master_id,reporting_master_id: @training_request.reporting_master_id,traininig_period: @training_request.training_period,training_date: @training_request.training_date,place: @training_request.place,no_of_employee: @training_request.no_of_employee,description: @training_request.description,justification: @training_request.justification,current_status: "Rejected")
     # ReportingMastersTrainingReq.create(reporting_master_id: @training_request.reporting_master_id, training_request_id: @training_request.id, training_status: "Reject")
     @reporting_masters = ReportingMaster.where(employee_id: current_user.employee_id).pluck(:id)
     ReportingMastersTrainingReq.where(reporting_master_id: @reporting_masters,training_request_id: @training_request.id).update_all(training_status: "Rejected")
+    TraineeRequest.where(reporting_master_id: @reporting_masters,training_request_id: @training_request.id,).update_all(is_complete: :false)
     #TrainingRequestMailer.reject_training_request_email(@training_request).deliver_now
     
     # @comment = params[:training_request][:comment]

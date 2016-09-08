@@ -102,6 +102,7 @@ class Employee < ActiveRecord::Base
 
   validates :manual_employee_code, presence: true, uniqueness: { case_sensitive: false }
   validates :first_name, presence: true
+  
   # validates :permanent_address, presence: true
   # validates :department_id,presence: true
   

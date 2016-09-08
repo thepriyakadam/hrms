@@ -64,15 +64,15 @@
         </tr>    
       </tbody>
     </table>
-    </div>
     <div class="row">
     <div class="col-sm-3">
       <div class="actions">
-        <%= f.submit "Confirm", class: 'btn btn-primary btn-sm' %> | <%= link_to 'Back', template_list_employee_templates_path(@employee.id),class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+        <%= f.submit "Confirm", class: 'btn btn-primary btn-sm' %> | <%= link_to 'Back', fresh_template_employee_templates_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
       </div>
     </div>
   </div>
     <% end %>
+    </div>
   </div><!-- /.box-body -->
 
 <script type="text/javascript">

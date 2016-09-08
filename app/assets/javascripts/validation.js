@@ -402,6 +402,15 @@ $("#employee").validate({
       "employee[email]":{
         loginRegex: true
       },
+      "employee[company_id]":{
+        required: true
+      },
+      "employee[company_location_id]":{
+        required: true
+      },
+      "employee[department_id]":{
+        required: true
+      }
     },
     messages: {
       "employee[manual_employee_code]":{
@@ -451,11 +460,14 @@ $("#employee").validate({
       "employee[email]":{
         required: "Please Specify Email ID"
       },
-      "employee[date_of_birth]":{
-        maxlength: "Date Of Birth can't exceed max limit"
+      "employee[company_id]":{
+        required: "Please Specify Company"
       },
-      "employee[status]":{
-        maxlength: "Status can't exceed max limit"
+      "employee[company_location_id]":{
+        required: "Please Specify Company Location"
+      },
+      "employee[department_id]":{
+        required: "Please Specify Department"
       }
     },
     errorPlacement: function(error, element) {

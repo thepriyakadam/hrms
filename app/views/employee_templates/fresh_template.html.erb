@@ -28,7 +28,7 @@
               <% if have_template(employee) %>
                 <%= link_to 'Create Template', fresh_employee_templates_path(employee),class: 'btn btn-sm btn-warning fa fa-check' %>
               <% else %>
-                <%= link_to 'View Template', show_employee_salary_template_employee_salary_templates_path(employee),class: 'btn btn-sm btn-info fa fa-check' %>
+                <%= link_to 'View Template', current_template_employee_salary_templates_path(emp_id: employee),class: 'btn btn-sm btn-info fa fa-check' %>
               <% end %>
             </td>
           </tr>

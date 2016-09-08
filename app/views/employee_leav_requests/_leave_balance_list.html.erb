@@ -13,7 +13,7 @@
     <tbody>
       <% @employee_leav_balances.each do |b| %>
         <tr>
-          <td><%= b.leav_category.try(:name) %></td>
+          <td><%= b.leav_category.try(:code) %></td>
           <td><%= b.expiry_date %></td>
           <td><%= b.no_of_leave %></td>
           <td><%= b.total_leave %></td>

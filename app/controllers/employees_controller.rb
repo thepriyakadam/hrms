@@ -88,9 +88,9 @@ class EmployeesController < ApplicationController
     @cities = @state.districts
 
     @company = @employee.company
-    @company_locations = @company.company_locations
+    @company_locations = @company.try(:company_locations)
     @company_location = @employee.company_location
-    @departments = @company_location.departments
+    @departments = @company_location.try(:departments)
 
 
     @form = 'employee'

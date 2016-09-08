@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   resources :issue_requests do
     collection do
       get :is_confirm
+      get :lock_request_list
+      get :lock_request
     end
    end
   resources :issue_masters
@@ -916,6 +918,9 @@ end
   match 'investment_declarations/:id/investment_document/:id' => 'investment_declarations#investment_document', :via => [:get], :as => :investment_document
   match 'due_templates/:id/download_due_tempalte_documents/:id' => 'due_templates#download_due_tempalte_documents', :via => [:get], :as => :download_due_tempalte_documents
   
+  match 'issue_requests/:id/download_screenshot/:id' => 'issue_requests#download_screenshot', :via => [:get], :as => :download_screenshot
+  match 'issue_requests/:id/download_screenshot_image/:id' => 'issue_requests#download_screenshot_image', :via => [:get], :as => :download_screenshot_image
+
   resources :leave_c_offs
   resources :overtime_month_records
 

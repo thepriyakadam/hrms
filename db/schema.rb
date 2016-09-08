@@ -11,7 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20160908091448) do
+=======
+ActiveRecord::Schema.define(version: 20160906065753) do
+>>>>>>> 2b7691620fd8dc58cb07e0b71dd91d8db185a03d
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -1722,6 +1726,7 @@ ActiveRecord::Schema.define(version: 20160908091448) do
     t.time     "time"
     t.integer  "employee_id"
     t.string   "issue_priority"
+<<<<<<< HEAD
     t.integer  "is_confirm_id"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
@@ -1734,6 +1739,12 @@ ActiveRecord::Schema.define(version: 20160908091448) do
     t.integer  "document2_file_size"
     t.datetime "document2_updated_at"
     t.boolean  "status"
+=======
+    t.integer  "status_id"
+    t.integer  "is_confirm_id"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+>>>>>>> 2b7691620fd8dc58cb07e0b71dd91d8db185a03d
   end
 
   add_index "issue_requests", ["employee_id"], name: "index_issue_requests_on_employee_id"
@@ -1741,6 +1752,10 @@ ActiveRecord::Schema.define(version: 20160908091448) do
   add_index "issue_requests", ["issue_master_id"], name: "index_issue_requests_on_issue_master_id"
   add_index "issue_requests", ["issue_tracker_group_id"], name: "index_issue_requests_on_issue_tracker_group_id"
   add_index "issue_requests", ["issue_tracker_member_id"], name: "index_issue_requests_on_issue_tracker_member_id"
+<<<<<<< HEAD
+=======
+  add_index "issue_requests", ["status_id"], name: "index_issue_requests_on_status_id"
+>>>>>>> 2b7691620fd8dc58cb07e0b71dd91d8db185a03d
 
   create_table "issue_tracker_accesses", force: :cascade do |t|
     t.string   "name"
@@ -1764,6 +1779,19 @@ ActiveRecord::Schema.define(version: 20160908091448) do
     t.string   "contact_number"
   end
 
+<<<<<<< HEAD
+=======
+  create_table "issue_tracker_issue_tracker_groups", force: :cascade do |t|
+    t.string   "name"
+    t.string   "email"
+    t.integer  "contact_number"
+    t.boolean  "status"
+    t.boolean  "is_confirm"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+>>>>>>> 2b7691620fd8dc58cb07e0b71dd91d8db185a03d
   create_table "issue_tracker_members", force: :cascade do |t|
     t.integer  "issue_tracker_group_id"
     t.integer  "employee_id"

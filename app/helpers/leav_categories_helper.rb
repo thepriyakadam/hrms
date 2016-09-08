@@ -1,5 +1,5 @@
 module LeavCategoriesHelper
   def all_leav_category
-    LeavCategory.all.collect { |x| [x.name+' - '+x.description, x.id] }
+    LeavCategory.all.collect { |x| [x.code+' - '+x.name, x.id] }
   end
 end

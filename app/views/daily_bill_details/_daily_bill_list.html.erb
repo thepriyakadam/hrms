@@ -74,8 +74,10 @@
         <%= link_to 'Confirm',is_confirm_daily_bill_details_path(travel_request_id: @travel_request.id),class: 'btn btn-primary btn-sm',data: { confirm: 'Are you sure?' } %>
           <!--<= f.submit "Confirm", class: 'btn btn-primary btn-sm',data: { confirm: 'Are you sure?' } %>--> |
         <% end %>
-
+        <% if @a = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id).pluck(:status).last == true %>
           <%= link_to 'Print PDF', print_daily_bill_daily_bill_details_path(format: 'pdf',qwe:@travel_request.id ),class: 'btn btn-sm btn-warning',:target => '_blank' %>
+          <% else %>
+          <% end %>
          
           <%= link_to 'Back', daily_bill_travel_requests_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
 

@@ -24,6 +24,10 @@
             <td>
               <% if a.status == true %>
               <small class="label label-success">Confirmed & Send Next</small>
+              <!--< if @dbl = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id).pluck(:status).last == true %>
+              <small class="label label-danger">Confirmed</small>
+              < else %>
+              < end %>-->
               <% elsif a.status == false %>
               <small class="label label-danger">Rejected</small>
               <% else %>

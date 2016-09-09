@@ -26,11 +26,11 @@ class IssueRequestsController < ApplicationController
   # POST /issue_requests.json
 
 
-    def create
+  def create
    @issue_request = IssueRequest.new(issue_request_params)
     respond_to do |format|
       if @issue_request.save
-        IssueRequestMailer.issue_tracker_group_email(@issue_request).deliver_now
+        # IssueRequestMailer.issue_tracker_group_email(@issue_request).deliver_now
         format.html { redirect_to @issue_request, notice: 'Issue request was successfully saved Successfully.' }
         format.json { render :show, status: :created, location: @issue_request }
       else
@@ -39,7 +39,6 @@ class IssueRequestsController < ApplicationController
       end
     end
   end
-
 
   # PATCH/PUT /issue_requests/1
   # PATCH/PUT /issue_requests/1.json
@@ -90,7 +89,8 @@ class IssueRequestsController < ApplicationController
   end
 
   def lock_request_list
-     @issue_requests = IssueRequest.all
+     @issue_tracker_member = IssueTrackerMember.find_by_employee_id(current_user.employee_id)
+     @issue_requests = IssueRequest.where(issue_tracker_group_id: @issue_tracker_member.issue_tracker_group_id,issue_tracker_member_id: @issue_tracker_member.id)
   end
 
   def lock_request

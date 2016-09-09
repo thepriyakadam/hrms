@@ -2,7 +2,7 @@
    <div class="box-body"> 
 <%= bootstrap_form_for(@issue_tracker_access, remote:true) do |f| %>
 <div class="col-sm-3">
-  <div class="group">
+  <div class="form-group required">
         <%= f.text_field :name,label:'Name', placeholder: 'Name' %>
   </div>
 </div>
@@ -14,7 +14,7 @@
 </div>
 
 <div class="col-sm-3">
-  <div class="form-group required">
+  <div class="group">
       <%= f.select :employee_id,employee_list_for_food_deduction,{include_blank: "Select Employee"} %>
   </div>
 </div>

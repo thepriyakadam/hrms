@@ -8,20 +8,21 @@ class Ability
         can :manage, :all
       elsif user.role.name == 'CompanyLocation'
         # can :manage, Employee, :joining_detail => { :company_location_id => user.company_location_id }
-        can :manage, [Employee, JoiningDetail, EmployeeBankDetail, Qualification, Experience, Skillset, EmployeePhysical, Family, Award, Certification, Award, EmployeeNomination]
-        can :manage, CompanyLeav
-        can [:read, :new], Department
+        # can :manage, [Employee, JoiningDetail, EmployeeBankDetail, Qualification, Experience, Skillset, EmployeePhysical, Family, Award, Certification, Award, EmployeeNomination]
+        # can :manage, CompanyLeav
+        # can [:read, :new], Department
         # can :manage, EmployeeLeavBalance, :employee => {:joining_detail => { :company_location_id => user.company_location_id }}
-        can :manage, EmployeeLeavBalance
-        can :manage, EmployeeLeavRequest
-        can :manage, EmployeeSalaryTemplate
-        can :manage, EmployeeTemplate
-        can :manage, AdvanceSalary
-        can :manage, Instalment
-        can :manage, ParticularLeaveRecord
-        can :manage, [GoalBunch, GoalRating]
-        can :manage, [TravelRequest, DailyBillDetail]
-        can [:read, :create, :update], SocietyMemberShip
+        # can :manage, EmployeeLeavBalance
+        # can :manage, EmployeeLeavRequest
+        # can :manage, EmployeeSalaryTemplate
+        # can :manage, EmployeeTemplate
+        # can :manage, AdvanceSalary
+        # can :manage, Instalment
+        # can :manage, ParticularLeaveRecord
+        # can :manage, [GoalBunch, GoalRating]
+        # can :manage, [TravelRequest, DailyBillDetail]
+        # can [:read, :create, :update], SocietyMemberShip
+        can :manage, :all
       elsif user.role.name == 'Department'
         can :read, Employee
         can :manage, EmployeeLeavRequest

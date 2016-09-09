@@ -65,6 +65,7 @@ class EmployeeAttendancesController < ApplicationController
 
   def department_wise_employee_list
     @costcenter, @date = params[:salary][:name], params[:salary][:day].to_date
+    #@department = params[:salary][:department_id]
     if Holiday.exists?(holiday_date: @date)
       @holiday_flag = true
       @holiday = Holiday.find_by(holiday_date: @date)
@@ -73,7 +74,9 @@ class EmployeeAttendancesController < ApplicationController
       if current_user.class == Member
       if current_user.role.name == 'CompanyLocation'
       @employees = Employee.where(company_location_id: current_user.company_location_id).filter_by_date_and_costcenter(@date, @costcenter, current_user)
-      elsif @employees = Employee.filter_by_date_and_costcenter(@date, @costcenter, current_user)
+      elsif 
+      @employees = Employee.filter_by_date_and_costcenter(@date, @costcenter, current_user)
+      #@employees = Employee.filter_by_date_costcenter_department(@date, @costcenter,@department, current_user)
       end
     end
       @employee_attendance = EmployeeAttendance.new

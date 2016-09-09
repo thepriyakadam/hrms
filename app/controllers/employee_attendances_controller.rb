@@ -70,7 +70,12 @@ class EmployeeAttendancesController < ApplicationController
       @holiday = Holiday.find_by(holiday_date: @date)
     else
       @holiday_flag = false
-      @employees = Employee.filter_by_date_and_costcenter(@date, @costcenter, current_user)
+      if current_user.class == Member
+      if current_user.role.name == 'CompanyLocation'
+      @employees = Employee.where(company_location_id: current_user.company_location_id).filter_by_date_and_costcenter(@date, @costcenter, current_user)
+      elsif @employees = Employee.filter_by_date_and_costcenter(@date, @costcenter, current_user)
+      end
+    end
       @employee_attendance = EmployeeAttendance.new
     end  
   end
@@ -199,6 +204,26 @@ class EmployeeAttendancesController < ApplicationController
       format.xls {render template: 'employee_attendances/employee_attendance.xls.erb'}
     end
   end
+
+  #  def search_by_start_date
+  #   reporter(EmployeeLeavRequest.filter_records(current_user), template_class: PdfReportTemplate) do
+  #     filter :start_date, type: :date
+  #     # filter :current_status, type: :string
+  #     column(:Request_ID, sortable: true) { |employee_leav_request| employee_leav_request.id }
+  #     column(:ID, sortable: true) { |employee_leav_request| employee_leav_request.employee.try(:manual_employee_code) }
+  #     column(:Employee_Name, sortable: true) { |employee_leav_request| full_name(employee_leav_request.employee) }
+  #     column(:Designation, sortable: true) { |employee_leav_request| employee_leav_request.employee.joining_detail.employee_designation.name }
+  #     column(:From, sortable: true) { |employee_leav_request| employee_leav_request.start_date.to_date }
+  #     column(:To, sortable: true) { |employee_leav_request| employee_leav_request.end_date.to_date }
+  #     column(:Leave_Category, sortable: true) { |employee_leav_request| employee_leav_request.leav_category.try(:description) }
+  #     column(:Apply_Date, sortable: true) { |employee_leav_request| employee_leav_request.created_at.to_date }
+  #     column(:Apply_Time, sortable: true) { |employee_leav_request| employee_leav_request.created_at }
+  #     column(:Leave_Type, sortable: true, &:leave_type)
+  #     column(:Status, sortable: true, &:current_status)
+  #     column(:No_OF_Day, sortable: true, &:leave_count)
+  #     column(:Reason, sortable: true, &:reason)
+  #   end
+  # end
 
 
   private

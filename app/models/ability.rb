@@ -46,7 +46,7 @@ class Ability
       elsif user.role.name == 'SalaryAccount'
         can :read, Employee
         can :manage, EmployeeLeavRequest
-        can :manage, AdvanceSalary
+        can :manage, [AdvanceSalary, Instalment]
         can :manage, [GoalBunch, GoalRating]
         can :manage, [TravelRequest, DailyBillDetail]
       elsif user.role.name == 'Account'

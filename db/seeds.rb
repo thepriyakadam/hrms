@@ -1,11 +1,11 @@
 
 require 'rubygems'
 require 'roo'
-ex = Roo::Excel.new("#{Rails.root}/public/a.xls")
-ex.default_sheet = ex.sheets[1] #siya feb
+ex = Roo::Excel.new("#{Rails.root}/public/b.xls")
+ex.default_sheet = ex.sheets[2] #siya feb
 i = 1
 ActiveRecord::Base.transaction do
-1.upto(367) do |line| # dewas jan 2016
+1.upto(1) do |line| # dewas jan 2016
   puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
   unless @employee.nil?

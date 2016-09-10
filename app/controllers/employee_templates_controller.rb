@@ -83,7 +83,9 @@ class EmployeeTemplatesController < ApplicationController
     @salary_template = SalaryTemplate.find(params[:salary_template_id])
     EmployeeTemplate.where(employee_id: @employee.id,salary_template_id: @salary_template.id).destroy_all
     EmployeeSalaryTemplate.where(employee_id: @employee.id,salary_template_id: @salary_template.id).destroy_all
-    @emp_template = EmployeeTemplate.find_by(employee_id: @employee.id).last
+    # @emp_template = EmployeeTemplate.find_by(employee_id: @employee.id).last
+    flash[:notice] = 'Employee Template was Reverted Successfully.'
+    redirect_to employee_templates_path
   end
 
   def create_fresh_template

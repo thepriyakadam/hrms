@@ -142,7 +142,7 @@ class VacancyMastersController < ApplicationController
     @vacancy_master.update(current_status: "Rejected")
     ReportingMastersVacancyMaster.create(vacancy_master_id: @vacancy_master.id, reporting_master_id: @vacancy_master.reporting_master_id, vacancy_status: "Rejected")
     VacancyRequestHistory.create(vacancy_master_id: @vacancy_master.id, vacancy_name: @vacancy_master.vacancy_name,no_of_position: @vacancy_master.no_of_position,description: @vacancy_master.description,vacancy_post_date: @vacancy_master.vacancy_post_date,budget: @vacancy_master.budget,department_id: @vacancy_master.department_id,employee_designation_id: @vacancy_master.employee_designation_id,company_location_id: @vacancy_master.company_location_id,degree_id: @vacancy_master.degree_id,degree_1_id: @vacancy_master.degree_1_id,degree_2_id: @vacancy_master.degree_2_id,keyword: @vacancy_master.keyword,other_organization: @vacancy_master.other_organization,industry: @vacancy_master.industry,reporting_master_id: @vacancy_master.reporting_master_id,employee_id: @vacancy_master.employee_id,justification: @vacancy_master.justification,current_status: "Rejected")
-    VacancyMasterMailer.reject_vacancy_email(@vacancy_master).deliver_now
+    # VacancyMasterMailer.reject_vacancy_email(@vacancy_master).deliver_now
     flash[:alert] = 'Vacancy Request Rejected'
     redirect_to vacancy_history_vacancy_masters_path
   end
@@ -155,7 +155,7 @@ class VacancyMastersController < ApplicationController
     @vacancy_master.no_of_position.times do 
       ParticularVacancyRequest.create(vacancy_master_id: @vacancy_master.id,employee_id: @vacancy_master.employee_id,employee_designation_id: @vacancy_master.employee_designation_id,vacancy_name: @vacancy_master.vacancy_name,fulfillment_date: @vacancy_master.vacancy_post_date,status: "Approved",open_date: Time.zone.now.to_date,vacancy_history_id: @c1.id)
   end
-    VacancyMasterMailer.approve_vacancy_email(@vacancy_master).deliver_now
+    # VacancyMasterMailer.approve_vacancy_email(@vacancy_master).deliver_now
     flash[:notice] = 'Vacancy Request Approved'
     redirect_to vacancy_history_vacancy_masters_path
   end

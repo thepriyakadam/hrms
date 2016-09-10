@@ -5,6 +5,7 @@ class EmployeeTemplate < ActiveRecord::Base
   # validates :employee_id, uniqueness: { scope: [:is_active] }
   # validates :employee_id, uniqueness: { scope: [:is_active] }
 
+ #validates :employee_id, uniqueness: { scope: [:salary_template_id] }
   def self.create_object(employee_id, template_id)
     employee_template = EmployeeTemplate.new do |et|
       et.employee_id = employee_id

@@ -467,7 +467,7 @@ end
     collection do
       get :training_request_list
       get :training_request_confirmation
-      post :approve_training_request
+      # post :approve_training_request
       get :reject_training_request
       get :confirmation_list
       get :modal_approver_comment
@@ -478,6 +478,8 @@ end
       patch :create_dept_wise_request
       post :comment
       post :create_department_wise_training_request
+      post :approve_and_send_next
+      get :approve_training_request
     end
   end
   resources :selected_resumes  do
@@ -1002,6 +1004,7 @@ end
       get :assign_new_template
       post :create_fresh_template
       get :template_salary
+      get :revert_salary_template
     end
   end
   resources :retention_moneys do

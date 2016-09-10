@@ -18,6 +18,9 @@ class EmployeeTemplatesController < ApplicationController
     session[:active_tab1] ="salarymaster"
   end
 
+  def show
+  end
+  
   def template_list
     @employee = Employee.find(params[:format])
     @employee_templates = @employee.employee_templates
@@ -88,6 +91,14 @@ class EmployeeTemplatesController < ApplicationController
       column(:created_at, sortable: true) { |employee_template| employee_template.created_at.to_date }
       column(:updated_at, sortable: true) { |employee_template| employee_template.updated_at.to_date }
     end
+  def revert_salary_template
+    @employee = Employee.find(params[:employee_id])
+    @salary_template = SalaryTemplate.find(params[:salary_template_id])
+    EmployeeTemplate.where(employee_id: @employee.id,salary_template_id: @salary_template.id).destroy_all
+    EmployeeSalaryTemplate.where(employee_id: @employee.id,salary_template_id: @salary_template.id).destroy_all
+    # @emp_template = EmployeeTemplate.find_by(employee_id: @employee.id).last
+    flash[:notice] = 'Employee Template was Reverted Successfully.'
+    redirect_to employee_templates_path
   end
 
   def create_fresh_template

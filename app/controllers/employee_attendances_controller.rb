@@ -73,7 +73,9 @@ class EmployeeAttendancesController < ApplicationController
       if current_user.class == Member
       if current_user.role.name == 'CompanyLocation'
       @employees = Employee.where(company_location_id: current_user.company_location_id).filter_by_date_and_costcenter(@date, @costcenter, current_user)
-      elsif @employees = Employee.filter_by_date_and_costcenter(@date, @costcenter, current_user)
+      elsif
+      @employees = Employee.filter_by_date_and_costcenter(@date, @costcenter, current_user)
+      #@employees = Employee.filter_by_date_costcenter_and_department(@date, @costcenter, @department)
       end
     end
       @employee_attendance = EmployeeAttendance.new

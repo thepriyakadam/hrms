@@ -14,7 +14,7 @@ class TrainingPlansController < ApplicationController
     @trainees = Trainee.where(training_plan_id: @training_plan.id)
   end
 
-  # GET /training_plans/new
+  # GET /training_plans/new 
   def new
     @training_plan = TrainingPlan.new
     #@training_requests = TrainingRequest.all
@@ -143,8 +143,8 @@ class TrainingPlansController < ApplicationController
   def show_traineerequest_list
      @training_plan =TrainingPlan.new
      @training_topic_master = TrainingTopicMaster.find(params[:training_topic_master_id])
-     @trainee_requests =TraineeRequest.where(training_topic_master_id: @training_topic_master.id,is_complete: true)
-     @trainee_request =TraineeRequest.where(training_topic_master_id: @training_topic_master.id)
+     @trainee_requests =TraineeRequest.where(training_topic_master_id: @training_topic_master.id,is_complete: :true)
+     # @trainee_request =TraineeRequest.where(training_topic_master_id: @training_topic_master.id)
   end
 
   def confirm_employee_for_training

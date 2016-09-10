@@ -265,9 +265,9 @@ class DailyBillDetailsController < ApplicationController
     if ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id).pluck(:status).last == nil  && ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id).pluck(:travel_status).last == "Approved"
       TravelExpence.where(travel_request_id: @travel_request.id).update_all(total_expence_amount: @travel_request.expense,remaining_amount: c1)
       # ReportingMastersTravelRequest.where(reporting_master_id: @reporting_masters,travel_request_id: @travel_request.id).update_all(status: "true",daily_bill_comment: @comment)
-      TravelRequest.where(id: @travel_request.id).update_all(reporting_master_id: r1)
+      # TravelRequest.where(id: @travel_request.id).update_all(reporting_master_id: r1)
     else
-      flash[:notice] = 'Not Yet Approved'
+      # flash[:notice] = 'Not Yet Approved'
     end
     
     if c1<0
@@ -278,7 +278,13 @@ class DailyBillDetailsController < ApplicationController
 
      if @reporting_masters_travel_requests1 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,status: nil)[0]
       ReportingMastersTravelRequest.where(reporting_master_id: @reporting_masters_travel_requests1.reporting_master_id).update_all(status: "true",daily_bill_comment: @comment)
-      TravelRequest.where(id: @travel_request.id).update_all(reporting_master_id: @reporting_masters_travel_requests2.reporting_master_id)
+      r1=ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id).pluck(:reporting_master_id).last
+      if @reporting_masters_travel_requests10 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,status: nil).pluck(:reporting_master_id).first == nil
+      # TravelRequest.where(id: @travel_request.id).update_all(reporting_master_id: r1)
+      TravelRequest.where(id: @travel_request.id).update_all(reporting_master_id: r1)
+      else
+      TravelRequest.where(id: @travel_request.id).update_all(reporting_master_id: @reporting_masters_travel_requests2.try(:reporting_master_id))
+      end
       flash[:notice] = 'Daily Bill Request Send To Higher Authority For Approval'
 
      elsif @reporting_masters_travel_requests2 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,status: nil)[1]
@@ -320,6 +326,10 @@ class DailyBillDetailsController < ApplicationController
       ReportingMastersTravelRequest.where(reporting_master_id: @reporting_masters_travel_requests9.reporting_master_id).update_all(status: "true",daily_bill_comment: @comment)
       TravelRequest.where(id: @travel_request.id).update_all(reporting_master_id: @reporting_masters_travel_requests9.reporting_master_id)
       flash[:notice] = 'Daily Bill Request Send To Higher Authority For Approval'
+
+      # elsif @reporting_masters_travel_requests10 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,status: nil).pluck(:reporting_master_id).first == nil
+      # TravelRequest.where(id: @travel_request.id).update_all(reporting_master_id: r1)
+        # flash[:notice] = 'Reporting Manager Id is Nil'
     else
       flash[:alert] = 'No Reporting Manager is present'
     end

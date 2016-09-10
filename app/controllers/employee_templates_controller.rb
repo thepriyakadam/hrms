@@ -16,6 +16,9 @@ class EmployeeTemplatesController < ApplicationController
     session[:active_tab1] ="salarymaster"
   end
 
+  def show
+  end
+  
   def template_list
     @employee = Employee.find(params[:format])
     @employee_templates = @employee.employee_templates
@@ -73,6 +76,14 @@ class EmployeeTemplatesController < ApplicationController
         @flag = true
       end
     end
+  end
+
+  def revert_salary_template
+    @employee = Employee.find(params[:employee_id])
+    @salary_template = SalaryTemplate.find(params[:salary_template_id])
+    EmployeeTemplate.where(employee_id: @employee.id,salary_template_id: @salary_template.id).destroy_all
+    EmployeeSalaryTemplate.where(employee_id: @employee.id,salary_template_id: @salary_template.id).destroy_all
+    @emp_template = EmployeeTemplate.find_by(employee_id: @employee.id).last
   end
 
   def create_fresh_template

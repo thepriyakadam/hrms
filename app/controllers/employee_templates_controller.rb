@@ -91,7 +91,8 @@ class EmployeeTemplatesController < ApplicationController
         EmployeeSalaryTemplate.where(employee_id: @employee.id,employee_template_id: @employee_template.id).destroy_all
       end
     flash[:notice] = 'Employee Template was Reverted Successfully.'
-    redirect_to employee_templates_path
+    # redirect_to employee_templates_path
+    redirect_to template_list_employee_templates_path(format: @employee.id)
   end
 
   def create_fresh_template

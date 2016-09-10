@@ -32,6 +32,25 @@ class EmployeeTemplate < ActiveRecord::Base
     employee_template
   end
 
+  def self.filter_records(current_user)
+    @employee_templates =  if current_user.class == Group
+      EmployeeTemplate.all
+    elsif current_user.class == Member
+      if current_user.role.name == "Company"
+        @employees = Employee.where(company_id: current_user.company_id)
+        EmployeeTemplate.where(employee_id: @employees)
+      elsif current_user.role.name == "CompanyLocation"
+        @employees = Employee.where(company_location_id: current_user.company_location_id)
+        EmployeeTemplate.where(employee_id: @employees)  
+      elsif current_user.role.name == "Department"
+        @employees = Employee.where(department_id: current_user.department_id)
+        EmployeeTemplate.where(employee_id: @employees)
+      elsif current_user.role.name == "Employee"
+        EmployeeTemplate.where(employee_id: current_user.employee_id)
+      end
+    end
+  end
+
   def self.create_new_object(employee_id, template_id)
     employee_template = EmployeeTemplate.new do |et|
       et.employee_id = employee_id

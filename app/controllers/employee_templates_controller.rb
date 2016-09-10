@@ -1,5 +1,7 @@
+require 'query_report/helper'  # need to require the helper
 class EmployeeTemplatesController < ApplicationController
   load_and_authorize_resource except: [:template_list]
+  include QueryReport::Helper  # need to include it
   def index
     if current_user.class == Group
       @employees = Employee.all
@@ -72,6 +74,19 @@ class EmployeeTemplatesController < ApplicationController
         @employee_salary_templates = @salary_template.salary_component_templates
         @flag = true
       end
+    end
+  end
+
+  def template_salary
+    reporter(EmployeeTemplate.filter_records(current_user), template_class: PdfReportTemplate) do
+      filter :start_date, type: :date
+      column(:Employee_ID, sortable: true) { |employee_template| employee_template.employee.try(:manual_employee_code) }
+      column(:Emploee_name, sortable: true) { |employee_template| full_name(employee_template.employee) }
+      column(:Template, sortable: true) { |employee_template| employee_template.salary_template.code }
+      column(:start_date, sortable: true) { |employee_template| employee_template.start_date }
+      column(:end_date, sortable: true) { |employee_template| employee_template.end_date }
+      column(:created_at, sortable: true) { |employee_template| employee_template.created_at.to_date }
+      column(:updated_at, sortable: true) { |employee_template| employee_template.updated_at.to_date }
     end
   end
 

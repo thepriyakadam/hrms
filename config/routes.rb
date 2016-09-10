@@ -1001,6 +1001,7 @@ end
       get :fresh
       get :assign_new_template
       post :create_fresh_template
+      get :template_salary
     end
   end
   resources :retention_moneys do

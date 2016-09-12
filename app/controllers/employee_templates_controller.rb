@@ -18,7 +18,7 @@ class EmployeeTemplatesController < ApplicationController
 
   def show
   end
-  
+ 
   def template_list
     @employee = Employee.find(params[:format])
     @employee_templates = @employee.employee_templates
@@ -82,7 +82,7 @@ class EmployeeTemplatesController < ApplicationController
     @employee = Employee.find(params[:employee_id])
     @salary_template = SalaryTemplate.find(params[:salary_template_id])
     @employee_template = EmployeeTemplate.find(params[:employee_template_id])
-    if @c1=EmployeeTemplate.where(employee_id: @employee.id).pluck(:is_active).last == true 
+    if @c1=EmployeeTemplate.where(employee_id: @employee.id).pluck(:is_active).last == true
        EmployeeTemplate.where(employee_id: @employee.id).update_all(end_date: nil,is_active: true)
     end
     @a1 = EmployeeTemplate.where(employee_id: @employee.id,id: @employee_template.id).last

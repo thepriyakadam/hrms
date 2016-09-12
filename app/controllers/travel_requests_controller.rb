@@ -35,8 +35,10 @@ class TravelRequestsController < ApplicationController
        # @reporting_master = params[:travel_request][:reporting_master_id]
        # @rep_master = ReportingMaster.find(@reporting_master)
        # TravelRequest.where(id: @travel_request.id).update_all(reporting_master_id: @rep_master.employee_id)
+        @c1 = (@travel_request.to - @travel_request.traveling_date).to_i
         ReportingMastersTravelRequest.create(reporting_master_id: @travel_request.reporting_master_id, travel_request_id: @travel_request.id)
         TravelRequestHistory.create(employee_id: @travel_request.employee_id,travel_request_id: @travel_request.id,application_date: @travel_request.application_date,traveling_date: @travel_request.traveling_date, tour_purpose: @travel_request.tour_purpose, place: @travel_request.place,total_advance: @travel_request.total_advance,reporting_master_id: @travel_request.reporting_master_id, travel_option_id: @travel_request.travel_option_id)
+        TravelRequest.where(id: @travel_request.id).update_all(day: @c1)
         TravelRequestMailer.travel_request(@travel_request).deliver_now
         format.html { redirect_to @travel_request, notice: 'Travel request was successfully created.' }
         format.json { render :show, status: :created, location: @travel_request }
@@ -52,6 +54,8 @@ class TravelRequestsController < ApplicationController
   def update
     respond_to do |format|
       if @travel_request.update(travel_request_params)
+        @c1 = (@travel_request.to - @travel_request.traveling_date).to_i
+        TravelRequest.where(id: @travel_request.id).update_all(day: @c1)
         TravelRequestMailer.travel_request(@travel_request).deliver_now
         format.html { redirect_to @travel_request, notice: 'Travel request was successfully updated.' }
         format.json { render :show, status: :ok, location: @travel_request }
@@ -134,7 +138,7 @@ class TravelRequestsController < ApplicationController
     # @reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
     @reporting_masters = ReportingMaster.where(employee_id: current_user.employee_id).pluck(:id)
     ReportingMastersTravelRequest.where(reporting_master_id: @reporting_masters,travel_request_id: @travel_request.id).update_all(travel_status: "Approved & Send Next")
-    # TravelRequestMailer.approve_and_send_next(@travel_request).deliver_now
+    TravelRequestMailer.approve_and_send_next(@travel_request).deliver_now
     flash[:notice] = 'Travel Request Send to Higher Authority for Approval'
     redirect_to travel_history_travel_requests_path
   end
@@ -285,6 +289,6 @@ class TravelRequestsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def travel_request_params
-      params.require(:travel_request).permit(:employee_id, :current_status, :expense,:reporting_master_id, :application_date, :traveling_date, :tour_purpose, :place, :traveling_advance, :lodging_boarding_advance, :extra_advance, :travel_option_id, :travel_mode_id, :total_advance)
+      params.require(:travel_request).permit(:employee_id, :to, :day,:current_status, :expense,:reporting_master_id, :application_date, :traveling_date, :tour_purpose, :place, :traveling_advance, :lodging_boarding_advance, :extra_advance, :travel_option_id, :travel_mode_id, :total_advance)
     end
 end

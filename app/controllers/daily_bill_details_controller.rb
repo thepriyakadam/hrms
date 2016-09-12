@@ -10,8 +10,8 @@ class DailyBillDetailsController < ApplicationController
   # GET /daily_bill_details/1
   # GET /daily_bill_details/1.json
   def show
-    @reporting_master = ReportingMaster.find(@daily_bill_detail.reporting_master_id)
-    @employee = Employee.find(@reporting_master.employee_id)
+    # @reporting_master = ReportingMaster.find(@daily_bill_detail.reporting_master_id)
+    # @employee = Employee.find(@reporting_master.employee_id)
   end
 
   # GET /daily_bill_details/new
@@ -20,6 +20,8 @@ class DailyBillDetailsController < ApplicationController
     
     @travel_request = TravelRequest.find(params[:travel_request_id])
     @daily_bill_details = DailyBillDetail.where(travel_request_id: @travel_request.id)
+
+    @reporting_masters_travel_requests1 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id)
 
 
     reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
@@ -46,8 +48,8 @@ class DailyBillDetailsController < ApplicationController
         # @daily_bill_detail.update(reporting_master_id: @reporting_masters_travel_requests.reporting_master_id)
         # @daily_bill_detail.update(reporting_master_id: @travel_request.reporting_master_id)
         @daily_bill_details = DailyBillDetail.where(travel_request_id: @travel_request.id)
-        c1 = @daily_bill_details.sum(:travel_expence).to_i
-        TravelRequest.where(id: @travel_request.id).update_all(expense: c1)
+        # c1 = @daily_bill_details.sum(:travel_expence).to_i
+        # TravelRequest.where(id: @travel_request.id).update_all(expense: c1)
         @daily_bill_detail = DailyBillDetail.new
         flash[:notice] = 'Daily Bill Detail saved Successfully.'
       end
@@ -64,6 +66,8 @@ class DailyBillDetailsController < ApplicationController
 
       if @daily_bill_detail.update(daily_bill_detail_params)
         @daily_bill_details =  @travel_request.daily_bill_details
+        # c1 = @daily_bill_details.sum(:travel_expence).to_i
+        # TravelRequest.where(id: @travel_request.id).update_all(expense: c1)
         flash[:notice] = "Updated successfully"
       else
         flash[:alert] = "not updated"
@@ -77,9 +81,9 @@ class DailyBillDetailsController < ApplicationController
   def destroy
     @travel_request = TravelRequest.find(@daily_bill_detail.travel_request_id)
     @daily_bill_details = DailyBillDetail.where(travel_request_id: @travel_request.id)
-
     @daily_bill_detail.destroy
-    flash.now[:notice] = "Deleted successfully"
+    flash[:alert] = "Deleted successfully"
+    redirect_to new_daily_bill_detail_path(travel_request_id: @travel_request.id)
   end
 
 
@@ -281,7 +285,7 @@ class DailyBillDetailsController < ApplicationController
       r1=ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id).pluck(:reporting_master_id).last
       if @reporting_masters_travel_requests10 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,status: nil).pluck(:reporting_master_id).first == nil
       # TravelRequest.where(id: @travel_request.id).update_all(reporting_master_id: r1)
-      TravelRequest.where(id: @travel_request.id).update_all(reporting_master_id: r1)
+      TravelRequest.where(id: @travel_request.id).update_all(reporting_master_id: r1,daily_bill_status: "true")
       else
       TravelRequest.where(id: @travel_request.id).update_all(reporting_master_id: @reporting_masters_travel_requests2.try(:reporting_master_id))
       end
@@ -384,9 +388,11 @@ class DailyBillDetailsController < ApplicationController
 
   def is_confirm
     @travel_request = TravelRequest.find(params[:travel_request_id])
+    @daily_bill_details = DailyBillDetail.where(travel_request_id: @travel_request.id)
     @reporting_masters_travel_requests = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id)[0]
     DailyBillDetail.where(travel_request_id: @travel_request.id).update_all(reporting_master_id: @reporting_masters_travel_requests.reporting_master_id,is_confirm: :true)
-    TravelRequest.where(id: @travel_request.id).update_all(daily_bill_status: "true",reporting_master_id: @reporting_masters_travel_requests.reporting_master_id,is_confirm: :true)
+    c1 = @daily_bill_details.sum(:travel_expence).to_i
+    TravelRequest.where(id: @travel_request.id).update_all(reporting_master_id: @reporting_masters_travel_requests.reporting_master_id,is_confirm: :true,expense: c1)
     flash[:notice] = "Confirmed Successfully"
     redirect_to new_daily_bill_detail_path(travel_request_id: @travel_request.id)
   end

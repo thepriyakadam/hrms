@@ -87,15 +87,15 @@ class EmployeeSalaryTemplatesController < ApplicationController
       @employee_template = EmployeeTemplate.create_new_object(@employee_id, @template_id)
       @employee_template = EmployeeTemplate.build_objects(arrays, params, @employee_id, @template_id, @employee_template)
 
-      @employee_arrear = EmployeeArrear.create_object(@employee_id, increement_date)
-      @employee_arrear = EmployeeArrear.build_objects(arrears_array, params, @employee_arrear)
+      # @employee_arrear = EmployeeArrear.create_object(@employee_id, increement_date)
+      # @employee_arrear = EmployeeArrear.build_objects(arrears_array, params, @employee_arrear)
       ActiveRecord::Base.transaction do
-        if @employee_arrear.save
+        # if @employee_arrear.save
           @employee_template.save
           flash[:notice] = 'Employee template created successfully.'
-        else
-          flash[:alert] = 'Same template cannot assigned.'
-        end
+        # else
+        #   flash[:alert] = 'Same template cannot assigned.'
+        # end
       end
       redirect_to template_list_employee_templates_path(@employee_id)
     end

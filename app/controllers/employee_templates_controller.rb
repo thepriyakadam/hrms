@@ -1,5 +1,7 @@
+require 'query_report/helper'  # need to require the helper
 class EmployeeTemplatesController < ApplicationController
   load_and_authorize_resource except: [:template_list]
+  include QueryReport::Helper  # need to include it
   def index
     if current_user.class == Group
       @employees = Employee.all
@@ -77,6 +79,19 @@ class EmployeeTemplatesController < ApplicationController
       end
     end
   end
+  def template_salary
+    reporter(EmployeeTemplate.filter_records(current_user), template_class: PdfReportTemplate) do
+      filter :start_date, type: :date
+      column(:Employee_ID, sortable: true) { |employee_template| employee_template.employee.try(:manual_employee_code) }
+      column(:Employee_name, sortable: true) { |employee_template| full_name(employee_template.employee) }
+      column(:Category, sortable: true) { |employee_template| employee_template.employee.joining_detail.try(:employee_designation).try(:name) }
+      column(:Template, sortable: true) { |employee_template| employee_template.salary_template.code }
+      column(:start_date, sortable: true) { |employee_template| employee_template.start_date }
+      column(:end_date, sortable: true) { |employee_template| employee_template.end_date }
+      column(:created_at, sortable: true) { |employee_template| employee_template.created_at.to_date }
+      column(:updated_at, sortable: true) { |employee_template| employee_template.updated_at.to_date }
+    end
+  end
 
   def revert_salary_template
     @employee = Employee.find(params[:employee_id])
@@ -91,8 +106,7 @@ class EmployeeTemplatesController < ApplicationController
         EmployeeSalaryTemplate.where(employee_id: @employee.id,employee_template_id: @employee_template.id).destroy_all
       end
     flash[:notice] = 'Employee Template was Reverted Successfully.'
-    # redirect_to employee_templates_path
-    redirect_to template_list_employee_templates_path(format: @employee.id)
+    redirect_to employee_templates_path
   end
 
   def create_fresh_template

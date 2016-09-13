@@ -20,10 +20,13 @@ class EmployeeTemplatesController < ApplicationController
 
   def show
   end
-  
+ 
   def template_list
     @employee = Employee.find(params[:format])
     @employee_templates = @employee.employee_templates
+    @template = EmployeeTemplate.where(employee_id: @employee.id)
+    @salaryslip_component = SalaryslipComponent.all
+    #@temp = @template.last
   end
 
   def activate
@@ -97,16 +100,31 @@ class EmployeeTemplatesController < ApplicationController
     @employee = Employee.find(params[:employee_id])
     @salary_template = SalaryTemplate.find(params[:salary_template_id])
     @employee_template = EmployeeTemplate.find(params[:employee_template_id])
-    if @c1=EmployeeTemplate.where(employee_id: @employee.id).pluck(:is_active).last == true 
-       EmployeeTemplate.where(employee_id: @employee.id).update_all(end_date: nil,is_active: true)
-    end
+    
+    # if @c1=EmployeeTemplate.where(employee_id: @employee.id).pluck(:is_active).last == true
+       #EmployeeTemplate.where(employee_id: @employee.id).update_all(end_date: nil,is_active: true)
+      # @emp_temp = EmployeeTemplate.where(employee_id: @employee.id).last
+      # @emp_temp.update(end_date: nil,is_active: true)
+    #end
     @a1 = EmployeeTemplate.where(employee_id: @employee.id,id: @employee_template.id).last
       if @a1.is_active == true
         @a1.destroy
+        @emp_temp = EmployeeTemplate.where(employee_id: @employee.id).last
+        @emp_temp.update(end_date: nil,is_active: true)
+
         EmployeeSalaryTemplate.where(employee_id: @employee.id,employee_template_id: @employee_template.id).destroy_all
       end
     flash[:notice] = 'Employee Template was Reverted Successfully.'
-    redirect_to employee_templates_path
+    redirect_to template_list_employee_templates_path(format: @employee.id)
+  end
+
+  def cancel_salary_template
+    @employee = Employee.find(params[:employee_id])
+    @employee_template = EmployeeTemplate.find(params[:employee_template_id])
+    EmployeeTemplate.where(id: @employee_template.id).destroy_all
+    EmployeeSalaryTemplate.where(employee_template_id: @employee_template.id,employee_id: @employee.id).destroy_all
+    flash[:notice] = 'Employee Template was Cancelled Successfully.'
+    redirect_to template_list_employee_templates_path(@employee.id)
   end
 
   def create_fresh_template

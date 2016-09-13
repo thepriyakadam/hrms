@@ -788,7 +788,7 @@ class SalaryslipsController < ApplicationController
                 deducted_actual_amount = 0
                 deducted_calculated_amount = @retention.amount
                 @salary_component = SalaryComponent.find_by(name: "Retaintion")
-                SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: deducted_actual_amount, calculated_amount: deducted_calculated_amount, is_deducted: true, other_component_name: 'Retaintion')
+                SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: deducted_actual_amount, calculated_amount: deducted_calculated_amount, is_deducted: true, other_component_name: 'Retaintion',salary_component_id: @salary_component.id)
               end
             end
           end

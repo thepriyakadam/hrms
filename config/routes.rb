@@ -1005,6 +1005,7 @@ end
       post :create_fresh_template
       get :revert_salary_template
       get :template_salary
+      get :cancel_salary_template
     end
   end
   resources :retention_moneys do

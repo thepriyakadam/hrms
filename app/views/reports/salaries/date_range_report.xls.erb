@@ -177,14 +177,13 @@
           
          <% @deducted_salaryslip_items = slip.salaryslip_components.where(is_deducted: true) %>
           <% @deducted_salaryslip_items.each do |item| %>
-            <% if item.salary_component_id.nil? %>
               <% if item.other_component_name == "PF" %>
                 <Cell ss:Index="39"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
               <% elsif item.other_component_name == "ESIC" %>
                 <Cell ss:Index="40"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
               <% elsif item.other_component_name == "Prof. Tax" %>
                 <Cell ss:Index="41"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
-              <% elsif item.other_component_name == "Retention" %>
+              <% elsif item.other_component_name == "Retaintion" %>
                 <Cell ss:Index="42"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
               <% elsif item.other_component_name == "Well Faire" %>
                 <Cell ss:Index="43"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
@@ -203,7 +202,6 @@
               <% elsif item.other_component_name == "Society Loan" %>
                 <Cell ss:Index="50"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
               <% end %>
-            <% end %>
           <% end %><!-- deducted items -->
 
           <Cell ss:Index="51"><Data ss:Type="Number"><%= slip.calculated_total_deduction.round %></Data></Cell>

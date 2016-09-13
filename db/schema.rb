@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160908093902) do
+ActiveRecord::Schema.define(version: 20160913043824) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -2180,9 +2180,15 @@ ActiveRecord::Schema.define(version: 20160908093902) do
     t.string   "name"
     t.string   "description"
     t.integer  "employee_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
     t.boolean  "is_expences"
+    t.boolean  "is_training"
+    t.boolean  "is_recruitment"
+    t.boolean  "is_resignation"
+    t.boolean  "is_transfer"
+    t.boolean  "is_promotion"
+    t.boolean  "is_active"
   end
 
   add_index "reporting_masters", ["employee_id"], name: "index_reporting_masters_on_employee_id"

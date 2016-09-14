@@ -9,4 +9,16 @@ class State < ActiveRecord::Base
   has_many :employee_nominations
   validates :code, presence: true, uniqueness: { case_sensitive: false }
   validates :name, presence: true, uniqueness: { case_sensitive: false }
+
+  def self.filter_records(current_user)
+    @countries =  if current_user.class == Group
+    Country.all
+    elsif current_user.class == Member
+    if current_user.role.name == "Company"
+    Country.all
+    elsif current_user.role.name == "CompanyLocation"
+    Country.all
+    end
+  end
+  end
 end

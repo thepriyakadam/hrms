@@ -50,13 +50,13 @@
         <Cell ss:Index="40"><Data ss:Type="String">Payment Mode</Data></Cell>
         <Cell ss:Index="41"><Data ss:Type="String">Cost Center</Data></Cell>
         <Cell ss:Index="42"><Data ss:Type="String">Employee Category</Data></Cell>
-        <Cell ss:Index="43"><Data ss:Type="String">Probation Period</Data></Cell>
-        <Cell ss:Index="44"><Data ss:Type="String">Notice Period</Data></Cell>
-        <Cell ss:Index="45"><Data ss:Type="String">Passport No.</Data></Cell>
-        <Cell ss:Index="46"><Data ss:Type="String">Passport Issue Date</Data></Cell>
-        <Cell ss:Index="47"><Data ss:Type="String">Passport Expiry Date</Data></Cell>
-        <Cell ss:Index="48"><Data ss:Type="String">Retention</Data></Cell>
-        <Cell ss:Index="49"><Data ss:Type="String">Religion</Data></Cell>
+        <Cell ss:Index="43"><Data ss:Type="String">Medical Scheme</Data></Cell>
+        <Cell ss:Index="44"><Data ss:Type="String">Probation Period</Data></Cell>
+        <Cell ss:Index="45"><Data ss:Type="String">Notice Period</Data></Cell>
+        <Cell ss:Index="46"><Data ss:Type="String">Passport No.</Data></Cell>
+        <Cell ss:Index="47"><Data ss:Type="String">Passport Issue Date</Data></Cell>
+        <Cell ss:Index="48"><Data ss:Type="String">Passport Expiry Date</Data></Cell>
+        <Cell ss:Index="49"><Data ss:Type="String">Retention</Data></Cell>
         <Cell ss:Index="50"><Data ss:Type="String">Retirement Date</Data></Cell>
         <Cell ss:Index="51"><Data ss:Type="String">Reserved Category</Data></Cell> 
 
@@ -300,9 +300,9 @@
           <Cell ss:Index="46"><Data ss:Type="String"><%= joining_detail.try(:passport_no) %></Data></Cell>
           <Cell ss:Index="47"><Data ss:Type="String"><%= joining_detail.try(:passport_issue_date) %></Data></Cell>
           <Cell ss:Index="48"><Data ss:Type="String"><%= joining_detail.try(:passport_expiry_date) %></Data></Cell>
-          <Cell ss:Index="49"><Data ss:Type="String"><%= joining_detail.try(:have_retention) %></Data></Cell>
+          <Cell ss:Index="49"><Data ss:Type="String"><%= joining_detail.try(:have_retention) ? "Yes" : "No" %></Data></Cell>
           <Cell ss:Index="50"><Data ss:Type="String"><%= joining_detail.try(:retirement_date) %></Data></Cell>
-          <Cell ss:Index="51"><Data ss:Type="String"><%= joining_detail.try(:reserved_category_id) %></Data></Cell>  
+          <Cell ss:Index="51"><Data ss:Type="String"><%= joining_detail.try(:reserved_category).try(:name) %></Data></Cell>  
 
 
           <Cell ss:Index="52"><Data ss:Type="String"><%= employee_bank_detail.try(:account_no) %></Data></Cell>

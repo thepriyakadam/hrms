@@ -65,12 +65,22 @@ class EmployeeAttendancesController < ApplicationController
 
   def department_wise_employee_list
     @costcenter, @date = params[:salary][:name], params[:salary][:day].to_date
+    #@department = params[:salary][:department_id]
     if Holiday.exists?(holiday_date: @date)
       @holiday_flag = true
       @holiday = Holiday.find_by(holiday_date: @date)
     else
       @holiday_flag = false
+      if current_user.class == Member
+      if current_user.role.name == 'CompanyLocation'
+      @employees = Employee.where(company_location_id: current_user.company_location_id).filter_by_date_and_costcenter(@date, @costcenter, current_user)
+
+      elsif
       @employees = Employee.filter_by_date_and_costcenter(@date, @costcenter, current_user)
+      #@employees = Employee.filter_by_date_costcenter_and_department(@date, @costcenter, @department)
+
+      end
+    end
       @employee_attendance = EmployeeAttendance.new
     end  
   end
@@ -81,12 +91,14 @@ class EmployeeAttendancesController < ApplicationController
     present = params[:employee_attendances][:present]
     #department = params[:employee_attendances][:department_id]
     @employee = Employee.where(id: @employee_ids)
+    
     if @employee_ids.nil?
       flash[:alert] = "Please Select the Checkbox"
     else
       @employee_ids.each do |eid|
         @emp = Employee.find_by_id(eid)
       EmployeeAttendance.create(employee_id: eid,day: day,present: present,department_id: @emp.department_id, is_confirm: false)  
+      #Holiday.where(holiday_date: day).update_all(is_taken: true)
       flash[:notice] = "Created successfully"
       end
     end
@@ -197,6 +209,26 @@ class EmployeeAttendancesController < ApplicationController
       format.xls {render template: 'employee_attendances/employee_attendance.xls.erb'}
     end
   end
+
+  #  def search_by_start_date
+  #   reporter(EmployeeLeavRequest.filter_records(current_user), template_class: PdfReportTemplate) do
+  #     filter :start_date, type: :date
+  #     # filter :current_status, type: :string
+  #     column(:Request_ID, sortable: true) { |employee_leav_request| employee_leav_request.id }
+  #     column(:ID, sortable: true) { |employee_leav_request| employee_leav_request.employee.try(:manual_employee_code) }
+  #     column(:Employee_Name, sortable: true) { |employee_leav_request| full_name(employee_leav_request.employee) }
+  #     column(:Designation, sortable: true) { |employee_leav_request| employee_leav_request.employee.joining_detail.employee_designation.name }
+  #     column(:From, sortable: true) { |employee_leav_request| employee_leav_request.start_date.to_date }
+  #     column(:To, sortable: true) { |employee_leav_request| employee_leav_request.end_date.to_date }
+  #     column(:Leave_Category, sortable: true) { |employee_leav_request| employee_leav_request.leav_category.try(:description) }
+  #     column(:Apply_Date, sortable: true) { |employee_leav_request| employee_leav_request.created_at.to_date }
+  #     column(:Apply_Time, sortable: true) { |employee_leav_request| employee_leav_request.created_at }
+  #     column(:Leave_Type, sortable: true, &:leave_type)
+  #     column(:Status, sortable: true, &:current_status)
+  #     column(:No_OF_Day, sortable: true, &:leave_count)
+  #     column(:Reason, sortable: true, &:reason)
+  #   end
+  # end
 
 
   private

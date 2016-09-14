@@ -19,4 +19,12 @@ LeaveCOff.all
     end
   end
   end
+
+  def is_present?
+    LeaveCOff.exists?(employee_id: self.employee_id,c_off_date: self.c_off_date)
+  end
+  # def is_available?
+  #   LeaveCOff.exists?(employee_id: self.employee_id,c_off_type: 'Full Day')
+  # end
+
 end

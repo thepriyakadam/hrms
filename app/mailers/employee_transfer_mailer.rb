@@ -46,6 +46,7 @@ class EmployeeTransferMailer < ApplicationMailer
   end
 
   def edit_and_approve(employee_transfer)
+    byebug
     @employee_transfer = employee_transfer
     @reporting_master = Employee.find(employee_transfer.reporting_master.employee_id)
     @employee_transfer = EmployeeTransfer.find(employee_transfer.id)

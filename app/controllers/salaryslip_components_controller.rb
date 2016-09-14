@@ -9,14 +9,14 @@ class SalaryslipComponentsController < ApplicationController
     # @salaryslip_components = SalaryslipComponent.limit(50)
     @salaryslips = Salaryslip.where(month: @month,year: @year)
     # @salaryslips_1 = Salaryslip.where(month: @month,year: @year)limit(1).present?
-    if @salaryslips.present? == true
+    if @salaryslips.present?
       respond_to do |format|
       format.xml { send_data render_to_string(:index), :filename => 'mydoc.xml', :type=>"application/xml", :disposition => 'attachment' }
       # redirect_to root_url
-      flash[:danger] = "Salaryslip  processed"
+      flash[:alert] = "Salaryslip  processed"
       end
     else
-    flash[:danger] = "Salaryslip not yet processed"
+    flash[:error] = "Salaryslip not yet processed"
     end
   end
     # else
@@ -29,7 +29,14 @@ class SalaryslipComponentsController < ApplicationController
   #   # byebug
   #   @month = params[:salaryslip_component][:month]
   #   @year = params[:salaryslip_component][:year]
-  #   @salary_components = SalaryComponent.all
+  #   @salary_components = Sala if @salaryslips_1 == "true"
+  #     respond_to do |format|
+  #     format.xml { send_data render_to_string(:index), :filename => 'mydoc.xml', :type=>"application/xml", :disposition => 'attachment' }
+  #   end
+  #   else
+  #   flash[:danger] = "Salaryslip not yet processed"
+  #   end
+  #   # @maps ryComponent.all
   #   # @salaryslip_components = SalaryslipComponent.limit(50)
   #   @salaryslips = Salaryslip.where(month: @month,year: @year).limit(1)
   #    @salaryslips_1 = Salaryslip.where(month: @month,year: @year)limit(1).present?

@@ -36,6 +36,8 @@
                  <small class="label label-primary">Pending</small>
               <% elsif employee_resignation.resign_status == "Approved" %>
                   <small class="label label-primary">Approved</small>
+              <% elsif employee_resignation.resign_status == "Rejected" %>
+                  <small class="label label-primary">Rejected</small>
               <% elsif employee_resignation.resign_status == "Edit & Send Next" %>
                   <small class="label label-info">Edit & Send Next</small>
               <% elsif employee_resignation.resign_status == "Approved & Send Next" %>

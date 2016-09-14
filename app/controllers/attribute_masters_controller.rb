@@ -53,6 +53,13 @@ class AttributeMastersController < ApplicationController
     @attribute_masters = AttributeMaster.all
   end
 
+  def is_confirm
+    @attribute_master = AttributeMaster.find(params[:attribute_master])
+    AttributeMaster.find(@attribute_master.id).update(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to new_attribute_master_path
+  end
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_attribute_master
@@ -61,6 +68,6 @@ class AttributeMastersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def attribute_master_params
-      params.require(:attribute_master).permit(:code, :name, :definition, :status)
+      params.require(:attribute_master).permit(:is_confirm,:code, :name, :definition, :status)
     end
 end

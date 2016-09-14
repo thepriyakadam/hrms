@@ -5,15 +5,22 @@
           <h3 class="box-title">Travel Request</h3>
         </div>
         <div class="box-body">
-        <%= bootstrap_form_for(TravelRequestHistory.new,url:{action:"edit_and_send_next_modal_submit",abc: @travel_request.id}) do |f| %>
+        <%= bootstrap_form_for :travel_request_history,url:{action:"edit_and_send_next_modal_submit", abc: @travel_request.id} do |f| %>
 
           <%= f.hidden_field :travel_request_id, value: @travel_request.id %>
 
         <div class="row">
+
+         <div class="col-sm-3">
+          <div class="form-group required">
+             <%= f.text_field :employee_id,label:'Employee Name',value: full_name(@travel_request.employee),readonly: true %>   
+          </div>
+        </div>
+
           <div class="col-sm-3">
             <label>Request To </label>
             <div class="field">
-              <%= f.select :reporting_master_id,all_reporting_master_list1,{hide_label: true,include_blank: " Select Reporting Manager"}%>
+              <%= f.select :reporting_master_id,all_reporting_master_list,{hide_label: true,include_blank: " Select Reporting Manager"}%>
             </div>
           </div>
 
@@ -36,18 +43,19 @@
               </div>
             </div>
 
-
-           <!--  <div class="col-sm-3">
-            <label>Travel Mode</label>
-              <div class="form-group required">
-                <= f.select :travel_mode_id,all_travel_mode,{hide_label: true,placeholder: 'Travel mode',include_blank: 'Select Travel mode'} %>
-              </div>
-            </div> -->
-
           </div>
 
 
         <div class="row">
+
+         <div class="col-sm-3">
+            <label>Travel Mode</label>
+              <div class="form-group required">
+                <%= f.select :travel_mode_id,all_travel_mode,{hide_label: true,placeholder: 'Travel mode',include_blank: 'Select Travel mode'} %>
+              </div>
+            </div>
+
+
           <div class="col-sm-3">
             <label>Traveling Date </label>
             <div class="field">
@@ -74,20 +82,21 @@
               <%= f.text_field :total_advance, label: 'Total Advance' %>
             </div>
           </div>
+        </div>
 
-          <div class="col-sm-3">
+        <div class="row">
+
+         <div class="col-sm-3">
             <div class="field">
               <div class="form-group required">
                 <%= f.text_field :tour_purpose, label: 'Tour Purpose' %>
               </div>
             </div>
           </div>
-        </div>
 
-        <div class="row">
-          <div class="col-sm-3">
+          <div class="col-sm-3" style="padding-top:20px;">
             <div class="actions">
-              <%= f.submit "Update Travel Request",:class => class_name, data: { disable_with: data_info }  %>
+              <%= f.submit "Edit & Send Next",:class => class_name, data: { disable_with: data_info }  %>
               <!-- link_to 'Back', travel_request_confirmation_travel_requests_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %> -->
             </div>
           </div>

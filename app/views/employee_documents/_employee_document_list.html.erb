@@ -12,25 +12,23 @@
       <tr>
         <td><%= employee_document.employee.try(:manual_employee_code) %></td>
         <td><%= employee_document.name %></td>
-         <td>
-           <% if employee_document.document_file_name == nil %>
-           <small class="label label-default">Document Not Available</small>
-             <% else %>
-             <%= link_to ' Document',download_emp_path(id: employee_document.id),class: 'btn btn-xs btn btn-info fa fa-download' %>
-             <% end %>
+        <td>
+          <% if employee_document.document_file_name == nil %>
+            <small class="label label-default">Document Not Available</small>
+          <% else %>
+            <%= link_to ' Document',download_emp_path(id: employee_document.id),class: 'btn btn-xs btn btn-info fa fa-download' %>
+          <% end %>
         </td>
         <td>
           <% if employee_document.image_file_name == nil %>
-              <small class="label label-default">Not Available</small>
-              <% else %>
-              <center><%= link_to '',download_pic_path(id: employee_document.id),class: 'btn btn-xs fa fa-picture-o' %></center>
-              <% end %>
+            <small class="label label-default">Not Available</small>
+          <% else %>
+            <center><%= link_to '',download_pic_path(id: employee_document.id),class: 'btn btn-xs fa fa-picture-o' %></center>
+          <% end %>
         </td>
-
         <td><%= employee_document.status ? "Active" : "Inactive" %></td>
-         <td>
-<!--           <= link_to '', edit_employee_document_path(employee_document),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
- -->          <%= link_to '',  employee_document, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-xs fa fa-close',remote:true %>
+        <td>
+          <%= link_to '',  employee_document, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-xs fa fa-close',remote:true %>
         </td>
       </tr>
     <% end %>

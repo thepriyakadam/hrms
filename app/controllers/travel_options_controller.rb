@@ -54,6 +54,13 @@ class TravelOptionsController < ApplicationController
     @travel_options = TravelOption.all
   end
 
+  def is_confirm
+    @travel_option = TravelOption.find(params[:travel_option])
+    TravelOption.find(@travel_option.id).update(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to new_travel_option_path
+  end
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_travel_option
@@ -62,6 +69,6 @@ class TravelOptionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def travel_option_params
-      params.require(:travel_option).permit(:code, :name, :discription)
+      params.require(:travel_option).permit(:is_confirm,:code, :name, :discription)
     end
 end

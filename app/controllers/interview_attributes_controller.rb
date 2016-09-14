@@ -55,6 +55,13 @@ class InterviewAttributesController < ApplicationController
     @interview_attributes = InterviewAttribute.all
   end
 
+  def is_confirm
+    @interview_attribute = InterviewAttribute.find(params[:interview_attribute])
+    InterviewAttribute.find(@interview_attribute.id).update(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to new_interview_attribute_path
+  end
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_interview_attribute
@@ -63,6 +70,6 @@ class InterviewAttributesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def interview_attribute_params
-      params.require(:interview_attribute).permit(:code, :name, :description)
+      params.require(:interview_attribute).permit(:is_confirm,:code, :name, :description)
     end
 end

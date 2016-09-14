@@ -1,10 +1,11 @@
+
 require 'rubygems'
 require 'roo'
-ex = Roo::Excel.new("#{Rails.root}/public/a.xls")
-ex.default_sheet = ex.sheets[0] #siya feb
+ex = Roo::Excel.new("#{Rails.root}/public/aa.xls")
+ex.default_sheet = ex.sheets[3] #siya feb
 i = 1
 ActiveRecord::Base.transaction do
-2.upto(88) do |line| # siya Feb 2016
+1.upto(2) do |line| # dewas jan 2016
   puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
   unless @employee.nil?
@@ -14,15 +15,21 @@ ActiveRecord::Base.transaction do
       w.month_name = ex.cell(line, 'B')
       w.year = ex.cell(line, 'C').to_i
 
+      w.day_in_month = ex.cell(line, 'D')
+      w.present_day = ex.cell(line, 'E')
+      w.week_off_day = ex.cell(line, 'F')
 
-      w.day_in_month = ex.cell(line, 'E')
-      w.present_day = ex.cell(line, 'F')
-     
-      w.payable_day = ex.cell(line, 'M')
+      w.cl_leave = ex.cell(line, 'G').to_i
+      w.el_leave = ex.cell(line, 'H').to_i
+      w.coff_leave = ex.cell(line, 'I').to_i
+
+      w.holiday_in_month = ex.cell(line, 'J')
+      w.absent_day = ex.cell(line, 'K')
+      w.payable_day = ex.cell(line, 'L')
       w.save!
     end
     puts "#{i} Record inserted.-----------------------------------------------"
-    i += 1
+    i=i+1
   end
-end
+  end
 end

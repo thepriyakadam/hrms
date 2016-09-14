@@ -2,6 +2,7 @@ class Employee < ActiveRecord::Base
   protokoll :employee_code, pattern: 'EMP#######'
   belongs_to :department
   belongs_to :company_location
+  belongs_to :company
   belongs_to :nationality
   belongs_to :blood_group
   belongs_to :employee_type
@@ -9,7 +10,7 @@ class Employee < ActiveRecord::Base
   belongs_to :state
   belongs_to :district
   belongs_to :religion
-  belongs_to :employee_resignation
+  # has_many :employee_resignations
   has_many :trainees
 
   has_many :reporting_masters
@@ -63,6 +64,9 @@ class Employee < ActiveRecord::Base
   has_many :due_employee_details
   has_many :employee_promotions
   has_many :leave_records
+  has_many :travel_request_histories
+  has_many :daily_bill_details
+  has_many :travel_requests
   
   #accepts_nested_attributes_for :joining_detail
   has_many :subordinates, class_name: 'Employee',
@@ -93,13 +97,14 @@ class Employee < ActiveRecord::Base
   # has_many :reporting_masters, class_name: "Employee",
   #                         foreign_key: "manager_2_id"
 
-  before_create :add_department
-  before_update :add_department
+  # before_create :add_department
+  # before_update :add_department
 
   validates :manual_employee_code, presence: true, uniqueness: { case_sensitive: false }
   validates :first_name, presence: true
-  validates :permanent_address, presence: true
-  validates :department_id,presence: true
+  
+  # validates :permanent_address, presence: true
+  # validates :department_id,presence: true
   
   # validate :adhar_no_regex
   # validate :pan_no_regex
@@ -177,6 +182,22 @@ class Employee < ActiveRecord::Base
   end
   
   def self.filter_by_date_and_costcenter(date, costcenter, current_user)
+    @attendances = EmployeeAttendance.where(day: date).pluck(:employee_id)
+    @joining_details = JoiningDetail.where(cost_center_id: costcenter).pluck(:employee_id)
+    @roles = collect_rolewise(current_user)
+    finals = (@joining_details - @attendances) & @roles
+    Employee.where(id: finals)
+  end
+
+# <<<<<<< HEAD
+#   def self.filter_by_date_costcenter_department(date, costcenter,department, current_user)
+#     @attendances = EmployeeAttendance.where(day: date).pluck(:employee_id)
+#     @joining_details = JoiningDetail.where(cost_center_id: costcenter).pluck(:employee_id)
+#     @departments = Employee.where(department_id: department).pluck(:id)
+#     @roles = collect_rolewise(current_user)
+#     finals = (@joining_details - @attendances - @departments) & @roles
+# =======
+  def self.filter_by_date_costcenter_and_department(date, costcenter, department)
     @attendances = EmployeeAttendance.where(day: date).pluck(:employee_id)
     @joining_details = JoiningDetail.where(cost_center_id: costcenter).pluck(:employee_id)
     @roles = collect_rolewise(current_user)

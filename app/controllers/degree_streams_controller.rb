@@ -43,6 +43,13 @@ class DegreeStreamsController < ApplicationController
     @degree_streams = DegreeStream.all
   end
 
+  def is_confirm
+    @degree_stream = DegreeStream.find(params[:degree_stream])
+    DegreeStream.find(@degree_stream.id).update(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to new_degree_stream_path
+  end
+  
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -52,6 +59,6 @@ class DegreeStreamsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def degree_stream_params
-    params.require(:degree_stream).permit(:name)
+    params.require(:degree_stream).permit(:is_confirm,:name)
   end
 end

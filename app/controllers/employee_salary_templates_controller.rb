@@ -46,11 +46,17 @@ class EmployeeSalaryTemplatesController < ApplicationController
   end
 
   def show_employee_salary_template
-    # @employee = Employee.find(params[:format])
-    @current_template = EmployeeTemplate.where(employee_id: params[:format], is_active: true).take
-    #@current_template = EmployeeTemplate.find(params[:format])
+    @employee = Employee.find(params[:emp_id])
+    @salary_template = SalaryTemplate.find(params[:salary_template_id])
+    authorize! :show, @current_template
+    @employee_salary_templates = EmployeeSalaryTemplate.where(employee_id: @employee.id,salary_template_id: @salary_template.id)
+  end
+
+  def current_template
+    @current_template = EmployeeTemplate.where(employee_id: params[:emp_id], is_active: true).take
     authorize! :show, @current_template
     @employee_salary_templates = @current_template.employee_salary_templates
+
   end
 
   def show_employee_salary_slip
@@ -81,15 +87,15 @@ class EmployeeSalaryTemplatesController < ApplicationController
       @employee_template = EmployeeTemplate.create_new_object(@employee_id, @template_id)
       @employee_template = EmployeeTemplate.build_objects(arrays, params, @employee_id, @template_id, @employee_template)
 
-      @employee_arrear = EmployeeArrear.create_object(@employee_id, increement_date)
-      @employee_arrear = EmployeeArrear.build_objects(arrears_array, params, @employee_arrear)
+      # @employee_arrear = EmployeeArrear.create_object(@employee_id, increement_date)
+      # @employee_arrear = EmployeeArrear.build_objects(arrears_array, params, @employee_arrear)
       ActiveRecord::Base.transaction do
-        if @employee_arrear.save
+        # if @employee_arrear.save
           @employee_template.save
           flash[:notice] = 'Employee template created successfully.'
-        else
-          flash[:alert] = 'Same template cannot assigned.'
-        end
+        # else
+        #   flash[:alert] = 'Same template cannot assigned.'
+        # end
       end
       redirect_to template_list_employee_templates_path(@employee_id)
     end

@@ -39,24 +39,20 @@ class EmployeeLeavRequestsController < ApplicationController
       @employee_leav_request.leave_records.build(employee_id: @employee_leav_request.employee_id,employee_leav_request_id: @employee_leav_request.id,status: "Pending", day: i)
     end
 
-    # for i in @employee_leav_request.start_date.to_date..@employee_leav_request.end_date.to_date
-    #   @leave_record = LeaveRecord.where(employee_id: @employee_leav_request.employee_id,day: i)
-    #   if @leave_record.present?
-    #     flash[:alert] = "Request already has attendance !"
-    #   end
-    # end
-
     if @employee_leav_request.is_holiday?
       flash[:alert] = "Your Leave Request has holiday."
       redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
-    # elsif @employee_leav_request.is_present?
-    #   flash[:alert] = "Your Leave Request already has attendance."
-    #   redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
-    # elsif @employee_leav_request.is_exist?
-    #     flash[:alert] = "Request already has attendance !!"
-    #   redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
     elsif @employee_leav_request.is_available?
-      flash[:alert] = "Your Leave Request already has attendance available !!"
+      flash[:alert] = "Your Leave Request already has been sent status is pending"
+      redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
+    elsif @employee_leav_request.is_available1?
+      flash[:alert] = "Your Leave Request already has been sent status is First Approved"
+      redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
+    elsif @employee_leav_request.is_available2?
+      flash[:alert] = "Request already has Approved"
+      redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
+    elsif @employee_leav_request.is_present?
+      flash[:alert] = "Leave Request already existed."
       redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
     else
       if @employee.manager_id.nil?
@@ -64,7 +60,6 @@ class EmployeeLeavRequestsController < ApplicationController
         redirect_to root_url
       else
         @employee_leav_request.first_reporter_id = @employee.manager_id
-        # @employee_leav_request.second_reporter_id = @employee.manager_2_id
         @employee_leav_request.is_pending = true
         @employee_leav_request.current_status = 'Pending'
         if @employee_leav_request.leave_type == 'Full Day'
@@ -197,6 +192,9 @@ class EmployeeLeavRequestsController < ApplicationController
         @employees = Employee.where(company_location_id: current_user.company_location_id)
       elsif current_user.role.name == 'Department'
         @employees = Employee.where(department_id: current_user.department_id)
+      elsif current_user.role.name == 'Supervisor'
+        @emp = Employee.find(current_user.employee_id)
+        @employees = @emp.subordinates
       else current_user.role.name == 'Employee'
            @employees = Employee.where(id: current_user.employee_id)
       end
@@ -274,5 +272,3 @@ class EmployeeLeavRequestsController < ApplicationController
     params.require(:employee_leav_request).permit(:current_status,:current_status1,:employee_id, :leav_category_id, :leave_type, :date_range, :start_date, :end_date, :reason)
   end
 end
-
-#ArgumentError (An SMTP To address is required to send a message. Set the message smtp_envelope_to, to, cc, or bcc address.):

@@ -55,6 +55,13 @@ class TravelExpenceTypesController < ApplicationController
    @travel_expence_types = TravelExpenceType.all
   end
 
+  def is_confirm
+    @travel_expence_type = TravelExpenceType.find(params[:travel_expence_type])
+    TravelExpenceType.find(@travel_expence_type.id).update(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to new_travel_expence_type_path
+  end
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_travel_expence_type
@@ -63,6 +70,6 @@ class TravelExpenceTypesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def travel_expence_type_params
-      params.require(:travel_expence_type).permit(:code, :name, :description)
+      params.require(:travel_expence_type).permit(:is_confirm,:code, :name, :description)
     end
 end

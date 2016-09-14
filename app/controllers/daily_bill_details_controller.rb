@@ -397,6 +397,11 @@ class DailyBillDetailsController < ApplicationController
     redirect_to new_daily_bill_detail_path(travel_request_id: @travel_request.id)
   end
 
+  def image_modal
+     @daily_bill_detail = DailyBillDetail.find(params[:format])
+     @daily_bill_details = DailyBillDetail.where(id: @daily_bill_detail.id)
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_daily_bill_detail

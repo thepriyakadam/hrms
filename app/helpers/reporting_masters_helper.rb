@@ -15,13 +15,35 @@ module ReportingMastersHelper
     end
   end
 
-  def all_reporting_master_list
-   ReportingMaster.all.collect { |e| [e.try(:employee).try(:manual_employee_code).to_s + ' ' + e.try(:employee).try(:middle_name).to_s + ' '+ e.try(:employee).try(:first_name).to_s + ' ' + e.try(:employee).try(:last_name).to_s, e.id] }
+  def all_expences_reporting_master_expences_list
+     ReportingMaster.where(is_expences: true,is_active: true).collect { |e| [e.try(:employee).try(:manual_employee_code).to_s + ' ' + e.try(:employee).try(:middle_name).to_s + ' '+ e.try(:employee).try(:first_name).to_s + ' ' + e.try(:employee).try(:last_name).to_s, e.id] }
+  end
+  
+  def all_training_reporting_master_list
+     ReportingMaster.where(is_training: true,is_active: true).collect { |e| [e.try(:employee).try(:manual_employee_code).to_s + ' ' + e.try(:employee).try(:middle_name).to_s + ' '+ e.try(:employee).try(:first_name).to_s + ' ' + e.try(:employee).try(:last_name).to_s, e.id] }
+  end
+  
+  def all_recruitment_reporting_master_list
+     ReportingMaster.where(is_recruitment: true,is_active: true).collect { |e| [e.try(:employee).try(:manual_employee_code).to_s + ' ' + e.try(:employee).try(:middle_name).to_s + ' '+ e.try(:employee).try(:first_name).to_s + ' ' + e.try(:employee).try(:last_name).to_s, e.id] }
   end
 
-  def all_reporting_master_expences_list
-   ReportingMaster.where(is_expences: true).collect { |e| [e.try(:employee).try(:manual_employee_code).to_s + ' ' + e.try(:employee).try(:middle_name).to_s + ' '+ e.try(:employee).try(:first_name).to_s + ' ' + e.try(:employee).try(:last_name).to_s, e.id] }
+  def all_resignation_reporting_master_list
+     ReportingMaster.where(is_resignation: true,is_active: true).collect { |e| [e.try(:employee).try(:manual_employee_code).to_s + ' ' + e.try(:employee).try(:middle_name).to_s + ' '+ e.try(:employee).try(:first_name).to_s + ' ' + e.try(:employee).try(:last_name).to_s, e.id] }
   end
+
+  def all_transfer_reporting_master_list
+    ReportingMaster.where(is_transfer: true,is_active: true).collect { |e| [e.try(:employee).try(:manual_employee_code).to_s + ' ' + e.try(:employee).try(:middle_name).to_s + ' '+ e.try(:employee).try(:first_name).to_s + ' ' + e.try(:employee).try(:last_name).to_s, e.id] }
+  end
+
+  def all_promotion_reporting_master_list
+     ReportingMaster.where(is_promotion: true,is_active: true).collect { |e| [e.try(:employee).try(:manual_employee_code).to_s + ' ' + e.try(:employee).try(:middle_name).to_s + ' '+ e.try(:employee).try(:first_name).to_s + ' ' + e.try(:employee).try(:last_name).to_s, e.id] }
+  end
+
+
+  def all_reporting_master_list
+    ReportingMaster.all.collect { |e| [e.try(:employee).try(:manual_employee_code).to_s + ' ' + e.try(:employee).try(:middle_name).to_s + ' '+ e.try(:employee).try(:first_name).to_s + ' ' + e.try(:employee).try(:last_name).to_s, e.id] }
+  end
+
 
   def all_reporting_master_list1
     ReportingMaster.where.not(employee_id: current_user.employee_id).collect { |e| [e.try(:employee).try(:manual_employee_code).to_s + ' ' + e.try(:employee).try(:first_name).to_s + ' '+ e.try(:employee).try(:middle_name).to_s + ' ' + e.try(:employee).try(:last_name).to_s, e.employee_id] }

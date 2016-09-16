@@ -14,23 +14,16 @@
   <tr>
   <th><strong>Expense Amount</strong></th>
   <td><%= @daily_bill_detail.travel_expence %></td>
-   <th><strong>Expense Type</strong></th>
+  <th><strong>Expense Type</strong></th>
   <td><%= @daily_bill_detail.travel_expence_type.try(:name) %></td>
   </tr>
 
   <tr>
-  <th><strong>Request To</strong></th>
-  <td><%= @employee.try(:first_name) %> <%= @employee.try(:middle_name) %> <%= @employee.try(:last_name) %></td>
-  <th><strong>Remark</strong></th>
-  <td><%= @daily_bill_detail.remarks %></td>
-  </tr>
-
-<tr> 
-  <th><strong>Comment</strong></th>
-  <td><%= @daily_bill_detail.comment %></td>
   <th><strong>Currency Type</strong></th>
   <td><%= @daily_bill_detail.currency_master.try(:name) %></td>
-</tr>
+  <th><strong></strong></th>
+  <td></td>
+  </tr>
 </table>
 <%= image_tag @daily_bill_detail.passport_photo.url, :size => "100x100" %><br><br>
 

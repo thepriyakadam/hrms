@@ -2632,6 +2632,8 @@ ActiveRecord::Schema.define(version: 20160913043824) do
     t.text     "comment"
     t.text     "daily_bill_status"
     t.decimal  "expense"
+    t.date     "to"
+    t.string   "day"
   end
 
   add_index "travel_requests", ["employee_id"], name: "index_travel_requests_on_employee_id"

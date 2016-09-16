@@ -1422,7 +1422,12 @@ end
       get :is_confirm
     end
   end
-  resources :departments
+  resources :departments do
+    collection do
+      get :department_list_xls
+    end
+  end
+
   resources :company_locations
   resources :companies do
     collection do

@@ -1419,6 +1419,7 @@ ActiveRecord::Schema.define(version: 20160913043824) do
     t.date     "holiday_date"
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
+    t.boolean  "is_loaded",    default: false
     t.boolean  "is_taken"
     t.boolean  "is_send",      default: false
   end

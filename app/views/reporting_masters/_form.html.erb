@@ -2,11 +2,11 @@
   <div class="row">
     <div class="col-sm-3">
           <div class="form-group required">
-            <%= f.select :employee_id, all_active_employee_with_code, {i    nclude_blank: "Select Reporting Manager",hide_label: true} %>
+            <%= f.select :employee_id, all_active_employee_with_code, {include_blank: "Select Reporting Manager",hide_label: true} %>
           </div>
         </div>
         
-    <div class="col-sm-1">
+      <div class="col-sm-1">
         <div class="field">
           <%= f.check_box :is_expences, label:'Expences' %>
        </div>

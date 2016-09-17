@@ -189,19 +189,13 @@ class Employee < ActiveRecord::Base
     Employee.where(id: finals)
   end
 
-# <<<<<<< HEAD
-#   def self.filter_by_date_costcenter_department(date, costcenter,department, current_user)
-#     @attendances = EmployeeAttendance.where(day: date).pluck(:employee_id)
-#     @joining_details = JoiningDetail.where(cost_center_id: costcenter).pluck(:employee_id)
-#     @departments = Employee.where(department_id: department).pluck(:id)
-#     @roles = collect_rolewise(current_user)
-#     finals = (@joining_details - @attendances - @departments) & @roles
-# =======
-  def self.filter_by_date_costcenter_and_department(date, costcenter, department)
+  def self.filter_by_date_costcenter_and_department(date, costcenter, department, current_user)
     @attendances = EmployeeAttendance.where(day: date).pluck(:employee_id)
     @joining_details = JoiningDetail.where(cost_center_id: costcenter).pluck(:employee_id)
+    @departments = Employee.where(department_id: department).pluck(:id)
     @roles = collect_rolewise(current_user)
-    finals = (@joining_details - @attendances) & @roles
-    Employee.where(id: finals)
+    final = (@departments) & @roles
+    finals = (@joining_details) & @roles
+    #Employee.where(id: finals,id: final)
   end
 end

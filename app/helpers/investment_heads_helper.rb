@@ -1,6 +1,5 @@
 module InvestmentHeadsHelper
-
-   def section_all
-   Section.all.collect { |x| [x.code, x.id] }
+  def investment_head_all
+   InvestmentHead.all.collect { |x| [x.description, x.id] }
   end
 end

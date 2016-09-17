@@ -11,5 +11,4 @@ class EmployeeAttendance < ActiveRecord::Base
     EmployeeAttendance.where(employee_id: @joining_details - @attendances - @attendance_status)
   end
 
- 
 end

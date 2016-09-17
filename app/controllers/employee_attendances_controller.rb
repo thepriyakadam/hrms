@@ -77,7 +77,7 @@ class EmployeeAttendancesController < ApplicationController
 
       elsif
       @employees = Employee.filter_by_date_and_costcenter(@date, @costcenter, current_user)
-      #@employees = Employee.filter_by_date_costcenter_and_department(@date, @costcenter, @department)
+      #@employees = Employee.filter_by_date_costcenter_and_department(@date, @costcenter, @department, current_user)
 
       end
     end
@@ -118,16 +118,14 @@ class EmployeeAttendancesController < ApplicationController
   end
 
   def show_employee
-    @costcenter_id = params[:salary][:costcenter_id]
+    @department_id = params[:salary][:department_id]
     @day = params[:salary][:day]
     @present = params[:salary][:present]
-    #@employee_attendances = EmployeeAttendance.filter_by_date_and_costcenter_and_present(@day, @costcenter_id, @present)
-    @costcenter = JoiningDetail.where(cost_center_id: @costcenter_id).pluck(:employee_id)
-    @employee_attendances = EmployeeAttendance.where(present: @present ,employee_id: @costcenter).where(day: @day.to_date,is_confirm: "false")
+    @employee_attendances = EmployeeAttendance.where(present: @present ,department_id: @department_id).where(day: @day.to_date,is_confirm: false)
   end
 
   def destroy_employee_attendance
-    @costcenter_id = params[:costcenter_id]
+    @department_id = params[:department_id]
     @day = params[:day]
     @present = params[:present]
     @employee_attendance_ids = params[:employee_attendance_ids]

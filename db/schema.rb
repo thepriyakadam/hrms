@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160913043824) do
+ActiveRecord::Schema.define(version: 20160919045818) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -1716,6 +1716,7 @@ ActiveRecord::Schema.define(version: 20160913043824) do
     t.decimal  "from"
     t.decimal  "to"
     t.boolean  "is_confirm"
+    t.boolean  "is_active"
   end
 
   create_table "leav_rejecteds", force: :cascade do |t|

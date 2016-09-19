@@ -1,6 +1,7 @@
+require 'query_report/helper'  # need to require the helper
 class EmployeeDesignationsController < ApplicationController
   before_action :set_employee_designation, only: [:show, :edit, :update, :destroy]
-
+  include QueryReport::Helper  # need to include it
   def new
     @employee_designation = EmployeeDesignation.new
     @employee_designations = EmployeeDesignation.all
@@ -49,6 +50,15 @@ class EmployeeDesignationsController < ApplicationController
     flash[:notice] = "Confirmed Successfully"
     redirect_to new_employee_designation_path
   end
+
+  def employee_designation_list
+    reporter(EmployeeDesignation.filter_records(current_user), template_class: PdfReportTemplate) do
+      column(:ID, sortable: true) { |employee_designation| employee_designation.id }
+      column(:Name, sortable: true) { |employee_designation| employee_designation.name }
+    end
+   
+  end
+
   
   private
 

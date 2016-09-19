@@ -41,41 +41,45 @@
 
       <tr>
         <th>Address</th>
-        <td><%= @company.address %></td>
+        <td colspan="3"><%= @company.address %></td>
+
+      </tr>
+      <tr>
 
         <th>Pin Code</th>
         <td><%= @company.pin_code %></td>
-      </tr>
-      <tr>
+     
         <th>City</th>
         <td><%= @company.city %></td>
 
+      </tr>
+
+      <tr>
         <th>District</th>
         <td><%= @company.district.try(:name) %></td>
-      </tr>
 
-      <tr>
         <th>State</th>
         <td><%= @company.state.try(:name) %></td>
+      </tr>
 
+      <tr>
         <th>Country</th>
         <td><%= @company.country.try(:name) %></td>
-      </tr>
 
-      <tr>
         <th>Starting Date</th>
         <td><%= @company.starting_date %></td>
-
-        <th>Contact No</th>
-        <td><%= @company.contact_no %></td>
       </tr>
 
       <tr>
+        <th>Contact No</th>
+        <td><%= @company.contact_no %></td>
+
         <th>Email</th>
         <td><%= @company.email %></td>
-
+      </tr>
+      <tr>
         <th>Website</th>
-        <td><%= @company.web_site %></td>
+        <td colspan="3"><%= @company.web_site %></td>
       </tr>
     </table>
 

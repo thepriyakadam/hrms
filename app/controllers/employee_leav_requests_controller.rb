@@ -56,7 +56,7 @@ class EmployeeLeavRequestsController < ApplicationController
       redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
     else
       if @employee.manager_id.nil?
-        flash[:alert] = 'First Reporter not set'
+        flash[:alert] = 'Reporting manager not set please set Reporting Manager'
         redirect_to root_url
       else
         @employee_leav_request.first_reporter_id = @employee.manager_id

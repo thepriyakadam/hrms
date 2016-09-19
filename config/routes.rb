@@ -1211,6 +1211,7 @@ end
   resources :employee_designations do
     collection do
       get :is_confirm
+      get :employee_designation_list
     end
   end
   resources :cost_centers do

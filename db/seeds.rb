@@ -406,80 +406,70 @@ require 'roo'
 # end
 
 
+# puts "Starting ..."
+# ex = Roo::Excel.new("#{Rails.root}/public/employe.xls")
+# ex.default_sheet = ex.sheets[0] 
+# i=1
+# 3.upto(510) do |line|
+# @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
+# EmployeeBankDetail.new do |b|
+#   b.employee_id = @employee.id unless @employee.nil?
+#   b.account_no = ex.cell(line,'AQ').to_i
+#   b.bank_name = ex.cell(line,'AR')
+#   b.branch_name = ex.cell(line,'AS')
+#   b.address = ex.cell(line,'AT')
+#   b.contact_no = ex.cell(line,'AU').to_i
+#   b.micr_code = ex.cell(line,'AV')
+#   b.branch_code = ex.cell(line,'AW')
+#   b.ifsc_code = ex.cell(line,'AX')
+#   b.save!
+# end
+# puts "#{i} Record inserted.-----------------------------------------------"
+# i = i+1
+# end
+
+
 puts "Starting ..."
-ex = Roo::Excel.new("#{Rails.root}/public/employe.xls")
+ex = Roo::Excel.new("#{Rails.root}/public/Leave Details.xls")
 ex.default_sheet = ex.sheets[0] 
 i=1
-3.upto(510) do |line|
+
+2.upto(190) do |line|
 @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
-EmployeeBankDetail.new do |b|
-  b.employee_id = @employee.id unless @employee.nil?
-  b.account_no = ex.cell(line,'AQ').to_i
-  b.bank_name = ex.cell(line,'AR')
-  b.branch_name = ex.cell(line,'AS')
-  b.address = ex.cell(line,'AT')
-  b.contact_no = ex.cell(line,'AU').to_i
-  b.micr_code = ex.cell(line,'AV')
-  b.branch_code = ex.cell(line,'AW')
-  b.ifsc_code = ex.cell(line,'AX')
-  b.save!
+EmployeeLeavBalance.new do |j|
+  j.employee_id = @employee.id unless @employee.nil?
+  j.leav_category_id = ex.cell(line,'B')
+  j.no_of_leave = ex.cell(line,'C')
+  j.expiry_date = ex.cell(line,'D')
+  j.total_leave = ex.cell(line,'E')
+  j.save!
 end
 puts "#{i} Record inserted.-----------------------------------------------"
 i = i+1
 end
 
 
-
 # puts "Starting ..."
-# ex = Roo::Excel.new("#{Rails.root}/public/employe.xls")
+# ex = Roo::Excel.new("#{Rails.root}/public/j.xls")
 # ex.default_sheet = ex.sheets[0] 
 # i=1
 
-# 3.upto(510) do |line|
+# 2.upto(65) do |line|
 # @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
 # JoiningDetail.new do |j|
 #   j.employee_id = @employee.id unless @employee.nil?
-#   j.joining_date = ex.cell(line,'W')
+#   j.joining_date = ex.cell(line,'B')
 
-#   @grade = EmployeeGrade.find_by_name(ex.cell(line,'X'))
+#   @designation = EmployeeDesignation.find_by_name(ex.cell(line,'C'))
+#   j.employee_designation_id = @designation.id unless @designation.nil?
+
+#   @grade = EmployeeGrade.find_by_name(ex.cell(line,'D'))
 #   j.employee_grade_id = @grade.id unless @grade.nil?
 
-#   @department = Department.find_by_name(ex.cell(line,'Y'))
-#   j.department_id = @department.id unless @department.nil?
-
-#   @category = EmployeeCategory.find_by_name(ex.cell(line,'Z'))
+#   @category = EmployeeCategory.find_by_name(ex.cell(line,'E'))
 #   j.employee_category_id = @category.id unless @category.nil?
 
-#   @designation = EmployeeDesignation.find_by_name(ex.cell(line,'AA'))
-#   j.employee_designation_id = @designation.id unless @designation.nil?
-  
-#   j.confirmation_date = ex.cell(line,'AB')
-#   j.employee_uan_no = ex.cell(line,'AC')
-
-#   j.select_pf = ex.cell(line,'AD')
-
-#   j.employee_pf_no = ex.cell(line,'AE').to_i
-#   j.pf_max_amount = ex.cell(line,'AF')
-#     if ex.cell(line,'AG') == "Yes"
-#       j.have_esic = true
-#     else
-#       j.have_esic = false
-#     end
-  
-#   j.employee_efic_no = ex.cell(line,'AH').to_i
-#   @mode = PaymentMode.find_by_name(ex.cell(line,'AI'))
-#   j.payment_mode_id = @mode.id unless @mode.nil?
-#   @cost_center = CostCenter.find_by_name(ex.cell(line,'AJ'))
-#   j.cost_center_id = @cost_center.id unless @cost_center.nil?
-
-
-#   j.medical_schem = ex.cell(line,'AK')
-#   j.passport_no = ex.cell(line,'AL')
-#   j.passport_issue_date = ex.cell(line,'AM')
-#   j.passport_expiry_date = ex.cell(line,'AN')
-
-#   j.probation_period = ex.cell(line,'AO')
-#   j.notice_period = ex.cell(line,'AP')
+#   j.passport_no = ex.cell(line,'F')
 #   j.save!
 # end
 # puts "#{i} Record inserted.-----------------------------------------------"

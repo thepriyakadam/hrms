@@ -53,7 +53,7 @@ class EmployeeDesignationsController < ApplicationController
 
   def employee_designation_list
     reporter(EmployeeDesignation.filter_records(current_user), template_class: PdfReportTemplate) do
-      column(:ID, sortable: true) { |employee_designation| employee_designation.id }
+      column(:ID, sortable: true) { |employee_designation| employee_designation.try(:id) }
       column(:Name, sortable: true) { |employee_designation| employee_designation.name }
     end
    

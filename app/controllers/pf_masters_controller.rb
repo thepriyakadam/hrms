@@ -41,16 +41,24 @@ class PfMastersController < ApplicationController
   #   end
   # end
 
-  def create
+ def create
+    components = params[:components]
+    str = ''
+    i = 0
+    components.each do |c|
+      str = if i == 0
+              c.to_s
+            else
+              str.to_s + ',' + c.to_s
+            end
+      i += 1
+    end
     @pf_master = PfMaster.new(pf_master_params)
+    @pf_master.base_component = str
     @pf_masters = PfMaster.all
-     if @pf_master.save
-       @pf_master = PfMaster.new
-     end
-     flash[:notice] = 'Employee Document saved Successfully.' 
-     redirect_to new_pf_master_path
-       
- end
+    @pf_master.save
+    @pf_master = PfMaster.new
+  end
 
 
 

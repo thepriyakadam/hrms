@@ -380,12 +380,14 @@
       </li>
     </ul>
   </li>
- 
-  <li class="treeview" id="timemgmt">
-    <a href="">
-      <i class="ionicons ion-ios-time"></i><span> Time Management </span> <i class="fa fa-angle-left pull-right"></i>
+    <li class="treeview" id="timemgmt">
+    <a href="#">
+      <i class="glyphicon glyphicon-th-large"></i> <span>Time Management</span>
+      <i class="fa fa-angle-left pull-right"></i>
     </a>
-    <ul class="treeview-menu">
+    <ul class="treeview-menu" >
+       <li class="treeview" id="leaveadministration"> <a href="#"><i class="fa fa-edit"></i>Attendance <i class="fa fa-angle-left pull-right"></i></a>
+        <ul class="treeview-menu">
      <li><a href="/holidays/new"><i class="fa fa-tags"></i> Holiday Setup </a></li>
      <li><a href="/employee_attendances"><i class="fa fa-tags"></i> Add Attendance </a></li>
      <li><a href="/employee_attendances/costcenter_wise_attendance"><i class="fa fa-tags"></i> Show Attendance </a></li>
@@ -397,7 +399,16 @@
       <li><a href="/employee_shifts"><i class="fa fa-tags"></i> Employee Shift Assignment </a></li>
       <li><a href="/attendances"><i class="fa fa-tags"></i> Employee Attendance </a></li> -->
     </ul>
-   </li>
+      </li> 
+        <li id="daily_activity">
+        <a href="#"><i class="fa fa-edit"></i> TimeShit <i class="fa fa-angle-left pull-right"></i></a>
+        <ul class="treeview-menu" >
+        <li><a href="/employee_daily_activities/new"><i class="fa fa-tags"></i>Daily Activity</a></li>
+        <li><a href="/employee_daily_activities/employee_details"><i class="fa fa-tags"></i>Employee Details</a></li>
+        </ul>
+        </li> 
+    </ul>
+  </li>
 
   <li class="treeview" id="performancemgmt">
     <a href="#">

@@ -1,16 +1,15 @@
 <table id="example1" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr> 
-      <th>Employee ID</th>
-      <th>Employee Name</th>
-<!--       <th>Role</th>
- -->      <th>Is Expences</th>
-      <th>Is Training</th>
-      <th>Is Recruitment</th>
-      <th>Is Resignation</th>
-      <th>Is Transfer</th>
-      <th>Is Promotion</th>
-      <th>Is Active</th>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Expences</th>
+      <th>Training</th>
+      <th>Recruitment</th>
+      <th>Resignation</th>
+      <th>Transfer</th>
+      <th>Promotion</th>
+      <th>Active</th>
       <th>Action</th>
     </tr>
   </thead>
@@ -19,8 +18,7 @@
       <tr>
         <td><%= reporting_master.employee.try(:manual_employee_code) %></td>
         <td><%= reporting_master.employee.try(:first_name).to_s+' '+reporting_master.employee.try(:middle_name).to_s+' '+reporting_master.employee.try(:last_name).to_s %>
-<!--         <td><= reporting_master.employee.role.try(:name) %></td>
- -->        <td><%= reporting_master.is_expences ? "Yes" : "No" %></td>
+        <td><%= reporting_master.is_expences ? "Yes" : "No" %></td>
         <td><%= reporting_master.is_training ? "Yes" : "No" %></td>
         <td><%= reporting_master.is_recruitment ? "Yes" : "No" %></td>
         <td><%= reporting_master.is_resignation ? "Yes" : "No" %></td>

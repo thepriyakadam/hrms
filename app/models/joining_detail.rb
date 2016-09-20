@@ -10,12 +10,12 @@ class JoiningDetail < ActiveRecord::Base
   belongs_to :reserved_category
 
   validates :employee_id, presence: true, uniqueness: { case_sensitive: false }
-  validates :joining_date, presence: true
-  validates :employee_designation_id, presence: true
-  validate :medical_scheme_regex
-  validate :probation_period_regex
-  validate :notice_period_regex
-  validate :status_regex
+  # validates :joining_date, presence: true
+  # validates :employee_designation_id, presence: true
+  # validate :medical_scheme_regex
+  # validate :probation_period_regex
+  # validate :notice_period_regex
+  # validate :status_regex
 
   def probation_period_regex
     if probation_period.present? && !probation_period.match(/\A[0-9A-Za-z_ ]{1,30}\Z/)

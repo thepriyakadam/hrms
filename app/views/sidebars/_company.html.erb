@@ -15,7 +15,6 @@
       <li><a href="/company_events/new"><i class="fa fa-tags"></i> Events</a></li>
       <li><a href="/circulars/new"><i class="fa fa-tags"></i> Circular/Information</a></li>
       <li><a href="/company_policies"><i class="fa fa-tags"></i> Company Policy</a></li>
-      <li><a href="/employee_documents/new"><i class="fa fa-tags"></i> Employee Documents </a></li>
 
     </ul>
   </li>
@@ -151,7 +150,7 @@
            <li><a href="/question_masters/new"><i class="fa fa-tags"></i> Question Master </a></li>
            <li><a href="/about_companies/new"><i class="fa fa-tags"></i> About Company </a></li>
            <li><a href="/about_bosses/new"><i class="fa fa-tags"></i> About Boss </a></li>
-           <li><a href="/leaving_reasons/new"><i class="fa fa-tags"></i> Leaving Reason Master </a></li>
+           <li><a href="/leaving_reasons/new"><i class="fa fa-tags"></i> Leaving Reason </a></li>
         </ul>
        </li>
         <li id="project_master_setup">
@@ -215,7 +214,6 @@
         <li><a href="/reports/award_details/new"><i class="fa fa-tags"></i> Award Details </a></li>
         <li><a href="/reports/physical_details/new"><i class="fa fa-tags"></i> Physical Details </a></li>
         <li><a href="/reports/family_details/new"><i class="fa fa-tags"></i> Family Details </a></li>
-        <li><a href="/reports/payroll.pdf"><i class="fa fa-tags"></i> Family Details </a></li>
         </ul>
       </li>
       <li class="treeview" id="certificates">
@@ -248,8 +246,10 @@
         </ul>
       </li>
 <!--       <li><a href="/employee_daily_activities/new"><i class="fa fa-tags"></i> Daily Activity </a></li>
- -->      <li><a href="/training_plans/trainee_list"><i class="fa fa-tags"></i> Training Feedback </a></li>
-  <li><a href="/self_services/employee_transfer"><i class="fa fa-tags"></i> Employee Transfer </a></li>
+ -->      
+     <li><a href="/training_plans/trainee_list"><i class="fa fa-tags"></i> Training Feedback </a></li>
+    <li><a href="/self_services/employee_transfer"><i class="fa fa-tags"></i> Employee Transfer </a></li>
+    <li><a href="/self_services/travel_request"><i class="fa fa-plane"></i> Travel Request </a></li>
     </ul>
   </li>
   <li class="treeview" id="leavemanagement">
@@ -380,12 +380,14 @@
       </li>
     </ul>
   </li>
- 
-  <li class="treeview" id="timemgmt">
-    <a href="">
-      <i class="ionicons ion-ios-time"></i><span> Time Management </span> <i class="fa fa-angle-left pull-right"></i>
+    <li class="treeview" id="timemgmt">
+    <a href="#">
+      <i class="glyphicon glyphicon-th-large"></i> <span>Time Management</span>
+      <i class="fa fa-angle-left pull-right"></i>
     </a>
-    <ul class="treeview-menu">
+    <ul class="treeview-menu" >
+       <li class="treeview" id="leaveadministration"> <a href="#"><i class="fa fa-edit"></i>Attendance <i class="fa fa-angle-left pull-right"></i></a>
+        <ul class="treeview-menu">
      <li><a href="/holidays/new"><i class="fa fa-tags"></i> Holiday Setup </a></li>
      <li><a href="/employee_attendances"><i class="fa fa-tags"></i> Add Attendance </a></li>
      <li><a href="/employee_attendances/costcenter_wise_attendance"><i class="fa fa-tags"></i> Show Attendance </a></li>
@@ -397,7 +399,16 @@
       <li><a href="/employee_shifts"><i class="fa fa-tags"></i> Employee Shift Assignment </a></li>
       <li><a href="/attendances"><i class="fa fa-tags"></i> Employee Attendance </a></li> -->
     </ul>
-   </li>
+      </li> 
+        <li id="daily_activity">
+        <a href="#"><i class="fa fa-edit"></i> Time Sheet <i class="fa fa-angle-left pull-right"></i></a>
+        <ul class="treeview-menu" >
+        <li><a href="/employee_daily_activities/new"><i class="fa fa-tags"></i>Daily Activity</a></li>
+        <li><a href="/employee_daily_activities/employee_details"><i class="fa fa-tags"></i>Employee Details</a></li>
+        </ul>
+        </li> 
+    </ul>
+  </li>
 
   <li class="treeview" id="performancemgmt">
     <a href="#">
@@ -416,7 +427,7 @@
         <li><a href="/goal_bunches/employee_list"><i class="fa fa-tags"></i> Final Evaluation  </a></li>
         <li><a href="/goal_ratings/period_for_training"><i class="fa fa-tags"></i>Training Assessment</a></li>
         <li><a href="/goal_ratings/period_and_topic_wise_list"><i class="fa fa-tags"></i>Training Plan</a></li>
-         <li><a href="/goal_ratings/increment_index"><i class="fa fa-tags"></i>Revision Simulation</a></li>
+        <li><a href="/goal_ratings/increment_index"><i class="fa fa-tags"></i>Revision Simulation</a></li>
         </ul>
       </li> 
 
@@ -531,7 +542,7 @@
    <li class="treeview" id="travelmgmt">
     <a href=""><i class="fa fa-briefcase"></i><span> Travel Management </span><i class="fa fa-angle-left pull-right"></i></a>
     <ul class="treeview-menu">
-      <li><a href="/travel_requests"><i class="fa fa-tags"></i>Travel Request </a></li>
+      <li><a href="/travel_requests"><i class="fa fa-plane"></i>Travel Request </a></li>
       <li><a href="/travel_requests/travel_history"><i class="fa fa-tags"></i> Travel Approve/Reject </a></li>
       <li><a href="/travel_requests/travel_request_list"><i class="fa fa-tags"></i> Travel Request List </a></li>
       <li><a href="/travel_requests/daily_bill"><i class="fa fa-tags"></i> Expenses Claim </a></li>
@@ -560,6 +571,13 @@
       <li><a href="/accident_records"><i class="fa fa-tags"></i> Accident Record </a></li>
     </ul>
    </li>
+
+   <!--  <li class="treeview" id="safety">
+    <a href=""><i class="ionicons ion-ios-time"></i><span><span> Table Reports </span></span> <i class="fa fa-angle-left pull-right"></i></a>
+    <ul class="treeview-menu">
+      <li><a href="/employee_designations/employee_designation_list"><i class="fa fa-tags"></i> Employee Designation </a></li>
+    </ul>
+   </li> -->
 </ul>
 
 <script typgre="text/javascript">

@@ -295,45 +295,7 @@ $("#company_type").validate({
     }
    });
 
-$("#department").validate({
-    rules: {
-      "department[name]":{
-        required: true
-      },
-      "department[email]":{
-        loginRegex: true,
-        required: true
-      },
-      "department[pin_code]":{
-        maxlength: 6,
-        required: true,
-        numbersOnly: true
-      },
-      "department[contact_no]":{
-        maxlength: 13
-      }
-    },
-    messages: {
-      "department[name]":{
-        required: "Please specify Department Name "
-      },
-      "department[email]":{
-        required: "Please Specify Email ID"
-      },
-     "department[pin_code]":{
-       required: "Please Enter Pincode Details",
-       maxlength: "Pincode Details allows max 6 digits"
-      },
-     "department[contact_no]":{
-       required: "Please Specify Contact No",
-       maxlength: "Enter the Correct contact number"
-      }  
-    },
-    errorPlacement: function(error, element) {
-     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
-     error.insertAfter(element.parent(element));
-    }
-   });
+
 
 $("#department_type").validate({
     rules: {
@@ -455,7 +417,7 @@ $("#employee").validate({
         maxlength: "Enter the Correct contact number"
       },
       "employee[status]":{
-        required: "Please Specify State"
+        required: "Please Specify Status"
       },
       "employee[email]":{
         required: "Please Specify Email ID"

@@ -53,6 +53,12 @@ class SelfServicesController < ApplicationController
     session[:active_tab] = "selfservice"
   end
 
+  def travel_request
+    @travel_request = TravelRequest.new
+    @travel_requests = TravelRequest.where(employee_id: current_user.employee_id)
+    session[:active_tab] = "selfservice"
+  end
+
 
 end
 

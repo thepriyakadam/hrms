@@ -741,6 +741,7 @@ end
       get :resignation_history
       get :show_resignation_detail
       get :employee_transfer
+      get :travel_request
     end
   end
 
@@ -1211,6 +1212,7 @@ end
   resources :employee_designations do
     collection do
       get :is_confirm
+      get :employee_designation_list
     end
   end
   resources :cost_centers do

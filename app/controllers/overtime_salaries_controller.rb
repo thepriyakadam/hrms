@@ -152,6 +152,10 @@ class OvertimeSalariesController < ApplicationController
 
     @esic_master = EsicMaster.first
     percentage = @esic_master.percentage
+    if employee_ids.nil?
+      flash[:alert] = "Please Select the Checkbox"
+      redirect_to select_month_year_form_overtime_salaries_path
+    else
     final = employee_ids.zip(ot_amount, ot_hrs, attendence_bonus_amount, paid_holiday_amount, ot_daily_amount)
 
     final.each do |i, a, h, bonus, holiday, ot_amount|
@@ -171,7 +175,8 @@ class OvertimeSalariesController < ApplicationController
         o.save
       end
     end
-    redirect_to select_month_year_form_overtime_salaries_path
+    flash[:alert] = "Employee Saved Successfully"
+  end
   end
 
   def overtimes

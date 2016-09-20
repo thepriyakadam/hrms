@@ -2,7 +2,7 @@
   <%= bootstrap_form_for(@department,html: {id: 'department'},remote: true) do |f| %>
     <div class="row">
       <div class="col-sm-3">
-        <div class="field">
+        <div class="form-group required">
          <%= f.text_field :manual_department_code,label: 'Department Code',placeholder: "Department Code"%>
          </div>
       </div>
@@ -20,13 +20,13 @@
         </div>
       </div>
       <div class="col-sm-3">
-      <label>Department Type</label>
+      <!-- <label>Department Type</label> -->
         <div class="form-group required">
          <div class="input-group">
         <div class="input-group-addon">
                 <%= link_to "", new_department_type_path,class: "fa fa-plus fa-success",:target => "_blank" %>
               </div>
-          <%= f.select :department_type_id, all_department_type,{hide_label: true,include_blank: " Select Department Type"}%>
+          <%= f.select :department_type_id, all_department_type,{label: "Department Type",include_blank: " Select Department Type"}%>
         </div>
         </div>
       </div>
@@ -55,3 +55,40 @@
     </div>
   <% end %>
 </div>
+
+<script>
+$("#department").validate({
+    rules: {
+      "department[name]":{
+        required: true,
+      },
+      "department[company_location_id]":{
+        required: true
+      },
+      "department[department_type_id]":{
+        required: true
+      },
+      "department[manual_department_code]":{
+        required: true
+      }
+    },
+    messages: {
+      "department[name]":{
+        required: "Please specify Department Name "
+      },
+      "department[company_location_id]":{
+        required: "Please Select Company Location"
+      },
+     "department[department_type_id]":{
+       required: "Please Select Department Type"
+      },
+      "department[manual_department_code]":{
+       required: "Please Specify Department Code"
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

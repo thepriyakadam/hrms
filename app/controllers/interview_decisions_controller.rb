@@ -52,7 +52,7 @@ class InterviewDecisionsController < ApplicationController
   # DELETE /interview_decisions/1.json
   def destroy
     @interview_decision.destroy
-    @interview_decision = InterviewDecision.all
+    @interview_decisions = InterviewDecision.all
   end
 
   def is_confirm

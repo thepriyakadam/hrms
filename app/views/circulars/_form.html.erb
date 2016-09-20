@@ -18,7 +18,7 @@
       </div>
     </div>
     <div class="col-sm-3">
-    <div class="field">
+    <div class="form-group required">
       <%= f.file_field :avatar,label: 'Document' %>
     </div>
    </div>
@@ -45,11 +45,17 @@ $("#circular").validate({
     rules: {
       "circular[subject]":{
         required: true,
+      },
+      "circular[avatar]":{
+        required: true,
       }
     },
     messages: {
       "circular[subject]":{
         required: "Please Specify Subject",
+      },
+      "circular[avatar]":{
+        required: "Please Select Document",
       }
       
     },

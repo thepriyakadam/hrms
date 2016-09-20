@@ -741,6 +741,7 @@ end
       get :resignation_history
       get :show_resignation_detail
       get :employee_transfer
+      get :travel_request
     end
   end
 

@@ -238,7 +238,7 @@ class EmployeeAttendancesController < ApplicationController
   def check_params
     if params[:employees].nil?
       flash[:alert] = "Please Select employees checkbox."
-      redirect_to root_url
+      redirect_to employee_attendances_path
     end 
   end
 

@@ -22,7 +22,7 @@
         </div>
       </div>
 
-      <% unless params['controller'] == 'skillsets' and params['action'] == 'edit' %>
+      <!--< unless params['controller'] == 'skillsets' and params['action'] == 'edit' %>
         <div class="row">
           <div class="col-sm-2">
             <input type="button" id="btnAdd" value="+ Additional Skillset" class="btn btn-success"> 
@@ -32,7 +32,7 @@
             <input type="button" id="btnDel" value="Remove Above Skillset" class="btn btn-sm btn-danger">
           </div>
         </div><br>
-      <%end%>
+      <end%>-->
       
       <div class="row">
         <div class="col-sm-4">
@@ -81,4 +81,33 @@
   $('#btnAdd').attr('disabled', false);
   $('#btnDel').attr('disabled', true);
 });
+</script>
+
+<script>
+$("#skillset").validate({
+    rules: {
+      "skillset[name]":{
+        required: true,
+        maxlength: 30,
+        Name:true
+      },
+      "skillset[skill_level]":{
+        required: true
+      }
+    },
+    messages: {
+      "skillset[name]":{
+        required: "Please specify Employee Name",
+        maxlength: "Employee Name allows upto 30 characters"
+      },
+      "skillset[skill_level]":{
+        required: "Please specify Skill Level"
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+
 </script>

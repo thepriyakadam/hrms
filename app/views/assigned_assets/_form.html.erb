@@ -11,7 +11,7 @@
 
   <div class="row">
     <div class="col-sm-3">
-      <div class="field">
+      <div class="form-group required">
         <%= f.select :asset_type_id,all_asset_type,{include_blank: " Assest Type"} %>
       </div>
     </div>
@@ -41,13 +41,12 @@
     </div>
 
     <div class="col-sm-3">
-      <label>Issue Date: </label>
-      <div class="field">
+      <div class="form-group required">
         <div class="input-group">
           <div class="input-group-addon">
             <i class="fa fa-calendar"></i>
           </div>
-          <%= f.text_field :issue_date, hide_label: true, class: 'issue_date'%>
+          <%= f.text_field :issue_date, label: "Issue Date:", class: 'issue_date'%>
         </div>
       </div>
     </div>
@@ -111,9 +110,6 @@
 
  $("#assigned_asset").validate({
     rules: {
-      "assigned_asset[employee_id]":{
-        required: true
-      },
       "assigned_asset[asset_type_id]":{
         required: true
       },
@@ -122,14 +118,11 @@
       }
     },
     messages: {
-      "assigned_asset[employee_id]":{
-        required: "Please specify employee_id"
-      },
       "assigned_asset[asset_type_id]":{
-        required: "Please specify asset_type_id"
+        required: "Please specify Asset Type"
       },
       "assigned_asset[issue_date]":{
-        required: "Please specify issue_date"
+        required: "Please specify Issue Date"
       }
     },
     errorPlacement: function(error, element) {

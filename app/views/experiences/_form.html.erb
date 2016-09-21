@@ -28,13 +28,13 @@
         </div>
 
         <div class="col-sm-3">
-          <div class="form-group required">
+          <div class="field">
             <%= f.text_field :ctc,label: "CTC", class: 'input_ctc' %>
           </div>
         </div>
       </div>
     </div>  
-    <% unless params['controller'] == 'experiences' and params['action'] == 'edit' %>
+    <!--< unless params['controller'] == 'experiences' and params['action'] == 'edit' %>
       <div class="row">
         <div class="col-sm-2">
           <input type="button" id="btnAdd" value="+ Additional Experiences" class="btn btn-sm btn-success"> 
@@ -44,7 +44,7 @@
           <input type="button" id="btnDel" value="Remove Above Experiences" class="btn btn-sm btn-danger">
         </div>
       </div><br>
-    <%end%>  
+    <end%>  -->
     <div class="row">
       <div class="col-sm-3">
         <div class="actions">
@@ -97,4 +97,51 @@
   $('#btnAdd').attr('disabled', false);
   $('#btnDel').attr('disabled', true);
 });
+</script>
+
+<script>
+$("#experince").validate({
+    rules: {
+      "experince[employee_id]":{
+        required: true
+      },
+      "experince[no_of_year_experince]":{
+        required: true,
+        maxlength: 4
+      },
+      "experince[company_name]":{
+        required: true
+      },
+      "experince[designation]":{
+        required: true
+      },
+      "experince[ctc]":{
+        required: true,
+        maxlength: 10
+      }
+    },
+    messages: {
+      "experince[employee_id]":{
+        required: "Please specify Employee ID"
+      },
+      "experince[no_of_year_experince]":{
+        required: "Please specify No Of Year Of Experiences",
+        maxlength: "No Of Year Of EXperiencesallows upto 4 integers"
+      },
+      "experince[company_name]":{
+        required: "Please specify Company Name"
+      },
+       "experince[designation]":{
+        required: "Please specify Designation Details"
+      },
+      "experince[ctc]":{
+        required: "Please specify CTC Details",
+        maxlength: "CTC allows upto 10 digit"
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
 </script>

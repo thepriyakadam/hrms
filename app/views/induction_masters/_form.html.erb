@@ -8,7 +8,7 @@
     </div> 
     <div class="col-sm-3">
       <div class="form-group required">
-        <%= f.text_field :description,label: 'Description' %>
+        <%= f.text_field :description,label: 'Name' %>
       </div>
     </div>
     <div class="col-sm-3">
@@ -41,7 +41,7 @@ $("#induction_master").validate({
         required: "Please specify Code",
       },
       "induction_master[description]":{
-        required: "Please specify Description",
+        required: "Please specify Name",
       }
       
     },

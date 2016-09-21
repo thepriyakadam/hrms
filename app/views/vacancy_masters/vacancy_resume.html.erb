@@ -14,7 +14,6 @@
               <th>No. of Position</th>
               <th>Department</th>
               <th>Experience</th>
-              <th>Justification</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -28,7 +27,6 @@
                 <td><%= vacancy_master.company_location.try(:name) %> - <%= vacancy_master.department.try(:name) %></td>
                
                 <td><%= vacancy_master.experience %></td>
-                <td><%= vacancy_master.justification %></td>
                 <td>
                   <%= link_to 'Add Resume & Shortlist',new_selected_resume_path(vacancy_master_id: vacancy_master.id),class: 'btn btn-xs btn-primary' %>
                 </td>

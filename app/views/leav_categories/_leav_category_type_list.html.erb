@@ -8,6 +8,7 @@
       <th>From</th>
       <th>To</th>
       <th>Is Payble</th> 
+      <th>Is Active</th> 
       <th>Action</th>
     </tr>
   </thead>
@@ -19,7 +20,8 @@
         <td><%= leav_category.description %></td>
         <td><%= leav_category.from %></td>
         <td><%= leav_category.to %></td>
-        <td><%= leav_category.is_payble ? "Yes" : "No" %></td> 
+        <td><%= leav_category.is_payble ? "Yes" : "No" %></td>
+        <td><%= leav_category.is_active ? "Active" : "Inactive" %></td> 
         <td>
           <% if leav_category.is_confirm == true %>
             <small class= "label label-primary">Confirmed</small>

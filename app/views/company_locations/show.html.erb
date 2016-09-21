@@ -28,34 +28,38 @@
 
     <tr>
       <th><strong>Address</strong></th>
-      <td><%= @company_location.address %></td>
+      <td colspan="3"><%= @company_location.address %></td>
 
+      
+    </tr>
+
+    <tr>
       <th><strong>City</strong></th>
       <td><%= @company_location.city %></td>
-    </tr>
 
-    <tr>
       <th><strong>Country</strong></th>
       <td><%= @company_location.country.try(:name) %></td>
+    </tr>
 
+    <tr>
       <th><strong>State</strong></th>
       <td><%= @company_location.state.try(:name) %></td>
-    </tr>
 
-    <tr>
       <th> <strong>District</strong></th>
       <td> <%= @company_location.district.try(:name) %></td>
-
-      <th><strong>Pin/Zip Code</strong></th>
-      <td><%= @company_location.pin_code %></td>
     </tr>
 
     <tr>
+      <th><strong>Pin/Zip Code</strong></th>
+      <td><%= @company_location.pin_code %></td>
+
       <th><strong>Contact No</strong></th>
       <td><%= @company_location.contact_no %></td>
+    </tr>
 
+     <tr>
       <th><strong>Email</strong></th>
-      <td><%= @company_location.email %></td>
+      <td colspan="3"><%= @company_location.email %></td>
     </tr>
      </table>
 

@@ -2,6 +2,8 @@ class Award < ActiveRecord::Base
   belongs_to :employee
   belongs_to :year
   validates :award_name, presence: true
+  validates :year_id, presence: true
+  validates :award_from, presence: true
   validate :award_name_regex
   validate :award_from_regex
   validates :employee_id, uniqueness: { scope: [:award_name] }

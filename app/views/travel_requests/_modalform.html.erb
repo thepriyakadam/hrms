@@ -4,7 +4,7 @@
      <%= bootstrap_form_for :travel_request,url:{action:"send_request_to_higher_authority", id: @travel_request.id},html: {id: 'travel_request'} do |f| %>
         <div class="row">
           <div class="col-sm-6">
-           <%= f.select :reporting_master_id, all_reporting_master_list, {hide_label: true,include_blank: " Select Reporting Manager"}, class: 'input_degree_stream_id' %>
+           <%= f.select :reporting_master_id, all_expences_reporting_master_expences_list, {hide_label: true,include_blank: " Select Reporting Manager"}, class: 'input_degree_stream_id' %>
           </div>
           <div class="col-sm-2">
             <%= f.submit "Approve & Send next", class: 'btn btn-sm btn-warning fa fa-modx' %>

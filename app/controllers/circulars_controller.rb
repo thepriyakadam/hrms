@@ -56,10 +56,15 @@ class CircularsController < ApplicationController
 
   def download_documents
     @circular = Circular.find(params[:id])
+    if File.exist?(@circular.avatar.path)
     send_file @circular.avatar.path,
               filename: @circular.avatar,
               type: @circular.avatar_content_type,
               disposition: 'attachment'
+    else
+    flash[:alert] = "No file found Please contact to Admin!"
+    redirect_to root_url
+    end
   end
 
   private

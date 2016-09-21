@@ -5,6 +5,10 @@ class PdfSalariesController < ApplicationController
       @year = params[:year]
       @cost_center = params[:cost_center]
       @salary1 = params[:salaryslip_ids]
+      if @salary1.nil?
+        flash[:alert] = "Please Select the Checkbox"
+        redirect_to select_month_year_form_pdf_salaries_path
+      else
       @joining_details = JoiningDetail.where(cost_center_id: @cost_center).pluck(:employee_id)
       @salaryslips = Salaryslip.where(month:  @month,year: @year.to_s,employee_id: @salary1)
 
@@ -24,6 +28,7 @@ class PdfSalariesController < ApplicationController
             :show_as_html => params[:debug].present?
           end
         end
+      end
     end
 
   def print_salary_slip_cost_unitwise
@@ -31,6 +36,10 @@ class PdfSalariesController < ApplicationController
       @year = params[:year]
       @cost_center = params[:cost_center]
       @salary1 = params[:salaryslip_ids]
+      if @salary1.nil?
+        flash[:alert] = "Please Select the Checkbox"
+        redirect_to select_month_year_form_pdf_salaries_path
+      else
       @joining_details = JoiningDetail.where(cost_center_id: @cost_center).pluck(:employee_id)
       @salaryslips = Salaryslip.where(month:  @month,year: @year.to_s,employee_id: @salary1)
       
@@ -51,6 +60,7 @@ class PdfSalariesController < ApplicationController
       end
     end
   end
+end
 
   def show_employee_costunit_wise
     session[:active_tab] ="payroll"

@@ -32,24 +32,34 @@
       </div>
 
      <div class="row">
+        
         <div class="col-sm-3">
-          <div class="field">
-            <%= f.select :company_id, all_company,{label: 'Company Select',include_blank: " Select Company"} %>
+            <div class="form-group required">
+            <div class="input-group">
+              <%=f.select :company_id, all_company,{include_blank: "Select Company"},{onchange:"var a={id:$(this).val(), form : 'employee'}; $.get('/employees/collect_company_location',a,function(response){});"}%>
+            </div>
+            </div>
           </div>
-        </div>
-      
-        <div class="col-sm-3">
-          <div class="field">
-            <%= f.select :company_location_id, all_company_with_location,{label: 'Department Location',include_blank: " Select Department Location"} %>
-          </div>
-        </div>
-     
 
-        <div class="col-sm-3">
-          <div class="field">
-            <%= f.select :department_id,all_department_type_list1,{include_blank: 'Select Department',label: 'Department'},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
+         <div class="col-sm-3">
+            <div class="form-group required">
+            <div class="input-group">
+              <div id="company_location">
+                <%= render 'employees/company_location_dropdown' %> 
+            </div> 
+            </div>
+            </div>
           </div>
-        </div>
+
+          <div class="col-sm-3">
+            <div class="form-group required">
+            <div class="input-group">
+              <div id="department">
+                <%= render 'employees/department_dropdown' %> 
+            </div> 
+            </div>
+            </div>
+          </div>
         </div>
 
       <div class="row">

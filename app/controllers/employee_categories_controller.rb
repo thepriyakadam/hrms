@@ -16,13 +16,11 @@ class EmployeeCategoriesController < ApplicationController
   # POST /employee_categories.json
   def create
     @employee_category = EmployeeCategory.new(employee_category_params)
-      if @employee_category.save
-         @employee_category = EmployeeCategory.new
-         @employee_categories = EmployeeCategory.all
-         @flag=true 
-      else
-         @flag=false
-      end
+    @employee_categories = EmployeeCategory.all
+    @employee_category.save
+    @employee_category = EmployeeCategory.new
+    @employee_categories = EmployeeCategory.all
+        
   end
 
 

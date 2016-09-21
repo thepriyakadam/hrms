@@ -13,4 +13,8 @@ module CompanyShiftsHelper
 
     "#{hours.to_s.rjust(2, '0')}:#{minutes.to_s.rjust(2, '0')}"
   end
+
+  def all_company_shifts
+    CompanyShift.all.collect { |x| [x.name.to_s + ' - ' + x.in_time.to_s + ' TO ' + x.out_time.to_s, x.id] }
+  end
 end

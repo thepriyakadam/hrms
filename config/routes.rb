@@ -122,15 +122,15 @@ end
   end
 
   resources :date_formats do
-    collection do 
+    collection do
     get :active
     post :activee
     end
-  end 
+  end
 
   resources :email_configs
   resources :weekoff_masters
-  resources :currency_masters do 
+  resources :currency_masters do
     collection do
       get :is_confirm
     end
@@ -150,20 +150,20 @@ end
       get :is_confirm
     end
   end
-  
+ 
   resources :years do
     collection do
       get :is_confirm
-    end 
+    end
   end
 
   resources :employee_daily_activities do
-    collection do 
+    collection do
       get :employee_details
       get :daily_show_activity_list
       get :activity_report
     end
-  end 
+  end
   resources :project_masters do
     collection do
       get :is_confirm
@@ -219,16 +219,16 @@ end
   end
   resources :training_records
   resources :induction_details do
-    collection do 
+    collection do
     get :all_induction_detail_list
     get :confirm
     get :print_induction_details
     get :update_date_modal
     post :update_date
     end
-  end 
+  end
   resources :induction_activities do
-    collection do 
+    collection do
     get :employee_list
     get :search_template
     get :find_assigned_induction_template
@@ -239,7 +239,7 @@ end
     get :modal_induction_activity
     post :update_induction
     end
-  end 
+  end
   resources :induction_masters
   resources :induction_templates
   resources :root_cause_masters do
@@ -353,7 +353,7 @@ end
       get :appraisee_detail_for_print
       get :appraiser_detail_for_print
       get :reviewer_detail_for_print
-      
+     
     end
   end
   resources :goal_perspectives do
@@ -372,14 +372,14 @@ end
     end
   end
   resources :overall_ratings do
-    collection do 
+    collection do
       get :modal_self
       patch :update_modal_self
     end
   end
 
   resources :overall_ratings do
-    collection do 
+    collection do
       get :modal_self
       patch :update_modal_self
     end
@@ -427,7 +427,7 @@ end
   end
   resources :accident_masters
   resources :travel_expence_types do
-    collection do 
+    collection do
       get :is_confirm
     end
   end
@@ -506,7 +506,7 @@ end
     collection do
       get :training_request_list
       get :training_request_confirmation
-      post :approve_training_request
+      # post :approve_training_request
       get :reject_training_request
       get :confirmation_list
       get :modal_approver_comment
@@ -517,10 +517,12 @@ end
       patch :create_dept_wise_request
       post :comment
       post :create_department_wise_training_request
+      post :approve_and_send_next
+      get :approve_training_request
     end
   end
   resources :selected_resumes  do
-    collection do 
+    collection do
     post :is_confirm
     get :new1
     get :all_resume_list
@@ -534,14 +536,14 @@ end
     get :part_resume
     post :is_confirm_resume
     end
-  end 
+  end
   resources :assigned_assets do
-    collection do 
+    collection do
     post :update_asset
     get :modal
     get :update_asset
     end
-  end 
+  end
   resources :asset_types do
     collection do
       get :is_confirm
@@ -561,7 +563,7 @@ end
   resources :particular_vacancy_requests
   resources :travel_expences
   resources :daily_bill_details do
-    collection do 
+    collection do
     # post :is_confirm
     get :is_confirm
     get :print_daily_bill
@@ -577,10 +579,11 @@ end
     get :approve_and_send_next_modal
     post :approve_n_send_next
     get :travel_request_history_list
+    get :image_modal
     end
-  end 
+  end
   resources :travel_requests do
-    collection do 
+    collection do
       get :daily_bill
       get :travel_history
       get :travel_request_confirmation
@@ -597,7 +600,7 @@ end
       get :is_confirm
     end
   end
-  
+ 
 
   namespace :reports do
     get 'monthly_expences_details/new'
@@ -646,16 +649,16 @@ end
  
     get 'certification_details/new'
     post 'certification_details/certification_detail_report'
-  
+ 
     get 'skillset_details/new'
     post 'skillset_details/skillset_detail_report'
  
     get 'experience_details/new'
     post 'experience_details/experience_detail_report'
-  
+ 
     get 'qualification_details/new'
     post 'qualification_details/qualification_detail_report'
-  
+ 
     get 'bank_details/new'
     post 'bank_details/bank_detail_report'
 
@@ -673,12 +676,12 @@ end
     get 'salaries/new'
     post 'salaries/date_range_report'
     get 'salaries/download'
-    
+   
     post 'salaries/ctc_yearly_report'
     get 'salaries/ctc_yearly'
 
 
-    
+   
   #   get 'certificate/new'
   #   post 'certificate/certificate_print'
   end
@@ -777,6 +780,7 @@ end
       get :resignation_history
       get :show_resignation_detail
       get :employee_transfer
+      get :travel_request
     end
   end
 
@@ -863,7 +867,7 @@ end
       get :appraiser1_approval
       get :appraiser1_subordinate
     end
-     
+    
   end
   resources :employee_attributes do
     collection do
@@ -923,8 +927,7 @@ end
   match 'employee_documents/:id/download_pic/:id' => 'employee_documents#download_pic', :via => [:get], :as => :download_pic
   match 'investment_declarations/:id/investment_document/:id' => 'investment_declarations#investment_document', :via => [:get], :as => :investment_document
   match 'due_templates/:id/download_due_tempalte_documents/:id' => 'due_templates#download_due_tempalte_documents', :via => [:get], :as => :download_due_tempalte_documents
-  
-  match 'issue_requests/:id/download_screenshot/:id' => 'issue_requests#download_screenshot', :via => [:get], :as => :download_screenshot
+
   match 'issue_requests/:id/download_screenshot_image/:id' => 'issue_requests#download_screenshot_image', :via => [:get], :as => :download_screenshot_image
 
   resources :leave_c_offs
@@ -966,7 +969,7 @@ end
     end
   end
   resources :reserved_categories do
-    collection do 
+    collection do
       get :is_confirm
     end
   end
@@ -1043,6 +1046,9 @@ end
       get :fresh
       get :assign_new_template
       post :create_fresh_template
+      get :revert_salary_template
+      get :template_salary
+      get :cancel_salary_template
     end
   end
   resources :retention_moneys do
@@ -1106,7 +1112,7 @@ end
       get :salary_slip_report
     end
   end
-  
+ 
   resources :pdf_salaries do
     collection do
       get :employee_list_pdf
@@ -1121,7 +1127,7 @@ end
       get :dynamic_dropdown
     end
    end
-  
+ 
   resources :salary_slip_ledgers do
     collection do
       get :select_month_year_form
@@ -1200,7 +1206,7 @@ end
       get :current_template
     end
   end
-  
+ 
   resources :salary_component_templates
   resources :salary_templates
   resources :religions do
@@ -1247,6 +1253,7 @@ end
   resources :employee_designations do
     collection do
       get :is_confirm
+      get :employee_designation_list
     end
   end
   resources :cost_centers do
@@ -1323,7 +1330,7 @@ end
       get :is_confirm_leave
     end
   end
-  
+ 
   resources :leav_rejecteds
   resources :leav_approveds
   resources :employee_leav_requests do
@@ -1433,7 +1440,7 @@ end
     end
   end
   resources :blood_groups do
-    collection do 
+    collection do
       get :is_confirm
     end
   end
@@ -1459,7 +1466,12 @@ end
       get :is_confirm
     end
   end
-  resources :departments
+  resources :departments do
+    collection do
+      get :department_list_xls
+    end
+  end
+
   resources :company_locations
   resources :companies do
     collection do

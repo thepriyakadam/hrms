@@ -1,13 +1,4 @@
 module DailyBillDetailsHelper
-	def all_travel_expence_type
-	TravelExpenceType.all.collect { |x| [x.name, x.id] }
-	end
-
-	def all_currency
-    CurrencyMaster.all.collect {|x| [x.name.to_s + ' - ' + x.description.to_s,x.id]}   
-   end
-
-
     def all_reporting_masters_travel_request
     # TraineeRequest.a.collect { |s| [s.training_topic_master.try(:name), s.id] }.distinct
     # TraineeRequest.all.collect { |x| [x.training_topic_master.try(:name)] }.uniq

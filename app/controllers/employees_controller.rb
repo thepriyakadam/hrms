@@ -380,12 +380,6 @@ class EmployeesController < ApplicationController
   end
   end
 
-  # def collect_states
-  #   @country = Country.find(params[:id])
-  #   @states = @country.states
-  #   @form = params[:form]
-  # end
-
   def collect_company_location
     @company = Company.find(params[:id])
     @company_locations = @company.company_locations
@@ -398,11 +392,6 @@ class EmployeesController < ApplicationController
      @form = params[:form]
   end
 
-  # def collect_cities
-  #   @state = State.find(params[:id])
-  #   @cities = @state.districts
-  #   @form = params[:form]
-  # end
 
   private
 

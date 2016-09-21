@@ -13,7 +13,6 @@
       <li><a href="/company_events/new"><i class="fa fa-tags"></i> Company Events</a></li>
       <li><a href="/circulars/new"><i class="fa fa-tags"></i> Circular</a></li>
       <li><a href="/company_policies"><i class="fa fa-tags"></i> Company Policy</a></li>
-      <li><a href="/employee_documents/new"><i class="fa fa-tags"></i> Employee Documents </a></li>
     </ul>
   </li>
   <li class="treeview" id="master">
@@ -99,7 +98,7 @@
            <li><a href="/question_masters/new"><i class="fa fa-tags"></i>Question Master </a></li>
            <li><a href="/about_companies/new"><i class="fa fa-tags"></i> About Company </a></li>
            <li><a href="/about_bosses/new"><i class="fa fa-tags"></i>About Boss </a></li>
-           <li><a href="/leaving_reasons/new"><i class="fa fa-tags"></i>Leaving Reason Master </a></li>
+           <li><a href="/leaving_reasons/new"><i class="fa fa-tags"></i>Leaving Reason </a></li>
         </ul>
        </li>
        <li id="daily_bill_master_setup">
@@ -164,6 +163,12 @@
         <li><a href="/reports/physical_details/new"><i class="fa fa-tags"></i>Physical Details</a></li>
         <li><a href="/reports/family_details/new"><i class="fa fa-tags"></i>Family Details</a></li>
         </ul>
+         <li class="treeview" id="certificates">
+       <a href="#"><i class="fa fa-file-o"></i> Certificates <i class="fa fa-angle-left pull-right"></i></a>
+       <ul class="treeview-menu">
+        <li><a href="/certificates/new"><i class="fa fa-sticky-note"></i> Certificates </a></li>
+        </ul>
+        </li>
       </li> 
     </ul>
   </li>
@@ -181,6 +186,7 @@
       <li><a href="/goal_bunches/new"><i class="fa fa-tags"></i> Set Goal </a></li>
       <li><a href="/goal_bunches/period_list_appraisee"><i class="fa fa-tags"></i> Self Evaluation </a></li>
       <li><a href="/training_plans/trainee_list"><i class="fa fa-tags"></i> Training Feedback </a></li>
+      <li><a href="/self_services/travel_request"><i class="fa fa-plane"></i> Travel Request </a></li>
     </ul>
   </li>
   <li class="treeview" id="leavemanagement">
@@ -256,6 +262,7 @@
         <li><a href="/salary_templates/new"><i class="fa fa-tags"></i>Salary Template</a></li>
         <li><a href="/employee_templates/fresh_template"><i class="fa fa-tags"></i>Salary Break up</a></li>
         <li><a href="/employee_templates"><i class="fa fa-tags"></i>Salary Increment</a></li>
+         <li><a href="/employee_templates/template_salary"><i class="fa fa-tags"></i>Template Report</a></li>
         </ul>
       </li>
 
@@ -317,15 +324,35 @@
   </li>
  
   <li class="treeview" id="timemgmt">
-    <a href="">
-      <i class="ionicons ion-ios-time"></i><span> Time Management </span> <i class="fa fa-angle-left pull-right"></i>
+    <a href="#">
+      <i class="glyphicon glyphicon-th-large"></i> <span>Time Management</span>
+      <i class="fa fa-angle-left pull-right"></i>
     </a>
-    <ul class="treeview-menu">
+    <ul class="treeview-menu" >
+       
+       <li class="treeview" id="leaveadministration"> <a href="#"><i class="fa fa-edit"></i>Attendance <i class="fa fa-angle-left pull-right"></i></a>
+        <ul class="treeview-menu">
+     <li><a href="/holidays/new"><i class="fa fa-tags"></i> Holiday Setup </a></li>
      <li><a href="/employee_attendances"><i class="fa fa-tags"></i> Add Attendance </a></li>
-      <li><a href="/employee_attendances/costcenter_wise_attendance"><i class="fa fa-tags"></i> Show Attendance </a></li>
+     <li><a href="/employee_attendances/costcenter_wise_attendance"><i class="fa fa-tags"></i> Show Attendance </a></li>
      <li><a href="/employee_attendances/revert_attendance"><i class="fa fa-tags"></i> Revert Attendance </a></li>
+    
+      <!-- <li><a href="/holidays/new"><i class="fa fa-tags"></i> Holiday Setup </a></li>
+      <li><a href="/company_shifts/new"><i class="fa fa-tags"></i> Shifts Maintenance </a></li>
+      <li><a href="/shift_rotations/new"><i class="fa fa-tags"></i> Shift Rotation </a></li>
+      <li><a href="/employee_shifts"><i class="fa fa-tags"></i> Employee Shift Assignment </a></li>
+      <li><a href="/attendances"><i class="fa fa-tags"></i> Employee Attendance </a></li> -->
     </ul>
-   </li>
+      </li> 
+        <li id="daily_activity">
+        <a href="#"><i class="fa fa-edit"></i> Time Sheet <i class="fa fa-angle-left pull-right"></i></a>
+        <ul class="treeview-menu" >
+        <li><a href="/employee_daily_activities/new"><i class="fa fa-tags"></i>Daily Activity</a></li>
+        <li><a href="/employee_daily_activities/employee_details"><i class="fa fa-tags"></i>Employee Details</a></li>
+        </ul>
+        </li> 
+    </ul>
+  </li>
 
    <li class="treeview" id="performancemgmt">
     <a href="#">
@@ -443,7 +470,7 @@
     <li class="treeview" id="travelmgmt">
     <a href=""><i class="fa fa-briefcase"></i><span> Travel Management </span><i class="fa fa-angle-left pull-right"></i></a>
     <ul class="treeview-menu">
-      <li><a href="/travel_requests"><i class="fa fa-tags"></i>Travel Request </a></li>
+      <li><a href="/travel_requests"><i class="fa fa-plane"></i>Travel Request </a></li>
       <li><a href="/travel_requests/travel_history"><i class="fa fa-tags"></i> Travel Approve/Reject </a></li>
       <li><a href="/travel_requests/travel_request_list"><i class="fa fa-tags"></i> Travel Request List </a></li>
       <li><a href="/travel_requests/daily_bill"><i class="fa fa-tags"></i> Expenses Claim </a></li>
@@ -451,7 +478,7 @@
        <li><a href="/daily_bill_details/travel_request_list"><i class="fa fa-tags"></i> Expense Approval </a></li>
       <li><a href="/daily_bill_details/approved_daily_bill_details"><i class="fa fa-tags"></i> Expenses Approval List </a></li>
 <!--       <li><a href="/travel_expences"><i class="fa fa-tags"></i> Travel Expenses </a></li>   
- -->    </ul>
+ --></ul>
    </li>
 
    <li class="treeview" id="trainingmgmt">

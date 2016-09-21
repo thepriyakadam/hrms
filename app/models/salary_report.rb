@@ -6,6 +6,7 @@ class SalaryReport
                 :total_leave, :cl_leave, :el_leave, :lwp_leave, :day_in_month, :payable_day, :present_day, :absent_day, :holiday, :weekoff, :month, :year,
                 :pf_ctc, :esic_ctc, :bonus_ctc, :actual_driver, :actual_medical, :actual_child_edu, :actual_mra, :earned_driver, :earned_medical, :earned_child_edu,
                 :earned_mra
+        
 
   def self.collect_data(e, j, sl)
     addable_items = SalaryslipComponent.where(salaryslip_id: sl.id, is_deducted: false, is_arrear: nil)
@@ -59,11 +60,11 @@ class SalaryReport
         sr.actual_medical = a.actual_amount
         sr.earned_medical = a.calculated_amount
 
-        when "Child Education Allowance"
+        when "Children Education Allowance"
         sr.actual_child_edu = a.actual_amount
         sr.earned_child_edu = a.calculated_amount
 
-        when "Reimbursement of Medical Allowance"
+        when "Rembursement of Medical Allowence"
         sr.actual_mra = a.actual_amount
         sr.earned_mra = a.calculated_amount
       end
@@ -90,7 +91,7 @@ class SalaryReport
         sr.food_deduction = d.calculated_amount.to_i
         when "Mobile Deduction"
         sr.mobile = d.calculated_amount
-        when "Retention"
+        when "Retaintion"
         sr.retention = d.calculated_amount
         when "Well Faire"
         sr.welfair = d.calculated_amount
@@ -361,10 +362,10 @@ class SalaryReport
         when "Medical Allowance"
         sr.actual_medical = a.actual_amount
 
-        when "Child Education Allowance"
+        when "Children Education Allowance"
         sr.actual_child_edu = a.actual_amount
 
-        when "Reimbursement of Medical Allowance"
+        when "Rembursement of Medical Allowence"
         sr.actual_mra = a.actual_amount
       end
     end
@@ -433,11 +434,11 @@ class SalaryReport
         sr.actual_medical = a.actual_amount
         sr.earned_medical = a.calculated_amount
 
-        when "Child Education Allowance"
+        when "Children Education Allowance"
         sr.actual_child_edu = a.actual_amount
         sr.earned_child_edu = a.calculated_amount
 
-        when "Reimbursement of Medical Allowance"
+        when "Rembursement of Medical Allowence"
         sr.actual_mra = a.actual_amount
         sr.earned_mra = a.calculated_amount
       end
@@ -464,7 +465,7 @@ class SalaryReport
         sr.food_deduction = d.calculated_amount.to_i
         when "Mobile Deduction"
         sr.mobile = d.calculated_amount
-        when "Retention"
+        when "Retaintion"
         sr.retention = d.calculated_amount
         when "Well Faire"
         sr.welfair = d.calculated_amount

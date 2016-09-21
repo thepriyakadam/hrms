@@ -40,11 +40,17 @@
     rules: {
       "nomination_master[name]":{
         required: true
+      },
+      "nomination_master[code]":{
+        required: true
       }
     },
     messages: {
       "nomination_master[name]":{
         required: "Please Specify Name"
+      },
+      "nomination_master[code]":{
+        required: "Please Specify Code"
       }
     },
     errorPlacement: function(error, element) {

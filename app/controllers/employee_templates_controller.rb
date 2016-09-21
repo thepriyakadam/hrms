@@ -1,5 +1,7 @@
+require 'query_report/helper'  # need to require the helper
 class EmployeeTemplatesController < ApplicationController
   load_and_authorize_resource except: [:template_list]
+  include QueryReport::Helper  # need to include it
   def index
     if current_user.class == Group
       @employees = Employee.all
@@ -16,9 +18,15 @@ class EmployeeTemplatesController < ApplicationController
     session[:active_tab1] ="salarymaster"
   end
 
+  def show
+  end
+ 
   def template_list
     @employee = Employee.find(params[:format])
     @employee_templates = @employee.employee_templates
+    @template = EmployeeTemplate.where(employee_id: @employee.id)
+    @salaryslip_component = SalaryslipComponent.all
+    #@temp = @template.last
   end
 
   def activate
@@ -73,6 +81,50 @@ class EmployeeTemplatesController < ApplicationController
         @flag = true
       end
     end
+  end
+  def template_salary
+    reporter(EmployeeTemplate.filter_records(current_user), template_class: PdfReportTemplate) do
+      filter :start_date, type: :date
+      column(:Employee_ID, sortable: true) { |employee_template| employee_template.employee.try(:manual_employee_code) }
+      column(:Employee_name, sortable: true) { |employee_template| full_name(employee_template.employee) }
+      column(:Category, sortable: true) { |employee_template| employee_template.employee.joining_detail.try(:employee_designation).try(:name) }
+      column(:Template, sortable: true) { |employee_template| employee_template.salary_template.code }
+      column(:start_date, sortable: true) { |employee_template| employee_template.start_date }
+      column(:end_date, sortable: true) { |employee_template| employee_template.end_date }
+      column(:created_at, sortable: true) { |employee_template| employee_template.created_at.to_date }
+      column(:updated_at, sortable: true) { |employee_template| employee_template.updated_at.to_date }
+    end
+  end
+
+  def revert_salary_template
+    @employee = Employee.find(params[:employee_id])
+    @salary_template = SalaryTemplate.find(params[:salary_template_id])
+    @employee_template = EmployeeTemplate.find(params[:employee_template_id])
+    
+    # if @c1=EmployeeTemplate.where(employee_id: @employee.id).pluck(:is_active).last == true
+       #EmployeeTemplate.where(employee_id: @employee.id).update_all(end_date: nil,is_active: true)
+      # @emp_temp = EmployeeTemplate.where(employee_id: @employee.id).last
+      # @emp_temp.update(end_date: nil,is_active: true)
+    #end
+    @a1 = EmployeeTemplate.where(employee_id: @employee.id,id: @employee_template.id).last
+      if @a1.is_active == true
+        @a1.destroy
+        @emp_temp = EmployeeTemplate.where(employee_id: @employee.id).last
+        @emp_temp.update(end_date: nil,is_active: true)
+
+        EmployeeSalaryTemplate.where(employee_id: @employee.id,employee_template_id: @employee_template.id).destroy_all
+      end
+    flash[:notice] = 'Employee Template was Reverted Successfully.'
+    redirect_to template_list_employee_templates_path(format: @employee.id)
+  end
+
+  def cancel_salary_template
+    @employee = Employee.find(params[:employee_id])
+    @employee_template = EmployeeTemplate.find(params[:employee_template_id])
+    EmployeeTemplate.where(id: @employee_template.id).destroy_all
+    EmployeeSalaryTemplate.where(employee_template_id: @employee_template.id,employee_id: @employee.id).destroy_all
+    flash[:notice] = 'Employee Template was Cancelled Successfully.'
+    redirect_to template_list_employee_templates_path(@employee.id)
   end
 
   def create_fresh_template

@@ -4,20 +4,20 @@ class VacancyMastersController < ApplicationController
   # GET /vacancy_masters
   # GET /vacancy_masters.json
   def index
-      # respond_to do |format|
-      # format.html
-      # format.csv { send_data @vacancy_masters.to_csv }
-      # format.xls
-      # if current_user.class == Member
-      #   if current_user.role.name == 'Department'
-      #     @vacancy_masters = VacancyMaster.where(employee_id: current_user.employee_id)
-      #   elsif current_user.role.name == 'CompanyLocation'
-      #     @vacancy_masters = VacancyMaster.where(company_location_id: current_user.company_location_id)
-      #   elsif current_user.role.name == 'Company'
-          @vacancy_masters = VacancyMaster.where(current_status: "Pending",employee_id: current_user.employee_id)
-     #    end
-     #  end
-     # end
+      respond_to do |format|
+      format.html
+      format.csv { send_data @vacancy_masters.to_csv }
+      format.xls
+      if current_user.class == Member
+        if current_user.role.name == 'Department'
+          @vacancy_masters = VacancyMaster.where(employee_id: current_user.employee_id)
+        elsif current_user.role.name == 'CompanyLocation'
+          @vacancy_masters = VacancyMaster.where(company_location_id: current_user.company_location_id)
+        elsif current_user.role.name == 'Company'
+          @vacancy_masters = VacancyMaster.all
+        end
+      end
+     end
   end
 
   # GET /vacancy_masters/1

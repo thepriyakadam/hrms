@@ -10,9 +10,9 @@
       <th>Sr.No</th>
       <th>Employee Name</th>
       <th>Start Date</th>
-      <th>Induction Template Code</th>
-      <th>Induction Completed</th>
-      <th>Induction Completion Date</th>
+      <th>Template Code</th>
+      <th>Completed</th>
+      <th>Completion Date</th>
       <th>Status</th>
       <th>Action</th>
     </tr>
@@ -30,16 +30,16 @@
         <td><%= induction_detail.end_date %></td>
         <td>
           <% if induction_detail.induction_completed == false %>
-            <small class="label label-primary">Not Yet Completed</small>
+            <small class="label label-primary">Not Completed</small>
             <%= link_to 'Confirm Induction',confirm_induction_details_path(induction_detail), class: 'btn btn-xs btn-info' %>
             <% elsif induction_detail.induction_completed == true %>
-            <small class="label label-primary">Induction Completed</small>
+            <small class="label label-primary">Completed</small>
              <% else %>
             <% end %>
         </td>
         <div id="myModal" class="modal fade"></div>
-        <td><%= link_to 'Print Induction Schedule', induction_detail,class: 'btn btn-xs btn-info fa fa-check' %>
-          <%= link_to ' Update Induction Date',update_date_modal_induction_details_path(induction_detail),class: 'btn btn btn-xs btn-success fa fa-modx',remote: true %>
+        <td><%= link_to 'Show', induction_detail,class: 'btn btn-xs btn-info fa fa-check' %>
+          <%= link_to ' Update Date',update_date_modal_induction_details_path(induction_detail),class: 'btn btn btn-xs btn-success fa fa-modx',remote: true %>
         </td>
       </tr>
     <% end %>

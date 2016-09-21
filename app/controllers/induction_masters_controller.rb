@@ -48,7 +48,7 @@ class InductionMastersController < ApplicationController
         @induction_master = InductionMaster.new
       end
       redirect_to new_induction_master_path
-      flash[:notice] = 'Induction Master saved Successfully.'   
+      flash[:notice] = 'Induction Template saved Successfully.'   
   end
 
   # def create

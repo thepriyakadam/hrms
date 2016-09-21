@@ -1,1 +1,19 @@
-Issue Created
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+     <h4>Issue Request</h4>
+    <p> 
+      This is to inform you that you have a Issue Request .
+      Details are given below.<br><br>
+      1.<b>Issue Master</b>:-<%= @issue_request.issue_master.try(:name) %>
+      2.<b>Issue Tracker Member</b>:-<%= @issue_request.issue_tracker_member_id %>
+      3.<b>Issue Tracker Group</b>:-<%= @issue_request.issue_tracker_group.try(:name) %>
+      4.<b>Issue Priority</b>:-<%= @issue_request.issue_priority %>
+        With Regards,<br><br>
+        HR
+     </p>
+  </body>
+</html>

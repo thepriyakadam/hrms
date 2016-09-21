@@ -9,27 +9,33 @@ Rails.application.routes.draw do
       get :is_confirm
       get :lock_request_list
       get :lock_request
+      get :issue_history
+      get :unlock_request
+      get :solved_request
+      get :solved_issues
+      get :lock_by_admin
+      get :unlock_by_admin
     end
    end
-  resources :issue_masters
+  resources :issue_masters do
+    collection do
+      get :collect_issues
+    end
+  end
   resources :issue_types do
     collection do
       get :is_confirm
     end
    end
-  resources :issue_tracker_accesses do
-    collection do
-      get :is_confirm
-    end
-   end
+  resources :issue_tracker_accesses
+   
   resources :issue_tracker_members do
     collection do
-      get :is_confirm
+       get :collect_issues
     end
    end
   resources :issue_tracker_groups do
     collection do
-      get :is_confirm
 
   end
 end

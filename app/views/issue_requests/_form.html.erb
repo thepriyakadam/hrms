@@ -4,106 +4,87 @@
   </div>
   <div class="box-body">
   <%= bootstrap_form_for(@issue_request,html: {id: 'issue_tracker'}) do |f| %>
+  
   <%= f.hidden_field :employee_id, :value => current_user.employee_id %>
+  <%= f.hidden_field :date, :value => Time.zone.now.to_date %>
+   <%= f.hidden_field :time, :value => Time.zone.now.to_time %>
   <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
 
 <div class="row">
-  <div class="col-sm-3">
-      <label>Issue Master</label>
-    <div class="form-group required">
-      <div class="input-group">
-        <div class="input-group-addon">
-          <%= link_to "", new_issue_master_path,class: "fa fa-plus fa-success",:target => "_blank" %>
-        </div>
-          <%= f.select :issue_master_id,all_issue_master, {hide_label: true,include_blank: " Select Master"}, class: 'input_degree_stream_id' %>
-    </div>
-  </div>
-  </div>
-   <div class="col-sm-3">
+ <div class="col-sm-3">
    <label>Issue Tracker Group</label>
      <div class="form-group required">
        <div class="input-group">
          <div class="input-group-addon">
                <%= link_to "", new_issue_tracker_group_path,class: "fa fa-plus fa-success",:target => "_blank" %>
           </div>
-        <%= f.select :issue_tracker_group_id,all_issue_tracker_group,{hide_label: true,include_blank: "Select Group"} , class: 'input_degree_stream_id'%>
+        <%= f.select :issue_tracker_group_id,all_issue_tracker_group,{hide_label: true ,include_blank: "Select Group"},{onchange:"var a={group_id:$(this).val()}; $.get('/issue_masters/collect_issues',a,function(response){});"}%>
       </div>
     </div>
+  </div> 
+  
+
+   <div class="col-sm-3">
+    <div class="form-group required">
+    <div class="input-group">
+      <div class="input-group-addon">
+      </div>
+      <div id="issues">
+        <%= render 'issue_masters/issue_dropdown' %> 
+    </div> 
+    </div>
+    </div>
   </div>
+<!-- 
+
   <div class="col-sm-3">
-    <label>Issue Tracker Member</label>
+      <label>Issue Master</label>
     <div class="form-group required">
       <div class="input-group">
         <div class="input-group-addon">
-          <%= link_to "", new_issue_tracker_member_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+          <= link_to "", new_issue_master_path,class: "fa fa-plus fa-success",:target => "_blank" %>
         </div>
-         <%= f.select :issue_tracker_member_id, all_issue_tracker_member, {hide_label: true,include_blank: " Select Member"}, class: 'input_degree_stream_id' %>
-      </div>
+          <= f.select :issue_master_id,all_issue_master, {hide_label: true,include_blank: " Select Master"}, class: 'input_degree_stream_id' %>
     </div>
   </div>
- 
+  </div> -->
+  
   <div class="col-sm-3">
   <label>Issue Priority</label>
     <div class="group">
      <%= f.select :issue_priority , ['Low','Medium','High'] ,{hide_label: true,include_blank: 'Select Issue Priority'}%>
     </div>
   </div>
+  
 </div>
 
 <div class="row">
- <div class="col-sm-3">
-    <div class="group">
-      <div class="input-group">
-        <div class="input-group-addon">
-        <i class="fa fa-calendar"></i>
-        </div>
-        <%= f.text_field :date,class: 'issue',label:'Date'%>
-      </div>
-    </div>
-  </div>
-  <div class="col-sm-3">
-    <div class="group">
-      <%= f.text_field :time %>
-    </div>
-  </div>
-  <div class="col-sm-3">
-    <label>Status</label>
-      <%= f.check_box :status,label:'Active' %>
-  </div>
-  <div class="col-sm-3">
-    <div class="form-group required">
-     <label>Is Confirm</label>
-       <%= f.check_box :is_confirm,label:'Confirm', placeholder: 'Confirm'%>
-    </div>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-sm-3">
+<div class="col-sm-6">
   <label>Description</label>
     <div class="group">
-      <%= f.text_field :description ,{hide_label:true} %>
+      <%= f.text_area :description ,{hide_label:true} %>
     </div>
   </div>
-
-
   <div class="col-sm-3">
     <div class="field">
       <%= f.file_field :document1,label: 'Upload Document(only docx,pdf)' %>
     </div>
   </div>
-
  <div class="col-sm-3">
     <div class="field">
       <%= f.file_field :document2,label: 'Upload Photo(only jpeg,jpg,png)' %>
     </div>
   </div>
   
+  </div>
+  <div class="row">
  <div class="col-sm-3">
+   <label></label>
   <div class="actions">
     <%= f.submit 'Create Issue Request',class: "btn btn-primary btn-sm"  %>
     <%= link_to 'Back', issue_requests_path,class: 'btn btn-sm btn-default fa fa-arrow-left' %>
   </div>
+ </div>
  </div>
  </div>
  </div>
@@ -112,13 +93,3 @@
     
   </div>
 </div>
-
-<script type="text/javascript">
-  $(function(){
-    $('.issue').datepicker({
-    changeYear:true,
-    changeMonth: true,
-    yearRange: '-200:-0',
-    dateFormat: 'dd-mm-yy' });
-  }); 
-</script>

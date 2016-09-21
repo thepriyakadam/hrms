@@ -60,7 +60,7 @@ class IssueTrackerGroupsController < ApplicationController
     flash[:notice] = "Confirmed Successfully"
     redirect_to new_issue_tracker_group_path
   end
-  
+ 
 
   private
     # Use callbacks to share common setup or constraints between actions.

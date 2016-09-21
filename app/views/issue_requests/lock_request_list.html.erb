@@ -1,56 +1,133 @@
-<div class="box">
-  <div class="box-header">
-    <h3 class="box-title">Issue Request</h3>
-    <!-- <div class="pull-right">
-      <= link_to "New Issue Request",  new_issue_request_path, class: 'btn btn-primary' %> 
-    </div> -->
-  </div><!-- /.box-header -->
-  <div class="box-body">
-    <table id="example1" class="table table-bordered table-hover table-condensed'">
-  <thead>
-    <tr>
-      <th>Issue Master</th>
-      <th>Issue Tracker Group</th>
-      <th>Date</th>
-      <th>Time</th>
-      <th>Issue Priority</th>
-      <th>Upload Document</th>
-      <th>Uplaod Image</th>
-      <th>Action</th>
-    </tr>
-  </thead>
 
-  <tbody>
-    <% @issue_requests.each do |issue_request| %>
-      <tr>
-        <td><%= issue_request.issue_master.try(:name) %></td>
-        <td><%= issue_request.issue_tracker_group.try(:name) %></td>
-        <td><%= issue_request.date %></td>
-        <td><%= issue_request.time %></td>
-        <td><%= issue_request.issue_priority %></td>
-        <td>
-         <% if issue_request.document1_file_name == nil %>
-           <small class="label label-default">Not Available</small>
-             <% else %>
-             <center><%= link_to '',download_screenshot_path(id: issue_request.id),class: 'btn btn-xs fa fa-download' %>
-             <% end %>
-             </center>
-        </td>
-        <td>
-          <% if issue_request.document2_file_name == nil %>
-              <small class="label label-default">Not Available</small>
-              <% else %>
-              <center><%= link_to '',download_screenshot_image_path(id: issue_request.id),class: 'btn btn-xs fa fa-picture-o' %></center>
+<% @issue_tracker_access.each do |e| %>
+<% if e.role ==  'Co-ordinator' %>
+
+    <div class="box">
+      <div class="box-header">
+       <h3 class="box-title">Issue List - <%= current_user.employee.try(:first_name) %> <%= current_user.employee.try(:middle_name) %> <%= current_user.employee.try(:last_name) %> Role - <%= e.try(:role)  %> </h3>
+      </div><!-- /.box-header -->
+      <div class="box-body">
+        <table id="example1" class="table table-bordered table-hover table-condensed'">
+      <thead>
+        <tr>
+          <th>Master</th>
+          <th>Tracker Group</th>
+          <th>Date</th>
+          <th>Time</th>
+          <th>Priority</th>
+          <th>Document</th>
+          <th>Image</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @issue_requests.each do |issue_request| %>
+          <tr>
+            <% if issue_request.request_status == 'Solved' %>
+            <% else %>
+                <td><%= issue_request.issue_master.try(:name) %></td>
+                <td><%= issue_request.issue_tracker_group.try(:name) %></td>
+                <td><%= issue_request.date %></td>
+                <td><%= issue_request.time %></td>
+                <td><%= issue_request.issue_priority %></td>
+                <td>
+                 <% if issue_request.document1_file_name == nil %>
+                   <small class="label label-default">Not Available</small>
+                     <% else %>
+                     <center><%= link_to '',download_screenshot_path(id: issue_request.id),class: 'btn btn-xs fa fa-download' %>
+                     <% end %>
+                     </center>
+                </td>
+                <td>
+                  <% if issue_request.document2_file_name == nil %>
+                      <small class="label label-default">Not Available</small>
+                      <% else %>
+                      <center><%= link_to '',download_screenshot_image_path(id: issue_request.id),class: 'btn btn-xs fa fa-picture-o' %></center>
+                      <% end %>
+                </td>
+
+                 <td>
+                  <%= select :issue_request,:issue_tracker_member_id,issue_tracker_member_role_wise(issue_request.issue_tracker_group.id),{prompt:"Select Member"},class: "form-control"%> <br>
+                  <%= link_to '',lock_by_admin_issue_requests_path(issue_request),class: 'btn btn-sm btn-primary fa fa-lock',data: { confirm: 'Are you sure?' } %> 
+                   <%= link_to '',unlock_by_admin_issue_requests_path(issue_request),class: 'btn btn-sm btn-info fa fa-lock',data: { confirm: 'Are you sure?' } %> 
+
+                </td>
               <% end %>
-        </td>
-        <td>
-       <!--  <td><= link_to '', issue_request, class: 'btn btn-default fa fa-eye btn-sm' %> -->
-        <%= link_to '',lock_request_issue_requests_path(issue_request),class: 'btn btn-sm btn-primary fa fa-lock',data: { confirm: 'Are you sure?' } %> 
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    </div>
+    </div>
+    <br>
+
+<% else %>
+
+    <div class="box">
+      <div class="box-header">
+        <h3 class="box-title">Issue Request</h3>
+      </div><!-- /.box-header -->
+      <div class="box-body">
+        <table id="example1" class="table table-bordered table-hover table-condensed'">
+      <thead>
+        <tr>
+          <th>Master</th>
+          <th>Tracker Group</th>
+          <th>Date</th>
+          <th>Time</th>
+          <th>Priority</th>
+          <th>Document</th>
+          <th>Image</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @issue_requests.each do |issue_request| %>
+          <tr>
+            <% if issue_request.request_status == 'Solved' %>
+            <% else %>
+                <td><%= issue_request.issue_master.try(:name) %></td>
+                <td><%= issue_request.issue_tracker_group.try(:name) %></td>
+                <td><%= issue_request.date %></td>
+                <td><%= issue_request.time %></td>
+                <td><%= issue_request.issue_priority %></td>
+                <td>
+                 <% if issue_request.document1_file_name == nil %>
+                   <small class="label label-default">Not Available</small>
+                     <% else %>
+                     <center><%= link_to '',download_screenshot_path(id: issue_request.id),class: 'btn btn-xs fa fa-download' %>
+                     <% end %>
+                     </center>
+                </td>
+                <td>
+                  <% if issue_request.document2_file_name == nil %>
+                      <small class="label label-default">Not Available</small>
+                      <% else %>
+                      <center><%= link_to '',download_screenshot_image_path(id: issue_request.id),class: 'btn btn-xs fa fa-picture-o' %></center>
+                      <% end %>
+                </td>
+
+                <td>
+                  <% if issue_request.issue_tracker_member_id == nil %>
+                    <%= link_to '',lock_request_issue_requests_path(issue_request),class: 'btn btn-sm btn-primary fa fa-lock',data: { confirm: 'Are you sure?' } %> 
+                  <% else %>
+                    <small class="label label-primary">Locked by <%= current_user.employee.try(:manual_employee_code) %></small>
+                      <% if issue_request.issue_tracker_member_id == current_user.employee_id %>
+                        <%= link_to '',unlock_request_issue_requests_path(issue_request),class: 'btn btn-sm btn-info fa fa-lock',data: { confirm: 'Are you sure?' } %> | <%= link_to 'Solved',solved_request_issue_requests_path(issue_request),class: 'btn btn-sm btn-info',data: { confirm: 'Are you sure?' } %>
+                      <% else %>
+                      <% end %>
+                  <% end %>
+              <% end %>
             </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-</div>
-</div>
-<br>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    </div>
+    </div>
+    <br>
+
+<% end %>
+<% end %>

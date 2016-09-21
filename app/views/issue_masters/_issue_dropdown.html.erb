@@ -1,0 +1,2 @@
+<label class="control-label required" for="company_district" aria-required="true">Master</label>
+	<%= select :issue_request,:issue_master_id,(@issue_masters.present? ? (@issue_masters.collect {|b| [b.name,b.id]}) : {}),{prompt:"Select Master",hide_label:true},class: "form-control"%>

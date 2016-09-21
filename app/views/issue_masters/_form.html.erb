@@ -3,23 +3,22 @@
 <%= bootstrap_form_for(@issue_master,remote:true )do |f| %>
 <div class="row">
   <div class="col-sm-3">
+  <label>Issue Tracker Group</label>
     <div class="form-group required">
-      <%= f.select :issue_tracker_group_id,all_issue_tracker_group,{include_blank: "Select Group"} %>
+      <%= f.select :issue_tracker_group_id,all_issue_tracker_group,{hide_label:true ,include_blank: "Select Group"} %>
     </div>
   </div>
-
   <div class="col-sm-3">
+  <label>Issue Type</label>
     <div class="form-group required">
-      <%= f.select :issue_type_id ,all_issue_types,{include_blank: "Select Type"}%>
+      <%= f.select :issue_type_id ,all_issue_types,{hide_label:true,include_blank: "Select Type"}%>
     </div>
   </div>
-
   <div class="col-sm-3">
     <div class="form-group required">
       <%= f.text_field :name,label:'Name', placeholder: 'Name' %>
     </div>
   </div>
-
   <div class="col-sm-3">
     <div class="form-group required">
       <%= f.text_field :description ,label:'Description', placeholder: 'Description'%>
@@ -29,20 +28,10 @@
 
 <div class="row">
   <div class="col-sm-3">
-    <label>Status</label>
-       <%= f.check_box :status,label:'Active' %>
-</div>
-    
-
-  <div class="col-sm-3">
-    <div class="form-group required">
-     <label>Is Confirm</label>
-       <%= f.check_box :is_confirm,label:'Confirm', placeholder: 'Confirm'%>
-    </div>
-  </div>
-
-  <div class="actions">
-    <%= f.submit'Create Issue',:class => class_name, data: { disable_with: data_info } %>
+   <label></label>
+   <div class="actions">
+     <%= f.submit'Create Issue',:class => class_name, data: { disable_with: data_info } %>
+   </div>
   </div>
 </div>
 <% end %>

@@ -53,6 +53,11 @@ class IssueMastersController < ApplicationController
     @issue_masters = IssueMaster.all
   end
 
+  def collect_issues
+    @issue_tracker_group = IssueTrackerGroup.find(params[:group_id])
+    @issue_masters = @issue_tracker_group.issue_masters
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_issue_master

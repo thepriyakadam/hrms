@@ -6,34 +6,31 @@
     <table id="example2" class="table table-bordered table-hover table-condensed'">
 
 <tr>
-  <th><strong>Issue Master</strong></th>
+  <th><strong>Type</strong></th>
   <td><%= @issue_request.issue_master.try(:name) %></td>
-</tr>
+  </tr>
 
-<tr>
-  <th><strong>Issue Tracker Member</strong></th>
+  <!-- <th><strong>Issue Tracker Member</strong></th>
   <td><%= @issue_request.issue_tracker_member_id %></td>
-</tr>
-
-<p>
-  <th><strong>Issue Tracker Group</strong></th>
-  <td><%= @issue_request.issue_tracker_group.try(:name) %></td>
-</p>
+</tr> -->
 
 <tr>
+  <th><strong>Group</strong></th>
+  <td><%= @issue_request.issue_tracker_group.try(:name) %></td></tr>
+
+  <tr>
+
   <th><strong>Description</strong></th>
   <td><%= @issue_request.description %></td>
 </tr>
 
-<tr>
+<!-- <tr>
   <th><strong>Date</strong></th>
   <td><%= @issue_request.date %></td>
-</tr>
 
-<tr>
   <th><strong>Time</strong></th>
   <td><%= @issue_request.time %></td>
-</tr>
+</tr> -->
 
 <!-- <tr>
   <th><strong>Request By</strong></th>
@@ -41,18 +38,13 @@
 </tr> -->
 
 <tr>
-  <th><strong>Issue Priority</strong></th>
-  <td><%= @issue_request.issue_priority %></td>
-</tr>
+  <th><strong>Priority</strong></th>
+  <td><%= @issue_request.issue_priority %></td></tr>
 
-<tr>
+  <tr>
+
   <th><strong>Status</strong>
   <td><%= @issue_request.status %></td>
-</tr>
-
-<tr>
-  <th><strong>Is Confirm</strong></th>
-  <td><%= @issue_request.is_confirm %></td>
 </tr>
 
 </table>

@@ -60,7 +60,11 @@ class IssueTrackerMembersController < ApplicationController
     flash[:notice] = "Confirmed Successfully"
     redirect_to new_issue_tracker_member_path
   end
-
+ 
+  def collect_issues
+    @issue_tracker_group = IssueTrackerGroup.find(params[:group_id])
+    @issue_tracker_members = @issue_tracker_group.issue_tracker_members
+  end
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_issue_tracker_member

@@ -24,7 +24,7 @@
       <tbody>
         <% @resignation_histories.each do |resignation_history| %>
           <tr>
-            <td><%= resignation_history.reporting_master.employee.try(:first_name) %> <%= resignation_history.reporting_master.employee.try(:middle_name) %> <%= resignation_history.reporting_master.employee.try(:last_name) %></td>
+            <td><%= resignation_history.try(:reporting_master).try(:employee).try(:first_name) %> <%= resignation_history.try(:reporting_master).try(:employee).try(:middle_name) %> <%= resignation_history.try(:reporting_master).try(:employee).try(:last_name) %></td>
             <td><%= resignation_history.resignation_date %></td>
             <td><%= resignation_history.reason %></td>
             <td><%= resignation_history.is_notice_period %></td>

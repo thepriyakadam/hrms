@@ -74,7 +74,7 @@ class InterviewSchedulesController < ApplicationController
         @interview_schedule = InterviewSchedule.new
       end
       if @interview_schedule.email_id.nil?
-      flash[:alert] = 'Interview Scheduled Successfully without Email'
+      flash[:notice] = 'Interview Scheduled Successfully without Email'
       redirect_to interview_schedules_path
        else
       InterviewScheduleMailer.sample_email_to_candidate(@interview_schedule).deliver_now

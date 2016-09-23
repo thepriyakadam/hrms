@@ -36,6 +36,8 @@
                    <small class="label label-success">Edit And Approved</small>
                     <% elsif vacancy_master.current_status == "Approved" %>
                     <small class="label label-primary">Approved</small>
+                    <% elsif vacancy_master.current_status == "Rejected" %>
+                    <small class="label label-primary">Rejected</small>
                     <% else %>
                     <%= link_to 'Approve / Reject', vacancy_request_confirmation_vacancy_masters_path(vacancy_master),class: 'btn btn-xs btn-warning' %>
                     <% end %>

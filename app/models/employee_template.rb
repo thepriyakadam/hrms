@@ -61,6 +61,4 @@ class EmployeeTemplate < ActiveRecord::Base
     end
     employee_template
   end
-
-  
 end

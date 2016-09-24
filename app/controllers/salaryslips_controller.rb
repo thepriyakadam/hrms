@@ -371,10 +371,10 @@ class SalaryslipsController < ApplicationController
           arrear_start_year = arrear_start_date.strftime('%Y').to_i
           arrear_end_month = Workingday.months[@month]
           arrear_end_year = params['year'].to_i
-          arrear_working_days = Workingday.where(employee_id: @employee.id, month: arrear_start_month..arrear_end_month, year: arrear_start_year..arrear_end_year)
+          arrear_working_days = Workingday.where(employee_id: @employee.id, month_name: arrear_start_month..arrear_end_month, year: arrear_start_year..arrear_end_year)
           @total_payable_days = arrear_working_days.sum('payable_day')
           @arrear_items = @arrear.employee_arrear_items
-
+          byebug
           number_of_months = (arrear_end_date.year*12+arrear_end_date.month)-(arrear_start_date.year*12+arrear_start_date.month)
 
           dates = number_of_months.times.each_with_object([]) do |count, array|

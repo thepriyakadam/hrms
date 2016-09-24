@@ -2,6 +2,7 @@ class EmployeeArrear < ActiveRecord::Base
   belongs_to :employee
   has_many :employee_arrear_items
   validates :employee_id, uniqueness: { scope: [:is_paid] }
+  
   # def self.create_object(employee_id, increement_date)
   #   employee_arrear = EmployeeArrear.new do |ea|
   #     ea.employee_id = employee_id

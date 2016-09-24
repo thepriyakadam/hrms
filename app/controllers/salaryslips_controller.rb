@@ -882,10 +882,19 @@ class SalaryslipsController < ApplicationController
           @total_payable_days = arrear_working_days.sum('payable_day')
           @arrear_items = @arrear.employee_arrear_items
 
-          @arrear_items.try(:each) do |ai|
-            arrear_calculated_amount = ((ai.actual_amount / 30) * @total_payable_days).round
-            SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: ai.actual_amount, calculated_amount: arrear_calculated_amount, is_deducted: ai.is_deducted, is_arrear: true, salary_component_id: ai.salary_component_id)
+          number_of_months = (arrear_end_date.year*12+arrear_end_date.month)-(arrear_start_date.year*12+arrear_start_date.month)
+
+          dates = number_of_months.times.each_with_object([]) do |count, array|
+            array << [arrear_start_date.beginning_of_month + count.months,arrear_start_date.end_of_month + count.months]
           end
+
+          @arrear_items.try(:each) do |ai|
+            dates.each do |start_instance,end_instance|
+              arrear_calculated_amount = ((ai.actual_amount / start_instance.end_of_month.day) * @total_payable_days).round
+            end
+            SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: ai.actual_amount, calculated_amount: arrear_calculated_amount, is_deducted: ai.is_deducted, is_arrear: true, salary_component_id: ai.salary_component_id)
+          end     
+
           # current template nil
           
         end # employee_ids loop

@@ -45,7 +45,7 @@ class EmployeeNominationsController < ApplicationController
       else
         @employee_nomination.save
         @employee_nominations = @employee.employee_nominations
-        flash[:alert] = "Nomination saved successfully"
+        flash[:notice] = "Nomination saved successfully"
         @flag = true
         redirect_to employees_path(@employee.id)
       end

@@ -47,4 +47,4 @@
 
 </div>
 </div>
-<%= link_to "Print",service_certificate_certificates_path(employee_id: @employee.id, certificate: @certificate,format: "pdf"),:target => "_blank"%>
+<%= link_to "Print",service_certificate_certificates_path(employee_id: @employee.id, certificate: @certificate,format: "pdf"),class: "btn btn-xl btn-info fa fa-print",:target => "_blank"%>

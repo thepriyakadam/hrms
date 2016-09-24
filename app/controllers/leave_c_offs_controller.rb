@@ -118,6 +118,7 @@ class LeaveCOffsController < ApplicationController
     @leave_c_off.update(leave_c_off_params)
     @leave_c_offs = LeaveCOff.all
     @leave_c_off = LeaveCOff.new
+    redirect_to new_leave_c_off_path
   end
 
   # DELETE /leave_c_offs/1

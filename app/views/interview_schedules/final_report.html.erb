@@ -59,7 +59,9 @@
 <h4 class="box-title">Interview Evaluation</h4><br>
 <table class="table table-bordered table-hover table-condensed">
   <thead>
-    <tr> 
+    <tr>
+      <th>Interviewer Name</th>
+      <th>Interview Type</th>
       <th>Evaluation Criteria</th>
       <th>Skillset</th>
       <th>Evaluation</th>
@@ -68,7 +70,9 @@
   </thead>
   <tbody>
     <% @interview_analyses.each do |interview_analysis| %>
-      <tr> 
+      <tr>
+        <td><%= full_name(interview_analysis.try(:interview_round).try(:employee)) %></td>
+        <td><%= interview_analysis.interview_round.interview_type.try(:name) %></td>
         <td><%= interview_analysis.interview_evalution.try(:name) %></td>
         <td><%= interview_analysis.interview_attribute.try(:name) %></td>
         <td><%= interview_analysis.interview_decision.try(:name) %></td>

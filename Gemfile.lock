@@ -119,7 +119,7 @@ GEM
     erubis (2.7.0)
     execjs (2.7.0)
     gherkin (4.0.0)
-    globalid (0.3.6)
+    globalid (0.3.7)
       activesupport (>= 4.1.0)
     google_visualr (2.5.1)
     gruff (0.7.0)
@@ -154,7 +154,7 @@ GEM
     mime-types-data (3.2016.0521)
     mimemagic (0.3.0)
     mini_portile2 (2.1.0)
-    minitest (5.9.0)
+    minitest (5.9.1)
     momentjs-rails (2.11.1)
       railties (>= 3.1)
     multi_json (1.12.1)
@@ -321,6 +321,7 @@ DEPENDENCIES
   datagrid (~> 1.4, >= 1.4.1)
   devise
   email_verifier
+  globalid (~> 0.3.7)
   hirb
   jbuilder (~> 2.0)
   jquery-rails
@@ -328,6 +329,7 @@ DEPENDENCIES
   jquery-validation-rails
   kaminari (~> 0.16.3)
   local-subdomain
+  mime-types-data (~> 3.2016, >= 3.2016.0521)
   paperclip (~> 4.3, >= 4.3.6)
   pdfkit (~> 0.8.2)
   prawn (~> 1.3.0)
@@ -350,3 +352,6 @@ DEPENDENCIES
   wirble
   wkhtmltopdf-binary (~> 0.9.9.3)
   yaml_db
+
+BUNDLED WITH
+   1.13.1

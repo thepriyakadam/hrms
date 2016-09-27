@@ -1,13 +1,11 @@
 Rails.application.routes.draw do
 
-<<<<<<< HEAD
   resources :due_actions
   resources :due_details do
     collection do
       get :all_employee_resignation_list
     end
   end
-=======
   resources :employee_transfers do
     collection do
       get :transfer_request
@@ -21,7 +19,6 @@ Rails.application.routes.draw do
     end
   end
   resources :due_details
->>>>>>> 4292cf1730bd021e38be2014ba4b56f173511fcf
   resources :due_templates
   resources :employee_transfers
   resources :rewards_pals

@@ -11,6 +11,8 @@ class LeaveStatusRecordsController < ApplicationController
       ActiveRecord::Base.transaction do
         if @leave_status.save
           @employee_leav_request.update(is_cancelled: true, current_status: 'Cancelled')
+
+          LeaveRecord.where(employee_leav_request_id: @employee_leav_request.id).update_all(status: "Cancelled")
           @employee_leav_request.revert_leave(@employee_leav_request)
           if @employee_leav_request.first_reporter.email.nil? || @employee_leav_request.first_reporter.email == ''
             flash[:notice] = 'Leave Cancelled Successfully without email.'
@@ -45,6 +47,9 @@ class LeaveStatusRecordsController < ApplicationController
           @employee_leav_request.create_single_record_for_leave(@employee_leav_request)
           @employee_leav_request.manage_coff(@employee_leav_request)
           @employee_leav_request.create_attendance
+          
+          LeaveRecord.where(employee_leav_request_id: @employee_leav_request.id).update_all(status: "FinalApproved")
+          #@leave_record.update_all(status: "FinalApproved")
 
           # @employee_leav_request.minus_leave(@employee_leav_request)
           if @employee_leav_request.employee.email.nil? || @employee_leav_request.employee.email == ''
@@ -66,6 +71,9 @@ class LeaveStatusRecordsController < ApplicationController
         s.change_status_employee_id = current_user.employee_id unless current_user.class == Group
         s.status = 'FirstApproved'
         s.change_date = Time.now
+
+        LeaveRecord.where(employee_leav_request_id: @employee_leav_request.id).update_all(status: "FirstApproved")
+        
       end
       ActiveRecord::Base.transaction do
         if @leave_status.save
@@ -99,6 +107,8 @@ class LeaveStatusRecordsController < ApplicationController
         @employee_leav_request.manage_coff(@employee_leav_request)
         @employee_leav_request.create_attendance
 
+        LeaveRecord.where(employee_leav_request_id: @employee_leav_request.id).update_all(status: "FinalApproved")
+
         # @employee_leav_request.minus_leave(@employee_leav_request)
         if @employee_leav_request.employee.email.nil? || @employee_leav_request.employee.email == ''
           flash[:notice] = 'Leave Approved Successfully without mail.'
@@ -124,6 +134,9 @@ class LeaveStatusRecordsController < ApplicationController
     ActiveRecord::Base.transaction do
       if @leave_status.save
         @employee_leav_request.update(is_first_rejected: true, current_status: 'Rejected')
+
+      LeaveRecord.where(employee_leav_request_id: @employee_leav_request.id).update_all(status: "Rejected")
+         
         @employee_leav_request.revert_leave(@employee_leav_request)
         if @employee_leav_request.employee.email.nil? || @employee_leav_request.employee.email == ''
           flash[:notice] = 'Leave Rejected Successfully without email.'
@@ -149,6 +162,9 @@ class LeaveStatusRecordsController < ApplicationController
     ActiveRecord::Base.transaction do
       if @leave_status.save
         @employee_leav_request.update(is_second_rejected: true, current_status: 'Rejected')
+
+       LeaveRecord.where(employee_leav_request_id: @employee_leav_request.id).update_all(status: "Rejected")
+
         @employee_leav_request.revert_leave(@employee_leav_request)
         if @employee_leav_request.employee.email.nil? || @employee_leav_request.employee.email == ''
           flash[:notice] = 'Leave Rejected Successfully without email.'
@@ -167,6 +183,9 @@ class LeaveStatusRecordsController < ApplicationController
   def cancel_after_approve
     @particular_leave_record = ParticularLeaveRecord.find(params[:format])
     @employee_leav_request = EmployeeLeavRequest.find_by_employee_id(@particular_leave_record.employee_id)
+    
+     @date = @particular_leave_record.leave_date.strftime("%Y-%m-%d")
+     LeaveRecord.where("employee_leav_request_id =? AND day =?", @particular_leave_record.employee_leav_request_id, @date).update_all(status: "Cancelled")
     @flag = @particular_leave_record.salary_processed?
     if @flag.nil?
       @particular_leave_record.is_cancel_after_approve = true

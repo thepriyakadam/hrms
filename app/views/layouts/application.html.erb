@@ -19,11 +19,26 @@
   <body font-size="12px">
     <div class="ajax-progress"></div>
     <% if user_signed_in? %>
+
       <body class="hold-transition skin-blue sidebar-mini">
+      <% if current_user.class == Member %>
+      <%  @members = Member.where(employee_id: current_user.employee_id).pluck(:employee_id) %>
+      <% @employees = Employee.where(id: @members) %>
+      <% @employees.each do |e| %>
+       <% if e.status == "Active" %>
         <div class="wrapper">
         <%= render 'layouts/header' %>
         <%= render 'layouts/navbar' %>
         </div>
+        <% else %>
+        <%= render 'layouts/header' %>
+        <%= render 'layouts/contact' %>  
+        <% end %>
+        <% end %>
+        <%else %>
+        <%= render 'layouts/header' %>
+        <%= render 'layouts/navbar' %>
+        <%end %>
       </body>
     <% else %>
       <body class="hold-transition login-page">

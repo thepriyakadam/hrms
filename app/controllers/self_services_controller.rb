@@ -7,6 +7,8 @@ class SelfServicesController < ApplicationController
   def employee_template
     @employee = Employee.find(current_user.employee_id)
     @employee_templates = @employee.employee_templates
+    @template = EmployeeTemplate.where(employee_id: @employee.id)
+    @salaryslip_component = SalaryslipComponent.all
     session[:active_tab] ="selfservice"
   end
 
@@ -50,6 +52,12 @@ class SelfServicesController < ApplicationController
   def employee_transfer
     @employee_transfer = EmployeeTransfer.new
     @employee_transfers = EmployeeTransfer.where(employee_id: current_user.employee_id)
+    session[:active_tab] = "selfservice"
+  end
+
+  def travel_request
+    @travel_request = TravelRequest.new
+    @travel_requests = TravelRequest.where(employee_id: current_user.employee_id)
     session[:active_tab] = "selfservice"
   end
 

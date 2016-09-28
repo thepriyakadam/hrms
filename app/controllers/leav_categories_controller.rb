@@ -37,6 +37,13 @@ class LeavCategoriesController < ApplicationController
     @leav_categories = LeavCategory.all
   end
 
+  def is_confirm
+    @leav_category = LeavCategory.find(params[:leav_category])
+    LeavCategory.find(@leav_category.id).update(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to new_leav_category_path
+  end
+  
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -46,6 +53,6 @@ class LeavCategoriesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def leav_category_params
-    params.require(:leav_category).permit(:from,:to,:is_payble,:code, :name, :description)
+    params.require(:leav_category).permit(:is_confirm,:from,:to,:is_active,:is_payble,:code, :name, :description)
   end
 end

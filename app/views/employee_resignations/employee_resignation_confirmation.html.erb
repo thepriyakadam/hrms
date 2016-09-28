@@ -51,11 +51,11 @@
     </tr>
     <tr>
       <td><b>Approved By</b></td>
-      <td><%= @employee_resignation.reporting_master_id %></td>
+      <td><%= @employee.first_name %> <%= @employee.middle_name %> <%= @employee.last_name %></td>
     </tr>
     <tr>
       <td><b>Employee ID</b></td>
-      <td><%= @employee_resignation.id %></td>
+      <td><%= @employee_resignation.employee.try(:manual_employee_code) %></td>
     </tr>
     <tr>
       <td><b>Resignation Date</b></td>

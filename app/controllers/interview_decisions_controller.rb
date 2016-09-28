@@ -52,9 +52,16 @@ class InterviewDecisionsController < ApplicationController
   # DELETE /interview_decisions/1.json
   def destroy
     @interview_decision.destroy
-    @interview_decision = InterviewDecision.all
+    @interview_decisions = InterviewDecision.all
   end
 
+  def is_confirm
+    @interview_decision = InterviewDecision.find(params[:interview_decision])
+    InterviewDecision.find(@interview_decision.id).update(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to new_interview_decision_path
+  end
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_interview_decision
@@ -63,6 +70,6 @@ class InterviewDecisionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def interview_decision_params
-      params.require(:interview_decision).permit(:code, :name, :description)
+      params.require(:interview_decision).permit(:is_confirm,:code, :name, :description)
     end
 end

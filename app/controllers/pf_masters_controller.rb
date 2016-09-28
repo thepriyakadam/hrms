@@ -41,16 +41,24 @@ class PfMastersController < ApplicationController
   #   end
   # end
 
-  def create
+ def create
+    components = params[:components]
+    str = ''
+    i = 0
+    components.each do |c|
+      str = if i == 0
+              c.to_s
+            else
+              str.to_s + ',' + c.to_s
+            end
+      i += 1
+    end
     @pf_master = PfMaster.new(pf_master_params)
+    @pf_master.base_component = str
     @pf_masters = PfMaster.all
-     if @pf_master.save
-       @pf_master = PfMaster.new
-     end
-     flash[:notice] = 'Employee Document saved Successfully.' 
-     redirect_to new_pf_master_path
-       
- end
+    @pf_master.save
+    @pf_master = PfMaster.new
+  end
 
 
 
@@ -76,6 +84,12 @@ class PfMastersController < ApplicationController
     @pf_masters = PfMaster.all
   end
 
+  def is_confirm
+    @pf_master = PfMaster.find(params[:pf_master])
+    PfMaster.find(@pf_master.id).update(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to new_pf_master_path
+  end
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -85,6 +99,6 @@ class PfMastersController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def pf_master_params
-    params.require(:pf_master).permit(:is_pf, :percentage, :date_effective, :min_limit, :base_component, :is_active)
+    params.require(:pf_master).permit(:is_confirm,:is_pf, :percentage, :date_effective, :min_limit, :base_component, :is_active)
   end
 end

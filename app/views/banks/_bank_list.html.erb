@@ -10,8 +10,13 @@
       <tr>
         <td><%= bank.name%></td>
         <td>
-          <%= link_to '', edit_bank_path(bank),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
-          <%= link_to '',  bank, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
+          <% if bank.is_confirm == true %>
+            <small class= "label label-primary">Confirmed</small>
+          <% else %>
+            <%= link_to '', edit_bank_path(bank),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
+            <%= link_to '',  bank, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
+            <%= link_to '', is_confirm_banks_path(bank: bank),data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-info fa fa-check' %>
+          <% end %>
         </td>
       </tr>
     <% end %>

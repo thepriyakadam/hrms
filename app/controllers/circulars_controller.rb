@@ -32,7 +32,7 @@ class CircularsController < ApplicationController
         @circular = Circular.new
       end
       redirect_to new_circular_path
-      flash[:notice] = 'Circular was saved Successfully'   
+      flash[:notice] = 'Circular Saved Successfully'   
   end
 
 
@@ -45,7 +45,7 @@ class CircularsController < ApplicationController
     @circulars = Circular.all
     @circular = Circular.new
     redirect_to new_circular_path
-    flash[:notice] = 'Circular was Updated Successfully'   
+    flash[:notice] = 'Circular Updated Successfully'   
   end
 
   # DELETE /circulars/1
@@ -58,10 +58,15 @@ class CircularsController < ApplicationController
 
   def download_documents
     @circular = Circular.find(params[:id])
+    if File.exist?(@circular.avatar.path)
     send_file @circular.avatar.path,
-              filename: @circular.avatar_file_name,
+              filename: @circular.avatar,
               type: @circular.avatar_content_type,
               disposition: 'attachment'
+    else
+    flash[:alert] = "No file found Please contact to Admin!"
+    redirect_to root_url
+    end
   end
 
   private

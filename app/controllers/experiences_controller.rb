@@ -84,7 +84,7 @@ class ExperiencesController < ApplicationController
      @experience = Experience.find(params[:id])
      @experience.update(experience_params)
      flash[:notice] = 'Experience Details Updated Successfully'
-     redirect_to root_url
+     redirect_to employees_path
   end
 
   private

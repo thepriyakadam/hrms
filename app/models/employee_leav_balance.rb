@@ -4,7 +4,6 @@ class EmployeeLeavBalance < ActiveRecord::Base
   belongs_to :company_leav
   #validates :employee_id, uniqueness: { scope: [:leav_category_id] }
   validates :no_of_leave, presence: true
-  validates :expiry_date, presence: true
 
   def self.count_leave(month)
     case month

@@ -54,6 +54,13 @@ class RetentionMoneysController < ApplicationController
     @retention_moneys = RetentionMoney.all
   end
 
+  def is_confirm
+    @retention_money = RetentionMoney.find(params[:retention_money])
+    RetentionMoney.find(@retention_money.id).update(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to new_retention_money_path
+  end
+  
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -63,6 +70,6 @@ class RetentionMoneysController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def retention_money_params
-    params.require(:retention_money).permit(:have_retention, :amount, :no_of_month, :description)
+    params.require(:retention_money).permit(:is_confirm,:have_retention, :amount, :no_of_month, :description)
   end
 end

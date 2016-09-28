@@ -30,7 +30,16 @@
           <% end %>
         </td>
           <td>
-          <%= link_to '', show_employee_salary_template_employee_salary_templates_path(t.employee_id),class: 'btn btn-default fa fa-eye' %>
+              <%= link_to '', show_employee_salary_template_employee_salary_templates_path(emp_id: t.employee_id, salary_template_id: t.salary_template_id),class: 'btn btn-xs btn-default fa fa-eye' %>
+              <% if t.start_date == nil %>
+              <%= link_to 'Cancel', cancel_salary_template_employee_templates_path(employee_id: t.employee_id,employee_template_id: t.id),class: 'btn btn-info btn-xs' %>
+              <% else %>
+                <% if @salaryslip_component.is_present(t.id) %>
+                  <small class="label label-primary">Salary Processed</small>
+                <% else %>
+                  <%= link_to 'Revert', revert_salary_template_employee_templates_path(employee_id: t.employee_id, salary_template_id: t.salary_template_id,employee_template_id: t.id),class: 'btn btn-danger btn-xs' %>
+                <% end %>
+              <% end %>
         </td>
       </tr>
     <% end %>

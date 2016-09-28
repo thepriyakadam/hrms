@@ -1,7 +1,6 @@
 class HomeController < ApplicationController
   # load_and_authorize_resource
   def index
-    @employee_task_to_dos = EmployeeTaskToDo.where(employee_id: current_user.try(:employee_id))
     @circulars = Circular.all
     @company_policies = CompanyPolicy.all
     @companies = Company.all
@@ -9,6 +8,7 @@ class HomeController < ApplicationController
     @departments = Department.all
     #@employees = Employee.all
     if current_user.class == Member
+      @employee_task_to_dos = EmployeeTaskToDo.where(employee_id: current_user.employee_id, status: true)
       if current_user.role.name == 'Employee'
         @employee = Employee.find(current_user.employee_id)
         #redirect_to home_index_path

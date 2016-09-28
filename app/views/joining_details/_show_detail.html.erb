@@ -27,10 +27,10 @@
     </tr>
     <tr>
       <th><strong>Location</strong></th>
-      <td><%= @joining_detail.employee.try(:company_location).try(:name) %></td>
+      <td><%= @joining_detail.employee.try(:company).try(:name) %> - <%= @joining_detail.employee.try(:company_location).try(:name) %></td>
 
      <th><strong>Department</strong></th>
-      <td><%= @joining_detail.company_location.try(:name) %><%= @joining_detail.department.try(:name) %></td>
+     <td><%= @joining_detail.employee.department.try(:name) %></td>
     </tr>
     <tr>
       <th><strong>Designation</strong></th>
@@ -38,6 +38,13 @@
 
       <th><strong>Employee Grade</strong></th>
       <td><%= @joining_detail.employee_grade.try(:name) %></td>
+    </tr>
+    <tr>
+      <th><strong>Cost Center</strong></th>
+      <td><%= @joining_detail.cost_center.try(:name) %></td>
+
+      <th><strong>Employee Category</strong></th>
+      <td><%= @joining_detail.employee_category.try(:name) %></td>
     </tr>
     <tr>
       <th><strong>PF</strong></th>
@@ -62,14 +69,7 @@
       <th><strong>Payment Mode</strong></th>
       <td><%= @joining_detail.payment_mode.try(:name) %></td>
     </tr>
-     <tr>
-      <th><strong>Cost Center</strong></th>
-      <td><%= @joining_detail.cost_center.try(:name) %></td>
-
-      <th><strong>Employee Category</strong></th>
-      <td><%= @joining_detail.employee_category.try(:name) %></td>
-    </tr>
-
+     
     <tr>
       <th><strong>Medical Insurance</strong></th>
       <td> <%= @joining_detail.medical_schem %></td>
@@ -95,7 +95,7 @@
     </tr>
      <tr>
       <th><strong>Retention</strong></th>
-      <td><%= @joining_detail.have_retention %></td>
+      <td><%= @joining_detail.have_retention ? "Yes" : "No" %></td>
 
       <th><strong>Retirement Date</strong></th>
       <td><%= @joining_detail.retirement_date %></td>
@@ -103,7 +103,7 @@
 
      <tr>
       <th><strong>Reserved Category</strong></th>
-      <td><%= @joining_detail.reserved_category_id %></td>
+      <td><%= @joining_detail.reserved_category.try(:name) %></td>
 
       <th></th>
       <td></td>

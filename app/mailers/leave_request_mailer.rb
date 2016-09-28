@@ -1,7 +1,7 @@
 class LeaveRequestMailer < ApplicationMailer
   def pending(request)
     @leave_request = request
-    @manager = Employee.find(@leave_request.first_reporter_id)
+    @manager = Employee.find(@leave_request.employee.try(:manager_id))
     email = @manager.email
     mail(to: email, subject: 'Leave Request')
   end

@@ -47,6 +47,13 @@ class IllnessTypesController < ApplicationController
     @illness_types = IllnessType.all
   end
 
+  def is_confirm
+    @illness_type = IllnessType.find(params[:illness_type])
+    IllnessType.find(@illness_type.id).update(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to new_illness_type_path
+  end
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_illness_type
@@ -55,6 +62,6 @@ class IllnessTypesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def illness_type_params
-      params.require(:illness_type).permit(:code, :name, :description)
+      params.require(:illness_type).permit(:is_confirm,:code, :name, :description)
     end
 end

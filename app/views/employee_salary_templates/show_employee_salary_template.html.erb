@@ -32,7 +32,7 @@
         <% @employee_salary_templates.each do |template| %>
           <tr>
 
-          <td> <% if template.is_confirm == true %>
+          <td> <% if template.try(:is_confirm) == true %>
 
           <% else %>
            <%= check_box_tag "template_ids[]", template.id %><% end %></td>
@@ -44,7 +44,7 @@
            <td align="right"><%= template.try(:monthly_amount)%></td>
            <td align="right"><%= template.try(:annual_amount)%></td>
 
-           <td><% if template.is_confirm == true %>
+           <td><% if template.try(:is_confirm) == true %>
             <small class="label label-info">Confirmed</small>
             <% else %><%= link_to '', edit_employee_salary_template_path(template), class: 'btn btn-success btn-xs fa fa-edit',remote:true %><% end %>
             </td>
@@ -68,7 +68,7 @@
     <div class="row">
     <div class="col-sm-3">
       <div class="actions">
-        <%= f.submit "Confirm", class: 'btn btn-primary btn-sm' %> | <%= link_to 'Back', fresh_template_employee_templates_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+        <%= f.submit "Confirm", class: 'btn btn-primary btn-sm' %> | <%= link_to 'Back', template_list_employee_templates_path(@employee.id),class: 'btn btn-default btn-sm fa fa-arrow-left' %>
       </div>
     </div>
   </div>

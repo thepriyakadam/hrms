@@ -34,23 +34,23 @@
                 <td><%= v %></td>
               <%end%>
             </tr>
-
             <% present_day = present_day_count(exist) %>
             <% holiday_in_month = holiday_in_month_count(exist) %>
             <% week_off_day = week_off_day_count(exist) %>
+
+            <% # full_pay_leave = full_pay_leave_count(exist) %>
+            <% # half_pay_leave = half_pay_leave_count(exist) %>
+
+            <% # pay_leave = full_pay_leave + half_pay_leave %>
+
+            <% # full_lwp_leave = full_lwp_leave_count(exist) %>
+            <% # half_lwp_leave = half_lwp_leave_count(exist) %>
+
+            <% # lwp_leave = full_lwp_leave + half_lwp_leave %>
+            <% workingday = [] %>
+            <% workingday = create_leave(@date, e) %>
             
-
-            <% full_pay_leave = full_pay_leave_count(exist) %>
-            <% half_pay_leave = half_pay_leave_count(exist) %>
-
-            <% pay_leave = full_pay_leave + half_pay_leave %>
-
-            <% full_lwp_leave = full_lwp_leave_count(exist) %>
-            <% half_lwp_leave = half_lwp_leave_count(exist) %>
-
-            <% lwp_leave = full_lwp_leave + half_lwp_leave %>
-
-            <% payable_day = present_day.to_f + holiday_in_month.to_f + week_off_day.to_f + pay_leave.to_f + payable_day.to_f + pay_leave.to_f %>
+            <% payable_day = present_day.to_f + holiday_in_month.to_f + week_off_day.to_f + workingday[2] %>
 
             <%= hidden_field_tag "attendances[]", e.id %>
             <%= hidden_field e.employee_id, 'employee_id', value: e.employee_id %>
@@ -60,8 +60,8 @@
             <%= hidden_field e.employee_id, 'year', value: @date.strftime("%Y") %>
             <%= hidden_field e.employee_id, 'present_day', value: present_day %>
             <%= hidden_field e.employee_id, 'total_leave', value: total_leave_count(exist) %>
-            <%= hidden_field e.employee_id, 'lwp_leave', value: lwp_leave %>
-            <%= hidden_field e.employee_id, 'pay_leave', value: pay_leave %>
+            <%= hidden_field e.employee_id, 'nonpay_leave', value: workingday[3] %>
+            <%= hidden_field e.employee_id, 'pay_leave', value: workingday[2] %>
             <%= hidden_field e.employee_id, 'holiday_in_month', value: holiday_in_month %>
             <%= hidden_field e.employee_id, 'week_off_day', value: week_off_day %>
             <%= hidden_field e.employee_id, 'absent_day', value: absent_day_count(exist) %>
@@ -74,19 +74,6 @@
     <% end %>
   </div>
 </div>
-
-
-<% leave_records = ParticularLeaveRecord.where("strftime('%m/%Y', leave_date) = ? and employee_id = ?", @date.strftime('%m/%Y'), 4668) %>
-<%= leave_records.count %>
-<% leave_records.each do |l| %>
-    <%= l.leav_category.is_payble %>
-    <% if l.leav_category.is_payble %>
-      <%= l.id %>
-    <% else %>lll
-      <%= l.id %>lwp
-    <% end %>
-<% end %>
-
 
 <script type="text/javascript">
   $('#selectAll').click(function() {

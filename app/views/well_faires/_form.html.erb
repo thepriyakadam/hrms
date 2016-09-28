@@ -1,4 +1,4 @@
-<%= bootstrap_form_for(@well_faire) do |f| %>
+<%= bootstrap_form_for(@well_faire,html: {id: 'well_faire'},remote:true) do |f| %>
   <div class="row">
     <div class="col-sm-3">
       <div class="field">
@@ -31,3 +31,24 @@
     </div>
   </div>
 <% end %>
+
+<script>
+$("#well_faire").validate({
+    rules: {
+      "well_faire[month]":{
+        required: true,
+      }
+    },
+    messages: {
+      "well_faire[month]":{
+        required: "Please Specify Month",
+      }  
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>
+
+

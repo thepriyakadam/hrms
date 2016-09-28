@@ -11,7 +11,6 @@
       <th>Organization</th>
       <th>Designation</th>
       <th>Job Title</th>
-      <th>Department</th>
       <th>Qualification</th>
       <th>No. of position</th>
       <th>Experience</th>
@@ -22,108 +21,107 @@
       <% @vacancy_masters.each do |vacancy_master| %>
       <tr>
         <% if @vacancy_master.id == vacancy_master.id %>
-        <td><font color='red'> * </font><%= vacancy_master.other_organization %></td>
+        <td><font color='green'> *<%= vacancy_master.other_organization %> </font></td>
+        <td><font color='green'><%= vacancy_master.employee_designation.try(:name) %></font></td>
+        <td><font color='green'><%= vacancy_master.vacancy_name %></font></td>
+        <td><font color='green'><%= vacancy_master.degree.try(:name) %></font></td>
+        <td><font color='green'><%= vacancy_master.no_of_position %></font></td>
+        
+        <td><font color='green'><%= vacancy_master.experience %></font></td>
         <%else%>
-        <td><%= vacancy_master.other_organization %></td>
-        <%end%>
+        <td><%= vacancy_master.other_organization %> </td>
         <td><%= vacancy_master.employee_designation.try(:name) %></td>
         <td><%= vacancy_master.vacancy_name %></td>
-        <td><%= vacancy_master.company_location.try(:name) %> - <%= vacancy_master.department.try(:name) %></td>
         <td><%= vacancy_master.degree.try(:name) %></td>
         <td><%= vacancy_master.no_of_position %></td>
         
         <td><%= vacancy_master.experience %></td>
       </tr>
       <% end %>
+      <% end %>
   </tbody>
 </table>
 <div class="row">
-    <div class="col-sm-12"><strong> <font color='red'>Note - * Row is the latest row to approve/reject </font></strong></div>
+    <div class="col-sm-12"><strong> <font color='green'>Note - * Row is the latest row to approve/reject </font></strong></div>
     </div><br>
   <div class="box-header">
-    <h3 class="box-title">Vacancy Request Details</h3>
+    <h3 class="box-title"></h3>
     <div class="pull-right">
     </div>
   </div>
 <div>
 <table id="example" class="table table-bordered table-hover table-condensed">
   <tbody>
+  <tr><td colspan="4"><font color='red'><center>Vacancy Request Details</center></td></tr>
     <tr>
-      <td><b>Vacancy Code</b></td>
+      <th>Vacancy Code</th>
       <td><%= @vacancy_master.id %></td>
+    
+      <th>Request By</th>
+      <td><%= @vacancy_master.employee.try(:first_name) %> <%= @vacancy_master.employee.try(:middle_name) %> <%= @vacancy_master.employee.try(:last_name) %></td>
     </tr>
     <tr>
-      <td><b>Request By</b></td>
-      <td><%= @vacancy_master.employee.first_name+' '+@vacancy_master.employee.middle_name+' '+@vacancy_master.employee.last_name %></td>
-    </tr>
-    <tr>
-      <td><b>Approved By</b></td>
+      <th>Approved By</th>
       <td><%= @employee.try(:first_name) %> <%= @employee.try(:middle_name) %> <%= @employee.try(:last_name) %></td>
-    </tr>
-    <tr>
-      <td><b>Organization</b></td>
+   
+      <th>Organization</th>
       <td><%= @vacancy_master.other_organization %></td>
     </tr>
     <tr>
-      <td><b>Job Title</b></td>
+      <th>Job Title</th>
       <td><%= @vacancy_master.employee_designation.try(:name) %></td>
-    </tr>
-    <tr>
-      <td><b>Vacancy Name</b></td>
+   
+      <th>Vacancy Name</th>
       <td><%= @vacancy_master.vacancy_name %></td>
     </tr>
     <tr>
-      <td><b>Company Location</b></td>
+      <th>Company Location</th>
       <td><%= @vacancy_master.company_location.try(:name) %></td>
-    </tr>
-    <tr>
-      <td><b>Department</b></td>
+   
+      <th>Department</th>
       <td><%= @vacancy_master.department.try(:name) %></td>
     </tr>
     <tr>
-      <td><b>No of Position</b></td>
+      <th>No of Position</th>
       <td><%= @vacancy_master.no_of_position %></td>
-    </tr>
-    <tr>
-      <td><b>Organization</b></td>
+   
+      <th>Organization</th>
       <td><%= @vacancy_master.other_organization %></td>
     </tr>
     <tr>
-      <td><b>Experience</b></td>
+      <th>Experience</th>
       <td><%= @vacancy_master.experience %></td>
-    </tr>
-    <tr>
-      <td><b>Budget</b></td>
+   
+      <th>Budget</th>
       <td><%= @vacancy_master.budget %></td>
     </tr>
     <tr>
-      <td><b>Vacancy Fulfillment Date</b></td>
+      <th>Vacancy Fulfillment Date</th>
       <td><%= @vacancy_master.vacancy_post_date %></td>
-    </tr>
-    <tr>
-      <td><b>Keyword</b></td>
+   
+      <th>Keyword</th>
       <td><%= @vacancy_master.keyword %></td>
     </tr>
     <tr>
-      <td><b>Qualification 1</b></td>
+      <th>Qualification 1</th>
       <td><%= @vacancy_master.degree.try(:name) %></td>
-    </tr>
-    <tr>
-      <td><b>Qualification 2</b></td>
+   
+      <th>Qualification 2</th>
       <td><%= @vacancy_master.degree_1.try(:name) %></td>
     </tr>
     <tr>
-      <td><b>Qualification 3</b></td>
+      <th>Qualification 3</th>
        <td><%= @vacancy_master.degree_2.try(:name) %></td>
+       <td></td>
+      <td></td>
     </tr>
     <tr>
-      <td><b>Description</b></td>
-      <td><%= @vacancy_master.description %></td>
+      <th>Justification</th>
+      <td colspan="3"><%= @vacancy_master.justification %></td>
+      
     </tr>
-    <tr>
-      <td><b>Justification</b></td>
-      <td><%= @vacancy_master.justification %></td>
-    </tr>
+    <tr><th>Description</th>
+      <td colspan="3"><%= @vacancy_master.description %></td></tr>
   </tbody>
 </table>
     <div id="myModal" class="modal fade"></div>

@@ -10,4 +10,5 @@ class EmployeeAttendance < ActiveRecord::Base
     @attendance_status = EmployeeAttendance.where(present: present).pluck(:employee_id)
     EmployeeAttendance.where(employee_id: @joining_details - @attendances - @attendance_status)
   end
+
 end

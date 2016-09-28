@@ -7,18 +7,13 @@
       <div class="row">
         <div class="col-sm-3">
           <div class="form-group required">
-            <%= f.select :employee_id, all_active_employee_with_code, {include_blank: "Select Employee"} %>    
+             <%= f.text_field :employee_id,label:'Employee Name',value: @employee_resignation.employee.first_name+''+@employee_resignation.employee.middle_name+''+@employee_resignation.employee.last_name,readonly: true %>   
           </div>
         </div>
      
         <div class="col-sm-3">
           <div class="form-group required">
-            <div class="input-group">
-              <div class="input-group-addon">
-                <i class="fa fa-calendar"></i>
-              </div>
               <%= f.text_field :resignation_date,class: 'resignation',label:'Resignation Date'%>
-            </div>
           </div>
         </div>
 
@@ -27,6 +22,12 @@
            <%= f.select :leaving_reason_id, all_leaving_reason,{label: 'Reason of Leaving',include_blank: " Select Reason of Leaving"} %>
           </div>
         </div>
+
+        <div class="col-sm-3">
+          <div class="field">
+          <%= f.text_field :reporting_master_id, label:'Request To',value: @employee_resignation.reporting_master_id,readonly: true %>   
+          </div>
+        </div>   
 
       </div>
       <div class="row">
@@ -45,12 +46,7 @@
       <div class="col-sm-3">
        <label>Requested Releaving Date</label>
        <div class="field">
-        <div class="input-group">
-          <div class="input-group-addon">
-            <i class="fa fa-calendar"></i>
-          </div>
           <%= f.text_field :tentative_leaving_date,hide_label: true, class: 'tentative_leaving_date'%>
-        </div>
        </div>
       </div>
       <div class="col-sm-3">
@@ -64,12 +60,7 @@
       <div class="col-sm-3">
        <label>Exit Interview Date</label>
        <div class="field">
-        <div class="input-group">
-          <div class="input-group-addon">
-            <i class="fa fa-calendar"></i>
-          </div>
           <%= f.text_field :exit_interview_date,hide_label: true, class: 'exit_interview_date'%>
-        </div>
        </div>
       </div>
     

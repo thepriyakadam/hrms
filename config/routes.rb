@@ -55,8 +55,16 @@ Rails.application.routes.draw do
   resources :rewards_pals
   resources :rewards_allocations
   resources :reward_recognitions
-  resources :reward_types
-  resources :reward_owners
+  resources :reward_types do
+    collection do
+      get :is_confirm
+    end
+  end
+  resources :reward_owners do
+    collection do
+      get :is_confirm
+    end
+  end
   resources :recognition_types
 
   resources :investment_declarations
@@ -75,31 +83,58 @@ Rails.application.routes.draw do
   end
 
   resources :date_formats do
-    collection do 
+    collection do
     get :active
     post :activee
     end
-  end 
+  end
 
   resources :email_configs
   resources :weekoff_masters
-  resources :currency_masters
-  resources :illness_types
-  resources :performance_calendars
-  resources :performance_activities
-  
-  resources :years do 
+  resources :currency_masters do
+    collection do
+      get :is_confirm
+    end
+  end
+  resources :illness_types do
+    collection do
+      get :is_confirm
+    end
+  end
+  resources :performance_calendars do
+    collection do
+      get :is_confirm
+    end
+  end
+  resources :performance_activities do
+    collection do
+      get :is_confirm
+    end
+  end
+ 
+  resources :years do
+    collection do
+      get :is_confirm
+    end
   end
 
   resources :employee_daily_activities do
-    collection do 
+    collection do
       get :employee_details
       get :daily_show_activity_list
       get :activity_report
     end
-  end 
-  resources :project_masters
-  resources :attribute_masters
+  end
+  resources :project_masters do
+    collection do
+      get :is_confirm
+    end
+  end
+  resources :attribute_masters do
+    collection do
+      get :is_confirm
+    end
+  end
   resources :circulars
 
   resources :salary_map_saps
@@ -110,7 +145,11 @@ Rails.application.routes.draw do
       get :interview_reschedule_list
     end
   end
-  resources :interview_types
+  resources :interview_types do
+    collection do
+      get :is_confirm
+    end
+  end
   resources :employee_attendances do
     collection do
       post :department_wise_employee_list
@@ -134,19 +173,23 @@ Rails.application.routes.draw do
   resources :employee_task_to_dos
 
 
-  resources :leaving_reasons
+  resources :leaving_reasons do
+    collection do
+      get :is_confirm
+    end
+  end
   resources :training_records
   resources :induction_details do
-    collection do 
+    collection do
     get :all_induction_detail_list
     get :confirm
     get :print_induction_details
     get :update_date_modal
     post :update_date
     end
-  end 
+  end
   resources :induction_activities do
-    collection do 
+    collection do
     get :employee_list
     get :search_template
     get :find_assigned_induction_template
@@ -157,10 +200,14 @@ Rails.application.routes.draw do
     get :modal_induction_activity
     post :update_induction
     end
-  end 
+  end
   resources :induction_masters
   resources :induction_templates
-  resources :root_cause_masters
+  resources :root_cause_masters do
+    collection do
+      get :is_confirm
+    end
+  end
 
   resources :goal_ratings do
     collection do
@@ -201,6 +248,7 @@ Rails.application.routes.draw do
       get :increment_index
       post :all_employee_list
       post :print_employee_list
+      get :is_confirm
     end
   end
   #post 'goal_ratings/update_goal_set_modal'
@@ -266,21 +314,33 @@ Rails.application.routes.draw do
       get :appraisee_detail_for_print
       get :appraiser_detail_for_print
       get :reviewer_detail_for_print
-      
+     
     end
   end
-  resources :goal_perspectives
-  resources :ratings
-  resources :periods
+  resources :goal_perspectives do
+    collection do
+      get :is_confirm
+    end
+  end
+  resources :ratings do
+    collection do
+      get :is_confirm
+    end
+  end
+  resources :periods do
+    collection do
+      get :is_confirm
+    end
+  end
   resources :overall_ratings do
-    collection do 
+    collection do
       get :modal_self
       patch :update_modal_self
     end
   end
 
   resources :overall_ratings do
-    collection do 
+    collection do
       get :modal_self
       patch :update_modal_self
     end
@@ -292,11 +352,27 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :about_companies
-  resources :about_bosses
-  resources :question_masters
+  resources :about_companies do
+    collection do
+      get :is_confirm
+    end
+  end
+  resources :about_bosses do
+    collection do
+      get :is_confirm
+    end
+  end
+  resources :question_masters do
+    collection do
+      get :is_confirm
+    end
+  end
   resources :training_records
-  resources :leaving_reasons
+  resources :leaving_reasons do
+    collection do
+      get :is_confirm
+    end
+  end
   resources :training_approvals
   resources :training_topics
   resources :employee_promotions do
@@ -311,17 +387,41 @@ Rails.application.routes.draw do
     end
   end
   resources :accident_masters
-  resources :travel_expence_types
-  resources :travel_modes
+  resources :travel_expence_types do
+    collection do
+      get :is_confirm
+    end
+  end
+  resources :travel_modes do
+    collection do
+      get :is_confirm
+    end
+  end
   resources :interview_analyses do
     collection do
       post :print_interview_analysis_list
     end
   end
-  resources :interview_decisions
-  resources :interview_attributes
-  resources :interview_evalutions
-  resources :training_topic_masters
+  resources :interview_decisions do
+    collection do
+      get :is_confirm
+    end
+  end
+  resources :interview_attributes do
+    collection do
+      get :is_confirm
+    end
+  end
+  resources :interview_evalutions do
+    collection do
+      get :is_confirm
+    end
+  end
+  resources :training_topic_masters do
+    collection do
+      get :is_confirm
+    end
+  end
 
   resources :employee_resignations do
     collection do
@@ -343,7 +443,11 @@ Rails.application.routes.draw do
       get :edit_n_approve_modal
   end
 end
-  resources :travel_options
+  resources :travel_options do
+    collection do
+      get :is_confirm
+    end
+  end
   resources :training_plans  do
     collection do
       post :create_records
@@ -363,7 +467,7 @@ end
     collection do
       get :training_request_list
       get :training_request_confirmation
-      post :approve_training_request
+      # post :approve_training_request
       get :reject_training_request
       get :confirmation_list
       get :modal_approver_comment
@@ -374,10 +478,12 @@ end
       patch :create_dept_wise_request
       post :comment
       post :create_department_wise_training_request
+      post :approve_and_send_next
+      get :approve_training_request
     end
   end
   resources :selected_resumes  do
-    collection do 
+    collection do
     post :is_confirm
     get :new1
     get :all_resume_list
@@ -391,23 +497,36 @@ end
     get :part_resume
     post :is_confirm_resume
     end
-  end 
+  end
   resources :assigned_assets do
-    collection do 
+    collection do
     post :update_asset
     get :modal
     get :update_asset
     end
-  end 
-  resources :asset_types
+  end
+  resources :asset_types do
+    collection do
+      get :is_confirm
+    end
+  end
   resources :employee_nominations
-  resources :nomination_masters
-  resources :relation_masters
+  resources :nomination_masters do
+    collection do
+      get :is_confirm
+    end
+  end
+  resources :relation_masters do
+    collection do
+      get :is_confirm
+    end
+  end
   resources :particular_vacancy_requests
   resources :travel_expences
   resources :daily_bill_details do
-    collection do 
-    post :is_confirm
+    collection do
+    # post :is_confirm
+    get :is_confirm
     get :print_daily_bill
     get :daily_bill_history
     get :daily_bill_request_confirmation
@@ -417,13 +536,15 @@ end
     get :comment_modal
     post :update_comment
     get :reject_request
-    get :approve_and_send_next
+    post :approve_and_send_next
     get :approve_and_send_next_modal
     post :approve_n_send_next
+    get :travel_request_history_list
+    get :image_modal
     end
-  end 
+  end
   resources :travel_requests do
-    collection do 
+    collection do
       get :daily_bill
       get :travel_history
       get :travel_request_confirmation
@@ -436,11 +557,11 @@ end
       get :edit_and_send_next_modal
       post :edit_and_send_next_modal_submit
       get :edit_and_approve_modal
-      patch :edit_and_approve_modal_submit
+      post :edit_and_approve_modal_submit
       get :is_confirm
     end
   end
-  
+ 
 
   namespace :reports do
     get 'monthly_expences_details/new'
@@ -489,16 +610,16 @@ end
  
     get 'certification_details/new'
     post 'certification_details/certification_detail_report'
-  
+ 
     get 'skillset_details/new'
     post 'skillset_details/skillset_detail_report'
  
     get 'experience_details/new'
     post 'experience_details/experience_detail_report'
-  
+ 
     get 'qualification_details/new'
     post 'qualification_details/qualification_detail_report'
-  
+ 
     get 'bank_details/new'
     post 'bank_details/bank_detail_report'
 
@@ -516,10 +637,12 @@ end
     get 'salaries/new'
     post 'salaries/date_range_report'
     get 'salaries/download'
-    
+   
     post 'salaries/ctc_yearly_report'
     get 'salaries/ctc_yearly'
-    
+
+
+   
   #   get 'certificate/new'
   #   post 'certificate/certificate_print'
   end
@@ -618,6 +741,7 @@ end
       get :resignation_history
       get :show_resignation_detail
       get :employee_transfer
+      get :travel_request
     end
   end
 
@@ -704,7 +828,7 @@ end
       get :appraiser1_approval
       get :appraiser1_subordinate
     end
-     
+    
   end
   resources :employee_attributes do
     collection do
@@ -764,7 +888,7 @@ end
   match 'employee_documents/:id/download_pic/:id' => 'employee_documents#download_pic', :via => [:get], :as => :download_pic
   match 'investment_declarations/:id/investment_document/:id' => 'investment_declarations#investment_document', :via => [:get], :as => :investment_document
   match 'due_templates/:id/download_due_tempalte_documents/:id' => 'due_templates#download_due_tempalte_documents', :via => [:get], :as => :download_due_tempalte_documents
-  
+ 
   resources :leave_c_offs
   resources :overtime_month_records
 
@@ -781,7 +905,11 @@ end
       get :particular_employee_bonus
     end
   end
-  resources :bonus_masters
+  resources :bonus_masters do
+    collection do
+      get :is_confirm
+    end
+  end
   resources :overtime_salaries do
     collection do
       get :collect_basic
@@ -794,20 +922,48 @@ end
       post :destroy_overtime_salary
     end
   end
-  resources :overtime_masters
-  resources :reserved_categories
-  resources :pf_masters
-  resources :professional_taxes
+  resources :overtime_masters do
+    collection do
+      get :is_confirm
+    end
+  end
+  resources :reserved_categories do
+    collection do
+      get :is_confirm
+    end
+  end
+  resources :pf_masters do
+    collection do
+      get :is_confirm
+    end
+  end
+  resources :professional_taxes do
+    collection do
+      get :is_confirm
+    end
+  end
   resources :society_member_ships
-  resources :well_faires
+  resources :well_faires do
+    collection do
+      get :is_confirm
+    end
+  end
   resources :monthly_expences do
     collection do
       get :employees
       get :employee_expences
     end
   end
-  resources :expencess_types
-  resources :food_coupan_masters
+  resources :expencess_types do
+    collection do
+      get :is_confirm
+    end
+  end
+  resources :food_coupan_masters do
+    collection do
+      get :is_confirm
+    end
+  end
   resources :food_deductions do
     collection do
       get :calculate_food_deduction_amount
@@ -833,7 +989,11 @@ end
       get :second_reject
     end
   end
-  resources :advance_types
+  resources :advance_types do
+    collection do
+      get :is_confirm
+    end
+  end
   resources :employee_templates do
     member do
       get :deactivate
@@ -845,24 +1005,47 @@ end
       get :fresh
       get :assign_new_template
       post :create_fresh_template
+      get :revert_salary_template
+      get :template_salary
+      get :cancel_salary_template
     end
   end
-  resources :retention_moneys
+  resources :retention_moneys do
+    collection do
+      get :is_confirm
+    end
+  end
  
-  resources :payment_modes
+  resources :payment_modes do
+    collection do
+      get :is_confirm
+    end
+  end
   resources :excel_exports do
     collection do
       get :payroll
     end
   end
-  resources :esic_masters
+  resources :esic_masters do
+    collection do
+      get :is_confirm
+    end
+  end
   resources :excel_uploads do
     collection do
       post :load_excel
     end
   end
-  resources :employee_categories
-  resources :other_salary_components
+  resources :employee_categories do
+    collection do
+      get :is_confirm
+    end
+  end
+  resources :other_salary_components do
+    collection do
+      get :is_confirm
+    end
+  end
   resources :salaryslip_components do
     collection do
       post :xml_print
@@ -888,7 +1071,7 @@ end
       get :salary_slip_report
     end
   end
-  
+ 
   resources :pdf_salaries do
     collection do
       get :employee_list_pdf
@@ -900,9 +1083,10 @@ end
       post :print_salary_slip_cost_unitwise
       get :excel_report
       post :print_salary_slip_excel
+      get :dynamic_dropdown
     end
    end
-  
+ 
   resources :salary_slip_ledgers do
     collection do
       get :select_month_year_form
@@ -959,7 +1143,11 @@ end
     end
   end
 
-  resources :holidays
+  resources :holidays do
+    collection do
+      get :assign_to_employee
+    end
+  end
 
   resources :employee_salary_templates do
     collection do
@@ -974,13 +1162,22 @@ end
       get :find_employee_for_salary
       post :save_data
       post :is_confirm_employee_template
+      get :current_template
     end
   end
-  
+ 
   resources :salary_component_templates
   resources :salary_templates
-  resources :religions
-  resources :banks
+  resources :religions do
+    collection do
+      get :is_confirm
+    end
+  end
+  resources :banks do
+    collection do
+      get :is_confirm
+    end
+  end
   # resources :employee_annual_salaries do
   #   collection do
   #     get :created_employee_annual_salary
@@ -991,14 +1188,62 @@ end
   resources :salary_components do
     collection do
       post :create_employee_template
+      get :is_confirm
+    end
+  end
+  resources :universities do
+    collection do
+      get :is_confirm
+    end
+  end
+  resources :degree_streams do
+    collection do
+      get :is_confirm
+    end
+  end
+  resources :degree_types do
+    collection do
+      get :is_confirm
+    end
+  end
+  resources :districts
+  resources :states
+  resources :countries
+  resources :employee_designations do
+    collection do
+      get :is_confirm
+      get :employee_designation_list
+    end
+  end
+  resources :cost_centers do
+    collection do
+      get :is_confirm
+    end
+  end
+  resources :degrees do
+    collection do
+      get :is_confirm
     end
   end
   resources :universities
   resources :degree_streams
   resources :degree_types
-  resources :districts
-  resources :states
-  resources :countries
+  resources :districts do
+    collection do
+      get :list_district
+    end
+    end
+  resources :states do
+    collection do
+      get :list_state
+    end
+    end
+
+  resources :countries do
+    collection do
+      get :list_country
+    end
+    end
   resources :employee_designations
   resources :cost_centers
   resources :degrees
@@ -1024,6 +1269,7 @@ end
     collection do
       get :dynamic_form
       get :role_edit_list
+      get :is_confirm
     end
 
     member do
@@ -1043,7 +1289,7 @@ end
       get :is_confirm_leave
     end
   end
-  
+ 
   resources :leav_rejecteds
   resources :leav_approveds
   resources :employee_leav_requests do
@@ -1060,14 +1306,22 @@ end
     end
   end
   resources :company_leavs
-  resources :leav_categories
+  resources :leav_categories do
+    collection do
+      get :is_confirm
+    end
+  end
   resources :employee_physicals
   resources :joining_details do
     collection do
       get :search_by_joining_date
     end
   end
-  resources :employee_grades
+  resources :employee_grades do
+    collection do
+      get :is_confirm
+    end
+  end
   resources :awards do
     collection do
       get :add_award_field
@@ -1130,6 +1384,12 @@ end
       get :birthday_invitation
       get :employee_list_for_revert
       get :revert_employee
+      get :all_emp_list
+      post :update_status
+      get :ajax_employee_document_detail
+      get :ajax_new_employee_document
+      get :collect_company_location
+      get :collect_department
     end
     member do
       get :edit_manager
@@ -1138,17 +1398,39 @@ end
       get :transfer_form
     end
   end
-  resources :blood_groups
-  resources :nationalities
-  resources :employee_types
-  resources :department_types
+  resources :blood_groups do
+    collection do
+      get :is_confirm
+    end
+  end
+  resources :nationalities do
+    collection do
+      get :is_confirm
+    end
+  end
+  resources :employee_types do
+    collection do
+      get :is_confirm
+    end
+  end
+  resources :department_types do
+    collection do
+      get :is_confirm
+    end
+  end
   resources :company_types do
     collection do
       get :add_company_type
       post :create_company_type
+      get :is_confirm
     end
   end
-  resources :departments
+  resources :departments do
+    collection do
+      get :department_list_xls
+    end
+  end
+
   resources :company_locations
   resources :companies do
     collection do

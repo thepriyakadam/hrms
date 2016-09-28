@@ -1,7 +1,13 @@
 class CompanyPoliciesController < ApplicationController
   before_action :set_company_policy, only: [:edit, :update, :destroy]
 
-  def index
+  # def index
+  #   @company_policies = CompanyPolicy.all
+  #   @company_policy = CompanyPolicy.new
+  #   session[:active_tab] = 'company'
+  # end
+
+  def new
     @company_policies = CompanyPolicy.all
     @company_policy = CompanyPolicy.new
     session[:active_tab] = 'company'
@@ -36,6 +42,7 @@ class CompanyPoliciesController < ApplicationController
     @company_policies = CompanyPolicy.all
     @company_policy = CompanyPolicy.new
     redirect_to company_policies_path
+    flash[:notice] = 'Company Policy Updated Successfully' 
   end
 
 	 def destroy
@@ -43,12 +50,17 @@ class CompanyPoliciesController < ApplicationController
 	    @company_policies = CompanyPolicy.all
 	  end
    
-   def download_docs
+  def download_docs
     @company_policy = CompanyPolicy.find(params[:id])
+    if File.exist?(@company_policy.document.path)
     send_file @company_policy.document.path,
               filename: @company_policy.document,
               type: @company_policy.document_content_type,
               disposition: 'attachment'
+    else
+    flash[:alert] = "No file found Please contact to Admin!"
+    redirect_to root_url
+    end
   end
 
 	private

@@ -1,6 +1,9 @@
+require 'query_report/helper'  # need to require the helper
 class DepartmentsController < ApplicationController
   before_action :set_department, only: [:show, :edit, :update, :destroy]
   load_and_authorize_resource
+  include QueryReport::Helper  # need to include it
+
 
   def new
     @department = Department.new
@@ -36,6 +39,14 @@ class DepartmentsController < ApplicationController
   def destroy
     @department.destroy
     @departments = Department.all
+  end
+
+  def department_list_xls
+    reporter(Department.filter_records(current_user), template_class: PdfReportTemplate) do
+      column(:Department_ID, sortable: true) { |department| department.id }
+      column(:Location_ID, sortable: true) { |department| department.company_location_id }
+      column(:Department_Name, sortable: true) { |department| department.name }
+    end
   end
 
   private

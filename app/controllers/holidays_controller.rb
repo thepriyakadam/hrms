@@ -43,6 +43,15 @@ class HolidaysController < ApplicationController
     @holidays = Holiday.all
   end
 
+  def assign_to_employee
+    holiday = Holiday.find(params[:format])
+    holiday.update(is_send: true)
+    Employee.where(status: 'Active').each do |e|
+      EmployeeAttendance.create(employee_id: e.id, day: holiday.holiday_date, present: "H", department_id: e.department_id, is_confirm: false, count: 1)
+    end
+    @holidays = Holiday.all
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -52,6 +61,6 @@ class HolidaysController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def holiday_params
-    params.require(:holiday).permit(:code, :name, :description, :holiday_date)
+    params.require(:holiday).permit(:is_taken,:code, :name, :description, :holiday_date)
   end
 end

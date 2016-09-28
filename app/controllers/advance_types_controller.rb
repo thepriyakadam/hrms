@@ -43,6 +43,12 @@ class AdvanceTypesController < ApplicationController
     @advance_types = AdvanceType.all
   end
 
+  def is_confirm
+    @advance_type = AdvanceType.find(params[:advance_type])
+    AdvanceType.find(@advance_type.id).update(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to new_advance_type_path
+  end
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -52,6 +58,6 @@ class AdvanceTypesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def advance_type_params
-    params.require(:advance_type).permit(:code, :name, :description)
+    params.require(:advance_type).permit(:is_confirm,:code, :name, :description)
   end
 end

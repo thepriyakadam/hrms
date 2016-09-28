@@ -52,8 +52,9 @@ class ReportingMastersController < ApplicationController
   def show_employee
     @reporting_master1 = params[:employee_id_1]
     #@employees = Employee.where("manager_id = ? OR manager_2_id = ?",@reporting_master1,@reporting_master1 )
-    @employee_rms = Employee.where(manager_id: @reporting_master1)
-    @employee_rm2s = Employee.where(manager_2_id: @reporting_master1)
+    @rep_mas = ReportingMaster.find(@reporting_master1)
+    @employee_rms = Employee.where(manager_id: @rep_mas.employee_id)
+    @employee_rm2s = Employee.where(manager_2_id: @rep_mas.employee_id)
   end
 
   def update_manager
@@ -75,9 +76,9 @@ class ReportingMastersController < ApplicationController
           ManagerHistory.create(employee_id: emp.id,manager_id: @employee.manager_id,manager_2_id: @employee.manager_2_id,effective_from: @effec_date.to_date)
 
           @manager_history = ManagerHistory.where("employee_id = ? AND manager_id = ? AND manager_2_id = ?", emp.id,@employee.manager_id,@employee.manager_2_id)
+          flash[:notice] = "Updated Successfully"
           end
         end
-    flash[:notice] = "Updated Successfully"
     redirect_to update_reporting_manager_reporting_masters_path
   end
   private
@@ -89,6 +90,6 @@ class ReportingMastersController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def reporting_master_params
-    params.require(:reporting_master).permit(:code, :name, :description, :employee_id)
+    params.require(:reporting_master).permit(:is_expences, :is_training, :is_recruitment, :is_resignation, :is_transfer, :is_promotion, :is_active, :code, :name, :description, :employee_id)
   end
 end

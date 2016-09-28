@@ -4,16 +4,11 @@
   </div><!-- /.box-header -->
  <div class="box-body">
    <table id="example2" class="table table-bordered table-hover table-condensed">
-   <tr> 
-      <th colspan="2"></th>
-      <th colspan="2"></th>
-    </tr>
-  
   <tr>
   <th><strong>Vacancy No.</strong></th>
   <td><%= @vacancy_master.id %></td>
    <th><strong>Request To</strong></th>
-  <td><%= @vacancy_master.reporting_master_id %></td>
+  <td><%= @employee.try(:first_name) %> <%= @employee.try(:middle_name) %> <%= @employee.try(:last_name) %> </td>
   </tr>
 
   <tr>
@@ -78,7 +73,7 @@
 </tr>
 
 </table>
-<%= link_to 'Edit', edit_vacancy_master_path(@vacancy_master),class: 'btn btn-success btn-sm fa fa-edit' %> |
-<%= link_to 'Back', approve_vacancy_list_vacancy_masters_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+<!--<= link_to 'Edit', edit_vacancy_master_path(@vacancy_master),class: 'btn btn-success btn-sm fa fa-edit' %> -->
+<%= link_to 'Back', vacancy_masters_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
 </div>
 </div>

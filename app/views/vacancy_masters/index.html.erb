@@ -1,6 +1,6 @@
 <div class="box">
   <div class="box-header">
-    <h3 class="box-title">Cancel Request</h3>
+    <h3 class="box-title">Vacancy Request List</h3>
     <div class="pull-right">
       <%= link_to "Create New Vacancy", new_vacancy_master_path, class: 'btn btn-sm btn-primary' %> 
     </div>
@@ -15,9 +15,9 @@
       <th>Job Title</th>
       <th>Department</th>
       <th>Qualification</th>
-      <th>Total No. Of Position</th>
-      <th>Total No. Of Approved Position</th>
-      <th>Cancel Request</th>
+      <th>Total Position</th>
+<!--   <th>Total No. Of Approved Position</th>
+ -->  <th>Current Status</th>
       <th>Action</th>
     </tr>
   </thead>
@@ -28,7 +28,7 @@
         <td><%= vacancy_master.company_location.try(:name) %> - <%= vacancy_master.department.try(:name) %></td>
         <td><%= vacancy_master.degree.try(:name) %></td>
         <td><%= vacancy_master.no_of_position %></td>
-         <td><%= vacancy_master.particular_vacancy_requests.where(status: "Approved").count %></td>
+         <!-- <td><= vacancy_master.particular_vacancy_requests.where(status: "Approved").count %></td> -->
         <td>
             <% if vacancy_master.current_status == "Pending" %>
               <%= link_to '', cancel_vacancy_request_vacancy_masters_path(vacancy_master), data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-xs fa fa-trash' %>

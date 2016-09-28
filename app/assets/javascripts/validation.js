@@ -295,45 +295,7 @@ $("#company_type").validate({
     }
    });
 
-$("#department").validate({
-    rules: {
-      "department[name]":{
-        required: true
-      },
-      "department[email]":{
-        loginRegex: true,
-        required: true
-      },
-      "department[pin_code]":{
-        maxlength: 6,
-        required: true,
-        numbersOnly: true
-      },
-      "department[contact_no]":{
-        maxlength: 13
-      }
-    },
-    messages: {
-      "department[name]":{
-        required: "Please specify Department Name "
-      },
-      "department[email]":{
-        required: "Please Specify Email ID"
-      },
-     "department[pin_code]":{
-       required: "Please Enter Pincode Details",
-       maxlength: "Pincode Details allows max 6 digits"
-      },
-     "department[contact_no]":{
-       required: "Please Specify Contact No",
-       maxlength: "Enter the Correct contact number"
-      }  
-    },
-    errorPlacement: function(error, element) {
-     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
-     error.insertAfter(element.parent(element));
-    }
-   });
+
 
 $("#department_type").validate({
     rules: {
@@ -396,9 +358,21 @@ $("#employee").validate({
         maxlength: 13,
         mobileNo: true
       },
+      "employee[status]":{
+        required: true
+      },
       "employee[email]":{
         loginRegex: true
       },
+      "employee[company_id]":{
+        required: true
+      },
+      "employee[company_location_id]":{
+        required: true
+      },
+      "employee[department_id]":{
+        required: true
+      }
     },
     messages: {
       "employee[manual_employee_code]":{
@@ -427,13 +401,13 @@ $("#employee").validate({
       "employee[country_id]":{
         required: "Please Specify Country"
       },
-      "company[state_id]":{
+      "employee[state_id]":{
         required: "Please Specify State"
       },
       "employee[city]":{
         maxlength: "Enter the City upto 30 char max"
       },
-      "company[district_id]":{
+      "employee[district_id]":{
         required: "Please Specify District"
       },
       "employee[pin_code]":{
@@ -442,14 +416,20 @@ $("#employee").validate({
       "employee[contact_no]":{
         maxlength: "Enter the Correct contact number"
       },
+      "employee[status]":{
+        required: "Please Specify Status"
+      },
       "employee[email]":{
         required: "Please Specify Email ID"
       },
-      "employee[date_of_birth]":{
-        maxlength: "Date Of Birth can't exceed max limit"
+      "employee[company_id]":{
+        required: "Please Specify Company"
       },
-      "employee[status]":{
-        maxlength: "Status can't exceed max limit"
+      "employee[company_location_id]":{
+        required: "Please Specify Company Location"
+      },
+      "employee[department_id]":{
+        required: "Please Specify Department"
       }
     },
     errorPlacement: function(error, element) {
@@ -511,50 +491,6 @@ $("#employee_physical").validate({
     }
    });
 
-$("#experince").validate({
-    rules: {
-      "experince[employee_id]":{
-        required: true
-      },
-      "experince[no_of_year_experince]":{
-        required: true,
-        maxlength: 4
-      },
-      "experince[company_name]":{
-        required: true
-      },
-      "experince[designation]":{
-        required: true
-      },
-      "experince[ctc]":{
-        required: true,
-        maxlength: 10
-      }
-    },
-    messages: {
-      "experince[employee_id]":{
-        required: "Please specify Employee ID"
-      },
-      "experince[no_of_year_experince]":{
-        required: "Please specify No Of Year Of Experiences",
-        maxlength: "No Of Year Of EXperiencesallows upto 4 integers"
-      },
-      "experince[company_name]":{
-        required: "Please specify Company Name"
-      },
-       "experince[designation]":{
-        required: "Please specify Designation Details"
-      },
-      "experince[ctc]":{
-        required: "Please specify CTC Details",
-        maxlength: "CTC allows upto 10 digit"
-      }
-    },
-    errorPlacement: function(error, element) {
-     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
-     error.insertAfter(element.parent(element));
-    }
-   });
 
 $("#family").validate({
     rules: {
@@ -709,63 +645,8 @@ $("#employee_leav_request").validate({
     }
    });
 
-$("#skillset").validate({
-    rules: {
-      "skillset[name]":{
-        required: true,
-        maxlength: 30,
-        Name:true
-      },
-      "skillset[skill_level]":{
-        required: true
-      }
-    },
-    messages: {
-      "skillset[name]":{
-        required: "Please specify Employee Name",
-        maxlength: "Employee Name allows upto 30 characters"
-      },
-      "skillset[skill_level]":{
-        required: "Please specify Skill Level"
-      }
-    },
-    errorPlacement: function(error, element) {
-     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
-     error.insertAfter(element.parent(element));
-    }
-   });
 
-$("#award").validate({
-    rules: {
-      "award[award_name]":{
-        maxlength: 30,
-        AwardName:true
-      },
-      "award[year]":{
-        maxlength: 4,
-        numbersOnly:true
-      },
-      "award[award_from]":{
-        maxlength: 30,
-        AwardFrom:true
-      }
-    },
-    messages: {
-      "award[award_name]":{
-        maxlength: "Awards Name allows upto 30 characters"
-      },
-      "award[year]":{
-        maxlength: "Please input correct year format"
-      },
-      "award[award_from]":{
-        maxlength: "Awards from allows upto 30 characters"
-      }
-    },
-    errorPlacement: function(error, element) {
-     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
-     error.insertAfter(element.parent(element));
-    }
-   });
+
 
 $("#certification").validate({
     rules: {/*qualification_id*/

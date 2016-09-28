@@ -44,6 +44,13 @@ class EmployeeGradesController < ApplicationController
     @employee_grades = EmployeeGrade.all
   end
 
+  def is_confirm
+    @employee_grade = EmployeeGrade.find(params[:employee_grade])
+    EmployeeGrade.find(@employee_grade.id).update(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to new_employee_grade_path
+  end
+  
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -53,6 +60,6 @@ class EmployeeGradesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def employee_grade_params
-    params.require(:employee_grade).permit(:name)
+    params.require(:employee_grade).permit(:is_confirm,:name)
   end
 end

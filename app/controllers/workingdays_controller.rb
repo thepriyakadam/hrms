@@ -1,30 +1,22 @@
 class WorkingdaysController < ApplicationController
   before_action :set_workingday, only: [:show, :edit, :update, :destroy]
 
-  # GET /workingdays
-  # GET /workingdays.json
   def index
     @workingdays = Workingday.group(:year)
     session[:active_tab] ="payroll"
     session[:active_tab1] ="salaryprocess"
   end
 
-  # GET /workingdays/1
-  # GET /workingdays/1.json
   def show
   end
 
-  # GET /workingdays/new
   def new
     @workingday = Workingday.new
   end
 
-  # GET /workingdays/1/edit
   def edit
   end
 
-  # POST /workingdays
-  # POST /workingdays.json
   def create
     @workingday = Workingday.new(workingday_params)
     respond_to do |format|
@@ -38,8 +30,6 @@ class WorkingdaysController < ApplicationController
     end
   end
 
-  # PATCH/PUT /workingdays/1
-  # PATCH/PUT /workingdays/1.json
   def update
     respond_to do |format|
       if @workingday.update(workingday_params)
@@ -52,8 +42,6 @@ class WorkingdaysController < ApplicationController
     end
   end
 
-  # DELETE /workingdays/1
-  # DELETE /workingdays/1.json
   def destroy
     @workingday.destroy
     respond_to do |format|
@@ -63,6 +51,7 @@ class WorkingdaysController < ApplicationController
   end
 
   def employees
+    @workingday = Workingday.where(year: params[:year],month_name: params[:month])
     if current_user.class == Group
       @workingdays = Workingday.where(year: params[:year], month_name: params[:month])
     else
@@ -80,66 +69,37 @@ class WorkingdaysController < ApplicationController
   def search_month_year
   end
 
-  def generate_workingday
-    @date = params[:date].to_date
-    @month = @date.strftime("%B")
-    @year = @date.strftime("%Y")
-    @existing = Workingday.where(month_name: @month, year: @year).pluck(:employee_id)
-    @all_employees = Employee.all.pluck(:id)
-    @employees = @all_employees - @existing
+  def search_month_year_xls
+  end
 
-    @workingdays = []
-    @employees.each do |ee|
-      workingday = Workingday.new
-      e = Employee.find(ee)
-      if e.joining_detail.nil?
-      else
-        if e.joining_detail.employee_category.nil?
-        else
-          if e.joining_detail.employee_category.name == 'Worker'
-            workingday.day_in_month = 26
-          else
-            workingday.day_in_month = @date.end_of_month.day
-          end
-        end
-      end
-      workingday.total_leave = ParticularLeaveRecord.where(leave_date: @date.beginning_of_month..@date.end_of_month, employee_id: e.id).count
-      workingday.holiday_in_month = Holiday.where(holiday_date: @date.beginning_of_month..@date.end_of_month).count
-      workingday.week_off_day = WeekoffMaster.day(@date)
-      workingday.absent_day = workingday.total_leave.to_f
-      workingday.present_day = workingday.day_in_month.to_i - workingday.absent_day
-      workingday.employee_id = e.id
-      lc = LeavCategory.where(is_payble: false).pluck(:id)
-      workingday.lwp_leave = ParticularLeaveRecord.where(leave_date: @date.beginning_of_month..@date.end_of_month, employee_id: e.id, leav_category_id: lc).count
-      workingday.payable_day = workingday.day_in_month.to_i - workingday.lwp_leave.to_f
-      @workingdays << workingday
-    end
+  def generate_workingday
+    @date, @is_stop = params[:date].to_date, params[:stop]
+    @month, @year = @date.strftime("%B"), @date.strftime("%Y")
+    @existing = Workingday.where(month_name: @month, year: @year).pluck(:employee_id)
+    @all_employees = Employee.where(status: "Active").pluck(:id)  
+    @employee_resignations = EmployeeResignation.stop_payment_request(@is_stop)
+    @employees = @all_employees - (@existing + @employee_resignations)
+    @workingdays = Workingday.collect_attendance(@date, @employees)
+  end
+
+  def generate_workingday_xls
+    @date, @is_stop = params[:date].to_date, params[:stop]
+    @month, @year = @date.strftime("%B"), @date.strftime("%Y")
+    @existing = Workingday.where(month_name: @month, year: @year).pluck(:employee_id)
+    @all_employees = Employee.where(status: "Active").pluck(:id)    
+    @employee_resignations = EmployeeResignation.stop_payment_request(@is_stop)
+    @employees = @all_employees - (@existing + @employee_resignations)
+    @workingdays = Workingday.collect_attendance(@date, @employees)
   end
 
   def print_working_day
-   @date = params[:date].to_date
-    @month = @date.strftime("%B")
-    @year = @date.strftime("%Y")
-    @existing = Workingday.where(month_name: @month, year: @year).pluck(:employee_id)
-    @all_employees = Employee.all.pluck(:id)
-    @employees = @all_employees - @existing
-
+    @date = params[:date].to_date
+    @employees = params[:ids]
     @workingdays = []
     @employees.each do |ee|
       workingday = Workingday.new
       e = Employee.find(ee)
-      if e.joining_detail.nil?
-
-      else
-        if e.joining_detail.employee_category.nil?
-        else
-          if e.joining_detail.employee_category.name == 'Worker'
-            workingday.day_in_month = 26
-          else
-            workingday.day_in_month = @date.end_of_month.day
-          end
-        end
-      end
+      workingday.day_in_month = workingday.create_day_in_month(e,@date)
       #workingday.present_day = Attendance.where(attendance_date: @date.beginning_of_month..@date.end_of_month, employee_id: e.id).count
       workingday.total_leave = ParticularLeaveRecord.where(leave_date: @date.beginning_of_month..@date.end_of_month, employee_id: e.id).count
       workingday.holiday_in_month = Holiday.where(holiday_date: @date.beginning_of_month..@date.end_of_month).count
@@ -152,29 +112,13 @@ class WorkingdaysController < ApplicationController
   end
 
   def create_working_day
-   @date = params[:date].to_date
-    @month = @date.strftime("%B")
-    @year = @date.strftime("%Y")
-    @existing = Workingday.where(month_name: @month, year: @year).pluck(:employee_id)
-    @all_employees = Employee.all.pluck(:id)
-    @employees = @all_employees - @existing
-
+    @date = params[:date].to_date
+    @employees = params[:ids]
     @workingdays = []
     @employees.each do |ee|
       workingday = Workingday.new
       e = Employee.find(ee)
-      if e.joining_detail.nil?
-
-      else
-        if e.joining_detail.employee_category.nil?
-        else
-          if e.joining_detail.employee_category.name == 'Worker'
-            workingday.day_in_month = 26
-          else
-            workingday.day_in_month = @date.end_of_month.day
-          end
-        end
-      end
+      workingday.day_in_month = workingday.create_day_in_month(e,@date)
       #workingday.present_day = Attendance.where(attendance_date: @date.beginning_of_month..@date.end_of_month, employee_id: e.id).count
       workingday.total_leave = ParticularLeaveRecord.where(leave_date: @date.beginning_of_month..@date.end_of_month, employee_id: e.id).count
       workingday.holiday_in_month = Holiday.where(holiday_date: @date.beginning_of_month..@date.end_of_month).count
@@ -190,6 +134,28 @@ class WorkingdaysController < ApplicationController
     redirect_to search_month_year_workingdays_path
   end
 
+
+
+   def is_confirm_workingday
+
+    # @employee = Employee.find(params[:id])
+     @workingday_ids = params[:workingday_ids]
+    if @workingday_ids.nil?
+      flash[:alert] = "Please Select the Checkbox"
+      redirect_to workingdays_path
+      # redirect_to show_employee_salary_template_employee_salary_templates_path(id: @employee.id)
+    else
+      @workingday_ids.each do |did|
+      @workingday = Workingday.find(did)
+      @workingday.update(is_confirm: true) 
+      # InterviewScheduleMailer.sample_email_to_interviewer(@interview_schedule).deliver_now
+      flash[:notice] = "Confirmed Successfully" 
+    end 
+    redirect_to workingdays_path
+    # redirect_to show_employee_salary_template_employee_salary_templates_path(id: @employee.id)
+  end
+ end
+ 
   private
 
   # Use callbacks to share common setup or constraints between actions.

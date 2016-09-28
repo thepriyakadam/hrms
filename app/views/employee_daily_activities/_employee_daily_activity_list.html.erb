@@ -17,7 +17,6 @@
         <tbody>
           <% @employee_daily_activities.each do |employee_daily_activity| %>
             <tr>
-
               <td><%= employee_daily_activity.day %></td>
               <td><%= full_name(employee_daily_activity.employee)%></td>
               <td><%= employee_daily_activity.project_master.try(:name) %></td>
@@ -27,6 +26,7 @@
           <% end %>
         </tbody>
       </table>
+       <%= link_to 'Back', employee_details_employee_daily_activities_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
       </div>
 </div>
 

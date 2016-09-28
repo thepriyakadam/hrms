@@ -1,6 +1,7 @@
+require 'query_report/helper'  # need to require the helper
 class EmployeeDesignationsController < ApplicationController
   before_action :set_employee_designation, only: [:show, :edit, :update, :destroy]
-
+  include QueryReport::Helper  # need to include it
   def new
     @employee_designation = EmployeeDesignation.new
     @employee_designations = EmployeeDesignation.all
@@ -43,6 +44,22 @@ class EmployeeDesignationsController < ApplicationController
     @employee_designations = EmployeeDesignation.all
   end
 
+  def is_confirm
+    @employee_designation = EmployeeDesignation.find(params[:employee_designation])
+    EmployeeDesignation.find(@employee_designation.id).update(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to new_employee_designation_path
+  end
+
+  def employee_designation_list
+    reporter(EmployeeDesignation.filter_records(current_user), template_class: PdfReportTemplate) do
+      column(:ID, sortable: true) { |employee_designation| employee_designation.try(:id) }
+      column(:Name, sortable: true) { |employee_designation| employee_designation.name }
+    end
+   
+  end
+
+  
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -52,6 +69,6 @@ class EmployeeDesignationsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def employee_designation_params
-    params.require(:employee_designation).permit(:name)
+    params.require(:employee_designation).permit(:is_confirm,:name)
   end
 end

@@ -9,7 +9,7 @@
       <div class="row">
 
        <div class="col-sm-3">
-          <div class="form-group required">
+          <div class="field">
              <%= f.text_field :other_organization,label: 'Organization',value: current_user.employee.company_location.company.description%>
           </div>
         </div>
@@ -90,7 +90,7 @@
         </div>  
 
         <div class="col-sm-3">
-          <label>Educational Qualification 1</label>
+          <label>Qualification 1</label>
           <div class="form-group required">
             <div class="input-group">
               <div class="input-group-addon">
@@ -102,7 +102,7 @@
         </div>
 
         <div class="col-sm-3">
-          <label>Educational Qualification 2</label>
+          <label>Qualification 2</label>
           <div class="form-group required">
             <div class="input-group">
               <div class="input-group-addon">
@@ -117,7 +117,7 @@
       <div class="row">
 
         <div class="col-sm-3">
-          <label>Educational Qualification 3</label>
+          <label>Qualification 3</label>
           <div class="form-group required">
             <div class="input-group">
               <div class="input-group-addon">
@@ -132,7 +132,7 @@
         <div class="col-sm-3">
           <div class="form-group required">
        <!--  <label>Vacancy Approval</label> -->
-          <%= f.select :reporting_master_id,all_reporting_master_list,{label: 'Vacancy Approval',include_blank: " Select Reporting Person"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
+          <%= f.select :reporting_master_id,all_recruitment_reporting_master_list,{label: 'Vacancy Approval',include_blank: " Select Reporting Person"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
             </div>
         </div>
        </div>  

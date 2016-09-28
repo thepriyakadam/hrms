@@ -1,0 +1,58 @@
+<table id="example2" class="table table-bordered table-hover table-condensed">
+
+    <tr>
+      <th><strong>Traveling Request ID</strong></th>
+      <td><%= @travel_request.id %></td>
+
+      <th><strong>Application Date</strong></th>
+      <td><%= @travel_request.application_date %></td>
+    </tr>
+
+    <tr>
+      <th><strong>ID</strong></th>
+      <td><%= @travel_request.employee.try(:manual_employee_code) %></td>
+
+      <th><strong>Employee Name</strong></th>
+      <td><%= @travel_request.employee.try(:first_name) %> <%= @travel_request.employee.try(:middle_name) %> <%= @travel_request.employee.try(:last_name) %></td>
+    </tr>
+
+    <tr>
+      <th><strong>Department</strong></th>
+      <td><%= @travel_request.employee.company_location.try(:name) %> - <%= @travel_request.employee.department.try(:name) %></td>
+
+     <!--  <th><strong>Request To</strong></th>
+      <td><= @employee.try(:first_name) %> <= @employee.try(:middle_name) %> <= @employee.try(:last_name) %></td> -->
+      <th><strong>Traveling Option</strong></th>
+      <td><%= @travel_request.travel_option.try(:name) %></td>
+    </tr>
+
+    <tr>
+      <th><strong>Travel Mode</strong></th>
+      <td><%= @travel_request.travel_mode.try(:name) %></td>
+
+      <th><strong>Place</strong></th>
+      <td><%= @travel_request.place %></td>
+    </tr>
+
+    <tr>
+      <th><strong>From Date</strong></th>
+      <td><%= @travel_request.traveling_date %></td>
+
+      <th><strong>To Date</strong></th>
+      <td><%= @travel_request.to %></td>
+    </tr>
+
+    <tr>
+      <th><strong>Day</strong></th>
+      <td><%= @travel_request.day %></td>
+
+      <th><strong>Advance</strong></th>
+      <td><%= @travel_request.total_advance %></td>  
+    </tr>
+
+      <tr>
+      <th><strong>Tour Purpose</strong></th>
+      <td colspan="3"><%= @travel_request.tour_purpose %></td>
+    </tr>
+
+  </table>

@@ -29,9 +29,35 @@
 
     <div class="col-sm-3">
       <div class="actions">
-        <%= f.submit "Create Due Template ",:class => class_name,  data: { disable_with: data_info } %>
+        <%= f.submit "Create No Dues Template ",:class => class_name,  data: { disable_with: data_info } %>
       </div>
     </div>
 
   </div>
 <% end %>
+
+<script>
+$("#due_template").validate({
+    rules: {
+      "due_template[code]":{
+        required: true,
+      },
+      "due_template[name]":{
+        required: true,
+      }
+    },
+    messages: {
+      "due_template[code]":{
+        required: "Please specify Code",
+      },
+      "due_template[name]":{
+        required: "Please specify Name",
+      } 
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>
+

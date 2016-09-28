@@ -1,0 +1,67 @@
+<div class="row">
+  <div class="col-sm-6">
+    <table  id="example1" class="table table-bordered table-hover table-condensed">
+      <thead>
+      <tr><th colspan="4"><center>First Reporting Employee</center></th></tr>
+        <tr>
+          <th><input type="checkbox" id="selectAll" value="selectAll"></th>
+          <th>ID</th>
+          <th>Employee Name</th>
+          <th>Reporting Manager</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @employee_rms.each do |employee| %>
+          <tr>
+            <td><%= check_box_tag "employee_ids[]", employee.id %></td>
+            <td><%= employee.manual_employee_code %></td>
+            <td><%= full_name(employee) %></td>
+            <td><%= employee.manager.try(:first_name) %> <%= employee.manager.try(:middle_name) %> <%= employee.manager.try(:last_name) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="col-sm-6">
+    <table  id="example1" class="table table-bordered table-hover table-condensed">
+      <thead>
+      <tr><th colspan="4"><center>Second Reporting Employee</center></th></tr>
+        <tr>
+          <th><input type="checkbox" id="selectAll" value="selectAll"></th>
+          <th>ID</th>
+          <th>Employee Name</th>
+          <th>Reporting Manager 2</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @employee_rm2s.each do |employee| %>
+          <tr>
+            <td><%= check_box_tag "employee_ids[]", employee.id %></td>
+            <td><%= employee.manual_employee_code %></td>
+            <td><%= full_name(employee) %></td>
+            <td><%= employee.manager_2.try(:first_name) %> <%= employee.manager_2.try(:middle_name) %> <%= employee.manager_2.try(:last_name) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+    <script type="text/javascript">
+      $(function () {
+        $('#selectAll').click(function() {
+          if (this.checked) {
+            $(':checkbox').each(function() {
+              this.checked = true;                       
+            });
+          } 
+          else {
+            $(':checkbox').each(function() {
+              this.checked = false;                        
+            });
+          }
+
+        });
+      });
+    </script>

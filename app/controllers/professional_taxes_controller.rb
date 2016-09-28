@@ -44,6 +44,12 @@ class ProfessionalTaxesController < ApplicationController
     @professional_taxes = ProfessionalTax.all
   end
 
+  def is_confirm
+    @professional_tax = ProfessionalTax.find(params[:professional_tax])
+    ProfessionalTax.find(@professional_tax.id).update(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to new_professional_tax_path
+  end
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -53,6 +59,6 @@ class ProfessionalTaxesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def professional_tax_params
-    params.require(:professional_tax).permit(:is_pt, :min_salary, :max_salary, :pt_amount, :for_months, :march_month)
+    params.require(:professional_tax).permit(:is_confirm,:is_pt, :min_salary, :max_salary, :pt_amount, :for_months, :march_month)
   end
 end

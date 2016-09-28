@@ -7,5 +7,6 @@ class EmployeeTransfer < ActiveRecord::Base
   belongs_to :company_location
   belongs_to :department
   validates :reporting_master_id,presence:true
+  validates :employee_id,presence:true
   # validates :departemnt,presence:true
 end

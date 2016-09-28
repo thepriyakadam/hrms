@@ -2,9 +2,8 @@ class EmployeeLeavBalance < ActiveRecord::Base
   belongs_to :employee
   belongs_to :leav_category
   belongs_to :company_leav
-  validates :employee_id, uniqueness: { scope: [:leav_category_id] }
+  #validates :employee_id, uniqueness: { scope: [:leav_category_id] }
   validates :no_of_leave, presence: true
-  validates :expiry_date, presence: true
 
   def self.count_leave(month)
     case month
@@ -34,4 +33,24 @@ class EmployeeLeavBalance < ActiveRecord::Base
       4
     end
   end
+
+  def self.filter_records(current_user)
+    @employee_leav_balances =  if current_user.class == Group
+    EmployeeLeavBalance.all
+    elsif current_user.class == Member
+    if current_user.role.name == "Company"
+      @employees = Employee.where(company_id: current_user.company_id)
+      EmployeeLeavBalance.where(employee_id: @employees)
+    elsif current_user.role.name == "CompanyLocation"
+      @employees = Employee.where(company_location_id: current_user.company_location_id)
+      EmployeeLeavBalance.where(employee_id: @employees)  
+    elsif current_user.role.name == "Department"
+      @employees = Employee.where(department_id: current_user.department_id)
+      EmployeeLeavBalance.where(employee_id: @employees)
+    elsif current_user.role.name == "Employee"
+      EmployeeLeavBalance.where(employee_id: current_user.employee_id)
+    end
+  end
+  end
+  
 end

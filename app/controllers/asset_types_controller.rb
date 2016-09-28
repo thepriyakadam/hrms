@@ -47,6 +47,13 @@ class AssetTypesController < ApplicationController
     redirect_to new_asset_type_path
   end
 
+  def is_confirm
+    @asset_type = AssetType.find(params[:asset_type])
+    AssetType.find(@asset_type.id).update(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to new_asset_type_path
+  end
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_asset_type
@@ -55,6 +62,6 @@ class AssetTypesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def asset_type_params
-      params.require(:asset_type).permit(:code, :name, :description)
+      params.require(:asset_type).permit(:is_confirm,:code, :name, :description)
     end
 end

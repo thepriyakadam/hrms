@@ -3,10 +3,10 @@
     <tr>
     	<th>Reward type</th>
       <th>Department</th>
-      <th>Reporting Manager ID</th>
+      <th>Approval</th>
       <th>From</th>
       <th>To</th>
-      <th>Allocated qty</th>
+      <th>Allocated Quantity</th>
       <th>Cost</th>
       <th>Action</th>
     </tr>
@@ -17,7 +17,7 @@
       <tr>
         <td><%= rewards_allocation.reward_type.try(:name) %></td>
         <td><%= rewards_allocation.department.try(:name) %></td>
-        <td><%= rewards_allocation.reporting_master_id %></td>
+        <td><%= full_name(rewards_allocation.reporting_master.employee) %></td>
         <td><%= rewards_allocation.from %></td>
         <td><%= rewards_allocation.to %></td>
         <td><%= rewards_allocation.allocated_qty %></td>

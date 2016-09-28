@@ -12,13 +12,17 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery.purr
+//= require best_in_place.purr
+//= require best_in_place
+//= require jquery-ui
+//= require best_in_place.jquery-ui
 //= require jquery.validate
 //= require jquery.validate.additional-methods
 //= require jquery-ui/datepicker
 //= require chartkick
 
 //= require_tree .
-
 
 // $(function () {
 //   setTimeout(updateComments, 10000);
@@ -28,6 +32,11 @@
 //   $.getScript('/employee_leav_requests/approved_or_rejected_leave_request');
 //   setTimeout(updateComments, 10000);
 // }
+
+$(document).ready(function() {
+  /* Activating Best In Place */
+  jQuery(".best_in_place").best_in_place();
+});
 
 $(function () {
   $("#example1").DataTable();
@@ -89,12 +98,11 @@ $(function(){
 });
 
 Date.format = "yyyy-mm-dd"
-$(document).ready(function() {
-  sh_highlightDocument();
-  $('.date_filter').datePicker({startDate: '2010-01-01'});
-  $("#dp-popup").addClass("dp-popup")
-})
-
+// $(document).ready(function() {
+//   sh_highlightDocument();
+//   $('.date_filter').datePicker({startDate: '2010-01-01'});
+//   $("#dp-popup").addClass("dp-popup")
+// })
 
 // Datepicker
 $(function(){
@@ -158,5 +166,3 @@ $(function(){
   yearRange: '-10:+50',
   dateFormat: 'dd-mm-yy' });  
 });
-
-

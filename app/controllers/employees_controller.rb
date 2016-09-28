@@ -86,15 +86,26 @@ class EmployeesController < ApplicationController
     @states = @country.states
     @state = @employee.state
     @cities = @state.districts
+
+    @company = @employee.company
+    @company_locations = @company.try(:company_locations)
+    @company_location = @employee.company_location
+    @departments = @company_location.try(:departments)
+
+
     @form = 'employee'
   end
+
+   
 
   # POST /employees
   # POST /employees.json
   def create
     @employee = Employee.new(employee_params)
+    @department = Department.find(@employee.department_id)
     authorize! :create, @employee
       if @employee.save
+        @employee.update(company_location_id: @department.company_location_id,company_id: @department.company_location.company_id)
         redirect_to @employee    
       else
         render :new
@@ -104,7 +115,7 @@ class EmployeesController < ApplicationController
   # PATCH/PUT /employees/1
   # PATCH/PUT /employees/1.json
   def update
-    respond_to do |format|
+     respond_to do |format|
       if @employee.update(employee_params)
         format.html { redirect_to @employee, notice: 'Employee was successfully updated.' }
         format.json { render :show, status: :ok, location: @employee }
@@ -136,8 +147,8 @@ class EmployeesController < ApplicationController
         @employees = Employee.joins("LEFT JOIN members on members.employee_id = employees.id where members.employee_id is null and employees.company_location_id = #{current_user.company_location_id}")
       end
     end
-    @all_employee_list = ReportingMaster.all.collect { |e| [e.try(:employee).try(:manual_employee_code).try(:to_s) + ' ' + e.try(:employee).try(:first_name).try(:to_s) + ' ' + e.try(:employee).try(:last_name).try(:to_s), e.try(:employee).id] }
-    @all_role_list = Role.all.collect { |r| [r.name, r.id] }
+    # @all_employee_list = ReportingMaster.all.collect { |e| [e.try(:employee).try(:manual_employee_code).try(:to_s) + ' ' + e.try(:employee).try(:first_name).try(:to_s) + ' ' + e.try(:employee).try(:last_name).try(:to_s), e.try(:employee).id] }
+    # @all_role_list = Role.all.collect { |r| [r.name, r.id] }
 
     session[:active_tab] ="employeemanagement"
     session[:active_tab1] ="useradministration"
@@ -165,6 +176,9 @@ class EmployeesController < ApplicationController
     ActiveRecord::Base.transaction do
       if user.save
         employee.update_attributes(manager_id: params["login"]["manager_id"], manager_2_id: params["login"]["manager_2_id"])
+
+        ManagerHistory.create(employee_id: employee.id,manager_id: params["login"]["manager_id"],manager_2_id: params["login"]["manager_2_id"],effective_from: params["login"]["effec_date"])
+        
         flash[:notice] = "Employee assigned successfully."
         redirect_to assign_role_employees_path
         # UserPasswordMailer.welcome_email(company,pass).deliver_now
@@ -241,7 +255,6 @@ class EmployeesController < ApplicationController
 
   def ajax_physical_detail
     @employee_physical = EmployeePhysical.new
-    puts '--------------------------------------------------------------------------------'
   end
 
   def ajax_family_detail
@@ -266,6 +279,18 @@ class EmployeesController < ApplicationController
     @value = params[:value]
   end
 
+  def ajax_employee_document_detail
+    @employee_document = EmployeeDocument.new
+    @employee = Employee.find(params[:id])
+    #@employee_documents = EmployeeDocument.all
+  end
+
+  def ajax_new_employee_document
+    @employee_document = EmployeeDocument.new
+    @employee = Employee.find(params[:id])
+    #@employee_documents = EmployeeDocument.all
+  end
+
   def manager
     @employees = Employee.all
     session[:active_tab] ="employeemanagement"
@@ -285,8 +310,14 @@ class EmployeesController < ApplicationController
     @employee = Employee.find(params[:id])
     @employee.manager_id = params[:employee][:manager_id]
     @employee.manager_2_id = params[:employee][:manager_2_id]
+    @effec_date = params[:employee][:effec_date]
+    
     if @employee.save
       @employees = Employee.all
+      @mngr = ManagerHistory.create(employee_id: @employee.id,manager_id: @employee.manager_id,manager_2_id: @employee.manager_2_id,effective_from: @effec_date.to_date)
+      @manager = ManagerHistory.where(employee_id: @employee.id).last(2).first
+      ManagerHistory.where(id: @manager.id).update_all(effective_to: @mngr.effective_from)
+
       @flag = true
     else
       @flag = false
@@ -298,7 +329,6 @@ class EmployeesController < ApplicationController
   end
 
   def transfer_employee
-    # byebug
     @department = Department.find(params[:employee][:department_id])
     @company_location = CompanyLocation.find(@department.company_location_id)
     @company = Company.find(@company_location.company_id)
@@ -314,9 +344,54 @@ class EmployeesController < ApplicationController
   end
 
   def transfer_employee_list
-    @employees = Employee.all
-    
+    @employees = Employee.all 
   end
+
+  def employee_list_for_revert
+    @employees = Employee.where(status: "Inactive")
+  end
+
+  def revert_employee
+    @employee = Employee.find(params[:emp_id])
+    Employee.where(id: @employee.id).destroy_all
+    flash[:notice] = "Revert Successfully"
+    redirect_to employee_list_for_revert_employees_path
+  end
+
+  def all_emp_list
+     @employees = Employee.all
+     session[:active_tab] ="employeemanagement"
+     session[:active_tab1] ="useradministration"
+  end
+
+  def update_status
+    @employee_ids = params[:employee_ids]
+    @status = params[:employee][:status]
+    if @employee_ids.nil?
+      flash[:alert] = "Please Select the Checkbox"
+      redirect_to all_emp_list_employees_path
+    else
+      @employee_ids.each do |eid|
+      @employee = Employee.find(eid)
+      @employee.update(status: @status) 
+      flash[:notice] = "Status Updated Successfully"
+    end 
+     redirect_to all_emp_list_employees_path
+  end
+  end
+
+  def collect_company_location
+    @company = Company.find(params[:id])
+    @company_locations = @company.company_locations
+    @form = params[:form]
+  end
+
+  def collect_department
+     @company_location = CompanyLocation.find(params[:id])
+     @departments = @company_location.departments
+     @form = params[:form]
+  end
+
 
   private
 
@@ -332,7 +407,7 @@ class EmployeesController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def employee_params
     # params.require(:employee).permit(:department_id, :first_name, :middle_name, :last_name, :date_of_birth, :contact_no, :email, :permanent_address, :city, :district, :state, :pin_code, :current_address, :adhar_no, :pan_no, :licence_no, :passport_no, :marital_status, :nationality_id, :blood_group_id, :handicap, :status, :employee_type_id, :gender)
-    params.require(:employee).permit(:manual_employee_code, :company_location_id, :department_id, :first_name, :middle_name, :last_name, :date_of_birth, :contact_no, :email, :permanent_address, :city, :country_id, :district_id, :state_id, :pin_code, :current_address, :adhar_no, :pan_no, :licence_no, :passport_no, :marital_status, :nationality_id, :blood_group_id, :handicap, :status, :employee_type_id, :gender, :religion_id, :handicap_type, :cost_center_id)
+    params.require(:employee).permit(:manual_employee_code,:company_id, :company_location_id, :department_id, :first_name, :middle_name, :last_name, :date_of_birth, :contact_no, :email, :permanent_address, :city, :country_id, :district_id, :state_id, :pin_code, :current_address, :adhar_no, :pan_no, :licence_no, :passport_no, :marital_status, :nationality_id, :blood_group_id, :handicap, :status, :employee_type_id, :gender, :religion_id, :handicap_type, :cost_center_id)
     # joining_detail_attributes: [:joining_date, :reference_from, :admin_hr, :tech_hr, :designation, :employee_grade_id, :confirmation_date, :status, :probation_period, :notice_period, :medical_schem])
   end
 end

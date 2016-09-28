@@ -11,8 +11,32 @@ class Department < ActiveRecord::Base
   has_many :employee_promotions
   has_many :accident_records
   has_many :rewards_allocations
+  has_many :travel_request_histories
+  has_many :employee_transfers
   
   validates :manual_department_code, presence: true, uniqueness: { case_sensitive: false }
   validates :name, presence: true
+  validates :company_location_id, presence: true
   validates :department_type_id, presence: true
+
+
+  def self.filter_records(current_user)
+    @departments =  if current_user.class == Group
+      Department.all
+    elsif current_user.class == Member
+      if current_user.role.name == "Company"
+        @employees = Employee.where(company_id: current_user.company_id)
+        Department.where(employee_id: @employees)
+      elsif current_user.role.name == "CompanyLocation"
+        @employees = Employee.where(company_location_id: current_user.company_location_id)
+        Department.where(employee_id: @employees)  
+      elsif current_user.role.name == "Department"
+        @employees = Employee.where(department_id: current_user.department_id)
+        Department.where(employee_id: @employees)
+      elsif current_user.role.name == "Employee"
+        Department.where(employee_id: current_user.employee_id)
+      end
+    end
+  end
+
 end

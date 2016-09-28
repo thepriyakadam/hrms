@@ -68,6 +68,13 @@ class RolesController < ApplicationController
     end
   end
 
+  def is_confirm
+    @role = Role.find(params[:role])
+    Role.find(@role.id).update(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to new_role_path
+  end
+  
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -77,6 +84,6 @@ class RolesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def role_params
-    params.require(:role).permit(:name)
+    params.require(:role).permit(:is_confirm,:name)
   end
 end

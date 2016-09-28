@@ -4,10 +4,6 @@
   </div><!-- /.box-header -->
   <div class="box-body">
     <table id="example2" class="table table-bordered table-hover table-condensed">
-    <tr> 
-      <th colspan="2"></th>
-      <th colspan="2"></th>
-    </tr>
 
     <tr>
       <th><strong>Traveling Request ID</strong></th>
@@ -29,16 +25,33 @@
       <th><strong>Department</strong></th>
       <td><%= @travel_request.employee.company_location.try(:name) %> - <%= @travel_request.employee.department.try(:name) %></td>
 
-      <th><strong>Reporting Manager</strong></th>
-      <td><%= @travel_request.reporting_master_id %></td>
+      <th><strong>Request To</strong></th>
+      <td><%= @employee.try(:first_name) %> <%= @employee.try(:middle_name) %> <%= @employee.try(:last_name) %></td>
     </tr>
 
     <tr>
-      <th><strong>Traveling Date</strong></th>
-      <td><%= @travel_request.traveling_date %></td>
+      <th><strong>Traveling Option</strong></th>
+      <td><%= @travel_request.travel_option.try(:name) %></td>
 
+      <th><strong>Travel Mode</strong></th>
+      <td><%= @travel_request.travel_mode.try(:name) %></td>
+    </tr>
+
+    <tr>
       <th><strong>Place</strong></th>
       <td><%= @travel_request.place %></td>
+
+      <th><strong>From Date</strong></th>
+      <td><%= @travel_request.traveling_date %></td>
+    </tr>
+
+    <tr>
+      <th><strong>To Date</strong></th>
+      <td><%= @travel_request.to %></td>
+  
+      <th><strong>Day</strong></th>
+      <td><%= @travel_request.day %></td>
+      
     </tr>
 
       <tr>

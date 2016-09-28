@@ -60,6 +60,12 @@ class EsicMastersController < ApplicationController
     @esic_masters = EsicMaster.all
   end
 
+  def is_confirm
+    @esic_master = EsicMaster.find(params[:esic_master])
+    EsicMaster.find(@esic_master.id).update(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to new_esic_master_path
+  end
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -69,6 +75,6 @@ class EsicMastersController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def esic_master_params
-    params.require(:esic_master).permit(:esic, :percentage, :date_effective, :max_limit, :base_component)
+    params.require(:esic_master).permit(:is_confirm,:esic, :percentage, :date_effective, :max_limit, :base_component)
   end
 end

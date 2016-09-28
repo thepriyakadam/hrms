@@ -3,12 +3,7 @@
     <h3 class="box-title">Training Request Confirmation </h3>
   </div><!-- /.box-header -->
   <div class="box-body">
-    <table id="example2" class="table table-bordered table-hover table-condensed">
-      <tr> 
-        <th colspan="2"></th>
-        <th colspan="2"></th>
-      </tr>
-
+    <table class="table table-bordered table-hover table-condensed">
       <tr>
         <th><strong>Employee ID</strong></th>
         <td><%= @training_request.employee.try(:manual_employee_code) %></td>
@@ -22,7 +17,7 @@
         <td><%= @training_request.training_date %></td>
       
         <th><strong>Request To</strong></th>
-        <td><%= @training_request.reporting_master_id %></td>
+        <td><%= @employee.try(:first_name) %> <%= @employee.try(:middle_name) %> <%= @employee.try(:last_name) %></td>
       </tr>
       <tr>
         <th><strong>No. Of Employee</strong></th>
@@ -38,32 +33,16 @@
         <th><strong>Justification</strong></th>
         <td><%= @training_request.justification %></td>
       </tr>
+      <!-- <tr>
+        <th><strong>Comment</strong></th>
+        <td colspan="4"><%= @training_request.comment %></td>
+      </tr> -->
     </table><br>
-<div class="box-header with-border">
-    <h3 class="box-title">Employee's Who are Going To Attend Training</h3>
-  </div>
-<table id="example2" class="table table-bordered table-hover table-condensed">
-  <thead>
-    <tr>
-      <th>Employee ID</th>
-      <th>Employee Name</th>
-      <th>Contact No</th>
-      </tr>
-  </thead>
 
-  <tbody>
-   <% @trainee_requests.each do |trainee_request| %>
-      <tr>
-        <td><%= trainee_request.employee.try(:manual_employee_code) %></td>
-        <td><%= full_name(trainee_request.employee) %> </td>
-        <td><%= trainee_request.employee.try(:contact_no) %></td>
-      </tr>
-      <% end %>
-  </tbody>
-</table><br>
-  
-  <%= link_to ' Comment & Approve',modal_approver_comment_training_requests_path(@training_request.id),class: 'btn btn-sm btn-info fa fa-check',remote: true %> |
-  <%= link_to ' Comment & Reject',modal_reject_comment_training_requests_path(@training_request.id),class: 'btn btn-sm btn-danger fa fa-trash',remote: true %>
+   <div>
+      <%= render 'trainee_request_list' %>
+  </div>
+
     </td>
   </div>
 </div>

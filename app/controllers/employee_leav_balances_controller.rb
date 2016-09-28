@@ -62,11 +62,11 @@ class EmployeeLeavBalancesController < ApplicationController
   # PATCH/PUT /employee_leav_balances/1
   # PATCH/PUT /employee_leav_balances/1.json
   def update
-      if @employee_leav_balance.update(employee_leav_balance_params)
-        @flag = true
-      else
-       @flag = false
-      end
+    if @employee_leav_balance.update(employee_leav_balance_params)
+      @flag = true
+    else
+     @flag = false
+    end
     redirect_to employee_leav_balance_path
   end
 
@@ -81,15 +81,16 @@ class EmployeeLeavBalancesController < ApplicationController
   end
 
   def employee_leave_balance
-    reporter(@employee_leav_balances, template_class: PdfReportTemplate) do
+    reporter(EmployeeLeavBalance.filter_records(current_user), template_class: PdfReportTemplate) do
       # filter :manual_employee_code, type: :string
       #filter(:current_status, :enum, :select => [["Pending",0], ["FirstApproved",2], ["SecondApproved",3], ["FirstRejected",4],["SecondRejected",5],["Cancelled",1]])
       column(:Employee_ID, sortable: true) { |employee_leav_balance| employee_leav_balance.employee.try(:manual_employee_code) }
       column(:Employee_Name, sortable: true) { |employee_leav_balance| full_name(employee_leav_balance.employee) }
-      column(:Leave_Category, sortable:true){|employee_leav_balance| employee_leav_balance.leav_category.try(:name)}
+      column(:Leave_Category, sortable:true){|employee_leav_balance| employee_leav_balance.leav_category.try(:description)}
       column(:Leave_Balance, sortable:true){|employee_leav_balance| employee_leav_balance.try(:no_of_leave)}
       column(:Expiry_Date, sortable:true){|employee_leav_balance| employee_leav_balance.try(:expiry_date)}
       column(:Total_Leave, sortable:true){|employee_leav_balance| employee_leav_balance.try(:total_leave)}
+      column(:Location, sortable:true){|employee_leav_balance| employee_leav_balance.employee.try(:company_location).try(:name)}
     end    
   end
 

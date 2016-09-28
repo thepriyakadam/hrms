@@ -1,0 +1,54 @@
+<div class="box-body">
+  <div style="float:right;">Date - <%= Time.zone.now.to_date %> </div><br><br>
+
+  <b><b><center>PROMOTION CERTIFICATE</center></b></b><br><br>
+  <table style="border-collapse: collapse; font-size:15pt;" border=1 width=1000 cellpadding="6">
+
+    <tr>
+      <th><strong>Employee Name</strong></th>
+      <td><%= @employee_promotion.employee.try(:first_name) %> <%= @employee_promotion.employee.try(:middle_name) %> <%= @employee_promotion.employee.try(:last_name) %></td>
+    
+      <th><strong>Department</strong></th>
+      <td><%= @employee_promotion.department.try(:name) %></td>
+    </tr>
+
+    <tr>
+      <th><strong>Employee Designation</strong></th>
+      <td><%= @employee_promotion.employee_designation.try(:name) %></td>
+  
+      <th><strong>Employee Grade</strong></th>
+      <td><%= @employee_promotion.employee_grade.try(:name) %></td>
+    </tr>
+
+    <tr>
+      <th><strong>Employee Category</strong></th>
+      <td><%= @employee_promotion.employee_category.try(:name) %></td>
+
+      <th><strong>Employee CTC</strong></th>
+      <td><%= @employee_promotion.employee_ctc %></td>
+    </tr>
+
+    <tr>
+      <th><strong>Effective From</strong></th>
+      <td><%= @employee_promotion.effective_from %></td>
+
+      <th><strong>Effective To</strong></th>
+      <td><%= @employee_promotion.effective_to %></td>
+    </tr>
+
+   </table>
+
+
+  <p>For <b> <%= current_user.employee.company_location.company.try(:description) %> </b></p>
+
+  <P>HR</P>
+
+
+</div>
+<!-- </div>
+ -->
+ <style type="text/css">
+div.alwaysbreak { page-break-before: always; }
+div.nobreak:before { clear:both; }
+div.nobreak { page-break-inside: avoid; }
+</style>

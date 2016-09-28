@@ -20,6 +20,8 @@ gem 'bootstrap-datepicker-rails'
 gem 'awesome_print'
 gem 'datagrid', '~> 1.4', '>= 1.4.1'
 
+gem 'quiet_assets'
+
 gem 'paperclip', '~> 4.3', '>= 4.3.6'
 
 gem 'mime-types-data', '~> 3.2016', '>= 3.2016.0521'
@@ -42,6 +44,9 @@ gem 'pdfkit', '~> 0.8.2'
 gem 'wicked_pdf', '~> 1.0', '>= 1.0.6'
 
 gem 'wkhtmltopdf-binary', '~> 0.9.9.3'
+
+#inline edit
+gem 'best_in_place', '~> 3.0.1'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
@@ -91,8 +96,6 @@ gem 'rails-erd'
 # Auto increement
 gem 'protokoll'
 
-# Image processing
-
 # country And State Name
 # gem 'country_state_select', '~> 2.0.0'
 # gem 'countries'
@@ -110,7 +113,6 @@ gem 'time_difference'
 gem 'roo'
 gem 'yaml_db'
 
-
 #gem 'mail'
 gem 'email_verifier'
 
@@ -120,4 +122,3 @@ gem "axlsx_rails"
 
 #Chart
 gem "chartkick"
-

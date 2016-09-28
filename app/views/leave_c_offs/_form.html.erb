@@ -1,5 +1,5 @@
 <div class="box-body">
-  <%= bootstrap_form_for(@leave_c_off,html: {id: 'leave_c_off'},remote: true) do |f| %>
+  <%= bootstrap_form_for(@leave_c_off,html: {id: 'leave_c_off'}) do |f| %>
     <div class="row">
      <div class="col-sm-3">
           <div class="form-group required">
@@ -25,7 +25,7 @@
        </div>
       </div> 
       <div class="col-sm-3">
-        <div class="form-group required">
+        <div class="field">
           <%= f.text_field :c_off_expire_day, label:'Applicable Day'%>
         </div>
       </div>

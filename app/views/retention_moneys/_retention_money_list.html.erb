@@ -16,8 +16,13 @@
         <td><%= retention_money.no_of_month %></td>
         <td><%= retention_money.description %></td>
         <td>
-          <%= link_to '', edit_retention_money_path(retention_money),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
-          <%= link_to '',  retention_money, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-xs btn-danger fa fa-close' %>
+          <% if retention_money.is_confirm == true %>
+            <small class= "label label-primary">Confirmed</small>
+          <% else %>
+            <%= link_to '', edit_retention_money_path(retention_money),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
+            <%= link_to '',  retention_money, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-xs btn-danger fa fa-close' %>
+            <%= link_to '', is_confirm_retention_moneys_path(retention_money: retention_money),data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-info fa fa-check' %>
+          <% end %>
         </td>
       </tr>
     <% end %>

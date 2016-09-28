@@ -10,13 +10,23 @@ class DailyBillDetailsController < ApplicationController
   # GET /daily_bill_details/1
   # GET /daily_bill_details/1.json
   def show
+    # @reporting_master = ReportingMaster.find(@daily_bill_detail.reporting_master_id)
+    # @employee = Employee.find(@reporting_master.employee_id)
   end
 
   # GET /daily_bill_details/new
   def new
     @daily_bill_detail = DailyBillDetail.new
+    
     @travel_request = TravelRequest.find(params[:travel_request_id])
     @daily_bill_details = DailyBillDetail.where(travel_request_id: @travel_request.id)
+
+    @reporting_masters_travel_requests1 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id)
+
+
+    reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
+    @reporting_master = ReportingMaster.find(@travel_request.reporting_master_id)
+    @employee = Employee.find(@reporting_master.employee_id)
     session[:active_tab] = "master"
     session[:active_tab1] ="daily_bill_master_setup"
   end
@@ -32,32 +42,14 @@ class DailyBillDetailsController < ApplicationController
 
   def create
     @daily_bill_detail = DailyBillDetail.new(daily_bill_detail_params)
-
-    @travel_request = TravelRequest.find(@daily_bill_detail.travel_request_id)
-
-       ActiveRecord::Base.transaction do
-        respond_to do |format|
-    if @daily_bill_detail.save
-        @daily_bill_detail.update(reporting_master_id: @travel_request.reporting_master_id)
-        @daily_bill_details = DailyBillDetail.where(travel_request_id: @travel_request.id)
-        format.html { redirect_to @daily_bill_detail, notice: 'Daily Bill was successfully created.' }
-        format.json { render :show, status: :created, location: @daily_bill_detail }
-        format.js { @flag = true }
-      else
-        format.html { render :new }
-        format.json { render json: @daily_bill_detail.errors, status: :unprocessable_entity }
-        format.js { @flag = false }
-      end
-    end
-  end
-end
-
-def create
-    @daily_bill_detail = DailyBillDetail.new(daily_bill_detail_params)
     @travel_request = TravelRequest.find(@daily_bill_detail.travel_request_id)
       if @daily_bill_detail.save
-        @daily_bill_detail.update(reporting_master_id: @travel_request.reporting_master_id)
+        # @reporting_masters_travel_requests = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id).first
+        # @daily_bill_detail.update(reporting_master_id: @reporting_masters_travel_requests.reporting_master_id)
+        # @daily_bill_detail.update(reporting_master_id: @travel_request.reporting_master_id)
         @daily_bill_details = DailyBillDetail.where(travel_request_id: @travel_request.id)
+        # c1 = @daily_bill_details.sum(:travel_expence).to_i
+        # TravelRequest.where(id: @travel_request.id).update_all(expense: c1)
         @daily_bill_detail = DailyBillDetail.new
         flash[:notice] = 'Daily Bill Detail saved Successfully.'
       end
@@ -70,17 +62,17 @@ def create
   # PATCH/PUT /daily_bill_details/1.json
 
   def update
-    respond_to do |format|
       @travel_request = TravelRequest.find(@daily_bill_detail.travel_request_id)
 
       if @daily_bill_detail.update(daily_bill_detail_params)
-        
         @daily_bill_details =  @travel_request.daily_bill_details
-         format.js { @flag = true }
+        # c1 = @daily_bill_details.sum(:travel_expence).to_i
+        # TravelRequest.where(id: @travel_request.id).update_all(expense: c1)
+        flash[:notice] = "Updated successfully"
       else
-        format.js { @flag = false }
+        flash[:alert] = "not updated"
       end
-    end
+      redirect_to new_daily_bill_detail_path(travel_request_id: @travel_request.id)
   end
 
 
@@ -89,31 +81,48 @@ def create
   def destroy
     @travel_request = TravelRequest.find(@daily_bill_detail.travel_request_id)
     @daily_bill_details = DailyBillDetail.where(travel_request_id: @travel_request.id)
-
     @daily_bill_detail.destroy
-    flash.now[:notice] = "Deleted successfully"
+    flash[:alert] = "Deleted successfully"
+    redirect_to new_daily_bill_detail_path(travel_request_id: @travel_request.id)
   end
 
 
-  def is_confirm
-    @travel_request = TravelRequest.find(params[:qwe])
-    @daily_bill_detail_ids = params[:daily_bill_detail_ids]
-    if @daily_bill_detail_ids.nil?
-      flash[:alert] = "Please Select the Checkbox"
-      redirect_to new_daily_bill_detail_path(@travel_request.id)
-    else
-      @daily_bill_detail_ids.each do |did|
-      @daily_bill_detail = DailyBillDetail.find(did)
-      @daily_bill_detail.update(is_confirm: true)
+  # def is_confirm
+  #   @travel_request = TravelRequest.find(params[:travel_request_id])
+  #   # TravelRequestHistory.where(travel_request_id: @travel_request.id).update_all(daily_bill_status: "true")
+
+  #   @daily_bill_detail_ids = params[:daily_bill_detail_ids]
+  #   if @daily_bill_detail_ids.nil?
+  #     flash[:alert] = "Please Select the Checkbox"
+  #     redirect_to new_daily_bill_detail_path(travel_request_id: @travel_request.id)
+  #   else
+  #     @daily_bill_detail_ids.each do |did|
+  #     @daily_bill_detail = DailyBillDetail.find(did)
+  #     # @daily_bill_detail.update(is_confirm: true)
+
+  #     # @reporting_masters_travel_requests = ReportingMastersTravelRequest.where("travel_request_id = ? and (status = ? or status = ?)",@travel_request.id,"Pending","Approved & Send Next").where("(status = ?)","Approved").first
+  #     # @reporting_masters_travel_requests = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id).first
+  #     @reporting_masters_travel_requests = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id)[0]
+  #     @daily_bill_detail.update(reporting_master_id: @reporting_masters_travel_requests.reporting_master_id,is_confirm: true)
+  #     TravelRequest.where(id: @travel_request.id).update_all(daily_bill_status: "true",reporting_master_id: @reporting_masters_travel_requests.reporting_master_id)
+  #     # @travel_request.update(reporting_master_id: @reporting_masters_travel_requests.reporting_master_id)
       
-      flash[:notice] = "Confirmed Successfully"
-    end 
-      redirect_to new_daily_bill_detail_path(@travel_request.id)
-    end
-  end
+  #     flash[:notice] = "Confirmed Successfully"
+  #   end 
+  #     redirect_to new_daily_bill_detail_path(travel_request_id: @travel_request.id)
+  #   end
+  # end
 
   def print_daily_bill
     @travel_request = TravelRequest.find(params[:qwe])
+    @employee = Employee.find(@travel_request.employee_id)
+    reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
+    @reporting_master = ReportingMaster.find(@travel_request.reporting_master_id)
+    @employee = Employee.find(@reporting_master.employee_id)
+    @travel_expences = TravelExpence.where(travel_request_id: @travel_request.id)
+    @reporting_masters_travel_requests1 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id)
+    # @reporting_master = ReportingMaster.find(@daily_bill_detail.reporting_master_id)
+    # @employee1 = Employee.find(@reporting_master.employee_id)
     @daily_bill_details = DailyBillDetail.where(travel_request_id: @travel_request.id)
 
     respond_to do |format|
@@ -134,38 +143,54 @@ def create
     end  
   end
 
-  # def daily_bill_history
-  #   # @daily_bill_details = DailyBillDetail.all
-  #   @c1 = ReportingMastersTravelRequest.find_by_travel_request_id(@daily_bill_detail.travel_request_id)
-  #   @daily_bill_details = DailyBillDetail.where("travel_request_id = ?",@c1.travel_request_id)
-  # end
-
   def daily_bill_history
-    @daily_bill_details = DailyBillDetail.where(reporting_master_id: current_user.employee_id,is_confirm: true)
+    @reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
+    @daily_bill_details = DailyBillDetail.where(reporting_master_id: @reporting_masters,is_confirm: true)
     session[:active_tab] ="travelmgmt" 
   end 
 
   def daily_bill_request_confirmation
     @travel_request = TravelRequest.find(params[:format])
+    # @travel_request_hisory = TravelRequestHistory.find(params[:format])
+    reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
+    @reporting_master = ReportingMaster.find(@travel_request.reporting_master_id)
+    @employee = Employee.find(@reporting_master.employee_id)
+    @dbl = ReportingMastersTravelRequest.where(travel_request_id: 27).pluck(:status).last
+    # @c1 = @reporting_masters_travel_requests = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id).count
+    # for i in 1..c1
+       
+    # end
     # @travel_request = TravelRequest.find(@daily_bill_detail.travel_request_id)
-    @daily_bill_details = DailyBillDetail.where(reporting_master_id: current_user.employee_id,travel_request_id: @travel_request.id)
+    # @reporting_masters_travel_request = ReportingMastersTravelRequest.find_by_reporting_master_id(params[:format])
+    @reporting_masters_travel_requests1 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id)
+    @reporting_masters_travel_requests2 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,status: nil).second
+    @reporting_masters_travel_requests3 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,status: nil).third
+    @reporting_masters_travel_requests4 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,status: nil).fourth
+    @reporting_masters_travel_requests5 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,status: nil).fifth
+    # @reporting_masters_travel_requests1 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id).first
+
+    
+    # @reporting_masters_travel_requests = ReportingMastersTravelRequest.all
+    # if @reporting_masters_travel_requests2.status == nil
+    #     flash[:notice] = 'Not Yet Approved So pls wait.........'  
+    #   elsif @reporting_masters_travel_requests3.status == nil
+    #     flash[:notice] = 'Not Yet Approved So pls wait.........'  
+    #   elsif @reporting_masters_travel_requests4.status == nil
+    #     flash[:notice] = 'Not Yet Approved So pls wait.........'  
+    #   elsif @reporting_masters_travel_requests5.status == nil
+    #     flash[:notice] = 'Not Yet Approved So pls wait.........'  
+    #   else
+      @daily_bill_details = DailyBillDetail.where(travel_request_id: @travel_request.id,is_confirm: :true)
+    # end
+    
+    
+    # @daily_bill_details = DailyBillDetail.where(reporting_master_id: reporting_masters,travel_request_id: @travel_request.id,is_confirm: true)
+    # @daily_bill_details = DailyBillDetail.where(travel_request_id: @travel_request.id,is_confirm: true)
     session[:active_tab] ="travelmgmt"
   end
 
-  def approve_request
-    @daily_bill_detail_ids = params[:daily_bill_detail_ids]
-    if @daily_bill_detail_ids.nil?
-      flash[:alert] = "Please Select the Checkbox"
-      redirect_to travel_request_list_daily_bill_details_path
-    else
-      @daily_bill_detail_ids.each do |did|
-      @daily_bill_detail = DailyBillDetail.find(did)
-      @daily_bill_detail.update(request_status: "Approved") 
-      flash[:notice] = "Approved Successfully"
-    end 
-     redirect_to travel_request_list_daily_bill_details_path
-  end
-  session[:active_tab] ="travelmgmt"
+  def approve_and_send_next
+
   end
 
   def approved_daily_bill_details
@@ -190,70 +215,191 @@ def create
   end
 
    def travel_request_list
-     @travel_requests = TravelRequest.where(reporting_master_id: current_user.employee_id)
+     reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
+     # @travel_requests = TravelRequest.where(daily_bill_status: "true",reporting_master_id: reporting_masters)
+     @travel_requests = TravelRequest.where(daily_bill_status: "true",current_status: "Approved",reporting_master_id: reporting_masters)
+     # @travel_request_histories = TravelRequestHistory.where(daily_bill_status: "true",reporting_master_id: reporting_masters)
+     session[:active_tab] ="travelmgmt"
+
   end
 
-  def edit_and_send_next_modal
-     @daily_bill_detail = DailyBillDetail.find(params[:format])
+  def travel_request_history_list
+     reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
+     # @travel_requests = TravelRequest.where(daily_bill_status: "true",reporting_master_id: reporting_masters)
+     @travel_request_histories = TravelRequestHistory.where(daily_bill_status: "true",reporting_master_id: reporting_masters)
   end
-
-  def edit_and_send_next
-     puts "----------------------"
-     @daily_bill_detail = DailyBillDetail.find(params[:id])
-  end
-
-  def edit_and_send_next
-    @daily_bill_detail = DailyBillDetail.find(params[:id])
-    @daily_bill_detail.update(daily_bill_detail_params)
-    flash[:notice] = "Updated successfully"
-    redirect_to travel_request_list_daily_bill_details_path
-  end
-
-  # def edit_and_send_next_modal_submit
-  #   @travel_request = TravelRequest.find(params[:id])
-  #   @travel_request.update(travel_request_params)
-  #   TravelRequestHistory.create(travel_request_id: @travel_request.id,application_date: @travel_request.application_date,traveling_date: @travel_request.traveling_date, tour_purpose: @travel_request.tour_purpose, place: @travel_request.place,total_advance: @travel_request.total_advance,reporting_master_id: @travel_request.reporting_master_id, travel_option_id: @travel_request.travel_option_id)
-  #   ReportingMastersTravelRequest.create(travel_request_id: @travel_request.id, reporting_master_id: @travel_request.reporting_master_id, travel_status: "Edit & Send Next")
-  #   flash[:notice] = "Updated successfully"
-  #   redirect_to travel_history_travel_requests_path
-  # end
 
   def comment_modal
-     @daily_bill_detail = DailyBillDetail.find(params[:daily_bill_detail_id])
+     @travel_request = TravelRequest.find(params[:format])
   end
 
-  def update_comment
-     # byebug
-     @daily_bill_detail = DailyBillDetail.find(params[:daily_bill_detail_id])
+  # def update_comment
+  #    # byebug
+  #    @travel_request = TravelRequest.find(params[:travel_request_id])
+  #    @comment = params[:daily_bill_detail][:comment]
+  #    @daily_bill_detail.update(comment: @comment)
+  #    flash[:notice] = 'Comment Updated Successfully'
+  #    redirect_to daily_bill_request_confirmation_daily_bill_details_path(daily_bill_detail_id: @daily_bill_detail.id)
+  # end
+
+  def approve_and_send_next
+     @travel_request = TravelRequest.find(params[:travel_request_id])
      @comment = params[:daily_bill_detail][:comment]
-     @daily_bill_detail.update(comment: @comment)
-     flash[:notice] = 'Comment Updated Successfully'
-     redirect_to daily_bill_request_confirmation_daily_bill_details_path(daily_bill_detail_id: @daily_bill_detail.id)
+     # @dbl = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id).pluck(:status).last
+     # @dbl1 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id).pluck(:travel_status).last
+
+     @reporting_masters_travel_requests2 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,status: nil)[1]
+     @reporting_masters_travel_requests3 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,status: nil)[2]
+     @reporting_masters_travel_requests4 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,status: nil)[3]
+     @reporting_masters_travel_requests5 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,status: nil)[4]
+     @reporting_masters_travel_requests6 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,status: nil)[5]
+     @reporting_masters_travel_requests7 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,status: nil)[6]
+     @reporting_masters_travel_requests8 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,status: nil)[7]
+     @reporting_masters_travel_requests9 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,status: nil)[8]
+
+     # @reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
+     #  ReportingMastersTravelRequest.where(id: @travel_request.id,reporting_master_id: @reporting_masters).update_all(travel_status: "Approved")
+    @reporting_masters = ReportingMaster.where(employee_id: current_user.employee_id).pluck(:id)
+    # ReportingMastersTravelRequest.where(reporting_master_id: @reporting_masters,travel_request_id: @travel_request.id).update_all(travel_status: "Approved & Send Next")
+
+    c1 = @travel_request.total_advance - @travel_request.expense
+    DailyBillDetail.where(travel_request_id: @travel_request.id).update_all(request_status: "Approved & Send Next")
+    r1=ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id).pluck(:reporting_master_id).last
+    
+    if ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id).pluck(:status).last == nil  && ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id).pluck(:travel_status).last == "Approved"
+      TravelExpence.where(travel_request_id: @travel_request.id).update_all(total_expence_amount: @travel_request.expense,remaining_amount: c1)
+      # ReportingMastersTravelRequest.where(reporting_master_id: @reporting_masters,travel_request_id: @travel_request.id).update_all(status: "true",daily_bill_comment: @comment)
+      # TravelRequest.where(id: @travel_request.id).update_all(reporting_master_id: r1)
+    else
+      # flash[:notice] = 'Not Yet Approved'
+    end
+    
+    if c1<0
+       TravelExpence.where(travel_request_id: @travel_request.id).update_all(employee_amount: c1.abs)
+      else
+        TravelExpence.where(travel_request_id: @travel_request.id).update_all(company_amount: c1.abs)
+    end
+
+     if @reporting_masters_travel_requests1 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,status: nil)[0]
+      ReportingMastersTravelRequest.where(reporting_master_id: @reporting_masters_travel_requests1.reporting_master_id).update_all(status: "true",daily_bill_comment: @comment)
+      r1=ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id).pluck(:reporting_master_id).last
+      if @reporting_masters_travel_requests10 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,status: nil).pluck(:reporting_master_id).first == nil
+      # TravelRequest.where(id: @travel_request.id).update_all(reporting_master_id: r1)
+      TravelRequest.where(id: @travel_request.id).update_all(reporting_master_id: r1,daily_bill_status: "true")
+      else
+      TravelRequest.where(id: @travel_request.id).update_all(reporting_master_id: @reporting_masters_travel_requests2.try(:reporting_master_id))
+      end
+      flash[:notice] = 'Daily Bill Request Send To Higher Authority For Approval'
+
+     elsif @reporting_masters_travel_requests2 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,status: nil)[1]
+      ReportingMastersTravelRequest.where(reporting_master_id: @reporting_masters_travel_requests2.reporting_master_id).update_all(status: "true",daily_bill_comment: @comment)
+      TravelRequest.where(id: @travel_request.id).update_all(reporting_master_id: @reporting_masters_travel_requests3.reporting_master_id)
+      flash[:notice] = 'Daily Bill Request Send To Higher Authority For Approval'
+     
+     elsif @reporting_masters_travel_requests3 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,status: nil)[2]
+      ReportingMastersTravelRequest.where(reporting_master_id: @reporting_masters_travel_requests3.reporting_master_id).update_all(status: "true",daily_bill_comment: @comment)
+      TravelRequest.where(id: @travel_request.id).update_all(reporting_master_id: @reporting_masters_travel_requests4.reporting_master_id)
+      flash[:notice] = 'Daily Bill Request Send To Higher Authority For Approval'
+
+      elsif @reporting_masters_travel_requests4 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,status: nil)[3]
+      ReportingMastersTravelRequest.where(reporting_master_id: @reporting_masters_travel_requests4.reporting_master_id).update_all(status: "true",daily_bill_comment: @comment)
+      TravelRequest.where(id: @travel_request.id).update_all(reporting_master_id: @reporting_masters_travel_requests5.reporting_master_id)
+      flash[:notice] = 'Daily Bill Request Send To Higher Authority For Approval'
+
+      elsif @reporting_masters_travel_requests5 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,status: nil)[4]
+      ReportingMastersTravelRequest.where(reporting_master_id: @reporting_masters_travel_requests5.reporting_master_id).update_all(status: "true",daily_bill_comment: @comment)
+      TravelRequest.where(id: @travel_request.id).update_all(reporting_master_id: @reporting_masters_travel_requests6.reporting_master_id)
+      flash[:notice] = 'Daily Bill Request Send To Higher Authority For Approval'
+
+      elsif @reporting_masters_travel_requests6 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,status: nil)[5]
+      ReportingMastersTravelRequest.where(reporting_master_id: @reporting_masters_travel_requests6.reporting_master_id).update_all(status: "true",daily_bill_comment: @comment)
+      TravelRequest.where(id: @travel_request.id).update_all(reporting_master_id: @reporting_masters_travel_requests7.reporting_master_id)
+      flash[:notice] = 'Daily Bill Request Send To Higher Authority For Approval'
+
+      elsif @reporting_masters_travel_requests7 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,status: nil)[6]
+      ReportingMastersTravelRequest.where(reporting_master_id: @reporting_masters_travel_requests7.reporting_master_id).update_all(status: "true",daily_bill_comment: @comment)
+      TravelRequest.where(id: @travel_request.id).update_all(reporting_master_id: @reporting_masters_travel_requests8.reporting_master_id)
+      flash[:notice] = 'Daily Bill Request Send To Higher Authority For Approval'
+
+      elsif @reporting_masters_travel_requests8 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,status: nil)[7]
+      ReportingMastersTravelRequest.where(reporting_master_id: @reporting_masters_travel_requests8.reporting_master_id).update_all(status: "true",daily_bill_comment: @comment)
+      TravelRequest.where(id: @travel_request.id).update_all(reporting_master_id: @reporting_masters_travel_requests9.reporting_master_id)
+      flash[:notice] = 'Daily Bill Request Send To Higher Authority For Approval'
+ 
+      elsif @reporting_masters_travel_requests9 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,status: nil)[8]
+      ReportingMastersTravelRequest.where(reporting_master_id: @reporting_masters_travel_requests9.reporting_master_id).update_all(status: "true",daily_bill_comment: @comment)
+      TravelRequest.where(id: @travel_request.id).update_all(reporting_master_id: @reporting_masters_travel_requests9.reporting_master_id)
+      flash[:notice] = 'Daily Bill Request Send To Higher Authority For Approval'
+
+      # elsif @reporting_masters_travel_requests10 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,status: nil).pluck(:reporting_master_id).first == nil
+      # TravelRequest.where(id: @travel_request.id).update_all(reporting_master_id: r1)
+        # flash[:notice] = 'Reporting Manager Id is Nil'
+    else
+      flash[:alert] = 'No Reporting Manager is present'
+    end
+      redirect_to travel_request_list_daily_bill_details_path
   end
-
-
-  # def reject_request
-  #   @daily_bill_detail_ids = params[:daily_bill_detail_ids]
-  #   if @daily_bill_detail_ids.nil?
-  #     flash[:alert] = "Please Select the Checkbox"
-  #     redirect_to daily_bill_history_daily_bill_details_path
-  #   else
-  #     @daily_bill_detail_ids.each do |did|
-  #     @daily_bill_detail = DailyBillDetail.find(did)
-  #     @daily_bill_detail.update(request_status: "Rejected") 
-  #     flash[:alert] = "Rejected Successfully"
-  #   end 
-  #    redirect_to travel_request_list_daily_bill_details_path
-  # end
-  # session[:active_tab] ="travelmgmt"
-  # end
 
   def reject_request
     # byebug
-    @daily_bill_detail = DailyBillDetail.find(params[:format])
-    @daily_bill_detail.update(request_status: "Rejected")
-    flash[:alert] = 'Daily Bill Request Rejected'
+    @travel_request = TravelRequest.find(params[:format])
+    # DailyBillDetail.where(travel_request_id: @travel_request.id).update_all(request_status: "Rejected")
+
+    if @reporting_masters_travel_requests1 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,status: nil)[0]
+      ReportingMastersTravelRequest.where(reporting_master_id: @reporting_masters_travel_requests1.reporting_master_id).update_all(status: "false")
+      flash[:notice] = 'Daily Bill Request Rejected'
+
+     elsif @reporting_masters_travel_requests2 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,status: nil)[1]
+      ReportingMastersTravelRequest.where(reporting_master_id: @reporting_masters_travel_requests2.reporting_master_id).update_all(status: "false")
+      flash[:notice] = 'Daily Bill Request Rejected'
+     
+     elsif @reporting_masters_travel_requests3 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,status: nil)[2]
+      ReportingMastersTravelRequest.where(reporting_master_id: @reporting_masters_travel_requests3.reporting_master_id).update_all(status: "false")
+      flash[:notice] = 'Daily Bill Request Rejected'
+
+      elsif @reporting_masters_travel_requests4 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,status: nil)[3]
+      ReportingMastersTravelRequest.where(reporting_master_id: @reporting_masters_travel_requests4.reporting_master_id).update_all(status: "false")
+      flash[:notice] = 'Daily Bill Request Rejected'
+
+      elsif @reporting_masters_travel_requests5 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,status: nil)[4]
+      ReportingMastersTravelRequest.where(reporting_master_id: @reporting_masters_travel_requests5.reporting_master_id).update_all(status: "false")
+      flash[:notice] = 'Daily Bill Request Rejected'
+
+      elsif @reporting_masters_travel_requests6 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,status: nil)[5]
+      ReportingMastersTravelRequest.where(reporting_master_id: @reporting_masters_travel_requests6.reporting_master_id).update_all(status: "false")
+      flash[:notice] = 'Daily Bill Request Rejected'
+
+      elsif @reporting_masters_travel_requests7 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,status: nil)[6]
+      ReportingMastersTravelRequest.where(reporting_master_id: @reporting_masters_travel_requests7.reporting_master_id).update_all(status: "false")
+      flash[:notice] = 'Daily Bill Request Rejected'
+
+      elsif @reporting_masters_travel_requests8 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,status: nil)[7]
+      ReportingMastersTravelRequest.where(reporting_master_id: @reporting_masters_travel_requests8.reporting_master_id).update_all(status: "false")
+      flash[:notice] = 'Daily Bill Request Rejected'
+ 
+      elsif @reporting_masters_travel_requests9 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,status: nil)[8]
+      ReportingMastersTravelRequest.where(reporting_master_id: @reporting_masters_travel_requests9.reporting_master_id).update_all(status: "false")
+      flash[:notice] = 'Daily Bill Request Rejected'
+    else
+      flash[:alert] = 'No Reporting Manager is present'
+    end
     redirect_to travel_request_list_daily_bill_details_path
+  end
+
+  def is_confirm
+    @travel_request = TravelRequest.find(params[:travel_request_id])
+    @daily_bill_details = DailyBillDetail.where(travel_request_id: @travel_request.id)
+    @reporting_masters_travel_requests = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id)[0]
+    DailyBillDetail.where(travel_request_id: @travel_request.id).update_all(reporting_master_id: @reporting_masters_travel_requests.reporting_master_id,is_confirm: :true)
+    c1 = @daily_bill_details.sum(:travel_expence).to_i
+    TravelRequest.where(id: @travel_request.id).update_all(reporting_master_id: @reporting_masters_travel_requests.reporting_master_id,is_confirm: :true,expense: c1)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to new_daily_bill_detail_path(travel_request_id: @travel_request.id)
+  end
+
+  def image_modal
+     @daily_bill_detail = DailyBillDetail.find(params[:format])
+     @daily_bill_details = DailyBillDetail.where(id: @daily_bill_detail.id)
   end
 
   private

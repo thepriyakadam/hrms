@@ -10,13 +10,12 @@
 <table id="example" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
-      <th>Employee ID</th>
+      <th>ID</th>
       <th>Employee Name</th>
-      <th>Department</th>
       <th>Request To</th>
-      <th>Traveling Date</th>
+      <th>From Date</th>
       <th>Place</th>
-      <th>Total Advance</th>
+      <th>Status</th>
       <th>Action</th>
     </tr>
   </thead>
@@ -26,13 +25,30 @@
       <tr>
         <td><%= travel_request.employee.try(:manual_employee_code) %></td>
         <td><%= travel_request.employee.try(:first_name) %> <%= travel_request.employee.try(:middle_name) %> <%= travel_request.employee.try(:last_name) %></td>
-        <td><%= travel_request.employee.company_location.try(:name) %> - <%= travel_request.employee.department.try(:name) %></td>
-        <td><%= travel_request.reporting_master_id %></td>
+        <td><%= travel_request.reporting_master.employee.try(:first_name) %> <%= travel_request.reporting_master.employee.try(:middle_name) %> <%= travel_request.reporting_master.employee.try(:last_name) %></td>
         <td><%= travel_request.traveling_date %></td>
         <td><%= travel_request.place %></td>
-        <td><%= travel_request.total_advance %></td>
         <td>
-           <%= link_to 'Approve / Reject',travel_request_confirmation_travel_requests_path(travel_request),class: 'btn btn-sm btn-warning' %> 
+            <% if travel_request.current_status == "Pending" %>
+              <small class="label label-primary">Pending</small>
+            <% elsif travel_request.current_status == "Approved & Send Next" %>
+              <small class="label label-primary">Approved & Send Next</small>
+            <% elsif travel_request.current_status == "Edit & Send Next" %>
+              <small class="label label-primary">Edit & Send Next</small>
+            <% elsif travel_request.current_status == "Approved" %>
+              <small class="label label-primary">Approved</small>
+            <% elsif travel_request.current_status == "Edit & Approved" %>
+              <small class="label label-primary">Edit & Approved</small>
+            <% else %>
+              <small class="label label-primary">Rejected</small>
+            <% end %>
+        </td>
+        <td>
+          <% if travel_request.current_status == "Approved" or travel_request.current_status == "Reject" or travel_request.current_status == "Edit & Approved" %>
+          <% else %>
+          <%= link_to 'Approve / Reject',travel_request_confirmation_travel_requests_path(travel_request),class: 'btn btn-sm btn-warning' %>
+          <% end %>
+          <%= link_to '', travel_request,class: 'btn btn-xs btn-default fa fa-eye' %>
         </td>
       </tr>
     <% end %>

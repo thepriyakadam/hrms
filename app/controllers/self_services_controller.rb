@@ -7,6 +7,8 @@ class SelfServicesController < ApplicationController
   def employee_template
     @employee = Employee.find(current_user.employee_id)
     @employee_templates = @employee.employee_templates
+    @template = EmployeeTemplate.where(employee_id: @employee.id)
+    @salaryslip_component = SalaryslipComponent.all
     session[:active_tab] ="selfservice"
   end
 
@@ -32,4 +34,33 @@ class SelfServicesController < ApplicationController
     end
     session[:active_tab] ="selfservice"
   end
+
+  def employee_resignation
+    @employee_resignation = EmployeeResignation.new
+    @employee_resignations = EmployeeResignation.where(employee_id: current_user.employee_id)
+  end
+
+  def resignation_history
+    @employee_resignations = EmployeeResignation.where(employee_id: current_user.employee_id)
+  end
+
+  def show_resignation_detail
+    @employee_resignation_id = EmployeeResignation.find_by_employee_id(params[:emp_id])
+    @resignation_histories = ResignationHistory.where(employee_resignation_id: @employee_resignation_id.id)
+  end
+
+  def employee_transfer
+    @employee_transfer = EmployeeTransfer.new
+    @employee_transfers = EmployeeTransfer.where(employee_id: current_user.employee_id)
+    session[:active_tab] = "selfservice"
+  end
+
+  def travel_request
+    @travel_request = TravelRequest.new
+    @travel_requests = TravelRequest.where(employee_id: current_user.employee_id)
+    session[:active_tab] = "selfservice"
+  end
+
+
 end
+

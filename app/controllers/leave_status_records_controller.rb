@@ -11,6 +11,8 @@ class LeaveStatusRecordsController < ApplicationController
       ActiveRecord::Base.transaction do
         if @leave_status.save
           @employee_leav_request.update(is_cancelled: true, current_status: 'Cancelled')
+
+          LeaveRecord.where(employee_leav_request_id: @employee_leav_request.id).update_all(status: "Cancelled")
           @employee_leav_request.revert_leave(@employee_leav_request)
           if @employee_leav_request.first_reporter.email.nil? || @employee_leav_request.first_reporter.email == ''
             flash[:notice] = 'Leave Cancelled Successfully without email.'
@@ -43,10 +45,12 @@ class LeaveStatusRecordsController < ApplicationController
         if @leave_status.save
           @employee_leav_request.update(is_first_approved: true, current_status: 'FinalApproved')
           @employee_leav_request.create_single_record_for_leave(@employee_leav_request)
-           for i in @employee_leav_request.start_date.to_date..@employee_leav_request.end_date.to_date
-             EmployeeAttendance.create(employee_id: @employee_leav_request.employee_id, day: i, present: "Leave")
-           end
           @employee_leav_request.manage_coff(@employee_leav_request)
+          @employee_leav_request.create_attendance
+          
+          LeaveRecord.where(employee_leav_request_id: @employee_leav_request.id).update_all(status: "FinalApproved")
+          #@leave_record.update_all(status: "FinalApproved")
+
           # @employee_leav_request.minus_leave(@employee_leav_request)
           if @employee_leav_request.employee.email.nil? || @employee_leav_request.employee.email == ''
             flash[:notice] = 'Leave Approved Successfully without email.'
@@ -67,6 +71,9 @@ class LeaveStatusRecordsController < ApplicationController
         s.change_status_employee_id = current_user.employee_id unless current_user.class == Group
         s.status = 'FirstApproved'
         s.change_date = Time.now
+
+        LeaveRecord.where(employee_leav_request_id: @employee_leav_request.id).update_all(status: "FirstApproved")
+        
       end
       ActiveRecord::Base.transaction do
         if @leave_status.save
@@ -97,10 +104,11 @@ class LeaveStatusRecordsController < ApplicationController
       if @leave_status.save
         @employee_leav_request.update(is_second_approved: true, current_status: 'FinalApproved')
         @employee_leav_request.create_single_record_for_leave(@employee_leav_request)
-         for i in @employee_leav_request.start_date.to_date..@employee_leav_request.end_date.to_date
-           EmployeeAttendance.create(employee_id: @employee_leav_request.employee_id, day: i, present: "Leave")
-         end
         @employee_leav_request.manage_coff(@employee_leav_request)
+        @employee_leav_request.create_attendance
+
+        LeaveRecord.where(employee_leav_request_id: @employee_leav_request.id).update_all(status: "FinalApproved")
+
         # @employee_leav_request.minus_leave(@employee_leav_request)
         if @employee_leav_request.employee.email.nil? || @employee_leav_request.employee.email == ''
           flash[:notice] = 'Leave Approved Successfully without mail.'
@@ -126,6 +134,9 @@ class LeaveStatusRecordsController < ApplicationController
     ActiveRecord::Base.transaction do
       if @leave_status.save
         @employee_leav_request.update(is_first_rejected: true, current_status: 'Rejected')
+
+      LeaveRecord.where(employee_leav_request_id: @employee_leav_request.id).update_all(status: "Rejected")
+         
         @employee_leav_request.revert_leave(@employee_leav_request)
         if @employee_leav_request.employee.email.nil? || @employee_leav_request.employee.email == ''
           flash[:notice] = 'Leave Rejected Successfully without email.'
@@ -151,6 +162,9 @@ class LeaveStatusRecordsController < ApplicationController
     ActiveRecord::Base.transaction do
       if @leave_status.save
         @employee_leav_request.update(is_second_rejected: true, current_status: 'Rejected')
+
+       LeaveRecord.where(employee_leav_request_id: @employee_leav_request.id).update_all(status: "Rejected")
+
         @employee_leav_request.revert_leave(@employee_leav_request)
         if @employee_leav_request.employee.email.nil? || @employee_leav_request.employee.email == ''
           flash[:notice] = 'Leave Rejected Successfully without email.'
@@ -168,22 +182,33 @@ class LeaveStatusRecordsController < ApplicationController
 
   def cancel_after_approve
     @particular_leave_record = ParticularLeaveRecord.find(params[:format])
-    @particular_leave_record.is_cancel_after_approve = true
+    @employee_leav_request = EmployeeLeavRequest.find_by_employee_id(@particular_leave_record.employee_id)
+    
+     @date = @particular_leave_record.leave_date.strftime("%Y-%m-%d")
+     LeaveRecord.where("employee_leav_request_id =? AND day =?", @particular_leave_record.employee_leav_request_id, @date).update_all(status: "Cancelled")
+    @flag = @particular_leave_record.salary_processed?
+    if @flag.nil?
+      @particular_leave_record.is_cancel_after_approve = true
 
-    @employee_leav_balance = EmployeeLeavBalance.where(employee_id: @particular_leave_record.employee_id, leav_category_id: @particular_leave_record.leav_category_id).take
-    if @particular_leave_record.is_full
-      @employee_leav_balance.no_of_leave = @employee_leav_balance.no_of_leave.to_f + 1
-    else
-      @employee_leav_balance.no_of_leave = @employee_leav_balance.no_of_leave.to_f + 0.5
-    end
-    ActiveRecord::Base.transaction do
-      @employee_leav_balance.save
-      @particular_leave_record.save
-      if @particular_leave_record.employee_leav_request.leav_category.name == "C.Off"
-        @particular_leave_record.rollback_coff(@particular_leave_record)
+      EmployeeAttendance.where("employee_id = ? AND day = ?", @particular_leave_record.employee_id,@particular_leave_record.leave_date.to_date).destroy_all
+      @employee_leav_balance = EmployeeLeavBalance.where(employee_id: @particular_leave_record.employee_id, leav_category_id: @particular_leave_record.leav_category_id).take
+      if @particular_leave_record.is_full
+        @employee_leav_balance.no_of_leave = @employee_leav_balance.no_of_leave.to_f + 1
+      else
+        @employee_leav_balance.no_of_leave = @employee_leav_balance.no_of_leave.to_f + 0.5
       end
+      EmployeeAttendance.where(employee_leav_request_id: @employee_leav_request.id).destroy_all
+      ActiveRecord::Base.transaction do
+        @employee_leav_balance.save
+        @particular_leave_record.save
+        if @particular_leave_record.employee_leav_request.leav_category.name == "C.Off"
+          @particular_leave_record.rollback_coff(@particular_leave_record)
+        end
+      end
+      flash[:notice] = 'Leave Cancelled Successfully.'
+    else
+      flash[:notice] = 'Salary is processed you cannot cancel the leave.'
     end
-    flash[:notice] = 'Leave Cancelled Successfully.'
     redirect_to show_leave_record_particular_leave_records_path(format: @particular_leave_record.employee_leav_request_id)
   end
 

@@ -48,6 +48,13 @@ class SalaryComponentsController < ApplicationController
   def create_employee_template
   end
 
+  def is_confirm
+    @salary_component = SalaryComponent.find(params[:salary_component])
+    SalaryComponent.find(@salary_component.id).update(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to new_salary_component_path
+  end
+  
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -57,6 +64,6 @@ class SalaryComponentsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def salary_component_params
-    params.require(:salary_component).permit(:name, :is_deducted, :code, :parent_id, :description)
+    params.require(:salary_component).permit(:is_confirm,:name, :is_deducted, :code, :parent_id, :description,:account_code)
   end
 end

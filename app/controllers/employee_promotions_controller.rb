@@ -122,6 +122,33 @@ class EmployeePromotionsController < ApplicationController
     end
   end
 
+  def display_certificate
+     # @employee_promotion = EmployeePromotion.find_by_employee_id(params[:emp_id])
+     @employee_promotion = EmployeePromotion.find_by_id(params[:emp_promotion_id])
+     @employee_promotions = EmployeePromotion.where(id: @employee_promotion.id)
+  end
+  
+  def print_certificate
+     @employee_promotion = EmployeePromotion.find(params[:emp_promotion_id])
+     @employee_promotions = EmployeePromotion.where(id: @employee_promotion.id)
+     respond_to do |format|
+        format.html
+        format.pdf do
+        render :pdf => 'print_certificate',
+        layout: '/layouts/pdf.html.erb',
+        :template => 'employee_promotions/print_certificate.pdf.erb',
+        :orientation      => 'Landscape', # default , Landscape
+        :page_height      => 1000,
+        :dpi              => '300',
+        :margin           => {:top    => 20, # default 10 (mm)
+                      :bottom => 20,
+                      :left   => 20,
+                      :right  => 20},
+        :show_as_html => params[:debug].present?
+     end
+        end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_employee_promotion

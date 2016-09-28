@@ -29,8 +29,6 @@
           <td><%= qualification.college %></td>
           <td><%= qualification.university.try(:name) %></td>
           <td>
-         
-           
              <%= link_to ' ',modal_qualifications_path(qualification),class: 'btn btn-success btn-sm fa fa-edit',remote: true %>
           </td>
       </tr>

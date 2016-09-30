@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160919045818) do
+ActiveRecord::Schema.define(version: 20160927120109) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -848,6 +848,9 @@ ActiveRecord::Schema.define(version: 20160919045818) do
     t.date     "expiry_date"
     t.string   "total_leave"
     t.boolean  "is_confirm"
+    t.date     "from_date"
+    t.date     "to_date"
+    t.boolean  "is_active"
   end
 
   add_index "employee_leav_balances", ["company_leav_id"], name: "index_employee_leav_balances_on_company_leav_id"
@@ -1745,6 +1748,19 @@ ActiveRecord::Schema.define(version: 20160919045818) do
   end
 
   add_index "leave_c_offs", ["employee_id"], name: "index_leave_c_offs_on_employee_id"
+
+  create_table "leave_masters", force: :cascade do |t|
+    t.integer  "leav_category_id"
+    t.string   "period"
+    t.decimal  "working_day"
+    t.string   "no_of_leave"
+    t.boolean  "is_carry_forward"
+    t.string   "limit"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "leave_masters", ["leav_category_id"], name: "index_leave_masters_on_leav_category_id"
 
   create_table "leave_records", force: :cascade do |t|
     t.date     "day"

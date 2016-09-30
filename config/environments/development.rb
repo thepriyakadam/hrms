@@ -47,20 +47,12 @@ Rails.application.configure do
   ActionMailer::Base.delivery_method = :smtp
 
   ActionMailer::Base.smtp_settings = {
-    # address: 'gator4134.hostgator.com',
-    # port: 993,
-    # domain: 'hostgator.com',
-    # user_name: 'ranna.p@amaazia.co.in',
-    # password: 'ranna123',
-    # authentication: :plain
-
-  :address: 'smtp.gmail.com',
-  :port: 587,
-  :domain: 'http://machinesandmachines.com/',
-  :user_name: 'it@indiba.in',
-  :password: 'indiba057',
-  :authentication: 'plain',
-  # :enable_starttls_auto => true
+    :address => "smtp.gmail.com",
+    :port => 587,
+    :domain =>"http://machinesandmachines.com/",
+    :user_name => "erp@indiba.in",
+    :password => "indibaerp",
+    :authentication => 'plain',
   }
 
   # Paperclip setup

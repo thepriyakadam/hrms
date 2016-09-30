@@ -4,28 +4,26 @@
         <div class="row">
           <div class="col-sm-3">
             <div class="form-group required">
-             <%= f.text_field :name %>
+             <%= f.text_field :name,label: "Policy Name" %>
             </div>
           </div>
     <div class="col-sm-3">
-       <label>Effective From</label>
       <div class="field">
         <div class="input-group">
           <div class="input-group-addon">
             <i class="fa fa-calendar"></i>
           </div>
-          <%= f.text_field :effective_from,hide_label: true, class: 'effective_from'%>
+          <%= f.text_field :effective_from,label: "Effective From", class: 'effective_from'%>
         </div>
       </div>
     </div>
  <div class="col-sm-3">
-       <label>Effective To</label>
       <div class="field">
         <div class="input-group">
           <div class="input-group-addon">
             <i class="fa fa-calendar"></i>
           </div>
-          <%= f.text_field :effective_to,hide_label: true, class: 'effective_to'%>
+          <%= f.text_field :effective_to, label: "Effective To", class: 'effective_to'%>
         </div>
       </div>
     </div>

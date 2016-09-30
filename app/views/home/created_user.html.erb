@@ -9,9 +9,9 @@
 		      <th>ID</th>
 		      <th>Employee Name</th>
 		      <th>System Role</th>
-		      <th>Reporting Manager - 1</th>
-		      <th>Reporting Manager - 2</th>
-		      <th>Department</th>
+		      <th>Reporting Manager 1</th>
+		      <th>Reporting Manager 2</th>
+		    
 		    </tr>
 		  </thead>
 		  <tbody>
@@ -22,7 +22,6 @@
 			        <td><%= employee.member.try(:role).try(:name) %>
         			<td><%= employee.manager.try(:first_name) %> <%= employee.manager.try(:middle_name) %> <%= employee.manager.try(:last_name) %></td>
         			<td><%= employee.manager_2.try(:first_name) %> <%= employee.manager_2.try(:middle_name) %><%= employee.manager_2.try(:last_name) %></td>
-			        <td><%= employee.department.try(:name) %></td>
 			      </tr>	
 		    <% end %>
 		  </tbody>

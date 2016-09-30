@@ -201,7 +201,6 @@
         var percentage = parseFloat($('#percentage_<%= item.try(:salary_component_id) %>').val()); 
         var parent_salary_component_id = parseInt($("#parent_salary_component_id_<%= item.try(:salary_component_id) %>").val());
         var parent_salary_component_monthly_amount = parseFloat($("#monthly_amount_"+parent_salary_component_id).val());
-        //alert(parent_salary_component_monthly_amount)
         var monthly_amount = "";
         var annual_amount = "";
         if(isNaN(percentage) || isNaN(parent_salary_component_monthly_amount)){

@@ -172,10 +172,15 @@ class TrainingRequestsController < ApplicationController
 #   end
 # end
 
+# def modal_approve_and_send_next
+#    @training_request = TrainingRequest.find(params[:format])
+#    @trainee_requests =TraineeRequest.where(training_request_id: @training_request.id,reporting_master_id: @training_request.reporting_master_id)
+# end
+
 def approve_and_send_next
      @training_request = TrainingRequest.find(params[:training_request_id])
      @rep = params[:training_request][:reporting_master_id]
-      @training_request.update(status: "Approved & Send Next",reporting_master_id: @rep) 
+      @training_request.update(status: "Approved & Send Next",reporting_master_id: @rep)
       @trainee_request_ids = params[:trainee_request_ids]
       @emp_total = @trainee_request_ids.count
       TrainingRequest.where(id: @training_request.id).update_all(no_of_employee: @emp_total)

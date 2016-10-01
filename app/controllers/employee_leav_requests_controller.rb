@@ -114,10 +114,7 @@ class EmployeeLeavRequestsController < ApplicationController
             render :new
 
             #@leave_coff = LeaveCOff.where(employee_id: @employee.id)
-          elsif @employee_leav_request.end_date < @emp_leave_bal.expiry_date && @emp_leave_bal.expiry_date < Date.today
-            @total_leaves = EmployeeLeavBalance.where('employee_id = ?', @employee.id)
-            flash.now[:alert] = 'Leave Time Expired.'
-            render :new
+          
           elsif type == 'C.Off'
             @employee_leav_request.leave_status_records.build(change_status_employee_id: current_user.employee_id, status: 'Pending', change_date: Date.today)
             if @employee_leav_request.save

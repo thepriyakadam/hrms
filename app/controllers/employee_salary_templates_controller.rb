@@ -82,19 +82,21 @@ class EmployeeSalaryTemplatesController < ApplicationController
       end
       redirect_to template_list_employee_templates_path(@employee_id)
     else
-      arrears_array = params[:old_salary_component_id].keys
-      increement_date = params[:increement][:date]
-      #@employee_template = EmployeeTemplate.create_new_object(@employee_id, @template_id)
-      #@employee_template = EmployeeTemplate.build_objects(arrays, params, @employee_id, @template_id, @employee_template)
+      ActiveRecord::Base.transaction do
+        arrears_array = params[:old_salary_component_id].keys
+        increement_date = params[:increement][:date]
+        @employee_template = EmployeeTemplate.create_new_object(@employee_id, @template_id)
+        @employee_template = EmployeeTemplate.build_objects(arrays, params, @employee_id, @template_id, @employee_template)
 
-      #@employee_arrear = EmployeeArrear.create_object(@employee_id, increement_date)
-      #@employee_arrear = EmployeeArrear.build_objects(arrears_array, params, @employee_arrear)
-      #if @employee_arrear.save
-        @employee_template.save
-        flash[:notice] = 'Employee template created successfully.'
-      #else
-        #flash[:alert] = 'Same template cannot assigned.'
-      #end
+        @employee_arrear = EmployeeArrear.create_object(@employee_id, increement_date)
+        @employee_arrear = EmployeeArrear.build_objects(arrears_array, params, @employee_arrear)
+        if @employee_arrear.save
+          @employee_template.save
+          flash[:notice] = 'Employee template created successfully.'
+        else
+          flash[:alert] = 'Same template cannot assigned.'
+        end
+      end  
       redirect_to template_list_employee_templates_path(@employee_id)
     end
   end

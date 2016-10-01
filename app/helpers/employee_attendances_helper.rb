@@ -44,7 +44,7 @@ module EmployeeAttendancesHelper
   end
 
   def absent_day_count(exist)
-    exist.select {|k,v| v == "A" }.count
+    exist.select {|k,v| v == "A" || v == "" }.count
   end
 
   # def payable_day_count(exist)

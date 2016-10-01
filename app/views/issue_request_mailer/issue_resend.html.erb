@@ -4,13 +4,14 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-     <h4>Issue Request</h4>
+     <h4>Issue Not Solved</h4>
     <p> 
-      This is to inform you that you have a Issue Request .
+      This is to inform you that the issue is not solved .
       Details are given below.<br><br>
-      <b>1. Issue Master</b> - <%= @issue_request.issue_master.try(:name) %><br><br>
 
-      <b>2. Issue Tracker Group</b> - <%= @issue_request.issue_tracker_group.try(:name) %><br><br>
+      <b>1. Issue</b> - <%= @issue_request.issue_master.try(:name) %><br><br>
+
+      <b>2. Group</b> - <%= @issue_request.issue_tracker_group.try(:name) %><br><br>
 
       <b>3. Issue Priority</b> - <%= @issue_request.issue_priority %><br><br>
 

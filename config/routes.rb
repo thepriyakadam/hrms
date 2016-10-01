@@ -8,13 +8,17 @@ Rails.application.routes.draw do
     collection do
       get :is_confirm
       get :lock_request_list
-      get :lock_request
+      post :lock_request
+      get :coordinator_lock_request
+      get :modal
       get :issue_history
       get :unlock_request
       get :solved_request
       get :solved_issues
       get :lock_by_admin
       get :unlock_by_admin
+      get :solved_confirm
+      get :resend_request
     end
    end
   resources :issue_masters do
@@ -929,6 +933,7 @@ end
   match 'due_templates/:id/download_due_tempalte_documents/:id' => 'due_templates#download_due_tempalte_documents', :via => [:get], :as => :download_due_tempalte_documents
 
   match 'issue_requests/:id/download_screenshot_image/:id' => 'issue_requests#download_screenshot_image', :via => [:get], :as => :download_screenshot_image
+  match 'issue_requests/:id/download_screenshot/:id' => 'issue_requests#download_screenshot', :via => [:get], :as => :download_screenshot
 
   resources :leave_c_offs
   resources :overtime_month_records

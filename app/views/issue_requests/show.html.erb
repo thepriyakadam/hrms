@@ -6,50 +6,42 @@
     <table id="example2" class="table table-bordered table-hover table-condensed'">
 
 <tr>
-  <th><strong>Type</strong></th>
+  <th><strong>Request By</strong></th>
+  <td><%= @issue_request.employee.try(:first_name) %> <%= @issue_request.employee.try(:middle_name) %> <%= @issue_request.employee.try(:last_name) %></td>
+
+  <th><strong>Issue</strong></th>
   <td><%= @issue_request.issue_master.try(:name) %></td>
-  </tr>
-
-  <!-- <th><strong>Issue Tracker Member</strong></th>
-  <td><%= @issue_request.issue_tracker_member_id %></td>
-</tr> -->
-
-<tr>
-  <th><strong>Group</strong></th>
-  <td><%= @issue_request.issue_tracker_group.try(:name) %></td></tr>
-
-  <tr>
-
-  <th><strong>Description</strong></th>
-  <td><%= @issue_request.description %></td>
+ 
 </tr>
 
-<!-- <tr>
+ 
+<tr>
+  <th><strong>Group</strong></th>
+  <td><%= @issue_request.issue_tracker_group.try(:name) %></td>
+  
+  <th><strong>Priority</strong></th>
+  <td><%= @issue_request.issue_priority %></td>
+  
+  
+</tr>
+
+<tr>
   <th><strong>Date</strong></th>
   <td><%= @issue_request.date %></td>
 
   <th><strong>Time</strong></th>
   <td><%= @issue_request.time %></td>
-</tr> -->
-
-<!-- <tr>
-  <th><strong>Request By</strong></th>
-  <td><= @issue_request.employee.try(:first_name) %> <= @issue_request.employee.try(:middle_name) %> <= @issue_request.employee.try(:last_name) %></td>
-</tr> -->
+</tr>
 
 <tr>
-  <th><strong>Priority</strong></th>
-  <td><%= @issue_request.issue_priority %></td></tr>
+  
+  <th><strong>Description</strong></th>
+  <td colspan="3"><%= @issue_request.description %></td>
 
-  <tr>
-
-  <th><strong>Status</strong>
-  <td><%= @issue_request.status %></td>
 </tr>
 
 </table>
-<%= link_to 'Edit', edit_issue_request_path(@issue_request),class: 'btn btn-success btn-sm fa fa-edit' %> |
-<%= link_to 'Back', issue_requests_path,class: 'btn btn-primary fa fa-arrow-left' %>
+<%= link_to 'Back', lock_request_list_issue_requests_path,class: 'btn btn-primary fa fa-arrow-left' %>
 
 
 </div>

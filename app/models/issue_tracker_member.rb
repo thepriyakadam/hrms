@@ -4,5 +4,9 @@ class IssueTrackerMember < ActiveRecord::Base
   has_many :issue_requests
   has_many :issue_tracker_accesses
 
+
+  validates :issue_tracker_group_id, presence: true
+  # validates :role, presence: true
+  
   validates_uniqueness_of :issue_tracker_group_id, :scope => :employee_id
 end

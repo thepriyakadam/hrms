@@ -10,11 +10,10 @@
   <thead>
     <tr>
       <th>Type</th>
-      <!-- <th>Issue Tracker Member</th> -->
       <th>Group</th>
       <th>Priority</th>
-      <th>Upload Document</th>
-      <th>Uplaod Image</th>
+      <th>Download Document</th>
+      <th>Download Image</th>
       <th>Action</th>
     </tr>
   </thead>
@@ -23,7 +22,6 @@
     <% @issue_requests.each do |issue_request| %>
       <tr>
         <td><%= issue_request.issue_master.try(:name) %></td>
-       <!--  <td><%= issue_request.issue_tracker_member_id %></td> -->
         <td><%= issue_request.issue_tracker_group.try(:name) %></td>
         <td><%= issue_request.issue_priority %></td>
        

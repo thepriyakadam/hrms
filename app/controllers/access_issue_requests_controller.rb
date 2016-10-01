@@ -28,7 +28,7 @@ class AccessIssueRequestsController < ApplicationController
 
     respond_to do |format|
       if @access_issue_request.save
-        format.html { redirect_to @access_issue_request, notice: 'Access issue request was successfully created.' }
+        format.html { redirect_to @access_issue_request, notice: 'Issue Access Request was successfully created.' }
         format.json { render :show, status: :created, location: @access_issue_request }
       else
         format.html { render :new }
@@ -42,7 +42,7 @@ class AccessIssueRequestsController < ApplicationController
   def update
     respond_to do |format|
       if @access_issue_request.update(access_issue_request_params)
-        format.html { redirect_to @access_issue_request, notice: 'Access issue request was successfully updated.' }
+        format.html { redirect_to @access_issue_request, notice: 'Issue Access Request was successfully updated.'}
         format.json { render :show, status: :ok, location: @access_issue_request }
       else
         format.html { render :edit }
@@ -56,7 +56,7 @@ class AccessIssueRequestsController < ApplicationController
   def destroy
     @access_issue_request.destroy
     respond_to do |format|
-      format.html { redirect_to access_issue_requests_url, notice: 'Access issue request was successfully destroyed.' }
+      format.html { redirect_to access_issue_requests_url, notice: 'Issue Access Request was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

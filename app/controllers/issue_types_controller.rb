@@ -6,6 +6,8 @@ class IssueTypesController < ApplicationController
   def new
     @issue_type = IssueType.new
     @issue_types = IssueType.all
+    # session[:active_tab] = "issuetracker"
+    # session[:active_tab1] = "issueprocess"
   end
 
   # GET /issue_types/1/edit

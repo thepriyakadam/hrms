@@ -16,7 +16,8 @@ class IssueTrackerMembersController < ApplicationController
   def new
     @issue_tracker_member = IssueTrackerMember.new
     @issue_tracker_members = IssueTrackerMember.all
-    session[:active_tab] = "issuetracker"
+    session[:active_tab] ="issuetracker"
+    session[:active_tab1] ="issueprocess1"
   end
 
   # GET /issue_tracker_members/1/edit
@@ -73,6 +74,6 @@ class IssueTrackerMembersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def issue_tracker_member_params
-      params.require(:issue_tracker_member).permit(:issue_tracker_group_id, :employee_id, :status, :is_confirm)
+      params.require(:issue_tracker_member).permit(:issue_tracker_group_id, :employee_id, :status, :is_confirm,:role)
     end
 end

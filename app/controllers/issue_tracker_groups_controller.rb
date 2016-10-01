@@ -17,6 +17,7 @@ class IssueTrackerGroupsController < ApplicationController
     @issue_tracker_group = IssueTrackerGroup.new
     @issue_tracker_groups = IssueTrackerGroup.all
     session[:active_tab] = "issuetracker"
+    session[:active_tab1] = "issueprocess1"
   end
 
   # GET /issue_tracker_groups/1/edit

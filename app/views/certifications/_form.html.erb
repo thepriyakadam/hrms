@@ -15,7 +15,7 @@
           
           <div class="col-sm-3">
             <div class="field">
-              <%= f.text_field :name, class: 'input_name' %>
+              <%= f.text_field :name,label: 'Certification Name', class: 'input_name' %>
             </div>
           </div>
       
@@ -42,7 +42,7 @@
       </div>
 
 
-      <!--< unless params['controller'] == 'Certifications' and params['action'] == 'edit' %>
+      <% unless params['controller'] == 'Certifications' and params['action'] == 'edit' %>
         <div class="row">
        <div class="col-sm-6">
         <span class="icon-input-btn btn-sm">
@@ -51,10 +51,10 @@
           </div>
 </div>          
         <br>
-      <end%>-->
+      <%end%>
 
       <div class="row">
-        <div class="col-sm-3">
+        <div class="col-sm-6">
           <div class="actions">
             <%= f.submit :class => class_name, data: { disable_with: data_info },class: 'btn btn-sm btn-primary' %>
             <% if params['controller'] == 'Certifications' and params['action'] == 'edit' %>

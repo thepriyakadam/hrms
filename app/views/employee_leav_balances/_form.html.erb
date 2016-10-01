@@ -34,7 +34,7 @@
         <thead>
           <tr>
             <th><input type="checkbox" id="selectAll" value="selectAll"></th>
-            <th>Employee ID</th>
+            <th>ID</th>
             <th>Employee Name</th>
             <th>Department</th>
             <th>Designation</th>
@@ -49,7 +49,7 @@
               <td><%= check_box_tag "employee_ids[]", e.id %></td>
               <td><%= e.manual_employee_code %></td>
               <td><%= full_name(e) %></td>
-              <td><%= e.company_location.try(:name) %> - <%= e.department.try(:name) %>
+              <td><%= e.department.try(:name) %>
               </td>
               <td><%= e.joining_detail.try(:employee_designation).try(:name) %></td>
               <td><%= e.employee_type.try(:name) %></td>
@@ -62,9 +62,11 @@
   </div>
  
   <div class="row">
-    <div class="col-sm-3">
+    <div class="col-sm-6">
       <div class="actions">
         <%= f.submit "Create Employee Leave Balance",:class => class_name, data: { disable_with: data_info } %>
+
+        <%= link_to 'Back', employee_leav_balances_path,class: 'btn btn-sm btn-default fa fa-arrow' %>
       </div>
     </div>
   </div>

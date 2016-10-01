@@ -41,7 +41,7 @@
     <end%>-->
 
     <div class="row">
-      <div class="col-sm-3">
+      <div class="col-sm-6">
         <div class="actions">
           <%= f.submit :class => class_name, data: { disable_with: data_info } %>
           <% if params['controller'] == 'awards' and params['action'] == 'edit' %>
@@ -103,7 +103,7 @@ $("#award").validate({
       "award[award_name]":{
         required: true
       },
-      "award[year]":{
+      "award[year_id]":{
         required: true
       },
       "award[award_from]":{
@@ -114,7 +114,7 @@ $("#award").validate({
       "award[award_name]":{
         required: "Please Specify Award Name"
       },
-      "award[year]":{
+      "award[year_id]":{
         required: "Please Select Year"
       },
       "award[award_from]":{

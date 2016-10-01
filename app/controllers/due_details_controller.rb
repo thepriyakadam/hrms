@@ -85,16 +85,19 @@ class DueDetailsController < ApplicationController
   end
 
   def create_due_employee_detail
-    # byebug
     # @due_employee_detail = DueEmployeeDetail.new(due_employee_detail_params)
     @emp = params[:due_employee_detail][:employee_id]
     @due_template = params[:due_template_id][:hhh]
     # @due_employee_detail.save
     @due_detail_ids = params[:due_detail_ids]
-    @due_detail_ids.each do |did|
-    DueEmployeeDetail.create(reporting_master_id: did,employee_id: @emp,due_template_id: @due_template,is_confirmed: true)
+    if @due_detail_ids.nil?
+       flash[:alert] = "Please Select the Checkbox"
+    else
+      @due_detail_ids.each do |did|
+      DueEmployeeDetail.create(reporting_master_id: did,employee_id: @emp,due_template_id: @due_template,is_confirmed: true)
+      flash[:notice] = "Created Successfully & Request Also Sent to the Selected Due Owner."
+      end
     end
-    flash[:notice] = "Created Successfully & Request Also Sent to the Selected Due Owner."
     redirect_to all_employee_resignation_list_due_details_path
   end
 

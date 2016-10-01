@@ -27,8 +27,8 @@
         <td><%= employee_transfer.employee_designation.try(:name) %></td>
         <td><%= employee_transfer.employee_category.try(:name) %></td>
         <td><%= employee_transfer.company.try(:name) %></td>
-        <td><%= employee_transfer.employee.try(:company_location).try(:name) %></td>  
-        <td><%= employee_transfer.employee.try(:department).try(:name) %></td>
+        <td><%= employee_transfer.company_location.try(:name) %></td>  
+        <td><%= employee_transfer.department.try(:name) %></td>
         <td><%= employee_transfer.justification %></td>
         <td>
         <!-- <= link_to '', employee_transfer,class:'btn btn-xs btn-default fa fa-eye' %> -->

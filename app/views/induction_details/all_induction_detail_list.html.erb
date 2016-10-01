@@ -38,8 +38,12 @@
             <% end %>
         </td>
         <div id="myModal" class="modal fade"></div>
-        <td><%= link_to 'Show', induction_detail,class: 'btn btn-xs btn-info fa fa-check' %>
-          <%= link_to ' Update Date',update_date_modal_induction_details_path(induction_detail),class: 'btn btn btn-xs btn-success fa fa-modx',remote: true %>
+        <td>
+          <% if induction_detail.induction_completed == true %>
+          <% else %>
+            <%= link_to 'Show', induction_detail,class: 'btn btn-xs btn-info fa fa-check' %>
+            <%= link_to ' Update Date',update_date_modal_induction_details_path(induction_detail),class: 'btn btn btn-xs btn-success fa fa-modx',remote: true %>
+          <% end %>
         </td>
       </tr>
     <% end %>

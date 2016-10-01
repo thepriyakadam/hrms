@@ -84,19 +84,17 @@ class EmployeeSalaryTemplatesController < ApplicationController
     else
       arrears_array = params[:old_salary_component_id].keys
       increement_date = params[:increement][:date]
-      @employee_template = EmployeeTemplate.create_new_object(@employee_id, @template_id)
-      @employee_template = EmployeeTemplate.build_objects(arrays, params, @employee_id, @template_id, @employee_template)
+      #@employee_template = EmployeeTemplate.create_new_object(@employee_id, @template_id)
+      #@employee_template = EmployeeTemplate.build_objects(arrays, params, @employee_id, @template_id, @employee_template)
 
-      # @employee_arrear = EmployeeArrear.create_object(@employee_id, increement_date)
-      # @employee_arrear = EmployeeArrear.build_objects(arrears_array, params, @employee_arrear)
-      ActiveRecord::Base.transaction do
-        # if @employee_arrear.save
-          @employee_template.save
-          flash[:notice] = 'Employee template created successfully.'
-        # else
-        #   flash[:alert] = 'Same template cannot assigned.'
-        # end
-      end
+      #@employee_arrear = EmployeeArrear.create_object(@employee_id, increement_date)
+      #@employee_arrear = EmployeeArrear.build_objects(arrears_array, params, @employee_arrear)
+      #if @employee_arrear.save
+        @employee_template.save
+        flash[:notice] = 'Employee template created successfully.'
+      #else
+        #flash[:alert] = 'Same template cannot assigned.'
+      #end
       redirect_to template_list_employee_templates_path(@employee_id)
     end
   end
@@ -147,7 +145,8 @@ class EmployeeSalaryTemplatesController < ApplicationController
         arrear_start_year = arrear_start_date.strftime('%Y').to_i
         arrear_end_month = Workingday.months[@month]
         arrear_end_year = params['year'].to_i
-        arrear_working_days = Workingday.where(employee_id: @employee.id, month: arrear_start_month..arrear_end_month, year: arrear_start_year..arrear_end_year)
+
+        arrear_working_days = Workingday.where(employee_id: @employee.id, month_name: arrear_start_month..arrear_end_month, year: arrear_start_year..arrear_end_year)
         @total_payable_days = arrear_working_days.sum('payable_day')
         @arrear_items = @arrear.employee_arrear_items
       end
@@ -155,8 +154,7 @@ class EmployeeSalaryTemplatesController < ApplicationController
     end
   end
 
-   def is_confirm_employee_template
-
+  def is_confirm_employee_template
     # @employee = Employee.find(params[:id])
      @template_ids = params[:template_ids]
     if @template_ids.nil?
@@ -165,18 +163,16 @@ class EmployeeSalaryTemplatesController < ApplicationController
       # redirect_to show_employee_salary_template_employee_salary_templates_path(id: @employee.id)
     else
       @template_ids.each do |did|
-      @employee_salary_template = EmployeeSalaryTemplate.find(did)
-      @employee_salary_template.update(is_confirm: true) 
-      # InterviewScheduleMailer.sample_email_to_interviewer(@interview_schedule).deliver_now
-      flash[:notice] = "Confirmed Successfully" 
-    end 
-    redirect_to fresh_template_employee_templates_path
-    # redirect_to show_employee_salary_template_employee_salary_templates_path(id: @employee.id)
+        @employee_salary_template = EmployeeSalaryTemplate.find(did)
+        @employee_salary_template.update(is_confirm: true) 
+        # InterviewScheduleMailer.sample_email_to_interviewer(@interview_schedule).deliver_now
+        flash[:notice] = "Confirmed Successfully" 
+      end 
+      redirect_to fresh_template_employee_templates_path
+      # redirect_to show_employee_salary_template_employee_salary_templates_path(id: @employee.id)
+    end
   end
- end
  
-
-
   def modal
   end
 

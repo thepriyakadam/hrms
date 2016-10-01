@@ -6,9 +6,8 @@
  <table id="example1" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
-      <th>Employee ID</th>
+      <th>ID</th>
       <th>Employee Name</th>
-      <th>Department</th>
       <th>Request To</th>
       <th>Traveling Date</th>
       <th>Place</th>
@@ -22,7 +21,6 @@
         <% if @travel_request.id == travel_request.id %>
         <th><font color='green'>*<%= travel_request.employee.try(:manual_employee_code) %></font></th>
         <th><font color='green'><%= travel_request.employee.try(:first_name) %> <%= travel_request.employee.try(:middle_name) %> <%= travel_request.employee.try(:last_name) %></font></th>
-        <th><font color='green'><%= travel_request.employee.company_location.try(:name) %> - <%= travel_request.employee.department.try(:name) %></font></th>
         <th><font color='green'><%= travel_request.reporting_master.employee.try(:first_name) %> <%= travel_request.reporting_master.employee.try(:middle_name) %> <%= travel_request.reporting_master.employee.try(:last_name) %></font></th>
         <th><font color='green'><%= travel_request.traveling_date %></font></th>
         <th><font color='green'><%= travel_request.place %></font></th>
@@ -30,7 +28,6 @@
         <%else%>
         <td><%= travel_request.employee.try(:manual_employee_code) %></td>
         <td><%= travel_request.employee.try(:first_name) %> <%= travel_request.employee.try(:middle_name) %> <%= travel_request.employee.try(:last_name) %></td>
-        <td><%= travel_request.employee.company_location.try(:name) %> - <%= travel_request.employee.department.try(:name) %></td>
         <td><%= travel_request.reporting_master.employee.try(:first_name) %> <%= travel_request.reporting_master.employee.try(:middle_name) %> <%= travel_request.reporting_master.employee.try(:last_name) %></td>
         <td><%= travel_request.traveling_date %></td>
         <td><%= travel_request.place %></td>

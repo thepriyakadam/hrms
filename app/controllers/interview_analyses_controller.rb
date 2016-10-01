@@ -33,7 +33,10 @@ class InterviewAnalysesController < ApplicationController
   def create
     @interview_analysis = InterviewAnalysis.new(interview_analysis_params)
     @interview_analyses = InterviewAnalysis.all
+    # @interview_round = InterviewRound.find(params[:interview_round_id])
+    @interview_round = InterviewRound.find(@interview_analysis.interview_round_id)
       if @interview_analysis.save
+        InterviewAnalysis.where(id: @interview_analysis.id).update_all(interview_schedule_id: @interview_round.interview_schedule_id)
         @interview_analysis = InterviewAnalysis.new
         flash[:notice] = 'Interview Evaluation Details saved Successfully.'
       end

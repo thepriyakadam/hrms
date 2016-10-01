@@ -723,6 +723,7 @@ end
       get :vacancy_profile
       get :vacancy_history_list
       get :show_vacancy_request_history
+      get :reporting_masters_vacancy_master_list
     end
   end
   resources :leave_c_offs do

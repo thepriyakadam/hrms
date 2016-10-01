@@ -59,14 +59,18 @@
         <td><%= interview_round.interview_time %></td>
         <td><%= interview_round.location %></td>
         <td><%= interview_round.schedule_comment %></td>
-      </tr>
+<!--         <td><= interview_rounds.interview_analysis.interview_evalution.try(:name) %></td>
+ -->      </tr>
     <% end %>
   </tbody>
 </table>  
-<h4 class="box-title">Interview Analysis</h4>
+<h4 class="box-title">Interview Evaluation</h4>
 <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
   <thead>
-    <tr> 
+    <tr>
+      <th>Sr.No</th> 
+      <th>Interviewer Name</th>
+      <th>Interview Type</th>
       <th>Evaluation Criteria</th>
       <th>Skillset</th>
       <th>Evaluation</th>
@@ -74,8 +78,12 @@
     </tr>
   </thead>
   <tbody>
+  <% i = 0 %>
     <% @interview_analyses.each do |interview_analysis| %>
-      <tr> 
+      <tr>
+        <td><%= i=i+1 %></td>
+        <td><%= interview_analysis.interview_round.employee.try(:first_name) %> <%= interview_analysis.interview_round.employee.try(:middle_name) %> <%= interview_analysis.interview_round.employee.try(:last_name) %></td>
+        <td><%= interview_analysis.interview_round.interview_type.try(:name) %></td>
         <td><%= interview_analysis.interview_evalution.try(:name) %></td>
         <td><%= interview_analysis.interview_attribute.try(:name) %></td>
         <td><%= interview_analysis.interview_decision.try(:name) %></td>

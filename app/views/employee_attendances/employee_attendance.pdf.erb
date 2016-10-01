@@ -1,5 +1,5 @@
 <div class="ajax-process"></div> 
-<h1 align="center"><center><strong>BHANDARI FOILS AND TUBES LTD.</strong></center></h1>
+<h1 align="center"><center><strong><%= current_user.employee.company_location.company.description %></strong></center></h1>
 <h1> Employee Attendance - <%= @month %>/<%= @year %></h1>
 
      <%= bootstrap_form_for :temp, url: {action: "create_attendance", date: @date} do |f| %>

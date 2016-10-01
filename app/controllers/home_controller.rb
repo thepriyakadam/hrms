@@ -1,8 +1,6 @@
 class HomeController < ApplicationController
   # load_and_authorize_resource
   def index
-    
-    
     @circulars = Circular.all
     @company_policies = CompanyPolicy.all
     @companies = Company.all

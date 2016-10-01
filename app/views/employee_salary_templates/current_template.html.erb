@@ -31,9 +31,7 @@
       <tbody>
         <% @employee_salary_templates.each do |template| %>
           <tr>
-
           <td> <% if template.try(:is_confirm) == true %>
-
           <% else %>
            <%= check_box_tag "template_ids[]", template.id %><% end %></td>
            <td><%= template.try(:salary_component).try(:name)%></td>
@@ -48,18 +46,13 @@
             <small class="label label-info">Confirmed</small>
             <% else %><%= link_to '', edit_employee_salary_template_path(template), class: 'btn btn-success btn-xs fa fa-edit',remote:true %><% end %>
             </td>
-
           </tr>
         <% end %> 
         <tr>
-          <th>Total</th>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td align="right"><%= @employee_salary_templates.sum(:monthly_amount) %></td>
-          <td align="right"><%= @employee_salary_templates.sum(:annual_amount) %></td>
+          <th colspan="2">Total</th>
+          <th colspan="4"></th>
+          <td align="right"><strong><%= @employee_salary_templates.sum(:monthly_amount) %></strong></td>
+          <td align="right"><strong><%= @employee_salary_templates.sum(:annual_amount) %></strong></td>
           <td></td>
         </tr>    
       </tbody>

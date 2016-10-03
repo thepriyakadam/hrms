@@ -4,7 +4,7 @@ module IssueRequestsHelper
   end
 
    def all_issue_tracker_member
-     IssueTrackerMember.all.collect { |x| [x.employee.first_name+' '+x.employee.middle_name+' '+x.employee.last_name, x.id] }
+     IssueTrackerMember.where(status: true).all.collect { |x| [x.employee.first_name+' '+x.employee.middle_name+' '+x.employee.last_name, x.id] }
   end
 
   def issue_tracker_member_role_wise(i)

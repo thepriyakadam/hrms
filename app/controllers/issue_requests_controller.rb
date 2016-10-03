@@ -147,8 +147,7 @@ class IssueRequestsController < ApplicationController
   end
 
   def solved_issues
-    @issue_tracker_member = IssueTrackerMember.find_by(employee_id: current_user.employee_id)
-    @issue_requests = IssueRequest.where(status: true, issue_tracker_group_id: @issue_tracker_member.issue_tracker_group_id,employee_id: current_user.employee_id)
+    @issue_requests = IssueRequest.where(status: true, employee_id: current_user.employee_id)
     session[:active_tab] = "issuetracker"
     session[:active_tab1] = "issueprocess"
   end

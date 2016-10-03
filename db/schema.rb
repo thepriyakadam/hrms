@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160928073605) do
+ActiveRecord::Schema.define(version: 20161003124141) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -1741,6 +1741,17 @@ ActiveRecord::Schema.define(version: 20160928073605) do
   add_index "issue_requests", ["issue_master_id"], name: "index_issue_requests_on_issue_master_id"
   add_index "issue_requests", ["issue_tracker_group_id"], name: "index_issue_requests_on_issue_tracker_group_id"
   add_index "issue_requests", ["issue_tracker_member_id"], name: "index_issue_requests_on_issue_tracker_member_id"
+
+  create_table "issue_root_causes", force: :cascade do |t|
+    t.integer  "issue_tracker_group_id"
+    t.string   "name"
+    t.boolean  "is_active"
+    t.boolean  "is_confirm"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "issue_root_causes", ["issue_tracker_group_id"], name: "index_issue_root_causes_on_issue_tracker_group_id"
 
   create_table "issue_tracker_accesses", force: :cascade do |t|
     t.string   "name"

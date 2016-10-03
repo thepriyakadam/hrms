@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
 
+  resources :issue_root_causes do
+    collection do
+      get :is_confirm
+        end
+   end
+
   resources :issue_histories
   resources :access_issue_requests
   resources :issue_locker_histories

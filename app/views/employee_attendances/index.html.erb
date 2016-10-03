@@ -4,39 +4,20 @@
     <div class="pull-right">
     <%= link_to "Add Employee Attendance", new_employee_attendance_path, class: 'btn btn-primary' %> 
     </div>
-  </div><!-- /.box-header -->
-  <div class="box-body">
-  <div id="comments">
-    <table id="example2" class="table table-bordered table-hover table-condensed">
-    <thead>
-      <tr>
-        <th>Year</th>
-        <th>Months</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @employee_attendances.each do |a| %>
-        <tr>
-          <% year = a.day.strftime("%Y") %>
-          <td><%= year %></td>
-          <td>
-            <%= link_to 'January',monthly_attendance_employee_attendances_path(year: year, month: "January") , class: 'btn btn-xs btn-primary' %>
-            <%= link_to 'February',monthly_attendance_employee_attendances_path(year: year, month: "February") , class: 'btn btn-xs btn-primary' %>
-            <%= link_to 'March',monthly_attendance_employee_attendances_path(year: year, month: "March") , class: 'btn btn-xs btn-primary' %>
-            <%= link_to 'April',monthly_attendance_employee_attendances_path(year: year, month: "April") , class: 'btn btn-xs btn-primary' %>
-            <%= link_to 'May',monthly_attendance_employee_attendances_path(year: year, month: "May") , class: 'btn btn-xs btn-success' %>
-            <%= link_to 'June',monthly_attendance_employee_attendances_path(year: year, month: "June") , class: 'btn btn-xs btn-success' %>
-            <%= link_to 'July',monthly_attendance_employee_attendances_path(year: year, month: "July") , class: 'btn btn-xs btn-success' %>
-            <%= link_to 'August',monthly_attendance_employee_attendances_path(year: year, month: "August") , class: 'btn btn-xs btn-success' %>
-            <%= link_to 'September',monthly_attendance_employee_attendances_path(year: year, month: "September") , class: 'btn btn-xs btn-info' %>
-            <%= link_to 'October',monthly_attendance_employee_attendances_path(year: year, month: "October") , class: 'btn btn-xs btn-info' %>
-            <%= link_to 'November',monthly_attendance_employee_attendances_path(year: year, month: "November") , class: 'btn btn-xs btn-info' %>
-            <%= link_to 'December',monthly_attendance_employee_attendances_path(year: year, month: "December") , class: 'btn btn-xs btn-info' %>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-  </div>
+ <div class="box-body">
+    <div class="row">
+        <div class="col-sm-3">
+          <div class="field">
+            <%= select :employee_attendance,:month, ['January','February','March','April','May','June','July','August','September','October','November','December'],{label: 'Select Month',include_blank: " Select Month"}, class: "form-control" %>
+           </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="field">
+            <%= select :employee_attendance,:year,['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025','2026','2027'],{label: 'Select Year',include_blank: " Select Year"}, {onchange:"var a={department_id:$(this).val(),month:$('#employee_attendance_month').val(),year:$('#employee_attendance_year').val()};$('.ajax-progress').show(); $.get('/employee_attendances/display_attendance_1',a,function(response){});",class: 'form-control'} %>
+          </div>
+        </div>
+        </div>
+     </div>
+   <div id="display_attendance_1"></div>
 </div>
 </div>

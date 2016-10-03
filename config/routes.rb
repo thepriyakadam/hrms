@@ -167,6 +167,8 @@ Rails.application.routes.draw do
       get :show_costcenter_wise_attendance
       get :employee_slip
       get :employee_slip_xls
+      post :display_attendance
+      get :display_attendance_1
     end
   end
   resources :salary_comp_mappings
@@ -1112,6 +1114,8 @@ end
   resources :instalments do
     collection do
       get :employees
+      get :display_installment
+      get :instalment_xls
     end
   end
   resources :advance_salaries do

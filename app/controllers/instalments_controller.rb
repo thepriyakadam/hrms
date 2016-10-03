@@ -73,7 +73,7 @@ class InstalmentsController < ApplicationController
     end
   end
 
-  def employees
+  def display_installment
     date = Date.new(params[:year].to_i, Workingday.months[params[:month]])
     if current_user.class == Group
       @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y'))
@@ -89,6 +89,54 @@ class InstalmentsController < ApplicationController
       end
     end
   end
+
+  # def employees
+  #   date = Date.new(params[:year].to_i, Workingday.months[params[:month]])
+  #   if current_user.class == Group
+  #     @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y'))
+  #   else
+  #     if current_user.role.name == 'Company' || current_user.role.name == 'Account'
+  #       @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y'))
+  #     elsif current_user.role.name == 'CompanyLocation'
+  #       @employees = Employee.where(company_location_id: current_user.company_location_id)
+  #       @advance_salaries = AdvanceSalary.where(employee_id: @employees)
+  #       @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y')).where(advance_salary_id: @advance_salaries)
+  #     elsif current_user.role.name == 'Employee'
+  #       @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y')).where(employee_id: current_user.employee_id)
+  #     end
+  #   end
+  # end
+
+  def instalment_xls
+    # byebug
+    date = Date.new(params[:year].to_i, Workingday.months[params[:month]])
+    if current_user.class == Group
+      @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y'))
+    else
+      if current_user.role.name == 'Company' || current_user.role.name == 'Account'
+        @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y'))
+      elsif current_user.role.name == 'CompanyLocation'
+        @employees = Employee.where(company_location_id: current_user.company_location_id)
+        @advance_salaries = AdvanceSalary.where(employee_id: @employees)
+        @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y')).where(advance_salary_id: @advance_salaries)
+      elsif current_user.role.name == 'Employee'
+        @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y')).where(employee_id: current_user.employee_id)
+      end
+    end
+    respond_to do |format|
+      format.xls {render template: 'instalments/instalment.xls.erb'}
+    end
+  end
+
+  # def employee_slip_xls
+  #   @year, @month = params[:year], params[:month]
+  #   @date = Date.new(@year.to_i, Workingday.months[@month])
+  #   @day = @date.end_of_month.day
+  #   @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ? and is_confirm = ?", @date.strftime('%m/%Y'),false).group(:employee_id)
+  #   respond_to do |format|
+  #     format.xls {render template: 'employee_attendances/employee_attendance.xls.erb'}
+  #   end
+  # end
 
   private
 

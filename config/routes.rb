@@ -1123,6 +1123,7 @@ end
       get :employees
       get :search_month_year
       get :generate_workingday
+      get :workingdays_detail
       post :print_working_day
       post :create_working_day
       get :search_month_year_xls

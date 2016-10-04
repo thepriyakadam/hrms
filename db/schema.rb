@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161004072054) do
+ActiveRecord::Schema.define(version: 20161004130453) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -860,6 +860,9 @@ ActiveRecord::Schema.define(version: 20161004072054) do
     t.date     "expiry_date"
     t.string   "total_leave"
     t.boolean  "is_confirm"
+    t.date     "from_date"
+    t.date     "to_date"
+    t.boolean  "is_active"
   end
 
   add_index "employee_leav_balances", ["company_leav_id"], name: "index_employee_leav_balances_on_company_leav_id"
@@ -1263,6 +1266,7 @@ ActiveRecord::Schema.define(version: 20161004072054) do
     t.integer  "food_coupan_master_id"
     t.integer  "return_coupan"
     t.integer  "total_coupan"
+    t.boolean  "is_paid"
   end
 
   add_index "food_deductions", ["employee_id"], name: "index_food_deductions_on_employee_id"
@@ -1431,7 +1435,7 @@ ActiveRecord::Schema.define(version: 20161004072054) do
     t.date     "holiday_date"
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
-    t.boolean  "isweekend"
+    t.boolean  "is_taken"
     t.boolean  "is_send",      default: false
   end
 
@@ -1764,7 +1768,6 @@ ActiveRecord::Schema.define(version: 20161004072054) do
   create_table "issue_tracker_accesses", force: :cascade do |t|
     t.string   "name"
     t.string   "role"
-    t.integer  "employee_id"
     t.boolean  "status"
     t.boolean  "is_confirm"
     t.datetime "created_at",              null: false
@@ -1773,7 +1776,6 @@ ActiveRecord::Schema.define(version: 20161004072054) do
     t.integer  "issue_tracker_group_id"
   end
 
-  add_index "issue_tracker_accesses", ["employee_id"], name: "index_issue_tracker_accesses_on_employee_id"
   add_index "issue_tracker_accesses", ["issue_tracker_group_id"], name: "index_issue_tracker_accesses_on_issue_tracker_group_id"
   add_index "issue_tracker_accesses", ["issue_tracker_member_id"], name: "index_issue_tracker_accesses_on_issue_tracker_member_id"
 
@@ -1912,6 +1914,19 @@ ActiveRecord::Schema.define(version: 20161004072054) do
   end
 
   add_index "leave_c_offs", ["employee_id"], name: "index_leave_c_offs_on_employee_id"
+
+  create_table "leave_masters", force: :cascade do |t|
+    t.integer  "leav_category_id"
+    t.string   "period"
+    t.decimal  "working_day"
+    t.string   "no_of_leave"
+    t.boolean  "is_carry_forward"
+    t.string   "limit"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "leave_masters", ["leav_category_id"], name: "index_leave_masters_on_leav_category_id"
 
   create_table "leave_records", force: :cascade do |t|
     t.date     "day"

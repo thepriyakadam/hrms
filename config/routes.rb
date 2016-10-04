@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
 
+  resources :employee_code_masters
   get 'download_pdf/index'
   get 'download_pdf/zip'
   get 'download_pdf/pdf'
@@ -1402,6 +1403,7 @@ end
       get :ajax_new_employee_document
       get :collect_company_location
       get :collect_department
+      get :display_emp_code_master
     end
     member do
       get :edit_manager

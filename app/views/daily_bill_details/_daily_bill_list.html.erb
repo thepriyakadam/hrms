@@ -38,7 +38,7 @@
               <% if daily_bill_detail.avatar_file_file_name == nil %>
                  <small class="label label-warning">Not Available</small>
               <% else %>
-                <%= link_to '',download_doc_path(id: daily_bill_detail.id),class: 'btn btn-xs fa fa-download' %>
+                <%= link_to '',download_doc_path(id: daily_bill_detail.id),class: 'btn btn-xs fa fa-download',:target => "_blank" %>
               <% end %>
             </td>            
             <td>

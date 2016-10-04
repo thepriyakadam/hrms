@@ -1,6 +1,5 @@
 require 'rubygems'
 require 'roo'
-
 ex = Roo::Excel.new("#{Rails.root}/public/a.xls")
 
 ex.default_sheet = ex.sheets[4] #siya feb

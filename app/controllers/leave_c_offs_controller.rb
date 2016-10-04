@@ -46,7 +46,7 @@ class LeaveCOffsController < ApplicationController
     else
         @leave_c_off = LeaveCOff.new(leave_c_off_params)
         @leave_c_offs = LeaveCOff.all
-        leav_category = LeavCategory.find_by_name('C.Off')
+        leav_category = LeavCategory.find_by_name('Compensatory Off')
         @leave_c_off.expiry_date = @leave_c_off.c_off_date + @leave_c_off.c_off_expire_day
         @c_off = LeaveCOff.where(employee_id: @leave_c_off.employee_id,is_expire: nil)
         if leav_category.nil?
@@ -118,6 +118,7 @@ class LeaveCOffsController < ApplicationController
     @leave_c_off.update(leave_c_off_params)
     @leave_c_offs = LeaveCOff.all
     @leave_c_off = LeaveCOff.new
+    redirect_to new_leave_c_off_path
   end
 
   # DELETE /leave_c_offs/1

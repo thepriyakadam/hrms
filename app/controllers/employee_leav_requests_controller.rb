@@ -52,7 +52,7 @@ class EmployeeLeavRequestsController < ApplicationController
       flash[:alert] = "Request already has Approved"
       redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
     elsif @employee_leav_request.is_present?
-      flash[:alert] = "Leave Request already existed."
+      flash[:alert] = " your attendance available for that day contact to Admin "
       redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
     else
       if @employee.manager_id.nil?

@@ -42,7 +42,7 @@ class EmployeeTemplate < ActiveRecord::Base
         EmployeeTemplate.where(employee_id: @employees)
       elsif current_user.role.name == "CompanyLocation"
         @employees = Employee.where(company_location_id: current_user.company_location_id)
-        EmployeeTemplate.where(employee_id: @employees)  
+        EmployeeTemplate.where(employee_id: @employees)
       elsif current_user.role.name == "Department"
         @employees = Employee.where(department_id: current_user.department_id)
         EmployeeTemplate.where(employee_id: @employees)
@@ -61,6 +61,4 @@ class EmployeeTemplate < ActiveRecord::Base
     end
     employee_template
   end
-
-  
 end

@@ -25,21 +25,19 @@
         </div>   
 
           <div class="col-sm-3">
-            <label>Application Date </label>
             <div class="field">
               <div class="input-group">
                 <div class="input-group-addon">
                   <i class="fa fa-calendar"></i>
                 </div>
-                <%= f.text_field :application_date, hide_label: true, class: 'application_date'%>
+                <%= f.text_field :application_date, label: "Application Date", class: 'application_date'%>
               </div>
             </div>
           </div>
 
           <div class="col-sm-3">
-            <label>Travel Option</label>
               <div class="form-group required">
-                <%= f.select :travel_option_id,all_travel_option,{hide_label: true,placeholder: 'Travel Option',include_blank: 'Select Travel Option'} %>
+                <%= f.select :travel_option_id,all_travel_option,{label: "Travel Option",placeholder: 'Travel Option',include_blank: 'Select Travel Option'} %>
               </div>
             </div>  
         </div>
@@ -48,20 +46,18 @@
         <div class="row">
 
        <div class="col-sm-3">
-          <label>Travel Mode</label>
             <div class="form-group required">
-              <%= f.select :travel_mode_id,all_travel_mode,{hide_label: true,placeholder: 'Travel mode',include_blank: 'Select Travel mode'} %>
+              <%= f.select :travel_mode_id,all_travel_mode,{label: "Travel Mode",placeholder: 'Travel mode',include_blank: 'Select Travel mode'} %>
             </div>
           </div>
 
         <div class="col-sm-3">
-            <label>Traveling Date </label>
             <div class="field">
               <div class="input-group">
                 <div class="input-group-addon">
                   <i class="fa fa-calendar"></i>
                 </div>
-                <%= f.text_field :traveling_date, hide_label: true, class: 'traveling_date'%>
+                <%= f.text_field :traveling_date, label: "Traveling Date", class: 'traveling_date'%>
               </div>
             </div>
           </div>
@@ -113,7 +109,7 @@
           $('.traveling_date').datepicker({
           changeYear:true,
           changeMonth: true,
-          yearRange: '-200:-0',
+          yearRange: '-20:+2',
           dateFormat: 'dd-mm-yy' });
           });
       </script>

@@ -60,6 +60,7 @@
 <table class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
+      <th>Sr.No</th> 
       <th>Interviewer Name</th>
       <th>Interview Type</th>
       <th>Evaluation Criteria</th>
@@ -69,9 +70,11 @@
     </tr>
   </thead>
   <tbody>
+  <% i = 0 %>
     <% @interview_analyses.each do |interview_analysis| %>
       <tr>
-        <td><%= full_name(interview_analysis.try(:interview_round).try(:employee)) %></td>
+        <td><%= i=i+1 %></td>
+        <td><%= interview_analysis.interview_round.employee.try(:first_name) %> <%= interview_analysis.interview_round.employee.try(:middle_name) %> <%= interview_analysis.interview_round.employee.try(:last_name) %></td>
         <td><%= interview_analysis.interview_round.interview_type.try(:name) %></td>
         <td><%= interview_analysis.interview_evalution.try(:name) %></td>
         <td><%= interview_analysis.interview_attribute.try(:name) %></td>
@@ -83,8 +86,9 @@
 </table>
 <% end %>   
 <br>
-<div class="col-sm-3">
+<div class="col-sm-6">
     <%= f.submit " Print Report",class: "btn btn-xl btn-info fa fa-print" %>
+    <%= link_to 'Back', all_interview_schedule_list_interview_schedules_path , class: 'btn btn-sm btn-default fa fa-arrow-left'  %>
   </div>
 </div>
 </div>

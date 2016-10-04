@@ -191,7 +191,7 @@ class LeaveStatusRecordsController < ApplicationController
       @particular_leave_record.is_cancel_after_approve = true
 
       EmployeeAttendance.where("employee_id = ? AND day = ?", @particular_leave_record.employee_id,@particular_leave_record.leave_date.to_date).destroy_all
-      @employee_leav_balance = EmployeeLeavBalance.where(employee_id: @particular_leave_record.employee_id, leav_category_id: @particular_leave_record.leav_category_id).take
+      @employee_leav_balance = EmployeeLeavBalance.where("employee_id = ? AND leav_category_id = ? AND is_active = ?", @particular_leave_record.employee_id, @particular_leave_record.leav_category_id,true).take
       if @particular_leave_record.is_full
         @employee_leav_balance.no_of_leave = @employee_leav_balance.no_of_leave.to_f + 1
       else
@@ -201,7 +201,7 @@ class LeaveStatusRecordsController < ApplicationController
       ActiveRecord::Base.transaction do
         @employee_leav_balance.save
         @particular_leave_record.save
-        if @particular_leave_record.employee_leav_request.leav_category.name == "C.Off"
+        if @particular_leave_record.employee_leav_request.leav_category.name == "Compensatory Off"
           @particular_leave_record.rollback_coff(@particular_leave_record)
         end
       end

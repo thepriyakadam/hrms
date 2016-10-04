@@ -52,7 +52,10 @@ class EmployeeLeavRequestsController < ApplicationController
       flash[:alert] = "Request already has Approved"
       redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
     elsif @employee_leav_request.is_present?
-      flash[:alert] = " your attendance available for that day contact to Admin "
+      for i in @employee_leav_request.start_date.to_date..@employee_leav_request.end_date.to_date
+        @emp_attendance = EmployeeAttendance.find_by(day: i)
+      end
+      flash[:alert] = "Leave Request already existed - #{@emp_attendance.present}"
       redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
     else
       if @employee.manager_id.nil?
@@ -67,7 +70,7 @@ class EmployeeLeavRequestsController < ApplicationController
         else
           @employee_leav_request.leave_count = 0.5
         end
-        @emp_leave_bal = EmployeeLeavBalance.where('employee_id = ? AND leav_category_id = ?', @employee.id, @employee_leav_request.leav_category_id).take
+        @emp_leave_bal = EmployeeLeavBalance.where('employee_id = ? AND leav_category_id = ? AND is_active = ?', @employee.id, @employee_leav_request.leav_category_id,true).take
         type = LeavCategory.find(@employee_leav_request.leav_category_id).is_payble
         if type == false
           @employee_leav_request.save
@@ -110,10 +113,7 @@ class EmployeeLeavRequestsController < ApplicationController
             render :new
 
             #@leave_coff = LeaveCOff.where(employee_id: @employee.id)
-          elsif @employee_leav_request.end_date < @emp_leave_bal.expiry_date && @emp_leave_bal.expiry_date < Date.today
-            @total_leaves = EmployeeLeavBalance.where('employee_id = ?', @employee.id)
-            flash.now[:alert] = 'Leave Time Expired.'
-            render :new
+          
           elsif type == 'C.Off'
             @employee_leav_request.leave_status_records.build(change_status_employee_id: current_user.employee_id, status: 'Pending', change_date: Date.today)
             if @employee_leav_request.save
@@ -122,7 +122,7 @@ class EmployeeLeavRequestsController < ApplicationController
               if @employee.manager.email.nil? || @employee.manager.email == ''
                 flash[:notice] = 'Send request without email.'
               else
-                flash[:notice] = 'Leave Request sent successfully !.'
+                flash[:notice] = 'Leave Request sent successfully !!'
                 #LeaveRequestMailer.pending(@employee_leav_request).deliver_now
               end
               redirect_to hr_view_request_employee_leav_requests_path(@employee.id)

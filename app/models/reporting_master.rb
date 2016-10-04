@@ -13,6 +13,7 @@ class ReportingMaster < ActiveRecord::Base
   has_many :employee_transfers
   has_many :due_employee_details
   has_many :employee_resignations
+  has_many :resignation_histories
 
  # belongs_to :manager_2, class_name: 'Employee'
  # belongs_to :manager, class_name: 'Employee'

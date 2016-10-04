@@ -106,6 +106,8 @@ class SalaryslipsController < ApplicationController
         @food_deductions = FoodDeduction.where(food_date: date..date.at_end_of_month, employee_id: @employee.id)
         unless @food_deductions.empty?
           @food_deductions.each do |f|
+            #byebug
+            f.update(is_paid: true)
             deducted_actual_amount = 0
             deducted_calculated_amount = f.amount
             deducted_total_actual_amount += deducted_actual_amount
@@ -264,6 +266,7 @@ class SalaryslipsController < ApplicationController
         deducted_calculated_amount = 0
         unless @food_deductions.empty?
           @food_deductions.each do |f|
+            f.update(is_paid: true)
             deducted_actual_amount = 0
             deducted_calculated_amount = deducted_calculated_amount + f.amount
           end
@@ -366,18 +369,28 @@ class SalaryslipsController < ApplicationController
         @arrear = EmployeeArrear.where('employee_id = ? and is_paid = ?', @employee.id, false).take
         unless @arrear.nil?
           arrear_start_date = @arrear.start_date
+          arrear_end_date = @arrear.end_date
           arrear_start_month = arrear_start_date.strftime('%-m').to_i
           arrear_start_year = arrear_start_date.strftime('%Y').to_i
           arrear_end_month = Workingday.months[@month]
           arrear_end_year = params['year'].to_i
-          arrear_working_days = Workingday.where(employee_id: @employee.id, month: arrear_start_month..arrear_end_month, year: arrear_start_year..arrear_end_year)
+          arrear_working_days = Workingday.where(employee_id: @employee.id, month_name: arrear_start_month..arrear_end_month, year: arrear_start_year..arrear_end_year)
           @total_payable_days = arrear_working_days.sum('payable_day')
           @arrear_items = @arrear.employee_arrear_items
+          byebug
+          number_of_months = (arrear_end_date.year*12+arrear_end_date.month)-(arrear_start_date.year*12+arrear_start_date.month)
+
+          dates = number_of_months.times.each_with_object([]) do |count, array|
+            array << [arrear_start_date.beginning_of_month + count.months,
+            arrear_start_date.end_of_month + count.months]
+          end
 
           @arrear_items.try(:each) do |ai|
-            arrear_calculated_amount = ((ai.actual_amount / 30) * @total_payable_days).round
+            dates.each do |start_instance,end_instance|
+              arrear_calculated_amount = ((ai.actual_amount / start_instance.end_of_month.day) * @total_payable_days).round
+            end
             SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: ai.actual_amount, calculated_amount: arrear_calculated_amount, is_deducted: ai.is_deducted, is_arrear: true, salary_component_id: ai.salary_component_id)
-          end
+          end          
         end
       end
     end
@@ -575,6 +588,8 @@ class SalaryslipsController < ApplicationController
           @food_deductions = FoodDeduction.where(food_date: date..date.at_end_of_month, employee_id: @employee.id)
           unless @food_deductions.empty?
             @food_deductions.each do |f|
+              #byebug
+              f.update(is_paid: true)
               deducted_actual_amount = 0
               deducted_calculated_amount = f.amount
               deducted_total_actual_amount += deducted_actual_amount
@@ -821,6 +836,8 @@ class SalaryslipsController < ApplicationController
           unless @food_deductions.empty?
             deducted_calculated_amount = 0
             @food_deductions.each do |f|
+              #byebug
+              f.update(is_paid: true)
               deducted_actual_amount = 0
               deducted_calculated_amount = deducted_calculated_amount + f.amount
             end
@@ -872,10 +889,19 @@ class SalaryslipsController < ApplicationController
           @total_payable_days = arrear_working_days.sum('payable_day')
           @arrear_items = @arrear.employee_arrear_items
 
-          @arrear_items.try(:each) do |ai|
-            arrear_calculated_amount = ((ai.actual_amount / 30) * @total_payable_days).round
-            SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: ai.actual_amount, calculated_amount: arrear_calculated_amount, is_deducted: ai.is_deducted, is_arrear: true, salary_component_id: ai.salary_component_id)
+          number_of_months = (arrear_end_date.year*12+arrear_end_date.month)-(arrear_start_date.year*12+arrear_start_date.month)
+
+          dates = number_of_months.times.each_with_object([]) do |count, array|
+            array << [arrear_start_date.beginning_of_month + count.months,arrear_start_date.end_of_month + count.months]
           end
+
+          @arrear_items.try(:each) do |ai|
+            dates.each do |start_instance,end_instance|
+              arrear_calculated_amount = ((ai.actual_amount / start_instance.end_of_month.day) * @total_payable_days).round
+            end
+            SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: ai.actual_amount, calculated_amount: arrear_calculated_amount, is_deducted: ai.is_deducted, is_arrear: true, salary_component_id: ai.salary_component_id)
+          end     
+
           # current template nil
           
         end # employee_ids loop

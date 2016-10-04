@@ -10,13 +10,13 @@
     <table id="example1" class="table table-bordered table-hover table-condensed">
     <thead>
       <tr>
-        <th>Employee ID</th>
+        <th>ID</th>
         <th>Employee Name</th>
-        <th>Food Date</th>
+        <th>Date</th>
         <th>No. of Coupon</th>
         <th>Return Coupon</th>
-        <th>Total Coupon</th>
-        <th>Coupon Type</th>
+        <th>Total</th>
+        <th>Price</th>
         <th>Amount</th>
         <th>Action</th>
       </tr>
@@ -31,10 +31,10 @@
           <td><%= food_deduction.no_of_coupan %></td>
           <td><%= food_deduction.return_coupan %></td>
           <td><%= food_deduction.total_coupan %></td>
-          <td><%= food_deduction.food_coupan_master.name %></td>
+          <td><%= food_deduction.food_coupan_master.price %></td>
           <td><%= food_deduction.amount %></td>
           <td>
-            <%= link_to '', food_deduction, class: "btn btn-default btn-xs fa fa-eye" %>
+            <!-- < link_to '', food_deduction, class: "btn btn-default btn-xs fa fa-eye" %> -->
             <%= link_to '', edit_food_deduction_path(food_deduction), class: "btn btn-success btn-xs fa fa-edit" %>
           </td>
         </tr>

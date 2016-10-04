@@ -46,6 +46,7 @@ class TrainingRequestsController < ApplicationController
           TraineeRequest.create(employee_id: eid,training_request_id: @training_request.id,training_topic_master_id: @training_request.training_topic_master_id)
           TrainingApproval.create(training_request_id: @training_request.id,employee_id: @training_request.employee_id, training_topic_master_id: @training_request.training_topic_master_id,reporting_master_id: @training_request.reporting_master_id,traininig_period: @training_request.training_period,training_date: @training_request.training_date,place: @training_request.place,no_of_employee: @training_request.no_of_employee,description: @training_request.description,justification: @training_request.justification,current_status: @training_request.status)
           ReportingMastersTrainingReq.create(reporting_master_id: @training_request.reporting_master_id, training_request_id: @training_request.id)
+          # TrainingRequestMailer.training_request(@training_request).deliver_now
           end
           flash[:notice] = 'Training Request Created Successfully'
           redirect_to new_training_request_path
@@ -171,10 +172,15 @@ class TrainingRequestsController < ApplicationController
 #   end
 # end
 
+# def modal_approve_and_send_next
+#    @training_request = TrainingRequest.find(params[:format])
+#    @trainee_requests =TraineeRequest.where(training_request_id: @training_request.id,reporting_master_id: @training_request.reporting_master_id)
+# end
+
 def approve_and_send_next
      @training_request = TrainingRequest.find(params[:training_request_id])
      @rep = params[:training_request][:reporting_master_id]
-      @training_request.update(status: "Approved & Send Next",reporting_master_id: @rep) 
+      @training_request.update(status: "Approved & Send Next",reporting_master_id: @rep)
       @trainee_request_ids = params[:trainee_request_ids]
       @emp_total = @trainee_request_ids.count
       TrainingRequest.where(id: @training_request.id).update_all(no_of_employee: @emp_total)

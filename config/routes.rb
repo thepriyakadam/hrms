@@ -973,6 +973,9 @@ end
     collection do
       get :calculate_food_deduction_amount
       get :employees
+      get :display_food_deduction
+      get :food_deduction_xls
+      get :food_deduction_pdf
     end
   end
   resources :reporting_masters do

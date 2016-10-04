@@ -56,7 +56,8 @@ class CompanyPoliciesController < ApplicationController
     send_file @company_policy.document.path,
               filename: @company_policy.document,
               type: @company_policy.document_content_type,
-              disposition: 'attachment'
+              disposition: 'attachment',
+              disposition: 'inline'
     else
     flash[:alert] = "No file found Please contact to Admin!"
     redirect_to root_url

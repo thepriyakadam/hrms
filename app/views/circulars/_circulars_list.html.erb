@@ -3,6 +3,7 @@
     <tr>  
       <th>Circular Date</th>
       <th>Subject</th>
+      <!-- <th>File Name</th> -->
       <th>Download</th>
       <th>Action</th>
     </tr>
@@ -12,11 +13,12 @@
       <tr>
         <td><%= circular.date %></td>
         <td><%= circular.subject %></td>
+        <!-- <td><%= circular.avatar_file_name %></td> -->
         <td>
            <% if circular.avatar_file_name == nil %>
            <small class="label label-default">Document Not Available</small>
              <% else %>
-             <%= link_to ' Document',download_documents_path(id: circular.id),class: 'btn btn-xs btn btn-info fa fa-download' %>
+             <%= link_to ' Document',download_documents_path(id: circular.id),class: 'btn btn-xs btn btn-info fa fa-download',:target => "_blank" %>
              <% end %>
         </td>
         <td>

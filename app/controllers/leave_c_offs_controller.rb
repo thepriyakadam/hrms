@@ -46,7 +46,7 @@ class LeaveCOffsController < ApplicationController
     else
         @leave_c_off = LeaveCOff.new(leave_c_off_params)
         @leave_c_offs = LeaveCOff.all
-        leav_category = LeavCategory.find_by_name('C.Off')
+        leav_category = LeavCategory.find_by_name('Compensatory Off')
         @leave_c_off.expiry_date = @leave_c_off.c_off_date + @leave_c_off.c_off_expire_day
         @c_off = LeaveCOff.where(employee_id: @leave_c_off.employee_id,is_expire: nil)
         if leav_category.nil?
@@ -87,6 +87,7 @@ class LeaveCOffsController < ApplicationController
               b.employee_id = @leave_c_off.employee_id
               b.leav_category_id = leav_category.id
               b.expiry_date = @leave_c_off.c_off_date + @leave_c_off.c_off_expire_day
+              b.is_active = true
 
               if @leave_c_off.c_off_type == "Full Day"
                 b.no_of_leave = 1
@@ -104,7 +105,7 @@ class LeaveCOffsController < ApplicationController
           ActiveRecord::Base.transaction do
             @leave_c_off.save
             @employee_leave_balance.save
-            flash[:notice] = "Your COff set successfully"
+            flash[:notice] = "Your C-Off set successfully"
             redirect_to new_leave_c_off_path
           end
         end
@@ -124,7 +125,7 @@ class LeaveCOffsController < ApplicationController
   # DELETE /leave_c_offs/1.json
   def destroy
     @leave_c_offs = LeaveCOff.all
-    leav_category = LeavCategory.find_by_name('C.Off')
+    leav_category = LeavCategory.find_by_name('Compensatory Off')
     @employee_leave_balance = EmployeeLeavBalance.where(employee_id: @leave_c_off.employee_id,leav_category_id: leav_category.id).take
     
     if @leave_c_off.c_off_type == 'Full Day'

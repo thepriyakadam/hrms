@@ -106,6 +106,8 @@ class SalaryslipsController < ApplicationController
         @food_deductions = FoodDeduction.where(food_date: date..date.at_end_of_month, employee_id: @employee.id)
         unless @food_deductions.empty?
           @food_deductions.each do |f|
+            #byebug
+            f.update(is_paid: true)
             deducted_actual_amount = 0
             deducted_calculated_amount = f.amount
             deducted_total_actual_amount += deducted_actual_amount
@@ -264,6 +266,7 @@ class SalaryslipsController < ApplicationController
         deducted_calculated_amount = 0
         unless @food_deductions.empty?
           @food_deductions.each do |f|
+            f.update(is_paid: true)
             deducted_actual_amount = 0
             deducted_calculated_amount = deducted_calculated_amount + f.amount
           end
@@ -585,6 +588,8 @@ class SalaryslipsController < ApplicationController
           @food_deductions = FoodDeduction.where(food_date: date..date.at_end_of_month, employee_id: @employee.id)
           unless @food_deductions.empty?
             @food_deductions.each do |f|
+              #byebug
+              f.update(is_paid: true)
               deducted_actual_amount = 0
               deducted_calculated_amount = f.amount
               deducted_total_actual_amount += deducted_actual_amount
@@ -831,6 +836,8 @@ class SalaryslipsController < ApplicationController
           unless @food_deductions.empty?
             deducted_calculated_amount = 0
             @food_deductions.each do |f|
+              #byebug
+              f.update(is_paid: true)
               deducted_actual_amount = 0
               deducted_calculated_amount = deducted_calculated_amount + f.amount
             end

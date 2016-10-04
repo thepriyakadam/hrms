@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160927120109) do
+ActiveRecord::Schema.define(version: 20161004130453) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -1254,6 +1254,7 @@ ActiveRecord::Schema.define(version: 20160927120109) do
     t.integer  "food_coupan_master_id"
     t.integer  "return_coupan"
     t.integer  "total_coupan"
+    t.boolean  "is_paid"
   end
 
   add_index "food_deductions", ["employee_id"], name: "index_food_deductions_on_employee_id"

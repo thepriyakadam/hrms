@@ -24,7 +24,6 @@ class EmployeeLeavRequestsController < ApplicationController
   end
 
   def create
-
     @employee_leav_request = EmployeeLeavRequest.new(employee_leav_request_params)
     @employee = Employee.find(@employee_leav_request.employee_id)
     date_arr = params['employee_leav_request']['date_range'].split('-')

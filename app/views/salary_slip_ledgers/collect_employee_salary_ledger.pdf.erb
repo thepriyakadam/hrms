@@ -4,7 +4,7 @@ try(:<div )class="ajax-progress"></div>
   <thead>
     <tr>
       <th colspan="22">
-        <center><strong>BHANDARI FOILS AND TUBES LTD.</strong></center>
+       <center><strong><%= current_user.employee.company_location.company.description %></strong></center>
         <center><small></small></center>
         <center><small>Employee Monthly Salary For The Year <%= @month %> - <%= @year %></small></center>   
       </th>

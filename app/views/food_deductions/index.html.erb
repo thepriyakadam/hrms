@@ -6,38 +6,18 @@
     </div>
   </div><!-- /.box-header -->
   <div class="box-body">
-  <div id="comments">
-    <table id="example2" class="table table-bordered table-hover table-condensed">
-    <thead>
-      <tr>
-        <th>Year</th>
-        <th>Months</th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <% @food_deductions.each do |f| %>
-        <tr>
-          <% year = f.food_date.strftime("%Y")%>
-          <td><%= year %></td>
-          <td>
-            <%= link_to 'January',employees_food_deductions_path(year: year, month: "January") , class: 'btn btn-xs btn-primary' %>
-            <%= link_to 'February',employees_food_deductions_path(year: year, month: "February") , class: 'btn btn-xs btn-primary' %>
-            <%= link_to 'March',employees_food_deductions_path(year: year, month: "March") , class: 'btn btn-xs btn-primary' %>
-            <%= link_to 'April',employees_food_deductions_path(year: year, month: "April") , class: 'btn btn-xs btn-primary' %>
-            <%= link_to 'May',employees_food_deductions_path(year: year, month: "May") , class: 'btn btn-xs btn-success' %>
-            <%= link_to 'June',employees_food_deductions_path(year: year, month: "June") , class: 'btn btn-xs btn-success' %>
-            <%= link_to 'July',employees_food_deductions_path(year: year, month: "July") , class: 'btn btn-xs btn-success' %>
-            <%= link_to 'August',employees_food_deductions_path(year: year, month: "August") , class: 'btn btn-xs btn-success' %>
-            <%= link_to 'September',employees_food_deductions_path(year: year, month: "September") , class: 'btn btn-xs btn-danger' %>
-            <%= link_to 'October',employees_food_deductions_path(year: year, month: "October") , class: 'btn btn-xs btn-danger' %>
-            <%= link_to 'November',employees_food_deductions_path(year: year, month: "November") , class: 'btn btn-xs btn-danger' %>
-            <%= link_to 'December',employees_food_deductions_path(year: year, month: "December") , class: 'btn btn-xs btn-danger' %>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-  </div>
-</div>
+    <div class="row">
+        <div class="col-sm-3">
+          <div class="field">
+            <%= select :food_deduction,:month, ['January','February','March','April','May','June','July','August','September','October','November','December'],{label: 'Select Month',include_blank: " Select Month"}, class: "form-control" %>
+           </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="field">
+            <%= select :food_deduction,:year,['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025','2026','2027'],{label: 'Select Year',include_blank: " Select Year"}, {onchange:"var a={department_id:$(this).val(),month:$('#food_deduction_month').val(),year:$('#food_deduction_year').val()};$('.ajax-progress').show(); $.get('/food_deductions/display_food_deduction',a,function(response){});",class: 'form-control'} %>
+          </div>
+        </div>
+        </div>
+      <div id="food_deduction_li"></div>
+    </div>
 </div>

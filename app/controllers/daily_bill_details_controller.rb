@@ -203,7 +203,7 @@ class DailyBillDetailsController < ApplicationController
     send_file @daily_bill_detail.avatar_file.path,
               filename: @daily_bill_detail.avatar_file_file_name,
               type: @daily_bill_detail.avatar_file_content_type,
-              disposition: 'attachment'
+              disposition: 'inline'
   end
 
   def download_pics

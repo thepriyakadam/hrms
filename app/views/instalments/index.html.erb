@@ -2,39 +2,20 @@
   <div class="box-header">
     <h3 class="box-title">Installments</h3>    
   </div><!-- /.box-header -->
-  <div class="box-body">
-  <div id="comments">
-    <table id="example1" class="table table-bordered table-hover table-condensed">
-    <thead>
-      <tr>
-        <th>Year</th>
-        <th>Months</th>
-      </tr>
-    </thead>
-
-    <tbody>
-       <% @instalments.each do |w| %>
-        <tr>
-          <% year = w.instalment_date.strftime('%Y') %>
-          <td><%= year %></td>
-          <td>
-            <%= link_to 'January',employees_instalments_path(year: year, month: "January") , class: 'btn btn-xs btn-primary' %>
-            <%= link_to 'February',employees_instalments_path(year: year, month: "February") , class: 'btn btn-xs btn-primary' %>
-            <%= link_to 'March',employees_instalments_path(year: year, month: "March") , class: 'btn btn-xs btn-primary' %>
-            <%= link_to 'April',employees_instalments_path(year: year, month: "April") , class: 'btn btn-xs btn-primary' %>
-            <%= link_to 'May',employees_instalments_path(year: year, month: "May") , class: 'btn btn-xs btn-success' %>
-            <%= link_to 'June',employees_instalments_path(year: year, month: "June") , class: 'btn btn-xs btn-success' %>
-            <%= link_to 'July',employees_instalments_path(year: year, month: "July") , class: 'btn btn-xs btn-success' %>
-            <%= link_to 'August',employees_instalments_path(year: year, month: "August") , class: 'btn btn-xs btn-success' %>
-            <%= link_to 'September',employees_instalments_path(year: year, month: "September") , class: 'btn btn-xs btn-danger' %>
-            <%= link_to 'October',employees_instalments_path(year: year, month: "October") , class: 'btn btn-xs btn-danger' %>
-            <%= link_to 'November',employees_instalments_path(year: year, month: "November") , class: 'btn btn-xs btn-danger' %>
-            <%= link_to 'December',employees_instalments_path(year: year, month: "December") , class: 'btn btn-xs btn-danger' %>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-  </div>
-</div>
+  
+    <div class="box-body">
+    <div class="row">
+        <div class="col-sm-3">
+          <div class="field">
+            <%= select :installment,:month, ['January','February','March','April','May','June','July','August','September','October','November','December'],{label: 'Select Month',include_blank: " Select Month"}, class: "form-control" %>
+           </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="field">
+            <%= select :installment,:year,['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025','2026','2027'],{label: 'Select Year',include_blank: " Select Year"}, {onchange:"var a={department_id:$(this).val(),month:$('#installment_month').val(),year:$('#installment_year').val()};$('.ajax-progress').show(); $.get('/instalments/display_installment',a,function(response){});",class: 'form-control'} %>
+          </div>
+        </div>
+        </div>
+      <div id="display_installment_li"></div>
+    </div>
 </div>

@@ -33,7 +33,10 @@ class InterviewAnalysesController < ApplicationController
   def create
     @interview_analysis = InterviewAnalysis.new(interview_analysis_params)
     @interview_analyses = InterviewAnalysis.all
+    # @interview_round = InterviewRound.find(params[:interview_round_id])
+    @interview_round = InterviewRound.find(@interview_analysis.interview_round_id)
       if @interview_analysis.save
+        InterviewAnalysis.where(id: @interview_analysis.id).update_all(interview_schedule_id: @interview_round.interview_schedule_id)
         @interview_analysis = InterviewAnalysis.new
         flash[:notice] = 'Interview Evaluation Details saved Successfully.'
       end
@@ -108,6 +111,6 @@ class InterviewAnalysesController < ApplicationController
 
       # Never trust parameters from the scary internet, only allow the white list through.
       def interview_analysis_params
-          params.require(:interview_analysis).permit(:interview_schedule_id,:interview_round_id,:vacancy_request_history_id, :interview_evalution_id, :interview_attribute_id, :interview_decision_id, :comment)
+          params.require(:interview_analysis).permit(:interview_schedule_id,:interview_schedule_id,:interview_round_id,:vacancy_request_history_id, :interview_evalution_id, :interview_attribute_id, :interview_decision_id, :comment)
       end
   end

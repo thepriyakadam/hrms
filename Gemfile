@@ -24,6 +24,9 @@ gem 'quiet_assets'
 
 gem 'paperclip', '~> 4.3', '>= 4.3.6'
 
+gem 'mime-types-data', '~> 3.2016', '>= 3.2016.0521'
+gem 'globalid', '~> 0.3.7'
+
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
@@ -76,6 +79,7 @@ end
 # Authentication and authorization
 gem 'devise'
 gem 'cancancan', '~> 1.10'
+
 
 # Apartment for Multitenancy
 gem 'apartment'

@@ -1,6 +1,6 @@
 <div class="box box-default">
   <div class="box-header with-border">
-    <h6 class="box-title"> Joining Details of ID : <%= @joining_detail.employee.try(:manual_employee_code) %> - Name : <%= @joining_detail.employee.try(:first_name) %> <%= @joining_detail.employee.try(:middle_name) %> <%= @joining_detail.employee.try(:last_name) %></h6>
+    <strong> <font color='#0077b3'> Joining Details of ID : <%= @joining_detail.employee.try(:manual_employee_code) %> - Name : <%= @joining_detail.employee.try(:first_name) %> <%= @joining_detail.employee.try(:middle_name) %> <%= @joining_detail.employee.try(:last_name) %></font></strong>
     <div class="box-tools pull-right">
       <%= link_to 'Edit',  edit_joining_detail_path(@joining_detail),class: 'btn btn-success fa fa-edit',remote:true %>
       <%= link_to 'Back', employees_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>

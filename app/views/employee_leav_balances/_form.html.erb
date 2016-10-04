@@ -18,10 +18,18 @@
         <%= f.text_field :total_leave, readonly:true %>
       </div>
     </div>
-    
+  
     <div class="col-sm-3">
       <div class="field">
-        <%= f.text_field :expiry_date, class: "expiry_date" %>
+        <%= f.text_field :from_date, class: "expiry_date" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+     <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :to_date, class: "expiry_date" %>
       </div>
     </div>
   </div>
@@ -49,8 +57,7 @@
               <td><%= check_box_tag "employee_ids[]", e.id %></td>
               <td><%= e.manual_employee_code %></td>
               <td><%= full_name(e) %></td>
-              <td><%= e.department.try(:name) %>
-              </td>
+              <td><%= e.department.try(:name) %></td>
               <td><%= e.joining_detail.try(:employee_designation).try(:name) %></td>
               <td><%= e.employee_type.try(:name) %></td>
                <td><%= e.contact_no %></td>

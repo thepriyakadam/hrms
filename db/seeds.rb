@@ -1,6 +1,45 @@
 require 'rubygems'
 require 'roo'
 
+
+ex = Roo::Excel.new("#{Rails.root}/public/a.xls")
+
+ex.default_sheet = ex.sheets[4] #siya feb
+i = 1
+ActiveRecord::Base.transaction do
+
+2.upto(5) do |line| # siya Feb 2016
+  puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
+  @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
+  unless @employee.nil?
+
+    Workingday.new do |w|
+      w.employee_id = @employee.id
+      w.month_name = ex.cell(line, 'B')
+      w.year = ex.cell(line, 'C').to_i
+
+      w.day_in_month = ex.cell(line, 'D')
+      w.present_day = ex.cell(line, 'E')
+      w.week_off_day = ex.cell(line, 'F')
+
+      w.cl_leave = ex.cell(line, 'G').to_i
+      w.el_leave = ex.cell(line, 'H').to_i
+      w.coff_leave = ex.cell(line, 'I').to_i
+
+     
+      w.holiday_in_month = ex.cell(line, 'J')
+
+     
+      w.absent_day = ex.cell(line, 'K')
+      w.payable_day = ex.cell(line, 'L')
+      w.save!
+    end
+    puts "#{i} Record inserted.-----------------------------------------------"
+    i += 1
+  end
+  end
+end
+
 # puts "Starting ..."
 # ex = Roo::Excel.new("#{Rails.root}/public/hrms.xls")
 # ex.default_sheet = ex.sheets[0]
@@ -429,24 +468,24 @@ require 'roo'
 # end
 
 
-puts "Starting ..."
-ex = Roo::Excel.new("#{Rails.root}/public/Leave Details.xls")
-ex.default_sheet = ex.sheets[0] 
-i=1
+# puts "Starting ..."
+# ex = Roo::Excel.new("#{Rails.root}/public/Leave Details.xls")
+# ex.default_sheet = ex.sheets[0] 
+# i=1
 
-2.upto(190) do |line|
-@employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
-EmployeeLeavBalance.new do |j|
-  j.employee_id = @employee.id unless @employee.nil?
-  j.leav_category_id = ex.cell(line,'B')
-  j.no_of_leave = ex.cell(line,'C')
-  j.expiry_date = ex.cell(line,'D')
-  j.total_leave = ex.cell(line,'E')
-  j.save!
-end
-puts "#{i} Record inserted.-----------------------------------------------"
-i = i+1
-end
+# 2.upto(190) do |line|
+# @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
+# EmployeeLeavBalance.new do |j|
+#   j.employee_id = @employee.id unless @employee.nil?
+#   j.leav_category_id = ex.cell(line,'B')
+#   j.no_of_leave = ex.cell(line,'C')
+#   j.expiry_date = ex.cell(line,'D')
+#   j.total_leave = ex.cell(line,'E')
+#   j.save!
+# end
+# puts "#{i} Record inserted.-----------------------------------------------"
+# i = i+1
+# end
 
 
 # puts "Starting ..."

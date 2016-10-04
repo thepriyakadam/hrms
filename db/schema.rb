@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161003124141) do
+ActiveRecord::Schema.define(version: 20161004072054) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -1682,6 +1682,8 @@ ActiveRecord::Schema.define(version: 20161003124141) do
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
     t.integer  "issue_tracker_member_id"
+    t.date     "lock_date"
+    t.time     "lock_time"
   end
 
   add_index "issue_locker_histories", ["issue_locker_id"], name: "index_issue_locker_histories_on_issue_locker_id"
@@ -1694,6 +1696,8 @@ ActiveRecord::Schema.define(version: 20161003124141) do
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
     t.integer  "issue_tracker_member_id"
+    t.date     "lock_date"
+    t.time     "lock_time"
   end
 
   add_index "issue_lockers", ["issue_request_id"], name: "index_issue_lockers_on_issue_request_id"
@@ -1735,10 +1739,14 @@ ActiveRecord::Schema.define(version: 20161003124141) do
     t.boolean  "status"
     t.boolean  "is_confirm"
     t.boolean  "is_complete"
+    t.integer  "issue_root_cause_id"
+    t.string   "effort_time"
+    t.string   "comment"
   end
 
   add_index "issue_requests", ["employee_id"], name: "index_issue_requests_on_employee_id"
   add_index "issue_requests", ["issue_master_id"], name: "index_issue_requests_on_issue_master_id"
+  add_index "issue_requests", ["issue_root_cause_id"], name: "index_issue_requests_on_issue_root_cause_id"
   add_index "issue_requests", ["issue_tracker_group_id"], name: "index_issue_requests_on_issue_tracker_group_id"
   add_index "issue_requests", ["issue_tracker_member_id"], name: "index_issue_requests_on_issue_tracker_member_id"
 

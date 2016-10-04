@@ -4,6 +4,8 @@
   </div>
   <div class="box-body">
   <%= bootstrap_form_for(@issue_locker) do |f| %>
+  <%= f.hidden_field :lock_date, :value => Time.zone.now.to_date %>
+   <%= f.hidden_field :lock_time, :value => Time.zone.now.to_time %>
   
 <div class="row">
   <div class="col-sm-3">

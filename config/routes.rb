@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :issue_root_causes
   resources :issue_root_causes do
     collection do
       get :is_confirm
@@ -17,9 +18,10 @@ Rails.application.routes.draw do
       post :lock_request
       get :coordinator_lock_request
       get :modal
+      get :modal1
       get :issue_history
       get :unlock_request
-      get :solved_request
+      post :solved_request
       get :solved_issues
       get :lock_by_admin
       get :unlock_by_admin

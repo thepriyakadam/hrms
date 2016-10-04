@@ -5,6 +5,7 @@ class IssueRequest < ActiveRecord::Base
   belongs_to :employee
   belongs_to :is_confirm
   has_many :issue_lockers
+  has_many :issue_root_causes
 
   validates :issue_tracker_group_id, presence: true
   validates :issue_master_id, presence: true

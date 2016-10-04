@@ -1,8 +1,9 @@
-
 <div class="box">
   <div class="box-header">
    <h3 class="box-title">Issue List - <%= current_user.employee.try(:first_name) %> <%= current_user.employee.try(:middle_name) %> <%= current_user.employee.try(:last_name) %> </h3>
   </div><!-- /.box-header -->
+   <%= hidden_field_tag :lock_date, :value => Time.zone.now.to_date %>
+   <%= hidden_field_tag :lock_time, :value => Time.zone.now.to_time %>
   <div class="box-body">
     <table id="example1" class="table table-bordered table-hover table-condensed'">
   <thead>
@@ -49,7 +50,7 @@
              <td>
                  <% if issue_request.issue_tracker_member_id == nil %>
 
-                 <%= link_to '',coordinator_lock_request_issue_requests_path(issue_request),class: 'btn btn-sm btn-danger fa fa-lock',data: { confirm: 'Are you sure?' } %>
+                 <%= link_to '',coordinator_lock_request_issue_requests_path(id: issue_request,lock_time:Time.zone.now.to_time,lock_date: Time.zone.now.to_date ),class: 'btn btn-sm btn-danger fa fa-lock',data: { confirm: 'Are you sure?' } %>
                  <% else %>
                    <small class="label label-primary">Locked by <%= issue_request.issue_tracker_member.employee.try(:manual_employee_code) %></small>
                   <% end %>

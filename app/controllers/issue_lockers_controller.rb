@@ -69,6 +69,6 @@ class IssueLockersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def issue_locker_params
-      params.require(:issue_locker).permit(:issue_request_id, :employee_id, :status)
+      params.require(:issue_locker).permit(:issue_request_id, :employee_id, :status,:lock_date,:lock_time)
     end
 end

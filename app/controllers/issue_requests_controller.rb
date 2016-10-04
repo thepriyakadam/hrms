@@ -110,8 +110,8 @@ class IssueRequestsController < ApplicationController
      @issue_tracker_member = params[:issue_request][:issue_tracker_member_id]
      IssueRequest.where(id: @issue_request.id).update_all(issue_tracker_member_id: @issue_tracker_member)
      @issue_tracker_member_id = IssueTrackerMember.find_by(employee_id: current_user.employee_id)
-     @c1=IssueLocker.create(issue_request_id: @issue_request.id,status: true,issue_tracker_member_id: @issue_tracker_member)
-     IssueLockerHistory.create(issue_tracker_member_id: @issue_tracker_member,issue_locker_id: @c1.id,issue_request_id: @issue_request.id,status: true)
+     @c1=IssueLocker.create(lock_time: params[:issue_request][:lock_time],lock_date: params[:issue_request][:lock_date],issue_request_id: @issue_request.id,status: true,issue_tracker_member_id: @issue_tracker_member)
+     IssueLockerHistory.create(lock_time: params[:issue_request][:lock_time],lock_date: params[:issue_request][:lock_date],issue_tracker_member_id: @issue_tracker_member,issue_locker_id: @c1.id,issue_request_id: @issue_request.id,status: true)
 
      flash[:notice] = "Issue Request Locked Successfully"
      redirect_to lock_request_list_issue_requests_path
@@ -119,11 +119,13 @@ class IssueRequestsController < ApplicationController
 
 
   def coordinator_lock_request
-    @issue_request = IssueRequest.find(params[:format])
+    @issue_request = IssueRequest.find(params[:id])
+    lock_date = params[:lock_date]
+    lock_time = params[:lock_time]
     @issue_tracker_member = IssueTrackerMember.where(employee_id: current_user.employee_id).take
     IssueRequest.where(id: @issue_request.id).update_all(issue_tracker_member_id: @issue_tracker_member.id)
-    @c1=IssueLocker.create(issue_request_id: @issue_request.id,status: true)
-    IssueLockerHistory.create(issue_locker_id: @c1.id,issue_request_id: @issue_request.id,status: true)
+    @c1=IssueLocker.create(lock_date: lock_date,lock_time: lock_time,issue_request_id: @issue_request.id,status: true)
+    IssueLockerHistory.create(lock_date: lock_date,lock_time: lock_time,issue_locker_id: @c1.id,issue_request_id: @issue_request.id,status: true)
     flash[:notice] = "Issue Request by Co-ordinator Locked Successfully"
     redirect_to lock_request_list_issue_requests_path
   end
@@ -139,11 +141,15 @@ class IssueRequestsController < ApplicationController
   end
 
   def solved_request
-    @issue_request = IssueRequest.find(params[:format])
-    @issue_request.update(status: true)
+    @issue_request = IssueRequest.find(params[:id])
+    @issue_request.update(status: true,issue_root_cause_id: params[:issue_request][:issue_root_cause_id],comment: params[:issue_request][:comment],time: params[:issue_request][:time])
     IssueHistory.create(issue_tracker_group_id: @issue_request.issue_tracker_group_id,issue_request_id: @issue_request.id,issue_master_id: @issue_request.issue_master_id,description: @issue_request.description,date: @issue_request.date,time: @issue_request.time,employee_id: @issue_request.employee_id,issue_tracker_member_id: @issue_request.issue_tracker_member_id,issue_priority: @issue_request.issue_priority,status: true)
     flash[:notice] = "Issue Request Solved Successfully"
     redirect_to lock_request_list_issue_requests_path
+  end
+
+  def modal1
+    @issue_request = IssueRequest.find(params[:format])
   end
 
   def solved_issues
@@ -181,6 +187,6 @@ class IssueRequestsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def issue_request_params
-      params.require(:issue_request).permit(:is_complete,:issue_master_id, :issue_tracker_member_id, :issue_tracker_group_id, :description, :date, :time, :employee_id, :issue_priority, :status, :document1, :document2)
+      params.require(:issue_request).permit(:issue_root_cause_id,:effort_time,:is_complete,:issue_master_id, :issue_tracker_member_id, :issue_tracker_group_id, :description, :date, :time, :employee_id, :issue_priority, :status, :document1, :document2)
     end
 end

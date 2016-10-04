@@ -2,6 +2,8 @@
   <div class="modal-content">
     <div class="modal-body" style="height:400px; max-height:150px; width:300px; max-width:300px;">
       <%= bootstrap_form_for :issue_request,url:{action:"lock_request", id: @issue_request.id},html: {id: 'issue_request'} do |f| %>
+      <%= f.hidden_field :lock_date, :value => Time.zone.now.to_date %>
+      <%= f.hidden_field :lock_time, :value => Time.zone.now.to_time %>
 
         <div class="row">
           <div class="col-sm-6">

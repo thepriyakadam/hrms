@@ -128,6 +128,40 @@ class InstalmentsController < ApplicationController
     end
   end
 
+  def installment_pdf
+    date = Date.new(params[:year].to_i, Workingday.months[params[:month]])
+    if current_user.class == Group
+      @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y'))
+    else
+      if current_user.role.name == 'Company' || current_user.role.name == 'Account'
+        @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y'))
+      elsif current_user.role.name == 'CompanyLocation'
+        @employees = Employee.where(company_location_id: current_user.company_location_id)
+        @advance_salaries = AdvanceSalary.where(employee_id: @employees)
+        @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y')).where(advance_salary_id: @advance_salaries)
+      elsif current_user.role.name == 'Employee'
+        @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y')).where(employee_id: current_user.employee_id)
+      end
+    end
+        respond_to do |format|
+          format.json
+          format.pdf do
+            render pdf: 'instalment',
+                  layout: 'pdf.html',
+                  orientation: 'Landscape',
+                  template: 'instalments/installment.pdf.erb',
+                  # show_as_html: params[:debug].present?,
+                  :page_height      => 1000,
+                  :dpi              => '300',
+                  :margin           => {:top    => 10, # default 10 (mm)
+                                :bottom => 10,
+                                :left   => 20,
+                                :right  => 20},
+                  :show_as_html => params[:debug].present?
+                end
+             end
+     end
+
   # def employee_slip_xls
   #   @year, @month = params[:year], params[:month]
   #   @date = Date.new(@year.to_i, Workingday.months[@month])

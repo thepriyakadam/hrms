@@ -1,9 +1,17 @@
-  <div class="box-header">
-   <!--  <h3 class="box-title">Installment</h3>  -->   
-  </div><!-- /.box-header -->
-  <div class="box-body">
-  <div id="comments">
-    <table id="example1" class="table table-bordered table-hover table-condensed">
+<style>
+    th {
+        text-align: left;
+    }
+    tr {
+        page-break-inside: avoid;
+    }
+    div.alwaysbreak { page-break-before: always; }
+    div.nobreak:before { clear:both; }
+    div.nobreak{ page-break-inside: avoid;
+      /* http://code.google.com/p/wkhtmltopdf/issues/detail?id=9#c21 */
+    }
+</style>
+<table style="border-collapse: collapse; font-size:20pt;" border=1 width=900 cellpadding="25">
     <thead>
       <tr>
         <th>Employee ID</th>
@@ -27,9 +35,4 @@
         </tr>
       <% end %>
     </tbody>
-  </table>
-  </div>
-  <%= link_to 'Back', instalments_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
-  <%= link_to " Excel Report ",instalment_xls_instalments_path(month: params[:month], year: params[:year], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
-  <%= link_to " Print Instalment ",installment_pdf_instalments_path(month: params[:month], year: params[:year], format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
-</div>
+</table>

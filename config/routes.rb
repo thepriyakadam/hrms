@@ -1116,6 +1116,7 @@ end
       get :employees
       get :display_installment
       get :instalment_xls
+      get :installment_pdf
     end
   end
   resources :advance_salaries do

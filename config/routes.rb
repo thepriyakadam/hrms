@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
 
 
+  resources :leave_masters
+
   get 'download_pdf/index'
   get 'download_pdf/zip'
   get 'download_pdf/pdf'
@@ -1299,6 +1301,7 @@ end
       get :leave_balance_modal
       patch :update_leave_balance
       get :is_confirm_leave
+      patch :update_leave_auto
     end
   end
  

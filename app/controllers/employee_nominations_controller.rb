@@ -32,7 +32,8 @@ class EmployeeNominationsController < ApplicationController
     @employee = Employee.find(params[:employee_nomination][:employee_id])
 
     @nomination_master = NominationMaster.find(params[:employee_nomination][:nomination_master_id])
-    @nomination = EmployeeNomination.find(params[:employee_nomination][:nomination])
+    #@nomination = EmployeeNomination.find(params[:employee_nomination][:nomination])
+    
     #@nom1 = EmployeeNomination.where(employee_id: @employee.id,nomination_master_id: @employee_nomination.nomination_master_id).pluck(:nomination_master_id)
     #@nom2 = EmployeeNomination.where(nomination_master_id: @nom1,nomination: @nomination.nomination).sum(:nomination)
 

@@ -4,7 +4,7 @@
   <thead>
     <tr>
       <th colspan="15">
-        <center><strong>BHANDARI FOILS AND TUBES LTD.</strong></center>
+        <center><strong><%= current_user.employee.company_location.company.description %></strong></center>
         <center><small></small></center>
         <center><small>Employee Monthly CTC Report for : <%= @month %> - <%= @year %></small></center>   
       </th>

@@ -42,14 +42,25 @@
                     <%= link_to 'Approve / Reject', vacancy_request_confirmation_vacancy_masters_path(vacancy_master),class: 'btn btn-xs btn-warning' %>
                     <% end %>
                   </td>
-                  <!-- <td>
+                 <!--  <td> -->
                   
-                    <= link_to 'History',vacancy_history_list_vacancy_masters_path(id: vacancy_master.id),class: 'btn btn-xs btn-primary' %>
-                  </td> -->
+                   <!--  <= link_to 'History',reporting_masters_vacancy_master_list_vacancy_masters_path(vacancy_master_id: vacancy_master.id),class: 'btn btn-xs btn-primary' %> -->
+                 <!--  </td> -->
               </tr>
             <% end %>
           </tbody>
         </table>
       </div>
 </div>
+
+<!-- <script>
+$(document).ready(function() {
+    // get data every 5 seconds and refresh myDiv
+    var pingAfter = 5000;  
+    var refreshId = setInterval(function() {
+        $("#example2").load('/vacancy_masters/vacancy_history');
+    }, pingAfter);
+});
+</script>
+ -->
 

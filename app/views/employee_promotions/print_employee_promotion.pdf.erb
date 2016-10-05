@@ -1,6 +1,6 @@
 <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
     <thead>
-      <tr><td colspan="7"> <center><strong>BHANDARI FOILS AND TUBES LTD.</strong></center>
+      <tr><td colspan="7"> <center><strong><%= current_user.employee.company_location.company.description %></strong></center>
         <center><small>Promotion Histroy</small></center>
         <center><small>Employee ID : <%= @employee_promotions.first.try(:employee).try(:manual_employee_code) %>  Employee Name : <%= full_name(@employee_promotions.first.try(:employee)) %></small></center>  </td>
       </tr>

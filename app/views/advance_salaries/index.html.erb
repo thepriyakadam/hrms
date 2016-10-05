@@ -4,9 +4,10 @@
     <div class="pull-right">
       <%= link_to "New Advance Salary", new_advance_salary_path, class: 'btn btn-sm btn-primary' %> 
     </div>
-  </div><!-- /.box-header -->
+    </div><br>
+ 
   <div class="box-body">
-  <div id="comments">
+    <div id="comments">
     <table id="example2" class="table table-bordered table-hover table-condensed">
     <thead>
       <tr>
@@ -17,7 +18,7 @@
     <tbody>
       <% @advance_salaries.each do |a| %>
         <tr>
-          <% year = a.advance_date.strftime("%Y")%>
+          <%year = a.advance_date.strftime("%Y")%>
           <td><%= year %></td>
           <td>
             <%= link_to 'January',advances_advance_salaries_path(year: year, month: "January") , class: 'btn btn-xs btn-primary' %>
@@ -38,5 +39,6 @@
     </tbody>
   </table>
   </div>
-</div>
+<!--   <div id="advance_salaries_li_1"></div>
+ --></div>
 </div>

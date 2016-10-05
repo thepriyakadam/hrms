@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160919045818) do
+ActiveRecord::Schema.define(version: 20161004130453) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -32,6 +32,18 @@ ActiveRecord::Schema.define(version: 20160919045818) do
     t.datetime "updated_at",  null: false
     t.boolean  "is_confirm"
   end
+
+  create_table "access_issue_requests", force: :cascade do |t|
+    t.integer  "issue_tracker_access_id"
+    t.integer  "issue_request_id"
+    t.boolean  "status"
+    t.boolean  "current_status"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  add_index "access_issue_requests", ["issue_request_id"], name: "index_access_issue_requests_on_issue_request_id"
+  add_index "access_issue_requests", ["issue_tracker_access_id"], name: "index_access_issue_requests_on_issue_tracker_access_id"
 
   create_table "accident_masters", force: :cascade do |t|
     t.string   "code"
@@ -848,6 +860,9 @@ ActiveRecord::Schema.define(version: 20160919045818) do
     t.date     "expiry_date"
     t.string   "total_leave"
     t.boolean  "is_confirm"
+    t.date     "from_date"
+    t.date     "to_date"
+    t.boolean  "is_active"
   end
 
   add_index "employee_leav_balances", ["company_leav_id"], name: "index_employee_leav_balances_on_company_leav_id"
@@ -1251,6 +1266,7 @@ ActiveRecord::Schema.define(version: 20160919045818) do
     t.integer  "food_coupan_master_id"
     t.integer  "return_coupan"
     t.integer  "total_coupan"
+    t.boolean  "is_paid"
   end
 
   add_index "food_deductions", ["employee_id"], name: "index_food_deductions_on_employee_id"
@@ -1641,6 +1657,159 @@ ActiveRecord::Schema.define(version: 20160919045818) do
 
   add_index "investment_heads", ["section_id"], name: "index_investment_heads_on_section_id"
 
+  create_table "issue_histories", force: :cascade do |t|
+    t.integer  "issue_request_id"
+    t.integer  "issue_master_id"
+    t.string   "description"
+    t.date     "date"
+    t.time     "time"
+    t.integer  "employee_id"
+    t.integer  "issue_tracker_member_id"
+    t.integer  "issue_tracker_group_id"
+    t.string   "issue_priority"
+    t.boolean  "status"
+    t.boolean  "is_confirm"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  add_index "issue_histories", ["employee_id"], name: "index_issue_histories_on_employee_id"
+  add_index "issue_histories", ["issue_master_id"], name: "index_issue_histories_on_issue_master_id"
+  add_index "issue_histories", ["issue_request_id"], name: "index_issue_histories_on_issue_request_id"
+  add_index "issue_histories", ["issue_tracker_group_id"], name: "index_issue_histories_on_issue_tracker_group_id"
+  add_index "issue_histories", ["issue_tracker_member_id"], name: "index_issue_histories_on_issue_tracker_member_id"
+
+  create_table "issue_locker_histories", force: :cascade do |t|
+    t.integer  "issue_locker_id"
+    t.integer  "issue_request_id"
+    t.boolean  "status"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.integer  "issue_tracker_member_id"
+    t.date     "lock_date"
+    t.time     "lock_time"
+  end
+
+  add_index "issue_locker_histories", ["issue_locker_id"], name: "index_issue_locker_histories_on_issue_locker_id"
+  add_index "issue_locker_histories", ["issue_request_id"], name: "index_issue_locker_histories_on_issue_request_id"
+  add_index "issue_locker_histories", ["issue_tracker_member_id"], name: "index_issue_locker_histories_on_issue_tracker_member_id"
+
+  create_table "issue_lockers", force: :cascade do |t|
+    t.integer  "issue_request_id"
+    t.boolean  "status"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.integer  "issue_tracker_member_id"
+    t.date     "lock_date"
+    t.time     "lock_time"
+  end
+
+  add_index "issue_lockers", ["issue_request_id"], name: "index_issue_lockers_on_issue_request_id"
+  add_index "issue_lockers", ["issue_tracker_member_id"], name: "index_issue_lockers_on_issue_tracker_member_id"
+
+  create_table "issue_masters", force: :cascade do |t|
+    t.integer  "issue_tracker_group_id"
+    t.integer  "issue_type_id"
+    t.string   "name"
+    t.string   "description"
+    t.boolean  "status"
+    t.boolean  "is_confirm"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "issue_masters", ["issue_tracker_group_id"], name: "index_issue_masters_on_issue_tracker_group_id"
+  add_index "issue_masters", ["issue_type_id"], name: "index_issue_masters_on_issue_type_id"
+
+  create_table "issue_requests", force: :cascade do |t|
+    t.integer  "issue_master_id"
+    t.integer  "issue_tracker_member_id"
+    t.integer  "issue_tracker_group_id"
+    t.string   "description"
+    t.date     "date"
+    t.time     "time"
+    t.integer  "employee_id"
+    t.string   "issue_priority"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.string   "document1_file_name"
+    t.string   "document1_content_type"
+    t.integer  "document1_file_size"
+    t.datetime "document1_updated_at"
+    t.string   "document2_file_name"
+    t.string   "document2_content_type"
+    t.integer  "document2_file_size"
+    t.datetime "document2_updated_at"
+    t.boolean  "status"
+    t.boolean  "is_confirm"
+    t.boolean  "is_complete"
+    t.integer  "issue_root_cause_id"
+    t.string   "effort_time"
+    t.string   "comment"
+  end
+
+  add_index "issue_requests", ["employee_id"], name: "index_issue_requests_on_employee_id"
+  add_index "issue_requests", ["issue_master_id"], name: "index_issue_requests_on_issue_master_id"
+  add_index "issue_requests", ["issue_root_cause_id"], name: "index_issue_requests_on_issue_root_cause_id"
+  add_index "issue_requests", ["issue_tracker_group_id"], name: "index_issue_requests_on_issue_tracker_group_id"
+  add_index "issue_requests", ["issue_tracker_member_id"], name: "index_issue_requests_on_issue_tracker_member_id"
+
+  create_table "issue_root_causes", force: :cascade do |t|
+    t.integer  "issue_tracker_group_id"
+    t.string   "name"
+    t.boolean  "is_active"
+    t.boolean  "is_confirm"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "issue_root_causes", ["issue_tracker_group_id"], name: "index_issue_root_causes_on_issue_tracker_group_id"
+
+  create_table "issue_tracker_accesses", force: :cascade do |t|
+    t.string   "name"
+    t.string   "role"
+    t.boolean  "status"
+    t.boolean  "is_confirm"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.integer  "issue_tracker_member_id"
+    t.integer  "issue_tracker_group_id"
+  end
+
+  add_index "issue_tracker_accesses", ["issue_tracker_group_id"], name: "index_issue_tracker_accesses_on_issue_tracker_group_id"
+  add_index "issue_tracker_accesses", ["issue_tracker_member_id"], name: "index_issue_tracker_accesses_on_issue_tracker_member_id"
+
+  create_table "issue_tracker_groups", force: :cascade do |t|
+    t.string   "name"
+    t.string   "email"
+    t.boolean  "status"
+    t.boolean  "is_confirm"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.string   "contact_number"
+  end
+
+  create_table "issue_tracker_members", force: :cascade do |t|
+    t.integer  "issue_tracker_group_id"
+    t.integer  "employee_id"
+    t.boolean  "status"
+    t.boolean  "is_confirm"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.string   "role"
+  end
+
+  add_index "issue_tracker_members", ["employee_id"], name: "index_issue_tracker_members_on_employee_id"
+  add_index "issue_tracker_members", ["issue_tracker_group_id"], name: "index_issue_tracker_members_on_issue_tracker_group_id"
+
+  create_table "issue_types", force: :cascade do |t|
+    t.string   "name"
+    t.boolean  "status"
+    t.boolean  "is_confirm"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "joining_details", force: :cascade do |t|
     t.integer  "employee_id"
     t.date     "joining_date"
@@ -1745,6 +1914,19 @@ ActiveRecord::Schema.define(version: 20160919045818) do
   end
 
   add_index "leave_c_offs", ["employee_id"], name: "index_leave_c_offs_on_employee_id"
+
+  create_table "leave_masters", force: :cascade do |t|
+    t.integer  "leav_category_id"
+    t.string   "period"
+    t.decimal  "working_day"
+    t.string   "no_of_leave"
+    t.boolean  "is_carry_forward"
+    t.string   "limit"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "leave_masters", ["leav_category_id"], name: "index_leave_masters_on_leav_category_id"
 
   create_table "leave_records", force: :cascade do |t|
     t.date     "day"

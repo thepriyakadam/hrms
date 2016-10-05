@@ -15,4 +15,14 @@ class TrainingRequestMailer < ApplicationMailer
     @employee = Employee.find(@training_request.employee_id)
     mail(to: @employee.email, subject: 'Training Request Rejected')
     end
+
+    def training_request(training_request)
+     @reporting_master = ReportingMaster.find(training_request.reporting_master_id)
+     @employee = Employee.find(@reporting_master.employee_id)
+     @training_request = TrainingRequest.find(training_request.id)
+     @emp = TrainingRequest.find_by_employee_id(training_request.employee_id)
+     mail(to: @employee.email, subject: 'Training Request')
+    end
+
+
 end

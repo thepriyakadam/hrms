@@ -29,7 +29,7 @@ class EmployeeLeavRequest < ActiveRecord::Base
   end
 
   def minus_leave(employee_leav_request)
-    leave_balance = EmployeeLeavBalance.where(employee_id: employee_leav_request.employee_id, leav_category_id: employee_leav_request.leav_category_id).take
+    leave_balance = EmployeeLeavBalance.where("employee_id = ? AND leav_category_id = ? AND is_active = ?",employee_leav_request.employee_id, employee_leav_request.leav_category_id, true).take
     unless leave_balance.nil?
       leave_balance.no_of_leave.to_f
       employee_leav_request.leave_count.to_f
@@ -40,7 +40,8 @@ class EmployeeLeavRequest < ActiveRecord::Base
   end
 
   def revert_leave(employee_leav_request)
-    leave_balance = EmployeeLeavBalance.where(employee_id: employee_leav_request.employee_id, leav_category_id: employee_leav_request.leav_category_id).take
+    leave_balance = EmployeeLeavBalance.where("employee_id = ? AND leav_category_id = ? AND is_active = ?",employee_leav_request.employee_id, employee_leav_request.leav_category_id, true).take
+
     unless leave_balance.nil?
       leave_balance.no_of_leave = leave_balance.no_of_leave.to_f + employee_leav_request.leave_count.to_f
       leave_balance.save
@@ -48,7 +49,7 @@ class EmployeeLeavRequest < ActiveRecord::Base
   end
 
   def manage_coff(request)
-    if request.leav_category.name == 'C.Off'
+    if request.leav_category.name == 'Compensatory Off'
       c_offs = LeaveCOff.where(employee_id: request.employee_id, is_taken: false).order('c_off_date asc')
       c_offs.each do |c|
         if request.leave_count == 0
@@ -116,7 +117,7 @@ class EmployeeLeavRequest < ActiveRecord::Base
         end
       else
         for i in self.start_date.to_date..self.start_date.to_date
-          EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: "P/"+self.leav_category.code.to_s, count: 0.5, employee_leav_request_id: self.id,department_id: self.employee.try(:department_id))
+          EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: "PR/"+self.leav_category.code.to_s, count: 0.5, employee_leav_request_id: self.id,department_id: self.employee.try(:department_id))
 
         end
       end
@@ -128,7 +129,7 @@ class EmployeeLeavRequest < ActiveRecord::Base
         end
       else
         for i in self.start_date.to_date..self.start_date.to_date
-          EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: "p/"+self.leav_category.code.to_s, count: 0.5, employee_leav_request_id: self.id,department_id: self.employee.try(:department_id))
+          EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: "PR/"+self.leav_category.code.to_s, count: 0.5, employee_leav_request_id: self.id,department_id: self.employee.try(:department_id))
 
         end
       end

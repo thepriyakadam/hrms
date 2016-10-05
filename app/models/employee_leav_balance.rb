@@ -53,4 +53,8 @@ class EmployeeLeavBalance < ActiveRecord::Base
   end
   end
   
+  def is_present(e)
+    LeaveMaster.exists?(leav_category_id: e.leav_category_id)
+  end
+
 end

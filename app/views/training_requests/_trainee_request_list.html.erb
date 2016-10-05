@@ -40,7 +40,9 @@
   <div class="col-sm-9">
     <div class="actions">
       <!--<= f.submit " Approve", class: 'btn btn-sm btn-info fa fa-check' %>-->
-      <%= f.submit " Approve & Send Next", class: 'btn btn-sm btn-primary fa fa-check' %> |
+      <%= f.submit " Approve & Send Next", class: 'btn btn-sm btn-primary fa fa-check' %>
+      <!-- <div id="myModal" class="modal fade"></div>
+      <= link_to 'Approve & Send next',modal_approve_and_send_next_training_requests_path(@training_request.id),class: 'btn btn btn-sm btn-success fa fa-modx',remote: true %> -->  |
       <%= link_to ' Approve',approve_training_request_training_requests_path(@training_request.id),class: 'btn btn-sm btn-info fa fa-check' %> |
       <%= link_to ' Reject',reject_training_request_training_requests_path(@training_request.id),class: 'btn btn-sm btn-danger fa fa-trash' %> 
       <!-- <= link_to ' Comment',modal_reject_comment_training_requests_path(@training_request.id),class: 'btn btn-sm btn-primary fa fa-commenting-o',remote: true %> -->

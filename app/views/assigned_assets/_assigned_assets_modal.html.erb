@@ -1,33 +1,27 @@
-<div class="modal-dialog"  style="height:500px; max-height:100px; width:350px; max-width:350px;">
+<div class="modal-dialog"  style="height:400px; max-height:1000px; width:300px; max-width:800px;">
   <div class="modal-content">
     <div class="modal-body">
-    <%= bootstrap_form_for :assigned_asset,url:{action:"update_asset",id: @assigned_asset.id},remote:true do |f| %>
-       <div class="row"> 
-     <div class="col-sm-3">
-    <label>Returned On </label>
-    <div class="field">
-      <div class="input-group">
-        <div class="input-group-addon">
-          <i class="fa fa-calendar"></i>
+
+      <%= bootstrap_form_for :assigned_asset,url:{action:"update_asset",id: @assigned_asset.id},remote:true do |f| %>
+      <div class="row"> 
+        <div class="col-sm-8">
+          <label>Reterned On</label>
+          <div class="field">
+            <%= f.text_field :returned_on,hide_label: true, class: 'returned_on_date' %>
+          </div>
         </div>
-        <%= f.date_field :returned_on, hide_label: true%>
+
+        <div class="col-sm-3" style="padding-top:20px;">
+          <div class="actions">
+            <%= f.submit "Update", class: "btn btn-success btn-sm" %>
+          </div>
+        </div>
       </div>
+   <% end %>
+
     </div>
   </div>
-  </div><br><br>
-  <div class="row">
-    <div class="col-sm-3">
-      <div class="actions">
-
-        <%= f.submit "Update", class: "btn btn-success btn-sm" %>
-
-      </div>
-    </div>
-  </div>
-  </div>
-  </div>
-  </div>
-  <% end %>
+</div>
 
   <script type="text/javascript">
   $(function(){

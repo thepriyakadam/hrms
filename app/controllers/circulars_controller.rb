@@ -35,8 +35,6 @@ class CircularsController < ApplicationController
       flash[:notice] = 'Circular Saved Successfully'   
   end
 
-
-
   # PATCH/PUT /circulars/1
   # PATCH/PUT /circulars/1.json
  

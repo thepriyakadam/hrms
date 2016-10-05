@@ -38,7 +38,7 @@
               <th>Leave Balance</th>
             </tr>
            </thead>
-          <% @total_leaves.each do |l| %>
+          <% @total_leaves.where(is_active: true).each do |l| %>
           <tr>
           <th><%= l.leav_category.name %></th>
           <td><%= l.expiry_date %></td>

@@ -1,0 +1,2 @@
+<label class="control-label required" for="company_district" aria-required="true">Member</label>
+	<%= select :issue_tracker_access,:issue_tracker_member_id,(@issue_tracker_members.present? ? (@issue_tracker_members.collect {|b| [b.employee.try(:first_name) +' '+b.employee.try(:middle_name)+' '+b.employee.try(:last_name),b.id]}) : {}),{prompt:"Select Member",hide_label:true},class: "form-control"%>

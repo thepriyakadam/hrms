@@ -1,0 +1,24 @@
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Group</th>
+      <th>Name</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+   <% @issue_root_causes.each do |issue_root_cause| %>
+      <tr>
+       <td><%= issue_root_cause.issue_tracker_group.try(:name) %></td>
+        <td><%= issue_root_cause.name %></td>
+        <td><%= issue_root_cause.is_active ? "Active" : "Inactive" %></td>
+  
+         <td>
+          <%= link_to '', edit_issue_root_cause_path(issue_root_cause),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
+          <%= link_to '',  issue_root_cause, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
+       
+    <% end %>
+  </tbody>
+</table>

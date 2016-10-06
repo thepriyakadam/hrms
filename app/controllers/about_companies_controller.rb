@@ -34,7 +34,7 @@ class AboutCompaniesController < ApplicationController
          @about_company = AboutCompany.new
         format.js { @flag = true }
       else
-        flash.now[:alert] = 'About Already Exist.'
+        flash.now[:alert] = 'Company Already Exist.'
         format.js { @flag = false }
       end
     end

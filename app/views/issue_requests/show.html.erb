@@ -1,0 +1,48 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Issue Request</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed'">
+
+<tr>
+  <th><strong>Request By</strong></th>
+  <td><%= @issue_request.employee.try(:first_name) %> <%= @issue_request.employee.try(:middle_name) %> <%= @issue_request.employee.try(:last_name) %></td>
+
+  <th><strong>Issue</strong></th>
+  <td><%= @issue_request.issue_master.try(:name) %></td>
+ 
+</tr>
+
+ 
+<tr>
+  <th><strong>Group</strong></th>
+  <td><%= @issue_request.issue_tracker_group.try(:name) %></td>
+  
+  <th><strong>Priority</strong></th>
+  <td><%= @issue_request.issue_priority %></td>
+  
+  
+</tr>
+
+<tr>
+  <th><strong>Date</strong></th>
+  <td><%= @issue_request.date %></td>
+
+  <th><strong>Time</strong></th>
+  <td><%= @issue_request.time %></td>
+</tr>
+
+<tr>
+  
+  <th><strong>Description</strong></th>
+  <td colspan="3"><%= @issue_request.description %></td>
+
+</tr>
+
+</table>
+<%= link_to 'Back', lock_request_list_issue_requests_path,class: 'btn btn-primary fa fa-arrow-left' %>
+
+
+</div>
+</div>

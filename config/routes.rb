@@ -1,8 +1,63 @@
 Rails.application.routes.draw do
 
+  resources :issue_root_causes do
+    collection do
+      get :is_confirm
+        end
+   end
+
+  resources :issue_histories
+  resources :access_issue_requests
+  resources :issue_locker_histories
+  resources :issue_lockers
+  resources :issue_requests do
+    collection do
+      get :is_confirm
+      get :lock_request_list
+      post :lock_request
+      get :coordinator_lock_request
+      get :modal
+      get :modal1
+      get :issue_history
+      get :unlock_request
+      post :solved_request
+      get :solved_issues
+      get :lock_by_admin
+      get :unlock_by_admin
+      get :solved_confirm
+      get :resend_request
+    end
+   end
+  resources :issue_masters do
+    collection do
+      get :collect_issues
+    end
+  end
+  resources :issue_types do
+    collection do
+      get :is_confirm
+    end
+   end
+  resources :issue_tracker_accesses
+   
+  resources :issue_tracker_members do
+    collection do
+       get :collect_issues
+    end
+   end
+  resources :issue_tracker_groups do
+    collection do
+
+  end
+end
 
   resources :leave_masters
 
+  resources :employee_code_masters do
+    collection do
+       get :is_confirm
+    end
+   end
   get 'download_pdf/index'
   get 'download_pdf/zip'
   get 'download_pdf/pdf'
@@ -898,7 +953,10 @@ end
   match 'employee_documents/:id/download_pic/:id' => 'employee_documents#download_pic', :via => [:get], :as => :download_pic
   match 'investment_declarations/:id/investment_document/:id' => 'investment_declarations#investment_document', :via => [:get], :as => :investment_document
   match 'due_templates/:id/download_due_tempalte_documents/:id' => 'due_templates#download_due_tempalte_documents', :via => [:get], :as => :download_due_tempalte_documents
- 
+
+  match 'issue_requests/:id/download_screenshot_image/:id' => 'issue_requests#download_screenshot_image', :via => [:get], :as => :download_screenshot_image
+  match 'issue_requests/:id/download_screenshot/:id' => 'issue_requests#download_screenshot', :via => [:get], :as => :download_screenshot
+
   resources :leave_c_offs
   resources :overtime_month_records
 
@@ -1408,6 +1466,7 @@ end
       get :ajax_new_employee_document
       get :collect_company_location
       get :collect_department
+      get :display_emp_code_master
     end
     member do
       get :edit_manager

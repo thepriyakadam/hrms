@@ -143,7 +143,8 @@ class SelectedResumesController < ApplicationController
   def download_resume
     @selected_resume = SelectedResume.find(params[:id])
     send_file @selected_resume.avatar.path,
-              filename: @selected_resume.avatar_file_name,
+              filename: @selected_resum24 | 7               | 9                       | 4                      | rttt        | 10-09-2016 |      | 4804        | Low            |               | 2016-09... | 2016-09... | redBus_Ticket.pdf   | application/pdf        | 217464              | 2016-09-08 10:45:44  | ambejogai.jpg       | image/jpeg             | 9070                | 2016-09-08 10:45:44  |       
+e.avatar_file_name,
               type: @selected_resume.avatar_content_type,
               disposition: 'attachment'
   end

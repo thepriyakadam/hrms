@@ -13,7 +13,13 @@
     </div>
 
     <div class="col-sm-3">
-      <div class="form-group required">
+      <div class="field">
+        <%= f.text_field :last_range,label: "Last Range" %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="field">
         <%= f.check_box :is_active,label: "Active" %>
       </div>
     </div>
@@ -26,3 +32,29 @@
     </div>
   </div>
 <% end %><br>
+
+<script>
+$("#employee_code_master").validate({
+    rules: {
+      "employee_code_master[name]":{
+        required: true,
+      },
+      "employee_code_master[range]":{
+        required: true,
+      }
+    },
+    messages: {
+      "employee_code_master[candidate_name]":{
+        required: "Please specify Name",
+      },
+      "employee_code_master[range]":{
+        required: "Please specify Range",
+      }    
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>
+

@@ -26,6 +26,8 @@ class EmployeeCodeMastersController < ApplicationController
     @employee_code_masters = EmployeeCodeMaster.all
     respond_to do |format|
       if @employee_code_master.save
+        @emp_code_master = EmployeeCodeMaster.where(id: @employee_code_master.id).last(2).first
+        EmployeeCodeMaster.where(id: @emp_code_master.id).update_all(last_range: @employee_code_master.range)
         format.html { redirect_to @employee_code_master, notice: 'Employee code master was successfully created.' }
         format.json { render :show, status: :created, location: @employee_code_master }
       else
@@ -38,7 +40,7 @@ class EmployeeCodeMastersController < ApplicationController
   # PATCH/PUT /employee_code_masters/1
   # PATCH/PUT /employee_code_masters/1.json
   def update
-    @employee_grade.update(employee_code_master_params)
+    @employee_code_master.update(employee_code_master_params)
     @employee_code_masters = EmployeeCodeMaster.all
     @employee_code_master = EmployeeCodeMaster.new
   end
@@ -48,6 +50,13 @@ class EmployeeCodeMastersController < ApplicationController
   def destroy
     @employee_code_master.destroy
     @employee_code_masters = EmployeeCodeMaster.all
+  end
+
+  def is_confirm
+    @employee_code_master = EmployeeCodeMaster.find(params[:employee_code_master])
+    EmployeeCodeMaster.find(@employee_code_master.id).update(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to new_employee_code_master_path
   end
 
   private

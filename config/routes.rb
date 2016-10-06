@@ -171,6 +171,9 @@ Rails.application.routes.draw do
       get :employee_slip_xls
       post :display_attendance
       get :display_attendance_1
+      get :revert_attendance_employeewise
+      post :show_employee_list
+      post :destroy_attendance_employeewise
     end
   end
   resources :salary_comp_mappings

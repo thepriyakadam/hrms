@@ -1195,6 +1195,7 @@ end
       get :search_month_year_xls
       get :generate_workingday_xls
       post :is_confirm_workingday
+      get :display_workingday
     end
   end
 

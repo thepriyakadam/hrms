@@ -5,7 +5,6 @@
           <tr>
             <th><input type="checkbox" id="selectAll" value="selectAll"></th>
             <th>ID</th>
-            <th>Employee Name</th>
             <% for i in 1..@day %>
               <th><%= i %></th>
             <%end%>
@@ -17,7 +16,6 @@
             <tr>
               <td><%= check_box_tag "employees[]", e.employee_id unless e.is_confirm %></td>
               <td><%= e.employee.manual_employee_code %></td>
-              <td><%= full_name(e.employee) %></td>
               <% sorted_exists = calculate_attendance(@date, exist, e)%>
               <% sorted_exists.each do |k,v|%>
                 <td><%= v %></td>

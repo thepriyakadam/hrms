@@ -782,6 +782,16 @@ ActiveRecord::Schema.define(version: 20161004130453) do
     t.boolean  "is_confirm"
   end
 
+  create_table "employee_code_masters", force: :cascade do |t|
+    t.string   "name"
+    t.string   "range"
+    t.string   "last_range"
+    t.boolean  "is_active"
+    t.boolean  "is_confirm"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "employee_daily_activities", force: :cascade do |t|
     t.integer  "employee_id"
     t.integer  "project_master_id"
@@ -1135,12 +1145,13 @@ ActiveRecord::Schema.define(version: 20161004130453) do
     t.integer  "employee_type_id"
     t.string   "gender"
     t.integer  "manager_id"
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
     t.integer  "religion_id"
     t.integer  "manager_2_id"
     t.integer  "company_location_id"
     t.integer  "company_id"
+    t.integer  "employee_code_master_id"
   end
 
   add_index "employees", ["blood_group_id"], name: "index_employees_on_blood_group_id"
@@ -1150,6 +1161,7 @@ ActiveRecord::Schema.define(version: 20161004130453) do
   add_index "employees", ["department_id"], name: "index_employees_on_department_id"
   add_index "employees", ["district_id"], name: "index_employees_on_district_id"
   add_index "employees", ["employee_code"], name: "index_employees_on_employee_code"
+  add_index "employees", ["employee_code_master_id"], name: "index_employees_on_employee_code_master_id"
   add_index "employees", ["employee_type_id"], name: "index_employees_on_employee_type_id"
   add_index "employees", ["manager_2_id"], name: "index_employees_on_manager_2_id"
   add_index "employees", ["manager_id"], name: "index_employees_on_manager_id"

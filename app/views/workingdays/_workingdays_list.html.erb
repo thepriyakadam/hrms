@@ -9,7 +9,7 @@
   <div class="box-body">
   <div id="comments">
   <%= form_for :workingday, url: { action: "is_confirm_workingday", date: @date } do |f| %>
-    <table id="example1" class="table table-bordered table-hover table-condensed">
+    <table id="example3" class="table table-bordered table-hover table-condensed">
     <thead>
       <tr>
        <th><input type="checkbox" id="selectAll" value="selectAll"></th>
@@ -56,14 +56,15 @@
     <% end %>
     </tbody>
   </table>
-  <%= f.submit "Confirm workingday", class: "btn btn-sm btn-primary" %>
+ <!--  <= f.submit "Confirm workingday", class: "btn btn-sm btn-primary" %> -->
+  <%= link_to " Print Working Days ",workingday_pdf_workingdays_path(month: params[:month], year: params[:year], format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+
+  <%= link_to " Excel Report ",workingday_xls_workingdays_path(month: params[:month], year: params[:year], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
   </div>
 </div>
 <% end %>
 
 <script type="text/javascript">
-  $("#example1").DataTable();
-
 $('#selectAll').click(function() {
   if (this.checked) {
     $(':checkbox').each(function() {
@@ -76,4 +77,12 @@ $('#selectAll').click(function() {
     });
   } 
 });
+</script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example3').DataTable( {
+        "scrollX": true
+    } );
+} );
 </script>

@@ -11,12 +11,12 @@
   </thead>
   <tbody>
       <tr>
-        <td><%=  @vacancy_master.id %></td>
-        <td><%=  @vacancy_master.vacancy_name %></td>
-        <td><%= @vacancy_master.company_location.try(:name) %></td>
-        <td><%= @vacancy_master.degree.try(:name) %></td>
-        <td><%= @vacancy_master.no_of_position %></td>
-        <td><%= @vacancy_master.experience %></td>
+        <td><%= @vacancy_master.try(:id) %></td>
+        <td><%= @vacancy_master.try(:vacancy_name) %></td>
+        <td><%= @vacancy_master.try(:company_location).try(:name) %></td>
+        <td><%= @vacancy_master.try(:degree).try(:name) %></td>
+        <td><%= @vacancy_master.try(:no_of_position) %></td>
+        <td><%= @vacancy_master.try(:experience) %></td>
       </tr>
   </tbody>
 </table>

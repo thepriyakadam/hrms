@@ -4,6 +4,8 @@ class PeriodsController < ApplicationController
   def index
     @periods = Period.all
     @period = Period.new
+    session[:active_tab] = "master"
+    session[:active_tab1] = "performancemaster"
   end
 
 	def create

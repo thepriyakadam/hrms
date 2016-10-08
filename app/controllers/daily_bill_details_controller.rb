@@ -217,8 +217,11 @@ class DailyBillDetailsController < ApplicationController
    def travel_request_list
      @reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
      # @travel_requests = TravelRequest.where(daily_bill_status: "true",reporting_master_id: reporting_masters)
-     # @travel_requests = TravelRequest.where(daily_bill_status: "true",current_status: "Approved",reporting_master_id: reporting_masters)
+
+     # @travel_requests = TravelRequest.where(daily_bill_status: "true",current_status: "Approved",reporting_master_id: @reporting_masters)
      @travel_requests = TravelRequest.where(current_status: "Approved",reporting_master_id: @reporting_masters)
+     # @travel_request_histories = TravelRequestHistory.where(daily_bill_status: "true",reporting_master_id: reporting_masters)
+
      # @travel_request_histories = TravelRequestHistory.where(daily_bill_status: "true",reporting_master_id: reporting_masters)
      session[:active_tab] ="travelmgmt"
 

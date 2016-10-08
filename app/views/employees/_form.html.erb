@@ -3,15 +3,19 @@
     <h3 class="box-title">Create Employee</h3>
   
   <div class="pull-right">
-   <h3 class="box-title"><font color='red'>*Last Employee ID : <%= Employee.last.try(:manual_employee_code) %> </font></h3>
-   </div>
-   </div><!-- /.box-header -->
+  <!-- <font color='red'>*Last Employee : <div id="employee_emp_code_master"></div> </font></div>
+   </div> --><!-- /.box-header -->
   <div class="box-body">
     <%= bootstrap_form_for(@employee,html: {id: 'employee'}) do |f| %>
       <div class="row">
+      <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.select :employee_code_master_id, all_employee_code_master,{include_blank: "Select Employee Contract Type",label: "Employee Contract Type"},{onchange:"var a={id:$(this).val()}; $.get('/employees/display_emp_code_master',a,function(response){});"}%>
+          </div>
+        </div>  
         <div class="col-sm-3">
           <div class="form-group required">
-           <%= f.text_field :manual_employee_code,label: 'Employee ID',placeholder: "Employee ID"%>
+           <%= f.text_field :manual_employee_code,label: 'Employee ID',placeholder: "Employee ID",readonly: true %>
            </div>
         </div>
       </div>
@@ -136,15 +140,10 @@
    
          <div class="row">
           <div class="col-sm-3">
-            <div class="form-group required">
-            <div class="input-group">
-              <div class="input-group-addon">
-                <%= link_to "", new_country_path,class: "fa fa-plus fa-success",:target => "_blank" %>
-              </div>
-              <%=f.select :country_id, all_countries,{include_blank: "Please Select Country"},{onchange:"var a={id:$(this).val(), form : 'employee'}; $.get('/companies/collect_states',a,function(response){});"}%>
-            </div>
-            </div>
+          <div class="form-group required">
+            <%=f.select :country_id, all_countries,{include_blank: "Please Select Country"},{onchange:"var a={id:$(this).val(), form : 'employee'}; $.get('/companies/collect_states',a,function(response){});"}%>
           </div>
+        </div>  
           <div class="col-sm-3">
             <div class="form-group required">
             <div class="input-group">
@@ -250,4 +249,137 @@
     yearRange: '-200:+1',
     dateFormat: 'dd-mm-yy' });
   }); 
+</script>
+
+<script>
+$("#employee").validate({
+    rules: {
+      "employee[manual_employee_code]":{
+        required: true
+      },
+      "employee[employee_code_master_id]":{
+        required: true
+      }, 
+      "employee[first_name]":{
+        required: true,
+        maxlength: 30,
+      },
+      "employee[last_name]":{
+        maxlength: 30,
+        lettersOnly:true
+      },
+      "employee[adhar_no]":{
+        maxlength: 12,
+        numbersOnly: true
+      },
+      "employee[pan_no]":{
+        maxlength: 10
+      },
+      "employee[licence_no]":{
+        maxlength: 17
+      },
+      "employee[permanent_address]":{
+        required: true
+      },
+
+      "employee[country_id]":{
+        required: true
+      },
+      "company[state_id]":{
+        required: true
+      },
+      "company[district_id]":{
+        required: true
+      },
+      "employee[pin_code]":{
+        maxlength: 6,
+        numbersOnly: true
+      },
+      "employee[contact_no]":{
+        maxlength: 13,
+        mobileNo: true
+      },
+      "employee[status]":{
+        required: true
+      },
+      "employee[email]":{
+        loginRegex: true
+      },
+      "employee[company_id]":{
+        required: true
+      },
+      "employee[company_location_id]":{
+        required: true
+      },
+      "employee[department_id]":{
+        required: true
+      }
+    },
+    messages: {
+      "employee[manual_employee_code]":{
+        required: "Please specify employee code"
+      },
+      "employee[employee_code_master_id]":{
+        required: "Please Select Employee Contract Type"
+      },
+      "employee[first_name]":{
+        required: "Please specify Your First Name",
+        maxlength: "Name allows upto 30 alphabets"
+      },
+      "employee[last_name]":{
+        maxlength: "Name allows upto 30 alphabets"
+      },
+      "employee[adhar_no]":{
+        maxlength: "Adhar no allows upto 12 characters"
+      },
+      "employee[pan_no]":{
+        maxlength: "Pan no allows upto 10 characters"
+      },
+      "employee[licence_no]":{
+        maxlength: "Licence No allows upto 17 characters"
+      },
+      "employee[permanent_address]":{
+        required: "Please specify address"
+      },
+
+      "employee[country_id]":{
+        required: "Please Specify Country"
+      },
+      "employee[state_id]":{
+        required: "Please Specify State"
+      },
+      "employee[city]":{
+        maxlength: "Enter the City upto 30 char max"
+      },
+      "employee[district_id]":{
+        required: "Please Specify District"
+      },
+      "employee[pin_code]":{
+        maxlength: "Please Enter Valid Pincode Details"
+      },
+      "employee[contact_no]":{
+        maxlength: "Enter the Correct contact number"
+      },
+      "employee[status]":{
+        required: "Please Specify Status"
+      },
+      "employee[email]":{
+        required: "Please Specify Email ID"
+      },
+      "employee[company_id]":{
+        required: "Please Specify Company"
+      },
+      "employee[company_location_id]":{
+        required: "Please Specify Company Location"
+      },
+      "employee[department_id]":{
+        required: "Please Specify Department"
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+
+   });
 </script>

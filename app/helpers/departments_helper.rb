@@ -11,10 +11,6 @@ module DepartmentsHelper
     Department.all.collect { |d| [d.company_location.company.name + '-' + d.company_location.name + '-' + d.name, d.id] }
   end
 
-  def all_department_list
-    Department.all.collect { |d| [d.company_location.company.name + '-' + d.company_location.name + '-' + d.name, d.id] }
-  end
-
   def all_department_type_list
     Department.all.collect { |d| [d.company_location.company.name + '-' + d.company_location.name + '-' + d.name, d.id] }
   end

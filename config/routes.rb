@@ -51,6 +51,13 @@ Rails.application.routes.draw do
   end
 end
 
+  resources :leave_masters
+
+  resources :employee_code_masters do
+    collection do
+       get :is_confirm
+    end
+   end
   get 'download_pdf/index'
   get 'download_pdf/zip'
   get 'download_pdf/pdf'
@@ -186,7 +193,11 @@ end
       get :is_confirm
     end
   end
-  resources :circulars
+  resources :circulars do
+    collection do
+      get :is_confirm
+    end
+  end
 
   resources :salary_map_saps
   resources :interview_rounds do
@@ -219,6 +230,9 @@ end
       get :employee_slip_xls
       post :display_attendance
       get :display_attendance_1
+      get :revert_attendance_employeewise
+      post :show_employee_list
+      post :destroy_attendance_employeewise
     end
   end
   resources :salary_comp_mappings
@@ -1193,6 +1207,9 @@ end
       get :search_month_year_xls
       get :generate_workingday_xls
       post :is_confirm_workingday
+      get :display_workingday
+      get :workingday_xls
+      get :workingday_pdf
     end
   end
 
@@ -1352,6 +1369,7 @@ end
       get :leave_balance_modal
       patch :update_leave_balance
       get :is_confirm_leave
+      patch :update_leave_auto
     end
   end
  
@@ -1455,6 +1473,7 @@ end
       get :ajax_new_employee_document
       get :collect_company_location
       get :collect_department
+      get :display_emp_code_master
     end
     member do
       get :edit_manager

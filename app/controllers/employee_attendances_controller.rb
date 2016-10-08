@@ -137,7 +137,7 @@ class EmployeeAttendancesController < ApplicationController
         @employee_attendance = EmployeeAttendance.find(eid)
         EmployeeAttendance.where(id: eid).destroy_all
       end
-      flash[:alert] = "Revert successfully"
+      flash[:notice] = "Revert successfully"
       redirect_to revert_attendance_employee_attendances_path
     end
   end
@@ -217,27 +217,35 @@ class EmployeeAttendancesController < ApplicationController
       format.xls {render template: 'employee_attendances/employee_attendance.xls.erb'}
     end
   end
+  
+  def revert_attendance_employeewise
+  end
 
-  #  def search_by_start_date
-  #   reporter(EmployeeLeavRequest.filter_records(current_user), template_class: PdfReportTemplate) do
-  #     filter :start_date, type: :date
-  #     # filter :current_status, type: :string
-  #     column(:Request_ID, sortable: true) { |employee_leav_request| employee_leav_request.id }
-  #     column(:ID, sortable: true) { |employee_leav_request| employee_leav_request.employee.try(:manual_employee_code) }
-  #     column(:Employee_Name, sortable: true) { |employee_leav_request| full_name(employee_leav_request.employee) }
-  #     column(:Designation, sortable: true) { |employee_leav_request| employee_leav_request.employee.joining_detail.employee_designation.name }
-  #     column(:From, sortable: true) { |employee_leav_request| employee_leav_request.start_date.to_date }
-  #     column(:To, sortable: true) { |employee_leav_request| employee_leav_request.end_date.to_date }
-  #     column(:Leave_Category, sortable: true) { |employee_leav_request| employee_leav_request.leav_category.try(:description) }
-  #     column(:Apply_Date, sortable: true) { |employee_leav_request| employee_leav_request.created_at.to_date }
-  #     column(:Apply_Time, sortable: true) { |employee_leav_request| employee_leav_request.created_at }
-  #     column(:Leave_Type, sortable: true, &:leave_type)
-  #     column(:Status, sortable: true, &:current_status)
-  #     column(:No_OF_Day, sortable: true, &:leave_count)
-  #     column(:Reason, sortable: true, &:reason)
-  #   end
-  # end
+  def show_employee_list
+    @employee_id = params[:salary][:employee_id]
+    @month = params[:salary][:month]
+    @year = params[:salary][:year]
+    @date = Date.new(@year.to_i, Workingday.months[@month])
+    @employee_attendances = EmployeeAttendance.where("strftime('%m/%Y', day) = ? and employee_id = ?", @date.strftime('%m/%Y'),@employee_id)
+  end
 
+  def destroy_attendance_employeewise
+    @employee_id = params[:employee_id]
+    @month = params[:month]
+    @year = params[:year]
+    @employee_attendance_ids = params[:employee_attendance_ids]
+      if @employee_attendance_ids.nil?
+        flash[:alert] = "Please Select Employees"
+        redirect_to revert_attendance_employeewise_employee_attendances_path
+      else
+        @employee_attendance_ids.each do |eid|
+          @employee_attendance = EmployeeAttendance.find(eid)
+          EmployeeAttendance.where(id: eid).destroy_all
+        end
+        flash[:notice] = "Revert successfully"
+        redirect_to revert_attendance_employeewise_employee_attendances_path
+      end
+  end
 
   private
   # Use callbacks to share common setup or constraints between actions.

@@ -29,6 +29,13 @@
 <%= f.submit "Create Salary", class: 'btn btn-sm btn-primary' %>
 <% end %>
 
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example1').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>
 
 <script type="text/javascript">
 $('#selectAll').click(function() {

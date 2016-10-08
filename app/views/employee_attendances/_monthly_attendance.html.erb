@@ -1,19 +1,10 @@
-<!-- <div class="box">
-  <div class="box-header">
-    <h3 class="box-title">Employee Attendance</h3>
-    <div class="pull-right">
-      <= link_to "Add Employee Attendance", new_employee_attendance_path, class: 'btn btn-primary' %>
-    </div>
-  </div>
 
-  <div class="box-body"> -->
     <%= bootstrap_form_for :temp, url: {action: "create_attendance", date: @date} do |f| %>
-      <table class="table table-bordered table-hover table-condensed">
+      <table id="example3" class="table table-bordered table-hover table-condensed">
         <thead>
           <tr>
             <th><input type="checkbox" id="selectAll" value="selectAll"></th>
             <th>ID</th>
-            <th>Employee Name</th>
             <% for i in 1..@day %>
               <th><%= i %></th>
             <%end%>
@@ -25,7 +16,6 @@
             <tr>
               <td><%= check_box_tag "employees[]", e.employee_id unless e.is_confirm %></td>
               <td><%= e.employee.manual_employee_code %></td>
-              <td><%= full_name(e.employee) %></td>
               <% sorted_exists = calculate_attendance(@date, exist, e)%>
               <% sorted_exists.each do |k,v|%>
                 <td><%= v %></td>
@@ -70,9 +60,9 @@
       </table>
       <%= f.submit "Confirm Workingdays", class: "btn btn-sm btn-primary" %>
 
-      <%= link_to " Print Attendance Slip ",employee_slip_employee_attendances_path(month: @month, year: @year, format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+      <%= link_to " Print Attendance Slip ",employee_slip_employee_attendances_path(month: params[:month], year: params[:year], format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
 
-      <%= link_to " Excel Report ",employee_slip_xls_employee_attendances_path(month: @month, year: @year, format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+      <%= link_to " Excel Report ",employee_slip_xls_employee_attendances_path(month: params[:month], year: params[:year], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
 
     <% end %>
   <!-- </div>
@@ -91,4 +81,12 @@
       });
     }
   });
+</script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example3').DataTable( {
+        "scrollX": true
+    } );
+} );
 </script>

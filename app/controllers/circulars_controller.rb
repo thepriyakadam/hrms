@@ -35,8 +35,6 @@ class CircularsController < ApplicationController
       flash[:notice] = 'Circular Saved Successfully'   
   end
 
-
-
   # PATCH/PUT /circulars/1
   # PATCH/PUT /circulars/1.json
  
@@ -62,11 +60,18 @@ class CircularsController < ApplicationController
     send_file @circular.avatar.path,
               filename: @circular.avatar,
               type: @circular.avatar_content_type,
-              disposition: 'attachment'
+              disposition: 'inline'
     else
     flash[:alert] = "No file found Please contact to Admin!"
     redirect_to root_url
     end
+  end
+
+  def is_confirm
+    @circular = Circular.find(params[:circular])
+    Circular.find(@circular.id).update(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to new_bank_path
   end
 
   private
@@ -77,6 +82,6 @@ class CircularsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def circular_params
-      params.require(:circular).permit(:avatar, :date, :subject)
+      params.require(:circular).permit(:avatar, :date, :subject,:is_active,:is_confirm)
     end
 end

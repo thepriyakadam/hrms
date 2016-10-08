@@ -1,43 +1,42 @@
 require 'rubygems'
 require 'roo'
+# ex = Roo::Excel.new("#{Rails.root}/public/sa.xls")
 
-ex = Roo::Excel.new("#{Rails.root}/public/a.xls")
+# ex.default_sheet = ex.sheets[1] #siya feb
+# i = 1
+# ActiveRecord::Base.transaction do
 
-ex.default_sheet = ex.sheets[3] #siya feb
-i = 1
-ActiveRecord::Base.transaction do
+# 1.upto(79) do |line| # siya Feb 2016
+#   puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
+#   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
+#   unless @employee.nil?
 
-1.upto(1) do |line| # siya Feb 2016
-  puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
-  @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
-  unless @employee.nil?
+#     Workingday.new do |w|
+#       w.employee_id = @employee.id
+#       w.month_name = ex.cell(line, 'B')
+#       w.year = ex.cell(line, 'C').to_i
 
-    Workingday.new do |w|
-      w.employee_id = @employee.id
-      w.month_name = ex.cell(line, 'B')
-      w.year = ex.cell(line, 'C').to_i
+#       w.day_in_month = ex.cell(line, 'D')
+#       w.present_day = ex.cell(line, 'E')
+#       w.week_off_day = ex.cell(line, 'F')
 
-      w.day_in_month = ex.cell(line, 'D')
-      w.present_day = ex.cell(line, 'E')
-      w.week_off_day = ex.cell(line, 'F')
-
-      w.cl_leave = ex.cell(line, 'G').to_i
-      w.el_leave = ex.cell(line, 'H').to_i
-      w.coff_leave = ex.cell(line, 'I').to_i
-
-     
-      w.holiday_in_month = ex.cell(line, 'J')
+#       w.cl_leave = ex.cell(line, 'G').to_i
+#       w.el_leave = ex.cell(line, 'H').to_i
+#       w.coff_leave = ex.cell(line, 'I').to_i
 
      
-      w.absent_day = ex.cell(line, 'K')
-      w.payable_day = ex.cell(line, 'L')
-      w.save!
-    end
-    puts "#{i} Record inserted.-----------------------------------------------"
-    i += 1
-  end
-  end
-end
+#       w.holiday_in_month = ex.cell(line, 'J')
+
+     
+#       w.absent_day = ex.cell(line, 'K')
+#       w.payable_day = ex.cell(line, 'L')
+#       w.save!
+#     end
+#     puts "#{i} Record inserted.-----------------------------------------------"
+#     i += 1
+#   end
+#   end
+# end
 
 # puts "Starting ..."
 # ex = Roo::Excel.new("#{Rails.root}/public/hrms.xls")
@@ -394,49 +393,52 @@ end
 
 
 # puts "Starting ..."
-# ex = Roo::Excel.new("#{Rails.root}/public/emprg.xls")
+# ex = Roo::Excel.new("#{Rails.root}/public/e.xls")
 # ex.default_sheet = ex.sheets[0] 
 # i=1
 
-# 2.upto(65) do |line|
+# 2.upto(60) do |line|
 # Employee.new do |e|
 #   e.manual_employee_code = ex.cell(line,'A').to_i
 #   e.first_name = ex.cell(line,'B')
 #   e.middle_name = ex.cell(line,'C')
 #   e.last_name = ex.cell(line,'D')
-#   e.date_of_birth = ex.cell(line,'E')
-#   e.contact_no = ex.cell(line,'F').to_i
-#   e.email = ex.cell(line,'G')
-#   e.permanent_address = ex.cell(line,'H')
-#   @country = Country.find_by_name(ex.cell(line,'I'))
-#   e.country_id = @country.id unless @country.nil?
-#   @state = State.find_by_name(ex.cell(line,'J'))
-#   e.state_id = @state.id unless @state.nil?
-#   @district = District.find_by_name(ex.cell(line,'K'))
-#   e.district_id =  @district.id unless @district.nil?
-#   e.city = ex.cell(line,'L')
-#   e.pin_code = ex.cell(line,'M').to_i
-#   e.current_address = ex.cell(line,'N')
-#   e.adhar_no = ex.cell(line,'O')
-#   e.pan_no = ex.cell(line,'P')
-#   e.licence_no = ex.cell(line,'Q')
-#   e.marital_status = ex.cell(line,'R')
-#   @nation = Nationality.find_by_name(ex.cell(line,'S'))
+#   e.gender = ex.cell(line,'E')
+#   e.adhar_no = ex.cell(line,'F')
+#   e.pan_no = ex.cell(line,'G')
+#   e.licence_no = ex.cell(line,'H')
+#   e.marital_status = ex.cell(line,'I')
+#   @nation = Nationality.find_by_name(ex.cell(line,'J'))
 #   e.nationality_id = @nation.id unless @nation.nil?
-#   @blood = BloodGroup.find_by_name(ex.cell(line,'T'))
+#   e.date_of_birth = ex.cell(line,'K')
+#   @blood = BloodGroup.find_by_name(ex.cell(line,'L'))
 #   e.blood_group_id = @blood.id unless @blood.nil?
-#   e.handicap = ex.cell(line,'U')
-#   e.handicap_type = ex.cell(line, 'V')
-#   e.status = ex.cell(line,'W')
-#   @type = EmployeeType.find_by_name(ex.cell(line,'X'))
-#   e.employee_type_id = @type.id unless @type.nil?
-#   e.gender = ex.cell(line,'Y')
-#   @religion = Religion.find_by_name(ex.cell(line,'Z'))
+#   e.permanent_address = ex.cell(line,'M')
+#   e.pin_code = ex.cell(line,'N').to_i
+#   @country = Country.find_by_name(ex.cell(line,'O'))
+#   e.country_id = @country.id unless @country.nil?
+#   @state = State.find_by_name(ex.cell(line,'P'))
+#   e.state_id = @state.id unless @state.nil?
+#   @district = District.find_by_name(ex.cell(line,'Q'))
+#   e.district_id =  @district.id unless @district.nil?
+#   e.city = ex.cell(line,'R')
+#   e.current_address = ex.cell(line,'S')
+#   @religion = Religion.find_by_name(ex.cell(line,'T'))
 #   e.religion_id = @religion.id unless @religion.nil?
+#   e.contact_no = ex.cell(line,'U').to_i
+#   e.email = ex.cell(line,'V')
+#   e.handicap = ex.cell(line,'W')
+#   e.handicap_type = ex.cell(line, 'X')
+#   e.status = ex.cell(line,'Y')
+#   @type = EmployeeType.find_by_name(ex.cell(line,'Z'))
+#   e.employee_type_id = @type.id unless @type.nil?
   
-#   e.department_id = ex.cell(line,'AC').to_i
-#   e.company_location_id = ex.cell(line,'AB').to_i
 #   e.company_id = ex.cell(line,'AA').to_i
+#   @type1 = CompanyLocation.find_by_name(ex.cell(line,'AB'))
+#   e.company_location_id = @type1.id unless @type1.nil?
+#    @type2 = Department.find_by_name(ex.cell(line,'AC'))
+
+#   e.department_id =  @type2.id unless @type2.nil?
 #   e.save!
 # end
 # puts "#{i} Employee inserted.-----------------------------------------------"
@@ -468,11 +470,11 @@ end
 
 
 # puts "Starting ..."
-# ex = Roo::Excel.new("#{Rails.root}/public/Leave Details.xls")
+# ex = Roo::Excel.new("#{Rails.root}/public/l.xls")
 # ex.default_sheet = ex.sheets[0] 
 # i=1
 
-# 2.upto(190) do |line|
+# 2.upto(169) do |line|
 # @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
 # EmployeeLeavBalance.new do |j|
 #   j.employee_id = @employee.id unless @employee.nil?
@@ -489,10 +491,10 @@ end
 
 # puts "Starting ..."
 # ex = Roo::Excel.new("#{Rails.root}/public/j.xls")
-# ex.default_sheet = ex.sheets[0] 
+# ex.default_sheet = ex.sheets[0]
 # i=1
 
-# 2.upto(65) do |line|
+# 2.upto(60) do |line|
 # @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
 # JoiningDetail.new do |j|
 #   j.employee_id = @employee.id unless @employee.nil?

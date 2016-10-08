@@ -1,6 +1,7 @@
+require 'query_report/helper'  # need to require the helper
 class WorkingdaysController < ApplicationController
   before_action :set_workingday, only: [:show, :edit, :update, :destroy]
-
+  include QueryReport::Helper  # need to include it
   def index
     @workingdays = Workingday.group(:year)
     session[:active_tab] ="payroll"
@@ -64,6 +65,79 @@ class WorkingdaysController < ApplicationController
         @workingdays = Workingday.where(year: params[:year], month_name: params[:month], employee_id: current_user.employee_id)
       end
     end
+  end
+
+  def display_workingday
+    @workingday = Workingday.where(year: params[:year],month_name: params[:month])
+    if current_user.class == Group
+      @workingdays = Workingday.where(year: params[:year], month_name: params[:month])
+    else
+      if current_user.role.name == 'Company'
+        @workingdays = Workingday.where(year: params[:year], month_name: params[:month])
+      elsif current_user.role.name == 'CompanyLocation'
+        @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+        @workingdays = Workingday.where(year: params[:year], month_name: params[:month], employee_id: @employees)
+      elsif current_user.role.name == 'Employee'
+        @workingdays = Workingday.where(year: params[:year], month_name: params[:month], employee_id: current_user.employee_id)
+      end
+    end
+  end
+
+  def workingday_xls
+    @year = params[:year]
+    @month = params[:month]
+    @workingday = Workingday.where(year: params[:year],month_name: params[:month])
+    if current_user.class == Group
+      @workingdays = Workingday.where(year: params[:year], month_name: params[:month])
+    else
+      if current_user.role.name == 'Company'
+        @workingdays = Workingday.where(year: params[:year], month_name: params[:month])
+      elsif current_user.role.name == 'CompanyLocation'
+        @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+        @workingdays = Workingday.where(year: params[:year], month_name: params[:month], employee_id: @employees)
+      elsif current_user.role.name == 'Employee'
+        @workingdays = Workingday.where(year: params[:year], month_name: params[:month], employee_id: current_user.employee_id)
+      end
+    end
+    respond_to do |format|
+      format.xls {render template: 'workingdays/workingday.xls.erb'}
+    end
+  end
+
+  def workingday_pdf
+    @year = params[:year]
+    @month = params[:month]
+    @workingday = Workingday.where(year: params[:year],month_name: params[:month])
+    if current_user.class == Group
+      @workingdays = Workingday.where(year: params[:year], month_name: params[:month])
+    else
+      if current_user.role.name == 'Company'
+        @workingdays = Workingday.where(year: params[:year], month_name: params[:month])
+      elsif current_user.role.name == 'CompanyLocation'
+        @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+        @workingdays = Workingday.where(year: params[:year], month_name: params[:month], employee_id: @employees)
+      elsif current_user.role.name == 'Employee'
+        @workingdays = Workingday.where(year: params[:year], month_name: params[:month], employee_id: current_user.employee_id)
+      end
+    end
+    respond_to do |format|
+          format.json
+          format.pdf do
+            render pdf: 'workingday',
+                  layout: 'pdf.html',
+                  orientation: 'Landscape',
+                  template: 'workingdays/workingday.pdf.erb',
+                  # show_as_html: params[:debug].present?,
+                  :page_height      => 1000,
+                  :dpi              => '300',
+                  :margin           => {:top    => 10, # default 10 (mm)
+                                :bottom => 10,
+                                :left   => 20,
+                                :right  => 20},
+                  :show_as_html => params[:debug].present?
+                end
+             end
+
   end
 
   def search_month_year
@@ -134,7 +208,28 @@ class WorkingdaysController < ApplicationController
     redirect_to search_month_year_workingdays_path
   end
 
+ def workingdays_detail
+    reporter(Workingday.filter_records(current_user), template_class: PdfReportTemplate) do
+      
+      filter :month_name, type: :string
+      filter :year, type: :string
+      column(:ID, sortable: true) { |workingday| workingday.employee.manual_employee_code }
+      column(:Employee_name, sortable: true) { |workingday| full_name(workingday.employee) }
+      column(:Month , sortable: true) { |workingday| workingday.month_name }
+      column(:Year , sortable: true) { |workingday| workingday.year }
+      column(:Day, sortable: true) { |workingday| workingday.day_in_month }
+      column(:Present , sortable: true) { |workingday| workingday.present_day }
+      column(:Holiday , sortable: true) { |workingday| workingday.holiday_in_month }
+      column(:Week_off , sortable: true) { |workingday| workingday.week_off_day }
+      column(:Absent , sortable: true) { |workingday| workingday.absent_day }
+      column(:Pay_leave , sortable: true) { |workingday| workingday.pay_leave }
+      column(:Nonpay_leave , sortable: true) { |workingday| workingday.nonpay_leave }
+      column(:Payable , sortable: true) { |workingday| workingday.payable_day }
 
+    end
+    # session[:active_tab] = "leavemanagement"
+    # session[:active_tab1] = "leavereport"
+  end
 
    def is_confirm_workingday
 

@@ -33,6 +33,7 @@ class InterviewSchedulesController < ApplicationController
 
   def new1
     @interview_schedule = InterviewSchedule.new
+    @selected_resume = SelectedResume.find(params[:format])
     session[:active_tab] ="recruitment"
     session[:active_tab1] ="general_vacancy"
   end
@@ -69,15 +70,18 @@ class InterviewSchedulesController < ApplicationController
 
   def create_new
     @interview_schedule = InterviewSchedule.new(interview_schedule_params)
-     @interview_schedules = InterviewSchedule.all
+     # @interview_schedules = InterviewSchedule.all
       if @interview_schedule.save
+        @selected_resume = SelectedResume.find(@interview_schedule.selected_resume_id)
+        @selected_resume.update(status: "Interview Scheduled")
+        # InterviewScheduleMailer.sample_email(@interview_schedule).deliver_now
         @interview_schedule = InterviewSchedule.new
       end
       if @interview_schedule.email_id.nil?
       flash[:notice] = 'Interview Scheduled Successfully without Email'
       redirect_to interview_schedules_path
        else
-      InterviewScheduleMailer.sample_email_to_candidate(@interview_schedule).deliver_now
+      # InterviewScheduleMailer.sample_email_to_candidate(@interview_schedule).deliver_now
       flash[:notice] = 'Interview Scheduled Successfully & Email also Sent.'
       redirect_to interview_schedules_path
     # @interview_reschedule.save

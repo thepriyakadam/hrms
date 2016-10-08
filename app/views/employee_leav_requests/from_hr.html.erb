@@ -36,7 +36,7 @@
               <th>No.of Leaves Available</th>
             </tr>
            </thead>
-          <% @total_leaves.each do |l| %>
+          <% @total_leaves.where(is_active: true).each do |l| %>
             <tr>
               <th><%= l.leav_category.try(:name) %></th>
               <td><%= l.no_of_leave %></td>

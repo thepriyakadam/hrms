@@ -6,7 +6,7 @@
         <div class="col-sm-2">
         <label>Select Attendance </label>
           <div class="field">
-            <%= f.select :present,['P','W','A'],{hide_label: true,include_blank: "Select Option"} %>
+            <%= f.select :present,['PR','WO','AB','1/2'],{hide_label: true,include_blank: "Select Option"} %>
             <%= f.hidden_field :day, value: @date %>
           </div>
         </div>
@@ -51,9 +51,14 @@
     </div>
   </div>
   <% end %>
-
 <script type="text/javascript">
-$("#example1").DataTable();
+$(document).ready(function() {
+    $('#example1').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>
+<script type="text/javascript">
   $('#selectAll').click(function() {
     if (this.checked) {
       $(':checkbox').each(function() {

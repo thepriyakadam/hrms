@@ -69,10 +69,15 @@ class AccidentRecordsController < ApplicationController
 
   def download_jpg
     @accident_record = AccidentRecord.find(params[:id])
+    if File.exist?(@accident_record.avatar.path)
     send_file @accident_record.avatar.path,
               filename: @accident_record.avatar_file_name,
               type: @accident_record.avatar_content_type,
               disposition: 'attachment'
+              else
+    flash[:alert] = "No file found Please contact to Admin!"
+    redirect_to accident_records_path
+    end
   end
 
   private

@@ -88,6 +88,81 @@ class FoodDeductionsController < ApplicationController
     end
   end
 
+  def display_food_deduction
+    @year = params[:year]
+    @month = params[:month]
+    date = Date.new(@year.to_i, Workingday.months[@month])
+    if current_user.class == Group
+      @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y'))
+    else
+      if current_user.role.name == 'Company' || current_user.role.name == 'Account'
+        @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y'))
+      elsif current_user.role.name == 'CompanyLocation'
+        @employees = Employee.where(company_location_id: current_user.company_location_id)
+        @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+      elsif current_user.role.name == 'Employee'
+        @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: current_user.employee_id)
+      end
+    end
+  end
+
+  def food_deduction_xls
+    @year = params[:year]
+    @month = params[:month]
+    date = Date.new(@year.to_i, Workingday.months[@month])
+    if current_user.class == Group
+      @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y'))
+    else
+      if current_user.role.name == 'Company' || current_user.role.name == 'Account'
+        @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y'))
+      elsif current_user.role.name == 'CompanyLocation'
+        @employees = Employee.where(company_location_id: current_user.company_location_id)
+        @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+      elsif current_user.role.name == 'Employee'
+        @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: current_user.employee_id)
+      end
+    end
+    respond_to do |format|
+      format.xls {render template: 'food_deductions/food_deductions.xls.erb'}
+    end
+  end
+
+  def food_deduction_pdf
+    @year = params[:year]
+    @month = params[:month]
+    date = Date.new(@year.to_i, Workingday.months[@month])
+    if current_user.class == Group
+      @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y'))
+    else
+      if current_user.role.name == 'Company' || current_user.role.name == 'Account'
+        @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y'))
+      elsif current_user.role.name == 'CompanyLocation'
+        @employees = Employee.where(company_location_id: current_user.company_location_id)
+        @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+      elsif current_user.role.name == 'Employee'
+        @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: current_user.employee_id)
+      end
+    end
+    respond_to do |format|
+          format.json
+          format.pdf do
+            render pdf: 'food_deduction',
+                  layout: 'pdf.html',
+                  orientation: 'Landscape',
+                  template: 'food_deductions/food_deduction.pdf.erb',
+                  # show_as_html: params[:debug].present?,
+                  :page_height      => 1000,
+                  :dpi              => '300',
+                  :margin           => {:top    => 10, # default 10 (mm)
+                                :bottom => 10,
+                                :left   => 20,
+                                :right  => 20},
+                  :show_as_html => params[:debug].present?
+                end
+             end
+  end
+
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

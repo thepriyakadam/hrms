@@ -1,6 +1,10 @@
 <div class="box">
   <div class="box-header">
    <h3 class="box-title">Issue List - <%= current_user.employee.try(:first_name) %> <%= current_user.employee.try(:middle_name) %> <%= current_user.employee.try(:last_name) %> </h3>
+   <% emp = current_user.employee_id %>
+   <%issue = IssueTrackerMember.find_by(employee_id: emp)%>
+  <h4> <%= issue.role %> </h4>
+
   </div><!-- /.box-header -->
    <%= hidden_field_tag :lock_date, :value => Time.zone.now.to_date %>
    <%= hidden_field_tag :lock_time, :value => Time.zone.now.to_time %>
@@ -54,7 +58,8 @@
                   <% end %>
                    <% if issue_request.issue_tracker_member.try(:employee_id) == current_user.employee_id %>
                      <%= link_to '',unlock_request_issue_requests_path(issue_request),class: 'btn btn-sm btn-warning fa fa-unlock-alt',data: { confirm: 'Are you sure?' } %> |
-                     <%= link_to 'Solved',solved_issues_issue_requests_path(issue_request),class: 'btn btn-sm btn-success',data: { confirm: 'Are you sure?' } %>
+                     <%= link_to 'Solved',modal1_issue_requests_path(issue_request),class: 'btn btn-sm btn-success',remote: true %>
+
                      <div id="myModal1" class="modal fade"></div>
                      <% else %>
                     

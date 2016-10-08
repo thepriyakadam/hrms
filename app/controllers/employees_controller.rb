@@ -166,6 +166,15 @@ class EmployeesController < ApplicationController
     session[:active_tab1] ="useradministration"
   end
 
+  def update_mgr
+    employee = Employee.find(params['emp']['employee_id'])
+    rep1 = params[:emp][:manager_id]
+    rep2 = params[:emp][:manager_2_id]
+    Employee.where(id: employee.id).update_all(manager_id: rep1,manager_2_id: rep2)
+    flash[:alert] = 'Updated successfully.'
+    redirect_to manager_employees_path
+  end
+
   def submit_form
     employee = Employee.find(params['login']['employee_id'])
     # @department = Department.find(params["login"]["department_id"])

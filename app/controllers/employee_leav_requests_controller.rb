@@ -51,12 +51,12 @@ class EmployeeLeavRequestsController < ApplicationController
     elsif @employee_leav_request.is_available2?
       flash[:alert] = "Request already has Approved"
       redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
-    elsif @employee_leav_request.is_present?
-      for i in @employee_leav_request.start_date.to_date..@employee_leav_request.end_date.to_date
-        @emp_attendance = EmployeeAttendance.find_by(day: i)
-      end
-      flash[:alert] = "Leave Request already existed - #{@emp_attendance.present}"
-      redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
+    # elsif @employee_leav_request.is_present?
+    #   for i in @employee_leav_request.start_date.to_date..@employee_leav_request.end_date.to_date
+    #     @emp_attendance = EmployeeAttendance.find_by(day: i)
+    #   end
+    #   flash[:alert] = "Leave Request already existed - #{@emp_attendance.present}"
+    #   redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
     else
       if @employee.manager_id.nil?
         flash[:alert] = 'Reporting manager not set please set Reporting Manager'

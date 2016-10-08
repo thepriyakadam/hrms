@@ -17,7 +17,7 @@
    <% @reporting_masters.each do |reporting_master| %>
       <tr>
         <td><%= reporting_master.employee.try(:manual_employee_code) %></td>
-        <td><%= reporting_master.employee.try(:first_name).to_s+' '+reporting_master.employee.try(:middle_name).to_s+' '+reporting_master.employee.try(:last_name).to_s %>
+        <td><%= reporting_master.employee.try(:first_name).to_s+' '+reporting_master.employee.try(:middle_name).to_s+' '+reporting_master.employee.try(:last_name).to_s %></td>
         <td><%= reporting_master.is_expences ? "Yes" : "No" %></td>
         <td><%= reporting_master.is_training ? "Yes" : "No" %></td>
         <td><%= reporting_master.is_recruitment ? "Yes" : "No" %></td>

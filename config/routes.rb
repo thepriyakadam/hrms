@@ -193,7 +193,11 @@ end
       get :is_confirm
     end
   end
-  resources :circulars
+  resources :circulars do
+    collection do
+      get :is_confirm
+    end
+  end
 
   resources :salary_map_saps
   resources :interview_rounds do

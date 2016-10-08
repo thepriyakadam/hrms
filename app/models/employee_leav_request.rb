@@ -18,6 +18,14 @@ class EmployeeLeavRequest < ActiveRecord::Base
   # CURRENT_STATUSS = [["Pending",0], ["FirstApproved",2], ["SecondApproved",3], ["FirstRejected",4],["SecondRejected",5],["Cancelled",1]]
   # validates_inclusion_of :current_status, :in => CURRENT_STATUSS
 
+  def is_salary_processed?
+    flag = 0
+    for i in self.start_date.to_date..self.end_date.to_date
+      flag = Workingday.exists?(year: i.year,month_name: i.strftime("%B"), employee_id: self.employee_id)
+    end
+    flag
+  end
+
   def create_single_record_for_leave(employee_leav_request)
     if employee_leav_request.leave_type == 'Full Day'
       for i in employee_leav_request.start_date.to_date..employee_leav_request.end_date.to_date

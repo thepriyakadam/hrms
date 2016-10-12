@@ -120,7 +120,7 @@ class EmployeesController < ApplicationController
   def display_emp_code_master
     # byebug
     @emp1= params[:id]
-    @emp_master_code = EmployeeCodeMaster.where(id: @emp1,is_active: true)
+    @emp_master_code = EmployeeCodeMaster.where(id: @emp1,is_active: true).take
     @last = @emp_master_code.last_range.succ
   end
 
@@ -164,6 +164,15 @@ class EmployeesController < ApplicationController
 
     session[:active_tab] ="employeemanagement"
     session[:active_tab1] ="useradministration"
+  end
+
+  def update_mgr
+    employee = Employee.find(params['emp']['employee_id'])
+    rep1 = params[:emp][:manager_id]
+    rep2 = params[:emp][:manager_2_id]
+    Employee.where(id: employee.id).update_all(manager_id: rep1,manager_2_id: rep2)
+    flash[:alert] = 'Updated successfully.'
+    redirect_to manager_employees_path
   end
 
   def submit_form

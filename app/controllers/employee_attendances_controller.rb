@@ -137,7 +137,7 @@ class EmployeeAttendancesController < ApplicationController
         @employee_attendance = EmployeeAttendance.find(eid)
         EmployeeAttendance.where(id: eid).destroy_all
       end
-      flash[:alert] = "Revert successfully"
+      flash[:notice] = "Revert successfully"
       redirect_to revert_attendance_employee_attendances_path
     end
   end
@@ -216,6 +216,35 @@ class EmployeeAttendancesController < ApplicationController
     respond_to do |format|
       format.xls {render template: 'employee_attendances/employee_attendance.xls.erb'}
     end
+  end
+  
+  def revert_attendance_employeewise
+  end
+
+  def show_employee_list
+    @employee_id = params[:salary][:employee_id]
+    @month = params[:salary][:month]
+    @year = params[:salary][:year]
+    @date = Date.new(@year.to_i, Workingday.months[@month])
+    @employee_attendances = EmployeeAttendance.where("strftime('%m/%Y', day) = ? and employee_id = ?", @date.strftime('%m/%Y'),@employee_id)
+  end
+
+  def destroy_attendance_employeewise
+    @employee_id = params[:employee_id]
+    @month = params[:month]
+    @year = params[:year]
+    @employee_attendance_ids = params[:employee_attendance_ids]
+      if @employee_attendance_ids.nil?
+        flash[:alert] = "Please Select Employees"
+        redirect_to revert_attendance_employeewise_employee_attendances_path
+      else
+        @employee_attendance_ids.each do |eid|
+          @employee_attendance = EmployeeAttendance.find(eid)
+          EmployeeAttendance.where(id: eid).destroy_all
+        end
+        flash[:notice] = "Revert successfully"
+        redirect_to revert_attendance_employeewise_employee_attendances_path
+      end
   end
 
   private

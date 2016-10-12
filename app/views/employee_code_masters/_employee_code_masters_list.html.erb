@@ -4,7 +4,7 @@
       <th>Name</th>
       <th>Range</th>
       <th>Last Range</th>
-      <th>Active</th>
+      <th>Status</th>
       <th>Action</th>
     </tr>
   </thead>
@@ -24,6 +24,7 @@
             <%= link_to '',  employee_code_master, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-xs btn-danger fa fa-close' %>
              <%= link_to '', is_confirm_employee_code_masters_path(employee_code_master: employee_code_master),data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-info fa fa-check' %>
           <% end %>
+          </td>
       </tr>
     <% end %>
   </tbody>

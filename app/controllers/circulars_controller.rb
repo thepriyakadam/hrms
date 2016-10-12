@@ -67,6 +67,13 @@ class CircularsController < ApplicationController
     end
   end
 
+  def is_confirm
+    @circular = Circular.find(params[:circular])
+    Circular.find(@circular.id).update(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to new_bank_path
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_circular
@@ -75,6 +82,6 @@ class CircularsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def circular_params
-      params.require(:circular).permit(:avatar, :date, :subject)
+      params.require(:circular).permit(:avatar, :date, :subject,:is_active,:is_confirm)
     end
 end

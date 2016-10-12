@@ -6,6 +6,7 @@ class HolidaysController < ApplicationController
     @holiday = Holiday.new
     @holidays = Holiday.all
     session[:active_tab] ="timemgmt"
+    session[:active_tab1] ="attendance"
   end
 
   # GET /holidays/1/edit

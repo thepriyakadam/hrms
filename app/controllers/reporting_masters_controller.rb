@@ -61,17 +61,17 @@ class ReportingMastersController < ApplicationController
     @reporting_master1 = params[:salary][:employee_id_1]
     @reporting_master2 = params[:salary][:employee_id_2]
     @effec_date = params[:salary][:effec_date]
-
     employee_ids = params[:employee_ids]
+    @rm1 = ReportingMaster.find_by(id: @reporting_master1)
+    @rm2 = ReportingMaster.find_by(id: @reporting_master2)
       if employee_ids.nil?
         flash[:alert] = "Please Select the Checkbox"
       else
         employee_ids.each do |e|
           emp = Employee.find(e)
-          Employee.where(manager_id: @reporting_master1,id: emp.id).update_all(manager_id: @reporting_master2)
-          Employee.where(manager_2_id: @reporting_master1,id: emp.id).update_all(manager_2_id: @reporting_master2)
+          Employee.where(manager_id: @rm1.employee_id,id: emp.id).update_all(manager_id: @rm2.employee_id)
+          Employee.where(manager_2_id: @rm1.employee_id,id: emp.id).update_all(manager_2_id: @rm2.employee_id)
           @manager = ManagerHistory.where(employee_id: emp.id).last
-          #@manager_history = ManagerHistory.where("employee_id = ? AND manager_id = ? AND manager_2_id = ?", emp.id,emp.manager_id,emp.manager_2_id)
           @employee = Employee.find(emp.id)
           ManagerHistory.create(employee_id: emp.id,manager_id: @employee.manager_id,manager_2_id: @employee.manager_2_id,effective_from: @effec_date.to_date)
 

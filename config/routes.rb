@@ -193,7 +193,11 @@ end
       get :is_confirm
     end
   end
-  resources :circulars
+  resources :circulars do
+    collection do
+      get :is_confirm
+    end
+  end
 
   resources :salary_map_saps
   resources :interview_rounds do
@@ -226,6 +230,9 @@ end
       get :employee_slip_xls
       post :display_attendance
       get :display_attendance_1
+      get :revert_attendance_employeewise
+      post :show_employee_list
+      post :destroy_attendance_employeewise
     end
   end
   resources :salary_comp_mappings
@@ -1200,6 +1207,9 @@ end
       get :search_month_year_xls
       get :generate_workingday_xls
       post :is_confirm_workingday
+      get :display_workingday
+      get :workingday_xls
+      get :workingday_pdf
     end
   end
 
@@ -1464,6 +1474,7 @@ end
       get :collect_company_location
       get :collect_department
       get :display_emp_code_master
+      post :update_mgr
     end
     member do
       get :edit_manager

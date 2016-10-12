@@ -11,6 +11,8 @@ class IssueRootCausesController < ApplicationController
   def new
     @issue_root_cause = IssueRootCause.new
     @issue_root_causes = IssueRootCause.all
+    session[:active_tab] = "issuetracker"
+    session[:active_tab1] = "issueprocess"
   end
 
   # GET /issue_root_causes/1/edit

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161004130453) do
+ActiveRecord::Schema.define(version: 20161007125531) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -325,6 +325,8 @@ ActiveRecord::Schema.define(version: 20161004130453) do
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
+    t.boolean  "is_active"
+    t.boolean  "is_confirm"
   end
 
   create_table "companies", force: :cascade do |t|
@@ -1447,7 +1449,7 @@ ActiveRecord::Schema.define(version: 20161004130453) do
     t.date     "holiday_date"
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
-    t.boolean  "is_taken"
+    t.boolean  "isweekend"
     t.boolean  "is_send",      default: false
   end
 
@@ -1780,6 +1782,7 @@ ActiveRecord::Schema.define(version: 20161004130453) do
   create_table "issue_tracker_accesses", force: :cascade do |t|
     t.string   "name"
     t.string   "role"
+    t.integer  "employee_id"
     t.boolean  "status"
     t.boolean  "is_confirm"
     t.datetime "created_at",              null: false
@@ -1788,6 +1791,7 @@ ActiveRecord::Schema.define(version: 20161004130453) do
     t.integer  "issue_tracker_group_id"
   end
 
+  add_index "issue_tracker_accesses", ["employee_id"], name: "index_issue_tracker_accesses_on_employee_id"
   add_index "issue_tracker_accesses", ["issue_tracker_group_id"], name: "index_issue_tracker_accesses_on_issue_tracker_group_id"
   add_index "issue_tracker_accesses", ["issue_tracker_member_id"], name: "index_issue_tracker_accesses_on_issue_tracker_member_id"
 
@@ -2752,18 +2756,8 @@ ActiveRecord::Schema.define(version: 20161004130453) do
     t.string   "esic_no"
     t.string   "pf_no"
     t.string   "uan_no"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
-    t.decimal  "cl_leave"
-    t.decimal  "cl_balance"
-    t.decimal  "el_leave"
-    t.decimal  "el_balance"
-    t.decimal  "coff_leave"
-    t.decimal  "coff_balance"
-    t.decimal  "advance_leave"
-    t.decimal  "advance_balance"
-    t.decimal  "lwp_leave"
-    t.decimal  "esic_leave"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
   end
 
   add_index "slip_informations", ["cost_center_id"], name: "index_slip_informations_on_cost_center_id"

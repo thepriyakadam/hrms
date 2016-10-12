@@ -5,6 +5,8 @@ class RewardOwnersController < ApplicationController
   def new
     @reward_owner = RewardOwner.new
     @reward_owners = RewardOwner.all
+    session[:active_tab] = "master"
+    session[:active_tab1] = "rewards"
   end
 
   # GET /reward_owners/1/edit

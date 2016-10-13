@@ -1,0 +1,72 @@
+<!--SELECT2 EXAMPLE -->
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Employee Food Deduction Report</h3>
+  </div><!-- /.box-header -->
+
+  <div class="box-body">
+    <%= bootstrap_form_for(:food_deduction, url: { action: 'dynamic_report'},html: {id: 'food_deduction'},remote:true) do |f| %>
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="field">
+            <%= select :food_deduction,:month, ['January','February','March','April','May','June','July','August','September','October','November','December'],{label: 'Select Month',include_blank: " Select Month"}, class: "form-control" %>
+           </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="field">
+            <%= select :food_deduction,:year,['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025','2026','2027'],{label: 'Select Year',include_blank: " Select Year"}, class: "form-control" %>
+          </div>
+        </div>
+
+         <div class="col-sm-3">
+          <div class="field">
+            <%= select :food_deduction,:company_id,all_company,{label: 'Company',include_blank: " Select Company"}, class: "form-control" %>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="field">
+          <%= select :food_deduction, :company_location_id, all_company_location,{label: 'Company Location',include_blank: " Select Company Location"}, class: "form-control" %>
+          </div>
+        </div>
+        </div>
+        
+        <div class="row">
+        <div class="col-sm-3">
+          <div class="actions">
+            <%= f.submit "Display Report", class: "btn btn-sm btn-warning" %>
+          </div>
+        </div>
+        </div><br>
+        <div id="food_deduction_li"></div>
+
+      <br>
+    <% end %>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->
+
+<script>
+$("#salary").validate({
+    rules: {
+      "salary[month]":{
+        required: true,
+      },
+      "salary[year]":{
+        required: true,
+      }
+    },
+    messages: {
+      "salary[month]":{
+        required: "Please specify Month",
+      },
+      "salary[year]":{
+        required: "Please specify Year",
+      }
+      
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

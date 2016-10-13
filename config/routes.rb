@@ -640,6 +640,8 @@ end
     post 'overtime_salary_details/overtime_daily_detail_report'
 
     get 'food_deduction_details/new'
+    get 'food_deduction_details/food_deduction_report'
+    post 'food_deduction_details/dynamic_report'
     post 'food_deduction_details/food_deduction_detail_report'
 
     get 'ctc_details/new'
@@ -1043,6 +1045,9 @@ end
       get :display_food_deduction
       get :food_deduction_xls
       get :food_deduction_pdf
+      get :food_deduction_report
+      post :dynamic_report
+      get :food_deduction_xls_1
     end
   end
   resources :reporting_masters do

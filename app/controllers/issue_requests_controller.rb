@@ -1,5 +1,7 @@
+require 'query_report/helper'  # need to require the helper
 class IssueRequestsController < ApplicationController
   before_action :set_issue_request, only: [:show, :edit, :update, :destroy]
+   include QueryReport::Helper  # need to include it
 
   # GET /issue_requests
   # GET /issue_requests.json
@@ -170,13 +172,34 @@ class IssueRequestsController < ApplicationController
   end
 
   def resend_request
-    # byebug
     @issue_request = IssueRequest.find(params[:format])
     IssueRequest.where(id: @issue_request.id).update_all(status: nil,issue_tracker_member_id: nil) 
     IssueHistory.create(issue_tracker_group_id: @issue_request.issue_tracker_group_id,issue_request_id: @issue_request.id,issue_master_id: @issue_request.issue_master_id,description: @issue_request.description,date: @issue_request.date,time: @issue_request.time,employee_id: @issue_request.employee_id,issue_tracker_member_id: @issue_request.issue_tracker_member_id,issue_priority: @issue_request.issue_priority,status: false)
     IssueRequestMailer.issue_resend(@issue_request).deliver_now
     flash[:notice] = "Resend Request Successfully"
     redirect_to solved_issues_issue_requests_path
+  end
+
+  def search_by_date
+    reporter(IssueRequest.filter_records(current_user), template_class: PdfReportTemplate) do
+    filter :date, type: :date
+    column(:Request_ID, sortable: true) { |issue_request| issue_request.id }
+    column(:ID, sortable: true) { |issue_request| issue_request.employee.try(:manual_employee_code) }
+    column(:Employee_Name, sortable: true) { |issue_request| full_name(issue_request.employee) }
+    column(:Date, sortable: true) { |issue_request| issue_request.date }
+    column(:Group, sortable: true) { |issue_request| issue_request.try(:issue_tracker_group).try(:name) }
+    end
+  end
+
+   def search_by_group
+    reporter(IssueRequest.filter_records(current_user), template_class: PdfReportTemplate) do
+    filter :issue_tracker_group_id, type: :integer
+    column(:Request_ID, sortable: true) { |issue_request| issue_request.id }
+    column(:ID, sortable: true) { |issue_request| issue_request.employee.try(:manual_employee_code) }
+    column(:Employee_Name, sortable: true) { |issue_request| full_name(issue_request.employee) }
+    column(:Date, sortable: true) { |issue_request| issue_request.date }
+    column(:Group, sortable: true) { |issue_request| issue_request.try(:issue_tracker_group).try(:name) }
+    end
   end
 
   private

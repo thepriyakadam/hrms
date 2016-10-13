@@ -9,6 +9,8 @@
       <th>To</th>
       <th>Is Payble</th> 
       <th>Is Active</th> 
+      <th>Is Balance Set</th> 
+      <th>Limit</th>
       <th>Action</th>
     </tr>
   </thead>
@@ -22,6 +24,8 @@
         <td><%= leav_category.to %></td>
         <td><%= leav_category.is_payble ? "Yes" : "No" %></td>
         <td><%= leav_category.is_active ? "Active" : "Inactive" %></td> 
+        <td><%= leav_category.is_balance ? "Yes" : "No" %></td>
+        <td><%= leav_category.limit %></td>
         <td>
           <% if leav_category.is_confirm == true %>
             <small class= "label label-primary">Confirmed</small>

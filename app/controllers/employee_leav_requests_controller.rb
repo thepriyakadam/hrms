@@ -26,15 +26,17 @@ class EmployeeLeavRequestsController < ApplicationController
   def create
     @employee_leav_request = EmployeeLeavRequest.new(employee_leav_request_params)
     @employee = Employee.find(@employee_leav_request.employee_id)
-    date_arr = params['employee_leav_request']['date_range'].split('-')
-    @employee_leav_request.start_date = date_arr[0].rstrip
-    @employee_leav_request.end_date = date_arr[1].lstrip
+    start_date = params['employee_leav_request']['start_date']
+    end_date = params['employee_leav_request']['end_date']
+    # date_arr = params['employee_leav_request']['date_range'].split('-')
+    # @employee_leav_request.start_date = date_arr[0].rstrip
+    # @employee_leav_request.end_date = date_arr[1].lstrip
+
     @leave_c_offs = LeaveCOff.where(employee_id: @employee.id)
     @leav_category = LeavCategory.find(@employee_leav_request.leav_category_id)
-    date_range = params['employee_leav_request']['date_range']
-    @date = params['employee_leav_request']['date_range']
-    @emp_leav_req = EmployeeLeavRequest.where(employee_id: @employee.id, date_range: date_range)
-    # byebug
+    # date_range = params['employee_leav_request']['date_range']
+    # @date = params['employee_leav_request']['date_range']
+    @emp_leav_req = EmployeeLeavRequest.where(employee_id: @employee.id, start_date: start_date,end_date: end_date)
     for i in @employee_leav_request.start_date.to_date..@employee_leav_request.end_date.to_date
       @employee_leav_request.leave_records.build(employee_id: @employee_leav_request.employee_id,employee_leav_request_id: @employee_leav_request.id,status: "Pending", day: i)
     end

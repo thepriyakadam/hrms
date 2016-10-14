@@ -53,6 +53,6 @@ class LeavCategoriesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def leav_category_params
-    params.require(:leav_category).permit(:limit,:is_balance,:is_confirm,:from,:to,:is_active,:is_payble,:code, :name, :description)
+    params.require(:leav_category).permit(:is_limit,:limit,:is_balance,:is_confirm,:from,:to,:is_active,:is_payble,:code, :name, :description)
   end
 end

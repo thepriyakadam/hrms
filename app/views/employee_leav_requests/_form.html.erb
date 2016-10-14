@@ -54,28 +54,44 @@
 
       <div class="row">
       
-        <div class="col-sm-2">
+        <div class="col-sm-3">
           <div class="form-group required">
             <%= f.select :leav_category_id, all_leav_category,label: 'Leave Category' %>
           </div>
         </div>
 
-        <div class="col-sm-2">
+        <div class="col-sm-3">
           <div class="form-group required">
            <%= f.select :leave_type, ['Full Day','Half Day'],label: 'Leave Type' %>
           </div>
         </div>
 
         <div class="col-sm-3">
-         <div class="form-group required">
+          <label>From Date: </label>
+          <div class="field">
             <div class="input-group">
               <div class="input-group-addon">
                 <i class="fa fa-calendar"></i>
               </div>
-              <%= f.text_field :date_range,class: "pull-right active",label:'Date Range',id: "reservationtime" %>
+              <%= f.text_field :start_date, hide_label: true, class: 'birth_date'%>
             </div>
           </div>
         </div>
+
+        <div class="col-sm-3">
+          <label>To Date: </label>
+          <div class="field">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <%= f.text_field :end_date, hide_label: true, class: 'birth_date'%>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
         <div class="col-sm-5">
           <div class="form-group required">
             <%= f.text_field :reason %>
@@ -137,4 +153,13 @@ $("#employee_leav_request").validate({
     });
 
   });
+
+  $(function(){
+    $('.birth_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:+1',
+    dateFormat: 'dd-mm-yy' });
+  }); 
+
 </script>

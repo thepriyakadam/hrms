@@ -11,15 +11,14 @@ class ParticularLeaveRecordsController < ApplicationController
     reporter(ParticularLeaveRecord.filter_records(current_user), template_class: PdfReportTemplate) do
       filter :leave_date, type: :date
       # filter :is_cancel_after_approve, type: :boolean
-      column :leave_request_id, sortable: true, &:employee_leav_request_id
+      #column :leave_request_id, sortable: true, &:employee_leav_request_id
       column(:Employee_ID, sortable: true) { |particular_leave_record| particular_leave_record.employee.try(:manual_employee_code) }
       column(:Employee_Name, sortable: true) { |particular_leave_record| full_name(particular_leave_record.employee) }
       column(:Leave_date, sortable: true) { |particular_leave_record| particular_leave_record.leave_date.to_date }
-      column :Is_full, sortable: true, &:is_full
+      column(:Leave_Type, sortable: true){ |particular_leave_record| particular_leave_record.employee_leav_request.leave_type }
       column(:Leave_Category, sortable: true) { |particular_leave_record| particular_leave_record.leav_category.try(:description) }
       column(:Approved_date, sortable: true) { |particular_leave_record| particular_leave_record.created_at.to_date }
       column(:Approved_Time, sortable: true) { |particular_leave_record| particular_leave_record.created_at }
-      column(:Location, sortable: true) { |particular_leave_record| particular_leave_record.employee.try(:company_location).try(:name) }
       column :Revert_Leave, sortable: true, &:is_cancel_after_approve
 
     #   chart(:pie, 'Leave') do |chart|

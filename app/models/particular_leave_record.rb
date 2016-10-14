@@ -61,7 +61,7 @@ class ParticularLeaveRecord < ActiveRecord::Base
   ParticularLeaveRecord.all
   elsif current_user.class == Member
     if current_user.role.name == "Company"
-      @employees = Employee.where(company_id: current_user.company_id)
+      @employees = Employee.all
       ParticularLeaveRecord.where(employee_id: @employees)
     elsif current_user.role.name == "CompanyLocation"
       @employees = Employee.where(company_location_id: current_user.company_location_id)

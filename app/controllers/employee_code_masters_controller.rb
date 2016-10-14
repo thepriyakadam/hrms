@@ -19,22 +19,13 @@ class EmployeeCodeMastersController < ApplicationController
   def edit
   end
 
-  # POST /employee_code_masters
-  # POST /employee_code_masters.json
   def create
     @employee_code_master = EmployeeCodeMaster.new(employee_code_master_params)
     @employee_code_masters = EmployeeCodeMaster.all
-    respond_to do |format|
-      if @employee_code_master.save
-        @emp_code_master = EmployeeCodeMaster.where(id: @employee_code_master.id).last(2).first
-        EmployeeCodeMaster.where(id: @emp_code_master.id).update_all(last_range: @employee_code_master.range)
-        format.html { redirect_to @employee_code_master, notice: 'Employee code master was successfully created.' }
-        format.json { render :show, status: :created, location: @employee_code_master }
-      else
-        format.html { render :new }
-        format.json { render json: @employee_code_master.errors, status: :unprocessable_entity }
-      end
-    end
+    @employee_code_master.save
+    @emp_code_master = EmployeeCodeMaster.new
+    @emp_code_master = EmployeeCodeMaster.where(id: @employee_code_master.id).last(2).first
+    EmployeeCodeMaster.where(id: @emp_code_master.id).update_all(last_range: @employee_code_master.range)
   end
 
   # PATCH/PUT /employee_code_masters/1

@@ -5,7 +5,7 @@ class CurrencyMastersController < ApplicationController
     @currency_masters = CurrencyMaster.all
     @currency_master = CurrencyMaster.new
     session[:active_tab] ="master"
-    session[:active_tab1] ="daily_bill_master_setup"
+    session[:active_tab1] ="travel"
   end
 
 	def create

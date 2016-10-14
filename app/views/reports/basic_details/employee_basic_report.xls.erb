@@ -216,6 +216,7 @@
         <Cell ss:Index="186"><Data ss:Type="String">Family Member Medical Insurance</Data></Cell>
         <Cell ss:Index="187"><Data ss:Type="String">Family Member Differently Abled</Data></Cell>
         <Cell ss:Index="188"><Data ss:Type="String">Family Member Disability Type</Data></Cell>
+         <Cell ss:Index="189"><Data ss:Type="String">Company Location</Data></Cell>
 
         </Row>
 
@@ -463,6 +464,7 @@
           <Cell ss:Index="186"><Data ss:Type="String"><%= family3.try(:medical_claim) %></Data></Cell>
           <Cell ss:Index="187"><Data ss:Type="String"><%= family3.try(:is_handicap) %></Data></Cell>
           <Cell ss:Index="188"><Data ss:Type="String"><%= family3.try(:handicap_type) %></Data></Cell>
+           <Cell ss:Index="189"><Data ss:Type="String"><%= employee.company.try(:name) %></Data></Cell>
 
      </Row><!-- Row -->
       <% end %><!-- slip -->

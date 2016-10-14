@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  get 'issue_request_report/index'
+
+  get 'welcome/index'
+
   resources :issue_root_causes do
     collection do
       get :is_confirm
@@ -26,6 +30,8 @@ Rails.application.routes.draw do
       get :unlock_by_admin
       get :solved_confirm
       get :resend_request
+      get :search_by_date
+      get :search_by_group
     end
    end
   resources :issue_masters do
@@ -193,7 +199,11 @@ end
       get :is_confirm
     end
   end
-  resources :circulars
+  resources :circulars do
+    collection do
+      get :is_confirm
+    end
+  end
 
   resources :salary_map_saps
   resources :interview_rounds do
@@ -1203,6 +1213,9 @@ end
       get :search_month_year_xls
       get :generate_workingday_xls
       post :is_confirm_workingday
+      get :display_workingday
+      get :workingday_xls
+      get :workingday_pdf
     end
   end
 
@@ -1467,6 +1480,8 @@ end
       get :collect_company_location
       get :collect_department
       get :display_emp_code_master
+      post :update_mgr
+      get :index_xls
     end
     member do
       get :edit_manager

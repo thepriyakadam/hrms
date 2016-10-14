@@ -4,7 +4,7 @@ class EmployeeTaskToDosController < ApplicationController
   # GET /employee_task_to_dos
   # GET /employee_task_to_dos.json
   def index
-    @employee_task_to_dos = EmployeeTaskToDo.where(employee_id: current_user.employee_id)
+    @employee_task_to_dos = EmployeeTaskToDo.where(employee_id: current_user.employee_id,status: true)
   end
 
   # GET /employee_task_to_dos/1
@@ -19,7 +19,7 @@ class EmployeeTaskToDosController < ApplicationController
 
   # GET /employee_task_to_dos/1/edit
   def edit
-    @employee_task_to_dos = EmployeeTaskToDo.where(employee_id: current_user.employee_id)
+    @employee_task_to_dos = EmployeeTaskToDo.where(employee_id: current_user.employee_id,status: true)
   end
 
   # POST /employee_task_to_dos
@@ -27,7 +27,7 @@ class EmployeeTaskToDosController < ApplicationController
   def create
     @employee_task_to_do = EmployeeTaskToDo.new(employee_task_to_do_params)
       if @employee_task_to_do.save
-        @employee_task_to_dos = EmployeeTaskToDo.where(employee_id: current_user.employee_id)
+        @employee_task_to_dos = EmployeeTaskToDo.where(employee_id: current_user.employee_id,status: true)
         @employee_task_to_do = EmployeeTaskToDo.new
         @flag = true
       else
@@ -39,7 +39,7 @@ class EmployeeTaskToDosController < ApplicationController
   # PATCH/PUT /employee_task_to_dos/1.json
   def update
     @employee_task_to_do.update(employee_task_to_do_params)
-    @employee_task_to_dos = EmployeeTaskToDo.where(employee_id: current_user.employee_id)
+    @employee_task_to_dos = EmployeeTaskToDo.where(employee_id: current_user.employee_id,status: true)
   end
 
   # DELETE /employee_task_to_dos/1
@@ -60,6 +60,6 @@ class EmployeeTaskToDosController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def employee_task_to_do_params
-      params.require(:employee_task_to_do).permit(:employee_id, :task_name, :task_date, :status, :task_time)
+      params.require(:employee_task_to_do).permit(:employee_id, :task_name, :task_date, :status, :task_time, :task_time1)
     end
 end

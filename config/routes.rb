@@ -1048,6 +1048,7 @@ end
       get :food_deduction_report
       post :dynamic_report
       get :food_deduction_xls_1
+      get :food_deduction_pdf_1
     end
   end
   resources :reporting_masters do
@@ -1480,6 +1481,7 @@ end
       get :collect_department
       get :display_emp_code_master
       post :update_mgr
+      get :collect_company_loc
     end
     member do
       get :edit_manager

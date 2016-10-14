@@ -2,13 +2,16 @@
   <thead>
     <tr>  
       <th>Name</th>
+      <th>Description</th>
       <th>Action</th>
     </tr>
   </thead>
   <tbody>
      <% @employee_designations.each do |employee_designation| %>
       <tr>
+        
         <td><%= employee_designation.try(:name) %></td>
+        <td><%= employee_designation.try(:description) %></td>
         <td>
           <% if employee_designation.is_confirm == true %>
             <small class= "label label-primary">Confirmed</small>

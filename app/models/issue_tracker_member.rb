@@ -6,7 +6,8 @@ class IssueTrackerMember < ActiveRecord::Base
 
 
   validates :issue_tracker_group_id, presence: true
-  # validates :role, presence: true
+  validates :employee_id, presence: true
+  validates :role, presence: true
   
   validates_uniqueness_of :issue_tracker_group_id, :scope => :employee_id
 end

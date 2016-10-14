@@ -225,7 +225,7 @@
               <% date = Date.today %>
              <% @employees = Employee.where("strftime('%d/%m', date_of_birth) = ?", date.strftime('%d/%m')) %>
             <% if @employees.empty? %>
-              <p>Today is No BirthDay</p>
+             
             <%else%>
               <%@employees.each do |e|%>
                 <li class="item">
@@ -264,7 +264,7 @@
             <% date = Date.today + 1 %>
             <% @employees = Employee.where("strftime('%d/%m', date_of_birth) = ?", date.strftime('%d/%m')) %>
             <% if @employees.empty? %>
-              <p>No BirthDay</p>
+              
             <%else%>
             <table  class="table table-bordered table-hover table-condensed">
             <thead>

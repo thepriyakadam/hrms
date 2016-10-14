@@ -4,4 +4,6 @@ class IssueMaster < ActiveRecord::Base
   has_many :issue_requests
 
   validates :name, presence: true
+  validates :issue_tracker_group_id, presence: true
+  validates :issue_type_id, presence: true
 end

@@ -1,4 +1,7 @@
-<%= bootstrap_form_for(@issue_type, remote:true) do |f| %>
+
+<div class="box box-default">
+   <div class="box-body"> 
+ <%= bootstrap_form_for(@issue_type,html: {id: 'issue_type'} ,remote:true) do |f| %>
   <div class="row">
     <div class="col-sm-3">
       <div class="form-group required">
@@ -8,6 +11,10 @@
     <div class="col-sm-3">
      <label>Status</label>
      <%= f.check_box :status,label:'Active' %>
+    </div>
+    <div class="col-sm-3">
+     <label>Confirm</label>
+     <%= f.check_box :is_confirm,label:'Confirm' %>
     </div>
     <div class="col-sm-3">
     <label></label>

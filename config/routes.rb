@@ -1480,6 +1480,8 @@ end
       get :collect_company_location
       get :collect_department
       get :display_emp_code_master
+      post :update_mgr
+      get :index_xls
     end
     member do
       get :edit_manager

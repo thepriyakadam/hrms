@@ -21,7 +21,7 @@
       </div>
     </div>
   </div>
-  <div clsaa="row">
+  <div class="row">
     <div class="col-sm-3">
       <div class="form-group required">
         <%= f.text_field :to,hide_label:true, placeholder: 'To' %>
@@ -29,26 +29,26 @@
     </div>
     <div class="col-sm-3">
       <div class="field">
+        <%= f.text_field :limit,hide_label:true, placeholder: 'Leave Limit For Month' %>
+      </div>
+    </div>
+    <div class="col-sm-2">
+      <div class="field">
         <%= f.check_box :is_payble, label: 'Is Payble'%>
       </div>
     </div>
-    <div class="col-sm-3">
+     <div class="col-sm-2">
+      <div class="field">
+        <%= f.check_box :is_balance, label: 'Is Balance Required'%>
+      </div>
+    </div>
+    <div class="col-sm-2">
       <div class="field">
         <%= f.check_box :is_active, label: 'Is Active'%>
       </div>
     </div>
-     <div class="col-sm-3">
-      <div class="field">
-        <%= f.check_box :is_balance, label: 'Is Balance Set'%>
-      </div>
-    </div>
   </div>
-  <div clsaa="row">
-    <div class="col-sm-3">
-      <div class="field">
-        <%= f.text_field :limit,hide_label:true, placeholder: 'Limit' %>
-      </div>
-    </div>
+    <div class="row">
     <div class="col-sm-3">
       <div class="actions">
         <%= f.submit "Create Leave Type",:class => class_name, data: { disable_with: data_info } %>

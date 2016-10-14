@@ -7,9 +7,9 @@
       <th>Description</th>
       <th>From</th>
       <th>To</th>
-      <th>Is Payble</th> 
-      <th>Is Active</th> 
-      <th>Is Balance Set</th> 
+      <th>Payble</th> 
+      <th>Balance Required</th> 
+      <th>Status</th> 
       <th>Limit</th>
       <th>Action</th>
     </tr>
@@ -23,8 +23,8 @@
         <td><%= leav_category.from %></td>
         <td><%= leav_category.to %></td>
         <td><%= leav_category.is_payble ? "Yes" : "No" %></td>
-        <td><%= leav_category.is_active ? "Active" : "Inactive" %></td> 
         <td><%= leav_category.is_balance ? "Yes" : "No" %></td>
+        <td><%= leav_category.is_active ? "Active" : "Inactive" %></td> 
         <td><%= leav_category.limit %></td>
         <td>
           <% if leav_category.is_confirm == true %>

@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  get 'issue_request_report/index'
+
+  get 'welcome/index'
+
   resources :issue_root_causes do
     collection do
       get :is_confirm
@@ -26,6 +30,8 @@ Rails.application.routes.draw do
       get :unlock_by_admin
       get :solved_confirm
       get :resend_request
+      get :search_by_date
+      get :search_by_group
     end
    end
   resources :issue_masters do

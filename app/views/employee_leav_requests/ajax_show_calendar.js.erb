@@ -1,0 +1,5 @@
+<% if @value == 'Full Day' %>
+$('#calendar_from').html("<%= j render 'employee_leav_requests/calendar_from' %>")
+<% else @value == 'First Half' %>
+$('#calendar_to').html("<%= j render 'employee_leav_requests/calendar_to' %>")
+<%end%>

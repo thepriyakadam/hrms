@@ -269,11 +269,6 @@ class EmployeeLeavRequestsController < ApplicationController
     end
   end
 
-  def ajax_show_calendar
-    @value = params[:value]
-    @start_date = params[:start_date]
-  end 
-
   private
 
   # Use callbacks to share common setup or constraints between actions.

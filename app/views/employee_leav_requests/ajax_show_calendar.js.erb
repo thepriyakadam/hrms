@@ -1,9 +1,0 @@
-<% if @value == 'First Half' || @value == 'Second Half' %>
-$("#employee_leav_request_end_date").val('<%= @start_date %>');
-//document.getElementById("employee_leav_request_end_date").disabled = true;
-$("#employee_leav_request_end_date").attr('readonly', true);
-<% elsif @value == 'Full Day'  %>
-//document.getElementById("employee_leav_request_end_date").disabled = false;
-$("#employee_leav_request_end_date").attr('readonly', false);
-$("#employee_leav_request_end_date").val(' ');
-<%end%>

@@ -59,31 +59,29 @@
         </div>
 
         <div class="col-sm-3">
-          <label>From Date: </label>
-          <div class="form-group required">
-            <div class="input-group">
-              <div class="input-group-addon">
-                <i class="fa fa-calendar"></i>
-              </div>
-              <%= f.text_field :start_date, hide_label: true, class: 'birth_date'%>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-sm-3">
           <div class="form-group required">
           <%= f.select :leave_type, ['Full Day','First Half','Second Half'],{label:"Leave Type",include_blank: "Please Select Leave Type"},{onchange:"var a={value:$(this).val(),start_date:$('#employee_leav_request_start_date').val()}; $.get('/employee_leav_requests/ajax_show_calendar',a,function(response){});"}%>
           </div>
         </div>
 
         <div class="col-sm-3">
-          <label>To Date: </label>
           <div class="form-group required">
             <div class="input-group">
               <div class="input-group-addon">
                 <i class="fa fa-calendar"></i>
               </div>
-              <%= f.text_field :end_date, hide_label: true, class: 'birth_date' %>
+              <%= f.text_field :start_date, label: 'From Date', class: 'birth_date'%>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <%= f.text_field :end_date, label: 'To Date', class: 'birth_date' %>
             </div>
           </div>
         </div>

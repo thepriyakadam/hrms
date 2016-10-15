@@ -265,12 +265,6 @@ class EmployeeLeavRequestsController < ApplicationController
       # filter(:current_status, :enum, :select => [["Pending",0],["Cancelled",1],["FirstApproved",2],["SecondApproved",3],["FirstRejected",4],["SecondRejected",5]])
       column(:Employee_ID, sortable: true) { |employee_leav_request| employee_leav_request.employee.try(:manual_employee_code) }
       column(:Emploee_name, sortable: true) { |employee_leav_request| full_name(employee_leav_request.employee) }
-      # column :is_pending
-      # column :is_cancelled
-      # column :is_first_approved
-      # column :is_second_approved
-      # column :is_first_rejected
-      # column :is_second_rejected
       column :current_status
     end
   end

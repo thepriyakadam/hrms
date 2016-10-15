@@ -1,54 +1,56 @@
 <!--SELECT2 EXAMPLE -->
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title">Leave Request
+    <h3 class="box-title">Leave Request</h3>
   </div><!-- /.box-header -->
 
   <div class="box-body">
     <%= bootstrap_form_for(@employee_leav_request,html: {id: 'employee_leav_request'}) do |f| %>
      <%= f.hidden_field :employee_id, value: @employee.id %>
      <div class="row">
-      <div class="col-sm-12">
+      <div class="col-sm-6">
         <div class="field">
          <table class="table table-bordered table-hover table-condensed'">
            <thead>
-           <tr><center><td colspan="4"><center> Employee : <%= @employee.manual_employee_code %>  <%= @employee.first_name %> <%= @employee.middle_name %> <%=@employee.last_name %>  </center></td></tr>
+           <tr>
+           <th colspan="2"><center> Leave Process </center></th>
+           </tr>
+           <tr>
+           <th> Employee </th>
+           <td><%= @employee.manual_employee_code %> - <%= @employee.first_name %> <%= @employee.middle_name %> <%=@employee.last_name %></td>
+           </tr>
+           <tr>
+              <th>Manager 1 </th>
+              <td><%= @employee.manager.try(:manual_employee_code) %> - <%= @employee.manager.try(:first_name) %> <%= @employee.manager.try(:middle_name) %> <%= @employee.manager.try(:last_name) %></td>
+            </tr>
             <tr>
-              <th><center> Manager 1 :</center></th>
-              <td><%= @employee.manager.try(:first_name) %> <%= @employee.manager.try(:middle_name) %> <%= @employee.manager.try(:last_name) %></td>
-              <th><center>Manager 2 :</center></th>
-              <td><%= @employee.manager_2.try(:first_name) %> <%= @employee.manager_2.try(:middle_name) %> <%= @employee.manager_2.try(:last_name) %></td>
+              <th>Manager 2 </th>
+              <td><%= @employee.manager_2.try(:manual_employee_code) %> - <%= @employee.manager_2.try(:first_name) %> <%= @employee.manager_2.try(:middle_name) %> <%= @employee.manager_2.try(:last_name) %></td>
             </tr>
            </thead>
          </table>
         </div>
       </div>
-    </div>
-     <div class="row">
-       <div class="col-sm-3"></div>
-        <div class="col-sm-6">
-          <div class="field">
-         
-          <table class="table table-bordered table-hover table-condensed'">
-           <thead>
-           <tr><center><th colspan="2"><center> Leave Balance </center></th></tr>
-            <tr>
-              <th>Leave Type</th>
-              <th>Leave Balance</th>
-            </tr>
-           </thead>
-          <% @total_leaves.where(is_active: true).each do |l| %>
+      <div class="col-sm-6">
+        <div class="field">
+        <table class="table table-bordered table-hover table-condensed'">
+         <thead>
+         <tr><center><th colspan="2"><center>Leave Balance</center></th></tr>
           <tr>
-          <th><%= l.leav_category.name %></th>
-          <td><%= l.no_of_leave %></td>
+            <th>Leave Type</th>
+            <th>Leave Balance</th>
           </tr>
-          <% end %>
-          </table>
-          </div>
+         </thead>
+        <% @total_leaves.where(is_active: true).each do |l| %>
+        <tr>
+        <td><%= l.leav_category.name %></td>
+        <td><%= l.no_of_leave %></td>
+        </tr>
+        <% end %>
+        </table>
         </div>
-        <div class="col-sm-3"></div>
-      </div>
-      <hr>
+        </div>
+    </div>
 
       <div class="row">
       

@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  get 'issue_request_report/index'
+
+  get 'welcome/index'
+
   resources :issue_root_causes do
     collection do
       get :is_confirm
@@ -1391,6 +1395,7 @@ end
       get :search_by_end_date
       get :search_by_is_pending_date
       get :employee_leav_request_reports
+      get :ajax_show_calendar
     end
   end
   resources :company_leavs
@@ -1480,6 +1485,7 @@ end
       get :collect_department
       get :display_emp_code_master
       post :update_mgr
+      get :index_xls
     end
     member do
       get :edit_manager

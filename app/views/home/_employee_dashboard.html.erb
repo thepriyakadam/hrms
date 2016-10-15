@@ -1,47 +1,6 @@
 <div id = "myModal"></div>
 <!-- Main row --><!-- Info boxes -->
-<div class="row">
-  <div class="col-md-3 col-sm-6 col-xs-12">
-    <div class="info-box">
-      <span class="info-box-icon bg-aqua"><i class="fa fa-industry"></i></span>
-      <div class="info-box-content">
-        <span class="info-box-text">Companies</span>
-        <span class="info-box-number"><%=@companies.try(:count)%></span>
-      </div><!-- /.info-box-content -->
-    </div><!-- /.info-box -->
-  </div><!-- /.col -->
-  <div class="col-md-3 col-sm-6 col-xs-12">
-    <div class="info-box">
-      <span class="info-box-icon bg-red"><i class="glyphicon glyphicon-th-list"></i></span>
-      <div class="info-box-content">
-        <span class="info-box-text">Locations</span>
-        <span class="info-box-number"><%= @company_locations.try(:count)%></span>
-      </div><!-- /.info-box-content -->
-    </div><!-- /.info-box -->
-  </div><!-- /.col -->
 
-  <!-- fix for small devices only -->
-  <div class="clearfix visible-sm-block"></div>
-
-  <div class="col-md-3 col-sm-6 col-xs-12">
-    <div class="info-box">
-      <span class="info-box-icon bg-green"><i class="glyphicon glyphicon-th"></i></span>
-      <div class="info-box-content">
-        <span class="info-box-text">Departments</span>
-        <span class="info-box-number"><%= @departments.try(:count) %></span>
-      </div><!-- /.info-box-content --> 
-    </div><!-- /.info-box -->
-  </div><!-- /.col -->
-  <div class="col-md-3 col-sm-6 col-xs-12">
-    <div class="info-box">
-      <span class="info-box-icon bg-yellow"><i class="ion ion-ios-people-outline"></i></span>
-      <div class="info-box-content">
-        <span class="info-box-text">Employees</span>
-        <span class="info-box-number"><%= @employees.try(:count) %></span>
-      </div><!-- /.info-box-content -->
-    </div><!-- /.info-box -->
-  </div><!-- /.col -->
-</div><!-- /.row -->
 <!-- TO DO List -->
   <div class="row">
     <div class="col-xs-12">
@@ -70,7 +29,7 @@
        <!-- TABLE: LATEST ORDERS -->
       <div class="box box-info">
         <div class="box-header with-border">
-          <h3 class="box-title">Circulars List</h3>
+          <h3 class="box-title">Circular List</h3>
           <div class="box-tools pull-right">
             <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
             <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -226,7 +185,6 @@
               <% date = Date.today %>
              <% @employees = Employee.where("strftime('%d/%m', date_of_birth) = ?", date.strftime('%d/%m')) %>
             <% if @employees.empty? %>
-              <p>Today is No BirthDay</p>
             <%else%>
               <%@employees.each do |e|%>
                 <li class="item">
@@ -260,7 +218,6 @@
             <% date = Date.today + 1 %>
             <% @employees = Employee.where("strftime('%d/%m', date_of_birth) = ?", date.strftime('%d/%m')) %>
             <% if @employees.empty? %>
-              <p>No BirthDay</p>
             <%else%>
             <table  class="table table-bordered table-hover table-condensed">
             <thead>

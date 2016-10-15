@@ -211,6 +211,14 @@ class EmployeesController < ApplicationController
     end
   end
 
+  # def index_xls
+  #   @employees = Employee.all
+  #   respond_to do |format|
+  #     format.xls {render template: 'employees/index.xls.erb'}
+  #   end
+
+  # end
+
   def basic_detail
     @employee = Employee.find(params[:id])
   end

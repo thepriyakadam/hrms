@@ -70,7 +70,7 @@
        <!-- TABLE: LATEST ORDERS -->
       <div class="box box-info">
         <div class="box-header with-border">
-          <h3 class="box-title">Circulars List</h3>
+          <h3 class="box-title">Circular List</h3>
           <div class="box-tools pull-right">
             <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
             <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -111,56 +111,6 @@
           <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a> -->
         </div><!-- /.box-footer -->
       </div><!-- /.box -->
-
-      <!-- Custom tabs (Charts with tabs)-->
-      <div class="row">
-        <div class="col-md-6">
-          <!-- USERS LIST -->
-           <div class="box box-default collapsed-box">
-            <div class="box-header with-border">
-              <h3 class="box-title">Employee Self Services</h3>
-              <div class="box-tools pull-right">
-                <!-- <span class="label label-danger">8 New Members</span> -->
-                <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
-                <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
-            </div><!-- /.box-header -->
-            <div class="box-body no-padding">
-              <ul class="nav nav-pills nav-stacked">
-            <li><a href="/self_services/employee"><i class="fa fa-tags"></i> Employees</a></li>
-              <li><a href="/self_services/employee_template"><i class="fa fa-tags"> </i> Salary Structure </a></li>
-              <li><a href="/self_services/attendance"><i class="fa fa-tags"></i>Attendance</a></li>
-              <li><a href="/self_services/salaryslip"><i class="fa fa-tags"></i>Salary Slip</a></li>
-              <li><a href="/self_services/advance"><i class="fa fa-tags"></i>Advance & Instalment</a></li>
-              <li><a href="/goal_rating_sheets/new"><i class="fa fa-tags"></i> Self Rating </a></li>
-          </ul>
-            </div><!-- /.box-body -->
-          </div><!--/.box -->
-        </div><!-- /.col -->
-         <div class="col-md-6">
-          <!-- USERS LIST -->
-          <div class="box box-default collapsed-box">
-            <div class="box-header with-border">
-              <h3 class="box-title">Travel Management</h3>
-              <div class="box-tools pull-right">
-                <!-- <span class="label label-danger">8 New Members</span> -->
-                <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
-                <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
-            </div><!-- /.box-header -->
-            <div class="box-body no-padding">
-              <ul class="nav nav-pills nav-stacked">
-            <li><a href="/travel_requests"><i class="fa fa-tags"></i>Travel Request </a></li>
-            <li><a href="/travel_requests/travel_history"><i class="fa fa-tags"></i> Travel Approve/Reject </a></li>
-            <li><a href="/travel_requests/travel_request_list"><i class="fa fa-tags"></i> Travel Request List </a></li>
-            <li><a href="/travel_requests/daily_bill"><i class="fa fa-tags"></i> Expenses Claim </a></li>
-            <li><a href="/travel_expences"><i class="fa fa-tags"></i> Travel Expences </a></li>  
-          </ul>
-            </div><!-- /.box-body -->
-          </div><!--/.box -->
-        </div><!-- /.col -->
-
-      </div><!-- /.row -->
 
       <!-- TABLE: LATEST ORDERS -->
       <div class="box box-info">
@@ -275,7 +225,6 @@
               <% date = Date.today %>
              <% @employees = Employee.where("strftime('%d/%m', date_of_birth) = ?", date.strftime('%d/%m')) %>
             <% if @employees.empty? %>
-              <p>Today is No BirthDay</p>
             <%else%>
               <%@employees.each do |e|%>
                 <li class="item">
@@ -309,7 +258,6 @@
             <% date = Date.today + 1 %>
             <% @employees = Employee.where("strftime('%d/%m', date_of_birth) = ?", date.strftime('%d/%m')) %>
             <% if @employees.empty? %>
-              <p>No BirthDay</p>
             <%else%>
             <table  class="table table-bordered table-hover table-condensed">
             <thead>

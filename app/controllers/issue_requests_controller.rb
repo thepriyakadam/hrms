@@ -142,7 +142,7 @@ class IssueRequestsController < ApplicationController
 
   def solved_request
     @issue_request = IssueRequest.find(params[:id])
-    @issue_request.update(status: true,issue_root_cause_id: params[:issue_request][:issue_root_cause_id],comment: params[:issue_request][:comment],time: params[:issue_request][:time])
+    @issue_request.update(status: true,issue_root_cause_id: params[:issue_request][:issue_root_cause_id],comment: params[:issue_request][:comment],time: params[:issue_request][:time],effort_time: params[:issue_request][:effort_time])
     IssueHistory.create(issue_tracker_group_id: @issue_request.issue_tracker_group_id,issue_request_id: @issue_request.id,issue_master_id: @issue_request.issue_master_id,description: @issue_request.description,date: @issue_request.date,time: @issue_request.time,employee_id: @issue_request.employee_id,issue_tracker_member_id: @issue_request.issue_tracker_member_id,issue_priority: @issue_request.issue_priority,status: true)
     flash[:notice] = "Issue Request Solved Successfully"
     redirect_to lock_request_list_issue_requests_path
@@ -179,6 +179,48 @@ class IssueRequestsController < ApplicationController
     redirect_to solved_issues_issue_requests_path
   end
 
+  # def issue_tracker_reports_xls
+  #    @issue_request = IssueRequest.where(params[:issue])
+  # end
+
+  def group_report_list
+    @date = params[:date].to_date
+    @issue_tracker_group = IssueTrackerGroup.find(params[:id])
+    @issue_requests = IssueRequest.where(issue_tracker_group_id: @issue_tracker_group.id,date: @date)
+
+    respond_to do |format|
+      format.xls {render template: 'issue_requests/issue_tracker_reports_xls.xls.erb'}
+    end
+  end
+
+  
+  
+  def issue_tracker_pdf
+   @date = params[:date].to_date
+    @issue_tracker_group = IssueTrackerGroup.find(params[:id])
+    @issue_requests = IssueRequest.where(issue_tracker_group_id: @issue_tracker_group.id,date: @date)
+      respond_to do |format|
+          format.json
+          format.pdf do
+            render pdf: 'issue_tracker_pdf',
+                  layout: 'pdf.html',
+                  orientation: 'Landscape',
+                  template: 'issue_requests/issue_tracker_pdf.pdf.erb',
+                  # show_as_html: params[:debug].present?,
+                  :page_height      => 1000,
+                  :dpi              => '300',
+                  :margin           => {:top    => 10, # default 10 (mm)
+                                :bottom => 10,
+                                :left   => 20,
+                                :right  => 20},
+                  :show_as_html => params[:debug].present?
+          end
+      end
+  end
+
+  def datewise_report
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_issue_request
@@ -187,6 +229,6 @@ class IssueRequestsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def issue_request_params
-      params.require(:issue_request).permit(:issue_root_cause_id,:effort_time,:is_complete,:issue_master_id, :issue_tracker_member_id, :issue_tracker_group_id, :description, :date, :time, :employee_id, :issue_priority, :status, :document1, :document2)
+      params.require(:issue_request).permit(:comment,:issue_root_cause_id, :effort_time,:is_complete,:issue_master_id, :issue_tracker_member_id, :issue_tracker_group_id, :description, :date, :time, :employee_id, :issue_priority, :status, :document1, :document2)
     end
 end

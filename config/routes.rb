@@ -26,6 +26,11 @@ Rails.application.routes.draw do
       get :unlock_by_admin
       get :solved_confirm
       get :resend_request
+      get :datewise_report
+      get :issue_tracker_reports_xls
+      get :issue_tracker_pdf
+      get :groupwise_report
+      get :group_report_list
     end
    end
   resources :issue_masters do

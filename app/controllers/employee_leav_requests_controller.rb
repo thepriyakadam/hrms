@@ -277,6 +277,7 @@ class EmployeeLeavRequestsController < ApplicationController
 
   def ajax_show_calendar
     @value = params[:value]
+    @start_date = params[:start_date]
   end 
 
   private

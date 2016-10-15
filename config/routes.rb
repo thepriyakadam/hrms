@@ -1193,12 +1193,20 @@ end
       get :display_installment
       get :instalment_xls
       get :installment_pdf
+      get :installment_report
+      post :dynamic_report
+      get :installment_pdf_1
+      get :installment_xls_1
     end
   end
   resources :advance_salaries do
     collection do
       get :search_by_advance_date
       get :advances
+      get :advance_salary_report
+      post :dynamic_report
+      get :advance_salary_xls
+      get :advance_salary_pdf
     end
   end
 

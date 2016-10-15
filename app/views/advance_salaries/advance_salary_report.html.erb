@@ -1,20 +1,20 @@
 <!--SELECT2 EXAMPLE -->
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title">Employee Food Deduction Report</h3>
+    <h3 class="box-title">Advance Salary Report</h3>
   </div><!-- /.box-header -->
 
   <div class="box-body">
-    <%= bootstrap_form_for(:food_deduction, url: { action: 'dynamic_report'},html: {id: 'food_deduction'},remote:true) do |f| %>
+    <%= bootstrap_form_for(:advance_salary, url: { action: 'dynamic_report'},html: {id: 'advance_salary'},remote:true) do |f| %>
       <div class="row">
         <div class="col-sm-3">
           <div class="field">
-            <%= select :food_deduction,:month, ['January','February','March','April','May','June','July','August','September','October','November','December'],{label: 'Select Month',include_blank: " Select Month"}, class: "form-control" %>
+            <%= select :advance_salary,:month, ['January','February','March','April','May','June','July','August','September','October','November','December'],{label: 'Select Month',include_blank: " Select Month"}, class: "form-control" %>
            </div>
         </div>
         <div class="col-sm-3">
           <div class="field">
-            <%= select :food_deduction,:year,['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025','2026','2027'],{label: 'Select Year',include_blank: " Select Year"}, class: "form-control" %>
+            <%= select :advance_salary,:year,['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025','2026','2027'],{label: 'Select Year',include_blank: " Select Year"}, class: "form-control" %>
           </div>
         </div>
 
@@ -32,7 +32,7 @@
         <div class="col-sm-3">
             <div class="form-group required">
             <div class="input-group">
-              <%=f.select :company_id, all_company,{include_blank: "Select Company",hide_label: true},{onchange:"var a={id:$(this).val(), form : 'food_deduction'}; $.get('/employees/collect_company_location',a,function(response){});"}%>
+              <%=f.select :company_id, all_company,{include_blank: "Select Company",hide_label: true},{onchange:"var a={id:$(this).val(), form :'advance_salary'}; $.get('/employees/collect_company_location',a,function(response){});"}%>
             </div>
             </div>
           </div>
@@ -40,8 +40,8 @@
           <div class="col-sm-3">
             <div class="form-group required">
             <div class="input-group">
-              <div id="company_location">
-                <%= render 'employees/company_location_dropdown' %> 
+              <div id="company_location1">
+                <%= render 'employees/company_loc_dropdown' %> 
             </div> 
             </div>
             </div>
@@ -55,7 +55,7 @@
           </div>
         </div>
         </div><br>
-        <div id="food_deduction_li_1"></div>
+        <div id="advance_salary_li"></div>
 
       <br>
     <% end %>
@@ -63,20 +63,20 @@
 </div><!-- /.box -->
 
 <script>
-$("#food_deduction").validate({
+$("#advance_salary").validate({
     rules: {
-      "food_deduction[month]":{
+      "advance_salary[month]":{
         required: true,
       },
-      "food_deduction[year]":{
+      "advance_salary[year]":{
         required: true,
       }
     },
     messages: {
-      "food_deduction[month]":{
+      "advance_salary[month]":{
         required: "Please specify Month",
       },
-      "food_deduction[year]":{
+      "advance_salary[year]":{
         required: "Please specify Year",
       }
       

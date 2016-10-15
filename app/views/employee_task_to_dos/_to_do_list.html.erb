@@ -14,11 +14,11 @@
   <td><%= e.task_name %></td>
   <td><span class="label label-success"><%= e.status ? "Active" : "Inactive" %></span></td>
   <td><span class="label label-info"><%= e.task_time1 %></span></td>
-  <td><% a_date_time = Time.now
-     b_date_time = e.task_time1
-     (a_date_time - b_date_time).to_i
+  <td><%  a_date_time = Time.now.to_datetime
+     b_date_time = e.task_time1.to_datetime
+     (b_date_time - a_date_time).to_i
 
-     @Seconds = ((a_date_time - b_date_time)*24*60*60).to_i
+     @Seconds = ((b_date_time - a_date_time)*24*60*60).to_i
 
      @sec = @Seconds % 60
 
@@ -32,7 +32,35 @@
 
      @Days = @Hours / 24
 
-     @s=@Days.to_s + 'Days, ' + @hour.to_s + 'Hours, '+ @min.to_s + 'Mins, ' + @sec.to_s + 'Secs' %>
+    if @Days <= 0
+      @s=@hour.to_s + ' Hours, '+ @min.to_s + ' Mins, ' + @sec.to_s + ' Secs'
+    elsif @hour <= 0
+      @s=@Days.to_s + ' Days, '+ @min.to_s + ' Mins, ' + @sec.to_s + ' Secs'
+    elsif @min <= 0
+      @s=@Days.to_s + 'Days, '+ @hour.to_s + 'Hours'
+    else
+      @s=@Days.to_s + ' Days, ' + @hour.to_s + ' Hours, '+ @min.to_s + ' Mins, ' + @sec.to_s + ' Secs' 
+    end  
+     %>
+
+     <!-- < t1 = Time.now.to_datetime 
+        t2 = e.task_time1.to_datetime #date2
+
+        @seconds = (t2.to_i - t1.to_i)
+        @days = @seconds / 86400
+        @hours = @seconds / 3600
+        @minutes = (@seconds - (@hours * 3600)) / 60
+        @seconds = (@seconds - (@hours * 3600) - (@minutes * 60))
+        @s=@days.to_s + 'Days, ' + @hours.to_s + 'Hours, '+ @minutes.to_s + 'Mins, ' + @seconds.to_s + 'Secs'
+         %> -->
+
+      <!-- < t1 = e.task_time1
+         t2 = Time.now
+         @r=TimeDifference.between(t1, t2).in_days
+         @s=TimeDifference.between(t1, t2).in_hours
+         @t=TimeDifference.between(t1, t2).in_minutes
+         @u=TimeDifference.between(t1, t2).in_seconds
+         @s=@r.to_s + ' Days, ' + @s.to_s + ' Hours, '+ @t.to_s + ' Mins, ' + @u.to_s + ' Secs' %> -->
       <%= @s %> 
      </td>
   <td>

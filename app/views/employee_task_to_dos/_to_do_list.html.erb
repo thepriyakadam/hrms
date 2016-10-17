@@ -32,15 +32,45 @@
 
      @Days = @Hours / 24
 
+     # @days = @Days % 30
+
+     # @Months = @Days / 30
+
+     # @months = @Months % 12
+
+     # @Year = @Months / 12
+
+
+    # if @days <= 0
+    #   @s=@hour.to_s + ' Hours, '+ @min.to_s + ' Mins, ' + @sec.to_s + ' Secs'
+    # elsif @months <= 0
+    #   @s=@days.to_s + ' Days, ' + @min.to_s + ' Mins, ' + @sec.to_s + ' Secs'
+    # elsif @Year <= 0
+    #  @s=@days.to_s + ' Days, ' + @months.to_s + ' Months, ' + @min.to_s + ' Mins, ' + @sec.to_s + ' Secs'
+    # else
+    #   @s=@Year.to_s + ' Year,' + @months.to_s + ' Months,'+@days.to_s + ' Days, ' + @hour.to_s + ' Hours, '+ @min.to_s + ' Mins, ' + @sec.to_s + ' Secs'
+    # end
+
     if @Days <= 0
-      @s=@hour.to_s + ' Hours, '+ @min.to_s + ' Mins, ' + @sec.to_s + ' Secs'
+      @s=@hour.to_s + ' Hours, '+ @min.to_s + ' Mins '
     elsif @hour <= 0
-      @s=@Days.to_s + ' Days, '+ @min.to_s + ' Mins, ' + @sec.to_s + ' Secs'
+      @s=@Days.to_s + ' Days, '+ @min.to_s + ' Mins '
     elsif @min <= 0
-      @s=@Days.to_s + 'Days, '+ @hour.to_s + 'Hours'
+      @s=@Days.to_s + ' Days, '+ @hour.to_s + ' Hours'
     else
-      @s=@Days.to_s + ' Days, ' + @hour.to_s + ' Hours, '+ @min.to_s + ' Mins, ' + @sec.to_s + ' Secs' 
+      @s=@Days.to_s + ' Days, ' + @hour.to_s + ' Hours, '+ @min.to_s + ' Mins' 
     end  
+
+
+    # if @Days <= 0
+    #   @s=@hour.to_s + ' Hours, '+ @min.to_s + ' Mins, ' + @sec.to_s + ' Secs'
+    # elsif @hour <= 0
+    #   @s=@Days.to_s + ' Days, '+ @min.to_s + ' Mins, ' + @sec.to_s + ' Secs'
+    # elsif @min <= 0
+    #   @s=@Days.to_s + 'Days, '+ @hour.to_s + 'Hours'
+    # else
+    #   @s=@Days.to_s + ' Days, ' + @hour.to_s + ' Hours, '+ @min.to_s + ' Mins, ' + @sec.to_s + ' Secs' 
+    # end  
      %>
 
      <!-- < t1 = Time.now.to_datetime 

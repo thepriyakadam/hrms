@@ -18,32 +18,17 @@
           </div>
         </div>
 
-         <!-- <div class="col-sm-3">
-          <div class="field">
-            <= select :food_deduction,:company_id,all_company,{label: 'Company',include_blank: " Select Company"}, class: "form-control" %>
-          </div>
-        </div>
-
-        <div class="col-sm-3">
-          <div class="field">
-          <= select :food_deduction, :company_location_id, all_company_location,{label: 'Company Location',include_blank: " Select Company Location"}, class: "form-control" %>
-          </div>
-        </div> -->
         <div class="col-sm-3">
             <div class="form-group required">
-            <div class="input-group">
               <%=f.select :company_id, all_company,{include_blank: "Select Company",hide_label: true},{onchange:"var a={id:$(this).val(), form :'advance_salary'}; $.get('/employees/collect_company_location',a,function(response){});"}%>
-            </div>
             </div>
           </div>
 
           <div class="col-sm-3">
             <div class="form-group required">
-            <div class="input-group">
               <div id="company_location1">
                 <%= render 'employees/company_loc_dropdown' %> 
             </div> 
-            </div>
             </div>
           </div>
         </div>

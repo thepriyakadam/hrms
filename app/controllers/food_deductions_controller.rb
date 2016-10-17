@@ -275,14 +275,7 @@ class FoodDeductionsController < ApplicationController
                   layout: 'pdf.html',
                   orientation: 'Landscape',
                   template: 'food_deductions/food_deduction.pdf.erb',
-                  # show_as_html: params[:debug].present?,
-                  :page_height      => 1000,
-                  :dpi              => '300',
-                  :margin           => {:top    => 10, # default 10 (mm)
-                                :bottom => 10,
-                                :left   => 20,
-                                :right  => 20},
-                  :show_as_html => params[:debug].present?
+                  show_as_html: params[:debug].present?
                 end
              end
    end

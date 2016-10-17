@@ -222,14 +222,7 @@ class AdvanceSalariesController < ApplicationController
             render pdf: 'advance_salary',
                   layout: 'pdf.html',
                   orientation: 'Landscape',
-                  template: 'advance_salaries/advance_salary.pdf.erb',
-                  # show_as_html: params[:debug].present?,
-                  :page_height      => 1000,
-                  :dpi              => '300',
-                  :margin           => {:top    => 10, # default 10 (mm)
-                                :bottom => 10,
-                                :left   => 20,
-                                :right  => 20},
+                  template: 'advance_salaries/advance_salary_pdf.pdf.erb',
                   :show_as_html => params[:debug].present?
                 end
              end

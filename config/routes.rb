@@ -1190,6 +1190,9 @@ end
       get :collect_salary
       get :salary_ledger
       post :show_monthly_ctc
+      get :pf_detail_report
+      # post :dynamic_report
+      # get :pf_detail_pdf
     end
   end
 

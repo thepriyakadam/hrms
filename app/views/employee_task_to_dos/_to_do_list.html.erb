@@ -10,7 +10,7 @@
 
 <% @employee_task_to_dos.each do |e| %>
 <tr>
-  <td><span class="label label-primary"><%= e.task_date %></span></td>
+  <td><span class="label label-primary"><%= e.task_time1.to_date %></span></td>
   <td><%= e.task_name %></td>
   <td><span class="label label-success"><%= e.status ? "Active" : "Inactive" %></span></td>
   <td><span class="label label-info"><%= e.task_time1 %></span></td>
@@ -32,6 +32,8 @@
 
      @Days = @Hours / 24
 
+
+
      # @days = @Days % 30
 
      # @Months = @Days / 30
@@ -39,6 +41,22 @@
      # @months = @Months % 12
 
      # @Year = @Months / 12
+
+
+
+     # seconds_diff = (Time.now.to_datetime - e.task_time1.to_datetime).to_i.abs
+
+     # hours = seconds_diff / 3600
+     # seconds_diff -= hours * 3600
+
+     # minutes = seconds_diff / 60
+     # seconds_diff -= minutes * 60
+
+     # seconds = seconds_diff
+
+     # @s=time_diff(Time.now.to_datetime,e.task_time1.to_datetime )
+
+     # @t="#{hours.to_s.rjust(2, '0')}:#{minutes.to_s.rjust(2, '0')}:#{seconds.to_s.rjust(2, '0')}"
 
 
     # if @days <= 0
@@ -50,6 +68,8 @@
     # else
     #   @s=@Year.to_s + ' Year,' + @months.to_s + ' Months,'+@days.to_s + ' Days, ' + @hour.to_s + ' Hours, '+ @min.to_s + ' Mins, ' + @sec.to_s + ' Secs'
     # end
+
+
 
     if @Days <= 0
       @s=@hour.to_s + ' Hours, '+ @min.to_s + ' Mins '

@@ -4,15 +4,115 @@
   <th>Task</th>
   <th>Status</th>
   <th>Time</th>
+  <th>Time Remaining</th>
   <th>Action</th>
 </tr>
 
 <% @employee_task_to_dos.each do |e| %>
 <tr>
-  <td><span class="label label-primary"><%= e.task_date %></span></td>
+  <td><span class="label label-primary"><%= e.task_time1.to_date %></span></td>
   <td><%= e.task_name %></td>
   <td><span class="label label-success"><%= e.status ? "Active" : "Inactive" %></span></td>
-  <td><span class="label label-info"><%= e.task_time %></span></td>
+  <td><span class="label label-info"><%= e.task_time1 %></span></td>
+  <td><%  a_date_time = Time.now.to_datetime
+     b_date_time = e.task_time1.to_datetime
+     (b_date_time - a_date_time).to_i
+
+     @Seconds = ((b_date_time - a_date_time)*24*60*60).to_i
+
+     @sec = @Seconds % 60
+
+     @Minutes = @Seconds / 60
+
+     @min = @Minutes % 60
+
+     @Hours = @Minutes / 60
+
+     @hour = @Hours % 24
+
+     @Days = @Hours / 24
+
+
+
+     # @days = @Days % 30
+
+     # @Months = @Days / 30
+
+     # @months = @Months % 12
+
+     # @Year = @Months / 12
+
+
+
+     # seconds_diff = (Time.now.to_datetime - e.task_time1.to_datetime).to_i.abs
+
+     # hours = seconds_diff / 3600
+     # seconds_diff -= hours * 3600
+
+     # minutes = seconds_diff / 60
+     # seconds_diff -= minutes * 60
+
+     # seconds = seconds_diff
+
+     # @s=time_diff(Time.now.to_datetime,e.task_time1.to_datetime )
+
+     # @t="#{hours.to_s.rjust(2, '0')}:#{minutes.to_s.rjust(2, '0')}:#{seconds.to_s.rjust(2, '0')}"
+
+
+    # if @days <= 0
+    #   @s=@hour.to_s + ' Hours, '+ @min.to_s + ' Mins, ' + @sec.to_s + ' Secs'
+    # elsif @months <= 0
+    #   @s=@days.to_s + ' Days, ' + @min.to_s + ' Mins, ' + @sec.to_s + ' Secs'
+    # elsif @Year <= 0
+    #  @s=@days.to_s + ' Days, ' + @months.to_s + ' Months, ' + @min.to_s + ' Mins, ' + @sec.to_s + ' Secs'
+    # else
+    #   @s=@Year.to_s + ' Year,' + @months.to_s + ' Months,'+@days.to_s + ' Days, ' + @hour.to_s + ' Hours, '+ @min.to_s + ' Mins, ' + @sec.to_s + ' Secs'
+    # end
+
+
+
+    if @Days <= 0
+      @s=@hour.to_s + ' Hours, '+ @min.to_s + ' Mins '
+    elsif @hour <= 0
+      @s=@Days.to_s + ' Days, '+ @min.to_s + ' Mins '
+    elsif @min <= 0
+      @s=@Days.to_s + ' Days, '+ @hour.to_s + ' Hours'
+    else
+      @s=@Days.to_s + ' Days, ' + @hour.to_s + ' Hours, '+ @min.to_s + ' Mins' 
+    end  
+
+
+    # if @Days <= 0
+    #   @s=@hour.to_s + ' Hours, '+ @min.to_s + ' Mins, ' + @sec.to_s + ' Secs'
+    # elsif @hour <= 0
+    #   @s=@Days.to_s + ' Days, '+ @min.to_s + ' Mins, ' + @sec.to_s + ' Secs'
+    # elsif @min <= 0
+    #   @s=@Days.to_s + 'Days, '+ @hour.to_s + 'Hours'
+    # else
+    #   @s=@Days.to_s + ' Days, ' + @hour.to_s + ' Hours, '+ @min.to_s + ' Mins, ' + @sec.to_s + ' Secs' 
+    # end  
+     %>
+
+     <!-- < t1 = Time.now.to_datetime 
+        t2 = e.task_time1.to_datetime #date2
+
+        @seconds = (t2.to_i - t1.to_i)
+        @days = @seconds / 86400
+        @hours = @seconds / 3600
+        @minutes = (@seconds - (@hours * 3600)) / 60
+        @seconds = (@seconds - (@hours * 3600) - (@minutes * 60))
+        @s=@days.to_s + 'Days, ' + @hours.to_s + 'Hours, '+ @minutes.to_s + 'Mins, ' + @seconds.to_s + 'Secs'
+         %> -->
+
+      <!-- < t1 = e.task_time1
+         t2 = Time.now
+         @r=TimeDifference.between(t1, t2).in_days
+         @s=TimeDifference.between(t1, t2).in_hours
+         @t=TimeDifference.between(t1, t2).in_minutes
+         @u=TimeDifference.between(t1, t2).in_seconds
+         @s=@r.to_s + ' Days, ' + @s.to_s + ' Hours, '+ @t.to_s + ' Mins, ' + @u.to_s + ' Secs' %> -->
+      <%= @s %> 
+     </td>
   <td>
     <%= link_to '', edit_employee_task_to_do_path(e),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
   </td>

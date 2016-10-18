@@ -200,6 +200,7 @@ class LeaveStatusRecordsController < ApplicationController
         else
           @employee_leav_balance.no_of_leave = @employee_leav_balance.no_of_leave.to_f + 0.5
         end
+        @particular_leave_record.update(is_cancel_after_approve: true)
         EmployeeAttendance.where(employee_leav_request_id: @employee_leav_request.id).destroy_all
           if @employee_leav_request.employee.email.nil? || @employee_leav_request.employee.email == ''
             flash[:notice] = 'Leave Cancelled Successfully without email.'
@@ -214,6 +215,8 @@ class LeaveStatusRecordsController < ApplicationController
           end
         end
       else
+        @particular_leave_record.update(is_cancel_after_approve: true)
+
         EmployeeAttendance.where(employee_leav_request_id: @employee_leav_request.id).destroy_all
         	if @employee_leav_request.employee.email.nil? || @employee_leav_request.employee.email == ''
             flash[:notice] = 'Leave Cancelled Successfully without email.'

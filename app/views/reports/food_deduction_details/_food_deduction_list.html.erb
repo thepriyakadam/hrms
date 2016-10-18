@@ -1,19 +1,11 @@
-<style>
-    th {
-        text-align: left;
-    }
-    tr {
-        page-break-inside: avoid;
-    }
-    div.alwaysbreak { page-break-before: always; }
-    div.nobreak:before { clear:both; }
-    div.nobreak{ page-break-inside: avoid;
-      /* http://code.google.com/p/wkhtmltopdf/issues/detail?id=9#c21 */
-    }
-</style>
-<table style="border-collapse: collapse; font-size:10pt;" border=1 width=1000 cellpadding="19">
+  <div class="box-header">
+    <div class="pull-right">
+    </div>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+  <div id="comments">
+    <table id="example1" class="table table-bordered table-hover table-condensed">
     <thead>
-    <tr><th colspan="8"><center>BFTL</center> </th></tr>
       <tr>
         <th>ID</th>
         <th>Employee Name</th>
@@ -41,3 +33,8 @@
       <% end %>
     </tbody>
   </table>
+  </div>
+  <!-- <= link_to 'Back', food_deductions_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+  <= link_to " Excel Report ",food_deduction_xls_food_deductions_path(month: params[:month], year: params[:year], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+  <= link_to " Print Food Deduction ",food_deduction_pdf_food_deductions_path(month: params[:month], year: params[:year], format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %> -->
+</div>

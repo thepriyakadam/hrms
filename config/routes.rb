@@ -646,6 +646,8 @@ end
     post 'overtime_salary_details/overtime_daily_detail_report'
 
     get 'food_deduction_details/new'
+    get 'food_deduction_details/food_deduction_report'
+    post 'food_deduction_details/dynamic_report'
     post 'food_deduction_details/food_deduction_detail_report'
 
     get 'ctc_details/new'
@@ -703,6 +705,7 @@ end
 
     get 'basic_details/new'
     post 'basic_details/employee_basic_report'
+    get 'basic_details/employee_basic_info'
     get 'basic_details/collect_departments'
     get 'basic_details/employee_list'
     get 'basic_details/select_department'
@@ -1049,6 +1052,10 @@ end
       get :display_food_deduction
       get :food_deduction_xls
       get :food_deduction_pdf
+      get :food_deduction_report
+      post :dynamic_report
+      get :food_deduction_xls_1
+      get :food_deduction_pdf_1
     end
   end
   resources :reporting_masters do
@@ -1184,6 +1191,9 @@ end
       get :collect_salary
       get :salary_ledger
       post :show_monthly_ctc
+      get :pf_detail_report
+      # post :dynamic_report
+      # get :pf_detail_pdf
     end
   end
 
@@ -1193,12 +1203,20 @@ end
       get :display_installment
       get :instalment_xls
       get :installment_pdf
+      get :installment_report
+      post :dynamic_report
+      get :installment_pdf_1
+      get :installment_xls_1
     end
   end
   resources :advance_salaries do
     collection do
       get :search_by_advance_date
       get :advances
+      get :advance_salary_report
+      post :dynamic_report
+      get :advance_salary_xls
+      get :advance_salary_pdf
     end
   end
 
@@ -1481,7 +1499,10 @@ end
       get :collect_department
       get :display_emp_code_master
       post :update_mgr
+      get :collect_company_loc
       get :index_xls
+      get :basic_info_company_wise
+      post :employee_basic_info
     end
     member do
       get :edit_manager

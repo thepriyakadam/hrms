@@ -9,6 +9,12 @@
 	<%= select :family,:company_location_id,(@company_locations.present? ? (@company_locations.collect {|b| [b.name,b.id]}) : {}),{prompt:"Select Company Location",hide_label:true},{onchange:"var a={id:$(this).val(), form : 'family'}; $.get('/employees/collect_department',a,function(response){});",class: "form-control"}%>
 <%elsif @form == 'employee_transfer' %>
 	<%= select :employee_transfer,:company_location_id,(@company_locations.present? ? (@company_locations.collect {|b| [b.name,b.id]}) : {}),{prompt:"Select Company Location",hide_label:true},{onchange:"var a={id:$(this).val(), form : 'family'}; $.get('/employees/collect_department',a,function(response){});",class: "form-control"}%>
+<%elsif @form == 'food_deduction' %>
+	<%= select :food_deduction,:company_location_id,(@company_locations.present? ? (@company_locations.collect {|b| [b.name,b.id]}) : {}),{prompt:"Select Company Location",hide_label:true},{onchange:"var a={id:$(this).val(), form : 'family'}; $.get('/employees/collect_department',a,function(response){});",class: "form-control"}%>
+<%elsif @form == 'advance_salary' %>
+	<%= select :advance_salary, :company_location_id, all_company_location,{hide_label: true,include_blank: " Select Company Location"}, class: "form-control" %>
+<%elsif @form == 'instalment' %>
+	<%= select :instalment, :company_location_id, all_company_location,{hide_label: true,include_blank: " Select Company Location"}, class: "form-control" %>
 <%else %>
 	<%= select :company,:company_location_id,(@company_locations.present? ? (@company_locations.collect {|b| [b.name,b.id]}) : {}),{prompt:"Select Company Location",hide_label:true},{onchange:"var a={id:$(this).val(), form : 'company'}; $.get('/employees/collect_department,a,function(response){});",class: "form-control"}%>
 <%end%>

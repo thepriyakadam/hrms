@@ -166,7 +166,7 @@ class EmployeeLeavRequestsController < ApplicationController
         end
       end
     end
-   end    
+   end
   end
 
   def update

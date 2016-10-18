@@ -8,32 +8,31 @@
       </div>
     </div>
 
-    <div class="col-sm-3">
+    <!-- <div class="col-sm-3">
       <div class="field">
         <div class="input-group">
           <div class="input-group-addon">
             <i class="fa fa-calendar"></i>
           </div>
-          <%= f.text_field :task_date, hide_label: true, class: 'birth_date',placeholder: 'Task Date' %>
+          <= f.text_field :task_date, hide_label: true, class: 'birth_date',placeholder: 'Task Date' %>
         </div>
       </div>
-    </div>
+    </div> -->
 
 
-    <div class="col-sm-2">
+    <div class="col-sm-3">
       <div class="field">
-        <div class="bootstrap-timepicker">
           <div class="form-group">
             <!-- <label>Time picker:</label> -->
-            <div class="input-group">
+            <div class='input-group date' id='datetimepicker4'>
               <!-- <input type="text" class="form-control timepicker"> -->
               <div class="input-group-addon">
-                <i class="fa fa-clock-o"></i>
+                <i class="fa fa-calendar"></i>
               </div>
-              <%= f.text_field :task_time,hide_label: true, class: "timepicker", placeholder: 'Time'%>
+              <!-- <= f.text_field :task_time,hide_label: true, class: "timepicker", placeholder: 'Time'%> -->
+              <%= f.text_field :task_time1,hide_label: true, placeholder: 'Date/Time'%>
             </div><!-- /.input group -->
           </div><!-- /.form group -->
-        </div>
       </div>
     </div>
     <div class="col-sm-1">
@@ -79,3 +78,9 @@
     });
   }); 
 </script>
+
+ <script type="text/javascript">
+    $(function () {
+        $('#datetimepicker4').datetimepicker();
+    });
+ </script>

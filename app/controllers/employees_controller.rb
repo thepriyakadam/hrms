@@ -411,16 +411,25 @@ class EmployeesController < ApplicationController
 
   def collect_company_location
     @company = Company.find(params[:id])
-    @company_locations = @company.company_locations
+    # @company_locations = @company.company_locations
+    @company_locations = CompanyLocation.where(company_id: @company.id)
     @form = params[:form]
   end
 
-  def collect_department
-     @company_location = CompanyLocation.find(params[:id])
-     @departments = @company_location.departments
-     @form = params[:form]
+  # def collect_company_loc
+  #    @company_location = CompanyLocation.find(params[:id])
+  #    @departments = @company_location.departments
+  #    @form = params[:form]
+  # end
+
+  def basic_info_company_wise
   end
 
+  def employee_basic_info
+    @company = params[:employee][:company_id]
+    @location = params[:employee][:company_location_id]
+    @employees = Employee.where(company_id: @company,company_location_id: @location)
+  end
 
   private
 

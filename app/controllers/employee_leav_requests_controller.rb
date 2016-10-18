@@ -37,7 +37,7 @@ class EmployeeLeavRequestsController < ApplicationController
     # date_range = params['employee_leav_request']['date_range']
     # @date = params['employee_leav_request']['date_range']
     @emp_leav_req = EmployeeLeavRequest.where(employee_id: @employee.id, start_date: start_date,end_date: end_date)
- 
+
    if @employee_leav_request.end_date == nil 
     flash[:alert] = "please Fill all mendatory fields"
     redirect_to new_employee_leav_request_path

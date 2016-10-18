@@ -416,11 +416,11 @@ class EmployeesController < ApplicationController
     @form = params[:form]
   end
 
-  # def collect_company_loc
-  #    @company_location = CompanyLocation.find(params[:id])
-  #    @departments = @company_location.departments
-  #    @form = params[:form]
-  # end
+  def collect_department
+     @company_location = CompanyLocation.find(params[:id])
+     @departments = @company_location.departments
+     @form = params[:form]
+  end
 
   def basic_info_company_wise
   end

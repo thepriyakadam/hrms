@@ -705,6 +705,7 @@ end
 
     get 'basic_details/new'
     post 'basic_details/employee_basic_report'
+    get 'basic_details/employee_basic_info'
     get 'basic_details/collect_departments'
     get 'basic_details/employee_list'
     get 'basic_details/select_department'
@@ -1500,6 +1501,8 @@ end
       post :update_mgr
       get :collect_company_loc
       get :index_xls
+      get :basic_info_company_wise
+      post :employee_basic_info
     end
     member do
       get :edit_manager

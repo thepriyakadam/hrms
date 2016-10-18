@@ -22,9 +22,7 @@ module CompanyLocationsHelper
       end
     end
   end
-
   
-
   def role_location_list
    if current_user.class == Group
       CompanyLocation.all.collect { |d| [d.company.name + '-' + d.name , d.id] }

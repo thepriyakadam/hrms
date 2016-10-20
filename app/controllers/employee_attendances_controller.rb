@@ -250,8 +250,8 @@ class EmployeeAttendancesController < ApplicationController
   def display_employee_attendance_list
     # @month = "September"
     # @year = 2016
-    @month = params[:month]
-    @year = params[:year]
+    @month = params[:month].to_s
+    @year = params[:year].to_s
     @date = Date.new(@year.to_i, Workingday.months[@month])
     @day = @date.end_of_month.day
     # @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).where(employee_id: current_user.employee_id)

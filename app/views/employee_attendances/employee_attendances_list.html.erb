@@ -1,10 +1,17 @@
-
-    <%= bootstrap_form_for :temp, url: {action: "create_attendance", date: @date} do |f| %>
-      <table id="example3" class="table table-bordered table-hover table-condensed">
+  <div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Employee Name: <%= current_user.employee.first_name %> <%= current_user.employee.middle_name %> <%= current_user.employee.last_name %></h3>
+    <div class="pull-right">
+    </div>
+    
+  </div><!-- /.box-header -->
+  <div class="box-body">
+  <div id="comments">
+  <table id="example5" class="table table-bordered table-hover table-condensed">
         <thead>
           <tr>
-            <th><input type="checkbox" id="selectAll" value="selectAll"></th>
-            <th>ID</th>
+            <!-- <th>ID</th> -->
+            <th>Date</th>
             <% for i in 1..@day %>
               <th><%= i %></th>
             <%end%>
@@ -14,8 +21,8 @@
           <% exist = {} %>
           <% @employees.each do |e| %>
             <tr>
-              <td><%= check_box_tag "employees[]", e.employee_id unless e.is_confirm %></td>
-              <td><%= e.employee.manual_employee_code %></td>
+              <!-- <td><%= e.employee.manual_employee_code %></td> -->
+              <td><%= e.day.strftime("%B %Y") %></td>
               <% sorted_exists = calculate_attendance(@date, exist, e)%>
               <% sorted_exists.each do |k,v|%>
                 <td><%= v %></td>
@@ -58,35 +65,15 @@
           <%end%>
         </tbody>
       </table>
-      <%= f.submit "Confirm Workingdays", class: "btn btn-sm btn-primary" %>
-
-      <%= link_to " Print Attendance Slip ",employee_slip_employee_attendances_path(month: params[:month], year: params[:year], format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
-
-      <%= link_to " Excel Report ",employee_slip_xls_employee_attendances_path(month: params[:month], year: params[:year], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
-
-    <% end %>
-  <!-- </div>
-</div> -->
-
-<script type="text/javascript">
-  $('#selectAll').click(function() {
-    if (this.checked) {
-      $(':checkbox').each(function() {
-        this.checked = true;
-      });
-    }
-    else {
-      $(':checkbox').each(function() {
-        this.checked = false;
-      });
-    }
-  });
-</script>
+      </div>
+    </div>
+    </div>
 
 <script type="text/javascript">
 $(document).ready(function() {
-    $('#example3').DataTable( {
-        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    $('#example5').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]],
+        "scrollX": true
     } );
 } );
 </script>

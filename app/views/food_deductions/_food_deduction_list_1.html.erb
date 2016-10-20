@@ -19,15 +19,15 @@
     </thead>
 
     <tbody>
-      <% @food_deductions.each do |food_deduction| %>
+      <% @food_deductions.try(:each) do |food_deduction| %>
         <tr>
           <td><%= food_deduction.employee.try(:manual_employee_code) %></td>
-          <td><%= full_name(food_deduction.employee) %></td>
+          <td><%= full_name(food_deduction.try(:employee)) %></td>
           <td><%= food_deduction.food_date %></td>
           <td><%= food_deduction.no_of_coupan %></td>
           <td><%= food_deduction.return_coupan %></td>
           <td><%= food_deduction.total_coupan %></td>
-          <td><%= food_deduction.food_coupan_master.price %></td>
+          <td><%= food_deduction.try(:food_coupan_master).try(:price) %></td>
           <td><%= food_deduction.amount %></td>
         </tr>
       <% end %>

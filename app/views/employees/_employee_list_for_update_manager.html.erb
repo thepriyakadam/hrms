@@ -12,20 +12,15 @@
   </thead>
   <tbody>
     <% @employees.each do |e| %>
-    <%= bootstrap_form_for :emp, url: {action: 'update_mgr'}, html: {id: 'login'} do |f| %>     
       <tr>
         <td><%= e.manual_employee_code %></td>
         <td><%= e.first_name %> <%= e.middle_name %> <%= e.last_name %></td> 
         <td><%= e.member.try(:company_location).try(:name) %></td>
         <td><%= e.member.try(:role).try(:name) %></td>
-        <td><%= f.select :manager_id, all_reporting_master_employee_id_list,{hide_label:true,include_blank: " Select Reporting Manager"},prompt:true %>
-          <%= f.hidden_field :employee_id, value: e.id %>
-        </td>
-        <td><%= f.select :manager_2_id, all_reporting_master_employee_id_list,{hide_label:true,include_blank: " Select Reporting Manager"},prompt:true %></td>
+        <td><%= e.manager.try(:first_name) %> <%= e.manager.try(:middle_name) %> <%= e.manager.try(:last_name) %></td>
+        <td><%= e.manager_2.try(:first_name) %> <%= e.manager_2.try(:middle_name) %> <%= e.manager_2.try(:last_name) %></td>
         <td><%= link_to "", edit_manager_employee_path(e), class: "btn btn-success btn-xs fa fa-edit", remote:true %></td>
-        <td><%= f.submit "+", class: 'btn btn-primary btn-sm fa fa-user-plus' %></td>
       </tr>
       <% end %>
-    <% end %>
   </tbody>
 </table>

@@ -55,16 +55,21 @@ $("#advance_salary").validate({
       },
       "advance_salary[year]":{
         required: true,
+      },
+      "advance_salary[company_id]":{
+        required: true,
       }
     },
     messages: {
       "advance_salary[month]":{
-        required: "Please specify Month",
+        required: "Please select Month",
       },
       "advance_salary[year]":{
-        required: "Please specify Year",
+        required: "Please select Year",
+      },
+      "advance_salary[company_id]":{
+        required: "Please select Company",
       }
-      
     },
     errorPlacement: function(error, element) {
      error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})

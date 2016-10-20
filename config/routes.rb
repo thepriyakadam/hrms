@@ -239,11 +239,18 @@ end
       get :revert_attendance_employeewise
       post :show_employee_list
       post :destroy_attendance_employeewise
+      get :loginwise_attendance_form
+      get :display_employee_attendance_list
+      get :employee_attendances_list
     end
   end
   resources :salary_comp_mappings
   resources :company_events
-  resources :employee_task_to_dos
+  resources :employee_task_to_dos do
+    collection do
+      get :dynamic_refresh
+    end
+  end
 
 
   resources :leaving_reasons do

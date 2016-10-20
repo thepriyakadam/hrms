@@ -15,6 +15,20 @@ class EmployeeTaskToDo < ActiveRecord::Base
   # "#{hours.to_s.rjust(2, '0')}:#{minutes.to_s.rjust(2, '0')}:#{seconds.to_s.rjust(2, '0')}"
 end
 
+    def distance_between(start_date, end_date)
+        difference = end_date.to_i - start_date.to_i
+        seconds    =  difference % 60
+        difference = (difference - seconds) / 60
+        minutes    =  difference % 60
+        difference = (difference - minutes) / 60
+        hours      =  difference % 24
+        difference = (difference - hours)   / 24
+        days       =  difference % 7
+        weeks      = (difference - days)    /  7
+        
+        return "#{hours} hours, #{minutes} minutes, #{seconds} seconds"
+      end
+
 def formatted_duration total_seconds
     hours = total_seconds / (60 * 60)
     minutes = (total_seconds / 60) % 60

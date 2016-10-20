@@ -116,6 +116,7 @@ class SalaryslipsController < ApplicationController
 
         @monthly_expences = MonthlyExpence.where(employee_id: @employee.id, expence_date: date.all_month)
         @monthly_expences.try(:each) do |m|
+          m.update(is_paid: true)
           deducted_actual_amount = 0
           deducted_calculated_amount = m.amount
           deducted_total_actual_amount += deducted_actual_amount
@@ -598,6 +599,8 @@ class SalaryslipsController < ApplicationController
 
           @monthly_expences = MonthlyExpence.where(employee_id: @employee.id, expence_date: date.all_month)
           @monthly_expences.try(:each) do |m|
+
+            m.update(is_paid: true)
             deducted_actual_amount = 0
             deducted_calculated_amount = m.amount
             deducted_total_actual_amount += deducted_actual_amount
@@ -963,6 +966,8 @@ class SalaryslipsController < ApplicationController
         @salaryslip = Salaryslip.find(sid)
         @bonus_employees = BonusEmployee.where("strftime('%m/%Y', bonus_date) = ? and employee_id = ?", date.strftime('%m/%Y'), @salaryslip.employee_id)        
         Instalment.where("strftime('%m/%Y' , instalment_date) = ? ", date.strftime('%m/%Y')).update_all(is_complete: false) 
+        MonthlyExpence.where("strftime('%m/%Y' , expence_date) = ? ", date.strftime('%m/%Y')).update_all(is_paid: false) 
+        FoodDeduction.where("strftime('%m/%Y' , food_date) = ? ", date.strftime('%m/%Y')).update_all(is_paid: false) 
         @bonus_employees.destroy_all
         SalaryslipComponent.where(salaryslip_id: @salaryslip.id).destroy_all
         @salaryslip.destroy

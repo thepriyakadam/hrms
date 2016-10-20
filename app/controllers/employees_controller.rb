@@ -416,13 +416,11 @@ class EmployeesController < ApplicationController
     @form = params[:form]
   end
 
-  # def collect_company_loc
-  #    @company_location = CompanyLocation.find(params[:id])
-  #    @departments = @company_location.departments
-  #    @form = params[:form]
-  # end
-
-  def basic_info_company_wise
+  def collect_department
+     @company_location = CompanyLocation.find(params[:id])
+     # @departments = @company_location.departments
+     @departments = Department.where(company_location_id: @company_location.id)
+     @form = params[:form]
   end
 
   def employee_basic_info
@@ -431,6 +429,25 @@ class EmployeesController < ApplicationController
     @employees = Employee.where(company_id: @company,company_location_id: @location)
   end
 
+  def basic_info 
+    employee_ids = params[:employee_ids]
+    if employee_ids.nil?
+      flash[:alert] = "Please Select the Checkbox"
+      @employees = []
+      redirect_to basic_info_company_wise_employees_path
+    else
+      @employees = []
+      employee_ids.each do |e|
+      emp = Employee.find(e)
+      @employees << emp
+      @employee = Employee.find(e)
+      end
+    end  
+  end
+
+  def emp_basic_info
+  end
+  
   private
 
   # Use callbacks to share common setup or constraints between actions.

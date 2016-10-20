@@ -410,9 +410,11 @@ class EmployeesController < ApplicationController
 
   def collect_department
      @company_location = CompanyLocation.find(params[:id])
-     # @departments = @company_location.departments
      @departments = Department.where(company_location_id: @company_location.id)
      @form = params[:form]
+  end
+
+  def basic_info_company_wise
   end
 
 

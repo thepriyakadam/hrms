@@ -1450,7 +1450,7 @@ ActiveRecord::Schema.define(version: 20161014124546) do
     t.date     "holiday_date"
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
-    t.boolean  "isweekend"
+    t.boolean  "is_taken"
     t.boolean  "is_send",      default: false
   end
 
@@ -2758,8 +2758,18 @@ ActiveRecord::Schema.define(version: 20161014124546) do
     t.string   "esic_no"
     t.string   "pf_no"
     t.string   "uan_no"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.decimal  "cl_leave"
+    t.decimal  "cl_balance"
+    t.decimal  "el_leave"
+    t.decimal  "el_balance"
+    t.decimal  "coff_leave"
+    t.decimal  "coff_balance"
+    t.decimal  "advance_leave"
+    t.decimal  "advance_balance"
+    t.decimal  "lwp_leave"
+    t.decimal  "esic_leave"
   end
 
   add_index "slip_informations", ["cost_center_id"], name: "index_slip_informations_on_cost_center_id"

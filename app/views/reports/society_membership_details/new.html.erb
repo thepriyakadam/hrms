@@ -1,2 +1,66 @@
-<h1>Reports::SocietyMembershipDetails#new</h1>
-<p>Find me in app/views/reports/society_membership_details/new.html.erb</p>
+<!--SELECT2 EXAMPLE -->
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Employee Monthly Society Membership Report</h3>
+  </div><!-- /.box-header -->
+
+  <div class="box-body">
+    <%= bootstrap_form_for(:salary, url: { action: 'society_membership_report',format: 'xls'},html: {id: 'salary'}) do |f| %>
+    
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="field">
+            <%= select :salary,:month, ['January','February','March','April','May','June','July','August','September','October','November','December'],{label: 'Select Month',include_blank: " Select Month"}, class: "form-control" %>
+           </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="field">
+            <%= select :salary,:year,['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025','2026','2027'],{label: 'Select Year',include_blank: " Select Year"}, class: "form-control" %>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="field">
+          <%= select :salary, :company_location_id, all_company_location,{label: 'Company Location',include_blank: " Select Company Location"}, class: "form-control" %>
+          </div>
+        </div>
+       
+        <div class="col-sm-3">
+          <div class="actions">
+            <%= f.submit "Download Excel", class: "btn btn-sm btn-warning" %>
+          </div>
+        </div>
+        </div>
+
+      <br>
+    <% end %>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->
+
+<script>
+$("#salary").validate({
+    rules: {
+      "salary[month]":{
+        required: true,
+      },
+      "salary[year]":{
+        required: true,
+      }
+    },
+    messages: {
+      "salary[month]":{
+        required: "Please specify Month",
+      },
+      "salary[year]":{
+        required: "Please specify Year",
+      }
+      
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>
+
+

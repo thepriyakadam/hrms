@@ -661,6 +661,7 @@ end
     post 'professional_tax_details/professional_tax_detail_report'
 
     get 'retention_money_details/new'
+    post 'retention_money_details/retention_money_report'
 
     get 'welfare_details/new'
     post 'welfare_details/welfare_detail_report'

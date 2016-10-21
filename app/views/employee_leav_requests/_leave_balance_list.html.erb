@@ -1,12 +1,11 @@
 <div class="row">
-<div class="col-sm-3"></div>
+ 
  <div class="col-sm-6">
   <table class="table table-bordered table-hover table-condensed">
     <thead>
-    <tr><th colspan="3"><center>Leave Balance</center></th></tr>
+    <tr><th colspan="2"><center>Leave Balance</center></th></tr>
       <tr>
-        <th>Leave Category</th>
-        <th>Expiry Date</th>
+        <th>Leave Type</th>
         <th>Leave Balance</th>
       </tr>
     </thead>
@@ -15,13 +14,11 @@
       <% @employee_leav_balances.where(is_active: true).each do |b| %>
         <tr>
           <td><%= b.leav_category.try(:code) %></td>
-          <td><%= b.expiry_date %></td>
           <td><%= b.no_of_leave %></td>
         </tr>
       <% end %>
     </tbody>
   </table>
  </div>
- <div class="col-sm-3"></div>
-  </div>
+ </div>
 

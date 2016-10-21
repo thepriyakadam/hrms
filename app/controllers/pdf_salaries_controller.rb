@@ -65,7 +65,6 @@ end
   def show_employee_costunit_wise
     session[:active_tab] ="payroll"
     session[:active_tab1] ="salaryreport"
-      # byebug
       @month = params[:month]
       @year = params[:year]
       @cost_center = params[:cost_center]
@@ -83,7 +82,6 @@ end
       # @salaryslips = Salaryslip.where(month:  @month,year: @year)
       @employees = Employee.where(department_id: @department).pluck(:id)
       @salaryslips = Salaryslip.where(month:  @month,year: @year.to_s,employee_id: @employees)
-    #byebug
   end
   
   def print_salary_slip_excel

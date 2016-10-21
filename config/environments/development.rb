@@ -41,17 +41,17 @@ Rails.application.configure do
   # config.action_view.raise_on_missing_translations = true
 
   # Root url
-  config.action_mailer.default_url_options = { host: 'http://machinesandmachines.com/', port: 3000 }
+  config.action_mailer.default_url_options = { host: 'mail.rajgreen.co.in/', port: 3000 }
   # config.domain = 'lvh.me'
   # config.action_mailer.perform_deliveries = true,
   ActionMailer::Base.delivery_method = :smtp
 
   ActionMailer::Base.smtp_settings = {
-    :address => "smtp.gmail.com",
+    :address => "mail.rajgreen.co.in",
     :port => 587,
-    :domain =>"http://machinesandmachines.com/",
-    :user_name => "erp@indiba.in",
-    :password => "indibaerp",
+    :domain =>"mail.rajgreen.co.in",
+    :user_name => "hrms@rajgreen.co.in",
+    :password => "amaazia@123",
     :authentication => 'plain',
   }
 

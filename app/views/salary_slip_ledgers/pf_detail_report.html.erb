@@ -60,23 +60,28 @@
 </div><!-- /.box -->
 
 <script>
-$("#food_deduction").validate({
+$("#pf_detail").validate({
     rules: {
-      "food_deduction[month]":{
+      "pf_detail[month]":{
         required: true,
       },
-      "food_deduction[year]":{
+      "pf_detail[year]":{
+        required: true,
+      },
+      "pf_detail[company_id]":{
         required: true,
       }
     },
     messages: {
-      "food_deduction[month]":{
-        required: "Please specify Month",
+      "pf_detail[month]":{
+        required: "Please select Month",
       },
-      "food_deduction[year]":{
-        required: "Please specify Year",
+      "pf_detail[year]":{
+        required: "Please select Year",
+      },
+      "pf_detail[company_id]":{
+        required: "Please select Company",
       }
-      
     },
     errorPlacement: function(error, element) {
      error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})

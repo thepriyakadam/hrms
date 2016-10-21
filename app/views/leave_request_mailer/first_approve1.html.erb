@@ -6,12 +6,13 @@
   <body>
     <h4>Leave Request Approved</h4>
     <p>
-      You have one leave request is Approved From
-
+      
       Employee ID : <%= @manager.manual_employee_code %><br>
       Employee Name : <%= @manager.first_name.to_s+' '+@manager.last_name.to_s %><br>
+      Approved
 
-      For Employee <br>
+      You have one leave request from <br>
+      
       Employee ID : <%= @leave_request.employee.manual_employee_code %><br>
       Employee Name : <%= @leave_request.employee.first_name.to_s+' '+@leave_request.employee.last_name.to_s %><br>
       From <%= @leave_request.start_date.to_date %>To<%= @leave_request.end_date.to_date%><br>

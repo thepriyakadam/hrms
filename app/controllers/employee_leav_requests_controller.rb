@@ -26,15 +26,22 @@ class EmployeeLeavRequestsController < ApplicationController
   def create
     @employee_leav_request = EmployeeLeavRequest.new(employee_leav_request_params)
     @employee = Employee.find(@employee_leav_request.employee_id)
-    date_arr = params['employee_leav_request']['date_range'].split('-')
-    @employee_leav_request.start_date = date_arr[0].rstrip
-    @employee_leav_request.end_date = date_arr[1].lstrip
+    start_date = params['employee_leav_request']['start_date']
+    end_date = params['employee_leav_request']['end_date']
+    # date_arr = params['employee_leav_request']['date_range'].split('-')
+    # @employee_leav_request.start_date = date_arr[0].rstrip
+    # @employee_leav_request.end_date = date_arr[1].lstrip
+
     @leave_c_offs = LeaveCOff.where(employee_id: @employee.id)
     @leav_category = LeavCategory.find(@employee_leav_request.leav_category_id)
-    date_range = params['employee_leav_request']['date_range']
-    @date = params['employee_leav_request']['date_range']
-    @emp_leav_req = EmployeeLeavRequest.where(employee_id: @employee.id, date_range: date_range)
-    # byebug
+    # date_range = params['employee_leav_request']['date_range']
+    # @date = params['employee_leav_request']['date_range']
+    @emp_leav_req = EmployeeLeavRequest.where(employee_id: @employee.id, start_date: start_date,end_date: end_date)
+
+   if @employee_leav_request.end_date == nil 
+    flash[:alert] = "please Fill all mendatory fields"
+    redirect_to new_employee_leav_request_path
+   else
     for i in @employee_leav_request.start_date.to_date..@employee_leav_request.end_date.to_date
       @employee_leav_request.leave_records.build(employee_id: @employee_leav_request.employee_id,employee_leav_request_id: @employee_leav_request.id,status: "Pending", day: i)
     end
@@ -159,7 +166,8 @@ class EmployeeLeavRequestsController < ApplicationController
           end
         end
       end
-    end    
+    end 
+   end #for   
   end
 
   def update
@@ -239,10 +247,10 @@ class EmployeeLeavRequestsController < ApplicationController
     reporter(EmployeeLeavRequest.filter_records(current_user), template_class: PdfReportTemplate) do
       filter :start_date, type: :date
       # filter :current_status, type: :string
-      column(:Request_ID, sortable: true) { |employee_leav_request| employee_leav_request.id }
+      #column(:Request_ID, sortable: true) { |employee_leav_request| employee_leav_request.id }
       column(:ID, sortable: true) { |employee_leav_request| employee_leav_request.employee.try(:manual_employee_code) }
       column(:Employee_Name, sortable: true) { |employee_leav_request| full_name(employee_leav_request.employee) }
-      column(:Designation, sortable: true) { |employee_leav_request| employee_leav_request.employee.joining_detail.employee_designation.name }
+      #column(:Designation, sortable: true) { |employee_leav_request| employee_leav_request.employee.joining_detail.employee_designation.name }
       column(:From, sortable: true) { |employee_leav_request| employee_leav_request.start_date.to_date }
       column(:To, sortable: true) { |employee_leav_request| employee_leav_request.end_date.to_date }
       column(:Leave_Category, sortable: true) { |employee_leav_request| employee_leav_request.leav_category.try(:description) }
@@ -263,12 +271,6 @@ class EmployeeLeavRequestsController < ApplicationController
       # filter(:current_status, :enum, :select => [["Pending",0],["Cancelled",1],["FirstApproved",2],["SecondApproved",3],["FirstRejected",4],["SecondRejected",5]])
       column(:Employee_ID, sortable: true) { |employee_leav_request| employee_leav_request.employee.try(:manual_employee_code) }
       column(:Emploee_name, sortable: true) { |employee_leav_request| full_name(employee_leav_request.employee) }
-      # column :is_pending
-      # column :is_cancelled
-      # column :is_first_approved
-      # column :is_second_approved
-      # column :is_first_rejected
-      # column :is_second_rejected
       column :current_status
     end
   end

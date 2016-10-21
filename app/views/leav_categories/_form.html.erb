@@ -49,6 +49,13 @@
     </div>
   </div>
     <div class="row">
+    <div class="col-sm-2">
+      <div class="field">
+        <%= f.check_box :is_limit, label: 'Is Limit'%>
+      </div>
+    </div>
+  </div>
+    <div class="row">
     <div class="col-sm-3">
       <div class="actions">
         <%= f.submit "Create Leave Type",:class => class_name, data: { disable_with: data_info } %>

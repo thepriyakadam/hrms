@@ -66,6 +66,15 @@ class IssueTrackerMembersController < ApplicationController
     @issue_tracker_group = IssueTrackerGroup.find(params[:group_id])
     @issue_tracker_members = @issue_tracker_group.issue_tracker_members
   end
+
+  def collect_memberwise_dropdown
+    @datea = params[:datea].to_s
+    @group_id = params[:group_id]
+    # byebug
+    @issue_tracker_group = IssueTrackerGroup.find(params[:group_id])
+    @issue_tracker_members = @issue_tracker_group.issue_tracker_members
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_issue_tracker_member

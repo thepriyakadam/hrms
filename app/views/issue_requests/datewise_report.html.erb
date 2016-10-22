@@ -14,12 +14,12 @@
             <div class="input-group-addon">
               <i class="fa fa-calendar"></i>
             </div>
-            <%= text_field :id,:date,hide_label: true,placeholder: "Date",class: 'request_date'%>
+            <%= text_field :id, :date,{onchange:"var a={date:$(this).val()}; $.get('/issue_requests/datewise_report_list',a,function(response){});",hide_label: true , placeholder: 'Date',class: 'form-control request_date'}%>
           </div>
          </div>
         </div>
     </div>
-      <div id="report_li"></div>
+       <div id="datewise_li"></div>
     </div>
 </div>
 
@@ -32,6 +32,3 @@
     dateFormat: 'dd-mm-yy' });
   }); 
 </script>
-
-
-

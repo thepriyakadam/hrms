@@ -1,11 +1,17 @@
- <div class="box-header">
-    <div class="pull-right">
-    </div>
-  </div><!-- /.box-header -->
-  <div class="box-body">
-  <div id="comments">
-    <table id="example1" class="table table-bordered table-hover table-condensed">
-    <thead>
+<style>
+    th {
+        text-align: left;
+    }
+    tr {
+        page-break-inside: avoid;
+    }
+    div.alwaysbreak { page-break-before: always; }
+    div.nobreak:before { clear:both; }
+    div.nobreak{ page-break-inside: avoid;
+    }
+</style>
+<table style="border-collapse: collapse; font-size:20pt;" border=1 width=900 cellpadding="25">
+     <thead>
       <tr>
         <th>Issue ID</th>
         <th>Issue</th>
@@ -41,8 +47,3 @@
       <% end %>
     </tbody>
     </table>
-    </div>
-    <%= link_to " Excel Report ",issue_tracker_reports_xls_issue_requests_path(issue_tracker_group_id: @issue_tracker_group, date: @start , to_date: @en , format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
-      <%= link_to " Print Issue Tracker PDF ",issue_tracker_pdf_issue_requests_path(issue_tracker_group_id: @issue_tracker_group, date: @start , to_date: @en , format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
-   
-    </div>

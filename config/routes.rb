@@ -30,11 +30,21 @@ Rails.application.routes.draw do
       get :unlock_by_admin
       get :solved_confirm
       get :resend_request
+      get :datewise_report_list
       get :datewise_report
+      get :datewise_report_xls
+      get :datewise_report_pdf
       get :issue_tracker_reports_xls
       get :issue_tracker_pdf
       get :groupwise_report
       get :group_report_list
+      get :request_id_wise_report
+      get :request_id_wise_list
+      get :id_wise_report_xls
+      get :id_wise_report_pdf
+      get :memberwise_report
+      get :memberwise_report_list
+      
     end
    end
   resources :issue_masters do
@@ -52,6 +62,7 @@ Rails.application.routes.draw do
   resources :issue_tracker_members do
     collection do
        get :collect_issues
+       get :collect_memberwise_dropdown
     end
    end
   resources :issue_tracker_groups do

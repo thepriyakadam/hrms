@@ -19,13 +19,17 @@
         <th>Confirm</th>
         <th>Effort Time</th>
         <th>Comment</th>
+        <th>Issue Locker ID</th>
+        <th>Lock Date</th>
+        <th>Lock Time</th>
       </tr>
     </thead>
 
     <tbody>
      <% @issue_requests.each do |issue_request| %>
+     <% @issue_locker_histories.each do |issue_locker_history| %>
         <tr>
-        <td><%= issue_request.id %></td>
+          <td><%= issue_request.id %></td>
           <td><%= issue_request.issue_master.try(:name) %></td>
           <td><%= full_name(issue_request.employee) %></td>
           <td><%= issue_request.date %></td>
@@ -37,12 +41,18 @@
            <td><%= issue_request.is_complete %></td>
           <td><%= issue_request.effort_time %></td>
           <td><%= issue_request.comment %></td>
+          <td><%= issue_locker_history.issue_locker_id %></td>
+          <td><%= issue_locker_history.lock_date %></td>
+          <td><%= issue_locker_history.lock_time %></td>
         </tr>
       <% end %>
+      <% end %> 
     </tbody>
     </table>
     </div>
-    <%= link_to " Excel Report ",issue_tracker_reports_xls_issue_requests_path(issue_tracker_group_id: @issue_tracker_group, date: @start , to_date: @en , format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
-      <%= link_to " Print Issue Tracker PDF ",issue_tracker_pdf_issue_requests_path(issue_tracker_group_id: @issue_tracker_group, date: @start , to_date: @en , format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
-   
+    <%= link_to " Excel Report ",id_wise_report_xls_issue_requests_path(issue_request_id: @issue_request.id, format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+    <%= link_to " Print Issue Tracker PDF ",id_wise_report_pdf_issue_requests_path(issue_request_id: @issue_request.id , format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
     </div>
+
+
+        

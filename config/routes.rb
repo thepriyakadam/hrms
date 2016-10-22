@@ -994,6 +994,12 @@ end
       get :search_bonus
       get :collect_bonus
       get :particular_employee_bonus
+      get :bonus_employee_xls
+      get :bonus_employee_pdf
+      get :particular_bonus_employee_xls
+      get :particular_bonus_employee_pdf
+      get :bonus_employee_report
+      post :dynamic_report
     end
   end
   resources :bonus_masters do

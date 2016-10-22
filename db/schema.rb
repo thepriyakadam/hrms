@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161014073847) do
+ActiveRecord::Schema.define(version: 20161014124546) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -1069,6 +1069,7 @@ ActiveRecord::Schema.define(version: 20161014073847) do
     t.time     "task_time"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.datetime "task_time1"
   end
 
   add_index "employee_task_to_dos", ["employee_id"], name: "index_employee_task_to_dos_on_employee_id"
@@ -1449,7 +1450,7 @@ ActiveRecord::Schema.define(version: 20161014073847) do
     t.date     "holiday_date"
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
-    t.boolean  "isweekend"
+    t.boolean  "is_taken"
     t.boolean  "is_send",      default: false
   end
 

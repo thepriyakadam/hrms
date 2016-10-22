@@ -183,7 +183,8 @@ class LeaveStatusRecordsController < ApplicationController
   def cancel_after_approve
     @particular_leave_record = ParticularLeaveRecord.find(params[:format])
     @employee_leav_request = EmployeeLeavRequest.find_by_employee_id(@particular_leave_record.employee_id)
-    
+    @current_emp = current_user.employee_id
+
      @date = @particular_leave_record.leave_date.strftime("%Y-%m-%d")
      LeaveRecord.where("employee_leav_request_id =? AND day =?", @particular_leave_record.employee_leav_request_id, @date).update_all(status: "Cancelled")
     @flag = @particular_leave_record.salary_processed?
@@ -192,20 +193,44 @@ class LeaveStatusRecordsController < ApplicationController
 
       EmployeeAttendance.where("employee_id = ? AND day = ?", @particular_leave_record.employee_id,@particular_leave_record.leave_date.to_date).destroy_all
       @employee_leav_balance = EmployeeLeavBalance.where("employee_id = ? AND leav_category_id = ? AND is_active = ?", @particular_leave_record.employee_id, @particular_leave_record.leav_category_id,true).take
-      if @particular_leave_record.is_full
-        @employee_leav_balance.no_of_leave = @employee_leav_balance.no_of_leave.to_f + 1
-      else
-        @employee_leav_balance.no_of_leave = @employee_leav_balance.no_of_leave.to_f + 0.5
-      end
-      EmployeeAttendance.where(employee_leav_request_id: @employee_leav_request.id).destroy_all
-      ActiveRecord::Base.transaction do
-        @employee_leav_balance.save
-        @particular_leave_record.save
-        if @particular_leave_record.employee_leav_request.leav_category.name == "Compensatory Off"
-          @particular_leave_record.rollback_coff(@particular_leave_record)
+      
+      if @particular_leave_record.try(:leav_category).try(:is_balance) == true
+        if @particular_leave_record.is_full
+          @employee_leav_balance.no_of_leave = @employee_leav_balance.no_of_leave.to_f + 1
+        else
+          @employee_leav_balance.no_of_leave = @employee_leav_balance.no_of_leave.to_f + 0.5
         end
-      end
-      flash[:notice] = 'Leave Cancelled Successfully.'
+        @particular_leave_record.update(is_cancel_after_approve: true)
+        EmployeeAttendance.where(employee_leav_request_id: @employee_leav_request.id).destroy_all
+          if @employee_leav_request.employee.email.nil? || @employee_leav_request.employee.email == ''
+            flash[:notice] = 'Leave Cancelled Successfully without email.'
+          else
+            flash[:notice] = 'Leave Cancelled Successfully.'
+            LeaveStatusRecordMailer.cancel_after_approve(@particular_leave_record,@current_emp).deliver_now
+          end
+        ActiveRecord::Base.transaction do
+          @employee_leav_balance.save
+          if @particular_leave_record.employee_leav_request.leav_category.name == "Compensatory Off"
+            @particular_leave_record.rollback_coff(@particular_leave_record)
+          end
+        end
+      else
+        @particular_leave_record.update(is_cancel_after_approve: true)
+
+        EmployeeAttendance.where(employee_leav_request_id: @employee_leav_request.id).destroy_all
+        	if @employee_leav_request.employee.email.nil? || @employee_leav_request.employee.email == ''
+            flash[:notice] = 'Leave Cancelled Successfully without email.'
+          else
+            flash[:notice] = 'Leave Cancelled Successfully.'
+            LeaveStatusRecordMailer.cancel_after_approve(@particular_leave_record,@current_emp).deliver_now
+          end
+        ActiveRecord::Base.transaction do
+          @particular_leave_record.save
+          if @particular_leave_record.employee_leav_request.leav_category.name == "Compensatory Off"
+            @particular_leave_record.rollback_coff(@particular_leave_record)
+          end
+        end
+      end #particular_leav_balance.is_payble
     else
       flash[:notice] = 'Salary is processed you cannot cancel the leave.'
     end

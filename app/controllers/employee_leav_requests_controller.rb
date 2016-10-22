@@ -37,6 +37,11 @@ class EmployeeLeavRequestsController < ApplicationController
     # date_range = params['employee_leav_request']['date_range']
     # @date = params['employee_leav_request']['date_range']
     @emp_leav_req = EmployeeLeavRequest.where(employee_id: @employee.id, start_date: start_date,end_date: end_date)
+
+   if @employee_leav_request.end_date == nil 
+    flash[:alert] = "please Fill all mendatory fields"
+    redirect_to new_employee_leav_request_path
+   else
     for i in @employee_leav_request.start_date.to_date..@employee_leav_request.end_date.to_date
       @employee_leav_request.leave_records.build(employee_id: @employee_leav_request.employee_id,employee_leav_request_id: @employee_leav_request.id,status: "Pending", day: i)
     end
@@ -161,7 +166,8 @@ class EmployeeLeavRequestsController < ApplicationController
           end
         end
       end
-    end    
+    end 
+   end #for   
   end
 
   def update
@@ -268,11 +274,6 @@ class EmployeeLeavRequestsController < ApplicationController
       column :current_status
     end
   end
-
-  def ajax_show_calendar
-    @value = params[:value]
-    @start_date = params[:start_date]
-  end 
 
   private
 

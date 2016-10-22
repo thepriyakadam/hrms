@@ -1,0 +1,74 @@
+<!--SELECT2 EXAMPLE -->
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Advance Salary Report</h3>
+  </div><!-- /.box-header -->
+
+  <div class="box-body">
+    <%= bootstrap_form_for(:advance_salary, url: { action: 'dynamic_report'},html: {id: 'advance_salary'},remote:true) do |f| %>
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="field">
+            <%= select :advance_salary,:month, ['January','February','March','April','May','June','July','August','September','October','November','December'],{label: 'Select Month',include_blank: " Select Month"}, class: "form-control" %>
+           </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="field">
+            <%= select :advance_salary,:year,['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025','2026','2027'],{label: 'Select Year',include_blank: " Select Year"}, class: "form-control" %>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+            <div class="form-group required">
+              <%=f.select :company_id, all_company,{include_blank: "Select Company",hide_label: true},{onchange:"var a={id:$(this).val(), form :'advance_salary'}; $.get('/employees/collect_company_location',a,function(response){});"}%>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="form-group required">
+              <div id="company_location1">
+                <%= render 'employees/company_loc_dropdown' %> 
+            </div> 
+            </div>
+          </div>
+        </div>
+        
+        <div class="row">
+        <div class="col-sm-3">
+          <div class="actions">
+            <%= f.submit "Display Report", class: "btn btn-sm btn-warning" %>
+          </div>
+        </div>
+        </div><br>
+        <div id="advance_salary_li"></div>
+
+      <br>
+    <% end %>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->
+
+<script>
+$("#advance_salary").validate({
+    rules: {
+      "advance_salary[month]":{
+        required: true,
+      },
+      "advance_salary[year]":{
+        required: true,
+      }
+    },
+    messages: {
+      "advance_salary[month]":{
+        required: "Please specify Month",
+      },
+      "advance_salary[year]":{
+        required: "Please specify Year",
+      }
+      
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

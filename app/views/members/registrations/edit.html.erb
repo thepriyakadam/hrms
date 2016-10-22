@@ -21,20 +21,34 @@
               <%end%>
               <%end%>
       <h3 class="profile-username text-center"></h3>
-        <p>
-          <% if current_user.class == Member %>
+        <table class="table table-bordered table-hover table-condensed">
+        <tbody>
+        <tr>
+        <td>Email</td>
+          <td><% if current_user.class == Member %>
             <% if current_user.role.try(:name) == 'Employee' %>
-             Email:- <%= current_user.email%>
+             <%= current_user.email%>
             <% else %>
-              Email:- <%= current_user.email %>
-            <% end %><br>
-              Name:- <%= current_user.employee.try(:first_name)%> <%= current_user.employee.try(:last_name)%>
+             <%= current_user.email %>
+            <% end %></td>
+            </tr>
+            <tr>
+          <td>ID</td>
+          <td>
+          <small><%= current_user.employee.try(:manual_employee_code)%></small>
+          </td>
+          </tr>
+            <tr>
+            <td>Name</td>
+            <td>
+              <%= current_user.employee.try(:first_name)%> <%= current_user.employee.try(:last_name)%>
              <%else%>
             <%= current_user.subdomain %>-
             <%= current_user.class %>
-          <%end%><br>
-          Employee ID:- <small><%= current_user.employee.try(:manual_employee_code)%></small>
-        </p> 
+          <%end%></td>
+          </tr>
+
+       </tbody></table>
     </div><!-- /.box-body -->
   </div><!-- /.box -->
 
@@ -76,50 +90,45 @@
       <%= bootstrap_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
   
         <div class="row"> 
-          <div class="col-sm-9">
+          <div class="col-sm-3">
             <div class="form-group required">
              <%= f.email_field :email, autofocus: true%>
              </div>
           </div>
-        </div>
+        
 
         <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
           <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
         <% end %>
 
-        <div class="row"> 
-          <div class="col-sm-4">
-          <label>Current Password</label>
+          <div class="col-sm-3">
             <div class="form-group required">
-              <%= f.password_field :current_password, hide_label: true, autocomplete: "off" %>
+              <%= f.password_field :current_password, label: "Current Password", autocomplete: "off" %>
             </div>
           </div>
-          <div class="col-sm-4">
-          <label>New Password</label>
-            <div class="form-group required">
-             <%= f.password_field :password, hide_label: true, autocomplete: "off" %>
+          <div class="col-sm-3">
+            <div class="field">
+             <%= f.password_field :password, label: "New Password", autocomplete: "off" %>
            </div>
           </div>
 
-          <div class="col-sm-4">
-          <label>Confirm Password</label>
-            <div class="form-group required">
-              <%= f.password_field :password_confirmation, hide_label: true, autocomplete: "off" %>
+          <div class="col-sm-3">
+            <div class="field">
+              <%= f.password_field :password_confirmation, label: "Confirm Password", autocomplete: "off" %>
             </div>
           </div>
         </div>
 
         <div class="row"> 
-          <div class="col-sm-9">
+          <div class="col-sm-3">
             <div class="field">
-              <label>Pofile Picture</label>
+              <label>Profile Picture</label>
               <%= f.file_field :avatar,hide_label: true%>
             </div>
           </div>
-        </div>
-
-        <div class="row">
+        
            <div class="col-sm-6">
+           <label></label>
             <div class="actions">
               <%= f.submit "Update Profile",:class => class_name, data: { disable_with: data_info } %> |
               <%= link_to 'Back', employees_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>

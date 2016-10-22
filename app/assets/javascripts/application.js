@@ -20,6 +20,9 @@
 //= require jquery-ui/datepicker
 //= require chartkick
 
+//= require moment
+//= require bootstrap-datetimepicker
+
 //= require_tree .
 
 // $(function () {
@@ -159,6 +162,12 @@ $(function(){
   dateFormat: 'dd-mm-yy' });
 
   $('.bonus_end_date').datepicker({
+  changeYear:true,
+  changeMonth: true,
+  yearRange: '-10:+50',
+  dateFormat: 'dd-mm-yy' });  
+
+  $('.request_end_date').datepicker({
   changeYear:true,
   changeMonth: true,
   yearRange: '-10:+50',

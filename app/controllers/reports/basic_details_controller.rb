@@ -49,6 +49,9 @@ class Reports::BasicDetailsController < ApplicationController
     end
   end
 
+  def employee_basic_info
+  end
+  
   def select_department
   end
 

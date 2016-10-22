@@ -1,0 +1,43 @@
+<table class="table table-hover">
+<tr>
+  <th>Date</th>
+  <th>Task</th>
+  <th>Status</th>
+  <th>Time</th>
+  <th>Time Remaining</th>
+  <th>Action</th>
+</tr>
+
+<% @employee_task_to_dos.each do |e| %>
+<tr>
+  <td><span class="label label-primary"><%= e.task_time1.to_date %></span></td>
+  <td><%= e.task_name %></td>
+  <td><span class="label label-success"><%= e.status ? "Active" : "Inactive" %></span></td>
+  <td><span class="label label-info"><%= e.task_time1 %></span></td>
+  <td><%  a_date_time = Time.now.to_datetime
+       b_date_time = e.task_time1.to_datetime
+ 
+     def distance_between(a_date_time, b_date_time)
+        difference = b_date_time.to_i - a_date_time.to_i
+        seconds    =  difference % 60
+        difference = (difference - seconds) / 60
+        minutes    =  difference % 60
+        difference = (difference - minutes) / 60
+        hours      =  difference % 24
+        difference = (difference - hours)   / 24
+        days       =  difference % 7
+        weeks      = (difference - days)    /  7
+        
+        return "#{hours} hours, #{minutes} minutes, #{seconds} seconds"
+     end
+
+     @s = distance_between(a_date_time, b_date_time)
+     %>   
+      <%= @s %> 
+     </td>
+  <td>
+    <%= link_to '', edit_employee_task_to_do_path(e),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
+  </td>
+</tr>
+<% end %>
+</table>

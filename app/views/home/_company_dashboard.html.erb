@@ -134,7 +134,7 @@
                 </tr>
               </thead>
               <tbody>
-              <% CompanyEvent.try(:all).try(:each) do |e| %>
+              <% CompanyEvent.where(status: true).try(:each) do |e| %>
                 <tr>
                   <td><%= e.event_date %></td>
                   <td><%= e.event_name %></td>

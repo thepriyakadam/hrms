@@ -5,7 +5,6 @@ class Reports::SocietyMembershipDetailsController < ApplicationController
   end
 
   def society_membership_report
-    # byebug
     @month = params[:salary][:month]
     @year = params[:salary][:year]
     @location = params[:salary][:company_location_id]
@@ -43,7 +42,6 @@ class Reports::SocietyMembershipDetailsController < ApplicationController
           @salaryslips = Salaryslip.where('month = ? and year = ?', @month, @year).where(id: @salaryslip_components)
         else
     end
-
       elsif current_user.role.name == 'Department'
         @salaryslips = Salaryslip.where(department_id: current_user.department_id)
       elsif current_user.role.name == 'Superviser'

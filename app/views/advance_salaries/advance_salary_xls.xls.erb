@@ -1,33 +1,25 @@
-<?xml version="1.0"?>
-<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
-  xmlns:o="urn:schemas-microsoft-com:office:office"
-  xmlns:x="urn:schemas-microsoft-com:office:excel"
-  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
-  xmlns:html="http://www.w3.org/TR/REC-html40">
-  <Worksheet ss:Name="Sheet1">
-    <Table>
-      <Row>
-        <Cell ss:Index="1"><Data ss:Type="String">Sr No.</Data></Cell>
-        <Cell ss:Index="2"><Data ss:Type="String">Employee ID</Data></Cell>
-        <Cell ss:Index="3"><Data ss:Type="String">Employee Name</Data></Cell>
-        <Cell ss:Index="4"><Data ss:Type="String">Advance Amount</Data></Cell>
-        <Cell ss:Index="5"><Data ss:Type="String">No of Installment</Data></Cell>
-        <Cell ss:Index="6"><Data ss:Type="String">Installment Amount</Data></Cell>
-        <Cell ss:Index="7"><Data ss:Type="String">Advance Date</Data></Cell>
-      </Row>
+<table id="example1" class="table table-bordered table-hover table-condensed">
+    <thead>
+      <tr>
+        <th>Employee ID</th>
+        <th>Employee Name</th>
+        <th>Advance Amount</th>
+        <th>No. of Installment</th>
+        <th>Installment Amount</th>
+        <th>Advance Date</th>
+      </tr>
+    </thead>
 
-      <% i = 0 %>
+    <tbody>
       <% @advance_salaries.each do |advance_salary| %>
-      <Row>
-         <Cell ss:Index="1"><Data ss:Type="String"><%= i=i+1 %></Data></Cell>
-         <Cell ss:Index="2"><Data ss:Type="String"><%= advance_salary.employee.try(:manual_employee_code) %></Data></Cell>
-         <Cell ss:Index="3"><Data ss:Type="String"><%= advance_salary.employee.try(:first_name) %> <%= advance_salary.employee.try(:middle_name) %> <%= advance_salary.employee.try(:last_name) %></Data></Cell>
-         <Cell ss:Index="4"><Data ss:Type="String"><%= advance_salary.advance_amount %></Data></Cell>
-         <Cell ss:Index="5"><Data ss:Type="String"><%= advance_salary.no_of_instalment %></Data></Cell>
-         <Cell ss:Index="6"><Data ss:Type="String"><%= advance_salary.instalment_amount %></Data></Cell>
-         <Cell ss:Index="7"><Data ss:Type="String"><%= advance_salary.advance_date %></Data></Cell>
-      </Row><!-- Row -->
-      <% end %><!-- slip -->
-    </Table>
-  </Worksheet>
-</Workbook>
+        <tr>
+         <td><%= advance_salary.employee.try(:manual_employee_code) %></td>
+         <td><%= full_name(advance_salary.employee) %></td>
+         <td><%= advance_salary.advance_amount %></td>
+         <td><%= advance_salary.no_of_instalment %></td>
+         <td><%= advance_salary.instalment_amount %></td>
+         <td><%= advance_salary.advance_date %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>

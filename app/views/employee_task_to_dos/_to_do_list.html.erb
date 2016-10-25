@@ -1,4 +1,5 @@
-<table class="table table-hover">
+<!-- <div id="div_id">
+ --><table class="table table-hover">
 <tr>
   <th>Date</th>
   <th>Task</th>
@@ -10,10 +11,10 @@
 
 <% @employee_task_to_dos.each do |e| %>
 <tr>
-  <td><span class="label label-primary"><%= e.task_time1.to_date %></span></td>
+  <td><span class="label label-primary"><%= e.try(:task_time1).to_date %></span></td>
   <td><%= e.task_name %></td>
-  <td><span class="label label-success"><%= e.status ? "Active" : "Inactive" %></span></td>
-  <td><span class="label label-info"><%= e.task_time1 %></span></td>
+  <td><span class="label label-success"><%= e.try(:status) ? "Active" : "Inactive" %></span></td>
+  <td><span class="label label-info"><%= e.try(:task_time1) %></span></td>
   <td><%  a_date_time = Time.now.to_datetime
        b_date_time = e.task_time1.to_datetime.change(:offset => "+0530")
      (b_date_time - a_date_time).to_i
@@ -70,3 +71,30 @@
 </tr>
 <% end %>
 </table>
+<!-- </div>
+ -->
+<!-- <script>
+  $(function() {
+    $(document).ready(function() {
+      setInterval(function() {
+        jQuery.ajax({
+          url: "/employee_task_to_dos/dynamic_refresh",
+          type: "GET",
+          dataType: "script"
+        });
+      }, 60000); // In every 60 seconds
+    });
+  });
+</script> -->
+
+<!-- <script>
+$(document).ready(function() {
+    // get data every 5 seconds and refresh myDiv
+    var pingAfter = 5000;  
+    var refreshId = setInterval(function() {
+        $("#example2").load('/vacancy_masters/vacancy_history');
+    }, pingAfter);
+});
+</script>
+ -->
+

@@ -3,20 +3,16 @@
     <tr>
       <th>ID</th>
       <th>Employee Name</th>
-      <th>Company</th>
-      <th>Location</th>
       <th>Bonus date</th>
       <th>Amount</th>
     </tr>
   </thead>
 
   <tbody>
-    <% @particular_bonuses.each do |bonus_employee| %>
+    <% @particular_bonuses.try(:each) do |bonus_employee| %>
       <tr>
         <td><%= bonus_employee.employee.manual_employee_code %></td>
         <td><%= full_name(bonus_employee.employee) %></td>
-        <td><%= bonus_employee.employee.company.try(:name) %></td>
-        <td><%= bonus_employee.employee.company_location.try(:name) %></td>
         <td><%= bonus_employee.bonus_date %></td>
         <td><%= bonus_employee.amount %></td>
       </tr>
@@ -24,8 +20,8 @@
   </tbody>
 </table>
 
-<%= link_to " Excel Report ",particular_bonus_employee_xls_bonus_employees_path(start_date: params[:bonus_employee][:start_date], end_date: params[:bonus_employee][:end_date], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
-  <%= link_to " Print Bonus Employees ",particular_bonus_employee_pdf_bonus_employees_path(start_date: params[:bonus_employee][:start_date], end_date: params[:bonus_employee][:end_date], format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+<%= link_to " Excel Report ",particular_bonus_employee_xls_bonus_employees_path(start_date: params[:bonus_employee][:start_date], end_date: params[:bonus_employee][:end_date],company_id: params[:bonus_employee][:company_id],company_location_id: params[:bonus_employee][:company_location_id], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+  <%= link_to " Print Bonus Employees ",particular_bonus_employee_pdf_bonus_employees_path(start_date: params[:bonus_employee][:start_date], end_date: params[:bonus_employee][:end_date],company_id: params[:bonus_employee][:company_id],company_location_id: params[:bonus_employee][:company_location_id], format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
 
 <script type="text/javascript">
   $(document).ready(function() {

@@ -1,35 +1,22 @@
-<table id="example3" class="table table-bordered table-hover table-condensed">
+<table class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
       <th>ID</th>
       <th>Employee Name</th>
-      <th>Company</th>
-      <th>Location</th>
-      <th>Bonus date</th>
       <th>Total Amount</th>
-      <th>Action</th>
     </tr>
   </thead>
 
   <tbody>
-    <% @bonus_employees.each do |b| %>
+    <% @bonus_employees.try(:each) do |b| %>
       <tr>
         <td><%= b.employee.manual_employee_code %></td>
         <td><%= full_name(b.employee) %></td>
-        <td><%= b.employee.company.try(:name) %></td>
-        <td><%= b.employee.company_location.try(:name) %></td>
-        <td><%= b.bonus_date %></td>
         <td><%= bonus_total(b) %></td>
-        <td>
-          <!-- link_to '', edit_bonus_employee_path(bonus_employee),class: 'btn btn-xs btn-success fa fa-edit' -->
-          <%= link_to '', particular_employee_bonus_bonus_employees_path(b.employee_id),class: 'btn btn-xs btn-default fa fa-eye',remote:true %>
-        </td>
       </tr>
     <% end %>
   </tbody>
 </table>
-
-
 
 <script type="text/javascript">
   $(document).ready(function() {
@@ -39,5 +26,5 @@
 } );
 </script>
 
-<%= link_to " Excel Report ",bonus_employee_xls_bonus_employees_path(start_date: params[:bonus_employee][:start_date], end_date: params[:bonus_employee][:end_date], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
-  <%= link_to " Print Bonus Employees ",bonus_employee_pdf_bonus_employees_path(start_date: params[:bonus_employee][:start_date], end_date: params[:bonus_employee][:end_date], format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+<%= link_to " Excel Report ",bonus_employee_xls_bonus_employees_path(start_date: params[:bonus_employee][:start_date], end_date: params[:bonus_employee][:end_date],company_id: params[:bonus_employee][:company_id],company_location_id: params[:bonus_employee][:company_location_id], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+<%= link_to " Print Bonus Employees ",bonus_employee_pdf_bonus_employees_path(start_date: params[:bonus_employee][:start_date], end_date: params[:bonus_employee][:end_date],company_id: params[:bonus_employee][:company_id],company_location_id: params[:bonus_employee][:company_location_id], format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>

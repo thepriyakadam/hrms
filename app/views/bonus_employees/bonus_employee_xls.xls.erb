@@ -3,7 +3,6 @@
     <tr>
       <th>ID</th>
       <th>Employee Name</th>
-      <th>Bonus date</th>
       <th>Total Amount</th>
     </tr>
   </thead>
@@ -13,7 +12,6 @@
       <tr>
         <td><%= b.employee.manual_employee_code %></td>
         <td><%= full_name(b.employee) %></td>
-        <td><%= b.bonus_date %></td>
         <td><%= bonus_total(b) %></td>
       </tr>
     <% end %>

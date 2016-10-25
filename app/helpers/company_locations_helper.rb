@@ -16,7 +16,7 @@ module CompanyLocationsHelper
       if current_user.role.name == 'Company'
         CompanyLocation.all.collect { |cl| [cl.company.name + '-' + cl.name, cl.id] }
       elsif current_user.role.name == 'CompanyLocation'
-        CompanyLocation.where(company_location: current_user.company_location_id).collect { |cl| [cl.company.name + '-' + cl.name, cl.id] }
+        CompanyLocation.where(id: current_user.company_location_id).collect { |cl| [cl.company.name + '-' + cl.name, cl.id] }
       elsif current_user.role.name == 'Department'
         Department.where(id: current_user.department_id).collect { |cl| [cl.company.name + '-' + cl.name, cl.id] }
       end

@@ -36,7 +36,7 @@ class Reports::SocietyMembershipDetailsController < ApplicationController
         if @location == ""
           @salaryslips = Salaryslip.where('month = ? and year = ?', @month, @year)
         elsif @location = params[:salary][:company_location_id]
-          @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+          @employees = Employee.where(company_location_id: @location.to_i).pluck(:id)
           @salaryslips1 = Salaryslip.where('month = ? and year = ?', @month, @year).where(employee_id: @employees)
           @salaryslip_components = SalaryslipComponent.where(salaryslip_id: @salaryslips1,is_deducted: true,other_component_name: "Society").pluck(:salaryslip_id)
           @salaryslips = Salaryslip.where('month = ? and year = ?', @month, @year).where(id: @salaryslip_components)

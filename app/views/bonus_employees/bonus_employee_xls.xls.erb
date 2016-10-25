@@ -1,19 +1,25 @@
-<table id="example" class="table table-bordered table-hover table-condensed">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Employee Name</th>
-      <th>Total Amount</th>
-    </tr>
-  </thead>
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Row>
+        <Cell ss:Index="1"><Data ss:Type="String">ID </Data></Cell>
+        <Cell ss:Index="2"><Data ss:Type="String">Employee Name </Data></Cell>
+        <Cell ss:Index="3"><Data ss:Type="String">Total Amount </Data></Cell>
+      </Row>
+     <% @bonus_employees.each do |b| %>
+      <Row>
+          <Cell ss:Index="1"><Data ss:Type="String"><%= b.employee.manual_employee_code %></Data></Cell>
+          <Cell ss:Index="2"><Data ss:Type="String"><%= full_name(b.employee) %></Data></Cell>
+          <Cell ss:Index="3"><Data ss:Type="String"><%= bonus_total(b) %></Data></Cell>
+          </Row><!-- Row -->
+      <% end %><!-- slip -->
+    </Table>
+  </Worksheet>
+</Workbook>
 
-  <tbody>
-    <% @bonus_employees.each do |b| %>
-      <tr>
-        <td><%= b.employee.manual_employee_code %></td>
-        <td><%= full_name(b.employee) %></td>
-        <td><%= bonus_total(b) %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+

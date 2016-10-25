@@ -1,28 +1,31 @@
-  <div class="box-body">
-    <%= bootstrap_form_for :temp, url: {action: "create_attendance", date: @date} do |f| %>
-      <table class="table table-bordered table-hover table-condensed">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Employee Name</th>
-            <% for i in 1..@day %>
-              <th><%= i %></th>
-            <%end%>
-          </tr>
-        </thead>
-        <tbody>
-          <% exist = {} %>
-          <% @employees.each do |e| %>
-            <tr>
-              <td><%= e.employee.manual_employee_code %></td>
-              <td><%= full_name(e.employee) %></td>
-              <% sorted_exists = calculate_attendance(@date, exist, e)%>
-              <% sorted_exists.each do |k,v|%>
-                <td><%= v %></td>
-              <%end%>
-            </tr>
-
-            <% present_day = present_day_count(exist) %>
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Row>
+        <Cell ss:Index="1"><Data ss:Type="String">ID </Data></Cell>
+        <Cell ss:Index="2"><Data ss:Type="String">Employee Name </Data></Cell>
+        <% for i in 1..@day %>
+        <Cell ss:Index="3"><Data ss:Type="String"><%= i %></Data></Cell>
+        <%end%>
+      </Row>
+      <% exist = {} %>
+      <% @employees.each do |e| %>
+      <Row>
+          <Cell ss:Index="1"><Data ss:Type="String"><%= e.employee.manual_employee_code %> </Data></Cell>
+          <Cell ss:Index="2"><Data ss:Type="String"><%= full_name(e.employee) %></Data></Cell>
+          <% sorted_exists = calculate_attendance(@date, exist, e)%>
+          <% sorted_exists.each do |k,v|%>
+          <Cell ss:Index="3"><Data ss:Type="String"><%= v %></Data></Cell>
+          <%end%>
+          
+      
+    
+    <% present_day = present_day_count(exist) %>
             <% holiday_in_month = holiday_in_month_count(exist) %>
             <% week_off_day = week_off_day_count(exist) %>
 
@@ -55,16 +58,9 @@
             <%= hidden_field e.employee_id, 'absent_day', value: absent_day_count(exist) %>
             <%= hidden_field e.employee_id, 'payable_day', value: payable_day %>
             <% exist.clear %>
-          <%end%>
-        </tbody>
-      </table>
-      <%= f.submit "Confirm Workingdays", class: "btn btn-sm btn-primary" %>
-
-      <%= link_to " Print Attendance Slip ",employee_slip_employee_attendances_path(month: @month, year: @year, format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
-
-      <%= link_to " Excel Report ",employee_slip_xls_employee_attendances_path(month: @month, year: @year, format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
-
-    <% end %>
-  </div>
-</div>
+            </Row><!-- Row -->
+            <% end %><!-- slip -->
+            </Table>
+  </Worksheet>
+</Workbook>
 

@@ -1203,6 +1203,8 @@ end
       get :salary_ledger
       post :show_monthly_ctc
       get :pf_detail_report
+      get :select_bank_wise
+      get :show_employee_list
       # post :dynamic_report
       # get :pf_detail_pdf
     end

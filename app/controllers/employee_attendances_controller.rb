@@ -118,14 +118,17 @@ class EmployeeAttendancesController < ApplicationController
   end
 
   def show_employee
-    @department_id = params[:salary][:department_id]
+    @costcenter_id =params[:salary][:costcenter_id]
+    @costcenter = JoiningDetail.where(cost_center_id: @costcenter_id).pluck(:employee_id)
+    #@department_id = params[:salary][:department_id]
     @day = params[:salary][:day]
     @present = params[:salary][:present]
-    @employee_attendances = EmployeeAttendance.where(present: @present ,department_id: @department_id).where(day: @day.to_date,is_confirm: false)
+    @employee_attendances = EmployeeAttendance.where(present: @present ,employee_id: @costcenter).where(day: @day.to_date,is_confirm: false).group(:employee_id)
   end
 
   def destroy_employee_attendance
-    @department_id = params[:department_id]
+    @costcenter_id =params[:costcenter_id]
+    @costcenter = JoiningDetail.where(cost_center_id: @costcenter_id).pluck(:employee_id)
     @day = params[:day]
     @present = params[:present]
     @employee_attendance_ids = params[:employee_attendance_ids]
@@ -153,6 +156,15 @@ class EmployeeAttendancesController < ApplicationController
 
   def monthly_attendance
     @year, @month = params[:year], params[:month]
+    @date = Date.new(@year.to_i, Workingday.months[@month])
+    @day = @date.end_of_month.day
+    @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).group(:employee_id)
+  end
+
+   def display_attendance_1
+    @month = params[:month]
+    @year = params[:year]
+    # @employee_attendances = EmployeeAttendance.where(day: @month)
     @date = Date.new(@year.to_i, Workingday.months[@month])
     @day = @date.end_of_month.day
     @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).group(:employee_id)
@@ -236,7 +248,6 @@ class EmployeeAttendancesController < ApplicationController
         redirect_to revert_attendance_employeewise_employee_attendances_path
       end
   end
-
   def display_attendance_1
     # byebug
     @month = params[:month]
@@ -273,7 +284,6 @@ class EmployeeAttendancesController < ApplicationController
     @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).where(employee_id: current_user.employee_id).group(:employee_id)
   end
   
-
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_employee_attendance

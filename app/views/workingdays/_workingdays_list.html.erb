@@ -23,6 +23,7 @@
         <th>Absent</th>
         <th>Non Payable Leave</th>
         <th>Payable Day</th>
+        <th>Month</th>
       </tr>
     </thead>
 
@@ -44,6 +45,7 @@
           <td><%= workingday.absent_day %></td>
           <td><%= workingday.lwp_leave %></td>
           <th><%= workingday.payable_day %></th>
+          <th><%= workingday.month_name %></th>
 
               <!-- < if workingday.is_confirm == true %>
               <small class="label label-info">Confirmed</small>

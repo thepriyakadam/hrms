@@ -3,7 +3,7 @@
 <table id="example3" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
-      <th colspan="6"><center> BASIC DETAILS</center></th>
+      <th colspan="7"><center> BASIC DETAILS</center></th>
       <th colspan="12"><center> SALARY DETAILS</center></th>
       <th colspan="8"><center> WORKING DAYS</center></th>
       <th colspan="12"><center> EARNED SALARY</center></th>
@@ -13,6 +13,7 @@
     </tr>
 
     <tr>
+      <th><input type="checkbox" id="selectAll" value="selectAll"></th>
       <th>Sr. No.</th>
       <th>ID</th>
       <th>Name</th>
@@ -74,6 +75,7 @@
   <tbody>
     <% @reports.each do |r| %>
       <tr>
+        <td><%= check_box_tag "report_ids[]", r %></td>
         <td><%= i = i+1 %></td>
         <td><%= r.try(:code) %></td>
         <td><%= r.try(:employee_name) %></td>
@@ -207,3 +209,21 @@
       <%= link_to " Excel Report ", show_employee_salary_slip_ledgers_path(bank_id: @bank.id,year: @year,month: @month, category: @category,format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
     <%end%>
   </div>  
+
+
+<script type="text/javascript">
+$('#selectAll').click(function() {
+  if (this.checked) {
+    $(':checkbox').each(function() {
+      this.checked = true;                       
+    });
+  } 
+  else {
+    $(':checkbox').each(function() {
+      this.checked = false;                        
+    });
+  } 
+});
+
+$("#example1").DataTable();
+</script>

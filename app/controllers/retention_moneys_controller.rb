@@ -39,6 +39,30 @@ class RetentionMoneysController < ApplicationController
     end
   end
 
+
+  def create
+    components = params[:components]
+    str = ''
+    i = 0
+    components.each do |c|
+      str = if i == 0
+              c.to_s
+            else
+              str.to_s + ',' + c.to_s
+            end
+      i += 1
+    end
+
+    @retention_money = RetentionMoney.new(retention_money_params)
+    @retention_money.base_component = str
+    @retention_moneys = RetentionMoney.all
+    @retention_money.save
+    #@retention_money = RetentionMoney.new
+
+    redirect_to new_retention_money_path
+    flash[:notice] = "Saved Successfully"
+  end
+
   # PATCH/PUT /retention_moneys/1
   # PATCH/PUT /retention_moneys/1.json
   def update
@@ -60,6 +84,15 @@ class RetentionMoneysController < ApplicationController
     flash[:notice] = "Confirmed Successfully"
     redirect_to new_retention_money_path
   end
+
+  def select_form
+    @retention_money = RetentionMoney.new
+    if params[:is_persent] == "Yes"
+      @flag = true
+    else
+      @flag = false
+    end
+  end
   
   private
 
@@ -70,6 +103,6 @@ class RetentionMoneysController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def retention_money_params
-    params.require(:retention_money).permit(:is_confirm,:have_retention, :amount, :no_of_month, :description)
+    params.require(:retention_money).permit(:is_persent,:persent,:base_component,:max_limit,:is_active,:is_confirm,:have_retention, :amount, :no_of_month, :description)
   end
 end

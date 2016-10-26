@@ -1116,6 +1116,7 @@ end
   end
   resources :retention_moneys do
     collection do
+      get :select_form
       get :is_confirm
     end
   end
@@ -1211,6 +1212,10 @@ end
       post :dynamic_report
       get :pf_detail_pdf
       get :pf_detail_xls
+      get :select_bank_wise
+      get :show_employee_list
+      # post :dynamic_report
+      # get :pf_detail_pdf
     end
   end
 
@@ -1520,6 +1525,7 @@ end
       get :index_xls
       get :basic_info_company_wise
       post :employee_basic_info
+      post :basic_info
     end
     member do
       get :edit_manager

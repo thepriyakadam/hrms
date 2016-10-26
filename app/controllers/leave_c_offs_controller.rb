@@ -48,7 +48,9 @@ class LeaveCOffsController < ApplicationController
         @leave_c_offs = LeaveCOff.all
         leav_category = LeavCategory.find_by_name('Compensatory Off')
         @leave_c_off.expiry_date = @leave_c_off.c_off_date + @leave_c_off.c_off_expire_day
-        @c_off = LeaveCOff.where(employee_id: @leave_c_off.employee_id,is_expire: nil)
+        @c_off = LeaveCOff.where(is_expire: nil)
+
+
         if leav_category.nil?
         else
           is_exist = EmployeeLeavBalance.exists?(employee_id: @leave_c_off.employee_id, leav_category_id: leav_category.id)
@@ -63,10 +65,12 @@ class LeaveCOffsController < ApplicationController
 
               @c_off.each do |l|
                 if l.expiry_date < Date.today
-                  LeaveCOff.find(l.id).update(is_expire: true)
-                  @employee_leave_balance.no_of_leave = @employee_leave_balance.no_of_leave.to_f - 1
+                  @emp_leave_bal = EmployeeLeavBalance.where(employee_id: l.employee_id,leav_category_id: leav_category.id).take  
+                  @emp_leave_bal.no_of_leave = @emp_leave_bal.no_of_leave.to_f - l.leave_count
+                  LeaveCOff.find(l.id).update(leave_count: 0,is_expire: true)
                 else
                 end
+                 @emp_leave_bal.save
               end
             else
               @employee_leave_balance.total_leave = @employee_leave_balance.total_leave.to_f + 0.5
@@ -76,10 +80,12 @@ class LeaveCOffsController < ApplicationController
               
               @c_off.each do |l|
                 if l.expiry_date < Date.today
-                  LeaveCOff.find(l.id).update(is_expire: true)
-                  @employee_leave_balance.no_of_leave = @employee_leave_balance.no_of_leave.to_f - 0.5
+                  @emp_leave_bal = EmployeeLeavBalance.where(employee_id: l.employee_id,leav_category_id: leav_category.id).take
+                  @emp_leave_bal.no_of_leave = @emp_leave_bal.no_of_leave.to_f - l.leave_count
+                  LeaveCOff.find(l.id).update(leave_count: 0,is_expire: true)
                 else
                 end
+                @emp_leave_bal.save
               end
             end
           else
@@ -108,6 +114,7 @@ class LeaveCOffsController < ApplicationController
             flash[:notice] = "Your C-Off set successfully"
             redirect_to new_leave_c_off_path
           end
+
         end
         @leave_c_off = LeaveCOff.new
     end

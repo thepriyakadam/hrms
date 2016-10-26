@@ -404,9 +404,23 @@ class EmployeesController < ApplicationController
     # byebug
     @company = Company.find(params[:id])
     # @company_locations = @company.company_locations
+    if current_user.class == Group
     @company_locations = CompanyLocation.where(company_id: @company.id)
+    else
+      if current_user.role.name == 'Company'
+        @company_locations = CompanyLocation.where(company_id: @company.id)
+      elsif current_user.role.name == 'CompanyLocation'
+        @company_locations = CompanyLocation.where(id: current_user.company_location_id,company_id: @company.id)
+      end
+    end
     @form = params[:form]
   end
+
+  # def collect_company_location
+  #    @company = Company.find(params[:id])
+  #    @company_locations = CompanyLocation.where(company_id: @company.id)
+  #    @form = params[:form]
+  # end
 
   def collect_department
      @company_location = CompanyLocation.find(params[:id])

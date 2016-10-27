@@ -114,7 +114,7 @@ class MonthlyExpencesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def monthly_expence_params
-    params.require(:monthly_expence).permit(:expence_date, :amount, :employee_id, :expencess_type_id)
+    params.require(:monthly_expence).permit(:is_paid,:expence_date, :amount, :employee_id, :expencess_type_id)
   end
 end
 # MonthlyExpence.where("strftime('%m/%Y', created_at) = ?", '12/02/2016'.to_date.strftime('%m/%Y'))

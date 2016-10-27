@@ -52,6 +52,10 @@ class EmployeeTaskToDosController < ApplicationController
     end
   end
 
+  def dynamic_refresh
+     @employee_task_to_dos = EmployeeTaskToDo.where(employee_id: current_user.employee_id,status: true)
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_employee_task_to_do

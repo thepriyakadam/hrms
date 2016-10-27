@@ -253,11 +253,18 @@ end
       get :revert_attendance_employeewise
       post :show_employee_list
       post :destroy_attendance_employeewise
+      get :loginwise_attendance_form
+      get :display_employee_attendance_list
+      get :employee_attendances_list
     end
   end
   resources :salary_comp_mappings
   resources :company_events
-  resources :employee_task_to_dos
+  resources :employee_task_to_dos do
+    collection do
+      get :dynamic_refresh
+    end
+  end
 
 
   resources :leaving_reasons do
@@ -1001,6 +1008,12 @@ end
       get :search_bonus
       get :collect_bonus
       get :particular_employee_bonus
+      get :bonus_employee_xls
+      get :bonus_employee_pdf
+      get :particular_bonus_employee_xls
+      get :particular_bonus_employee_pdf
+      get :bonus_employee_report
+      post :dynamic_report
     end
   end
   resources :bonus_masters do
@@ -1117,6 +1130,7 @@ end
   end
   resources :retention_moneys do
     collection do
+      get :select_form
       get :is_confirm
     end
   end
@@ -1209,6 +1223,11 @@ end
       get :salary_ledger
       post :show_monthly_ctc
       get :pf_detail_report
+      post :dynamic_report
+      get :pf_detail_pdf
+      get :pf_detail_xls
+      get :select_bank_wise
+      get :show_employee_list
       # post :dynamic_report
       # get :pf_detail_pdf
     end
@@ -1520,6 +1539,7 @@ end
       get :index_xls
       get :basic_info_company_wise
       post :employee_basic_info
+      post :basic_info
     end
     member do
       get :edit_manager

@@ -163,44 +163,60 @@ class InstalmentsController < ApplicationController
      end
 
      def dynamic_report
+        # byebug
         @month = params[:instalment][:month]
         @year = params[:instalment][:year]
         @company = params[:instalment][:company_id]
         @location = params[:instalment][:company_location_id]
         date = Date.new(@year.to_i, Workingday.months[@month])
-        if current_user.class == Group
-          if params[:instalment][:company_location_id] == '' || params[:instalment][:company_id] == ''
-            @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y'))
-          else
-            @employees = Employee.where(company_location_id: @location.to_i,company_id: @company.to_i)
-            @advances = AdvanceSalary.where(employee_id: @employees)
-            @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y')).where(advance_salary_id: @advances)
-          end
-        elsif current_user.class == Member
-          if current_user.role.name == 'Company'
-            if params[:instalment][:company_location_id] == '' || params[:instalment][:company_id] == ''
-              @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y'))
-            else
-              @employees = Employee.where(company_location_id: @location.to_i,company_id: @company.to_i)
+        # if current_user.class == Group
+        #   if params[:instalment][:company_location_id] == '' || params[:instalment][:company_id] == ''
+        #     @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y'))
+        #   else
+        #     @employees = Employee.where(company_location_id: @location.to_i,company_id: @company.to_i)
+        #     @advances = AdvanceSalary.where(employee_id: @employees)
+        #     @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y')).where(advance_salary_id: @advances)
+        #   end
+        # elsif current_user.class == Member
+        #   if current_user.role.name == 'Company'
+            
+            if @location == ""
+              @employees = Employee.where(company_id: @company.to_i).pluck(:id)
+              @advances = AdvanceSalary.where(employee_id: @employees)
+              @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y')).where(advance_salary_id: @advances)
+            elsif @company == ""
+              @employees = Employee.where(company_location_id: @location.to_i).pluck(:id)
+              @advances = AdvanceSalary.where(employee_id: @employees)
+              @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y')).where(advance_salary_id: @advances)
+            else 
+              @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
               @advances = AdvanceSalary.where(employee_id: @employees)
               @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y')).where(advance_salary_id: @advances)
             end
-          elsif current_user.role.name == 'CompanyLocation'
-            params[:instalment][:company_location_id] == '' || params[:instalment][:company_id] == ''
-            @employees = Employee.where(company_location_id: current_user.company_location_id,company_id: @company.to_i)
-            @advances = AdvanceSalary.where(employee_id: @employees)
-            @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y')).where(advance_salary_id: @advances)
-          elsif current_user.role.name == 'SalaryAccount'
-            params[:instalment][:company_location_id] == '' || params[:instalment][:company_id] == ''
-            @employees = Employee.where(company_location_id: current_user.company_location_id,company_id: @company.to_i)
-            @advances = AdvanceSalary.where(employee_id: @employees)
-            @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y')).where(advance_salary_id: @advances)
-          elsif current_user.role.name == 'Department'
-            @salaryslips = Salaryslip.where(department_id: current_user.department_id)
-          elsif current_user.role.name == 'Superviser'
-          elsif current_user.role.name == 'Employee'
-          end
-        end
+
+        #   elsif current_user.role.name == 'CompanyLocation'
+            
+        #     if @location == ""
+        #       @employees = Employee.where(company_id: @company.to_i).pluck(:id)
+        #       @advances = AdvanceSalary.where(employee_id: @employees)
+        #       @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y')).where(advance_salary_id: @advances)
+        #     elsif @company == ""
+        #       @employees = Employee.where(company_location_id: @location.to_i).pluck(:id)
+        #       @advances = AdvanceSalary.where(employee_id: @employees)
+        #       @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y')).where(advance_salary_id: @advances)
+        #     else 
+        #       @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
+        #       @advances = AdvanceSalary.where(employee_id: @employees)
+        #       @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y')).where(advance_salary_id: @advances)
+        #     end
+        #   elsif current_user.role.name == 'SalaryAccount'
+           
+        #   elsif current_user.role.name == 'Department'
+        #     @salaryslips = Salaryslip.where(department_id: current_user.department_id)
+        #   elsif current_user.role.name == 'Superviser'
+        #   elsif current_user.role.name == 'Employee'
+        #   end
+        # end
       end
 
     def installment_xls_1
@@ -209,39 +225,54 @@ class InstalmentsController < ApplicationController
         @company = params[:company_id]
         @location = params[:company_location_id]
         date = Date.new(@year.to_i, Workingday.months[@month])
-        if current_user.class == Group
-          if @location == '' || @company == ''
-            @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y'))
-          else
-            @employees = Employee.where(company_location_id: @location.to_i,company_id: @company.to_i)
-            @advances = AdvanceSalary.where(employee_id: @employees)
-            @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y')).where(advance_salary_id: @advances)
-          end
-        elsif current_user.class == Member
-          if current_user.role.name == 'Company'
-            if @location == '' || @company == ''
-              @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y'))
-            else
-              @employees = Employee.where(company_location_id: @location.to_i,company_id: @company.to_i)
+        # if current_user.class == Group
+        #   if params[:instalment][:company_location_id] == '' || params[:instalment][:company_id] == ''
+        #     @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y'))
+        #   else
+        #     @employees = Employee.where(company_location_id: @location.to_i,company_id: @company.to_i)
+        #     @advances = AdvanceSalary.where(employee_id: @employees)
+        #     @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y')).where(advance_salary_id: @advances)
+        #   end
+        # elsif current_user.class == Member
+        #   if current_user.role.name == 'Company'
+            
+            if @location == ""
+              @employees = Employee.where(company_id: @company.to_i).pluck(:id)
+              @advances = AdvanceSalary.where(employee_id: @employees)
+              @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y')).where(advance_salary_id: @advances)
+            elsif @company == ""
+              @employees = Employee.where(company_location_id: @location.to_i).pluck(:id)
+              @advances = AdvanceSalary.where(employee_id: @employees)
+              @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y')).where(advance_salary_id: @advances)
+            else 
+              @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
               @advances = AdvanceSalary.where(employee_id: @employees)
               @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y')).where(advance_salary_id: @advances)
             end
-          elsif current_user.role.name == 'CompanyLocation'
-            @location == '' || @company == ''
-            @employees = Employee.where(company_location_id: current_user.company_location_id,company_id: @company.to_i)
-            @advances = AdvanceSalary.where(employee_id: @employees)
-            @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y')).where(advance_salary_id: @advances)
-          elsif current_user.role.name == 'SalaryAccount'
-            @location == '' || @company == ''
-            @employees = Employee.where(company_location_id: current_user.company_location_id,company_id: @company.to_i)
-            @advances = AdvanceSalary.where(employee_id: @employees)
-            @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y')).where(advance_salary_id: @advances)
-          elsif current_user.role.name == 'Department'
-            @salaryslips = Salaryslip.where(department_id: current_user.department_id)
-          elsif current_user.role.name == 'Superviser'
-          elsif current_user.role.name == 'Employee'
-          end
-        end
+
+        #   elsif current_user.role.name == 'CompanyLocation'
+            
+        #     if @location == ""
+        #       @employees = Employee.where(company_id: @company.to_i).pluck(:id)
+        #       @advances = AdvanceSalary.where(employee_id: @employees)
+        #       @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y')).where(advance_salary_id: @advances)
+        #     elsif @company == ""
+        #       @employees = Employee.where(company_location_id: @location.to_i).pluck(:id)
+        #       @advances = AdvanceSalary.where(employee_id: @employees)
+        #       @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y')).where(advance_salary_id: @advances)
+        #     else 
+        #       @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
+        #       @advances = AdvanceSalary.where(employee_id: @employees)
+        #       @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y')).where(advance_salary_id: @advances)
+        #     end
+        #   elsif current_user.role.name == 'SalaryAccount'
+           
+        #   elsif current_user.role.name == 'Department'
+        #     @salaryslips = Salaryslip.where(department_id: current_user.department_id)
+        #   elsif current_user.role.name == 'Superviser'
+        #   elsif current_user.role.name == 'Employee'
+        #   end
+        # end
         respond_to do |format|
         format.xls {render template: 'instalments/instalment.xls.erb'}
       end
@@ -253,39 +284,54 @@ class InstalmentsController < ApplicationController
       @company = params[:company_id]
       @location = params[:company_location_id]
       date = Date.new(@year.to_i, Workingday.months[@month])
-      if current_user.class == Group
-        if @location == '' || @company == ''
-          @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y'))
-        else
-          @employees = Employee.where(company_location_id: @location.to_i,company_id: @company.to_i)
-          @advances = AdvanceSalary.where(employee_id: @employees)
-          @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y')).where(advance_salary_id: @advances)
-        end
-      elsif current_user.class == Member
-        if current_user.role.name == 'Company'
-          if @location == '' || @company == ''
-            @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y'))
-          else
-            @employees = Employee.where(company_location_id: @location.to_i,company_id: @company.to_i)
-            @advances = AdvanceSalary.where(employee_id: @employees)
-            @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y')).where(advance_salary_id: @advances)
-          end
-        elsif current_user.role.name == 'CompanyLocation'
-          @location == '' || @company == ''
-          @employees = Employee.where(company_location_id: current_user.company_location_id,company_id: @company.to_i)
-          @advances = AdvanceSalary.where(employee_id: @employees)
-          @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y')).where(advance_salary_id: @advances)
-        elsif current_user.role.name == 'SalaryAccount'
-          @location == '' || @company == ''
-          @employees = Employee.where(company_location_id: current_user.company_location_id,company_id: @company.to_i)
-          @advances = AdvanceSalary.where(employee_id: @employees)
-          @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y')).where(advance_salary_id: @advances)
-        elsif current_user.role.name == 'Department'
-          @salaryslips = Salaryslip.where(department_id: current_user.department_id)
-        elsif current_user.role.name == 'Superviser'
-        elsif current_user.role.name == 'Employee'
-        end
-      end
+      # if current_user.class == Group
+        #   if params[:instalment][:company_location_id] == '' || params[:instalment][:company_id] == ''
+        #     @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y'))
+        #   else
+        #     @employees = Employee.where(company_location_id: @location.to_i,company_id: @company.to_i)
+        #     @advances = AdvanceSalary.where(employee_id: @employees)
+        #     @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y')).where(advance_salary_id: @advances)
+        #   end
+        # elsif current_user.class == Member
+        #   if current_user.role.name == 'Company'
+            
+            if @location == ""
+              @employees = Employee.where(company_id: @company.to_i).pluck(:id)
+              @advances = AdvanceSalary.where(employee_id: @employees)
+              @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y')).where(advance_salary_id: @advances)
+            elsif @company == ""
+              @employees = Employee.where(company_location_id: @location.to_i).pluck(:id)
+              @advances = AdvanceSalary.where(employee_id: @employees)
+              @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y')).where(advance_salary_id: @advances)
+            else 
+              @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
+              @advances = AdvanceSalary.where(employee_id: @employees)
+              @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y')).where(advance_salary_id: @advances)
+            end
+
+        #   elsif current_user.role.name == 'CompanyLocation'
+            
+        #     if @location == ""
+        #       @employees = Employee.where(company_id: @company.to_i).pluck(:id)
+        #       @advances = AdvanceSalary.where(employee_id: @employees)
+        #       @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y')).where(advance_salary_id: @advances)
+        #     elsif @company == ""
+        #       @employees = Employee.where(company_location_id: @location.to_i).pluck(:id)
+        #       @advances = AdvanceSalary.where(employee_id: @employees)
+        #       @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y')).where(advance_salary_id: @advances)
+        #     else 
+        #       @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
+        #       @advances = AdvanceSalary.where(employee_id: @employees)
+        #       @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y')).where(advance_salary_id: @advances)
+        #     end
+        #   elsif current_user.role.name == 'SalaryAccount'
+           
+        #   elsif current_user.role.name == 'Department'
+        #     @salaryslips = Salaryslip.where(department_id: current_user.department_id)
+        #   elsif current_user.role.name == 'Superviser'
+        #   elsif current_user.role.name == 'Employee'
+        #   end
+        # end
       respond_to do |format|
           format.json
           format.pdf do

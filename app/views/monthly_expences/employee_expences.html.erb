@@ -25,7 +25,11 @@
           <td><%= m.amount %></td>
           <td><%= m.expence_date %></td>
           <td>
-            <%= link_to '', edit_monthly_expence_path(m), class: 'btn btn-xs btn-success fa fa-edit' %>
+            <% if m.is_paid == true %>
+              <small class="label label-primary">Paid</small>
+            <% else %>
+              <%= link_to '', edit_monthly_expence_path(m), class: 'btn btn-xs btn-success fa fa-edit' %>
+            <% end %>
           </td>
         </tr>
       <% end %>

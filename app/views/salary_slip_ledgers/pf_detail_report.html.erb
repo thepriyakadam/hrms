@@ -1,7 +1,7 @@
 <!--SELECT2 EXAMPLE -->
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title">Employee Food Deduction Report</h3>
+    <h3 class="box-title">Pf Detail Report</h3>
   </div><!-- /.box-header -->
 
   <div class="box-body">
@@ -9,13 +9,14 @@
       <div class="row">
         <div class="col-sm-3">
           <div class="field">
-            <%= select :pf_detail,:month, ['January','February','March','April','May','June','July','August','September','October','November','December'],{label: 'Select Month',include_blank: " Select Month"}, class: "form-control" %>
-           </div>
-        </div>
-        <div class="col-sm-3">
-          <div class="field">
             <%= select :pf_detail,:year,['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025','2026','2027'],{label: 'Select Year',include_blank: " Select Year"}, class: "form-control" %>
           </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="field">
+            <%= select :pf_detail,:month, ['January','February','March','April','May','June','July','August','September','October','November','December'],{label: 'Select Month',include_blank: " Select Month"}, class: "form-control" %>
+           </div>
         </div>
 
          <!-- <div class="col-sm-3">
@@ -51,7 +52,7 @@
           </div>
         </div>
         </div><br>
-        <div id="food_deduction_li_1"></div>
+        <div id="pf_detail_li"></div>
 
       <br>
     <% end %>
@@ -59,23 +60,28 @@
 </div><!-- /.box -->
 
 <script>
-$("#food_deduction").validate({
+$("#pf_detail").validate({
     rules: {
-      "food_deduction[month]":{
+      "pf_detail[month]":{
         required: true,
       },
-      "food_deduction[year]":{
+      "pf_detail[year]":{
+        required: true,
+      },
+      "pf_detail[company_id]":{
         required: true,
       }
     },
     messages: {
-      "food_deduction[month]":{
-        required: "Please specify Month",
+      "pf_detail[month]":{
+        required: "Please select Month",
       },
-      "food_deduction[year]":{
-        required: "Please specify Year",
+      "pf_detail[year]":{
+        required: "Please select Year",
+      },
+      "pf_detail[company_id]":{
+        required: "Please select Company",
       }
-      
     },
     errorPlacement: function(error, element) {
      error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})

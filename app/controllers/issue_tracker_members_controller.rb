@@ -68,7 +68,7 @@ class IssueTrackerMembersController < ApplicationController
   end
 
   def collect_memberwise_dropdown
-    @datea = params[:datea].to_s
+    @date = params[:date].to_s
     @group_id = params[:group_id]
     # byebug
     @issue_tracker_group = IssueTrackerGroup.find(params[:group_id])

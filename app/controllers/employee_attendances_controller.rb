@@ -248,7 +248,6 @@ class EmployeeAttendancesController < ApplicationController
         redirect_to revert_attendance_employeewise_employee_attendances_path
       end
   end
-
   def display_attendance_1
     # byebug
     @month = params[:month]
@@ -285,7 +284,6 @@ class EmployeeAttendancesController < ApplicationController
     @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).where(employee_id: current_user.employee_id).group(:employee_id)
   end
   
-
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_employee_attendance

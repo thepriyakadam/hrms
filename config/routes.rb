@@ -1209,6 +1209,9 @@ end
       get :salary_ledger
       post :show_monthly_ctc
       get :pf_detail_report
+      post :dynamic_report
+      get :pf_detail_pdf
+      get :pf_detail_xls
       get :select_bank_wise
       get :show_employee_list
       # post :dynamic_report
@@ -1216,7 +1219,6 @@ end
       post :dynamic_report
       get :pf_detail_pdf
       get :pf_detail_xls
-    end
   end
 
   resources :instalments do

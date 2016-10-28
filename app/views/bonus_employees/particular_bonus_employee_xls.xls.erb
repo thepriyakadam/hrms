@@ -1,21 +1,28 @@
-<table id="example" class="table table-bordered table-hover table-condensed">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Employee Name</th>
-      <th>Bonus date</th>
-      <th>Amount</th>
-    </tr>
-  </thead>
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Row>
+        <Cell ss:Index="1"><Data ss:Type="String">ID </Data></Cell>
+        <Cell ss:Index="2"><Data ss:Type="String">Employee Name </Data></Cell>
+        <Cell ss:Index="3"><Data ss:Type="String">Bonus date </Data></Cell>
+        <Cell ss:Index="4"><Data ss:Type="String">Amount </Data></Cell>
+      </Row>
 
-  <tbody>
-    <% @particular_bonuses.each do |bonus_employee| %>
-      <tr>
-        <td><%= bonus_employee.employee.manual_employee_code %></td>
-        <td><%= full_name(bonus_employee.employee) %></td>
-        <td><%= bonus_employee.bonus_date %></td>
-        <td><%= bonus_employee.amount %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+      <% @particular_bonuses.each do |bonus_employee| %>
+      <Row>
+          <Cell ss:Index="1"><Data ss:Type="String"><%= bonus_employee.employee.manual_employee_code %></Data></Cell>
+          <Cell ss:Index="2"><Data ss:Type="String"><%= full_name(bonus_employee.employee) %></Data></Cell>
+          <Cell ss:Index="3"><Data ss:Type="String"><%= bonus_employee.bonus_date %></Data></Cell>
+          <Cell ss:Index="4"><Data ss:Type="String"><%= bonus_employee.amount %></Data></Cell>
+          </Row><!-- Row -->
+      <% end %><!-- slip -->
+    </Table>
+  </Worksheet>
+</Workbook>
+
+

@@ -14,6 +14,7 @@
         <th>Return Coupon</th>
         <th>Total</th>
         <th>Price</th>
+        <th>Location</th>
         <th>Amount</th>
       </tr>
     </thead>
@@ -28,6 +29,7 @@
           <td><%= food_deduction.return_coupan %></td>
           <td><%= food_deduction.total_coupan %></td>
           <td><%= food_deduction.try(:food_coupan_master).try(:price) %></td>
+          <td><%= food_deduction.employee.company_location.name %></td>
           <td><%= food_deduction.amount %></td>
         </tr>
       <% end %>

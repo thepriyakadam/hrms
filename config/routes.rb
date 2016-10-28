@@ -1217,7 +1217,9 @@ end
       get :show_employee_list
       # post :dynamic_report
       # get :pf_detail_pdf
-    end
+      post :dynamic_report
+      get :pf_detail_pdf
+      get :pf_detail_xls
   end
 
   resources :instalments do

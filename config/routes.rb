@@ -810,6 +810,7 @@ end
       get :vacancy_history_list
       get :show_vacancy_request_history
       get :reporting_masters_vacancy_master_list
+      post :import
     end
   end
   resources :leave_c_offs do
@@ -1216,9 +1217,7 @@ end
       get :show_employee_list
       # post :dynamic_report
       # get :pf_detail_pdf
-      post :dynamic_report
-      get :pf_detail_pdf
-      get :pf_detail_xls
+    end
   end
 
   resources :instalments do

@@ -11,6 +11,10 @@
 	<%= select :instalment, :company_location_id, (@company_locations.present? ? (@company_locations.collect {|b| [b.name,b.id]}) : {}),{hide_label: true,include_blank: " Select Company Location"}, class: "form-control" %>
 <% elsif @form == 'employee' %>
 	<%= select :employee, :company_location_id, (@company_locations.present? ? (@company_locations.collect {|b| [b.name,b.id]}) : {}),{hide_label: true,include_blank: " Select Company Location"}, class: "form-control" %>
+<%elsif @form == 'salary_slip_ledger' %>
+	<%= select :salary_slip_ledger, :company_location_id, (@company_locations.present? ? (@company_locations.collect {|b| [b.name,b.id]}) : {}),{hide_label: true,include_blank: " Select Company Location"}, class: "form-control" %>
+<%elsif @form == 'bonus_employee' %>
+	<%= select :bonus_employee, :company_location_id, (@company_locations.present? ? (@company_locations.collect {|b| [b.name,b.id]}) : {}),{hide_label: true,include_blank: " Select Company Location"}, class: "form-control" %>
 <%else %>
 	<%= select :company,:company_location_id,(@company_locations.present? ? (@company_locations.collect {|b| [b.name,b.id]}) : {}),{prompt:"Select Company Location",hide_label:true},{onchange:"var a={id:$(this).val(), form : 'company'}; $.get('/employees/collect_department,a,function(response){});",class: "form-control"}%>
 <%end%>

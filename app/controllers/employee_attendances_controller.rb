@@ -174,7 +174,7 @@ class EmployeeAttendancesController < ApplicationController
     @employees, @attendances, work_data_structure, @date = params[:employees], params[:attendances], [], params[:date]
     params.permit!
     @employees.each { |e| work_data_structure << params[e] }
-    EmployeeAttendance.where(employee_id: @employees).where("strftime('%m/%Y', day) = ? and is_confirm = ?", @date.to_date.strftime('%m/%Y'),false).update_all(is_confirm: true)
+    #EmployeeAttendance.where(employee_id: @employees).where("strftime('%m/%Y', day) = ? and is_confirm = ?", @date.to_date.strftime('%m/%Y'),false).update_all(is_confirm: true)
     Workingday.create(work_data_structure)
     flash[:notice] = "Workingday successfully saved."
     redirect_to employee_attendances_path
@@ -248,6 +248,43 @@ class EmployeeAttendancesController < ApplicationController
         redirect_to revert_attendance_employeewise_employee_attendances_path
       end
   end
+
+  def display_attendance_1
+    # byebug
+    @month = params[:month]
+    @year = params[:year]
+    # @employee_attendances = EmployeeAttendance.where(day: @month)
+    @date = Date.new(@year.to_i, Workingday.months[@month])
+    @day = @date.end_of_month.day
+    @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).group(:employee_id)
+  end
+
+  def display_employee_attendance_list
+    # @month = "September"
+    # @year = 2016
+    @month = params[:month].to_s
+    @year = params[:year].to_s
+    @date = Date.new(@year.to_i, Workingday.months[@month])
+    @day = @date.end_of_month.day
+    # @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).where(employee_id: current_user.employee_id)
+    @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).where(employee_id: current_user.employee_id).group(:employee_id)
+    # @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).where(employee_id: current_user.employee_id)
+  end
+
+  def employee_attendances_list
+    # @employees1 = EmployeeAttendance.where(employee_id: current_user.employee_id)
+    # @employees1.each do |s|
+    #   @month = s.day.strftime("%B")
+    #   @year = s.day.strftime("%Y")
+    # end
+    @employees1 = EmployeeAttendance.where(employee_id: current_user.employee_id).take
+    @month = @employees1.day.strftime("%B")
+    @year = @employees1.day.strftime("%Y")
+    @date = Date.new(@year.to_i, Workingday.months[@month])
+    @day = @date.end_of_month.day
+    @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).where(employee_id: current_user.employee_id).group(:employee_id)
+  end
+  
 
   private
   # Use callbacks to share common setup or constraints between actions.

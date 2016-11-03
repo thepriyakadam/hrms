@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Esic:</strong>
+  <%= @esic_employer_master.esic %>
+</p>
+
+<p>
+  <strong>Percentage:</strong>
+  <%= @esic_employer_master.percentage %>
+</p>
+
+<p>
+  <strong>Effective from:</strong>
+  <%= @esic_employer_master.effective_from %>
+</p>
+
+<p>
+  <strong>Effective to:</strong>
+  <%= @esic_employer_master.effective_to %>
+</p>
+
+<p>
+  <strong>Max limit:</strong>
+  <%= @esic_employer_master.max_limit %>
+</p>
+
+<p>
+  <strong>Base component:</strong>
+  <%= @esic_employer_master.base_component %>
+</p>
+
+<p>
+  <strong>Is active:</strong>
+  <%= @esic_employer_master.is_active %>
+</p>
+
+<p>
+  <strong>Is confirm:</strong>
+  <%= @esic_employer_master.is_confirm %>
+</p>
+
+<%= link_to 'Edit', edit_esic_employer_master_path(@esic_employer_master) %> |
+<%= link_to 'Back', esic_employer_masters_path %>

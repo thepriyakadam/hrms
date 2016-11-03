@@ -4,6 +4,11 @@
       <th>Retention</th>
       <th>Amount</th>
       <th>No. of Month</th>
+      <th>Persent</th>
+      <th>Persentage</th>
+      <th>Max Amount</th>
+      <th>Base Component</th>
+      <th>Status</th>
       <th>Description</th>
       <th>Action</th>
     </tr>
@@ -14,6 +19,11 @@
         <td><%= retention_money.have_retention ? "Yes" : "No" %></td>
         <td><%= retention_money.amount %></td>
         <td><%= retention_money.no_of_month %></td>
+        <td><%= retention_money.is_persent %></td>
+        <td><%= retention_money.persent %></td>
+        <td><%= retention_money.max_limit %></td>
+        <td><%= retention_money.base_component %></td>
+        <td><%= retention_money.is_active %></td>
         <td><%= retention_money.description %></td>
         <td>
           <% if retention_money.is_confirm == true %>

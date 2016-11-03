@@ -50,5 +50,4 @@ class EmployeeSalaryTemplate < ActiveRecord::Base
       @flag = true
     end
   end
-
 end

@@ -1,0 +1,5 @@
+<% if @flag %>
+$("#dropdown").html("<%= j render 'form1' %>");
+<% else %>
+$("#dropdown").html("<%= j render 'form2' %>");
+<% end %>

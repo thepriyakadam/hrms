@@ -12,7 +12,8 @@
         <th>No. of Installment</th>
         <th>Installment Amount</th>
         <th>Advance Date</th>
-      </tr>
+<!--         <th>Location</th>
+ -->      </tr>
     </thead>
 
     <tbody>
@@ -24,7 +25,8 @@
          <td><%= advance_salary.no_of_instalment %></td>
          <td><%= advance_salary.instalment_amount %></td>
          <td><%= advance_salary.advance_date %></td>
-        </tr>
+<!--          <td><%= advance_salary.employee.company_location.name %></td>
+ -->        </tr>
       <% end %>
     </tbody>
   </table>

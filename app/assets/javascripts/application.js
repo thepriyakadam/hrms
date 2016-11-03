@@ -39,7 +39,6 @@
 //   jQuery(".best_in_place").best_in_place();
 // });
 
-$(function () {
   $("#example1").DataTable();
   $('#example2').DataTable({
     "paging": true,

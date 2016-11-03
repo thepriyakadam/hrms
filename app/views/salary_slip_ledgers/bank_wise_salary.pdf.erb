@@ -5,7 +5,9 @@
     <tr>
       <th colspan="45">
         <center><strong><%= current_user.employee.company_location.company.description %></strong></center>
-        <center><small><%= Bank.find(@bank).name %></small></center>
+        <center><small><%= Bank.find(@bank).name unless @bank.nil? or @bank.empty? or @bank.blank? %>
+        <%= CostCenter.find(@cost_center).name unless @cost_center.blank? or @cost_center.nil? or @cost_center.empty? %>
+        <%= EmployeeCategory.find(@category).name %></small></center>
         <center><small>Employee Monthly Salary For The Month <%= @month %> - <%= @year %></small></center>   
       </th>
     </tr>
@@ -90,6 +92,7 @@
         <strong>PF NO - <%= r.try(:pf_no) %></strong></td>
       <td colspan="6">
         <strong>ESIC NO - <%= r.try(:esic_no) %></strong></td>
+      <td></td>
       </tr>
       <tr>  
         <td><%= r.try(:actual_basic).try(:round) %></td>

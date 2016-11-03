@@ -1,0 +1,2 @@
+json.extract! fp_master, :id, :is_fp, :min_limit, :percentage, :base_component, :effective_from, :effective_to, :is_active, :is_confirm, :created_at, :updated_at
+json.url fp_master_url(fp_master, format: :json)

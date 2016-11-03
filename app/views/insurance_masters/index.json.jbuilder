@@ -1,0 +1,1 @@
+json.array! @insurance_masters, partial: 'insurance_masters/insurance_master', as: :insurance_master

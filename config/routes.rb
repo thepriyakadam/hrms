@@ -1,5 +1,25 @@
 Rails.application.routes.draw do
 
+  resources :insurance_masters do
+    collection do
+      get :is_confirm
+    end
+  end
+  resources :fp_masters do
+    collection do
+      get :is_confirm
+    end
+  end
+  resources :esic_employer_masters do
+    collection do
+      get :is_confirm
+    end
+  end
+  resources :da_masters do
+    collection do
+      get :is_confirm
+    end
+   end
   get 'issue_request_report/index'
   get 'welcome/index'
 

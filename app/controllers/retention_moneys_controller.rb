@@ -23,22 +23,6 @@ class RetentionMoneysController < ApplicationController
   def edit
   end
 
-  # POST /retention_moneys
-  # POST /retention_moneys.json
-  # def create
-  #   @retention_money = RetentionMoney.new(retention_money_params)
-  #   @retention_moneys = RetentionMoney.all
-  #   respond_to do |format|
-  #     if @retention_money.save
-  #       @retention_money = RetentionMoney.new
-  #       format.js { @flag = true }
-  #     else
-  #       flash.now[:alert] = 'Retention Money Already Exist.'
-  #       format.js { @flag = false }
-  #     end
-  #   end
-  # end
-
 
   def create
     components = params[:components]
@@ -86,8 +70,9 @@ class RetentionMoneysController < ApplicationController
   end
 
   def select_form
+    # byebug
     @retention_money = RetentionMoney.new
-    if params[:is_persent] == "Yes"
+    if params[:have_retention] == "true"
       @flag = true
     else
       @flag = false

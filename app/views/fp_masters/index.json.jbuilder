@@ -1,0 +1,1 @@
+json.array! @fp_masters, partial: 'fp_masters/fp_master', as: :fp_master

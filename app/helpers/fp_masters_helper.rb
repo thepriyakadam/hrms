@@ -1,0 +1,2 @@
+module FpMastersHelper
+end

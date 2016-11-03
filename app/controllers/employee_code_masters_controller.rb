@@ -13,6 +13,9 @@ class EmployeeCodeMastersController < ApplicationController
   def new
     @employee_code_master = EmployeeCodeMaster.new
     @employee_code_masters = EmployeeCodeMaster.all
+    session[:active_tab] ="master"
+    session[:active_tab1] ="employeeprofilesetup"
+
   end
 
   # GET /employee_code_masters/1/edit

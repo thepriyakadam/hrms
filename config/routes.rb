@@ -1,15 +1,13 @@
 Rails.application.routes.draw do
 
   get 'issue_request_report/index'
-
   get 'welcome/index'
 
   resources :issue_root_causes do
     collection do
       get :is_confirm
-        end
+    end
    end
-
   resources :issue_histories
   resources :access_issue_requests
   resources :issue_locker_histories
@@ -824,6 +822,7 @@ end
       get :vacancy_history_list
       get :show_vacancy_request_history
       get :reporting_masters_vacancy_master_list
+      post :import
     end
   end
   resources :leave_c_offs do

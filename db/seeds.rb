@@ -454,11 +454,11 @@ require 'roo'
 
 
 puts "Starting ..."
-ex = Roo::Excel.new("#{Rails.root}/public/me.xls")
+ex = Roo::Excel.new("#{Rails.root}/public/ee.xls")
 ex.default_sheet = ex.sheets[0] 
 i=1
 
-2.upto(17) do |line|
+2.upto(72) do |line|
 Employee.new do |e|
   e.manual_employee_code = ex.cell(line,'A')
   e.first_name = ex.cell(line,'B')
@@ -497,9 +497,12 @@ Employee.new do |e|
   e.company_id = ex.cell(line,'AA').to_i
   @type1 = CompanyLocation.find_by_name(ex.cell(line,'AB'))
   e.company_location_id = @type1.id unless @type1.nil?
-   @type2 = Department.find_by_name(ex.cell(line,'AC'))
-
+  @type2 = Department.find_by_name(ex.cell(line,'AC'))
   e.department_id =  @type2.id unless @type2.nil?
+
+  @code_master = EmployeeCodeMaster.find_by_name(ex.cell(line,'AZ'))
+  e.employee_code_master_id = @code_master.id unless @code_master.nil?
+
   e.save!
 end
 puts "#{i} Employee inserted.-----------------------------------------------"

@@ -1,0 +1,2 @@
+json.extract! esic_employer_master, :id, :esic, :percentage, :effective_from, :effective_to, :max_limit, :base_component, :is_active, :is_confirm, :created_at, :updated_at
+json.url esic_employer_master_url(esic_employer_master, format: :json)

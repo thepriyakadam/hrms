@@ -1,0 +1,1 @@
+json.array! @da_masters, partial: 'da_masters/da_master', as: :da_master

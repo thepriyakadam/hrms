@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Is insurance:</strong>
+  <%= @insurance_master.is_insurance %>
+</p>
+
+<p>
+  <strong>Percentage:</strong>
+  <%= @insurance_master.percentage %>
+</p>
+
+<p>
+  <strong>Base component:</strong>
+  <%= @insurance_master.base_component %>
+</p>
+
+<p>
+  <strong>Effective from:</strong>
+  <%= @insurance_master.effective_from %>
+</p>
+
+<p>
+  <strong>Effective to:</strong>
+  <%= @insurance_master.effective_to %>
+</p>
+
+<p>
+  <strong>Is active:</strong>
+  <%= @insurance_master.is_active %>
+</p>
+
+<p>
+  <strong>Is confirm:</strong>
+  <%= @insurance_master.is_confirm %>
+</p>
+
+<%= link_to 'Edit', edit_insurance_master_path(@insurance_master) %> |
+<%= link_to 'Back', insurance_masters_path %>

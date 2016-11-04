@@ -1,0 +1,1 @@
+json.partial! "fp_masters/fp_master", fp_master: @fp_master

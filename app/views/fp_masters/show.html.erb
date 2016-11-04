@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Is fp:</strong>
+  <%= @fp_master.is_fp %>
+</p>
+
+<p>
+  <strong>Min limit:</strong>
+  <%= @fp_master.min_limit %>
+</p>
+
+<p>
+  <strong>Percentage:</strong>
+  <%= @fp_master.percentage %>
+</p>
+
+<p>
+  <strong>Base component:</strong>
+  <%= @fp_master.base_component %>
+</p>
+
+<p>
+  <strong>Effective from:</strong>
+  <%= @fp_master.effective_from %>
+</p>
+
+<p>
+  <strong>Effective to:</strong>
+  <%= @fp_master.effective_to %>
+</p>
+
+<p>
+  <strong>Is active:</strong>
+  <%= @fp_master.is_active %>
+</p>
+
+<p>
+  <strong>Is confirm:</strong>
+  <%= @fp_master.is_confirm %>
+</p>
+
+<%= link_to 'Edit', edit_fp_master_path(@fp_master) %> |
+<%= link_to 'Back', fp_masters_path %>

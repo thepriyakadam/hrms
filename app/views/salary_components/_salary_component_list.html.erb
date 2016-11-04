@@ -6,6 +6,7 @@
       <th>Description</th>
       <th>Account Code</th>
       <th>Is Deducted</th>
+      <th>Status</th>
       <th>Action</th>
     </tr>
   </thead>
@@ -17,6 +18,8 @@
         <td><%= salary_component.description %></td>
         <td><%= salary_component.account_code %></td>
         <td><%= salary_component.is_deducted ? "Yes" : "No" %></td>
+        <td><%= salary_component.is_active ? "Active" : "Inactive" %></td>
+
         <td>
           <% if salary_component.is_confirm == true %>
             <small class= "label label-primary">Confirmed</small>

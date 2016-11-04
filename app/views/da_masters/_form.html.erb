@@ -2,7 +2,9 @@
  <div class="row">
 
   <div class="col-sm-3">
+        <div class="form-group required">
         <%= f.select :is_da,[['Yes','true'],['No','false']],{label: 'DA',include_blank: " Select DA Option"} %>
+      </div>
       </div>
    
    
@@ -67,4 +69,30 @@
     yearRange: '-20:+10',
     dateFormat: 'dd-mm-yy' });
   });
+</script>
+
+<script>
+$("#da_master").validate({
+    rules: {
+      "da_master[is_da]":{
+        required: true,
+      },
+      "da_master[minimum_wages]":{
+        required: true
+      },
+     
+    },
+    messages: {
+      "da_master[is_da]":{
+        required: "Please Select DA "
+      },
+      "da_master[minimum_wages]":{
+        required: "Please Specify Minimum Wages "
+      },
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
 </script>

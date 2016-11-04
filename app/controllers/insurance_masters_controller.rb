@@ -26,8 +26,6 @@ class InsuranceMastersController < ApplicationController
   def create
     @insurance_master = InsuranceMaster.new(insurance_master_params)
     @insurance_masters = InsuranceMaster.all
-
-
     respond_to do |format|
       if @insurance_master.save
          @insurance_master = InsuranceMaster.new

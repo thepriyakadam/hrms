@@ -2,11 +2,14 @@
  <div class="row">
 
   <div class="col-sm-3">
-        <%= f.select :esic,[['Yes','true'],['No','false']],{label: 'DA',include_blank: " Select DA Option"} %>
+        <div class="form-group required">
+
+        <%= f.select :esic,[['Yes','true'],['No','false']],{label: 'ESIC Employer',include_blank: " Select ESIC Employer Option"} %>
+      </div>
       </div>
      
    <div class="col-sm-3">
-      <div class="form-group required">
+      <div class="field">
         <%= f.text_field :percentage %>
       </div>
     </div>
@@ -35,7 +38,7 @@
 
  <div class="row">
   <div class="col-sm-3">
-      <div class="field">
+      <div class="form-group required">
         <%= f.text_field :max_limit %>
       </div>
     </div>
@@ -79,4 +82,29 @@
     yearRange: '-20:+10',
     dateFormat: 'dd-mm-yy' });
   });
+</script>
+<script>
+$("#esic_employer_master").validate({
+    rules: {
+      "esic_employer_master[esic]":{
+        required: true,
+      },
+      "esic_employer_master[max_limit]":{
+        required: true
+      },
+     
+    },
+    messages: {
+      "esic_employer_master[esic]":{
+        required: "Please specify ESIC "
+      },
+      "esic_employer_master[max_limit]":{
+        required: "Please Specify Limit"
+      },
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
 </script>

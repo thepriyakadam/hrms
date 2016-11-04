@@ -64,7 +64,7 @@ class SalaryReport
         sr.actual_child_edu = a.actual_amount
         sr.earned_child_edu = a.calculated_amount
 
-        when "Rembursement of Medical Allowence"
+        when "Reimbursement of Medical Allowence"
         sr.actual_mra = a.actual_amount
         sr.earned_mra = a.calculated_amount
       end
@@ -93,7 +93,7 @@ class SalaryReport
         sr.mobile = d.calculated_amount
         when "Retention"
         sr.retention = d.calculated_amount
-        when "Well Faire"
+        when "WelFare"
         sr.welfair = d.calculated_amount
       end
     end
@@ -365,7 +365,7 @@ class SalaryReport
         when "Children Education Allowance"
         sr.actual_child_edu = a.actual_amount
 
-        when "Rembursement of Medical Allowence"
+        when "Reimbursement of Medical Allowence"
         sr.actual_mra = a.actual_amount
       end
     end
@@ -438,7 +438,7 @@ class SalaryReport
         sr.actual_child_edu = a.actual_amount
         sr.earned_child_edu = a.calculated_amount
 
-        when "Rembursement of Medical Allowence"
+        when "Reimbursement of Medical Allowence"
         sr.actual_mra = a.actual_amount
         sr.earned_mra = a.calculated_amount
       end
@@ -467,7 +467,7 @@ class SalaryReport
         sr.mobile = d.calculated_amount
         when "Retention"
         sr.retention = d.calculated_amount
-        when "Well Faire"
+        when "WelFare"
         sr.welfair = d.calculated_amount
       end
     end

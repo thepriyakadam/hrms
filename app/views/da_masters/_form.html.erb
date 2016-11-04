@@ -1,11 +1,16 @@
-<%= bootstrap_form_for(@da_master,html: {id: 'da_master'},remote:true) do |f| %>
+<%= bootstrap_form_for(@da_master,html: {id: 'da_master'}) do |f| %>
  <div class="row">
 
   <div class="col-sm-3">
         <%= f.select :is_da,[['Yes','true'],['No','false']],{label: 'DA',include_blank: " Select DA Option"} %>
       </div>
    
-   
+   <div class="col-sm-2">
+      <div class="field">
+        <%=select_tag("components[]",options_for_select(SalaryComponent.all.collect {|ff| [ff.name, ff.id] }),{:multiple=>true,:id => "batches",class: "form-control"})%>
+      </div>
+    </div>
+
  <div class="col-sm-3">
       <div class="form-group required">
         <%= f.text_field :minimum_wages %>
@@ -22,7 +27,9 @@
         </div>
       </div>
     </div>
-     <div class="col-sm-3">
+</div>
+<div class="row">
+<div class="col-sm-3">
       <div class="field">
         <div class="input-group">
           <div class="input-group-addon">
@@ -32,8 +39,6 @@
         </div>
       </div>
     </div>
-</div>
-<div class="row">
  <div class="col-sm-3">
          <div class="col-sm-1">
       <label>Status </label>

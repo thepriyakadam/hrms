@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161103103812) do
+ActiveRecord::Schema.define(version: 20161104093342) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -2501,6 +2501,7 @@ ActiveRecord::Schema.define(version: 20161103103812) do
     t.integer  "parent_id"
     t.string   "account_code"
     t.boolean  "is_confirm"
+    t.boolean  "is_active"
   end
 
   add_index "salary_components", ["parent_id"], name: "index_salary_components_on_parent_id"

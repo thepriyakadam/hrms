@@ -24,20 +24,44 @@ class DaMastersController < ApplicationController
 
   # POST /da_masters
   # POST /da_masters.json
+
+  # def create
+  #   @da_master = DaMaster.new(da_master_params)
+  #   @da_masters = DaMaster.all
+
+  #   respond_to do |format|
+  #     if @da_master.save
+  #        @da_master = DaMaster.new
+  #        format.js { @flag = true }
+
+  #     else
+  #       flash.now[:alert] = 'DA Already Exist.'
+  #       format.js { @flag = false }
+  #     end
+  #   end
+  # end
+
   def create
-    @da_master = DaMaster.new(da_master_params)
-    @da_masters = DaMaster.all
-
-    respond_to do |format|
-      if @da_master.save
-         @da_master = DaMaster.new
-         format.js { @flag = true }
-
-      else
-        flash.now[:alert] = 'DA Already Exist.'
-        format.js { @flag = false }
-      end
+    components = params[:components]
+    str = ''
+    i = 0
+    components.try(:each) do |c|
+      str = if i == 0
+              c.to_s
+            else
+              str.to_s + ',' + c.to_s
+            end
+      i += 1
     end
+
+    @da_master = DaMaster.new(da_master_params)
+    @da_master.base_component = str
+    @da_masters = DaMaster.all
+    @da_master.save
+    #@retention_money = RetentionMoney.new
+
+    redirect_to new_da_master_path
+    flash[:notice] = "Saved Successfully"
   end
 
   # PATCH/PUT /da_masters/1
@@ -70,6 +94,6 @@ class DaMastersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def da_master_params
-      params.require(:da_master).permit(:is_da, :minimum_wages, :effective_from, :effective_to, :is_active, :is_confirm)
+      params.require(:da_master).permit(:is_da, :minimum_wages,:base_component, :effective_from, :effective_to, :is_active, :is_confirm)
     end
 end

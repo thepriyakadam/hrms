@@ -1,8 +1,8 @@
-<%= bootstrap_form_for(@retention_money,remote:true) do |f| %>
+<%= bootstrap_form_for(@retention_money) do |f| %>
   <div class="row">
      <div class="col-sm-3">
         <div class="form-group required">
-        <%= f.select :is_persent,["Yes","No"],{label: 'Percentage',include_blank: "Select Percentage"},{onchange:"var a={is_persent:$(this).val()}; $.get('/retention_moneys/select_form',a,function(response){});",class: 'form-control'} %>
+        <%= f.select :have_retention, [['Yes', true], ['No', false]],{label: 'Percentage',include_blank: "Select Percentage"},{onchange:"var a={have_retention:$(this).val()}; $.get('/retention_moneys/select_form',a,function(response){});",class: 'form-control'} %>
       </div>
     </div>
   </div>

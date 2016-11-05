@@ -811,7 +811,7 @@ class SalaryslipsController < ApplicationController
               addable_actual_amount = 0
               addable_calculated_amount = 0
             end
-            if @da.minimum_wages > da_actual_amount.to_f
+            if @da.minimum_wages > addable_actual_amount.to_f
             @salary_component = SalaryComponent.find_by(name: "DA")
             SalaryslipComponent.create(salaryslip_id: @salaryslip.try(:id), actual_amount: addable_actual_amount, calculated_amount: addable_calculated_amount, is_deducted: false, other_component_name: 'DA',salary_component_id: @salary_component.try(:id))
               end

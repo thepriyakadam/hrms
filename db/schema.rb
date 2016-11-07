@@ -1832,7 +1832,6 @@ ActiveRecord::Schema.define(version: 20161103103812) do
   create_table "issue_tracker_accesses", force: :cascade do |t|
     t.string   "name"
     t.string   "role"
-    t.integer  "employee_id"
     t.boolean  "status"
     t.boolean  "is_confirm"
     t.datetime "created_at",              null: false
@@ -1841,7 +1840,6 @@ ActiveRecord::Schema.define(version: 20161103103812) do
     t.integer  "issue_tracker_group_id"
   end
 
-  add_index "issue_tracker_accesses", ["employee_id"], name: "index_issue_tracker_accesses_on_employee_id"
   add_index "issue_tracker_accesses", ["issue_tracker_group_id"], name: "index_issue_tracker_accesses_on_issue_tracker_group_id"
   add_index "issue_tracker_accesses", ["issue_tracker_member_id"], name: "index_issue_tracker_accesses_on_issue_tracker_member_id"
 
@@ -2547,15 +2545,6 @@ ActiveRecord::Schema.define(version: 20161103103812) do
     t.string   "base_component"
     t.boolean  "is_active"
     t.string   "is_persent"
-  end
-
-  create_table "reward_allocations", force: :cascade do |t|
-    t.string   "code"
-    t.string   "name"
-    t.text     "description"
-    t.boolean  "status"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
   end
 
   create_table "reward_allocations", force: :cascade do |t|

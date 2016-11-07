@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161103103812) do
+ActiveRecord::Schema.define(version: 20161106072411) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -481,6 +481,7 @@ ActiveRecord::Schema.define(version: 20161103103812) do
     t.boolean  "is_confirm"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+    t.string   "base_component"
   end
 
   create_table "daily_bill_detail_histories", force: :cascade do |t|
@@ -1128,6 +1129,26 @@ ActiveRecord::Schema.define(version: 20161103103812) do
     t.datetime "updated_at",  null: false
     t.boolean  "is_confirm"
   end
+
+  create_table "employeer_esics", force: :cascade do |t|
+    t.integer  "empoyee_id"
+    t.date     "esic_date"
+    t.decimal  "amount"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "employeer_esics", ["empoyee_id"], name: "index_employeer_esics_on_empoyee_id"
+
+  create_table "employeer_pfs", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.date     "pf_date"
+    t.decimal  "amount"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "employeer_pfs", ["employee_id"], name: "index_employeer_pfs_on_employee_id"
 
   create_table "employees", force: :cascade do |t|
     t.integer  "department_id"
@@ -2682,6 +2703,7 @@ ActiveRecord::Schema.define(version: 20161103103812) do
     t.integer  "parent_id"
     t.string   "account_code"
     t.boolean  "is_confirm"
+    t.boolean  "is_active"
   end
 
   add_index "salary_components", ["parent_id"], name: "index_salary_components_on_parent_id"

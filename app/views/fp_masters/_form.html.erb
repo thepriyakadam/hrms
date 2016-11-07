@@ -1,16 +1,32 @@
 <%= bootstrap_form_for(@fp_master,html: {id: 'fp_master'},remote:true) do |f| %>
  <div class="row">
-
-  <div class="col-sm-3">
-        <%= f.select :is_fp,[['Yes','true'],['No','false']],{label: 'FP',include_blank: " Select FP Option"} %>
-      </div>
-     
    <div class="col-sm-3">
       <div class="form-group required">
+        <%= f.select :is_fp,[['Yes','true'],['No','false']],{label: 'FP',include_blank: " Select FP Option"} %>
+      </div>
+   </div>
+     
+   <div class="col-sm-3">
+      <div class="field">
         <%= f.text_field :percentage %>
       </div>
+   </div>
+    <div class="col-sm-3">
+    <label>Base Component</label>
+      <div class="form-group required">
+        <%=select_tag("components[]",options_for_select(SalaryComponent.all.collect {|ff| [ff.name, ff.id] }),{:multiple=>true,:id => "batches",class: "form-control"})%>
+      </div>
     </div>
+
    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :min_limit %>
+      </div>
+    </div>
+</div>
+
+ <div class="row">
+ <div class="col-sm-3">
       <div class="field">
         <div class="input-group">
           <div class="input-group-addon">
@@ -30,20 +46,7 @@
         </div>
       </div>
     </div>
-
-</div>
-
- <div class="row">
-  <div class="col-sm-3">
-      <div class="field">
-        <%= f.text_field :min_limit %>
-      </div>
-    </div>
-  <div class="col-sm-3">
-      <div class="field">
-    <%= f.text_field :base_component %>
-  </div>
-  </div>
+    
   
  <div class="col-sm-3">
          <div class="col-sm-1">
@@ -79,4 +82,29 @@
     yearRange: '-20:+10',
     dateFormat: 'dd-mm-yy' });
   });
+</script>
+<script>
+$("#fp_master").validate({
+    rules: {
+      "fp_master[is_fp]":{
+        required: true,
+      },
+      "fp_master[min_limit]":{
+        required: true
+      },
+     
+    },
+    messages: {
+      "fp_master[is_fp]":{
+        required: "Please specify FP "
+      },
+      "fp_master[min_limit]":{
+        required: "Please Specify Limit"
+      },
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
 </script>

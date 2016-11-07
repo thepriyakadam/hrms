@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161107100328) do
+ActiveRecord::Schema.define(version: 20161107135922) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -230,9 +230,10 @@ ActiveRecord::Schema.define(version: 20161107100328) do
   create_table "bonus_employees", force: :cascade do |t|
     t.integer  "employee_id"
     t.date     "bonus_date"
-    t.decimal  "amount",      precision: 15, scale: 2
-    t.datetime "created_at",                           null: false
-    t.datetime "updated_at",                           null: false
+    t.decimal  "amount",        precision: 15, scale: 2
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+    t.decimal  "actual_amount"
   end
 
   add_index "bonus_employees", ["employee_id"], name: "index_bonus_employees_on_employee_id"
@@ -1134,8 +1135,9 @@ ActiveRecord::Schema.define(version: 20161107100328) do
     t.integer  "empoyee_id"
     t.date     "esic_date"
     t.decimal  "amount"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.decimal  "actual_amount"
   end
 
   add_index "employeer_esics", ["empoyee_id"], name: "index_employeer_esics_on_empoyee_id"
@@ -1144,8 +1146,9 @@ ActiveRecord::Schema.define(version: 20161107100328) do
     t.integer  "employee_id"
     t.date     "pf_date"
     t.decimal  "amount"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.decimal  "actual_amount"
   end
 
   add_index "employeer_pfs", ["employee_id"], name: "index_employeer_pfs_on_employee_id"

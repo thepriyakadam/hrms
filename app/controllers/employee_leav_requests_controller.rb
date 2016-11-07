@@ -46,10 +46,7 @@ class EmployeeLeavRequestsController < ApplicationController
       @employee_leav_request.leave_records.build(employee_id: @employee_leav_request.employee_id,employee_leav_request_id: @employee_leav_request.id,status: "Pending", day: i)
     end
 
-    if @employee_leav_request.is_holiday?
-      flash[:alert] = "Your Leave Request has holiday."
-      redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
-    elsif @employee_leav_request.is_available?
+    if @employee_leav_request.is_available?
       flash[:alert] = "Your Leave Request already has been sent status is pending"
       redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
     elsif @employee_leav_request.is_available1?

@@ -47,7 +47,10 @@ class LeaveCOffsController < ApplicationController
         @leave_c_off = LeaveCOff.new(leave_c_off_params)
         @leave_c_offs = LeaveCOff.all
         leav_category = LeavCategory.find_by_name('Compensatory Off')
-        @leave_c_off.expiry_date = @leave_c_off.c_off_date + @leave_c_off.c_off_expire_day
+        if @leave_c_off.expiry_status == true
+          @leave_c_off.expiry_date = @leave_c_off.c_off_date + @leave_c_off.c_off_expire_day
+        else
+        end
         @c_off = LeaveCOff.where(is_expire: nil)
 
 
@@ -92,7 +95,10 @@ class LeaveCOffsController < ApplicationController
             @employee_leave_balance = EmployeeLeavBalance.new do |b|
               b.employee_id = @leave_c_off.employee_id
               b.leav_category_id = leav_category.id
-              b.expiry_date = @leave_c_off.c_off_date + @leave_c_off.c_off_expire_day
+              if @leave_c_off.expiry_status == true
+                b.expiry_date = @leave_c_off.c_off_date + @leave_c_off.c_off_expire_day
+              else
+              end
               b.is_active = true
 
               if @leave_c_off.c_off_type == "Full Day"

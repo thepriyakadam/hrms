@@ -1132,15 +1132,15 @@ ActiveRecord::Schema.define(version: 20161107141459) do
   end
 
   create_table "employeer_esics", force: :cascade do |t|
-    t.integer  "empoyee_id"
     t.date     "esic_date"
     t.decimal  "amount"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.integer  "employee_id"
     t.decimal  "actual_amount"
   end
 
-  add_index "employeer_esics", ["empoyee_id"], name: "index_employeer_esics_on_empoyee_id"
+  add_index "employeer_esics", ["employee_id"], name: "index_employeer_esics_on_employee_id"
 
   create_table "employeer_pfs", force: :cascade do |t|
     t.integer  "employee_id"

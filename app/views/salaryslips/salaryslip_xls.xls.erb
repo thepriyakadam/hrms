@@ -1,0 +1,46 @@
+<table id="example5" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th><input type="checkbox" id="selectAll" value="selectAll"></th>
+      <th>Year-Month</th>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Actual Gross Salary</th>
+      <th>Actual Bonus</th>
+      <th>Actual Pf</th>
+      <th>Actual Esic</th>
+      <th>Actual CTC</th>
+      <th>Calculated Gross Salary</th>
+      <th>Calculated Bonus</th>
+      <th>Calculated Pf</th>
+      <th>Calculated Esic</th>
+      <th>Calculated CTC</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @salaryslips.try(:each) do |s| %>
+    <% @bonus_employees.try(:each) do |be| %>
+    <% @employeer_pfs.try(:each) do |ep| %>
+    <% @employeer_esic.try(:each) do |ee| %>
+      <tr>
+        <td><%= check_box_tag "slaryslip_ids[]", s.id %></td>
+        <td><%= s.year %>-<%= s.month %></td>
+        <td><%= s.employee.try(:manual_employee_code) %></td>
+        <td><%= s.employee.try(:first_name) %> <%= s.employee.try(:middle_name) %> <%= s.employee.try(:last_name) %></td>
+        <td><%= s.actual_gross_salary.round %></td>
+        <td><%=  %></td>
+        <td><%=  %></td>
+        <td><%=  %></td>
+        <td><%=  %></td>
+        <td><%= s.calculated_gross_salary.round %></td>
+        <td><%= be.amount %></td>
+        <td><%= ep.amount %></td>
+        <td><%= ee.amount %></td>
+        <td><%= a=be.amount+ep.amount+ee.amount %></td>
+      </tr>
+    <% end %>
+    <% end %>
+    <% end %>
+    <% end %>
+  </tbody>
+</table>

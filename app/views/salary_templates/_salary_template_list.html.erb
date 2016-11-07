@@ -22,7 +22,7 @@
           <%= link_to 'Edit Template Detail', edit_salary_template_path(salary_template),class: 'btn btn-sm btn-success btn-xs',remote:true %>
           <%= link_to 'Assign Component To Template', salary_component_templates_path(salary_template),class: 'btn btn-sm btn-info btn-xs' %>
            <%= link_to '', is_confirm_salary_templates_path(salary_template: salary_template),data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-primary fa fa-check' %>
-          <%= link_to 'page', salary_template_page_salary_component_templates_path(salary_template),class: 'btn btn-xs btn-primary ' %>
+          <%= link_to 'Information', salary_template_page_salary_component_templates_path(salary_template),class: 'btn btn-xs btn-primary ' %>
   
            <% end %>
         </td>

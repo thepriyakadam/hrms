@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161106072411) do
+ActiveRecord::Schema.define(version: 20161107100328) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -1992,7 +1992,7 @@ ActiveRecord::Schema.define(version: 20161106072411) do
     t.integer  "employee_id"
     t.date     "c_off_date"
     t.string   "c_off_type"
-    t.integer  "c_off_expire_day",                         default: 60
+    t.integer  "c_off_expire_day",                         default: 0
     t.boolean  "expiry_status"
     t.datetime "created_at",                                               null: false
     t.datetime "updated_at",                                               null: false

@@ -51,7 +51,7 @@ class LeaveCOffsController < ApplicationController
           @leave_c_off.expiry_date = @leave_c_off.c_off_date + @leave_c_off.c_off_expire_day
         else
         end
-        @c_off = LeaveCOff.where(is_expire: nil)
+        @c_off = LeaveCOff.where(is_expire: nil,expiry_status: true)
 
 
         if leav_category.nil?
@@ -67,7 +67,7 @@ class LeaveCOffsController < ApplicationController
               @employee_leave_balance.update(expiry_date: @leave_c_off.expiry_date)
 
               @c_off.each do |l|
-                if l.expiry_date < Date.today
+                if l.try(:expiry_date) < Date.today
                   @emp_leave_bal = EmployeeLeavBalance.where(employee_id: l.employee_id,leav_category_id: leav_category.id).take  
                   @emp_leave_bal.no_of_leave = @emp_leave_bal.no_of_leave.to_f - l.leave_count
                   LeaveCOff.find(l.id).update(leave_count: 0,is_expire: true)
@@ -82,7 +82,7 @@ class LeaveCOffsController < ApplicationController
               @employee_leave_balance.update(expiry_date: @leave_c_off.expiry_date)
               
               @c_off.each do |l|
-                if l.expiry_date < Date.today
+                if l.try(:expiry_date) < Date.today
                   @emp_leave_bal = EmployeeLeavBalance.where(employee_id: l.employee_id,leav_category_id: leav_category.id).take
                   @emp_leave_bal.no_of_leave = @emp_leave_bal.no_of_leave.to_f - l.leave_count
                   LeaveCOff.find(l.id).update(leave_count: 0,is_expire: true)

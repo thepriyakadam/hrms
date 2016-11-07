@@ -590,7 +590,7 @@ class SalaryslipsController < ApplicationController
       redirect_to select_month_year_form_salaryslips_path
     else
       ActiveRecord::Base.transaction do
-        employee_ids.each do |eid|
+        employee_ids.try(:each) do |eid|
           @instalment_array = []
           @salaryslip_component_array = []
           @employee = Employee.find(eid)
@@ -755,16 +755,16 @@ class SalaryslipsController < ApplicationController
             ss.employee_id = @employee.id
             ss.workingday_id = working_day.id
             ss.employee_template_id = current_template.id
-            ss.actual_gross_salary = addable_total_actual_amount
-            ss.actual_total_deduction = deducted_total_actual_amount
-            ss.actual_net_salary = addable_total_actual_amount - deducted_total_actual_amount
+            # ss.actual_gross_salary = addable_total_actual_amount
+            # ss.actual_total_deduction = deducted_total_actual_amount
+            # ss.actual_net_salary = addable_total_actual_amount - deducted_total_actual_amount
             ss.salary_template_id = @template_id
             ss.month = @month
             ss.year = @year
             ss.month_year = "01 #{@month} #{@year}".to_date
-            ss.calculated_gross_salary = addable_total_calculated_amount
-            ss.calculated_total_deduction = deducted_total_calculated_amount
-            ss.calculated_net_salary = addable_total_calculated_amount - deducted_total_calculated_amount
+            # ss.calculated_gross_salary = addable_total_calculated_amount
+            # ss.calculated_total_deduction = deducted_total_calculated_amount
+            # ss.calculated_net_salary = addable_total_calculated_amount - deducted_total_calculated_amount
             ss.save!
           end
           @salaryslip = Salaryslip.last
@@ -799,6 +799,8 @@ class SalaryslipsController < ApplicationController
                   #redirect_to select_month_year_form_salaryslips_path
                 end
               end
+              # c=formula_item_actual_amount
+              # d=formula_item_calculated_amount
 
               if @employee.joining_detail.select_pf == 'Yes'
                 deducted_actual_amount = (formula_total_actual_amount / 100 * @pf_master.percentage).round
@@ -814,6 +816,7 @@ class SalaryslipsController < ApplicationController
               SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: deducted_actual_amount, calculated_amount: deducted_calculated_amount, is_deducted: true, other_component_name: 'PF',salary_component_id: @salary_component.id)
             end
           end
+          # byebug
 
           formula_item_actual_amount = 0
           formula_item_calculated_amount = 0
@@ -1025,10 +1028,36 @@ class SalaryslipsController < ApplicationController
           calculated_net_salary = calculated_gross_salary - calculated_total_deduction
 
           Salaryslip.where(id: @salaryslip.id).update_all(actual_gross_salary: actual_gross_salary,actual_total_deduction: actual_total_deduction,actual_net_salary: actual_net_salary,calculated_gross_salary: calculated_gross_salary,calculated_total_deduction: calculated_total_deduction,calculated_net_salary: calculated_net_salary)
-          puts "SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS.............................."        
-           
-          BonusEmployee.create_bonus(basic_calculated_amount, @employee.id, date)
+          puts "SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS.............................."
 
+ 
+          BonusEmployee.create_bonus(basic_calculated_amount, @employee.id, date)
+          # byebug
+          @fp_master = FpMaster.where(is_active: true).take
+          formula_string = @fp_master.base_component.split(',').map {|i| i.to_i}
+          # formula_string.try(:each) do |f|
+          formula_item = SalaryslipComponent.where(salary_component_id: formula_string,salaryslip_id: @salaryslip.id)
+          @total = formula_item.sum(:calculated_amount)
+          formula_item_calculated_amount = (@total / 100 * @fp_master.percentage).ceil
+          # formula_item_calculated_amount = @total / working_day.try(:day_in_month) * working_day.try(:payable_day)
+
+          EmployeerPf.create_fp(formula_item_calculated_amount,@employee.id, date)
+          puts "ttttttttttttttttttttttttttttttttttttttttttttt..........................."
+          # end
+
+
+          # byebug
+          @esic_employer_master = EsicEmployerMaster.where(is_active: true).take
+          formula_string = @esic_employer_master.base_component.split(',').map {|i| i.to_i}
+          # formula_string.try(:each) do |f|
+          formula_item = SalaryslipComponent.where(salary_component_id: formula_string,salaryslip_id: @salaryslip.id)
+          @total = formula_item.sum(:calculated_amount)
+          formula_item_calculated_amount = (@total / 100 * @esic_employer_master.percentage).ceil
+          # formula_item_calculated_amount = @total / working_day.try(:day_in_month) * working_day.try(:payable_day)
+
+          EmployeerEsic.create_esic(formula_item_calculated_amount,@employee.id, date)
+          puts "ggggggggggggggggggggggggggggggg..........................."
+          # end
 
           @arrear = EmployeeArrear.where('employee_id = ? and is_paid = ?', @employee.id, false).take
           next if @arrear.nil?
@@ -1102,6 +1131,17 @@ class SalaryslipsController < ApplicationController
         @salaryslips = Salaryslip.where(month: @month, year: @year.to_s, employee_id: @employees)
       end  
     end    
+  end
+
+  def display_salaryslip_report
+    @month = params[:month]
+    @year = params[:year]
+    @salaryslips = Salaryslip.where(month: @month.to_s, year: @year.to_s)
+    @salaryslips = Salaryslip.where(month: @month.to_s, year: @year.to_s).take
+    # @bonus_employees = BonusEmployee.where(employee_id: @salaryslips.employee_id,date: )
+    @bonus_employees = BonusEmployee.where("strftime('%m/%Y', bonus_date) = ? and employee_id = ?", date.strftime('%m/%Y'), @salaryslips.employee_id)
+    @employeer_pfs = EmployeerPf.where("strftime('%m/%Y', pf_date) = ? and employee_id = ?", date.strftime('%m/%Y'), @salaryslips.employee_id)
+    @employeer_esic = EmployeerEsic.where("strftime('%m/%Y', esic_date) = ? and employee_id = ?", date.strftime('%m/%Y'), @salaryslips.employee_id)
   end
 
   def destroy_salary_slip

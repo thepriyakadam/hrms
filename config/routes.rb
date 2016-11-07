@@ -1207,6 +1207,8 @@ end
       get :show_employee
       post :destroy_salary_slip
       get :salary_slip_report
+      get :salary_report
+      get :display_salaryslip_report
     end
   end
  

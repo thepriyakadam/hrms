@@ -1038,10 +1038,12 @@ class SalaryslipsController < ApplicationController
           # formula_string.try(:each) do |f|
           formula_item = SalaryslipComponent.where(salary_component_id: formula_string,salaryslip_id: @salaryslip.id)
           @total = formula_item.sum(:calculated_amount)
+          @total_actual = formula_item.sum(:actual_amount)
           formula_item_calculated_amount = (@total / 100 * @fp_master.percentage).ceil
+          formula_item_actual_amount = (@total_actual / 100 * @fp_master.percentage).ceil
           # formula_item_calculated_amount = @total / working_day.try(:day_in_month) * working_day.try(:payable_day)
 
-          EmployeerPf.create_fp(formula_item_calculated_amount,@employee.id, date)
+          EmployeerPf.create_fp(formula_item_calculated_amount,formula_item_actual_amount,@employee.id, date)
           puts "ttttttttttttttttttttttttttttttttttttttttttttt..........................."
           # end
 
@@ -1052,10 +1054,11 @@ class SalaryslipsController < ApplicationController
           # formula_string.try(:each) do |f|
           formula_item = SalaryslipComponent.where(salary_component_id: formula_string,salaryslip_id: @salaryslip.id)
           @total = formula_item.sum(:calculated_amount)
+          @total_actual = formula_item.sum(:actual_amount)
           formula_item_calculated_amount = (@total / 100 * @esic_employer_master.percentage).ceil
-          # formula_item_calculated_amount = @total / working_day.try(:day_in_month) * working_day.try(:payable_day)
+          formula_item_actual_amount = (@total_actual / 100 * @esic_employer_master.percentage).ceil
 
-          EmployeerEsic.create_esic(formula_item_calculated_amount,@employee.id, date)
+          EmployeerEsic.create_esic(formula_item_calculated_amount,formula_item_actual_amount,@employee.id, date)
           puts "ggggggggggggggggggggggggggggggg..........................."
           # end
 
@@ -1134,7 +1137,6 @@ class SalaryslipsController < ApplicationController
   end
 
   def display_salaryslip_report
-    byebug
     @month = params[:month]
     @year = params[:year]
     # byebug

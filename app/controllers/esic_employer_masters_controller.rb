@@ -24,20 +24,27 @@ class EsicEmployerMastersController < ApplicationController
 
   # POST /esic_employer_masters
   # POST /esic_employer_masters.json
+
   def create
-    @esic_employer_master = EsicEmployerMaster.new(esic_employer_master_params)
-    @esic_employer_masters = EsicEmployerMaster.all
-
-    respond_to do |format|
-      if @esic_employer_master.save
-        esic_employer_master = EsicEmployerMaster.new
-     format.js { @flag = true }
-
-      else
-        flash.now[:alert] = 'ESIC Employer Already Exist.'
-        format.js { @flag = false }
-      end
+    components = params[:components]
+    str = ''
+    i = 0
+    components.try(:each) do |c|
+      str = if i == 0
+              c.to_s
+            else
+              str.to_s + ',' + c.to_s
+            end
+      i += 1
     end
+
+    @esic_employer_master = EsicEmployerMaster.new(esic_employer_master_params)
+    @esic_employer_master.base_component = str
+    @esic_employer_masters = EsicEmployerMaster.all
+    @esic_employer_master.save
+
+    redirect_to new_esic_employer_master_path
+    flash[:notice] = "Saved Successfully"
   end
 
   # PATCH/PUT /esic_employer_masters/1

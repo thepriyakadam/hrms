@@ -25,18 +25,25 @@ class FpMastersController < ApplicationController
   # POST /fp_masters
   # POST /fp_masters.json
   def create
-    @fp_master = FpMaster.new(fp_master_params)
-    @fp_masters = FpMaster.all   
-    respond_to do |format|
-      if @fp_master.save
-        fp_master = FpMaster.new
-     format.js { @flag = true }
-
-      else
-        flash.now[:alert] = 'PF Already Exist.'
-        format.js { @flag = false }
-      end
+    components = params[:components]
+    str = ''
+    i = 0
+    components.try(:each) do |c|
+      str = if i == 0
+              c.to_s
+            else
+              str.to_s + ',' + c.to_s
+            end
+      i += 1
     end
+
+    @fp_master = FpMaster.new(fp_master_params)
+    @fp_master.base_component = str
+    @fp_masters = FpMaster.all   
+    @fp_master.save
+
+    redirect_to new_fp_master_path
+    flash[:notice] = "Saved Successfully"
   end
 
   # PATCH/PUT /fp_masters/1

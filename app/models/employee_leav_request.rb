@@ -139,7 +139,7 @@ class EmployeeLeavRequest < ActiveRecord::Base
           end
         else
           for i in self.start_date.to_date..self.start_date.to_date
-            EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: "PR/"+self.leav_category.code.to_s, count: 0.5, employee_leav_request_id: self.id,department_id: self.employee.try(:department_id))
+            EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: "P/"+self.leav_category.code.to_s, count: 0.5, employee_leav_request_id: self.id,department_id: self.employee.try(:department_id))
 
           end
         end
@@ -151,7 +151,7 @@ class EmployeeLeavRequest < ActiveRecord::Base
           end
         else
           for i in self.start_date.to_date..self.start_date.to_date
-            EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: "PR/"+self.leav_category.code.to_s, count: 0.5, employee_leav_request_id: self.id,department_id: self.employee.try(:department_id))
+            EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: "P/"+self.leav_category.code.to_s, count: 0.5, employee_leav_request_id: self.id,department_id: self.employee.try(:department_id))
 
           end
         end

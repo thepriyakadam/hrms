@@ -1209,6 +1209,7 @@ end
       get :salary_slip_report
       get :salary_report
       get :display_salaryslip_report
+      post :pdf_report
     end
   end
  

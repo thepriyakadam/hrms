@@ -1136,13 +1136,43 @@ class SalaryslipsController < ApplicationController
   def display_salaryslip_report
     @month = params[:month]
     @year = params[:year]
-    @salaryslips = Salaryslip.where(month: @month.to_s, year: @year.to_s)
-    @salaryslips = Salaryslip.where(month: @month.to_s, year: @year.to_s).take
+    # byebug
+    @salaryslips = Salaryslip.where(month: @month.to_s, year: @year.to_s).group(:employee_id)
+    @salaryslips1 = Salaryslip.where(month: @month.to_s, year: @year.to_s).take
     # @bonus_employees = BonusEmployee.where(employee_id: @salaryslips.employee_id,date: )
-    @bonus_employees = BonusEmployee.where("strftime('%m/%Y', bonus_date) = ? and employee_id = ?", date.strftime('%m/%Y'), @salaryslips.employee_id)
-    @employeer_pfs = EmployeerPf.where("strftime('%m/%Y', pf_date) = ? and employee_id = ?", date.strftime('%m/%Y'), @salaryslips.employee_id)
-    @employeer_esic = EmployeerEsic.where("strftime('%m/%Y', esic_date) = ? and employee_id = ?", date.strftime('%m/%Y'), @salaryslips.employee_id)
+    @bonus_employees = BonusEmployee.where(employee_id: @salaryslips1.employee_id).group(:employee_id)
+    @employeer_pfs = EmployeerPf.where(employee_id: @salaryslips1.employee_id).group(:employee_id)
+    @employeer_esic = EmployeerEsic.where(employee_id: @salaryslips1.employee_id).group(:employee_id)
   end
+
+  def pdf_report
+    # byebug
+    @month = params[:month]
+    @year = params[:year]
+    @salary1 = params[:slaryslip_ids]
+    @salaryslips = Salaryslip.where(month: @month.to_s, year: @year.to_s,id: @salary1).group(:employee_id)
+    @salaryslips1 = Salaryslip.where(month: @month.to_s, year: @year.to_s,id: @salary1).take
+    # @bonus_employees = BonusEmployee.where(employee_id: @salaryslips.employee_id,date: )
+    @bonus_employees = BonusEmployee.where(employee_id: @salaryslips1.try(:employee_id)).group(:employee_id)
+    @employeer_pfs = EmployeerPf.where(employee_id: @salaryslips1.try(:employee_id)).group(:employee_id)
+    @employeer_esic = EmployeerEsic.where(employee_id: @salaryslips1.try(:employee_id)).group(:employee_id)
+    respond_to do |format|
+            format.html
+            format.pdf do
+            render :pdf => 'pdf_report',
+            layout: '/layouts/pdf.html.erb',
+            :template => 'salaryslips/pdf_report.pdf.erb',
+            :orientation      => 'Landscape', # default , Landscape
+            :page_height      => 1000,
+            :dpi              => '300',
+            :margin           => {:top    => 10, # default 10 (mm)
+                          :bottom => 10,
+                          :left   => 20,
+                          :right  => 20},
+            :show_as_html => params[:debug].present?
+          end
+        end
+      end
 
   def destroy_salary_slip
     @month = params[:month]

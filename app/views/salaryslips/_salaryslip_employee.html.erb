@@ -1,43 +1,43 @@
-<!-- <= form_for :salary_data, url: { action: 'save_all_data',month: @month,
-  year: @year} do |f| %> -->
+<%= form_for :pdf_salaries, url: { action: 'pdf_report',format: 'pdf',month: @month,year: @year},:html => {:target => '_blank'} do |f| %>
 <table id="example5" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
       <th><input type="checkbox" id="selectAll" value="selectAll"></th>
-      <th>Employee ID</th>
+      <th>Year-Month</th>
+      <th>ID</th>
+      <th>Name</th>
       <th>Actual Gross Salary</th>
-      <th>Actual Total Deduction</th>
-      <th>Actual Net Salary</th>
-      <th>Salary Template</th>
-      <th>Month</th>
-      <th>Year</th>
+      <th>Actual Bonus</th>
+      <th>Actual Pf</th>
+      <th>Actual Esic</th>
+      <th>Actual CTC</th>
       <th>Calculated Gross Salary</th>
-      <th>Calculated Total Deduction</th>
-      <th>Calculated Net Salary</th>
-      <th>Date</th>
+      <th>Calculated Bonus</th>
+      <th>Calculated Pf</th>
+      <th>Calculated Esic</th>
+      <th>Calculated CTC</th>
     </tr>
   </thead>
   <tbody>
-    <% @salaryslips.each do |s| %>
-    <% @bonus_employees.each do |be| %>
-    <% @employeer_pfs.each do |ep| %>
-    <% @employeer_esic.each do |ee| %>
+    <% @salaryslips.try(:each) do |s| %>
+    <% @bonus_employees.try(:each) do |be| %>
+    <% @employeer_pfs.try(:each) do |ep| %>
+    <% @employeer_esic.try(:each) do |ee| %>
       <tr>
         <td><%= check_box_tag "slaryslip_ids[]", s.id %></td>
-        <td><%= s.employee_id %></td>
+        <td><%= s.year %>-<%= s.month %></td>
+        <td><%= s.employee.try(:manual_employee_code) %></td>
+        <td><%= s.employee.try(:first_name) %> <%= s.employee.try(:middle_name) %> <%= s.employee.try(:last_name) %></td>
         <td><%= s.actual_gross_salary.round %></td>
-        <td><%= s.actual_total_deduction.round %></td>
-        <td><%= s.actual_net_salary.round %></td>
-        <td><%= s.salary_template.try(:name) %></td>
-        <td><%= s.month %></td>
-        <td><%= s.year %></td>
+        <td><%=  %></td>
+        <td><%=  %></td>
+        <td><%=  %></td>
+        <td><%=  %></td>
         <td><%= s.calculated_gross_salary.round %></td>
-        <td><%= s.calculated_total_deduction.round %></td>
-        <td><%= s.calculated_net_salary.round %></td>
-        <td><%= s.month_year %></td>
         <td><%= be.amount %></td>
         <td><%= ep.amount %></td>
         <td><%= ee.amount %></td>
+        <td><%= a=be.amount+ep.amount+ee.amount %></td>
       </tr>
     <% end %>
     <% end %>
@@ -45,8 +45,9 @@
     <% end %>
   </tbody>
 </table>
-<!-- <= f.submit "Create Salary", class: 'btn btn-sm btn-primary' %> -->
-<!-- < end %> -->
+<%= f.submit "Display Pdf", class: "btn btn-xl btn-info fa fa-print" %>
+<%= link_to " Excel Report ",salaryslip_xls_food_deductions_path(month: params[:food_deduction][:month], year: params[:food_deduction][:year],company_id: params[:food_deduction][:company_id],company_location_id: params[:food_deduction][:company_location_id], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+<% end %>
 
 <script type="text/javascript">
 $(document).ready(function() {

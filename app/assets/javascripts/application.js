@@ -48,7 +48,7 @@
     "info": true,
     "autoWidth": false
   });
-});
+
 
 $(function () {
   //Initialize Select2 Elements

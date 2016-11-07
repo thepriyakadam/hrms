@@ -1,19 +1,34 @@
 <%= bootstrap_form_for(@esic_employer_master,html: {id: 'esic_employer_master'},remote:true) do |f| %>
  <div class="row">
-
-  <div class="col-sm-3">
-        <div class="form-group required">
-
+    <div class="col-sm-3">
+      <div class="form-group required">
         <%= f.select :esic,[['Yes','true'],['No','false']],{label: 'ESIC Employer',include_blank: " Select ESIC Employer Option"} %>
       </div>
-      </div>
-     
-   <div class="col-sm-3">
+    </div>
+
+    <div class="col-sm-3">
       <div class="field">
         <%= f.text_field :percentage %>
       </div>
     </div>
-   <div class="col-sm-3">
+
+    <div class="col-sm-3">
+     <label>Base Component</label>
+      <div class="form-group required">
+        <%=select_tag("components[]",options_for_select(SalaryComponent.all.collect {|ff| [ff.name, ff.id] }),{:multiple=>true,:id => "batches",class: "form-control"})%>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :max_limit %>
+      </div>
+    </div>
+</div>
+
+ <div class="row">
+  
+     <div class="col-sm-3">
       <div class="field">
         <div class="input-group">
           <div class="input-group-addon">
@@ -33,21 +48,6 @@
         </div>
       </div>
     </div>
-
-</div>
-
- <div class="row">
-  <div class="col-sm-3">
-      <div class="form-group required">
-        <%= f.text_field :max_limit %>
-      </div>
-    </div>
-  <div class="col-sm-3">
-      <div class="field">
-    <%= f.text_field :base_component %>
-  </div>
-  </div>
-  
  <div class="col-sm-3">
          <div class="col-sm-1">
       <label>Status </label>

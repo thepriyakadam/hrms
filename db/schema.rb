@@ -481,6 +481,7 @@ ActiveRecord::Schema.define(version: 20161105060406) do
     t.boolean  "is_confirm"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+    t.string   "base_component"
   end
 
   create_table "daily_bill_detail_histories", force: :cascade do |t|

@@ -1327,8 +1327,16 @@ end
     end
   end
  
-  resources :salary_component_templates
-  resources :salary_templates
+  resources :salary_component_templates do
+    collection do
+      get :salary_template_page
+    end
+  end
+  resources :salary_templates do
+    collection do
+      get :is_confirm
+    end
+  end
   resources :religions do
     collection do
       get :is_confirm

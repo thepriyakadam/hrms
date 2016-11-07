@@ -1134,6 +1134,7 @@ class SalaryslipsController < ApplicationController
   end
 
   def display_salaryslip_report
+    byebug
     @month = params[:month]
     @year = params[:year]
     # byebug
@@ -1173,6 +1174,21 @@ class SalaryslipsController < ApplicationController
           end
         end
       end
+
+  def salaryslip_xls
+    @month = params[:month]
+    @year = params[:year]
+    # byebug
+    @salaryslips = Salaryslip.where(month: @month.to_s, year: @year.to_s).group(:employee_id)
+    @salaryslips1 = Salaryslip.where(month: @month.to_s, year: @year.to_s).take
+    # @bonus_employees = BonusEmployee.where(employee_id: @salaryslips.employee_id,date: )
+    @bonus_employees = BonusEmployee.where(employee_id: @salaryslips1.employee_id).group(:employee_id)
+    @employeer_pfs = EmployeerPf.where(employee_id: @salaryslips1.employee_id).group(:employee_id)
+    @employeer_esic = EmployeerEsic.where(employee_id: @salaryslips1.employee_id).group(:employee_id)
+    respond_to do |format|
+      format.xls {render template: 'salaryslips/salaryslip_xls.xls.erb'}
+    end
+  end
 
   def destroy_salary_slip
     @month = params[:month]

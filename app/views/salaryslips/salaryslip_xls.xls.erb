@@ -1,4 +1,3 @@
-<%= form_for :pdf_salaries, url: { action: 'pdf_report',format: 'pdf',month: @month,year: @year},:html => {:target => '_blank'} do |f| %>
 <table id="example5" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
@@ -45,30 +44,3 @@
     <% end %>
   </tbody>
 </table>
-<%= f.submit "Print Pdf", class: "btn btn-xl btn-info fa fa-print" %>
-<!-- <= link_to " Excel Report ",salaryslip_xls_salaryslips_path(month: @month, year: @year, format: "xls"), class: "btn btn-xl btn-success fa fa-print" %> -->
-<% end %>
-
-<script type="text/javascript">
-$(document).ready(function() {
-    $('#example5').DataTable( {
-        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]],
-        "scrollX": true
-    } );
-} );
-</script>
-
-<script type="text/javascript">
-$('#selectAll').click(function() {
-  if (this.checked) {
-    $(':checkbox').each(function() {
-      this.checked = true;                       
-    });
-  } 
-  else {
-    $(':checkbox').each(function() {
-      this.checked = false;                        
-    });
-  } 
-});
-</script>

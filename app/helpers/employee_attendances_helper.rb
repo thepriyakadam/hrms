@@ -36,7 +36,7 @@ module EmployeeAttendancesHelper
   end
 
   def holiday_in_month_count(exist)
-    exist.select {|k,v| v == "H" }.count
+    exist.select {|k,v| v == "HD" }.count
   end
 
   def week_off_day_count(exist)

@@ -1149,6 +1149,8 @@ class SalaryslipsController < ApplicationController
     @employeer_pfs = EmployeerPf.where(employee_id: s.employee_id).group(:employee_id)
     @employeer_esic = EmployeerEsic.where(employee_id: s.employee_id).group(:employee_id)
   end
+    session[:active_tab] ="payroll"
+    session[:active_tab1] ="salaryreport"
   end
 
   def pdf_report

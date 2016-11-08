@@ -43,12 +43,12 @@
         <td><%= %></td>
         <td><%= ep.try(:actual_amount) %></td>
         <td><%= ee.try(:actual_amount) %></td>
-        <td><%= b=ep.try(:actual_amount)+ee.try(:actual_amount) %></td>
+        <td><%= b=ep.actual_amount+ee.actual_amount+s.actual_gross_salary.round %></td>
         <td><%= s.calculated_gross_salary.round %></td>
         <td><%= be.amount %></td>
         <td><%= ep.amount %></td>
         <td><%= ee.amount %></td>
-        <td><%= a=be.amount+ep.amount+ee.amount %></td>
+        <td><%= a=be.amount+ep.amount+ee.amount+s.calculated_gross_salary.round %></td>
       </tr>
     <% end %>
     <% end %>

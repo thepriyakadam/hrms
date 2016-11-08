@@ -27,7 +27,7 @@
         <td><%= check_box_tag "slaryslip_ids[]", s.id %></td>
         <td><%= s.year %>-<%= s.month %></td>
         <td><%= s.employee.try(:manual_employee_code) %></td>
-        <td><%= s.employee.try(:first_name) %> <%= s.employee.try(:middle_name) %> <%= s.employee.try(:last_name) %></td>
+        <td><%= full_name(s.employee) %></td>
         <td><%= s.actual_gross_salary.round %></td>
         <td><%= %></td>
         <td><%= ep.try(:actual_amount) %></td>

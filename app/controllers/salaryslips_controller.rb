@@ -589,7 +589,7 @@ class SalaryslipsController < ApplicationController
       flash[:alert] = 'Please select employees.'
       redirect_to select_month_year_form_salaryslips_path
     else
-      ActiveRecord::Base.transaction do
+      ActiveRecord::Base.try(:transaction) do
         employee_ids.try(:each) do |eid|
           @instalment_array = []
           @salaryslip_component_array = []
@@ -1006,13 +1006,13 @@ class SalaryslipsController < ApplicationController
           end
           
 
-          @salary_component = SalaryComponent.find_by(name: "DA")
-          @salslip_comp = SalaryslipComponent.where(salaryslip_id: @salaryslip.id,salary_component_id: @salary_component.id).take
-          if @salslip_comp.actual_amount.to_f < 0
-            SalaryslipComponent.where(salary_component_id: @salary_component.id).update_all(actual_amount: 0, calculated_amount: 0)
-            puts "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT.............................."
-          else
-          end
+          # @salary_component = SalaryComponent.find_by(name: "DA")
+          # @salslip_comp = SalaryslipComponent.where(salaryslip_id: @salaryslip.id,salary_component_id: @salary_component.id).take
+          # if @salslip_comp.actual_amount.to_f < 0
+          #   SalaryslipComponent.where(salary_component_id: @salary_component.id).update_all(actual_amount: 0, calculated_amount: 0)
+          #   puts "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT.............................."
+          # else
+          # end
 
           @salaryslip = Salaryslip.last
           @salaryslip_component1 = SalaryslipComponent.where(salaryslip_id: @salaryslip.id)
@@ -1033,6 +1033,7 @@ class SalaryslipsController < ApplicationController
  
           BonusEmployee.create_bonus(basic_calculated_amount, @employee.id, date)
           # byebug
+        if @employee.joining_detail.is_employeer_pf == true
           @fp_master = FpMaster.where(is_active: true).take
           formula_string = @fp_master.base_component.split(',').map {|i| i.to_i}
           # formula_string.try(:each) do |f|
@@ -1046,8 +1047,10 @@ class SalaryslipsController < ApplicationController
           EmployeerPf.create_fp(formula_item_calculated_amount,formula_item_actual_amount,@employee.id, date)
           puts "ttttttttttttttttttttttttttttttttttttttttttttt..........................."
           # end
+        else
+        end
 
-
+        if @employee.joining_detail.is_employeer_esic == true
           # byebug
           @esic_employer_master = EsicEmployerMaster.where(is_active: true).take
           formula_string = @esic_employer_master.base_component.split(',').map {|i| i.to_i}
@@ -1061,6 +1064,8 @@ class SalaryslipsController < ApplicationController
           EmployeerEsic.create_esic(formula_item_calculated_amount,formula_item_actual_amount,@employee.id, date)
           puts "ggggggggggggggggggggggggggggggg..........................."
           # end
+        else
+        end
 
           @arrear = EmployeeArrear.where('employee_id = ? and is_paid = ?', @employee.id, false).take
           next if @arrear.nil?

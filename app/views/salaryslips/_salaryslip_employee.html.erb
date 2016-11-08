@@ -29,15 +29,15 @@
         <td><%= s.employee.try(:manual_employee_code) %></td>
         <td><%= s.employee.try(:first_name) %> <%= s.employee.try(:middle_name) %> <%= s.employee.try(:last_name) %></td>
         <td><%= s.actual_gross_salary.round %></td>
-        <td><%=  %></td>
-        <td><%=  %></td>
-        <td><%=  %></td>
-        <td><%=  %></td>
+        <td><%= %></td>
+        <td><%= ep.try(:actual_amount) %></td>
+        <td><%= ee.try(:actual_amount) %></td>
+        <td><%= b=ep.actual_amount+ee.actual_amount+s.actual_gross_salary.round %></td>
         <td><%= s.calculated_gross_salary.round %></td>
         <td><%= be.amount %></td>
         <td><%= ep.amount %></td>
         <td><%= ee.amount %></td>
-        <td><%= a=be.amount+ep.amount+ee.amount %></td>
+        <td><%= a=be.amount+ep.amount+ee.amount+s.calculated_gross_salary.round %></td>
       </tr>
     <% end %>
     <% end %>
@@ -46,7 +46,7 @@
   </tbody>
 </table>
 <%= f.submit "Print Pdf", class: "btn btn-xl btn-info fa fa-print" %>
-<!-- <= link_to " Excel Report ",salaryslip_xls_salaryslips_path(month: @month, year: @year, format: "xls"), class: "btn btn-xl btn-success fa fa-print" %> -->
+<%= link_to " Excel Report ",salaryslip_xls_salaryslips_path(month: @month, year: @year, format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
 <% end %>
 
 <script type="text/javascript">

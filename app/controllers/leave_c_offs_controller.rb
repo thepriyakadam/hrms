@@ -158,6 +158,7 @@ class LeaveCOffsController < ApplicationController
       # column(:Employee_Code, sortable: true) { |leave_c_off| leave_c_off.employee_id }
       column(:Employee_ID, sortable: true) { |leave_c_off| leave_c_off.employee.try(:manual_employee_code) }
       column(:Employee_Name, sortable: true) { |leave_c_off| full_name(leave_c_off.employee) }
+      column(:Designation, sortable: true) { |leave_c_off| leave_c_off.employee.joining_detail.try(:employee_designation).try(:name) }
       column(:Date, sortable: true, &:c_off_date)
       column(:Type, sortable: true, &:c_off_type)
       column(:Expire_Day, sortable: true, &:c_off_expire_day)

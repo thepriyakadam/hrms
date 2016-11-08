@@ -29,7 +29,19 @@ class JoiningDetailsController < ApplicationController
   # POST /joining_details
   # POST /joining_details.json
   def create
+    components = params[:components]
+    str = ''
+    i = 0
+    components.try(:each) do |c|
+      str = if i == 0
+              c.to_s
+            else
+              str.to_s + ',' + c.to_s
+            end
+      i += 1
+    end
     @joining_detail = JoiningDetail.new(joining_detail_params)
+     @joining_detail.base_component = str
     @employee = Employee.find(params[:joining_detail][:employee_id])
     respond_to do |format|
       if @joining_detail.save
@@ -102,6 +114,6 @@ class JoiningDetailsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def joining_detail_params
-    params.require(:joining_detail).permit(:employee_id, :joining_date, :employee_grade_id, :confirmation_date, :employee_uan_no, :employee_pf_no, :employee_efic_no, :probation_period, :notice_period, :medical_schem, :employee_designation_id, :passport_no, :passport_issue_date, :passport_expiry_date, :select_pf, :pf_max_amount, :have_esic, :payment_mode_id, :cost_center_id, :employee_category_id, :department_id, :have_retention, :retirement_date, :reserved_category_id, :is_da)
+    params.require(:joining_detail).permit(:base_component,:employee_id, :joining_date, :employee_grade_id, :confirmation_date, :employee_uan_no, :employee_pf_no, :employee_efic_no, :probation_period, :notice_period, :medical_schem, :employee_designation_id, :passport_no, :passport_issue_date, :passport_expiry_date, :select_pf, :pf_max_amount, :have_esic, :payment_mode_id, :cost_center_id, :employee_category_id, :department_id, :have_retention, :retirement_date, :reserved_category_id, :is_da)
   end
 end

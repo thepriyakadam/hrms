@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161107100328) do
+ActiveRecord::Schema.define(version: 20161108052900) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -1928,6 +1928,7 @@ ActiveRecord::Schema.define(version: 20161107100328) do
     t.date     "retirement_date"
     t.integer  "reserved_category_id"
     t.boolean  "is_da"
+    t.string   "base_component"
   end
 
   add_index "joining_details", ["cost_center_id"], name: "index_joining_details_on_cost_center_id"

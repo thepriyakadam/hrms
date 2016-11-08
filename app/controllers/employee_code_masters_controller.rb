@@ -37,6 +37,8 @@ class EmployeeCodeMastersController < ApplicationController
     @employee_code_master.update(employee_code_master_params)
     @employee_code_masters = EmployeeCodeMaster.all
     @employee_code_master = EmployeeCodeMaster.new
+    @emp_code_master = EmployeeCodeMaster.where(id: @employee_code_master.id).last(2).first
+    EmployeeCodeMaster.where(id: @emp_code_master.id).update_all(last_range: @employee_code_master.range)
   end
 
   # DELETE /employee_code_masters/1

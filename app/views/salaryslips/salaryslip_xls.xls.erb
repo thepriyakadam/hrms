@@ -7,39 +7,44 @@
   <Worksheet ss:Name="Sheet1">
     <Table>
       <Row>
-        <Cell ss:Index="1"><Data ss:Type="String">Year-Month</Data></Cell>
-        <Cell ss:Index="2"><Data ss:Type="String">ID</Data></Cell>
-        <Cell ss:Index="3"><Data ss:Type="String">Name</Data></Cell>
-        <Cell ss:Index="4"><Data ss:Type="String">Actual Gross Salary</Data></Cell>
-        <Cell ss:Index="5"><Data ss:Type="String">Actual Bonus</Data></Cell>
-        <Cell ss:Index="6"><Data ss:Type="String">Actual Pf</Data></Cell>
-        <Cell ss:Index="7"><Data ss:Type="String">Actual Esic</Data></Cell>
-        <Cell ss:Index="8"><Data ss:Type="String">Actual CTC</Data></Cell>
-        <Cell ss:Index="9"><Data ss:Type="String">Calculated Gross Salary</Data></Cell>
-        <Cell ss:Index="10"><Data ss:Type="String">Calculated Bonus</Data></Cell>
-        <Cell ss:Index="11"><Data ss:Type="String">Calculated Pf</Data></Cell>
-        <Cell ss:Index="12"><Data ss:Type="String">Calculated Esic</Data></Cell>
-        <Cell ss:Index="13"><Data ss:Type="String">Calculated CTC</Data></Cell>
+        <Cell ss:Index="1"><Data ss:Type="String">Year</Data></Cell>
+        <Cell ss:Index="2"><Data ss:Type="String">Month</Data></Cell>
+        <Cell ss:Index="3"><Data ss:Type="String">ID</Data></Cell>
+        <Cell ss:Index="4"><Data ss:Type="String">Name</Data></Cell>
+        <Cell ss:Index="5"><Data ss:Type="String">Actual Gross Salary</Data></Cell>
+        <Cell ss:Index="6"><Data ss:Type="String">Actual Bonus</Data></Cell>
+        <Cell ss:Index="7"><Data ss:Type="String">Actual Pf</Data></Cell>
+        <Cell ss:Index="8"><Data ss:Type="String">Actual Esic</Data></Cell>
+        <Cell ss:Index="9"><Data ss:Type="String">Actual CTC</Data></Cell>
+        <Cell ss:Index="10"><Data ss:Type="String">Calculated Gross Salary</Data></Cell>
+        <Cell ss:Index="11"><Data ss:Type="String">Calculated Bonus</Data></Cell>
+        <Cell ss:Index="12"><Data ss:Type="String">Calculated Pf</Data></Cell>
+        <Cell ss:Index="13"><Data ss:Type="String">Calculated Esic</Data></Cell>
+        <Cell ss:Index="14"><Data ss:Type="String">Calculated CTC</Data></Cell>
       </Row>
         <% @salaryslips.try(:each) do |s| %>
         <% @bonus_employees.try(:each) do |be| %>
         <% @employeer_pfs.try(:each) do |ep| %>
         <% @employeer_esic.try(:each) do |ee| %>
       <Row>
-        <Cell ss:Index="1"><Data ss:Type="Number"><%= s.year %>-<%= s.month %></Data></Cell>
-        <Cell ss:Index="2"><Data ss:Type="Number"><%= s.employee.try(:manual_employee_code) %></Data></Cell>
-        <Cell ss:Index="3"><Data ss:Type="Number"><%= s.employee.try(:first_name) %> <%= s.employee.try(:middle_name) %> <%= s.employee.try(:last_name) %></Data></Cell>
-        <Cell ss:Index="4"><Data ss:Type="Number"><%= s.actual_gross_salary.round %></Data></Cell>
-        <Cell ss:Index="5"><Data ss:Type="Number"><%=  %></Data></Cell>
-        <Cell ss:Index="6"><Data ss:Type="Number"><%=  %></Data></Cell>
-        <Cell ss:Index="7"><Data ss:Type="Number"><%=  %></Data></Cell>
-        <Cell ss:Index="8"><Data ss:Type="Number"><%= %></Data></Cell>
-        <Cell ss:Index="9"><Data ss:Type="Number"><%= s.calculated_gross_salary.round %></Data></Cell>
-        <Cell ss:Index="10"><Data ss:Type="Number"><%= be.amount %></Data></Cell>
-        <Cell ss:Index="11"><Data ss:Type="Number"><%= ep.amount %></Data></Cell>
-        <Cell ss:Index="12"><Data ss:Type="Number"><%= ee.amount %></Data></Cell>
-        <Cell ss:Index="13"><Data ss:Type="Number"><%= a=be.amount+ep.amount+ee.amount %></Data></Cell>
+        <Cell ss:Index="1"><Data ss:Type="String"><%= s.year %></Data></Cell>
+        <Cell ss:Index="2"><Data ss:Type="String"><%= s.month %></Data></Cell>
+        <Cell ss:Index="3"><Data ss:Type="String"><%= s.employee.try(:manual_employee_code) %></Data></Cell>
+        <Cell ss:Index="4"><Data ss:Type="String"><%= full_name(s.employee) %></Data></Cell>
+        <Cell ss:Index="5"><Data ss:Type="String"><%= s.actual_gross_salary.round %></Data></Cell>
+        <Cell ss:Index="6"><Data ss:Type="String"><%=  %></Data></Cell>
+        <Cell ss:Index="7"><Data ss:Type="String"><%= ep.try(:actual_amount) %></Data></Cell>
+        <Cell ss:Index="8"><Data ss:Type="String"><%= ee.try(:actual_amount) %></Data></Cell>
+        <Cell ss:Index="9"><Data ss:Type="String"><%= b=ep.actual_amount+ee.actual_amount+s.actual_gross_salary.round %></Data></Cell>
+        <Cell ss:Index="10"><Data ss:Type="String"><%= s.calculated_gross_salary.round %></Data></Cell>
+        <Cell ss:Index="11"><Data ss:Type="String"><%= be.amount %></Data></Cell>
+        <Cell ss:Index="12"><Data ss:Type="String"><%= ep.amount %></Data></Cell>
+        <Cell ss:Index="13"><Data ss:Type="String"><%= ee.amount %></Data></Cell>
+        <Cell ss:Index="14"><Data ss:Type="String"><%= a=be.amount+ep.amount+ee.amount+s.calculated_gross_salary.round %></Data></Cell>
       </Row>
+    <% end %>
+    <% end %>
+    <% end %>
     <% end %>
     </Table>
   </Worksheet>

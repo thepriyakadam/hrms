@@ -1189,9 +1189,11 @@ class SalaryslipsController < ApplicationController
     @salaryslips = Salaryslip.where(month: @month.to_s, year: @year.to_s).group(:employee_id)
     @salaryslips1 = Salaryslip.where(month: @month.to_s, year: @year.to_s).take
     # @bonus_employees = BonusEmployee.where(employee_id: @salaryslips.employee_id,date: )
-    @bonus_employees = BonusEmployee.where(employee_id: @salaryslips1.employee_id).group(:employee_id)
-    @employeer_pfs = EmployeerPf.where(employee_id: @salaryslips1.employee_id).group(:employee_id)
-    @employeer_esic = EmployeerEsic.where(employee_id: @salaryslips1.employee_id).group(:employee_id)
+    @salaryslips.each do |s|
+    @bonus_employees = BonusEmployee.where(employee_id: s.employee_id).group(:employee_id)
+    @employeer_pfs = EmployeerPf.where(employee_id: s.employee_id).group(:employee_id)
+    @employeer_esic = EmployeerEsic.where(employee_id: s.employee_id).group(:employee_id)
+    end
     respond_to do |format|
       format.xls {render template: 'salaryslips/salaryslip_xls.xls.erb'}
     end

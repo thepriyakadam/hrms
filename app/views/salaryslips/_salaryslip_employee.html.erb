@@ -46,7 +46,7 @@
   </tbody>
 </table>
 <%= f.submit "Print Pdf", class: "btn btn-xl btn-info fa fa-print" %>
-<!-- <= link_to " Excel Report ",salaryslip_xls_salaryslips_path(month: @month, year: @year, format: "xls"), class: "btn btn-xl btn-success fa fa-print" %> -->
+<%= link_to " Excel Report ",salaryslip_xls_salaryslips_path(month: @month, year: @year, format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
 <% end %>
 
 <script type="text/javascript">

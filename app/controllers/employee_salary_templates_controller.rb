@@ -83,7 +83,7 @@ class EmployeeSalaryTemplatesController < ApplicationController
       redirect_to template_list_employee_templates_path(@employee_id)
     else
       ActiveRecord::Base.transaction do
-        arrears_array = params[:old_salary_component_id].keys
+        # arrears_array = params[:old_salary_component_id].keys
         increement_date = params[:increement][:date]
         @employee_template = EmployeeTemplate.create_new_object(@employee_id, @template_id)
         @employee_template = EmployeeTemplate.build_objects(arrays, params, @employee_id, @template_id, @employee_template)

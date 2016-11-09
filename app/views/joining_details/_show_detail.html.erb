@@ -107,11 +107,21 @@
 
       <th><strong>DA</strong></th>
       <td><%= @joining_detail.is_da ? "Yes" : "No" %></td>
-
-
-      <th></th>
-      <td></td>
     </tr>
+
+    <tr>
+      <th><strong>Employer PF</strong></th>
+      <td><%= @joining_detail.is_employeer_pf ? "Yes" : "No" %></td>
+
+      <th><strong>Employer ESIC</strong></th>
+      <td><%= @joining_detail.is_employeer_esic ? "Yes" : "No" %></td>
+    </tr>
+     
+     <tr>
+         <th><strong>Insurance</strong></th>
+      <td><%= @joining_detail.is_insurance ? "Yes" : "No" %></td>
+     </tr>
+
  </table>
   </div><!-- /.box -->
 </div>

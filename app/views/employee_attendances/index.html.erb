@@ -12,7 +12,7 @@
         </div>
         <div class="col-sm-3">
           <div class="field">
-            <%= select :employee_attendance,:year,['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025','2026','2027'],{label: 'Select Year',include_blank: " Select Year"}, {onchange:"var a={department_id:$(this).val(),month:$('#employee_attendance_month').val(),year:$('#employee_attendance_year').val()};$('.ajax-progress').show(); $.get('/employee_attendances/display_attendance_1',a,function(response){});",class: 'form-control'} %>
+            <%= select :employee_attendance,:year,['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025','2026','2027'],{label: 'Select Year',include_blank: " Select Year"}, {onchange:"var a={department_id: #{@department_id},month:$('#employee_attendance_month').val(),year:$('#employee_attendance_year').val()};$('.ajax-progress').show(); $.get('/employee_attendances/display_attendance_1',a,function(response){});",class: 'form-control'} %>
           </div>
         </div>
         </div>

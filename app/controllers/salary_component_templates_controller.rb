@@ -47,6 +47,13 @@ class SalaryComponentTemplatesController < ApplicationController
     end
   end
 
+  def salary_template_page
+    # byebug
+    @salary_components = SalaryComponent.all
+    @salary_template = SalaryTemplate.find(params[:format])
+    @salary_component_templates = @salary_template.salary_component_templates
+  end
+
   # def created_salary_component_template
   #   @employees = Employee.joins("inner join employee_annual_salaries on employees.id = employee_annual_salaries.employee_id").uniq
   # end

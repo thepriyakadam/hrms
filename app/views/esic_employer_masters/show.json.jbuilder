@@ -1,1 +1,0 @@
-json.partial! "esic_employer_masters/esic_employer_master", esic_employer_master: @esic_employer_master

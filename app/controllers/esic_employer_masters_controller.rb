@@ -50,9 +50,23 @@ class EsicEmployerMastersController < ApplicationController
   # PATCH/PUT /esic_employer_masters/1
   # PATCH/PUT /esic_employer_masters/1.json
   def update
-   @esic_employer_master.update(esic_employer_master_params)
-   @esic_employer_master = EsicEmployerMaster.new
-   @esic_employer_masters = EsicEmployerMaster.all    
+    components = params[:components]
+    str = ''
+    i = 0
+    components.each do |c|
+      str = if i == 0
+              c.to_s
+            else
+              str.to_s + ',' + c.to_s
+            end
+      i += 1
+    end
+    @esic_employer_master.base_component = str
+    @esic_employer_master.update(esic_employer_master_params)
+    @esic_employer_masters = EsicEmployerMaster.all    
+    @esic_employer_master = EsicEmployerMaster.new
+    redirect_to new_esic_employer_master_path
+    flash[:notice] = "Updated Successfully"
   end
 
   # DELETE /esic_employer_masters/1

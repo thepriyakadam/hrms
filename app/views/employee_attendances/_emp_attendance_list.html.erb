@@ -1,30 +1,22 @@
-  <div class="box-body">
-    <%= bootstrap_form_for :temp, url: {action: "create_attendance", date: @date} do |f| %>
-      <table class="table table-bordered table-hover table-condensed">
+      <table id="example5" class="table table-bordered table-hover table-condensed">
         <thead>
           <tr>
-            <th>ID</th>
-            <th>Employee Name</th>
+            <th>Name</th>
             <% for i in 1..@day %>
               <th><%= i %></th>
             <%end%>
-            <th>Weekoff Count</th>
           </tr>
         </thead>
         <tbody>
           <% exist = {} %>
           <% @employees.each do |e| %>
-          <% @emp_w.each do |ew| %>
             <tr>
-              <td><%= e.employee.manual_employee_code %></td>
               <td><%= full_name(e.employee) %></td>
               <% sorted_exists = calculate_attendance(@date, exist, e)%>
               <% sorted_exists.each do |k,v|%>
                 <td><%= v %></td>
               <%end%>
-              <% ew.count %>
-            </tr>
-
+            </tr> 
             <% present_day = present_day_count(exist) %>
             <% holiday_in_month = holiday_in_month_count(exist) %>
             <% week_off_day = week_off_day_count(exist) %>
@@ -57,17 +49,35 @@
             <%= hidden_field e.employee_id, 'week_off_day', value: week_off_day %>
             <%= hidden_field e.employee_id, 'absent_day', value: absent_day_count(exist) %>
             <%= hidden_field e.employee_id, 'payable_day', value: payable_day %>
+
             <% exist.clear %>
-          <%end%>
           <%end%>
         </tbody>
       </table>
-      <%= f.submit "Confirm Workingdays", class: "btn btn-sm btn-primary" %>
+  <!-- </div>
+</div> -->
 
-      <%= link_to " Print Attendance Slip ",employee_slip_employee_attendances_path(month: @month, year: @year, format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+<script type="text/javascript">
+  $('#selectAll').click(function() {
+    if (this.checked) {
+      $(':checkbox').each(function() {
+        this.checked = true;
+      });
+    }
+    else {
+      $(':checkbox').each(function() {
+        this.checked = false;
+      });
+    }
+  });
+</script>
 
-      <%= link_to " Excel Report ",employee_slip_xls_employee_attendances_path(month: @month, year: @year, format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
-
-    <% end %>
-  </div>
-</div>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example5').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]],
+        "scrollX": true,
+        "scrollY": 200
+    } );
+} );
+</script>

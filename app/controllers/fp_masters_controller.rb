@@ -49,9 +49,23 @@ class FpMastersController < ApplicationController
   # PATCH/PUT /fp_masters/1
   # PATCH/PUT /fp_masters/1.json
   def update
+    components = params[:components]
+    str = ''
+    i = 0
+    components.each do |c|
+      str = if i == 0
+              c.to_s
+            else
+              str.to_s + ',' + c.to_s
+            end
+      i += 1
+    end
+    @fp_master.base_component = str
     @fp_master.update(fp_master_params)
+    @fp_masters = FpMaster.all
     @fp_master = FpMaster.new
-    @fp_masters = FpMaster.all  
+    redirect_to new_fp_master_path
+    flash[:notice] = "Updated Successfully"
   end
 
   # DELETE /fp_masters/1

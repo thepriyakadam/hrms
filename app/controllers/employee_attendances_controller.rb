@@ -5,7 +5,7 @@ class EmployeeAttendancesController < ApplicationController
   # GET /employee_attendances
   # GET /employee_attendances.json
   def index
-    @employee_attendances = EmployeeAttendance.group("strftime('%Y',day)")
+    @department_id = current_user.employee.department_id
     session[:active_tab] = "timemgmt"
   end
 
@@ -161,13 +161,15 @@ class EmployeeAttendancesController < ApplicationController
     @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).group(:employee_id)
   end
 
-   def display_attendance_1
+  def display_attendance_1
+    puts params
     @month = params[:month]
     @year = params[:year]
+    department_id = params[:department_id]
     # @employee_attendances = EmployeeAttendance.where(day: @month)
     @date = Date.new(@year.to_i, Workingday.months[@month])
     @day = @date.end_of_month.day
-    @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).group(:employee_id)
+    @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?, department_id = ?", @date.strftime('%m/%Y'), department_id).group(:employee_id)
   end
 
   def display_attendance_2
@@ -258,14 +260,14 @@ class EmployeeAttendancesController < ApplicationController
         redirect_to revert_attendance_employeewise_employee_attendances_path
       end
   end
+
   def display_attendance_1
-    # byebug
     @month = params[:month]
     @year = params[:year]
-    # @employee_attendances = EmployeeAttendance.where(day: @month)
+    department_id = params[:department_id]
     @date = Date.new(@year.to_i, Workingday.months[@month])
     @day = @date.end_of_month.day
-    @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).group(:employee_id)
+    @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?, department_id = ?", @date.strftime('%m/%Y'), department_id).group(:employee_id)
   end
 
   def display_employee_attendance_list

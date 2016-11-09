@@ -1142,7 +1142,10 @@ class SalaryslipsController < ApplicationController
   end
 
   def display_salaryslip_report
+<<<<<<< HEAD
+=======
     # byebug
+>>>>>>> bfe3f9399705b642728ed91dbe6446b41cbf7a74
     @month = params[:month]
     @year = params[:year]
     # byebug

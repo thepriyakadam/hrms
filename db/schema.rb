@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161107100328) do
+ActiveRecord::Schema.define(version: 20161108120440) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -230,9 +230,10 @@ ActiveRecord::Schema.define(version: 20161107100328) do
   create_table "bonus_employees", force: :cascade do |t|
     t.integer  "employee_id"
     t.date     "bonus_date"
-    t.decimal  "amount",      precision: 15, scale: 2
-    t.datetime "created_at",                           null: false
-    t.datetime "updated_at",                           null: false
+    t.decimal  "amount",        precision: 15, scale: 2
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+    t.decimal  "actual_amount"
   end
 
   add_index "bonus_employees", ["employee_id"], name: "index_bonus_employees_on_employee_id"
@@ -1131,21 +1132,23 @@ ActiveRecord::Schema.define(version: 20161107100328) do
   end
 
   create_table "employeer_esics", force: :cascade do |t|
-    t.integer  "empoyee_id"
     t.date     "esic_date"
     t.decimal  "amount"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.integer  "employee_id"
+    t.decimal  "actual_amount"
   end
 
-  add_index "employeer_esics", ["empoyee_id"], name: "index_employeer_esics_on_empoyee_id"
+  add_index "employeer_esics", ["employee_id"], name: "index_employeer_esics_on_employee_id"
 
   create_table "employeer_pfs", force: :cascade do |t|
     t.integer  "employee_id"
     t.date     "pf_date"
     t.decimal  "amount"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.decimal  "actual_amount"
   end
 
   add_index "employeer_pfs", ["employee_id"], name: "index_employeer_pfs_on_employee_id"
@@ -1928,6 +1931,9 @@ ActiveRecord::Schema.define(version: 20161107100328) do
     t.date     "retirement_date"
     t.integer  "reserved_category_id"
     t.boolean  "is_da"
+    t.boolean  "is_employeer_pf"
+    t.boolean  "is_employeer_esic"
+    t.boolean  "is_insurance"
   end
 
   add_index "joining_details", ["cost_center_id"], name: "index_joining_details_on_cost_center_id"
@@ -2724,6 +2730,8 @@ ActiveRecord::Schema.define(version: 20161107100328) do
     t.date     "validity_date"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.boolean  "is_active"
+    t.boolean  "is_confirm"
   end
 
   create_table "salaryslip_components", force: :cascade do |t|

@@ -1207,6 +1207,10 @@ end
       get :show_employee
       post :destroy_salary_slip
       get :salary_slip_report
+      get :salary_report
+      get :display_salaryslip_report
+      post :pdf_report
+      get :salaryslip_xls
     end
   end
  
@@ -1327,8 +1331,16 @@ end
     end
   end
  
-  resources :salary_component_templates
-  resources :salary_templates
+  resources :salary_component_templates do
+    collection do
+      get :salary_template_page
+    end
+  end
+  resources :salary_templates do
+    collection do
+      get :is_confirm
+    end
+  end
   resources :religions do
     collection do
       get :is_confirm

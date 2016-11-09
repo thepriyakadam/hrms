@@ -247,7 +247,7 @@ class EmployeeLeavRequestsController < ApplicationController
       #column(:Request_ID, sortable: true) { |employee_leav_request| employee_leav_request.id }
       column(:ID, sortable: true) { |employee_leav_request| employee_leav_request.employee.try(:manual_employee_code) }
       column(:Employee_Name, sortable: true) { |employee_leav_request| full_name(employee_leav_request.employee) }
-      #column(:Designation, sortable: true) { |employee_leav_request| employee_leav_request.employee.joining_detail.employee_designation.name }
+      column(:Designation, sortable: true) { |employee_leav_request| employee_leav_request.employee.joining_detail.try(:employee_designation).try(:name) }
       column(:From, sortable: true) { |employee_leav_request| employee_leav_request.start_date.to_date }
       column(:To, sortable: true) { |employee_leav_request| employee_leav_request.end_date.to_date }
       column(:Leave_Category, sortable: true) { |employee_leav_request| employee_leav_request.leav_category.try(:description) }

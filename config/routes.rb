@@ -274,6 +274,8 @@ end
       get :loginwise_attendance_form
       get :display_employee_attendance_list
       get :employee_attendances_list
+      get :emp_attendance
+      get :display_attendance_2
     end
   end
   resources :salary_comp_mappings
@@ -1331,8 +1333,16 @@ end
     end
   end
  
-  resources :salary_component_templates
-  resources :salary_templates
+  resources :salary_component_templates do
+    collection do
+      get :salary_template_page
+    end
+  end
+  resources :salary_templates do
+    collection do
+      get :is_confirm
+    end
+  end
   resources :religions do
     collection do
       get :is_confirm

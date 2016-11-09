@@ -434,6 +434,8 @@ class SalarySlipLedgersController < ApplicationController
   end
 
   def show_employee_list
+    # byebug
+    rep=params[:report_ids]
     @pdf = "category"
     @bank = Bank.find(params[:bank_id])
     @category = params[:category]

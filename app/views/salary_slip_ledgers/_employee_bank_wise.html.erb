@@ -75,7 +75,7 @@
   <tbody>
     <% @reports.each do |r| %>
       <tr>
-        <td><%= check_box_tag "report_ids[]", r %></td>
+        <td><%= check_box_tag "report_ids[]", sr %></td>
         <td><%= i = i+1 %></td>
         <td><%= r.try(:code) %></td>
         <td><%= r.try(:employee_name) %></td>

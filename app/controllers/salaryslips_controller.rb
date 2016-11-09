@@ -1142,21 +1142,18 @@ class SalaryslipsController < ApplicationController
   end
 
   def display_salaryslip_report
-<<<<<<< HEAD
-=======
-    # byebug
->>>>>>> bfe3f9399705b642728ed91dbe6446b41cbf7a74
+
     @month = params[:month]
     @year = params[:year]
     # byebug
-    @salaryslips = Salaryslip.where(month: @month.to_s, year: @year.to_s).group(:employee_id)
+    @salaryslips = Salaryslip.where(month: @month.to_s, year: @year.to_s)
     @salaryslips1 = Salaryslip.where(month: @month.to_s, year: @year.to_s).take
     # @bonus_employees = BonusEmployee.where(employee_id: @salaryslips.employee_id,date: )
-    # @salaryslips.each do |s|
-    @bonus_employees = BonusEmployee.where(employee_id: @salaryslips1.try(:employee_id)).group(:employee_id)
-    @employeer_pfs = EmployeerPf.where(employee_id: @salaryslips1.try(:employee_id)).group(:employee_id)
-    @employeer_esic = EmployeerEsic.where(employee_id: @salaryslips1.try(:employee_id)).group(:employee_id)
-  # end
+    @salaryslips.each do |s|
+    @bonus_employees = BonusEmployee.where(employee_id: s.employee_id).group(:employee_id)
+    @employeer_pfs = EmployeerPf.where(employee_id: s.employee_id).group(:employee_id)
+    @employeer_esic = EmployeerEsic.where(employee_id: s.employee_id).group(:employee_id)
+  end
     session[:active_tab] ="payroll"
     session[:active_tab1] ="salaryreport"
   end

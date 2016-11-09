@@ -5,7 +5,7 @@ class EmployeeAttendancesController < ApplicationController
   # GET /employee_attendances
   # GET /employee_attendances.json
   def index
-    @employee_attendances = EmployeeAttendance.group("strftime('%Y',day)")
+    @department_id = current_user.employee.department_id
     session[:active_tab] = "timemgmt"
   end
 
@@ -162,12 +162,14 @@ class EmployeeAttendancesController < ApplicationController
   end
 
    def display_attendance_1
+    puts params
     @month = params[:month]
     @year = params[:year]
+    department_id = params[:department_id]
     # @employee_attendances = EmployeeAttendance.where(day: @month)
     @date = Date.new(@year.to_i, Workingday.months[@month])
     @day = @date.end_of_month.day
-    @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).group(:employee_id)
+    @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?, department_id = ?", @date.strftime('%m/%Y'), department_id).group(:employee_id)
   end
                                 
   def create_attendance

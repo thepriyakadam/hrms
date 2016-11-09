@@ -1,0 +1,43 @@
+ <div class="box-body">
+ <table id="example1" class="table table-bordered table-hover table-condensed">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>P</th>
+            <th>A</th>
+            <th>W</th>
+            <th>EL</th>
+            <th>ESIC</th>
+            <th>CL</th>
+            <th>LWP</th>
+            <th>C.Off</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% exist = {} %>
+          <% @employees.each do |e| %>
+            <tr>
+              <td><%= e.employee.manual_employee_code %></td>
+
+              <% abs = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "A") %>
+              <% pre = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id,"P") %>
+              <% wd = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "W") %>
+              <% el = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "EL") %>
+              <% esic = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "ESIC") %>
+              <% cl = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "CL") %>
+              <% lwp = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "LWP") %>
+              <% coff = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "C.Off") %>
+
+              <td><%= abs.count %></td>
+              <td><%= pre.count %></td>
+              <td><%= wd.count %></td>
+              <td><%= el.count %></td>
+              <td><%= esic.count %></td>
+              <td><%= cl.count %></td>
+              <td><%= lwp.count %></td>
+              <td><%= coff.count %></td>
+            </tr> 
+          <%end%>
+        </tbody>
+      </table>
+</div>

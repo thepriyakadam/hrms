@@ -1,0 +1,71 @@
+
+   
+      <table id="example1" class="table table-bordered table-hover table-condensed">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>A</th>
+            <th>P</th>
+            <th>W</th>
+            <th>P/1/2</th>
+            <th>EL</th>
+            <th>CL</th>
+            <th>LWP</th>
+            <th>ESIC</th>
+            <th>C.Off</th>
+            <th>AL</th>
+            <th>GP</th>
+            <th>GPWP</th>
+            <th>OD</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% exist = {} %>
+          <% @employees.each do |e| %>
+            <tr>
+              <td><%= e.employee.manual_employee_code %></td>
+
+              <% abs = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "A") %>
+              <% pre = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id,"P") %>
+              <% wd = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "W") %>
+              <% p_half = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "P/1/2") %>
+              <% el = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "EL") %>
+              <% cl = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "CL") %>
+              <% lwp = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "LWP") %>
+              <% esic = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "ESIC") %>
+              <% coff = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "C.Off") %>
+              <% al = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "AL") %>
+              <% gp = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "GP") %>
+              <% gpwp = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "GPWP") %>
+              <% od = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "OD") %>
+
+              <td><%= abs.count %></td>
+              <td><%= pre.count %></td>
+              <td><%= wd.count %></td>
+              <td><%= p_half.count %></td>
+              <td><%= el.count %></td>
+              <td><%= esic.count %></td>
+              <td><%= cl.count %></td>
+              <td><%= lwp.count %></td>
+              <td><%= coff.count %></td>
+              <td><%= al.count %></td>
+              <td><%= gp.count %></td>
+              <td><%= gpwp.count %></td>
+              <td><%= od.count %></td>
+            </tr> 
+          <%end%>
+        </tbody>
+      </table>
+
+      <%= link_to " Excel Report ",attendance_total_xls_employee_attendances_path(month: params[:month], year: params[:year], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+  <!-- </div>
+</div> -->
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example5').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]],
+        "scrollX": true
+    } );
+} );
+</script>

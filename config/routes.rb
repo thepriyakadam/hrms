@@ -274,6 +274,9 @@ end
       get :loginwise_attendance_form
       get :display_employee_attendance_list
       get :employee_attendances_list
+      get :calculate_attendance
+      get :display_total
+      get :attendance_total_xls
     end
   end
   resources :salary_comp_mappings

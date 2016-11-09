@@ -8,11 +8,13 @@
             <% for i in 1..@day %>
               <th><%= i %></th>
             <%end%>
+            <th>Weekoff Count</th>
           </tr>
         </thead>
         <tbody>
           <% exist = {} %>
           <% @employees.each do |e| %>
+          <% @emp_w.each do |ew| %>
             <tr>
               <td><%= e.employee.manual_employee_code %></td>
               <td><%= full_name(e.employee) %></td>
@@ -20,6 +22,7 @@
               <% sorted_exists.each do |k,v|%>
                 <td><%= v %></td>
               <%end%>
+              <% ew.count %>
             </tr>
 
             <% present_day = present_day_count(exist) %>
@@ -55,6 +58,7 @@
             <%= hidden_field e.employee_id, 'absent_day', value: absent_day_count(exist) %>
             <%= hidden_field e.employee_id, 'payable_day', value: payable_day %>
             <% exist.clear %>
+          <%end%>
           <%end%>
         </tbody>
       </table>

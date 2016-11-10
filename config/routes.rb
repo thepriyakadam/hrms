@@ -1256,6 +1256,7 @@ end
       get :show_employee_list
       # post :dynamic_report
       # get :pf_detail_pdf
+      post :print_xls
     end
   end
 

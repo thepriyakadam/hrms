@@ -29,7 +29,6 @@ class EsicMastersController < ApplicationController
     @esic_master = EsicMaster.new(esic_master_params)
     @esic_master.base_component = str
     @esic_masters = EsicMaster.all
-    byebug
     @esic_master.save
     @esic_master = EsicMaster.new
   end

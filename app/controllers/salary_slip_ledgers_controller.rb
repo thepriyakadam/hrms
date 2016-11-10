@@ -434,6 +434,7 @@ class SalarySlipLedgersController < ApplicationController
   end
 
   def show_employee_list
+    rep=params[:report_ids]
     @pdf = "category"
     @bank = Bank.find(params[:bank_id])
     @category = params[:category]
@@ -454,6 +455,7 @@ class SalarySlipLedgersController < ApplicationController
       sl1 = Salaryslip.where('employee_id = ? and month = ? and year = ?', e.id, @month, @year.to_s).take
       if j.nil? or e.nil? or sl1.nil?
       else
+        # byebug
         sr = SalaryReport.collect_data(e,j,sl1)
         @reports << sr
       end
@@ -472,6 +474,51 @@ class SalarySlipLedgersController < ApplicationController
               margin:  { top:1,bottom:1,left:1,right:1 }
       end
     end
+  end
+
+  def print_xls
+    # byebug
+    rep=params[:report_ids]
+    @pdf = "category"
+    @bank = Bank.find(params[:bank_id])
+    @category = params[:category]
+    @month, @year = params[:month], params[:year]
+    joining_array = JoiningDetail.where(employee_category_id: @category).pluck(:employee_id)
+    emp_array = EmployeeBankDetail.where(bank_id: @bank.id).pluck(:employee_id)
+    emp_user_array = Employee.collect_rolewise(current_user)
+    if joining_array.empty?
+      final_emp_array = emp_array & emp_user_array
+    else
+      final_emp_array = emp_array & emp_user_array & joining_array
+    end
+    @reports = []
+    @employees = Employee.where(id: final_emp_array)
+    @employees.try(:each) do |e|
+      j = JoiningDetail.find_by_employee_id(e.id)
+      #wd1 = Workingday.where('employee_id = ? and month_name = ? and year = ?', e.id, @month, @year.to_s).take
+      sl1 = Salaryslip.where('employee_id = ? and month = ? and year = ?', e.id, @month, @year.to_s).take
+      if j.nil? or e.nil? or sl1.nil?
+      else
+     
+        sr1 = SalaryReport.collect_data(e,j,sl1)
+      
+        
+        # sr = SalaryReport.where(code: rep)
+        # byebug
+      if a="10008" ==  sr1.code.to_s
+        sr = SalaryReport.collect_data(e,j,sl1)
+        # @reports = SalaryReport.collect_data(e,j,sl1)
+        @reports << sr
+        byebug
+      else
+      end
+      end
+    end
+    @sum = SalaryReport.create_sum(@reports)
+    respond_to do |format|
+      format.xls {render template: 'salary_slip_ledgers/print_xls.xls.erb'}
+    end
+
   end
 
 end

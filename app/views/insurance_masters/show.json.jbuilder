@@ -1,1 +1,0 @@
-json.partial! "insurance_masters/insurance_master", insurance_master: @insurance_master

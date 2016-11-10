@@ -279,6 +279,7 @@ end
       get :attendance_total_xls
       get :emp_attendance
       get :display_attendance_2
+      get :employee_slip_xls_1
     end
   end
   resources :salary_comp_mappings
@@ -1258,6 +1259,7 @@ end
       get :show_employee_list
       # post :dynamic_report
       # get :pf_detail_pdf
+      post :print_xls
     end
   end
 

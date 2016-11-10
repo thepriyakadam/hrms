@@ -23,28 +23,49 @@ class InsuranceMastersController < ApplicationController
 
   # POST /insurance_masters
   # POST /insurance_masters.json
+
   def create
-    @insurance_master = InsuranceMaster.new(insurance_master_params)
-    @insurance_masters = InsuranceMaster.all
-    respond_to do |format|
-      if @insurance_master.save
-         @insurance_master = InsuranceMaster.new
-
-            format.js { @flag = true }
-
-      else
-        flash.now[:alert] = 'ESIC Employer Already Exist.'
-        format.js { @flag = false }
-      end
+    components = params[:components]
+    str = ''
+    i = 0
+    components.try(:each) do |c|
+      str = if i == 0
+              c.to_s
+            else
+              str.to_s + ',' + c.to_s
+            end
+      i += 1
     end
+
+    @insurance_master = InsuranceMaster.new(insurance_master_params)
+    @insurance_master.base_component = str
+    @insurance_masters = InsuranceMaster.all   
+    @insurance_master.save
+
+    redirect_to new_insurance_master_path
+    flash[:notice] = "Saved Successfully"
   end
 
   # PATCH/PUT /insurance_masters/1
   # PATCH/PUT /insurance_masters/1.json
   def update
-    @insurance_master.update(insurance_master_params)
+    components = params[:components]
+    str = ''
+    i = 0
+    components.each do |c|
+      str = if i == 0
+              c.to_s
+            else
+              str.to_s + ',' + c.to_s
+            end
+      i += 1
+    end
+    @insurance_master.base_component = str
+    @insurance_master = InsuranceMaster.new(insurance_master_params)
+    @insurance_masters = InsuranceMaster.all   
     @insurance_master = InsuranceMaster.new
-    @insurance_masters = InsuranceMaster.all
+    redirect_to new_insurance_master_path
+    flash[:notice] = "Updated Successfully"
   end
 
   # DELETE /insurance_masters/1

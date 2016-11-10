@@ -54,6 +54,8 @@
           <%end%>
         </tbody>
       </table>
+      <%= link_to " Excel Report ",employee_slip_xls_1_employee_attendances_path(month: params[:month], year: params[:year], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+
   <!-- </div>
 </div> -->
 

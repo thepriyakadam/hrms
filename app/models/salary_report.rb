@@ -91,7 +91,7 @@ class SalaryReport
         sr.food_deduction = d.calculated_amount.to_i
         when "Mobile Deduction"
         sr.mobile = d.calculated_amount
-        when "Retention"
+        when "Retaintion"
         sr.retention = d.calculated_amount
         when "WelFare"
         sr.welfair = d.calculated_amount
@@ -465,7 +465,7 @@ class SalaryReport
         sr.food_deduction = d.calculated_amount.to_i
         when "Mobile Deduction"
         sr.mobile = d.calculated_amount
-        when "Retention"
+        when "Retaintion"
         sr.retention = d.calculated_amount
         when "WelFare"
         sr.welfair = d.calculated_amount

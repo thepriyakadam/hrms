@@ -1,3 +1,4 @@
+<%= form_for :pdf_salaries, url: { action: 'print_xls',format: 'xls',month: @month,year: @year,cost_center: @cost_center,category: @category,bank_id: @bank},:html => {:target => '_blank'} do |f| %>
 <div class="ajax-progress"></div>
 <% i = 0 %>
 <table id="example3" class="table table-bordered table-hover table-condensed">
@@ -75,7 +76,7 @@
   <tbody>
     <% @reports.each do |r| %>
       <tr>
-        <td><%= check_box_tag "report_ids[]", r %></td>
+        <td><%= check_box_tag "report_ids[]", r.code %></td>
         <td><%= i = i+1 %></td>
         <td><%= r.try(:code) %></td>
         <td><%= r.try(:employee_name) %></td>
@@ -198,17 +199,22 @@
     </tr>
   </tbody>
 </table>
-  <div class="col-sm-6">
-    <% if action_name == "cost_unit_wise_salary" %>
+<div class="col-sm-3">
+    <%= f.submit "Print Excel",class: "btn btn-xl btn-warning fa fa-print" %>
+ </div>
+<% end %>
+
+  <!-- <div class="col-sm-6">
+    < if action_name == "cost_unit_wise_salary" %>
       <%= link_to " Print Salary Slip ", cost_unit_wise_salary_salary_slip_ledgers_path(bank_id: @bank,year: @year,month: @month, cost_center: @cost_center,category: @category, format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
 
-      <%= link_to " Excel Report ", cost_unit_wise_salary_salary_slip_ledgers_path(bank_id: @bank,year: @year,month: @month, cost_center: @cost_center,category: @category,format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
-    <% else %>  
-      <%= link_to " Print Salary Slip ", show_employee_salary_slip_ledgers_path(bank_id: @bank.id,year: @year,month: @month, category: @category,format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank"  %>
+      <= link_to " Excel Report ", cost_unit_wise_salary_salary_slip_ledgers_path(bank_id: @bank,year: @year,month: @month, cost_center: @cost_center,category: @category,format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+    < else %>  
+      <= link_to " Print Salary Slip ", show_employee_salary_slip_ledgers_path(bank_id: @bank.id,year: @year,month: @month, category: @category,format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank"  %>
 
-      <%= link_to " Excel Report ", show_employee_salary_slip_ledgers_path(bank_id: @bank.id,year: @year,month: @month, category: @category,format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
-    <%end%>
-  </div>  
+      <= link_to " Excel Report ", show_employee_salary_slip_ledgers_path(bank_id: @bank.id,year: @year,month: @month, category: @category,format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+    <end%>
+  </div>   -->
 
 
 <script type="text/javascript">

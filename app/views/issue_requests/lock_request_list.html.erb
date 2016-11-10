@@ -3,7 +3,7 @@
 
   <div class="box">
     <div class="box-header">
-       <h3 class="box-title">Issue List - <%= current_user.employee.try(:first_name) %> <%= current_user.employee.try(:middle_name) %> <%= current_user.employee.try(:last_name) %> </h3>
+       <h3 class="box-title">Support List - <%= current_user.employee.try(:first_name) %> <%= current_user.employee.try(:middle_name) %> <%= current_user.employee.try(:last_name) %> </h3>
        <% emp = current_user.employee_id %>
        <% issue = IssueTrackerMember.find_by(employee_id: emp)%>
        <h4> <%= issue.role %></h4>
@@ -14,7 +14,7 @@
           <thead>
             <tr>
               
-              <th>Issue</th>
+              <th>Support</th>
               <th>Group</th>
               <th>Date</th>
               <th>Time</th>

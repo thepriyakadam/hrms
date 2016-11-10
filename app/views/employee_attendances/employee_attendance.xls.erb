@@ -8,13 +8,13 @@
             <% for i in 1..@day %>
               <th><%= i %></th>
             <%end%>
-            <th>Weekoff Count</th>
+            <th>P</th>
+            <th>A</th>
           </tr>
         </thead>
         <tbody>
           <% exist = {} %>
           <% @employees.each do |e| %>
-          <% @emp_w.each do |ew| %>
             <tr>
               <td><%= e.employee.manual_employee_code %></td>
               <td><%= full_name(e.employee) %></td>
@@ -22,7 +22,12 @@
               <% sorted_exists.each do |k,v|%>
                 <td><%= v %></td>
               <%end%>
-              <% ew.count %>
+
+              <% abs = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "A") %>
+              <% pre = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id,"P") %>
+              
+              <td><%= abs.count %></td>
+              <td><%= pre.count %></td>
             </tr>
 
             <% present_day = present_day_count(exist) %>

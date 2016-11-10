@@ -1,2 +1,0 @@
-json.extract! insurance_master, :id, :is_insurance, :percentage, :base_component, :effective_from, :effective_to, :is_active, :is_confirm, :created_at, :updated_at
-json.url insurance_master_url(insurance_master, format: :json)

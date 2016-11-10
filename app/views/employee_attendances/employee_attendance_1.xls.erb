@@ -54,32 +54,3 @@
           <%end%>
         </tbody>
       </table>
-      <%= link_to " Excel Report ",employee_slip_xls_1_employee_attendances_path(month: params[:month], year: params[:year], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
-
-  <!-- </div>
-</div> -->
-
-<script type="text/javascript">
-  $('#selectAll').click(function() {
-    if (this.checked) {
-      $(':checkbox').each(function() {
-        this.checked = true;
-      });
-    }
-    else {
-      $(':checkbox').each(function() {
-        this.checked = false;
-      });
-    }
-  });
-</script>
-
-<script type="text/javascript">
-$(document).ready(function() {
-    $('#example5').DataTable( {
-        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]],
-        "scrollX": true,
-        "scrollY": 200
-    } );
-} );
-</script>

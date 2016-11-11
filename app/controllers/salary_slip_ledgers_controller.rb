@@ -458,8 +458,10 @@ class SalarySlipLedgersController < ApplicationController
         # byebug
         sr = SalaryReport.collect_data(e,j,sl1)
         @reports << sr
+        # @next = sr.next
       end
     end
+    # byebug
     @sum = SalaryReport.create_sum(@reports)
     respond_to do |format|
       format.js
@@ -509,7 +511,7 @@ class SalarySlipLedgersController < ApplicationController
         sr = SalaryReport.collect_data(e,j,sl1)
         # @reports = SalaryReport.collect_data(e,j,sl1)
         @reports << sr
-        byebug
+        # byebug
       else
       end
       end

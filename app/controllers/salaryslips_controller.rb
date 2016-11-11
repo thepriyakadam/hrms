@@ -1041,6 +1041,23 @@ class SalaryslipsController < ApplicationController
         else
         end
 
+        if @employee.joining_detail.is_insurance == true
+          # byebug
+          @insurance_master = InsuranceMaster.where(is_active: true).take
+          formula_string = @insurance_master.base_component.split(',').map {|i| i.to_i}
+          # formula_string.try(:each) do |f|
+          formula_item = SalaryslipComponent.where(salary_component_id: formula_string,salaryslip_id: @salaryslip.id)
+          @total = formula_item.sum(:calculated_amount)
+          @total_actual = formula_item.sum(:actual_amount)
+          formula_item_calculated_amount = (@total / 100 * @insurance_master.percentage).ceil
+          formula_item_actual_amount = (@total_actual / 100 * @insurance_master.percentage).ceil
+
+          EmployeerInsurance.create_insurance(formula_item_calculated_amount,formula_item_actual_amount,@employee.id, date)
+          puts "hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh..........................."
+          # end
+        else
+        end
+
           # @arrear = EmployeeArrear.where('employee_id = ? and is_paid = ?', @employee.id, false).take
           # next if @arrear.nil?
           # arrear_start_date = @arrear.start_date

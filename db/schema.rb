@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161108120440) do
+ActiveRecord::Schema.define(version: 20161110061702) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -1141,6 +1141,17 @@ ActiveRecord::Schema.define(version: 20161108120440) do
   end
 
   add_index "employeer_esics", ["employee_id"], name: "index_employeer_esics_on_employee_id"
+
+  create_table "employeer_insurances", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.date     "insurance_date"
+    t.decimal  "actual_amout"
+    t.decimal  "amount"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  add_index "employeer_insurances", ["employee_id"], name: "index_employeer_insurances_on_employee_id"
 
   create_table "employeer_pfs", force: :cascade do |t|
     t.integer  "employee_id"

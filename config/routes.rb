@@ -278,6 +278,11 @@ end
       get :display_attendance_2
       get :employee_slip_xls_1
       get :employee_slip_pdf
+      get :emp_attendance_1
+      post :attendance_report
+      get :confirm_attendance_form
+      post :confirm_attendance
+      post :create_attendance_1
     end
   end
   resources :salary_comp_mappings

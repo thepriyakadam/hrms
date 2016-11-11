@@ -1,2 +1,2 @@
-<label class="control-label required" for="issue_tracker" aria-required="true">Issue Type</label>
+<label class="control-label required" for="issue_tracker" aria-required="true">Support Type</label>
 	<%= select :issue_request,:issue_master_id,(@issue_masters.present? ? (@issue_masters.collect {|b| [b.name,b.id]}) : {}),{prompt:"Select Issue Type ",label: "Issue Type"},class: "form-control"%>

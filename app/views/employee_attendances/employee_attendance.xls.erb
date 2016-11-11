@@ -8,8 +8,6 @@
             <% for i in 1..@day %>
               <th><%= i %></th>
             <%end%>
-            <th>P</th>
-            <th>A</th>
           </tr>
         </thead>
         <tbody>
@@ -22,12 +20,6 @@
               <% sorted_exists.each do |k,v|%>
                 <td><%= v %></td>
               <%end%>
-
-              <% abs = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "A") %>
-              <% pre = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id,"P") %>
-              
-              <td><%= abs.count %></td>
-              <td><%= pre.count %></td>
             </tr>
 
             <% present_day = present_day_count(exist) %>

@@ -170,6 +170,19 @@ class LeaveCOffsController < ApplicationController
     end
   end
 
+  def add_coff
+    #byebug
+    @leave_c_off = LeaveCOff.find(params['login']['leave_c_off_id'])
+    leav_category = LeavCategory.find_by(name: 'Compensatory Off')
+    @emp_leav_bal = EmployeeLeavBalance.where(employee_id: @leave_c_off.employee_id,leav_category_id: leav_category.id)
+    if @leave_c_off.c_off_type == 'Full Day'
+      @leave_c_off.update(expiry_date: nil,expiry_status: nil,leave_count: 1)
+      @emp_leav_bal.update(no_of_leave: @emp_leav_bal.no_of_leave + 1)
+    elsif @leave_c_off.c_off_type == 'Half Day'
+      @leave_c_off.update(expiry_date: nil,expiry_status: nil,leave_count: 0.5)
+      @emp_leav_bal.update(no_of_leave: @emp_leav_bal.no_of_leave + 0.5)
+    end
+  end
   # def ajax_show_textbox
   #   # byebug
   #   @value = params[:value]

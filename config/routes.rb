@@ -281,6 +281,7 @@ end
       get :display_attendance_2
       get :employee_slip_xls_1
       get :employee_slip_pdf
+      get :attendance_total_pdf
     end
   end
   resources :salary_comp_mappings
@@ -855,6 +856,7 @@ end
   resources :leave_c_offs do
     collection do
       get :search_by_c_off_date
+      post :add_coff
     end
   end
 

@@ -267,15 +267,7 @@ class EmployeeAttendancesController < ApplicationController
         redirect_to revert_attendance_employeewise_employee_attendances_path
       end
   end
-  def display_attendance_1
-    # byebug
-    @month = params[:month]
-    @year = params[:year]
-    # @employee_attendances = EmployeeAttendance.where(day: @month)
-    @date = Date.new(@year.to_i, Workingday.months[@month])
-    @day = @date.end_of_month.day
-    @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).group(:employee_id)
-  end
+  
 
   def display_employee_attendance_list
     # @month = "September"
@@ -301,6 +293,24 @@ class EmployeeAttendancesController < ApplicationController
     @date = Date.new(@year.to_i, Workingday.months[@month])
     @day = @date.end_of_month.day
     @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).where(employee_id: current_user.employee_id).group(:employee_id)
+  end
+
+  def employee_slip_pdf
+    @year, @month = params[:year], params[:month]
+    @date = Date.new(@year.to_i, Workingday.months[@month])
+    @day = @date.end_of_month.day
+    @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ? and is_confirm = ?", @date.strftime('%m/%Y'),false).group(:employee_id)
+    respond_to do |format|
+        format.json
+        format.pdf do
+          render pdf: 'employee_attendance',
+                layout: 'pdf.html',
+                orientation: 'Landscape',
+                template: 'employee_attendances/employee_slip_pdf.pdf.erb',
+                show_as_html: params[:debug].present?,
+                margin:  { top:1,bottom:1,left:1,right:1 }
+              end
+           end
   end
   
   private

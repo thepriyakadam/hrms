@@ -277,6 +277,7 @@ end
       get :emp_attendance
       get :display_attendance_2
       get :employee_slip_xls_1
+      get :employee_slip_pdf
     end
   end
   resources :salary_comp_mappings

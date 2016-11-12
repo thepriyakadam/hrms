@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Base component:</strong>
+  <%= @bonus_employer.base_component %>
+</p>
+
+<p>
+  <strong>Limit amount:</strong>
+  <%= @bonus_employer.limit_amount %>
+</p>
+
+<p>
+  <strong>Percentage:</strong>
+  <%= @bonus_employer.percentage %>
+</p>
+
+<p>
+  <strong>Effective from:</strong>
+  <%= @bonus_employer.effective_from %>
+</p>
+
+<p>
+  <strong>Effective to:</strong>
+  <%= @bonus_employer.effective_to %>
+</p>
+
+<p>
+  <strong>Is active:</strong>
+  <%= @bonus_employer.is_active %>
+</p>
+
+<p>
+  <strong>Is confirm:</strong>
+  <%= @bonus_employer.is_confirm %>
+</p>
+
+<%= link_to 'Edit', edit_bonus_employer_path(@bonus_employer) %> |
+<%= link_to 'Back', bonus_employers_path %>

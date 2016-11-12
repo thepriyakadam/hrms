@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
 
+  resources :bonus_employers
+  resources :dearness_allowances
+  resources :employer_insurances
+  resources :employer_family_pensions
+  resources :employer_esics
+  resources :employer_pfs
   resources :insurance_masters do
     collection do
       get :is_confirm
@@ -283,6 +289,7 @@ end
       get :confirm_attendance_form
       post :confirm_attendance
       post :create_attendance_1
+      get :emp_attendance_1_list
     end
   end
   resources :salary_comp_mappings

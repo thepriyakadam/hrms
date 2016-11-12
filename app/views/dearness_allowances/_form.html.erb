@@ -1,0 +1,41 @@
+<%= form_for(@dearness_allowance) do |f| %>
+  <% if @dearness_allowance.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@dearness_allowance.errors.count, "error") %> prohibited this dearness_allowance from being saved:</h2>
+
+      <ul>
+      <% @dearness_allowance.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :base_component %><br>
+    <%= f.text_field :base_component %>
+  </div>
+  <div class="field">
+    <%= f.label :minimum_wages %><br>
+    <%= f.text_field :minimum_wages %>
+  </div>
+  <div class="field">
+    <%= f.label :effective_from %><br>
+    <%= f.date_select :effective_from %>
+  </div>
+  <div class="field">
+    <%= f.label :effective_to %><br>
+    <%= f.date_select :effective_to %>
+  </div>
+  <div class="field">
+    <%= f.label :is_active %><br>
+    <%= f.check_box :is_active %>
+  </div>
+  <div class="field">
+    <%= f.label :is_confirm %><br>
+    <%= f.check_box :is_confirm %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -230,7 +230,7 @@ class EmployeeAttendancesController < ApplicationController
   end
 
   def employee_slip_xls_1
-    byebug
+    # byebug
     @year, @month = params[:year], params[:month]
     @date = Date.new(@year.to_i, Workingday.months[@month])
     @day = @date.end_of_month.day
@@ -340,6 +340,15 @@ class EmployeeAttendancesController < ApplicationController
     Workingday.create(work_data_structure)
     flash[:notice] = "Workingday successfully saved."
     redirect_to confirm_attendances_form_employee_attendances_path
+  end
+
+  def emp_attendance_1_list
+    @month = params[:month]
+    @year = params[:year]
+    # @employee_attendances = EmployeeAttendance.where(day: @month)
+    @date = Date.new(@year.to_i, Workingday.months[@month])
+    @day = @date.end_of_month.day
+    @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).group(:employee_id)
   end
   
   private

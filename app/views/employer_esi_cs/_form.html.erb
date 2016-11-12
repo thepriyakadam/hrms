@@ -1,0 +1,41 @@
+<%= form_for(@employer_esic) do |f| %>
+  <% if @employer_esic.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@employer_esic.errors.count, "error") %> prohibited this employer_esic from being saved:</h2>
+
+      <ul>
+      <% @employer_esic.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :base_component %><br>
+    <%= f.text_field :base_component %>
+  </div>
+  <div class="field">
+    <%= f.label :percentage %><br>
+    <%= f.text_field :percentage %>
+  </div>
+  <div class="field">
+    <%= f.label :effective_from %><br>
+    <%= f.date_select :effective_from %>
+  </div>
+  <div class="field">
+    <%= f.label :effective_to %><br>
+    <%= f.date_select :effective_to %>
+  </div>
+  <div class="field">
+    <%= f.label :is_active %><br>
+    <%= f.check_box :is_active %>
+  </div>
+  <div class="field">
+    <%= f.label :is_confirm %><br>
+    <%= f.check_box :is_confirm %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

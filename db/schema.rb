@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161110061702) do
+ActiveRecord::Schema.define(version: 20161112121755) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -195,6 +195,18 @@ ActiveRecord::Schema.define(version: 20161110061702) do
   end
 
   add_index "bonus_employees", ["employee_id"], name: "index_bonus_employees_on_employee_id"
+
+  create_table "bonus_employers", force: :cascade do |t|
+    t.string   "base_component"
+    t.decimal  "limit_amount"
+    t.decimal  "percentage"
+    t.date     "effective_from"
+    t.date     "effective_to"
+    t.boolean  "is_active"
+    t.boolean  "is_confirm"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
 
   create_table "bonus_masters", force: :cascade do |t|
     t.boolean  "is_bouns"
@@ -498,6 +510,17 @@ ActiveRecord::Schema.define(version: 20161110061702) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean  "is_active"
+  end
+
+  create_table "dearness_allowances", force: :cascade do |t|
+    t.string   "base_component"
+    t.decimal  "minimum_wages"
+    t.date     "effective_from"
+    t.date     "effective_to"
+    t.boolean  "is_active"
+    t.boolean  "is_confirm"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
   end
 
   create_table "definitions", force: :cascade do |t|
@@ -1121,6 +1144,81 @@ ActiveRecord::Schema.define(version: 20161110061702) do
   add_index "employees", ["nationality_id"], name: "index_employees_on_nationality_id"
   add_index "employees", ["religion_id"], name: "index_employees_on_religion_id"
   add_index "employees", ["state_id"], name: "index_employees_on_state_id"
+
+  create_table "employer_bonus", force: :cascade do |t|
+    t.string   "base_component"
+    t.decimal  "limit_amount"
+    t.decimal  "percentage"
+    t.date     "effective_from"
+    t.date     "effective_to"
+    t.boolean  "is_active"
+    t.boolean  "is_confirm"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  create_table "employer_contributions", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.date     "date"
+    t.decimal  "actual_pf"
+    t.decimal  "pf"
+    t.decimal  "actual_esic"
+    t.decimal  "esic"
+    t.decimal  "actual_fp"
+    t.decimal  "fp"
+    t.decimal  "actual_insurance"
+    t.decimal  "insurance"
+    t.decimal  "actual_bonus"
+    t.decimal  "bonus"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "employer_contributions", ["employee_id"], name: "index_employer_contributions_on_employee_id"
+
+  create_table "employer_esics", force: :cascade do |t|
+    t.string   "base_component"
+    t.decimal  "percentage"
+    t.date     "effective_from"
+    t.date     "effective_to"
+    t.boolean  "is_active"
+    t.boolean  "is_confirm"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  create_table "employer_family_pensions", force: :cascade do |t|
+    t.string   "base_component"
+    t.decimal  "percentage"
+    t.date     "effective_from"
+    t.date     "effective_to"
+    t.boolean  "is_active"
+    t.boolean  "is_confirm"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  create_table "employer_insurances", force: :cascade do |t|
+    t.string   "base_component"
+    t.decimal  "percentage"
+    t.date     "effective_from"
+    t.date     "effective_to"
+    t.boolean  "is_active"
+    t.boolean  "is_confirm"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  create_table "employer_pfs", force: :cascade do |t|
+    t.string   "base_component"
+    t.decimal  "percentage"
+    t.date     "effective_from"
+    t.date     "effective_to"
+    t.boolean  "is_active"
+    t.boolean  "is_confirm"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
 
   create_table "esic_employer_masters", force: :cascade do |t|
     t.boolean  "esic"
@@ -1808,6 +1906,8 @@ ActiveRecord::Schema.define(version: 20161110061702) do
     t.boolean  "is_employeer_pf"
     t.boolean  "is_employeer_esic"
     t.boolean  "is_insurance"
+    t.boolean  "is_family_pension"
+    t.boolean  "is_bonus"
   end
 
   add_index "joining_details", ["cost_center_id"], name: "index_joining_details_on_cost_center_id"

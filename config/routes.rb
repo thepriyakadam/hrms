@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
 
+  resources :bonus_employers
+  resources :dearness_allowances
+  resources :employer_insurances
+  resources :employer_family_pensions
+  resources :employer_esics
+  resources :employer_pfs
   resources :insurance_masters do
     collection do
       get :is_confirm
@@ -281,7 +287,16 @@ end
       get :display_attendance_2
       get :employee_slip_xls_1
       get :employee_slip_pdf
+<<<<<<< HEAD
       get :attendance_total_pdf
+=======
+      get :emp_attendance_1
+      post :attendance_report
+      get :confirm_attendance_form
+      post :confirm_attendance
+      post :create_attendance_1
+      get :emp_attendance_1_list
+>>>>>>> c4b0ad846dc1a030cab26aa48d646fa2c0a588d1
     end
   end
   resources :salary_comp_mappings

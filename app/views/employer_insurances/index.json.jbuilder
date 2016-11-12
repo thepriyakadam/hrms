@@ -1,0 +1,1 @@
+json.array! @employer_insurances, partial: 'employer_insurances/employer_insurance', as: :employer_insurance

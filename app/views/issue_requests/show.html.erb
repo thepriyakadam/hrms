@@ -1,6 +1,6 @@
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title">Issue Request</h3>
+    <h3 class="box-title">Support Request</h3>
   </div><!-- /.box-header -->
   <div class="box-body">
     <table id="example2" class="table table-bordered table-hover table-condensed'">
@@ -9,7 +9,7 @@
   <th><strong>Request By</strong></th>
   <td><%= @issue_request.employee.try(:first_name) %> <%= @issue_request.employee.try(:middle_name) %> <%= @issue_request.employee.try(:last_name) %></td>
 
-  <th><strong>Issue</strong></th>
+  <th><strong>Support</strong></th>
   <td><%= @issue_request.issue_master.try(:name) %></td>
  
 </tr>

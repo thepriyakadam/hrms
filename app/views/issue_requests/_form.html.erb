@@ -1,6 +1,6 @@
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title"> Request For Issue </h3>
+    <h3 class="box-title"> Request For Support </h3>
   </div>
   <div class="box-body">
   <%= bootstrap_form_for(@issue_request,html: {id: 'issue_request'}) do |f| %>
@@ -28,7 +28,7 @@
 
   <div class="col-sm-3">
     <div class="group">
-     <%= f.select :issue_priority , ['Low','Medium','High'] ,{label: "Issue Priority",include_blank: 'Select Issue Priority'}%>
+     <%= f.select :issue_priority , ['Low','Medium','High'] ,{label: "Support Priority",include_blank: 'Select Support Priority'}%>
     </div>
   </div>
   
@@ -56,7 +56,7 @@
  <div class="col-sm-6">
    <label></label>
   <div class="actions">
-    <%= f.submit 'Create Issue Request',class: "btn btn-primary btn-sm"  %>
+    <%= f.submit 'Create Support Request',class: "btn btn-primary btn-sm"  %>
     <%= link_to 'Back', issue_requests_path,class: 'btn btn-sm btn-default fa fa-arrow-left' %>
   </div>
  </div>

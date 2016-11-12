@@ -31,6 +31,7 @@ class IssueRequestsController < ApplicationController
 
 
   def create
+    # byebug
    @issue_request = IssueRequest.new(issue_request_params)
     respond_to do |format|
       if @issue_request.save

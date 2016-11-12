@@ -5,13 +5,13 @@
 
         <div class="row">
           <div class="col-sm-3">
-            <div class="form-group required">
+            <div class="field">
                <%= f.select :issue_root_cause_id,all_issue_root_cause,{label: "Support Root Cause",include_blank: "Select Support Root Cause"} %>
             </div>
           </div>
           <div class="col-sm-3">
-            <div class="form-group required">
-              <%= f.text_area :comment,label: "Comment",class: "form-control"%>
+            <div class="field">
+              <%= f.text_area :comment,label: "Description",class: "form-control"%>
             </div>
          </div>
          <div class="col-sm-3">

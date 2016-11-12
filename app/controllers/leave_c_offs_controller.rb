@@ -171,17 +171,22 @@ class LeaveCOffsController < ApplicationController
   end
 
   def add_coff
-    #byebug
     @leave_c_off = LeaveCOff.find(params['login']['leave_c_off_id'])
     leav_category = LeavCategory.find_by(name: 'Compensatory Off')
     @emp_leav_bal = EmployeeLeavBalance.where(employee_id: @leave_c_off.employee_id,leav_category_id: leav_category.id)
+    @emp_leav_bal1 = EmployeeLeavBalance.where(employee_id: @leave_c_off.employee_id,leav_category_id: leav_category.id).take
+  
+    @no_of_leav = @emp_leav_bal1.no_of_leave
+
     if @leave_c_off.c_off_type == 'Full Day'
-      @leave_c_off.update(expiry_date: nil,expiry_status: nil,leave_count: 1)
-      @emp_leav_bal.update(no_of_leave: @emp_leav_bal.no_of_leave + 1)
+      @leave_c_off.update(expiry_date: nil,is_expire: nil,leave_count: 1)
+      @emp_leav_bal1.update(no_of_leave: @no_of_leav.to_f + 1 )
     elsif @leave_c_off.c_off_type == 'Half Day'
-      @leave_c_off.update(expiry_date: nil,expiry_status: nil,leave_count: 0.5)
-      @emp_leav_bal.update(no_of_leave: @emp_leav_bal.no_of_leave + 0.5)
+      @leave_c_off.update(expiry_date: nil,is_expire: nil,leave_count: 0.5)
+      @emp_leav_bal1.update(no_of_leave: @no_of_leav.to_f + 0.5)
     end
+    flash[:notice] = "Created successfully"
+    redirect_to new_leave_c_off_path
   end
   # def ajax_show_textbox
   #   # byebug

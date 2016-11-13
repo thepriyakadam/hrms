@@ -4,7 +4,7 @@ class EmployerInsurancesController < ApplicationController
   # GET /employer_insurances
   # GET /employer_insurances.json
   def index
-    @employer_insurances = EmployerInsurance.all
+   
   end
 
   # GET /employer_insurances/1
@@ -15,6 +15,7 @@ class EmployerInsurancesController < ApplicationController
   # GET /employer_insurances/new
   def new
     @employer_insurance = EmployerInsurance.new
+    @employer_insurances = EmployerInsurance.all
   end
 
   # GET /employer_insurances/1/edit
@@ -24,41 +25,61 @@ class EmployerInsurancesController < ApplicationController
   # POST /employer_insurances
   # POST /employer_insurances.json
   def create
-    @employer_insurance = EmployerInsurance.new(employer_insurance_params)
-
-    respond_to do |format|
-      if @employer_insurance.save
-        format.html { redirect_to @employer_insurance, notice: 'Employer insurance was successfully created.' }
-        format.json { render :show, status: :created, location: @employer_insurance }
-      else
-        format.html { render :new }
-        format.json { render json: @employer_insurance.errors, status: :unprocessable_entity }
-      end
+   components = params[:components]
+    str = ''
+    i = 0
+    components.try(:each) do |c|
+      str = if i == 0
+              c.to_s
+            else
+              str.to_s + ',' + c.to_s
+            end
+      i += 1
     end
-  end
+
+    @employer_insurance = EmployerInsurance.new(employer_insurance_params)
+    @employer_insurance.base_component = str
+    @employer_insurances = EmployerInsurance.all
+    @employer_insurance.save
+    @employer_insurance = EmployerInsurance.new
+    end
 
   # PATCH/PUT /employer_insurances/1
   # PATCH/PUT /employer_insurances/1.json
   def update
-    respond_to do |format|
-      if @employer_insurance.update(employer_insurance_params)
-        format.html { redirect_to @employer_insurance, notice: 'Employer insurance was successfully updated.' }
-        format.json { render :show, status: :ok, location: @employer_insurance }
-      else
-        format.html { render :edit }
-        format.json { render json: @employer_insurance.errors, status: :unprocessable_entity }
-      end
+    components = params[:components]
+    str = ''
+    i = 0
+    components.try(:each) do |c|
+      str = if i == 0
+              c.to_s
+            else
+              str.to_s + ',' + c.to_s
+            end
+      i += 1
     end
+    @employer_insurance.base_component = str
+    @employer_insurance.update(employer_insurance_params)
+    @employer_insurances = EmployerInsurance.all
+    @employer_insurance = EmployerInsurance.new
+
   end
 
   # DELETE /employer_insurances/1
   # DELETE /employer_insurances/1.json
   def destroy
     @employer_insurance.destroy
-    respond_to do |format|
-      format.html { redirect_to employer_insurances_url, notice: 'Employer insurance was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    @employer_insurance = EmployerInsurance.new
+    @employer_insurances = EmployerInsurance.all
+
+    
+  end
+
+  def is_confirm
+    @employer_insurance = EmployerInsurance.find(params[:employer_insurance])
+    EmployerInsurance.find(@employer_insurance.id).update(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to new_employer_insurance_path
   end
 
   private

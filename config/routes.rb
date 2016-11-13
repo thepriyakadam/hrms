@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :professional_tax_masters
   resources :pf_employers
   resources :esic_employers
   resources :bonus_employers

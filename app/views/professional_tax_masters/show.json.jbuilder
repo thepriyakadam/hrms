@@ -1,0 +1,1 @@
+json.partial! "professional_tax_masters/professional_tax_master", professional_tax_master: @professional_tax_master

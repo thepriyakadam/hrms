@@ -644,17 +644,17 @@ class SalaryslipsController < ApplicationController
           deducted_total_actual_amount = 0
           deducted_total_calculated_amount = 0
 
-          if addable_total_actual_amount > 15_000
-            if @month == 'March'
-              deducted_actual_amount = 212
-              deducted_calculated_amount = 212
-            else
-              deducted_actual_amount = 208
-              deducted_calculated_amount = 208
-            end
-            deducted_total_actual_amount += deducted_actual_amount
-            deducted_total_calculated_amount += deducted_calculated_amount
-          end
+          # if addable_total_actual_amount > 15_000
+          #   if @month == 'March'
+          #     deducted_actual_amount = 212
+          #     deducted_calculated_amount = 212
+          #   else
+          #     deducted_actual_amount = 208
+          #     deducted_calculated_amount = 208
+          #   end
+          #   deducted_total_actual_amount += deducted_actual_amount
+          #   deducted_total_calculated_amount += deducted_calculated_amount
+          # end
 
           @advance_salaries = AdvanceSalary.where(employee_id: @employee.id)
           @advance_salaries.try(:each) do |a|
@@ -854,6 +854,47 @@ class SalaryslipsController < ApplicationController
               end
             end
           end
+
+
+          formula_item_actual_amount = 0
+          formula_item_calculated_amount = 0
+          formula_total_actual_amount = 0
+          formula_total_calculated_amount = 0
+
+          @retention = RetentionMoney.first
+          if @retention.have_retention == true
+            unless @retention.nil? || @employee.employee_type.name == "Confirmed"
+            if @retention.have_retention && addable_total_calculated_amount <= @retention.max_limit.to_f && @employee.joining_detail.have_retention
+              formula_string = @retention.base_component.split(',')
+              formula_string.try(:each) do |f|
+              formula_item = addable_salary_items.where(salary_component_id: f.to_i).take
+              formula_item_actual_amount = formula_item.monthly_amount
+              formula_item_actual_amount = 0 if formula_item_actual_amount.nil?
+              formula_total_actual_amount += formula_item_actual_amount
+              formula_item_calculated_amount = formula_item_actual_amount / working_day.try(:day_in_month) * working_day.try(:payable_day)
+              formula_total_calculated_amount += formula_item_calculated_amount
+              end
+              deducted_actual_amount = (formula_total_actual_amount / 100 * @retention.persent).ceil
+              deducted_calculated_amount = (formula_total_calculated_amount / 100 * @retention.persent).ceil
+            else
+              deducted_actual_amount = 0
+              deducted_calculated_amount = 0
+            end
+            @salary_component = SalaryComponent.find_by(name: "Retention")
+            SalaryslipComponent.create(salaryslip_id: @salaryslip.try(:id), actual_amount: deducted_actual_amount, calculated_amount: deducted_calculated_amount, is_deducted: true, other_component_name: 'Retention',salary_component_id: @salary_component.try(:id))
+          end 
+          else  
+          unless @retention.nil?
+           if @employee.joining_detail.have_retention
+              unless @employee.employee_type.name == "Confirmed"
+                deducted_actual_amount = 0
+                deducted_calculated_amount = @retention.amount
+                @salary_component = SalaryComponent.find_by(name: "Retention")
+                SalaryslipComponent.create(salaryslip_id: @salaryslip.try(:id), actual_amount: deducted_actual_amount, calculated_amount: deducted_calculated_amount, is_deducted: true, other_component_name: 'Retention',salary_component_id: @salary_component.try(:id))
+              end
+            end
+         end
+       end
       
 
         formula_item_actual_amount = 0
@@ -894,17 +935,17 @@ class SalaryslipsController < ApplicationController
         #   end
         # end
         
-          if addable_total_actual_amount > 15_000
-            if @month == 'March'
-              deducted_actual_amount = 212
-              deducted_calculated_amount = 212
-            else
-              deducted_actual_amount = 208
-              deducted_calculated_amount = 208
-            end
-            @salary_component = SalaryComponent.find_by(name: "Prof. Tax")
-            SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: deducted_actual_amount, calculated_amount: deducted_calculated_amount, is_deducted: true, other_component_name: 'Prof. Tax',salary_component_id: @salary_component.id)
-          end
+          # if addable_total_actual_amount > 15_000
+          #   if @month == 'March'
+          #     deducted_actual_amount = 212
+          #     deducted_calculated_amount = 212
+          #   else
+          #     deducted_actual_amount = 208
+          #     deducted_calculated_amount = 208
+          #   end
+          #   @salary_component = SalaryComponent.find_by(name: "Prof. Tax")
+          #   SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: deducted_actual_amount, calculated_amount: deducted_calculated_amount, is_deducted: true, other_component_name: 'Prof. Tax',salary_component_id: @salary_component.id)
+          # end
 
           @well_faires = WellFaire.all
           unless @well_faires.empty?
@@ -1142,6 +1183,33 @@ class SalaryslipsController < ApplicationController
         end
 
       end
+
+      # date: @start..@en
+
+      @professional_tax_masters = ProfessionalTaxMaster.where(is_active: true)
+
+      @professional_tax_masters.try(:each) do |s|
+        formula_string = s.base_component.split(',').map {|i| i.to_i}
+        formula_item = SalaryslipComponent.where(salary_component_id: formula_string,salaryslip_id: @salaryslip.id)
+        @total = formula_item.sum(:calculated_amount)
+        @total_actual = formula_item.sum(:actual_amount)
+        if @total.between?(s.min_amount, s.max_amount) && @month != "March"
+          @salary_component = SalaryComponent.find_by(name: "Prof. Tax")
+          SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: s.for_month, calculated_amount: s.for_month, is_deducted: true, other_component_name: 'Prof. Tax',salary_component_id: @salary_component.id)
+          puts "ssssssSSSSssasssSSSSssssSSSSss.........................."
+        
+        elsif @month == 'March' && @total.between?(s.min_amount, s.max_amount)
+          @salary_component = SalaryComponent.find_by(name: "Prof. Tax")
+          SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: s.march_amount, calculated_amount: s.march_amount, is_deducted: true, other_component_name: 'Prof. Tax',salary_component_id: @salary_component.id)
+          puts "tStsssssssssssssssssssssssssssssss.........................."
+        else
+        end
+      end
+        # byebug
+
+
+
+
 
           # @arrear = EmployeeArrear.where('employee_id = ? and is_paid = ?', @employee.id, false).take
           # next if @arrear.nil?

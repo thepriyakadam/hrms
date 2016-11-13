@@ -1,0 +1,53 @@
+<%= form_for(@professional_tax_master) do |f| %>
+  <% if @professional_tax_master.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@professional_tax_master.errors.count, "error") %> prohibited this professional_tax_master from being saved:</h2>
+
+      <ul>
+      <% @professional_tax_master.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :base_component %><br>
+    <%= f.text_field :base_component %>
+  </div>
+  <div class="field">
+    <%= f.label :min_amount %><br>
+    <%= f.text_field :min_amount %>
+  </div>
+  <div class="field">
+    <%= f.label :max_amount %><br>
+    <%= f.text_field :max_amount %>
+  </div>
+  <div class="field">
+    <%= f.label :for_month %><br>
+    <%= f.text_field :for_month %>
+  </div>
+  <div class="field">
+    <%= f.label :march_amount %><br>
+    <%= f.text_field :march_amount %>
+  </div>
+  <div class="field">
+    <%= f.label :effective_from %><br>
+    <%= f.date_select :effective_from %>
+  </div>
+  <div class="field">
+    <%= f.label :effective_to %><br>
+    <%= f.date_select :effective_to %>
+  </div>
+  <div class="field">
+    <%= f.label :is_active %><br>
+    <%= f.check_box :is_active %>
+  </div>
+  <div class="field">
+    <%= f.label :is_confirm %><br>
+    <%= f.check_box :is_confirm %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

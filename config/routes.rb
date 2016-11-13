@@ -1,11 +1,11 @@
 Rails.application.routes.draw do
 
+  resources :pf_employers
+  resources :esic_employers
   resources :bonus_employers
   resources :dearness_allowances
   resources :employer_insurances
   resources :employer_family_pensions
-  resources :employer_esics
-  resources :employer_pfs
   resources :insurance_masters do
     collection do
       get :is_confirm

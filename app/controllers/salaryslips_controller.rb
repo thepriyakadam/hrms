@@ -1055,14 +1055,14 @@ class SalaryslipsController < ApplicationController
           # byebug
           a = EmployerContribution.create_contribution(@employee.id)
         if @employee.joining_detail.is_employeer_esic == true
-          @employer_esic = EmployerEsic.where(is_active: true).take
-          formula_string = @employer_esic.base_component.split(',').map {|i| i.to_i}
+          @esic_employer = EsicEmployer.where(is_active: true).take
+          formula_string = @esic_employer.base_component.split(',').map {|i| i.to_i}
           # formula_string.try(:each) do |f|
           formula_item = SalaryslipComponent.where(salary_component_id: formula_string,salaryslip_id: @salaryslip.id)
           @total = formula_item.sum(:calculated_amount)
           @total_actual = formula_item.sum(:actual_amount)
-          formula_item_calculated_amount = (@total / 100 * @employer_esic.percentage).ceil
-          formula_item_actual_amount = (@total_actual / 100 * @employer_esic.percentage).ceil
+          formula_item_calculated_amount = (@total / 100 * @esic_employer.percentage).ceil
+          formula_item_actual_amount = (@total_actual / 100 * @esic_employer.percentage).ceil
           
             @e1=EmployerContribution.where(id: a.id).update_all(date: date,esic: formula_item_calculated_amount,actual_esic: formula_item_actual_amount)
           # EmployeerEsic.create_esic(formula_item_calculated_amount,formula_item_actual_amount,@employee.id, date)
@@ -1071,14 +1071,14 @@ class SalaryslipsController < ApplicationController
 
 
         if @employee.joining_detail.is_employeer_pf == true
-          @employer_pf = EmployerPf.where(is_active: true).take
-          formula_string = @employer_pf.base_component.split(',').map {|i| i.to_i}
+          @pf_employer = PfEmployer.where(is_active: true).take
+          formula_string = @pf_employer.base_component.split(',').map {|i| i.to_i}
           # formula_string.try(:each) do |f|
           formula_item = SalaryslipComponent.where(salary_component_id: formula_string,salaryslip_id: @salaryslip.id)
           @total = formula_item.sum(:calculated_amount)
           @total_actual = formula_item.sum(:actual_amount)
-          formula_item_calculated_amount = (@total / 100 * @employer_pf.percentage).ceil
-          formula_item_actual_amount = (@total_actual / 100 * @employer_pf.percentage).ceil
+          formula_item_calculated_amount = (@total / 100 * @pf_employer.percentage).ceil
+          formula_item_actual_amount = (@total_actual / 100 * @pf_employer.percentage).ceil
 
           @e1=EmployerContribution.where(id: a.id).update_all(date: date,pf: formula_item_calculated_amount,actual_pf: formula_item_actual_amount)
           # EmployeerEsic.create_esic(formula_item_calculated_amount,formula_item_actual_amount,@employee.id, date)

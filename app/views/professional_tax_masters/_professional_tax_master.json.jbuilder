@@ -1,0 +1,2 @@
+json.extract! professional_tax_master, :id, :base_component, :min_amount, :max_amount, :for_month, :march_amount, :effective_from, :effective_to, :is_active, :is_confirm, :created_at, :updated_at
+json.url professional_tax_master_url(professional_tax_master, format: :json)

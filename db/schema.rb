@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161112121755) do
+ActiveRecord::Schema.define(version: 20161113054556) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -1317,6 +1317,17 @@ ActiveRecord::Schema.define(version: 20161112121755) do
     t.datetime "updated_at",     null: false
   end
 
+  create_table "esic_employers", force: :cascade do |t|
+    t.string   "base_component"
+    t.decimal  "percentage"
+    t.date     "effective_from"
+    t.date     "effective_to"
+    t.boolean  "is_active"
+    t.boolean  "is_confirm"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
   create_table "esic_masters", force: :cascade do |t|
     t.boolean  "esic"
     t.decimal  "percentage",     precision: 15, scale: 2, default: 0.0
@@ -2435,6 +2446,17 @@ ActiveRecord::Schema.define(version: 20161112121755) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean  "is_confirm"
+  end
+
+  create_table "pf_employers", force: :cascade do |t|
+    t.string   "base_component"
+    t.decimal  "percentage"
+    t.date     "effective_from"
+    t.date     "effective_to"
+    t.boolean  "is_active"
+    t.boolean  "is_confirm"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
   end
 
   create_table "pf_masters", force: :cascade do |t|

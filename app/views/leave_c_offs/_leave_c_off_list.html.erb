@@ -13,24 +13,28 @@
 
   <tbody>
   <% @leave_c_offs.each do |leave_c_off| %>
-    <tr>
-      <td><%= leave_c_off.employee.try(:manual_employee_code) %></td>
-      <td><%= leave_c_off.employee.try(:first_name) %> <%= leave_c_off.employee.try(:middle_name) %> <%= leave_c_off.employee.try(:last_name) %></td>
-      <td><%= leave_c_off.c_off_date %></td>
-      <td><%= leave_c_off.leave_count %></td>
-      <td><%= leave_c_off.expiry_date %></td>
-      <td><%= leave_c_off.expiry_status ? "Yes" : "No" %></td>
-      <td>
-          <% if leave_c_off.is_taken == true %>
-          <small class= "label label-primary">Taken</small>
-          <% elsif leave_c_off.is_expire == true %>
-          <small class= "label label-warning">Expired</small>
-          <% else %>
-          <%= link_to '', edit_leave_c_off_path(leave_c_off), class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
-          <%= link_to '', leave_c_off, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-xs  btn-danger fa fa-close',remote:true %>
-          <% end %>
-      </td>
-    </tr>
+    <%= bootstrap_form_for :login, url: {action: 'add_coff'} do |f| %>
+      <tr>
+        <td><%= leave_c_off.employee.try(:manual_employee_code) %></td>
+        <td><%= leave_c_off.employee.try(:first_name) %> <%= leave_c_off.employee.try(:middle_name) %> <%= leave_c_off.employee.try(:last_name) %></td>
+        <td><%= leave_c_off.c_off_date %></td>
+        <td><%= leave_c_off.leave_count %></td>
+        <td><%= leave_c_off.expiry_date %></td>
+        <td><%= leave_c_off.expiry_status ? "Yes" : "No" %></td>
+        <td>
+            <%= f.hidden_field :leave_c_off_id, value: leave_c_off.id %>
+            <% if leave_c_off.is_taken == true %>
+            <small class= "label label-primary">Taken</small>
+            <% elsif leave_c_off.is_expire == true %>
+            <small class= "label label-warning">Expired</small>
+            <%= f.submit "Add", class: 'btn btn-info btn-xs fa fa-user-plus' %>
+            <% else %>
+            <%= link_to '', edit_leave_c_off_path(leave_c_off), class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
+            <%= link_to '', leave_c_off, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-xs  btn-danger fa fa-close',remote:true %>
+            <% end %>
+        </td>
+      </tr>
+    <% end %>
   <% end %>
   </tbody>
 </table>

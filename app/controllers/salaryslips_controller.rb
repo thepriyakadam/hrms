@@ -627,7 +627,6 @@ class SalaryslipsController < ApplicationController
             if item.salary_component.name == 'Basic'
               basic_actual_amount = addable_actual_amount
               basic_calculated_amount = addable_calculated_amount
-              # byebug
             elsif item.salary_component.name == 'DA'
               da_actual_amount = addable_actual_amount
               da_calculated_amount = addable_calculated_amount
@@ -640,9 +639,6 @@ class SalaryslipsController < ApplicationController
             end
             @salaryslip_component_array << @addable_salaryslip_item
         end
-
-
-
           deducted_actual_amount = 0
           deducted_calculated_amount = 0
           deducted_total_actual_amount = 0
@@ -683,7 +679,6 @@ class SalaryslipsController < ApplicationController
           @food_deductions = FoodDeduction.where(food_date: date..date.at_end_of_month, employee_id: @employee.id)
           unless @food_deductions.empty?
             @food_deductions.each do |f|
-              #byebug
               f.update(is_paid: true)
               deducted_actual_amount = 0
               deducted_calculated_amount = f.amount
@@ -980,7 +975,6 @@ class SalaryslipsController < ApplicationController
           unless @food_deductions.empty?
             deducted_calculated_amount = 0
             @food_deductions.each do |f|
-              #byebug
               f.update(is_paid: true)
               deducted_actual_amount = 0
               deducted_calculated_amount = deducted_calculated_amount + f.amount

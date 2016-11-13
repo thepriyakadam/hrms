@@ -281,10 +281,14 @@ end
       get :loginwise_attendance_form
       get :display_employee_attendance_list
       get :employee_attendances_list
+      get :calculate_attendance
+      get :display_total
+      get :attendance_total_xls
       get :emp_attendance
       get :display_attendance_2
       get :employee_slip_xls_1
       get :employee_slip_pdf
+      get :attendance_total_pdf
       get :emp_attendance_1
       post :attendance_report
       get :confirm_attendance_form
@@ -865,6 +869,7 @@ end
   resources :leave_c_offs do
     collection do
       get :search_by_c_off_date
+      post :add_coff
     end
   end
 

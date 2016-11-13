@@ -31,11 +31,10 @@
           <td><%= food_deduction.food_coupan_master.price %></td>
           <td><%= food_deduction.amount %></td>
           <td>
-            <!-- < link_to '', food_deduction, class: "btn btn-default btn-xs fa fa-eye" %> -->
             <% if food_deduction.is_paid == true %>
               <small class="label label-primary">Paid</small>
             <% else %>
-              <%= link_to '', edit_food_deduction_path(food_deduction), class: "btn btn-success btn-xs fa fa-edit" %>
+              <%= link_to '', edit_food_deduction_path(food_deduction),class: "btn btn-success btn-xs fa fa-edit" %>
             <% end %>
           </td>
         </tr>

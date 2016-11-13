@@ -1165,17 +1165,6 @@ ActiveRecord::Schema.define(version: 20161113062727) do
 
   add_index "employeer_esics", ["employee_id"], name: "index_employeer_esics_on_employee_id"
 
-  create_table "employeer_insurances", force: :cascade do |t|
-    t.integer  "employee_id"
-    t.date     "insurance_date"
-    t.decimal  "actual_amout"
-    t.decimal  "amount"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
-  end
-
-  add_index "employeer_insurances", ["employee_id"], name: "index_employeer_insurances_on_employee_id"
-
   create_table "employeer_pfs", force: :cascade do |t|
     t.integer  "employee_id"
     t.date     "pf_date"
@@ -1240,18 +1229,6 @@ ActiveRecord::Schema.define(version: 20161113062727) do
   add_index "employees", ["nationality_id"], name: "index_employees_on_nationality_id"
   add_index "employees", ["religion_id"], name: "index_employees_on_religion_id"
   add_index "employees", ["state_id"], name: "index_employees_on_state_id"
-
-  create_table "employer_bonus", force: :cascade do |t|
-    t.string   "base_component"
-    t.decimal  "limit_amount"
-    t.decimal  "percentage"
-    t.date     "effective_from"
-    t.date     "effective_to"
-    t.boolean  "is_active"
-    t.boolean  "is_confirm"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
-  end
 
   create_table "employer_contributions", force: :cascade do |t|
     t.integer  "employee_id"

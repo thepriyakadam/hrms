@@ -4,7 +4,7 @@ class ProfessionalTaxMastersController < ApplicationController
   # GET /professional_tax_masters
   # GET /professional_tax_masters.json
   def index
-    @professional_tax_masters = ProfessionalTaxMaster.all
+    
   end
 
   # GET /professional_tax_masters/1
@@ -15,6 +15,7 @@ class ProfessionalTaxMastersController < ApplicationController
   # GET /professional_tax_masters/new
   def new
     @professional_tax_master = ProfessionalTaxMaster.new
+    @professional_tax_masters = ProfessionalTaxMaster.all
   end
 
   # GET /professional_tax_masters/1/edit
@@ -24,42 +25,62 @@ class ProfessionalTaxMastersController < ApplicationController
   # POST /professional_tax_masters
   # POST /professional_tax_masters.json
   def create
-    @professional_tax_master = ProfessionalTaxMaster.new(professional_tax_master_params)
-
-    respond_to do |format|
-      if @professional_tax_master.save
-        format.html { redirect_to @professional_tax_master, notice: 'Professional tax master was successfully created.' }
-        format.json { render :show, status: :created, location: @professional_tax_master }
-      else
-        format.html { render :new }
-        format.json { render json: @professional_tax_master.errors, status: :unprocessable_entity }
-      end
+   components = params[:components]
+    str = ''
+    i = 0
+    components.try(:each) do |c|
+      str = if i == 0
+              c.to_s
+            else
+              str.to_s + ',' + c.to_s
+            end
+      i += 1
     end
-  end
+
+    @professional_tax_master = ProfessionalTaxMaster.new(professional_tax_master_params)
+    @professional_tax_master.base_component = str
+    @professional_tax_masters = ProfessionalTaxMaster.all
+    @professional_tax_master.save
+    @professional_tax_master = ProfessionalTaxMaster.new
+    end
 
   # PATCH/PUT /professional_tax_masters/1
   # PATCH/PUT /professional_tax_masters/1.json
-  def update
-    respond_to do |format|
-      if @professional_tax_master.update(professional_tax_master_params)
-        format.html { redirect_to @professional_tax_master, notice: 'Professional tax master was successfully updated.' }
-        format.json { render :show, status: :ok, location: @professional_tax_master }
-      else
-        format.html { render :edit }
-        format.json { render json: @professional_tax_master.errors, status: :unprocessable_entity }
-      end
+ def update
+    components = params[:components]
+    str = ''
+    i = 0
+    components.try(:each) do |c|
+      str = if i == 0
+              c.to_s
+            else
+              str.to_s + ',' + c.to_s
+            end
+      i += 1
     end
+    @professional_tax_master.base_component = str
+    @professional_tax_master.update(professional_tax_master_params)
+    @professional_tax_masters = ProfessionalTaxMaster.all
+    @professional_tax_master = ProfessionalTaxMaster.new
+
   end
 
   # DELETE /professional_tax_masters/1
   # DELETE /professional_tax_masters/1.json
   def destroy
     @professional_tax_master.destroy
-    respond_to do |format|
-      format.html { redirect_to professional_tax_masters_url, notice: 'Professional tax master was successfully destroyed.' }
-      format.json { head :no_content }
+    @professional_tax_master = ProfessionalTaxMaster.new
+    @professional_tax_masters = ProfessionalTaxMaster.all
+    
     end
+
+  def is_confirm
+    @professional_tax_master = ProfessionalTaxMaster.find(params[:professional_tax_master])
+    ProfessionalTaxMaster.find(@professional_tax_master.id).update(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to new_professional_tax_master_path
   end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

@@ -1033,39 +1033,39 @@ class SalaryslipsController < ApplicationController
  
           BonusEmployee.create_bonus(basic_calculated_amount, @employee.id, date)
           # byebug
-        if @employee.joining_detail.is_employeer_pf == true
-          @fp_master = FpMaster.where(is_active: true).take
-          formula_string = @fp_master.base_component.split(',').map {|i| i.to_i}
-          # formula_string.try(:each) do |f|
-          formula_item = SalaryslipComponent.where(salary_component_id: formula_string,salaryslip_id: @salaryslip.id)
-          @total = formula_item.sum(:calculated_amount)
-          @total_actual = formula_item.sum(:actual_amount)
-          formula_item_calculated_amount = (@total / 100 * @fp_master.percentage).ceil
-          formula_item_actual_amount = (@total_actual / 100 * @fp_master.percentage).ceil
-          # formula_item_calculated_amount = @total / working_day.try(:day_in_month) * working_day.try(:payable_day)
+        # if @employee.joining_detail.is_employeer_pf == true
+        #   @fp_master = FpMaster.where(is_active: true).take
+        #   formula_string = @fp_master.base_component.split(',').map {|i| i.to_i}
+        #   # formula_string.try(:each) do |f|
+        #   formula_item = SalaryslipComponent.where(salary_component_id: formula_string,salaryslip_id: @salaryslip.id)
+        #   @total = formula_item.sum(:calculated_amount)
+        #   @total_actual = formula_item.sum(:actual_amount)
+        #   formula_item_calculated_amount = (@total / 100 * @fp_master.percentage).ceil
+        #   formula_item_actual_amount = (@total_actual / 100 * @fp_master.percentage).ceil
+        #   # formula_item_calculated_amount = @total / working_day.try(:day_in_month) * working_day.try(:payable_day)
 
-          EmployeerPf.create_fp(formula_item_calculated_amount,formula_item_actual_amount,@employee.id, date)
-          puts "ttttttttttttttttttttttttttttttttttttttttttttt..........................."
-          # end
-        else
-        end
+        #   EmployeerPf.create_fp(formula_item_calculated_amount,formula_item_actual_amount,@employee.id, date)
+        #   puts "ttttttttttttttttttttttttttttttttttttttttttttt..........................."
+        #   # end
+        # else
+        # end
 
-        if @employee.joining_detail.is_employeer_esic == true
-          # byebug
-          @esic_employer_master = EsicEmployerMaster.where(is_active: true).take
-          formula_string = @esic_employer_master.base_component.split(',').map {|i| i.to_i}
-          # formula_string.try(:each) do |f|
-          formula_item = SalaryslipComponent.where(salary_component_id: formula_string,salaryslip_id: @salaryslip.id)
-          @total = formula_item.sum(:calculated_amount)
-          @total_actual = formula_item.sum(:actual_amount)
-          formula_item_calculated_amount = (@total / 100 * @esic_employer_master.percentage).ceil
-          formula_item_actual_amount = (@total_actual / 100 * @esic_employer_master.percentage).ceil
+        # if @employee.joining_detail.is_employeer_esic == true
+        #   # byebug
+        #   @esic_employer_master = EsicEmployerMaster.where(is_active: true).take
+        #   formula_string = @esic_employer_master.base_component.split(',').map {|i| i.to_i}
+        #   # formula_string.try(:each) do |f|
+        #   formula_item = SalaryslipComponent.where(salary_component_id: formula_string,salaryslip_id: @salaryslip.id)
+        #   @total = formula_item.sum(:calculated_amount)
+        #   @total_actual = formula_item.sum(:actual_amount)
+        #   formula_item_calculated_amount = (@total / 100 * @esic_employer_master.percentage).ceil
+        #   formula_item_actual_amount = (@total_actual / 100 * @esic_employer_master.percentage).ceil
 
-          EmployeerEsic.create_esic(formula_item_calculated_amount,formula_item_actual_amount,@employee.id, date)
-          puts "ggggggggggggggggggggggggggggggg..........................."
-          # end
-        else
-        end
+        #   EmployeerEsic.create_esic(formula_item_calculated_amount,formula_item_actual_amount,@employee.id, date)
+        #   puts "ggggggggggggggggggggggggggggggg..........................."
+        #   # end
+        # else
+        # end
 
           # @arrear = EmployeeArrear.where('employee_id = ? and is_paid = ?', @employee.id, false).take
           # next if @arrear.nil?

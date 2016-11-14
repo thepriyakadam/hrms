@@ -4,7 +4,7 @@ class EsicEmployersController < ApplicationController
   # GET /esic_employers
   # GET /esic_employers.json
   def index
-    @esic_employers = EsicEmployer.all
+    
   end
 
   # GET /esic_employers/1
@@ -15,6 +15,7 @@ class EsicEmployersController < ApplicationController
   # GET /esic_employers/new
   def new
     @esic_employer = EsicEmployer.new
+    @esic_employers = EsicEmployer.all
   end
 
   # GET /esic_employers/1/edit
@@ -23,43 +24,62 @@ class EsicEmployersController < ApplicationController
 
   # POST /esic_employers
   # POST /esic_employers.json
-  def create
-    @esic_employer = EsicEmployer.new(esic_employer_params)
-
-    respond_to do |format|
-      if @esic_employer.save
-        format.html { redirect_to @esic_employer, notice: 'Esic employer was successfully created.' }
-        format.json { render :show, status: :created, location: @esic_employer }
-      else
-        format.html { render :new }
-        format.json { render json: @esic_employer.errors, status: :unprocessable_entity }
-      end
+   def create
+   components = params[:components]
+    str = ''
+    i = 0
+    components.try(:each) do |c|
+      str = if i == 0
+              c.to_s
+            else
+              str.to_s + ',' + c.to_s
+            end
+      i += 1
     end
-  end
+
+    @esic_employer = EsicEmployer.new(esic_employer_params)
+    @esic_employer.base_component = str
+    @esic_employers = EsicEmployer.all
+    @esic_employer.save
+    @esic_employer = EsicEmployer.new
+    end
 
   # PATCH/PUT /esic_employers/1
   # PATCH/PUT /esic_employers/1.json
   def update
-    respond_to do |format|
-      if @esic_employer.update(esic_employer_params)
-        format.html { redirect_to @esic_employer, notice: 'Esic employer was successfully updated.' }
-        format.json { render :show, status: :ok, location: @esic_employer }
-      else
-        format.html { render :edit }
-        format.json { render json: @esic_employer.errors, status: :unprocessable_entity }
-      end
+    components = params[:components]
+    str = ''
+    i = 0
+    components.try(:each) do |c|
+      str = if i == 0
+              c.to_s
+            else
+              str.to_s + ',' + c.to_s
+            end
+      i += 1
     end
+    @esic_employer.base_component = str
+    @esic_employer.update(esic_employer_params)
+    @esic_employers = EsicEmployer.all
+    @esic_employer = EsicEmployer.new
+
   end
 
   # DELETE /esic_employers/1
   # DELETE /esic_employers/1.json
   def destroy
     @esic_employer.destroy
-    respond_to do |format|
-      format.html { redirect_to esic_employers_url, notice: 'Esic employer was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    @esic_employer = EsicEmployer.new
+    @esic_employers = EsicEmployer.all
   end
+
+  def is_confirm
+    @esic_employer = EsicEmployer.find(params[:esic_employer])
+    EsicEmployer.find(@esic_employer.id).update(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to new_esic_employer_path
+  end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

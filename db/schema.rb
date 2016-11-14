@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161113054556) do
+ActiveRecord::Schema.define(version: 20161113062727) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -2469,6 +2469,20 @@ ActiveRecord::Schema.define(version: 20161113054556) do
     t.datetime "created_at",                              null: false
     t.datetime "updated_at",                              null: false
     t.boolean  "is_confirm"
+  end
+
+  create_table "professional_tax_masters", force: :cascade do |t|
+    t.string   "base_component"
+    t.decimal  "min_amount"
+    t.decimal  "max_amount"
+    t.decimal  "for_month"
+    t.decimal  "march_amount"
+    t.date     "effective_from"
+    t.date     "effective_to"
+    t.boolean  "is_active"
+    t.boolean  "is_confirm"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
   end
 
   create_table "professional_taxes", force: :cascade do |t|

@@ -5,6 +5,13 @@
             <% for i in 1..@day %>
               <th><%= i %></th>
             <%end%>
+            <th colspan="13"> Total </th>
+          </tr>
+          <tr>
+            <th>Day</th>
+              <% @start_date.step(@end_date).each do |l| %>
+                <th><%= l.strftime("%a") %></th>
+              <%end%>
             <th>A</th>
             <th>P</th>
             <th>W</th>
@@ -17,6 +24,7 @@
             <th>OD</th>
             <th>GP</th>
             <th>GPWP</th>
+            <th>Total</th>
           </tr>
         </thead>
         <tbody>
@@ -89,6 +97,7 @@
               </td>
               <td><%= gp.count %></td>
               <td><%= gpwp.count %></td>
+              <td><%= ab + ap + wd.count + ael + acl + alwp + aesic + acoff + aal + aod +  gp.count + gpwp.count %></td>
             </tr> 
             <% present_day = present_day_count(exist) %>
             <% holiday_in_month = holiday_in_month_count(exist) %>

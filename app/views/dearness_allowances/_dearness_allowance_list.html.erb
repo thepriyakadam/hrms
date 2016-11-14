@@ -19,7 +19,7 @@
       <tr>
         <td>
           <% i = 0 %>
-          <% dearness_allowance.base_component.split(",").each do |e| %>
+          <% dearness_allowance.base_component.split(",").try(:each) do |e| %>
             <% if i == 0 %>
               <%= SalaryComponent.find(e.to_i).name %>
             <% else %>

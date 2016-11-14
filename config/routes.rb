@@ -35,6 +35,7 @@ Rails.application.routes.draw do
       get :is_confirm
     end
   end
+
   resources :insurance_masters do
     collection do
       get :is_confirm

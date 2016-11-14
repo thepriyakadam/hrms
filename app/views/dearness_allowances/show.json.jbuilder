@@ -1,1 +1,0 @@
-json.partial! "dearness_allowances/dearness_allowance", dearness_allowance: @dearness_allowance

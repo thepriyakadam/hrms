@@ -9,6 +9,8 @@ class IssueRequest < ActiveRecord::Base
   validates :issue_tracker_group_id, presence: true
   validates :issue_master_id, presence: true
   validates :issue_priority, presence: true
+  
+
 
   has_attached_file :document1, :path => "attachments/attach_resume/:basename.:extension"
 

@@ -1,41 +1,74 @@
-<%= form_for(@pf_employer) do |f| %>
-  <% if @pf_employer.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@pf_employer.errors.count, "error") %> prohibited this pf_employer from being saved:</h2>
+<%= bootstrap_form_for(@pf_employer,html: {id: 'pf_employer'},remote:true) do |f| %>
 
-      <ul>
-      <% @pf_employer.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+<div class="row">
+  <div class="col-sm-3">
+      <label>Base Component</label>
+      <div class="form-group required">
+        <%=select_tag("components[]",options_for_select(SalaryComponent.all.collect {|ff| [ff.name, ff.id] }),{:multiple=>true,:id => "batches",class: "form-control"})%>
+      </div>
     </div>
-  <% end %>
+ <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :percentage %>
+      </div>
+    </div>
 
-  <div class="field">
-    <%= f.label :base_component %><br>
-    <%= f.text_field :base_component %>
-  </div>
-  <div class="field">
-    <%= f.label :percentage %><br>
-    <%= f.text_field :percentage %>
-  </div>
-  <div class="field">
-    <%= f.label :effective_from %><br>
-    <%= f.date_select :effective_from %>
-  </div>
-  <div class="field">
-    <%= f.label :effective_to %><br>
-    <%= f.date_select :effective_to %>
-  </div>
-  <div class="field">
-    <%= f.label :is_active %><br>
-    <%= f.check_box :is_active %>
-  </div>
-  <div class="field">
-    <%= f.label :is_confirm %><br>
-    <%= f.check_box :is_confirm %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+   <div class="col-sm-3">
+      <div class="field">
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="fa fa-calendar"></i>
+          </div>
+          <%= f.text_field :effective_from,label: "Effective From", class: 'effective_from'%>
+        </div>
+      </div>
+    </div>
+<div class="col-sm-3">
+      <div class="field">
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="fa fa-calendar"></i>
+          </div>
+          <%= f.text_field :effective_to, label: "Effective To", class: 'effective_to'%>
+        </div>
+      </div>
+      </div>
+      </div>
+    <div class="row">
+
+         <div class="col-sm-1">
+      <label>Status </label>
+      <div class="field">
+        <%= f.check_box :is_active, label: 'Active'%>
+      </div>
+    </div>
+   
+
+ <div class="col-sm-3">
+   <label></label>
+      <div class="actions">
+        <%= f.submit :class => class_name, data: { disable_with: data_info } %>
+      </div>
+    </div>
+     </div>
 <% end %>
+
+<script>     
+    $(function(){
+    $('.effective_from').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-20:+10',
+    dateFormat: 'dd-mm-yy' });
+  });
+</script>
+<script>
+   $(function(){
+    $('.effective_to').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-20:+10',
+    dateFormat: 'dd-mm-yy' });
+  });
+</script>
+

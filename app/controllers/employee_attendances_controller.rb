@@ -176,6 +176,9 @@ class EmployeeAttendancesController < ApplicationController
     # @employee_attendances = EmployeeAttendance.where(day: @month)
     @date = Date.new(@year.to_i, Workingday.months[@month])
     @day = @date.end_of_month.day
+
+    @start_date = @date
+    @end_date = @date.end_of_month
     @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).group(:employee_id)
   end
                                 
@@ -231,10 +234,11 @@ class EmployeeAttendancesController < ApplicationController
   end
 
   def employee_slip_xls_1
-    # byebug
     @year, @month = params[:year], params[:month]
     @date = Date.new(@year.to_i, Workingday.months[@month])
     @day = @date.end_of_month.day
+    @start_date = @date
+    @end_date = @date.end_of_month
     @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ? and is_confirm = ?", @date.strftime('%m/%Y'),false).group(:employee_id)
     respond_to do |format|
       format.xls {render template: 'employee_attendances/employee_attendance_1.xls.erb'}
@@ -301,6 +305,8 @@ class EmployeeAttendancesController < ApplicationController
     @year, @month = params[:year], params[:month]
     @date = Date.new(@year.to_i, Workingday.months[@month])
     @day = @date.end_of_month.day
+    @start_date = @date
+    @end_date = @date.end_of_month
     @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ? and is_confirm = ?", @date.strftime('%m/%Y'),false).group(:employee_id)
       respond_to do |format|
           format.json

@@ -4,7 +4,7 @@ class BonusEmployersController < ApplicationController
   # GET /bonus_employers
   # GET /bonus_employers.json
   def index
-    @bonus_employers = BonusEmployer.all
+    
   end
 
   # GET /bonus_employers/1
@@ -15,6 +15,7 @@ class BonusEmployersController < ApplicationController
   # GET /bonus_employers/new
   def new
     @bonus_employer = BonusEmployer.new
+    @bonus_employers = BonusEmployer.all
   end
 
   # GET /bonus_employers/1/edit
@@ -24,41 +25,60 @@ class BonusEmployersController < ApplicationController
   # POST /bonus_employers
   # POST /bonus_employers.json
   def create
-    @bonus_employer = BonusEmployer.new(bonus_employer_params)
-
-    respond_to do |format|
-      if @bonus_employer.save
-        format.html { redirect_to @bonus_employer, notice: 'Bonus employer was successfully created.' }
-        format.json { render :show, status: :created, location: @bonus_employer }
-      else
-        format.html { render :new }
-        format.json { render json: @bonus_employer.errors, status: :unprocessable_entity }
-      end
+   components = params[:components]
+    str = ''
+    i = 0
+    components.each do |c|
+      str = if i == 0
+              c.to_s
+            else
+              str.to_s + ',' + c.to_s
+            end
+      i += 1
     end
-  end
+
+    @bonus_employer = BonusEmployer.new(bonus_employer_params)
+    @bonus_employer.base_component = str
+    @bonus_employers = BonusEmployer.all
+    @bonus_employer.save
+    @bonus_employer = BonusEmployer.new
+    end
 
   # PATCH/PUT /bonus_employers/1
   # PATCH/PUT /bonus_employers/1.json
   def update
-    respond_to do |format|
-      if @bonus_employer.update(bonus_employer_params)
-        format.html { redirect_to @bonus_employer, notice: 'Bonus employer was successfully updated.' }
-        format.json { render :show, status: :ok, location: @bonus_employer }
-      else
-        format.html { render :edit }
-        format.json { render json: @bonus_employer.errors, status: :unprocessable_entity }
-      end
+    components = params[:components]
+    str = ''
+    i = 0
+    components.try(:each) do |c|
+      str = if i == 0
+              c.to_s
+            else
+              str.to_s + ',' + c.to_s
+            end
+      i += 1
     end
+    @bonus_employer.base_component = str
+    @bonus_employer.update(bonus_employer_params)
+    @bonus_employers = BonusEmployer.all
+    @bonus_employer = BonusEmployer.new
+
   end
+
 
   # DELETE /bonus_employers/1
   # DELETE /bonus_employers/1.json
   def destroy
     @bonus_employer.destroy
-    respond_to do |format|
-      format.html { redirect_to bonus_employers_url, notice: 'Bonus employer was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    @bonus_employer = BonusEmployer.new
+    @bonus_employers = BonusEmployer.all
+  end
+
+  def is_confirm
+    @bonus_employer = BonusEmployer.find(params[:bonus_employer])
+    BonusEmployer.find(@bonus_employer.id).update(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to new_bonus_employer_path
   end
 
   private

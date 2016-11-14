@@ -4,7 +4,7 @@ class PfEmployersController < ApplicationController
   # GET /pf_employers
   # GET /pf_employers.json
   def index
-    @pf_employers = PfEmployer.all
+   
   end
 
   # GET /pf_employers/1
@@ -15,6 +15,7 @@ class PfEmployersController < ApplicationController
   # GET /pf_employers/new
   def new
     @pf_employer = PfEmployer.new
+    @pf_employers = PfEmployer.all
   end
 
   # GET /pf_employers/1/edit
@@ -24,41 +25,60 @@ class PfEmployersController < ApplicationController
   # POST /pf_employers
   # POST /pf_employers.json
   def create
-    @pf_employer = PfEmployer.new(pf_employer_params)
-
-    respond_to do |format|
-      if @pf_employer.save
-        format.html { redirect_to @pf_employer, notice: 'Pf employer was successfully created.' }
-        format.json { render :show, status: :created, location: @pf_employer }
-      else
-        format.html { render :new }
-        format.json { render json: @pf_employer.errors, status: :unprocessable_entity }
-      end
+   components = params[:components]
+    str = ''
+    i = 0
+    components.try(:each) do |c|
+      str = if i == 0
+              c.to_s
+            else
+              str.to_s + ',' + c.to_s
+            end
+      i += 1
     end
-  end
+
+    @pf_employer = PfEmployer.new(pf_employer_params)
+    @pf_employer.base_component = str
+    @pf_employers = PfEmployer.all
+    @pf_employer.save
+    @pf_employer = PfEmployer.new
+    end
+
 
   # PATCH/PUT /pf_employers/1
   # PATCH/PUT /pf_employers/1.json
   def update
-    respond_to do |format|
-      if @pf_employer.update(pf_employer_params)
-        format.html { redirect_to @pf_employer, notice: 'Pf employer was successfully updated.' }
-        format.json { render :show, status: :ok, location: @pf_employer }
-      else
-        format.html { render :edit }
-        format.json { render json: @pf_employer.errors, status: :unprocessable_entity }
-      end
+    components = params[:components]
+    str = ''
+    i = 0
+    components.try(:each) do |c|
+      str = if i == 0
+              c.to_s
+            else
+              str.to_s + ',' + c.to_s
+            end
+      i += 1
     end
+    @pf_employer.base_component = str
+    @pf_employer.update(pf_employer_params)
+    @pf_employers = PfEmployer.all
+    @pf_employer = PfEmployer.new
+
   end
 
   # DELETE /pf_employers/1
   # DELETE /pf_employers/1.json
   def destroy
     @pf_employer.destroy
-    respond_to do |format|
-      format.html { redirect_to pf_employers_url, notice: 'Pf employer was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    @pf_employer = PfEmployer.new
+    @pf_employers = PfEmployer.all  
+  end
+
+   def is_confirm
+    @pf_employer = PfEmployer.find(params[:pf_employer])
+    PfEmployer.find(@pf_employer.id).update(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to new_pf_employer_path
   end
 
   private

@@ -15,6 +15,7 @@
             <th>OD</th>
             <th>GP</th>
             <th>GPWP</th>
+            <th>Total</th>
           </tr>
         </thead>
         <tbody>
@@ -82,6 +83,7 @@
               </td>
               <td><%= gp.count %></td>
               <td><%= gpwp.count %></td>
+              <td><%= ab + ap + wd.count + ael + acl + alwp + aesic + acoff + aal + aod +  gp.count + gpwp.count %></td>
             </tr> 
           <%end%>
         </tbody>

@@ -1165,6 +1165,17 @@ ActiveRecord::Schema.define(version: 20161113062727) do
 
   add_index "employeer_esics", ["employee_id"], name: "index_employeer_esics_on_employee_id"
 
+  create_table "employeer_insurances", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.date     "insurance_date"
+    t.decimal  "actual_amout"
+    t.decimal  "amount"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  add_index "employeer_insurances", ["employee_id"], name: "index_employeer_insurances_on_employee_id"
+
   create_table "employeer_pfs", force: :cascade do |t|
     t.integer  "employee_id"
     t.date     "pf_date"

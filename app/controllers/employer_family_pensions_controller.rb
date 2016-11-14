@@ -4,7 +4,7 @@ class EmployerFamilyPensionsController < ApplicationController
   # GET /employer_family_pensions
   # GET /employer_family_pensions.json
   def index
-    @employer_family_pensions = EmployerFamilyPension.all
+    
   end
 
   # GET /employer_family_pensions/1
@@ -15,6 +15,7 @@ class EmployerFamilyPensionsController < ApplicationController
   # GET /employer_family_pensions/new
   def new
     @employer_family_pension = EmployerFamilyPension.new
+    @employer_family_pensions = EmployerFamilyPension.all
   end
 
   # GET /employer_family_pensions/1/edit
@@ -23,42 +24,61 @@ class EmployerFamilyPensionsController < ApplicationController
 
   # POST /employer_family_pensions
   # POST /employer_family_pensions.json
-  def create
-    @employer_family_pension = EmployerFamilyPension.new(employer_family_pension_params)
-
-    respond_to do |format|
-      if @employer_family_pension.save
-        format.html { redirect_to @employer_family_pension, notice: 'Employer family pension was successfully created.' }
-        format.json { render :show, status: :created, location: @employer_family_pension }
-      else
-        format.html { render :new }
-        format.json { render json: @employer_family_pension.errors, status: :unprocessable_entity }
-      end
+ def create
+   components = params[:components]
+    str = ''
+    i = 0
+    components.try(:each) do |c|
+      str = if i == 0
+              c.to_s
+            else
+              str.to_s + ',' + c.to_s
+            end
+      i += 1
     end
-  end
+
+    @employer_family_pension = EmployerFamilyPension.new(employer_family_pension_params)
+    @employer_family_pension.base_component = str
+    @employer_family_pensions = EmployerFamilyPension.all
+    @employer_family_pension.save
+    @employer_family_pension = EmployerFamilyPension.new
+    end
 
   # PATCH/PUT /employer_family_pensions/1
   # PATCH/PUT /employer_family_pensions/1.json
   def update
-    respond_to do |format|
-      if @employer_family_pension.update(employer_family_pension_params)
-        format.html { redirect_to @employer_family_pension, notice: 'Employer family pension was successfully updated.' }
-        format.json { render :show, status: :ok, location: @employer_family_pension }
-      else
-        format.html { render :edit }
-        format.json { render json: @employer_family_pension.errors, status: :unprocessable_entity }
-      end
+    components = params[:components]
+    str = ''
+    i = 0
+    components.try(:each) do |c|
+      str = if i == 0
+              c.to_s
+            else
+              str.to_s + ',' + c.to_s
+            end
+      i += 1
     end
+    @employer_family_pension.base_component = str
+    @employer_family_pension.update(employer_family_pension_params)
+    @employer_family_pensions = EmployerFamilyPension.all
+    @employer_family_pension = EmployerFamilyPension.new
+
   end
+
+  def is_confirm
+    @employer_family_pension = EmployerFamilyPension.find(params[:employer_family_pension])
+    EmployerFamilyPension.find(@employer_family_pension.id).update(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to new_employer_family_pension_path
+  end
+
 
   # DELETE /employer_family_pensions/1
   # DELETE /employer_family_pensions/1.json
   def destroy
     @employer_family_pension.destroy
-    respond_to do |format|
-      format.html { redirect_to employer_family_pensions_url, notice: 'Employer family pension was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    @employer_family_pension = EmployerFamilyPension.new
+    @employer_family_pensions = EmployerFamilyPension.all
   end
 
   private

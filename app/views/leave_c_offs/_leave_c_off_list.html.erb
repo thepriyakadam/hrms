@@ -27,7 +27,7 @@
             <small class= "label label-primary">Taken</small>
             <% elsif leave_c_off.is_expire == true %>
             <small class= "label label-warning">Expired</small>
-            <%= f.submit "Add", class: 'btn btn-info btn-xs fa fa-user-plus' %>
+            <%= f.submit "Revert", class: 'btn btn-info btn-xs fa fa-user-plus' %>
             <% else %>
             <%= link_to '', edit_leave_c_off_path(leave_c_off), class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
             <%= link_to '', leave_c_off, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-xs  btn-danger fa fa-close',remote:true %>

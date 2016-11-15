@@ -63,6 +63,14 @@ class SocietyMemberShipsController < ApplicationController
     end
   end
 
+
+  def is_confirm
+    @society_member_ship = SocietyMemberShip.find(params[:society_member_ship])
+    SocietyMemberShip.find(@society_member_ship.id).update(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to society_member_ships_path
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -72,6 +80,6 @@ class SocietyMemberShipsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def society_member_ship_params
-    params.require(:society_member_ship).permit(:is_society_member, :amount, :employee_id, :start_date)
+    params.require(:society_member_ship).permit(:is_active,:is_confirm,:is_society_member, :amount, :employee_id, :start_date)
   end
 end

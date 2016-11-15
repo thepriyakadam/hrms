@@ -8,7 +8,7 @@
   </div><!-- /.box-header -->
   <div class="box-body">
   <div id="comments">
-    <table id="example1" class="table table-bordered table-hover table-condensed">
+    <table id="example6" class="table table-bordered table-hover table-condensed">
     <thead>
       <tr>
         <th>Employee ID</th>
@@ -16,6 +16,7 @@
         <th>Society Member</th>
         <th>Date</th>
         <th>Amount</th>
+        <th>Status</th>
         <th>Action</th>
       </tr>
     </thead>
@@ -28,9 +29,15 @@
           <td><%= society_member_ship.is_society_member ? "Yes" : "No" %></td>
           <td><%= society_member_ship.start_date %></td>
           <td><%= society_member_ship.amount %></td>
+          <td><%= society_member_ship.is_active ? "Active" : "Inactive" %></td>
           <td>
+           <% if society_member_ship.is_confirm == true %>
+            <small class= "label label-primary">Confirmed</small>
+          <% else %>
             <%= link_to '', edit_society_member_ship_path(society_member_ship), class: 'btn btn-xs btn-success fa fa-edit' %>
             <%= link_to '', society_member_ship,class: 'btn btn-xs btn-default fa fa-eye' %>
+            <%= link_to '', is_confirm_society_member_ships_path(society_member_ship: society_member_ship),data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-info fa fa-check' %>
+          <% end %>
           </td>
         </tr>
       <% end %>
@@ -39,3 +46,11 @@
   </div>
 </div>
 </div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Row>
+        <Cell ss:Index="1"><Data ss:Type="String">Sr No.</Data></Cell>
+        <Cell ss:Index="2"><Data ss:Type="String">Employee Code</Data></Cell>
+        <Cell ss:Index="3"><Data ss:Type="String">Employee Name</Data></Cell>
+        <Cell ss:Index="4"><Data ss:Type="String">PF No.</Data></Cell>
+        <Cell ss:Index="5"><Data ss:Type="String">Payble Days</Data></Cell>
+        <Cell ss:Index="6"><Data ss:Type="String">Basic</Data></Cell>
+        <Cell ss:Index="7"><Data ss:Type="String">DA</Data></Cell>
+        <Cell ss:Index="8"><Data ss:Type="String">Total</Data></Cell>
+         <Cell ss:Index="9"><Data ss:Type="String">PF</Data></Cell>
+      </Row>
+      <% i = 0 %>
+      <% @salaryslips.each do |slip| %>
+        <% employee = slip.employee %>
+        <% joining = employee.joining_detail %>
+        <% bank = employee.employee_bank_detail %>
+        <% workingday = slip.workingday %>
+        <Row>
+          <Cell ss:Index="1"><Data ss:Type="String"><%= i=i+1 %></Data></Cell>
+          <Cell ss:Index="2"><Data ss:Type="String"><%= slip.employee.manual_employee_code %></Data></Cell>
+          <Cell ss:Index="3"><Data ss:Type="String"><%= employee.first_name.to_s+" "+employee.middle_name.to_s+" "+employee.last_name.to_s %></Data></Cell>
+          <Cell ss:Index="4"><Data ss:Type="String"><%= joining.try(:employee_pf_no) %></Data></Cell>
+          <Cell ss:Index="5"><Data ss:Type="Number"><%= workingday.payable_day %></Data></Cell>
+
+          <% @addable_salaryslip_items = slip.salaryslip_components.where(is_deducted: false) %>
+          <%basic_amt = 0%>
+          <%da_amt = 0%>
+          <% @addable_salaryslip_items.each do |item| %>
+          
+            <% case item.salary_component.try(:name) %>
+            <% when "Basic" %>
+              <Cell ss:Index="6"><Data ss:Type="Number"><%= basic_amt = item.calculated_amount.round %></Data></Cell>
+            <% when "DA" %>
+              <Cell ss:Index="7"><Data ss:Type="Number"><%= da_amt = item.calculated_amount.round %></Data></Cell>
+            <% else %>
+            <% end %> <!-- switch case -->
+            
+          <% end %><!-- addable items -->
+          <Cell ss:Index="8"><Data ss:Type="Number"><%= basic_amt+da_amt %></Data></Cell>
+
+          <% @deducted_salaryslip_items = slip.salaryslip_components.where(is_deducted: true) %>
+          <% @deducted_salaryslip_items.each do |item| %>
+            <% if item.salary_component_id.nil? %>
+              <% if item.other_component_name == "PF" %>
+                <Cell ss:Index="9"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
+              <% end %>
+            <% end %>
+          <% end %><!-- deducted items -->
+        </Row><!-- Row -->
+      <% end %><!-- slip -->
+    </Table>
+  </Worksheet>
+</Workbook>

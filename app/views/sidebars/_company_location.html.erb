@@ -224,7 +224,7 @@
 
 <li class="treeview" id="issuetracker">
     <a href="#">
-      <i class="glyphicon glyphicon-th-large"></i> <span>Issue Tracker</span>
+      <i class="glyphicon glyphicon-th-large"></i> <span>Help Desk</span>
       <i class="fa fa-angle-left pull-right"></i>
     </a>
     <ul class="treeview-menu" >
@@ -246,6 +246,8 @@
         <li><a href="/issue_requests/new"><i class="fa fa-tags"></i>Issue Request</a></li>
         <li><a href="/issue_requests/lock_request_list"><i class="fa fa-tags"></i>Issue List</a></li>
         <li><a href="/issue_requests/solved_issues"><i class="fa fa-tags"></i>Solved Issues</a></li>
+        <li><a href="/issue_requests/groupwise_report"><i class="fa fa-tags"></i>Group Wise Report</a></li>
+        <li><a href="/issue_requests/datewise_report"><i class="fa fa-tags"></i>Date Wise Report</a></li>
         </ul>
       </li>
     </ul>
@@ -271,18 +273,23 @@
       <li id="montlyamount">
         <a href="#"><i class="fa fa-edit"></i>Periodic Components <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
-        <li><a href="/advance_salaries"><i class="fa fa-tags"> </i>Salary Advance</a></li>
-        <li><a href="/instalments"><i class="fa fa-tags"> </i>Installment</a></li>
         <li><a href="/food_deductions"><i class="fa fa-tags"> </i>Food Deduction</a></li>
         <li><a href="/monthly_expences"><i class="fa fa-tags"> </i>Monthly Expences</a></li>
         <li><a href="/society_member_ships"><i class="fa fa-tags"> </i> Employee Membership</a></li>
         </ul>
       </li>
+        <li id="montlyamount">
+        <a href="#"><i class="fa fa-edit"></i>Advance Salary <i class="fa fa-angle-left pull-right"></i></a>
+        <ul class="treeview-menu">
+        <li><a href="/advance_salaries"><i class="fa fa-tags"> </i>Salary Advance </a></li>
+        <li><a href="/instalments"><i class="fa fa-tags"> </i>Installment</a></li>
+        </ul>
+      </li>
       <li id="salaryprocess">
         <a href="#"><i class="fa fa-edit"></i> Salary Processing <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
-        <li><a href="/workingdays"><i class="fa fa-tags"> </i>Attendace Update </a></li>
-        <li><a href="/employee_salary_templates/salary_template"><i class="fa fa-tags"> </i>Salary Process Individual </a></li>
+       <!--  <li><a href="/workingdays"><i class="fa fa-tags"> </i>Attendace Update </a></li>
+        <li><a href="/employee_salary_templates/salary_template"><i class="fa fa-tags"> </i>Salary Process Individual </a></li> -->
         <li><a href="/salaryslips/select_month_year_form"><i class="fa fa-tags"> </i>Salary Process Mass  </a></li>
         <li><a href="/salaryslips/revert_salary"><i class="fa fa-tags"> </i>Salary Reversal </a></li>
         </ul>
@@ -324,20 +331,25 @@
       </li>
     </ul>
   </li>
- 
-  <li class="treeview" id="timemgmt">
+ <li class="treeview" id="timemgmt">
     <a href="#">
       <i class="glyphicon glyphicon-th-large"></i> <span>Time Management</span>
       <i class="fa fa-angle-left pull-right"></i>
     </a>
+
+     
     <ul class="treeview-menu" >
-       
-       <li class="treeview" id="attendance"> <a href="#"><i class="fa fa-edit"></i>Attendance <i class="fa fa-angle-left pull-right"></i></a>
-        <ul class="treeview-menu">
      <li><a href="/holidays/new"><i class="fa fa-tags"></i> Holiday Setup </a></li>
-     <li><a href="/employee_attendances"><i class="fa fa-tags"></i> Add Attendance </a></li>
-     <li><a href="/employee_attendances/costcenter_wise_attendance"><i class="fa fa-tags"></i> Show Attendance </a></li>
-     <li><a href="/employee_attendances/revert_attendance"><i class="fa fa-tags"></i> Revert Attendance </a></li>
+     <li class="treeview" id="attendance"> <a href="#"><i class="fa fa-edit"></i>Attendance <i class="fa fa-angle-left pull-right"></i></a>
+      <ul class="treeview-menu">
+     <li><a href="/employee_attendances/new"><i class="fa fa-tags"></i> Add Attendance</a></li>
+     <li><a href="/employee_attendances"><i class="fa fa-tags"></i> Show Attendance  </a></li>
+     <li><a href="/employee_attendances/costcenter_wise_attendance"><i class="fa fa-tags"></i> Show Cost Center Wise </a></li>
+     <li><a href="/employee_attendances/revert_attendance_employeewise"><i class="fa fa-tags"></i> Revert Employee Wise </a></li>
+     <li><a href="/employee_attendances/revert_attendance"><i class="fa fa-tags"></i> Revert Cost Center Wise </a></li>
+     <li><a href="/employee_attendances/calculate_attendance"><i class="fa fa-tags"></i> Attendance Setup</a></li>
+     <li><a href="/workingdays"><i class="fa fa-tags"> </i>Monthly Working Day</a></li>
+     <!-- <li><a href="/workingdays/search_month_year"><i class="fa fa-tags"> </i>Attendace Update(Auto) </a></li> -->
     
       <!-- <li><a href="/holidays/new"><i class="fa fa-tags"></i> Holiday Setup </a></li>
       <li><a href="/company_shifts/new"><i class="fa fa-tags"></i> Shifts Maintenance </a></li>

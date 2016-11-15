@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Base component:</strong>
+  <%= @pf_employer.base_component %>
+</p>
+
+<p>
+  <strong>Percentage:</strong>
+  <%= @pf_employer.percentage %>
+</p>
+
+<p>
+  <strong>Effective from:</strong>
+  <%= @pf_employer.effective_from %>
+</p>
+
+<p>
+  <strong>Effective to:</strong>
+  <%= @pf_employer.effective_to %>
+</p>
+
+<p>
+  <strong>Is active:</strong>
+  <%= @pf_employer.is_active %>
+</p>
+
+<p>
+  <strong>Is confirm:</strong>
+  <%= @pf_employer.is_confirm %>
+</p>
+
+<%= link_to 'Edit', edit_pf_employer_path(@pf_employer) %> |
+<%= link_to 'Back', pf_employers_path %>

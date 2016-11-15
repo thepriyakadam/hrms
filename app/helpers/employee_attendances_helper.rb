@@ -15,6 +15,19 @@ module EmployeeAttendancesHelper
     Hash[exist.sort]
 	end
 
+  # def total_attendance(date, exist, e)
+  #   start_date = date.beginning_of_month
+  #   end_date = date.end_of_month
+  #   start_date.step(end_date).each do |d|
+  #     attendance_record = EmployeeAttendance.where(day: d, employee_id: e.employee_id,present: "P").take
+  #     unless attendance_record.nil?
+  #       exist[d] = attendance_record.count
+  #     end
+  #   end
+  #   Hash[exist.sort]
+  # end
+
+
   def count_day(day,employee)
     e = Employee.find(employee)
     if e.joining_detail.nil?
@@ -32,7 +45,7 @@ module EmployeeAttendancesHelper
   end
 
   def present_day_count(exist)
-    exist.select {|k,v| v == "PR" }.count + (exist.select {|k,v| v == "1/2" }.count)/2.to_f
+    exist.select {|k,v| v == "P" }.count + (exist.select {|k,v| v == "P/1/2" }.count)/2.to_f
   end
 
   def holiday_in_month_count(exist)
@@ -40,11 +53,11 @@ module EmployeeAttendancesHelper
   end
 
   def week_off_day_count(exist)
-    exist.select {|k,v| v == "WO" }.count
+    exist.select {|k,v| v == "W" }.count
   end
 
   def absent_day_count(exist)
-    exist.select {|k,v| v == "AB" || v == "" }.count + (exist.select {|k,v| v == "1/2" }.count)/2.to_f
+    exist.select {|k,v| v == "A" || v == "" }.count + (exist.select {|k,v| v == "P/1/2" }.count)/2.to_f
   end
 
   # def payable_day_count(exist)

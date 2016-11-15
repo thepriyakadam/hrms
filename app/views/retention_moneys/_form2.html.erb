@@ -1,0 +1,26 @@
+<%= bootstrap_form_for(@retention_money,remote:true) do |f| %>
+  <div class="row">
+    <div class="col-sm-2">
+      <div class="form-group required">
+        <%= f.text_field :amount, placeholder: 'Amount' %>
+      </div>
+    </div>
+    <div class="col-sm-2">
+      <div class="field">
+        <%= f.text_field :no_of_month, placeholder: 'No. of Month' %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :description, placeholder: 'Description' %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.check_box :is_active, label: 'Active'%>
+      </div>
+    </div>
+  </div>
+
+  <!-- <= hidden_field_tag :flag, "No" %> -->
+<% end %>

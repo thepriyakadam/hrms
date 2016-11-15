@@ -32,6 +32,12 @@
         <%= f.select :is_deducted,[['Yes','true'],['No','false']],{label: 'Is Deducted',include_blank: "Select Option"} %>
       </div>
     </div>
+     <div class="col-sm-3">
+      <label>Status </label>
+      <div class="field">
+        <%= f.check_box :is_active, label: 'Active'%>
+      </div>
+    </div>
     <label></label>
       <div class="col-sm-3" style="padding-top:20px;">
         <div class="actions">

@@ -9,7 +9,7 @@
       </div>
       <div class="col-sm-3">
         <div class="field">
-          <%= text_field :bonus,:end_date,{onchange:"var a={end_date:$(this).val(),start_date : $('#bonus_start_date').val()}; $.get('/bonus_employees/collect_bonus',a,function(response){});",class: 'form-control bonus_end_date',placeholder:'End Date'} %>
+          <%= text_field :bonus,:end_date,{onchange:"var a={end_date:$(this).val(),start_date : $('#bonus_start_date').val()};$('.ajax-progress').show(); $.get('/bonus_employees/collect_bonus',a,function(response){});",class: 'form-control bonus_end_date',placeholder:'End Date'} %>
         </div>
       </div>
     </div><br>

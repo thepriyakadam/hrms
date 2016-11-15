@@ -1,15 +1,69 @@
 Rails.application.routes.draw do
 
-  get 'issue_request_report/index'
+  resources :pf_employers do
+    collection do
+      get :is_confirm
+    end
+  end
+  resources :esic_employers do
+    collection do
+      get :is_confirm
+    end
+  end
+  resources :bonus_employers do
+    collection do
+      get :is_confirm
+    end
+  end
+  resources :professional_tax_masters do
+    collection do
+      get :is_confirm
+    end
+  end
+  resources :dearness_allowances do
+    collection do
+      get :is_confirm
+    end
+  end
+  resources :employer_insurances do
+    collection do
+      get :is_confirm
+    end
+  end
+  resources :employer_family_pensions do
+    collection do
+      get :is_confirm
+    end
+  end
 
+  resources :insurance_masters do
+    collection do
+      get :is_confirm
+    end
+  end
+  resources :fp_masters do
+    collection do
+      get :is_confirm
+    end
+  end
+  resources :esic_employer_masters do
+    collection do
+      get :is_confirm
+    end
+  end
+  resources :da_masters do
+    collection do
+      get :is_confirm
+    end
+   end
+  get 'issue_request_report/index'
   get 'welcome/index'
 
   resources :issue_root_causes do
     collection do
       get :is_confirm
-        end
+    end
    end
-
   resources :issue_histories
   resources :access_issue_requests
   resources :issue_locker_histories
@@ -30,8 +84,21 @@ Rails.application.routes.draw do
       get :unlock_by_admin
       get :solved_confirm
       get :resend_request
-      get :search_by_date
-      get :search_by_group
+      get :datewise_report_list
+      get :datewise_report
+      get :datewise_report_xls
+      get :datewise_report_pdf
+      get :issue_tracker_reports_xls
+      get :issue_tracker_pdf
+      get :groupwise_report
+      get :group_report_list
+      get :request_id_wise_report
+      get :request_id_wise_list
+      get :id_wise_report_xls
+      get :id_wise_report_pdf
+      get :memberwise_report
+      get :memberwise_report_list
+      
     end
    end
   resources :issue_masters do
@@ -49,6 +116,7 @@ Rails.application.routes.draw do
   resources :issue_tracker_members do
     collection do
        get :collect_issues
+       get :collect_memberwise_dropdown
     end
    end
   resources :issue_tracker_groups do
@@ -239,11 +307,32 @@ end
       get :revert_attendance_employeewise
       post :show_employee_list
       post :destroy_attendance_employeewise
+      get :loginwise_attendance_form
+      get :display_employee_attendance_list
+      get :employee_attendances_list
+      get :calculate_attendance
+      get :display_total
+      get :attendance_total_xls
+      get :emp_attendance
+      get :display_attendance_2
+      get :employee_slip_xls_1
+      get :employee_slip_pdf
+      get :attendance_total_pdf
+      get :emp_attendance_1
+      post :attendance_report
+      get :confirm_attendance_form
+      post :confirm_attendance
+      post :create_attendance_1
+      get :emp_attendance_1_list
     end
   end
   resources :salary_comp_mappings
   resources :company_events
-  resources :employee_task_to_dos
+  resources :employee_task_to_dos do
+    collection do
+      get :dynamic_refresh
+    end
+  end
 
 
   resources :leaving_reasons do
@@ -641,6 +730,7 @@ end
     get 'monthly_expences_details/new'
 
     get 'society_membership_details/new'
+    post 'society_membership_details/society_membership_report'
 
     get 'overtime_salary_details/daily'
     post 'overtime_salary_details/overtime_daily_detail_report'
@@ -660,8 +750,10 @@ end
     post 'professional_tax_details/professional_tax_detail_report'
 
     get 'retention_money_details/new'
+    post 'retention_money_details/retention_money_report'
 
     get 'welfare_details/new'
+    post 'welfare_details/welfare_detail_report'
 
     get 'esic_details/new'
     post 'esic_details/esic_detail_report'
@@ -800,11 +892,13 @@ end
       get :vacancy_history_list
       get :show_vacancy_request_history
       get :reporting_masters_vacancy_master_list
+      post :import
     end
   end
   resources :leave_c_offs do
     collection do
       get :search_by_c_off_date
+      post :add_coff
     end
   end
 
@@ -984,6 +1078,12 @@ end
       get :search_bonus
       get :collect_bonus
       get :particular_employee_bonus
+      get :bonus_employee_xls
+      get :bonus_employee_pdf
+      get :particular_bonus_employee_xls
+      get :particular_bonus_employee_pdf
+      get :bonus_employee_report
+      post :dynamic_report
     end
   end
   resources :bonus_masters do
@@ -1100,6 +1200,7 @@ end
   end
   resources :retention_moneys do
     collection do
+      get :select_form
       get :is_confirm
     end
   end
@@ -1157,6 +1258,10 @@ end
       get :show_employee
       post :destroy_salary_slip
       get :salary_slip_report
+      get :salary_report
+      get :display_salaryslip_report
+      post :pdf_report
+      get :salaryslip_xls
     end
   end
  
@@ -1192,8 +1297,14 @@ end
       get :salary_ledger
       post :show_monthly_ctc
       get :pf_detail_report
+      post :dynamic_report
+      get :pf_detail_pdf
+      get :pf_detail_xls
+      get :select_bank_wise
+      get :show_employee_list
       # post :dynamic_report
       # get :pf_detail_pdf
+      post :print_xls
     end
   end
 
@@ -1272,8 +1383,16 @@ end
     end
   end
  
-  resources :salary_component_templates
-  resources :salary_templates
+  resources :salary_component_templates do
+    collection do
+      get :salary_template_page
+    end
+  end
+  resources :salary_templates do
+    collection do
+      get :is_confirm
+    end
+  end
   resources :religions do
     collection do
       get :is_confirm
@@ -1503,6 +1622,7 @@ end
       get :index_xls
       get :basic_info_company_wise
       post :employee_basic_info
+      post :basic_info
     end
     member do
       get :edit_manager

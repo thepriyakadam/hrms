@@ -26,7 +26,7 @@ class IssueTypesController < ApplicationController
   # PATCH/PUT /issue_types/1
   # PATCH/PUT /issue_types/1.json
   def update
-   @issue_type.update(issue_type_params)
+    @issue_type.update(issue_type_params)
     @issue_type = IssueType.new
     @issue_types = IssueType.all
        

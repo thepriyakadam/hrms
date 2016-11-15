@@ -1,31 +1,17 @@
-<%= bootstrap_form_for(@retention_money,remote:true) do |f| %>
+<%= bootstrap_form_for(@retention_money) do |f| %>
   <div class="row">
-      <div class="col-sm-2">
-      <div class="form-group required">      
-        <%= f.select :have_retention,[['Yes','true'],['No','false']],{label: 'Retention',include_blank: " Select Retention"} %>
-      </div>
-    </div>
-    <div class="col-sm-2">
-      <div class="form-group required">
-        <%= f.text_field :amount, placeholder: 'Amount' %>
-      </div>
-    </div>
-    <div class="col-sm-2">
-      <div class="field">
-        <%= f.text_field :no_of_month, placeholder: 'No. of Month' %>
-      </div>
-    </div>
-    <div class="col-sm-3">
-      <div class="field">
-        <%= f.text_field :description, placeholder: 'Description' %>
-      </div>
-    </div>
-
-    <div class="col-sm-3">
-    <label></label>
-      <div class="actions">
-        <%= f.submit "Create Retention Money",:class => class_name %>
+     <div class="col-sm-3">
+        <div class="form-group required">
+        <%= f.select :have_retention, [['Yes', true], ['No', false]],{label: 'Percentage',include_blank: "Select Percentage"},{onchange:"var a={have_retention:$(this).val()}; $.get('/retention_moneys/select_form',a,function(response){});",class: 'form-control'} %>
       </div>
     </div>
   </div>
-<% end %>
+ <div id="dropdown"></div>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit :class => class_name %>
+      </div>
+    </div>
+  </div>
+<% end %><br>

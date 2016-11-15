@@ -1,4 +1,4 @@
-<table id="example1" class="table table-bordered table-hover table-condensed">
+<table id="example6" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>  
       <th>Code</th>
@@ -6,6 +6,7 @@
       <th>Description</th>
       <th>Account Code</th>
       <th>Is Deducted</th>
+      <th>Status</th>
       <th>Action</th>
     </tr>
   </thead>
@@ -17,6 +18,8 @@
         <td><%= salary_component.description %></td>
         <td><%= salary_component.account_code %></td>
         <td><%= salary_component.is_deducted ? "Yes" : "No" %></td>
+        <td><%= salary_component.is_active ? "Active" : "Inactive" %></td>
+
         <td>
           <% if salary_component.is_confirm == true %>
             <small class= "label label-primary">Confirmed</small>
@@ -29,3 +32,11 @@
     <% end %>
   </tbody>
 </table>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

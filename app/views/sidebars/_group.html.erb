@@ -13,7 +13,7 @@
       <li><a href="/companies"><i class="fa fa-tags"></i> Companies</a></li>
             <li><a href="/company_locations"><i class="fa fa-tags"></i> Locations</a></li>
             <li><a href="/departments/new"><i class="fa fa-tags"></i> Departments</a></li>
-              <li><a href="/company_policies"><i class="fa fa-tags"></i> Company Policy</a></li>
+              <li><a href="/company_policies/new"><i class="fa fa-tags"></i> Company Policy</a></li>
     </ul>
   </li>
   <li class="treeview" id="master">
@@ -35,7 +35,7 @@
       </li>
 
       <li id="payrollsetup">
-        <a href="#"><i class="fa fa-edit"></i> Payroll Component Setup <i class="fa fa-angle-left pull-right"></i></a>
+        <a href="#"><i class="fa fa-edit"></i> Payroll Component <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
           <li><a href="/advance_types/new"><i class="fa fa-tags"></i> Advance Type </a></li>
           <li><a href="/expencess_types/new"><i class="fa fa-tags"></i> Expenses Type </a></li>
@@ -44,25 +44,28 @@
       </li>
 
       <li id="payrollcomponents">
-        <a href="#"><i class="fa fa-edit"></i> Payroll Components <i class="fa fa-angle-left pull-right"></i></a>
+        <a href="#"><i class="fa fa-edit"></i> Payroll Masters <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
-          <li><a href="/esic_masters/new"><i class="fa fa-tags"></i> ESIC Master</a></li>
-          <li><a href="/pf_masters/new"><i class="fa fa-tags"></i> PF Master</a></li>
-          <li><a href="/professional_taxes/new"><i class="fa fa-tags"></i> Prof.Tax Master</a></li>
-          <li><a href="/overtime_masters/new"><i class="fa fa-tags"></i> Overtime Master </a></li>
+          <li><a href="/esic_masters/new"><i class="fa fa-tags"></i> ESIC Employee</a></li>
+          <li><a href="/esic_employer_masters/new"><i class="fa fa-tags"></i> Esic Employeer </a></li>
+          <li><a href="/pf_masters/new"><i class="fa fa-tags"></i> PF Employee</a></li>
+          <li><a href="/fp_masters/new"><i class="fa fa-tags"></i> PF Employeer </a></li>
+          <li><a href="/overtime_masters/new"><i class="fa fa-tags"></i> Overtime  </a></li>
           <li><a href="/well_faires/new"><i class="fa fa-tags"></i> Welfare Scheme</a></li>
           <li><a href="/bonus_masters/new"><i class="fa fa-tags"></i> Bonus Master </a></li>
           <li><a href="/retention_moneys/new"><i class="fa fa-tags"></i> Retention Money </a></li>
+          <li><a href="/da_masters/new"><i class="fa fa-tags"></i> Da Master </a></li>
+          <li><a href="/insurance_masters/new"><i class="fa fa-tags"></i> Insurance </a></li>
         </ul>
-       </li>
+      </li>
 
        <li id="employeeprofilesetup">
-        <a href="#"><i class="fa fa-edit"></i> Employee Profile Setup <i class="fa fa-angle-left pull-right"></i></a>
+        <a href="#"><i class="fa fa-edit"></i> Employee Profile <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
-          <li><a href="/employee_code_masters/new"><i class="fa fa-tags"></i> Employee Code Master </a></li>
-          <li><a href="/employee_grades/new"><i class="fa fa-tags"></i> Employee Grade</a></li>
+          <li><a href="/employee_code_masters/new"><i class="fa fa-tags"></i>Code Master </a></li>
+          <li><a href="/employee_grades/new"><i class="fa fa-tags"></i> Grade</a></li>
           <li><a href="/employee_types/new"><i class="fa fa-tags"></i> Employment Type</a></li>
-          <li><a href="/employee_categories/new"><i class="fa fa-tags"></i> Employee Category</a></li>
+          <li><a href="/employee_categories/new"><i class="fa fa-tags"></i> Category</a></li>
           <li><a href="/employee_designations/new"><i class="fa fa-tags"></i> Designation</a></li>
           <li><a href="/roles/new"><i class="fa fa-tags"></i> User Role </a></li>
           <li><a href="/nationalities/new"><i class="fa fa-tags"></i> Nationality</a></li>
@@ -71,42 +74,93 @@
           <li><a href="/relation_masters/new"><i class="fa fa-tags"></i> Relation </a></li>
           <li><a href="/blood_groups/new"><i class="fa fa-tags"></i> Blood Group</a></li>
           <li><a href="/nomination_masters/new"><i class="fa fa-tags"></i> Nomination Type </a></li>
+          <li><a href="/illness_types/new"><i class="fa fa-tags"></i> Illness Type </a></li>
         </ul>
        </li>
 
        <li id="qualificationsetup">
         <a href="#"><i class="fa fa-edit"></i> Qualification <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
-          <li><a href="/degrees/new"><i class="fa fa-tags"></i>Qualification</a></li>
-          <li><a href="/degree_types/new"><i class="fa fa-tags"></i>Qualification Level</a></li>
-          <li><a href="/degree_streams/new"><i class="fa fa-tags"></i>Specialization</a></li>
-          <li><a href="/universities/new"><i class="fa fa-tags"></i>University/Institution</a></li>
+          <li><a href="/degrees/new"><i class="fa fa-tags"></i> Qualification</a></li>
+          <li><a href="/degree_types/new"><i class="fa fa-tags"></i> Qualification Level</a></li>
+          <li><a href="/degree_streams/new"><i class="fa fa-tags"></i> Specialization</a></li>
+          <li><a href="/universities/new"><i class="fa fa-tags"></i> University/Institution</a></li>
+          <li><a href="/years/new"><i class="fa fa-tags"></i> Passout Year</a></li>
         </ul>
        </li>
 
        <li id="assetmanagement">
         <a href="#"><i class="fa fa-edit"></i> Asset Management <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
-           <li><a href="/asset_types/new"><i class="fa fa-tags"></i>Asset Type </a></li>
+           <li><a href="/asset_types/new"><i class="fa fa-tags"></i> Asset Type </a></li>
         </ul>
        </li>
-       <li>
+       <li id="rewards">
+        <a href="#"><i class="fa fa-edit"></i> Rewards <i class="fa fa-angle-left pull-right"></i></a>
+        <ul class="treeview-menu">
+           <li><a href="/reward_types/new"><i class="fa fa-tags"></i>Rewards Type </a></li>
+           <li><a href="/reward_owners/new"><i class="fa fa-tags"></i>Reward Owners </a></li>
+        </ul>
+       </li>
+       <li id="training">
         <a href="#"><i class="fa fa-edit"></i> Training <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
+          <li><a href="/training_topic_masters/new"><i class="fa fa-tags"></i> Training Course </a></li>
+        </ul>
+       </li>
+
+       <li id="travel">
+        <a href="#"><i class="fa fa-edit"></i> Travel Setup <i class="fa fa-angle-left pull-right"></i></a>
+        <ul class="treeview-menu">
+           <li><a href="/travel_expence_types/new"><i class="fa fa-tags"></i> Travel Expense Type </a></li>
+           <li><a href="/travel_modes/new"><i class="fa fa-tags"></i> Travel Mode </a></li>
+           <li><a href="/travel_options/new"><i class="fa fa-tags"></i> Travel Options </a></li>
+           <li><a href="/currency_masters"><i class="fa fa-tags"></i> Currency Master </a></li>
+        </ul>
+       </li>
+
+       <li id="accident">
+        <a href="#"><i class="fa fa-edit"></i> HSE <i class="fa fa-angle-left pull-right"></i></a>
+        <ul class="treeview-menu">
+           <li><a href="/root_cause_masters/new"><i class="fa fa-tags"></i> Accident Root Cause </a></li>
+        </ul>
+       </li>
 
        <li id="performancemaster">
-        <a href="#"><i class="fa fa-edit"></i> Performance Master <i class="fa fa-angle-left pull-right"></i></a>
+        <a href="#"><i class="fa fa-edit"></i> Performance <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
-          <li><a href="/goal_perspectives/new"><i class="fa fa-tags"></i>Goal Perspective</a></li>
-          <li><a href="/attribute_masters/new"><i class="fa fa-tags"></i>Attribute Definition</a></li>
-          <li><a href="/periods"><i class="fa fa-tags"></i>Performance Period</a></li>
-          <li><a href="/ratings/new"><i class="fa fa-tags"></i> Rating Setup </a></li>
+          <li><a href="/periods"><i class="fa fa-tags"></i> Performance Period</a></li>
+          <li><a href="/performance_activities/new"><i class="fa fa-tags"></i> Performance Activity </a></li>
+          <li><a href="/performance_calendars/new"><i class="fa fa-tags"></i> Performance Calendar</a></li>
+          <li><a href="/goal_perspectives/new"><i class="fa fa-tags"></i> Goal Perspective</a></li>
+          <li><a href="/attribute_masters/new"><i class="fa fa-tags"></i> Attribute Definition</a></li>
+          <li><a href="/ratings/new"><i class="fa fa-tags"></i> Ratings Setup </a></li>
         </ul>
+
+        <li id="interview_master_setup">
+        <a href="#"><i class="fa fa-edit"></i> Interview Master <i class="fa fa-angle-left pull-right"></i></a>
+        <ul class="treeview-menu">
+           <li><a href="/interview_attributes/new"><i class="fa fa-tags"></i> Skillset </a></li>
+           <li><a href="/interview_decisions/new"><i class="fa fa-tags"></i> Evaluation </a></li>
+           <li><a href="/interview_evalutions/new"><i class="fa fa-tags"></i> Evaluation Criteria </a></li>
+           <li><a href="/interview_types/new"><i class="fa fa-tags"></i> Interview Types </a></li>
+        </ul>
+       </li>
+        <li id="exit_interview_master_setup">
+        <a href="#"><i class="fa fa-edit"></i> Exit Interview Master <i class="fa fa-angle-left pull-right"></i></a>
+        <ul class="treeview-menu">
+           <li><a href="/question_masters/new"><i class="fa fa-tags"></i> Question Master </a></li>
+           <li><a href="/about_companies/new"><i class="fa fa-tags"></i> About Company </a></li>
+           <li><a href="/about_bosses/new"><i class="fa fa-tags"></i> About Boss </a></li>
+           <li><a href="/leaving_reasons/new"><i class="fa fa-tags"></i> Leaving Reason </a></li>
+        </ul>
+       </li>
+        <li id="project_master_setup">
+        <li><a href="/project_masters/new"><i class="fa fa-tags"></i> Project Master </a></li>
+       </li>
       </li> 
       </ul>
   </li>
-</ul>
-</li>
   <li class="treeview" id="employeemanagement">
     <a href="#">
       <i class="glyphicon glyphicon-th-large"></i> <span>Employee Management</span>
@@ -195,6 +249,38 @@
       </li>  
     </ul>
   </li>
+
+  <li class="treeview" id="issuetracker">
+    <a href="#">
+      <i class="glyphicon glyphicon-th-large"></i> <span>Help Desk</span>
+      <i class="fa fa-angle-left pull-right"></i>
+    </a>
+    <ul class="treeview-menu" >
+       
+       <li class="treeview" id="issueprocess1"> <a href="#"><i class="fa fa-edit"></i>Setup <i class="fa fa-angle-left pull-right"></i></a>
+       <ul class="treeview-menu">
+       <li><a href="/issue_tracker_groups/new"><i class="fa fa-tags"></i>Group</a></li>
+        <li><a href="/issue_tracker_members/new"><i class="fa fa-tags"></i>Member</a></li>
+         
+       
+       </ul>
+      </li> 
+       <li class="treeview" id="issueprocess">
+        <a href="#"><i class="fa fa-edit"></i> Issue Process  <i class="fa fa-angle-left pull-right"></i></a>
+        <ul class="treeview-menu">
+        <li><a href="/issue_types/new"><i class="fa fa-tags"></i>Issue Type</a></li>
+        <li><a href="/issue_masters/new"><i class="fa fa-tags"></i>Issue Master</a></li>
+        <li><a href="/issue_root_causes/new"><i class="fa fa-tags"></i>Issue Root Cause</a></li>
+        <li><a href="/issue_requests/new"><i class="fa fa-tags"></i>Issue Request</a></li>
+        <li><a href="/issue_requests/lock_request_list"><i class="fa fa-tags"></i>Issue List</a></li>
+        <li><a href="/issue_requests/solved_issues"><i class="fa fa-tags"></i>Solved Issues</a></li>
+        <li><a href="/issue_requests/groupwise_report"><i class="fa fa-tags"></i>Group Wise Report</a></li>
+        <li><a href="/issue_requests/datewise_report"><i class="fa fa-tags"></i>Date Wise Report</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+
   
   <li class="treeview" id="payroll">
     <a href="#">

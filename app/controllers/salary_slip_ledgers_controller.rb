@@ -203,6 +203,204 @@ class SalarySlipLedgersController < ApplicationController
     end
   end
 
+  # def pf_detail_report
+  #   @month = params[:salary][:month]
+  #   @year = params[:salary][:year]
+  #   @location = params[:salary][:company_location_id]
+  #   if current_user.class == Group
+  #     if params[:salary][:company_location_id] == '' || params[:salary][:company_location_id].nil?
+  #       @salaryslips = Salaryslip.where('month = ? and year = ?', @month, @year)
+  #     else
+  #       @employees = Employee.where(company_location_id: @location.to_i)
+  #       @salaryslips = Salaryslip.where('month = ? and year = ?', @month, @year).where(employee_id: @employees)
+  #     end
+  #   elsif current_user.class == Member
+  #     if current_user.role.name == 'Company'
+  #       if params[:salary][:company_location_id] == '' || params[:salary][:company_location_id].nil?
+  #         @salaryslips = Salaryslip.where('month = ? and year = ?', @month, @year)
+  #       else
+  #         @employees = Employee.where(company_location_id: @location.to_i)
+  #         @salaryslips = Salaryslip.where('month = ? and year = ?', @month, @year).where(employee_id: @employees)
+  #       end
+  #     elsif current_user.role.name == 'CompanyLocation'
+  #       params[:salary][:company_location_id] == '' || params[:salary][:company_location_id].nil?
+  #       @employees = Employee.where(company_location_id: current_user.company_location_id)
+  #       @salaryslips = Salaryslip.where('month = ? and year = ?', @month, @year).where(employee_id: @employees)
+
+  #     elsif current_user.role.name == 'Department'
+  #       @salaryslips = Salaryslip.where(department_id: current_user.department_id)
+  #     elsif current_user.role.name == 'Superviser'
+  #     elsif current_user.role.name == 'Employee'
+  #     end
+  #   end
+  # end
+
+  def dynamic_report
+    @month = params[:pf_detail][:month]
+    @year = params[:pf_detail][:year]
+    @company = params[:pf_detail][:company_id]
+    @location = params[:pf_detail][:company_location_id]
+    if current_user.class == Group
+      # if params[:salary][:company_location_id] == '' || params[:salary][:company_location_id].nil?
+      #   @salaryslips = Salaryslip.where('month = ? and year = ?', @month, @year)
+      # else
+      #   @employees = Employee.where(company_location_id: @location.to_i)
+      #   @salaryslips = Salaryslip.where('month = ? and year = ?', @month, @year).where(employee_id: @employees)
+      # end
+
+      if @location == ""
+          @employees = Employee.where(company_id: @company.to_i)
+          @salaryslips = Salaryslip.where('month = ? and year = ?', @month, @year).where(employee_id: @employees)
+        elsif @company == ""
+          @employees = Employee.where(company_location_id: @location.to_i)
+          @salaryslips = Salaryslip.where('month = ? and year = ?', @month, @year).where(employee_id: @employees)
+        else 
+          @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i)
+          @salaryslips = Salaryslip.where('month = ? and year = ?', @month, @year).where(employee_id: @employees)
+        end
+    elsif current_user.class == Member
+      if current_user.role.name == 'Company'
+        # if params[:salary][:company_location_id] == '' || params[:salary][:company_location_id].nil?
+        #   @salaryslips = Salaryslip.where('month = ? and year = ?', @month, @year)
+        # else
+        #   @employees = Employee.where(company_location_id: @location.to_i)
+        #   @salaryslips = Salaryslip.where('month = ? and year = ?', @month, @year).where(employee_id: @employees)
+        # end
+        if @location == ""
+          @employees = Employee.where(company_id: @company.to_i)
+          @salaryslips = Salaryslip.where('month = ? and year = ?', @month, @year).where(employee_id: @employees)
+        elsif @company == ""
+          @employees = Employee.where(company_location_id: @location.to_i)
+          @salaryslips = Salaryslip.where('month = ? and year = ?', @month, @year).where(employee_id: @employees)
+        else 
+          @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i)
+          @salaryslips = Salaryslip.where('month = ? and year = ?', @month, @year).where(employee_id: @employees)
+        end
+      elsif current_user.role.name == 'CompanyLocation'
+        # params[:salary][:company_location_id] == '' || params[:salary][:company_location_id].nil?
+        # @employees = Employee.where(company_location_id: current_user.company_location_id)
+        # @salaryslips = Salaryslip.where('month = ? and year = ?', @month, @year).where(employee_id: @employees)
+        if @location == ""
+          @employees = Employee.where(company_id: current_user.company_id)
+          @salaryslips = Salaryslip.where('month = ? and year = ?', @month, @year).where(employee_id: @employees)
+        elsif @company == ""
+          @employees = Employee.where(company_location_id: current_user.company_location_id)
+          @salaryslips = Salaryslip.where('month = ? and year = ?', @month, @year).where(employee_id: @employees)
+        else 
+          @employees = Employee.where(company_id: current_user.company_id,company_location_id: current_user.company_location_id)
+          @salaryslips = Salaryslip.where('month = ? and year = ?', @month, @year).where(employee_id: @employees)
+        end
+
+      elsif current_user.role.name == 'Department'
+        @salaryslips = Salaryslip.where(department_id: current_user.department_id)
+      elsif current_user.role.name == 'Superviser'
+      elsif current_user.role.name == 'Employee'
+      end
+    end
+  end
+
+  def pf_detail_xls
+    # byebug
+    @month = params[:month]
+    @year = params[:year]
+    @company = params[:company_id]
+    @location = params[:company_location_id]
+    if current_user.class == Group
+      # if params[:salary][:company_location_id] == '' || params[:salary][:company_location_id].nil?
+      #   @salaryslips = Salaryslip.where('month = ? and year = ?', @month, @year)
+      # else
+      #   @employees = Employee.where(company_location_id: @location.to_i)
+      #   @salaryslips = Salaryslip.where('month = ? and year = ?', @month, @year).where(employee_id: @employees)
+      # end
+
+      if @location == ""
+          @employees = Employee.where(company_id: @company.to_i).pluck(:id)
+          @salaryslips = Salaryslip.where('month = ? and year = ?', @month, @year).where(employee_id: @employees)
+        elsif @company == ""
+          @employees = Employee.where(company_location_id: @location.to_i).pluck(:id)
+          @salaryslips = Salaryslip.where('month = ? and year = ?', @month, @year).where(employee_id: @employees)
+        else 
+          @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
+          @salaryslips = Salaryslip.where('month = ? and year = ?', @month, @year).where(employee_id: @employees)
+        end
+    elsif current_user.class == Member
+      if current_user.role.name == 'Company'
+        # if params[:salary][:company_location_id] == '' || params[:salary][:company_location_id].nil?
+        #   @salaryslips = Salaryslip.where('month = ? and year = ?', @month, @year)
+        # else
+        #   @employees = Employee.where(company_location_id: @location.to_i)
+        #   @salaryslips = Salaryslip.where('month = ? and year = ?', @month, @year).where(employee_id: @employees)
+        # end
+        if @location == ""
+          @employees = Employee.where(company_id: @company.to_i).pluck(:id)
+          @salaryslips = Salaryslip.where('month = ? and year = ?', @month, @year).where(employee_id: @employees)
+        elsif @company == ""
+          @employees = Employee.where(company_location_id: @location.to_i).pluck(:id)
+          @salaryslips = Salaryslip.where('month = ? and year = ?', @month, @year).where(employee_id: @employees)
+        else 
+          @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
+          @salaryslips = Salaryslip.where('month = ? and year = ?', @month, @year).where(employee_id: @employees)
+        end
+      elsif current_user.role.name == 'CompanyLocation'
+        # params[:salary][:company_location_id] == '' || params[:salary][:company_location_id].nil?
+        # @employees = Employee.where(company_location_id: current_user.company_location_id)
+        # @salaryslips = Salaryslip.where('month = ? and year = ?', @month, @year).where(employee_id: @employees)
+        if @location == ""
+          @employees = Employee.where(company_id: current_user.company_id).pluck(:id)
+          @salaryslips = Salaryslip.where('month = ? and year = ?', @month, @year).where(employee_id: @employees)
+        elsif @company == ""
+          @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+          @salaryslips = Salaryslip.where('month = ? and year = ?', @month, @year).where(employee_id: @employees)
+        else 
+          @employees = Employee.where(company_id: current_user.company_id,company_location_id: current_user.company_location_id).pluck(:id)
+          @salaryslips = Salaryslip.where('month = ? and year = ?', @month, @year).where(employee_id: @employees)
+        end
+
+      elsif current_user.role.name == 'Department'
+        @salaryslips = Salaryslip.where(department_id: current_user.department_id)
+      elsif current_user.role.name == 'Superviser'
+      elsif current_user.role.name == 'Employee'
+      end
+    end
+    respond_to do |format|
+      format.xls {render template: 'salary_slip_ledgers/pf_detail_xls.xls.erb'}
+    end
+  end
+
+  def pf_detail_report
+    @month = params[:salary][:month]
+    @year = params[:salary][:year]
+    @location = params[:salary][:company_location_id]
+    if current_user.class == Group
+      if params[:salary][:company_location_id] == '' || params[:salary][:company_location_id].nil?
+        @salaryslips = Salaryslip.where('month = ? and year = ?', @month, @year)
+      else
+        @employees = Employee.where(company_location_id: @location.to_i)
+        @salaryslips = Salaryslip.where('month = ? and year = ?', @month, @year).where(employee_id: @employees)
+      end
+    elsif current_user.class == Member
+      if current_user.role.name == 'Company'
+        if params[:salary][:company_location_id] == '' || params[:salary][:company_location_id].nil?
+          @salaryslips = Salaryslip.where('month = ? and year = ?', @month, @year)
+        else
+          @employees = Employee.where(company_location_id: @location.to_i)
+          @salaryslips = Salaryslip.where('month = ? and year = ?', @month, @year).where(employee_id: @employees)
+        end
+      elsif current_user.role.name == 'CompanyLocation'
+        params[:salary][:company_location_id] == '' || params[:salary][:company_location_id].nil?
+        @employees = Employee.where(company_location_id: current_user.company_location_id)
+        @salaryslips = Salaryslip.where('month = ? and year = ?', @month, @year).where(employee_id: @employees)
+
+      elsif current_user.role.name == 'Department'
+        @salaryslips = Salaryslip.where(department_id: current_user.department_id)
+      elsif current_user.role.name == 'Superviser'
+      elsif current_user.role.name == 'Employee'
+      end
+    end
+  end
+
+
+
   def salary_ledger
     @reports = []
     @start_date = params[:start_date].to_date
@@ -231,4 +429,98 @@ class SalarySlipLedgersController < ApplicationController
       end
     end
   end
+
+  def select_bank_wise
+  end
+
+  def show_employee_list
+    rep=params[:report_ids]
+    @pdf = "category"
+    @bank = Bank.find(params[:bank_id])
+    @category = params[:category]
+    @month, @year = params[:month], params[:year]
+    joining_array = JoiningDetail.where(employee_category_id: @category).pluck(:employee_id)
+    emp_array = EmployeeBankDetail.where(bank_id: @bank.id).pluck(:employee_id)
+    emp_user_array = Employee.collect_rolewise(current_user)
+    if joining_array.empty?
+      final_emp_array = emp_array & emp_user_array
+    else
+      final_emp_array = emp_array & emp_user_array & joining_array
+    end
+    @reports = []
+    @employees = Employee.where(id: final_emp_array)
+    @employees.try(:each) do |e|
+      j = JoiningDetail.find_by_employee_id(e.id)
+      #wd1 = Workingday.where('employee_id = ? and month_name = ? and year = ?', e.id, @month, @year.to_s).take
+      sl1 = Salaryslip.where('employee_id = ? and month = ? and year = ?', e.id, @month, @year.to_s).take
+      if j.nil? or e.nil? or sl1.nil?
+      else
+        # byebug
+        sr = SalaryReport.collect_data(e,j,sl1)
+        @reports << sr
+        # @next = sr.next
+      end
+    end
+    # byebug
+    @sum = SalaryReport.create_sum(@reports)
+    respond_to do |format|
+      format.js
+      format.html
+      format.xls {render template: 'salary_slip_ledgers/show_employee.xls.erb'}
+      format.pdf do
+        render pdf: 'bank_wise_salary',
+              layout: 'pdf.html',
+              orientation: 'Landscape',
+              template: 'salary_slip_ledgers/bank_wise_salary.pdf.erb',
+              show_as_html: params[:debug].present?,
+              margin:  { top:1,bottom:1,left:1,right:1 }
+      end
+    end
+  end
+
+  def print_xls
+    # byebug
+    rep=params[:report_ids]
+    @pdf = "category"
+    @bank = Bank.find(params[:bank_id])
+    @category = params[:category]
+    @month, @year = params[:month], params[:year]
+    joining_array = JoiningDetail.where(employee_category_id: @category).pluck(:employee_id)
+    emp_array = EmployeeBankDetail.where(bank_id: @bank.id).pluck(:employee_id)
+    emp_user_array = Employee.collect_rolewise(current_user)
+    if joining_array.empty?
+      final_emp_array = emp_array & emp_user_array
+    else
+      final_emp_array = emp_array & emp_user_array & joining_array
+    end
+    @reports = []
+    @employees = Employee.where(id: final_emp_array)
+    @employees.try(:each) do |e|
+        j = JoiningDetail.find_by_employee_id(e.id)
+        #wd1 = Workingday.where('employee_id = ? and month_name = ? and year = ?', e.id, @month, @year.to_s).take
+        sl1 = Salaryslip.where('employee_id = ? and month = ? and year = ?', e.id, @month, @year.to_s).take
+        if j.nil? or e.nil? or sl1.nil?
+        else
+       
+          sr1 = SalaryReport.collect_data(e,j,sl1)
+        
+          
+          # sr = SalaryReport.where(code: rep)
+          # byebug
+        if a="10008" && b="10055" ==  sr1.code.to_s
+          sr = SalaryReport.collect_data(e,j,sl1)
+          # @reports = SalaryReport.collect_data(e,j,sl1)
+          @reports << sr
+          # byebug
+        else
+        end
+        end
+      end
+    @sum = SalaryReport.create_sum(@reports)
+    respond_to do |format|
+      format.xls {render template: 'salary_slip_ledgers/print_xls.xls.erb'}
+    end
+
+  end
+
 end

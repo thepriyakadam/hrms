@@ -46,10 +46,7 @@ class EmployeeLeavRequestsController < ApplicationController
       @employee_leav_request.leave_records.build(employee_id: @employee_leav_request.employee_id,employee_leav_request_id: @employee_leav_request.id,status: "Pending", day: i)
     end
 
-    if @employee_leav_request.is_holiday?
-      flash[:alert] = "Your Leave Request has holiday."
-      redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
-    elsif @employee_leav_request.is_available?
+    if @employee_leav_request.is_available?
       flash[:alert] = "Your Leave Request already has been sent status is pending"
       redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
     elsif @employee_leav_request.is_available1?
@@ -250,7 +247,7 @@ class EmployeeLeavRequestsController < ApplicationController
       #column(:Request_ID, sortable: true) { |employee_leav_request| employee_leav_request.id }
       column(:ID, sortable: true) { |employee_leav_request| employee_leav_request.employee.try(:manual_employee_code) }
       column(:Employee_Name, sortable: true) { |employee_leav_request| full_name(employee_leav_request.employee) }
-      #column(:Designation, sortable: true) { |employee_leav_request| employee_leav_request.employee.joining_detail.employee_designation.name }
+      column(:Designation, sortable: true) { |employee_leav_request| employee_leav_request.employee.joining_detail.try(:employee_designation).try(:name) }
       column(:From, sortable: true) { |employee_leav_request| employee_leav_request.start_date.to_date }
       column(:To, sortable: true) { |employee_leav_request| employee_leav_request.end_date.to_date }
       column(:Leave_Category, sortable: true) { |employee_leav_request| employee_leav_request.leav_category.try(:description) }

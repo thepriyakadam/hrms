@@ -1123,7 +1123,11 @@ end
       get :is_confirm
     end
   end
-  resources :society_member_ships
+  resources :society_member_ships do
+    collection do
+      get :is_confirm
+    end
+  end
   resources :well_faires do
     collection do
       get :is_confirm

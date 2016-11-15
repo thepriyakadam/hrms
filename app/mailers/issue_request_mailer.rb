@@ -14,4 +14,12 @@ class IssueRequestMailer < ApplicationMailer
       mail(to: @issue_tracker_group.email, subject: 'Issue Request')
   end
 
+
+def issue_tracker_member(issue_request)
+      @employee = Employee.find(:id)
+      @issue_tracker_member = IssueTrackerMember.where
+      @issue_request = IssueRequest.find(issue_request.id)
+      @emp = EmployeeResignation.find_by_employee_id(issue_request.employee_id)
+      mail(to: @employee.email, subject: 'Resignation Request')
+  end
 end

@@ -19,7 +19,7 @@
       <tr>
         <td>
           <% i = 0 %>
-          <% employer_insurance.base_component.split(",").each do |e| %>
+          <% employer_insurance.base_component.split(",").try(:each) do |e| %>
             <% if i == 0 %>
               <%= SalaryComponent.find(e.to_i).name %>
             <% else %>

@@ -1533,6 +1533,7 @@ end
       get :search_by_end_date
       get :search_by_is_pending_date
       get :employee_leav_request_reports
+      get :all_leave_request_list
     end
   end
   resources :company_leavs

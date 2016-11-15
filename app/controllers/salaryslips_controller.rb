@@ -550,7 +550,6 @@ class SalaryslipsController < ApplicationController
           puts "pppppppppppppppppppppppppppppppp.........................."
         end
         end
-
       end
 
       @professional_tax_masters = ProfessionalTaxMaster.where(is_active: true)

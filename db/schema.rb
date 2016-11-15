@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161113062727) do
+ActiveRecord::Schema.define(version: 20161114125046) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -1111,6 +1111,18 @@ ActiveRecord::Schema.define(version: 20161113062727) do
   add_index "employees", ["nationality_id"], name: "index_employees_on_nationality_id"
   add_index "employees", ["religion_id"], name: "index_employees_on_religion_id"
   add_index "employees", ["state_id"], name: "index_employees_on_state_id"
+
+  create_table "employer_bonus", force: :cascade do |t|
+    t.string   "base_component"
+    t.decimal  "limit_amount"
+    t.decimal  "percentage"
+    t.date     "effective_from"
+    t.date     "effective_to"
+    t.boolean  "is_active"
+    t.boolean  "is_confirm"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
 
   create_table "employer_contributions", force: :cascade do |t|
     t.integer  "employee_id"
@@ -2719,6 +2731,8 @@ ActiveRecord::Schema.define(version: 20161113062727) do
     t.datetime "created_at",                                               null: false
     t.datetime "updated_at",                                               null: false
     t.date     "start_date"
+    t.boolean  "is_active"
+    t.boolean  "is_confirm"
   end
 
   add_index "society_member_ships", ["employee_id"], name: "index_society_member_ships_on_employee_id"

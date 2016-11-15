@@ -31,6 +31,7 @@ class LeaveStatusRecordsController < ApplicationController
       redirect_to hr_view_request_employee_leav_requests_path(@employee_leav_request.employee_id)
     end
   end
+  
 
   def first_approve
     ### if no second reporter available

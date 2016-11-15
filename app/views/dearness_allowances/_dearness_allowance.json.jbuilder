@@ -1,2 +1,0 @@
-json.extract! dearness_allowance, :id, :base_component, :minimum_wages, :effective_from, :effective_to, :is_active, :is_confirm, :created_at, :updated_at
-json.url dearness_allowance_url(dearness_allowance, format: :json)

@@ -128,6 +128,7 @@
               <th>Target/Unit</th>
               <th>Aligned</th>
               <th>Self Comment</th>
+              <th>Self Rating</th>
             </tr>
           </thead>
           <tbody>
@@ -139,6 +140,7 @@
                 <td><%= goal_rating.target %></td>
                 <td><%= goal_rating.aligned %></td>
                 <td><%= text_field_tag 'appraisee_comment[]',"",class: "form-control",autofocus: true %></td>
+                <td><%= select_tag 'appraisee_rating[]',options_for_select(all_rating_type),{class: "form-control", hide_label: true,include_blank: " Select Rating"} %></td>
                 <%= hidden_field_tag 'goal_rating_ids[]',"",value: goal_rating.id %>
               </tr>
             <% end %>
@@ -154,6 +156,7 @@
               <th>Target/Unit</th>
               <th>Aligned</th>
               <th>Self Comment</th>
+              <th>Self Rating</th>
             </tr>
           </thead>
           <tbody>
@@ -165,6 +168,7 @@
                 <td><%= goal_rating.target %></td>
                 <td><%= goal_rating.aligned %></td>
                 <td><%= text_field_tag 'appraisee_comment[]',"",class: "form-control" %></td>
+                <td><%= select_tag 'appraisee_rating[]',options_for_select(all_rating_type),{class: "form-control", hide_label: true,include_blank: " Select Rating"} %></td>
                 <%= hidden_field_tag 'goal_rating_ids[]',"",value: goal_rating.id %>
               </tr>
             <% end %>
@@ -200,31 +204,36 @@
           <th>Target/Unit</th>
           <th>Aligned</th>
           <th>Self Comment</th>
+          <th>Self Rating</th>
           <th>Action</th>
         </tr>
       </thead>
       <tbody>
+        <% appraisee_goal_sum = 0 %>
         <% @self_goal_ratings.each do |goal_rating| %>
           <tr>
             <td><%= goal_rating.goal_perspective.try(:name) %></td>
-            <td><%= goal_rating.goal_weightage %></td>
+            <td><%= weightage = goal_rating.goal_weightage %></td>
             <td><%= goal_rating.goal_measure %></td>
             <td><%= goal_rating.target %></td>
             <td><%= goal_rating.aligned %></td>
             <td><%= goal_rating.appraisee_comment %></td>
+            <td><%= appraisee_rating = goal_rating.appraisee_rating_id %></td>
             <td>
             <% if @goal_bunch.appraisee_confirm == true %>
               <small class="label label-info">Confirmed</small>
             <% else %>
-              <%= link_to '', self_modal_goal_ratings_path(goal_rating),class: 'btn btn-xs btn-success fa fa-edit',remote: true %>
-              
+              <%= link_to '', self_modal_goal_ratings_path(goal_rating),class: 'btn btn-xs btn-success fa fa-edit',remote: true %> 
               <% end %>
             </td>
+            <% appraisee_output = weightage * appraisee_rating.to_i / 100.to_f %>
+            <% appraisee_goal_sum = appraisee_goal_sum + appraisee_output %>
           </tr>
         <% end %>
       </tbody>
     </table>
 
+  <h6>Appraisee Rating For Goal= <%= appraisee_goal_sum.round(4) %></h6>
     <table class="table table-bordered table-hover table-condensed">
       <thead>
         <tr>
@@ -234,18 +243,21 @@
           <th>Target/Unit</th>
           <th>Aligned</th>
           <th>Self Comment</th>
+          <th>Self Rating</th>
           <th>Action</th>
         </tr>
       </thead>
       <tbody>
+        <% appraisee_attribute_sum = 0 %>
         <% @self_attribute_ratings.each do |goal_rating| %>
           <tr>
             <td><%= goal_rating.attribute_master.try(:name) %></td>
-            <td><%= goal_rating.goal_weightage %></td>
+            <td><%= weightage = goal_rating.goal_weightage %></td>
             <td><%= goal_rating.goal_measure %></td>
             <td><%= goal_rating.target %></td>
             <td><%= goal_rating.aligned %></td>
             <td><%= goal_rating.appraisee_comment %></td>
+            <td><%= appraisee_rating = goal_rating.appraisee_rating_id %></td>
             <td>
             <% if @goal_bunch.appraisee_confirm == true %>
               <small class="label label-info">Confirmed</small>
@@ -254,10 +266,16 @@
               
               <% end %>
             </td>
+            <% appraisee_output = weightage * appraisee_rating.to_i / 100.to_f %>
+            <% appraisee_attribute_sum = appraisee_attribute_sum + appraisee_output %>
           </tr>
         <% end %>
       </tbody>
     </table>
+
+    <h6>Appraisee Rating For Attribute = <%= appraisee_attribute_sum.round(4) %></h6>
+    <h6>Overall = <%= (appraisee_attribute_sum + appraisee_goal_sum ).round(4) %></h6>
+       <% @Overall = (appraisee_attribute_sum + appraisee_goal_sum ) %>
 
   <div class="row">
     <div class="col-sm-3">
@@ -267,7 +285,7 @@
           <% unless @goal_bunch.nil? %>
             <% if @goal_bunch.appraisee_confirm == true %>
             <% else %>
-            <%= link_to 'Overall Comment', modal_self_overall_goal_bunches_path(goal_bunch_id: @goal_bunch.id),class: 'btn btn-warning btn-sm',remote: true %>
+            <%= link_to 'Overall Comment', modal_self_overall_goal_bunches_path(goal_bunch_id: @goal_bunch.id,appraisee_overall: @Overall),class: 'btn btn-warning btn-sm',remote: true %>
             <% end %>
           <% end %>
         <% end %>
@@ -285,6 +303,7 @@
       <tr>
         <th><input type="checkbox" id="selectAll" value="selectAll"></th>
         <th>Overall Comment</th>
+        <th>Overall Rating</th>
       </tr>
     </thead>
     <tbody>
@@ -297,6 +316,7 @@
           <% end %>
         </td>
         <td><%= goal_bunch.appraisee_comment %></td>
+        <td><%= goal_bunch.appraisee_rating_id %></td>
       </tr>
       <% end %>
     </tbody>

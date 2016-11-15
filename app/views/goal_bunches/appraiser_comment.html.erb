@@ -125,6 +125,7 @@
           <th>Target/Unit</th>
           <th>Aligned</th>
           <th>Self Comment</th>
+          <th>Self Rating</th>
           <th>Appraiser Comment</th>
           <th>Appraiser Rating</th>
         </tr>
@@ -138,6 +139,7 @@
             <td><%= goal_rating.target %></td>
             <td><%= goal_rating.aligned %></td>
             <td><%= goal_rating.appraisee_comment %></td>
+            <td><%= goal_rating.appraisee_rating_id %></td>
             <td><%= text_field_tag 'appraiser_comments[]',"",class: "form-control",autofocus: true %></td>
             <td><%= select_tag 'appraiser_ratings[]',options_for_select(all_rating_type),{class: "form-control", hide_label: true,include_blank: " Select Rating"} %></td>
             <%= hidden_field_tag 'goal_rating_ids[]',"",value: goal_rating.id %>
@@ -155,6 +157,7 @@
           <th>Target/Unit</th>
           <th>Aligned</th>
           <th>Self Comment</th>
+          <th>Self Rating</th>
           <th>Appraiser Comment</th>
           <th>Appraiser Rating</th>
         </tr>
@@ -168,6 +171,7 @@
             <td><%= goal_rating.target %></td>
             <td><%= goal_rating.aligned %></td>
             <td><%= goal_rating.appraisee_comment %></td>
+            <td><%= goal_rating.appraisee_rating_id %></td>
             <td><%= text_field_tag 'appraiser_comments[]',"",class: "form-control" %></td>
             <td><%= select_tag 'appraiser_ratings[]',options_for_select(all_rating_type),{class: "form-control", hide_label: true,include_blank: " Select Rating"} %></td>
             <%= hidden_field_tag 'goal_rating_ids[]',"",value: goal_rating.id %>
@@ -205,6 +209,7 @@
           <th>Target/Unit</th>
           <th>Aligned</th>
           <th>Self Comment</th>
+          <th>Self Rating</th>
           <th>Appraiser Comment</th>
           <th>Appraiser Rating</th>
           <th>Action</th>
@@ -220,6 +225,7 @@
             <td><%= goal_rating.target %></td>
             <td><%= goal_rating.aligned %></td>
             <td><%= goal_rating.appraisee_comment %></td>
+            <td><%= goal_rating.appraisee_rating_id %></td>
             <td><%= goal_rating.appraiser_comment %></td>
             <td><%= appraiser_rating = goal_rating.appraiser_rating_id %></td>
             <td>
@@ -246,6 +252,7 @@
           <th>Target/Unit</th>
           <th>Aligned</th>
           <th>Self Comment</th>
+          <th>Self Rating</th>
           <th>Appraiser Comment</th>
           <th>Appraiser Rating</th>
           <th>Action</th>
@@ -261,6 +268,7 @@
             <td><%= goal_rating.target %></td>
             <td><%= goal_rating.aligned %></td>
             <td><%= goal_rating.appraisee_comment %></td>
+            <td><%= goal_rating.appraisee_rating_id %></td>
             <td><%= goal_rating.appraiser_comment %></td>
             <td><%= appraiser_rating = goal_rating.appraiser_rating_id %></td>
             <td>
@@ -306,6 +314,7 @@
         <tr>
           <th><input type="checkbox" id="selectAll" value="selectAll"></th>
           <th>Overall Comment</th>
+          <th>Overall Rating</th>
         </tr>
       </thead>
       <tbody>
@@ -318,6 +327,7 @@
             <% end %>
           </td>
           <td><%= goal_bunch.appraiser_comment %></td>
+          <td><%= goal_bunch.appraiser_rating %></td>
         </tr>
         <% end %>
       </tbody>

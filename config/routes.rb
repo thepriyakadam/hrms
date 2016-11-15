@@ -401,6 +401,8 @@ end
       post :all_employee_list
       post :print_employee_list
       get :is_confirm
+      get :new_form
+      post :create_for_multiple
     end
   end
   #post 'goal_ratings/update_goal_set_modal'
@@ -466,7 +468,8 @@ end
       get :appraisee_detail_for_print
       get :appraiser_detail_for_print
       get :reviewer_detail_for_print
-     
+      get :period_for_multiple
+      post :create_multiple_bunch
     end
   end
   resources :goal_perspectives do

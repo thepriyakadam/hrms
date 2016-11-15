@@ -40,6 +40,23 @@ class GoalBunchesController < ApplicationController
       end
   end
 
+  def create_multiple_bunch
+   @goal_bunch = GoalBunch.new(goal_bunch_params)
+    if @goal_bunch.save
+      @flag = true
+      @goal_bunch = GoalBunch.new 
+      redirect_to period_for_multiple_goal_bunches_path
+    else
+      @flag = false
+    redirect_to period_for_multiple_goal_bunches_path
+    end
+  end
+
+
+  def period_for_multiple
+    @goal_bunches = GoalBunch.all
+  end
+
   # PATCH/PUT /goal_bunches/1
   # PATCH/PUT /goal_bunches/1.json
   def update
@@ -132,14 +149,17 @@ class GoalBunchesController < ApplicationController
   def self_comment
     @goal_rating_ids = params[:goal_rating_ids]
     comments = params[:appraisee_comment]
-    final = @goal_rating_ids.zip(comments)
-    final.each do |e, c|
+    ratings = params[:appraisee_rating]
+    final = @goal_rating_ids.zip(comments,ratings)
+    final.each do |e, c, r|
       goal_rating = GoalRating.find(e)
       if c == ''
         flash[:alert] = 'Fill comments'
+      elsif r == ''
+        flash[:alert] = 'Fill ratings'
       else
-        goal_rating.update(appraisee_comment: c)
-        flash[:notice] = 'Self Comments Created Successfully'
+        goal_rating.update(appraisee_comment: c, appraisee_rating_id: r)
+        flash[:notice] = 'Self Comment & Rating Created Successfully'
       end
     end
     @goal_bunch_id = GoalBunch.find(params[:goal_bunch_id])
@@ -573,13 +593,17 @@ class GoalBunchesController < ApplicationController
 
   def modal_self_overall
     @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
+    @appraisee_overall = params[:appraisee_overall]
   end
 
   def self_overall_comment_create
     @employee = Employee.find(params[:employee_id])
     @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
     comment = params[:goal_bunch][:appraisee_comment]
-    @goal_bunch.update(appraisee_comment: comment,appraisee_id: params[:employee_id])
+    @appraisee_overall = params[:appraisee_overall]
+
+    @goal_bunch.update(appraisee_rating_id: @appraisee_overall,appraisee_comment: comment,appraisee_id: params[:employee_id])
+    
     flash[:notice] = "Overall Comment Created Successfully"
     redirect_to appraisee_comment_goal_bunches_path(emp_id: @employee.id,id: @goal_bunch.id)
   end
@@ -908,6 +932,6 @@ class GoalBunchesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def goal_bunch_params
-      params.require(:goal_bunch).permit(:f_promotion,:f_increment,:f_designation_id,:f_ctc,:goal_confirm,:period_id, :employee_id, :appraisee_id, :appraisee_comment, :appraisee_confirm, :appraiser_id, :appraiser_rating, :appraiser_comment, :appraiser_confirm, :reviewer_id, :review_comment, :reviewer_rating_id, :reviewer_confirm, :final_id, :final_comment, :final_rating_id, :final_confirm)
+      params.require(:goal_bunch).permit(:appraisee_rating_id,:f_promotion,:f_increment,:f_designation_id,:f_ctc,:goal_confirm,:period_id, :employee_id, :appraisee_id, :appraisee_comment, :appraisee_confirm, :appraiser_id, :appraiser_rating, :appraiser_comment, :appraiser_confirm, :reviewer_id, :review_comment, :reviewer_rating_id, :reviewer_confirm, :final_id, :final_comment, :final_rating_id, :final_confirm)
     end
 end

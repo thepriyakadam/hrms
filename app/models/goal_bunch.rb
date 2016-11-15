@@ -8,6 +8,7 @@ class GoalBunch < ActiveRecord::Base
   belongs_to :final
   belongs_to :final_rating
   has_many :goal_ratings
+  belongs_to :appraisee_rating
 
   belongs_to :r_designation, class_name: 'EmployeeDesignation'
   belongs_to :f_designation, class_name: 'EmployeeDesignation'

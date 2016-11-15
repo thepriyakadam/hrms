@@ -253,6 +253,12 @@ class EmployeeLeavRequestsController < ApplicationController
     @employee_leav_requests = @employee.employee_leav_requests
   end
 
+  def admin_employee_history_with_current_leave
+    @current_request = EmployeeLeavRequest.find(params[:format])
+    @employee = Employee.find(@current_request.employee_id)
+    @employee_leav_requests = @employee.employee_leav_requests
+  end
+
   def search_by_start_date
     reporter(EmployeeLeavRequest.filter_records(current_user), template_class: PdfReportTemplate) do
       filter :start_date, type: :date

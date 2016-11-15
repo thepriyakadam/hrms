@@ -181,6 +181,154 @@ class LeaveStatusRecordsController < ApplicationController
     end
   end
 
+  def admin_first_approve
+    ### if no second reporter available
+    if @employee_leav_request.employee.manager_2_id.nil?
+      @leave_status = LeaveStatusRecord.new do |s|
+        s.employee_leav_request_id = params[:id]
+        s.change_status_employee_id = current_user.employee_id unless current_user.class == Group
+        s.status = 'FinalApproved'
+        s.change_date = Time.now
+      end
+      ActiveRecord::Base.transaction do
+        if @leave_status.save
+          @employee_leav_request.update(is_first_approved: true, current_status: 'FinalApproved')
+          @employee_leav_request.create_single_record_for_leave(@employee_leav_request)
+          @employee_leav_request.manage_coff(@employee_leav_request)
+          @employee_leav_request.create_attendance
+          
+          LeaveRecord.where(employee_leav_request_id: @employee_leav_request.id).update_all(status: "FinalApproved")
+          #@leave_record.update_all(status: "FinalApproved")
+
+          # @employee_leav_request.minus_leave(@employee_leav_request)
+          if @employee_leav_request.employee.email.nil? || @employee_leav_request.employee.email == ''
+            flash[:notice] = 'Leave Approved Successfully without email.'
+          else
+            LeaveRequestMailer.first_approve1(@employee_leav_request).deliver_now
+            flash[:notice] = 'Leave Approved Successfully.'
+          end
+          redirect_to all_leave_request_list_employee_leav_requests_path
+        else
+          flash[:alert] = 'Leave Already Approved. Please refresh page.'
+          redirect_to all_leave_request_list_employee_leav_requests_path
+        end
+      end
+    ### if second reporter available
+    else
+      @leave_status = LeaveStatusRecord.new do |s|
+        s.employee_leav_request_id = params[:id]
+        s.change_status_employee_id = current_user.employee_id unless current_user.class == Group
+        s.status = 'FirstApproved'
+        s.change_date = Time.now
+
+        LeaveRecord.where(employee_leav_request_id: @employee_leav_request.id).update_all(status: "FirstApproved")
+        
+      end
+      ActiveRecord::Base.transaction do
+        if @leave_status.save
+          @employee_leav_request.update(is_first_approved: true, current_status: 'FirstApproved', second_reporter_id: @employee_leav_request.employee.manager_2_id)
+          if @employee_leav_request.second_reporter.email.nil? || @employee_leav_request.second_reporter.email == ''
+            flash[:notice] = 'Leave Approved Successfully without email.'
+          else
+            LeaveRequestMailer.first_approve(@employee_leav_request).deliver_now
+            flash[:notice] = 'Leave Approved Successfully.'
+          end
+          redirect_to all_leave_request_list_employee_leav_requests_path
+        else
+          flash[:alert] = 'Leave Already Approved. Please refresh page.'
+          redirect_to all_leave_request_list_employee_leav_requests_path
+        end
+      end
+    end
+  end
+
+  def admin_second_approve
+    @leave_status = LeaveStatusRecord.new do |s|
+      s.employee_leav_request_id = params[:id]
+      s.change_status_employee_id = current_user.employee_id unless current_user.class == Group
+      s.status = 'FinalApproved'
+      s.change_date = Time.now
+    end
+    ActiveRecord::Base.transaction do
+      if @leave_status.save
+        @employee_leav_request.update(is_second_approved: true, current_status: 'FinalApproved')
+        @employee_leav_request.create_single_record_for_leave(@employee_leav_request)
+        @employee_leav_request.manage_coff(@employee_leav_request)
+        @employee_leav_request.create_attendance
+
+        LeaveRecord.where(employee_leav_request_id: @employee_leav_request.id).update_all(status: "FinalApproved")
+
+        # @employee_leav_request.minus_leave(@employee_leav_request)
+        if @employee_leav_request.employee.email.nil? || @employee_leav_request.employee.email == ''
+          flash[:notice] = 'Leave Approved Successfully without mail.'
+        else
+          flash[:notice] = 'Leave Approved Successfully.'
+          LeaveRequestMailer.second_approve(@employee_leav_request).deliver_now
+        end
+        redirect_to all_leave_request_list_employee_leav_requests_path
+      else
+        flash[:alert] = 'Leave Already Approved. Please refresh page.'
+        redirect_to all_leave_request_list_employee_leav_requests_path
+      end
+    end
+  end
+
+  def admin_first_reject
+    @leave_status = LeaveStatusRecord.new do |s|
+      s.employee_leav_request_id = params[:id]
+      s.change_status_employee_id = current_user.employee_id unless current_user.class == Group
+      s.status = 'Rejected'
+      s.change_date = Time.now
+    end
+    ActiveRecord::Base.transaction do
+      if @leave_status.save
+        @employee_leav_request.update(is_first_rejected: true, current_status: 'Rejected')
+
+      LeaveRecord.where(employee_leav_request_id: @employee_leav_request.id).update_all(status: "Rejected")
+         
+        @employee_leav_request.revert_leave(@employee_leav_request)
+        if @employee_leav_request.employee.email.nil? || @employee_leav_request.employee.email == ''
+          flash[:notice] = 'Leave Rejected Successfully without email.'
+        else
+          flash[:notice] = 'Leave Rejected Successfully.'
+          LeaveRequestMailer.first_reject(@employee_leav_request).deliver_now
+        end
+        redirect_to all_leave_request_list_employee_leav_requests_path
+      else
+        flash[:alert] = 'Leave Already Rejected. Please refresh page.'
+        redirect_to all_leave_request_list_employee_leav_requests_path
+      end
+    end
+  end
+
+  def admin_second_reject
+    @leave_status = LeaveStatusRecord.new do |s|
+      s.employee_leav_request_id = params[:id]
+      s.change_status_employee_id = current_user.employee_id unless current_user.class == Group
+      s.status = 'Rejected'
+      s.change_date = Time.now
+    end
+    ActiveRecord::Base.transaction do
+      if @leave_status.save
+        @employee_leav_request.update(is_second_rejected: true, current_status: 'Rejected')
+
+       LeaveRecord.where(employee_leav_request_id: @employee_leav_request.id).update_all(status: "Rejected")
+
+        @employee_leav_request.revert_leave(@employee_leav_request)
+        if @employee_leav_request.employee.email.nil? || @employee_leav_request.employee.email == ''
+          flash[:notice] = 'Leave Rejected Successfully without email.'
+        else
+          flash[:notice] = 'Leave Rejected Successfully.'
+          LeaveRequestMailer.second_reject(@employee_leav_request).deliver_now
+        end
+        redirect_to all_leave_request_list_employee_leav_requests_path
+      else
+        flash[:alert] = 'Leave Already Rejected. Please refresh page.'
+        redirect_to all_leave_request_list_employee_leav_requests_path
+      end
+    end
+  end
+
   def cancel_after_approve
     @particular_leave_record = ParticularLeaveRecord.find(params[:format])
     @employee_leav_request = EmployeeLeavRequest.find_by_employee_id(@particular_leave_record.employee_id)

@@ -1179,6 +1179,10 @@ end
       get :second_approve
       get :first_reject
       get :second_reject
+      get :admin_first_approve
+      get :admin_second_approve
+      get :admin_first_reject
+      get :admin_second_reject
     end
   end
   resources :advance_types do
@@ -1534,6 +1538,7 @@ end
       get :search_by_is_pending_date
       get :employee_leav_request_reports
       get :all_leave_request_list
+      get :admin_employee_history_with_current_leave
     end
   end
   resources :company_leavs

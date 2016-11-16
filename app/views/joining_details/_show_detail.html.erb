@@ -106,7 +106,7 @@
       <td><%= @joining_detail.reserved_category.try(:name) %></td>
 
       <th><strong>DA</strong></th>
-      <td></td>
+      <td><%= @joining_detail.is_da ? "Yes" : "No" %></td>
     </tr>
 
     <tr>

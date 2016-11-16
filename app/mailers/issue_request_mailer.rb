@@ -22,5 +22,4 @@ class IssueRequestMailer < ApplicationMailer
 #   @issue_tracker_group = IssueTrackerGroup.find(@issue_request.employee_id)
 #   mail(to: @issue_tracker_member.email, subject: 'Support Request')
 # end
-      
 end

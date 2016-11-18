@@ -64,6 +64,6 @@ class SalaryComponentsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def salary_component_params
-    params.require(:salary_component).permit(:is_confirm,:name, :is_deducted, :code, :parent_id, :description,:account_code)
+    params.require(:salary_component).permit(:is_confirm,:name, :is_active,:is_deducted, :code, :parent_id, :description,:account_code)
   end
 end

@@ -166,15 +166,6 @@ class EmployeesController < ApplicationController
     session[:active_tab1] ="useradministration"
   end
 
-  def update_mgr
-    employee = Employee.find(params['emp']['employee_id'])
-    rep1 = params[:emp][:manager_id]
-    rep2 = params[:emp][:manager_2_id]
-    Employee.where(id: employee.id).update_all(manager_id: rep1,manager_2_id: rep2)
-    flash[:alert] = 'Updated successfully.'
-    redirect_to manager_employees_path
-  end
-
   def submit_form
     employee = Employee.find(params['login']['employee_id'])
     # @department = Department.find(params["login"]["department_id"])
@@ -410,27 +401,65 @@ class EmployeesController < ApplicationController
   end
 
   def collect_company_location
+    # byebug
     @company = Company.find(params[:id])
     # @company_locations = @company.company_locations
+    if current_user.class == Group
     @company_locations = CompanyLocation.where(company_id: @company.id)
+    else
+      if current_user.role.name == 'Company'
+        @company_locations = CompanyLocation.where(company_id: @company.id)
+      elsif current_user.role.name == 'CompanyLocation'
+        @company_locations = CompanyLocation.where(id: current_user.company_location_id,company_id: @company.id)
+      end
+    end
     @form = params[:form]
   end
 
+  # def collect_company_location
+  #    @company = Company.find(params[:id])
+  #    @company_locations = CompanyLocation.where(company_id: @company.id)
+  #    @form = params[:form]
+  # end
+
   def collect_department
      @company_location = CompanyLocation.find(params[:id])
-     @departments = @company_location.departments
+     @departments = Department.where(company_location_id: @company_location.id)
      @form = params[:form]
   end
 
   def basic_info_company_wise
   end
 
-  def employee_basic_info
-    @company = params[:employee][:company_id]
-    @location = params[:employee][:company_location_id]
-    @employees = Employee.where(company_id: @company,company_location_id: @location)
+
+  # def basic_info_company_wise
+  # end
+
+  # def employee_basic_info
+  #   @company = params[:employee][:company_id]
+  #   @location = params[:employee][:company_location_id]
+  #   @employees = Employee.where(company_id: @company,company_location_id: @location)
+  # end
+
+  def basic_info 
+    employee_ids = params[:employee_ids]
+    if employee_ids.nil?
+      flash[:alert] = "Please Select the Checkbox"
+      @employees = []
+      redirect_to basic_info_company_wise_employees_path
+    else
+      @employees = []
+      employee_ids.each do |e|
+      emp = Employee.find(e)
+      @employees << emp
+      @employee = Employee.find(e)
+      end
+    end  
   end
 
+  def emp_basic_info
+  end
+  
   private
 
   # Use callbacks to share common setup or constraints between actions.

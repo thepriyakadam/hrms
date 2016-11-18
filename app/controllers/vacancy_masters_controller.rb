@@ -20,6 +20,11 @@ class VacancyMastersController < ApplicationController
      end
   end
 
+  def import
+    VacancyMaster.import(params[:file])
+    redirect_to root_url, notice: "File imported."
+  end
+
   # GET /vacancy_masters/1
   # GET /vacancy_masters/1.json
   def show

@@ -4,11 +4,13 @@ class IssueRequest < ActiveRecord::Base
   belongs_to :issue_tracker_group
   belongs_to :employee
   has_many :issue_lockers
-  has_many :issue_root_causes
+  belongs_to :issue_root_cause
 
   validates :issue_tracker_group_id, presence: true
   validates :issue_master_id, presence: true
   validates :issue_priority, presence: true
+  
+
 
   has_attached_file :document1, :path => "attachments/attach_resume/:basename.:extension"
 

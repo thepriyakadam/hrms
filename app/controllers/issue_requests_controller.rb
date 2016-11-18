@@ -40,7 +40,7 @@ class IssueRequestsController < ApplicationController
         format.json { render :show, status: :created, location: @issue_request }
       else
         format.html { render :new }
-        format.json { render json: @issue_request.errors, status: :unprocessable_entity }
+        format.json { render json: @issue_request.errors, status: :unprocessable_entity }  
       end
     end
   end
@@ -96,6 +96,7 @@ class IssueRequestsController < ApplicationController
   end
 
   def lock_request_list
+    # byebug
     @issue_tracker_member = IssueTrackerMember.where(employee_id: current_user.employee_id)
     @issue_tracker_member_id = IssueTrackerMember.find_by(employee_id: current_user.employee_id)
     @issue_requests = IssueRequest.where(issue_tracker_group_id: @issue_tracker_member_id.issue_tracker_group_id,status: nil)
@@ -144,7 +145,7 @@ class IssueRequestsController < ApplicationController
 
   def solved_request
     @issue_request = IssueRequest.find(params[:id])
-    @issue_request.update(status: true,issue_root_cause_id: params[:issue_request][:issue_root_cause_id],comment: params[:issue_request][:comment],time: params[:issue_request][:time])
+    @issue_request.update(status: true,issue_root_cause_id: params[:issue_request][:issue_root_cause_id],comment: params[:issue_request][:comment],time: params[:issue_request][:time],effort_time: params[:issue_request][:effort_time])
     IssueHistory.create(issue_tracker_group_id: @issue_request.issue_tracker_group_id,issue_request_id: @issue_request.id,issue_master_id: @issue_request.issue_master_id,description: @issue_request.description,date: @issue_request.date,time: @issue_request.time,employee_id: @issue_request.employee_id,issue_tracker_member_id: @issue_request.issue_tracker_member_id,issue_priority: @issue_request.issue_priority,status: true)
     flash[:notice] = "Issue Request Solved Successfully"
     redirect_to lock_request_list_issue_requests_path
@@ -180,26 +181,122 @@ class IssueRequestsController < ApplicationController
     redirect_to solved_issues_issue_requests_path
   end
 
-  def search_by_date
-    reporter(IssueRequest.filter_records(current_user), template_class: PdfReportTemplate) do
-    filter :date, type: :date
-    column(:Request_ID, sortable: true) { |issue_request| issue_request.id }
-    column(:ID, sortable: true) { |issue_request| issue_request.employee.try(:manual_employee_code) }
-    column(:Employee_Name, sortable: true) { |issue_request| full_name(issue_request.employee) }
-    column(:Date, sortable: true) { |issue_request| issue_request.date }
-    column(:Group, sortable: true) { |issue_request| issue_request.try(:issue_tracker_group).try(:name) }
-    end
+  def issue_tracker_reports_xls
+    # byebug
+    @start = params[:date].to_date
+    @en = params[:to_date].to_date
+    @issue_tracker_group = IssueTrackerGroup.find(params[:issue_tracker_group_id])
+    @issue_requests = IssueRequest.where(issue_tracker_group_id: @issue_tracker_group.id,date: @start..@en)
   end
 
-   def search_by_group
-    reporter(IssueRequest.filter_records(current_user), template_class: PdfReportTemplate) do
-    filter :issue_tracker_group_id, type: :integer
-    column(:Request_ID, sortable: true) { |issue_request| issue_request.id }
-    column(:ID, sortable: true) { |issue_request| issue_request.employee.try(:manual_employee_code) }
-    column(:Employee_Name, sortable: true) { |issue_request| full_name(issue_request.employee) }
-    column(:Date, sortable: true) { |issue_request| issue_request.date }
-    column(:Group, sortable: true) { |issue_request| issue_request.try(:issue_tracker_group).try(:name) }
-    end
+  def group_report_list
+    # byebug
+    @start = params[:date].to_date
+    @en = params[:to_date].to_date
+    @issue_tracker_group = IssueTrackerGroup.find(params[:id])
+    @issue_requests = IssueRequest.where(issue_tracker_group_id: @issue_tracker_group.id,date: @start..@en)
+
+  end
+
+  def issue_tracker_pdf
+    @start = params[:date].to_date
+    @en = params[:to_date].to_date
+   @issue_tracker_group = IssueTrackerGroup.find(params[:issue_tracker_group_id])
+   @issue_requests = IssueRequest.where(issue_tracker_group_id: @issue_tracker_group.id,date: @start..@en)
+      respond_to do |format|
+          format.json
+          format.pdf do
+            render pdf: 'issue_tracker_pdf',
+                  layout: 'pdf.html',
+                  orientation: 'Landscape',
+                  template: 'issue_requests/issue_tracker_pdf.pdf.erb',
+                  # show_as_html: params[:debug].present?,
+                  :page_height      => 1000,
+                  :dpi              => '300',
+                  :margin           => {:top    => 10, # default 10 (mm)
+                                :bottom => 10,
+                                :left   => 20,
+                                :right  => 20},
+                  :show_as_html => params[:debug].present?
+          end
+      end
+  end
+
+  def datewise_report_list
+    @date = params[:date].to_date
+    @issue_requests = IssueRequest.where(date: @date)
+  end
+
+  def datewise_report_xls
+    @date = params[:date].to_date
+    @issue_requests = IssueRequest.where(date: @date)
+  end
+
+  def datewise_report_pdf
+     @date = params[:date].to_date
+    @issue_requests = IssueRequest.where(date: @date)
+    respond_to do |format|
+          format.json
+          format.pdf do
+            render pdf: 'datewise_report_pdf',
+                  layout: 'pdf.html',
+                  orientation: 'Landscape',
+                  template: 'issue_requests/datewise_report_pdf.pdf.erb',
+                  # show_as_html: params[:debug].present?,
+                  :page_height      => 1000,
+                  :dpi              => '300',
+                  :margin           => {:top    => 10, # default 10 (mm)
+                                :bottom => 10,
+                                :left   => 20,
+                                :right  => 20},
+                  :show_as_html => params[:debug].present?
+          end
+      end
+  end
+
+  def request_id_wise_list
+    # byebug
+    # @id = params[:issue_request_id][:id]
+    @issue_request = IssueRequest.find(params[:id])
+    @issue_requests = IssueRequest.where(id: @issue_request.id)
+    @issue_locker_histories = IssueLockerHistory.where(issue_request_id: @issue_request.id)
+  end
+
+  def id_wise_report_xls
+    @issue_request = IssueRequest.find(params[:issue_request_id])
+    @issue_requests = IssueRequest.where(id: @issue_request.id)
+    @issue_locker_histories = IssueLockerHistory.where(issue_request_id: @issue_request.id)
+  end
+
+  def id_wise_report_pdf
+    @issue_request = IssueRequest.find(params[:issue_request_id])
+    @issue_requests = IssueRequest.where(id: @issue_request.id)
+    @issue_locker_histories = IssueLockerHistory.where(issue_request_id: @issue_request.id)
+    respond_to do |format|
+          format.json
+          format.pdf do
+            render pdf: 'id_wise_report_pdf',
+                  layout: 'pdf.html',
+                  orientation: 'Landscape',
+                  template: 'issue_requests/id_wise_report_pdf.pdf.erb',
+                  # show_as_html: params[:debug].present?,
+                  :page_height      => 1000,
+                  :dpi              => '300',
+                  :margin           => {:top    => 10, # default 10 (mm)
+                                :bottom => 10,
+                                :left   => 20,
+                                :right  => 20},
+                  :show_as_html => params[:debug].present?
+          end
+      end
+  end
+
+  def memberwise_report_list
+     @date = params[:datea]
+     @group_id = params[:group_id]
+     @member_id = params[:issue_member_id]
+     # byebug
+     IssueRequest.where(issue_tracker_group_id: @group_id, issue_tracker_member_id: @member_id, date: @date) 
   end
 
   private
@@ -210,6 +307,6 @@ class IssueRequestsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def issue_request_params
-      params.require(:issue_request).permit(:issue_root_cause_id,:effort_time,:is_complete,:issue_master_id, :issue_tracker_member_id, :issue_tracker_group_id, :description, :date, :time, :employee_id, :issue_priority, :status, :document1, :document2)
+      params.require(:issue_request).permit(:comment,:issue_root_cause_id, :effort_time,:is_complete,:issue_master_id, :issue_tracker_member_id, :issue_tracker_group_id, :description, :date, :time, :employee_id, :issue_priority, :status, :document1, :document2)
     end
 end

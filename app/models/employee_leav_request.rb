@@ -62,7 +62,7 @@ class EmployeeLeavRequest < ActiveRecord::Base
 
   def manage_coff(request)
     if request.leav_category.name == 'Compensatory Off'
-      c_offs = LeaveCOff.where(employee_id: request.employee_id, is_taken: false).order('c_off_date asc')
+      c_offs = LeaveCOff.where(employee_id: request.employee_id, is_taken: false, is_expire: nil).order('c_off_date asc')
       c_offs.each do |c|
         if request.leave_count == 0
         elsif request.leave_count == 0.5
@@ -139,7 +139,7 @@ class EmployeeLeavRequest < ActiveRecord::Base
           end
         else
           for i in self.start_date.to_date..self.start_date.to_date
-            EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: "PR/"+self.leav_category.code.to_s, count: 0.5, employee_leav_request_id: self.id,department_id: self.employee.try(:department_id))
+            EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: "P/"+self.leav_category.code.to_s, count: 0.5, employee_leav_request_id: self.id,department_id: self.employee.try(:department_id))
 
           end
         end
@@ -151,7 +151,7 @@ class EmployeeLeavRequest < ActiveRecord::Base
           end
         else
           for i in self.start_date.to_date..self.start_date.to_date
-            EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: "PR/"+self.leav_category.code.to_s, count: 0.5, employee_leav_request_id: self.id,department_id: self.employee.try(:department_id))
+            EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: "P/"+self.leav_category.code.to_s, count: 0.5, employee_leav_request_id: self.id,department_id: self.employee.try(:department_id))
 
           end
         end

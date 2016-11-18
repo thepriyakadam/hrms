@@ -1,0 +1,53 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Groupwise Report</h3>
+    <div class="pull-right">
+    </div>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <div class="row">
+        <div class="col-sm-3">
+         <div class="form-group required">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+            <%= text_field :id,:date,hide_label: true,placeholder: "From Date",class: 'form-control request_date'%>
+          </div>
+         </div>
+        </div>
+
+        <div class="col-sm-3">
+         <div class="form-group required">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+           <%= text_field :id,:to_date,hide_label: true,placeholder: "To Date", class: 'form-control request_date'%>
+          </div>
+         </div>
+        </div>
+        
+        <div class="col-sm-3">
+          <div class="field">
+        			<%= select :id, :issue_tracker_group, all_issue_tracker_group,{include_blank: 'select Group'},{onchange:"var a={id:$(this).val(),date:$('#id_date').val(),to_date:$('#id_to_date').val()}; $.get('/issue_requests/group_report_list',a,function(response){});",class: 'form-control'}%>
+           </div>
+        </div>
+
+        </div>
+      <div id="report_li"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+  $(function(){
+    $('.request_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:+1',
+    dateFormat: 'dd-mm-yy' });
+  }); 
+</script>
+
+
+

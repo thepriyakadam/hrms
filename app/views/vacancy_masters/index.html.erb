@@ -56,6 +56,16 @@
     <% end %>
   </tbody>
 </table>
+<!-- <h2>Import</h2>
+    <= form_tag import_vacancy_masters_path, multipart: true do %>
+      <= file_field_tag :file %>
+      %= submit_tag "Import" %>
+    < end %>
+    <p>
+    Download:
+    <= link_to "CSV", import_vacancy_masters_path(format: "csv") %> |
+    <= link_to "Excel", import_vacancy_masters_path(format: "xls") %>
+    </p> -->
 </div>
 </div>
 <script>

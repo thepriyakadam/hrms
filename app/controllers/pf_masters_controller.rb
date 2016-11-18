@@ -99,6 +99,6 @@ class PfMastersController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def pf_master_params
-    params.require(:pf_master).permit(:is_confirm,:is_pf, :percentage, :date_effective, :min_limit, :base_component, :is_active)
+    params.require(:pf_master).permit(:is_confirm,:is_pf, :is_da,:percentage, :date_effective, :min_limit, :base_component, :is_active)
   end
 end

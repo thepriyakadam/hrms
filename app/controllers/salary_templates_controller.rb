@@ -54,6 +54,14 @@ class SalaryTemplatesController < ApplicationController
     @salary_templates = SalaryTemplate.all
   end
 
+  def is_confirm
+    @salary_template = SalaryTemplate.find(params[:salary_template])
+    SalaryTemplate.find(@salary_template.id).update(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to new_salary_template_path
+  end
+
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -63,6 +71,6 @@ class SalaryTemplatesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def salary_template_params
-    params.require(:salary_template).permit(:code, :description, :validity_date)
+    params.require(:salary_template).permit(:code, :description, :validity_date,:is_active,:is_confirm)
   end
 end

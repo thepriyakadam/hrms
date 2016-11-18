@@ -1,0 +1,98 @@
+<!--SELECT2 EXAMPLE -->
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Bonus Employee Report</h3>
+  </div><!-- /.box-header -->
+
+  <div class="box-body">
+    <%= bootstrap_form_for(:bonus_employee, url: { action: 'dynamic_report'},html: {id: 'bonus_employee'},remote: true) do |f| %>
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="field">
+            <%= text_field :bonus_employee,:start_date,{class: 'form-control bonus_start_date',placeholder:'Start Date'} %>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="field">
+            <%= text_field :bonus_employee,:end_date,{class: 'form-control bonus_start_date',placeholder:'End Date'} %>
+           </div>
+        </div>
+
+         <!-- <div class="col-sm-3">
+          <div class="field">
+            <= select :food_deduction,:company_id,all_company,{label: 'Company',include_blank: " Select Company"}, class: "form-control" %>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="field">
+          <= select :food_deduction, :company_location_id, all_company_location,{label: 'Company Location',include_blank: " Select Company Location"}, class: "form-control" %>
+          </div>
+        </div> -->
+        <div class="col-sm-3">
+            <div class="form-group required">
+              <%=f.select :company_id, all_company,{include_blank: "Select Company",hide_label: true},{onchange:"var a={id:$(this).val(), form : 'bonus_employee'}; $.get('/employees/collect_company_location',a,function(response){});"}%>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="form-group required">
+              <div id="company_location1">
+                <%= render 'employees/company_loc_dropdown' %> 
+            </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="row">
+        <div class="col-sm-3">
+          <div class="actions">
+            <%= f.submit "Display Report", class: "btn btn-sm btn-warning" %>
+          </div>
+        </div>
+        </div><br>
+        <div class="row">
+	      <div class="col-sm-6">
+	        <div id="all_employee_bonus"></div>    
+	      </div>
+	      <div class="col-sm-6">
+	        <div id="particular_employee_bonus"></div>    
+	      </div>
+       </div>
+
+      <br>
+    <% end %>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->
+
+<script>
+$("#bonus_employee").validate({
+    rules: {
+      "bonus_employee[start_date]":{
+        required: true,
+      },
+      "bonus_employee[end_date]":{
+        required: true,
+      },
+      "bonus_employee[company_id]":{
+        required: true,
+      }
+    },
+    messages: {
+      "bonus_employee[start_date]":{
+        required: "Please select Start Date",
+      },
+      "bonus_employee[end_date]":{
+        required: "Please select End Date",
+      },
+      "bonus_employee[company_id]":{
+        required: "Please select Company",
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

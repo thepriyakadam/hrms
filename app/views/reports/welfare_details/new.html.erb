@@ -21,7 +21,7 @@
 
         <div class="col-sm-3">
           <div class="field">
-          <%= select :salary, :company_location_id, all_company_location,{label: 'Company Location',include_blank: " Select Company Location"}, class: "form-control" %>
+          <%= select :salary, :company_location_id, all_company_location2,{label: 'Company Location',include_blank: " Select Company Location"}, class: "form-control" %>
           </div>
         </div>
        
@@ -45,6 +45,9 @@ $("#salary").validate({
       },
       "salary[year]":{
         required: true,
+      },
+      "salary[company_location_id]":{
+        required: true,
       }
     },
     messages: {
@@ -53,8 +56,10 @@ $("#salary").validate({
       },
       "salary[year]":{
         required: "Please specify Year",
+      },
+       "salary[company_location_id]":{
+        required: "Please select Company Locationr",
       }
-      
     },
     errorPlacement: function(error, element) {
      error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})

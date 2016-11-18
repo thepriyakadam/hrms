@@ -19,27 +19,12 @@
   <div class="navbar-custom-menu">
     <ul class="nav navbar-nav">
       
-      <!-- User Account Menu -->
+       <!-- User Account Menu -->
       <li class="dropdown user user-menu">
         <!-- Menu Toggle Button -->
         <a href="#" class="dropdown-toggle" data-toggle="dropdown" title = "Profile Setup">
           <!-- The user image in the navbar-->
-          
-          <%  @members = Member.where(employee_id: current_user.employee_id).pluck(:employee_id) %>
-             <%  @members1 = Member.where(employee_id: current_user.employee_id) %>
-             <% @employees = Employee.where(id: @members) %>
-             <% @employees.each do |e| %>
-             <% @members1.each do |m| %>
-             <% if e.gender == "Male" && m.avatar_file_name == nil  %>
-             <%= image_tag "avatar5.png",size: "25x25",class: "img-circle" %>
-             <% elsif e.gender == "Female" && m.avatar_file_name == nil  %>
-             <%= image_tag "avatar2.png",size: "25x25",class: "img-circle" %>
-             <!-- < image_tag("avatar2.png") %> -->
-             <%else%>
-              <%= image_tag current_user.avatar.url(:thumb),class: "img-circle", alt: "avatar2",size: "25x25"%>
-              <%end%>
-              <%end%>
-              <%end%>
+          <%= image_tag current_user.avatar.url(:thumb),class: "img-circle", alt: "/images/icons/avatar2.png",size: "25x25" %>
           <span class="hidden-xs"> 
           <!-- Right hand header image -->
             <% if current_user.class == Member %>
@@ -63,22 +48,7 @@
         <ul class="dropdown-menu">
           <!-- The user image in the menu -->
           <li class="user-header">
-            <%  @members = Member.where(employee_id: current_user.employee_id).pluck(:employee_id) %>
-             <%  @members1 = Member.where(employee_id: current_user.employee_id) %>
-             <% @employees = Employee.where(id: @members) %>
-             <% @employees.each do |e| %>
-             <% @members1.each do |m| %>
-             <% if e.gender == "Male" && m.avatar_file_name == nil  %>
-             <%= image_tag "avatar5.png" %>
-             <!-- < image_tag("avatar5.png") %> -->
-             <% elsif e.gender == "Female" && m.avatar_file_name == nil  %>
-             <%= image_tag "avatar2.png" %>
-             <!-- < image_tag("avatar2.png") %> -->
-             <%else%>
-              <%= image_tag current_user.avatar.url(:medium),class: "img-circle", alt: "avatar2"%>
-              <%end%>
-              <%end%>
-              <%end%>
+            <%= image_tag current_user.avatar.url(:medium),class: "img-circle", alt: "avatar2"%>
             <!-- Click image -->
             <p>
               <% if current_user.class == Member %>
@@ -93,7 +63,7 @@
             </p>
           </li>
           <!-- Menu Body -->
-          <li class="user-body">
+<li class="user-body">
             <div class="col-xs-5 text-center">
               <!-- <a href="#">Followers</a> -->
               <small>DESIGNATION:</small>
@@ -110,7 +80,7 @@
            <!--  <div class="col-xs-4 text-center">
               <a href="#">Friends</a>
             </div> -->
-          </li>
+</li>
           <!-- Menu Footer-->
           <% if group_signed_in? %>
             <li class="user-footer">

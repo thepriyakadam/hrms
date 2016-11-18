@@ -24,16 +24,19 @@
           <%= f.select :c_off_type,['Full Day','Half Day'],{label: 'C.Off Type',include_blank: " Select C.Off Type"} %>
        </div>
       </div> 
-      <div class="col-sm-3">
-        <div class="field">
-          <%= f.text_field :c_off_expire_day, label:'Applicable Day'%>
-        </div>
-      </div>
-      <div class="col-sm-3">
-        <div class="field">
+       <div class="col-sm-2">
+       <label>Is Expire</label>
+        <div class="field" id="checker">
          <%= f.check_box :expiry_status %>
         </div>
       </div>
+    
+      <div class="col-sm-3">
+          <div class="field" id="dependent-box">
+              <%= f.text_field :c_off_expire_day, label:'Applicable Day',class: "form-control" %>
+          </div>
+        </div>
+     
     </div>
     <div class="row">
       <div class="col-sm-3">
@@ -81,5 +84,22 @@
 $(document).ready(function() {
   $(".select2").select2();
 });
+
+</script>
+
+<script type="text/javascript">
+   $(document).ready(function () {
+        var checkbox = $('#checker'); 
+        var dependent = $('#dependent-box');
+        if (checkbox.attr('checked') !== undefined){
+           dependent.show();
+        } else {
+            dependent.hide();
+        }
+        
+        checkbox.change(function(e){
+           dependent.toggle(); 
+        });
+    }); 
 
 </script>

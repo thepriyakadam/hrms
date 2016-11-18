@@ -27,14 +27,13 @@
            <%= f.select :employee_category_id, all_employee_category, {label: 'Employee Category',include_blank: " Select Employee Category"} %>
         </div>
       </div>
-        <div class="col-sm-3">
+      <div class="col-sm-3">
         <div class="form-group required">
           <%= f.select :employee_designation_id,all_employee_designation,{label: 'Designation',include_blank: " Select Employee Designation"} %>
         </div>
-        </div>
+      </div>
   </div>
-
-      <div class="row">
+  <div class="row">
         <div class="col-sm-3">
          <label>Confirmation Date</label>
         <div class="field">
@@ -64,11 +63,11 @@
     </div>
     </div>
      <div class="row"> 
-    <div class="col-sm-3">
+   <!--  <div class="col-sm-3">
       <div class="form-group required">
-        <%= f.select :is_da,[['Yes','true'],['No','false']],{label: 'DA',include_blank: " Select DA Option"} %>
+
       </div>
-    </div>
+    </div> -->
      <div class="col-sm-3">
       <div class="form-group required">
         <%= f.select :is_employeer_pf,[['Yes','true'],['No','false']],{label: 'Employer PF',include_blank: " Select Employeer PF Option"} %>
@@ -87,30 +86,30 @@
     
     </div>
 
-    <div class="row">
-    <div class="col-sm-3">
+  <div class="row">
+      <div class="col-sm-3">
         <div class="field">
           <%= f.text_field :pf_max_amount, label:'PF Max Amount' %>
        </div>
-    </div> 
-     <div class="col-sm-3">
+      </div> 
+      <div class="col-sm-3">
         <div class="field">
           <%= f.select :have_esic, [['Yes','true'],['No','false']],{label: 'ESIC Option',include_blank: " Select ESIC Option"} %>
-       </div>
-    </div> 
-    <div class="col-sm-3">
+        </div>
+      </div> 
+      <div class="col-sm-3">
         <div class="field">
           <%= f.text_field :employee_efic_no, label:'ESIC No' %>
-       </div>
-    </div> 
-    <div class="col-sm-3">
+        </div>
+      </div> 
+      <div class="col-sm-3">
         <div class="field">
           <%= f.select :payment_mode_id, all_payment_mode,{label: 'Payment Mode',include_blank: " Select Payment Mode"} %>
-       </div>
-    </div> 
-    </div>
-
-    <div class="row">
+        </div>
+      </div> 
+  </div>
+  
+  <div class="row">
      <div class="col-sm-3">
         <div class="field">
            <%= f.select :cost_center_id, all_cost_center, {label: 'Cost Center',include_blank: " Select Cost Center"} %>

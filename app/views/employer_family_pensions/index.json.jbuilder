@@ -1,0 +1,1 @@
+json.array! @employer_family_pensions, partial: 'employer_family_pensions/employer_family_pension', as: :employer_family_pension

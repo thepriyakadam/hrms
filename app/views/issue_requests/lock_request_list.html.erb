@@ -57,7 +57,7 @@
                    <% else %>
                   <% if issue_request.issue_tracker_member_id == nil %>
                   <div id="myModal" class="modal fade"></div>
-                    <%= link_to '',modal_issue_requests_path(issue_request),class: 'btn btn-sm btn-danger fa fa-lock',remote: true %> 
+                    <%= link_to '',modal_issue_requests_path(issue_request),class: 'btn btn-sm btn-danger fa fa-lock ',remote: true %> 
                   <% else %> 
                     <small class="label label-primary">Locked by <%= issue_request.issue_tracker_member.employee.try(:manual_employee_code) %></small>
                   <% end %> 

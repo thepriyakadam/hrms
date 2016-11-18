@@ -36,7 +36,16 @@
         </div>
         </div>      
         <div class="row">
+
+         <div class="col-sm-3">
+      <label>Status </label>
+      <div class="field">
+        <%= f.check_box :is_active, label: 'Active'%>
+      </div>
+    </div>
+   
         <div class="col-sm-3">
+         <label></label>
           <div class="actions">
             <%= f.submit "New Membership",:class => class_name, data: { disable_with: data_info } %>
             <%= link_to 'Back', society_member_ships_path,class: 'btn btn-sm btn-default fa fa-arrow-left' %>

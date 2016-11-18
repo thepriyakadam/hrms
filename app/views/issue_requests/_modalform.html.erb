@@ -1,6 +1,6 @@
 <div class="modal-dialog">
   <div class="modal-content">
-    <div class="modal-body" style="height:400px; max-height:150px; width:300px; max-width:300px;">
+    <div class="modal-body" style="height:100px; max-height:200px; width:400px; max-width:400px;">
       <%= bootstrap_form_for :issue_request,url:{action:"lock_request", id: @issue_request.id},html: {id: 'issue_request'} do |f| %>
       <%= f.hidden_field :lock_date, :value => Time.zone.now.to_date %>
       <%= f.hidden_field :lock_time, :value => Time.zone.now.to_time %>
@@ -10,13 +10,10 @@
              <div class="form-group required">
          <%= f.select :issue_tracker_member_id,issue_tracker_member_role_wise(@issue_request.issue_tracker_group.id),{label: "Member",include_blank: " Select Member"},class: "form-control"%>
         </div>
-         </div>
-         </div><br>
-          <div class="row">
           <div class="col-sm-6">
+           <div class="actions">
             <%= f.submit "LOCK", class: 'btn btn-sm btn-primary fa fa-modx' %>
           </div>
-
         </div>
      <% end %>
     </div>

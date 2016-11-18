@@ -40,7 +40,7 @@ class IssueRequestsController < ApplicationController
         format.json { render :show, status: :created, location: @issue_request }
       else
         format.html { render :new }
-        format.json { render json: @issue_request.errors, status: :unprocessable_entity }
+        format.json { render json: @issue_request.errors, status: :unprocessable_entity }  
       end
     end
   end
@@ -96,6 +96,7 @@ class IssueRequestsController < ApplicationController
   end
 
   def lock_request_list
+    # byebug
     @issue_tracker_member = IssueTrackerMember.where(employee_id: current_user.employee_id)
     @issue_tracker_member_id = IssueTrackerMember.find_by(employee_id: current_user.employee_id)
     @issue_requests = IssueRequest.where(issue_tracker_group_id: @issue_tracker_member_id.issue_tracker_group_id,status: nil)

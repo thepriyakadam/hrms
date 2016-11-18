@@ -176,6 +176,9 @@ class EmployeeAttendancesController < ApplicationController
     # @employee_attendances = EmployeeAttendance.where(day: @month)
     @date = Date.new(@year.to_i, Workingday.months[@month])
     @day = @date.end_of_month.day
+
+    @start_date = @date
+    @end_date = @date.end_of_month
     @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).group(:employee_id)
   end
                                 
@@ -224,6 +227,7 @@ class EmployeeAttendancesController < ApplicationController
     @date = Date.new(@year.to_i, Workingday.months[@month])
     @day = @date.end_of_month.day
     @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ? and is_confirm = ?", @date.strftime('%m/%Y'),false).group(:employee_id)
+    #@emp_w = EmployeeAttendance.where("strftime('%m/%Y', day) = ? and is_confirm = ? and present = ?", @date.strftime('%m/%Y'),false,"W")
     respond_to do |format|
       format.xls {render template: 'employee_attendances/employee_attendance.xls.erb'}
     end
@@ -233,6 +237,8 @@ class EmployeeAttendancesController < ApplicationController
     @year, @month = params[:year], params[:month]
     @date = Date.new(@year.to_i, Workingday.months[@month])
     @day = @date.end_of_month.day
+    @start_date = @date
+    @end_date = @date.end_of_month
     @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ? and is_confirm = ?", @date.strftime('%m/%Y'),false).group(:employee_id)
     respond_to do |format|
       format.xls {render template: 'employee_attendances/employee_attendance_1.xls.erb'}
@@ -267,15 +273,7 @@ class EmployeeAttendancesController < ApplicationController
         redirect_to revert_attendance_employeewise_employee_attendances_path
       end
   end
-  def display_attendance_1
-    # byebug
-    @month = params[:month]
-    @year = params[:year]
-    # @employee_attendances = EmployeeAttendance.where(day: @month)
-    @date = Date.new(@year.to_i, Workingday.months[@month])
-    @day = @date.end_of_month.day
-    @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).group(:employee_id)
-  end
+  
 
   def display_employee_attendance_list
     # @month = "September"
@@ -302,7 +300,102 @@ class EmployeeAttendancesController < ApplicationController
     @day = @date.end_of_month.day
     @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).where(employee_id: current_user.employee_id).group(:employee_id)
   end
+
+  def employee_slip_pdf
+    @year, @month = params[:year], params[:month]
+    @date = Date.new(@year.to_i, Workingday.months[@month])
+    @day = @date.end_of_month.day
+    @start_date = @date
+    @end_date = @date.end_of_month
+    @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ? and is_confirm = ?", @date.strftime('%m/%Y'),false).group(:employee_id)
+      respond_to do |format|
+          format.json
+          format.pdf do
+            render pdf: 'employee_attendance',
+                  layout: 'pdf.html',
+                  orientation: 'Landscape',
+                  template: 'employee_attendances/employee_slip_pdf.pdf.erb',
+                  show_as_html: params[:debug].present?,
+                  margin:  { top:1,bottom:1,left:1,right:1 }
+                end
+             end
+  end
+
+  def attendance_report
+    @month = params[:employee_attendance][:month]
+    @year = params[:employee_attendance][:year]
+    # @employee_attendances = EmployeeAttendance.where(day: @month)
+    @date = Date.new(@year.to_i, Workingday.months[@month])
+    @day = @date.end_of_month.day
+    @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).group(:employee_id)
+  end
+
+  def confirm_attendance
+    @month = params[:employee_attendance][:month]
+    @year = params[:employee_attendance][:year]
+    # @employee_attendances = EmployeeAttendance.where(day: @month)
+    @date = Date.new(@year.to_i, Workingday.months[@month])
+    @day = @date.end_of_month.day
+    @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).group(:employee_id)
+  end
+
+  def create_attendance_1
+    @employees, @attendances, work_data_structure, @date = params[:employees], params[:attendances], [], params[:date]
+    params.permit!
+    @employees.each { |e| work_data_structure << params[e] }
+    #EmployeeAttendance.where(employee_id: @employees).where("strftime('%m/%Y', day) = ? and is_confirm = ?", @date.to_date.strftime('%m/%Y'),false).update_all(is_confirm: true)
+    Workingday.create(work_data_structure)
+    flash[:notice] = "Workingday successfully saved."
+    redirect_to confirm_attendances_form_employee_attendances_path
+  end
+
+  def emp_attendance_1_list
+    @month = params[:month]
+    @year = params[:year]
+    # @employee_attendances = EmployeeAttendance.where(day: @month)
+    @date = Date.new(@year.to_i, Workingday.months[@month])
+    @day = @date.end_of_month.day
+    @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).group(:employee_id)
+  end
   
+  def calculate_attendance
+  end
+
+  def display_total
+    @month = params[:month]
+    @year = params[:year]
+    @date = Date.new(@year.to_i, Workingday.months[@month])
+    #@day = @date.end_of_month.day
+    @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).group(:employee_id)
+  end
+
+  def attendance_total_xls
+    @year, @month = params[:year], params[:month]
+    @date = Date.new(@year.to_i, Workingday.months[@month])
+    @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ? and is_confirm = ?", @date.strftime('%m/%Y'),false).group(:employee_id)
+    respond_to do |format|
+      format.xls {render template: 'employee_attendances/attendance_total.xls.erb'}
+    end
+  end
+
+  def attendance_total_pdf
+    @year, @month = params[:year], params[:month]
+    @date = Date.new(@year.to_i, Workingday.months[@month])
+    @day = @date.end_of_month.day
+    @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ? and is_confirm = ?", @date.strftime('%m/%Y'),false).group(:employee_id)
+    respond_to do |format|
+      format.json
+      format.pdf do
+        render pdf: 'employee_attendance',
+              layout: 'pdf.html',
+              orientation: 'Landscape',
+              template: 'employee_attendances/attendance_total_pdf.pdf.erb',
+              show_as_html: params[:debug].present?,
+              margin:  { top:1,bottom:1,left:1,right:1 }
+      end
+    end
+  end
+
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_employee_attendance

@@ -1,5 +1,41 @@
 Rails.application.routes.draw do
 
+  resources :pf_employers do
+    collection do
+      get :is_confirm
+    end
+  end
+  resources :esic_employers do
+    collection do
+      get :is_confirm
+    end
+  end
+  resources :bonus_employers do
+    collection do
+      get :is_confirm
+    end
+  end
+  resources :professional_tax_masters do
+    collection do
+      get :is_confirm
+    end
+  end
+  resources :dearness_allowances do
+    collection do
+      get :is_confirm
+    end
+  end
+  resources :employer_insurances do
+    collection do
+      get :is_confirm
+    end
+  end
+  resources :employer_family_pensions do
+    collection do
+      get :is_confirm
+    end
+  end
+
   resources :insurance_masters do
     collection do
       get :is_confirm
@@ -274,9 +310,20 @@ end
       get :loginwise_attendance_form
       get :display_employee_attendance_list
       get :employee_attendances_list
+      get :calculate_attendance
+      get :display_total
+      get :attendance_total_xls
       get :emp_attendance
       get :display_attendance_2
       get :employee_slip_xls_1
+      get :employee_slip_pdf
+      get :attendance_total_pdf
+      get :emp_attendance_1
+      post :attendance_report
+      get :confirm_attendance_form
+      post :confirm_attendance
+      post :create_attendance_1
+      get :emp_attendance_1_list
     end
   end
   resources :salary_comp_mappings
@@ -851,6 +898,7 @@ end
   resources :leave_c_offs do
     collection do
       get :search_by_c_off_date
+      post :add_coff
     end
   end
 
@@ -1075,7 +1123,11 @@ end
       get :is_confirm
     end
   end
-  resources :society_member_ships
+  resources :society_member_ships do
+    collection do
+      get :is_confirm
+    end
+  end
   resources :well_faires do
     collection do
       get :is_confirm
@@ -1481,6 +1533,7 @@ end
       get :search_by_end_date
       get :search_by_is_pending_date
       get :employee_leav_request_reports
+      get :all_leave_request_list
     end
   end
   resources :company_leavs

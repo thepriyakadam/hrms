@@ -40,7 +40,7 @@ class IssueRequestsController < ApplicationController
         format.json { render :show, status: :created, location: @issue_request }
       else
         format.html { render :new }
-        format.json { render json: @issue_request.errors, status: :unprocessable_entity }
+        format.json { render json: @issue_request.errors, status: :unprocessable_entity }  
       end
     end
   end

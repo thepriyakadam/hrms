@@ -140,6 +140,11 @@ class WorkingdaysController < ApplicationController
 
   end
 
+  def import
+    Workingday.import(params[:file])
+    redirect_to root_url, notice: "File imported."
+  end
+
   def search_month_year
   end
 

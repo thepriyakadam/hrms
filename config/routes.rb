@@ -1357,6 +1357,8 @@ end
       get :display_workingday
       get :workingday_xls
       get :workingday_pdf
+      get :import_workingday
+      post :import
     end
   end
 

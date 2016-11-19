@@ -1154,6 +1154,28 @@ ActiveRecord::Schema.define(version: 20161114125046) do
     t.boolean  "is_confirm"
   end
 
+  create_table "employeer_esics", force: :cascade do |t|
+    t.date     "esic_date"
+    t.decimal  "amount"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.integer  "employee_id"
+    t.decimal  "actual_amount"
+  end
+
+  add_index "employeer_esics", ["employee_id"], name: "index_employeer_esics_on_employee_id"
+
+  create_table "employeer_pfs", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.date     "pf_date"
+    t.decimal  "amount"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.decimal  "actual_amount"
+  end
+
+  add_index "employeer_pfs", ["employee_id"], name: "index_employeer_pfs_on_employee_id"
+
   create_table "employees", force: :cascade do |t|
     t.integer  "department_id"
     t.string   "manual_employee_code"
@@ -1243,6 +1265,19 @@ ActiveRecord::Schema.define(version: 20161114125046) do
     t.decimal  "percentage"
     t.date     "effective_from"
     t.date     "effective_to"
+    t.boolean  "is_active"
+    t.boolean  "is_confirm"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  create_table "esic_employer_masters", force: :cascade do |t|
+    t.boolean  "esic"
+    t.decimal  "percentage"
+    t.date     "effective_from"
+    t.date     "effective_to"
+    t.decimal  "max_limit"
+    t.string   "base_component"
     t.boolean  "is_active"
     t.boolean  "is_confirm"
     t.datetime "created_at",     null: false
@@ -1374,6 +1409,19 @@ ActiveRecord::Schema.define(version: 20161114125046) do
 
   add_index "food_deductions", ["employee_id"], name: "index_food_deductions_on_employee_id"
   add_index "food_deductions", ["food_coupan_master_id"], name: "index_food_deductions_on_food_coupan_master_id"
+
+  create_table "fp_masters", force: :cascade do |t|
+    t.boolean  "is_fp"
+    t.decimal  "min_limit"
+    t.decimal  "percentage"
+    t.string   "base_component"
+    t.date     "effective_from"
+    t.date     "effective_to"
+    t.boolean  "is_active"
+    t.boolean  "is_confirm"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
 
   create_table "goal_bunches", force: :cascade do |t|
     t.integer  "period_id"
@@ -1617,6 +1665,18 @@ ActiveRecord::Schema.define(version: 20161114125046) do
   end
 
   add_index "instalments", ["advance_salary_id"], name: "index_instalments_on_advance_salary_id"
+
+  create_table "insurance_masters", force: :cascade do |t|
+    t.boolean  "is_insurance"
+    t.decimal  "percentage"
+    t.string   "base_component"
+    t.date     "effective_from"
+    t.date     "effective_to"
+    t.boolean  "is_active"
+    t.boolean  "is_confirm"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
 
   create_table "interview_analyses", force: :cascade do |t|
     t.integer  "vacancy_request_history_id"
@@ -1945,6 +2005,7 @@ ActiveRecord::Schema.define(version: 20161114125046) do
     t.boolean  "is_society_member"
     t.date     "retirement_date"
     t.integer  "reserved_category_id"
+    t.boolean  "is_da"
     t.boolean  "is_employeer_pf"
     t.boolean  "is_employeer_esic"
     t.boolean  "is_insurance"

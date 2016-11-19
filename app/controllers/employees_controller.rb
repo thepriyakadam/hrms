@@ -27,6 +27,21 @@ class EmployeesController < ApplicationController
       session[:active_tab] ="employeemanagement"
       session[:active_tab1] ="employeeprofile"
   end
+  
+
+  def import_xl
+    @employees = Employee.all
+    respond_to do |format|
+    format.html
+    format.csv { send_data @employee_bank_details.to_csv }
+    format.xls
+   end     
+  end
+
+  def import
+    Employee.import(params[:file])
+    redirect_to root_url, notice: "File imported."
+  end
 
   def report
     @employees = Employee.all

@@ -1,0 +1,37 @@
+
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Employee Wise List</h3>
+  </div><!-- /.box-header -->
+
+  <div class="box-body">
+    <%= bootstrap_form_for(:salary, url: { action: 'goal_employee_wise'},html: {id: "salary"},remote: true) do |f| %>
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <%= select :salary, :employee_id, all_employee_list,{label: 'Employee',include_blank: " Select Employee"},{class: "form-control"} %>
+          </div>
+        </div>
+  
+        <div class="col-sm-3">
+          <div class="actions">
+            <%= f.submit "Submit", class: "btn btn-sm btn-warning", id: "buttonCtc" %>
+          </div>
+        </div>
+      </div><br>
+    <% end %>
+    <div class="ajax-progress"></div>
+    <div class="row">
+      <div class="col-sm-12">
+        <div id="employee_list"></div>    
+      </div>
+    </div>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->
+
+<script type="text/javascript">
+  $("#buttonCtc").click(function(){
+    $('.ajax-progress').show();
+    $("#salary").submit();
+  })
+</script>

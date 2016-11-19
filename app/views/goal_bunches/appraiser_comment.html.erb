@@ -115,7 +115,7 @@
     <h3 class="box-title">Goal Rating</h3>
   </div><!-- /.box-header -->
   <div class="box-body">
-  <%= bootstrap_form_for (@goal_rating),url:{action:'appraiser_create',emp_id: @employee.id,goal_bunch_id: @goal_bunch_id.id} do |f| %>  
+  <%= bootstrap_form_for (@goal_rating),url:{action:'appraiser_create',emp_id: @employee.id,goal_bunch_id: @goal_bunch_id.id,period_id: @period.id} do |f| %>  
     <table class="table table-bordered table-hover table-condensed">
       <thead>
         <tr>
@@ -242,7 +242,7 @@
       </tbody>
     </table>
 
-    <h6>Appraiser Rating For Goal= <%= appraiser_goal_sum.round(4) %></h6>
+    <h6><font color='red' size='2'>Appraiser Rating For Goal= <%= appraiser_goal_sum.round(4) %></font></h6>
      <table class="table table-bordered table-hover table-condensed">
       <thead>
         <tr>
@@ -284,8 +284,8 @@
         <% end %>
       </tbody>
     </table>
-    <h6>Appraiser Rating For Attribute = <%= appraiser_attribute_sum.round(4) %></h6>
-       <h6>Overall = <%= (appraiser_attribute_sum + appraiser_goal_sum /2).round(4) %></h6>
+    <h6><font color='red' size='2'>Appraiser Rating For Attribute = <%= appraiser_attribute_sum.round(4) %></font></h6>
+       <h6><font color='red' size='2'>Overall = <%= (appraiser_attribute_sum + appraiser_goal_sum /2).round(4) %></font></h6>
        <% @Overall = (appraiser_attribute_sum + appraiser_goal_sum /2).round(4) %>
       <!-- <= f.hidden_field :appraiser_overall, value: appraiser_attribute_sum + appraiser_goal_sum / 2 %> -->
     <div class="row">
@@ -296,7 +296,7 @@
             <% unless @goal_bunch.nil? %>
               <% if @goal_bunch.appraiser_confirm == true %>
               <% else %>
-              <%= link_to 'Overall Comment', modal_appraiser_overall_goal_bunches_path(goal_bunch_id: @goal_bunch.id,appraiser_overall: @Overall), class: 'btn btn-warning btn-sm',remote: true %>
+              <%= link_to 'Overall Comment', modal_appraiser_overall_goal_bunches_path(goal_bunch_id: @goal_bunch.id,appraiser_overall: @Overall,period_id: @period.id), class: 'btn btn-warning btn-sm',remote: true %>
               <% end %>
             <% end %>
           <% end %>
@@ -308,7 +308,7 @@
   <div class="box-header with-border">
     <h3 class="box-title">Overall Comment</h3>
   </div>
-  <%= bootstrap_form_for GoalBunch.new,url:{action:'appraiser_overall_comment_confirm',emp_id: @employee.id,goal_bunch_id: @goal_bunch.id} do |f| %>
+  <%= bootstrap_form_for GoalBunch.new,url:{action:'appraiser_overall_comment_confirm',emp_id: @employee.id,goal_bunch_id: @goal_bunch.id,period_id: @period.id} do |f| %>
     <table class="table table-bordered table-hover table-condensed">
       <thead>
         <tr>
@@ -350,7 +350,7 @@
 </div>
 <% end %>
 
-<%= link_to 'Back',period_list_appraiser_goal_bunches_path(emp_id: @employee.id),class: 'btn btn-sm btn-default fa fa-arrow-left' %>
+<%= link_to 'Back',period_list_appraiser_goal_bunches_path(period_id: @period.id),class: 'btn btn-sm btn-default fa fa-arrow-left' %>
 </div>
 </div>
 <div id="myModal" class="modal fade"></div>

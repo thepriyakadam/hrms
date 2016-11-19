@@ -254,6 +254,131 @@ class GoalRatingsController < ApplicationController
     end
   end
 
+  def employee_goal_wise
+  end
+
+  def print_employee
+    @period = Period.find(params[:salary][:period_id])
+    @goal_bunch = GoalBunch.find_by(period_id: @period.id)
+
+    #goal_bunches = GoalBunch.where(period_id: @period.id).pluck(:employee_id)
+    @employees = GoalBunch.where(period_id: @period.id)
+  end
+
+  def detail_goal_wise
+    @goal_bunch_id = GoalBunch.find(params[:goal_bunch_id])
+    @employee_ids = params[:employee_ids]
+      if @employee_ids.nil?
+        flash[:alert] = "Please Select the Checkbox"
+        @employees = []
+        redirect_to subordinate_list_goal_wise_goal_ratings_path
+      else
+      @employees = []
+      @employee_ids.each do |e|
+        emp = GoalBunch.find_by_employee_id(e)
+        @employees << emp
+        @goal_bunch = GoalBunch.find_by_employee_id(e)
+        #@goal_bunch = GoalBunch.find(params[:id])
+      end 
+    end
+  end
+
+  def detail_goal_wise_xls
+   @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
+    @employees = GoalBunch.where(id: @goal_bunch.id)
+    @employee_promotions = EmployeePromotion.where(employee_id: @goal_bunch.employee_id)
+    @joining_detail = JoiningDetail.find_by_employee_id(@goal_bunch.employee_id)
+    @qualifications = Qualification.find_by_employee_id(@goal_bunch.employee_id)
+    @experiences = Experience.where(employee_id: @goal_bunch.employee_id)
+    @ctc = EmployeeSalaryTemplate.where(employee_id: @goal_bunch.employee_id).sum(:monthly_amount)
+    @goal_ratings = GoalRating.where(appraisee_id: @goal_bunch.employee_id, goal_bunch_id: @goal_bunch.id, goal_type: 'Goal')
+    @goal_attribute_ratings = GoalRating.where("goal_bunch_id = ? AND goal_type = ?", @goal_bunch.id ,'Attribute')
+    @goal_bunches = GoalBunch.where(employee_id: @goal_bunch.employee_id, id: @goal_bunch.id).group(:employee_id)
+
+    respond_to do |format|
+      format.xls {render template: 'goal_ratings/detail_goal_wise.xls.erb'}
+    end
+  end
+
+  def print_goal_wise
+    @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
+    @employees = GoalBunch.where(id: @goal_bunch.id)
+    # @employee_promotions = EmployeePromotion.where(employee_id: @goal_bunch.employee_id)
+    # @joining_detail = JoiningDetail.find_by_employee_id(@goal_bunch.employee_id)
+    # @qualifications = Qualification.find_by_employee_id(@goal_bunch.employee_id)
+    # @experiences = Experience.where(employee_id: @goal_bunch.employee_id)
+    # @ctc = EmployeeSalaryTemplate.where(employee_id: @goal_bunch.employee_id).sum(:monthly_amount)
+    # @goal_ratings = GoalRating.where(appraisee_id: @goal_bunch.employee_id, goal_bunch_id: @goal_bunch.id, goal_type: 'Goal')
+    # @goal_attribute_ratings = GoalRating.where("goal_bunch_id = ? AND goal_type = ?", @goal_bunch.id ,'Attribute')
+    # @goal_bunches = GoalBunch.where(employee_id: @goal_bunch.employee_id, id: @goal_bunch.id).group(:employee_id)
+
+    respond_to do |format|
+          format.json
+          format.pdf do
+            render pdf: 'goal_rating',
+                  layout: 'pdf.html',
+                  orientation: 'Landscape',
+                  template: 'goal_ratings/print_goal_wise.pdf.erb',
+                  show_as_html: params[:debug].present?,
+                  margin:  { top:1,bottom:1,left:1,right:1 }
+                end
+             end
+  end
+
+  def employee_wise_goal
+  end
+
+  def goal_employee_wise
+    @employee = Employee.find(params[:salary][:employee_id])
+    @goal_bunches = GoalBunch.where(employee_id: @employee.id)
+  end
+
+  def detail_employee_wise
+    @employee = Employee.find(params[:employee_id])
+    @employees = Employee.where(id: @employee.id)
+    @goal_bunch = GoalBunch.where(employee_id: @employee.id).pluck(:id)
+    @employee_promotions = EmployeePromotion.where(employee_id: @employee.id)
+    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
+    @experiences = Experience.where(employee_id: @employee.id)
+    @ctc = EmployeeSalaryTemplate.where(employee_id: @employee.id).sum(:monthly_amount)
+    @goal_ratings = GoalRating.where(appraisee_id: @employee.id, goal_bunch_id: @goal_bunch, goal_type: 'Goal')
+    @goal_attribute_ratings = GoalRating.where("goal_bunch_id = ? AND goal_type = ?", @goal_bunch ,'Attribute')
+    @goal_bunches = GoalBunch.where(employee_id: @employee.id, id: @goal_bunch).group(:employee_id)
+  end
+
+  def print_employee_wise
+    @employee = Employee.find(params[:emp_id])
+    @employees = Employee.where(id: @employee.id)
+    @goal_bunch = GoalBunch.where(employee_id: @employee.id).pluck(:id)
+    @employee_promotions = EmployeePromotion.where(employee_id: @employee.id)
+    @qualifications = Qualification.where(employee_id: @employee.id)
+    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
+    @experiences = Experience.where(employee_id: @employee.id)
+    @ctc = EmployeeSalaryTemplate.where(employee_id: @employee.id).sum(:monthly_amount)
+    @goal_ratings = GoalRating.where(appraisee_id: @employee.id, goal_bunch_id: @goal_bunch, goal_type: 'Goal')
+    @goal_attribute_ratings = GoalRating.where("goal_bunch_id = ? AND goal_type = ?", @goal_bunch ,'Attribute')
+    @goal_bunches = GoalBunch.where(employee_id: @employee.id, id: @goal_bunch).group(:employee_id)
+    respond_to do |format|
+          format.json
+          format.pdf do
+            render pdf: 'goal_rating',
+                  layout: 'pdf.html',
+                  orientation: 'Landscape',
+                  template: 'goal_ratings/print_employee_wise.pdf.erb',
+                  show_as_html: params[:debug].present?,
+                  margin:  { top:1,bottom:1,left:1,right:1 }
+                end
+             end
+  end
+
+  def detail_employee_wise_xls
+    @employee = Employee.find(params[:emp_id])
+    @employees = Employee.where(id: @employee.id)
+    respond_to do |format|
+      format.xls {render template: 'goal_ratings/detail_employee_wise.xls.erb'}
+    end
+  end
+
   def performance_type
   end
   
@@ -337,7 +462,6 @@ class GoalRatingsController < ApplicationController
   def goal_set_modal
     @goal_rating = GoalRating.find(params[:format])
   end
-
 
   def update_goal_set_modal
     @goal_rating = GoalRating.find(params[:goal_id])

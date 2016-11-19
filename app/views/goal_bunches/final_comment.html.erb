@@ -230,7 +230,7 @@
   <% if @goal_bunch.final_comment == nil %>
       <% if @goal_bunch.employee.manager_2_id == nil %>
      
-          <%= bootstrap_form_for(@goal_bunch,html: {id: 'goal_bunch'},url:{action: "final_create",employee_id: @employee.id,goal_bunch_id: @goal_bunch.id}) do |f| %>
+          <%= bootstrap_form_for(@goal_bunch,html: {id: 'goal_bunch'},url:{action: "final_create",employee_id: @employee.id,goal_bunch_id: @goal_bunch.id,period_id: @period.id}) do |f| %>
           <%= hidden_field_tag :final_id, {},value: current_user.employee_id %>
 
           <div class="row">
@@ -355,7 +355,7 @@
           <div class="box-header with-border">
             <h3 class="box-title">Recommendation For Employee</h3>
           </div>
-          <%= bootstrap_form_for GoalBunch.new,url:{action:'final_comment_confirm',emp_id: @employee.id,goal_bunch_id: @goal_bunch.id} do |f| %>
+          <%= bootstrap_form_for GoalBunch.new,url:{action:'final_comment_confirm',emp_id: @employee.id,goal_bunch_id: @goal_bunch.id,period_id: @period.id} do |f| %>
           <%= hidden_field_tag :final_id, {},value: current_user.employee_id %>
 
           <table class="table table-bordered table-hover table-condensed">
@@ -434,7 +434,7 @@
           <div class="box-header with-border">
             <h3 class="box-title">Recommendation For Employee</h3>
           </div>
-          <%= bootstrap_form_for GoalBunch.new,url:{action:'final_comment_confirm',emp_id: @employee.id,goal_bunch_id: @goal_bunch.id} do |f| %>
+          <%= bootstrap_form_for GoalBunch.new,url:{action:'final_comment_confirm',emp_id: @employee.id,goal_bunch_id: @goal_bunch.id,period_id: @period.id} do |f| %>
           <%= hidden_field_tag :final_id, {},value: current_user.employee_id %>
 
           <table class="table table-bordered table-hover table-condensed">
@@ -487,7 +487,7 @@
                       <% if goal_bunch.final_confirm == true %>
                       <td><small class="label label-info">Confirmed</small></td>
                       <% else %>
-                      <td><%= link_to '', final_modal_goal_bunches_path(goal_bunch),class: 'btn btn-xs btn-success fa fa-edit',remote:true %></td>
+                      <td><%= link_to '', final_modal_goal_bunches_path(goal_bunch_id: goal_bunch,period_id: @period.id),class: 'btn btn-xs btn-success fa fa-edit',remote:true %></td>
                       <% end %>
                     <% end %>
                 </tr>
@@ -512,7 +512,7 @@
       <% end %>
     <% end %>  
   <br>
-  <%= link_to 'Back',period_list_final_goal_bunches_path(emp_id: @employee.id),class: 'btn btn-sm btn-default fa fa-arrow-left' %>
+  <%= link_to 'Back',period_list_final_goal_bunches_path(period_id: @period.id),class: 'btn btn-sm btn-default fa fa-arrow-left' %>
   </div>
   </div>
 <% end %>

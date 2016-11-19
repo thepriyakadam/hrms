@@ -1,24 +1,19 @@
-<style>
-th {
-    text-align: left;
-}
-tr {
-    page-break-inside: avoid;
-}
-div.alwaysbreak { page-break-before: always; }
-div.nobreak:before { clear:both; }
-div.nobreak{ page-break-inside: avoid;
-  /* http://code.google.com/p/wkhtmltopdf/issues/detail?id=9#c21 */
-}
-</style>
-<div>
-
 <div class="box box-default">
   <div class="box-body">
-    <% @goal_bunches.each do |g|  %>
+    <div class="pull-right">
+      <%= link_to 'Print Report', print_goal_wise_goal_ratings_path(format: 'pdf',goal_bunch_id: @goal_bunch_id.id),class: "btn btn-xl btn-info fa fa-print" %>
+      <%= link_to " Print excel ",detail_goal_wise_xls_goal_ratings_path(format: "xls",goal_bunch_id: @goal_bunch_id.id), class: "btn btn-xl btn-primary fa fa-print", :target => "_blank" %>
+    </div>
+
+    <% @employees.each do |e| %>
       <center><h3>Employee Performance Detail</h3></center>
-      <% employee = Employee.find(g.employee_id) %>
-      <% joining_detail = JoiningDetail.find_by_employee_id(g.employee_id) %>
+      <% employee = Employee.find(e.employee_id) %>
+      <% joining_detail = JoiningDetail.find_by_employee_id(e.employee_id) %>
+      <% @experiences = Experience.where(employee_id: e.employee_id) %>
+      <% @qualifications = Qualification.where(employee_id: e.employee_id) %>
+      <% @employee_promotions = EmployeePromotion.where(employee_id: e.employee_id) %>
+      <% @goal_ratings = GoalRating.where(goal_bunch_id: e.id,appraisee_id: e.employee_id, goal_type: 'Goal') %>
+      <% @attribute_ratings = GoalRating.where(goal_bunch_id: e.id,appraisee_id: e.employee_id, goal_type: 'Attribute') %>
 
       <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">    
         <thead>
@@ -35,10 +30,10 @@ div.nobreak{ page-break-inside: avoid;
         </thead>
         <tbody>
           <tr>
-            <td><%= employee.manual_employee_code %></td> 
-            <td><%= full_name(employee) %></td>
+            <td><%= e.employee.manual_employee_code %></td> 
+            <td><%= e.employee.first_name %> <%= e.employee.middle_name %> <%= e.employee.last_name %></td>
             <td><%=  %></td>
-            <td><%= employee.department.try(:name) %></td>
+            <td><%= e.employee.department.try(:name) %></td>
             <td><%= joining_detail.joining_date %></td>
             <td><%= joining_detail.employee_grade.try(:name) %></td>
             <td><%= joining_detail.employee_designation.try(:name) %></td>
@@ -47,7 +42,7 @@ div.nobreak{ page-break-inside: avoid;
       </table>
       <br>
 
-      <% experience = Experience.find_by_employee_id(g.employee_id) %>
+    
       <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
           <thead>
           <tr><th colspan="4"><center>Previous Experience</center></th></tr>
@@ -59,17 +54,18 @@ div.nobreak{ page-break-inside: avoid;
             </tr>
           </thead>
           <tbody>
+            <% @experiences.each do |experience| %>
               <tr>
                 <td><%= experience.try(:company_name) %></td>
                 <td><%= experience.try(:designation) %></td>
                 <td align="right"><%= experience.try(:no_of_year) %></td>
                 <td align="right"><%= experience.try(:ctc) %></td>
               </tr>
+            <% end %>
           </tbody>
         </table>
         <br>
 
-        <% qualification = Qualification.find_by_employee_id(g.employee_id) %>
         <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
           <thead>
           <tr><th colspan="4"><center>Qualification</center></th></tr>
@@ -81,20 +77,51 @@ div.nobreak{ page-break-inside: avoid;
             </tr>
           </thead>
           <tbody>
+            <% @qualifications.each do |qualification| %>
               <tr>
                 <td><%= qualification.try(:degree).try(:name) %></td>
                 <td><%= qualification.try(:year).try(:name)%> </td>
                 <td><%= qualification.try(:marks) %></td>
                 <td><%= qualification.try(:degree_type).try(:name) %></td>
               </tr>
+            <% end %>
           </tbody>
         </table>
         <br>
 
-        <% goal_rating = GoalRating.find_by_appraisee_id(g.employee_id) %>
+      <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
+        <thead>
+        <tr><th colspan="7"><center>Promotion Detail</center></th></tr>
+          <tr>
+            <th>Department</th>
+            <th>Designation</th>
+            <th>Grade</th>
+            <th>Category</th>
+            <th>CTC</th>
+            <th>From</th>
+            <th>To</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @employee_promotions.each do |employee_promotion| %>
+            <tr>
+              <td><%= employee_promotion.employee.try(:company_location).try(:name) %> - <%= employee_promotion.employee.try(:department).try(:name) %></td>
+              <td><%= employee_promotion.employee_designation.try(:name) %></td>
+              <td><%= employee_promotion.employee_grade.try(:name) %></td>
+              <td><%= employee_promotion.employee_category.try(:name) %></td>
+              <td><%= employee_promotion.try(:ctc) %></td>
+              <td><%= employee_promotion.effective_from %></td>
+              <td><%= employee_promotion.effective_to %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <br>
+
         <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
           <thead>
-          <tr><th colspan="9"><center>Performance Record</center></th></tr>
+          <tr><th colspan="10"><center>Performance Record</center></th></tr>
+          <tr><th colspan="10"><center>Goals</center></th></tr>
             <tr>
               <th>Goal Perspective</th>
               <th>Goal Weightage</th>
@@ -109,6 +136,7 @@ div.nobreak{ page-break-inside: avoid;
             </tr>
           </thead>
           <tbody>
+            <% @goal_ratings.each do |goal_rating| %>
               <tr>
                 <td><%= goal_rating.try(:goal_perspective).try(:name) %></td>
                 <td><%= goal_rating.try(:goal_weightage) %></td>
@@ -120,12 +148,51 @@ div.nobreak{ page-break-inside: avoid;
                 <td><%= goal_rating.try(:appraiser_comment) %></td>
                 <td><%= goal_rating.try(:appraiser_rating_id) %></td>
                 <td><%= goal_rating.try(:reviewer_comment) %></td>
+              <% end %>
               </tr>
+          </tbody>
+        </table>
+
+        <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
+          <thead>
+          <tr><th colspan="10"><center>Attributes</center></th></tr>
+            <tr>
+              <th>Attribute</th>
+              <th>Goal Weightage</th>
+              <th>Goal Measure</th>
+              <th>Target/Unit</th>
+              <th>Aligned</th>
+              <th>Self Comment</th>
+              <th>Self Rating</th>
+              <th>Appraiser Comment</th>
+              <th>Appraiser Rating</th>
+              <th>Reviewer Comment</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @attribute_ratings.each do |attribute_rating| %>
+              <tr>
+                <td><%= attribute_rating.try(:attribute_master).try(:name) %></td>
+                <td><%= attribute_rating.try(:goal_weightage) %></td>
+                <td><%= attribute_rating.try(:goal_measure) %></td>
+                <td><%= attribute_rating.try(:target) %></td>
+                <td><%= attribute_rating.try(:aligned) %></td>
+                <td><%= attribute_rating.try(:appraisee_comment) %></td>
+                <td><%= attribute_rating.try(:appraisee_rating_id) %></td>
+                <td><%= attribute_rating.try(:appraiser_comment) %></td>
+                <td><%= attribute_rating.try(:appraiser_rating_id) %></td>
+                <td><%= attribute_rating.try(:reviewer_comment) %></td>
+              </tr>
+            <% end %>
           </tbody>
         </table>
         <br>
 
-       <% goal_bunch = GoalBunch.find_by_employee_id(g.employee_id)%>
+    <% if  @goal_bunch.nil? %>
+    <center><p class="text-warning"> No Goal Bunch Available </p></center> 
+    <% else %>
+
+       <% goal_bunch = GoalBunch.find_by_employee_id(e.employee_id)%>
        <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
         <tbody>
           <tr><th colspan="2"><center>Overall Performance Detail</center></th></tr>
@@ -143,7 +210,7 @@ div.nobreak{ page-break-inside: avoid;
             </tr>
             <tr>
               <th>Appraiser Rating</th>
-              <td><%= %></td>
+              <td><%= goal_bunch.try(:appraiser_rating) %></td>
             </tr>
             <tr>
               <th>Reviewer Comment</th>
@@ -164,7 +231,7 @@ div.nobreak{ page-break-inside: avoid;
         </tbody>
       </table>
       <br>
-      <% goal_bunch = GoalBunch.find_by_employee_id(g.employee_id) %>
+      <% goal_bunch = GoalBunch.find_by_employee_id(e.employee_id) %>
        <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
         <tbody>
           <tr><th colspan="2"><center>Detail</center></th><th>Sign</th></tr>
@@ -190,6 +257,7 @@ div.nobreak{ page-break-inside: avoid;
             </tr>
         </tbody>
       </table>
+  <% end %>
   <% end %>
 </div>
 </div>

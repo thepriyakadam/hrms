@@ -233,7 +233,7 @@
       </tbody>
     </table>
 
-  <h6>Appraisee Rating For Goal= <%= appraisee_goal_sum.round(4) %></h6>
+  <h6><font color='red' size='2'>Appraisee Rating For Goal= <%= appraisee_goal_sum.round(4) %></font></h6>
     <table class="table table-bordered table-hover table-condensed">
       <thead>
         <tr>
@@ -273,8 +273,8 @@
       </tbody>
     </table>
 
-    <h6>Appraisee Rating For Attribute = <%= appraisee_attribute_sum.round(4) %></h6>
-    <h6>Overall = <%= (appraisee_attribute_sum + appraisee_goal_sum ).round(4) %></h6>
+    <h6><font color='red' size='2'>Appraisee Rating For Attribute = <%= appraisee_attribute_sum.round(4) %></font></h6>
+    <h6><font color='red' size='2'>Overall = <%= (appraisee_attribute_sum + appraisee_goal_sum ).round(4) %></font></h6>
        <% @Overall = (appraisee_attribute_sum + appraisee_goal_sum ) %>
 
   <div class="row">

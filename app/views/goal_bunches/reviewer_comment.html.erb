@@ -118,7 +118,7 @@
     <h3 class="box-title">Goal Rating</h3>
   </div><!-- /.box-header -->
   <div class="box-body">
-  <%= bootstrap_form_for @goal_rating,url:{action:'reviewer_create',emp_id: @employee.id,goal_bunch_id: @goal_bunch_id.id} do |f| %>
+  <%= bootstrap_form_for @goal_rating,url:{action:'reviewer_create',emp_id: @employee.id,goal_bunch_id: @goal_bunch_id.id,period_id: @period.id} do |f| %>
   <%= hidden_field_tag :reviewer_id, {},value: current_user.employee_id %> 
     <table class="table table-bordered table-hover table-condensed">
       <thead>
@@ -226,7 +226,6 @@
       <tbody>
         <% @reviewer_goal_ratings.each do |goal_rating| %>
           <tr>
-            
             <td><%= goal_rating.goal_perspective.try(:name) %></td>
             <td><%= goal_rating.goal_weightage %></td>
             <td><%= goal_rating.goal_measure %></td>
@@ -300,7 +299,7 @@
             <% unless @goal_bunch.nil? %>
               <% if @goal_bunch.reviewer_confirm == true %>
               <% else %>
-              <%= link_to 'Overall Comment', modal_reviewer_overall_goal_bunches_path(goal_bunch_id: @goal_bunch.id), class: 'btn btn-warning btn-sm',remote: true %>
+              <%= link_to 'Overall Comment', modal_reviewer_overall_goal_bunches_path(goal_bunch_id: @goal_bunch.id,period_id: @period.id), class: 'btn btn-warning btn-sm',remote: true %>
               <% end %>
             <% end %>
           <% end %>
@@ -314,7 +313,7 @@
       <h3 class="box-title">Recommendation For Employee</h3>
     </div>
     
-  <%= bootstrap_form_for GoalBunch.new,url:{action:'reviewer_overall_comment_confirm',emp_id: @employee.id,goal_bunch_id: @goal_bunch.id} do |f| %>
+  <%= bootstrap_form_for GoalBunch.new,url:{action:'reviewer_overall_comment_confirm',emp_id: @employee.id,goal_bunch_id: @goal_bunch.id,period_id: @period.id} do |f| %>
     
     <table class="table table-bordered table-hover table-condensed">
       <thead>
@@ -379,7 +378,7 @@
       <br>
     <% end %>
 <% end %>
-  <%= link_to 'Back',period_list_reviewer_goal_bunches_path(emp_id: @employee.id),class: 'btn btn-sm btn-default fa fa-arrow-left
+  <%= link_to 'Back',period_list_reviewer_goal_bunches_path(period_id: @period.id),class: 'btn btn-sm btn-default fa fa-arrow-left
   +++-
   '%>
 </div>

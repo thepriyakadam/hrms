@@ -413,6 +413,16 @@ end
       get :is_confirm
       get :new_form
       post :create_for_multiple
+      get :employee_goal_wise
+      post :print_employee
+      post :detail_goal_wise
+      get :employee_wise_goal
+      post :goal_employee_wise
+      post :detail_employee_wise
+      get :print_employee_wise
+      get :print_goal_wise
+      get :detail_goal_wise_xls
+      get :detail_employee_wise_xls
     end
   end
   #post 'goal_ratings/update_goal_set_modal'

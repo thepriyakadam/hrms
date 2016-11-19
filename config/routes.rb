@@ -1270,6 +1270,10 @@ end
       get :display_salaryslip_report
       post :pdf_report
       get :salaryslip_xls
+      get :emp_contibution_salary_list
+      get :emp_contribution_slip_list
+      get :show_emp_contribution_salaryslip
+      get :print_emp_contribution_slip
     end
   end
  
@@ -1633,6 +1637,8 @@ end
       get :basic_info_company_wise
       post :employee_basic_info
       post :basic_info
+      get :change_password_form
+      post :update_password
     end
     member do
       get :edit_manager

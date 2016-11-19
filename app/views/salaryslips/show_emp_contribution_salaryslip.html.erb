@@ -2,7 +2,7 @@
   <div class="box-header">
     <h3 class="box-title">Employee Salary Slip <%= @salaryslip.month%> <%= @salaryslip.year%></h3>
     <div style="float:right;">
-  <%= link_to 'Print PDF', print_salary_slip_salaryslips_path(format: 'pdf',id: @salaryslip.id),class: 'btn btn-xl btn-warning fa fa-print', :target => '_blank' %><br><br>
+  <%= link_to ' Print PDF', print_emp_contribution_slip_salaryslips_path(format: 'pdf',id: @salaryslip.id),class: 'btn btn-xl btn-warning fa fa-print', :target => '_blank' %><br><br>
   </div>
   </div><!-- /.box-header -->
   
@@ -85,7 +85,6 @@
           <td><%= @employee.joining_detail.try(:employee_efic_no) %></td>
           <th>PF No.</th>
           <td colspan="2" align="right"><%= @employee.joining_detail.try(:employee_pf_no) %></td>
-          
           <th>UAN No.</th>
           <td align="right"><%= @employee.joining_detail.try(:employee_uan_no) %></td>
         </tr>
@@ -93,7 +92,7 @@
     </table>
     <br>
       
-    <%= render 'slip' %>
+    <div id="slip"><%= render 'emp_contribution_slip' %></div>
   </div>
 </div>
 

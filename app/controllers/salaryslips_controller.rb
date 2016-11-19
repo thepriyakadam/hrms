@@ -35,6 +35,75 @@ class SalaryslipsController < ApplicationController
     end
   end
 
+  def emp_contibution_salary_list
+    @employees = Employee.find_by_role(current_user)
+    # authorize! :show, @employees
+    session[:active_tab] ="payroll"
+    session[:active_tab1] ="salaryreport"
+  end
+
+  def emp_contribution_slip_list
+    @employee = Employee.find(params[:format])
+    authorize! :show, @employee
+    @salray_slips = Salaryslip.where('employee_id= ?', @employee.id)
+  end
+
+  def show_emp_contribution_salaryslip
+    # byebug
+    @instalment_array = []
+    @salaryslip = Salaryslip.find(params[:format])
+    @sal_slip_date = Salaryslip.where(id: @salaryslip.id).pluck(:month_year)
+    @emp_contribution = EmployerContribution.where(employee_id: @salaryslip.employee_id,date: @sal_slip_date).take
+    @addable_salary_components = SalaryslipComponent.where('is_deducted = ? and salaryslip_id = ?', false, @salaryslip.id).where(is_arrear: nil)
+    @deducted_salary_components = SalaryslipComponent.where('is_deducted = ? and salaryslip_id = ?', true, @salaryslip.id).where(is_arrear: nil)
+    @working_day = Workingday.find(@salaryslip.workingday_id)
+    @employee = Employee.find(@salaryslip.employee_id)
+    # @employee_leav_balance = EmployeeLeavBalance.find_by()
+    @advance_salary = AdvanceSalary.find_by_employee_id(@employee.id)
+    unless @advance_salary.nil?
+      @instalments = @advance_salary.instalments
+      @instalments.try(:each) do |i|
+        unless i.instalment_date.nil?
+          if i.try(:instalment_date).strftime('%B') == params['month'] && i.try(:instalment_date).strftime('%Y') == params['year']
+            @instalment_array << i
+          end
+        end
+      end
+    end
+  end
+
+  def print_emp_contribution_slip
+    @instalment_array = []
+    @salaryslip = Salaryslip.find(params[:id])
+    @sal_slip_date = Salaryslip.where(id: @salaryslip.id).pluck(:month_year)
+    @emp_contribution = EmployerContribution.where(employee_id: @salaryslip.employee_id,date: @sal_slip_date).take
+    @addable_salary_components = SalaryslipComponent.where('is_deducted = ? and salaryslip_id = ?', false, @salaryslip.id).where(is_arrear: nil)
+    @deducted_salary_components = SalaryslipComponent.where('is_deducted = ? and salaryslip_id = ?', true, @salaryslip.id).where(is_arrear: nil)
+    @working_day = Workingday.find(@salaryslip.workingday_id)
+    @employee = Employee.find(@salaryslip.employee_id)
+    # @employee_leav_balance = EmployeeLeavBalance.find_by()
+    @advance_salary = AdvanceSalary.find_by_employee_id(@employee.id)
+    unless @advance_salary.nil?
+      @instalments = @advance_salary.instalments
+      @instalments.try(:each) do |i|
+        unless i.instalment_date.nil?
+          if i.try(:instalment_date).strftime('%B') == params['month'] && i.try(:instalment_date).strftime('%Y') == params['year']
+            @instalment_array << i
+          end
+        end
+      end
+    end
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render pdf: 'print_emp_contribution_slip',
+              layout: 'pdf.html',
+              template: 'salaryslips/emp_contribution_slip_pdf.pdf.erb',
+              :show_as_html => params[:debug].present?
+      end
+    end
+  end
+
   def print_salary_slip
     @instalment_array = []
     @salaryslip = Salaryslip.find(params[:id])
@@ -647,20 +716,29 @@ class SalaryslipsController < ApplicationController
     end    
   end
 
+  # def display_salaryslip_report
+  #   @month = params[:month]
+  #   @year = params[:year]
+  #   # byebug
+  #   @salaryslips = Salaryslip.where(month: @month.to_s, year: @year.to_s)
+  #   @salaryslips1 = Salaryslip.where(month: @month.to_s, year: @year.to_s).take
+  #   # @bonus_employees = BonusEmployee.where(employee_id: @salaryslips.employee_id,date: )
+  #   @salaryslips.each do |s|
+  #   @bonus_employees = BonusEmployee.where(employee_id: s.employee_id).group(:employee_id)
+  #   @employeer_pfs = EmployeerPf.where(employee_id: s.employee_id).group(:employee_id)
+  #   @employeer_esic = EmployeerEsic.where(employee_id: s.employee_id).group(:employee_id)
+  # end
+  #   session[:active_tab] ="payroll"
+  #   session[:active_tab1] ="salaryreport"
+  # end
+
   def display_salaryslip_report
+    # byebug
     @month = params[:month]
     @year = params[:year]
-    # byebug
     @salaryslips = Salaryslip.where(month: @month.to_s, year: @year.to_s)
-    @salaryslips1 = Salaryslip.where(month: @month.to_s, year: @year.to_s).take
-    # @bonus_employees = BonusEmployee.where(employee_id: @salaryslips.employee_id,date: )
-    @salaryslips.each do |s|
-    @bonus_employees = BonusEmployee.where(employee_id: s.employee_id).group(:employee_id)
-    @employeer_pfs = EmployeerPf.where(employee_id: s.employee_id).group(:employee_id)
-    @employeer_esic = EmployeerEsic.where(employee_id: s.employee_id).group(:employee_id)
-  end
-    session[:active_tab] ="payroll"
-    session[:active_tab1] ="salaryreport"
+    @salaryslips_1 = Salaryslip.where(month: @month.to_s, year: @year.to_s).pluck(:employee_id,:month_year)
+    @emp_contribution = EmployerContribution.where(employee_id: @salaryslips_1,date: @salaryslips_1)
   end
 
   def pdf_report

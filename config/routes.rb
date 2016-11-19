@@ -1506,7 +1506,13 @@ end
       patch :update_role
     end
   end
-  resources :employee_bank_details
+  resources :employee_bank_details do
+    collection do
+      post :import  
+      get :import_xl
+    end
+  end
+
   resources :leav_cancelleds
 
   resources :employee_leav_balances do
@@ -1580,6 +1586,8 @@ end
   end
   resources :employees do
     collection do
+      get :import_xl
+      post :import
       get :graph
       get :assign_role
       post :submit_form
@@ -1636,6 +1644,14 @@ end
       get :transfer_form
     end
   end
+
+  # resources :joining_details do
+  #   collection do
+  #     get :import_xl
+  #     post :import
+  #   end
+  # end
+
   resources :blood_groups do
     collection do
       get :is_confirm

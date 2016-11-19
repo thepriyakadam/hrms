@@ -39,16 +39,6 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
-
-Bad me bat karte he
-WhatsApp
-Par
-theek h sir
-sir
-Bolo
-branch push pull krna hai ?
-Morning me
-ok 
 # Root url
  config.action_mailer.default_url_options = { host: '192.168.0.62', port: 3000 }
 

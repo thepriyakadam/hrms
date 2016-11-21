@@ -140,9 +140,19 @@ class WorkingdaysController < ApplicationController
 
   end
 
+  def import_workingday
+    @workingdays = Workingday.all
+    respond_to do |format|
+    format.html
+    format.csv { send_data @workingdays.to_csv }
+    format.xls
+   end   
+  end
+
   def import
+    # byebug
     Workingday.import(params[:file])
-    redirect_to root_url, notice: "File imported."
+    redirect_to import_workingday_workingdays_path, notice: "File imported."
   end
 
   def search_month_year

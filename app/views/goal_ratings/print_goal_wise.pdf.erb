@@ -12,11 +12,25 @@ div.nobreak{ page-break-inside: avoid;
 }
 </style>
 <div>
-<center><h3>Employee Performance Detail</h3></center>
+  <% @employees.each do |e| %>
+  <% employee = Employee.find(e.employee_id) %>
+  <% @joining_detail = JoiningDetail.find_by_employee_id(e.employee_id) %>
+  <% @experiences = Experience.where(employee_id: e.employee_id) %>
+  <% @qualifications = Qualification.where(employee_id: e.employee_id) %>
+  <% @employee_promotions = EmployeePromotion.where(employee_id: e.employee_id) %>
+  <% @goal_ratings = GoalRating.where(appraisee_id: e.employee_id, goal_bunch_id: e.id, goal_type: 'Goal') %>
+  <% @goal_attribute_ratings = GoalRating.where("goal_bunch_id = ? AND goal_type = ?", e.id ,'Attribute') %>
+  <% @goal_bunches = GoalBunch.where(employee_id: e.employee_id, id: e.id).group(:employee_id) %>
 
-<table style="border-collapse: collapse;" border=1 width=1200 class="table table-bordered table-hover">    
+<table style="border-collapse: collapse; font-size:10pt;" border=1 width=1200 class="table table-bordered table-hover">    
   <thead>
-  <tr><th colspan="7"><center>Employee Detail</center></th></tr>
+<tr><th colspan="7"><center><h3><font color='green'>Employee Performance Detail</font></h3></center></th></tr>
+</thead>
+</table>
+
+<table style="border-collapse: collapse; font-size:10pt;" border=1 width=1200 class="table table-bordered table-hover">    
+  <thead>
+  <tr><th colspan="7"><center><font color='red'>Employee Detail</font></center></th></tr>
     <tr>
       <th>Employee ID</th>
       <th>Name</th>
@@ -41,8 +55,8 @@ div.nobreak{ page-break-inside: avoid;
     <% end %>
   </tbody>
 </table>
-<br>
-<table style="border-collapse: collapse;" border=1 width=1200 class="table table-bordered table-hover">
+
+<table style="border-collapse: collapse; font-size:10pt;" border=1 width=1200 class="table table-bordered table-hover">    
   <thead>
   <tr><th colspan="4"><center>Previous Experience</center></th></tr>
     <tr>
@@ -63,8 +77,8 @@ div.nobreak{ page-break-inside: avoid;
     <% end %>
   </tbody>
 </table>
-<br>
-  <table style="border-collapse: collapse;" border=1 width=1200 class="table table-bordered table-hover">
+
+  <table style="border-collapse: collapse; font-size:10pt;" border=1 width=1200 class="table table-bordered table-hover">    
     <thead>
     <tr><th colspan="4"><center>Qualification</center></th></tr>
       <tr>
@@ -85,9 +99,9 @@ div.nobreak{ page-break-inside: avoid;
       <% end %>
     </tbody>
   </table>
-  <br>
 
-  <table style="border-collapse: collapse;" border=1 width=1200 class="table table-bordered table-hover">
+
+  <table style="border-collapse: collapse; font-size:10pt;" border=1 width=1200 class="table table-bordered table-hover">    
     <thead>
     <tr><th colspan="7"><center>Promotion Details</center></th></tr>
       <tr>
@@ -114,9 +128,9 @@ div.nobreak{ page-break-inside: avoid;
       <% end %>
     </tbody>
   </table>
-  <br>
 
-  <table style="border-collapse: collapse;" border=1 width=1200 class="table table-bordered table-hover">
+
+  <table style="border-collapse: collapse; font-size:10pt;" border=1 width=1200 class="table table-bordered table-hover">    
     <thead>
     <tr><th colspan="10"><center>Performance Record</center></th></tr>
     <tr><th colspan="10">Goals</th></tr>
@@ -151,7 +165,7 @@ div.nobreak{ page-break-inside: avoid;
     </tbody>
   </table>
 
-  <table style="border-collapse: collapse;" border=1 width=1200 class="table table-bordered table-hover">
+  <table style="border-collapse: collapse; font-size:10pt;" border=1 width=1200 class="table table-bordered table-hover">    
     <thead>
     <tr><th colspan="10">Attributes</th></tr>
       <tr>
@@ -185,8 +199,8 @@ div.nobreak{ page-break-inside: avoid;
     </tbody>
 
   </table>
-  <br>
-   <table style="border-collapse: collapse;" border=1 width=1200 class="table table-bordered table-hover">
+
+  <table style="border-collapse: collapse; font-size:10pt;" border=1 width=1200 class="table table-bordered table-hover">    
     <tbody>
       <% @goal_bunches.each do |goal_bunch| %>
       <tr><th colspan="2"><center>Overall Performance Detail</center></th></tr>
@@ -225,29 +239,33 @@ div.nobreak{ page-break-inside: avoid;
       <% end %>
     </tbody>
   </table>
-  <br>
-   <table style="border-collapse: collapse;" border=1 width=1200 class="table table-bordered table-hover">
+
+ <table style="border-collapse: collapse; font-size:10pt;" border=1 width=1200 class="table table-bordered table-hover">    
     <tbody>
       <% @goal_bunches.each do |goal_bunch| %>
-      <tr><th colspan="2"><center>Detail</center></th><th>Sign</th></tr>
+      <tr><th colspan="2"><center>Detail</center></th><th>Contact No</th><th>Sign</th></tr>
         <tr>
           <th>Appraisee Name</th>
           <td><%= goal_bunch.employee.try(:first_name) %> <%= goal_bunch.employee.try(:middle_name) %> <%= goal_bunch.employee.try(:last_name) %></td>
+          <td><%= goal_bunch.employee.try(:contact_no) %></td>
           <td></td>
         </tr>
         <tr>
           <th>Appraiser Name</th>
           <td><%= goal_bunch.employee.manager.try(:first_name) %> <%= goal_bunch.employee.manager.try(:middle_name) %> <%= goal_bunch.employee.manager.try(:last_name) %></td>
+          <td><%= goal_bunch.employee.manager.try(:contact_no) %></td>
           <td></td>
         </tr>
         <tr>
           <th>Reviewer Name</th>
           <td><%= goal_bunch.employee.manager_2.try(:first_name) %> <%= goal_bunch.employee.manager_2.try(:middle_name) %> <%= goal_bunch.employee.manager_2.try(:last_name) %></td>
+          <td><%= goal_bunch.employee.manager_2.try(:contact_no) %></td>
           <td></td>
         </tr>
         <tr>
           <th>Final Name</th>
           <td><%=  %></td>
+          <td></td>
           <td></td>
         </tr>
       <% end %>
@@ -255,3 +273,4 @@ div.nobreak{ page-break-inside: avoid;
   </table>
 </div>
 </div>
+<% end %>

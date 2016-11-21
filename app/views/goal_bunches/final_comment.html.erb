@@ -1,12 +1,8 @@
 <div class="box">
-  <div class="box-header">
-    <h3 class="box-title">Employee Details</h3>
-    <div class="pull-right">  
-    </div>
-  </div>
   <div class="box-body">
    <table class="table table-bordered table-hover table-condensed">     
       <thead>
+        <tr><th colspan="7"><center>Employee Details</center></th></tr>
         <tr>
           <th>Employee Id</th>
           <th>Name</th>
@@ -32,11 +28,9 @@
       </tbody>
     </table>
 
-    <div class="box-header with-border">
-      <h3 class="box-title">Qualification Details</h3>
-    </div>
     <table class="table table-bordered table-hover table-condensed">
       <thead>
+        <tr><th colspan="4"><center>Qualification Details</center></th></tr>
         <tr>
           <th>Degree</th>
           <th>Year Of Passing</th>
@@ -56,11 +50,9 @@
       </tbody>
     </table>
 
-    <div class="box-header with-border">
-      <h3 class="box-title">Previous Experience</h3>
-    </div>
     <table class="table table-bordered table-hover table-condensed">
       <thead>
+     <tr><th colspan="4"><center>Previous Experience</center></th></tr>
         <tr>
           <th>Previous Company</th>
           <th>Designation</th>
@@ -80,12 +72,9 @@
       </tbody>
     </table>
 
-  
-  <div class="box-header with-border">
-    <h3 class="box-title">Promotion Details</h3>
-  </div>
   <table class="table table-bordered table-hover table-condensed">
     <thead>
+     <tr><th colspan="7"><center>Promotion Details</center></th></tr>
       <tr>
         <th>Department</th>
         <th>Designation</th>
@@ -111,11 +100,9 @@
     </tbody>
   </table>
   
-<div class="box-header with-border">
-  <h3 class="box-title">Goals List</h3>
-</div>
   <table class="table table-bordered table-hover table-condensed">
     <thead>
+      <tr><th colspan="10"><center>Goal Rating</center></th></tr>
       <tr>
         <th>Goal Perspective</th>
         <th>Weightage</th>
@@ -150,6 +137,7 @@
   
   <table class="table table-bordered table-hover table-condensed">
     <thead>
+      <tr><th colspan="10"><center>Attribute Rating</center></th></tr>
       <tr>
         <th>Attribute</th>
         <th>Weightage</th>
@@ -185,10 +173,8 @@
   <center><p class="text-warning"> No Goals Available </p></center> 
   <% else %>
 
-   <div class="box-header with-border">
-  <h3 class="box-title">Overall List</h3>
-</div>
    <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
+    <thead><tr><th colspan="2"><center>Overall List</center></th></tr></thead>
    <tbody>
       <% @goal_bunches.each do |goal_bunch| %>
         <tr>
@@ -288,7 +274,7 @@
       <% else %>
           <% if @goal_bunch.reviewer_confirm == true %>
 
-              <%= bootstrap_form_for(@goal_bunch,html: {id: 'goal_bunch'},url:{action: "final_create",employee_id: @employee.id,goal_bunch_id: @goal_bunch.id}) do |f| %>
+              <%= bootstrap_form_for(@goal_bunch,html: {id: 'goal_bunch'},url:{action: "final_create",employee_id: @employee.id,goal_bunch_id: @goal_bunch.id,period_id: @period.id}) do |f| %>
               <%= hidden_field_tag :final_id, {},value: current_user.employee_id %>
 
                 <div class="row">
@@ -352,14 +338,13 @@
     <% end %>
 
     <% if @goal_bunch.employee.manager_2_id == nil %>
-          <div class="box-header with-border">
-            <h3 class="box-title">Recommendation For Employee</h3>
-          </div>
+
           <%= bootstrap_form_for GoalBunch.new,url:{action:'final_comment_confirm',emp_id: @employee.id,goal_bunch_id: @goal_bunch.id,period_id: @period.id} do |f| %>
           <%= hidden_field_tag :final_id, {},value: current_user.employee_id %>
 
           <table class="table table-bordered table-hover table-condensed">
             <thead>
+              <tr><th colspan="4"><center>Recommendation For Employee</center></th></tr>
               <tr>
                 <th>Promotion</th>
                 <th>Increment</th>
@@ -379,11 +364,9 @@
             </tbody>
           </table>
 
-          <div class="box-header with-border">
-          <h3 class="box-title">Created Final Comment</h3>
-          </div>
           <table class="table table-bordered table-hover table-condensed">
             <thead>
+              <tr><th colspan="4"><center>Created Final Comment</center></th></tr>
               <tr>
                 <th><input type="checkbox" id="selectAll" value="selectAll"></th>
                 <th>Final Comment</th>
@@ -431,14 +414,12 @@
     <% else %>
     <% if @goal_bunch.reviewer_confirm == true %>
 
-          <div class="box-header with-border">
-            <h3 class="box-title">Recommendation For Employee</h3>
-          </div>
           <%= bootstrap_form_for GoalBunch.new,url:{action:'final_comment_confirm',emp_id: @employee.id,goal_bunch_id: @goal_bunch.id,period_id: @period.id} do |f| %>
           <%= hidden_field_tag :final_id, {},value: current_user.employee_id %>
 
           <table class="table table-bordered table-hover table-condensed">
             <thead>
+              <tr><th colspan="4"><center>Recommendation For Employee</center></th></tr>
               <tr>
                 <th>Promotion</th>
                 <th>Increment</th>
@@ -458,11 +439,9 @@
             </tbody>
           </table>
 
-          <div class="box-header with-border">
-          <h3 class="box-title">Created Final Comment</h3>
-          </div>
           <table class="table table-bordered table-hover table-condensed">
             <thead>
+              <tr><th colspan="4"><center>Created Final Comment</center></th></tr>
               <tr>
                 <th><input type="checkbox" id="selectAll" value="selectAll"></th>
                 <th>Final Comment</th>
@@ -511,7 +490,6 @@
          
       <% end %>
     <% end %>  
-  <br>
   <%= link_to 'Back',period_list_final_goal_bunches_path(period_id: @period.id),class: 'btn btn-sm btn-default fa fa-arrow-left' %>
   </div>
   </div>

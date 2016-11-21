@@ -262,30 +262,30 @@ class GoalRatingsController < ApplicationController
     @goal_bunch = GoalBunch.find_by(period_id: @period.id)
 
     #goal_bunches = GoalBunch.where(period_id: @period.id).pluck(:employee_id)
-    @employees = GoalBunch.where(period_id: @period.id)
+    @goal_bunches = GoalBunch.where(period_id: @period.id)
   end
 
   def detail_goal_wise
-    @goal_bunch_id = GoalBunch.find(params[:goal_bunch_id])
-    @employee_ids = params[:employee_ids]
-      if @employee_ids.nil?
+    @period = Period.find(params[:period_id])
+    @period_ids = params[:period_ids]
+      if @period_ids.nil?
         flash[:alert] = "Please Select the Checkbox"
         @employees = []
         redirect_to subordinate_list_goal_wise_goal_ratings_path
       else
       @employees = []
-      @employee_ids.each do |e|
-        emp = GoalBunch.find_by_employee_id(e)
+      @period_ids.each do |e|
+        emp = GoalBunch.find_by_period_id(e)
         @employees << emp
-        @goal_bunch = GoalBunch.find_by_employee_id(e)
-        #@goal_bunch = GoalBunch.find(params[:id])
+        @goal_bunch = GoalBunch.find_by_period_id(e)
       end 
     end
   end
 
   def detail_goal_wise_xls
-   @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
-    @employees = GoalBunch.where(id: @goal_bunch.id)
+    @period = Period.find(params[:period_id])
+    #@goal_bunch = GoalBunch.find(params[:goal_bunch_id])
+    @employees = GoalBunch.where(period_id: @period.id)
     @employee_promotions = EmployeePromotion.where(employee_id: @goal_bunch.employee_id)
     @joining_detail = JoiningDetail.find_by_employee_id(@goal_bunch.employee_id)
     @qualifications = Qualification.find_by_employee_id(@goal_bunch.employee_id)
@@ -301,8 +301,9 @@ class GoalRatingsController < ApplicationController
   end
 
   def print_goal_wise
-    @goal_bunch = GoalBunch.find(params[:goal_bunch_id])
-    @employees = GoalBunch.where(id: @goal_bunch.id)
+    @period = Period.find(params[:period_id])
+    @employees = GoalBunch.where(period_id: @period.id)
+
     # @employee_promotions = EmployeePromotion.where(employee_id: @goal_bunch.employee_id)
     # @joining_detail = JoiningDetail.find_by_employee_id(@goal_bunch.employee_id)
     # @qualifications = Qualification.find_by_employee_id(@goal_bunch.employee_id)
@@ -335,8 +336,21 @@ class GoalRatingsController < ApplicationController
 
   def detail_employee_wise
     @employee = Employee.find(params[:employee_id])
-    @employees = Employee.where(id: @employee.id)
-    @goal_bunch = GoalBunch.where(employee_id: @employee.id).pluck(:id)
+    @period_ids = params[:period_ids]
+    if @period_ids.nil?
+      flash[:alert] = "Please Select the Checkbox"
+      @employees = []
+      redirect_to employee_wise_goal_goal_ratings_path
+    else
+      @employees = []
+      @period_ids.each do |p|
+        emp = GoalBunch.where(period_id: p,employee_id: @employee.id)
+        @employees << emp
+        @goal_bunch = GoalBunch.find_by_period_id(p)
+      end
+    end 
+    #@employees = Employee.where(id: @employee.id)
+    #@goal_bunch = GoalBunch.where(employee_id: @employee.id).pluck(:id)
     @employee_promotions = EmployeePromotion.where(employee_id: @employee.id)
     @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
     @experiences = Experience.where(employee_id: @employee.id)
@@ -553,8 +567,13 @@ class GoalRatingsController < ApplicationController
 
   def print_employee_list
     @period = Period.find(params[:period_id])
-
     @goal_bunches = GoalBunch.joins("INNER JOIN employees ON employees.id = goal_bunches.employee_id").where("employees.department_id = ? AND employees.company_location_id = ? AND employees.company_id = ? AND goal_bunches.period_id = ?" , @department_name,@location_name,@company_name,@period.id)
+  end
+
+  def period_rating_wise
+  end
+
+  def Period_rating_wise_employee
   end
 
     private

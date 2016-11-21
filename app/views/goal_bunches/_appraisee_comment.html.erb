@@ -1,10 +1,9 @@
 <div class="box box-default">
-  <div class="box-header with-border">
-    <h3 class="box-title">Employee Details</h3>
-  </div><!-- /.box-header -->
+
   <div class="box-body">
 <table class="table table-bordered table-hover table-condensed">     
   <thead>
+   <tr><th colspan="7"><center>Employee Details</center></th></tr>
     <tr>
       <th>Employee Id</th>
       <th>Name</th>
@@ -30,11 +29,9 @@
   </tbody>
 </table>
 
-<div class="box-header with-border">
-  <h3 class="box-title">Qualification Details</h3>
-</div>
 <table class="table table-bordered table-hover table-condensed">
   <thead>
+   <tr><th colspan="4"><center>Qualification Details</center></th></tr>
     <tr>
       <th>Degree</th>
       <th>Year Of Passing</th>
@@ -54,11 +51,10 @@
   </tbody>
 </table>
 
-  <div class="box-header with-border">
-    <h3 class="box-title">Previous Experience</h3>
-  </div>
+  
   <table class="table table-bordered table-hover table-condensed">
     <thead>
+     <tr><th colspan="4"><center>Previous Experience</center></th></tr>
       <tr>
         <th>Previous Company</th>
         <th>Designation</th>
@@ -78,12 +74,9 @@
     </tbody>
   </table>
 
-  
-  <div class="box-header with-border">
-    <h3 class="box-title">Promotion Details</h3>
-  </div>
   <table class="table table-bordered table-hover table-condensed">
     <thead>
+     <tr><th colspan="7"><center>Promotion Details</center></th></tr>
       <tr>
         <th>Department</th>
         <th>Designation</th>
@@ -114,13 +107,11 @@
   <% else %>
 
     <div class="box box-default">
-      <div class="box-header with-border">
-        <h3 class="box-title">Goal Rating</h3>
-      </div><!-- /.box-header -->
       <div class="box-body">
       <%= bootstrap_form_for (@goal_rating),url:{action:'self_comment',emp_id: @employee.id,goal_bunch_id: @goal_bunch_id.id} do |f| %>  
         <table class="table table-bordered table-hover table-condensed">
           <thead>
+           <tr><th colspan="7"><center>Goal Rating</center></th></tr>
             <tr>
               <th>Goal Perspective</th>
               <th>Weightage</th>
@@ -149,6 +140,7 @@
 
         <table class="table table-bordered table-hover table-condensed">
           <thead>
+           <tr><th colspan="7"><center>Attribute Rating</center></th></tr>
             <tr>
               <th>Attribute</th>
               <th>Weightage</th>
@@ -190,13 +182,12 @@
 <div id="myModal" class="modal fade"></div>
 
 <div class="box box-default">
-  <div class="box-header with-border">
-    <h3 class="box-title">Created Goal Rating</h3>
-  </div><!-- /.box-header -->
+  
   <div class="box-body">
   <%= bootstrap_form_for GoalBunch.new,url:{action:'self_comment_confirm'} do |f| %>
     <table class="table table-bordered table-hover table-condensed">
       <thead>
+       <tr><th colspan="8"><center>Goal Details</center></th></tr>
         <tr>
           <th>Goal Perspective</th>
           <th>Weightage</th>
@@ -230,12 +221,16 @@
             <% appraisee_goal_sum = appraisee_goal_sum + appraisee_output %>
           </tr>
         <% end %>
+        <tr>
+        <th colspan="2"><h6><font color='red' size='2'>Appraisee Rating For Goal </font></h6></th>
+        <th colspan="6"><h6><font color='red' size='2'> <%= appraisee_goal_sum.round(4) %></font></h6></th></tr>
       </tbody>
     </table>
 
-  <h6><font color='red' size='2'>Appraisee Rating For Goal= <%= appraisee_goal_sum.round(4) %></font></h6>
+  
     <table class="table table-bordered table-hover table-condensed">
       <thead>
+       <tr><th colspan="8"><center>Attribute Details</center></th></tr>
         <tr>
           <th>Attribute</th>
           <th>Weightage</th>
@@ -270,11 +265,18 @@
             <% appraisee_attribute_sum = appraisee_attribute_sum + appraisee_output %>
           </tr>
         <% end %>
+        <tr><th colspan="2"><h6><font color='red' size='2'>Appraisee Rating For Attribute</font></h6></th>
+        <th colspan="6"><h6><font color='red' size='2'> <%= appraisee_attribute_sum.round(4) %></font></h6></th>
+        </tr>
+        <tr>
+        <th colspan="2"> <h6><font color='red' size='2'>Overall </font></h6></th>
+        <th colspan="6"> <h6><font color='red' size='2'><%= (appraisee_attribute_sum + appraisee_goal_sum ).round(4) %></font></h6></th>
+        </tr>
       </tbody>
     </table>
 
-    <h6><font color='red' size='2'>Appraisee Rating For Attribute = <%= appraisee_attribute_sum.round(4) %></font></h6>
-    <h6><font color='red' size='2'>Overall = <%= (appraisee_attribute_sum + appraisee_goal_sum ).round(4) %></font></h6>
+    
+   
        <% @Overall = (appraisee_attribute_sum + appraisee_goal_sum ) %>
 
   <div class="row">

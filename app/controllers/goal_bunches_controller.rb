@@ -78,11 +78,10 @@ class GoalBunchesController < ApplicationController
   end
 
   def subordinate_list
-    @period = Period.where(status: true).take
-    @goal_bunches = GoalBunch.where(period_id: @period.id).group(:period_id)
-
-    # current_login = Employee.find(current_user.employee_id)
-    # @employees = current_login.subordinates
+    @periods = Period.where(status: true).group(:id)
+    #@goal_bunch = GoalBunch.where(period_id: @periods)
+    @goal_bunches = GoalBunch.where(goal_confirm: false).group(:period_id)
+    
     session[:active_tab] ="performancemgmt"
     session[:active_tab1] ="perform_cycle"
   end
@@ -91,8 +90,8 @@ class GoalBunchesController < ApplicationController
     @period = Period.find(params[:period_id])
     current_login = Employee.find(current_user.employee_id)
     @emps = current_login.subordinates.pluck(:id)
-    @emp1 = Employee.where(id: @emps).pluck(:id)
-    @employees = GoalBunch.where(employee_id: @emp1,goal_confirm: false)
+    #@emp1 = Employee.where(id: @emps).pluck(:id)
+    @employees = GoalBunch.where(employee_id: @emps,period_id: @period.id,goal_confirm: false)
     # end
     # @employee = Employee.find(params[:format])
     # @goal_bunches = GoalBunch.where(employee_id: @employee.id)
@@ -116,8 +115,10 @@ class GoalBunchesController < ApplicationController
   end
 
   def appraiser_subordinate
-    @period = Period.where(status: true).take
-    @goal_bunches = GoalBunch.where(period_id: @period.id).group(:period_id)
+    @periods = Period.where(status: true).group(:id)
+    @goal_bunches = GoalBunch.where(appraisee_confirm: true).group(:period_id)
+    #@goal_bunches = GoalBunch.where(period_id: @period.id).group(:period_id)
+
     # current_login = Employee.find(current_user.employee_id)
     # @employees = current_login.subordinates
     session[:active_tab] ="performancemgmt"
@@ -128,8 +129,8 @@ class GoalBunchesController < ApplicationController
      @period = Period.find(params[:period_id])
     current_login = Employee.find(current_user.employee_id)
     @emps = current_login.subordinates.pluck(:id)
-    @emp1 = Employee.where(id: @emps).pluck(:id)
-    @employees = GoalBunch.where(employee_id: @emp1,goal_confirm: true,period_id: @period.id)
+    #@emp1 = Employee.where(id: @emps).pluck(:id)
+    @employees = GoalBunch.where(employee_id: @emps,goal_confirm: true,period_id: @period.id)
   end
 
   def appraiser_comment
@@ -313,8 +314,8 @@ class GoalBunchesController < ApplicationController
   end
 
   def reviewer_subordinate
-    @period = Period.where(status: true).take
-    @goal_bunches = GoalBunch.where(period_id: @period.id).group(:period_id)
+    @periods = Period.where(status: true).group(:name)
+    @goal_bunches = GoalBunch.where(appraiser_confirm: true).group(:period_id)
     session[:active_tab] ="performancemgmt"
     session[:active_tab1] ="perform_cycle"
   end
@@ -323,8 +324,8 @@ class GoalBunchesController < ApplicationController
     @period = Period.find(params[:period_id])
     current_login = Employee.find(current_user.employee_id)
     @emps = current_login.indirect_subordinates.pluck(:id)
-    @emp1 = Employee.where(id: @emps).pluck(:id)
-    @employees = GoalBunch.where(employee_id: @emp1,appraiser_confirm: true,period_id: @period.id)
+    #@emp1 = Employee.where(id: @emps).pluck(:id)
+    @employees = GoalBunch.where(employee_id: @emps,appraiser_confirm: true,period_id: @period.id)
   end
 
   def reviewer_comment
@@ -391,15 +392,17 @@ class GoalBunchesController < ApplicationController
   end
 
   def employee_list
-    @period = Period.where(status: true).take
-    @goal_bunches = GoalBunch.where(period_id: @period.id).group(:period_id)
+    @periods = Period.where(status: true).group(:name)
+    @goal_bunches = GoalBunch.where(" appraiser_confirm = ? OR reviewer_confirm = ?", true,true).group(:period_id)
     session[:active_tab] ="performancemgmt"
     session[:active_tab1] ="perform_cycle"
   end
 
   def period_list_final
     @period = Period.find(params[:period_id])
-    @emp1 = Employee.all.pluck(:id)
+    #@emp1 = Employee.all.pluck(:id)
+    @emp1 = GoalBunch.where(" appraiser_confirm = ? OR reviewer_confirm = ?", true,true).pluck(:employee_id)
+
     @employees = GoalBunch.where(employee_id: @emp1,period_id: @period.id)
   end
 

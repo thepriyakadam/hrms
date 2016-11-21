@@ -5,11 +5,10 @@
   <div class="box-body">
   <%= bootstrap_form_for GoalBunch.new,url:{action:'appraiser_confirm',emp_id: @employee.id,goal_bunch_id: @goal_bunch_id.id,period_id: @period.id} do |f| %>  
 
-  <div class="box-header with-border">
-  <h3 class="box-title">Employee Details</h3>
-</div>
+ 
   <table class="table table-bordered table-hover table-condensed">     
     <thead>
+    <tr><th colspan="7"><center>Employee Details</center></th></tr>
       <tr>
         <th>Employee Id</th>
         <th>Name</th>
@@ -35,11 +34,10 @@
     </tbody>
   </table>
 
-  <div class="box-header with-border">
-    <h3 class="box-title">Qualification Details</h3>
-  </div>
+ 
   <table class="table table-bordered table-hover table-condensed">
     <thead>
+     <tr><th colspan="4"><center>Qualification Details</center></th></tr>
       <tr>
         <th>Degree</th>
         <th>Year Of Passing</th>
@@ -59,11 +57,10 @@
     </tbody>
   </table>
 
-  <div class="box-header with-border">
-    <h3 class="box-title">Previous Experience</h3>
-  </div>
+ 
   <table class="table table-bordered table-hover table-condensed">
     <thead>
+     <tr><th colspan="4"><center>Previous Experience</center></th></tr>
       <tr>
         <th>Previous Company</th>
         <th>Designation</th>
@@ -83,11 +80,10 @@
     </tbody>
   </table>
 
-  <div class="box-header with-border">
-    <h3 class="box-title">Promotion Details</h3>
-  </div>
+  
   <table class="table table-bordered table-hover table-condensed">
     <thead>
+     <tr><th colspan="7"><center>Promotion Details</center></th></tr>
       <tr>
         <th>Department</th>
         <th>Designation</th>
@@ -115,12 +111,12 @@
 
   <% if @goal_bunch_id.goal_confirm == false %>
 
-    <h5>Period : <%= @period.try(:name) %> : <%= @period.try(:from) %> - <%= @period.try(:to) %></h5>
-      <div class="box-header with-border">
-        <h3 class="box-title">Goal List</h3>
-      </div>
+    
+     
         <table class="table table-bordered table-hover table-condensed">
           <thead>
+          <tr><th colspan="7"><center>Period : <%= @period.try(:name) %> : <%= @period.try(:from) %> - <%= @period.try(:to) %></center></th></tr>
+           <tr><th colspan="7"><center>Goal List</center></th></tr>
             <tr>
               <th><input type="checkbox" id="selectAll" value="selectAll"></th>
               <th>Goal perspective</th>
@@ -157,11 +153,10 @@
           </tbody>
         </table>
 
-      <div class="box-header with-border">
-      <h3 class="box-title">Attribute List</h3>
-      </div>
+      
         <table class="table table-bordered table-hover table-condensed">
           <thead>
+          <tr><th colspan="7"><center>Attribute List</center></th></tr>
             <tr>
               <th><input type="checkbox" id="selectAll" value="selectAll"></th>
               <th>Attribute</th>
@@ -197,8 +192,6 @@
             <% end %>
           </tbody>
         </table>
-
-
   <% else %>
   <% end %>
       <div class="row">

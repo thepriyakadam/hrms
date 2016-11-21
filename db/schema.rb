@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161114125046) do
+ActiveRecord::Schema.define(version: 20161119073700) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -1479,6 +1479,7 @@ ActiveRecord::Schema.define(version: 20161114125046) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean  "is_confirm"
+    t.boolean  "status"
   end
 
   create_table "goal_rating_sheets", force: :cascade do |t|
@@ -2519,6 +2520,7 @@ ActiveRecord::Schema.define(version: 20161114125046) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.boolean  "is_confirm"
+    t.boolean  "status"
   end
 
   create_table "recognition_types", force: :cascade do |t|

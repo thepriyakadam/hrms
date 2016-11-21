@@ -9,36 +9,14 @@
   <div class="box box-default">
   <div class="box-body">
 
-  <center><h3>Employee Performance Detail</h3></center>
-
-  <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">    
-    <thead>
-    <tr><th colspan="7"><center>Employee Detail</center></th></tr>
-      <tr>
-          <th>Employee Id</th>
-          <th>Name</th>
-          <th>Age</th>
-          <th>Department</th>
-          <th>Date Of Joining</th>
-          <th>Grade</th>
-          <th>Current Designation</th> 
-        </tr>
-      </thead>
-      <tbody>
-        <% @employees.each do |a| %>
-        <tr>
-          <td><%= a.manual_employee_code %></td> 
-          <td><%= full_name(a) %></td>
-          <td><%=  %></td>
-          <td><%= a.department.name %></td>
-          <td><%= @joining_detail.joining_date %></td>
-          <td><%= @joining_detail.employee_grade.name %></td>
-          <td><%= @joining_detail.employee_designation.name %></td>
-        </tr>
-        <% end %>
-      </tbody>
-    </table>
-  <br>
+    <% @employees.each do |e| %>
+      <% employee = Employee.find_by(id: e.employee_id) %>
+      <% joining_detail = JoiningDetail.find_by_employee_id(e.employee_id) %>
+      <% @experiences = Experience.where(employee_id: e.employee_id) %>
+      <% @qualifications = Qualification.where(employee_id: e.employee_id) %>
+      <% @employee_promotions = EmployeePromotion.where(employee_id: e.employee_id) %>
+      <% @goal_ratings = GoalRating.where(goal_bunch_id: e.id,appraisee_id: e.employee_id, goal_type: 'Goal') %>
+      <% @goal_attribute_ratings = GoalRating.where(goal_bunch_id: e.id,appraisee_id: e.employee_id, goal_type: 'Attribute') %>
 
   <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
     <thead>
@@ -230,6 +208,7 @@
             </tr>
         </tbody>
       </table>
+  <% end %>
   <% end %>
 </div>
 </div>

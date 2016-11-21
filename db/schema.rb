@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161119073523) do
+ActiveRecord::Schema.define(version: 20161121132745) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -442,6 +442,20 @@ ActiveRecord::Schema.define(version: 20161119073523) do
     t.datetime "updated_at",  null: false
   end
 
+  create_table "company_time_masters", force: :cascade do |t|
+    t.time     "in_min_time"
+    t.time     "in_max_time"
+    t.time     "out_min_time"
+    t.time     "out_max_time"
+    t.decimal  "working_hrs"
+    t.boolean  "is_active"
+    t.boolean  "is_confirm"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.time     "in_time"
+    t.time     "out_time"
+  end
+
   create_table "company_types", force: :cascade do |t|
     t.string   "code"
     t.string   "name"
@@ -767,16 +781,20 @@ ActiveRecord::Schema.define(version: 20161119073523) do
     t.datetime "created_at",                                                       null: false
     t.datetime "updated_at",                                                       null: false
     t.integer  "department_id"
-    t.datetime "in_time"
-    t.datetime "out_time"
+    t.date     "in_time"
+    t.date     "out_time"
     t.boolean  "is_confirm",                                       default: false
     t.decimal  "count",                    precision: 5, scale: 2
     t.integer  "employee_leav_request_id"
+    t.integer  "machine_attendances_id"
+    t.string   "company_hrs"
+    t.string   "overtime_hrs"
   end
 
   add_index "employee_attendances", ["department_id"], name: "index_employee_attendances_on_department_id"
   add_index "employee_attendances", ["employee_id"], name: "index_employee_attendances_on_employee_id"
   add_index "employee_attendances", ["employee_leav_request_id"], name: "index_employee_attendances_on_employee_leav_request_id"
+  add_index "employee_attendances", ["machine_attendances_id"], name: "index_employee_attendances_on_machine_attendances_id"
 
   create_table "employee_attributes", force: :cascade do |t|
     t.integer  "attribute_master_id"
@@ -2132,6 +2150,17 @@ ActiveRecord::Schema.define(version: 20161119073523) do
     t.datetime "updated_at",  null: false
     t.boolean  "is_confirm"
   end
+
+  create_table "machine_attendances", force: :cascade do |t|
+    t.date     "day"
+    t.integer  "employee_id"
+    t.time     "in"
+    t.time     "out"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "machine_attendances", ["employee_id"], name: "index_machine_attendances_on_employee_id"
 
   create_table "manager_histories", force: :cascade do |t|
     t.integer  "employee_id"

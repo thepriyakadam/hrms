@@ -1,5 +1,17 @@
 Rails.application.routes.draw do
-
+  
+  resources :machine_attendances do
+    collection do
+      get :new
+      post :create
+      post :save_machine_attendance
+    end
+  end
+  resources :company_time_masters do
+    collection do
+      get :is_confirm
+    end
+  end
   resources :pf_employers do
     collection do
       get :is_confirm

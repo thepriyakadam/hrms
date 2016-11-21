@@ -803,6 +803,7 @@ end
     get 'bank_details/new'
     post 'bank_details/bank_detail_report'
 
+
     get 'joining_details/new'
     post 'joining_details/joining_detail_report'
     get 'joining_details/collect_departments'
@@ -1575,6 +1576,8 @@ end
   resources :joining_details do
     collection do
       get :search_by_joining_date
+      get :import_xl
+      post :import
     end
   end
   resources :employee_grades do

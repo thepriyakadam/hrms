@@ -14,7 +14,7 @@
     </div>
 
    <div class="col-sm-3">
-      <div class="field">
+      <div class="form-group required">
         <div class="input-group">
           <div class="input-group-addon">
             <i class="fa fa-calendar"></i>
@@ -24,7 +24,7 @@
       </div>
     </div>
 <div class="col-sm-3">
-      <div class="field">
+      <div class="form-group required">
         <div class="input-group">
           <div class="input-group-addon">
             <i class="fa fa-calendar"></i>
@@ -70,4 +70,36 @@
     yearRange: '-20:+10',
     dateFormat: 'dd-mm-yy' });
   });
+</script>
+
+
+<script>
+$("#employer_family_pension").validate({
+    rules: {
+      "employer_family_pension[percentage]":{
+        required: true,
+      },
+      "employer_family_pension[effective_from]":{
+        required: true,
+      },
+      "employer_family_pension[effective_to]":{
+        required: true,
+      }
+       },
+    messages: {
+      "employer_family_pension[percentage]":{
+        required: "Please Specify percentage",
+      },
+       "employer_family_pension[effective_from]":{
+        required: "Please Select Date",
+      },
+      "employer_family_pension[effective_to]":{
+        required: "Please Select Date",
+      }
+       },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
 </script>

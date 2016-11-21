@@ -1,5 +1,4 @@
 class ProfessionalTaxMaster < ActiveRecord::Base
-
 		def self.create_string(components)
     str = ''
     i = 0

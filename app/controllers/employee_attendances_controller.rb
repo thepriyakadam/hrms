@@ -201,6 +201,8 @@ class EmployeeAttendancesController < ApplicationController
     @costcenter = JoiningDetail.where(cost_center_id: @costcenter_id).pluck(:employee_id)
     @date = Date.new(@year.to_i, Workingday.months[@month])
     @day = @date.end_of_month.day
+    @start_date = @date
+    @end_date = @date.end_of_month
     @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).where(employee_id: @costcenter).group(:employee_id)
   end 
 
@@ -241,7 +243,19 @@ class EmployeeAttendancesController < ApplicationController
     @end_date = @date.end_of_month
     @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ? and is_confirm = ?", @date.strftime('%m/%Y'),false).group(:employee_id)
     respond_to do |format|
-      format.xls {render template: 'employee_attendances/employee_attendance_1.xls.erb'}
+    format.xls {render template: 'employee_attendances/employee_attendance_1.xls.erb'}
+    end
+  end
+
+  def costcenter_wise_excel1
+    @year, @month ,@cost_center = params[:year], params[:month] , params[:cost_center]
+    @date = Date.new(@year.to_i, Workingday.months[@month])
+    @day = @date.end_of_month.day
+    @start_date = @date
+    @end_date = @date.end_of_month
+    @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ? and is_confirm = ?", @date.strftime('%m/%Y'),false).group(:employee_id)
+    respond_to do |format|
+    format.xls {render template: 'employee_attendances/costcenter_wise_excel.xls.erb'}
     end
   end
   

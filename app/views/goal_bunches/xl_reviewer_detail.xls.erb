@@ -85,10 +85,11 @@
 
 
         <Cell ss:Index="63"><Data ss:Type="String">Employee Self Comment </Data></Cell>
-        <Cell ss:Index="64"><Data ss:Type="String">Appraiser Comment </Data></Cell>
-        <Cell ss:Index="65"><Data ss:Type="String">Appraiser Rating </Data></Cell>
-        <Cell ss:Index="66"><Data ss:Type="String">Reviewer Comment </Data></Cell>
-        <Cell ss:Index="67"><Data ss:Type="String">Reviewer Rating </Data></Cell>
+        <Cell ss:Index="64"><Data ss:Type="String">Employee Self Rating </Data></Cell>
+        <Cell ss:Index="65"><Data ss:Type="String">Appraiser Comment </Data></Cell>
+        <Cell ss:Index="66"><Data ss:Type="String">Appraiser Rating </Data></Cell>
+        <Cell ss:Index="67"><Data ss:Type="String">Reviewer Comment </Data></Cell>
+        <Cell ss:Index="68"><Data ss:Type="String">Reviewer Rating </Data></Cell>
         </Row>
 
         <% i = 0 %>
@@ -190,10 +191,11 @@
           <Cell ss:Index="62"><Data ss:Type="String"><%= employee_promotion3.try(:effective_to) %></Data></Cell>
 
           <Cell ss:Index="63"><Data ss:Type="String"><%= goal_bunch.try(:appraisee_comment) %></Data></Cell>
-          <Cell ss:Index="64"><Data ss:Type="String"><%= goal_bunch.try(:appraiser_comment) %></Data></Cell>
-          <Cell ss:Index="65"><Data ss:Type="String"><%= goal_bunch.try(:appraiser_rating) %></Data></Cell>
-          <Cell ss:Index="66"><Data ss:Type="String"><%= goal_bunch.try(:review_comment) %></Data></Cell>
-          <Cell ss:Index="67"><Data ss:Type="String"><%= goal_bunch.try(:reviewer_rating_id) %></Data></Cell>
+          <Cell ss:Index="64"><Data ss:Type="String"><%= goal_bunch.try(:appraisee_rating_id) %></Data></Cell>
+          <Cell ss:Index="65"><Data ss:Type="String"><%= goal_bunch.try(:appraiser_comment) %></Data></Cell>
+          <Cell ss:Index="66"><Data ss:Type="String"><%= goal_bunch.try(:appraiser_rating) %></Data></Cell>
+          <Cell ss:Index="67"><Data ss:Type="String"><%= goal_bunch.try(:review_comment) %></Data></Cell>
+          <Cell ss:Index="68"><Data ss:Type="String"><%= goal_bunch.try(:reviewer_rating_id) %></Data></Cell>
      </Row><!-- Row -->
       <% end %><!-- slip -->
     </Table>

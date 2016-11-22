@@ -423,6 +423,20 @@ end
       post :all_employee_list
       post :print_employee_list
       get :is_confirm
+      get :new_form
+      post :create_for_multiple
+      get :employee_goal_wise
+      post :print_employee
+      post :detail_goal_wise
+      get :employee_wise_goal
+      post :goal_employee_wise
+      post :detail_employee_wise
+      get :print_employee_wise
+      get :print_goal_wise
+      get :detail_goal_wise_xls
+      get :detail_employee_wise_xls
+      get :period_rating_wise
+      post :Period_rating_wise_employee
     end
   end
   #post 'goal_ratings/update_goal_set_modal'
@@ -488,7 +502,8 @@ end
       get :appraisee_detail_for_print
       get :appraiser_detail_for_print
       get :reviewer_detail_for_print
-     
+      get :period_for_multiple
+      post :create_multiple_bunch
     end
   end
   resources :goal_perspectives do

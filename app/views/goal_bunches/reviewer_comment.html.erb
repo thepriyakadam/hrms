@@ -1,10 +1,8 @@
 <div class="box box-default">
-  <div class="box-header with-border">
-    <h3 class="box-title">Employee Details</h3>
-  </div><!-- /.box-header -->
-  <div class="box-body">
+<div class="box-body">
 <table class="table table-bordered table-hover table-condensed">     
   <thead>
+  <tr><th colspan="7"><center>Employee Details</center></th></tr>
     <tr>
       <th>Employee Id</th>
       <th>Name</th>
@@ -30,11 +28,9 @@
   </tbody>
 </table>
 
-  <div class="box-header with-border">
-    <h3 class="box-title">Previous Experience</h3>
-  </div>
   <table class="table table-bordered table-hover table-condensed">
     <thead>
+    <tr><th colspan="4"><center>Previous Experience</center></th></tr>
       <tr>
         <th>Previous Company</th>
         <th>Designation</th>
@@ -54,11 +50,9 @@
     </tbody>
   </table>
 
-  <div class="box-header with-border">
-    <h3 class="box-title">Qualification Details</h3>
-  </div>
   <table class="table table-bordered table-hover table-condensed">
     <thead>
+    <tr><th colspan="4"><center>Qualification Details</center></th></tr>
       <tr>
         <th>Degree</th>
         <th>Year Of Passing</th>
@@ -78,12 +72,9 @@
     </tbody>
   </table>
   
-
-  <div class="box-header with-border">
-    <h3 class="box-title">Promotion Details</h3>
-  </div>
   <table class="table table-bordered table-hover table-condensed">
     <thead>
+    <tr><th colspan="7"><center>Promotion Details</center></th></tr>
       <tr>
         <th>Department</th>
         <th>Designation</th>
@@ -113,15 +104,11 @@
   <center><p class="text-warning"> No Goals Available </p></center> 
   <% else %>
 
-<div class="box box-default">
-  <div class="box-header with-border">
-    <h3 class="box-title">Goal Rating</h3>
-  </div><!-- /.box-header -->
-  <div class="box-body">
-  <%= bootstrap_form_for @goal_rating,url:{action:'reviewer_create',emp_id: @employee.id,goal_bunch_id: @goal_bunch_id.id} do |f| %>
+  <%= bootstrap_form_for @goal_rating,url:{action:'reviewer_create',emp_id: @employee.id,goal_bunch_id: @goal_bunch_id.id,period_id: @period.id} do |f| %>
   <%= hidden_field_tag :reviewer_id, {},value: current_user.employee_id %> 
     <table class="table table-bordered table-hover table-condensed">
       <thead>
+      <tr><th colspan="10"><center>Goal Rating</center></th></tr>
         <tr>
           <th>Goal perspective</th>
           <th>Weightage</th>
@@ -129,6 +116,7 @@
           <th>Target</th>
           <th>Aligned</th>
           <th>Self Comment</th>
+          <th>Self Rating</th>
           <th>Appraiser Comment</th>
           <th>Appraiser Rating</th>
           <th>Reviewer Comment</th>
@@ -143,6 +131,7 @@
             <td><%= goal_rating.target %></td>
             <td><%= goal_rating.aligned %></td>
             <td><%= goal_rating.appraisee_comment %></td>
+            <td><%= goal_rating.appraisee_rating_id %></td>
             <td><%= goal_rating.appraiser_comment %></td>
             <td><%= goal_rating.appraiser_rating_id %></td>
             <td><%= text_field_tag 'reviewer_comments[]',"",class: "form-control",autofocus: true %></td>
@@ -154,6 +143,7 @@
 
     <table class="table table-bordered table-hover table-condensed">
       <thead>
+      <tr><th colspan="10"><center>Attribute Rating</center></th></tr>
         <tr>
           <th>Attribute</th>
           <th>Weightage</th>
@@ -161,6 +151,7 @@
           <th>Target</th>
           <th>Aligned</th>
           <th>Self Comment</th>
+          <th>Self Rating</th>
           <th>Appraiser Comment</th>
           <th>Appraiser Rating</th>
           <th>Reviewer Comment</th>
@@ -175,6 +166,7 @@
             <td><%= goal_rating.target %></td>
             <td><%= goal_rating.aligned %></td>
             <td><%= goal_rating.appraisee_comment %></td>
+            <td><%= goal_rating.appraisee_rating_id %></td>
             <td><%= goal_rating.appraiser_comment %></td>
             <td><%= goal_rating.appraiser_rating_id %></td>
             <td><%= text_field_tag 'reviewer_comments[]',"",class: "form-control" %></td>
@@ -194,17 +186,12 @@
       </div>
     <% end %>
   <% end %>
-</div>
-</div>
+<hr>
 
-<div class="box box-default">
-  <div class="box-header with-border">
-    <h3 class="box-title">Created Goal Rating</h3>
-  </div><!-- /.box-header -->
-  <div class="box-body">
   <%= bootstrap_form_for GoalBunch.new,url:{action:'reviewer_comment_confirm',id: @employee.id} do |f| %>
     <table class="table table-bordered table-hover table-condensed">
       <thead>
+      <tr><th colspan="11"><center>Goal Details</center></th></tr>
         <tr>
           <th>Goal perspective</th>
           <th>Weightage</th>
@@ -212,6 +199,7 @@
           <th>Target</th>
           <th>Aligned</th>
           <th>Self Comment</th>
+          <th>Self Rating</th>
           <th>Appraiser Comment</th>
           <th>Appraiser Rating</th>
           <th>Reviewer Comment</th>
@@ -221,13 +209,13 @@
       <tbody>
         <% @reviewer_goal_ratings.each do |goal_rating| %>
           <tr>
-            
             <td><%= goal_rating.goal_perspective.try(:name) %></td>
             <td><%= goal_rating.goal_weightage %></td>
             <td><%= goal_rating.goal_measure %></td>
             <td><%= goal_rating.target %></td>
             <td><%= goal_rating.aligned %></td>
             <td><%= goal_rating.appraisee_comment %></td>
+            <td><%= goal_rating.appraisee_rating_id %></td>
             <td><%= goal_rating.appraiser_comment %></td>
             <td><%= goal_rating.appraiser_rating_id %></td>
             <td><%= goal_rating.reviewer_comment %></td>
@@ -245,6 +233,7 @@
 
     <table class="table table-bordered table-hover table-condensed">
       <thead>
+      <tr><th colspan="11"><center>Attribute Details</center></th></tr>
         <tr>
           <th>Attribute</th>
           <th>Weightage</th>
@@ -252,6 +241,7 @@
           <th>Target</th>
           <th>Aligned</th>
           <th>Self Comment</th>
+          <th>Self Rating</th>
           <th>Appraiser Comment</th>
           <th>Appraiser Rating</th>
           <th>Reviewer Comment</th>
@@ -268,6 +258,7 @@
             <td><%= goal_rating.target %></td>
             <td><%= goal_rating.aligned %></td>
             <td><%= goal_rating.appraisee_comment %></td>
+            <td><%= goal_rating.appraisee_rating_id %></td>
             <td><%= goal_rating.appraiser_comment %></td>
             <td><%= goal_rating.appraiser_rating_id %></td>
             <td><%= goal_rating.reviewer_comment %></td>
@@ -292,7 +283,7 @@
             <% unless @goal_bunch.nil? %>
               <% if @goal_bunch.reviewer_confirm == true %>
               <% else %>
-              <%= link_to 'Overall Comment', modal_reviewer_overall_goal_bunches_path(goal_bunch_id: @goal_bunch.id), class: 'btn btn-warning btn-sm',remote: true %>
+              <%= link_to 'Overall Comment', modal_reviewer_overall_goal_bunches_path(goal_bunch_id: @goal_bunch.id,period_id: @period.id), class: 'btn btn-warning btn-sm',remote: true %>
               <% end %>
             <% end %>
           <% end %>
@@ -301,15 +292,13 @@
       </div>
     </div>
   <% end %>
+  <hr>
 
-    <div class="box-header with-border">
-      <h3 class="box-title">Recommendation For Employee</h3>
-    </div>
-    
-  <%= bootstrap_form_for GoalBunch.new,url:{action:'reviewer_overall_comment_confirm',emp_id: @employee.id,goal_bunch_id: @goal_bunch.id} do |f| %>
+  <%= bootstrap_form_for GoalBunch.new,url:{action:'reviewer_overall_comment_confirm',emp_id: @employee.id,goal_bunch_id: @goal_bunch.id,period_id: @period.id} do |f| %>
     
     <table class="table table-bordered table-hover table-condensed">
       <thead>
+      <tr><th colspan="4"><center>Recommendation For Employee</center></th></tr>
         <tr>
           <th>Promotion</th>
           <th>Increment</th>
@@ -329,11 +318,9 @@
       </tbody>
     </table>
 
-    <div class="box-header with-border">
-      <h3 class="box-title">Overall Comment For Employee</h3>
-    </div>
     <table class="table table-bordered table-hover table-condensed">
       <thead>
+      <tr><th colspan="3"><center>Overall Comment For Employee</center></th></tr>
         <tr>
           <th><input type="checkbox" id="selectAll" value="selectAll"></th>
           <th>Overall Comment</th>
@@ -356,24 +343,23 @@
       </tbody>
     </table>
 
+    <div class="row">
       <% unless @goal_bunch.nil? %>
         <% if @goal_bunch.review_comment == nil %>
         <% else %>
-          <div class="row">
             <div class="col-sm-3">
               <div class="actions">
                 <%= f.submit "Confirm", class: 'btn btn-primary btn-sm' %>
               </div>
             </div>
-          </div>
-        <% end %>
+         <% end %>
       <% end %>
-      <br>
     <% end %>
 <% end %>
-  <%= link_to 'Back',period_list_reviewer_goal_bunches_path(emp_id: @employee.id),class: 'btn btn-sm btn-default fa fa-arrow-left
-  +++-
-  '%>
+ <div class="col-sm-3">
+<%= link_to 'Back',period_list_reviewer_goal_bunches_path(period_id: @period.id),class: 'btn btn-sm btn-default fa fa-arrow-left' %>
+</div>
+</div>
 </div>
 </div>
 

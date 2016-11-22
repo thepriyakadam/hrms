@@ -15,15 +15,16 @@
             <th>A</th>
             <th>P</th>
             <th>W</th>
+            <th>H</th>
             <th>EL</th>
             <th>CL</th>
-            <th>LWP</th>
-            <th>ESIC</th>
             <th>C.Off</th>
             <th>AL</th>
             <th>OD</th>
             <th>GP</th>
             <th>GPWP</th>
+            <th>LWP</th>
+            <th>ESIC</th>
             <th>Total</th>
           </tr>
         </thead>
@@ -40,6 +41,7 @@
               <% abs = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "A") %>
               <% pre = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id,"P") %>
               <% wd = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "W") %>
+              <% h = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "H") %>
               <% el = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "EL") %>
               <% cl = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "CL") %>
               <% lwp = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "LWP") %>
@@ -67,6 +69,7 @@
                 <%= ap %>
               </td>
               <td><%= wd.count %></td>
+              <td><%= h.count %></td>
               <td>
                 <% ael = el.count + (pel.count)/2.to_f %>
                 <%= ael %>
@@ -74,14 +77,6 @@
               <td>
                 <% acl = cl.count + (pcl.count)/2.to_f %>
                 <%= acl %>
-              </td>
-              <td>
-                <% alwp= lwp.count + (plwp.count)/2.to_f %>
-                <%= alwp %>
-              </td>
-              <td>
-                <% aesic = esic.count + (pesic.count)/2.to_f %>
-                <%= aesic %>
               </td>
               <td>
                 <% acoff = coff.count + (pcoff.count)/2.to_f %>
@@ -97,7 +92,15 @@
               </td>
               <td><%= gp.count %></td>
               <td><%= gpwp.count %></td>
-              <td><%= ab + ap + wd.count + ael + acl + alwp + aesic + acoff + aal + aod +  gp.count + gpwp.count %></td>
+              <td>
+                <% alwp= lwp.count + (plwp.count)/2.to_f %>
+                <%= alwp %>
+              </td>
+              <td>
+                <% aesic = esic.count + (pesic.count)/2.to_f %>
+                <%= aesic %>
+              </td>
+              <td><%= ab + ap + wd.count + h.count + ael + acl + alwp + aesic + acoff + aal + aod +  gp.count + gpwp.count %></td>
             </tr> 
             <tr></tr>
             <% present_day = present_day_count(exist) %>

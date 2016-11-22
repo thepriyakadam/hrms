@@ -2,6 +2,7 @@
   <thead>
     <tr>
       <th>Name</th>
+      <th>Status</th>
       <th>Action</th>
     </tr>
   </thead>
@@ -9,6 +10,7 @@
     <% @goal_perspectives.each do |goal_perspective| %>
       <tr>
         <td><%= goal_perspective.name %></td>
+        <td><%= goal_perspective.status ? "Active" : "Inactive" %></td>
         <td>
           <% if goal_perspective.is_confirm == true %>
             <small class= "label label-primary">Confirmed</small>

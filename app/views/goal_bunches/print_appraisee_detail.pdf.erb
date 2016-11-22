@@ -139,7 +139,7 @@ div.nobreak{ page-break-inside: avoid;
             <td><%= goal_rating.target %></td>
             <td><%= goal_rating.aligned %></td>
             <td><%= goal_rating.appraisee_comment %></td>
-            <td><%= %></td>
+            <td><%= goal_rating.appraisee_rating_id %></td>
           </tr>
         <% end %>
       </tbody>
@@ -165,7 +165,7 @@ div.nobreak{ page-break-inside: avoid;
             <td><%= goal_rating.target %></td>
             <td><%= goal_rating.aligned %></td>
             <td><%= goal_rating.appraisee_comment %></td>
-            <td><%= %></td>
+            <td><%= goal_rating.appraisee_rating_id %></td>
           </tr>
         <% end %>
       </tbody>
@@ -180,6 +180,9 @@ div.nobreak{ page-break-inside: avoid;
           <tr>
             <th>Self Comment</th>
             <td><%= goal_bunch.appraisee_comment %></td>
+
+             <th>Self Rating</th>
+            <td><%= goal_bunch.appraisee_rating_id %></td>
           </tr>
         <% end %>
       </tbody>

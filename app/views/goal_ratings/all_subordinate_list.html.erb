@@ -119,8 +119,8 @@
 
         <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
           <thead>
-          <tr><th colspan="9"><center>Performance Record</center></th></tr>
-          <tr><th colspan="9"><center>Goals</center></th></tr>
+          <tr><th colspan="10"><center>Performance Record</center></th></tr>
+          <tr><th colspan="10"><center>Goals</center></th></tr>
             <tr>
               <th>Goal Perspective</th>
               <th>Goal Weightage</th>
@@ -143,7 +143,7 @@
                 <td><%= goal_rating.try(:target) %></td>
                 <td><%= goal_rating.try(:aligned) %></td>
                 <td><%= goal_rating.try(:appraisee_comment) %></td>
-                <td><%=  %></td>
+                <td><%= goal_rating.try(:appraisee_rating_id) %></td>
                 <td><%= goal_rating.try(:appraiser_comment) %></td>
                 <td><%= goal_rating.try(:appraiser_rating_id) %></td>
                 <td><%= goal_rating.try(:reviewer_comment) %></td>
@@ -154,7 +154,7 @@
 
         <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
           <thead>
-          <tr><th colspan="9"><center>Attributes</center></th></tr>
+          <tr><th colspan="10"><center>Attributes</center></th></tr>
             <tr>
               <th>Attribute</th>
               <th>Goal Weightage</th>
@@ -177,7 +177,7 @@
                 <td><%= attribute_rating.try(:target) %></td>
                 <td><%= attribute_rating.try(:aligned) %></td>
                 <td><%= attribute_rating.try(:appraisee_comment) %></td>
-                 <td><%=  %></td>
+                <td><%= attribute_rating.try(:appraisee_rating_id) %></td>
                 <td><%= attribute_rating.try(:appraiser_comment) %></td>
                 <td><%= attribute_rating.try(:appraiser_rating_id) %></td>
                 <td><%= attribute_rating.try(:reviewer_comment) %></td>
@@ -201,7 +201,7 @@
             </tr>
             <tr>
               <th>Self Rating</th>
-              <td><%=  %></td>
+              <td><%= goal_bunch.try(:appraisee_rating_id) %></td>
             </tr>
             <tr>
               <th>Appraiser Comment</th>

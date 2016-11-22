@@ -142,7 +142,7 @@ div.nobreak{ page-break-inside: avoid;
           <td><%= goal_rating.target %></td>
           <td><%= goal_rating.aligned %></td>
           <td><%= goal_rating.appraisee_comment %></td>
-          <td><%= %></td>
+          <td><%= goal_rating.appraisee_rating_id %></td>
           <td><%= goal_rating.appraiser_comment %></td>
           <td><%= goal_rating.appraiser_rating_id %></td>
           <td><%= goal_rating.reviewer_comment %></td>
@@ -174,7 +174,7 @@ div.nobreak{ page-break-inside: avoid;
           <td><%= goal_rating.target %></td>
           <td><%= goal_rating.aligned %></td>
           <td><%= goal_rating.appraisee_comment %></td>
-          <td><%= %></td>
+          <td><%= goal_rating.appraisee_rating_id %></td>
           <td><%= goal_rating.appraiser_comment %></td>
           <td><%= goal_rating.appraiser_rating_id %></td>
           <td><%= goal_rating.reviewer_comment %></td>
@@ -194,7 +194,7 @@ div.nobreak{ page-break-inside: avoid;
         </tr>
         <tr>
           <th>Self Rating</th>
-          <td><%= %></td>
+          <td><%= goal_bunch.try(:appraisee_rating_id) %></td>
         </tr>
         <tr>
           <th>Appraiser Comment</th>

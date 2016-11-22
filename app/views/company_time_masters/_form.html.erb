@@ -1,11 +1,11 @@
-<%= bootstrap_form_for(@company_time_master,html: {id: 'company_time_master'},remote:true) do |f| %>
+<%= bootstrap_form_for(CompanyTimeMaster.new,html: {id: 'company_time_master'}) do |f| %>
   <div class="row">
     <div class="col-sm-2">
       <div class="bootstrap-timepicker">
         <div class="form-group">
           <label>In Min Time</label>
           <div class="input-group">
-            <%= f.text_field :in_min_time,hide_label:true, class: 'form-control timepicker' %>
+            <%= text_field :company_time_master,:in_min_time,hide_label:true, class: 'form-control timepicker' %>
             <div class="input-group-addon">
               <i class="fa fa-clock-o"></i>
             </div>
@@ -18,7 +18,7 @@
         <div class="form-group">
           <label>In Max Time</label>
           <div class="input-group">
-            <%= f.text_field :in_max_time,hide_label:true, class: 'form-control timepicker' %>
+            <%= text_field :company_time_master,:in_max_time,hide_label:true, class: 'form-control timepicker' %>
             <div class="input-group-addon">
               <i class="fa fa-clock-o"></i>
             </div>
@@ -31,7 +31,7 @@
         <div class="form-group">
           <label>In Time</label>
           <div class="input-group">
-            <%= f.text_field :in_time,hide_label:true, class: 'form-control timepicker' %>
+            <%= text_field :company_time_master,:in_time,hide_label:true, class: 'form-control timepicker' %>
             <div class="input-group-addon">
               <i class="fa fa-clock-o"></i>
             </div>
@@ -44,7 +44,7 @@
         <div class="form-group">
           <label>Out Min Time</label>
           <div class="input-group">
-            <%= f.text_field :out_min_time,hide_label:true, class: 'form-control timepicker' %>
+            <%= text_field :company_time_master,:out_min_time,hide_label:true, class: 'form-control timepicker' %>
             <div class="input-group-addon">
               <i class="fa fa-clock-o"></i>
             </div>
@@ -57,7 +57,7 @@
         <div class="form-group">
           <label>Out Max Time</label>
           <div class="input-group">
-            <%= f.text_field :out_max_time,hide_label:true, class: 'form-control timepicker' %>
+            <%= text_field :company_time_master,:out_max_time,hide_label:true, class: 'form-control timepicker' %>
             <div class="input-group-addon">
               <i class="fa fa-clock-o"></i>
             </div>
@@ -70,7 +70,7 @@
         <div class="form-group">
           <label>Out Time</label>
           <div class="input-group">
-            <%= f.text_field :out_time,hide_label:true, class: 'form-control timepicker' %>
+            <%= text_field :company_time_master,:out_time,hide_label:true, class: 'form-control timepicker' %>
             <div class="input-group-addon">
               <i class="fa fa-clock-o"></i>
             </div>
@@ -83,7 +83,7 @@
     
     <div class="col-sm-2">
       <div class="field">
-        <%= f.text_field :working_hrs,label: 'Working Hrs' %>
+        <%= text_field :company_time_master,:working_hrs,label: 'Working Hrs' %>
       </div>
     </div>
     
@@ -91,7 +91,7 @@
      <div class="col-sm-3">
       <label>Status </label>
       <div class="field">
-        <%= f.check_box :is_active, label: 'Active'%>
+        <%= check_box :company_time_master,:is_active, label: 'Active'%>
       </div>
     </div>
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161121132745) do
+ActiveRecord::Schema.define(version: 20161122120232) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -443,17 +443,17 @@ ActiveRecord::Schema.define(version: 20161121132745) do
   end
 
   create_table "company_time_masters", force: :cascade do |t|
-    t.time     "in_min_time"
-    t.time     "in_max_time"
-    t.time     "out_min_time"
-    t.time     "out_max_time"
+    t.datetime "in_min_time"
+    t.datetime "in_max_time"
+    t.datetime "out_min_time"
+    t.datetime "out_max_time"
     t.decimal  "working_hrs"
     t.boolean  "is_active"
     t.boolean  "is_confirm"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
-    t.time     "in_time"
-    t.time     "out_time"
+    t.datetime "in_time"
+    t.datetime "out_time"
   end
 
   create_table "company_types", force: :cascade do |t|
@@ -781,8 +781,8 @@ ActiveRecord::Schema.define(version: 20161121132745) do
     t.datetime "created_at",                                                       null: false
     t.datetime "updated_at",                                                       null: false
     t.integer  "department_id"
-    t.date     "in_time"
-    t.date     "out_time"
+    t.datetime "in_time"
+    t.datetime "out_time"
     t.boolean  "is_confirm",                                       default: false
     t.decimal  "count",                    precision: 5, scale: 2
     t.integer  "employee_leav_request_id"
@@ -2154,8 +2154,8 @@ ActiveRecord::Schema.define(version: 20161121132745) do
   create_table "machine_attendances", force: :cascade do |t|
     t.date     "day"
     t.integer  "employee_id"
-    t.time     "in"
-    t.time     "out"
+    t.datetime "in"
+    t.datetime "out"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end

@@ -2,7 +2,7 @@
   <div class="modal-content">
     <div class="modal-body">
 
-      <%= bootstrap_form_for @goal_bunch,url:{action: "update_final_modal",goal_bunch_id:@goal_bunch.id} do |f| %>
+      <%= bootstrap_form_for @goal_bunch,url:{action: "update_final_modal",goal_bunch_id:@goal_bunch.id,period_id: @period.id} do |f| %>
         <div class="row">
           <div class="col-sm-4">
           <label>Final Comment</label>

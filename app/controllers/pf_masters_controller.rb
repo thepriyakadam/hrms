@@ -65,15 +65,22 @@ class PfMastersController < ApplicationController
   # PATCH/PUT /pf_masters/1
   # PATCH/PUT /pf_masters/1.json
   def update
-    respond_to do |format|
-      if @pf_master.update(pf_master_params)
-        format.html { redirect_to pf_masters_path, notice: 'PF Master was successfully updated.' }
-        format.json { render :show, status: :ok, location: @pf_master }
-      else
-        format.html { render :edit }
-        format.json { render json: @pf_master.errors, status: :unprocessable_entity }
-      end
+    components = params[:components]
+    str = ''
+    i = 0
+    components.try(:each) do |c|
+      str = if i == 0
+              c.to_s
+            else
+              str.to_s + ',' + c.to_s
+            end
+      i += 1
     end
+    @pf_master.base_component = str
+    @pf_master.update(pf_master_params)
+    @pf_masters = PfMaster.all
+    @pf_master = PfMaster.new
+
   end
 
   # DELETE /pf_masters/1

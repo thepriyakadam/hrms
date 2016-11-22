@@ -1,0 +1,42 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Employee Salary List</h3>
+      <!-- link_to "Download Excel Report", payroll_excel_exports_path(format: "xls"),class: "btn btn-warning btn-sm" -->
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example6" class="table table-bordered table-hover">
+    <thead>
+      <tr>
+      <th> Employee ID</th>
+      <th>Employee Name</th>
+      <th>Department</th>
+      <th>Contact No.</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @employees.each do |employee| %>
+      <tr>
+        <td><%= employee.manual_employee_code %></td>
+        <td><%= employee.try(:first_name) %> <%= employee.try(:middle_name) %> <%= employee.try(:last_name) %></td>
+        <td><%= employee.company_location.try(:name) %> - <%= employee.department.try(:name) %></td>
+        <td><%= employee.contact_no %></td>
+  
+        <td>
+        <%= link_to '', emp_contribution_slip_list_salaryslips_path(employee), class: 'btn btn-default fa fa-eye' %>
+        </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+</div>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>
+

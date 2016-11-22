@@ -6,7 +6,7 @@
   <div class="box-body">
     <div class="row">
       <div class="col-sm-6">
-        <table class="table table-bordered table-hover table-condensed">
+        <table id="example6" class="table table-bordered table-hover table-condensed">
           <thead>
            <tr><td colspan="5"><center>First Level Request</center></td></tr>
             <tr>
@@ -35,7 +35,7 @@
       </div>
 
        <div class="col-sm-6">
-        <table class="table table-bordered table-hover table-condensed">
+        <table id="example7" class="table table-bordered table-hover table-condensed">
           <thead>
           <tr><td colspan="5"><center>Second Level Request</center></td></tr>
             <tr>
@@ -65,3 +65,19 @@
     </div>
   </div>
 </div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example7').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

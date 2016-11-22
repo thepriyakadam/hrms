@@ -1,5 +1,17 @@
 Rails.application.routes.draw do
-
+  
+  resources :machine_attendances do
+    collection do
+      get :new
+      post :create
+      post :save_machine_attendance
+    end
+  end
+  resources :company_time_masters do
+    collection do
+      get :is_confirm
+    end
+  end
   resources :pf_employers do
     collection do
       get :is_confirm
@@ -412,6 +424,20 @@ end
       post :all_employee_list
       post :print_employee_list
       get :is_confirm
+      get :new_form
+      post :create_for_multiple
+      get :employee_goal_wise
+      post :print_employee
+      post :detail_goal_wise
+      get :employee_wise_goal
+      post :goal_employee_wise
+      post :detail_employee_wise
+      get :print_employee_wise
+      get :print_goal_wise
+      get :detail_goal_wise_xls
+      get :detail_employee_wise_xls
+      get :period_rating_wise
+      post :Period_rating_wise_employee
     end
   end
   #post 'goal_ratings/update_goal_set_modal'
@@ -477,7 +503,8 @@ end
       get :appraisee_detail_for_print
       get :appraiser_detail_for_print
       get :reviewer_detail_for_print
-     
+      get :period_for_multiple
+      post :create_multiple_bunch
     end
   end
   resources :goal_perspectives do
@@ -1181,6 +1208,10 @@ end
       get :second_approve
       get :first_reject
       get :second_reject
+      get :admin_first_approve
+      get :admin_second_approve
+      get :admin_first_reject
+      get :admin_second_reject
     end
   end
   resources :advance_types do
@@ -1268,6 +1299,10 @@ end
       get :display_salaryslip_report
       post :pdf_report
       get :salaryslip_xls
+      get :emp_contibution_salary_list
+      get :emp_contribution_slip_list
+      get :show_emp_contribution_salaryslip
+      get :print_emp_contribution_slip
     end
   end
  
@@ -1351,6 +1386,8 @@ end
       get :display_workingday
       get :workingday_xls
       get :workingday_pdf
+      get :import_workingday
+      post :import
     end
   end
 
@@ -1542,6 +1579,7 @@ end
       get :search_by_is_pending_date
       get :employee_leav_request_reports
       get :all_leave_request_list
+      get :admin_employee_history_with_current_leave
     end
   end
   resources :company_leavs
@@ -1640,6 +1678,8 @@ end
       get :basic_info_company_wise
       post :employee_basic_info
       post :basic_info
+      get :change_password_form
+      post :update_password
     end
     member do
       get :edit_manager

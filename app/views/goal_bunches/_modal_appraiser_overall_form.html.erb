@@ -2,7 +2,7 @@
   <div class="modal-content">
     <div class="modal-body">
 
-      <%= bootstrap_form_for(:goal_bunch,url:{action:'appraiser_overall_comment_create',employee_id: current_user.employee_id,goal_bunch_id: @goal_bunch.id,appraiser_overall: @appraiser_overall},html: {id: 'goal_bunch'}) do |f| %>
+      <%= bootstrap_form_for(:goal_bunch,url:{action:'appraiser_overall_comment_create',employee_id: current_user.employee_id,goal_bunch_id: @goal_bunch.id,appraiser_overall: @appraiser_overall,period_id: @period.id},html: {id: 'goal_bunch'}) do |f| %>
         <div class="row">
           <div class="col-sm-9">
           <label>Overall Comment</label>

@@ -17,10 +17,10 @@
       <tbody>
         <% @goal_bunches.each do |g| %>
           <tr>
-            <td><%= check_box_tag "period_ids[]", g.period_id %></td>
+            <td><%= check_box_tag "employee_ids[]", g.employee_id %></td>
             <td><%= g.period.try(:name) %></td>
             <td> From: <%= g.period.try(:from) %> To: <%= g.period.try(:to) %> </td>
-            <!-- <= f.hidden_field :period_id, value: g.period_id  %> -->
+           <!--  <= f.hidden_field :employee_id, value: g.employee_id  %> -->
           </tr>
         <% end %>
       </tbody>

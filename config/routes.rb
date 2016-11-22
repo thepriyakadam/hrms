@@ -424,7 +424,7 @@ end
       get :detail_goal_wise_xls
       get :detail_employee_wise_xls
       get :period_rating_wise
-      get :Period_rating_wise_employee
+      post :Period_rating_wise_employee
     end
   end
   #post 'goal_ratings/update_goal_set_modal'

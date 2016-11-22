@@ -515,10 +515,10 @@ class SalaryslipsController < ApplicationController
           Salaryslip.where(id: @salaryslip.id).update_all(actual_gross_salary: actual_gross_salary,actual_total_deduction: actual_total_deduction,actual_net_salary: actual_net_salary,calculated_gross_salary: calculated_gross_salary,calculated_total_deduction: calculated_total_deduction,calculated_net_salary: calculated_net_salary)
           
 
-          BonusEmployee.create_bonus(basic_calculated_amount, @employee.id, date)
-         
-         
 
+ 
+          BonusEmployee.create_bonus(basic_calculated_amount, @employee.id, date)
+        
       if @employee.joining_detail.is_employeer_esic == true || @employee.joining_detail.is_insurance == true || @employee.joining_detail.is_employeer_pf == true || @employee.joining_detail.is_family_pension == true || @employee.joining_detail.is_bonus == true
         a = EmployerContribution.create_contribution(@employee.id)
         if @employee.joining_detail.is_employeer_esic == true

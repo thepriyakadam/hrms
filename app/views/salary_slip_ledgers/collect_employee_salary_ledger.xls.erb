@@ -48,6 +48,7 @@
         <Cell ss:Index="1"><Data ss:Type="String"><%= r.try(:employee_name) %></Data></Cell>
         <Cell ss:Index="1"><Data ss:Type="String"><%= r.try(:month) %></Data></Cell>
         
+        
         <Cell ss:Index="1"><Data ss:Type="Number"><%= r.try(:earned_basic).try(:round) %></Data></Cell>
         <Cell ss:Index="1"><Data ss:Type="Number"><%= r.try(:earned_da).try(:round) %></Data></Cell>
         <Cell ss:Index="1"><Data ss:Type="Number"><%= r.try(:earned_hra).try(:round) %></Data></Cell>

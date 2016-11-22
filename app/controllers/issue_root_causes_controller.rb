@@ -32,6 +32,7 @@ class IssueRootCausesController < ApplicationController
         flash.now[:alert] = 'Root Cause Already Exist.'
         format.js { @flag = false }
       end
+      redirect_to new_issue_root_cause_path
     end
   end
 

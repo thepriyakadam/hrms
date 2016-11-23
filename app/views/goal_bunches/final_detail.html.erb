@@ -120,6 +120,7 @@
         <th>Target/Unit</th>
         <th>Aligned</th>
         <th>Self Comment</th>
+        <th>Self Rating</th>
         <th>Appraiser Comment</th>
         <th>Appraiser Rating</th>
         <th>Reviewer Comment</th>
@@ -134,6 +135,7 @@
           <td><%= goal_rating.target %></td>
           <td><%= goal_rating.aligned %></td>
           <td><%= goal_rating.appraisee_comment %></td>
+          <td><%= goal_rating.appraisee_rating_id %></td>
           <td><%= goal_rating.appraiser_comment %></td>
           <td><%= goal_rating.appraiser_rating_id %></td>
           <td><%= goal_rating.reviewer_comment %></td>
@@ -152,6 +154,7 @@
         <th>Target/Unit</th>
         <th>Aligned</th>
         <th>Self Comment</th>
+        <th>Self Rating</th>
         <th>Appraiser Comment</th>
         <th>Appraiser Rating</th>
         <th>Reviewer Comment</th>
@@ -166,6 +169,7 @@
           <td><%= goal_rating.target %></td>
           <td><%= goal_rating.aligned %></td>
           <td><%= goal_rating.appraisee_comment %></td>
+          <td><%= goal_rating.appraisee_rating_id %></td>
           <td><%= goal_rating.appraiser_comment %></td>
           <td><%= goal_rating.appraiser_rating_id %></td>
           <td><%= goal_rating.reviewer_comment %></td>
@@ -183,6 +187,10 @@
         <tr>
           <th>Self Comment</th>
           <td><%= goal_bunch.try(:appraisee_comment) %></td>
+        </tr>
+        <tr>
+          <th>Self Rating</th>
+          <td><%= goal_bunch.try(:appraisee_rating_id) %></td>
         </tr>
         <tr>
           <th>Appraiser Comment</th>

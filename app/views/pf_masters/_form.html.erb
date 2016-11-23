@@ -1,6 +1,14 @@
 
 <%= bootstrap_form_for(@pf_master,html: {id: 'pf_master'},remote:true) do |f| %>
 <div class="row">
+<div class="col-sm-3">
+    <label>Base Component</label>
+      <div class="form-group required">
+        <%=select_tag("components[]",options_for_select(SalaryComponent.where(is_base: true).collect {|ff| [ff.name, ff.id] }),{:multiple=>true,:id => "batches",class: "form-control"})%>
+      </div>
+    </div>
+
+    
     <div class="col-sm-3">
        <label>Effective Date</label>
       <div class="field">
@@ -25,12 +33,7 @@
       </div>
     </div>
    
-    <div class="col-sm-3">
-    <label>Base Component</label>
-      <div class="form-group required">
-        <%=select_tag("components[]",options_for_select(SalaryComponent.all.collect {|ff| [ff.name, ff.id] }),{:multiple=>true,:id => "batches",class: "form-control"})%>
-      </div>
-    </div>
+    
  
   <div class="col-sm-1">
       <label>Status </label>

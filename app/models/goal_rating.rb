@@ -8,6 +8,7 @@ class GoalRating < ActiveRecord::Base
   belongs_to :appraiser_rating
   belongs_to :reviewer
   belongs_to :attribute_master
+  belongs_to :appraisee_rating
 
   belongs_to :appraisee, class_name: 'Employee'
   belongs_to :appraiser, class_name: 'Employee'

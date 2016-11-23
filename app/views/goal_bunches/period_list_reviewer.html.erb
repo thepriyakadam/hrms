@@ -1,30 +1,28 @@
 <div class="box">
   <div class="box-header">
-    <h3 class="box-title">Performance Goal List</h3>
+    <h3 class="box-title">Reviewer Evaluation - My Team</h3>
     <div class="pull-right">  
     </div>
   </div>
   <div class="box-body">
-    <table id="example2" class="table table-bordered table-hover table-condensed">
+    <table id="example1" class="table table-bordered table-hover table-condensed">
      <thead>
         <tr>
-         <th>Base</th>
-         <th>Period</th>
-         <th>Employee Name</th>
-         <th>Appraiser</th>
-         <th>Reviewer</th>
-         <th>Action</th>
+          <th>Employee ID</th>
+          <th>Employee Name</th>
+          <th>Department</th>
+          <th>Designation</th>
+          <th>Action</th>
         </tr>
       </thead>
       <tbody>
-        <% @goal_bunches.each do |g| %>
+        <% @employees.each do |e| %>
         <tr>
-         <td> <%= g.period.try(:name) %></td>
-        <td> From: <%= g.period.try(:from) %> To: <%= g.period.try(:to) %> </td>
-        <td> <%= g.employee.try(:first_name) %> <%= g.employee.try(:middle_name) %> <%= g.employee.try(:last_name) %>  </td>
-        <td> <%= g.employee.manager.try(:first_name) %> <%= g.employee.manager.try(:middle_name) %> <%= g.employee.manager.try(:last_name) %>  </td>
-        <td> <%= g.employee.manager_2.try(:first_name) %> <%= g.employee.manager_2.try(:middle_name) %> <%= g.employee.manager_2.try(:last_name) %>  </td>
-        <td><%= link_to 'Reviewer Comment', reviewer_comment_goal_bunches_path(id: g,emp_id: g.employee_id) ,class: 'btn btn-xs btn-info' %></td>
+        <td><%= e.employee.manual_employee_code %></td>
+        <td><%= e.employee.first_name %> <%= e.employee.middle_name %> <%= e.employee.last_name %> </td>
+        <td><%= e.employee.company_location.try(:name) %> - <%= e.employee.department.try(:name) %></td> 
+        <td><%= e.employee.joining_detail.employee_designation.try(:name) %></td>
+        <td><%= link_to 'Reviewer Comment', reviewer_comment_goal_bunches_path(id: e,emp_id: e.employee_id,period_id: e.period_id) ,class: 'btn btn-xs btn-info' %></td>
         </tr>
         <% end %>
       </tbody>

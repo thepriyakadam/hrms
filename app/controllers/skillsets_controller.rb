@@ -66,6 +66,20 @@ class SkillsetsController < ApplicationController
     end
   end
 
+  def import_xl
+    @skillsets = Skillset.all
+    respond_to do |format|
+    format.html
+    format.csv { send_data @skillsets.to_csv }
+    format.xls
+   end   
+  end
+
+  def import
+    # byebug
+    Skillset.import(params[:file])
+    redirect_to root_url, notice: "File imported."
+  end
   # DELETE /skillsets/1
   # DELETE /skillsets/1.json
   def destroy

@@ -15,17 +15,27 @@ Rails.application.routes.draw do
       get :is_confirm
     end
   end
-  resources :professional_tax_masters
-  resources :pf_employers
-  resources :esic_employers
-  resources :bonus_employers
-  resources :dearness_allowances
+  resources :professional_tax_masters do
+    collection do
+      get :is_confirm
+    end
+  end
+  resources :dearness_allowances do
+    collection do
+      get :is_confirm
+    end
+  end
   resources :employer_insurances do
     collection do
       get :is_confirm
     end
   end
-  resources :employer_family_pensions
+  resources :employer_family_pensions do
+    collection do
+      get :is_confirm
+    end
+  end
+
   resources :insurance_masters do
     collection do
       get :is_confirm
@@ -781,6 +791,7 @@ end
     get 'bank_details/new'
     post 'bank_details/bank_detail_report'
 
+
     get 'joining_details/new'
     post 'joining_details/joining_detail_report'
     get 'joining_details/collect_departments'
@@ -1113,7 +1124,11 @@ end
       get :is_confirm
     end
   end
-  resources :society_member_ships
+  resources :society_member_ships do
+    collection do
+      get :is_confirm
+    end
+  end
   resources :well_faires do
     collection do
       get :is_confirm
@@ -1492,7 +1507,13 @@ end
       patch :update_role
     end
   end
-  resources :employee_bank_details
+  resources :employee_bank_details do
+    collection do
+      post :import  
+      get :import_xl
+    end
+  end
+
   resources :leav_cancelleds
 
   resources :employee_leav_balances do
@@ -1519,6 +1540,7 @@ end
       get :search_by_end_date
       get :search_by_is_pending_date
       get :employee_leav_request_reports
+      get :all_leave_request_list
     end
   end
   resources :company_leavs
@@ -1531,6 +1553,8 @@ end
   resources :joining_details do
     collection do
       get :search_by_joining_date
+      get :import_xl
+      post :import
     end
   end
   resources :employee_grades do
@@ -1565,6 +1589,8 @@ end
   end
   resources :employees do
     collection do
+      get :import_xl
+      post :import
       get :graph
       get :assign_role
       post :submit_form
@@ -1621,6 +1647,14 @@ end
       get :transfer_form
     end
   end
+
+  # resources :joining_details do
+  #   collection do
+  #     get :import_xl
+  #     post :import
+  #   end
+  # end
+
   resources :blood_groups do
     collection do
       get :is_confirm

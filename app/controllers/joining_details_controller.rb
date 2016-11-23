@@ -93,6 +93,21 @@ class JoiningDetailsController < ApplicationController
     end
  end
 
+  def import_xl
+    @joining_details = JoiningDetail.all
+    respond_to do |format|
+    format.html
+    format.csv { send_data @joining_details.to_csv }
+    format.xls
+   end   
+  end
+
+  def import
+    # byebug
+    JoiningDetail.import(params[:file])
+    redirect_to root_url, notice: "File imported."
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

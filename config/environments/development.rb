@@ -39,8 +39,8 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
-
-  # Root url
+  
+# Root url
   config.action_mailer.default_url_options = { host: '192.168.0.62', port: 3000 }
 
   # config.domain = 'lvh.me'
@@ -55,6 +55,7 @@ Rails.application.configure do
     password: 'hrms1234',
     authentication: :plain
   }
+
 
   # Paperclip setup
   # Paperclip.options[:command_path] = "/usr/local/bin/convert"

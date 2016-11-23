@@ -21,14 +21,18 @@ class IssueTypesController < ApplicationController
     @issue_types = IssueType.all
     @issue_type.save
     @issue_type = IssueType.new
+    redirect_to new_issue_type_path
+    flash[:notice] = "Saved Successfully"
   end
 
   # PATCH/PUT /issue_types/1
   # PATCH/PUT /issue_types/1.json
   def update
     @issue_type.update(issue_type_params)
-    @issue_type = IssueType.new
     @issue_types = IssueType.all
+    @issue_type = IssueType.new 
+    redirect_to new_issue_type_path
+    flash[:notice] = "Updated Successfully"
        
   end
 

@@ -14,7 +14,7 @@
     </div>
 
    <div class="col-sm-3">
-      <div class="field">
+      <div class="form-group required">
         <div class="input-group">
           <div class="input-group-addon">
             <i class="fa fa-calendar"></i>
@@ -24,7 +24,7 @@
       </div>
     </div>
 <div class="col-sm-3">
-      <div class="field">
+      <div class="form-group required">
         <div class="input-group">
           <div class="input-group-addon">
             <i class="fa fa-calendar"></i>
@@ -71,4 +71,38 @@
     dateFormat: 'dd-mm-yy' });
   });
 </script>
+
+
+
+<script>
+$("#employer_insurance").validate({
+    rules: {
+      "employer_insurance[percentage]":{
+        required: true,
+      },
+      "employer_insurance[effective_from]":{
+        required: true,
+      },
+      "employer_insurance[effective_to]":{
+        required: true,
+      }
+       },
+    messages: {
+      "employer_insurance[percentage]":{
+        required: "Please Specify percentage",
+      },
+       "employer_insurance[effective_from]":{
+        required: "Please Select Date",
+      },
+      "employer_insurance[effective_to]":{
+        required: "Please Select Date",
+      }
+       },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>
+
 

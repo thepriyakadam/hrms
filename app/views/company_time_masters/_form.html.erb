@@ -1,89 +1,93 @@
 <%= bootstrap_form_for(CompanyTimeMaster.new,html: {id: 'company_time_master'}) do |f| %>
   <div class="row">
     <div class="col-sm-2">
-      <div class="bootstrap-timepicker">
-        <div class="form-group">
-          <label>In Min Time</label>
-          <div class="input-group">
-            <%= text_field :company_time_master,:in_min_time,hide_label:true, class: 'form-control timepicker' %>
-            <div class="input-group-addon">
-              <i class="fa fa-clock-o"></i>
-            </div>
-          </div><!-- /.input group -->
-        </div><!-- /.form group -->
+      <div class="field">
+          <div class="form-group">
+            <label>In Min Time</label>
+            <div class='input-group date' id='datetimepicker4'>
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <%= text_field :company_time_master,:in_min_time,hide_label: true, placeholder: 'Date/Time',class: 'form-control'%>
+            </div><!-- /.input group -->
+          </div><!-- /.form group -->
       </div>
     </div>
     <div class="col-sm-2">
-      <div class="bootstrap-timepicker">
-        <div class="form-group">
-          <label>In Max Time</label>
-          <div class="input-group">
-            <%= text_field :company_time_master,:in_max_time,hide_label:true, class: 'form-control timepicker' %>
-            <div class="input-group-addon">
-              <i class="fa fa-clock-o"></i>
-            </div>
-          </div><!-- /.input group -->
-        </div><!-- /.form group -->
+      <div class="field">
+          <div class="form-group">
+            <label>In Max Time</label>
+            <div class='input-group date' id='datetimepicker5'>
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <%= text_field :company_time_master,:in_max_time,hide_label: true, placeholder: 'Date/Time',class: 'form-control'%>
+            </div><!-- /.input group -->
+          </div><!-- /.form group -->
       </div>
     </div>
     <div class="col-sm-2">
-      <div class="bootstrap-timepicker">
-        <div class="form-group">
-          <label>In Time</label>
-          <div class="input-group">
-            <%= text_field :company_time_master,:in_time,hide_label:true, class: 'form-control timepicker' %>
-            <div class="input-group-addon">
-              <i class="fa fa-clock-o"></i>
-            </div>
-          </div><!-- /.input group -->
-        </div><!-- /.form group -->
+      <div class="field">
+          <div class="form-group">
+            <label>In Time</label>
+            <div class='input-group date' id='datetimepicker6'>
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <%= text_field :company_time_master,:in_time,hide_label: true, placeholder: 'Date/Time',class: 'form-control'%>
+            </div><!-- /.input group -->
+          </div><!-- /.form group -->
       </div>
     </div>
     <div class="col-sm-2">
-      <div class="bootstrap-timepicker">
-        <div class="form-group">
-          <label>Out Min Time</label>
-          <div class="input-group">
-            <%= text_field :company_time_master,:out_min_time,hide_label:true, class: 'form-control timepicker' %>
-            <div class="input-group-addon">
-              <i class="fa fa-clock-o"></i>
-            </div>
-          </div><!-- /.input group -->
-        </div><!-- /.form group -->
-      </div>
-    </div>
-     <div class="col-sm-2">
-      <div class="bootstrap-timepicker">
-        <div class="form-group">
-          <label>Out Max Time</label>
-          <div class="input-group">
-            <%= text_field :company_time_master,:out_max_time,hide_label:true, class: 'form-control timepicker' %>
-            <div class="input-group-addon">
-              <i class="fa fa-clock-o"></i>
-            </div>
-          </div><!-- /.input group -->
-        </div><!-- /.form group -->
+      <div class="field">
+          <div class="form-group">
+            <label>Out Min Time</label>
+            <div class='input-group date' id='datetimepicker8'>
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <%= text_field :company_time_master,:out_min_time,hide_label: true, placeholder: 'Date/Time',class: 'form-control'%>
+            </div><!-- /.input group -->
+          </div><!-- /.form group -->
       </div>
     </div>
     <div class="col-sm-2">
-      <div class="bootstrap-timepicker">
-        <div class="form-group">
-          <label>Out Time</label>
-          <div class="input-group">
-            <%= text_field :company_time_master,:out_time,hide_label:true, class: 'form-control timepicker' %>
-            <div class="input-group-addon">
-              <i class="fa fa-clock-o"></i>
-            </div>
-          </div><!-- /.input group -->
-        </div><!-- /.form group -->
+      <div class="field">
+          <div class="form-group">
+            <label>Out Max Time</label>
+            <div class='input-group date' id='datetimepicker9'>
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <%= text_field :company_time_master,:out_max_time,hide_label: true, placeholder: 'Date/Time',class: 'form-control'%>
+            </div><!-- /.input group -->
+          </div><!-- /.form group -->
       </div>
     </div>
+
+    <div class="col-sm-2">
+      <div class="field">
+          <div class="form-group">
+            <label>Out Time</label>
+            <div class='input-group date' id='datetimepicker10'>
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <%= text_field :company_time_master,:out_time,hide_label: true, placeholder: 'Date/Time',class: 'form-control'%>
+            </div><!-- /.input group -->
+          </div><!-- /.form group -->
+      </div>
+    </div>
+
     </div>
     <div class="row">
     
-    <div class="col-sm-2">
+
+     <div class="col-sm-3">
+     <label>Working Hrs</label>
       <div class="field">
-        <%= text_field :company_time_master,:working_hrs,label: 'Working Hrs' %>
+        <%= text_field :company_time_master,:working_hrs,class: 'form-control' %>
       </div>
     </div>
     
@@ -93,14 +97,56 @@
       <div class="field">
         <%= check_box :company_time_master,:is_active, label: 'Active'%>
       </div>
-    </div>
+    </div><br>
 
     <div class="col-sm-3">
     <label></label>
       <div class="actions">
-
         <%= f.submit "Create Company Time" ,class: 'btn btn-sm btn-primary' %>
       </div>
     </div>
-  </div>
+    </div><br>
+
 <% end %>
+
+<script type="text/javascript">
+    $(function () {
+        $('#datetimepicker4').datetimepicker();
+    });
+ </script>
+
+ <script type="text/javascript">
+    $(function () {
+        $('#datetimepicker5').datetimepicker();
+    });
+ </script>
+
+ <script type="text/javascript">
+    $(function () {
+        $('#datetimepicker6').datetimepicker();
+    });
+ </script>
+
+ <script type="text/javascript">
+    $(function () {
+        $('#datetimepicker7').datetimepicker();
+    });
+ </script>
+
+ <script type="text/javascript">
+    $(function () {
+        $('#datetimepicker8').datetimepicker();
+    });
+ </script>
+
+ <script type="text/javascript">
+    $(function () {
+        $('#datetimepicker9').datetimepicker();
+    });
+ </script>
+
+ <script type="text/javascript">
+    $(function () {
+        $('#datetimepicker10').datetimepicker();
+    });
+ </script>

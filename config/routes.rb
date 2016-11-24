@@ -1,5 +1,15 @@
 Rails.application.routes.draw do
 
+  resources :leave_cashables do
+    collection do
+      get :collect_amount
+    end
+  end
+  resources :week_off_masters do 
+    collection do
+      get :assign_week_off
+    end
+  end
   resources :pf_employers do
     collection do
       get :is_confirm

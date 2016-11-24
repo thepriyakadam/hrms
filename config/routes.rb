@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   resources :shift_masters do
     collection do
       get :is_confirm
+    end
+  end
   resources :payroll_overtime_masters do
     collection do
       get :is_confirm
@@ -13,6 +15,8 @@ Rails.application.routes.draw do
       get :is_confirm
       end
   end
+
+  
 
   resources :leave_cashables do
     collection do

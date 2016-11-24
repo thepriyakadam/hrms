@@ -16,8 +16,8 @@ class IssueTrackerMembersController < ApplicationController
   def new
     @issue_tracker_member = IssueTrackerMember.new
     @issue_tracker_members = IssueTrackerMember.all
-    session[:active_tab] ="issuetracker"
-    session[:active_tab1] ="issueprocess1"
+    session[:active_tab] = "issuetracker"
+    session[:active_tab1] = "issueprocess1"
   end
 
   # GET /issue_tracker_members/1/edit

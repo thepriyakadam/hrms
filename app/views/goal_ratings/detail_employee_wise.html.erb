@@ -10,21 +10,10 @@
   <div class="box box-default">
   <div class="box-body">
      <% i=0%>
-    <% @employees.each do |e| %>
-      <% @employee = Employee.find_by(e.employee_id) %>
-      <% joining_detail = JoiningDetail.find_by_employee_id(e.employee_id) %>
-      <% @experiences = Experience.where(employee_id: e.employee_id) %>
-      <% @qualifications = Qualification.where(employee_id: e.employee_id) %>
-      <% @employee_promotions = EmployeePromotion.where(employee_id: e.employee_id) %>
-      <% @goal_ratings = GoalRating.where(goal_bunch_id: e.id,appraisee_id: e.employee_id, goal_type: 'Goal') %>
-      <% @goal_attribute_ratings = GoalRating.where(goal_bunch_id: e.id,appraisee_id: e.employee_id, goal_type: 'Attribute') %>
-
-      <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">    
+      <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
         <thead>
         <tr>
-        <% i=i+1%>
-        <th><%= i %></th>
-        <th colspan="6"><center>Employee Performance Detail</center></th>
+        <th colspan="7"><center>Employee Performance Detail</center></th>
         </tr>
           <tr>
             <th>Employee ID</th>
@@ -38,13 +27,13 @@
         </thead>
         <tbody>
           <tr>
-            <td><%= e.employee.manual_employee_code %></td> 
-            <td><%= e.employee.first_name %> <%= e.employee.middle_name %> <%= e.employee.last_name %></td>
+            <td><%= @emp1.manual_employee_code %></td> 
+            <td><%= @emp1.first_name %> <%= @emp1.middle_name %> <%= @emp1.last_name %></td>
             <td><%=  %></td>
-            <td><%= e.employee.department.try(:name) %></td>
-            <td><%= joining_detail.joining_date %></td>
-            <td><%= joining_detail.employee_grade.try(:name) %></td>
-            <td><%= joining_detail.employee_designation.try(:name) %></td>
+            <td><%= @emp1.department.try(:name) %></td>
+            <td><%= @joining_detail.joining_date %></td>
+            <td><%= @joining_detail.employee_grade.try(:name) %></td>
+            <td><%= @joining_detail.employee_designation.try(:name) %></td>
           </tr>
         </tbody>
       </table>
@@ -125,10 +114,24 @@
         </tbody>
       </table>
       <br>
+
+    <% @employees.each do |e| %>
+    <% employee = Employee.find(e.employee_id) %>
+    <% @joining_detail = JoiningDetail.find_by_employee_id(e.employee_id) %>
+    <% @experiences = Experience.where(employee_id: e.employee_id) %>
+    <% @qualifications = Qualification.where(employee_id: e.employee_id) %>
+    <% @employee_promotions = EmployeePromotion.where(employee_id: e.employee_id) %>
+    <% @goal_ratings = GoalRating.where(appraisee_id: e.employee_id, goal_bunch_id: e.id, goal_type: 'Goal') %>
+    <% @goal_attribute_ratings = GoalRating.where("goal_bunch_id = ? AND goal_type = ?", e.id ,'Attribute') %>
+    <% @goal_bunches = GoalBunch.where(employee_id: e.employee_id, id: e.id).group(:employee_id) %>
+
       <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
         <thead>
-        <tr><th colspan="10"><center>Performance Record</center></th></tr>
-        <tr><th colspan="10">Goals</th></tr>
+        <tr>
+        <% i=i+1%>
+        <th><%= i %></th>
+        <th colspan="9"><center>Performance Report for Period: <%= e.period.name %> From: <%= e.period.from %> To: <%= e.period.to %></center></th></tr>
+        <tr><th colspan="10"><center>Goals</center></th></tr>
           <tr>
             <th>Goal Perspective</th>
             <th>Goal Weightage</th>
@@ -161,7 +164,7 @@
         </table>
         <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
         <thead>
-        <tr><th colspan="10">Attributes</th></tr>
+        <tr><th colspan="10"><center>Attributes</center></th></tr>
           <tr>
             <th>Attribute</th>
             <th>Goal Weightage</th>
@@ -198,7 +201,7 @@
     <center><p class="text-warning"> No Goal Bunch Available </p></center> 
     <% else %>
 
-       <% goal_bunch = GoalBunch.find_by_employee_id(@employee.id)%>
+       <% goal_bunch = GoalBunch.find_by_employee_id(@emp1.id)%>
        <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
         <tbody>
           <tr><th colspan="2"><center>Overall Performance Detail</center></th></tr>
@@ -237,28 +240,26 @@
         </tbody>
       </table>
       <br>
-      <% goal_bunch = GoalBunch.find_by_employee_id(@employee.id) %>
+      <% goal_bunch = GoalBunch.find_by_employee_id(@emp1.id) %>
        <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
         <tbody>
-          <tr><th colspan="2"><center>Detail</center></th><th>Sign</th></tr>
+          <tr><th colspan="2"><center>Detail</center></th><th>Contact No</th><th>Sign</th></tr>
             <tr>
               <th>Appraisee Name</th>
               <td><%= goal_bunch.employee.try(:first_name) %> <%= goal_bunch.employee.try(:middle_name) %> <%= goal_bunch.employee.try(:last_name) %></td>
+              <td><%= goal_bunch.employee.try(:contact_no) %></td>
               <td></td>
             </tr>
             <tr>
               <th>Appraiser Name</th>
               <td><%= goal_bunch.employee.manager.try(:first_name) %> <%= goal_bunch.employee.manager.try(:middle_name) %> <%= goal_bunch.employee.manager.try(:last_name) %></td>
+          <td><%= goal_bunch.employee.manager.try(:contact_no) %></td>
               <td></td>
             </tr>
             <tr>
               <th>Reviewer Name</th>
               <td><%= goal_bunch.employee.manager_2.try(:first_name) %> <%= goal_bunch.employee.manager_2.try(:middle_name) %> <%= goal_bunch.employee.manager_2.try(:last_name) %></td>
-              <td></td>
-            </tr>
-            <tr>
-              <th>Final Name</th>
-              <td><%=  %></td>
+          <td><%= goal_bunch.employee.manager_2.try(:contact_no) %></td>
               <td></td>
             </tr>
         </tbody>

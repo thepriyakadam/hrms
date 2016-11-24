@@ -87,6 +87,7 @@ class EmployeeNominationsController < ApplicationController
     format.html
     format.csv { send_data @employee_nominations.to_csv }
     format.xls
+    session[:active_tab] = "import"
    end   
   end
 

@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  is_payroll: false
+  base_component: MyString
+  rate: MyString
+  is_active: false
+  is_confirm: false
+
+two:
+  is_payroll: false
+  base_component: MyString
+  rate: MyString
+  is_active: false
+  is_confirm: false

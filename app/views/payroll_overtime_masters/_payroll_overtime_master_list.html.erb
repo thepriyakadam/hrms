@@ -4,6 +4,7 @@
       <th>Base Component</th>
       <th>Payroll</th>
       <th>Rate</th>
+      <th>Company Hrs</th>
       <th>Status</th>
       <th>Action</th>
     </tr>
@@ -24,7 +25,7 @@
         </td>
         <td><%= payroll_overtime_master.is_payroll ? "Yes" : "No" %></td>
         <td><%= payroll_overtime_master.rate %></td>
-        
+        <th><%= payroll_overtime_master.company_hrs %></th>
         <td><%= payroll_overtime_master.is_active ? "Active" : "Inactive" %></td>
         <td>
           <% if payroll_overtime_master.is_confirm == true %>

@@ -323,40 +323,39 @@ class GoalRatingsController < ApplicationController
       @employees = []
       redirect_to employee_wise_goal_goal_ratings_path
     else
-      #@emp1 = Employee.find(params[:employee_id])
       @employees = []
       @employee_ids.each do |p|
-        emp = GoalBunch.find_by_employee_id(p)
-        @employees << emp
+        @employees = GoalBunch.where(employee_id: p)
+        #@employees << emp
         @goal_bunch = GoalBunch.find_by_employee_id(p)
       end
-    end 
+    end
+     @joining_detail = JoiningDetail.find_by_employee_id(@emp1.id)
+     @experiences = Experience.where(employee_id: @emp1.id)
+     @qualifications = Qualification.where(employee_id: @emp1.id)
+     @employee_promotions = EmployeePromotion.where(employee_id: @emp1.id)
   end
 
   def print_employee_wise
     @employee = Employee.find(params[:emp_id])
-    #@employees = Employee.where(id: @employee.id)
     @employees = GoalBunch.where(employee_id: @employee.id)
     @employee_promotions = EmployeePromotion.where(employee_id: @employee.id)
     @qualifications = Qualification.where(employee_id: @employee.id)
     @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
     @experiences = Experience.where(employee_id: @employee.id)
     @ctc = EmployeeSalaryTemplate.where(employee_id: @employee.id).sum(:monthly_amount)
-    # @goal_ratings = GoalRating.where(appraisee_id: @employee.id, goal_bunch_id: @goal_bunch, goal_type: 'Goal')
-    # @goal_attribute_ratings = GoalRating.where("goal_bunch_id = ? AND goal_type = ?", @goal_bunch ,'Attribute')
-    # @goal_bunches = GoalBunch.where(employee_id: @employee.id, id: @goal_bunch).group(:employee_id)
     
     respond_to do |format|
-          format.json
-          format.pdf do
-            render pdf: 'goal_rating',
-                  layout: 'pdf.html',
-                  orientation: 'Landscape',
-                  template: 'goal_ratings/print_employee_wise.pdf.erb',
-                  show_as_html: params[:debug].present?,
-                  margin:  { top:1,bottom:1,left:1,right:1 }
-                end
-             end
+    format.json
+      format.pdf do
+      render pdf: 'goal_rating',
+            layout: 'pdf.html',
+            orientation: 'Landscape',
+            template: 'goal_ratings/print_employee_wise.pdf.erb',
+            show_as_html: params[:debug].present?,
+            margin:  { top:1,bottom:1,left:1,right:1 }
+      end
+    end
   end
 
   def detail_employee_wise_xls
@@ -518,9 +517,6 @@ class GoalRatingsController < ApplicationController
 
     def increment_index
     @rating = Rating.last
-    # @company = params[:salary][:company]
-    # @department = params[:salary][:department]
-    # @location = params[:salary][:location]
   end
 
   def all_employee_list
@@ -528,15 +524,28 @@ class GoalRatingsController < ApplicationController
     @company = params[:salary][:company]
     @department = params[:salary][:department]
     @location = params[:salary][:location]
-
-    #byebug
     @company_name = params[:salary][:company_name]
     @department_name = params[:salary][:department_name]
     @location_name = params[:salary][:location_name]
-
     @rating = Rating.last
     #@goal_bunches = GoalBunch.where(period_id: @period.id)
     @goal_bunches = GoalBunch.joins("INNER JOIN employees ON employees.id = goal_bunches.employee_id").where("employees.department_id = ? AND employees.company_location_id = ? AND employees.company_id = ? AND goal_bunches.period_id = ?" , @department_name,@location_name,@company_name,@period.id)
+  end
+
+  def increment_index_report
+    @period = params[:period_id]
+    @company = params[:company]
+    @department = params[:department]
+    @location = params[:location]
+    @company_name = params[:company_name]
+    @department_name = params[:department_name]
+    @location_name = params[:location_name]
+    @rating = Rating.last
+    #@goal_bunches = GoalBunch.where(period_id: @period.id)
+    @goal_bunches = GoalBunch.joins("INNER JOIN employees ON employees.id = goal_bunches.employee_id").where("employees.department_id = ? AND employees.company_location_id = ? AND employees.company_id = ? AND goal_bunches.period_id = ?" , @department_name,@location_name,@company_name,@period.id)
+    respond_to do |format|
+      format.xls {render template: 'goal_ratings/increment_index.xls.erb'}
+    end
   end
 
   def print_employee_list

@@ -239,25 +239,23 @@
       <% goal_bunch = GoalBunch.find_by_employee_id(e.employee_id) %>
        <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
         <tbody>
-          <tr><th colspan="2"><center>Detail</center></th><th>Sign</th></tr>
+          <tr><th colspan="2"><center>Detail</center></th><th>Contact No</th><th>Sign</th></tr>
             <tr>
               <th>Appraisee Name</th>
               <td><%= goal_bunch.employee.try(:first_name) %> <%= goal_bunch.employee.try(:middle_name) %> <%= goal_bunch.employee.try(:last_name) %></td>
+              <td><%= goal_bunch.employee.try(:contact_no) %></td>
               <td></td>
             </tr>
             <tr>
               <th>Appraiser Name</th>
               <td><%= goal_bunch.employee.manager.try(:first_name) %> <%= goal_bunch.employee.manager.try(:middle_name) %> <%= goal_bunch.employee.manager.try(:last_name) %></td>
+          <td><%= goal_bunch.employee.manager.try(:contact_no) %></td>
               <td></td>
             </tr>
             <tr>
               <th>Reviewer Name</th>
               <td><%= goal_bunch.employee.manager_2.try(:first_name) %> <%= goal_bunch.employee.manager_2.try(:middle_name) %> <%= goal_bunch.employee.manager_2.try(:last_name) %></td>
-              <td></td>
-            </tr>
-            <tr>
-              <th>Final Name</th>
-              <td><%=  %></td>
+          <td><%= goal_bunch.employee.manager_2.try(:contact_no) %></td>
               <td></td>
             </tr>
         </tbody>

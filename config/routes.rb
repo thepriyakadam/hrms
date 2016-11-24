@@ -10,11 +10,23 @@ Rails.application.routes.draw do
       get :is_confirm
       end
   end
+
+  resources :leave_cashables do
+    collection do
+      get :collect_amount
+    end
+  end
+  resources :week_off_masters do 
+    collection do
+      get :assign_week_off
+    end
+  end
   resources :machine_attendances do
     collection do
       get :new
       post :create
       post :save_machine_attendance
+      post :save_machine_attendance_checkbox
     end
   end
   resources :company_time_masters do

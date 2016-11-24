@@ -1,0 +1,65 @@
+<%= bootstrap_form_for(@leave_cashable,html: {id: 'leave_cashable'},remote: true) do |f| %>
+  <div class="row">
+    <label>Employee</label>
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= select :salary,:employee_id,all_employee_list,{label: "Employee",include_blank: "Select Employee"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.select :leav_category_id,cashable_leav_category, {include_blank: "Select Category"},{onchange:"var a={id:$(this).val(),emp_id:$('#salary_employee_id').val()}; $.get('/leave_cashables/collect_amount',a,function(response){});",:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="fa fa-calendar"></i>
+          </div>
+            <%= f.text_field :date, label: "Date", class: 'cashable_date'%>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :no_of_leave, label: "Balance",include_blank: "balance" , readonly:true %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :cashable, label: "Cashable",include_blank: "cashable" %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :amount, label: "Amount",include_blank: "amount" %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <label>Status</label>
+      <div class="form-group required">
+        <%= f.check_box :is_confirm,label:'Confirm' %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "Create Leave Cashable" ,class: "btn btn-primary btn-sm" %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+
+<script type="text/javascript">
+
+  $(function(){
+     $('.cashable_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:-0',
+    dateFormat: 'dd-mm-yy' });
+    });
+</script>

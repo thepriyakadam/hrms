@@ -24,7 +24,7 @@ class IssueRequestMailer < ApplicationMailer
 # end
 
   def issue_tracker_group_email(s)
-    s=s
+  	s=s
     mail(to: s, subject: 'Support Request')
   end
 end

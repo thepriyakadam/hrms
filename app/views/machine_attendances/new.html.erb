@@ -15,34 +15,35 @@
         <div class="input-group-addon">
           <i class="fa fa-calendar"></i>
         </div>
-        <%= text_field :machine_attendance,:day,label: "Date",class: 'joining_date'%>
+        <%= text_field :machine_attendance,:day,label: "Date",class: 'joining_date form-control',placeholder: 'Date'%>
       </div>
     </div>
   </div>
+    
     <div class="col-sm-2">
-      <div class="bootstrap-timepicker">
-        <div class="form-group">
-          <label>In Time</label>
-          <div class="input-group">
-            <%= text_field :machine_attendance,:in,hide_label:true, class: 'form-control timepicker' %>
-            <div class="input-group-addon">
-              <i class="fa fa-clock-o"></i>
-            </div>
-          </div><!-- /.input group -->
-        </div><!-- /.form group -->
+      <div class="field">
+          <div class="form-group">
+            <!-- <label>In Time</label> -->
+            <div class='input-group date' id='datetimepicker10'>
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <%= text_field :machine_attendance,:in,hide_label: true, placeholder: 'In Time',class: 'form-control'%>
+            </div><!-- /.input group -->
+          </div><!-- /.form group -->
       </div>
     </div>
-    <div class="col-sm-2">
-      <div class="bootstrap-timepicker">
-        <div class="form-group">
-          <label>Out Time</label>
-          <div class="input-group">
-            <%= text_field :machine_attendance,:out,hide_label:true, class: 'form-control timepicker' %>
-            <div class="input-group-addon">
-              <i class="fa fa-clock-o"></i>
-            </div>
-          </div><!-- /.input group -->
-        </div><!-- /.form group -->
+     <div class="col-sm-2">
+      <div class="field">
+          <div class="form-group">
+            <!-- <label>Out Time</label> -->
+            <div class='input-group date' id='datetimepicker11'>
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <%= text_field :machine_attendance,:out,hide_label: true, placeholder: 'Out Time',class: 'form-control'%>
+            </div><!-- /.input group -->
+          </div><!-- /.form group -->
       </div>
     </div>
     </div>
@@ -59,6 +60,8 @@
 </div>
 <% end %>
 
+<%= render 'machine_attendance_list' %>
+
 <script type="text/javascript">
   $(function(){
     $('.joining_date').datepicker({
@@ -68,3 +71,15 @@
     dateFormat: 'dd-mm-yy' });
   }); 
 </script>
+
+<script type="text/javascript">
+    $(function () {
+        $('#datetimepicker10').datetimepicker();
+    });
+ </script>
+
+ <script type="text/javascript">
+    $(function () {
+        $('#datetimepicker11').datetimepicker();
+    });
+ </script>

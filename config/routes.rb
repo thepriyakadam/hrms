@@ -5,6 +5,7 @@ Rails.application.routes.draw do
       get :new
       post :create
       post :save_machine_attendance
+      post :save_machine_attendance_checkbox
     end
   end
   resources :company_time_masters do
@@ -328,6 +329,8 @@ end
       get :emp_attendance
       get :display_attendance_2
       get :employee_slip_xls_1
+      get :costcenter_wise_excel1
+      get :costcenter_wise_pdf
       get :employee_slip_pdf
       get :attendance_total_pdf
       get :emp_attendance_1
@@ -693,6 +696,8 @@ end
     post :update_asset
     get :modal
     get :update_asset
+    get :import_xl
+    post :import
     end
   end
   resources :asset_types do
@@ -700,7 +705,12 @@ end
       get :is_confirm
     end
   end
-  resources :employee_nominations
+  resources :employee_nominations do
+    collection do
+      get :import_xl
+      post :import
+    end
+  end
   resources :nomination_masters do
     collection do
       get :is_confirm
@@ -1587,7 +1597,12 @@ end
       get :is_confirm
     end
   end
-  resources :employee_physicals
+  resources :employee_physicals do
+    collection do
+      get :import_xl
+      post :import
+       end
+  end
   resources :joining_details do
     collection do
       get :search_by_joining_date
@@ -1603,18 +1618,34 @@ end
   resources :awards do
     collection do
       get :add_award_field
+      get :import_xl
+      post :import
     end
   end
-  resources :skillsets
+  resources :skillsets  do
+    collection do
+      get :import_xl
+      post :import
+       end
+  end
   resources :experiences  do
     collection do
+      get :import_xl
+      post :import
       get :modal_experience
       post :update_experience
     end
   end
-  resources :certifications
+  resources :certifications do
+    collection do
+      get :import_xl
+      post :import
+    end
+  end
   resources :qualifications do
     collection do
+      get :import_xl
+      post :import
       get :modal
       post :update_qualification
      end
@@ -1623,6 +1654,8 @@ end
     collection do
       get :ajax_show_handicap_type_textbox
       get :ajax_show_passport_detail_textbox
+      get :import_xl
+      post :import
     end
   end
   resources :employees do

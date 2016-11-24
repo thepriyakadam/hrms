@@ -15,12 +15,12 @@
   <tbody>
     <% @company_time_masters.each do |company_time_master| %>
       <tr>
-        <td><%= company_time_master.in_min_time.to_time %></td>
-        <td><%= company_time_master.in_max_time.to_time %></td>
-        <td><%= company_time_master.in_time.to_time %></td>
-        <td><%= company_time_master.out_min_time.to_time %></td>
-        <td><%= company_time_master.out_max_time.to_time %></td>
-        <td><%= company_time_master.out_time.to_time %></td>
+        <td><%= company_time_master.in_min_time %></td>
+        <td><%= company_time_master.in_max_time %></td>
+        <td><%= company_time_master.in_time %></td>
+        <td><%= company_time_master.out_min_time %></td>
+        <td><%= company_time_master.out_max_time %></td>
+        <td><%= company_time_master.out_time %></td>
         <td><%= company_time_master.working_hrs %></td>
         <td><%= company_time_master.is_active ? "Yes" : "No" %></td>
         <td>

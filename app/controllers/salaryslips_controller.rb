@@ -601,6 +601,22 @@ class SalaryslipsController < ApplicationController
         end
       end
 
+      @payroll_overtime_masters = PayrollOvertimeMaster.where(is_active: true,is_payroll: true)
+
+      @payroll_overtime_masters.try(:each) do |pom|
+      formula_string = s.base_component.split(',').map {|i| i.to_i}
+      formula_item = SalaryslipComponent.where(salary_component_id: formula_string,salaryslip_id: @salaryslip.id)  
+      @total = formula_item.sum(:calculated_amount)
+      @total_actual = formula_item.sum(:actual_amount)
+      formula_item_calculated_amount = (@total.to_f / working_day.try(:day_in_month)) * pom.rate
+      f1_calculated = 
+      formula_item_actual_amount = (@total.to_f / working_day.try(:day_in_month)) * pom.rate
+      f1_actual = 
+      @salary_component = SalaryComponent.find_by(name: "Overtime")
+      SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: f1_actual.to_f, calculated_amount: f1_calculated.to_f, is_deducted: true, other_component_name: 'Overtime',salary_component_id: @salary_component.id)
+    end
+
+
           # @arrear = EmployeeArrear.where('employee_id = ? and is_paid = ?', @employee.id, false).take
           # next if @arrear.nil?
           # arrear_start_date = @arrear.start_date

@@ -70,6 +70,21 @@ class QualificationsController < ApplicationController
     @qualification = Qualification.find(params[:format])
   end
 
+   def import_xl
+    @qualifications = Qualification.all
+    respond_to do |format|
+    format.html
+    format.csv { send_data @qualifications.to_csv }
+    format.xls
+   end   
+  end
+
+  def import
+    # byebug
+    Qualification.import(params[:file])
+    redirect_to root_url, notice: "File imported."
+  end
+
   def update_qualification
     @qualification = Qualification.find(params[:id])
     @employee = Employee.find(@qualification.employee_id)

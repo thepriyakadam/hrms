@@ -77,6 +77,21 @@ class AwardsController < ApplicationController
     end
   end
 
+  def import_xl
+    @awards = Award.all
+    respond_to do |format|
+    format.html
+    format.csv { send_data @awards.to_csv }
+    format.xls
+   end   
+  end
+
+  def import
+    # byebug
+    Award.import(params[:file])
+    redirect_to root_url, notice: "File imported."
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

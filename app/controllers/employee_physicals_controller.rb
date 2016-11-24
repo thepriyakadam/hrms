@@ -66,6 +66,21 @@ class EmployeePhysicalsController < ApplicationController
     end
   end
 
+   def import_xl
+    @employee_physicals = EmployeePhysical.all
+    respond_to do |format|
+    format.html
+    format.csv { send_data @employee_physicals.to_csv }
+    format.xls
+   end   
+  end
+
+  def import
+    # byebug
+    EmployeePhysical.import(params[:file])
+    redirect_to root_url, notice: "File imported."
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

@@ -2080,6 +2080,7 @@ ActiveRecord::Schema.define(version: 20161124112721) do
     t.boolean  "is_balance"
     t.string   "limit"
     t.boolean  "is_limit"
+    t.boolean  "is_cashable"
   end
 
   create_table "leav_rejecteds", force: :cascade do |t|
@@ -2117,6 +2118,21 @@ ActiveRecord::Schema.define(version: 20161124112721) do
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
   end
+
+  create_table "leave_cashables", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.integer  "leav_category_id"
+    t.date     "date"
+    t.string   "no_of_leave"
+    t.string   "cashable"
+    t.decimal  "amount"
+    t.boolean  "is_confirm"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "leave_cashables", ["employee_id"], name: "index_leave_cashables_on_employee_id"
+  add_index "leave_cashables", ["leav_category_id"], name: "index_leave_cashables_on_leav_category_id"
 
   create_table "leave_masters", force: :cascade do |t|
     t.integer  "leav_category_id"
@@ -3344,6 +3360,19 @@ ActiveRecord::Schema.define(version: 20161124112721) do
   add_index "vacancy_request_histories", ["employee_id"], name: "index_vacancy_request_histories_on_employee_id"
   add_index "vacancy_request_histories", ["reporting_master_id"], name: "index_vacancy_request_histories_on_reporting_master_id"
   add_index "vacancy_request_histories", ["vacancy_master_id"], name: "index_vacancy_request_histories_on_vacancy_master_id"
+
+  create_table "week_off_masters", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.string   "day"
+    t.boolean  "is_active"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.boolean  "is_send"
+    t.date     "from"
+    t.date     "to"
+  end
+
+  add_index "week_off_masters", ["employee_id"], name: "index_week_off_masters_on_employee_id"
 
   create_table "week_offs", force: :cascade do |t|
     t.string   "weekoff_date_range"

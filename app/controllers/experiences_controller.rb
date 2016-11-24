@@ -87,6 +87,21 @@ class ExperiencesController < ApplicationController
      redirect_to employees_path
   end
 
+   def import_xl
+    @experiences = Experience.all
+    respond_to do |format|
+    format.html
+    format.csv { send_data @experiences.to_csv }
+    format.xls
+   end   
+  end
+
+  def import
+    # byebug
+    Experience.import(params[:file])
+    redirect_to root_url, notice: "File imported."
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

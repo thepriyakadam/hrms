@@ -10,37 +10,32 @@
       <th>Actual Bonus</th>
       <th>Actual Pf</th>
       <th>Actual Esic</th>
-      <th>Actual CTC</th>
+      <!-- <th>Actual CTC</th> -->
       <th>Calculated Gross Salary</th>
       <th>Calculated Bonus</th>
       <th>Calculated Pf</th>
       <th>Calculated Esic</th>
-      <th>Calculated CTC</th>
+      <!-- <th>Calculated CTC</th> -->
     </tr>
   </thead>
   <tbody>
     <% @salaryslips.try(:each) do |s| %>
-    <% @bonus_employees.try(:each) do |be| %>
-    <% @employeer_pfs.try(:each) do |ep| %>
-    <% @employeer_esic.try(:each) do |ee| %>
+    <% @emp_contribution.try(:each) do |ee| %>
       <tr>
         <td><%= check_box_tag "slaryslip_ids[]", s.id %></td>
         <td><%= s.year %>-<%= s.month %></td>
         <td><%= s.employee.try(:manual_employee_code) %></td>
         <td><%= full_name(s.employee) %></td>
         <td><%= s.actual_gross_salary.round %></td>
-        <td><%= %></td>
-        <td><%= ep.try(:actual_amount) %></td>
-        <td><%= ee.try(:actual_amount) %></td>
-        <td><%= b=ep.actual_amount+ee.actual_amount+s.actual_gross_salary.round %></td>
-        <td><%= s.calculated_gross_salary.round %></td>
-        <td><%= be.amount %></td>
-        <td><%= ep.amount %></td>
-        <td><%= ee.amount %></td>
-        <td><%= a=be.amount+ep.amount+ee.amount+s.calculated_gross_salary.round %></td>
+        <td><%= ee.try(:actual_bonus)%></td>
+        <td><%= ee.try(:actual_pf) %></td>
+        <td><%= ee.try(:actual_esic) %></td>
+        <!-- <td><= b=(ee.try(:actual_bonus)+ee.try(:actual_pf)+ee.try(:actual_esic)).to_f %></td> -->
+        <td><%= ee.try(:bonus) %></td>
+        <td><%= ee.try(:pf) %></td>
+        <td><%= ee.try(:esic) %></td>
+        <!-- <td><= a=(ee.try(:actual_bonus)+ee.try(:actual_pf)+ee.try(:actual_esic)).to_f %></td> -->
       </tr>
-    <% end %>
-    <% end %>
     <% end %>
     <% end %>
   </tbody>

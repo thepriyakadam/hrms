@@ -8,13 +8,13 @@
     <p>
       This is to inform you that you have a support Request .
       Details are given below.<br><br>
-      <b>1. Support Master</b> - <%= @issue_request.issue_master.try(:name) %><br><br>
+      <b>1. Support Master</b> - <%= @issue_request.try(:issue_master).try(:name) %><br><br>
 
-      <b>2. Support Tracker Group</b> - <%= @issue_request.issue_tracker_group.try(:name) %><br><br>
+      <b>2. Support Tracker Group</b> - <%= @issue_request.try(:issue_tracker_group).try(:name) %><br><br>
 
-      <b>3. Support Priority</b> - <%= @issue_request.issue_priority %><br><br>
+      <b>3. Support Priority</b> - <%= @issue_request.try(:issue_priority) %><br><br>
 
-      <b>4. Description</b> - <%= @issue_request.description %><br><br>
+      <b>4. Description</b> - <%= @issue_request.try(:description) %><br><br>
         With Regards,<br><br>
         HR
      </p>

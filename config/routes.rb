@@ -5,6 +5,7 @@ Rails.application.routes.draw do
       get :new
       post :create
       post :save_machine_attendance
+      post :save_machine_attendance_checkbox
     end
   end
   resources :company_time_masters do

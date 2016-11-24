@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161122114648) do
+ActiveRecord::Schema.define(version: 20161124112721) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -2109,6 +2109,15 @@ ActiveRecord::Schema.define(version: 20161122114648) do
 
   add_index "leave_c_offs", ["employee_id"], name: "index_leave_c_offs_on_employee_id"
 
+  create_table "leave_cash_masters", force: :cascade do |t|
+    t.string   "base_component"
+    t.string   "rate"
+    t.boolean  "is_confirm"
+    t.boolean  "is_active"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
   create_table "leave_masters", force: :cascade do |t|
     t.integer  "leav_category_id"
     t.string   "period"
@@ -2393,6 +2402,17 @@ ActiveRecord::Schema.define(version: 20161122114648) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.boolean  "is_confirm"
+  end
+
+  create_table "payroll_overtime_masters", force: :cascade do |t|
+    t.boolean  "is_payroll"
+    t.string   "base_component"
+    t.string   "rate"
+    t.boolean  "is_active"
+    t.boolean  "is_confirm"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.string   "company_hrs"
   end
 
   create_table "performance_activities", force: :cascade do |t|

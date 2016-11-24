@@ -83,6 +83,7 @@ class CertificationsController < ApplicationController
     format.html
     format.csv { send_data @certifications.to_csv }
     format.xls
+     session[:active_tab] = "import"
    end   
   end
 

@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Base component:</strong>
+  <%= @leave_cash_master.base_component %>
+</p>
+
+<p>
+  <strong>Rate:</strong>
+  <%= @leave_cash_master.rate %>
+</p>
+
+<p>
+  <strong>Is confirm:</strong>
+  <%= @leave_cash_master.is_confirm %>
+</p>
+
+<p>
+  <strong>Is active:</strong>
+  <%= @leave_cash_master.is_active %>
+</p>
+
+<%= link_to 'Edit', edit_leave_cash_master_path(@leave_cash_master) %> |
+<%= link_to 'Back', leave_cash_masters_path %>

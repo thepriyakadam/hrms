@@ -56,7 +56,7 @@ class LeaveCashablesController < ApplicationController
   def collect_amount
     @employee = Employee.find(params[:emp_id])
     @leav_category = LeavCategory.find(params[:id])
-    @emp_bal = EmployeeLeavBalance.where(employee_id: @employee.id,leave_category_id: @leav_category.id,is_active: true)
+    @emp_bal = EmployeeLeavBalance.where(employee_id: @employee.id,leav_category_id: @leav_category.id,is_active: true).take
     @amount = @emp_bal.no_of_leave
   end
 

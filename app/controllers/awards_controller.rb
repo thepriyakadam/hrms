@@ -83,6 +83,7 @@ class AwardsController < ApplicationController
     format.html
     format.csv { send_data @awards.to_csv }
     format.xls
+     session[:active_tab] = "import"
    end   
   end
 

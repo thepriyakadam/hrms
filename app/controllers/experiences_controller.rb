@@ -93,6 +93,7 @@ class ExperiencesController < ApplicationController
     format.html
     format.csv { send_data @experiences.to_csv }
     format.xls
+     session[:active_tab] = "import"
    end   
   end
 

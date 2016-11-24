@@ -1,0 +1,1 @@
+json.partial! "leave_cash_masters/leave_cash_master", leave_cash_master: @leave_cash_master

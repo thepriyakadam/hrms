@@ -94,6 +94,7 @@ class AssignedAssetsController < ApplicationController
     format.html
     format.csv { send_data @assigned_assets.to_csv }
     format.xls
+     session[:active_tab] = "import"
    end   
   end
 

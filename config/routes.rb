@@ -1,4 +1,22 @@
 Rails.application.routes.draw do
+  
+  resources :shift_masters do
+    collection do
+      get :is_confirm
+    end
+  end
+  resources :payroll_overtime_masters do
+    collection do
+      get :is_confirm
+      end
+  end
+  resources :leave_cash_masters do
+    collection do
+      get :is_confirm
+      end
+  end
+
+  
 
   resources :leave_cashables do
     collection do
@@ -10,7 +28,6 @@ Rails.application.routes.draw do
       get :assign_week_off
     end
   end
-
   resources :machine_attendances do
     collection do
       get :new
@@ -121,7 +138,7 @@ Rails.application.routes.draw do
       get :id_wise_report_xls
       get :id_wise_report_pdf
       get :memberwise_report
-      get :memberwise_report_list
+      post :memberwise_report_list
       
     end
    end

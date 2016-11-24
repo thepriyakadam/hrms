@@ -77,6 +77,7 @@ class FamiliesController < ApplicationController
     format.html
     format.csv { send_data @families.to_csv }
     format.xls
+     session[:active_tab] = "import"
    end   
   end
 

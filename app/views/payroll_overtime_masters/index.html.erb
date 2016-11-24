@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Payroll Overtime Masters</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Is payroll</th>
+      <th>Base component</th>
+      <th>Rate</th>
+      <th>Is active</th>
+      <th>Is confirm</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @payroll_overtime_masters.each do |payroll_overtime_master| %>
+      <tr>
+        <td><%= payroll_overtime_master.is_payroll %></td>
+        <td><%= payroll_overtime_master.base_component %></td>
+        <td><%= payroll_overtime_master.rate %></td>
+        <td><%= payroll_overtime_master.is_active %></td>
+        <td><%= payroll_overtime_master.is_confirm %></td>
+        <td><%= link_to 'Show', payroll_overtime_master %></td>
+        <td><%= link_to 'Edit', edit_payroll_overtime_master_path(payroll_overtime_master) %></td>
+        <td><%= link_to 'Destroy', payroll_overtime_master, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Payroll overtime master', new_payroll_overtime_master_path %>

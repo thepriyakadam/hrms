@@ -62,6 +62,7 @@ end
     format.html
     format.csv { send_data @employee_bank_details.to_csv }
     format.xls
+    session[:active_tab] = "import"
    end   
   end
 

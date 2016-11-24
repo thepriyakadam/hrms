@@ -1,0 +1,6 @@
+<%if @flag == true %>
+$("#form").html("<%= j render 'form' %>");
+$("#leave_cashable_list").html("<%= j render 'leave_cashable_list' %>");
+<%else%>
+  $("#form").html("<%= j render 'form' %>");
+<%end%>

@@ -265,6 +265,7 @@
        <li><a href="/employee_leav_balances"><i class="fa fa-tags"></i>Leave Assignment</a></li>
        <li><a href="/leave_c_offs/new"><i class="fa fa-tags"></i>C.Off Maintenance</a></li>
        <li><a href="/leave_masters/new"><i class="fa fa-tags"></i>Leave Master</a></li>
+       <li><a href="/leave_cash_masters/new"><i class="fa fa-tags"></i>Leave Cash Master</a></li>
        </ul>
       </li> 
        <li class="treeview" id="leaverequest">
@@ -419,23 +420,24 @@
       <i class="glyphicon glyphicon-th-large"></i> <span>Time Management</span>
       <i class="fa fa-angle-left pull-right"></i>
     </a>
-
-     
     <ul class="treeview-menu" >
      <li><a href="/holidays/new"><i class="fa fa-tags"></i> Holiday Setup </a></li>
-     <li class="treeview" id="attendance"> <a href="#"><i class="fa fa-edit"></i>Attendance <i class="fa fa-angle-left pull-right"></i></a>
+     <li><a href="/week_off_masters/new"><i class="fa fa-tags"></i> Week Off Setup </a></li>
+
+     <li class="treeview" id="attendance">
+      <a href="#">
+        <i class="fa fa-edit"></i>Attendance <i class="fa fa-angle-left pull-right"></i>
+      </a>
       <ul class="treeview-menu">
-     <li><a href="/employee_attendances/new"><i class="fa fa-tags"></i> Add Attendance</a></li>
-     
-     <li><a href="/employee_attendances/emp_attendance"><i class="fa fa-tags"></i> Attendance  </a></li>
-     <li><a href="/employee_attendances/costcenter_wise_attendance"><i class="fa fa-tags"></i> Show Cost Center Wise </a></li>
-     <li><a href="/employee_attendances/revert_attendance_employeewise"><i class="fa fa-tags"></i> Revert Employee Wise </a></li>
-     <li><a href="/employee_attendances/revert_attendance"><i class="fa fa-tags"></i> Revert Cost Center Wise </a></li>
-     <li><a href="/employee_attendances/calculate_attendance"><i class="fa fa-tags"></i> Attendance Setup</a></li>
-    <!--  <li><a href="/employee_attendances"><i class="fa fa-tags"></i> Confirm Attendance  </a></li> -->
-     <li><a href="/workingdays"><i class="fa fa-tags"> </i>Monthly Working Day</a></li>
+       <li><a href="/employee_attendances/new"><i class="fa fa-tags"></i> Add Attendance</a></li> 
+       <li><a href="/employee_attendances/emp_attendance"><i class="fa fa-tags"></i> Attendance  </a></li>
+       <li><a href="/employee_attendances/costcenter_wise_attendance"><i class="fa fa-tags"></i> Show Cost Center Wise </a></li>
+       <li><a href="/employee_attendances/revert_attendance_employeewise"><i class="fa fa-tags"></i> Revert Employee Wise </a></li>
+       <li><a href="/employee_attendances/revert_attendance"><i class="fa fa-tags"></i> Revert Cost Center Wise </a></li>
+       <li><a href="/employee_attendances/calculate_attendance"><i class="fa fa-tags"></i> Attendance Setup</a></li>
+      <!--  <li><a href="/employee_attendances"><i class="fa fa-tags"></i> Confirm Attendance  </a></li> -->
+       <li><a href="/workingdays"><i class="fa fa-tags"> </i>Monthly Working Day</a></li>
      <!-- <li><a href="/workingdays/search_month_year"><i class="fa fa-tags"> </i>Attendace Update(Auto) </a></li> -->
-    
      <!--  <li><a href="/holidays/new"><i class="fa fa-tags"></i> Holiday Setup </a></li>
       <li><a href="/company_shifts/new"><i class="fa fa-tags"></i> Shifts Maintenance </a></li>
       <li><a href="/shift_rotations/new"><i class="fa fa-tags"></i> Shift Rotation </a></li>
@@ -615,6 +617,25 @@
     <a href=""><i class="ionicons ion-ios-time"></i><span><span> Health Safety Management </span></span> <i class="fa fa-angle-left pull-right"></i></a>
     <ul class="treeview-menu">
       <li><a href="/accident_records"><i class="fa fa-tags"></i> Accident Record </a></li>
+    </ul>
+   </li>
+
+   <li class="treeview" id="import">
+    <a href=""><i class="glyphicon glyphicon-save"></i><span><span> Import Excel File </span></span> <i class="fa fa-angle-left pull-right"></i></a>
+    <ul class="treeview-menu">
+      <li><a href="/employees/import_xl"><i class="fa fa-user"></i> Employee </a></li>
+      <li><a href="/employee_bank_details/import_xl"><i class="fa fa-university"></i> Bank Detail </a></li>
+      <li><a href="/joining_details/import_xl"><i class="fa fa-user"></i> On Boarding Detail</a></li>
+      <li><a href="/qualifications/import_xl"><i class="fa fa-graduation-cap"></i> Qualifiation Detail</a></li>
+      <li><a href="/experiences/import_xl"><i class="fa fa-star-o"></i> Experience Detail</a></li>
+      <li><a href="/skillsets/import_xl"><i class="fa fa-asterisk"></i> Skillset Detail</a></li>
+      <li><a href="/certifications/import_xl"><i class="fa fa-certificate"></i> Certification Detail</a></li>
+      <li><a href="/awards/import_xl"><i class="fa fa-trophy"></i> Awards Detail</a></li>
+      <li><a href="/employee_physicals/import_xl"><i class="fa fa-tags"></i> Physical Detail</a></li>
+      <li><a href="/families/import_xl"><i class="fa fa-child"></i> Family </a></li>
+      <li><a href="/employee_nominations/import_xl"><i class="fa fa-users"></i> Nomination Detail </a></li>
+      <li><a href="/assigned_assets/import_xl"><i class="fa fa-th-list"></i> Assigned Assets Detail </a></li>
+
     </ul>
    </li>
 

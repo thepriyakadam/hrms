@@ -1,0 +1,38 @@
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Base component</th>  
+      <th>Rate</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+   <% @leave_cash_masters.each do |leave_cash_master| %>
+      <tr>
+        <td>
+          <% i = 0 %>
+          <% leave_cash_master.base_component.split(",").each do |e| %>
+            <% if i == 0 %>
+              <%= SalaryComponent.find(e.to_i).name %>
+            <% else %>
+              + <%= SalaryComponent.find(e.to_i).name %>
+            <% end %>
+            <% i = i + 1 %>
+          <% end %>
+        </td>
+        <td><%= leave_cash_master.rate %></td>     
+        <td><%= leave_cash_master.is_active ? "Active" : "Inactive" %></td>
+        <td>
+          <% if leave_cash_master.is_confirm == true %>
+            <small class= "label label-primary">Confirmed</small>
+          <% else %>
+            <%= link_to '', edit_leave_cash_master_path(leave_cash_master) ,class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
+            <%= link_to '',  leave_cash_master, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-xs btn-danger fa fa-close' %>
+            <%= link_to '', is_confirm_leave_cash_masters_path(leave_cash_master: leave_cash_master),data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-info fa fa-check' %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

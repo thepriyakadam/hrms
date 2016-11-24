@@ -8,6 +8,7 @@
       <th>To</th>
       <th>Payble</th> 
       <th>Balance Required</th> 
+      <th>Cashable</th> 
       <th>Status</th> 
       <th>Limit</th>
       <th>Action</th>
@@ -23,6 +24,7 @@
         <td><%= leav_category.to %></td>
         <td><%= leav_category.is_payble ? "Yes" : "No" %></td>
         <td><%= leav_category.is_balance ? "Yes" : "No" %></td>
+        <td><%= leav_category.is_cashable ? "Yes" : "No" %></td>
         <td><%= leav_category.is_active ? "Active" : "Inactive" %></td> 
         <td><%= leav_category.limit %></td>
         <td>

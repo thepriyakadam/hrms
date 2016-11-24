@@ -25,17 +25,18 @@ class LeaveCashablesController < ApplicationController
   # POST /leave_cashables
   # POST /leave_cashables.json
   def create
-    @leave_cashable = LeaveCashable.new(leave_cashable_params)
+     @leave_cashable = LeaveCashable.new(leave_cashable_params)
     @leave_cashables = LeaveCashable.all
     respond_to do |format|
       if @leave_cashable.save
         @leave_cashable = LeaveCashable.new 
         format.js { @flag = true }
       else
-        flash.now[:alert] = 'Leave Cashable Created Successfully'
+        flash.now[:alert] = 'Week Off Created Successfully'
         format.js { @flag = false }
       end
     end
+
   end
 
   # PATCH/PUT /leave_cashables/1

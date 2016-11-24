@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
   
+  resources :shift_masters do
+    collection do
+      get :is_confirm
+    end
+  end
   resources :machine_attendances do
     collection do
       get :new

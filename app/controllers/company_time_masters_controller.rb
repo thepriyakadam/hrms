@@ -47,8 +47,9 @@ class CompanyTimeMastersController < ApplicationController
     @out_max_time = params[:company_time_master][:out_max_time]
     @out_time = params[:company_time_master][:out_time]
     @working_hrs = params[:company_time_master][:working_hrs]
+    @shift_type = params[:company_time_master][:shift_master_id]
     @is_active = params[:company_time_master][:is_active]
-    CompanyTimeMaster.create(in_min_time: @in_min_time.to_datetime,in_max_time: @in_max_time.to_datetime,in_time: @in_time.to_datetime,out_min_time: @out_min_time.to_datetime,out_max_time: @out_max_time.to_datetime,out_time: @out_time.to_datetime,working_hrs: @working_hrs,is_active: @is_active)
+    CompanyTimeMaster.create(in_min_time: @in_min_time.to_datetime,in_max_time: @in_max_time.to_datetime,in_time: @in_time.to_datetime,out_min_time: @out_min_time.to_datetime,out_max_time: @out_max_time.to_datetime,out_time: @out_time.to_datetime,working_hrs: @working_hrs,shift_master_id: @shift_type,is_active: @is_active)
     flash[:notice] = "Company Time Master Created Successfully"
     redirect_to new_company_time_master_path
   end

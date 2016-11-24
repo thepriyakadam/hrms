@@ -1,6 +1,7 @@
 <table id="example2" class="table table-bordered table-hover table-condensed">
   <thead>
-    <tr>  
+    <tr>
+      <th>Shift</th>  
       <th>In Min Time</th>
       <th>In Max Time</th>
        <th>In Time</th>
@@ -8,6 +9,7 @@
       <th>Out Max Time</th>
       <th>Out Time</th>
       <th>Working Hrs</th>
+      
       <th>Is Active</th>
       <th>Action</th>
     </tr>
@@ -15,6 +17,7 @@
   <tbody>
     <% @company_time_masters.each do |company_time_master| %>
       <tr>
+        <td><%= company_time_master.shift_master.try(:name) %></td>
         <td><%= company_time_master.in_min_time %></td>
         <td><%= company_time_master.in_max_time %></td>
         <td><%= company_time_master.in_time %></td>
@@ -22,6 +25,7 @@
         <td><%= company_time_master.out_max_time %></td>
         <td><%= company_time_master.out_time %></td>
         <td><%= company_time_master.working_hrs %></td>
+        
         <td><%= company_time_master.is_active ? "Yes" : "No" %></td>
         <td>
           <% if company_time_master.is_confirm == true %>

@@ -1,2 +1,7 @@
+<%if @flag %>
 $("#form").html("<%= j render 'form' %>");
 $("#leave_c_off_li").html("<%= j render 'leave_c_off_list' %>");
+<%else%>
+  $("#form").html("<%= j render 'form' %>");
+<%end%>
+

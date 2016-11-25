@@ -99,6 +99,33 @@ ActiveRecord::Base.transaction do
   end
 end
 
+ex = Roo::Excel.new("#{Rails.root}/public/bftl machine attendance.xls")
+
+ex.default_sheet = ex.sheets[1] #siya feb
+i = 1
+ActiveRecord::Base.transaction do
+
+2.upto(71) do |line| # siya Feb 2016
+ puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
+ @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
+ unless @employee.nil?
+
+   MachineAttendance.new do |w|
+     w.employee_id = @employee.id
+     w.day = ex.cell(line, 'B')
+     w.in = ex.cell(line, 'C')
+     w.out = ex.cell(line, 'D')
+     w.shift_master_id = ex.cell(line, 'G').to_i
+
+     
+     w.save!
+   end
+   puts "#{i} Record inserted.-----------------------------------------------"
+   i += 1
+ end
+ end
+end
+
 # puts "Starting ..."
 # ex = Roo::Excel.new("#{Rails.root}/public/hrms.xls")
 # ex.default_sheet = ex.sheets[0]

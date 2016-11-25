@@ -608,10 +608,9 @@ class SalaryslipsController < ApplicationController
       formula_item = SalaryslipComponent.where(salary_component_id: formula_string,salaryslip_id: @salaryslip.id)  
       @total = formula_item.sum(:calculated_amount)
       @total_actual = formula_item.sum(:actual_amount)
-      # (@total / 100 * @pf_employer.percentage).ceil
-      formula_item_calculated_amount = (@total.to_f / working_day.try(:day_in_month)  * pom.rate.to_f )
+      formula_item_calculated_amount = (@total.to_f / working_day.try(:day_in_month)  * pom.rate.to_f)
       f1_calculated = (formula_item_calculated_amount / pom.company_hrs.to_f)
-      formula_item_actual_amount = (@total.to_f / working_day.try(:day_in_month)  * pom.rate.to_f)
+      formula_item_actual_amount = (@total_actual.to_f / working_day.try(:day_in_month)  * pom.rate.to_f)
       f1_actual = (formula_item_actual_amount / pom.company_hrs.to_f)
       @salary_component = SalaryComponent.find_by(name: "Overtime")
       SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: f1_actual, calculated_amount: f1_calculated, is_deducted: true, other_component_name: 'Overtime',salary_component_id: @salary_component.id)

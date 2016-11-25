@@ -49,7 +49,7 @@ class CompanyTimeMastersController < ApplicationController
     @working_hrs = params[:company_time_master][:working_hrs]
     @shift_type = params[:company_time_master][:shift_master_id]
     @is_active = params[:company_time_master][:is_active]
-    CompanyTimeMaster.create(in_min_time: @in_min_time.to_datetime,in_max_time: @in_max_time.to_datetime,in_time: @in_time.to_datetime,out_min_time: @out_min_time.to_datetime,out_max_time: @out_max_time.to_datetime,out_time: @out_time.to_datetime,working_hrs: @working_hrs,shift_master_id: @shift_type,is_active: @is_active)
+    CompanyTimeMaster.create(in_min_time: @in_min_time,in_max_time: @in_max_time,in_time: @in_time,out_min_time: @out_min_time,out_max_time: @out_max_time,out_time: @out_time,working_hrs: @working_hrs,shift_master_id: @shift_type,is_active: @is_active)
     flash[:notice] = "Company Time Master Created Successfully"
     redirect_to new_company_time_master_path
   end
@@ -57,7 +57,8 @@ class CompanyTimeMastersController < ApplicationController
   # PATCH/PUT /company_time_masters/1
   # PATCH/PUT /company_time_masters/1.json
    def update
-   @company_time_master.update(company_time_master_params)
+    byebug
+    @company_time_master.update(company_time_master_params)
     @company_time_masters = CompanyTimeMaster.all
     @company_time_master = CompanyTimeMaster.new
   end
@@ -67,6 +68,8 @@ class CompanyTimeMastersController < ApplicationController
   def destroy
     @company_time_master.destroy
     @company_time_masters = CompanyTimeMaster.all
+    flash[:alert] = "Record Deleted Successfully"
+    redirect_to new_company_master_path 
   end
 
   def is_confirm

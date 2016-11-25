@@ -99,6 +99,7 @@ class JoiningDetailsController < ApplicationController
     format.html
     format.csv { send_data @joining_details.to_csv }
     format.xls
+     session[:active_tab] = "import"
    end   
   end
 

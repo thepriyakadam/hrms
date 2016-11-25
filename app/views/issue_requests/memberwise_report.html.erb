@@ -5,6 +5,7 @@
     </div>
   </div><!-- /.box-header -->
   <div class="box-body">
+  <%= bootstrap_form_for(:issue_request,url: { action: 'memberwise_report_list'},html: {id: 'issue_request'},remote:true) do |f| %>
     <div class="row">
       <div class="col-sm-3">
       <label>Date</label>
@@ -31,10 +32,18 @@
            </div> 
         </div>
       </div>
+    
+    <div class="col-sm-3">
+    <label></label>
+          <div class="actions">
+            <%= f.submit "Download Excel", class: "btn btn-sm btn-warning" %>
+          </div>
+    </div>
     </div>
       <div id="memberwise_li"></div>
   </div>
 </div>
+<%end%>
 
 <script type="text/javascript">
   $(function(){

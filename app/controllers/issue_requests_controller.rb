@@ -42,7 +42,7 @@ class IssueRequestsController < ApplicationController
         @emp.each do |s|
         IssueRequestMailer.issue_tracker_group_email(s.email).deliver_now
         end
-        format.html { redirect_to @issue_request, notice: 'Issue request was successfully saved Successfully.' }
+        format.html { redirect_to @issue_request, notice: 'Support request was successfully saved Successfully.' }
         format.json { render :show, status: :created, location: @issue_request }
       else
         format.html { render :new }
@@ -107,7 +107,7 @@ class IssueRequestsController < ApplicationController
     @issue_tracker_member_id = IssueTrackerMember.find_by(employee_id: current_user.employee_id)
     @issue_requests = IssueRequest.where(issue_tracker_group_id: @issue_tracker_member_id.issue_tracker_group_id,status: nil)
     session[:active_tab] = "issuetracker"
-    session[:active_tab1] = "issueprocess"   
+    session[:active_tab1] = "issueprocess" 
  end
 
    def modal
@@ -201,7 +201,8 @@ class IssueRequestsController < ApplicationController
     @en = params[:to_date].to_date
     @issue_tracker_group = IssueTrackerGroup.find(params[:id])
     @issue_requests = IssueRequest.where(issue_tracker_group_id: @issue_tracker_group.id,date: @start..@en)
-
+    session[:active_tab] = "issuetracker"
+    session[:active_tab1] = "issueprocess" 
   end
 
   def issue_tracker_pdf
@@ -231,6 +232,8 @@ class IssueRequestsController < ApplicationController
   def datewise_report_list
     @date = params[:date].to_date
     @issue_requests = IssueRequest.where(date: @date)
+    session[:active_tab] = "issuetracker"
+    session[:active_tab1] = "issueprocess" 
   end
 
   def datewise_report_xls
@@ -298,11 +301,14 @@ class IssueRequestsController < ApplicationController
   end
 
   def memberwise_report_list
-     @date = params[:datea]
+     @date = params[:date]
      @group_id = params[:group_id]
      @member_id = params[:issue_member_id]
      # byebug
      IssueRequest.where(issue_tracker_group_id: @group_id, issue_tracker_member_id: @member_id, date: @date) 
+     respond_to do |format|
+     format.xls {render template: 'issue_requests/memberwise_report_list_xls.xls.erb'}
+    end
   end
 
   private

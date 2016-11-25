@@ -86,8 +86,24 @@ class AssignedAssetsController < ApplicationController
 
   def modal
     @assigned_asset = AssignedAsset.find(params[:format])
-
   end
+
+  def import_xl
+    @assigned_assets = AssignedAsset.all
+    respond_to do |format|
+    format.html
+    format.csv { send_data @assigned_assets.to_csv }
+    format.xls
+     session[:active_tab] = "import"
+   end   
+  end
+
+  def import
+    # byebug
+    AssignedAsset.import(params[:file])
+    redirect_to root_url, notice: "File imported."
+  end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

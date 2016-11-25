@@ -7,7 +7,7 @@
   <div class="row">
   <label></label>
     <div class="col-sm-3">
-    <%= select :machine_attendance,:employee_id,all_employee_list,{include_blank: " Select Employees"}, class: "form-control" %>
+     <%= select :machine_attendance,:employee_id,all_employee_list, {include_blank: "Select Employee"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
   </div>
   <div class="col-sm-3">
       <div class="form-group required">
@@ -15,38 +15,42 @@
         <div class="input-group-addon">
           <i class="fa fa-calendar"></i>
         </div>
-        <%= text_field :machine_attendance,:day,label: "Date",class: 'joining_date'%>
+        <%= text_field :machine_attendance,:day,label: "Date",class: 'joining_date form-control',placeholder: 'Date'%>
       </div>
     </div>
   </div>
+    
     <div class="col-sm-2">
-      <div class="bootstrap-timepicker">
-        <div class="form-group">
-          <label>In Time</label>
-          <div class="input-group">
-            <%= text_field :machine_attendance,:in,hide_label:true, class: 'form-control timepicker' %>
-            <div class="input-group-addon">
-              <i class="fa fa-clock-o"></i>
-            </div>
-          </div><!-- /.input group -->
-        </div><!-- /.form group -->
+      <div class="field">
+          <div class="form-group">
+            <!-- <label>In Time</label> -->
+            <div class='input-group date' id='datetimepicker10'>
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <%= text_field :machine_attendance,:in,hide_label: true, placeholder: 'In Time',class: 'form-control'%>
+            </div><!-- /.input group -->
+          </div><!-- /.form group -->
+      </div>
+    </div>
+     <div class="col-sm-2">
+      <div class="field">
+          <div class="form-group">
+            <!-- <label>Out Time</label> -->
+            <div class='input-group date' id='datetimepicker11'>
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <%= text_field :machine_attendance,:out,hide_label: true, placeholder: 'Out Time',class: 'form-control'%>
+            </div><!-- /.input group -->
+          </div><!-- /.form group -->
       </div>
     </div>
     <div class="col-sm-2">
-      <div class="bootstrap-timepicker">
-        <div class="form-group">
-          <label>Out Time</label>
-          <div class="input-group">
-            <%= text_field :machine_attendance,:out,hide_label:true, class: 'form-control timepicker' %>
-            <div class="input-group-addon">
-              <i class="fa fa-clock-o"></i>
-            </div>
-          </div><!-- /.input group -->
-        </div><!-- /.form group -->
-      </div>
+    <%= select :machine_attendance,:shift_master_id,all_shift_type,{include_blank: " Select Shift"}, class: "form-control" %>
     </div>
     </div>
-     
+
     <div class="row">
     <div class="col-sm-3">
     <label></label>
@@ -59,6 +63,8 @@
 </div>
 <% end %>
 
+<%= render 'machine_attendance_list' %>
+
 <script type="text/javascript">
   $(function(){
     $('.joining_date').datepicker({
@@ -68,3 +74,15 @@
     dateFormat: 'dd-mm-yy' });
   }); 
 </script>
+
+<script type="text/javascript">
+    $(function () {
+        $('#datetimepicker10').datetimepicker();
+    });
+ </script>
+
+ <script type="text/javascript">
+    $(function () {
+        $('#datetimepicker11').datetimepicker();
+    });
+ </script>

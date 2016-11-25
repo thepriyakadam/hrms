@@ -26,8 +26,8 @@ class IssueTrackerGroupsController < ApplicationController
 
   # POST /issue_tracker_groups
   # POST /issue_tracker_groups.json
-  def create
-   @issue_tracker_group = IssueTrackerGroup.new(issue_tracker_group_params)
+   def create
+    @issue_tracker_group = IssueTrackerGroup.new(issue_tracker_group_params)
     @issue_tracker_groups = IssueTrackerGroup.all
     respond_to do |format|
       if @issue_tracker_group.save

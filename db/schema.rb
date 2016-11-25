@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161122114648) do
+ActiveRecord::Schema.define(version: 20161124112721) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -450,11 +450,14 @@ ActiveRecord::Schema.define(version: 20161122114648) do
     t.decimal  "working_hrs"
     t.boolean  "is_active"
     t.boolean  "is_confirm"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
     t.datetime "in_time"
     t.datetime "out_time"
+    t.integer  "shift_master_id"
   end
+
+  add_index "company_time_masters", ["shift_master_id"], name: "index_company_time_masters_on_shift_master_id"
 
   create_table "company_types", force: :cascade do |t|
     t.string   "code"
@@ -789,8 +792,10 @@ ActiveRecord::Schema.define(version: 20161122114648) do
     t.integer  "machine_attendances_id"
     t.string   "company_hrs"
     t.string   "overtime_hrs"
+    t.integer  "company_time_master_id"
   end
 
+  add_index "employee_attendances", ["company_time_master_id"], name: "index_employee_attendances_on_company_time_master_id"
   add_index "employee_attendances", ["department_id"], name: "index_employee_attendances_on_department_id"
   add_index "employee_attendances", ["employee_id"], name: "index_employee_attendances_on_employee_id"
   add_index "employee_attendances", ["employee_leav_request_id"], name: "index_employee_attendances_on_employee_leav_request_id"
@@ -2080,6 +2085,7 @@ ActiveRecord::Schema.define(version: 20161122114648) do
     t.boolean  "is_balance"
     t.string   "limit"
     t.boolean  "is_limit"
+    t.boolean  "is_cashable"
   end
 
   create_table "leav_rejecteds", force: :cascade do |t|
@@ -2108,6 +2114,30 @@ ActiveRecord::Schema.define(version: 20161122114648) do
   end
 
   add_index "leave_c_offs", ["employee_id"], name: "index_leave_c_offs_on_employee_id"
+
+  create_table "leave_cash_masters", force: :cascade do |t|
+    t.string   "base_component"
+    t.string   "rate"
+    t.boolean  "is_confirm"
+    t.boolean  "is_active"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  create_table "leave_cashables", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.integer  "leav_category_id"
+    t.date     "date"
+    t.string   "no_of_leave"
+    t.string   "cashable"
+    t.decimal  "amount"
+    t.boolean  "is_confirm"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "leave_cashables", ["employee_id"], name: "index_leave_cashables_on_employee_id"
+  add_index "leave_cashables", ["leav_category_id"], name: "index_leave_cashables_on_leav_category_id"
 
   create_table "leave_masters", force: :cascade do |t|
     t.integer  "leav_category_id"
@@ -2154,6 +2184,19 @@ ActiveRecord::Schema.define(version: 20161122114648) do
     t.datetime "updated_at",  null: false
     t.boolean  "is_confirm"
   end
+
+  create_table "machine_attendances", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.date     "day"
+    t.datetime "in"
+    t.datetime "out"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.integer  "shift_master_id"
+  end
+
+  add_index "machine_attendances", ["employee_id"], name: "index_machine_attendances_on_employee_id"
+  add_index "machine_attendances", ["shift_master_id"], name: "index_machine_attendances_on_shift_master_id"
 
   create_table "manager_histories", force: :cascade do |t|
     t.integer  "employee_id"
@@ -2393,6 +2436,17 @@ ActiveRecord::Schema.define(version: 20161122114648) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.boolean  "is_confirm"
+  end
+
+  create_table "payroll_overtime_masters", force: :cascade do |t|
+    t.boolean  "is_payroll"
+    t.string   "base_component"
+    t.string   "rate"
+    t.boolean  "is_active"
+    t.boolean  "is_confirm"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.string   "company_hrs"
   end
 
   create_table "performance_activities", force: :cascade do |t|
@@ -2939,6 +2993,16 @@ ActiveRecord::Schema.define(version: 20161122114648) do
   add_index "selected_resumes", ["degree_id"], name: "index_selected_resumes_on_degree_id"
   add_index "selected_resumes", ["vacancy_master_id"], name: "index_selected_resumes_on_vacancy_master_id"
 
+  create_table "shift_masters", force: :cascade do |t|
+    t.integer  "code"
+    t.string   "name"
+    t.text     "description"
+    t.boolean  "is_confirm"
+    t.boolean  "is_active"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
   create_table "shift_rotations", force: :cascade do |t|
     t.integer  "company_shift_id"
     t.date     "start_date"
@@ -3324,6 +3388,19 @@ ActiveRecord::Schema.define(version: 20161122114648) do
   add_index "vacancy_request_histories", ["employee_id"], name: "index_vacancy_request_histories_on_employee_id"
   add_index "vacancy_request_histories", ["reporting_master_id"], name: "index_vacancy_request_histories_on_reporting_master_id"
   add_index "vacancy_request_histories", ["vacancy_master_id"], name: "index_vacancy_request_histories_on_vacancy_master_id"
+
+  create_table "week_off_masters", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.string   "day"
+    t.boolean  "is_active"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.boolean  "is_send"
+    t.date     "from"
+    t.date     "to"
+  end
+
+  add_index "week_off_masters", ["employee_id"], name: "index_week_off_masters_on_employee_id"
 
   create_table "week_offs", force: :cascade do |t|
     t.string   "weekoff_date_range"

@@ -13,11 +13,13 @@ div.nobreak{ page-break-inside: avoid;
 </style>
 <div>
 
-<center><h3>Employee Performance Detail</h3></center>
+<% i=0%>
+<center><h4><font color="orange">Employee Performance Detail</font></h4></center>
 
 <table style="border-collapse: collapse;" border=1 width=1200 class="table table-bordered table-hover">    
   <thead>
-  <tr><th colspan="7"><center>Employee Detail</center></th></tr>
+  <tr>
+    <th colspan="7"><center>Employee Detail</center></th></tr>
     <tr>
       <th>Employee ID</th>
       <th>Name</th>
@@ -129,9 +131,11 @@ div.nobreak{ page-break-inside: avoid;
   <table style="border-collapse: collapse;" border=1 width=1200 class="table table-bordered table-hover">
     <thead>
 
-    <tr><th colspan="10"><center>Performance Report for Period: <%= e.period.name %> From: <%= e.period.from %> To: <%= e.period.to %></center></th></tr>
-    <tr><th colspan="10"><center>Performance Record</center></th></tr>
-    <tr><th colspan="10">Goals</th></tr>
+    <tr>
+    <% i=i+1%>
+    <th><%= i %></th>
+    <th colspan="10"><center>Performance Report for Period: <%= e.period.name %> From: <%= e.period.from %> To: <%= e.period.to %></center></th></tr>
+    <tr><th colspan="10"><center>Goals</center></th></tr>
       <tr>
         <th>Goal Perspective</th>
         <th>Goal Weightage</th>
@@ -165,7 +169,7 @@ div.nobreak{ page-break-inside: avoid;
 
   <table style="border-collapse: collapse;" border=1 width=1200 class="table table-bordered table-hover">
     <thead>
-    <tr><th colspan="10">Attributes</th></tr>
+    <tr><th colspan="10"><center>Attributes</center></th></tr>
       <tr>
         <th>Attribute</th>
         <th>Goal Weightage</th>
@@ -240,25 +244,23 @@ div.nobreak{ page-break-inside: avoid;
    <table style="border-collapse: collapse;" border=1 width=1200 class="table table-bordered table-hover">
     <tbody>
       <% @goal_bunches.each do |goal_bunch| %>
-      <tr><th colspan="2"><center>Detail</center></th><th>Sign</th></tr>
+      <tr><th colspan="2"><center>Detail</center></th><th>Contact No</th><th>Sign</th></tr>
         <tr>
           <th>Appraisee Name</th>
           <td><%= goal_bunch.employee.try(:first_name) %> <%= goal_bunch.employee.try(:middle_name) %> <%= goal_bunch.employee.try(:last_name) %></td>
+          <td><%= goal_bunch.employee.try(:contact_no) %></td>
           <td></td>
         </tr>
         <tr>
           <th>Appraiser Name</th>
           <td><%= goal_bunch.employee.manager.try(:first_name) %> <%= goal_bunch.employee.manager.try(:middle_name) %> <%= goal_bunch.employee.manager.try(:last_name) %></td>
+          <td><%= goal_bunch.employee.manager.try(:contact_no) %></td>
           <td></td>
         </tr>
         <tr>
           <th>Reviewer Name</th>
           <td><%= goal_bunch.employee.manager_2.try(:first_name) %> <%= goal_bunch.employee.manager_2.try(:middle_name) %> <%= goal_bunch.employee.manager_2.try(:last_name) %></td>
-          <td></td>
-        </tr>
-        <tr>
-          <th>Final Name</th>
-          <td><%=  %></td>
+          <td><%= goal_bunch.employee.manager_2.try(:contact_no) %></td>
           <td></td>
         </tr>
       <% end %>

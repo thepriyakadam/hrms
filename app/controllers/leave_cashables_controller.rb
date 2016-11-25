@@ -25,17 +25,18 @@ class LeaveCashablesController < ApplicationController
   # POST /leave_cashables
   # POST /leave_cashables.json
   def create
-    @leave_cashable = LeaveCashable.new(leave_cashable_params)
+     @leave_cashable = LeaveCashable.new(leave_cashable_params)
     @leave_cashables = LeaveCashable.all
     respond_to do |format|
       if @leave_cashable.save
         @leave_cashable = LeaveCashable.new 
         format.js { @flag = true }
       else
-        flash.now[:alert] = 'Leave Cashable Created Successfully'
+        flash.now[:alert] = 'Week Off Created Successfully'
         format.js { @flag = false }
       end
     end
+
   end
 
   # PATCH/PUT /leave_cashables/1
@@ -56,7 +57,7 @@ class LeaveCashablesController < ApplicationController
   def collect_amount
     @employee = Employee.find(params[:emp_id])
     @leav_category = LeavCategory.find(params[:id])
-    @emp_bal = EmployeeLeavBalance.where(employee_id: @employee.id,leave_category_id: @leav_category.id,is_active: true)
+    @emp_bal = EmployeeLeavBalance.where(employee_id: @employee.id,leav_category_id: @leav_category.id,is_active: true).take
     @amount = @emp_bal.no_of_leave
   end
 

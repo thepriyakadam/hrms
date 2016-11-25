@@ -1,4 +1,4 @@
-<%= bootstrap_form_for(@due_detail,html: {id: 'due_detail'},remote:true,due_template_id: @due_template.id ) do |f| %>
+<%= bootstrap_form_for(@due_detail,html: {id: 'due_detail'},due_template_id: @due_template.id ) do |f| %>
 <%= f.hidden_field :due_template_id, value: @due_template.id  %>
 <div>
 <!--   <= render 'show_travel_request' %>

@@ -101,13 +101,17 @@ class IssueRequestsController < ApplicationController
               disposition: 'attachment'
   end
 
-  def lock_request_list
-    # byebug
-    @issue_tracker_member = IssueTrackerMember.where(employee_id: current_user.employee_id)
-    @issue_tracker_member_id = IssueTrackerMember.find_by(employee_id: current_user.employee_id)
+  def lock_request_list 
+    if @issue_tracker_member = IssueTrackerMember.where(employee_id: current_user.employee_id)
+    if @issue_tracker_member_id = IssueTrackerMember.find_by(employee_id: current_user.employee_id)
     @issue_requests = IssueRequest.where(issue_tracker_group_id: @issue_tracker_member_id.issue_tracker_group_id,status: nil)
     session[:active_tab] = "issuetracker"
     session[:active_tab1] = "issueprocess" 
+  else
+  flash[:alert] = "Member Not Present In List"
+
+  end
+  end
  end
 
    def modal

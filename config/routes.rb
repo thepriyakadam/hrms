@@ -34,11 +34,15 @@ Rails.application.routes.draw do
       post :create
       post :save_machine_attendance
       post :save_machine_attendance_checkbox
+      get :import_machine_attendance
+      post :import
     end
   end
   resources :company_time_masters do
     collection do
       get :is_confirm
+      get :edit
+      get :update
     end
   end
   resources :pf_employers do

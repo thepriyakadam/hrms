@@ -1,5 +1,5 @@
 module EmployeeCodeMastersHelper
 	def all_employee_code_master
-      EmployeeCodeMaster.all.collect { |x| [x.name, x.id] }
+      EmployeeCodeMaster.where(is_active: true).collect { |x| [x.name, x.id] }
     end
 end

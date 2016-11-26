@@ -14,7 +14,7 @@
       <tr>
         <td>
           <% i = 0 %>
-          <% payroll_overtime_master.base_component.split(",").each do |e| %>
+          <% payroll_overtime_master.base_component.split(",").try(:each) do |e| %>
             <% if i == 0 %>
               <%= SalaryComponent.find(e.to_i).name %>
             <% else %>
@@ -25,7 +25,7 @@
         </td>
         <td><%= payroll_overtime_master.is_payroll ? "Yes" : "No" %></td>
         <td><%= payroll_overtime_master.rate %></td>
-        <th><%= payroll_overtime_master.company_hrs %></th>
+        <td><%= payroll_overtime_master.company_hrs %></td>
         <td><%= payroll_overtime_master.is_active ? "Active" : "Inactive" %></td>
         <td>
           <% if payroll_overtime_master.is_confirm == true %>

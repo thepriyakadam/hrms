@@ -1,14 +1,13 @@
-<%= bootstrap_form_for(@leave_cashable,html: {id: 'leave_cashable'},remote: true) do |f| %>
+<%= bootstrap_form_for(@leave_cashable,remote: true,html: {id: 'leave_cashable'}) do |f| %>
   <div class="row">
-    <label>Employee</label>
     <div class="col-sm-3">
       <div class="form-group required">
-        <%= select :salary,:employee_id,all_employee_list,{label: "Employee",include_blank: "Select Employee"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
+        <%= f.select :employee_id,all_employee_list,{include_blank: "Select Employee"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
       </div>
     </div>
     <div class="col-sm-3">
       <div class="form-group required">
-        <%= f.select :leav_category_id,cashable_leav_category, {include_blank: "Select Category"},{onchange:"var a={id:$(this).val(),emp_id:$('#salary_employee_id').val()}; $.get('/leave_cashables/collect_amount',a,function(response){});",:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
+        <%= f.select :leav_category_id,cashable_leav_category, {label: "Leave Category",include_blank: "Select Category"},{onchange:"var a={id:$(this).val(),emp_id:$('#leave_cashable_employee_id').val()}; $.get('/leave_cashables/collect_amount',a,function(response){});",:class=>"form_control"} %>
       </div>
     </div>
     <div class="col-sm-3">

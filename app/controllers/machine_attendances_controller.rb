@@ -45,7 +45,9 @@ class MachineAttendancesController < ApplicationController
           total_time_diff = time_diff - s.working_hrs.to_f
           # byebug
           EmployeeAttendance.where(id: @c2.id).update_all(company_hrs: s.working_hrs,overtime_hrs: total_time_diff)
-          puts "/////////////////////////////////////"    
+          puts "/////////////////////////////////////" 
+          flash[:notice] = "Machine Attendance Created Successfully"
+          redirect_to new_machine_attendance_path   
        end
           flash[:notice] = "Machine Attendance Created Successfully"
           redirect_to new_machine_attendance_path
@@ -87,42 +89,57 @@ end
       @company_time_masters.each do |s|
       # byebug
       if e.shift_master_id == s.shift_master_id
-      if e.in.to_time.between?(s.in_min_time.to_time, s.in_max_time.to_time) && e.out.to_time.between?(s.out_min_time.to_time, s.out_max_time.to_time) && e.shift_master_id == s.shift_master_id
+        # byebug
+      if e.in.strftime('%H:%M:%S').between?(s.in_min_time.strftime('%H:%M:%S'), s.in_max_time.strftime('%H:%M:%S')) && e.out.strftime('%H:%M:%S').between?(s.out_min_time.strftime('%H:%M:%S'), s.out_max_time.strftime('%H:%M:%S')) && e.shift_master_id == s.shift_master_id
         @c1=EmployeeAttendance.create(employee_id: e.employee_id,day: e.day.to_date,in_time: s.in_time,out_time: s.out_time,machine_attendances_id: e.id,company_time_master_id: s.id)
-        time_diff=TimeDifference.between(@c1.in_time.to_time, @c1.out_time.to_time).in_hours
+        time_diff=TimeDifference.between(@c1.in_time.strftime('%H:%M:%S'), @c1.out_time.strftime('%H:%M:%S')).in_hours.round
         total_time_diff = time_diff - s.working_hrs.to_f
-        EmployeeAttendance.where(id: @c1.id).update_all(company_hrs: s.working_hrs,overtime_hrs: total_time_diff)
+        EmployeeAttendance.where(id: @c1.id).update_all(company_hrs: s.working_hrs,overtime_hrs: total_time_diff,total_hrs: time_diff)
         puts "------------------------------------"
 
-      elsif e.in.to_time.between?(s.in_min_time.to_time, s.in_max_time.to_time) && e.shift_master_id == s.shift_master_id
-          @c1=EmployeeAttendance.create(employee_id: e.employee_id,day: e.day.to_date,in_time: s.in_time,out_time: e.to_time,machine_attendances_id: e.id,company_time_master_id: s.id)
-          time_diff=TimeDifference.between(@c1.in_time.to_time, @c1.out_time.to_time).in_hours
+      elsif e.in.strftime('%H:%M:%S').between?(s.in_min_time.strftime('%H:%M:%S'), s.in_max_time.strftime('%H:%M:%S')) && e.shift_master_id == s.shift_master_id
+          @c1=EmployeeAttendance.create(employee_id: e.employee_id,day: e.day.to_date,in_time: s.in_time,out_time: e.out,machine_attendances_id: e.id,company_time_master_id: s.id)
+          time_diff=TimeDifference.between(@c1.in_time.strftime('%H:%M:%S'), @c1.out_time.strftime('%H:%M:%S')).in_hours.round
           total_time_diff = time_diff - s.working_hrs.to_f
-          EmployeeAttendance.where(id: @c1.id).update_all(company_hrs: s.working_hrs,overtime_hrs: total_time_diff)
+          EmployeeAttendance.where(id: @c1.id).update_all(company_hrs: s.working_hrs,overtime_hrs: total_time_diff,total_hrs: time_diff)
           puts "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
 
-      elsif e.out.to_time.between?(s.in_min_time.to_time, s.in_max_time.to_time) && e.shift_master_id == s.shift_master_id
-          @c1=EmployeeAttendance.create(employee_id: e.employee_id,day: e.day.to_date,in_time: e.in.to_time,out_time: s.out_time,machine_attendances_id: e.id,company_time_master_id: s.id)
-          time_diff=TimeDifference.between(@c1.in_time.to_time, @c1.out_time.to_time).in_hours
+      elsif e.out.strftime('%H:%M:%S').between?(s.out_min_time.strftime('%H:%M:%S'), s.out_max_time.strftime('%H:%M:%S')) && e.shift_master_id == s.shift_master_id
+          @c1=EmployeeAttendance.create(employee_id: e.employee_id,day: e.day.to_date,in_time: e.in,out_time: s.out_time,machine_attendances_id: e.id,company_time_master_id: s.id)
+          time_diff=TimeDifference.between(@c1.in_time.strftime('%H:%M:%S'), @c1.out_time.strftime('%H:%M:%S')).in_hours.round
           total_time_diff = time_diff - s.working_hrs.to_f
-          EmployeeAttendance.where(id: @c1.id).update_all(company_hrs: s.working_hrs,overtime_hrs: total_time_diff)
+          EmployeeAttendance.where(id: @c1.id).update_all(company_hrs: s.working_hrs,overtime_hrs: total_time_diff,total_hrs: time_diff)
           puts "cccccccccccccccccccccccccccccccccccccc"
-
       else
-          @c2=EmployeeAttendance.create(employee_id: e.employee_id,day: e.day.to_date,in_time: e.in.to_time,out_time: e.out.to_time,machine_attendances_id: e.id,company_time_master_id: s.id)
-          time_diff=TimeDifference.between(@c2.in_time.to_time, @c2.out_time.to_time).in_hours
+          @c2=EmployeeAttendance.create(employee_id: e.employee_id,day: e.day.to_date,in_time: e.in,out_time: e.out,machine_attendances_id: e.id,company_time_master_id: s.id)
+          time_diff=TimeDifference.between(@c2.in_time.strftime('%H:%M:%S'), @c2.out_time.strftime('%H:%M:%S')).in_hours.round
           total_time_diff = time_diff - s.working_hrs.to_f
           # byebug
-          EmployeeAttendance.where(id: @c2.id).update_all(company_hrs: s.working_hrs,overtime_hrs: total_time_diff)
+          EmployeeAttendance.where(id: @c2.id).update_all(company_hrs: s.working_hrs,overtime_hrs: total_time_diff,total_hrs: time_diff)
           puts "/////////////////////////////////////"    
        end
-        end
-        end
+       end
+      end
       end 
       flash[:notice] = "Machine Attendance Created Successfully"
        redirect_to new_machine_attendance_path
      end
     end
+  end
+
+  def import_machine_attendance
+    @machine_attendances = MachineAttendance.all
+    respond_to do |format|
+    format.html
+    format.csv { send_data @machine_attendances.to_csv }
+    format.xls
+   end
+  end
+
+  def import
+    # byebug
+    MachineAttendance.import(params[:file])
+    redirect_to import_machine_attendance_machine_attendances_path, notice: "File imported."
   end
 
   private

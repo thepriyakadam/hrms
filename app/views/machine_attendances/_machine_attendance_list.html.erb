@@ -13,6 +13,7 @@
 <thead>
   <tr>
     <th><input type="checkbox" id="selectAll" value="selectAll"></th>
+    <th>ID</th>
     <th>Employee Name</th>
     <th>Day</th>
     <th>In</th>
@@ -23,10 +24,11 @@
   <% @machine_attendances.each do |m| %>
     <tr>              
       <td><%= check_box_tag "machine_attendance_ids[]",m.id %></td>
+      <td><%= m.id %></td>
       <td><%= m.employee.try(:first_name) %> <%= m.employee.try(:middle_name) %> <%= m.employee.try(:last_name) %></td>
       <td><%= m.day %></td>
-      <td><%= m.try(:in).to_time %></td>
-      <td><%= m.try(:out).to_time %></td>
+      <td><%= m.try(:in) %></td>
+      <td><%= m.try(:out) %></td>
     </tr>
   <% end %>
 </tbody>

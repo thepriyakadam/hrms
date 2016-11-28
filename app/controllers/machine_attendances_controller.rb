@@ -6,52 +6,62 @@ class MachineAttendancesController < ApplicationController
     @machine_attendances = MachineAttendance.where(is_proceed: nil)
   end
 
+#   def save_machine_attendance
+#     # byebug
+#     @emp_id = params[:machine_attendance][:employee_id]
+#     @day = params[:machine_attendance][:day]
+#     @in = params[:machine_attendance][:in]
+#     @out = params[:machine_attendance][:out]
+#     @shift_type = params[:machine_attendance][:shift_master_id]
+#     s1=MachineAttendance.create(employee_id: @emp_id,day: @day,in: @in.to_time,out: @out.to_time,shift_master_id: @shift_type)
+#     @company_time_masters = CompanyTimeMaster.where(is_active: true)
+#     @company_time_masters.each do |s|
+#     if s1.shift_master_id == s.shift_master_id
+#       if @in.between?(s.in_min_time, s.in_max_time) && @out.between?(s.out_min_time, s.out_max_time) && s1.shift_master_id == s.shift_master_id
+#         @c1=EmployeeAttendance.create(employee_id: @emp_id,day: @day.to_date,in_time: s.in_time,out_time: s.out_time,machine_attendances_id: s1.id,company_time_master_id: s.id)
+#         time_diff=TimeDifference.between(@c1.in_time.to_time, @c1.out_time.to_time).in_hours
+#         total_time_diff = time_diff - s.working_hrs.to_f
+#         EmployeeAttendance.where(id: @c1.id).update_all(company_hrs: s.working_hrs,overtime_hrs: total_time_diff)
+#         puts "------------------------------------"
+
+#       elsif @in.between?(s.in_min_time, s.in_max_time)  && s1.shift_master_id == s.shift_master_id
+#           @c1=EmployeeAttendance.create(employee_id: @emp_id,day: @day.to_date,in_time: s.in_time,out_time: @out.to_time,machine_attendances_id: s1.id,company_time_master_id: s.id)
+#           time_diff=TimeDifference.between(@c1.in_time.to_time, @c1.out_time.to_time).in_hours
+#           total_time_diff = time_diff - s.working_hrs.to_f
+#           EmployeeAttendance.where(id: @c1.id).update_all(company_hrs: s.working_hrs,overtime_hrs: total_time_diff)
+#           puts "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+
+#       elsif @out.between?(s.out_min_time, s.out_max_time) && s1.shift_master_id == s.shift_master_id
+#           @c1=EmployeeAttendance.create(employee_id: @emp_id,day: @day.to_date,in_time: @in.to_time,out_time: s.out_time,machine_attendances_id: s1.id,company_time_master_id: s.id)
+#           time_diff=TimeDifference.between(@c1.in_time.to_time, @c1.out_time.to_time).in_hours
+#           total_time_diff = time_diff - s.working_hrs.to_f
+#           EmployeeAttendance.where(id: @c1.id).update_all(company_hrs: s.working_hrs,overtime_hrs: total_time_diff)
+#           puts "cccccccccccccccccccccccccccccccccccccc"
+
+#       else
+#           @c2=EmployeeAttendance.create(employee_id: @emp_id,day: @day,in_time: @in.to_time,out_time: @out.to_time,machine_attendances_id: s1.id,company_time_master_id: s.id)
+#           time_diff=TimeDifference.between(@c2.in_time.to_time, @c2.out_time.to_time).in_hours
+#           total_time_diff = time_diff - s.working_hrs.to_f
+#           EmployeeAttendance.where(id: @c2.id).update_all(company_hrs: s.working_hrs,overtime_hrs: total_time_diff)
+#           puts "/////////////////////////////////////" 
+#           flash[:notice] = "Machine Attendance Created Successfully"
+#           redirect_to new_machine_attendance_path   
+#        end
+#           flash[:notice] = "Machine Attendance Created Successfully"
+#           redirect_to new_machine_attendance_path
+#     end
+#   end
+# end
+
   def save_machine_attendance
-    # byebug
-    @emp_id = params[:machine_attendance][:employee_id]
-    @day = params[:machine_attendance][:day]
-    @in = params[:machine_attendance][:in]
-    @out = params[:machine_attendance][:out]
-    @shift_type = params[:machine_attendance][:shift_master_id]
-    s1=MachineAttendance.create(employee_id: @emp_id,day: @day,in: @in.to_time,out: @out.to_time,shift_master_id: @shift_type)
-    @company_time_masters = CompanyTimeMaster.where(is_active: true)
-    @company_time_masters.each do |s|
-    if s1.shift_master_id == s.shift_master_id
-      if @in.between?(s.in_min_time, s.in_max_time) && @out.between?(s.out_min_time, s.out_max_time) && s1.shift_master_id == s.shift_master_id
-        @c1=EmployeeAttendance.create(employee_id: @emp_id,day: @day.to_date,in_time: s.in_time,out_time: s.out_time,machine_attendances_id: s1.id,company_time_master_id: s.id)
-        time_diff=TimeDifference.between(@c1.in_time.to_time, @c1.out_time.to_time).in_hours
-        total_time_diff = time_diff - s.working_hrs.to_f
-        EmployeeAttendance.where(id: @c1.id).update_all(company_hrs: s.working_hrs,overtime_hrs: total_time_diff)
-        puts "------------------------------------"
-
-      elsif @in.between?(s.in_min_time, s.in_max_time)  && s1.shift_master_id == s.shift_master_id
-          @c1=EmployeeAttendance.create(employee_id: @emp_id,day: @day.to_date,in_time: s.in_time,out_time: @out.to_time,machine_attendances_id: s1.id,company_time_master_id: s.id)
-          time_diff=TimeDifference.between(@c1.in_time.to_time, @c1.out_time.to_time).in_hours
-          total_time_diff = time_diff - s.working_hrs.to_f
-          EmployeeAttendance.where(id: @c1.id).update_all(company_hrs: s.working_hrs,overtime_hrs: total_time_diff)
-          puts "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
-
-      elsif @out.between?(s.out_min_time, s.out_max_time) && s1.shift_master_id == s.shift_master_id
-          @c1=EmployeeAttendance.create(employee_id: @emp_id,day: @day.to_date,in_time: @in.to_time,out_time: s.out_time,machine_attendances_id: s1.id,company_time_master_id: s.id)
-          time_diff=TimeDifference.between(@c1.in_time.to_time, @c1.out_time.to_time).in_hours
-          total_time_diff = time_diff - s.working_hrs.to_f
-          EmployeeAttendance.where(id: @c1.id).update_all(company_hrs: s.working_hrs,overtime_hrs: total_time_diff)
-          puts "cccccccccccccccccccccccccccccccccccccc"
-
-      else
-          @c2=EmployeeAttendance.create(employee_id: @emp_id,day: @day,in_time: @in.to_time,out_time: @out.to_time,machine_attendances_id: s1.id,company_time_master_id: s.id)
-          time_diff=TimeDifference.between(@c2.in_time.to_time, @c2.out_time.to_time).in_hours
-          total_time_diff = time_diff - s.working_hrs.to_f
-          EmployeeAttendance.where(id: @c2.id).update_all(company_hrs: s.working_hrs,overtime_hrs: total_time_diff)
-          puts "/////////////////////////////////////" 
-          flash[:notice] = "Machine Attendance Created Successfully"
-          redirect_to new_machine_attendance_path   
-       end
-          flash[:notice] = "Machine Attendance Created Successfully"
-          redirect_to new_machine_attendance_path
-    end
-  end
-end
+     @machine_attendance = MachineAttendance.new(machine_attendance_params)
+     @machine_attendances = MachineAttendance.all
+      if @machine_attendance.save
+        @machine_attendance = MachineAttendance.new
+      end
+      redirect_to new_machine_attendance_path
+      flash[:notice] = 'Machine Attendance saved Successfully.'
+  end   
 
   def save_machine_attendance_checkbox
     @machine_attendance_ids = params[:machine_attendance_ids]

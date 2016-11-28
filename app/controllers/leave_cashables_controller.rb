@@ -31,6 +31,20 @@ class LeaveCashablesController < ApplicationController
       flash[:alert] = "Check Balance"
     else
       @leave_cashable.save
+      @employee_salary_templates = EmployeeSalaryTemplate.where(employee_id: @leave_cashable.employee_id)
+      @leave_cash_masters = LeaveCashMaster.where(is_active: true)
+      @day_in_month =  @leave_cashable.date.end_of_month.day
+      @employee_salary_templates.try(:each) do |est|
+        @leave_cash_masters.try(:each) do |lcm|
+          # byebug
+          formula_string = lcm.base_component.split(',').map {|i| i.to_i}
+          @employee_templates = EmployeeTemplate.where(employee_id: @leave_cashable.employee_id,is_active: true).take
+          formula_item = EmployeeSalaryTemplate.where(salary_component_id: formula_string,employee_id: @leave_cashable.employee_id,employee_template_id: @employee_templates.id)  
+          @total = formula_item.sum(:monthly_amount)
+          formula_item_monthly_amount = ( @total.to_f / @day_in_month.to_i * lcm.rate.to_f ) * @leave_cashable.cashable.to_f
+          LeaveCashable.where(id: @leave_cashable.id).update_all(amount: formula_item_monthly_amount)
+        end
+      end
       @employee_leav_balance = EmployeeLeavBalance.where(employee_id: @leave_cashable.employee_id,leav_category_id: @leave_cashable.leav_category_id,is_active: true).take
       @employee_leav_balance.update(no_of_leave: @employee_leav_balance.no_of_leave.to_f - @leave_cashable.cashable.to_f)
     end

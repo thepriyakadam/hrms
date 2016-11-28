@@ -161,9 +161,9 @@ class EmployeeAttendancesController < ApplicationController
     @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).group(:employee_id)
   end
 
-   def display_attendance_1
-    @month = params[:month]
-    @year = params[:year]
+  def display_attendance_1
+    @month = params[:employee_attendance][:month]
+    @year = params[:employee_attendance][:year]
     # @employee_attendances = EmployeeAttendance.where(day: @month)
     @date = Date.new(@year.to_i, Workingday.months[@month])
     @day = @date.end_of_month.day
@@ -183,9 +183,11 @@ class EmployeeAttendancesController < ApplicationController
   end
                                 
   def create_attendance
+    # byebug
     @employees, @attendances, work_data_structure, @date = params[:employees], params[:attendances], [], params[:date]
     params.permit!
     @employees.each { |e| work_data_structure << params[e] }
+    # byebug
     #EmployeeAttendance.where(employee_id: @employees).where("strftime('%m/%Y', day) = ? and is_confirm = ?", @date.to_date.strftime('%m/%Y'),false).update_all(is_confirm: true)
     Workingday.create(work_data_structure)
     flash[:notice] = "Workingday successfully saved."

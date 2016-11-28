@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161125104852) do
+ActiveRecord::Schema.define(version: 20161128111741) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -963,6 +963,8 @@ ActiveRecord::Schema.define(version: 20161125104852) do
     t.integer  "first_reporter_id"
     t.integer  "second_reporter_id"
     t.string   "current_status1"
+    t.boolean  "first_half"
+    t.boolean  "last_half"
   end
 
   add_index "employee_leav_requests", ["employee_id"], name: "index_employee_leav_requests_on_employee_id"
@@ -2076,8 +2078,8 @@ ActiveRecord::Schema.define(version: 20161125104852) do
     t.string   "code"
     t.string   "name"
     t.string   "description"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
     t.boolean  "is_payble"
     t.decimal  "from"
     t.decimal  "to"
@@ -2087,6 +2089,7 @@ ActiveRecord::Schema.define(version: 20161125104852) do
     t.string   "limit"
     t.boolean  "is_limit"
     t.boolean  "is_cashable"
+    t.boolean  "assign_balance"
   end
 
   create_table "leav_rejecteds", force: :cascade do |t|

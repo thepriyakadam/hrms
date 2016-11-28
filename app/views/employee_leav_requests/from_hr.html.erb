@@ -60,8 +60,13 @@
 
         <div class="col-sm-3">
           <div class="form-group required">
-          <%= f.select :leave_type, ['Full Day','First Half','Second Half'],{label:"Leave Type",include_blank: "Please Select Leave Type"}%>
+          <%= f.select :leave_type, ['Full Day','Half Day','Full/Half'],{label:"Leave Type",include_blank: "Select Leave Type"}%>
           </div>
+        </div>
+
+        <div class="col-sm-2">
+          <label>Second Half</label>
+          <%= f.check_box :last_half,label: "Click" %>
         </div>
 
         <div class="col-sm-3">
@@ -75,7 +80,11 @@
           </div>
         </div>
 
-        <div class="col-sm-3">
+        
+      </div>
+
+      <div class="row">
+      <div class="col-sm-3">
           <div class="form-group required">
             <div class="input-group">
               <div class="input-group-addon">
@@ -85,10 +94,13 @@
             </div>
           </div>
         </div>
-      </div>
+
+        <div class="col-sm-2">
+          <label>First Half</label>
+          <%= f.check_box :first_half,label: "Click" %>
+        </div> 
       
-      <div class="row">
-        <div class="col-sm-5">
+        <div class="col-sm-6">
           <div class="form-group required">
             <%= f.text_field :reason %>
           </div>
@@ -150,32 +162,33 @@
   });
 
   $('#employee_leav_request_start_date').on('change', function() {
-    if ($('#employee_leav_request_leave_type').val() == "Full Day"){
-
+    if ($('#employee_leav_request_leave_type').val() == "Half Day"){
+      $('#employee_leav_request_end_date').val($('#employee_leav_request_start_date').val());
     }
     else{
-      $('#employee_leav_request_end_date').val($('#employee_leav_request_start_date').val());
     }
     
   });
 
   $('#employee_leav_request_end_date').on('change', function() {
-    if ($('#employee_leav_request_leave_type').val() == "Full Day"){
+    if ($('#employee_leav_request_leave_type').val() == "Half Day"){
+      $('#employee_leav_request_end_date').val($('#employee_leav_request_start_date').val());
 
     }
     else{
-      $('#employee_leav_request_end_date').val($('#employee_leav_request_start_date').val());
     }
   });
 
   $('#employee_leav_request_leave_type').on('change', function() {
-    if ($('#employee_leav_request_leave_type').val() == "Full Day"){
-      $("#employee_leav_request_end_date").attr('readonly', false);
-      $("#employee_leav_request_end_date").val('');
-    }
-    else{
+    if ($('#employee_leav_request_leave_type').val() == "Half Day"){
+
       $("#employee_leav_request_end_date").attr('readonly', true);
       $("#employee_leav_request_end_date").val('<%= @start_date %>');
+      
+    }
+    else{
+      $("#employee_leav_request_end_date").attr('readonly', false);
+      $("#employee_leav_request_end_date").val('');
     }
   });
 </script>

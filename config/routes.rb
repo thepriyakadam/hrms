@@ -968,7 +968,7 @@ end
   resources :leave_c_offs do
     collection do
       get :search_by_c_off_date
-      post :add_coff
+      get :add_coff
     end
   end
 

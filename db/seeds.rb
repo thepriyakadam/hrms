@@ -122,25 +122,23 @@ ActiveRecord::Base.transaction do
 2.upto(71) do |line| # siya Feb 2016
   puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A'))
-  # JoiningDetail.where(id: @employee.id).update_all(is_da: true)
+  JoiningDetail.where(id: @employee.id).update_all(is_da: true)
   puts "#{i} Record inserted.-----------------------------------------------"
-  unless @employee.nil?
-  @joining_details = JoiningDetail.where(employee_id: @employee.id)
+  # unless @employee.nil?
 
-    @joining_details.each do |jo|
-      jo.update(is_employeer_pf: ex.cell(line,'B'))
-      jo.update(is_family_pension: ex.cell(line,'C'))
-      jo.update(is_employeer_esic: ex.cell(line,'D'))
-      jo.update(select_pf: ex.cell(line,'E'))
-      jo.update(employee_pf_no: ex.cell(line,'F')) 
-      jo.update(have_esic: ex.cell(line,'G'))
-      jo.update(employee_esic_no: ex.cell(line,'H')) 
+  #   EmployeeAttendance.new do |w|
+  #     w.employee_id = @employee.id
+  #     w.day = ex.cell(line, 'B')
+  #     w.in = ex.cell(line, 'C')
+  #     w.out = ex.cell(line, 'D')
+  #     w.shift_master_id = ex.cell(line, 'G').to_i
+
       
-      jo.save!
-    end
-    puts "#{i} Record inserted.-----------------------------------------------"
-    i += 1
-  end
+  #     w.save!
+  #   end
+  #   puts "#{i} Record inserted.-----------------------------------------------"
+  #   i += 1
+  # end
   end
 end
 

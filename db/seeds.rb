@@ -155,7 +155,6 @@ require 'roo'
 
 #       puts "OA..................Salary"
 #     end
-
 #       est.save!
 #       puts "#{j} component inserted..."
 #       j=j+1
@@ -167,10 +166,10 @@ require 'roo'
 
 ex = Roo::Excel.new("#{Rails.root}/public/jd.xls")
 
+
 ex.default_sheet = ex.sheets[0] #siya feb
 i = 1
 ActiveRecord::Base.transaction do
-
 2.upto(73) do |line| # siya Feb 2016
  puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
  @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A'))

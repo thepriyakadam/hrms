@@ -11,11 +11,13 @@
   <tr>
     <th><input type="checkbox" id="selectAll" value="selectAll"></th>
     <th>ID</th>
+    <th>Employee ID</th>
     <th>Employee Name</th>
     <th>Shift</th>
     <th>Day</th>
     <th>In</th>
     <th>Out</th>
+    <th>Present</th>
   </tr> 
 </thead>
 <tbody>
@@ -23,11 +25,13 @@
     <tr>              
       <td><%= check_box_tag "machine_attendance_ids[]",m.id %></td>
       <td><%= m.id %></td>
+      <td><%= m.employee.try(:id) %></td>
       <td><%= m.employee.try(:first_name) %> <%= m.employee.try(:middle_name) %> <%= m.employee.try(:last_name) %></td>
       <td><%= m.shift_master.try(:name) %></td>
       <td><%= m.day %></td>
       <td><%= m.try(:in) %></td>
       <td><%= m.try(:out) %></td>
+      <td><%= m.try(:present) %></td>
     </tr>
   <% end %>
 </tbody>

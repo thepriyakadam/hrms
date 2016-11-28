@@ -77,7 +77,7 @@ class MachineAttendancesController < ApplicationController
                 # byebug
                 if e.shift_master_id == s.shift_master_id
                     if e.in.strftime('%H:%M:%S').between?(s.in_min_time.strftime('%H:%M:%S'), s.in_max_time.strftime('%H:%M:%S')) && e.out.strftime('%H:%M:%S').between?(s.out_min_time.strftime('%H:%M:%S'), s.out_max_time.strftime('%H:%M:%S'))
-                      @c1=EmployeeAttendance.create(employee_id: e.employee_id,day: e.day.to_date,in_time: s.in_time,out_time: s.out_time,machine_attendances_id: e.id,company_time_master_id: s.id)
+                      @c1=EmployeeAttendance.create(employee_id: e.employee_id,day: e.day.to_date,in_time: s.in_time,out_time: s.out_time,machine_attendances_id: e.id,company_time_master_id: s.id,present: e.present)
                       MachineAttendance.where(id: e.id).update_all(is_proceed: true)
                       time_diff=TimeDifference.between(@c1.in_time.strftime('%H:%M:%S'), @c1.out_time.strftime('%H:%M:%S')).in_hours.round
                       total_time_diff = time_diff - s.working_hrs.to_f
@@ -85,7 +85,7 @@ class MachineAttendancesController < ApplicationController
                       puts "------------------------------------"
 
                     elsif e.in.strftime('%H:%M:%S').between?(s.in_min_time.strftime('%H:%M:%S'), s.in_max_time.strftime('%H:%M:%S')) 
-                        @c1=EmployeeAttendance.create(employee_id: e.employee_id,day: e.day.to_date,in_time: s.in_time,out_time: e.out,machine_attendances_id: e.id,company_time_master_id: s.id)
+                        @c1=EmployeeAttendance.create(employee_id: e.employee_id,day: e.day.to_date,in_time: s.in_time,out_time: e.out,machine_attendances_id: e.id,company_time_master_id: s.id,present: e.present)
                         MachineAttendance.where(id: e.id).update_all(is_proceed: true)
                         time_diff=TimeDifference.between(@c1.in_time.strftime('%H:%M:%S'), @c1.out_time.strftime('%H:%M:%S')).in_hours.round
                         total_time_diff = time_diff - s.working_hrs.to_f
@@ -93,7 +93,7 @@ class MachineAttendancesController < ApplicationController
                         puts "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
 
                     elsif e.out.strftime('%H:%M:%S').between?(s.out_min_time.strftime('%H:%M:%S'), s.out_max_time.strftime('%H:%M:%S'))
-                        @c1=EmployeeAttendance.create(employee_id: e.employee_id,day: e.day.to_date,in_time: e.in,out_time: s.out_time,machine_attendances_id: e.id,company_time_master_id: s.id)
+                        @c1=EmployeeAttendance.create(employee_id: e.employee_id,day: e.day.to_date,in_time: e.in,out_time: s.out_time,machine_attendances_id: e.id,company_time_master_id: s.id,present: e.present)
                         MachineAttendance.where(id: e.id).update_all(is_proceed: true)
                         time_diff=TimeDifference.between(@c1.in_time.strftime('%H:%M:%S'), @c1.out_time.strftime('%H:%M:%S')).in_hours.round
                         total_time_diff = time_diff - s.working_hrs.to_f
@@ -101,7 +101,7 @@ class MachineAttendancesController < ApplicationController
                         puts "cccccccccccccccccccccccccccccccccccccc"
 
                     else
-                        @c2=EmployeeAttendance.create(employee_id: e.employee_id,day: e.day.to_date,in_time: e.in,out_time: e.out,machine_attendances_id: e.id,company_time_master_id: s.id)
+                        @c2=EmployeeAttendance.create(employee_id: e.employee_id,day: e.day.to_date,in_time: e.in,out_time: e.out,machine_attendances_id: e.id,company_time_master_id: s.id,present: e.present)
                         MachineAttendance.where(id: e.id).update_all(is_proceed: true)
                         time_diff=TimeDifference.between(@c2.in_time.strftime('%H:%M:%S'), @c2.out_time.strftime('%H:%M:%S')).in_hours.round
                         total_time_diff = time_diff - s.working_hrs.to_f

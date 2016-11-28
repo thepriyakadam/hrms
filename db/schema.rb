@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161126103908) do
+ActiveRecord::Schema.define(version: 20161128060507) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -2195,6 +2195,7 @@ ActiveRecord::Schema.define(version: 20161126103908) do
     t.datetime "updated_at",      null: false
     t.integer  "shift_master_id"
     t.boolean  "is_proceed"
+    t.string   "present"
   end
 
   add_index "machine_attendances", ["employee_id"], name: "index_machine_attendances_on_employee_id"

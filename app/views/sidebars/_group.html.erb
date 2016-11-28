@@ -359,18 +359,57 @@
   </li>
  
   <li class="treeview" id="timemgmt">
-    <a href="">
-      <i class="ionicons ion-ios-time"></i><span> Time Management </span> <i class="fa fa-angle-left pull-right"></i>
+    <a href="#">
+      <i class="glyphicon glyphicon-th-large"></i> <span>Time Management</span>
+      <i class="fa fa-angle-left pull-right"></i>
     </a>
-    <ul class="treeview-menu">
-      <li><a href="/holidays/new"><i class="fa fa-tags"></i> Holiday Setup </a></li>
+    <ul class="treeview-menu" >
+     <li><a href="/holidays/new"><i class="fa fa-tags"></i> Holiday Setup </a></li>
      <li><a href="/week_off_masters/new"><i class="fa fa-tags"></i> Week Off Setup </a></li>
+
+      <li class="treeview" id="attendance">
+      <a href="#">
+        <i class="fa fa-edit"></i>Attendance <i class="fa fa-angle-left pull-right"></i>
+      </a>
+      <ul class="treeview-menu">
+
+     <li><a href="/company_time_masters/new"><i class="fa fa-tags"> </i>Company Time Master</a></li>
+      <li><a href="/machine_attendances/new"><i class="fa fa-tags"> </i>Machine Attendances</a></li>
+      <li><a href="/shift_masters/new"><i class="fa fa-tags"> </i>Shift Master</a></li>
+      </ul>
+      </li> 
+
+
+     <li class="treeview" id="attendance">
+      <a href="#">
+        <i class="fa fa-edit"></i>Attendance <i class="fa fa-angle-left pull-right"></i>
+      </a>
+      <ul class="treeview-menu">
+       <li><a href="/employee_attendances/new"><i class="fa fa-tags"></i> Add Attendance</a></li> 
+       <li><a href="/employee_attendances/emp_attendance"><i class="fa fa-tags"></i> Attendance  </a></li>
+       <li><a href="/employee_attendances/costcenter_wise_attendance"><i class="fa fa-tags"></i> Show Cost Center Wise </a></li>
+       <li><a href="/employee_attendances/revert_attendance_employeewise"><i class="fa fa-tags"></i> Revert Employee Wise </a></li>
+       <li><a href="/employee_attendances/revert_attendance"><i class="fa fa-tags"></i> Revert Cost Center Wise </a></li>
+       <li><a href="/employee_attendances/calculate_attendance"><i class="fa fa-tags"></i> Attendance Setup</a></li>
+      <!--  <li><a href="/employee_attendances"><i class="fa fa-tags"></i> Confirm Attendance  </a></li> -->
+       <li><a href="/workingdays"><i class="fa fa-tags"> </i>Monthly Working Day</a></li>
+     <!-- <li><a href="/workingdays/search_month_year"><i class="fa fa-tags"> </i>Attendace Update(Auto) </a></li> -->
+     <!--  <li><a href="/holidays/new"><i class="fa fa-tags"></i> Holiday Setup </a></li>
       <li><a href="/company_shifts/new"><i class="fa fa-tags"></i> Shifts Maintenance </a></li>
       <li><a href="/shift_rotations/new"><i class="fa fa-tags"></i> Shift Rotation </a></li>
       <li><a href="/employee_shifts"><i class="fa fa-tags"></i> Employee Shift Assignment </a></li>
-      <li><a href="/attendances"><i class="fa fa-tags"></i> Employee Attendance </a></li>
+      <li><a href="/attendances"><i class="fa fa-tags"></i> Employee Attendance </a></li> -->
     </ul>
-   </li>
+      </li> 
+        <li id="time_sheet">
+        <a href="#"><i class="fa fa-edit"></i> Time Sheet <i class="fa fa-angle-left pull-right"></i></a>
+        <ul class="treeview-menu" >
+        <li><a href="/employee_daily_activities/new"><i class="fa fa-tags"></i>Daily Activity</a></li>
+        <li><a href="/employee_daily_activities/employee_details"><i class="fa fa-tags"></i>Employee Details</a></li>
+        </ul>
+        </li> 
+    </ul>
+  </li>
 
     <li class="treeview">
     <a href="">

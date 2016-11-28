@@ -24,40 +24,40 @@ class CompanyTimeMastersController < ApplicationController
 
   # POST /company_time_masters
   # POST /company_time_masters.json
-  # def create
-  #  @company_time_master = CompanyTimeMaster.new(company_time_master_params)
-  #   @company_time_masters = CompanyTimeMaster.all
-  #   respond_to do |format|
-  #     if @company_time_master.save
-  #        @company_time_master = CompanyTimeMaster.new
-  #       format.js { @flag = true }
-  #     else
-  #       flash.now[:alert] = 'Company time Already Exist.'
-  #       format.js { @flag = false }
-  #     end
-  #   end
-  # end
-
   def create
-    # byebug
-    @in_min_time = params[:company_time_master][:in_min_time]
-    @in_max_time = params[:company_time_master][:in_max_time]
-    @in_time = params[:company_time_master][:in_time]
-    @out_min_time = params[:company_time_master][:out_min_time]
-    @out_max_time = params[:company_time_master][:out_max_time]
-    @out_time = params[:company_time_master][:out_time]
-    @working_hrs = params[:company_time_master][:working_hrs]
-    @shift_type = params[:company_time_master][:shift_master_id]
-    @is_active = params[:company_time_master][:is_active]
-    CompanyTimeMaster.create(in_min_time: @in_min_time,in_max_time: @in_max_time,in_time: @in_time,out_min_time: @out_min_time,out_max_time: @out_max_time,out_time: @out_time,working_hrs: @working_hrs,shift_master_id: @shift_type,is_active: @is_active)
-    flash[:notice] = "Company Time Master Created Successfully"
-    redirect_to new_company_time_master_path
+   @company_time_master = CompanyTimeMaster.new(company_time_master_params)
+    @company_time_masters = CompanyTimeMaster.all
+    respond_to do |format|
+      if @company_time_master.save
+         @company_time_master = CompanyTimeMaster.new
+        format.js { @flag = true }
+      else
+        flash.now[:alert] = 'Company time Already Exist.'
+        format.js { @flag = false }
+      end
+    end
   end
+
+  # def create
+  #   # byebug
+  #   @in_min_time = params[:company_time_master][:in_min_time]
+  #   @in_max_time = params[:company_time_master][:in_max_time]
+  #   @in_time = params[:company_time_master][:in_time]
+  #   @out_min_time = params[:company_time_master][:out_min_time]
+  #   @out_max_time = params[:company_time_master][:out_max_time]
+  #   @out_time = params[:company_time_master][:out_time]
+  #   @working_hrs = params[:company_time_master][:working_hrs]
+  #   @shift_type = params[:company_time_master][:shift_master_id]
+  #   @is_active = params[:company_time_master][:is_active]
+  #   CompanyTimeMaster.create(in_min_time: @in_min_time,in_max_time: @in_max_time,in_time: @in_time,out_min_time: @out_min_time,out_max_time: @out_max_time,out_time: @out_time,working_hrs: @working_hrs,shift_master_id: @shift_type,is_active: @is_active)
+  #   flash[:notice] = "Company Time Master Created Successfully"
+  #   redirect_to new_company_time_master_path
+  # end
 
   # PATCH/PUT /company_time_masters/1
   # PATCH/PUT /company_time_masters/1.json
    def update
-    byebug
+    # byebug
     @company_time_master.update(company_time_master_params)
     @company_time_masters = CompanyTimeMaster.all
     @company_time_master = CompanyTimeMaster.new
@@ -69,7 +69,7 @@ class CompanyTimeMastersController < ApplicationController
     @company_time_master.destroy
     @company_time_masters = CompanyTimeMaster.all
     flash[:alert] = "Record Deleted Successfully"
-    redirect_to new_company_master_path 
+    redirect_to new_company_time_master_path 
   end
 
   def is_confirm
@@ -87,6 +87,6 @@ class CompanyTimeMastersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def company_time_master_params
-      params.require(:company_time_master).permit(:in_min_time, :in_max_time, :in_time, :out_time, :out_min_time, :out_max_time, :working_hrs, :is_active, :is_confirm)
+      params.require(:company_time_master).permit(:in_min_time, :in_max_time, :shift_master_id, :in_time, :out_time, :out_min_time, :out_max_time, :working_hrs, :is_active, :is_confirm)
     end
 end

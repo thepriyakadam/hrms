@@ -4,9 +4,6 @@
     <div class="pull-right">
     </div>
     </div>
-
-<p id="notice"><%= notice %></p>
-
 <div class="box-body">
 <%= form_for :machine_attendances, url: { action: 'save_machine_attendance_checkbox'} do |f| %>
 <table id="example5" class="table table-bordered table-hover table-condensed">
@@ -14,10 +11,14 @@
   <tr>
     <th><input type="checkbox" id="selectAll" value="selectAll"></th>
     <th>ID</th>
+    <th>Employee ID</th>
     <th>Employee Name</th>
+    <th>Shift</th>
     <th>Day</th>
     <th>In</th>
     <th>Out</th>
+    <th>Present</th>
+    <th>Action</th>
   </tr> 
 </thead>
 <tbody>
@@ -25,10 +26,14 @@
     <tr>              
       <td><%= check_box_tag "machine_attendance_ids[]",m.id %></td>
       <td><%= m.id %></td>
+      <td><%= m.employee.try(:id) %></td>
       <td><%= m.employee.try(:first_name) %> <%= m.employee.try(:middle_name) %> <%= m.employee.try(:last_name) %></td>
+      <td><%= m.shift_master.try(:name) %></td>
       <td><%= m.day %></td>
       <td><%= m.try(:in) %></td>
       <td><%= m.try(:out) %></td>
+      <td><%= m.try(:present) %></td>
+      <td></td>
     </tr>
   <% end %>
 </tbody>

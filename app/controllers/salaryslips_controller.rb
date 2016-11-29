@@ -128,6 +128,7 @@ class SalaryslipsController < ApplicationController
   end
 
   def show_unsaved_employee
+    # byebug
     @month = params[:month]
     @year = params[:year]
     @workingdays = Workingday.where(month_name: @month, year: @year).pluck(:employee_id)

@@ -2197,6 +2197,8 @@ ActiveRecord::Schema.define(version: 20161128111741) do
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
     t.integer  "shift_master_id"
+    t.boolean  "is_proceed"
+    t.string   "present"
   end
 
   add_index "machine_attendances", ["employee_id"], name: "index_machine_attendances_on_employee_id"

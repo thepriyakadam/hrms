@@ -68,12 +68,13 @@ class LeaveCOffsController < ApplicationController
 
               @c_off.each do |l|
                 if l.try(:expiry_date).to_date < Date.today
-                  @emp_leave_bal = EmployeeLeavBalance.where(employee_id: l.employee_id,leav_category_id: leav_category.id).take  
-                  @emp_leave_bal.no_of_leave = @emp_leave_bal.no_of_leave.to_f - l.leave_count
+                  @employee_leave_balance = EmployeeLeavBalance.where(employee_id: l.employee_id,leav_category_id: leav_category.id).take  
+                  @employee_leave_balance.no_of_leave = @employee_leave_balance.no_of_leave.to_f - l.leave_count
                   LeaveCOff.where(id: l.id).update_all(leave_count: 0,is_expire: true)
+                  @employee_leave_balance.save
                 else
+                  @employee_leave_balance.save
                 end
-                 @emp_leave_bal.save
               end
             else
               @employee_leave_balance.total_leave = @employee_leave_balance.total_leave.to_f + 0.5
@@ -83,12 +84,13 @@ class LeaveCOffsController < ApplicationController
               
               @c_off.each do |l|
                 if l.try(:expiry_date) < Date.today
-                  @emp_leave_bal = EmployeeLeavBalance.where(employee_id: l.employee_id,leav_category_id: leav_category.id).take
-                  @emp_leave_bal.no_of_leave = @emp_leave_bal.no_of_leave.to_f - l.leave_count
+                  @employee_leave_balance = EmployeeLeavBalance.where(employee_id: l.employee_id,leav_category_id: leav_category.id).take
+                  @employee_leave_balance.no_of_leave = @employee_leave_balance.no_of_leave.to_f - l.leave_count
                   LeaveCOff.where(id: l.id).update_all(leave_count: 0,is_expire: true)
+                @employee_leave_balance.save
                 else
+                @employee_leave_balance.save
                 end
-                @emp_leave_bal.save
               end
             end
           else
@@ -100,6 +102,7 @@ class LeaveCOffsController < ApplicationController
               else
               end
               b.is_active = true
+              @c_off = LeaveCOff.where(is_expire: nil,expiry_status: true)
 
               if @leave_c_off.c_off_type == "Full Day"
                 b.no_of_leave = 1
@@ -113,6 +116,16 @@ class LeaveCOffsController < ApplicationController
                 puts @leave_c_off.leave_count
               end
             end
+              @c_off.each do |l|
+                if l.try(:expiry_date).to_date < Date.today
+                  @employee_leave_balance = EmployeeLeavBalance.where(employee_id: l.employee_id,leav_category_id: leav_category.id).take  
+                  @employee_leave_balance.no_of_leave = @employee_leave_balance.no_of_leave.to_f - l.leave_count
+                  LeaveCOff.where(id: l.id).update_all(leave_count: 0,is_expire: true)
+                  @employee_leave_balance.save
+                else
+                  @employee_leave_balance.save
+                end
+              end
           end
           ActiveRecord::Base.transaction do
             @leave_c_off.save

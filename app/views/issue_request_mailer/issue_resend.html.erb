@@ -4,16 +4,16 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-     <h4>Issue Not Solved</h4>
+     <h4>Support Not Solved</h4>
     <p> 
-      This is to inform you that the issue is not solved .
+      This is to inform you that the support request is not solved .
       Details are given below.<br><br>
 
-      <b>1. Issue</b> - <%= @issue_request.issue_master.try(:name) %><br><br>
+      <b>1. Support</b> - <%= @issue_request.issue_master.try(:name) %><br><br>
 
       <b>2. Group</b> - <%= @issue_request.issue_tracker_group.try(:name) %><br><br>
 
-      <b>3. Issue Priority</b> - <%= @issue_request.issue_priority %><br><br>
+      <b>3. Support Priority</b> - <%= @issue_request.issue_priority %><br><br>
 
       <b>4. Description</b> - <%= @issue_request.description %><br><br>
         With Regards,<br><br>

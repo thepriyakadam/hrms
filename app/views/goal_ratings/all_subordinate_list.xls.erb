@@ -12,14 +12,9 @@
         <Cell ss:Index="3"><Data ss:Type="String">Employee Name</Data></Cell>
         <Cell ss:Index="4"><Data ss:Type="String">Company Location</Data></Cell>
         <Cell ss:Index="5"><Data ss:Type="String">Department</Data></Cell> 
-
-       
         <Cell ss:Index="6"><Data ss:Type="String">Joining Date</Data></Cell>
         <Cell ss:Index="7"><Data ss:Type="String">Designation</Data></Cell>
         <Cell ss:Index="8"><Data ss:Type="String">Employee Grade</Data></Cell>
-
-
-
         <Cell ss:Index="9"><Data ss:Type="String">Employee Qualification Level 1</Data></Cell>
         <Cell ss:Index="10"><Data ss:Type="String">Employee Qualification </Data></Cell>
         <Cell ss:Index="11"><Data ss:Type="String">Employee Qualification Specialization </Data></Cell>
@@ -61,12 +56,13 @@
 
 
         <Cell ss:Index="42"><Data ss:Type="String">Employee Self Comment </Data></Cell>
-        <Cell ss:Index="43"><Data ss:Type="String">Appraiser Comment </Data></Cell>
-        <Cell ss:Index="44"><Data ss:Type="String">Appraiser Rating </Data></Cell>
-        <Cell ss:Index="45"><Data ss:Type="String">Reviewer Comment </Data></Cell>
-        <Cell ss:Index="46"><Data ss:Type="String">Reviewer Rating </Data></Cell>
-        <Cell ss:Index="47"><Data ss:Type="String">Final Comment </Data></Cell>
-        <Cell ss:Index="48"><Data ss:Type="String">Final Rating </Data></Cell>
+        <Cell ss:Index="43"><Data ss:Type="String">Employee Self Rating </Data></Cell>
+        <Cell ss:Index="44"><Data ss:Type="String">Appraiser Comment </Data></Cell>
+        <Cell ss:Index="45"><Data ss:Type="String">Appraiser Rating </Data></Cell>
+        <Cell ss:Index="46"><Data ss:Type="String">Reviewer Comment </Data></Cell>
+        <Cell ss:Index="47"><Data ss:Type="String">Reviewer Rating </Data></Cell>
+        <Cell ss:Index="48"><Data ss:Type="String">Final Comment </Data></Cell>
+        <Cell ss:Index="49"><Data ss:Type="String">Final Rating </Data></Cell>
         </Row>
 
         <% i = 0 %>
@@ -140,12 +136,13 @@
           <Cell ss:Index="41"><Data ss:Type="String"><%= experience3.try(:ctc) %></Data></Cell>
           
           <Cell ss:Index="42"><Data ss:Type="String"><%= goal_bunch.try(:appraisee_comment) %></Data></Cell>
-          <Cell ss:Index="43"><Data ss:Type="String"><%= goal_bunch.try(:appraiser_comment) %></Data></Cell>
-          <Cell ss:Index="44"><Data ss:Type="String"><%= goal_bunch.try(:appraiser_rating) %></Data></Cell>
-          <Cell ss:Index="45"><Data ss:Type="String"><%= goal_bunch.try(:review_comment) %></Data></Cell>
-          <Cell ss:Index="46"><Data ss:Type="String"><%= goal_bunch.try(:reviewer_rating_id) %></Data></Cell>
-          <Cell ss:Index="47"><Data ss:Type="String"><%= goal_bunch.try(:final_comment) %></Data></Cell>
-          <Cell ss:Index="48"><Data ss:Type="String"><%= goal_bunch.try(:final_rating_id) %></Data></Cell>
+          <Cell ss:Index="43"><Data ss:Type="String"><%= goal_bunch.try(:appraisee_rating_id) %></Data></Cell>
+          <Cell ss:Index="44"><Data ss:Type="String"><%= goal_bunch.try(:appraiser_comment) %></Data></Cell>
+          <Cell ss:Index="45"><Data ss:Type="String"><%= goal_bunch.try(:appraiser_rating) %></Data></Cell>
+          <Cell ss:Index="46"><Data ss:Type="String"><%= goal_bunch.try(:review_comment) %></Data></Cell>
+          <Cell ss:Index="47"><Data ss:Type="String"><%= goal_bunch.try(:reviewer_rating_id) %></Data></Cell>
+          <Cell ss:Index="48"><Data ss:Type="String"><%= goal_bunch.try(:final_comment) %></Data></Cell>
+          <Cell ss:Index="49"><Data ss:Type="String"><%= goal_bunch.try(:final_rating_id) %></Data></Cell>
      </Row><!-- Row -->
       <% end %><!-- slip -->
     </Table>

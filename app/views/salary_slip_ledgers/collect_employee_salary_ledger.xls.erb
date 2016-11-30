@@ -20,6 +20,10 @@
       <Cell ss:Index="1"><Data ss:Type="String">O.Allow</Data></Cell>
       <Cell ss:Index="1"><Data ss:Type="String">S.Allow</Data></Cell>
       <Cell ss:Index="1"><Data ss:Type="String">Wsh.Allow</Data></Cell>
+      <Cell ss:Index="1"><Data ss:Type="String">Driver Allow</Data></Cell>
+      <Cell ss:Index="1"><Data ss:Type="String">Medi Allow</Data></Cell>
+      <Cell ss:Index="1"><Data ss:Type="String">Child Edu Allow</Data></Cell>
+      <Cell ss:Index="1"><Data ss:Type="String">MRA</Data></Cell>
       <Cell ss:Index="1"><Data ss:Type="String">Gross</Data></Cell>
 
       <Cell ss:Index="1"><Data ss:Type="String">PF</Data></Cell>
@@ -44,6 +48,7 @@
         <Cell ss:Index="1"><Data ss:Type="String"><%= r.try(:employee_name) %></Data></Cell>
         <Cell ss:Index="1"><Data ss:Type="String"><%= r.try(:month) %></Data></Cell>
         
+        
         <Cell ss:Index="1"><Data ss:Type="Number"><%= r.try(:earned_basic).try(:round) %></Data></Cell>
         <Cell ss:Index="1"><Data ss:Type="Number"><%= r.try(:earned_da).try(:round) %></Data></Cell>
         <Cell ss:Index="1"><Data ss:Type="Number"><%= r.try(:earned_hra).try(:round) %></Data></Cell>
@@ -52,6 +57,10 @@
         <Cell ss:Index="1"><Data ss:Type="Number"><%= r.try(:earned_other).try(:round) %></Data></Cell>
         <Cell ss:Index="1"><Data ss:Type="Number"><%= r.try(:earned_special).try(:round) %></Data></Cell>
         <Cell ss:Index="1"><Data ss:Type="Number"><%= r.try(:earned_washing).try(:round) %></Data></Cell>
+        <Cell ss:Index="1"><Data ss:Type="Number"><%= r.try(:earned_driver).try(:round) %></Data></Cell>
+        <Cell ss:Index="1"><Data ss:Type="Number"><%= r.try(:earned_medical).try(:round) %></Data></Cell>
+        <Cell ss:Index="1"><Data ss:Type="Number"><%= r.try(:earned_child_edu).try(:round) %></Data></Cell>
+        <Cell ss:Index="1"><Data ss:Type="Number"><%= r.try(:earned_mra).try(:round) %></Data></Cell>
         <Cell ss:Index="1"><Data ss:Type="Number"><%= r.try(:earned_total).try(:round) %></Data></Cell>
 
         <Cell ss:Index="1"><Data ss:Type="Number"><%= r.try(:pf) %></Data></Cell>

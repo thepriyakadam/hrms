@@ -1,21 +1,17 @@
 <table id="example2" class="table table-bordered table-hover table-condensed'">
   <thead>
-    <tr>  
+    <tr>
+      <th>Base component</th>  
       <th>ESIC</th>
       <th>Percentage</th>
       <th>Effective Date</th>
       <th>Max limit</th>
-      <th>Base component</th>
       <th>Action</th>
     </tr>
   </thead>
   <tbody>
     <% @esic_masters.each do |esic_master| %>
       <tr>
-        <td><%= esic_master.esic ? "Yes" : "No" %></td>
-        <td><%= esic_master.percentage %></td>
-        <td><%= esic_master.date_effective %></td>
-        <td><%= esic_master.max_limit %></td>
         <td>
           <% i = 0 %>
           <% esic_master.base_component.split(",").each do |e| %>
@@ -27,6 +23,11 @@
             <% i = i + 1 %>
           <% end %>
         </td>
+        <td><%= esic_master.esic ? "Yes" : "No" %></td>
+        <td><%= esic_master.percentage %></td>
+        <td><%= esic_master.date_effective %></td>
+        <td><%= esic_master.max_limit %></td>
+        
 
         <td>
           <% if esic_master.is_confirm == true %>

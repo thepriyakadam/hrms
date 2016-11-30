@@ -17,8 +17,8 @@
           <td>
           <% if issue_type.is_confirm == true %>
             <small class= "label label-primary">Confirmed</small>
+            <%= link_to '', edit_issue_type_path(issue_type),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
             <% else %>
-           <%= link_to '', edit_issue_type_path(issue_type),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
             <%= link_to '',  issue_type, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
              <%= link_to '', is_confirm_issue_types_path(issue_type: issue_type),data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-info fa fa-check' %>
             <% end %>

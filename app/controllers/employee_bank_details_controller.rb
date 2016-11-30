@@ -29,7 +29,6 @@ class EmployeeBankDetailsController < ApplicationController
     @employee_bank_detail = EmployeeBankDetail.new(employee_bank_detail_params)
     @employee = Employee.find(params[:employee_bank_detail][:employee_id])
   end
-
   # PATCH/PUT /employee_bank_details/1
   # PATCH/PUT /employee_bank_details/1.json
   def update
@@ -54,10 +53,24 @@ class EmployeeBankDetailsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to employee_bank_details_url, notice: 'Employee bank detail was successfully destroyed.' }
       format.json { head :no_content }
-    end
+  end
+end
+  
+  def import_xl
+    @employee_bank_details = EmployeeBankDetail.all
+    respond_to do |format|
+    format.html
+    format.csv { send_data @employee_bank_details.to_csv }
+    format.xls
+    session[:active_tab] = "import"
+   end   
   end
 
-
+  def import
+    # byebug
+    EmployeeBankDetail.import(params[:file])
+    redirect_to root_url, notice: "File imported."
+  end
 
 
   private

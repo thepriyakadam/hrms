@@ -1,4 +1,4 @@
-<!-- Optionally, you can add icons to the links -->
+Support<!-- Optionally, you can add icons to the links -->
 <!-- sidebar menu: : style can be found in sidebar.less -->
 <ul class="sidebar-menu">
   <li class="header">
@@ -147,8 +147,6 @@
        <li><a href="/reporting_masters/update_reporting_manager"><i class="fa fa-tags"></i> Replace Reporting Manager </a></li>
     </ul>
     </li>
-
-
       <li class="treeview" id="employeereport">
         <a href="#"><i class="fa fa-edit"></i> Reports <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
@@ -221,7 +219,6 @@
     </ul>
   </li>
   
-
 <li class="treeview" id="issuetracker">
     <a href="#">
       <i class="glyphicon glyphicon-th-large"></i> <span>Help Desk</span>
@@ -231,27 +228,27 @@
        
        <li class="treeview" id="issueprocess1"> <a href="#"><i class="fa fa-edit"></i>Setup <i class="fa fa-angle-left pull-right"></i></a>
        <ul class="treeview-menu">
-       <li><a href="/issue_tracker_groups/new"><i class="fa fa-tags"></i>Group</a></li>
+        <li><a href="/issue_tracker_groups/new"><i class="fa fa-tags"></i>Group</a></li>
         <li><a href="/issue_tracker_members/new"><i class="fa fa-tags"></i>Member</a></li>
-         
-       
+        <li><a href="/issue_types/new"><i class="fa fa-tags"></i>Support Type</a></li>
+        <li><a href="/issue_masters/new"><i class="fa fa-tags"></i>Support Master</a></li>
+        <li><a href="/issue_root_causes/new"><i class="fa fa-tags"></i>Support Root Cause</a></li>
+
        </ul>
       </li> 
        <li class="treeview" id="issueprocess">
-        <a href="#"><i class="fa fa-edit"></i> Issue Process  <i class="fa fa-angle-left pull-right"></i></a>
+        <a href="#"><i class="fa fa-edit"></i> Process  <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
-        <li><a href="/issue_types/new"><i class="fa fa-tags"></i>Issue Type</a></li>
-        <li><a href="/issue_masters/new"><i class="fa fa-tags"></i>Issue Master</a></li>
-        <li><a href="/issue_root_causes/new"><i class="fa fa-tags"></i>Issue Root Cause</a></li>
-        <li><a href="/issue_requests/new"><i class="fa fa-tags"></i>Issue Request</a></li>
-        <li><a href="/issue_requests/lock_request_list"><i class="fa fa-tags"></i>Issue List</a></li>
-        <li><a href="/issue_requests/solved_issues"><i class="fa fa-tags"></i>Solved Issues</a></li>
-        <li><a href="/issue_requests/groupwise_report"><i class="fa fa-tags"></i>Group Wise Report</a></li>
-        <li><a href="/issue_requests/datewise_report"><i class="fa fa-tags"></i>Date Wise Report</a></li>
+        <li><a href="/issue_requests/new"><i class="fa fa-tags"></i>Support Request</a></li>
+        <li><a href="/issue_requests/lock_request_list"><i class="fa fa-tags"></i>Support List</a></li>
+        <li><a href="/issue_requests/solved_issues"><i class="fa fa-tags"></i>Solved Support</a></li>
+         <li><a href="/issue_requests/groupwise_report"><i class="fa fa-tags"></i>Group Wise Report</a></li>
+          <li><a href="/issue_requests/datewise_report"><i class="fa fa-tags"></i>Date Wise Report</a></li>
         </ul>
       </li>
     </ul>
   </li>
+
 
   <li class="treeview" id="payroll">
     <a href="#">
@@ -266,7 +263,7 @@
         <li><a href="/salary_templates/new"><i class="fa fa-tags"></i>Salary Template</a></li>
         <li><a href="/employee_templates/fresh_template"><i class="fa fa-tags"></i>Salary Break up</a></li>
         <li><a href="/employee_templates"><i class="fa fa-tags"></i>Salary Increment</a></li>
-         <li><a href="/employee_templates/template_salary"><i class="fa fa-tags"></i>Template Report</a></li>
+        <li><a href="/employee_templates/template_salary"><i class="fa fa-tags"></i>Template Report</a></li>
         </ul>
       </li>
 
@@ -331,6 +328,7 @@
       </li>
     </ul>
   </li>
+  
  <li class="treeview" id="timemgmt">
     <a href="#">
       <i class="glyphicon glyphicon-th-large"></i> <span>Time Management</span>
@@ -340,18 +338,21 @@
      
     <ul class="treeview-menu" >
      <li><a href="/holidays/new"><i class="fa fa-tags"></i> Holiday Setup </a></li>
+     <li><a href="/week_off_masters/new"><i class="fa fa-tags"></i> Week Off Setup </a></li>
      <li class="treeview" id="attendance"> <a href="#"><i class="fa fa-edit"></i>Attendance <i class="fa fa-angle-left pull-right"></i></a>
       <ul class="treeview-menu">
      <li><a href="/employee_attendances/new"><i class="fa fa-tags"></i> Add Attendance</a></li>
-     <li><a href="/employee_attendances"><i class="fa fa-tags"></i> Show Attendance  </a></li>
+     
+     <li><a href="/employee_attendances/emp_attendance"><i class="fa fa-tags"></i> Attendance  </a></li>
      <li><a href="/employee_attendances/costcenter_wise_attendance"><i class="fa fa-tags"></i> Show Cost Center Wise </a></li>
      <li><a href="/employee_attendances/revert_attendance_employeewise"><i class="fa fa-tags"></i> Revert Employee Wise </a></li>
      <li><a href="/employee_attendances/revert_attendance"><i class="fa fa-tags"></i> Revert Cost Center Wise </a></li>
      <li><a href="/employee_attendances/calculate_attendance"><i class="fa fa-tags"></i> Attendance Setup</a></li>
+   <!--   <li><a href="/employee_attendances"><i class="fa fa-tags"></i> Confirm Attendance  </a></li> -->
      <li><a href="/workingdays"><i class="fa fa-tags"> </i>Monthly Working Day</a></li>
      <!-- <li><a href="/workingdays/search_month_year"><i class="fa fa-tags"> </i>Attendace Update(Auto) </a></li> -->
     
-      <!-- <li><a href="/holidays/new"><i class="fa fa-tags"></i> Holiday Setup </a></li>
+     <!--  <li><a href="/holidays/new"><i class="fa fa-tags"></i> Holiday Setup </a></li>
       <li><a href="/company_shifts/new"><i class="fa fa-tags"></i> Shifts Maintenance </a></li>
       <li><a href="/shift_rotations/new"><i class="fa fa-tags"></i> Shift Rotation </a></li>
       <li><a href="/employee_shifts"><i class="fa fa-tags"></i> Employee Shift Assignment </a></li>
@@ -382,6 +383,7 @@
         <li><a href="/goal_bunches/period_list_appraisee"><i class="fa fa-tags"></i> Self Evaluation </a></li>
         <li><a href="/goal_bunches/appraiser_subordinate"><i class="fa fa-tags"></i> Appraiser Evaluation </a></li>
         <li><a href="/goal_bunches/reviewer_subordinate"><i class="fa fa-tags"></i> Reviewer Evaluation  </a></li>
+        <li><a href="/goal_bunches/employee_list"><i class="fa fa-tags"></i> Final Evaluation  </a></li>
         <li><a href="/goal_ratings/period_for_training"><i class="fa fa-tags"></i>Training Assessment</a></li>
         <li><a href="/goal_ratings/period_and_topic_wise_list"><i class="fa fa-tags"></i>Training Plan</a></li>
          <li><a href="/goal_ratings/increment_index"><i class="fa fa-tags"></i>Revision Simulation</a></li>
@@ -406,6 +408,9 @@
         <li><a href="/goal_bunches/subordinate_list_for_appraisee"><i class="fa fa-tags"></i> Appraiser Report</a></li>
         <li><a href="/goal_bunches/subordinate_list_for_reviewer"><i class="fa fa-tags"></i> Reviewer Report</a></li>
         <li><a href="/goal_ratings/trainee_list"><i class="fa fa-tags"></i>Training Plan Report</a></li>
+        <li><a href="/goal_ratings/employee_goal_wise"><i class="fa fa-tags"></i>Period Wise Report</a></li>
+        <li><a href="/goal_ratings/employee_wise_goal"><i class="fa fa-tags"></i>Employee Wise Report</a></li>
+        <li><a href="/goal_ratings/period_rating_wise"><i class="fa fa-tags"></i>Period & Rating Wise</a></li>
         </ul>
       </li> 
     </ul>

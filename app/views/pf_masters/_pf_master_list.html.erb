@@ -1,11 +1,11 @@
 <table id="example2" class="table table-bordered table-hover table-condensed">
   <thead>
-    <tr>  
+    <tr>
+      <th>Base component</th>  
       <th>PF</th>
       <th>Percentage</th>
       <th>Effective Date</th>
       <th>Min limit</th>
-      <th>Base component</th>
       <th>Status</th>
       <th>Action</th>
     </tr>
@@ -13,10 +13,6 @@
   <tbody>
    <% @pf_masters.each do |pf_master| %>
       <tr>
-        <td><%= pf_master.is_pf ? "Yes" : "No" %></td>
-        <td><%= pf_master.percentage %></td>
-        <td><%= pf_master.date_effective %></td>
-        <td><%= pf_master.min_limit %></td>
         <td>
           <% i = 0 %>
           <% pf_master.base_component.split(",").each do |e| %>
@@ -28,6 +24,11 @@
             <% i = i + 1 %>
           <% end %>
         </td>
+        <td><%= pf_master.is_pf ? "Yes" : "No" %></td>
+        <td><%= pf_master.percentage %></td>
+        <td><%= pf_master.date_effective %></td>
+        <td><%= pf_master.min_limit %></td>
+        
         <td><%= pf_master.is_active ? "Active" : "Inactive" %></td>
         <td>
           <% if pf_master.is_confirm == true %>

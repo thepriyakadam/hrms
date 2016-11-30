@@ -3,17 +3,17 @@
    <h3 class="box-title">Issue List - <%= current_user.employee.try(:first_name) %> <%= current_user.employee.try(:middle_name) %> <%= current_user.employee.try(:last_name) %> </h3>
    <% emp = current_user.employee_id %>
    <%issue = IssueTrackerMember.find_by(employee_id: emp)%>
-  <h4> <%= issue.role %> </h4>
+  <h6> <%= issue.role %> </h6>
 
   </div><!-- /.box-header -->
    <%= hidden_field_tag :lock_date, :value => Time.zone.now.to_date %>
    <%= hidden_field_tag :lock_time, :value => Time.zone.now.to_time %>
   <div class="box-body">
-    <table id="example1" class="table table-bordered table-hover table-condensed'">
+    <table id="example6" class="table table-bordered table-hover table-condensed'">
   <thead>
     <tr>
       <th>Issue</th>
-      <th>Tracker Group</th>
+      <th>Support Group</th>
       <th>Date</th>
       <th>Time</th>
       <th>Priority</th>

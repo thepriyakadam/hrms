@@ -34,9 +34,15 @@ class IssueRequestsController < ApplicationController
    @issue_request = IssueRequest.new(issue_request_params)
     respond_to do |format|
       if @issue_request.save
+        # byebug
         IssueHistory.create(issue_tracker_group_id: @issue_request.issue_tracker_group_id,issue_request_id: @issue_request.id,issue_master_id: @issue_request.issue_master_id,description: @issue_request.description,date: @issue_request.date,time: @issue_request.time,employee_id: @issue_request.employee_id,status: @issue_request.status,issue_tracker_member_id: @issue_request.issue_tracker_member_id,issue_priority: @issue_request.issue_priority)
-        IssueRequestMailer.issue_tracker_group_email(@issue_request).deliver_now
-        format.html { redirect_to @issue_request, notice: 'Issue request was successfully saved Successfully.' }
+        @c1 = IssueTrackerGroup.where(id: @issue_request.issue_tracker_group_id).pluck(:id)
+        @c2 = IssueTrackerMember.where(issue_tracker_group_id: @c1).pluck(:employee_id)
+        @emp = Employee.where(id: @c2)
+        @emp.each do |s|
+        IssueRequestMailer.issue_tracker_group_email(s.email).deliver_now
+        end
+        format.html { redirect_to @issue_request, notice: 'Support request was successfully saved Successfully.' }
         format.json { render :show, status: :created, location: @issue_request }
       else
         format.html { render :new }
@@ -51,7 +57,7 @@ class IssueRequestsController < ApplicationController
     respond_to do |format|
       if @issue_request.update(issue_request_params)
          # IssueHistory.create(issue_request_id: @issue_request.id,issue_master_id: @issue_request.issue_master_id,description: @issue_request.description,date: @issue_request.date,time: @issue_request.time,employee_id: @issue_request.employee_id,status: @issue_request.status,issue_tracker_member_id: @issue_request.issue_tracker_member_id,issue_priority: @issue_request.issue_priority)
-        format.html { redirect_to @issue_request, notice: 'Issue request was successfully updated.' }
+        format.html { redirect_to @issue_request, notice: 'Support request was successfully updated.' }
         format.json { render :show, status: :ok, location: @issue_request }
       else
         format.html { render :edit }
@@ -65,7 +71,7 @@ class IssueRequestsController < ApplicationController
   def destroy
     @issue_request.destroy
     respond_to do |format|
-      format.html { redirect_to issue_requests_url, notice: 'Issue request was successfully destroyed.' }
+      format.html { redirect_to issue_requests_url, notice: 'Support request was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -95,13 +101,17 @@ class IssueRequestsController < ApplicationController
               disposition: 'attachment'
   end
 
-  def lock_request_list
-    # byebug
-    @issue_tracker_member = IssueTrackerMember.where(employee_id: current_user.employee_id)
-    @issue_tracker_member_id = IssueTrackerMember.find_by(employee_id: current_user.employee_id)
+  def lock_request_list 
+    if @issue_tracker_member = IssueTrackerMember.where(employee_id: current_user.employee_id)
+    if @issue_tracker_member_id = IssueTrackerMember.find_by(employee_id: current_user.employee_id)
     @issue_requests = IssueRequest.where(issue_tracker_group_id: @issue_tracker_member_id.issue_tracker_group_id,status: nil)
     session[:active_tab] = "issuetracker"
-    session[:active_tab1] = "issueprocess"   
+    session[:active_tab1] = "issueprocess" 
+  else
+  flash[:alert] = "Member Not Present In List"
+
+  end
+  end
  end
 
    def modal
@@ -116,7 +126,7 @@ class IssueRequestsController < ApplicationController
      @c1=IssueLocker.create(lock_time: params[:issue_request][:lock_time],lock_date: params[:issue_request][:lock_date],issue_request_id: @issue_request.id,status: true,issue_tracker_member_id: @issue_tracker_member)
      IssueLockerHistory.create(lock_time: params[:issue_request][:lock_time],lock_date: params[:issue_request][:lock_date],issue_tracker_member_id: @issue_tracker_member,issue_locker_id: @c1.id,issue_request_id: @issue_request.id,status: true)
 
-     flash[:notice] = "Issue Request Locked Successfully"
+     flash[:notice] = "Support Request Locked Successfully"
      redirect_to lock_request_list_issue_requests_path
   end
 
@@ -129,7 +139,7 @@ class IssueRequestsController < ApplicationController
     IssueRequest.where(id: @issue_request.id).update_all(issue_tracker_member_id: @issue_tracker_member.id)
     @c1=IssueLocker.create(lock_date: lock_date,lock_time: lock_time,issue_request_id: @issue_request.id,status: true)
     IssueLockerHistory.create(lock_date: lock_date,lock_time: lock_time,issue_locker_id: @c1.id,issue_request_id: @issue_request.id,status: true)
-    flash[:notice] = "Issue Request by Co-ordinator Locked Successfully"
+    flash[:notice] = "Support Request by Co-ordinator Locked Successfully"
     redirect_to lock_request_list_issue_requests_path
   end
 
@@ -139,7 +149,7 @@ class IssueRequestsController < ApplicationController
     @issue_locker = IssueLocker.where(issue_request_id: @issue_request.id).take
     IssueLocker.where(issue_request_id: @issue_request.id).update_all(status: false)
     IssueLockerHistory.create(issue_tracker_member_id: @issue_request.issue_tracker_member_id,issue_locker_id: @issue_locker.id,issue_request_id: @issue_request.id,status: false)
-    flash[:notice] = "Issue Request Unlocked Successfully"
+    flash[:notice] = "Support Request Unlocked Successfully"
     redirect_to lock_request_list_issue_requests_path
   end
 
@@ -147,7 +157,7 @@ class IssueRequestsController < ApplicationController
     @issue_request = IssueRequest.find(params[:id])
     @issue_request.update(status: true,issue_root_cause_id: params[:issue_request][:issue_root_cause_id],comment: params[:issue_request][:comment],time: params[:issue_request][:time],effort_time: params[:issue_request][:effort_time])
     IssueHistory.create(issue_tracker_group_id: @issue_request.issue_tracker_group_id,issue_request_id: @issue_request.id,issue_master_id: @issue_request.issue_master_id,description: @issue_request.description,date: @issue_request.date,time: @issue_request.time,employee_id: @issue_request.employee_id,issue_tracker_member_id: @issue_request.issue_tracker_member_id,issue_priority: @issue_request.issue_priority,status: true)
-    flash[:notice] = "Issue Request Solved Successfully"
+    flash[:notice] = "Support Request Solved Successfully"
     redirect_to lock_request_list_issue_requests_path
   end
 
@@ -195,7 +205,8 @@ class IssueRequestsController < ApplicationController
     @en = params[:to_date].to_date
     @issue_tracker_group = IssueTrackerGroup.find(params[:id])
     @issue_requests = IssueRequest.where(issue_tracker_group_id: @issue_tracker_group.id,date: @start..@en)
-
+    session[:active_tab] = "issuetracker"
+    session[:active_tab1] = "issueprocess" 
   end
 
   def issue_tracker_pdf
@@ -225,6 +236,8 @@ class IssueRequestsController < ApplicationController
   def datewise_report_list
     @date = params[:date].to_date
     @issue_requests = IssueRequest.where(date: @date)
+    session[:active_tab] = "issuetracker"
+    session[:active_tab1] = "issueprocess" 
   end
 
   def datewise_report_xls
@@ -292,11 +305,14 @@ class IssueRequestsController < ApplicationController
   end
 
   def memberwise_report_list
-     @date = params[:datea]
+     @date = params[:date]
      @group_id = params[:group_id]
      @member_id = params[:issue_member_id]
      # byebug
      IssueRequest.where(issue_tracker_group_id: @group_id, issue_tracker_member_id: @member_id, date: @date) 
+     respond_to do |format|
+     format.xls {render template: 'issue_requests/memberwise_report_list_xls.xls.erb'}
+    end
   end
 
   private

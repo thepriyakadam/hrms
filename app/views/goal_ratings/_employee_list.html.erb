@@ -2,20 +2,24 @@
 	  <thead>
 	    <tr>
 	      <th><input type="checkbox" id="selectAll" value="selectAll"></th>
-	    	<th>Employee ID</th>
-		    <th>Name</th>
-		    <th>Attribute</th>
-		    <th>Rating</th>
+	    	<th>ID</th>
+		    <th>Employee Name</th>
+		    <th>Appraisee Rating</th>
+		    <th>Appraiser Rating</th>
+		    <th>Reviewer Rating</th>
+		    <th>Final Rating</th>
 		  </tr>
 		</thead>
 	  <tbody>
 	  	<% @goal_ratings.each do |e|  %>
 		    <tr>
 		      <td><%= check_box_tag "goal_rating_ids[]", e.appraisee_id %></td>
-		      <td><%= e.appraisee_id %></td> 
-		      <td><%= e.appraisee.try(:first_name) %> <%= e.appraisee.try(:last_name) %></td>
-		      <td><%= e.attribute_master.try(:name) %></td>
-		      <td><%= e.appraiser_rating_id %></td>
+		      <td><%= e.goal_bunch.employee.try(:manual_employee_code) %></td> 
+		      <td><%= e.appraisee.try(:first_name) %> <%= e.appraisee.try(:middle_name) %> <%= e.appraisee.try(:last_name) %></td>
+		      <td><%= e.goal_bunch.try(:appraisee_rating_id) %></td>
+		      <td><%= e.goal_bunch.try(:appraiser_rating) %></td>
+		      <td><%= e.goal_bunch.try(:reviewer_rating_id) %></td>
+		      <td><%= e.goal_bunch.try(:final_rating_id) %></td>
 		      <%= hidden_field_tag "period_id[]", value: e.goal_bunch.period_id %>
 		      <%= hidden_field_tag "appraisee_id[]", value: e.appraisee_id %>
 		      <%= hidden_field_tag "attribute_master_id[]", value: e.attribute_master_id %>

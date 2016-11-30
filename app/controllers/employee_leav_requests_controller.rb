@@ -206,7 +206,8 @@ class EmployeeLeavRequestsController < ApplicationController
       @second_level_request_lists = EmployeeLeavRequest.where(is_first_approved: true, is_second_approved: nil, is_second_rejected: nil, is_cancelled: nil)
     else
       @first_level_request_lists = EmployeeLeavRequest.where(is_pending: true, is_first_approved: nil, is_first_rejected: nil, is_cancelled: nil)
-      @second_level_request_lists = EmployeeLeavRequest.where(is_first_approved: true, is_second_approved: nil, is_second_rejected: nil, is_cancelled: nil)
+      @emp_leav_req = EmployeeLeavRequest.where.not(second_reporter_id: nil).pluck(:second_reporter_id)
+      @second_level_request_lists = EmployeeLeavRequest.where(is_first_approved: true, is_second_approved: nil, is_second_rejected: nil, is_cancelled: nil,second_reporter_id: @emp_leav_req)
     end
     # @employee_leav_requests = EmployeeLeavRequest.joins("LEFT JOIN leav_approveds ON employee_leav_requests.id = leav_approveds.employee_leav_request_id LEFT JOIN leav_cancelleds ON employee_leav_requests.id = leav_cancelleds.employee_leav_request_id LEFT JOIN leav_rejecteds ON employee_leav_requests.id = leav_rejecteds.employee_leav_request_id where leav_approveds.id IS NULL AND leav_rejecteds.id IS NULL AND leav_cancelleds.id IS NULL")
     session[:active_tab] ="leavemanagement"
@@ -248,6 +249,12 @@ class EmployeeLeavRequestsController < ApplicationController
   end
 
   def employee_history_with_current_leave
+    @current_request = EmployeeLeavRequest.find(params[:format])
+    @employee = Employee.find(@current_request.employee_id)
+    @employee_leav_requests = @employee.employee_leav_requests
+  end
+
+  def admin_employee_history_with_current_leave
     @current_request = EmployeeLeavRequest.find(params[:format])
     @employee = Employee.find(@current_request.employee_id)
     @employee_leav_requests = @employee.employee_leav_requests

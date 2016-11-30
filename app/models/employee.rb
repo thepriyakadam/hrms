@@ -72,6 +72,7 @@ class Employee < ActiveRecord::Base
   has_many :travel_requests
   has_many :issue_requests
   has_many :issue_lockers
+  has_many :week_off_masters
   
   #accepts_nested_attributes_for :joining_detail
   has_many :subordinates, class_name: 'Employee',
@@ -202,5 +203,34 @@ class Employee < ActiveRecord::Base
     final = (@departments) & @roles
     finals = (@joining_details) & @roles
     #Employee.where(id: finals,id: final)
+  end
+
+  def self.to_csv(options = {})
+    CSV.generate(options) do |csv|
+      csv << column_names
+      all.each do |employee|
+        csv << employee.attributes.values_at(*column_names)
+      end
+    end
+  end
+
+  def self.import(file)
+    spreadsheet = open_spreadsheet(file)
+    header = spreadsheet.row(1)
+    (2..spreadsheet.last_row).each do |i|
+      row = Hash[[header, spreadsheet.row(i)].transpose]
+      employee = find_by_id(row["id"]) || new
+      employee.attributes = row.to_hash.slice(*row.to_hash.keys)
+      employee.save!
+    end
+  end
+
+  def self.open_spreadsheet(file)
+    case File.extname(file.original_filename)
+      when ".csv" then Roo::CSV.new(file.path, file_warning: :ignore)
+      when ".xls" then Roo::Excel.new(file.path, file_warning: :ignore)
+      when ".xlsx" then Roo::Excelx.new(file.path, file_warning: :ignore)
+      else raise "Unknown file type: #{file.original_filename}"
+    end
   end
 end

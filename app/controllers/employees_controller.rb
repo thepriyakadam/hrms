@@ -27,6 +27,21 @@ class EmployeesController < ApplicationController
       session[:active_tab] ="employeemanagement"
       session[:active_tab1] ="employeeprofile"
   end
+  
+
+  def import_xl
+    @employees = Employee.all
+    respond_to do |format|
+    format.html
+    format.csv { send_data @employee_bank_details.to_csv }
+    format.xls
+   end     
+  end
+
+  def import
+    Employee.import(params[:file])
+    redirect_to root_url, notice: "File imported."
+  end
 
   def report
     @employees = Employee.all
@@ -399,6 +414,17 @@ class EmployeesController < ApplicationController
      redirect_to all_emp_list_employees_path
   end
   end
+
+  def update_password
+    # byebug
+    @id = params[:employee][:id]
+    @password = params[:employee][:password]
+    @member = Member.where(employee_id: @id).update_all(encrypted_password: @password)
+    flash[:notice] = "Password Changed Successfully"
+    redirect_to change_password_form_employees_path
+  end
+
+
 
   def collect_company_location
     # byebug

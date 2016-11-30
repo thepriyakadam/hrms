@@ -4,20 +4,6 @@
   <div class="col-sm-3">
   <label>Base Component</label>
       <div class="form-group required">
-<<<<<<< HEAD
-        <%=select_tag("components[]",options_for_select(SalaryComponent.where(is_base: true).collect {|ff| [ff.name, ff.id] }),{:multiple=>true,:id => "batches",class: "form-control"})%>
-      </div>
-    </div>
-     
-     <div class="col-sm-3">
-      <div class="field">
-        <%= f.text_field :min_amount %>
-      </div>
-    </div>
-    <div class="col-sm-3">
-      <div class="field">
-        <%= f.text_field :max_amount %>
-=======
         <%=select_tag("components[]",options_for_select(SalaryComponent.all.collect {|ff| [ff.name, ff.id] }),{:multiple=>true,:id => "batches",class: "form-control"})  %>
       </div>
     </div>
@@ -30,7 +16,6 @@
      <div class="col-sm-3">
       <div class="form-group required">
         <%= f.text_field :max_amount , label: "Maximum Amount" %>
->>>>>>> b22c7fb4fa6260505f9888e2e36ad4b9b8d1ad62
       </div>
     </div>
 

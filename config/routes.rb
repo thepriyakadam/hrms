@@ -36,6 +36,8 @@ Rails.application.routes.draw do
       post :save_machine_attendance_checkbox
       get :import_machine_attendance
       post :import
+      get :modal
+      post :edit_machine_attendance
     end
   end
   resources :company_time_masters do

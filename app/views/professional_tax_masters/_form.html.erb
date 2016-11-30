@@ -7,8 +7,7 @@
         <%=select_tag("components[]",options_for_select(SalaryComponent.where(is_base: true).collect {|ff| [ff.name, ff.id] }),{:multiple=>true,:id => "batches",class: "form-control"})%>
       </div>
     </div>
-     
-    
+  
     
      <div class="col-sm-3">
       <div class="form-group required">

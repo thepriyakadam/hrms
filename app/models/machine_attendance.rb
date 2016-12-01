@@ -1,6 +1,7 @@
 class MachineAttendance < ActiveRecord::Base
   belongs_to :employee
   belongs_to :shift_master
+  validates :shift_master_id, presence: true
 
   def self.to_csv(options = {})
     CSV.generate(options) do |csv|

@@ -5,7 +5,7 @@
   <div class="box-body">
     <div class="row">
       <div class="col-sm-3">
-        <%= select :employee_leav_balance,:leav_category_id, all_leav_category_balance,{label:'Leave Category',include_blank: " Select Leave"},{onchange:"var a={leav_category_id:$(this).val()}; $.get('/employee_leav_balances/collect_employee_for_leave',a,function(response){});",class: 'form-control'} %>    
+        <%= select :employee_leav_balance,:leav_category_id, assign_leav_category_balance,{label:'Leave Category',include_blank: " Select Leave"},{onchange:"var a={leav_category_id:$(this).val()}; $.get('/employee_leav_balances/collect_employee_for_leave',a,function(response){});",class: 'form-control'} %>    
       </div>
     </div>
     <div id="form"></div>

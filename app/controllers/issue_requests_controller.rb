@@ -104,17 +104,16 @@ class IssueRequestsController < ApplicationController
   def lock_request_list 
     if @issue_tracker_member = IssueTrackerMember.where(employee_id: current_user.employee_id)
     if @issue_tracker_member_id = IssueTrackerMember.find_by(employee_id: current_user.employee_id)
-    @issue_requests = IssueRequest.where(issue_tracker_group_id: @issue_tracker_member_id.issue_tracker_group_id,status: nil)
-    session[:active_tab] = "issuetracker"
-    session[:active_tab1] = "issueprocess" 
-  else
-  flash[:alert] = "Member Not Present In List"
-
+    @issue_requests = IssueRequest.where(issue_tracker_group_id: @issue_tracker_member_id.issue_tracker_group_id,status: nil)   
+    else
+      flash[:alert] = "There is no any Support Request"
+    end
+    end
+   session[:active_tab] = "issuetracker"
+   session[:active_tab1] = "issueprocess" 
   end
-  end
- end
 
-   def modal
+  def modal
     @issue_request = IssueRequest.find(params[:format])
   end
 

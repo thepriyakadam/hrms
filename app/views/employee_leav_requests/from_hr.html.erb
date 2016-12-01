@@ -60,13 +60,8 @@
 
         <div class="col-sm-3">
           <div class="form-group required">
-          <%= f.select :leave_type, ['Full Day','Half Day','Full/Half'],{label:"Leave Type",include_blank: "Select Leave Type"}%>
+          <%= f.select :leave_type, ['Full Day','Half Day'],{label:"Leave Type",include_blank: "Select Leave Type"}%>
           </div>
-        </div>
-
-        <div class="col-sm-2">
-          <label>Second Half</label>
-          <%= f.check_box :last_half,label: "Click" %>
         </div>
 
         <div class="col-sm-3">
@@ -80,10 +75,6 @@
           </div>
         </div>
 
-        
-      </div>
-
-      <div class="row">
       <div class="col-sm-3">
           <div class="form-group required">
             <div class="input-group">
@@ -93,13 +84,10 @@
               <%= f.text_field :end_date, label: 'To Date', class: 'request_end_date' %>
             </div>
           </div>
-        </div>
-
-        <div class="col-sm-2">
-          <label>First Half</label>
-          <%= f.check_box :first_half,label: "Click" %>
         </div> 
-      
+      </div>
+
+      <div class="row">
         <div class="col-sm-6">
           <div class="form-group required">
             <%= f.text_field :reason %>

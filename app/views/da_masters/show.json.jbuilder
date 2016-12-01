@@ -1,1 +1,0 @@
-json.partial! "da_masters/da_master", da_master: @da_master

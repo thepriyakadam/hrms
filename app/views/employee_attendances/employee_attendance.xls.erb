@@ -8,6 +8,20 @@
             <% for i in 1..@day %>
               <th><%= i %></th>
             <%end%>
+            <th>A</th>
+            <th>P</th>
+            <th>W</th>
+            <th>H</th>
+            <th>EL</th>
+            <th>CL</th>
+            <th>C.Off</th>
+            <th>AL</th>
+            <th>OD</th>
+            <th>GP</th>
+            <th>GPWP</th>
+            <th>LWP</th>
+            <th>ESIC</th>
+            <th>Total</th>
           </tr>
         </thead>
         <tbody>
@@ -20,7 +34,72 @@
               <% sorted_exists.each do |k,v|%>
                 <td><%= v %></td>
               <%end%>
-            </tr>
+
+              <% abs = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "A") %>
+              <% pre = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id,"P") %>
+              <% wd = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "W") %>
+              <% h = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "H") %>
+              <% el = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "EL") %>
+              <% cl = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "CL") %>
+              <% lwp = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "LWP") %>
+              <% esic = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "ESIC") %>
+              <% coff = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "C.Off") %>
+              <% al = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "AL") %>
+              <% od = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "OD") %>
+              <% gp = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "GP") %>
+              <% gpwp = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "GPWP") %>
+              <% phalf = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "P/1/2") %>
+              <% pcl = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "P/CL") %>
+              <% pel = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "P/EL") %>
+              <% pal = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "P/AL") %>
+              <% pcoff = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "P/C.Off") %>
+              <% plwp = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "P/LWP") %>
+              <% pesic = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "P/ESIC") %>
+              <% pod = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "P/OD") %>
+
+
+              <td>
+                <% ab = abs.count + ( phalf.count)/2.to_f  %>
+                <%= ab %>
+              </td>
+              <td>
+                <% ap = pre.count + (phalf.count)/2.to_f + (pcl.count)/2.to_f + (pel.count)/2.to_f + (pal.count)/2.to_f + (pcoff.count)/2.to_f + (plwp.count)/2.to_f + (pesic.count)/2.to_f + (pod.count)/2.to_f %>
+                <%= ap %>
+              </td>
+              <td><%= wd.count %></td>
+              <td><%= h.count %></td>
+              <td>
+                <% ael = el.count + (pel.count)/2.to_f %>
+                <%= ael %>
+              </td>
+              <td>
+                <% acl = cl.count + (pcl.count)/2.to_f %>
+                <%= acl %>
+              </td>
+              <td>
+                <% acoff = coff.count + (pcoff.count)/2.to_f %>
+                <%= acoff %>
+              </td>
+              <td>
+                <% aal = al.count + (pal.count)/2.to_f %>
+                <%= aal %>
+              </td>
+              <td>
+                <% aod = od.count + (pod.count)/2.to_f %>
+                <%= aod %>
+              </td>
+              <td><%= gp.count %></td>
+              <td><%= gpwp.count %></td>
+              <td>
+                <% alwp= lwp.count + (plwp.count)/2.to_f %>
+                <%= alwp %>
+              </td>
+              <td>
+                <% aesic = esic.count + (pesic.count)/2.to_f %>
+                <%= aesic %>
+              </td>
+              <td><%= ab + ap + wd.count + h.count + ael + acl + alwp + aesic + acoff + aal + aod +  gp.count + gpwp.count %></td>
+            </tr> 
 
             <% present_day = present_day_count(exist) %>
             <% holiday_in_month = holiday_in_month_count(exist) %>
@@ -56,7 +135,7 @@
             <%= hidden_field e.employee_id, 'payable_day', value: payable_day %>
             <% exist.clear %>
           <%end%>
-          <%end%>
+         
         </tbody>
       </table>
       <%= f.submit "Confirm Workingdays", class: "btn btn-sm btn-primary" %>

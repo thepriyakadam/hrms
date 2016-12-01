@@ -22,8 +22,8 @@
         <td><%= leave_cashable.amount %></td>
         <td><%= leave_cashable.is_confirm ? "Yes" : "No" %></td>
         <td>
-        	<%= link_to '', edit_leave_cashable_path(leave_cashable),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
-            <%= link_to '',  leave_cashable, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
+        	<!-- <= link_to '', edit_leave_cashable_path(leave_cashable),class: 'btn btn-success btn-xs fa fa-edit',remote:true %> -->
+            <%= link_to '',  leave_cashable, method: :delete, data: { confirm: 'Are you sure?'},class: 'btn btn-danger btn-xs fa fa-close' %>
         </td>
       </tr>
     <% end %>

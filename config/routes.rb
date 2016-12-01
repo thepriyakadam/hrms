@@ -36,6 +36,8 @@ Rails.application.routes.draw do
       post :save_machine_attendance_checkbox
       get :import_machine_attendance
       post :import
+      get :modal
+      post :edit_machine_attendance
     end
   end
   resources :company_time_masters do
@@ -348,7 +350,7 @@ end
       get :employee_slip
       get :employee_slip_xls
       post :display_attendance
-      get :display_attendance_1
+      # get :display_attendance_1
       get :revert_attendance_employeewise
       post :show_employee_list
       post :destroy_attendance_employeewise
@@ -371,6 +373,7 @@ end
       post :confirm_attendance
       post :create_attendance_1
       get :emp_attendance_1_list
+      post :display_attendance_1
     end
   end
   resources :salary_comp_mappings
@@ -968,7 +971,7 @@ end
   resources :leave_c_offs do
     collection do
       get :search_by_c_off_date
-      post :add_coff
+      get :add_coff
     end
   end
 

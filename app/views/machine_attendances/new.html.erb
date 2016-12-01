@@ -3,7 +3,7 @@
     <h3 class="box-title">Machine Attendance</h3>
     </div>
 <div class="box-body">
-<%= bootstrap_form_for MachineAttendance.new,url:{action:'save_machine_attendance'},html: {id: 'machine_attendance'} do |f| %>
+<%= bootstrap_form_for MachineAttendance.new,html: {id: 'machine_attendance'},url:{action:'save_machine_attendance'},html: {id: 'machine_attendance'} do |f| %>
   <div class="row">
   <label></label>
     <div class="col-sm-3">
@@ -86,3 +86,23 @@
         $('#datetimepicker11').datetimepicker();
     });
  </script>
+
+ <script>
+$("#machine_attendance").validate({
+    rules: {
+      "machine_attendance[shift_master_id]":{
+        required: true,
+      }
+    },
+    messages: {
+      "machine_attendance[shift_master_id]":{
+        required: "Please Select Shift",
+      }
+      
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

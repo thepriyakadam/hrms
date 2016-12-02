@@ -104,17 +104,16 @@ class IssueRequestsController < ApplicationController
   def lock_request_list 
     if @issue_tracker_member = IssueTrackerMember.where(employee_id: current_user.employee_id)
     if @issue_tracker_member_id = IssueTrackerMember.find_by(employee_id: current_user.employee_id)
-    @issue_requests = IssueRequest.where(issue_tracker_group_id: @issue_tracker_member_id.issue_tracker_group_id,status: nil)
-    session[:active_tab] = "issuetracker"
-    session[:active_tab1] = "issueprocess" 
-  else
-  flash[:alert] = "Member Not Present In List"
-
+    @issue_requests = IssueRequest.where(issue_tracker_group_id: @issue_tracker_member_id.issue_tracker_group_id,status: nil)   
+    else
+      flash[:alert] = "There is no any Support Request"
+    end
+    end
+   session[:active_tab] = "issuetracker"
+   session[:active_tab1] = "issueprocess" 
   end
-  end
- end
 
-   def modal
+  def modal
     @issue_request = IssueRequest.find(params[:format])
   end
 
@@ -186,7 +185,7 @@ class IssueRequestsController < ApplicationController
     @issue_request = IssueRequest.find(params[:format])
     IssueRequest.where(id: @issue_request.id).update_all(status: nil,issue_tracker_member_id: nil) 
     IssueHistory.create(issue_tracker_group_id: @issue_request.issue_tracker_group_id,issue_request_id: @issue_request.id,issue_master_id: @issue_request.issue_master_id,description: @issue_request.description,date: @issue_request.date,time: @issue_request.time,employee_id: @issue_request.employee_id,issue_tracker_member_id: @issue_request.issue_tracker_member_id,issue_priority: @issue_request.issue_priority,status: false)
-    IssueRequestMailer.issue_resend(@issue_request).deliver_now
+    # IssueRequestMailer.issue_resend(@issue_request).deliver_now
     flash[:notice] = "Resend Request Successfully"
     redirect_to solved_issues_issue_requests_path
   end

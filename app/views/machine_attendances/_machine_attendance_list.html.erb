@@ -19,7 +19,7 @@
     <th>Out</th>
     <th>Present</th>
     <th>Action</th>
-  </tr> 
+  </tr>
 </thead>
 <tbody>
   <% @machine_attendances.each do |m| %>
@@ -33,7 +33,8 @@
       <td><%= m.try(:in) %></td>
       <td><%= m.try(:out) %></td>
       <td><%= m.try(:present) %></td>
-      <td></td>
+      <div id="myModal" class="modal fade"></div>
+      <td><%= link_to '',modal_machine_attendances_path(m),class: 'btn btn-success btn-xs fa fa-edit',remote: true %></td>
     </tr>
   <% end %>
 </tbody>

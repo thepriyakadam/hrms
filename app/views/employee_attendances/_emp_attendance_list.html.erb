@@ -1,13 +1,14 @@
       <table id="example6" class="table table-bordered table-hover table-condensed">
         <thead>
           <tr>
+          <th>ID</th>
             <th>Name</th>
               <% for i in 1..@day %>
                 <th><%= i %></th>
               <%end%>
           </tr>
           <tr>
-            <th>Day</th>
+            <th colspan="2">Day</th>
               <% @start_date.step(@end_date).each do |l| %>
                 <th><%= l.strftime("%a") %></th>
               <%end%>
@@ -17,6 +18,7 @@
           <% exist = {} %>
           <% @employees.each do |e| %>
             <tr>
+            <td><%= e.employee.try(:manual_employee_code) %></td>
               <td><%= full_name(e.employee) %></td>
               <% sorted_exists = calculate_attendance(@date, exist, e)%>
               <% sorted_exists.each do |k,v|%>
@@ -60,9 +62,9 @@
           <%end%>
         </tbody>
       </table>
-      <%= link_to " Excel Report ",employee_slip_xls_1_employee_attendances_path(month: params[:month], year: params[:year], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+      <%= link_to " Excel Report ",employee_attendance_excel_report_employee_attendances_path(month: params[:month], year: params[:year], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
 
-      <%= link_to " Print Attendance Slip ",employee_slip_pdf_employee_attendances_path(month: params[:month], year: params[:year], format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+      <%= link_to " Print Attendance Slip ",employee_attendance_pdf_report_employee_attendances_path(month: params[:month], year: params[:year], format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
 
   <!-- </div>
 </div> -->

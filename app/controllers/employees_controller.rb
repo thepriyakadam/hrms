@@ -486,6 +486,17 @@ class EmployeesController < ApplicationController
   def emp_basic_info
   end
   
+  def destroy_employee
+  end
+
+  def show_employee_detail
+    @employee = Employee.find(params[:salary][:employee_id])
+  end
+
+  def destroy_details
+    @employee = Employee.find(params[:emp_id])
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

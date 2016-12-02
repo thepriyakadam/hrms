@@ -9,6 +9,12 @@
               <th><%= i %></th>
             <%end%>
           </tr>
+          <tr>
+            <th colspan="2">Day</th>
+              <% @start_date.step(@end_date).each do |l| %>
+                <th><%= l.strftime("%a") %></th>
+              <%end%>
+          </tr>
         </thead>
         <tbody>
           <% exist = {} %>

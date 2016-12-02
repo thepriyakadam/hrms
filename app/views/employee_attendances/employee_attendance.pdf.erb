@@ -11,22 +11,28 @@
             <% for i in 1..@day %>
               <th><%= i %></th>
             <%end%>
-            
-            <th>A</th>
-            <th>P</th>
-            <th>W</th>
-            <th>H</th>
-            <th>EL</th>
-            <th>CL</th>
-            <th>C.Off</th>
-            <th>AL</th>
-            <th>OD</th>
-            <th>GP</th>
-            <th>GPWP</th>
-            <th>LWP</th>
-            <th>ESIC</th>
-            <th>Total</th>
-          </tr>
+            <th colspan="14"> Total </th>
+            </tr>
+            <tr>
+              <th>Day</th>
+                <% @start_date.step(@end_date).each do |l| %>
+                  <th><%= l.strftime("%a") %></th>
+                <%end%>
+              <th>A</th>
+              <th>P</th>
+              <th>W</th>
+              <th>H</th>
+              <th>EL</th>
+              <th>CL</th>
+              <th>C.Off</th>
+              <th>AL</th>
+              <th>OD</th>
+              <th>GP</th>
+              <th>GPWP</th>
+              <th>LWP</th>
+              <th>ESIC</th>
+              <th>Total</th>
+            </tr>
         </thead>
         <tbody>
           <% exist = {} %>

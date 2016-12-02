@@ -7,6 +7,7 @@ class EmployeeAttendancesController < ApplicationController
   def index
     @employee_attendances = EmployeeAttendance.group("strftime('%Y',day)")
     session[:active_tab] = "timemgmt"
+
   end
 
   # GET /employee_attendances/1
@@ -167,6 +168,9 @@ class EmployeeAttendancesController < ApplicationController
     # @employee_attendances = EmployeeAttendance.where(day: @month)
     @date = Date.new(@year.to_i, Workingday.months[@month])
     @day = @date.end_of_month.day
+    @start_date = @date
+    @end_date = @date.end_of_month
+
     @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).group(:employee_id)
   end
 
@@ -183,7 +187,6 @@ class EmployeeAttendancesController < ApplicationController
   end
                                 
   def create_attendance
-    # byebug
     @employees, @attendances, work_data_structure, @date = params[:employees], params[:attendances], [], params[:date]
     params.permit!
     @employees.each { |e| work_data_structure << params[e] }
@@ -211,6 +214,8 @@ class EmployeeAttendancesController < ApplicationController
     @year, @month = params[:year], params[:month]
     @date = Date.new(@year.to_i, Workingday.months[@month])
     @day = @date.end_of_month.day
+    @start_date = @date
+    @end_date = @date.end_of_month
     @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ? and is_confirm = ?", @date.strftime('%m/%Y'),false).group(:employee_id)
     respond_to do |format|
       format.json
@@ -229,6 +234,8 @@ class EmployeeAttendancesController < ApplicationController
     @year, @month = params[:year], params[:month]
     @date = Date.new(@year.to_i, Workingday.months[@month])
     @day = @date.end_of_month.day
+    @start_date = @date
+    @end_date = @date.end_of_month
     @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ? and is_confirm = ?", @date.strftime('%m/%Y'),false).group(:employee_id)
     #@emp_w = EmployeeAttendance.where("strftime('%m/%Y', day) = ? and is_confirm = ? and present = ?", @date.strftime('%m/%Y'),false,"W")
     respond_to do |format|

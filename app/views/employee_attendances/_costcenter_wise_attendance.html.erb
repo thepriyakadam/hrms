@@ -27,7 +27,6 @@
           <% exist = {} %>
           <% @employees.each do |e| %>
             <tr>
-              
               <td><%= e.employee.manual_employee_code %></td>
               <td><%= full_name(e.employee) %></td>
               <td><%= e.employee.joining_detail.try(:cost_center).try(:name) %></td>

@@ -8,6 +8,15 @@
             <% for i in 1..@day %>
               <th><%= i %></th>
             <%end%>
+            <th colspan="13"> Total </th>
+          </tr>
+          <tr>
+            <th>Day</th>
+            <th></th>
+              <% @start_date.step(@end_date).each do |l| %>
+                <th><%= l.strftime("%a") %></th>
+              <%end%>
+            <th>A</th>
             <th>A</th>
             <th>P</th>
             <th>W</th>

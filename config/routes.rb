@@ -143,6 +143,8 @@ Rails.application.routes.draw do
       get :id_wise_report_pdf
       get :memberwise_report
       post :memberwise_report_list
+      get :memberwise_report_list_xls
+      get :memberwise_report_list_pdf
       
     end
    end
@@ -208,6 +210,7 @@ end
       get :due_employee_detail_list
       get :due_action_list
       get :emp_resignation
+      get :modal
     end
   end
 

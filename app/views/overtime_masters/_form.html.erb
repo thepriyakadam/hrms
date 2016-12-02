@@ -16,13 +16,13 @@
         <%= f.text_field :company_hrs,label:'Company Hours' %>
       </div>
     </div>
-  </div>
-  <div class="row">
     <div class="col-sm-3">
       <div class="field">
         <%= f.text_field :ot_rate ,label: 'Rate' %>
       </div>
     </div>
+    </div>
+     <div class="row">
      <div class="col-sm-3">
       <div class="form-group required">
         <%= f.select :is_esic,[['Yes','true'],['No','false']],{label: 'ESIC Option',include_blank: " Select ESIC Option"} %>
@@ -34,10 +34,9 @@
         <%= f.check_box :status, label: 'Active'%>
       </div>
     </div>
-  </div>
-     
-  <div class="row">
+ 
     <div class="col-sm-3">
+  <label></label>
       <div class="actions">
         <%= f.submit "Create Overtime Master",:class => class_name %>
       </div>

@@ -304,15 +304,63 @@ class IssueRequestsController < ApplicationController
       end
   end
 
-  def memberwise_report_list
+  # def memberwise_report_list
+  #   # byebug
+  #    @date = params[:date]
+  #    @group_id = params[:group_id]
+  #    @member_id = params[:issue_member_id]
+  #    IssueRequest.where(issue_tracker_group_id: @group_id, issue_tracker_member_id: @member_id, date: @date) 
+  #    respond_to do |format|
+  #    format.xls {render template: 'issue_requests/memberwise_report_list_xls.xls.erb'}
+  #   end
+  # end
+
+
+def memberwise_report_list
+      # byebug
+     @date = params[:issue_request][:date]
+     @group_id = params[:issue_request][:issue_tracker_group_id]
+     @member_id = params[:issue_requests][:issue_tracker_member_id]
+     @issue_requests = IssueRequest.where(issue_tracker_group_id: @group_id, issue_tracker_member_id: @member_id, date: @date.to_date) 
+    #  respond_to do |format|
+    #  format.xls {render template: 'issue_requests/memberwise_report_list_xls.xls.erb'}
+    # end
+  end
+
+  def memberwise_report_list_xls
+    # byebug
      @date = params[:date]
-     @group_id = params[:group_id]
-     @member_id = params[:issue_member_id]
-     # byebug
-     IssueRequest.where(issue_tracker_group_id: @group_id, issue_tracker_member_id: @member_id, date: @date) 
+     @group_id = params[:issue_tracker_group_id]
+     @member_id = params[:issue_tracker_member_id]
+     @issue_requests = IssueRequest.where(issue_tracker_group_id: @group_id, issue_tracker_member_id: @member_id, date: @date.to_date)    
      respond_to do |format|
      format.xls {render template: 'issue_requests/memberwise_report_list_xls.xls.erb'}
     end
+  end
+
+  def memberwise_report_list_pdf
+    # byebug
+     @date = params[:date]
+     @group_id = params[:issue_tracker_group_id]
+     @member_id = params[:issue_tracker_member_id]
+     @issue_requests = IssueRequest.where(issue_tracker_group_id: @group_id, issue_tracker_member_id: @member_id, date: @date.to_date)   
+      respond_to do |format|
+          format.json
+          format.pdf do
+            render pdf: 'memberwise_report_list_pdf',
+                  layout: 'pdf.html',
+                  orientation: 'Landscape',
+                  template: 'issue_requests/memberwise_report_list_pdf.pdf.erb',
+                  # show_as_html: params[:debug].present?,
+                  :page_height      => 1000,
+                  :dpi              => '300',
+                  :margin           => {:top    => 10, # default 10 (mm)
+                                :bottom => 10,
+                                :left   => 20,
+                                :right  => 20},
+                  :show_as_html => params[:debug].present?
+          end
+      end
   end
 
   private

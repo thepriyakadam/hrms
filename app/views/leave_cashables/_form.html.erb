@@ -33,17 +33,13 @@
       </div>
     </div>
     <div class="col-sm-3">
-      <div class="form-group required">
-        <%= f.text_field :amount, label: "Amount",include_blank: "amount" %>
-      </div>
-    </div>
-    <div class="col-sm-3">
       <label>Status</label>
       <div class="form-group required">
         <%= f.check_box :is_confirm,label:'Confirm' %>
       </div>
     </div>
     <div class="col-sm-3">
+    <label></label>
       <div class="actions">
         <%= f.submit "Create Leave Cashable" ,class: "btn btn-primary btn-sm" %>
       </div>

@@ -1,6 +1,6 @@
 
     <%= bootstrap_form_for :temp, url: {action: "create_attendance", date: @date} do |f| %>
-      <table id="example6" class="table table-bordered table-hover table-condensed">
+      <table class="table table-bordered table-hover table-condensed">
         <thead>
           <tr>
             <th><input type="checkbox" id="selectAll" value="selectAll"></th>
@@ -60,10 +60,9 @@
       </table>
       <%= f.submit "Confirm Workingdays", class: "btn btn-sm btn-primary" %>
 
-      <%= link_to " Print Attendance Slip ",employee_slip_employee_attendances_path(month: params[:month], year: params[:year], format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+      <%= link_to " Excel Report ",employee_attendance_excel_report_employee_attendances_path(month: params[:employee_attendance][:month], year: params[:employee_attendance][:year], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
 
-      <%= link_to " Excel Report ",employee_slip_xls_employee_attendances_path(month: params[:month], year: params[:year], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
-
+      <%= link_to " Print Attendance Slip ",employee_attendance_pdf_report_employee_attendances_path(month: params[:employee_attendance][:month], year: params[:employee_attendance][:year], format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
     <% end %>
   <!-- </div>
 </div> -->
@@ -81,13 +80,4 @@
       });
     }
   });
-</script>
-
-<script type="text/javascript">
-$(document).ready(function() {
-    $('#example6').DataTable( {
-        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]],
-        "scrollX": true
-    } );
-} );
 </script>

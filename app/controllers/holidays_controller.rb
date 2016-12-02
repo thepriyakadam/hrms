@@ -47,7 +47,7 @@ class HolidaysController < ApplicationController
     holiday = Holiday.find(params[:format])
     holiday.update(is_send: true)
     Employee.where(status: 'Active').each do |e|
-      EmployeeAttendance.create(employee_id: e.id, day: holiday.holiday_date, present: "HD", department_id: e.department_id, is_confirm: false, count: 1)
+      EmployeeAttendance.create(employee_id: e.id, day: holiday.holiday_date, present: "H", department_id: e.department_id, is_confirm: false, count: 1)
     end
     @holidays = Holiday.all
   end

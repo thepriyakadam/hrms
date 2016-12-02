@@ -369,7 +369,7 @@ class SalaryslipsController < ApplicationController
           puts "ESIC................................................................."
         end
       end
-      
+
      
         formula_item_actual_amount = 0
         formula_item_calculated_amount = 0
@@ -526,18 +526,23 @@ class SalaryslipsController < ApplicationController
         a = EmployerContribution.create_contribution(@employee.id)
         if @employee.joining_detail.is_employeer_esic == true
           @esic_employer = EsicEmployer.where(is_active: true).take
-          formula_string = @esic_employer.base_component.split(',').map {|i| i.to_i}
-          formula_item = SalaryslipComponent.where(salary_component_id: formula_string,salaryslip_id: @salaryslip.id)
-          @total = formula_item.sum(:calculated_amount)
-          @total_actual = formula_item.sum(:actual_amount)
-          formula_item_calculated_amount = (@total / 100 * @esic_employer.percentage).ceil
-          formula_item_actual_amount = (@total_actual / 100 * @esic_employer.percentage).ceil
+          if @esic_employer.nil?
+          else
+            formula_string = @esic_employer.base_component.split(',').map {|i| i.to_i}
+            formula_item = SalaryslipComponent.where(salary_component_id: formula_string,salaryslip_id: @salaryslip.id)
+            @total = formula_item.sum(:calculated_amount)
+            @total_actual = formula_item.sum(:actual_amount)
+            formula_item_calculated_amount = (@total / 100 * @esic_employer.percentage).ceil
+            formula_item_actual_amount = (@total_actual / 100 * @esic_employer.percentage).ceil
 
-          @e1=EmployerContribution.where(id: a.id).update_all(date: date,esic: formula_item_calculated_amount,actual_esic: formula_item_actual_amount)
-        end
+            @e1=EmployerContribution.where(id: a.id).update_all(date: date,esic: formula_item_calculated_amount,actual_esic: formula_item_actual_amount)
+          end
+         end
 
         if @employee.joining_detail.is_employeer_pf == true
           @pf_employer = PfEmployer.where(is_active: true).take
+          if @pf_employer.nil?
+          else
           formula_string = @pf_employer.base_component.split(',').map {|i| i.to_i}
           formula_item = SalaryslipComponent.where(salary_component_id: formula_string,salaryslip_id: @salaryslip.id)
           @total = formula_item.sum(:calculated_amount)
@@ -547,9 +552,12 @@ class SalaryslipsController < ApplicationController
 
           @e1=EmployerContribution.where(id: a.id).update_all(date: date,pf: formula_item_calculated_amount,actual_pf: formula_item_actual_amount)
         end
+       end
 
         if @employee.joining_detail.is_insurance == true
           @employer_insurance = EmployerInsurance.where(is_active: true).take
+          if @employer_insurance.nil?
+          else
           formula_string = @employer_insurance.base_component.split(',').map {|i| i.to_i}
           formula_item = SalaryslipComponent.where(salary_component_id: formula_string,salaryslip_id: @salaryslip.id)
           @total = formula_item.sum(:calculated_amount)
@@ -559,9 +567,12 @@ class SalaryslipsController < ApplicationController
 
           @e1=EmployerContribution.where(id: a.id).update_all(date: date,insurance: formula_item_calculated_amount,actual_insurance: formula_item_actual_amount)
         end
+      end
 
         if @employee.joining_detail.is_family_pension == true
           @employer_family_pension = EmployerFamilyPension.where(is_active: true).take
+          if @employer_family_pension.nil?
+          else
           formula_string = @employer_family_pension.base_component.split(',').map {|i| i.to_i}
           formula_item = SalaryslipComponent.where(salary_component_id: formula_string,salaryslip_id: @salaryslip.id)
           @total = formula_item.sum(:calculated_amount)
@@ -571,9 +582,12 @@ class SalaryslipsController < ApplicationController
 
           @e1=EmployerContribution.where(id: a.id).update_all(date: date,fp: formula_item_calculated_amount,actual_fp: formula_item_actual_amount)
         end
+      end
 
         if @employee.joining_detail.is_bonus == true
           @bonus_employer = BonusEmployer.where(is_active: true).take
+          if @bonus_employer.nil?
+          else
           formula_string = @bonus_employer.base_component.split(',').map {|i| i.to_i}
           formula_item = SalaryslipComponent.where(salary_component_id: formula_string,salaryslip_id: @salaryslip.id)
           @total = formula_item.sum(:calculated_amount)
@@ -591,6 +605,7 @@ class SalaryslipsController < ApplicationController
         end
         end
       end
+    end
 
       @professional_tax_masters = ProfessionalTaxMaster.where(is_active: true)
        

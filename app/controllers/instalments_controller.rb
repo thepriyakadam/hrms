@@ -80,7 +80,7 @@ class InstalmentsController < ApplicationController
     else
       if current_user.role.name == 'Company' || current_user.role.name == 'Account'
         @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y'))
-      elsif current_user.role.name == 'CompanyLocation'
+      elsif current_user.role.name == 'CompanyLocation' || current_user.role.name == 'SalaryAccount'
         @employees = Employee.where(company_location_id: current_user.company_location_id)
         @advance_salaries = AdvanceSalary.where(employee_id: @employees)
         @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y')).where(advance_salary_id: @advance_salaries)
@@ -115,7 +115,7 @@ class InstalmentsController < ApplicationController
     else
       if current_user.role.name == 'Company' || current_user.role.name == 'Account'
         @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y'))
-      elsif current_user.role.name == 'CompanyLocation'
+      elsif current_user.role.name == 'CompanyLocation' || current_user.role.name == 'SalaryAccount'
         @employees = Employee.where(company_location_id: current_user.company_location_id)
         @advance_salaries = AdvanceSalary.where(employee_id: @employees)
         @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y')).where(advance_salary_id: @advance_salaries)
@@ -135,7 +135,7 @@ class InstalmentsController < ApplicationController
     else
       if current_user.role.name == 'Company' || current_user.role.name == 'Account'
         @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y'))
-      elsif current_user.role.name == 'CompanyLocation'
+      elsif current_user.role.name == 'CompanyLocation' || current_user.role.name == 'SalaryAccount'
         @employees = Employee.where(company_location_id: current_user.company_location_id)
         @advance_salaries = AdvanceSalary.where(employee_id: @employees)
         @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y')).where(advance_salary_id: @advance_salaries)

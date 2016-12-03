@@ -1,0 +1,25 @@
+<!--SELECT2 EXAMPLE -->
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Employee Information </h3>
+  </div><!-- /.box-header -->
+
+  <div class="box-body">
+    <%= bootstrap_form_for(:employee, url: { action: 'destroy_details'},remote: true) do |f| %>
+
+      <div class="col-sm-3">
+        <div class="field">
+        <%= f.select :employee_id, all_active_employee_with_code,{include_blank: 'select Employee'}, class: "form-control"%>
+        </div>
+      </div>
+
+      <div class="col-sm-3">
+        <div class="actions">
+          <%= f.submit "Submit", class: "btn btn-sm btn-primary" %>
+        </div>
+      </div>
+
+      </div><br>
+    <% end %>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->

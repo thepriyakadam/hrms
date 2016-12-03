@@ -30,10 +30,18 @@
         </div>
       </div>
     </div>
+  </div>
+  <div class="row">
     <div class="col-sm-1">
       <label>Status</label>
       <div class="form-group required">
         <%= f.check_box :is_active,label:'Active' %>
+      </div>
+    </div>
+    <div class="col-sm-1">
+      <label>Prefix</label>
+      <div class="form-group required">
+        <%= f.check_box :is_prefix,label:'Prefix' %>
       </div>
     </div>
   </div>

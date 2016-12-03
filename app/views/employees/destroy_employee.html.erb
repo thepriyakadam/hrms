@@ -1,7 +1,7 @@
 <!--SELECT2 EXAMPLE -->
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title">Employee Information </h3>
+    <h3 class="box-title">Employee Information Report</h3>
   </div><!-- /.box-header -->
 
   <div class="box-body">
@@ -9,7 +9,7 @@
       <div class="row">
         <div class="col-sm-3">
           <div class="field">
-          <%= select :salary,:employee_id, all_active_employee_with_code,{include_blank: 'select Employee'}, class: "form-control"%>
+          <%= select :salary,:employee_id, all_inactive_employee_with_code,{include_blank: 'select Employee'}, class: "form-control"%>
           </div>
         </div>
 

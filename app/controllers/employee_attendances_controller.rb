@@ -92,7 +92,6 @@ class EmployeeAttendancesController < ApplicationController
           else
           end
         end
-      end
       @emp_attendances = EmployeeAttendance.where("strftime('%m/%Y', day) = ? AND present = ?", @date.strftime('%m/%Y'), "H")
         @emp_attendances.each do |e|
           date = e.day.to_datetime
@@ -193,10 +192,16 @@ class EmployeeAttendancesController < ApplicationController
     # @employee_attendances = EmployeeAttendance.where(day: @month)
     @date = Date.new(@year.to_i, Workingday.months[@month])
     @day = @date.end_of_month.day
-    @start_date = @date
-    @end_date = @date.end_of_month
-
-    @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).group(:employee_id)
+    if current_user.class == Member
+      if current_user.role.name == 'CompanyLocation'
+          @emp = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+          # byebug
+          @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).where(employee_id: @emp).group(:employee_id)
+        elsif current_user.role.name == 'Company'
+          @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).group(:employee_id)
+      end
+    end
+    # @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).group(:employee_id)
   end
 
   def display_attendance_2

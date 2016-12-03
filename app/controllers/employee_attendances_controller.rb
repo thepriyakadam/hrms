@@ -92,7 +92,6 @@ class EmployeeAttendancesController < ApplicationController
           else
           end
         end
-      end
       @emp_attendances = EmployeeAttendance.where("strftime('%m/%Y', day) = ? AND present = ?", @date.strftime('%m/%Y'), "H")
         @emp_attendances.each do |e|
           date = e.day.to_datetime

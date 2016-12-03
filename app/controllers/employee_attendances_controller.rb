@@ -167,7 +167,16 @@ class EmployeeAttendancesController < ApplicationController
     # @employee_attendances = EmployeeAttendance.where(day: @month)
     @date = Date.new(@year.to_i, Workingday.months[@month])
     @day = @date.end_of_month.day
-    @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).group(:employee_id)
+    if current_user.class == Member
+      if current_user.role.name == 'CompanyLocation'
+          @emp = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+          # byebug
+          @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).where(employee_id: @emp).group(:employee_id)
+        elsif current_user.role.name == 'Company'
+          @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).group(:employee_id)
+      end
+    end
+    # @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).group(:employee_id)
   end
 
   def display_attendance_2

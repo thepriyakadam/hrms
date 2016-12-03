@@ -81,6 +81,6 @@ class WeekOffMastersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def week_off_master_params
-      params.require(:week_off_master).permit(:from,:to,:employee_id, :day, :is_active)
+      params.require(:week_off_master).permit(:is_prefix,:from,:to,:employee_id, :day, :is_active)
     end
 end

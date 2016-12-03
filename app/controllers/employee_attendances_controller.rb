@@ -7,6 +7,7 @@ class EmployeeAttendancesController < ApplicationController
   def index
     @employee_attendances = EmployeeAttendance.group("strftime('%Y',day)")
     session[:active_tab] = "timemgmt"
+
   end
 
   # GET /employee_attendances/1
@@ -78,9 +79,34 @@ class EmployeeAttendancesController < ApplicationController
       elsif
       @employees = Employee.filter_by_date_and_costcenter(@date, @costcenter, current_user)
       #@employees = Employee.filter_by_date_costcenter_and_department(@date, @costcenter, @department, current_user)
-
       end
-    end
+      @emp_attendances = EmployeeAttendance.where("strftime('%m/%Y', day) = ? AND present = ?", @date.strftime('%m/%Y'), "W")
+        @emp_attendances.each do |e|
+          date = e.day.to_datetime
+          yd = (date-1).strftime('%Y-%m-%d')
+          tmr = (date+1).strftime('%Y-%m-%d')
+          yd_emp = EmployeeAttendance.where(day: yd,employee_id:e.employee_id).take
+          tmr_emp = EmployeeAttendance.where(day: tmr,employee_id:e.employee_id).take
+          if yd_emp.try(:present) == "A" && tmr_emp.try(:present) == "A"
+            EmployeeAttendance.find_by(id: e.id).update(present: "A")
+          else
+          end
+        end
+      end
+      @emp_attendances = EmployeeAttendance.where("strftime('%m/%Y', day) = ? AND present = ?", @date.strftime('%m/%Y'), "H")
+        @emp_attendances.each do |e|
+          date = e.day.to_datetime
+          yd = (date-1).strftime('%Y-%m-%d')
+          tmr = (date+1).strftime('%Y-%m-%d')
+          yd_emp = EmployeeAttendance.where(day: yd,employee_id:e.employee_id).take
+          tmr_emp = EmployeeAttendance.where(day: tmr,employee_id:e.employee_id).take
+          if yd_emp.try(:present) == "A" && tmr_emp.try(:present) == "A"
+            EmployeeAttendance.find_by(id: e.id).update(present: "A")
+          else
+          end
+        end
+      end
+
       @employee_attendance = EmployeeAttendance.new
     end  
   end
@@ -167,6 +193,9 @@ class EmployeeAttendancesController < ApplicationController
     # @employee_attendances = EmployeeAttendance.where(day: @month)
     @date = Date.new(@year.to_i, Workingday.months[@month])
     @day = @date.end_of_month.day
+    @start_date = @date
+    @end_date = @date.end_of_month
+
     @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).group(:employee_id)
   end
 
@@ -192,7 +221,6 @@ class EmployeeAttendancesController < ApplicationController
   end
                                 
   def create_attendance
-    # byebug
     @employees, @attendances, work_data_structure, @date = params[:employees], params[:attendances], [], params[:date]
     params.permit!
     @employees.each { |e| work_data_structure << params[e] }

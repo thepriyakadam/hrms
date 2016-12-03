@@ -208,7 +208,16 @@ class EmployeeAttendancesController < ApplicationController
 
     @start_date = @date
     @end_date = @date.end_of_month
-    @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).group(:employee_id)
+    if current_user.class == Member
+      if current_user.role.name == 'CompanyLocation'
+          @emp = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+          # byebug
+          @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).where(employee_id: @emp).group(:employee_id)
+        elsif current_user.role.name == 'Company'
+          @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).group(:employee_id)
+      end
+    end
+    # @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).group(:employee_id)
   end
                                 
   def create_attendance
@@ -241,7 +250,16 @@ class EmployeeAttendancesController < ApplicationController
     @day = @date.end_of_month.day
     @start_date = @date
     @end_date = @date.end_of_month
-    @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ? and is_confirm = ?", @date.strftime('%m/%Y'),false).group(:employee_id)
+    if current_user.class == Member
+      if current_user.role.name == 'CompanyLocation'
+          @emp = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+          # byebug
+          @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).where(employee_id: @emp).group(:employee_id)
+        elsif current_user.role.name == 'Company'
+          @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).group(:employee_id)
+      end
+    end
+    # @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ? and is_confirm = ?", @date.strftime('%m/%Y'),false).group(:employee_id)
     respond_to do |format|
     format.xls {render template: 'employee_attendances/employee_attendance_1.xls.erb'}
     end
@@ -253,7 +271,16 @@ class EmployeeAttendancesController < ApplicationController
     @day = @date.end_of_month.day
     @start_date = @date
     @end_date = @date.end_of_month
-    @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ? and is_confirm = ?", @date.strftime('%m/%Y'),false).group(:employee_id)
+    if current_user.class == Member
+      if current_user.role.name == 'CompanyLocation'
+          @emp = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+          # byebug
+          @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).where(employee_id: @emp).group(:employee_id)
+        elsif current_user.role.name == 'Company'
+          @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).group(:employee_id)
+      end
+    end
+    # @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ? and is_confirm = ?", @date.strftime('%m/%Y'),false).group(:employee_id)
       respond_to do |format|
           format.json
           format.pdf do

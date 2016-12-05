@@ -409,6 +409,24 @@ class SalaryslipsController < ApplicationController
             end
           end
 
+      @professional_tax_masters = ProfessionalTaxMaster.where(is_active: true)
+       
+      @professional_tax_masters.try(:each) do |s|
+        formula_string = s.base_component.split(',').map {|i| i.to_i}
+        formula_item = SalaryslipComponent.where(salary_component_id: formula_string,salaryslip_id: @salaryslip.id)
+        @total = formula_item.sum(:calculated_amount)
+        @total_actual = formula_item.sum(:actual_amount)
+        if @total.between?(s.min_amount, s.max_amount) && @month != "March"
+          @salary_component = SalaryComponent.find_by(name: "Prof. Tax")
+          SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: s.for_month, calculated_amount: s.for_month, is_deducted: true, other_component_name: 'Prof. Tax',salary_component_id: @salary_component.id)
+
+        elsif @month == 'March' && @total.between?(s.min_amount, s.max_amount)
+          @salary_component = SalaryComponent.find_by(name: "Prof. Tax")
+          SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: s.march_amount, calculated_amount: s.march_amount, is_deducted: true, other_component_name: 'Prof. Tax',salary_component_id: @salary_component.id)
+        else
+        end
+      end
+
         if @employee.joining_detail.have_retention == true      
           @retention = RetentionMoney.where(is_active: true).take
           if @retention.nil?
@@ -612,23 +630,7 @@ class SalaryslipsController < ApplicationController
       end
     end
 
-      @professional_tax_masters = ProfessionalTaxMaster.where(is_active: true)
-       
-      @professional_tax_masters.try(:each) do |s|
-        formula_string = s.base_component.split(',').map {|i| i.to_i}
-        formula_item = SalaryslipComponent.where(salary_component_id: formula_string,salaryslip_id: @salaryslip.id)
-        @total = formula_item.sum(:calculated_amount)
-        @total_actual = formula_item.sum(:actual_amount)
-        if @total.between?(s.min_amount, s.max_amount) && @month != "March"
-          @salary_component = SalaryComponent.find_by(name: "Prof. Tax")
-          SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: s.for_month, calculated_amount: s.for_month, is_deducted: true, other_component_name: 'Prof. Tax',salary_component_id: @salary_component.id)
-
-        elsif @month == 'March' && @total.between?(s.min_amount, s.max_amount)
-          @salary_component = SalaryComponent.find_by(name: "Prof. Tax")
-          SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: s.march_amount, calculated_amount: s.march_amount, is_deducted: true, other_component_name: 'Prof. Tax',salary_component_id: @salary_component.id)
-        else
-        end
-      end
+     
 
       @payroll_overtime_masters = PayrollOvertimeMaster.where(is_active: true,is_payroll: true)
 

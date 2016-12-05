@@ -253,7 +253,7 @@ require 'roo'
 
 ex = Roo::Excel.new("#{Rails.root}/public/nabftl.xls")
 
-ex.default_sheet = ex.sheets[1] #siya feb
+ex.default_sheet = ex.sheets[0] #siya feb
 i = 1
 ActiveRecord::Base.transaction do
 

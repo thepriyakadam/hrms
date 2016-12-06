@@ -327,11 +327,9 @@ class SalaryslipsController < ApplicationController
 
 
         @master_esic = EsicMaster.where(is_active: true).take
-          # byebug
           if @master_esic.nil?
           else
           if @master_esic.esic && addable_total_calculated_amount <= @master_esic.max_limit && @employee.joining_detail.have_esic
-            # byebug
             formula_string = @master_esic.base_component.split(',').map {|i| i.to_i}
             formula_item = SalaryslipComponent.where(salary_component_id: formula_string,salaryslip_id: @salaryslip.id)
             @total = formula_item.sum(:calculated_amount)
@@ -518,6 +516,7 @@ class SalaryslipsController < ApplicationController
             elsif m.expencess_type.name == @salary_compon.name
               SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: deducted_actual_amount, calculated_amount: deducted_calculated_amount, is_deducted: true, other_component_name: m.expencess_type.name,salary_component_id:  @salary_compon.id)
             end
+            m.update(is_paid: true)
           end
         
           @salary_component = SalaryComponent.find_by(name: "DA")

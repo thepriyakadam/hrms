@@ -61,10 +61,11 @@
         <Cell ss:Index="46"><Data ss:Type="String">Mobile</Data></Cell>
         <Cell ss:Index="47"><Data ss:Type="String">Retention</Data></Cell>
         <Cell ss:Index="48"><Data ss:Type="String">Wel Faire</Data></Cell>
-        <Cell ss:Index="49"><Data ss:Type="String">Total Dedu</Data></Cell>
+        <Cell ss:Index="49"><Data ss:Type="String">O.Dedu</Data></Cell>
+        <Cell ss:Index="50"><Data ss:Type="String">Total Dedu</Data></Cell>
 
-        <Cell ss:Index="50"><Data ss:Type="String">NET</Data></Cell>
-        <Cell ss:Index="51"><Data ss:Type="String">SIGN</Data></Cell>
+        <Cell ss:Index="51"><Data ss:Type="String">NET</Data></Cell>
+        <Cell ss:Index="52"><Data ss:Type="String">SIGN</Data></Cell>
     </Row>
   <% i = 0 %>
     <% @reports.each do |r| %>
@@ -127,6 +128,7 @@
         <Cell ss:Index="46"><Data ss:Type="Number"><%= r.try(:mobile) %></Data></Cell>
         <Cell ss:Index="47"><Data ss:Type="Number"><%= r.try(:retention) %></Data></Cell>
         <Cell ss:Index="48"><Data ss:Type="Number"><%= r.try(:welfair) %></Data></Cell>
+        <Cell ss:Index="48"><Data ss:Type="Number"><%= r.try(:other_deduction) %></Data></Cell>
         <Cell ss:Index="49"><Data ss:Type="Number"><%= r.try(:deduction_total).round %></Data></Cell>
         <Cell ss:Index="50"><Data ss:Type="Number"><%= r.try(:net_payable).round %></Data></Cell>
         <Cell ss:Index="51"><Data ss:Type="String"><%=  %></Data></Cell>

@@ -19,10 +19,10 @@
           <% if holiday.is_send == true %>
             <small class="label label-primary">Already Set</small>
           <% else %>
-            <%= link_to '', edit_holiday_path(holiday),class: 'btn btn-success btn-sm fa fa-edit',remote:true %>
-            <%= link_to '',  holiday, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-sm fa fa-close' %>
+            <%= link_to '', edit_holiday_path(holiday),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
+            <%= link_to '',  holiday, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
           
-            <%= link_to 'Set Attendance', assign_to_employee_holidays_path(holiday),class: 'btn btn-info btn-sm fa fa-check',remote:true %>
+            <%= link_to 'Set Attendance', assign_to_employee_holidays_path(holiday),class: 'btn btn-info btn-xs fa fa-check',remote:true %>
           <% end %> 
         </td>
       </tr>

@@ -53,6 +53,14 @@ class IssueRootCausesController < ApplicationController
     
   end
 
+   def is_confirm
+    @issue_root_cause = IssueRootCause.find(params[:issue_root_cause])
+    IssueRootCause.find(@issue_root_cause.id).update(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to new_issue_root_cause_path
+  end
+ 
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_issue_root_cause

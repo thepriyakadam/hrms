@@ -60,7 +60,7 @@
 
         <div class="col-sm-3">
           <div class="form-group required">
-          <%= f.select :leave_type, ['Full Day','Half Day'],{label:"Leave Type",include_blank: "Select Leave Type"}%>
+          <%= f.select :leave_type, ['Full Day','Half Day','Full/Half'],{label:"Leave Type",include_blank: "Select Leave Type"}%>
           </div>
         </div>
 
@@ -76,7 +76,7 @@
               <div class="input-group-addon">
                 <i class="fa fa-calendar"></i>
               </div>
-              <%= f.text_field :start_date, label: 'From Date', class: 'birth_date'%>
+              <%= f.text_field :start_date, label: 'From Date', class: 'request_from_date'%>
             </div>
           </div>
         </div>
@@ -159,6 +159,22 @@
      error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
      error.insertAfter(element.parent(element));
     }
+  });
+
+  $(function(){
+    $('.request_from_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-12:+5',
+    dateFormat: 'dd-mm-yy' });
+  }); 
+
+  $(function(){
+    $('.request_end_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-12:+5',
+    dateFormat: 'dd-mm-yy' });
   });
 
   $('#employee_leav_request_start_date').on('change', function() {

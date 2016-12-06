@@ -68,6 +68,17 @@ class EmployeeLeavRequestsController < ApplicationController
         @employee_leav_request.current_status = 'Pending'
         if @employee_leav_request.leave_type == 'Full Day'
           @employee_leav_request.leave_count = (@employee_leav_request.end_date.to_date - @employee_leav_request.start_date.to_date).to_f + 1
+        
+        elsif @employee_leav_request.leave_type == 'Full/Half'
+          if @employee_leav_request.first_half == true && @employee_leav_request.last_half == true
+            @employee_leav_request.leave_count = (@employee_leav_request.end_date.to_date - @employee_leav_request.start_date.to_date).to_f
+          elsif @employee_leav_request.first_half == true
+            @employee_leav_request.leave_count = (@employee_leav_request.end_date.to_date - @employee_leav_request.start_date.to_date).to_f + 0.5
+          elsif @employee_leav_request.last_half == true
+            @employee_leav_request.leave_count = (@employee_leav_request.end_date.to_date - @employee_leav_request.start_date.to_date).to_f + 0.5
+          else
+            @employee_leav_request.leave_count = (@employee_leav_request.end_date.to_date - @employee_leav_request.start_date.to_date).to_f + 1
+          end
         else
           @employee_leav_request.leave_count = 0.5
         end

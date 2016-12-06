@@ -6,9 +6,7 @@
       <div class="form-group required">
         <%=select_tag("components[]",options_for_select(SalaryComponent.where(is_base: true).collect {|ff| [ff.name, ff.id] }),{:multiple=>true,:id => "batches",class: "form-control"})%>
       </div>
-    </div>
-  
-    
+    </div>  
      <div class="col-sm-3">
       <div class="form-group required">
         <%= f.text_field :min_amount , label: "Minimum Amount" %>
@@ -19,20 +17,19 @@
         <%= f.text_field :max_amount , label: "Maximum Amount" %>
       </div>
     </div>
-
     <div class="col-sm-3">
       <div class="form-group required">
         <%= f.text_field :for_month , label: "For Month" %>
       </div>
     </div>
-</div>
-<div class="row">
+  </div>
+
+  <div class="row">
      <div class="col-sm-3">
       <div class="form-group required">
         <%= f.text_field :march_amount , label: "March Amount"%>
       </div>
     </div>
-
     <div class="col-sm-3">
       <div class="field">
         <div class="input-group">
@@ -59,16 +56,15 @@
         <%= f.check_box :is_active, label: 'Active'%>
       </div>
     </div>
-</div>
-<div class="row">
-
-  <div class="col-sm-3">
-   <label></label>
-      <div class="actions">
-        <%= f.submit :class => class_name, data: { disable_with: data_info } %>
-      </div>
   </div>
-</div>
+  <div class="row">
+    <div class="col-sm-3">
+     <label></label>
+        <div class="actions">
+          <%= f.submit :class => class_name, data: { disable_with: data_info } %>
+        </div>
+    </div>
+  </div>
 <% end %>
 
 <script>     

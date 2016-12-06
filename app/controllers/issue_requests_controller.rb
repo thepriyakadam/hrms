@@ -40,9 +40,8 @@ class IssueRequestsController < ApplicationController
         @c2 = IssueTrackerMember.where(issue_tracker_group_id: @c1).pluck(:employee_id)
         @emp = Employee.where(id: @c2)
         @emp.each do |s|
-        IssueRequestMailer.issue_tracker_group_email(s.email).deliver_now
-
-        # IssueRequestMailer.issue_tracker_group_email(s.email, @issue_request, @c1, @c2).deliver_now
+        # IssueRequestMailer.issue_tracker_group_email(s.email).deliver_now
+        IssueRequestMailer.issue_tracker_group_email(s.email, @issue_request, @c1, @c2).deliver_now
         end
         format.html { redirect_to @issue_request, notice: 'Support request was successfully saved Successfully.' }
         format.json { render :show, status: :created, location: @issue_request }
@@ -133,6 +132,7 @@ class IssueRequestsController < ApplicationController
 
 
   def coordinator_lock_request
+    # byebug
     @issue_request = IssueRequest.find(params[:id])
     lock_date = params[:lock_date]
     lock_time = params[:lock_time]
@@ -185,7 +185,7 @@ class IssueRequestsController < ApplicationController
 
   def resend_request
     @issue_request = IssueRequest.find(params[:format])
-    IssueRequest.where(id: @issue_request.id).update_all(status: nil,issue_tracker_member_id: nil) 
+    IssueRequest.where(id: @issue_request.id).update_all(status: nil,issue_tracker_member_id: nil,issue_root_cause_id: nil,effort_time: nil,comment: nil) 
     IssueHistory.create(issue_tracker_group_id: @issue_request.issue_tracker_group_id,issue_request_id: @issue_request.id,issue_master_id: @issue_request.issue_master_id,description: @issue_request.description,date: @issue_request.date,time: @issue_request.time,employee_id: @issue_request.employee_id,issue_tracker_member_id: @issue_request.issue_tracker_member_id,issue_priority: @issue_request.issue_priority,status: false)
     # IssueRequestMailer.issue_resend(@issue_request).deliver_now
     flash[:notice] = "Resend Request Successfully"

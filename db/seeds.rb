@@ -253,11 +253,19 @@ require 'roo'
 
 ex = Roo::Excel.new("#{Rails.root}/public/novattendance.xls")
 
+<<<<<<< HEAD
+ex.default_sheet = ex.sheets[0] #siya feb
+i = 1
+ActiveRecord::Base.transaction do
+
+2.upto(68) do |line| # siya Feb 2016
+=======
 ex.default_sheet = ex.sheets[2] #siya feb
 i = 1
 ActiveRecord::Base.transaction do
 
 1.upto(1) do |line| # siya Feb 2016
+>>>>>>> e6a8f31ce64bce98f4558f43c9b7ddde166f9358
   puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
   unless @employee.nil?

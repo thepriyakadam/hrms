@@ -1,0 +1,52 @@
+<div class="modal-dialog" style="height:1000px; max-height:100px; width:900px; max-width:900px;">
+  <div class="modal-content">
+    <div class="modal-body">
+     <%= bootstrap_form_for @week_off_master,url:{action:"update_week_off",week_off_id:@week_off_master.id} do |f| %>
+      <div class="row">
+        <div class="col-sm-3">
+      		<div class="form-group required">
+         	<%= f.select :day, ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],{label: "Day",include_blank: " Select Day"} %>
+      		</div>
+    	</div>
+    	<div class="col-sm-3">
+      		<div class="form-group required">
+        		<div class="input-group">
+          			<div class="input-group-addon">
+            		<i class="fa fa-calendar"></i>
+          			</div>
+            		<%= f.text_field :from, label: "From", class: 'week_off_date'%>
+        		</div>
+      		</div>
+    	</div>
+     	<div class="col-sm-3">
+      		<div class="form-group required">
+        		<div class="input-group">
+          			<div class="input-group-addon">
+            		<i class="fa fa-calendar"></i>
+          			</div>
+            		<%= f.text_field :to, label: "To", class: 'week_off_date'%>
+        		</div>
+      		</div>
+    	</div>
+	    <div class="col-sm-1">
+	      <label>Status</label>
+	      <div class="form-group required">
+	        <%= f.check_box :is_active,label:'Active' %>
+	      </div>
+	    </div>
+	    <div class="col-sm-1">
+	      <label>Prefix</label>
+	      <div class="form-group required">
+	        <%= f.check_box :is_prefix,label:'Prefix' %>
+	      </div>
+	    </div>
+	  </div>
+	  <div class="row">
+	    <div class="col-sm-3">
+	      <div class="actions">
+	        <%= f.submit "Update Week Off" ,class: "btn btn-primary btn-sm" %>
+	      </div>
+	    </div>
+	  </div>
+	<% end %>
+

@@ -251,9 +251,8 @@ require 'roo'
 #  end
 # end
 
-ex = Roo::Excel.new("#{Rails.root}/public/novattendance.xls")
-
-ex.default_sheet = ex.sheets[2] #siya feb
+ex = Roo::Excel.new("#{Rails.root}/public/1.xls")
+ex.default_sheet = ex.sheets[0] #siya feb
 i = 1
 ActiveRecord::Base.transaction do
 

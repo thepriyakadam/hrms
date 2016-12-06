@@ -41,6 +41,8 @@ class IssueRequestsController < ApplicationController
         @emp = Employee.where(id: @c2)
         @emp.each do |s|
         IssueRequestMailer.issue_tracker_group_email(s.email).deliver_now
+
+        # IssueRequestMailer.issue_tracker_group_email(s.email, @issue_request, @c1, @c2).deliver_now
         end
         format.html { redirect_to @issue_request, notice: 'Support request was successfully saved Successfully.' }
         format.json { render :show, status: :created, location: @issue_request }
@@ -106,7 +108,7 @@ class IssueRequestsController < ApplicationController
     if @issue_tracker_member_id = IssueTrackerMember.find_by(employee_id: current_user.employee_id)
     @issue_requests = IssueRequest.where(issue_tracker_group_id: @issue_tracker_member_id.issue_tracker_group_id,status: nil)   
     else
-      flash[:alert] = "There is no any Support Request"
+      flash[:alert] = "No Support Request "
     end
     end
    session[:active_tab] = "issuetracker"
@@ -245,7 +247,7 @@ class IssueRequestsController < ApplicationController
   end
 
   def datewise_report_pdf
-     @date = params[:date].to_date
+    @date = params[:date].to_date
     @issue_requests = IssueRequest.where(date: @date)
     respond_to do |format|
           format.json

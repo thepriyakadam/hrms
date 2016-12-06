@@ -78,7 +78,7 @@ class InstalmentsController < ApplicationController
     if current_user.class == Group
       @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y'))
     else
-      if current_user.role.name == 'Company' || current_user.role.name == 'Account'
+      if current_user.role.name == 'Company' || current_user.role.name == 'SalaryAccount'
         @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y'))
       elsif current_user.role.name == 'CompanyLocation'
         @employees = Employee.where(company_location_id: current_user.company_location_id)

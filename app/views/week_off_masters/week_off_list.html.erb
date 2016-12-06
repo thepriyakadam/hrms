@@ -18,7 +18,7 @@
       </thead>
 
       <tbody>
-        <% @week_off_masters.each do |week_off_master| %>
+        <% @week_off_masters.try(:each) do |week_off_master| %>
           <tr>
             <td><%= week_off_master.employee.manual_employee_code %></td>
             <td><%= week_off_master.employee.try(:first_name) %> <%= week_off_master.employee.try(:middle_name) %> <%= week_off_master.employee.try(:last_name) %></td>

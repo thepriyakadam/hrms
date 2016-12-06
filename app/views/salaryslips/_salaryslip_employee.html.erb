@@ -19,8 +19,12 @@
     </tr>
   </thead>
   <tbody>
+    <% if @emp_contribution.empty? %>
+    <% @salaryslips.try(:each) do |s| %>
+    <% else %>
     <% @salaryslips.try(:each) do |s| %>
     <% @emp_contribution.try(:each) do |ee| %>
+    <% end %>
       <tr>
         <td><%= check_box_tag "slaryslip_ids[]", s.id %></td>
         <td><%= s.year %>-<%= s.month %></td>
@@ -36,6 +40,7 @@
         <td><%= ee.try(:esic) %></td>
         <!-- <td><= a=(ee.try(:actual_bonus)+ee.try(:actual_pf)+ee.try(:actual_esic)).to_f %></td> -->
       </tr>
+    <% end %>
     <% end %>
     <% end %>
   </tbody>

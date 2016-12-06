@@ -1748,6 +1748,9 @@ end
       post :basic_info
       get :change_password_form
       post :update_password
+      get :destroy_employee
+      post :show_employee_detail
+      get :destroy_details
     end
     member do
       get :edit_manager

@@ -2,7 +2,7 @@ class SalaryReport
   attr_accessor :employee_name, :department_name, :code, :pf_no, :esic_no,
                 :actual_basic, :actual_da, :actual_hra, :actual_convenience, :actual_other, :actual_special, :actual_washing, :actual_total,
                 :earned_basic, :earned_da, :earned_hra, :earned_convenience, :earned_other, :earned_special, :earned_washing, :earned_total,
-                :pf, :esic, :income_tax, :pt, :advance, :society, :food_deduction, :mobile, :retention, :welfair, :deduction_total, :net_payable,
+                :pf, :esic, :income_tax, :pt, :advance, :society, :food_deduction, :mobile, :retention, :welfair, :deduction_total, :net_payable, :other_deduction,
                 :total_leave, :cl_leave, :el_leave, :lwp_leave, :day_in_month, :payable_day, :present_day, :absent_day, :holiday, :weekoff, :month, :year,
                 :pf_ctc, :esic_ctc, :bonus_ctc, :actual_driver, :actual_medical, :actual_child_edu, :actual_mra, :earned_driver, :earned_medical, :earned_child_edu,
                 :earned_mra
@@ -92,6 +92,8 @@ class SalaryReport
         sr.food_deduction = d.calculated_amount.to_i
         when "Mobile Deduction"
         sr.mobile = d.calculated_amount
+        when "Other Deduction"
+        sr.other_deduction = d.calculated_amount
         when "Retention"
         sr.retention = d.calculated_amount
         when "WelFare"
@@ -283,6 +285,9 @@ class SalaryReport
     array_mobile = reports.collect {|r| r.try(:mobile)}.compact
     @sum.mobile = array_mobile.inject(0){|sum,x| sum + x }
 
+    array_other_deduction = reports.collect {|r| r.try(:other_deduction)}.compact
+    @sum.other_deduction = array_other_deduction.inject(0){|sum,x| sum + x }
+
     array_retention = reports.collect {|r| r.try(:retention)}.compact
     @sum.retention = array_retention.inject(0){|sum,x| sum + x }
 
@@ -465,6 +470,8 @@ class SalaryReport
         sr.food_deduction = d.calculated_amount.to_i
         when "Mobile Deduction"
         sr.mobile = d.calculated_amount
+        when "Other Deduction"
+        sr.other_deduction = d.calculated_amount
         when "Retention"
         sr.retention = d.calculated_amount
         when "WelFare"

@@ -14,10 +14,10 @@ class DueDetailsController < ApplicationController
 
   # GET /due_details/new
   def new
-    # byebug
     @due_detail = DueDetail.new
     @due_template = DueTemplate.find(params[:due_template_id])
     @due_details = DueDetail.where(due_template_id: @due_template.id)
+    # redirect_to new_due_detail_path  
   end
 
   # GET /due_details/1/edit
@@ -49,8 +49,8 @@ class DueDetailsController < ApplicationController
   end
 
   def all_employee_resignation_list
-     @employee_resignations = EmployeeResignation.all
-     session[:active_tab] = "resignationmanagement"
+    @employee_resignations = EmployeeResignation.all
+    session[:active_tab] = "resignationmanagement"
     session[:active_tab1] ="no_due_mgmt"
   end
 
@@ -102,7 +102,7 @@ class DueDetailsController < ApplicationController
   end
 
 
-  def employee_due_detail_history
+  def emis_confirm_employee_dueployee_due_detail_history
     @due_employee_details = DueEmployeeDetail.where(reporting_master_id: current_user.employee_id,is_confirmed: true)
     session[:active_tab] = "resignationmanagement"
     session[:active_tab1] ="no_due_mgmt"
@@ -146,6 +146,12 @@ class DueDetailsController < ApplicationController
 
   def emp_resignation
     @employee_resignations = EmployeeResignation.all
+    redirect_to new_due_detail_path(due_template_id: @due_template_id.id)
+  end
+
+   def modal
+    @due_detail = DueDetail.find(params[:format])
+    # redirect_to new_due_detail_path  
   end
 
   private

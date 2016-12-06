@@ -9,7 +9,6 @@
           <th>Issue</th>
           <th>Group</th>
           <th>Date</th>
-          <!-- <th>Time</th> -->
           <th>Priority</th>
           <th>Action</th>
         </tr>
@@ -21,7 +20,6 @@
             <td><%= issue_request.issue_master.try(:name) %></td>
             <td><%= issue_request.issue_tracker_group.try(:name) %></td>
             <td><%= issue_request.date %></td>
-            <!-- <td><%= issue_request.time %></td> -->
             <td><%= issue_request.issue_priority %></td>
             <td>
               <% if issue_request.is_complete == true %>

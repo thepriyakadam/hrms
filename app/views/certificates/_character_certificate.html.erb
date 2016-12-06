@@ -20,4 +20,4 @@
 
 </div>
 </div>
-<%= link_to "Print",character_certificate_certificates_path(employee_id: @employee.id, certificate: @certificate,format: "pdf"),class: "btn btn-xl btn-info fa fa-print"%>
+<%= link_to "Print",character_certificate_certificates_path(employee_id: @employee.id, certificate: @certificate,format: "pdf"),class: "btn btn-xl btn-info fa fa-print",:target => "_blank"%>

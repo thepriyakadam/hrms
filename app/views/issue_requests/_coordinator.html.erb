@@ -15,7 +15,6 @@
       <th>Issue</th>
       <th>Support Group</th>
       <th>Date</th>
-      <th>Time</th>
       <th>Priority</th>
       <th>Document</th>
       <th>Image</th>
@@ -31,7 +30,6 @@
             <td><%= issue_request.issue_master.try(:name) %></td>
             <td><%= issue_request.issue_tracker_group.try(:name) %></td>
             <td><%= issue_request.date %></td>
-            <td><%= issue_request.time %></td>
             <td><%= issue_request.issue_priority %></td>
             <td>
              <% if issue_request.document1_file_name == nil %>

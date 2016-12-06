@@ -32,9 +32,19 @@ class EmployeeLeavRequest < ActiveRecord::Base
         employee_leav_request.particular_leave_records.create(employee_id: employee_leav_request.employee_id, leave_date: i, is_full: true, leav_category_id: employee_leav_request.leav_category_id)
         EmployeeAttendance.where(employee_id: employee_leav_request.employee_id,day: i).update_all(present: employee_leav_request.try(:leav_category).try(:code),employee_leav_request_id: employee_leav_request.id)
       end
+
     elsif employee_leav_request.leave_type == 'Full/Half'
       for i in employee_leav_request.start_date.to_date..employee_leav_request.end_date.to_date
-        
+          start_date = employee_leav_request.start_date.to_date
+        if employee_leav_request.last_half == true
+          if i == start_date
+            employee_leav_request.particular_leave_records.create(employee_id: employee_leav_request.employee_id, leave_date: employee_leav_request.start_date, is_full: false, leav_category_id: employee_leav_request.leav_category_id)
+            EmployeeAttendance.where(employee_id: employee_leav_request.employee_id,day: i).update_all(present: employee_leav_request.try(:leav_category).try(:code),employee_leav_request_id: employee_leav_request.id)
+          else
+            employee_leav_request.particular_leave_records.create(employee_id: employee_leav_request.employee_id, leave_date: employee_leav_request.start_date, is_full: true, leav_category_id: employee_leav_request.leav_category_id)
+            EmployeeAttendance.where(employee_id: employee_leav_request.employee_id,day: i).update_all(present: employee_leav_request.try(:leav_category).try(:code),employee_leav_request_id: employee_leav_request.id)
+          end
+        end
       end
     else
       for i in employee_leav_request.start_date.to_date..employee_leav_request.end_date.to_date

@@ -1,0 +1,53 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Week Off Master List</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example1" class="table table-bordered table-hover table-condensed">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Employee</th>
+          <th>Day</th>
+          <th>From</th>
+          <th>To</th>
+          <th>Status</th>
+          <th>Prefix</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @week_off_masters.each do |week_off_master| %>
+          <tr>
+            <td><%= week_off_master.employee.manual_employee_code %></td>
+            <td><%= week_off_master.employee.try(:first_name) %> <%= week_off_master.employee.try(:middle_name) %> <%= week_off_master.employee.try(:last_name) %></td>
+            <td><%= week_off_master.day %></td>
+            <td><%= week_off_master.from %></td>
+            <td><%= week_off_master.to %></td>
+            <td><%= week_off_master.is_active ? 'Active' : 'Inactive' %></td>
+            <td><%= week_off_master.is_prefix ? 'Yes' : 'No' %></td>
+            <td>
+
+            <div id="myModal1" class="modal fade"></div>
+              <% if week_off_master.is_send == true %>
+                <small class="label label-primary">Already Assign</small>
+              <% else %>
+              	<!-- <= link_to '', edit_modal_week_off_masters_path(week_off_master),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
+                <= link_to '',  week_off_master, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %> -->
+                <%= link_to 'Set Week Off', assign_week_off_week_off_masters_path(week_off_master),class: 'btn btn-info btn-xs fa fa-check' %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example1').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

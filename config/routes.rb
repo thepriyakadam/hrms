@@ -16,8 +16,6 @@ Rails.application.routes.draw do
       end
   end
 
-  
-
   resources :leave_cashables do
     collection do
       get :collect_amount
@@ -26,6 +24,11 @@ Rails.application.routes.draw do
   resources :week_off_masters do 
     collection do
       get :assign_week_off
+      post :employee_list
+      post :create_week_off
+      get :week_off_list
+      get :edit_modal
+      post :update_week_off
     end
   end
   resources :machine_attendances do

@@ -156,6 +156,7 @@ Rails.application.routes.draw do
   resources :issue_masters do
     collection do
       get :collect_issues
+       get :is_confirm
     end
   end
   resources :issue_types do
@@ -167,12 +168,14 @@ Rails.application.routes.draw do
    
   resources :issue_tracker_members do
     collection do
+      get :is_confirm
        get :collect_issues
        get :collect_memberwise_dropdown
     end
    end
   resources :issue_tracker_groups do
     collection do
+      get :is_confirm
 
   end
 end

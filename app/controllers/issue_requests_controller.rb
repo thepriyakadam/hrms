@@ -6,7 +6,7 @@ class IssueRequestsController < ApplicationController
   # GET /issue_requests
   # GET /issue_requests.json
   def index
-    @issue_requests = IssueRequest.all
+    @issue_requests = IssueRequest.where(employee_id: current_user.employee_id)
   end
 
   # GET /issue_requests/1
@@ -107,7 +107,8 @@ class IssueRequestsController < ApplicationController
     if @issue_tracker_member_id = IssueTrackerMember.find_by(employee_id: current_user.employee_id)
     @issue_requests = IssueRequest.where(issue_tracker_group_id: @issue_tracker_member_id.issue_tracker_group_id,status: nil)   
     else
-      flash[:alert] = "No Support Request "
+      redirect_to issue_requests_path
+      flash[:alert] = "This Member Is Not Present In Member List To Solve Support "
     end
     end
    session[:active_tab] = "issuetracker"

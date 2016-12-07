@@ -15,7 +15,6 @@
           <th>From</th>
           <th>To</th>
           <th>Status</th>
-          <th>Prefix</th>
           <th>Action</th>
         </tr>
       </thead>
@@ -31,7 +30,6 @@
             <td><%= week_off_master.from %></td>
             <td><%= week_off_master.to %></td>
             <td><%= week_off_master.is_active ? 'Active' : 'Inactive' %></td>
-            <td><%= week_off_master.is_prefix ? 'Yes' : 'No' %></td>
             <td>
             <div id="myModal1" class="modal fade"></div>
               <% if week_off_master.is_send == true %>

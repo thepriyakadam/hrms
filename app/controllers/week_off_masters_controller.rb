@@ -62,10 +62,10 @@ class WeekOffMastersController < ApplicationController
   
   def week_off_list
     if current_user.role.name == 'Company' 
-      @week_off_masters = WeekOffMaster.all
+      @week_off_masters = WeekOffMaster.where(is_send: nil)
     elsif current_user.role.name == 'CompanyLocation'
       @employees = Employee.where(company_location_id: current_user.company_location_id)
-      @week_off_masters = WeekOffMaster.where(employee_id: @employees)
+      @week_off_masters = WeekOffMaster.where(is_send: nil).where(employee_id: @employees)
     end
   end
 

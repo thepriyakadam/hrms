@@ -4,7 +4,6 @@
   </div><!-- /.box-header -->
   <div class="box-body">
     <table id="example2" class="table table-bordered table-hover table-condensed'">
-
 <tr>
   <th><strong>Request By</strong></th>
   <td><%= @issue_request.employee.try(:first_name) %> <%= @issue_request.employee.try(:middle_name) %> <%= @issue_request.employee.try(:last_name) %></td>
@@ -34,6 +33,27 @@
 </tr>
 
 <tr>
+
+<tr>
+  <th><strong>Download Document</strong></th>
+  <td>
+    <% if @issue_request.document1_file_name == nil %>
+      <small class="label label-default">Not Available</small>
+          <% else %>
+            <center><%= link_to '',download_screenshot_path(@issue_request),class: 'btn btn-xs fa fa-download' %>
+      <% end %>
+    </center>
+  </td>
+
+  <th><strong>Download Image</strong></th>
+  <td>
+  <% if @issue_request.document2_file_name == nil %>
+    <small class="label label-default">Not Available</small>
+      <% else %>
+    <center><%= link_to '',download_screenshot_image_path(@issue_request),class: 'btn btn-xs fa fa-picture-o' %></center>
+  <% end %></td>
+</tr>
+
   
   <th><strong>Description</strong></th>
   <td colspan="3"><%= @issue_request.description %></td>

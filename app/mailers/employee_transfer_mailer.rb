@@ -13,7 +13,7 @@ class EmployeeTransferMailer < ApplicationMailer
       @employee_transfer = EmployeeTransfer.find(employee_transfer.id)
       @employee = Employee.find(@employee_transfer.employee_id)
       @emp = EmployeeTransfer.find_by_employee_id(employee_transfer.employee_id)
-      mail(to: @employee.email, subject: 'Transfer Approve Request')
+      mail(to: @employee.email, subject: 'Transfer Request Approved')
   end
 
 
@@ -24,7 +24,7 @@ class EmployeeTransferMailer < ApplicationMailer
     @employee_transfer = EmployeeTransfer.find(employee_transfer.id)
     @employee = Employee.find(@employee_transfer.employee_id)
     @emp = EmployeeTransfer.find_by_employee_id(employee_transfer.employee_id)
-    mail(to: @employee.email, subject: 'Transfer Reject Request')
+    mail(to: @employee.email, subject: 'Transfer Request Rejected ')
   end
 
   def edit_and_send_next(employee_transfer)
@@ -33,7 +33,7 @@ class EmployeeTransferMailer < ApplicationMailer
     @employee_transfer = EmployeeTransfer.find(employee_transfer.id)
     @employee = Employee.find(@employee_transfer.employee_id)
     @emp = EmployeeTransfer.find_by_employee_id(employee_transfer.employee_id)
-    mail(to: @reporting_master.email, subject: 'Transfer Request Edited And Sent To Higher Authority Request')
+    mail(to: @reporting_master.email, subject: 'Transfer Request Edited And Sent To Higher Authority')
   end
 
   def approve_and_send_next(employee_transfer)
@@ -42,7 +42,7 @@ class EmployeeTransferMailer < ApplicationMailer
     @employee_transfer = EmployeeTransfer.find(employee_transfer.id)
     @employee = Employee.find(@employee_transfer.employee_id)
     @emp = EmployeeTransfer.find_by_employee_id(employee_transfer.employee_id)
-    mail(to: @reporting_master.email, subject: 'Transfer Request Approved And Sent To Higher Authority Request')
+    mail(to: @reporting_master.email, subject: 'Transfer Request Approved And Sent To Higher Authority')
   end
 
   def edit_and_approve(employee_transfer)

@@ -4,6 +4,11 @@ class IssueRootCausesController < ApplicationController
 
   # GET /issue_root_causes/1
   # GET /issue_root_causes/1.json
+  def index
+    @issue_root_cause = IssueRootCause.new
+    @issue_root_causes = IssueRootCause.all
+  end
+
   def show
   end
 
@@ -52,6 +57,14 @@ class IssueRootCausesController < ApplicationController
     @issue_root_causes = IssueRootCause.all
     
   end
+
+   def is_confirm
+    @issue_root_cause = IssueRootCause.find(params[:issue_root_cause])
+    IssueRootCause.find(@issue_root_cause.id).update(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to new_issue_root_cause_path
+  end
+ 
 
   private
     # Use callbacks to share common setup or constraints between actions.

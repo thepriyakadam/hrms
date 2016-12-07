@@ -33,12 +33,12 @@
         <tr>
         <td><%= issue_request.id %></td>
           <td><%= issue_request.issue_master.try(:name) %></td>
-          <td><%= full_name(issue_request.employee) %></td>
+          <td><%= full_name(issue_request.try(:employee)) %></td>
           <td><%= issue_request.date %></td>
           <td><%= issue_request.issue_root_cause.try(:name) %></td>
           <td><%= issue_request.description %></td>
           <td><%= issue_request.issue_priority %></td>
-          <td><%= full_name(issue_request.issue_tracker_member.employee) %></td>
+          <td><%= full_name(issue_request.issue_tracker_member.try(:employee)) %></td>
           <td><%= issue_request.status %></td>
            <td><%= issue_request.is_complete %></td>
           <td><%= issue_request.effort_time %></td>

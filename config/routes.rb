@@ -23,7 +23,7 @@ Rails.application.routes.draw do
   end
   resources :week_off_masters do 
     collection do
-      get :assign_week_off
+      post :assign_week_off
       post :employee_list
       post :create_week_off
       get :week_off_list
@@ -148,12 +148,15 @@ Rails.application.routes.draw do
       get :id_wise_report_pdf
       get :memberwise_report
       post :memberwise_report_list
+      get :memberwise_report_list_xls
+      get :memberwise_report_list_pdf
       
     end
    end
   resources :issue_masters do
     collection do
       get :collect_issues
+       get :is_confirm
     end
   end
   resources :issue_types do
@@ -165,12 +168,14 @@ Rails.application.routes.draw do
    
   resources :issue_tracker_members do
     collection do
+      get :is_confirm
        get :collect_issues
        get :collect_memberwise_dropdown
     end
    end
   resources :issue_tracker_groups do
     collection do
+      get :is_confirm
 
   end
 end
@@ -213,6 +218,7 @@ end
       get :due_employee_detail_list
       get :due_action_list
       get :emp_resignation
+      get :modal
     end
   end
 
@@ -1625,6 +1631,7 @@ end
       get :employee_leav_request_reports
       get :all_leave_request_list
       get :admin_employee_history_with_current_leave
+      get :select_checkbox
     end
   end
   resources :company_leavs

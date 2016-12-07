@@ -1,3 +1,4 @@
+ <div class="ajax-progress"></div>
 <%= bootstrap_form_for(:week_off_master, url: { action: 'employee_list'},html: {id: 'week_off_master'},remote: true) do |f| %>
  <div class="row">
     <div class="col-sm-2">
@@ -51,6 +52,7 @@
 <% end %>
 
    <div class="ajax-progress"></div>
+
      <div class="row">
        <div class="col-sm-12">
          <div id="employee_list"></div>    

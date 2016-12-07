@@ -406,7 +406,6 @@ class SalaryslipsController < ApplicationController
             end
             end
           end
-
       @professional_tax_masters = ProfessionalTaxMaster.where(is_active: true)
        
       @professional_tax_masters.try(:each) do |s|

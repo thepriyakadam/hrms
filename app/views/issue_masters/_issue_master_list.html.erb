@@ -5,7 +5,7 @@
       <th>Type</th>
       <th>Support</th>
       <th>Description</th>
-      <!-- <th>Status</th> -->
+      <th>Status</th>
       <th>Action</th>
     </tr>
   </thead>
@@ -17,11 +17,18 @@
         <td><%= issue_master.issue_type.try(:name) %></td>
         <td><%= issue_master.name %></td>
         <td><%= issue_master.description %></td>
-       <!--  <td><= issue_master.status ? "Active" : "Inactive" %></td>
-         -->
+        <td><%= issue_master.status ? "Active" : "Inactive" %></td>
+        
          <td>
-          <%= link_to '', edit_issue_master_path(issue_master),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
+         <% if issue_master.is_confirm == true %>
+            <small class= "label label-primary">Confirmed</small>
+             <%= link_to '', edit_issue_master_path(issue_master),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
+          <% else %>
+         
           <%= link_to '',  issue_master, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
+           <%= link_to '', is_confirm_issue_masters_path(issue_master: issue_master),data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-info fa fa-check' %>
+           <% end %>
+          </td>
        
     <% end %>
   </tbody>

@@ -16,7 +16,7 @@
         </div>
       </div>
       <div class="col-sm-3">
-        <div class="group">
+        <div class="form-group required">
           <div id="issues">
             <%= render 'issue_masters/issue_dropdown' %> 
           </div> 
@@ -67,6 +67,9 @@ $("#issue_request").validate({
       "issue_request[issue_tracker_group_id]":{
         required: true,
       },
+      "issue_request[issue_master_id]":{
+        required: true,
+      },
       "issue_request[issue_priority]":{
         required: true,
       },
@@ -75,7 +78,10 @@ $("#issue_request").validate({
       "issue_request[issue_tracker_group_id]":{
         required: "Please Select Group",
       },
-       "issue_request[issue_priority]":{
+       "issue_request[issue_master_id]":{
+        required: "Please Select Priority",
+      },
+      "issue_request[issue_priority]":{
         required: "Please Select Priority",
       },
        },

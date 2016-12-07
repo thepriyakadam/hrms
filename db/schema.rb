@@ -460,6 +460,18 @@ ActiveRecord::Schema.define(version: 20161203040527) do
 
   add_index "custom_auto_increments", ["counter_model_name"], name: "index_custom_auto_increments_on_counter_model_name"
 
+  create_table "da_masters", force: :cascade do |t|
+    t.boolean  "is_da"
+    t.decimal  "minimum_wages"
+    t.date     "effective_from"
+    t.date     "effective_to"
+    t.boolean  "is_active"
+    t.boolean  "is_confirm"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.string   "base_component"
+  end
+
   create_table "daily_bill_detail_histories", force: :cascade do |t|
     t.integer  "daily_bill_detail_id"
     t.integer  "travel_expence_type_id"

@@ -9,6 +9,20 @@
       </div>
     </div>
 
+
+    <div class="col-sm-2">
+      <div class="form-group required">       
+        <%= f.select :esic,[['Yes','true'],['No','false']],{label: 'ESIC',include_blank: "Select ESIC Option"} %>
+      </div>
+    </div>
+
+    <div class="col-sm-2">
+      <div class="field">
+        <%= f.text_field :percentage %>
+      </div>
+    </div>
+
+
     
     <div class="col-sm-3">
      <div class="form-group required">
@@ -23,17 +37,7 @@
     </div>
   
 
-    <div class="col-sm-2">
-      <div class="form-group required">       
-        <%= f.select :esic,[['Yes','true'],['No','false']],{label: 'ESIC',include_blank: "Select ESIC Option"} %>
-      </div>
-    </div>
-
-    <div class="col-sm-2">
-      <div class="field">
-        <%= f.text_field :percentage %>
-      </div>
-    </div>
+    
 
     <div class="col-sm-2">
       <div class="field">

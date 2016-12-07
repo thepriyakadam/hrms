@@ -40,25 +40,19 @@ class Employee < ActiveRecord::Base
   has_many :skillsets
   has_many :assigned_assets
   has_many :employee_salary_templates
-  has_many :overtimes
   has_many :workingdays
   has_many :employee_templates
   has_many :particular_leave_records
   has_many :society_member_ships
   has_many :monthly_expences
   has_many :bonus_employees
-  has_many :employee_goals
   has_one :employee_shift
   has_one :member
   has_one :employee_bank_detail
   has_one :joining_detail
-  has_many :employee_promotions
   has_many :training_requests
-  has_many :interview_rounds
   has_many :goal_bunches
   has_many :employee_documents
-  has_many :employee_declarations
-  has_many :reward_pals
   has_many :interview_rounds
   has_many :interview_round_reschedules
   has_many :manager_histories

@@ -60,15 +60,11 @@
 
         <div class="col-sm-3">
           <div class="form-group required">
-          <%= f.select :leave_type, ['Full Day','Half Day','Full/Half'],{label:"Leave Type",include_blank: "Select Leave Type"}%>
+          <%= f.select :leave_type, ['Full Day','Half Day','Full/Half'],{label:"Leave Type",include_blank: "Select Leave Type"},{onchange:"var a={leave_type:$(this).val()}; $.get('/employee_leav_requests/select_checkbox',a,function(response){});",class: 'form-control'} %>
           </div>
         </div>
 
-        <div class="col-sm-2">
-          <div class="field">
-            <%= f.check_box :last_half, label: 'Last Half' %>
-          </div>
-        </div>
+      <div id="checkbox"></div>
 
         <div class="col-sm-3">
           <div class="form-group required">
@@ -94,11 +90,7 @@
           </div>
         </div>
 
-        <div class="col-sm-2">
-          <div class="field">
-            <%= f.check_box :first_half, label: 'First Half' %>
-          </div>
-        </div> 
+      <div id="checkbox1"></div>
 
         <div class="col-sm-6">
           <div class="form-group required">
@@ -165,7 +157,7 @@
     $('.request_from_date').datepicker({
     changeYear:true,
     changeMonth: true,
-    yearRange: '-12:+5',
+    yearRange: '-2:+5',
     dateFormat: 'dd-mm-yy' });
   }); 
 
@@ -173,7 +165,7 @@
     $('.request_end_date').datepicker({
     changeYear:true,
     changeMonth: true,
-    yearRange: '-12:+5',
+    yearRange: '-2:+5',
     dateFormat: 'dd-mm-yy' });
   });
 
@@ -205,6 +197,18 @@
     else{
       $("#employee_leav_request_end_date").attr('readonly', false);
       $("#employee_leav_request_end_date").val('');
+    }
+  });
+
+  $('#employee_leav_request_leave_type').on('change', function() {
+    if ($('#employee_leav_request_leave_type').val() == "Full Day"){
+   
+      $("#checkbox1").hide();
+      $("#checkbox").hide();
+    }
+    else{
+      $("#checkbox1").show();
+      $("#checkbox").show();
     }
   });
 </script>

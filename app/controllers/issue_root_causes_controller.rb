@@ -4,6 +4,11 @@ class IssueRootCausesController < ApplicationController
 
   # GET /issue_root_causes/1
   # GET /issue_root_causes/1.json
+  def index
+    @issue_root_cause = IssueRootCause.new
+    @issue_root_causes = IssueRootCause.all
+  end
+
   def show
   end
 

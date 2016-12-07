@@ -1,5 +1,4 @@
 <%= bootstrap_form_for(@professional_tax_master,html: {id: 'professional_tax_master'},remote:true) do |f| %>
-
 <div class="row">
   <div class="col-sm-3">
   <label>Base Component</label>
@@ -12,6 +11,7 @@
         <%= f.text_field :min_amount , label: "Minimum Amount" %>
       </div>
     </div>
+  </div>
      <div class="col-sm-3">
       <div class="form-group required">
         <%= f.text_field :max_amount , label: "Maximum Amount" %>
@@ -22,39 +22,38 @@
         <%= f.text_field :for_month , label: "For Month" %>
       </div>
     </div>
-  </div>
 
-  <div class="row">
-     <div class="col-sm-3">
-      <div class="form-group required">
-        <%= f.text_field :march_amount , label: "March Amount"%>
-      </div>
+</div>
+<div class="row">
+  <div class="col-sm-3">
+    <div class="form-group required">
+      <%= f.text_field :march_amount , label: "March Amount"%>
     </div>
-    <div class="col-sm-3">
-      <div class="field">
-        <div class="input-group">
-          <div class="input-group-addon">
-            <i class="fa fa-calendar"></i>
-          </div>
-          <%= f.text_field :effective_from,label: "Effective From", class: 'effective_from'%>
+  </div>
+  <div class="col-sm-3">
+    <div class="field">
+      <div class="input-group">
+        <div class="input-group-addon">
+          <i class="fa fa-calendar"></i>
         </div>
+        <%= f.text_field :effective_from,label: "Effective From", class: 'effective_from'%>
       </div>
     </div>
-    <div class="col-sm-3">
-      <div class="field">
-        <div class="input-group">
-          <div class="input-group-addon">
-            <i class="fa fa-calendar"></i>
-          </div>
-          <%= f.text_field :effective_to, label: "Effective To", class: 'effective_to'%>
+  </div>
+  <div class="col-sm-3">
+    <div class="field">
+      <div class="input-group">
+        <div class="input-group-addon">
+          <i class="fa fa-calendar"></i>
         </div>
+        <%= f.text_field :effective_to, label: "Effective To", class: 'effective_to'%>
       </div>
     </div>
-    <div class="col-sm-3">
-      <label>Status </label>
-      <div class="field">
-        <%= f.check_box :is_active, label: 'Active'%>
-      </div>
+  </div>
+  <div class="col-sm-3">
+    <label>Status </label>
+    <div class="field">
+      <%= f.check_box :is_active, label: 'Active'%>
     </div>
   </div>
   <div class="row">

@@ -60,6 +60,13 @@ class IssueMastersController < ApplicationController
     @issue_masters = @issue_tracker_group.issue_masters
   end
 
+   def is_confirm
+    @issue_master = IssueMaster.find(params[:issue_master])
+    IssueMaster.find(@issue_master.id).update(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to new_issue_master_path
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_issue_master

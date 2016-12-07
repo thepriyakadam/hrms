@@ -24,6 +24,7 @@
         <% @week_off_masters.each do |week_off_master| %>
           <tr>              
             <td><%= check_box_tag "week_off_master_ids[]",week_off_master.id %></td>
+
             <td><%= week_off_master.employee.manual_employee_code %></td>
             <td><%= week_off_master.employee.try(:first_name) %> <%= week_off_master.employee.try(:middle_name) %> <%= week_off_master.employee.try(:last_name) %></td>
             <td><%= week_off_master.day %></td>

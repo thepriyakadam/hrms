@@ -76,3 +76,30 @@
     dateFormat: 'dd-mm-yy' });
   });
 </script>
+
+
+<script>
+$("#bonus_employer").validate({
+    rules: {
+      "bonus_employer[percentage]":{
+        required: true,
+      },
+      "bonus_employer[limit_amount]":{
+        required: true,
+      },
+       },
+    messages: {
+      "bonus_employer[percentage]":{
+        required: "Please Specify percentage",
+      },
+       "bonus_employer[limit_amount]":{
+        required: "Please Specify Amount",
+      },
+       },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>
+

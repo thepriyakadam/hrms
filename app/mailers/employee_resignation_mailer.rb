@@ -13,7 +13,7 @@ class EmployeeResignationMailer < ApplicationMailer
 	    @employee_resignation = EmployeeResignation.find(employee_resignation.id)
 	    @employee = Employee.find(@employee_resignation.employee_id)
 	    @emp = EmployeeResignation.find_by_employee_id(employee_resignation.employee_id)
-	    mail(to: @employee.email, subject: 'Resignation Approve Request')
+	    mail(to: @employee.email, subject: 'Resignation Request Approved ')
     end
     
     def reject_resignation_email(employee_resignation)

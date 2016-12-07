@@ -13,10 +13,11 @@
           <div class="input-group-addon">
             <i class="fa fa-calendar"></i>
           </div>
-            <%= text_field :week_off_master,:from, label: "From", class: 'week_off_date'%>
+            <%= text_field :week_off_master,:from, hide_label: true, class: 'week_off_date form-control'%>
         </div>
       </div>
     </div>
+
      <div class="col-sm-3">
       <label>To</label>
       <div class="form-group required">
@@ -24,7 +25,7 @@
           <div class="input-group-addon">
             <i class="fa fa-calendar"></i>
           </div>
-            <%= text_field :week_off_master,:to, label: "To", class: 'week_off_date'%>
+            <%= text_field :week_off_master,:to, hide_label: true, class: 'week_off_date form-control'%>
         </div>
       </div>
     </div>
@@ -34,17 +35,16 @@
         <%= check_box :week_off_master,:is_active,label:'Active' %>
       </div>
     </div>
-    <div class="col-sm-1">
+   <!--  <div class="col-sm-1">
       <label>Prefix</label>
       <div class="form-group required">
-        <%= check_box :week_off_master,:is_prefix,label:'Prefix' %>
+        < check_box :week_off_master,:is_prefix,label:'Prefix' %>
       </div>
-    </div>
-  </div>
-  <div class="row">
+    </div> -->
     <div class="col-sm-3">
+    <label></label>
       <div class="actions">
-        <%= f.submit "Create Week Off" ,class: "btn btn-primary btn-sm" %>
+        <%= f.submit "Search Employee" ,class: "btn btn-primary btn-sm" %>
       </div>
     </div>
   </div>

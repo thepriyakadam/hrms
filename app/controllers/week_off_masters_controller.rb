@@ -61,7 +61,12 @@ class WeekOffMastersController < ApplicationController
   end
   
   def week_off_list
-    @week_off_masters = WeekOffMaster.where(is_send: nil)
+    if current_user.role.name == 'Company' 
+      @week_off_masters = WeekOffMaster.all
+    elsif current_user.role.name == 'CompanyLocation'
+      @employees = Employee.where(company_location_id: current_user.company_location_id)
+      @week_off_masters = WeekOffMaster.where(employee_id: @employees)
+    end
   end
 
   def employee_list
@@ -70,8 +75,17 @@ class WeekOffMastersController < ApplicationController
     @to = params[:week_off_master][:to]
     @is_active = params[:week_off_master][:is_active]
     @is_prefix = params[:week_off_master][:is_prefix]
-    @employees = Employee.all
+
+    if current_user.class == Member
+      if current_user.role.name == 'Company'
+      @employees = Employee.all
+      elsif current_user.role.name == 'CompanyLocation'
+        @employees = Employee.where(company_location_id: current_user.company_location_id)
+    else
+      @employees = Employee.all
+    end
   end
+end
 
   def create_week_off
     @employee_ids = params[:employee_ids]

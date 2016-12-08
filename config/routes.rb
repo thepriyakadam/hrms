@@ -23,7 +23,7 @@ Rails.application.routes.draw do
   end
   resources :week_off_masters do 
     collection do
-      get :assign_week_off
+      post :assign_week_off
       post :employee_list
       post :create_week_off
       get :week_off_list
@@ -1633,6 +1633,7 @@ end
       get :employee_leav_request_reports
       get :all_leave_request_list
       get :admin_employee_history_with_current_leave
+      get :select_checkbox
     end
   end
   resources :company_leavs

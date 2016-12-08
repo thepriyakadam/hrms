@@ -455,15 +455,9 @@
           <li><a href="/reports/overtime_salary_details/new"><i class="fa fa-tags"> </i>Overtime Report</a></li>
         </ul>
       </li>
-
     <li><a href="#"><i class="fa fa-circle-o"></i> Level One</a></li>
   </ul>
 </li>
-
-   
-
-   
-
 
    <li class="treeview" id="issuetracker">
     <a href="#">
@@ -493,10 +487,45 @@
           <li><a href="/issue_requests/memberwise_report"><i class="fa fa-tags"></i>Member Wise Report</a></li>
         </ul>
       </li>
+       <li class="treeview" id="issueprocess">
+        <a href="#"><i class="fa fa-edit"></i> Report  <i class="fa fa-angle-left pull-right"></i></a>
+        <ul class="treeview-menu">
+         <li><a href="/issue_requests/groupwise_report"><i class="fa fa-tags"></i>Group Wise Report</a></li>
+          <li><a href="/issue_requests/datewise_report"><i class="fa fa-tags"></i>Date Wise Report</a></li>
+          <li><a href="/issue_requests/memberwise_report"><i class="fa fa-tags"></i>Member Wise Report</a></li>
+        </ul>
+      </li>
     </ul>
   </li>
 
- 
+   <li class="treeview" id="issuetracker">
+    <a href="#">
+      <i class="glyphicon glyphicon-phone-alt"></i> <span>Travel Management</span>
+      <i class="fa fa-angle-left pull-right"></i>
+    </a>
+    <ul class="treeview-menu" >
+       
+       <li class="treeview" id="issueprocess1"> <a href="#"><i class="fa fa-edit"></i>Travel Request Process <i class="fa fa-angle-left pull-right"></i></a>
+       <ul class="treeview-menu">
+        <li><a href="/travel_requests"><i class="fa fa-plane"></i>Travel Request </a></li>
+        <li><a href="/travel_requests/travel_history"><i class="fa fa-plane"></i> Travel Approve/Reject </a></li>
+        <li><a href="/travel_requests/travel_request_list"><i class="fa fa-plane"></i> Travel Request List </a></li>
+       </ul>
+      </li> 
+  
+       <li class="treeview" id="issueprocess">
+        <a href="#"><i class="fa fa-edit"></i> Expenses Claim Process  <i class="fa fa-angle-left pull-right"></i></a>
+        <ul class="treeview-menu">
+          <li><a href="/travel_requests/daily_bill"><i class="fa fa-plane"></i> Expenses Claim </a></li>
+          <!--  <li><a href="/daily_bill_details/daily_bill_history"><i class="fa fa-tags"></i> Expenses Claim Approval </a></li> -->
+           <li><a href="/daily_bill_details/travel_request_list"><i class="fa fa-plane"></i>Approval / Reject </a></li>
+          <li><a href="/daily_bill_details/approved_daily_bill_details"><i class="fa fa-plane"></i>Approval List </a></li>
+          <!--       <li><a href="/travel_expences"><i class="fa fa-tags"></i> Travel Expenses </a></li>   
+           -->    
+        </ul>
+      </li>
+    </ul>
+  </li>
 
   <li class="treeview" id="performancemgmt">
     <a href="#">
@@ -519,11 +548,12 @@
         </ul>
       </li> 
 
-       <li id="reward">
-        <a href="#"><i class="fa fa-edit"></i>Reward Management <i class="fa fa-angle-left pull-right"></i></a>
+      <li id="perform_cycle">
+        <a href="#"><i class="fa fa-edit"></i>Employee Plan <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
-         <li><a href="/rewards_allocations/new"><i class="fa fa-tags"></i> Rewards Allocations </a></li> 
-        <li><a href="/rewards_pals/new"><i class="fa fa-tags"></i> Rewards Pals </a></li> 
+        <li><a href="/goal_ratings/period_for_training"><i class="fa fa-tags"></i>Training Assessment</a></li>
+        <li><a href="/goal_ratings/period_and_topic_wise_list"><i class="fa fa-tags"></i>Training Plan</a></li>
+        <li><a href="/goal_ratings/increment_index"><i class="fa fa-tags"></i>Revision Simulation</a></li>
         </ul>
       </li> 
       
@@ -630,19 +660,7 @@
     </ul>
   </li>
 
-   <li class="treeview" id="travelmgmt">
-    <a href=""><i class="fa fa-plane"></i><span> Travel Management </span><i class="fa fa-angle-left pull-right"></i></a>
-    <ul class="treeview-menu">
-      <li><a href="/travel_requests"><i class="fa fa-plane"></i>Travel Request </a></li>
-      <li><a href="/travel_requests/travel_history"><i class="fa fa-plane"></i> Travel Approve/Reject </a></li>
-      <li><a href="/travel_requests/travel_request_list"><i class="fa fa-plane"></i> Travel Request List </a></li>
-      <li><a href="/travel_requests/daily_bill"><i class="fa fa-plane"></i> Expenses Claim </a></li>
-      <!--  <li><a href="/daily_bill_details/daily_bill_history"><i class="fa fa-tags"></i> Expenses Claim Approval </a></li> -->
-       <li><a href="/daily_bill_details/travel_request_list"><i class="fa fa-plane"></i> Expense Approval </a></li>
-      <li><a href="/daily_bill_details/approved_daily_bill_details"><i class="fa fa-plane"></i> Expenses Approval List </a></li>
-<!--       <li><a href="/travel_expences"><i class="fa fa-tags"></i> Travel Expenses </a></li>   
- -->    </ul>
-   </li>
+  
 
    <li class="treeview" id="trainingmgmt">
     <a href=""><i class="fa fa-briefcase"></i> <span> Training Management </span> <i class="fa fa-angle-left pull-right"></i></a>
@@ -663,7 +681,7 @@
     </ul>
    </li>
 
-   <li class="treeview" id="import">
+   <!-- <li class="treeview" id="import">
     <a href=""><i class="glyphicon glyphicon-save"></i><span><span> Import Excel File </span></span> <i class="fa fa-angle-left pull-right"></i></a>
     <ul class="treeview-menu">
       <li><a href="/employees/import_xl"><i class="fa fa-user"></i> Employee </a></li>
@@ -681,7 +699,7 @@
 
     </ul>
    </li>
-
+ -->
    <!--  <li class="treeview" id="safety">
     <a href=""><i class="ionicons ion-ios-time"></i><span><span> Table Reports </span></span> <i class="fa fa-angle-left pull-right"></i></a>
     <ul class="treeview-menu">

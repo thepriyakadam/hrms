@@ -144,7 +144,7 @@ end
     @week_off_master = WeekOffMaster.find(params[:week_off_master_id])
     @week_off_master.update(week_off_master_params)
      flash[:notice] = 'Week Off Updated Successfully'
-     redirect_to new_week_off_master_path
+    redirect_to week_off_list_week_off_masters_path
   end
 
   private

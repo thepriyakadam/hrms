@@ -5,8 +5,6 @@ class IssueRootCausesController < ApplicationController
   # GET /issue_root_causes/1
   # GET /issue_root_causes/1.json
   def index
-    @issue_root_cause = IssueRootCause.new
-    @issue_root_causes = IssueRootCause.all
   end
 
   def show
@@ -29,16 +27,8 @@ class IssueRootCausesController < ApplicationController
   def create
     @issue_root_cause = IssueRootCause.new(issue_root_cause_params)
     @issue_root_causes = IssueRootCause.all
-    respond_to do |format|
-      if @issue_root_cause.save
-        @issue_root_cause = IssueRootCause.new
-        format.js { @flag = true }
-      else
-        flash.now[:alert] = 'Root Cause Already Exist.'
-        format.js { @flag = false }
-      end
-      redirect_to new_issue_root_cause_path
-    end
+    @issue_root_cause.save
+    @issue_root_cause = IssueRootCause.new
   end
 
   # PATCH/PUT /issue_root_causes/1
@@ -47,7 +37,7 @@ class IssueRootCausesController < ApplicationController
     @issue_root_cause.update(issue_root_cause_params)
     @issue_root_cause = IssueRootCause.new
     @issue_root_causes = IssueRootCause.all
-       
+    # redirect_to new_issue_root_cause_path
   end
 
   # DELETE /issue_root_causes/1

@@ -406,6 +406,7 @@ class SalaryslipsController < ApplicationController
             end
             end
           end
+
       @professional_tax_masters = ProfessionalTaxMaster.where(is_active: true)
        
       @professional_tax_masters.try(:each) do |s|
@@ -515,7 +516,6 @@ class SalaryslipsController < ApplicationController
             elsif m.expencess_type.name == @salary_compon.name
               SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: deducted_actual_amount, calculated_amount: deducted_calculated_amount, is_deducted: true, other_component_name: m.expencess_type.name,salary_component_id:  @salary_compon.id)
             end
-            m.update(is_paid: true)
           end
         
           @salary_component = SalaryComponent.find_by(name: "DA")

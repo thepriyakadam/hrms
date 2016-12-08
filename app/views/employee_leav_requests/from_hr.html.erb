@@ -85,7 +85,7 @@
               <div class="input-group-addon">
                 <i class="fa fa-calendar"></i>
               </div>
-              <%= f.text_field :end_date, label: 'To Date', class: 'request_end_date' %>
+              <%= f.text_field :end_date, label: 'To Date', class: 'request_from_date' %>
             </div>
           </div>
         </div>
@@ -160,14 +160,6 @@
     yearRange: '-2:+5',
     dateFormat: 'dd-mm-yy' });
   }); 
-
-  $(function(){
-    $('.request_end_date').datepicker({
-    changeYear:true,
-    changeMonth: true,
-    yearRange: '-2:+5',
-    dateFormat: 'dd-mm-yy' });
-  });
 
   $('#employee_leav_request_start_date').on('change', function() {
     if ($('#employee_leav_request_leave_type').val() == "Half Day"){

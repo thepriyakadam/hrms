@@ -664,7 +664,32 @@ end
 # i = i+1
 # end
 
+# ex = Roo::Excel.new("#{Rails.root}/public/rge1.xls")
+# ex.default_sheet = ex.sheets[0] #siya feb
+# i = 1
+# ActiveRecord::Base.transaction do
+# 2.upto(47) do |line| # siya Feb 2016
+#  puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
+#  @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A'))
+#  # JoiningDetail.where(id: @employee.id).update_all(is_da: true)
+#  puts "#{i} Record inserting.----------------------------"
 
+<<<<<<< HEAD
+=======
+#   @employee.try(:each) do |e|
+
+#   e.update(company_id = ex.cell(line,'B'))
+#   e.update(company_location_id = ex.cell(line,'C'))
+#   e.update(department_id = ex.cell(line,'D'))
+#   e.save!
+
+#   end
+#    puts "#{i} Record inserted.-----------------------------------------------"
+#    i += 1
+#  end
+#  end
+
+>>>>>>> 13ab5636bfecf1827b8b61495fcbde3236ecdfd0
 # puts "Starting ..."
 # ex = Roo::Excel.new("#{Rails.root}/public/rge.xls")
 # ex.default_sheet = ex.sheets[0] 

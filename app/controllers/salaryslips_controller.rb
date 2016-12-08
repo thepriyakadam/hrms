@@ -327,18 +327,15 @@ class SalaryslipsController < ApplicationController
 
 
         @master_esic = EsicMaster.where(is_active: true).take
-          # byebug
           if @master_esic.nil?
           else
           if @master_esic.esic && addable_total_calculated_amount <= @master_esic.max_limit && @employee.joining_detail.have_esic
-           
             formula_string = @master_esic.base_component.split(',').map {|i| i.to_i}
             formula_item = SalaryslipComponent.where(salary_component_id: formula_string,salaryslip_id: @salaryslip.id)
-            
             @total_actual = formula_item.sum(:actual_amount)
             @total = formula_item.sum(:calculated_amount)
             formula_item_actual_amount = (@total_actual / working_day.try(:day_in_month))
-            formula_item_calculated_amount = (@total_actual /  working_day.try(:day_in_month) * working_day.try(:payable_day))
+            formula_item_calculated_amount = (@total_actual / working_day.try(:day_in_month) * working_day.try(:payable_day))
             deducted_actual_amount = (formula_item_actual_amount / 100 * @master_esic.percentage).ceil
             deducted_calculated_amount = (formula_item_calculated_amount / 100 * @master_esic.percentage).ceil
             @salary_component = SalaryComponent.find_by(name: "ESIC")
@@ -409,6 +406,7 @@ class SalaryslipsController < ApplicationController
             end
             end
           end
+
       @professional_tax_masters = ProfessionalTaxMaster.where(is_active: true)
        
       @professional_tax_masters.try(:each) do |s|

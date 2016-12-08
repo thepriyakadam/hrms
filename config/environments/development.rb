@@ -39,34 +39,35 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
-# # Root url
-#   config.action_mailer.default_url_options = { host: '192.168.0.62', port: 3000 }
+# Root url
+  config.action_mailer.default_url_options = { host: '192.168.0.62', port: 3000 }
 
-#   # config.domain = 'lvh.me'
-#   # config.action_mailer.perform_deliveries = true,
-#   ActionMailer::Base.delivery_method = :smtp
-
-#   ActionMailer::Base.smtp_settings = {
-#     address: 'mail.bhandarigroup.in',
-#     port: 25,
-#     domain: '192.168.0.62',
-#     user_name: 'hrmsdws-bhandarigroup',
-#     password: 'hrms1234',
-#     authentication: :plain
-#   }
-  # Root url
-  config.action_mailer.default_url_options = { host: 'mail.rajgreen.co.in', port: 3000 }
   # config.domain = 'lvh.me'
   # config.action_mailer.perform_deliveries = true,
   ActionMailer::Base.delivery_method = :smtp
 
   ActionMailer::Base.smtp_settings = {
-    :address => "mail.rajgreen.co.in",
-    :port => 25,
-    :user_name => "hrms@rajgreen.co.in",
-    :password => "amaazia@123",
-    :authentication => 'plain',
-}
+    address: 'mail.bhandarigroup.in',
+    port: 25,
+    domain: '192.168.0.62',
+    user_name: 'hrmsdws-bhandarigroup',
+    password: 'hrms1234',
+    authentication: :plain
+  }
+  
+#   # Root url
+#   config.action_mailer.default_url_options = { host: 'mail.rajgreen.co.in', port: 3000 }
+#   # config.domain = 'lvh.me'
+#   # config.action_mailer.perform_deliveries = true,
+#   ActionMailer::Base.delivery_method = :smtp
+
+#   ActionMailer::Base.smtp_settings = {
+#     :address => "mail.rajgreen.co.in",
+#     :port => 25,
+#     :user_name => "hrms@rajgreen.co.in",
+#     :password => "amaazia@123",
+#     :authentication => 'plain',
+# }
 
 
   # Paperclip setup

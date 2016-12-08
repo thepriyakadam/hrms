@@ -261,11 +261,11 @@ require 'roo'
 # end
 
 ex = Roo::Excel.new("#{Rails.root}/public/novattendance.xls")
-ex.default_sheet = ex.sheets[1] #siya feb
+ex.default_sheet = ex.sheets[0] #siya feb
 i = 1
 ActiveRecord::Base.transaction do
 
-2.upto(322) do |line| # siya Feb 201
+2.upto(68) do |line| # siya Feb 201
   puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
   unless @employee.nil?
@@ -674,8 +674,6 @@ end
 #  # JoiningDetail.where(id: @employee.id).update_all(is_da: true)
 #  puts "#{i} Record inserting.----------------------------"
 
-<<<<<<< HEAD
-=======
 #   @employee.try(:each) do |e|
 
 #   e.update(company_id = ex.cell(line,'B'))
@@ -688,8 +686,6 @@ end
 #    i += 1
 #  end
 #  end
-
->>>>>>> 13ab5636bfecf1827b8b61495fcbde3236ecdfd0
 # puts "Starting ..."
 # ex = Roo::Excel.new("#{Rails.root}/public/rge.xls")
 # ex.default_sheet = ex.sheets[0] 

@@ -5,8 +5,9 @@ class MonthlyExpencesController < ApplicationController
   # GET /monthly_expences.json
   def index
     @monthly_expences = MonthlyExpence.group("strftime('%Y',expence_date)")
-    session[:active_tab] = "payroll"
-    session[:active_tab1] = "montlyamount"
+    session[:active_tab] ="PayrollManagement"
+    session[:active_tab1] ="PayrollSetup"
+    session[:active_tab2] ="PeriodicComponents"
   end
 
   # GET /monthly_expences/1

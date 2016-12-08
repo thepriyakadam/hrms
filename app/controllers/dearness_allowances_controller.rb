@@ -16,6 +16,9 @@ class DearnessAllowancesController < ApplicationController
   def new
     @dearness_allowance = DearnessAllowance.new
     @dearness_allowances = DearnessAllowance.all
+    session[:active_tab] ="PayrollManagement"
+    session[:active_tab1] ="PayrollSetup"
+    session[:active_tab2] ="EmployerMaster"
   end
 
   # GET /dearness_allowances/1/edit

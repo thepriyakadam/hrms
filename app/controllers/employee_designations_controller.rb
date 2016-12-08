@@ -5,8 +5,8 @@ class EmployeeDesignationsController < ApplicationController
   def new
     @employee_designation = EmployeeDesignation.new
     @employee_designations = EmployeeDesignation.all
-    session[:active_tab] ="master"
-    session[:active_tab1] ="employeeprofilesetup"
+    session[:active_tab] ="GlobalSetup"
+    session[:active_tab1] ="OnBording"
   end
 
   # GET /employee_designations/1/edit

@@ -7,6 +7,7 @@ class EmployeeLeavRequestsController < ApplicationController
   def index
     @employee_leav_requests = EmployeeLeavRequest.where('employee_id = ?', current_user.try(:employee_id))
     @employee_leav_balances = EmployeeLeavBalance.where(employee_id: current_user.employee_id)
+    session[:active_tab] ="EmployeeSelfService"
   end
 
   def show
@@ -196,8 +197,8 @@ class EmployeeLeavRequestsController < ApplicationController
       @first_approved_employee_leav_requests = EmployeeLeavRequest.where(is_first_approved: true, is_second_approved: nil, is_second_rejected: nil, is_cancelled: nil, second_reporter_id: current_user.employee_id)
     end
     # @employee_leav_requests = EmployeeLeavRequest.joins("LEFT JOIN leav_approveds ON employee_leav_requests.id = leav_approveds.employee_leav_request_id LEFT JOIN leav_cancelleds ON employee_leav_requests.id = leav_cancelleds.employee_leav_request_id LEFT JOIN leav_rejecteds ON employee_leav_requests.id = leav_rejecteds.employee_leav_request_id where leav_approveds.id IS NULL AND leav_rejecteds.id IS NULL AND leav_cancelleds.id IS NULL")
-    session[:active_tab] ="leavemanagement"
-    session[:active_tab1] ="leaverequest"
+    session[:active_tab] ="LeaveManagement"
+    session[:active_tab1] ="LeaveProcess"
   end
 
   def all_leave_request_list
@@ -210,8 +211,8 @@ class EmployeeLeavRequestsController < ApplicationController
       @second_level_request_lists = EmployeeLeavRequest.where(is_first_approved: true, is_second_approved: nil, is_second_rejected: nil, is_cancelled: nil,second_reporter_id: @emp_leav_req)
     end
     # @employee_leav_requests = EmployeeLeavRequest.joins("LEFT JOIN leav_approveds ON employee_leav_requests.id = leav_approveds.employee_leav_request_id LEFT JOIN leav_cancelleds ON employee_leav_requests.id = leav_cancelleds.employee_leav_request_id LEFT JOIN leav_rejecteds ON employee_leav_requests.id = leav_rejecteds.employee_leav_request_id where leav_approveds.id IS NULL AND leav_rejecteds.id IS NULL AND leav_cancelleds.id IS NULL")
-    session[:active_tab] ="leavemanagement"
-    session[:active_tab1] ="leaverequest"
+    session[:active_tab] ="LeaveManagement"
+    session[:active_tab1] ="LeaveProcess"
   end
 
   def employee_list
@@ -231,8 +232,8 @@ class EmployeeLeavRequestsController < ApplicationController
            @employees = Employee.where(id: current_user.employee_id)
       end
     end
-    session[:active_tab] ="leavemanagement"
-    session[:active_tab1] ="leaverequest"
+    session[:active_tab] ="LeaveManagement"
+    session[:active_tab1] ="LeaveProcess"
   end
 
   def from_hr
@@ -278,8 +279,8 @@ class EmployeeLeavRequestsController < ApplicationController
       column(:No_OF_Day, sortable: true, &:leave_count)
       column(:Reason, sortable: true, &:reason)
     end
-    session[:active_tab] = "leavemanagement"
-    session[:active_tab1] = "leavereport"
+    session[:active_tab] ="LeaveManagement"
+    session[:active_tab1] ="LeaveReports"
   end
 
   def search_by_is_pending_date

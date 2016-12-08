@@ -4,8 +4,8 @@ class CurrencyMastersController < ApplicationController
   def index
     @currency_masters = CurrencyMaster.all
     @currency_master = CurrencyMaster.new
-    session[:active_tab] ="master"
-    session[:active_tab1] ="travel"
+    session[:active_tab] = "GlobalSetup"
+    session[:active_tab1] = "TravelSetup"
   end
 
 	def create

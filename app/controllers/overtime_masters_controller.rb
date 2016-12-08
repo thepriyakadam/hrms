@@ -5,8 +5,9 @@ class OvertimeMastersController < ApplicationController
   def new
     @overtime_master = OvertimeMaster.new
     @overtime_masters = OvertimeMaster.all
-    session[:active_tab] ="master"
-    session[:active_tab1] ="payrollcomponents"
+    session[:active_tab] ="PayrollManagement"
+    session[:active_tab1] ="PayrollSetup"
+    session[:active_tab2] ="EmployerMaster"
   end
 
   # GET /overtime_masters/1/edit

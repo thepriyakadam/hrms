@@ -16,6 +16,8 @@ class CompanyTimeMastersController < ApplicationController
   def new
     @company_time_master = CompanyTimeMaster.new
     @company_time_masters = CompanyTimeMaster.all
+    session[:active_tab] ="TimeManagement"
+    session[:active_tab1] ="AttendanceSetup"
   end
 
   # GET /company_time_masters/1/edit

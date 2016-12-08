@@ -18,8 +18,8 @@ include QueryReport::Helper
   def new
     @employee_daily_activity = EmployeeDailyActivity.new
     @employee_daily_activities = EmployeeDailyActivity.where(employee_id: current_user.employee_id).order("day asc")
-    session[:active_tab] = "timemgmt"
-    session[:active_tab1] = "time_sheet"
+    session[:active_tab] = "TimeManagement"
+    session[:active_tab1] = "TimeSheet"
   end
 
   # GET /employee_daily_activities/1/edit
@@ -80,8 +80,8 @@ include QueryReport::Helper
     else
       @employees = Employee.all
     end
-    session[:active_tab] = "timemgmt"
-    session[:active_tab1] = "time_sheet"
+    session[:active_tab] = "TimeManagement"
+    session[:active_tab1] = "TimeSheet"
   end
 
   def daily_show_activity_list

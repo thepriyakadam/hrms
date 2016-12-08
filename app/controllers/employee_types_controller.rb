@@ -5,8 +5,8 @@ class EmployeeTypesController < ApplicationController
   def new
     @employee_type = EmployeeType.new
     @employee_types = EmployeeType.all
-    session[:active_tab] ="master"
-    session[:active_tab1] ="employeeprofilesetup"
+    session[:active_tab] ="GlobalSetup"
+    session[:active_tab1] ="EmployeeProfile"
   end
 
   # GET /employee_types/1/edit

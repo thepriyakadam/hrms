@@ -21,7 +21,9 @@ class ParticularLeaveRecordsController < ApplicationController
       column(:Approved_date, sortable: true) { |particular_leave_record| particular_leave_record.created_at.to_date }
       column(:Approved_Time, sortable: true) { |particular_leave_record| particular_leave_record.created_at }
       column :Revert_Leave, sortable: true, &:is_cancel_after_approve
-
+       
+      session[:active_tab] ="LeaveManagement"
+      session[:active_tab1] ="LeaveReports"
     #   chart(:pie, 'Leave') do |chart|
     #   chart.sum_with 'Taken' => :leave_date, 'Revert' => :employee_leav_request_id
     # end

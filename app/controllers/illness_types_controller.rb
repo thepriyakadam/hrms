@@ -13,6 +13,8 @@ class IllnessTypesController < ApplicationController
   def new
     @illness_type = IllnessType.new
     @illness_types = IllnessType.all
+    session[:active_tab] ="GlobalSetup"
+    session[:active_tab1] ="EmployeeProfile"
   end
 
   # GET /illness_types/1/edit

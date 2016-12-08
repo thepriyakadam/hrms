@@ -16,6 +16,9 @@ class ProfessionalTaxMastersController < ApplicationController
   def new
     @professional_tax_master = ProfessionalTaxMaster.new
     @professional_tax_masters = ProfessionalTaxMaster.all
+    session[:active_tab] ="PayrollManagement"
+    session[:active_tab1] ="PayrollSetup"
+    session[:active_tab2] ="PayrollMaster"
   end
 
   # GET /professional_tax_masters/1/edit

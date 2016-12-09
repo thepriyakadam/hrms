@@ -1,5 +1,7 @@
 class Reports::OvertimeSalaryDetailsController < ApplicationController
   def new
+    session[:active_tab] ="PayrollManagement"
+    session[:active_tab1] ="Overtime"
   end
 
 

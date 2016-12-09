@@ -149,11 +149,11 @@
       </ul>
    </li>
 
-    <li class="treeview" id="company">
+    <li class="treeview" id="InformationManagement">
     <a href="">
       <i class="fa fa-user-plus"></i> <span>Information Management</span> <i class="fa fa-angle-left pull-right"></i></a>
     <ul class="treeview-menu" >
-     <li><a href="/company_events/new"><i class="fa fa-tags"></i> Events</a></li>
+     <li id="Events"><a href="/company_events/new"><i class="fa fa-tags"></i> Events</a></li>
       <li><a href="/circulars/new"><i class="fa fa-tags"></i> Circular/Information</a></li>
       <li><a href="/company_policies/new"><i class="fa fa-tags"></i> Company Policy</a></li>
     </ul>
@@ -165,7 +165,7 @@
       <i class="fa fa-angle-left pull-right"></i>
     </a>
     <ul class="treeview-menu" >
-     <li><a href="/employees"><i class="fa fa-tags"></i> Employee </a></li>
+     <li id="Employee1"><a href="/employees"><i class="fa fa-tags"></i> Employee </a></li>
 
     <li class="treeview" id="EmployeeInduction">
         <a href="#"><i class="fa fa-edit"></i> Employee Induction <i class="fa fa-angle-left pull-right"></i></a>
@@ -380,14 +380,14 @@
         <a href="#"><i class="fa fa-edit"></i> Advance Salary <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
           <li id="Advance">
-            <a href="#"><i class="fa fa-tags"></i> Advance <i class="fa fa-angle-left pull-right"></i></a>
+            <a href="#"><i class="fa fa-edit"></i> Advance <i class="fa fa-angle-left pull-right"></i></a>
             <ul class="treeview-menu">
                <li><a href="/advance_salaries"><i class="fa fa-tags"> </i>Salary Advance </a></li>
             </ul>
           </li>
 
           <li id="Instalment">
-            <a href="#"><i class="fa fa-tags"></i> Instalment <i class="fa fa-angle-left pull-right"></i></a>
+            <a href="#"><i class="fa fa-edit"></i> Instalment <i class="fa fa-angle-left pull-right"></i></a>
             <ul class="treeview-menu">
              <li><a href="/instalments"><i class="fa fa-tags"> </i>Installment</a></li>
             </ul>
@@ -400,7 +400,7 @@
         <ul class="treeview-menu">
           <li><a href="/salaryslips/select_month_year_form"><i class="fa fa-tags"></i> Salary Process Mass</a></li>
           <li><a href="/salaryslips/revert_salary"><i class="fa fa-tags"></i> Salary Reversal</a></li>
-          <li>
+          <li id="SalarySlip">
             <a href="#"><i class="fa fa-edit"></i> Salary Slip<i class="fa fa-angle-left pull-right"></i></a>
             <ul class="treeview-menu">
                <li><a href="/salaryslips/employee_salary_list"><i class="fa fa-tags"> </i>Employee Wise </a></li>
@@ -409,7 +409,7 @@
             </ul>
           </li>
 
-          <li>
+          <li id="SalaryReport">
             <a href="#"><i class="fa fa-edit"></i> Salary Report <i class="fa fa-angle-left pull-right"></i></a>
             <ul class="treeview-menu">
              <li><a href="/reports/salaries/new"><i class="fa fa-tags"> </i>Monthly Salary </a></li>
@@ -421,14 +421,14 @@
             </ul>
           </li>
 
-           <li>
+           <li id="CTCReport">
             <a href="#"><i class="fa fa-edit"></i> CTC Report <i class="fa fa-angle-left pull-right"></i></a>
             <ul class="treeview-menu">
              <li><a href="/salaryslips/emp_contibution_salary_list"><i class="fa fa-tags"> </i>CTC Wise Slip </a></li>
             </ul>
           </li>
 
-           <li>
+           <li id="DeductionReport">
             <a href="#"><i class="fa fa-edit"></i> Deduction Report <i class="fa fa-angle-left pull-right"></i></a>
             <ul class="treeview-menu">
             <li><a href="/reports/advance_salaries/new"><i class="fa fa-tags"> </i>Advance Salary</a></li>
@@ -445,7 +445,7 @@
         </ul>
       </li>
 
-       <li>
+       <li id="IncomeTax">
         <a href="#"><i class="fa fa-edit"></i> Income Tax <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
           
@@ -455,7 +455,7 @@
         </ul>
       </li>
 
-       <li>
+       <li id="Overtime">
         <a href="#"><i class="fa fa-edit"></i> Overtime <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
           <li><a href="/overtime_daily_records"><i class="fa fa-tags"> </i> Record </a></li>
@@ -470,14 +470,14 @@
   </ul>
 </li>
 
-   <li class="treeview" id="issuetracker">
+   <li class="treeview" id="HelpDesk">
     <a href="#">
       <i class="glyphicon glyphicon-phone-alt"></i> <span>Help Desk</span>
       <i class="fa fa-angle-left pull-right"></i>
     </a>
     <ul class="treeview-menu" >
        
-       <li class="treeview" id="issueprocess1"> <a href="#"><i class="fa fa-edit"></i>Setup <i class="fa fa-angle-left pull-right"></i></a>
+       <li class="treeview" id="Setup"> <a href="#"><i class="fa fa-edit"></i>Setup <i class="fa fa-angle-left pull-right"></i></a>
        <ul class="treeview-menu">
         <li><a href="/issue_tracker_groups/new"><i class="fa fa-tags"></i>Group</a></li>
         <li><a href="/issue_tracker_members/new"><i class="fa fa-tags"></i>Member</a></li>
@@ -487,18 +487,15 @@
 
        </ul>
       </li> 
-       <li class="treeview" id="issueprocess">
+       <li class="treeview" id="Process">
         <a href="#"><i class="fa fa-edit"></i> Process  <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
         <li><a href="/issue_requests/new"><i class="fa fa-tags"></i>Support Request</a></li>
         <li><a href="/issue_requests/lock_request_list"><i class="fa fa-tags"></i>Support List</a></li>
         <li><a href="/issue_requests/solved_issues"><i class="fa fa-tags"></i>Solved Support</a></li>
-         <li><a href="/issue_requests/groupwise_report"><i class="fa fa-tags"></i>Group Wise Report</a></li>
-          <li><a href="/issue_requests/datewise_report"><i class="fa fa-tags"></i>Date Wise Report</a></li>
-          <li><a href="/issue_requests/memberwise_report"><i class="fa fa-tags"></i>Member Wise Report</a></li>
         </ul>
       </li>
-       <li class="treeview" id="issueprocess">
+       <li class="treeview" id="SupportReport">
         <a href="#"><i class="fa fa-edit"></i> Report  <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
          <li><a href="/issue_requests/groupwise_report"><i class="fa fa-tags"></i>Group Wise Report</a></li>
@@ -509,14 +506,14 @@
     </ul>
   </li>
 
-   <li class="treeview" id="issuetracker">
+   <li class="treeview" id="TravelManagement">
     <a href="#">
-      <i class="glyphicon glyphicon-phone-alt"></i> <span>Travel Management</span>
+      <i class="glyphicon glyphicon-th-large"></i> <span>Travel Management</span>
       <i class="fa fa-angle-left pull-right"></i>
     </a>
     <ul class="treeview-menu" >
        
-       <li class="treeview" id="issueprocess1"> <a href="#"><i class="fa fa-edit"></i>Travel Request Process <i class="fa fa-angle-left pull-right"></i></a>
+       <li class="treeview" id="TravelRequestProcess"> <a href="#"><i class="fa fa-edit"></i>Travel Request Process <i class="fa fa-angle-left pull-right"></i></a>
        <ul class="treeview-menu">
         <li><a href="/travel_requests"><i class="fa fa-plane"></i>Travel Request </a></li>
         <li><a href="/travel_requests/travel_history"><i class="fa fa-plane"></i> Travel Approve/Reject </a></li>
@@ -524,7 +521,7 @@
        </ul>
       </li> 
   
-       <li class="treeview" id="issueprocess">
+       <li class="treeview" id="ExpensesClaimProcess">
         <a href="#"><i class="fa fa-edit"></i> Expenses Claim Process  <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
           <li><a href="/travel_requests/daily_bill"><i class="fa fa-plane"></i> Expenses Claim </a></li>
@@ -553,9 +550,6 @@
         <li><a href="/goal_bunches/appraiser_subordinate"><i class="fa fa-tags"></i> Appraiser Evaluation </a></li>
         <li><a href="/goal_bunches/reviewer_subordinate"><i class="fa fa-tags"></i> Reviewer Evaluation  </a></li>
         <li><a href="/goal_bunches/employee_list"><i class="fa fa-tags"></i> Final Evaluation  </a></li>
-        <li><a href="/goal_ratings/period_for_training"><i class="fa fa-tags"></i>Training Assessment</a></li>
-        <li><a href="/goal_ratings/period_and_topic_wise_list"><i class="fa fa-tags"></i>Training Plan</a></li>
-        <li><a href="/goal_ratings/increment_index"><i class="fa fa-tags"></i>Revision Simulation</a></li>
         </ul>
       </li> 
 
@@ -571,14 +565,14 @@
       <li id="perform_report">
       <a href="#"><i class="fa fa-edit"></i> Reports <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
-        <li><a href="/goal_bunches/set_goal_list"><i class="fa fa-tags"></i> Employee List</a></li>
+       <!--  <li><a href="/goal_bunches/set_goal_list"><i class="fa fa-tags"></i> Employee List</a></li>
          <li><a href="/goal_bunches/emp_list_goal_wise"><i class="fa fa-tags"></i> Employee Wise Detail </a></li>
         <li><a href="/goal_ratings/subordinate_list_goal_wise"><i class="fa fa-tags"></i>Team Wise Detail</a>
         <li><a href="/goal_bunches/period_for_appraisee"><i class="fa fa-tags"></i> Appraisee Report</a></li>
         <li><a href="/goal_bunches/subordinate_list_for_appraisee"><i class="fa fa-tags"></i> Appraiser Report</a></li>
         <li><a href="/goal_bunches/subordinate_list_for_reviewer"><i class="fa fa-tags"></i> Reviewer Report</a></li>
         <li><a href="/goal_bunches/final_employee_list"><i class="fa fa-tags"></i> Final Report </a></li></li>
-        <li><a href="/goal_ratings/trainee_list"><i class="fa fa-tags"></i>Training Plan Report</a></li>
+        <li><a href="/goal_ratings/trainee_list"><i class="fa fa-tags"></i>Training Plan Report</a></li> -->
         <li><a href="/goal_ratings/employee_goal_wise"><i class="fa fa-tags"></i>Period Wise Report</a></li>
         <li><a href="/goal_ratings/employee_wise_goal"><i class="fa fa-tags"></i>Employee Wise Report</a></li>
         <li><a href="/goal_ratings/period_rating_wise"><i class="fa fa-tags"></i>Period & Rating Wise</a></li>

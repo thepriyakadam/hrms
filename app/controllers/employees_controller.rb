@@ -25,7 +25,7 @@ class EmployeesController < ApplicationController
     end
 
       session[:active_tab] ="EmployeeManagement"
-      # session[:active_tab1] ="employeeprofile"
+      session[:active_tab1] ="Employee1"
   end
   
 

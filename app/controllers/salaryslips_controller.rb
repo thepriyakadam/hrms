@@ -3,8 +3,9 @@ class SalaryslipsController < ApplicationController
   def employee_salary_list
     @employees = Employee.find_by_role(current_user)
     # authorize! :show, @employees
-    session[:active_tab] ="payroll"
-    session[:active_tab1] ="salaryreport"
+   session[:active_tab] ="PayrollManagement"
+   session[:active_tab1] ="SalaryProcess"
+   session[:active_tab2] = "SalarySlip"
   end
 
   def salary_slip_list
@@ -37,8 +38,9 @@ class SalaryslipsController < ApplicationController
   def emp_contibution_salary_list
     @employees = Employee.find_by_role(current_user)
     # authorize! :show, @employees
-    session[:active_tab] ="payroll"
-    session[:active_tab1] ="salaryreport"
+   session[:active_tab] ="PayrollManagement"
+   session[:active_tab1] ="SalaryProcess"
+   session[:active_tab2] = "CTCReport"
   end
 
   def emp_contribution_slip_list

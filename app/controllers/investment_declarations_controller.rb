@@ -17,8 +17,8 @@ class InvestmentDeclarationsController < ApplicationController
   def new
     @investment_declaration = InvestmentDeclaration.new
     @investment_declarations = InvestmentDeclaration.all
-      session[:active_tab] = "payroll"
-        session[:active_tab1] = "income_tax"
+      session[:active_tab] ="PayrollManagement"
+      session[:active_tab1] = "IncomeTax"
   end
 
   # GET /investment_declarations/1/edit

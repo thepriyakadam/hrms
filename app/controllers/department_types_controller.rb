@@ -5,8 +5,8 @@ class DepartmentTypesController < ApplicationController
   def new
     @department_type = DepartmentType.new
     @department_types = DepartmentType.all
-    session[:active_tab] ="master"
-    session[:active_tab1] ="companymaster"
+    session[:active_tab] ="GlobalSetup"
+    session[:active_tab1] ="CompanyType"
   end
 
   def edit

@@ -1,7 +1,7 @@
 class SelfServicesController < ApplicationController
   def employee
     @employees = Employee.where(id: current_user.employee_id)
-    session[:active_tab] ="selfservice"
+    session[:active_tab] ="EmployeeSelfService"
   end
 
   def employee_template
@@ -9,19 +9,18 @@ class SelfServicesController < ApplicationController
     @employee_templates = @employee.employee_templates
     @template = EmployeeTemplate.where(employee_id: @employee.id)
     @salaryslip_component = SalaryslipComponent.all
-    session[:active_tab] ="selfservice"
+    session[:active_tab] ="EmployeeSelfService"
   end
 
   def attendance
     @attendances = Attendance.where(employee_id: current_user.employee_id)
-    session[:active_tab] ="selfservice"
-
+    session[:active_tab] ="EmployeeSelfService"
   end
 
   def salaryslip
     # @employee = Employee.find(current_user.employee_id)
     @salray_slips = Salaryslip.where(employee_id: current_user.employee_id)
-    session[:active_tab] ="selfservice"
+   session[:active_tab] ="EmployeeSelfService"
   end
 
   def advance
@@ -32,16 +31,18 @@ class SelfServicesController < ApplicationController
     else
       # @instalments = @advance_salary.instalments
     end
-    session[:active_tab] ="selfservice"
+    session[:active_tab] ="EmployeeSelfService"
   end
 
   def employee_resignation
     @employee_resignation = EmployeeResignation.new
     @employee_resignations = EmployeeResignation.where(employee_id: current_user.employee_id)
+    session[:active_tab] ="EmployeeSelfService"
   end
 
   def resignation_history
     @employee_resignations = EmployeeResignation.where(employee_id: current_user.employee_id)
+    session[:active_tab] ="EmployeeSelfService"
   end
 
   def show_resignation_detail
@@ -52,13 +53,13 @@ class SelfServicesController < ApplicationController
   def employee_transfer
     @employee_transfer = EmployeeTransfer.new
     @employee_transfers = EmployeeTransfer.where(employee_id: current_user.employee_id)
-    session[:active_tab] = "selfservice"
+    session[:active_tab] ="EmployeeSelfService"
   end
 
   def travel_request
     @travel_request = TravelRequest.new
     @travel_requests = TravelRequest.where(employee_id: current_user.employee_id)
-    session[:active_tab] = "selfservice"
+    session[:active_tab] ="EmployeeSelfService"
   end
 
 

@@ -28,7 +28,7 @@ class LeaveCOffsController < ApplicationController
         @leave_c_offs = LeaveCOff.where(employee_id: @employees)
       end
     end
-    session[:active_tab] ="leavemanagement"
+     session[:active_tab] ="LeaveManagement"
     session[:active_tab1] ="leaveadministration"
   end
 
@@ -180,6 +180,8 @@ class LeaveCOffsController < ApplicationController
       column(:Expire_Date, sortable:true, &:expiry_date)
       column(:No_OF_COff, sortable:true, &:leave_count)
       column(:Location, sortable: true) { |leave_c_off| leave_c_off.employee.try(:company_location).try(:name) }
+      session[:active_tab] ="LeaveManagement"
+      session[:active_tab1] ="LeaveReports"
     end
   end
 

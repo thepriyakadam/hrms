@@ -16,8 +16,8 @@ class TravelExpenceTypesController < ApplicationController
   def new
     @travel_expence_type = TravelExpenceType.new
     @travel_expence_types = TravelExpenceType.all
-    session[:active_tab] = "master"
-    session[:active_tab1] = "travel"
+    session[:active_tab] = "GlobalSetup"
+    session[:active_tab1] = "TravelSetup"
   end
 
   # GET /travel_expence_types/1/edit

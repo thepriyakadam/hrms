@@ -1,9 +1,11 @@
 <div class="box">
   <div class="box-header">
-   <h3 class="box-title">Issue List - <%= current_user.employee.try(:first_name) %> <%= current_user.employee.try(:middle_name) %> <%= current_user.employee.try(:last_name) %> </h3>
-   <% emp = current_user.employee_id %>
-   <%issue = IssueTrackerMember.find_by(employee_id: emp)%>
-  <h6> <%= issue.role %> </h6>
+   
+
+   <strong> <font color='#0077b3' , size="4"> 
+        <% emp = current_user.employee_id %>
+       <% issue = IssueTrackerMember.find_by(employee_id: emp)%>
+       Support List of : <%= issue.issue_tracker_group.name %> Group  - Member : <%= current_user.employee.try(:first_name) %> <%= current_user.employee.try(:middle_name) %> <%= current_user.employee.try(:last_name) %> - Role : <%= issue.role %> </font></strong>
 
   </div><!-- /.box-header -->
    <%= hidden_field_tag :lock_date, :value => Time.zone.now.to_date %>
@@ -12,7 +14,7 @@
     <table id="example6" class="table table-bordered table-hover table-condensed'">
   <thead>
     <tr>
-      <th>Issue</th>
+      <th>Support</th>
       <th>Support Group</th>
       <th>Date</th>
       <th>Priority</th>
@@ -56,7 +58,7 @@
                   <% end %>
                    <% if issue_request.issue_tracker_member.try(:employee_id) == current_user.employee_id %>
                      <%= link_to '',unlock_request_issue_requests_path(issue_request),class: 'btn btn-sm btn-warning fa fa-unlock-alt',data: { confirm: 'Are you sure?' } %> |
-                     <%= link_to 'Solved',modal1_issue_requests_path(issue_request),class: 'btn btn-sm btn-success',remote: true %>
+                     <%= link_to 'Solved',modal1_issue_requests_path(issue_request),class: 'btn btn-xs btn-success',remote: true %>
 
                      <div id="myModal1" class="modal fade"></div>
                      <% else %>

@@ -16,6 +16,8 @@ class TravelModesController < ApplicationController
   def new
     @travel_mode = TravelMode.new
     @travel_modes = TravelMode.all
+    session[:active_tab] = "GlobalSetup"
+    session[:active_tab1] = "TravelSetup"
   end
 
   # GET /travel_modes/1/edit

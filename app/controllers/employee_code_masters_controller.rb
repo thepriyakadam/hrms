@@ -13,8 +13,8 @@ class EmployeeCodeMastersController < ApplicationController
   def new
     @employee_code_master = EmployeeCodeMaster.new
     @employee_code_masters = EmployeeCodeMaster.all
-    session[:active_tab] ="master"
-    session[:active_tab1] ="employeeprofilesetup"
+    session[:active_tab] ="GlobalSetup"
+    session[:active_tab1] ="EmployeeProfile"
 
   end
 

@@ -5,8 +5,9 @@ class InstalmentsController < ApplicationController
   # GET /instalments.json
   def index
     @instalments = Instalment.where.not(instalment_date: nil).group("strftime('%Y',instalment_date)")
-    session[:active_tab] ="payroll"
-    session[:active_tab1] ="montlyamount"
+    session[:active_tab] ="PayrollManagement"
+    session[:active_tab1] ="AdvanceSalary"
+    session[:active_tab2] ="Instalment"
   end
 
   # GET /instalments/1

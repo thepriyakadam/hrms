@@ -14,6 +14,8 @@ class YearsController < ApplicationController
   def new
     @year = Year.new
     @years = Year.all
+    session[:active_tab] ="GlobalSetup"
+    session[:active_tab1] ="Qualification"
   end
 
   

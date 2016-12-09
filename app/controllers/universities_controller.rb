@@ -4,8 +4,8 @@ class UniversitiesController < ApplicationController
   def new
     @university = University.new
     @universities = University.all
-    session[:active_tab] ="master"
-    session[:active_tab1] ="qualificationsetup"
+    session[:active_tab] ="GlobalSetup"
+    session[:active_tab1] ="Qualification"
   end
 
   # GET /universities/1/edit

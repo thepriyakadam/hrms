@@ -99,7 +99,7 @@ class TrainingPlansController < ApplicationController
 
   def trainee_list
      @trainees = Trainee.where(employee_id: current_user.employee_id,is_complete: true)
-     session[:active_tab] ="selfservice"
+     session[:active_tab] ="EmployeeSelfService"
   end
 
   def modal_feedback

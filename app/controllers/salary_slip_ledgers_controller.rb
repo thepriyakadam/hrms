@@ -3,6 +3,9 @@ class SalarySlipLedgersController < ApplicationController
   include QueryReport::Helper
 
   def cost_unit_wise
+   session[:active_tab] ="PayrollManagement"
+   session[:active_tab1] ="SalaryProcess"
+   session[:active_tab2] = "SalaryReport"
   end
 
   def employee_salary_ledger
@@ -12,6 +15,10 @@ class SalarySlipLedgersController < ApplicationController
   end
 
   def show_employee
+   session[:active_tab] ="PayrollManagement"
+   session[:active_tab1] ="SalaryProcess"
+   session[:active_tab2] = "SalaryReport"
+
     @pdf = "category"
     @bank = Bank.find(params[:bank_id])
     @category = params[:category]
@@ -53,10 +60,17 @@ class SalarySlipLedgersController < ApplicationController
   end
 
   def cost_unit_wise
+   session[:active_tab] ="PayrollManagement"
+   session[:active_tab1] ="SalaryProcess"
+   session[:active_tab2] = "SalaryReport"
     
   end
 
   def cost_unit_wise_salary
+   session[:active_tab] ="PayrollManagement"
+   session[:active_tab1] ="SalaryProcess"
+   session[:active_tab2] = "SalaryReport"
+
     @pdf = "cost_center"
     @bank = params[:bank_id]
     @cost_center = params[:cost_center]

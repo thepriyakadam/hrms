@@ -63,8 +63,9 @@ class PdfSalariesController < ApplicationController
 end
 
   def show_employee_costunit_wise
-    session[:active_tab] ="payroll"
-    session[:active_tab1] ="salaryreport"
+   session[:active_tab] ="PayrollManagement"
+   session[:active_tab1] ="SalaryProcess"
+   session[:active_tab2] = "SalarySlip"
       @month = params[:month]
       @year = params[:year]
       @cost_center = params[:cost_center]
@@ -93,8 +94,9 @@ end
   end
 
   def select_month_year_form
-    session[:active_tab] ="payroll"
-    session[:active_tab1] ="salaryreport"
+  session[:active_tab] ="PayrollManagement"
+  session[:active_tab1] ="SalaryProcess"
+  session[:active_tab2] = "SalarySlip"
   end
 
 end

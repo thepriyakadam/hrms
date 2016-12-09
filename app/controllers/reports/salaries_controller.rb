@@ -1,7 +1,8 @@
 class Reports::SalariesController < ApplicationController
   def new
-    session[:active_tab] ="payroll"
-    session[:active_tab1] ="salaryreport"
+   session[:active_tab] ="PayrollManagement"
+   session[:active_tab1] ="SalaryProcess"
+   session[:active_tab2] = "SalaryReport"
   end
 
   def download

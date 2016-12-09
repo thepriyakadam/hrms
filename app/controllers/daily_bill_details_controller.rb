@@ -146,7 +146,7 @@ class DailyBillDetailsController < ApplicationController
   def daily_bill_history
     @reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
     @daily_bill_details = DailyBillDetail.where(reporting_master_id: @reporting_masters,is_confirm: true)
-    session[:active_tab] ="travelmgmt" 
+    # session[:active_tab] ="travelmgmt" 
   end 
 
   def daily_bill_request_confirmation
@@ -195,7 +195,8 @@ class DailyBillDetailsController < ApplicationController
 
   def approved_daily_bill_details
     @daily_bill_details = DailyBillDetail.where(request_status: "Approved")
-    session[:active_tab] ="travelmgmt"
+   session[:active_tab] = "TravelManagement"
+    session[:active_tab1] = "ExpensesClaimProcess"  
   end
 
   def download_doc
@@ -223,8 +224,8 @@ class DailyBillDetailsController < ApplicationController
      # @travel_request_histories = TravelRequestHistory.where(daily_bill_status: "true",reporting_master_id: reporting_masters)
 
      # @travel_request_histories = TravelRequestHistory.where(daily_bill_status: "true",reporting_master_id: reporting_masters)
-     session[:active_tab] ="travelmgmt"
-
+    session[:active_tab] = "TravelManagement"
+    session[:active_tab1] = "ExpensesClaimProcess"  
   end
 
   def travel_request_history_list

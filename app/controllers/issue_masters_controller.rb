@@ -16,8 +16,8 @@ class IssueMastersController < ApplicationController
   def new
     @issue_master = IssueMaster.new
     @issue_masters = IssueMaster.all
-    session[:active_tab] = "issuetracker"
-    session[:active_tab1] = "issueprocess1"
+    session[:active_tab] ="HelpDesk"
+    session[:active_tab1] ="Setup"
   end
 
   # GET /issue_masters/1/edit

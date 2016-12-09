@@ -1,0 +1,31 @@
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>  
+      <th>Code</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Is Active</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @shift_masters.each do |shift_master| %>
+      <tr>
+        <td><%= shift_master.code %></td>
+        <td><%= shift_master.name %></td>
+        <td><%= shift_master.description %></td>
+        <td><%= shift_master.is_active ? "Yes" : "No" %></td>
+        <td>
+          <% if shift_master.is_confirm == true %>
+            <small class= "label label-primary">Confirmed</small>
+          <% else %>
+            <%= link_to '', edit_shift_master_path(shift_master),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
+            <%= link_to '',  shift_master, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
+            <%= link_to '', is_confirm_shift_masters_path(shift_master: shift_master),data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-info fa fa-check' %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+

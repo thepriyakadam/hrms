@@ -127,6 +127,7 @@ div.nobreak{ page-break-inside: avoid;
           <th>Target/Unit</th>
           <th>Aligned</th>
           <th>Self Comment</th>
+          <th>Self Rating</th>
         </tr>
       </thead>
       <tbody>
@@ -138,6 +139,7 @@ div.nobreak{ page-break-inside: avoid;
             <td><%= goal_rating.target %></td>
             <td><%= goal_rating.aligned %></td>
             <td><%= goal_rating.appraisee_comment %></td>
+            <td><%= goal_rating.appraisee_rating_id %></td>
           </tr>
         <% end %>
       </tbody>
@@ -151,6 +153,7 @@ div.nobreak{ page-break-inside: avoid;
           <th>Target/Unit</th>
           <th>Aligned</th>
           <th>Self Comment</th>
+          <th>Self Rating</th>
         </tr>
       </thead>
       <tbody>
@@ -162,6 +165,7 @@ div.nobreak{ page-break-inside: avoid;
             <td><%= goal_rating.target %></td>
             <td><%= goal_rating.aligned %></td>
             <td><%= goal_rating.appraisee_comment %></td>
+            <td><%= goal_rating.appraisee_rating_id %></td>
           </tr>
         <% end %>
       </tbody>
@@ -176,6 +180,9 @@ div.nobreak{ page-break-inside: avoid;
           <tr>
             <th>Self Comment</th>
             <td><%= goal_bunch.appraisee_comment %></td>
+
+             <th>Self Rating</th>
+            <td><%= goal_bunch.appraisee_rating_id %></td>
           </tr>
         <% end %>
       </tbody>

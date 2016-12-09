@@ -76,6 +76,24 @@ class CertificationsController < ApplicationController
     end
   end
 
+
+  def import_xl
+    @certifications = Certification.all
+    respond_to do |format|
+    format.html
+    format.csv { send_data @certifications.to_csv }
+    format.xls
+     session[:active_tab] = "import"
+   end   
+  end
+
+  def import
+    # byebug
+    Certification.import(params[:file])
+    redirect_to root_url, notice: "File imported."
+  end
+
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

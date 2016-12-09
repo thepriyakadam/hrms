@@ -5,6 +5,7 @@
     </div>
   </div><!-- /.box-header -->
   <div class="box-body">
+  <%= bootstrap_form_for(:issue_request,url: { action: 'memberwise_report_list'},html: {id: 'issue_request'},remote: true) do |f| %>
     <div class="row">
       <div class="col-sm-3">
       <label>Date</label>
@@ -13,16 +14,15 @@
             <div class="input-group-addon">
               <i class="fa fa-calendar"></i>
             </div>
-            <%= text_field :id,:date,placeholder: "Date",class: 'form-control request_date'%>
+            <%= text_field :issue_request,:date,placeholder: "Date",class: 'form-control request_date'%>
           </div>
          </div>
       </div>
       <div class="col-sm-3">
       <label>Group</label>
         <div class="field">
-          <%= select :id, :issue_tracker_group_id, all_issue_tracker_group,{include_blank: 'select Group'},{onchange:"var a={group_id:$(this).val(), datea:$('#id_date').val()}; $.get('/issue_tracker_members/collect_memberwise_dropdown',a,function(response){});",class: 'form-control'}%>
+          <%= select :issue_request, :issue_tracker_group_id, all_issue_tracker_group,{include_blank: 'select Group'},{onchange:"var a={group_id:$(this).val(), date:$('#issue_request_date').val()}; $.get('/issue_tracker_members/collect_memberwise_dropdown',a,function(response){});",class: 'form-control'}%>
         </div>
-
       </div>
       <div class="col-sm-3">
         <div class="form-group required">
@@ -31,10 +31,18 @@
            </div> 
         </div>
       </div>
+    
+    <div class="col-sm-3">
+    <label></label>
+          <div class="actions">
+            <%= f.submit "Display", class: "btn btn-sm btn-warning" %>
+          </div>
     </div>
-      <div id="memberwise_li"></div>
+    </div>
+      <div id="memberwise_list"></div>
   </div>
 </div>
+<%end%>
 
 <script type="text/javascript">
   $(function(){

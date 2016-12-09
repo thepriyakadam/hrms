@@ -1,21 +1,21 @@
 
    
-      <table id="example1" class="table table-bordered table-hover table-condensed">
+      <table id="example6" class="table table-bordered table-hover table-condensed">
         <thead>
           <tr>
             <th>ID</th>
             <th>A</th>
             <th>P</th>
             <th>W</th>
+            <th>H</th>
             <th>EL</th>
             <th>CL</th>
-            <th>LWP</th>
-            <th>ESIC</th>
             <th>C.Off</th>
             <th>AL</th>
             <th>OD</th>
             <th>GP</th>
-            <th>GPWP</th>
+            <th>LWP</th>
+            <th>ESIC</th>
             <th>Total</th>
           </tr>
         </thead>
@@ -27,16 +27,16 @@
               <% abs = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "A") %>
               <% pre = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id,"P") %>
               <% wd = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "W") %>
+              <% h = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "H") %>
               <% el = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "EL") %>
               <% cl = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "CL") %>
-              <% lwp = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "LWP") %>
-              <% esic = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "ESIC") %>
               <% coff = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "C.Off") %>
               <% al = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "AL") %>
               <% od = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "OD") %>
-              <% gp = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "GP") %>
-              <% gpwp = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "GPWP") %>
-              <% phalf = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "P/1/2") %>
+              <% gp = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "G") %>
+              <% lwp = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "LWP") %>
+              <% esic = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "ESIC") %>
+              <% phalf = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "P/2") %>
               <% pcl = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "P/CL") %>
               <% pel = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "P/EL") %>
               <% pal = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "P/AL") %>
@@ -54,6 +54,7 @@
                 <%= ap %>
               </td>
               <td><%= wd.count %></td>
+              <td><%= h.count %></td>
               <td>
                 <% ael = el.count + (pel.count)/2.to_f %>
                 <%= ael %>
@@ -61,14 +62,6 @@
               <td>
                 <% acl = cl.count + (pcl.count)/2.to_f %>
                 <%= acl %>
-              </td>
-              <td>
-                <% alwp= lwp.count + (plwp.count)/2.to_f %>
-                <%= alwp %>
-              </td>
-              <td>
-                <% aesic = esic.count + (pesic.count)/2.to_f %>
-                <%= aesic %>
               </td>
               <td>
                 <% acoff = coff.count + (pcoff.count)/2.to_f %>
@@ -83,8 +76,15 @@
                 <%= aod %>
               </td>
               <td><%= gp.count %></td>
-              <td><%= gpwp.count %></td>
-              <td><%= ab + ap + wd.count + ael + acl + alwp + aesic + acoff + aal + aod +  gp.count + gpwp.count %></td>
+              <td>
+                <% alwp= lwp.count + (plwp.count)/2.to_f %>
+                <%= alwp %>
+              </td>
+              <td>
+                <% aesic = esic.count + (pesic.count)/2.to_f %>
+                <%= aesic %>
+              </td>
+              <td><%= ab + ap + wd.count + h.count + ael + acl + alwp + aesic + acoff + aal + aod +  gp.count %></td>
             </tr> 
           <%end%>
         </tbody>
@@ -96,11 +96,11 @@
   <!-- </div>
 </div> -->
 
+
 <script type="text/javascript">
 $(document).ready(function() {
-    $('#example5').DataTable( {
-        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]],
-        "scrollX": true
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
     } );
 } );
 </script>

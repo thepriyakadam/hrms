@@ -1,0 +1,1 @@
+json.array! @leave_cash_masters, partial: 'leave_cash_masters/leave_cash_master', as: :leave_cash_master

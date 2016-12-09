@@ -43,19 +43,21 @@
         </ul>
       </li>
 
-      <li id="payrollcomponents">
+     <li id="payrollcomponents">
         <a href="#"><i class="fa fa-edit"></i> Payroll Masters <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
           <li><a href="/esic_masters/new"><i class="fa fa-tags"></i> ESIC Employee</a></li>
-          <li><a href="/esic_employer_masters/new"><i class="fa fa-tags"></i> Esic Employeer </a></li>
+          <li><a href="/esic_employers/new"><i class="fa fa-tags"></i> Esic Employeer </a></li>
           <li><a href="/pf_masters/new"><i class="fa fa-tags"></i> PF Employee</a></li>
-          <li><a href="/fp_masters/new"><i class="fa fa-tags"></i> PF Employeer </a></li>
+          <li><a href="/pf_employers/new"><i class="fa fa-tags"></i> PF Employeer </a></li>
           <li><a href="/overtime_masters/new"><i class="fa fa-tags"></i> Overtime  </a></li>
           <li><a href="/well_faires/new"><i class="fa fa-tags"></i> Welfare Scheme</a></li>
-          <li><a href="/bonus_masters/new"><i class="fa fa-tags"></i> Bonus Master </a></li>
+          <li><a href="/bonus_employers/new"><i class="fa fa-tags"></i> Bonus Master </a></li>
           <li><a href="/retention_moneys/new"><i class="fa fa-tags"></i> Retention Money </a></li>
-          <li><a href="/da_masters/new"><i class="fa fa-tags"></i> Da Master </a></li>
-          <li><a href="/insurance_masters/new"><i class="fa fa-tags"></i> Insurance </a></li>
+          <li><a href="/professional_tax_masters/new"><i class="fa fa-tags"></i> Professional Tax Master </a></li>
+          <li><a href="/dearness_allowances/new"><i class="fa fa-tags"></i> Dearness Allowance </a></li>
+          <li><a href="/employer_insurances/new"><i class="fa fa-tags"></i> Employer Insurance </a></li>
+          <li><a href="/employer_family_pensions/new"><i class="fa fa-tags"></i> Employer Family Pension </a></li>
         </ul>
       </li>
 
@@ -261,19 +263,19 @@
        <ul class="treeview-menu">
        <li><a href="/issue_tracker_groups/new"><i class="fa fa-tags"></i>Group</a></li>
         <li><a href="/issue_tracker_members/new"><i class="fa fa-tags"></i>Member</a></li>
-         
+         <li><a href="/issue_types/new"><i class="fa fa-tags"></i>Support Type</a></li>
+        <li><a href="/issue_masters/new"><i class="fa fa-tags"></i>Support Master</a></li>
+        <li><a href="/issue_root_causes/new"><i class="fa fa-tags"></i>Support Root Cause</a></li>
        
        </ul>
       </li> 
        <li class="treeview" id="issueprocess">
-        <a href="#"><i class="fa fa-edit"></i> Issue Process  <i class="fa fa-angle-left pull-right"></i></a>
+        <a href="#"><i class="fa fa-edit"></i> Support Process  <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
-        <li><a href="/issue_types/new"><i class="fa fa-tags"></i>Issue Type</a></li>
-        <li><a href="/issue_masters/new"><i class="fa fa-tags"></i>Issue Master</a></li>
-        <li><a href="/issue_root_causes/new"><i class="fa fa-tags"></i>Issue Root Cause</a></li>
-        <li><a href="/issue_requests/new"><i class="fa fa-tags"></i>Issue Request</a></li>
-        <li><a href="/issue_requests/lock_request_list"><i class="fa fa-tags"></i>Issue List</a></li>
-        <li><a href="/issue_requests/solved_issues"><i class="fa fa-tags"></i>Solved Issues</a></li>
+        
+        <li><a href="/issue_requests/new"><i class="fa fa-tags"></i>Support Request</a></li>
+        <li><a href="/issue_requests/lock_request_list"><i class="fa fa-tags"></i>Support List</a></li>
+        <li><a href="/issue_requests/solved_issues"><i class="fa fa-tags"></i>Solved Support</a></li>
         <li><a href="/issue_requests/groupwise_report"><i class="fa fa-tags"></i>Group Wise Report</a></li>
         <li><a href="/issue_requests/datewise_report"><i class="fa fa-tags"></i>Date Wise Report</a></li>
         </ul>
@@ -357,17 +359,57 @@
   </li>
  
   <li class="treeview" id="timemgmt">
-    <a href="">
-      <i class="ionicons ion-ios-time"></i><span> Time Management </span> <i class="fa fa-angle-left pull-right"></i>
+    <a href="#">
+      <i class="glyphicon glyphicon-th-large"></i> <span>Time Management</span>
+      <i class="fa fa-angle-left pull-right"></i>
     </a>
-    <ul class="treeview-menu">
-      <li><a href="/holidays/new"><i class="fa fa-tags"></i> Holiday Setup </a></li>
+    <ul class="treeview-menu" >
+     <li><a href="/holidays/new"><i class="fa fa-tags"></i> Holiday Setup </a></li>
+     <li><a href="/week_off_masters/new"><i class="fa fa-tags"></i> Week Off Setup </a></li>
+
+      <li class="treeview" id="attendance">
+      <a href="#">
+        <i class="fa fa-edit"></i>Attendance <i class="fa fa-angle-left pull-right"></i>
+      </a>
+      <ul class="treeview-menu">
+
+     <li><a href="/company_time_masters/new"><i class="fa fa-tags"> </i>Company Time Master</a></li>
+      <li><a href="/machine_attendances/new"><i class="fa fa-tags"> </i>Machine Attendances</a></li>
+      <li><a href="/shift_masters/new"><i class="fa fa-tags"> </i>Shift Master</a></li>
+      </ul>
+      </li> 
+
+
+     <li class="treeview" id="attendance">
+      <a href="#">
+        <i class="fa fa-edit"></i>Attendance <i class="fa fa-angle-left pull-right"></i>
+      </a>
+      <ul class="treeview-menu">
+       <li><a href="/employee_attendances/new"><i class="fa fa-tags"></i> Add Attendance</a></li> 
+       <li><a href="/employee_attendances/emp_attendance"><i class="fa fa-tags"></i> Attendance  </a></li>
+       <li><a href="/employee_attendances/costcenter_wise_attendance"><i class="fa fa-tags"></i> Show Cost Center Wise </a></li>
+       <li><a href="/employee_attendances/revert_attendance_employeewise"><i class="fa fa-tags"></i> Revert Employee Wise </a></li>
+       <li><a href="/employee_attendances/revert_attendance"><i class="fa fa-tags"></i> Revert Cost Center Wise </a></li>
+       <li><a href="/employee_attendances/calculate_attendance"><i class="fa fa-tags"></i> Attendance Setup</a></li>
+       <li><a href="/employee_attendances"><i class="fa fa-tags"></i> Confirm Attendance  </a></li>
+       <li><a href="/workingdays"><i class="fa fa-tags"> </i>Monthly Working Day</a></li>
+     <!-- <li><a href="/workingdays/search_month_year"><i class="fa fa-tags"> </i>Attendace Update(Auto) </a></li> -->
+     <!--  <li><a href="/holidays/new"><i class="fa fa-tags"></i> Holiday Setup </a></li>
       <li><a href="/company_shifts/new"><i class="fa fa-tags"></i> Shifts Maintenance </a></li>
       <li><a href="/shift_rotations/new"><i class="fa fa-tags"></i> Shift Rotation </a></li>
       <li><a href="/employee_shifts"><i class="fa fa-tags"></i> Employee Shift Assignment </a></li>
-      <li><a href="/attendances"><i class="fa fa-tags"></i> Employee Attendance </a></li>
+      <li><a href="/attendances"><i class="fa fa-tags"></i> Employee Attendance </a></li> -->
     </ul>
-   </li>
+      </li> 
+        <li id="time_sheet">
+        <a href="#"><i class="fa fa-edit"></i> Time Sheet <i class="fa fa-angle-left pull-right"></i></a>
+        <ul class="treeview-menu" >
+        <li><a href="/employee_daily_activities/new"><i class="fa fa-tags"></i>Daily Activity</a></li>
+        <li><a href="/employee_daily_activities/employee_details"><i class="fa fa-tags"></i>Employee Details</a></li>
+        </ul>
+        </li> 
+    </ul>
+  </li>
 
     <li class="treeview">
     <a href="">

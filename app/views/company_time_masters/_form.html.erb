@@ -1,0 +1,136 @@
+<%= bootstrap_form_for(@company_time_master,html: {id: 'company_time_master'},remote:true) do |f| %>
+  <div class="row">
+   <div class="col-sm-3">
+    <%= f.select :shift_master_id,all_shift_type,{include_blank: " Select Shift",label: "Shift"}, class: "form-control" %>
+    </div>
+     <div class="col-sm-3">
+      <div class="bootstrap-timepicker">
+        <div class="form-group">
+          <label>In Min Time</label>
+          <div class="input-group">
+            <%= f.text_field :in_min_time,hide_label: true, placeholder: 'Time',class: 'form-control timepicker' %>
+            <div class="input-group-addon">
+              <i class="fa fa-clock-o"></i>
+            </div>
+          </div><!-- /.input group -->
+        </div><!-- /.form group -->
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="bootstrap-timepicker">
+        <div class="form-group">
+          <label>In Max Time</label>
+          <div class="input-group">
+            <%= f.text_field :in_max_time,hide_label: true, placeholder: 'Time',class: 'form-control timepicker' %>
+            <div class="input-group-addon">
+              <i class="fa fa-clock-o"></i>
+            </div>
+          </div><!-- /.input group -->
+        </div><!-- /.form group -->
+      </div>
+    </div>
+     <div class="col-sm-3">
+      <div class="bootstrap-timepicker">
+        <div class="form-group">
+          <label>In Time</label>
+          <div class="input-group">
+            <%= f.text_field :in_time,hide_label: true, placeholder: 'Time',class: 'form-control timepicker' %>
+            <div class="input-group-addon">
+              <i class="fa fa-clock-o"></i>
+            </div>
+          </div><!-- /.input group -->
+        </div><!-- /.form group -->
+      </div>
+    </div>
+    </div>
+
+    <div class="row">
+     <div class="col-sm-3">
+      <div class="bootstrap-timepicker">
+        <div class="form-group">
+          <label>Out Min Time</label>
+          <div class="input-group">
+            <%= f.text_field :out_min_time,hide_label: true, placeholder: 'Time',class: 'form-control timepicker' %>
+            <div class="input-group-addon">
+              <i class="fa fa-clock-o"></i>
+            </div>
+          </div><!-- /.input group -->
+        </div><!-- /.form group -->
+      </div>
+    </div>
+     <div class="col-sm-3">
+      <div class="bootstrap-timepicker">
+        <div class="form-group">
+          <label>Out Max Time</label>
+          <div class="input-group">
+            <%= f.text_field :out_max_time,hide_label: true, placeholder: 'Time',class: 'form-control timepicker' %>
+            <div class="input-group-addon">
+              <i class="fa fa-clock-o"></i>
+            </div>
+          </div><!-- /.input group -->
+        </div><!-- /.form group -->
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="bootstrap-timepicker">
+        <div class="form-group">
+          <label>Out Time</label>
+          <div class="input-group">
+            <%= f.text_field :out_time,hide_label: true, placeholder: 'Time',class: 'form-control timepicker' %>
+            <div class="input-group-addon">
+              <i class="fa fa-clock-o"></i>
+            </div>
+          </div><!-- /.input group -->
+        </div><!-- /.form group -->
+      </div>
+    </div>
+     <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :working_hrs,class: 'form-control',label: "Working Hrs" %>
+      </div>
+    </div>
+    </div>
+
+    <div class="row">
+     <div class="col-sm-3">
+      <label>Status </label>
+      <div class="field">
+        <%= f.check_box :is_active, label: 'Active'%>
+      </div>
+    </div><br>
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "Create Company Time" ,class: 'btn btn-sm btn-primary' %>
+      </div>
+    </div>
+    </div><br>
+   <% end %>
+<script>
+$(function () {
+//Timepicker
+  $(".timepicker").timepicker({
+    showInputs: false
+  });
+  
+});
+</script>
+
+<script>
+$("#company_time_master").validate({
+    rules: {
+      "company_time_master[shift_master_id]":{
+        required: true,
+      }
+    },
+    messages: {
+      "company_time_master[shift_master_id]":{
+        required: "Please Select Shift",
+      }
+      
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

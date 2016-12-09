@@ -45,11 +45,11 @@ module EmployeeAttendancesHelper
   end
 
   def present_day_count(exist)
-    exist.select {|k,v| v == "P" }.count + (exist.select {|k,v| v == "P/1/2" }.count)/2.to_f
+    exist.select {|k,v| v == "P" }.count + (exist.select {|k,v| v == "P/2" }.count)/2.to_f + (exist.select {|k,v| v == "G" }.count).to_f
   end
 
   def holiday_in_month_count(exist)
-    exist.select {|k,v| v == "HD" }.count
+    exist.select {|k,v| v == "H" }.count
   end
 
   def week_off_day_count(exist)
@@ -57,7 +57,7 @@ module EmployeeAttendancesHelper
   end
 
   def absent_day_count(exist)
-    exist.select {|k,v| v == "A" || v == "" }.count + (exist.select {|k,v| v == "P/1/2" }.count)/2.to_f
+    exist.select {|k,v| v == "A" || v == "" }.count + (exist.select {|k,v| v == "P/2" }.count)/2.to_f
   end
 
   # def payable_day_count(exist)

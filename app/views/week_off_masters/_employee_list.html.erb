@@ -1,0 +1,69 @@
+<div class="box box-default">
+  <div class="box-body">
+    <%= bootstrap_form_for :week_off_masters,url: { action: 'create_week_off'} do |f| %>
+
+      <table id="example1" class="table table-bordered table-hover table-condensed">
+        <thead>
+          <tr>
+            <th><input type="checkbox" id="selectAll" value="selectAll"></th>
+            <th>ID</th>
+            <th>Employee Name</th>
+            <th>Department</th>
+            <th>Designation</th>
+            <th>Cost Center</th>
+            <th>Contact No.</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @employees.where(status: "Active").each do |e| %>
+            <tr>              
+              <td><%= check_box_tag "employee_ids[]",e.id %></td>
+              <td><%= e.manual_employee_code %></td>
+              <td><%= e.first_name %> <%= e.middle_name %> <%= e.last_name %></td>
+              <td><%= e.try(:company_location).try(:name)%> - <%= e.try(:department).try(:name)%></td>
+              <td><%= e.try(:joining_detail).try(:employee_designation).try(:name) %></td>
+              <td><%= e.try(:joining_detail).try(:cost_center).try(:name) %></td>
+              <td><%= e.contact_no %></td>
+
+              <%= f.hidden_field :day, value: @day %>
+              <%= f.hidden_field :from, value: @from %>
+              <%= f.hidden_field :to, value: @to %>
+              <%= f.hidden_field :is_active, value: @is_active %>
+              <%= f.hidden_field :is_prefix, value: @is_prefix %>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="actions">
+            <%= f.submit "Create Week Off" ,class: 'btn btn-primary btn-sm' %>
+          </div>
+        </div>
+      </div>
+      <br>
+    </div>
+  </div>
+  <% end %>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example1').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>
+<script type="text/javascript">
+  $('#selectAll').click(function() {
+    if (this.checked) {
+      $(':checkbox').each(function() {
+        this.checked = true;
+      });
+    }
+    else {
+      $(':checkbox').each(function() {
+        this.checked = false;
+      });
+    }
+  });
+</script>

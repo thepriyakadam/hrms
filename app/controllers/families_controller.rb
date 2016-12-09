@@ -71,6 +71,22 @@ class FamiliesController < ApplicationController
     end
   end
 
+   def import_xl
+    @families = Family.all
+    respond_to do |format|
+    format.html
+    format.csv { send_data @families.to_csv }
+    format.xls
+     session[:active_tab] = "import"
+   end   
+  end
+
+  def import
+    # byebug
+    Family.import(params[:file])
+    redirect_to root_url, notice: "File imported."
+  end
+
   def ajax_show_handicap_type_textbox
     @value = params[:id]
   end

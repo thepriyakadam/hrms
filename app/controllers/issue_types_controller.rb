@@ -6,8 +6,8 @@ class IssueTypesController < ApplicationController
   def new
     @issue_type = IssueType.new
     @issue_types = IssueType.all
-    # session[:active_tab] = "issuetracker"
-    # session[:active_tab1] = "issueprocess"
+    session[:active_tab] = "issuetracker"
+    session[:active_tab1] = "issueprocess1"
   end
 
   # GET /issue_types/1/edit
@@ -21,14 +21,18 @@ class IssueTypesController < ApplicationController
     @issue_types = IssueType.all
     @issue_type.save
     @issue_type = IssueType.new
+    redirect_to new_issue_type_path
+    flash[:notice] = "Saved Successfully"
   end
 
   # PATCH/PUT /issue_types/1
   # PATCH/PUT /issue_types/1.json
   def update
     @issue_type.update(issue_type_params)
-    @issue_type = IssueType.new
     @issue_types = IssueType.all
+    @issue_type = IssueType.new 
+    redirect_to new_issue_type_path
+    flash[:notice] = "Updated Successfully"
        
   end
 

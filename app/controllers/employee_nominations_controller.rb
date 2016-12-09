@@ -81,6 +81,23 @@ class EmployeeNominationsController < ApplicationController
     end
   end
 
+  def import_xl
+    @employee_nominations = EmployeeNomination.all
+    respond_to do |format|
+    format.html
+    format.csv { send_data @employee_nominations.to_csv }
+    format.xls
+    session[:active_tab] = "import"
+   end   
+  end
+
+  def import
+    # byebug
+    EmployeeNomination.import(params[:file])
+    redirect_to root_url, notice: "File imported."
+  end
+
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_employee_nomination

@@ -1,4 +1,4 @@
-<%= bootstrap_form_for(@retention_money) do |f| %>
+<%= bootstrap_form_for(@retention_money,html: {id: 'retention_money'}) do |f| %>
   <div class="row">
      <div class="col-sm-3">
         <div class="form-group required">
@@ -15,3 +15,24 @@
     </div>
   </div>
 <% end %><br>
+
+
+<script>
+$("#retention_money").validate({
+    rules: {
+      "retention_money[have_retention]":{
+        required: true,
+      },
+       },
+    messages: {
+      "retention_money[have_retention]":{
+        required: "Please Select Percentage",
+      },
+       },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>
+

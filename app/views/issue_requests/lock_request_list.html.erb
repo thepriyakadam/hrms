@@ -6,18 +6,16 @@
        <h3 class="box-title">Support List - <%= current_user.employee.try(:first_name) %> <%= current_user.employee.try(:middle_name) %> <%= current_user.employee.try(:last_name) %> </h3>
        <% emp = current_user.employee_id %>
        <% issue = IssueTrackerMember.find_by(employee_id: emp)%>
-       <h4> <%= issue.role %></h4>
+       <h6> <%= issue.role %></h6>
 
-    </div><!-- /.box-header -->
+    </div>
     <div class="box-body">
-        <table id="example1" class="table table-bordered table-hover table-condensed'">
+        <table id="example6" class="table table-bordered table-hover table-condensed'">
           <thead>
             <tr>
-              
               <th>Support</th>
-              <th>Group</th>
+              <th>Support Group</th>
               <th>Date</th>
-              <th>Time</th>
               <th>Priority</th>
               <th>Document</th>
               <th>Image</th>
@@ -33,7 +31,6 @@
                     <td><%= issue_request.issue_master.try(:name) %></td>
                     <td><%= issue_request.issue_tracker_group.try(:name) %></td>
                     <td><%= issue_request.date %></td>
-                    <td><%= issue_request.time %></td>
                     <td><%= issue_request.issue_priority %></td>
                     <td>
                 <% if issue_request.document1_file_name == nil %>
@@ -83,3 +80,11 @@
    <%= render 'coordinator' %>
 <%end%>
 <%end%>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

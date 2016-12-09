@@ -1,31 +1,29 @@
 <%= bootstrap_form_for(@retention_money) do |f| %>
-  <div class="row">
-    <div class="col-sm-2">
-      <div class="form-group required">
-        <%= f.text_field :max_limit, placeholder: 'Max Amount' %>
-      </div>
-    </div>
-    <div class="col-sm-2">
-      <div class="field">
-        <%=select_tag("components[]",options_for_select(SalaryComponent.all.collect {|ff| [ff.name, ff.id] }),{:multiple=>true,:id => "batches",class: "form-control"})%>
-      </div>
-    </div>
-    <div class="col-sm-3">
-      <div class="field">
-        <%= f.text_field :persent, placeholder: 'Percentage',label: "Percent" %>
-      </div>
-    </div>
-    <div class="col-sm-3">
-      <div class="field">
-        <%= f.text_field :no_of_month, placeholder: 'No Of Month' %>
-      </div>
-    </div>
-    <div class="col-sm-2">
-      <div class="field">
-        <%= f.check_box :is_active, label: 'Active'%>
-      </div>
+<div class="row">
+  <div class="col-sm-2">
+    <div class="form-group required">
+      <%= f.text_field :max_limit, placeholder: 'Max Amount' %>
     </div>
   </div>
-
-  <!-- <= hidden_field_tag :flag, "Yes" %> -->
+  <div class="col-sm-2">
+    <div class="field">
+      <%=select_tag("components[]",options_for_select(SalaryComponent.where(is_base: true).collect {|ff| [ff.name, ff.id] }),{:multiple=>true,:id => "batches",class: "form-control"})%>
+    </div>
+  </div>
+  <div class="col-sm-3">
+    <div class="field">
+      <%= f.text_field :persent, placeholder: 'Percentage',label: "Percent" %>
+    </div>
+  </div>
+  <div class="col-sm-3">
+    <div class="field">
+      <%= f.text_field :no_of_month, placeholder: 'No Of Month' %>
+    </div>
+  </div>
+  <div class="col-sm-2">
+    <div class="field">
+      <%= f.check_box :is_active, label: 'Active'%>
+    </div>
+  </div>
+</div>
 <% end %>

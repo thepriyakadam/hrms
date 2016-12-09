@@ -1,5 +1,55 @@
 Rails.application.routes.draw do
+  
+  resources :shift_masters do
+    collection do
+      get :is_confirm
+    end
+  end
+  resources :payroll_overtime_masters do
+    collection do
+      get :is_confirm
+      end
+  end
+  resources :leave_cash_masters do
+    collection do
+      get :is_confirm
+      end
+  end
 
+  resources :leave_cashables do
+    collection do
+      get :collect_amount
+    end
+  end
+  resources :week_off_masters do 
+    collection do
+      post :assign_week_off
+      post :employee_list
+      post :create_week_off
+      get :week_off_list
+      get :edit_modal
+      post :update_week_off
+    end
+  end
+  resources :machine_attendances do
+    collection do
+      get :new
+      post :create
+      post :save_machine_attendance
+      post :save_machine_attendance_checkbox
+      get :import_machine_attendance
+      post :import
+      get :modal
+      post :edit_machine_attendance
+    end
+  end
+  resources :company_time_masters do
+    collection do
+      get :is_confirm
+      get :edit
+      get :update
+    end
+  end
   resources :pf_employers do
     collection do
       get :is_confirm
@@ -97,13 +147,16 @@ Rails.application.routes.draw do
       get :id_wise_report_xls
       get :id_wise_report_pdf
       get :memberwise_report
-      get :memberwise_report_list
+      post :memberwise_report_list
+      get :memberwise_report_list_xls
+      get :memberwise_report_list_pdf
       
     end
    end
   resources :issue_masters do
     collection do
       get :collect_issues
+       get :is_confirm
     end
   end
   resources :issue_types do
@@ -115,12 +168,14 @@ Rails.application.routes.draw do
    
   resources :issue_tracker_members do
     collection do
+      get :is_confirm
        get :collect_issues
        get :collect_memberwise_dropdown
     end
    end
   resources :issue_tracker_groups do
     collection do
+      get :is_confirm
 
   end
 end
@@ -163,6 +218,7 @@ end
       get :due_employee_detail_list
       get :due_action_list
       get :emp_resignation
+      get :modal
     end
   end
 
@@ -300,10 +356,8 @@ end
       get :monthly_attendance
       get :costcenter_wise_attendance
       get :show_costcenter_wise_attendance
-      get :employee_slip
-      get :employee_slip_xls
       post :display_attendance
-      get :display_attendance_1
+      # get :display_attendance_1
       get :revert_attendance_employeewise
       post :show_employee_list
       post :destroy_attendance_employeewise
@@ -315,8 +369,10 @@ end
       get :attendance_total_xls
       get :emp_attendance
       get :display_attendance_2
-      get :employee_slip_xls_1
-      get :employee_slip_pdf
+      get :costcenter_wise_excel1
+      get :costcenter_wise_pdf
+      get :employee_attendance_excel_report
+      get :employee_attendance_pdf_report
       get :attendance_total_pdf
       get :emp_attendance_1
       post :attendance_report
@@ -324,6 +380,7 @@ end
       post :confirm_attendance
       post :create_attendance_1
       get :emp_attendance_1_list
+      post :display_attendance_1
     end
   end
   resources :salary_comp_mappings
@@ -411,6 +468,20 @@ end
       post :all_employee_list
       post :print_employee_list
       get :is_confirm
+      get :new_form
+      post :create_for_multiple
+      get :employee_goal_wise
+      post :print_employee
+      post :detail_goal_wise
+      get :employee_wise_goal
+      post :goal_employee_wise
+      post :detail_employee_wise
+      get :print_employee_wise
+      get :print_goal_wise
+      get :detail_goal_wise_xls
+      get :detail_employee_wise_xls
+      get :period_rating_wise
+      post :Period_rating_wise_employee
     end
   end
   #post 'goal_ratings/update_goal_set_modal'
@@ -476,7 +547,8 @@ end
       get :appraisee_detail_for_print
       get :appraiser_detail_for_print
       get :reviewer_detail_for_print
-     
+      get :period_for_multiple
+      post :create_multiple_bunch
     end
   end
   resources :goal_perspectives do
@@ -666,6 +738,8 @@ end
     post :update_asset
     get :modal
     get :update_asset
+    get :import_xl
+    post :import
     end
   end
   resources :asset_types do
@@ -673,7 +747,12 @@ end
       get :is_confirm
     end
   end
-  resources :employee_nominations
+  resources :employee_nominations do
+    collection do
+      get :import_xl
+      post :import
+    end
+  end
   resources :nomination_masters do
     collection do
       get :is_confirm
@@ -791,6 +870,7 @@ end
     get 'bank_details/new'
     post 'bank_details/bank_detail_report'
 
+
     get 'joining_details/new'
     post 'joining_details/joining_detail_report'
     get 'joining_details/collect_departments'
@@ -898,7 +978,7 @@ end
   resources :leave_c_offs do
     collection do
       get :search_by_c_off_date
-      post :add_coff
+      get :add_coff
     end
   end
 
@@ -1179,6 +1259,10 @@ end
       get :second_approve
       get :first_reject
       get :second_reject
+      get :admin_first_approve
+      get :admin_second_approve
+      get :admin_first_reject
+      get :admin_second_reject
     end
   end
   resources :advance_types do
@@ -1266,6 +1350,10 @@ end
       get :display_salaryslip_report
       post :pdf_report
       get :salaryslip_xls
+      get :emp_contibution_salary_list
+      get :emp_contribution_slip_list
+      get :show_emp_contribution_salaryslip
+      get :print_emp_contribution_slip
     end
   end
  
@@ -1349,6 +1437,8 @@ end
       get :display_workingday
       get :workingday_xls
       get :workingday_pdf
+      get :import_workingday
+      post :import
     end
   end
 
@@ -1506,7 +1596,13 @@ end
       patch :update_role
     end
   end
-  resources :employee_bank_details
+  resources :employee_bank_details do
+    collection do
+      post :import  
+      get :import_xl
+    end
+  end
+
   resources :leav_cancelleds
 
   resources :employee_leav_balances do
@@ -1534,6 +1630,8 @@ end
       get :search_by_is_pending_date
       get :employee_leav_request_reports
       get :all_leave_request_list
+      get :admin_employee_history_with_current_leave
+      get :select_checkbox
     end
   end
   resources :company_leavs
@@ -1542,10 +1640,17 @@ end
       get :is_confirm
     end
   end
-  resources :employee_physicals
+  resources :employee_physicals do
+    collection do
+      get :import_xl
+      post :import
+       end
+  end
   resources :joining_details do
     collection do
       get :search_by_joining_date
+      get :import_xl
+      post :import
     end
   end
   resources :employee_grades do
@@ -1556,18 +1661,34 @@ end
   resources :awards do
     collection do
       get :add_award_field
+      get :import_xl
+      post :import
     end
   end
-  resources :skillsets
+  resources :skillsets  do
+    collection do
+      get :import_xl
+      post :import
+       end
+  end
   resources :experiences  do
     collection do
+      get :import_xl
+      post :import
       get :modal_experience
       post :update_experience
     end
   end
-  resources :certifications
+  resources :certifications do
+    collection do
+      get :import_xl
+      post :import
+    end
+  end
   resources :qualifications do
     collection do
+      get :import_xl
+      post :import
       get :modal
       post :update_qualification
      end
@@ -1576,10 +1697,14 @@ end
     collection do
       get :ajax_show_handicap_type_textbox
       get :ajax_show_passport_detail_textbox
+      get :import_xl
+      post :import
     end
   end
   resources :employees do
     collection do
+      get :import_xl
+      post :import
       get :graph
       get :assign_role
       post :submit_form
@@ -1628,6 +1753,11 @@ end
       get :basic_info_company_wise
       post :employee_basic_info
       post :basic_info
+      get :change_password_form
+      post :update_password
+      get :destroy_employee
+      post :show_employee_detail
+      get :destroy_details
     end
     member do
       get :edit_manager
@@ -1636,6 +1766,14 @@ end
       get :transfer_form
     end
   end
+
+  # resources :joining_details do
+  #   collection do
+  #     get :import_xl
+  #     post :import
+  #   end
+  # end
+
   resources :blood_groups do
     collection do
       get :is_confirm

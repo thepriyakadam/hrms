@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Is payroll:</strong>
+  <%= @payroll_overtime_master.is_payroll %>
+</p>
+
+<p>
+  <strong>Base component:</strong>
+  <%= @payroll_overtime_master.base_component %>
+</p>
+
+<p>
+  <strong>Rate:</strong>
+  <%= @payroll_overtime_master.rate %>
+</p>
+
+<p>
+  <strong>Is active:</strong>
+  <%= @payroll_overtime_master.is_active %>
+</p>
+
+<p>
+  <strong>Is confirm:</strong>
+  <%= @payroll_overtime_master.is_confirm %>
+</p>
+
+<%= link_to 'Edit', edit_payroll_overtime_master_path(@payroll_overtime_master) %> |
+<%= link_to 'Back', payroll_overtime_masters_path %>

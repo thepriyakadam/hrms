@@ -2,21 +2,13 @@ module EmployeesHelper
   def all_active_employee_with_code
   Employee.where(status: "Active").collect {|e| [e.try(:manual_employee_code).to_s + ' ' + e.try(:first_name).to_s+ ' ' + e.try(:middle_name).to_s + ' ' + e.try(:last_name).to_s, e.id]}
   end
-
-  def all_employee_list
-    Employee.all.collect { |e| [e.try(:manual_employee_code).to_s + ' ' + e.try(:first_name).to_s + ' ' + e.try(:last_name).to_s, e.id] }
+  
+  def all_inactive_employee_with_code
+  Employee.where(status: "Inactive").collect {|e| [e.try(:manual_employee_code).to_s + ' ' + e.try(:first_name).to_s+ ' ' + e.try(:middle_name).to_s + ' ' + e.try(:last_name).to_s, e.id]}
   end
 
   def all_employee_list
     Employee.all.collect { |e| [e.try(:manual_employee_code).to_s + ' ' + e.try(:first_name).to_s+ ' ' + e.try(:middle_name).to_s + ' ' + e.try(:last_name).to_s, e.id] }
-  end
-
-  def all_employee_list
-    Employee.all.collect { |e| [e.try(:manual_employee_code).to_s + ' ' + e.try(:first_name).to_s + ' ' + e.try(:last_name).to_s, e.id] }
-  end
-
-  def all_employee_list
-    Employee.all.collect { |e| [e.try(:manual_employee_code).to_s + ' ' + e.try(:first_name).to_s + ' ' + e.try(:last_name).to_s, e.id] }
   end
 
   def check_if_true(item)

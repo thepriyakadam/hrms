@@ -4,8 +4,8 @@ class EmployeeCategoriesController < ApplicationController
   def new
     @employee_category = EmployeeCategory.new
     @employee_categories = EmployeeCategory.all
-    session[:active_tab] ="master"
-    session[:active_tab1] ="employeeprofilesetup"
+    session[:active_tab] ="GlobalSetup"
+    session[:active_tab1] ="OnBording"
   end
 
   # GET /employee_categories/1/edit

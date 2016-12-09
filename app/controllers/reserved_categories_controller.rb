@@ -5,8 +5,8 @@ class ReservedCategoriesController < ApplicationController
   def new
     @reserved_category = ReservedCategory.new
     @reserved_categories = ReservedCategory.all
-    session[:active_tab] ="master"
-    session[:active_tab1] ="employeeprofilesetup"
+    session[:active_tab] ="GlobalSetup"
+    session[:active_tab1] ="EmployeeProfile"
   end
 
   # GET /reserved_categories/1/edit

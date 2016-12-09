@@ -16,6 +16,9 @@ class EsicEmployersController < ApplicationController
   def new
     @esic_employer = EsicEmployer.new
     @esic_employers = EsicEmployer.all
+    session[:active_tab] ="PayrollManagement"
+    session[:active_tab1] ="PayrollSetup"
+    session[:active_tab2] ="EmployerMaster"
   end
 
   # GET /esic_employers/1/edit

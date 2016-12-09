@@ -7,6 +7,8 @@ class PerformanceActivitiesController < ApplicationController
   def new
     @performance_activity = PerformanceActivity.new
     @performance_activities = PerformanceActivity.all
+    session[:active_tab] = "GlobalSetup"
+    session[:active_tab1] = "Performance"
   end
 
   # GET /performance_activities/1/edit

@@ -16,6 +16,8 @@ class PerformanceCalendarsController < ApplicationController
   def new
     @performance_calendar = PerformanceCalendar.new
     @performance_calendars = PerformanceCalendar.all
+    session[:active_tab] = "GlobalSetup"
+    session[:active_tab1] = "Performance"
   end
 
   # GET /performance_calendars/1/edit

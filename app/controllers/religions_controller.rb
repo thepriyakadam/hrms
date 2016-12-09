@@ -5,8 +5,8 @@ class ReligionsController < ApplicationController
   def new
     @religion = Religion.new
     @religions = Religion.all
-    session[:active_tab] ="master"
-    session[:active_tab1] ="employeeprofilesetup"
+    session[:active_tab] ="GlobalSetup"
+    session[:active_tab1] ="EmployeeProfile"
   end
 
   # GET /religions/1/edit

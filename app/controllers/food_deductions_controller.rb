@@ -5,8 +5,9 @@ class FoodDeductionsController < ApplicationController
   # GET /food_deductions.json
   def index
     @food_deductions = FoodDeduction.group("strftime('%Y',food_date)")
-    session[:active_tab] ="payroll"
-    session[:active_tab1] ="montlyamount"
+    session[:active_tab] ="PayrollManagement"
+    session[:active_tab1] ="PayrollSetup"
+    session[:active_tab2] ="PeriodicComponents"
   end
 
   # GET /food_deductions/1

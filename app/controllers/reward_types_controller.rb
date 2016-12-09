@@ -17,8 +17,8 @@ class RewardTypesController < ApplicationController
   def new
     @reward_type = RewardType.new
     @reward_types = RewardType.all
-    session[:active_tab] = "master"
-    session[:active_tab1] = "rewards"
+    session[:active_tab] = "GlobalSetup"
+    session[:active_tab1] = "Rewards"
   end
 
   # GET /reward_types/1/edit

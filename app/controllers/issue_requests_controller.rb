@@ -12,6 +12,8 @@ class IssueRequestsController < ApplicationController
   # GET /issue_requests/1
   # GET /issue_requests/1.json
   def show
+    # byebug
+     @issue_request = IssueRequest.find(params[:id])
   end
 
   # GET /issue_requests/new
@@ -92,6 +94,9 @@ class IssueRequestsController < ApplicationController
               filename: @issue_request.document1_file_name,
               type: @issue_request.document1_content_type,
               disposition: 'attachment'
+    # path = params[:to]
+    # render path
+    # render 'show'
   end
 
   def download_screenshot_image
@@ -100,6 +105,9 @@ class IssueRequestsController < ApplicationController
               filename: @issue_request.document2_file_name,
               type: @issue_request.document2_content_type,
               disposition: 'attachment'
+    # path = params[:to]
+    # render path
+    # render 'show'
   end
 
   def lock_request_list 

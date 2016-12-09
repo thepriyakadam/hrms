@@ -20,7 +20,7 @@ class EmployeeLeavBalancesController < ApplicationController
         @employee_leav_balances = EmployeeLeavBalance.where(employee_id: current_user.employee_id)
       end
     end
-    session[:active_tab] ="leavemanagement"
+    session[:active_tab] ="LeaveManagement"
     session[:active_tab1] ="leaveadministration"
   end
 
@@ -179,6 +179,8 @@ class EmployeeLeavBalancesController < ApplicationController
       # column(:Expiry_Date, sortable:true){|employee_leav_balance| employee_leav_balance.try(:expiry_date)}
       column(:Total_Leave, sortable:true){|employee_leav_balance| employee_leav_balance.try(:total_leave)}
       column(:Location, sortable:true){|employee_leav_balance| employee_leav_balance.employee.try(:company_location).try(:name)}
+    session[:active_tab] ="LeaveManagement"
+    session[:active_tab1] ="LeaveReports"
     end    
   end
 

@@ -5,6 +5,8 @@ class RatingsController < ApplicationController
   def new
     @rating = Rating.new
     @ratings = Rating.all
+    session[:active_tab] = "GlobalSetup"
+    session[:active_tab1] = "Performance"
   end
 
   # GET /ratings/1/edit

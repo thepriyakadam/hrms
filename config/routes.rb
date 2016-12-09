@@ -1143,6 +1143,8 @@ end
 
   match 'issue_requests/:id/download_screenshot_image/:id' => 'issue_requests#download_screenshot_image', :via => [:get], :as => :download_screenshot_image
   match 'issue_requests/:id/download_screenshot/:id' => 'issue_requests#download_screenshot', :via => [:get], :as => :download_screenshot
+  # get '/screenshot', to: 'issue_requests#download_screenshot', as: 'download_screenshot'
+  # get '/download', to: 'issue_requests#download_screenshot_image', as: 'download_screenshot_image'
 
   resources :leave_c_offs
   resources :overtime_month_records

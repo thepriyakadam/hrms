@@ -4,8 +4,8 @@ class RolesController < ApplicationController
   def new
     @role = Role.new
     @roles = Role.all
-    session[:active_tab] ="master"
-    session[:active_tab1] ="employeeprofilesetup"
+    session[:active_tab] ="GlobalSetup"
+    session[:active_tab1] ="EmployeeProfile"
   end
 
   def edit
@@ -48,8 +48,7 @@ class RolesController < ApplicationController
 
   def role_edit_list
     @employees = Member.all
-    session[:active_tab] ="employeemanagement"
-    session[:active_tab1] ="useradministration"
+    session[:active_tab] ="UserAdministration"
   end
 
   def edit_role

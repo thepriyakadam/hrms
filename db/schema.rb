@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161129125213) do
+ActiveRecord::Schema.define(version: 20161203040527) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -3405,6 +3405,7 @@ ActiveRecord::Schema.define(version: 20161129125213) do
     t.boolean  "is_send"
     t.date     "from"
     t.date     "to"
+    t.boolean  "is_prefix"
   end
 
   add_index "week_off_masters", ["employee_id"], name: "index_week_off_masters_on_employee_id"

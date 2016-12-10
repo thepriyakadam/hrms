@@ -1,4 +1,4 @@
-<%= form_for :pdf_salaries, url: { action: 'pdf_report',format: 'pdf',month: @month,year: @year},:html => {:target => '_blank'} do |f| %>
+<!-- <= form_for :pdf_salaries, url: { action: 'pdf_report',format: 'pdf',month: @month,year: @year},:html => {:target => '_blank'} do |f| %> -->
 <table id="example5" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
@@ -10,45 +10,55 @@
       <th>Actual Bonus</th>
       <th>Actual Pf</th>
       <th>Actual Esic</th>
-      <!-- <th>Actual CTC</th> -->
+      <th>Actual Family Pension</th>
+      <th>Actual CTC</th>
       <th>Calculated Gross Salary</th>
       <th>Calculated Bonus</th>
       <th>Calculated Pf</th>
       <th>Calculated Esic</th>
-      <!-- <th>Calculated CTC</th> -->
+      <th>Calculated Family Pension</th>
+      <th>Calculated CTC</th>
     </tr>
   </thead>
   <tbody>
-    <% if @emp_contribution.empty? %>
+    <!-- < if @emp_contribution.empty? %> -->
     <% @salaryslips.try(:each) do |s| %>
-    <% else %>
-    <% @salaryslips.try(:each) do |s| %>
-    <% @emp_contribution.try(:each) do |ee| %>
-    <% end %>
+    <% @emp_contribution = EmployerContribution.where(employee_id: s.employee_id,date: @salaryslips_1_date) %>
+    <!-- < employee_contribution = s.employee_contribution %> -->
+    <!-- < else %>
+    < @salaryslips.try(:each) do |s| %> -->
+    <!-- < @emp_contribution.try(:each) do |ee| %> -->
+    <!-- < end %> -->
       <tr>
         <td><%= check_box_tag "slaryslip_ids[]", s.id %></td>
         <td><%= s.year %>-<%= s.month %></td>
         <td><%= s.employee.try(:manual_employee_code) %></td>
         <td><%= full_name(s.employee) %></td>
         <td><%= s.actual_gross_salary.round %></td>
-        <td><%= ee.try(:actual_bonus)%></td>
-        <td><%= ee.try(:actual_pf) %></td>
-        <td><%= ee.try(:actual_esic) %></td>
-        <!-- <td><= b=(ee.try(:actual_bonus)+ee.try(:actual_pf)+ee.try(:actual_esic)).to_f %></td> -->
-        <td><%= ee.try(:bonus) %></td>
-        <td><%= ee.try(:pf) %></td>
-        <td><%= ee.try(:esic) %></td>
-        <!-- <td><= a=(ee.try(:actual_bonus)+ee.try(:actual_pf)+ee.try(:actual_esic)).to_f %></td> -->
+      <!-- < @emp_contribution.try(:each) do |ec| %> -->
+        <td><% a=EmployerContribution.where(employee_id: s.employee_id,date: @salaryslips_1_date).pluck(:actual_bonus).map {|i| i.to_i}.inject{|n|} %></td>
+        <td><%= b=EmployerContribution.where(employee_id: s.employee_id,date: @salaryslips_1_date).pluck(:actual_pf).map {|i| i.to_i}.inject{|n|} %></td>
+        <td><%= c=EmployerContribution.where(employee_id: s.employee_id,date: @salaryslips_1_date).pluck(:actual_esic).map {|i| i.to_i}.inject{|n|} %></td>
+        <td><%= d=EmployerContribution.where(employee_id: s.employee_id,date: @salaryslips_1_date).pluck(:actual_fp).map {|i| i.to_i}.inject{|n|} %></td>
+        <!-- <td><= actual_ctc=(a+b+c+d).to_f %></td> -->
+        <td></td>
+        <td><%= e=EmployerContribution.where(employee_id: s.employee_id,date: @salaryslips_1_date).pluck(:bonus).map {|i| i.to_i}.inject{|n|} %></td>
+        <td><%= f=EmployerContribution.where(employee_id: s.employee_id,date: @salaryslips_1_date).pluck(:pf).map {|i| i.to_i}.inject{|n|} %></td>
+        <td><%= g=EmployerContribution.where(employee_id: s.employee_id,date: @salaryslips_1_date).pluck(:esic).map {|i| i.to_i}.inject{|n|} %></td>
+        <td><%= h=EmployerContribution.where(employee_id: s.employee_id,date: @salaryslips_1_date).pluck(:fp).map {|i| i.to_i}.inject{|n|} %></td>
+        <!-- <td><= calculated_ctc=(e+f+g+h).to_f %></td> -->
+        <td></td>
+        <!-- < end %> -->
       </tr>
     <% end %>
-    <% end %>
-    <% end %>
+    <!-- < end %> -->
+    <!-- < end %> -->
   </tbody>
 </table>
-<%= f.submit "Print Pdf", class: "btn btn-xl btn-info fa fa-print" %>
+<!-- < submit "Print Pdf", class: "btn btn-xl btn-info fa fa-print" %> -->
 <%= link_to " Excel Report ",salaryslip_xls_salaryslips_path(month: @month, year: @year, format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
-<% end %>
-
+<!-- < end %>
+ -->
 <script type="text/javascript">
 $(document).ready(function() {
     $('#example5').DataTable( {

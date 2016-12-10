@@ -342,7 +342,6 @@ class SalaryslipsController < ApplicationController
             deducted_calculated_amount = (formula_item_calculated_amount / 100 * @master_esic.percentage).ceil
             @salary_component = SalaryComponent.find_by(name: "ESIC")
             SalaryslipComponent.create(salaryslip_id: @salaryslip.try(:id), actual_amount: deducted_actual_amount, calculated_amount: deducted_calculated_amount, is_deducted: true, other_component_name: 'ESIC',salary_component_id: @salary_component.try(:id))
-            puts "ESIC................................................................."
           end
         end
 
@@ -429,7 +428,6 @@ class SalaryslipsController < ApplicationController
               # byebug
             @salary_component = SalaryComponent.find_by(name: "Retention")
             SalaryslipComponent.create(salaryslip_id: @salaryslip.try(:id), actual_amount: @retention.try(:amount), calculated_amount: @retention.try(:amount), is_deducted: true, other_component_name: 'Retention',salary_component_id: @salary_component.try(:id))
-            puts "sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss"
             end
           end
         end
@@ -643,7 +641,6 @@ class SalaryslipsController < ApplicationController
       f1_actual = (formula_item_actual_amount / pom.company_hrs.to_f)
       @salary_component = SalaryComponent.find_by(name: "Overtime")
       SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: f1_actual, calculated_amount: f1_calculated, is_deducted: true, other_component_name: 'Overtime',salary_component_id: @salary_component.id)
-      puts "fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
     end
 
 
@@ -744,6 +741,10 @@ class SalaryslipsController < ApplicationController
     @month = params[:month]     
     @year = params[:year]
     @salaryslips = Salaryslip.where(month: @month.to_s, year: @year.to_s)
+    @salaryslips.each do |s|
+      # byebug
+      a=s.employee
+    end
     @salaryslips_1 = Salaryslip.where(month: @month.to_s, year: @year.to_s).pluck(:employee_id)
     @salaryslips_1_date = Salaryslip.where(month: @month.to_s, year: @year.to_s).pluck(:month_year)
     @emp_contribution = EmployerContribution.where(employee_id: @salaryslips_1,date: @salaryslips_1_date)

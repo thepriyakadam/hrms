@@ -698,7 +698,7 @@ ex = Roo::Excel.new("#{Rails.root}/public/employee_basic_report (1).xls")
 ex.default_sheet = ex.sheets[0] #siya feb
 i = 1
 ActiveRecord::Base.transaction do
-67.upto(111) do |line| # siya Feb 2016
+66.upto(66) do |line| # siya Feb 2016
  puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
  @employee = Employee.find_by_id(ex.cell(line,'A'))
  puts "#{i} Record inserting.----------------------------"

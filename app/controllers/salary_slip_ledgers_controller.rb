@@ -508,26 +508,21 @@ class SalarySlipLedgersController < ApplicationController
       final_emp_array = emp_array & emp_user_array & joining_array
     end
     @reports = []
-    @employees = Employee.where(id: final_emp_array)
+    check_array = Employee.where(manual_employee_code: rep).pluck(:id)
+    aaa = final_emp_array & check_array 
+    # byebug
+    @employees = Employee.where(id: aaa)
     @employees.try(:each) do |e|
         j = JoiningDetail.find_by_employee_id(e.id)
         #wd1 = Workingday.where('employee_id = ? and month_name = ? and year = ?', e.id, @month, @year.to_s).take
         sl1 = Salaryslip.where('employee_id = ? and month = ? and year = ?', e.id, @month, @year.to_s).take
+        
         if j.nil? or e.nil? or sl1.nil?
         else
-       
-          sr1 = SalaryReport.collect_data(e,j,sl1)
-        
-          
-          # sr = SalaryReport.where(code: rep)
-          # byebug
-        if a="10008" && b="10055" ==  sr1.code.to_s
-          sr = SalaryReport.collect_data(e,j,sl1)
-          # @reports = SalaryReport.collect_data(e,j,sl1)
-          @reports << sr
-          # byebug
-        else
-        end
+            # byebug
+            sr = SalaryReport.collect_data(e,j,sl1)
+            @reports << sr
+            # @next = sr.next
         end
       end
     @sum = SalaryReport.create_sum(@reports)

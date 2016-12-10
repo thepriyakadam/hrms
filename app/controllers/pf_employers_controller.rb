@@ -16,6 +16,9 @@ class PfEmployersController < ApplicationController
   def new
     @pf_employer = PfEmployer.new
     @pf_employers = PfEmployer.all
+    session[:active_tab] ="PayrollManagement"
+    session[:active_tab1] ="PayrollSetup"
+    session[:active_tab2] ="EmployerMaster"
   end
 
   # GET /pf_employers/1/edit

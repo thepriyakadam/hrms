@@ -16,6 +16,8 @@ class TravelOptionsController < ApplicationController
   def new
     @travel_option = TravelOption.new
     @travel_options = TravelOption.all
+    session[:active_tab] = "GlobalSetup"
+    session[:active_tab1] = "TravelSetup"
   end
 
   # GET /travel_options/1/edit

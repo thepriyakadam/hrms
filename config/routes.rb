@@ -23,7 +23,7 @@ Rails.application.routes.draw do
   end
   resources :week_off_masters do 
     collection do
-      get :assign_week_off
+      post :assign_week_off
       post :employee_list
       post :create_week_off
       get :week_off_list
@@ -1143,6 +1143,8 @@ end
 
   match 'issue_requests/:id/download_screenshot_image/:id' => 'issue_requests#download_screenshot_image', :via => [:get], :as => :download_screenshot_image
   match 'issue_requests/:id/download_screenshot/:id' => 'issue_requests#download_screenshot', :via => [:get], :as => :download_screenshot
+  # get '/screenshot', to: 'issue_requests#download_screenshot', as: 'download_screenshot'
+  # get '/download', to: 'issue_requests#download_screenshot_image', as: 'download_screenshot_image'
 
   resources :leave_c_offs
   resources :overtime_month_records
@@ -1631,6 +1633,7 @@ end
       get :employee_leav_request_reports
       get :all_leave_request_list
       get :admin_employee_history_with_current_leave
+      get :select_checkbox
     end
   end
   resources :company_leavs

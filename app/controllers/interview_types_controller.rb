@@ -16,8 +16,8 @@ class InterviewTypesController < ApplicationController
   def new
     @interview_type = InterviewType.new
     @interview_types = InterviewType.all
-    session[:active_tab] ="master"
-    session[:active_tab1] ="interview_master_setup"
+    session[:active_tab] = "GlobalSetup"
+    session[:active_tab1] = "Recruitment"
   end
 
   # GET /interview_types/1/edit

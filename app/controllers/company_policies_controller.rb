@@ -10,7 +10,8 @@ class CompanyPoliciesController < ApplicationController
   def new
     @company_policies = CompanyPolicy.all
     @company_policy = CompanyPolicy.new
-    session[:active_tab] = 'company'
+    session[:active_tab] = "InformationManagement"
+    session[:active_tab1] = "Events" 
   end
 
    # GET /about_bosses/new

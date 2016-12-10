@@ -8,8 +8,9 @@ class AdvanceSalariesController < ApplicationController
   include QueryReport::Helper # need to include it
   def index
     @advance_salaries = AdvanceSalary.group("strftime('%Y',advance_date)")
-    session[:active_tab] ="payroll"
-    session[:active_tab1] ="montlyamount"
+    session[:active_tab] ="PayrollManagement"
+    session[:active_tab1] ="AdvanceSalary"
+    session[:active_tab2] ="Advance"
   end
 
   # GET /advance_salaries/1

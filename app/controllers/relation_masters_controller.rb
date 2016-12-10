@@ -16,6 +16,8 @@ class RelationMastersController < ApplicationController
   def new
     @relation_master = RelationMaster.new
     @relation_masters = RelationMaster.all
+    session[:active_tab] ="GlobalSetup"
+    session[:active_tab1] ="EmployeeProfile"
   end
 
   # GET /relation_masters/1/edit

@@ -1,7 +1,8 @@
 class Reports::EsicDetailsController < ApplicationController
   def new
-    session[:active_tab] ="payroll"
-    session[:active_tab1] ="deductionreport"
+    session[:active_tab] ="PayrollManagement"
+   session[:active_tab1] ="SalaryProcess"
+   session[:active_tab2] = "DeductionReport"
   end
 
   def esic_detail_report

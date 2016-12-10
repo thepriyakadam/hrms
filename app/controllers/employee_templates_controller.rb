@@ -14,8 +14,9 @@ class EmployeeTemplatesController < ApplicationController
         @employees = Employee.where(id: current_user.employee_id)
       end
     end
-    session[:active_tab] ="payroll"
-    session[:active_tab1] ="salarymaster"
+    session[:active_tab] ="PayrollManagement"
+    session[:active_tab1] ="PayrollSetup"
+    session[:active_tab2] ="SalarySetup"
   end
 
   def show
@@ -62,8 +63,9 @@ class EmployeeTemplatesController < ApplicationController
         @employees = Employee.where(id: current_user.employee_id)
       end
     end
-    session[:active_tab] ="payroll"
-    session[:active_tab1] ="salarymaster"
+    session[:active_tab] ="PayrollManagement"
+    session[:active_tab1] ="PayrollSetup"
+    session[:active_tab2] ="SalarySetup"
   end
 
   def fresh

@@ -16,8 +16,7 @@ class ProjectMastersController < ApplicationController
   def new
     @project_master = ProjectMaster.new
     @project_masters = ProjectMaster.all
-    session[:active_tab] = "master"
-    session[:active_tab1] = "project_master_setup"
+    session[:active_tab] = "GlobalSetup"
 
   end
 

@@ -1,7 +1,7 @@
 <table id="example3" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
-      <th colspan="7"><center> BASIC DETAILS</center></th>
+      <th colspan="5"><center> BASIC DETAILS</center></th>
       <th colspan="12"><center> SALARY DETAILS</center></th>
       <th colspan="8"><center> WORKING DAYS</center></th>
       <th colspan="12"><center> EARNED SALARY</center></th>
@@ -9,9 +9,7 @@
       <th><center> NET </center></th>
       <th><center> SIGN </center></th>
     </tr>
-
     <tr>
-      <th>Sr. No.</th>
       <th>ID</th>
       <th>Name</th>
       <th>Department</th>
@@ -66,7 +64,7 @@
       <th>Total Dedu</th>
 
       <th>NET</th>
-      <th>SING</th>
+      <th>SIGN</th>
     </tr>
   </thead>
   <tbody>
@@ -138,7 +136,6 @@
       <td></td>
       <td></td>
       <td></td>
-      <td></td>
 
 
       <td><%= @sum.actual_basic.try(:round) %></td>
@@ -189,7 +186,7 @@
       <td><%= @sum.deduction_total %></td>
 
       <td><%= @sum.net_payable.round.round %></td>
-      <td>SIGN</td>
+      <td> </td>
     </tr>
   </tbody>
 </table>

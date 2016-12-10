@@ -260,42 +260,42 @@ require 'roo'
 #  end
 # end
 
-ex = Roo::Excel.new("#{Rails.root}/public/novattendance.xls")
-ex.default_sheet = ex.sheets[1] #siya feb
-i = 1
-ActiveRecord::Base.transaction do
+# ex = Roo::Excel.new("#{Rails.root}/public/novattendance.xls")
+# ex.default_sheet = ex.sheets[1] #siya feb
+# i = 1
+# ActiveRecord::Base.transaction do
 
-2.upto(322) do |line| # siya Feb 201
-  puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
-  @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
-  unless @employee.nil?
+# 2.upto(322) do |line| # siya Feb 201
+#   puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
+#   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
+#   unless @employee.nil?
 
-    Workingday.new do |w|
-      w.employee_id = @employee.id
-      w.month_name = ex.cell(line, 'B')
-      w.year = ex.cell(line, 'C').to_i
+#     Workingday.new do |w|
+#       w.employee_id = @employee.id
+#       w.month_name = ex.cell(line, 'B')
+#       w.year = ex.cell(line, 'C').to_i
 
-      w.day_in_month = ex.cell(line, 'D')
-      w.present_day = ex.cell(line, 'E')
-      w.week_off_day = ex.cell(line, 'F')
+#       w.day_in_month = ex.cell(line, 'D')
+#       w.present_day = ex.cell(line, 'E')
+#       w.week_off_day = ex.cell(line, 'F')
 
-      w.cl_leave = ex.cell(line, 'G').to_i
-      w.el_leave = ex.cell(line, 'H').to_i
-      w.coff_leave = ex.cell(line, 'I').to_i
-
-     
-      w.holiday_in_month = ex.cell(line, 'J')
+#       w.cl_leave = ex.cell(line, 'G').to_i
+#       w.el_leave = ex.cell(line, 'H').to_i
+#       w.coff_leave = ex.cell(line, 'I').to_i
 
      
-      w.absent_day = ex.cell(line, 'K')
-      w.payable_day = ex.cell(line, 'L')
-      w.save!
-    end
-    puts "#{i} Record inserted.-----------------------------------------------"
-    i += 1
-  end
-  end
-end
+#       w.holiday_in_month = ex.cell(line, 'J')
+
+     
+#       w.absent_day = ex.cell(line, 'K')
+#       w.payable_day = ex.cell(line, 'L')
+#       w.save!
+#     end
+#     puts "#{i} Record inserted.-----------------------------------------------"
+#     i += 1
+#   end
+#   end
+# end
 
 # puts "Starting ..."
 # ex = Roo::Excel.new("#{Rails.root}/public/hrms.xls")
@@ -439,7 +439,7 @@ end
 # ex = Roo::Excel.new("#{Rails.root}/public/hrms.xls")
 # ex.default_sheet = ex.sheets[9]
 # i=1
-# 2.upto(6) do |line|
+# 2.upto(5) do |line|
 # Religion.new do |ec|
 #   ec.code = ex.cell(line,'A')
 #   ec.name = ex.cell(line,'B')
@@ -469,7 +469,7 @@ end
 # ex = Roo::Excel.new("#{Rails.root}/public/hrms.xls")
 # ex.default_sheet = ex.sheets[11]
 # i=1
-# 2.upto(9) do |line|
+# 2.upto(4) do |line|
 # BloodGroup.new do |ec|
 #   ec.name = ex.cell(line,'B')
 #   ec.save!
@@ -649,20 +649,50 @@ end
 # i = i+1
 # end
 
-# puts "Starting ..."
-# ex = Roo::Excel.new("#{Rails.root}/public/hrms.xls")
-# ex.default_sheet = ex.sheets[22]
-# i=1
-# 2.upto(1033) do |line|
-# District.new do |ec|
-#   ec.state_id = ex.cell(line,'A')
-#   ec.code = ex.cell(line,'B')
-#   ec.name = ex.cell(line,'C')
-#   ec.save!
-# end
-# puts " #{i} District inserted.-----------------------------------------------"
-# i = i+1
-# end
+puts "Starting ..."
+ex = Roo::Excel.new("#{Rails.root}/public/hrms.xls")
+ex.default_sheet = ex.sheets[22]
+i=1
+2.upto(1033) do |line|
+District.new do |ec|
+  ec.state_id = ex.cell(line,'A')
+  ec.code = ex.cell(line,'B')
+  ec.name = ex.cell(line,'C')
+  ec.save!
+end
+puts " #{i} District inserted.-----------------------------------------------"
+i = i+1
+end
+
+
+x = Roo::Excel.new("#{Rails.root}/public/joining_detail.xls")
+
+ex.default_sheet = ex.sheets[0] #siya feb
+i = 1
+ActiveRecord::Base.transaction do
+
+2.upto(71) do |line| # siya Feb 2016
+  puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
+  @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A'))
+  JoiningDetail.where(id: @employee.id).update_all(is_da: true)
+  puts "#{i} Record inserted.-----------------------------------------------"
+  # unless @employee.nil?
+
+  #   EmployeeAttendance.new do |w|
+  #     w.employee_id = @employee.id
+  #     w.day = ex.cell(line, 'B')
+  #     w.in = ex.cell(line, 'C')
+  #     w.out = ex.cell(line, 'D')
+  #     w.shift_master_id = ex.cell(line, 'G').to_i
+
+      
+  #     w.save!
+  #   end
+  #   puts "#{i} Record inserted.-----------------------------------------------"
+  #   i += 1
+  # end
+  end
+end
 
 # ex = Roo::Excel.new("#{Rails.root}/public/rge1.xls")
 # ex.default_sheet = ex.sheets[0] #siya feb
@@ -686,6 +716,7 @@ end
 #    i += 1
 #  end
 #  end
+
 # puts "Starting ..."
 # ex = Roo::Excel.new("#{Rails.root}/public/rge.xls")
 # ex.default_sheet = ex.sheets[0] 

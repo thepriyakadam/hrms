@@ -6,7 +6,7 @@
         <div class="col-sm-2">
         <label>Select Attendance </label>
           <div class="field">
-            <%= f.select :present,['P','W','A','P/2','G'],{hide_label: true,include_blank: "Select Option"} %>
+            <%= f.select :present,['P','W','A','P/2','PG'],{hide_label: true,include_blank: "Select Option"} %>
 
             <%= f.hidden_field :day, value: @date %>
           </div>
@@ -26,7 +26,7 @@
           </tr>
         </thead>
         <tbody>
-          <% @employees.where(status: "Active").each do |e| %>
+          <% @employees.each do |e| %>
             <tr>              
               <td><%= check_box_tag "employee_ids[]",e.id %></td>
               <td><%= e.manual_employee_code %></td>

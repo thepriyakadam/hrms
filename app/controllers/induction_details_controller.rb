@@ -67,8 +67,8 @@ class InductionDetailsController < ApplicationController
 
   def all_induction_detail_list
    @induction_details = InductionDetail.all
-   session[:active_tab] ="employeemanagement"
-   session[:active_tab1] ="employeeinduction"
+   session[:active_tab] ="EmployeeManagement"
+    session[:active_tab1] ="EmployeeInduction"
   end
 
   def confirm

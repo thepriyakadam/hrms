@@ -6,7 +6,8 @@ class EmployeeAttendancesController < ApplicationController
   # GET /employee_attendances.json
   def index
     @employee_attendances = EmployeeAttendance.group("strftime('%Y',day)")
-    session[:active_tab] = "timemgmt"
+    session[:active_tab] ="TimeManagement"
+    session[:active_tab1] ="Attendance"
 
   end
 
@@ -18,8 +19,10 @@ class EmployeeAttendancesController < ApplicationController
   # GET /employee_attendances/new
   def new
     @employee_attendance = EmployeeAttendance.new
-    session[:active_tab] = "timemgmt"
+    session[:active_tab] ="TimeManagement"
+    session[:active_tab1] ="Attendance"
   end
+ 
 
   # GET /employee_attendances/1/edit
   def edit
@@ -140,6 +143,8 @@ class EmployeeAttendancesController < ApplicationController
   end
 
   def revert_attendance
+    session[:active_tab] ="TimeManagement"
+    session[:active_tab1] ="Attendance"
   end
 
   def show_employee
@@ -236,6 +241,8 @@ class EmployeeAttendancesController < ApplicationController
   end
 
   def costcenter_wise_attendance
+    session[:active_tab] ="TimeManagement"
+    session[:active_tab1] ="Attendance"
   end
 
   def show_costcenter_wise_attendance
@@ -333,6 +340,8 @@ class EmployeeAttendancesController < ApplicationController
   end
   
   def revert_attendance_employeewise
+    session[:active_tab] ="TimeManagement"
+    session[:active_tab1] ="Attendance"
   end
 
   def show_employee_list
@@ -427,6 +436,8 @@ class EmployeeAttendancesController < ApplicationController
   end
   
   def calculate_attendance
+    session[:active_tab] ="TimeManagement"
+    session[:active_tab1] ="Attendance"
   end
 
   def display_total

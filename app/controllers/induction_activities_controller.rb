@@ -68,8 +68,8 @@ class InductionActivitiesController < ApplicationController
      @employees = Employee.all
      # @employee = Employee.find(params[:emp_id])
      # @induction_details = InductionDetail.where(employee_id: @employee.id)
-     session[:active_tab] ="employeemanagement"
-     session[:active_tab1] ="employeeinduction"
+     session[:active_tab] ="EmployeeManagement"
+    session[:active_tab1] ="EmployeeInduction"
   end
 
   def search_template

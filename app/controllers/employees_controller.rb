@@ -24,8 +24,8 @@ class EmployeesController < ApplicationController
       @employees = Employee.all
     end
 
-      session[:active_tab] ="employeemanagement"
-      session[:active_tab1] ="employeeprofile"
+      session[:active_tab] ="EmployeeManagement"
+      session[:active_tab1] ="Employee1"
   end
   
 
@@ -177,8 +177,7 @@ class EmployeesController < ApplicationController
     # @all_employee_list = ReportingMaster.all.collect { |e| [e.try(:employee).try(:manual_employee_code).try(:to_s) + ' ' + e.try(:employee).try(:first_name).try(:to_s) + ' ' + e.try(:employee).try(:last_name).try(:to_s), e.try(:employee).id] }
     # @all_role_list = Role.all.collect { |r| [r.name, r.id] }
 
-    session[:active_tab] ="employeemanagement"
-    session[:active_tab1] ="useradministration"
+   session[:active_tab] ="UserAdministration"
   end
 
   def submit_form
@@ -328,8 +327,7 @@ class EmployeesController < ApplicationController
 
   def manager
     @employees = Employee.all
-    session[:active_tab] ="employeemanagement"
-    session[:active_tab1] ="useradministration"
+   session[:active_tab] ="UserAdministration"
   end
 
   def edit_manager
@@ -384,6 +382,7 @@ class EmployeesController < ApplicationController
 
   def employee_list_for_revert
     @employees = Employee.where(status: "Inactive")
+    session[:active_tab] ="UserAdministration"
   end
 
   def revert_employee
@@ -395,8 +394,8 @@ class EmployeesController < ApplicationController
 
   def all_emp_list
      @employees = Employee.all
-     session[:active_tab] ="employeemanagement"
-     session[:active_tab1] ="useradministration"
+     # session[:active_tab] ="employeemanagement"
+     session[:active_tab] ="UserAdministration"
   end
 
   def update_status

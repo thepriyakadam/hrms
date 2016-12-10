@@ -15,6 +15,8 @@ class LeaveMastersController < ApplicationController
   def new
     @leave_master = LeaveMaster.new
     @leave_masters = LeaveMaster.all
+     session[:active_tab] ="LeaveManagement"
+    session[:active_tab1] ="leaveadministration"
   end
 
   # GET /leave_masters/1/edit

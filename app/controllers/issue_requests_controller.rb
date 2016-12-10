@@ -12,13 +12,15 @@ class IssueRequestsController < ApplicationController
   # GET /issue_requests/1
   # GET /issue_requests/1.json
   def show
+    # byebug
+     @issue_request = IssueRequest.find(params[:id])
   end
 
   # GET /issue_requests/new
   def new
     @issue_request = IssueRequest.new
-    session[:active_tab] = "issuetracker"
-    session[:active_tab1] = "issueprocess" 
+    session[:active_tab] = "HelpDesk"
+    session[:active_tab1] = "Process" 
   end
 
   # GET /issue_requests/1/edit
@@ -92,6 +94,9 @@ class IssueRequestsController < ApplicationController
               filename: @issue_request.document1_file_name,
               type: @issue_request.document1_content_type,
               disposition: 'attachment'
+    # path = params[:to]
+    # render path
+    # render 'show'
   end
 
   def download_screenshot_image
@@ -100,6 +105,9 @@ class IssueRequestsController < ApplicationController
               filename: @issue_request.document2_file_name,
               type: @issue_request.document2_content_type,
               disposition: 'attachment'
+    # path = params[:to]
+    # render path
+    # render 'show'
   end
 
   def lock_request_list 
@@ -111,8 +119,8 @@ class IssueRequestsController < ApplicationController
       flash[:alert] = "This Member Is Not Present In Member List To Solve Support "
     end
     end
-   session[:active_tab] = "issuetracker"
-   session[:active_tab1] = "issueprocess" 
+    session[:active_tab] = "HelpDesk"
+    session[:active_tab1] = "Process" 
   end
 
   def modal
@@ -169,8 +177,8 @@ class IssueRequestsController < ApplicationController
 
   def solved_issues
     @issue_requests = IssueRequest.where(status: true, employee_id: current_user.employee_id)
-    session[:active_tab] = "issuetracker"
-    session[:active_tab1] = "issueprocess"
+    session[:active_tab] = "HelpDesk"
+    session[:active_tab1] = "Process" 
   end
 
   def issue_history
@@ -207,9 +215,14 @@ class IssueRequestsController < ApplicationController
     @en = params[:to_date].to_date
     @issue_tracker_group = IssueTrackerGroup.find(params[:id])
     @issue_requests = IssueRequest.where(issue_tracker_group_id: @issue_tracker_group.id,date: @start..@en)
-    session[:active_tab] = "issuetracker"
-    session[:active_tab1] = "issueprocess" 
+   
   end
+
+  def groupwise_report
+    session[:active_tab] = "HelpDesk"
+    session[:active_tab1] = "SupportReport" 
+  end
+
 
   def issue_tracker_pdf
     @start = params[:date].to_date
@@ -235,11 +248,18 @@ class IssueRequestsController < ApplicationController
       end
   end
 
+
+  def datewise_report
+    session[:active_tab] = "HelpDesk"
+    session[:active_tab1] = "SupportReport" 
+  end
+
+
   def datewise_report_list
     @date = params[:date].to_date
     @issue_requests = IssueRequest.where(date: @date)
-    session[:active_tab] = "issuetracker"
-    session[:active_tab1] = "issueprocess" 
+    session[:active_tab] = "HelpDesk"
+    session[:active_tab1] = "SupportReport" 
   end
 
   def datewise_report_xls
@@ -248,6 +268,8 @@ class IssueRequestsController < ApplicationController
   end
 
   def datewise_report_pdf
+    session[:active_tab] = "HelpDesk"
+    session[:active_tab1] = "SupportReport" 
     @date = params[:date].to_date
     @issue_requests = IssueRequest.where(date: @date)
     respond_to do |format|
@@ -316,7 +338,11 @@ class IssueRequestsController < ApplicationController
   #    format.xls {render template: 'issue_requests/memberwise_report_list_xls.xls.erb'}
   #   end
   # end
-
+ def memberwise_report
+  session[:active_tab] = "HelpDesk"
+  session[:active_tab1] = "SupportReport" 
+   
+ end
 
 def memberwise_report_list
       # byebug

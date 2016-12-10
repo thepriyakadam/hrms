@@ -5,8 +5,8 @@ class AssetTypesController < ApplicationController
   def new
     @asset_type = AssetType.new
     @asset_types = AssetType.all
-    session[:active_tab] ="master"
-    session[:active_tab1] ="assetmanagement"
+    session[:active_tab] ="GlobalSetup"
+    session[:active_tab1] ="OnBording"
   end
 
   # GET /asset_types/1/edit

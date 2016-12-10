@@ -16,7 +16,8 @@ class CircularsController < ApplicationController
   def new
     @circular = Circular.new
     @circulars = Circular.all
-    session[:active_tab] = "company"
+    session[:active_tab] = "InformationManagement"
+    session[:active_tab1] = "Events" 
   end
 
   # GET /circulars/1/edit

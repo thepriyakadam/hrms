@@ -4,6 +4,8 @@ class MachineAttendancesController < ApplicationController
   def new
     @machine_attendance = MachineAttendance.new
     @machine_attendances = MachineAttendance.where(is_proceed: nil)
+    session[:active_tab] ="TimeManagement"
+    session[:active_tab1] ="AttendanceSetup"
   end
 
   def save_machine_attendance

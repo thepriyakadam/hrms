@@ -16,8 +16,8 @@ class TrainingTopicMastersController < ApplicationController
   def new
     @training_topic_master = TrainingTopicMaster.new
     @training_topic_masters = TrainingTopicMaster.all
-    session[:active_tab] = "master"
-    session[:active_tab1] = "training"  
+    session[:active_tab] = "GlobalSetup"
+    session[:active_tab1] = "Training"
   end
 
   # GET /training_topic_masters/1/edit

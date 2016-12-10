@@ -381,6 +381,14 @@ end
       post :create_attendance_1
       get :emp_attendance_1_list
       post :display_attendance_1
+      get :select_date_department_form
+      post :show_departmntwise_employee
+      get :department_wise_pdf
+      get :department_wise_xls
+      get :select_date_present_form
+      get :show_datewise_employee
+      get :date_wise_pdf
+      get :date_wise_xls
     end
   end
   resources :salary_comp_mappings

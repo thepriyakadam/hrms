@@ -1,0 +1,46 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Attendance Department Wise</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <%= form_for :pdf_salaries, url: { action: 'show_departmntwise_employee'} do |f| %>
+
+  	 <div class="row">
+        <div class="col-sm-3">
+         <div class="form-group required">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+            <%= text_field :salary, :date,{hide_label: true , placeholder: 'Date',class: 'form-control request_date'}%>
+          </div>
+         </div>
+        </div>
+
+      <div class="col-sm-3">
+        <div class="field">
+          <%= select :salary, :company_location_id, all_department_type_list1,{include_blank: 'select Location'},class: 'form-control' %>
+        </div>
+      </div> 
+      <div class="col-sm-3">
+        <%= f.submit "show Employee List",class: "btn btn-xl btn-primary fa fa-print" %>
+      </div>
+
+    </div><br>
+    <div id="employee_list_pdf"></div>
+
+  <% end %>
+
+  </div>
+</div>
+
+
+<script type="text/javascript">
+  $(function(){
+    $('.request_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:+1',
+    dateFormat: 'dd-mm-yy' });
+  }); 
+</script>

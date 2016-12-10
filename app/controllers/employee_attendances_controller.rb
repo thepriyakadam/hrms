@@ -74,10 +74,10 @@ class EmployeeAttendancesController < ApplicationController
       @holiday_flag = false
       if current_user.class == Member
       if current_user.role.name == 'CompanyLocation'
-      @employees = Employee.where(company_location_id: current_user.company_location_id).filter_by_date_and_costcenter(@date, @costcenter, current_user)
+      @employees = Employee.where(status: "Active",company_location_id: current_user.company_location_id).filter_by_date_and_costcenter(@date, @costcenter, current_user)
 
       elsif
-      @employees = Employee.filter_by_date_and_costcenter(@date, @costcenter, current_user)
+      @employees = Employee.where(status: "Active").filter_by_date_and_costcenter(@date, @costcenter, current_user)
       #@employees = Employee.filter_by_date_costcenter_and_department(@date, @costcenter, @department, current_user)
       end
       @emp_attendances = EmployeeAttendance.where("strftime('%m/%Y', day) = ? AND present = ?", @date.strftime('%m/%Y'), "W")
@@ -403,7 +403,8 @@ class EmployeeAttendancesController < ApplicationController
     # @employee_attendances = EmployeeAttendance.where(day: @month)
     @date = Date.new(@year.to_i, Workingday.months[@month])
     @day = @date.end_of_month.day
-    @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).group(:employee_id)
+    @emp = Employee.where(status: "Active").pluck(:id)
+    @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ? AND employee_id = ?", @date.strftime('%m/%Y'),@emp).group(:employee_id)
   end
 
   def create_attendance_1
@@ -460,6 +461,89 @@ class EmployeeAttendancesController < ApplicationController
               show_as_html: params[:debug].present?,
               margin:  { top:1,bottom:1,left:1,right:1 }
       end
+    end
+  end
+
+  def select_date_department_form
+  end
+
+  def show_departmntwise_employee
+    @date = params[:salary][:date]
+    @department = params[:salary][:company_location_id]
+    @employees = Employee.where(department_id: @department).pluck(:id)
+    @employee_attendances = EmployeeAttendance.where(day: @date.to_date ,employee_id: @employees)
+  end
+
+  def department_wise_pdf
+    @date = params[:date]
+    @department = params[:department]
+    @employees = Employee.where(department_id: @department).pluck(:id)
+    @employee_attendances = EmployeeAttendance.where(day: @date.to_date,employee_id: @employees)
+    
+    respond_to do |format|
+        format.html
+        format.pdf do
+        render :pdf => 'print_department_wise',
+        layout: '/layouts/pdf.html.erb',
+        :template => 'employee_attendances/print_department_wise.pdf.erb',
+        :orientation      => 'Landscape', # default , Landscape
+        :page_height      => 1000,
+        :dpi              => '300',
+        :margin           => {:top    => 10, # default 10 (mm)
+                      :bottom => 10,
+                      :left   => 20,
+                      :right  => 20},
+        :show_as_html => params[:debug].present?
+      end
+    end
+  end
+
+  def department_wise_xls
+    @date, @department = params[:date], params[:department]
+    @employees = Employee.where(department_id: @department).pluck(:id)
+    @employee_attendances = EmployeeAttendance.where(day: @date.to_date,employee_id: @employees)
+    respond_to do |format|
+      format.xls {render template: 'employee_attendances/print_department_wise.xls.erb'}
+    end
+  end
+
+  def select_date_present_form
+  end
+
+  def show_datewise_employee
+    @date = params[:date]
+    @present = params[:present]
+    @employee_attendances = EmployeeAttendance.where(day: @date.to_date,present: @present)
+  end
+
+  def date_wise_pdf
+    @date = params[:date]
+    @present = params[:present]
+    @employee_attendances = EmployeeAttendance.where(day: @date.to_date,present: @present)
+    
+    respond_to do |format|
+        format.html
+        format.pdf do
+        render :pdf => 'print_date_wise',
+        layout: '/layouts/pdf.html.erb',
+        :template => 'employee_attendances/print_date_wise.pdf.erb',
+        :orientation      => 'Landscape', # default , Landscape
+        :page_height      => 1000,
+        :dpi              => '300',
+        :margin           => {:top    => 10, # default 10 (mm)
+                      :bottom => 10,
+                      :left   => 20,
+                      :right  => 20},
+        :show_as_html => params[:debug].present?
+      end
+    end
+  end
+
+  def date_wise_xls
+    @date, @present = params[:date], params[:present]
+    @employee_attendances = EmployeeAttendance.where(day: @date.to_date,present: @present)
+    respond_to do |format|
+      format.xls {render template: 'employee_attendances/print_date_wise.xls.erb'}
     end
   end
 

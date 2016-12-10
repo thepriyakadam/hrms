@@ -674,8 +674,6 @@ end
 #  # JoiningDetail.where(id: @employee.id).update_all(is_da: true)
 #  puts "#{i} Record inserting.----------------------------"
 
-<<<<<<< HEAD
-=======
 #   @employee.try(:each) do |e|
 
 #   e.update(company_id = ex.cell(line,'B'))
@@ -689,7 +687,6 @@ end
 #  end
 #  end
 
->>>>>>> 13ab5636bfecf1827b8b61495fcbde3236ecdfd0
 # puts "Starting ..."
 # ex = Roo::Excel.new("#{Rails.root}/public/rge.xls")
 # ex.default_sheet = ex.sheets[0] 

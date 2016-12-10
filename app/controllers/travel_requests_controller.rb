@@ -5,7 +5,8 @@ class TravelRequestsController < ApplicationController
   # GET /travel_requests.json
   def index
     @travel_requests = TravelRequest.where(employee_id: current_user.employee_id)
-    session[:active_tab] ="travelmgmt"
+   session[:active_tab] = "TravelManagement"
+    session[:active_tab1] = "TravelRequestProcess" 
   end
 
   # GET /travel_requests/1
@@ -80,6 +81,8 @@ class TravelRequestsController < ApplicationController
   def daily_bill
      # @travel_requests = TravelRequest.where(employee_id: current_user.employee_id)
       @travel_requests = TravelRequest.where("employee_id = ? and (current_status = ?)",current_user.employee_id,"Approved")
+    session[:active_tab] = "TravelManagement"
+    session[:active_tab1] = "ExpensesClaimProcess"  
   end
 
   def travel_history
@@ -88,7 +91,8 @@ class TravelRequestsController < ApplicationController
     @reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
     @travel_requests = TravelRequest.where(reporting_master_id: @reporting_masters)
     #@travel_requests = TravelRequest.where(reporting_master_id: current_user.employee_id)
-    session[:active_tab] ="travelmgmt"
+     session[:active_tab] = "TravelManagement"
+    session[:active_tab1] = "TravelRequestProcess" 
   end
 
   def travel_request_confirmation
@@ -162,7 +166,8 @@ class TravelRequestsController < ApplicationController
     # else
       @travel_requests = TravelRequest.where(employee_id: current_user.employee_id)
     # end
-    session[:active_tab]="travelmgmt"
+   session[:active_tab] = "TravelManagement"
+    session[:active_tab1] = "TravelRequestProcess" 
   end
 
   def edit_and_send_next_modal

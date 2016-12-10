@@ -24,8 +24,8 @@ class EmployeesController < ApplicationController
       @employees = Employee.all
     end
 
-      session[:active_tab] ="employeemanagement"
-      session[:active_tab1] ="employeeprofile"
+      session[:active_tab] ="EmployeeManagement"
+      session[:active_tab1] ="Employee1"
   end
   
 
@@ -177,8 +177,7 @@ class EmployeesController < ApplicationController
     # @all_employee_list = ReportingMaster.all.collect { |e| [e.try(:employee).try(:manual_employee_code).try(:to_s) + ' ' + e.try(:employee).try(:first_name).try(:to_s) + ' ' + e.try(:employee).try(:last_name).try(:to_s), e.try(:employee).id] }
     # @all_role_list = Role.all.collect { |r| [r.name, r.id] }
 
-    session[:active_tab] ="employeemanagement"
-    session[:active_tab1] ="useradministration"
+   session[:active_tab] ="UserAdministration"
   end
 
   def submit_form
@@ -328,8 +327,7 @@ class EmployeesController < ApplicationController
 
   def manager
     @employees = Employee.all
-    session[:active_tab] ="employeemanagement"
-    session[:active_tab1] ="useradministration"
+   session[:active_tab] ="UserAdministration"
   end
 
   def edit_manager
@@ -384,6 +382,7 @@ class EmployeesController < ApplicationController
 
   def employee_list_for_revert
     @employees = Employee.where(status: "Inactive")
+    session[:active_tab] ="UserAdministration"
   end
 
   def revert_employee
@@ -395,8 +394,8 @@ class EmployeesController < ApplicationController
 
   def all_emp_list
      @employees = Employee.all
-     session[:active_tab] ="employeemanagement"
-     session[:active_tab1] ="useradministration"
+     # session[:active_tab] ="employeemanagement"
+     session[:active_tab] ="UserAdministration"
   end
 
   def update_status
@@ -486,6 +485,63 @@ class EmployeesController < ApplicationController
   def emp_basic_info
   end
   
+  def destroy_employee
+  end
+
+  def show_employee_detail
+    @employee = Employee.find(params[:salary][:employee_id])
+  end
+
+  # def destroy_details
+  #   @employee = Employee.find(params[:emp_id])
+  #   Employee.find_by(id: @employee.id).destroy
+  #   JoiningDetail.where(employee_id: @employee.id).destroy_all
+  #   Salaryslip.where(employee_id: @employee.id).destroy_all
+  #   EmployeeNomination.where(employee_id: @employee.id).destroy_all
+  #   Award.where(employee_id: @employee.id).destroy_all
+  #   Certification.where(employee_id: @employee.id).destroy_all
+  #   InterviewSchedule.where(employee_id: @employee.id).destroy_all
+  #   VacancyMaster.where(employee_id: @employee.id).destroy_all
+  #   Qualification.where(employee_id: @employee.id).destroy_all
+  #   EmployeeLeavRequest.where(employee_id: @employee.id).destroy_all
+  #   EmployeeLeavBalance.where(employee_id: @employee.id).destroy_all
+  #   Family.where(employee_id: @employee.id).destroy_all
+  #   Experience.where(employee_id: @employee.id).destroy_all
+  #   Skillset.where(employee_id: @employee.id).destroy_all
+  #   AssignedAsset.where(employee_id: @employee.id).destroy_all
+  #   EmployeeSalaryTemplate.where(employee_id: @employee.id).destroy_all
+  #   Workingday.where(employee_id: @employee.id).destroy_all
+  #   EmployeeTemplate.where(employee_id: @employee.id).destroy_all
+  #   ParticularLeaveRecord.where(employee_id: @employee.id).destroy_all
+  #   SocietyMemberShip.where(employee_id: @employee.id).destroy_all
+  #   MonthlyExpence.where(employee_id: @employee.id).destroy_all
+  #   BonusEmployee.where(employee_id: @employee.id).destroy_all
+  #   EmployeeShift.where(employee_id: @employee.id).destroy_all
+  #   Member.where(employee_id: @employee.id).destroy_all
+  #   EmployeeBankDetail.where(employee_id: @employee.id).destroy_all
+  #   EmployeePromotion.where(employee_id: @employee.id).destroy_all
+  #   TrainingRequest.where(employee_id: @employee.id).destroy_all
+  #   InterviewRound.where(employee_id: @employee.id).destroy_all
+  #   GoalBunch.where(employee_id: @employee.id).destroy_all
+  #   InterviewRoundReschedule.where(employee_id: @employee.id).destroy_all
+  #   ManagerHistory.where(employee_id: @employee.id).destroy_all
+  #   DueEmployeeDetail.where(employee_id: @employee.id).destroy_all
+  #   LeaveRecord.where(employee_id: @employee.id).destroy_all
+  #   TravelRequestHistory.where(employee_id: @employee.id).destroy_all
+  #   IssueTrackerMember.where(employee_id: @employee.id).destroy_all
+  #   TravelRequest.where(employee_id: @employee.id).destroy_all
+  #   IssueRequest.where(employee_id: @employee.id).destroy_all
+  #   WeekOffMaster.where(employee_id: @employee.id).destroy_all
+  #   InductionDetail.where(employee_id: @employee.id).destroy_all
+  #   VacancyRequestHistory.where(employee_id: @employee.id).destroy_all
+  #   OvertimeSalary.where(employee_id: @employee.id).destroy_all
+  #   ReportingMaster.where(employee_id: @employee.id).destroy_all
+  #   Trainee.where(employee_id: @employee.id).destroy_all
+
+  #   flash[:notice] = "Employee Record Successfully destroyed !!"
+  #   redirect_to destroy_employee_employees_path
+  # end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

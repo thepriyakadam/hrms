@@ -16,6 +16,9 @@ class EmployerInsurancesController < ApplicationController
   def new
     @employer_insurance = EmployerInsurance.new
     @employer_insurances = EmployerInsurance.all
+    session[:active_tab] ="PayrollManagement"
+    session[:active_tab1] ="PayrollSetup"
+    session[:active_tab2] ="EmployerMaster"
   end
 
   # GET /employer_insurances/1/edit

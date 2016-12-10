@@ -15,7 +15,7 @@ class LeaveCashMastersController < ApplicationController
   def new
     @leave_cash_master = LeaveCashMaster.new
     @leave_cash_masters = LeaveCashMaster.all
-    session[:active_tab] ="leavemanagement"
+    session[:active_tab] ="LeaveManagement"
     session[:active_tab1] ="leaveadministration"
   end
 

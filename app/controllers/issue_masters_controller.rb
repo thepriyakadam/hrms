@@ -16,8 +16,8 @@ class IssueMastersController < ApplicationController
   def new
     @issue_master = IssueMaster.new
     @issue_masters = IssueMaster.all
-    session[:active_tab] = "issuetracker"
-    session[:active_tab1] = "issueprocess1"
+    session[:active_tab] ="HelpDesk"
+    session[:active_tab1] ="Setup"
   end
 
   # GET /issue_masters/1/edit
@@ -58,6 +58,13 @@ class IssueMastersController < ApplicationController
   def collect_issues
     @issue_tracker_group = IssueTrackerGroup.find(params[:group_id])
     @issue_masters = @issue_tracker_group.issue_masters
+  end
+
+   def is_confirm
+    @issue_master = IssueMaster.find(params[:issue_master])
+    IssueMaster.find(@issue_master.id).update(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to new_issue_master_path
   end
 
   private

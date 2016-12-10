@@ -16,6 +16,8 @@ class ShiftMastersController < ApplicationController
   def new
     @shift_master = ShiftMaster.new
     @shift_masters = ShiftMaster.all
+    session[:active_tab] ="TimeManagement"
+    session[:active_tab1] ="AttendanceSetup"
   end
 
   # GET /shift_masters/1/edit

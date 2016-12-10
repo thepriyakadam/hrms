@@ -17,8 +17,8 @@ class InvestmentHeadsController < ApplicationController
   def new
     @investment_head = InvestmentHead.new
     @investment_heads = InvestmentHead.all
-     session[:active_tab] = "payroll"
-     session[:active_tab1] = "income_tax"
+     session[:active_tab] ="PayrollManagement"
+   session[:active_tab1] = "IncomeTax"
   end
 
   # GET /investment_heads/1/edit

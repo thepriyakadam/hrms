@@ -5,8 +5,8 @@ class OvertimeDailyRecordsController < ApplicationController
   # GET /overtime_daily_records.json
   def index
     @overtime_daily_records = OvertimeDailyRecord.group("strftime('%Y',ot_daily_date)")
-    session[:active_tab] ="payroll"
-    session[:active_tab1] ="overtime"
+    session[:active_tab] ="PayrollManagement"
+    session[:active_tab1] ="Overtime"
   end
 
   # GET /overtime_daily_records/1

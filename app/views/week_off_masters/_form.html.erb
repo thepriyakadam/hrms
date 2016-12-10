@@ -1,50 +1,63 @@
-<%= bootstrap_form_for(@week_off_master,html: {id: 'week_off_master'},remote: true) do |f| %>
+
+<%= bootstrap_form_for(:week_off_master, url: { action: 'employee_list'},html: {id: 'week_off_master'},remote: true) do |f| %>
  <div class="row">
-    <div class="col-sm-3">
-      <div class="form-group required">
-        <%= f.select :employee_id,all_employee_list,{include_blank: "Select Employee"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
-      </div>
-    </div>
     <div class="col-sm-2">
+      <label>Day</label>
       <div class="form-group required">
-         <%= f.select :day, ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],{label: "Day",include_blank: " Select Day"} %>
+         <%= select :week_off_master,:day, ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],{label: "Day",include_blank: " Select Day"},{class: 'form-control'} %>
       </div>
     </div>
     <div class="col-sm-3">
+      <label>From</label>
       <div class="form-group required">
         <div class="input-group">
           <div class="input-group-addon">
             <i class="fa fa-calendar"></i>
           </div>
-            <%= f.text_field :from, label: "From", class: 'week_off_date'%>
+            <%= text_field :week_off_master,:from, hide_label: true, class: 'week_off_date form-control'%>
         </div>
       </div>
     </div>
+
      <div class="col-sm-3">
+      <label>To</label>
       <div class="form-group required">
         <div class="input-group">
           <div class="input-group-addon">
             <i class="fa fa-calendar"></i>
           </div>
-            <%= f.text_field :to, label: "To", class: 'week_off_date'%>
+            <%= text_field :week_off_master,:to, hide_label: true, class: 'week_off_date form-control'%>
         </div>
       </div>
     </div>
     <div class="col-sm-1">
       <label>Status</label>
       <div class="form-group required">
-        <%= f.check_box :is_active,label:'Active' %>
+        <%= check_box :week_off_master,:is_active,label:'Active' %>
       </div>
     </div>
-  </div>
-  <div class="row">
+   <!--  <div class="col-sm-1">
+      <label>Prefix</label>
+      <div class="form-group required">
+        < check_box :week_off_master,:is_prefix,label:'Prefix' %>
+      </div>
+    </div> -->
     <div class="col-sm-3">
+    <label></label>
       <div class="actions">
-        <%= f.submit "Create Week Off" ,class: "btn btn-primary btn-sm" %>
+        <%= f.submit "Search Employee" ,class: "btn btn-primary btn-sm" %>
       </div>
     </div>
   </div>
 <% end %>
+
+   <div class="ajax-progress"></div>
+
+     <div class="row">
+       <div class="col-sm-12">
+         <div id="employee_list"></div>    
+       </div>
+     </div>
 <br>
 
 <script type="text/javascript">
@@ -53,7 +66,7 @@
      $('.week_off_date').datepicker({
     changeYear:true,
     changeMonth: true,
-    yearRange: '-200:-0',
+    yearRange: '-2:+5',
     dateFormat: 'dd-mm-yy' });
     });
 

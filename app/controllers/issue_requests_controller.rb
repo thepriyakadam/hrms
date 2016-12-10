@@ -6,19 +6,21 @@ class IssueRequestsController < ApplicationController
   # GET /issue_requests
   # GET /issue_requests.json
   def index
-    @issue_requests = IssueRequest.all
+    @issue_requests = IssueRequest.where(employee_id: current_user.employee_id)
   end
 
   # GET /issue_requests/1
   # GET /issue_requests/1.json
   def show
+    # byebug
+     @issue_request = IssueRequest.find(params[:id])
   end
 
   # GET /issue_requests/new
   def new
     @issue_request = IssueRequest.new
-    session[:active_tab] = "issuetracker"
-    session[:active_tab1] = "issueprocess" 
+    session[:active_tab] = "HelpDesk"
+    session[:active_tab1] = "Process" 
   end
 
   # GET /issue_requests/1/edit
@@ -40,7 +42,8 @@ class IssueRequestsController < ApplicationController
         @c2 = IssueTrackerMember.where(issue_tracker_group_id: @c1).pluck(:employee_id)
         @emp = Employee.where(id: @c2)
         @emp.each do |s|
-        IssueRequestMailer.issue_tracker_group_email(s.email).deliver_now
+        # IssueRequestMailer.issue_tracker_group_email(s.email).deliver_now
+        IssueRequestMailer.issue_tracker_group_email(s.email, @issue_request, @c1, @c2).deliver_now
         end
         format.html { redirect_to @issue_request, notice: 'Support request was successfully saved Successfully.' }
         format.json { render :show, status: :created, location: @issue_request }
@@ -91,6 +94,9 @@ class IssueRequestsController < ApplicationController
               filename: @issue_request.document1_file_name,
               type: @issue_request.document1_content_type,
               disposition: 'attachment'
+    # path = params[:to]
+    # render path
+    # render 'show'
   end
 
   def download_screenshot_image
@@ -99,6 +105,9 @@ class IssueRequestsController < ApplicationController
               filename: @issue_request.document2_file_name,
               type: @issue_request.document2_content_type,
               disposition: 'attachment'
+    # path = params[:to]
+    # render path
+    # render 'show'
   end
 
   def lock_request_list 
@@ -106,11 +115,12 @@ class IssueRequestsController < ApplicationController
     if @issue_tracker_member_id = IssueTrackerMember.find_by(employee_id: current_user.employee_id)
     @issue_requests = IssueRequest.where(issue_tracker_group_id: @issue_tracker_member_id.issue_tracker_group_id,status: nil)   
     else
-      flash[:alert] = "There is no any Support Request"
+      redirect_to issue_requests_path
+      flash[:alert] = "This Member Is Not Present In Member List To Solve Support "
     end
     end
-   session[:active_tab] = "issuetracker"
-   session[:active_tab1] = "issueprocess" 
+    session[:active_tab] = "HelpDesk"
+    session[:active_tab1] = "Process" 
   end
 
   def modal
@@ -131,6 +141,7 @@ class IssueRequestsController < ApplicationController
 
 
   def coordinator_lock_request
+    # byebug
     @issue_request = IssueRequest.find(params[:id])
     lock_date = params[:lock_date]
     lock_time = params[:lock_time]
@@ -166,8 +177,8 @@ class IssueRequestsController < ApplicationController
 
   def solved_issues
     @issue_requests = IssueRequest.where(status: true, employee_id: current_user.employee_id)
-    session[:active_tab] = "issuetracker"
-    session[:active_tab1] = "issueprocess"
+    session[:active_tab] = "HelpDesk"
+    session[:active_tab1] = "Process" 
   end
 
   def issue_history
@@ -183,7 +194,7 @@ class IssueRequestsController < ApplicationController
 
   def resend_request
     @issue_request = IssueRequest.find(params[:format])
-    IssueRequest.where(id: @issue_request.id).update_all(status: nil,issue_tracker_member_id: nil) 
+    IssueRequest.where(id: @issue_request.id).update_all(status: nil,issue_tracker_member_id: nil,issue_root_cause_id: nil,effort_time: nil,comment: nil) 
     IssueHistory.create(issue_tracker_group_id: @issue_request.issue_tracker_group_id,issue_request_id: @issue_request.id,issue_master_id: @issue_request.issue_master_id,description: @issue_request.description,date: @issue_request.date,time: @issue_request.time,employee_id: @issue_request.employee_id,issue_tracker_member_id: @issue_request.issue_tracker_member_id,issue_priority: @issue_request.issue_priority,status: false)
     # IssueRequestMailer.issue_resend(@issue_request).deliver_now
     flash[:notice] = "Resend Request Successfully"
@@ -204,9 +215,14 @@ class IssueRequestsController < ApplicationController
     @en = params[:to_date].to_date
     @issue_tracker_group = IssueTrackerGroup.find(params[:id])
     @issue_requests = IssueRequest.where(issue_tracker_group_id: @issue_tracker_group.id,date: @start..@en)
-    session[:active_tab] = "issuetracker"
-    session[:active_tab1] = "issueprocess" 
+   
   end
+
+  def groupwise_report
+    session[:active_tab] = "HelpDesk"
+    session[:active_tab1] = "SupportReport" 
+  end
+
 
   def issue_tracker_pdf
     @start = params[:date].to_date
@@ -232,11 +248,18 @@ class IssueRequestsController < ApplicationController
       end
   end
 
+
+  def datewise_report
+    session[:active_tab] = "HelpDesk"
+    session[:active_tab1] = "SupportReport" 
+  end
+
+
   def datewise_report_list
     @date = params[:date].to_date
     @issue_requests = IssueRequest.where(date: @date)
-    session[:active_tab] = "issuetracker"
-    session[:active_tab1] = "issueprocess" 
+    session[:active_tab] = "HelpDesk"
+    session[:active_tab1] = "SupportReport" 
   end
 
   def datewise_report_xls
@@ -245,7 +268,9 @@ class IssueRequestsController < ApplicationController
   end
 
   def datewise_report_pdf
-     @date = params[:date].to_date
+    session[:active_tab] = "HelpDesk"
+    session[:active_tab1] = "SupportReport" 
+    @date = params[:date].to_date
     @issue_requests = IssueRequest.where(date: @date)
     respond_to do |format|
           format.json
@@ -303,15 +328,67 @@ class IssueRequestsController < ApplicationController
       end
   end
 
-  def memberwise_report_list
+  # def memberwise_report_list
+  #   # byebug
+  #    @date = params[:date]
+  #    @group_id = params[:group_id]
+  #    @member_id = params[:issue_member_id]
+  #    IssueRequest.where(issue_tracker_group_id: @group_id, issue_tracker_member_id: @member_id, date: @date) 
+  #    respond_to do |format|
+  #    format.xls {render template: 'issue_requests/memberwise_report_list_xls.xls.erb'}
+  #   end
+  # end
+ def memberwise_report
+  session[:active_tab] = "HelpDesk"
+  session[:active_tab1] = "SupportReport" 
+   
+ end
+
+def memberwise_report_list
+      # byebug
+     @date = params[:issue_request][:date]
+     @group_id = params[:issue_request][:issue_tracker_group_id]
+     @member_id = params[:issue_requests][:issue_tracker_member_id]
+     @issue_requests = IssueRequest.where(issue_tracker_group_id: @group_id, issue_tracker_member_id: @member_id, date: @date.to_date) 
+    #  respond_to do |format|
+    #  format.xls {render template: 'issue_requests/memberwise_report_list_xls.xls.erb'}
+    # end
+  end
+
+  def memberwise_report_list_xls
+    # byebug
      @date = params[:date]
-     @group_id = params[:group_id]
-     @member_id = params[:issue_member_id]
-     # byebug
-     IssueRequest.where(issue_tracker_group_id: @group_id, issue_tracker_member_id: @member_id, date: @date) 
+     @group_id = params[:issue_tracker_group_id]
+     @member_id = params[:issue_tracker_member_id]
+     @issue_requests = IssueRequest.where(issue_tracker_group_id: @group_id, issue_tracker_member_id: @member_id, date: @date.to_date)    
      respond_to do |format|
      format.xls {render template: 'issue_requests/memberwise_report_list_xls.xls.erb'}
     end
+  end
+
+  def memberwise_report_list_pdf
+    # byebug
+     @date = params[:date]
+     @group_id = params[:issue_tracker_group_id]
+     @member_id = params[:issue_tracker_member_id]
+     @issue_requests = IssueRequest.where(issue_tracker_group_id: @group_id, issue_tracker_member_id: @member_id, date: @date.to_date)   
+      respond_to do |format|
+          format.json
+          format.pdf do
+            render pdf: 'memberwise_report_list_pdf',
+                  layout: 'pdf.html',
+                  orientation: 'Landscape',
+                  template: 'issue_requests/memberwise_report_list_pdf.pdf.erb',
+                  # show_as_html: params[:debug].present?,
+                  :page_height      => 1000,
+                  :dpi              => '300',
+                  :margin           => {:top    => 10, # default 10 (mm)
+                                :bottom => 10,
+                                :left   => 20,
+                                :right  => 20},
+                  :show_as_html => params[:debug].present?
+          end
+      end
   end
 
   private

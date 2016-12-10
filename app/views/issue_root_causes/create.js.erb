@@ -1,6 +1,3 @@
-<%if @flag == true %>
-  $("#form").html("<%= j render 'form' %>");
-  $("#issue_root_cause_li").html("<%= j render 'issue_root_cause_list' %>");
-<%else%>
-  $("#form").html("<%= j render 'form' %>");
-<%end%>
+ $("#form").html("<%= j render 'form' %>");
+$("#issue_root_cause_list").html("<%= j render 'issue_root_cause_list' %>");
+

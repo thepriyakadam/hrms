@@ -16,6 +16,9 @@ class EmployerFamilyPensionsController < ApplicationController
   def new
     @employer_family_pension = EmployerFamilyPension.new
     @employer_family_pensions = EmployerFamilyPension.all
+    session[:active_tab] ="PayrollManagement"
+    session[:active_tab1] ="PayrollSetup"
+    session[:active_tab2] ="EmployerMaster"
   end
 
   # GET /employer_family_pensions/1/edit

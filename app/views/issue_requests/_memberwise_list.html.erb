@@ -41,4 +41,7 @@
       </tbody>
     </table>
     </div>
+    <%= link_to " Excel Report ",memberwise_report_list_xls_issue_requests_path(date: params[:issue_request][:date], issue_tracker_group_id: params[:issue_request][:issue_tracker_group_id], issue_tracker_member_id: params[:issue_requests][:issue_tracker_member_id], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+ 
+       <%= link_to " Print Report ",memberwise_report_list_pdf_issue_requests_path(date: @date , issue_tracker_member_id: @member_id,issue_tracker_group_id: @group_id,format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
 </div>

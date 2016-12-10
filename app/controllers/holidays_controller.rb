@@ -5,7 +5,8 @@ class HolidaysController < ApplicationController
   def new
     @holiday = Holiday.new
     @holidays = Holiday.all
-    session[:active_tab] ="timemgmt"
+    session[:active_tab] ="TimeManagement"
+    session[:active_tab1] ="AttendanceSetup"
   end
 
   # GET /holidays/1/edit
@@ -47,7 +48,11 @@ class HolidaysController < ApplicationController
     holiday = Holiday.find(params[:format])
     holiday.update(is_send: true)
     Employee.where(status: 'Active').each do |e|
-      EmployeeAttendance.create(employee_id: e.id, day: holiday.holiday_date, present: "H", department_id: e.department_id, is_confirm: false, count: 1)
+      @emp_attendance = EmployeeAttendance.where(employee_id: e.id,day: holiday.holiday_date).take
+        if @emp_attendance.try(:present) == nil
+          EmployeeAttendance.create(employee_id: e.id, day: holiday.holiday_date, present: "H", department_id: e.department_id, is_confirm: false, count: 1)
+        else
+        end   
     end
     @holidays = Holiday.all
   end

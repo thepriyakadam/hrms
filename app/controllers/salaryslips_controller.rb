@@ -3,8 +3,9 @@ class SalaryslipsController < ApplicationController
   def employee_salary_list
     @employees = Employee.find_by_role(current_user)
     # authorize! :show, @employees
-    session[:active_tab] ="payroll"
-    session[:active_tab1] ="salaryreport"
+   session[:active_tab] ="PayrollManagement"
+   session[:active_tab1] ="SalaryProcess"
+   session[:active_tab2] = "SalarySlip"
   end
 
   def salary_slip_list
@@ -37,8 +38,9 @@ class SalaryslipsController < ApplicationController
   def emp_contibution_salary_list
     @employees = Employee.find_by_role(current_user)
     # authorize! :show, @employees
-    session[:active_tab] ="payroll"
-    session[:active_tab1] ="salaryreport"
+   session[:active_tab] ="PayrollManagement"
+   session[:active_tab1] ="SalaryProcess"
+   session[:active_tab2] = "CTCReport"
   end
 
   def emp_contribution_slip_list
@@ -123,8 +125,9 @@ class SalaryslipsController < ApplicationController
   end
  
   def select_month_year_form
-    session[:active_tab] ="payroll"
-    session[:active_tab1] ="salaryprocess"
+    session[:active_tab] ="PayrollManagement"
+    session[:active_tab1] ="SalaryProcess"
+    # session[:active_tab2] ="Advance"
   end
 
   def show_unsaved_employee
@@ -327,17 +330,15 @@ class SalaryslipsController < ApplicationController
 
 
         @master_esic = EsicMaster.where(is_active: true).take
-          # byebug
           if @master_esic.nil?
           else
           if @master_esic.esic && addable_total_calculated_amount <= @master_esic.max_limit && @employee.joining_detail.have_esic
-            # byebug
             formula_string = @master_esic.base_component.split(',').map {|i| i.to_i}
             formula_item = SalaryslipComponent.where(salary_component_id: formula_string,salaryslip_id: @salaryslip.id)
-            @total = formula_item.sum(:calculated_amount)
             @total_actual = formula_item.sum(:actual_amount)
-            formula_item_calculated_amount = (@total / working_day.try(:day_in_month) * working_day.try(:payable_day))
-            formula_item_actual_amount = (@total_actual / working_day.try(:day_in_month) * working_day.try(:payable_day))
+            @total = formula_item.sum(:calculated_amount)
+            formula_item_actual_amount = (@total_actual / working_day.try(:day_in_month))
+            formula_item_calculated_amount = (@total_actual / working_day.try(:day_in_month) * working_day.try(:payable_day))
             deducted_actual_amount = (formula_item_actual_amount / 100 * @master_esic.percentage).ceil
             deducted_calculated_amount = (formula_item_calculated_amount / 100 * @master_esic.percentage).ceil
             @salary_component = SalaryComponent.find_by(name: "ESIC")
@@ -407,6 +408,24 @@ class SalaryslipsController < ApplicationController
             end
             end
           end
+
+      @professional_tax_masters = ProfessionalTaxMaster.where(is_active: true)
+       
+      @professional_tax_masters.try(:each) do |s|
+        formula_string = s.base_component.split(',').map {|i| i.to_i}
+        formula_item = SalaryslipComponent.where(salary_component_id: formula_string,salaryslip_id: @salaryslip.id)
+        @total = formula_item.sum(:calculated_amount)
+        @total_actual = formula_item.sum(:actual_amount)
+        if @total_actual.between?(s.min_amount, s.max_amount) && @month != "March"
+          @salary_component = SalaryComponent.find_by(name: "Prof. Tax")
+          SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: s.for_month, calculated_amount: s.for_month, is_deducted: true, other_component_name: 'Prof. Tax',salary_component_id: @salary_component.id)
+
+        elsif @month == 'March' && @total_actual.between?(s.min_amount, s.max_amount)
+          @salary_component = SalaryComponent.find_by(name: "Prof. Tax")
+          SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: s.march_amount, calculated_amount: s.march_amount, is_deducted: true, other_component_name: 'Prof. Tax',salary_component_id: @salary_component.id)
+        else
+        end
+      end
 
         if @employee.joining_detail.have_retention == true      
           @retention = RetentionMoney.where(is_active: true).take
@@ -610,23 +629,7 @@ class SalaryslipsController < ApplicationController
       end
     end
 
-      @professional_tax_masters = ProfessionalTaxMaster.where(is_active: true)
-       
-      @professional_tax_masters.try(:each) do |s|
-        formula_string = s.base_component.split(',').map {|i| i.to_i}
-        formula_item = SalaryslipComponent.where(salary_component_id: formula_string,salaryslip_id: @salaryslip.id)
-        @total = formula_item.sum(:calculated_amount)
-        @total_actual = formula_item.sum(:actual_amount)
-        if @total.between?(s.min_amount, s.max_amount) && @month != "March"
-          @salary_component = SalaryComponent.find_by(name: "Prof. Tax")
-          SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: s.for_month, calculated_amount: s.for_month, is_deducted: true, other_component_name: 'Prof. Tax',salary_component_id: @salary_component.id)
-
-        elsif @month == 'March' && @total.between?(s.min_amount, s.max_amount)
-          @salary_component = SalaryComponent.find_by(name: "Prof. Tax")
-          SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: s.march_amount, calculated_amount: s.march_amount, is_deducted: true, other_component_name: 'Prof. Tax',salary_component_id: @salary_component.id)
-        else
-        end
-      end
+     
 
       @payroll_overtime_masters = PayrollOvertimeMaster.where(is_active: true,is_payroll: true)
 
@@ -689,8 +692,8 @@ class SalaryslipsController < ApplicationController
   end
 
   def revert_salary
-    session[:active_tab] ="payroll"
-    session[:active_tab1] ="salaryprocess"
+    session[:active_tab] ="PayrollManagement"
+    session[:active_tab1] ="SalaryProcess"
   end
   
   def salary_slip_report 

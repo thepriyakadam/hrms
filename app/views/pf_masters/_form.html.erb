@@ -8,7 +8,19 @@
       </div>
     </div>
 
+     <div class="col-sm-2">
+      <div class="form-group required">
+        <%= f.select :is_pf,[['Yes','true'],['No','false']],{label: 'PF',include_blank: " Select PF Option"} %>
+      </div>
+    </div>
+
     
+    <div class="col-sm-2">
+      <div class="form-group required">
+        <%= f.text_field :percentage %>
+      </div>
+    </div>
+   
     <div class="col-sm-3">
        <label>Effective Date</label>
       <div class="field">
@@ -21,29 +33,24 @@
       </div>
     </div>
 
-    <div class="col-sm-2">
-      <div class="form-group required">
-        <%= f.select :is_pf,[['Yes','true'],['No','false']],{label: 'PF',include_blank: " Select PF Option"} %>
-      </div>
-    </div>
 
     <div class="col-sm-2">
-      <div class="form-group required">
-        <%= f.text_field :percentage %>
+      <div class="field">
+        <%= f.text_field :min_limit %>
       </div>
     </div>
-   
-    
- 
+</div>
+  <div class="row">
+
   <div class="col-sm-1">
       <label>Status </label>
       <div class="field">
         <%= f.check_box :is_active, label: 'Active'%>
       </div>
     </div>
-</div>
-  <div class="row">
+
     <div class="col-sm-3">
+    <label></label>
       <div class="actions">
         <%= f.submit"Create PF Master", :class => class_name, data: { disable_with: data_info }%>
       </div>
@@ -60,53 +67,26 @@
     yearRange: '-200:-0',
     dateFormat: 'dd-mm-yy' });
   });
-
-  // $(function() {
-  //   $('#batches').multiselect({
-  //   includeSelectAllOption: true,
-  //   maxHeight: 200
-  //   });
-  // });
-
-  //   $("#pf_master").validate({
-  //     rules: {
-  //       "pf_master[date_effective]":{
-  //         required: true
-  //       },
-  //       "pf_master[is_pf]":{
-  //         required: true
-  //       },
-  //       "pf_master[percentage]":{
-  //         required: true
-  //       },
-  //       "pf_master[is_active]":{
-  //         required: true
-  //       }
-        
-  //     },
-  
-  //   errorPlacement: function(error, element) {
-  //     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
-  //     error.insertAfter(element.parent(element));
-  //   }
-  // }); 
-
 </script>
-
 
 <script>
 $("#pf_master").validate({
     rules: {
-      "pf_master[base_component]":{
+      "pf_master[percentage]":{
         required: true,
-      }
-    },
+      },
+      "pf_master[is_pf]":{
+        required: true,
+      },
+       },
     messages: {
-      "pf_master[base_component]":{
-        required: "Please specify Base Component",
-      }
-      
-    },
+      "pf_master[percentage]":{
+        required: "Please Specify percentage",
+      },
+       "pf_master[is_pf]":{
+        required: "Please Select PF",
+      },
+       },
     errorPlacement: function(error, element) {
      error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
      error.insertAfter(element.parent(element));

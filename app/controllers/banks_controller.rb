@@ -5,8 +5,8 @@ class BanksController < ApplicationController
   def new
     @bank = Bank.new
     @banks = Bank.all
-    session[:active_tab] ="master"
-    session[:active_tab1] ="companymaster"
+    session[:active_tab] ="GlobalSetup"
+    session[:active_tab1] ="CompanyType"
   end
 
   # GET /banks/1/edit

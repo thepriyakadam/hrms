@@ -16,8 +16,8 @@ class RootCauseMastersController < ApplicationController
   def new
     @root_cause_master = RootCauseMaster.new
     @root_cause_masters = RootCauseMaster.all
-    session[:active_tab] = "master"
-    session[:active_tab1] = "accident"
+    session[:active_tab] = "GlobalSetup"
+    session[:active_tab1] = "HSE"
   end
 
   # GET /root_cause_masters/1/edit

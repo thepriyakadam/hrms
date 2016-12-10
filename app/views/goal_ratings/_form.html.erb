@@ -10,7 +10,6 @@
       <div class="col-sm-3">
         <div class="form-group required">
         <%= f.select :goal_type,["Goal","Attribute"],{label: 'Performance Type',include_blank: "Select Type"},{onchange:"var a={goal_type:$(this).val()}; $.get('/goal_ratings/select_dropdown',a,function(response){});",class: 'form-control'} %>
-
       </div>
     </div>
 

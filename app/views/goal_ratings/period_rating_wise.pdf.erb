@@ -1,0 +1,39 @@
+<style>
+th {
+    text-align: left;
+}
+tr {
+    page-break-inside: avoid;
+}
+div.alwaysbreak { page-break-before: always; }
+div.nobreak:before { clear:both; }
+div.nobreak{ page-break-inside: avoid;
+  /* http://code.google.com/p/wkhtmltopdf/issues/detail?id=9#c21 */
+}
+</style>
+<div>
+  <center><h3>Employee Rating Detail</h3></center>
+      <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover" >
+        <thead>
+          <tr>
+            <th>Employee ID</th>
+            <th>Employee Name</th>
+            <th>Appraisee Rating</th>
+            <th>Appraiser Rating</th>
+            <th>Reviewer Rating</th>
+            <th>Reviewer Rating</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @goal_bunches.each do |e| %>
+          <tr>
+          <td><%= e.employee.manual_employee_code %></td>
+          <td><%= e.employee.first_name %> <%= e.employee.middle_name %> <%= e.employee.last_name %> </td>
+          <td><%= e.appraisee_rating_id %></td> 
+          <td><%= e.appraiser_rating %></td>
+          <td><%= e.reviewer_rating_id %></td>
+          <td><%= e.final_rating_id %></td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>

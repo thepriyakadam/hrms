@@ -412,8 +412,8 @@ class EmployeeAttendancesController < ApplicationController
     # @employee_attendances = EmployeeAttendance.where(day: @month)
     @date = Date.new(@year.to_i, Workingday.months[@month])
     @day = @date.end_of_month.day
-    @emp = Employee.where(status: "Active").pluck(:id)
-    @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ? AND employee_id = ?", @date.strftime('%m/%Y'),@emp).group(:employee_id)
+    #@emp = Employee.where(status: "Active").pluck(:id)
+    @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).group(:employee_id)
   end
 
   def create_attendance_1
@@ -476,6 +476,8 @@ class EmployeeAttendancesController < ApplicationController
   end
 
   def select_date_department_form
+    session[:active_tab] ="TimeManagement"
+    session[:active_tab1] ="Reports"
   end
 
   def show_departmntwise_employee
@@ -519,6 +521,8 @@ class EmployeeAttendancesController < ApplicationController
   end
 
   def select_date_present_form
+    session[:active_tab] ="TimeManagement"
+    session[:active_tab1] ="Reports"
   end
 
   def show_datewise_employee

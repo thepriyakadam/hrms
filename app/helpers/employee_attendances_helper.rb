@@ -60,6 +60,19 @@ module EmployeeAttendancesHelper
     exist.select {|k,v| v == "A" || v == "" }.count + (exist.select {|k,v| v == "P/2" }.count)/2.to_f
   end
 
+  def gatepass_count(exist)
+    #byebug
+    count = exist.select {|k,v| v == "PG" }.count
+    if count <= 2
+    else
+      @a = count - 2
+      @b = count - @a
+      @c = @a/2
+      present_day_count = @b + @c
+      absent_day_count = @c
+    end
+  end
+
   # def payable_day_count(exist)
   #   exist.select {|k,v| v == "P" }.count
   # end

@@ -703,7 +703,7 @@ ActiveRecord::Base.transaction do
  @employee = Employee.find_by_id(ex.cell(line,'A'))
  puts "#{i} Record inserting.----------------------------"
  # Employee.where(id: @employee.id).update_all(manual_employee_code: ex.cell(line,'B'))
- Employee.where(id: @employee.id).update_all(employee_master_code_id: ex.cell(line,'B').to_i)
+ Employee.where(id: @employee.id).update_all(employee_code_master_id: ex.cell(line,'B').to_i)
  puts "#{i} Record inserted.-----------------------------------------------"
  i += 1
  end

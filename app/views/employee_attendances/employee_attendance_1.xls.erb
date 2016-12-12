@@ -26,7 +26,7 @@
             <th>GP</th>
             <th>LWP</th>
             <th>ESIC</th>
-            <th>Total</th>
+            <th>Payble Days</th>
           </tr>
         </thead>
         <tbody>
@@ -101,7 +101,7 @@
                 <% aesic = esic.count + (pesic.count)/2.to_f %>
                 <%= aesic %>
               </td>
-              <td><%= ab + ap + wd.count + h.count + ael + acl + alwp + aesic + acoff + aal + aod +  gp.count %></td>
+              <td><%= ap + wd.count + h.count + ael + acl + acoff + aal + aod +  gp.count %></td>
             </tr> 
             <% present_day = present_day_count(exist) %>
             <% holiday_in_month = holiday_in_month_count(exist) %>

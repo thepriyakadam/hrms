@@ -694,16 +694,16 @@ require 'roo'
 #   end
 # end
 
-ex = Roo::Excel.new("#{Rails.root}/public/employee_basic_report (1).xls")
+ex = Roo::Excel.new("#{Rails.root}/public/cid.xls")
 ex.default_sheet = ex.sheets[0] #siya feb
 i = 1
 ActiveRecord::Base.transaction do
-66.upto(66) do |line| # siya Feb 2016
+2.upto(543) do |line| # siya Feb 2016
  puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
  @employee = Employee.find_by_id(ex.cell(line,'A'))
  puts "#{i} Record inserting.----------------------------"
  # Employee.where(id: @employee.id).update_all(manual_employee_code: ex.cell(line,'B'))
- Employee.where(id: @employee.id).update_all(manual_employee_code: ex.cell(line,'B'),company_id: ex.cell(line,'C').to_i,company_location_id: ex.cell(line,'D').to_i,department_id: ex.cell(line,'E').to_i)
+ Employee.where(id: @employee.id).update_all(employee_master_code_id: ex.cell(line,'B').to_i)
  puts "#{i} Record inserted.-----------------------------------------------"
  i += 1
  end

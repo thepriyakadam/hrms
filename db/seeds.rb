@@ -856,53 +856,82 @@ require 'roo'
 # i = i+1
 # end
 
-# puts "Starting ..."
-# ex = Roo::Excel.new("#{Rails.root}/public/rge.xls")
-# ex.default_sheet = ex.sheets[0]
-# i=1
-
-# 2.upto(47) do |line|
-# @employee = Employee.find_by_manual_employee_code(ex.cell(line,'AD'))
-# JoiningDetail.new do |j|
-#   j.employee_id = @employee.id unless @employee.nil?
-#   j.joining_date = ex.cell(line,'AE')
-
-#   @designation = EmployeeDesignation.find_by_name(ex.cell(line,'AF'))
-#   j.employee_designation_id = @designation.id unless @designation.nil?
-
-#   @grade = EmployeeGrade.find_by_name(ex.cell(line,'AG'))
-#   j.employee_grade_id = @grade.id unless @grade.nil?
-
-#   @category = EmployeeCategory.find_by_name(ex.cell(line,'AP'))
-#   j.employee_category_id = @category.id unless @category.nil?
-
-#   # j.select_pf = ex.cell(line,'AI')
-#   # j.employee_pf_no = ex.cell(line,'AJ')
-#   # j.have_esic = ex.cell(line,'AL')
-#   # j.employee_efic_no = ex.cell(line,'AM')
-#   # j.is_da = ex.cell(line,'BA')
-#   j.save!
-# end
-# puts "#{i} Record inserted.-----------------------------------------------"
-# i = i+1
-# end
-
-
 puts "Starting ..."
-ex = Roo::Excel.new("#{Rails.root}/public/rgl.xls")
-ex.default_sheet = ex.sheets[1] 
+ex = Roo::Excel.new("#{Rails.root}/public/rgjdec.xls")
+ex.default_sheet = ex.sheets[0]
 i=1
 
-2.upto(53) do |line|
+48.upto(99) do |line|
 @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
-EmployeeLeavBalance.new do |j|
+JoiningDetail.new do |j|
   j.employee_id = @employee.id unless @employee.nil?
-  j.leav_category_id = ex.cell(line,'B')
-  j.no_of_leave = ex.cell(line,'C')
-  j.total_leave = ex.cell(line,'D')
-  j.is_active = ex.cell(line,'E')
+
+  j.employee_uan_no = ex.cell(line,'B')
+  j.joining_date = ex.cell(line,'C')
+  j.confirmation_date = ex.cell(line,'D')
+
+  @designation = EmployeeDesignation.find_by_name(ex.cell(line,'E'))
+  j.employee_designation_id = @designation.id unless @designation.nil?
+
+  @grade = EmployeeGrade.find_by_name(ex.cell(line,'F'))
+  j.employee_grade_id = @grade.id unless @grade.nil?
+
+  j.select_pf = ex.cell(line,'G')
+  j.employee_pf_no = ex.cell(line,'H')
+  j.pf_max_amount = ex.cell(line,'I')
+  j.have_esic = ex.cell(line,'J')
+  j.employee_efic_no = ex.cell(line,'K')
+
+  @pay_mode = PaymentMode.find_by_name(ex.cell(line,'L'))
+  j.payment_mode_id = @pay_mode.id unless @pay_mode.nil?
+
+  @cost_center = CostCenter.find_by_name(ex.cell(line,'M'))
+  j.cost_center_id = @cost_center.id unless @cost_center.nil?
+
+  @category = EmployeeCategory.find_by_name(ex.cell(line,'N'))
+  j.employee_category_id = @category.id unless @category.nil?
+
+  j.medical_schem = ex.cell(line,'O')
+  j.probation_period = ex.cell(line,'P')
+  j.notice_period = ex.cell(line,'Q')
+  j.have_passport = ex.cell(line,'R')
+  j.passport_no = ex.cell(line,'S')
+  j.passport_issue_date = ex.cell(line,'T')
+  j.passport_expiry_date = ex.cell(line,'U')
+  j.have_retention = ex.cell(line,'V')
+  j.retirement_date = ex.cell(line,'W')
+
+  @reserved_category = ReservedCategory.find_by_name(ex.cell(line,'X'))
+  j.reserved_category_id = @reserved_category.id unless @reserved_category.nil?
+
+
+  j.is_employeer_pf = ex.cell(line,'Y')
+  j.is_employeer_esic = ex.cell(line,'Z')
+  j.is_insurance = ex.cell(line,'AA')
+  j.is_family_pension = ex.cell(line,'AB')
+  j.is_bonus = ex.cell(line,'AC')
   j.save!
 end
 puts "#{i} Record inserted.-----------------------------------------------"
 i = i+1
 end
+
+
+# puts "Starting ..."
+# ex = Roo::Excel.new("#{Rails.root}/public/rgl.xls")
+# ex.default_sheet = ex.sheets[1] 
+# i=1
+
+# 2.upto(53) do |line|
+# @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
+# EmployeeLeavBalance.new do |j|
+#   j.employee_id = @employee.id unless @employee.nil?
+#   j.leav_category_id = ex.cell(line,'B')
+#   j.no_of_leave = ex.cell(line,'C')
+#   j.total_leave = ex.cell(line,'D')
+#   j.is_active = ex.cell(line,'E')
+#   j.save!
+# end
+# puts "#{i} Record inserted.-----------------------------------------------"
+# i = i+1
+# end

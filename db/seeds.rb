@@ -694,20 +694,20 @@ require 'roo'
 #   end
 # end
 
-ex = Roo::Excel.new("#{Rails.root}/public/cid.xls")
-ex.default_sheet = ex.sheets[0] #siya feb
-i = 1
-ActiveRecord::Base.transaction do
-2.upto(543) do |line| # siya Feb 2016
- puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
- @employee = Employee.find_by_id(ex.cell(line,'A'))
- puts "#{i} Record inserting.----------------------------"
- # Employee.where(id: @employee.id).update_all(manual_employee_code: ex.cell(line,'B'))
- Employee.where(id: @employee.id).update_all(employee_code_master_id: ex.cell(line,'B').to_i)
- puts "#{i} Record inserted.-----------------------------------------------"
- i += 1
- end
- end
+# ex = Roo::Excel.new("#{Rails.root}/public/cid.xls")
+# ex.default_sheet = ex.sheets[0] #siya feb
+# i = 1
+# ActiveRecord::Base.transaction do
+# 2.upto(543) do |line| # siya Feb 2016
+#  puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
+#  @employee = Employee.find_by_id(ex.cell(line,'A'))
+#  puts "#{i} Record inserting.----------------------------"
+#  # Employee.where(id: @employee.id).update_all(manual_employee_code: ex.cell(line,'B'))
+#  Employee.where(id: @employee.id).update_all(employee_code_master_id: ex.cell(line,'B').to_i)
+#  puts "#{i} Record inserted.-----------------------------------------------"
+#  i += 1
+#  end
+#  end
 
 # puts "Starting ..."
 # ex = Roo::Excel.new("#{Rails.root}/public/rge.xls")
@@ -822,21 +822,21 @@ ActiveRecord::Base.transaction do
 # end
 
 
-# puts "Starting ..."
-# ex = Roo::Excel.new("#{Rails.root}/public/l.xls")
-# ex.default_sheet = ex.sheets[0] 
-# i=1
+puts "Starting ..."
+ex = Roo::Excel.new("#{Rails.root}/public/rgl.xls")
+ex.default_sheet = ex.sheets[0] 
+i=1
 
-# 2.upto(169) do |line|
-# @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
-# EmployeeLeavBalance.new do |j|
-#   j.employee_id = @employee.id unless @employee.nil?
-#   j.leav_category_id = ex.cell(line,'B')
-#   j.no_of_leave = ex.cell(line,'C')
-#   j.expiry_date = ex.cell(line,'D')
-#   j.total_leave = ex.cell(line,'E')
-#   j.save!
-# end
-# puts "#{i} Record inserted.-----------------------------------------------"
-# i = i+1
-# end
+2.upto(47) do |line|
+@employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
+EmployeeLeavBalance.new do |j|
+  j.employee_id = @employee.id unless @employee.nil?
+  j.leav_category_id = ex.cell(line,'B')
+  j.no_of_leave = ex.cell(line,'C')
+  j.total_leave = ex.cell(line,'D')
+  j.is_active = ex.cell(line,'E')
+  j.save!
+end
+puts "#{i} Record inserted.-----------------------------------------------"
+i = i+1
+end

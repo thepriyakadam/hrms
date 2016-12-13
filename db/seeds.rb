@@ -861,8 +861,8 @@ ex = Roo::Excel.new("#{Rails.root}/public/rgjdec.xls")
 ex.default_sheet = ex.sheets[0]
 i=1
 
-48.upto(99) do |line|
-@employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
+2.upto(47) do |line|
+@employee = Employee.find_by_manual_employee_code(ex.cell(line,'A'))
 JoiningDetail.new do |j|
   j.employee_id = @employee.id unless @employee.nil?
 

@@ -626,38 +626,10 @@ class EmployeesController < ApplicationController
 
 
 
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     flash[:notice] = "Employee Record Successfully destroyed !!"
     redirect_to destroy_employee_employees_path
   end
+
 
   private
 

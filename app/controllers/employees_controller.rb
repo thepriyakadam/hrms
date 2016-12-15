@@ -492,55 +492,172 @@ class EmployeesController < ApplicationController
     @employee = Employee.find(params[:salary][:employee_id])
   end
 
-  # def destroy_details
-  #   @employee = Employee.find(params[:emp_id])
-  #   Employee.find_by(id: @employee.id).destroy
-  #   JoiningDetail.where(employee_id: @employee.id).destroy_all
-  #   Salaryslip.where(employee_id: @employee.id).destroy_all
-  #   EmployeeNomination.where(employee_id: @employee.id).destroy_all
-  #   Award.where(employee_id: @employee.id).destroy_all
-  #   Certification.where(employee_id: @employee.id).destroy_all
-  #   InterviewSchedule.where(employee_id: @employee.id).destroy_all
-  #   VacancyMaster.where(employee_id: @employee.id).destroy_all
-  #   Qualification.where(employee_id: @employee.id).destroy_all
-  #   EmployeeLeavRequest.where(employee_id: @employee.id).destroy_all
-  #   EmployeeLeavBalance.where(employee_id: @employee.id).destroy_all
-  #   Family.where(employee_id: @employee.id).destroy_all
-  #   Experience.where(employee_id: @employee.id).destroy_all
-  #   Skillset.where(employee_id: @employee.id).destroy_all
-  #   AssignedAsset.where(employee_id: @employee.id).destroy_all
-  #   EmployeeSalaryTemplate.where(employee_id: @employee.id).destroy_all
-  #   Workingday.where(employee_id: @employee.id).destroy_all
-  #   EmployeeTemplate.where(employee_id: @employee.id).destroy_all
-  #   ParticularLeaveRecord.where(employee_id: @employee.id).destroy_all
-  #   SocietyMemberShip.where(employee_id: @employee.id).destroy_all
-  #   MonthlyExpence.where(employee_id: @employee.id).destroy_all
-  #   BonusEmployee.where(employee_id: @employee.id).destroy_all
-  #   EmployeeShift.where(employee_id: @employee.id).destroy_all
-  #   Member.where(employee_id: @employee.id).destroy_all
-  #   EmployeeBankDetail.where(employee_id: @employee.id).destroy_all
-  #   EmployeePromotion.where(employee_id: @employee.id).destroy_all
-  #   TrainingRequest.where(employee_id: @employee.id).destroy_all
-  #   InterviewRound.where(employee_id: @employee.id).destroy_all
-  #   GoalBunch.where(employee_id: @employee.id).destroy_all
-  #   InterviewRoundReschedule.where(employee_id: @employee.id).destroy_all
-  #   ManagerHistory.where(employee_id: @employee.id).destroy_all
-  #   DueEmployeeDetail.where(employee_id: @employee.id).destroy_all
-  #   LeaveRecord.where(employee_id: @employee.id).destroy_all
-  #   TravelRequestHistory.where(employee_id: @employee.id).destroy_all
-  #   IssueTrackerMember.where(employee_id: @employee.id).destroy_all
-  #   TravelRequest.where(employee_id: @employee.id).destroy_all
-  #   IssueRequest.where(employee_id: @employee.id).destroy_all
-  #   WeekOffMaster.where(employee_id: @employee.id).destroy_all
-  #   InductionDetail.where(employee_id: @employee.id).destroy_all
-  #   VacancyRequestHistory.where(employee_id: @employee.id).destroy_all
-  #   OvertimeSalary.where(employee_id: @employee.id).destroy_all
-  #   ReportingMaster.where(employee_id: @employee.id).destroy_all
-  #   Trainee.where(employee_id: @employee.id).destroy_all
+  def destroy_details
+    # @employee = Employee.find(params[:emp_id])
+    # Employee.find_by(id: @employee.id).destroy
+    # JoiningDetail.where(employee_id: @employee.id).destroy_all
+    # Salaryslip.where(employee_id: @employee.id).destroy_all
+    # EmployeeNomination.where(employee_id: @employee.id).destroy_all
+    # Award.where(employee_id: @employee.id).destroy_all
+    # Certification.where(employee_id: @employee.id).destroy_all
+    # InterviewSchedule.where(employee_id: @employee.id).destroy_all
+    # VacancyMaster.where(employee_id: @employee.id).destroy_all
+    # Qualification.where(employee_id: @employee.id).destroy_all
+    # EmployeeLeavRequest.where(employee_id: @employee.id).destroy_all
+    # EmployeeLeavBalance.where(employee_id: @employee.id).destroy_all
+    # Family.where(employee_id: @employee.id).destroy_all
+    # Experience.where(employee_id: @employee.id).destroy_all
+    # Skillset.where(employee_id: @employee.id).destroy_all
+    # AssignedAsset.where(employee_id: @employee.id).destroy_all
+    # EmployeeSalaryTemplate.where(employee_id: @employee.id).destroy_all
+    # Workingday.where(employee_id: @employee.id).destroy_all
+    # EmployeeTemplate.where(employee_id: @employee.id).destroy_all
+    # ParticularLeaveRecord.where(employee_id: @employee.id).destroy_all
+    # SocietyMemberShip.where(employee_id: @employee.id).destroy_all
+    # MonthlyExpence.where(employee_id: @employee.id).destroy_all
+    # BonusEmployee.where(employee_id: @employee.id).destroy_all
+    # EmployeeShift.where(employee_id: @employee.id).destroy_all
+    # Member.where(employee_id: @employee.id).destroy_all
+    # EmployeeBankDetail.where(employee_id: @employee.id).destroy_all
+    # EmployeePromotion.where(employee_id: @employee.id).destroy_all
+    # TrainingRequest.where(employee_id: @employee.id).destroy_all
+    # InterviewRound.where(employee_id: @employee.id).destroy_all
+    # GoalBunch.where(employee_id: @employee.id).destroy_all
+    # InterviewRoundReschedule.where(employee_id: @employee.id).destroy_all
+    # ManagerHistory.where(employee_id: @employee.id).destroy_all
+    # DueEmployeeDetail.where(employee_id: @employee.id).destroy_all
+    # LeaveRecord.where(employee_id: @employee.id).destroy_all
+    # TravelRequestHistory.where(employee_id: @employee.id).destroy_all
+    # TravelRequest.where(employee_id: @employee.id).destroy_all
+    # # IssueRequest.where(employee_id: @employee.id).destroy_all
+    # WeekOffMaster.where(employee_id: @employee.id).destroy_all
+    # InductionDetail.where(employee_id: @employee.id).destroy_all
+    # VacancyRequestHistory.where(employee_id: @employee.id).destroy_all
+    # OvertimeSalary.where(employee_id: @employee.id).destroy_all
+    # ReportingMaster.where(employee_id: @employee.id).destroy_all
+    # Trainee.where(employee_id: @employee.id).destroy_all
 
-  #   flash[:notice] = "Employee Record Successfully destroyed !!"
-  #   redirect_to destroy_employee_employees_path
-  # end
+
+    
+    # IssueTrackerMember.where(employee_id: @employee.id).destroy_all
+    # IssueRequest.where(issue_tracker_member_id: @issue_request.issue_tracker_member_id).destroy_all
+    # # @issue_tracker_member = IssueTrackerMember.find(params[:issue_tracker_member])
+    # IssueLocker.where(issue_request_id: @employee.id).destroy_all
+    # IssueLockerHistory.where(issue_request_id: @employee.id).destroy_all
+    # IssueHistory.where(issue_request_id: @employee_id).destroy_all
+
+   # puts'new code'
+
+    @employee = Employee.find(params[:emp_id])
+
+    @issue_tracker_members = IssueTrackerMember.where(employee_id: @employee.id)
+    @issue_tracker_members.each do |itm|
+    IssueRequest.where(issue_tracker_member_id: itm.id).destroy_all
+    IssueHistory.where(issue_tracker_member_id: itm.id).destroy_all
+    IssueLocker.where(issue_tracker_member_id: itm.id).destroy_all
+    IssueLockerHistory.where(issue_tracker_member_id: itm.id).destroy_all
+    IssueTrackerMember.where(employee_id: @employee.id).destroy_all
+
+    end
+
+    @issue_requests = IssueRequest.where(employee_id: @employee.id)
+    @issue_requests.each do |ir|
+    IssueHistory.where(issue_request_id: ir.id).destroy_all
+    IssueLocker.where(issue_request_id: ir.id).destroy_all
+    IssueLockerHistory.where(issue_request_id: ir.id).destroy_all 
+    IssueRequest.where(id: ir.id).destroy_all
+    end
+
+    @salaryslips= Salaryslip.where(employee_id: @employee.id)
+    salaryslips.each do |ss|
+      SalaryslipComponent.where(salaryslip_id: ss.id)
+      Salaryslip.where(id: ss.idss)
+    end
+
+
+    # EmployeeResignation.where(employee_id: @employee.id).destroy_all
+    # ResignationHistory.where(employee_id: @employee.id).destroy_all
+    # DueEmployeeTemplate.where(employee_id: @employee.id,due_template_id: @due_template.id).destroy_all
+    # DueDetail.where(due_employee_template_id: @due_employee_template.id).destroy_all
+    # DueEmployeeDetail.where(employee_id: @employee.id).destroy_all
+    
+    # AdvanceSalary.where(employee_id: @employee_id).destroy_all
+    # Instalment.where(advance_salary_id: @advance_salary.id).destroy_all
+
+    # Attendance.where(employee_id: @employee.id).destroy_all
+    # EmployeeShift.where(employee_id: @employee.id).destroy_all
+
+    # TravelRequest.where(employee_id: @employee.id).destroy_all
+    # TravelExpence.where(travel_request_id: @travel_request.id).destroy_all
+    # TravelRequestHistory.where(employee_id: @employee.id).destroy_all
+    # DailyBillDetail.where(travel_request_id: @travel_request.id).destroy_all
+
+    # Salaryslip.where(employee_id: @employee.id).destroy_all
+    # EmployeeBankDetail.where(employee_id: @employee.id).destroy_all
+    # Workingday.where(employee_id: @employee.id).destroy_all
+    # EmployeeTemplate.where(employee_id: @employee.id).destroy_all
+    # SalaryslipComponent.where(salaryslip_id: @salaryslip.id).destroy_all
+    # EmployeeSalaryTemplate.where(employee_id: @employee.id).destroy_all
+    # SalaryComponentTemplate.where(salary_template: @salary_template.id).destroy_all
+    # EmployeeArrear.where(employee_id: @employee.id).destroy_all
+    # EmployeeArrearItem.where(employee_arrear_id: @employee_arrear.id).destroy_all
+    # SalaryCompMapping.where(salary_component_id: @salary_component.id).destroy_all
+
+
+    # VacancyMaster.where(employee_id: @employee.id).destroy_all
+    # VacancyRequestHistory.where(employee_id: @employee.id).destroy_all
+    # ParticularVacancyRequest.where(employee_id: @employee.id).destroy_all
+    # ReportingMastersVacancyMaster.where(vacancy_master_id: @vacancy_master.id).destroy_all
+    # InterviewSchedule.where(employee_id: @employee.id).destroy_all
+    # InterviewRoundReschedule.where(employee_id: @employee.id).destroy_all
+    # InterviewRound.where(employee_id: @employee.id).destroy_all
+    # VacancyRequestHistory.where(employee_id: @employee.id).destroy_all
+    # InterviewAnalysis.where(vacancy_request_history_id: @vacancy_request_history.id).destroy_all
+
+    # TrainingRequest.where(employee_id: @employee.id).destroy_all
+    # TrainingPlan.where(training_request_id: @training_request.id).destroy_all
+    # TrainingRecord.where(employee_id: @employee.id).destroy_all
+    # TraineeRequest.where(employee_id: @employee.id).destroy_all
+
+    # EmployeeTransfer.where(employee_id: @employee.id).destroy_all
+    # TransferHistory.where(employee_id: @employee.id).destroy_all
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    flash[:notice] = "Employee Record Successfully destroyed !!"
+    redirect_to destroy_employee_employees_path
+  end
 
   private
 

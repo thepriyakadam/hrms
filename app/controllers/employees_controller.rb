@@ -326,8 +326,8 @@ class EmployeesController < ApplicationController
   end
 
   def manager
-    @employees = Employee.all
-   session[:active_tab] ="UserAdministration"
+    @employees = Employee.where.not(manager_id: nil)
+    session[:active_tab] ="UserAdministration"
   end
 
   def edit_manager

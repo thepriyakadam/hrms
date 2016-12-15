@@ -115,10 +115,9 @@
      
         <table class="table table-bordered table-hover table-condensed">
           <thead>
-          <tr><th colspan="7"><center>Period : <%= @period.try(:name) %> : <%= @period.try(:from) %> - <%= @period.try(:to) %></center></th></tr>
-           <tr><th colspan="7"><center>Goal List</center></th></tr>
+          <tr><th colspan="6"><center>Period : <%= @period.try(:name) %> : <%= @period.try(:from) %> - <%= @period.try(:to) %></center></th></tr>
+           <tr><th colspan="6"><center>Goal List</center></th></tr>
             <tr>
-              <th><input type="checkbox" id="selectAll" value="selectAll"></th>
               <th>Goal perspective</th>
               <th>Goal weightage</th>
               <th>Goal measure</th>
@@ -130,12 +129,6 @@
           <tbody>
             <% @goal_ratings.each do |goal_rating| %>
               <tr>
-                <td>
-                <% if goal_rating.goal_bunch.goal_confirm == true %>
-                <% else %>
-                <%= check_box_tag "goal_rating_ids[]", goal_rating.goal_bunch_id %>
-                <% end %>
-                </td>
                 <td><%= goal_rating.goal_perspective.try(:name) %></td>
                 <td><%= goal_rating.goal_weightage %></td>
                 <td><%= goal_rating.goal_measure %></td>
@@ -156,9 +149,8 @@
       
         <table class="table table-bordered table-hover table-condensed">
           <thead>
-          <tr><th colspan="7"><center>Attribute List</center></th></tr>
+          <tr><th colspan="6"><center>Attribute List</center></th></tr>
             <tr>
-              <th><input type="checkbox" id="selectAll" value="selectAll"></th>
               <th>Attribute</th>
               <th>Goal weightage</th>
               <th>Goal measure</th>
@@ -170,12 +162,6 @@
           <tbody>
             <% @goal_attribute_ratings.each do |goal_rating| %>
               <tr>
-                <td>
-                <% if goal_rating.goal_bunch.goal_confirm == true %>
-                <% else %>
-                <%= check_box_tag "goal_rating_ids[]", goal_rating.goal_bunch_id %>
-                <% end %>
-                </td>
                 <td><%= goal_rating.attribute_master.try(:name) %></td>
                 <td><%= goal_rating.goal_weightage %></td>
                 <td><%= goal_rating.goal_measure %></td>
@@ -207,19 +193,3 @@
 </div>
 </div>
 <div id="myModal" class="modal fade"></div>
-<script type="text/javascript">
-  $(function () {
-    $('#selectAll').click(function() {
-      if (this.checked) {
-        $(':checkbox').each(function() {
-          this.checked = true;                       
-        });
-      } 
-      else {
-        $(':checkbox').each(function() {
-          this.checked = false;                        
-        });
-      } 
-    });
-  });
-</script>

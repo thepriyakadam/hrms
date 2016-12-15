@@ -136,25 +136,29 @@ class GoalRatingsController < ApplicationController
   end
 
   def appraiser_modal
-    @goal_rating = GoalRating.find(params[:format])
+    @goal_rating = GoalRating.find(params[:goal_rating_id])
+    @period = Period.find(params[:period_id])
   end
 
   def update_appraiser_modal
     @goal_rating = GoalRating.find(params[:goal_rating_id])
+    @period = Period.find(params[:period_id])
     @goal_rating.update(goal_rating_params)
     flash[:notice] = 'Updated Successfully'
-    redirect_to appraiser_comment_goal_bunches_path(emp_id: @goal_rating.appraisee_id, goal_id: @goal_rating.goal_bunch_id)
+    redirect_to appraiser_comment_goal_bunches_path(emp_id: @goal_rating.appraisee_id, goal_id: @goal_rating.goal_bunch_id,period_id: @period.id)
   end
 
   def reviewer_modal
-    @goal_rating = GoalRating.find(params[:format])
+    @goal_rating = GoalRating.find(params[:goal_rating_id])
+    @period = Period.find(params[:period_id])
   end
 
   def update_reviewer_modal
     @goal_rating = GoalRating.find(params[:goal_rating_id])
+    @period = Period.find(params[:period_id])
     @goal_rating.update(goal_rating_params)
     flash[:notice] = 'Updated Successfully'
-    redirect_to reviewer_comment_goal_bunches_path(emp_id: @goal_rating.appraisee_id, id: @goal_rating.goal_bunch_id)
+    redirect_to reviewer_comment_goal_bunches_path(emp_id: @goal_rating.appraisee_id, id: @goal_rating.goal_bunch_id,period_id: @period.id)
   end
 
   def goal_modal
@@ -515,7 +519,7 @@ class GoalRatingsController < ApplicationController
     end
   end
 
-    def increment_index
+  def increment_index
     @rating = Rating.last
   end
 
@@ -542,7 +546,7 @@ class GoalRatingsController < ApplicationController
     @location_name = params[:location_name]
     @rating = Rating.last
     #@goal_bunches = GoalBunch.where(period_id: @period.id)
-    @goal_bunches = GoalBunch.joins("INNER JOIN employees ON employees.id = goal_bunches.employee_id").where("employees.department_id = ? AND employees.company_location_id = ? AND employees.company_id = ? AND goal_bunches.period_id = ?" , @department_name,@location_name,@company_name,@period.id)
+    @goal_bunches = GoalBunch.joins("INNER JOIN employees ON employees.id = goal_bunches.employee_id").where("employees.department_id = ? AND employees.company_location_id = ? AND employees.company_id = ? AND goal_bunches.period_id = ?" , @department_name,@location_name,@company_name,@period)
     respond_to do |format|
       format.xls {render template: 'goal_ratings/increment_index.xls.erb'}
     end

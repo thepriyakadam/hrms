@@ -11,7 +11,7 @@
 	          <div class="input-group-addon">
 	            <i class="fa fa-calendar"></i>
 	          </div>
-	          <%= f.text_field :training_date, hide_label: true,class: 'birth_date'%>
+	          <%= f.text_field :training_date, hide_label: true,class: 'training_date'%>
 	        </div>
 	      </div>
 	    </div>
@@ -56,6 +56,13 @@
     <% end %>
 
 <script type="text/javascript">
+  $(function(){
+     $('.training_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-2:+5',
+    dateFormat: 'dd-mm-yy' });
+    });
 
   $("#training_plan").validate({
     rules: {

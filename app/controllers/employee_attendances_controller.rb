@@ -197,6 +197,8 @@ class EmployeeAttendancesController < ApplicationController
     # @employee_attendances = EmployeeAttendance.where(day: @month)
     @date = Date.new(@year.to_i, Workingday.months[@month])
     @day = @date.end_of_month.day
+    @start_date = @date
+    @end_date = @date.end_of_month
     if current_user.class == Member
       if current_user.role.name == 'CompanyLocation'
           @emp = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
@@ -423,7 +425,7 @@ class EmployeeAttendancesController < ApplicationController
     #EmployeeAttendance.where(employee_id: @employees).where("strftime('%m/%Y', day) = ? and is_confirm = ?", @date.to_date.strftime('%m/%Y'),false).update_all(is_confirm: true)
     Workingday.create(work_data_structure)
     flash[:notice] = "Workingday successfully saved."
-    redirect_to confirm_attendances_form_employee_attendances_path
+    redirect_to confirm_attendance_form_employee_attendances_path
   end
 
   def emp_attendance_1_list

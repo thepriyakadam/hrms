@@ -1772,6 +1772,7 @@ end
       post :show_employee_detail
       get :destroy_details
       get :edit_manager
+      post :update_manager
     end
     member do
       get :edit_manager

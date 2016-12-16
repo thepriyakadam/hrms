@@ -50,9 +50,9 @@ class ReportingMastersController < ApplicationController
   end
 
   def show_employee
-    @reporting_master1 = params[:employee_id_1]
+    @employee_id = params[:employee_id_1]
     #@employees = Employee.where("manager_id = ? OR manager_2_id = ?",@reporting_master1,@reporting_master1 )
-    @rep_mas = ReportingMaster.find(@reporting_master1)
+    @rep_mas = ReportingMaster.find_by_employee_id(@employee_id)
     @employee_rms = Employee.where(manager_id: @rep_mas.employee_id)
     @employee_rm2s = Employee.where(manager_2_id: @rep_mas.employee_id)
   end
@@ -62,8 +62,8 @@ class ReportingMastersController < ApplicationController
     @reporting_master2 = params[:salary][:employee_id_2]
     @effec_date = params[:salary][:effec_date]
     employee_ids = params[:employee_ids]
-    @rm1 = ReportingMaster.find_by(id: @reporting_master1)
-    @rm2 = ReportingMaster.find_by(id: @reporting_master2)
+    @rm1 = ReportingMaster.find_by_employee_id(@reporting_master1)
+    @rm2 = ReportingMaster.find_by_employee_id(@reporting_master2)
       if employee_ids.nil?
         flash[:alert] = "Please Select the Checkbox"
       else

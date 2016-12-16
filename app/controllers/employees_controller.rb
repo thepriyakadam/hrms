@@ -538,6 +538,7 @@ class EmployeesController < ApplicationController
   #   ReportingMaster.where(employee_id: @employee.id).destroy_all
   #   Trainee.where(employee_id: @employee.id).destroy_all
 
+
   #   flash[:notice] = "Employee Record Successfully destroyed !!"
   #   redirect_to destroy_employee_employees_path
   # end

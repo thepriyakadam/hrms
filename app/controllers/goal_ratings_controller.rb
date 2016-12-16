@@ -562,6 +562,31 @@ class GoalRatingsController < ApplicationController
     @goal_bunches = GoalBunch.where(period_id: period_id,final_rating_id: rating_id)
   end
 
+  def period_rating_wise_xls
+    period_id, rating_id = params[:period_id], params[:rating_id]
+    @goal_bunches = GoalBunch.where(period_id: period_id,final_rating_id: rating_id)
+    respond_to do |format|
+      format.xls {render template: 'goal_ratings/period_rating_wise.xls.erb'}
+    end
+
+  end
+
+  def period_rating_wise_pdf
+    period_id, rating_id = params[:period_id], params[:rating_id]
+    @goal_bunches = GoalBunch.where(period_id: period_id,final_rating_id: rating_id)
+    respond_to do |format|
+      format.json
+      format.pdf do
+        render pdf: 'goal_rating',
+              layout: 'pdf.html',
+              orientation: 'Landscape',
+              template: 'goal_ratings/period_rating_wise.pdf.erb',
+              show_as_html: params[:debug].present?,
+              margin:  { top:1,bottom:1,left:1,right:1 }
+      end
+    end
+  end
+
     private
     # Use callbacks to share common setup or constraints between actions.
     def set_goal_rating

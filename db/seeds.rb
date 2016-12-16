@@ -759,6 +759,20 @@ end
 #   end
 # end
 
+ex = Roo::Excel.new("#{Rails.root}/public/cid.xls")
+ex.default_sheet = ex.sheets[0] #siya feb
+i = 1
+ActiveRecord::Base.transaction do
+2.upto(543) do |line| # siya Feb 2016
+ puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
+ @employee = Employee.find_by_id(ex.cell(line,'A'))
+ puts "#{i} Record inserting.----------------------------"
+ # Employee.where(id: @employee.id).update_all(manual_employee_code: ex.cell(line,'B'))
+ Employee.where(id: @employee.id).update_all(employee_code_master_id: ex.cell(line,'B').to_i)
+ puts "#{i} Record inserted.-----------------------------------------------"
+ i += 1
+ end
+ end
 # ex = Roo::Excel.new("#{Rails.root}/public/cid.xls")
 # ex.default_sheet = ex.sheets[0] #siya feb
 # i = 1

@@ -1,6 +1,4 @@
-<div class="box box-default">
-   <div class="box-body"> 
-    <%= bootstrap_form_for(@investment_declaration,html: {id: 'investment_declaration'}) do |f| %>
+<%= bootstrap_form_for(@investment_declaration,html: {id: 'investment_declaration'}) do |f| %>
      <%= hidden_field_tag :authenticity_token, form_authenticity_token %> 
       <div class="row">
         <div class="col-sm-3">
@@ -14,14 +12,12 @@
             </div>
         </div>
 
-            <div class="col-sm-3">
+          <div class="col-sm-3">
             <div class="form-group required">
               <%= f.text_field :amount,label:'Amount', placeholder: 'Amount' %>
             </div>
           </div>
          
-        
-
         <div class="col-sm-3">
           <div class="form-group required">
             <div class="input-group">
@@ -52,8 +48,6 @@
             </div>
             </div>
           </div>
-        </div>
-    </div>
  <% end %>
 
 <script type="text/javascript">

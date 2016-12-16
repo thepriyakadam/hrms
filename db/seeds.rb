@@ -242,33 +242,32 @@ require 'roo'
 # ex = Roo::Excel.new("#{Rails.root}/public/jd.xls")
 
 
-# ex.default_sheet = ex.sheets[0] #siya feb
-# i = 1
-# ActiveRecord::Base.transaction do
-# 2.upto(73) do |line| # siya Feb 2016
-#  puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
-#  @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A'))
-#  # JoiningDetail.where(id: @employee.id).update_all(is_da: true)
-#  puts "#{i} Record inserted.-----------------------------------------------"
-#  unless @employee.nil?
-#  @joining_details = JoiningDetail.where(employee_id: @employee.id)
+ex.default_sheet = ex.sheets[0] #siya feb
+i = 1
+ActiveRecord::Base.transaction do
+2.upto(73) do |line| # siya Feb 2016
+ puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
+ @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A'))
+ # JoiningDetail.where(id: @employee.id).update_all(is_da: true)
+ puts "#{i} Record inserted.-----------------------------------------------"
+ unless @employee.nil?
+ @joining_details = JoiningDetail.where(employee_id: @employee.id)
 
-#    @joining_details.each do |jo|
-#      jo.update(is_employeer_pf: ex.cell(line,'B'))
-#      jo.update(is_family_pension: ex.cell(line,'C'))
-#      jo.update(is_employeer_esic: ex.cell(line,'D'))
-#      jo.update(select_pf: ex.cell(line,'E'))
-#      jo.update(employee_pf_no: ex.cell(line,'F'))
-#      jo.update(have_esic: ex.cell(line,'G'))
-#      jo.update(employee_efic_no: ex.cell(line,'H')) 
-  
-#      jo.save!
-#    end
-#    puts "#{i} Record inserted.-----------------------------------------------"
-#    i += 1
-#  end
-#  end
-# end
+   @joining_details.each do |jo|
+
+	@designation = EmployeeDesignation.find_by_name(ex.cell(line,'B'))
+	jo.update(employee_designation_id = @designation.id unless @designation.nil?)
+
+	@grade = EmployeeGrade.find_by_name(ex.cell(line,'C'))
+	jo.update(employee_grade_id = @grade.id unless @grade.nil?)
+
+    jo.save!
+   end
+   puts "#{i} Record inserted.-----------------------------------------------"
+   i += 1
+ end
+ end
+end
 
 
 
@@ -856,65 +855,65 @@ require 'roo'
 # i = i+1
 # end
 
-puts "Starting ..."
-ex = Roo::Excel.new("#{Rails.root}/public/rgjdec.xls")
-ex.default_sheet = ex.sheets[0]
-i=1
+# puts "Starting ..."
+# ex = Roo::Excel.new("#{Rails.root}/public/rgjdec.xls")
+# ex.default_sheet = ex.sheets[0]
+# i=1
 
-2.upto(47) do |line|
-@employee = Employee.find_by_manual_employee_code(ex.cell(line,'A'))
-JoiningDetail.new do |j|
-  j.employee_id = @employee.id unless @employee.nil?
+# 2.upto(47) do |line|
+# @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A'))
+# JoiningDetail.new do |j|
+#   j.employee_id = @employee.id unless @employee.nil?
 
-  j.employee_uan_no = ex.cell(line,'B')
-  j.joining_date = ex.cell(line,'C')
-  j.confirmation_date = ex.cell(line,'D')
+#   j.employee_uan_no = ex.cell(line,'B')
+#   j.joining_date = ex.cell(line,'C')
+#   j.confirmation_date = ex.cell(line,'D')
 
-  @designation = EmployeeDesignation.find_by_name(ex.cell(line,'E'))
-  j.employee_designation_id = @designation.id unless @designation.nil?
+#   @designation = EmployeeDesignation.find_by_name(ex.cell(line,'E'))
+#   j.employee_designation_id = @designation.id unless @designation.nil?
 
-  @grade = EmployeeGrade.find_by_name(ex.cell(line,'F'))
-  j.employee_grade_id = @grade.id unless @grade.nil?
+#   @grade = EmployeeGrade.find_by_name(ex.cell(line,'F'))
+#   j.employee_grade_id = @grade.id unless @grade.nil?
 
-  j.select_pf = ex.cell(line,'G')
-  j.employee_pf_no = ex.cell(line,'H')
-  j.pf_max_amount = ex.cell(line,'I')
-  j.have_esic = ex.cell(line,'J')
-  j.employee_efic_no = ex.cell(line,'K')
+#   j.select_pf = ex.cell(line,'G')
+#   j.employee_pf_no = ex.cell(line,'H')
+#   j.pf_max_amount = ex.cell(line,'I')
+#   j.have_esic = ex.cell(line,'J')
+#   j.employee_efic_no = ex.cell(line,'K')
 
-  @pay_mode = PaymentMode.find_by_name(ex.cell(line,'L'))
-  j.payment_mode_id = @pay_mode.id unless @pay_mode.nil?
+#   @pay_mode = PaymentMode.find_by_name(ex.cell(line,'L'))
+#   j.payment_mode_id = @pay_mode.id unless @pay_mode.nil?
 
-  @cost_center = CostCenter.find_by_name(ex.cell(line,'M'))
-  j.cost_center_id = @cost_center.id unless @cost_center.nil?
+#   @cost_center = CostCenter.find_by_name(ex.cell(line,'M'))
+#   j.cost_center_id = @cost_center.id unless @cost_center.nil?
 
-  @category = EmployeeCategory.find_by_name(ex.cell(line,'N'))
-  j.employee_category_id = @category.id unless @category.nil?
+#   @category = EmployeeCategory.find_by_name(ex.cell(line,'N'))
+#   j.employee_category_id = @category.id unless @category.nil?
 
-  j.medical_schem = ex.cell(line,'O')
-  j.probation_period = ex.cell(line,'P')
-  j.notice_period = ex.cell(line,'Q')
-  j.have_passport = ex.cell(line,'R')
-  j.passport_no = ex.cell(line,'S')
-  j.passport_issue_date = ex.cell(line,'T')
-  j.passport_expiry_date = ex.cell(line,'U')
-  j.have_retention = ex.cell(line,'V')
-  j.retirement_date = ex.cell(line,'W')
+#   j.medical_schem = ex.cell(line,'O')
+#   j.probation_period = ex.cell(line,'P')
+#   j.notice_period = ex.cell(line,'Q')
+#   j.have_passport = ex.cell(line,'R')
+#   j.passport_no = ex.cell(line,'S')
+#   j.passport_issue_date = ex.cell(line,'T')
+#   j.passport_expiry_date = ex.cell(line,'U')
+#   j.have_retention = ex.cell(line,'V')
+#   j.retirement_date = ex.cell(line,'W')
 
-  @reserved_category = ReservedCategory.find_by_name(ex.cell(line,'X'))
-  j.reserved_category_id = @reserved_category.id unless @reserved_category.nil?
+#   @reserved_category = ReservedCategory.find_by_name(ex.cell(line,'X'))
+#   j.reserved_category_id = @reserved_category.id unless @reserved_category.nil?
 
 
-  j.is_employeer_pf = ex.cell(line,'Y')
-  j.is_employeer_esic = ex.cell(line,'Z')
-  j.is_insurance = ex.cell(line,'AA')
-  j.is_family_pension = ex.cell(line,'AB')
-  j.is_bonus = ex.cell(line,'AC')
-  j.save!
-end
-puts "#{i} Record inserted.-----------------------------------------------"
-i = i+1
-end
+#   j.is_employeer_pf = ex.cell(line,'Y')
+#   j.is_employeer_esic = ex.cell(line,'Z')
+#   j.is_insurance = ex.cell(line,'AA')
+#   j.is_family_pension = ex.cell(line,'AB')
+#   j.is_bonus = ex.cell(line,'AC')
+#   j.save!
+# end
+# puts "#{i} Record inserted.-----------------------------------------------"
+# i = i+1
+# end
 
 
 # puts "Starting ..."

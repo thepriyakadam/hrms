@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161203040527) do
+ActiveRecord::Schema.define(version: 20161215074308) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -728,10 +728,11 @@ ActiveRecord::Schema.define(version: 20161203040527) do
     t.decimal  "count",                    precision: 5, scale: 2
     t.integer  "employee_leav_request_id"
     t.integer  "machine_attendances_id"
-    t.string   "company_hrs"
-    t.string   "overtime_hrs"
     t.integer  "company_time_master_id"
-    t.string   "total_hrs"
+    t.string   "working_hrs"
+    t.string   "rest_time"
+    t.string   "difference_hrs"
+    t.string   "overtime_hrs"
   end
 
   add_index "employee_attendances", ["company_time_master_id"], name: "index_employee_attendances_on_company_time_master_id"

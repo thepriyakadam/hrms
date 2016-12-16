@@ -1,5 +1,4 @@
-<div class="box box-default">
-   <div class="box-body"> 
+
 <%= bootstrap_form_for(@issue_tracker_group,html: {id: 'issue_tracker_group'}, remote:true) do |f| %>
     <div class="row">
         <div class="col-sm-3">
@@ -30,8 +29,6 @@
     </div>
   </div>
 <% end %>
-  </div>
-  </div>
   
 <script>
 $("#issue_tracker_group").validate({

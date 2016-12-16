@@ -538,41 +538,36 @@ class EmployeesController < ApplicationController
     # Trainee.where(employee_id: @employee.id).destroy_all
 
 
-    
-    # IssueTrackerMember.where(employee_id: @employee.id).destroy_all
-    # IssueRequest.where(issue_tracker_member_id: @issue_request.issue_tracker_member_id).destroy_all
-    # # @issue_tracker_member = IssueTrackerMember.find(params[:issue_tracker_member])
-    # IssueLocker.where(issue_request_id: @employee.id).destroy_all
-    # IssueLockerHistory.where(issue_request_id: @employee.id).destroy_all
-    # IssueHistory.where(issue_request_id: @employee_id).destroy_all
+   
+  
 
-   # puts'new code'
+# puts'final code'
 
-    @employee = Employee.find(params[:emp_id])
+#     @issue_tracker_members = IssueTrackerMember.where(employee_id: @employee.id)
+#     @issue_tracker_members.each do |itm|
+#     IssueRequest.where(issue_tracker_member_id: itm.id).destroy_all
+#     IssueHistory.where(issue_tracker_member_id: itm.id).destroy_all
+#     IssueLocker.where(issue_tracker_member_id: itm.id).destroy_all
+#     IssueLockerHistory.where(issue_tracker_member_id: itm.id).destroy_all
+#     IssueTrackerMember.where(employee_id: @employee.id).destroy_all
 
-    @issue_tracker_members = IssueTrackerMember.where(employee_id: @employee.id)
-    @issue_tracker_members.each do |itm|
-    IssueRequest.where(issue_tracker_member_id: itm.id).destroy_all
-    IssueHistory.where(issue_tracker_member_id: itm.id).destroy_all
-    IssueLocker.where(issue_tracker_member_id: itm.id).destroy_all
-    IssueLockerHistory.where(issue_tracker_member_id: itm.id).destroy_all
-    IssueTrackerMember.where(employee_id: @employee.id).destroy_all
+#     end
 
-    end
+#     @issue_requests = IssueRequest.where(employee_id: @employee.id)
+#     @issue_requests.each do |ir|
+#     IssueHistory.where(issue_request_id: ir.id).destroy_all
+#     IssueLocker.where(issue_request_id: ir.id).destroy_all
+#     IssueLockerHistory.where(issue_request_id: ir.id).destroy_all 
+#     IssueRequest.where(id: ir.id).destroy_all
+#     end
 
-    @issue_requests = IssueRequest.where(employee_id: @employee.id)
-    @issue_requests.each do |ir|
-    IssueHistory.where(issue_request_id: ir.id).destroy_all
-    IssueLocker.where(issue_request_id: ir.id).destroy_all
-    IssueLockerHistory.where(issue_request_id: ir.id).destroy_all 
-    IssueRequest.where(id: ir.id).destroy_all
-    end
+#     @salaryslips= Salaryslip.where(employee_id: @employee.id)
+#     salaryslips.each do |ss|
+#       SalaryslipComponent.where(salaryslip_id: ss.id)
+#       Salaryslip.where(id: ss.idss)
+#     end
 
-    @salaryslips= Salaryslip.where(employee_id: @employee.id)
-    salaryslips.each do |ss|
-      SalaryslipComponent.where(salaryslip_id: ss.id)
-      Salaryslip.where(id: ss.idss)
-    end
+# puts'till here'
 
 
     # EmployeeResignation.where(employee_id: @employee.id).destroy_all
@@ -614,11 +609,14 @@ class EmployeesController < ApplicationController
     # VacancyRequestHistory.where(employee_id: @employee.id).destroy_all
     # InterviewAnalysis.where(vacancy_request_history_id: @vacancy_request_history.id).destroy_all
 
-    # TrainingRequest.where(employee_id: @employee.id).destroy_all
-    # TrainingPlan.where(training_request_id: @training_request.id).destroy_all
-    # TrainingRecord.where(employee_id: @employee.id).destroy_all
-    # TraineeRequest.where(employee_id: @employee.id).destroy_all
-
+    @employee = Employee.find(params[:emp_id])
+    @training_requests = TrainingRequest.where(employee_id: @employee.id)
+    @training_requests.each do |tr|
+    TrainingPlan.where(training_request_id: tr.id).destroy_all
+    TraineeRequest.where(training_request_id: tr.id).destroy_all
+    TrainingRecord.where(employee_id: @employee.id).destroy_all
+    TrainingRequest.where(employee_id: @employee.id).destroy_all 
+end
     # EmployeeTransfer.where(employee_id: @employee.id).destroy_all
     # TransferHistory.where(employee_id: @employee.id).destroy_all
 

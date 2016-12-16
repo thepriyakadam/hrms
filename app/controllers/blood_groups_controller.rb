@@ -7,6 +7,7 @@ class BloodGroupsController < ApplicationController
     @blood_groups = BloodGroup.all
     session[:active_tab] ="GlobalSetup"
     session[:active_tab1] ="EmployeeProfile"
+  end
 
   def edit
   end

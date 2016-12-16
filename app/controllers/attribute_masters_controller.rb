@@ -44,8 +44,8 @@ class AttributeMastersController < ApplicationController
   # PATCH/PUT /attribute_masters/1.json
   def update
       @attribute_master.update(attribute_master_params)
-      @attribute_master = AttributeMaster.new
-      @attribute_masters = AttributeMaster.all  
+      @attribute_masters = AttributeMaster.all 
+      @attribute_master = AttributeMaster.new 
   end
 
   # DELETE /attribute_masters/1

@@ -181,39 +181,58 @@ class EmployeesController < ApplicationController
   end
 
   def submit_form
-    employee = Employee.find(params['login']['employee_id'])
-    # @department = Department.find(params["login"]["department_id"])
-    user = Member.new do |u|
-      u.email = if employee.email == '' || employee.email.nil?
-                  "#{employee.manual_employee_code}@xyz.com"
-                else
-                  employee.email
-                end
-      u.password = '12345678'
-      u.employee_id = employee.id
-      u.department_id = employee.department_id
-      u.company_id = employee.company_location.company_id
-      u.company_location_id = employee.company_location_id
-      # u.subdomain = Apartment::Tenant.current_tenant
-      u.member_code = employee.employee_code
-      u.manual_member_code = employee.manual_employee_code
-      u.role_id = params['login']['role_id']
-    end
-    ActiveRecord::Base.transaction do
-      if user.save
-        employee.update_attributes(manager_id: params["login"]["manager_id"], manager_2_id: params["login"]["manager_2_id"])
 
-        ManagerHistory.create(employee_id: employee.id,manager_id: params["login"]["manager_id"],manager_2_id: params["login"]["manager_2_id"],effective_from: params["login"]["effec_date"])
-        
-        flash[:notice] = "Employee assigned successfully."
+    @employee_ids = params[:employee_ids]
+
+    role_id = params[:role_id]
+    manager_id = params[:manager_id]
+    manager_2_id = params[:manager_2_id]
+    final = @employee_ids.zip(role_id,manager_id,manager_2_id)
+    final.each do |e,r,m1|
+      employee = Employee.find(e)
+      if r == ''
+        flash[:alert] = 'Select Role'
         redirect_to assign_role_employees_path
-        # UserPasswordMailer.welcome_email(company,pass).deliver_now
+      elsif m1 == ''
+        flash[:alert] = 'Select Manager 1'
+        redirect_to assign_role_employees_path
       else
-        p user.errors
-        flash[:alert] = 'Employee not assigned successfully.'
-        redirect_to assign_role_employees_path
-      end
-    end
+
+        employee = Employee.find(params['login']['employee_id'])
+        # @department = Department.find(params["login"]["department_id"])
+        user = Member.new do |u|
+          u.email = if employee.email == '' || employee.email.nil?
+                      "#{employee.manual_employee_code}@xyz.com"
+                    else
+                      employee.email
+                    end
+          u.password = '12345678'
+          u.employee_id = employee.id
+          u.department_id = employee.department_id
+          u.company_id = employee.company_location.company_id
+          u.company_location_id = employee.company_location_id
+          # u.subdomain = Apartment::Tenant.current_tenant
+          u.member_code = employee.employee_code
+          u.manual_member_code = employee.manual_employee_code
+          u.role_id = params['login']['role_id']
+        end
+        ActiveRecord::Base.transaction do
+          if user.save
+            employee.update_attributes(manager_id: params["login"]["manager_id"], manager_2_id: params["login"]["manager_2_id"])
+
+            ManagerHistory.create(employee_id: employee.id,manager_id: params["login"]["manager_id"],manager_2_id: params["login"]["manager_2_id"],effective_from: params["login"]["effec_date"])
+            
+            flash[:notice] = "Employee assigned successfully."
+            redirect_to assign_role_employees_path
+            # UserPasswordMailer.welcome_email(company,pass).deliver_now
+          else
+            p user.errors
+            flash[:alert] = 'Employee not assigned successfully.'
+            redirect_to assign_role_employees_path
+          end
+        end
+      end #validation
+    end #do
   end
 
   # def index_xls
@@ -326,8 +345,8 @@ class EmployeesController < ApplicationController
   end
 
   def manager
-    @employees = Employee.all
-   session[:active_tab] ="UserAdministration"
+    @employees = Employee.where.not(manager_id: nil)
+    session[:active_tab] ="UserAdministration"
   end
 
   def edit_manager
@@ -340,13 +359,13 @@ class EmployeesController < ApplicationController
   end
 
   def update_manager
-    @employee = Employee.find(params[:id])
+    @employee = Employee.find(params[:emp_id])
     @employee.manager_id = params[:employee][:manager_id]
     @employee.manager_2_id = params[:employee][:manager_2_id]
     @effec_date = params[:employee][:effec_date]
     
     if @employee.save
-      @employees = Employee.all
+      @employees = Employee.where.not(manager_id: nil)
       @mngr = ManagerHistory.create(employee_id: @employee.id,manager_id: @employee.manager_id,manager_2_id: @employee.manager_2_id,effective_from: @effec_date.to_date)
       @manager = ManagerHistory.where(employee_id: @employee.id).last(2).first
       ManagerHistory.where(id: @manager.id).update_all(effective_to: @mngr.effective_from)

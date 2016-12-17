@@ -151,4 +151,45 @@ class EmployeeTemplatesController < ApplicationController
       redirect_to template_list_employee_templates_path(@employee_id)
     end
   end
+
+  def active_list
+    @employee_templates = EmployeeTemplate.where(is_active: true)
+  end
+
+  def salary_breakup_pdf
+    @employee_template_ids = params[:employee_template_ids]
+    if @employee_template_ids.nil?
+      flash[:alert] = "Please Select the checkbox"
+    else
+      @employee_template_ids.each do |e|
+        @employee_template = EmployeeTemplate.find_by(id: e)
+        @employee_salary_templates = EmployeeSalaryTemplate.where(employee_id: @employee_template.employee_id,salary_template_id: @employee_template.salary_template_id)    
+      end
+    end
+      respond_to do |format|
+        format.json
+        format.pdf do
+          render pdf: 'employee_template',
+                layout: 'pdf.html',
+                orientation: 'Landscape',
+                template: 'employee_templates/salary_breakup.pdf.erb',
+                show_as_html: params[:debug].present?,
+                margin:  { top:10,bottom:10,left:20,right:20 }
+          end
+        end
+  end
+  
+  def show_employee_record
+    @employee_template_ids = params[:employee_template_ids]
+    if @employee_template_ids.nil?
+      flash[:alert] = "Please Select the checkbox"
+      redirect_to show_employee_record_employee_templates_path
+    else
+      @employee_template_ids.each do |eid|
+        @employee_templates = EmployeeTemplate.where(id: eid)
+      end
+    end
+      redirect_to show_employee_record_employee_templates_path
+  end
+
 end

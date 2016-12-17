@@ -1297,6 +1297,9 @@ end
       get :revert_salary_template
       get :template_salary
       get :cancel_salary_template
+      get :active_list
+      post :show_employee_record
+      post :salary_breakup_pdf
     end
   end
   resources :retention_moneys do

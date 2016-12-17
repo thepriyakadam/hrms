@@ -3,6 +3,56 @@
     <h3 class="box-title">Employee Record</h3>
   </div><!-- /.box-header -->
   <div class="box-body">
+
+    <% i=0%>
+    <% @employee_templates.each do |e| %>
+      <% employee = Employee.find_by(id: e.employee_id) %>
+      <% joining_detail = JoiningDetail.find_by_employee_id(e.employee_id) %>
+
+      <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">    
+        <thead>
+        <tr>
+        <% i=i+1%>
+        <th><%= i %></th>
+        <th colspan="6"><center>Employee Performance Detail</center></th>
+        </tr>
+          <tr>
+            <th>Employee ID</th>
+            <th>Name</th>
+            <th>Department</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><%= employee.manual_employee_code %></td> 
+            <td><%= employee.first_name %> <%= employee.middle_name %> <%= employee.last_name %></td>
+            <td><%= employee.department.try(:name) %></td>
+          </tr>
+        </tbody>
+      </table>
+      <br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <table id="example6" class="table table-bordered table-hover table-condensed">
       <thead>
         <tr>

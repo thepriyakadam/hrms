@@ -492,6 +492,7 @@ end
       post :Period_rating_wise_employee
       get :period_rating_wise_pdf
       get :period_rating_wise_xls
+      get :increment_index_report
     end
   end
   #post 'goal_ratings/update_goal_set_modal'
@@ -1770,6 +1771,8 @@ end
       get :destroy_employee
       post :show_employee_detail
       get :destroy_details
+      get :edit_manager
+      post :update_manager
     end
     member do
       get :edit_manager

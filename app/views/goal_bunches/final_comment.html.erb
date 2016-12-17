@@ -263,6 +263,7 @@
                     <div class="col-sm-3">
                       <div class="actions">
                         <%= f.submit "Create" , class: "btn btn-primary btn-sm" %>
+                        <%= link_to 'Back',period_list_final_goal_bunches_path(period_id: @period.id),class: 'btn btn-sm btn-default fa fa-arrow-left' %>
                       </div>
                     </div>
                   </div>
@@ -277,6 +278,7 @@
               <%= bootstrap_form_for(@goal_bunch,html: {id: 'goal_bunch'},url:{action: "final_create",employee_id: @employee.id,goal_bunch_id: @goal_bunch.id,period_id: @period.id}) do |f| %>
               <%= hidden_field_tag :final_id, {},value: current_user.employee_id %>
 
+                  <br>
                 <div class="row">
                   <h6><center>Recommendation For Employee</center></h6>
                 <div class="col-sm-3">
@@ -321,6 +323,7 @@
                       <div class="col-sm-3">
                         <div class="actions">
                           <%= f.submit "Create" , class: "btn btn-primary btn-sm" %>
+                          <%= link_to 'Back',period_list_final_goal_bunches_path(period_id: @period.id),class: 'btn btn-sm btn-default fa fa-arrow-left' %>
                         </div>
                       </div>
                     </div>
@@ -405,6 +408,7 @@
                   <% if @goal_bunch.final_comment == nil %>
                   <% else %>
                     <%= f.submit "Confirm", class: 'btn btn-primary btn-sm' %>
+                    <%= link_to 'Back',period_list_final_goal_bunches_path(period_id: @period.id),class: 'btn btn-sm btn-default fa fa-arrow-left' %>
                   <% end %>
                 </div>
               </div>
@@ -480,6 +484,7 @@
                   <% if @goal_bunch.final_comment == nil %>
                   <% else %>
                     <%= f.submit "Confirm", class: 'btn btn-primary btn-sm' %>
+                    <%= link_to 'Back',period_list_final_goal_bunches_path(period_id: @period.id),class: 'btn btn-sm btn-default fa fa-arrow-left' %>
                   <% end %>
                 </div>
               </div>
@@ -490,7 +495,6 @@
          
       <% end %>
     <% end %>  
-  <%= link_to 'Back',period_list_final_goal_bunches_path(period_id: @period.id),class: 'btn btn-sm btn-default fa fa-arrow-left' %>
   </div>
   </div>
 <% end %>

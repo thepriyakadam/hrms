@@ -31,6 +31,7 @@
             <% present_day = present_day_count(exist) %>
             <% holiday_in_month = holiday_in_month_count(exist) %>
             <% week_off_day = week_off_day_count(exist) %>
+            <% gate_pass = gate_pass_count(exist) %>
 
             <% # full_pay_leave = full_pay_leave_count(exist) %>
             <% # half_pay_leave = half_pay_leave_count(exist) %>
@@ -60,6 +61,7 @@
             <%= hidden_field e.employee_id, 'week_off_day', value: week_off_day %>
             <%= hidden_field e.employee_id, 'absent_day', value: absent_day_count(exist) %>
             <%= hidden_field e.employee_id, 'payable_day', value: payable_day %>
+            <%= hidden_field e.employee_id, 'gatepass', value: gate_pass %>
 
             <% exist.clear %>
           <%end%>

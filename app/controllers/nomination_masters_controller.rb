@@ -18,6 +18,7 @@ class NominationMastersController < ApplicationController
     @nomination_masters = NominationMaster.all
     session[:active_tab] ="GlobalSetup"
     session[:active_tab1] ="EmployeeProfile"
+  end
 
   # GET /nomination_masters/1/edit
   def edit

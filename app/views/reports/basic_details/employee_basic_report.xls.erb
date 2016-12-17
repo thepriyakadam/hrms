@@ -34,9 +34,9 @@
         <Cell ss:Index="25"><Data ss:Type="String">Disability Type</Data></Cell>
         <Cell ss:Index="26"><Data ss:Type="String">Employement Type</Data></Cell>
         <Cell ss:Index="27"><Data ss:Type="String">Employee Status</Data></Cell>
-        <Cell ss:Index="28"><Data ss:Type="String">Company Location</Data></Cell>
-        <Cell ss:Index="29"><Data ss:Type="String">Department</Data></Cell> 
-        <Cell ss:Index="30"><Data ss:Type="String">Company Location</Data></Cell>
+        <Cell ss:Index="28"><Data ss:Type="String">Company</Data></Cell>
+        <Cell ss:Index="29"><Data ss:Type="String">Company Location</Data></Cell> 
+        <Cell ss:Index="30"><Data ss:Type="String">Department</Data></Cell>
         </Row>
 
         <% i = 0 %>
@@ -69,9 +69,10 @@
           <Cell ss:Index="25"><Data ss:Type="String"><%= employee.handicap_type %></Data></Cell>
           <Cell ss:Index="26"><Data ss:Type="String"><%= employee.employee_type.try(:name) %></Data></Cell>
           <Cell ss:Index="27"><Data ss:Type="String"><%= employee.status %></Data></Cell>
-          <Cell ss:Index="28"><Data ss:Type="String"><%= employee.company_location.try(:name) %></Data></Cell>
-          <Cell ss:Index="29"><Data ss:Type="String"><%= employee.department.try(:name) %></Data></Cell>
-          <Cell ss:Index="30"><Data ss:Type="String"><%= employee.company.try(:name) %>  <%= employee.company_location.try(:name) %></Data></Cell>
+          <Cell ss:Index="28"><Data ss:Type="String"><%= employee.company.try(:name) %></Data></Cell>
+          <Cell ss:Index="29"><Data ss:Type="String"><%= employee.company_location.try(:name) %></Data></Cell>
+          <Cell ss:Index="30"><Data ss:Type="String"><%= employee.department.try(:name) %></Data></Cell>
+          
      </Row><!-- Row -->
       <% end %><!-- slip -->
     </Table>

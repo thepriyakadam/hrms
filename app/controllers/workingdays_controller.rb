@@ -275,6 +275,6 @@ class WorkingdaysController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def workingday_params
-    params.require(:workingday).permit(:employee_id, :month_name, :year, :day_in_month, :present_day, :total_leave, :holiday_in_month, :week_off_day, :absent_day, :payable_day)
+    params.require(:workingday).permit(:gatepass,:employee_id, :month_name, :year, :day_in_month, :present_day, :total_leave, :holiday_in_month, :week_off_day, :absent_day, :payable_day)
   end
 end

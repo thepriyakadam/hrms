@@ -50,8 +50,7 @@ class TrainingPlansController < ApplicationController
           TrainingPlanMailer.confirmation_email_to_employee(@trainee_request).deliver_now 
           flash[:notice] = 'Training Plan Created Successfully'
           end
-        end    
-        
+        end   
         redirect_to training_topic_wise_search_training_plans_path
   end
 

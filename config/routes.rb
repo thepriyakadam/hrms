@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   
+  resources :certificates
   resources :certificate_masters
   resources :shift_masters do
     collection do

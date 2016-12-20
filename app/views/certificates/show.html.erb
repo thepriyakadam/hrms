@@ -1,0 +1,83 @@
+<!-- SELECT2 EXAMPLE -->
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Company</h3>
+    <div class="box-tools pull-right">
+    </div>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+
+<tr>
+  <td><strong>Certificate Name</strong></td>
+  <td colspan="3"><%= @certificate.certificate_master.try(:name) %></td>
+<tr>
+<tr>
+  <td><strong>Heading Start</strong></td>
+  <td><%= @certificate.h1_start %></td>
+
+  <td><strong>Heading End</strong></td>
+  <td><%= @certificate.h1_end %></td>
+</tr>
+<tr>
+  <td><strong>Heading Start</strong></td>
+  <td><%= @certificate.h2_start %></td>
+
+  <td><strong>Heading End</strong></td>
+  <td><%= @certificate.h2_end %></td>
+</tr>
+<tr>
+  <td><strong>Body Start</strong></td>
+  <td><%= @certificate.b1_start %></td>
+
+  <td><strong>Body End</strong></td>
+  <td><%= @certificate.b1_end %></td>
+</tr>
+<tr>
+  <td><strong>Body Start</strong></td>
+  <td><%= @certificate.b2_start %></td>
+
+  <td><strong>Body End</strong></td>
+  <td><%= @certificate.b2_end %></td>
+</tr>
+<tr>
+  <td><strong>Body Start</strong></td>
+  <td><%= @certificate.b3_start %></td>
+
+  <td><strong>Body End</strong></td>
+  <td><%= @certificate.b3_end %></td>
+</tr>
+<tr>
+  <td><strong>Body Start</strong></td>
+  <td><%= @certificate.b4_start %></td>
+
+  <td><strong>Body End</strong></td>
+  <td><%= @certificate.b4_end %></td>
+</tr>
+<tr>
+  <td><strong>Body Start</strong></td>
+  <td><%= @certificate.b5_start %></td>
+
+ <td><strong>Body End</strong></td>
+  <td><%= @certificate.b5_end %></td>
+</tr>
+<tr>
+  <td><strong>Footer Start</strong></td>
+  <td><%= @certificate.f1_start %></td>
+
+  <td><strong>Footer End</strong></td>
+  <td><%= @certificate.f1_end %></td>
+</tr>
+<tr>
+  <td><strong>Footer Start</strong></td>
+  <td><%= @certificate.f2_start %></td>
+
+  <td><strong>Footer End</strong></td>
+  <td> <%= @certificate.f2_end %></td>
+</tr>
+  </table>
+
+    <%= link_to 'Edit',edit_certificate_path(@certificate),class: 'btn btn-success btn-sm fa fa-edit' %> |
+    <%= link_to 'Back', certificates_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->

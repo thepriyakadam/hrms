@@ -6,4 +6,8 @@ $("#address_proof").html("<%= j render 'address_proof' %>")
 $("#character_certificate").html("<%= j render 'character_certificate' %>")
 <% elsif @certificate == "Acceptance Of Resignation"	%>
 $("#service_certificate").html("<%= j render 'service_certificate' %>")
+<% elsif @certificate == "Joining Letter"	%>
+$("#joining_letter").html("<%= j render 'joining_letter' %>")
+<% elsif @certificate == "Offer Letter"	%>
+$("#offer_letter").html("<%= j render 'offer_letter' %>")
 <% end %>

@@ -13,7 +13,7 @@
          </div>
         <div class="col-sm-3">
           <div class="field">
-            <%= select :salary,:certificate, ['Character','Leaving','Service','Acceptance Of Resignation'],{label: 'Select Certificate',include_blank: " Select Cetificate"}, class: "form-control" %>
+            <%= select :salary,:certificate, ['Character','Leaving','Service','Acceptance Of Resignation','Joining Letter','Offer Letter'],{label: 'Select Certificate',include_blank: " Select Cetificate"}, class: "form-control" %>
           </div>
         </div>
 
@@ -29,6 +29,8 @@
       <div id="address_proof"></div>
       <div id="character_certificate"></div>
       <div id="service_certificate"></div>
+      <div id="joining_letter"></div>
+      <div id="offer_letter"></div>
     </div>
   <%end%>
 </div>

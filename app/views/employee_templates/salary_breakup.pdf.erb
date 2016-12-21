@@ -1,3 +1,4 @@
+
 <style>
 th {
     text-align: left;
@@ -14,38 +15,32 @@ div.nobreak{ page-break-inside: avoid;
 <div>
 <div class="box box-default">
   <div class="box-body">
-    <% employee = Employee.find_by(id: @employee_template.employee_id) %>
-
-      <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
-        <tbody>
-          <tr></tr>
-          <tr>
-            <td>ID : <%= employee.manual_employee_code %></td>
-            <td colspan="2">Employee Name : <%= employee.first_name %> <%= employee.middle_name %> <%= employee.last_name %></td>
-            <td colspan="2">Department Name : <%= employee.company_location.try(:name) %> - <%= employee.department.try(:name) %></td>
-          </tr>
-        </tbody>
-      </table>
-      <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
-        <thead>
-          <tr>
-            <th>Salary Component</th>
-            <th>Monthly Amount</th>
-            <th>Anual Amount</th>
-          </tr>
-        </thead>
-     
-      <% @employee_salary_templates.each do |g|  %>
-      <% employee = Employee.find(g.employee_id) %>
-      <% employee_salary_template = EmployeeSalaryTemplate.find_by(id: g) %>
+    <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
+      <% @employee_template_ids.each do |e|  %>
+      <% employee_template = EmployeeTemplate.find_by(id: e) %>
+      <% @employee_salary_templates = EmployeeSalaryTemplate.where(employee_template_id: e)  %>
+        <tr>
+          <td>ID : <%= employee_template.employee.manual_employee_code %></td>
+          <td colspan="2">Employee Name : <%= employee_template.employee.first_name %> <%= employee_template.employee.middle_name %> <%= employee_template.employee.last_name %></td>
+        </tr>
+        <tr>
+          <th>Salary Component</th>
+          <th>Monthly Amount</th>
+          <th>Annual Amount</th>
+        </tr>
+          <% @employee_salary_templates.each do |s|  %>
             <tr>
-              <td><%= employee_salary_template.try(:salary_component).try(:name) %></td>
-              <td><%= employee_salary_template.try(:monthly_amount) %></td>
-              <td><%= employee_salary_template.try(:annual_amount) %></td>
+              <td><%= s.try(:salary_component).try(:name) %></td>
+              <td><%= s.try(:monthly_amount) %></td>
+              <td><%= s.try(:annual_amount) %></td>
             </tr>
-      
-    <% end %>
-      </tbody>
-      </table>
+          <% end %>
+          <tr>
+            <th>Gross Salary</th>
+            <th><%= @employee_salary_templates.sum(:monthly_amount) %></th>
+            <th><%= @employee_salary_templates.sum(:annual_amount) %></th>
+          </tr>
+        <% end %>
+    </table>
   </div>
 </div>

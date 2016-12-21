@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   
+  resources :certificate_masters
   resources :shift_masters do
     collection do
       get :is_confirm
@@ -201,6 +202,8 @@ end
       get :character_certificate
       get :display_certificate
       get :service_certificate
+      get :joining_letter
+      get :offer_letter
     end
    end
   resources :due_actions

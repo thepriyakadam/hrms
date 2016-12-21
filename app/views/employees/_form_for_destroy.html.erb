@@ -6,10 +6,10 @@
 
   <div class="box-body">
     <%= bootstrap_form_for(:employee, url: { action: 'destroy_details'},remote: true) do |f| %>
-
+  <div class="row">
       <div class="col-sm-3">
         <div class="field">
-        <%= f.select :employee_id, all_active_employee_with_code,{include_blank: 'select Employee'}, class: "form-control"%>
+        <%= f.select :employee_id, all_active_employee_with_code,{include_blank: 'select Employee'},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
         </div>
       </div>
 

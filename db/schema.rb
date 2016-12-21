@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161212104430) do
+ActiveRecord::Schema.define(version: 20161220121946) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -315,6 +315,15 @@ ActiveRecord::Schema.define(version: 20161212104430) do
   add_index "capture_resumes", ["employee_designation_id"], name: "index_capture_resumes_on_employee_designation_id"
   add_index "capture_resumes", ["state_id"], name: "index_capture_resumes_on_state_id"
   add_index "capture_resumes", ["vacancy_master_id"], name: "index_capture_resumes_on_vacancy_master_id"
+
+  create_table "certificate_masters", force: :cascade do |t|
+    t.string   "name"
+    t.string   "description"
+    t.boolean  "status"
+    t.boolean  "confirm"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
 
   create_table "certifications", force: :cascade do |t|
     t.integer  "employee_id"

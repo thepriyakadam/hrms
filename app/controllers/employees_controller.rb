@@ -505,8 +505,8 @@ class EmployeesController < ApplicationController
     @employee = Employee.find(params[:salary][:employee_id])
   end
 
-  def destroy_details
-    @employee = Employee.find(params[:emp_id])
+  # def destroy_details
+  #   @employee = Employee.find(params[:emp_id])
 
     # @employee = Employee.find(params[:emp_id])
     # Employee.find_by(id: @employee.id).destroy
@@ -702,12 +702,12 @@ class EmployeesController < ApplicationController
     #  MonthlyExpence.whre(employee_id: @employee.id).destroy_all
 
 
-    TransferHistory.where(employee_id: @employee.id).destroy_all
-    EmployeeTransfer.where(employee_id: @employee.id).destroy_all
+  #   TransferHistory.where(employee_id: @employee.id).destroy_all
+  #   EmployeeTransfer.where(employee_id: @employee.id).destroy_all
 
-    flash[:notice] = "Employee Record Successfully destroyed !!"
-    redirect_to destroy_employee_employees_path
-  end
+  #   flash[:notice] = "Employee Record Successfully destroyed !!"
+  #   redirect_to destroy_employee_employees_path
+  # end
 
 
   private

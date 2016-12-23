@@ -1,6 +1,16 @@
 Rails.application.routes.draw do
   
-  resources :certificate_masters
+  resources :certificates do
+    collection do
+      get :certificate_form
+      get :certificate_print
+    end
+  end
+  resources :certificate_masters do
+    collection do
+      get :is_confirm
+    end
+  end
   resources :shift_masters do
     collection do
       get :is_confirm

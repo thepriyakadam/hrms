@@ -1,33 +1,27 @@
-<%= form_for(@certificate_master) do |f| %>
-  <% if @certificate_master.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@certificate_master.errors.count, "error") %> prohibited this certificate_master from being saved:</h2>
-
-      <ul>
-      <% @certificate_master.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+ <%= bootstrap_form_for(@certificate_master,html: {id: 'certificate_master'},remote:true) do |f| %>
+   <div class="row">
+      <div class="col-sm-3">
+          <div class="form-group required">
+              <%= f.text_field :name,label:'Name', placeholder: 'Name' %>
+          </div>
+      </div>
+      <div class="col-sm-3">
+          <div class="field">
+              <%= f.text_field :description,label:'Description', placeholder: 'Description' %>
+          </div>
+      </div>
+      <div class="col-sm-3">
+        <label>Status</label>
+        <div class="field">
+            <%= f.check_box :status , label:'Active'%>
+        </div>
+      </div>
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :description %><br>
-    <%= f.text_field :description %>
-  </div>
-  <div class="field">
-    <%= f.label :status %><br>
-    <%= f.check_box :status %>
-  </div>
-  <div class="field">
-    <%= f.label :confirm %><br>
-    <%= f.check_box :confirm %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+    <div class="row">
+        <div class="col-sm-3">
+          <div class="actions">
+              <%= f.submit 'Create Certificate',:class => class_name, data: { disable_with: data_info } %>
+          </div>
+        </div>
+    </div>
 <% end %>

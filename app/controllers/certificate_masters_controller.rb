@@ -4,6 +4,7 @@ class CertificateMastersController < ApplicationController
   # GET /certificate_masters
   # GET /certificate_masters.json
   def index
+    @certificate_master = CertificateMaster.new
     @certificate_masters = CertificateMaster.all
   end
 
@@ -15,6 +16,7 @@ class CertificateMastersController < ApplicationController
   # GET /certificate_masters/new
   def new
     @certificate_master = CertificateMaster.new
+    @certificate_masters = CertificateMaster.all
   end
 
   # GET /certificate_masters/1/edit
@@ -25,14 +27,14 @@ class CertificateMastersController < ApplicationController
   # POST /certificate_masters.json
   def create
     @certificate_master = CertificateMaster.new(certificate_master_params)
-
+    @certificate_masters = CertificateMaster.all
     respond_to do |format|
       if @certificate_master.save
-        format.html { redirect_to @certificate_master, notice: 'Certificate master was successfully created.' }
-        format.json { render :show, status: :created, location: @certificate_master }
+         @certificate_master = CertificateMaster.new
+        format.js { @flag = true }
       else
-        format.html { render :new }
-        format.json { render json: @certificate_master.errors, status: :unprocessable_entity }
+        flash.now[:alert] = 'Certificate Already Exist.'
+        format.js { @flag = false }
       end
     end
   end
@@ -40,25 +42,25 @@ class CertificateMastersController < ApplicationController
   # PATCH/PUT /certificate_masters/1
   # PATCH/PUT /certificate_masters/1.json
   def update
-    respond_to do |format|
-      if @certificate_master.update(certificate_master_params)
-        format.html { redirect_to @certificate_master, notice: 'Certificate master was successfully updated.' }
-        format.json { render :show, status: :ok, location: @certificate_master }
-      else
-        format.html { render :edit }
-        format.json { render json: @certificate_master.errors, status: :unprocessable_entity }
-      end
-    end
+    @certificate_master.update(certificate_master_params)
+    @certificate_masters = CertificateMaster.all
+    @certificate_master = CertificateMaster.new
+      
   end
 
   # DELETE /certificate_masters/1
   # DELETE /certificate_masters/1.json
   def destroy
     @certificate_master.destroy
-    respond_to do |format|
-      format.html { redirect_to certificate_masters_url, notice: 'Certificate master was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    @certificate_masters = CertificateMaster.all
+    
+  end
+
+  def is_confirm
+    @certificate_master = CertificateMaster.find(params[:certificate_master])
+    CertificateMaster.find(@certificate_master.id).update(confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to new_certificate_master_path
   end
 
   private

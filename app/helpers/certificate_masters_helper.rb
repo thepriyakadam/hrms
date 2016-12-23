@@ -1,5 +1,5 @@
 module CertificateMastersHelper
 	def all_certificate_master
-    CertificateMaster.all.collect { |x| [x.name, x.id] }
+    CertificateMaster.where(status: true).collect { |x| [x.name, x.id] }
   end
 end

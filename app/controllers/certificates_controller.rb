@@ -23,7 +23,9 @@ class CertificatesController < ApplicationController
 
   # POST /certificates
   # POST /certificates.json
+
   def create
+    # byebug
     @certificate = Certificate.new(certificate_params)
 
     respond_to do |format|
@@ -59,6 +61,13 @@ class CertificatesController < ApplicationController
       format.html { redirect_to certificates_url, notice: 'Certificate was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+   def certificate_print
+    @employee = Employee.find(params[:salary][:employee_id])
+    # byebug
+    @certificate = params[:salary][:certificate_master_id]
+    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
   end
 
   private

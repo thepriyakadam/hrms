@@ -17,9 +17,10 @@
          <% @certificates.each do |certificate| %>
       <tr>
         <td><%= certificate.certificate_master.try(:name) %></td>
-        <td><%= link_to 'Show', certificate %>
-        <%= link_to 'Edit', edit_certificate_path(certificate) %>
-        <%= link_to 'Destroy', certificate, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td>
+        <%= link_to '', edit_certificate_path(certificate),class: 'btn btn-success btn-xs fa fa-edit'  %>
+        <%= link_to '', certificate, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-xs fa fa-close' %>
+        <%= link_to '', certificate,class: 'btn btn-xs btn-default fa fa-eye' %></td>
       </tr>
       <% end %>
     </tbody>

@@ -5,12 +5,19 @@ class EmployeeTemplatesController < ApplicationController
   def index
     if current_user.class == Group
       @employees = Employee.all
-    else
-      if current_user.role.name == 'Company'
+    elsif current_user.class == Member
+      if current_user.role.name == 'GroupAdmin'
         @employees = Employee.all
-      elsif current_user.role.name == 'CompanyLocation'
+      if current_user.role.name == 'Admin'
+        @employees = Employee.where(company_id: current_user.company_id)
+      elsif current_user.role.name == 'Branch'
         @employees = Employee.where(company_location_id: current_user.company_location_id)
-      elsif current_user.role.name == 'Employee'
+      elsif current_user.role.name == 'HOD'
+        @employees = Employee.where(department_id: current_user.department_id)
+      elsif current_user.role.name == 'Supervisor'
+        @emp = Employee.find(current_user.employee_id)
+        @employees = @emp.subordinates
+      else current_user.role.name == 'Employee'
         @employees = Employee.where(id: current_user.employee_id)
       end
     end
@@ -54,12 +61,19 @@ class EmployeeTemplatesController < ApplicationController
   def fresh_template
     if current_user.class == Group
       @employees = Employee.all
-    else
-      if current_user.role.name == 'Company'
+    elsif current_user.class == Member
+      if current_user.role.name == 'GroupAdmin'
         @employees = Employee.all
-      elsif current_user.role.name == 'CompanyLocation'
+      elsif current_user.role.name == 'Admin'
+        @employees = Employee.where(company_id: current_user.company_id)
+      elsif current_user.role.name == 'Branch'
         @employees = Employee.where(company_location_id: current_user.company_location_id)
-      elsif current_user.role.name == 'Employee'
+      elsif current_user.role.name == 'HOD'
+        @employees = Employee.where(department_id: current_user.department_id)
+      elsif current_user.role.name == 'Supervisor'
+        @emp = Employee.find(current_user.employee_id)
+        @employees = @emp.subordinates
+      else current_user.role.name == 'Employee'
         @employees = Employee.where(id: current_user.employee_id)
       end
     end
@@ -155,13 +169,19 @@ class EmployeeTemplatesController < ApplicationController
   def active_list
     if current_user.class == Group
       @employee_templates = EmployeeTemplate.where(is_active: true)
-    else
-      if current_user.role.name == 'Company'
-         @employee_templates = EmployeeTemplate.where(is_active: true)
-      elsif current_user.role.name == 'CompanyLocation'
+    elsif current_user.class == Member
+      if current_user.role.name == 'GroupAdmin'
+        @employee_templates = EmployeeTemplate.where(is_active: true)
+      elsif current_user.role.name == 'Admin'
+        @employees = Employee.where(company_id: current_user.company_id)
+        @employee_templates = EmployeeTemplate.where(is_active: true,employee_id: @employees)
+      elsif current_user.role.name == 'Branch'
         @employees = Employee.where(company_location_id: current_user.company_location_id)
         @employee_templates = EmployeeTemplate.where(is_active: true,employee_id: @employees)
-      elsif current_user.role.name == 'Employee'
+      elsif current_user.role.name == 'HOD'
+        @employees = Employee.where(department_id: current_user.department_id)
+        @employee_templates = EmployeeTemplate.where(is_active: true,employee_id: @employees)
+      else current_user.role.name == 'Employee'
          @employee_templates = EmployeeTemplate.where(is_active: true,employee_id: current_user.employee_id)
       end
     end

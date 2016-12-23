@@ -121,22 +121,22 @@ class WorkingdaysController < ApplicationController
       end
     end
     respond_to do |format|
-          format.json
-          format.pdf do
-            render pdf: 'workingday',
-                  layout: 'pdf.html',
-                  orientation: 'Landscape',
-                  template: 'workingdays/workingday.pdf.erb',
-                  # show_as_html: params[:debug].present?,
-                  :page_height      => 1000,
-                  :dpi              => '300',
-                  :margin           => {:top    => 10, # default 10 (mm)
-                                :bottom => 10,
-                                :left   => 20,
-                                :right  => 20},
-                  :show_as_html => params[:debug].present?
-                end
-             end
+      format.json
+      format.pdf do
+        render pdf: 'workingday',
+              layout: 'pdf.html',
+              orientation: 'Landscape',
+              template: 'workingdays/workingday.pdf.erb',
+              # show_as_html: params[:debug].present?,
+              :page_height      => 1000,
+              :dpi              => '300',
+              :margin           => {:top    => 10, # default 10 (mm)
+                            :bottom => 10,
+                            :left   => 20,
+                            :right  => 20},
+              :show_as_html => params[:debug].present?
+            end
+         end
 
   end
 

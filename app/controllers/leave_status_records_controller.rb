@@ -36,7 +36,6 @@ class LeaveStatusRecordsController < ApplicationController
   def first_approve
     ### if no second reporter available
     if @employee_leav_request.employee.manager_2_id.nil?
-      # byebug
       @leave_status = LeaveStatusRecord.new do |s|
         s.employee_leav_request_id = params[:id]
         s.change_status_employee_id = current_user.employee_id unless current_user.class == Group

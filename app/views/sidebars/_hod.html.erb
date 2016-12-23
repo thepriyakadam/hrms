@@ -1,0 +1,147 @@
+<!-- Optionally, you can add icons to the links -->
+<!-- sidebar menu: : style can be found in sidebar.less -->
+<ul class="sidebar-menu">
+  <li class="header">
+ <a href="/home"> <Center> <strong><% if current_user.class == Member %>
+  <%= current_user.company_location.company.try(:name) %> <%= current_user.company_location.try(:name) %> <%= current_user.department.try(:name) %>
+  <%else%><%= current_user.subdomain %><%end%></li></strong></Center></a>
+  <li class="treeview">
+    <a href="">
+      <i class="fa fa-user-plus"></i> <span>Employee Management</span> 
+    </a>
+    <ul class="treeview-menu">
+      <li><a href="/employees"><i class="fa fa-tags"></i> Employees</a></li>
+    </ul>
+  </li>
+  <li class="treeview" id="selfservice">
+    <a href="">
+      <i class="fa fa-user-plus"></i> <span>Employee Self Service</span><i class="fa fa-angle-left pull-right"></i>
+    </a>
+    <ul class="treeview-menu">
+      <li><a href="/self_services/employee"><i class="fa fa-tags"></i> Employees</a></li>
+      <li><a href="/employee_leav_requests"><i class="fa fa-tags"></i> Leave Request</a></li>
+      <li><a href="/self_services/employee_template"><i class="fa fa-tags"> </i> Salary Structure </a></li>
+      <li><a href="/self_services/attendance"><i class="fa fa-tags"></i> Attendance</a></li>
+      <li><a href="/self_services/salaryslip"><i class="fa fa-tags"></i> Salary Slip</a></li>
+      <li><a href="/self_services/advance"><i class="fa fa-tags"></i> Advance & Installment</a></li>
+      <li><a href="/training_plans/trainee_list"><i class="fa fa-tags"></i> Training Feedback </a></li>
+      <li><a href="/self_services/travel_request"><i class="fa fa-plane"></i> Travel Request </a></li>
+    </ul>
+  </li>
+
+  <!-- Leave management -->
+  <li class="treeview">
+    <a href="">
+      <i class="fa fa-bell"></i> <span>Leave Management</span> <i class="fa fa-angle-left pull-right"></i>
+    </a>
+    <ul class="treeview-menu">
+      <li><a href="/employee_leav_requests/employee_list"><i class="fa fa-tags"></i>Create Leave Request</a></li>
+      <li><a href="/employee_leav_requests/approved_or_rejected_leave_request"><i class="fa fa-tags"></i>Approve/Reject Leave</a></li>
+    </ul>
+  </li>
+
+  <li class="treeview" id="timemgmt">
+    <a href="#">
+      <i class="glyphicon glyphicon-th-large"></i> <span>Time Management</span>
+      <i class="fa fa-angle-left pull-right"></i>
+    </a>
+    <ul class="treeview-menu" >
+        <li id="time_sheet">
+        <a href="#"><i class="fa fa-edit"></i> Time Sheet <i class="fa fa-angle-left pull-right"></i></a>
+        <ul class="treeview-menu" >
+        <li><a href="/employee_daily_activities/new"><i class="fa fa-tags"></i>Daily Activity</a></li>
+        <li><a href="/employee_daily_activities/employee_details"><i class="fa fa-tags"></i>Employee Details</a></li>
+        </ul>
+        </li> 
+    </ul>
+  </li>
+
+  <li class="treeview">
+    <a href="">
+      <i class="fa fa-briefcase"></i><span> Recruitment Management </span> <i class="fa fa-angle-left pull-right"></i>
+    </a>
+    <ul class="treeview-menu">
+      <li><a href="/vacancy_masters"><i class="fa fa-tags"></i> Create Vacancy </a></li>
+      <li><a href="/vacancy_masters/vacancy_history"><i class="fa fa-tags"></i> Approve Vacancy </a></li>
+    </ul>
+   </li>
+
+  
+  <li class="treeview" id="performancemgmt">
+    <a href="#">
+      <i class="fa fa-list-alt"></i> <span>Performance Management</span>
+      <i class="fa fa-angle-left pull-right"></i>
+    </a>
+    <ul class="treeview-menu" >
+      <li id="perform_cycle">
+        <a href="#"><i class="fa fa-edit"></i>Performance Cycle <i class="fa fa-angle-left pull-right"></i></a>
+        <ul class="treeview-menu">
+        <li><a href="/goal_bunches/new"><i class="fa fa-tags"></i> Goal Setting </a></li>
+        <li><a href="/goal_bunches/subordinate_list"><i class="fa fa-tags"></i> Goal Approval </a></li>
+        <li><a href="/goal_bunches/period_list_appraisee"><i class="fa fa-tags"></i> Self Evaluation </a></li>
+        <li><a href="/goal_bunches/appraiser_subordinate"><i class="fa fa-tags"></i> Appraiser Evaluation </a></li>
+        <li><a href="/goal_bunches/reviewer_subordinate"><i class="fa fa-tags"></i> Reviewer Evaluation  </a></li>
+        </ul>
+      </li> 
+      <li id="perform_report">
+      <a href="#"><i class="fa fa-edit"></i> Reports <i class="fa fa-angle-left pull-right"></i></a>
+        <ul class="treeview-menu">
+        <li><a href="/goal_bunches/set_goal_list"><i class="fa fa-tags"></i> Employee List</a></li>
+         <li><a href="/goal_bunches/emp_list_goal_wise"><i class="fa fa-tags"></i> Employee Wise Detail </a></li>
+        <li><a href="/goal_ratings/subordinate_list_goal_wise"><i class="fa fa-tags"></i>Team Wise Detail</a>
+        <li><a href="/goal_bunches/period_for_appraisee"><i class="fa fa-tags"></i> Appraisee Report</a></li>
+        <li><a href="/goal_bunches/subordinate_list_for_appraisee"><i class="fa fa-tags"></i> Appraiser Report</a></li>
+        <li><a href="/goal_bunches/subordinate_list_for_reviewer"><i class="fa fa-tags"></i> Reviewer Report</a></li>
+        </ul>
+      </li> 
+    </ul>
+  </li>
+
+   <li class="treeview" id="travelmgmt">
+    <a href=""><i class="fa fa-plane"></i><span> Travel Management </span><i class="fa fa-angle-left pull-right"></i></a>
+    <ul class="treeview-menu">
+      <li><a href="/travel_requests"><i class="fa fa-plane"></i>Travel Request </a></li>
+      <li><a href="/travel_requests/travel_history"><i class="fa fa-plane"></i> Travel Approve/Reject </a></li>
+      <li><a href="/travel_requests/travel_request_list"><i class="fa fa-plane"></i> Travel Request List </a></li>
+      <li><a href="/travel_requests/daily_bill"><i class="fa fa-plane"></i> Expenses Claim </a></li>
+     <li><a href="/daily_bill_details/daily_bill_history"><i class="fa fa-tags"></i> Expenses Claim Approval </a></li> 
+       <li><a href="/daily_bill_details/travel_request_list"><i class="fa fa-plane"></i> Expense Approval </a></li>
+      <li><a href="/daily_bill_details/approved_daily_bill_details"><i class="fa fa-plane"></i> Expenses Approval List </a></li>
+      <li><a href="/travel_expences"><i class="fa fa-tags"></i> Travel Expenses </a></li>   
+  </ul>
+   </li>
+
+  <li class="treeview" id="trainingmgmt">
+    <a href=""><i class="fa fa-briefcase"></i> <span> Training Management </span> <i class="fa fa-angle-left pull-right"></i></a>
+    <ul class="treeview-menu">
+      <li><a href="/training_requests/new"><i class="fa fa-tags"></i> Training Request </a></li>
+      <li><a href="/training_requests/training_request_list"><i class="fa fa-tags"></i> Training Approve/Reject </a></li>
+      <li><a href="/training_plans"><i class="fa fa-tags"></i> Training Plan List </a></li>
+    </ul>
+   </li> 
+
+ <li class="treeview" id="issuetracker">
+    <a href="#">
+      <i class="glyphicon glyphicon-th-large"></i> <span>Help Desk</span>
+      <i class="fa fa-angle-left pull-right"></i>
+    </a>
+    <ul class="treeview-menu" id="issueprocess">
+        <li><a href="/issue_requests/new"><i class="fa fa-tags"></i>Support Request</a></li>
+        <li><a href="/issue_requests/lock_request_list"><i class="fa fa-tags"></i>Support List</a></li>
+        <li><a href="/issue_requests/solved_issues"><i class="fa fa-tags"></i>Solved Support</a></li>
+    </ul>
+  </li>
+</ul>
+
+
+<script typgre="text/javascript">
+  <% unless session[:active_tab].nil? %>
+  document.getElementById("<%= session[:active_tab] %>").classList.add("active");
+  <%end%>
+  <% unless session[:active_tab1].nil? %>
+  document.getElementById("<%= session[:active_tab1] %>").classList.add("active");
+  <%end%>
+  <% unless session[:active_tab2].nil? %>
+  document.getElementById("<%= session[:active_tab2] %>").classList.add("active");
+  <%end%>
+</script>

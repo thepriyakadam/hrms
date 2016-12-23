@@ -1,18 +1,20 @@
 <%if current_user.class == Group %>
 	<%= render 'group_dashboard' %>
 <%elsif current_user.class == Member %>
-	<% if current_user.role.try(:name) == 'Company' %>
-		<%= render 'company_dashboard' %>
-	<% elsif current_user.role.try(:name) == 'CompanyLocation' %>
-		<%= render 'company_location_dashboard' %>
-	<% elsif current_user.role.try(:name) == 'Department' %>
-		<%= render 'department_dashboard' %>
+	<% if current_user.role.try(:name) == 'Admin' %>
+		<%= render 'admin_dashboard' %>
+	<% elsif current_user.role.try(:name) == 'Branch' %>
+		<%= render 'branch_dashboard' %>
+	<% elsif current_user.role.try(:name) == 'HOD' %>
+		<%= render 'hod_dashboard' %>
 	<% elsif current_user.role.try(:name) == 'Supervisor' %>
 		<%= render 'supervisor_dashboard' %>
-	<% elsif current_user.role.try(:name) == 'SalaryAccount' %>
-		<%= render 'salary_account' %>
 	<% elsif current_user.role.try(:name) == 'Account' %>
-	    <%= render 'account' %>
+		<%= render 'account_dashboard' %>
+	<% elsif current_user.role.try(:name) == 'AccountAdmin' %>
+	    <%= render 'account_admin' %>
+	<% elsif current_user.role.try(:name) == 'GroupAdmin' %>
+	    <%= render 'group_admin' %>
 	<% else %>
 		<%= render 'employee_dashboard' %>
 	<% end %>

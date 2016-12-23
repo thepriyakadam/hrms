@@ -76,13 +76,16 @@ class EmployeeAttendancesController < ApplicationController
     else
       @holiday_flag = false
       if current_user.class == Member
-      if current_user.role.name == 'CompanyLocation'
-      @employees = Employee.where(status: "Active",company_location_id: current_user.company_location_id).filter_by_date_and_costcenter(@date, @costcenter, current_user)
-
-      elsif
-      @employees = Employee.where(status: "Active").filter_by_date_and_costcenter(@date, @costcenter, current_user)
-      #@employees = Employee.filter_by_date_costcenter_and_department(@date, @costcenter, @department, current_user)
-      end
+        if current_user.role.name == 'GroupAdmin'
+          @employees = Employee.where(status: "Active").filter_by_date_and_costcenter(@date, @costcenter, current_user)
+        elsif current_user.role.name == 'Admin'
+          @employees = Employee.where(status: "Active",company_id: current_user.company_id).filter_by_date_and_costcenter(@date, @costcenter, current_user)
+        elsif current_user.role.name == 'Branch'
+          @employees = Employee.where(status: "Active",company_location_id: current_user.company_location_id).filter_by_date_and_costcenter(@date, @costcenter, current_user)
+        elsif
+        @employees = Employee.where(status: "Active").filter_by_date_and_costcenter(@date, @costcenter, current_user)
+        #@employees = Employee.filter_by_date_costcenter_and_department(@date, @costcenter, @department, current_user)
+        end
       @emp_attendances = EmployeeAttendance.where("strftime('%m/%Y', day) = ? AND present = ?", @date.strftime('%m/%Y'), "W")
         @emp_attendances.each do |e|
           date = e.day.to_datetime
@@ -200,12 +203,14 @@ class EmployeeAttendancesController < ApplicationController
     @start_date = @date
     @end_date = @date.end_of_month
     if current_user.class == Member
-      if current_user.role.name == 'CompanyLocation'
-          @emp = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
-          # byebug
-          @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).where(employee_id: @emp).group(:employee_id)
-        elsif current_user.role.name == 'Company'
-          @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).group(:employee_id)
+      if current_user.role.name == 'GroupAdmin'
+         @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).group(:employee_id)
+      elsif current_user.role.name == 'Admin'
+        @emp = Employee.where(company_id: current_user.company_id).pluck(:id)
+        @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).where(employee_id: @emp).group(:employee_id)   
+      elsif current_user.role.name == 'Branch'
+        @emp = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+        @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).where(employee_id: @emp).group(:employee_id)
       end
     end
     # @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).group(:employee_id)
@@ -221,12 +226,14 @@ class EmployeeAttendancesController < ApplicationController
     @start_date = @date
     @end_date = @date.end_of_month
     if current_user.class == Member
-      if current_user.role.name == 'CompanyLocation'
-          @emp = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
-          # byebug
+      if current_user.role.name == 'GroupAdmin'
+         @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).group(:employee_id)
+      elsif current_user.role.name == 'Admin'
+          @emp = Employee.where(company_id: current_user.company_id).pluck(:id)
           @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).where(employee_id: @emp).group(:employee_id)
-        elsif current_user.role.name == 'Company'
-          @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).group(:employee_id)
+      elsif current_user.role.name == 'Branch'
+          @emp = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+          @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).where(employee_id: @emp).group(:employee_id)
       end
     end
     # @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).group(:employee_id)
@@ -265,12 +272,14 @@ class EmployeeAttendancesController < ApplicationController
     @start_date = @date
     @end_date = @date.end_of_month
     if current_user.class == Member
-      if current_user.role.name == 'CompanyLocation'
-          @emp = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
-          # byebug
-          @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).where(employee_id: @emp).group(:employee_id)
-        elsif current_user.role.name == 'Company'
-          @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).group(:employee_id)
+      if current_user.role.name == 'GroupAdmin'
+        @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).group(:employee_id)
+      elsif current_user.role.name == 'Admin'
+        @emp = Employee.where(company_id: current_user.company_id).pluck(:id)
+        @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).where(employee_id: @emp).group(:employee_id)
+      elsif current_user.role.name == 'Branch'
+        @emp = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+        @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).where(employee_id: @emp).group(:employee_id)     
       end
     end
     # @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ? and is_confirm = ?", @date.strftime('%m/%Y'),false).group(:employee_id)
@@ -286,12 +295,14 @@ class EmployeeAttendancesController < ApplicationController
     @start_date = @date
     @end_date = @date.end_of_month
     if current_user.class == Member
-      if current_user.role.name == 'CompanyLocation'
-          @emp = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
-          # byebug
-          @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).where(employee_id: @emp).group(:employee_id)
-        elsif current_user.role.name == 'Company'
-          @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).group(:employee_id)
+      if current_user.role.name == 'GroupAdmin'
+        @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).group(:employee_id)
+      elsif current_user.role.name == 'Admin'
+        @emp = Employee.where(company_id: current_user.company_id).pluck(:id)
+        @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).where(employee_id: @emp).group(:employee_id)
+      elsif current_user.role.name == 'Branch'
+        @emp = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+        @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).where(employee_id: @emp).group(:employee_id)
       end
     end
     # @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ? and is_confirm = ?", @date.strftime('%m/%Y'),false).group(:employee_id)

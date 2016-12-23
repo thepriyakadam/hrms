@@ -40,6 +40,8 @@
 </tbody>
 </table>
 <%= f.submit "Save", class: "btn btn-xl btn-info" %>
+<%= link_to " Excel Report ",machine_attendance_xls_machine_attendances_path(format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+<%= link_to " Print ",machine_attendance_pdf_machine_attendances_path(format: "pdf"), class: "btn btn-xl btn-warning fa fa-print", :target => "_blank" %>
 <% end %>
 </div>
 </div>

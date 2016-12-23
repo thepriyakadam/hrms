@@ -3,8 +3,8 @@
   <div class="box-header">
     <h3 class="box-title">Employee List</h3> 
 
-     <!-- <= link_to " Print excel ",increment_index_report_goal_ratings_path(format: "xls"),period_id: @period.id,class: "btn btn-xs btn-info fa fa-print", :target => "_blank" %> -->
     <div class="pull-right">  
+    <%= link_to " Excel Report ",increment_index_report_goal_ratings_path(period_id: @period.id, format: "xls"), class: "btn btn-sm btn-success fa fa-print" %>
     </div>
   </div>
   <div class="box-body">
@@ -81,6 +81,5 @@
               <td><%= great3 %></td>
             </tr>
         </table>
-
   </div>
 </div>

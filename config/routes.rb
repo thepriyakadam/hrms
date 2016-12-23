@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   
+  resources :certificate_masters
   resources :shift_masters do
     collection do
       get :is_confirm
@@ -203,6 +204,8 @@ end
       get :character_certificate
       get :display_certificate
       get :service_certificate
+      get :joining_letter
+      get :offer_letter
     end
    end
   resources :due_actions
@@ -494,6 +497,7 @@ end
       post :Period_rating_wise_employee
       get :period_rating_wise_pdf
       get :period_rating_wise_xls
+      get :increment_index_report
     end
   end
   #post 'goal_ratings/update_goal_set_modal'
@@ -1772,6 +1776,8 @@ end
       get :destroy_employee
       post :show_employee_detail
       get :destroy_details
+      get :edit_manager
+      post :update_manager
     end
     member do
       get :edit_manager

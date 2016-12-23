@@ -2,7 +2,7 @@
   <div class="box-header with-border">
     <h3 class="box-title">Certificates</h3>
   </div>
-  <%= bootstrap_form_for :salary, url: { action: 'certificate_print',id: @employee}, remote:true do |f| %>
+  <%= bootstrap_form_for :salary, url: { action: 'certificate_print',id: @employee},html: {id: 'salary'},remote:true do |f| %>
   <div class="box-body">
 
       <div class="row">
@@ -13,7 +13,7 @@
          </div>
         <div class="col-sm-3">
           <div class="field">
-            <%= select :salary,:certificate, ['Character','Leaving','Service','Acceptance Of Resignation'],{label: 'Select Certificate',include_blank: " Select Cetificate"}, class: "form-control" %>
+            <%= select :salary,:certificate, ['Character','Leaving','Service','Acceptance Of Resignation','Joining Letter','Offer Letter'],{label: 'Select Certificate',include_blank: " Select Cetificate"}, class: "form-control" %>
           </div>
         </div>
 
@@ -29,6 +29,34 @@
       <div id="address_proof"></div>
       <div id="character_certificate"></div>
       <div id="service_certificate"></div>
+      <div id="joining_letter"></div>
+      <div id="offer_letter"></div>
     </div>
   <%end%>
 </div>
+
+<script>
+$("#salary").validate({
+    rules: {
+      "salary[employee_id]":{
+        required: true,
+      },
+      "salary[certificate]":{
+        required: true,
+      }
+    },
+    messages: {
+      "salary[employee_id]":{
+        required: "Please Specify Employee",
+      },
+      "salary[certificate]":{
+        required: "Please Select Certificate",
+      }
+      
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

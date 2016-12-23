@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @certificate_master.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @certificate_master.description %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @certificate_master.status %>
+</p>
+
+<p>
+  <strong>Confirm:</strong>
+  <%= @certificate_master.confirm %>
+</p>
+
+<%= link_to 'Edit', edit_certificate_master_path(@certificate_master) %> |
+<%= link_to 'Back', certificate_masters_path %>

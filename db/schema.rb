@@ -283,6 +283,32 @@ ActiveRecord::Schema.define(version: 20161222113048) do
     t.datetime "updated_at",  null: false
   end
 
+  create_table "certificates", force: :cascade do |t|
+    t.integer  "certificate_master_id"
+    t.text     "h1_start"
+    t.text     "h1_end"
+    t.text     "h2_start"
+    t.text     "h2_end"
+    t.text     "b1_start"
+    t.text     "b1_end"
+    t.text     "b2_start"
+    t.text     "b2_end"
+    t.text     "b3_start"
+    t.text     "b3_end"
+    t.text     "b4_start"
+    t.text     "b4_end"
+    t.text     "b5_start"
+    t.text     "b5_end"
+    t.text     "f1_start"
+    t.text     "f1_end"
+    t.text     "f2_start"
+    t.text     "f2_end"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+  end
+
+  add_index "certificates", ["certificate_master_id"], name: "index_certificates_on_certificate_master_id"
+
   create_table "certifications", force: :cascade do |t|
     t.integer  "employee_id"
     t.integer  "year_id"

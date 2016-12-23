@@ -5,25 +5,24 @@ class EmployeesController < ApplicationController
   # GET /employees.json
   def index
     if current_user.class == Member
-      if current_user.role.name == 'Employee'
-        @employees = Employee.where(id: current_user.employee_id)
-        redirect_to home_index_path
-      elsif current_user.role.name == 'CompanyLocation'
-        @employees = Employee.where(company_location_id: current_user.company_location_id)
-      elsif current_user.role.name == 'Department'
-        @employees = Employee.where(department_id: current_user.department_id)
-      elsif current_user.role.name == 'Company'
+      if current_user.role.name == 'GroupAdmin'
         @employees = Employee.all
+      elsif current_user.role.name == 'Admin'
+        @employees = Employee.where(company_id: current_user.company_id)
+      elsif current_user.role.name == 'Branch'
+        @employees = Employee.where(company_location_id: current_user.company_location_id)
+      elsif current_user.role.name == 'HOD'
+        @employees = Employee.where(department_id: current_user.department_id)
       elsif current_user.role.name == 'Supervisor'
         @emp = Employee.find(current_user.employee_id)
-        # @employees_indirect = @emp.indirect_subordinates
-        # @employees_direct = @emp.subordinates
         @employees = @emp.subordinates
+      else current_user.role.name == 'Employee'
+        @employees = Employee.where(id: current_user.employee_id)
+        redirect_to home_index_path
       end
     else
       @employees = Employee.all
     end
-
       session[:active_tab] ="EmployeeManagement"
       session[:active_tab1] ="Employee1"
   end
@@ -445,15 +444,16 @@ class EmployeesController < ApplicationController
 
 
   def collect_company_location
-    # byebug
     @company = Company.find(params[:id])
     # @company_locations = @company.company_locations
     if current_user.class == Group
     @company_locations = CompanyLocation.where(company_id: @company.id)
     else
-      if current_user.role.name == 'Company'
+      if current_user.role.name == 'GroupAdmin'
+        @company_locations = CompanyLocation.all
+      elsif current_user.role.name == 'Admin'
         @company_locations = CompanyLocation.where(company_id: @company.id)
-      elsif current_user.role.name == 'CompanyLocation'
+      elsif current_user.role.name == 'Branch'
         @company_locations = CompanyLocation.where(id: current_user.company_location_id,company_id: @company.id)
       end
     end
@@ -477,12 +477,6 @@ class EmployeesController < ApplicationController
 
 
   # def basic_info_company_wise
-  # end
-
-  # def employee_basic_info
-  #   @company = params[:employee][:company_id]
-  #   @location = params[:employee][:company_location_id]
-  #   @employees = Employee.where(company_id: @company,company_location_id: @location)
   # end
 
   def basic_info 
@@ -511,8 +505,8 @@ class EmployeesController < ApplicationController
     @employee = Employee.find(params[:salary][:employee_id])
   end
 
-  def destroy_details
-    @employee = Employee.find(params[:emp_id])
+  # def destroy_details
+  #   @employee = Employee.find(params[:emp_id])
 
     # @employee = Employee.find(params[:emp_id])
     # Employee.find_by(id: @employee.id).destroy
@@ -708,12 +702,12 @@ class EmployeesController < ApplicationController
     #  MonthlyExpence.whre(employee_id: @employee.id).destroy_all
 
 
-    TransferHistory.where(employee_id: @employee.id).destroy_all
-    EmployeeTransfer.where(employee_id: @employee.id).destroy_all
+  #   TransferHistory.where(employee_id: @employee.id).destroy_all
+  #   EmployeeTransfer.where(employee_id: @employee.id).destroy_all
 
-    flash[:notice] = "Employee Record Successfully destroyed !!"
-    redirect_to destroy_employee_employees_path
-  end
+  #   flash[:notice] = "Employee Record Successfully destroyed !!"
+  #   redirect_to destroy_employee_employees_path
+  # end
 
 
   private

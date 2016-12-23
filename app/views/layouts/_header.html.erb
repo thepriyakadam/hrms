@@ -139,13 +139,21 @@
           <span class="hidden-xs"> 
           <!-- Right hand header image -->
             <% if current_user.class == Member %>
-              <% if current_user.role.name == 'Company' %>
-               ID : <%= current_user.employee.try(:manual_employee_code) %>
-              <% elsif current_user.role.name == 'CompanyLocation' %>
+              <% if current_user.role.name == 'GroupAdmin' %>
                ID :  <%= current_user.employee.try(:manual_employee_code) %>
-              <% elsif current_user.role.name == 'Department' %>
+              <% elsif current_user.role.name == 'Admin' %>
+               ID : <%= current_user.employee.try(:manual_employee_code) %>
+              <% elsif current_user.role.name == 'Branch' %>
+               ID :  <%= current_user.employee.try(:manual_employee_code) %>
+              <% elsif current_user.role.name == 'HOD' %>
                ID :  <%= current_user.employee.try(:manual_employee_code) %>
               <% elsif current_user.role.name == 'Supervisor' %>
+               ID :  <%= current_user.employee.try(:manual_employee_code) %>
+              <% elsif current_user.role.name == 'Employee' %>
+               ID :  <%= current_user.employee.try(:manual_employee_code) %>
+              <% elsif current_user.role.name == 'AccountAdmin' %>
+               ID :  <%= current_user.employee.try(:manual_employee_code) %>
+              <% elsif current_user.role.name == 'Account' %>
                ID :  <%= current_user.employee.try(:manual_employee_code) %>
               <% else %>
                ID :  <%= current_user.employee.try(:manual_employee_code) %>

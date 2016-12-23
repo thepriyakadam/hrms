@@ -60,22 +60,23 @@
           <%if current_user.class == Group %>
             <%= render 'sidebars/group' %>
           <%elsif current_user.class == Member %>
-            <% if current_user.role.name == 'Company' %>
-              <%= render 'sidebars/company' %>
-            <% elsif current_user.role.name == 'CompanyLocation' %>
-              <%= render 'sidebars/company_location' %>
-            <% elsif current_user.role.name == 'Department' %>
-              <%= render 'sidebars/department' %>
+            <% if current_user.role.name == 'GroupAdmin' %>
+              <%= render 'sidebars/group_admin' %>
+            <% elsif current_user.role.name == 'Admin' %>
+              <%= render 'sidebars/admin' %>
+            <% elsif current_user.role.name == 'Branch' %>
+              <%= render 'sidebars/branch' %>
+            <% elsif current_user.role.name == 'HOD' %>
+              <%= render 'sidebars/hod' %>
             <% elsif current_user.role.name == 'Supervisor' %>
               <%= render 'sidebars/supervisor' %>
-            <% elsif current_user.role.name == 'SalaryAccount' %>
-              <%= render 'sidebars/salary_account' %>
             <% elsif current_user.role.name == 'Account' %>
               <%= render 'sidebars/account' %>
+            <% elsif current_user.role.name == 'AccountAdmin' %>
+              <%= render 'sidebars/account_admin' %>
             <% else %>
               <%= render 'sidebars/employee' %>
             <% end %>
-            
           <%end%>
           
         </section>

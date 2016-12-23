@@ -1,6 +1,16 @@
 Rails.application.routes.draw do
   
-  resources :certificate_masters
+  resources :certificates do
+    collection do
+      get :certificate_form
+      get :certificate_print
+    end
+  end
+  resources :certificate_masters do
+    collection do
+      get :is_confirm
+    end
+  end
   resources :shift_masters do
     collection do
       get :is_confirm
@@ -1302,6 +1312,14 @@ end
       get :revert_salary_template
       get :template_salary
       get :cancel_salary_template
+      get :active_list
+      post :show_employee_record
+      get :salary_breakup_pdf
+      get :salary_breakup_xls
+      get :employee_wise_breakup
+      post :salary_employee_wise
+      get :employee_wise_pdf
+      get :employee_wise_xls
     end
   end
   resources :retention_moneys do

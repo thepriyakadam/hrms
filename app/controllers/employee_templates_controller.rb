@@ -5,12 +5,19 @@ class EmployeeTemplatesController < ApplicationController
   def index
     if current_user.class == Group
       @employees = Employee.all
-    else
-      if current_user.role.name == 'Company'
+    elsif current_user.class == Member
+      if current_user.role.name == 'GroupAdmin'
         @employees = Employee.all
-      elsif current_user.role.name == 'CompanyLocation'
+      if current_user.role.name == 'Admin'
+        @employees = Employee.where(company_id: current_user.company_id)
+      elsif current_user.role.name == 'Branch'
         @employees = Employee.where(company_location_id: current_user.company_location_id)
-      elsif current_user.role.name == 'Employee'
+      elsif current_user.role.name == 'HOD'
+        @employees = Employee.where(department_id: current_user.department_id)
+      elsif current_user.role.name == 'Supervisor'
+        @emp = Employee.find(current_user.employee_id)
+        @employees = @emp.subordinates
+      else current_user.role.name == 'Employee'
         @employees = Employee.where(id: current_user.employee_id)
       end
     end
@@ -54,12 +61,19 @@ class EmployeeTemplatesController < ApplicationController
   def fresh_template
     if current_user.class == Group
       @employees = Employee.all
-    else
-      if current_user.role.name == 'Company'
+    elsif current_user.class == Member
+      if current_user.role.name == 'GroupAdmin'
         @employees = Employee.all
-      elsif current_user.role.name == 'CompanyLocation'
+      elsif current_user.role.name == 'Admin'
+        @employees = Employee.where(company_id: current_user.company_id)
+      elsif current_user.role.name == 'Branch'
         @employees = Employee.where(company_location_id: current_user.company_location_id)
-      elsif current_user.role.name == 'Employee'
+      elsif current_user.role.name == 'HOD'
+        @employees = Employee.where(department_id: current_user.department_id)
+      elsif current_user.role.name == 'Supervisor'
+        @emp = Employee.find(current_user.employee_id)
+        @employees = @emp.subordinates
+      else current_user.role.name == 'Employee'
         @employees = Employee.where(id: current_user.employee_id)
       end
     end
@@ -149,6 +163,134 @@ class EmployeeTemplatesController < ApplicationController
     else
       flash[:alert] = 'Same template already assigned.'
       redirect_to template_list_employee_templates_path(@employee_id)
+    end
+  end
+
+  def active_list
+    if current_user.class == Group
+      @employee_templates = EmployeeTemplate.where(is_active: true)
+    elsif current_user.class == Member
+      if current_user.role.name == 'GroupAdmin'
+        @employee_templates = EmployeeTemplate.where(is_active: true)
+      elsif current_user.role.name == 'Admin'
+        @employees = Employee.where(company_id: current_user.company_id)
+        @employee_templates = EmployeeTemplate.where(is_active: true,employee_id: @employees)
+      elsif current_user.role.name == 'Branch'
+        @employees = Employee.where(company_location_id: current_user.company_location_id)
+        @employee_templates = EmployeeTemplate.where(is_active: true,employee_id: @employees)
+      elsif current_user.role.name == 'HOD'
+        @employees = Employee.where(department_id: current_user.department_id)
+        @employee_templates = EmployeeTemplate.where(is_active: true,employee_id: @employees)
+      else current_user.role.name == 'Employee'
+         @employee_templates = EmployeeTemplate.where(is_active: true,employee_id: current_user.employee_id)
+      end
+    end
+    session[:active_tab] ="PayrollManagement"
+    session[:active_tab1] ="SalaryProcess"
+    session[:active_tab2] = "SalaryReport"
+  end
+
+  def show_employee_record
+    #employee_template_id = params[:employee_templates][:employee_template_id]
+    @employee_template_ids = params[:employee_template_ids]
+    if @employee_template_ids.nil?
+      flash[:alert] = "Please Select the checkbox"
+      @employee_salary_templates = []
+      redirect_to show_employee_record_employee_templates_path
+    else
+      # @employee_salary_templates = []
+      # @employee_template_ids.each do |eid|
+      #   @employee_salary_templates = EmployeeSalaryTemplate.where(employee_template_id: eid)
+      #    @employee_salary_templates.each do |g|
+      #   @employee_salary_templates = EmployeeSalaryTemplate.where(id: g.id)
+      #   @employee_salary_templates << @employee_salary_template
+      #   end  
+      # end
+    end
+  end
+
+  def salary_breakup_pdf
+    @employee_template_ids = params[:employee_template_ids]
+    @employee_template_ids.each do |e|
+      @employee_template = EmployeeTemplate.find_by(id: e)
+      @employee_salary_templates = EmployeeSalaryTemplate.where(employee_template_id: e)
+    end
+    #@employee_template = EmployeeTemplate.find(params[:employee_template_id])
+    #@employee_salary_templates = EmployeeSalaryTemplate.where(employee_id: @employee_template.employee_id,salary_template_id: @employee_template.salary_template_id)    
+    respond_to do |format|
+      format.json
+      format.pdf do
+        render pdf: 'employee_template',
+              layout: 'pdf.html',
+              orientation: 'Landscape',
+              template: 'employee_templates/salary_breakup.pdf.erb',
+              show_as_html: params[:debug].present?,
+              margin:  { top:10,bottom:10,left:20,right:20 }
+      end
+    end
+  end
+
+  def salary_breakup_xls
+    @employee_template_ids = params[:employee_template_ids]
+      @employee_template_ids.each do |e|
+        @employee_template = EmployeeTemplate.find_by(id: e)
+      end
+    respond_to do |format|
+      format.xls {render template: 'employee_templates/salary_breakup.xls.erb'}
+    end
+  end
+
+  def employee_wise_breakup
+    session[:active_tab] ="PayrollManagement"
+    session[:active_tab1] ="SalaryProcess"
+    session[:active_tab2] = "SalaryReport"
+  end
+
+  def salary_employee_wise
+    @employee = Employee.find(params[:salary][:employee_id])
+    @employee_templates = EmployeeTemplate.where(employee_id: @employee.id)
+    @employee_templates.each do |t|
+      @employee_salary_templates = EmployeeSalaryTemplate.where(employee_template_id: t)
+      @employee_salary_templates.each do |s|
+        @employee_salary_template = EmployeeSalaryTemplate.find_by(id: s)
+      end
+    end
+  end
+
+  def employee_wise_pdf
+    @employee = Employee.find(params[:employee_id])
+    @employee_templates = EmployeeTemplate.where(employee_id: @employee.id)
+    @employee_templates.each do |t|
+      @employee_salary_templates = EmployeeSalaryTemplate.where(employee_template_id: t)
+      @employee_salary_templates.each do |s|
+        @employee_salary_template = EmployeeSalaryTemplate.find_by(id: s)
+      end
+    end
+    #@employee_salary_templates = EmployeeSalaryTemplate.where(employee_id: @employee.id)
+    respond_to do |format|
+      format.json
+      format.pdf do
+        render pdf: 'employee_template',
+              layout: 'pdf.html',
+              orientation: 'Landscape',
+              template: 'employee_templates/employee_wise_salary.pdf.erb',
+              show_as_html: params[:debug].present?,
+              margin:  { top:10,bottom:10,left:20,right:20 }
+      end
+    end
+  end
+
+  def employee_wise_xls
+     @employee = Employee.find(params[:employee_id])
+    @employee_templates = EmployeeTemplate.where(employee_id: @employee.id)
+    @employee_templates.each do |t|
+      @employee_salary_templates = EmployeeSalaryTemplate.where(employee_template_id: t)
+      @employee_salary_templates.each do |s|
+        @employee_salary_template = EmployeeSalaryTemplate.find_by(id: s)
+      end
+    end
+    respond_to do |format|
+      format.xls {render template: 'employee_templates/employee_wise_salary.xls.erb'}
     end
   end
 end

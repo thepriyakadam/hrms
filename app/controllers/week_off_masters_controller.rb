@@ -62,9 +62,12 @@ class WeekOffMastersController < ApplicationController
   end
   
   def week_off_list
-    if current_user.role.name == 'Company' 
+    if current_user.role.name == 'GroupAdmin' 
       @week_off_masters = WeekOffMaster.where(is_send: nil)
-    elsif current_user.role.name == 'CompanyLocation'
+    elsif current_user.role.name == 'Admin'
+      @employees = Employee.where(company_id: current_user.company_id)
+      @week_off_masters = WeekOffMaster.where(is_send: nil).where(employee_id: @employees)
+     elsif current_user.role.name == 'Branch'
       @employees = Employee.where(company_location_id: current_user.company_location_id)
       @week_off_masters = WeekOffMaster.where(is_send: nil).where(employee_id: @employees)
     end
@@ -80,9 +83,11 @@ class WeekOffMastersController < ApplicationController
     @is_prefix = params[:week_off_master][:is_prefix]
 
     if current_user.class == Member
-      if current_user.role.name == 'Company'
+      if current_user.role.name == 'GroupAdmin'
       @employees = Employee.all
-      elsif current_user.role.name == 'CompanyLocation'
+      elsif current_user.role.name == 'Admin'
+        @employees = Employee.where(company_id: current_user.company_id)
+       elsif current_user.role.name == 'Branch'
         @employees = Employee.where(company_location_id: current_user.company_location_id)
     else
       @employees = Employee.all

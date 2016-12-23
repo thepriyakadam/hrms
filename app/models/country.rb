@@ -13,9 +13,11 @@ class Country < ActiveRecord::Base
     @countries =  if current_user.class == Group
     Country.all
     elsif current_user.class == Member
-    if current_user.role.name == "Company"
+    if current_user.role.name == "GroupAdmin"
     Country.all
-    elsif current_user.role.name == "CompanyLocation"
+    elsif current_user.role.name == "Admin"
+    Country.all
+    elsif current_user.role.name == "Branch"
     Country.all
     end
   end

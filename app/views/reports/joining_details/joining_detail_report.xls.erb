@@ -63,7 +63,7 @@
           <Cell ss:Index="23"><Data ss:Type="String"><%= joining_detail.try(:passport_expiry_date) %></Data></Cell>
           <Cell ss:Index="24"><Data ss:Type="String"><%= joining_detail.try(:have_retention) %></Data></Cell>
           <Cell ss:Index="25"><Data ss:Type="String"><%= joining_detail.try(:retirement_date) %></Data></Cell>
-          <Cell ss:Index="26"><Data ss:Type="String"><%= joining_detail.try(:reserved_category_id) %></Data></Cell>
+          <Cell ss:Index="26"><Data ss:Type="String"><%= joining_detail.try(:reserved_category).try(:name) %></Data></Cell>
         </Row><!-- Row -->
       <% end %><!-- slip -->
     </Table>

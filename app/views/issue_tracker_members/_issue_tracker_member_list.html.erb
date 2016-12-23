@@ -24,6 +24,7 @@
          
           <%= link_to '',  issue_tracker_member, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
           <%= link_to '', is_confirm_issue_tracker_members_path(issue_tracker_member: issue_tracker_member),data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-info fa fa-check' %>
+           <%= link_to '', edit_issue_tracker_member_path(issue_tracker_member),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
            <% end %>
           </td>
       </tr>

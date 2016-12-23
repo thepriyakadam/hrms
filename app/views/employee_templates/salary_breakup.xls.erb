@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <% @employee_template_ids.each do |e| %>
+      <% @employee_template = EmployeeTemplate.find_by(id: e) %>
+      <% @employee_salary_templates = EmployeeSalaryTemplate.where(employee_template_id: e) %>
+       <Row>
+        <Cell ss:Index="1"><Data ss:Type="String"> ID <%= @employee_template.employee.manual_employee_code %></Data></Cell>
+        <Cell ss:Index="2"><Data ss:Type="String">Employee Name <%= @employee_template.employee.first_name %> <%= @employee_template.employee.middle_name %> <%= @employee_template.employee.last_name %></Data></Cell>
+         <Cell ss:Index="3"><Data ss:Type="String">Period <%= @employee_template.start_date %> - <%= @employee_template.end_date %> </Data></Cell>
+      </Row>
+      <Row>
+        <Cell ss:Index="1"><Data ss:Type="String">Salary Component</Data></Cell>
+        <Cell ss:Index="2"><Data ss:Type="String">Monthly Amount</Data></Cell>
+        <Cell ss:Index="3"><Data ss:Type="String">Annual Amount</Data></Cell>
+        </Row>
+        <% @employee_salary_templates.each do |g|  %>
+        <% employee = Employee.find(g.employee_id) %>
+        <% employee_salary_template = EmployeeSalaryTemplate.find_by(id: g) %>
+        <Row>
+          <Cell ss:Index="1"><Data ss:Type="String"><%= g.try(:salary_component).try(:name) %></Data></Cell>
+          <Cell ss:Index="2"><Data ss:Type="Number"><%= g.try(:monthly_amount) %></Data></Cell>
+          <Cell ss:Index="3"><Data ss:Type="Number"><%= g.try(:annual_amount) %></Data></Cell>
+     </Row><!-- Row -->
+      <% end %><!-- slip -->
+      <Row>
+          <Cell ss:Index="1"><Data ss:Type="String">Gross Salary</Data></Cell>
+          <Cell ss:Index="2"><Data ss:Type="Number"><%= @employee_salary_templates.sum(:monthly_amount) %></Data></Cell>
+          <Cell ss:Index="3"><Data ss:Type="Number"><%= @employee_salary_templates.sum(:annual_amount) %></Data></Cell>
+       </Row><!-- Row -->
+    <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>

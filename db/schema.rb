@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161220124243) do
+ActiveRecord::Schema.define(version: 20161222113048) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -763,10 +763,12 @@ ActiveRecord::Schema.define(version: 20161220124243) do
     t.decimal  "count",                    precision: 5, scale: 2
     t.integer  "employee_leav_request_id"
     t.integer  "machine_attendances_id"
-    t.string   "company_hrs"
-    t.string   "overtime_hrs"
     t.integer  "company_time_master_id"
-    t.string   "total_hrs"
+    t.string   "working_hrs"
+    t.string   "rest_time"
+    t.decimal  "difference_hrs"
+    t.decimal  "overtime_hrs"
+    t.string   "month_name"
   end
 
   add_index "employee_attendances", ["company_time_master_id"], name: "index_employee_attendances_on_company_time_master_id"
@@ -1214,6 +1216,19 @@ ActiveRecord::Schema.define(version: 20161220124243) do
     t.datetime "updated_at",     null: false
   end
 
+  create_table "esic_employer_masters", force: :cascade do |t|
+    t.boolean  "esic"
+    t.decimal  "percentage"
+    t.date     "effective_from"
+    t.date     "effective_to"
+    t.decimal  "max_limit"
+    t.string   "base_component"
+    t.boolean  "is_active"
+    t.boolean  "is_confirm"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
   create_table "esic_employers", force: :cascade do |t|
     t.string   "base_component"
     t.decimal  "percentage"
@@ -1340,6 +1355,19 @@ ActiveRecord::Schema.define(version: 20161220124243) do
 
   add_index "food_deductions", ["employee_id"], name: "index_food_deductions_on_employee_id"
   add_index "food_deductions", ["food_coupan_master_id"], name: "index_food_deductions_on_food_coupan_master_id"
+
+  create_table "fp_masters", force: :cascade do |t|
+    t.boolean  "is_fp"
+    t.decimal  "min_limit"
+    t.decimal  "percentage"
+    t.string   "base_component"
+    t.date     "effective_from"
+    t.date     "effective_to"
+    t.boolean  "is_active"
+    t.boolean  "is_confirm"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
 
   create_table "goal_bunches", force: :cascade do |t|
     t.integer  "period_id"
@@ -1546,6 +1574,18 @@ ActiveRecord::Schema.define(version: 20161220124243) do
   end
 
   add_index "instalments", ["advance_salary_id"], name: "index_instalments_on_advance_salary_id"
+
+  create_table "insurance_masters", force: :cascade do |t|
+    t.boolean  "is_insurance"
+    t.decimal  "percentage"
+    t.string   "base_component"
+    t.date     "effective_from"
+    t.date     "effective_to"
+    t.boolean  "is_active"
+    t.boolean  "is_confirm"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
 
   create_table "interview_analyses", force: :cascade do |t|
     t.integer  "vacancy_request_history_id"
@@ -1858,8 +1898,8 @@ ActiveRecord::Schema.define(version: 20161220124243) do
     t.string   "passport_no"
     t.date     "passport_issue_date"
     t.date     "passport_expiry_date"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
     t.string   "employee_uan_no"
     t.string   "employee_pf_no"
     t.string   "employee_efic_no"
@@ -1874,11 +1914,13 @@ ActiveRecord::Schema.define(version: 20161220124243) do
     t.boolean  "is_society_member"
     t.date     "retirement_date"
     t.integer  "reserved_category_id"
+    t.boolean  "is_da"
     t.boolean  "is_employeer_pf"
     t.boolean  "is_employeer_esic"
     t.boolean  "is_insurance"
     t.boolean  "is_family_pension"
     t.boolean  "is_bonus"
+    t.boolean  "basis_of_time",           default: false
   end
 
   add_index "joining_details", ["cost_center_id"], name: "index_joining_details_on_cost_center_id"
@@ -3225,8 +3267,8 @@ ActiveRecord::Schema.define(version: 20161220124243) do
     t.decimal  "week_off_day"
     t.decimal  "absent_day"
     t.decimal  "payable_day"
-    t.datetime "created_at",                                null: false
-    t.datetime "updated_at",                                null: false
+    t.datetime "created_at",                                       null: false
+    t.datetime "updated_at",                                       null: false
     t.decimal  "lwp_leave"
     t.decimal  "cl_leave"
     t.decimal  "el_leave"
@@ -3239,7 +3281,9 @@ ActiveRecord::Schema.define(version: 20161220124243) do
     t.decimal  "advance_balance"
     t.boolean  "is_confirm"
     t.decimal  "pay_leave"
-    t.decimal  "nonpay_leave",     precision: 10, scale: 2
+    t.decimal  "nonpay_leave",            precision: 10, scale: 2
+    t.decimal  "calculated_payable_days"
+    t.decimal  "ot_days"
     t.decimal  "gatepass"
   end
 

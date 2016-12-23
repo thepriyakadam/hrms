@@ -9,10 +9,16 @@ class AttendancesController < ApplicationController
     if current_user.class == Group
       @attendances = Attendance.all
     else
-      if current_user.role.name == 'Company'
+      if current_user.role.name == 'GroupAdmin'
         @attendances = Attendance.all
-      elsif current_user.role.name == 'CompanyLocation'
+      elsif current_user.role.name == 'Admin'
+        @employees = Employee.where(company_id: current_user.company_id).pluck(:id)
+        @attendances = Attendance.where(employee_id: @employees)
+      elsif current_user.role.name == 'Branch'
         @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+        @attendances = Attendance.where(employee_id: @employees)
+      elsif current_user.role.name == 'HOD'
+        @employees = Employee.where(department_id: current_user.department_id).pluck(:id)
         @attendances = Attendance.where(employee_id: @employees)
       elsif current_user.role.name == 'Employee'
         @attendances = Attendance.where(employee_id: current_user.employee_id)

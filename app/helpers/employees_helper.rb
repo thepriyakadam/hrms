@@ -23,9 +23,11 @@ module EmployeesHelper
     if current_user.class == Group
       Employee.all.collect { |e| [e.manual_employee_code + '  ' + e.first_name.to_s + ' ' + e.last_name.to_s, e.id] }
     else
-      if current_user.role.name == 'Company'
+      if current_user.role.name == 'GroupAdmin'
         Employee.all.collect { |e| [e.manual_employee_code + '  ' + e.first_name.to_s + ' ' + e.last_name.to_s, e.id] }
-      elsif current_user.role.name == 'CompanyLocation'
+      elsif current_user.role.name == 'Admin'
+        Employee.where(company_location_id: current_user.company_id).collect { |e| [e.manual_employee_code + '  ' + e.first_name.to_s + ' ' + e.last_name.to_s, e.id] }
+      elsif current_user.role.name == 'Branch'
         Employee.where(company_location_id: current_user.company_location_id).collect { |e| [e.manual_employee_code + '  ' + e.first_name.to_s + ' ' + e.last_name.to_s, e.id] }
       end
     end
@@ -47,9 +49,11 @@ module EmployeesHelper
     if current_user.class == Group
       Employee.all.collect { |e| [e.manual_employee_code + '  ' + e.first_name.to_s + ' ' + e.last_name.to_s, e.id] }
     else
-      if current_user.role.name == 'Company'
+      if current_user.role.name == 'GroupAdmin'
         Employee.all.collect { |e| [e.manual_employee_code + '  ' + e.first_name.to_s + ' ' + e.last_name.to_s, e.id] }
-      elsif current_user.role.name == 'CompanyLocation' || current_user.role.name == "SalaryAccount"
+      elsif current_user.role.name == 'Admin' || current_user.role.name == "Account"
+        Employee.where(company_location_id: current_user.company_id).collect { |e| [e.manual_employee_code + '  ' + e.first_name.to_s + ' ' + e.last_name.to_s, e.id] }
+      elsif current_user.role.name == 'Branch' || current_user.role.name == "Account"
         Employee.where(company_location_id: current_user.company_location_id).collect { |e| [e.manual_employee_code + '  ' + e.first_name.to_s + ' ' + e.last_name.to_s, e.id] }
       end
     end

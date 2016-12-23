@@ -291,7 +291,6 @@ end
   end
 
   resources :email_configs
-  resources :weekoff_masters
   resources :currency_masters do
     collection do
       get :is_confirm
@@ -933,7 +932,6 @@ end
 
   end
 
-  resources :week_offs
   resources :employee_leav_request_reports, only: [:index]
 
   resources :capture_resumes do

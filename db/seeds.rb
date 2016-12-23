@@ -778,13 +778,11 @@ end
 #   end
 # end
 
-<<<<<<< HEAD
 # ex = Roo::Excel.new("#{Rails.root}/public/employee_basic_report (1).xls")
 # ex.default_sheet = ex.sheets[0] #siya feb
 # i = 1
 # ActiveRecord::Base.transaction do
 # 66.upto(66) do |line| # siya Feb 2016
-=======
 ex = Roo::Excel.new("#{Rails.root}/public/cid.xls")
 ex.default_sheet = ex.sheets[0] #siya feb
 i = 1
@@ -799,7 +797,6 @@ ActiveRecord::Base.transaction do
  i += 1
  end
  end
->>>>>>> a2ce3b731d46c9085763c8b75b8ad5a68da9014d
 # ex = Roo::Excel.new("#{Rails.root}/public/cid.xls")
 # ex.default_sheet = ex.sheets[0] #siya feb
 # i = 1

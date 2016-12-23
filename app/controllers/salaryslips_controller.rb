@@ -808,6 +808,7 @@ class SalaryslipsController < ApplicationController
             sa.employee_template_id = current_template.id
             sa.save!
           end
+          
 
           formula_item_actual_amount = 0
           formula_item_calculated_amount = 0

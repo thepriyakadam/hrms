@@ -1,5 +1,6 @@
-<% if @certificate.try(:certificate_master).try(:name) == "Offer Letter" %>
+<% if@certificate.certificate_master.name == "Offer Letter" %>
 $("#offer_letter").html("<%= j render 'offer_letter' %>")
-<% else @certificate.try(:certificate_master).try(:name)  == "Joining Letter"	%>
+<% elsif@certificate.certificate_master.name  == "Joining Letter"	%>
 $("#joining_letter").html("<%= j render 'joining_letter' %>")
+<%else%>
 <% end %>

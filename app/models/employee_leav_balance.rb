@@ -38,13 +38,16 @@ class EmployeeLeavBalance < ActiveRecord::Base
     @employee_leav_balances =  if current_user.class == Group
     EmployeeLeavBalance.all
     elsif current_user.class == Member
-    if current_user.role.name == "Company"
+    if current_user.role.name == "GroupAdmin"
       @employees = Employee.where(company_id: current_user.company_id)
       EmployeeLeavBalance.where(employee_id: @employees)
-    elsif current_user.role.name == "CompanyLocation"
+    elsif current_user.role.name == "Admin"
+      @employees = Employee.where(company_location_id: current_user.company_id)
+      EmployeeLeavBalance.where(employee_id: @employees)  
+    elsif current_user.role.name == "Branch"
       @employees = Employee.where(company_location_id: current_user.company_location_id)
       EmployeeLeavBalance.where(employee_id: @employees)  
-    elsif current_user.role.name == "Department"
+    elsif current_user.role.name == "HOD"
       @employees = Employee.where(department_id: current_user.department_id)
       EmployeeLeavBalance.where(employee_id: @employees)
     elsif current_user.role.name == "Employee"

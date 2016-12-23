@@ -12,9 +12,11 @@ class District < ActiveRecord::Base
     @disticts =  if current_user.class == Group
     District.all
     elsif current_user.class == Member
-    if current_user.role.name == "Company"
+    if current_user.role.name == "GroupAdmin"
     District.all
-    elsif current_user.role.name == "CompanyLocation"
+  elsif current_user.role.name == "Admin"
+    District.all
+    elsif current_user.role.name == "Branch"
     District.all
     end
   end

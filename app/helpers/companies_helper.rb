@@ -10,7 +10,7 @@ module CompaniesHelper
       if current_user.role.name == 'GroupAdmin'
         Company.all.collect { |x| [x.name, x.id] }
       elsif current_user.role.name == 'Admin'
-        Company.where(id: current_user.company_id).collect { |x| [x.name, x.id] }
+        Company.where(id: current_user.compnay_location_id).collect { |x| [x.name, x.id] }
       elsif current_user.role.name == 'Branch'
         Company.where(id: current_user.company_location_id).collect { |x| [x.name, x.id] }
       end

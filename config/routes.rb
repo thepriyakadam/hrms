@@ -56,6 +56,8 @@ Rails.application.routes.draw do
       post :import
       get :modal
       post :edit_machine_attendance
+      get :machine_attendance_xls
+      get :machine_attendance_pdf
     end
   end
   resources :company_time_masters do

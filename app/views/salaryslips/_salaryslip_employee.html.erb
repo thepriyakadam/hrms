@@ -38,7 +38,7 @@
         <td><%= full_name(s.employee) %></td>
         <td><%= s.actual_gross_salary.round %></td>
       <!-- < @emp_contribution.try(:each) do |ec| %> -->
-        <td><% a=EmployerContribution.where(employee_id: s.employee_id,date: @salaryslips_1_date).pluck(:actual_bonus).map {|i| i.to_i}.inject{|n|} %></td>
+        <td><%= a=EmployerContribution.where(employee_id: s.employee_id,date: @salaryslips_1_date).pluck(:actual_bonus).map {|i| i.to_i}.inject{|n|} %></td>
         <td><%= b=EmployerContribution.where(employee_id: s.employee_id,date: @salaryslips_1_date).pluck(:actual_pf).map {|i| i.to_i}.inject{|n|} %></td>
         <td><%= c=EmployerContribution.where(employee_id: s.employee_id,date: @salaryslips_1_date).pluck(:actual_esic).map {|i| i.to_i}.inject{|n|} %></td>
         <td><%= d=EmployerContribution.where(employee_id: s.employee_id,date: @salaryslips_1_date).pluck(:actual_fp).map {|i| i.to_i}.inject{|n|} %></td>

@@ -452,9 +452,10 @@ class EmployeesController < ApplicationController
       if current_user.role.name == 'GroupAdmin'
         @company_locations = CompanyLocation.all
       elsif current_user.role.name == 'Admin'
-        @company_locations = CompanyLocation.where(company_id: @company.id)
+        @company_locations = CompanyLocation.where(id: current_user.company_location_id)
+        # byebug
       elsif current_user.role.name == 'Branch'
-        @company_locations = CompanyLocation.where(id: current_user.company_location_id,company_id: @company.id)
+        @company_locations = CompanyLocation.where(id: current_user.company_location_id,company_id: current_user.company_location.company_id)
       end
     end
     @form = params[:form]

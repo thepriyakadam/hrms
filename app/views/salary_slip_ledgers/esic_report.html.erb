@@ -1,21 +1,21 @@
 <!--SELECT2 EXAMPLE -->
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title">Employee Food Deduction Report</h3>
+    <h3 class="box-title">Esic Report</h3>
   </div><!-- /.box-header -->
 
   <div class="box-body">
-    <%= bootstrap_form_for(:food_deduction, url: { action: 'dynamic_report'},html: {id: 'food_deduction'},remote:true) do |f| %>
+    <%= bootstrap_form_for(:esic, url: { action: 'esic_dynamic_report'},html: {id: 'esic'},remote:true) do |f| %>
       <div class="row">
         <div class="col-sm-2">
           <div class="field">
-            <%= select :food_deduction,:year,['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025','2026','2027'],{label: 'Select Year',include_blank: " Select Year"}, class: "form-control" %>
+            <%= select :esic,:year,['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025','2026','2027'],{label: 'Select Year',include_blank: " Select Year"}, class: "form-control" %>
           </div>
         </div>
 
         <div class="col-sm-2">
           <div class="field">
-            <%= select :food_deduction,:month, ['January','February','March','April','May','June','July','August','September','October','November','December'],{label: 'Select Month',include_blank: " Select Month"}, class: "form-control" %>
+            <%= select :esic,:month, ['January','February','March','April','May','June','July','August','September','October','November','December'],{label: 'Select Month',include_blank: " Select Month"}, class: "form-control" %>
            </div>
         </div>
 
@@ -50,7 +50,7 @@
           </div>
         </div>
         </div><br>
-        <div id="food_deduction_li_1"></div>
+        <div id="esic_li"></div>
 
       <br>
     <% end %>
@@ -58,26 +58,26 @@
 </div><!-- /.box -->
 
 <script>
-$("#food_deduction").validate({
+$("#esic").validate({
     rules: {
-      "food_deduction[month]":{
+      "esic[month]":{
         required: true,
       },
-      "food_deduction[year]":{
+      "esic[year]":{
         required: true,
       },
-      "food_deduction[company_id]":{
+      "esic[company_id]":{
         required: true,
       }
     },
     messages: {
-      "food_deduction[month]":{
+      "esic[month]":{
         required: "Please select Month",
       },
-      "food_deduction[year]":{
+      "esic[year]":{
         required: "Please select Year",
       },
-      "food_deduction[company_id]":{
+      "esic[company_id]":{
         required: "Please select Company",
       }   
     },

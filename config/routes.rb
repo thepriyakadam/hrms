@@ -4,6 +4,10 @@ Rails.application.routes.draw do
     collection do
       get :certificate_form
       get :certificate_print
+      get :employee
+      post :selected_employee_list
+      get :selected_employee_pdf
+      get :selected_employee_xls
     end
   end
   resources :certificate_masters do
@@ -1751,6 +1755,20 @@ end
   end
   resources :employees do
     collection do
+      get :employee_list_report
+      post :selected_employee_list_report
+      get :selected_employee_pdf
+      get :selected_employee_xls
+      get :selected_on_boarding_pdf
+      get :selected_on_boarding_xls
+      get :selected_bank_pdf
+      get :selected_bank_xls
+      get :selected_qualification_pdf
+      get :selected_qualification_xls
+      get :selected_experience_pdf
+      get :selected_experience_xls
+      get :selected_skillset_pdf
+      get :selected_skillset_xls
       get :import_xl
       post :import
       get :graph

@@ -70,7 +70,7 @@ class CertificatesController < ApplicationController
     @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
   end
 
-  private
+ private
     # Use callbacks to share common setup or constraints between actions.
     def set_certificate
       @certificate = Certificate.find(params[:id])

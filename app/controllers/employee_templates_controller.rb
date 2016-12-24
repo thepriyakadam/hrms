@@ -8,7 +8,7 @@ class EmployeeTemplatesController < ApplicationController
     elsif current_user.class == Member
       if current_user.role.name == 'GroupAdmin'
         @employees = Employee.all
-      if current_user.role.name == 'Admin'
+      elsif current_user.role.name == 'Admin'
         @employees = Employee.where(company_id: current_user.company_id)
       elsif current_user.role.name == 'Branch'
         @employees = Employee.where(company_location_id: current_user.company_location_id)

@@ -506,6 +506,221 @@ class EmployeesController < ApplicationController
     @employee = Employee.find(params[:salary][:employee_id])
   end
 
+
+  def employee_list_report
+    @employees = Employee.all 
+  end
+
+  def selected_employee_list_report
+    @employee_id = params[:employee_id]
+    @employees = Employee.where(id: @employee_id)
+    if @employee_id.nil?
+      flash[:alert] = "Please Select the checkbox"
+      @employees = []
+      redirect_to selected_employee_list_report_employees_path
+    else
+    end
+  end
+
+  def selected_employee_pdf
+
+      @employee_id = params[:employee_id]
+      @employee_id.each do |e|
+      @employee = Employee.find_by(id: e)
+      @employees = Employee.where(id: e)
+    end
+    #@employee_template = EmployeeTemplate.find(params[:employee_template_id])
+    #@employee_salary_templates = EmployeeSalaryTemplate.where(employee_id: @employee_template.employee_id,salary_template_id: @employee_template.salary_template_id)    
+    respond_to do |format|
+      format.json
+      format.pdf do
+        render pdf: 'employee',
+              layout: 'pdf.html',
+              orientation: 'Landscape',
+              template: 'employees/selected_employee_pdf.pdf.erb',
+              show_as_html: params[:debug].present?,
+              margin:  { top:10,bottom:10,left:20,right:20 }
+      end
+    end
+    
+  end
+
+  def selected_employee_xls
+     @employee_id = params[:employee_id]
+      @employees = Employee.where(id: @employee_id)
+      @employee_id.each do |e|
+        @employee = Employee.find_by(id: e)
+      end
+    respond_to do |format|
+      format.xls {render template: 'employees/selected_employee_xls.xls.erb'}
+    end
+  end
+
+
+def selected_on_boarding_pdf
+      @employee_id = params[:employee_id]
+      @joining_details = JoiningDetail.where(employee_id: @employee_id)
+      @employee_id.each do |e|
+      @employee = Employee.find_by(id: e)
+      @employees = Employee.where(id: e)
+    end
+    #@employee_template = EmployeeTemplate.find(params[:employee_template_id])
+    #@employee_salary_templates = EmployeeSalaryTemplate.where(employee_id: @employee_template.employee_id,salary_template_id: @employee_template.salary_template_id)    
+    respond_to do |format|
+      format.json
+      format.pdf do
+        render pdf: 'employee',
+              layout: 'pdf.html',
+              orientation: 'Landscape',
+              template: 'employees/selected_on_boarding_pdf.pdf.erb',
+              show_as_html: params[:debug].present?,
+              margin:  { top:10,bottom:10,left:20,right:20 }
+      end
+    end
+end
+
+  def selected_on_boarding_xls
+    @employee_id = params[:employee_id]
+    @joining_details = JoiningDetail.where(employee_id: @employee_id)
+      @employee_id.each do |e|
+        @employee = Employee.find_by(id: e)
+      end
+    respond_to do |format|
+      format.xls {render template: 'employees/selected_on_boarding_xls.xls.erb'}
+    end
+  end
+
+
+def selected_bank_pdf
+   @employee_id = params[:employee_id]
+      @employee_bank_details = EmployeeBankDetail.where(employee_id: @employee_id)
+      @employee_id.each do |e|
+      @employee = Employee.find_by(id: e)
+    end
+    #@employee_template = EmployeeTemplate.find(params[:employee_template_id])
+    #@employee_salary_templates = EmployeeSalaryTemplate.where(employee_id: @employee_template.employee_id,salary_template_id: @employee_template.salary_template_id)    
+    respond_to do |format|
+      format.json
+      format.pdf do
+        render pdf: 'employee',
+              layout: 'pdf.html',
+              orientation: 'Landscape',
+              template: 'employees/selected_bank_pdf.pdf.erb',
+              show_as_html: params[:debug].present?,
+              margin:  { top:10,bottom:10,left:20,right:20 }
+      end
+    end
+end
+
+def selected_bank_xls
+   @employee_id = params[:employee_id]
+    @employee_bank_details = EmployeeBankDetail.where(employee_id: @employee_id)
+      @employee_id.each do |e|
+        @employee = Employee.find_by(id: e)
+      end
+    respond_to do |format|
+      format.xls {render template: 'employees/selected_bank_xls.xls.erb'}
+    end
+end
+
+def selected_qualification_pdf
+   @employee_id = params[:employee_id]
+      @qualifications = Qualification.where(employee_id: @employee_id)
+      @employee_id.each do |e|
+      @employee = Employee.find_by(id: e)
+    end
+    #@employee_template = EmployeeTemplate.find(params[:employee_template_id])
+    #@employee_salary_templates = EmployeeSalaryTemplate.where(employee_id: @employee_template.employee_id,salary_template_id: @employee_template.salary_template_id)    
+    respond_to do |format|
+      format.json
+      format.pdf do
+        render pdf: 'employee',
+              layout: 'pdf.html',
+              orientation: 'Landscape',
+              template: 'employees/selected_qualification_pdf.pdf.erb',
+              show_as_html: params[:debug].present?,
+              margin:  { top:10,bottom:10,left:20,right:20 }
+      end
+    end
+  
+end
+
+def selected_qualification_xls
+    @employee_id = params[:employee_id]
+    @qualifications = Qualification.where(employee_id: @employee_id)
+      @employee_id.each do |e|
+        @employee = Employee.find_by(id: e)
+      end
+    respond_to do |format|
+      format.xls {render template: 'employees/selected_qualification_xls.xls.erb'}
+    end
+  
+end
+
+def selected_experience_pdf
+  @employee_id = params[:employee_id]
+      @experiences = Experience.where(employee_id: @employee_id)
+      @employee_id.each do |e|
+      @employee = Employee.find_by(id: e)
+    end
+    #@employee_template = EmployeeTemplate.find(params[:employee_template_id])
+    #@employee_salary_templates = EmployeeSalaryTemplate.where(employee_id: @employee_template.employee_id,salary_template_id: @employee_template.salary_template_id)    
+    respond_to do |format|
+      format.json
+      format.pdf do
+        render pdf: 'employee',
+              layout: 'pdf.html',
+              orientation: 'Landscape',
+              template: 'employees/selected_experience_pdf.pdf.erb',
+              show_as_html: params[:debug].present?,
+              margin:  { top:10,bottom:10,left:20,right:20 }
+      end
+    end
+end
+
+def selected_experience_xls
+   @employee_id = params[:employee_id]
+    @experiences = Experience.where(employee_id: @employee_id)
+      @employee_id.each do |e|
+        @employee = Employee.find_by(id: e)
+      end
+    respond_to do |format|
+      format.xls {render template: 'employees/selected_experience_xls.xls.erb'}
+    end
+end
+
+def selected_skillset_pdf
+   @employee_id = params[:employee_id]
+      @skillsets = Skillset.where(employee_id: @employee_id)
+      @employee_id.each do |e|
+      @employee = Employee.find_by(id: e)
+    end
+    #@employee_template = EmployeeTemplate.find(params[:employee_template_id])
+    #@employee_salary_templates = EmployeeSalaryTemplate.where(employee_id: @employee_template.employee_id,salary_template_id: @employee_template.salary_template_id)    
+    respond_to do |format|
+      format.json
+      format.pdf do
+        render pdf: 'employee',
+              layout: 'pdf.html',
+              orientation: 'Landscape',
+              template: 'employees/selected_skillset_pdf.pdf.erb',
+              show_as_html: params[:debug].present?,
+              margin:  { top:10,bottom:10,left:20,right:20 }
+      end
+    end
+  
+end
+
+def selected_skillset_xls
+  @employee_id = params[:employee_id]
+    @skillsets = Skillset.where(employee_id: @employee_id)
+      @employee_id.each do |e|
+        @employee = Employee.find_by(id: e)
+      end
+    respond_to do |format|
+      format.xls {render template: 'employees/selected_skillset_xls.xls.erb'}
+    end
+end
   # def destroy_details
   #   @employee = Employee.find(params[:emp_id])
 

@@ -1,5 +1,5 @@
 class CertificateMaster < ActiveRecord::Base
-	belongs_to :certificate
+	has_many :certificates
 
 	validates :name, presence: true,  uniqueness: { case_sensitive: false }
 end

@@ -1245,6 +1245,10 @@ end
     collection do
       get :employees
       get :employee_expences
+      get :monthly_expence_report
+      post :dynamic_report
+      get :monthly_expence_xls
+      get :monthly_expence_pdf
     end
   end
   resources :expencess_types do
@@ -1430,9 +1434,17 @@ end
       get :pf_detail_xls
       get :select_bank_wise
       get :show_employee_list
+      get :esic_report
+      post :esic_dynamic_report
+      get :esic_xls
+      get :esic_pdf
       # post :dynamic_report
       # get :pf_detail_pdf
       post :print_xls
+      get :proff_tax_xls
+      get :proff_tax_pdf
+      get :proff_tax_report
+      post :professional_tax_master_dynamic_report
     end
   end
 

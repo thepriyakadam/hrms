@@ -7,36 +7,34 @@
     <table id="example" class="table table-bordered table-hover table-condensed">
     <thead>
       <tr>
-        <th>ID</Data></th>
+        <th>Employee Code</th>
         <th>Employee Name</th>
-        <th>Department</th>
-        <th>Professional Tax</th>
+        <th>Retention Money</th>
     </tr>
     </thead>
     <tbody>
       <% @salaryslips.each do |slip| %>
         <% employee = slip.employee %>
+        <% joining = employee.joining_detail %>
         <% bank = employee.employee_bank_detail %>
         <% workingday = slip.workingday %>
         <tr>
           <td><%= slip.employee.manual_employee_code %></td>
           <td><%= employee.try(:first_name) %> <%= employee.try(:middle_name) %> <%= employee.try(:last_name) %></td>
-           <td><%= employee.company_location.try(:name) %> - <%= employee.department.try(:name) %></td>
-
           <% @deducted_salaryslip_items = slip.salaryslip_components.where(is_deducted: true) %>
           <% @deducted_salaryslip_items.each do |item| %>
-              <% if item.other_component_name == "Prof. Tax" %>
+              <% if item.other_component_name == "Retention" %>
                 <td><%= item.calculated_amount.round %></td>
               <% end %>
           <% end %><!-- deducted items -->
-        </Row><!-- Row -->
+        </tr><!-- Row -->
       <% end %><!-- slip -->
    </tbody>
   </table>
   </div>
 
-  <%= link_to " Excel Report ",proff_tax_xls_salary_slip_ledgers_path(month: params[:proff_tax][:month], year: params[:proff_tax][:year],company_id: params[:proff_tax][:company_id],company_location_id: params[:food_deduction][:company_location_id], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
-  <%= link_to " Print Professional Tax ",proff_tax_pdf_salary_slip_ledgers_path(month: params[:proff_tax][:month], year: params[:proff_tax][:year],company_id: params[:proff_tax][:company_id],company_location_id: params[:food_deduction][:company_location_id], format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+  <%= link_to " Excel Report ",retention_money_xls_salary_slip_ledgers_path(month: params[:retention_money][:month], year: params[:retention_money][:year],company_id: params[:retention_money][:company_id],company_location_id: params[:food_deduction][:company_location_id], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+  <%= link_to " Print  Retention Money ",retention_money_pdf_salary_slip_ledgers_path(month: params[:retention_money][:month], year: params[:retention_money][:year],company_id: params[:retention_money][:company_id],company_location_id: params[:food_deduction][:company_location_id], format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
 </div>
 
 <script type="text/javascript">

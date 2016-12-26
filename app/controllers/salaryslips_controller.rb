@@ -131,7 +131,6 @@ class SalaryslipsController < ApplicationController
   end
 
   def show_unsaved_employee
-    # byebug
     @month = params[:month]
     @year = params[:year]
     @workingdays = Workingday.where(month_name: @month, year: @year).pluck(:employee_id)
@@ -140,13 +139,17 @@ class SalaryslipsController < ApplicationController
     if current_user.class == Group
       @employees = Employee.where(id: emp_ids)  
     elsif current_user.class == Member
-      if current_user.role.name == "Company"
+      if current_user.role.name == "GroupAdmin"
         @employees = Employee.where(id: emp_ids)
-      elsif current_user.role.name == "CompanyLocation"
+      elsif current_user.role.name == "Admin"
+        company_employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
+        new_ids = company_employees & emp_ids
+        @employees = Employee.where(id: new_ids)
+      elsif current_user.role.name == "Branch"
         location_employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
         new_ids = location_employees & emp_ids
         @employees = Employee.where(id: new_ids)
-      elsif current_user.role.name == "Department"
+      elsif current_user.role.name == "HOD"
         department_employees = Employee.where(department_id: current_user.company_location_id)
         new_ids = department_employees & emp_ids
         @employees = Employee.where(id: new_ids)
@@ -638,7 +641,7 @@ class SalaryslipsController < ApplicationController
       overtime_payment = working_day.try(:ot_days).to_f * pom.rate.to_f * base_amount.to_f
       @salary_component = SalaryComponent.find_by(name: "Overtime")
       SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: 0, calculated_amount: overtime_payment, is_deducted: false, other_component_name: 'Overtime',salary_component_id: @salary_component.id)
-      puts "fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+      puts "fffffffffffffff"
     end
 
 
@@ -1151,7 +1154,7 @@ class SalaryslipsController < ApplicationController
       overtime_payment = working_day.try(:ot_days).to_f * pom.rate.to_f * base_amount.to_f
       @salary_component = SalaryComponent.find_by(name: "Overtime")
       SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: 0, calculated_amount: overtime_payment, is_deducted: false, other_component_name: 'Overtime',salary_component_id: @salary_component.id)
-      puts "ggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg"
+      puts "gggggggggggggggg"
     end
 
 
@@ -1245,9 +1248,12 @@ end
     if current_user.class == Group
       @salaryslips = Salaryslip.where(month: @month, year: @year.to_s)
     elsif current_user.class == Member
-      if current_user.role.name == "Company"
+      if current_user.role.name == "GroupAdmin"
         @salaryslips = Salaryslip.where(month: @month, year: @year.to_s)
-      elsif current_user.role.name == "CompanyLocation"
+      elsif current_user.role.name == "Admin"
+        @employees = Employee.where(company_id: current_user.company_location.company_id)
+        @salaryslips = Salaryslip.where(month: @month, year: @year.to_s, employee_id: @employees)
+      elsif current_user.role.name == "Branch"
         @employees = Employee.where(company_location_id: current_user.company_location_id)
         @salaryslips = Salaryslip.where(month: @month, year: @year.to_s, employee_id: @employees)
       end  

@@ -1780,6 +1780,18 @@ end
       get :selected_experience_xls
       get :selected_skillset_pdf
       get :selected_skillset_xls
+      get :selected_certification_pdf
+      get :selected_certification_xls
+      get :selected_award_pdf
+      get :selected_award_xls
+      get :selected_employee_physical_pdf
+      get :selected_employee_physical_xls
+      get :selected_employee_family_pdf
+      get :selected_employee_family_xls
+      get :selected_employee_nomination_pdf
+      get :selected_employee_nomination_xls
+      get :selected_asset_pdf
+      get :selected_asset_xls
       get :import_xl
       post :import
       get :graph

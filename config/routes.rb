@@ -297,7 +297,6 @@ end
   end
 
   resources :email_configs
-  resources :weekoff_masters
   resources :currency_masters do
     collection do
       get :is_confirm
@@ -939,7 +938,6 @@ end
 
   end
 
-  resources :week_offs
   resources :employee_leav_request_reports, only: [:index]
 
   resources :capture_resumes do
@@ -1249,6 +1247,10 @@ end
     collection do
       get :employees
       get :employee_expences
+      get :monthly_expence_report
+      post :dynamic_report
+      get :monthly_expence_xls
+      get :monthly_expence_pdf
     end
   end
   resources :expencess_types do
@@ -1434,9 +1436,30 @@ end
       get :pf_detail_xls
       get :select_bank_wise
       get :show_employee_list
+      get :esic_report
+      post :esic_dynamic_report
+      get :esic_xls
+      get :esic_pdf
       # post :dynamic_report
       # get :pf_detail_pdf
       post :print_xls
+      get :proff_tax_xls
+      get :proff_tax_pdf
+      get :proff_tax_report
+      post :professional_tax_master_dynamic_report
+      get :retention_money_report
+      post :retention_dynamic_report
+      get :retention_money_xls
+      get :retention_money_pdf
+      get :welfare_detail_report
+      post :wellfair_dynamic_report
+      get :wellfair_xls
+      get :wellfair_pdf
+      get :soc_membership_report
+      post :soc_membership_dynamic_report
+      get :soc_membership_xls
+      get :soc_membership_pdf
+      get :pf_pdf
     end
   end
 

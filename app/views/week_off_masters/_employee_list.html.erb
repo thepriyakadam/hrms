@@ -2,6 +2,7 @@
   <div class="box-body">
     <%= bootstrap_form_for :week_off_masters,url: { action: 'create_week_off'} do |f| %>
 
+
       <table id="example1" class="table table-bordered table-hover table-condensed">
         <thead>
           <tr>
@@ -15,22 +16,29 @@
           </tr>
         </thead>
         <tbody>
-          <% @employees.where(status: "Active").each do |e| %>
-            <tr>              
-              <td><%= check_box_tag "employee_ids[]",e.id %></td>
-              <td><%= e.manual_employee_code %></td>
-              <td><%= e.first_name %> <%= e.middle_name %> <%= e.last_name %></td>
-              <td><%= e.try(:company_location).try(:name)%> - <%= e.try(:department).try(:name)%></td>
-              <td><%= e.try(:joining_detail).try(:employee_designation).try(:name) %></td>
-              <td><%= e.try(:joining_detail).try(:cost_center).try(:name) %></td>
-              <td><%= e.contact_no %></td>
-              <%= f.hidden_field :day, value: @day %>
-              <%= f.hidden_field :from, value: @from %>
-              <%= f.hidden_field :to, value: @to %>
-              <%= f.hidden_field :is_active, value: @is_active %>
-              <%= f.hidden_field :is_prefix, value: @is_prefix %>
-            </tr>
+          <% @week_off_masters.each do |e| %>
+            <% for i in e.from.to_date..e.to.to_date %>
+              <% @emp_id = WeekOffMaster.where.not(from: i).pluck(:employee_id) %>
+                <% @employees = Employee.where(id: @emp_id) %>
+             <% end %>
           <% end %>
+              <% @employees = Employee.where(id: @emp_id) %>
+              <% @employees.where(status: "Active").each do |e| %>
+                <tr>              
+                  <td><%= check_box_tag "employee_ids[]",e.id %></td>
+                  <td><%= e.manual_employee_code %></td>
+                  <td><%= e.first_name %> <%= e.middle_name %> <%= e.last_name %></td>
+                  <td><%= e.try(:company_location).try(:name)%> - <%= e.try(:department).try(:name)%></td>
+                  <td><%= e.try(:joining_detail).try(:employee_designation).try(:name) %></td>
+                  <td><%= e.try(:joining_detail).try(:cost_center).try(:name) %></td>
+                  <td><%= e.contact_no %></td>
+                    <%= f.hidden_field :day, value: @day %>
+                    <%= f.hidden_field :from, value: @from %>
+                    <%= f.hidden_field :to, value: @to %>
+                    <%= f.hidden_field :is_active, value: @is_active %>
+                    <%= f.hidden_field :is_prefix, value: @is_prefix %>
+                </tr>
+              <% end %>
         </tbody>
       </table>
       

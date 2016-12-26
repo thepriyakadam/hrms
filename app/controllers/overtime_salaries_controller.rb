@@ -189,16 +189,16 @@ class OvertimeSalariesController < ApplicationController
       if current_user.role.name == "GroupAdmin" 
          @overtime_salaries = OvertimeSalary.where("strftime('%m/%Y', ot_date) = ?", date.strftime('%m/%Y'))
       elsif current_user.role.name == "Admin"
-        @employees = Employee.where(company_id: current_user.company_id).pluck(:id)
+        @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
          @overtime_salaries = OvertimeSalary.where("strftime('%m/%Y', ot_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
       elsif current_user.role.name == "Branch"
         @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
          @overtime_salaries = OvertimeSalary.where("strftime('%m/%Y', ot_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
       elsif current_user.role.name == "HOD"
-        @employees = Employee.where(d_id: current_user.d_id).pluck(:id)
+        @employees = Employee.where(department_id: current_user.department_id).pluck(:id)
          @overtime_salaries = OvertimeSalary.where("strftime('%m/%Y', ot_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
       elsif current_user.role.name == "AccountAdmin"
-        @employees = Employee.where(company_id: current_user.company_id).pluck(:id)
+        @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
          @overtime_salaries = OvertimeSalary.where("strftime('%m/%Y', ot_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
       elsif current_user.role.name == "Admin"
          @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)

@@ -8,7 +8,7 @@ class EmployeesController < ApplicationController
       if current_user.role.name == 'GroupAdmin'
         @employees = Employee.all
       elsif current_user.role.name == 'Admin'
-        @employees = Employee.where(company_id: current_user.company_id)
+        @employees = Employee.where(company_id: current_user.company_location.company_id)
       elsif current_user.role.name == 'Branch'
         @employees = Employee.where(company_location_id: current_user.company_location_id)
       elsif current_user.role.name == 'HOD'
@@ -167,9 +167,11 @@ class EmployeesController < ApplicationController
     if current_user.class == Group
       @employees = Employee.joins('LEFT JOIN members on members.employee_id = employees.id where members.employee_id is null')
     else
-      if current_user.role.name == 'Company'
+      if current_user.role.name == 'GroupAdmin'
         @employees = Employee.joins('LEFT JOIN members on members.employee_id = employees.id where members.employee_id is null')
-      elsif current_user.role.name == 'CompanyLocation'
+      elsif current_user.role.name == 'Admin'
+        @employees = Employee.joins('LEFT JOIN members on members.employee_id = employees.id where members.employee_id is null and employees.company_location.company_id = #{current_user.company_location.company_id}"')
+      elsif current_user.role.name == 'Branch'
         @employees = Employee.joins("LEFT JOIN members on members.employee_id = employees.id where members.employee_id is null and employees.company_location_id = #{current_user.company_location_id}")
       end
     end
@@ -447,14 +449,15 @@ class EmployeesController < ApplicationController
     @company = Company.find(params[:id])
     # @company_locations = @company.company_locations
     if current_user.class == Group
-    @company_locations = CompanyLocation.where(company_id: @company.id)
+    @company_locations = CompanyLocation.all
     else
       if current_user.role.name == 'GroupAdmin'
         @company_locations = CompanyLocation.all
       elsif current_user.role.name == 'Admin'
-        @company_locations = CompanyLocation.where(company_id: @company.id)
+        @company_locations = CompanyLocation.where(company_id: current_user.company_location.company_id)
+        # byebug
       elsif current_user.role.name == 'Branch'
-        @company_locations = CompanyLocation.where(id: current_user.company_location_id,company_id: @company.id)
+        @company_locations = CompanyLocation.where(id: current_user.company_location_id,company_id: current_user.company_location.company_id)
       end
     end
     @form = params[:form]

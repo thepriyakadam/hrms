@@ -1447,6 +1447,19 @@ end
       get :proff_tax_pdf
       get :proff_tax_report
       post :professional_tax_master_dynamic_report
+      get :retention_money_report
+      post :retention_dynamic_report
+      get :retention_money_xls
+      get :retention_money_pdf
+      get :welfare_detail_report
+      post :wellfair_dynamic_report
+      get :wellfair_xls
+      get :wellfair_pdf
+      get :soc_membership_report
+      post :soc_membership_dynamic_report
+      get :soc_membership_xls
+      get :soc_membership_pdf
+      get :pf_pdf
     end
   end
 

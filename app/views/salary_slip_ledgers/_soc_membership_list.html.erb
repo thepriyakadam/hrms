@@ -7,36 +7,36 @@
     <table id="example" class="table table-bordered table-hover table-condensed">
     <thead>
       <tr>
-        <th>ID</Data></th>
-        <th>Employee Name</th>
-        <th>Department</th>
-        <th>Professional Tax</th>
+        <th>Employee Code</th>
+        <th>Employee Code</th>
+        <th>Society</th>
     </tr>
     </thead>
     <tbody>
       <% @salaryslips.each do |slip| %>
         <% employee = slip.employee %>
+        <% joining = employee.joining_detail %>
         <% bank = employee.employee_bank_detail %>
         <% workingday = slip.workingday %>
         <tr>
           <td><%= slip.employee.manual_employee_code %></td>
           <td><%= employee.try(:first_name) %> <%= employee.try(:middle_name) %> <%= employee.try(:last_name) %></td>
-           <td><%= employee.company_location.try(:name) %> - <%= employee.department.try(:name) %></td>
-
+          <td>
           <% @deducted_salaryslip_items = slip.salaryslip_components.where(is_deducted: true) %>
           <% @deducted_salaryslip_items.each do |item| %>
-              <% if item.other_component_name == "Prof. Tax" %>
-                <td><%= item.calculated_amount.round %></td>
+              <% if item.other_component_name == "Society" %>
+                <%= item.calculated_amount.round %>
               <% end %>
-          <% end %><!-- deducted items -->
-        </Row><!-- Row -->
+            <% end %>
+            </td>
+        </tr><!-- Row -->
       <% end %><!-- slip -->
    </tbody>
   </table>
   </div>
 
-  <%= link_to " Excel Report ",proff_tax_xls_salary_slip_ledgers_path(month: params[:proff_tax][:month], year: params[:proff_tax][:year],company_id: params[:proff_tax][:company_id],company_location_id: params[:food_deduction][:company_location_id], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
-  <%= link_to " Print Professional Tax ",proff_tax_pdf_salary_slip_ledgers_path(month: params[:proff_tax][:month], year: params[:proff_tax][:year],company_id: params[:proff_tax][:company_id],company_location_id: params[:food_deduction][:company_location_id], format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+  <%= link_to " Excel Report ",soc_membership_xls_salary_slip_ledgers_path(month: params[:soc_membership][:month], year: params[:soc_membership][:year],company_id: params[:soc_membership][:company_id],company_location_id: params[:food_deduction][:company_location_id], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+  <%= link_to " Print Society Membership ",soc_membership_pdf_salary_slip_ledgers_path(month: params[:soc_membership][:month], year: params[:soc_membership][:year],company_id: params[:soc_membership][:company_id],company_location_id: params[:food_deduction][:company_location_id], format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
 </div>
 
 <script type="text/javascript">

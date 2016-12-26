@@ -7,31 +7,34 @@
   <Worksheet ss:Name="Sheet1">
     <Table>
       <Row>
-      	<Cell ss:Index="1"><Data ss:Type="String">Sr. No.</Data></Cell>
-        <Cell ss:Index="2"><Data ss:Type="String">Employee ID</Data></Cell>
+        <Cell ss:Index="1"><Data ss:Type="String">Sr No.</Data></Cell>
+        <Cell ss:Index="2"><Data ss:Type="String">Employee Code</Data></Cell>
         <Cell ss:Index="3"><Data ss:Type="String">Employee Name</Data></Cell>
-        <Cell ss:Index="4"><Data ss:Type="String">Department</Data></Cell>
-        <Cell ss:Index="5"><Data ss:Type="String">Professional Tax</Data></Cell>
-    </Row>
+        <Cell ss:Index="4"><Data ss:Type="String">Society</Data></Cell>
+        <!-- <Cell ss:Index="5"><Data ss:Type="String">Month</Data></Cell> -->
+      </Row>
       <% i = 0 %>
       <% @salaryslips.each do |slip| %>
         <% employee = slip.employee %>
+        <% joining = employee.joining_detail %>
         <% bank = employee.employee_bank_detail %>
         <% workingday = slip.workingday %>
         <Row>
           <Cell ss:Index="1"><Data ss:Type="String"><%= i=i+1 %></Data></Cell>
           <Cell ss:Index="2"><Data ss:Type="String"><%= slip.employee.manual_employee_code %></Data></Cell>
-          <Cell ss:Index="3"><Data ss:Type="String"><%= employee.try(:first_name) %> <%= employee.try(:middle_name) %> <%= employee.try(:last_name) %></Data></Cell>
-           <Cell ss:Index="4"><Data ss:Type="String"><%= employee.company_location.try(:name) %> - <%= employee.department.try(:name) %></Data></Cell>
-
+          <Cell ss:Index="3"><Data ss:Type="String"><%= employee.first_name.to_s+" "+employee.middle_name.to_s+" "+employee.last_name.to_s %></Data></Cell>
+         <!--  <Cell ss:Index="5"><Data ss:Type="String"><%= slip.month %></Data></Cell> -->
           <% @deducted_salaryslip_items = slip.salaryslip_components.where(is_deducted: true) %>
           <% @deducted_salaryslip_items.each do |item| %>
-              <% if item.other_component_name == "Prof. Tax" %>
-                <Cell ss:Index="5"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
+              <% if item.other_component_name == "Society" %>
+                <Cell ss:Index="4"><Data ss:Type="Number"><%= item.calculated_amount.round %></Data></Cell>
               <% end %>
           <% end %><!-- deducted items -->
         </Row><!-- Row -->
       <% end %><!-- slip -->
+      
     </Table>
   </Worksheet>
 </Workbook>
+
+

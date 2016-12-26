@@ -1,4 +1,4 @@
-<style>
+<table id="example" class="table table-bordered table-hover table-condensed"><style>
     th {
         text-align: left;
     }
@@ -14,18 +14,18 @@
 <table style="border-collapse: collapse; font-size:10pt;" border=1 width=900 cellpadding="25">
     <thead>
       <tr>
-        <th>Employee Code</th>
+        <th>ID</th>
         <th>Employee Name</th>
-        <th>ESIC No.</th>
-        <th>Payble Days</Data></th>
-        <th>Washing Allowance</th>
-        <th>Gross Salary</th>
-        <th>Amount</th>
-        <th>ESIC Amount</th>
+        <th>PF No.</th>
+        <th>Payble Days</th>
+        <th>Basic</th>
+        <th>DA</th>
+        <th>Total</th>
+        <th>PF</th>
       </tr>
-      </thead>
+    </thead>
 
-      <tbody>
+    <tbody>
       <% @salaryslips.each do |slip| %>
         <% employee = slip.employee %>
         <% joining = employee.joining_detail %>
@@ -34,29 +34,30 @@
         <tr>
           <td><%= slip.employee.manual_employee_code %></td>
           <td><%= employee.first_name.to_s+" "+employee.middle_name.to_s+" "+employee.last_name.to_s %></td>
-          <td><%= joining.try(:employee_efic_no) %></td>
+          <td><%= joining.try(:employee_pf_no) %></td>
           <td><%= workingday.payable_day %></td>
-
           <% @addable_salaryslip_items = slip.salaryslip_components.where(is_deducted: false) %>
-          <%gross_amt = 0%>
-          <%wa_amt = 0%>
+          <%basic_amt = 0%>
+          <%da_amt = 0%>
           <% @addable_salaryslip_items.each do |item| %>
-            <% case item.salary_component.try(:name) %>
-            <% when "Washing Allowance" %>
-              <td><%= wa_amt = item.calculated_amount.round %></td>
-            <% else %>
-            <% end %> <!-- switch case -->
-          <% end %><!-- addable items -->
-          <td><%= gross_amt = slip.calculated_gross_salary.round %></td>
-          <td><%= gross_amt - wa_amt %></td>
           
+            <% case item.salary_component.try(:name) %>
+            <% when "Basic" %>
+            <td><%= basic_amt = item.calculated_amount.round %></td>
+            <% when "DA" %>
+            <td><%= da_amt = item.calculated_amount.round %></td>
+            <% else %>
+            <% end %> <!-- switch case --> 
+          <% end %><!-- addable items -->
+          <td><%= basic_amt+da_amt %></td>
+
           <% @deducted_salaryslip_items = slip.salaryslip_components.where(is_deducted: true) %>
           <% @deducted_salaryslip_items.each do |item| %>
-              <% if item.other_component_name == "ESIC" %>
+              <% if item.other_component_name == "PF" %>
                 <td><%= item.calculated_amount.round %></td>
-              <% end %>
-          <% end %><!-- deducted items -->
-        </tr><!-- Row -->
+            <% end %>
       <% end %><!-- slip -->
+        </tr>
+        <% end %>
     </tbody>
-    </table>
+  </table>

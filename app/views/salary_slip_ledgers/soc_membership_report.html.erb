@@ -1,21 +1,21 @@
 <!--SELECT2 EXAMPLE -->
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title">Professional Tax Report</h3>
+    <h3 class="box-title">Society Membership Report</h3>
   </div><!-- /.box-header -->
 
   <div class="box-body">
-    <%= bootstrap_form_for(:proff_tax, url: { action: 'professional_tax_master_dynamic_report'},html: {id: 'proff_tax'},remote:true) do |f| %>
+    <%= bootstrap_form_for(:soc_membership, url: { action: 'soc_membership_dynamic_report'},html: {id: 'soc_membership'},remote:true) do |f| %>
       <div class="row">
         <div class="col-sm-2">
           <div class="field">
-            <%= select :proff_tax,:year,['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025','2026','2027'],{label: 'Select Year',include_blank: " Select Year"}, class: "form-control" %>
+            <%= select :soc_membership,:year,['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025','2026','2027'],{label: 'Select Year',include_blank: " Select Year"}, class: "form-control" %>
           </div>
         </div>
 
         <div class="col-sm-2">
           <div class="field">
-            <%= select :proff_tax,:month, ['January','February','March','April','May','June','July','August','September','October','November','December'],{label: 'Select Month',include_blank: " Select Month"}, class: "form-control" %>
+            <%= select :soc_membership,:month, ['January','February','March','April','May','June','July','August','September','October','November','December'],{label: 'Select Month',include_blank: " Select Month"}, class: "form-control" %>
            </div>
         </div>
 
@@ -50,7 +50,7 @@
           </div>
         </div>
         </div><br>
-        <div id="proff_tax_li"></div>
+        <div id="soc_membership_li"></div>
 
       <br>
     <% end %>
@@ -58,26 +58,26 @@
 </div><!-- /.box -->
 
 <script>
-$("#proff_tax").validate({
+$("#soc_membership").validate({
     rules: {
-      "proff_tax[month]":{
+      "soc_membership[month]":{
         required: true,
       },
-      "proff_tax[year]":{
+      "soc_membership[year]":{
         required: true,
       },
-      "proff_tax[company_id]":{
+      "soc_membership[company_id]":{
         required: true,
       }
     },
     messages: {
-      "proff_tax[month]":{
+      "soc_membership[month]":{
         required: "Please select Month",
       },
-      "proff_tax[year]":{
+      "soc_membership[year]":{
         required: "Please select Year",
       },
-      "proff_tax[company_id]":{
+      "soc_membership[company_id]":{
         required: "Please select Company",
       }
     },

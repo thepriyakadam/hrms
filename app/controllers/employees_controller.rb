@@ -532,6 +532,8 @@ class EmployeesController < ApplicationController
 
     end
     end
+      session[:active_tab] ="EmployeeManagement"
+      session[:active_tab1] ="Reports"
   end
 
   def selected_employee_list_report

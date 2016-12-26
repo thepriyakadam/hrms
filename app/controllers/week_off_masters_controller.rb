@@ -67,7 +67,7 @@ class WeekOffMastersController < ApplicationController
     elsif current_user.role.name == 'Admin'
       @employees = Employee.where(company_id: current_user.company_id)
       @week_off_masters = WeekOffMaster.where(is_send: nil).where(employee_id: @employees)
-     elsif current_user.role.name == 'Branch'
+    elsif current_user.role.name == 'Branch'
       @employees = Employee.where(company_location_id: current_user.company_location_id)
       @week_off_masters = WeekOffMaster.where(is_send: nil).where(employee_id: @employees)
     end
@@ -76,6 +76,7 @@ class WeekOffMastersController < ApplicationController
   end
 
   def employee_list
+    #@week_off_master = WeekOffMaster.new(week_off_master_params)
     @day = params[:week_off_master][:day]
     @from = params[:week_off_master][:from]
     @to = params[:week_off_master][:to]
@@ -84,16 +85,27 @@ class WeekOffMastersController < ApplicationController
 
     if current_user.class == Member
       if current_user.role.name == 'GroupAdmin'
-      @employees = Employee.all
+        @week_off_masters = WeekOffMaster.where(day: @day,from: @from.to_date,to: @to.to_date)
+        #@employees = Employee.where.not(id: @week_off_masters)
+
+       # @week_off_masters = WeekOffMaster.where(day: @day,from: @from,to: @to)
+       #   @week_off_masters.each do |e|
+       #     for i in e.from.to_date..e.to.to_date
+       #        @emp_id = WeekOffMaster.where.not(from: i).pluck(:employee_id)
+       #        @employees = Employee.where(id: @emp_id)
+       #      end
+       #    end
+
+        #@employees = WeekOffMaster.joins("INNER JOIN week_off_masters ON week_off_masters.employee_id = employees.id").where.not("week_off_masters.day = ? AND week_off_masters.from.to_date = ? AND week_off_masters.to.to_date = ?",@day,@from.to_date,@to.to_date)
       elsif current_user.role.name == 'Admin'
         @employees = Employee.where(company_id: current_user.company_id)
-       elsif current_user.role.name == 'Branch'
+      elsif current_user.role.name == 'Branch'
         @employees = Employee.where(company_location_id: current_user.company_location_id)
-    else
-      @employees = Employee.all
+      else
+        @employees = Employee.all
+      end
     end
   end
-end
 
   def create_week_off
     @employee_ids = params[:employee_ids]

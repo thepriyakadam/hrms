@@ -4,6 +4,10 @@ Rails.application.routes.draw do
     collection do
       get :certificate_form
       get :certificate_print
+      get :employee
+      post :selected_employee_list
+      get :selected_employee_pdf
+      get :selected_employee_xls
     end
   end
   resources :certificate_masters do
@@ -52,6 +56,8 @@ Rails.application.routes.draw do
       post :import
       get :modal
       post :edit_machine_attendance
+      get :machine_attendance_xls
+      get :machine_attendance_pdf
     end
   end
   resources :company_time_masters do
@@ -1241,6 +1247,10 @@ end
     collection do
       get :employees
       get :employee_expences
+      get :monthly_expence_report
+      post :dynamic_report
+      get :monthly_expence_xls
+      get :monthly_expence_pdf
     end
   end
   resources :expencess_types do
@@ -1426,9 +1436,17 @@ end
       get :pf_detail_xls
       get :select_bank_wise
       get :show_employee_list
+      get :esic_report
+      post :esic_dynamic_report
+      get :esic_xls
+      get :esic_pdf
       # post :dynamic_report
       # get :pf_detail_pdf
       post :print_xls
+      get :proff_tax_xls
+      get :proff_tax_pdf
+      get :proff_tax_report
+      post :professional_tax_master_dynamic_report
     end
   end
 
@@ -1735,6 +1753,20 @@ end
   end
   resources :employees do
     collection do
+      get :employee_list_report
+      post :selected_employee_list_report
+      get :selected_employee_pdf
+      get :selected_employee_xls
+      get :selected_on_boarding_pdf
+      get :selected_on_boarding_xls
+      get :selected_bank_pdf
+      get :selected_bank_xls
+      get :selected_qualification_pdf
+      get :selected_qualification_xls
+      get :selected_experience_pdf
+      get :selected_experience_xls
+      get :selected_skillset_pdf
+      get :selected_skillset_xls
       get :import_xl
       post :import
       get :graph

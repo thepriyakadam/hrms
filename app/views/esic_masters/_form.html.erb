@@ -35,26 +35,29 @@
         </div>
       </div>
     </div>
-  
-
-    
 
     <div class="col-sm-2">
       <div class="field">
         <%= f.text_field :max_limit %>
       </div>
-    </div>
-
-    
+    </div>   
 </div>
 
-    <div class="row">
-      <div class="col-sm-3">
-        <div class="actions">
-          <%= f.submit "Create ESIC Master",:class => class_name, data: { disable_with: data_info }%>
-        </div>
+<div class="row">
+  <div class="col-sm-1">
+      <label>Status </label>
+      <div class="field">
+        <%= f.check_box :is_active, label: 'Active'%>
       </div>
     </div>
+
+    <div class="col-sm-3">
+    <label></label>
+      <div class="actions">
+        <%= f.submit"Create ESIC Master", :class => class_name, data: { disable_with: data_info }%>
+      </div>
+    </div>
+  </div>
 <% end %>
 <br>
 

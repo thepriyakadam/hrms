@@ -7,7 +7,7 @@
     <table id="example" class="table table-bordered table-hover table-condensed">
     <thead>
       <tr>
-        <th>Employee Code</th>
+        <th>ID</th>
         <th>Employee Name</th>
         <th>PF No.</th>
         <th>Payble Days</th>
@@ -27,7 +27,7 @@
         <tr>
           <td><%= slip.employee.manual_employee_code %></td>
           <td><%= employee.first_name.to_s+" "+employee.middle_name.to_s+" "+employee.last_name.to_s %></td>
-          <td>%= joining.try(:employee_pf_no) %></td>
+          <td><%= joining.try(:employee_pf_no) %></td>
           <td><%= workingday.payable_day %></td>
           <% @addable_salaryslip_items = slip.salaryslip_components.where(is_deducted: false) %>
           <%basic_amt = 0%>
@@ -40,8 +40,7 @@
             <% when "DA" %>
             <td><%= da_amt = item.calculated_amount.round %></td>
             <% else %>
-            <% end %> <!-- switch case -->
-            
+            <% end %> <!-- switch case --> 
           <% end %><!-- addable items -->
           <td><%= basic_amt+da_amt %></td>
 

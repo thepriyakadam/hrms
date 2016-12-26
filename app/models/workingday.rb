@@ -63,7 +63,7 @@ class Workingday < ActiveRecord::Base
       elsif current_user.role.name == "Branch"
         @employees = Employee.where(company_location_id: current_user.company_location_id)
         Workingday.where(employee_id: @employees)  
-      elsif current_user.role.name == "Department"
+      elsif current_user.role.name == "HOD"
         @employees = Employee.where(department_id: current_user.department_id)
         Workingday.where(employee_id: @employees)
       elsif current_user.role.name == "Employee"

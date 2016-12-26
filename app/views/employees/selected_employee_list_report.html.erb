@@ -1,0 +1,56 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Selected Employee</h3>
+    <div class="pull-right">
+   <%= link_to 'PDF Report', selected_employee_pdf_employees_path(format: 'pdf',employee_id: @employee_id ),class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+
+    <%= link_to "Excel Report",selected_employee_xls_employees_path(format: "xls",employee_id: @employee_id ), class: "btn btn-xl btn-primary fa fa-print", :target => "_blank" %>
+
+     <%= link_to 'On Boarding PDF', selected_on_boarding_pdf_employees_path(format: 'pdf',employee_id: @employee_id ),class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+
+     <%= link_to "On Boarding Excel",selected_on_boarding_xls_employees_path(format: "xls",employee_id: @employee_id ), class: "btn btn-xl btn-primary fa fa-print", :target => "_blank" %>
+
+     <%= link_to 'Bank PDF', selected_bank_pdf_employees_path(format: 'pdf',employee_id: @employee_id ),class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+
+     <%= link_to "Bank Excel",selected_bank_xls_employees_path(format: "xls",employee_id: @employee_id ), class: "btn btn-xl btn-primary fa fa-print", :target => "_blank" %>
+
+      <%= link_to 'Qualification PDF', selected_qualification_pdf_employees_path(format: 'pdf',employee_id: @employee_id ),class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+
+     <%= link_to "Qualification Excel",selected_qualification_xls_employees_path(format: "xls",employee_id: @employee_id ), class: "btn btn-xl btn-primary fa fa-print", :target => "_blank" %>
+
+     <%= link_to 'Experience PDF', selected_experience_pdf_employees_path(format: 'pdf',employee_id: @employee_id ),class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+
+     <%= link_to "Experience Excel",selected_experience_xls_employees_path(format: "xls",employee_id: @employee_id ), class: "btn btn-xl btn-primary fa fa-print", :target => "_blank" %>
+
+     <%= link_to 'Skillset PDF', selected_skillset_pdf_employees_path(format: 'pdf',employee_id: @employee_id ),class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+
+     <%= link_to "Skillset Excel",selected_skillset_xls_employees_path(format: "xls",employee_id: @employee_id ), class: "btn btn-xl btn-primary fa fa-print", :target => "_blank" %>
+    </div>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+
+    <table id="example" class="table table-bordered table-hover table-condensed">
+    <thead>
+      <tr>
+      <th>ID</th>
+      <th>Employee Name</th>
+      <th>Department</th>
+      <th>Designation</th>
+      <th>No.</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @employees.each do |employee| %>
+      <tr>
+        <td><%= employee.manual_employee_code %></td>
+        <td><%= full_name(employee) %></td>
+        <td><%= employee.try(:company_location).try(:name) %> - <%= employee.try(:department).try(:name) %></td>
+        <td><%= employee.joining_detail.try(:employee_designation).try(:name) %></td>
+        <td><%= employee.try(:contact_no) %></td>
+        </tr>
+      <% end %>
+        </tbody>
+  </table>
+</div>
+</div>

@@ -81,7 +81,7 @@ class FoodDeductionsController < ApplicationController
       if current_user.role.name == 'GroupAdmin'
         @food_deduction = FoodDeduction.where("strftime('%m/%y', food_date) = ?",date.strftime('%m/%y'))
       elsif current_user.role.name == 'Admin'
-        @employees = Employee.where(company_id: current_user.company_id)
+        @employees = Employee.where(company_id: current_user.company_location.company_id)
         @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
       elsif current_user.role.name == 'Branch'
         @employees = Employee.where(company_location_id: current_user.company_location_id)
@@ -96,7 +96,7 @@ class FoodDeductionsController < ApplicationController
       elsif current_user.role.name == 'Employee'
         @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: current_user.employee_id)
       else current_user.role.name == 'AccountAdmin'
-        @employees = Employee.where(company_id: current_user.company_id)
+        @employees = Employee.where(company_id: current_user.company_location.company_id)
         @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)  
       end
     end
@@ -112,7 +112,7 @@ class FoodDeductionsController < ApplicationController
       if current_user.role.name == 'GroupAdmin'
         @food_deduction = FoodDeduction.where("strftime('%m/%y', food_date) = ?",date.strftime('%m/%y'))
       elsif current_user.role.name == 'Admin'
-        @employees = Employee.where(company_id: current_user.company_id)
+        @employees = Employee.where(company_id: current_user.company_location.company_id)
         @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
       elsif current_user.role.name == 'Branch'
         @employees = Employee.where(company_location_id: current_user.company_location_id)
@@ -127,7 +127,7 @@ class FoodDeductionsController < ApplicationController
       elsif current_user.role.name == 'Employee'
         @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: current_user.employee_id)
       else current_user.role.name == 'AccountAdmin'
-        @employees = Employee.where(company_id: current_user.company_id)
+        @employees = Employee.where(company_id: current_user.company_location.company_id)
         @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)  
       end
     end
@@ -143,7 +143,7 @@ class FoodDeductionsController < ApplicationController
       if current_user.role.name == 'GroupAdmin'
         @food_deduction = FoodDeduction.where("strftime('%m/%y', food_date) = ?",date.strftime('%m/%y'))
       elsif current_user.role.name == 'Admin'
-        @employees = Employee.where(company_id: current_user.company_id)
+        @employees = Employee.where(company_id: current_user.company_location.company_id)
         @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
       elsif current_user.role.name == 'Branch'
         @employees = Employee.where(company_location_id: current_user.company_location_id)
@@ -158,7 +158,7 @@ class FoodDeductionsController < ApplicationController
       elsif current_user.role.name == 'Employee'
         @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: current_user.employee_id)
       else current_user.role.name == 'AccountAdmin'
-        @employees = Employee.where(company_id: current_user.company_id)
+        @employees = Employee.where(company_id: current_user.company_location.company_id)
         @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)  
       end
     end
@@ -177,7 +177,7 @@ class FoodDeductionsController < ApplicationController
       if current_user.role.name == 'GroupAdmin'
         @food_deduction = FoodDeduction.where("strftime('%m/%y', food_date) = ?",date.strftime('%m/%y'))
       elsif current_user.role.name == 'Admin'
-        @employees = Employee.where(company_id: current_user.company_id)
+        @employees = Employee.where(company_id: current_user.company_location.company_id)
         @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
       elsif current_user.role.name == 'Branch'
         @employees = Employee.where(company_location_id: current_user.company_location_id)
@@ -192,7 +192,7 @@ class FoodDeductionsController < ApplicationController
       elsif current_user.role.name == 'Employee'
         @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: current_user.employee_id)
       else current_user.role.name == 'AccountAdmin'
-        @employees = Employee.where(company_id: current_user.company_id)
+        @employees = Employee.where(company_id: current_user.company_location.company_id)
         @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)  
       end
     end

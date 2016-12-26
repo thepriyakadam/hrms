@@ -59,7 +59,7 @@ class WorkingdaysController < ApplicationController
       if current_user.role.name == 'GroupAdmin'
         @workingdays = Workingday.where(year: params[:year], month_name: params[:month])
       elsif current_user.role.name == 'Admin'
-        @employees = Employee.where(company_id: current_user.company_id).pluck(:id)
+        @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
         @workingdays = Workingday.where(year: params[:year], month_name: params[:month], employee_id: @employees)
       elsif current_user.role.name == 'Branch'
         @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
@@ -81,7 +81,7 @@ class WorkingdaysController < ApplicationController
       if current_user.role.name == 'GroupAdmin'
         @workingdays = Workingday.where(year: params[:year], month_name: params[:month])
       elsif current_user.role.name == 'Admin'
-        @employees = Employee.where(company_id: current_user.company_id).pluck(:id)
+        @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
         @workingdays = Workingday.where(year: params[:year], month_name: params[:month], employee_id: @employees)
       elsif current_user.role.name == 'Branch'
         @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
@@ -105,7 +105,7 @@ class WorkingdaysController < ApplicationController
       if current_user.role.name == 'GroupAdmin'
         @workingdays = Workingday.where(year: params[:year], month_name: params[:month])
       elsif current_user.role.name == 'Admin'
-        @employees = Employee.where(company_id: current_user.company_id).pluck(:id)
+        @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
         @workingdays = Workingday.where(year: params[:year], month_name: params[:month], employee_id: @employees)
       elsif current_user.role.name == 'Branch'
         @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
@@ -132,7 +132,7 @@ class WorkingdaysController < ApplicationController
       if current_user.role.name == 'GroupAdmin'
         @workingdays = Workingday.where(year: params[:year], month_name: params[:month])
       elsif current_user.role.name == 'Admin'
-        @employees = Employee.where(company_id: current_user.company_id).pluck(:id)
+        @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
         @workingdays = Workingday.where(year: params[:year], month_name: params[:month], employee_id: @employees)
       elsif current_user.role.name == 'Branch'
         @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)

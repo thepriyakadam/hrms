@@ -14,7 +14,7 @@ class EmployeeLeavBalancesController < ApplicationController
       if current_user.role.name == 'GroupAdmin'
         @employee_leav_balances = EmployeeLeavBalance.all
       elsif current_user.role.name == 'Admin'
-        @employees = Employee.where(company_id: current_user.company_id)
+        @employees = Employee.where(company_id: current_user.company_location.company_id)
         @employee_leav_balances = EmployeeLeavBalance.where(employee_id: @employees)
       elsif current_user.role.name == 'Branch'
         @employees = Employee.where(company_location_id: current_user.company_location_id)

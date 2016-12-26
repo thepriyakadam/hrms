@@ -65,7 +65,7 @@ class WeekOffMastersController < ApplicationController
     if current_user.role.name == 'GroupAdmin' 
       @week_off_masters = WeekOffMaster.where(is_send: nil)
     elsif current_user.role.name == 'Admin'
-      @employees = Employee.where(company_id: current_user.company_id)
+      @employees = Employee.where(company_id: current_user.company_location.company_id)
       @week_off_masters = WeekOffMaster.where(is_send: nil).where(employee_id: @employees)
     elsif current_user.role.name == 'Branch'
       @employees = Employee.where(company_location_id: current_user.company_location_id)
@@ -98,7 +98,7 @@ class WeekOffMastersController < ApplicationController
 
         #@employees = WeekOffMaster.joins("INNER JOIN week_off_masters ON week_off_masters.employee_id = employees.id").where.not("week_off_masters.day = ? AND week_off_masters.from.to_date = ? AND week_off_masters.to.to_date = ?",@day,@from.to_date,@to.to_date)
       elsif current_user.role.name == 'Admin'
-        @employees = Employee.where(company_id: current_user.company_id)
+        @employees = Employee.where(company_id: current_user.company_location.company_id)
       elsif current_user.role.name == 'Branch'
         @employees = Employee.where(company_location_id: current_user.company_location_id)
       else

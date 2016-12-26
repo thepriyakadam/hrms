@@ -13,7 +13,7 @@ class HomeController < ApplicationController
       if current_user.role.name == 'GroupAdmin'
         @employees = Employee.all
       elsif current_user.role.name == 'Admin'
-        @employees = Employee.where(company_id: current_user.company_id)
+        @employees = Employee.where(company_id: current_user.company_location.company_id)
       elsif current_user.role.try(:name) == 'Branch'
         @employees = Employee.where(company_location_id: current_user.company_location_id)
       elsif current_user.role.name == 'HOD'
@@ -39,11 +39,14 @@ class HomeController < ApplicationController
     if current_user.class == Group
       @employees = Employee.joins('INNER JOIN members on employees.id = members.employee_id')
     else
-      if current_user.role.name == 'Admin'
+      if current_user.role.name == 'GroupAdmin'
         @employees = Employee.joins('INNER JOIN members on employees.id = members.employee_id')
+      elsif current_user.role.name == 'Admin'
+        @employees = Employee.joins('INNER JOIN members on employees.id = members.employee_id where employees.company_location.company_id = #{current_user.company_location.company_id}"')
       elsif current_user.role.name == 'Branch'
         @employees = Employee.joins("INNER JOIN members on employees.id = members.employee_id where employees.company_location_id = #{current_user.company_location_id}")
       end
     end
   end
+  
 end

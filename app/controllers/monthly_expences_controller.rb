@@ -82,7 +82,7 @@ class MonthlyExpencesController < ApplicationController
       if current_user.role.name == 'GroupAdmin' 
         @monthly_expences = MonthlyExpence.where("strftime('%m/%Y', expence_date) = ?", date.strftime('%m/%Y')).group(:employee_id)
       elsif current_user.role.name == 'Admin'
-        @employees = Employee.where(company_id: current_user.company_id)
+        @employees = Employee.where(company_id: current_user.company_location.company_id)
         @monthly_expences = MonthlyExpence.where("strftime('%m/%Y', expence_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees).group(:employee_id)
       elsif current_user.role.name == 'Branch'
         @employees = Employee.where(company_location_id: current_user.company_location_id)
@@ -91,7 +91,7 @@ class MonthlyExpencesController < ApplicationController
         @employees = Employee.where(department_id: current_user.department_id)
         @monthly_expences = MonthlyExpence.where("strftime('%m/%Y', expence_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees).group(:employee_id)
       elsif current_user.role.name == 'AccountAdmin'
-        @employees = Employee.where(company_id: current_user.company_id)
+        @employees = Employee.where(company_id: current_user.company_location.company_id)
         @monthly_expences = MonthlyExpence.where("strftime('%m/%Y', expence_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees).group(:employee_id)
        elsif current_user.role.name == 'Account'
         @employees = Employee.where(company_location_id: current_user.company_location_id)
@@ -110,7 +110,7 @@ class MonthlyExpencesController < ApplicationController
       if current_user.role.name == 'GroupAdmin' 
         @monthly_expences = MonthlyExpence.where("strftime('%m/%Y', expence_date) = ?", date.strftime('%m/%Y')).where(employee_id: params[:employee_id])
       elsif current_user.role.name == 'Admin'
-        @employees = Employee.where(company_id: current_user.company_id)
+        @employees = Employee.where(company_id: current_user.company_location.company_id)
         @monthly_expences = MonthlyExpence.where("strftime('%m/%Y', expence_date) = ?", date.strftime('%m/%Y')).where(employee_id: params[:employee_id])
       elsif current_user.role.name == 'Branch'
         @employees = Employee.where(company_location_id: current_user.company_location_id)
@@ -119,7 +119,7 @@ class MonthlyExpencesController < ApplicationController
         @employees = Employee.where(department_id: current_user.department_id)
         @monthly_expences = MonthlyExpence.where("strftime('%m/%Y', expence_date) = ?", date.strftime('%m/%Y')).where(employee_id: params[:employee_id])
       elsif current_user.role.name == 'AccountAdmin'
-        @employees = Employee.where(company_id: current_user.company_id)
+        @employees = Employee.where(company_id: current_user.company_location.company_id)
         @monthly_expences = MonthlyExpence.where("strftime('%m/%Y', expence_date) = ?", date.strftime('%m/%Y')).where(employee_id: params[:employee_id])
        elsif current_user.role.name == 'Account'
         @employees = Employee.where(company_location_id: current_user.company_location_id)

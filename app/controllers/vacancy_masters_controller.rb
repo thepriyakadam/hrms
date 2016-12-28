@@ -14,7 +14,7 @@ class VacancyMastersController < ApplicationController
         if current_user.role.name == 'GroupAdmin'
           @vacancy_masters = VacancyMaster.all
         elsif current_user.role.name == 'Admin'
-        @vacancy_masters = VacancyMaster.where(company_id: current_user.company_id)
+        @vacancy_masters = VacancyMaster.where(company_id: current_user.company_location.company_id)
         elsif current_user.role.name == 'Branch'
         @vacancy_masters = VacancyMaster.where(company_location_id: current_user.company_location_id)
         elsif current_user.role.name == 'HOD'

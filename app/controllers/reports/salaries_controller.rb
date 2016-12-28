@@ -25,19 +25,19 @@ class Reports::SalariesController < ApplicationController
         @salaryslips = Salaryslip.where('month = ? and year = ?', @month, @year).where(employee_id: @employees)
       end
     elsif current_user.class == Member
-      if current_user.role.name == 'Company'
+      if current_user.role.name == 'Admin'
         if params[:salary][:company_location_id] == '' || params[:salary][:company_location_id].nil?
           @salaryslips = Salaryslip.where('month = ? and year = ?', @month, @year)
         else
           @employees = Employee.where(company_location_id: @location.to_i)
           @salaryslips = Salaryslip.where('month = ? and year = ?', @month, @year).where(employee_id: @employees)
         end
-      elsif current_user.role.name == 'CompanyLocation'
+      elsif current_user.role.name == 'Branch'
         params[:salary][:company_location_id] == '' || params[:salary][:company_location_id].nil?
         @employees = Employee.where(company_location_id: current_user.company_location_id)
         @salaryslips = Salaryslip.where('month = ? and year = ?', @month, @year).where(employee_id: @employees)
 
-      elsif current_user.role.name == 'Department'
+      elsif current_user.role.name == 'HOD'
         @salaryslips = Salaryslip.where(department_id: current_user.department_id)
       elsif current_user.role.name == 'Superviser'
       elsif current_user.role.name == 'Employee'
@@ -77,18 +77,18 @@ class Reports::SalariesController < ApplicationController
         @employee_salary_templates = EmployeeSalaryTemplate.where(employee_id: @employees)
       end
     elsif current_user.class == Member
-      if current_user.role.name == 'Company'
+      if current_user.role.name == 'Admin'
         if params[:salary][:company_location_id] == '' || params[:salary][:company_location_id].nil?
           @employee_salary_templates = EmployeeSalaryTemplate.all
         else
           @employees = Employee.where(company_location_id: @location.to_i)
           @employee_salary_templates = EmployeeSalaryTemplate.where(employee_id: @employees)
         end
-      elsif current_user.role.name == 'CompanyLocation'
+      elsif current_user.role.name == 'Branch'
         params[:salary][:company_location_id] == '' || params[:salary][:company_location_id].nil?
         @employees = Employee.where(company_location_id: current_user.company_location_id)
         @employee_salary_templates = EmployeeSalaryTemplate.where(employee_id: @employees)
-      elsif current_user.role.name == 'Department'
+      elsif current_user.role.name == 'HOD'
         @employee_salary_templates = EmployeeSalaryTemplate.where(department_id: current_user.department_id)
       elsif current_user.role.name == 'Superviser'
       elsif current_user.role.name == 'Employee'

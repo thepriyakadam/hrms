@@ -1,0 +1,78 @@
+<style>
+    th {
+        text-align: left;
+    }
+    tr {
+        page-break-inside: avoid;
+    }
+    div.alwaysbreak { page-break-before: always; }
+    div.nobreak:before { clear:both; }
+    div.nobreak{ page-break-inside: avoid;
+    }
+</style>
+  <table style="border-collapse: collapse; font-size:12pt;" border=1 width=1200 cellpadding="15">
+    <thead>
+    <tr><td colspan="27"><center>BFTL</center> </td></tr>
+      <tr>
+      <th>ID</th>
+      <th>Employee Name</th>
+      <th>UAN No.</th>
+      <th>Joining Date</th>
+      <th>Confirmation Date</th>
+      <th>Designation</th>
+      <th>Employee Grade</th>
+      <th>PF</th>
+      <th>PF No.</th>
+      <th>PF Max Amount</th>
+      <th>ESIC</th>
+      <th>ESIC No.</th>
+      <th>Payment Mode</th>
+      <th> Cost Center</th>
+      <th> Employee Category</th>
+      <th> Medical Scheme</th>
+      <th> Probation Period</th>
+      <th> Notice Period</th>
+      <th> Passport</th>
+      <th> Passport No.</th>
+      <th>Passport Issue Date</th>
+      <th> Passport Expiry Date</th>
+      <th> Retention</th>
+      <th> Retirement Date</th>
+      <th> Reserved Category</th>
+
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @joining_details.each do |joining_detail| %>
+      <tr>
+        <td><%= joining_detail.employee.try(:manual_employee_code) %></td>
+         <td><%= full_name(joining_detail.employee) %></td>
+          <td><%= joining_detail.try(:employee_uan_no) %></td>
+          <td><%= joining_detail.try(:joining_date) %></td>
+          <td><%= joining_detail.try(:confirmation_date) %></td>
+          <td><%= joining_detail.try(:employee_designation).try(:name)%></td>
+         <td> <%= joining_detail.try(:employee_grade).try(:name) %></td>
+         <td> <%= joining_detail.try(:select_pf) %></td>
+         <td> <%= joining_detail.try(:employee_pf_no) %></td>
+         <td> <%= joining_detail.try(:pf_max_amount) %></td>
+         <td> <%= joining_detail.try(:have_esic) %></td>
+         <td> <%= joining_detail.try(:employee_efic_no) %></td>
+         <td> <%= joining_detail.try(:payment_mode).try(:name) %></td>
+         <td> <%= joining_detail.try(:cost_center).try(:name) %></td>
+         <td> <%= joining_detail.try(:employee_category).try(:name) %></td>
+         <td> <%= joining_detail.try(:medical_schem) %></td>
+         <td> <%= joining_detail.try(:probation_period) %></td>
+         <td> <%= joining_detail.try(:notice_period) %></td>
+         <td> <%= joining_detail.try(:passport_no) %></td>
+         <td> <%= joining_detail.try(:is_passport) %></td>
+         <td> <%= joining_detail.try(:passport_issue_date) %></td>
+         <td> <%= joining_detail.try(:passport_expiry_date) %></td>
+         <td> <%= joining_detail.try(:have_retention) %></td>
+         <td> <%= joining_detail.try(:retirement_date) %></td>
+         <td> <%= joining_detail.try(:reserved_category).try(:name) %></td>
+        </tr>
+    <%end%>
+
+  </tbody>
+  </table>

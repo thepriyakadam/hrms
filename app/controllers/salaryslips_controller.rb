@@ -641,7 +641,7 @@ class SalaryslipsController < ApplicationController
       overtime_payment = working_day.try(:ot_days).to_f * pom.rate.to_f * base_amount.to_f
       @salary_component = SalaryComponent.find_by(name: "Overtime")
       SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: 0, calculated_amount: overtime_payment, is_deducted: false, other_component_name: 'Overtime',salary_component_id: @salary_component.id)
-      puts "fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+      puts "fffffffffffffff"
     end
 
 
@@ -811,7 +811,6 @@ class SalaryslipsController < ApplicationController
             sa.employee_template_id = current_template.id
             sa.save!
           end
-          
 
           formula_item_actual_amount = 0
           formula_item_calculated_amount = 0
@@ -1155,7 +1154,7 @@ class SalaryslipsController < ApplicationController
       overtime_payment = working_day.try(:ot_days).to_f * pom.rate.to_f * base_amount.to_f
       @salary_component = SalaryComponent.find_by(name: "Overtime")
       SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: 0, calculated_amount: overtime_payment, is_deducted: false, other_component_name: 'Overtime',salary_component_id: @salary_component.id)
-      puts "ggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg"
+      puts "gggggggggggggggg"
     end
 
 
@@ -1249,9 +1248,12 @@ end
     if current_user.class == Group
       @salaryslips = Salaryslip.where(month: @month, year: @year.to_s)
     elsif current_user.class == Member
-      if current_user.role.name == "Company"
+      if current_user.role.name == "GroupAdmin"
         @salaryslips = Salaryslip.where(month: @month, year: @year.to_s)
-      elsif current_user.role.name == "CompanyLocation"
+      elsif current_user.role.name == "Admin"
+        @employees = Employee.where(company_id: current_user.company_location.company_id)
+        @salaryslips = Salaryslip.where(month: @month, year: @year.to_s, employee_id: @employees)
+      elsif current_user.role.name == "Branch"
         @employees = Employee.where(company_location_id: current_user.company_location_id)
         @salaryslips = Salaryslip.where(month: @month, year: @year.to_s, employee_id: @employees)
       end  

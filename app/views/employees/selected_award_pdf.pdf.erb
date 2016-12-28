@@ -1,0 +1,39 @@
+<style>
+    th {
+        text-align: left;
+    }
+    tr {
+        page-break-inside: avoid;
+    }
+    div.alwaysbreak { page-break-before: always; }
+    div.nobreak:before { clear:both; }
+    div.nobreak{ page-break-inside: avoid;
+    }
+</style>
+  <table style="border-collapse: collapse; font-size:10pt;" border=1 width=1000 cellpadding="15">
+    <thead>
+    <tr><td colspan="5"><center>BFTL</center> </td></tr>
+      <tr>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Employee Name</th>
+      <th>Award name</th>
+      <th>Year</th>
+      <th>Award from</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @awards.each do |award| %>
+      <tr>
+        <td><%= award.employee.try(:manual_employee_code ) %></td>
+        <td><%= full_name(award.employee) %></td>
+        <td><%= award.award_name %></td>
+        <td><%= award.year_id %></td>
+        <td><%= award.award_from %></td>
+        </tr>
+        <%end%>
+  </tbody>
+  </thead>
+  </table>

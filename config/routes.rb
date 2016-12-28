@@ -1796,6 +1796,8 @@ end
       get :destroy_details
       get :edit_manager
       post :update_manager
+      get :member_list_for_update_password
+      get :reset_password
     end
     member do
       get :edit_manager

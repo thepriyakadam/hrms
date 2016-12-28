@@ -505,6 +505,17 @@ class EmployeesController < ApplicationController
     @employee = Employee.find(params[:salary][:employee_id])
   end
 
+  def member_list_for_update_password
+    @members = Member.all
+  end
+
+  def reset_password
+    @member = Member.find(params[:id])
+    @member_password_reset = Member.find_by(manual_member_code: @member.manual_member_code).update(password: "12345678")
+    flash[:notice] = "Password Changed Successfully"
+    redirect_to member_list_for_update_password_employees_path
+  end
+
   # def destroy_details
   #   @employee = Employee.find(params[:emp_id])
 

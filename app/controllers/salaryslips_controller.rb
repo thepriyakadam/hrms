@@ -131,7 +131,6 @@ class SalaryslipsController < ApplicationController
   end
 
   def show_unsaved_employee
-    # byebug
     @month = params[:month]
     @year = params[:year]
     @workingdays = Workingday.where(month_name: @month, year: @year).pluck(:employee_id)
@@ -140,13 +139,17 @@ class SalaryslipsController < ApplicationController
     if current_user.class == Group
       @employees = Employee.where(id: emp_ids)  
     elsif current_user.class == Member
-      if current_user.role.name == "Company"
+      if current_user.role.name == "GroupAdmin"
         @employees = Employee.where(id: emp_ids)
-      elsif current_user.role.name == "CompanyLocation"
+      elsif current_user.role.name == "Admin"
         location_employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
         new_ids = location_employees & emp_ids
         @employees = Employee.where(id: new_ids)
-      elsif current_user.role.name == "Department"
+      elsif current_user.role.name == "Branch"
+        location_employees = Employee.where(company_location_id: current_user.company_id).pluck(:id)
+        new_ids = location_employees & emp_ids
+        @employees = Employee.where(id: new_ids)
+      elsif current_user.role.name == "HOD"
         department_employees = Employee.where(department_id: current_user.company_location_id)
         new_ids = department_employees & emp_ids
         @employees = Employee.where(id: new_ids)

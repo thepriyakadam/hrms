@@ -1447,6 +1447,19 @@ end
       get :proff_tax_pdf
       get :proff_tax_report
       post :professional_tax_master_dynamic_report
+      get :retention_money_report
+      post :retention_dynamic_report
+      get :retention_money_xls
+      get :retention_money_pdf
+      get :welfare_detail_report
+      post :wellfair_dynamic_report
+      get :wellfair_xls
+      get :wellfair_pdf
+      get :soc_membership_report
+      post :soc_membership_dynamic_report
+      get :soc_membership_xls
+      get :soc_membership_pdf
+      get :pf_pdf
     end
   end
 
@@ -1767,6 +1780,18 @@ end
       get :selected_experience_xls
       get :selected_skillset_pdf
       get :selected_skillset_xls
+      get :selected_certification_pdf
+      get :selected_certification_xls
+      get :selected_award_pdf
+      get :selected_award_xls
+      get :selected_employee_physical_pdf
+      get :selected_employee_physical_xls
+      get :selected_employee_family_pdf
+      get :selected_employee_family_xls
+      get :selected_employee_nomination_pdf
+      get :selected_employee_nomination_xls
+      get :selected_asset_pdf
+      get :selected_asset_xls
       get :import_xl
       post :import
       get :graph
@@ -1824,6 +1849,8 @@ end
       get :destroy_details
       get :edit_manager
       post :update_manager
+      get :member_list_for_update_password
+      get :reset_password
     end
     member do
       get :edit_manager

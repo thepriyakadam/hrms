@@ -43,22 +43,22 @@
             <% end %> <!-- switch case --> 
           <% end %><!-- addable items -->
           <td><%= basic_amt+da_amt %></td>
-
+           <td>
           <% @deducted_salaryslip_items = slip.salaryslip_components.where(is_deducted: true) %>
           <% @deducted_salaryslip_items.each do |item| %>
-            <% if item.salary_component_id.nil? %>
               <% if item.other_component_name == "PF" %>
-                <td><%= item.calculated_amount.round %></td>
+               <%= item.calculated_amount.round %>
             <% end %>
-          <% end %><!-- deducted items -->
+             </td>
       <% end %><!-- slip -->
+     
         </tr>
         <% end %>
     </tbody>
   </table>
   </div>
-  <%= link_to " Excel Report ",pf_detail_xls_salary_slip_ledgers_path(month: params[:pf_detail][:month], year: params[:pf_detail][:year],company_id: params[:pf_detail][:company_id],company_location_id: params[:pf_detail][:company_location_id], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
-  <!-- <= link_to " Print Food Deduction ",food_deduction_pdf_1_food_deductions_path(month: params[:food_deduction][:month], year: params[:food_deduction][:year],company_id: params[:food_deduction][:company_id],company_location_id: params[:food_deduction][:company_location_id], format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %> -->
+  <%= link_to " Excel Report ",pf_detail_xls_salary_slip_ledgers_path(month: params[:pf_detail][:month], year: params[:pf_detail][:year],company_id: params[:pf_detail][:company_id],company_location_id: params[:food_deduction][:company_location_id], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+  <%= link_to " Print PF ",pf_pdf_salary_slip_ledgers_path(month: params[:pf_detail][:month], year: params[:pf_detail][:year],company_id: params[:pf_detail][:company_id],company_location_id: params[:food_deduction][:company_location_id], format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
 </div>
 
 <script type="text/javascript">

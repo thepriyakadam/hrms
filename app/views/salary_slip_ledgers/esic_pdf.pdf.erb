@@ -52,11 +52,9 @@
           
           <% @deducted_salaryslip_items = slip.salaryslip_components.where(is_deducted: true) %>
           <% @deducted_salaryslip_items.each do |item| %>
-            <% if item.salary_component_id.nil? %>
               <% if item.other_component_name == "ESIC" %>
                 <td><%= item.calculated_amount.round %></td>
               <% end %>
-            <% end %>
           <% end %><!-- deducted items -->
         </tr><!-- Row -->
       <% end %><!-- slip -->

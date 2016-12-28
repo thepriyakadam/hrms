@@ -202,6 +202,7 @@ end
   resources :employee_code_masters do
     collection do
        get :is_confirm
+      get :select_textbox
     end
    end
   get 'download_pdf/index'

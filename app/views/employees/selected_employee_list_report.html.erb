@@ -3,7 +3,7 @@
     <h3 class="box-title">Selected Employee</h3>
     
   <div class="box-body">
-   <table id="example" class="table table-bordered table-hover table-condensed">
+   <table id="example6" class="table table-bordered table-hover table-condensed">
     <tr>
     <th>PDF</th>
     <th><%= link_to ' Basic Detail', selected_employee_pdf_employees_path(format: 'pdf',employee_id: @employee_id ),class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %></th>
@@ -22,9 +22,8 @@
     
 
      <th><%= link_to 'Experience ', selected_experience_pdf_employees_path(format: 'pdf',employee_id: @employee_id ),class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %></th>
-
-    
-
+    </tr>
+    <tr>
      <th><%= link_to 'Skillset ', selected_skillset_pdf_employees_path(format: 'pdf',employee_id: @employee_id ),class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %></th>
 
      <th><%= link_to 'Certification', selected_certification_pdf_employees_path(format: 'pdf',employee_id: @employee_id ),class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %></th>
@@ -73,7 +72,9 @@
     
 
      <td><%= link_to "Experience ",selected_experience_xls_employees_path(format: "xls",employee_id: @employee_id ), class: "btn btn-xl btn-primary fa fa-print", :target => "_blank" %></td>
+      </tr>
 
+      <tr>
 
     
 
@@ -108,7 +109,9 @@
      <td><%= link_to "Assets",selected_asset_xls_employees_path(format: "xls",employee_id: @employee_id ), class: "btn btn-xl btn-primary fa fa-print", :target => "_blank" %></td>
      </tr>
     </div>
+  </tr>
   </table>
+  
 
     <table id="example" class="table table-bordered table-hover table-condensed">
     <thead>
@@ -135,3 +138,11 @@
   </table>
 </div>
 </div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "scrollX": true
+    } );
+} );
+</script>

@@ -20,7 +20,7 @@ class Reports::InstalmentDetailsController < ApplicationController
         @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y')).where(advance_salary_id: @advances)
       end
     elsif current_user.class == Member
-      if current_user.role.name == 'Company'
+      if current_user.role.name == 'GroupAdmin'
         if params[:food_deduction][:company_location_id] == '' || params[:food_deduction][:company_id] == ''
           @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y'))
         else
@@ -28,17 +28,17 @@ class Reports::InstalmentDetailsController < ApplicationController
           @advances = AdvanceSalary.where(employee_id: @employees)
           @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y')).where(advance_salary_id: @advances)
         end
-      elsif current_user.role.name == 'CompanyLocation'
+      elsif current_user.role.name == 'Branch'
         params[:food_deduction][:company_location_id] == '' || params[:food_deduction][:company_id] == ''
         @employees = Employee.where(company_location_id: current_user.company_location_id)
         @advances = AdvanceSalary.where(employee_id: @employees)
         @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y')).where(advance_salary_id: @advances)
-      elsif current_user.role.name == 'SalaryAccount'
+      elsif current_user.role.name == 'AccountAdmin'
         params[:food_deduction][:company_location_id] == '' || params[:food_deduction][:company_id] == ''
         @employees = Employee.where(company_location_id: current_user.company_location_id)
         @advances = AdvanceSalary.where(employee_id: @employees)
         @instalments = Instalment.where("strftime('%m/%Y', instalment_date) = ?", date.strftime('%m/%Y')).where(advance_salary_id: @advances)
-      elsif current_user.role.name == 'Department'
+      elsif current_user.role.name == 'HOD'
         @salaryslips = Salaryslip.where(department_id: current_user.department_id)
       elsif current_user.role.name == 'Superviser'
       elsif current_user.role.name == 'Employee'

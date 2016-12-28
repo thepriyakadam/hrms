@@ -20,7 +20,7 @@ class Reports::WelfareDetailsController < ApplicationController
         else
         end
     elsif current_user.class == Member
-      if current_user.role.name == 'Company'
+      if current_user.role.name == 'GroupAdmin'
         if @location == ""
           @salaryslips = Salaryslip.where('month = ? and year = ?', @month, @year)
         elsif @location = params[:salary][:company_location_id]
@@ -30,7 +30,7 @@ class Reports::WelfareDetailsController < ApplicationController
           @salaryslips = Salaryslip.where('month = ? and year = ?', @month, @year).where(id: @salaryslip_components)
         else
         end
-      elsif current_user.role.name == 'CompanyLocation'
+      elsif current_user.role.name == 'Branch'
         if @location == ""
           @salaryslips = Salaryslip.where('month = ? and year = ?', @month, @year)
         elsif @location = params[:salary][:company_location_id]
@@ -40,7 +40,7 @@ class Reports::WelfareDetailsController < ApplicationController
           @salaryslips = Salaryslip.where('month = ? and year = ?', @month, @year).where(id: @salaryslip_components)
         else
         end
-      elsif current_user.role.name == 'Department'
+      elsif current_user.role.name == 'HOD'
       elsif current_user.role.name == 'Superviser'
       elsif current_user.role.name == 'Employee'
       end

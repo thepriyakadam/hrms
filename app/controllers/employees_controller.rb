@@ -943,8 +943,6 @@ def selected_asset_xls
     end
 end
 
-
->>>>>>> 1aa3b795224040677ca43a1944688dc067f7e8fe
   # def destroy_details
   #   @employee = Employee.find(params[:emp_id])
 

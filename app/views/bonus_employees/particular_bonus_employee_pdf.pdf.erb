@@ -27,7 +27,7 @@
       <tr>
         <td><%= bonus_employee.employee.manual_employee_code %></td>
         <td><%= full_name(bonus_employee.employee) %></td>
-        <td><%= bonus_employee.bonus_date %></td>
+        <td><%= bonus_employee.bonus_date.strftime("%B %Y") %></td>
         <td><%= bonus_employee.amount %></td>
       </tr>
     <% end %>

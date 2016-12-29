@@ -7,16 +7,38 @@
   <div class="box-body">
     <%= bootstrap_form_for(:bonus_employee, url: { action: 'dynamic_report'},html: {id: 'bonus_employee'},remote: true) do |f| %>
       <div class="row">
-        <div class="col-sm-3">
+        <!-- <div class="col-sm-3">
           <div class="field">
-            <%= text_field :bonus_employee,:start_date,{class: 'form-control bonus_start_date',placeholder:'Start Date'} %>
+            <= text_field :bonus_employee,:start_date,{class: 'form-control bonus_start_date',placeholder:'From Date'} %>
+          </div>
+        </div> -->
+
+        <div class="col-sm-2">
+          <div class="form-group required">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+            <%= text_field :bonus_employee,:start_date,{class: 'form-control joining_date',placeholder:'From Date'} %>
           </div>
         </div>
+        </div>
 
-        <div class="col-sm-3">
+        <!-- <div class="col-sm-3">
           <div class="field">
-            <%= text_field :bonus_employee,:end_date,{class: 'form-control bonus_start_date',placeholder:'End Date'} %>
+            <= text_field :bonus_employee,:end_date,{class: 'form-control bonus_start_date',placeholder:'To Date'} %>
            </div>
+        </div> -->
+
+        <div class="col-sm-2">
+          <div class="form-group required">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+            <%= text_field :bonus_employee,:end_date,{class: 'form-control joining_date',placeholder:'To Date'} %>
+          </div>
+        </div>
         </div>
 
          <!-- <div class="col-sm-3">
@@ -30,28 +52,27 @@
           <= select :food_deduction, :company_location_id, all_company_location,{label: 'Company Location',include_blank: " Select Company Location"}, class: "form-control" %>
           </div>
         </div> -->
-        <div class="col-sm-3">
+        <div class="col-sm-2">
             <div class="form-group required">
               <%=f.select :company_id, all_company,{include_blank: "Select Company",hide_label: true},{onchange:"var a={id:$(this).val(), form : 'bonus_employee'}; $.get('/employees/collect_company_location',a,function(response){});"}%>
             </div>
           </div>
 
-          <div class="col-sm-3">
+          <div class="col-sm-2">
             <div class="form-group required">
               <div id="company_location1">
                 <%= render 'employees/company_loc_dropdown' %> 
             </div>
             </div>
           </div>
-        </div>
         
-        <div class="row">
-        <div class="col-sm-3">
+        <div class="col-sm-2">
           <div class="actions">
-            <%= f.submit "Display Report", class: "btn btn-sm btn-warning" %>
+            <%= f.submit "Display Report", class: "btn btn-sm btn-primary" %>
           </div>
         </div>
         </div><br>
+       
         <div class="row">
 	      <div class="col-sm-6">
 	        <div id="all_employee_bonus"></div>    
@@ -63,6 +84,7 @@
 
       <br>
     <% end %>
+     </div>
   </div><!-- /.box-body -->
 </div><!-- /.box -->
 
@@ -96,3 +118,14 @@ $("#bonus_employee").validate({
     }
    });
 </script>
+
+<script type="text/javascript">
+  $(function(){
+    $('.joining_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-100:-0',
+    dateFormat: 'dd-mm-yy' });
+  }); 
+</script>
+

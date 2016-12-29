@@ -1396,6 +1396,10 @@ end
       get :emp_contribution_slip_list
       get :show_emp_contribution_salaryslip
       get :print_emp_contribution_slip
+      get :salary_slip_report_form
+      post :dynamic_report
+      get :salary_slip_xls
+      get :salary_slip_pdf
     end
   end
  
@@ -1851,6 +1855,7 @@ end
       post :update_manager
       get :member_list_for_update_password
       get :reset_password
+      get :all_employee_list
     end
     member do
       get :edit_manager

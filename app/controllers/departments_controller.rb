@@ -20,8 +20,7 @@ class DepartmentsController < ApplicationController
       elsif current_user.role.name == 'HOD'
         @departments = Department.where(id: current_user.department_id)
       elsif current_user.role.name == 'Employee'
-        @employees = Employee.where(id: current_user.employee_id).pluck(:department_id)
-        @departments = Department.where(id: @employees)
+        @departments = Department.where(id: current_user.department_id)
       end
     end
     session[:active_tab] = "company"

@@ -7,6 +7,8 @@
       <th>Employee ID</th>
       <th>Employee Name</th>
       <th>Account Number</th>
+      <th>Month</th>
+      <th>Year</th>
       <th>Net Salary</th>
       <th>Location</th>
     </tr>
@@ -18,16 +20,16 @@
         <td><%= s.employee.manual_employee_code %></td>
         <td><%= full_name(s.employee) %></td>
         <td><%= account_no(s.employee.id) %></td>
+        <td><%= s.month %></td>
+        <td><%= s.year %></td>
         <td><%= s.calculated_net_salary.round %></td>
         <td><%= s.employee.company_location.try(:name) %></td>
       </tr>
     <% end %>
     <tfoot>
       <tr>
-        <th>Total</th>
-        <th></th>
-        <th></th>
-        <th></th>
+        <th colspan="6">Total</th>
+        
         <th><%= @total_net_salary %></th>
         <th></th>
       </tr>

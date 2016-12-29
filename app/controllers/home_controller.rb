@@ -42,9 +42,11 @@ class HomeController < ApplicationController
       if current_user.role.name == 'GroupAdmin'
         @employees = Employee.joins('INNER JOIN members on employees.id = members.employee_id')
       elsif current_user.role.name == 'Admin'
-        @employees = Employee.joins('INNER JOIN members on employees.id = members.employee_id where employees.company_location.company_id = #{current_user.company_location.company_id}"')
+        @employees = Employee.joins("INNER JOIN members on employees.id = members.employee_id where employees.company_id = #{current_user.company_location.company_id}")
       elsif current_user.role.name == 'Branch'
         @employees = Employee.joins("INNER JOIN members on employees.id = members.employee_id where employees.company_location_id = #{current_user.company_location_id}")
+      else
+        @employees = Employee.joins('INNER JOIN members on employees.id = members.employee_id')
       end
     end
   end

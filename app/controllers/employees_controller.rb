@@ -101,10 +101,32 @@ class EmployeesController < ApplicationController
     @state = @employee.state
     @cities = @state.districts
 
-    @company = @employee.company
-    @company_locations = @company.try(:company_locations)
-    @company_location = @employee.company_location
-    @departments = @company_location.try(:departments)
+    # @company = @employee.company
+    # @company_locations = @company.try(:company_locations)
+    # @company_location = @employee.company_location
+    # @departments = @company_location.try(:departments)
+
+    if current_user.class == Group
+    @company_locations = CompanyLocation.all
+    else
+      if current_user.role.name == 'GroupAdmin'
+        @company_locations = CompanyLocation.all
+        @company_locations.each do |cl|
+         @departments = Department.where(company_location_id: cl.id)
+        end
+      elsif current_user.role.name == 'Admin'
+        @company_locations = CompanyLocation.where(company_location_id: current_user.company_location_id)
+        @company_locations.each do |cl|
+         @departments = Department.where(company_location_id: cl.id)
+        end
+        # byebug
+      elsif current_user.role.name == 'Branch'
+        @company_locations = CompanyLocation.where(id: current_user.company_location_id)
+        @company_locations.each do |cl|
+         @departments = Department.where(company_location_id: cl.id)
+        end
+      end
+    end
 
 
     @form = 'employee'
@@ -446,6 +468,7 @@ class EmployeesController < ApplicationController
 
 
   def collect_company_location
+    # byebug
     @company = Company.find(params[:id])
     # @company_locations = @company.company_locations
     if current_user.class == Group
@@ -454,10 +477,10 @@ class EmployeesController < ApplicationController
       if current_user.role.name == 'GroupAdmin'
         @company_locations = CompanyLocation.all
       elsif current_user.role.name == 'Admin'
-        @company_locations = CompanyLocation.where(company_id: current_user.company_location.company_id)
+        @company_locations = CompanyLocation.where(id: current_user.company_location_id)
         # byebug
       elsif current_user.role.name == 'Branch'
-        @company_locations = CompanyLocation.where(id: current_user.company_location_id,company_id: current_user.company_location.company_id)
+        @company_locations = CompanyLocation.where(id: current_user.company_location_id)
       end
     end
     @form = params[:form]
@@ -941,6 +964,11 @@ def selected_asset_xls
     respond_to do |format|
       format.xls {render template: 'employees/selected_asset_xls.xls.erb'}
     end
+end
+
+def all_employee_list
+  @employees = Employee.all
+
 end
 
   # def destroy_details

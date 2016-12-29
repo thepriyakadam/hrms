@@ -1,0 +1,33 @@
+<style>
+    th {
+        text-align: left;
+    }
+    tr {
+        page-break-inside: avoid;
+    }
+    div.alwaysbreak { page-break-before: always; }
+    div.nobreak:before { clear:both; }
+    div.nobreak{ page-break-inside: avoid;
+    }
+</style>
+  <table style="border-collapse: collapse; font-size:12pt;" border=1 width=1200 cellpadding="15">
+    <thead>
+    <tr><td colspan="4"><center>BFTL</center> </td></tr>
+      <tr>
+        <th> ID</th>
+        <th>Employee Name</th>
+        <th>Skill</th>
+        <th>Level</th>
+      </tr>
+      </thead>
+      <tbody>
+    <% @skillsets.each do |skillset| %>
+      <tr>
+          <td><%= skillset.employee.try(:manual_employee_code ) %></td>
+          <td><%= full_name(skillset.employee) %></td>
+          <td><%= skillset.name %></td>
+          <td><%= skillset.skill_level %></td>
+      </tr>
+       <%end%>
+      </tbody>
+      </table>    

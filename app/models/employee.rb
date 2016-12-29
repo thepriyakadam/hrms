@@ -139,11 +139,13 @@ class Employee < ActiveRecord::Base
     if current_user.class == Group
       Employee.all.pluck(:id)
     else
-      if current_user.role.name == 'Company'
+      if current_user.role.name == 'GroupAdmin'
         Employee.all.pluck(:id)
-      elsif current_user.role.name == 'CompanyLocation'
+      elsif current_user.role.name == 'Admin'
+        Employee.where(company_location_id: current_user.company_id).pluck(:id)
+      elsif current_user.role.name == 'Branch'
         Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
-      elsif current_user.role.name == 'Department'
+      elsif current_user.role.name == 'HOD'
         Employee.where(id: current_user.department_id).pluck(:id)
       elsif current_user.role.name == 'Employee'
         Employee.where(id: current_user.employee_id).pluck(:id)
@@ -157,9 +159,11 @@ class Employee < ActiveRecord::Base
     if current_user.class == Group
       Employee.all
     else
-      if current_user.role.name == 'Company'
+      if current_user.role.name == 'GroupAdmin'
         Employee.all
-      elsif current_user.role.name == 'CompanyLocation'
+      elsif current_user.role.name == 'Admin'
+        Employee.where(company_location_id: current_user.company_id)
+      elsif current_user.role.name == 'Branch'
         Employee.where(company_location_id: current_user.company_location_id)
       elsif current_user.role.name == 'Employee'
         Employee.where(id: current_user.employee_id)
@@ -171,9 +175,11 @@ class Employee < ActiveRecord::Base
     if current_user.class == Group
       Employee.all
     else
-      if current_user.role.name == 'Company'
+      if current_user.role.name == 'GroupAdmin'
         Employee.all
-      elsif current_user.role.name == 'CompanyLocation'
+      elsif current_user.role.name == 'Admin'
+        Employee.where(company_location_id: current_user.company_location_id)
+      elsif current_user.role.name == 'Branch'
         Employee.where(company_location_id: current_user.company_location_id)
       elsif current_user.role.name == 'Employee'
         Employee.where(id: current_user.employee_id)

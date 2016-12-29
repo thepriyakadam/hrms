@@ -7,13 +7,13 @@
   <div class="box-body">
     <%= bootstrap_form_for(:pf_detail, url: { action: 'dynamic_report'},html: {id: 'pf_detail'},remote:true) do |f| %>
       <div class="row">
-        <div class="col-sm-3">
+        <div class="col-sm-2">
           <div class="field">
             <%= select :pf_detail,:year,['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025','2026','2027'],{label: 'Select Year',include_blank: " Select Year"}, class: "form-control" %>
           </div>
         </div>
 
-        <div class="col-sm-3">
+        <div class="col-sm-2">
           <div class="field">
             <%= select :pf_detail,:month, ['January','February','March','April','May','June','July','August','September','October','November','December'],{label: 'Select Month',include_blank: " Select Month"}, class: "form-control" %>
            </div>
@@ -30,25 +30,23 @@
           <= select :food_deduction, :company_location_id, all_company_location,{label: 'Company Location',include_blank: " Select Company Location"}, class: "form-control" %>
           </div>
         </div> -->
-        <div class="col-sm-3">
+        <div class="col-sm-2">
             <div class="form-group required">
-              <%=f.select :company_id, all_company,{include_blank: "Select Company",hide_label: true},{onchange:"var a={id:$(this).val(), form : 'salary_slip_ledger'}; $.get('/employees/collect_company_location',a,function(response){});"}%>
+              <%=f.select :company_id, all_company,{include_blank: "Select Company",hide_label: true},{onchange:"var a={id:$(this).val(), form : 'food_deduction'}; $.get('/employees/collect_company_location',a,function(response){});"}%>
             </div>
           </div>
 
-          <div class="col-sm-3">
+          <div class="col-sm-2">
             <div class="form-group required">
               <div id="company_location1">
                 <%= render 'employees/company_loc_dropdown' %> 
             </div>
             </div>
           </div>
-        </div>
         
-        <div class="row">
-        <div class="col-sm-3">
+        <div class="col-sm-2">
           <div class="actions">
-            <%= f.submit "Display Report", class: "btn btn-sm btn-warning" %>
+            <%= f.submit "Display Report", class: "btn btn-sm btn-primary" %>
           </div>
         </div>
         </div><br>

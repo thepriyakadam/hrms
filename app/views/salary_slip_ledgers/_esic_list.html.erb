@@ -1,0 +1,67 @@
+<div class="box-header">
+    <div class="pull-right">
+    </div>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+  <div id="comments">
+    <table id="example" class="table table-bordered table-hover table-condensed">
+    <thead>
+      <tr>
+        <th>Employee Code</th>
+        <th>Employee Name</th>
+        <th>ESIC No.</th>
+        <th>Payble Days</Data></th>
+        <th>Washing Allowance</th>
+        <th>Gross Salary</th>
+        <th>Amount</th>
+        <th>ESIC Amount</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <% @salaryslips.each do |slip| %>
+        <% employee = slip.employee %>
+        <% joining = employee.joining_detail %>
+        <% bank = employee.employee_bank_detail %>
+        <% workingday = slip.workingday %>
+        <tr>
+          <td><%= slip.employee.manual_employee_code %></td>
+          <td><%= employee.first_name.to_s+" "+employee.middle_name.to_s+" "+employee.last_name.to_s %></td>
+          <td><%= joining.try(:employee_efic_no) %></td>
+          <td><%= workingday.payable_day %></td>
+
+          <% @addable_salaryslip_items = slip.salaryslip_components.where(is_deducted: false) %>
+          <%gross_amt = 0%>
+          <%wa_amt = 0%>
+          <% @addable_salaryslip_items.each do |item| %>
+            <% case item.salary_component.try(:name) %>
+            <% when "Washing Allowance" %>
+              <td><%= wa_amt = item.calculated_amount.round %></td>
+            <% else %>
+            <% end %> <!-- switch case -->
+          <% end %><!-- addable items -->
+          <td><%= gross_amt = slip.calculated_gross_salary.round %></td>
+          <td><%= gross_amt - wa_amt %></td>
+          
+          <% @deducted_salaryslip_items = slip.salaryslip_components.where(is_deducted: true) %>
+          <% @deducted_salaryslip_items.each do |item| %>
+              <% if item.other_component_name == "ESIC" %>
+                <td><%= item.calculated_amount.round %></td>
+              <% end %>
+          <% end %><!-- deducted items -->
+        </tr><!-- Row -->
+      <% end %><!-- slip -->
+    </tbody>
+    </table>
+    </div>
+  <%= link_to " Excel Report ",esic_xls_salary_slip_ledgers_path(month: params[:esic][:month], year: params[:esic][:year],company_id: params[:esic][:company_id],company_location_id: params[:food_deduction][:company_location_id], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+  <%= link_to " Print Esic",esic_pdf_salary_slip_ledgers_path(month: params[:esic][:month], year: params[:esic][:year],company_id: params[:esic][:company_id],company_location_id: params[:food_deduction][:company_location_id], format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#example').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

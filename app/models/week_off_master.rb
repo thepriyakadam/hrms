@@ -10,4 +10,7 @@ class WeekOffMaster < ActiveRecord::Base
   #   flag
   # end
 
+
+  
+
 end

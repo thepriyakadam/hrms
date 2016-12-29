@@ -2,22 +2,26 @@ class VacancyMastersController < ApplicationController
   before_action :set_vacancy_master, only: [:show, :edit, :update, :destroy]
 
   # GET /vacancy_masters
-  # GET /vacancy_masters.json
+  # GET /vacancy_masters.json   
   def index
-      respond_to do |format|
-      format.html
-      format.csv { send_data @vacancy_masters.to_csv }
-      format.xls
-      if current_user.class == Member
-        if current_user.role.name == 'Department'
-          @vacancy_masters = VacancyMaster.where(employee_id: current_user.employee_id)
-        elsif current_user.role.name == 'CompanyLocation'
-          @vacancy_masters = VacancyMaster.where(company_location_id: current_user.company_location_id)
-        elsif current_user.role.name == 'Company'
+    respond_to do |format|
+    format.html
+    format.csv { send_data @vacancy_masters.to_csv }
+    format.xls
+    if current_user.class == Group
+      @vacancy_masters = VacancyMaster.all
+      else
+        if current_user.role.name == 'GroupAdmin'
           @vacancy_masters = VacancyMaster.all
-        end
+        elsif current_user.role.name == 'Admin'
+        @vacancy_masters = VacancyMaster.where(company_id: current_user.company_location.company_id)
+        elsif current_user.role.name == 'Branch'
+        @vacancy_masters = VacancyMaster.where(company_location_id: current_user.company_location_id)
+        elsif current_user.role.name == 'HOD'
+        @vacancy_masters = VacancyMaster.where(department_id: current_user.department_id)
       end
-     end
+    end
+   end
   end
 
   def import

@@ -17,10 +17,10 @@ div.nobreak{ page-break-inside: avoid;
     <% employee = Employee.find_by(id: @employee.id) %>
 
       <table style="border-collapse: collapse;font-size:10pt;" border=1 width=900 class="table table-bordered table-hover">
-      <tr><th colspan="3"><center><%= employee.company.try(:description)%> <%= employee.company_location.try(:name)%></center> <center><small><%= employee.company.try(:address)%> </small> </center></th> </tr>
+      <tr><th colspan="3"><center><%= employee.company.try(:description)%> <%= employee.company_location.try(:name)%></center> <center><small><%= employee.company.try(:address)%></small> </center></th> </tr>
       <tr>
        <td> <strong>ID : </strong><%= employee.manual_employee_code %></td>
-       <td colspan="2"><center> <strong>Employee Name : </strong><%= employee.first_name %> <%= employee.middle_name %> <%= employee.last_name %> </center></td>
+       <td colspan="2"><center> <strong>Employee Name : </strong><%= employee.first_name %> <%= employee.middle_name %> <%= employee.last_name %></center></td>
       </tr>
           <% @employee_templates = EmployeeTemplate.where(employee_id: @employee.id) %>
           <% @employee_templates.each do |t| %>
@@ -32,9 +32,9 @@ div.nobreak{ page-break-inside: avoid;
             <th>Monthly Amount</th>
             <th>Annual Amount</th>
           </tr>
-             <% @employee_salary_templates = EmployeeSalaryTemplate.where(employee_template_id: t)  %>
-             <% @employee_salary_templates.each do |s|  %>
-               <% @employee_salary_template = EmployeeSalaryTemplate.find_by(id: s) %>
+              <% @employee_salary_templates = EmployeeSalaryTemplate.where(employee_template_id: t)  %>
+              <% @employee_salary_templates.each do |s|  %>
+              <% @employee_salary_template = EmployeeSalaryTemplate.find_by(id: s) %>
                 <tr>
                   <td><%= s.try(:salary_component).try(:name) %></td>
                   <td><%= s.try(:monthly_amount) %></td>

@@ -22,6 +22,7 @@
           <% else %>    
           <%= link_to '',  issue_root_cause, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
            <%= link_to '', is_confirm_issue_root_causes_path(issue_root_cause: issue_root_cause),data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-info fa fa-check' %>
+           <%= link_to '', edit_issue_root_cause_path(issue_root_cause),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
            <% end %>
           </td>
        

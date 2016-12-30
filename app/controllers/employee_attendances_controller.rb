@@ -79,7 +79,7 @@ class EmployeeAttendancesController < ApplicationController
         if current_user.role.name == 'GroupAdmin'
           @employees = Employee.where(status: "Active").filter_by_date_and_costcenter(@date, @costcenter, current_user)
         elsif current_user.role.name == 'Admin'
-          @employees = Employee.where(status: "Active",company_id: current_user.company_location.company_id).filter_by_date_and_costcenter(@date, @costcenter, current_user)
+          @employees = Employee.where(status: "Active",company_id: current_user.company_id).filter_by_date_and_costcenter(@date, @costcenter, current_user)
         elsif current_user.role.name == 'Branch'
           @employees = Employee.where(status: "Active",company_location_id: current_user.company_location_id).filter_by_date_and_costcenter(@date, @costcenter, current_user)
         elsif
@@ -243,13 +243,15 @@ class EmployeeAttendancesController < ApplicationController
       @employees, @attendances, work_data_structure, @date = params[:employees], params[:attendances], [], params[:date]
       params.permit!
       @employees.each { |e| work_data_structure << params[e] }
-      # byebug
       a= Workingday.create(work_data_structure)
       @emp1 = params[:employees]
       b=a.last
       @payroll_overtime_masters = PayrollOvertimeMaster.where(is_active: true,is_payroll: true).take
       @emp1.try(:each) do |x| 
       emp_attend=EmployeeAttendance.where(employee_id: x,month_name: b.month_name)
+
+      #EmployeeAttendance.where("strftime('%m/%Y', day) = ? AND employee_id = ?", @date,x).update_all(is_confirm: true)
+     
       # ff=EmployeeAttendance.where(employee_id: x,month_name: b.month_name).take
       
       ot_hours=emp_attend.sum(:overtime_hrs).to_f
@@ -264,10 +266,12 @@ class EmployeeAttendancesController < ApplicationController
       end
       work=Workingday.where("ot_days < ?", 0).pluck(:id)
       @workingdays = Workingday.where(id: work)
-          # byebug
       @workingdays.each do |wor|
       # byebug
       emp_att=EmployeeAttendance.where(employee_id: wor.employee_id,month_name: wor.month_name)
+
+      #EmployeeAttendance.where("strftime('%m/%Y', day) = ? AND employee_id = ?", @date,wor.employee_id).update_all(is_confirm: true)
+
       overtime_hours=emp_att.sum(:overtime_hrs).to_f
       difference_hours=emp_att.sum(:difference_hrs).to_f
       calculated_diff_hours=(overtime_hours-difference_hours)
@@ -371,17 +375,17 @@ class EmployeeAttendancesController < ApplicationController
     @start_date = @date
     @end_date = @date.end_of_month
     @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ? and is_confirm = ?", @date.strftime('%m/%Y'),false).group(:employee_id)
-      respond_to do |format|
-          format.json
-          format.pdf do
-            render pdf: 'employee_attendance',
-                  layout: 'pdf.html',
-                  orientation: 'Landscape',
-                  template: 'employee_attendances/costcenter_wise_pdf.pdf.erb',
-                  show_as_html: params[:debug].present?,
-                  margin:  { top:1,bottom:1,left:1,right:1 }
-                end
-             end
+    respond_to do |format|
+      format.json
+      format.pdf do
+        render pdf: 'employee_attendance',
+              layout: 'pdf.html',
+              orientation: 'Landscape',
+              template: 'employee_attendances/costcenter_wise_pdf.pdf.erb',
+              show_as_html: params[:debug].present?,
+              margin:  { top:1,bottom:1,left:1,right:1 }
+            end
+         end
     
   end
   

@@ -62,17 +62,16 @@
             <%= hidden_field e.employee_id, 'payable_day', value: payable_day %>
             <%= hidden_field e.employee_id, 'gatepass', value: gate_pass %>
 
+
             <% if gate_pass <= 2 %>
               <%= hidden_field e.employee_id, 'present_day', value: present_day.to_f + gate_pass.to_f %>
-              <%= hidden_field e.employee_id, 'payable_day', value: payable_day.to_f + gate_pass.to_f %>
             <% else %>
               <% @a = gate_pass.to_f - 2 %>
               <% @b = @a.to_f/2 %>
               <%= hidden_field e.employee_id, 'present_day', value: present_day.to_f + @b.to_f + 2 %>
-              <%= hidden_field e.employee_id, 'absent_day', value: absent_day_count(exist).to_f + @b.to_f %>
-              <%= hidden_field e.employee_id, 'payable_day', value: payable_day.to_f + @b.to_f + 2 %>
+              <%= hidden_field e.employee_id, 'absent_day', value: absent_day_count(exist) + @b.to_f %>
             <% end %>
-
+            
             <% exist.clear %>
           <%end%>
         </tbody>

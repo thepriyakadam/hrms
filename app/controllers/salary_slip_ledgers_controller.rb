@@ -62,8 +62,7 @@ class SalarySlipLedgersController < ApplicationController
   def cost_unit_wise
    session[:active_tab] ="PayrollManagement"
    session[:active_tab1] ="SalaryProcess"
-   session[:active_tab2] = "SalaryReport"
-    
+   session[:active_tab2] = "SalaryReport"  
   end
 
   def cost_unit_wise_salary

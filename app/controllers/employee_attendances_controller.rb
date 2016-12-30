@@ -243,9 +243,9 @@ class EmployeeAttendancesController < ApplicationController
       @employees, @attendances, work_data_structure, @date = params[:employees], params[:attendances], [], params[:date]
       params.permit!
       @employees.each { |e| work_data_structure << params[e] }
+      # byebug
       a= Workingday.create(work_data_structure)
       @emp1 = params[:employees]
-      #byebug
       b=a.last
       @payroll_overtime_masters = PayrollOvertimeMaster.where(is_active: true,is_payroll: true).take
       @emp1.try(:each) do |x| 

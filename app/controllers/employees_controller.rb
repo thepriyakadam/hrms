@@ -968,7 +968,137 @@ end
 
 def all_employee_list
   @employees = Employee.all
+end
 
+def dynamic_report
+    @employee_type = params[:employee][:employee_type_id]
+    @company = params[:employee][:company_id]
+    @location = params[:food_deduction][:company_location_id]
+    if current_user.class == Group
+      if @location == ""
+        @employees = Employee.where(employee_type_id: @employee_type,company_id: @company.to_i)
+        else 
+        @employees = Employee.where(employee_type_id: @employee_type,company_id: @company.to_i,company_location_id: @location.to_i)
+        end
+    elsif current_user.class == Member
+      if current_user.role.name == 'GroupAdmin'
+        if @location == ""
+        @employees = Employee.where(employee_type_id: @employee_type,company_id: @company.to_i)
+        else 
+        @employees = Employee.where(employee_type_id: @employee_type,company_id: @company.to_i,company_location_id: @location.to_i)
+        end
+       elsif current_user.role.name == 'Admin'
+        if @location == ""
+        @employees = Employee.where(employee_type_id: @employee_type,company_id: @company.to_i)
+        else 
+        @employees = Employee.where(employee_type_id: @employee_type,company_id: @company.to_i,company_location_id: @location.to_i)
+        end
+        elsif current_user.role.name == 'Branch'
+        if @location == ""
+        @employees = Employee.where(employee_type_id: @employee_type,company_id: @company.to_i)
+        else 
+        @employees = Employee.where(employee_type_id: @employee_type,company_id: @company.to_i,company_location_id: @location.to_i)
+        end
+      elsif current_user.role.name == 'HOD'
+        @employees = Employee.where(department_id: current_user.department_id)
+      elsif current_user.role.name == 'Superviser'
+      elsif current_user.role.name == 'Employee'
+      end
+    end
+end
+
+def left_employee_xl
+    @employee_type = params[:employee_type_id]
+    @company = params[:company_id]
+    @location = params[:company_location_id]
+    if current_user.class == Group
+      if @location == ""
+        @employees = Employee.where(employee_type_id: @employee_type,company_id: @company.to_i)
+        else 
+        @employees = Employee.where(employee_type_id: @employee_type,company_id: @company.to_i,company_location_id: @location.to_i)
+        end
+    elsif current_user.class == Member
+      if current_user.role.name == 'GroupAdmin'
+        if @location == ""
+        @employees = Employee.where(employee_type_id: @employee_type,company_id: @company.to_i)
+        else 
+        @employees = Employee.where(employee_type_id: @employee_type,company_id: @company.to_i,company_location_id: @location.to_i)
+        end
+       elsif current_user.role.name == 'Admin'
+        if @location == ""
+        @employees = Employee.where(employee_type_id: @employee_type,company_id: @company.to_i)
+        else 
+        @employees = Employee.where(employee_type_id: @employee_type,company_id: @company.to_i,company_location_id: @location.to_i)
+        end
+        elsif current_user.role.name == 'Branch'
+        if @location == ""
+        @employees = Employee.where(employee_type_id: @employee_type,company_id: @company.to_i)
+        else 
+        @employees = Employee.where(employee_type_id: @employee_type,company_id: @company.to_i,company_location_id: @location.to_i)
+        end
+      elsif current_user.role.name == 'HOD'
+        @employees = Employee.where(department_id: current_user.department_id)
+      elsif current_user.role.name == 'Superviser'
+      elsif current_user.role.name == 'Employee'
+      end
+    end
+    respond_to do |format|
+      format.xls {render template: 'employees/left_employee.xls.erb'}
+    end
+end
+
+def left_employee_pdf
+    @employee_type = params[:employee_type_id]
+    @company = params[:company_id]
+    @location = params[:company_location_id]
+    if current_user.class == Group
+      if @location == ""
+        @employees = Employee.where(employee_type_id: @employee_type,company_id: @company.to_i)
+        else 
+        @employees = Employee.where(employee_type_id: @employee_type,company_id: @company.to_i,company_location_id: @location.to_i)
+        end
+    elsif current_user.class == Member
+      if current_user.role.name == 'GroupAdmin'
+        if @location == ""
+        @employees = Employee.where(employee_type_id: @employee_type,company_id: @company.to_i)
+        else 
+        @employees = Employee.where(employee_type_id: @employee_type,company_id: @company.to_i,company_location_id: @location.to_i)
+        end
+       elsif current_user.role.name == 'Admin'
+        if @location == ""
+        @employees = Employee.where(employee_type_id: @employee_type,company_id: @company.to_i)
+        else 
+        @employees = Employee.where(employee_type_id: @employee_type,company_id: @company.to_i,company_location_id: @location.to_i)
+        end
+        elsif current_user.role.name == 'Branch'
+        if @location == ""
+        @employees = Employee.where(employee_type_id: @employee_type,company_id: @company.to_i)
+        else 
+        @employees = Employee.where(employee_type_id: @employee_type,company_id: @company.to_i,company_location_id: @location.to_i)
+        end
+      elsif current_user.role.name == 'HOD'
+        @employees = Employee.where(department_id: current_user.department_id)
+      elsif current_user.role.name == 'Superviser'
+      elsif current_user.role.name == 'Employee'
+      end
+    end
+    respond_to do |format|
+          format.json
+          format.pdf do
+            render pdf: 'left_employee_pdf',
+                  layout: 'pdf.html',
+                  orientation: 'Landscape',
+                  template: 'employees/left_employee.pdf.erb',
+                  # show_as_html: params[:debug].present?,
+                  :page_height      => 1000,
+                  :dpi              => '300',
+                  :margin           => {:top    => 10, # default 10 (mm)
+                                :bottom => 10,
+                                :left   => 20,
+                                :right  => 20},
+                  :show_as_html => params[:debug].present?
+                end
+             end
 end
 
   # def destroy_details

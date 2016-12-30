@@ -51,10 +51,12 @@ module EmployeesHelper
     else
       if current_user.role.name == 'GroupAdmin'
         Employee.all.collect { |e| [e.manual_employee_code + '  ' + e.first_name.to_s + ' ' + e.last_name.to_s, e.id] }
-      elsif current_user.role.name == 'Admin' || current_user.role.name == "Account"
-        Employee.where(company_location_id: current_user.company_id).collect { |e| [e.manual_employee_code + '  ' + e.first_name.to_s + ' ' + e.last_name.to_s, e.id] }
-      elsif current_user.role.name == 'Branch' || current_user.role.name == "Account"
+      elsif current_user.role.name == 'Admin'
+        Employee.where(company_id: current_user.company_location.company_id).collect { |e| [e.manual_employee_code + '  ' + e.first_name.to_s + ' ' + e.last_name.to_s, e.id] }
+      elsif current_user.role.name == 'Branch'
         Employee.where(company_location_id: current_user.company_location_id).collect { |e| [e.manual_employee_code + '  ' + e.first_name.to_s + ' ' + e.last_name.to_s, e.id] }
+      elsif current_user.role.name == "AccountAdmin"
+        Employee.where(company_location_id: current_user.company_id).collect { |e| [e.manual_employee_code + '  ' + e.first_name.to_s + ' ' + e.last_name.to_s, e.id] }
       end
     end
   end

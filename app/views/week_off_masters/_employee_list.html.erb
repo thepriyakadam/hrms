@@ -16,13 +16,13 @@
           </tr>
         </thead>
         <tbody>
-          <% @week_off_masters.each do |e| %>
-            <% for i in e.from.to_date..e.to.to_date %>
-              <% @emp_id = WeekOffMaster.where.not(from: i).pluck(:employee_id) %>
-                <% @employees = Employee.where(id: @emp_id) %>
-             <% end %>
-          <% end %>
-              <% @employees = Employee.where(id: @emp_id) %>
+          <!-- < @week_off_masters.each do |e| %>
+            < for i in e.from.to_date..e.to.to_date %>
+              < @emp_id = WeekOffMaster.where.not(from: i).pluck(:employee_id) %>
+                < @employees = Employee.where(id: @emp_id) %>
+             < end %>
+          < end %> -->
+          
               <% @employees.where(status: "Active").each do |e| %>
                 <tr>              
                   <td><%= check_box_tag "employee_ids[]",e.id %></td>

@@ -19,8 +19,6 @@ class DepartmentsController < ApplicationController
         @departments = Department.where(company_location_id: current_user.company_location_id)
       elsif current_user.role.name == 'HOD'
         @departments = Department.where(id: current_user.department_id)
-      elsif current_user.role.name == 'Employee'
-        @departments = Department.where(id: current_user.department_id)
       end
     end
     session[:active_tab] = "company"

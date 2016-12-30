@@ -243,12 +243,7 @@ class EmployeeAttendancesController < ApplicationController
       @employees, @attendances, work_data_structure, @date = params[:employees], params[:attendances], [], params[:date]
       params.permit!
       @employees.each { |e| work_data_structure << params[e] }
-      #byebug
-      a = Workingday.create(work_data_structure)      
-      # @employees.try(:each) do |x| 
-      #   EmployeeAttendance.where("employee_id = ? AND strftime('%m/%Y', day) = ?",x,@date.strftime('%m/%Y')).update_all(is_confirm: true)
-      # end
-
+      a= Workingday.create(work_data_structure)
       @emp1 = params[:employees]
       b=a.last
       @payroll_overtime_masters = PayrollOvertimeMaster.where(is_active: true,is_payroll: true).take
@@ -287,8 +282,6 @@ class EmployeeAttendancesController < ApplicationController
       Workingday.where(id: wor,employee_id: wor.employee_id).update_all(calculated_payable_days: final_payable_day.to_f,ot_days: nil)
       # Workingday.update_all(is_confirm: true)
       end
-
-
       flash[:notice] = "Workingday successfully saved."
       redirect_to employee_attendances_path
   end

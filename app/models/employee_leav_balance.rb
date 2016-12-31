@@ -38,22 +38,22 @@ class EmployeeLeavBalance < ActiveRecord::Base
     @employee_leav_balances =  if current_user.class == Group
     EmployeeLeavBalance.all
     elsif current_user.class == Member
-    if current_user.role.name == "GroupAdmin"
-      @employees = Employee.where(company_id: current_user.company_id)
-      EmployeeLeavBalance.where(employee_id: @employees)
-    elsif current_user.role.name == "Admin"
-      @employees = Employee.where(company_location_id: current_user.company_id)
-      EmployeeLeavBalance.where(employee_id: @employees)  
-    elsif current_user.role.name == "Branch"
-      @employees = Employee.where(company_location_id: current_user.company_location_id)
-      EmployeeLeavBalance.where(employee_id: @employees)  
-    elsif current_user.role.name == "HOD"
-      @employees = Employee.where(department_id: current_user.department_id)
-      EmployeeLeavBalance.where(employee_id: @employees)
-    elsif current_user.role.name == "Employee"
-      EmployeeLeavBalance.where(employee_id: current_user.employee_id)
+      if current_user.role.name == "GroupAdmin"
+        @employees = Employee.all
+        EmployeeLeavBalance.where(employee_id: @employees)
+      elsif current_user.role.name == "Admin"
+        @employees = Employee.where(company_id: current_user.company_location.company_id)
+        EmployeeLeavBalance.where(employee_id: @employees)  
+      elsif current_user.role.name == "Branch"
+        @employees = Employee.where(company_location_id: current_user.company_location_id)
+        EmployeeLeavBalance.where(employee_id: @employees)  
+      elsif current_user.role.name == "HOD"
+        @employees = Employee.where(department_id: current_user.department_id)
+        EmployeeLeavBalance.where(employee_id: @employees)
+      elsif current_user.role.name == "Employee"
+        EmployeeLeavBalance.where(employee_id: current_user.employee_id)
+      end
     end
-  end
   end
   
   def is_present(e)

@@ -6,7 +6,6 @@
   <table class="table table-bordered table-hover table-condensed">
         <thead>
           <tr>
-            <!-- <th>ID</th> -->
             <th>Date</th>
             <% for i in 1..@day %>
               <th><%= i %></th>
@@ -17,7 +16,6 @@
           <% exist = {} %>
           <% @employees.each do |e| %>
             <tr>
-              <!-- <td><%= e.employee.manual_employee_code %></td> -->
               <td><%= e.day.strftime("%B %Y") %></td>
               <% sorted_exists = calculate_attendance(@date, exist, e)%>
               <% sorted_exists.each do |k,v|%>

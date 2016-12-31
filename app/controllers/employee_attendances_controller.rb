@@ -79,7 +79,7 @@ class EmployeeAttendancesController < ApplicationController
         if current_user.role.name == 'GroupAdmin'
           @employees = Employee.where(status: "Active").filter_by_date_and_costcenter(@date, @costcenter, current_user)
         elsif current_user.role.name == 'Admin'
-          @employees = Employee.where(status: "Active",company_id: current_user.company_id).filter_by_date_and_costcenter(@date, @costcenter, current_user)
+          @employees = Employee.where(status: "Active",company_id: current_user.company_location.company_id).filter_by_date_and_costcenter(@date, @costcenter, current_user)
         elsif current_user.role.name == 'Branch'
           @employees = Employee.where(status: "Active",company_location_id: current_user.company_location_id).filter_by_date_and_costcenter(@date, @costcenter, current_user)
         elsif
@@ -422,8 +422,6 @@ class EmployeeAttendancesController < ApplicationController
   
 
   def display_employee_attendance_list
-    # @month = "September"
-    # @year = 2016
     @month = params[:month].to_s
     @year = params[:year].to_s
     @date = Date.new(@year.to_i, Workingday.months[@month])

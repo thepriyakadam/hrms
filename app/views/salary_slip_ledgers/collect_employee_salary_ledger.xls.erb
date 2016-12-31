@@ -12,6 +12,7 @@
       <Cell ss:Index="1"><Data ss:Type="String">Code</Data></Cell>
       <Cell ss:Index="1"><Data ss:Type="String">Name</Data></Cell>
       <Cell ss:Index="1"><Data ss:Type="String">Month</Data></Cell>
+      <Cell ss:Index="1"><Data ss:Type="String">Year</Data></Cell>
       
       <Cell ss:Index="1"><Data ss:Type="String">Basic</Data></Cell>
       <Cell ss:Index="1"><Data ss:Type="String">DA</Data></Cell>
@@ -47,6 +48,7 @@
         <Cell ss:Index="1"><Data ss:Type="String"><%= r.try(:code) %></Data></Cell>
         <Cell ss:Index="1"><Data ss:Type="String"><%= r.try(:employee_name) %></Data></Cell>
         <Cell ss:Index="1"><Data ss:Type="String"><%= r.try(:month) %></Data></Cell>
+         <Cell ss:Index="1"><Data ss:Type="String"><%= r.try(:year) %></Data></Cell>
         
         
         <Cell ss:Index="1"><Data ss:Type="Number"><%= r.try(:earned_basic).try(:round) %></Data></Cell>

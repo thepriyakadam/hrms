@@ -6,7 +6,7 @@ try(:<div )class="ajax-progress"></div>
       <th colspan="26">
        <center><strong><%= current_user.employee.company_location.company.description %></strong></center>
         <center><small></small></center>
-        <center><small>Employee Monthly Salary For The Year <%= @month %> - <%= @year %></small></center>   
+        <center><small>Employee Monthly Salary For The Year <%= @start_date.strftime("%B") %>  <%= @start_date.strftime("%Y") %> - <%= @end_date.strftime("%B") %> <%= @end_date.strftime("%Y") %> </small></center>   
       </th>
     </tr>
     <tr>

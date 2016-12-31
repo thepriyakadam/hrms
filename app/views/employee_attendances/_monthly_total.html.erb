@@ -4,8 +4,8 @@
         <thead>
           <tr>
             <th>ID</th>
-            <th>A</th>
             <th>P</th>
+            <th>A</th>
             <th>W</th>
             <th>H</th>
             <th>EL</th>
@@ -13,10 +13,10 @@
             <th>C.Off</th>
             <th>AL</th>
             <th>OD</th>
-            <th>GP</th>
             <th>LWP</th>
             <th>ESIC</th>
             <th>Payble Days</th>
+            <th>GP</th>
           </tr>
         </thead>
         <tbody>
@@ -44,14 +44,30 @@
               <% plwp = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "P/LWP") %>
               <% pesic = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "P/ESIC") %>
               <% pod = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "P/OD") %>
+              <% a = gp.count %>
 
               <td>
-                <% ab = abs.count + ( phalf.count)/2.to_f  %>
-                <%= ab %>
+                <% if a.to_f <= 2 %>
+                  <% ap = pre.count + (phalf.count)/2.to_f + (pcl.count)/2.to_f + (pel.count)/2.to_f + (pal.count)/2.to_f + (pcoff.count)/2.to_f + (plwp.count)/2.to_f + (pesic.count)/2.to_f + (pod.count)/2.to_f + a.to_f %>
+                  <%= ap %>
+                <% else %>
+                  <% @a = a.to_f - 2 %>
+                  <% @b = @a.to_f/2 %>
+                    <% ap = pre.count + (phalf.count)/2.to_f + (pcl.count)/2.to_f + (pel.count)/2.to_f + (pal.count)/2.to_f + (pcoff.count)/2.to_f + (plwp.count)/2.to_f + (pesic.count)/2.to_f + (pod.count)/2.to_f + @b.to_f + 2 %>
+                    <%= ap %>
+                  <% end %>
               </td>
+
               <td>
-                <% ap = pre.count + (phalf.count)/2.to_f + (pcl.count)/2.to_f + (pel.count)/2.to_f + (pal.count)/2.to_f + (pcoff.count)/2.to_f + (plwp.count)/2.to_f + (pesic.count)/2.to_f + (pod.count)/2.to_f %>
-                <%= ap %>
+                <% if a.to_f <= 2 %>
+                  <% ab = abs.count + (phalf.count)/2.to_f  %>
+                  <%= ab %>
+                <% else %>
+                  <% @a = a.to_f - 2 %>
+                  <% @b = @a.to_f/2 %>
+                  <% ab = abs.count + (phalf.count)/2.to_f + @b.to_f %>
+                  <%= ab %>
+                <% end %>
               </td>
               <td><%= wd.count %></td>
               <td><%= h.count %></td>
@@ -75,7 +91,6 @@
                 <% aod = od.count + (pod.count)/2.to_f %>
                 <%= aod %>
               </td>
-              <td><%= gp.count %></td>
               <td>
                 <% alwp= lwp.count + (plwp.count)/2.to_f %>
                 <%= alwp %>
@@ -84,7 +99,8 @@
                 <% aesic = esic.count + (pesic.count)/2.to_f %>
                 <%= aesic %>
               </td>
-              <td><%= ap + wd.count + h.count + ael + acl + acoff + aal + aod +  gp.count %></td>
+              <td><%= ap + wd.count + h.count + ael + acl + acoff + aal + aod %></td>
+              <td><%= gp.count %></td>
             </tr> 
           <%end%>
         </tbody>

@@ -1,0 +1,180 @@
+<div class="ajax-progress"></div>
+  <div class="box-body">
+  <div id="comments">
+ <table id="example6" class="table table-bordered table-hover table-condensed">
+   <thead>
+   <tr>
+		<th>Sr.No.</th>
+		<th>Employee ID</th>
+		<th>Employee Name</th>
+		<th>Designation</th>
+		<th>Department</th>
+		<th>Cost Unit</th>
+		<th>Year</th>
+		<th>Month</th>
+		<th>Category</th>
+		<th>Account No.</th>
+		<th>Bank Name</th>
+		<th>Payment Mode</th>
+		<th>PF No.</th>
+		<th>ESIC No.</th>
+
+		<th>Actual Gross Salary</th>
+
+		<th>Calculated Gross Salary</th>
+
+		<th>Total Deduction</th>
+
+		<th>Net Salary</th>
+
+		<th>Payable Days</th>
+
+		<th>Location</th>
+   </tr>
+  </thead>
+  <tbody>
+		<% i = 0 %>
+		<% @salaryslips.each do |slip| %>
+		<% employee = slip.employee %>
+		<% joining = employee.joining_detail %>
+		<% bankdetail = employee.employee_bank_detail %>
+		<% workingday = slip.workingday %>
+<tr>
+		<td><%= i=i+1 %></td>
+		<td><%= slip.employee.manual_employee_code %></td>
+		<td><%= employee.first_name.to_s+" "+employee.middle_name.to_s+" "+employee.last_name.to_s %></td>
+		<td><%= joining.employee_designation.try(:name) %></td>
+		<td><%= joining.department.try(:name) %></td>
+		<td><%= joining.cost_center.try(:name) %></td>
+		<td><%= slip.year %></td>
+		<td><%= slip.month %></td>
+		<td><%= joining.employee_category.try(:name) %></td>
+		<td><%= bankdetail.try(:account_no) %></td>
+		<td><%= bankdetail.try(:bank).try(:name) %></td>
+		<td><%= joining.try(:payment_mode).try(:name) %></td>
+		<td><%= joining.try(:employee_pf_no) %></td>
+		<td><%= joining.try(:employee_efic_no) %></td>
+
+<% @addable_salaryslip_items = slip.salaryslip_components.where(is_deducted: false) %>
+<% @addable_salaryslip_items.each do |item| %>
+  <% case item.salary_component.try(:name) %>
+  <% when "Basic" %>
+    <% item.try(:actual_amount).try(:round) %>
+  <% when "HRA" %>
+    <% item.try(:actual_amount).try(:round) %>
+  <% when "Special Allowance" %>
+    <% item.try(:actual_amount).try(:round) %>
+  <% when "Convenience Allowance" %>
+    <% item.try(:actual_amount).try(:round) %>
+  <% when "Other Allowance" %>
+    <% item.try(:actual_amount).try(:round) %>
+  <% when "Washing Allowance" %>
+    <% item.try(:actual_amount).try(:round) %>
+  <% when "DA" %>
+    <% item.try(:actual_amount).try(:round) %>
+  <% when "Driver Allowance" %>
+    <% item.try(:actual_amount).try(:round) %>
+  <% when "Medical Allowance" %>
+    <% item.try(:actual_amount).try(:round) %>
+  <% when "Children Education Allowance" %>
+    <% item.try(:actual_amount).try(:round) %>
+  <% when "Rembursement of Medical Allowence" %>
+    <% item.try(:actual_amount).try(:round) %>
+  <% else %>
+  <% end %> <!-- switch case -->
+<% end %><!-- addable items -->
+
+<td><%= slip.actual_gross_salary.round %></td>
+
+<% @addable_salaryslip_items.each do |item| %>
+  <% case item.salary_component.try(:name) %>
+  <% when "Basic" %>
+    <% item.try(:calculated_amount).try(:round) %>
+  <% when "HRA" %>
+    <% item.try(:calculated_amount).try(:round) %>
+  <% when "Special Allowance" %>
+    <% item.try(:calculated_amount).try(:round) %>
+  <% when "Convenience Allowance" %>
+    <% item.try(:calculated_amount).try(:round) %>
+  <% when "Other Allowance" %>
+    <% item.try(:calculated_amount).try(:round) %>
+  <% when "Washing Allowance" %>
+    <% item.try(:calculated_amount).try(:round) %>
+  <% when "DA" %>
+    <% item.try(:calculated_amount).try(:round) %>
+  <% when "Driver Allowance" %>
+    <% item.try(:calculated_amount).try(:round) %>
+  <% when "Medical Allowance" %>
+    <% item.try(:calculated_amount).try(:round) %>
+  <% when "Children Education Allowance" %>
+    <% item.try(:calculated_amount).try(:round) %>
+  <% when "Rembursement of Medical Allowence" %>
+    <% item.try(:calculated_amount).try(:round) %>
+  <% else %>
+  <% end %> <!-- switch case -->
+<% end %><!-- addable items -->
+
+<td><%= slip.calculated_gross_salary.round %></td>
+
+<% @deducted_salaryslip_items = slip.salaryslip_components.where(is_deducted: true) %>
+<% @deducted_salaryslip_items.each do |item| %>
+    <% if item.other_component_name == "PF" %>
+      <% item.try(:calculated_amount).try(:round) %>
+    <% elsif item.other_component_name == "ESIC" %>
+      <% item.try(:calculated_amount).try(:round) %>
+    <% elsif item.other_component_name == "Prof. Tax" %>
+      <% item.try(:calculated_amount).try(:round) %>
+    <% elsif item.other_component_name == "Retention" %>
+      <% item.try(:calculated_amount).try(:round) %>
+    <% elsif item.other_component_name == "Well Faire" %>
+      <% item.try(:calculated_amount).try(:round) %>
+    <% elsif item.other_component_name == "Society" %>
+      <% item.try(:calculated_amount).try(:round) %>
+    <% elsif item.other_component_name == "Food Deduction" %>
+      <% item.try(:calculated_amount).try(:round) %>
+    <% elsif item.other_component_name == "Advance" %>
+      <% item.try(:calculated_amount).try(:round) %>
+    <% elsif item.other_component_name == "Income Tax" %>
+      <% item.try(:calculated_amount).try(:round) %>
+    <% elsif item.other_component_name == "Mobile Deduction" %>
+      <% item.try(:calculated_amount).try(:round) %>
+    <% elsif item.other_component_name == "Other Deduction" %>
+      <% item.try(:calculated_amount).try(:round) %>
+    <% elsif item.other_component_name == "Society Loan" %>
+      <% item.try(:calculated_amount).try(:round) %>
+    <% end %>
+<% end %><!-- deducted items -->
+
+<td><%= slip.calculated_total_deduction.round %></td>
+<td><%= slip.calculated_net_salary.round %></td>
+
+<% workingday.day_in_month %>
+<% workingday.present_day %>
+<% workingday.week_off_day %>
+<% workingday.lwp_leave %>
+<% workingday.cl_leave %>
+<% workingday.el_leave %>
+<% workingday.esic_leave %>
+<% workingday.holiday_in_month %>
+<% workingday.absent_day %>
+<td><%= workingday.payable_day %></td>
+
+<td><%= employee.company_location.name %></td>
+</tr><!-- Row -->
+<%end%>
+    </tbody>
+  </table>
+  </div>
+  <%= link_to " Excel Report ",daterangewise_salaryslip_xls_salaryslips_path(start_date: params[:salaryslip][:start_date], end_date: params[:salaryslip][:end_date],company_id: params[:salaryslip][:company_id],company_location_id: params[:food_deduction][:company_location_id], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+  <!-- <= link_to " Print Salaryslip ",salary_slip_pdf_salaryslips_path(month: params[:salaryslip][:month], year: params[:salaryslip][:year],company_id: params[:salaryslip][:company_id],company_location_id: params[:food_deduction][:company_location_id], format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %> -->
+</div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]],
+        "scrollX": true,
+        "scrollY": 500
+    } );
+} );
+</script>

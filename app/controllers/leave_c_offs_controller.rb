@@ -23,7 +23,7 @@ class LeaveCOffsController < ApplicationController
     else
       if current_user.role.name == 'GroupAdmin'
         @leave_c_offs = LeaveCOff.all
-      if current_user.role.name == 'Admin'
+      elsif current_user.role.name == 'Admin'
         @employees = Employee.where(company_id: current_user.company_location.company_id)
         @leave_c_offs = LeaveCOff.where(employee_id: @employees)
       elsif current_user.role.name == 'Branch'

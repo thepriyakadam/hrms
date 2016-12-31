@@ -127,8 +127,8 @@ class EmployeeAttendancesController < ApplicationController
       flash[:alert] = "Please Select the Checkbox"
     else
       @employee_ids.each do |eid|
-        @emp = Employee.find_by_id(eid)
-      EmployeeAttendance.create(employee_id: eid,day: day,present: present,department_id: @emp.department_id, is_confirm: false)  
+      @emp = Employee.find_by_id(eid)
+      EmployeeAttendance.create(employee_id: eid,day: day,present: present,department_id: @emp.department_id, is_confirm: true)  
       #Holiday.where(holiday_date: day).update_all(is_taken: true)
       flash[:notice] = "Created successfully"
       end
@@ -243,12 +243,7 @@ class EmployeeAttendancesController < ApplicationController
       @employees, @attendances, work_data_structure, @date = params[:employees], params[:attendances], [], params[:date]
       params.permit!
       @employees.each { |e| work_data_structure << params[e] }
-      #byebug
-      a = Workingday.create(work_data_structure)      
-      # @employees.try(:each) do |x| 
-      #   EmployeeAttendance.where("employee_id = ? AND strftime('%m/%Y', day) = ?",x,@date.strftime('%m/%Y')).update_all(is_confirm: true)
-      # end
-
+      a= Workingday.create(work_data_structure)
       @emp1 = params[:employees]
       b=a.last
       @payroll_overtime_masters = PayrollOvertimeMaster.where(is_active: true,is_payroll: true).take
@@ -275,7 +270,7 @@ class EmployeeAttendancesController < ApplicationController
       # byebug
       emp_att=EmployeeAttendance.where(employee_id: wor.employee_id,month_name: wor.month_name)
 
-      #EmployeeAttendance.where("strftime('%m/%Y', day) = ? AND employee_id = ?", @date,wor.employee_id).update_all(is_confirm: true)
+     EmployeeAttendance.where("strftime('%m/%Y', day) = ? AND employee_id = ?", @date,wor.employee_id).update_all(is_confirm: true)
 
       overtime_hours=emp_att.sum(:overtime_hrs).to_f
       difference_hours=emp_att.sum(:difference_hrs).to_f
@@ -287,8 +282,6 @@ class EmployeeAttendancesController < ApplicationController
       Workingday.where(id: wor,employee_id: wor.employee_id).update_all(calculated_payable_days: final_payable_day.to_f,ot_days: nil)
       # Workingday.update_all(is_confirm: true)
       end
-
-
       flash[:notice] = "Workingday successfully saved."
       redirect_to employee_attendances_path
   end

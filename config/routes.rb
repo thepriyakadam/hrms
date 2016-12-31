@@ -202,6 +202,7 @@ end
   resources :employee_code_masters do
     collection do
        get :is_confirm
+      get :select_textbox
     end
    end
   get 'download_pdf/index'
@@ -1400,6 +1401,9 @@ end
       post :dynamic_report
       get :salary_slip_xls
       get :salary_slip_pdf
+      get :salaryslip_daterange_report
+      post :dynamic_daterange_report
+      get :daterangewise_salaryslip_xls
     end
   end
  
@@ -1856,6 +1860,10 @@ end
       get :member_list_for_update_password
       get :reset_password
       get :all_employee_list
+      get :left_employee_report
+      post :dynamic_report
+      get :left_employee_xl
+      get :left_employee_pdf
     end
     member do
       get :edit_manager

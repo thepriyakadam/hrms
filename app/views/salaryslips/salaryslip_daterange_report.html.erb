@@ -1,0 +1,117 @@
+<!--SELECT2 EXAMPLE -->
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Datewise Report</h3>
+  </div><!-- /.box-header -->
+
+  <div class="box-body">
+    <%= bootstrap_form_for(:salaryslip, url: { action: 'dynamic_daterange_report'},html: {id: 'salaryslip'},remote:true) do |f| %>
+      <div class="row">
+                <div class="col-sm-2">
+          <div class="form-group required">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+            <%= text_field :salaryslip,:start_date,{class: 'form-control joining_date',placeholder:'From Date'} %>
+          </div>
+        </div>
+        </div>
+
+        <!-- <div class="col-sm-3">
+          <div class="field">
+            <= text_field :bonus_employee,:end_date,{class: 'form-control bonus_start_date',placeholder:'To Date'} %>
+           </div>
+        </div> -->
+
+        <div class="col-sm-2">
+          <div class="form-group required">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+            <%= text_field :salaryslip,:end_date,{class: 'form-control joining_date',placeholder:'To Date'} %>
+          </div>
+        </div>
+        </div>
+
+
+         <!-- <div class="col-sm-3">
+          <div class="field">
+            <= select :food_deduction,:company_id,all_company,{label: 'Company',include_blank: " Select Company"}, class: "form-control" %>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="field">
+          <= select :food_deduction, :company_location_id, all_company_location,{label: 'Company Location',include_blank: " Select Company Location"}, class: "form-control" %>
+          </div>
+        </div> -->
+        <div class="col-sm-2">
+            <div class="form-group required">
+              <%=f.select :company_id, all_company,{include_blank: "Select Company",hide_label: true},{onchange:"var a={id:$(this).val(), form : 'food_deduction'}; $.get('/employees/collect_company_location',a,function(response){});"}%>
+            </div>
+          </div>
+
+          <div class="col-sm-2">
+            <div class="form-group required">
+              <div id="company_location1">
+                <%= render 'employees/company_loc_dropdown' %> 
+            </div>
+            </div>
+          </div>
+        
+        <div class="col-sm-2">
+          <div class="actions">
+            <%= f.submit "Display Report", class: "btn btn-sm btn-primary" %>
+          </div>
+        </div>
+        </div><br>
+        <div id="salaryslip_li_1"></div>
+
+      <br>
+    <% end %>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->
+
+<script>
+$("#salaryslip").validate({
+    rules: {
+      "salaryslip[month]":{
+        required: true,
+      },
+      "salaryslip[year]":{
+        required: true,
+      },
+      "salaryslip[company_id]":{
+        required: true,
+      }
+    },
+    messages: {
+      "salaryslip[month]":{
+        required: "Please select Month",
+      },
+      "salaryslip[year]":{
+        required: "Please select Year",
+      },
+      "salaryslip[company_id]":{
+        required: "Please select Company",
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>
+
+<script type="text/javascript">
+  $(function(){
+    $('.joining_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-100:-0',
+    dateFormat: 'dd-mm-yy' });
+  }); 
+</script>
+

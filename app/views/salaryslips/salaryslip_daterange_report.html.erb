@@ -1,22 +1,38 @@
 <!--SELECT2 EXAMPLE -->
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title">Monthly Report</h3>
+    <h3 class="box-title">Datewise Report</h3>
   </div><!-- /.box-header -->
 
   <div class="box-body">
-    <%= bootstrap_form_for(:salaryslip, url: { action: 'dynamic_report'},html: {id: 'salaryslip'},remote:true) do |f| %>
+    <%= bootstrap_form_for(:salaryslip, url: { action: 'dynamic_daterange_report'},html: {id: 'salaryslip'},remote:true) do |f| %>
       <div class="row">
-        <div class="col-sm-2">
-          <div class="field">
-            <%= select :salaryslip,:year,['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025','2026','2027'],{label: 'Select Year',include_blank: " Select Year"}, class: "form-control" %>
+                <div class="col-sm-2">
+          <div class="form-group required">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+            <%= text_field :salaryslip,:start_date,{class: 'form-control joining_date',placeholder:'From Date'} %>
           </div>
         </div>
+        </div>
+
+        <!-- <div class="col-sm-3">
+          <div class="field">
+            <= text_field :bonus_employee,:end_date,{class: 'form-control bonus_start_date',placeholder:'To Date'} %>
+           </div>
+        </div> -->
 
         <div class="col-sm-2">
-          <div class="field">
-            <%= select :salaryslip,:month, ['January','February','March','April','May','June','July','August','September','October','November','December'],{label: 'Select Month',include_blank: " Select Month"}, class: "form-control" %>
-           </div>
+          <div class="form-group required">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+            <%= text_field :salaryslip,:end_date,{class: 'form-control joining_date',placeholder:'To Date'} %>
+          </div>
+        </div>
         </div>
 
 
@@ -51,7 +67,7 @@
           </div>
         </div>
         </div><br>
-        <div id="salaryslip_li"></div>
+        <div id="salaryslip_li_1"></div>
 
       <br>
     <% end %>
@@ -88,3 +104,14 @@ $("#salaryslip").validate({
     }
    });
 </script>
+
+<script type="text/javascript">
+  $(function(){
+    $('.joining_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-100:-0',
+    dateFormat: 'dd-mm-yy' });
+  }); 
+</script>
+

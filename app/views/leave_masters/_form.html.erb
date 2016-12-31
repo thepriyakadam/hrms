@@ -24,7 +24,7 @@
 			</div>
 			<div class="col-sm-3">
 				<div class="field">
-					<%= f.check_box :is_carry_forward,{label:"Is Carry-forward"},{onchange:"var a={is_carry_forward:$(this).val()}; $.get('/leave_masters/select_textbox',a,function(response){});"} %>
+					<%= f.check_box :is_carry_forward, label: 'Is Carry-forward' %>
 				</div>
 			</div>
 			<div class="col-sm-3">

@@ -278,7 +278,7 @@ ex = Roo::Excel.new("#{Rails.root}/public/rgupdatedesignation.xls")
 ex.default_sheet = ex.sheets[0] #siya feb
 i = 1
 ActiveRecord::Base.transaction do
-2.upto(73) do |line| # siya Feb 2016
+74.upto(162) do |line| # siya Feb 2016
  puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
  @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A'))
  # JoiningDetail.where(id: @employee.id).update_all(is_da: true)

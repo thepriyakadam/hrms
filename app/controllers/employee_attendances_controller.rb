@@ -257,10 +257,10 @@ class EmployeeAttendancesController < ApplicationController
       calculated_diff=ot_hours-diff_hours
       # Workingday.where(employee_id: x).update_all(ot_days: calculated_diff.to_f / @payroll_overtime_masters.company_hrs.to_f)
       Workingday.where(employee_id: x).update_all(ot_days: calculated_diff.to_f)
-      d=Workingday.where(employee_id: x)
-        d.each do |f|
-          f.update(calculated_payable_days: f.payable_day)
-        end
+      # d=Workingday.where(employee_id: x)
+      #   d.each do |f|
+      #     f.update(calculated_payable_days: f.payable_day)
+      #   end
       end
       work=Workingday.where("ot_days < ?", 0).pluck(:id)
       @workingdays = Workingday.where(id: work)

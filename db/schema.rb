@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161222113048) do
+ActiveRecord::Schema.define(version: 20161231115416) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -1151,13 +1151,17 @@ ActiveRecord::Schema.define(version: 20161222113048) do
     t.integer  "employee_type_id"
     t.string   "gender"
     t.integer  "manager_id"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
     t.integer  "religion_id"
     t.integer  "manager_2_id"
     t.integer  "company_location_id"
     t.integer  "company_id"
     t.integer  "employee_code_master_id"
+    t.string   "passport_photo_file_name"
+    t.string   "passport_photo_content_type"
+    t.integer  "passport_photo_file_size"
+    t.datetime "passport_photo_updated_at"
   end
 
   add_index "employees", ["blood_group_id"], name: "index_employees_on_blood_group_id"
@@ -2079,10 +2083,13 @@ ActiveRecord::Schema.define(version: 20161222113048) do
     t.integer  "shift_master_id"
     t.boolean  "is_proceed"
     t.string   "present"
+    t.integer  "user_id"
+    t.boolean  "is_updated"
   end
 
   add_index "machine_attendances", ["employee_id"], name: "index_machine_attendances_on_employee_id"
   add_index "machine_attendances", ["shift_master_id"], name: "index_machine_attendances_on_shift_master_id"
+  add_index "machine_attendances", ["user_id"], name: "index_machine_attendances_on_user_id"
 
   create_table "manager_histories", force: :cascade do |t|
     t.integer  "employee_id"

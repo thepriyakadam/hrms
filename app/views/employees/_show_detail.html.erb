@@ -1,14 +1,27 @@
 <div class="box box-default">
   <div class="box-header with-border">
-    <strong> <font color='#0077b3'> Employee Basic Details of ID : <%= @employee.try(:manual_employee_code) %> - Name : <%= @employee.try(:first_name) %> <%= @employee.try(:middle_name) %> <%= @employee.try(:last_name) %></font></strong>
+  <div class="row">
+ 
+          <div class="col-sm-1">
+              <%= image_tag @employee.passport_photo.url, :size => "50x50" %>
+          </div>
+            <div class="col-sm-6">
+         <font color='#0077b3'>ID: <%= @employee.try(:manual_employee_code) %><br>
+  Name : <%= @employee.try(:first_name) %> <%= @employee.try(:middle_name) %> <%= @employee.try(:last_name) %><br>
+  <%= @employee.email %></font>
+          </div>
+
+  </div>
     <div class="box-tools pull-right">
       <%= link_to 'Edit', edit_employee_path(@employee),class: 'btn btn-sm btn-success fa fa-edit', remote:true %>
       <%= link_to 'Back', employees_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
     </div>
+    
   </div><!-- /.box-header -->
   <div class="box-body">
-    <table class="table table-bordered table-hover table-condensed">
+    <table class="table table-bordered table-hover table-condensed">    
       <tr>
+
         <th><strong>Employee ID</strong></th>
         <td><%= @employee.manual_employee_code %></td>
 
@@ -98,6 +111,7 @@
         <td colspan="3"><%= @employee.try(:company).try(:name) %> - <%= @employee.try(:company_location).try(:name) %> - <%= @employee.try(:department).try(:name) %></td>
         
       </tr>
+     
     </table>
   </div><!-- /.box -->
 </div>

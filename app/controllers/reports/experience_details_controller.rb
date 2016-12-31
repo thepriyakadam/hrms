@@ -30,6 +30,6 @@ class Reports::ExperienceDetailsController < ApplicationController
       elsif current_user.role.name == 'Superviser'
       elsif current_user.role.name == 'Employee'
       end
-      end
+    end
   end
 end

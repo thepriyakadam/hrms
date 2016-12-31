@@ -148,11 +148,11 @@ class Employee < ActiveRecord::Base
       if current_user.role.name == 'GroupAdmin'
         Employee.all.pluck(:id)
       elsif current_user.role.name == 'Admin'
-        Employee.where(company_location_id: current_user.company_id).pluck(:id)
+        Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
       elsif current_user.role.name == 'Branch'
         Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
       elsif current_user.role.name == 'HOD'
-        Employee.where(id: current_user.department_id).pluck(:id)
+        Employee.where(department_id: current_user.department_id).pluck(:id)
       elsif current_user.role.name == 'Employee'
         Employee.where(id: current_user.employee_id).pluck(:id)
       end
@@ -168,7 +168,7 @@ class Employee < ActiveRecord::Base
       if current_user.role.name == 'GroupAdmin'
         Employee.all
       elsif current_user.role.name == 'Admin'
-        Employee.where(company_location_id: current_user.company_id)
+        Employee.where(company_id: current_user.company_location.company_id)
       elsif current_user.role.name == 'Branch'
         Employee.where(company_location_id: current_user.company_location_id)
       elsif current_user.role.name == 'Employee'
@@ -184,7 +184,7 @@ class Employee < ActiveRecord::Base
       if current_user.role.name == 'GroupAdmin'
         Employee.all
       elsif current_user.role.name == 'Admin'
-        Employee.where(company_location_id: current_user.company_location_id)
+        Employee.where(company_id: current_user.company_location.company_id)
       elsif current_user.role.name == 'Branch'
         Employee.where(company_location_id: current_user.company_location_id)
       elsif current_user.role.name == 'Employee'

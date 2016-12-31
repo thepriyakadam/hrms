@@ -11,18 +11,17 @@
 		      <th>System Role</th>
 		      <th>Reporting Manager 1</th>
 		      <th>Reporting Manager 2</th>
-		    
 		    </tr>
 		  </thead>
 		  <tbody>
-		    <% @employees.each do |employee| %>   
-			      <tr>
-			        <td><%= employee.manual_employee_code %></td>
-			        <td><%= employee.first_name %> <%= employee.middle_name %> <%= employee.last_name %></td>
-			        <td><%= employee.member.try(:role).try(:name) %>
-        			<td><%= employee.manager.try(:first_name) %> <%= employee.manager.try(:middle_name) %> <%= employee.manager.try(:last_name) %></td>
-        			<td><%= employee.manager_2.try(:first_name) %> <%= employee.manager_2.try(:middle_name) %><%= employee.manager_2.try(:last_name) %></td>
-			      </tr>	
+			<% @employees.each do |employee| %>  
+		      <tr>
+		        <td><%= employee.manual_employee_code %></td>
+		        <td><%= employee.first_name %> <%= employee.middle_name %> <%= employee.last_name %></td>
+		        <td><%= employee.member.try(:role).try(:name) %></td>
+				<td><%= employee.manager.try(:first_name) %> <%= employee.manager.try(:middle_name) %> <%= employee.manager.try(:last_name) %></td>
+				<td><%= employee.manager_2.try(:first_name) %> <%= employee.manager_2.try(:middle_name) %><%= employee.manager_2.try(:last_name) %></td>
+		      </tr>	
 		    <% end %>
 		  </tbody>
 		</table>

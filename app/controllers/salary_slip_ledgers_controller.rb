@@ -62,8 +62,7 @@ class SalarySlipLedgersController < ApplicationController
   def cost_unit_wise
    session[:active_tab] ="PayrollManagement"
    session[:active_tab1] ="SalaryProcess"
-   session[:active_tab2] = "SalaryReport"
-    
+   session[:active_tab2] = "SalaryReport"  
   end
 
   def cost_unit_wise_salary
@@ -1821,6 +1820,7 @@ class SalarySlipLedgersController < ApplicationController
 
 
   def salary_ledger
+    # byebug
     @reports = []
     @start_date = params[:start_date].to_date
     @end_date = params[:end_date].to_date

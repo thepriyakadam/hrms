@@ -39,6 +39,8 @@ class Reports::BasicDetailsController < ApplicationController
         else
           @employees = Employee.where(company_location_id: params[:salary][:company_location_id])
         end
+      elsif current_user.role.name == 'Admin'
+        @employees = Employee.where(company_id: current_user.company_location.company_id)
       elsif current_user.role.name == 'Branch'
         @employees = Employee.where(company_location_id: current_user.company_location_id)
       elsif current_user.role.name == 'HOD'

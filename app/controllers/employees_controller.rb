@@ -201,7 +201,6 @@ class EmployeesController < ApplicationController
   end
 
   def submit_form
-
     @employee_ids = params[:employee_ids]
 
     role_id = params[:role_id]
@@ -217,7 +216,6 @@ class EmployeesController < ApplicationController
         flash[:alert] = 'Select Manager 1'
         redirect_to assign_role_employees_path
       else
-
         employee = Employee.find(params['login']['employee_id'])
         # @department = Department.find(params["login"]["department_id"])
         user = Member.new do |u|
@@ -234,13 +232,15 @@ class EmployeesController < ApplicationController
           # u.subdomain = Apartment::Tenant.current_tenant
           u.member_code = employee.employee_code
           u.manual_member_code = employee.manual_employee_code
-          u.role_id = params['login']['role_id']
+          u.role_id = role_id
         end
         ActiveRecord::Base.transaction do
           if user.save
-            employee.update_attributes(manager_id: params["login"]["manager_id"], manager_2_id: params["login"]["manager_2_id"])
+            manager_id = params[:manager_id]
+            manager_2_id = params[:manager_2_id]
+            employee.update_attributes(manager_id: manager_id, manager_2_id: manager_2_id)
 
-            ManagerHistory.create(employee_id: employee.id,manager_id: params["login"]["manager_id"],manager_2_id: params["login"]["manager_2_id"],effective_from: params["login"]["effec_date"])
+            ManagerHistory.create(employee_id: employee.id,manager_id: manager_id,manager_2_id: manager_2_id,effective_from: params["login"]["effec_date"])
             
             flash[:notice] = "Employee assigned successfully."
             redirect_to assign_role_employees_path
@@ -544,7 +544,7 @@ class EmployeesController < ApplicationController
       if current_user.role.name == 'GroupAdmin'
         @employees = Employee.all
       elsif current_user.role.name == 'Admin'
-        @employees = Employee.where(company_id: current_user.company_id)
+        @employees = Employee.where(company_id: current_user.company_location.company_id)
       elsif current_user.role.name == 'Branch'
         @employees = Employee.where(company_location_id: current_user.company_location_id)
       elsif current_user.role.name == 'HOD'

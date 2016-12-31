@@ -26,7 +26,7 @@ module EmployeesHelper
       if current_user.role.name == 'GroupAdmin'
         Employee.all.collect { |e| [e.manual_employee_code + '  ' + e.first_name.to_s + ' ' + e.last_name.to_s, e.id] }
       elsif current_user.role.name == 'Admin'
-        Employee.where(company_location_id: current_user.company_id).collect { |e| [e.manual_employee_code + '  ' + e.first_name.to_s + ' ' + e.last_name.to_s, e.id] }
+        Employee.where(company_id: current_user.company_location.company_id).collect { |e| [e.manual_employee_code + '  ' + e.first_name.to_s + ' ' + e.last_name.to_s, e.id] }
       elsif current_user.role.name == 'Branch'
         Employee.where(company_location_id: current_user.company_location_id).collect { |e| [e.manual_employee_code + '  ' + e.first_name.to_s + ' ' + e.last_name.to_s, e.id] }
       end

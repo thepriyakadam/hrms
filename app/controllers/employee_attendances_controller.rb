@@ -128,7 +128,7 @@ class EmployeeAttendancesController < ApplicationController
     else
       @employee_ids.each do |eid|
       @emp = Employee.find_by_id(eid)
-      EmployeeAttendance.create(employee_id: eid,day: day,present: present,department_id: @emp.department_id, is_confirm: true)  
+      EmployeeAttendance.create(employee_id: eid,day: day,present: present,department_id: @emp.department_id, is_confirm: false)  
       #Holiday.where(holiday_date: day).update_all(is_taken: true)
       flash[:notice] = "Created successfully"
       end

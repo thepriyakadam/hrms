@@ -14,7 +14,7 @@
   
       <div class="col-sm-3">
         <label>Joining Date </label>
-          <div class="form-group required">
+          <div class="field">
           <div class="input-group">
             <div class="input-group-addon">
               <i class="fa fa-calendar"></i>
@@ -46,7 +46,7 @@
 
       <div class="row">
       <div class="col-sm-3">
-        <div class="form-group required">
+        <div class="field">
           <%= f.select :employee_designation_id,all_employee_designation,{label: 'Designation',include_blank: " Select Employee Designation"} %>
         </div>
       </div>
@@ -154,7 +154,7 @@
      </div>
 
      <div class="col-sm-3">
-      <div class="form-group required">
+      <div class="field">
         <%= f.select :is_employeer_pf,[['Yes','true'],['No','false']],{label: 'Employer PF',include_blank: " Select Employeer PF Option"} %>
       </div>
     </div>
@@ -178,7 +178,7 @@
     </div>
 
     <div class="col-sm-3">
-      <div class="form-group required">
+      <div class="field">
         <%= f.select :is_employeer_esic,[['Yes','true'],['No','false']],{label: 'Employer ESIC',include_blank: " Select Employer ESIC Option"} %>
       </div>
     </div>
@@ -202,12 +202,12 @@
        </div>
     </div>
     <div class="col-sm-3">
-      <div class="form-group required">
+      <div class="field">
        <%= f.select :have_retention,[['Yes','true'],['No','false']],{label: 'DA',include_blank: " Select DA"} %>
       </div>
     </div>
     <div class="col-sm-3">
-      <div class="form-group required">
+      <div class="field">
         <%= f.select :is_insurance,[['Yes','true'],['No','false']],{label: 'Insurance',include_blank: " Select Insurance Option"} %>
       </div>
     </div>
@@ -215,16 +215,28 @@
     <div class="row">
 
     <div class="col-sm-3">
-      <div class="form-group required">
+      <div class="field">
         <%= f.select :is_family_pension,[['Yes','true'],['No','false']],{label: 'Family Insurance',include_blank: " Select Family Pension Option"} %>
       </div>
     </div>
 
     <div class="col-sm-3">
-      <div class="form-group required">
+      <div class="field">
         <%= f.select :is_bonus,[['Yes','true'],['No','false']],{label: 'Bonus',include_blank: " Select Bonus Option"} %>
       </div>
     </div>
+
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.select :ot_option,[['Yes','true'],['No','false']],{label: 'OT Option',include_blank: " Select OT Option"} %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+        <div class="field">
+        <%= f.text_field :ot_rate, label:'OT Rate' %>
+       </div>
+     </div>
     </div>
   <div class="row">
     <div class="col-sm-6">

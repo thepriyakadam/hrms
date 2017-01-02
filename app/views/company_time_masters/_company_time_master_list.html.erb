@@ -9,7 +9,7 @@
       <th>Out Max Time</th>
       <th>Out Time</th>
       <th>Working Hrs</th>
-      
+      <th>Rest Time</th>
       <th>Is Active</th>
       <th>Action</th>
     </tr>
@@ -25,7 +25,7 @@
         <td><%= company_time_master.out_max_time %></td>
         <td><%= company_time_master.out_time %></td>
         <td><%= company_time_master.working_hrs %></td>
-        
+        <td><%= company_time_master.rest_time %></td>
         <td><%= company_time_master.is_active ? "Yes" : "No" %></td>
         <td>
           <% if company_time_master.is_confirm == true %>

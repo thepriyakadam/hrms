@@ -270,7 +270,7 @@ class EmployeeAttendancesController < ApplicationController
       # byebug
       emp_att=EmployeeAttendance.where(employee_id: wor.employee_id,month_name: wor.month_name)
 
-     EmployeeAttendance.where("strftime('%m/%Y', day) = ? AND employee_id = ?", @date,wor.employee_id).update_all(is_confirm: true)
+     # EmployeeAttendance.where("strftime('%m/%Y', day) = ? AND employee_id = ?", @date,wor.employee_id).update_all(is_confirm: true)
 
       overtime_hours=emp_att.sum(:overtime_hrs).to_f
       difference_hours=emp_att.sum(:difference_hrs).to_f

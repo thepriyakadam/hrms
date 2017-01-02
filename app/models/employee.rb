@@ -91,6 +91,8 @@ class Employee < ActiveRecord::Base
   has_many :manager_histories, class_name: "Employee",
                           foreign_key: "manager_2_id"
 
+  belongs_to :user, class_name: 'Employee'
+
   # has_many :reporting_masters, class_name: "Employee",
   #                         foreign_key: "manager_id"
 
@@ -102,6 +104,10 @@ class Employee < ActiveRecord::Base
 
   validates :manual_employee_code, presence: true, uniqueness: { case_sensitive: false }
   validates :first_name, presence: true
+
+  has_attached_file :passport_photo, styles: { medium: '300x300>', thumb: '100x100>' }, default_url: 'Profile11.jpg'
+  validates_attachment_content_type :passport_photo,  :content_type => /\Aimage\/.*\Z/,:message => 'only (png/gif/jpeg) images'
+  validates_attachment_size :passport_photo, :less_than => 5.megabytes
   
   # validates :permanent_address, presence: true
   # validates :department_id,presence: true

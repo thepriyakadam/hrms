@@ -62,8 +62,8 @@ class EmployeeLeavBalancesController < ApplicationController
             @elb = EmployeeLeavBalance.create(employee_id: e, leav_category_id: params[:employee_leav_balance][:leav_category_id], no_of_leave: params[:employee_leav_balance][:no_of_leave], total_leave: params[:employee_leav_balance][:total_leave], from_date: params[:employee_leav_balance][:from_date],to_date: params[:employee_leav_balance][:to_date],is_active: true)
         end
       end
-
-        @employee_leav_bal = EmployeeLeavBalance.where(to_date: Date.today,is_active: true)
+        #@employees = Employee.where(status: 'Active').pluck(:id)
+        @employee_leav_bal = EmployeeLeavBalance.where("to_date <= ? AND is_active = ?", Date.today, true)
         @employee_leav_bal.each do |e|
          
           if @employee_leav_balance.is_present(e)
@@ -73,7 +73,9 @@ class EmployeeLeavBalancesController < ApplicationController
               date_quarterly = e.to_date + 90
               date_half_yearly = e.to_date + 180
               date_yearly = e.to_date + 360
-
+             
+            if e.employee.status == 'Active'
+            #if e.to_date <= Date.today
               if e.leav_category_id == @leave_master.leav_category_id && @leave_master.period == "Monthly"
                 if @leave_master.is_carry_forward == true
                   @leave = @leave_master.no_of_leave.to_i + e.no_of_leave.to_i
@@ -141,11 +143,16 @@ class EmployeeLeavBalancesController < ApplicationController
                   EmployeeLeavBalance.create(employee_id: e.employee_id,leav_category_id: e.leav_category_id,no_of_leave: @leave_master.no_of_leave,from_date: e.to_date,to_date: date_yearly,is_active: true,expiry_date: date_yearly)
                   e.update(is_active: false)
                 end
-              end
-          else
+              end #if_else_monthly
+            #else #date<=today
+            #end #date<=today
+          else #status_Active
+          end
+
+          else #is_present
            
           end
-        end
+        end #do
 
       flash[:notice] = 'Leave assigned successfully.'
       redirect_to new_employee_leav_balance_path
@@ -205,6 +212,9 @@ class EmployeeLeavBalancesController < ApplicationController
           e = EmployeeLeavBalance.where(leav_category_id: leav_category_id).pluck(:employee_id)
           @employees = Employee.where.not(id: e).where(company_id: current_user.employee.company_id)
           # @employees = Employee.joins("LEFT JOIN employee_leav_balances on employee_leav_balances.employee_id = employees.id where employee_leav_balances.leav_category_id is not #{leav_category_id}")
+        elsif current_user.role.name == 'Admin'
+          e = EmployeeLeavBalance.where(leav_category_id: leav_category_id).pluck(:employee_id)
+          @employees = Employee.where.not(id: e).where(company_id: current_user.employee.company_location.company_id)
         elsif current_user.role.name == 'Branch'
           e = EmployeeLeavBalance.where(leav_category_id: leav_category_id).pluck(:employee_id)
           @employees = Employee.where.not(id: e).where(company_location_id: current_user.employee.company_location_id)

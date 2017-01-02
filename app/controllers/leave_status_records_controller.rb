@@ -67,7 +67,6 @@ class LeaveStatusRecordsController < ApplicationController
       end
     ### if second reporter available
     else
-      # byebug
       @leave_status = LeaveStatusRecord.new do |s|
         s.employee_leav_request_id = params[:id]
         s.change_status_employee_id = current_user.employee_id unless current_user.class == Group

@@ -28,7 +28,7 @@ class Department < ActiveRecord::Base
         @employees = Employee.where(company_id: current_user.company_id)
         Department.where(employee_id: @employees)
       elsif current_user.role.name == "Admin"
-        @employees = Employee.where(company_location_id: current_user.company_id)
+        @employees = Employee.where(company_id: current_user.company_location.company_id)
       elsif current_user.role.name == "Branch"
         @employees = Employee.where(company_location_id: current_user.company_location_id)
         Department.where(employee_id: @employees)  

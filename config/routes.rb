@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
   
+  resources :late_mark_masters do
+    collection do
+      get :is_confirm
+    end
+  end
   resources :certificates do
     collection do
       get :certificate_form

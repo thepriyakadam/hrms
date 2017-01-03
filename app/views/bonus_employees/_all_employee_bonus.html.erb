@@ -27,4 +27,4 @@
 </script>
 
 <%= link_to " Excel Report ",bonus_employee_xls_bonus_employees_path(start_date: params[:bonus_employee][:start_date], end_date: params[:bonus_employee][:end_date],company_id: params[:bonus_employee][:company_id],company_location_id: params[:bonus_employee][:company_location_id], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
-<%= link_to " Print Bonus Employees ",bonus_employee_pdf_bonus_employees_path(start_date: params[:bonus_employee][:start_date], end_date: params[:bonus_employee][:end_date],company_id: params[:bonus_employee][:company_id],company_location_id: params[:bonus_employee][:company_location_id], format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+<%= link_to " PDF Report ",bonus_employee_pdf_bonus_employees_path(start_date: params[:bonus_employee][:start_date], end_date: params[:bonus_employee][:end_date],company_id: params[:bonus_employee][:company_id],company_location_id: params[:bonus_employee][:company_location_id], format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>

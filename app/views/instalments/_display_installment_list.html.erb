@@ -31,7 +31,7 @@
   </div>
   <%= link_to 'Back', instalments_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
   <%= link_to " Excel Report ",instalment_xls_instalments_path(month: params[:month], year: params[:year], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
-  <%= link_to " Print Instalment ",installment_pdf_instalments_path(month: params[:month], year: params[:year], format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+  <%= link_to " PDF Report ",installment_pdf_instalments_path(month: params[:month], year: params[:year], format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
 </div>
 
 <script type="text/javascript">

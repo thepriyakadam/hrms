@@ -12,7 +12,7 @@
 </style>
   <table style="border-collapse: collapse; font-size:12pt;" border=1 width=1200 cellpadding="15">
     <thead>
-    <tr><td colspan="27"><center>BFTL</center> </td></tr>
+    <tr><td colspan="34"><center></center> </td></tr>
       <tr>
       <th>ID</th>
       <th>Employee Name</th>
@@ -39,7 +39,13 @@
       <th> Retention</th>
       <th> Retirement Date</th>
       <th> Reserved Category</th>
-
+      <th> Dearness Allowance</th>
+      <th> Employeer Pf</th>
+      <th> Employeer Esic</th>
+      <th> Employeer Insurance</th>
+      <th> Employeer Family Pension</th>
+      <th> Employeer Bonus</th>
+      <th> Basis Of Time</th>
     </tr>
   </thead>
 
@@ -71,6 +77,13 @@
          <td> <%= joining_detail.try(:have_retention) %></td>
          <td> <%= joining_detail.try(:retirement_date) %></td>
          <td> <%= joining_detail.try(:reserved_category).try(:name) %></td>
+         <td><%= joining_detail.is_da ? "Yes" : "No" %></td>
+         <td><%= joining_detail.is_employeer_pf ? "Yes" : "No" %></td>
+         <td><%= joining_detail.is_employeer_esic ? "Yes" : "No" %></td>
+         <td><%= joining_detail.is_insurance ? "Yes" : "No" %></td>
+         <td><%= joining_detail.is_family_pension ? "Yes" : "No" %></td>
+         <td><%= joining_detail.is_bonus ? "Yes" : "No" %></td>
+         <td><%= joining_detail.basis_of_time ? "Yes" : "No" %></td>
         </tr>
     <%end%>
 

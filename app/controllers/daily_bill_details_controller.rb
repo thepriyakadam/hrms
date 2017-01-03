@@ -335,13 +335,19 @@ class DailyBillDetailsController < ApplicationController
       ReportingMastersTravelRequest.where(reporting_master_id: @reporting_masters_travel_requests9.reporting_master_id).update_all(status: "true",daily_bill_comment: @comment)
       TravelRequest.where(id: @travel_request.id).update_all(reporting_master_id: @reporting_masters_travel_requests9.reporting_master_id)
       flash[:notice] = 'Daily Bill Request Send To Higher Authority For Approval'
-
       # elsif @reporting_masters_travel_requests10 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,status: nil).pluck(:reporting_master_id).first == nil
       # TravelRequest.where(id: @travel_request.id).update_all(reporting_master_id: r1)
         # flash[:notice] = 'Reporting Manager Id is Nil'
     else
       flash[:alert] = 'No Reporting Manager is present'
+      # byebug
     end
+      # byebug
+       @report = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id).last
+      if @report.status == true
+        rep_first = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,status: "true")[0]
+        TravelRequest.where(id: rep_first.travel_request_id).update_all(reporting_master_id: rep_first.reporting_master_id)
+      end
       redirect_to travel_request_list_daily_bill_details_path
   end
 

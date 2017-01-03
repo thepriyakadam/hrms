@@ -9,7 +9,7 @@
 
       <div class="col-sm-3">
           <div class="field">
-          <%= select :salary, :company_location_id, all_company_location,{include_blank: 'select Location'},{onchange:"var a={id:$(this).val()}; $.get('/reports/basic_details/collect_departments',a,function(response){});", class: "form-control"}%>
+          <%= select :salary, :company_location_id, all_company_location2,{include_blank: 'select Location'},{onchange:"var a={id:$(this).val()}; $.get('/reports/basic_details/collect_departments',a,function(response){});", class: "form-control"}%>
           </div>
       </div>
 

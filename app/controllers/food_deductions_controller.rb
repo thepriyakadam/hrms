@@ -269,7 +269,7 @@ class FoodDeductionsController < ApplicationController
       end
       elsif current_user.role.name == 'Branch'
        if @location == ""
-        @employees = Employee.where(company_id: @company.to_i).pluck(:id)
+        @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
         @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
       elsif @company == ""
         @employees = Employee.where(company_location_id: @location.to_i).pluck(:id)
@@ -341,7 +341,7 @@ class FoodDeductionsController < ApplicationController
       end
       elsif current_user.role.name == 'Branch'
        if @location == ""
-        @employees = Employee.where(company_id: @company.to_i).pluck(:id)
+        @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
         @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
       elsif @company == ""
         @employees = Employee.where(company_location_id: @location.to_i).pluck(:id)
@@ -416,7 +416,7 @@ class FoodDeductionsController < ApplicationController
       end
       elsif current_user.role.name == 'Branch'
        if @location == ""
-        @employees = Employee.where(company_id: @company.to_i).pluck(:id)
+        @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
         @food_deductions = FoodDeduction.where("strftime('%m/%Y', food_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
       elsif @company == ""
         @employees = Employee.where(company_location_id: @location.to_i).pluck(:id)

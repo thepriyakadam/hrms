@@ -79,7 +79,7 @@ class EmployeeAttendancesController < ApplicationController
         if current_user.role.name == 'GroupAdmin'
           @employees = Employee.where(status: "Active").filter_by_date_and_costcenter(@date, @costcenter, current_user)
         elsif current_user.role.name == 'Admin'
-          @employees = Employee.where(status: "Active",company_id: current_user.company_id).filter_by_date_and_costcenter(@date, @costcenter, current_user)
+          @employees = Employee.where(status: "Active",company_id: current_user.company_location.company_id).filter_by_date_and_costcenter(@date, @costcenter, current_user)
         elsif current_user.role.name == 'Branch'
           @employees = Employee.where(status: "Active",company_location_id: current_user.company_location_id).filter_by_date_and_costcenter(@date, @costcenter, current_user)
         elsif
@@ -128,6 +128,7 @@ class EmployeeAttendancesController < ApplicationController
     else
       @employee_ids.each do |eid|
         @emp = Employee.find_by_id(eid)
+
       EmployeeAttendance.create(employee_id: eid,day: day,present: present,department_id: @emp.department_id, is_confirm: false)  
       #Holiday.where(holiday_date: day).update_all(is_taken: true)
       flash[:notice] = "Created successfully"
@@ -264,10 +265,10 @@ class EmployeeAttendancesController < ApplicationController
       calculated_diff=ot_hours-diff_hours
       # Workingday.where(employee_id: x).update_all(ot_days: calculated_diff.to_f / @payroll_overtime_masters.company_hrs.to_f)
       Workingday.where(employee_id: x).update_all(ot_days: calculated_diff.to_f)
-      d=Workingday.where(employee_id: x)
-        d.each do |f|
-          f.update(calculated_payable_days: f.payable_day)
-        end
+      # d=Workingday.where(employee_id: x)
+      #   d.each do |f|
+      #     f.update(calculated_payable_days: f.payable_day)
+      #   end
       end
       work=Workingday.where("ot_days < ?", 0).pluck(:id)
       @workingdays = Workingday.where(id: work)
@@ -275,7 +276,11 @@ class EmployeeAttendancesController < ApplicationController
       # byebug
       emp_att=EmployeeAttendance.where(employee_id: wor.employee_id,month_name: wor.month_name)
 
+<<<<<<< HEAD
       #EmployeeAttendance.where("strftime('%m/%Y', day) = ? AND employee_id = ?", @date,wor.employee_id).update_all(is_confirm: true)
+=======
+     # EmployeeAttendance.where("strftime('%m/%Y', day) = ? AND employee_id = ?", @date,wor.employee_id).update_all(is_confirm: true)
+>>>>>>> 5af6548f6bd4b569672a734dfe6fde8ac07efee8
 
       overtime_hours=emp_att.sum(:overtime_hrs).to_f
       difference_hours=emp_att.sum(:difference_hrs).to_f
@@ -429,8 +434,6 @@ class EmployeeAttendancesController < ApplicationController
   
 
   def display_employee_attendance_list
-    # @month = "September"
-    # @year = 2016
     @month = params[:month].to_s
     @year = params[:year].to_s
     @date = Date.new(@year.to_i, Workingday.months[@month])

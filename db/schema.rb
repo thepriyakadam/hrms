@@ -11,7 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20170102091214) do
+=======
+ActiveRecord::Schema.define(version: 20170102114614) do
+>>>>>>> 5af6548f6bd4b569672a734dfe6fde8ac07efee8
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -496,6 +500,7 @@ ActiveRecord::Schema.define(version: 20170102091214) do
     t.datetime "in_time"
     t.datetime "out_time"
     t.integer  "shift_master_id"
+    t.string   "rest_time"
   end
 
   add_index "company_time_masters", ["shift_master_id"], name: "index_company_time_masters_on_shift_master_id"
@@ -1275,13 +1280,18 @@ ActiveRecord::Schema.define(version: 20170102091214) do
     t.integer  "employee_type_id"
     t.string   "gender"
     t.integer  "manager_id"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
     t.integer  "religion_id"
     t.integer  "manager_2_id"
     t.integer  "company_location_id"
     t.integer  "company_id"
     t.integer  "employee_code_master_id"
+    t.string   "passport_photo_file_name"
+    t.string   "passport_photo_content_type"
+    t.integer  "passport_photo_file_size"
+    t.datetime "passport_photo_updated_at"
+    t.string   "punch_card_id"
   end
 
   add_index "employees", ["blood_group_id"], name: "index_employees_on_blood_group_id"
@@ -2086,6 +2096,8 @@ ActiveRecord::Schema.define(version: 20170102091214) do
     t.boolean  "is_family_pension"
     t.boolean  "is_bonus"
     t.boolean  "basis_of_time",           default: false
+    t.string   "ot_rate"
+    t.boolean  "ot_option"
   end
 
   add_index "joining_details", ["cost_center_id"], name: "index_joining_details_on_cost_center_id"
@@ -2096,6 +2108,16 @@ ActiveRecord::Schema.define(version: 20170102091214) do
   add_index "joining_details", ["employee_id"], name: "index_joining_details_on_employee_id"
   add_index "joining_details", ["payment_mode_id"], name: "index_joining_details_on_payment_mode_id"
   add_index "joining_details", ["reserved_category_id"], name: "index_joining_details_on_reserved_category_id"
+
+  create_table "late_mark_masters", force: :cascade do |t|
+    t.string   "from"
+    t.string   "to"
+    t.string   "late_mark"
+    t.boolean  "is_active"
+    t.boolean  "is_confirm"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "leav_approveds", force: :cascade do |t|
     t.integer  "employee_leav_request_id"
@@ -2244,10 +2266,13 @@ ActiveRecord::Schema.define(version: 20170102091214) do
     t.integer  "shift_master_id"
     t.boolean  "is_proceed"
     t.string   "present"
+    t.integer  "user_id"
+    t.boolean  "is_updated"
   end
 
   add_index "machine_attendances", ["employee_id"], name: "index_machine_attendances_on_employee_id"
   add_index "machine_attendances", ["shift_master_id"], name: "index_machine_attendances_on_shift_master_id"
+  add_index "machine_attendances", ["user_id"], name: "index_machine_attendances_on_user_id"
 
   create_table "manager_histories", force: :cascade do |t|
     t.integer  "employee_id"

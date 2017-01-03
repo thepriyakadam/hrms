@@ -55,7 +55,7 @@
     </table>
     </div>
   <%= link_to " Excel Report ",esic_xls_salary_slip_ledgers_path(month: params[:esic][:month], year: params[:esic][:year],company_id: params[:esic][:company_id],company_location_id: params[:food_deduction][:company_location_id], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
-  <%= link_to " Print Esic",esic_pdf_salary_slip_ledgers_path(month: params[:esic][:month], year: params[:esic][:year],company_id: params[:esic][:company_id],company_location_id: params[:food_deduction][:company_location_id], format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+  <%= link_to " PDF Report",esic_pdf_salary_slip_ledgers_path(month: params[:esic][:month], year: params[:esic][:year],company_id: params[:esic][:company_id],company_location_id: params[:food_deduction][:company_location_id], format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
 </div>
 
 <script type="text/javascript">

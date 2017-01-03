@@ -64,6 +64,7 @@ class CertificatesController < ApplicationController
   end
 
    def certificate_print
+    byebug
     @employee = Employee.find(params[:salary][:employee_id])
     # byebug
     @certificate = params[:salary][:certificate_master_id]

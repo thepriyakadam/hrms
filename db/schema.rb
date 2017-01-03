@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161222113048) do
+ActiveRecord::Schema.define(version: 20170102091214) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -76,6 +76,12 @@ ActiveRecord::Schema.define(version: 20161222113048) do
   add_index "accident_records", ["department_id"], name: "index_accident_records_on_department_id"
   add_index "accident_records", ["employee_id"], name: "index_accident_records_on_employee_id"
   add_index "accident_records", ["root_cause_master_id"], name: "index_accident_records_on_root_cause_master_id"
+
+  create_table "add_col_to_monthly_expences", force: :cascade do |t|
+    t.text     "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
 
   create_table "advance_salaries", force: :cascade do |t|
     t.integer  "employee_id"
@@ -2301,6 +2307,7 @@ ActiveRecord::Schema.define(version: 20161222113048) do
     t.datetime "updated_at",                                               null: false
     t.integer  "expencess_type_id"
     t.boolean  "is_paid"
+    t.text     "description"
   end
 
   add_index "monthly_expences", ["employee_id"], name: "index_monthly_expences_on_employee_id"

@@ -575,6 +575,7 @@ class EmployeesController < ApplicationController
   def selected_employee_list_report
     @employee_id = params[:employee_id]
     @employees = Employee.where(id: @employee_id)
+     
   end
 
   def selected_employee_pdf

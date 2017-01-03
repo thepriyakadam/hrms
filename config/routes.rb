@@ -1496,6 +1496,7 @@ end
       post :dynamic_report
       get :advance_salary_xls
       get :advance_salary_pdf
+      post :selected_advance_salary_list
     end
   end
 

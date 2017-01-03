@@ -308,6 +308,16 @@ class AdvanceSalariesController < ApplicationController
              end
    end
 
+   def selected_advance_salary_list
+    @month = params[:month]
+    @year = params[:year]
+    @company = params[:company]
+    @location = params[:location]
+    
+    @employee_id = params[:employee_id]
+    @employees = Employee.where(id: @employee_id)
+   end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

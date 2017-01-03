@@ -60,7 +60,6 @@ include QueryReport::Helper
   end
 
   def employee_details
-    # @employees = Employee.where(department_id: current_user.department_id)
     if current_user.class == Member
       if current_user.role.name == 'GroupAdmin'
         @employees = Employee.all

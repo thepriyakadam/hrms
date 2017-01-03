@@ -22,9 +22,11 @@ class Workingday < ActiveRecord::Base
     if current_user.class == Group
       Employee.where(id: workingdays)
     else
-      if current_user.role.name == 'Company'
-        Employee.where(id: workingdays)
-      elsif current_user.role.name == 'CompanyLocation'
+      if current_user.role.name == "GroupAdmin"
+        Employee.all
+      elsif current_user.role.name == 'Admin'
+        Employee.where(id: workingdays, company_id: current_user.company_location.company_id)
+      elsif current_user.role.name == 'Branch'
         Employee.where(id: workingdays, company_location_id: current_user.company_location_id)
       end
     end
@@ -55,10 +57,10 @@ class Workingday < ActiveRecord::Base
       Workingday.all
     elsif current_user.class == Member
       if current_user.role.name == "GroupAdmin"
-        @employees = Employee.where(company_id: current_user.company_id)
+        @employees = Employee.all
         Workingday.where(employee_id: @employees)
       elsif current_user.role.name == "Admin"
-        @employees = Employee.where(company_location_id: current_user.company_id)
+        @employees = Employee.where(company_id: current_user.company_location.company_id)
         Workingday.where(employee_id: @employees)  
       elsif current_user.role.name == "Branch"
         @employees = Employee.where(company_location_id: current_user.company_location_id)

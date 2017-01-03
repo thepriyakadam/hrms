@@ -115,11 +115,10 @@ class EmployeesController < ApplicationController
          @departments = Department.where(company_location_id: cl.id)
         end
       elsif current_user.role.name == 'Admin'
-        @company_locations = CompanyLocation.where(company_location_id: current_user.company_location_id)
+        @company_locations = CompanyLocation.where(company_id: current_user.company_location.company_id)
         @company_locations.each do |cl|
          @departments = Department.where(company_location_id: cl.id)
         end
-        # byebug
       elsif current_user.role.name == 'Branch'
         @company_locations = CompanyLocation.where(id: current_user.company_location_id)
         @company_locations.each do |cl|
@@ -127,8 +126,6 @@ class EmployeesController < ApplicationController
         end
       end
     end
-
-
     @form = 'employee'
   end
 
@@ -204,7 +201,6 @@ class EmployeesController < ApplicationController
   end
 
   def submit_form
-
     @employee_ids = params[:employee_ids]
 
     role_id = params[:role_id]
@@ -220,7 +216,6 @@ class EmployeesController < ApplicationController
         flash[:alert] = 'Select Manager 1'
         redirect_to assign_role_employees_path
       else
-
         employee = Employee.find(params['login']['employee_id'])
         # @department = Department.find(params["login"]["department_id"])
         user = Member.new do |u|
@@ -237,13 +232,15 @@ class EmployeesController < ApplicationController
           # u.subdomain = Apartment::Tenant.current_tenant
           u.member_code = employee.employee_code
           u.manual_member_code = employee.manual_employee_code
-          u.role_id = params['login']['role_id']
+          u.role_id = role_id
         end
         ActiveRecord::Base.transaction do
           if user.save
-            employee.update_attributes(manager_id: params["login"]["manager_id"], manager_2_id: params["login"]["manager_2_id"])
+            manager_id = params[:manager_id]
+            manager_2_id = params[:manager_2_id]
+            employee.update_attributes(manager_id: manager_id, manager_2_id: manager_2_id)
 
-            ManagerHistory.create(employee_id: employee.id,manager_id: params["login"]["manager_id"],manager_2_id: params["login"]["manager_2_id"],effective_from: params["login"]["effec_date"])
+            ManagerHistory.create(employee_id: employee.id,manager_id: manager_id,manager_2_id: manager_2_id,effective_from: params["login"]["effec_date"])
             
             flash[:notice] = "Employee assigned successfully."
             redirect_to assign_role_employees_path
@@ -477,7 +474,7 @@ class EmployeesController < ApplicationController
       if current_user.role.name == 'GroupAdmin'
         @company_locations = CompanyLocation.all
       elsif current_user.role.name == 'Admin'
-        @company_locations = CompanyLocation.where(id: current_user.company_location_id)
+        @company_locations = CompanyLocation.where(company_id: current_user.company_location.company_id)
         # byebug
       elsif current_user.role.name == 'Branch'
         @company_locations = CompanyLocation.where(id: current_user.company_location_id)
@@ -547,7 +544,7 @@ class EmployeesController < ApplicationController
       if current_user.role.name == 'GroupAdmin'
         @employees = Employee.all
       elsif current_user.role.name == 'Admin'
-        @employees = Employee.where(company_id: current_user.company_id)
+        @employees = Employee.where(company_id: current_user.company_location.company_id)
       elsif current_user.role.name == 'Branch'
         @employees = Employee.where(company_location_id: current_user.company_location_id)
       elsif current_user.role.name == 'HOD'
@@ -1320,7 +1317,7 @@ end
   # Never trust parameters from the scary internet, only allow the white list through.
   def employee_params
     # params.require(:employee).permit(:department_id, :first_name, :middle_name, :last_name, :date_of_birth, :contact_no, :email, :permanent_address, :city, :district, :state, :pin_code, :current_address, :adhar_no, :pan_no, :licence_no, :passport_no, :marital_status, :nationality_id, :blood_group_id, :handicap, :status, :employee_type_id, :gender)
-    params.require(:employee).permit(:employee_code_master_id,:manual_employee_code,:company_id, :company_location_id, :department_id, :first_name, :middle_name, :last_name, :date_of_birth, :contact_no, :email, :permanent_address, :city, :country_id, :district_id, :state_id, :pin_code, :current_address, :adhar_no, :pan_no, :licence_no, :passport_no, :marital_status, :nationality_id, :blood_group_id, :handicap, :status, :employee_type_id, :gender, :religion_id, :handicap_type, :cost_center_id)
+    params.require(:employee).permit(:employee_code_master_id,:passport_photo,:manual_employee_code,:company_id, :company_location_id, :department_id, :first_name, :middle_name, :last_name, :date_of_birth, :contact_no, :email, :permanent_address, :city, :country_id, :district_id, :state_id, :pin_code, :current_address, :adhar_no, :pan_no, :licence_no, :passport_no, :marital_status, :nationality_id, :blood_group_id, :handicap, :status, :employee_type_id, :gender, :religion_id, :handicap_type, :cost_center_id)
     # joining_detail_attributes: [:joining_date, :reference_from, :admin_hr, :tech_hr, :designation, :employee_grade_id, :confirmation_date, :status, :probation_period, :notice_period, :medical_schem])
   end
 end

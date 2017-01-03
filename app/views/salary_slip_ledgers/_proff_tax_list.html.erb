@@ -36,7 +36,7 @@
   </div>
 
   <%= link_to " Excel Report ",proff_tax_xls_salary_slip_ledgers_path(month: params[:proff_tax][:month], year: params[:proff_tax][:year],company_id: params[:proff_tax][:company_id],company_location_id: params[:food_deduction][:company_location_id], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
-  <%= link_to " Print Professional Tax ",proff_tax_pdf_salary_slip_ledgers_path(month: params[:proff_tax][:month], year: params[:proff_tax][:year],company_id: params[:proff_tax][:company_id],company_location_id: params[:food_deduction][:company_location_id], format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+  <%= link_to " PDF Report ",proff_tax_pdf_salary_slip_ledgers_path(month: params[:proff_tax][:month], year: params[:proff_tax][:year],company_id: params[:proff_tax][:company_id],company_location_id: params[:food_deduction][:company_location_id], format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
 </div>
 
 <script type="text/javascript">

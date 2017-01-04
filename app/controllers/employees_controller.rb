@@ -558,7 +558,7 @@ class EmployeesController < ApplicationController
     else
        @employees = Employee.where(id: current_user.employee_id)
         @employees = []
-    if @employee_id.nil? || employee_ids.empty?
+    if @employee_id.nil? || employee_id.empty?
       flash[:alert] = "Please Select the checkbox"
       redirect_to employee_list_report_employees_path
     else
@@ -571,8 +571,7 @@ class EmployeesController < ApplicationController
 
   def selected_employee_list_report
     @employee_id = params[:employee_id]
-    @employees = Employee.where(id: @employee_id)
-     
+    @employees = Employee.where(id: @employee_id)     
   end
 
   def selected_employee_pdf
@@ -708,7 +707,7 @@ def selected_qualification_xls
 end
 
 def selected_experience_pdf
-  @employee_id = params[:employee_id]
+      @employee_id = params[:employee_id]
       @experiences = Experience.where(employee_id: @employee_id)
       @employee_id.each do |e|
       @employee = Employee.find_by(id: e)

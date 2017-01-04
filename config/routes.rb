@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
   
+  resources :late_mark_masters do
+    collection do
+      get :is_confirm
+    end
+  end
   resources :certificates do
     collection do
       get :certificate_form
@@ -202,6 +207,7 @@ end
   resources :employee_code_masters do
     collection do
        get :is_confirm
+      get :select_textbox
     end
    end
   get 'download_pdf/index'
@@ -297,7 +303,6 @@ end
   end
 
   resources :email_configs
-  resources :weekoff_masters
   resources :currency_masters do
     collection do
       get :is_confirm
@@ -939,7 +944,6 @@ end
 
   end
 
-  resources :week_offs
   resources :employee_leav_request_reports, only: [:index]
 
   resources :capture_resumes do
@@ -1398,6 +1402,13 @@ end
       get :emp_contribution_slip_list
       get :show_emp_contribution_salaryslip
       get :print_emp_contribution_slip
+      get :salary_slip_report_form
+      post :dynamic_report
+      get :salary_slip_xls
+      get :salary_slip_pdf
+      get :salaryslip_daterange_report
+      post :dynamic_daterange_report
+      get :daterangewise_salaryslip_xls
     end
   end
  
@@ -1782,6 +1793,18 @@ end
       get :selected_experience_xls
       get :selected_skillset_pdf
       get :selected_skillset_xls
+      get :selected_certification_pdf
+      get :selected_certification_xls
+      get :selected_award_pdf
+      get :selected_award_xls
+      get :selected_employee_physical_pdf
+      get :selected_employee_physical_xls
+      get :selected_employee_family_pdf
+      get :selected_employee_family_xls
+      get :selected_employee_nomination_pdf
+      get :selected_employee_nomination_xls
+      get :selected_asset_pdf
+      get :selected_asset_xls
       get :import_xl
       post :import
       get :graph
@@ -1839,6 +1862,13 @@ end
       get :destroy_details
       get :edit_manager
       post :update_manager
+      get :member_list_for_update_password
+      get :reset_password
+      get :all_employee_list
+      get :left_employee_report
+      post :dynamic_report
+      get :left_employee_xl
+      get :left_employee_pdf
     end
     member do
       get :edit_manager

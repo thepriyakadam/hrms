@@ -13,7 +13,7 @@
       <tr>
         <td><%= bonus_employee.employee.manual_employee_code %></td>
         <td><%= full_name(bonus_employee.employee) %></td>
-        <td><%= bonus_employee.bonus_date %></td>
+        <td><%= bonus_employee.bonus_date.strftime("%B %Y") %></td>
         <td><%= bonus_employee.amount %></td>
       </tr>
     <% end %>
@@ -21,7 +21,7 @@
 </table>
 
 <%= link_to " Excel Report ",particular_bonus_employee_xls_bonus_employees_path(start_date: params[:bonus_employee][:start_date], end_date: params[:bonus_employee][:end_date],company_id: params[:bonus_employee][:company_id],company_location_id: params[:bonus_employee][:company_location_id], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
-  <%= link_to " Print Bonus Employees ",particular_bonus_employee_pdf_bonus_employees_path(start_date: params[:bonus_employee][:start_date], end_date: params[:bonus_employee][:end_date],company_id: params[:bonus_employee][:company_id],company_location_id: params[:bonus_employee][:company_location_id], format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+  <%= link_to " PDF Report ",particular_bonus_employee_pdf_bonus_employees_path(start_date: params[:bonus_employee][:start_date], end_date: params[:bonus_employee][:end_date],company_id: params[:bonus_employee][:company_id],company_location_id: params[:bonus_employee][:company_location_id], format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
 
 <script type="text/javascript">
   $(document).ready(function() {

@@ -60,12 +60,11 @@ include QueryReport::Helper
   end
 
   def employee_details
-    # @employees = Employee.where(department_id: current_user.department_id)
     if current_user.class == Member
       if current_user.role.name == 'GroupAdmin'
         @employees = Employee.all
       elsif current_user.role.name == 'Admin'
-        @employees = Employee.where(Company_id: current_user.company_id)
+        @employees = Employee.where(Company_id: current_user.company_location.company_id)
       elsif current_user.role.name == 'Branch'
         @employees = Employee.where(company_location_id: current_user.company_location_id)
       elsif current_user.role.name == 'HOD'

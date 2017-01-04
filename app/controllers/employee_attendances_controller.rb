@@ -128,6 +128,7 @@ class EmployeeAttendancesController < ApplicationController
     else
       @employee_ids.each do |eid|
         @emp = Employee.find_by_id(eid)
+
       EmployeeAttendance.create(employee_id: eid,day: day,present: present,department_id: @emp.department_id, is_confirm: false)  
       #Holiday.where(holiday_date: day).update_all(is_taken: true)
       flash[:notice] = "Created successfully"
@@ -243,13 +244,20 @@ class EmployeeAttendancesController < ApplicationController
       @employees, @attendances, work_data_structure, @date = params[:employees], params[:attendances], [], params[:date]
       params.permit!
       @employees.each { |e| work_data_structure << params[e] }
-      a= Workingday.create(work_data_structure)
-      @emp1 = params[:employees]
       #byebug
+      a = Workingday.create(work_data_structure)      
+      # @employees.try(:each) do |x| 
+      #   EmployeeAttendance.where("employee_id = ? AND strftime('%m/%Y', day) = ?",x,@date.strftime('%m/%Y')).update_all(is_confirm: true)
+      # end
+
+      @emp1 = params[:employees]
       b=a.last
       @payroll_overtime_masters = PayrollOvertimeMaster.where(is_active: true,is_payroll: true).take
       @emp1.try(:each) do |x| 
       emp_attend=EmployeeAttendance.where(employee_id: x,month_name: b.month_name)
+
+      #EmployeeAttendance.where("strftime('%m/%Y', day) = ? AND employee_id = ?", @date,x).update_all(is_confirm: true)
+     
       # ff=EmployeeAttendance.where(employee_id: x,month_name: b.month_name).take
       
       ot_hours=emp_attend.sum(:overtime_hrs).to_f
@@ -257,17 +265,23 @@ class EmployeeAttendancesController < ApplicationController
       calculated_diff=ot_hours-diff_hours
       # Workingday.where(employee_id: x).update_all(ot_days: calculated_diff.to_f / @payroll_overtime_masters.company_hrs.to_f)
       Workingday.where(employee_id: x).update_all(ot_days: calculated_diff.to_f)
-      d=Workingday.where(employee_id: x)
-        d.each do |f|
-          f.update(calculated_payable_days: f.payable_day)
-        end
+      # d=Workingday.where(employee_id: x)
+      #   d.each do |f|
+      #     f.update(calculated_payable_days: f.payable_day)
+      #   end
       end
       work=Workingday.where("ot_days < ?", 0).pluck(:id)
       @workingdays = Workingday.where(id: work)
-          # byebug
       @workingdays.each do |wor|
       # byebug
       emp_att=EmployeeAttendance.where(employee_id: wor.employee_id,month_name: wor.month_name)
+
+<<<<<<< HEAD
+      #EmployeeAttendance.where("strftime('%m/%Y', day) = ? AND employee_id = ?", @date,wor.employee_id).update_all(is_confirm: true)
+=======
+     # EmployeeAttendance.where("strftime('%m/%Y', day) = ? AND employee_id = ?", @date,wor.employee_id).update_all(is_confirm: true)
+>>>>>>> 5af6548f6bd4b569672a734dfe6fde8ac07efee8
+
       overtime_hours=emp_att.sum(:overtime_hrs).to_f
       difference_hours=emp_att.sum(:difference_hrs).to_f
       calculated_diff_hours=(overtime_hours-difference_hours)
@@ -278,6 +292,8 @@ class EmployeeAttendancesController < ApplicationController
       Workingday.where(id: wor,employee_id: wor.employee_id).update_all(calculated_payable_days: final_payable_day.to_f,ot_days: nil)
       # Workingday.update_all(is_confirm: true)
       end
+
+
       flash[:notice] = "Workingday successfully saved."
       redirect_to employee_attendances_path
   end
@@ -371,17 +387,17 @@ class EmployeeAttendancesController < ApplicationController
     @start_date = @date
     @end_date = @date.end_of_month
     @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ? and is_confirm = ?", @date.strftime('%m/%Y'),false).group(:employee_id)
-      respond_to do |format|
-          format.json
-          format.pdf do
-            render pdf: 'employee_attendance',
-                  layout: 'pdf.html',
-                  orientation: 'Landscape',
-                  template: 'employee_attendances/costcenter_wise_pdf.pdf.erb',
-                  show_as_html: params[:debug].present?,
-                  margin:  { top:1,bottom:1,left:1,right:1 }
-                end
-             end
+    respond_to do |format|
+      format.json
+      format.pdf do
+        render pdf: 'employee_attendance',
+              layout: 'pdf.html',
+              orientation: 'Landscape',
+              template: 'employee_attendances/costcenter_wise_pdf.pdf.erb',
+              show_as_html: params[:debug].present?,
+              margin:  { top:1,bottom:1,left:1,right:1 }
+            end
+         end
     
   end
   
@@ -418,8 +434,6 @@ class EmployeeAttendancesController < ApplicationController
   
 
   def display_employee_attendance_list
-    # @month = "September"
-    # @year = 2016
     @month = params[:month].to_s
     @year = params[:year].to_s
     @date = Date.new(@year.to_i, Workingday.months[@month])

@@ -27,7 +27,7 @@ class CompanyPoliciesController < ApplicationController
         @company_policy = CompanyPolicy.new
       end
       flash[:notice] = 'Company Policy saved Successfully.' 
-      redirect_to company_policies_path
+      redirect_to new_company_policy_path
         
   end
 

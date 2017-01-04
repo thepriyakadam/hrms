@@ -14,7 +14,7 @@ class EmployeeLeavBalancesController < ApplicationController
       if current_user.role.name == 'GroupAdmin'
         @employee_leav_balances = EmployeeLeavBalance.all
       elsif current_user.role.name == 'Admin'
-        @employees = Employee.where(company_id: current_user.company_id)
+        @employees = Employee.where(company_id: current_user.company_location.company_id)
         @employee_leav_balances = EmployeeLeavBalance.where(employee_id: @employees)
       elsif current_user.role.name == 'Branch'
         @employees = Employee.where(company_location_id: current_user.company_location_id)
@@ -201,7 +201,7 @@ class EmployeeLeavBalancesController < ApplicationController
         @employees = Employee.where.not(id: e)
         # @employees = Employee.joins("LEFT JOIN employee_leav_balances on employee_leav_balances.employee_id = employees.id where employee_leav_balances.leav_category_id is not #{leav_category_id}")
       else
-        if current_user.role.name == 'Admin'
+        if current_user.role.name == 'GroupAdmin'
           e = EmployeeLeavBalance.where(leav_category_id: leav_category_id).pluck(:employee_id)
           @employees = Employee.where.not(id: e).where(company_id: current_user.employee.company_id)
           # @employees = Employee.joins("LEFT JOIN employee_leav_balances on employee_leav_balances.employee_id = employees.id where employee_leav_balances.leav_category_id is not #{leav_category_id}")

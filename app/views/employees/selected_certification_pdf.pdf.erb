@@ -1,0 +1,39 @@
+<style>
+    th {
+        text-align: left;
+    }
+    tr {
+        page-break-inside: avoid;
+    }
+    div.alwaysbreak { page-break-before: always; }
+    div.nobreak:before { clear:both; }
+    div.nobreak{ page-break-inside: avoid;
+    }
+</style>
+  <table style="border-collapse: collapse; font-size:10pt;" border=1 width=1000 cellpadding="15">
+    <thead>
+    <tr><td colspan="8"><center></center> </td></tr>
+      <tr>
+      <th>ID</th>
+      <th>Employee Name</th>
+      <th>Name</th>
+      <th>Year</th>
+      <th>Duration</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @certifications.each do |certification| %>
+      <tr>
+        <td><%= certification.employee.try(:manual_employee_code ) %></td>
+         <td><%= full_name(certification.employee) %></td>
+        <td><%= certification.name %></td>
+        <td><%= certification.year_id %></td>
+        <td><%= certification.duration %></td>
+        <td><%= certification.description %></td>
+        </tr>
+    <%end%>
+
+  </tbody>
+  </table>

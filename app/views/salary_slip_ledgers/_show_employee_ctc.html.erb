@@ -48,7 +48,7 @@
   </tbody>
 </table>
 <div class="col-sm-6">
-  <%= link_to " Print Salary Slip ",show_employee_ctc_salary_slip_ledgers_path(salary: {department_id: @department},format: "pdf"),method: :post, class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+  <%= link_to " PDF Report ",show_employee_ctc_salary_slip_ledgers_path(salary: {department_id: @department},format: "pdf"),method: :post, class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
 
   <%= link_to " Excel Report ",show_employee_ctc_salary_slip_ledgers_path(salary: {department_id: @department},format: "xls"),method: :post, class: "btn btn-xl btn-success fa fa-print" %>
 </div>

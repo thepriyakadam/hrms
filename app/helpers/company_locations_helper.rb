@@ -16,7 +16,7 @@ module CompanyLocationsHelper
       if current_user.role.name == 'GroupAdmin'
         CompanyLocation.all.collect { |cl| [cl.company.name + '-' + cl.name, cl.id] }
       elsif current_user.role.name == 'Admin'
-        CompanyLocation.where(id: current_user.company_id).collect { |cl| [cl.company.name + '-' + cl.name, cl.id] }
+        CompanyLocation.where(company_id: current_user.company_location.company_id).collect { |cl| [cl.company.name + '-' + cl.name, cl.id] }
       elsif current_user.role.name == 'Branch'
         CompanyLocation.where(id: current_user.company_location_id).collect { |cl| [cl.company.name + '-' + cl.name, cl.id] }
       elsif current_user.role.name == 'HOD'
@@ -32,7 +32,7 @@ module CompanyLocationsHelper
       if current_user.role.name == 'GroupAdmin'
         CompanyLocation.all.collect { |d| [d.company.name + '-' + d.name, d.id] }
       elsif current_user.role.name == 'Admin'
-        CompanyLocation.where(id: current_user.company_id).collect { |d| [d.company.name + '-' + d.name, d.id] }
+        CompanyLocation.where(company_id: current_user.company_location.company_id).collect { |d| [d.company.name + '-' + d.name, d.id] }
       elsif current_user.role.name == 'Branch'
         CompanyLocation.where(id: current_user.company_location_id).collect { |d| [d.company.name + '-' + d.name, d.id] }
       elsif current_user.role.name == 'HOD'

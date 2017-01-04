@@ -1,1 +1,43 @@
-selected_qualification_pdf.pdf.erb
+<style>
+    th {
+        text-align: left;
+    }
+    tr {
+        page-break-inside: avoid;
+    }
+    div.alwaysbreak { page-break-before: always; }
+    div.nobreak:before { clear:both; }
+    div.nobreak{ page-break-inside: avoid;
+    }
+</style>
+  <table style="border-collapse: collapse; font-size:12pt;" border=1 width=1200 cellpadding="15">
+    <thead>
+    <tr><td colspan="9"><center></center> </td></tr>
+      <tr>
+        <th>ID</th>
+        <th>Employee Name</th>
+        <th>Qualification Level</th>
+        <th>Qualification</th>
+        <th>Qualification Specialization</th>
+        <th>Marks</th>
+        <th>Passout Year</th>
+        <th>College/School</th>
+        <th>University/Institute</th>
+       </tr>
+     </thead>
+      <tbody>
+    <% @qualifications.each do |qualification| %>
+      <tr>
+      <td><%= qualification.employee.try(:manual_employee_code ) %></td>
+          <td><%= full_name(qualification.employee) %></td>
+          <td><%= qualification.degree_type.try(:name) %></td>
+          <td><%= qualification.degree.try(:name) %></td>
+          <td><%= qualification.degree_stream.try(:name) %></td>
+          <td><%= qualification.marks %></td>
+          <td><%= qualification.year.try(:name) %></td>
+          <td><%= qualification.college %></td>
+          <td><%= qualification.university.try(:name) %></td>
+      </tr>
+       <%end%>
+      </tbody>
+      </table>

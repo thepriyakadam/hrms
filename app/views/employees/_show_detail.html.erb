@@ -1,21 +1,19 @@
 <div class="box box-default">
   <div class="box-header with-border">
   <div class="row">
- 
-          <div class="col-sm-1">
-              <%= image_tag @employee.passport_photo.url, :size => "50x50" %>
-          </div>
-            <div class="col-sm-6">
-         <font color='#0077b3'>ID: <%= @employee.try(:manual_employee_code) %><br>
-  Name : <%= @employee.try(:first_name) %> <%= @employee.try(:middle_name) %> <%= @employee.try(:last_name) %><br>
-  <%= @employee.email %></font>
-          </div>
-
+  <div class="col-sm-1">
+      <%= image_tag @employee.passport_photo.url, :size => "70x70" %>
   </div>
-    <div class="box-tools pull-right">
-      <%= link_to 'Edit', edit_employee_path(@employee),class: 'btn btn-sm btn-success fa fa-edit', remote:true %>
-      <%= link_to 'Back', employees_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+    <div class="col-sm-6">
+     <font color='#0077b3'>ID: <%= @employee.try(:manual_employee_code) %><br>
+        Name : <%= @employee.try(:first_name) %> <%= @employee.try(:middle_name) %> <%= @employee.try(:last_name) %><br>
+        Email : <%= @employee.email %></font>
     </div>
+  </div>
+  <div class="box-tools pull-right">
+    <%= link_to 'Edit', edit_employee_path(@employee),class: 'btn btn-sm btn-success fa fa-edit', remote:true %>
+    <%= link_to 'Back', employees_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+  </div>
     
   </div><!-- /.box-header -->
   <div class="box-body">

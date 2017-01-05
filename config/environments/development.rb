@@ -70,17 +70,31 @@ Rails.application.configure do
   #   authentication: :plain
   # }
   
-  # Root url
-  config.action_mailer.default_url_options = { host: 'mail.rajgreen.co.in', port: 3000 }
+#   # Root url
+#   config.action_mailer.default_url_options = { host: 'mail.rajgreen.co.in', port: 3000 }
+#   # config.domain = 'lvh.me'
+#   # config.action_mailer.perform_deliveries = true,
+#   ActionMailer::Base.delivery_method = :smtp
+
+#   ActionMailer::Base.smtp_settings = {
+#     :address => "mail.rajgreen.co.in",
+#     :port => 25,
+#     :user_name => "hrms@rajgreen.co.in",
+#     :password => "amaazia@123",
+#     :authentication => 'plain',
+# }
+
+ # Root url
+  config.action_mailer.default_url_options = { host: 'mail.amaazia.com', port: 3000 }
   # config.domain = 'lvh.me'
   # config.action_mailer.perform_deliveries = true,
   ActionMailer::Base.delivery_method = :smtp
 
   ActionMailer::Base.smtp_settings = {
-    :address => "mail.rajgreen.co.in",
+    :address => "mail.amaazia.com",
     :port => 25,
-    :user_name => "hrms@rajgreen.co.in",
-    :password => "amaazia@123",
+    :user_name => "ranna.p@amaazia.com",
+    :password => "rannahr@123",
     :authentication => 'plain',
 }
 

@@ -567,13 +567,11 @@ class EmployeesController < ApplicationController
     end
       session[:active_tab] ="EmployeeManagement"
       session[:active_tab1] ="Reports"
->>>>>>> b7643d0909c80237afc8907957d011bb5b60c7cc
   end
 
   def selected_employee_list_report
     @employee_id = params[:employee_id]
     @employees = Employee.where(id: @employee_id)
-<<<<<<< HEAD
     if @employee_id.nil?
       flash[:alert] = "Please Select the checkbox"
       @employees = []
@@ -588,16 +586,6 @@ class EmployeesController < ApplicationController
       @employee_id.each do |e|
       @employee = Employee.find_by(id: e)
       @employees = Employee.where(id: e)
-=======
-     
-  end
-
-  def selected_employee_pdf
-      @employee_id = params[:employee_id]
-      @employees = Employee.where(id: @employee_id)
-      @employee_id.each do |e|
-      @employee = Employee.find_by(id: e)
->>>>>>> b7643d0909c80237afc8907957d011bb5b60c7cc
     end
     #@employee_template = EmployeeTemplate.find(params[:employee_template_id])
     #@employee_salary_templates = EmployeeSalaryTemplate.where(employee_id: @employee_template.employee_id,salary_template_id: @employee_template.salary_template_id)    
@@ -612,10 +600,6 @@ class EmployeesController < ApplicationController
               margin:  { top:10,bottom:10,left:20,right:20 }
       end
     end
-<<<<<<< HEAD
-    
-=======
->>>>>>> b7643d0909c80237afc8907957d011bb5b60c7cc
   end
 
   def selected_employee_xls
@@ -727,11 +711,7 @@ def selected_qualification_xls
     respond_to do |format|
       format.xls {render template: 'employees/selected_qualification_xls.xls.erb'}
     end
-<<<<<<< HEAD
-  
-=======
->>>>>>> b7643d0909c80237afc8907957d011bb5b60c7cc
-end
+  end
 
 def selected_experience_pdf
   @employee_id = params[:employee_id]
@@ -766,11 +746,7 @@ def selected_experience_xls
 end
 
 def selected_skillset_pdf
-<<<<<<< HEAD
-   @employee_id = params[:employee_id]
-=======
      @employee_id = params[:employee_id]
->>>>>>> b7643d0909c80237afc8907957d011bb5b60c7cc
       @skillsets = Skillset.where(employee_id: @employee_id)
       @employee_id.each do |e|
       @employee = Employee.find_by(id: e)
@@ -801,8 +777,6 @@ def selected_skillset_xls
       format.xls {render template: 'employees/selected_skillset_xls.xls.erb'}
     end
 end
-<<<<<<< HEAD
-=======
 
 def selected_certification_pdf
   @employee_id = params[:employee_id]
@@ -1131,7 +1105,6 @@ def left_employee_pdf
              end
 end
 
->>>>>>> b7643d0909c80237afc8907957d011bb5b60c7cc
   # def destroy_details
   #   @employee = Employee.find(params[:emp_id])
 

@@ -244,6 +244,9 @@ end
       get :due_action_list
       get :emp_resignation
       get :modal
+      get :due_employee_detail_history
+      get :all_employee_list
+      get :specific_due_action_list
     end
   end
 

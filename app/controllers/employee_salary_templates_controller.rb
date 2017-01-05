@@ -53,6 +53,7 @@ class EmployeeSalaryTemplatesController < ApplicationController
   end
 
   def current_template
+    # byebug
     @current_template = EmployeeTemplate.where(employee_id: params[:emp_id], is_active: true).take
     authorize! :show, @current_template
     @employee_salary_templates = @current_template.employee_salary_templates

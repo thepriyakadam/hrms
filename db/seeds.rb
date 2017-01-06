@@ -272,29 +272,43 @@ require 'roo'
 # end
 # end
 
+# ex = Roo::Excel.new("#{Rails.root}/public/leavedate.xls")
+# ex.default_sheet = ex.sheets[2] #siya feb
+# i = 1
+# ActiveRecord::Base.transaction do
+# 2.upto(288) do |line| # siya Feb 2016
+#  puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
+#  @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
+#  # JoiningDetail.where(id: @employee.id).update_all(is_da: true)
+#  # EmployeeLeavBalance.where(id: @employee.id).update_all(to_date: nil)
+#  puts "#{i} Record inserted.-----------------------------------------------"
+#  unless @employee.nil?
+#  	@employee_leav_balances = EmployeeLeavBalance.where(employee_id: @employee.id)
+# #  @joining_details = JoiningDetail.where(employee_id: @employee.id)
+
+# #    @joining_details.each do |jo|
+#   @employee_leav_balances.each do |elb|
+# 	 elb.update(from_date: ex.cell(line,'B'))
+# 	 puts "#{i}  inserted Balance Successfuly.-----------------------------------------------"
+# 	 elb.update(to_date: ex.cell(line,'C'))
+# 	 puts "#{i}  inserted Balance Successfuly.-----------------------------------------------"
+#   end
+
 ex = Roo::Excel.new("#{Rails.root}/public/leavedate.xls")
-
-
-
-ex.default_sheet = ex.sheets[2] #siya feb
+ex.default_sheet = ex.sheets[3] #siya feb
 i = 1
 ActiveRecord::Base.transaction do
 2.upto(288) do |line| # siya Feb 2016
  puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
- @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
- # JoiningDetail.where(id: @employee.id).update_all(is_da: true)
- # EmployeeLeavBalance.where(id: @employee.id).update_all(to_date: nil)
+ @elbb = EmployeeLeavBalance.find_by_id(ex.cell(line,'A').to_i)
  puts "#{i} Record inserted.-----------------------------------------------"
- unless @employee.nil?
- 	@employee_leav_balances = EmployeeLeavBalance.where(employee_id: @employee.id)
-#  @joining_details = JoiningDetail.where(employee_id: @employee.id)
-
-#    @joining_details.each do |jo|
+ unless @elbb.nil?
+  @employee_leav_balances = EmployeeLeavBalance.where(id: @elbb.id)
   @employee_leav_balances.each do |elb|
-	 elb.update(from_date: ex.cell(line,'B'))
+	 elb.update(total_leave: ex.cell(line,'B'))
 	 puts "#{i}  inserted Balance Successfuly.-----------------------------------------------"
-	 elb.update(to_date: ex.cell(line,'C'))
-	 puts "#{i}  inserted Balance Successfuly.-----------------------------------------------"
+	 # elb.update(to_date: ex.cell(line,'C'))
+	 # puts "#{i}  inserted Balance Successfuly.-----------------------------------------------"
   end
 
 # 	@designation = EmployeeDesignation.find_by_name(ex.cell(line,'B'))

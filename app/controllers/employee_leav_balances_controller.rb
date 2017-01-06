@@ -177,6 +177,7 @@ class EmployeeLeavBalancesController < ApplicationController
     reporter(EmployeeLeavBalance.filter_records(current_user), template_class: PdfReportTemplate) do
       # filter :manual_employee_code, type: :string
       #filter(:current_status, :enum, :select => [["Pending",0], ["FirstApproved",2], ["SecondApproved",3], ["FirstRejected",4],["SecondRejected",5],["Cancelled",1]])
+      column(:IDD, sortable: true) { |employee_leav_balance| employee_leav_balance.id }
       column(:ID, sortable: true) { |employee_leav_balance| employee_leav_balance.employee.try(:manual_employee_code) }
       column(:Employee_Name, sortable: true) { |employee_leav_balance| full_name(employee_leav_balance.employee) }
       column(:Designation, sortable: true) { |employee_leav_balance| employee_leav_balance.employee.joining_detail.try(:employee_designation).try(:name) }

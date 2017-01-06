@@ -63,7 +63,7 @@ class EmployeeLeavBalancesController < ApplicationController
         end
       end
 
-        @employee_leav_bal = EmployeeLeavBalance.where(to_date: Date.today,is_active: true)
+        @employee_leav_bal = EmployeeLeavBalance.where("to_date <= ? AND is_active = ?", Date.today,true)
         @employee_leav_bal.each do |e|
          
           if @employee_leav_balance.is_present(e)
@@ -76,8 +76,8 @@ class EmployeeLeavBalancesController < ApplicationController
 
               if e.leav_category_id == @leave_master.leav_category_id && @leave_master.period == "Monthly"
                 if @leave_master.is_carry_forward == true
-                  @leave = @leave_master.no_of_leave.to_i + e.no_of_leave.to_i
-                  if @leave <= @leave_master.limit.to_i
+                  @leave = @leave_master.no_of_leave.to_f + e.no_of_leave.to_f
+                  if @leave <= @leave_master.limit.to_f
                     EmployeeLeavBalance.create(employee_id: e.employee_id,leav_category_id: e.leav_category_id,no_of_leave: @leave,from_date: e.to_date,to_date: date_monthly,is_active: true,expiry_date: date_monthly)
                     e.update(is_active: false)
                     flash[:notice] = "Created Successfully"
@@ -93,8 +93,8 @@ class EmployeeLeavBalancesController < ApplicationController
 
               elsif e.leav_category_id == @leave_master.leav_category_id && @leave_master.period == "Quarterly"
                 if @leave_master.is_carry_forward == true
-                  @leave = @leave_master.no_of_leave.to_i + e.no_of_leave.to_i
-                  if @leave <= @leave_master.limit.to_i
+                  @leave = @leave_master.no_of_leave.to_f + e.no_of_leave.to_f
+                  if @leave <= @leave_master.limit.to_f
                     EmployeeLeavBalance.create(employee_id: e.employee_id,leav_category_id: e.leav_category_id,no_of_leave: @leave,from_date: e.to_date,to_date: date_quarterly,is_active: true,expiry_date: date_quarterly)
                     e.update(is_active: false)
                     flash[:notice] = "Created Successfully"
@@ -110,8 +110,8 @@ class EmployeeLeavBalancesController < ApplicationController
 
               elsif e.leav_category_id == @leave_master.leav_category_id && @leave_master.period == "Half-yearly"
                 if @leave_master.is_carry_forward == true
-                  @leave = @leave_master.no_of_leave.to_i + e.no_of_leave.to_i
-                  if @leave <= @leave_master.limit.to_i
+                  @leave = @leave_master.no_of_leave.to_f + e.no_of_leave.to_f
+                  if @leave <= @leave_master.limit.to_f
                     EmployeeLeavBalance.create(employee_id: e.employee_id,leav_category_id: e.leav_category_id,no_of_leave: @leave,from_date: e.to_date,to_date: date_half_yearly,is_active: true,expiry_date: date_half_yearly)
                     e.update(is_active: false)
                     flash[:notice] = "Created Successfully"
@@ -127,8 +127,8 @@ class EmployeeLeavBalancesController < ApplicationController
 
               else e.leav_category_id == @leave_master.leav_category_id && @leave_master.period == "Yearly"
                 if @leave_master.is_carry_forward == true
-                  @leave = @leave_master.no_of_leave.to_i + e.no_of_leave.to_i
-                  if @leave <= @leave_master.limit.to_i
+                  @leave = @leave_master.no_of_leave.to_f + e.no_of_leave.to_f
+                  if @leave <= @leave_master.limit.to_f
                     EmployeeLeavBalance.create(employee_id: e.employee_id,leav_category_id: e.leav_category_id,no_of_leave: @leave,from_date: e.to_date,to_date: date_yearly,is_active: true,expiry_date: date_yearly)
                     e.update(is_active: false)
                     flash[:notice] = "Created Successfully"
@@ -177,14 +177,18 @@ class EmployeeLeavBalancesController < ApplicationController
     reporter(EmployeeLeavBalance.filter_records(current_user), template_class: PdfReportTemplate) do
       # filter :manual_employee_code, type: :string
       #filter(:current_status, :enum, :select => [["Pending",0], ["FirstApproved",2], ["SecondApproved",3], ["FirstRejected",4],["SecondRejected",5],["Cancelled",1]])
-      column(:Employee_ID, sortable: true) { |employee_leav_balance| employee_leav_balance.employee.try(:manual_employee_code) }
+      column(:ID, sortable: true) { |employee_leav_balance| employee_leav_balance.employee.try(:manual_employee_code) }
       column(:Employee_Name, sortable: true) { |employee_leav_balance| full_name(employee_leav_balance.employee) }
       column(:Designation, sortable: true) { |employee_leav_balance| employee_leav_balance.employee.joining_detail.try(:employee_designation).try(:name) }
       column(:Leave_Category, sortable:true){|employee_leav_balance| employee_leav_balance.leav_category.try(:description)}
       column(:Leave_Balance, sortable:true){|employee_leav_balance| employee_leav_balance.try(:no_of_leave)}
       # column(:Expiry_Date, sortable:true){|employee_leav_balance| employee_leav_balance.try(:expiry_date)}
+      column(:From_Date, sortable:true){|employee_leav_balance| employee_leav_balance.try(:from_date)}
+      column(:To_Date, sortable:true){|employee_leav_balance| employee_leav_balance.try(:to_date)}
+      column(:Status, sortable:true){|employee_leav_balance| employee_leav_balance.try(:is_active)}
       column(:Total_Leave, sortable:true){|employee_leav_balance| employee_leav_balance.try(:total_leave)}
       column(:Location, sortable:true){|employee_leav_balance| employee_leav_balance.employee.try(:company_location).try(:name)}
+
     session[:active_tab] ="LeaveManagement"
     session[:active_tab1] ="LeaveReports"
     end    

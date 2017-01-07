@@ -206,6 +206,8 @@ class EmployeesController < ApplicationController
     role_id = params[:role_id]
     manager_id = params[:manager_id]
     manager_2_id = params[:manager_2_id]
+
+    role = role_id.inject{|n| n}
     final = @employee_ids.zip(role_id,manager_id,manager_2_id)
     final.each do |e,r,m1|
       employee = Employee.find(e)
@@ -232,15 +234,26 @@ class EmployeesController < ApplicationController
           # u.subdomain = Apartment::Tenant.current_tenant
           u.member_code = employee.employee_code
           u.manual_member_code = employee.manual_employee_code
-          u.role_id = role_id
+          u.role_id = role
         end
         ActiveRecord::Base.transaction do
           if user.save
+
             manager_id = params[:manager_id]
             manager_2_id = params[:manager_2_id]
-            employee.update_attributes(manager_id: manager_id, manager_2_id: manager_2_id)
 
-            ManagerHistory.create(employee_id: employee.id,manager_id: manager_id,manager_2_id: manager_2_id,effective_from: params["login"]["effec_date"])
+            @manager1 = manager_id.inject{|n| n}
+            @manager2 = manager_2_id.inject{|n| n}
+            
+            @reporting_master1 = ReportingMaster.find_by(id: @manager1)
+            @reporting_master2 = ReportingMaster.find_by(id: @manager2)
+
+            @manager_1 = @reporting_master1.employee_id
+            @manager_2 = @reporting_master2.employee_id
+
+            employee.update_attributes(manager_id: @manager_1, manager_2_id: @manager_2)
+
+            ManagerHistory.create(employee_id: employee.id,manager_id: @manager_1,manager_2_id: @manager_2,effective_from: params["login"]["effec_date"])
             
             flash[:notice] = "Employee assigned successfully."
             redirect_to assign_role_employees_path

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170102114614) do
+ActiveRecord::Schema.define(version: 20170107064553) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -3150,6 +3150,7 @@ ActiveRecord::Schema.define(version: 20170102114614) do
     t.integer  "training_topic_master_id"
     t.boolean  "is_complete"
     t.integer  "reporting_master_id"
+    t.boolean  "training_plan"
   end
 
   add_index "trainee_requests", ["employee_id"], name: "index_trainee_requests_on_employee_id"

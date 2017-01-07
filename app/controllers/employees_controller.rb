@@ -238,9 +238,18 @@ class EmployeesController < ApplicationController
           if user.save
             manager_id = params[:manager_id]
             manager_2_id = params[:manager_2_id]
-            employee.update_attributes(manager_id: manager_id, manager_2_id: manager_2_id)
 
-            ManagerHistory.create(employee_id: employee.id,manager_id: manager_id,manager_2_id: manager_2_id,effective_from: params["login"]["effec_date"])
+            @manager1 = manager_id.inject{|n| n}
+            @manager2 = manager_2_id.inject{|n| n}
+
+            @reporting_master1 = ReportingMaster.find_by(id: @manager1)
+            @reporting_master2 = ReportingMaster.find_by(id: @manager2)
+
+            manager_1 = @reporting_master1.employee_id
+            manager_2 = @reporting_master2.employee_id
+            employee.update_attributes(manager_id: manager_1, manager_2_id: manager_2)
+
+            ManagerHistory.create(employee_id: employee.id,manager_id: manager_1,manager_2_id: manager_2,effective_from: params["login"]["effec_date"])
             
             flash[:notice] = "Employee assigned successfully."
             redirect_to assign_role_employees_path
@@ -308,6 +317,7 @@ class EmployeesController < ApplicationController
     @assigned_asset = AssignedAsset.new
      @employee = Employee.find(params[:id])
   end
+
 
 
   def ajax_certification_detail

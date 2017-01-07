@@ -36,16 +36,17 @@ class TrainingPlansController < ApplicationController
     @training_plan = TrainingPlan.new(training_plan_params)
     # byebug
         @training_plan.save
-        a=TraineeRequest.where(training_topic_master_id: @training_plan.training_topic_master_id,is_complete: true,training_plan: nil)
-          a.each do |s|
-            s.update(training_plan: true)
-          end
+        @trainee_request_ids = params[:trainee_request_ids]
+        TraineeRequest.where(id: @trainee_request_ids).update_all(training_plan: true)
+        # a=TraineeRequest.where(training_topic_master_id: @training_plan.training_topic_master_id,is_complete: true,training_plan: nil)
+        #   a.each do |s|
+        #     s.update(training_plan: true)
+        #   end
           # TraineeRequest.where(id: a).update_all(training_plan: true)
           b=TraineeRequest.where(training_topic_master_id: @training_plan.training_topic_master_id,is_complete: nil,training_plan: nil)
           b.each do |sb|
             sb.update(is_complete: true,training_plan: nil)
           end
-        @trainee_request_ids = params[:trainee_request_ids]
 
         if @trainee_request_ids.nil?
           flash[:alert] = "Please Select the Checkbox"

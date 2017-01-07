@@ -10,7 +10,7 @@ class TrainingRequestsController < ApplicationController
   # GET /training_requests/1
   # GET /training_requests/1.json
   def show
-    @trainee_requests = TraineeRequest.where(training_request_id: @training_request.id,is_complete: :true)
+    @trainee_requests = TraineeRequest.where(training_request_id: @training_request.id,is_complete: true)
     @reporting_master = ReportingMaster.find(@training_request.reporting_master_id)
     @employee = Employee.find(@reporting_master.employee_id)
   end
@@ -241,7 +241,7 @@ end
     b=ReportingMastersTrainingReq.last(2).first
     c=ReportingMastersTrainingReq.where(training_request_id: @training_request.id,training_status: "Approved").pluck(:id)
     ReportingMastersTrainingReq.where(id: c).update_all(employee_training: b.employee_training)
-    TraineeRequest.where(reporting_master_id: @reporting_masters,training_request_id: @training_request.id,).update_all(is_complete: :true)
+    TraineeRequest.where(reporting_master_id: @reporting_masters,training_request_id: @training_request.id,).update_all(is_complete: true)
     #TrainingRequestMailer.reject_training_request_email(@training_request).deliver_now
     
     # @comment = params[:training_request][:comment]
@@ -261,7 +261,7 @@ end
     b=ReportingMastersTrainingReq.last(2).first
     c=ReportingMastersTrainingReq.where(training_request_id: @training_request.id,training_status: "Rejected").pluck(:id)
     ReportingMastersTrainingReq.where(id: c).update_all(employee_training: b.employee_training)
-    TraineeRequest.where(reporting_master_id: @reporting_masters,training_request_id: @training_request.id,).update_all(is_complete: :false)
+    TraineeRequest.where(reporting_master_id: @reporting_masters,training_request_id: @training_request.id,).update_all(is_complete: false)
     #TrainingRequestMailer.reject_training_request_email(@training_request).deliver_now
     
     # @comment = params[:training_request][:comment]

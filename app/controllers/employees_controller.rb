@@ -110,7 +110,10 @@ class EmployeesController < ApplicationController
     @company_locations = CompanyLocation.all
     else
       if current_user.role.name == 'GroupAdmin'
-        @company_locations = CompanyLocation.all
+        # byebug
+        # a=current_user.company_id
+        # @company_locations = CompanyLocation.where(company_id: a)
+        @company_locations = CompanyLocation.where(company_id: current_user.company_location.company_id)
         @company_locations.each do |cl|
          @departments = Department.where(company_location_id: cl.id)
         end
@@ -482,10 +485,9 @@ class EmployeesController < ApplicationController
     @company_locations = CompanyLocation.all
     else
       if current_user.role.name == 'GroupAdmin'
-        @company_locations = CompanyLocation.all
+        @company_locations = CompanyLocation.where(company_id: @company.id)
       elsif current_user.role.name == 'Admin'
         @company_locations = CompanyLocation.where(company_id: current_user.company_location.company_id)
-        # byebug
       elsif current_user.role.name == 'Branch'
         @company_locations = CompanyLocation.where(id: current_user.company_location_id)
       end

@@ -140,6 +140,7 @@ class TrainingPlansController < ApplicationController
   end
 
   def show_traineerequest_list
+     # byebug
      @training_plan =TrainingPlan.new
      @training_topic_master = TrainingTopicMaster.find(params[:training_topic_master_id])
      @trainee_requests =TraineeRequest.where(training_topic_master_id: @training_topic_master.id,is_complete: :true)

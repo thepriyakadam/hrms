@@ -453,6 +453,7 @@ end
     post :create_induction_detail
     get :modal_induction_activity
     post :update_induction
+    get :view_induction_list
     end
   end
   resources :induction_masters

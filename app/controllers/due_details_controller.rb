@@ -130,7 +130,8 @@ class DueDetailsController < ApplicationController
   end
 
   def all_employee_list
-     @employees = Employee.all
+     @employee_resignations = EmployeeResignation.where(resign_status: "Approved").pluck(:employee_id)
+     @employees = Employee.where(id: @employee_resignations,status: "Active")
      session[:active_tab] = "resignationmanagement"
      session[:active_tab1] ="no_due_mgmt"
   end

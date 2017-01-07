@@ -1,6 +1,6 @@
 <div class="box">
   <div class="box-header">
-    <h6 class="box-title">No Due Action of : <!-- <= @due_employee_detail.employee.try(:first_name) %> <= @due_employee_detail.employee.try(:middle_name) %> <= @due_employee_detail.employee.try(:last_name), %> --> Template Name : <!-- <= @due_employee_details.first.due_template.try(:name) %> -->,No Due Owner: <!-- <= @due_employee_detail.reporting_master.employee.try(:first_name) %> <= @due_employee_detail.reporting_master.employee.try(:middle_name) %> <= @due_employee_detail.reporting_master.employee.try(:last_name) %> --></h6>
+    <h6 class="box-title">No Due Action of : <%= @due_employee_detail.employee.try(:first_name) %> <%= @due_employee_detail.employee.try(:middle_name) %> <%= @due_employee_detail.employee.try(:last_name) %> ,Template Name : <%= @due_employee_detail.due_template.try(:name) %> ,No Due Owner: <%= @due_employee_detail.reporting_master.employee.try(:first_name) %> <%= @due_employee_detail.reporting_master.employee.try(:middle_name) %> <%= @due_employee_detail.reporting_master.employee.try(:last_name) %></h6>
 <div class="box-body">
 <table  class="table table-bordered table-hover table-condensed'">
       <thead>

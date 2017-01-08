@@ -15,7 +15,7 @@
       <tr>
         <td><%= @employee.manual_employee_code %></td>
         <td><%= full_name(@employee) %></td>
-        <td><%= @employee_template.try(:salary_template).try(:code) %></td>
+        <td><%= @employee_template.try(:salary_template).try(:code) %>- <%= @employee_template.try(:salary_template).try(:description) %></td>
       </tr>
     </table><br>
 

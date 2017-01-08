@@ -22,9 +22,9 @@
           <td><%= slip.employee.manual_employee_code %></td>
           <td><%= employee.try(:first_name) %> <%= employee.try(:middle_name) %> <%= employee.try(:last_name) %></td>
           <td>
-          <% @deducted_salaryslip_items = slip.salaryslip_components.where(is_deducted: true,other_component_name: "Well Faire") %>
+          <% @deducted_salaryslip_items = slip.salaryslip_components.where(is_deducted: true,other_component_name: "WelFare") %>
           <% @deducted_salaryslip_items.each do |item| %>
-              <% if item.other_component_name == "Well Faire" %>
+              <% if item.other_component_name == "WelFare" %>
                 <%= item.calculated_amount.round %>
               <% end %>
             <% end %>
@@ -36,7 +36,7 @@
   </div>
 
   <%= link_to " Excel Report ",wellfair_xls_salary_slip_ledgers_path(month: params[:wellfair][:month], year: params[:wellfair][:year],company_id: params[:wellfair][:company_id],company_location_id: params[:food_deduction][:company_location_id], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
-  <%= link_to " Print Wellfair ",wellfair_pdf_salary_slip_ledgers_path(month: params[:wellfair][:month], year: params[:wellfair][:year],company_id: params[:wellfair][:company_id],company_location_id: params[:food_deduction][:company_location_id], format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+  <%= link_to " PDF Report ",wellfair_pdf_salary_slip_ledgers_path(month: params[:wellfair][:month], year: params[:wellfair][:year],company_id: params[:wellfair][:company_id],company_location_id: params[:food_deduction][:company_location_id], format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
 </div>
 
 <script type="text/javascript">

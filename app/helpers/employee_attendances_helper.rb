@@ -100,6 +100,7 @@ module EmployeeAttendancesHelper
     full_leave = 0
     pay_leave = 0
     non_pay_leave = 0
+    lwp_leave = 0
     attendances.each do |a|
       if a.employee_leav_request.leave_type == "Full Day"
         full_leave = full_leave + 1
@@ -112,6 +113,7 @@ module EmployeeAttendancesHelper
         half_leave = half_leave + 0.5
         if a.employee_leav_request.leav_category.is_payble
           pay_leave = pay_leave + 0.5
+          lwp_leave = lwp_leave + 0.5
         else
           non_pay_leave = non_pay_leave + 0.5
         end
@@ -122,6 +124,7 @@ module EmployeeAttendancesHelper
     arr << full_leave
     arr << pay_leave
     arr << non_pay_leave
+    arr << lwp_leave
     arr
   end
 

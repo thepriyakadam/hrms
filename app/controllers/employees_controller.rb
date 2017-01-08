@@ -206,6 +206,8 @@ class EmployeesController < ApplicationController
     role_id = params[:role_id]
     manager_id = params[:manager_id]
     manager_2_id = params[:manager_2_id]
+
+    role = role_id.inject{|n| n}
     final = @employee_ids.zip(role_id,manager_id,manager_2_id)
     final.each do |e,r,m1|
       employee = Employee.find(e)
@@ -232,10 +234,11 @@ class EmployeesController < ApplicationController
           # u.subdomain = Apartment::Tenant.current_tenant
           u.member_code = employee.employee_code
           u.manual_member_code = employee.manual_employee_code
-          u.role_id = role_id
+          u.role_id = role
         end
         ActiveRecord::Base.transaction do
           if user.save
+
             manager_id = params[:manager_id]
             manager_2_id = params[:manager_2_id]
 

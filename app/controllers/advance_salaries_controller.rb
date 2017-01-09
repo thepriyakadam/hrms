@@ -319,4 +319,3 @@ class AdvanceSalariesController < ApplicationController
   def advance_salary_params
     params.require(:advance_salary).permit(:employee_id, :advance_amount, :no_of_instalment, :instalment_amount, :advance_date, :advance_type_id, :interest)
   end
-end

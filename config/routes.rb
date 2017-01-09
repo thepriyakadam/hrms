@@ -1515,6 +1515,9 @@ end
       get :workingday_pdf
       get :import_workingday
       post :import
+      get :revert_workingday
+      get :show_employee
+      post :revert_all_workingday
     end
   end
 

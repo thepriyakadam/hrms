@@ -13,6 +13,7 @@ class Department < ActiveRecord::Base
   has_many :rewards_allocations
   has_many :travel_request_histories
   has_many :employee_transfers
+  has_many :goal_perspectives
   
   validates :manual_department_code, presence: true, uniqueness: { case_sensitive: false }
   validates :name, presence: true

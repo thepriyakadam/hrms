@@ -606,7 +606,6 @@ class EmployeesController < ApplicationController
     end
   end
 
-
 def selected_on_boarding_pdf
       @employee_id = params[:employee_id]
       @joining_details = JoiningDetail.where(employee_id: @employee_id)

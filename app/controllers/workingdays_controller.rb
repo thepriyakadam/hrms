@@ -173,7 +173,6 @@ class WorkingdaysController < ApplicationController
   end
 
   def import
-    # byebug
     Workingday.import(params[:file])
     redirect_to import_workingday_workingdays_path, notice: "File imported."
   end

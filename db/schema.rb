@@ -2325,6 +2325,7 @@ ActiveRecord::Schema.define(version: 20170109044054) do
     t.datetime "updated_at",                                               null: false
     t.integer  "expencess_type_id"
     t.boolean  "is_paid"
+    t.text     "description"
   end
 
   add_index "monthly_expences", ["employee_id"], name: "index_monthly_expences_on_employee_id"

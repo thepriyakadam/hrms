@@ -158,7 +158,7 @@ class AdvanceSalariesController < ApplicationController
         end
         elsif current_user.role.name == 'Branch'
          if @location == ""
-          @employees = Employee.where(company_id: @company.to_i).pluck(:id)
+          @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
           @advance_salaries = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
         elsif @company == ""
           @employees = Employee.where(company_location_id: @location.to_i).pluck(:id)
@@ -217,7 +217,7 @@ class AdvanceSalariesController < ApplicationController
         end
         elsif current_user.role.name == 'Branch'
          if @location == ""
-          @employees = Employee.where(company_id: @company.to_i).pluck(:id)
+          @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
           @advance_salaries = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
         elsif @company == ""
           @employees = Employee.where(company_location_id: @location.to_i).pluck(:id)
@@ -280,7 +280,7 @@ class AdvanceSalariesController < ApplicationController
         end
         elsif current_user.role.name == 'Branch'
          if @location == ""
-          @employees = Employee.where(company_id: @company.to_i).pluck(:id)
+          @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
           @advance_salaries = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
         elsif @company == ""
           @employees = Employee.where(company_location_id: @location.to_i).pluck(:id)

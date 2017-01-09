@@ -31,5 +31,5 @@
   </div>
   <%= link_to 'Back', instalments_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
   <%= link_to " Excel Report ",installment_xls_1_instalments_path(month: params[:instalment][:month], year: params[:instalment][:year],company_id: params[:instalment][:company_id],company_location_id: params[:instalment][:company_location_id], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
-  <%= link_to " Print Installment ",installment_pdf_1_instalments_path(month: params[:instalment][:month], year: params[:instalment][:year],company_id: params[:instalment][:company_id],company_location_id: params[:instalment][:company_location_id], format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+  <%= link_to " PDF Report ",installment_pdf_1_instalments_path(month: params[:instalment][:month], year: params[:instalment][:year],company_id: params[:instalment][:company_id],company_location_id: params[:instalment][:company_location_id], format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
 </div>

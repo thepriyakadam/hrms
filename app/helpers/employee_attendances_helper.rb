@@ -73,10 +73,30 @@ module EmployeeAttendancesHelper
     exist.select {|k,v| leave.member?(v)}.count
   end
 
-  # def pay_leave_count(exist)
-  #   leave = LeavCategory.where(is_payble: true).collect {|c| c.code }
-  #   exist.select {|k,v| leave.member?(v)}.count
-  # end
+  def cl_leave_count(exist)
+    exist.select {|k,v| v == "CL" }.count + (exist.select {|k,v| v == "P/CL" }.count)/2.to_f 
+  end
+
+  def el_leave_count(exist)
+    exist.select {|k,v| v == "EL" }.count + (exist.select {|k,v| v == "P/EL" }.count)/2.to_f 
+  end
+
+  def esic_leave_count(exist)
+    exist.select {|k,v| v == "ESIC" }.count + (exist.select {|k,v| v == "P/ESIC" }.count)/2.to_f 
+  end
+
+  def lwp_leave_count(exist)
+    exist.select {|k,v| v == "LWP" }.count + (exist.select {|k,v| v == "P/LWP" }.count)/2.to_f 
+  end
+
+  def advance_leave_count(exist)
+    exist.select {|k,v| v == "AL" }.count + (exist.select {|k,v| v == "P/AL" }.count)/2.to_f 
+  end
+
+  def coff_leave_count(exist)
+    exist.select {|k,v| v == "C.Off" }.count + (exist.select {|k,v| v == "P/C.Off" }.count)/2.to_f 
+  end
+
 
   # def non_pay_leave_count(exist)
   #   leave = LeavCategory.where(is_payble: false).collect {|c| c.code }

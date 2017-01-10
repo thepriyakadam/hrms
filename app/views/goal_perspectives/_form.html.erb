@@ -30,11 +30,17 @@
     rules: {
       "goal_perspective[name]":{
         required: true
+      },
+      "goal_perspective[department_id]":{
+        required: true
       }
     },
     messages: {
       "goal_perspective[name]":{
         required: "Please Specify Name"
+      },
+      "goal_perspective[department_id]":{
+        required: "Please Specify Department"
       }
     },
     errorPlacement: function(error, element) {

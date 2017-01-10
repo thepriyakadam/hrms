@@ -1,6 +1,11 @@
 Rails.application.routes.draw do
   
-  resources :employee_week_offs
+  resources :employee_week_offs do
+    collection do
+      get :revert_week_off
+      
+    end
+  end
   resources :late_mark_masters do
     collection do
       get :is_confirm

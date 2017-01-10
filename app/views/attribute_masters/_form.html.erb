@@ -45,6 +45,9 @@ $("#attribute_master").validate({
       "attribute_master[code]":{
         required: true,
       },
+      "attribute_master[department_id]":{
+        required: true,
+      },
       "attribute_master[name]":{
         required: true,
       }
@@ -52,6 +55,9 @@ $("#attribute_master").validate({
     messages: {
       "attribute_master[code]":{
         required: "Please Specify Code",
+      },
+      "attribute_master[department_id]":{
+        required: "Please Specify Department",
       },
       "attribute_master[name]":{
         required: "Please Specify Name",

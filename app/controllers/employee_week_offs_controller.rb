@@ -61,6 +61,14 @@ class EmployeeWeekOffsController < ApplicationController
     end
   end
 
+  def revert_week_off
+    @employee_week_off = EmployeeWeekOff.find(params[:format])
+    EmployeeAttendance.where(employee_id: @employee_week_off.employee_id,day: @employee_week_off.date).destroy_all
+    @employee_week_off.destroy
+    flash[:notice] = "Revert successfully"
+    redirect_to employee_week_offs_path
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_employee_week_off

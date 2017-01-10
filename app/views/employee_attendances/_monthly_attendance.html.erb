@@ -4,9 +4,7 @@
           <tr>
             <th><input type="checkbox" id="selectAll" value="selectAll"></th>
             <th>ID</th>
-            <% for i in 1..@day %>
-              <th><%= i %></th>
-            <%end%>
+            <th>Name</th>
           </tr>
           <!-- <tr>
             <th colspan="2">Day</th>
@@ -21,10 +19,7 @@
             <tr>
               <td><%= check_box_tag "employees[]", e.employee_id unless e.is_confirm %></td>
               <td><%= e.employee.manual_employee_code %></td>
-              <% sorted_exists = calculate_attendance(@date, exist, e)%>
-              <% sorted_exists.each do |k,v|%>
-                <td><%= v %></td>
-              <%end%>
+              <td><%= e.employee.first_name %> <%= e.employee.middle_name %> <%= e.employee.last_name %></td>
             </tr> 
             <% present_day = present_day_count(exist) %>
             <% holiday_in_month = holiday_in_month_count(exist) %>
@@ -95,9 +90,6 @@
               <% @b = @a.to_f/2 %>
               <%= hidden_field e.employee_id, 'payable_day', value: present_day.to_f + holiday_in_month.to_f + week_off_day.to_f + workingday[2] + @b.to_f + 2 + workingday[4] %>
             <% end %>
-
-           
-
             <%= hidden_field e.employee_id, 'gatepass', value: gate_pass %>
             
             <% exist.clear %>

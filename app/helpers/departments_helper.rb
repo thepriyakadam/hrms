@@ -24,6 +24,9 @@ module DepartmentsHelper
         Department.where(company_location_id: current_user.company_location_id).collect { |d| [d.company_location.company.name + '-' + d.company_location.name + '-' + d.name, d.id] }
       elsif current_user.role.name == 'HOD'
         Department.where(id: current_user.department_id).collect { |d| [d.company_location.company.name + '-' + d.company_location.name + '-' + d.name, d.id] }
+      else
+        @department_id = Employee.where(id: current_user.employee_id).pluck(:department_id)
+        Department.where(id: @department_id).collect { |d| [d.company_location.company.name + '-' + d.company_location.name + '-' + d.name, d.id] }
       end
     end
   end

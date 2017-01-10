@@ -173,7 +173,6 @@ class WorkingdaysController < ApplicationController
   end
 
   def import
-    # byebug
     Workingday.import(params[:file])
     redirect_to import_workingday_workingdays_path, notice: "File imported."
   end
@@ -319,14 +318,15 @@ class WorkingdaysController < ApplicationController
         @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
         @workingdays = Workingday.where(month_name: @month, year: @year.to_s, employee_id: @employees)
       elsif current_user.role.name == "Branch"
-        @work = Workingday.where(month_name: @month, year: @year.to_s)
-        @work.each do |w|
-          @employee = Salaryslip.find_by(workingday_id: w.id).pluck(:employee_id)
-          @emp = Employee.where.not(id: @employee)
-        end
-         @workingdays = Workingday.where(employee_id: @emp)
-        #@employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
-        #@workingdays = Workingday.where(month_name: @month, year: @year.to_s, employee_id: @employees)
+        # @work = Workingday.where(month_name: @month, year: @year.to_s)
+        # @work.each do |w|
+        #   @employee = Salaryslip.find_by(workingday_id: w.id).pluck(:employee_id)
+        #   @emp = Employee.where.not(id: @employee)
+        # end
+        #  @workingdays = Workingday.where(employee_id: @emp)
+
+        @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+        @workingdays = Workingday.where(month_name: @month, year: @year.to_s, employee_id: @employees)
       end  
     end    
   end
@@ -338,7 +338,7 @@ class WorkingdaysController < ApplicationController
     @workingday_ids = params[:workingday_ids]
     if @workingday_ids.nil?
       flash[:alert] = "Please Select Employees"
-      redirect_to revert_workingdays_path
+      redirect_to revert_workingday_workingdays_path
     else
       @workingday_ids.each do |wid|
         @workingday = Workingday.find(wid)

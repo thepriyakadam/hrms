@@ -3,6 +3,11 @@
   <div class="row">
     <div class="col-sm-3">
       <div class="form-group required">
+      <%= f.select :department_id, all_department_type_list1,{include_blank: 'select Department'},class: 'form-control' %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group required">
         <%= f.text_field :code,placeholder: 'Attribute Code',label:'Code' %>
       </div>
     </div> 

@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Week off master:</strong>
+  <%= @employee_week_off.week_off_master %>
+</p>
+
+<p>
+  <strong>Employee:</strong>
+  <%= @employee_week_off.employee %>
+</p>
+
+<p>
+  <strong>Day:</strong>
+  <%= @employee_week_off.day %>
+</p>
+
+<p>
+  <strong>Date:</strong>
+  <%= @employee_week_off.date %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @employee_week_off.status %>
+</p>
+
+<p>
+  <strong>Is confirm:</strong>
+  <%= @employee_week_off.is_confirm %>
+</p>
+
+<%= link_to 'Edit', edit_employee_week_off_path(@employee_week_off) %> |
+<%= link_to 'Back', employee_week_offs_path %>

@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   
+  resources :employee_week_offs
   resources :late_mark_masters do
     collection do
       get :is_confirm

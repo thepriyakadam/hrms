@@ -1,0 +1,41 @@
+<%= form_for(@employee_week_off) do |f| %>
+  <% if @employee_week_off.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@employee_week_off.errors.count, "error") %> prohibited this employee_week_off from being saved:</h2>
+
+      <ul>
+      <% @employee_week_off.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :week_off_master_id %><br>
+    <%= f.text_field :week_off_master_id %>
+  </div>
+  <div class="field">
+    <%= f.label :employee_id %><br>
+    <%= f.text_field :employee_id %>
+  </div>
+  <div class="field">
+    <%= f.label :day %><br>
+    <%= f.text_field :day %>
+  </div>
+  <div class="field">
+    <%= f.label :date %><br>
+    <%= f.date_select :date %>
+  </div>
+  <div class="field">
+    <%= f.label :status %><br>
+    <%= f.check_box :status %>
+  </div>
+  <div class="field">
+    <%= f.label :is_confirm %><br>
+    <%= f.check_box :is_confirm %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

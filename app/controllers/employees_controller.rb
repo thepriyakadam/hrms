@@ -249,7 +249,7 @@ class EmployeesController < ApplicationController
             @reporting_master2 = ReportingMaster.find_by(id: @manager2)
 
             manager_1 = @reporting_master1.employee_id
-            manager_2 = @reporting_master2.employee_id
+            manager_2 = @reporting_master2.try(:employee_id)
             employee.update_attributes(manager_id: manager_1, manager_2_id: manager_2)
 
             ManagerHistory.create(employee_id: employee.id,manager_id: manager_1,manager_2_id: manager_2,effective_from: params["login"]["effec_date"])
@@ -571,7 +571,7 @@ class EmployeesController < ApplicationController
     else
        @employees = Employee.where(id: current_user.employee_id)
         @employees = []
-    if @employee_id.nil? || employee_ids.empty?
+    if @employee_id.nil? || employee_id.empty?
       flash[:alert] = "Please Select the checkbox"
       redirect_to employee_list_report_employees_path
     else
@@ -584,8 +584,7 @@ class EmployeesController < ApplicationController
 
   def selected_employee_list_report
     @employee_id = params[:employee_id]
-    @employees = Employee.where(id: @employee_id)
-     
+    @employees = Employee.where(id: @employee_id)     
   end
 
   def selected_employee_pdf
@@ -619,7 +618,6 @@ class EmployeesController < ApplicationController
       format.xls {render template: 'employees/selected_employee_xls.xls.erb'}
     end
   end
-
 
 def selected_on_boarding_pdf
       @employee_id = params[:employee_id]
@@ -721,7 +719,7 @@ def selected_qualification_xls
 end
 
 def selected_experience_pdf
-  @employee_id = params[:employee_id]
+      @employee_id = params[:employee_id]
       @experiences = Experience.where(employee_id: @employee_id)
       @employee_id.each do |e|
       @employee = Employee.find_by(id: e)

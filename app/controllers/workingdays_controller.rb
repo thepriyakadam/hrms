@@ -173,7 +173,6 @@ class WorkingdaysController < ApplicationController
   end
 
   def import
-    # byebug
     Workingday.import(params[:file])
     redirect_to import_workingday_workingdays_path, notice: "File imported."
   end
@@ -298,12 +297,59 @@ class WorkingdaysController < ApplicationController
       @workingday.update(is_confirm: true) 
       # InterviewScheduleMailer.sample_email_to_interviewer(@interview_schedule).deliver_now
       flash[:notice] = "Confirmed Successfully" 
-    end 
-    redirect_to workingdays_path
+      end 
+      redirect_to workingdays_path
     # redirect_to show_employee_salary_template_employee_salary_templates_path(id: @employee.id)
+    end
   end
- end
- 
+  
+  def revert_workingday
+  end
+
+  def show_employee
+    @month = params[:month]
+    @year = params[:year]
+    if current_user.class == Group
+      @workingdays = Workingday.where(month_name: @month, year: @year.to_s)
+    elsif current_user.class == Member
+      if current_user.role.name == "GroupAdmin"
+        @workingdays = Workingday.where(month_name: @month, year: @year.to_s)
+      elsif current_user.role.name == "Admin"
+        @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
+        @workingdays = Workingday.where(month_name: @month, year: @year.to_s, employee_id: @employees)
+      elsif current_user.role.name == "Branch"
+        # @work = Workingday.where(month_name: @month, year: @year.to_s)
+        # @work.each do |w|
+        #   @employee = Salaryslip.find_by(workingday_id: w.id).pluck(:employee_id)
+        #   @emp = Employee.where.not(id: @employee)
+        # end
+        #  @workingdays = Workingday.where(employee_id: @emp)
+
+        @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+        @workingdays = Workingday.where(month_name: @month, year: @year.to_s, employee_id: @employees)
+      end  
+    end    
+  end
+
+  def revert_all_workingday
+    @month = params[:month]
+    @year = params[:year]
+    date = Date.new(@year.to_i,Workingday.months[@month])
+    @workingday_ids = params[:workingday_ids]
+    if @workingday_ids.nil?
+      flash[:alert] = "Please Select Employees"
+      redirect_to revert_workingday_workingdays_path
+    else
+      @workingday_ids.each do |wid|
+        @workingday = Workingday.find(wid)
+        @workingdays = Workingday.where(employee_id: @workingday.employee_id, month_name: date.strftime("%B"), year: date.strftime("%Y"))
+        @workingdays.destroy_all
+      end
+      flash[:notice] = "Revert successfully"
+      redirect_to revert_workingdays_path
+    end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
   
+  resources :employee_week_offs do
+    collection do
+      get :revert_week_off
+      
+    end
+  end
   resources :late_mark_masters do
     collection do
       get :is_confirm
@@ -1515,6 +1521,9 @@ end
       get :workingday_pdf
       get :import_workingday
       post :import
+      get :revert_workingday
+      get :show_employee
+      post :revert_all_workingday
     end
   end
 

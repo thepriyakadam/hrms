@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170102114614) do
+ActiveRecord::Schema.define(version: 20170110045655) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -151,10 +151,13 @@ ActiveRecord::Schema.define(version: 20170102114614) do
     t.string   "name"
     t.text     "definition"
     t.boolean  "status"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
     t.boolean  "is_confirm"
+    t.integer  "department_id"
   end
+
+  add_index "attribute_masters", ["department_id"], name: "index_attribute_masters_on_department_id"
 
   create_table "attribute_rating_sheets", force: :cascade do |t|
     t.integer  "appraisee_id"
@@ -1218,6 +1221,20 @@ ActiveRecord::Schema.define(version: 20170102114614) do
     t.boolean  "is_confirm"
   end
 
+  create_table "employee_week_offs", force: :cascade do |t|
+    t.integer  "week_off_master_id"
+    t.integer  "employee_id"
+    t.string   "day"
+    t.date     "date"
+    t.boolean  "status"
+    t.boolean  "is_confirm"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
+
+  add_index "employee_week_offs", ["employee_id"], name: "index_employee_week_offs_on_employee_id"
+  add_index "employee_week_offs", ["week_off_master_id"], name: "index_employee_week_offs_on_week_off_master_id"
+
   create_table "employeer_esics", force: :cascade do |t|
     t.date     "esic_date"
     t.decimal  "amount"
@@ -1546,11 +1563,14 @@ ActiveRecord::Schema.define(version: 20170102114614) do
 
   create_table "goal_perspectives", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
     t.boolean  "is_confirm"
     t.boolean  "status"
+    t.integer  "department_id"
   end
+
+  add_index "goal_perspectives", ["department_id"], name: "index_goal_perspectives_on_department_id"
 
   create_table "goal_rating_sheets", force: :cascade do |t|
     t.integer  "appraisee_id"

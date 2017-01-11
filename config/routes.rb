@@ -413,6 +413,10 @@ end
       get :show_datewise_employee
       get :date_wise_pdf
       get :date_wise_xls
+      get :select_from_and_to_date
+      get :show_from_and_to_date
+      get :from_date_wise_xls
+      get :from_date_wise_pdf
     end
   end
   resources :salary_comp_mappings

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170102114614) do
+ActiveRecord::Schema.define(version: 20170109044054) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -1546,11 +1546,14 @@ ActiveRecord::Schema.define(version: 20170102114614) do
 
   create_table "goal_perspectives", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
     t.boolean  "is_confirm"
     t.boolean  "status"
+    t.integer  "department_id"
   end
+
+  add_index "goal_perspectives", ["department_id"], name: "index_goal_perspectives_on_department_id"
 
   create_table "goal_rating_sheets", force: :cascade do |t|
     t.integer  "appraisee_id"
@@ -3387,6 +3390,40 @@ ActiveRecord::Schema.define(version: 20170102114614) do
     t.boolean  "is_confirm"
   end
 
+  create_table "vacancy_masters", force: :cascade do |t|
+    t.string   "vacancy_name"
+    t.integer  "no_of_position"
+    t.text     "description"
+    t.date     "vacancy_post_date"
+    t.string   "budget"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.integer  "department_id"
+    t.integer  "employee_designation_id"
+    t.integer  "company_location_id"
+    t.integer  "degree_id"
+    t.string   "experience"
+    t.string   "keyword"
+    t.string   "others"
+    t.string   "other_organization"
+    t.string   "industry"
+    t.integer  "degree_1_id"
+    t.integer  "degree_2_id"
+    t.integer  "reporting_master_id"
+    t.string   "current_status"
+    t.integer  "employee_id"
+    t.text     "justification"
+  end
+
+  add_index "vacancy_masters", ["company_location_id"], name: "index_vacancy_masters_on_company_location_id"
+  add_index "vacancy_masters", ["degree_1_id"], name: "index_vacancy_masters_on_degree_1_id"
+  add_index "vacancy_masters", ["degree_2_id"], name: "index_vacancy_masters_on_degree_2_id"
+  add_index "vacancy_masters", ["degree_id"], name: "index_vacancy_masters_on_degree_id"
+  add_index "vacancy_masters", ["department_id"], name: "index_vacancy_masters_on_department_id"
+  add_index "vacancy_masters", ["employee_designation_id"], name: "index_vacancy_masters_on_employee_designation_id"
+  add_index "vacancy_masters", ["employee_id"], name: "index_vacancy_masters_on_employee_id"
+  add_index "vacancy_masters", ["reporting_master_id"], name: "index_vacancy_masters_on_reporting_master_id"
+
   create_table "vacancy_request_histories", force: :cascade do |t|
     t.integer  "vacancy_master_id"
     t.string   "vacancy_name"
@@ -3435,6 +3472,15 @@ ActiveRecord::Schema.define(version: 20170102114614) do
   end
 
   add_index "week_off_masters", ["employee_id"], name: "index_week_off_masters_on_employee_id"
+
+  create_table "week_offs", force: :cascade do |t|
+    t.string   "weekoff_date_range"
+    t.integer  "employee_id"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
+
+  add_index "week_offs", ["employee_id"], name: "index_week_offs_on_employee_id"
 
   create_table "weekoff_masters", force: :cascade do |t|
     t.string   "day"

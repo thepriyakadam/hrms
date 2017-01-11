@@ -49,7 +49,7 @@ class EmployeeLeavBalancesController < ApplicationController
   # POST /employee_leav_balances
   # POST /employee_leav_balances.json
   def create
-     @employee_leav_balance = EmployeeLeavBalance.new(employee_leav_balance_params)
+    @employee_leav_balance = EmployeeLeavBalance.new(employee_leav_balance_params)
 
     @employee_ids = params[:employee_ids]
     if @employee_ids.nil?
@@ -63,9 +63,26 @@ class EmployeeLeavBalancesController < ApplicationController
         end
       end
 
-        @employee_leav_bal = EmployeeLeavBalance.where(to_date: Date.today,is_active: true)
+        @employee_leav_bal = EmployeeLeavBalance.where("to_date <= ? AND is_active = ?", Date.today,true)
         @employee_leav_bal.each do |e|
-         
+
+          from_date = e.from_date
+          to_date = e.to_date
+
+          @from_month = from_date.strftime('%B')
+          @from_year = from_date.strftime('%Y')
+
+          @to_month = to_date.strftime('%B')
+          @to_year = to_date.strftime('%Y')
+
+          @workingday = Workingday.where(employee_id: e.employee_id)
+
+          @workingday_from = Workingday.where(employee_id: e.employee_id,month_name: @from_month,year: @from_year)
+          @workingday_to = Workingday.where(employee_id: e.employee_id,month_name: @to_month,year: @to_year)
+
+          @from_day = @workingday_from.pluck(:present_day).map {|i| i.to_i}
+          @to_day = @workingday_to.pluck(:present_day).map {|i| i.to_i}
+
           if @employee_leav_balance.is_present(e)
              @leave_master = LeaveMaster.find_by(leav_category_id: e.leav_category_id)
 
@@ -73,79 +90,98 @@ class EmployeeLeavBalancesController < ApplicationController
               date_quarterly = e.to_date + 90
               date_half_yearly = e.to_date + 180
               date_yearly = e.to_date + 360
-
+             
+            if e.employee.try(:status) == 'Active'
               if e.leav_category_id == @leave_master.leav_category_id && @leave_master.period == "Monthly"
                 if @leave_master.is_carry_forward == true
-                  @leave = @leave_master.no_of_leave.to_i + e.no_of_leave.to_i
-                  if @leave <= @leave_master.limit.to_i
+                  @leave = @leave_master.no_of_leave.to_f + e.no_of_leave.to_f
+                  if @leave <= @leave_master.limit.to_f
                     EmployeeLeavBalance.create(employee_id: e.employee_id,leav_category_id: e.leav_category_id,no_of_leave: @leave,from_date: e.to_date,to_date: date_monthly,is_active: true,expiry_date: date_monthly)
                     e.update(is_active: false)
                     flash[:notice] = "Created Successfully"
                   else
-                    EmployeeLeavBalance.create(employee_id: e.employee_id,leav_category_id: e.leav_category_id,no_of_leave: @leave_master.limit,from_date: e.to_date,to_date: date_monthly,is_active: true,expiry_date: date_monthly)
+                    EmployeeLeavBalance.create(employee_id: e.employee_id,leav_category_id: e.leav_category_id,no_of_leave: @leave_master.limit,from_date: e.to_date,to_date: date_monthly,is_active: true,expiry_date: date_monthly,total_leave: @leave_master.limit)
                     e.update(is_active: false)
                     flash[:notice] = "Created Successfully"
                   end
                 else
-                  EmployeeLeavBalance.create(employee_id: e.employee_id,leav_category_id: e.leav_category_id,no_of_leave: @leave_master.no_of_leave,from_date: e.to_date,to_date: date_monthly,is_active: true,expiry_date: date_monthly)
+                  EmployeeLeavBalance.create(employee_id: e.employee_id,leav_category_id: e.leav_category_id,no_of_leave: @leave_master.no_of_leave,from_date: e.to_date,to_date: date_monthly,is_active: true,expiry_date: date_monthly,total_leave: @leave_master.no_of_leave)
                   e.update(is_active: false)
                 end
 
               elsif e.leav_category_id == @leave_master.leav_category_id && @leave_master.period == "Quarterly"
                 if @leave_master.is_carry_forward == true
-                  @leave = @leave_master.no_of_leave.to_i + e.no_of_leave.to_i
-                  if @leave <= @leave_master.limit.to_i
+                  @leave = @leave_master.no_of_leave.to_f + e.no_of_leave.to_f
+                  if @leave <= @leave_master.limit.to_f
                     EmployeeLeavBalance.create(employee_id: e.employee_id,leav_category_id: e.leav_category_id,no_of_leave: @leave,from_date: e.to_date,to_date: date_quarterly,is_active: true,expiry_date: date_quarterly)
                     e.update(is_active: false)
                     flash[:notice] = "Created Successfully"
                   else
-                    EmployeeLeavBalance.create(employee_id: e.employee_id,leav_category_id: e.leav_category_id,no_of_leave: @leave_master.limit,from_date: e.to_date,to_date: date_quarterly,is_active: true,expiry_date: date_quarterly)
+                    EmployeeLeavBalance.create(employee_id: e.employee_id,leav_category_id: e.leav_category_id,no_of_leave: @leave_master.limit,from_date: e.to_date,to_date: date_quarterly,is_active: true,expiry_date: date_quarterly,total_leave: @leave_master.limit)
                     e.update(is_active: false)
                     flash[:notice] = "Created Successfully"
                   end
                 else
-                  EmployeeLeavBalance.create(employee_id: e.employee_id,leav_category_id: e.leav_category_id,no_of_leave: @leave_master.no_of_leave,from_date: e.to_date,to_date: date_quarterly,is_active: true,expiry_date: date_quarterly)
+                  EmployeeLeavBalance.create(employee_id: e.employee_id,leav_category_id: e.leav_category_id,no_of_leave: @leave_master.no_of_leave,from_date: e.to_date,to_date: date_quarterly,is_active: true,expiry_date: date_quarterly,total_leave: @leave_master.no_of_leave)
                   e.update(is_active: false)
                 end
 
               elsif e.leav_category_id == @leave_master.leav_category_id && @leave_master.period == "Half-yearly"
                 if @leave_master.is_carry_forward == true
-                  @leave = @leave_master.no_of_leave.to_i + e.no_of_leave.to_i
-                  if @leave <= @leave_master.limit.to_i
+                  @leave = @leave_master.no_of_leave.to_f + e.no_of_leave.to_f
+                  if @leave <= @leave_master.limit.to_f
                     EmployeeLeavBalance.create(employee_id: e.employee_id,leav_category_id: e.leav_category_id,no_of_leave: @leave,from_date: e.to_date,to_date: date_half_yearly,is_active: true,expiry_date: date_half_yearly)
                     e.update(is_active: false)
                     flash[:notice] = "Created Successfully"
                   else
-                    EmployeeLeavBalance.create(employee_id: e.employee_id,leav_category_id: e.leav_category_id,no_of_leave: @leave_master.limit,from_date: e.to_date,to_date: date_half_yearly,is_active: true,expiry_date: date_half_yearly)
+                    EmployeeLeavBalance.create(employee_id: e.employee_id,leav_category_id: e.leav_category_id,no_of_leave: @leave_master.limit,from_date: e.to_date,to_date: date_half_yearly,is_active: true,expiry_date: date_half_yearly,total_leave: @leave_master.limit)
                     e.update(is_active: false)
                     flash[:notice] = "Created Successfully"
                   end
                 else
-                  EmployeeLeavBalance.create(employee_id: e.employee_id,leav_category_id: e.leav_category_id,no_of_leave: @leave_master.no_of_leave,from_date: e.to_date,to_date: date_half_yearly,is_active: true,expiry_date: date_half_yearly)
+                  EmployeeLeavBalance.create(employee_id: e.employee_id,leav_category_id: e.leav_category_id,no_of_leave: @leave_master.no_of_leave,from_date: e.to_date,to_date: date_half_yearly,is_active: true,expiry_date: date_half_yearly,total_leave:  @leave_master.no_of_leave)
                   e.update(is_active: false)
                 end
 
               else e.leav_category_id == @leave_master.leav_category_id && @leave_master.period == "Yearly"
-                if @leave_master.is_carry_forward == true
-                  @leave = @leave_master.no_of_leave.to_i + e.no_of_leave.to_i
-                  if @leave <= @leave_master.limit.to_i
-                    EmployeeLeavBalance.create(employee_id: e.employee_id,leav_category_id: e.leav_category_id,no_of_leave: @leave,from_date: e.to_date,to_date: date_yearly,is_active: true,expiry_date: date_yearly)
+
+                             
+                if @employee_leav_balance.emp_available_from(e) && @employee_leav_balance.emp_available_to(e)
+
+                  if @from_day.inject{|n| n} < @leave_master.working_day.to_f && @to_day.inject{|n| n} < @leave_master.working_day.to_f
+                    EmployeeLeavBalance.create(employee_id: e.employee_id,leav_category_id: e.leav_category_id,no_of_leave: e.no_of_leave,from_date: e.to_date,to_date: date_yearly,expiry_date: date_yearly,is_active: true,total_leave: e.no_of_leave)
                     e.update(is_active: false)
-                    flash[:notice] = "Created Successfully"
                   else
-                    EmployeeLeavBalance.create(employee_id: e.employee_id,leav_category_id: e.leav_category_id,no_of_leave: @leave_master.limit,from_date: e.to_date,to_date: date_yearly,is_active: true,expiry_date: date_yearly)
-                    e.update(is_active: false)
-                    flash[:notice] = "Created Successfully"
-                  end
-                else
-                  EmployeeLeavBalance.create(employee_id: e.employee_id,leav_category_id: e.leav_category_id,no_of_leave: @leave_master.no_of_leave,from_date: e.to_date,to_date: date_yearly,is_active: true,expiry_date: date_yearly)
-                  e.update(is_active: false)
-                end
-              end
-          else
+                    if @leave_master.is_carry_forward == true
+                      @leave = @leave_master.no_of_leave.to_f + e.no_of_leave.to_f
+                      if @leave <= @leave_master.limit.to_f
+                        EmployeeLeavBalance.create(employee_id: e.employee_id,leav_category_id: e.leav_category_id,no_of_leave: @leave,from_date: e.to_date,to_date: date_yearly,is_active: true,expiry_date: date_yearly,total_leave: @leave)
+                        e.update(is_active: false)
+                        flash[:notice] = "Created Successfully"
+                      else
+                        EmployeeLeavBalance.create(employee_id: e.employee_id,leav_category_id: e.leav_category_id,no_of_leave: @leave_master.limit,from_date: e.to_date,to_date: date_yearly,is_active: true,expiry_date: date_yearly,total_leave: @leave_master.limit)
+                        e.update(is_active: false)
+                        flash[:notice] = "Created Successfully"
+                      end
+                    else #is_carry_forward
+                      EmployeeLeavBalance.create(employee_id: e.employee_id,leav_category_id: e.leav_category_id,no_of_leave: @leave_master.no_of_leave,from_date: e.to_date,to_date: date_yearly,is_active: true,expiry_date: date_yearly,total_leave:  @leave_master.no_of_leave)
+                      e.update(is_active: false)
+                    end
+                  end # @from_day
+
+                else #emp_available()
+                  flash[:alert] = "Workingday not available"
+                end #emp_available()
+
+              end #if_else_monthly
+
+          else #status_Active
+          end
+
+          else #is_present
            
           end
-        end
+        end #do
 
       flash[:notice] = 'Leave assigned successfully.'
       redirect_to new_employee_leav_balance_path
@@ -177,14 +213,19 @@ class EmployeeLeavBalancesController < ApplicationController
     reporter(EmployeeLeavBalance.filter_records(current_user), template_class: PdfReportTemplate) do
       # filter :manual_employee_code, type: :string
       #filter(:current_status, :enum, :select => [["Pending",0], ["FirstApproved",2], ["SecondApproved",3], ["FirstRejected",4],["SecondRejected",5],["Cancelled",1]])
-      column(:Employee_ID, sortable: true) { |employee_leav_balance| employee_leav_balance.employee.try(:manual_employee_code) }
+      column(:IDD, sortable: true) { |employee_leav_balance| employee_leav_balance.id }
+      column(:ID, sortable: true) { |employee_leav_balance| employee_leav_balance.employee.try(:manual_employee_code) }
       column(:Employee_Name, sortable: true) { |employee_leav_balance| full_name(employee_leav_balance.employee) }
       column(:Designation, sortable: true) { |employee_leav_balance| employee_leav_balance.employee.joining_detail.try(:employee_designation).try(:name) }
       column(:Leave_Category, sortable:true){|employee_leav_balance| employee_leav_balance.leav_category.try(:description)}
       column(:Leave_Balance, sortable:true){|employee_leav_balance| employee_leav_balance.try(:no_of_leave)}
       # column(:Expiry_Date, sortable:true){|employee_leav_balance| employee_leav_balance.try(:expiry_date)}
+      column(:From_Date, sortable:true){|employee_leav_balance| employee_leav_balance.try(:from_date)}
+      column(:To_Date, sortable:true){|employee_leav_balance| employee_leav_balance.try(:to_date)}
+      column(:Status, sortable:true){|employee_leav_balance| employee_leav_balance.try(:is_active)}
       column(:Total_Leave, sortable:true){|employee_leav_balance| employee_leav_balance.try(:total_leave)}
       column(:Location, sortable:true){|employee_leav_balance| employee_leav_balance.employee.try(:company_location).try(:name)}
+
     session[:active_tab] ="LeaveManagement"
     session[:active_tab1] ="LeaveReports"
     end    
@@ -205,6 +246,9 @@ class EmployeeLeavBalancesController < ApplicationController
           e = EmployeeLeavBalance.where(leav_category_id: leav_category_id).pluck(:employee_id)
           @employees = Employee.where.not(id: e).where(company_id: current_user.employee.company_id)
           # @employees = Employee.joins("LEFT JOIN employee_leav_balances on employee_leav_balances.employee_id = employees.id where employee_leav_balances.leav_category_id is not #{leav_category_id}")
+        elsif current_user.role.name == 'Admin'
+          e = EmployeeLeavBalance.where(leav_category_id: leav_category_id).pluck(:employee_id)
+          @employees = Employee.where.not(id: e).where(company_id: current_user.employee.company_location.company_id)
         elsif current_user.role.name == 'Branch'
           e = EmployeeLeavBalance.where(leav_category_id: leav_category_id).pluck(:employee_id)
           @employees = Employee.where.not(id: e).where(company_location_id: current_user.employee.company_location_id)

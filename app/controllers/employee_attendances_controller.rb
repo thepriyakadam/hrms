@@ -241,7 +241,12 @@ class EmployeeAttendancesController < ApplicationController
   end
                                 
   def create_attendance
-      @employees, @attendances, work_data_structure, @date = params[:employees], params[:attendances], [], params[:date]
+      @employees, @attendances, work_data_structure = params[:employees], params[:attendances], []
+     
+      @month = params[:month]
+      @year = params[:year]
+      @date = Date.new(@year.to_i, Workingday.months[@month])
+
       params.permit!
       @employees.each { |e| work_data_structure << params[e] }
       #byebug
@@ -255,8 +260,8 @@ class EmployeeAttendancesController < ApplicationController
       @payroll_overtime_masters = PayrollOvertimeMaster.where(is_active: true,is_payroll: true).take
       @emp1.try(:each) do |x| 
       emp_attend=EmployeeAttendance.where(employee_id: x,month_name: b.month_name)
-
-      #EmployeeAttendance.where("strftime('%m/%Y', day) = ? AND employee_id = ?", @date,x).update_all(is_confirm: true)
+      
+      EmployeeAttendance.where("strftime('%m/%Y', day) = ? AND employee_id = ?", @date.strftime('%m/%Y'),x).update_all(is_confirm: true)
      
       # ff=EmployeeAttendance.where(employee_id: x,month_name: b.month_name).take
       
@@ -273,14 +278,10 @@ class EmployeeAttendancesController < ApplicationController
       work=Workingday.where("ot_days < ?", 0).pluck(:id)
       @workingdays = Workingday.where(id: work)
       @workingdays.each do |wor|
-      # byebug
+      
       emp_att=EmployeeAttendance.where(employee_id: wor.employee_id,month_name: wor.month_name)
-
-<<<<<<< HEAD
       #EmployeeAttendance.where("strftime('%m/%Y', day) = ? AND employee_id = ?", @date,wor.employee_id).update_all(is_confirm: true)
-=======
-     # EmployeeAttendance.where("strftime('%m/%Y', day) = ? AND employee_id = ?", @date,wor.employee_id).update_all(is_confirm: true)
->>>>>>> 5af6548f6bd4b569672a734dfe6fde8ac07efee8
+
 
       overtime_hours=emp_att.sum(:overtime_hrs).to_f
       difference_hours=emp_att.sum(:difference_hrs).to_f
@@ -622,6 +623,49 @@ class EmployeeAttendancesController < ApplicationController
     end
   end
 
+  def show_from_and_to_date
+    # byebug
+    @start = params[:day]
+    @end = params[:to_date]
+    @present = params[:present]
+    @employee_attendances = EmployeeAttendance.where(present: @present,day: @start..@end)
+  end
+
+  def from_date_wise_xls
+    @start = params[:day]
+    @end = params[:to_date]
+    @present = params[:present]
+    @employee_attendances = EmployeeAttendance.where(present: @present,day: @start..@end)
+    respond_to do |format|
+    format.xls {render template: 'employee_attendances/from_date_wise_xls.xls.erb'}
+  end
+end
+
+def from_date_wise_pdf
+   @start = params[:day]
+    @end = params[:to_date]
+    @present = params[:present]
+    @employee_attendances = EmployeeAttendance.where(present: @present,day: @start..@end)
+
+     respond_to do |format|
+        format.html
+        format.pdf do
+        render :pdf => 'from_date_wise_pdf',
+        layout: '/layouts/pdf.html.erb',
+        :template => 'employee_attendances/from_date_wise_pdf.pdf.erb',
+        :orientation      => 'Landscape', # default , Landscape
+        :page_height      => 1000,
+        :dpi              => '300',
+        :margin           => {:top    => 10, # default 10 (mm)
+                      :bottom => 10,
+                      :left   => 20,
+                      :right  => 20},
+        :show_as_html => params[:debug].present?
+      end
+    end
+end
+
+ 
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_employee_attendance

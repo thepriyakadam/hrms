@@ -241,7 +241,12 @@ class EmployeeAttendancesController < ApplicationController
   end
                                 
   def create_attendance
-      @employees, @attendances, work_data_structure, @date = params[:employees], params[:attendances], [], params[:date]
+      @employees, @attendances, work_data_structure = params[:employees], params[:attendances], []
+     
+      @month = params[:month]
+      @year = params[:year]
+      @date = Date.new(@year.to_i, Workingday.months[@month])
+
       params.permit!
       @employees.each { |e| work_data_structure << params[e] }
       #byebug
@@ -249,15 +254,14 @@ class EmployeeAttendancesController < ApplicationController
       # @employees.try(:each) do |x| 
       #   EmployeeAttendance.where("employee_id = ? AND strftime('%m/%Y', day) = ?",x,@date.strftime('%m/%Y')).update_all(is_confirm: true)
       # end
-
       @emp1 = params[:employees]
       b=a.last
       @payroll_overtime_masters = PayrollOvertimeMaster.where(is_active: true,is_payroll: true).take
       @emp1.try(:each) do |x| 
       emp_attend=EmployeeAttendance.where(employee_id: x,month_name: b.month_name)
-
-      #EmployeeAttendance.where("strftime('%m/%Y', day) = ? AND employee_id = ?", @date,x).update_all(is_confirm: true)
-     
+      
+      EmployeeAttendance.where("strftime('%m/%Y', day) = ? AND employee_id = ?", @date.strftime('%m/%Y'),x).update_all(is_confirm: true)
+      EmployeeWeekOff.where("strftime('%m/%Y', date) = ? AND employee_id = ?", @date.strftime('%m/%Y'),x).update_all(is_confirm: true)
       # ff=EmployeeAttendance.where(employee_id: x,month_name: b.month_name).take
       
       ot_hours=emp_attend.sum(:overtime_hrs).to_f
@@ -273,10 +277,8 @@ class EmployeeAttendancesController < ApplicationController
       work=Workingday.where("ot_days < ?", 0).pluck(:id)
       @workingdays = Workingday.where(id: work)
       @workingdays.each do |wor|
-      # byebug
+      
       emp_att=EmployeeAttendance.where(employee_id: wor.employee_id,month_name: wor.month_name)
-
-      #EmployeeAttendance.where("strftime('%m/%Y', day) = ? AND employee_id = ?", @date,wor.employee_id).update_all(is_confirm: true)
 
       overtime_hours=emp_att.sum(:overtime_hrs).to_f
       difference_hours=emp_att.sum(:difference_hrs).to_f

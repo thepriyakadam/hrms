@@ -55,13 +55,13 @@ class LeaveMastersController < ApplicationController
     @leave_masters = LeaveMaster.all
   end
 
-  def select_textbox
-    if params[:is_carry_forward] == true
-      @flag = true
-    else
-      @flag = false
-    end
-  end
+  # def select_textbox
+  #   if params[:is_carry_forward] == true
+  #     @flag = true
+  #   else
+  #     @flag = false
+  #   end
+  # end
 
   private
     # Use callbacks to share common setup or constraints between actions.

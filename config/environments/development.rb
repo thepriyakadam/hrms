@@ -100,7 +100,7 @@ Rails.application.configure do
 # }
 
  # Root url
-  config.action_mailer.default_url_options = { host: 'amaazia.com', port: 3000 }
+  config.action_mailer.default_url_options = { host: 'imap.gmail.com', port: 3000 }
   # config.domain = 'lvh.me'
   # config.action_mailer.perform_deliveries = true,
   ActionMailer::Base.delivery_method = :smtp
@@ -108,7 +108,7 @@ Rails.application.configure do
   ActionMailer::Base.smtp_settings = {
     address: 'smtp.gmail.com',
     port: 25,
-    domain: 'amaazia.com',
+    domain: 'imap.gmail.com',
     authentication: :plain,
     enable_starttls_auto: true,
     user_name: 'ranna.p@amaazia.com',

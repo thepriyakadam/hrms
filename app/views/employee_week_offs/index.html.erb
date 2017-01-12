@@ -1,0 +1,47 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Employee List</h3>
+    
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example6" class="table table-bordered table-hover table-condensed">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Employee</th>
+          <th>Department</th>
+          <th>Cost Center</th>
+          <th>Day</th>
+          <th>Date</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @employee_week_offs.each do |employee_week_off| %>
+          <tr>
+            <td><%= employee_week_off.employee.manual_employee_code %></td>
+            <td><%= full_name(employee_week_off.employee) %></td>
+            <td><%= employee_week_off.try(:employee).try(:department).try(:name) %></td>
+            <td><%= employee_week_off.employee.try(:joining_detail).try(:cost_center).try(:name) %></td>
+            <td><%= employee_week_off.day %></td>
+            <td><%= employee_week_off.date %></td>
+            <td><!-- <= link_to '', edit_employee_week_off_path(employee_week_off),class:'btn-success btn-xs fa fa-edit' %> -->
+              <% if employee_week_off.is_confirm == true %>
+                <small class="label label-info">Attendance Confirmed</small>
+              <% else %>
+                <%= link_to 'Revert', revert_week_off_employee_week_offs_path(employee_week_off),class:'btn-danger btn-xs' %></td>
+              <% end %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

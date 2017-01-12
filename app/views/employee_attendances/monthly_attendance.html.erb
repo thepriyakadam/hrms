@@ -62,8 +62,23 @@
             <%= hidden_field e.employee_id, 'pay_leave', value: workingday[2] %>
             <%= hidden_field e.employee_id, 'holiday_in_month', value: holiday_in_month %>
             <%= hidden_field e.employee_id, 'week_off_day', value: week_off_day %>
-            <%= hidden_field e.employee_id, 'absent_day', value: absent_day_count(exist) %>
-            <%= hidden_field e.employee_id, 'payable_day', value: payable_day %>
+
+            <% if gate_pass <= 2 %>
+              <%= hidden_field e.employee_id, 'absent_day', value: absent_day_count(exist) %>
+            <% else %>
+              <% @a = gate_pass.to_f - 2 %>
+              <% @b = @a.to_f/2 %>
+              <%= hidden_field e.employee_id, 'absent_day', value: absent_day_count(exist) + @b.to_f %>
+            <% end %>
+            
+            <% if gate_pass <= 2 %>
+              <%= hidden_field e.employee_id, 'payable_day', value: present_day.to_f + holiday_in_month.to_f + week_off_day.to_f + workingday[2] + gate_pass.to_f %>
+            <% else %>
+              <% @a = gate_pass.to_f - 2 %>
+              <% @b = @a.to_f/2 %>
+              <%= hidden_field e.employee_id, 'payable_day', value: present_day.to_f + holiday_in_month.to_f + week_off_day.to_f + workingday[2] + @b.to_f + 2 %>
+            <% end %>
+
             <%= hidden_field e.employee_id, 'gatepass', value: gate_pass %>
 
             <% exist.clear %>

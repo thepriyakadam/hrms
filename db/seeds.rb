@@ -354,35 +354,35 @@ require 'roo'
 # end
 # end
 # end
-ex = Roo::Excel.new("#{Rails.root}/public/0.xls")
-ex.default_sheet = ex.sheets[0] #siya feb
-i = 1
-ActiveRecord::Base.transaction do
-2.upto(27) do |line| # siya Feb 2016
- puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
- @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A'))
- # JoiningDetail.where(id: @employee.id).update_all(is_da: true)
- puts "#{i} Record inserted.-----------------------------------------------"
- unless @employee.nil?
- @employees = Employee.where(id: @employee.id)
+# ex = Roo::Excel.new("#{Rails.root}/public/0.xls")
+# ex.default_sheet = ex.sheets[0] #siya feb
+# i = 1
+# ActiveRecord::Base.transaction do
+# 2.upto(27) do |line| # siya Feb 2016
+#  puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
+#  @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A'))
+#  # JoiningDetail.where(id: @employee.id).update_all(is_da: true)
+#  puts "#{i} Record inserted.-----------------------------------------------"
+#  unless @employee.nil?
+#  @employees = Employee.where(id: @employee.id)
 
-   @employees.each do |e|
-   	@country1 = Country.find_by_name(ex.cell(line,'B'))
-   	e.update country_id: @country1.id
-   	puts "#{i} Country inserted.-----------------------------------------------"
-   	@state1 = State.find_by_name(ex.cell(line,'C'))
-   	e.update state_id: @state1.id
-   	puts "#{i} State Record inserted.-----------------------------------------------"
-   	@district1 = District.find_by_name(ex.cell(line,'D'))
-   	e.update district_id: @district1.id
-   	puts "#{i} District Record inserted.-----------------------------------------------"
-    e.save!
-   end
-   puts "#{i} Record inserted.-----------------------------------------------"
-   i += 1
- end
- end
-end
+#    @employees.each do |e|
+#    	@country1 = Country.find_by_name(ex.cell(line,'B'))
+#    	e.update country_id: @country1.id
+#    	puts "#{i} Country inserted.-----------------------------------------------"
+#    	@state1 = State.find_by_name(ex.cell(line,'C'))
+#    	e.update state_id: @state1.id
+#    	puts "#{i} State Record inserted.-----------------------------------------------"
+#    	@district1 = District.find_by_name(ex.cell(line,'D'))
+#    	e.update district_id: @district1.id
+#    	puts "#{i} District Record inserted.-----------------------------------------------"
+#     e.save!
+#    end
+#    puts "#{i} Record inserted.-----------------------------------------------"
+#    i += 1
+#  end
+#  end
+# end
 
 
 # ex = Roo::Excel.new("#{Rails.root}/public/o.xls")
@@ -438,6 +438,30 @@ end
 #  end
 #  end
 # end
+
+ex = Roo::Excel.new("#{Rails.root}/public/rgwdd.xls")
+ex.default_sheet = ex.sheets[0] #siya feb
+i = 1
+ActiveRecord::Base.transaction do
+
+2.upto(155) do |line| # siya Feb 201
+  puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
+  @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
+  unless @employee.nil?
+
+    Workingday.new do |w|
+      w.employee_id = @employee.id
+      w.month_name = ex.cell(line, 'B')
+      w.year = ex.cell(line, 'C').to_i
+      w.day_in_month = ex.cell(line, 'D')
+      w.payable_day = ex.cell(line, 'E')
+      w.save!
+    end
+    puts "#{i} Record inserted.-----------------------------------------------"
+    i += 1
+  end
+  end
+end
 
 # ex = Roo::Excel.new("#{Rails.root}/public/novattendance.xls")
 # ex.default_sheet = ex.sheets[1] #siya feb

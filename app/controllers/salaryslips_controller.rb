@@ -1242,23 +1242,6 @@ end
 
   
 
-  def show_employee
-    @month = params[:month]
-    @year = params[:year]
-    if current_user.class == Group
-      @salaryslips = Salaryslip.where(month: @month, year: @year.to_s)
-    elsif current_user.class == Member
-      if current_user.role.name == "GroupAdmin"
-        @salaryslips = Salaryslip.where(month: @month, year: @year.to_s)
-      elsif current_user.role.name == "Admin"
-        @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
-        @salaryslips = Salaryslip.where(month: @month, year: @year.to_s, employee_id: @employees)
-      elsif current_user.role.name == "Branch"
-        @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
-        @salaryslips = Salaryslip.where(month: @month, year: @year.to_s, employee_id: @employees)
-      end  
-    end    
-  end
 
   # def display_salaryslip_report
   #   @month = params[:month]
@@ -1650,6 +1633,25 @@ end
     end
   end
 
+
+  def show_employee
+    @month = params[:month]
+    @year = params[:year]
+    if current_user.class == Group
+      @salaryslips = Salaryslip.where(month: @month, year: @year.to_s)
+    elsif current_user.class == Member
+      if current_user.role.name == "GroupAdmin"
+        @salaryslips = Salaryslip.where(month: @month, year: @year.to_s)
+      elsif current_user.role.name == "Admin"
+        @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
+        @salaryslips = Salaryslip.where(month: @month, year: @year.to_s, employee_id: @employees)
+      elsif current_user.role.name == "Branch"
+        @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+        @salaryslips = Salaryslip.where(month: @month, year: @year.to_s, employee_id: @employees)
+      end  
+    end    
+  end
+  
   def destroy_salary_slip
     @month = params[:month]
     @year = params[:year]
@@ -1671,7 +1673,8 @@ end
         @workingdays = Workingday.where(employee_id: @salaryslip.employee_id, month_name: date.strftime("%B"), year: date.strftime("%Y"))
         @workingdays.destroy_all
         EmployerContribution.where(employee_id: @salaryslip.employee_id,date: @salaryslip.month_year).destroy_all
-        EmployeeAttendance.where("strftime('%m/%Y', day) = ?", date.strftime('%m/%Y')).update_all(is_confirm: false)
+        EmployeeAttendance.where("strftime('%m/%Y', day) = ? AND employee_id = ? ", date.strftime('%m/%Y'),@salaryslip.employee_id).update_all(is_confirm: false)
+        EmployeeWeekOff.where("strftime('%m/%Y', date) = ? AND employee_id = ? ", date.strftime('%m/%Y'),@salaryslip.employee_id).update_all(is_confirm: false)
       end
       flash[:notice] = "Revert successfully"
       redirect_to revert_salary_salaryslips_path

@@ -254,7 +254,6 @@ class EmployeeAttendancesController < ApplicationController
       # @employees.try(:each) do |x| 
       #   EmployeeAttendance.where("employee_id = ? AND strftime('%m/%Y', day) = ?",x,@date.strftime('%m/%Y')).update_all(is_confirm: true)
       # end
-
       @emp1 = params[:employees]
       b=a.last
       @payroll_overtime_masters = PayrollOvertimeMaster.where(is_active: true,is_payroll: true).take
@@ -262,7 +261,7 @@ class EmployeeAttendancesController < ApplicationController
       emp_attend=EmployeeAttendance.where(employee_id: x,month_name: b.month_name)
       
       EmployeeAttendance.where("strftime('%m/%Y', day) = ? AND employee_id = ?", @date.strftime('%m/%Y'),x).update_all(is_confirm: true)
-     
+      EmployeeWeekOff.where("strftime('%m/%Y', date) = ? AND employee_id = ?", @date.strftime('%m/%Y'),x).update_all(is_confirm: true)
       # ff=EmployeeAttendance.where(employee_id: x,month_name: b.month_name).take
       
       ot_hours=emp_attend.sum(:overtime_hrs).to_f

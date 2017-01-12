@@ -308,6 +308,51 @@ class AdvanceSalariesController < ApplicationController
              end
    end
 
+   def advance_report
+   end
+
+   def show_employee_detail
+    @employee_id = params[:employee_id]
+    @employee = Employee.find_by(id: @employee_id)
+    @advance_salaries = AdvanceSalary.where(employee_id: @employee_id)
+    @advance_salary = AdvanceSalary.where(employee_id: @employee_id).pluck(:id)
+      @instalments = Instalment.where(advance_salary_id: @advance_salary)
+   end
+
+   def employee_advance_excel
+    @employee_id = params[:employee_id]
+    @employee = Employee.find_by(id: @employee_id)
+    @advance_salaries = AdvanceSalary.where(employee_id: @employee_id)
+    @advance_salary = AdvanceSalary.where(employee_id: @employee_id).pluck(:id)
+      @instalments = Instalment.where(advance_salary_id: @advance_salary)
+
+      respond_to do |format|
+        format.xls {render template: 'advance_salaries/employee_advance.xls.erb'}
+      end
+   end
+
+   def employee_advance_pdf
+    @employee_id = params[:employee_id]
+    @employee = Employee.find_by(id: @employee_id)
+    @advance_salaries = AdvanceSalary.where(employee_id: @employee_id)
+    @advance_salary = AdvanceSalary.where(employee_id: @employee_id).pluck(:id)
+      @instalments = Instalment.where(advance_salary_id: @advance_salary)
+
+    respond_to do |format|
+    format.json
+    format.pdf do
+      render pdf: 'advance_salary',
+            layout: 'pdf.html',
+            orientation: 'Landscape',
+            template: 'advance_salaries/employee_advance.pdf.erb',
+            show_as_html: params[:debug].present?,
+            margin:  { top:1,bottom:1,left:1,right:1 }
+          end
+       end
+   end
+
+end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

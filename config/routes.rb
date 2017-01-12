@@ -1505,6 +1505,10 @@ end
       post :dynamic_report
       get :advance_salary_xls
       get :advance_salary_pdf
+      get :advance_report
+      get :show_employee_detail
+      get :employee_advance_excel
+      get :employee_advance_pdf
     end
   end
 

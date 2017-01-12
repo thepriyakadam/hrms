@@ -1,0 +1,15 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Employee Advance List</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+     <div class="row">
+        <div class="col-sm-3">
+          <div class="field">
+            <%= select :salary,:employee_id,employee_list_by_company_location,{label: 'Select Employee',include_blank: " Select Employee"},{onchange:"var a={employee_id:$(this).val()};$('.ajax-progress').show(); $.get('/advance_salaries/show_employee_detail',a,function(response){});", :class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"}  %>
+           </div>
+        </div>
+      </div><br>
+    <div id="employee_list"></div>
+</div>
+</div>

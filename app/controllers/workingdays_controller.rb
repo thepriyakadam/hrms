@@ -310,15 +310,19 @@ class WorkingdaysController < ApplicationController
     @month = params[:month]
     @year = params[:year]
     if current_user.class == Group
+      @workingday = Salaryslip.where(month: @month,year: @year).pluck(:workingday_id)
       @workingdays = Workingday.where(month_name: @month, year: @year.to_s)
     elsif current_user.class == Member
       if current_user.role.name == "GroupAdmin"
-        @workingdays = Workingday.where(month_name: @month, year: @year.to_s)
+        @workingday = Salaryslip.where(month: @month,year: @year).pluck(:workingday_id)
+        @workingdays = Workingday.where(month_name: @month, year: @year.to_s).where.not(id: @workingday)
       elsif current_user.role.name == "Admin"
         @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
-        @workingdays = Workingday.where(month_name: @month, year: @year.to_s, employee_id: @employees)
+        @workingday = Salaryslip.where(month: @month,year: @year,employee_id: @employee).pluck(:workingday_id)
+        @workingdays = Workingday.where(month_name: @month, year: @year.to_s).where.not(id: @workingday)
       elsif current_user.role.name == "Branch"
-        @workingday = Salaryslip.where(month: @month,year: @year).pluck(:workingday_id)
+        @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+        @workingday = Salaryslip.where(month: @month,year: @year,employee_id: @employees).pluck(:workingday_id)
         @workingdays = Workingday.where(month_name: @month,year: @year.to_s).where.not(id: @workingday)
 
         # @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)

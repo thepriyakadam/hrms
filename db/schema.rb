@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170110045655) do
+ActiveRecord::Schema.define(version: 20170112050137) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -2795,6 +2795,7 @@ ActiveRecord::Schema.define(version: 20170110045655) do
     t.integer  "employee_template_id"
     t.decimal  "arrear_actual_amount",       precision: 15, scale: 2
     t.decimal  "arrear_calculated_amount",   precision: 15, scale: 2
+    t.boolean  "is_confirm"
   end
 
   add_index "salaryslips", ["employee_id"], name: "index_salaryslips_on_employee_id"

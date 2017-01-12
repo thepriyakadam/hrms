@@ -318,15 +318,11 @@ class WorkingdaysController < ApplicationController
         @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
         @workingdays = Workingday.where(month_name: @month, year: @year.to_s, employee_id: @employees)
       elsif current_user.role.name == "Branch"
-        # @work = Workingday.where(month_name: @month, year: @year.to_s)
-        # @work.each do |w|
-        #   @employee = Salaryslip.find_by(workingday_id: w.id).pluck(:employee_id)
-        #   @emp = Employee.where.not(id: @employee)
-        # end
-        #  @workingdays = Workingday.where(employee_id: @emp)
+        @workingday = Salaryslip.where(month: @month,year: @year).pluck(:workingday_id)
+        @workingdays = Workingday.where(month_name: @month,year: @year.to_s).where.not(id: @workingday)
 
-        @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
-        @workingdays = Workingday.where(month_name: @month, year: @year.to_s, employee_id: @employees)
+        # @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+        # @workingdays = Workingday.where(month_name: @month, year: @year.to_s, employee_id: @employees)
       end  
     end    
   end

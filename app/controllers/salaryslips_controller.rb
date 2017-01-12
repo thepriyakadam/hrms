@@ -1680,4 +1680,46 @@ end
       redirect_to revert_salary_salaryslips_path
     end
   end
+
+  def confirm_salaryslip
+  end
+
+  def show_unconfirmed_employee
+    @month = params[:month]
+    @year = params[:year]
+    @salaryslips = Salaryslip.where(month: @month,year: @year,is_confirm: nil)
+
+    if current_user.class == Group
+      @salaryslips = Salaryslip.where(month: @month,year: @year,is_confirm: nil)  
+    elsif current_user.class == Member
+      if current_user.role.name == "GroupAdmin"
+        @salaryslips = Salaryslip.where(month: @month,year: @year,is_confirm: nil)
+      elsif current_user.role.name == "Admin"
+        company_employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
+        @salaryslips = Salaryslip.where(month: @month,year: @year,employee_id: company_employees,is_confirm: nil)
+      elsif current_user.role.name == "Branch"
+        location_employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+        @salaryslips = Salaryslip.where(month: @month,year: @year,employee_id: location_employees,is_confirm: nil)
+      elsif current_user.role.name == "HOD"
+        department_employees = Employee.where(department_id: current_user.company_location_id)
+        @salaryslips = Salaryslip.where(month: @month,year: @year,employee_id: department_employees,is_confirm: nil)
+      end
+    end
+  end
+
+  def Confirm_salaryslip
+    @salaryslip_ids = params[:salaryslip_ids]
+    if @salaryslip_ids.nil?
+      flash[:alert] = "Please Select Employees"
+      redirect_to confirm_salaryslip_salaryslips_path
+    else
+      @salaryslip_ids.each do |sid|
+        @salaryslip = Salaryslip.find(sid)
+        @salaryslip.update(is_confirm: true)
+      end
+      flash[:notice] = "Confirm successfully"
+      redirect_to confirm_salaryslip_salaryslips_path
+    end
+  end
+
 end

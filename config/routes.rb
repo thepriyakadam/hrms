@@ -1415,6 +1415,9 @@ end
       get :salaryslip_daterange_report
       post :dynamic_daterange_report
       get :daterangewise_salaryslip_xls
+      get :confirm_salaryslip
+      get :show_unconfirmed_employee
+      post :Confirm_salaryslip
     end
   end
  

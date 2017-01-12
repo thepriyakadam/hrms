@@ -5,6 +5,7 @@
     <tr>
       <th><input type="checkbox" id="selectAll" value="selectAll"></th>
       <th>Sr.No</th>
+      <th>ID</th>
       <th>Employee Name</th>
       <th>Contact No</th>
       <th>Signature</th>
@@ -20,6 +21,7 @@
           <% end %>
         </td>
         <td><%= i=i+1 %></td>
+        <td><%= trainee.employee.manual_employee_code %></td>
         <td><%= trainee.employee.try(:first_name) %> <%= trainee.employee.try(:middle_name) %> <%=trainee.employee.try(:last_name) %></td>
         <td><%= trainee.employee.try(:contact_no) %></td>
         <td></td>

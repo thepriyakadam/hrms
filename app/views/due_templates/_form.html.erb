@@ -8,26 +8,24 @@
     </div> 
      <div class="col-sm-3">
       <div class="form-group required">
-        <%= f.text_field :name,label: 'Name' %>
+        <%= f.text_field :name,label: 'Template Name' %>
       </div>
     </div>
 
-     <div class="col-sm-3">
+     <div class="col-sm-2">
      <label>Status</label>
       <div class="form-group required">
         <%= f.check_box :status,label: 'Active' %>
       </div>
     </div>
 
-    <div class="row">
-     <div class="col-sm-3">
+     <div class="col-sm-2">
         <div class="field">
           <%= f.file_field :document,label: 'Document Upload(only docx,pdf)' %>
         </div>
      </div>
-  </div>  
 
-    <div class="col-sm-3">
+    <div class="col-sm-2">
       <div class="actions">
         <%= f.submit "Create No Dues Template ",:class => class_name,  data: { disable_with: data_info } %>
       </div>

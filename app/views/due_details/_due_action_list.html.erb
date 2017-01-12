@@ -5,7 +5,7 @@
       <thead>
         <tr>
           <th>No Due Owner</th>
-          <th>Name</th>
+          <th>Item Name</th>
           <th>Remark</th>
           <th>Amount</th>
        </tr>
@@ -14,7 +14,7 @@
       <tbody>
         <% @due_actions.each do |due_action| %>
           <tr>
-            <td><%= due_action.due_employee_detail.reporting_master_id %></td>
+            <td><%= full_name(due_action.due_employee_detail.reporting_master.employee) %></td>
             <td><%= due_action.name %></td>
             <td><%= due_action.remark %></td>
             <td><%= due_action.amount %></td>

@@ -5,9 +5,10 @@
 <table id="example2" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
-     <th>No Dues Owner</th>
-     <th>No Dues Template</th>
+     <th>ID</th>
      <th>Employee Name</th>
+     <th>No Dues Owner</th>
+     <th>Template Name</th>
      <th>Action</th>
     </tr>
   </thead>
@@ -15,8 +16,9 @@
   <tbody>
     <% @due_employee_details.each do |due_employee_detail| %>
       <tr>
+       <td><%= due_employee_detail.employee.manual_employee_code %></td>
        <td><%= due_employee_detail.employee.first_name+' '+due_employee_detail.employee.middle_name+' '+due_employee_detail.employee.last_name %></td>
-       <td><%= due_employee_detail.reporting_master_id %></td>
+       <td><%= due_employee_detail.reporting_master.employee.try(:first_name) %> <%= due_employee_detail.reporting_master.employee.try(:moddle_name) %> <%= due_employee_detail.reporting_master.employee.try(:last_name) %></td>
        <td><%= due_employee_detail.due_template.try(:name) %></td>
         <td>
           <%= link_to ' Assign No Dues Action', new_due_action_path(due_employee_detail_id: due_employee_detail.id),class: 'btn btn-xs btn-primary' %>

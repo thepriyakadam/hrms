@@ -46,16 +46,25 @@
         
         <div class="col-sm-2">
           <div class="actions">
-            <%= f.submit "Display Report", class: "btn btn-sm btn-primary" %>
+            <%= f.submit "Display Report", class: "btn btn-sm btn-primary",id: "buttonCtc" %>
           </div>
         </div>
         </div><br>
+        <div class="ajax-progress"></div>
         <div id="retention_money_li"></div>
 
       <br>
     <% end %>
   </div><!-- /.box-body -->
 </div><!-- /.box -->
+
+<script type="text/javascript">
+  $("#buttonCtc").click(function(){
+    $('.ajax-progress').show();
+    $("#retention_money").submit();
+  })
+</script>
+
 
 <script>
 $("#retention_money").validate({

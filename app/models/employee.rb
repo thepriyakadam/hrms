@@ -67,6 +67,7 @@ class Employee < ActiveRecord::Base
   has_many :issue_requests
   has_many :issue_lockers
   has_many :week_off_masters
+  has_many :machine_attendances
   
   #accepts_nested_attributes_for :joining_detail
   has_many :subordinates, class_name: 'Employee',

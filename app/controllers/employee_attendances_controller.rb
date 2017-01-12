@@ -628,24 +628,24 @@ class EmployeeAttendancesController < ApplicationController
     @start = params[:day]
     @end = params[:to_date]
     @present = params[:present]
-    @employee_attendances = EmployeeAttendance.where(present: @present,day: @start..@end)
+    @employee_attendances = EmployeeAttendance.where(present: @present,day: @start.to_date..@end.to_date)
   end
 
   def from_date_wise_xls
     @start = params[:day]
     @end = params[:to_date]
     @present = params[:present]
-    @employee_attendances = EmployeeAttendance.where(present: @present,day: @start..@end)
+    @employee_attendances = EmployeeAttendance.where(present: @present,day: @start.to_date..@end.to_date)
     respond_to do |format|
     format.xls {render template: 'employee_attendances/from_date_wise_xls.xls.erb'}
   end
 end
 
 def from_date_wise_pdf
-   @start = params[:day]
+    @start = params[:day]
     @end = params[:to_date]
     @present = params[:present]
-    @employee_attendances = EmployeeAttendance.where(present: @present,day: @start..@end)
+    @employee_attendances = EmployeeAttendance.where(present: @present,day: @start.to_date..@end.to_date)
 
      respond_to do |format|
         format.html

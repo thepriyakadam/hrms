@@ -93,8 +93,8 @@ class WeekOffMastersController < ApplicationController
         #   @employees = Employee.all
         # end
         
-        @emp_id = WeekOffMaster.where.not(day: @day,from: @from.to_date,to: @to.to_date).pluck(:employee_id)
-        @employees = Employee.where(id: @emp_id)
+        @emp_id = WeekOffMaster.where(day: @day,from: @from.to_date,to: @to.to_date).pluck(:employee_id)
+        @employees = Employee.where.not(id: @emp_id)
 
         # for i in @from.to_date..@to.to_date
         #   @emp_id = WeekOffMaster.where(day: @day,from: i).pluck(:employee_id)
@@ -119,11 +119,11 @@ class WeekOffMastersController < ApplicationController
       #@employees = WeekOffMaster.joins("INNER JOIN week_off_masters ON week_off_masters.employee_id = employees.id").where.not("week_off_masters.day = ? AND week_off_masters.from.to_date = ? AND week_off_masters.to.to_date = ?",@day,@from.to_date,@to.to_date)
       
       elsif current_user.role.name == 'Admin'
-        @emp_id = WeekOffMaster.where.not(day: @day,from: @from.to_date,to: @to.to_date).pluck(:employee_id)
-        @employees = Employee.where(company_id: current_user.company_location.company_id,id: @emp_id)
+        @emp_id = WeekOffMaster.where(day: @day,from: @from.to_date,to: @to.to_date).pluck(:employee_id)
+        @employees = Employee.where(company_id: current_user.company_location.company_id).where.not(id: @emp_id)
       elsif current_user.role.name == 'Branch'
-        @emp_id = WeekOffMaster.where.not(day: @day,from: @from.to_date,to: @to.to_date).pluck(:employee_id)
-        @employees = Employee.where(company_location_id: current_user.company_location_id,id: @emp_id)
+        @emp_id = WeekOffMaster.where(day: @day,from: @from.to_date,to: @to.to_date).pluck(:employee_id)
+        @employees = Employee.where(company_location_id: current_user.company_location_id).where.not(id: @emp_id)
       else
         @employees = Employee.all
       end

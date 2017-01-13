@@ -346,7 +346,7 @@ class AdvanceSalariesController < ApplicationController
             orientation: 'Landscape',
             template: 'advance_salaries/employee_advance.pdf.erb',
             show_as_html: params[:debug].present?,
-            margin:  { top:1,bottom:1,left:1,right:1 }
+            margin:  { top:10,bottom:10,left:15,right:15 }
           end
        end
    end

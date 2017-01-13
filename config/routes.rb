@@ -1513,6 +1513,10 @@ end
       post :advance_detail
       get :advance_detail_pdf
       get :advance_detail_excel
+      get :yearly_advance_report
+      post :yearly_advance
+      get :yearly_advance_pdf
+      get :yearly_advance_excel
     end
   end
 

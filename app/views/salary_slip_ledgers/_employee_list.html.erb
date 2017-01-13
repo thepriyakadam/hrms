@@ -5,7 +5,7 @@
     <tr>
       <th colspan="6"><center> BASIC DETAILS</center></th>
       <th colspan="12"><center> SALARY DETAILS</center></th>
-      <th colspan="8"><center> WORKING DAYS</center></th>
+      <th colspan="11"><center> WORKING DAYS</center></th>
       <th colspan="12"><center> EARNED SALARY</center></th>
       <th colspan="12"><center>DEDUCTION</center></th>
       <th><center> NET </center></th>
@@ -35,6 +35,9 @@
 
       <th>CL</th>
       <th>EL</th>
+      <th>AL</th>
+      <th>Coff</th>
+      <th>ESIC</th>
       <th>LWP</th>
       <th>Payable</th>
       <th>PD</th>
@@ -98,6 +101,9 @@
 
         <td><%= r.try(:cl_leave) %></td>
         <td><%= r.try(:el_leave) %></td>
+        <td><%= r.try(:advance_leave) %></td>
+        <td><%= r.try(:coff_leave) %></td>
+        <td><%= r.try(:esic_leave) %></td>
 
         <td><%= r.try(:lwp_leave) %></td>
         <td><%= r.try(:payable_day) %></td>
@@ -161,6 +167,10 @@
       
       <td><%= @sum.cl_leave %></td>
       <td><%= @sum.el_leave %></td>
+      <td><%= @sum.advance_leave %></td>
+      <td><%= @sum.coff_leave %></td>
+      <td><%= @sum.esic_leave %></td>
+
       <td><%= @sum.lwp_leave %></td>
       <td><%= @sum.payable_day %></td>
       <td><%= @sum.present_day %></td>

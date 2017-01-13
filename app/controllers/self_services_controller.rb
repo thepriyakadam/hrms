@@ -19,7 +19,7 @@ class SelfServicesController < ApplicationController
 
   def salaryslip
     # @employee = Employee.find(current_user.employee_id)
-    @salray_slips = Salaryslip.where(employee_id: current_user.employee_id)
+    @salray_slips = Salaryslip.where(employee_id: current_user.employee_id , is_confirm: true)
    session[:active_tab] ="EmployeeSelfService"
   end
 

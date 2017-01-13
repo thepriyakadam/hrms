@@ -351,6 +351,106 @@ class AdvanceSalariesController < ApplicationController
        end
    end
 
+   def advance_detailed_report  
+   end
+
+   def advance_detail
+    @month = params[:advance_salary][:month]
+    @year = params[:advance_salary][:year]
+    @company = params[:advance_salary][:company_id]
+    @location = params[:advance_salary][:company_location_id]
+    date = Date.new(@year.to_i, Workingday.months[@month])
+    @compny = Company.find_by(id: @company)
+
+    if current_user.class == Group
+      if @location == ""
+        @employees = Employee.where(company_id: @company.to_i).pluck(:id)
+        @advance_salaries = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+      elsif @company == ""
+        @employees = Employee.where(company_location_id: @location.to_i).pluck(:id)
+        @advance_salaries = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+      else 
+        @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
+        @advance_salaries = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+      end
+    elsif current_user.class == Member
+      if current_user.role.name == 'GroupAdmin'
+        if @location == ""
+          @employees = Employee.where(company_id: @company.to_i).pluck(:id)
+          @advance_salaries = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+        elsif @company == ""
+          @employees = Employee.where(company_location_id: @location.to_i).pluck(:id)
+          @advance_salaries = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+        else 
+          @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
+          @advance_salaries = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+        end
+      elsif current_user.role.name == 'Admin'
+        if @location == ""
+          @employees = Employee.where(company_id: @company.to_i).pluck(:id)
+          @advance_salaries = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+        elsif @company == ""
+          @employees = Employee.where(company_location_id: @location.to_i).pluck(:id)
+          @advance_salaries = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+        else 
+          @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
+          @advance_salaries = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+        end
+      elsif current_user.role.name == 'Branch'
+        if @location == ""
+          @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+          @advance_salaries = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+        elsif @company == ""
+          @employees = Employee.where(company_location_id: @location.to_i).pluck(:id)
+          @advance_salaries = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+        else 
+          @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
+          @advance_salaries = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+        end
+      end #admin,branch
+    end #group/member
+   end #def
+
+   def advance_detail_excel
+    @month = params[:month]
+    @year = params[:year]
+    @company = params[:company_id]
+    @location = params[:company_location_id]
+    date = Date.new(@year.to_i, Workingday.months[@month])
+    @compny = Company.find_by(id: @company)
+
+    @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
+    @advance_salaries = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)    
+    
+    respond_to do |format|
+      format.xls {render template: 'advance_salaries/advance_detail.xls.erb'}
+    end
+   end
+
+   def advance_detail_pdf
+    @month = params[:month]
+    @year = params[:year]
+    @company = params[:company_id]
+    @location = params[:company_location_id]
+    date = Date.new(@year.to_i, Workingday.months[@month])
+    @compny = Company.find_by(id: @company)
+
+    @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
+    @advance_salaries = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)    
+    
+    respond_to do |format|
+    format.json
+    format.pdf do
+      render pdf: 'advance_salary',
+            layout: 'pdf.html',
+            orientation: 'Landscape',
+            template: 'advance_salaries/advance_detail.pdf.erb',
+            show_as_html: params[:debug].present?,
+            margin:  { top:1,bottom:1,left:1,right:1 }
+          end
+       end
+   end
+
 end
 
   private

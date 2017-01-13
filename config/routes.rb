@@ -1509,6 +1509,10 @@ end
       get :show_employee_detail
       get :employee_advance_excel
       get :employee_advance_pdf
+      get :advance_detailed_report
+      post :advance_detail
+      get :advance_detail_pdf
+      get :advance_detail_excel
     end
   end
 

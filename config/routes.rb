@@ -1482,6 +1482,10 @@ end
       get :soc_membership_xls
       get :soc_membership_pdf
       get :pf_pdf
+      get :monthly_deduction_report
+      post :monthly_deduction
+      get :monthly_deduction_pdf
+      get :monthly_deduction_excel
     end
   end
 

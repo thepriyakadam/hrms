@@ -1728,6 +1728,7 @@ end
       get :all_leave_request_list
       get :admin_employee_history_with_current_leave
       get :select_checkbox
+      get :leave_request_report
     end
   end
   resources :company_leavs

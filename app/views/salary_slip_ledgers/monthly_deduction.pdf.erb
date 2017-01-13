@@ -1,0 +1,41 @@
+<style>
+    th {
+        text-align: left;
+    }
+    tr {
+        page-break-inside: avoid;
+    }
+    div.alwaysbreak { page-break-before: always; }
+    div.nobreak:before { clear:both; }
+    div.nobreak{ page-break-inside: avoid;
+      /* http://code.google.com/p/wkhtmltopdf/issues/detail?id=9#c21 */
+    }
+</style>
+<table style="border-collapse: collapse; font-size:10pt;" border=1 width=1000 cellpadding="10">
+ <thead>
+      <tr>
+        <th>ID</th>
+        <th>Employee Name</th>
+        <th>Department</th>
+        <th>Other Component</th>
+        <th>Actual Amount</th>
+    </tr>
+    </thead>
+    <tbody>
+      <% @salaryslips.each do |slip| %>
+        <% employee = slip.employee %>
+        <tr>
+          <td><%= slip.employee.manual_employee_code %></td>
+          <td><%= employee.try(:first_name) %> <%= employee.try(:middle_name) %> <%= employee.try(:last_name) %></td>
+          <td><%= employee.company_location.try(:name) %> - <%= employee.department.try(:name) %></td>
+            <% @deducted_salaryslip = slip.salaryslip_components %>
+            <% @deducted_salaryslip.each do |item| %>
+              <% if item.other_component_name == "Advance" %>
+                <td><%= item.other_component_name %></td>
+                <td><%= item.actual_amount.round %></td>
+              <% end %>
+            <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>

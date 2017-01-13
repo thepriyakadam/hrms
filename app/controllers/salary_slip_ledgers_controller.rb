@@ -1934,7 +1934,66 @@ class SalarySlipLedgersController < ApplicationController
     respond_to do |format|
       format.xls {render template: 'salary_slip_ledgers/print_xls.xls.erb'}
     end
-
   end
+
+  def monthly_deduction_report
+  end
+
+  def monthly_deduction
+    @month = params[:salaryslip][:month]
+    @year = params[:salaryslip][:year]
+    @company = params[:salaryslip][:company_id]
+    @location = params[:food_deduction][:company_location_id]
+
+    @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i)
+    @salaryslips1 = Salaryslip.where('month = ? and year = ?', @month, @year).where(employee_id: @employees).pluck(:id)
+    @salaryslip_components = SalaryslipComponent.where(salaryslip_id: @salaryslips1,other_component_name: "Advance").pluck(:salaryslip_id)
+    @salaryslips = Salaryslip.where(id:  @salaryslip_components)
+  end
+
+  def monthly_deduction_pdf
+    @month = params[:month]
+    @year = params[:year]
+    @company = params[:company_id]
+    @location = params[:company_location_id]
+
+    @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i)
+    @salaryslips1 = Salaryslip.where('month = ? and year = ?', @month, @year).where(employee_id: @employees).pluck(:id)
+    @salaryslip_components = SalaryslipComponent.where(salaryslip_id: @salaryslips1,other_component_name: "Advance").pluck(:salaryslip_id)
+    @salaryslips = Salaryslip.where(id:  @salaryslip_components)
+      
+       respond_to do |format|
+          format.json
+          format.pdf do
+            render pdf: 'monthly_deduction_pdf',
+                  layout: 'pdf.html',
+                  orientation: 'Landscape',
+                  template: 'salary_slip_ledgers/monthly_deduction.pdf.erb',
+                  # show_as_html: params[:debug].present?,
+                  :page_height      => 1000,
+                  :dpi              => '300',
+                  :margin           => {:top    => 10, # default 10 (mm)
+                                :bottom => 10,
+                                :left   => 20,
+                                :right  => 20},
+                  :show_as_html => params[:debug].present?
+                end
+             end
+    end
+
+    def monthly_deduction_excel
+      @month = params[:month]
+      @year = params[:year]
+      @company = params[:company_id]
+      @location = params[:company_location_id]
+
+      @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i)
+      @salaryslips1 = Salaryslip.where('month = ? and year = ?', @month, @year).where(employee_id: @employees).pluck(:id)
+      @salaryslip_components = SalaryslipComponent.where(salaryslip_id: @salaryslips1,other_component_name: "Advance").pluck(:salaryslip_id)
+      @salaryslips = Salaryslip.where(id:  @salaryslip_components)
+      respond_to do |format|
+        format.xls {render template: 'salary_slip_ledgers/monthly_deduction.xls.erb'}
+      end
+    end
 
 end

@@ -1438,6 +1438,7 @@ end
       get :excel_report
       post :print_salary_slip_excel
       get :dynamic_dropdown
+      post :salary_slip_company_location_department
     end
    end
  

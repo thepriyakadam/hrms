@@ -586,7 +586,6 @@ class EmployeesController < ApplicationController
 
   def selected_employee_list_report
     @employee_id = params[:employee_id]
-<<<<<<< HEAD
     @employees = Employee.where(id: @employee_id)
     if @employee_id.nil?
       flash[:alert] = "Please Select the checkbox"
@@ -594,9 +593,7 @@ class EmployeesController < ApplicationController
       redirect_to selected_employee_list_report_employees_path
     else
     end
-=======
     @employees = Employee.where(id: @employee_id)     
->>>>>>> 2f5206455df4285ab23b3a02dbe3958591406c9c
   end
 
   def selected_employee_pdf

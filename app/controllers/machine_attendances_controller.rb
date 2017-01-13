@@ -153,11 +153,6 @@ end
                           total_time_diff = time_diff - s.working_hrs.to_f
                           # byebug
                           late_diff =TimeDifference.between(@c1.in_time.strftime('%H:%M:%S'), s.in_time.strftime('%H:%M:%S')).in_minutes.abs.to_f
-                          # late_working_hrs_1 = time_diff.abs - lmm.late_mark.to_i.abs
-                          # byebug
-                          # calculated_working_hrs = late_working_hrs_1 - s.working_hrs.to_f
-                          late_working_hrs_1 = time_diff.abs - lmm.late_mark.to_i.abs
-                          calculated_working_hrs = late_working_hrs_1 - s.working_hrs.to_f
                           # byebug
                           @late_mark_masters.each do |lmm|
                           if late_diff.between?(lmm.from.to_i, lmm.to.to_i)
@@ -197,28 +192,38 @@ end
                             # byebug
                             # lm=LateMarkMaster.where(id: lmm).take
 
-                            # late_working_hrs_1 = time_diff.abs - lmm.late_mark.to_i.abs
+                            # late_working_hrs_1 = time_diff.abs - lmm.late_mark.to_i.ab0.
                             # calculated_working_hrs = late_working_hrs_1 - s.working_hrs.to_f
 
                             late_working_hrs = time_diff.abs - lmm.late_mark.to_i.abs
                             EmployeeAttendance.where(id: @c2.id).update_all(working_hrs: late_working_hrs,rest_time: time_diff)
                           # EmployeeAttendance.where(id: @c1.id).update_all(working_hrs: time_diff)
                           end
-                        end
-                          # if total_time_diff<0
-                          #   EmployeeAttendance.where(id: @c1.id).update_all(difference_hrs: total_time_diff.abs)
+                        # end
+                        # byebug
+                          # late_working_hrs_1 = time_diff.abs - lmm.late_mark.to_i.abs
+                          # calculated_working_hrs = late_working_hrs_1 - s.working_hrs.to_f
+                          # #in_late_diff_hours =TimeDifference.between(@c2.in_time.strftime('%H:%M:%S'), s.in_time.strftime('%H:%M:%S')).in_hours.abs.to_f
+                          # #out_late_diff_hours =TimeDifference.between(@c2.out_time.strftime('%H:%M:%S'), s.out_time.strftime('%H:%M:%S')).in_hours.abs.to_f
+                          # if calculated_working_hrs<0
+                          #   # byebug
+                          #   EmployeeAttendance.where(id: @c2.id).update_all(difference_hrs: calculated_working_hrs.abs)
                           # else
-                          #   EmployeeAttendance.where(id: @c1.id).update_all(overtime_hrs: total_time_diff)
+                          #   EmployeeAttendance.where(id: @c2.id).update_all(overtime_hrs: calculated_working_hrs)
                           # end
+
+                          # byebug
+                        end
+                        # byebug
                           puts "/////////////////////////////////////"    
                       end
                   end
                 end
             # end
       end
-    end  
+  end  
           flash[:notice] = "Machine Attendance Created Successfully"
-          redirect_to new_machine_attendance_path    
+          redirect_to root_url
   end
 
   def import_machine_attendance

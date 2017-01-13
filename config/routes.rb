@@ -1423,6 +1423,9 @@ end
       get :salaryslip_daterange_report
       post :dynamic_daterange_report
       get :daterangewise_salaryslip_xls
+      get :confirm_salaryslip
+      get :show_unconfirmed_employee
+      post :Confirm_salaryslip
     end
   end
  
@@ -1488,6 +1491,10 @@ end
       get :soc_membership_xls
       get :soc_membership_pdf
       get :pf_pdf
+      get :monthly_deduction_report
+      post :monthly_deduction
+      get :monthly_deduction_pdf
+      get :monthly_deduction_excel
     end
   end
 
@@ -1511,6 +1518,18 @@ end
       post :dynamic_report
       get :advance_salary_xls
       get :advance_salary_pdf
+      get :advance_report
+      get :show_employee_detail
+      get :employee_advance_excel
+      get :employee_advance_pdf
+      get :advance_detailed_report
+      post :advance_detail
+      get :advance_detail_pdf
+      get :advance_detail_excel
+      get :yearly_advance_report
+      post :yearly_advance
+      get :yearly_advance_pdf
+      get :yearly_advance_excel
     end
   end
 
@@ -1726,6 +1745,7 @@ end
       get :all_leave_request_list
       get :admin_employee_history_with_current_leave
       get :select_checkbox
+      get :leave_request_report
     end
   end
   resources :company_leavs

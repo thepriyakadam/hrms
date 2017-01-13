@@ -505,7 +505,6 @@ class InstalmentsController < ApplicationController
   #     format.xls {render template: 'employee_attendances/employee_attendance.xls.erb'}
   #   end
   # end
-
   private
 
   # Use callbacks to share common setup or constraints between actions.

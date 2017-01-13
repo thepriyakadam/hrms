@@ -292,7 +292,7 @@
        <li><a href="/machine_attendances/new"><i class="fa fa-tags"> </i>Machine Attendances</a></li>
        <li><a href="/holidays/new"><i class="fa fa-tags"></i> Holiday Setup </a></li>
        <li><a href="/week_off_masters/new"><i class="fa fa-tags"></i> Week Off Setup </a></li>
-       <li><a href="/week_off_masters/week_off_list"><i class="fa fa-tags"></i> Week Off List </a></li>
+       <li><a href="/week_off_masters/week_off_list"><i class="fa fa-tags"></i> Confirm Week Off </a></li>
        <li><a href="/employee_week_offs"><i class="fa fa-tags"></i> Revert Week Off</a></li>
      </ul>
       </li> 
@@ -402,10 +402,20 @@
             </ul>
           </li>
 
-          <li id="Instalment">
+          <!-- <li id="Instalment">
             <a href="#"><i class="fa fa-edit"></i> Instalment <i class="fa fa-angle-left pull-right"></i></a>
             <ul class="treeview-menu">
              <li><a href="/instalments"><i class="fa fa-tags"> </i>Installment</a></li>
+            </ul>
+          </li> -->
+           <li id="Instalment">
+            <a href="#"><i class="fa fa-edit"></i> Report <i class="fa fa-angle-left pull-right"></i></a>
+            <ul class="treeview-menu">
+              <li><a href="/instalments/installment_report"><i class="fa fa-tags"> </i>Installment Details</a></li>
+              <li><a href="/advance_salaries/advance_report"><i class="fa fa-tags"> </i>Employee Advance</a></li>
+              <li><a href="/advance_salaries/advance_salary_report"><i class="fa fa-tags"> </i>Monthly Advance</a></li>
+               <li><a href="/advance_salaries/advance_detailed_report"><i class="fa fa-tags"></i>Advance Detail</a></li>
+               <li><a href="/advance_salaries/yearly_advance_report"><i class="fa fa-tags"> </i>Yearly Advance</a></li>
             </ul>
           </li>
         </ul>
@@ -416,6 +426,7 @@
         <ul class="treeview-menu">
           <li><a href="/salaryslips/select_month_year_form"><i class="fa fa-tags"></i> Salary Process Mass</a></li>
           <li><a href="/salaryslips/revert_salary"><i class="fa fa-tags"></i> Salary Reversal</a></li>
+          <li><a href="/salaryslips/confirm_salaryslip"><i class="fa fa-tags"></i> Confirm Salary</a></li>
           <li id="SalarySlip">
             <a href="#"><i class="fa fa-edit"></i> Salary Slip<i class="fa fa-angle-left pull-right"></i></a>
             <ul class="treeview-menu">
@@ -454,9 +465,9 @@
             <a href="#"><i class="fa fa-edit"></i> Deduction Report <i class="fa fa-angle-left pull-right"></i></a>
             <ul class="treeview-menu">
             <!-- <li><a href="/reports/advance_salaries/new"><i class="fa fa-tags"> </i>Advance Salaries</a></li> -->
-            <li><a href="/advance_salaries/advance_salary_report"><i class="fa fa-tags"> </i>Advance Salary</a></li>
-            <!-- <li><a href="/reports/instalment_details/new"><i class="fa fa-tags"> </i>Monthly Instalments </a></li> -->
-            <li><a href="/instalments/installment_report"><i class="fa fa-tags"> </i>Monthly Instalment </a></li>
+           
+            <li><a href="/salary_slip_ledgers/monthly_deduction_report"><i class="fa fa-tags"> </i>Monthly Deduction</a></li>
+           
             <!-- <li><a href="/reports/food_deduction_details/new"><i class="fa fa-tags"> </i>Food Deductions</a></li> -->
             <li><a href="/food_deductions/food_deduction_report"><i class="fa fa-tags"> </i>Food Deduction</a></li>
             <!-- <li><a href="/reports/pf_details/new"><i class="fa fa-tags"> </i>PF Monthly Details</a></li> -->

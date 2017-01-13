@@ -5,6 +5,7 @@ class EmployeeLeavRequestsController < ApplicationController
   include QueryReport::Helper  # need to include it
 
   def index
+    @employee = Employee.find(current_user.employee_id)
     @employee_leav_requests = EmployeeLeavRequest.where('employee_id = ?', current_user.try(:employee_id))
     @employee_leav_balances = EmployeeLeavBalance.where(employee_id: current_user.employee_id)
     session[:active_tab] ="EmployeeSelfService"
@@ -320,6 +321,9 @@ class EmployeeLeavRequestsController < ApplicationController
     end
   end
 
+  def leave_request_report
+  end
+  
   private
 
   # Use callbacks to share common setup or constraints between actions.

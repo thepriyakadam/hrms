@@ -321,6 +321,9 @@ class EmployeeLeavRequestsController < ApplicationController
     end
   end
 
+  def leave_request_report
+  end
+  
   private
 
   # Use callbacks to share common setup or constraints between actions.

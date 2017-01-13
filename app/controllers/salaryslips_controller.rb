@@ -1360,7 +1360,7 @@ end
         end
         elsif current_user.role.name == 'Branch'
         if @location == ""
-          @employees = Employee.where(company_id: @company.to_i)
+          @employees = Employee.where(company_location_id: current_user.company_location_id)
           @salaryslips = Salaryslip.where('month = ? and year = ?', @month, @year).where(employee_id: @employees)
         elsif @company == ""
           @employees = Employee.where(company_location_id: @location.to_i)
@@ -1418,7 +1418,7 @@ end
         end
         elsif current_user.role.name == 'Branch'
         if @location == ""
-          @employees = Employee.where(company_id: @company.to_i)
+          @employees = Employee.where(company_location_id: current_user.company_location_id)
           @salaryslips = Salaryslip.where('month = ? and year = ?', @month, @year).where(employee_id: @employees)
         elsif @company == ""
           @employees = Employee.where(company_location_id: @location.to_i)
@@ -1479,7 +1479,7 @@ end
         end
         elsif current_user.role.name == 'Branch'
         if @location == ""
-          @employees = Employee.where(company_id: @company.to_i)
+          @employees = Employee.where(company_location_id: current_user.company_location_id)
           @salaryslips = Salaryslip.where('month = ? and year = ?', @month, @year).where(employee_id: @employees)
         elsif @company == ""
           @employees = Employee.where(company_location_id: @location.to_i)
@@ -1555,7 +1555,7 @@ end
         end
         elsif current_user.role.name == 'Branch'
         if @location == ""
-          @employees = Employee.where(company_id: @company.to_i)
+          @employees = Employee.where(company_location_id: current_user.company_location_id)
           @salaryslips = Salaryslip.where(month_year: start_date..end_date).where(employee_id: @employees)
         elsif @company == ""
           @employees = Employee.where(company_location_id: @location.to_i)
@@ -1613,7 +1613,7 @@ end
         end
         elsif current_user.role.name == 'Branch'
         if @location == ""
-          @employees = Employee.where(company_id: @company.to_i)
+          @employees = Employee.where(company_location_id: current_user.company_location_id)
           @salaryslips = Salaryslip.where(month_year: start_date..end_date).where(employee_id: @employees)
         elsif @company == ""
           @employees = Employee.where(company_location_id: @location.to_i)

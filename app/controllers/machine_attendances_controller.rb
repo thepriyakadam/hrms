@@ -56,7 +56,6 @@ class MachineAttendancesController < ApplicationController
 # end
 
 def save_machine_attendance
-    # byebug
     @emp_id = params[:machine_attendance][:employee_id]
     @day = params[:machine_attendance][:day]
     @in = params[:machine_attendance][:in]
@@ -111,7 +110,7 @@ end
                         MachineAttendance.where(id: e.id).update_all(is_proceed: true)
                         time_diff=TimeDifference.between(@c1.in_time.strftime('%H:%M:%S'), @c1.out_time.strftime('%H:%M:%S')).in_hours.round
                         total_time_diff = time_diff - s.working_hrs.to_f
-                        EmployeeAttendance.where(id: @c1.id).update_all(working_hrs: time_diff)
+                        EmployeeAttendance.where(id: @c1.id).update_all(working_hrs: time_diff,rest_time: time_diff)
                         if total_time_diff<0
                           EmployeeAttendance.where(id: @c1.id).update_all(difference_hrs: total_time_diff.abs)
                         else
@@ -134,6 +133,14 @@ end
                             # byebug
                             late_working_hrs = time_diff.abs - lmm.late_mark.to_i.abs
                             EmployeeAttendance.where(id: @c1.id).update_all(working_hrs: late_working_hrs,rest_time: time_diff)
+                            late_working_hrs_1 = time_diff.abs - lmm.late_mark.to_i.abs
+                            calculated_working_hrs = late_working_hrs_1 - s.working_hrs.to_f
+                            if calculated_working_hrs<0
+                              #byebug
+                              EmployeeAttendance.where(id: @c1.id).update_all(difference_hrs: calculated_working_hrs.abs)
+                            else
+                              EmployeeAttendance.where(id: @c1.id).update_all(overtime_hrs: calculated_working_hrs)
+                            end
                           # EmployeeAttendance.where(id: @c1.id).update_all(working_hrs: time_diff)
                           end
                         end
@@ -164,16 +171,27 @@ end
 
                             late_working_hrs = time_diff.abs - lmm.late_mark.to_i.abs
                             EmployeeAttendance.where(id: @c1.id).update_all(working_hrs: late_working_hrs,rest_time: time_diff)
+                            late_working_hrs_1 = time_diff.abs - lmm.late_mark.to_i.abs
+                            calculated_working_hrs = late_working_hrs_1 - s.working_hrs.to_f
+                            if calculated_working_hrs<0
+                              #byebug
+                              EmployeeAttendance.where(id: @c1.id).update_all(difference_hrs: calculated_working_hrs.abs)
+                            else
+                              EmployeeAttendance.where(id: @c1.id).update_all(overtime_hrs: calculated_working_hrs)
+                            end
                           # EmployeeAttendance.where(id: @c1.id).update_all(working_hrs: time_diff)
                           end
-                        end
+                        # end
                           # byebug
+                          # late_working_hrs_1 = time_diff.abs - lmm.late_mark.to_i.abs
+                          # calculated_working_hrs = late_working_hrs_1 - s.working_hrs.to_f
                           # if calculated_working_hrs<0
+                          #   #byebug
                           #   EmployeeAttendance.where(id: @c1.id).update_all(difference_hrs: calculated_working_hrs.abs)
                           # else
                           #   EmployeeAttendance.where(id: @c1.id).update_all(overtime_hrs: calculated_working_hrs)
                           # end
-                        # end
+                        end
                           puts "cccccccccccccccccccccccccccccccccccccc"
                           # byebug
                       else
@@ -197,6 +215,14 @@ end
 
                             late_working_hrs = time_diff.abs - lmm.late_mark.to_i.abs
                             EmployeeAttendance.where(id: @c2.id).update_all(working_hrs: late_working_hrs,rest_time: time_diff)
+                            late_working_hrs_1 = time_diff.abs - lmm.late_mark.to_i.abs
+                            calculated_working_hrs = late_working_hrs_1 - s.working_hrs.to_f
+                            if calculated_working_hrs<0
+                              #byebug
+                              EmployeeAttendance.where(id: @c2.id).update_all(difference_hrs: calculated_working_hrs.abs)
+                            else
+                              EmployeeAttendance.where(id: @c2.id).update_all(overtime_hrs: calculated_working_hrs)
+                            end
                           # EmployeeAttendance.where(id: @c1.id).update_all(working_hrs: time_diff)
                           end
                         # end
@@ -215,7 +241,7 @@ end
                           # byebug
                         end
                         # byebug
-                          puts "/////////////////////////////////////"    
+                          puts "/////////////////////////////////////"
                       end
                   end
                 end

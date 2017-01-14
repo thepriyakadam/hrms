@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Row>
+        <Cell ss:Index="1"><Data ss:Type="String">Sr. No.</Data></Cell>
+        <Cell ss:Index="2"><Data ss:Type="String">Employee ID</Data></Cell>
+        <Cell ss:Index="3"><Data ss:Type="String">First Name</Data></Cell>
+        <Cell ss:Index="4"><Data ss:Type="String">Middle Name</Data></Cell>
+        <Cell ss:Index="5"><Data ss:Type="String">Last Name</Data></Cell>
+        <Cell ss:Index="6"><Data ss:Type="String">Approver First Name</Data></Cell>
+        <Cell ss:Index="7"><Data ss:Type="String">Approver Middle Name</Data></Cell>
+        <Cell ss:Index="8"><Data ss:Type="String">Approver Last Name</Data></Cell>
+        <Cell ss:Index="9"><Data ss:Type="String">Traveling Date</Data></Cell>
+        <Cell ss:Index="10"><Data ss:Type="String">Place</Data></Cell>
+        <Cell ss:Index="11"><Data ss:Type="String">Total Advance</Data></Cell>
+      </Row>
+         <% i = 0 %>
+          <% @travel_requests.each do |travel_request| %>
+        <Row>
+          <Cell ss:Index="1"><Data ss:Type="String"><%= i=i+1 %></Data></Cell>
+          <Cell ss:Index="2"><Data ss:Type="String"><%= travel_request.employee.try(:manual_employee_code ) %></Data></Cell>
+          <Cell ss:Index="3"><Data ss:Type="String"><%= travel_request.employee.try(:first_name ) %></Data></Cell>
+          <Cell ss:Index="4"><Data ss:Type="String"><%= travel_request.employee.try(:middle_name ) %></Data></Cell>
+          <Cell ss:Index="5"><Data ss:Type="String"><%= travel_request.employee.try(:last_name ) %></Data></Cell>
+          <Cell ss:Index="6"><Data ss:Type="String"><%= travel_request.reporting_master.employee.try(:first_name) %></Data></Cell>
+          <Cell ss:Index="7"><Data ss:Type="String"><%= travel_request.reporting_master.employee.try(:middle_name ) %></Data></Cell>
+          <Cell ss:Index="8"><Data ss:Type="String"><%= travel_request.reporting_master.employee.try(:last_name ) %></Data></Cell>
+          <Cell ss:Index="9"><Data ss:Type="Number"><%= travel_request.traveling_date %></Data></Cell>
+          <Cell ss:Index="10"><Data ss:Type="String"><%= travel_request.place %></Data></Cell>
+          <Cell ss:Index="11"><Data ss:Type="String"><%= travel_request.total_advance %></Data></Cell>
+          </Row><!-- Row -->
+      <% end %><!-- slip -->
+    </Table>
+  </Worksheet>
+</Workbook>

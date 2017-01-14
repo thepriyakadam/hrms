@@ -1,0 +1,39 @@
+<style>
+    th {
+        text-align: left;
+    }
+    tr {
+        page-break-inside: avoid;
+    }
+    div.alwaysbreak { page-break-before: always; }
+    div.nobreak:before { clear:both; }
+    div.nobreak{ page-break-inside: avoid;
+    }
+</style>
+  <table style="border-collapse: collapse; font-size:12pt;" border=1 width=1200 cellpadding="15">
+    <thead>
+    <tr><td colspan="6"><center>Traveling Datewise Report</center> </td></tr>
+      <tr>
+      <th>Employee ID</th>
+      <th>Employee Name</th>
+      <th>Approver</th>
+      <th>Travelling Date</th>
+      <th>Place</th>
+      <th>Total Advance</th>
+    </tr>
+      </thead>
+      <tbody>
+    <% @travel_requests.each do |travel_request| %>
+     <tr>
+        <td><%= travel_request.employee.try(:manual_employee_code) %></td>
+        <td><%= travel_request.employee.try(:first_name) %> <%= travel_request.employee.try(:middle_name) %> <%= travel_request.employee.try(:last_name) %></td>
+        <td><%= travel_request.reporting_master.employee.try(:first_name) %>
+        <%= travel_request.reporting_master.employee.try(:last_name) %>
+        <%= travel_request.reporting_master.employee.try(:middle_name) %></td>
+        <td><%= travel_request.traveling_date %></td>
+        <td><%= travel_request.place %></td>
+        <td><%= travel_request.total_advance %></td>
+      </tr>
+    <% end %>
+      </tbody>
+      </table>    

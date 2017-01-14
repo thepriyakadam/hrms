@@ -11,8 +11,11 @@ def salary_slip_company_location_department
         flash[:alert] = "Please Select the Checkbox"
         redirect_to select_month_year_form_pdf_salaries_path
       else
-      @employees = Employee.where(company_id: @company.to_i,company_location_id: @company_location.to_i,department_id: @department).pluck(:id)
+        @salary1.each do |s|
+        @salaryslip_employee = Employee.find_by_id(s)
+      @employees = Employee.where(id: s,company_id: @company.to_i,company_location_id: @company_location.to_i,department_id: @department).pluck(:id)
       @salaryslips = Salaryslip.where(month:  @month,year: @year.to_s,employee_id: @employees)
+    end
 
       respond_to do |format|
         format.html

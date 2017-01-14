@@ -282,6 +282,131 @@ class TravelRequestsController < ApplicationController
   #    @travel_requests = TravelRequest.where(reporting_master_id: current_user.employee_id)
   # end
 
+  def print_application_report
+    # byebug
+      @from = params[:salary][:from_date]
+      @to = params[:salary][:to_date]
+      @company = params[:employee][:company_id] 
+      @company_location = params[:employee][:company_location_id] 
+      @department = params[:employee][:department_id] 
+      @employees = Employee.where(company_id: @company.to_i,company_location_id: @company_location.to_i,department_id: @department).pluck(:id)
+      @travel_requests = TravelRequest.where(application_date:  @from.to_date..@to.to_date,employee_id: @employees)
+      respond_to do |format|
+      format.js
+      format.xls {render template: 'travel_requests/application_datewise_report_xls.xls.erb'}
+      format.html
+      format.pdf do
+        render pdf: 'application_datewise_report_pdf',
+              layout: 'pdf.html',
+              orientation: 'Landscape',
+              template: 'travel_requests/application_datewise_report_pdf.pdf.erb',
+              # show_as_html: params[:debug].present?,
+              :page_height      => 1000,
+              :dpi              => '300',
+              :margin           => {:top    => 10, # default 10 (mm)
+                            :bottom => 10,
+                            :left   => 20,
+                            :right  => 20},
+              :show_as_html => params[:debug].present?
+          end
+        end
+  end
+
+  def print_travelling_datewise_report
+    # byebug
+      @start = params[:salary][:from_date]
+      @end = params[:salary][:to_date]
+      @company = params[:employee][:company_id]
+      @company_location = params[:employee][:company_location_id]
+      @department = params[:employee][:department_id]
+      @employees = Employee.where(company_id: @company.to_i,company_location_id: @company_location.to_i,department_id: @department).pluck(:id)
+      @travel_requests = TravelRequest.where(traveling_date:  @start.to_date..@end.to_date,employee_id: @employees) 
+    end
+
+#     def application_datewise_report_xls
+#       @start = params[:from_date]
+#       @end = params[:to_date]
+#       @company = params[:company_id]
+#       @company_location = params[:company_location_id]
+#       @department = params[:department_id]
+#       @employees = Employee.where(company_id: @company.to_i,company_location_id: @company_location.to_i,department_id: @department).pluck(:id)
+#       @travel_requests = TravelRequest.where(application_date:  @start.to_date..@end.to_date,employee_id: @employees) 
+
+#      respond_to do |format|
+#      format.xls {render template: 'travel_requests/application_datewise_report_xls.xls.erb'}
+#    end
+# end
+#   def application_datewise_report_pdf
+#       @start = params[:from_date]
+#       @end = params[:to_date]
+#       @company = params[:company_id]
+#       @company_location = params[:company_location_id]
+#       @department = params[:department_id]
+#       @employees = Employee.where(company_id: @company.to_i,company_location_id: @company_location.to_i,department_id: @department).pluck(:id)
+#       @travel_requests = TravelRequest.where(application_date:  @start.to_date..@end.to_date,employee_id: @employees) 
+
+#     respond_to do |format|
+#     format.json
+#     format.pdf do
+#       render pdf: 'application_datewise_report_pdf',
+#             layout: 'pdf.html',
+#             orientation: 'Landscape',
+#             template: 'travel_requests/application_datewise_report_pdf.pdf.erb',
+#             # show_as_html: params[:debug].present?,
+#             :page_height      => 1000,
+#             :dpi              => '300',
+#             :margin           => {:top    => 10, # default 10 (mm)
+#                           :bottom => 10,
+#                           :left   => 20,
+#                           :right  => 20},
+#             :show_as_html => params[:debug].present?
+#         end
+#       end
+     
+#   end
+
+  def travelling_datewise_report_xls
+      @start = params[:from_date]
+      @end = params[:to_date]
+      @company = params[:company_id]
+      @company_location = params[:company_location_id]
+      @department = params[:department_id]
+      @employees = Employee.where(company_id: @company.to_i,company_location_id: @company_location.to_i,department_id: @department).pluck(:id)
+      @travel_requests = TravelRequest.where(traveling_date:  @start.to_date..@end.to_date,employee_id: @employees) 
+
+     respond_to do |format|
+     format.xls {render template: 'travel_requests/travelling_datewise_report_xls.xls.erb'}
+   end
+ end
+
+  def travelling_datewise_report_pdf
+      @start = params[:from_date]
+      @end = params[:to_date]
+      @company = params[:company_id]
+      @company_location = params[:company_location_id]
+      @department = params[:department_id]
+      @employees = Employee.where(company_id: @company.to_i,company_location_id: @company_location.to_i,department_id: @department).pluck(:id)
+      @travel_requests = TravelRequest.where(traveling_date:  @start.to_date..@end.to_date,employee_id: @employees) 
+    
+    respond_to do |format|
+    format.json
+    format.pdf do
+      render pdf: 'travelling_datewise_report_pdf',
+            layout: 'pdf.html',
+            orientation: 'Landscape',
+            template: 'travel_requests/travelling_datewise_report_pdf.pdf.erb',
+            # show_as_html: params[:debug].present?,
+            :page_height      => 1000,
+            :dpi              => '300',
+            :margin           => {:top    => 10, # default 10 (mm)
+                          :bottom => 10,
+                          :left   => 20,
+                          :right  => 20},
+            :show_as_html => params[:debug].present?
+        end
+      end
+  end
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_travel_request

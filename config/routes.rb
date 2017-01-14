@@ -832,6 +832,9 @@ end
     post :approve_n_send_next
     get :travel_request_history_list
     get :image_modal
+    post :print_expence_date_report
+    get :expence_date_report_list
+    get :expence_date_report
     end
   end
   resources :travel_requests do
@@ -850,6 +853,15 @@ end
       get :edit_and_approve_modal
       post :edit_and_approve_modal_submit
       get :is_confirm
+      get :application_date_report
+      post :print_application_report
+      get :print_application_report
+      # get :application_datewise_report_xls
+      # get :application_datewise_report_pdf
+      get :travelling_datewise_report
+      post :print_travelling_datewise_report
+      get :travelling_datewise_report_xls
+      get :travelling_datewise_report_pdf
     end
   end
  

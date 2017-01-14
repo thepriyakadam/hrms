@@ -1,0 +1,35 @@
+ 
+<div class="box-body">
+
+<table id="example" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Employee ID</th>
+      <th>Employee Name</th>
+      <th>Approver</th>
+      <th>Application Date</th>
+      <th>Place</th>
+      <th>Total Advance</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @travel_requests.each do |travel_request| %>
+      <tr>
+        <td><%= travel_request.employee.try(:manual_employee_code) %></td>
+        <td><%= travel_request.employee.try(:first_name) %> <%= travel_request.employee.try(:middle_name) %> <%= travel_request.employee.try(:last_name) %></td>
+        <td><%= travel_request.reporting_master.employee.try(:first_name) %>
+        <%= travel_request.reporting_master.employee.try(:last_name) %>
+        <%= travel_request.reporting_master.employee.try(:middle_name) %></td>
+        <td><%= travel_request.application_date %></td>
+        <td><%= travel_request.place %></td>
+        <td><%= travel_request.total_advance %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
+<%= link_to " Excel Report ",print_application_report_travel_requests_path(from_date: params[:salary][:from_date],to_date: params[:salary][:to_date], company_id: params[:employee][:company_id], company_location_id: params[:employee][:company_location_id],department_id: params[:employee][:department_id], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+ 
+<%= link_to " Print Report ",print_application_report_travel_requests_path(from_date: params[:salary][:from_date],to_date: params[:salary][:to_date], company_id: params[:employee][:company_id], company_location_id: params[:employee][:company_location_id],department_id: params[:employee][:department_id],format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+</div>

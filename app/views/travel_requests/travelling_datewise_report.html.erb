@@ -1,0 +1,88 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Travelling Datewise Report</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+<%= bootstrap_form_for(:employee, url: { action: 'print_travelling_datewise_report'},html: {id: 'travel_request'},remote: true ) do |f| %>
+	 <div class="row">
+      <div class="col-sm-3">
+      <label>From Date</label>
+         <div class="form-group required">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+            <%= text_field :salary,:from_date,hide_label: true,placeholder: "From Date",class: 'form-control request_date'%>
+          </div>
+         </div>
+        </div>
+
+        <div class="col-sm-3">
+        <label>To Date</label>
+         <div class="form-group required">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+           <%= text_field :salary,:to_date,hide_label: true,placeholder: "To Date", class: 'form-control request_date'%>
+          </div>
+         </div>
+        </div>
+
+       <div class="col-sm-2">
+            <div class="form-group required">
+            <div class="input-group">
+              <%= f.select :company_id, all_company,{include_blank: "Select Company"},{onchange:"var a={id:$(this).val(), form : 'employee'}; $.get('/employees/collect_company_location',a,function(response){});"}%>
+            </div>
+            </div>
+      </div>
+     
+      <div class="col-sm-2">
+            <div class="form-group required">
+              <div id="company_location">
+                <%= render 'employees/company_location_dropdown' %> 
+            </div> 
+            </div>
+          </div>
+
+       <div class="col-sm-2">
+            <div class="form-group required">
+            <div class="input-group">
+              <div id="department">
+                <%= render 'employees/department_dropdown' %> 
+            </div> 
+            </div>
+            </div>
+        </div>
+     
+       <div class="col-sm-2">
+       <label></label>
+          <div class="actions">
+            <%= f.submit "Display Report", class: "btn btn-sm btn-primary",id: "buttonCtc" %>
+          </div>
+        </div>
+        </div>
+       <div id="travelling_date_li"></div>
+</div>
+</div>
+<%end%>
+
+<script type="text/javascript">
+  $(function(){
+    $('.request_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:+1',
+    dateFormat: 'dd-mm-yy' });
+  }); 
+</script>
+
+<script type="text/javascript">
+  $(function(){
+    $('.request_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:+1',
+    dateFormat: 'dd-mm-yy' });
+  }); 
+</script>

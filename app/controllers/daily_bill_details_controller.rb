@@ -413,6 +413,18 @@ class DailyBillDetailsController < ApplicationController
      @daily_bill_details = DailyBillDetail.where(id: @daily_bill_detail.id)
   end
 
+  def print_expence_date_report
+    # byebug
+      @start = params[:salary][:from_date]
+      @end = params[:salary][:to_date]
+      @company = params[:employee][:company_id]
+      @company_location = params[:employee][:company_location_id]
+      @department = params[:employee][:department_id]
+      @employees = Employee.where(company_id: @company.to_i,company_location_id: @company_location.to_i,department_id: @department).pluck(:id)
+      @daily_bill_details = DailyBillDetail.where(expence_date:  @start.to_date..@end.to_date,travel_request_id: @employees) 
+    
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_daily_bill_detail

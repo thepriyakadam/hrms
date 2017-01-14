@@ -1,9 +1,9 @@
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title">Leave Request Report</h3>
+    <h3 class="box-title">Leave Approved Report</h3>
   </div><!-- /.box-header -->
  <div class="box-body">
- <%= bootstrap_form_for(:employee_leav_request, url: { action: 'request_report'},html: {id: 'employee_leav_request'},remote:true) do |f| %>
+ <%= bootstrap_form_for(:particular_leave_record, url: { action: 'show_approved_record'},html: {id: 'particular_leave_record'},remote:true) do |f| %>
  		<div class="row">
  			<div class="col-sm-3">
         <div class="form-group required">
@@ -27,11 +27,11 @@
       </div>
 
       <div class="col-sm-2">
-            <div class="form-group required">
-            <div class="input-group">
-              <%= f.select :company_id, all_company,{include_blank: "Select Company"},{onchange:"var a={id:$(this).val(), form : 'employee'}; $.get('/employees/collect_company_location',a,function(response){});"}%>
-            </div>
-            </div>
+        <div class="form-group required">
+          <div class="input-group">
+            <%= f.select :company_id, all_company,{include_blank: "Select Company"},{onchange:"var a={id:$(this).val(), form : 'employee'}; $.get('/employees/collect_company_location',a,function(response){});"}%>
+          </div>
+        </div>
       </div>
      
       <div class="col-sm-2">
@@ -60,7 +60,7 @@
         </div>
       </div>
     </div><br>
-      <div id="leave_request"></div>
+      <div id="approved_record_list"></div>
     <br>
     <% end %>
   </div><!-- /.box-body -->

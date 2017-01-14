@@ -452,11 +452,6 @@ class AdvanceSalariesController < ApplicationController
    end
 
    def yearly_advance_report 
-    # @year = params[:advance_salary][:year]
-    # @company = params[:advance_salary][:company_id]
-    # @location = params[:advance_salary][:company_location_id]
-    # date = Date.new(@year.to_i, Workingday.months[@month])
-    # @compny = Company.find_by(id: @company)
    end
 
    def yearly_advance

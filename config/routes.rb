@@ -1158,6 +1158,10 @@ end
     collection do
       get :show_leave_record
       get :search_by_leave_date
+      get :leave_approval_report
+      post :show_approved_record
+      get :approved_record_pdf
+      get :approved_record_excel
     end
   end
   match 'selected_resumes/:id/download_resume/:id' => 'selected_resumes#download_resume', :via => [:get], :as => :download_resume
@@ -1737,6 +1741,13 @@ end
       get :admin_employee_history_with_current_leave
       get :select_checkbox
       get :leave_request_report
+      post :request_report
+      get :leave_request_excel
+      get :leave_request_pdf
+      get :leave_req_status_report
+      post :status_wise_request
+      get :status_wise_excel
+      get :status_wise_pdf
     end
   end
   resources :company_leavs

@@ -99,21 +99,21 @@ Rails.application.configure do
     :authentication => 'plain',
 }
 
- # Root url
-  config.action_mailer.default_url_options = { host: 'imap.gmail.com', port: 3000 }
-  # config.domain = 'lvh.me'
-  # config.action_mailer.perform_deliveries = true,
-  ActionMailer::Base.delivery_method = :smtp
+ # # Root url
+ #  config.action_mailer.default_url_options = { host: 'imap.gmail.com', port: 3000 }
+ #  # config.domain = 'lvh.me'
+ #  # config.action_mailer.perform_deliveries = true,
+ #  ActionMailer::Base.delivery_method = :smtp
 
-  ActionMailer::Base.smtp_settings = {
-    address: 'smtp.gmail.com',
-    port: 25,
-    domain: 'imap.gmail.com',
-    authentication: :plain,
-    enable_starttls_auto: true,
-    user_name: 'ranna.p@amaazia.com',
-    password: 'rannahr@123'
-  }
+ #  ActionMailer::Base.smtp_settings = {
+ #    address: 'smtp.gmail.com',
+ #    port: 25,
+ #    domain: 'imap.gmail.com',
+ #    authentication: :plain,
+ #    enable_starttls_auto: true,
+ #    user_name: 'ranna.p@amaazia.com',
+ #    password: 'rannahr@123'
+ #  }
 
 # config.action_mailer.default_url_options = { :host => 'amaazia.com', port: 3000 }  
 # config.action_mailer.delivery_method = :smtp  

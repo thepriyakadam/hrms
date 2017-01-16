@@ -1,0 +1,37 @@
+<style>
+    th {
+        text-align: left;
+    }
+    tr {
+        page-break-inside: avoid;
+    }
+    div.alwaysbreak { page-break-before: always; }
+    div.nobreak:before { clear:both; }
+    div.nobreak{ page-break-inside: avoid;
+    }
+</style>
+  <table style="border-collapse: collapse; font-size:12pt;" border=1 width=1200 cellpadding="15">
+    <thead>
+    <tr><td colspan="6"><center>Expence Datewise Report</center> </td></tr>
+      <tr>
+      <th>Travel Request ID</th>
+       <th>Expense Date</th>
+      <th>Place</th>
+      <th>Expense Type</th>
+      <th>Expence Amount</th>
+      <th>Currency</th>
+    </tr>
+      </thead>
+      <tbody>
+    <% @daily_bill_details.each do |daily_bill_detail| %>
+     <tr>
+        <td><%= daily_bill_detail.travel_request_id %></td>
+        <td><%= daily_bill_detail.expence_date %></td>
+         <td><%= daily_bill_detail.e_place %></td>
+        <td><%= daily_bill_detail.travel_expence_type.try(:name) %></td>
+        <td><%= daily_bill_detail.travel_expence %></td>
+        <td><%= daily_bill_detail.currency_master.try(:name) %></td>
+      </tr>
+    <% end %>
+      </tbody>
+      </table>    

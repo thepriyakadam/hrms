@@ -3,7 +3,7 @@
     <h3 class="box-title">Application Report</h3>
   </div><!-- /.box-header -->
   <div class="box-body">
-<%= bootstrap_form_for(:employee, url: { action: 'print_application_report'},html: {id: 'travel_request'},remote: true ) do |f| %>
+<%= bootstrap_form_for(:travel_request, url: { action: 'print_application_report'},html: {id: 'travel_request'},remote: true ) do |f| %>
 	 <div class="row">
       <div class="col-sm-3">
       <label>From Date</label>
@@ -32,7 +32,7 @@
        <div class="col-sm-2">
             <div class="form-group required">
             <div class="input-group">
-              <%= f.select :company_id, all_company,{include_blank: "Select Company"},{onchange:"var a={id:$(this).val(), form : 'employee'}; $.get('/employees/collect_company_location',a,function(response){});"}%>
+              <%= f.select :company_id, all_company,{include_blank: "Select Company"},{onchange:"var a={id:$(this).val(), form : 'travel_request'}; $.get('/employees/collect_company_location',a,function(response){});"}%>
             </div>
             </div>
       </div>

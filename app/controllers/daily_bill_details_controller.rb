@@ -414,15 +414,34 @@ class DailyBillDetailsController < ApplicationController
   end
 
   def print_expence_date_report
-    # byebug
-      @start = params[:salary][:from_date]
-      @end = params[:salary][:to_date]
-      @company = params[:employee][:company_id]
-      @company_location = params[:employee][:company_location_id]
-      @department = params[:employee][:department_id]
+      @from = params[:salary] ? params[:salary][:from_date] : params[:from_date]
+      @to = params[:salary] ? params[:salary][:to_date] : params[:to_date]
+      @company = params[:employee] ? params[:employee][:company_id] : params[:company_id]
+      @company_location = params[:employee] ? params[:employee][:company_location_id] : params[:company_location_id]
+      @department = params[:employee] ? params[:employee][:department_id] : params[:department_id]
       @employees = Employee.where(company_id: @company.to_i,company_location_id: @company_location.to_i,department_id: @department).pluck(:id)
-      @daily_bill_details = DailyBillDetail.where(expence_date:  @start.to_date..@end.to_date,travel_request_id: @employees) 
+      @daily_bill_details = DailyBillDetail.where(expence_date:  @from.to_date..@to.to_date,travel_request_id: @employees) 
     
+
+     respond_to do |format|
+      format.js
+      format.xls {render template: 'daily_bill_details/expence_date_xls.xls.erb'}
+      format.html
+      format.pdf do
+        render pdf: 'expence_date_pdf',
+              layout: 'pdf.html',
+              orientation: 'Landscape',
+              template: 'daily_bill_details/expence_date_pdf.pdf.erb',
+              # show_as_html: params[:debug].present?,
+              :page_height      => 1000,
+              :dpi              => '300',
+              :margin           => {:top    => 10, # default 10 (mm)
+                            :bottom => 10,
+                            :left   => 20,
+                            :right  => 20},
+              :show_as_html => params[:debug].present?
+          end
+        end
   end
 
   private

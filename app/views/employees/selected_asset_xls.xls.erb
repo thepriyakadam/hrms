@@ -16,6 +16,7 @@
         <Cell ss:Index="7"><Data ss:Type="String">Asset Details</Data></Cell>
         <Cell ss:Index="8"><Data ss:Type="String">Assets ID</Data></Cell>
         <Cell ss:Index="9"><Data ss:Type="String">Assets Value</Data></Cell>
+        <Cell ss:Index="10"><Data ss:Type="String">Issue Date</Data></Cell>
       </Row>
          <% i = 0 %>
          <% @assigned_assets.each do |assigned_asset| %>
@@ -29,6 +30,7 @@
           <Cell ss:Index="7"><Data ss:Type="Number"><%= assigned_asset.assets_detail.try(:name) %></Data></Cell>
           <Cell ss:Index="8"><Data ss:Type="String"><%= assigned_asset.assets_id %></Data></Cell>
           <Cell ss:Index="9"><Data ss:Type="String"><%= assigned_asset.assets_value %></Data></Cell>
+          <Cell ss:Index="10"><Data ss:Type="String"><%= assigned_asset.issue_date %></Data></Cell>
           </Row><!-- Row -->
       <% end %><!-- slip -->
     </Table>

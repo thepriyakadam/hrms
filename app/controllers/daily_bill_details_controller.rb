@@ -35,6 +35,7 @@ class DailyBillDetailsController < ApplicationController
   def edit
     @travel_request = TravelRequest.find(@daily_bill_detail.travel_request_id)
     @daily_bill_details = DailyBillDetail.where(travel_request_id: @travel_request.id)
+    @reporting_masters_travel_requests1 = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id)
   end
 
   # POST /daily_bill_details
@@ -414,13 +415,15 @@ class DailyBillDetailsController < ApplicationController
   end
 
   def print_expence_date_report
+    # byebug
       @from = params[:salary] ? params[:salary][:from_date] : params[:from_date]
       @to = params[:salary] ? params[:salary][:to_date] : params[:to_date]
       @company = params[:employee] ? params[:employee][:company_id] : params[:company_id]
       @company_location = params[:employee] ? params[:employee][:company_location_id] : params[:company_location_id]
       @department = params[:employee] ? params[:employee][:department_id] : params[:department_id]
       @employees = Employee.where(company_id: @company.to_i,company_location_id: @company_location.to_i,department_id: @department).pluck(:id)
-      @daily_bill_details = DailyBillDetail.where(expence_date:  @from.to_date..@to.to_date,travel_request_id: @employees) 
+      @travel_requests = TravelRequest.where(employee_id: @employees)
+      @daily_bill_details = DailyBillDetail.where(expence_date:  @from.to_date..@to.to_date,travel_request_id: @travel_requests) 
     
 
      respond_to do |format|

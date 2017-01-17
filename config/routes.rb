@@ -860,6 +860,9 @@ end
       get :travelling_datewise_report
       post :print_travelling_datewise_report
       get :print_travelling_datewise_report
+      get :travel_request_id_report
+      get :print_travel_request_id_report
+      post :print_travel_request_id_report
     end
   end
  

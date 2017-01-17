@@ -448,6 +448,13 @@ elsif current_user.role.name == 'Branch'
       end
     end
 
+    def print_travel_request_id_report
+      # byebug
+      @travel_request = params[:travel_request][:travel_request_id]
+      @travel_requests = TravelRequest.where(id: @travel_request)
+      @daily_bill_details = DailyBillDetail.where(travel_request_id: @travel_request)
+    end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_travel_request

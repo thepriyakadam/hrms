@@ -5,6 +5,7 @@
   <thead>
     <tr>
       <th>Travel Request ID</th>
+      <th>Traveler Name</th>
        <th>Expense Date</th>
        <th>Place</th>
        <th>Expense Type</th>
@@ -17,6 +18,7 @@
     <% @daily_bill_details.each do |daily_bill_detail| %>
       <tr>
         <td><%= daily_bill_detail.travel_request_id %></td>
+        <td><%= daily_bill_detail.travel_request.employee.try(:first_name) %> <%= daily_bill_detail.travel_request.employee.try(:middle_name) %> <%= daily_bill_detail.travel_request.employee.try(:last_name) %></td>
         <td><%= daily_bill_detail.expence_date%></td>
         <td><%= daily_bill_detail.e_place %></td>
         <td><%= daily_bill_detail.travel_expence_type.try(:name) %></td>

@@ -13,7 +13,7 @@
     </div>
    <div class="col-sm-3">
        <div class="field">
-          <%= text_field :machine_attendance,:day,hide_label: true, class: 'form-control joining_date'%>
+          <%= text_field :machine_attendance,:day,hide_label: true,placeholder: 'Date', class: 'form-control joining_date'%>
         </div>
       </div>
 
@@ -47,6 +47,12 @@
     </div>
 
     <div class="row">
+    <div class="col-sm-3">
+    <label></label>
+      <div class="field">
+        <%= text_field :machine_attendance,:present , hide_label: true, placeholder: 'Present',class: 'form-control' %>
+      </div>
+    </div>
     <div class="col-sm-3">
     <label></label>
       <div class="actions">

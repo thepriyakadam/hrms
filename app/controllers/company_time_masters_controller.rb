@@ -89,6 +89,6 @@ class CompanyTimeMastersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def company_time_master_params
-      params.require(:company_time_master).permit(:in_min_time, :rest_time,:in_max_time, :shift_master_id, :in_time, :out_time, :out_min_time, :out_max_time, :working_hrs, :is_active, :is_confirm)
+      params.require(:company_time_master).permit(:in_min_time, :rest_time,:in_max_time, :time_adjust, :shift_master_id, :in_time, :out_time, :out_min_time, :out_max_time, :working_hrs, :is_active, :is_confirm)
     end
 end

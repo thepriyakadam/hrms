@@ -1,6 +1,6 @@
 
 <div class="box-body">
-
+<h5 class="box-title"><center>Travel Request</center></h5>
 <table id="example" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
@@ -40,10 +40,11 @@
 </table>
 </div>
 <div class="box-body">
-
+<h5 class="box-title"><center>Daily Bill Details</center></h5>
 <table id="example" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
+       <th>Travel Request ID</th>
        <th>Expense Date</th>
        <th>Place</th>
        <th>Expense Type</th>
@@ -55,6 +56,7 @@
   <tbody>
     <% @daily_bill_details.each do |daily_bill_detail| %>
       <tr>
+        <td><%= daily_bill_detail.travel_request_id%></td>
         <td><%= daily_bill_detail.expence_date%></td>
         <td><%= daily_bill_detail.e_place %></td>
         <td><%= daily_bill_detail.travel_expence_type.try(:name) %></td>
@@ -62,17 +64,46 @@
       </tr>
     <% end %>
     <tr>
-       <th colspan="3">Expense Amount</th>
+       <th colspan="4">Expense Amount</th>
         <th><%= @daily_bill_details.sum(:travel_expence) %></th>
     </tr>
     <tr>
-       <th colspan="3">Total</th>
+       <th colspan="4">Total</th>
         <th><%= @travel_expences.try(:remaining_amount) %></th>
     </tr>
   </tbody>
 </table>
 </div>
-<%= link_to " Excel Report ",print_travel_request_id_report_travel_requests_path(travel_request_id: params[:travel_request][:travel_request_id], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+<div class="box-body">
+<h5 class="box-title"><center>Travel Expences</center></h5>
+<table id="example" class="table table-bordered table-hover table-condensed">
+  <thead>
+     <tr>
+          <th>Travel Request ID</th>
+          <th>Total Advance Amount</th>
+          <th>Total Expense Amount</th>
+          <th>Remaining Amount</th>
+          <th>Employee Amount</th>
+          <th>Company Amount</th>
+        </tr>
+  
+  </thead>
+
+  <tbody>
+    <% @travel_expences.each do |travel_expence| %>
+      <tr>
+            <td><%= travel_expence.travel_request.id %></td>
+            <td><%= travel_expence.total_advance_amount %></td>
+            <td><%= travel_expence.total_expence_amount %></td>
+            <td><%= travel_expence.remaining_amount %></td>
+            <td><%= travel_expence.employee_amount %></td>
+            <td><%= travel_expence.company_amount %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
+<!-- <= link_to " Excel Report ",print_travel_request_employee_name_report_travel_requests_path(employee_id: params[:travel_request][:employee_id], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
  
-<%= link_to " Print Report ",print_travel_request_id_report_travel_requests_path(travel_request_id: params[:travel_request][:travel_request_id],format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+<= link_to " Print Report ",print_travel_request_employee_name_report_travel_requests_path(employee_id: params[:travel_request][:employee_id],format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %> -->
 </div>

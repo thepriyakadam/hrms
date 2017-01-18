@@ -863,6 +863,9 @@ end
       get :travel_request_id_report
       get :print_travel_request_id_report
       post :print_travel_request_id_report
+      get :travel_request_employee_name_report
+      get :print_travel_request_employee_name_report
+      post :print_travel_request_employee_name_report
     end
   end
  

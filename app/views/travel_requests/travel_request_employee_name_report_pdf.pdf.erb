@@ -1,0 +1,57 @@
+<style>
+    th {
+        text-align: left;
+    }
+    tr {
+        page-break-inside: avoid;
+    }
+    div.alwaysbreak { page-break-before: always; }
+    div.nobreak:before { clear:both; }
+    div.nobreak{ page-break-inside: avoid;
+    }
+</style>
+  <table style="border-collapse: collapse; font-size:12pt;" border=1 width=1200 cellpadding="15">
+    <thead>
+    <tr><td colspan="14"><center>Travel Request Employee Name Report</center> </td></tr>
+      <tr>
+      <th>Travel Request ID</th>
+      <th>Employee ID</th>
+      <th>Employee Name</th>
+      <th>Approver</th>
+      <th>Application Date</th>
+      <th>Travelling Date</th>
+      <th>Place</th>
+      <th>Tour Purpose</th>
+      <th>Travel Option</th>
+      <th>Travel Mode</th>
+      <th>Total Advance</th>
+       <th>Expense Date</th>
+       <th>Expense Type</th>
+       <th>Expense Amount</th>
+    </tr>
+      </thead>
+      <tbody>
+    <% @travel_requests.each do |travel_request| %>
+    <% @daily_bill_details.each do |daily_bill_detail| %>
+     <tr>
+        <td><%= travel_request.id %></td>
+        <td><%= travel_request.employee.try(:manual_employee_code) %></td>
+        <td><%= travel_request.employee.try(:first_name) %> <%= travel_request.employee.try(:middle_name) %> <%= travel_request.employee.try(:last_name) %></td>
+        <td><%= travel_request.reporting_master.employee.try(:first_name) %>
+        <%= travel_request.reporting_master.employee.try(:last_name) %>
+        <%= travel_request.reporting_master.employee.try(:middle_name) %></td>
+        <td><%= travel_request.application_date %></td>
+        <td><%= travel_request.traveling_date %></td>
+        <td><%= travel_request.place %></td>
+        <td><%= travel_request.tour_purpose %></td>
+        <td><%= travel_request.travel_option %></td>
+        <td><%= travel_request.travel_mode.try(:name) %></td>
+        <td><%= travel_request.total_advance %></td>
+        <td><%= daily_bill_detail.expence_date%></td>
+        <td><%= daily_bill_detail.travel_expence_type.try(:name) %></td>
+        <td><%= daily_bill_detail.travel_expence %></td>
+      </tr>
+    <% end %>
+    <% end %>
+    </tbody>
+    </table>    

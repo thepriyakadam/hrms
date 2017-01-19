@@ -476,11 +476,39 @@ elsif current_user.role.name == 'Branch'
     end
 
     def print_travel_request_employee_name_report
+
+    #    @employee_id = params[:employee_id]
+    # @employee = Employee.find_by(id: @employee_id)
+    # @advance_salaries = AdvanceSalary.where(employee_id: @employee_id)
+    # @advance_salary = AdvanceSalary.where(employee_id: @employee_id).pluck(:id)
+    #   @instalments = Instalment.where(advance_salary_id: @advance_salary)
 # byebug
-      @travel_request = params[:salary] ? params[:salary][:employee_id] : params[:employee_id]
-      @travel_requests = TravelRequest.where(employee_id: @travel_request)
-      @daily_bill_details = DailyBillDetail.where(travel_request_id: @travel_requests)
-      @travel_expences = TravelExpence.where(travel_request_id: @travel_requests)
+      @employee_id = params[:travel_request] ? params[:travel_request][:employee_id] : params[:employee_id]
+      @employee = Employee.find_by(id: @employee_id)
+      @travel_requests = TravelRequest.where(employee_id: @employee_id)
+      @travel_request = TravelRequest.where(employee_id: @employee_id).pluck(:id)
+      @daily_bill_details = DailyBillDetail.where(travel_request_id: @travel_request)
+      @travel_expences = TravelExpence.where(travel_request_id: @travel_request)
+
+       respond_to do |format|
+     format.js
+     format.xls {render template: 'travel_requests/travel_request_employee_name_report_xls.xls.erb'}
+     format.html
+     format.pdf do
+      render pdf: 'travel_request_employee_name_report_pdf',
+            layout: 'pdf.html',
+            orientation: 'Landscape',
+            template: 'travel_requests/travel_request_employee_name_report_pdf.pdf.erb',
+            # show_as_html: params[:debug].present?,
+            :page_height      => 1000,
+            :dpi              => '300',
+            :margin           => {:top    => 10, # default 10 (mm)
+                          :bottom => 10,
+                          :left   => 20,
+                          :right  => 20},
+            :show_as_html => params[:debug].present?
+        end
+      end
 
     end
 

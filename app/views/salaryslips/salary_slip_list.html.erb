@@ -15,7 +15,7 @@
   </thead>
 
   <tbody>
-    <% @salray_slips.where(is_confirm: true) do |salary| %>
+    <% @salray_slips.each do |salary| %>
       <tr>
         <td><%= salary.salary_slip_code %></td>
         <td><%= salary.salary_template.try(:description)%></td>

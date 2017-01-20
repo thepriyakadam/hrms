@@ -1,0 +1,36 @@
+<style>
+    th {
+        text-align: left;
+    }
+    tr {
+        page-break-inside: avoid;
+    }
+    div.alwaysbreak { page-break-before: always; }
+    div.nobreak:before { clear:both; }
+    div.nobreak{ page-break-inside: avoid;
+      /* http://code.google.com/p/wkhtmltopdf/issues/detail?id=9#c21 */
+    }
+</style>
+<table style="border-collapse: collapse; font-size:9pt;" border=1 width=1000 cellpadding="10">
+ <thead>
+    <tr>
+      <th>Employee ID</th>
+      <th>Employee Name</th>
+      <th>Leave Date</th>
+      <th>Leave Category</th>
+      <th>Cancel After Approve</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @particular_leave_records.each do |particular_leave_record| %>
+      <tr>
+        <td><%= particular_leave_record.employee.try(:manual_employee_code) %></td>
+        <td><%= full_name(particular_leave_record.employee) %></td>
+        <td><%= particular_leave_record.leave_date.to_date %></td>
+        <td><%= particular_leave_record.leav_category.try(:name) %></td>
+        <td><%= particular_leave_record.is_cancel_after_approve %></td>
+      </tr>
+    <% end %>
+   </tbody>
+</table>

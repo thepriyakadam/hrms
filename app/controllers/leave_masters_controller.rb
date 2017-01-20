@@ -71,6 +71,6 @@ class LeaveMastersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def leave_master_params
-      params.require(:leave_master).permit(:leav_category_id, :period, :working_day, :no_of_leave, :is_carry_forward, :limit)
+      params.require(:leave_master).permit(:company_workingday,:leav_category_id, :period, :working_day, :no_of_leave, :is_carry_forward, :limit)
     end
 end

@@ -27,7 +27,7 @@ class Ability
         can :manage, :all
       elsif user.role.name == 'HOD'
         can :read, Employee
-        can :manage, EmployeeLeavRequest
+        can :manage, [EmployeeLeavRequest, ParticularLeaveRecord]
         can :manage, [GoalBunch, GoalRating]
         can :manage, [TravelRequest, DailyBillDetail]
       elsif user.role.name == 'Supervisor'

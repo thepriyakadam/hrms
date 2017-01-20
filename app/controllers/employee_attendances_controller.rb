@@ -587,36 +587,19 @@ class EmployeeAttendancesController < ApplicationController
     @date = params[:date]
     @present = params[:present]
     @employee_attendances = EmployeeAttendance.where(day: @date.to_date,present: @present)
-  end
-
-  def date_wise_pdf
-    @date = params[:date]
-    @present = params[:present]
-    @employee_attendances = EmployeeAttendance.where(day: @date.to_date,present: @present)
     
-    respond_to do |format|
-        format.html
-        format.pdf do
-        render :pdf => 'print_date_wise',
-        layout: '/layouts/pdf.html.erb',
-        :template => 'employee_attendances/print_date_wise.pdf.erb',
-        :orientation      => 'Landscape', # default , Landscape
-        :page_height      => 1000,
-        :dpi              => '300',
-        :margin           => {:top    => 10, # default 10 (mm)
-                      :bottom => 10,
-                      :left   => 20,
-                      :right  => 20},
-        :show_as_html => params[:debug].present?
+    respond_to do |f|
+      f.js
+      f.xls {render template: 'employee_attendances/print_date_wise.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'show_datewise_employee',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'employee_attendances/print_date_wise.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
       end
-    end
-  end
-
-  def date_wise_xls
-    @date, @present = params[:date], params[:present]
-    @employee_attendances = EmployeeAttendance.where(day: @date.to_date,present: @present)
-    respond_to do |format|
-      format.xls {render template: 'employee_attendances/print_date_wise.xls.erb'}
     end
   end
 

@@ -1,0 +1,35 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Approved Leave Detail</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+  <table id="example1" class="table table-bordered table-hover table-condensed">
+	  <thead>
+	    <tr>
+	      <th>Employee ID</th>
+	      <th>Employee Name</th>
+	      <th>Leave Date</th>
+	      <th>Leave Category</th>
+	      <th>Cancel After Approve</th>
+	    </tr>
+	  </thead>
+
+	  <tbody>
+	    <% @particular_leave_records.each do |particular_leave_record| %>
+	      <tr>
+	        <td><%= particular_leave_record.employee.try(:manual_employee_code) %></td>
+	        <td><%= full_name(particular_leave_record.employee) %></td>
+	        <td><%= particular_leave_record.leave_date.to_date %></td>
+	        <td><%= particular_leave_record.leav_category.try(:name) %></td>
+	        <td><%= particular_leave_record.is_cancel_after_approve %></td>
+	      </tr>
+	    <% end %>
+	   </tbody>
+	  </table>
+	  <br>
+	<%= link_to " Excel Report ",show_approved_record_particular_leave_records_path(:particular_leave_record =>{:start_date => params[:particular_leave_record][:start_date],:end_date => params[:particular_leave_record][:end_date],:company_id => params[:particular_leave_record][:company_id],:company_location_id => params[:particular_leave_record][:company_location_id],:department_id => params[:particular_leave_record][:department_id]},format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+
+    <%= link_to " PDF Report ",show_approved_record_particular_leave_records_path(:particular_leave_record =>{:start_date => params[:particular_leave_record][:start_date],:end_date => params[:particular_leave_record][:end_date],:company_id => params[:particular_leave_record][:company_id],:company_location_id => params[:particular_leave_record][:company_location_id],:department_id => params[:particular_leave_record][:department_id]},format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+
+	 </div>
+	</div>

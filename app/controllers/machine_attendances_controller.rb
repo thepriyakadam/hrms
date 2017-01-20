@@ -116,6 +116,7 @@ class MachineAttendancesController < ApplicationController
 														if total_time_diff<0
 														  EmployeeAttendance.where(id: @c1.id).update_all(difference_hrs: total_time_diff.abs)
 														else
+                              # byebug
 														  EmployeeAttendance.where(id: @c1.id).update_all(overtime_hrs: total_time_diff)
 														end
 														puts "IN Time & OUT Time"
@@ -250,7 +251,7 @@ class MachineAttendancesController < ApplicationController
                                     if jd.ot_option == true
                                     	EmployeeAttendance.where(id: @c2.id).update_all(out_time: e.out)
                                     else
-                                    		EmployeeAttendance.where(id: @c2.id).update_all(out_time: ctm.out_time)
+                                    	EmployeeAttendance.where(id: @c2.id).update_all(out_time: ctm.out_time)
                                     end
                                   end
                           	  end
@@ -260,14 +261,14 @@ class MachineAttendancesController < ApplicationController
                         end# if elsif end
 
 											else #shift_master
-
+              
 											end #shift_master
 
 									else #joining_detail
                     # byebug
-                   month_name = e.day.strftime("%B")
-									 @c1=EmployeeAttendance.create(employee_id: e.employee_id,day: e.day.to_date,in_time: e.in,out_time: e.out,machine_attendances_id: e.id,company_time_master_id: ctm.id,present: e.present,month_name: month_name)
-									 MachineAttendance.where(id: e.id).update_all(is_proceed: true)
+                  month_name = e.day.strftime("%B")
+									@c1=EmployeeAttendance.create(employee_id: e.employee_id,day: e.day.to_date,in_time: e.in,out_time: e.out,machine_attendances_id: e.id,company_time_master_id: ctm.id,present: e.present,month_name: month_name)
+									MachineAttendance.where(id: e.id).update_all(is_proceed: true)
   
 								end #joining_detail
 							end#joining_detail loop
@@ -277,8 +278,10 @@ class MachineAttendancesController < ApplicationController
 								emp_attend.each do |eatt|
 	                time_diff=TimeDifference.between(eatt.in_time.strftime('%H:%M:%S'), eatt.out_time.strftime('%H:%M:%S')).in_hours.to_f
 									total_time_diff = time_diff - ctm.working_hrs.to_f
+                  # byebug
 									EmployeeAttendance.where(id: eatt).update_all(working_hrs: time_diff)
 									if total_time_diff<0
+                    # byebug
 									  EmployeeAttendance.where(id: eatt).update_all(difference_hrs: total_time_diff.abs)
 									else
 									  EmployeeAttendance.where(id: eatt).update_all(overtime_hrs: total_time_diff)

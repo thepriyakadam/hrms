@@ -63,11 +63,11 @@ class EmployeeLeavBalance < ActiveRecord::Base
   def emp_available(e)
     from_date = e.from_date
     to_date = e.to_date
+
     from_month = from_date.strftime('%B')
     to_month = to_date.strftime('%B')
     flag = 0
     for i in from_month..to_month
-      byebug
       flag = Workingday.exists?(employee_id: e.employee_id,month_name: i)
     end
     flag

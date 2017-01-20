@@ -15,7 +15,6 @@
       <% @goal_ratings = GoalRating.where(goal_bunch_id: e.id,appraisee_id: e.employee_id, goal_type: 'Goal') %>
       <% @attribute_ratings = GoalRating.where(goal_bunch_id: e.id,appraisee_id: e.employee_id, goal_type: 'Attribute') %>
 
-
       <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">    
         <thead>
         <tr>

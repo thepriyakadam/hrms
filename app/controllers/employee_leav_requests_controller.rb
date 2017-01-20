@@ -322,8 +322,104 @@ class EmployeeLeavRequestsController < ApplicationController
   end
 
   def leave_request_report
+    session[:active_tab] ="LeaveManagement"
+    session[:active_tab1] ="LeaveReports"
   end
   
+  def request_report
+    @start_date = params[:employee_leav_request][:start_date]
+    @end_date = params[:employee_leav_request][:end_date]
+    @company_id = params[:employee_leav_request][:company_id]
+    @location = params[:employee_leav_request][:company_location_id]
+    @department = params[:employee_leav_request][:department_id]
+  
+    if current_user.class == Group
+      @employee_leav_requests = EmployeeLeavRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime)
+    elsif current_user.class == Member
+      if current_user.role.name == 'GroupAdmin'
+        @employee_leav_requests = EmployeeLeavRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime)
+      elsif current_user.role.name == 'Admin'
+        @employees = Employee.where(company_id: current_user.company_location.company_id)
+        @employee_leav_requests = EmployeeLeavRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees)
+      elsif current_user.role.name == 'Branch'
+        @employees = Employee.where(company_location_id: current_user.company_location_id)
+        @employee_leav_requests = EmployeeLeavRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees)
+      end
+    end
+
+    respond_to do |f|
+      f.js
+      f.xls {render template: 'employee_leav_requests/leave_request.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'request_report',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'employee_leav_requests/leave_request.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+      end
+    end
+  end
+  
+  def leave_req_status_report
+    session[:active_tab] ="LeaveManagement"
+    session[:active_tab1] ="LeaveReports"
+  end
+
+  def status_wise_request
+    @start_date = params[:employee_leav_request][:start_date]
+    @end_date = params[:employee_leav_request][:end_date]
+    @company_id = params[:employee_leav_request][:company_id]
+    @location = params[:employee_leav_request][:company_location_id]
+    @department = params[:employee_leav_request][:department_id]
+    @status = params[:employee_leav_request][:current_status]
+
+    if @status == "Pending"
+      @current_status = 0
+    elsif @status == "FinalApproved"
+      @current_status = 3
+    elsif @status == "FirstApproved"
+      @current_status = 2
+    elsif @status == "Cancelled"
+      @current_status = 1
+    else @status == "Rejected"
+      @current_status = 4
+    end
+    
+    if current_user.class == Group
+      @employee_leav_request = EmployeeLeavRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime).pluck(:id)
+      @employee_leav_requests = EmployeeLeavRequest.where(id: @employee_leav_request)
+    elsif current_user.class == Member
+      if current_user.role.name == 'GroupAdmin'
+        @employee_leav_request = EmployeeLeavRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime).pluck(:id)
+        @employee_leav_requests = EmployeeLeavRequest.where(id: @employee_leav_request).where(current_status: @current_status)
+      elsif current_user.role.name == 'Admin'
+        @employees = Employee.where(company_id: current_user.company_location.company_id)
+        @employee_leav_request = EmployeeLeavRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime,employee_id: @employees).pluck(:id)
+        @employee_leav_requests = EmployeeLeavRequest.where(id: @employee_leav_request).where(current_status: @current_status)
+      elsif current_user.role.name == 'Branch'
+        @employees = Employee.where(company_location_id: current_user.company_location_id)
+        @employee_leav_request = EmployeeLeavRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime,employee_id: @employees).pluck(:id)
+        @employee_leav_requests = EmployeeLeavRequest.where(id: @employee_leav_request).where(current_status: @current_status)
+      end
+    end
+
+    respond_to do |f|
+      f.js
+      f.xls {render template: 'employee_leav_requests/status_wise.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'status_wise_request',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'employee_leav_requests/status_wise.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+      end
+    end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

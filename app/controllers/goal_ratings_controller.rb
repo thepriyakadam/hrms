@@ -274,7 +274,7 @@ class GoalRatingsController < ApplicationController
       if @employee_ids.nil?
         flash[:alert] = "Please Select the Checkbox"
         @employees = []
-        redirect_to subordinate_list_goal_wise_goal_ratings_path
+        redirect_to employee_goal_wise_goal_ratings_path
       else
       @employees = []
       @employee_ids.each do |g|

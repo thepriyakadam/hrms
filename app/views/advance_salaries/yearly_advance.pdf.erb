@@ -11,28 +11,27 @@
       /* http://code.google.com/p/wkhtmltopdf/issues/detail?id=9#c21 */
     }
 </style>
-  <table style="border-collapse: collapse; font-size:8pt;" border=1 width=900 cellpadding="10">
-    <thead>
+<table style="border-collapse: collapse; font-size:9pt;" border=1 width=1000 cellpadding="10">
+<% i=0%>
+  <thead>
      <tr>
       <td colspan = "3">
-        <center><strong><%= current_user.employee.company_location.company.description %></strong></center>
+        <center><strong><%= @compny.description %></strong></center>
       </td>
-      </tr>
-      <tr> 
-      <td>
-        <strong><%= @employee.manual_employee_code %></strong>
-      </td> 
-      <td colspan = "2">
-        <strong><%= @employee.first_name %> <%= @employee.middle_name %> <%= @employee.last_name %></strong>
-      </td>            
-      </tr>   
-    </thead>
+    </tr>  
+  </thead>
 
     <tbody>
       <% @advance_salaries.each do |advance_salary| %>
         <% @instalment = Instalment.where(advance_salary_id: advance_salary) %>
         <tr>
         <th colspan = "3"><center> Advance </center></th>
+        </tr>
+        <tr>
+         <% i=i+1%>
+        <th><%= i %></th>
+        <th><%= advance_salary.employee.manual_employee_code %></th>
+        <th><%= full_name(advance_salary.employee) %></th>
         </tr>
        <tr>
         <th>Advance Date</th>
@@ -52,7 +51,7 @@
         <tr>
         <th>Installment Date</th>
         <th>Installment Amount</th>
-        <th>Paid</th>
+        <th>Complete</th>
         </tr>
          <% @instalment.each do |instalment| %>
         <tr>

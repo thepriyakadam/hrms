@@ -1486,6 +1486,10 @@ end
       get :soc_membership_xls
       get :soc_membership_pdf
       get :pf_pdf
+      get :monthly_deduction_report
+      post :monthly_deduction
+      get :monthly_deduction_pdf
+      get :monthly_deduction_excel
     end
   end
 
@@ -1518,6 +1522,10 @@ end
       post :advance_detail
       get :advance_detail_pdf
       get :advance_detail_excel
+      get :yearly_advance_report
+      post :yearly_advance
+      get :yearly_advance_pdf
+      get :yearly_advance_excel
     end
   end
 
@@ -1733,6 +1741,7 @@ end
       get :all_leave_request_list
       get :admin_employee_history_with_current_leave
       get :select_checkbox
+      get :leave_request_report
     end
   end
   resources :company_leavs

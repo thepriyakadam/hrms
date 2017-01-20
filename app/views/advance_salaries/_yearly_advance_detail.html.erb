@@ -4,22 +4,15 @@
   </div><!-- /.box-header -->
   <div class="box-body">
   <div id="comments">
+     <% i=0%>
 
     <table id="example6" class="table table-bordered table-hover table-condensed">
     <thead>
      <tr>
       <td colspan = "3">
-        <center><strong><%= current_user.employee.company_location.company.description %></strong></center>
+        <center><strong><%= @compny.description %></strong></center>
       </td>
-      </tr>
-      <tr> 
-      <td>
-        <strong><%= @employee.manual_employee_code %></strong>
-      </td> 
-      <td colspan = "2">
-        <strong><%= @employee.first_name %> <%= @employee.middle_name %> <%= @employee.last_name %></strong>
-      </td>            
-      </tr>   
+      </tr>  
     </thead>
 
     <tbody>
@@ -27,6 +20,12 @@
         <% @instalment = Instalment.where(advance_salary_id: advance_salary) %>
         <tr>
         <th colspan = "3"><center> Advance </center></th>
+        </tr>
+        <tr>
+         <% i=i+1%>
+        <th><%= i %></th>
+        <th><%= advance_salary.employee.manual_employee_code %></th>
+        <th><%= full_name(advance_salary.employee) %></th>
         </tr>
        <tr>
         <th>Advance Date</th>
@@ -46,7 +45,7 @@
         <tr>
         <th>Installment Date</th>
         <th>Installment Amount</th>
-        <th>Paid</th>
+        <th>Complete</th>
         </tr>
          <% @instalment.each do |instalment| %>
         <tr>
@@ -55,15 +54,14 @@
           <td><%= instalment.is_complete ? "Yes" : "No" %></td>
         </tr>
       <% end %>
-       
       <% end %>
     </tbody>
   </table>
 
+    <%= link_to " Excel Report ",yearly_advance_excel_advance_salaries_path(month: params[:advance_salary][:month],year: params[:advance_salary][:year],company_id: params[:advance_salary][:company_id],company_location_id: params[:advance_salary][:company_location_id],format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
 
-    <%= link_to " Excel Report ",employee_advance_excel_advance_salaries_path(employee_id: @employee_id,format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+    <%= link_to " PDF Report ",yearly_advance_pdf_advance_salaries_path(year: params[:advance_salary][:year],company_id: params[:advance_salary][:company_id],company_location_id: params[:advance_salary][:company_location_id],format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
 
-    <%= link_to " PDF Report ",employee_advance_pdf_advance_salaries_path(employee_id: @employee_id,format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
     </div>
   </div>
 </div>

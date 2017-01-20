@@ -981,17 +981,33 @@ require 'roo'
 #  end
 #  end
 
+# ex = Roo::Excel.new("#{Rails.root}/public/yearly_workingdays.xls")
+# ex.default_sheet = ex.sheets[0] #siya feb
+# i = 1
+# ActiveRecord::Base.transaction do
+# 2.upto(416) do |line| # siya Feb 2016
+#  puts "Starting Record #{ex.cell(line,'B')}---------------------------------------"
+#  # byebug
+#  @employee = Employee.find_by_manual_employee_code(ex.cell(line,'B').to_i)
+#  puts "#{i} Record inserting.----------------------------"
+#  # MachineAttendance.where(employee_id: @employee.id).update_all(employee_id: @employee.id,in: ex.cell(line,'B'),out: ex.cell(line,'C'),shift_master_id: ex.cell(line,'E'),present: ex.cell(line,'F').to_s,day: ex.cell(line,'G'))
+#  EmployeeLeavBalance.where(employee_id: @employee.id).update_all(total_leave: ex.cell(line,'E'))
+#  puts "#{i} Record inserted.-----------------------------------------------"
+#  i += 1
+#  end
+#  end
+
+
 ex = Roo::Excel.new("#{Rails.root}/public/yearly_workingdays.xls")
 ex.default_sheet = ex.sheets[0] #siya feb
 i = 1
 ActiveRecord::Base.transaction do
 2.upto(416) do |line| # siya Feb 2016
  puts "Starting Record #{ex.cell(line,'B')}---------------------------------------"
- # byebug
- @employee = Employee.find_by_manual_employee_code(ex.cell(line,'B').to_i)
+ @employee = Employee.where(manual_employee_code: ex.cell(line,'B').to_i).pluck(:id)
+ @emp_leav_bal = EmployeeLeavBalance.where(employee_id: @employee,leav_category_id: 2).pluck(:id)
  puts "#{i} Record inserting.----------------------------"
- # MachineAttendance.where(employee_id: @employee.id).update_all(employee_id: @employee.id,in: ex.cell(line,'B'),out: ex.cell(line,'C'),shift_master_id: ex.cell(line,'E'),present: ex.cell(line,'F').to_s,day: ex.cell(line,'G'))
- EmployeeLeavBalance.where(employee_id: @employee.id).update_all(total_leave: ex.cell(line,'E'))
+ EmployeeLeavBalance.where(id: @emp_leav_bal).update_all(total_leave: ex.cell(line,'E'))
  puts "#{i} Record inserted.-----------------------------------------------"
  i += 1
  end

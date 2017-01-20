@@ -7,26 +7,36 @@
   <Worksheet ss:Name="Sheet1">
     <Table>
       <Row>
-        <Cell ss:Index="1"><Data ss:Type="String">Sr. No.</Data></Cell>
-        <Cell ss:Index="2"><Data ss:Type="String">Travel Request ID</Data></Cell>
-        <Cell ss:Index="3"><Data ss:Type="String">Traveler Name</Data></Cell>
+      <Cell ss:Index="1"><Data ss:Type="String">
+      <%= Company.find(@company).description unless @company.nil? or @company.blank? %> <%= Company.find(@company).address unless @company.nil? or @company.blank? %> <%=Department.find(@department).name unless @department.nil? or @department.blank? %>  <%= CompanyLocation.find(@company_location).name unless @company_location.nil? or @company_location.blank? %></Data></Cell>
+      </Row>
+     
+      <Row>
+        <Cell ss:Index="1"><Data ss:Type="String">Request ID</Data></Cell>
+        <Cell ss:Index="2"><Data ss:Type="String">Employee Name</Data></Cell>
+        <Cell ss:Index="3"><Data ss:Type="String">ID</Data></Cell>
         <Cell ss:Index="4"><Data ss:Type="String">Expense Date</Data></Cell>
         <Cell ss:Index="5"><Data ss:Type="String">Place</Data></Cell>
         <Cell ss:Index="6"><Data ss:Type="String">Expense Type</Data></Cell>
         <Cell ss:Index="7"><Data ss:Type="String">Expense Amount</Data></Cell>
-        <Cell ss:Index="8"><Data ss:Type="String">Currency</Data></Cell>
+        <Cell ss:Index="8"><Data ss:Type="String">Remark</Data></Cell>
+        <Cell ss:Index="9"><Data ss:Type="String">Request Status</Data></Cell>
+        <Cell ss:Index="10"><Data ss:Type="String">Confirm</Data></Cell>
       </Row>
-         <% i = 0 %>
+        
           <% @daily_bill_details.each do |daily_bill_detail| %>
         <Row>
-          <Cell ss:Index="1"><Data ss:Type="String"><%= i=i+1 %></Data></Cell>
-          <Cell ss:Index="2"><Data ss:Type="String"><%= daily_bill_detail.travel_request_id %></Data></Cell>
-          <Cell ss:Index="3"><Data ss:Type="String"><%= daily_bill_detail.travel_request.employee.try(:first_name) %> <%= daily_bill_detail.travel_request.employee.try(:middle_name) %> <%= daily_bill_detail.travel_request.employee.try(:last_name) %></Data></Cell>
+        
+          <Cell ss:Index="1"><Data ss:Type="String"><%= daily_bill_detail.travel_request_id %></Data></Cell>
+          <Cell ss:Index="2"><Data ss:Type="String"><%= daily_bill_detail.travel_request.employee.try(:first_name) %> <%= daily_bill_detail.travel_request.employee.try(:middle_name) %> <%= daily_bill_detail.travel_request.employee.try(:last_name) %></Data></Cell>
+          <Cell ss:Index="3"><Data ss:Type="String"><%= daily_bill_detail.travel_request.employee.try(:manual_employee_code) %></Data></Cell>
           <Cell ss:Index="4"><Data ss:Type="String"><%= daily_bill_detail.expence_date %></Data></Cell>
           <Cell ss:Index="5"><Data ss:Type="String"><%= daily_bill_detail.e_place %></Data></Cell>
           <Cell ss:Index="6"><Data ss:Type="String"><%= daily_bill_detail.travel_expence_type.try(:name) %></Data></Cell>
           <Cell ss:Index="7"><Data ss:Type="String"><%= daily_bill_detail.travel_expence  %></Data></Cell>
-          <Cell ss:Index="8"><Data ss:Type="String"><%= daily_bill_detail.currency_master.try(:name) %></Data></Cell>
+           <Cell ss:Index="8"><Data ss:Type="String"><%= daily_bill_detail.remarks %></Data></Cell>
+          <Cell ss:Index="9"><Data ss:Type="String"><%= daily_bill_detail.request_status  %></Data></Cell>
+           <Cell ss:Index="10"><Data ss:Type="String"><%= daily_bill_detail.is_confirm ? "Yes" : "No" %></Data></Cell>
           </Row><!-- Row -->
       <% end %><!-- slip -->
     </Table>

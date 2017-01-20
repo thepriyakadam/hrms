@@ -5,8 +5,10 @@
   <table id="example" class="table table-bordered table-hover table-condensed">
     <% @daily_bill_detail = DailyBillDetail.where(travel_request_id: travel_request) %>
       <% @travel_expence = TravelExpence.where(travel_request_id: travel_request) %>
-      <% travel_request.id %>
-     <tr><th colspan="2">Application Date: <%= travel_request.try(:application_date) %></th><th colspan="4"><center> Travel Request </center></th><th colspan="2">Traveling Date: <%= travel_request.try(:traveling_date) %> - <%= travel_request.try(:to) %></th></tr>
+     <tr><td colspan="8"><center><strong><%= travel_request.employee.company_location.company.try(:description) %></strong> <br>
+        <%= travel_request.employee.company_location.company.try(:address) %><br> <%= travel_request.employee.department.try(:name) %> -
+        <%= travel_request.employee.company_location.try(:name) %></center> </td></tr>
+     <tr><th colspan="2">Application Date: <%= travel_request.try(:application_date) %></th><th colspan="4"><center> Employee Traveling Detail Report </center></th><th colspan="2">Traveling Date: <%= travel_request.try(:traveling_date) %> - <%= travel_request.try(:to) %></th></tr>
      <tr>
       <th>Request ID</th>
       <th>Employee ID</th>
@@ -72,8 +74,7 @@
 </table>
   <% end %>
 </div>
-<%debugger%>
- <%= link_to " Excel Report ",print_travel_request_employee_name_report_travel_requests_path(employee_id:params[:travel_request][:employee_id], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+ <%= link_to " Excel Report ",print_travel_request_employee_name_report_travel_requests_path(employee_id: params[:travel_request][:employee_id], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
  
 <%= link_to " Print Report ",print_travel_request_employee_name_report_travel_requests_path(employee_id: params[:travel_request][:employee_id],format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
 </div>                                     

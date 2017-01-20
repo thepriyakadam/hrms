@@ -7,7 +7,7 @@
      <div class="row">
         <div class="col-sm-3">
           <div class="field">
-            <%= f.select :employee_id,employee_list_by_company_location,{hide_label:true,include_blank: " Select Employee"},{onchange:"var a={employee_id:$(this).val()};$('.ajax-progress').show(); $.get('/travel_requests/print_travel_request_employee_name_report',a,function(response){});", :class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"}  %>
+            <%= f.select :employee_id,employee_list_by_company_location,{hide_label:true,include_blank: " Select Employee"},{onchange:"var a={employee_id:$(this).val() , form : 'travel_request'};$('.ajax-progress').show(); $.get('/travel_requests/print_travel_request_employee_name_report',a,function(response){});", :class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"}  %>
            </div>
         </div>
         <div class="col-sm-3">

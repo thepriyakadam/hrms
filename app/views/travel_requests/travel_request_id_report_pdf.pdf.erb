@@ -1,57 +1,83 @@
-<style>
-    th {
-        text-align: left;
-    }
-    tr {
-        page-break-inside: avoid;
-    }
+<style type="text/css">
+    th { text-align: left; }
+    tr { page-break-inside: avoid; }
     div.alwaysbreak { page-break-before: always; }
     div.nobreak:before { clear:both; }
-    div.nobreak{ page-break-inside: avoid;
-    }
+    div.nobreak{ page-break-inside: avoid;}
 </style>
-  <table style="border-collapse: collapse; font-size:12pt;" border=1 width=1200 cellpadding="15">
-    <thead>
-    <tr><td colspan="14"><center>Travel Request ID Report</center> </td></tr>
-      <tr>
-      <th>Travel Request ID</th>
+
+<% @travel_requests.each do |travel_request| %>
+ <table style="border-collapse: collapse; font-size:9pt;" border=1 width=1200 cellpadding="10">
+    <% @daily_bill_detail = DailyBillDetail.where(travel_request_id: travel_request) %>
+      <% @travel_expence = TravelExpence.where(travel_request_id: travel_request) %>
+ 
+        <tr><td colspan="8"><center><strong><%= travel_request.employee.company_location.company.try(:description) %></strong> <br>
+        <%= travel_request.employee.company_location.company.try(:address) %><br>  <%= travel_request.employee.department.try(:name) %> -
+        <%= travel_request.employee.company_location.try(:name) %></center> </td></tr>
+
+     <tr><th colspan="2">Application Date: <%= travel_request.try(:application_date) %></th><th colspan="4"><center> Travel Request Id Report </center></th><th colspan="2">Traveling Date: <%= travel_request.try(:traveling_date) %> - <%= travel_request.try(:to) %></th></tr>
+     <tr>
+      <th>Request ID</th>
       <th>Employee ID</th>
       <th>Employee Name</th>
-      <th>Approver</th>
-      <th>Application Date</th>
-      <th>Travelling Date</th>
+      <th>Request To</th>
+      <th>Option</th>
       <th>Place</th>
-      <th>Tour Purpose</th>
-      <th>Travel Option</th>
-      <th>Travel Mode</th>
-      <th>Total Advance</th>
-       <th>Expense Date</th>
-       <th>Expense Type</th>
-       <th>Expense Amount</th>
-    </tr>
-      </thead>
-      <tbody>
-    <% @travel_requests.each do |travel_request| %>
-    <% @daily_bill_details.each do |daily_bill_detail| %>
+      <th>Day</th>
+      <th>Advance</th>
+     </tr>
      <tr>
-        <td><%= travel_request.id %></td>
-        <td><%= travel_request.employee.try(:manual_employee_code) %></td>
-        <td><%= travel_request.employee.try(:first_name) %> <%= travel_request.employee.try(:middle_name) %> <%= travel_request.employee.try(:last_name) %></td>
-        <td><%= travel_request.reporting_master.employee.try(:first_name) %>
-        <%= travel_request.reporting_master.employee.try(:last_name) %>
-        <%= travel_request.reporting_master.employee.try(:middle_name) %></td>
-        <td><%= travel_request.application_date %></td>
-        <td><%= travel_request.traveling_date %></td>
-        <td><%= travel_request.place %></td>
-        <td><%= travel_request.tour_purpose %></td>
-        <td><%= travel_request.travel_option %></td>
-        <td><%= travel_request.travel_mode.try(:name) %></td>
-        <td><%= travel_request.total_advance %></td>
-        <td><%= daily_bill_detail.expence_date%></td>
-        <td><%= daily_bill_detail.travel_expence_type.try(:name) %></td>
-        <td><%= daily_bill_detail.travel_expence %></td>
+      <td><%= travel_request.id %></td>
+      <td><%= travel_request.employee.try(:manual_employee_code) %></td>
+      <td><%= travel_request.employee.try(:first_name) %> <%= travel_request.employee.try(:middle_name) %> <%= travel_request.employee.try(:last_name) %></td>
+      <td><%= travel_request.employee.try(:first_name) %> <%= travel_request.employee.try(:middle_name) %> <%= travel_request.employee.try(:last_name) %></td>
+      <td><%= travel_request.try(:travel_option).try(:name) %></td>
+      <td><%= travel_request.try(:place) %></td>
+      <td><%= travel_request.try(:day) %></td>
+      <td><%= travel_request.try(:total_advance) %></td>
+      </tr>
+      <tr>
+       <th >Tour Purpose</th>
+       <td colspan="7"><%= @travel_request.try(:tour_purpose) %></td>
+      </tr>
+      <tr><th colspan="8"><center>Expence Claim</center></th></tr>
+      <tr>
+         <th colspan="2">Expense Date</th>
+         <th colspan="2">Place</th>
+         <th colspan="2">Expense Type</th>
+         <th colspan="2">Expense Amount</th>
+      </tr>
+    <% @daily_bill_detail.each do |daily_bill_detail| %>
+      <tr>
+        <td colspan="2"><%= daily_bill_detail.expence_date%></td>
+        <td colspan="2"><%= daily_bill_detail.e_place %></td>
+        <td colspan="2"><%= daily_bill_detail.travel_expence_type.try(:name) %></td>
+        <td colspan="2"><%= daily_bill_detail.travel_expence %></td>
       </tr>
     <% end %>
-    <% end %>
-    </tbody>
-    </table>    
+
+    <tr>
+        <th colspan="6">Expense Amount</th>
+        <th colspan="2"><%= @daily_bill_detail.sum(:travel_expence) %></th>
+    </tr>
+
+     <tr><th colspan="8"><center>Expence Detail</center></th></tr>
+    <tr>
+      <th colspan="2">Total Advance Amount</th>
+      <th colspan="2">Total Expense Amount</th>
+      <th colspan="2">Remaining Amount</th>
+      <th colspan="2">Employee Amount</th>
+    </tr>
+
+    <% @travel_expence.each do |travel_expence| %>
+      <tr>
+        <td colspan="2"><%= travel_expence.total_advance_amount %></td>
+        <td colspan="2"><%= travel_expence.total_expence_amount %></td>
+        <td colspan="2"><%= travel_expence.remaining_amount %></td>
+        <td colspan="2"><%= travel_expence.employee_amount %></td>
+      </tr>
+  <% end %>
+    <tr><td colspan="8"></td></tr><br>
+</tbody>
+</table>
+  <% end %>

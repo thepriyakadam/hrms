@@ -5,9 +5,11 @@
   xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
   xmlns:html="http://www.w3.org/TR/REC-html40">
   <Worksheet ss:Name="Sheet1">
-    <Table>
-      <Row>
-        <Cell ss:Index="1"><Data ss:Type="String">Sr. No.</Data></Cell>
+    <Table>  
+         <% i = 0 %>
+          <% @travel_requests.each do |travel_request| %>
+        <Row>
+        <Cell ss:Index="1"><Data ss:Type="String">Request ID.</Data></Cell>
         <Cell ss:Index="2"><Data ss:Type="String">Employee ID</Data></Cell>
         <Cell ss:Index="3"><Data ss:Type="String">First Name</Data></Cell>
         <Cell ss:Index="4"><Data ss:Type="String">Middle Name</Data></Cell>
@@ -22,22 +24,19 @@
         <Cell ss:Index="13"><Data ss:Type="String">Travel Option</Data></Cell>
         <Cell ss:Index="14"><Data ss:Type="String">Travel Mode</Data></Cell>
         <Cell ss:Index="15"><Data ss:Type="String">Total Advance</Data></Cell>
-        <Cell ss:Index="16"><Data ss:Type="String">Expense Date</Data></Cell>
-        <Cell ss:Index="17"><Data ss:Type="String">Expense Type</Data></Cell>
-        <Cell ss:Index="18"><Data ss:Type="String">Expense Amount</Data></Cell>
-      </Row>
-         <% i = 0 %>
-          <% @travel_requests.each do |travel_request| %>
-          <% @daily_bill_details.each do |daily_bill_detail| %>
+        </Row>
+          <% @daily_bill_detail = DailyBillDetail.where(travel_request_id: travel_request) %>
+          <% @travel_expence = TravelExpence.where(travel_request_id: travel_request) %>
+        
+          
         <Row>
-          <Cell ss:Index="1"><Data ss:Type="String"><%= i=i+1 %></Data></Cell>
-  
+          <Cell ss:Index="1"><Data ss:Type="String"><%= travel_request.id %></Data></Cell>
           <Cell ss:Index="2"><Data ss:Type="String"><%= travel_request.employee.try(:manual_employee_code ) %></Data></Cell>
           <Cell ss:Index="3"><Data ss:Type="String"><%= travel_request.employee.try(:first_name ) %></Data></Cell>
           <Cell ss:Index="4"><Data ss:Type="String"><%= travel_request.employee.try(:middle_name ) %></Data></Cell>
           <Cell ss:Index="5"><Data ss:Type="String"><%= travel_request.employee.try(:last_name ) %></Data></Cell>
-          <Cell ss:Index="6"><Data ss:Type="Number"><%= travel_request.application_date %></Data></Cell>
-          <Cell ss:Index="7"><Data ss:Type="Number"><%= travel_request.traveling_date %></Data></Cell>
+          <Cell ss:Index="6"><Data ss:Type="String"><%= travel_request.application_date %></Data></Cell>
+          <Cell ss:Index="7"><Data ss:Type="String"><%= travel_request.traveling_date %></Data></Cell>
           <Cell ss:Index="8"><Data ss:Type="String"><%= travel_request.reporting_master.employee.try(:first_name) %></Data></Cell>
           <Cell ss:Index="9"><Data ss:Type="String"><%= travel_request.reporting_master.employee.try(:middle_name ) %></Data></Cell>
           <Cell ss:Index="10"><Data ss:Type="String"><%= travel_request.reporting_master.employee.try(:last_name ) %></Data></Cell>
@@ -45,13 +44,38 @@
           <Cell ss:Index="12"><Data ss:Type="String"><%= travel_request.tour_purpose %></Data></Cell>
           <Cell ss:Index="13"><Data ss:Type="String"><%= travel_request.try(:travel_option).try(:name) %></Data></Cell>
           <Cell ss:Index="14"><Data ss:Type="String"><%= travel_request.travel_mode.try(:name) %></Data></Cell>
-          <Cell ss:Index="15"><Data ss:Type="String"><%= travel_request.total_advance %></Data></Cell>
-          <Cell ss:Index="16"><Data ss:Type="String"><%= daily_bill_detail.try(:travel_option).try(:expence_date) %></Data></Cell>
-          <Cell ss:Index="17"><Data ss:Type="String"><%= daily_bill_detail.travel_expence_type.try(:name) %></Data></Cell>
-          <Cell ss:Index="18"><Data ss:Type="String"><%= daily_bill_detail.travel_expence %></Data></Cell>
+          <Cell ss:Index="15"><Data ss:Type="Number"><%= travel_request.total_advance %></Data></Cell>
+          </Row>
+        <Row>
+        <Cell ss:Index="1"><Data ss:Type="String">Expense Date</Data></Cell>
+        <Cell ss:Index="2"><Data ss:Type="String">Expense Type</Data></Cell>
+        <Cell ss:Index="3"><Data ss:Type="String">Expense Amount</Data></Cell>
+        </Row>
+          <% @daily_bill_detail.each do |daily_bill_detail| %>
+          <Row>
+          <Cell ss:Index="1"><Data ss:Type="String"><%= daily_bill_detail.try(:travel_option).try(:expence_date) %></Data></Cell>
+          <Cell ss:Index="2"><Data ss:Type="String"><%= daily_bill_detail.travel_expence_type.try(:name) %></Data></Cell>
+          <Cell ss:Index="3"><Data ss:Type="Number"><%= daily_bill_detail.travel_expence %></Data></Cell>
+          </Row>
+          <% @travel_expence.each do |travel_expence| %>
+           <Row>
+        <Cell ss:Index="1"><Data ss:Type="String">Total Advance Amount</Data></Cell>
+        <Cell ss:Index="2"><Data ss:Type="String">Total Expense Amount</Data></Cell>
+        <Cell ss:Index="3"><Data ss:Type="String">Remaining Amount</Data></Cell>
+        <Cell ss:Index="4"><Data ss:Type="String">Employee Amount</Data></Cell>
+      </Row>
+          <Row>
+          <Cell ss:Index="1"><Data ss:Type="Number"><%= travel_expence.total_advance_amount %></Data></Cell>
+          <Cell ss:Index="2"><Data ss:Type="Number"><%= travel_expence.total_expence_amount %></Data></Cell>
+          <Cell ss:Index="3"><Data ss:Type="Number"><%= travel_expence.remaining_amount %></Data></Cell>
+          <Cell ss:Index="4"><Data ss:Type="Number"><%= travel_expence.employee_amount %></Data></Cell>
           </Row><!-- Row -->
       <% end %>
-      <% end %><!-- slip -->
+      <% end %>
+       <% end %><!-- slip -->
+       <Row>
+          <Cell ss:Index="1"><Data ss:Type="String"> </Data></Cell>
+       </Row>
     </Table>
   </Worksheet>
 </Workbook>

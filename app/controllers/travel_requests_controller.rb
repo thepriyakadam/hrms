@@ -490,7 +490,7 @@ elsif current_user.role.name == 'Branch'
       @daily_bill_details = DailyBillDetail.where(travel_request_id: @travel_request)
       @travel_expences = TravelExpence.where(travel_request_id: @travel_request)
 
-       respond_to do |format|
+      respond_to do |format|
      format.js
      format.xls {render template: 'travel_requests/travel_request_employee_name_report_xls.xls.erb'}
      format.html

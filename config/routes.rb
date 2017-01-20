@@ -413,12 +413,11 @@ end
       post :display_attendance_1
       get :select_date_department_form
       post :show_departmntwise_employee
+      get :show_departmntwise_employee
       get :department_wise_pdf
       get :department_wise_xls
       get :select_date_present_form
       get :show_datewise_employee
-      get :date_wise_pdf
-      get :date_wise_xls
     end
   end
   resources :salary_comp_mappings
@@ -511,12 +510,13 @@ end
       get :employee_goal_wise
       post :print_employee
       post :detail_goal_wise
+      get :detail_goal_wise
+      get :detail_goal_wise_xls
+      get :print_goal_wise
       get :employee_wise_goal
       post :goal_employee_wise
       post :detail_employee_wise
       get :print_employee_wise
-      get :print_goal_wise
-      get :detail_goal_wise_xls
       get :detail_employee_wise_xls
       get :period_rating_wise
       post :Period_rating_wise_employee
@@ -1043,85 +1043,6 @@ end
     end
   end
 
-  resources :attribute_rating_sheets do
-    collection do
-      get :edit_appraiser
-      get :edit_attribute_rating
-      patch :update_appraiser
-      get :appraiser
-      post :appraiser_create
-      post :is_confirm_appraiser
-      post :is_confirm_appraisee
-      get :employee_details
-      get :employee_info
-      get :subordinate_list
-      get :appraiser2
-      post :appraiser2_create
-      get :final_comment
-      post :final_create
-      get :edit_final
-      patch :update_final
-      post :is_confirm_final
-      post :is_confirm_appraiser2
-      get :edit_appraiser2
-      patch :update_appraiser2
-      get :employee_list
-      get :employee_final_details
-      get :subordinate_list2
-      get :employee_appraiser2_details
-      get :modal
-      patch :update_modal
-      get :modal_appraiser
-      patch :update_appraiser_modal
-      get :modal_appraiser2
-      patch :update_appraiser2_modal
-      get :modal_final
-      patch :update_final_modal
-      get :print_details_appraiser
-      get :print_details_final
-      get :print_details_appraiser2
-      get :send_email_to_appraiser
-      get :send_email_to_appraiser2
-      get :try
-    end
-  end
-  resources :goal_rating_sheets do
-    collection do
-      post :is_confirm_appraisee
-      post :is_confirm_appraiser
-      get :edit_appraiser
-      patch :update_appraiser
-      delete :destroy_appraiser
-      get :subordinate_list
-      get :edit_goal_rating
-      get :appraiser
-      post :appraiser_create
-      get :appraisee_goal_list
-      get :subordinate_list2
-      get :appraiser2
-      post :appraiser2_create
-      get :edit_appraiser2
-      patch :update_appraiser2
-      get :employee_list
-      get :final_comment
-      post :final_create
-      get :edit_final
-      patch :update_final
-      post :is_confirm_final
-      post :is_confirm_appraiser2
-      get :modal
-      patch :update_modal
-      get :modal_appraiser
-      patch :update_appraiser_modal
-      get :modal_appraiser2
-      patch :update_appraiser2_modal
-      get :modal_final
-      patch :update_final_modal
-      get :appraiser1_approval
-      get :appraiser1_subordinate
-    end
-    
-  end
   resources :employee_attributes do
     collection do
       get :appraisee
@@ -1160,8 +1081,7 @@ end
       get :search_by_leave_date
       get :leave_approval_report
       post :show_approved_record
-      get :approved_record_pdf
-      get :approved_record_excel
+      get :show_approved_record
     end
   end
   match 'selected_resumes/:id/download_resume/:id' => 'selected_resumes#download_resume', :via => [:get], :as => :download_resume
@@ -1244,11 +1164,7 @@ end
       get :is_confirm
     end
   end
-  resources :professional_taxes do
-    collection do
-      get :is_confirm
-    end
-  end
+ 
   resources :society_member_ships do
     collection do
       get :is_confirm
@@ -1488,8 +1404,7 @@ end
       get :pf_pdf
       get :monthly_deduction_report
       post :monthly_deduction
-      get :monthly_deduction_pdf
-      get :monthly_deduction_excel
+      get :monthly_deduction
     end
   end
 
@@ -1511,20 +1426,15 @@ end
       get :advances
       get :advance_salary_report
       post :dynamic_report
-      get :advance_salary_xls
-      get :advance_salary_pdf
+      get :dynamic_report
       get :advance_report
       get :show_employee_detail
-      get :employee_advance_excel
-      get :employee_advance_pdf
       get :advance_detailed_report
       post :advance_detail
-      get :advance_detail_pdf
-      get :advance_detail_excel
+      get :advance_detail
       get :yearly_advance_report
       post :yearly_advance
-      get :yearly_advance_pdf
-      get :yearly_advance_excel
+      get :yearly_advance
     end
   end
 
@@ -1742,12 +1652,10 @@ end
       get :select_checkbox
       get :leave_request_report
       post :request_report
-      get :leave_request_excel
-      get :leave_request_pdf
+      get :request_report
       get :leave_req_status_report
       post :status_wise_request
-      get :status_wise_excel
-      get :status_wise_pdf
+      get :status_wise_request
     end
   end
   resources :company_leavs

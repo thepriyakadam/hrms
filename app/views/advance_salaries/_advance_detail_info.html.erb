@@ -57,10 +57,9 @@
       <% end %>
     </tbody>
   </table>
+    <%= link_to " Excel Report ",advance_detail_advance_salaries_path(:advance_salary =>{:month => params[:advance_salary][:month],:year => params[:advance_salary][:year],:company_id => params[:advance_salary][:company_id] ,:company_location_id => params[:advance_salary][:company_location_id]},format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
 
-    <%= link_to " Excel Report ",advance_detail_excel_advance_salaries_path(month: params[:advance_salary][:month],year: params[:advance_salary][:year],company_id: params[:advance_salary][:company_id],company_location_id: params[:advance_salary][:company_location_id],format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
-
-    <%= link_to " PDF Report ",advance_detail_pdf_advance_salaries_path(month: params[:advance_salary][:month],year: params[:advance_salary][:year],company_id: params[:advance_salary][:company_id],company_location_id: params[:advance_salary][:company_location_id],format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+    <%= link_to " PDF Report ",advance_detail_advance_salaries_path(:advance_salary =>{month: params[:advance_salary][:month],year: params[:advance_salary][:year],company_id: params[:advance_salary][:company_id],company_location_id: params[:advance_salary][:company_location_id]},format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
     </div>
   </div>
 </div>

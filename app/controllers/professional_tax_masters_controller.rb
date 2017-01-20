@@ -93,6 +93,6 @@ class ProfessionalTaxMastersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def professional_tax_master_params
-      params.require(:professional_tax_master).permit(:base_component, :min_amount, :max_amount, :for_month, :march_amount, :effective_from, :effective_to, :is_active, :is_confirm)
+      params.require(:professional_tax_master).permit(:base_component, :min_amount, :max_amount, :basis_actual_amount, :company_location_id, :for_month, :march_amount, :effective_from, :effective_to, :is_active, :is_confirm)
     end
 end

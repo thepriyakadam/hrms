@@ -27,8 +27,47 @@ class ParticularLeaveRecordsController < ApplicationController
     #   chart(:pie, 'Leave') do |chart|
     #   chart.sum_with 'Taken' => :leave_date, 'Revert' => :employee_leav_request_id
     # end
-    
+    end
   end
- end
-end
 
+  def leave_approval_report
+  end
+
+  def show_approved_record
+    @start_date = params[:particular_leave_record][:start_date]
+    @end_date = params[:particular_leave_record][:end_date]
+    @company_id = params[:particular_leave_record][:company_id]
+    @location = params[:particular_leave_record][:company_location_id]
+    @department = params[:particular_leave_record][:department_id]
+  
+    if current_user.class == Group
+      @particular_leave_records = ParticularLeaveRecord.where(leave_date: @start_date.to_datetime..@end_date.to_datetime)
+    elsif current_user.class == Member
+      if current_user.role.name == 'GroupAdmin'
+        @employees = Employee.where(company_id: @company_id)
+        @particular_leave_records = ParticularLeaveRecord.where(leave_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees)
+      elsif current_user.role.name == 'Admin'
+        @employees = Employee.where(company_id: current_user.company_location.company_id)
+        @particular_leave_records = ParticularLeaveRecord.where(leave_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees)
+      elsif current_user.role.name == 'Branch'
+        @employees = Employee.where(company_location_id: current_user.company_location_id)
+        @particular_leave_records = ParticularLeaveRecord.where(leave_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees)
+      end
+    end
+
+    respond_to do |f|
+      f.js
+      f.xls {render template: 'particular_leave_records/approved_record.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'show_approved_record',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'particular_leave_records/approved_record.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+      end
+    end
+  end
+  
+end

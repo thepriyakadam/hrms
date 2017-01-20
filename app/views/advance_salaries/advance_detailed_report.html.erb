@@ -9,17 +9,18 @@
       <div class="row">
         <div class="col-sm-2">
           <div class="field">
-            <%= select :advance_salary,:year,['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025','2026','2027'],{label: 'Select Year',include_blank: " Select Year"}, class: "form-control" %>
+            <%= f.select :year,['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025','2026','2027'],{label: 'Year',include_blank: " Select Year"}, class: "form-control" %>
           </div>
         </div>
 
         <div class="col-sm-2">
           <div class="field">
-            <%= select :advance_salary,:month, ['January','February','March','April','May','June','July','August','September','October','November','December'],{label: 'Select Month',include_blank: " Select Month"}, class: "form-control" %>
+            <%= f.select :month, ['January','February','March','April','May','June','July','August','September','October','November','December'],{label: 'Month',include_blank: " Select Month"}, class: "form-control" %>
            </div>
         </div>
 
         <div class="col-sm-2">
+          <label>Company</label>
             <div class="form-group required">
               <%=f.select :company_id, all_company,{include_blank: "Select Company",hide_label: true},{onchange:"var a={id:$(this).val(), form :'advance_salary'}; $.get('/employees/collect_company_location',a,function(response){});"}%>
             </div>
@@ -33,7 +34,7 @@
             </div>
           </div>
         
-        <div class="col-sm-2">
+        <div class="col-sm-2" style="padding-top:20px;">
           <div class="actions">
             <%= f.submit "Display Report", class: "btn btn-sm btn-primary" %>
           </div>

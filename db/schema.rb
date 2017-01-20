@@ -11,7 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20170112050137) do
+=======
+ActiveRecord::Schema.define(version: 20170118034909) do
+>>>>>>> 07822919c1e62db8213c1e44b13d38b495aa360b
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -2227,8 +2231,14 @@ ActiveRecord::Schema.define(version: 20170112050137) do
     t.string   "no_of_leave"
     t.boolean  "is_carry_forward"
     t.string   "limit"
+<<<<<<< HEAD
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
+=======
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.decimal  "company_workingday"
+>>>>>>> 07822919c1e62db8213c1e44b13d38b495aa360b
   end
 
   add_index "leave_masters", ["leav_category_id"], name: "index_leave_masters_on_leav_category_id"
@@ -2611,10 +2621,21 @@ ActiveRecord::Schema.define(version: 20170112050137) do
     t.date     "effective_to"
     t.boolean  "is_active"
     t.boolean  "is_confirm"
+<<<<<<< HEAD
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
   end
 
+=======
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+    t.integer  "company_location_id"
+    t.boolean  "basis_actual_amount"
+  end
+
+  add_index "professional_tax_masters", ["company_location_id"], name: "index_professional_tax_masters_on_company_location_id"
+
+>>>>>>> 07822919c1e62db8213c1e44b13d38b495aa360b
   create_table "professional_taxes", force: :cascade do |t|
     t.string   "is_pt"
     t.decimal  "min_salary",  precision: 15, scale: 2, default: 0.0
@@ -3171,7 +3192,10 @@ ActiveRecord::Schema.define(version: 20170112050137) do
     t.integer  "training_topic_master_id"
     t.boolean  "is_complete"
     t.integer  "reporting_master_id"
+<<<<<<< HEAD
     t.boolean  "training_plan"
+=======
+>>>>>>> 07822919c1e62db8213c1e44b13d38b495aa360b
   end
 
   add_index "trainee_requests", ["employee_id"], name: "index_trainee_requests_on_employee_id"

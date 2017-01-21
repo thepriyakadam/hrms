@@ -1,0 +1,22 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Travel Request ID Report</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+<%= bootstrap_form_for(:travel_request, url: { action: 'print_travel_request_id_report'},html: {id: 'travel_request'},remote: true ) do |f| %>
+	 <div class="row">
+      <div class="col-sm-3">
+          <div class="field">
+          <%= f.select :travel_request_id,all_travel_request,{hide_label:true,include_blank: 'Select Travel Request ID'},class: 'form-control'%>
+          </div>
+         </div>
+         <div class="col-sm-3">
+          <div class="actions">
+            <%= f.submit "Display Report", class: "btn btn-sm btn-primary",id: "buttonCtc" %>
+          </div>
+        </div>
+    </div>
+       <div id="travel_request_id"></div>
+    </div>
+</div>
+<%end%>

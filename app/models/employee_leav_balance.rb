@@ -63,6 +63,7 @@ class EmployeeLeavBalance < ActiveRecord::Base
   def emp_available(e)
     from_date = e.from_date
     to_date = e.to_date
+
     from_month = from_date.strftime('%B')
     to_month = to_date.strftime('%B')
     flag = 0

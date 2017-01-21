@@ -305,7 +305,7 @@
             <% unless @goal_bunch.nil? %>
               <% if @goal_bunch.appraiser_confirm == true %>
               <% else %>
-              <%= link_to 'Overall Comment', modal_appraiser_overall_goal_bunches_path(goal_bunch_id: @goal_bunch.id,appraiser_overall: @Overall,period_id: @period.id), class: 'btn btn-warning btn-sm',remote: true %>
+              <%= link_to 'Overall Comment', modal_appraiser_overall_goal_bunches_path(goal_bunch_id: @goal_bunch.id,appraiser_overall: @Overall,period_id: @period.id), class: 'btn btn-primary btn-sm',remote: true %>
               <% end %>
             <% end %>
           <% end %>

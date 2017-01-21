@@ -429,7 +429,6 @@ class SalaryslipsController < ApplicationController
         @total = formula_item.sum(:calculated_amount)
         @total_actual = formula_item.sum(:actual_amount)
         if @total_actual.between?(s.min_amount, s.max_amount) && @month != "March"
-          @salary_component = SalaryComponent.find_by(name: "Prof. Tax")
           SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: s.for_month, calculated_amount: s.for_month, is_deducted: true, other_component_name: 'Prof. Tax',salary_component_id: @salary_component.id)
 
         elsif @month == 'March' && @total_actual.between?(s.min_amount, s.max_amount)

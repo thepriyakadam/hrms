@@ -819,36 +819,36 @@ class SalaryslipsController < ApplicationController
           @pf_master = PfMaster.where(is_active: true).take
           if @pf_master.nil?
           else
-            if @pf_master.is_pf
-              formula_string = @pf_master.base_component.split(',')
-              formula_string.try(:each) do |f|
-                begin
-                  formula_item = addable_salary_items.where(salary_component_id: f.to_i).take
-                  formula_item_actual_amount = formula_item.monthly_amount
-                  formula_item_actual_amount = 0 if formula_item_actual_amount.nil?
-                  formula_total_actual_amount += formula_item_actual_amount
-                  formula_item_calculated_amount = formula_item_actual_amount / working_day.try(:day_in_month) * working_day.try(:payable_day)
-                  formula_total_calculated_amount += formula_item_calculated_amount
-                rescue NoMethodError
-                  @salary_component = SalaryComponent.find(f.to_i)
-                  flash[:alert] = "#{@salary_component.name} is not available in tamplate of #{@employee.manual_employee_code}."
-                end
+          if @pf_master.is_pf
+            formula_string = @pf_master.base_component.split(',')
+            formula_string.try(:each) do |f|
+              begin
+                formula_item = addable_salary_items.where(salary_component_id: f.to_i).take
+                formula_item_actual_amount = formula_item.monthly_amount
+                formula_item_actual_amount = 0 if formula_item_actual_amount.nil?
+                formula_total_actual_amount += formula_item_actual_amount
+                formula_item_calculated_amount = formula_item_actual_amount / working_day.try(:day_in_month) * working_day.try(:payable_day)
+                formula_total_calculated_amount += formula_item_calculated_amount
+              rescue NoMethodError
+                @salary_component = SalaryComponent.find(f.to_i)
+                flash[:alert] = "#{@salary_component.name} is not available in tamplate of #{@employee.manual_employee_code}."
               end
-          
-              if @employee.joining_detail.select_pf == 'Yes'
-                deducted_actual_amount = (formula_total_actual_amount / 100 * @pf_master.percentage).round
-                deducted_calculated_amount = (formula_total_calculated_amount / 100 * @pf_master.percentage).round
-              elsif @employee.joining_detail.select_pf == 'Limit'
-                deducted_actual_amount = (@employee.joining_detail.pf_max_amount.to_f / 100 * @pf_master.percentage).round
-                deducted_calculated_amount = deducted_actual_amount
-              else
-                deducted_actual_amount = 0
-                deducted_calculated_amount = 0
-              end
-              @salary_component = SalaryComponent.find_by(name: "PF")
-              SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: deducted_actual_amount, calculated_amount: deducted_calculated_amount, is_deducted: true, other_component_name: 'PF',salary_component_id: @salary_component.id)
             end
+        
+            if @employee.joining_detail.select_pf == 'Yes'
+              deducted_actual_amount = (formula_total_actual_amount / 100 * @pf_master.percentage).round
+              deducted_calculated_amount = (formula_total_calculated_amount / 100 * @pf_master.percentage).round
+            elsif @employee.joining_detail.select_pf == 'Limit'
+              deducted_actual_amount = (@employee.joining_detail.pf_max_amount.to_f / 100 * @pf_master.percentage).round
+              deducted_calculated_amount = deducted_actual_amount
+            else
+              deducted_actual_amount = 0
+              deducted_calculated_amount = 0
+            end
+            @salary_component = SalaryComponent.find_by(name: "PF")
+            SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: deducted_actual_amount, calculated_amount: deducted_calculated_amount, is_deducted: true, other_component_name: 'PF',salary_component_id: @salary_component.id)
           end
+        end
 
 
         @master_esic = EsicMaster.where(is_active: true).take
@@ -944,11 +944,11 @@ class SalaryslipsController < ApplicationController
         formula_item = SalaryslipComponent.where(salary_component_id: formula_string,salaryslip_id: @salaryslip.id)
         @total = formula_item.sum(:calculated_amount)
         @total_actual = formula_item.sum(:actual_amount)
-        if @total_actual.between?(s.min_amount, s.max_amount) && @month != "March"
+        if @total_actual.between?(s.min_amount, s.max_amount) && @month != "March" && @employee.company_location_id == s.company_location_id
           @salary_component = SalaryComponent.find_by(name: "Prof. Tax")
           SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: s.for_month, calculated_amount: s.for_month, is_deducted: true, other_component_name: 'Prof. Tax',salary_component_id: @salary_component.id)
 
-        elsif @month == 'March' && @total_actual.between?(s.min_amount, s.max_amount)
+        elsif @month == 'March' && @total_actual.between?(s.min_amount, s.max_amount) && @employee.company_location_id == s.company_location_id
           @salary_component = SalaryComponent.find_by(name: "Prof. Tax")
           SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: s.march_amount, calculated_amount: s.march_amount, is_deducted: true, other_component_name: 'Prof. Tax',salary_component_id: @salary_component.id)
         else

@@ -163,12 +163,9 @@ class AdvanceSalariesController < ApplicationController
         elsif @company == ""
           @employees = Employee.where(company_location_id: @location.to_i).pluck(:id)
           @advance_salaries = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
-<<<<<<< HEAD
-=======
         elsif @company == "" && @location == ""
           @employees = Employee.all
           @advance_salaries = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
->>>>>>> 07822919c1e62db8213c1e44b13d38b495aa360b
         else 
           @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
           @advance_salaries = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
@@ -179,7 +176,6 @@ class AdvanceSalariesController < ApplicationController
       elsif current_user.role.name == 'Employee'
       end
     end
-<<<<<<< HEAD
    end
 
    def advance_salary_xls
@@ -454,12 +450,7 @@ class AdvanceSalariesController < ApplicationController
         #margin:  { top:1,bottom:1,left:1,right:1 }
       end
     end
-<<<<<<< HEAD
-   end
-=======
    end #def
-end
->>>>>>> 07822919c1e62db8213c1e44b13d38b495aa360b
 
   private
 

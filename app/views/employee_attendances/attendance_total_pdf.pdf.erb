@@ -1,8 +1,12 @@
 
- <table style="border-collapse: collapse; font-size:10pt;" border=1 width=1100 cellpadding="20"> 
+ <table style="border-collapse: collapse; font-size:9pt;" border=1 width=1200 cellpadding="10">
    <thead>
+   <tr><td colspan="15"><center><strong><%= current_user.employee.company_location.company.try(:description)%></strong>
+        <br> <%= current_user.employee.company_location.try(:address)%></center></td></tr>
+          <tr>
           <tr>
             <th>ID</th>
+            <th>Employee Name</th>
             <th>P</th>
             <th>A</th>
             <th>W</th>
@@ -22,6 +26,7 @@
           <% @employees.each do |e| %>
             <tr>
               <td><%= e.employee.manual_employee_code %></td>
+              <td><%= full_name(e.employee) %></td>
 
               <% abs = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id, "A") %>
               <% pre = EmployeeAttendance.where( "strftime('%m/%Y', day) = ? and employee_id = ? and present = ?", @date.strftime('%m/%Y'), e.employee_id,"P") %>

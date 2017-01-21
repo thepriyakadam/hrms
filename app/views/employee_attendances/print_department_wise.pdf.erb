@@ -12,11 +12,12 @@ div.nobreak{ page-break-inside: avoid;
 }
 </style>
 <div>
-  <center><h3>Employee Attendance Detail</h3></center>
-      <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover" >
+      <table style="border-collapse: collapse; font-size:9pt;" border=1 width=1200 cellpadding="10">
         <thead>
+        <tr><td colspan="6"><center><strong><%=current_user.employee.company_location.company.try(:description)%></strong> <br> <%= current_user.employee.company_location.try(:address)%></center></td></tr>
+        <tr><td colspan="6"><center>Employee Attendance Detail Departmentwise</center></td></tr>
           <tr>
-            <th>Employee Id</th>
+            <th>Employee ID</th>
             <th>Employee Name</th>
             <th>Department Name</th>
             <th>Present</th>

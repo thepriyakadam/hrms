@@ -23,13 +23,13 @@ def salary_slip_company_location_department
         render :pdf => 'print_salary_slip_cost_unitwise',
         layout: '/layouts/pdf.html.erb',
         :template => 'pdf_salaries/salary_slip_company_location_department.pdf.erb',
-        :orientation      => 'Landscape', # default , Landscape
-        :page_height      => 1000,
+        # :orientation      => 'Landscape', # default , Landscape
+        :page_height      => 1200,
         :dpi              => '300',
-        :margin           => {:top    => 20, # default 10 (mm)
-                      :bottom => 20,
-                      :left   => 20,
-                      :right  => 20},
+        :margin           => {:top    => 30, # default 10 (mm)
+                      :bottom => 30,
+                      :left   => 10,
+                      :right  => 10},
         :show_as_html => params[:debug].present?
     end
   end
@@ -121,13 +121,13 @@ end
         render :pdf => 'print_salary_slip_cost_unitwise',
         layout: '/layouts/pdf.html.erb',
         :template => 'pdf_salaries/print_salary_slip_cost_unitwise.pdf.erb',
-        :orientation      => 'Landscape', # default , Landscape
+        # :orientation      => 'Landscape', # default , Landscape
         :page_height      => 1000,
         :dpi              => '300',
         :margin           => {:top    => 20, # default 10 (mm)
-                      :bottom => 20,
-                      :left   => 20,
-                      :right  => 20},
+                      :bottom => 60,
+                      :left   => 10,
+                      :right  => 10},
         :show_as_html => params[:debug].present?
       end
     end

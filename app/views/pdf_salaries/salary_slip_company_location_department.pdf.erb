@@ -16,16 +16,14 @@ th {
   <% @advance_salary = AdvanceSalary.find_by_employee_id(@employee.id) %>
   <body>
   </br>
-       <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
+        <table style="border-collapse: collapse; font-size:11pt;" border=1 width=1200 cellpadding="10">
       <thead>
         <tr>
           <td colspan="7">
-           <!-- <center><strong>BHANDARI</strong></center> 
-            <center><strong>BHANDARI FOILS AND TUBES LTD.</strong></center>
-            <center><small> Manufacturers of Stainless Steel Cold Rolled Coils, Tubes & Fittings</small></center> -->
-            <center><strong><%= current_user.employee.company_location.company.description %></strong></center>
+           <center><strong><%= @employee.company_location.company.try(:description) %></strong><br> <%= @employee.company_location.try(:address) %> - <%= @employee.company_location.try(:name) %></center>
           </td>           
         </tr>
+        <tr><td colspan="7"><center><strong> Employee Details </strong></center></td></tr>
         <tr>
           <td colspan="2">Salary Slip : <%= e.month%> - <%= e.year%></td>
           <td>Leave Type</td>
@@ -100,8 +98,9 @@ th {
         </tr>
       </tbody>
     </table>
-       <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
+       <table style="border-collapse: collapse; font-size:11pt;" border=1 width=1200 cellpadding="10">
       <thead>
+      <tr><td colspan="3"><center><strong> Salary Details </strong></center></td></tr>
         <tr>
           <th>Salary Component</th>
           <th style="text-align: right;">Actual Amount</th>

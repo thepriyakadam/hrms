@@ -421,15 +421,13 @@ end
       get :department_wise_xls
       get :select_date_present_form
       get :show_datewise_employee
-<<<<<<< HEAD
-      get :date_wise_pdf
-      get :date_wise_xls
-      get :select_from_and_to_date
-      get :show_from_and_to_date
-      get :from_date_wise_xls
-      get :from_date_wise_pdf
-=======
->>>>>>> 07822919c1e62db8213c1e44b13d38b495aa360b
+
+      # get :date_wise_pdf
+      # get :date_wise_xls
+      # get :select_from_and_to_date
+      # get :show_from_and_to_date
+      # get :from_date_wise_xls
+      # get :from_date_wise_pdf
     end
   end
   resources :salary_comp_mappings

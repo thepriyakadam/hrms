@@ -905,9 +905,6 @@ class SalaryslipsController < ApplicationController
           #   @salary_component = SalaryComponent.find_by(name: "ESIC")
           #   SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: deducted_actual_amount, calculated_amount: deducted_calculated_amount, is_deducted: true, other_component_name: 'ESIC',salary_component_id: @salary_component.id)
           # end
-
-
-
      
         formula_item_actual_amount = 0
         formula_item_calculated_amount = 0

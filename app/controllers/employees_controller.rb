@@ -110,9 +110,6 @@ class EmployeesController < ApplicationController
     @company_locations = CompanyLocation.all
     else
       if current_user.role.name == 'GroupAdmin'
-        # byebug
-        # a=current_user.company_id
-        # @company_locations = CompanyLocation.where(company_id: a)
         @company_locations = CompanyLocation.where(company_id: current_user.company_location.company_id)
         @company_locations.each do |cl|
          @departments = Department.where(company_location_id: cl.id)
@@ -123,6 +120,11 @@ class EmployeesController < ApplicationController
          @departments = Department.where(company_location_id: cl.id)
         end
       elsif current_user.role.name == 'Branch'
+        @company_locations = CompanyLocation.where(id: current_user.company_location_id)
+        @company_locations.each do |cl|
+         @departments = Department.where(company_location_id: cl.id)
+        end
+     elsif current_user.role.name == 'HOD'
         @company_locations = CompanyLocation.where(id: current_user.company_location_id)
         @company_locations.each do |cl|
          @departments = Department.where(company_location_id: cl.id)
@@ -493,6 +495,8 @@ class EmployeesController < ApplicationController
         @company_locations = CompanyLocation.where(company_id: current_user.company_location.company_id)
       elsif current_user.role.name == 'Branch'
         @company_locations = CompanyLocation.where(id: current_user.company_location_id)
+      elsif current_user.role.name == 'HOD'
+        @company_locations = CompanyLocation.where(id: current_user.company_location_id)
       end
     end
     @form = params[:form]
@@ -506,8 +510,13 @@ class EmployeesController < ApplicationController
 
   def collect_department
      @company_location = CompanyLocation.find(params[:id])
-     @departments = Department.where(company_location_id: @company_location.id)
-     @form = params[:form]
+      if current_user.role.name == 'HOD'
+        @departments = Department.where(id: current_user.department_id)
+      else
+         @departments = Department.where(company_location_id: @company_location.id)
+         @form = params[:form]
+      end
+    
   end
 
   def basic_info_company_wise

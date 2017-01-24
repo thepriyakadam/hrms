@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170118070135) do
+ActiveRecord::Schema.define(version: 20170124064504) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -1183,6 +1183,7 @@ ActiveRecord::Schema.define(version: 20170118070135) do
     t.integer  "passport_photo_file_size"
     t.datetime "passport_photo_updated_at"
     t.string   "punch_card_id"
+    t.string   "prefix"
   end
 
   add_index "employees", ["blood_group_id"], name: "index_employees_on_blood_group_id"

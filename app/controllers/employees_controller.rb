@@ -129,6 +129,11 @@ class EmployeesController < ApplicationController
         @company_locations.each do |cl|
          @departments = Department.where(company_location_id: cl.id)
         end
+    elsif current_user.role.name == 'Supervisor'
+        @company_locations = CompanyLocation.where(id: current_user.company_location_id)
+        @company_locations.each do |cl|
+         @departments = Department.where(company_location_id: cl.id)
+        end
       end
     end
     @form = 'employee'
@@ -142,8 +147,6 @@ class EmployeesController < ApplicationController
     @employee = Employee.new(employee_params)
     @department = Department.find(@employee.department_id)
     authorize! :create, @employee
-    # byebug
-    
       if @employee.save
         @emp1=params[:employee][:employee_code_master_id]
         EmployeeCodeMaster.where(id: @emp1).update_all(last_range: @employee.manual_employee_code)
@@ -496,6 +499,8 @@ class EmployeesController < ApplicationController
       elsif current_user.role.name == 'Branch'
         @company_locations = CompanyLocation.where(id: current_user.company_location_id)
       elsif current_user.role.name == 'HOD'
+        @company_locations = CompanyLocation.where(id: current_user.company_location_id)
+      elsif current_user.role.name == 'Supervisor'
         @company_locations = CompanyLocation.where(id: current_user.company_location_id)
       end
     end

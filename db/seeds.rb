@@ -998,20 +998,20 @@ ActiveRecord::Base.transaction do
  end
 
 
-ex = Roo::Excel.new("#{Rails.root}/public/leave balance.xls")
-ex.default_sheet = ex.sheets[1] #siya feb
-i = 1
-ActiveRecord::Base.transaction do
-2.upto(385) do |line| # siya Feb 2016
- puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
- @employee = Employee.where(manual_employee_code: ex.cell(line,'A').to_i).pluck(:id)
- @emp_leav_bal = EmployeeLeavBalance.where(employee_id: @employee,leav_category_id: 2).pluck(:id)
- puts "#{i} Record inserting.----------------------------"
- EmployeeLeavBalance.where(id: @emp_leav_bal).update_all(no_of_leave: ex.cell(line,'B'))
- puts "#{i} Record inserted.-----------------------------------------------"
- i += 1
- end
- end
+# ex = Roo::Excel.new("#{Rails.root}/public/leave balance.xls")
+# ex.default_sheet = ex.sheets[1] #siya feb
+# i = 1
+# ActiveRecord::Base.transaction do
+# 2.upto(385) do |line| # siya Feb 2016
+#  puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
+#  @employee = Employee.where(manual_employee_code: ex.cell(line,'A').to_i).pluck(:id)
+#  @emp_leav_bal = EmployeeLeavBalance.where(employee_id: @employee,leav_category_id: 2).pluck(:id)
+#  puts "#{i} Record inserting.----------------------------"
+#  EmployeeLeavBalance.where(id: @emp_leav_bal).update_all(no_of_leave: ex.cell(line,'B'))
+#  puts "#{i} Record inserted.-----------------------------------------------"
+#  i += 1
+#  end
+#  end
 
 # puts "Starting ..."
 # ex = Roo::Excel.new("#{Rails.root}/public/rgedec.xls")

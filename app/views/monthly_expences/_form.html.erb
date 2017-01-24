@@ -49,7 +49,7 @@
       </div>
 
       
-        <div class="row">
+      <!--   <div class="row">
           <div class="col-sm-2">
             <input type="button" id="btnAdd" value="+ Additional Awards" class="btn btn-success btn-sm"> 
           </div>
@@ -57,7 +57,7 @@
           <div class="col-sm-3">
             <input type="button" id="btnDel" value="Remove Above Awards" class="btn btn-danger btn-sm">
           </div>
-        </div><br>
+        </div><br> -->
       
 
       <div class="row">
@@ -81,44 +81,44 @@
     dateFormat: 'dd-mm-yy' });
   });
 
-  $(function () {
-  $('#btnAdd').click(function () {
-      var num     = $('.clonedInput').length, 
-          newNum  = new Number(num + 1),      
-          newElem = $('#entry' + num).clone().attr('id', 'entry' + newNum).fadeIn('slow'); //
-      newElem.find('.input_expence_date').attr('name','monthly_expence['+ newNum +'][expence_date]').attr('id', newNum + '_monthly_expence_expence_date').val('');
-      newElem.find('.input_expencess_type_id').attr('name','monthly_expence['+ newNum +'][expencess_type_id]').attr('id', newNum + '_monthly_expencess_expencess_type_id').val('');
-      newElem.find('.input_amount').attr('name','monthly_expence['+ newNum +'][amount]').attr('id', newNum + '_monthly_expence_amount').val('');
+//   $(function () {
+//   $('#btnAdd').click(function () {
+//       var num     = $('.clonedInput').length, 
+//           newNum  = new Number(num + 1),      
+//           newElem = $('#entry' + num).clone().attr('id', 'entry' + newNum).fadeIn('slow'); //
+//       newElem.find('.input_expence_date').attr('name','monthly_expence['+ newNum +'][expence_date]').attr('id', newNum + '_monthly_expence_expence_date').val('');
+//       newElem.find('.input_expencess_type_id').attr('name','monthly_expence['+ newNum +'][expencess_type_id]').attr('id', newNum + '_monthly_expencess_expencess_type_id').val('');
+//       newElem.find('.input_amount').attr('name','monthly_expence['+ newNum +'][amount]').attr('id', newNum + '_monthly_expence_amount').val('');
 
-      $('#entry' + num).after(newElem);
-      $('#ID' + newNum + '_title').focus();
+//       $('#entry' + num).after(newElem);
+//       $('#ID' + newNum + '_title').focus();
 
-      $('#btnDel').attr('disabled', false);
+//       $('#btnDel').attr('disabled', false);
 
-      if (newNum == 5)
-      $('#btnAdd').attr('disabled', true).prop('value', "You've reached the limit"); // value here updates the text in the 'add' button when the limit is reached 
-  });
+//       if (newNum == 5)
+//       $('#btnAdd').attr('disabled', true).prop('value', "You've reached the limit"); // value here updates the text in the 'add' button when the limit is reached 
+//   });
 
-  $('#btnDel').click(function () {
-  // Confirmation dialog box. Works on all desktop browsers and iPhone.
-      if (confirm("Are you sure you wish to remove this section? This cannot be undone."))
-          {
-              var num = $('.clonedInput').length;
-              // how many "duplicatable" input fields we currently have
-              $('#entry' + num).slideUp('slow', function () {$(this).remove();
-              // if only one element remains, disable the "remove" button
-                  if (num -1 === 1)
-              $('#btnDel').attr('disabled', true);
-              // enable the "add" button
-              $('#btnAdd').attr('disabled', false).prop('value', "+ Additional Awards");});
-          }
-      return false; // Removes the last section you added
-  });
-  // Enable the "add" button
-  $('#btnAdd').attr('disabled', false);
-  // Disable the "remove" button
-  $('#btnDel').attr('disabled', true);
-});
+//   $('#btnDel').click(function () {
+//   // Confirmation dialog box. Works on all desktop browsers and iPhone.
+//       if (confirm("Are you sure you wish to remove this section? This cannot be undone."))
+//           {
+//               var num = $('.clonedInput').length;
+//               // how many "duplicatable" input fields we currently have
+//               $('#entry' + num).slideUp('slow', function () {$(this).remove();
+//               // if only one element remains, disable the "remove" button
+//                   if (num -1 === 1)
+//               $('#btnDel').attr('disabled', true);
+//               // enable the "add" button
+//               $('#btnAdd').attr('disabled', false).prop('value', "+ Additional Awards");});
+//           }
+//       return false; // Removes the last section you added
+//   });
+//   // Enable the "add" button
+//   $('#btnAdd').attr('disabled', false);
+//   // Disable the "remove" button
+//   $('#btnDel').attr('disabled', true);
+// });
 
 $("#monthly_expence").validate({
   rules: {

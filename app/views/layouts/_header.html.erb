@@ -131,7 +131,10 @@
            <% elsif e.gender == "Female" && m.avatar_file_name == nil  %>
            <%= image_tag "avatar2.png",size: "25x25",class: "img-circle" %>
            <!-- < image_tag("avatar2.png") %> -->
-          <%end%>
+         
+          <%else%>
+          <%= image_tag current_user.avatar.url(:medium),size: "25x25",class: "img-circle", alt: "avatar2"%>
+           <%end%>
           <%end%>
           <%end%>
           <%end%>

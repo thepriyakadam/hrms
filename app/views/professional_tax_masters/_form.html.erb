@@ -108,6 +108,10 @@ $("#professional_tax_master").validate({
       },
        "professional_tax_master[march_amount]":{
         required: true,
+      },
+      ,
+       "professional_tax_master[company_location_id]":{
+        required: true,
       }
        },
     messages: {
@@ -122,6 +126,10 @@ $("#professional_tax_master").validate({
       },
        "professional_tax_master[march_amount]":{
         required: "Please Specify March Amount",
+      },
+      ,
+       "professional_tax_master[company_location_id]":{
+        required: "Please Select Company Location",
       }
        },
     errorPlacement: function(error, element) {

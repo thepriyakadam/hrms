@@ -250,6 +250,9 @@ end
       get :due_action_list
       get :emp_resignation
       get :modal
+      get :due_employee_detail_history
+      get :all_employee_list
+      get :specific_due_action_list
     end
   end
 
@@ -418,6 +421,13 @@ end
       get :department_wise_xls
       get :select_date_present_form
       get :show_datewise_employee
+
+      # get :date_wise_pdf
+      # get :date_wise_xls
+      # get :select_from_and_to_date
+      # get :show_from_and_to_date
+      # get :from_date_wise_xls
+      # get :from_date_wise_pdf
     end
   end
   resources :salary_comp_mappings
@@ -455,6 +465,7 @@ end
     post :create_induction_detail
     get :modal_induction_activity
     post :update_induction
+    get :view_induction_list
     end
   end
   resources :induction_masters
@@ -824,6 +835,10 @@ end
     post :approve_n_send_next
     get :travel_request_history_list
     get :image_modal
+    post :print_expence_date_report
+    get :print_expence_date_report
+    get :expence_date_report_list
+    get :expence_date_report
     end
   end
   resources :travel_requests do
@@ -842,6 +857,18 @@ end
       get :edit_and_approve_modal
       post :edit_and_approve_modal_submit
       get :is_confirm
+      get :application_date_report
+      post :print_application_report
+      get :print_application_report
+      get :travelling_datewise_report
+      post :print_travelling_datewise_report
+      get :print_travelling_datewise_report
+      get :travel_request_id_report
+      get :print_travel_request_id_report
+      post :print_travel_request_id_report
+      get :travel_request_employee_name_report
+      get :print_travel_request_employee_name_report
+      post :print_travel_request_employee_name_report
     end
   end
  
@@ -1353,6 +1380,7 @@ end
       get :excel_report
       post :print_salary_slip_excel
       get :dynamic_dropdown
+      post :salary_slip_company_location_department
     end
    end
  

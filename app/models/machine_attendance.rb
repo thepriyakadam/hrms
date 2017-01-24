@@ -2,6 +2,11 @@ class MachineAttendance < ActiveRecord::Base
   belongs_to :employee
   belongs_to :shift_master
   validates :shift_master_id, presence: true
+  validates :employee_id, uniqueness: { scope: [:day] }
+
+  has_many :subordinates, class_name: 'MachineAttendance',
+                          foreign_key: 'user_id'
+  belongs_to :user, class_name: 'Employee'
 
   def self.to_csv(options = {})
     CSV.generate(options) do |csv|

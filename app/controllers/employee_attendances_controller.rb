@@ -279,8 +279,6 @@ class EmployeeAttendancesController < ApplicationController
       @workingdays.each do |wor|
       
       emp_att=EmployeeAttendance.where(employee_id: wor.employee_id,month_name: wor.month_name)
-      #EmployeeAttendance.where("strftime('%m/%Y', day) = ? AND employee_id = ?", @date,wor.employee_id).update_all(is_confirm: true)
-
 
       overtime_hours=emp_att.sum(:overtime_hrs).to_f
       difference_hours=emp_att.sum(:difference_hrs).to_f
@@ -604,6 +602,56 @@ class EmployeeAttendancesController < ApplicationController
       end
     end
   end
+
+  def date_wise_xls
+    @date, @present = params[:date], params[:present]
+    @employee_attendances = EmployeeAttendance.where(day: @date.to_date,present: @present)
+    respond_to do |format|
+      format.xls {render template: 'employee_attendances/print_date_wise.xls.erb'}
+    end
+  end
+
+  def show_from_and_to_date
+    # byebug
+    @start = params[:day]
+    @end = params[:to_date]
+    @present = params[:present]
+    @employee_attendances = EmployeeAttendance.where(present: @present,day: @start.to_date..@end.to_date)
+  end
+
+  def from_date_wise_xls
+    @start = params[:day]
+    @end = params[:to_date]
+    @present = params[:present]
+    @employee_attendances = EmployeeAttendance.where(present: @present,day: @start.to_date..@end.to_date)
+    respond_to do |format|
+    format.xls {render template: 'employee_attendances/from_date_wise_xls.xls.erb'}
+  end
+end
+
+def from_date_wise_pdf
+    @start = params[:day]
+    @end = params[:to_date]
+    @present = params[:present]
+    @employee_attendances = EmployeeAttendance.where(present: @present,day: @start.to_date..@end.to_date)
+
+     respond_to do |format|
+        format.html
+        format.pdf do
+        render :pdf => 'from_date_wise_pdf',
+        layout: '/layouts/pdf.html.erb',
+        :template => 'employee_attendances/from_date_wise_pdf.pdf.erb',
+        :orientation      => 'Landscape', # default , Landscape
+        :page_height      => 1000,
+        :dpi              => '300',
+        :margin           => {:top    => 10, # default 10 (mm)
+                      :bottom => 10,
+                      :left   => 20,
+                      :right  => 20},
+        :show_as_html => params[:debug].present?
+      end
+    end
+end
 
   private
   # Use callbacks to share common setup or constraints between actions.

@@ -241,7 +241,7 @@ class SalarySlipLedgersController < ApplicationController
     elsif current_user.class == Member
       if current_user.role.name == 'GroupAdmin'
         if @location == ""
-          @employees = Employee.where(company_id: @company.to_i)
+          @employees = Employee.where(company_id: @company.to_i)                                              
           @salaryslips1 = Salaryslip.where('month = ? and year = ?', @month, @year).where(employee_id: @employees).pluck(:id)
           @salaryslip_components = SalaryslipComponent.where(salaryslip_id: @salaryslips1,other_component_name: "PF").pluck(:salaryslip_id)
           @salaryslips = Salaryslip.where(id:  @salaryslip_components)

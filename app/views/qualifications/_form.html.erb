@@ -26,13 +26,13 @@
     <div id="entry1" class="clonedInput ">
       <div class="row">
         <div class="col-sm-3">
-          <div class="field">
+          <div class="form group-required">
             <%= f.select :degree_type_id, all_degree_type, {include_blank: "Select Qualification Level",label:"Qualification Level"}, class: 'input_degree_type_id' %>
           </div>
         </div>
 
         <div class="col-sm-3">
-          <div class="field">
+          <div class="form group-required">
             <%= f.select :degree_id, all_degree, {include_blank: "Select Qualification",label:"Qualification"}, class: 'input_degree_id' %>
           </div>
         </div>
@@ -44,7 +44,7 @@
         </div>
     
         <div class="col-sm-2">
-          <div class="field">
+          <div class="form group-required">
             <%= f.text_field :marks, label: 'Marks(CGPA / %)', class: 'input_marks' %>
           </div>
         </div>
@@ -151,4 +151,35 @@
 });
 
 
+</script>
+
+<script>
+$("#qualification").validate({
+    rules: {
+      "qualification[degree_type_id]":{
+        required: true,
+      },
+      "qualification[degree_id]":{
+        required: true,
+      },
+      "qualification[marks]":{
+        required: true,
+      }
+       },
+    messages: {
+      "qualification[degree_type_id]":{
+        required: "Please Specify Qualification Level",
+      },
+       "qualification[degree_id]":{
+        required: "Please Select Qualification ",
+      },
+      "qualification[marks]":{
+        required: "Please Specify Marks",
+      }
+       },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
 </script>

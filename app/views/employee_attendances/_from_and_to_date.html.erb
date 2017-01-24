@@ -1,0 +1,35 @@
+
+<table id="example" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Employee Id</th>
+      <th>Employee Name</th>
+      <th>Present</th>
+      <th>Designation</th>
+      <th>Department Name</th>
+      <th>Cost Center</th>
+      <th>Contact No</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @employee_attendances.each do |a| %>
+      <tr>
+        <td><%= a.employee.manual_employee_code %></td>
+        <td><%= a.employee.first_name %> <%= a.employee.middle_name %> <%= a.employee.last_name %></td>
+        <td><%= a.present %></td>
+        <td><%= a.employee.joining_detail.try(:employee_designation).try(:name) %></td>
+        <td><%= a.employee.company_location.try(:name) %> - <%= a.employee.department.try(:name) %></td>
+        <td><%= a.employee.joining_detail.cost_center.try(:name) %></td>
+        <td><%= a.employee.contact_no %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+  <%= link_to " Excel Report ",from_date_wise_xls_employee_attendances_path(day: @start, present: @present, to_date: @end,format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+ <%= link_to "PDF Report", from_date_wise_pdf_employee_attendances_path(day: @start, present: @present, to_date: @end, format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+<script>
+$(document).ready(function() {
+    $('#example').DataTable();
+} );
+</script>

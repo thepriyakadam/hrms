@@ -12,6 +12,8 @@
 	<%= select :capture_resume,:department_id,(@departments.present? ? (@departments.collect {|b| [b.name,b.id]}) : {}),{prompt:"Select Department",hide_label:true},class: "form-control"%>
 <% elsif @form == 'employee_transfer' %>
 	<%= select :employee_transfer,:department_id,(@departments.present? ? (@departments.collect {|b| [b.name,b.id]}) : {}),{prompt:"Select Department",hide_label:true},class: "form-control"%>
+<% elsif @form == 'travel_request' %>
+	<%= select :travel_request,:department_id,(@departments.present? ? (@departments.collect {|b| [b.name,b.id]}) : {}),{prompt:"Select Department",hide_label:true},class: "form-control"%>
 <% elsif @form == 'employee_leav_request' %>
 	<%= select :employee_leav_request,:department_id,(@departments.present? ? (@departments.collect {|b| [b.name,b.id]}) : {}),{prompt:"Select Department",hide_label:true},class: "form-control"%>
 <% elsif @form == 'particular_leave_record' %>

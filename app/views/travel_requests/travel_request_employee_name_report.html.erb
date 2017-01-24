@@ -1,0 +1,22 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Travel Request Employee Name Report</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+  <%= bootstrap_form_for(:travel_request, url: { action: 'print_travel_request_employee_name_report'},html: {id: 'travel_request'},remote: true ) do |f| %>
+     <div class="row">
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.select :employee_id,employee_list_by_company_location,{hide_label:true,include_blank: " Select Employee"},{onchange:"var a={employee_id:$(this).val() , form : 'travel_request'};$('.ajax-progress').show(); $.get('/travel_requests/print_travel_request_employee_name_report',a,function(response){});", :class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"}  %>
+           </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="actions">
+            <%= f.submit "Display Report", class: "btn btn-sm btn-primary",id: "buttonCtc" %>
+          </div>
+        </div>
+      </div><br>
+      <%end%>
+    <div id="travel_request_employee_name"></div>
+  </div>
+</div>

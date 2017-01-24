@@ -10,7 +10,7 @@ class TrainingRequestsController < ApplicationController
   # GET /training_requests/1
   # GET /training_requests/1.json
   def show
-    @trainee_requests = TraineeRequest.where(training_request_id: @training_request.id,is_complete: :true)
+    @trainee_requests = TraineeRequest.where(training_request_id: @training_request.id,is_complete: true)
     @reporting_master = ReportingMaster.find(@training_request.reporting_master_id)
     @employee = Employee.find(@reporting_master.employee_id)
   end
@@ -44,10 +44,11 @@ class TrainingRequestsController < ApplicationController
           @emp_total = @employee_ids.count
           TrainingRequest.where(id: @training_request.id).update_all(no_of_employee: @emp_total)
           TraineeRequest.create(employee_id: eid,training_request_id: @training_request.id,training_topic_master_id: @training_request.training_topic_master_id)
+        end
           TrainingApproval.create(training_request_id: @training_request.id,employee_id: @training_request.employee_id, training_topic_master_id: @training_request.training_topic_master_id,reporting_master_id: @training_request.reporting_master_id,traininig_period: @training_request.training_period,training_date: @training_request.training_date,place: @training_request.place,no_of_employee: @training_request.no_of_employee,description: @training_request.description,justification: @training_request.justification,current_status: @training_request.status)
           ReportingMastersTrainingReq.create(reporting_master_id: @training_request.reporting_master_id, training_request_id: @training_request.id)
+          TraineeRequest.where(training_request_id: @training_request.id).update_all(reporting_master_id: @training_request.reporting_master_id)
           # TrainingRequestMailer.training_request(@training_request).deliver_now
-          end
           flash[:notice] = 'Training Request Created Successfully'
           redirect_to new_training_request_path
         end
@@ -237,7 +238,10 @@ end
     # ReportingMastersTrainingReq.create(reporting_master_id: @training_request.reporting_master_id, training_request_id: @training_request.id, training_status: "Reject")
     @reporting_masters = ReportingMaster.where(employee_id: current_user.employee_id).pluck(:id)
     ReportingMastersTrainingReq.where(reporting_master_id: @reporting_masters,training_request_id: @training_request.id).update_all(training_status: "Approved")
-    TraineeRequest.where(reporting_master_id: @reporting_masters,training_request_id: @training_request.id,).update_all(is_complete: :true)
+    b=ReportingMastersTrainingReq.last(2).first
+    c=ReportingMastersTrainingReq.where(training_request_id: @training_request.id,training_status: "Approved").pluck(:id)
+    ReportingMastersTrainingReq.where(id: c).update_all(employee_training: b.employee_training)
+    TraineeRequest.where(reporting_master_id: @reporting_masters,training_request_id: @training_request.id,).update_all(is_complete: true)
     #TrainingRequestMailer.reject_training_request_email(@training_request).deliver_now
     
     # @comment = params[:training_request][:comment]
@@ -254,7 +258,10 @@ end
     # ReportingMastersTrainingReq.create(reporting_master_id: @training_request.reporting_master_id, training_request_id: @training_request.id, training_status: "Reject")
     @reporting_masters = ReportingMaster.where(employee_id: current_user.employee_id).pluck(:id)
     ReportingMastersTrainingReq.where(reporting_master_id: @reporting_masters,training_request_id: @training_request.id).update_all(training_status: "Rejected")
-    TraineeRequest.where(reporting_master_id: @reporting_masters,training_request_id: @training_request.id,).update_all(is_complete: :false)
+    b=ReportingMastersTrainingReq.last(2).first
+    c=ReportingMastersTrainingReq.where(training_request_id: @training_request.id,training_status: "Rejected").pluck(:id)
+    ReportingMastersTrainingReq.where(id: c).update_all(employee_training: b.employee_training)
+    TraineeRequest.where(reporting_master_id: @reporting_masters,training_request_id: @training_request.id,).update_all(is_complete: false)
     #TrainingRequestMailer.reject_training_request_email(@training_request).deliver_now
     
     # @comment = params[:training_request][:comment]

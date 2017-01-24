@@ -14,6 +14,7 @@ class DueActionsController < ApplicationController
 
   # GET /due_actions/new
   def new
+    # byebug
     @due_action = DueAction.new
     # @due_detail = DueDetail.find(params[:due_detail_id])
     @due_employee_detail = DueEmployeeDetail.find(params[:due_employee_detail_id])
@@ -32,6 +33,7 @@ class DueActionsController < ApplicationController
      @due_action = DueAction.new(due_action_params)
      @due_actions = DueAction.all
       if @due_action.save
+        # byebug
         @due_action = DueAction.new
         flash[:notice] = 'Due Action created Successfully.'   
       end

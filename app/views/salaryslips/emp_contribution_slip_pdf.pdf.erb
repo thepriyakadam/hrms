@@ -17,10 +17,8 @@ div.nobreak{ page-break-inside: avoid;
       <thead>
         <tr>
           <td colspan="7">
-           <!-- <center><strong>BHANDARI</strong></center> 
-            <center><strong>BHANDARI FOILS AND TUBES LTD.</strong></center>
-            <center><small> Manufacturers of Stainless Steel Cold Rolled Coils, Tubes & Fittings</small></center> -->
-            <center><strong><%= current_user.employee.company_location.company.description %></strong></center>
+          
+            <center><strong><%= @employee.company_location.company.try(:description)%></strong><%= @employee.company_location.try(:address)%> - <%= @employee.company_location.try(:name)%></center>
           </td>           
         </tr>
         <tr>

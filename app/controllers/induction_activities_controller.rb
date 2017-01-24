@@ -142,6 +142,13 @@ class InductionActivitiesController < ApplicationController
     redirect_to new_induction_activity_path(induction_master_id: @induction_master.id)
   end
 
+  # def view_induction_list
+  #    @employee = Employee.find(params[:emp_id])
+  #    @induction_details = InductionDetail.where(employee_id: @employee.id,induction_completed: true)
+  #    @induction_details_1 = InductionDetail.where(employee_id: @employee.id,induction_completed: true).pluck(:induction_master_id)
+  #    @induction_activities = InductionActivity.where(induction_master_id: @induction_details_1)
+  # end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_induction_activity

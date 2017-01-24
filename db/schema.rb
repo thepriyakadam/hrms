@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170118034909) do
+ActiveRecord::Schema.define(version: 20170118070135) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -494,6 +494,7 @@ ActiveRecord::Schema.define(version: 20170118034909) do
     t.datetime "out_time"
     t.integer  "shift_master_id"
     t.string   "rest_time"
+    t.boolean  "time_adjust"
   end
 
   add_index "company_time_masters", ["shift_master_id"], name: "index_company_time_masters_on_shift_master_id"
@@ -835,6 +836,7 @@ ActiveRecord::Schema.define(version: 20170118034909) do
     t.decimal  "difference_hrs"
     t.decimal  "overtime_hrs"
     t.string   "month_name"
+    t.decimal  "late_mark"
   end
 
   add_index "employee_attendances", ["company_time_master_id"], name: "index_employee_attendances_on_company_time_master_id"
@@ -2108,6 +2110,8 @@ ActiveRecord::Schema.define(version: 20170118034909) do
     t.boolean  "basis_of_time",           default: false
     t.string   "ot_rate"
     t.boolean  "ot_option"
+    t.boolean  "time_master"
+    t.boolean  "time_adjusted"
   end
 
   add_index "joining_details", ["cost_center_id"], name: "index_joining_details_on_cost_center_id"
@@ -3176,6 +3180,7 @@ ActiveRecord::Schema.define(version: 20170118034909) do
     t.integer  "training_topic_master_id"
     t.boolean  "is_complete"
     t.integer  "reporting_master_id"
+    t.boolean  "training_plan"
   end
 
   add_index "trainee_requests", ["employee_id"], name: "index_trainee_requests_on_employee_id"

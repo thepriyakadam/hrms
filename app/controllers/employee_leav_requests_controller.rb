@@ -383,7 +383,7 @@ class EmployeeLeavRequestsController < ApplicationController
       @current_status = 2
     elsif @status == "Cancelled"
       @current_status = 1
-    else @status == "Rejected"
+    elsif @status == "Rejected"
       @current_status = 4
     end
     
@@ -400,6 +400,10 @@ class EmployeeLeavRequestsController < ApplicationController
         @employee_leav_requests = EmployeeLeavRequest.where(id: @employee_leav_request).where(current_status: @current_status)
       elsif current_user.role.name == 'Branch'
         @employees = Employee.where(company_location_id: current_user.company_location_id)
+        @employee_leav_request = EmployeeLeavRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime,employee_id: @employees).pluck(:id)
+        @employee_leav_requests = EmployeeLeavRequest.where(id: @employee_leav_request).where(current_status: @current_status)
+      elsif current_user.role.name == 'HOD'
+        @employees = Employee.where(department_id: current_user.department_id)
         @employee_leav_request = EmployeeLeavRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime,employee_id: @employees).pluck(:id)
         @employee_leav_requests = EmployeeLeavRequest.where(id: @employee_leav_request).where(current_status: @current_status)
       end

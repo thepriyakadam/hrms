@@ -7,6 +7,8 @@ class IssueRequestsController < ApplicationController
   # GET /issue_requests.json
   def index
     @issue_requests = IssueRequest.where(employee_id: current_user.employee_id)
+     session[:active_tab] = "HelpDesk"
+     session[:active_tab1] = "Process"
   end
 
   # GET /issue_requests/1
@@ -20,7 +22,8 @@ class IssueRequestsController < ApplicationController
   def new
     @issue_request = IssueRequest.new
     session[:active_tab] = "HelpDesk"
-    session[:active_tab1] = "Process" 
+    session[:active_tab1] = "Process"
+    session[:active_tab1] = "SupportReport"
   end
 
   # GET /issue_requests/1/edit
@@ -116,11 +119,11 @@ class IssueRequestsController < ApplicationController
     @issue_requests = IssueRequest.where(issue_tracker_group_id: @issue_tracker_member_id.issue_tracker_group_id,status: nil)   
     else
       redirect_to issue_requests_path
-      flash[:alert] = "This Member Is Not Present In Member List To Solve Support "
+      # flash[:alert] = "This Member Is Not Present In Member List To Solve Support "
     end
     end
     session[:active_tab] = "HelpDesk"
-    session[:active_tab1] = "Process" 
+    session[:active_tab1] = "Process"
   end
 
   def modal

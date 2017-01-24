@@ -100,7 +100,6 @@ class EmployeeLeavBalancesController < ApplicationController
                   if @employee_leav_balance.emp_available(e)
 
                     for i in @from_month..@to_month
-                      # byebug
                       @workingday = Workingday.where(employee_id: e.employee_id,month_name: i)
                       @day = @workingday.pluck(:present_day).map {|i| i.to_i}
                       @employee_actual_workingday = @employee_actual_workingday.to_i + @day.inject{|n| n}

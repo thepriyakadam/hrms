@@ -121,17 +121,17 @@ class AdvanceSalariesController < ApplicationController
     @location = params[:advance_salary][:company_location_id]
     date = Date.new(@year.to_i, Workingday.months[@month])
 
-      if current_user.class == Group
+    if current_user.class == Group
       if @location == ""
-          @employees = Employee.where(company_id: @company.to_i).pluck(:id)
-          @advance_salaries = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
-        elsif @company == ""
-          @employees = Employee.where(company_location_id: @location.to_i).pluck(:id)
-          @advance_salaries = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
-        else 
-          @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
-          @advance_salaries = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
-        end
+        @employees = Employee.where(company_id: @company.to_i).pluck(:id)
+        @advance_salaries = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+      elsif @company == ""
+        @employees = Employee.where(company_location_id: @location.to_i).pluck(:id)
+        @advance_salaries = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+      else 
+        @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i).pluck(:id)
+        @advance_salaries = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
+      end
     elsif current_user.class == Member
       if current_user.role.name == 'GroupAdmin'
          if @location == ""

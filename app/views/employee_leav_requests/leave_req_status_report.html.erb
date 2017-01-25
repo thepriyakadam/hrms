@@ -86,6 +86,9 @@
       },
       "employee_leav_request[end_date]":{
         required: true
+      },
+      "employee_leav_request[current_status]":{
+        required: true
       }
     },
     messages: {
@@ -94,6 +97,9 @@
       },
       "employee_leav_request[end_date]":{
         required: "Please specify date range."
+      },
+      "employee_leav_request[current_status]":{
+        required: "Please specify Status."
       }
     },
     errorPlacement: function(error, element) {

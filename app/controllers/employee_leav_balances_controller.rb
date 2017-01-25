@@ -114,6 +114,7 @@ class EmployeeLeavBalancesController < ApplicationController
                           e.update(is_active: false)
                         end #is_carry_forward
                       else #@employee_actual_workingday < workingday
+                       
                           @calculated_no_of_leave = ( e.total_leave.to_f / @leave_master.company_workingday).to_f * @leave_master.no_of_leave.to_f
                         
                         if @leave_master.is_carry_forward == true

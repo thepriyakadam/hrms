@@ -37,7 +37,6 @@ end
 end
 
     def print_salary_slip_monthwise
-      # byebug
       @month = params[:salary][:month]
       @year = params[:salary][:year]
       @company = params[:employee][:company_id]
@@ -48,56 +47,67 @@ end
       @salaryslips = Salaryslip.where(month:  @month,year: @year.to_s,employee_id: @employees)
        
       if current_user.class == Group
-      if @company_location == ""
+        if @company == ""
+          @salaryslips = Salaryslip.where(month:  @month,year: @year.to_s)
+        elsif @company_location == ""
           @employees = Employee.where(company_id: @company.to_i).pluck(:id)
           @salaryslips = Salaryslip.where(month:  @month,year: @year.to_s,employee_id: @employees)
-      elsif  @department == ""
-          @employees = Employee.where(company_id: @company.to_i).pluck(:id)
+        elsif @department == ""
+          @employees = Employee.where(company_location_id: @company_location.to_i).pluck(:id)
           @salaryslips = Salaryslip.where(month:  @month,year: @year.to_s,employee_id: @employees)
         else
           @employees = Employee.where(company_id: @company.to_i,company_location_id: @company_location.to_i,department_id: @department.to_i).pluck(:id)
           @salaryslips = Salaryslip.where(month:  @month,year: @year.to_s,employee_id: @employees)
-      end
+        end
 
       elsif current_user.class == Member
       if current_user.role.name == 'GroupAdmin'
-        # byebug
-         if @company_location == ""
+        if @company == ""
+          @salaryslips = Salaryslip.where(month:  @month,year: @year.to_s)
+        elsif @company_location == ""
           @employees = Employee.where(company_id: @company.to_i).pluck(:id)
           @salaryslips = Salaryslip.where(month:  @month,year: @year.to_s,employee_id: @employees)
-        elsif  @department == ""
-          @employees = Employee.where(company_id: @company.to_i,company_location_id: @company_location.to_i).pluck(:id)
+        elsif @department == ""
+          @employees = Employee.where(company_location_id: @company_location.to_i).pluck(:id)
           @salaryslips = Salaryslip.where(month:  @month,year: @year.to_s,employee_id: @employees)
-        else 
-          # byebug
+        else
           @employees = Employee.where(company_id: @company.to_i,company_location_id: @company_location.to_i,department_id: @department.to_i).pluck(:id)
           @salaryslips = Salaryslip.where(month:  @month,year: @year.to_s,employee_id: @employees)
         end
         elsif current_user.role.name == 'Admin'
-         if @company_location == ""
+         if @company == ""
+          @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
+          @salaryslips = Salaryslip.where(month:  @month,year: @year.to_s).where(employee_id: @employees)
+        elsif @company_location == ""
           @employees = Employee.where(company_id: @company.to_i).pluck(:id)
           @salaryslips = Salaryslip.where(month:  @month,year: @year.to_s,employee_id: @employees)
-        elsif @company == ""
+        elsif @department == ""
           @employees = Employee.where(company_location_id: @company_location.to_i).pluck(:id)
           @salaryslips = Salaryslip.where(month:  @month,year: @year.to_s,employee_id: @employees)
-        else 
-          @employees = Employee.where(company_id: @company.to_i,company_location_id: @company_location.to_i,department_id: @department).pluck(:id)
+        else
+          @employees = Employee.where(company_id: @company.to_i,company_location_id: @company_location.to_i,department_id: @department.to_i).pluck(:id)
           @salaryslips = Salaryslip.where(month:  @month,year: @year.to_s,employee_id: @employees)
         end
         elsif current_user.role.name == 'Branch'
-         if @company_location == ""
+          if @company == "" || @company_location == ""
           @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
           @salaryslips = Salaryslip.where(month:  @month,year: @year.to_s,employee_id: @employees)
-        elsif @company == ""
+         elsif @department == ""
           @employees = Employee.where(company_location_id: @company_location.to_i).pluck(:id)
           @salaryslips = Salaryslip.where(month:  @month,year: @year.to_s,employee_id: @employees)
-        else 
-          @employees = Employee.where(company_id: @company.to_i,company_location_id: @company_location.to_i,department_id: @department).pluck(:id)
+          else 
+          @employees = Employee.where(company_id: @company.to_i,company_location_id: @company_location.to_i,department_id: @department.to_i).pluck(:id)
           @salaryslips = Salaryslip.where(month:  @month,year: @year.to_s,employee_id: @employees)
         end
         elsif current_user.role.name == 'HOD'
-        @salaryslips = Salaryslip.where(department_id: current_user.department_id)
-      elsif current_user.role.name == 'Superviser'
+          if @company == "" || @company_location == "" || @department == ""
+          @employees = Employee.where(department_id: current_user.department_id).pluck(:id)
+          @salaryslips = Salaryslip.where(month:  @month,year: @year.to_s,employee_id: @employees)
+        else 
+          @employees = Employee.where(company_id: @company.to_i,company_location_id: @company_location.to_i,department_id: @department.to_i).pluck(:id)
+          @salaryslips = Salaryslip.where(month:  @month,year: @year.to_s,employee_id: @employees)
+        end
+      elsif current_user.role.name == 'Supervisor'
       elsif current_user.role.name == 'Employee'
       end
     end

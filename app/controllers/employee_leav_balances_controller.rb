@@ -100,7 +100,6 @@ class EmployeeLeavBalancesController < ApplicationController
                   if @employee_leav_balance.emp_available(e)
 
                     # for i in @from_month..@to_month
-                    #   # byebug
                     #   @workingday = Workingday.where(employee_id: e.employee_id,month_name: i)
                     #   @day = @workingday.pluck(:present_day).map {|i| i.to_i}
                     #   @employee_actual_workingday = @employee_actual_workingday.to_i + @day.inject{|n| n}
@@ -115,6 +114,7 @@ class EmployeeLeavBalancesController < ApplicationController
                           e.update(is_active: false)
                         end #is_carry_forward
                       else #@employee_actual_workingday < workingday
+                       
                           @calculated_no_of_leave = ( e.total_leave.to_f / @leave_master.company_workingday).to_f * @leave_master.no_of_leave.to_f
                         
                         if @leave_master.is_carry_forward == true

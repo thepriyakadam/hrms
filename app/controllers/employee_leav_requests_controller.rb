@@ -422,7 +422,7 @@ class EmployeeLeavRequestsController < ApplicationController
   def status_wise_request
     @start_date = params[:employee_leav_request][:start_date]
     @end_date = params[:employee_leav_request][:end_date]
-    @company_id = params[:employee_leav_request][:company_id]
+    @company = params[:employee_leav_request][:company_id]
     @location = params[:employee_leav_request][:company_location_id]
     @department = params[:employee_leav_request][:department_id]
     @status = params[:employee_leav_request][:current_status]
@@ -440,65 +440,65 @@ class EmployeeLeavRequestsController < ApplicationController
     end
     
     if current_user.class == Group
-      if @company_id == ""
-        @employee_leav_request = EmployeeLeavRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime,current_status: @current_status)
+      if @company == ""
+        @employee_leav_requests = EmployeeLeavRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime,current_status: @current_status)
       elsif @location == ""
-        @employees = Employee.where(company_id: @company_id.to_i).pluck(:id)
-        @employee_leav_request = EmployeeLeavRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime,current_status: @current_status).where(employee_id: @employees)
+        @employees = Employee.where(company_id: @company.to_i).pluck(:id)
+        @employee_leav_requests = EmployeeLeavRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime,current_status: @current_status).where(employee_id: @employees)
       elsif @department == ""
         @employees = Employee.where(company_location_id: @location.to_i).pluck(:id)
-        @employee_leav_request = EmployeeLeavRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime,current_status: @current_status).where(employee_id: @employees)
+        @employee_leav_requests = EmployeeLeavRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime,current_status: @current_status).where(employee_id: @employees)
       else
-        @employees = Employee.where(company_id: @company_id.to_i,company_location_id: @location.to_i,department_id: @department.to_i).pluck(:id)
-        @employee_leav_request = EmployeeLeavRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime,current_status: @current_status).where(employee_id: @employees)
+        @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i,department_id: @department.to_i).pluck(:id)
+        @employee_leav_requests = EmployeeLeavRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime,current_status: @current_status).where(employee_id: @employees)
       end
 
     elsif current_user.class == Member
       if current_user.role.name == 'GroupAdmin'
-        if @company_id == ""
-          @employee_leav_request = EmployeeLeavRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime,current_status: @current_status)
+        if @company == ""
+          @employee_leav_requests = EmployeeLeavRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime,current_status: @current_status)
         elsif @location == ""
-          @employees = Employee.where(company_id: @company_id.to_i).pluck(:id)
-          @employee_leav_request = EmployeeLeavRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime,current_status: @current_status).where(employee_id: @employees)
+          @employees = Employee.where(company_id: @company.to_i).pluck(:id)
+          @employee_leav_requests = EmployeeLeavRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime,current_status: @current_status).where(employee_id: @employees)
         elsif @department == ""
           @employees = Employee.where(company_location_id: @location.to_i).pluck(:id)
-          @employee_leav_request = EmployeeLeavRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime,current_status: @current_status).where(employee_id: @employees)
+          @employee_leav_requests = EmployeeLeavRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime,current_status: @current_status).where(employee_id: @employees)
         else
-          @employees = Employee.where(company_id: @company_id.to_i,company_location_id: @location.to_i,department_id: @department.to_i).pluck(:id)
-          @employee_leav_request = EmployeeLeavRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime,current_status: @current_status).where(employee_id: @employees)
+          @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i,department_id: @department.to_i).pluck(:id)
+          @employee_leav_requests = EmployeeLeavRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime,current_status: @current_status).where(employee_id: @employees)
         end
       elsif current_user.role.name == 'Admin'
-        if @company_id == ""
+        if @company == ""
           @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
-          @employee_leav_request = EmployeeLeavRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime,current_status: @current_status).where(employee_id: @employees)
+          @employee_leav_requests = EmployeeLeavRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime,current_status: @current_status).where(employee_id: @employees)
         elsif @location == ""
-          @employees = Employee.where(company_id: @company_id.to_i).pluck(:id)
-          @employee_leav_request = EmployeeLeavRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime,current_status: @current_status).where(employee_id: @employees)
+          @employees = Employee.where(company_id: @company.to_i).pluck(:id)
+          @employee_leav_requests = EmployeeLeavRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime,current_status: @current_status).where(employee_id: @employees)
         elsif @department == ""
           @employees = Employee.where(company_location_id: @location.to_i).pluck(:id)
-          @employee_leav_request = EmployeeLeavRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime,current_status: @current_status).where(employee_id: @employees)
+          @employee_leav_requests = EmployeeLeavRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime,current_status: @current_status).where(employee_id: @employees)
         else
-          @employees = Employee.where(company_id: @company_id.to_i,company_location_id: @location.to_i,department_id: @department.to_i).pluck(:id)
-          @employee_leav_request = EmployeeLeavRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime,current_status: @current_status).where(employee_id: @employees)
+          @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i,department_id: @department.to_i).pluck(:id)
+          @employee_leav_requests = EmployeeLeavRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime,current_status: @current_status).where(employee_id: @employees)
         end
       elsif current_user.role.name == 'Branch'
-        if @company_id == "" || @location == ""
+        if @company == "" || @location == ""
           @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
-          @employee_leav_request = EmployeeLeavRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime,current_status: @current_status).where(employee_id: @employees)
+          @employee_leav_requests = EmployeeLeavRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime,current_status: @current_status).where(employee_id: @employees)
         elsif @department == ""
           @employees = Employee.where(company_location_id: @location.to_i).pluck(:id)
-          @employee_leav_request = EmployeeLeavRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime,current_status: @current_status).where(employee_id: @employees)
+          @employee_leav_requests = EmployeeLeavRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime,current_status: @current_status).where(employee_id: @employees)
         else
-          @employees = Employee.where(company_id: @company_id.to_i,company_location_id: @location.to_i,department_id: @department.to_i).pluck(:id)
-          @employee_leav_request = EmployeeLeavRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime,current_status: @current_status).where(employee_id: @employees)
+          @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i,department_id: @department.to_i).pluck(:id)
+          @employee_leav_requests = EmployeeLeavRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime,current_status: @current_status).where(employee_id: @employees)
         end
       elsif current_user.role.name == 'HOD'
-        if @company_id == "" || @location == "" || @department == ""
+        if @company == "" || @location == "" || @department == ""
           @employees = Employee.where(department_id: current_user.department_id).pluck(:id)
-          @employee_leav_request = EmployeeLeavRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime,current_status: @current_status).where(employee_id: @employees)
+          @employee_leav_requests = EmployeeLeavRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime,current_status: @current_status).where(employee_id: @employees)
         else
-          @employees = Employee.where(company_id: @company_id.to_i,company_location_id: @location.to_i,department_id: @department.to_i).pluck(:id)
-          @employee_leav_request = EmployeeLeavRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime,current_status: @current_status).where(employee_id: @employees)
+          @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i,department_id: @department.to_i).pluck(:id)
+          @employee_leav_requests = EmployeeLeavRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime,current_status: @current_status).where(employee_id: @employees)
         end
       end #current_user.role
     end #current_user.class

@@ -394,7 +394,7 @@ class EmployeeLeavRequestsController < ApplicationController
           @employees = Employee.where(company_id: @company_id.to_i,company_location_id: @location.to_i,department_id: @department.to_i).pluck(:id)
           @salaryslips = Salaryslip.where(month:  @month,year: @year.to_s,employee_id: @employees)
         end
-      elsif current_user.role.name == 'Superviser'
+      elsif current_user.role.name == 'Supervisor'
       elsif current_user.role.name == 'Employee'
       end #current_user.role
     end #current_user.class

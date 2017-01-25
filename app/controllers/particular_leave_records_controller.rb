@@ -34,24 +34,73 @@ class ParticularLeaveRecordsController < ApplicationController
   end
 
   def show_approved_record
-    @start_date = params[:particular_leave_record][:start_date]
-    @end_date = params[:particular_leave_record][:end_date]
-    @company_id = params[:particular_leave_record][:company_id]
-    @location = params[:particular_leave_record][:company_location_id]
-    @department = params[:particular_leave_record][:department_id]
+    @start_date = params[:employee][:start_date]
+    @end_date = params[:employee][:end_date]
+    @company_id = params[:employee][:company_id]
+    @location = params[:employee][:company_location_id]
+    @department = params[:employee][:department_id]
   
     if current_user.class == Group
-      @particular_leave_records = ParticularLeaveRecord.where(leave_date: @start_date.to_datetime..@end_date.to_datetime)
+      if @company_id == ""
+        @particular_leave_records = ParticularLeaveRecord.where(leave_date: @start_date.to_datetime..@end_date.to_datetime)
+      elsif @location == ""
+        @employees = Employee.where(company_id: @company_id.to_i).pluck(:id)
+        @particular_leave_records = ParticularLeaveRecord.where(leave_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees)
+      elsif @department == ""
+        @employees = Employee.where(company_location_id: @location.to_i).pluck(:id)
+        @particular_leave_records = ParticularLeaveRecord.where(leave_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees)
+      else
+        @employees = Employee.where(company_id: @company_id.to_i,company_location_id: @location.to_i,department_id: @department.to_i).pluck(:id)
+        @particular_leave_records = ParticularLeaveRecord.where(leave_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees)
+      end
+      
     elsif current_user.class == Member
       if current_user.role.name == 'GroupAdmin'
-        @employees = Employee.where(company_id: @company_id)
-        @particular_leave_records = ParticularLeaveRecord.where(leave_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees)
+        if @company_id == ""
+          @particular_leave_records = ParticularLeaveRecord.where(leave_date: @start_date.to_datetime..@end_date.to_datetime)
+        elsif @location == ""
+          @employees = Employee.where(company_id: @company_id.to_i).pluck(:id)
+          @particular_leave_records = ParticularLeaveRecord.where(leave_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees)
+        elsif @department == ""
+          @employees = Employee.where(company_location_id: @location.to_i).pluck(:id)
+          @particular_leave_records = ParticularLeaveRecord.where(leave_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees)
+        else
+          @employees = Employee.where(company_id: @company_id.to_i,company_location_id: @location.to_i,department_id: @department.to_i).pluck(:id)
+          @particular_leave_records = ParticularLeaveRecord.where(leave_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees)
+        end
       elsif current_user.role.name == 'Admin'
-        @employees = Employee.where(company_id: current_user.company_location.company_id)
-        @particular_leave_records = ParticularLeaveRecord.where(leave_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees)
+        if @company_id == ""
+          @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
+          @particular_leave_records = ParticularLeaveRecord.where(leave_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees)
+        elsif @location == ""
+          @employees = Employee.where(company_id: @company_id.to_i).pluck(:id)
+          @particular_leave_records = ParticularLeaveRecord.where(leave_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees)
+        elsif @department == ""
+          @employees = Employee.where(company_location_id: @location.to_i).pluck(:id)
+          @particular_leave_records = ParticularLeaveRecord.where(leave_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees)
+        else
+          @employees = Employee.where(company_id: @company_id.to_i,company_location_id: @location.to_i,department_id: @department.to_i).pluck(:id)
+          @particular_leave_records = ParticularLeaveRecord.where(leave_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees)
+        end
       elsif current_user.role.name == 'Branch'
-        @employees = Employee.where(company_location_id: current_user.company_location_id)
-        @particular_leave_records = ParticularLeaveRecord.where(leave_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees)
+        if @company_id == "" || @location == ""
+          @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+          @particular_leave_records = ParticularLeaveRecord.where(leave_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees)
+        elsif @department == ""
+          @employees = Employee.where(company_location_id: @location.to_i).pluck(:id)
+          @particular_leave_records = ParticularLeaveRecord.where(leave_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees)
+        else
+          @employees = Employee.where(company_id: @company_id.to_i,company_location_id: @location.to_i,department_id: @department.to_i).pluck(:id)
+          @particular_leave_records = ParticularLeaveRecord.where(leave_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees)
+        end
+      elsif current_user.role.name == 'HOD'
+        if @company_id == "" || @location == "" || @department == ""
+          @employees = Employee.where(department_id: current_user.department_id).pluck(:id)
+          @particular_leave_records = ParticularLeaveRecord.where(leave_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees)
+        else
+          @employees = Employee.where(company_id: @company_id.to_i,company_location_id: @location.to_i,department_id: @department.to_i).pluck(:id)
+          @particular_leave_records = ParticularLeaveRecord.where(leave_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees)
+        end
       end
     end
 

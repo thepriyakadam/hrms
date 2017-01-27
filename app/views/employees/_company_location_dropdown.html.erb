@@ -1,4 +1,4 @@
-<label class="control-label required" for="company_state" aria-required="true">Company Location</label>
+<!-- <label class="control-label required" for="company_state" aria-required="true">Company Location</label> -->
 <% if @form == 'company' %>
 	<%= select :company,:company_location_id,(@company_locations.present? ? (@company_locations.collect {|b| [b.name,b.id]}) : {}),{prompt:"Select Company Location",hide_label:true},{onchange:"var a={id:$(this).val(), form : 'company'}; $.get('/employees/collect_department',a,function(response){});",class: "form-control"}%>
 <% elsif @form == 'company_location' %>

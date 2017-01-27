@@ -1,9 +1,9 @@
 <div class="box">
   <div class="box-header">
-    <h3 class="box-title">Travelling Datewise Report</h3>
+    <h3 class="box-title">Travelling Date Report</h3>
   </div><!-- /.box-header -->
   <div class="box-body">
-<%= bootstrap_form_for(:travel_request, url: { action: 'print_travelling_datewise_report'},html: {id: 'travel_request'},remote: true ) do |f| %>
+<%= bootstrap_form_for(:travel_request, url: { action: 'print_travelling_datewise_report'},html: {id: 'salary'},remote: true ) do |f| %>
 	 <div class="row">
       <div class="col-sm-3">
       <label>From Date</label>
@@ -54,7 +54,8 @@
             </div>
             </div>
         </div>
-     
+        </div>
+     <div class="row">
        <div class="col-sm-2">
        <label></label>
           <div class="actions">
@@ -72,7 +73,7 @@
     $('.request_date').datepicker({
     changeYear:true,
     changeMonth: true,
-    yearRange: '-200:+1',
+    yearRange: '-100:-0',
     dateFormat: 'dd-mm-yy' });
   }); 
 </script>
@@ -82,7 +83,34 @@
     $('.request_date').datepicker({
     changeYear:true,
     changeMonth: true,
-    yearRange: '-200:+1',
+    yearRange: '-100:-0',
     dateFormat: 'dd-mm-yy' });
   }); 
+</script>
+
+<script type="text/javascript">
+ 
+   $("#salary").validate({
+    rules: {
+      "salary[from_date]":{
+        required: true,
+      
+      },
+      "salary[to_date]":{
+        required: true,
+      }
+    },
+    messages: {
+      "salary[from_date]":{
+        required: "Please Specify Date Range",
+      },
+      "salary[to_date]":{
+        required: "Please Specify Date Range",
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
 </script>

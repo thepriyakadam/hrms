@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170112050137) do
+ActiveRecord::Schema.define(version: 20170124064504) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -452,6 +452,7 @@ ActiveRecord::Schema.define(version: 20170112050137) do
     t.datetime "out_time"
     t.integer  "shift_master_id"
     t.string   "rest_time"
+    t.boolean  "time_adjust"
   end
 
   add_index "company_time_masters", ["shift_master_id"], name: "index_company_time_masters_on_shift_master_id"
@@ -773,6 +774,7 @@ ActiveRecord::Schema.define(version: 20170112050137) do
     t.decimal  "difference_hrs"
     t.decimal  "overtime_hrs"
     t.string   "month_name"
+    t.decimal  "late_mark"
   end
 
   add_index "employee_attendances", ["company_time_master_id"], name: "index_employee_attendances_on_company_time_master_id"
@@ -1181,6 +1183,7 @@ ActiveRecord::Schema.define(version: 20170112050137) do
     t.integer  "passport_photo_file_size"
     t.datetime "passport_photo_updated_at"
     t.string   "punch_card_id"
+    t.string   "prefix"
   end
 
   add_index "employees", ["blood_group_id"], name: "index_employees_on_blood_group_id"
@@ -1910,6 +1913,8 @@ ActiveRecord::Schema.define(version: 20170112050137) do
     t.boolean  "basis_of_time",           default: false
     t.string   "ot_rate"
     t.boolean  "ot_option"
+    t.boolean  "time_master"
+    t.boolean  "time_adjusted"
   end
 
   add_index "joining_details", ["cost_center_id"], name: "index_joining_details_on_cost_center_id"
@@ -2029,8 +2034,9 @@ ActiveRecord::Schema.define(version: 20170112050137) do
     t.string   "no_of_leave"
     t.boolean  "is_carry_forward"
     t.string   "limit"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.decimal  "company_workingday"
   end
 
   add_index "leave_masters", ["leav_category_id"], name: "index_leave_masters_on_leav_category_id"
@@ -2386,9 +2392,13 @@ ActiveRecord::Schema.define(version: 20170112050137) do
     t.date     "effective_to"
     t.boolean  "is_active"
     t.boolean  "is_confirm"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+    t.integer  "company_location_id"
+    t.boolean  "basis_actual_amount"
   end
+
+  add_index "professional_tax_masters", ["company_location_id"], name: "index_professional_tax_masters_on_company_location_id"
 
   create_table "professional_taxes", force: :cascade do |t|
     t.string   "is_pt"
@@ -2919,6 +2929,7 @@ ActiveRecord::Schema.define(version: 20170112050137) do
     t.integer  "training_topic_master_id"
     t.boolean  "is_complete"
     t.integer  "reporting_master_id"
+    t.boolean  "training_plan"
   end
 
   add_index "trainee_requests", ["employee_id"], name: "index_trainee_requests_on_employee_id"

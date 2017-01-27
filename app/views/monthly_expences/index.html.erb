@@ -1,18 +1,24 @@
 <div class="box">
   <div class="box-header">
-    <h3 class="box-title">Monthly Expenses</h3>
+    <h3 class="box-title"></h3>
     <div class="pull-right">
       <%= link_to "New Monthly Expense", new_monthly_expence_path, class: 'btn btn-sm btn-primary' %> 
     </div>
     
   </div><!-- /.box-header -->
   <div class="box-body">
+   <div class="row">
+        <div class="col-sm-2">
+        </div>
+        <div class="col-sm-8">
   <div id="comments">
     <table id="example" class="table table-bordered table-hover table-condensed">
     <thead>
+    <tr><td colspan="5"><center><strong>Monthly Expenses</strong></center></td></tr>
       <tr>
         <th>Year</th>
-        <th>Action</th>
+        <th colspan="4">Month</th>
+        
       </tr>
     </thead>
 
@@ -21,24 +27,35 @@
         <% year = w.expence_date.strftime('%Y') %>
         <tr>
           <td><%= year %></td>
-          <td>
-            <%= link_to 'January',employees_monthly_expences_path(year: year, month: "January") , class: 'btn btn-xs btn-primary' %>
-            <%= link_to 'February',employees_monthly_expences_path(year: year, month: "February") , class: 'btn btn-xs btn-primary' %>
-            <%= link_to 'March',employees_monthly_expences_path(year: year, month: "March") , class: 'btn btn-xs btn-primary' %>
-            <%= link_to 'April',employees_monthly_expences_path(year: year, month: "April") , class: 'btn btn-xs btn-primary' %>
-            <%= link_to 'May',employees_monthly_expences_path(year: year, month: "May") , class: 'btn btn-xs btn-success' %>
-            <%= link_to 'June',employees_monthly_expences_path(year: year, month: "June") , class: 'btn btn-xs btn-success' %>
-            <%= link_to 'July',employees_monthly_expences_path(year: year, month: "July") , class: 'btn btn-xs btn-success' %>
-            <%= link_to 'August',employees_monthly_expences_path(year: year, month: "August") , class: 'btn btn-xs btn-success' %>
-            <%= link_to 'September',employees_monthly_expences_path(year: year, month: "September") , class: 'btn btn-xs btn-danger' %>
-            <%= link_to 'October',employees_monthly_expences_path(year: year, month: "October") , class: 'btn btn-xs btn-danger' %>
-            <%= link_to 'November',employees_monthly_expences_path(year: year, month: "November") , class: 'btn btn-xs btn-danger' %>
-            <%= link_to 'December',employees_monthly_expences_path(year: year, month: "December") , class: 'btn btn-xs btn-danger' %>
-          </td>
-        </tr>
+          
+            <td><%= link_to 'January',employees_monthly_expences_path(year: year, month: "January") , class: 'btn btn-xs btn-primary' %></td>
+            <td><%= link_to 'February',employees_monthly_expences_path(year: year, month: "February") , class: 'btn btn-xs btn-primary' %></td>  
+            <td><%= link_to 'March',employees_monthly_expences_path(year: year, month: "March") , class: 'btn btn-xs btn-primary' %></td>
+            <td><%= link_to 'April',employees_monthly_expences_path(year: year, month: "April") , class: 'btn btn-xs btn-primary' %></td>
+           
+            </tr>
+          
+          <tr>
+          <td><%= year %></td>
+            <td><%= link_to 'May',employees_monthly_expences_path(year: year, month: "May") , class: 'btn btn-xs btn-primary' %></td>
+            <td><%= link_to 'June',employees_monthly_expences_path(year: year, month: "June") , class: 'btn btn-xs btn-primary' %></td>
+            <td><%= link_to 'July',employees_monthly_expences_path(year: year, month: "July") , class: 'btn btn-xs btn-primary' %></td>
+            <td><%= link_to 'August',employees_monthly_expences_path(year: year, month: "August") , class: 'btn btn-xs btn-primary' %></td>
+          </tr>
+          <tr>
+          <td><%= year %></td>
+            <td><%= link_to 'September',employees_monthly_expences_path(year: year, month: "September") , class: 'btn btn-xs btn-primary' %></td>
+            <td><%= link_to 'October',employees_monthly_expences_path(year: year, month: "October") , class: 'btn btn-xs btn-primary' %></td>
+            <td><%= link_to 'November',employees_monthly_expences_path(year: year, month: "November") , class: 'btn btn-xs btn-primary' %></td>
+            <td><%= link_to 'December',employees_monthly_expences_path(year: year, month: "December") , class: 'btn btn-xs btn-primary' %></td>
+          </tr>
+       
       <% end %>
     </tbody>
   </table>
+  </div>
+  <div class="col-sm-2">
+  </div>
   </div>
 </div>
 </div>

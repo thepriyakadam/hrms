@@ -27,7 +27,7 @@ class Ability
         can :manage, :all
       elsif user.role.name == 'HOD'
         can :read, Employee
-        can :manage, EmployeeLeavRequest
+        can :manage, [EmployeeLeavRequest, ParticularLeaveRecord]
         can :manage, [GoalBunch, GoalRating]
         can :manage, [TravelRequest, DailyBillDetail]
       elsif user.role.name == 'Supervisor'
@@ -38,8 +38,8 @@ class Ability
       elsif user.role.name == 'Employee'
         can :read, Employee, id: user.employee_id
         can :read, [JoiningDetail, EmployeeBankDetail, Qualification, Experience, Skillset, EmployeePhysical, Family]
+        can :read, [EmployeeTemplate, EmployeeSalaryTemplate]
         can :manage, EmployeeLeavRequest, employee_id: user.employee_id
-        can :read, EmployeeTemplate, employee_id: user.employee_id
         can :read, AdvanceSalary, employee_id: user.employee_id
         can :read, Attendance, employee_id: user.employee_id
         can :manage, GoalBunch, employee_id: user.employee_id

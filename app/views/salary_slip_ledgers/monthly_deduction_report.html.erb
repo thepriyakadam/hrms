@@ -5,17 +5,17 @@
   </div><!-- /.box-header -->
 
   <div class="box-body">
-    <%= bootstrap_form_for(:salaryslip, url: { action: 'monthly_deduction'},html: {id: 'salaryslip'},remote:true) do |f| %>
+    <%= bootstrap_form_for(:salary_slip_ledger, url: { action: 'monthly_deduction'},html: {id: 'salary_slip_ledger'},remote:true) do |f| %>
       <div class="row">
         <div class="col-sm-2">
           <div class="field">
-            <%= select :salaryslip,:year,['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025','2026','2027'],{label: 'Select Year',include_blank: " Select Year"}, class: "form-control" %>
+            <%= f.select :year,['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025','2026','2027'],{hide_label:true,include_blank: " Select Year"}, class: "form-control" %>
           </div>
         </div>
 
         <div class="col-sm-2">
           <div class="field">
-            <%= select :salaryslip,:month, ['January','February','March','April','May','June','July','August','September','October','November','December'],{label: 'Select Month',include_blank: " Select Month"}, class: "form-control" %>
+            <%= f.select :month, ['January','February','March','April','May','June','July','August','September','October','November','December'],{hide_label:true,include_blank: " Select Month"}, class: "form-control" %>
            </div>
         </div>
 
@@ -27,13 +27,13 @@
 
           <div class="col-sm-2">
             <div class="form-group required">
-              <div id="company_location1">
-                <%= render 'employees/company_loc_dropdown' %> 
+              <div id="company_location">
+                <%= render 'employees/company_location_dropdown' %> 
             </div>
             </div>
           </div>
         
-        <div class="col-sm-2">
+        <div class="col-sm-2" >
           <div class="actions">
             <%= f.submit "Display Report", class: "btn btn-sm btn-primary" %>
           </div>
@@ -47,26 +47,26 @@
 </div><!-- /.box -->
 
 <script>
-$("#salaryslip").validate({
+$("#salary_slip_ledger").validate({
     rules: {
-      "salaryslip[month]":{
+      "salary_slip_ledger[month]":{
         required: true,
       },
-      "salaryslip[year]":{
+      "salary_slip_ledger[year]":{
         required: true,
       },
-      "salaryslip[company_id]":{
+      "salary_slip_ledger[company_id]":{
         required: true,
       }
     },
     messages: {
-      "salaryslip[month]":{
+      "salary_slip_ledger[month]":{
         required: "Please select Month",
       },
-      "salaryslip[year]":{
+      "salary_slip_ledger[year]":{
         required: "Please select Year",
       },
-      "salaryslip[company_id]":{
+      "salary_slip_ledger[company_id]":{
         required: "Please select Company",
       }
     },

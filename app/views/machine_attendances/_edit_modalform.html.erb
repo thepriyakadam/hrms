@@ -13,39 +13,46 @@
     </div>
    <div class="col-sm-3">
        <div class="field">
-          <%= text_field :machine_attendance,:day,hide_label: true, class: 'form-control joining_date'%>
+          <%= text_field :machine_attendance,:day,hide_label: true,placeholder: 'Date', class: 'form-control joining_date'%>
         </div>
       </div>
-      <div class="col-sm-2">
-      <div class="field">
-          <div class="form-group">
-            <!-- <label>In Time</label> -->
-            <div class='input-group date' id='datetimepicker10'>
-              <div class="input-group-addon">
-                <i class="fa fa-calendar"></i>
-              </div>
-              <%= text_field :machine_attendance,:in,hide_label: true, placeholder: 'In Time',class: 'form-control',value: @machine_attendance.in%>
-            </div><!-- /.input group -->
-          </div><!-- /.form group -->
+
+    <div class="col-sm-2">
+      <div class="bootstrap-timepicker">
+        <div class="form-group">
+<!--           <label>In Time</label>
+ -->          <div class="input-group">
+            <%= text_field :machine_attendance,:in,hide_label: true, placeholder: 'In Time',class: 'form-control timepicker',value: @machine_attendance.in %>
+            <div class="input-group-addon">
+              <i class="fa fa-clock-o"></i>
+            </div>
+          </div><!-- /.input group -->
+        </div><!-- /.form group -->
       </div>
     </div>
     <div class="col-sm-2">
-      <div class="field">
-          <div class="form-group">
-            <!-- <label>In Time</label> -->
-            <div class='input-group date' id='datetimepicker11 '>
-              <div class="input-group-addon">
-                <i class="fa fa-calendar"></i>
-              </div>
-              <%= text_field :machine_attendance,:out,hide_label: true, placeholder: 'Out Time',class: 'form-control',value: @machine_attendance.out%>
-            </div><!-- /.input group -->
-          </div><!-- /.form group -->
+      <div class="bootstrap-timepicker">
+        <div class="form-group">
+<!--           <label>Out Time</label>
+ -->          <div class="input-group">
+            <%= text_field :machine_attendance,:out,hide_label: true, placeholder: 'Out Time',class: 'form-control timepicker',value: @machine_attendance.out %>
+            <div class="input-group-addon">
+              <i class="fa fa-clock-o"></i>
+            </div>
+          </div><!-- /.input group -->
+        </div><!-- /.form group -->
       </div>
     </div>
    
     </div>
 
     <div class="row">
+    <div class="col-sm-3">
+    <label></label>
+      <div class="field">
+        <%= text_field :machine_attendance,:present , hide_label: true, placeholder: 'Present',class: 'form-control' %>
+      </div>
+    </div>
     <div class="col-sm-3">
     <label></label>
       <div class="actions">
@@ -67,6 +74,16 @@
     yearRange: '-100:-0',
     dateFormat: 'dd-mm-yy' });
   }); 
+</script>
+
+<script>
+$(function () {
+//Timepicker
+  $(".timepicker").timepicker({
+    showInputs: false
+  });
+  
+});
 </script>
 
 <script type="text/javascript">

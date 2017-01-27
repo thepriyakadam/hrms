@@ -1,4 +1,5 @@
 class ProfessionalTaxMaster < ActiveRecord::Base
+  belongs_to :company_location
 		def self.create_string(components)
     str = ''
     i = 0

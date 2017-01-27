@@ -20,6 +20,7 @@ class DueDetailsController < ApplicationController
     # redirect_to new_due_detail_path  
   end
 
+
   # GET /due_details/1/edit
   def edit
   end
@@ -80,38 +81,65 @@ class DueDetailsController < ApplicationController
   end
 
   def all_due_template
-     @employee_resignation = EmployeeResignation.find(params[:format])
-     @employee = Employee.find(@employee_resignation.employee_id)
+     # @employee_resignation = EmployeeResignation.find(params[:format])
+     # @employee = Employee.find(@employee_resignation.employee_id)
+     @employee = Employee.find(params[:emp_id])
+     @employees = Employee.where(id: @employee.id)
   end
 
   def create_due_employee_detail
     # @due_employee_detail = DueEmployeeDetail.new(due_employee_detail_params)
+    # byebug
     @emp = params[:due_employee_detail][:employee_id]
     @due_template = params[:due_template_id][:hhh]
+    # byebug
+    # @employee = Employee.find(params[:emp_id])
     # @due_employee_detail.save
     @due_detail_ids = params[:due_detail_ids]
     if @due_detail_ids.nil?
        flash[:alert] = "Please Select the Checkbox"
     else
       @due_detail_ids.each do |did|
-      DueEmployeeDetail.create(reporting_master_id: did,employee_id: @emp,due_template_id: @due_template,is_confirmed: true)
+       due_det = DueDetail.where(id: did)
+       due_det.each do |dd|
+
+      DueEmployeeDetail.create(due_detail_id: dd.id,reporting_master_id: dd.reporting_master_id,employee_id: @emp,due_template_id: @due_template,is_confirmed: true)
+      # DueEmployeeDetail.create(reporting_master_id: did,employee_id: @employee.id,due_template_id: @due_template,is_confirmed: true)
       flash[:notice] = "Created Successfully & Request Also Sent to the Selected Due Owner."
       end
     end
-    redirect_to all_employee_resignation_list_due_details_path
+  end
+    # redirect_to all_employee_resignation_list_due_details_path
+    redirect_to all_employee_list_due_details_path
   end
 
 
   def emis_confirm_employee_dueployee_due_detail_history
-    @due_employee_details = DueEmployeeDetail.where(reporting_master_id: current_user.employee_id,is_confirmed: true)
+    @reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
+    @due_employee_details = DueEmployeeDetail.where(reporting_master_id: @reporting_masters,is_confirmed: true)
     session[:active_tab] = "resignationmanagement"
     session[:active_tab1] ="no_due_mgmt"
   end
 
+  def employee_due_detail_history
+    # byebug
+    @reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
+    @due_employee_details = DueEmployeeDetail.where(reporting_master_id: @reporting_masters,is_confirmed: true)
+    session[:active_tab] = "resignationmanagement"
+    session[:active_tab1] ="no_due_mgmt"
+  end
+
+  def all_employee_list
+     @employee_resignations = EmployeeResignation.where(resign_status: "Approved").pluck(:employee_id)
+     @employees = Employee.where(id: @employee_resignations,status: "Active")
+     session[:active_tab] = "resignationmanagement"
+     session[:active_tab1] ="no_due_mgmt"
+  end
+
   def all_employee_due_detail
      @due_employee_details = DueEmployeeDetail.where(is_confirmed: nil)
-      session[:active_tab] = "resignationmanagement"
-    session[:active_tab1] ="no_due_mgmt"
+     session[:active_tab] = "resignationmanagement"
+     session[:active_tab1] ="no_due_mgmt"
   end
 
   def is_confirm_employee_due
@@ -132,16 +160,18 @@ class DueDetailsController < ApplicationController
 
   def due_employee_detail_list
      # @due_employee_details = DueEmployeeDetail.where(is_confirmed: true)
-     @employee_resignation = EmployeeResignation.find(params[:format])
-     @employee = Employee.find(@employee_resignation.employee_id)
+     # @employee_resignation = EmployeeResignation.find(params[:format])
+     # @employee = Employee.find(@employee_resignation.employee_id)
+     @employee = Employee.find(params[:emp_id])
      @due_employee_details = DueEmployeeDetail.where(employee_id: @employee.id,is_confirmed: true)
-     @due_actions = DueAction.all
+     @due_employee_details_1 = DueEmployeeDetail.where(employee_id: @employee.id,is_confirmed: true).pluck(:id)
+     @due_actions = DueAction.where(due_employee_detail_id: @due_employee_details_1)
   end
 
-  def due_action_list
-    @due_employee_detail = DueEmployeeDetail.find(params[:format])
-    @due_actions = DueAction.where(due_employee_detail_id: @due_employee_detail.id)
-  end
+  # def due_action_list
+  #   @due_employee_detail = DueEmployeeDetail.find(params[:format])
+  #   @due_actions = DueAction.where(due_employee_detail_id: @due_employee_detail.id)
+  # end
 
 
   def emp_resignation
@@ -152,6 +182,11 @@ class DueDetailsController < ApplicationController
    def modal
     @due_detail = DueDetail.find(params[:format])
     # redirect_to new_due_detail_path  
+  end
+
+  def specific_due_action_list
+    @due_employee_detail = DueEmployeeDetail.find(params[:format])
+    @due_actions = DueAction.where(due_employee_detail_id: @due_employee_detail.id)
   end
 
   private

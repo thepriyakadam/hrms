@@ -13,7 +13,9 @@
 </style>
 <table style="border-collapse: collapse; font-size:10pt;" border=1 width=1000 cellpadding="19">
     <thead>
-    <tr><th colspan="6"><center>BFTL</center> </th></tr>
+    <td colspan="6"><center><strong>
+ <%= Company.find(@company).description unless @company.nil? or @company.blank? %></strong><br> <%= Company.find(@company).address unless @company.nil? or @company.blank? %> <br><%=Department.find(@department).name unless @department.nil? or @department.blank? %> - <%= CompanyLocation.find(@company_location).name unless @company_location.nil? or @company_location.blank? %></center>
+ </td>
       <tr>
         <th>ID</th>
         <th>Employee Name</th>

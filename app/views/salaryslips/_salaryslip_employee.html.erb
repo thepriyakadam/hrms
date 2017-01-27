@@ -44,7 +44,7 @@
         <td><%= d=EmployerContribution.where(employee_id: s.employee_id,date: @salaryslips_1_date).pluck(:actual_fp).map {|i| i.to_i}.inject{|n|} %></td>
         <!-- <td><= actual_ctc=(a+b+c+d).to_f %></td> -->
         <td><%= e=EmployerContribution.where(employee_id: s.employee_id,date: @salaryslips_1_date).pluck(:actual_insurance).map {|i| i.to_i}.inject{|n|} %></td>
-        <td></td>
+        <td><%= %></td>
         <td><%= s.calculated_gross_salary.round %></td>
         <td><%= f=EmployerContribution.where(employee_id: s.employee_id,date: @salaryslips_1_date).pluck(:bonus).map {|i| i.to_i}.inject{|n|} %></td>
         <td><%= g=EmployerContribution.where(employee_id: s.employee_id,date: @salaryslips_1_date).pluck(:pf).map {|i| i.to_i}.inject{|n|} %></td>
@@ -52,7 +52,7 @@
         <td><%= i=EmployerContribution.where(employee_id: s.employee_id,date: @salaryslips_1_date).pluck(:fp).map {|i| i.to_i}.inject{|n|} %></td>
         <td><%= j=EmployerContribution.where(employee_id: s.employee_id,date: @salaryslips_1_date).pluck(:insurance).map {|i| i.to_i}.inject{|n|} %></td>
         <!-- <td><= calculated_ctc=(e+f+g+h).to_f %></td> -->
-        <td></td>
+        <td><%= %></td>
         <!-- < end %> -->
       </tr>
     <% end %>

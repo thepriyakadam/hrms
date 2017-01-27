@@ -173,7 +173,7 @@ class MachineAttendancesController < ApplicationController
                                end
 														end
 														puts "Outttttttttttttttttttttt Timeeeeeeeeeeee"
-								
+							
 											  else
 
 											    if jd.time_adjusted == true
@@ -192,27 +192,33 @@ class MachineAttendancesController < ApplicationController
 	                              	   EmployeeAttendance.where(id: @c2.id).update_all(in_time: e.in)
 	                              	   @employee_attend = EmployeeAttendance.where(id: @c2.id)
 			                               @employee_attend.each do |ea|
-			                               	late_diff_in_min =TimeDifference.between(ea.in_time.strftime('%H:%M:%S') , ctm.in_time.strftime('%H:%M:%S')).in_minutes.abs.to_f
+			                                late_diff_in_min =TimeDifference.between(ea.in_time.strftime('%H:%M:%S') , ctm.in_time.strftime('%H:%M:%S')).in_minutes.abs.to_f
 			                               	EmployeeAttendance.where(id: ea).update_all(late_mark: late_diff_in_min)
-			                               end
+			                              end
 	                                end
                                   # byebug
 		                              if e.out.strftime('%H:%M:%S') < ctm.out_time.strftime('%H:%M:%S')
 		                              	   EmployeeAttendance.where(id: @c2.id).update_all(out_time: e.out)
 		                              	   @employee_attend = EmployeeAttendance.where(id: @c2.id)
-				                               @employee_attend.each do |ea|
+				                              @employee_attend.each do |ea|
 				                               	late_diff_in_min =TimeDifference.between(ea.out_time.strftime('%H:%M:%S') , ctm.out_time.strftime('%H:%M:%S')).in_minutes.abs.to_f
 				                               	# byebug
 				                               	#f=EmployeeAttendance.where(id: @c2.id).pluck(:late_mark)
-				                               	total_late_in_min = ea.late_mark + late_diff_in_min
-				                               	EmployeeAttendance.where(id: ea).update_all(late_mark: total_late_in_min)
-				                               end
-		                              	else
-		                              		if jd.ot_option == true
-		                              	 	 EmployeeAttendance.where(id: @c2.id).update_all(out_time: e.out)
-		                                   else
-		                              	   EmployeeAttendance.where(id: @c2.id).update_all(out_time: ctm.out_time)
-		                                  end
+                                        if ea.late_mark.nil?
+                                          # byebug
+                                          total_late_in_min = 0 + late_diff_in_min
+                                          EmployeeAttendance.where(id: ea).update_all(late_mark: total_late_in_min)
+                                        else
+  				                               	total_late_in_min = ea.late_mark + late_diff_in_min
+  				                               	EmployeeAttendance.where(id: ea).update_all(late_mark: total_late_in_min)
+                                        end
+				                              end
+	                              	else
+    	                              		if jd.ot_option == true
+    	                              	 	 EmployeeAttendance.where(id: @c2.id).update_all(out_time: e.out)
+    	                                   else
+    	                              	   EmployeeAttendance.where(id: @c2.id).update_all(out_time: ctm.out_time)
+    	                                  end   
 		                              end
                               end
                               puts "Time Adjusted True"
@@ -244,8 +250,14 @@ class MachineAttendancesController < ApplicationController
 				                               @employee_attend.each do |ea|
 				                               	late_diff_in_min =TimeDifference.between(ea.out_time.strftime('%H:%M:%S') , ctm.out_time.strftime('%H:%M:%S')).in_minutes.abs.to_f
 				                               	# f=EmployeeAttendance.where(id: @c2.id).pluck(:late_mark)
-				                               	total_late_in_min = ea.late_mark + late_diff_in_min
-				                               	EmployeeAttendance.where(id: ea).update_all(late_mark: total_late_in_min)
+                                        if ea.late_mark.nil?
+                                        # byebug
+                                        total_late_in_min = 0 + late_diff_in_min
+                                        EmployeeAttendance.where(id: ea).update_all(late_mark: total_late_in_min)
+                                        else
+                                        total_late_in_min = ea.late_mark + late_diff_in_min
+                                        EmployeeAttendance.where(id: ea).update_all(late_mark: total_late_in_min)
+                                       end
 				                               end
                                   else
                                     if jd.ot_option == true
@@ -276,14 +288,12 @@ class MachineAttendancesController < ApplicationController
 								month_name = e.day.strftime("%B")
 								emp_attend = EmployeeAttendance.where(employee_id: e.employee_id,month_name: month_name)
 								emp_attend.each do |eatt|
-	                time_diff=TimeDifference.between(eatt.in_time.strftime('%H:%M:%S'), eatt.out_time.strftime('%H:%M:%S')).in_hours.to_f
-									total_time_diff = time_diff - ctm.working_hrs.to_f
-                  # byebug
+                time_diff=TimeDifference.between(eatt.in_time.strftime('%H:%M:%S'), eatt.out_time.strftime('%H:%M:%S')).in_hours.to_f
+								total_time_diff = time_diff - ctm.working_hrs.to_f
+         #          # byebug
 									EmployeeAttendance.where(id: eatt).update_all(working_hrs: time_diff)
-									if total_time_diff<0
+									if total_time_diff>0
                     # byebug
-									  EmployeeAttendance.where(id: eatt).update_all(difference_hrs: total_time_diff.abs)
-									else
 									  EmployeeAttendance.where(id: eatt).update_all(overtime_hrs: total_time_diff)
 									end
 								end#emp_attend loop
@@ -294,7 +304,14 @@ class MachineAttendancesController < ApplicationController
 											if ea1.late_mark.between?(lmm.from.to_i, lmm.to.to_i)
 												# late_mark_in_hrs = lmm.late_mark / 60
 	                      late_working_hrs = lmm.late_mark.to_f - ea1.working_hrs.to_f
+                        late_working_hrs_1 = lmm.late_mark.to_f - ea1.working_hrs.to_f
 	                      EmployeeAttendance.where(id: ea1).update_all(working_hrs: late_working_hrs.abs)
+                        total_time_diff = late_working_hrs_1.abs.to_f - ctm.working_hrs.to_f
+                        if total_time_diff<0
+                          EmployeeAttendance.where(id: ea1).update_all(difference_hrs: total_time_diff.abs)
+                        else
+                          EmployeeAttendance.where(id: ea1).update_all(overtime_hrs: total_time_diff)
+                        end
 										  end
 								   	end#late_mark_masters loop
 							  	end#emp_attend_1 loop

@@ -1,0 +1,30 @@
+<%= bootstrap_form_for(@salary_map_sap,html: {id: 'salary_map_sap'},remote:true) do |f| %>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.select :salary_component_id,all_salary_component,{hide_label: true,include_blank: " Select Salary Component"} %>
+       
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :account_code,hide_label:true, placeholder: 'Account Code ' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.select :is_debit, [["Debit",true],["Credit",false]],hide_label:true,include_blank: "Select Account Type"  %>
+      </div>
+    </div>
+    </div>
+
+    <div class="row">
+    <div class="col-sm-3">
+      <div class="actions">
+       <%= f.submit "Create Component",:class => class_name, data: { disable_with: data_info } %>
+      </div>
+    </div>
+  </div>
+<% end %>

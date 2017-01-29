@@ -1,0 +1,2 @@
+module SalaryslipComponentsHelper
+end

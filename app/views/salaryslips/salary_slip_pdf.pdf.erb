@@ -1,0 +1,215 @@
+    <style>
+    th {
+        text-align: left;
+    }
+    tr {
+        page-break-inside: avoid;
+    }
+    div.alwaysbreak { page-break-before: always; }
+    div.nobreak:before { clear:both; }
+    div.nobreak{ page-break-inside: avoid;
+      /* http://code.google.com/p/wkhtmltopdf/issues/detail?id=9#c21 */
+    }
+</style>
+<table style="border-collapse: collapse; font-size:10pt;" border=1 width=900 cellpadding="25">
+    <thead>
+      <tr>
+<th>Sr.No.</th>
+<th>Employee ID</th>
+<th>Employee Name</th>
+<th>Designation</th>
+<th>Department</th>
+<th>Cost Unit</th>
+<th>Year</th>
+<th>Month</th>
+<th>Category</th>
+<th>Account No.</th>
+<th>Bank Name</th>
+<th>Payment Mode</th>
+<th>PF No.</th>
+<th>ESIC No.</th>
+<th>Basic</th>
+<th>HRA</th>
+<th>Special Allowence</th>
+<th>Conveyance Allowence</th>
+<th>Other Allowence</th>
+<th>Washing Allowence</th>
+<th>Direct Allowence</th>
+<th>Driver Allowance</th>
+<th>Medical Allowance</th>
+<th>Children Educatio Allowance</th>
+<th>RembursementofMedical</th>
+<th>Gross Salary</th>
+<th>Calculated Basic</th>
+<th>Calculated HRA</th>
+<th>C Special Allowence</th>
+<th>C Convenience Allowence</th>
+<th>Calculated Other Allowence</th>
+<th>C Washing Allowence</th>
+<th>Calculated Direct Allowence</th>
+<th>Calculated Driver Allowance</th>
+<th>C Medical Allowance</th>
+<th>en Education Allowance</th>
+<th>sement of Medical Allowence</th>
+<th>Gross Salary</th>
+<th>PF</th>
+<th>ESIC</th>
+<th>Professional Tax</th>
+<th>Retention</th>
+<th>Welfare</th>
+<th>Society</th>
+<th>Food Deduction</th>
+<th>Advance</th>
+<th>Income Tax</th>
+<th>Mobile Expences</th>
+<th>Other Deduction</th>
+<th>Socity Loan</th>
+<th>Total Deduction</th>
+<th>Net Salary</th>
+<th>No. of Days in Month</th>
+<th>Present Days</th>
+<th>Weekoff</th>
+<th>CL</th>
+<th>EL</th>
+<th>ESIC LEAVE</th>
+<th>LWP</th>
+<th>Holiday</th>
+<th>Absent Days</th>
+<th>Payable Days</th>
+<th>Location</th>
+</tr>
+<% i = 0 %>
+<% @salaryslips.each do |slip| %>
+<% employee = slip.employee %>
+<% joining = employee.joining_detail %>
+<% bankdetail = employee.employee_bank_detail %>
+<% workingday = slip.workingday %>
+<tr>
+<tbody>
+<td><%= i=i+1 %></td>
+<td><%= slip.employee.manual_employee_code %></td>
+<td><%= employee.first_name.to_s+" "+employee.middle_name.to_s+" "+employee.last_name.to_s %></td>
+<td><%= joining.employee_designation.try(:name) %></td>
+<td><%= joining.department.try(:name) %></td>
+<td><%= joining.cost_center.try(:name) %></td>
+<td><%= slip.year %></td>
+<td><%= slip.month %></td>
+<td><%= joining.employee_category.try(:name) %></td>
+<td><%= bankdetail.try(:account_no) %></td>
+<td><%= bankdetail.try(:bank).try(:name) %></td>
+<td><%= joining.try(:payment_mode).try(:name) %></td>
+<td><%= joining.try(:employee_pf_no) %></td>
+<td><%= joining.try(:employee_efic_no) %></td>
+
+<% @addable_salaryslip_items = slip.salaryslip_components.where(is_deducted: false) %>
+<% @addable_salaryslip_items.each do |item| %>
+  <% case item.salary_component.try(:name) %>
+  <% when "Basic" %>
+    <td><%= item.actual_amount.round %></td>
+  <% when "HRA" %>
+    <td><%= item.actual_amount.round %></td>
+  <% when "Special Allowance" %>
+    <td><%= item.actual_amount.round %></td>
+  <% when "Convenience Allowance" %>
+    <td><%= item.actual_amount.round %></td>
+  <% when "Other Allowance" %>
+    <td><%= item.actual_amount.round %></td>
+  <% when "Washing Allowance" %>
+    <td><%= item.actual_amount.round %></td>
+  <% when "DA" %>
+    <td><%= item.actual_amount.round %></td>
+
+
+    <% when "Driver Allowance" %>
+    <td><%= item.actual_amount.round %></td>
+  <% when "Medical Allowance" %>
+    <td><%= item.actual_amount.round %></td>
+  <% when "Children Education Allowance" %>
+    <td><%= item.actual_amount.round %></td>
+  <% when "Rembursement of Medical Allowence" %>
+    <td><%= item.actual_amount.round %></td>
+  <% else %>
+  
+  <% end %> <!-- switch case -->
+<% end %><!-- addable items -->
+  <td><%= slip.actual_gross_salary.round %></td>
+<% @addable_salaryslip_items.each do |item| %>
+  <% case item.salary_component.try(:name) %>
+  <% when "Basic" %>
+    <td><%= item.calculated_amount.round %></td>
+  <% when "HRA" %>
+    <td><%= item.calculated_amount.round %></td>
+  <% when "Special Allowance" %>
+    <td><%= item.calculated_amount.round %></td>
+  <% when "Convenience Allowance" %>
+    <td><%= item.calculated_amount.round %></td>
+  <% when "Other Allowance" %>
+    <td><%= item.calculated_amount.round %></td>
+  <% when "Washing Allowance" %>
+    <td><%= item.calculated_amount.round %></td>
+  <% when "DA" %>
+    <td><%= item.calculated_amount.round %></td>
+
+    <% when "Driver Allowance" %>
+    <td><%= item.calculated_amount.round %></td>
+  <% when "Medical Allowance" %>
+    <td><%= item.calculated_amount.round %></td>
+  <% when "Children Education Allowance" %>
+    <td><%= item.calculated_amount.round %></td>
+  <% when "Rembursement of Medical Allowence" %>
+    <td><%= item.calculated_amount.round %></td>
+
+  <% else %>
+  
+  <% end %> <!-- switch case -->
+<% end %><!-- addable items -->
+<td><%= slip.calculated_gross_salary.round %></td>
+
+<% @deducted_salaryslip_items = slip.salaryslip_components.where(is_deducted: true) %>
+<% @deducted_salaryslip_items.each do |item| %>
+    <% if item.other_component_name == "PF" %>
+      <td><%= item.calculated_amount.round %></td>
+    <% elsif item.other_component_name == "ESIC" %>
+      <td><%= item.calculated_amount.round %></td>
+    <% elsif item.other_component_name == "Prof. Tax" %>
+      <td><%= item.calculated_amount.round %></td>
+    <% elsif item.other_component_name == "Retention" %>
+      <td><%= item.calculated_amount.round %></td>
+    <% elsif item.other_component_name == "Well Faire" %>
+      <td><%= item.calculated_amount.round %></td>
+    <% elsif item.other_component_name == "Society" %>
+      <td><%= item.calculated_amount.round %></td>
+    <% elsif item.other_component_name == "Food Deduction" %>
+      <td><%= item.calculated_amount.round %></td>
+    <% elsif item.other_component_name == "Advance" %>
+      <td><%= item.calculated_amount.round %></td>
+    <% elsif item.other_component_name == "Income Tax" %>
+      <td><%= item.calculated_amount.round %></td>
+    <% elsif item.other_component_name == "Mobile Deduction" %>
+      <td><%= item.calculated_amount.round %></td>
+    <% elsif item.other_component_name == "Other Deduction" %>
+      <td><%= item.calculated_amount.round %></td>
+    <% elsif item.other_component_name == "Society Loan" %>
+      <td><%= item.calculated_amount.round %></td>
+    <% end %>
+<% end %><!-- deducted items -->
+
+<td><%= slip.calculated_total_deduction.round %></td>
+<td><%= slip.calculated_net_salary.round %></td>
+
+<td><%= workingday.day_in_month %></td>
+<td><%= workingday.present_day %></td>
+
+<td><%= workingday.week_off_day %></td>
+<td><%= workingday.lwp_leave %></td>
+<td><%= workingday.cl_leave %></td>
+<td><%= workingday.el_leave %></td>
+<td><%= workingday.esic_leave %></td>
+<td><%= workingday.holiday_in_month %></td>
+<td><%= workingday.absent_day %></td>
+<td><%= workingday.payable_day %></td>
+<td><%= employee.company_location.name %></td>
+</tr><!-- Row -->
+<%end%>
+    </tbody>
+  </table>

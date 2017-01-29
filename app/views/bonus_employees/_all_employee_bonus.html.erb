@@ -1,0 +1,30 @@
+<table id="example3" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Employee Name</th>
+      <th>Total Amount</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @bonus_employees.try(:each) do |b| %>
+      <tr>
+        <td><%= b.employee.manual_employee_code %></td>
+        <td><%= full_name(b.employee) %></td>
+        <td><%= bonus_total(b) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#example3').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>
+
+<%= link_to " Excel Report ",bonus_employee_xls_bonus_employees_path(start_date: params[:bonus_employee][:start_date], end_date: params[:bonus_employee][:end_date],company_id: params[:bonus_employee][:company_id],company_location_id: params[:bonus_employee][:company_location_id], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+<%= link_to " PDF Report ",bonus_employee_pdf_bonus_employees_path(start_date: params[:bonus_employee][:start_date], end_date: params[:bonus_employee][:end_date],company_id: params[:bonus_employee][:company_id],company_location_id: params[:bonus_employee][:company_location_id], format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>

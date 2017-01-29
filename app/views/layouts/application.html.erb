@@ -1,29 +1,52 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Hrms</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
-<% if group_signed_in? %>
-  <li>
-  <%= link_to('Group Logout', destroy_group_session_path, :method => :delete) %>        
-  </li>
-  <li><%= link_to "Group Profile", edit_group_registration_path %></li>
-  
-<%elsif member_signed_in? %>
-  <li>
-  <%= link_to('Member Logout', destroy_member_session_path, :method => :delete) %>        
-  </li>
-  <li><%= link_to "Member Profile", edit_member_registration_path %></li>
-<% end %>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Hrms</title>
+    <%= stylesheet_link_tag    'application' %>
+    <%= javascript_include_tag 'application' %>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <%= csrf_meta_tags %>
+  </head>
+  <body font-size="12px">
+    <div class="ajax-progress"></div>
+    <% if user_signed_in? %>
 
-<p class="notice"><%= notice %></p>
-<p class="alert"><%= alert %></p>
-
-<%= yield %>
-
-</body>
+      <body class="hold-transition skin-blue sidebar-mini">
+      <% if current_user.class == Member %>
+      <%  @members = Member.where(employee_id: current_user.employee_id).pluck(:employee_id) %>
+      <% @employees = Employee.where(id: @members) %>
+      <% @employees.each do |e| %>
+       <% if e.status == "Active" %>
+        <div class="wrapper">
+        <%= render 'layouts/header' %>
+        <%= render 'layouts/navbar' %>
+        </div>
+        <% else %>
+        <%= render 'layouts/header' %>
+        <%= render 'layouts/contact' %>  
+        <% end %>
+        <% end %>
+        <%else %>
+        <%= render 'layouts/header' %>
+        <%= render 'layouts/navbar' %>
+        <%end %>
+      </body>
+    <% else %>
+      <body class="hold-transition login-page">
+        <%= render 'layouts/messages' %>
+        <%= yield %>
+        <div>
+        <%= render :partial => "layouts/email_modal" %>
+        </div>
+      </body>
+    <% end %>
+  </body>
 </html>

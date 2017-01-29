@@ -1,0 +1,39 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Travel Request</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+    <tr> 
+      <th colspan="2"></th>
+      <th colspan="2"></th>
+    </tr>
+
+    <tr>
+      <th><strong>Travel Request</strong></th>
+      <td><%= @travel_expence.travel_request.try(:name) %></td>
+    
+      <th><strong>Total Advance Amount</strong></th>
+      <td><%= @travel_expence.total_advance_amount %></td>
+    </tr>
+
+    <tr>
+      <th><strong>Total Expense Amount</strong></th>
+      <td><%= @travel_expence.total_expence_amount %></td>
+    
+      <th><strong>Remaining Amount</strong></th>
+      <td><%= @travel_expence.remaining_amount %></td>
+    </tr>
+
+    <tr>
+      <th><strong>Employee Amount</strong></th>
+      <td><%= @travel_expence.employee_amount %></td>
+    
+      <th><strong>Company Amount</strong></th>
+      <td><%= @travel_expence.company_amount %></td>
+    </tr>
+  </table>
+    <%= link_to 'Edit', edit_travel_expence_path(@travel_expence),class: 'btn btn-success btn-sm fa fa-edit'  %> |
+    <%= link_to 'Back', travel_expences_path,class: 'btn btn-default btn-sm fa fa-arrow-left'  %>
+</div>
+</div>

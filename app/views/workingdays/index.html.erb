@@ -1,0 +1,24 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title"> Working Days</h3>
+    <div class="pull-right">
+    </div>
+ <div class="box-body">
+    <div class="row">
+    <div class="col-sm-3">
+          <div class="field">
+            <%= select :workingday,:year,['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025','2026','2027'],{label: 'Select Year',include_blank: " Select Year"},class: 'form-control' %>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="field">
+            <%= select :workingday,:month, ['January','February','March','April','May','June','July','August','September','October','November','December'],{label: 'Select Month',include_blank: " Select Month"}, {onchange:"var a={department_id:$(this).val(),month:$('#workingday_month').val(),year:$('#workingday_year').val()};$('.ajax-progress').show(); $.get('/workingdays/display_workingday',a,function(response){});",class: 'form-control'}  %>
+           </div>
+        </div>
+        
+        </div>
+     </div>
+   <div id="working_day_li"></div>
+</div>
+</div>

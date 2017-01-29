@@ -1,39 +1,69 @@
-<p id="notice"><%= notice %></p>
+<!-- SELECT2 EXAMPLE -->
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Company Location</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+    <tr> 
+      <th colspan="2"></th>
+      <th colspan="2"></th>
+    </tr>
+    <tr>
+      <th><strong>Location Code</strong></th>
+      <td><%= @company_location.manual_company_location_code %></td>
 
-<p>
-  <strong>Company:</strong>
-  <%= @company_location.company %>
-</p>
+      <th></th>
+      <td></td>
+    </tr>
+ 
+ 
+    <tr>
+      <th><strong>Company</strong></th>
+      <td> <%= @company_location.company.try(:name) %></td>
 
-<p>
-  <strong>Name:</strong>
-  <%= @company_location.name %>
-</p>
+      <th><strong>Location Name</strong></th>
+      <td><%= @company_location.name %></td>
+    </tr>
 
-<p>
-  <strong>Address:</strong>
-  <%= @company_location.address %>
-</p>
+    <tr>
+      <th><strong>Address</strong></th>
+      <td colspan="3"><%= @company_location.address %></td>
 
-<p>
-  <strong>City:</strong>
-  <%= @company_location.city %>
-</p>
+      
+    </tr>
 
-<p>
-  <strong>District:</strong>
-  <%= @company_location.district %>
-</p>
+    <tr>
+      <th><strong>City</strong></th>
+      <td><%= @company_location.city %></td>
 
-<p>
-  <strong>Pin code:</strong>
-  <%= @company_location.pin_code %>
-</p>
+      <th><strong>Country</strong></th>
+      <td><%= @company_location.country.try(:name) %></td>
+    </tr>
 
-<p>
-  <strong>Contact no:</strong>
-  <%= @company_location.contact_no %>
-</p>
+    <tr>
+      <th><strong>State</strong></th>
+      <td><%= @company_location.state.try(:name) %></td>
 
-<%= link_to 'Edit', edit_company_location_path(@company_location) %> |
-<%= link_to 'Back', company_locations_path %>
+      <th> <strong>District</strong></th>
+      <td> <%= @company_location.district.try(:name) %></td>
+    </tr>
+
+    <tr>
+      <th><strong>Pin/Zip Code</strong></th>
+      <td><%= @company_location.pin_code %></td>
+
+      <th><strong>Contact No</strong></th>
+      <td><%= @company_location.contact_no %></td>
+    </tr>
+
+     <tr>
+      <th><strong>Email</strong></th>
+      <td colspan="3"><%= @company_location.email %></td>
+    </tr>
+     </table>
+
+    <%= link_to 'Edit', edit_company_location_path(@company_location),class: 'btn btn-sm btn-success fa fa-edit' %> |
+    <%= link_to 'Back', company_locations_path,class: 'btn btn-sm btn-default fa fa-arrow-left' %>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->

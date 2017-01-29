@@ -1,0 +1,76 @@
+<div class="box box-default">
+<div class="box-header with-border">
+    <h3 class="box-title">Candidate Details</h3>
+ <div class="box-body">
+   <table id="example2" class="table table-bordered table-hover table-condensed">
+  
+
+ <tr> 
+  <th><strong>Name</strong></th>
+  <td><%= @selected_resume.name %></td>
+ </tr>
+
+  <tr>
+   <th><strong>Contact No.</strong></th>
+   <td><%= @selected_resume.contact_no %></td>
+  </tr>
+
+<tr>
+  <th><strong>Skillset</strong></th>
+  <td><%= @selected_resume.skillset %></td>
+</tr>
+
+<tr>
+  <th><strong>Qualification</strong></th>
+  <td><%= @selected_resume.degree.name %></td>
+</tr>
+
+<tr>
+  <th><strong>Expected CTC</strong></th>
+  <td><%= @selected_resume.ctc %></td>
+ </tr>
+
+<tr>
+  <th><strong>Email ID</strong></th>
+  <td><%= @selected_resume.email_id %></td>
+</tr>
+
+<tr>
+  <th><strong>Experience</strong></th>
+  <td><%= @selected_resume.experience %></td>
+</tr>
+
+<tr>
+  <th><strong>Notice Period</strong></th>
+  <td><%= @selected_resume.notice_period %></td>
+</tr>
+<tr>
+   <th>Status</th>
+   <td><%= @selected_resume.status %></td>
+</tr>
+
+<!-- <tr>
+   <th>Offer Letter Status</th>
+   <td><%= @selected_resume.offer_letter_status %></td>
+</tr>
+
+<tr>
+  <th>Download Resume</th>
+  <td><%= @selected_resume.avatar_file_name %></td>
+</tr>
+
+<tr>
+  <th>Download Image</th>
+  <td><%= @selected_resume.passport_photo_file_name %></td>
+</tr> -->
+
+
+
+</table>
+
+<%= image_tag @selected_resume.passport_photo.url, :size => "100x100" %><br><br>
+<br>
+<%= link_to 'Back', all_resume_list_selected_resumes_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+</div>
+</div>
+</div>

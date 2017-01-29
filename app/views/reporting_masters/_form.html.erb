@@ -1,0 +1,63 @@
+<%= bootstrap_form_for(@reporting_master,remote: true) do |f| %>
+  <div class="row">
+    <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.select :employee_id, all_active_employee_with_code, {include_blank: "Select Reporting Manager",hide_label: true} %>
+          </div>
+        </div>
+        <div class="col-sm-1">
+        <div class="field">
+          <%= f.check_box :is_active, label:'Active' %>
+       </div>
+      </div>
+    </div>
+
+    <div class="row">    
+      <div class="col-sm-2">
+        <div class="field">
+          <%= f.check_box :is_expences, label:'Expences' %>
+       </div>
+      </div>
+      <div class="col-sm-2">
+        <div class="field">
+          <%= f.check_box :is_training, label:'Training' %>
+       </div>
+      </div>
+      <div class="col-sm-2">
+        <div class="field">
+          <%= f.check_box :is_recruitment, label:'Recruitment' %>
+       </div>
+      </div>
+     
+      <div class="col-sm-2">
+        <div class="field">
+          <%= f.check_box :is_resignation, label:'Resignation' %>
+       </div>
+      </div>
+      <div class="col-sm-2">
+        <div class="field">
+          <%= f.check_box :is_transfer, label:'Transfer' %>
+       </div>
+      </div>
+      <div class="col-sm-2">
+        <div class="field">
+          <%= f.check_box :is_promotion, label:'Promotion' %>
+       </div>
+      </div>
+    </div>
+
+    <div class="row">
+    <div class="col-sm-3">
+    <label></label>
+      <div class="actions">
+        <%= f.submit "Create Reporting Manager",:class => class_name %>
+      </div>
+    </div>
+  </div>
+<% end %><br>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $(".select2").select2();
+  });
+</script>

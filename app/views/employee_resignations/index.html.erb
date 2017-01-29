@@ -1,0 +1,63 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title"> Employee Resignation</h3>
+    <div class="pull-right">
+      <%= link_to "New Employee Separation", new_employee_resignation_path, class: 'btn btn-primary' %> 
+    </div>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example6" class="table table-bordered table-hover table-condensed'">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Employee Name</th>
+          <th>Resignation Date</th>
+          <th>Reason</th>
+          <th>Leaving Date</th>
+          <th>Notice Period</th>
+          <th>Action</th>
+       </tr>
+      </thead>
+
+      <tbody>
+        <% @employee_resignations.each do |employee_resignation| %>
+          <tr>
+            <td><%= employee_resignation.employee.manual_employee_code %></td>
+            <td><%= full_name(employee_resignation.employee) %></td>
+            <td><%= employee_resignation.resignation_date %></td>
+            <td><%= employee_resignation.reason %></td>
+            <td><%= employee_resignation.leaving_date %></td>
+            <td><%= employee_resignation.notice_period %></td>
+             <td>
+            <% if employee_resignation.resign_status == "Pending" %>
+              <%= link_to '', cancel_resignation_request_employee_resignations_path(employee_resignation), data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-xs fa fa-trash' %>
+              <% elsif employee_resignation.resign_status == "Approved" %>
+              <small class="label label-primary">Approved</small>
+              <% elsif employee_resignation.resign_status == "Reject" %>
+              <small class="label label-danger">Reject</small>
+              <% elsif employee_resignation.resign_status == "Approved & Send Next" %>
+              <small class="label label-info">Approved & Send Next</small>
+              <% elsif employee_resignation.resign_status == "Cancelled" %>
+              <small class="label label-warning">Cancelled</small>
+              <% else %>
+              <small class="label label-success">Revert</small>
+             <% end %>
+            <%= link_to '', employee_resignation, class: 'btn btn-default fa fa-eye btn-xs ' %>
+            <%= link_to '', edit_employee_resignation_path(employee_resignation), class: 'btn btn-xs btn-success fa fa-edit' %>
+            <%= link_to '', employee_resignation, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-sm btn-danger fa fa-close btn-xs' %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<br>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>
+

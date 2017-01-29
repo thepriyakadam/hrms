@@ -1,0 +1,16 @@
+<%= bootstrap_form_for(@degree_stream,html: {id: 'degree_stream'},remote:true) do |f| %>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :name,hide_label:true, placeholder: 'Qualification Specialization' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "Create Specialization",:class => class_name, data: { disable_with: data_info }%>
+      </div>
+    </div>
+  </div>
+<% end %>
+

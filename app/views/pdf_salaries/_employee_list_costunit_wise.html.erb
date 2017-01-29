@@ -1,0 +1,55 @@
+<%= form_for :pdf_salaries, url: { action: 'print_salary_slip_cost_unitwise',format: 'pdf',month: @month,year: @year,cost_centre: @cost_centre},:html => {:target => '_blank'} do |f| %>
+<table id="example" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th><input type="checkbox" id="selectAll" value="selectAll"></th>
+      <th>Employee Id</th>
+      <th>Employee Name</th>
+      <th>Designation</th>
+      <th>Department Name</th>
+      <th>Employement</th>
+      <th>Cost Center</th>
+      <th>Contact No</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @salaryslips.each do |salaryslip| %>
+      <tr>
+        <td><%= check_box_tag "salaryslip_ids[]", salaryslip.employee_id %></td>
+        <td><%= salaryslip.employee.manual_employee_code %></td>
+        <td><%= salaryslip.employee.first_name %> <%= salaryslip.employee.middle_name %> <%= salaryslip.employee.last_name %></td>
+        <td><%= salaryslip.employee.joining_detail.try(:employee_designation).try(:name) %></td>
+        <td><%= salaryslip.employee.company_location.try(:name) %> - <%= salaryslip.employee.department.try(:name) %></td>
+        <td><%= salaryslip.employee.employee_type.try(:name) %></td>
+        <td><%= salaryslip.employee.joining_detail.cost_center.try(:name) %></td>
+        <td><%= salaryslip.employee.contact_no %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+ <div class="col-sm-3">
+    <%= f.submit "Print Salary Slip",class: "btn btn-xl btn-warning fa fa-print" %>
+ </div>
+<% end %>
+
+<script type="text/javascript">
+$('#selectAll').click(function() {
+  if (this.checked) {
+    $(':checkbox').each(function() {
+      this.checked = true;                       
+    });
+  } 
+  else {
+    $(':checkbox').each(function() {
+      this.checked = false;                        
+    });
+  } 
+});
+</script>
+
+<script>
+$(document).ready(function() {
+    $('#example').DataTable();
+} );
+</script>
+

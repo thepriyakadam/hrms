@@ -1,0 +1,54 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Employee Leave Assignment</h3>
+    <div class="pull-right">
+      <%= link_to "New Employee leave balance", new_employee_leav_balance_path, class: 'btn btn-primary' %> | 
+     
+    </div>
+    
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example6" class="table table-bordered table-hover table-condensed'">
+    <thead>
+      <tr>
+      <th>ID</th>
+      <th>Employee Name</th>
+      <th>Location</th>
+      <th>Category</th>
+      <th>No. of Leave</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @employee_leav_balances.each do |employee_leav_balance| %>
+      <tr>
+        <td><%= employee_leav_balance.employee.try(:manual_employee_code) %></td>
+        <td><%= full_name(employee_leav_balance.employee)%></td>
+        <td><%= employee_leav_balance.employee.try(:company_location).try(:name) %></td>
+        <td><%= employee_leav_balance.leav_category.try(:code) %> - <%= employee_leav_balance.leav_category.try(:name) %></td>
+        <td><%= employee_leav_balance.no_of_leave %></td>
+         <td>
+            <div id="myModal1" class="modal fade"></div>
+              <% if employee_leav_balance.is_confirm == true %>
+              <small class= "label label-primary">Confirmed</small>
+              <% else %>
+                <%= link_to '',leave_balance_modal_employee_leav_balances_path(employee_leav_balance),class: 'btn btn btn-xs btn-success fa fa-edit',remote: true %>
+                <%= link_to '', is_confirm_leave_employee_leav_balances_path(emp_leav_bal_id: employee_leav_balance ),class: 'btn btn-xs btn-info fa fa-check' %>
+              <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>
+

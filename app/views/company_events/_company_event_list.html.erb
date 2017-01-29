@@ -1,0 +1,30 @@
+<br>
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Event Name</th>
+      <th>Event Date</th>
+      <th>Time</th>
+       <th>Location</th>
+      <th>Description</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @company_events.each do |company_event| %>
+      <tr>
+        <td><%= company_event.event_name %></td>
+        <td><%= company_event.event_date %></td>
+        <td><%= company_event.time %></td>
+        <td><%= company_event.location %></td>
+        <td><%= company_event.description %></td>
+        <td><%= company_event.status ? 'Active' : 'Inactive' %></td>
+        
+        <td>
+          <%= link_to '', edit_company_event_path(company_event),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

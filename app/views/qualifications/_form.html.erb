@@ -1,121 +1,185 @@
-<%= form_for(@qualification) do |f| %>
-  <% if @qualification.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@qualification.errors.count, "error") %> prohibited this qualification from being saved:</h2>
+<!-- SELECT2 EXAMPLE -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script type="text/javascript">
+  $(document).ready(function(){
+    $(".icon-input-btn").each(function(){
+          var btnFont = $(this).find(".btn").css("font-size");
+        var btnColor = $(this).find(".btn").css("color");
+      $(this).find(".glyphicon").css("font-size", btnFont);
+          $(this).find(".glyphicon").css("color", btnColor);
+          if($(this).find(".btn-xs").length){
+              $(this).find(".glyphicon").css("top", "24%");
+          }
+    }); 
+  });
+</script>
 
-      <ul>
-      <% @qualification.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Employee Qualifications</h3>
+  </div><!-- /.box-header -->
+<div class="box-body">
+
+<%= bootstrap_form_for(@qualification,html: {id: 'qualification'},remote:true) do |f| %>
+<%= f.hidden_field :employee_id, value: @employee.id %>
+    <div id="entry1" class="clonedInput ">
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="form group-required">
+            <%= f.select :degree_type_id, all_degree_type, {include_blank: "Select Qualification Level",label:"Qualification Level"}, class: 'input_degree_type_id' %>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="form group-required">
+            <%= f.select :degree_id, all_degree, {include_blank: "Select Qualification",label:"Qualification"}, class: 'input_degree_id' %>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.select :degree_stream_id, all_degree_stream, {include_blank: " Select Qualification Specialization",label:"Qualification Specialization"}, class: 'input_degree_stream_id' %>
+          </div>
+        </div>
+    
+        <div class="col-sm-2">
+          <div class="form group-required">
+            <%= f.text_field :marks, label: 'Marks(CGPA / %)', class: 'input_marks' %>
+          </div>
+        </div>
+      </div>    
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="field">
+           <%= f.select :year_id, all_year,{include_blank: " Select Passing Year",label: "Passout Year"},class: 'input_year_id' %>
+          </div>
+        </div>
+       
+        <div class="col-sm-4">
+          <div class="field">
+          <%= f.text_field :college,label:"College/School", class: 'input_college' %>
+           </div>
+        </div>
+
+        <div class="col-sm-4">
+          <div class="field">
+           <%= f.select :university_id, all_university,{include_blank: " Select University/Institute",label:"University/Institute"},class: 'input_university_id' %>
+          </div>
+        </div>
+      </div>
+      <hr>
     </div>
-  <% end %>
 
-  <div class="field">
-    <%= f.label :employee_id %><br>
-    <%= f.text_field :employee_id %>
-  </div>
-  <div class="field">
-    <%= f.label :ssc %><br>
-    <%= f.text_field :ssc %>
-  </div>
-  <div class="field">
-    <%= f.label :ssc_from %><br>
-    <%= f.text_field :ssc_from %>
-  </div>
-  <div class="field">
-    <%= f.label :ssc_marks %><br>
-    <%= f.text_field :ssc_marks %>
-  </div>
-  <div class="field">
-    <%= f.label :ssc_year %><br>
-    <%= f.number_field :ssc_year %>
-  </div>
-  <div class="field">
-    <%= f.label :ssc_bord %><br>
-    <%= f.text_field :ssc_bord %>
-  </div>
-  <div class="field">
-    <%= f.label :deploma %><br>
-    <%= f.text_field :deploma %>
-  </div>
-  <div class="field">
-    <%= f.label :deploma_from %><br>
-    <%= f.text_field :deploma_from %>
-  </div>
-  <div class="field">
-    <%= f.label :deploma_marks %><br>
-    <%= f.text_field :deploma_marks %>
-  </div>
-  <div class="field">
-    <%= f.label :deploma_year %><br>
-    <%= f.number_field :deploma_year %>
-  </div>
-  <div class="field">
-    <%= f.label :deploma_university %><br>
-    <%= f.text_field :deploma_university %>
-  </div>
-  <div class="field">
-    <%= f.label :hsc %><br>
-    <%= f.text_field :hsc %>
-  </div>
-  <div class="field">
-    <%= f.label :hsc_from %><br>
-    <%= f.text_field :hsc_from %>
-  </div>
-  <div class="field">
-    <%= f.label :hsc_marks %><br>
-    <%= f.text_field :hsc_marks %>
-  </div>
-  <div class="field">
-    <%= f.label :hsc_year %><br>
-    <%= f.number_field :hsc_year %>
-  </div>
-  <div class="field">
-    <%= f.label :hsc_bord %><br>
-    <%= f.text_field :hsc_bord %>
-  </div>
-  <div class="field">
-    <%= f.label :ug %><br>
-    <%= f.text_field :ug %>
-  </div>
-  <div class="field">
-    <%= f.label :ug_from %><br>
-    <%= f.text_field :ug_from %>
-  </div>
-  <div class="field">
-    <%= f.label :ug_marks %><br>
-    <%= f.text_field :ug_marks %>
-  </div>
-  <div class="field">
-    <%= f.label :ug_year %><br>
-    <%= f.number_field :ug_year %>
-  </div>
-  <div class="field">
-    <%= f.label :ug_university %><br>
-    <%= f.text_field :ug_university %>
-  </div>
-  <div class="field">
-    <%= f.label :pg %><br>
-    <%= f.text_field :pg %>
-  </div>
-  <div class="field">
-    <%= f.label :pg_from %><br>
-    <%= f.text_field :pg_from %>
-  </div>
-  <div class="field">
-    <%= f.label :pg_marks %><br>
-    <%= f.text_field :pg_marks %>
-  </div>
-  <div class="field">
-    <%= f.label :pg_yaer %><br>
-    <%= f.number_field :pg_yaer %>
-  </div>
-  <div class="field">
-    <%= f.label :pg_university %><br>
-    <%= f.text_field :pg_university %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
+    <!-- < unless params['controller'] == 'qualifications' and params['action'] == 'edit' %>  
+      <div class="row">
+
+       <div class="col-sm-3">
+       <f.submit "+", class: 'btn btn-success btn-primary btn-sm fa fa-user-plus btn btn-success' %>
+       <span class="icon-input-btn"><span class="glyphicon glyphicon-plus"></span>
+          <input type="button" class="btn btn-sm btn-primary btn-success" id="btnAdd" value="Additional Qualifications"></span>
+        </div>
+
+         <div class="col-sm-3">
+        < f.submit "-", class: 'btn btn-primary fa fa-user-minus' %>
+        <span class="icon-input-btn"><span class="glyphicon glyphicon-minus"></span>
+          <input type="button" id="btnDel" value="Remove Above Qualification" class="btn btn-sm btn-danger">
+        </div>
+
+      </div><br>
+    < end %>  
+ -->
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="actions">
+          <%= f.submit :class => class_name, data: { disable_with: data_info } %>
+          <% if params['controller'] == 'qualifications' and params['action'] == 'edit' %>
+            <%= link_to 'Back',ajax_qualification_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-default',remote:true%>
+          <%end%>
+        </div>
+      </div>
+    </div>
   </div>
 <% end %>
+</div><!-- /.box-body -->
+</div><!-- /.box -->
+
+
+<script type="text/javascript">
+  $(function () {
+  $('#btnAdd').click(function () {
+    var num     = $('.clonedInput').length,
+        newNum  = new Number(num + 1),      
+        newElem = $('#entry' + num).clone().attr('id', 'entry' + newNum).fadeIn('slow'); //
+    newElem.find('.input_degree_type_id').attr('name','qualification['+ newNum +'][degree_type_id]').attr('id', newNum + '_qualification_degree_type_id').val(''); 
+    newElem.find('.input_degree_id').attr('name','qualification['+ newNum +'][degree_id]').attr('id', newNum + '_qualification_degree_id').val('');
+    newElem.find('.input_degree_stream_id').attr('name','qualification['+ newNum +'][degree_stream_id]').attr('id', newNum + '_qualification_degree_stream_id').val('');
+    newElem.find('.input_marks').attr('name','qualification['+ newNum +'][marks]').attr('id', newNum + '_qualification_marks').val('');
+    newElem.find('.input_year_id').attr('name','qualification['+ newNum +'][year_id]').attr('id', newNum + '_qualification_year_id').val('');
+    newElem.find('.input_college').attr('name','qualification['+ newNum +'][college]').attr('id', newNum + '_qualification_college').val('');
+    newElem.find('.input_university_id').attr('name','qualification['+ newNum +'][university_id]').attr('id', newNum + '_qualification_university_id').val('');
+    
+    
+    $('#entry' + num).after(newElem);
+    $('#ID' + newNum + '_title').focus();
+
+    $('#btnDel').attr('disabled', false);
+
+    if (newNum == 5)
+    $('#btnAdd').attr('disabled', true).prop('value', "You've reached the limit"); // value here updates the text in the 'add' button when the limit is reached 
+  });
+
+  $('#btnDel').click(function () {
+  // Confirmation dialog box. Works on all desktop browsers and iPhone.
+      if (confirm("Are you sure you wish to remove this section? This cannot be undone."))
+          {
+              var num = $('.clonedInput').length;
+              // how many "duplicatable" input fields we currently have
+              $('#entry' + num).slideUp('slow', function () {$(this).remove();
+              // if only one element remains, disable the "remove" button
+                  if (num -1 === 1)
+              $('#btnDel').attr('disabled', true);
+              // enable the "add" button
+              $('#btnAdd').attr('disabled', false).prop('value', " Additional Qualifications");});
+          }
+      return false; // Removes the last section you added
+  });
+  // Enable the "add" button
+  $('#btnAdd').attr('disabled', false);
+  // Disable the "remove" button
+  $('#btnDel').attr('disabled', true);
+});
+
+
+</script>
+
+<script>
+$("#qualification").validate({
+    rules: {
+      "qualification[degree_type_id]":{
+        required: true,
+      },
+      "qualification[degree_id]":{
+        required: true,
+      },
+      "qualification[marks]":{
+        required: true,
+      }
+       },
+    messages: {
+      "qualification[degree_type_id]":{
+        required: "Please Specify Qualification Level",
+      },
+       "qualification[degree_id]":{
+        required: "Please Select Qualification ",
+      },
+      "qualification[marks]":{
+        required: "Please Specify Marks",
+      }
+       },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

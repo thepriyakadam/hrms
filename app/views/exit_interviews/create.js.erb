@@ -1,0 +1,6 @@
+<%if @flag == true %>
+  $("#form").html("<%= j render 'form' %>");
+  $("#exit_interview_li").html("<%= j render 'exit_interview_list' %>");
+<%else%>
+  $("#form").html("<%= j render 'form' %>");
+<%end%>

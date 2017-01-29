@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Row>
+        <Cell ss:Index="1"><Data ss:Type="String">ID </Data></Cell>
+        <Cell ss:Index="2"><Data ss:Type="String">Employee Name </Data></Cell>
+          <Cell ss:Index="3"><Data ss:Type="String">month Name </Data></Cell>
+           <Cell ss:Index="4"><Data ss:Type="String">year </Data></Cell>
+
+        <Cell ss:Index="5"><Data ss:Type="String">Days In Month </Data></Cell>
+        <Cell ss:Index="6"><Data ss:Type="String">Present Day </Data></Cell>
+        <Cell ss:Index="7"><Data ss:Type="String">Payable Leave </Data></Cell>
+        <Cell ss:Index="8"><Data ss:Type="String">Holiday </Data></Cell>
+        <Cell ss:Index="9"><Data ss:Type="String">Week Off </Data></Cell>
+        <Cell ss:Index="10"><Data ss:Type="String">Absent </Data></Cell>
+        <Cell ss:Index="11"><Data ss:Type="String">Non Payable Leave </Data></Cell>
+        <Cell ss:Index="12"><Data ss:Type="String">Payable Day </Data></Cell>
+      </Row>
+
+      <% @workingdays.each do |workingday| %>
+      <Row>
+          <Cell ss:Index="1"><Data ss:Type="String"><%= workingday.employee.try(:manual_employee_code) %></Data></Cell>
+          <Cell ss:Index="2"><Data ss:Type="String"><%= full_name(workingday.employee) %></Data></Cell>
+          <Cell ss:Index="3"><Data ss:Type="String"><%= workingday.month_name %></Data></Cell>
+          <Cell ss:Index="4"><Data ss:Type="String"><%= workingday.year %></Data></Cell>
+          <Cell ss:Index="5"><Data ss:Type="Number"><%= workingday.day_in_month %></Data></Cell>
+          <Cell ss:Index="6"><Data ss:Type="Number"><%= workingday.present_day %></Data></Cell>
+          <Cell ss:Index="7"><Data ss:Type="Number"><%= workingday.pay_leave %></Data></Cell>
+          <Cell ss:Index="8"><Data ss:Type="Number"><%= workingday.holiday_in_month %></Data></Cell>
+          <Cell ss:Index="9"><Data ss:Type="Number"><%= workingday.week_off_day %></Data></Cell>
+          <Cell ss:Index="10"><Data ss:Type="Number"><%= workingday.absent_day %></Data></Cell>
+          <Cell ss:Index="11"><Data ss:Type="Number"><%= workingday.nonpay_leave %></Data></Cell>
+          <Cell ss:Index="12"><Data ss:Type="Number"><%= workingday.payable_day %></Data></Cell>
+          </Row><!-- Row -->
+      <% end %><!-- slip -->
+    </Table>
+  </Worksheet>
+</Workbook>

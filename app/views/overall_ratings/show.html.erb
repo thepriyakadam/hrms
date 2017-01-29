@@ -1,0 +1,79 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Goal rating sheet:</strong>
+  <%= @overall_rating.goal_rating_sheet %>
+</p>
+
+<p>
+  <strong>Employee:</strong>
+  <%= @overall_rating.employee %>
+</p>
+
+<p>
+  <strong>Ro1:</strong>
+  <%= @overall_rating.ro1 %>
+</p>
+
+<p>
+  <strong>Ro2:</strong>
+  <%= @overall_rating.ro2 %>
+</p>
+
+<p>
+  <strong>Final:</strong>
+  <%= @overall_rating.final %>
+</p>
+
+<p>
+  <strong>Ro1 rating:</strong>
+  <%= @overall_rating.ro1_rating %>
+</p>
+
+<p>
+  <strong>Ro1 comment:</strong>
+  <%= @overall_rating.ro1_comment %>
+</p>
+
+<p>
+  <strong>Ro2 rating:</strong>
+  <%= @overall_rating.ro2_rating %>
+</p>
+
+<p>
+  <strong>Ro2 comment:</strong>
+  <%= @overall_rating.ro2_comment %>
+</p>
+
+<p>
+  <strong>Final rating:</strong>
+  <%= @overall_rating.final_rating %>
+</p>
+
+<p>
+  <strong>Final comment:</strong>
+  <%= @overall_rating.final_comment %>
+</p>
+
+<p>
+  <strong>Promotion:</strong>
+  <%= @overall_rating.promotion %>
+</p>
+
+<p>
+  <strong>Increment:</strong>
+  <%= @overall_rating.increment %>
+</p>
+
+<p>
+  <strong>Final ctc:</strong>
+  <%= @overall_rating.final_ctc %>
+</p>
+
+<p>
+  <strong>Appraisee comment:</strong>
+  <%= @overall_rating.appraisee_comment %>
+</p>
+
+<%= link_to 'Edit', edit_overall_rating_path(@overall_rating) %> |
+<%= link_to 'Back', overall_ratings_path %>

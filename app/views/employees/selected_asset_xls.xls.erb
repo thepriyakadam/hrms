@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Row>
+        <Cell ss:Index="1"><Data ss:Type="String">Sr. No.</Data></Cell>
+        <Cell ss:Index="2"><Data ss:Type="String">Employee ID</Data></Cell>
+        <Cell ss:Index="3"><Data ss:Type="String">First Name</Data></Cell>
+        <Cell ss:Index="4"><Data ss:Type="String">Middle Name</Data></Cell>
+        <Cell ss:Index="5"><Data ss:Type="String">Last Name</Data></Cell>
+        <Cell ss:Index="6"><Data ss:Type="String">Asset Type</Data></Cell>
+        <Cell ss:Index="7"><Data ss:Type="String">Asset Details</Data></Cell>
+        <Cell ss:Index="8"><Data ss:Type="String">Assets ID</Data></Cell>
+        <Cell ss:Index="9"><Data ss:Type="String">Assets Value</Data></Cell>
+        <Cell ss:Index="10"><Data ss:Type="String">Issue Date</Data></Cell>
+      </Row>
+         <% i = 0 %>
+         <% @assigned_assets.each do |assigned_asset| %>
+        <Row>
+          <Cell ss:Index="1"><Data ss:Type="String"><%= i=i+1 %></Data></Cell>
+          <Cell ss:Index="2"><Data ss:Type="String"><%= assigned_asset.employee.try(:manual_employee_code ) %></Data></Cell>
+          <Cell ss:Index="3"><Data ss:Type="String"><%= assigned_asset.employee.try(:first_name ) %></Data></Cell>
+          <Cell ss:Index="4"><Data ss:Type="String"><%= assigned_asset.employee.try(:middle_name ) %></Data></Cell>
+          <Cell ss:Index="5"><Data ss:Type="String"><%= assigned_asset.employee.try(:last_name ) %></Data></Cell>
+          <Cell ss:Index="6"><Data ss:Type="String"><%= assigned_asset.asset_type.try(:name) %></Data></Cell>
+          <Cell ss:Index="7"><Data ss:Type="Number"><%= assigned_asset.assets_detail.try(:name) %></Data></Cell>
+          <Cell ss:Index="8"><Data ss:Type="String"><%= assigned_asset.assets_id %></Data></Cell>
+          <Cell ss:Index="9"><Data ss:Type="String"><%= assigned_asset.assets_value %></Data></Cell>
+          <Cell ss:Index="10"><Data ss:Type="String"><%= assigned_asset.issue_date %></Data></Cell>
+          </Row><!-- Row -->
+      <% end %><!-- slip -->
+    </Table>
+  </Worksheet>
+</Workbook>

@@ -1,0 +1,17 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-body" style="height:1000px; max-height:100px; width:630px; max-width:630px;">
+     <%= bootstrap_form_for :particular_vacancy_request,url:{action:"update_no_of_positions",id: @vacancy_master.id} do |f| %>
+        <div class="row">
+          <div class="col-sm-6">
+            <%= f.text_field :no_of_position,value: @vacancy_master.no_of_position,hide_label: true%>
+          </div>
+          <div class="col-sm-3">
+            <%= f.submit "Update No. Of Positions", class: 'btn btn-sm btn-warning fa fa-modx' %>
+          </div>
+        </div>
+      <% end %>
+      <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+    </div>
+  </div>
+</div>

@@ -1,0 +1,86 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Particular Resume List</h3>
+<div class="box-body">
+<table class="table table-bordered table-hover table-condensed example3">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Contact No.</th>
+      <th>Degree</th>
+      <!-- <th>Expected CTC</th>
+      <th>Experience</th>
+      <th>Notice Period</th> -->
+      <th>Status</th>
+      <th>Download Resume</th>
+      <th>Download Image</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @selected_resumes.each do |selected_resume| %>
+      <tr>
+        <td><%= selected_resume.name %></td>
+        <td><%= selected_resume.contact_no %></td>
+        <td><%= selected_resume.degree.try(:name) %></td>
+        <!-- <td><%= selected_resume.ctc %></td>
+        <td><%= selected_resume.experience %></td>
+        <td><%= selected_resume.notice_period %></td> -->
+        <td>
+          <div id="myModal1" class="modal fade"></div>
+          <% if selected_resume.status == "Shortlisted" %>
+            <small class="label label-primary">Shortlisted</small>
+            <% elsif selected_resume.status == "Interview Scheduled" %>
+            <small class="label label-primary">Interview Scheduled</small>
+            <% elsif selected_resume.status == "Interview Rescheduled" %>
+            <small class="label label-danger">Interview Rescheduled</small>
+            <% else %>
+            <small class="label label-default">Not Yet Shortlisted</small>
+            <% end %>
+        </td>
+       <td>
+         <% if selected_resume.avatar_file_name == nil %>
+           <small class="label label-default">Resume Not Available</small>
+             <% else %>
+             <center><%= link_to '',download_resume_path(id: selected_resume.id),class: 'btn btn-xs fa fa-download' %>
+             <% end %></center>
+          </td>
+          <td>
+          <% if selected_resume.passport_photo_file_name == nil %>
+              <small class="label label-default">Image Not Available</small>
+              <% else %>
+              <center><%= link_to '',download_image_path(id: selected_resume.id),class: 'btn btn-xs fa fa-picture-o' %></center>
+              <% end %>
+        </td>
+        <td>
+          <%= link_to '', selected_resume,class: 'btn btn-xs btn-default fa fa-eye' %>  
+        </td>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table><br>
+<%= link_to 'Back', vacancy_profile_vacancy_masters_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+ </div>
+ </div>
+ </div>
+
+
+
+<script type="text/javascript">
+  $(function () {
+    $('#selectAll').click(function() {
+      if (this.checked) {
+        $(':checkbox').each(function() {
+          this.checked = true;                       
+        });
+      } 
+      else {
+        $(':checkbox').each(function() {
+          this.checked = false;                        
+        });
+      } 
+    });
+  });
+</script>

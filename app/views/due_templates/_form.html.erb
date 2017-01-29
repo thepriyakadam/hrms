@@ -1,0 +1,61 @@
+<%= bootstrap_form_for(@due_template,html: {id: 'due_template'}) do |f| %>
+<%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :code,label: 'Code' %>
+      </div>
+    </div> 
+     <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :name,label: 'Template Name' %>
+      </div>
+    </div>
+
+     <div class="col-sm-2">
+     <label>Status</label>
+      <div class="form-group required">
+        <%= f.check_box :status,label: 'Active' %>
+      </div>
+    </div>
+
+     <div class="col-sm-2">
+        <div class="field">
+          <%= f.file_field :document,label: 'Document Upload(only docx,pdf)' %>
+        </div>
+     </div>
+
+    <div class="col-sm-2">
+      <div class="actions">
+        <%= f.submit "Create No Dues Template ",:class => class_name,  data: { disable_with: data_info } %>
+      </div>
+    </div>
+
+  </div>
+<% end %>
+
+<script>
+$("#due_template").validate({
+    rules: {
+      "due_template[code]":{
+        required: true,
+      },
+      "due_template[name]":{
+        required: true,
+      }
+    },
+    messages: {
+      "due_template[code]":{
+        required: "Please specify Code",
+      },
+      "due_template[name]":{
+        required: "Please specify Name",
+      } 
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>
+

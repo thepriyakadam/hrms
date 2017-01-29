@@ -1,0 +1,59 @@
+<%= bootstrap_form_for(@period,remote:true) do |f| %>
+  <div class="row">
+    <div class="col-sm-3">
+    <div class="form-group required">
+        <%= f.text_field :name,label: 'Period', placeholder: 'Period' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <label>From </label>
+      <div class="field">
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="fa fa-calendar"></i>
+          </div>
+          <%= f.text_field :from, hide_label: true, class: 'birth_date1'%>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <label>To </label>
+      <div class="field">
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="fa fa-calendar"></i>
+          </div>
+          <%= f.text_field :to, hide_label: true, class: 'birth_date1'%>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-sm-3">
+      <label>Status </label>
+      <div class="field">
+        <%= f.check_box :status, label: 'Active'%>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "Create Period", class: 'btn btn-primary btn-sm ' %>
+      </div>
+    </div>
+  </div>
+  <br>
+
+<% end %>
+
+<script type="text/javascript">
+  $('.birth_date1').datepicker({
+  changeYear:true,
+  changeMonth: true,
+  yearRange: '-100:+10',
+  dateFormat: 'dd-mm-yy' });
+</script>

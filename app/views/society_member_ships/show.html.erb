@@ -1,0 +1,36 @@
+<!-- SELECT2 EXAMPLE -->
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Employee Membership</h3>
+    <div class="box-tools pull-right">
+    </div>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+      <tr>
+        <th> <strong>Employee ID</strong></th>
+        <td><%= @society_member_ship.employee.try(:manual_employee_code) %></td>
+        
+        <th><strong>Emplyee Name</strong></th>
+        <td><%= @society_member_ship.employee.first_name %><%= @society_member_ship.employee.middle_name %><%= @society_member_ship.employee.last_name %></td>
+      </tr>
+      <tr>
+        <th> <strong>Society Member</strong></th>
+        <td><%= @society_member_ship.is_society_member ? "Yes" : "No" %></td>
+
+        <th> <strong>Date</strong></th>
+        <td><%= @society_member_ship.start_date %></td>
+      </tr>
+      <tr>
+        <th> <strong>Amount</strong></th>
+        <td><%= @society_member_ship.amount %></td>
+
+        <th> </th>
+        <td></td>
+      </tr>
+
+    </table>
+    <%= link_to 'Edit', edit_society_member_ship_path(@society_member_ship),class: 'btn btn-success btn-sm fa fa-edit' %> |
+    <%= link_to 'Back', society_member_ships_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->

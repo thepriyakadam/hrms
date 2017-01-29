@@ -1,0 +1,40 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Employee Salaryslip</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example6" class="table table-bordered table-hover">
+    <thead>
+      <tr>
+      <th>Salary Slip Code</th>
+      <th>Salary Template</th>
+      <th>Month</th>
+      <th>Year</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @salray_slips.each do |salary| %>
+      <tr>
+        <td><%= salary.salary_slip_code %></td>
+        <td><%= salary.salary_template.try(:description)%></td>
+        <td><%= salary.month %></td>
+        <td><%= salary.year %></td>
+        <td>
+        <%= link_to '', show_salaryslip_salaryslips_path(salary), class: 'btn btn-default fa fa-eye' %>
+        </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

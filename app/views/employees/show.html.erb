@@ -1,124 +1,34 @@
-<p id="notice"><%= notice %></p>
+		<%= link_to 'Basic Details',basic_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-primary ', remote:true%>
+	
+		<%= link_to 'On Boarding',ajax_joining_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-primary ',remote:true%>
+	
+		<%= link_to 'Bank',ajax_bank_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-primary ',remote:true%>
+	
+		<%= link_to 'Qualification',ajax_qualification_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-primary ',remote:true%>
+	
+		<%= link_to 'Experience',ajax_experience_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-primary ',remote:true%>
+	
+		<%= link_to 'Skillset',ajax_skillset_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-primary ',remote:true%>
+	
+		<%= link_to 'Certification',ajax_certification_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-primary ',remote:true%>
+	
+		<%= link_to 'Award',ajax_award_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-primary ',remote:true%>
+	
+		<%= link_to 'Physical',ajax_physical_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-primary',remote:true%>
+	
+		<%= link_to 'Family',ajax_family_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-primary ',remote:true%>
 
-<p>
-  <strong>Department:</strong>
-  <%= @employee.department %>
-</p>
+		<%= link_to 'Nomination',ajax_employee_nomination_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-primary ',remote:true%>
 
-<p>
-  <strong>First name:</strong>
-  <%= @employee.first_name %>
-</p>
+		<%= link_to 'Assets',ajax_assigned_asset_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-primary ',remote:true%>
 
-<p>
-  <strong>Middle name:</strong>
-  <%= @employee.middle_name %>
-</p>
+		<%= link_to 'Documents',ajax_employee_document_detail_employees_path(id: @employee.id),class: 'btn btn-sm btn-primary ',remote:true%>
+		 <!-- link_to 'Payroll',ajax_setup_payroll_employees_path(id: @employee.id),class: 'btn btn-sm btn-primary ',remote:true %> -->
+<div id="message">
+</div>
 
-<p>
-  <strong>Last name:</strong>
-  <%= @employee.last_name %>
-</p>
+<div id='info'>
+<%= render 'show_detail'%>
+</div>
 
-<p>
-  <strong>Date of birth:</strong>
-  <%= @employee.date_of_birth %>
-</p>
-
-<p>
-  <strong>Contact no:</strong>
-  <%= @employee.contact_no %>
-</p>
-
-<p>
-  <strong>Email:</strong>
-  <%= @employee.email %>
-</p>
-
-<p>
-  <strong>Permanent address:</strong>
-  <%= @employee.permanent_address %>
-</p>
-
-<p>
-  <strong>City:</strong>
-  <%= @employee.city %>
-</p>
-
-<p>
-  <strong>District:</strong>
-  <%= @employee.district %>
-</p>
-
-<p>
-  <strong>State:</strong>
-  <%= @employee.state %>
-</p>
-
-<p>
-  <strong>Pin code:</strong>
-  <%= @employee.pin_code %>
-</p>
-
-<p>
-  <strong>Current address:</strong>
-  <%= @employee.current_address %>
-</p>
-
-<p>
-  <strong>Adhar no:</strong>
-  <%= @employee.adhar_no %>
-</p>
-
-<p>
-  <strong>Pan no:</strong>
-  <%= @employee.pan_no %>
-</p>
-
-<p>
-  <strong>Licence no:</strong>
-  <%= @employee.licence_no %>
-</p>
-
-<p>
-  <strong>Passport no:</strong>
-  <%= @employee.passport_no %>
-</p>
-
-<p>
-  <strong>Marital status:</strong>
-  <%= @employee.marital_status %>
-</p>
-
-<p>
-  <strong>Nationality:</strong>
-  <%= @employee.nationality.try(:name) %>
-</p>
-
-<p>
-  <strong>Blood group:</strong>
-  <%= @employee.blood_group %>
-</p>
-
-<p>
-  <strong>Handicap:</strong>
-  <%= @employee.handicap %>
-</p>
-
-<p>
-  <strong>Status:</strong>
-  <%= @employee.status %>
-</p>
-
-<p>
-  <strong>Employee type:</strong>
-  <%= @employee.employee_type %>
-</p>
-
-<p>
-  <strong>Gender:</strong>
-  <%= @employee.gender %>
-</p>
-
-<%= link_to 'Edit', edit_employee_path(@employee) %> |
-<%= link_to 'Back', employees_path %>
+<div id="myModal" class="modal fade"></div>

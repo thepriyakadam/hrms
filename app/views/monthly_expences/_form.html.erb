@@ -1,0 +1,148 @@
+
+<!-- SELECT2 EXAMPLE -->
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Monthly Expenses</h3>
+  </div><!-- /.box-header -->
+  
+  <div class="box-body">
+    <%= bootstrap_form_for(@monthly_expence,html: {id: 'monthly_expence'}) do |f| %>
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="form-group required">
+             <%= f.select :employee_id, employee_list_for_food_deduction, {label: 'Employee ',include_blank: " Select Employee"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"}  %>
+          </div>
+        </div>
+        
+      </div>  
+        
+      <div id="entry1" class="clonedInput">
+        <div class="row">
+          <div class="col-sm-3">
+           <!--  <label> Date </label> -->
+            <div class="form-group required">
+              <div class="input-group">
+                <div class="input-group-addon">
+                  <i class="fa fa-calendar"></i>
+                </div>
+                <%= f.text_field :expence_date,class: 'input_expence_date',label:'Date'%>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="form-group required">
+             <%= f.select :expencess_type_id, all_expencess_type,{ label:'Expense Type',include_blank: " Select Expense Type"}, class: 'input_expencess_type_id' %>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="field">
+              <%= f.text_field :amount,label: 'Amount',placeholder: "Amount", class: 'input_amount'%>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="field">
+              <%= f.text_field :description,label: 'Description',placeholder: "Description", class: 'description'%>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      
+      <!--   <div class="row">
+          <div class="col-sm-2">
+            <input type="button" id="btnAdd" value="+ Additional Awards" class="btn btn-success btn-sm"> 
+          </div>
+
+          <div class="col-sm-3">
+            <input type="button" id="btnDel" value="Remove Above Awards" class="btn btn-danger btn-sm">
+          </div>
+        </div><br> -->
+      
+
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="actions">
+            <%= f.submit "Create Monthly Expense",:class => class_name, data: { disable_with: data_info } %>
+            <%= link_to 'Back', monthly_expences_path,class: 'btn btn-sm btn-default fa fa-arrow-left' %>
+          </div>
+        </div>
+    </div>
+    <% end %>
+  </div><!-- /.box-body --> 
+</div><!-- /.box -->
+
+<script type="text/javascript">
+  $(function(){
+    $('.input_expence_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-5:+20',
+    dateFormat: 'dd-mm-yy' });
+  });
+
+//   $(function () {
+//   $('#btnAdd').click(function () {
+//       var num     = $('.clonedInput').length, 
+//           newNum  = new Number(num + 1),      
+//           newElem = $('#entry' + num).clone().attr('id', 'entry' + newNum).fadeIn('slow'); //
+//       newElem.find('.input_expence_date').attr('name','monthly_expence['+ newNum +'][expence_date]').attr('id', newNum + '_monthly_expence_expence_date').val('');
+//       newElem.find('.input_expencess_type_id').attr('name','monthly_expence['+ newNum +'][expencess_type_id]').attr('id', newNum + '_monthly_expencess_expencess_type_id').val('');
+//       newElem.find('.input_amount').attr('name','monthly_expence['+ newNum +'][amount]').attr('id', newNum + '_monthly_expence_amount').val('');
+
+//       $('#entry' + num).after(newElem);
+//       $('#ID' + newNum + '_title').focus();
+
+//       $('#btnDel').attr('disabled', false);
+
+//       if (newNum == 5)
+//       $('#btnAdd').attr('disabled', true).prop('value', "You've reached the limit"); // value here updates the text in the 'add' button when the limit is reached 
+//   });
+
+//   $('#btnDel').click(function () {
+//   // Confirmation dialog box. Works on all desktop browsers and iPhone.
+//       if (confirm("Are you sure you wish to remove this section? This cannot be undone."))
+//           {
+//               var num = $('.clonedInput').length;
+//               // how many "duplicatable" input fields we currently have
+//               $('#entry' + num).slideUp('slow', function () {$(this).remove();
+//               // if only one element remains, disable the "remove" button
+//                   if (num -1 === 1)
+//               $('#btnDel').attr('disabled', true);
+//               // enable the "add" button
+//               $('#btnAdd').attr('disabled', false).prop('value', "+ Additional Awards");});
+//           }
+//       return false; // Removes the last section you added
+//   });
+//   // Enable the "add" button
+//   $('#btnAdd').attr('disabled', false);
+//   // Disable the "remove" button
+//   $('#btnDel').attr('disabled', true);
+// });
+
+$("#monthly_expence").validate({
+  rules: {
+    "monthly_expence[employee_id]":{
+      required: true
+    },
+    "monthly_expence[expencess_type_id]":{
+      required: true
+    },
+    "monthly_expence[amount]":{
+      required: true
+    },
+    "monthly_expence[expence_date]":{
+      required: true
+    }
+  },
+  
+  errorPlacement: function(error, element) {
+   error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+   error.insertAfter(element.parent(element));
+  }
+});
+
+$(document).ready(function() {
+  $(".select2").select2();
+});
+</script>

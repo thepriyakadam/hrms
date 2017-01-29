@@ -1,74 +1,58 @@
 class NationalitiesController < ApplicationController
   before_action :set_nationality, only: [:show, :edit, :update, :destroy]
+  load_and_authorize_resource
 
-  # GET /nationalities
-  # GET /nationalities.json
-  def index
-    @nationalities = Nationality.all
-  end
-
-  # GET /nationalities/1
-  # GET /nationalities/1.json
-  def show
-  end
-
-  # GET /nationalities/new
   def new
     @nationality = Nationality.new
+    @nationalities = Nationality.all
+    session[:active_tab] ="GlobalSetup"
+    session[:active_tab1] ="EmployeeProfile"
   end
 
-  # GET /nationalities/1/edit
   def edit
   end
 
-  # POST /nationalities
-  # POST /nationalities.json
   def create
     @nationality = Nationality.new(nationality_params)
-
+    @nationalities = Nationality.all
     respond_to do |format|
       if @nationality.save
-        format.html { redirect_to @nationality, notice: 'Nationality was successfully created.' }
-        format.json { render :show, status: :created, location: @nationality }
+        @nationality = Nationality.new
+        format.js { @flag = true }
       else
-        format.html { render :new }
-        format.json { render json: @nationality.errors, status: :unprocessable_entity }
-      end
+        flash.now[:alert] = 'Nationality Already Exist.'
+        format.js { @flag = false }
+        end
     end
   end
 
-  # PATCH/PUT /nationalities/1
-  # PATCH/PUT /nationalities/1.json
   def update
-    respond_to do |format|
-      if @nationality.update(nationality_params)
-        format.html { redirect_to @nationality, notice: 'Nationality was successfully updated.' }
-        format.json { render :show, status: :ok, location: @nationality }
-      else
-        format.html { render :edit }
-        format.json { render json: @nationality.errors, status: :unprocessable_entity }
-      end
-    end
+    @nationality.update(nationality_params)
+    @nationalities = Nationality.all
+    @nationality = Nationality.new
   end
 
-  # DELETE /nationalities/1
-  # DELETE /nationalities/1.json
   def destroy
     @nationality.destroy
-    respond_to do |format|
-      format.html { redirect_to nationalities_url, notice: 'Nationality was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    @nationalities = Nationality.all
   end
 
+  def is_confirm
+    @nationality = Nationality.find(params[:nationality])
+    Nationality.find(@nationality.id).update(is_confirm: true)
+    flash[:notice] = "Confirmed Successfully"
+    redirect_to new_nationality_path
+  end
+  
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_nationality
-      @nationality = Nationality.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def nationality_params
-      params.require(:nationality).permit(:name)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_nationality
+    @nationality = Nationality.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def nationality_params
+    params.require(:nationality).permit(:is_confirm,:name)
+  end
 end

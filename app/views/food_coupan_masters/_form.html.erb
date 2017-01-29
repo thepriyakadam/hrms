@@ -1,0 +1,28 @@
+
+<%= bootstrap_form_for(@food_coupan_master,html: {id: 'food_coupan_master'},remote:true) do |f| %>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :code,hide_label:true, placeholder: 'Food Coupon Code' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :name,hide_label:true, placeholder: 'Food Coupon Type ' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :price,hide_label:true, placeholder: 'Food Coupon Price' %>
+      </div>
+    </div>
+    
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "Create Food Coupon Type",:class => class_name, data: { disable_with: data_info } %>
+      </div>
+    </div>
+  </div>
+<% end %>

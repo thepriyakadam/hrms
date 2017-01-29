@@ -1,0 +1,147 @@
+<%= bootstrap_form_for(@daily_bill_detail,id:@travel_request.id,html: {id: "daily_bill_detail"},travel_request_id: @travel_request.id,daily_bill_detail_id: @daily_bill_detail.id) do |f| %>
+<%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+  <%= f.hidden_field :travel_request_id, value:@travel_request.id  %>
+  
+  <% if @travel_request.is_confirm == true %>
+  <div>
+     <%= render 'show_travel_request' %>
+   </div>
+   <div>
+     <%= render 'show_reporting_masters_travel_request' %>
+   </div>
+  <% else %>
+    <div>
+     <%= render 'show_travel_request' %>
+   </div>
+   <div>
+     <%= render 'show_reporting_masters_travel_request' %>
+   </div>
+
+    <div class="row">
+
+       <div class="col-sm-3">
+          <div class="form-group required">
+          <!-- <label>Vacancy Fulfillment Date </label> -->
+           <label>Expense Date </label>
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+               <%= f.text_field :expence_date, hide_label: true,class: 'input_expence_date'%>
+            </div>
+          </div>
+        </div>      
+
+      <div class="col-sm-3">
+        <div class="form-group required">
+          <%= f.text_field :e_place, label: 'Place',class: 'input_e_place'  %>
+        </div>
+      </div>
+      <div class="col-sm-3">
+          <label>Expence Type</label>
+          <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <%= link_to "", new_travel_expence_type_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+              </div>
+               <%= f.select :travel_expence_type_id, all_travel_expence_type, {hide_label: true,include_blank: " Select Expense Type"} %>
+            </div>
+          </div>
+        </div>
+      <div class="col-sm-3">
+        <div class="form-group required">
+          <%= f.text_field :travel_expence,label: 'Expense Amount',class: 'input_travel_expence'  %>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+    <div class="col-sm-3">
+          <label>Currency</label>
+          <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <%= link_to "", currency_masters_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+              </div>
+               <%= f.select :currency_master_id, all_currency, {hide_label: true,include_blank: " Select Currency Type"} %>
+            </div>
+          </div>
+        </div>
+    <div class="col-sm-3">
+    <div class="field">
+      <%= f.file_field :avatar_file,label: 'Document(only docx,pdf)' %>
+    </div>
+   </div>
+
+   <div class="col-sm-3">
+    <div class="field">
+      <%= f.file_field :passport_photo,label: 'Image(only jpeg,jpg,png)' %>
+    </div>
+   </div>
+   </div>
+
+   <!-- unless params['controller'] == 'daily_bill_details' and params['action'] == 'edit' %> -->
+    <!-- <div class="row">
+      <div class="col-sm-2">
+        <input type="button" id="btnAdd" value="+ Add Bill Details" class="btn btn-sm btn-success"> 
+      </div>
+
+      <div class="col-sm-3">
+        <input type="button" id="btnDel" value="Remove Bill Details" class="btn btn-sm btn-danger">
+      </div>
+    </div><br> -->
+  <!-- end%> -->
+
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "Create Expense Claim Detail",:class => class_name, data: { disable_with: data_info }  %>
+      </div>
+    </div>
+  </div>
+<% end %>
+<% end %>
+
+
+<script type="text/javascript">
+ $(function(){
+    $('.input_expence_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:+1',
+    dateFormat: 'dd-mm-yy' });
+    $("#daily_bill_detail").validate({
+      rules: {
+        "daily_bill_detail[expence_date]":{
+          required: true
+        },
+        "daily_bill_detail[e_place]":{
+          required: true
+        },
+        "daily_bill_detail[travel_expence_type_id]":{
+          required: true
+        },
+        "daily_bill_detail[travel_expence]":{
+          required: true
+        }
+      },
+      messages: {
+        "daily_bill_detail[expence_date]":{
+          required: "Please Specify Expence Date"
+        },
+        "daily_bill_detail[e_place]":{
+          required: "Please Specify E Place"
+        },
+        "daily_bill_detail[travel_expence_type_id]":{
+          required: "Please Specify Travel Expense Type"
+        },
+        "daily_bill_detail[travel_expence]":{
+          required: "Please Specify Travelling Amount"
+        }
+      },
+      errorPlacement: function(error, element) {
+       error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+       error.insertAfter(element.parent(element));
+      }
+    });
+  });
+</script>

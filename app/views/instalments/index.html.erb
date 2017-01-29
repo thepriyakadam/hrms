@@ -1,0 +1,21 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Installments</h3>    
+  </div><!-- /.box-header -->
+  
+    <div class="box-body">
+    <div class="row">
+        <div class="col-sm-3">
+          <div class="field">
+            <%= select :installment,:month, ['January','February','March','April','May','June','July','August','September','October','November','December'],{label: 'Select Month',include_blank: " Select Month"}, class: "form-control" %>
+           </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="field">
+            <%= select :installment,:year,['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025','2026','2027'],{label: 'Select Year',include_blank: " Select Year"}, {onchange:"var a={department_id:$(this).val(),month:$('#installment_month').val(),year:$('#installment_year').val()};$('.ajax-progress').show(); $.get('/instalments/display_installment',a,function(response){});",class: 'form-control'} %>
+          </div>
+        </div>
+        </div>
+      <div id="display_installment_li"></div>
+    </div>
+</div>

@@ -1,0 +1,134 @@
+<style>
+th {
+    text-align: left;
+}
+tr {
+    page-break-inside: avoid;
+}
+div.alwaysbreak { page-break-before: always; }
+div.nobreak:before { clear:both; }
+div.nobreak{ page-break-inside: avoid;
+  /* http://code.google.com/p/wkhtmltopdf/issues/detail?id=9#c21 */
+}
+</style>
+<table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
+    <tr> 
+    <th colspan="7">
+        <center><strong><%= current_user.employee.company_location.company.description %></strong></center>
+        <center><small>Expense Claim</small></center>
+        <center><small></small></center>   
+      </th>
+    </tr>
+       <tr>
+        <td colspan="4"> Employee ID : <%= @travel_request.employee.manual_employee_code %>  </td>
+         
+
+        <td colspan="4"> Employee Name : 
+        <%= @travel_request.employee.try(:first_name) %> <%= @travel_request.employee.try(:middle_name) %> <%= @travel_request.employee.try(:last_name) %></td>
+      </tr>
+      <tr>
+        <td colspan="4"> Department Name : <%= @travel_request.employee.department.try(:name) %></td>
+        
+     
+        <td colspan="4"> Designation : <%= @travel_request.employee.joining_detail.employee_designation.try(:name) %> </td>
+       
+      </tr>
+    </table>
+    <br>
+
+<table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
+  <tbody>
+  <tr><th colspan="8"><center>Travel Request Detail</center></th></tr>
+    <tr>
+      <td colspan="4">Approver : <%= @employee.try(:first_name) %> <%= @employee.try(:middle_name) %> <%= @employee.try(:last_name) %></td>
+      <td colspan="4">Traveling Date : <%= @travel_request.traveling_date %></td>
+      </tr>
+      <tr>
+      <td colspan="4">Place : <%= @travel_request.place %></td>
+      <td colspan="4">Total Advance : <%= @travel_request.total_advance %></td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
+  <thead>
+  <tr><th colspan="8"><center>Expense Claim Detail</center></th></tr>
+    <tr>
+      <th>Date</th>
+      <th>Place</th>
+      <th>Type</th>
+      <th>Amount</th>
+<!--       <th colspan="2">Comment</th>
+ -->      <th>Currency</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @daily_bill_details.each do |daily_bill_detail| %>
+      <tr>
+        <td><%= daily_bill_detail.expence_date %></td>
+        <td><%= daily_bill_detail.e_place %></td>
+        <td><%= daily_bill_detail.travel_expence_type.try(:name) %></td>
+        <td><%= daily_bill_detail.travel_expence %></td>
+<!--         <td colspan="2"><%= daily_bill_detail.comment %></td>
+ -->        <td><%= daily_bill_detail.currency_master.try(:name) %></td>
+      </tr>
+    <% end %>
+     <tr>
+          <th>Total</th>
+          <td colspan ="2"></td>   
+          <th><%= @daily_bill_details.sum(:travel_expence) %></th>
+          <td colspan ="3"></td>
+          
+    </tr>    
+  </tbody>
+</table>
+<br>
+<table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
+      <thead>
+        <tr>
+        <th>Sr.No</th>
+        <th>Approver ID</th>
+        <th>Approver Name</th>
+        <th>Travel Request Status</th>
+        <th>Comment</th>
+<!--         <th>Expence Claim Status</th>
+ -->       </tr>
+      </thead>
+
+      <tbody>
+        <% i = 0 %>
+        <% @reporting_masters_travel_requests1.each do |a| %>
+          <tr>
+            <td><%= i=i+1 %></td>
+            <td><%= a.reporting_master.employee.manual_employee_code %></td>
+            <td><%= a.reporting_master.employee.try(:first_name) %> <%= a.reporting_master.employee.try(:middle_name) %> <%= a.reporting_master.employee.try(:last_name) %></td>
+            <td><%= a.travel_status %></td>
+            <td><%= a.daily_bill_comment %></td>
+            <!-- <td>
+              < if a.status == true %>
+              <small class="label label-success">Confirmed & Send Next</small>
+              < elsif a.status == false %>
+              <small class="label label-danger">Rejected</small>
+              < else %>
+              < end %>
+            </td> -->
+          </tr>
+        <% end %>
+      </tbody>
+</table>
+<br>
+<table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
+  <thead>
+  <tr><th colspan="8"><center>Travel Expence Detail</center></th></tr>
+  </thead>
+  <tbody>
+    <% @travel_expences.each do |t| %>
+      <tr>
+        <td><strong>Total Advance: </strong><%= t.total_advance_amount %></td>
+        <td><strong>Total Expence: </strong><%= t.total_expence_amount %></td>
+        <td><strong>Remaining Amount: </strong><%= t.employee_amount %></td>
+        <td><strong>Extra Amount: </strong><%= t.company_amount %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,0 +1,21 @@
+<%= bootstrap_form_for(@date_format,remote: true) do |f| %>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :name, hide_label: true,placeholder: "Name"%>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :value, hide_label: true,placeholder: "Value"%>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "Create Date Format", class: "btn btn-primary btn-sm" %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+

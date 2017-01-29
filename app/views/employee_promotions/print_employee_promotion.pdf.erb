@@ -1,0 +1,38 @@
+<table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
+    <thead>
+      <tr><td colspan="7"> <center><strong><%= current_user.employee.company_location.company.description %></strong></center>
+        <center><small>Promotion Histroy</small></center>
+        <center><small>Employee ID : <%= @employee_promotions.first.try(:employee).try(:manual_employee_code) %>  Employee Name : <%= full_name(@employee_promotions.first.try(:employee)) %></small></center>  </td>
+      </tr>
+      <tr><th colspan="7"></th></tr>
+       <tr>
+        <th>Department</th>
+        <th>Designation</th>
+        <th>Grade</th>
+        <th>Category</th>
+        <th>CTC</th>
+        <th>From</th>
+        <th>To</th>  
+       </tr>
+    </thead>
+
+    <tbody>
+      <% i = 0 %>
+      <% @employee_promotions.each do |employee_promotion| %>
+      <tr><th colspan="7"><%= i=i+1 %></th></tr>
+        <tr>
+          <td><%= employee_promotion.employee.try(:company_location).try(:name) %> - <%= employee_promotion.employee.try(:department).try(:name) %></td>
+          <td><%= employee_promotion.employee_designation.try(:name) %></td>
+          <td><%= employee_promotion.employee_grade.try(:name) %></td>
+          <td><%= employee_promotion.employee_category.try(:name) %></td>
+          <td><%= employee_promotion.try(:ctc) %></td>
+          <td><%= employee_promotion.effective_from %></td>
+          <td><%= employee_promotion.effective_to %></td>
+        </tr>
+        <tr>
+        
+        <td colspan="7"><strong>justification : </strong><%= employee_promotion.justification %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>

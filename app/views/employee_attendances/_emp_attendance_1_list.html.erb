@@ -1,0 +1,89 @@
+      <table id="example5" class="table table-bordered table-hover table-condensed">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <% for i in 1..@day %>
+              <th><%= i %></th>
+            <%end%>
+          </tr>
+        </thead>
+        <tbody>
+          <% exist = {} %>
+          <% @employees.each do |e| %>
+            <tr>
+              <td><%= full_name(e.employee) %></td>
+              <% sorted_exists = calculate_attendance(@date, exist, e)%>
+              <% sorted_exists.each do |k,v|%>
+                <td><%= v %></td>
+              <%end%>
+            </tr> 
+            <% present_day = present_day_count(exist) %>
+            <% holiday_in_month = holiday_in_month_count(exist) %>
+            <% week_off_day = week_off_day_count(exist) %>
+            <% gate_pass = gate_pass_count(exist) %>
+
+            <% # full_pay_leave = full_pay_leave_count(exist) %>
+            <% # half_pay_leave = half_pay_leave_count(exist) %>
+
+            <% # pay_leave = full_pay_leave + half_pay_leave %>
+
+            <% # full_lwp_leave = full_lwp_leave_count(exist) %>
+            <% # half_lwp_leave = half_lwp_leave_count(exist) %>
+
+            <% # lwp_leave = full_lwp_leave + half_lwp_leave %>
+            <% workingday = [] %>
+            <% workingday = create_leave(@date, e) %>
+            
+            <% payable_day = present_day.to_f + holiday_in_month.to_f + week_off_day.to_f + workingday[2] %>
+
+            <%= hidden_field_tag "attendances[]", e.id %>
+            <%= hidden_field e.employee_id, 'employee_id', value: e.employee_id %>
+            <%= hidden_field e.employee_id, 'month_name', value: @date.strftime("%B") %>
+            <%= hidden_field e.employee_id, 'year', value: @date.strftime("%Y") %>
+            <%= hidden_field e.employee_id, 'day_in_month', value: count_day(@day,e.employee_id) %>
+            <%= hidden_field e.employee_id, 'year', value: @date.strftime("%Y") %>
+            <%= hidden_field e.employee_id, 'present_day', value: present_day %>
+            <%= hidden_field e.employee_id, 'total_leave', value: total_leave_count(exist) %>
+            <%= hidden_field e.employee_id, 'nonpay_leave', value: workingday[3] %>
+            <%= hidden_field e.employee_id, 'pay_leave', value: workingday[2] %>
+            <%= hidden_field e.employee_id, 'holiday_in_month', value: holiday_in_month %>
+            <%= hidden_field e.employee_id, 'week_off_day', value: week_off_day %>
+            <%= hidden_field e.employee_id, 'absent_day', value: absent_day_count(exist) %>
+            <%= hidden_field e.employee_id, 'payable_day', value: payable_day %>
+            <%= hidden_field e.employee_id, 'gatepass', value: gate_pass %>
+
+            <% exist.clear %>
+          <%end%>
+        </tbody>
+      </table>
+      <%= link_to " Excel Report ",employee_slip_xls_1_employee_attendances_path(month: params[:employee_attendance][:month], year: params[:employee_attendance][:year], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+
+      <%= link_to " Print Attendance Slip ",employee_slip_pdf_employee_attendances_path(month: params[:employee_attendance][:month], year: params[:employee_attendance][:year], format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+
+  <!-- </div>
+</div> -->
+
+<script type="text/javascript">
+  $('#selectAll').click(function() {
+    if (this.checked) {
+      $(':checkbox').each(function() {
+        this.checked = true;
+      });
+    }
+    else {
+      $(':checkbox').each(function() {
+        this.checked = false;
+      });
+    }
+  });
+</script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example5').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]],
+        "scrollX": true,
+        "scrollY": 200
+    } );
+} );
+</script>

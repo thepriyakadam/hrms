@@ -1,0 +1,16 @@
+<%= bootstrap_form_for(:employee, url: {action: 'update_manager', emp_id: @employee.id},remote:true) do |f| %>
+<%= f.hidden_field :effec_date, value: Date.today %>
+  <div class="row">
+    <div class="col-sm-4">
+    <label>Reporting Manager 1</label>
+      <%= select :employee,:manager_id,(@managers.present? ? (@managers.collect {|b| [b.employee.first_name.to_s+' '+b.employee.middle_name.to_s+' '+b.employee.last_name.to_s,b.employee_id]}) : {}),{include_blank: "Select Repoting Officer 1",hide_label:true},class: "form-control"%>
+    </div>
+    <div class="col-sm-4">
+    <label>Reporting Manager 2</label>
+      <%= select :employee,:manager_2_id,(@managers.present? ? (@managers.collect {|b| [b.employee.first_name.to_s+' '+b.employee.middle_name.to_s+' '+b.employee.last_name.to_s,b.employee_id]}) : {}),{include_blank: "Select Repoting Officer 2",hide_label:true},class: "form-control"%>
+    </div>
+    <div class="col-sm-2" style="padding-top:20px;">
+      <%= f.submit "Update", class: 'btn btn-success btn-sm' %>
+    </div>
+  </div>
+<% end %>

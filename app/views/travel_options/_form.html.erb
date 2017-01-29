@@ -1,0 +1,22 @@
+<%= bootstrap_form_for(@travel_option,html: {id: 'travel'},remote:true) do |f| %>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :code,hide_label:true, placeholder: 'Code' %>
+      </div>
+    </div>
+
+     <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :name,hide_label:true, placeholder: 'Travel Type' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "Create Travel Option" ,class: "btn btn-primary btn-sm" %>
+      </div>
+    </div>
+  </div>
+<% end %>
+

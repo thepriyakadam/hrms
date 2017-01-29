@@ -1,0 +1,87 @@
+<%= bootstrap_form_for(@induction_activity,html: {id: "induction_activity"},induction_master_id: @induction_master.id) do |f| %>
+
+<%= f.hidden_field :induction_master_id,value:@induction_master.id  %>
+<%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+
+ <div>
+  <%= render 'show_induction_master_list' %>
+  </div>
+
+ <!--  Template No:<td><%= @induction_master.code %></td>
+  Description:<td><%= @induction_master.description %></td> -->
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :activity,placeholder: 'Eg: Meeting with HR Manager' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :day,placeholder: 'Eg: 1,2,3' %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :duration,placeholder: 'In Hrs' %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+    <label>Contact Person</label>
+      <div class="form-group required">
+        <%= f.select :employee_id,all_employee_list,{hide_label: true,include_blank: " Select Employee"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
+      </div>
+    </div>
+  </div>
+<!-- <div class="row">
+  <div class="col-sm-3">
+    <div class="field">
+      <%= f.file_field :avatar,label: 'Document Upload' %>
+    </div>
+ </div>
+ </div> --><br>
+ 
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "Create Induction Activity", class: 'btn btn-primary btn-sm' %>
+      </div>
+    </div>
+  </div>
+<% end %><br>
+<script>
+$("#induction_activity").validate({
+    rules: {
+      "induction_activity[activity]":{
+        required: true
+              },
+      "induction_activity[day]":{
+        required: true
+      },
+      "induction_activity[duration]":{
+        required: true
+      },
+      "induction_activity[employee_id]":{
+        required: true
+      }
+    },
+    messages: {
+      "induction_activity[activity]":{
+        required: "Please specify Activity"
+      },
+      "induction_activity[day]":{
+        required: "Please specify Day"
+      },
+      "induction_activity[duration]":{
+        required: "Please specify duration"
+      },
+      "induction_activity[employee_id]":{
+        required: "Please specify Contact Person Name"
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

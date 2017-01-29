@@ -1,0 +1,28 @@
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>  
+      <th>Month</th>
+      <th>Amount</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @well_faires.each do |well_faire| %>
+      <tr>
+        <td><%= well_faire.month %></td>
+        <td><%= well_faire.amount %></td>
+        <td><%= well_faire.status ? "Active" : "Inactive" %></td>
+        <td>
+          <% if well_faire.is_confirm == true %>
+            <small class= "label label-primary">Confirmed</small>
+          <% else %>
+            <%= link_to '', edit_well_faire_path(well_faire),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
+            <%= link_to '',  well_faire, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
+            <%= link_to '', is_confirm_well_faires_path(well_faire: well_faire),data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-info fa fa-check' %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

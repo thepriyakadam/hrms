@@ -1,0 +1,41 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title"> Qualification Details of ID - <%= code_full_name(@qualifications.first.employee) %></h3>
+
+    <div class="box-tools pull-right">
+      <%= link_to "Add Qualification", ajax_new_qualification_employees_path(id: @employee.id), class: 'btn btn-sm btn-primary',remote:true %>
+      <%= link_to 'Back', employees_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+    </div>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+      <tr>
+        <th>Qualification Level</th>
+        <th>Qualification</th>
+        <th>Qualification Specialization</th>
+        <th>Marks</th>
+        <th>Passout Year</th>
+        <th>College/School</th>
+        <th>University/Institute</th>
+        <th>Action</th>
+      </tr>
+       <% @qualifications.each do |qualification| %>
+      <tr>
+          <td><%= qualification.degree_type.try(:name) %></td>
+          <td><%= qualification.degree.try(:name) %></td>
+          <td><%= qualification.degree_stream.try(:name) %></td>
+          <td><%= qualification.marks %></td>
+          <td><%= qualification.year.try(:name) %></td>
+          <td><%= qualification.college %></td>
+          <td><%= qualification.university.try(:name) %></td>
+          <td>
+             <%= link_to ' ',modal_qualifications_path(qualification),class: 'btn btn-success btn-sm fa fa-edit',remote: true %>
+          </td>
+      </tr>
+        <%end%>
+      </table>
+  </div><!-- /.box -->
+</div>
+ 
+
+

@@ -1,0 +1,98 @@
+<!--SELECT2 EXAMPLE -->
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Retention Money Report</h3>
+  </div><!-- /.box-header -->
+
+  <div class="box-body">
+    <%= bootstrap_form_for(:retention_money, url: { action: 'retention_dynamic_report'},html: {id: 'retention_money'},remote:true) do |f| %>
+      <div class="row">
+        <div class="col-sm-2">
+          <div class="field">
+            <%= select :retention_money,:year,['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025','2026','2027'],{label: 'Select Year',include_blank: " Select Year"}, class: "form-control" %>
+          </div>
+        </div>
+
+        <div class="col-sm-2">
+          <div class="field">
+            <%= select :retention_money,:month, ['January','February','March','April','May','June','July','August','September','October','November','December'],{label: 'Select Month',include_blank: " Select Month"}, class: "form-control" %>
+           </div>
+        </div>
+
+         <!-- <div class="col-sm-3">
+          <div class="field">
+            <= select :food_deduction,:company_id,all_company,{label: 'Company',include_blank: " Select Company"}, class: "form-control" %>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="field">
+          <= select :food_deduction, :company_location_id, all_company_location,{label: 'Company Location',include_blank: " Select Company Location"}, class: "form-control" %>
+          </div>
+        </div> -->
+        <div class="col-sm-2">
+            <div class="form-group required">
+              <%=f.select :company_id, all_company,{include_blank: "Select Company",hide_label: true},{onchange:"var a={id:$(this).val(), form : 'food_deduction'}; $.get('/employees/collect_company_location',a,function(response){});"}%>
+            </div>
+          </div>
+
+          <div class="col-sm-2">
+            <div class="form-group required">
+              <div id="company_location">
+                <%= render 'employees/company_location_dropdown' %> 
+            </div>
+            </div>
+          </div>
+        
+        <div class="col-sm-2">
+          <div class="actions">
+            <%= f.submit "Display Report", class: "btn btn-sm btn-primary",id: "buttonCtc" %>
+          </div>
+        </div>
+        </div><br>
+        <div class="ajax-progress"></div>
+        <div id="retention_money_li"></div>
+
+      <br>
+    <% end %>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->
+
+<script type="text/javascript">
+  $("#buttonCtc").click(function(){
+    $('.ajax-progress').show();
+    $("#retention_money").submit();
+  })
+</script>
+
+
+<script>
+$("#retention_money").validate({
+    rules: {
+      "retention_money[month]":{
+        required: true,
+      },
+      "retention_money[year]":{
+        required: true,
+      },
+      "retention_money[company_id]":{
+        required: true,
+      }
+    },
+    messages: {
+      "retention_money[month]":{
+        required: "Please select Month",
+      },
+      "retention_money[year]":{
+        required: "Please select Year",
+      },
+      "retention_money[company_id]":{
+        required: "Please select Company",
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

@@ -1,0 +1,274 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Employee Performance Detail</h3>
+    <div class="pull-right">
+    <%= link_to 'Back',emp_list_goal_wise_goal_bunches_path,class: 'btn btn-sm btn-default'%> |
+      <%= link_to " Print excel ",all_emp_list_goal_bunches_path(format: "xls",goal_bunch_ids: @goal_bunches),method: :post, class: "btn btn-sm btn-info fa fa-print", :target => "_blank" %>
+    </div>
+   
+    
+  </div><!-- /.box-header -->
+<div class="box box-default">
+  <div class="box-body">
+  </br><br>
+  <% i=0 %>
+    <% @goal_bunches.each do |g|  %>
+      <% employee = Employee.find(g.employee_id) %>
+      <% joining_detail = JoiningDetail.find_by_employee_id(g.employee_id) %>
+      <% @experiences = Experience.where(employee_id: g.employee_id) %>
+      <% @qualifications = Qualification.where(employee_id: g.employee_id) %>
+      <% @employee_promotions = EmployeePromotion.where(employee_id: g.employee_id) %>
+      <% @goal_ratings = GoalRating.where(goal_bunch_id: g.id,appraisee_id: g.employee_id, goal_type: 'Goal') %>
+      <% @attribute_ratings = GoalRating.where(goal_bunch_id: g.id,appraisee_id: g.employee_id, goal_type: 'Attribute') %>
+
+      <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">    
+        <thead>
+        <tr><th colspan="8"><center>Employee Detail</center></th></tr>
+          <tr>
+           <th>Sr.No</th>
+            <th>Employee ID</th>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Department</th>
+            <th>Date Of Joining</th>
+            <th>Grade</th>
+            <th>Designation</th> 
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+           <td><%= i=i+1 %></td>
+            <td><%= employee.manual_employee_code %></td> 
+            <td><%= full_name(employee) %></td>
+            <td><%=  %></td>
+            <td><%= employee.department.try(:name) %></td>
+            <td><%= joining_detail.joining_date %></td>
+            <td><%= joining_detail.employee_grade.try(:name) %></td>
+            <td><%= joining_detail.employee_designation.try(:name) %></td>
+          </tr>
+        </tbody>
+      </table>
+      <br>
+
+      <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
+          <thead>
+          <tr><th colspan="4"><center>Previous Experience</center></th></tr>
+            <tr>
+              <th>Company</th>
+              <th>Designation</th>
+              <th>Exp.(Years)</th>
+              <th>CTC</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @experiences.each do |experience| %>
+              <tr>
+                <td><%= experience.try(:company_name) %></td>
+                <td><%= experience.try(:designation) %></td>
+                <td align="right"><%= experience.try(:no_of_year) %></td>
+                <td align="right"><%= experience.try(:ctc) %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <br>
+
+        <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
+          <thead>
+          <tr><th colspan="4"><center>Qualification</center></th></tr>
+            <tr>
+              <th>Degree</th>
+              <th>Year Of Passing</th>
+              <th>Marks</th>
+              <th>Qualification</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @qualifications.each do |qualification| %>
+              <tr>
+                <td><%= qualification.try(:degree).try(:name) %></td>
+                <td><%= qualification.try(:year).try(:name)%> </td>
+                <td><%= qualification.try(:marks) %></td>
+                <td><%= qualification.try(:degree_type).try(:name) %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <br>
+
+      <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
+        <thead>
+        <tr><th colspan="7"><center>Promotion Detail</center></th></tr>
+          <tr>
+          
+            <th>Department</th>
+            <th>Designation</th>
+            <th>Grade</th>
+            <th>Category</th>
+            <th>CTC</th>
+            <th>From</th>
+            <th>To</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @employee_promotions.each do |employee_promotion| %>
+            <tr>
+              <td><%= employee_promotion.employee.try(:company_location).try(:name) %> - <%= employee_promotion.employee.try(:department).try(:name) %></td>
+              <td><%= employee_promotion.employee_designation.try(:name) %></td>
+              <td><%= employee_promotion.employee_grade.try(:name) %></td>
+              <td><%= employee_promotion.employee_category.try(:name) %></td>
+              <td><%= employee_promotion.try(:ctc) %></td>
+              <td><%= employee_promotion.effective_from %></td>
+              <td><%= employee_promotion.effective_to %></td>
+            </tr>
+            <% end %>
+        </tbody>
+      </table>
+      <br>
+
+        <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
+          <thead>
+          <tr><th colspan="9"><center>Performance Record</center></th></tr>
+          <tr><th colspan="9"><center>Goals</center></th></tr>
+            <tr>
+              <th>Goal Perspective</th>
+              <th>Goal Weightage</th>
+              <th>Goal Measure</th>
+              <th>Target/Unit</th>
+              <th>Aligned</th>
+              <th>Self Comment</th>
+              <th>Self Rating</th>
+              <th>Appraiser Comment</th>
+              <th>Appraiser Rating</th>
+              <th>Reviewer Comment</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @goal_ratings.each do |goal_rating| %>
+              <tr>
+                <td><%= goal_rating.try(:goal_perspective).try(:name) %></td>
+                <td><%= goal_rating.try(:goal_weightage) %></td>
+                <td><%= goal_rating.try(:goal_measure) %></td>
+                <td><%= goal_rating.try(:target) %></td>
+                <td><%= goal_rating.try(:aligned) %></td>
+                <td><%= goal_rating.try(:appraisee_comment) %></td>
+                <td><%= goal_rating.try(:appraisee_rating_id) %></td>
+                <td><%= goal_rating.try(:appraiser_comment) %></td>
+                <td><%= goal_rating.try(:appraiser_rating_id) %></td>
+                <td><%= goal_rating.try(:reviewer_comment) %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
+          <thead>
+          <tr><th colspan="9"><center>Attributes</center></th></tr>
+            <tr>
+              <th>Attribute</th>
+              <th>Goal Weightage</th>
+              <th>Goal Measure</th>
+              <th>Target/Unit</th>
+              <th>Aligned</th>
+              <th>Self Comment</th>
+              <th>Self Rating</th>
+              <th>Appraiser Comment</th>
+              <th>Appraiser Rating</th>
+              <th>Reviewer Comment</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @attribute_ratings.each do |attribute_rating| %>
+              <tr>
+                <td><%= attribute_rating.try(:attribute_master).try(:name) %></td>
+                <td><%= attribute_rating.try(:goal_weightage) %></td>
+                <td><%= attribute_rating.try(:goal_measure) %></td>
+                <td><%= attribute_rating.try(:target) %></td>
+                <td><%= attribute_rating.try(:aligned) %></td>
+                <td><%= attribute_rating.try(:appraisee_comment) %></td>
+                <td><%= attribute_rating.try(:appraisee_rating_id) %></td>
+                <td><%= attribute_rating.try(:appraiser_comment) %></td>
+                <td><%= attribute_rating.try(:appraiser_rating_id) %></td>
+                <td><%= attribute_rating.try(:reviewer_comment) %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <br>
+
+ <% if  @goal_bunch.nil? %>
+    <center><p class="text-warning"> No Goal Bunch Available </p></center> 
+    <% else %>
+
+       <% goal_bunch = GoalBunch.find_by_employee_id(g.employee_id)%>
+       <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
+        <tbody>
+          <tr><th colspan="2"><center>Overall Performance Detail</center></th></tr>
+            <tr>
+              <th>Self Comment</th>
+              <td><%= goal_bunch.try(:appraisee_comment) %></td>
+            </tr>
+            <tr>
+              <th>Self Rating</th>
+              <td><%= goal_bunch.try(:appraisee_rating_id) %></td>
+            </tr>
+            <tr>
+              <th>Appraiser Comment</th>
+              <td><%= goal_bunch.try(:appraiser_comment) %></td>
+            </tr>
+            <tr>
+              <th>Appraiser Rating</th>
+              <td><%= goal_bunch.try(:appraiser_rating) %></td>
+            </tr>
+            <tr>
+              <th>Reviewer Comment</th>
+              <td><%= goal_bunch.try(:review_comment) %></td>
+            </tr>
+            <tr>
+              <th>Reviewer Rating</th>
+              <td><%= goal_bunch.try(:reviewer_rating_id) %></td>
+            </tr>
+            <tr>
+              <th>Final Comment</th>
+              <td><%= goal_bunch.try(:final_comment) %></td>
+            </tr>
+            <tr>
+              <th>Final Rating</th>
+              <td><%= goal_bunch.try(:final_rating_id) %></td>
+            </tr>
+        </tbody>
+      </table>
+      <br>
+      <% goal_bunch = GoalBunch.find_by_employee_id(g.employee_id) %>
+       <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
+        <tbody>
+          <tr><th colspan="2"><center>Detail</center></th><th>Sign</th></tr>
+            <tr>
+              <th>Appraisee Name</th>
+              <td><%= goal_bunch.employee.try(:first_name) %> <%= goal_bunch.employee.try(:middle_name) %> <%= goal_bunch.employee.try(:last_name) %></td>
+              <td></td>
+            </tr>
+            <tr>
+              <th>Appraiser Name</th>
+              <td><%= goal_bunch.employee.manager.try(:first_name) %> <%= goal_bunch.employee.manager.try(:middle_name) %> <%= goal_bunch.employee.manager.try(:last_name) %></td>
+              <td></td>
+            </tr>
+            <tr>
+              <th>Reviewer Name</th>
+              <td><%= goal_bunch.employee.manager_2.try(:first_name) %> <%= goal_bunch.employee.manager_2.try(:middle_name) %> <%= goal_bunch.employee.manager_2.try(:last_name) %></td>
+              <td></td>
+            </tr>
+            <tr>
+              <th>Final Name</th>
+              <td><%=  %></td>
+              <td></td>
+            </tr>
+        </tbody>
+      </table>
+      </div>
+    <% end %>
+  <% end %>
+
+</div>
+</div>
+<br><br>
+<hr>

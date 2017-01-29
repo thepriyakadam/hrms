@@ -1,0 +1,100 @@
+
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Employee Induction Plan</h3>
+    <div class="pull-right">  
+    </div>
+  </div>
+  <%= bootstrap_form_for :induction_detail,url:{action:"create_induction_detail",id: @induction_master.id},html: {id: 'induction_detail'} do |f| %>
+ <!--   bootstrap_form_for :particular_vacancy_request,url:{action:"update_no_of_positions",id: @vacancy_master.id} do |f| %>-->
+ <%= f.hidden_field :employee_id,value: @employee.id %>
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+               <%= f.text_field :start_date, hide_label: true,placeholder: 'Start Date', class: 'start_date'%>
+            </div>
+          </div>
+        </div>
+         
+<div class="box-body">
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Sr.No</th>
+      <th>Activity</th>
+      <th>Day</th>
+      <th>Duration(Hrs)</th>
+      <th>Contact Person</th>
+<!--       <th>Download</th>
+ -->    </tr>
+  </thead>
+
+  <tbody>
+  <% i = 0 %>
+   <% @induction_activities.each do |induction_activity| %>
+      <tr>
+        <td><%= i=i+1 %></td>
+        <td><%= induction_activity.activity %></td>
+        <td><%= induction_activity.day %></td>
+        <td><%= induction_activity.duration %></td>
+        <td><%= full_name(induction_activity.employee) %></td>
+        <!-- <td>
+            if induction_activity.avatar_file_name == nil %>
+           <small class="label label-default">Document Not Available</small>
+             < else %>
+             <center>< link_to '',download_document_path(id: induction_activity.id),class: 'btn btn-xs btn-primary fa fa-download' %></center>
+              end %>
+        </td> -->
+      </tr>
+      <% end %>
+  </tbody>
+</table><br>
+  <div class="row">
+  <div class="col-sm-6">
+    <%= f.submit "Create Induction Plan" ,class: 'btn btn-primary'%>
+    <%= link_to 'Back', employee_list_induction_activities_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+
+  </div>
+  </div>
+  </div>
+  </div>
+
+<% end %>
+</div>
+</div>
+
+<script type="text/javascript">
+  $(function(){
+    $('.start_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:-0',
+    dateFormat: 'dd-mm-yy' });
+
+  }); 
+
+$(function(){
+$("#induction_detail").validate({
+    rules: {
+      "induction_detail[start_date]":{
+        required: true
+      }
+    },
+    messages: {
+      "induction_detail[start_date]":{
+        required: "Please specify Start Date"
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+});
+</script>
+
+

@@ -1,0 +1,1 @@
+json.partial! "certificate_masters/certificate_master", certificate_master: @certificate_master

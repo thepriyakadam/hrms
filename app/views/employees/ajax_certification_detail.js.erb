@@ -1,0 +1,6 @@
+<% if Certification.exists?(employee_id: params[:id]) %>
+<%@certifications = Certification.where('employee_id=?',params[:id])%>
+$('#info').html("<%= j render 'certifications/show_detail' %>")
+<%else%>
+$('#info').html("<%= j render 'certifications/form' %>")
+<%end%>

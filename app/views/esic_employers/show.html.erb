@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Base component:</strong>
+  <%= @esic_employer.base_component %>
+</p>
+
+<p>
+  <strong>Percentage:</strong>
+  <%= @esic_employer.percentage %>
+</p>
+
+<p>
+  <strong>Effective from:</strong>
+  <%= @esic_employer.effective_from %>
+</p>
+
+<p>
+  <strong>Effective to:</strong>
+  <%= @esic_employer.effective_to %>
+</p>
+
+<p>
+  <strong>Is active:</strong>
+  <%= @esic_employer.is_active %>
+</p>
+
+<p>
+  <strong>Is confirm:</strong>
+  <%= @esic_employer.is_confirm %>
+</p>
+
+<%= link_to 'Edit', edit_esic_employer_path(@esic_employer) %> |
+<%= link_to 'Back', esic_employers_path %>

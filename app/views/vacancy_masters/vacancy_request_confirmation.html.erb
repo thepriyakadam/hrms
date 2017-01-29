@@ -1,0 +1,145 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Vacancy Confirmation List</h3>
+    <div class="pull-right">
+    </div>
+    </div>
+<div class="box-body">
+<table id="example" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Organization</th>
+      <th>Designation</th>
+      <th>Job Title</th>
+      <th>Qualification</th>
+      <th>No. of position</th>
+      <th>Experience</th>
+    </tr>
+  </thead>
+
+  <tbody>
+      <% @vacancy_masters.each do |vacancy_master| %>
+      <tr>
+        <% if @vacancy_master.id == vacancy_master.id %>
+        <td><font color='green'> *<%= vacancy_master.other_organization %> </font></td>
+        <td><font color='green'><%= vacancy_master.employee_designation.try(:name) %></font></td>
+        <td><font color='green'><%= vacancy_master.vacancy_name %></font></td>
+        <td><font color='green'><%= vacancy_master.degree.try(:name) %></font></td>
+        <td><font color='green'><%= vacancy_master.no_of_position %></font></td>
+        
+        <td><font color='green'><%= vacancy_master.experience %></font></td>
+        <%else%>
+        <td><%= vacancy_master.other_organization %> </td>
+        <td><%= vacancy_master.employee_designation.try(:name) %></td>
+        <td><%= vacancy_master.vacancy_name %></td>
+        <td><%= vacancy_master.degree.try(:name) %></td>
+        <td><%= vacancy_master.no_of_position %></td>
+        
+        <td><%= vacancy_master.experience %></td>
+      </tr>
+      <% end %>
+      <% end %>
+  </tbody>
+</table>
+<div class="row">
+    <div class="col-sm-12"><strong> <font color='green'>Note - * Row is the latest row to approve/reject </font></strong></div>
+    </div><br>
+  <div class="box-header">
+    <h3 class="box-title"></h3>
+    <div class="pull-right">
+    </div>
+  </div>
+<div>
+<table id="example" class="table table-bordered table-hover table-condensed">
+  <tbody>
+  <tr><td colspan="4"><font color='red'><center>Vacancy Request Details</center></td></tr>
+    <tr>
+      <th>Vacancy Code</th>
+      <td><%= @vacancy_master.id %></td>
+    
+      <th>Request By</th>
+      <td><%= @vacancy_master.employee.try(:first_name) %> <%= @vacancy_master.employee.try(:middle_name) %> <%= @vacancy_master.employee.try(:last_name) %></td>
+    </tr>
+    <tr>
+      <th>Approved By</th>
+      <td><%= @employee.try(:first_name) %> <%= @employee.try(:middle_name) %> <%= @employee.try(:last_name) %></td>
+   
+      <th>Organization</th>
+      <td><%= @vacancy_master.other_organization %></td>
+    </tr>
+    <tr>
+      <th>Job Title</th>
+      <td><%= @vacancy_master.employee_designation.try(:name) %></td>
+   
+      <th>Vacancy Name</th>
+      <td><%= @vacancy_master.vacancy_name %></td>
+    </tr>
+    <tr>
+      <th>Company Location</th>
+      <td><%= @vacancy_master.company_location.try(:name) %></td>
+   
+      <th>Department</th>
+      <td><%= @vacancy_master.department.try(:name) %></td>
+    </tr>
+    <tr>
+      <th>No of Position</th>
+      <td><%= @vacancy_master.no_of_position %></td>
+   
+      <th>Organization</th>
+      <td><%= @vacancy_master.other_organization %></td>
+    </tr>
+    <tr>
+      <th>Experience</th>
+      <td><%= @vacancy_master.experience %></td>
+   
+      <th>Budget</th>
+      <td><%= @vacancy_master.budget %></td>
+    </tr>
+    <tr>
+      <th>Vacancy Fulfillment Date</th>
+      <td><%= @vacancy_master.vacancy_post_date %></td>
+   
+      <th>Keyword</th>
+      <td><%= @vacancy_master.keyword %></td>
+    </tr>
+    <tr>
+      <th>Qualification 1</th>
+      <td><%= @vacancy_master.degree.try(:name) %></td>
+   
+      <th>Qualification 2</th>
+      <td><%= @vacancy_master.degree_1.try(:name) %></td>
+    </tr>
+    <tr>
+      <th>Qualification 3</th>
+       <td><%= @vacancy_master.degree_2.try(:name) %></td>
+       <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>Justification</th>
+      <td colspan="3"><%= @vacancy_master.justification %></td>
+      
+    </tr>
+    <tr><th>Description</th>
+      <td colspan="3"><%= @vacancy_master.description %></td></tr>
+  </tbody>
+</table>
+    <div id="myModal" class="modal fade"></div>
+    <div id="myModal1" class="modal fade"></div>
+    <div id="myModal3" class="modal fade"></div>
+<%= link_to 'Approve',approve_vacancy_vacancy_masters_path(@vacancy_master.id),class: 'btn btn-sm btn-primary fa fa-check' %> |
+<%= link_to 'Reject',reject_vacancy_vacancy_masters_path(@vacancy_master.id),class: 'btn btn-sm btn-danger fa fa-trash' %> |
+<%= link_to 'Approve & Send next',modal_vacancy_masters_path(@vacancy_master.id),class: 'btn btn btn-sm btn-success fa fa-modx',remote: true %> 
+<!-- link_to 'Update No. Of Positions',modal1_vacancy_masters_path(@vacancy_master.id),class: 'btn btn btn-sm btn-default fa fa-modx',remote: true %>-->
+<!-- link_to 'Edit & Approve',modal3_vacancy_masters_path(@vacancy_master.id),class: 'btn btn btn-sm btn-default fa fa-modx',remote: true %>-->
+    </div>
+</div>
+
+<script>
+$(document).ready(function() {
+    $('#example').DataTable();
+} );
+</script>
+
+
+

@@ -1,0 +1,15 @@
+<%= bootstrap_form_for(@degree_type,html: {id: 'degree_type'},remote:true) do |f| %>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :name,hide_label:true, placeholder: 'Qualification Level' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="actions">
+      <%= f.submit "Create Qualification Level", class: "btn btn-primary btn-sm" %>
+      </div>
+    </div>
+  </div>
+<% end %>

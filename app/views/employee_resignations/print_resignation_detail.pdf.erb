@@ -1,0 +1,92 @@
+<style>
+th {
+    text-align: left;
+}
+tr {
+    page-break-inside: avoid;
+}
+div.alwaysbreak { page-break-before: always; }
+div.nobreak:before { clear:both; }
+div.nobreak{ page-break-inside: avoid;
+  /* http://code.google.com/p/wkhtmltopdf/issues/detail?id=9#c21 */
+}
+</style>
+<div>
+<center><h3>Employee Resignation Detail</h3></center>
+
+<table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">    
+  <thead>
+  <tr><th colspan="7"><center>Employee Detail</center></th></tr>
+    <tr>
+        <th>Employee Id</th>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Department</th>
+        <th>Date Of Joining</th>
+        <th>Grade</th>
+        <th>Current Designation</th> 
+      </tr>
+    </thead>
+    <tbody>
+      <% @employees.each do |a| %>
+      <tr>
+        <td><%= a.manual_employee_code %></td> 
+        <td><%= full_name(a) %></td>
+        <td><%= Time.now.year-a.date_of_birth.year %></td>
+        <td><%= a.department.name %></td>
+        <td><%= @joining_detail.joining_date %></td>
+        <td><%= @joining_detail.employee_grade.name %></td>
+        <td><%= @joining_detail.employee_designation.name %></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+<br>
+
+ <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
+    <thead>
+    <tr><th colspan="17"><center>Resignation Details</center></th></tr>
+      <tr>
+        <th>Reporting Master</th>
+        <th>Resignation Date</th>
+        <th>Reason</th>
+        <th>Is Notice Period</th>
+        <th>Notice Period</th>
+        <th>Short Notice Period</th>
+        <th>Tentative Leaving Date</th>
+        <th>Remark</th>
+        <th>Exit Interview Date</th>
+        <th>Note</th>
+        <th>Leaving Date</th>
+        <th>Settled On</th>
+        <th>Has Left</th>
+        <th>Notice Served</th>
+        <th>Rehired</th>
+        <th>Leaving Reason</th>
+        <th>Resign Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @resignation_histories.each do |resignation_history| %>
+        <tr>
+          <td><%= resignation_history.reporting_master.employee.try(:first_name) %> <%= resignation_history.reporting_master.employee.try(:middle_name) %> <%= resignation_history.reporting_master.employee.try(:last_name) %></td>
+          <td><%= resignation_history.resignation_date %></td>
+          <td><%= resignation_history.reason %></td>
+          <td><%= resignation_history.is_notice_period %></td>
+          <td><%= resignation_history.notice_period %></td>
+          <td><%= resignation_history.short_notice_period %></td>
+          <td><%= resignation_history.tentative_leaving_date %></td>
+          <td><%= resignation_history.remark %></td>
+          <td><%= resignation_history.exit_interview_date %></td>
+          <td><%= resignation_history.note %></td>
+          <td><%= resignation_history.leaving_date %></td>
+          <td><%= resignation_history.settled_on %></td>
+          <td><%= resignation_history.has_left %></td>
+          <td><%= resignation_history.notice_served %></td>
+          <td><%= resignation_history.rehired %></td>
+          <td><%= resignation_history.leaving_date %></td>
+          <td><%= resignation_history.resign_status %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>

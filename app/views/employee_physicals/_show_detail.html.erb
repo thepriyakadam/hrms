@@ -1,0 +1,31 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+  <h6 class="box-title"> Physical Details Of : <%= @employee_physical.try(:employee).try(:manual_employee_code) %> - Name : <%= @employee_physical.try(:employee).try(:first_name) %> <%= @employee_physical.try(:employee).try(:middle_name) %> <%= @employee_physical.try(:employee).try(:last_name) %></h6>
+     
+    <div class="box-tools pull-right">
+      <%= link_to 'Edit',  edit_employee_physical_path(@employee_physical),class: 'btn btn-sm btn-success fa fa-edit',remote:true %>
+      <%= link_to 'Back', employees_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+    </div>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+   <table id="example2" class="table table-bordered table-hover table-condensed">
+
+    <tr>
+        <th> <strong>Trouser Size(cm)</strong></th>
+        <td> <%= @employee_physical.trouser_size %></td>
+
+        <th> <strong>Height(inches):</strong></th>
+        <td> <%= @employee_physical.height %></td>
+    </tr>
+     <tr>
+        <th><strong>Weight(kg):</strong></th>
+        <td><%= @employee_physical.weight %></td>
+
+        <th> <strong>T-Shirt Size</strong></th>
+        <td> <%= @employee_physical.size %></td>
+    </tr>
+    </table>
+  </div><!-- /.box -->
+</div>
+
+

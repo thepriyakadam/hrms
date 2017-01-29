@@ -1,0 +1,79 @@
+<div class="box box-default">
+<div class="box-header with-border">
+    <h3 class="box-title">Vacancy Master Details</h3>
+  </div><!-- /.box-header -->
+ <div class="box-body">
+   <table id="example2" class="table table-bordered table-hover table-condensed">
+  <tr>
+  <th><strong>Vacancy No.</strong></th>
+  <td><%= @vacancy_master.id %></td>
+   <th><strong>Request To</strong></th>
+  <td><%= @employee.try(:first_name) %> <%= @employee.try(:middle_name) %> <%= @employee.try(:last_name) %> </td>
+  </tr>
+
+  <tr>
+  <th><strong>Organization</strong></th>
+  <td><%= @vacancy_master.other_organization %></td>
+   <th><strong>Job Title</strong></th>
+  <td><%= @vacancy_master.employee_designation.name %></td>
+  </tr>
+
+  <tr>
+  <th><strong>Vacancy Name</strong></th>
+  <td><%= @vacancy_master.vacancy_name %></td>
+  <th><strong>Location</strong></th>
+  <td><%= @vacancy_master.company_location.try(:name) %></td>
+  </tr>
+
+<tr> 
+  <th><strong>Department</strong></th>
+  <td><%= @vacancy_master.department.name %></td>
+  <th><strong>No. of Positions</strong></th>
+  <td><%= @vacancy_master.no_of_position %></td>
+</tr>
+
+<tr>  
+  <th><strong>Experience</strong></th>
+  <td><%= @vacancy_master.experience %></td>
+  <th><strong>Budget</strong></th>
+  <td><%= @vacancy_master.budget %></td>
+</tr>
+<tr>
+
+ <tr>
+   <th><strong>Fulfillment Date</strong></th>
+  <td><%= @vacancy_master.vacancy_post_date %></td>
+  <th><strong>Keyword</strong></th>
+  <td><%= @vacancy_master.keyword %></td>
+</tr>
+
+<tr>
+  <th><strong>Organization</strong></th>
+  <td><%= @vacancy_master.other_organization %></td>
+  <th><strong>Qualification 1</strong></th>
+  <td><%= @vacancy_master.degree.try(:name) %></td>
+</tr>
+
+ <tr>
+  <th><strong>Qualification 2</strong></th>
+  <td><%= @vacancy_master.degree_1.try(:name) %></td>
+  <th><strong>Qualification 3</strong></th>
+  <td><%= @vacancy_master.degree_2.try(:name) %></td>
+</tr>
+
+<tr>
+  <th><strong>Description</strong></th>
+  <td colspan="3"><%= @vacancy_master.description %></td>
+  
+</tr>
+
+<tr>
+  <th><strong>Justification</strong></th>
+  <td colspan="3"><%= @vacancy_master.justification %></td>
+</tr>
+
+</table>
+<!--<= link_to 'Edit', edit_vacancy_master_path(@vacancy_master),class: 'btn btn-success btn-sm fa fa-edit' %> -->
+<%= link_to 'Back', vacancy_masters_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+</div>
+</div>

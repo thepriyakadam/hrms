@@ -1,0 +1,88 @@
+<%= bootstrap_form_for(@company_event,remote: true,html: {id: "company_event"}) do |f| %>
+  
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :event_name %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <label>Event Date </label>
+      <div class="field">
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="fa fa-calendar"></i>
+          </div>
+          <%= f.text_field :event_date, hide_label: true, class: 'birth_date'%>
+        </div>
+      </div>
+    </div>
+
+   <div class="col-sm-3">     
+      <div class="field">
+        <%= f.text_field :time %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :location %>
+      </div>
+    </div>
+
+    </div>
+
+   <div class="row">
+    <div class="col-sm-6">
+      <div class="field">
+        <%= f.text_field :description %>
+      </div>
+    </div>
+   
+  
+    <div class="col-sm-3">
+    <label>Status </label>
+      <div class="field">
+        <%= f.check_box :status, label: 'Active' %>
+      </div>
+    </div> 
+  </div>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "Create Company Event", class: 'btn btn-primary btn-sm'%>
+      </div>
+    </div>
+  </div>
+
+    <% end %>
+
+<script type="text/javascript">
+
+
+ $("#company_event").validate({
+    rules: {
+      "company_event[event_name]":{
+        required: true
+      }
+    },
+    messages: {
+      "company_event[event_name]":{
+        required: "Please Specify Event Name"
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+
+  $(function(){
+    $('.birth_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:+1',
+    dateFormat: 'dd-mm-yy' });
+  }); 
+</script>

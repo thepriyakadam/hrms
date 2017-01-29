@@ -1,0 +1,6 @@
+<% if @flag == true %>
+  	$("#form").html("<%= j render 'form' %>")
+  	$("#allocation_list").html("<%= j render 'allocation_list' %>")
+	<% else %>
+  	$("#form").html("<%= j render 'form' %>")
+	<% end %>

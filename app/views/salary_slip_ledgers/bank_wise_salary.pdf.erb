@@ -1,0 +1,229 @@
+<div class="ajax-progress"></div>
+<% i = 0 %>
+<table style="border-collapse: collapse; font-size:30pt;" border=1 width=1000 cellpadding="19">
+  <thead>
+    <tr>
+      <th colspan="46">
+        <center><strong><%= current_user.employee.company_location.company.description %></strong></center>
+        <center><small><%= Bank.find(@bank).name unless @bank.nil?  or @bank.blank? %>
+        <%= CostCenter.find(@cost_center).name unless @cost_center.blank? or @cost_center.nil? or @cost_center.empty? %>
+        <%= EmployeeCategory.find(@category).name %></small></center>
+        <center><small>Employee Monthly Salary For The Month <%= @month %> - <%= @year %></small></center>   
+      </th>
+    </tr>
+    <tr>
+      <th colspan="12"><center> SALARY DETAILS</center></th>
+      <th colspan="11"><center> WORKING DAYS</center></th>
+      <th colspan="12"><center> EARNED SALARY</center></th>
+      <th colspan="12"><center>DEDUCTION</center></th>
+      <th><center> NET </center></th>
+      <th><center> SIGN </center></th>
+    </tr>
+    
+    <tr>
+      <th>Basic</th>
+      <th>DA</th>
+      <th>HRA</th>
+      <th>Conv</th>
+      <th>O.Allow</th>
+      <th>S.Allow</th>
+      <th>Wsh.Allow</th>
+      <th>Driver Allow</th>
+      <th>Medi Allow</th>
+      <th>Child Edu Allow</th>
+      <th>MRA</th>
+      <th>Total</th>
+
+      
+      
+      <th>PD</th>
+      <th>WOff</th>
+      <th>CL</th>
+      <th>EL</th>
+      <th>AL</th>
+
+
+      <th>Coff</th>
+      <th>ESIC</th>
+      <th>LWP</th>
+      <th>HD</th>
+      <th>AD</th>
+      <th>Payable</th>
+    
+      <th>Basic</th>
+      <th>DA</th>
+      <th>HRA</th>
+      <th>conv</th>
+      <th>O.Allow</th>
+      <th>S.Allow</th>
+      <th>Wsh.Allow</th>
+      <th>Driver Allow</th>
+      <th>Medi Allow</th>
+      <th>Child Edu Allow</th>
+      <th>MRA</th>
+      <th>Gross</th>
+
+      <th>PF</th>
+      <th>ESIC</th>
+      <th>IT</th>
+      <th>PT</th>
+      <th>Adv.Sal</th>
+      <th>Society</th>
+      <th>Food</th>
+      <th>Mobile</th>
+      <th>Retention</th>
+      <th>WF</th>
+      <th>o.Dedu</th>
+      <th>Total Dedu</th>
+
+      <th>NET</th>
+      <th>SING</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @reports.each do |r| %>
+      <tr>
+      <td colspan="1">
+        <strong><%= i = i + 1 %></strong>
+      </td>
+      <td colspan="11"><strong>Code - <%= r.try(:code) %></strong></td>
+      <td colspan="8"><strong>Employee - <%= r.try(:employee_name) %></strong></td>
+      <td colspan="12">
+        <strong>
+          Department - <%= r.try(:department_name) %>|
+          Designation - <%= Employee.find_by_manual_employee_code(r.code).try(:joining_detail).try(:employee_designation).try(:name) %>
+        </strong>
+      </td>
+      <td colspan="6">
+        <strong>PF NO - <%= r.try(:pf_no) %></strong></td>
+      <td colspan="6">
+        <strong>ESIC NO - <%= r.try(:esic_no) %></strong></td>
+      <td></td>
+      </tr>
+      <tr>  
+        <td><%= r.try(:actual_basic).try(:round) %></td>
+        <td><%= r.try(:actual_da).try(:round) %></td>
+        <td><%= r.try(:actual_hra).try(:round) %></td>
+
+        <td><%= r.try(:actual_convenience).try(:round) %></td>
+        <td><%= r.try(:actual_other).try(:round) %></td>
+        <td><%= r.try(:actual_special).try(:round) %></td>
+        <td><%= r.try(:actual_washing).try(:round) %></td>
+        <td><%= r.try(:actual_driver).try(:round) %></td>
+        <td><%= r.try(:actual_medical).try(:round) %></td>
+        <td><%= r.try(:actual_child_edu).try(:round) %></td>
+        <td><%= r.try(:actual_mra).try(:round) %></td>
+        <td><%= r.try(:actual_total).try(:round) %></td>
+
+
+        <td><%= r.try(:present_day) %></td>
+        <td><%= r.try(:weekoff) %></td>
+        <td><%= r.try(:cl_leave) %></td>
+        <td><%= r.try(:el_leave) %></td>
+        <td><%= r.try(:advance_leave) %></td>
+        <td><%= r.try(:coff_leave) %></td>
+        <td><%= r.try(:esic_leave) %></td>
+        <td><%= r.try(:lwp_leave) %></td>
+        <td><%= r.try(:holiday) %></td>
+        <td><%= r.try(:absent_day) %></td>
+        <td><%= r.try(:payable_day) %></td>
+       
+        <td><%= r.try(:earned_basic).try(:round) %></td>
+        <td><%= r.try(:earned_da).try(:round) %></td>
+        <td><%= r.try(:earned_hra).try(:round) %></td>
+
+        <td><%= r.try(:earned_convenience).try(:round) %></td>
+        <td><%= r.try(:earned_other).try(:round) %></td>
+        <td><%= r.try(:earned_special).try(:round) %></td>
+        <td><%= r.try(:earned_washing).try(:round) %></td>
+        <td><%= r.try(:earned_driver).try(:round) %></td>
+        <td><%= r.try(:earned_medical).try(:round) %></td>
+        <td><%= r.try(:earned_child_edu).try(:round) %></td>
+        <td><%= r.try(:earned_mra).try(:round) %></td>
+        <td><%= r.try(:earned_total).try(:round) %></td>
+
+        <td><%= r.try(:pf) %></td>
+        <td><%= r.try(:esic) %></td>
+        <td><%= r.try(:income_tax) %></td>
+        <td><%= r.try(:pt) %></td>
+        <td><%= r.try(:advance) %></td>
+        <td><%= r.try(:society) %></td>
+
+        <td><%= r.try(:food_deduction) %></td>
+        <td><%= r.try(:mobile) %></td>
+        <td><%= r.try(:retention) %></td>
+        <td><%= r.try(:welfair) %></td>
+        <td><%= r.try(:other_deduction) %></td>
+        <td><%= r.try(:deduction_total) %></td>
+        <td><%= r.try(:net_payable) %></td>
+        <td><%=  %></td>
+      </tr>
+    <% end %>
+    <tr>
+      <td colspan="47"><strong>Total</strong></td>
+    </tr>
+
+    <tr>      
+      <td><%= @sum.actual_basic.try(:round) %></td>
+      <td><%= @sum.actual_da.try(:round) %></td>
+      <td><%= @sum.actual_hra.try(:round) %></td>
+      <td><%= @sum.actual_convenience.try(:round) %></td>
+      <td><%= @sum.actual_other.try(:round) %></td>
+      <td><%= @sum.actual_special.try(:round) %></td>
+      <td><%= @sum.actual_washing.try(:round) %></td>
+      <td><%= @sum.actual_driver.try(:round) %></td>
+      <td><%= @sum.actual_medical.try(:round) %></td>
+      <td><%= @sum.actual_child_edu.try(:round) %></td>
+      <td><%= @sum.actual_mra.try(:round) %></td>
+      <td><%= @sum.actual_total.try(:round) %></td>
+
+      <td><%= @sum.present_day %></td>
+      <td><%= @sum.weekoff %></td>
+      <td><%= @sum.cl_leave %></td>
+      <td><%= @sum.el_leave %></td>
+      <td><%= @sum.advance_leave %></td>
+      <td><%= @sum.coff_leave %></td>
+      <td><%= @sum.esic_leave %></td>
+      <td><%= @sum.lwp_leave %></td>
+      <td><%= @sum.holiday %></td>
+      <td><%= @sum.absent_day %></td>
+      <td><%= @sum.payable_day %></td>
+      
+
+      <td><%= @sum.earned_basic.try(:round) %></td>
+      <td><%= @sum.earned_da.try(:round) %></td>
+      <td><%= @sum.earned_hra.try(:round) %></td>
+      <td><%= @sum.earned_convenience.try(:round) %></td>
+      <td><%= @sum.earned_other.try(:round) %></td>
+      <td><%= @sum.earned_special.try(:round) %></td>
+      <td><%= @sum.earned_washing.try(:round) %></td>
+      <td><%= @sum.earned_driver.try(:round) %></td>
+      <td><%= @sum.earned_medical.try(:round) %></td>
+      <td><%= @sum.earned_child_edu.try(:round) %></td>
+      <td><%= @sum.earned_mra.try(:round) %></td>
+      <td><%= @sum.earned_total.try(:round) %></td>
+
+      <td><%= @sum.pf %></td>
+      <td><%= @sum.esic %></td>
+      <td><%= @sum.income_tax %></td>
+      <td><%= @sum.pt %></td>
+      <td><%= @sum.advance %></td>
+      <td><%= @sum.society %></td>
+      <td><%= @sum.food_deduction %></td>
+      <td><%= @sum.mobile %></td>
+      <td><%= @sum.retention %></td>
+      <td><%= @sum.welfair %></td>
+      <td><%= @sum.other_deduction %></td>
+      <td><%= @sum.deduction_total %></td>
+
+      <td><%= @sum.net_payable %></td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+
+<style type="text/css">
+div.alwaysbreak { page-break-before: always; }
+div.nobreak:before { clear:both; }
+div.nobreak { page-break-inside: avoid; }
+</style>

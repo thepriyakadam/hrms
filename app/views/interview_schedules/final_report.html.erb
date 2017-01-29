@@ -1,0 +1,97 @@
+<div class="box">
+  <div class="box-header">
+    <center><h3 class="box-title">Interview Schedule Report</h3></center><br>
+<div class="box-body">
+<%= form_for :interview_schedule, url: { action: 'print_final_report',format: 'pdf',id: @interview_schedule.id},:html => {:target => '_blank'} do |f| %>
+<h4 class="box-title">Interview Schedule Details</h4><br>
+<table class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+<!--       <th>ID</th>
+ -->  <th>Job Title</th>
+      <th>Candidate Name</th>
+      <th>Email ID</th>
+      <th>Interview Date</th>
+      <th>Location</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @interview_schedules.each do |interview_schedule| %>
+      <tr>
+<!--         <td><%= interview_schedule.id %></td>
+ -->    <td><%= interview_schedule.job_title %></td>
+        <td><%= interview_schedule.candidate_name %></td>
+        <td><%= interview_schedule.email_id %></td>
+        <td><%= interview_schedule.interview_date %></td>
+        <td><%= interview_schedule.location %></td>
+      </tr>
+  </tbody>
+</table><br><br>
+<h4 class="box-title">Interview Rounds</h4><br>
+<table class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Sr.No</th> 
+      <th>Interviewer Name</th>
+      <th>Interview Type</th>
+      <th>Interview Date</th>
+      <th>Interview Time</th>
+      <th>Location</th>
+      <th>Schedule Comment</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% i = 0 %>
+    <% @interview_rounds.each do |interview_round| %>
+      <tr>
+        <td><%= i=i+1 %></td>
+        <td><%= full_name(interview_round.employee) %></td>
+        <td><%= interview_round.interview_type.try(:name) %></td>
+        <td><%= interview_round.interview_date %></td>
+        <td><%= interview_round.interview_time %></td>
+        <td><%= interview_round.location %></td>
+        <td><%= interview_round.schedule_comment %></td>
+<!--         <td><= interview_rounds.interview_analysis.interview_evalution.try(:name) %></td>
+ -->      </tr>
+    <% end %>
+  </tbody>
+</table>  
+<h4 class="box-title">Interview Evaluation</h4><br>
+<table class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Sr.No</th> 
+      <th>Interviewer Name</th>
+      <th>Interview Type</th>
+      <th>Evaluation Criteria</th>
+      <th>Skillset</th>
+      <th>Evaluation</th>
+      <th>Comment</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% i = 0 %>
+    <% @interview_analyses.each do |interview_analysis| %>
+      <tr>
+        <td><%= i=i+1 %></td>
+        <td><%= interview_analysis.interview_round.employee.try(:first_name) %> <%= interview_analysis.interview_round.employee.try(:middle_name) %> <%= interview_analysis.interview_round.employee.try(:last_name) %></td>
+        <td><%= interview_analysis.interview_round.interview_type.try(:name) %></td>
+        <td><%= interview_analysis.interview_evalution.try(:name) %></td>
+        <td><%= interview_analysis.interview_attribute.try(:name) %></td>
+        <td><%= interview_analysis.interview_decision.try(:name) %></td>
+        <td><%= interview_analysis.comment %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<% end %>   
+<br>
+<div class="col-sm-6">
+    <%= f.submit " Print Report",class: "btn btn-xl btn-info fa fa-print" %>
+    <%= link_to 'Back', all_interview_schedule_list_interview_schedules_path , class: 'btn btn-sm btn-default fa fa-arrow-left'  %>
+  </div>
+</div>
+</div>
+</div>
+<% end %>
+

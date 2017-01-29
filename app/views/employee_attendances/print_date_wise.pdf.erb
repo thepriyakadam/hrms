@@ -1,0 +1,40 @@
+<style>
+th {
+    text-align: left;
+}
+tr {
+    page-break-inside: avoid;
+}
+div.alwaysbreak { page-break-before: always; }
+div.nobreak:before { clear:both; }
+div.nobreak{ page-break-inside: avoid;
+  /* http://code.google.com/p/wkhtmltopdf/issues/detail?id=9#c21 */
+}
+</style>
+<div>
+    <table style="border-collapse: collapse; font-size:9pt;" border=1 width=1200 cellpadding="10">
+        <thead>
+        <tr><td colspan="6"><center><strong><%= current_user.employee.company_location.company.try(:description)%></strong>
+        <br> <%= current_user.employee.company_location.try(:address)%></center></td></tr>
+          <tr>
+            <th>Employee ID</th>
+            <th>Employee Name</th>
+            <th>Department Name</th>
+            <th>Present</th>
+            <th>Day</th>
+            <th>Contact No</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @employee_attendances.each do |a| %>
+            <tr>
+              <td><%= a.employee.manual_employee_code %></td>
+              <td><%= a.employee.first_name %> <%= a.employee.middle_name %> <%= a.employee.last_name %></td>
+              <td><%= a.employee.company_location.try(:name) %> - <%= a.employee.department.try(:name) %></td>
+              <td><%= a.try(:present) %></td>
+              <td><%= a.try(:day) %></td>
+              <td><%= a.employee.contact_no %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>

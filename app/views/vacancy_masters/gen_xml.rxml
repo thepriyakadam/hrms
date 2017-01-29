@@ -1,0 +1,13 @@
+@xml.instruct! :xml, :version=>"1.0"
+
+@xml.vacancy_masters{
+  for vacancy_master in @vacancy_masters
+    @xml.catalog do
+      @xml.employee_designation_id(vacancy_master.employee_designation_id)
+      @xml.justification(vacancy_master.justification)
+      @xml.current_status(vacancy_master.current_status)     
+      @xml.experience(vacancy_master.experience)
+      @xml.degree_1_id(vacancy_master.degree_1_id)
+    end
+  end
+}

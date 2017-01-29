@@ -1,0 +1,76 @@
+<div class="box">
+  <div class="box-header">
+   
+
+   <strong> <font color='#0077b3' , size="4"> 
+        <% emp = current_user.employee_id %>
+       <% issue = IssueTrackerMember.find_by(employee_id: emp)%>
+       Support List of : <%= issue.issue_tracker_group.name %> Group  - Member : <%= current_user.employee.try(:first_name) %> <%= current_user.employee.try(:middle_name) %> <%= current_user.employee.try(:last_name) %> - Role : <%= issue.role %> </font></strong>
+
+  </div><!-- /.box-header -->
+   <%= hidden_field_tag :lock_date, :value => Time.zone.now.to_date %>
+   <%= hidden_field_tag :lock_time, :value => Time.zone.now.to_time %>
+  <div class="box-body">
+    <table id="example6" class="table table-bordered table-hover table-condensed'">
+  <thead>
+    <tr>
+      <th>Support</th>
+      <th>Support Group</th>
+      <th>Date</th>
+      <th>Priority</th>
+      <th>Document</th>
+      <th>Image</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @issue_requests.each do |issue_request| %>
+      <tr>
+        <% if issue_request.status == 'true' %>
+        <% else %>
+            <td><%= issue_request.issue_master.try(:name) %></td>
+            <td><%= issue_request.issue_tracker_group.try(:name) %></td>
+            <td><%= issue_request.date %></td>
+            <td><%= issue_request.issue_priority %></td>
+            <td>
+             <% if issue_request.document1_file_name == nil %>
+               <small class="label label-default">Not Available</small>
+                 <% else %>
+                 <center><%= link_to '',download_screenshot_path(id: issue_request.id),class: 'btn btn-xs fa fa-download' %>
+                 <% end %>
+                 </center>
+            </td>
+            <td>
+              <% if issue_request.document2_file_name == nil %>
+                  <small class="label label-default">Not Available</small>
+                  <% else %>
+                  <center><%= link_to '',download_screenshot_image_path(id: issue_request.id),class: 'btn btn-xs fa fa-picture-o' %></center>
+                  <% end %>
+            </td>
+
+             <td>
+                 <% if issue_request.issue_tracker_member_id == nil %>
+
+                 <%= link_to '',coordinator_lock_request_issue_requests_path(id: issue_request,lock_time:Time.zone.now.to_time,lock_date: Time.zone.now.to_date ),class: 'btn btn-sm btn-danger fa fa-lock',data: { confirm: 'Are you sure?' } %>
+                 <% else %>
+                   <small class="label label-primary">Locked by <%= issue_request.issue_tracker_member.employee.try(:manual_employee_code) %></small>
+                  <% end %>
+                   <% if issue_request.issue_tracker_member.try(:employee_id) == current_user.employee_id %>
+                     <%= link_to '',unlock_request_issue_requests_path(issue_request),class: 'btn btn-sm btn-warning fa fa-unlock-alt',data: { confirm: 'Are you sure?' } %> |
+                     <%= link_to 'Solved',modal1_issue_requests_path(issue_request),class: 'btn btn-xs btn-success',remote: true %>
+
+                     <div id="myModal1" class="modal fade"></div>
+                     <% else %>
+                    
+                     <% end %> 
+                  <%= link_to '', issue_request,class: 'btn btn-sm btn-default fa fa-eye' %>
+            </td>
+          <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
+</div>
+<br>

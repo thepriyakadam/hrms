@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  employee_id: 
+  date: 2016-03-08
+  ot_hrs: 9.99
+  ot_esic_amount: 9.99
+  total_amount: 9.99
+  attendence_bouns_amount: 9.99
+  paid_holiday_amount: 9.99
+  net_payble_amount: 9.99
+
+two:
+  employee_id: 
+  date: 2016-03-08
+  ot_hrs: 9.99
+  ot_esic_amount: 9.99
+  total_amount: 9.99
+  attendence_bouns_amount: 9.99
+  paid_holiday_amount: 9.99
+  net_payble_amount: 9.99

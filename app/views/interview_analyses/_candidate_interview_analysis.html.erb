@@ -1,0 +1,32 @@
+<%= form_for :interview_analyses, url: { action: 'print_interview_analysis_list',format: 'pdf',interview_round_id: @interview_round.id},:html => {:target => '_blank'} do |f| %>
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Interviewer Name</th>
+      <th>Evaluation Criteria</th>
+      <th>Skillset</th>
+      <th>Evaluation</th>
+      <th>Comment</th>
+      <!-- th>Action</th> -->
+    </tr>
+  </thead>
+  <tbody>
+    <% @interview_analyses.each do |interview_analysis| %>
+      <tr> 
+        <td><%= interview_analysis.interview_round.employee.try(:first_name) %> <%= interview_analysis.interview_round.employee.try(:middle_name) %> <%= interview_analysis.interview_round.employee.try(:last_name) %></td>
+        <td><%= interview_analysis.interview_evalution.try(:name) %></td>
+        <td><%= interview_analysis.interview_attribute.try(:name) %></td>
+        <td><%= interview_analysis.interview_decision.try(:name) %></td>
+        <td><%= interview_analysis.comment %></td>
+        <!-- <td> -->
+          <!--<= link_to '', edit_interview_analysis_path(interview_analysis),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>-->
+          <!--<= link_to '',  interview_analysis, method: :delete, data: { confirm: 'Are you sure?'},class: 'btn btn-danger btn-xs fa fa-close',remote:true %>-->
+        <!-- </td> -->
+      </tr> 
+    <% end %>
+  </tbody>
+</table>
+<div class="col-sm-3">
+  <%= f.submit "Print",class: "btn btn-xl btn-warning fa fa-print" %>
+</div>
+<% end %>

@@ -1,0 +1,62 @@
+<center><h3><%= @date.strftime('%B-%Y')%></h3></center>
+<%= form_for :workingday, url: { action: "print_working_day", format: "xls", date: @date } do |f| %>
+<table id="example1" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th><input type="checkbox" id="selectAll" value="selectAll"></th>
+      <th>Employee No</th>
+      <th>Employee ID </th>
+      <th>Month</th>
+      <th>Year</th>
+      <th>Employee Name</th>
+      <th>Day In Month</th>
+      <th>Total Leave</th>
+      <th>Non pay Leave</th>
+      <th>Holiday In Month</th>
+      <th>Week off Day</th>
+      <th>Absent Day</th>
+      <th>Present Day</th>
+      <th>Payable Day</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @workingdays.each do |workingday| %>
+      <tr>
+        <td><%= check_box_tag "ids[]", workingday.employee_id %></td>
+        <td><%= workingday.employee.try(:manual_employee_code) %></td>
+         <td><%= workingday.employee.id %></td>
+          <td><%= workingday.month_name %></td>
+           <td><%= workingday.year%></td>
+        <td><%= full_name(workingday.employee) %></td>
+        <td><%= workingday.day_in_month %></td>
+        <td><%= workingday.total_leave %></td>
+        <td><%= workingday.lwp_leave %></td>
+        <td><%= workingday.holiday_in_month %></td>
+        <td><%= workingday.week_off_day %></td>
+        <td><%= workingday.absent_day %></td>
+        <td><%= workingday.present_day %></td>
+        <td><%= workingday.payable_day %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= f.submit "Xls Report", class: "btn btn-xl btn-success fa fa-print" %>
+<%end%>
+
+<script type="text/javascript">
+  $("#example1").DataTable();
+
+$('#selectAll').click(function() {
+  if (this.checked) {
+    $(':checkbox').each(function() {
+      this.checked = true;                       
+    });
+  } 
+  else {
+    $(':checkbox').each(function() {
+      this.checked = false;                        
+    });
+  } 
+});
+</script>

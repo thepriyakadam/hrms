@@ -1,0 +1,15 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Create Expense Claim</h3> Request To: <%= @employee.try(:first_name) %> <%= @employee.try(:middle_name) %> <%= @employee.try(:last_name) %>
+
+  </div><!-- /.box-header -->
+    <div class="box-body">
+	    <div id="form">
+	      <%= render 'form' %>
+	  	</div>
+	  	<div id="daily_bill_list">
+	      <%= render 'daily_bill_list' %>
+		</div>
+   	</div>
+</div>
+

@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  is_over_time: false
+  day: 1
+  company_hrs: 9.99
+  ot_rate: 9.99
+  is_esic: false
+  status: false
+
+two:
+  is_over_time: false
+  day: 1
+  company_hrs: 9.99
+  ot_rate: 9.99
+  is_esic: false
+  status: false

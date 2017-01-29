@@ -1,0 +1,114 @@
+
+<%= bootstrap_form_for(@attendance,html: {id: 'award'},remote:true) do |f| %>
+<div class="row">
+    <div class="col-sm-3">
+    <label>Attendance Date </label>
+    <div class="field">
+      <div class="input-group">
+        <div class="input-group-addon">
+          <i class="fa fa-calendar"></i>
+        </div>
+        <%= f.text_field :attendance_date, hide_label: true, id: 'attendance_date'%>
+      </div>
+    </div>
+    </div>
+    <div class="col-sm-2">
+      <div class="bootstrap-timepicker">
+       <div class="form-group">
+        <label>Check In</label>
+          <div class="input-group">
+            <%= f.text_field :check_in,hide_label:true, class: 'form-control timepicker' %>
+            <div class="input-group-addon">
+              <i class="fa fa-clock-o"></i>
+            </div>
+          </div><!-- /.input group -->
+        </div><!-- /.form group -->
+      </div>
+    </div>
+    <div class="col-sm-2">
+      <div class="bootstrap-timepicker">
+       <div class="form-group">
+        <label>Check Out</label>
+         <div class="input-group">
+           <%= f.text_field :check_out,hide_label:true, class: 'form-control timepicker' %>
+         <div class="input-group-addon">
+          <i class="fa fa-clock-o"></i>
+         </div>
+         </div><!-- /.input group -->
+       </div><!-- /.form group -->
+      </div>
+    </div>
+    <div class="col-sm-2">
+     <div class="field">
+      <%= f.text_field :company_hrs %>
+     </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="row">
+    <div class="col-sm-10">
+      <table id="example2" class="table table-bordered table-hover table-condensed">
+        <thead>
+          <tr>
+          <th><input type="checkbox" id="selectAll" value="selectAll"></th>
+          <th>Employee ID</th>
+          <th>Employee Name</th>
+          <th>Designation</th>
+          <th>Contact No</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @employees.each do |employee| %>
+            <tr>
+              <td><%= check_box_tag "employee_ids[]",employee.employee.id%></td>
+              <td><%= employee.employee.try(:manual_employee_code) %></td>
+              <td><%= employee.employee.try(:first_name)+' '+employee.employee.try(:last_name) %></td>
+              <td><%= employee.employee.try(:joining_detail).try(:employee_designation).try(:name) %></td>
+              <td><%= employee.employee.try(:contact_no) %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+  
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit :class => class_name, data: { disable_with: data_info } %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<script>
+$(function () {
+  $(".timepicker").timepicker({
+    showInputs: false
+  });
+});
+
+$('#selectAll').click(function() {
+    if (this.checked) {
+      $(':checkbox').each(function() {
+        this.checked = true;                        
+      });
+    } 
+    else {
+      $(':checkbox').each(function() {
+        this.checked = false;                        
+      });
+    } 
+  });
+  
+  $(function(){
+    $('#attendance_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-1:+10',
+    dateFormat: 'dd-mm-yy' });
+  });
+
+</script>

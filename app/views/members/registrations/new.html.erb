@@ -1,29 +1,11 @@
-<h2>Sign up</h2>
-
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= devise_error_messages! %>
-
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "off" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "off" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Sign up" %>
-  </div>
-<% end %>
-
-<%= render "members/shared/links" %>
+<div class="login-box">
+  <div class="login-logo">
+    <a><b>Registration</b></a>
+  </div><!-- /.login-logo -->
+  <div class="login-box-body">
+    <p class="login-box-msg">You have no authority.</p>
+    <%- if controller_name != 'sessions' %>
+      <%= link_to "Back to Log in", new_session_path(resource_name), class: "btn btn-primary btn-xs" %><br/>
+    <% end -%>
+  </div><!-- /.login-box-body -->
+</div><!-- /.login-box -->

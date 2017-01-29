@@ -1,0 +1,116 @@
+<%= bootstrap_form_for @selected_resume,url:{action:'is_confirm',vacancy_master_id: @vacancy_master.id} do |f| %>   
+<table class="table table-bordered table-hover table-condensed example3">
+  <thead>
+    <tr>
+      <th><input type="checkbox" id="selectAll" value="selectAll"></th>
+      <th>Name</th>
+      <th>Contact No.</th>
+      <th>Degree</th>
+      <th>Status</th>
+<!--       <th>Offer Letter Status</th>
+ -->      <th>Resume</th>
+      <th>Image</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @selected_resumes.each do |selected_resume| %>
+      <tr>
+        <td>
+          <% if selected_resume.status == "Shortlisted" %>
+          <% elsif selected_resume.status == "Interview Scheduled" %>
+          <% elsif selected_resume.status == "Interview Rescheduled" %>
+          <% else %>
+            <%= check_box_tag "selected_resume_ids[]", selected_resume.id %>
+          <% end %>
+        </td>
+        <td><%= selected_resume.name %></td>
+        <td><%= selected_resume.contact_no %></td>
+        <td><%= selected_resume.degree.try(:name) %></td>
+        <td>
+          <div id="myModal1" class="modal fade"></div>
+          <% if selected_resume.status == "Shortlisted" %>
+            <small class="label label-primary">Shortlisted</small>
+            <% elsif selected_resume.status == "Interview Scheduled" %>
+            <small class="label label-primary">Interview Scheduled</small>
+            <%= link_to '',modal_change_status_selected_resumes_path(selected_resume,vacancy_master_id: @vacancy_master.id),class: 'btn btn btn-sm btn-default fa fa-info',remote: true %>
+            <% elsif selected_resume.status == "Interview Rescheduled" %>
+            <small class="label label-default">Interview Rescheduled</small>
+            <%= link_to ' Update Status',modal_change_status_selected_resumes_path(selected_resume),class: 'btn btn btn-sm btn-default fa fa-modx',remote: true %>
+            <% else %>
+            <small class="label label-default">Not Yet Shortlisted</small>
+            <% end %>
+        </td>
+        <!-- <td><= selected_resume.offer_letter_status %> <div id="myModal" class="modal fade"></div>
+          < if selected_resume.status == "Shortlisted" %>
+          <= link_to ' Offer Letter',modal_selected_resumes_path(selected_resume),class: 'btn btn btn-sm btn-default fa fa-modx',remote: true %>
+          < elsif selected_resume.status == "Interview Scheduled" %>
+          <= link_to ' Offer Letter',modal_selected_resumes_path(selected_resume),class: 'btn btn btn-sm btn-default fa fa-modx',remote: true %>
+          < else %>
+          < end %>
+          </td> -->
+        <td>
+         <% if selected_resume.avatar_file_name == nil %>
+           <small class="label label-default">Not Available</small>
+             <% else %>
+             <center><%= link_to '',download_resume_path(id: selected_resume.id),class: 'btn btn-xs fa fa-download' %>
+             <% end %>
+             </center>
+        </td>
+        <td>
+          <% if selected_resume.passport_photo_file_name == nil %>
+              <small class="label label-default">Not Available</small>
+              <% else %>
+              <center><%= link_to '',download_image_path(id: selected_resume.id),class: 'btn btn-xs fa fa-picture-o' %></center>
+              <% end %>
+        </td>
+        <td>
+        <div id="myModal" class="modal fade"></div>
+
+        <%= link_to '', selected_resume,class: 'btn btn-xs btn-default fa fa-eye' %>
+        <!--<= link_to '', selected_resume, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>-->
+        <%= link_to '',modal_profile_update_selected_resumes_path(selected_resume,vacancy_master_id: @vacancy_master.id),class: 'btn btn btn-xs btn-success fa fa-edit',remote: true %>
+           <% if selected_resume.status == "Shortlisted" %>
+          <%= link_to ' Interview', new_interview_schedule_path(selected_resume.id),class: 'btn btn-xs btn-primary fa fa-check' %>
+          <% elsif selected_resume.status == "Interview Rescheduled" %>
+          <%= link_to ' Interview', new_interview_schedule_path(selected_resume.id),class: 'btn btn-xs btn-primary fa fa-check' %>
+          <% else %>
+          <% end %>
+          
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<div id="myModal2" class="modal fade"></div>
+
+<div class="row">
+  <div class="col-sm-6">
+    <div class="actions">
+      <%= f.submit "Confirm", class: 'btn btn-primary btn-sm' %>
+      <%= link_to 'Back', vacancy_resume_vacancy_masters_path,class:"btn btn-sm btn-default fa fa-arrow-left" %>
+    </div>
+  </div>
+</div>
+<% end %>
+
+
+
+<script type="text/javascript">
+  $(function () {
+    $('#selectAll').click(function() {
+      if (this.checked) {
+        $(':checkbox').each(function() {
+          this.checked = true;                       
+        });
+      } 
+      else {
+        $(':checkbox').each(function() {
+          this.checked = false;                        
+        });
+      } 
+    });
+  });
+</script>

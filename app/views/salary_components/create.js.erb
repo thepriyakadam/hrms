@@ -1,0 +1,7 @@
+<%if @flag == true %>
+$("#form").html("<%= j render 'form' %>");
+$("#salary_component_code").focus();
+$("#salary_component_li").html("<%= j render 'salary_component_list' %>");
+<%else%>
+  $("#form").html("<%= j render 'form' %>");
+<%end%>

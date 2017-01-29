@@ -5,6 +5,7 @@ gem 'rails', '4.2.4'
 # Use mysql as the database for Active Record
 # gem 'mysql2', '~> 0.3.18'
 gem 'sqlite3', '~> 1.3', '>= 1.3.13'# Use SCSS for stylesheets
+
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'

@@ -1,0 +1,35 @@
+<div class="box box-default">
+    <div class="box-header with-border">
+        <h3 class="box-title">Employee Daily Activity List</h3> 
+    </div><!-- /.box-header -->
+        <div class="box-body"> 
+      <table id="example2" class="table table-bordered table-hover table-condensed">
+       <thead>
+          <tr>
+           
+            <th>Date</th>
+            <th>Employee Name</th>
+            <th>Project</th>
+            <th>Day activity</th>
+            <th>Next Day Plan</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @employee_daily_activities.each do |employee_daily_activity| %>
+            <tr>
+              <td><%= employee_daily_activity.day %></td>
+              <td><%= full_name(employee_daily_activity.employee)%></td>
+              <td><%= employee_daily_activity.project_master.try(:name) %></td>
+              <td><%= employee_daily_activity.today_activity %></td>
+              <td><%= employee_daily_activity.tomorrow_plan %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <br>
+       <%= link_to 'Back', employee_details_employee_daily_activities_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+      </div>
+</div>
+
+
+

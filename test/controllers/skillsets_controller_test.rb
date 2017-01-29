@@ -5,18 +5,18 @@ class SkillsetsControllerTest < ActionController::TestCase
     @skillset = skillsets(:one)
   end
 
-  test "should get index" do
+  test 'should get index' do
     get :index
     assert_response :success
     assert_not_nil assigns(:skillsets)
   end
 
-  test "should get new" do
+  test 'should get new' do
     get :new
     assert_response :success
   end
 
-  test "should create skillset" do
+  test 'should create skillset' do
     assert_difference('Skillset.count') do
       post :create, skillset: { employee_id: @skillset.employee_id, name: @skillset.name, skill_level: @skillset.skill_level }
     end
@@ -24,22 +24,22 @@ class SkillsetsControllerTest < ActionController::TestCase
     assert_redirected_to skillset_path(assigns(:skillset))
   end
 
-  test "should show skillset" do
+  test 'should show skillset' do
     get :show, id: @skillset
     assert_response :success
   end
 
-  test "should get edit" do
+  test 'should get edit' do
     get :edit, id: @skillset
     assert_response :success
   end
 
-  test "should update skillset" do
+  test 'should update skillset' do
     patch :update, id: @skillset, skillset: { employee_id: @skillset.employee_id, name: @skillset.name, skill_level: @skillset.skill_level }
     assert_redirected_to skillset_path(assigns(:skillset))
   end
 
-  test "should destroy skillset" do
+  test 'should destroy skillset' do
     assert_difference('Skillset.count', -1) do
       delete :destroy, id: @skillset
     end

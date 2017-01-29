@@ -1,0 +1,44 @@
+<table id="example6" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr> 
+      <th>ID</th>
+      <th>Name</th>
+      <th>Expences</th>
+      <th>Training</th>
+      <th>Recruitment</th>
+      <th>Resignation</th>
+      <th>Transfer</th>
+      <th>Promotion</th>
+      <th>Active</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+   <% @reporting_masters.each do |reporting_master| %>
+      <tr>
+        <td><%= reporting_master.employee.try(:manual_employee_code) %></td>
+        <td><%= reporting_master.employee.try(:first_name).to_s+' '+reporting_master.employee.try(:middle_name).to_s+' '+reporting_master.employee.try(:last_name).to_s %></td>
+        <td><%= reporting_master.is_expences ? "Yes" : "No" %></td>
+        <td><%= reporting_master.is_training ? "Yes" : "No" %></td>
+        <td><%= reporting_master.is_recruitment ? "Yes" : "No" %></td>
+        <td><%= reporting_master.is_resignation ? "Yes" : "No" %></td>
+        <td><%= reporting_master.is_transfer ? "Yes" : "No" %></td>
+        <td><%= reporting_master.is_promotion ? "Yes" : "No" %></td>
+        <td><%= reporting_master.is_active ? "Yes" : "No" %></td>
+        </td> 
+        <td>
+         <%= link_to '', edit_reporting_master_path(reporting_master),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
+         <%= link_to '',  reporting_master, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-xs btn-danger fa fa-close' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

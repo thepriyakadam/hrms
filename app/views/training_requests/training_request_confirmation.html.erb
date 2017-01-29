@@ -1,0 +1,51 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Training Request Confirmation </h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table class="table table-bordered table-hover table-condensed">
+      <tr>
+        <th><strong>Employee ID</strong></th>
+        <td><%= @training_request.employee.try(:manual_employee_code) %></td>
+      
+        <th><strong>Training Topic</strong></th>
+        <td><%= @training_request.training_topic_master.try(:name) %></td>
+      </tr>
+
+      <tr>
+        <th><strong>Request Date</strong></th>
+        <td><%= @training_request.training_date %></td>
+      
+        <th><strong>Request To</strong></th>
+        <td><%= @employee.try(:first_name) %> <%= @employee.try(:middle_name) %> <%= @employee.try(:last_name) %></td>
+      </tr>
+      <tr>
+        <th><strong>No. Of Employee</strong></th>
+        <td><%= @training_request.no_of_employee %></td>
+      
+        <th><strong>Place</strong></th>
+        <td><%= @training_request.place %></td>
+      </tr>
+      <tr>
+        <th><strong>Description</strong></th>
+        <td><%= @training_request.description %></td>
+      
+        <th><strong>Justification</strong></th>
+        <td><%= @training_request.justification %></td>
+      </tr>
+      <!-- <tr>
+        <th><strong>Comment</strong></th>
+        <td colspan="4"><%= @training_request.comment %></td>
+      </tr> -->
+    </table><br>
+
+   <div>
+      <%= render 'trainee_request_list' %>
+  </div>
+
+    </td>
+  </div>
+</div>
+
+<div id="myModal1" class="modal fade"></div>
+<div id="myModal2" class="modal fade"></div>

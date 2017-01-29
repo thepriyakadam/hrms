@@ -1,0 +1,40 @@
+<style>
+    th {
+        text-align: left;
+    }
+    tr {
+        page-break-inside: avoid;
+    }
+    div.alwaysbreak { page-break-before: always; }
+    div.nobreak:before { clear:both; }
+    div.nobreak{ page-break-inside: avoid;
+    }
+</style>
+  <table style="border-collapse: collapse; font-size:9pt;" border=1 width=1200 cellpadding="10">
+    <thead>
+     <tr><td colspan="6"><center><strong><%= current_user.employee.company_location.company.try(:description) %></strong> <br>
+        <%= current_user.employee.company_location.company.try(:address) %><br> 
+        <%= current_user.employee.company_location.try(:name) %></center> </td></tr>
+  <thead>
+    <tr>
+        <th>ID</th>
+        <th>Employee Name</th>
+        <th>Company Name</th>
+        <th>Designation</th>
+        <th>Experience</th>
+        <th>CTC</th>
+    </tr>
+    </thead>
+<tbody>
+    <% @experiences.each do |experience| %>
+  <tr>
+          <td><%= experience.employee.try(:manual_employee_code ) %></td>
+          <td><%= full_name(experience.employee)%></td>
+          <td><%= experience.company_name %></td>
+          <td><%= experience.designation %></td>
+          <td><%= experience.no_of_year %></td>
+          <td><%= experience.ctc %></td>
+       <%end%>
+  </tr>
+  </tbody>
+  </thead>

@@ -1,0 +1,229 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Vacancy</h3>
+  </div><!-- /.box-header -->
+
+  <div class="box-body">
+  <%= bootstrap_form_for(@vacancy_master,html: {id: 'vacancy_master'}) do |f| %>
+  <%= f.hidden_field :employee_id, :value => current_user.employee_id %>
+      <div class="row">
+
+       <div class="col-sm-3">
+          <div class="field">
+             <%= f.text_field :other_organization,label: 'Organization',value: current_user.employee.company_location.company.description%>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+         <div class="form-group required">
+       <!--   <label>Job Title</label> -->
+              <%= f.select :employee_designation_id,all_employee_designation,{label: 'Job Title',include_blank: " Select Job Title"} %>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="field">
+           <%= f.text_field :vacancy_name,label: 'Vacancy Name'%>
+          </div>
+        </div>
+
+          <div class="col-sm-3">
+          <div class="field">
+            <div class="form-group required">
+              <%= f.select :company_location_id, role_location_list,{label: 'Location',include_blank: " Select Location"} %>
+            </div>
+          </div>
+        </div> 
+        </div>
+
+      <div class="row">
+
+         <div class="col-sm-3">
+          <div class="field">
+            <div class="form-group required">
+              <%= f.select :department_id, all_department_type_list2,{label: 'Department',include_blank: " Select Department"} %>
+            </div>
+          </div>
+        </div> 
+
+     
+      
+        <div class="col-sm-3">
+          <div class="form-group required">
+             <%= f.text_field :no_of_position,label: 'No. of Positions'%>
+          </div>
+        </div>  
+
+        <div class="col-sm-3">
+          <div class="field">
+             <%= f.text_field :experience,label: 'Experience'%>
+          </div>
+        </div>
+
+
+        <div class="col-sm-3">
+          <div class="field">
+             <%= f.text_field :budget,label: 'Budget'%>
+          </div>
+        </div> 
+          </div>
+
+      <div class="row">
+
+        <div class="col-sm-3">
+          <div class="form-group required">
+          <!-- <label>Vacancy Fulfillment Date </label> -->
+        
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+               <%= f.text_field :vacancy_post_date, label: 'Vacancy Fulfillment Date', class: 'birth_date'%>
+            </div>
+          </div>
+        </div>      
+    
+        <div class="col-sm-3">
+          <div class="field">
+             <%= f.text_field :keyword,label: 'Keyword'%>
+          </div>
+        </div>  
+
+        <div class="col-sm-3">
+          <label>Qualification 1</label>
+          <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <%= link_to "", new_degree_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+              </div>
+               <%= f.select :degree_id, all_degree, {hide_label: true,include_blank: " Select Qualification"}, class: 'input_degree_stream_id' %>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <label>Qualification 2</label>
+          <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <%= link_to "", new_degree_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+              </div>
+               <%= f.select :degree_1_id, all_degree, {hide_label: true,include_blank: " Select Qualification"}, class: 'input_degree_stream_id' %>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="row">
+
+        <div class="col-sm-3">
+          <label>Qualification 3</label>
+          <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <%= link_to "", new_degree_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+              </div>
+               <%= f.select :degree_2_id, all_degree, {hide_label: true,include_blank: " Select Qualification"}, class: 'input_degree_stream_id' %>
+            </div>
+          </div>
+        </div>
+       
+       
+        <div class="col-sm-3">
+          <div class="form-group required">
+       <!--  <label>Vacancy Approval</label> -->
+          <%= f.select :reporting_master_id,all_recruitment_reporting_master_list,{label: 'Vacancy Approval',include_blank: " Select Reporting Person"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
+            </div>
+        </div>
+       </div>  
+     
+
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="field">
+           <%= f.text_area :description,label: 'Job Description',placeholder: "e.g : Any Description related to Vacancy"%>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="field">
+           <%= f.text_area :justification,label: 'Justification',placeholder: "e.g : Any Description related to why its needed for creating this vacancy"%>
+          </div>
+        </div>
+      </div> 
+
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="actions">
+            <%= f.submit "Create Vacancy",class: "btn btn-primary btn-sm" %>
+            <%= link_to 'Back', vacancy_masters_path,class:"btn btn-sm btn-default fa fa-arrow-left" %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+<script>
+$(function(){
+  $.validator.addMethod("numbersOnly", function (value, element) {
+    return this.optional(element) || /^[0-9]+$/i.test(value);
+}, "Please enter numbers only.");
+
+$("#vacancy_master").validate({
+    rules: {
+      "vacancy_master[company_location_id]":{
+        required: true
+      },
+      "vacancy_master[other_organization]":{
+        required: true
+      },
+      "vacancy_master[no_of_position]":{
+        required: true,
+        numbersOnly: true
+      },
+      "vacancy_master[employee_designation_id]":{
+        required: true
+      },
+      "vacancy_master[department_id]":{
+        required: true
+      },
+      "vacancy_master[vacancy_post_date]":{
+        required: true
+      },
+      "vacancy_master[reporting_master_id]":{
+        required: true
+      }
+    },
+    messages: {
+      "vacancy_master[company_location_id]":{
+        required: "Please Specify Location Name"
+      },
+      "vacancy_master[other_organization]":{
+        required: "Please Specify Organization Name"
+      },
+      "vacancy_master[no_of_position]":{
+        required: "Please Specify No. of Positions"
+      },
+      "vacancy_master[employee_designation_id]":{
+        required: "Please Specify Job Title"
+      },
+      "vacancy_master[department_id]":{
+        required: "Please Specify Department Name"
+      },
+      "vacancy_master[vacancy_post_date]":{
+        required: "Please Specify Vacancy Post Date"
+      },
+      "vacancy_master[vacancy_post_date]":{
+        required: "Please Specify Vacancy Post Date"
+      },
+      "vacancy_master[reporting_master_id]":{
+        required: "Please Specify Reporting Master Name"
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+    
+   });
+});
+</script>

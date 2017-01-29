@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Base component:</strong>
+  <%= @employer_family_pension.base_component %>
+</p>
+
+<p>
+  <strong>Percentage:</strong>
+  <%= @employer_family_pension.percentage %>
+</p>
+
+<p>
+  <strong>Effective from:</strong>
+  <%= @employer_family_pension.effective_from %>
+</p>
+
+<p>
+  <strong>Effective to:</strong>
+  <%= @employer_family_pension.effective_to %>
+</p>
+
+<p>
+  <strong>Is active:</strong>
+  <%= @employer_family_pension.is_active %>
+</p>
+
+<p>
+  <strong>Is confirm:</strong>
+  <%= @employer_family_pension.is_confirm %>
+</p>
+
+<%= link_to 'Edit', edit_employer_family_pension_path(@employer_family_pension) %> |
+<%= link_to 'Back', employer_family_pensions_path %>

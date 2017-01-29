@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  employee_id: 
+  advance_amount: 9.99
+  no_of_instalment: MyString
+  instalment_amount: 9.99
+  advance_date: 2016-01-13
+
+two:
+  employee_id: 
+  advance_amount: 9.99
+  no_of_instalment: MyString
+  instalment_amount: 9.99
+  advance_date: 2016-01-13

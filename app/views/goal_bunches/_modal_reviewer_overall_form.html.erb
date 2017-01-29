@@ -1,0 +1,79 @@
+<div class="modal-dialog" style="height:800px; max-height:1000px; width:800px; max-width:1000px;">
+  <div class="modal-content">
+    <div class="modal-body">
+
+      <%= bootstrap_form_for(:goal_bunch,url:{action:'reviewer_overall_comment_create',employee_id: current_user.employee_id,goal_bunch_id: @goal_bunch.id,period_id: @period.id},html: {id: 'goal_bunch'}) do |f| %>
+        
+        <div class="row">
+        <h6><center>Recommendation For Employee</center></h6>
+          <div class="col-sm-3">
+              <%= f.select :r_promotion,[['Yes','true'],['No','false']],{label: 'Promotion',include_blank: " Select Promotion Option"} %>
+          </div>
+
+          <div class="col-sm-3">
+              <%= f.select :r_increment,[['Yes','true'],['No','false']],{label: 'Increment',include_blank: " Select Increment Option"} %>
+          </div>
+
+          <div class="col-sm-3">
+              <%= f.select :r_designation_id,all_employee_designation,{label: 'Designation',include_blank: " Select Designation"} %>
+          </div>
+
+          <div class="col-sm-3">
+          <label>Revised CTC</label>
+            <%= f.text_field :r_ctc,hide_label:true,placeholder: 'CTC' %>
+          </div>
+          </div>
+          <br>
+
+          <div class="row">
+          <hr>
+          <h6><center>Overall Comment/Rating For Employee</center></h6>
+          <div class="col-sm-6">
+          <label>Overall Comment</label>
+              <%= f.text_field :review_comment,hide_label:true,placeholder: 'Overall Comment' %>
+          </div>
+
+          <div class="col-sm-4">
+            <label>Overall Rating</label>
+            <%= f.select :reviewer_rating_id,all_rating_type,{hide_label:true, include_blank: "select rating"} %>    
+          </div>
+        </div>
+
+          <div class="row">
+            <div class="col-sm-4">
+                <div class="actions">
+                <%= f.submit "Create" , class: 'btn btn-primary btn-sm' %>
+                </div>
+            </div>
+          </div>
+
+      <% end %>
+
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $("#goal_bunch").validate({
+    rules: {
+      "goal_bunch[review_comment]":{
+        required: true
+      },
+      "goal_bunch[reviewer_rating_id]":{
+        required: true
+      }
+    },
+    messages: {
+      "goal_bunch[review_comment]":{
+        required: "Please specify Comment"
+      },
+      "goal_bunch[reviewer_rating_id]":{
+        required: "Please specify Rating"
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

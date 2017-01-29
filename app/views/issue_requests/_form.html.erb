@@ -1,0 +1,93 @@
+ <div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title"> Support Request </h3>
+  </div>
+    <div class="box-body">
+      <%= bootstrap_form_for(@issue_request,html: {id: 'issue_request'}) do |f| %>
+      <%= f.hidden_field :employee_id, :value => current_user.employee_id %>
+      <%= f.hidden_field :date, :value => Time.zone.now.to_date %>
+      <%= f.hidden_field :time, :value => Time.zone.now.to_time %>
+      <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="form-group required">       
+          <%= f.select :issue_tracker_group_id,all_issue_tracker_group,{label: "Group" ,include_blank: "Select Group"},{onchange:"var a={group_id:$(this).val()}; $.get('/issue_masters/collect_issues',a,function(response){});"}%>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="form-group required">
+          <div id="issues">
+            <%= render 'issue_masters/issue_dropdown' %> 
+          </div> 
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="form-group required">
+          <%= f.select :issue_priority , ['Low','Medium','High'] ,{label: "Support Priority",include_blank: 'Select Priority'}%>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="group">
+          <%= f.text_area :description ,{label: "Description"} %>
+        </div>
+      </div>
+      <div class="col-sm-3">
+          <div class="field">
+            <%= f.file_field :document1,label: 'Upload Document(only docx,pdf)' %>
+          </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="field">
+            <%= f.file_field :document2,label: 'Upload Photo(only jpeg,jpg,png)' %>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6">
+        <label></label>
+        <div class="actions">
+            <%= f.submit 'Create Support Request',class: "btn btn-primary btn-sm"  %>
+            <%= link_to 'Back', issue_requests_path,class: 'btn btn-sm btn-default fa fa-arrow-left' %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<% end %>
+</div>
+</div>
+
+<script>
+$("#issue_request").validate({
+    rules: {
+      "issue_request[issue_tracker_group_id]":{
+        required: true,
+      },
+      "issue_request[issue_master_id]":{
+        required: true,
+      },
+      "issue_request[issue_priority]":{
+        required: true,
+      },
+       },
+    messages: {
+      "issue_request[issue_tracker_group_id]":{
+        required: "Please Select Group",
+      },
+       "issue_request[issue_master_id]":{
+        required: "Please Select Priority",
+      },
+      "issue_request[issue_priority]":{
+        required: "Please Select Priority",
+      },
+       },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

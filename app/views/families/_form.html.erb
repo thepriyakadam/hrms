@@ -1,303 +1,200 @@
-<%= bootstrap_form_for(@family) do |f| %>
-  <% if @family.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@family.errors.count, "error") %> prohibited this family from being saved:</h2>
+<!-- SELECT2 EXAMPLE -->
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Employee Family Details</h3>
+  </div><!-- /.box-header -->
 
-      <ul>
-      <% @family.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
 
+<div class="box-body">
+<%= bootstrap_form_for(@family,html: {id: 'family'},remote:true) do |f| %>
+<%= f.hidden_field :employee_id, value: @employee.id %>
   <div class="row">
-    <div class="col-sm-1"></div>
       <div class="col-sm-3">
-        <div class="field">
-         <%= f.text_field :employee_id %>
-       </div>
-    </div>
-  </div>
-
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-         <%= f.text_field :no_of_member %>
-      </div>
-    </div>
-  </div>
-
-
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-         <%= f.text_field :f_name %>
+        <div class="form-group required">
+          <%= f.text_field :relation %>
         </div>
     </div>
-  </div>
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-         <%= f.text_field :m_name %>
+    <div class="col-sm-3">
+        <div class="form-group required">
+         <%= f.text_field :f_name,label: 'First Name' %>
         </div>
     </div>
-  </div>
-
-
- <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
+    <div class="col-sm-3">
         <div class="field">
-         <%= f.text_field :m_name %>
+         <%= f.text_field :m_name,label: 'Middle Name' %>
         </div>
     </div>
-  </div>
-
-
-  
- <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-        <%= f.text_field :l_name %>
+     <div class="col-sm-3">
+        <div class="form-group required">
+        <%= f.text_field :l_name,label: 'Last Name' %>
         </div>
     </div>
-  </div>
-
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-         <%= f.date_select :date_of_birth %>
-        </div>
-    </div>
-  </div>
-
-<div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-          <%= f.number_field :age %>
-        </div>
-      </div>
 </div>
 
-  <div class="row">
-    <div class="col-sm-1"></div>
+<div class="row">
+     <div class="col-sm-3">
+     <label>Birth Date: </label>
+         <div class="form-group required">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+            <%= f.text_field :date_of_birth,hide_label:true, class: 'family_birth_date' %>
+          </div>
+         </div>
+        </div>
       <div class="col-sm-3">
         <div class="field">
-          <%= f.text_field :contact_no %>
+          <%= f.text_field :age %>
         </div>
-    </div>
-  </div>
-
-
-  <div class="row">
-    <div class="col-sm-1"></div>
+      </div>
       <div class="col-sm-3">
         <div class="field">
-          <%= f.text_field :phone_no %>
+          <%= f.text_field :contact_no,label: 'Contact No' %>
         </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
+     </div>
+     <div class="col-sm-3">
         <div class="field">
          <%= f.text_field :email %>
         </div>
     </div>
-  </div>
+</div>
 
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
+<div class="row">
+   
+      <div class="col-sm-6">
         <div class="field">
-    <%= f.text_field :permanent_address %>
-       </div>
-    </div>
-  </div>
-
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-        <%= f.label :city %><br>
-        <%= f.text_field :city %>
+         <%= f.text_field :current_address,label: 'Current Address' %>
         </div>
     </div>
-  </div>
 
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
+    <div class="col-sm-3">
         <div class="field">
-         <%= f.text_field :dist %>
+         <%= f.select :gender,['Male','Female'],{label: 'Gender',include_blank: " Select Gender"} %>
         </div>
     </div>
-  </div>
 
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
+    <div class="col-sm-3">
         <div class="field">
-         <%= f.text_field :state %>
+        <%= f.select :blood_group_id, all_blood_group,{label: 'Blood Group',include_blank: " Select Blood Group"} %>
+        </div>
+      </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-3">
+        <div class="field">
+          <%= f.text_field :adhar_no,label: 'Aadhaar Card No' %>
         </div>
     </div>
-  </div>
 
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
+    <div class="col-sm-3">
         <div class="field">
-        <%= f.number_field :pin_code %>
+          <%= f.text_field :pan_no,label:"PAN Card No" %>
         </div>
     </div>
-  </div>
-
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
+    <div class="col-sm-3">
         <div class="field">
-         <%= f.text_field :current_address %>
+        <%= f.select :marital, ['Married','UnMarried'],{label: 'Marital Status',include_blank: " Select Marital Status"}%>
         </div>
     </div>
-  </div>
 
-
-   <div class="row">
-    <div class="col-sm-1"></div>
       <div class="col-sm-3">
         <div class="field">
-          <%= f.text_field :relation %>
+          <%= f.select :medical_claim, ['Yes','No'],{label: 'Medical Insurance',include_blank: " Select Medical Insurance"} %>
         </div>
-    </div>
-  </div>
-
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-          <%= f.text_field :adhar_no %>
-        </div>
-    </div>
-  </div>
-
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-          <%= f.text_field :pan_no %>
-        </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-    <%= f.label :passport_no %><br>
-    <%= f.text_field :passport_no %>
-  </div>
-    </div>
-  </div>
-
-
- <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-          <%= f.text_field :medical_claim %>
-        </div>
-    </div>
-  </div>
-
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-          <%= f.text_field :marital %>
-        </div>
-    </div>
-  </div>
-
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-          <%= f.text_field :status %>
-        </div>
-    </div>
-  </div>
-
-
- <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-          <%= f.text_field :nationality_id %>
-        </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-          <%= f.text_field :blood_group %>
-        </div>
-    </div>
-  </div>
-
-   <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-          <%= f.text_field :religion %>
-        </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
-        <div class="field">
-          <%= f.text_field :phandicap %>
-        </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-sm-1"></div>
-      <div class="col-sm-3">
+      </div>
+</div>
+<div class="row">
+     <div class="col-sm-3">
         <div class="field">
           <%= f.text_field :profession %>
         </div>
+      </div>
+
+     <div class="col-sm-3">
+        <div class="field">
+        <%= f.text_field :passport_no,label: 'Passport No' %>
+       </div>
+      </div>
+
+      <div class="col-sm-3">
+       <div class="field">
+        <label>Passport Issue Date: </label>
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+            <%= f.text_field :passport_issue_date,hide_label:true, class: 'family_passport_issue_date'%>
+          </div>
+        </div>
+        </div>
+        <div class="col-sm-3">
+        <div class="field">
+        <label>Passport Expiry Date: </label>
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+            <%= f.text_field :passport_expiry_date,hide_label: true, class: 'family_passport_expiry_date'%>
+          </div>
+        </div>
+        </div>
     </div>
+    <div class="row">  
+      <div class="col-sm-3">
+        <div class="field">
+          <%= f.select :religion_id, all_religions,{include_blank: " Select Religion"} %>
+        </div>
+      </div>
+ 
+      <div class="col-sm-3">
+        <div class="field">
+          <%= f.select :is_handicap, ['Yes','No'],{label: 'Differently Abled',include_blank: "Please Select"},{onchange:"var a={id:$(this).val()}; $.get('/families/ajax_show_handicap_type_textbox',a,function(response){});"} %>
+        </div>
+      </div>
+
+      <div class="col-sm-3">
+        <div class="field">
+          <div id="handicap_type">
+              <% if action_name == 'edit' and @family.handicap_type != "" %>
+                <%= f.text_field :handicap_type %>
+              <% end %>
+            </div>
+        </div>
+      </div>
   </div>
 
   <div class="row">
-    <div class="col-sm-1"></div>
       <div class="col-sm-3">
         <div class="actions">
-          <%= f.submit %>
+            <%= f.submit :class => class_name, data: { disable_with: data_info } %>
         </div>
     </div>
   </div>
 <% end %>
+</div><!-- /.box-body -->
+</div><!-- /.box -->
+
+<script type="text/javascript">
+  $(function(){
+    $('.family_birth_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:-0',
+    dateFormat: 'dd-mm-yy' });
+
+    $('.family_passport_issue_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:-0',
+    dateFormat: 'dd-mm-yy' });
+
+    $('.family_passport_expiry_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-100:+30',
+    dateFormat: 'dd-mm-yy' });
+
+  }); 
+</script>

@@ -1,0 +1,46 @@
+<style>
+    th {
+        text-align: left;
+    }
+    tr {
+        page-break-inside: avoid;
+    }
+    div.alwaysbreak { page-break-before: always; }
+    div.nobreak:before { clear:both; }
+    div.nobreak{ page-break-inside: avoid;
+      /* http://code.google.com/p/wkhtmltopdf/issues/detail?id=9#c21 */
+    }
+</style>
+   <table style="border-collapse: collapse; font-size:9pt;" border=1 width=1200 cellpadding="10">
+    <thead>
+    <tr><td colspan="10"><center><strong><%=current_user.employee.company_location.company.try(:description) %></strong> <br> <%=current_user.employee.company_location.try(:address) %> <%= current_user.employee.company_location.try(:name) %> </center></td></tr> 
+      <tr>
+        <th>ID</th>
+        <th>Employee Name</th>
+        <th>Days In Month</th>
+        <th>Present Day</th>
+        <th>Payable Leave</th>
+        <th>Holiday</th>
+        <th>Week Off</th>
+        <th>Absent</th>
+        <th>Non Payable Leave</th>
+        <th>Payable Day</th>
+      </tr>
+    </thead>
+
+    <tbody>
+       <% @workingdays.each do |workingday| %>
+        <tr>
+          <td><%= workingday.employee.try(:manual_employee_code) %></td>
+          <td><%= full_name(workingday.employee) %></td>
+          <td><%= workingday.day_in_month %></td>
+          <td><%= workingday.present_day %></td>
+          <td><%= workingday.pay_leave %></td>
+          <td><%= workingday.holiday_in_month %></td>
+          <td><%= workingday.week_off_day %></td>
+          <td><%= workingday.absent_day %></td>
+          <td><%= workingday.nonpay_leave %></td>
+          <th><%= workingday.payable_day %></th>     
+    <% end %>
+    </tbody>
+  </table>

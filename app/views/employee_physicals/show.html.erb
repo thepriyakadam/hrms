@@ -1,24 +1,39 @@
-<p id="notice"><%= notice %></p>
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Company</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+    <tr> 
+      <th colspan="2"></th>
+      <th colspan="2"></th>
+    </tr>
 
-<p>
-  <strong>Employee:</strong>
-  <%= @employee_physical.employee %>
-</p>
+    <tr>
+    	<th><strong>Employee:</strong></th>
+    	<td>  <%= @employee_physical.employee %></td>
 
-<p>
-  <strong>Hieght:</strong>
-  <%= @employee_physical.hieght %>
-</p>
+    	<th> <strong>Hieght:</strong></th>
+    	<td> <%= @employee_physical.height %></td>
+    </tr>
+     <tr>
+    	<th><strong>Weight:</strong></th>
+    	<td><%= @employee_physical.weight %></td>
 
-<p>
-  <strong>Weight:</strong>
-  <%= @employee_physical.weight %>
-</p>
+    	<th> <strong>T-Shirt Size:</strong></th>
+    	<td> <%= @employee_physical.size %></td>
+    </tr>
+    <tr>
+      <th><strong>Trouser Size</strong></th>
+      <td><%= @employee_physical.trouser_size %></td>
 
-<p>
-  <strong>Size:</strong>
-  <%= @employee_physical.size %>
-</p>
+      <th> </th>
+      <td> </td>
+    </tr>
+  
+    </table>
 
-<%= link_to 'Edit', edit_employee_physical_path(@employee_physical) %> |
-<%= link_to 'Back', employee_physicals_path %>
+    <%= link_to 'Edit', edit_employee_physical_path(@employee_physical),class: 'btn btn-success btn-sm fa fa-edit' %> |
+    <%= link_to 'Back', employee_physicals_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->

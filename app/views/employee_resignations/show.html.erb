@@ -1,0 +1,93 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Employee Resignation</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed'">
+
+<tr>
+ <th><strong>Employee ID</strong></th>
+ <td><%= @employee_resignation.employee.try (:manual_employee_code )%></td>
+ 
+</tr>
+
+<tr>
+  <th><strong>Resignation Date</strong></th>
+  <td><%= @employee_resignation.resignation_date %></td>
+ 
+</tr>
+
+<tr>
+ <th><strong>Leaving Reason</strong></th>
+ <td><%= @employee_resignation.leaving_reason.try(:name)%></td>
+
+
+</tr>
+
+<tr>
+  <th><strong>Reason</strong></th>
+  <td><%= @employee_resignation.reason %></td>
+  
+
+</tr>
+
+<tr>
+ <th><strong>Notice period:</strong></th>
+  <td><%= @employee_resignation.notice_period %></td>
+  
+</tr>
+
+<tr>
+  <th><strong>Short notice period:</strong></th>
+  <td><%= @employee_resignation.short_notice_period %></td>
+  
+</tr>
+
+<tr>
+ <th><strong>Tentative leaving date</strong></th>
+ <td><%= @employee_resignation.tentative_leaving_date %></td>
+ 
+
+</tr>
+
+<tr>
+  <th><strong>Remark:</strong></th>
+ <td><%= @employee_resignation.remark %></td>
+ 
+
+</tr>
+
+<tr>
+ <th><strong>Exit interview date:</strong></th>
+  <td><%= @employee_resignation.exit_interview_date %></td>
+  
+</tr>
+
+<tr>
+ <th><strong>Note:</strong></th>
+  <td><%= @employee_resignation.note %></td>
+ 
+
+</tr>
+
+<tr>
+  <th><strong>Leaving date:</strong></th>
+  <td><%= @employee_resignation.leaving_date %></td>
+  
+
+</tr>
+
+<tr>
+ <th><strong>Settled on:</strong></th>
+ <td><%= @employee_resignation.settled_on %></td>
+
+
+</tr>
+
+</table>
+<%= link_to 'Edit', edit_employee_resignation_path(@employee_resignation),class: 'btn btn-success btn-sm fa fa-edit' %> |
+<%= link_to 'Back', employee_resignations_path,class: 'btn btn-primary fa fa-arrow-left' %>
+
+
+</div>
+</div>

@@ -1,0 +1,41 @@
+<style>
+    th {
+        text-align: left;
+    }
+    tr {
+        page-break-inside: avoid;
+    }
+    div.alwaysbreak { page-break-before: always; }
+    div.nobreak:before { clear:both; }
+    div.nobreak{ page-break-inside: avoid;
+      /* http://code.google.com/p/wkhtmltopdf/issues/detail?id=9#c21 */
+    }
+</style>
+<table style="border-collapse: collapse; font-size:10pt;" border=1 width=1000 cellpadding="19">
+<thead>
+  <tr>
+    <th>ID</th>
+    <th>Employee ID</th>
+    <th>Employee Name</th>
+    <th>Shift</th>
+    <th>Day</th>
+    <th>In</th>
+    <th>Out</th>
+    <th>Present</th>
+  </tr>
+</thead>
+<tbody>
+  <% @machine_attendances.each do |m| %>
+    <tr>              
+      <td><%= m.id %></td>
+      <td><%= m.employee.try(:id) %></td>
+      <td><%= m.employee.try(:first_name) %> <%= m.employee.try(:middle_name) %> <%= m.employee.try(:last_name) %></td>
+      <td><%= m.shift_master.try(:name) %></td>
+      <td><%= m.day %></td>
+      <td><%= m.try(:in) %></td>
+      <td><%= m.try(:out) %></td>
+      <td><%= m.try(:present) %></td>
+    </tr>
+  <% end %>
+</tbody>
+</table>

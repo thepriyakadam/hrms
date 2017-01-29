@@ -1,0 +1,57 @@
+<%= form_for :overtime_salary, url: { action: 'create_overtime_salary',month: @month,year: @year} do |f| %>
+  <table id="example1" class="table table-bordered table-hover table-condensed">
+    <thead>
+      <tr>
+        <th><input type="checkbox" id="selectAll" value="selectAll"></th>
+        <th>Employee ID</th>
+        <th>Employee Name</th>
+        <th>Month</th>
+        <th>Total Amount </th>
+        <th>Total Hours </th>
+        <th>Bonus Amount</th>
+        <th>Holiday Amount </th>
+        <th>Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @employees.each do |o| %>
+        <tr>
+          <td><%= check_box_tag "employee_ids[]", o.employee_id %></td>
+          <td><%= o.employee.try(:manual_employee_code) %></td>
+          <td><%= full_name(o.employee) %></td>
+          <td><%= o.ot_daily_date.strftime('%B-%Y') %></td>
+          <% start_date = o.ot_daily_date.at_beginning_of_month %>
+          <% end_date = o.ot_daily_date.at_end_of_month %>
+          <% ot_amount = OvertimeDailyRecord.where(employee_id: o.employee_id, ot_daily_date:start_date..end_date).sum(:ot_daily_amount) %>
+          <% ot_hrs = OvertimeDailyRecord.where(employee_id: o.employee_id, ot_daily_date:start_date..end_date).sum(:ot_daily_hrs) %>
+          <% attendance_bonus_amount = OvertimeDailyRecord.where(employee_id: o.employee_id, ot_daily_date:start_date..end_date).sum(:attendance_bonus_amount) %>
+          <% paid_holiday_amount = OvertimeDailyRecord.where(employee_id: o.employee_id, ot_daily_date:start_date..end_date).sum(:paid_holiday_amount) %>
+          <% ot_daily_amount = OvertimeDailyRecord.where(employee_id: o.employee_id, ot_daily_date:start_date..end_date).sum(:ot_daily_amount) %>
+          <td><%= text_field_tag 'ot_amount[]',{}, value: ot_amount, readonly:true,class: 'form-control' %></td>
+          <td><%= text_field_tag 'ot_hrs[]',{}, value: ot_hrs, readonly: true,class: 'form-control' %></td>
+          <td><%= text_field_tag 'attendance_bonus_amount[]',{}, value: attendance_bonus_amount,class: 'form-control' %></td>
+          <td><%= text_field_tag 'paid_holiday_amount[]',{}, value: paid_holiday_amount,class: 'form-control' %></td>
+          <td><%= text_field_tag 'ot_daily_amount[]',{}, value: ot_daily_amount,readonly: true,class: 'form-control' %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <%= f.submit class: 'btn btn-primary' %>
+<% end %>
+
+<script type="text/javascript">
+  $('#selectAll').click(function() {
+    if (this.checked) {
+      $(':checkbox').each(function() {
+        this.checked = true;                       
+      });
+    } 
+    else {
+      $(':checkbox').each(function() {
+        this.checked = false;                        
+      });
+    }
+  });
+
+  $("#example1").DataTable();
+</script>

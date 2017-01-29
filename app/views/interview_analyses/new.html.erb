@@ -1,0 +1,15 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h6 class="box-title">Interview Evaluation Of :- <%= @interview_round.interview_schedule.try(:candidate_name) %></h6>
+  </div><!-- /.box-header -->
+	<div class="box-body">
+		<div id="form">
+			<%= render 'form' %>	
+		</div>
+		
+		<div id="interview_analyses_li">
+			<%= render 'candidate_interview_analysis' %>
+		</div>
+	</div><!-- /.box-body -->
+</div><!-- /.box -->
+

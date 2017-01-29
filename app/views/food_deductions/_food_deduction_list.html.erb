@@ -1,0 +1,58 @@
+  <div class="box-header">
+    <div class="pull-right">
+    </div>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+  <div id="comments">
+    <table id="example6" class="table table-bordered table-hover table-condensed">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Employee Name</th>
+        <th>Date</th>
+        <th>No. of Coupon</th>
+        <th>Return Coupon</th>
+        <th>Total</th>
+        <th>Price</th>
+        <th>Amount</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @food_deductions.each do |food_deduction| %>
+        <tr>
+          <td><%= food_deduction.employee.try(:manual_employee_code) %></td>
+          <td><%= full_name(food_deduction.employee) %></td>
+          <td><%= food_deduction.food_date %></td>
+          <td><%= food_deduction.no_of_coupan %></td>
+          <td><%= food_deduction.return_coupan %></td>
+          <td><%= food_deduction.total_coupan %></td>
+          <td><%= food_deduction.food_coupan_master.price %></td>
+          <td><%= food_deduction.amount %></td>
+          <td>
+            <% if food_deduction.is_paid == true %>
+              <small class="label label-primary">Paid</small>
+            <% else %>
+              <%= link_to '', edit_food_deduction_path(food_deduction),class: "btn btn-success btn-xs fa fa-edit" %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  </div>
+  <%= link_to 'Back', food_deductions_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+  <%= link_to " Excel Report ",food_deduction_xls_food_deductions_path(month: params[:month], year: params[:year], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+  <%= link_to " Print Food Deduction ",food_deduction_pdf_food_deductions_path(month: params[:month], year: params[:year], format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+</div>
+
+
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

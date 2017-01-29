@@ -1,0 +1,113 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Promotion</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <%= bootstrap_form_for(@employee_promotion,html: {id: 'employee_promotion'}) do |f| %>
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <%= f.select :employee_id, employee_list_by_company_location, {label: 'Employee ',include_blank: " Select Employee" },{onchange: "var a = {employee_id : $(this).val()};$.get('/employee_promotions/collect_data',a,function(response){});",:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
+
+          </div>
+        </div>
+      </div>  
+
+      <div id="employeeInfo">
+
+      </div>
+
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.select :department_id,all_department_type_list1,{include_blank: 'Select Department',label: 'Department'},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.select :employee_designation_id,all_employee_designation,{include_blank: 'Select Designation',label: 'Employee Designation'},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"}  %>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.select :employee_grade_id,all_employee_grade,{include_blank: 'Select Grade',label: 'Employee Grade'}  %>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.select :employee_category_id,all_employee_category,{include_blank: 'Select Category',label: 'Employee Category'} %>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-3">
+        <label>Employee CTC </label>
+          <div class="field">
+            <%= f.text_field :employee_ctc, hide_label: true %>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <label>Effective From </label>
+          <div class="field">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <%= f.text_field :effective_from, hide_label: true, class: 'effective_from'%>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="field">
+            <%= f.text_field :justification %>
+          </div>
+        </div> 
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="actions">
+            <%= f.submit'Create Employee Promotion', :class => class_name, data: { disable_with: data_info } %> |
+            <%= link_to 'Back',employee_list_employee_promotions_path,class: 'btn btn-default btn-sm fa fa-arrow-left'%>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $(function(){
+    $('.effective_from').datepicker({
+      changeYear:true,
+      changeMonth: true,
+      yearRange: '-100:+10',
+      dateFormat: 'dd-mm-yy'
+    });
+  }); 
+</script>
+
+
+<script>
+$("#employee_promotion").validate({
+    rules: {
+      "employee_promotion[employee_id]":{
+        required: true,
+      },
+       },
+    messages: {
+      "employee_promotion[employee_id]":{
+        required: "Please Select Employee",
+      },
+       },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>
+

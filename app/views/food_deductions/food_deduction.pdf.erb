@@ -1,0 +1,43 @@
+<style>
+    th {
+        text-align: left;
+    }
+    tr {
+        page-break-inside: avoid;
+    }
+    div.alwaysbreak { page-break-before: always; }
+    div.nobreak:before { clear:both; }
+    div.nobreak{ page-break-inside: avoid;
+      /* http://code.google.com/p/wkhtmltopdf/issues/detail?id=9#c21 */
+    }
+</style>
+<table style="border-collapse: collapse; font-size:10pt;" border=1 width=1000 cellpadding="19">
+    <thead>
+    <tr><th colspan="8"><center>BFTL</center> </th></tr>
+      <tr>
+        <th>ID</th>
+        <th>Employee Name</th>
+        <th>Date</th>
+        <th>No. of Coupon</th>
+        <th>Return Coupon</th>
+        <th>Total</th>
+        <th>Price</th>
+        <th>Amount</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @food_deductions.each do |food_deduction| %>
+        <tr>
+          <td><%= food_deduction.employee.try(:manual_employee_code) %></td>
+          <td><%= full_name(food_deduction.employee) %></td>
+          <td><%= food_deduction.food_date %></td>
+          <td><%= food_deduction.no_of_coupan %></td>
+          <td><%= food_deduction.return_coupan %></td>
+          <td><%= food_deduction.total_coupan %></td>
+          <td><%= food_deduction.food_coupan_master.price %></td>
+          <td><%= food_deduction.amount %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>

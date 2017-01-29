@@ -1,0 +1,34 @@
+<!--SELECT2 EXAMPLE -->
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Employee Salary Report</h3>
+  </div><!-- /.box-header -->
+
+  <div class="box-body">
+    <%= bootstrap_form_for(:salaryslip_component, url: { action: 'index',format: 'xml'}) do |f| %>
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="field">
+            <%= select :salaryslip_component,:month, ['January','February','March','April','May','June','July','August','September','October','November','December'],{label: 'Select Month',include_blank: " Select Month"}, class: "form-control" %>
+           </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="field">
+            <%= select :salaryslip_component,:year,['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025','2026','2027'],{label: 'Select Year',include_blank: " Select Year"}, class: "form-control" %>
+          </div>
+        </div>
+        </div><br>
+
+        <div class="row">
+        <div class="col-sm-3">
+          <div class="actions">
+            <%= f.submit "Download XML", class: "btn btn-sm btn-warning" %>
+          </div>
+        </div>
+        </div>
+
+      <br>
+    <% end %>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->
+

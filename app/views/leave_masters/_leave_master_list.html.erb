@@ -1,0 +1,33 @@
+<br>
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+    	<th>Leav category</th>
+      <th>Period</th>
+      <th>Workingday Limit</th>
+      <th>Company Workingday</th>
+      <th>No of leave</th>
+      <th>Is carry forward</th>
+      <th>Limit</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @leave_masters.each do |leave_master| %>
+      <tr>
+        <td><%= leave_master.leav_category.try(:code) %> - <%= leave_master.leav_category.try(:name) %></td>
+        <td><%= leave_master.period %></td>
+        <td><%= leave_master.working_day %></td>
+        <td><%= leave_master.company_workingday %></td>
+        <td><%= leave_master.no_of_leave %></td>
+        <td><%= leave_master.is_carry_forward ? 'Yes' : 'No' %></td>
+        <td><%= leave_master.limit %></td>
+        <td>
+        	<%= link_to '', edit_leave_master_path(leave_master),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
+          <%= link_to '',  leave_master, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

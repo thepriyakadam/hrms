@@ -1,0 +1,54 @@
+<%= bootstrap_form_for(@salary_component,remote:true) do |f| %>
+
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :code,hide_label:true, placeholder: 'Code' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :name,hide_label:true, placeholder: 'Salary Component Name' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="form-group">
+        <%= f.text_field :description,hide_label:true, placeholder: 'Salary Component Description' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="form-group">
+        <%= f.text_field :account_code,hide_label:true, placeholder: 'Account Code' %>
+      </div>
+    </div>
+    </div>
+
+     <div class="row">
+      <div class="col-sm-3">
+      <div class="form-group required">       
+        <%= f.select :is_deducted,[['Yes','true'],['No','false']],{label: 'Is Deducted',include_blank: "Select Option"} %>
+      </div>
+    </div>
+     <div class="col-sm-3">
+      <label>Status </label>
+      <div class="field">
+        <%= f.check_box :is_active, label: 'Active'%>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <label>Base Component </label>
+      <div class="field">
+        <%= f.check_box :is_base, label: 'Base'%>
+      </div>
+    </div>
+    <label></label>
+      <div class="col-sm-3" style="padding-top:20px;">
+        <div class="actions">
+          <%= f.submit "Create Salary Component",:class => class_name %>
+        </div>
+      </div>
+    </div>   
+<% end %><br>

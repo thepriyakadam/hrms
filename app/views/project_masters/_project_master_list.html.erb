@@ -1,0 +1,28 @@
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>  
+      <th>Code</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @project_masters.each do |project_master| %>
+      <tr>
+        <td><%=project_master.code %></td>
+        <td><%=project_master.name %></td>
+        <td><%=project_master.description %></td>
+        <td>
+          <% if project_master.is_confirm == true %>
+            <small class= "label label-primary">Confirmed</small>
+          <% else %>
+            <%= link_to '', edit_project_master_path(project_master),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
+            <%= link_to '',  project_master, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
+            <%= link_to '', is_confirm_project_masters_path(project_master: project_master),data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-info fa fa-check' %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

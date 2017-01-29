@@ -1,0 +1,34 @@
+<div class="box box-default">
+   <div class="box-body"> 
+    <%= bootstrap_form_for(@section,html: {id: 'section'},remote:true) do |f| %>
+      <div class="row">
+        <div class="col-sm-3">
+            <div class="form-group required">
+              <%= f.text_field :code,label:'Code', placeholder: 'Code' %>
+            </div>
+        </div> 
+            <div class="col-sm-3">
+            <div class="field">
+              <%= f.text_field :description,label:'Description', placeholder: 'Description' %>
+            </div>
+          </div>
+           
+            <div class="col-sm-3">
+            <label>Status</label>
+            <div class="field">
+            <%= f.check_box :status , label:'Active'%>
+          </div>
+          </div>
+          </div>
+           <div class="row">
+          <div class="col-sm-3">
+            <div class="actions">
+              <%= f.submit 'Create Section',:class => class_name, data: { disable_with: data_info } %>
+            </div>
+          </div>
+        </div>
+    <div>
+</div>
+</div>
+</div>
+<% end %>

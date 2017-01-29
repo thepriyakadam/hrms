@@ -1,0 +1,52 @@
+<%= bootstrap_form_for(@goal_perspective,html: {id: 'goal_perspective'},remote:true) do |f| %>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+      <%= f.select :department_id, all_department_type_list1,{hide_label:true,include_blank: 'select Department'},class: 'form-control' %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :name,hide_label:true, placeholder: 'Goal Perspective' %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.check_box :status, label: 'Active'%>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit :class => class_name, data: { disable_with: data_info }%>
+      </div>
+    </div>
+
+  </div>
+<% end %>
+
+<script type="text/javascript">
+
+ $("#goal_perspective").validate({
+    rules: {
+      "goal_perspective[name]":{
+        required: true
+      },
+      "goal_perspective[department_id]":{
+        required: true
+      }
+    },
+    messages: {
+      "goal_perspective[name]":{
+        required: "Please Specify Name"
+      },
+      "goal_perspective[department_id]":{
+        required: "Please Specify Department"
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>
+

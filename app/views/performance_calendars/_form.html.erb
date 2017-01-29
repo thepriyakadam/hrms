@@ -1,0 +1,58 @@
+<%= bootstrap_form_for(@performance_calendar,remote:true) do |f| %>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.select :period_id,all_period_type,{label: 'Period',include_blank: " Select Period"}  %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.select :performance_activity_id,all_activity_type,{label: 'Performance Activity',include_blank: " Select Performance Activity"}  %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <label>Start Date: </label>
+      <div class="form-group required">
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="fa fa-calendar"></i>
+          </div>
+          <%= f.text_field :start_date, hide_label: true, class: 'birth_date1'%>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <label>End Date: </label>
+      <div class="form-group required">
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="fa fa-calendar"></i>
+          </div>
+          <%= f.text_field :end_date, hide_label: true, class: 'birth_date1'%>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "Create Calendar",:class => class_name %>
+      </div>
+    </div>
+  </div>
+<% end %>
+<br> 
+
+<script type="text/javascript">
+  $(function(){
+    $('.birth_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:+1',
+    dateFormat: 'dd-mm-yy' });
+  }); 
+</script>

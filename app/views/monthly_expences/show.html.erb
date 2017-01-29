@@ -1,0 +1,39 @@
+<!-- SELECT2 EXAMPLE -->
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Expence Detail</h3>
+    <div class="box-tools pull-right">
+    </div>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+
+    <tr>
+      <th><strong>Employee ID</strong></th>
+      <td><%= @monthly_expence.employee.try(:manual_employee_code) %></td>
+
+      <th>Employee Name</th>
+      <td><%= @monthly_expence.employee.try(:first_name) %></td>
+     </tr>
+
+     <tr>
+      <th><strong>Expense Date</strong></th>
+      <td><%= @monthly_expence.expence_date %></td>
+
+      <th><strong>Amount</strong></th>
+      <td> <%= @monthly_expence.amount %></td>
+     </tr>
+
+      <tr>
+        <th><strong>Amount</strong></th>
+        <td> <%= @monthly_expence.amount %></td>
+
+        <th><strong>Description</strong></th>
+        <td><td> <%= @monthly_expence.description %></td>
+      </tr>
+    </table>
+
+    <%= link_to 'Edit', edit_monthly_expence_path(@monthly_expence),class: 'btn btn-success btn-sm fa fa-edit' %> |
+    <%= link_to 'Back', monthly_expences_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->

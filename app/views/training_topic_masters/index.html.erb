@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Training Topic Masters</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Status</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @training_topic_masters.each do |training_topic_master| %>
+      <tr>
+        <td><%= training_topic_master.code %></td>
+        <td><%= training_topic_master.name %></td>
+        <td><%= training_topic_master.description %></td>
+        <td><%= training_topic_master.status %></td>
+        <td><%= link_to 'Show', training_topic_master %></td>
+        <td><%= link_to 'Edit', edit_training_topic_master_path(training_topic_master) %></td>
+        <td><%= link_to 'Destroy', training_topic_master, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Training topic master', new_training_topic_master_path %>

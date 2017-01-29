@@ -1,0 +1,63 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Employee Transfer</h3>
+    <div class="box-body">
+      <%= bootstrap_form_for(@employee_week_off) do |f| %>
+        <div class="row">
+          <div class="col-sm-3">
+            <div class="field">
+              <%= f.select :employee_id,employee_list_by_company_location,{hide_label: true,include_blank: " Select Employee"}  %>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="field">
+            <%= f.select :day, ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],{hide_label: true,include_blank: " Select Day"},{class: 'form-control'} %>
+            </div>
+          </div>
+          <div class="col-sm-3">
+           <div class="field">
+             <div class="input-group">
+               <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+               </div>
+              <%= f.text_field :date, hide_label: true,placeholder: "Select Date", class: 'date'%>
+             </div>
+           </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-3">
+            <div class="field">
+              <%= f.check_box :status, label:'Status' %>
+            </div>
+          </div>
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.check_box :is_confirm, label:'Is Confirm' %>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="actions">
+            <%= f.submit 'Create Employee Week Off',class: "btn btn-primary btn-sm"%> | 
+            <%= link_to 'Back', employee_week_offs_path,class:'btn btn-sm btn-default fa fa-arrow-left' %>
+          </div>
+        </div>
+      </div>
+      <% end %>
+
+    </div>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+  $(function(){
+    $('.date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-1:+10',
+    dateFormat: 'dd-mm-yy' });
+  }); 
+</script> 

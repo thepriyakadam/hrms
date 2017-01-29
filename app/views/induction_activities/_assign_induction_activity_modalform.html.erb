@@ -1,0 +1,37 @@
+<div class="modal-dialog" style="height:1000px; max-height:100px; width:800px; max-width:1200px;">
+  <div class="modal-content">
+    <div class="modal-body">
+     <%= bootstrap_form_for :induction_activity,url:{action:"update_induction",id: @induction_activity.id,induction_master_id: @induction_master.id} do |f| %>
+        <div class="row">
+          <div class="col-sm-3">
+            <%= f.text_field :activity,placeholder: 'Eg: Meeting with HR Manager',hide_label: true%>
+          </div>
+          <div class="col-sm-3">
+            <%= f.text_field :day,placeholder: 'Eg: 1,2,3',hide_label: true %>
+          </div>
+        </div><br>
+         <div class="row">
+          <div class="col-sm-3">
+            <div class="form-group required">
+              <%= f.text_field :duration,placeholder: 'In Hrs',hide_label: true %>
+            </div>
+          </div>
+          <div class="col-sm-3">
+           <div class="form-group required">
+            <%= f.select :employee_id,all_employee_list,{hide_label: true,include_blank: " Select Employee"} %>
+           </div>
+          </div>
+          </div><br>
+          <div class="row">
+          <div class="col-sm-3">
+            <%= f.submit "Update Induction Activity ", class: 'btn btn-sm btn-warning fa fa-modx' %>
+          </div>
+        </div>
+      <% end %>
+      <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+    </div>
+  </div>
+</div>
+
+
+  

@@ -1,0 +1,25 @@
+<%= bootstrap_form_for(@advance_type,html: {id: 'advance'},remote:true) do |f| %>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :code,hide_label:true, placeholder: 'Advance Type Code' %>
+      </div>
+    </div> 
+     <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :name,hide_label:true, placeholder: 'Advance Type' %>
+      </div>
+    </div>
+     <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :description,hide_label:true, placeholder: 'Description' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "Create Advance Type", class: 'btn btn-primary btn-sm' %>
+      </div>
+    </div>
+  </div>
+<% end %>

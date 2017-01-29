@@ -1,0 +1,125 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Vacancy Request History List</h3>
+    </div>
+
+<p id="notice"><%= notice %></p>
+
+<div class="box-body">
+
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <tr>
+  <th><strong>Vacancy No.</strong></th>
+  <td><%= @vacancy_master1.id %></td>
+   <th><strong>Request To</strong></th>
+  <td><%= @employee.try(:first_name) %> <%= @employee.try(:middle_name) %> <%= @employee.try(:last_name) %> </td>
+  </tr>
+
+  <tr>
+  <th><strong>Organization</strong></th>
+  <td><%= @vacancy_master1.other_organization %></td>
+   <th><strong>Job Title</strong></th>
+  <td><%= @vacancy_master.employee_designation.name %></td>
+  </tr>
+
+  <tr>
+  <th><strong>Vacancy Name</strong></th>
+  <td><%= @vacancy_master1.vacancy_name %></td>
+  <th><strong>Location</strong></th>
+  <td><%= @vacancy_master1.company_location.try(:name) %></td>
+  </tr>
+
+<tr> 
+  <th><strong>Department</strong></th>
+  <td><%= @vacancy_master1.department.name %></td>
+  <th><strong>No. of Positions</strong></th>
+  <td><%= @vacancy_master1.no_of_position %></td>
+</tr>
+
+<tr>  
+  <th><strong>Experience</strong></th>
+  <td><%= @vacancy_master1.experience %></td>
+  <th><strong>Budget</strong></th>
+  <td><%= @vacancy_master1.budget %></td>
+</tr>
+<tr>
+
+ <tr>
+   <th><strong>Fulfillment Date</strong></th>
+  <td><%= @vacancy_master1.vacancy_post_date %></td>
+  <th><strong>Keyword</strong></th>
+  <td><%= @vacancy_master1.keyword %></td>
+</tr>
+
+<tr>
+  <th><strong>Organization</strong></th>
+  <td><%= @vacancy_master1.other_organization %></td>
+  <th><strong>Qualification 1</strong></th>
+  <td><%= @vacancy_master1.degree.try(:name) %></td>
+</tr>
+
+ <tr>
+  <th><strong>Qualification 2</strong></th>
+  <td><%= @vacancy_master1.degree_1.try(:name) %></td>
+  <th><strong>Qualification 3</strong></th>
+  <td><%= @vacancy_master1.degree_2.try(:name) %></td>
+</tr>
+
+<tr>
+  <th><strong>Description</strong></th>
+  <td colspan="3"><%= @vacancy_master.description %></td>
+  
+</tr>
+
+<tr>
+  <th><strong>Justification</strong></th>
+  <td colspan="3"><%= @vacancy_master.justification %></td>
+</tr>
+
+</table><br><br>
+<table id="example" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Approved By</th>
+      <th>Date</th>
+      <th>Time</th>
+      <th>Status</th>
+<!--       <th>Action</th>
+ -->    </tr>
+  </thead>
+
+  <tbody>
+    <% @reporting_masters_vacancy_masters.each do |reporting_masters_vacancy_master| %>
+       <tr>
+                <td><%= reporting_masters_vacancy_master.reporting_master.employee.try(:first_name) %> <%= reporting_masters_vacancy_master.reporting_master.employee.try(:middle_name) %> <%= reporting_masters_vacancy_master.reporting_master.employee.try(:last_name) %></td>
+                <td><%= reporting_masters_vacancy_master.created_at.to_date %></td>
+                <td><%= reporting_masters_vacancy_master.created_at %></td>
+                 <td>
+                    <% if reporting_masters_vacancy_master.vacancy_status == "Pending" %>
+                    <small class="label label-primary">Pending</small>
+                    <% elsif reporting_masters_vacancy_master.vacancy_status == "Approved & Send Next" %>
+                    <small class="label label-primary">Approved & Send Next</small>
+                    <% elsif reporting_masters_vacancy_master.vacancy_status == "Edit And Approved" %>
+                    <small class="label label-primary">Edit And Approved</small>
+                    <% elsif reporting_masters_vacancy_master.vacancy_status == "Rejected" %>
+                    <small class="label label-primary">Rejected</small>
+                    <% elsif reporting_masters_vacancy_master.vacancy_status == "Approved" %>
+                    <small class="label label-primary">Approved</small>
+                    <% else %>
+                    <% end %>
+                  </td>
+                  <!-- <td><= link_to '', show_vacancy_request_history_vacancy_masters_path(vacancy_request_history,vacancy_master_id: @vacancy_master.id),class: 'btn btn-xs btn-default fa fa-eye' %></td> -->
+              </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= link_to 'Back', vacancy_history_vacancy_masters_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+ </div>
+</div>
+
+<script>
+$(document).ready(function() {
+    $('#example').DataTable();
+} );
+</script>
+

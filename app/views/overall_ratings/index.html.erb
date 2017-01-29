@@ -1,0 +1,55 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Overall Ratings</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Goal rating sheet</th>
+      <th>Employee</th>
+      <th>Ro1</th>
+      <th>Ro2</th>
+      <th>Final</th>
+      <th>Ro1 rating</th>
+      <th>Ro1 comment</th>
+      <th>Ro2 rating</th>
+      <th>Ro2 comment</th>
+      <th>Final rating</th>
+      <th>Final comment</th>
+      <th>Promotion</th>
+      <th>Increment</th>
+      <th>Final ctc</th>
+      <th>Appraisee comment</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @overall_ratings.each do |overall_rating| %>
+      <tr>
+        <td><%= overall_rating.goal_rating_sheet %></td>
+        <td><%= overall_rating.employee %></td>
+        <td><%= overall_rating.ro1 %></td>
+        <td><%= overall_rating.ro2 %></td>
+        <td><%= overall_rating.final %></td>
+        <td><%= overall_rating.ro1_rating %></td>
+        <td><%= overall_rating.ro1_comment %></td>
+        <td><%= overall_rating.ro2_rating %></td>
+        <td><%= overall_rating.ro2_comment %></td>
+        <td><%= overall_rating.final_rating %></td>
+        <td><%= overall_rating.final_comment %></td>
+        <td><%= overall_rating.promotion %></td>
+        <td><%= overall_rating.increment %></td>
+        <td><%= overall_rating.final_ctc %></td>
+        <td><%= overall_rating.appraisee_comment %></td>
+        <td><%= link_to 'Show', overall_rating %></td>
+        <td><%= link_to 'Edit', edit_overall_rating_path(overall_rating) %></td>
+        <td><%= link_to 'Destroy', overall_rating, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Overall rating', new_overall_rating_path %>

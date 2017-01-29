@@ -1,0 +1,40 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h6 class="box-title">Employee Family Member List - <%= code_full_name(@families.first.employee) %></h6>
+    <div class="box-tools pull-right">
+      <%= link_to "Add Member", ajax_new_family_employees_path(id: @employee.id), class: 'btn btn-primary btn-sm',remote:true %>
+      <%= link_to 'Back', employees_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+    </div>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+   <table id="example2" class="table table-bordered table-hover table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Birth Date</th>
+        <th>Contact no</th>
+        <th>Relation</th>
+        <th>Profession</th>
+        <th>Blood Group</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+  <tbody>
+    <% @families.each do |family| %>
+      <tr>
+        <td><%= family.f_name+' '+family.m_name+' '+family.l_name %></td>
+        <td><%= family.date_of_birth %></td>
+        <td><%= family.contact_no %></td>
+        <td><%= family.relation %></td>
+        <td><%= family.profession %></td>
+        <td><%= family.blood_group.try(:name) %></td>
+        <td>
+        <%= link_to '', family,class: 'btn btn-default fa btn-xs fa-eye',remote: true %>
+        <%= link_to '', edit_family_path(family),class: 'btn btn-xs btn-success fa fa-edit',remote: true %>
+        </td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+  </div><!-- /.box -->
+</div>

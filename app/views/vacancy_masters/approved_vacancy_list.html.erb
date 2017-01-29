@@ -1,0 +1,68 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Approved Vacancy Details</h3>
+    </div>
+
+<p id="notice"><%= notice %></p>
+
+<div class="box-body">
+<table id="example" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Organization</th>
+      <th>Designation</th>
+      <th>Job Title</th>
+      <th>Department</th>
+      <th>Qualification</th>
+      <th>No. of position</th>
+      <th>Experience</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @vacancy_masters.each do |vacancy_master| %>
+      <tr>
+         <td><%= vacancy_master.other_organization %></td>
+          <td><%= vacancy_master.employee_designation.try(:name) %></td>
+          <td><%= vacancy_master.vacancy_name %></td>
+          <td><%= vacancy_master.company_location.try(:name) %> - <%= vacancy_master.department.try(:name) %></td>
+          <td><%= vacancy_master.degree.try(:name) %></td>
+          <td><%= vacancy_master.no_of_position %></td>
+          
+          <td><%= vacancy_master.experience %></td>
+        <td>
+            <% if vacancy_master.current_status == "Pending" %>
+             <%= link_to '', cancel_vacancy_request_vacancy_masters_path(vacancy_master), data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-xs fa fa-trash' %>
+              <% elsif vacancy_master.current_status == "Approved" %>
+              <small class="label label-primary">Approved</small>
+              <% elsif vacancy_master.current_status == "Reject" %>
+              <small class="label label-danger">Reject</small>
+              <% elsif vacancy_master.current_status == "Approved & Send Next" %>
+              <small class="label label-info">Approved & Send Next</small>
+              <% elsif vacancy_master.current_status == "Cancelled" %>
+              <small class="label label-warning">Cancelled</small>
+              <% elsif vacancy_master.current_status == "Edit And Approved" %>
+                <small class="label label-success">Edit And Approved</small>
+              <% else %>
+              <small class="label label-success">No Status</small>
+           <% end %>
+        </td>
+        <td>
+         <!--<= link_to ' Vacancy Request', particular_vacancy_request_list_vacancy_masters_path(vacancy_master),class: 'btn btn-xs btn-default' %>-->
+         <%= link_to '', vacancy_master,class: 'btn btn-sm btn-default fa fa-eye' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
+</div>
+
+<script>
+$(document).ready(function() {
+    $('#example').DataTable();
+} );
+</script>
+

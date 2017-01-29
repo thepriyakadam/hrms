@@ -1,0 +1,49 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Base component:</strong>
+  <%= @professional_tax_master.base_component %>
+</p>
+
+<p>
+  <strong>Min amount:</strong>
+  <%= @professional_tax_master.min_amount %>
+</p>
+
+<p>
+  <strong>Max amount:</strong>
+  <%= @professional_tax_master.max_amount %>
+</p>
+
+<p>
+  <strong>For month:</strong>
+  <%= @professional_tax_master.for_month %>
+</p>
+
+<p>
+  <strong>March amount:</strong>
+  <%= @professional_tax_master.march_amount %>
+</p>
+
+<p>
+  <strong>Effective from:</strong>
+  <%= @professional_tax_master.effective_from %>
+</p>
+
+<p>
+  <strong>Effective to:</strong>
+  <%= @professional_tax_master.effective_to %>
+</p>
+
+<p>
+  <strong>Is active:</strong>
+  <%= @professional_tax_master.is_active %>
+</p>
+
+<p>
+  <strong>Is confirm:</strong>
+  <%= @professional_tax_master.is_confirm %>
+</p>
+
+<%= link_to 'Edit', edit_professional_tax_master_path(@professional_tax_master) %> |
+<%= link_to 'Back', professional_tax_masters_path %>

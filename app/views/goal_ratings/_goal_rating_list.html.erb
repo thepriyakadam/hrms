@@ -1,0 +1,89 @@
+<%= bootstrap_form_for @goal_rating,url:{action:'send_mail_to_appraiser',emp_id: @employee.id,goal_bunch_id: @goal_bunch.id} do |f| %>
+
+<!-- < if @goal_rating.goal_type == 'Goal' %> -->
+  <div class="row">
+    <div class="col-sm-6">
+      <table class="table table-bordered table-hover table-condensed">
+        <thead>
+        <tr><td colspan="6"><center>Employee Goals </center></td></tr>
+          <tr>
+            <th>Goal Perspective</th>
+            <th>Measure</th>
+            <th>Target</th>
+            <th>Weightage</th>
+            <th>Aligned</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @goal_ratings.each do |goal_rating| %>
+            <tr>
+              <td><%= goal_rating.goal_perspective.try(:name) %></td>
+              <td><%= goal_rating.goal_measure %></td>
+              <td><%= goal_rating.target %></td>
+              <td><%= goal_rating.goal_weightage %></td>
+              <td><%= goal_rating.aligned %></td>
+              <td>
+                <% if goal_rating.goal_bunch.goal_confirm == true %>
+                <small class="label label-info">Confirmed</small>
+                <% else %>
+                <%= link_to '', goal_set_modal_goal_ratings_path(goal_rating),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
+                  <!-- < link_to '', edit_goal_rating_path(id: goal_rating,goal_bunch_id: @goal_ratings.goal_bunch_id),class: 'btn btn-xs btn-success fa fa-edit',remote:true %> -->
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- < elsif @goal_rating.goal_type == 'Attribute' %> -->
+
+  <div class="col-sm-6">
+    <table class="table table-bordered table-hover table-condensed">
+      <thead>
+       <tr><td colspan="6"><center> Employee Attribute & Definition</center></td></tr>
+        <tr>
+          <th>Attribute</th>
+          <th>Measure</th>
+          <th>Target</th>
+          <th>Weightage</th>
+          <th>Aligned</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @goal_attribute_ratings.each do |goal_rating| %>
+          <tr>
+            <td><%= goal_rating.attribute_master.try(:name) %></td>
+            <td><%= goal_rating.goal_measure %></td>
+            <td><%= goal_rating.target %></td>
+            <td><%= goal_rating.goal_weightage %></td>
+            <td><%= goal_rating.aligned %></td>
+            <td>
+              <% if goal_rating.goal_bunch.goal_confirm == true %>
+              <small class="label label-info">Confirmed</small>
+              <% else %>
+                <%= link_to '', attribute_set_modal_goal_ratings_path(goal_rating),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+  <% if @goal_bunch.goal_confirm == false %>
+  <small class="label label-info">Request has been send for Confirmation</small>
+  <% else %>
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="actions">
+         <%= f.submit "Send For Confirmation", class: 'btn btn-primary btn-sm' %> |
+          <%= link_to 'Back',new_goal_bunch_path, class: 'btn btn-sm btn-default fa fa-arrow-left' %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+<% end %>

@@ -1,0 +1,89 @@
+
+  <div class="box-body">
+  <%= bootstrap_form_for(@interview_analysis,html: {id: 'interview_analysis'},interview_round_id: @interview_round.id) do |f| %>
+  <%= f.hidden_field :interview_round_id,value:@interview_round.id  %>
+      <div class="row">
+
+      <div class="col-sm-3">
+        <label>Evaluation Criteria</label>
+          <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <%= link_to "", new_interview_evalution_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+              </div>
+               <%= f.select :interview_evalution_id, all_interview_evaluation, {hide_label: true,include_blank: " Select Evaluation Criteria"} %>
+            </div>
+          </div>
+      </div>
+
+       <div class="col-sm-3">
+        <label>Skillset</label>
+          <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <%= link_to "", new_interview_attribute_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+              </div>
+               <%= f.select :interview_attribute_id, all_interview_attribute, {hide_label: true,include_blank: " Select Skillset"} %>
+            </div>
+          </div>
+      </div>
+
+       <div class="col-sm-3">
+        <label>Evaluation</label>
+          <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <%= link_to "", new_interview_decision_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+              </div>
+               <%= f.select :interview_decision_id, all_interview_decision, {hide_label: true,include_blank: " Select Evaluation"} %>
+            </div>
+          </div>
+      </div>
+
+      <div class="col-sm-3">
+        <div class="form-group required">
+         <%= f.text_field :comment ,label:"Comment" %>
+        </div>
+      </div>
+      </div>
+
+      <div class="row">
+      <div class="col-sm-3">
+        <div class="actions">
+          <%= f.submit "Create Evaluation" ,class: 'btn btn-sm btn-primary' %>
+        </div>
+      </div>
+    </div>
+    </div>
+<% end %>
+
+<script>
+$("#interview_analysis").validate({
+    rules: {
+      "interview_analysis[interview_evalution_id]":{
+        required: true
+              },
+      "interview_analysis[interview_decision_id]":{
+        required: true
+      },
+      "interview_analysis[comment]":{
+        required: true
+      }
+    },
+    messages: {
+      "interview_analysis[interview_evalution_id]":{
+        required: "Please specify Evaluation Criteria"
+      },
+      "interview_analysis[interview_decision_id]":{
+        required: "Please specify Interview Decision"
+      },
+      "interview_analysis[comment]":{
+        required: "Please specify Comment"
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

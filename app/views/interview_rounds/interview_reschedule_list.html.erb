@@ -1,0 +1,32 @@
+<div class="box">
+  <div class="box-header">
+  <h6 class="box-title">Interview Reschedule History of : <%= @interview_round.interview_schedule.try(:candidate_name) %></h6>   
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+    <thead>
+      <tr>
+        <th>Sr.No</th>
+        <th>Interviewer Name</th>
+        <th>Interview Type</th>
+        <th>Interview Date</th>
+        <th>Interview Time</th>
+        <th>Location</th>
+      </tr>
+    </thead>
+  <tbody>
+  <% i = 0 %>
+    <% @interview_round_reschedules.each do |interview_round_reschedule| %>
+      <tr>
+        <td><%= i=i+1 %></td>
+        <td><%= interview_round_reschedule.employee.first_name+' '+interview_round_reschedule.employee.middle_name+' '+interview_round_reschedule.employee.last_name %></td>
+        <td><%= interview_round_reschedule.interview_type.try(:name) %></td>
+        <td><%= interview_round_reschedule.interview_date %></td>
+        <td><%= interview_round_reschedule.interview_time %></td>
+        <td><%= interview_round_reschedule.location %></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+ </div>
+</div>

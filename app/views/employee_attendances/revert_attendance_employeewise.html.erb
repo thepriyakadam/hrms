@@ -1,0 +1,32 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Revert Attendance</h3>
+  </div><!-- /.box-header -->
+  <%= bootstrap_form_for(:salary,html: {id: 'salary'}, url: { action: 'show_employee_list'}, remote: true) do |f| %>
+    <div class="box-body">
+    	<div class="row">
+        <div class="col-sm-3">
+          <div class="field">
+            <%= select :salary,:month, ['January','February','March','April','May','June','July','August','September','October','November','December'],{label: 'Select Month',include_blank: " Select Month"}, class: "form-control" %>
+           </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="field">
+            <%= select :salary,:year,['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025','2026','2027'],{label: 'Select Year',include_blank: " Select Year"},{class: 'form-control'} %>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="field">
+             <%= select :salary,:employee_id, all_employee_list,{include_blank: "Select Employee"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="actions">
+            <%= f.submit "Employees For Revert Attendance" ,class: 'btn btn-primary btn-sm' %>
+          </div>
+        </div>
+      </div><br>
+    <% end %>
+    <div id="all_employee_list"></div>
+  </div>
+</div>

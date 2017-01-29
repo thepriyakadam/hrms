@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Row>
+        <Cell ss:Index="1"><Data ss:Type="String">Sr. No.</Data></Cell>
+        <Cell ss:Index="2"><Data ss:Type="String">Employee Name</Data></Cell>
+        <Cell ss:Index="3"><Data ss:Type="String">Department</Data></Cell> 
+        <Cell ss:Index="4"><Data ss:Type="String">Degree/Diploma etc </Data></Cell>
+        <Cell ss:Index="5"><Data ss:Type="String">Year Of Passing </Data></Cell>
+        <Cell ss:Index="6"><Data ss:Type="String">Marks(%) </Data></Cell>
+        <Cell ss:Index="7"><Data ss:Type="String">Qualification Category</Data></Cell>
+        <Cell ss:Index="8"><Data ss:Type="String">Date Of Joining</Data></Cell>
+        <Cell ss:Index="9"><Data ss:Type="String">Joining Grade/Designation</Data></Cell>
+        <Cell ss:Index="10"><Data ss:Type="String">Current Designation</Data></Cell>
+        <Cell ss:Index="11"><Data ss:Type="String">Last Promotion</Data></Cell>
+        <Cell ss:Index="12"><Data ss:Type="String">Recommendation Increment</Data></Cell>
+        <Cell ss:Index="13"><Data ss:Type="String">Recommendation Promotion</Data></Cell>
+        <Cell ss:Index="14"><Data ss:Type="String">Recommendation CTC</Data></Cell>
+        <Cell ss:Index="15"><Data ss:Type="String">Recommendation Designation</Data></Cell>
+        <Cell ss:Index="16"><Data ss:Type="String">Final Increment</Data></Cell>
+        <Cell ss:Index="17"><Data ss:Type="String">Final Promotion</Data></Cell>
+        <Cell ss:Index="18"><Data ss:Type="String">Final CTC</Data></Cell>
+        <Cell ss:Index="19"><Data ss:Type="String">Final Designation</Data></Cell>
+
+        <Cell ss:Index="20"><Data ss:Type="String">Employee Self Comment </Data></Cell>
+        <Cell ss:Index="21"><Data ss:Type="String">Employee Self Rating </Data></Cell>
+        <Cell ss:Index="22"><Data ss:Type="String">Appraiser Comment </Data></Cell>
+        <Cell ss:Index="23"><Data ss:Type="String">Appraiser Rating </Data></Cell>
+        <Cell ss:Index="24"><Data ss:Type="String">Reviewer Comment </Data></Cell>
+        <Cell ss:Index="25"><Data ss:Type="String">Reviewer Rating </Data></Cell>
+        <Cell ss:Index="26"><Data ss:Type="String">Final Comment </Data></Cell>
+        <Cell ss:Index="27"><Data ss:Type="String">Final Rating </Data></Cell>
+        </Row>
+
+        <% i = 0 %>
+        <% @goal_bunches.each do |g|  %>
+        <% employee = Employee.find(g.employee_id) %>
+        <% joining_detail = JoiningDetail.find_by_employee_id(g.employee_id) %>
+        <% employee_promotion1 = EmployeePromotion.find_by_employee_id(g.employee_id) %>
+        <% employee_promotion2 = EmployeePromotion.find_by_employee_id(g.employee_id)%>
+
+        <% qualification1 = Qualification.where(employee_id: g.employee_id).last(2).first %>
+        <% qualification2 = Qualification.where(employee_id: g.employee_id).last(2).second %>
+
+        <% goal_bunch = GoalBunch.find_by_employee_id(g.employee_id)%>
+
+        <Row>
+          <Cell ss:Index="1"><Data ss:Type="String"><%= i=i+1 %></Data></Cell>
+          <Cell ss:Index="2"><Data ss:Type="String"><%= employee.first_name %> <%= employee.middle_name %> <%= employee.last_name %></Data></Cell>
+          <Cell ss:Index="3"><Data ss:Type="String"><%= employee.department.try(:name) %></Data></Cell>
+          <Cell ss:Index="4"><Data ss:Type="String"><%= qualification1.try(:degree_type).try(:name) %></Data></Cell>
+          <Cell ss:Index="5"><Data ss:Type="String"><%= qualification1.try(:degree).try(:name) %></Data></Cell>
+          <Cell ss:Index="6"><Data ss:Type="String"><%= qualification1.try(:year).try(:name) %></Data></Cell>
+          <Cell ss:Index="7"><Data ss:Type="String"><%= qualification1.try(:marks) %></Data></Cell>
+          <Cell ss:Index="8"><Data ss:Type="String"><%= joining_detail.try(:joining_date) %></Data></Cell>
+          <Cell ss:Index="9"><Data ss:Type="String"><%= joining_detail.try(:employee_designation).try(:name)%></Data></Cell> 
+          <Cell ss:Index="10"><Data ss:Type="String"><%= employee_promotion1.try(:employee_designation).try(:name)%></Data></Cell> 
+           <Cell ss:Index="11"><Data ss:Type="String"><%= employee_promotion2.try(:effective_from)%></Data></Cell>
+          <Cell ss:Index="12"><Data ss:Type="String"><%= goal_bunch.try(:r_increment)%></Data></Cell>
+          <Cell ss:Index="13"><Data ss:Type="String"><%= goal_bunch.try(:r_promotion)%></Data></Cell>
+          <Cell ss:Index="14"><Data ss:Type="String"><%= goal_bunch.try(:r_ctc)%></Data></Cell>
+          <Cell ss:Index="15"><Data ss:Type="String"><%= goal_bunch.try(:r_designation).try(:name)%></Data></Cell>
+          <Cell ss:Index="16"><Data ss:Type="String"><%= goal_bunch.try(:f_increment)%></Data></Cell>
+          <Cell ss:Index="17"><Data ss:Type="String"><%= goal_bunch.try(:f_promotion)%></Data></Cell>
+          <Cell ss:Index="18"><Data ss:Type="String"><%= goal_bunch.try(:f_ctc)%></Data></Cell>
+          <Cell ss:Index="19"><Data ss:Type="String"><%= goal_bunch.try(:f_designation).try(:name)%></Data></Cell>
+
+          <Cell ss:Index="20"><Data ss:Type="String"><%= goal_bunch.try(:appraisee_comment) %></Data></Cell>
+          <Cell ss:Index="21"><Data ss:Type="String"><%= goal_bunch.try(:appraisee_rating_id) %></Data></Cell>
+          <Cell ss:Index="22"><Data ss:Type="String"><%= goal_bunch.try(:appraiser_comment) %></Data></Cell>
+          <Cell ss:Index="23"><Data ss:Type="String"><%= goal_bunch.try(:appraiser_rating) %></Data></Cell>
+          <Cell ss:Index="24"><Data ss:Type="String"><%= goal_bunch.try(:review_comment) %></Data></Cell>
+          <Cell ss:Index="25"><Data ss:Type="String"><%= goal_bunch.try(:reviewer_rating_id) %></Data></Cell>
+          <Cell ss:Index="26"><Data ss:Type="String"><%= goal_bunch.try(:final_comment) %></Data></Cell>
+          <Cell ss:Index="27"><Data ss:Type="String"><%= goal_bunch.try(:final_rating_id) %></Data></Cell>
+        </Row><!-- Row -->
+      <% end %><!-- slip -->
+    </Table>
+  </Worksheet>
+</Workbook>

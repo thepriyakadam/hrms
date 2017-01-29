@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+     <h4>Interview Schedule Details</h4>
+    <p>
+       Dear <%= @interview_schedule.candidate_name.to_s %>,<br><br>
+       This is to inform you that with your resume we have organize your interview for the position of <b><%= @interview_schedule.post_title %></b> as details given below.<br><br>
+       1. <b>Date :-</b> <%= @interview_schedule.interview_date %><br><br>
+       2. <b>Address :-</b> <%= @interview_schedule.location %><br><br>
+       3. <b>Contact Person Name :-</b> <%= @employee.first_name.to_s %> <%= @employee.last_name.to_s %> <%= @employee.middle_name.to_s %><br><br>
+       4.  <b>Mobile No:-</b> <%= @employee.contact_no.to_s %><br><br>
+      <div class="row">
+        <div class="col-sm-5">
+            With Regards,<br><br>
+            HR 
+        </div>
+      </div>
+    </p>
+  </body>
+</html>

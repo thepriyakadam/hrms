@@ -1,0 +1,35 @@
+<div class="box box-default">
+<div class="box-header with-border">
+    <h3 class="box-title">Interview Details</h3>
+  </div><!-- /.box-header -->
+ <div class="box-body">
+   <table id="example2" class="table table-bordered table-hover table-condensed">
+<tr> 
+  <th><strong>Job Title</strong></th>
+  <td><%= @interview_schedule.job_title %></td>
+
+  <th><strong>Candidate Name</strong></th>
+  <td><%= @interview_schedule.candidate_name %></td>
+</tr>
+
+<tr> 
+  <th><strong>Email Id</strong></th>
+  <td><%= @interview_schedule.email_id %></td>
+
+  <th><strong>Interview Date</strong></th>
+  <td><%= @interview_schedule.interview_date %></td>
+</tr>
+
+<tr> 
+  <th><strong>Location</strong></th>
+  <td><%= @interview_schedule.location %></td>
+
+
+  <th></th>
+  <td></td>
+</tr>
+
+</table>
+<%= link_to 'Back', interview_schedules_path , class: 'btn btn-sm btn-default fa fa-arrow-left'  %>
+</div>
+</div>

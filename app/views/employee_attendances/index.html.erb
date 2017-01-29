@@ -1,0 +1,60 @@
+
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Confirm Employee Attendance</h3>
+  </div><!-- /.box-header -->
+
+  <div class="box-body">
+    <%= bootstrap_form_for(:employee_attendance, url: { action: 'display_attendance_1'},html: {id: 'employee_attendance'},remote: true) do |f| %>
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="field">
+            <%= select :employee_attendance,:year,['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025','2026','2027'],{label: 'Select Year',include_blank: " Select Year"}, class: "form-control" %>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="field">
+            <%= select :employee_attendance,:month, ['January','February','March','April','May','June','July','August','September','October','November','December'],{label: 'Select Month',include_blank: " Select Month"}, class: "form-control" %>
+           </div>
+        </div>
+
+         <div class="col-sm-3">
+          <div class="actions">
+            <%= f.submit "Display Report", class: "btn btn-sm btn-primary" %>
+          </div>
+        </div>
+
+        </div><br>
+        <div class="ajax-progress"></div>
+        <div id="attendance_lii"></div>
+
+      <br>
+    <% end %>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->
+
+<script>
+$("#employee_attendance").validate({
+    rules: {
+      "employee_attendance[month]":{
+        required: true,
+      },
+      "employee_attendance[year]":{
+        required: true,
+      }
+    },
+    messages: {
+      "employee_attendance[month]":{
+        required: "Please select Month",
+      },
+      "employee_attendance[year]":{
+        required: "Please select Year",
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

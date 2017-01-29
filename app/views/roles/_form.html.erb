@@ -1,0 +1,24 @@
+<%= bootstrap_form_for(@role,remote:true) do |f| %>
+  <div class="row">
+    <div class="col-sm-2">
+      <div class="form-group required">
+        <%= f.text_field :code,hide_label:true, placeholder: 'Code' %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :name,hide_label:true, placeholder: 'Employee Role' %>
+      </div>
+    </div>
+    <div class="col-sm-5">
+      <div class="form-group required">
+        <%= f.text_field :description,hide_label:true, placeholder: 'Description' %>
+      </div>
+    </div>
+    <div class="col-sm-2">
+      <div class="actions">
+        <%= f.submit :class => class_name %>
+      </div>
+    </div>
+  </div>
+<% end %>

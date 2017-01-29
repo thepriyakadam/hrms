@@ -1,0 +1,115 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Training Assessment</h3>
+    <div class="pull-right">  
+    </div>
+  </div>
+  <div class="box-body">
+
+      <table id="example1" class="table table-bordered table-hover table-condensed">     
+        <thead>
+        <tr><td colspan="8"><center> Employee Goal Details for Training </center></td></tr>
+          <tr>
+            <th>Employee ID</th>
+            <th>Name</th>
+            <th>Period</th>
+            <th>Department</th>
+            <th>Goal</th>
+            <th>Rating</th>
+            <th>Training Course</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @goal_ratings.each do |a| %>
+          <tr>
+          <%= bootstrap_form_for :login, url: {action: 'create_goal_training',emp_id: a.appraisee_id,goal_rating_id: a.id,period_id: @period_id}, html: {id: 'login'} do |f| %> 
+          <%= f.hidden_field :period_id,value: @period_id %>
+            <td><%= a.appraisee.manual_employee_code %></td> 
+            <td><%= a.appraisee.first_name %> <%= a.appraisee.middle_name %> <%= a.appraisee.last_name %></td>
+            <td><%= a.goal_bunch.period.name %></td>
+            <td><%= a.appraisee.try(:department).try(:name) %></td>
+            <td><%= a.goal_perspective.try(:name) %></td>
+            <td><%= a.appraiser_rating_id %></td>
+            <td><%= select_tag :training_topic_master_id,options_for_select(all_training_topic),{class: "form-control",hide_label: true,include_blanck: "Select Training Topic",value: a.training_topic_master_id} %></td>
+            <td><%= f.submit "Confirm Training", class: 'btn btn-info btn-sm fa fa-user-plus' %></td>
+            <% end %>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <br><br>
+
+      <table id="example1" class="table table-bordered table-hover table-condensed">     
+        <thead>
+        <tr><td colspan="8"><center> Employee Attribute Details for Training </center></td></tr>
+          <tr>
+            <th>Employee ID</th>
+            <th>Name</th>
+            <th>Period</th>
+            <th>Department</th>
+            <th>Attribute</th>
+            <th>Rating</th>
+            <th>Training Course</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @attribute_ratings.each do |a| %>
+          <tr>
+          <%= bootstrap_form_for :login, url: {action: 'create_attribute_training',emp_id: a.appraisee_id,goal_rating_id: a.id,period_id: @period_id}, html: {id: 'login1'} do |f| %> 
+          <%= f.hidden_field :period_id,value: @period_id %>
+            <td><%= a.appraisee.manual_employee_code %></td> 
+            <td><%= a.appraisee.first_name %> <%= a.appraisee.middle_name %> <%= a.appraisee.last_name %></td>
+            <td><%= a.goal_bunch.period.try(:name) %></td>
+            <td><%= a.appraisee.try(:department).try(:name) %></td>
+            <td><%= a.attribute_master.try(:name) %></td>
+            <td><%= a.appraiser_rating_id %></td>
+            <td><%= select_tag :training_topic_master_id,options_for_select(all_training_topic),{class: "form-control",hide_label: true,include_blanck: "Select Training Topic",value: a.training_topic_master_id} %></td>
+            <td><%= f.submit "Confirm Training", class: 'btn btn-info btn-sm fa fa-user-plus' %></td>
+            <% end %>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <br>
+      <%= link_to 'Back',period_for_training_goal_ratings_path,class: 'btn btn-sm btn-default fa fa-arrow-left' %>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $("#login").validate({
+    rules: {
+      "login[training_topic_master_id]":{
+        required: true
+      }
+    },
+    messages: {
+      "login[training_topic_master_id]":{
+        required: "Please specify training_topic_master_id"
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>
+<script type="text/javascript">
+  $("#login1").validate({
+    rules: {
+      "login1[training_topic_master_id]":{
+        required: true
+      }
+    },
+    messages: {
+      "login1[training_topic_master_id]":{
+        required: "Please specify training_topic_master_id"
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

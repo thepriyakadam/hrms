@@ -1,0 +1,40 @@
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>  
+      <th>Retention</th>
+      <th>Amount</th>
+      <th>No. of Month</th>
+      <th>Persent</th>
+      <th>Persentage</th>
+      <th>Max Amount</th>
+      <th>Base Component</th>
+      <th>Status</th>
+      <th>Description</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @retention_moneys.each do |retention_money| %>
+      <tr>
+        <td><%= retention_money.have_retention ? "Yes" : "No" %></td>
+        <td><%= retention_money.amount %></td>
+        <td><%= retention_money.no_of_month %></td>
+        <td><%= retention_money.is_persent %></td>
+        <td><%= retention_money.persent %></td>
+        <td><%= retention_money.max_limit %></td>
+        <td><%= retention_money.base_component %></td>
+        <td><%= retention_money.is_active %></td>
+        <td><%= retention_money.description %></td>
+        <td>
+          <% if retention_money.is_confirm == true %>
+            <small class= "label label-primary">Confirmed</small>
+          <% else %>
+            <%= link_to '', edit_retention_money_path(retention_money),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
+            <%= link_to '',  retention_money, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-xs btn-danger fa fa-close' %>
+            <%= link_to '', is_confirm_retention_moneys_path(retention_money: retention_money),data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-info fa fa-check' %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

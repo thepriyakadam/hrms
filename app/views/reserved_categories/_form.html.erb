@@ -1,0 +1,27 @@
+<%= bootstrap_form_for(@reserved_category,html: {id: 'reserved_category'},remote:true) do |f| %>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :code,hide_label:true, placeholder: 'Reservation Category Code' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :name,hide_label:true, placeholder: 'Reservation Category Name' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :description,hide_label:true, placeholder: 'Description' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "Create Reservation Category",:class => class_name, data: { disable_with: data_info } %>
+      </div>
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  in_min_time: 2016-11-21 16:47:15
+  in_max_time: 2016-11-21 16:47:15
+  out_min_time: 2016-11-21 16:47:15
+  out_max_time: 2016-11-21 16:47:15
+  working_hrs: 9.99
+  is_active: false
+  is_confirm: false
+
+two:
+  in_min_time: 2016-11-21 16:47:15
+  in_max_time: 2016-11-21 16:47:15
+  out_min_time: 2016-11-21 16:47:15
+  out_max_time: 2016-11-21 16:47:15
+  working_hrs: 9.99
+  is_active: false
+  is_confirm: false

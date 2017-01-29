@@ -1,0 +1,53 @@
+<%= bootstrap_form_for(@induction_master,html: {id: 'induction_master'}) do |f| %>
+<%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :code,label: 'Code' %>
+      </div>
+    </div> 
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :description,label: 'Name' %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.file_field :avatar,label: 'Document Upload(only docx,pdf)' %>
+      </div>
+    </div>
+    </div>
+    <div class="row">
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "Create Induction Template",:class => class_name,  data: { disable_with: data_info } %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<script>
+$("#induction_master").validate({
+    rules: {
+      "induction_master[code]":{
+        required: true,
+      },
+      "induction_master[description]":{
+        required: true,
+      }
+    },
+    messages: {
+      "induction_master[code]":{
+        required: "Please specify Code",
+      },
+      "induction_master[description]":{
+        required: "Please specify Name",
+      }
+      
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

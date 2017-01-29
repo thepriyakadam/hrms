@@ -1,0 +1,46 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Employee List</h3>
+    <div class="pull-right">  
+    </div>
+  </div>
+  <div class="box-body">
+    <table id="example6" class="table table-bordered table-hover table-condensed">
+     <thead>
+        <tr>
+          <th>Employee ID</th>
+          <th>Employee Name</th>
+          <th>Appraisee Rating</th>
+          <th>Appraiser Rating</th>
+          <th>Reviewer Rating</th>
+          <th>Reviewer Rating</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @goal_bunches.each do |e| %>
+        <tr>
+        <td><%= e.employee.manual_employee_code %></td>
+        <td><%= e.employee.first_name %> <%= e.employee.middle_name %> <%= e.employee.last_name %> </td>
+        <td><%= e.appraisee_rating_id %></td> 
+        <td><%= e.appraiser_rating %></td>
+        <td><%= e.reviewer_rating_id %></td>
+        <td><%= e.final_rating_id %>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>  
+
+      <%= link_to " Excel Report ",period_rating_wise_xls_goal_ratings_path(period_id: params[:period_id], rating_id: params[:rating_id], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+      
+      <%= link_to " Print Report ",period_rating_wise_pdf_goal_ratings_path(period_id: params[:period_id], rating_id: params[:rating_id], format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

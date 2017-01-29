@@ -1,0 +1,44 @@
+
+<div class="box box-default">
+   <div class="box-body"> 
+ <%= bootstrap_form_for(@issue_type,html: {id: 'issue_type'}) do |f| %>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :name,label:'Support Type', placeholder: 'Support Type' %>
+      </div>
+    </div> 
+    <div class="col-sm-3">
+     <label>Status</label>
+     <%= f.check_box :status,label:'Active' %>
+    </div>
+    <div class="col-sm-3">
+    <label></label>
+      <div class="actions">
+       <%= f.submit'Create Type Of Support',:class => class_name, data: { disable_with: data_info } %>
+      </div>
+    </div>
+  </div>
+ <% end %>
+
+
+<script>
+$("#issue_type").validate({
+    rules: {
+      "issue_type[name]":{
+        required: true,
+      },
+      
+       },
+    messages: {
+      "issue_type[name]":{
+        required: "Please Specify Support Type",
+      }
+       },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>
+

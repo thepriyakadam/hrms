@@ -1,0 +1,26 @@
+<%= bootstrap_form_for(@investment_head,html: {id: 'investment_head'},remote:true) do |f| %>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.select :section_id, section_all, {label:'Section',include_blank: " Select Section"} %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :description,label:'Description', placeholder: 'Description' %>
+      </div>
+    </div>
+    <div class="col-sm-2">
+      <div class="field">
+        <%= f.text_field :limit %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit 'Create Investment Head',:class => class_name, data: { disable_with: data_info } %>
+      </div>
+    </div>
+  </div>
+<% end %>

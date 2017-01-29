@@ -1,0 +1,26 @@
+<br>
+<%= form_for :pdf_salaries, url: { action: 'print_exit_interview',format: 'pdf',id: @exit_interview.id},:html => {:target => '_blank'} do |f| %>
+
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>  
+      <th>Select Question</th>
+      <th>Answer</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @exit_interviews.each do |exit_interview| %>
+      <tr>
+         <td><%= exit_interview.question_master.name %></td>
+        <td><%= exit_interview.answer %></td>
+        <td>
+          <%= link_to '', edit_exit_interview_path(exit_interview),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
+          <%= link_to '',  exit_interview, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+  <%= f.submit "Print Exit Interview",class: "btn btn-xl btn-warning fa fa-print" %>
+</table>
+<% end %>

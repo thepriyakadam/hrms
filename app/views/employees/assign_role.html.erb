@@ -1,0 +1,86 @@
+<style type="text/css">
+.table-condensed>thead>tr>th, .table-condensed>tbody>tr>th, .table-condensed>tfoot>tr>th, .table-condensed>thead>tr>td, .table-condensed>tbody>tr>td, .table-condensed>tfoot>tr>td {
+  padding: 1px;
+  }
+</style>
+
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Create New User</h3>    
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example" class="table table-bordered table-hover table-condensed">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Employee Name</th>
+          <th>HRMS Access Control</th>
+          <th>Reporting Manager-1</th>
+          <th>Reporting Manager-2</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @employees.each do |employee| %>
+          <%= bootstrap_form_for :login, url: {action: 'submit_form'}, html: {id: 'login'} do |f| %>  
+          <%= f.hidden_field :effec_date, value: Date.today %>  
+            <tr>
+              <td><%= employee.manual_employee_code %></td>
+              <td><%= employee.first_name %> <%= employee.middle_name %> <%= employee.last_name %></td>
+<!-- 
+              <td><= f.select :role_id, all_role_list,{hide_label:true,include_blank: "Select Role"},prompt:true %>
+              
+              </td>
+              <td><= f.select :manager_id, manager_id,{hide_label:true,include_blank: " Select Reporting Manager"},prompt:true %></td>
+
+              <td><= f.select :manager_2_id, all_reporting_master_list1,{hide_label:true,include_blank: " Select Reporting Manager"}, prompt:true %></td> -->
+               <%= f.hidden_field :employee_id, value: employee.id %>
+
+              <td><%= select_tag 'role_id[]',options_for_select(all_role_list),{class: "form-control", hide_label: true,include_blank: " Select Role"} %></td>
+              <!-- 
+              <td><= select_tag 'role_id[]'options_for_select(all_role_list),{class: "form-control", hide_label: true,include_blank: " Select Role"} %></td> -->
+
+              <td><%= select_tag 'manager_id[]',options_for_select(all_reporting_master_list), {class: "form-control",include_blank: 'Select Manager 1'} %></td>
+              <td><%= select_tag 'manager_2_id[]',options_for_select(all_reporting_master_list),{class: "form-control",include_blank: 'select Manager 2'} %></td>
+              <%= hidden_field_tag 'employee_ids[]',"",value: employee.id %>
+
+              <td><%= f.submit "+", class: 'btn btn-primary btn-sm fa fa-user-plus' %></td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+$("#login").validate({
+    rules: {
+      "login[role_id]":{
+        required: true
+      },
+      "login[manager_id]":{
+        required: true
+      }, 
+      "login[manager_2_id]":{
+        required: true
+      }
+    },
+    messages: {
+      "login[role_id]":{
+        required: "Please specify role"
+      },
+      "login[manager_id]":{
+        required: "Please Select manager"
+      },
+      "login[manager_2_id]":{
+        required: "Please specify manager_2"
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+
+   });
+</script>

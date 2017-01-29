@@ -1,0 +1,66 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+  <h6 class="box-title">Employee Asset Details - <%= code_full_name(@assigned_assets.first.employee) %></h6>
+    <div class="box-tools pull-right">
+      <%= link_to 'Back', employees_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+      <%= link_to "Assign Asset", ajax_new_assigned_asset_employees_path(id: @employee.id), class: 'btn btn-primary',remote:true %>
+    </div>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+	    
+      <th>Asset type</th>
+      <th>Assets detail</th>
+      <th>Assets</th>
+      <th>Assets value</th>
+      <th>Assest status</th>
+      <th>Issue date</th>
+      <th>Valid till</th>
+      <th>Returned on</th> 
+      <th>Remarks</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+	<tbody>
+	<% @assigned_assets.each do |assigned_asset| %>
+      <tr>
+        
+        <td><%= assigned_asset.asset_type.try(:name) %></td>
+        <td><%= assigned_asset.assets_detail %></td>
+        <td><%= assigned_asset.assets_id %></td>
+        <td><%= assigned_asset.assets_value %></td>
+        <td><%= assigned_asset.assest_status %></td>
+        <td><%= assigned_asset.issue_date %></td>
+        <td><%= assigned_asset.valid_till %></td>
+        <td>
+          <% if assigned_asset.returned_on == nil %>
+            <%= link_to ' ',modal_assigned_assets_path(assigned_asset),class: 'btn btn-info btn-sm fa fa-arrow-right',remote: true %></td>
+          <% else %> 
+            <%= assigned_asset.returned_on %>
+          <% end %>
+        <td><%= assigned_asset.remarks %></td>
+        <td>
+          <!-- <= link_to ' ',modal_edit_assigned_assets_path(assigned_asset),class: 'btn btn-success btn-sm fa fa-edit',remote: true %> --></td>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
+</div>
+
+<div id="myModal" class="modal fade"></div>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#example3').DataTable( {
+        "scrollY":        "200px",
+        "scrollX":        "1000px",
+        "scrollCollapse": true,
+        "paging":         false
+    } );
+} );
+</script>

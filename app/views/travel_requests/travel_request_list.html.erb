@@ -1,0 +1,57 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Travel Request</h3>
+    <div class="pull-right">
+       
+    </div>
+    </div>
+
+<div class="box-body">
+
+<table id="example" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Employee Name</th>
+      <th>Request To</th>
+      <th>Traveling Date</th>
+      <th>Place</th>
+      <th>Total Advance</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @travel_requests.each do |travel_request| %>
+      <tr>
+        <td><%= travel_request.employee.try(:manual_employee_code) %></td>
+        <td><%= travel_request.employee.try(:first_name) %> <%= travel_request.employee.try(:middle_name) %> <%= travel_request.employee.try(:last_name) %></td>
+        <td><%= travel_request.reporting_master.employee.try(:first_name) %> <%= travel_request.reporting_master.employee.try(:middle_name) %> <%= travel_request.reporting_master.employee.try(:last_name) %></td>
+        <td><%= travel_request.traveling_date %></td>
+        <td><%= travel_request.place %></td>
+        <td><%= travel_request.total_advance %></td>
+         <td>
+             <% if travel_request.current_status == "Pending" %>
+              <small class="label label-primary">Pending</small>
+             <% elsif travel_request.current_status == "Approved" %>
+              <small class="label label-primary">Approved</small>
+             <% elsif travel_request.current_status == "Reject" %>
+              <small class="label label-danger">Reject</small>
+              <% elsif travel_request.current_status == "Approved & Send Next" %>
+              <small class="label label-info">Approved & Send Next</small>
+              <% elsif travel_request.current_status == "Cancelled" %>
+              <small class="label label-warning">Cancelled</small>
+              <% else %>
+               <small class="label label-success">Revert</small>
+          <% end %>
+        </td>
+        <td>
+         <%= link_to 'Show', travel_request,class: 'btn btn-xs btn-info fa fa-check' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
+</div>

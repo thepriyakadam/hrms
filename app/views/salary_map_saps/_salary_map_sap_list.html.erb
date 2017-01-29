@@ -1,0 +1,23 @@
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>  
+      <th>Salary Component</th>
+      <th>Account Code</th>
+      <th>Account Type</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+   <% @salary_map_saps.each do |salary_map_sap| %>
+      <tr>
+        <td><%= salary_map_sap.salary_component.try(:name)%></td>
+        <td><%= salary_map_sap.account_code %></td>
+        <td><%= salary_map_sap.is_debit ? "Debit" : "Credit" %></td>
+        <td>
+          <%= link_to '', edit_salary_map_sap_path(salary_map_sap),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
+          <%= link_to '',  salary_map_sap, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-xs btn-danger fa fa-close' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

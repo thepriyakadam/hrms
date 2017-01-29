@@ -1,0 +1,46 @@
+<div class="box-body">
+ <%= bootstrap_form_for @due_detail,url:{action:'is_confirm',due_template_id: @due_template.id} do |f| %>  
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>No Dues Owner</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @due_details.each do |due_detail| %>
+          <tr>
+            <td><%= due_detail.reporting_master.employee.try(:manual_employee_code) %></td>
+            <td><%= full_name(due_detail.reporting_master.employee) %></td>
+            <td><%= due_detail.status ? "Active" : "Inactive" %></td>
+            <td>
+               <%= link_to '', edit_due_detail_path(due_detail),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
+              <%= link_to '',  due_detail, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %> 
+</div>
+<div id="myModal" class="modal fade"></div>
+
+<script type="text/javascript">
+  $(function () {
+    $('#selectAll').click(function() {
+      if (this.checked) {
+        $(':checkbox').each(function() {
+          this.checked = true;                       
+        });
+      } 
+      else {
+        $(':checkbox').each(function() {
+          this.checked = false;                        
+        });
+      } 
+    });
+  });
+</script>

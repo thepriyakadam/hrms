@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <%  @employee_templates.each do |t| %>
+      <% @employee_salary_templates = EmployeeSalaryTemplate.where(employee_template_id: t) %>
+      <Row>
+        <Cell ss:Index="1"><Data ss:Type="String"> ID <%= @employee.manual_employee_code %></Data></Cell>
+        <Cell ss:Index="2"><Data ss:Type="String">Employee Name <%= @employee.first_name %> <%= @employee.middle_name %> <%= @employee.last_name %></Data></Cell>
+         <Cell ss:Index="3"><Data ss:Type="String">Period <%= t.start_date %> - <%= t.end_date %> </Data></Cell>
+      </Row>
+      <Row>
+        <Cell ss:Index="1"><Data ss:Type="String">Salary Component</Data></Cell>
+        <Cell ss:Index="2"><Data ss:Type="String">Monthly Amount</Data></Cell>
+        <Cell ss:Index="3"><Data ss:Type="String">Annual Amount</Data></Cell>
+      </Row>
+      <% @employee_salary_templates.each do |s| %>
+      <% @employee_salary_template = EmployeeSalaryTemplate.find_by(id: s) %>
+       <Row>
+          <Cell ss:Index="1"><Data ss:Type="String"><%= s.try(:salary_component).try(:name) %></Data></Cell>
+          <Cell ss:Index="2"><Data ss:Type="Number"><%= s.try(:monthly_amount) %></Data></Cell>
+          <Cell ss:Index="3"><Data ss:Type="Number"><%= s.try(:annual_amount) %></Data></Cell>
+       </Row><!-- Row -->
+      <% end %><!-- slip -->
+       <Row>
+          <Cell ss:Index="1"><Data ss:Type="String">Gross Salary</Data></Cell>
+          <Cell ss:Index="2"><Data ss:Type="Number"><%= @employee_salary_templates.sum(:monthly_amount) %></Data></Cell>
+          <Cell ss:Index="3"><Data ss:Type="Number"><%= @employee_salary_templates.sum(:annual_amount) %></Data></Cell>
+       </Row><!-- Row -->
+    <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>

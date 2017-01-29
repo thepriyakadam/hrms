@@ -1,0 +1,30 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Employee Skillset Details</h3>
+    <div class="box-tools pull-right">
+      <%= link_to "Add Skillset", ajax_new_skillset_employees_path(id: @employee.id), class: 'btn btn-sm btn-primary',remote:true %>
+      <%= link_to 'Back', employees_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+    </div>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+   <tr>
+      <th>Name</th>
+      <th>Skill Level</th>
+      <th>Action</th>
+    </tr>
+  
+    <% @skillsets.each do |skillset| %>
+      <tr>
+        <td><%= skillset.name %></td>
+        <td><%= skillset.skill_level %></td>
+        <td>
+          <%= link_to '', edit_skillset_path(skillset),class: 'btn btn-sm btn-success fa fa-edit',remote:true %>
+          <!--  link_to '', skillset, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-sm fa fa-close' %> -->
+        </td>
+      </tr>
+        <%end%>
+    </table>
+  </div><!-- /.box -->
+</div>
+

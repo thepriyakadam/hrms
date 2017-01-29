@@ -1,0 +1,42 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Employee Attendance</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table class="table table-bordered table-hover table-condensed">
+     <tr>
+      <th><strong>Shift</strong></th>
+      <td><%= @attendance.try(:employee_shift).try(:company_shift).try(:name) %></td>
+
+      <th> <strong>Employee Name</strong></th>
+      <td><%= full_name(@attendance.employee) %></td>
+     </tr>
+
+     <tr>
+      <th> <strong>Attendance Date</strong></th>
+      <td><%= @attendance.attendance_date %></td>
+
+      <th><strong>Check In</strong></th>
+      <td><%= @attendance.check_in %></td>
+     </tr>
+
+     <tr>
+      <th><strong>Check Out</strong></th>
+      <td><%= @attendance.check_out %></td>
+
+      <th><strong>Company Hours</strong></th>
+      <td><%= @attendance.company_hrs %></td>
+     </tr>
+
+     <tr>
+      <th><strong>Over Time Hours</strong></th>
+      <td><%= @attendance.over_time_hrs %></td>
+
+      <th><strong>Total Hours</strong></th>
+      <td><%= @attendance.total_hrs %></td>
+     </tr>
+    </table>
+    <%= link_to 'Edit', edit_attendance_path(@attendance),class: 'btn btn-success fa fa-edit btn-sm' %> 
+    <%= link_to 'Back', attendances_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->

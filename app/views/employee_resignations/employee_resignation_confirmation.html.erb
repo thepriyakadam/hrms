@@ -1,0 +1,137 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Resignation Confirmation List</h3>
+    <div class="pull-right">
+    </div>
+    </div>
+<div class="box-body">
+<table id="example" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Employee ID</th>
+      <th>Employee Name</th>
+      <th>Resignation Date</th>
+      <th>Reason</th>
+      <th>Notice period(in days)</th>
+      <th>Short notice period(in days)</th>
+      <th>Tentative leaving date</th>
+    </tr>
+  </thead>
+
+  <tbody>
+      <% @employee_resignations.each do |employee_resignation| %>
+      <tr>
+      <td><%= employee_resignation.employee.try(:manual_employee_code) %></td>
+        <td><%= full_name(employee_resignation.employee)%></td>
+        <td><%= employee_resignation.resignation_date %></td>
+        <td><%= employee_resignation.reason %></td>
+        <td><%= employee_resignation.notice_period %></td>
+        <td><%= employee_resignation.short_notice_period %></td>
+        <td><%= employee_resignation.tentative_leaving_date %></td>
+      </tr>
+      <% end %>
+  </tbody>
+</table>
+  <div class="box-header">
+    <h3 class="box-title">Employee Resignation Details</h3>
+    <div class="pull-right">
+    </div>
+  </div>
+<div>
+<table id="example" class="table table-bordered table-hover table-condensed">
+  <tbody>
+    <tr>
+
+      <td><b>Resignation Code</b></td>
+      <td><%= @employee_resignation.id %></td>
+    </tr>
+    <tr>
+      <td><b>Request By</b></td>
+      <td><%= full_name(@employee_resignation.employee) %></td>
+    </tr>
+    <tr>
+      <td><b>Approved By</b></td>
+      <td><%= @employee.first_name %> <%= @employee.middle_name %> <%= @employee.last_name %></td>
+    </tr>
+    <tr>
+      <td><b>Employee ID</b></td>
+      <td><%= @employee_resignation.employee.try(:manual_employee_code) %></td>
+    </tr>
+    <tr>
+      <td><b>Resignation Date</b></td>
+      <td><%= @employee_resignation.resignation_date %></td>
+    </tr>
+    <tr>
+      <td><b>Reason</b></td>
+      <td><%= @employee_resignation.reason %></td>
+    </tr>
+    <tr>
+      <td><b>Is Notice Period</b></td>
+      <td><%= @employee_resignation.is_notice_period %></td>
+    </tr>
+    <tr>
+      <td><b>Notice period</b></td>
+      <td><%= @employee_resignation.notice_period %></td>
+    </tr>
+    <tr>
+      <td><b>Short notice period</b></td>
+      <td><%= @employee_resignation.short_notice_period %></td>
+    </tr>
+    <tr>
+      <td><b>Tentative leaving date</b></td>
+      <td><%= @employee_resignation.tentative_leaving_date %></td>
+    </tr>
+    <tr>
+      <td><b>Remark</b></td>
+      <td><%= @employee_resignation.remark %></td>
+    </tr>
+    <tr>
+      <td><b>Exit interview date</b></td>
+      <td><%= @employee_resignation.exit_interview_date %></td>
+    </tr>
+    <tr>
+      <td><b>Note</b></td>
+      <td><%= @employee_resignation.note %></td>
+    </tr>
+    <tr>
+      <td><b>Leaving date</b></td>
+      <td><%= @employee_resignation.leaving_date %></td>
+    </tr>
+    <tr>
+      <td><b>Settled on</b></td>
+      <td><%= @employee_resignation.settled_on %></td>
+    </tr>
+    <tr>
+      <td><b>Has left</b></td>
+      <td><%= @employee_resignation.has_left %></td>
+    </tr>
+    <tr>
+      <td><b>Notice served</b></td>
+      <td><%= @employee_resignation.notice_served %></td>
+    </tr>
+    <tr>
+      <td><b>Rehired</b></td>
+      <td><%= @employee_resignation.rehired %></td>
+    </tr>
+    
+  </tbody>
+</table>
+<div id="myModal" class="modal fade"></div>
+<div id="myModal1" class="modal fade"></div>
+<div id="myModal2" class="modal fade"></div>
+<%= link_to 'Approve',approve_resignation_employee_resignations_path(@employee_resignation),class: 'btn btn-sm btn-primary fa fa-check' %> |
+<%= link_to 'Reject',reject_employee_resignation_employee_resignations_path(@employee_resignation),class: 'btn btn-sm btn-danger fa fa-trash' %> |
+<%= link_to 'Approve & Send next',modal_employee_resignations_path(@employee_resignation.id),class: 'btn btn btn-sm btn-success fa fa-modx',remote: true %>  |
+ <%= link_to 'Edit & Send Next',edit_n_send_next_modal_employee_resignations_path(@employee_resignation.id),class: 'btn btn-sm btn-primary fa fa-check',remote: true %> |
+ <%= link_to 'Edit & Approve',edit_n_approve_modal_employee_resignations_path(@employee_resignation.id),class: 'btn btn btn-sm btn-success fa fa-modx',remote: true %>  |
+
+ 
+</div>
+</div>
+</div>
+
+<script>
+$(document).ready(function() {
+    $('#example').DataTable();
+} );
+</script>

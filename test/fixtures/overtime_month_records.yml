@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  employee_id: 
+  overtime_data: 2016-03-12
+  attendance_bonus_amount: 9.99
+  paid_holiday_amount: 9.99
+
+two:
+  employee_id: 
+  overtime_data: 2016-03-12
+  attendance_bonus_amount: 9.99
+  paid_holiday_amount: 9.99

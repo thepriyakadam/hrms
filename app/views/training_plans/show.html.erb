@@ -1,0 +1,60 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Training Plan</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table class="table table-bordered table-hover table-condensed">
+
+      <tr>
+        <th><strong>Training Date:</strong></th>
+        <td><%= @training_plan.training_date %></td>
+      
+        <th><strong>Topic:</strong></th>
+        <td><%= @training_plan.training_topic_master.try(:name) %></td>
+      </tr>
+
+      <tr>
+        <th><strong>No of Employee:</strong></th>
+        <td><%= @training_plan.no_of_employee %></td>
+      
+        <th><strong>Trainer Name:</strong></th>
+        <td><%= @training_plan.trainer_name %></td>
+      </tr>
+
+      <tr>
+        <th><strong>Contact No:</strong></th>
+        <td><%= @training_plan.trainer_num %></td>
+        
+        <th><strong>About Trainer:</strong></th>
+        <td><%= @training_plan.about_trainer %></td>
+        
+      </tr>
+
+      <tr>
+        <th><strong>Trainer Email:</strong></th>
+        <td><%= @training_plan.trainer_email %></td>
+
+        <th><strong>No of Days:</strong></th>
+        <td><%= @training_plan.no_of_days %></td>
+      
+      </tr>
+
+      <tr>
+
+        <th><strong>No of Hrs:</strong></th>
+        <td><%= @training_plan.no_of_hrs %></td>
+
+        <th><strong>Place:</strong></th>
+        <td><%= @training_plan.place %></td>
+
+      </tr>
+    </table>
+    <div class="box-header with-border">
+       <h3 class="box-title">Employee's Who are Going To Attend Training</h3>
+    </div>
+    <div>
+      <%= render 'trainee' %>
+    </div>
+      
+  </div>
+</div>

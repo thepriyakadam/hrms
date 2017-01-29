@@ -1,0 +1,61 @@
+<%= bootstrap_form_for(@shift_rotation,remote:true) do |f| %>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+      <%= f.select :company_shift_id, all_company_shifts,{hide_label: true, include_blank: " Select Company Shift"} %>
+       
+      </div>
+    </div>
+    <div class="col-sm-3">
+          <div class="field">
+            <div class="field">
+              <%= f.select :department_id, all_department_list,{hide_label: true,include_blank: " Select Department Name"} %>
+            </div>
+          </div>
+        </div> 
+     <div class="col-sm-3">
+        <div class="field">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+            <%= f.text_field :start_date,hide_label: true,placeholder: "Select Start Date", class: 'start_date'%>
+          </div>
+        </div>
+        </div>
+     <div class="col-sm-3">
+        <div class="field">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+            <%= f.text_field :end_date,hide_label: true,placeholder: "Select End Date", class: 'end_date'%>
+          </div>
+        </div>
+        </div>
+        </div>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "Create Shift Rotation",:class => class_name %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<script type="text/javascript">
+  $(function(){
+    $('.start_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-2:+20',
+    dateFormat: 'dd-mm-yy' });
+
+    $('.end_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-2:+20',
+    dateFormat: 'dd-mm-yy' });
+
+  }); 
+</script>

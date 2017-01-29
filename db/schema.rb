@@ -14,369 +14,342 @@
 ActiveRecord::Schema.define(version: 20151118095539) do
 
   create_table "awards", force: :cascade do |t|
-    t.integer  "employee_id", limit: 4
-    t.string   "award_name",  limit: 255
-    t.integer  "year",        limit: 4
-    t.string   "award_from",  limit: 255
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.integer  "employee_id"
+    t.string   "award_name"
+    t.integer  "year"
+    t.string   "award_from"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
-  add_index "awards", ["employee_id"], name: "index_awards_on_employee_id", using: :btree
+  add_index "awards", ["employee_id"], name: "index_awards_on_employee_id"
 
   create_table "blood_groups", force: :cascade do |t|
-    t.string   "name",       limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "certifications", force: :cascade do |t|
-    t.integer  "qualification_id", limit: 4
-    t.string   "name",             limit: 255
-    t.integer  "year",             limit: 4
-    t.string   "duration",         limit: 255
-    t.text     "descripation",     limit: 65535
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
+    t.integer  "qualification_id"
+    t.string   "name"
+    t.integer  "year"
+    t.string   "duration"
+    t.text     "descripation"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
   end
 
-  add_index "certifications", ["qualification_id"], name: "index_certifications_on_qualification_id", using: :btree
+  add_index "certifications", ["qualification_id"], name: "index_certifications_on_qualification_id"
 
   create_table "companies", force: :cascade do |t|
-    t.integer  "group_id",            limit: 4
-    t.string   "name",                limit: 255
-    t.string   "registration_no",     limit: 255
-    t.string   "pan_card_no",         limit: 255
-    t.string   "tax_no",              limit: 255
-    t.string   "professional_tax_no", limit: 255
-    t.text     "address",             limit: 65535
-    t.string   "city",                limit: 255
-    t.string   "district",            limit: 255
-    t.integer  "pin_code",            limit: 4
-    t.string   "state",               limit: 255
-    t.string   "email",               limit: 255
-    t.string   "contact_no",          limit: 255
-    t.string   "web_site",            limit: 255
+    t.integer  "group_id"
+    t.string   "name"
+    t.string   "registration_no"
+    t.string   "pan_card_no"
+    t.string   "tax_no"
+    t.string   "professional_tax_no"
+    t.text     "address"
+    t.string   "city"
+    t.string   "district"
+    t.integer  "pin_code"
+    t.string   "state"
+    t.string   "email"
+    t.string   "contact_no"
+    t.string   "web_site"
     t.date     "starting_date"
-    t.string   "ceo_name",            limit: 255
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
-    t.integer  "company_type_id",     limit: 4
+    t.string   "ceo_name"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+    t.integer  "company_type_id"
   end
 
-  add_index "companies", ["company_type_id"], name: "index_companies_on_company_type_id", using: :btree
-  add_index "companies", ["group_id"], name: "index_companies_on_group_id", using: :btree
+  add_index "companies", ["company_type_id"], name: "index_companies_on_company_type_id"
+  add_index "companies", ["group_id"], name: "index_companies_on_group_id"
 
   create_table "company_locations", force: :cascade do |t|
-    t.integer  "company_id", limit: 4
-    t.string   "name",       limit: 255
-    t.string   "address",    limit: 255
-    t.string   "city",       limit: 255
-    t.string   "district",   limit: 255
-    t.integer  "pin_code",   limit: 4
-    t.string   "contact_no", limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.integer  "company_id"
+    t.string   "name"
+    t.string   "address"
+    t.string   "city"
+    t.string   "district"
+    t.integer  "pin_code"
+    t.string   "contact_no"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  add_index "company_locations", ["company_id"], name: "index_company_locations_on_company_id", using: :btree
+  add_index "company_locations", ["company_id"], name: "index_company_locations_on_company_id"
 
   create_table "company_types", force: :cascade do |t|
-    t.string   "name",       limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "department_types", force: :cascade do |t|
-    t.string   "name",       limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "departments", force: :cascade do |t|
-    t.integer  "company_location_id", limit: 4
-    t.string   "name",                limit: 255
-    t.string   "address",             limit: 255
-    t.integer  "pin_code",            limit: 4
-    t.string   "head_of_department",  limit: 255
-    t.string   "contact_no",          limit: 255
-    t.string   "manager",             limit: 255
-    t.string   "hr",                  limit: 255
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
-    t.integer  "department_type_id",  limit: 4
+    t.integer  "company_location_id"
+    t.string   "name"
+    t.string   "address"
+    t.integer  "pin_code"
+    t.string   "head_of_department"
+    t.string   "contact_no"
+    t.string   "manager"
+    t.string   "hr"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+    t.integer  "department_type_id"
   end
 
-  add_index "departments", ["company_location_id"], name: "index_departments_on_company_location_id", using: :btree
-  add_index "departments", ["department_type_id"], name: "index_departments_on_department_type_id", using: :btree
+  add_index "departments", ["company_location_id"], name: "index_departments_on_company_location_id"
+  add_index "departments", ["department_type_id"], name: "index_departments_on_department_type_id"
 
   create_table "employee_grades", force: :cascade do |t|
-    t.string   "name",       limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-  end
-
-  create_table "employee_leavs", force: :cascade do |t|
-    t.string   "leave_type",        limit: 255
-    t.string   "no_of_leave",       limit: 255
-    t.datetime "leave_expiry_date"
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "employee_physicals", force: :cascade do |t|
-    t.integer  "employee_id", limit: 4
-    t.string   "hieght",      limit: 255
-    t.string   "weight",      limit: 255
-    t.string   "size",        limit: 255
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.integer  "employee_id"
+    t.string   "hieght"
+    t.string   "weight"
+    t.string   "size"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
-  add_index "employee_physicals", ["employee_id"], name: "index_employee_physicals_on_employee_id", using: :btree
+  add_index "employee_physicals", ["employee_id"], name: "index_employee_physicals_on_employee_id"
 
   create_table "employee_types", force: :cascade do |t|
-    t.string   "name",       limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "employees", force: :cascade do |t|
-    t.integer  "department_id",     limit: 4
-    t.string   "first_name",        limit: 255
-    t.string   "middle_name",       limit: 255
-    t.string   "last_name",         limit: 255
+    t.integer  "department_id"
+    t.string   "first_name"
+    t.string   "middle_name"
+    t.string   "last_name"
     t.date     "date_of_birth"
-    t.string   "contact_no",        limit: 255
-    t.string   "email",             limit: 255
-    t.string   "permanent_address", limit: 255
-    t.string   "city",              limit: 255
-    t.string   "district",          limit: 255
-    t.string   "state",             limit: 255
-    t.integer  "pin_code",          limit: 4
-    t.string   "current_address",   limit: 255
-    t.string   "adhar_no",          limit: 255
-    t.string   "pan_no",            limit: 255
-    t.string   "licence_no",        limit: 255
-    t.string   "passport_no",       limit: 255
-    t.string   "marital_status",    limit: 255
-    t.integer  "nationality_id",    limit: 4
-    t.integer  "blood_group_id",    limit: 4
-    t.string   "handicap",          limit: 255
-    t.string   "status",            limit: 255
-    t.integer  "employee_type_id",  limit: 4
-    t.string   "gender",            limit: 255
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+    t.string   "contact_no"
+    t.string   "email"
+    t.string   "permanent_address"
+    t.string   "city"
+    t.string   "district"
+    t.string   "state"
+    t.integer  "pin_code"
+    t.string   "current_address"
+    t.string   "adhar_no"
+    t.string   "pan_no"
+    t.string   "licence_no"
+    t.string   "passport_no"
+    t.string   "marital_status"
+    t.integer  "nationality_id"
+    t.integer  "blood_group_id"
+    t.string   "handicap"
+    t.string   "status"
+    t.integer  "employee_type_id"
+    t.string   "gender"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
   end
 
-  add_index "employees", ["blood_group_id"], name: "index_employees_on_blood_group_id", using: :btree
-  add_index "employees", ["department_id"], name: "index_employees_on_department_id", using: :btree
-  add_index "employees", ["employee_type_id"], name: "index_employees_on_employee_type_id", using: :btree
-  add_index "employees", ["nationality_id"], name: "index_employees_on_nationality_id", using: :btree
+  add_index "employees", ["blood_group_id"], name: "index_employees_on_blood_group_id"
+  add_index "employees", ["department_id"], name: "index_employees_on_department_id"
+  add_index "employees", ["employee_type_id"], name: "index_employees_on_employee_type_id"
+  add_index "employees", ["nationality_id"], name: "index_employees_on_nationality_id"
 
   create_table "experinces", force: :cascade do |t|
-    t.integer  "employee_id",          limit: 4
-    t.string   "no_of_year_experince", limit: 255
-    t.string   "company_name",         limit: 255
-    t.string   "designation",          limit: 255
-    t.string   "ctc",                  limit: 255
-    t.datetime "created_at",                       null: false
-    t.datetime "updated_at",                       null: false
+    t.integer  "employee_id"
+    t.string   "no_of_year_experince"
+    t.string   "company_name"
+    t.string   "designation"
+    t.string   "ctc"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
   end
 
-  add_index "experinces", ["employee_id"], name: "index_experinces_on_employee_id", using: :btree
+  add_index "experinces", ["employee_id"], name: "index_experinces_on_employee_id"
 
   create_table "families", force: :cascade do |t|
-    t.integer  "employee_id",       limit: 4
-    t.string   "no_of_member",      limit: 255
-    t.string   "f_name",            limit: 255
-    t.string   "m_name",            limit: 255
-    t.string   "l_name",            limit: 255
+    t.integer  "employee_id"
+    t.string   "no_of_member"
+    t.string   "f_name"
+    t.string   "m_name"
+    t.string   "l_name"
     t.date     "date_of_birth"
-    t.integer  "age",               limit: 4
-    t.string   "contact_no",        limit: 255
-    t.string   "phone_no",          limit: 255
-    t.string   "email",             limit: 255
-    t.string   "permanent_address", limit: 255
-    t.string   "city",              limit: 255
-    t.string   "dist",              limit: 255
-    t.string   "state",             limit: 255
-    t.integer  "pin_code",          limit: 4
-    t.string   "current_address",   limit: 255
-    t.string   "relation",          limit: 255
-    t.string   "adhar_no",          limit: 255
-    t.string   "pan_no",            limit: 255
-    t.string   "passport_no",       limit: 255
-    t.string   "medical_claim",     limit: 255
-    t.string   "marital",           limit: 255
-    t.string   "status",            limit: 255
-    t.integer  "nationality_id",    limit: 4
-    t.string   "blood_group",       limit: 255
-    t.string   "religion",          limit: 255
-    t.string   "phandicap",         limit: 255
-    t.string   "profession",        limit: 255
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+    t.integer  "age"
+    t.string   "contact_no"
+    t.string   "phone_no"
+    t.string   "email"
+    t.string   "permanent_address"
+    t.string   "city"
+    t.string   "dist"
+    t.string   "state"
+    t.integer  "pin_code"
+    t.string   "current_address"
+    t.string   "relation"
+    t.string   "adhar_no"
+    t.string   "pan_no"
+    t.string   "passport_no"
+    t.string   "medical_claim"
+    t.string   "marital"
+    t.string   "status"
+    t.integer  "nationality_id"
+    t.string   "blood_group"
+    t.string   "religion"
+    t.string   "phandicap"
+    t.string   "profession"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
   end
 
-  add_index "families", ["employee_id"], name: "index_families_on_employee_id", using: :btree
-  add_index "families", ["nationality_id"], name: "index_families_on_nationality_id", using: :btree
+  add_index "families", ["employee_id"], name: "index_families_on_employee_id"
+  add_index "families", ["nationality_id"], name: "index_families_on_nationality_id"
 
   create_table "groups", force: :cascade do |t|
-    t.string   "email",                  limit: 255, default: "", null: false
-    t.string   "encrypted_password",     limit: 255, default: "", null: false
-    t.string   "subdomain",              limit: 255,              null: false
-    t.string   "reset_password_token",   limit: 255
+    t.string   "email",                  default: "", null: false
+    t.string   "encrypted_password",     default: "", null: false
+    t.string   "subdomain",                           null: false
+    t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          limit: 4,   default: 0,  null: false
+    t.integer  "sign_in_count",          default: 0,  null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip",     limit: 255
-    t.string   "last_sign_in_ip",        limit: 255
-    t.datetime "created_at",                                      null: false
-    t.datetime "updated_at",                                      null: false
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
   end
 
-  add_index "groups", ["email"], name: "index_groups_on_email", unique: true, using: :btree
-  add_index "groups", ["reset_password_token"], name: "index_groups_on_reset_password_token", unique: true, using: :btree
-  add_index "groups", ["subdomain"], name: "index_groups_on_subdomain", unique: true, using: :btree
+  add_index "groups", ["email"], name: "index_groups_on_email", unique: true
+  add_index "groups", ["reset_password_token"], name: "index_groups_on_reset_password_token", unique: true
+  add_index "groups", ["subdomain"], name: "index_groups_on_subdomain", unique: true
 
   create_table "joining_details", force: :cascade do |t|
-    t.integer  "employee_id",       limit: 4
-    t.string   "joining_date",      limit: 255
-    t.string   "reffernce_from",    limit: 255
-    t.string   "admin_hr",          limit: 255
-    t.string   "tech_hr",           limit: 255
-    t.string   "designation",       limit: 255
-    t.string   "ctc",               limit: 255
-    t.string   "account_no",        limit: 255
-    t.integer  "employee_grade_id", limit: 4
+    t.integer  "employee_id"
+    t.string   "joining_date"
+    t.string   "reffernce_from"
+    t.string   "admin_hr"
+    t.string   "tech_hr"
+    t.string   "designation"
+    t.string   "ctc"
+    t.string   "account_no"
+    t.integer  "employee_grade_id"
     t.date     "confirmation_date"
-    t.string   "status",            limit: 255
-    t.string   "probation_period",  limit: 255
-    t.string   "notice_period",     limit: 255
-    t.string   "medical_schem",     limit: 255
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+    t.string   "status"
+    t.string   "probation_period"
+    t.string   "notice_period"
+    t.string   "medical_schem"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
   end
 
-  add_index "joining_details", ["employee_grade_id"], name: "index_joining_details_on_employee_grade_id", using: :btree
-  add_index "joining_details", ["employee_id"], name: "index_joining_details_on_employee_id", using: :btree
+  add_index "joining_details", ["employee_grade_id"], name: "index_joining_details_on_employee_grade_id"
+  add_index "joining_details", ["employee_id"], name: "index_joining_details_on_employee_id"
 
   create_table "leav_requests", force: :cascade do |t|
-    t.integer  "leav_type_id",     limit: 4
-    t.integer  "employee_id",      limit: 4
-    t.string   "available_leaves", limit: 255
-    t.string   "leave",            limit: 255
+    t.integer  "leav_type_id"
+    t.integer  "employee_id"
+    t.string   "available_leaves"
+    t.string   "leave"
     t.datetime "date_from"
     t.datetime "date_to"
-    t.string   "no_of_days",       limit: 255
-    t.text     "reason",           limit: 65535
+    t.string   "no_of_days"
+    t.text     "reason"
     t.date     "applied_on"
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
   end
 
-  add_index "leav_requests", ["employee_id"], name: "index_leav_requests_on_employee_id", using: :btree
-  add_index "leav_requests", ["leav_type_id"], name: "index_leav_requests_on_leav_type_id", using: :btree
+  add_index "leav_requests", ["employee_id"], name: "index_leav_requests_on_employee_id"
+  add_index "leav_requests", ["leav_type_id"], name: "index_leav_requests_on_leav_type_id"
 
   create_table "leav_types", force: :cascade do |t|
-    t.string   "leave_type",        limit: 255
-    t.string   "no_of_leave",       limit: 255
+    t.string   "leave_type"
+    t.string   "no_of_leave"
     t.datetime "leave_expiry_date"
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
   end
 
   create_table "members", force: :cascade do |t|
-    t.string   "email",                  limit: 255, default: "", null: false
-    t.string   "encrypted_password",     limit: 255, default: "", null: false
-    t.string   "reset_password_token",   limit: 255
+    t.string   "email",                  default: "", null: false
+    t.string   "encrypted_password",     default: "", null: false
+    t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          limit: 4,   default: 0,  null: false
+    t.integer  "sign_in_count",          default: 0,  null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip",     limit: 255
-    t.string   "last_sign_in_ip",        limit: 255
-    t.datetime "created_at",                                      null: false
-    t.datetime "updated_at",                                      null: false
-    t.integer  "account_id",             limit: 4
-    t.string   "account_type",           limit: 255
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+    t.integer  "account_id"
+    t.string   "account_type"
   end
 
-  add_index "members", ["account_type", "account_id"], name: "index_members_on_account_type_and_account_id", using: :btree
-  add_index "members", ["email"], name: "index_members_on_email", unique: true, using: :btree
-  add_index "members", ["reset_password_token"], name: "index_members_on_reset_password_token", unique: true, using: :btree
+  add_index "members", ["account_type", "account_id"], name: "index_members_on_account_type_and_account_id"
+  add_index "members", ["email"], name: "index_members_on_email", unique: true
+  add_index "members", ["reset_password_token"], name: "index_members_on_reset_password_token", unique: true
 
   create_table "nationalities", force: :cascade do |t|
-    t.string   "name",       limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "qualifications", force: :cascade do |t|
-    t.integer  "employee_id",        limit: 4
-    t.string   "ssc",                limit: 255
-    t.string   "ssc_from",           limit: 255
-    t.string   "ssc_marks",          limit: 255
-    t.integer  "ssc_year",           limit: 4
-    t.string   "ssc_bord",           limit: 255
-    t.string   "deploma",            limit: 255
-    t.string   "deploma_from",       limit: 255
-    t.string   "deploma_marks",      limit: 255
-    t.integer  "deploma_year",       limit: 4
-    t.string   "deploma_university", limit: 255
-    t.string   "hsc",                limit: 255
-    t.string   "hsc_from",           limit: 255
-    t.string   "hsc_marks",          limit: 255
-    t.integer  "hsc_year",           limit: 4
-    t.string   "hsc_bord",           limit: 255
-    t.string   "ug",                 limit: 255
-    t.string   "ug_from",            limit: 255
-    t.string   "ug_marks",           limit: 255
-    t.integer  "ug_year",            limit: 4
-    t.string   "ug_university",      limit: 255
-    t.string   "pg",                 limit: 255
-    t.string   "pg_from",            limit: 255
-    t.string   "pg_marks",           limit: 255
-    t.integer  "pg_yaer",            limit: 4
-    t.string   "pg_university",      limit: 255
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
+    t.integer  "employee_id"
+    t.string   "ssc"
+    t.string   "ssc_from"
+    t.string   "ssc_marks"
+    t.integer  "ssc_year"
+    t.string   "ssc_bord"
+    t.string   "deploma"
+    t.string   "deploma_from"
+    t.string   "deploma_marks"
+    t.integer  "deploma_year"
+    t.string   "deploma_university"
+    t.string   "hsc"
+    t.string   "hsc_from"
+    t.string   "hsc_marks"
+    t.integer  "hsc_year"
+    t.string   "hsc_bord"
+    t.string   "ug"
+    t.string   "ug_from"
+    t.string   "ug_marks"
+    t.integer  "ug_year"
+    t.string   "ug_university"
+    t.string   "pg"
+    t.string   "pg_from"
+    t.string   "pg_marks"
+    t.integer  "pg_yaer"
+    t.string   "pg_university"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
   end
 
-  add_index "qualifications", ["employee_id"], name: "index_qualifications_on_employee_id", using: :btree
+  add_index "qualifications", ["employee_id"], name: "index_qualifications_on_employee_id"
 
   create_table "skillsets", force: :cascade do |t|
-    t.integer  "employee_id", limit: 4
-    t.string   "name",        limit: 255
-    t.string   "skill_level", limit: 255
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.integer  "employee_id"
+    t.string   "name"
+    t.string   "skill_level"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
-  add_index "skillsets", ["employee_id"], name: "index_skillsets_on_employee_id", using: :btree
+  add_index "skillsets", ["employee_id"], name: "index_skillsets_on_employee_id"
 
-  add_foreign_key "awards", "employees"
-  add_foreign_key "certifications", "qualifications"
-  add_foreign_key "companies", "groups"
-  add_foreign_key "company_locations", "companies"
-  add_foreign_key "departments", "company_locations"
-  add_foreign_key "employee_physicals", "employees"
-  add_foreign_key "employees", "blood_groups"
-  add_foreign_key "employees", "departments"
-  add_foreign_key "employees", "employee_types"
-  add_foreign_key "employees", "nationalities"
-  add_foreign_key "experinces", "employees"
-  add_foreign_key "families", "employees"
-  add_foreign_key "families", "nationalities"
-  add_foreign_key "joining_details", "employee_grades"
-  add_foreign_key "joining_details", "employees"
-  add_foreign_key "leav_requests", "employees"
-  add_foreign_key "leav_requests", "leav_types"
-  add_foreign_key "qualifications", "employees"
-  add_foreign_key "skillsets", "employees"
 end

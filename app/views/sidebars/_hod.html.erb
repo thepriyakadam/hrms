@@ -3,8 +3,8 @@
 <ul class="sidebar-menu">
   <li class="header">
  <a href="/home"> <Center> <strong><% if current_user.class == Member %>
-  <%= current_user.company_location.company.try(:name) %> <%= current_user.company_location.try(:name) %> <%= current_user.department.try(:name) %>
-  <%else%><%= current_user.subdomain %><%end%></li></strong></Center></a>
+   <%= current_user.department.try(:name) %>
+  <%else%><%= current_user.subdomain %><%end%></strong></Center></a></li>
  <!-- Optionally, you can add icons to the links -->
 <!-- sidebar menu: : style can be found in sidebar.less -->
   <li class="treeview" id="EmployeeManagement">

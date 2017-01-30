@@ -22,7 +22,7 @@
 
       <div class="row">
        <div class="col-sm-3">
-          <div class="form-group required">
+          <div class="field">
             <%= f.select :prefix ,['Mr.','Mrs.','Miss.'] ,{label: 'Prefix',include_blank: "Select Prefix"} %>
           </div>
         </div>
@@ -274,10 +274,6 @@ $("#employee").validate({
       "employee[employee_code_master_id]":{
         required: true
       }, 
-      "employee[prefix]":{
-        required: true,
-        maxlength: 30,
-      },
       "employee[first_name]":{
         required: true,
         maxlength: 30,
@@ -339,9 +335,6 @@ $("#employee").validate({
       },
       "employee[employee_code_master_id]":{
         required: "Please Select Employee Contract Type"
-      },
-       "employee[prefix]":{
-        required: "Please Select Prefix",
       },
       "employee[first_name]":{
         required: "Please specify Your First Name",

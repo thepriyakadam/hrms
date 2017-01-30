@@ -402,6 +402,7 @@ end
       get :attendance_total_xls
       get :emp_attendance
       get :display_attendance_2
+      post :display_attendance_2
       get :costcenter_wise_excel1
       get :costcenter_wise_pdf
       get :employee_attendance_excel_report

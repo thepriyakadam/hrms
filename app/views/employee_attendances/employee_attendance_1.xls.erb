@@ -119,7 +119,13 @@
                 <%= aesic %>
               </td>
 
-              <td><%= ap.to_f + wd.count + h.count + ael + acl + acoff + aal + aod %></td>
+              <td>
+                <% if e.employee.try(:joining_detail).try(:employee_category).try(:name) == 'Worker' %>
+                  <%= ap.to_f + h.count + ael + acl + acoff + aal + aod %>
+                <% else %>
+                  <%= ap.to_f + wd.count + h.count + ael + acl + acoff + aal + aod %>
+                <% end %>
+              </td>
               <td><%= gp.count %></td>
             </tr> 
             <% exist.clear %>

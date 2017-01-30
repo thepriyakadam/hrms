@@ -1,7 +1,7 @@
 <div class="col-sm-3">
   <label>Goal Perspective</label>
   <div class="form-group required">
-    <%= select :common,:id, department_wise_goal,{include_blank: "Please Select Goal Perspective"},{onchange:"var a={ifc_category_id:$(this).val()}; $.get('/assessments/collect_risks',a,function(response){});",class: 'form-control'} %>
+    <%= select :common,:id, all_goal_perspective,{include_blank: "Please Select Goal Perspective"},{onchange:"var a={ifc_category_id:$(this).val()}; $.get('/assessments/collect_risks',a,function(response){});",class: 'form-control'} %>
     <%= hidden_field_tag :flag, "Goal" %>
   </div>
 </div>

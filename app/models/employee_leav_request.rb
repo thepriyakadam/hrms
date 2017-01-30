@@ -369,4 +369,15 @@ class EmployeeLeavRequest < ActiveRecord::Base
     flag
   end
 
+  def is_continue?
+    flag = false
+    leav_category = LeavCategory.find_by(id: self.leav_category_id)
+    if leav_category.is_continuous == true
+      date = self.start_date
+      @date = date.yesterday
+      flag = EmployeeLeavRequest.exists?(end_date: @date,employee_id: self.employee_id)
+    end
+    flag
+  end
+
 end

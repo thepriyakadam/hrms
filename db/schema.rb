@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170124064504) do
+ActiveRecord::Schema.define(version: 20170127063657) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -151,13 +151,10 @@ ActiveRecord::Schema.define(version: 20170124064504) do
     t.string   "name"
     t.text     "definition"
     t.boolean  "status"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.boolean  "is_confirm"
-    t.integer  "department_id"
   end
-
-  add_index "attribute_masters", ["department_id"], name: "index_attribute_masters_on_department_id"
 
   create_table "attribute_rating_sheets", force: :cascade do |t|
     t.integer  "appraisee_id"
@@ -1566,14 +1563,11 @@ ActiveRecord::Schema.define(version: 20170124064504) do
 
   create_table "goal_perspectives", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.boolean  "is_confirm"
     t.boolean  "status"
-    t.integer  "department_id"
   end
-
-  add_index "goal_perspectives", ["department_id"], name: "index_goal_perspectives_on_department_id"
 
   create_table "goal_rating_sheets", force: :cascade do |t|
     t.integer  "appraisee_id"
@@ -2172,6 +2166,7 @@ ActiveRecord::Schema.define(version: 20170124064504) do
     t.boolean  "is_limit"
     t.boolean  "is_cashable"
     t.boolean  "assign_balance"
+    t.boolean  "is_continuous"
   end
 
   create_table "leav_rejecteds", force: :cascade do |t|

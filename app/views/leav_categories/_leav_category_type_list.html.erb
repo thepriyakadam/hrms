@@ -12,6 +12,7 @@
       <th>Assign Balance</th> 
       <th>Status</th> 
       <th>Limit</th>
+      <th>Continue</th>
       <th>Action</th>
     </tr>
   </thead>
@@ -29,6 +30,7 @@
         <td><%= leav_category.assign_balance ? "Yes" : "No" %></td>
         <td><%= leav_category.is_active ? "Active" : "Inactive" %></td> 
         <td><%= leav_category.limit %></td>
+        <td><%= leav_category.is_continuous ? "Yes" : "No" %></td> 
         <td>
           <% if leav_category.is_confirm == true %>
             <small class= "label label-primary">Confirmed</small>

@@ -54,6 +54,7 @@
               <%= hidden_field e.employee_id, 'absent_day', value: absent_day_count(exist) + @b.to_f %>
             <% end %>
             <%= hidden_field e.employee_id, 'total_leave', value: total_leave_count(exist) %>
+            <%= hidden_field e.employee_id, 'lwp_leave', value: workingday[4] %>
             <%= hidden_field e.employee_id, 'nonpay_leave', value: workingday[3] %>
             <%= hidden_field e.employee_id, 'pay_leave', value: workingday[2] %>
             <%= hidden_field e.employee_id, 'holiday_in_month', value: holiday_in_month %>
@@ -73,13 +74,21 @@
             < end %> -->
 
             <% if gate_pass <= 2 %>
-              <%= hidden_field e.employee_id, 'payable_day', value: present_day.to_f + holiday_in_month.to_f + week_off_day.to_f + workingday[2] + gate_pass.to_f %>
+              <% if e.employee.try(:joining_detail).try(:employee_category).try(:name) == 'Worker' %>
+                <%= hidden_field e.employee_id, 'payable_day', value: present_day.to_f + holiday_in_month.to_f + workingday[2] + gate_pass.to_f + workingday[4] %>
+              <% else %>
+                <%= hidden_field e.employee_id, 'payable_day', value: present_day.to_f + holiday_in_month.to_f + week_off_day.to_f + workingday[2] + gate_pass.to_f + workingday[4] %>
+              <% end %>
             <% else %>
               <% @a = gate_pass.to_f - 2 %>
               <% @b = @a.to_f/2 %>
-              <%= hidden_field e.employee_id, 'payable_day', value: present_day.to_f + holiday_in_month.to_f + week_off_day.to_f + workingday[2] + @b.to_f + 2 %>
+              <% if e.employee.try(:joining_detail).try(:employee_category).try(:name) == 'Worker' %>
+                <%= hidden_field e.employee_id, 'payable_day', value: present_day.to_f + holiday_in_month.to_f + workingday[2] + @b.to_f + 2 + workingday[4] %>
+              <% else %>
+                <%= hidden_field e.employee_id, 'payable_day', value: present_day.to_f + holiday_in_month.to_f + week_off_day.to_f + workingday[2] + @b.to_f + 2 + workingday[4] %>
+              <% end %>
             <% end %>
-
+            
             <%= hidden_field e.employee_id, 'gatepass', value: gate_pass %>
 
 

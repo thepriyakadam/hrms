@@ -271,11 +271,11 @@ class GoalRatingsController < ApplicationController
   def detail_goal_wise
     @period = Period.find(params[:period_id])
     @employee_ids = params[:employee_ids]
-      if @employee_ids.nil?
-        flash[:alert] = "Please Select the Checkbox"
-        @employees = []
-        redirect_to employee_goal_wise_goal_ratings_path
-      else
+    if @employee_ids.nil?
+      flash[:alert] = "Please Select the Checkbox"
+      @employees = []
+      redirect_to employee_goal_wise_goal_ratings_path
+    else
       @employees = []
       @employee_ids.each do |g|
         emp = GoalBunch.find_by_employee_id(g)
@@ -283,7 +283,6 @@ class GoalRatingsController < ApplicationController
         @goal_bunch = GoalBunch.find_by_employee_id(g)
       end 
     end
-
   end
 
   def detail_goal_wise_xls

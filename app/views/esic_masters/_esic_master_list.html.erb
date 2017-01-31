@@ -3,7 +3,8 @@
     <tr>
       <th>ESIC</th>
       <th>Percentage</th>
-      <th>Effective Date</th>
+      <th>From Date</th>
+      <th>To Date</th>
       <th>Max limit</th>
       <th>Status</th>
       <th>Action</th>
@@ -15,6 +16,7 @@
         <td><%= esic_master.esic ? "Yes" : "No" %></td>
         <td><%= esic_master.percentage %></td>
         <td><%= esic_master.date_effective %></td>
+        <td><%= esic_master.to_date %></td>
         <td><%= esic_master.max_limit %></td>
         <td><%= esic_master.is_active ? "Active" : "Inactive" %></td>
         <td>

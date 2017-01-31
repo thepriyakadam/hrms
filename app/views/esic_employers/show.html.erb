@@ -1,34 +1,39 @@
-<p id="notice"><%= notice %></p>
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">ESIC Employer</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
 
-<p>
-  <strong>Base component:</strong>
-  <%= @esic_employer.base_component %>
-</p>
+  <tr>
+  <th><strong>Base Component</strong></th>
+   <td colspan="3"> <% i = 0 %>
+          <% @esic_employer.base_component.split(",").each do |e| %>
+            <% if i == 0 %>
+              <%= SalaryComponent.find(e.to_i).name %>
+            <% else %>
+              + <%= SalaryComponent.find(e.to_i).name %>
+            <% end %>
+            <% i = i + 1 %>
+          <% end %>
+      </td>
+  
+</tr>
+<tr>
+  <th><strong>Percentage</strong></th>
+   <td><%= @esic_employer.percentage %></td>
 
-<p>
-  <strong>Percentage:</strong>
-  <%= @esic_employer.percentage %>
-</p>
+    <th><strong>Status</strong></th>
+   <td><%= @esic_employer.is_active ? "Active" : "Inactive" %></td>
+</tr>
 
-<p>
-  <strong>Effective from:</strong>
-  <%= @esic_employer.effective_from %>
-</p>
+<tr>
+  <th><strong>From Date</strong></th>
+  <td><%= @esic_employer.effective_from %></td>
 
-<p>
-  <strong>Effective to:</strong>
-  <%= @esic_employer.effective_to %>
-</p>
+  <th><strong>To Date</strong></th>
+  <td><%= @esic_employer.effective_to %></td>
 
-<p>
-  <strong>Is active:</strong>
-  <%= @esic_employer.is_active %>
-</p>
-
-<p>
-  <strong>Is confirm:</strong>
-  <%= @esic_employer.is_confirm %>
-</p>
-
-<%= link_to 'Edit', edit_esic_employer_path(@esic_employer) %> |
-<%= link_to 'Back', esic_employers_path %>
+</tr>
+</table><br>
+ <%= link_to 'Back', new_esic_employer_path,class: 'btn btn-default btn-sm fa fa-arrow-left'  %>

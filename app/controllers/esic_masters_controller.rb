@@ -76,6 +76,6 @@ class EsicMastersController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def esic_master_params
-    params.require(:esic_master).permit(:is_confirm,:esic, :is_active, :percentage, :date_effective, :max_limit, :base_component)
+    params.require(:esic_master).permit(:is_confirm,:esic, :is_active, :percentage, :date_effective, :max_limit, :base_component, :to_date)
   end
 end

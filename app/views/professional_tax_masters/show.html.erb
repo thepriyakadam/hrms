@@ -1,49 +1,58 @@
-<p id="notice"><%= notice %></p>
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Professional Tax Master</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
 
-<p>
-  <strong>Base component:</strong>
-  <%= @professional_tax_master.base_component %>
-</p>
 
-<p>
-  <strong>Min amount:</strong>
-  <%= @professional_tax_master.min_amount %>
-</p>
+ <tr>
+      <th><strong>Branch</strong></th>
+      <td><%= @professional_tax_master.company_location.company.try(:name) %> - <%= @professional_tax_master.company_location.try(:name)%></td>
+  <th><strong>Basis Actual Amount</strong></th>
+  <td><%= @professional_tax_master.basis_actual_amount ? "Yes" : "No" %></td></tr>
+<tr>
+      <th><strong>Base component</strong></th>
+      <td colspan="3"> <% i = 0 %>
+          <% @professional_tax_master.base_component.split(",").each do |e| %>
+            <% if i == 0 %>
+              <%= SalaryComponent.find(e.to_i).name %>
+            <% else %>
+              + <%= SalaryComponent.find(e.to_i).name %>
+            <% end %>
+            <% i = i + 1 %>
+          <% end %>
+      </td>
+</tr>
+<tr>
+  <th><strong>Min amount</strong></th>
+  <td><%= @professional_tax_master.min_amount %></td>
 
-<p>
-  <strong>Max amount:</strong>
-  <%= @professional_tax_master.max_amount %>
-</p>
+  <th>Max amount</th>
+  <td><%= @professional_tax_master.max_amount %></td>
+</tr>
 
-<p>
-  <strong>For month:</strong>
-  <%= @professional_tax_master.for_month %>
-</p>
+<tr>
+  <th><strong>For month</strong></th>
+  <td><%= @professional_tax_master.for_month %></td>
+  <th><strong>March amount</strong></th>
+  <td><%= @professional_tax_master.march_amount %></td>
+</tr>
 
-<p>
-  <strong>March amount:</strong>
-  <%= @professional_tax_master.march_amount %>
-</p>
+<tr>
+  <th><strong>Effective from</strong></th>
+  <td><%= @professional_tax_master.effective_from %></td>
+  <th><strong>Effective to</strong></th>
+  <td><%= @professional_tax_master.effective_to %></td>
+</tr>
 
-<p>
-  <strong>Effective from:</strong>
-  <%= @professional_tax_master.effective_from %>
-</p>
+<tr>
+  <th><strong>Status</strong></th>
+  <td colspan="3"><%= @professional_tax_master.is_active ? "Active" : "Inactive" %></td>
+  
+</tr>
+</table> <br>
 
-<p>
-  <strong>Effective to:</strong>
-  <%= @professional_tax_master.effective_to %>
-</p>
-
-<p>
-  <strong>Is active:</strong>
-  <%= @professional_tax_master.is_active %>
-</p>
-
-<p>
-  <strong>Is confirm:</strong>
-  <%= @professional_tax_master.is_confirm %>
-</p>
-
-<%= link_to 'Edit', edit_professional_tax_master_path(@professional_tax_master) %> |
-<%= link_to 'Back', professional_tax_masters_path %>
+<!-- <= link_to 'Back', new_professional_tax_masters_path %>
+ -->
+ <%= link_to 'Back', new_professional_tax_master_path,class: 'btn btn-default btn-sm fa fa-arrow-left'  %>

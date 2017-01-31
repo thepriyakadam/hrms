@@ -97,9 +97,9 @@ div.nobreak{ page-break-inside: avoid;
           <tr><th colspan="9"><center>Performance Record</center></th></tr>
             <tr>
               <th>Goal Perspective</th>
-              <th>Goal Weightage</th>
               <th>Goal Measure</th>
               <th>Target/Unit</th>
+              <th>Goal Weightage</th>
               <th>Aligned</th>
               <th>Self Comment</th>
               <th>Self Rating</th>
@@ -111,9 +111,9 @@ div.nobreak{ page-break-inside: avoid;
           <tbody>
               <tr>
                 <td><%= goal_rating.try(:goal_perspective).try(:name) %></td>
-                <td><%= goal_rating.try(:goal_weightage) %></td>
                 <td><%= goal_rating.try(:goal_measure) %></td>
                 <td><%= goal_rating.try(:target) %></td>
+                <td><%= goal_rating.try(:goal_weightage) %></td>
                 <td><%= goal_rating.try(:aligned) %></td>
                 <td><%= goal_rating.try(:appraisee_comment) %></td>
                 <td><%= goal_rating.try(:appraisee_rating_id) %></td>

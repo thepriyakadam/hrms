@@ -48,4 +48,10 @@ module ReportingMastersHelper
     ReportingMaster.where(is_promotion: true).collect { |e| [e.try(:employee).try(:manual_employee_code).to_s + ' ' + e.try(:employee).try(:first_name).to_s + ' '+ e.try(:employee).try(:middle_name).to_s + ' ' + e.try(:employee).try(:last_name).to_s, e.id] }
   end
 
+  def approve_and_send_next_rep_master_list
+     # byebug
+     @reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
+     ReportingMaster.where.not(id: @reporting_masters).where(is_training: true).collect { |e| [e.try(:employee).try(:manual_employee_code).to_s + ' ' + e.try(:employee).try(:first_name).to_s + ' '+ e.try(:employee).try(:middle_name).to_s + ' ' + e.try(:employee).try(:last_name).to_s, e.id] }
+  end
+
 end

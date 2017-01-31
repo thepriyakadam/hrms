@@ -10,9 +10,11 @@
     div.nobreak{ page-break-inside: avoid;
     }
 </style>
-  <table style="border-collapse: collapse; font-size:12pt;" border=1 width=1200 cellpadding="15">
+ <table style="border-collapse: collapse; font-size:9pt;" border=1 width=1200 cellpadding="10">
     <thead>
-    <tr><td colspan="34"><center></center> </td></tr>
+   <tr><td colspan="31"><center><strong><%= current_user.employee.company_location.company.try(:description) %></strong> <br>
+        <%= current_user.employee.company_location.company.try(:address) %><br> 
+        <%= current_user.employee.company_location.try(:name) %></center> </td></tr>
       <tr>
       <th>ID</th>
       <th>Employee Name</th>
@@ -39,7 +41,6 @@
       <th> Retention</th>
       <th> Retirement Date</th>
       <th> Reserved Category</th>
-      <th> Dearness Allowance</th>
       <th> Employeer Pf</th>
       <th> Employeer Esic</th>
       <th> Employeer Insurance</th>
@@ -77,7 +78,6 @@
          <td> <%= joining_detail.try(:have_retention) %></td>
          <td> <%= joining_detail.try(:retirement_date) %></td>
          <td> <%= joining_detail.try(:reserved_category).try(:name) %></td>
-         <td><%= joining_detail.is_da ? "Yes" : "No" %></td>
          <td><%= joining_detail.is_employeer_pf ? "Yes" : "No" %></td>
          <td><%= joining_detail.is_employeer_esic ? "Yes" : "No" %></td>
          <td><%= joining_detail.is_insurance ? "Yes" : "No" %></td>

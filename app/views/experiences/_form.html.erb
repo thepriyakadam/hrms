@@ -98,8 +98,7 @@
   $('#btnDel').attr('disabled', true);
 });
 </script>
-
-<script>
+<!-- 
 $("#experince").validate({
     rules: {
       "experince[employee_id]":{
@@ -139,6 +138,36 @@ $("#experince").validate({
         maxlength: "CTC allows upto 10 digit"
       }
     },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   }); -->
+
+<script>
+$("#experince").validate({
+    rules: {
+      "experince[company_name]":{
+        required: true,
+      },
+      "experince[designation]":{
+        required: true,
+      },
+      "experince[no_of_year]":{
+        required: true,
+      }
+       },
+    messages: {
+      "experince[company_name]":{
+        required: "Please Specify Company Name",
+      },
+       "experince[designation]":{
+        required: "Please Specify Designation ",
+      },
+      "experince[no_of_year]":{
+        required: "Please Specify Experience Year",
+      }
+       },
     errorPlacement: function(error, element) {
      error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
      error.insertAfter(element.parent(element));

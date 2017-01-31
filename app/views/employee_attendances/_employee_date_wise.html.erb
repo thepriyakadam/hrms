@@ -26,8 +26,8 @@
   </tbody>
 </table>
 
-  <%= link_to " Excel Report ",date_wise_xls_employee_attendances_path(date: @date, present: @present, format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
-  <%= link_to "PDF Report", date_wise_pdf_employee_attendances_path(date: @date,present: @present, format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+  <%= link_to " Excel Report ",show_datewise_employee_employee_attendances_path(date: params[:date], present: params[:present], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+  <%= link_to "PDF Report", show_datewise_employee_employee_attendances_path(date: params[:date],present: params[:present], format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
 
 <script>
 $(document).ready(function() {

@@ -13,6 +13,8 @@
       <th>Effective From</th>
       <th>Effective To</th>
       <th>Status</th>
+      <th>Company Location</th>
+      <th>Basis Actual Amount</th>
       <th>Action</th>
     </tr>
   </thead>
@@ -38,6 +40,8 @@
         <td><%= professional_tax_master.effective_from %></td>
         <td><%= professional_tax_master.effective_to %></td>
         <td><%= professional_tax_master.is_active ? "Active" : "Inactive" %></td>
+        <td><%= professional_tax_master.company_location.try(:name) %></td>
+        <td><%= professional_tax_master.basis_actual_amount ? "Yes" : "No" %></td>
         <td>
           <% if professional_tax_master.is_confirm == true %>
             <small class= "label label-primary">Confirmed</small>

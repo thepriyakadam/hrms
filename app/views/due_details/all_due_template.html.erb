@@ -1,11 +1,11 @@
 <div class="box">
   <div class="box-header">
-  <h3 class="box-title">No Dues Template Assign To Employee</h3>
+  <h3 class="box-title">No Dues Template Assign To Employee:  <%= @employee.first_name %> <%= @employee.middle_name %> <%= @employee.last_name %></h3>
   </div><!-- /.box-header -->
   <div class="box-body">
   <%= bootstrap_form_for :due_employee_detail,url:{action:"create_due_employee_detail"},html: {id: 'due_employee_detail'} do |f| %>
-  <%= f.hidden_field :employee_id,value: @employee_resignation.employee_id  %>
-<!--   <= f.hidden_field :due_template_id,value: @due_template.id  %>
+  <%= f.hidden_field :employee_id,value: @employee.id  %>
+  <!--   <= f.hidden_field :due_template_id,value: @due_template.id  %>
  -->  <div class="row">
       <div class="col-sm-3">
         <div class="field">

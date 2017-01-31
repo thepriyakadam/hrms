@@ -1,7 +1,7 @@
 <div class="col-sm-3">
   <label>Attribute</label>
   <div class="form-group required">
-    <%= select :common,:id,department_wise_attribute,{include_blank: "Please Select Attribute"},{onchange:"var a={ifc_category_id:$(this).val()}; $.get('/assessments/collect_risks',a,function(response){});",class: 'form-control'} %>
+    <%= select :common,:id,all_attribute_type,{include_blank: "Please Select Attribute"},{onchange:"var a={ifc_category_id:$(this).val()}; $.get('/assessments/collect_risks',a,function(response){});",class: 'form-control'} %>
     <%= hidden_field_tag :flag, "Attribute" %>
   </div>
 </div>

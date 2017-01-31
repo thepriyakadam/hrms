@@ -2,6 +2,8 @@ require 'query_report/helper'
 class GoalBunchesController < ApplicationController
   before_action :set_goal_bunch, only: [:show, :edit, :update, :destroy]
   load_and_authorize_resource
+
+  #before_filter :authenticate_user!
  include QueryReport::Helper  # need to include it
   # GET /goal_bunches
   # GET /goal_bunches.json
@@ -435,7 +437,6 @@ class GoalBunchesController < ApplicationController
     @goal_bunch.update(goal_bunch_params)
     flash[:notice] = "final comment added Successfully"
     redirect_to final_comment_goal_bunches_path(emp_id: @employee.id, id:@goal_bunch.id,period_id: @period.id)
-    #redirect_to root_url
   end 
 
   def final_modal

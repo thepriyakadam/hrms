@@ -113,9 +113,9 @@
             <tr><th colspan="9"><center>Goal Rating</center></th></tr>
               <tr>
                 <th>Goal Perspective</th>
-                <th>Weightage</th>
                 <th>Measure</th>
                 <th>Target/Unit</th>
+                <th>Weightage</th>
                 <th>Aligned</th>
                 <th>Self Comment</th>
                 <th>Self Rating</th>
@@ -127,9 +127,9 @@
               <% @goal_ratings.each do |goal_rating| %>
                 <tr>
                   <td><%= goal_rating.goal_perspective.try(:name) %></td>
-                  <td><%= goal_rating.goal_weightage %></td>
                   <td><%= goal_rating.goal_measure %></td>
                   <td><%= goal_rating.target %></td>
+                  <td><%= goal_rating.goal_weightage %></td>
                   <td><%= goal_rating.aligned %></td>
                   <td><%= goal_rating.appraisee_comment %></td>
                   <td><%= goal_rating.appraisee_rating_id %></td>
@@ -146,9 +146,9 @@
             <tr><th colspan="9"><center>Attribute Rating</center></th></tr>
               <tr>
                 <th>Attribute</th>
-                <th>Weightage</th>
                 <th>Measure</th>
                 <th>Target/Unit</th>
+                <th>Weightage</th>
                 <th>Aligned</th>
                 <th>Self Comment</th>
                 <th>Self Rating</th>
@@ -160,9 +160,9 @@
               <% @goal_attribute_ratings.each do |goal_rating| %>
                 <tr>
                   <td><%= goal_rating.attribute_master.try(:name) %></td>
-                  <td><%= goal_rating.goal_weightage %></td>
                   <td><%= goal_rating.goal_measure %></td>
                   <td><%= goal_rating.target %></td>
+                  <td><%= goal_rating.goal_weightage %></td>
                   <td><%= goal_rating.aligned %></td>
                   <td><%= goal_rating.appraisee_comment %></td>
                   <td><%= goal_rating.appraisee_rating_id %></td>
@@ -201,9 +201,9 @@
       <tr><th colspan="10"><center>Goal Details</center></th></tr>
         <tr>
           <th>Goal Perspective</th>
-          <th>Weightage</th>
           <th>Measure</th>
           <th>Target/Unit</th>
+          <th>Weightage</th>
           <th>Aligned</th>
           <th>Self Comment</th>
           <th>Self Rating</th>
@@ -217,9 +217,9 @@
         <% @appraiser_goal_ratings.each do |goal_rating| %>
           <tr>
             <td><%= goal_rating.goal_perspective.try(:name) %></td>
-            <td><%= weightage = goal_rating.goal_weightage %></td>
             <td><%= goal_rating.goal_measure %></td>
             <td><%= goal_rating.target %></td>
+            <td><%= weightage = goal_rating.goal_weightage %></td>
             <td><%= goal_rating.aligned %></td>
             <td><%= goal_rating.appraisee_comment %></td>
             <td><%= goal_rating.appraisee_rating_id %></td>
@@ -249,9 +249,9 @@
       <tr><th colspan="10"><center>Attribute Details</center></th></tr>
         <tr>
           <th>Attribute</th>
-          <th>Weightage</th>
           <th>Measure</th>
           <th>Target/Unit</th>
+          <th>Weightage</th>
           <th>Aligned</th>
           <th>Self Comment</th>
           <th>Self Rating</th>
@@ -265,9 +265,9 @@
         <% @appraiser_attribute_ratings.each do |goal_rating| %>
           <tr>
             <td><%= goal_rating.attribute_master.try(:name) %></td>
-            <td><%= weightage = goal_rating.goal_weightage %></td>
             <td><%= goal_rating.goal_measure %></td>
             <td><%= goal_rating.target %></td>
+            <td><%= weightage = goal_rating.goal_weightage %></td>
             <td><%= goal_rating.aligned %></td>
             <td><%= goal_rating.appraisee_comment %></td>
             <td><%= goal_rating.appraisee_rating_id %></td>
@@ -305,7 +305,7 @@
             <% unless @goal_bunch.nil? %>
               <% if @goal_bunch.appraiser_confirm == true %>
               <% else %>
-              <%= link_to 'Overall Comment', modal_appraiser_overall_goal_bunches_path(goal_bunch_id: @goal_bunch.id,appraiser_overall: @Overall,period_id: @period.id), class: 'btn btn-warning btn-sm',remote: true %>
+              <%= link_to 'Overall Comment', modal_appraiser_overall_goal_bunches_path(goal_bunch_id: @goal_bunch.id,appraiser_overall: @Overall,period_id: @period.id), class: 'btn btn-primary btn-sm',remote: true %>
               <% end %>
             <% end %>
           <% end %>

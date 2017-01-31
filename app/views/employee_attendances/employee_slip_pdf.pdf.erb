@@ -1,6 +1,8 @@
-      <table style="border-collapse: collapse; font-size:20pt;" border=1 width=900 cellpadding="25">
+      <table style="border-collapse: collapse; font-size:9pt;" border=1 width=1200 cellpadding="10">
         <thead>
-          <tr>
+<!--          <h3><center><strong><= current_user.employee.company_location.company.try(:description)%></strong>
+        <br> <= current_user.employee.company_location.try(:address)%></center><h3>
+ -->          <tr>
             <th>Employee ID</th>
             <th>Employee Name</th>
             <% for i in 1..@day %>
@@ -116,7 +118,13 @@
                 <% aesic = esic.count + (pesic.count)/2.to_f %>
                 <%= aesic %>
               </td>
-              <td><%= ap + wd.count + h.count + ael + acl + acoff + aal + aod  %></td>
+              <td>
+                <% if e.employee.try(:joining_detail).try(:employee_category).try(:name) == 'Worker' %>
+                  <%= ap + h.count + ael + acl + acoff + aal + aod  %>
+                <% else %>
+                  <%= ap + wd.count + h.count + ael + acl + acoff + aal + aod  %>
+                <% end %>
+              </td>
               <td><%= gp.count %></td>
             </tr> 
             <tr></tr>

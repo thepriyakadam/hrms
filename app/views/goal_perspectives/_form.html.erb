@@ -2,11 +2,6 @@
   <div class="row">
     <div class="col-sm-3">
       <div class="form-group required">
-      <%= f.select :department_id, all_department_type_list1,{hide_label:true,include_blank: 'select Department'},class: 'form-control' %>
-      </div>
-    </div>
-    <div class="col-sm-3">
-      <div class="form-group required">
         <%= f.text_field :name,hide_label:true, placeholder: 'Goal Perspective' %>
       </div>
     </div>
@@ -30,17 +25,11 @@
     rules: {
       "goal_perspective[name]":{
         required: true
-      },
-      "goal_perspective[department_id]":{
-        required: true
       }
     },
     messages: {
       "goal_perspective[name]":{
-        required: "Please Specify Name"
-      },
-      "goal_perspective[department_id]":{
-        required: "Please Specify Department"
+        required: "Please Specify Goal"
       }
     },
     errorPlacement: function(error, element) {

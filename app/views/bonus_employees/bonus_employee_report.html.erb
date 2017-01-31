@@ -60,23 +60,26 @@
 
           <div class="col-sm-2">
             <div class="form-group required">
-              <div id="company_location1">
-                <%= render 'employees/company_loc_dropdown' %> 
+              <div id="company_location">
+                <%= render 'employees/company_location_dropdown' %> 
             </div>
             </div>
           </div>
         
         <div class="col-sm-2">
           <div class="actions">
-            <%= f.submit "Display Report", class: "btn btn-sm btn-primary" %>
+            <%= f.submit "Display Report", class: "btn btn-sm btn-primary",id: "buttonCtc" %>
           </div>
         </div>
         </div><br>
        
         <div class="row">
+        <div class="ajax-progress"></div>
 	      <div class="col-sm-6">
+         <div class="ajax-progress"></div>
 	        <div id="all_employee_bonus"></div>    
 	      </div>
+        <div class="ajax-progress"></div>
 	      <div class="col-sm-6">
 	        <div id="particular_employee_bonus"></div>    
 	      </div>
@@ -87,6 +90,13 @@
      </div>
   </div><!-- /.box-body -->
 </div><!-- /.box -->
+
+<script type="text/javascript">
+  $("#buttonCtc").click(function(){
+    $('.ajax-progress').show();
+    $("#bonus_employee").submit();
+  })
+</script>
 
 <script>
 $("#bonus_employee").validate({

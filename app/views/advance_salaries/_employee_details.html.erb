@@ -59,11 +59,9 @@
       <% end %>
     </tbody>
   </table>
+    <%= link_to " Excel Report ",show_employee_detail_advance_salaries_path(employee_id: @employee_id,format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
 
-
-    <%= link_to " Excel Report ",employee_advance_excel_advance_salaries_path(employee_id: @employee_id,format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
-
-    <%= link_to " PDF Report ",employee_advance_pdf_advance_salaries_path(employee_id: @employee_id,format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+    <%= link_to " PDF Report ",show_employee_detail_advance_salaries_path(employee_id: @employee_id,format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
     </div>
   </div>
 </div>

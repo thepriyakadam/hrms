@@ -33,13 +33,12 @@
         <Cell ss:Index="24"><Data ss:Type="String">Retention</Data></Cell>
         <Cell ss:Index="25"><Data ss:Type="String">Retirement Date</Data></Cell>
         <Cell ss:Index="26"><Data ss:Type="String">Reserved Category</Data></Cell>
-        <Cell ss:Index="27"><Data ss:Type="String">Dearness Allowance</Data></Cell>
-        <Cell ss:Index="28"><Data ss:Type="String">Employeer Pf</Data></Cell>
-        <Cell ss:Index="29"><Data ss:Type="String">Employeer Esic</Data></Cell>
-        <Cell ss:Index="30"><Data ss:Type="String">Employeer Insurance</Data></Cell>
-        <Cell ss:Index="31"><Data ss:Type="String">Employeer Family Pension</Data></Cell>
-        <Cell ss:Index="32"><Data ss:Type="String">Employeer Bonus</Data></Cell>
-        <Cell ss:Index="33"><Data ss:Type="String">Basis Of Time</Data></Cell>   
+        <Cell ss:Index="27"><Data ss:Type="String">Employeer Pf</Data></Cell>
+        <Cell ss:Index="28"><Data ss:Type="String">Employeer Esic</Data></Cell>
+        <Cell ss:Index="29"><Data ss:Type="String">Employeer Insurance</Data></Cell>
+        <Cell ss:Index="30"><Data ss:Type="String">Employeer Family Pension</Data></Cell>
+        <Cell ss:Index="31"><Data ss:Type="String">Employeer Bonus</Data></Cell>
+        <Cell ss:Index="32"><Data ss:Type="String">Basis Of Time</Data></Cell>   
       </Row>
 
       <% i = 0 %>
@@ -71,13 +70,12 @@
           <Cell ss:Index="24"><Data ss:Type="String"><%= joining_detail.try(:have_retention) %></Data></Cell>
           <Cell ss:Index="25"><Data ss:Type="String"><%= joining_detail.try(:retirement_date) %></Data></Cell>
           <Cell ss:Index="26"><Data ss:Type="String"><%= joining_detail.try(:reserved_category).try(:name) %></Data></Cell>
-          <Cell ss:Index="27"><Data ss:Type="String"><%= joining_detail.is_da ? "Yes" : "No" %></Data></Cell>
-          <Cell ss:Index="28"><Data ss:Type="String"><%= joining_detail.is_employeer_pf ? "Yes" : "No" %></Data></Cell>
-          <Cell ss:Index="29"><Data ss:Type="String"><%= joining_detail.is_employeer_esic ? "Yes" : "No" %></Data></Cell>
-          <Cell ss:Index="30"><Data ss:Type="String"><%= joining_detail.is_insurance ? "Yes" : "No" %></Data></Cell>
-          <Cell ss:Index="31"><Data ss:Type="String"><%= joining_detail.is_family_pension ? "Yes" : "No" %></Data></Cell>
-          <Cell ss:Index="32"><Data ss:Type="String"><%= joining_detail.is_bonus ? "Yes" : "No" %></Data></Cell>
-          <Cell ss:Index="33"><Data ss:Type="String"><%= joining_detail.basis_of_time ? "Yes" : "No" %></Data></Cell>
+          <Cell ss:Index="27"><Data ss:Type="String"><%= joining_detail.is_employeer_pf ? "Yes" : "No" %></Data></Cell>
+          <Cell ss:Index="28"><Data ss:Type="String"><%= joining_detail.is_employeer_esic ? "Yes" : "No" %></Data></Cell>
+          <Cell ss:Index="29"><Data ss:Type="String"><%= joining_detail.is_insurance ? "Yes" : "No" %></Data></Cell>
+          <Cell ss:Index="30"><Data ss:Type="String"><%= joining_detail.is_family_pension ? "Yes" : "No" %></Data></Cell>
+          <Cell ss:Index="31"><Data ss:Type="String"><%= joining_detail.is_bonus ? "Yes" : "No" %></Data></Cell>
+          <Cell ss:Index="32"><Data ss:Type="String"><%= joining_detail.basis_of_time ? "Yes" : "No" %></Data></Cell>
         </Row><!-- Row -->
       <% end %><!-- slip -->
     </Table>

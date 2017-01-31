@@ -32,8 +32,8 @@
   </table>
 </div>
 
-  <%= link_to " Excel Report ",monthly_deduction_excel_salary_slip_ledgers_path(month: params[:salaryslip][:month], year: params[:salaryslip][:year],company_id: params[:salaryslip][:company_id],company_location_id: params[:food_deduction][:company_location_id], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
-  <%= link_to " PDF Report ",monthly_deduction_pdf_salary_slip_ledgers_path(month: params[:salaryslip][:month], year: params[:salaryslip][:year],company_id: params[:salaryslip][:company_id],company_location_id: params[:food_deduction][:company_location_id], format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+  <%= link_to " Excel Report ",monthly_deduction_salary_slip_ledgers_path(:salary_slip_ledger =>{month: params[:salary_slip_ledger][:month], year: params[:salary_slip_ledger][:year],company_id: params[:salary_slip_ledger][:company_id],company_location_id: params[:salary_slip_ledger][:company_location_id]}, format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+  <%= link_to " PDF Report ",monthly_deduction_salary_slip_ledgers_path(:salary_slip_ledger =>{month: params[:salary_slip_ledger][:month], year: params[:salary_slip_ledger][:year],company_id: params[:salary_slip_ledger][:company_id],company_location_id: params[:salary_slip_ledger][:company_location_id]}, format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
 </div>
 
 <script type="text/javascript">

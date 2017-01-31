@@ -44,8 +44,11 @@ gem 'pdfkit', '~> 0.8.2'
 # Provides binaries for WKHTMLTOPDF project in an easily accessible package.
 
 # gem 'wicked_pdf', '~> 1.0', '>= 1.0.6'
+gem 'rake', '~> 12.0'
 
 gem 'wicked_pdf', '~> 1.1'
+
+gem 'selenium-webdriver', '~> 3.0', '>= 3.0.5'
 
 gem 'wkhtmltopdf-binary', '~> 0.9.9.3'
 

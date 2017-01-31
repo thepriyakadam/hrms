@@ -18,6 +18,8 @@
     <th>In</th>
     <th>Out</th>
     <th>Present</th>
+    <th>User</th>
+    <th>Is Updated</th>
     <th>Action</th>
   </tr>
 </thead>
@@ -33,6 +35,8 @@
       <td><%= m.try(:in) %></td>
       <td><%= m.try(:out) %></td>
       <td><%= m.try(:present) %></td>
+      <td><%= m.user_id %></td>
+      <td><%= m.is_updated ? "Yes" : "No" %></td>
       <div id="myModal" class="modal fade"></div>
       <td><%= link_to '',modal_machine_attendances_path(m),class: 'btn btn-success btn-xs fa fa-edit',remote: true %></td>
     </tr>
@@ -40,6 +44,8 @@
 </tbody>
 </table>
 <%= f.submit "Save", class: "btn btn-xl btn-info" %>
+<%= link_to " Excel Report ",machine_attendance_xls_machine_attendances_path(format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+<%= link_to " Print ",machine_attendance_pdf_machine_attendances_path(format: "pdf"), class: "btn btn-xl btn-warning fa fa-print", :target => "_blank" %>
 <% end %>
 </div>
 </div>

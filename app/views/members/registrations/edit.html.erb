@@ -5,21 +5,21 @@
     <div class="box-body box-profile">
       <!-- <= image_tag current_user.avatar.url(:medium),class: "profile-user-img img-responsive img-circle", alt: "User Image",size: "25x25" %> -->
       <%  @members = Member.where(employee_id: current_user.employee_id).pluck(:employee_id) %>
-             <%  @members1 = Member.where(employee_id: current_user.employee_id) %>
-             <% @employees = Employee.where(id: @members) %>
-             <% @employees.each do |e| %>
-             <% @members1.each do |m| %>
-             <% if e.gender == "Male" && m.avatar_file_name == nil  %>
-             <%= image_tag "avatar5.png",size: "25x25",class: "profile-user-img img-responsive img-circle", alt: "User Image",size: "25x25" %>
-             <!-- < image_tag("avatar5.png") %> -->
-             <% elsif e.gender == "Female" && m.avatar_file_name == nil  %>
-             <%= image_tag "avatar2.png",size: "25x25",class: "profile-user-img img-responsive img-circle", alt: "User Image",size: "25x25" %>
-             <!-- < image_tag("avatar2.png") %> -->
-             <%else%>
-              <%= image_tag current_user.avatar.url(:medium),class: "profile-user-img img-responsive img-circle", alt: "User Image",size: "25x25" %>
-              <%end%>
-              <%end%>
-              <%end%>
+      <%  @members1 = Member.where(employee_id: current_user.employee_id) %>
+      <% @employees = Employee.where(id: @members) %>
+      <% @employees.each do |e| %>
+      <% @members1.each do |m| %>
+      <% if e.gender == "Male" && m.avatar_file_name == nil  %>
+        <%= image_tag "avatar5.png",size: "25x25",class: "profile-user-img img-responsive img-circle", alt: "User Image",size: "25x25" %>
+     <!-- < image_tag("avatar5.png") %> -->
+      <% elsif e.gender == "Female" && m.avatar_file_name == nil  %>
+        <%= image_tag "avatar2.png",size: "25x25",class: "profile-user-img img-responsive img-circle", alt: "User Image",size: "25x25" %>
+     <!-- < image_tag("avatar2.png") %> -->
+      <%else%>
+      <%= image_tag current_user.avatar.url(:medium),class: "profile-user-img img-responsive img-circle", alt: "User Image",size: "25x25" %>
+      <%end%>
+      <%end%>
+      <%end%>
       <h3 class="profile-username text-center"></h3>
         <table class="table table-bordered table-hover table-condensed">
         <tbody>

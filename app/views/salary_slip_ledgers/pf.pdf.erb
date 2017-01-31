@@ -1,0 +1,63 @@
+<table id="example" class="table table-bordered table-hover table-condensed"><style>
+    th {
+        text-align: left;
+    }
+    tr {
+        page-break-inside: avoid;
+    }
+    div.alwaysbreak { page-break-before: always; }
+    div.nobreak:before { clear:both; }
+    div.nobreak{ page-break-inside: avoid;
+      /* http://code.google.com/p/wkhtmltopdf/issues/detail?id=9#c21 */
+    }
+</style>
+<table style="border-collapse: collapse; font-size:10pt;" border=1 width=900 cellpadding="25">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Employee Name</th>
+        <th>PF No.</th>
+        <th>Payble Days</th>
+        <th>Basic</th>
+        <th>DA</th>
+        <th>Total</th>
+        <th>PF</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @salaryslips.each do |slip| %>
+        <% employee = slip.employee %>
+        <% joining = employee.joining_detail %>
+        <% bank = employee.employee_bank_detail %>
+        <% workingday = slip.workingday %>
+        <tr>
+          <td><%= slip.employee.manual_employee_code %></td>
+          <td><%= employee.first_name.to_s+" "+employee.middle_name.to_s+" "+employee.last_name.to_s %></td>
+          <td><%= joining.try(:employee_pf_no) %></td>
+          <td><%= workingday.payable_day %></td>
+          <% @addable_salaryslip_items = slip.salaryslip_components.where(is_deducted: false) %>
+          <%basic_amt = 0%>
+          <%da_amt = 0%>
+          <% @addable_salaryslip_items.each do |item| %>
+          
+            <% case item.salary_component.try(:name) %>
+            <% when "Basic" %>
+            <td><%= basic_amt = item.calculated_amount.round %></td>
+            <% when "DA" %>
+            <td><%= da_amt = item.calculated_amount.round %></td>
+            <% else %>
+            <% end %> <!-- switch case --> 
+          <% end %><!-- addable items -->
+          <td><%= basic_amt+da_amt %></td>
+
+          <% @deducted_salaryslip_items = slip.salaryslip_components.where(is_deducted: true) %>
+          <% @deducted_salaryslip_items.each do |item| %>
+              <% if item.other_component_name == "PF" %>
+                <td><%= item.calculated_amount.round %></td>
+            <% end %>
+      <% end %><!-- slip -->
+        </tr>
+        <% end %>
+    </tbody>
+  </table>

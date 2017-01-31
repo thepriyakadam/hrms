@@ -1,112 +1,83 @@
 class CertificatesController < ApplicationController
+  before_action :set_certificate, only: [:show, :edit, :update, :destroy]
+
+  # GET /certificates
+  # GET /certificates.json
+  def index
+    @certificates = Certificate.all
+  end
+
+  # GET /certificates/1
+  # GET /certificates/1.json
   def show
   end
-  
+
+  # GET /certificates/new
   def new
-     session[:active_tab] ="Reports"
+    @certificate = Certificate.new
   end
 
-  def show_joining_date
-    @employee = Employee.find(params[:employee_id])
-    @certificate = params[:salary][:certificate]
-    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
+  # GET /certificates/1/edit
+  def edit
   end
 
-  def certificate_print
+  # POST /certificates
+  # POST /certificates.json
+
+  def create
+    # byebug
+    @certificate = Certificate.new(certificate_params)
+
+    respond_to do |format|
+      if @certificate.save
+        format.html { redirect_to @certificate, notice: 'Certificate was successfully created.' }
+        format.json { render :show, status: :created, location: @certificate }
+      else
+        format.html { render :new }
+        format.json { render json: @certificate.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # PATCH/PUT /certificates/1
+  # PATCH/PUT /certificates/1.json
+  def update
+    respond_to do |format|
+      if @certificate.update(certificate_params)
+        format.html { redirect_to @certificate, notice: 'Certificate was successfully updated.' }
+        format.json { render :show, status: :ok, location: @certificate }
+      else
+        format.html { render :edit }
+        format.json { render json: @certificate.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # DELETE /certificates/1
+  # DELETE /certificates/1.json
+  def destroy
+    @certificate.destroy
+    respond_to do |format|
+      format.html { redirect_to certificates_url, notice: 'Certificate was successfully destroyed.' }
+      format.json { head :no_content }
+    end
+  end
+
+   def certificate_print
     @employee = Employee.find(params[:salary][:employee_id])
-    @certificate = params[:salary][:certificate]
+    # byebug
+    @certificate = params[:salary][:certificate_master_id]
     @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
   end
 
- def address_proof
-    @employee = Employee.find(params[:employee_id])
-    @certificate = [:certificate]
-    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
-    respond_to do |format|
-        format.html
-        format.pdf do
-        render :pdf => 'certificate_print',
-        layout: '/layouts/pdf.html.erb',
-        :template => 'certificates/certificate_print_address.pdf.erb',
-        :orientation      => 'Landscape', # default , Landscape
-        :page_height      => 1000,
-        :dpi              => '300',
-        :margin           => {:top    => 20, # default 10 (mm)
-                      :bottom => 20,
-                      :left   => 20,
-                      :right  => 20},
-        :show_as_html => params[:debug].present?
-        end
-        end
-  end
+ private
+    # Use callbacks to share common setup or constraints between actions.
+    def set_certificate
+      @certificate = Certificate.find(params[:id])
+    end
 
-  def character_certificate
-    @employee = Employee.find(params[:employee_id])
-    @certificate = [:certificate]
-    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
-    respond_to do |format|
-        format.html
-        format.pdf do
-        render :pdf => 'certificate_print',
-        layout: '/layouts/pdf.html.erb',
-        :template => 'certificates/certificate_print_character.pdf.erb',
-        :orientation      => 'Landscape', # default , Landscape
-        :page_height      => 1000,
-        :dpi              => '300',
-        :margin           => {:top    => 20, # default 10 (mm)
-                      :bottom => 20,
-                      :left   => 20,
-                      :right  => 20},
-        :show_as_html => params[:debug].present?
-        end
-        end
-  end
-
-
-  def display_certificate
-    @employee = Employee.find(params[:employee_id])
-    @certificate = [:certificate]
-    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
-    respond_to do |format|
-        format.html
-        format.pdf do
-        render :pdf => 'certificate_print',
-        layout: '/layouts/pdf.html.erb',
-        :template => 'certificates/certificate_print_display.pdf.erb',
-        :orientation      => 'Landscape', # default , Landscape
-        :page_height      => 1000,
-        :dpi              => '300',
-        :margin           => {:top    => 20, # default 10 (mm)
-                      :bottom => 20,
-                      :left   => 20,
-                      :right  => 20},
-        :show_as_html => params[:debug].present?
-        end
-        end
-  end
-
-
-  def service_certificate
-    @employee = Employee.find(params[:employee_id])
-    @certificate = [:certificate]
-    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
-    respond_to do |format|
-        format.html
-        format.pdf do
-        render :pdf => 'certificate_print',
-        layout: '/layouts/pdf.html.erb',
-        :template => 'certificates/certificate_print_service.pdf.erb',
-        :orientation      => 'Landscape', # default , Landscape
-        :page_height      => 1000,
-        :dpi              => '300',
-        :margin           => {:top    => 20, # default 10 (mm)
-                      :bottom => 20,
-                      :left   => 20,
-                      :right  => 20},
-        :show_as_html => params[:debug].present?
-        end
-        end
-  end
-
-
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def certificate_params
+      params.require(:certificate).permit(:certificate_master_id, :h1_start, :h1_end, :h2_start, :h2_end, :b1_start, :b1_end, :b2_start, :b2_end, :b3_start, :b3_end, :b4_start, :b4_end, :b5_start, :b5_end, :f1_start, :f1_end, :f2_start, :f2_end)
+    end
 end

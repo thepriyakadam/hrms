@@ -62,9 +62,12 @@ class WeekOffMastersController < ApplicationController
   end
   
   def week_off_list
-    if current_user.role.name == 'Company' 
+    if current_user.role.name == 'GroupAdmin' 
       @week_off_masters = WeekOffMaster.where(is_send: nil)
-    elsif current_user.role.name == 'CompanyLocation'
+    elsif current_user.role.name == 'Admin'
+      @employees = Employee.where(company_id: current_user.company_location.company_id)
+      @week_off_masters = WeekOffMaster.where(is_send: nil).where(employee_id: @employees)
+    elsif current_user.role.name == 'Branch'
       @employees = Employee.where(company_location_id: current_user.company_location_id)
       @week_off_masters = WeekOffMaster.where(is_send: nil).where(employee_id: @employees)
     end
@@ -73,6 +76,8 @@ class WeekOffMastersController < ApplicationController
   end
 
   def employee_list
+    @week_off_master = WeekOffMaster.new(week_off_master_params)
+
     @day = params[:week_off_master][:day]
     @from = params[:week_off_master][:from]
     @to = params[:week_off_master][:to]
@@ -80,15 +85,20 @@ class WeekOffMastersController < ApplicationController
     @is_prefix = params[:week_off_master][:is_prefix]
 
     if current_user.class == Member
-      if current_user.role.name == 'Company'
-      @employees = Employee.all
-      elsif current_user.role.name == 'CompanyLocation'
-        @employees = Employee.where(company_location_id: current_user.company_location_id)
-    else
-      @employees = Employee.all
+      if current_user.role.name == 'GroupAdmin'
+        @emp_id = WeekOffMaster.where(day: @day,from: @from.to_date,to: @to.to_date).pluck(:employee_id)
+        @employees = Employee.where.not(id: @emp_id)      
+      elsif current_user.role.name == 'Admin'
+        @emp_id = WeekOffMaster.where(day: @day,from: @from.to_date,to: @to.to_date).pluck(:employee_id)
+        @employees = Employee.where(company_id: current_user.company_location.company_id).where.not(id: @emp_id)
+      elsif current_user.role.name == 'Branch'
+        @emp_id = WeekOffMaster.where(day: @day,from: @from.to_date,to: @to.to_date).pluck(:employee_id)
+        @employees = Employee.where(company_location_id: current_user.company_location_id).where.not(id: @emp_id)
+      else
+        @employees = Employee.all
+      end
     end
   end
-end
 
   def create_week_off
     @employee_ids = params[:employee_ids]
@@ -122,6 +132,7 @@ end
              @emp_attendance = EmployeeAttendance.where(employee_id: week_off_master.employee_id,day: i).take
               if @emp_attendance.try(:present) == nil
                 EmployeeAttendance.create(employee_id: week_off_master.employee_id,day: i,present: "W",department_id: week_off_master.employee.department_id,is_confirm: false)
+                EmployeeWeekOff.create(week_off_master_id: wid,employee_id: week_off_master.employee_id,day: week_off_master.day,date: i)
               else
               end
             else

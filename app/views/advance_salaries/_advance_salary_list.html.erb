@@ -1,4 +1,4 @@
-  <div class="box-header">
+ <div class="box-header">
     <h3 class="box-title">Employee Advance Salary</h3>
   </div><!-- /.box-header -->
   <div class="box-body">
@@ -33,5 +33,5 @@
   </div>
   <%= link_to 'Back', advance_salaries_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
   <%= link_to " Excel Report ",advance_salary_xls_advance_salaries_path(month: params[:advance_salary][:month], year: params[:advance_salary][:year],company_id: params[:advance_salary][:company_id],company_location_id: params[:advance_salary][:company_location_id], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
-  <%= link_to " Print Advance Salary ",advance_salary_pdf_advance_salaries_path(month: params[:advance_salary][:month], year: params[:advance_salary][:year],company_id: params[:advance_salary][:company_id],company_location_id: params[:advance_salary][:company_location_id], format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+  <%= link_to " PDF Report ",advance_salary_pdf_advance_salaries_path(month: params[:advance_salary][:month], year: params[:advance_salary][:year],company_id: params[:advance_salary][:company_id],company_location_id: params[:advance_salary][:company_location_id], format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
 </div>

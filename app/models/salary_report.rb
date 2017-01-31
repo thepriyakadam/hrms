@@ -3,7 +3,7 @@ class SalaryReport
                 :actual_basic, :actual_da, :actual_hra, :actual_convenience, :actual_other, :actual_special, :actual_washing, :actual_total,
                 :earned_basic, :earned_da, :earned_hra, :earned_convenience, :earned_other, :earned_special, :earned_washing, :earned_total,
                 :pf, :esic, :income_tax, :pt, :advance, :society, :food_deduction, :mobile, :retention, :welfair, :deduction_total, :net_payable, :other_deduction,
-                :total_leave, :cl_leave, :el_leave, :lwp_leave, :day_in_month, :payable_day, :present_day, :absent_day, :holiday, :weekoff, :month, :year,
+                :total_leave, :cl_leave, :el_leave,:advance_leave,:coff_leave,:esic_leave, :lwp_leave, :day_in_month, :payable_day, :present_day, :absent_day, :holiday, :weekoff, :month, :year,
                 :pf_ctc, :esic_ctc, :bonus_ctc, :actual_driver, :actual_medical, :actual_child_edu, :actual_mra, :earned_driver, :earned_medical, :earned_child_edu,
                 :earned_mra
         
@@ -106,7 +106,10 @@ class SalaryReport
     
     sr.cl_leave = wd.cl_leave.to_f
     sr.el_leave = wd.el_leave.to_f
-    sr.lwp_leave = wd.lwp_leave.to_f + wd.esic_leave.to_f
+    sr.advance_leave = wd.advance_leave.to_f
+    sr.coff_leave = wd.coff_leave.to_f
+    sr.esic_leave = wd.esic_leave.to_f
+    sr.lwp_leave = wd.lwp_leave.to_f 
     sr.day_in_month = wd.day_in_month
     sr.payable_day = wd.payable_day
     sr.present_day = wd.present_day
@@ -309,6 +312,15 @@ class SalaryReport
     array_el_leave = reports.collect {|r| r.try(:el_leave)}.compact
     @sum.el_leave = array_el_leave.inject(0){|sum,x| sum + x }
 
+    array_advance_leave = reports.collect {|r| r.try(:advance_leave)}.compact
+    @sum.advance_leave = array_advance_leave.inject(0){|sum,x| sum + x }
+
+    array_coff_leave = reports.collect {|r| r.try(:coff_leave)}.compact
+    @sum.coff_leave = array_coff_leave.inject(0){|sum,x| sum + x }
+
+    array_esic_leave = reports.collect {|r| r.try(:esic_leave)}.compact
+    @sum.esic_leave = array_esic_leave.inject(0){|sum,x| sum + x }
+
     array_lwp_leave = reports.collect {|r| r.try(:lwp_leave)}.compact
     @sum.lwp_leave = array_lwp_leave.inject(0){|sum,x| sum + x.to_i }
 
@@ -484,7 +496,10 @@ class SalaryReport
     
     sr.cl_leave = wd.cl_leave.to_f
     sr.el_leave = wd.el_leave.to_f
-    sr.lwp_leave = wd.lwp_leave.to_f + wd.esic_leave.to_f
+    sr.advance_leave = wd.advance_leave.to_f
+    sr.coff_leave = wd.coff_leave.to_f
+    sr.esic_leave = wd.esic_leave.to_f
+    sr.lwp_leave = wd.lwp_leave.to_f 
     sr.day_in_month = wd.day_in_month
     sr.payable_day = wd.payable_day
     sr.present_day = wd.present_day

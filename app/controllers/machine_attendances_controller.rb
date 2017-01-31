@@ -67,7 +67,7 @@ end
     @in = params[:machine_attendance][:in]
     @out = params[:machine_attendance][:out]
     @shift_type = params[:machine_attendance][:shift_master_id]
-    MachineAttendance.where(id: @machine_attendance.id).update_all(employee_id: @emp_id,day: @day,in: @in,out: @out,shift_master_id: @shift_type)
+    MachineAttendance.where(id: @machine_attendance.id).update_all(employee_id: @emp_id,day: @day,in: @in,out: @out,shift_master_id: @shift_type,user_id: current_user.employee_id,is_updated: true)
     flash[:notice] = "Machine Attendance Updated Successfully"
     redirect_to new_machine_attendance_path
   end
@@ -84,11 +84,11 @@ end
 
   def save_machine_attendance_checkbox
     @machine_attendance_ids = params[:machine_attendance_ids]
-    ma_id = @machine_attendance_ids.map {|i| i.to_i}
     if @machine_attendance_ids.nil?
         flash[:alert] = "Please Select the Checkbox"
         redirect_to new_machine_attendance_path
       else
+          ma_id = @machine_attendance_ids.map {|i| i.to_i}
           @employee = MachineAttendance.where(id: ma_id)
           @company_time_masters = CompanyTimeMaster.where(is_active: true)
             @employee.each do |e|
@@ -96,35 +96,56 @@ end
                 # byebug
                 if e.shift_master_id == s.shift_master_id
                     if e.in.strftime('%H:%M:%S').between?(s.in_min_time.strftime('%H:%M:%S'), s.in_max_time.strftime('%H:%M:%S')) && e.out.strftime('%H:%M:%S').between?(s.out_min_time.strftime('%H:%M:%S'), s.out_max_time.strftime('%H:%M:%S'))
-                      @c1=EmployeeAttendance.create(employee_id: e.employee_id,day: e.day.to_date,in_time: s.in_time,out_time: s.out_time,machine_attendances_id: e.id,company_time_master_id: s.id,present: e.present)
+                      month_name = e.day.strftime("%B")
+                      @c1=EmployeeAttendance.create(employee_id: e.employee_id,day: e.day.to_date,in_time: s.in_time,out_time: s.out_time,machine_attendances_id: e.id,company_time_master_id: s.id,present: e.present,month_name: month_name)
                       MachineAttendance.where(id: e.id).update_all(is_proceed: true)
                       time_diff=TimeDifference.between(@c1.in_time.strftime('%H:%M:%S'), @c1.out_time.strftime('%H:%M:%S')).in_hours.round
                       total_time_diff = time_diff - s.working_hrs.to_f
-                      EmployeeAttendance.where(id: @c1.id).update_all(company_hrs: s.working_hrs,overtime_hrs: total_time_diff,total_hrs: time_diff)
+                      EmployeeAttendance.where(id: @c1.id).update_all(working_hrs: time_diff)
+                      if total_time_diff<0
+                        EmployeeAttendance.where(id: @c1.id).update_all(difference_hrs: total_time_diff.abs)
+                      else
+                        EmployeeAttendance.where(id: @c1.id).update_all(overtime_hrs: total_time_diff)
+                      end
                       puts "------------------------------------"
 
                     elsif e.in.strftime('%H:%M:%S').between?(s.in_min_time.strftime('%H:%M:%S'), s.in_max_time.strftime('%H:%M:%S')) 
-                        @c1=EmployeeAttendance.create(employee_id: e.employee_id,day: e.day.to_date,in_time: s.in_time,out_time: e.out,machine_attendances_id: e.id,company_time_master_id: s.id,present: e.present)
+                        @c1=EmployeeAttendance.create(employee_id: e.employee_id,day: e.day.to_date,in_time: s.in_time,out_time: e.out,machine_attendances_id: e.id,company_time_master_id: s.id,present: e.present,month_name: month_name)
                         MachineAttendance.where(id: e.id).update_all(is_proceed: true)
                         time_diff=TimeDifference.between(@c1.in_time.strftime('%H:%M:%S'), @c1.out_time.strftime('%H:%M:%S')).in_hours.round
                         total_time_diff = time_diff - s.working_hrs.to_f
-                        EmployeeAttendance.where(id: @c1.id).update_all(company_hrs: s.working_hrs,overtime_hrs: total_time_diff,total_hrs: time_diff)
+                        EmployeeAttendance.where(id: @c1.id).update_all(working_hrs: time_diff)
+                        if total_time_diff<0
+                          EmployeeAttendance.where(id: @c1.id).update_all(difference_hrs: total_time_diff.abs)
+                        else
+                          EmployeeAttendance.where(id: @c1.id).update_all(overtime_hrs: total_time_diff)
+                        end
                         puts "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
 
                     elsif e.out.strftime('%H:%M:%S').between?(s.out_min_time.strftime('%H:%M:%S'), s.out_max_time.strftime('%H:%M:%S'))
-                        @c1=EmployeeAttendance.create(employee_id: e.employee_id,day: e.day.to_date,in_time: e.in,out_time: s.out_time,machine_attendances_id: e.id,company_time_master_id: s.id,present: e.present)
+                        @c1=EmployeeAttendance.create(employee_id: e.employee_id,day: e.day.to_date,in_time: e.in,out_time: s.out_time,machine_attendances_id: e.id,company_time_master_id: s.id,present: e.present,month_name: month_name)
                         MachineAttendance.where(id: e.id).update_all(is_proceed: true)
                         time_diff=TimeDifference.between(@c1.in_time.strftime('%H:%M:%S'), @c1.out_time.strftime('%H:%M:%S')).in_hours.round
                         total_time_diff = time_diff - s.working_hrs.to_f
-                        EmployeeAttendance.where(id: @c1.id).update_all(company_hrs: s.working_hrs,overtime_hrs: total_time_diff,total_hrs: time_diff)
+                        EmployeeAttendance.where(id: @c1.id).update_all(working_hrs: time_diff)
+                        if total_time_diff<0
+                          EmployeeAttendance.where(id: @c1.id).update_all(difference_hrs: total_time_diff.abs)
+                        else
+                          EmployeeAttendance.where(id: @c1.id).update_all(overtime_hrs: total_time_diff)
+                        end
                         puts "cccccccccccccccccccccccccccccccccccccc"
 
                     else
-                        @c2=EmployeeAttendance.create(employee_id: e.employee_id,day: e.day.to_date,in_time: e.in,out_time: e.out,machine_attendances_id: e.id,company_time_master_id: s.id,present: e.present)
+                        @c2=EmployeeAttendance.create(employee_id: e.employee_id,day: e.day.to_date,in_time: e.in,out_time: e.out,machine_attendances_id: e.id,company_time_master_id: s.id,present: e.present,month_name: month_name)
                         MachineAttendance.where(id: e.id).update_all(is_proceed: true)
                         time_diff=TimeDifference.between(@c2.in_time.strftime('%H:%M:%S'), @c2.out_time.strftime('%H:%M:%S')).in_hours.round
                         total_time_diff = time_diff - s.working_hrs.to_f
-                        EmployeeAttendance.where(id: @c2.id).update_all(company_hrs: s.working_hrs,overtime_hrs: total_time_diff,total_hrs: time_diff)
+                        EmployeeAttendance.where(id: @c1.id).update_all(working_hrs: time_diff)
+                        if total_time_diff<0
+                          EmployeeAttendance.where(id: @c1.id).update_all(difference_hrs: total_time_diff.abs)
+                        else
+                          EmployeeAttendance.where(id: @c1.id).update_all(overtime_hrs: total_time_diff)
+                        end
                         puts "/////////////////////////////////////"    
                     end
                 end
@@ -145,9 +166,31 @@ end
   end
 
   def import
-    # byebug
     MachineAttendance.import(params[:file])
     redirect_to import_machine_attendance_machine_attendances_path, notice: "File imported."
+  end
+
+  def machine_attendance_xls
+    @machine_attendances = MachineAttendance.all
+    # @machine_attendances = MachineAttendance.where(is_proceed: nil)
+    respond_to do |format|
+      format.xls {render template: 'machine_attendances/machine_attendances.xls.erb'}
+    end
+  end
+
+  def machine_attendance_pdf
+    @machine_attendances = MachineAttendance.all
+     # @machine_attendances = MachineAttendance.where(is_proceed: nil)
+     respond_to do |format|
+      format.json
+      format.pdf do
+        render pdf: 'machine_attendances',
+              layout: 'pdf.html',
+              orientation: 'Landscape',
+              template: 'machine_attendances/machine_attendances.pdf.erb',
+              show_as_html: params[:debug].present?
+            end
+         end
   end
 
   private

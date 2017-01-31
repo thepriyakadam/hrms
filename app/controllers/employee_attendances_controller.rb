@@ -76,13 +76,16 @@ class EmployeeAttendancesController < ApplicationController
     else
       @holiday_flag = false
       if current_user.class == Member
-      if current_user.role.name == 'CompanyLocation'
-      @employees = Employee.where(status: "Active",company_location_id: current_user.company_location_id).filter_by_date_and_costcenter(@date, @costcenter, current_user)
-
-      elsif
-      @employees = Employee.where(status: "Active").filter_by_date_and_costcenter(@date, @costcenter, current_user)
-      #@employees = Employee.filter_by_date_costcenter_and_department(@date, @costcenter, @department, current_user)
-      end
+        if current_user.role.name == 'GroupAdmin'
+          @employees = Employee.where(status: "Active").filter_by_date_and_costcenter(@date, @costcenter, current_user)
+        elsif current_user.role.name == 'Admin'
+          @employees = Employee.where(status: "Active",company_id: current_user.company_location.company_id).filter_by_date_and_costcenter(@date, @costcenter, current_user)
+        elsif current_user.role.name == 'Branch'
+          @employees = Employee.where(status: "Active",company_location_id: current_user.company_location_id).filter_by_date_and_costcenter(@date, @costcenter, current_user)
+        elsif
+        @employees = Employee.where(status: "Active").filter_by_date_and_costcenter(@date, @costcenter, current_user)
+        #@employees = Employee.filter_by_date_costcenter_and_department(@date, @costcenter, @department, current_user)
+        end
       @emp_attendances = EmployeeAttendance.where("strftime('%m/%Y', day) = ? AND present = ?", @date.strftime('%m/%Y'), "W")
         @emp_attendances.each do |e|
           date = e.day.to_datetime
@@ -125,6 +128,7 @@ class EmployeeAttendancesController < ApplicationController
     else
       @employee_ids.each do |eid|
         @emp = Employee.find_by_id(eid)
+
       EmployeeAttendance.create(employee_id: eid,day: day,present: present,department_id: @emp.department_id, is_confirm: false)  
       #Holiday.where(holiday_date: day).update_all(is_taken: true)
       flash[:notice] = "Created successfully"
@@ -200,12 +204,14 @@ class EmployeeAttendancesController < ApplicationController
     @start_date = @date
     @end_date = @date.end_of_month
     if current_user.class == Member
-      if current_user.role.name == 'CompanyLocation'
-          @emp = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
-          # byebug
-          @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).where(employee_id: @emp).group(:employee_id)
-        elsif current_user.role.name == 'Company'
-          @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).group(:employee_id)
+      if current_user.role.name == 'GroupAdmin'
+         @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).group(:employee_id)
+      elsif current_user.role.name == 'Admin'
+        @emp = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
+        @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).where(employee_id: @emp).group(:employee_id)   
+      elsif current_user.role.name == 'Branch'
+        @emp = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+        @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).where(employee_id: @emp).group(:employee_id)
       end
     end
     # @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).group(:employee_id)
@@ -221,25 +227,75 @@ class EmployeeAttendancesController < ApplicationController
     @start_date = @date
     @end_date = @date.end_of_month
     if current_user.class == Member
-      if current_user.role.name == 'CompanyLocation'
-          @emp = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
-          # byebug
+      if current_user.role.name == 'GroupAdmin'
+         @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).group(:employee_id)
+      elsif current_user.role.name == 'Admin'
+          @emp = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
           @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).where(employee_id: @emp).group(:employee_id)
-        elsif current_user.role.name == 'Company'
-          @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).group(:employee_id)
+      elsif current_user.role.name == 'Branch'
+          @emp = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+          @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).where(employee_id: @emp).group(:employee_id)
       end
     end
     # @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).group(:employee_id)
   end
                                 
   def create_attendance
-    @employees, @attendances, work_data_structure, @date = params[:employees], params[:attendances], [], params[:date]
-    params.permit!
-    @employees.each { |e| work_data_structure << params[e] }
-    #EmployeeAttendance.where(employee_id: @employees).where("strftime('%m/%Y', day) = ? and is_confirm = ?", @date.to_date.strftime('%m/%Y'),false).update_all(is_confirm: true)
-    Workingday.create(work_data_structure)
-    flash[:notice] = "Workingday successfully saved."
-    redirect_to employee_attendances_path
+      @employees, @attendances, work_data_structure = params[:employees], params[:attendances], []
+     
+      @month = params[:month]
+      @year = params[:year]
+      @date = Date.new(@year.to_i, Workingday.months[@month])
+
+      params.permit!
+      @employees.each { |e| work_data_structure << params[e] }
+      #byebug
+      a = Workingday.create(work_data_structure)      
+      # @employees.try(:each) do |x| 
+      #   EmployeeAttendance.where("employee_id = ? AND strftime('%m/%Y', day) = ?",x,@date.strftime('%m/%Y')).update_all(is_confirm: true)
+      # end
+      @emp1 = params[:employees]
+      b=a.last
+      @payroll_overtime_masters = PayrollOvertimeMaster.where(is_active: true,is_payroll: true).take
+      @emp1.try(:each) do |x| 
+      emp_attend=EmployeeAttendance.where(employee_id: x,month_name: b.month_name)
+      
+      EmployeeAttendance.where("strftime('%m/%Y', day) = ? AND employee_id = ?", @date.strftime('%m/%Y'),x).update_all(is_confirm: true)
+      EmployeeWeekOff.where("strftime('%m/%Y', date) = ? AND employee_id = ?", @date.strftime('%m/%Y'),x).update_all(is_confirm: true)
+      # ff=EmployeeAttendance.where(employee_id: x,month_name: b.month_name).take
+      
+      ot_hours=emp_attend.sum(:overtime_hrs).to_f
+      diff_hours=emp_attend.sum(:difference_hrs).to_f
+      calculated_diff=ot_hours-diff_hours
+      # Workingday.where(employee_id: x).update_all(ot_days: calculated_diff.to_f / @payroll_overtime_masters.company_hrs.to_f)
+      Workingday.where(employee_id: x).update_all(ot_days: calculated_diff.to_f)
+      # d=Workingday.where(employee_id: x)
+      #   d.each do |f|
+      #     f.update(calculated_payable_days: f.payable_day)
+      #   end
+      end
+      work=Workingday.where("ot_days < ?", 0).pluck(:id)
+      @workingdays = Workingday.where(id: work)
+      @workingdays.each do |wor|
+      
+      emp_att=EmployeeAttendance.where(employee_id: wor.employee_id,month_name: wor.month_name)
+      #EmployeeAttendance.where("strftime('%m/%Y', day) = ? AND employee_id = ?", @date,wor.employee_id).update_all(is_confirm: true)
+
+
+      overtime_hours=emp_att.sum(:overtime_hrs).to_f
+      difference_hours=emp_att.sum(:difference_hrs).to_f
+      calculated_diff_hours=(overtime_hours-difference_hours)
+      total_hrs =  wor.payable_day.to_f * @payroll_overtime_masters.company_hrs.to_f
+      result = total_hrs - wor.ot_days.abs.to_f
+      final_payable_day = result / @payroll_overtime_masters.company_hrs.to_f
+      # byebug
+      Workingday.where(id: wor,employee_id: wor.employee_id).update_all(calculated_payable_days: final_payable_day.to_f,ot_days: nil)
+      # Workingday.update_all(is_confirm: true)
+      end
+
+
+      flash[:notice] = "Workingday successfully saved."
+      redirect_to employee_attendances_path
   end
 
   def costcenter_wise_attendance
@@ -265,12 +321,14 @@ class EmployeeAttendancesController < ApplicationController
     @start_date = @date
     @end_date = @date.end_of_month
     if current_user.class == Member
-      if current_user.role.name == 'CompanyLocation'
-          @emp = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
-          # byebug
-          @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).where(employee_id: @emp).group(:employee_id)
-        elsif current_user.role.name == 'Company'
-          @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).group(:employee_id)
+      if current_user.role.name == 'GroupAdmin'
+        @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).group(:employee_id)
+      elsif current_user.role.name == 'Admin'
+        @emp = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
+        @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).where(employee_id: @emp).group(:employee_id)
+      elsif current_user.role.name == 'Branch'
+        @emp = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+        @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).where(employee_id: @emp).group(:employee_id)     
       end
     end
     # @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ? and is_confirm = ?", @date.strftime('%m/%Y'),false).group(:employee_id)
@@ -286,12 +344,14 @@ class EmployeeAttendancesController < ApplicationController
     @start_date = @date
     @end_date = @date.end_of_month
     if current_user.class == Member
-      if current_user.role.name == 'CompanyLocation'
-          @emp = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
-          # byebug
-          @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).where(employee_id: @emp).group(:employee_id)
-        elsif current_user.role.name == 'Company'
-          @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).group(:employee_id)
+      if current_user.role.name == 'GroupAdmin'
+        @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).group(:employee_id)
+      elsif current_user.role.name == 'Admin'
+        @emp = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
+        @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).where(employee_id: @emp).group(:employee_id)
+      elsif current_user.role.name == 'Branch'
+        @emp = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+        @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ?", @date.strftime('%m/%Y')).where(employee_id: @emp).group(:employee_id)
       end
     end
     # @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ? and is_confirm = ?", @date.strftime('%m/%Y'),false).group(:employee_id)
@@ -327,17 +387,17 @@ class EmployeeAttendancesController < ApplicationController
     @start_date = @date
     @end_date = @date.end_of_month
     @employees = EmployeeAttendance.where("strftime('%m/%Y', day) = ? and is_confirm = ?", @date.strftime('%m/%Y'),false).group(:employee_id)
-      respond_to do |format|
-          format.json
-          format.pdf do
-            render pdf: 'employee_attendance',
-                  layout: 'pdf.html',
-                  orientation: 'Landscape',
-                  template: 'employee_attendances/costcenter_wise_pdf.pdf.erb',
-                  show_as_html: params[:debug].present?,
-                  margin:  { top:1,bottom:1,left:1,right:1 }
-                end
-             end
+    respond_to do |format|
+      format.json
+      format.pdf do
+        render pdf: 'employee_attendance',
+              layout: 'pdf.html',
+              orientation: 'Landscape',
+              template: 'employee_attendances/costcenter_wise_pdf.pdf.erb',
+              show_as_html: params[:debug].present?,
+              margin:  { top:1,bottom:1,left:1,right:1 }
+            end
+         end
     
   end
   
@@ -374,8 +434,6 @@ class EmployeeAttendancesController < ApplicationController
   
 
   def display_employee_attendance_list
-    # @month = "September"
-    # @year = 2016
     @month = params[:month].to_s
     @year = params[:year].to_s
     @date = Date.new(@year.to_i, Workingday.months[@month])

@@ -1,9 +1,13 @@
 class Workingday < ActiveRecord::Base
   # enum month: [:January, :February, :March, :April, :May, :June, :July, :August, :September, :October, :November, :December]
   enum month: { January: 1, February: 2, March: 3, April: 4, May: 5, June: 6, July: 7, August: 8, September: 9, October: 10, November: 11, December: 12 }
-  validates :employee_id, uniqueness: { scope: :month_name }
+  validates :employee_id, uniqueness: { scope: [:month_name, :year] }
   belongs_to :employee
   has_many :salaryslips
+
+  #validates :workingday, uniqueness: { scope: [:month_name, :year] }
+
+  #validates :month_name, uniqueness: { scope: [:year] }
 
   # validates_uniqueness_of :acronym, :allow_blank => true, :scope => [:group_id], :case_sensitive => false
   # validates_uniqueness_of :acronym, :allow_nil => true, :scope => [:group_id], :case_sensitive => false
@@ -22,9 +26,11 @@ class Workingday < ActiveRecord::Base
     if current_user.class == Group
       Employee.where(id: workingdays)
     else
-      if current_user.role.name == 'Company'
-        Employee.where(id: workingdays)
-      elsif current_user.role.name == 'CompanyLocation'
+      if current_user.role.name == "GroupAdmin"
+        Employee.all
+      elsif current_user.role.name == 'Admin'
+        Employee.where(id: workingdays, company_id: current_user.company_location.company_id)
+      elsif current_user.role.name == 'Branch'
         Employee.where(id: workingdays, company_location_id: current_user.company_location_id)
       end
     end
@@ -54,13 +60,16 @@ class Workingday < ActiveRecord::Base
     @workingdays =  if current_user.class == Group
       Workingday.all
     elsif current_user.class == Member
-      if current_user.role.name == "Company"
-        @employees = Employee.where(company_id: current_user.company_id)
+      if current_user.role.name == "GroupAdmin"
+        @employees = Employee.all
         Workingday.where(employee_id: @employees)
-      elsif current_user.role.name == "CompanyLocation"
+      elsif current_user.role.name == "Admin"
+        @employees = Employee.where(company_id: current_user.company_location.company_id)
+        Workingday.where(employee_id: @employees)  
+      elsif current_user.role.name == "Branch"
         @employees = Employee.where(company_location_id: current_user.company_location_id)
         Workingday.where(employee_id: @employees)  
-      elsif current_user.role.name == "Department"
+      elsif current_user.role.name == "HOD"
         @employees = Employee.where(department_id: current_user.department_id)
         Workingday.where(employee_id: @employees)
       elsif current_user.role.name == "Employee"

@@ -24,14 +24,15 @@
 			</div>
 			<div class="col-sm-3">
 				<div class="field">
-					<%= f.text_field :limit,label:'Limit', placeholder: 'Limit' %>
+					<%= f.check_box :is_carry_forward, label: 'Is Carry-forward' %>
 				</div>
 			</div>
 			<div class="col-sm-3">
 				<div class="field">
-					<%= f.check_box :is_carry_forward, label: 'Is Carry-forward' %>
+					<%= f.text_field :limit,label:'Limit', placeholder: 'Limit' %>
 				</div>
 			</div>
+
 		</div>
 		<div class="row">
 			<div class="col-sm-3">
@@ -71,10 +72,22 @@ $("#leave_master").validate({
      error.insertAfter(element.parent(element));
     }
   });
+
   $(function(){
     $('#reservationtime').on('click', function() {
     
     });
-
   });
+
+  $('#leave_master_is_carry_forward').on('change', function() {
+    if ($('#leave_master_is_carry_forward').val() == true){
+ 
+      $("#textbox1").show();
+      
+    }
+    else{
+      $("#textbox1").hide();
+    }
+  });
+
 </script>

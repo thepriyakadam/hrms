@@ -1,4 +1,6 @@
 <div class="ajax-progress"></div>
+<div class="box">
+<div class="box-body">
 <% i = 0 %>
 <table id="example3" class="table table-bordered table-hover table-condensed">
   <thead>
@@ -7,6 +9,7 @@
       <th>ID</th>
       <th>Name</th>
       <th>Month</th>
+      <th>Year</th>
 
       <th>Payble Day</th>
       
@@ -44,6 +47,7 @@
         <td><%= r.try(:code) %></td>
         <td><%= r.try(:employee_name) %></td>
         <td><%= r.try(:month) %></td>
+        <td><%= r.try(:year) %></td>
 
         <td><%= r.try(:payable_day) %></td>
         
@@ -76,6 +80,7 @@
       </tr>
       <% end %>
       <tr>
+      <td></td>
       <td></td>
       <td></td>
       <td></td>
@@ -114,4 +119,6 @@
   <%= link_to " Print Salary Slip ",salary_ledger_salary_slip_ledgers_path(employee_id: @employee, start_date: @start_date,end_date: @end_date, format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
 
   <%= link_to " Excel Report ",salary_ledger_salary_slip_ledgers_path(employee_id: @employee,start_date: @start_date,end_date: @end_date, format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+</div>
+</div>
 </div>

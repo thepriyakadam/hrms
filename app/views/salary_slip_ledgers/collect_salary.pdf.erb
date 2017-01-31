@@ -1,5 +1,5 @@
 <% i = 0 %>
-<table style="border-collapse: collapse; font-size:15pt;" border=1 width=1000 cellpadding="15">
+<table style="border-collapse: collapse; font-size:10pt;" border=1 width=1000 cellpadding="10">
   <thead>
     <tr>
       <th colspan="6">
@@ -8,7 +8,8 @@
         <center><small>Employee Monthly Salary For The Month <%= @month %> - <%= @year %></small></center> 
       </th>
     </tr>
-     <tr>
+  
+    <tr>
       <th>Sr. No</th>
       <th>Employee ID</th>
       <th>Employee Name</th>
@@ -16,9 +17,9 @@
       <th>Net Salary</th>
       <th>Location</th>
     </tr>
-    </thead>
-    <tbody>
-     <% @slips.each do |s| %>
+  </thead>
+  <tbody>
+    <% @slips.each do |s| %>
       <tr>
         <td><%= i = i+1 %></td>
         <td><%= s.employee.manual_employee_code %></td>
@@ -28,9 +29,16 @@
         <td><%= s.employee.company_location.try(:name) %></td>
       </tr>
     <% end %>
+    <tfoot>
+      <tr>
+        <th colspan="4">Total</th>
+        
+        <th><%= @total_net_salary %></th>
+        <th></th>
+      </tr>
+    </tfoot>
   </tbody>
 </table>
-
 <style type="text/css">
 div.alwaysbreak { page-break-before: always; }
 div.nobreak:before { clear:both; }

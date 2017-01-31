@@ -1,0 +1,38 @@
+<style>
+    th {
+        text-align: left;
+    }
+    tr {
+        page-break-inside: avoid;
+    }
+    div.alwaysbreak { page-break-before: always; }
+    div.nobreak:before { clear:both; }
+    div.nobreak{ page-break-inside: avoid;
+    }
+</style>
+  <table style="border-collapse: collapse; font-size:10pt;" border=1 width=1000 cellpadding="15">
+    <thead>
+    <tr><td colspan="6"><center></center> </td></tr>
+  <thead>
+    <tr>
+        <th>ID</th>
+        <th>Employee Name</th>
+				<th>Hieght</th>
+				<th>Weight</th>
+				<th>T-Shirt Size</th>
+        <th>Trouser Size</th>
+    </tr>
+  </thead>
+<tbody>
+    <% @employee_physicals.each do |employee_physical| %>
+  <tr>
+          <td><%= employee_physical.employee.try(:manual_employee_code ) %></td>
+          <td><%= full_name(employee_physical.employee) %></td>
+          <td><%= employee_physical.height %></td>
+          <td><%= employee_physical.weight %></td>
+          <td><%= employee_physical.size %></td>
+          <td><%= employee_physical.trouser_size %></td>
+          </tr>
+          <%end%>
+</tbody>
+</thead>

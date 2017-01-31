@@ -18,23 +18,142 @@
   <!-- Navbar Right Menu -->
   <div class="navbar-custom-menu">
     <ul class="nav navbar-nav">
-      
-       <!-- User Account Menu -->
+      <!-- Messages: style can be found in dropdown.less-->
+      <li class="dropdown messages-menu">
+        <!-- Menu toggle button -->
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="Messages">
+          <i class="fa fa-envelope-o" ></i>
+          <span class="label label-success"> </span>
+        </a>
+        <ul class="dropdown-menu">
+          <li class="header">You have 4 messages</li>
+          <li>
+            <!-- inner menu: contains the messages -->
+            <ul class="menu">
+              <li><!-- start message -->
+                <a href="#">
+                  <div class="pull-left">
+                    <!-- User Image -->
+                    <%= image_tag current_user.avatar.url(:medium),class: "img-circle"%>
+                  </div>
+                  <!-- Message title and timestamp -->
+                  <h4>
+                    Support Team
+                    <small><i class="fa fa-clock-o"></i> 5 mins</small>
+                  </h4>
+                  <!-- The message -->
+                  <p>Why not buy a new awesome theme?</p>
+                 <!-- @pending_employee_leav_requests.try(:each) do |employee_leav_request| %>
+                   employee_leav_request.employee.try(:first_name) %>
+                   end %> -->
+                </a>
+              </li><!-- end message -->
+            </ul><!-- /.menu -->
+          </li>
+          <li class="footer"><a href="#">See All Messages</a></li>
+        </ul>
+      </li><!-- /.messages-menu -->
+
+      <!-- Notifications Menu -->
+      <li class="dropdown notifications-menu">
+        <!-- Menu toggle button -->
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="Notification">
+          <i class="fa fa-bell-o" ></i>
+          <span class="label label-warning"></span>
+        </a>
+        <ul class="dropdown-menu">
+          <li class="header">You have 10 notifications</li>
+          <li>
+            <!-- Inner Menu: contains the notifications -->
+            <ul class="menu">
+              <li><!-- start notification -->
+                <a href="#">
+                  <i class="fa fa-users text-aqua"></i> 5 new members joined today
+                </a>
+              </li><!-- end notification -->
+            </ul>
+          </li>
+          <li class="footer"><a href="#">View all</a></li>
+        </ul>
+      </li>
+      <!-- Tasks Menu -->
+      <li class="dropdown tasks-menu">
+        <!-- Menu Toggle Button -->
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="Task">
+          <i class="fa fa-flag-o"></i>
+          <span class="label label-danger"></span>
+        </a>
+        <ul class="dropdown-menu">
+          <li class="header">You have 9 tasks</li>
+          <li>
+            <!-- Inner menu: contains the tasks -->
+            <ul class="menu">
+              <li><!-- Task item -->
+                <a href="#">
+                  <!-- Task title and progress text -->
+                  <h3>
+                    Design some buttons
+                    <small class="pull-right">20%</small>
+                  </h3>
+                  <!-- The progress bar -->
+                  <div class="progress xs">
+                    <!-- Change the css width attribute to simulate progress -->
+                    <div class="progress-bar progress-bar-aqua" style="width: 20%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                      <span class="sr-only">20% Complete</span>
+                    </div>
+                  </div>
+                </a>
+              </li><!-- end task item -->
+            </ul>
+          </li>
+          <li class="footer">
+            <a href="#">View all tasks</a>
+          </li>
+        </ul>
+      </li>
+      <!-- User Account Menu -->
       <li class="dropdown user user-menu">
         <!-- Menu Toggle Button -->
         <a href="#" class="dropdown-toggle" data-toggle="dropdown" title = "Profile Setup">
           <!-- The user image in the navbar-->
-          <%= image_tag current_user.avatar.url(:thumb),class: "img-circle", alt: "/images/icons/avatar2.png",size: "25x25" %>
+          <% if current_user.class == Group %>
+            <%= image_tag "avatar.png",class: "img-circle", alt: "User Image", size: "25x25" %>
+          <% else %>
+          <%end%>
+          <% if current_user.class == Member %>
+           <%  @members = Member.where(employee_id: current_user.employee_id).pluck(:employee_id) %>
+           <%  @members1 = Member.where(employee_id: current_user.employee_id) %>
+           <% @employees = Employee.where(id: @members) %>
+           <% @employees.each do |e| %>
+           <% @members1.each do |m| %>
+           <% if e.gender == "Male" && m.avatar_file_name == nil  %>
+           <%= image_tag "avatar5.png",size: "25x25",class: "img-circle" %>
+           <% elsif e.gender == "Female" && m.avatar_file_name == nil  %>
+           <%= image_tag "avatar2.png",size: "25x25",class: "img-circle" %>
+           <!-- < image_tag("avatar2.png") %> -->
+          <%end%>
+          <%end%>
+          <%end%>
+          <%end%>
+
           <span class="hidden-xs"> 
           <!-- Right hand header image -->
             <% if current_user.class == Member %>
-              <% if current_user.role.name == 'Company' %>
-               ID : <%= current_user.employee.try(:manual_employee_code) %>
-              <% elsif current_user.role.name == 'CompanyLocation' %>
+              <% if current_user.role.name == 'GroupAdmin' %>
                ID :  <%= current_user.employee.try(:manual_employee_code) %>
-              <% elsif current_user.role.name == 'Department' %>
+              <% elsif current_user.role.name == 'Admin' %>
+               ID : <%= current_user.employee.try(:manual_employee_code) %>
+              <% elsif current_user.role.name == 'Branch' %>
+               ID :  <%= current_user.employee.try(:manual_employee_code) %>
+              <% elsif current_user.role.name == 'HOD' %>
                ID :  <%= current_user.employee.try(:manual_employee_code) %>
               <% elsif current_user.role.name == 'Supervisor' %>
+               ID :  <%= current_user.employee.try(:manual_employee_code) %>
+              <% elsif current_user.role.name == 'Employee' %>
+               ID :  <%= current_user.employee.try(:manual_employee_code) %>
+              <% elsif current_user.role.name == 'AccountAdmin' %>
+               ID :  <%= current_user.employee.try(:manual_employee_code) %>
+              <% elsif current_user.role.name == 'Account' %>
                ID :  <%= current_user.employee.try(:manual_employee_code) %>
               <% else %>
                ID :  <%= current_user.employee.try(:manual_employee_code) %>
@@ -48,7 +167,26 @@
         <ul class="dropdown-menu">
           <!-- The user image in the menu -->
           <li class="user-header">
-            <%= image_tag current_user.avatar.url(:medium),class: "img-circle", alt: "avatar2"%>
+            <% if current_user.class == Group %>
+            <%= image_tag "avatar.png",class: "img-circle", alt: "User Image", size: "25x25" %>
+            <% else %>
+            <%end%>
+            <% if current_user.class == Member %>
+            <%  @members = Member.where(employee_id: current_user.employee_id).pluck(:employee_id) %>
+             <%  @members1 = Member.where(employee_id: current_user.employee_id) %>
+             <% @employees = Employee.where(id: @members) %>
+             <% @employees.each do |e| %>
+             <% @members1.each do |m| %>
+             <% if e.gender == "Male" && m.avatar_file_name == nil  %>
+             <%= image_tag "avatar5.png" %>
+             <!-- < image_tag("avatar5.png") %> -->
+             <% elsif e.gender == "Female" && m.avatar_file_name == nil  %>
+             <%= image_tag "avatar2.png" %>
+             <!-- < image_tag("avatar2.png") %> -->
+              <%end%>
+              <%end%>
+              <%end%>
+              <%end%>
             <!-- Click image -->
             <p>
               <% if current_user.class == Member %>
@@ -63,7 +201,7 @@
             </p>
           </li>
           <!-- Menu Body -->
-<li class="user-body">
+          <li class="user-body">
             <div class="col-xs-5 text-center">
               <!-- <a href="#">Followers</a> -->
               <small>DESIGNATION:</small>
@@ -80,24 +218,24 @@
            <!--  <div class="col-xs-4 text-center">
               <a href="#">Friends</a>
             </div> -->
-</li>
+          </li>
           <!-- Menu Footer-->
           <% if group_signed_in? %>
             <li class="user-footer">
               <div class="pull-left">
-              	<%= link_to "Profile", edit_group_registration_path,class: "btn btn-default btn-flat" %>
+                <%= link_to "Profile", edit_group_registration_path,class: "btn btn-default btn-flat" %>
               </div>
               <div class="pull-right">
-              	<%= link_to 'Sign out', destroy_group_session_path, :method => :delete ,class: "btn btn-default btn-flat" %>
+                <%= link_to 'Sign out', destroy_group_session_path, :method => :delete ,class: "btn btn-default btn-flat" %>
               </div>
             </li>
           <%elsif member_signed_in? %>
-          	<li class="user-footer">
+            <li class="user-footer">
               <div class="pull-left">
-              	<%= link_to "Profile", edit_member_registration_path,class: "btn btn-default btn-flat" %>
+                <%= link_to "Profile", edit_member_registration_path,class: "btn btn-default btn-flat" %>
               </div>
               <div class="pull-right">
-              	<%= link_to 'Logout', destroy_member_session_path, :method => :delete ,class: "btn btn-default btn-flat" %>
+                <%= link_to 'Logout', destroy_member_session_path, :method => :delete ,class: "btn btn-default btn-flat" %>
               </div>
             </li>
           <% end %>
@@ -115,4 +253,3 @@
   </div>
 </nav>
 </header>
-

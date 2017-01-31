@@ -1,0 +1,42 @@
+<style>
+    th {
+        text-align: left;
+    }
+    tr {
+        page-break-inside: avoid;
+    }
+    div.alwaysbreak { page-break-before: always; }
+    div.nobreak:before { clear:both; }
+    div.nobreak{ page-break-inside: avoid;
+    }
+</style>
+  <table style="border-collapse: collapse; font-size:10pt;" border=1 width=1000 cellpadding="15">
+    <thead>
+    <tr><td colspan="8"><center></center> </td></tr>
+      <tr>
+      <th>Employee Name</th>
+      <th>Account No</th>
+      <th>Bank Name</th>
+      <th>Branch Name</th>
+      <th>Contact No</th>
+      <th>MICR Code</th>
+      <th>Branch Code</th>
+      <th>IFSC Code</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @employee_bank_details.each do |employee_bank_detail| %>
+      <tr>
+        <td><%= full_name(employee_bank_detail.try(:employee))%></td>
+        <td><%= employee_bank_detail.account_no %></td>
+        <td><%= employee_bank_detail.bank.try(:name) %></td>
+        <td><%= employee_bank_detail.branch_name %></td>
+        <td><%= employee_bank_detail.contact_no %></td>
+        <td><%= employee_bank_detail.micr_code %></td>
+        <td><%= employee_bank_detail.branch_code %></td>
+        <td><%= employee_bank_detail.ifsc_code %></td>
+       </tr>
+      <% end %>
+    </tbody>
+    </table>

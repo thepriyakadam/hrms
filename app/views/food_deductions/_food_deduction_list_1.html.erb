@@ -38,7 +38,7 @@
   </div>
   <%= link_to 'Back', food_deductions_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
   <%= link_to " Excel Report ",food_deduction_xls_1_food_deductions_path(month: params[:food_deduction][:month], year: params[:food_deduction][:year],company_id: params[:food_deduction][:company_id],company_location_id: params[:food_deduction][:company_location_id], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
-  <%= link_to " Print Food Deduction ",food_deduction_pdf_1_food_deductions_path(month: params[:food_deduction][:month], year: params[:food_deduction][:year],company_id: params[:food_deduction][:company_id],company_location_id: params[:food_deduction][:company_location_id], format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+  <%= link_to " PDF Report ",food_deduction_pdf_1_food_deductions_path(month: params[:food_deduction][:month], year: params[:food_deduction][:year],company_id: params[:food_deduction][:company_id],company_location_id: params[:food_deduction][:company_location_id], format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
 </div>
 
 <script type="text/javascript">

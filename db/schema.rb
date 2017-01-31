@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161212104430) do
+ActiveRecord::Schema.define(version: 20170112050137) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -151,10 +151,13 @@ ActiveRecord::Schema.define(version: 20161212104430) do
     t.string   "name"
     t.text     "definition"
     t.boolean  "status"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
     t.boolean  "is_confirm"
+    t.integer  "department_id"
   end
+
+  add_index "attribute_masters", ["department_id"], name: "index_attribute_masters_on_department_id"
 
   create_table "attribute_rating_sheets", force: :cascade do |t|
     t.integer  "appraisee_id"
@@ -316,6 +319,41 @@ ActiveRecord::Schema.define(version: 20161212104430) do
   add_index "capture_resumes", ["state_id"], name: "index_capture_resumes_on_state_id"
   add_index "capture_resumes", ["vacancy_master_id"], name: "index_capture_resumes_on_vacancy_master_id"
 
+  create_table "certificate_masters", force: :cascade do |t|
+    t.string   "name"
+    t.string   "description"
+    t.boolean  "status"
+    t.boolean  "confirm"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "certificates", force: :cascade do |t|
+    t.integer  "certificate_master_id"
+    t.text     "h1_start"
+    t.text     "h1_end"
+    t.text     "h2_start"
+    t.text     "h2_end"
+    t.text     "b1_start"
+    t.text     "b1_end"
+    t.text     "b2_start"
+    t.text     "b2_end"
+    t.text     "b3_start"
+    t.text     "b3_end"
+    t.text     "b4_start"
+    t.text     "b4_end"
+    t.text     "b5_start"
+    t.text     "b5_end"
+    t.text     "f1_start"
+    t.text     "f1_end"
+    t.text     "f2_start"
+    t.text     "f2_end"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+  end
+
+  add_index "certificates", ["certificate_master_id"], name: "index_certificates_on_certificate_master_id"
+
   create_table "certifications", force: :cascade do |t|
     t.integer  "employee_id"
     t.integer  "year_id"
@@ -455,6 +493,7 @@ ActiveRecord::Schema.define(version: 20161212104430) do
     t.datetime "in_time"
     t.datetime "out_time"
     t.integer  "shift_master_id"
+    t.string   "rest_time"
   end
 
   add_index "company_time_masters", ["shift_master_id"], name: "index_company_time_masters_on_shift_master_id"
@@ -790,10 +829,12 @@ ActiveRecord::Schema.define(version: 20161212104430) do
     t.decimal  "count",                    precision: 5, scale: 2
     t.integer  "employee_leav_request_id"
     t.integer  "machine_attendances_id"
-    t.string   "company_hrs"
-    t.string   "overtime_hrs"
     t.integer  "company_time_master_id"
-    t.string   "total_hrs"
+    t.string   "working_hrs"
+    t.string   "rest_time"
+    t.decimal  "difference_hrs"
+    t.decimal  "overtime_hrs"
+    t.string   "month_name"
   end
 
   add_index "employee_attendances", ["company_time_master_id"], name: "index_employee_attendances_on_company_time_master_id"
@@ -1180,6 +1221,20 @@ ActiveRecord::Schema.define(version: 20161212104430) do
     t.boolean  "is_confirm"
   end
 
+  create_table "employee_week_offs", force: :cascade do |t|
+    t.integer  "week_off_master_id"
+    t.integer  "employee_id"
+    t.string   "day"
+    t.date     "date"
+    t.boolean  "status"
+    t.boolean  "is_confirm"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
+
+  add_index "employee_week_offs", ["employee_id"], name: "index_employee_week_offs_on_employee_id"
+  add_index "employee_week_offs", ["week_off_master_id"], name: "index_employee_week_offs_on_week_off_master_id"
+
   create_table "employees", force: :cascade do |t|
     t.integer  "department_id"
     t.string   "manual_employee_code"
@@ -1210,13 +1265,18 @@ ActiveRecord::Schema.define(version: 20161212104430) do
     t.integer  "employee_type_id"
     t.string   "gender"
     t.integer  "manager_id"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
     t.integer  "religion_id"
     t.integer  "manager_2_id"
     t.integer  "company_location_id"
     t.integer  "company_id"
     t.integer  "employee_code_master_id"
+    t.string   "passport_photo_file_name"
+    t.string   "passport_photo_content_type"
+    t.integer  "passport_photo_file_size"
+    t.datetime "passport_photo_updated_at"
+    t.string   "punch_card_id"
   end
 
   add_index "employees", ["blood_group_id"], name: "index_employees_on_blood_group_id"
@@ -1455,11 +1515,14 @@ ActiveRecord::Schema.define(version: 20161212104430) do
 
   create_table "goal_perspectives", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
     t.boolean  "is_confirm"
     t.boolean  "status"
+    t.integer  "department_id"
   end
+
+  add_index "goal_perspectives", ["department_id"], name: "index_goal_perspectives_on_department_id"
 
   create_table "goal_rating_sheets", force: :cascade do |t|
     t.integer  "appraisee_id"
@@ -1960,8 +2023,8 @@ ActiveRecord::Schema.define(version: 20161212104430) do
     t.string   "passport_no"
     t.date     "passport_issue_date"
     t.date     "passport_expiry_date"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
     t.string   "employee_uan_no"
     t.string   "employee_pf_no"
     t.string   "employee_efic_no"
@@ -1981,6 +2044,9 @@ ActiveRecord::Schema.define(version: 20161212104430) do
     t.boolean  "is_insurance"
     t.boolean  "is_family_pension"
     t.boolean  "is_bonus"
+    t.boolean  "basis_of_time",           default: false
+    t.string   "ot_rate"
+    t.boolean  "ot_option"
   end
 
   add_index "joining_details", ["cost_center_id"], name: "index_joining_details_on_cost_center_id"
@@ -1991,6 +2057,16 @@ ActiveRecord::Schema.define(version: 20161212104430) do
   add_index "joining_details", ["employee_id"], name: "index_joining_details_on_employee_id"
   add_index "joining_details", ["payment_mode_id"], name: "index_joining_details_on_payment_mode_id"
   add_index "joining_details", ["reserved_category_id"], name: "index_joining_details_on_reserved_category_id"
+
+  create_table "late_mark_masters", force: :cascade do |t|
+    t.string   "from"
+    t.string   "to"
+    t.string   "late_mark"
+    t.boolean  "is_active"
+    t.boolean  "is_confirm"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "leav_approveds", force: :cascade do |t|
     t.integer  "employee_leav_request_id"
@@ -2139,10 +2215,13 @@ ActiveRecord::Schema.define(version: 20161212104430) do
     t.integer  "shift_master_id"
     t.boolean  "is_proceed"
     t.string   "present"
+    t.integer  "user_id"
+    t.boolean  "is_updated"
   end
 
   add_index "machine_attendances", ["employee_id"], name: "index_machine_attendances_on_employee_id"
   add_index "machine_attendances", ["shift_master_id"], name: "index_machine_attendances_on_shift_master_id"
+  add_index "machine_attendances", ["user_id"], name: "index_machine_attendances_on_user_id"
 
   create_table "manager_histories", force: :cascade do |t|
     t.integer  "employee_id"
@@ -2202,6 +2281,7 @@ ActiveRecord::Schema.define(version: 20161212104430) do
     t.datetime "updated_at",                                               null: false
     t.integer  "expencess_type_id"
     t.boolean  "is_paid"
+    t.text     "description"
   end
 
   add_index "monthly_expences", ["employee_id"], name: "index_monthly_expences_on_employee_id"
@@ -2896,6 +2976,7 @@ ActiveRecord::Schema.define(version: 20161212104430) do
     t.integer  "employee_template_id"
     t.decimal  "arrear_actual_amount",       precision: 15, scale: 2
     t.decimal  "arrear_calculated_amount",   precision: 15, scale: 2
+    t.boolean  "is_confirm"
   end
 
   add_index "salaryslips", ["employee_id"], name: "index_salaryslips_on_employee_id"
@@ -3374,8 +3455,8 @@ ActiveRecord::Schema.define(version: 20161212104430) do
     t.decimal  "week_off_day"
     t.decimal  "absent_day"
     t.decimal  "payable_day"
-    t.datetime "created_at",                                null: false
-    t.datetime "updated_at",                                null: false
+    t.datetime "created_at",                                       null: false
+    t.datetime "updated_at",                                       null: false
     t.decimal  "lwp_leave"
     t.decimal  "cl_leave"
     t.decimal  "el_leave"
@@ -3388,8 +3469,10 @@ ActiveRecord::Schema.define(version: 20161212104430) do
     t.decimal  "advance_balance"
     t.boolean  "is_confirm"
     t.decimal  "pay_leave"
-    t.decimal  "nonpay_leave",     precision: 10, scale: 2
+    t.decimal  "nonpay_leave",            precision: 10, scale: 2
     t.decimal  "gatepass"
+    t.decimal  "calculated_payable_days"
+    t.decimal  "ot_days"
   end
 
   add_index "workingdays", ["employee_id"], name: "index_workingdays_on_employee_id"

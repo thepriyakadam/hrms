@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  week_off_master_id: 
+  employee_id: 
+  day: MyString
+  date: 2017-01-09
+  status: false
+  is_confirm: false
+
+two:
+  week_off_master_id: 
+  employee_id: 
+  day: MyString
+  date: 2017-01-09
+  status: false
+  is_confirm: false

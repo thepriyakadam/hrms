@@ -6,6 +6,7 @@
       <th>Percentage</th>
       <th>Effective Date</th>
       <th>Max limit</th>
+      <th>Status</th>
       <th>Action</th>
     </tr>
   </thead>
@@ -27,8 +28,7 @@
         <td><%= esic_master.percentage %></td>
         <td><%= esic_master.date_effective %></td>
         <td><%= esic_master.max_limit %></td>
-        
-
+        <td><%= esic_master.is_active ? "Active" : "Inactive" %></td>
         <td>
           <% if esic_master.is_confirm == true %>
             <small class= "label label-primary">Confirmed</small>

@@ -1,5 +1,31 @@
 Rails.application.routes.draw do
   
+  resources :employee_week_offs do
+    collection do
+      get :revert_week_off
+      
+    end
+  end
+  resources :late_mark_masters do
+    collection do
+      get :is_confirm
+    end
+  end
+  resources :certificates do
+    collection do
+      get :certificate_form
+      get :certificate_print
+      get :employee
+      post :selected_employee_list
+      get :selected_employee_pdf
+      get :selected_employee_xls
+    end
+  end
+  resources :certificate_masters do
+    collection do
+      get :is_confirm
+    end
+  end
   resources :shift_masters do
     collection do
       get :is_confirm
@@ -41,6 +67,8 @@ Rails.application.routes.draw do
       post :import
       get :modal
       post :edit_machine_attendance
+      get :machine_attendance_xls
+      get :machine_attendance_pdf
     end
   end
   resources :company_time_masters do
@@ -185,6 +213,7 @@ end
   resources :employee_code_masters do
     collection do
        get :is_confirm
+      get :select_textbox
     end
    end
   get 'download_pdf/index'
@@ -201,6 +230,8 @@ end
       get :character_certificate
       get :display_certificate
       get :service_certificate
+      get :joining_letter
+      get :offer_letter
     end
    end
   resources :due_actions
@@ -278,7 +309,6 @@ end
   end
 
   resources :email_configs
-  resources :weekoff_masters
   resources :currency_masters do
     collection do
       get :is_confirm
@@ -920,7 +950,6 @@ end
 
   end
 
-  resources :week_offs
   resources :employee_leav_request_reports, only: [:index]
 
   resources :capture_resumes do
@@ -1230,6 +1259,10 @@ end
     collection do
       get :employees
       get :employee_expences
+      get :monthly_expence_report
+      post :dynamic_report
+      get :monthly_expence_xls
+      get :monthly_expence_pdf
     end
   end
   resources :expencess_types do
@@ -1297,6 +1330,14 @@ end
       get :revert_salary_template
       get :template_salary
       get :cancel_salary_template
+      get :active_list
+      post :show_employee_record
+      get :salary_breakup_pdf
+      get :salary_breakup_xls
+      get :employee_wise_breakup
+      post :salary_employee_wise
+      get :employee_wise_pdf
+      get :employee_wise_xls
     end
   end
   resources :retention_moneys do
@@ -1367,6 +1408,16 @@ end
       get :emp_contribution_slip_list
       get :show_emp_contribution_salaryslip
       get :print_emp_contribution_slip
+      get :salary_slip_report_form
+      post :dynamic_report
+      get :salary_slip_xls
+      get :salary_slip_pdf
+      get :salaryslip_daterange_report
+      post :dynamic_daterange_report
+      get :daterangewise_salaryslip_xls
+      get :confirm_salaryslip
+      get :show_unconfirmed_employee
+      post :Confirm_salaryslip
     end
   end
  
@@ -1407,9 +1458,34 @@ end
       get :pf_detail_xls
       get :select_bank_wise
       get :show_employee_list
+      get :esic_report
+      post :esic_dynamic_report
+      get :esic_xls
+      get :esic_pdf
       # post :dynamic_report
       # get :pf_detail_pdf
       post :print_xls
+      get :proff_tax_xls
+      get :proff_tax_pdf
+      get :proff_tax_report
+      post :professional_tax_master_dynamic_report
+      get :retention_money_report
+      post :retention_dynamic_report
+      get :retention_money_xls
+      get :retention_money_pdf
+      get :welfare_detail_report
+      post :wellfair_dynamic_report
+      get :wellfair_xls
+      get :wellfair_pdf
+      get :soc_membership_report
+      post :soc_membership_dynamic_report
+      get :soc_membership_xls
+      get :soc_membership_pdf
+      get :pf_pdf
+      get :monthly_deduction_report
+      post :monthly_deduction
+      get :monthly_deduction_pdf
+      get :monthly_deduction_excel
     end
   end
 
@@ -1433,6 +1509,18 @@ end
       post :dynamic_report
       get :advance_salary_xls
       get :advance_salary_pdf
+      get :advance_report
+      get :show_employee_detail
+      get :employee_advance_excel
+      get :employee_advance_pdf
+      get :advance_detailed_report
+      post :advance_detail
+      get :advance_detail_pdf
+      get :advance_detail_excel
+      get :yearly_advance_report
+      post :yearly_advance
+      get :yearly_advance_pdf
+      get :yearly_advance_excel
     end
   end
 
@@ -1452,6 +1540,9 @@ end
       get :workingday_pdf
       get :import_workingday
       post :import
+      get :revert_workingday
+      get :show_employee
+      post :revert_all_workingday
     end
   end
 
@@ -1645,6 +1736,7 @@ end
       get :all_leave_request_list
       get :admin_employee_history_with_current_leave
       get :select_checkbox
+      get :leave_request_report
     end
   end
   resources :company_leavs
@@ -1716,6 +1808,32 @@ end
   end
   resources :employees do
     collection do
+      get :employee_list_report
+      post :selected_employee_list_report
+      get :selected_employee_pdf
+      get :selected_employee_xls
+      get :selected_on_boarding_pdf
+      get :selected_on_boarding_xls
+      get :selected_bank_pdf
+      get :selected_bank_xls
+      get :selected_qualification_pdf
+      get :selected_qualification_xls
+      get :selected_experience_pdf
+      get :selected_experience_xls
+      get :selected_skillset_pdf
+      get :selected_skillset_xls
+      get :selected_certification_pdf
+      get :selected_certification_xls
+      get :selected_award_pdf
+      get :selected_award_xls
+      get :selected_employee_physical_pdf
+      get :selected_employee_physical_xls
+      get :selected_employee_family_pdf
+      get :selected_employee_family_xls
+      get :selected_employee_nomination_pdf
+      get :selected_employee_nomination_xls
+      get :selected_asset_pdf
+      get :selected_asset_xls
       get :import_xl
       post :import
       get :graph
@@ -1773,6 +1891,13 @@ end
       get :destroy_details
       get :edit_manager
       post :update_manager
+      get :member_list_for_update_password
+      get :reset_password
+      get :all_employee_list
+      get :left_employee_report
+      post :dynamic_report
+      get :left_employee_xl
+      get :left_employee_pdf
     end
     member do
       get :edit_manager

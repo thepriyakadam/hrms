@@ -17,14 +17,17 @@ class EmployeeDesignation < ActiveRecord::Base
     @employee_designations =  if current_user.class == Group
       EmployeeDesignation.all
     elsif current_user.class == Member
-      if current_user.role.name == "Company"
-        @employees = Employee.where(company_id: current_user.company_id)
+      if current_user.role.name == "GroupAdmin"
+         @employees = Employee.all
+         EmployeeDesignation.where(employee_id: @employees)
+      elsif current_user.role.name == "Admin"
+        @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
         EmployeeDesignation.where(employee_id: @employees)
-      elsif current_user.role.name == "CompanyLocation"
-        @employees = Employee.where(company_location_id: current_user.company_location_id)
-        EmployeeDesignation.where(employee_id: @employees)  
-      elsif current_user.role.name == "Department"
-        @employees = Employee.where(department_id: current_user.department_id)
+      elsif current_user.role.name == "Branch"
+        @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+        EmployeeDesignation.where(employee_id: @employees)    
+      elsif current_user.role.name == "HOD"
+        @employees = Employee.where(department_id: current_user.department_id).pluck(:id)
         EmployeeDesignation.where(employee_id: @employees)
       elsif current_user.role.name == "Employee"
         EmployeeDesignation.where(employee_id: current_user.employee_id)

@@ -5,6 +5,7 @@ class EmployeeLeavRequestsController < ApplicationController
   include QueryReport::Helper  # need to include it
 
   def index
+    @employee = Employee.find(current_user.employee_id)
     @employee_leav_requests = EmployeeLeavRequest.where('employee_id = ?', current_user.try(:employee_id))
     @employee_leav_balances = EmployeeLeavBalance.where(employee_id: current_user.employee_id)
     session[:active_tab] ="EmployeeSelfService"
@@ -236,17 +237,19 @@ class EmployeeLeavRequestsController < ApplicationController
     if current_user.class == Group
       @employees = Employee.all
     elsif current_user.class == Member
-      if current_user.role.name == 'Company'
+      if current_user.role.name == 'GroupAdmin'
         @employees = Employee.all
-      elsif current_user.role.name == 'CompanyLocation'
+      elsif current_user.role.name == 'Admin'
+        @employees = Employee.where(company_id: current_user.company_location.company_id)
+      elsif current_user.role.name == 'Branch'
         @employees = Employee.where(company_location_id: current_user.company_location_id)
-      elsif current_user.role.name == 'Department'
+      elsif current_user.role.name == 'HOD'
         @employees = Employee.where(department_id: current_user.department_id)
       elsif current_user.role.name == 'Supervisor'
         @emp = Employee.find(current_user.employee_id)
         @employees = @emp.subordinates
       else current_user.role.name == 'Employee'
-           @employees = Employee.where(id: current_user.employee_id)
+        @employees = Employee.where(id: current_user.employee_id)
       end
     end
     session[:active_tab] ="LeaveManagement"
@@ -318,6 +321,9 @@ class EmployeeLeavRequestsController < ApplicationController
     end
   end
 
+  def leave_request_report
+  end
+  
   private
 
   # Use callbacks to share common setup or constraints between actions.

@@ -1,0 +1,1 @@
+json.array! @certificate_masters, partial: 'certificate_masters/certificate_master', as: :certificate_master

@@ -1,0 +1,80 @@
+<style>
+    th {
+        text-align: left;
+    }
+    tr {
+        page-break-inside: avoid;
+    }
+    div.alwaysbreak { page-break-before: always; }
+    div.nobreak:before { clear:both; }
+    div.nobreak{ page-break-inside: avoid;
+    }
+</style>
+  <table style="border-collapse: collapse; font-size:12pt;" border=1 width=1200 cellpadding="15">
+    <thead>
+    <tr><td colspan="28"><center></center> </td></tr>
+      <tr>
+        
+        <th> ID</th>
+        <th>Employee Name</th>
+        <th>Gender</th>
+        <th>Aadhar Card No.</th>
+        <th>Pan Card No.</th>
+        <th>Licence No.</th>
+        <th>Marital Status</th>
+        <th>Nationality</th>
+        <th>Date of Birth</th>
+        <th>Blood Group</th>
+        <th>Permanent Address</th>
+        <th>Pin Code</th>
+        <th>Country</th>
+        <th>State</th>
+        <th>District</th>
+        <th>City</th>
+        <th>Current Address</th>
+        <th>Religion</th>
+        <th>Contact No</th>
+        <th>Email</th>
+        <th>Differently Abled</th>
+        <th>Disability Type</th>
+        <th>Employement Type</th>
+        <th>Employee Status</th>
+        <th>Company</th>
+        <th>Company Location</Dth>
+        <th>Department</th>
+       </tr>
+     </thead>
+     <tbody>
+       <% @employees.each do |employee| %>
+       <tr>
+        <td><%= employee.manual_employee_code %></td>
+        <td><%= full_name(employee) %></td>
+        <td><%= employee.gender %></td>
+        <td><%= employee.adhar_no %></td>
+        <td><%= employee.pan_no %></td>
+        <td><%= employee.licence_no %></td>
+        <td><%= employee.marital_status %></td>
+        <td><%= employee.nationality.try(:name) %></td>
+        <td><%= employee.date_of_birth %></td>
+        <td><%= employee.blood_group.try(:name) %></td>
+        <td><%= employee.permanent_address %></td>
+        <td><%= employee.pin_code %></td>
+        <td><%= employee.country.try(:name) %></td>
+        <td><%= employee.state.try(:name) %></td>
+        <td><%= employee.district.try(:name) %></td>
+        <td><%= employee.city %></td>
+        <td><%= employee.current_address %></td>
+        <td><%= employee.religion.try(:name) %></td>
+        <td><%= employee.contact_no %></td>
+        <td><%= employee.email %></td>
+        <td><%= employee.handicap %></td>
+        <td><%= employee.handicap_type %></td>
+        <td><%= employee.employee_type.try(:name) %></td>
+        <td><%= employee.status %></td>
+        <td><%= employee.company.try(:name) %></td>
+        <td><%= employee.company_location.try(:name) %></td>
+        <td><%= employee.department.try(:name) %></td>
+       </tr>
+       <%end%>
+       </tbody>
+    </table>

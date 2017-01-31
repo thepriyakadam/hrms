@@ -10,10 +10,15 @@ class DepartmentsController < ApplicationController
     if current_user.class == Group
       @departments = Department.all
     else
-      if current_user.role.name == 'Company'
+      if current_user.role.name == 'GroupAdmin'
         @departments = Department.all
-      elsif current_user.role.name == 'CompanyLocation'
+      elsif current_user.role.name == 'Admin'
+        @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:department_id)
+        @departments = Department.where(id: @employees)
+      elsif current_user.role.name == 'Branch'
         @departments = Department.where(company_location_id: current_user.company_location_id)
+      elsif current_user.role.name == 'HOD'
+        @departments = Department.where(id: current_user.department_id)
       end
     end
     session[:active_tab] = "company"

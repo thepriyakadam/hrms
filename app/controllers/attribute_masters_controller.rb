@@ -70,6 +70,6 @@ class AttributeMastersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def attribute_master_params
-      params.require(:attribute_master).permit(:is_confirm,:code, :name, :definition, :status)
+      params.require(:attribute_master).permit(:department_id,:is_confirm,:code, :name, :definition, :status)
     end
 end

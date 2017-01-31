@@ -283,11 +283,11 @@ class GoalRatingsController < ApplicationController
         @goal_bunch = GoalBunch.find_by_employee_id(g)
       end 
     end
+
   end
 
   def detail_goal_wise_xls
     @period = Period.find(params[:period_id])
-    #@goal_bunch = GoalBunch.find(params[:goal_bunch_id])
     @employees = GoalBunch.where(period_id: @period.id)
     respond_to do |format|
       format.xls {render template: 'goal_ratings/detail_goal_wise.xls.erb'}

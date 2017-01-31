@@ -23,11 +23,10 @@ div.nobreak{ page-break-inside: avoid;
   <% @goal_attribute_ratings = GoalRating.where("goal_bunch_id = ? AND goal_type = ?", e.id ,'Attribute') %>
   <% @goal_bunches = GoalBunch.where(employee_id: e.employee_id, id: e.id).group(:employee_id) %>
 
-<table style="border-collapse: collapse; font-size:10pt;" border=1 width=1200 class="table table-bordered table-hover">    
+<!-- <table style="border-collapse: collapse; font-size:10pt;" border=1 width=1200 class="table table-bordered table-hover">    
   <thead>
- 
 </thead>
-</table>
+</table> -->
 
 <table style="border-collapse: collapse; font-size:10pt;" border=1 width=1200 class="table table-bordered table-hover">    
   <thead>

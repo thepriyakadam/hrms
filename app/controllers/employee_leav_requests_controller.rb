@@ -330,11 +330,11 @@ class EmployeeLeavRequestsController < ApplicationController
   end
   
   def request_report
-    @start_date = params[:employee_leav_request][:start_date]
-    @end_date = params[:employee_leav_request][:end_date]
-    @company_id = params[:employee_leav_request][:company_id]
-    @location = params[:employee_leav_request][:company_location_id]
-    @department = params[:employee_leav_request][:department_id]
+    @start_date = params[:employee_leav_request] ? params[:employee_leav_request][:start_date] : params[:start_date]
+    @end_date = params[:employee_leav_request] ? params[:employee_leav_request][:end_date] : params[:end_date]
+    @company_id = params[:employee_leav_request] ? params[:employee_leav_request][:company_id] : params[:company_id]
+    @location = params[:employee] ? params[:employee][:company_location_id] : params[:company_location_id]
+    @department = params[:employee] ? params[:employee][:department_id] : params[:department_id]
   
     if current_user.class == Group
       if @company_id == ""
@@ -423,13 +423,13 @@ class EmployeeLeavRequestsController < ApplicationController
   end
 
   def status_wise_request
-    @start_date = params[:employee_leav_request][:start_date]
-    @end_date = params[:employee_leav_request][:end_date]
-    @company = params[:employee_leav_request][:company_id]
-    @location = params[:employee_leav_request][:company_location_id]
-    @department = params[:employee_leav_request][:department_id]
-    @status = params[:employee_leav_request][:current_status]
-
+    @start_date = params[:employee_leav_request] ? params[:employee_leav_request][:start_date] : params[:start_date]
+    @end_date = params[:employee_leav_request] ? params[:employee_leav_request][:end_date] : params[:end_date]
+    @company = params[:employee_leav_request] ? params[:employee_leav_request][:company_id] : params[:company_id]
+    @location = params[:employee] ? params[:employee][:company_location_id] : params[:company_location_id]
+    @department = params[:employee] ? params[:employee][:department_id] : params[:department_id]
+    @status = params[:employee_leav_request] ? params[:employee_leav_request][:current_status] : params[:current_status]
+    
     if @status == "Pending"
       @current_status = 0
     elsif @status == "FinalApproved"

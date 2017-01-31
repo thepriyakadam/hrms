@@ -507,6 +507,26 @@ class EmployeesController < ApplicationController
     @form = params[:form]
   end
 
+   def collect_company_location_dropdown_with_label
+    @company = Company.find(params[:id])
+    if current_user.class == Group
+    @company_locations = CompanyLocation.all
+    else
+      if current_user.role.name == 'GroupAdmin'
+        @company_locations = CompanyLocation.where(company_id: @company.id)
+      elsif current_user.role.name == 'Admin'
+        @company_locations = CompanyLocation.where(company_id: current_user.company_location.company_id)
+      elsif current_user.role.name == 'Branch'
+        @company_locations = CompanyLocation.where(id: current_user.company_location_id)
+      elsif current_user.role.name == 'HOD'
+        @company_locations = CompanyLocation.where(id: current_user.company_location_id)
+      elsif current_user.role.name == 'Supervisor'
+        @company_locations = CompanyLocation.where(id: current_user.company_location_id)
+      end
+    end
+    @form = params[:form]
+  end
+
   # def collect_company_location
   #    @company = Company.find(params[:id])
   #    @company_locations = CompanyLocation.where(company_id: @company.id)

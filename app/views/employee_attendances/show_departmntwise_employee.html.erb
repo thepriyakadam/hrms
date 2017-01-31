@@ -26,9 +26,8 @@
     <% end %>
   </tbody>
 </table>
-
- <%= link_to " Excel Report ",department_wise_xls_employee_attendances_path(date: @date, department: @department, format: "xls"), class: "btn btn-xs btn-info" %>
-<%= link_to "PDF Report", department_wise_pdf_employee_attendances_path(date: @date,department: @department, format: "pdf"), class: "btn btn-xs btn-info", :target => "_blank" %>
+  <%= link_to " Excel Report ",show_departmntwise_employee_employee_attendances_path(:salary =>{:date => params[:salary][:date],:company_location_id => params[:salary][:company_location_id]}, format: "xls"), class: "btn btn-xs btn-info" %>
+  <%= link_to "PDF Report", show_departmntwise_employee_employee_attendances_path(:salary => {:date => params[:salary][:date],:company_location_id => params[:salary][:company_location_id]}, format: "pdf"), class: "btn btn-xs btn-info", :target => "_blank" %>
 
 </div>
 </div>

@@ -2,7 +2,6 @@
   <thead>
     <tr>  
       <th>Code</th>
-      <th>Department</th>
       <th>Attribute</th>
       <th>Definition</th>
       <th>Status</th>
@@ -14,7 +13,6 @@
     <% @attribute_masters.each do |attribute_master| %>
       <tr>
         <td><%= attribute_master.code %></td>
-        <td><%= attribute_master.try(:department).try(:name) %></td>
         <td><%= attribute_master.name %></td>
         <td><%= attribute_master.definition %></td>
         <td><%= attribute_master.status ? "Active" : "Inactive" %></td>

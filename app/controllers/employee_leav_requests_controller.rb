@@ -66,6 +66,9 @@ class EmployeeLeavRequestsController < ApplicationController
       elsif @employee_leav_request.is_salary_processed?
         flash[:alert] = "Salary Processed for this month"
         redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
+      elsif @employee_leav_request.is_continue?
+        flash[:alert] = "Leave Already Available !"
+        redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
       else
         if @employee.manager_id.nil?
           flash[:alert] = 'Reporting manager not set please set Reporting Manager'

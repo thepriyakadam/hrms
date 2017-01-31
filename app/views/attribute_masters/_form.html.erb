@@ -3,11 +3,6 @@
   <div class="row">
     <div class="col-sm-3">
       <div class="form-group required">
-      <%= f.select :department_id, all_department_type_list1,{include_blank: 'select Department'},class: 'form-control' %>
-      </div>
-    </div>
-    <div class="col-sm-3">
-      <div class="form-group required">
         <%= f.text_field :code,placeholder: 'Attribute Code',label:'Code' %>
       </div>
     </div> 
@@ -16,13 +11,13 @@
         <%= f.text_field :name,placeholder: 'Attribute Name',label:'Name' %>
       </div>
     </div>
-     <div class="col-sm-3">
+     <div class="col-sm-4">
       <div class="field">
         <%= f.text_field :definition, placeholder: 'Definition',label:'Definition' %>
       </div>
     </div>
     
-     <div class="col-sm-3">
+     <div class="col-sm-2">
      <label> Status </label>
       <div class="field">
         <%= f.check_box :status,label:'Status' %>
@@ -45,9 +40,6 @@ $("#attribute_master").validate({
       "attribute_master[code]":{
         required: true,
       },
-      "attribute_master[department_id]":{
-        required: true,
-      },
       "attribute_master[name]":{
         required: true,
       }
@@ -55,9 +47,6 @@ $("#attribute_master").validate({
     messages: {
       "attribute_master[code]":{
         required: "Please Specify Code",
-      },
-      "attribute_master[department_id]":{
-        required: "Please Specify Department",
       },
       "attribute_master[name]":{
         required: "Please Specify Name",

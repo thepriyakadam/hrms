@@ -13,18 +13,6 @@
 
 ActiveRecord::Schema.define(version: 20170124064504) do
 
-<<<<<<< HEAD
-  create_table "awards", force: :cascade do |t|
-    t.integer  "employee_id"
-    t.string   "award_name"
-    t.integer  "year"
-    t.string   "award_from"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-  end
-
-  add_index "awards", ["employee_id"], name: "index_awards_on_employee_id"
-=======
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
     t.string   "name"
@@ -171,6 +159,38 @@ ActiveRecord::Schema.define(version: 20170124064504) do
 
   add_index "attribute_masters", ["department_id"], name: "index_attribute_masters_on_department_id"
 
+  create_table "attribute_rating_sheets", force: :cascade do |t|
+    t.integer  "appraisee_id"
+    t.integer  "appraiser_id"
+    t.integer  "employee_attribute_id"
+    t.text     "appraisee_comment"
+    t.text     "appraiser_comment"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+    t.boolean  "is_confirm_appraiser"
+    t.boolean  "is_confirm_appraisee"
+    t.text     "appraiser2_comment"
+    t.text     "final_comment"
+    t.integer  "final_id_id"
+    t.integer  "appraiser_2_id"
+    t.boolean  "is_confirm_final"
+    t.boolean  "is_confirm_appraiser2"
+    t.integer  "appraisee_rating_id"
+    t.integer  "appraiser_rating_id"
+    t.integer  "appraiser2_rating_id"
+    t.integer  "final_rating_id"
+  end
+
+  add_index "attribute_rating_sheets", ["appraisee_id"], name: "index_attribute_rating_sheets_on_appraisee_id"
+  add_index "attribute_rating_sheets", ["appraisee_rating_id"], name: "index_attribute_rating_sheets_on_appraisee_rating_id"
+  add_index "attribute_rating_sheets", ["appraiser2_rating_id"], name: "index_attribute_rating_sheets_on_appraiser2_rating_id"
+  add_index "attribute_rating_sheets", ["appraiser_2_id"], name: "index_attribute_rating_sheets_on_appraiser_2_id"
+  add_index "attribute_rating_sheets", ["appraiser_id"], name: "index_attribute_rating_sheets_on_appraiser_id"
+  add_index "attribute_rating_sheets", ["appraiser_rating_id"], name: "index_attribute_rating_sheets_on_appraiser_rating_id"
+  add_index "attribute_rating_sheets", ["employee_attribute_id"], name: "index_attribute_rating_sheets_on_employee_attribute_id"
+  add_index "attribute_rating_sheets", ["final_id_id"], name: "index_attribute_rating_sheets_on_final_id_id"
+  add_index "attribute_rating_sheets", ["final_rating_id"], name: "index_attribute_rating_sheets_on_final_rating_id"
+
   create_table "awards", force: :cascade do |t|
     t.integer  "employee_id"
     t.string   "award_name"
@@ -192,16 +212,23 @@ ActiveRecord::Schema.define(version: 20170124064504) do
     t.datetime "updated_at",  null: false
     t.boolean  "is_confirm"
   end
->>>>>>> 52c2ae700bd6c0b25a19737f2ed16224b8480563
 
   create_table "blood_groups", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-<<<<<<< HEAD
-=======
     t.boolean  "is_confirm"
   end
+
+  create_table "bonus", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.decimal  "bonus_amount", precision: 15, scale: 2, default: 0.0
+    t.string   "bouns_date"
+    t.datetime "created_at",                                          null: false
+    t.datetime "updated_at",                                          null: false
+  end
+
+  add_index "bonus", ["employee_id"], name: "index_bonus_on_employee_id"
 
   create_table "bonus_employees", force: :cascade do |t|
     t.integer  "employee_id"
@@ -239,16 +266,12 @@ ActiveRecord::Schema.define(version: 20170124064504) do
   create_table "capture_resumes", force: :cascade do |t|
     t.string   "name_of_candidate"
     t.string   "contact_no"
-    t.string   "contact_no2"
     t.string   "post_applied"
     t.string   "mode_of_application"
     t.date     "date_of_application"
     t.string   "url"
     t.string   "fax"
     t.text     "street"
-    t.integer  "country_id"
-    t.integer  "state_id"
-    t.integer  "district_id"
     t.string   "city"
     t.string   "zip_code"
     t.string   "current_job_title"
@@ -256,10 +279,8 @@ ActiveRecord::Schema.define(version: 20170124064504) do
     t.string   "skill_set"
     t.string   "additional_info"
     t.string   "email"
-    t.string   "email2"
     t.string   "skype_id"
     t.string   "twitter"
-    t.string   "linkedin"
     t.decimal  "current_salary"
     t.decimal  "expected_salary"
     t.string   "current_location"
@@ -269,18 +290,24 @@ ActiveRecord::Schema.define(version: 20170124064504) do
     t.string   "reason"
     t.string   "work_experience"
     t.string   "candidate_call_status"
-    t.integer  "vacancy_master_id"
-    t.integer  "degree_id"
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
     t.string   "avatar_file_name"
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
+    t.integer  "country_id"
+    t.integer  "state_id"
+    t.integer  "district_id"
     t.string   "passport_photo_file_name"
     t.string   "passport_photo_content_type"
     t.integer  "passport_photo_file_size"
     t.datetime "passport_photo_updated_at"
+    t.string   "contact_no2"
+    t.string   "email2"
+    t.string   "linkedin"
+    t.integer  "vacancy_master_id"
+    t.integer  "degree_id"
     t.string   "job_title"
     t.integer  "employee_designation_id"
   end
@@ -323,28 +350,11 @@ ActiveRecord::Schema.define(version: 20170124064504) do
     t.text     "f2_end"
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
->>>>>>> 52c2ae700bd6c0b25a19737f2ed16224b8480563
   end
 
   add_index "certificates", ["certificate_master_id"], name: "index_certificates_on_certificate_master_id"
 
   create_table "certifications", force: :cascade do |t|
-<<<<<<< HEAD
-    t.integer  "qualification_id"
-    t.string   "name"
-    t.integer  "year"
-    t.string   "duration"
-    t.text     "descripation"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-  end
-
-  add_index "certifications", ["qualification_id"], name: "index_certifications_on_qualification_id"
-
-  create_table "companies", force: :cascade do |t|
-    t.integer  "group_id"
-    t.string   "name"
-=======
     t.integer  "employee_id"
     t.integer  "year_id"
     t.string   "name"
@@ -377,57 +387,20 @@ ActiveRecord::Schema.define(version: 20170124064504) do
     t.text     "description"
     t.string   "name"
     t.integer  "company_type_id"
->>>>>>> 52c2ae700bd6c0b25a19737f2ed16224b8480563
     t.string   "registration_no"
     t.string   "pan_card_no"
     t.string   "tax_no"
     t.string   "professional_tax_no"
     t.text     "address"
-<<<<<<< HEAD
-    t.string   "city"
-    t.string   "district"
-    t.integer  "pin_code"
-    t.string   "state"
-=======
     t.integer  "country_id"
     t.integer  "state_id"
     t.integer  "district_id"
     t.string   "city"
     t.integer  "pin_code"
->>>>>>> 52c2ae700bd6c0b25a19737f2ed16224b8480563
     t.string   "email"
     t.string   "contact_no"
     t.string   "web_site"
     t.date     "starting_date"
-<<<<<<< HEAD
-    t.string   "ceo_name"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
-    t.integer  "company_type_id"
-  end
-
-  add_index "companies", ["company_type_id"], name: "index_companies_on_company_type_id"
-  add_index "companies", ["group_id"], name: "index_companies_on_group_id"
-
-  create_table "company_locations", force: :cascade do |t|
-    t.integer  "company_id"
-    t.string   "name"
-    t.string   "address"
-    t.string   "city"
-    t.string   "district"
-    t.integer  "pin_code"
-    t.string   "contact_no"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  add_index "company_locations", ["company_id"], name: "index_company_locations_on_company_id"
-
-  create_table "company_types", force: :cascade do |t|
-    t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-=======
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
   end
@@ -594,7 +567,6 @@ ActiveRecord::Schema.define(version: 20170124064504) do
     t.string   "boolean"
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
->>>>>>> 52c2ae700bd6c0b25a19737f2ed16224b8480563
   end
 
   add_index "daily_bill_detail_histories", ["daily_bill_detail_id"], name: "index_daily_bill_detail_histories_on_daily_bill_detail_id"
@@ -684,34 +656,6 @@ ActiveRecord::Schema.define(version: 20170124064504) do
   end
 
   create_table "department_types", force: :cascade do |t|
-<<<<<<< HEAD
-    t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "departments", force: :cascade do |t|
-    t.integer  "company_location_id"
-    t.string   "name"
-    t.string   "address"
-    t.integer  "pin_code"
-    t.string   "head_of_department"
-    t.string   "contact_no"
-    t.string   "manager"
-    t.string   "hr"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
-    t.integer  "department_type_id"
-  end
-
-  add_index "departments", ["company_location_id"], name: "index_departments_on_company_location_id"
-  add_index "departments", ["department_type_id"], name: "index_departments_on_department_type_id"
-
-  create_table "employee_grades", force: :cascade do |t|
-    t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-=======
     t.string   "code"
     t.string   "name"
     t.string   "description"
@@ -826,6 +770,26 @@ ActiveRecord::Schema.define(version: 20170124064504) do
     t.datetime "updated_at",      null: false
   end
 
+  create_table "employee_annual_salaries", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.integer  "salary_component_id"
+    t.datetime "created_at",                                          null: false
+    t.datetime "updated_at",                                          null: false
+    t.decimal  "percentage",                 precision: 5,  scale: 2
+    t.integer  "parent_salary_component_id"
+    t.boolean  "is_deducted"
+    t.string   "to_be_paid"
+    t.decimal  "max_amount",                 precision: 15, scale: 2
+    t.decimal  "monthly_amount",             precision: 15, scale: 2
+    t.decimal  "annual_amount",              precision: 15, scale: 2
+    t.boolean  "is_taxable"
+    t.decimal  "tax",                        precision: 15, scale: 2
+    t.string   "base"
+  end
+
+  add_index "employee_annual_salaries", ["employee_id"], name: "index_employee_annual_salaries_on_employee_id"
+  add_index "employee_annual_salaries", ["salary_component_id"], name: "index_employee_annual_salaries_on_salary_component_id"
+
   create_table "employee_arrear_items", force: :cascade do |t|
     t.integer  "employee_arrear_id"
     t.integer  "salary_component_id"
@@ -880,6 +844,21 @@ ActiveRecord::Schema.define(version: 20170124064504) do
   add_index "employee_attendances", ["employee_id"], name: "index_employee_attendances_on_employee_id"
   add_index "employee_attendances", ["employee_leav_request_id"], name: "index_employee_attendances_on_employee_leav_request_id"
   add_index "employee_attendances", ["machine_attendances_id"], name: "index_employee_attendances_on_machine_attendances_id"
+
+  create_table "employee_attributes", force: :cascade do |t|
+    t.integer  "attribute_master_id"
+    t.integer  "weightage"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+    t.integer  "performance_period_id"
+    t.integer  "employee_id"
+    t.boolean  "is_confirm"
+    t.string   "emp_head"
+  end
+
+  add_index "employee_attributes", ["attribute_master_id"], name: "index_employee_attributes_on_attribute_master_id"
+  add_index "employee_attributes", ["employee_id"], name: "index_employee_attributes_on_employee_id"
+  add_index "employee_attributes", ["performance_period_id"], name: "index_employee_attributes_on_performance_period_id"
 
   create_table "employee_bank_details", force: :cascade do |t|
     t.integer  "employee_id"
@@ -957,6 +936,25 @@ ActiveRecord::Schema.define(version: 20170124064504) do
   end
 
   add_index "employee_documents", ["employee_id"], name: "index_employee_documents_on_employee_id"
+
+  create_table "employee_goals", force: :cascade do |t|
+    t.integer  "goal_perspective_id"
+    t.string   "target"
+    t.integer  "goal_weightage"
+    t.integer  "difficulty_level"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+    t.string   "goal_measure"
+    t.integer  "period_id"
+    t.integer  "employee_id"
+    t.string   "allign_to_supervisor"
+    t.boolean  "is_confirm"
+    t.string   "emp_head"
+  end
+
+  add_index "employee_goals", ["employee_id"], name: "index_employee_goals_on_employee_id"
+  add_index "employee_goals", ["goal_perspective_id"], name: "index_employee_goals_on_goal_perspective_id"
+  add_index "employee_goals", ["period_id"], name: "index_employee_goals_on_period_id"
 
   create_table "employee_grades", force: :cascade do |t|
     t.string   "code"
@@ -1053,7 +1051,6 @@ ActiveRecord::Schema.define(version: 20170124064504) do
     t.integer  "illness_type_id"
     t.string   "mobile_no"
     t.string   "phone_no"
->>>>>>> 52c2ae700bd6c0b25a19737f2ed16224b8480563
   end
 
   add_index "employee_nominations", ["country_id"], name: "index_employee_nominations_on_country_id"
@@ -1068,21 +1065,6 @@ ActiveRecord::Schema.define(version: 20170124064504) do
 
   create_table "employee_physicals", force: :cascade do |t|
     t.integer  "employee_id"
-<<<<<<< HEAD
-    t.string   "hieght"
-    t.string   "weight"
-    t.string   "size"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-  end
-
-  add_index "employee_physicals", ["employee_id"], name: "index_employee_physicals_on_employee_id"
-
-  create_table "employee_types", force: :cascade do |t|
-    t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-=======
     t.string   "height"
     t.string   "weight"
     t.string   "size"
@@ -1205,7 +1187,6 @@ ActiveRecord::Schema.define(version: 20170124064504) do
     t.date     "end_date"
     t.datetime "created_at",                        null: false
     t.datetime "updated_at",                        null: false
->>>>>>> 52c2ae700bd6c0b25a19737f2ed16224b8480563
   end
 
   add_index "employee_templates", ["employee_id"], name: "index_employee_templates_on_employee_id"
@@ -1256,31 +1237,37 @@ ActiveRecord::Schema.define(version: 20170124064504) do
   add_index "employee_week_offs", ["employee_id"], name: "index_employee_week_offs_on_employee_id"
   add_index "employee_week_offs", ["week_off_master_id"], name: "index_employee_week_offs_on_week_off_master_id"
 
+  create_table "employeer_esics", force: :cascade do |t|
+    t.date     "esic_date"
+    t.decimal  "amount"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.integer  "employee_id"
+    t.decimal  "actual_amount"
+  end
+
+  add_index "employeer_esics", ["employee_id"], name: "index_employeer_esics_on_employee_id"
+
+  create_table "employeer_pfs", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.date     "pf_date"
+    t.decimal  "amount"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.decimal  "actual_amount"
+  end
+
+  add_index "employeer_pfs", ["employee_id"], name: "index_employeer_pfs_on_employee_id"
+
   create_table "employees", force: :cascade do |t|
     t.integer  "department_id"
-<<<<<<< HEAD
-=======
     t.string   "manual_employee_code"
     t.string   "employee_code"
->>>>>>> 52c2ae700bd6c0b25a19737f2ed16224b8480563
     t.string   "first_name"
     t.string   "middle_name"
     t.string   "last_name"
     t.date     "date_of_birth"
     t.string   "contact_no"
-<<<<<<< HEAD
-    t.string   "email"
-    t.string   "permanent_address"
-    t.string   "city"
-    t.string   "district"
-    t.string   "state"
-    t.integer  "pin_code"
-    t.string   "current_address"
-    t.string   "adhar_no"
-    t.string   "pan_no"
-    t.string   "licence_no"
-    t.string   "passport_no"
-=======
     t.string   "optinal_contact_no"
     t.string   "email"
     t.text     "permanent_address"
@@ -1293,36 +1280,10 @@ ActiveRecord::Schema.define(version: 20170124064504) do
     t.string   "adhar_no"
     t.string   "pan_no"
     t.string   "licence_no"
->>>>>>> 52c2ae700bd6c0b25a19737f2ed16224b8480563
     t.string   "marital_status"
     t.integer  "nationality_id"
     t.integer  "blood_group_id"
     t.string   "handicap"
-<<<<<<< HEAD
-    t.string   "status"
-    t.integer  "employee_type_id"
-    t.string   "gender"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
-  end
-
-  add_index "employees", ["blood_group_id"], name: "index_employees_on_blood_group_id"
-  add_index "employees", ["department_id"], name: "index_employees_on_department_id"
-  add_index "employees", ["employee_type_id"], name: "index_employees_on_employee_type_id"
-  add_index "employees", ["nationality_id"], name: "index_employees_on_nationality_id"
-
-  create_table "experinces", force: :cascade do |t|
-    t.integer  "employee_id"
-    t.string   "no_of_year_experince"
-    t.string   "company_name"
-    t.string   "designation"
-    t.string   "ctc"
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
-  end
-
-  add_index "experinces", ["employee_id"], name: "index_experinces_on_employee_id"
-=======
     t.string   "handicap_type"
     t.string   "status"
     t.integer  "employee_type_id"
@@ -1399,6 +1360,19 @@ ActiveRecord::Schema.define(version: 20170124064504) do
     t.datetime "updated_at",     null: false
   end
 
+  create_table "esic_employer_masters", force: :cascade do |t|
+    t.boolean  "esic"
+    t.decimal  "percentage"
+    t.date     "effective_from"
+    t.date     "effective_to"
+    t.decimal  "max_limit"
+    t.string   "base_component"
+    t.boolean  "is_active"
+    t.boolean  "is_confirm"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
   create_table "esic_employers", force: :cascade do |t|
     t.string   "base_component"
     t.decimal  "percentage"
@@ -1465,7 +1439,6 @@ ActiveRecord::Schema.define(version: 20170124064504) do
   end
 
   add_index "experiences", ["employee_id"], name: "index_experiences_on_employee_id"
->>>>>>> 52c2ae700bd6c0b25a19737f2ed16224b8480563
 
   create_table "families", force: :cascade do |t|
     t.integer  "employee_id"
@@ -1476,34 +1449,6 @@ ActiveRecord::Schema.define(version: 20170124064504) do
     t.date     "date_of_birth"
     t.integer  "age"
     t.string   "contact_no"
-<<<<<<< HEAD
-    t.string   "phone_no"
-    t.string   "email"
-    t.string   "permanent_address"
-    t.string   "city"
-    t.string   "dist"
-    t.string   "state"
-    t.integer  "pin_code"
-    t.string   "current_address"
-    t.string   "relation"
-    t.string   "adhar_no"
-    t.string   "pan_no"
-    t.string   "passport_no"
-    t.string   "medical_claim"
-    t.string   "marital"
-    t.string   "status"
-    t.integer  "nationality_id"
-    t.string   "blood_group"
-    t.string   "religion"
-    t.string   "phandicap"
-    t.string   "profession"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
-  end
-
-  add_index "families", ["employee_id"], name: "index_families_on_employee_id"
-  add_index "families", ["nationality_id"], name: "index_families_on_nationality_id"
-=======
     t.string   "email"
     t.text     "current_address"
     t.string   "relation"
@@ -1555,6 +1500,19 @@ ActiveRecord::Schema.define(version: 20170124064504) do
   add_index "food_deductions", ["employee_id"], name: "index_food_deductions_on_employee_id"
   add_index "food_deductions", ["food_coupan_master_id"], name: "index_food_deductions_on_food_coupan_master_id"
 
+  create_table "fp_masters", force: :cascade do |t|
+    t.boolean  "is_fp"
+    t.decimal  "min_limit"
+    t.decimal  "percentage"
+    t.string   "base_component"
+    t.date     "effective_from"
+    t.date     "effective_to"
+    t.boolean  "is_active"
+    t.boolean  "is_confirm"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
   create_table "goal_bunches", force: :cascade do |t|
     t.integer  "period_id"
     t.integer  "employee_id"
@@ -1600,6 +1558,12 @@ ActiveRecord::Schema.define(version: 20170124064504) do
   add_index "goal_bunches", ["reviewer_id"], name: "index_goal_bunches_on_reviewer_id"
   add_index "goal_bunches", ["reviewer_rating_id"], name: "index_goal_bunches_on_reviewer_rating_id"
 
+  create_table "goal_measures", force: :cascade do |t|
+    t.text     "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "goal_perspectives", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at",    null: false
@@ -1610,6 +1574,41 @@ ActiveRecord::Schema.define(version: 20170124064504) do
   end
 
   add_index "goal_perspectives", ["department_id"], name: "index_goal_perspectives_on_department_id"
+
+  create_table "goal_rating_sheets", force: :cascade do |t|
+    t.integer  "appraisee_id"
+    t.integer  "appraiser_id"
+    t.integer  "employee_goal_id"
+    t.boolean  "allign_to_supervisor"
+    t.text     "appraisee_comment"
+    t.text     "appraiser_comment"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+    t.integer  "performance_period_id"
+    t.boolean  "is_confirm_appraiser"
+    t.boolean  "is_confirm_appraisee"
+    t.text     "appraiser2_comment"
+    t.text     "final_comment"
+    t.integer  "appraiser_2_id"
+    t.integer  "final_id_id"
+    t.boolean  "is_confirm_final"
+    t.boolean  "is_confirm_appraiser2"
+    t.integer  "appraisee_rating_id"
+    t.integer  "appraiser_rating_id"
+    t.integer  "appraiser2_rating_id"
+    t.integer  "final_rating_id"
+  end
+
+  add_index "goal_rating_sheets", ["appraisee_id"], name: "index_goal_rating_sheets_on_appraisee_id"
+  add_index "goal_rating_sheets", ["appraisee_rating_id"], name: "index_goal_rating_sheets_on_appraisee_rating_id"
+  add_index "goal_rating_sheets", ["appraiser2_rating_id"], name: "index_goal_rating_sheets_on_appraiser2_rating_id"
+  add_index "goal_rating_sheets", ["appraiser_2_id"], name: "index_goal_rating_sheets_on_appraiser_2_id"
+  add_index "goal_rating_sheets", ["appraiser_id"], name: "index_goal_rating_sheets_on_appraiser_id"
+  add_index "goal_rating_sheets", ["appraiser_rating_id"], name: "index_goal_rating_sheets_on_appraiser_rating_id"
+  add_index "goal_rating_sheets", ["employee_goal_id"], name: "index_goal_rating_sheets_on_employee_goal_id"
+  add_index "goal_rating_sheets", ["final_id_id"], name: "index_goal_rating_sheets_on_final_id_id"
+  add_index "goal_rating_sheets", ["final_rating_id"], name: "index_goal_rating_sheets_on_final_rating_id"
+  add_index "goal_rating_sheets", ["performance_period_id"], name: "index_goal_rating_sheets_on_performance_period_id"
 
   create_table "goal_ratings", force: :cascade do |t|
     t.integer  "goal_bunch_id"
@@ -1652,7 +1651,6 @@ ActiveRecord::Schema.define(version: 20170124064504) do
   add_index "goal_ratings", ["period_id"], name: "index_goal_ratings_on_period_id"
   add_index "goal_ratings", ["reviewer_id"], name: "index_goal_ratings_on_reviewer_id"
   add_index "goal_ratings", ["training_topic_master_id"], name: "index_goal_ratings_on_training_topic_master_id"
->>>>>>> 52c2ae700bd6c0b25a19737f2ed16224b8480563
 
   create_table "groups", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -1668,138 +1666,16 @@ ActiveRecord::Schema.define(version: 20170124064504) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
-<<<<<<< HEAD
-=======
     t.string   "avatar_file_name"
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
->>>>>>> 52c2ae700bd6c0b25a19737f2ed16224b8480563
   end
 
   add_index "groups", ["email"], name: "index_groups_on_email", unique: true
   add_index "groups", ["reset_password_token"], name: "index_groups_on_reset_password_token", unique: true
   add_index "groups", ["subdomain"], name: "index_groups_on_subdomain", unique: true
 
-<<<<<<< HEAD
-  create_table "joining_details", force: :cascade do |t|
-    t.integer  "employee_id"
-    t.string   "joining_date"
-    t.string   "reffernce_from"
-    t.string   "admin_hr"
-    t.string   "tech_hr"
-    t.string   "designation"
-    t.string   "ctc"
-    t.string   "account_no"
-    t.integer  "employee_grade_id"
-    t.date     "confirmation_date"
-    t.string   "status"
-    t.string   "probation_period"
-    t.string   "notice_period"
-    t.string   "medical_schem"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
-  end
-
-  add_index "joining_details", ["employee_grade_id"], name: "index_joining_details_on_employee_grade_id"
-  add_index "joining_details", ["employee_id"], name: "index_joining_details_on_employee_id"
-
-  create_table "leav_requests", force: :cascade do |t|
-    t.integer  "leav_type_id"
-    t.integer  "employee_id"
-    t.string   "available_leaves"
-    t.string   "leave"
-    t.datetime "date_from"
-    t.datetime "date_to"
-    t.string   "no_of_days"
-    t.text     "reason"
-    t.date     "applied_on"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-  end
-
-  add_index "leav_requests", ["employee_id"], name: "index_leav_requests_on_employee_id"
-  add_index "leav_requests", ["leav_type_id"], name: "index_leav_requests_on_leav_type_id"
-
-  create_table "leav_types", force: :cascade do |t|
-    t.string   "leave_type"
-    t.string   "no_of_leave"
-    t.datetime "leave_expiry_date"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
-  end
-
-  create_table "members", force: :cascade do |t|
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
-    t.string   "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip"
-    t.string   "last_sign_in_ip"
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
-    t.integer  "account_id"
-    t.string   "account_type"
-  end
-
-  add_index "members", ["account_type", "account_id"], name: "index_members_on_account_type_and_account_id"
-  add_index "members", ["email"], name: "index_members_on_email", unique: true
-  add_index "members", ["reset_password_token"], name: "index_members_on_reset_password_token", unique: true
-
-  create_table "nationalities", force: :cascade do |t|
-    t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "qualifications", force: :cascade do |t|
-    t.integer  "employee_id"
-    t.string   "ssc"
-    t.string   "ssc_from"
-    t.string   "ssc_marks"
-    t.integer  "ssc_year"
-    t.string   "ssc_bord"
-    t.string   "deploma"
-    t.string   "deploma_from"
-    t.string   "deploma_marks"
-    t.integer  "deploma_year"
-    t.string   "deploma_university"
-    t.string   "hsc"
-    t.string   "hsc_from"
-    t.string   "hsc_marks"
-    t.integer  "hsc_year"
-    t.string   "hsc_bord"
-    t.string   "ug"
-    t.string   "ug_from"
-    t.string   "ug_marks"
-    t.integer  "ug_year"
-    t.string   "ug_university"
-    t.string   "pg"
-    t.string   "pg_from"
-    t.string   "pg_marks"
-    t.integer  "pg_yaer"
-    t.string   "pg_university"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
-  end
-
-  add_index "qualifications", ["employee_id"], name: "index_qualifications_on_employee_id"
-
-  create_table "skillsets", force: :cascade do |t|
-    t.integer  "employee_id"
-    t.string   "name"
-    t.string   "skill_level"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-  end
-
-  add_index "skillsets", ["employee_id"], name: "index_skillsets_on_employee_id"
-
-=======
   create_table "holidays", force: :cascade do |t|
     t.string   "code"
     t.string   "name"
@@ -1807,7 +1683,7 @@ ActiveRecord::Schema.define(version: 20170124064504) do
     t.date     "holiday_date"
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
-    t.boolean  "isweekend"
+    t.boolean  "is_taken"
     t.boolean  "is_send",      default: false
   end
 
@@ -1886,6 +1762,18 @@ ActiveRecord::Schema.define(version: 20170124064504) do
   end
 
   add_index "instalments", ["advance_salary_id"], name: "index_instalments_on_advance_salary_id"
+
+  create_table "insurance_masters", force: :cascade do |t|
+    t.boolean  "is_insurance"
+    t.decimal  "percentage"
+    t.string   "base_component"
+    t.date     "effective_from"
+    t.date     "effective_to"
+    t.boolean  "is_active"
+    t.boolean  "is_confirm"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
 
   create_table "interview_analyses", force: :cascade do |t|
     t.integer  "vacancy_request_history_id"
@@ -1977,14 +1865,14 @@ ActiveRecord::Schema.define(version: 20170124064504) do
   add_index "interview_rounds", ["interview_type_id"], name: "index_interview_rounds_on_interview_type_id"
 
   create_table "interview_schedules", force: :cascade do |t|
-    t.integer  "employee_id"
-    t.string   "email_id"
     t.string   "candidate_name"
     t.date     "interview_date"
     t.string   "location"
     t.string   "post_title"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
+    t.string   "email_id"
+    t.integer  "employee_id"
     t.boolean  "is_confirm"
     t.integer  "selected_resume_id"
     t.string   "job_title"
@@ -2214,6 +2102,7 @@ ActiveRecord::Schema.define(version: 20170124064504) do
     t.boolean  "is_society_member"
     t.date     "retirement_date"
     t.integer  "reserved_category_id"
+    t.boolean  "is_da"
     t.boolean  "is_employeer_pf"
     t.boolean  "is_employeer_esic"
     t.boolean  "is_insurance"
@@ -2575,14 +2464,31 @@ ActiveRecord::Schema.define(version: 20170124064504) do
 
   add_index "overtime_salaries", ["employee_id"], name: "index_overtime_salaries_on_employee_id"
 
+  create_table "overtimes", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.date     "ot_date"
+    t.string   "ot_type"
+    t.string   "ot_total_hrs"
+    t.string   "total_production"
+    t.string   "normal_wages_rate"
+    t.string   "ot_wages_rate"
+    t.string   "ot_earning"
+    t.date     "paid_on_date"
+    t.text     "remarks"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
+  add_index "overtimes", ["employee_id"], name: "index_overtimes_on_employee_id"
+
   create_table "particular_leave_records", force: :cascade do |t|
     t.integer  "employee_id"
     t.integer  "employee_leav_request_id"
-    t.integer  "leav_category_id"
     t.datetime "leave_date"
     t.boolean  "is_full"
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
+    t.integer  "leav_category_id"
     t.boolean  "is_cancel_after_approve"
   end
 
@@ -2657,6 +2563,16 @@ ActiveRecord::Schema.define(version: 20170124064504) do
 
   add_index "performance_calendars", ["performance_activity_id"], name: "index_performance_calendars_on_performance_activity_id"
   add_index "performance_calendars", ["period_id"], name: "index_performance_calendars_on_period_id"
+
+  create_table "performance_periods", force: :cascade do |t|
+    t.string   "title"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.string   "description"
+    t.boolean  "is_open"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
 
   create_table "periods", force: :cascade do |t|
     t.string   "name"
@@ -2758,6 +2674,13 @@ ActiveRecord::Schema.define(version: 20170124064504) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.boolean  "is_confirm"
+  end
+
+  create_table "rating_masters", force: :cascade do |t|
+    t.integer  "code"
+    t.text     "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "ratings", force: :cascade do |t|
@@ -2868,6 +2791,7 @@ ActiveRecord::Schema.define(version: 20170124064504) do
     t.integer  "reporting_master_id"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
+    t.string   "vacancy_status"
   end
 
   add_index "reporting_masters_vacancy_masters", ["reporting_master_id"], name: "index_reporting_masters_vacancy_masters_on_reporting_master_id"
@@ -2924,6 +2848,15 @@ ActiveRecord::Schema.define(version: 20170124064504) do
     t.string   "base_component"
     t.boolean  "is_active"
     t.string   "is_persent"
+  end
+
+  create_table "reward_allocations", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
+    t.text     "description"
+    t.boolean  "status"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "reward_owners", force: :cascade do |t|
@@ -3199,8 +3132,18 @@ ActiveRecord::Schema.define(version: 20170124064504) do
     t.string   "esic_no"
     t.string   "pf_no"
     t.string   "uan_no"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.decimal  "cl_leave"
+    t.decimal  "cl_balance"
+    t.decimal  "el_leave"
+    t.decimal  "el_balance"
+    t.decimal  "coff_leave"
+    t.decimal  "coff_balance"
+    t.decimal  "advance_leave"
+    t.decimal  "advance_balance"
+    t.decimal  "lwp_leave"
+    t.decimal  "esic_leave"
   end
 
   add_index "slip_informations", ["cost_center_id"], name: "index_slip_informations_on_cost_center_id"
@@ -3482,19 +3425,22 @@ ActiveRecord::Schema.define(version: 20170124064504) do
     t.text     "description"
     t.date     "vacancy_post_date"
     t.string   "budget"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
     t.integer  "department_id"
-    t.integer  "company_location_id"
     t.integer  "employee_designation_id"
+    t.integer  "company_location_id"
     t.integer  "degree_id"
+    t.string   "experience"
+    t.string   "keyword"
+    t.string   "others"
+    t.string   "other_organization"
+    t.string   "industry"
     t.integer  "degree_1_id"
     t.integer  "degree_2_id"
     t.integer  "reporting_master_id"
-    t.integer  "employee_id"
-    t.string   "other_organization"
-    t.string   "industry"
     t.string   "current_status"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.integer  "employee_id"
     t.text     "justification"
   end
 
@@ -3620,5 +3566,4 @@ ActiveRecord::Schema.define(version: 20170124064504) do
     t.boolean  "is_confirm"
   end
 
->>>>>>> 52c2ae700bd6c0b25a19737f2ed16224b8480563
 end

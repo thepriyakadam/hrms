@@ -43,7 +43,9 @@ gem 'prawn', '~> 1.3.0'
 gem 'pdfkit', '~> 0.8.2'
 # Provides binaries for WKHTMLTOPDF project in an easily accessible package.
 
-gem 'wicked_pdf', '~> 1.0', '>= 1.0.6'
+# gem 'wicked_pdf', '~> 1.0', '>= 1.0.6'
+
+gem 'wicked_pdf', '~> 1.1'
 
 gem 'wkhtmltopdf-binary', '~> 0.9.9.3'
 
@@ -60,22 +62,22 @@ gem 'best_in_place', '~> 3.0.1'
 # gem 'capistrano-rails', group: :development
 
 group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug'
-  gem 'cucumber-rails', :require => false
-  # database_cleaner is not required, but highly recommended
-  gem 'database_cleaner'
+	# Call 'byebug' anywhere in the code to stop execution and get a debugger console
+	gem 'byebug'
+	gem 'cucumber-rails', :require => false
+	# database_cleaner is not required, but highly recommended
+	gem 'database_cleaner'
 end
 
 group :development do
-  # Access an IRB console on exception pages or by using <%= console %> in views
-  gem 'web-console', '~> 2.0'
-  # Rails console table print
-  gem 'table_print'
-  gem 'wirble'
-  gem 'hirb'
-  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem 'spring'
+	# Access an IRB console on exception pages or by using <%= console %> in views
+	gem 'web-console', '~> 2.0'
+	# Rails console table print
+	gem 'table_print'
+	gem 'wirble'
+	gem 'hirb'
+	# Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
+	gem 'spring'
 end
 
 # Authentication and authorization

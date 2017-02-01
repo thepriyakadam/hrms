@@ -171,7 +171,7 @@ class AdvanceSalariesController < ApplicationController
           @advance_salaries = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
         end
       elsif current_user.role.name == 'HOD'
-        @salaryslips = Salaryslip.where(department_id: current_user.department_id)
+        @advance_salaries = AdvanceSalary.where(department_id: current_user.department_id)
       elsif current_user.role.name == 'Superviser'
       elsif current_user.role.name == 'Employee'
       end

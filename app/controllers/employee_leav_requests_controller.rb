@@ -395,9 +395,18 @@ class EmployeeLeavRequestsController < ApplicationController
           @employee_leav_requests = EmployeeLeavRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees)
         else 
           @employees = Employee.where(company_id: @company_id.to_i,company_location_id: @location.to_i,department_id: @department.to_i).pluck(:id)
-          @salaryslips = Salaryslip.where(month:  @month,year: @year.to_s,employee_id: @employees)
+          @employee_leav_requests = EmployeeLeavRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees)
         end
       elsif current_user.role.name == 'Supervisor'
+        if @company_id == "" || @location == "" || @department == ""
+          @emp = Employee.find(current_user.employee_id)
+          @employees = @emp.subordinates
+          @employee_leav_requests = EmployeeLeavRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees)
+       else
+          @emp = Employee.find(current_user.employee_id)
+          @employees = @emp.subordinates
+          @employee_leav_requests = EmployeeLeavRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime).where(employee_id: @employees)
+        end
       elsif current_user.role.name == 'Employee'
       end #current_user.role
     end #current_user.class
@@ -504,6 +513,15 @@ class EmployeeLeavRequestsController < ApplicationController
           @employee_leav_requests = EmployeeLeavRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime,current_status: @current_status).where(employee_id: @employees)
         end
       elsif current_user.role.name == 'Supervisor'
+        if @company_id == "" || @location == "" || @department == ""
+          @emp = Employee.find(current_user.employee_id)
+          @employees = @emp.subordinates
+          @employee_leav_requests = EmployeeLeavRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime,current_status: @current_status).where(employee_id: @employees)
+       else
+          @emp = Employee.find(current_user.employee_id)
+          @employees = @emp.subordinates
+          @employee_leav_requests = EmployeeLeavRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime,current_status: @current_status).where(employee_id: @employees)
+        end
       elsif current_user.role.name == 'Employee'
       end #current_user.role
     end #current_user.class

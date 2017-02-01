@@ -10,8 +10,10 @@
     div.nobreak{ page-break-inside: avoid;
     }
 </style>
-<table style="border-collapse: collapse; font-size:20pt;" border=1 width=900 cellpadding="25">
+<table style="border-collapse: collapse; font-size:9pt;" border=1 width=1200 cellpadding="10" >
      <thead>
+      <tr><td colspan="12"><center><strong><%= current_user.employee.company_location.company.try(:description) %></strong> <br>
+        <%= current_user.employee.company_location.company.try(:address) %><br> <%= current_user.employee.department.try(:name) %>
       <tr>
         <th>Support ID</th>
         <th>Support</th>

@@ -3,23 +3,26 @@
   <div class="row">
     <div class="col-sm-3">
       <div class="form-group required">
-        <%= f.text_field :code,hide_label:true, placeholder: 'Code' %>
+        <%= f.text_field :code,label:true, placeholder: 'Code' %>
       </div>
     </div>
 
     <div class="col-sm-3">
+    <label>Salary Component Name</label>
       <div class="form-group required">
         <%= f.text_field :name,hide_label:true, placeholder: 'Salary Component Name' %>
       </div>
     </div>
 
     <div class="col-sm-3">
+    <label>Salary Component Description</label>
       <div class="form-group">
         <%= f.text_field :description,hide_label:true, placeholder: 'Salary Component Description' %>
       </div>
     </div>
 
     <div class="col-sm-3">
+    <label>Account Code</label>
       <div class="form-group">
         <%= f.text_field :account_code,hide_label:true, placeholder: 'Account Code' %>
       </div>

@@ -1014,14 +1014,12 @@ require 'roo'
 #  end
 
 ex = Roo::Excel.new("#{Rails.root}/public/joining_detail_report.xls")
-# ex = Roo::Excel.new("D:/hrms/public/joining_detail_report.xls")
 ex.default_sheet = ex.sheets[1] #siya feb
 i = 1
 ActiveRecord::Base.transaction do
 2.upto(169) do |line| # siya Feb 2016
  puts "Starting Record #{ex.cell(line,'B')}---------------------------------------"
  @employee = Employee.where(manual_employee_code: ex.cell(line,'B').to_i).pluck(:id)
- # @emp_leav_bal = EmployeeLeavBalance.where(employee_id: @employee,leav_category_id: 2).pluck(:id)
  puts "#{i} Record inserting.----------------------------"
  JoiningDetail.where(id: @employee).update_all(is_employeer_pf: ex.cell(line,'I').to_s,select_pf: ex.cell(line,'J').to_s,employee_pf_no: ex.cell(line,'K').to_s)
  puts "#{i} Record inserted.-----------------------------------------------"

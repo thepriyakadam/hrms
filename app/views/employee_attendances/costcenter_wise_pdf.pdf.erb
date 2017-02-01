@@ -1,6 +1,9 @@
        <table style="border-collapse: collapse; font-size:10pt;" border=1 width=1100 cellpadding="20"> 
+       <% s = 0 %>
         <thead>
           <tr>
+            <th>Sr. No.</th>
+            <th>ID</th>
             <th>Name</th>
             <th>Cost Center</th>
             <% for i in 1..@day %>
@@ -9,8 +12,9 @@
             <th colspan="13"> Total </th>
           </tr>
           <tr>
-            <th>Day</th>
-            <th></th>
+
+            <th colspan="4">Day</th>
+            
               <% @start_date.step(@end_date).each do |l| %>
                 <th><%= l.strftime("%a") %></th>
               <%end%>
@@ -34,6 +38,8 @@
           <% @employees.each do |e| %>
  
             <tr>
+              <td><%= s = s + 1 %></td>
+              <td><%= e.employee.manual_employee_code %></td>
               <td><%= full_name(e.employee) %></td>
               <td><%= e.employee.try(:joining_detail).try(:cost_center).try(:name) %></td>
               <% sorted_exists = calculate_attendance(@date, exist, e)%>

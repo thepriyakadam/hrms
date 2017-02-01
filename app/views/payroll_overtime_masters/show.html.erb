@@ -1,29 +1,36 @@
-<p id="notice"><%= notice %></p>
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Payroll Overtime Master</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
 
-<p>
-  <strong>Is payroll:</strong>
-  <%= @payroll_overtime_master.is_payroll %>
-</p>
+  <tr>
+  <th><strong>Base Component</strong></th>
+   <td colspan="3"> <% i = 0 %>
+          <% @payroll_overtime_master.base_component.split(",").each do |e| %>
+            <% if i == 0 %>
+              <%= SalaryComponent.find(e.to_i).name %>
+            <% else %>
+              + <%= SalaryComponent.find(e.to_i).name %>
+            <% end %>
+            <% i = i + 1 %>
+          <% end %>
+      </td>
+  
+</tr>
+<tr>
+  <th><strong>Rate</strong></th>
+   <td><%= @payroll_overtime_master.rate %></td>
 
-<p>
-  <strong>Base component:</strong>
-  <%= @payroll_overtime_master.base_component %>
-</p>
+     <th><strong>Is payroll</strong></th>
+  <td><%= @payroll_overtime_master.is_payroll %></td>
 
-<p>
-  <strong>Rate:</strong>
-  <%= @payroll_overtime_master.rate %>
-</p>
+</tr>
 
-<p>
-  <strong>Is active:</strong>
-  <%= @payroll_overtime_master.is_active %>
-</p>
-
-<p>
-  <strong>Is confirm:</strong>
-  <%= @payroll_overtime_master.is_confirm %>
-</p>
-
-<%= link_to 'Edit', edit_payroll_overtime_master_path(@payroll_overtime_master) %> |
-<%= link_to 'Back', payroll_overtime_masters_path %>
+<tr>
+    <th><strong>Status</strong></th>
+   <td colspan="3"><%= @payroll_overtime_master.is_active ? "Active" : "Inactive" %></td>
+</tr>
+</table><br>
+ <%= link_to 'Back', new_payroll_overtime_master_path,class: 'btn btn-default btn-sm fa fa-arrow-left'  %>

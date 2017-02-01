@@ -330,9 +330,9 @@ class EmployeeLeavRequestsController < ApplicationController
   end
   
   def request_report
-    @start_date = params[:employee_leav_request] ? params[:employee_leav_request][:start_date] : params[:start_date]
-    @end_date = params[:employee_leav_request] ? params[:employee_leav_request][:end_date] : params[:end_date]
-    @company_id = params[:employee_leav_request] ? params[:employee_leav_request][:company_id] : params[:company_id]
+    @start_date = params[:employee] ? params[:employee][:start_date] : params[:start_date]
+    @end_date = params[:employee] ? params[:employee][:end_date] : params[:end_date]
+    @company_id = params[:employee] ? params[:employee][:company_id] : params[:company_id]
     @location = params[:employee] ? params[:employee][:company_location_id] : params[:company_location_id]
     @department = params[:employee] ? params[:employee][:department_id] : params[:department_id]
   
@@ -423,12 +423,12 @@ class EmployeeLeavRequestsController < ApplicationController
   end
 
   def status_wise_request
-    @start_date = params[:employee_leav_request] ? params[:employee_leav_request][:start_date] : params[:start_date]
-    @end_date = params[:employee_leav_request] ? params[:employee_leav_request][:end_date] : params[:end_date]
-    @company = params[:employee_leav_request] ? params[:employee_leav_request][:company_id] : params[:company_id]
+    @start_date = params[:employee] ? params[:employee][:start_date] : params[:start_date]
+    @end_date = params[:employee] ? params[:employee][:end_date] : params[:end_date]
+    @company = params[:employee] ? params[:employee][:company_id] : params[:company_id]
     @location = params[:employee] ? params[:employee][:company_location_id] : params[:company_location_id]
     @department = params[:employee] ? params[:employee][:department_id] : params[:department_id]
-    @status = params[:employee_leav_request] ? params[:employee_leav_request][:current_status] : params[:current_status]
+    @status = params[:employee] ? params[:employee][:current_status] : params[:current_status]
     
     if @status == "Pending"
       @current_status = 0
@@ -503,6 +503,8 @@ class EmployeeLeavRequestsController < ApplicationController
           @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i,department_id: @department.to_i).pluck(:id)
           @employee_leav_requests = EmployeeLeavRequest.where(start_date: @start_date.to_datetime..@end_date.to_datetime,current_status: @current_status).where(employee_id: @employees)
         end
+      elsif current_user.role.name == 'Supervisor'
+      elsif current_user.role.name == 'Employee'
       end #current_user.role
     end #current_user.class
 

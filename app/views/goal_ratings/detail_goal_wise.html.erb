@@ -1,7 +1,8 @@
 <div class="box box-default">
   <div class="box-body">
     <div class="pull-right">
-      <%= link_to 'Print Report', print_goal_wise_goal_ratings_path(format: 'pdf',period_id: @period.id ),class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+      <%= link_to 'Back',employee_goal_wise_goal_ratings_path,class: 'btn btn-sm btn-default fa fa-arrow-left'%>
+      <%= link_to 'Print PDF', print_goal_wise_goal_ratings_path(format: 'pdf',period_id: @period.id ),class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
       <%= link_to " Print excel ",detail_goal_wise_xls_goal_ratings_path(format: "xls",period_id: @period.id), class: "btn btn-xl btn-primary fa fa-print", :target => "_blank" %>
     </div>
     <h6><center>Performance Report for Period: <%= @period.name %> From: <%= @period.from %> To: <%= @period.to %></center></h6>

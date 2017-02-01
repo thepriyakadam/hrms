@@ -8,18 +8,11 @@
     <th>PDF</th>
     <th><%= link_to ' Basic Detail', selected_employee_pdf_employees_path(format: 'pdf',employee_id: @employee_id ),class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %></th>
 
-
      <th><%= link_to 'On Boarding ', selected_on_boarding_pdf_employees_path(format: 'pdf',employee_id: @employee_id ),class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %></th>
-
     
-
      <th><%= link_to 'Bank ', selected_bank_pdf_employees_path(format: 'pdf',employee_id: @employee_id ),class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %></th>
 
-    
-
       <th><%= link_to 'Qualification ', selected_qualification_pdf_employees_path(format: 'pdf',employee_id: @employee_id ),class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %></th>
-
-    
 
      <th><%= link_to 'Experience ', selected_experience_pdf_employees_path(format: 'pdf',employee_id: @employee_id ),class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %></th>
     </tr>

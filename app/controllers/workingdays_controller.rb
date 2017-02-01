@@ -93,75 +93,89 @@ class WorkingdaysController < ApplicationController
         @workingdays = Workingday.where(year: params[:year], month_name: params[:month], employee_id: current_user.employee_id)
       end
     end
-  end
 
-  def workingday_xls
-    @year = params[:year]
-    @month = params[:month]
-    @workingday = Workingday.where(year: params[:year],month_name: params[:month])
-    if current_user.class == Group
-      @workingdays = Workingday.where(year: params[:year], month_name: params[:month])
-    else
-      if current_user.role.name == 'GroupAdmin'
-        @workingdays = Workingday.where(year: params[:year], month_name: params[:month])
-      elsif current_user.role.name == 'Admin'
-        @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
-        @workingdays = Workingday.where(year: params[:year], month_name: params[:month], employee_id: @employees)
-      elsif current_user.role.name == 'Branch'
-        @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
-        @workingdays = Workingday.where(year: params[:year], month_name: params[:month], employee_id: @employees)
-      elsif current_user.role.name == 'HOD'
-        @employees = Employee.where(department_id: current_user.department_id).pluck(:id)
-        @workingdays = Workingday.where(year: params[:year], month_name: params[:month], employee_id: @employees)
-      elsif current_user.role.name == 'Employee'
-        @workingdays = Workingday.where(year: params[:year], month_name: params[:month], employee_id: current_user.employee_id)
+    respond_to do |f|
+      f.js
+      f.xls {render template: 'workingdays/workingday.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'show_datewise_employee',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'workingdays/workingday.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
       end
-    end
-    respond_to do |format|
-      format.xls {render template: 'workingdays/workingday.xls.erb'}
     end
   end
 
-  def workingday_pdf
-    @year = params[:year]
-    @month = params[:month]
-    @workingday = Workingday.where(year: params[:year],month_name: params[:month])
-    if current_user.class == Group
-      @workingdays = Workingday.where(year: params[:year], month_name: params[:month])
-    else
-      if current_user.role.name == 'GroupAdmin'
-        @workingdays = Workingday.where(year: params[:year], month_name: params[:month])
-      elsif current_user.role.name == 'Admin'
-        @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
-        @workingdays = Workingday.where(year: params[:year], month_name: params[:month], employee_id: @employees)
-      elsif current_user.role.name == 'Branch'
-        @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
-        @workingdays = Workingday.where(year: params[:year], month_name: params[:month], employee_id: @employees)
-      elsif current_user.role.name == 'HOD'
-        @employees = Employee.where(department_id: current_user.department_id).pluck(:id)
-        @workingdays = Workingday.where(year: params[:year], month_name: params[:month], employee_id: @employees)
-      elsif current_user.role.name == 'Employee'
-        @workingdays = Workingday.where(year: params[:year], month_name: params[:month], employee_id: current_user.employee_id)
-      end
-    end
-    respond_to do |format|
-    format.json
-    format.pdf do
-      render pdf: 'workingday',
-            layout: 'pdf.html',
-            orientation: 'Landscape',
-            template: 'workingdays/workingday.pdf.erb',
-            # show_as_html: params[:debug].present?,
-            :page_height      => 1000,
-            :dpi              => '300',
-            :margin           => {:top    => 10, # default 10 (mm)
-                          :bottom => 10,
-                          :left   => 20,
-                          :right  => 20},
-            :show_as_html => params[:debug].present?
-          end
-       end
-  end
+  # def workingday_xls
+  #   @year = params[:year]
+  #   @month = params[:month]
+  #   @workingday = Workingday.where(year: params[:year],month_name: params[:month])
+  #   if current_user.class == Group
+  #     @workingdays = Workingday.where(year: params[:year], month_name: params[:month])
+  #   else
+  #     if current_user.role.name == 'GroupAdmin'
+  #       @workingdays = Workingday.where(year: params[:year], month_name: params[:month])
+  #     elsif current_user.role.name == 'Admin'
+  #       @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
+  #       @workingdays = Workingday.where(year: params[:year], month_name: params[:month], employee_id: @employees)
+  #     elsif current_user.role.name == 'Branch'
+  #       @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+  #       @workingdays = Workingday.where(year: params[:year], month_name: params[:month], employee_id: @employees)
+  #     elsif current_user.role.name == 'HOD'
+  #       @employees = Employee.where(department_id: current_user.department_id).pluck(:id)
+  #       @workingdays = Workingday.where(year: params[:year], month_name: params[:month], employee_id: @employees)
+  #     elsif current_user.role.name == 'Employee'
+  #       @workingdays = Workingday.where(year: params[:year], month_name: params[:month], employee_id: current_user.employee_id)
+  #     end
+  #   end
+  #   respond_to do |format|
+  #     format.xls {render template: 'workingdays/workingday.xls.erb'}
+  #   end
+  # end
+
+  # def workingday_pdf
+  #   @year = params[:year]
+  #   @month = params[:month]
+  #   @workingday = Workingday.where(year: params[:year],month_name: params[:month])
+  #   if current_user.class == Group
+  #     @workingdays = Workingday.where(year: params[:year], month_name: params[:month])
+  #   else
+  #     if current_user.role.name == 'GroupAdmin'
+  #       @workingdays = Workingday.where(year: params[:year], month_name: params[:month])
+  #     elsif current_user.role.name == 'Admin'
+  #       @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
+  #       @workingdays = Workingday.where(year: params[:year], month_name: params[:month], employee_id: @employees)
+  #     elsif current_user.role.name == 'Branch'
+  #       @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
+  #       @workingdays = Workingday.where(year: params[:year], month_name: params[:month], employee_id: @employees)
+  #     elsif current_user.role.name == 'HOD'
+  #       @employees = Employee.where(department_id: current_user.department_id).pluck(:id)
+  #       @workingdays = Workingday.where(year: params[:year], month_name: params[:month], employee_id: @employees)
+  #     elsif current_user.role.name == 'Employee'
+  #       @workingdays = Workingday.where(year: params[:year], month_name: params[:month], employee_id: current_user.employee_id)
+  #     end
+  #   end
+  #   respond_to do |format|
+  #   format.json
+  #   format.pdf do
+  #     render pdf: 'workingday',
+  #           layout: 'pdf.html',
+  #           orientation: 'Landscape',
+  #           template: 'workingdays/workingday.pdf.erb',
+  #           # show_as_html: params[:debug].present?,
+  #           :page_height      => 1000,
+  #           :dpi              => '300',
+  #           :margin           => {:top    => 10, # default 10 (mm)
+  #                         :bottom => 10,
+  #                         :left   => 20,
+  #                         :right  => 20},
+  #           :show_as_html => params[:debug].present?
+  #         end
+  #      end
+  # end
 
   def import_workingday
     @workingdays = Workingday.all
@@ -284,8 +298,6 @@ class WorkingdaysController < ApplicationController
   end
 
    def is_confirm_workingday
-
-    # @employee = Employee.find(params[:id])
      @workingday_ids = params[:workingday_ids]
     if @workingday_ids.nil?
       flash[:alert] = "Please Select the Checkbox"

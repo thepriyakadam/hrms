@@ -99,16 +99,22 @@
                 <% aesic = esic.count + (pesic.count)/2.to_f %>
                 <%= aesic %>
               </td>
-              <td><%= ap + wd.count + h.count + ael + acl + acoff + aal + aod %></td>
+              <td>
+                <% if e.employee.try(:joining_detail).try(:employee_category).try(:name) == 'Worker' %>
+                  <%= ap + h.count + ael + acl + acoff + aal + aod %>
+                <% else %>
+                  <%= ap + wd.count + h.count + ael + acl + acoff + aal + aod %>
+                <% end %>
+              </td>
               <td><%= gp.count %></td>
             </tr> 
           <%end%>
         </tbody>
       </table>
 
-      <%= link_to " Excel Report ",attendance_total_xls_employee_attendances_path(month: params[:month], year: params[:year], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+      <%= link_to " Excel Report ",display_total_employee_attendances_path(month: params[:month], year: params[:year], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
       
-       <%= link_to " Print Report ",attendance_total_pdf_employee_attendances_path(month: params[:month], year: params[:year], format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+       <%= link_to " Print Report ",display_total_employee_attendances_path(month: params[:month], year: params[:year], format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
   <!-- </div>
 </div> -->
 

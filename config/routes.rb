@@ -389,8 +389,8 @@ end
       get :monthly_attendance
       get :costcenter_wise_attendance
       get :show_costcenter_wise_attendance
+      post :show_costcenter_wise_attendance
       post :display_attendance
-      # get :display_attendance_1
       get :revert_attendance_employeewise
       post :show_employee_list
       post :destroy_attendance_employeewise
@@ -399,6 +399,7 @@ end
       get :employee_attendances_list
       get :calculate_attendance
       get :display_total
+      post :display_total
       get :attendance_total_xls
       get :emp_attendance
       get :display_attendance_2
@@ -418,6 +419,7 @@ end
       get :select_date_department_form
       post :show_departmntwise_employee
       get :show_departmntwise_employee
+      post :show_departmntwise_employee
       get :department_wise_pdf
       get :department_wise_xls
       get :select_date_present_form
@@ -1479,6 +1481,7 @@ end
       get :generate_workingday_xls
       post :is_confirm_workingday
       get :display_workingday
+      post :display_workingday
       get :workingday_xls
       get :workingday_pdf
       get :import_workingday
@@ -1824,10 +1827,10 @@ end
       get :ajax_employee_document_detail
       get :ajax_new_employee_document
       get :collect_company_location
+      get :collect_company_location_dropdown_with_label
       get :collect_department
       get :display_emp_code_master
       post :update_mgr
-      get :collect_company_loc
       get :index_xls
       get :basic_info_company_wise
       post :employee_basic_info

@@ -176,6 +176,20 @@ class AdvanceSalariesController < ApplicationController
       elsif current_user.role.name == 'Employee'
       end
     end
+
+    respond_to do |f|
+      f.js
+      f.xls {render template: 'advance_salaries/advance_salary_xls.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'show_employee_detail',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'advance_salaries/advance_salary_pdf.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+      end
+    end
    end
 
    def advance_salary_xls

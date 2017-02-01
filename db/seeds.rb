@@ -1023,7 +1023,7 @@ ActiveRecord::Base.transaction do
  @employee = Employee.where(manual_employee_code: ex.cell(line,'B').to_i).pluck(:id)
  # @emp_leav_bal = EmployeeLeavBalance.where(employee_id: @employee,leav_category_id: 2).pluck(:id)
  puts "#{i} Record inserting.----------------------------"
- JoiningDetail.where(id: @employee).update_all(is_employeer_pf: ex.cell(line,'I'),select_pf: ex.cell(line,'J').to_s,employee_pf_no: ex.cell(line,'K').to_s)
+ JoiningDetail.where(id: @employee).update_all(is_employeer_pf: ex.cell(line,'I').to_s,select_pf: ex.cell(line,'J').to_s,employee_pf_no: ex.cell(line,'K').to_s)
  puts "#{i} Record inserted.-----------------------------------------------"
  i += 1
  end

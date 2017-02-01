@@ -171,9 +171,23 @@ class AdvanceSalariesController < ApplicationController
           @advance_salaries = AdvanceSalary.where("strftime('%m/%Y', advance_date) = ?", date.strftime('%m/%Y')).where(employee_id: @employees)
         end
       elsif current_user.role.name == 'HOD'
-        @salaryslips = Salaryslip.where(department_id: current_user.department_id)
+        @advance_salaries = AdvanceSalary.where(department_id: current_user.department_id)
       elsif current_user.role.name == 'Superviser'
       elsif current_user.role.name == 'Employee'
+      end
+    end
+
+    respond_to do |f|
+      f.js
+      f.xls {render template: 'advance_salaries/advance_salary_xls.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'show_employee_detail',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'advance_salaries/advance_salary_pdf.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
       end
     end
    end

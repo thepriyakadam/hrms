@@ -1,0 +1,99 @@
+<div class="box">
+  <div class="box-header">
+ </div>
+<div class="box-body">
+ <table class="table table-bordered table-hover table-condensed">
+
+    <table class="table table-bordered table-hover table-condensed">
+      <thead>
+       <tr>
+      <td colspan="3">
+        <center><strong><%= @employee.company_location.company.try(:description) %></strong><br><%= @employee.company_location.try(:address) %>, <%= @employee.company_location.try(:name) %>.  </center>
+      </td>           
+    </tr>
+    <tr>
+      <td>Employee ID : <%= @employee.manual_employee_code%> </td>
+      <td>Designation : <%= @employee.joining_detail.try(:employee_designation).name %> </td>  
+      <td>PF No. : <%= @employee.joining_detail.try(:employee_pf_no) %> </td>   
+    </tr>
+     <tr>
+      <td>Employee Name : <%= full_name(@employee) %> </td>
+      <td>Department : <%= @employee.department.try(:name) %> </td>  
+      <td>UAN No. : <%= @employee.joining_detail.try(:employee_uan_no) %> </td>   
+    </tr>
+     <tr>
+      <td>Pay Period :  <%= @salaryslip.month%> - <%= @salaryslip.year%></td>
+      <td>Location : <%= @employee.company_location.try(:name) %></td>  
+      <td>Working Days : <%= @working_day.try(:day_in_month) %> - Paid Days : <%= @working_day.try(:payable_day) %> </td>   
+    </tr>
+  </thead>
+ </table><br>
+
+ <div class="row">
+  <div class="col-sm-6">
+    <table class="table table-bordered table-hover table-condensed">
+      <thead>
+        <tr>
+          <th>Earning</th>
+          <th>Actual Amount</th>
+          <th>Calculated Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @addable_salary_components.each do |item| %>
+          <tr>
+            <td><%= item.salary_component.name %></td>
+            <td align="right"><%= item.actual_amount.round %></td>
+            <td align="right"><%= item.calculated_amount.round %></td>
+          </tr>
+        <% end %>
+        <tr>
+          <td><strong>Total Gross</strong></td>
+          <td align="right"><strong><%= @salaryslip.actual_gross_salary.round %></strong></td>
+          <td align="right"><strong><%= @salaryslip.calculated_gross_salary.round %></strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-sm-6">
+    <table class="table table-bordered table-hover table-condensed">
+      <thead>
+        <tr>
+          <th>Deduction</th>
+          <th>Actual Amount</th>
+          <th>Calculated Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @deducted_salary_components.each do |item| %>
+          <tr>
+            <% unless item.salary_component_id.nil? %>
+              <td><%= item.salary_component.name %></td>
+              <td align="right"><%= item.actual_amount.round %></td>
+              <td align="right"><%= item.calculated_amount.round %></td>
+            <%else%>
+              <td><%= item.other_component_name %></td>
+              <td align="right"><%= item.actual_amount.round %></td>
+              <td align="right"><%= item.calculated_amount.round %></td>
+            <%end%>
+          </tr>
+        <% end %>
+        <tr>
+          <td><strong>Total Deduction</strong></td>
+          <td align="right"><strong><%= @salaryslip.actual_total_deduction.round %></strong></td>
+          <td align="right"><strong><%= @salaryslip.calculated_total_deduction.round %></strong></td>
+        </tr>
+      </tbody>
+
+    </table>
+  </div>
+</div>
+<table class="table table-bordered table-hover table-condensed">
+        <tr>
+          <td><strong>Net Salary</strong></td>
+          <td align="right"><strong><%= @salaryslip.actual_net_salary.round %></strong></td>
+          <td align="right"><strong><%= @salaryslip.calculated_net_salary.round %></strong></td>
+        </tr>
+    </table>
+    </table>
+</div>

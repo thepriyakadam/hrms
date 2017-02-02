@@ -1,6 +1,10 @@
 
 <div class="box-body">
 
+<% if @travel_request_id == nil %>
+     <center><strong><p class="text-primary"> Selected Employee Travel Request Report Not Available - <%= full_name(@employee) %></strong></p></center>
+   <% else %>
+
     <% @travel_requests.each do |travel_request| %>
   <table id="example" class="table table-bordered table-hover table-condensed">
     <% @daily_bill_detail = DailyBillDetail.where(travel_request_id: travel_request) %>
@@ -77,4 +81,5 @@
  <%= link_to " Excel Report ",print_travel_request_employee_name_report_travel_requests_path(employee_id: params[:travel_request][:employee_id], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
  
 <%= link_to " Print Report ",print_travel_request_employee_name_report_travel_requests_path(employee_id: params[:travel_request][:employee_id],format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
-</div>                                     
+</div> 
+ <% end %>                                    

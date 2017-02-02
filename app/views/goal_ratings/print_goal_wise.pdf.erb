@@ -13,7 +13,7 @@ div.nobreak{ page-break-inside: avoid;
 </style>
 <div>
     <% i=0%>
-  <% @employees.each do |e| %>
+  <% @goal_bunches.each do |e| %>
   <% employee = Employee.find(e.employee_id) %>
   <% @joining_detail = JoiningDetail.find_by_employee_id(e.employee_id) %>
   <% @experiences = Experience.where(employee_id: e.employee_id) %>
@@ -22,11 +22,6 @@ div.nobreak{ page-break-inside: avoid;
   <% @goal_ratings = GoalRating.where(appraisee_id: e.employee_id, goal_bunch_id: e.id, goal_type: 'Goal') %>
   <% @goal_attribute_ratings = GoalRating.where("goal_bunch_id = ? AND goal_type = ?", e.id ,'Attribute') %>
   <% @goal_bunches = GoalBunch.where(employee_id: e.employee_id, id: e.id).group(:employee_id) %>
-
-<!-- <table style="border-collapse: collapse; font-size:10pt;" border=1 width=1200 class="table table-bordered table-hover">    
-  <thead>
-</thead>
-</table> -->
 
 <table style="border-collapse: collapse; font-size:10pt;" border=1 width=1200 class="table table-bordered table-hover">    
   <thead>
@@ -267,6 +262,5 @@ div.nobreak{ page-break-inside: avoid;
       <% end %>
     </tbody>
   </table>
-</div>
 </div>
 <% end %>

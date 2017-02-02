@@ -17,7 +17,7 @@
       <tbody>
         <% @goal_bunches.each do |e| %>
         <tr>
-        <td><%= check_box_tag "employee_ids[]", e.employee_id %></td>
+        <td><%= check_box_tag "goal_bunch_ids[]", e.id %></td>
         <td><%= e.employee.manual_employee_code %></td>
         <td><%= e.employee.first_name %> <%= e.employee.middle_name %> <%= e.employee.last_name %> </td>
         <td><%= e.employee.company_location.try(:name) %> - <%= e.employee.department.try(:name) %></td> 

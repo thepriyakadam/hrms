@@ -207,7 +207,7 @@ class EmployeeLeavRequest < ActiveRecord::Base
                 else
                 EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: self.leav_category.code.to_s, count: 1, employee_leav_request_id: self.id,department_id: self.employee.try(:department_id))
                 end
-              end 
+              end #i==start_date
             elsif self.last_half == true
               if i == start_date
                 if self.is_there(i)
@@ -237,10 +237,10 @@ class EmployeeLeavRequest < ActiveRecord::Base
               else
               EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: self.leav_category.code.to_s, count: 1, employee_leav_request_id: self.id,department_id: self.employee.try(:department_id))
               end
-            end
-          end 
+            end #self.first_half
+          end #for i in
 
-        else
+        else #FULL DAY
           for i in self.start_date.to_date..self.start_date.to_date
             if self.is_there(i)
             else
@@ -248,7 +248,7 @@ class EmployeeLeavRequest < ActiveRecord::Base
             end
           end
         end
-      else
+      else # is_payable
         if self.leave_type == "Full Day"
           for i in self.start_date.to_date..self.end_date.to_date
             if self.is_there(i)
@@ -317,10 +317,10 @@ class EmployeeLeavRequest < ActiveRecord::Base
             EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: "P/"+self.leav_category.code.to_s, count: 0.5, employee_leav_request_id: self.id,department_id: self.employee.try(:department_id))
             end
           end
-        end
-      end
-    end
-  end
+        end #leave_type FULL DAY
+      end #is_payable
+    end #self.is_present
+  end #def
 
   def is_holiday?
     flag = 0
@@ -383,5 +383,5 @@ class EmployeeLeavRequest < ActiveRecord::Base
     end
     flag
   end
-
+  
 end

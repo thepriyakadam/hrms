@@ -46,14 +46,14 @@ Rails.application.configure do
   # config.action_mailer.perform_deliveries = true,
   ActionMailer::Base.delivery_method = :smtp
 
-  # ActionMailer::Base.smtp_settings = {
-  #   address: 'mail.bhandarigroup.in',
-  #   port: 25,
-  #   domain: '192.168.0.62',
-  #   user_name: 'hrmsdws-bhandarigroup',
-  #   password: 'hrms1234',
-  #   authentication: :plain
-  # }
+  ActionMailer::Base.smtp_settings = {
+    address: 'mail.bhandarigroup.in',
+    port: 25,
+    domain: '192.168.0.62',
+    user_name: 'hrmsdws-bhandarigroup',
+    password: 'hrms1234',
+    authentication: :plain
+  }
   
   # # Root url
   # config.action_mailer.default_url_options = { host: 'mail.bhandarigroup.in', port: 3000 }
@@ -104,15 +104,15 @@ Rails.application.configure do
  #  # config.action_mailer.perform_deliveries = true,
  #  ActionMailer::Base.delivery_method = :smtp
 
-  ActionMailer::Base.smtp_settings = {
-    address: 'smtp.gmail.com',
-    port: 25,
-    domain: 'imap.gmail.com',
-    authentication: :plain,
-    enable_starttls_auto: true,
-    user_name: 'ranna.p@amaazia.com',
-    password: 'rannahr@123'
-  }
+  # ActionMailer::Base.smtp_settings = {
+  #   address: 'smtp.gmail.com',
+  #   port: 25,
+  #   domain: 'imap.gmail.com',
+  #   authentication: :plain,
+  #   enable_starttls_auto: true,
+  #   user_name: 'ranna.p@amaazia.com',
+  #   password: 'rannahr@123'
+  # }
 
 # config.action_mailer.default_url_options = { :host => 'amaazia.com', port: 3000 }  
 # config.action_mailer.delivery_method = :smtp  

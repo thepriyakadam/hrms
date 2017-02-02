@@ -17,7 +17,7 @@
   <tbody>
     <% @professional_tax_masters.each do |professional_tax_master| %>
       <tr>
-      <td><%= professional_tax_master.company_location.company.try(:name) %> - <%= professional_tax_master.company_location.try(:name) %></td>
+      <td><%= professional_tax_master.company_location.try(:company).try(:name) %> - <%= professional_tax_master.company_location.try(:name) %></td>
         <td><%= professional_tax_master.min_amount %></td>
         <td><%= professional_tax_master.max_amount %></td>
         <td><%= professional_tax_master.for_month %></td>

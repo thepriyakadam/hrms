@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170131111613) do
+ActiveRecord::Schema.define(version: 20170202192113) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -3183,6 +3183,8 @@ ActiveRecord::Schema.define(version: 20170131111613) do
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
     t.text     "justification"
+    t.string   "experience"
+    t.text     "keyword"
   end
 
   add_index "vacancy_masters", ["company_location_id"], name: "index_vacancy_masters_on_company_location_id"

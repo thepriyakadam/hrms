@@ -11,56 +11,63 @@
       /* http://code.google.com/p/wkhtmltopdf/issues/detail?id=9#c21 */
     }
 </style>
+    <% i = 0%>
   <table style="border-collapse: collapse; font-size:8pt;" border=1 width=900 cellpadding="10">
     <thead>
-     <tr>
-      <td colspan = "3">
-        <center><strong><%= current_user.employee.company_location.company.description %></strong></center>
-      </td>
-      </tr>
-      <tr> 
-      <td>
-        <strong><%= @employee.manual_employee_code %></strong>
-      </td> 
-      <td colspan = "2">
-        <strong><%= @employee.first_name %> <%= @employee.middle_name %> <%= @employee.last_name %></strong>
-      </td>            
-      </tr>   
-    </thead>
-
-    <tbody>
-      <% @advance_salaries.each do |advance_salary| %>
-        <% @instalment = Instalment.where(advance_salary_id: advance_salary) %>
         <tr>
-        <th colspan = "3"><center> Advance </center></th>
+          <td colspan = "5">
+            <center><strong><%= @employee.company_location.company.description %></strong><br><%= @employee.company_location.address %>, <%= @employee.company_location.name %></center>
+          </td>
         </tr>
-       <tr>
-        <th>Advance Date</th>
-        <th>Advance Amount</th>
-        <th>Installment Amount</th>
-      </tr>
-
-        <tr>
-         <td><%= advance_salary.advance_date %></td>
-         <td><%= advance_salary.advance_amount %></td>
-         <td><%= advance_salary.instalment_amount %></td>
-        </tr>
-
-        <tr>
-        <th colspan = "3"><center> Installment </center></th>
-        </tr>
-        <tr>
-        <th>Installment Date</th>
-        <th>Installment Amount</th>
-        <th>Paid</th>
-        </tr>
-         <% @instalment.each do |instalment| %>
-        <tr>
-          <td><%= instalment.instalment_date %></td>
-          <td><%= instalment.instalment_amount %></td>
-          <td><%= instalment.is_complete ? "Yes" : "No" %></td>
-        </tr>
+        <tr> 
+          <td>
+            <strong>ID : <%= @employee.manual_employee_code %></strong>
+          </td> 
+          <td colspan = "2">
+            <strong>Name : <%= @employee.first_name %> <%= @employee.middle_name %> <%= @employee.last_name %></strong>
+          </td> 
+          <td colspan="2">
+            <strong>Department :  <%= @employee.company_location.try(:name) %> - <%= @employee.department.try(:name) %></strong>
+          </td>            
+        </tr>   
+      </thead>
+    </table>
+   
+    <% @advance_salaries.each do |advance_salary| %>
+      <table style="border-collapse: collapse; font-size:8pt;" border=1 width=900 cellpadding="10">
+        <tbody>
+          <% @instalment = Instalment.where(advance_salary_id: advance_salary) %>
+          <tr>
+            <th colspan = "4"><center> Advance Detail</center></th>
+          </tr>
+          <tr>
+            <th>Sr. No : <%= i = i + 1 %></th>
+            <th>Advance Date</th>
+            <th>Advance Amount</th>
+            <th>Installment Amount</th>
+          </tr>
+          <tr>
+            <td></td>
+            <td><%= advance_salary.advance_date %></td>
+            <td><%= advance_salary.advance_amount %></td>
+            <td><%= advance_salary.instalment_amount %></td>
+          </tr>
+          <tr>
+            <th colspan = "4"><center> Installment Detail </center></th>
+          </tr>
+          <tr>
+            <th>Installment Date</th>
+            <th>Installment Amount</th>
+            <th colspan="2">Paid</th>
+          </tr>
+            <% @instalment.each do |instalment| %>
+              <tr>
+                <td><%= instalment.instalment_date %></td>
+                <td><%= instalment.instalment_amount %></td>
+                <td colspan="2"><%= instalment.is_complete ? "Yes" : "No" %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <br>
       <% end %>
-      <% end %>
-    </tbody>
-  </table>

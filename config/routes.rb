@@ -527,6 +527,7 @@ end
       get :detail_goal_wise
       get :detail_goal_wise_xls
       get :print_goal_wise
+      post :print_goal_wise
       get :employee_wise_goal
       post :goal_employee_wise
       post :detail_employee_wise

@@ -35,7 +35,7 @@
     <div class="col-sm-3">
     <label></label>
           <div class="actions">
-            <%= f.submit "Display", class: "btn btn-sm btn-warning" %>
+            <%= f.submit "Display", class: "btn btn-sm btn-primary" %>
           </div>
     </div>
     </div>
@@ -52,4 +52,36 @@
     yearRange: '-200:+1',
     dateFormat: 'dd-mm-yy' });
   }); 
+</script>
+
+<script type="text/javascript">
+   $("#issue_request").validate({
+    rules: {
+      "issue_request[date]":{
+        required: true,
+      
+      },
+      "issue_request[issue_tracker_group_id]":{
+        required: true,
+      },
+      "issue_request[issue_tracker_member_id]":{
+        required: true,
+      }
+    },
+    messages: {
+      "issue_request[date]":{
+        required: "Please Specify Date Range",
+      },
+      "issue_request[issue_tracker_group_id]":{
+        required: "Please select Group",
+      },
+       "issue_request[issue_tracker_member_id]":{
+        required: "Please select Member",
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
 </script>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170131111613) do
+ActiveRecord::Schema.define(version: 20170203141934) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -398,8 +398,12 @@ ActiveRecord::Schema.define(version: 20170131111613) do
     t.string   "contact_no"
     t.string   "web_site"
     t.date     "starting_date"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.string   "company_logo_file_name"
+    t.string   "company_logo_content_type"
+    t.integer  "company_logo_file_size"
+    t.datetime "company_logo_updated_at"
   end
 
   add_index "companies", ["company_type_id"], name: "index_companies_on_company_type_id"
@@ -3128,18 +3132,8 @@ ActiveRecord::Schema.define(version: 20170131111613) do
     t.string   "esic_no"
     t.string   "pf_no"
     t.string   "uan_no"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
-    t.decimal  "cl_leave"
-    t.decimal  "cl_balance"
-    t.decimal  "el_leave"
-    t.decimal  "el_balance"
-    t.decimal  "coff_leave"
-    t.decimal  "coff_balance"
-    t.decimal  "advance_leave"
-    t.decimal  "advance_balance"
-    t.decimal  "lwp_leave"
-    t.decimal  "esic_leave"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
   end
 
   add_index "slip_informations", ["cost_center_id"], name: "index_slip_informations_on_cost_center_id"

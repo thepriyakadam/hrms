@@ -78,8 +78,16 @@
         <td><%= @company.email %></td>
       </tr>
       <tr>
-        <th>Website</th>
-        <td colspan="3"><%= @company.web_site %></td>
+        <th colspan="3">Website</th>
+        <td><%= @company.web_site %></td>
+<!--         <th>Company Logo</th>
+ -->        <!-- <td>
+          < if @company.company_logo_file_name == nil %>
+              <small class="label label-default">Not Available</small>
+              < else %>
+              <center>< link_to '',download_company_logo_image_path(@company),class: 'btn btn-xs fa fa-picture-o' %></center>
+              <end %>
+        </td> -->
       </tr>
     </table> <br>
 

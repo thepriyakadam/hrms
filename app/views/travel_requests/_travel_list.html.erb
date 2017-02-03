@@ -1,6 +1,10 @@
 
 <div class="box-body">
 
+<!-- < if @application_date == nil %>
+     <center><strong><p class="text-primary"> Selected Application Date Travel Request Report Not Available </strong></p></center>
+   <else %> -->
+
     <% @travel_requests.each do |travel_request| %>
   <table id="example" class="table table-bordered table-hover table-condensed">
     <% @daily_bill_detail = DailyBillDetail.where(travel_request_id: travel_request) %>
@@ -77,4 +81,4 @@
 <%= link_to " Excel Report ",print_application_report_travel_requests_path(from_date: params[:salary][:from_date],to_date: params[:salary][:to_date], company_id: params[:travel_request][:company_id], company_location_id: params[:travel_request][:company_location_id],department_id: params[:travel_request][:department_id], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
  
 <%= link_to " Print Report ",print_application_report_travel_requests_path(from_date: params[:salary][:from_date],to_date: params[:salary][:to_date], company_id: params[:travel_request][:company_id], company_location_id: params[:travel_request][:company_location_id],department_id: params[:travel_request][:department_id],format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
-</div>                                     
+</div> 

@@ -1367,6 +1367,8 @@ end
       get :confirm_salaryslip
       get :show_unconfirmed_employee
       post :Confirm_salaryslip
+      get :show_salaryslip_rg
+      get :print_salary_slip_rg
     end
   end
  

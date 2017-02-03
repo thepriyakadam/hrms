@@ -1,6 +1,10 @@
 
 <div class="box-body">
 
+<!-- <if @traveling_date == nil %>
+     <center><strong><p class="text-primary"> Selected Travelling Date Travel Request Report Not Available </strong></p></center>
+   < else %> -->
+
     <% @travel_requests.each do |travel_request| %>
   <table id="example" class="table table-bordered table-hover table-condensed">
     <% @daily_bill_detail = DailyBillDetail.where(travel_request_id: travel_request) %>

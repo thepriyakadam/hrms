@@ -1,0 +1,112 @@
+<style>
+th {
+    text-align: left;
+}
+tr {
+    page-break-inside: avoid;
+}
+div.alwaysbreak { page-break-before: always; }
+div.nobreak:before { clear:both; }
+div.nobreak{ page-break-inside: avoid;
+  /* http://code.google.com/p/wkhtmltopdf/issues/detail?id=9#c21 */
+}
+</style>
+     
+ <div>
+  <table style="border-collapse: collapse; font-size:11pt;" border=1 width=1200 cellpadding="10">
+   <thead>
+       <tr>
+      <td colspan="3">
+        <center><strong><%= @employee.company_location.company.try(:description) %></strong><br><%= @employee.company_location.try(:address) %>, <%= @employee.company_location.try(:name) %>  </center><center><strong>Salary Slip</strong></center>
+      </td>           
+    </tr>
+    <tr>
+      <td>
+      Employee ID : <%= @employee.manual_employee_code%> <br><br>
+      Employee Name : <%= full_name(@employee) %> <br><br>
+      Designation : <%= @employee.joining_detail.try(:employee_designation).name %> <br><br>
+      Department : <%= @employee.department.try(:name) %> <br><br>
+      </td>
+      <td>
+      UAN No. : <%= @employee.joining_detail.try(:employee_uan_no) %><br><br> 
+      PF No. : <%= @employee.joining_detail.try(:employee_pf_no) %><br><br>
+      PAN No  : <%= @salaryslip.employee.pan_no %><br><br> 
+      Account No. :<%= @employee.employee_bank_detail.account_no %><br><br> 
+      </td>
+      <td>
+      Location : <%= @employee.company_location.try(:name) %>  <br><br>
+      Pay Period :  <%= @salaryslip.month%> - <%= @salaryslip.year%><br><br>
+      Working Days : <%= @working_day.try(:day_in_month) %> <br><br> 
+      Paid Days : <%= @working_day.try(:payable_day) %><br><br> 
+      </td>   
+    </tr>
+   
+     <tr>
+      <th>Gross Salary : <%= @salaryslip.actual_gross_salary.round %> 
+    </th>   
+ 
+      <th>Deduction : <%= @salaryslip.actual_total_deduction.round %> 
+         </th>   
+  
+      <th>Net Salary :  <%= @salaryslip.actual_net_salary.round %>
+      </th>   
+    </tr>
+
+  </thead>
+</table>
+
+ <div class="row">
+  <div class="col-sm-12">
+<table style="border-collapse: collapse; font-size:11pt;" border=1 width=1200 cellpadding="5">
+      <thead>
+      <tr><th colspan="3"><center> Earning Details </center></th></tr>
+        <tr>
+          <th>Component</th>
+          <th>Actual Amount</th>
+          <th>Calculated Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @addable_salary_components.each do |item| %>
+          <tr>
+            <td><%= item.salary_component.name %></td>
+            <td align="right"><%= item.actual_amount.round %></td>
+            <td align="right"><%= item.calculated_amount.round %></td>
+          </tr>
+        <% end %>
+        <tr>
+          <td><strong>Gross Salary</strong></td>
+          <td align="right"><strong><%= @salaryslip.actual_gross_salary.round %></strong></td>
+          <td align="right"><strong><%= @salaryslip.calculated_gross_salary.round %></strong></td>
+        </tr>
+       <tr><th colspan="3"><center> Deduction Details </center></th></tr>
+    
+        <% @deducted_salary_components.each do |item| %>
+          <tr>
+            <% unless item.salary_component_id.nil? %>
+              <td><%= item.salary_component.name %></td>
+              <td align="right"><%= item.actual_amount.round %></td>
+              <td align="right"><%= item.calculated_amount.round %></td>
+            <%else%>
+              <td><%= item.other_component_name %></td>
+              <td align="right"><%= item.actual_amount.round %></td>
+              <td align="right"><%= item.calculated_amount.round %></td>
+            <%end%>
+          </tr>
+        <% end %>
+        <tr>
+          <td><strong>Total Deduction</strong></td>
+          <td align="right"><strong><%= @salaryslip.actual_total_deduction.round %></strong></td>
+          <td align="right"><strong><%= @salaryslip.calculated_total_deduction.round %></strong></td>
+        </tr>
+
+         <tr>
+          <td><strong>Net Salary</strong></td>
+          <td align="right"><strong><%= @salaryslip.actual_net_salary.round %></strong></td>
+          <td align="right"><strong><%= @salaryslip.calculated_net_salary.round %></strong></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    </div>
+    </div>

@@ -5,17 +5,17 @@
   </div><!-- /.box-header -->
 
   <div class="box-body">
-    <%= bootstrap_form_for(:wellfair, url: { action: 'wellfair_dynamic_report'},html: {id: 'wellfair'},remote:true) do |f| %>
+    <%= bootstrap_form_for(:food_deduction, url: { action: 'wellfair_dynamic_report'},html: {id: 'food_deduction'},remote:true) do |f| %>
       <div class="row">
         <div class="col-sm-2">
           <div class="field">
-            <%= select :wellfair,:year,['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025','2026','2027'],{label: 'Select Year',include_blank: " Select Year"}, class: "form-control" %>
+            <%= select :food_deduction,:year,['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025','2026','2027'],{label: 'Select Year',include_blank: " Select Year"}, class: "form-control" %>
           </div>
         </div>
 
         <div class="col-sm-2">
           <div class="field">
-            <%= select :wellfair,:month, ['January','February','March','April','May','June','July','August','September','October','November','December'],{label: 'Select Month',include_blank: " Select Month"}, class: "form-control" %>
+            <%= select :food_deduction,:month, ['January','February','March','April','May','June','July','August','September','October','November','December'],{label: 'Select Month',include_blank: " Select Month"}, class: "form-control" %>
            </div>
         </div>
 
@@ -62,31 +62,31 @@
 <script type="text/javascript">
   $("#buttonCtc").click(function(){
     $('.ajax-progress').show();
-    $("#wellfair").submit();
+    $("#food_deduction").submit();
   })
 </script>
 
 <script>
-$("#wellfair").validate({
+$("#food_deduction").validate({
     rules: {
-      "wellfair[month]":{
+      "food_deduction[month]":{
         required: true,
       },
-      "wellfair[year]":{
+      "food_deduction[year]":{
         required: true,
       },
-      "wellfair[company_id]":{
+      "food_deduction[company_id]":{
         required: true,
       }
     },
     messages: {
-      "wellfair[month]":{
+      "food_deduction[month]":{
         required: "Please select Month",
       },
-      "wellfair[year]":{
+      "food_deduction[year]":{
         required: "Please select Year",
       },
-      "proff_tax[company_id]":{
+      "food_deduction[company_id]":{
         required: "Please select Company",
       }
     },

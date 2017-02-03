@@ -24,7 +24,7 @@
       UAN No. : <%= @employee.joining_detail.try(:employee_uan_no) %><br><br> 
       PF No. : <%= @employee.joining_detail.try(:employee_pf_no) %><br><br>
       PAN No  : <%= @salaryslip.employee.pan_no %><br><br> 
-      Account No. :<%= @employee.employee_bank_detail.account_no %><br><br> 
+      Account No. :<%= @employee.try(:employee_bank_detail).try(:account_no) %><br><br> 
       </td>
       <td>
       Location : <%= @employee.company_location.try(:name) %>  <br><br>

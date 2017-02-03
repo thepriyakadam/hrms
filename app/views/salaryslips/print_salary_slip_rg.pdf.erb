@@ -1,13 +1,20 @@
-<div class="box">
-  <div class="box-header">
- </div>
-<div class="box-body">
- <div style="float:right;">
-  <%= link_to 'Print PDF', print_salary_slip_rg_salaryslips_path(format: 'pdf',id: @salaryslip.id),class: 'btn btn-xl btn-primary fa fa-print', :target => '_blank' %><br><br>
-  </div>
-
- <table class="table table-bordered table-hover table-condensed">
-      <thead>
+<style>
+th {
+    text-align: left;
+}
+tr {
+    page-break-inside: avoid;
+}
+div.alwaysbreak { page-break-before: always; }
+div.nobreak:before { clear:both; }
+div.nobreak{ page-break-inside: avoid;
+  /* http://code.google.com/p/wkhtmltopdf/issues/detail?id=9#c21 */
+}
+</style>
+     
+ <div>
+  <table style="border-collapse: collapse; font-size:11pt;" border=1 width=1200 cellpadding="10">
+   <thead>
        <tr>
       <td colspan="3">
         <center><strong><%= @employee.company_location.company.try(:description) %></strong><br><%= @employee.company_location.try(:address) %>, <%= @employee.company_location.try(:name) %>  </center><center><strong>Salary Slip</strong></center>
@@ -46,28 +53,11 @@
     </tr>
 
   </thead>
-  <!-- <tr>
-  <td><strong>PAN No.</strong></td>
-  <td colspan="2"><strong>Account No.</strong></td>
-  <td><strong>Gross Salary</strong></td>
-  <td><strong>Deductions</strong></td>
-  <td><strong>Adjustment</strong></td>
-  <td><strong>Net Salary</strong></td> -->
- <!--  </tr>
-
-  <tr>
-  <td><%= @salaryslip.employee.pan_no %></td>
-  <td colspan="2"><%= @employee.employee_bank_detail.account_no %></td>
-  <td></td>
-  <td><%= @salaryslip.actual_total_deduction.round %></td>
-  <td></td>
-  <td><%= @salaryslip.actual_net_salary.round %></td> 
-  </tr>  -->
 </table>
 
  <div class="row">
   <div class="col-sm-12">
-    <table class="table table-bordered table-hover table-condensed">
+<table style="border-collapse: collapse; font-size:11pt;" border=1 width=1200 cellpadding="5">
       <thead>
       <tr><th colspan="3"><center> Earning Details </center></th></tr>
         <tr>
@@ -116,9 +106,7 @@
           <td align="right"><strong><%= @salaryslip.calculated_net_salary.round %></strong></td>
         </tr>
       </tbody>
-
     </table>
-  </div>
-</div>
-<div><%= link_to 'Back', employee_salary_list_salaryslips_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %></div>
-</div>
+    </div>
+    </div>
+    </div>

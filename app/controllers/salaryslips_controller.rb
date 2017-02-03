@@ -145,6 +145,25 @@ class SalaryslipsController < ApplicationController
       end
     end
   end
+
+   def print_salary_slip_rg
+    @instalment_array = []
+    @salaryslip = Salaryslip.find(params[:id])
+    @addable_salary_components = SalaryslipComponent.where('is_deducted = ? and salaryslip_id = ?', false, @salaryslip.id)
+    @deducted_salary_components = SalaryslipComponent.where('is_deducted = ? and salaryslip_id = ?', true, @salaryslip.id)
+    @working_day = Workingday.find(@salaryslip.workingday_id)
+    @employee = Employee.find(@salaryslip.employee_id)
+    @advance_salary = AdvanceSalary.find_by_employee_id(@employee.id)
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render pdf: 'print_salary_slip_rg',
+              layout: 'pdf.html',
+              template: 'salaryslips/print_salary_slip_rg.pdf.erb',
+              :show_as_html => params[:debug].present?
+      end
+    end
+  end
  
   def select_month_year_form
     session[:active_tab] ="PayrollManagement"

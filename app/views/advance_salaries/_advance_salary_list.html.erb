@@ -1,9 +1,12 @@
- <div class="box-header">
-    <h3 class="box-title">Employee Advance Salary</h3>
-  </div><!-- /.box-header -->
+
   <div class="box-body">
   <div id="comments">
     <% i = 0 %>
+
+    <% if @advance_salary_id == nil %>
+      <center><p class="text-primary"> Advance Salary Not Available For : <%= @month %> -<%= @year %> </p></center> 
+    <% else %>
+
     <table id="example1" class="table table-bordered table-hover table-condensed">
     <thead>
       <tr>
@@ -45,3 +48,5 @@
   <%= link_to " Excel Report ",dynamic_report_advance_salaries_path(:advance_salary =>{:month => params[:advance_salary][:month], :year => params[:advance_salary][:year],:company_id => params[:advance_salary][:company_id],:company_location_id => params[:advance_salary][:company_location_id]}, format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
   <%= link_to " PDF Report ",dynamic_report_advance_salaries_path(:advance_salary =>{:month => params[:advance_salary][:month], :year => params[:advance_salary][:year],:company_id => params[:advance_salary][:company_id],:company_location_id => params[:advance_salary][:company_location_id]}, format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
 </div>
+
+<% end %> <!-- if-else -->

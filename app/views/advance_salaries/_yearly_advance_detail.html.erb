@@ -6,6 +6,10 @@
   <div id="comments">
      <% i=0%>
 
+     <% if @advance_salary_id == nil %>
+      <center><p class="text-primary"> Advance Salary Not Available For : <%= @year %></p></center> 
+    <% else %>
+
     <table id="example6" class="table table-bordered table-hover table-condensed">
     <thead>
      <tr>
@@ -63,4 +67,5 @@
 
     </div>
   </div>
+  <% end %>
 </div>

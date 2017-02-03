@@ -1211,9 +1211,8 @@ end
       get :employees
       get :employee_expences
       get :monthly_expence_report
+      get :dynamic_report
       post :dynamic_report
-      get :monthly_expence_xls
-      get :monthly_expence_pdf
     end
   end
   resources :expencess_types do
@@ -1234,9 +1233,8 @@ end
       get :food_deduction_xls
       get :food_deduction_pdf
       get :food_deduction_report
+      get :dynamic_report
       post :dynamic_report
-      get :food_deduction_xls_1
-      get :food_deduction_pdf_1
     end
   end
   resources :reporting_masters do
@@ -1407,35 +1405,31 @@ end
       get :salary_ledger
       post :show_monthly_ctc
       get :pf_detail_report
+      get :dynamic_report
       post :dynamic_report
       get :pf_detail_pdf
-      get :pf_detail_xls
       get :select_bank_wise
       get :show_employee_list
       get :esic_report
+      get :esic_dynamic_report
       post :esic_dynamic_report
-      get :esic_xls
-      get :esic_pdf
       # post :dynamic_report
       # get :pf_detail_pdf
       post :print_xls
       get :proff_tax_xls
       get :proff_tax_pdf
       get :proff_tax_report
+      get :professional_tax_master_dynamic_report
       post :professional_tax_master_dynamic_report
       get :retention_money_report
+      get :retention_dynamic_report
       post :retention_dynamic_report
-      get :retention_money_xls
-      get :retention_money_pdf
       get :welfare_detail_report
+      get :wellfair_dynamic_report
       post :wellfair_dynamic_report
-      get :wellfair_xls
-      get :wellfair_pdf
       get :soc_membership_report
+      get :soc_membership_dynamic_report
       post :soc_membership_dynamic_report
-      get :soc_membership_xls
-      get :soc_membership_pdf
-      get :pf_pdf
       get :monthly_deduction_report
       post :monthly_deduction
       get :monthly_deduction
@@ -1450,8 +1444,7 @@ end
       get :installment_pdf
       get :installment_report
       post :dynamic_report
-      get :installment_pdf_1
-      get :installment_xls_1
+      get :dynamic_report
     end
   end
   resources :advance_salaries do

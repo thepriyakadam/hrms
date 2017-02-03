@@ -3,7 +3,7 @@
     <h3 class="box-title">Leave Approved Report</h3>
   </div><!-- /.box-header -->
  <div class="box-body">
- <%= bootstrap_form_for(:employee, url: { action: 'show_approved_record'},html: {id: 'particular_leave_record'},remote:true) do |f| %>
+ <%= bootstrap_form_for(:employee, url: { action: 'show_approved_record'},html: {id: 'employee'},remote:true) do |f| %>
  		<div class="row">
  			<div class="col-sm-3">
         <div class="form-group required">
@@ -75,20 +75,20 @@
     dateFormat: 'dd-mm-yy' });
   }); 
 
-  $("#employee_leav_request").validate({
+  $("#employee").validate({
     rules: {
-      "employee_leav_request[start_date]":{
+      "employee[start_date]":{
         required: true
       },
-      "employee_leav_request[end_date]":{
+      "employee[end_date]":{
         required: true
       }
     },
     messages: {
-      "employee_leav_request[start_date]":{
+      "employee[start_date]":{
         required: "Please specify date range."
       },
-      "employee_leav_request[end_date]":{
+      "employee[end_date]":{
         required: "Please specify date range."
       }
     },

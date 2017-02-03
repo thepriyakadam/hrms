@@ -1257,15 +1257,8 @@ class SalaryslipsController < ApplicationController
           #   SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: ai.actual_amount, calculated_amount: arrear_calculated_amount, is_deducted: ai.is_deducted, is_arrear: true, salary_component_id: ai.salary_component_id)
           # end
           
-
           # current template nil
 
-
-
-
-
-
-          
         end # employee_ids loop
       end
       flash[:notice] = 'All Salary processed.'
@@ -1299,9 +1292,6 @@ end
     @advance_salary = AdvanceSalary.find(@employee.id)
   end
 
-  
-
-
   # def display_salaryslip_report
   #   @month = params[:month]
   #   @year = params[:year]
@@ -1319,12 +1309,10 @@ end
   # end
 
   def display_salaryslip_report
-    # byebug
     @month = params[:month]     
     @year = params[:year]
     @salaryslips = Salaryslip.where(month: @month.to_s, year: @year.to_s)
     @salaryslips.each do |s|
-      # byebug
       a=s.employee
     end
     @salaryslips_1 = Salaryslip.where(month: @month.to_s, year: @year.to_s).pluck(:employee_id)
@@ -1333,7 +1321,6 @@ end
   end
 
   def pdf_report
-    # byebug
     @month = params[:month]
     @year = params[:year]
     @salary1 = params[:slaryslip_ids]
@@ -1364,14 +1351,13 @@ end
   def salaryslip_xls
     @month = params[:month]
     @year = params[:year]
-    # byebug
     @salaryslips = Salaryslip.where(month: @month.to_s, year: @year.to_s).group(:employee_id)
     @salaryslips1 = Salaryslip.where(month: @month.to_s, year: @year.to_s).take
     # @bonus_employees = BonusEmployee.where(employee_id: @salaryslips.employee_id,date: )
     @salaryslips.each do |s|
-    @bonus_employees = BonusEmployee.where(employee_id: s.employee_id).group(:employee_id)
-    @employeer_pfs = EmployeerPf.where(employee_id: s.employee_id).group(:employee_id)
-    @employeer_esic = EmployeerEsic.where(employee_id: s.employee_id).group(:employee_id)
+      @bonus_employees = BonusEmployee.where(employee_id: s.employee_id).group(:employee_id)
+      @employeer_pfs = EmployeerPf.where(employee_id: s.employee_id).group(:employee_id)
+      @employeer_esic = EmployeerEsic.where(employee_id: s.employee_id).group(:employee_id)
     end
     respond_to do |format|
       format.xls {render template: 'salaryslips/salaryslip_xls.xls.erb'}

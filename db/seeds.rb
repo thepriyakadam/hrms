@@ -439,8 +439,7 @@ require 'roo'
 #  end
 #  end
 # end
-
- ex = Roo::Excel.new("#{Rails.root}/public/rgwdd.xls")
+ex = Roo::Excel.new("#{Rails.root}/public/rgwdd.xls")
  ex.default_sheet = ex.sheets[0] #siya feb
  i = 1
  ActiveRecord::Base.transaction do
@@ -464,6 +463,45 @@ require 'roo'
    end
  end
 
+ ex = Roo::Excel.new("#{Rails.root}/public/rgwdj.xls")
+ ex.default_sheet = ex.sheets[1] #siya feb
+ i = 1
+ ActiveRecord::Base.transaction do
+
+ 1.upto(150) do |line| # siya Feb 201
+   puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
+   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
+   unless @employee.nil?
+
+     Workingday.new do |w|
+       w.employee_id = @employee.id
+       w.month_name = ex.cell(line, 'B')
+       w.year = ex.cell(line, 'C').to_i
+       w.day_in_month = ex.cell(line, 'D')
+       w.payable_day = ex.cell(line, 'E')
+       w.save!
+     end
+     puts "#{i} Record inserted.-----------------------------------------------"
+     i += 1
+   end
+   end
+ end
+
+ex = Roo::Excel.new("#{Rails.root}/public/joining_detail_report.xls")
+ex.default_sheet = ex.sheets[1] #siya feb
+i = 1
+ActiveRecord::Base.transaction do
+2.upto(169) do |line| # siya Feb 2016
+ puts "Starting Record #{ex.cell(line,'B')}---------------------------------------"
+  @employee = Employee.find_by_manual_employee_code(ex.cell(line,'B'))
+ puts "#{i} Record inserting.----------------------------"
+ JoiningDetail.where(id: @employee).update_all(is_employeer_pf: ex.cell(line,'I').to_s,select_pf: ex.cell(line,'J').to_s,employee_pf_no: ex.cell(line,'K').to_s)
+ # JoiningDetail.where(employee_pf_no: ex.cell(line,'D').to_s)
+ puts "#{i} Record inserted.-----------------------------------------------"
+ i += 1
+ end
+ end
+ 
 # ex = Roo::Excel.new("#{Rails.root}/public/novattendance.xls")
 # ex.default_sheet = ex.sheets[1] #siya feb
 # i = 1
@@ -1008,6 +1046,37 @@ require 'roo'
 #  @emp_leav_bal = EmployeeLeavBalance.where(employee_id: @employee,leav_category_id: 2).pluck(:id)
 #  puts "#{i} Record inserting.----------------------------"
 #  EmployeeLeavBalance.where(id: @emp_leav_bal).update_all(no_of_leave: ex.cell(line,'B'))
+#  puts "#{i} Record inserted.-----------------------------------------------"
+#  i += 1
+#  end
+#  end
+
+
+
+
+# ex = Roo::Excel.new("#{Rails.root}/public/rgwdd.xls")
+# ex.default_sheet = ex.sheets[0] #siya feb
+# i = 1
+# ActiveRecord::Base.transaction do
+# 2.upto(155) do |line| # siya Feb 2016
+#  puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
+#  @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A'))
+#  puts "#{i} Record inserting.----------------------------"
+#  Workingday.where(employee_id: @employee.id).update_all(month_name: ex.cell(line,'B'),year: ex.cell(line,'C'),day_in_month: ex.cell(line,'D'),payable_day: ex.cell(line,'E'))
+#  puts "#{i} Record inserted.-----------------------------------------------"
+#  i += 1
+#  end
+#  end
+
+# ex = Roo::Excel.new("#{Rails.root}/public/rgwdj.xls")
+# ex.default_sheet = ex.sheets[1] #siya feb
+# i = 1
+# ActiveRecord::Base.transaction do
+# 1.upto(150) do |line| # siya Feb 2016
+#  puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
+#  @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A'))
+#  puts "#{i} Record inserting.----------------------------"
+#  Workingday.where(employee_id: @employee.id).update_all(month_name: ex.cell(line,'D'),year: ex.cell(line,'E'),day_in_month: ex.cell(line,'F'),payable_day: ex.cell(line,'C'))
 #  puts "#{i} Record inserted.-----------------------------------------------"
 #  i += 1
 #  end

@@ -10,6 +10,8 @@
       <th>For Month</th>
       <th>March Amount</th>
       <th>Status</th>
+      <th>Branch</th>
+      <th>Basis Actual Amount</th>
       <th>Action</th>
     </tr>
   </thead>
@@ -17,12 +19,14 @@
   <tbody>
     <% @professional_tax_masters.each do |professional_tax_master| %>
       <tr>
-      <td><%= professional_tax_master.company_location.company.try(:name) %> - <%= professional_tax_master.company_location.try(:name) %></td>
+      <td><%= professional_tax_master.company_location.try(:company).try(:name) %> - <%= professional_tax_master.company_location.try(:name) %></td>
         <td><%= professional_tax_master.min_amount %></td>
         <td><%= professional_tax_master.max_amount %></td>
         <td><%= professional_tax_master.for_month %></td>
         <td><%= professional_tax_master.march_amount %></td>
         <td><%= professional_tax_master.is_active ? "Active" : "Inactive" %></td>
+        <td><%= professional_tax_master.company_location.try(:company).try(:name) %> - <%= professional_tax_master.try(:company_location).try(:name) %></td>
+        <td><%= professional_tax_master.basis_actual_amount ? "Yes" : "No" %></td>
         <td>
           <% if professional_tax_master.is_confirm == true %>
             <small class= "label label-primary">Confirmed</small>

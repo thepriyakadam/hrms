@@ -24,7 +24,7 @@
       UAN No. : <%= @employee.joining_detail.try(:employee_uan_no) %><br><br> 
       PF No. : <%= @employee.joining_detail.try(:employee_pf_no) %><br><br>
       PAN No  : <%= @salaryslip.employee.pan_no %><br><br> 
-      Account No. :<%= @employee.employee_bank_detail.account_no %><br><br> 
+      Account No. :<%= @employee.try(:employee_bank_detail).try(:account_no) %><br><br> 
       </td>
       <td>
       Location : <%= @employee.company_location.try(:name) %>  <br><br>
@@ -46,23 +46,7 @@
     </tr>
 
   </thead>
-  <!-- <tr>
-  <td><strong>PAN No.</strong></td>
-  <td colspan="2"><strong>Account No.</strong></td>
-  <td><strong>Gross Salary</strong></td>
-  <td><strong>Deductions</strong></td>
-  <td><strong>Adjustment</strong></td>
-  <td><strong>Net Salary</strong></td> -->
- <!--  </tr>
-
-  <tr>
-  <td><%= @salaryslip.employee.pan_no %></td>
-  <td colspan="2"><%= @employee.employee_bank_detail.account_no %></td>
-  <td></td>
-  <td><%= @salaryslip.actual_total_deduction.round %></td>
-  <td></td>
-  <td><%= @salaryslip.actual_net_salary.round %></td> 
-  </tr>  -->
+ 
 </table>
 
  <div class="row">

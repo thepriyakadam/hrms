@@ -19,7 +19,6 @@ gem 'coderay'
 gem 'bootstrap-datepicker-rails'
 gem 'awesome_print'
 gem 'datagrid', '~> 1.4', '>= 1.4.1'
-
 gem 'quiet_assets'
 
 gem 'tzinfo-data', '~> 1.2016', '>= 1.2016.10'
@@ -37,6 +36,8 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
+
+
 # for pdf generation
 gem 'prawn', '~> 1.3.0'
 # for pdf generation

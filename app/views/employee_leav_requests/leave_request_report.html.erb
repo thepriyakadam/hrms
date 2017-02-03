@@ -56,7 +56,7 @@
       
      	<div class="col-sm-2" style="padding-top:20px;">
        	<div class="actions">
-          <%= f.submit "Display Report", class: "btn btn-sm btn-primary" %>
+          <%= f.submit "Display Report", class: "btn btn-sm btn-primary",id: "buttonCtc"  %>
         </div>
       </div>
     </div><br>
@@ -67,6 +67,11 @@
 </div><!-- /.box -->
         
 <script type="text/javascript">
+  $("#buttonCtc").click(function(){
+    $('.ajax-progress').show();
+    $("#employee_attendance").submit();
+  })
+  
   $(function(){
     $('.request_from_date').datepicker({
     changeYear:true,

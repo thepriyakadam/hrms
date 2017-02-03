@@ -862,6 +862,23 @@ class SalaryslipsController < ApplicationController
             sa.employee_template_id = current_template.id
             sa.save!
           end
+          leave_count = 0
+          @salaryslip = Salaryslip.last
+          @employee_leav_balances = EmployeeLeavBalance.where(employee_id: @employee.id)
+            @employee_leav_balances.each do |elb|
+              if elb.is_active == true
+                @particular_leave_records = ParticularLeaveRecord.where(employee_id: elb.employee_id,leav_category_id: elb.leav_category_id)
+                @particular_leave_records.each do |plr|
+                  @date = plr.leave_date
+                  month = @date.strftime("%B")
+                  year = @date.strftime("%Y")
+                  if @salaryslip.month == month && @salaryslip.year == year 
+                    leave_count = leave_count + 1
+                  end
+                end
+              end
+              LeaveDetail.create_leave_detail_information(@salaryslip, elb,leave_count)
+            end
 
           formula_item_actual_amount = 0
           formula_item_calculated_amount = 0

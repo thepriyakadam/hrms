@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170131111613) do
+ActiveRecord::Schema.define(version: 20170203131348) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -2220,6 +2220,18 @@ ActiveRecord::Schema.define(version: 20170131111613) do
 
   add_index "leave_cashables", ["employee_id"], name: "index_leave_cashables_on_employee_id"
   add_index "leave_cashables", ["leav_category_id"], name: "index_leave_cashables_on_leav_category_id"
+
+  create_table "leave_details", force: :cascade do |t|
+    t.integer  "salaryslip_id"
+    t.integer  "leav_category_id"
+    t.string   "no_of_leave"
+    t.decimal  "balance"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "leave_details", ["leav_category_id"], name: "index_leave_details_on_leav_category_id"
+  add_index "leave_details", ["salaryslip_id"], name: "index_leave_details_on_salaryslip_id"
 
   create_table "leave_masters", force: :cascade do |t|
     t.integer  "leav_category_id"

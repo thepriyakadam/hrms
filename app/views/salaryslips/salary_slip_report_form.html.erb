@@ -47,7 +47,7 @@
         
         <div class="col-sm-2">
           <div class="actions">
-            <%= f.submit "Display Report", class: "btn btn-sm btn-primary" %>
+            <%= f.submit "Display Report", class: "btn btn-sm btn-primary" ,id: "buttonCtc" %>
           </div>
         </div>
         </div><br>
@@ -57,6 +57,14 @@
     <% end %>
   </div><!-- /.box-body -->
 </div><!-- /.box -->
+
+
+<script type="text/javascript">
+  $("#buttonCtc").click(function(){
+    $('.ajax-progress').show();
+    $("#salaryslip").submit();
+  })
+</script>
 
 <script>
 $("#salaryslip").validate({

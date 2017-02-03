@@ -562,6 +562,7 @@ class EmployeeAttendancesController < ApplicationController
     @department = params[:salary][:company_location_id]
     @employees = Employee.where(department_id: @department).pluck(:id)
     @employee_attendances = EmployeeAttendance.where(day: @date.to_date ,employee_id: @employees)
+    @employee_attendance_id = EmployeeAttendance.where(day: @date.to_date ,employee_id: @employees).take
     
     respond_to do |f|
       f.js

@@ -5,7 +5,7 @@
   <%= link_to 'Print PDF', print_salary_slip_salaryslips_path(format: 'pdf',id: @salaryslip.id),class: 'btn btn-xl btn-primary fa fa-print', :target => '_blank' %><br><br>
   </div>
   </div><!-- /.box-header -->
-   <%=  @slip_information = SlipInformation.find(@salaryslip.id) %> -->
+   
   <div class="box-body">
     <table class="table table-bordered table-hover table-condensed">
       <thead>
@@ -38,10 +38,10 @@
 
        </td>
        <td>
-        <% @leave_details.try(:each) do |ld| %>
+        <% @leave_details.each do |ld| %>
             <%= ld.leav_category.name %>
             <%= ld.no_of_leave %>
-            <%= ld.balance %>
+            <%= ld.balance %><br><br>
         <% end %>
        Leave :<br><br> Balance:<br><br></td>
        <td>

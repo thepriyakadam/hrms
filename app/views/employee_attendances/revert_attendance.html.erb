@@ -30,7 +30,7 @@
         </div> 
         <div class="col-sm-3" style="padding-top:20px;">
           <div class="actions">
-            <%= f.submit "Employees For Revert Attendance" ,class: 'btn btn-primary btn-sm' %>
+            <%= f.submit "Employees For Revert Attendance" ,class: 'btn btn-primary btn-sm' ,id: "buttonCtc" %>
           </div>
         </div>
       </div><br>
@@ -41,10 +41,10 @@
 <% end %>
 <script type="text/javascript">
 
-    $("#buttonCtc").click(function(){
-      $('.ajax-progress').show();
-      $("#salary").submit();
-    })
+  $("#buttonCtc").click(function(){
+    $('.ajax-progress').show();
+    $("#employee_attendance").submit();
+  })
 
     $(function(){
       $('.day_date').datepicker({

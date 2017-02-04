@@ -14,87 +14,48 @@ div.nobreak{ page-break-inside: avoid;
      
  <div>
   <table style="border-collapse: collapse; font-size:11pt;" border=1 width=1200 cellpadding="10">
-  <thead>
-    <tr>
-      <td colspan="7">
-        <center><strong><%= @employee.company_location.company.try(:description) %></strong><br><%= @employee.company_location.try(:address) %>, <%= @employee.company_location.try(:name) %>.  </center>
-      </td>           
-    </tr>
-    <tr><td colspan="7"><center><strong>Employee Details</strong></center></td></tr>
-    <tr>
-      <td colspan="2">Salary Slip : <%= @salaryslip.month%> - <%= @salaryslip.year%></td>
-      <td>Leave Type</td>
-      <td>Leave</td>  
-      <td>Balance</td>   
-      <td colspan="2"></td>
-    </tr>
-    <tr>
-      <th>Employee ID</th>
-      <td><%= @employee.manual_employee_code%></td>
-      <th>CL</th>        
-      <td align="right"><%= @working_day.try(:cl_leave) %></td> 
-      <td align="right"><%= @working_day.try(:cl_balance) %></td> 
-      <th>Monthly Days</th>        
-      <td align="right"><%= @working_day.try(:day_in_month) %></td>            
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>Employee Name</th>
-      <td><%= full_name(@employee) %></td>
-      <th>EL</th>        
-      <td align="right"><%= @working_day.try(:el_leave) %></td>
-      <td align="right"><%= @working_day.try(:el_balance) %></td>
-      <th>Working Days</th>
-      <td align="right"><%= @working_day.try(:present_day) %></td>
-    </tr>
-    <tr>
-      <th>Department</th>
-      <td><%= @employee.department.try(:name) %></td>
-      <th>C.off</th>        
-      <td align="right"><%= @working_day.try(:coff_leave) %></td>
-      <td align="right"><%= @working_day.try(:coff_balance) %></td>      
-      <th>Holidays</th>        
-      <td align="right"><%= @working_day.try(:holiday_in_month) %></td>   
-    </tr>
-    <tr>
-      <th>Designation</th>
-      <td><%= @employee.joining_detail.try(:employee_designation).name %></td>
-      <th>Advance Leave</th>    
-      <td align="right"><%= 0 %></td>   
-      <td align="right"><%= 0 %></td>
-      <th>Week Off</th>    
-      <td align="right"><%= @working_day.try(:week_off_day) %></td>
-    </tr>
-    <tr>
-      <th>Unit</th>
-      <td><%= @employee.joining_detail.cost_center.try(:name) %></td>
-      <th>ESIC Leave</th>        
-      <td align="right"><%= @working_day.try(:esic_leave) %></td> 
-      <td align="right"><%= 0 %></td>   
-      <th>Absent Days</th>
-      <td align="right"><%= @working_day.try(:absent_day) %></td>       
-    </tr>
-    <tr>
-      <th>Contact No.</th>
-      <td><%= @employee.contact_no %></td>
-      <th>LWP</th>    
-      <td align="right"><%= @working_day.try(:lwp_leave) %></td>  
-      <td align="right"><%= 0%></td>      
-      <th>Payble Days</th>
-      <td align="right"><%= @working_day.try(:payable_day) %></td>
-    </tr>
-    <tr>
-      <th>ESIC No.</th>
-      <td><%= @employee.joining_detail.try(:employee_efic_no) %></td>
-      <th>PF No.</th>
-      <td colspan="2" align="right"><%= @employee.joining_detail.try(:employee_pf_no) %></td>
-      
-      <th>UAN No.</th>
-      <td align="right"><%= @employee.joining_detail.try(:employee_uan_no) %></td>
-    </tr>
+      <thead>
+       <tr>
+        <td colspan="4">
+          <center><strong><%= @employee.company_location.company.try(:description) %></strong><br><%= @employee.company_location.try(:address) %>, <%= @employee.company_location.try(:name) %>.  </center>
+        </td>           
+       </tr>
+       <tr>
+         <th>Employee Detail</th>
+         <th>Working Day</th>
+         <th>Leave Details</th>
+         <th>Slip Information</th>
+       </tr>
+       <tr>
+       <td>
+       ID: <%= @employee.manual_employee_code%><br><br> 
+       Name: <%= full_name(@employee) %><br><br> 
+       Designation: <%= @slip_information.try(:employee_designation).try(:name) %><br><br>
+       Department : <%= @slip_information.try(:department).try(:name) %><br><br>
+       Unit: <%= @slip_information.try(:cost_center).try(:name)%><br><br>
+       </td>
+       <td>
+       Present Day : <%= @working_day.try(:present_day) %> <br><br> 
+       Holiday : <%= @working_day.try(:holiday_in_month) %><br><br> 
+       Week Off : <%= @working_day.try(:week_off_day) %><br><br> 
+       Absent Day : <%= @working_day.try(:absent_day) %><br><br> 
+       Payable Day :<%= @working_day.try(:payable_day) %><br><br>
+       </td>
+       <td>
+
+        <% @leave_details.each do |ld| %>
+            <%= ld.leav_category.name %> <%= ld.no_of_leave %> <%= ld.balance %><br><br>
+        <% end %>
+        </td>
+       <td>
+       Salary Slip : <%= @salaryslip.month%> - <%= @salaryslip.year%><br><br>
+       UAN No :  <%= @slip_information.try(:uan_no) %><br><br>
+       PF No :   <%= @slip_information.try(:pf_no) %><br><br>
+       ESIC No : <%= @slip_information.try(:esic_no) %><br><br>
+       </td>
+       </tr>
   </tbody>
-</table>
+  </table>
 <table style="border-collapse: collapse; font-size:11pt;" border=1 width=1200 cellpadding="5">
   <thead>
   <tr><td colspan="7"><center><strong>Salary Details</strong></center> </td></tr>

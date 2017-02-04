@@ -1370,6 +1370,8 @@ end
       post :Confirm_salaryslip
       get :show_salaryslip_rg
       get :print_salary_slip_rg
+      get :show_salaryslip_formate_3
+      get :print_salary_slip_formate_3
     end
   end
  

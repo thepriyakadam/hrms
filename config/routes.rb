@@ -1693,6 +1693,7 @@ end
   resources :leav_categories do
     collection do
       get :is_confirm
+      get :show_leave_category
     end
   end
   resources :employee_physicals do

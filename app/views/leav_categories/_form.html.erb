@@ -28,16 +28,23 @@
       </div>
     </div>
     <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :monthly_leave,hide_label:true, placeholder: 'Monthly Leave Limit' %>
+      </div>
+    </div>
+    <div class="col-sm-3">
       <div class="field">
         <%= f.text_field :limit,hide_label:true, placeholder: 'Leave Limit For Month' %>
       </div>
     </div>
-    <div class="col-sm-2">
+    <div class="col-sm-3">
       <div class="field">
         <%= f.check_box :is_payble, label: 'Is Payble'%>
       </div>
     </div>
-     <div class="col-sm-2">
+  </div>
+  <div class="row">
+    <div class="col-sm-2">
       <div class="field">
         <%= f.check_box :is_balance, label: 'Is Balance Required'%>
       </div>
@@ -47,8 +54,6 @@
         <%= f.check_box :is_cashable, label: 'Is Cashable'%>
       </div>
     </div>
-  </div>
-    <div class="row">
     <div class="col-sm-2">
       <div class="field">
         <%= f.check_box :assign_balance, label: 'Assign Balance'%>

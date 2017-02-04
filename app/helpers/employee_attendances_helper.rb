@@ -133,9 +133,9 @@ module EmployeeAttendancesHelper
         half_leave = half_leave + 0.5
         if a.employee_leav_request.leav_category.is_payble
           pay_leave = pay_leave + 0.5
-          lwp_leave = lwp_leave + 0.5
         else
           non_pay_leave = non_pay_leave + 0.5
+          lwp_leave = lwp_leave + 0.5
         end
       end
       

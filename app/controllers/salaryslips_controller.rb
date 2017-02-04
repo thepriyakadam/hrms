@@ -132,8 +132,12 @@ class SalaryslipsController < ApplicationController
     @salaryslip = Salaryslip.find(params[:id])
     @addable_salary_components = SalaryslipComponent.where('is_deducted = ? and salaryslip_id = ?', false, @salaryslip.id)
     @deducted_salary_components = SalaryslipComponent.where('is_deducted = ? and salaryslip_id = ?', true, @salaryslip.id)
+    @leave_details = LeaveDetail.where(@salaryslip.id)
     @working_day = Workingday.find(@salaryslip.workingday_id)
     @employee = Employee.find(@salaryslip.employee_id)
+    @slip_information = SlipInformation.find(@salaryslip.id)
+
+
     @advance_salary = AdvanceSalary.find_by_employee_id(@employee.id)
     respond_to do |format|
       format.html
@@ -876,8 +880,8 @@ class SalaryslipsController < ApplicationController
                     leave_count = leave_count + 1
                   end
                 end
+                 LeaveDetail.create_leave_detail_information(@salaryslip, elb,leave_count)
               end
-              LeaveDetail.create_leave_detail_information(@salaryslip, elb,leave_count)
             end
 
           formula_item_actual_amount = 0

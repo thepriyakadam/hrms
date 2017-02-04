@@ -34,16 +34,13 @@
        Week Off : <%= @working_day.try(:week_off_day) %><br><br> 
        Absent Day : <%= @working_day.try(:absent_day) %><br><br> 
        Payable Day :<%= @working_day.try(:payable_day) %><br><br>
-
-
        </td>
        <td>
+
         <% @leave_details.each do |ld| %>
-            <%= ld.leav_category.name %>
-            <%= ld.no_of_leave %>
-            <%= ld.balance %><br><br>
+            <%= ld.leav_category.name %> <%= ld.no_of_leave %> <%= ld.balance %><br><br>
         <% end %>
-       Leave :<br><br> Balance:<br><br></td>
+        </td>
        <td>
        Salary Slip : <%= @salaryslip.month%> - <%= @salaryslip.year%><br><br>
        UAN No :  <%= @slip_information.try(:uan_no) %><br><br>

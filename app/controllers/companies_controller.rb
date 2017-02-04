@@ -1,5 +1,7 @@
+require 'query_report/helper'
 class CompaniesController < ApplicationController
   before_action :set_company, only: [:show, :edit, :update, :destroy]
+   include QueryReport::Helper
   # load_and_authorize_resource
 
   # GET /companies
@@ -46,6 +48,15 @@ class CompaniesController < ApplicationController
     end
   end
 
+   def download_company_logo
+    @company = Company.find(params[:id])
+    send_file @company.company_logo.path,
+              filename: @company.company_logo_file_name,
+              type: @company.company_logo_content_type,
+    
+  end
+
+
   # PATCH/PUT /companies/1
   # PATCH/PUT /companies/1.json
   def update
@@ -91,6 +102,6 @@ class CompaniesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def company_params
-    params.require(:company).permit(:manual_company_code, :group_id, :name, :company_type_id, :registration_no, :description, :pan_card_no, :tax_no, :professional_tax_no, :address, :city, :district_id, :country_id, :pin_code, :state_id, :email, :contact_no, :web_site, :starting_date, :ceo_name)
+    params.require(:company).permit(:company_logo,:manual_company_code, :group_id, :name, :company_type_id, :registration_no, :description, :pan_card_no, :tax_no, :professional_tax_no, :address, :city, :district_id, :country_id, :pin_code, :state_id, :email, :contact_no, :web_site, :starting_date, :ceo_name)
   end
 end

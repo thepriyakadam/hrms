@@ -15,7 +15,8 @@
         <th>Company Email</th>
         <th>Contact No</th>
         <th>Website</th>
-        <th>Action</th>
+<!--         <th>Download Image</th>
+ -->        <th>Action</th>
       </tr>
     </thead>
 
@@ -27,6 +28,13 @@
           <td><%= company.email %></td>
           <td><%= company.contact_no %></td>
           <td><%= company.web_site %></td>
+          <!--  <td>
+          < if company.company_logo_file_name == nil %>
+              <small class="label label-default">Not Available</small>
+              < else %>
+              <center><= link_to '',download_company_logo_image_path(id: company.id),class: 'btn btn-xs fa fa-picture-o' %></center>
+              <end %>
+        </td> -->
           <td>
             <%= link_to '', company,class: 'btn btn-sm btn-default fa fa-eye' %>
           </td>

@@ -1138,6 +1138,7 @@ end
 
   match 'issue_requests/:id/download_screenshot_image/:id' => 'issue_requests#download_screenshot_image', :via => [:get], :as => :download_screenshot_image
   match 'issue_requests/:id/download_screenshot/:id' => 'issue_requests#download_screenshot', :via => [:get], :as => :download_screenshot
+  match 'companies/:id/download_company_logo/:id' => 'companies#download_company_logo', :via => [:get], :as => :download_company_logo
   # get '/screenshot', to: 'issue_requests#download_screenshot', as: 'download_screenshot'
   # get '/download', to: 'issue_requests#download_screenshot_image', as: 'download_screenshot_image'
 
@@ -1369,6 +1370,8 @@ end
       post :Confirm_salaryslip
       get :show_salaryslip_rg
       get :print_salary_slip_rg
+      get :show_salaryslip_formate_3
+      get :print_salary_slip_formate_3
     end
   end
  

@@ -75,7 +75,6 @@ class BonusEmployeesController < ApplicationController
   end
 
   def particular_employee_bonus
-    # byebug
     @employee = Employee.find(params[:format])
     @particular_bonuses = @employee.particular_bonuses
   end

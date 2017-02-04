@@ -1792,6 +1792,8 @@ end
         FoodDeduction.where("strftime('%m/%Y' , food_date) = ? ", date.strftime('%m/%Y')).update_all(is_paid: false) 
         @bonus_employees.destroy_all
         SalaryslipComponent.where(salaryslip_id: @salaryslip.id).destroy_all
+        SlipInformation.where(salaryslip_id: @salaryslip.id).destroy_all
+        LeaveDetail.where(salaryslip_id: @salaryslip.id).destroy_all
         @salaryslip.destroy
         @workingdays = Workingday.where(employee_id: @salaryslip.employee_id, month_name: date.strftime("%B"), year: date.strftime("%Y"))
         @workingdays.destroy_all

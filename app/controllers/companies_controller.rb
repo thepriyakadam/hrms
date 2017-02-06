@@ -1,7 +1,5 @@
-require 'query_report/helper'
 class CompaniesController < ApplicationController
   before_action :set_company, only: [:show, :edit, :update, :destroy]
-   include QueryReport::Helper
   # load_and_authorize_resource
 
   # GET /companies
@@ -53,9 +51,8 @@ class CompaniesController < ApplicationController
     send_file @company.company_logo.path,
               filename: @company.company_logo_file_name,
               type: @company.company_logo_content_type,
-    
-  end
-
+              disposition: 'attachment'
+   end
 
   # PATCH/PUT /companies/1
   # PATCH/PUT /companies/1.json

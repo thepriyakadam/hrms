@@ -5,8 +5,8 @@
  <thead>
     <tr>
       <th>Percentage</th>
-      <th>Effective from</th>
-      <th>Effective to</th>
+      <th>Effective From</th>
+      <th>Effective To</th>
       <th>Status</th>
       <th>Action</th>
     </tr>
@@ -23,6 +23,7 @@
           <% if esic_employer.is_confirm == true %>
             <small class= "label label-primary">Confirmed</small>
             <%= link_to '', esic_employer ,class: 'btn btn-xs btn-default fa fa-eye' %>
+            <%= link_to '', edit_esic_employer_path(esic_employer) ,class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
           <% else %>
             <%= link_to '', edit_esic_employer_path(esic_employer) ,class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
             <%= link_to '',  esic_employer, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-xs btn-danger fa fa-close' %>

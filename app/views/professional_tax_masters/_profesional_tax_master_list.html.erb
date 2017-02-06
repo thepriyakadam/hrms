@@ -5,13 +5,11 @@
  <thead>
     <tr>
       <th>Branch</th>
+      <th>Base Component</th>
       <th>Min Amount</th>
       <th>Max Amount</th>
       <th>For Month</th>
-      <th>March Amount</th>
       <th>Status</th>
-      <th>Branch</th>
-      <th>Basis Actual Amount</th>
       <th>Action</th>
     </tr>
   </thead>
@@ -19,17 +17,26 @@
   <tbody>
     <% @professional_tax_masters.each do |professional_tax_master| %>
       <tr>
-      <td><%= professional_tax_master.company_location.try(:company).try(:name) %> - <%= professional_tax_master.company_location.try(:name) %></td>
+      <td><%= professional_tax_master.company_location.try(:name) %></td>
+       <td>
+          <% i = 0 %>
+          <% professional_tax_master.base_component.split(",").each do |e| %>
+            <% if i == 0 %>
+              <%= SalaryComponent.find(e.to_i).name %>
+            <% else %>
+              + <%= SalaryComponent.find(e.to_i).name %>
+            <% end %>
+            <% i = i + 1 %>
+          <% end %>
+        </td>
         <td><%= professional_tax_master.min_amount %></td>
         <td><%= professional_tax_master.max_amount %></td>
         <td><%= professional_tax_master.for_month %></td>
-        <td><%= professional_tax_master.march_amount %></td>
         <td><%= professional_tax_master.is_active ? "Active" : "Inactive" %></td>
-        <td><%= professional_tax_master.company_location.try(:company).try(:name) %> - <%= professional_tax_master.try(:company_location).try(:name) %></td>
-        <td><%= professional_tax_master.basis_actual_amount ? "Yes" : "No" %></td>
         <td>
           <% if professional_tax_master.is_confirm == true %>
             <small class= "label label-primary">Confirmed</small>
+            <%= link_to '', edit_professional_tax_master_path(professional_tax_master) ,class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
          <%= link_to '', professional_tax_master ,class: 'btn btn-xs btn-default fa fa-eye' %>
           <% else %>
             <%= link_to '', edit_professional_tax_master_path(professional_tax_master) ,class: 'btn btn-xs btn-success fa fa-edit',remote:true %>

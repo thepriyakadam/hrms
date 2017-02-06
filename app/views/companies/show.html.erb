@@ -78,18 +78,21 @@
         <td><%= @company.email %></td>
       </tr>
       <tr>
-        <th colspan="3">Website</th>
+        <th>Website</th>
         <td><%= @company.web_site %></td>
-<!--         <th>Company Logo</th>
- -->        <!-- <td>
-          < if @company.company_logo_file_name == nil %>
+        <th>Company Logo</th>
+        <td>
+          <% if @company.company_logo_file_name == nil %>
               <small class="label label-default">Not Available</small>
-              < else %>
-              <center>< link_to '',download_company_logo_image_path(@company),class: 'btn btn-xs fa fa-picture-o' %></center>
-              <end %>
-        </td> -->
+              <% else %>
+              <!-- <center><= link_to '',download_company_logo_path(@company),class: 'btn btn-xs fa fa-picture-o' %></center> -->
+              <%= image_tag @company.company_logo.url, :size => "130x50" %><br><br>
+              <%end %>
+        </td>
       </tr>
-    </table> <br>
+    </table> 
+    
+<br>
 
     <%= link_to 'Edit', edit_company_path(@company),class: 'btn btn-success btn-sm fa fa-edit' %> 
     <%= link_to 'Back', companies_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>

@@ -33,6 +33,12 @@
         <Cell ss:Index="24"><Data ss:Type="String">Retention</Data></Cell>
         <Cell ss:Index="25"><Data ss:Type="String">Retirement Date</Data></Cell>
         <Cell ss:Index="26"><Data ss:Type="String">Reserved Category</Data></Cell> 
+        <Cell ss:Index="27"><Data ss:Type="String">EID</Data></Cell> 
+          <Cell ss:Index="28"><Data ss:Type="String">DID</Data></Cell> 
+          <Cell ss:Index="29"><Data ss:Type="String">CID</Data></Cell>
+          <Cell ss:Index="30"><Data ss:Type="String">GID</Data></Cell>
+          <Cell ss:Index="31"><Data ss:Type="String">DesID</Data></Cell>
+
       </Row>
 
       <% i = 0 %>
@@ -64,6 +70,12 @@
           <Cell ss:Index="24"><Data ss:Type="String"><%= joining_detail.try(:have_retention) %></Data></Cell>
           <Cell ss:Index="25"><Data ss:Type="String"><%= joining_detail.try(:retirement_date) %></Data></Cell>
           <Cell ss:Index="26"><Data ss:Type="String"><%= joining_detail.try(:reserved_category).try(:name) %></Data></Cell>
+          <Cell ss:Index="27"><Data ss:Type="String"><%= joining_detail.employee_id %></Data></Cell>
+           <Cell ss:Index="28"><Data ss:Type="String"><%= joining_detail.employee.try(:department_id) %></Data></Cell>
+            <Cell ss:Index="29"><Data ss:Type="String"><%= joining_detail.try(:cost_center_id) %></Data></Cell>
+            <Cell ss:Index="30"><Data ss:Type="String"><%= joining_detail.try(:employee_grade_id) %></Data></Cell>
+            <Cell ss:Index="31"><Data ss:Type="String"><%= joining_detail.try(:employee_designation_id) %></Data></Cell>
+
         </Row><!-- Row -->
       <% end %><!-- slip -->
     </Table>

@@ -36,6 +36,7 @@
         <td>
           <% if bonus_employer.is_confirm == true %>
             <small class= "label label-primary">Confirmed</small>
+            <%= link_to '', edit_bonus_employer_path(bonus_employer) ,class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
           <% else %>
             <%= link_to '', edit_bonus_employer_path(bonus_employer) ,class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
             <%= link_to '',  bonus_employer, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-xs btn-danger fa fa-close' %>

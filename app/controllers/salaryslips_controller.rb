@@ -1432,7 +1432,7 @@ end
     @month = params[:salaryslip][:month]
     @year = params[:salaryslip][:year]
     @company = params[:salaryslip][:company_id]
-    @company_location = params[:food_deduction][:company_location_id]
+    @company_location = params[:salaryslip][:company_location_id]
     if current_user.class == Group
         if @company == ""
           @salaryslips = Salaryslip.where(month:  @month,year: @year.to_s)

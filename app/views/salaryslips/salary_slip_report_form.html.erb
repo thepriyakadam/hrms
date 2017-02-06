@@ -62,9 +62,6 @@ $("#salaryslip").validate({
       },
       "salaryslip[year]":{
         required: true,
-      },
-      "salaryslip[company_id]":{
-        required: true,
       }
     },
     messages: {
@@ -73,9 +70,6 @@ $("#salaryslip").validate({
       },
       "salaryslip[year]":{
         required: "Please select Year",
-      },
-      "salaryslip[company_id]":{
-        required: "Please select Company",
       }
     },
     errorPlacement: function(error, element) {

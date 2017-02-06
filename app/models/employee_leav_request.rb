@@ -384,4 +384,22 @@ class EmployeeLeavRequest < ActiveRecord::Base
     flag
   end
   
+  def leave_count?
+    count_1 = 0
+    count_2 = 0
+    start_month = self.start_date.strftime("%B")
+    end_month = self.end_date.strftime("%B")
+    for i in self.start_date.to_datetime..self.end_date.to_datetime
+      if start_month == end_month
+        count = ParticularLeaveRecord.exists?(employee_id: self.employee_id,leave_date: i)
+        count_1 = count_1 + 1
+      else
+        count = ParticularLeaveRecord.exists?(employee_id: self.employee_id,leave_date: i)
+        count_2 = count_2 + 1
+      end
+    end
+    count_1
+    count_2
+  end
+
 end

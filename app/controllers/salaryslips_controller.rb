@@ -1,4 +1,6 @@
+require 'query_report/helper'
 class SalaryslipsController < ApplicationController
+ include QueryReport::Helper
 
   def employee_salary_list
     @employees = Employee.find_by_role(current_user)
@@ -14,6 +16,18 @@ class SalaryslipsController < ApplicationController
     @salray_slips = Salaryslip.where('employee_id= ?', @employee.id)
   end
 
+
+ def search_by_slip_detail
+    reporter(Salaryslip.all, template_class: PdfReportTemplate) do
+      
+      # filter :current_status, type: :string
+      #column(:Request_ID, sortable: true) { |employee_leav_request| employee_leav_request.id }
+      column(:ID, sortable: true) { |salaryslip| salaryslip.id }
+      column(:EID, sortable: true) { |salaryslip| salaryslip.employee_id }
+      column(:WID, sortable: true) { |salaryslip| salaryslip.workingday_id }
+    end
+  end
+
   def show_salaryslip
     @instalment_array = []
     @salaryslip = Salaryslip.find(params[:format])
@@ -21,8 +35,8 @@ class SalaryslipsController < ApplicationController
     @deducted_salary_components = SalaryslipComponent.where('is_deducted = ? and salaryslip_id = ?', true, @salaryslip.id).where(is_arrear: nil)
     @working_day = Workingday.find(@salaryslip.workingday_id)
     @employee = Employee.find(@salaryslip.employee_id)
-     @leave_details = LeaveDetail.where(salaryslip_id: @salaryslip.id)
-     @slip_information = SlipInformation.find_by(salaryslip_id: @salaryslip.id)
+    @leave_details = LeaveDetail.where(salaryslip_id: @salaryslip.id)
+    @slip_information = SlipInformation.find_by(salaryslip_id: @salaryslip.id)
     # @employee_leav_balance = EmployeeLeavBalance.find_by()
     @advance_salary = AdvanceSalary.find_by_employee_id(@employee.id)
     unless @advance_salary.nil?

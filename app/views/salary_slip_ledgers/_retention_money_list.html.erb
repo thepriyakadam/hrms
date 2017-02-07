@@ -33,8 +33,8 @@
   </table>
   </div>
 
-  <%= link_to " Excel Report ",retention_money_xls_salary_slip_ledgers_path(month: params[:retention_money][:month], year: params[:retention_money][:year],company_id: params[:retention_money][:company_id],company_location_id: params[:food_deduction][:company_location_id], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
-  <%= link_to " PDF Report ",retention_money_pdf_salary_slip_ledgers_path(month: params[:retention_money][:month], year: params[:retention_money][:year],company_id: params[:retention_money][:company_id],company_location_id: params[:food_deduction][:company_location_id], format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+  <%= link_to " Excel Report ",retention_dynamic_report_salary_slip_ledgers_path(:food_deduction => {:month => params[:food_deduction][:month],:year => params[:food_deduction][:year],:company_id => params[:food_deduction][:company_id],:company_location_id => params[:food_deduction][:company_location_id]}, format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+  <%= link_to " PDF Report ",retention_dynamic_report_salary_slip_ledgers_path(:food_deduction => {:month => params[:food_deduction][:month],:year => params[:food_deduction][:year],:company_id => params[:food_deduction][:company_id],:company_location_id => params[:food_deduction][:company_location_id]}, format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
 </div>
 
 <script type="text/javascript">

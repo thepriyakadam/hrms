@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170127063657) do
+ActiveRecord::Schema.define(version: 20170204035132) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -398,8 +398,12 @@ ActiveRecord::Schema.define(version: 20170127063657) do
     t.string   "contact_no"
     t.string   "web_site"
     t.date     "starting_date"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.string   "company_logo_file_name"
+    t.string   "company_logo_content_type"
+    t.integer  "company_logo_file_size"
+    t.datetime "company_logo_updated_at"
   end
 
   add_index "companies", ["company_type_id"], name: "index_companies_on_company_type_id"
@@ -1357,6 +1361,7 @@ ActiveRecord::Schema.define(version: 20170127063657) do
     t.datetime "updated_at",                                            null: false
     t.boolean  "is_confirm"
     t.boolean  "is_active"
+    t.date     "to_date"
   end
 
   create_table "excel_uploads", force: :cascade do |t|
@@ -2106,6 +2111,7 @@ ActiveRecord::Schema.define(version: 20170127063657) do
     t.boolean  "is_cashable"
     t.boolean  "assign_balance"
     t.boolean  "is_continuous"
+    t.decimal  "monthly_leave"
   end
 
   create_table "leav_rejecteds", force: :cascade do |t|
@@ -2158,6 +2164,18 @@ ActiveRecord::Schema.define(version: 20170127063657) do
 
   add_index "leave_cashables", ["employee_id"], name: "index_leave_cashables_on_employee_id"
   add_index "leave_cashables", ["leav_category_id"], name: "index_leave_cashables_on_leav_category_id"
+
+  create_table "leave_details", force: :cascade do |t|
+    t.integer  "salaryslip_id"
+    t.integer  "leav_category_id"
+    t.string   "no_of_leave"
+    t.decimal  "balance"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "leave_details", ["leav_category_id"], name: "index_leave_details_on_leav_category_id"
+  add_index "leave_details", ["salaryslip_id"], name: "index_leave_details_on_salaryslip_id"
 
   create_table "leave_masters", force: :cascade do |t|
     t.integer  "leav_category_id"

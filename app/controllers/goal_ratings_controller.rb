@@ -264,39 +264,43 @@ class GoalRatingsController < ApplicationController
   def print_employee
     @period = Period.find(params[:salary][:period_id])
     @goal_bunch = GoalBunch.find_by(period_id: @period.id)
-    #goal_bunches = GoalBunch.where(period_id: @period.id).pluck(:employee_id)
     @goal_bunches = GoalBunch.where(period_id: @period.id)
   end
 
   def detail_goal_wise
     @period = Period.find(params[:period_id])
-    @employee_ids = params[:employee_ids]
-      if @employee_ids.nil?
-        flash[:alert] = "Please Select the Checkbox"
-        @employees = []
-        redirect_to employee_goal_wise_goal_ratings_path
-      else
-      @employees = []
-      @employee_ids.each do |g|
-        emp = GoalBunch.find_by_employee_id(g)
-        @employees << emp
-        @goal_bunch = GoalBunch.find_by_employee_id(g)
-      end 
-    end
+    goal_bunch_ids = params[:goal_bunch_ids]
+    if goal_bunch_ids.nil?
+      flash[:alert] = "Please Select the Checkbox"
+      @goal_bunches = []
+      redirect_to employee_goal_wise_goal_ratings_path
+    else
+      @goal_bunches = []
+      goal_bunch_ids.each do |g|
+      emp = GoalBunch.find(g)
+      @goal_bunches << emp
+      @goal_bunch = GoalBunch.find(g)
+      end
+    end  
   end
 
-  def detail_goal_wise_xls
-    @period = Period.find(params[:period_id])
-    #@goal_bunch = GoalBunch.find(params[:goal_bunch_id])
-    @employees = GoalBunch.where(period_id: @period.id)
-    respond_to do |format|
-      format.xls {render template: 'goal_ratings/detail_goal_wise.xls.erb'}
-    end
-  end
+  # def detail_goal_wise_xls
+  #   @period = Period.find(params[:period_id])
+  #   @employees = GoalBunch.where(period_id: @period.id)
+  #   respond_to do |format|
+  #     format.xls {render template: 'goal_ratings/detail_goal_wise.xls.erb'}
+  #   end
+  # end
 
   def print_goal_wise
     @period = Period.find(params[:period_id])
-    @employees = GoalBunch.where(period_id: @period.id)
+    goal_bunch_ids = params[:goal_bunch_ids]
+    @goal_bunches = []
+      goal_bunch_ids.each do |g|
+      emp = GoalBunch.find(g)
+      @goal_bunches << emp
+      @goal_bunch = GoalBunch.find(g)
+      end
 
     respond_to do |format|
       format.json

@@ -3,8 +3,7 @@
     <h3 class="box-title">Attendance Department Wise</h3>
   </div><!-- /.box-header -->
   <div class="box-body">
-    <%= form_for :pdf_salaries, url: { action: 'show_departmntwise_employee'} do |f| %>
-
+    <%= bootstrap_form_for(:pdf_salaries, url: { action: 'show_departmntwise_employee'},html: {id: "salary"}) do |f| %>
   	 <div class="row">
         <div class="col-sm-3">
          <div class="form-group required">
@@ -43,4 +42,28 @@
     yearRange: '-200:+1',
     dateFormat: 'dd-mm-yy' });
   }); 
+
+  $("#salary").validate({
+    rules: {
+      "salary[date]":{
+        required: true
+      },
+      "salary[company_location_id]":{
+        required: true
+      }
+    },
+    messages: {
+      "salary[date]":{
+        required: "Please specify date"
+      },
+      "salary[company_location_id]":{
+        required: "Please specify Location"
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+  });
+  
 </script>

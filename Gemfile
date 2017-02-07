@@ -3,9 +3,9 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.4'
 # Use mysql as the database for Active Record
-#gem 'mysql2', '~> 0.3.18'
-gem 'sqlite3'
-# Use SCSS for stylesheets
+# gem 'mysql2', '~> 0.3.18'
+gem 'sqlite3', '~> 1.3', '>= 1.3.13'# Use SCSS for stylesheets
+
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
@@ -19,8 +19,9 @@ gem 'coderay'
 gem 'bootstrap-datepicker-rails'
 gem 'awesome_print'
 gem 'datagrid', '~> 1.4', '>= 1.4.1'
-
 gem 'quiet_assets'
+
+gem 'tzinfo-data', '~> 1.2016', '>= 1.2016.10'
 
 gem 'paperclip', '~> 4.3', '>= 4.3.6'
 
@@ -35,13 +36,20 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
+
+
 # for pdf generation
 gem 'prawn', '~> 1.3.0'
 # for pdf generation
 gem 'pdfkit', '~> 0.8.2'
 # Provides binaries for WKHTMLTOPDF project in an easily accessible package.
 
-gem 'wicked_pdf', '~> 1.0', '>= 1.0.6'
+# gem 'wicked_pdf', '~> 1.0', '>= 1.0.6'
+gem 'rake', '~> 12.0'
+
+gem 'wicked_pdf', '~> 1.1'
+
+gem 'selenium-webdriver', '~> 3.0', '>= 3.0.5'
 
 gem 'wkhtmltopdf-binary', '~> 0.9.9.3'
 
@@ -58,22 +66,22 @@ gem 'best_in_place', '~> 3.0.1'
 # gem 'capistrano-rails', group: :development
 
 group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug'
-  gem 'cucumber-rails', :require => false
-  # database_cleaner is not required, but highly recommended
-  gem 'database_cleaner'
+	# Call 'byebug' anywhere in the code to stop execution and get a debugger console
+	gem 'byebug'
+	gem 'cucumber-rails', :require => false
+	# database_cleaner is not required, but highly recommended
+	gem 'database_cleaner'
 end
 
 group :development do
-  # Access an IRB console on exception pages or by using <%= console %> in views
-  gem 'web-console', '~> 2.0'
-  # Rails console table print
-  gem 'table_print'
-  gem 'wirble'
-  gem 'hirb'
-  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem 'spring'
+	# Access an IRB console on exception pages or by using <%= console %> in views
+	gem 'web-console', '~> 2.0'
+	# Rails console table print
+	gem 'table_print'
+	gem 'wirble'
+	gem 'hirb'
+	# Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
+	gem 'spring'
 end
 
 # Authentication and authorization
@@ -100,6 +108,8 @@ gem 'protokoll'
 # gem 'country_state_select', '~> 2.0.0'
 # gem 'countries'
 gem 'city-state'
+
+gem 'rmagick', '~> 2.15.4'
 
 # infinite-cove-6619
 # DateTimePicker

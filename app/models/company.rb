@@ -24,6 +24,10 @@ class Company < ActiveRecord::Base
   validate :pan_no_regex
   validate :contact_no_regex
 
+
+  has_attached_file :company_logo, styles: { medium: '300x300>', thumb: '100x100>' }, default_url: 'missing.png'
+  validates_attachment_content_type :company_logo, :content_type => /\Aimage\/.*\Z/,:message => 'only (png/gif/jpeg) images'
+
   def company_name_regex
     if name.present? && !name.match(/\A[A-Za-z0-9&@_ ]{1,30}\Z/)
       errors.add :name, 'Company Name allows only Characters'

@@ -389,8 +389,8 @@ end
       get :monthly_attendance
       get :costcenter_wise_attendance
       get :show_costcenter_wise_attendance
+      post :show_costcenter_wise_attendance
       post :display_attendance
-      # get :display_attendance_1
       get :revert_attendance_employeewise
       post :show_employee_list
       post :destroy_attendance_employeewise
@@ -399,6 +399,7 @@ end
       get :employee_attendances_list
       get :calculate_attendance
       get :display_total
+      post :display_total
       get :attendance_total_xls
       get :emp_attendance
       get :display_attendance_2
@@ -418,6 +419,7 @@ end
       get :select_date_department_form
       post :show_departmntwise_employee
       get :show_departmntwise_employee
+      post :show_departmntwise_employee
       get :department_wise_pdf
       get :department_wise_xls
       get :select_date_present_form
@@ -525,6 +527,7 @@ end
       get :detail_goal_wise
       get :detail_goal_wise_xls
       get :print_goal_wise
+      post :print_goal_wise
       get :employee_wise_goal
       post :goal_employee_wise
       post :detail_employee_wise
@@ -1135,6 +1138,7 @@ end
 
   match 'issue_requests/:id/download_screenshot_image/:id' => 'issue_requests#download_screenshot_image', :via => [:get], :as => :download_screenshot_image
   match 'issue_requests/:id/download_screenshot/:id' => 'issue_requests#download_screenshot', :via => [:get], :as => :download_screenshot
+  match 'companies/:id/download_company_logo/:id' => 'companies#download_company_logo', :via => [:get], :as => :download_company_logo
   # get '/screenshot', to: 'issue_requests#download_screenshot', as: 'download_screenshot'
   # get '/download', to: 'issue_requests#download_screenshot_image', as: 'download_screenshot_image'
 
@@ -1208,9 +1212,8 @@ end
       get :employees
       get :employee_expences
       get :monthly_expence_report
+      get :dynamic_report
       post :dynamic_report
-      get :monthly_expence_xls
-      get :monthly_expence_pdf
     end
   end
   resources :expencess_types do
@@ -1231,9 +1234,8 @@ end
       get :food_deduction_xls
       get :food_deduction_pdf
       get :food_deduction_report
+      get :dynamic_report
       post :dynamic_report
-      get :food_deduction_xls_1
-      get :food_deduction_pdf_1
     end
   end
   resources :reporting_masters do
@@ -1366,6 +1368,11 @@ end
       get :confirm_salaryslip
       get :show_unconfirmed_employee
       post :Confirm_salaryslip
+      get :show_salaryslip_rg
+      get :print_salary_slip_rg
+      get :show_salaryslip_formate_3
+      get :print_salary_slip_formate_3
+      get :search_by_slip_detail
     end
   end
  
@@ -1402,35 +1409,31 @@ end
       get :salary_ledger
       post :show_monthly_ctc
       get :pf_detail_report
+      get :dynamic_report
       post :dynamic_report
       get :pf_detail_pdf
-      get :pf_detail_xls
       get :select_bank_wise
       get :show_employee_list
       get :esic_report
+      get :esic_dynamic_report
       post :esic_dynamic_report
-      get :esic_xls
-      get :esic_pdf
       # post :dynamic_report
       # get :pf_detail_pdf
       post :print_xls
       get :proff_tax_xls
       get :proff_tax_pdf
       get :proff_tax_report
+      get :professional_tax_master_dynamic_report
       post :professional_tax_master_dynamic_report
       get :retention_money_report
+      get :retention_dynamic_report
       post :retention_dynamic_report
-      get :retention_money_xls
-      get :retention_money_pdf
       get :welfare_detail_report
+      get :wellfair_dynamic_report
       post :wellfair_dynamic_report
-      get :wellfair_xls
-      get :wellfair_pdf
       get :soc_membership_report
+      get :soc_membership_dynamic_report
       post :soc_membership_dynamic_report
-      get :soc_membership_xls
-      get :soc_membership_pdf
-      get :pf_pdf
       get :monthly_deduction_report
       post :monthly_deduction
       get :monthly_deduction
@@ -1445,8 +1448,7 @@ end
       get :installment_pdf
       get :installment_report
       post :dynamic_report
-      get :installment_pdf_1
-      get :installment_xls_1
+      get :dynamic_report
     end
   end
   resources :advance_salaries do
@@ -1479,6 +1481,7 @@ end
       get :generate_workingday_xls
       post :is_confirm_workingday
       get :display_workingday
+      post :display_workingday
       get :workingday_xls
       get :workingday_pdf
       get :import_workingday
@@ -1824,10 +1827,10 @@ end
       get :ajax_employee_document_detail
       get :ajax_new_employee_document
       get :collect_company_location
+      get :collect_company_location_dropdown_with_label
       get :collect_department
       get :display_emp_code_master
       post :update_mgr
-      get :collect_company_loc
       get :index_xls
       get :basic_info_company_wise
       post :employee_basic_info

@@ -1,67 +1,74 @@
 <div class="box">
-  <div class="box-header">
-    <h3 class="box-title">Employee Advance Salary</h3>
-  </div><!-- /.box-header -->
   <div class="box-body">
   <div id="comments">
+    <% i = 0%>
 
-    <table id="example6" class="table table-bordered table-hover table-condensed">
-    <thead>
-     <tr>
-      <td colspan = "3">
-        <center><strong><%= current_user.employee.company_location.company.description %></strong></center>
-      </td>
-      </tr>
-      <tr> 
-      <td>
-        <strong><%= @employee.manual_employee_code %></strong>
-      </td> 
-      <td colspan = "2">
-        <strong><%= @employee.first_name %> <%= @employee.middle_name %> <%= @employee.last_name %></strong>
-      </td>            
-      </tr>   
-    </thead>
-
-    <tbody>
+    <% if @advance_salary_id == nil %>
+      <center><p class="text-primary"> Advance Salary Not Available For - <%= full_name(@employee) %></p></center> 
+    <% else %>
+      <table id="example6" class="table table-bordered table-hover table-condensed">
+        <thead>
+          <tr>
+            <td colspan = "5">
+              <center><strong><%= @employee.company_location.company.description %></strong><br><%= @employee.company_location.address %>, <%= @employee.company_location.name %></center>
+            </td>
+          </tr>
+          <tr> 
+            <td>
+              <strong>ID : <%= @employee.manual_employee_code %></strong>
+            </td> 
+            <td colspan = "2">
+              <strong>Name : <%= @employee.first_name %> <%= @employee.middle_name %> <%= @employee.last_name %></strong>
+            </td> 
+            <td colspan="2">
+              <strong>Department :  <%= @employee.company_location.try(:name) %> - <%= @employee.department.try(:name) %></strong>
+            </td>            
+          </tr>   
+        </thead>
+      </table>
+     
       <% @advance_salaries.each do |advance_salary| %>
-        <% @instalment = Instalment.where(advance_salary_id: advance_salary) %>
-        <tr>
-        <th colspan = "3"><center> Advance </center></th>
-        </tr>
-       <tr>
-        <th>Advance Date</th>
-        <th>Advance Amount</th>
-        <th>Installment Amount</th>
-      </tr>
+        <table id="example6" class="table table-bordered table-hover table-condensed">
+          <tbody>
+            <% @instalment = Instalment.where(advance_salary_id: advance_salary) %>
+            <tr>
+              <th colspan = "4"><center> Advance Detail</center></th>
+            </tr>
+            <tr>
+              <th>Sr. No : <%= i = i + 1 %></th>
+              <th>Advance Date</th>
+              <th>Advance Amount</th>
+              <th>Installment Amount</th>
+            </tr>
+            <tr>
+              <td></td>
+              <td><%= advance_salary.advance_date %></td>
+              <td><%= advance_salary.advance_amount %></td>
+              <td><%= advance_salary.instalment_amount %></td>
+            </tr>
+            <tr>
+              <th colspan = "4"><center> Installment Detail </center></th>
+            </tr>
+            <tr>
+              <th>Installment Date</th>
+              <th>Installment Amount</th>
+              <th colspan="2">Paid</th>
+            </tr>
+              <% @instalment.each do |instalment| %>
+                <tr>
+                  <td><%= instalment.instalment_date %></td>
+                  <td><%= instalment.instalment_amount %></td>
+                  <td colspan="2"><%= instalment.is_complete ? "Yes" : "No" %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        <% end %>
+      <%= link_to " Excel Report ",show_employee_detail_advance_salaries_path(employee_id: @employee_id,format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
 
-        <tr>
-         <td><%= advance_salary.advance_date %></td>
-         <td><%= advance_salary.advance_amount %></td>
-         <td><%= advance_salary.instalment_amount %></td>
-        </tr>
+      <%= link_to " PDF Report ",show_employee_detail_advance_salaries_path(employee_id: @employee_id,format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
 
-        <tr>
-        <th colspan = "3"><center> Installment </center></th>
-        </tr>
-        <tr>
-        <th>Installment Date</th>
-        <th>Installment Amount</th>
-        <th>Paid</th>
-        </tr>
-         <% @instalment.each do |instalment| %>
-        <tr>
-          <td><%= instalment.instalment_date %></td>
-          <td><%= instalment.instalment_amount %></td>
-          <td><%= instalment.is_complete ? "Yes" : "No" %></td>
-        </tr>
-      <% end %>
-       
-      <% end %>
-    </tbody>
-  </table>
-    <%= link_to " Excel Report ",show_employee_detail_advance_salaries_path(employee_id: @employee_id,format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
-
-    <%= link_to " PDF Report ",show_employee_detail_advance_salaries_path(employee_id: @employee_id,format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+     <% end %> <!-- if-else -->
     </div>
   </div>
 </div>

@@ -30,10 +30,13 @@
         <td>
           <% if payroll_overtime_master.is_confirm == true %>
             <small class= "label label-primary">Confirmed</small>
+            <%= link_to '', payroll_overtime_master ,class: 'btn btn-xs btn-default fa fa-eye' %>
+            <%= link_to '', edit_payroll_overtime_master_path(payroll_overtime_master) ,class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
           <% else %>
             <%= link_to '', edit_payroll_overtime_master_path(payroll_overtime_master) ,class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
             <%= link_to '',  payroll_overtime_master, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-xs btn-danger fa fa-close' %>
             <%= link_to '', is_confirm_payroll_overtime_masters_path(payroll_overtime_master: payroll_overtime_master),data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-info fa fa-check' %>
+            <%= link_to '', payroll_overtime_master ,class: 'btn btn-xs btn-default fa fa-eye' %>
           <% end %>
         </td>
       </tr>

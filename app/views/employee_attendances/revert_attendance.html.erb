@@ -25,12 +25,12 @@
         <div class="col-sm-2">
         <label>Present </label>
           <div class="field">
-            <%= select :salary,:present,['P','W','A','P/2','PG'],{hide_label: true,include_blank: "Select Option"} ,{class: "form-control"}%>
+            <%= select :salary,:present,['P','W','A','P/2','PG','H'],{hide_label: true,include_blank: "Select Option"} ,{class: "form-control"}%>
           </div>
         </div> 
         <div class="col-sm-3" style="padding-top:20px;">
           <div class="actions">
-            <%= f.submit "Employees For Revert Attendance" ,class: 'btn btn-primary btn-sm' %>
+            <%= f.submit "Employees For Revert Attendance" ,class: 'btn btn-primary btn-sm' ,id: "buttonCtc" %>
           </div>
         </div>
       </div><br>
@@ -41,10 +41,10 @@
 <% end %>
 <script type="text/javascript">
 
-    $("#buttonCtc").click(function(){
-      $('.ajax-progress').show();
-      $("#salary").submit();
-    })
+  $("#buttonCtc").click(function(){
+    $('.ajax-progress').show();
+    $("#employee_attendance").submit();
+  })
 
     $(function(){
       $('.day_date').datepicker({

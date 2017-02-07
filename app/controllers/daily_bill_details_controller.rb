@@ -425,6 +425,7 @@ class DailyBillDetailsController < ApplicationController
       @travel_requests = TravelRequest.where(employee_id: @employees)
       @daily_bill_details = DailyBillDetail.where(expence_date:  @from.to_date..@to.to_date,travel_request_id: @travel_requests) 
       @detail = DailyBillDetail.where(company_id: @company.to_i,company_location_id: @company_location.to_i,department_id: @department)
+      # @expence_date = DailyBillDetail.where(travel_request_id: @travel_requests).take
 
 if current_user.class == Group
       if @company_location == ""

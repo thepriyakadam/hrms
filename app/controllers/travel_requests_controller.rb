@@ -289,7 +289,8 @@ class TravelRequestsController < ApplicationController
       @department = params[:travel_request] ?  params[:travel_request][:department_id] : params[:department_id] 
       @employees = Employee.where(company_id: @company.to_i,company_location_id: @company_location.to_i,department_id: @department).pluck(:id)
       @travel_requests = TravelRequest.where(application_date:  @from.to_date..@to.to_date,employee_id: @employees)
-      
+      # @application_date = TravelRequest.where(employee_id: @employee_id).take
+
 if current_user.class == Group
         if @company == ""
           @travel_requests = TravelRequest.where(application_date:  @from.to_date..@to.to_date)
@@ -386,7 +387,7 @@ end
       @department = params[:travel_request] ?  params[:travel_request][:department_id] : params[:department_id] 
       @employees = Employee.where(company_id: @company.to_i,company_location_id: @company_location.to_i,department_id: @department).pluck(:id)
       @travel_requests = TravelRequest.where(traveling_date:  @from.to_date..@to.to_date,employee_id: @employees) 
-
+      # @traveling_date = TravelRequest.where(employee_id: @employee_id).take
 
 if current_user.class == Group
         if @company == ""
@@ -516,7 +517,7 @@ end
       @travel_request = TravelRequest.where(employee_id: @employee_id).pluck(:id)
       @daily_bill_details = DailyBillDetail.where(travel_request_id: @travel_request)
       @travel_expences = TravelExpence.where(travel_request_id: @travel_request)
-
+      @travel_request_id = TravelRequest.where(employee_id: @employee_id).take
     
     respond_to do |format|
      format.js

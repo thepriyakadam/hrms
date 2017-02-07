@@ -18,19 +18,7 @@
             <%= select :salaryslip,:month, ['January','February','March','April','May','June','July','August','September','October','November','December'],{label: 'Select Month',include_blank: " Select Month"}, class: "form-control" %>
            </div>
         </div>
-
-
-         <!-- <div class="col-sm-3">
-          <div class="field">
-            <= select :food_deduction,:company_id,all_company,{label: 'Company',include_blank: " Select Company"}, class: "form-control" %>
-          </div>
-        </div>
-
-        <div class="col-sm-3">
-          <div class="field">
-          <= select :food_deduction, :company_location_id, all_company_location,{label: 'Company Location',include_blank: " Select Company Location"}, class: "form-control" %>
-          </div>
-        </div> -->
+        
         <div class="col-sm-2">
             <div class="form-group required">
               <%=f.select :company_id, all_company,{include_blank: "Select Company",hide_label: true},{onchange:"var a={id:$(this).val(), form : 'food_deduction'}; $.get('/employees/collect_company_location',a,function(response){});"}%>
@@ -47,7 +35,7 @@
         
         <div class="col-sm-2">
           <div class="actions">
-            <%= f.submit "Display Report", class: "btn btn-sm btn-primary" %>
+            <%= f.submit "Display Report", class: "btn btn-sm btn-primary" ,id: "buttonCtc" %>
           </div>
         </div>
         </div><br>
@@ -57,6 +45,14 @@
     <% end %>
   </div><!-- /.box-body -->
 </div><!-- /.box -->
+
+
+<script type="text/javascript">
+  $("#buttonCtc").click(function(){
+    $('.ajax-progress').show();
+    $("#salaryslip").submit();
+  })
+</script>
 
 <script>
 $("#salaryslip").validate({

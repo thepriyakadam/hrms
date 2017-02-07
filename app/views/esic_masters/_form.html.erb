@@ -10,13 +10,13 @@
     </div>
 
 
-    <div class="col-sm-2">
+    <div class="col-sm-3">
       <div class="form-group required">       
         <%= f.select :esic,[['Yes','true'],['No','false']],{label: 'ESIC',include_blank: "Select ESIC Option"} %>
       </div>
     </div>
 
-    <div class="col-sm-2">
+    <div class="col-sm-3">
       <div class="field">
         <%= f.text_field :percentage %>
       </div>
@@ -26,7 +26,7 @@
     
     <div class="col-sm-3">
      <div class="form-group required">
-      <label>Effective Date</label>
+      <label>From Date</label>
         <div class="input-group">
           <div class="input-group-addon">
             <i class="fa fa-calendar"></i>
@@ -36,14 +36,27 @@
       </div>
     </div>
 
+   
+</div>
+
+<div class="row">
+  <div class="col-sm-3">
+     <div class="form-group required">
+      <label>To Date</label>
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="fa fa-calendar"></i>
+          </div>
+            <%= f.text_field :to_date,hide_label: true, class: 'effective_date'%>
+        </div>
+      </div>
+    </div>
+
     <div class="col-sm-2">
       <div class="field">
         <%= f.text_field :max_limit %>
       </div>
     </div>   
-</div>
-
-<div class="row">
   <div class="col-sm-1">
       <label>Status </label>
       <div class="field">

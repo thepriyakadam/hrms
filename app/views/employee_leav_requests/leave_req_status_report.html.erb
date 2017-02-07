@@ -3,7 +3,7 @@
     <h3 class="box-title">Leave Request Report</h3>
   </div><!-- /.box-header -->
  <div class="box-body">
- <%= bootstrap_form_for(:employee_leav_request, url: { action: 'status_wise_request'},html: {id: 'employee_leav_request'},remote:true) do |f| %>
+ <%= bootstrap_form_for(:employee, url: { action: 'status_wise_request'},html: {id: 'employee'},remote:true) do |f| %>
  		<div class="row">
  			<div class="col-sm-3">
         <div class="form-group required">
@@ -26,23 +26,24 @@
         </div>
       </div>
 
-      <div class="col-sm-2">
+      <div class="col-sm-3">
         <div class="form-group required">
         <div class="input-group">
-          <%= f.select :company_id, all_company,{include_blank: "Select Company"},{onchange:"var a={id:$(this).val(), form : 'employee'}; $.get('/employees/collect_company_location',a,function(response){});"}%>
+          <%= f.select :company_id, all_company,{include_blank: "Select Company"},{onchange:"var a={id:$(this).val(), form : 'employee'}; $.get('/employees/collect_company_location_dropdown_with_label',a,function(response){});"}%>
         </div>
         </div>
       </div>
      
-      <div class="col-sm-2">
+      <div class="col-sm-3">
         <div class="form-group required">
-          <div id="company_location">
-            <%= render 'employees/company_location_dropdown' %> 
+          <div id="company_location_with_label">
+            <%= render 'employees/company_location_dropdown_with_label' %> 
         </div> 
         </div>
       </div>
-
-      <div class="col-sm-2">
+    </div>
+    <div class="row">
+      <div class="col-sm-3">
         <div class="form-group required">
           <div class="input-group">
             <div id="department">
@@ -50,17 +51,16 @@
             </div> 
           </div>
         </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-sm-2">
+      </div> 
+
+      <div class="col-sm-3">
         <div class="form-group required">
           <%= f.select :current_status, ['Pending','FirstApproved','FinalApproved','Rejected','Cancelled'],{label:"Status",include_blank: "Select Status"},class: 'form-control' %>
         </div>
       </div>
-     	<div class="col-sm-2" style="padding-top:20px;">
+     	<div class="col-sm-3" style="padding-top:20px;">
        	<div class="actions">
-          <%= f.submit "Display Report", class: "btn btn-sm btn-primary" %>
+          <%= f.submit "Display Report", class: "btn btn-sm btn-primary",id: "buttonCtc"   %>
         </div>
       </div>
     </div><br>
@@ -71,6 +71,11 @@
 </div><!-- /.box -->
         
 <script type="text/javascript">
+  $("#buttonCtc").click(function(){
+    $('.ajax-progress').show();
+    $("#employee_attendance").submit();
+  })
+  
   $(function(){
     $('.request_from_date').datepicker({
     changeYear:true,
@@ -79,26 +84,26 @@
     dateFormat: 'dd-mm-yy' });
   }); 
 
-  $("#employee_leav_request").validate({
+  $("#employee").validate({
     rules: {
-      "employee_leav_request[start_date]":{
+      "employee[start_date]":{
         required: true
       },
-      "employee_leav_request[end_date]":{
+      "employee[end_date]":{
         required: true
       },
-      "employee_leav_request[current_status]":{
+      "employee[current_status]":{
         required: true
       }
     },
     messages: {
-      "employee_leav_request[start_date]":{
+      "employee[start_date]":{
         required: "Please specify date range."
       },
-      "employee_leav_request[end_date]":{
+      "employee[end_date]":{
         required: "Please specify date range."
       },
-      "employee_leav_request[current_status]":{
+      "employee[current_status]":{
         required: "Please specify Status."
       }
     },

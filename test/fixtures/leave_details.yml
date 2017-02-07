@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  salaryslip_id: 
+  leav_category_id: 
+  no_of_leave: MyString
+  balance: 9.99
+
+two:
+  salaryslip_id: 
+  leav_category_id: 
+  no_of_leave: MyString
+  balance: 9.99

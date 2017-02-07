@@ -1,7 +1,7 @@
 class HomeController < ApplicationController
   # load_and_authorize_resource
   def index
-    @circulars = Circular.all
+    @circulars = Circular.where(is_active: true)
     @company_policies = CompanyPolicy.all
     @companies = Company.all
     @company_locations = CompanyLocation.all

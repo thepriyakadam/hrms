@@ -284,12 +284,27 @@ class WorkingdaysController < ApplicationController
 
   def workingdays_detail
     reporter(Workingday.filter_records(current_user), template_class: PdfReportTemplate) do
-      
-      column(:ID, sortable: true) { |workingday| workingday.employee.manual_employee_code }
+      column(:ID, sortable: true) { |workingday| workingday.id }
+      column(:EID, sortable: true) { |workingday| workingday.employee.manual_employee_code }
       column(:Employee_name, sortable: true) { |workingday| full_name(workingday.employee) }
       column(:Month , sortable: true) { |workingday| workingday.month_name }
       column(:Year , sortable: true) { |workingday| workingday.year }
       column(:Present , sortable: true) { |workingday| workingday.present_day }
+
+      column(:Day, sortable: true) { |workingday| workingday.day_in_month }
+      column(:Present , sortable: true) { |workingday| workingday.present_day }
+      column(:Holiday , sortable: true) { |workingday| workingday.holiday_in_month }
+      column(:Week_off , sortable: true) { |workingday| workingday.week_off_day }
+      column(:Absent , sortable: true) { |workingday| workingday.absent_day }
+      column(:Pay_leave , sortable: true) { |workingday| workingday.pay_leave }
+      column(:Nonpay_leave , sortable: true) { |workingday| workingday.nonpay_leave }
+      column(:Payable , sortable: true) { |workingday| workingday.payable_day }
+
+      column(:cl_leave, sortable: true) { |workingday| workingday.cl_leave }
+      column(:el_leave , sortable: true) { |workingday| workingday.el_leave }
+      column(:esic_leave , sortable: true) { |workingday| workingday.esic_leave }
+      column(:coff_leave , sortable: true) { |workingday| workingday.coff_leave }
+      column(:advance_leave , sortable: true) { |workingday| workingday.advance_leave }
      
 
     end

@@ -391,15 +391,22 @@ class EmployeeLeavRequest < ActiveRecord::Base
     end_month = self.end_date.strftime("%B")
     for i in self.start_date.to_datetime..self.end_date.to_datetime
       if start_month == end_month
-        count = ParticularLeaveRecord.exists?(employee_id: self.employee_id,leave_date: i)
+        count = ParticularLeaveRecord.where("employee_id = ? AND strftime('%m/%Y', leave_date) = ? AND leav_category_id = ?" ,  self.employee_id,i.strftime('%m/%y'),self.leav_category_id)
         count_1 = count_1 + 1
       else
-        count = ParticularLeaveRecord.exists?(employee_id: self.employee_id,leave_date: i)
+        count = ParticularLeaveRecord.where("employee_id = ? AND strftime('%m/%Y', leave_date) = ? AND leav_category_id = ?" ,  self.employee_id,i.strftime('%m/%y'),self.leav_category_id)
         count_2 = count_2 + 1
       end
     end
     count_1
     count_2
+
+    @leave_category = LeavCategory.find_by(id: self.leav_category_id)
+    @monthly_limit = @leave_category.monthly_leave
+    
+    if count_1 > @monthly_limit
+    elsif count_2 > @monthly_limit
+    end
   end
 
 end

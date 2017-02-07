@@ -11,11 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
-ActiveRecord::Schema.define(version: 20170112050137) do
-=======
 ActiveRecord::Schema.define(version: 20170127063657) do
->>>>>>> fc25df8addb27b1b4baaf5c735faff7c7194780d
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -155,22 +151,11 @@ ActiveRecord::Schema.define(version: 20170127063657) do
     t.string   "name"
     t.text     "definition"
     t.boolean  "status"
-<<<<<<< HEAD
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-    t.boolean  "is_confirm"
-    t.integer  "department_id"
-  end
-
-  add_index "attribute_masters", ["department_id"], name: "index_attribute_masters_on_department_id"
-
-=======
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean  "is_confirm"
   end
 
->>>>>>> fc25df8addb27b1b4baaf5c735faff7c7194780d
   create_table "attribute_rating_sheets", force: :cascade do |t|
     t.integer  "appraisee_id"
     t.integer  "appraiser_id"
@@ -506,10 +491,7 @@ ActiveRecord::Schema.define(version: 20170127063657) do
     t.datetime "out_time"
     t.integer  "shift_master_id"
     t.string   "rest_time"
-<<<<<<< HEAD
-=======
     t.boolean  "time_adjust"
->>>>>>> fc25df8addb27b1b4baaf5c735faff7c7194780d
   end
 
   add_index "company_time_masters", ["shift_master_id"], name: "index_company_time_masters_on_shift_master_id"
@@ -851,10 +833,7 @@ ActiveRecord::Schema.define(version: 20170127063657) do
     t.decimal  "difference_hrs"
     t.decimal  "overtime_hrs"
     t.string   "month_name"
-<<<<<<< HEAD
-=======
     t.decimal  "late_mark"
->>>>>>> fc25df8addb27b1b4baaf5c735faff7c7194780d
   end
 
   add_index "employee_attendances", ["company_time_master_id"], name: "index_employee_attendances_on_company_time_master_id"
@@ -1255,31 +1234,6 @@ ActiveRecord::Schema.define(version: 20170127063657) do
   add_index "employee_week_offs", ["employee_id"], name: "index_employee_week_offs_on_employee_id"
   add_index "employee_week_offs", ["week_off_master_id"], name: "index_employee_week_offs_on_week_off_master_id"
 
-<<<<<<< HEAD
-=======
-  create_table "employeer_esics", force: :cascade do |t|
-    t.date     "esic_date"
-    t.decimal  "amount"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-    t.integer  "employee_id"
-    t.decimal  "actual_amount"
-  end
-
-  add_index "employeer_esics", ["employee_id"], name: "index_employeer_esics_on_employee_id"
-
-  create_table "employeer_pfs", force: :cascade do |t|
-    t.integer  "employee_id"
-    t.date     "pf_date"
-    t.decimal  "amount"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-    t.decimal  "actual_amount"
-  end
-
-  add_index "employeer_pfs", ["employee_id"], name: "index_employeer_pfs_on_employee_id"
-
->>>>>>> fc25df8addb27b1b4baaf5c735faff7c7194780d
   create_table "employees", force: :cascade do |t|
     t.integer  "department_id"
     t.string   "manual_employee_code"
@@ -1322,10 +1276,7 @@ ActiveRecord::Schema.define(version: 20170127063657) do
     t.integer  "passport_photo_file_size"
     t.datetime "passport_photo_updated_at"
     t.string   "punch_card_id"
-<<<<<<< HEAD
-=======
     t.string   "prefix"
->>>>>>> fc25df8addb27b1b4baaf5c735faff7c7194780d
   end
 
   add_index "employees", ["blood_group_id"], name: "index_employees_on_blood_group_id"
@@ -1384,22 +1335,6 @@ ActiveRecord::Schema.define(version: 20170127063657) do
     t.datetime "updated_at",     null: false
   end
 
-<<<<<<< HEAD
-=======
-  create_table "esic_employer_masters", force: :cascade do |t|
-    t.boolean  "esic"
-    t.decimal  "percentage"
-    t.date     "effective_from"
-    t.date     "effective_to"
-    t.decimal  "max_limit"
-    t.string   "base_component"
-    t.boolean  "is_active"
-    t.boolean  "is_confirm"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
-  end
-
->>>>>>> fc25df8addb27b1b4baaf5c735faff7c7194780d
   create_table "esic_employers", force: :cascade do |t|
     t.string   "base_component"
     t.decimal  "percentage"
@@ -1527,22 +1462,6 @@ ActiveRecord::Schema.define(version: 20170127063657) do
   add_index "food_deductions", ["employee_id"], name: "index_food_deductions_on_employee_id"
   add_index "food_deductions", ["food_coupan_master_id"], name: "index_food_deductions_on_food_coupan_master_id"
 
-<<<<<<< HEAD
-=======
-  create_table "fp_masters", force: :cascade do |t|
-    t.boolean  "is_fp"
-    t.decimal  "min_limit"
-    t.decimal  "percentage"
-    t.string   "base_component"
-    t.date     "effective_from"
-    t.date     "effective_to"
-    t.boolean  "is_active"
-    t.boolean  "is_confirm"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
-  end
-
->>>>>>> fc25df8addb27b1b4baaf5c735faff7c7194780d
   create_table "goal_bunches", force: :cascade do |t|
     t.integer  "period_id"
     t.integer  "employee_id"
@@ -1596,24 +1515,12 @@ ActiveRecord::Schema.define(version: 20170127063657) do
 
   create_table "goal_perspectives", force: :cascade do |t|
     t.string   "name"
-<<<<<<< HEAD
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-    t.boolean  "is_confirm"
-    t.boolean  "status"
-    t.integer  "department_id"
-  end
-
-  add_index "goal_perspectives", ["department_id"], name: "index_goal_perspectives_on_department_id"
-
-=======
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean  "is_confirm"
     t.boolean  "status"
   end
 
->>>>>>> fc25df8addb27b1b4baaf5c735faff7c7194780d
   create_table "goal_rating_sheets", force: :cascade do |t|
     t.integer  "appraisee_id"
     t.integer  "appraiser_id"
@@ -1722,11 +1629,7 @@ ActiveRecord::Schema.define(version: 20170127063657) do
     t.date     "holiday_date"
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
-<<<<<<< HEAD
     t.boolean  "isweekend"
-=======
-    t.boolean  "is_taken"
->>>>>>> fc25df8addb27b1b4baaf5c735faff7c7194780d
     t.boolean  "is_send",      default: false
   end
 
@@ -1806,21 +1709,6 @@ ActiveRecord::Schema.define(version: 20170127063657) do
 
   add_index "instalments", ["advance_salary_id"], name: "index_instalments_on_advance_salary_id"
 
-<<<<<<< HEAD
-=======
-  create_table "insurance_masters", force: :cascade do |t|
-    t.boolean  "is_insurance"
-    t.decimal  "percentage"
-    t.string   "base_component"
-    t.date     "effective_from"
-    t.date     "effective_to"
-    t.boolean  "is_active"
-    t.boolean  "is_confirm"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
-  end
-
->>>>>>> fc25df8addb27b1b4baaf5c735faff7c7194780d
   create_table "interview_analyses", force: :cascade do |t|
     t.integer  "vacancy_request_history_id"
     t.integer  "interview_evalution_id"
@@ -2148,10 +2036,6 @@ ActiveRecord::Schema.define(version: 20170127063657) do
     t.boolean  "is_society_member"
     t.date     "retirement_date"
     t.integer  "reserved_category_id"
-<<<<<<< HEAD
-=======
-    t.boolean  "is_da"
->>>>>>> fc25df8addb27b1b4baaf5c735faff7c7194780d
     t.boolean  "is_employeer_pf"
     t.boolean  "is_employeer_esic"
     t.boolean  "is_insurance"
@@ -2160,11 +2044,8 @@ ActiveRecord::Schema.define(version: 20170127063657) do
     t.boolean  "basis_of_time",           default: false
     t.string   "ot_rate"
     t.boolean  "ot_option"
-<<<<<<< HEAD
-=======
     t.boolean  "time_master"
     t.boolean  "time_adjusted"
->>>>>>> fc25df8addb27b1b4baaf5c735faff7c7194780d
   end
 
   add_index "joining_details", ["cost_center_id"], name: "index_joining_details_on_cost_center_id"
@@ -2224,10 +2105,7 @@ ActiveRecord::Schema.define(version: 20170127063657) do
     t.boolean  "is_limit"
     t.boolean  "is_cashable"
     t.boolean  "assign_balance"
-<<<<<<< HEAD
-=======
     t.boolean  "is_continuous"
->>>>>>> fc25df8addb27b1b4baaf5c735faff7c7194780d
   end
 
   create_table "leav_rejecteds", force: :cascade do |t|
@@ -2288,14 +2166,9 @@ ActiveRecord::Schema.define(version: 20170127063657) do
     t.string   "no_of_leave"
     t.boolean  "is_carry_forward"
     t.string   "limit"
-<<<<<<< HEAD
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-=======
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
     t.decimal  "company_workingday"
->>>>>>> fc25df8addb27b1b4baaf5c735faff7c7194780d
   end
 
   add_index "leave_masters", ["leav_category_id"], name: "index_leave_masters_on_leav_category_id"
@@ -2678,12 +2551,6 @@ ActiveRecord::Schema.define(version: 20170127063657) do
     t.date     "effective_to"
     t.boolean  "is_active"
     t.boolean  "is_confirm"
-<<<<<<< HEAD
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
-  end
-
-=======
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
     t.integer  "company_location_id"
@@ -2692,7 +2559,6 @@ ActiveRecord::Schema.define(version: 20170127063657) do
 
   add_index "professional_tax_masters", ["company_location_id"], name: "index_professional_tax_masters_on_company_location_id"
 
->>>>>>> fc25df8addb27b1b4baaf5c735faff7c7194780d
   create_table "professional_taxes", force: :cascade do |t|
     t.string   "is_pt"
     t.decimal  "min_salary",  precision: 15, scale: 2, default: 0.0
@@ -3200,23 +3066,8 @@ ActiveRecord::Schema.define(version: 20170127063657) do
     t.string   "esic_no"
     t.string   "pf_no"
     t.string   "uan_no"
-<<<<<<< HEAD
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
-=======
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
-    t.decimal  "cl_leave"
-    t.decimal  "cl_balance"
-    t.decimal  "el_leave"
-    t.decimal  "el_balance"
-    t.decimal  "coff_leave"
-    t.decimal  "coff_balance"
-    t.decimal  "advance_leave"
-    t.decimal  "advance_balance"
-    t.decimal  "lwp_leave"
-    t.decimal  "esic_leave"
->>>>>>> fc25df8addb27b1b4baaf5c735faff7c7194780d
   end
 
   add_index "slip_informations", ["cost_center_id"], name: "index_slip_informations_on_cost_center_id"
@@ -3254,10 +3105,7 @@ ActiveRecord::Schema.define(version: 20170127063657) do
     t.integer  "training_topic_master_id"
     t.boolean  "is_complete"
     t.integer  "reporting_master_id"
-<<<<<<< HEAD
-=======
     t.boolean  "training_plan"
->>>>>>> fc25df8addb27b1b4baaf5c735faff7c7194780d
   end
 
   add_index "trainee_requests", ["employee_id"], name: "index_trainee_requests_on_employee_id"

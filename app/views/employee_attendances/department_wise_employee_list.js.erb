@@ -1,6 +1,3 @@
 $(".ajax-progress").hide();
-<% if @holiday_flag %>
-$("#employee_list").html("<center><font color='red'>This date has holiday.<%= @holiday.name %></font></center>");
-<% else %>
+
 $("#employee_list").html("<%= j render 'department_wise_employee_list' %>");
-<% end %>

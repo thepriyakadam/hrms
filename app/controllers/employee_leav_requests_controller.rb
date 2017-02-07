@@ -57,6 +57,10 @@ class EmployeeLeavRequestsController < ApplicationController
       if @employee_leav_request.is_available?
         flash[:alert] = "Your Leave Request already has been sent status is pending"
         redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
+      # elsif @employee_leav_request.leave_count?
+      #   flash[:alert] = "Cross the leave limit"
+      #   redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
+
       elsif @employee_leav_request.is_available1?
         flash[:alert] = "Your Leave Request already has been sent status is First Approved"
         redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
@@ -69,6 +73,7 @@ class EmployeeLeavRequestsController < ApplicationController
       elsif @employee_leav_request.is_continue?
         flash[:alert] = "Leave Already Available !"
         redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
+     
       else
         if @employee.manager_id.nil?
           flash[:alert] = 'Reporting manager not set please set Reporting Manager'
@@ -135,7 +140,7 @@ class EmployeeLeavRequestsController < ApplicationController
               elsif
                 @employee_leav_request.leave_count < @leav_category.from or @employee_leav_request.leave_count > @leav_category.to 
                 @total_leaves = EmployeeLeavBalance.where('employee_id = ?', @employee.id)
-                flash.now[:alert] = 'You are not in limit.'
+                flash.now[:alert] = "Leave Range is #{@leav_category.from} - #{@leav_category.to} "
                 render :new
                 #@leave_coff = LeaveCOff.where(employee_id: @employee.id)
               elsif type == 'C.Off'

@@ -1,18 +1,14 @@
+
 <table id="example2" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>  
       <th>Code</th> 
       <th>Name</th>
-      <th>Description</th>
       <th>From</th>
       <th>To</th>
+      <th>Monthly Limit</th>
       <th>Payble</th> 
-      <th>Balance Required</th> 
-      <th>Cashable</th> 
-      <th>Assign Balance</th> 
       <th>Status</th> 
-      <th>Limit</th>
-      <th>Continue</th>
       <th>Action</th>
     </tr>
   </thead>
@@ -21,21 +17,19 @@
       <tr>
         <td><%= leav_category.code %></td> 
         <td><%= leav_category.name %></td>
-        <td><%= leav_category.description %></td>
         <td><%= leav_category.from %></td>
         <td><%= leav_category.to %></td>
+        <td><%= leav_category.monthly_leave %></td>
         <td><%= leav_category.is_payble ? "Yes" : "No" %></td>
-        <td><%= leav_category.is_balance ? "Yes" : "No" %></td>
-        <td><%= leav_category.is_cashable ? "Yes" : "No" %></td>
-        <td><%= leav_category.assign_balance ? "Yes" : "No" %></td>
         <td><%= leav_category.is_active ? "Active" : "Inactive" %></td> 
-        <td><%= leav_category.limit %></td>
-        <td><%= leav_category.is_continuous ? "Yes" : "No" %></td> 
         <td>
           <% if leav_category.is_confirm == true %>
             <small class= "label label-primary">Confirmed</small>
+             <%= link_to '', edit_leav_category_path(leav_category),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
+            <%= link_to '', show_leave_category_leav_categories_path(leav_category: leav_category),class: 'btn btn-default btn-xs fa fa-eye' %>
           <% else %>
             <%= link_to '', edit_leav_category_path(leav_category),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
+            <%= link_to '', show_leave_category_leav_categories_path(leav_category: leav_category),class: 'btn btn-default btn-xs fa fa-eye' %>
             <%= link_to '',  leav_category, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
             <%= link_to '', is_confirm_leav_categories_path(leav_category: leav_category),data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-info fa fa-check' %>
           <% end %>

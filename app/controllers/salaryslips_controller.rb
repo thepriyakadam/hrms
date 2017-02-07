@@ -13,7 +13,8 @@ class SalaryslipsController < ApplicationController
   def salary_slip_list
     @employee = Employee.find(params[:format])
     authorize! :show, @employee
-    @salray_slips = Salaryslip.where('employee_id= ?', @employee.id)
+    @salray_slips = Salaryslip.where('employee_id= ?', @employee.id).order('salary_slip_code desc').only(:order, :where)
+    # @salray_slips = Salaryslip.where('employee_id= ?', @employee.id).sort_by(&:salary_slip_code)
   end
 
 

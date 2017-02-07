@@ -6,6 +6,7 @@
       <th>Name</th>
       <th>From</th>
       <th>To</th>
+      <th>Monthly Limit</th>
       <th>Payble</th> 
       <th>Status</th> 
       <th>Action</th>
@@ -18,11 +19,14 @@
         <td><%= leav_category.name %></td>
         <td><%= leav_category.from %></td>
         <td><%= leav_category.to %></td>
+        <td><%= leav_category.monthly_leave %></td>
         <td><%= leav_category.is_payble ? "Yes" : "No" %></td>
         <td><%= leav_category.is_active ? "Active" : "Inactive" %></td> 
         <td>
           <% if leav_category.is_confirm == true %>
             <small class= "label label-primary">Confirmed</small>
+             <%= link_to '', edit_leav_category_path(leav_category),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
+            <%= link_to '', show_leave_category_leav_categories_path(leav_category: leav_category),class: 'btn btn-default btn-xs fa fa-eye' %>
           <% else %>
             <%= link_to '', edit_leav_category_path(leav_category),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
             <%= link_to '', show_leave_category_leav_categories_path(leav_category: leav_category),class: 'btn btn-default btn-xs fa fa-eye' %>

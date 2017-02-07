@@ -35,6 +35,7 @@
             <% esic_leave = esic_leave_count(exist) %>
             <% advance_leave = advance_leave_count(exist) %>
             <% coff_leave = coff_leave_count(exist) %>
+            <% od_leave = od_leave_count(exist) %>
 
             <% # full_pay_leave = full_pay_leave_count(exist) %>
             <% # half_pay_leave = half_pay_leave_count(exist) %>
@@ -61,11 +62,13 @@
             <%= hidden_field e.employee_id, 'year', value: @date.strftime("%Y") %>
             <%= hidden_field e.employee_id, 'present_day', value: present_day %>
             <%= hidden_field e.employee_id, 'total_leave', value: total_leave_count(exist) %>
+            
             <%= hidden_field e.employee_id, 'advance_leave', value: advance_leave %>
             <%= hidden_field e.employee_id, 'coff_leave', value: coff_leave %>
             <%= hidden_field e.employee_id, 'esic_leave', value: esic_leave %>
             <%= hidden_field e.employee_id, 'el_leave', value: el_leave %>
             <%= hidden_field e.employee_id, 'cl_leave', value: cl_leave %>
+            <%= hidden_field e.employee_id, 'od_leave', value: od_leave %>
 
             <%= hidden_field e.employee_id, 'lwp_leave', value: workingday[4] %>
             <%= hidden_field e.employee_id, 'nonpay_leave', value: workingday[3] %>

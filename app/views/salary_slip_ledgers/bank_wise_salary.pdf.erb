@@ -3,7 +3,7 @@
 <table style="border-collapse: collapse; font-size:30pt;" border=1 width=1000 cellpadding="19">
   <thead>
     <tr>
-      <th colspan="46">
+      <th colspan="50">
         <center><strong><%= current_user.employee.company_location.company.description %></strong></center>
         <center><small><%= Bank.find(@bank).name unless @bank.nil?  or @bank.blank? %>
         <%= CostCenter.find(@cost_center).name unless @cost_center.blank? or @cost_center.nil? or @cost_center.empty? %>
@@ -13,7 +13,7 @@
     </tr>
     <tr>
       <th colspan="12"><center> SALARY DETAILS</center></th>
-      <th colspan="11"><center> WORKING DAYS</center></th>
+      <th colspan="12"><center> WORKING DAYS</center></th>
       <th colspan="12"><center> EARNED SALARY</center></th>
       <th colspan="12"><center>DEDUCTION</center></th>
       <th><center> NET </center></th>
@@ -41,6 +41,7 @@
       <th>CL</th>
       <th>EL</th>
       <th>AL</th>
+      <th>OD</th>
 
 
       <th>Coff</th>
@@ -94,11 +95,10 @@
           Designation - <%= Employee.find_by_manual_employee_code(r.code).try(:joining_detail).try(:employee_designation).try(:name) %>
         </strong>
       </td>
-      <td colspan="6">
+      <td colspan="9">
         <strong>PF NO - <%= r.try(:pf_no) %></strong></td>
-      <td colspan="6">
+      <td colspan="9">
         <strong>ESIC NO - <%= r.try(:esic_no) %></strong></td>
-      <td></td>
       </tr>
       <tr>  
         <td><%= r.try(:actual_basic).try(:round) %></td>
@@ -121,6 +121,7 @@
         <td><%= r.try(:cl_leave) %></td>
         <td><%= r.try(:el_leave) %></td>
         <td><%= r.try(:advance_leave) %></td>
+        <td><%= r.try(:od_leave) %></td>
         <td><%= r.try(:coff_leave) %></td>
         <td><%= r.try(:esic_leave) %></td>
         <td><%= r.try(:lwp_leave) %></td>
@@ -160,7 +161,7 @@
       </tr>
     <% end %>
     <tr>
-      <td colspan="47"><strong>Total</strong></td>
+      <td colspan="50"><strong>Total</strong></td>
     </tr>
 
     <tr>      
@@ -182,6 +183,7 @@
       <td><%= @sum.cl_leave %></td>
       <td><%= @sum.el_leave %></td>
       <td><%= @sum.advance_leave %></td>
+       <td><%= @sum.od_leave %></td>
       <td><%= @sum.coff_leave %></td>
       <td><%= @sum.esic_leave %></td>
       <td><%= @sum.lwp_leave %></td>

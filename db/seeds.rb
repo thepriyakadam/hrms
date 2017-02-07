@@ -1054,7 +1054,7 @@ require 'roo'
 #  end
 
 a = EmployeeCodeMaster.last
-EmployeeCodeMaster.where(id: a.id).update_all(last_range: 10576)
+EmployeeCodeMaster.where(id: a.id).update_all(last_range: 10546)
 
 # puts "Starting ..."
 # ex = Roo::Excel.new("#{Rails.root}/public/rgedec.xls")

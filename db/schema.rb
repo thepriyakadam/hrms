@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170204035132) do
+ActiveRecord::Schema.define(version: 20170207105642) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -3497,6 +3497,7 @@ ActiveRecord::Schema.define(version: 20170204035132) do
     t.decimal  "gatepass"
     t.decimal  "calculated_payable_days"
     t.decimal  "ot_days"
+    t.decimal  "od_leave"
   end
 
   add_index "workingdays", ["employee_id"], name: "index_workingdays_on_employee_id"

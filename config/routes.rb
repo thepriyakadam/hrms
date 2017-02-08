@@ -434,7 +434,12 @@ end
     end
   end
   resources :salary_comp_mappings
-  resources :company_events
+  resources :company_events do
+    collection do
+      get :event_detail
+      get :show_event
+    end
+  end
   resources :employee_task_to_dos do
     collection do
       get :dynamic_refresh

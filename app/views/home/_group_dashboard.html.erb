@@ -99,7 +99,7 @@
         </div><!-- /.box-footer -->
       </div><!-- /.box -->
 
-      <!-- TABLE: LATEST ORDERS -->
+    <!-- TABLE: LATEST ORDERS -->
       <div class="box box-info">
         <div class="box-header with-border">
           <h3 class="box-title">Company Events</h3>
@@ -115,23 +115,17 @@
                 <tr>
                   <th>Event Date</th>
                   <th>Event Name</th>
-                  <th>Event Detail</th>
-                  <th>Status</th>
+                  <th>Action</th>
                   <!-- <th>Popularity</th> -->
                 </tr>
               </thead>
               <tbody>
-              <% CompanyEvent.try(:all).try(:each) do |e| %>
+              <% @company_events.where(status: true).try(:each) do |e| %>
                 <tr>
                   <td><%= e.event_date %></td>
                   <td><%= e.event_name %></td>
-                  <td><%= e.description %></td>
                   <td>
-                    <% if e.status %>
-                      <span class="label label-success">Active</span>
-                    <%else%>
-                      <span class="label label-danger">Inactive</span>
-                    <%end%>
+                    <%= link_to 'Detail', event_detail_company_events_path(id: e),class: 'btn btn-xs btn-info',remote:true %>
                   </td>
                   <!-- <td><div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div></td> -->
                 </tr>
@@ -145,6 +139,7 @@
           <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a> -->
         </div><!-- /.box-footer -->
       </div><!-- /.box -->
+       <div id="event_detail" class="modal fade"></div>
 
             <!-- TABLE: LATEST ORDERS -->
       <div class="box box-info">

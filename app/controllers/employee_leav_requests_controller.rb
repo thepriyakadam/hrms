@@ -35,8 +35,6 @@ class EmployeeLeavRequestsController < ApplicationController
     # @employee_leav_request.end_date = date_arr[1].lstrip
     @leave_c_offs = LeaveCOff.where(employee_id: @employee.id)
     @leav_category = LeavCategory.find(@employee_leav_request.leav_category_id)
-    # date_range = params['employee_leav_request']['date_range']
-    # @date = params['employee_leav_request']['date_range']
     @emp_leav_req = EmployeeLeavRequest.where(employee_id: @employee.id, start_date: start_date,end_date: end_date)
       if params[:flag] == "Full/Half"
         @employee_leav_request.last_half = params[:common][:last_half]
@@ -57,9 +55,9 @@ class EmployeeLeavRequestsController < ApplicationController
       if @employee_leav_request.is_available?
         flash[:alert] = "Your Leave Request already has been sent status is pending"
         redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
-      # elsif @employee_leav_request.leave_count?
-      #   flash[:alert] = "Cross the leave limit"
-      #   redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
+      elsif @employee_leav_request.leave_count?
+        flash[:alert] = "Cross the leave limit"
+        redirect_to hr_view_request_employee_leav_requests_path(@employee.id)
 
       elsif @employee_leav_request.is_available1?
         flash[:alert] = "Your Leave Request already has been sent status is First Approved"

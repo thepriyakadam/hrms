@@ -375,7 +375,6 @@ ActiveRecord::Schema.define(version: 20170208060007) do
     t.datetime "avatar_updated_at"
     t.boolean  "is_active"
     t.boolean  "is_confirm"
-    t.string   "document"
     t.string   "document_file_name"
     t.string   "document_content_type"
     t.integer  "document_file_size"
@@ -474,7 +473,6 @@ ActiveRecord::Schema.define(version: 20170208060007) do
     t.integer  "document_file_size"
     t.datetime "document_updated_at"
     t.text     "description"
-    t.string   "document"
   end
 
   create_table "company_shifts", force: :cascade do |t|

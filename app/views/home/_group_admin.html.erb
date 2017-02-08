@@ -216,7 +216,6 @@
               <%@employees.each do |e|%>
                 <li class="item">
                   <div class="product-img">
-
                  <%unless e.nil? or e.member.nil? or e.member.avatar.nil? %>
                   <%= image_tag e.member.avatar.url(:medium),class: "img-circle"%>
                   <%else%>
@@ -225,7 +224,7 @@
                 </div> 
                 <div class="product-info">
                   <%= full_name(e) %>
-                  <span class="label label-success pull-right">Happy Birthday</span>
+                 <span class="label label-primary pull-right"><i><strong>Happy Birthday</strong></i></span>
                   <span class="users-list-date"><%= e.contact_no %></span>
                   </div>
                 <% end %>

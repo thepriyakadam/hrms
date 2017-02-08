@@ -68,8 +68,7 @@
                 </tr>
               </thead>
               <tbody>
-              <% Circular.where(is_active: true) do |circular| %>
-                <tr>
+               <% @circulars.each do |circular| %>
                    <td><%= circular.date %></td>
                    <td><%= circular.subject %></td>
                   <td>

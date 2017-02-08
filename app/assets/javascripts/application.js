@@ -20,6 +20,8 @@
 //= require jquery-ui/datepicker
 //= require chartkick
 
+ //= require magnific-popup
+
 //= require moment
 //= require bootstrap-datetimepicker
 

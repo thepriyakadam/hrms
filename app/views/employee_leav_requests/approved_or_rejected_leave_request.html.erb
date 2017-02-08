@@ -26,7 +26,7 @@
                 <td><%= employee_leav_request.leav_category.try(:name) %></td>
                 <td><%= employee_leav_request.leave_count %></td>
                 <td>
-                  <%= link_to 'View Detail', employee_history_with_current_leave_employee_leav_requests_path(employee_leav_request),class: 'btn btn-sm btn-warning' %>
+                  <%= link_to 'View Detail', employee_history_with_current_leave_employee_leav_requests_path(employee_leav_request),class: 'btn btn-sm btn-info' %>
                 </td>
               </tr>
             <% end %>
@@ -55,7 +55,7 @@
                 <td><%= employee_leav_request.leav_category.try(:name) %></td>
                 <td><%= employee_leav_request.leave_count %></td>
                 <td>
-                  <%= link_to 'View Detail', employee_history_with_current_leave_employee_leav_requests_path(employee_leav_request),class: 'btn btn-sm btn-warning' %>
+                  <%= link_to 'View Detail', employee_history_with_current_leave_employee_leav_requests_path(employee_leav_request),class: 'btn btn-sm btn-info' %>
                 </td>
               </tr>
             <% end %>

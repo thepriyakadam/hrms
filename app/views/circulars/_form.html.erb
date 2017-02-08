@@ -1,4 +1,4 @@
-<%= bootstrap_form_for(@circular,html: {id: 'circular'},remote:true) do |f| %>
+<%= bootstrap_form_for(@circular,html: {id: 'circular'}) do |f| %>
 <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
   <div class="row">
     <div class="col-sm-3">
@@ -19,18 +19,24 @@
     </div>
     <div class="col-sm-3">
     <div class="form-group required">
-      <%= f.file_field :avatar,label: 'Document' %>
+      <%= f.file_field :document,label: 'Document' %>
+    </div>
+   </div>
+    <div class="col-sm-3">
+    <div class="form-group required">
+      <%= f.file_field :avatar,label: 'Picture' %>
     </div>
    </div>
 
-   <div class="col-sm-3">
+  
+    </div>
+    <div class="row">
+     <div class="col-sm-3">
       <label>Status </label>
       <div class="field">
         <%= f.check_box :is_active, label: 'Active'%>
       </div>
     </div>
-    </div>
-    <div class="row">
     <div class="col-sm-3">
     <label></label>
       <div class="actions">
@@ -56,9 +62,6 @@ $("#circular").validate({
       },
        "circular[date]":{
         required: true,
-      },
-      "circular[avatar]":{
-        required: true,
       }
     },
     messages: {
@@ -67,11 +70,7 @@ $("#circular").validate({
       },
        "circular[date]":{
         required: "Please Select Date",
-      },
-      "circular[avatar]":{
-        required: "Please Select Document",
       }
-      
     },
     errorPlacement: function(error, element) {
      error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})

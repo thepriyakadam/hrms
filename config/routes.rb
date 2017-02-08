@@ -1127,6 +1127,7 @@ end
   match 'interview_schedules/:id/sample_email_to_interviewer/:id' => 'interview_schedules#sample_email_to_interviewer', :via => [:get], :as => :sample_email_to_interviewer
 
   match 'circulars/:id/download_documents/:id' => 'circulars#download_documents', :via => [:get], :as => :download_documents
+  match 'circulars/:id/download_company_policy_document/:id' => 'circulars#download_company_policy_document', :via => [:get], :as => :download_company_policy_document
 
   match 'daily_bill_details/:id/download_doc/:id' => 'daily_bill_details#download_doc', :via => [:get], :as => :download_doc
   match 'daily_bill_details/:id/download_pics/:id' => 'daily_bill_details#download_pics', :via => [:get], :as => :download_pics

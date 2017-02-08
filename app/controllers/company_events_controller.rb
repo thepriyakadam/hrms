@@ -9,7 +9,8 @@ class CompanyEventsController < ApplicationController
 
   # GET /company_events/1
   # GET /company_events/1.json
-  def show
+  def show_event
+    @company_event = CompanyEvent.find(params[:format])
   end
 
   # GET /company_events/new
@@ -60,7 +61,7 @@ class CompanyEventsController < ApplicationController
     end
   end
 
-  def modal_detail_info
+  def event_detail
     @company_event = CompanyEvent.find(params[:id])
   end
 

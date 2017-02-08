@@ -3,6 +3,7 @@ class HomeController < ApplicationController
   def index
     @circulars = Circular.where(is_active: true)
     @company_policies = CompanyPolicy.all
+    @company_events = CompanyEvent.all
     @companies = Company.all
     @company_locations = CompanyLocation.all
     @departments = Department.all
@@ -49,6 +50,10 @@ class HomeController < ApplicationController
         @employees = Employee.joins('INNER JOIN members on employees.id = members.employee_id')
       end
     end
+  end
+  
+  def event_detail
+    @company_event = CompanyEvent.find(params[:id])
   end
   
 end

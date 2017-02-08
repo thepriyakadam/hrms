@@ -436,7 +436,8 @@ end
   resources :salary_comp_mappings
   resources :company_events do
     collection do
-      get :modal_detail_info
+      get :event_detail
+      get :show_event
     end
   end
   resources :employee_task_to_dos do

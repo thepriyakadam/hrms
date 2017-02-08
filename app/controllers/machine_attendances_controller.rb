@@ -63,7 +63,18 @@ class MachineAttendancesController < ApplicationController
 			@shift_type = params[:machine_attendance][:shift_master_id]
 			@present = params[:machine_attendance][:present]
 			# byebug
-			s1=MachineAttendance.create(employee_id: @emp_id,day: @day,in: @in.to_datetime.utc,out: @out.to_datetime.utc,shift_master_id: @shift_type,present: @present)
+			if @in == "" && @out == ""
+		  	# byebug
+		  	s1=MachineAttendance.create(employee_id: @emp_id,day: @day,in: 0,out: 0,shift_master_id: @shift_type,present: @present)
+			elsif @in == ""
+				# byebug
+			  s1=MachineAttendance.create(employee_id: @emp_id,day: @day,in: 0,out: @out.to_datetime.utc,shift_master_id: @shift_type,present: @present)
+		  elsif @out == ""
+		  	s1=MachineAttendance.create(employee_id: @emp_id,day: @day,in: @in.to_datetime.utc,out: 0,shift_master_id: @shift_type,present: @present)
+		  else
+		  	# byebug
+		  	s1=MachineAttendance.create(employee_id: @emp_id,day: @day,in: @in.to_datetime.utc,out: @out.to_datetime.utc,shift_master_id: @shift_type,present: @present)
+		  end
 			flash[:notice] = "Machine Attendance Created Successfully"
 			redirect_to new_machine_attendance_path
 	end
@@ -88,6 +99,26 @@ class MachineAttendancesController < ApplicationController
 		redirect_to new_machine_attendance_path
 	end
 
+	def search_by_date
+    reporter(EmployeeAttendance, template_class: PdfReportTemplate) do
+      filter :day, type: :date
+      # filter :current_status, type: :string
+      #column(:Request_ID, sortable: true) { |employee_leav_request| employee_leav_request.id }
+      column(:ID, sortable: true) { |employee_attendance| employee_attendance.employee.try(:manual_employee_code) }
+      column(:Employee_Name, sortable: true) { |employee_attendance| full_name(employee_attendance.employee) }
+      column(:Day, sortable: true) { |employee_attendance| employee_attendance.day }
+      column(:Month, sortable: true) { |employee_attendance| employee_attendance.month_name }
+      column(:InTime, sortable: true) { |employee_attendance| employee_attendance.in_time }
+      column(:OutTime, sortable: true) { |employee_attendance| employee_attendance.out_time}
+      column(:WorkingHrs, sortable: true) { |employee_attendance| employee_attendance.working_hrs }
+      column(:difference_hrs, sortable: true) { |employee_attendance| employee_attendance.difference_hrs }
+      column(:OvertimeHrs, sortable: true) { |employee_attendance| employee_attendance.overtime_hrs }
+      column(:LateMark, sortable: true) { |employee_attendance| employee_attendance.late_mark }
+    end
+    session[:active_tab] ="LeaveManagement"
+    session[:active_tab1] ="LeaveReports"
+  end
+
 
 	def save_machine_attendance_checkbox
 		@machine_attendance_ids = params[:machine_attendance_ids]
@@ -105,7 +136,11 @@ class MachineAttendancesController < ApplicationController
 							@company_time_masters.each do |ctm|
 								@joining_details.each do |jd|
 									if jd.time_master == true
+										# byebug
+										if e.present == "P"
+
 											if e.shift_master_id == ctm.shift_master_id
+											 	# byebug
 												if e.in.strftime('%H:%M:%S').between?(ctm.in_min_time.strftime('%H:%M:%S'), ctm.in_max_time.strftime('%H:%M:%S')) && e.out.strftime('%H:%M:%S').between?(ctm.out_min_time.strftime('%H:%M:%S'), ctm.out_max_time.strftime('%H:%M:%S'))
 														month_name = e.day.strftime("%B")
 														@c1=EmployeeAttendance.create(employee_id: e.employee_id,day: e.day.to_date,in_time: ctm.in_time,out_time: ctm.out_time,machine_attendances_id: e.id,company_time_master_id: ctm.id,present: e.present,month_name: month_name)
@@ -120,8 +155,8 @@ class MachineAttendancesController < ApplicationController
 														  EmployeeAttendance.where(id: @c1.id).update_all(overtime_hrs: total_time_diff)
 														end
 														puts "IN Time & OUT Time"
-
-
+                        
+                        
 												elsif e.in.strftime('%H:%M:%S').between?(ctm.in_min_time.strftime('%H:%M:%S'), ctm.in_max_time.strftime('%H:%M:%S'))
 													# byebug
  														month_name = e.day.strftime("%B")
@@ -148,8 +183,8 @@ class MachineAttendancesController < ApplicationController
                              	  EmployeeAttendance.where(id: @c1.id).update_all(out_time: e.out)
 														end
 														puts "Innnnnnnnnnnnnnnnnnnnn Timeeeeeeeeeeeee"
-
-
+                        
+                        
 												elsif e.out.strftime('%H:%M:%S').between?(ctm.out_min_time.strftime('%H:%M:%S'), ctm.out_max_time.strftime('%H:%M:%S'))
                             month_name = e.day.strftime("%B")
 														@c1=EmployeeAttendance.create(employee_id: e.employee_id,day: e.day.to_date,in_time: nil,out_time: ctm.out_time,machine_attendances_id: e.id,company_time_master_id: ctm.id,present: e.present,month_name: month_name)
@@ -181,6 +216,7 @@ class MachineAttendancesController < ApplicationController
                               month_name = e.day.strftime("%B")
 								              @c2=EmployeeAttendance.create(employee_id: e.employee_id,day: e.day.to_date,in_time: e.in,out_time: e.out,machine_attendances_id: e.id,company_time_master_id: ctm.id,present: e.present,month_name: month_name)
 								              MachineAttendance.where(id: e.id).update_all(is_proceed: true)
+								              # byebug
                               if e.in.strftime('%H:%M:%S') < ctm.in_time.strftime('%H:%M:%S') || e.out.strftime('%H:%M:%S') < ctm.out_time.strftime('%H:%M:%S')
 	                              	if e.in.strftime('%H:%M:%S') < ctm.in_time.strftime('%H:%M:%S')
 		                              	if jd.ot_option == true
@@ -209,7 +245,8 @@ class MachineAttendancesController < ApplicationController
                                           total_late_in_min = 0 + late_diff_in_min
                                           EmployeeAttendance.where(id: ea).update_all(late_mark: total_late_in_min)
                                         else
-  				                               	total_late_in_min = ea.late_mark + late_diff_in_min
+  				                               	total_late_in_min = ea.late_mark.to_i + late_diff_in_min
+  				                               	# byebug
   				                               	EmployeeAttendance.where(id: ea).update_all(late_mark: total_late_in_min)
                                         end
 				                              end
@@ -222,7 +259,7 @@ class MachineAttendancesController < ApplicationController
 		                              end
                               end
                               puts "Time Adjusted True"
-                    
+                          
                           else
                               month_name = e.day.strftime("%B")
 								              @c2=EmployeeAttendance.create(employee_id: e.employee_id,day: e.day.to_date,in_time: e.in,out_time: e.out,machine_attendances_id: e.id,company_time_master_id: ctm.id,present: e.present,month_name: month_name)
@@ -255,7 +292,7 @@ class MachineAttendancesController < ApplicationController
                                         total_late_in_min = 0 + late_diff_in_min
                                         EmployeeAttendance.where(id: ea).update_all(late_mark: total_late_in_min)
                                         else
-                                        total_late_in_min = ea.late_mark + late_diff_in_min
+                                        total_late_in_min = ea.late_mark.to_i + late_diff_in_min
                                         EmployeeAttendance.where(id: ea).update_all(late_mark: total_late_in_min)
                                        end
 				                               end
@@ -276,6 +313,13 @@ class MachineAttendancesController < ApplicationController
               
 											end #shift_master
 
+											else
+											# byebug
+											month_name = e.day.strftime("%B")
+											EmployeeAttendance.create(employee_id: e.employee_id,day: e.day.to_date,in_time: e.in,out_time: e.out,machine_attendances_id: e.id,company_time_master_id: ctm.id,present: e.present,month_name: month_name)
+											MachineAttendance.where(id: e.id).update_all(is_proceed: true)
+					          end
+
 									else #joining_detail
                     # byebug
                   month_name = e.day.strftime("%B")
@@ -285,21 +329,28 @@ class MachineAttendancesController < ApplicationController
 								end #joining_detail
 							end#joining_detail loop
 							# byebug
+							if e.in.nil? || e.out.nil?
+							  else
 								month_name = e.day.strftime("%B")
 								emp_attend = EmployeeAttendance.where(employee_id: e.employee_id,month_name: month_name)
 								emp_attend.each do |eatt|
-                time_diff=TimeDifference.between(eatt.in_time.strftime('%H:%M:%S'), eatt.out_time.strftime('%H:%M:%S')).in_hours.to_f
-								total_time_diff = time_diff - ctm.working_hrs.to_f
-         #          # byebug
+									if eatt.in_time.nil? || eatt.out_time.nil?
+									else
+		                time_diff=TimeDifference.between(eatt.in_time.strftime('%H:%M:%S'), eatt.out_time.strftime('%H:%M:%S')).in_hours.to_f
+										total_time_diff = time_diff - ctm.working_hrs.to_f
+                  # byebug
 									EmployeeAttendance.where(id: eatt).update_all(working_hrs: time_diff)
 									if total_time_diff>0
                     # byebug
 									  EmployeeAttendance.where(id: eatt).update_all(overtime_hrs: total_time_diff)
 									end
+								end
 								end#emp_attend loop
 						      @emp_attend_1 = EmployeeAttendance.where(employee_id: e.employee_id,month_name: month_name).where.not(late_mark: nil)
 						      @late_mark_masters = LateMarkMaster.where(is_active: true)
 						      @emp_attend_1.each do |ea1|	
+						      	if ea1.in_time.nil? || ea1.out_time.nil?
+						      	else
 									  @late_mark_masters.each do |lmm|
 											if ea1.late_mark.between?(lmm.from.to_i, lmm.to.to_i)
 												# late_mark_in_hrs = lmm.late_mark / 60
@@ -311,17 +362,21 @@ class MachineAttendancesController < ApplicationController
                           EmployeeAttendance.where(id: ea1).update_all(difference_hrs: total_time_diff.abs)
                         else
                           EmployeeAttendance.where(id: ea1).update_all(overtime_hrs: total_time_diff)
+                          puts "Overtime Calculations............................."
                         end
 										  end
 								   	end#late_mark_masters loop
 							  	end#emp_attend_1 loop
+							  end
 								#end#emp_attend loop
 						end#employee loop
+					end
 					end#company_time_masters loop
-					flash[:notice] = "Machine Attendance Created Successfully"
+					flash[:notice] = "Machine Attendance Confirmed Successfully"
 					redirect_to root_url
 		end#machine_attendance_ids
 	end
+
 
 	def import_machine_attendance
 		@machine_attendances = MachineAttendance.all

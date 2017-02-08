@@ -1,6 +1,8 @@
+require 'query_report/helper'  # need to require the helper
 class EmployeeAttendancesController < ApplicationController
   before_action :set_employee_attendance, only: [:show, :edit, :update, :destroy]
   before_action :check_params, only: [:create_attendance]
+  include QueryReport::Helper  # need to include it
 
   # GET /employee_attendances
   # GET /employee_attendances.json
@@ -244,11 +246,11 @@ class EmployeeAttendancesController < ApplicationController
                                 
   def create_attendance
       @employees, @attendances, work_data_structure = params[:employees], params[:attendances], []
-     
+      
       @month = params[:month]
       @year = params[:year]
       @date = Date.new(@year.to_i, Workingday.months[@month])
-
+      
       params.permit!
       @employees.each { |e| work_data_structure << params[e] }
       #byebug
@@ -271,17 +273,17 @@ class EmployeeAttendancesController < ApplicationController
       calculated_diff=ot_hours-diff_hours
       # Workingday.where(employee_id: x).update_all(ot_days: calculated_diff.to_f / @payroll_overtime_masters.company_hrs.to_f)
       Workingday.where(employee_id: x).update_all(ot_days: calculated_diff.to_f)
-      # d=Workingday.where(employee_id: x)
-      #   d.each do |f|
-      #     f.update(calculated_payable_days: f.payable_day)
-      #   end
+      d=Workingday.where(employee_id: x)
+        d.each do |f|
+          f.update(calculated_payable_days: f.payable_day)
+        end
       end
       work=Workingday.where("ot_days < ?", 0).pluck(:id)
       @workingdays = Workingday.where(id: work)
       @workingdays.each do |wor|
       
       emp_att=EmployeeAttendance.where(employee_id: wor.employee_id,month_name: wor.month_name)
-
+      
       overtime_hours=emp_att.sum(:overtime_hrs).to_f
       difference_hours=emp_att.sum(:difference_hrs).to_f
       calculated_diff_hours=(overtime_hours-difference_hours)
@@ -292,8 +294,8 @@ class EmployeeAttendancesController < ApplicationController
       Workingday.where(id: wor,employee_id: wor.employee_id).update_all(calculated_payable_days: final_payable_day.to_f,ot_days: nil)
       # Workingday.update_all(is_confirm: true)
       end
-
-
+      
+      
       flash[:notice] = "Workingday successfully saved."
       redirect_to employee_attendances_path
   end
@@ -684,6 +686,28 @@ def from_date_wise_pdf
       end
     end
 end
+
+def search_by_date
+  @employee_attendances = EmployeeAttendance.all
+    reporter(@employee_attendances, template_class: PdfReportTemplate) do
+      filter :day, type: :date
+      # filter :current_status, type: :string
+      #column(:Request_ID, sortable: true) { |employee_leav_request| employee_leav_request.id }
+      column(:ID, sortable: true) { |employee_attendance| employee_attendance.employee.try(:manual_employee_code) }
+      column(:Employee_Name, sortable: true) { |employee_attendance| full_name(employee_attendance.employee) }
+      column(:Day, sortable: true) { |employee_attendance| employee_attendance.day }
+      column(:Month, sortable: true) { |employee_attendance| employee_attendance.month_name }
+      column(:In_Time, sortable: true) { |employee_attendance| employee_attendance.in_time }
+      column(:Out_Time, sortable: true) { |employee_attendance| employee_attendance.out_time}
+      column(:Working_Hrs, sortable: true) { |employee_attendance| employee_attendance.working_hrs }
+      column(:Difference_Hrs, sortable: true) { |employee_attendance| employee_attendance.difference_hrs }
+      column(:Overtime_Hrs, sortable: true) { |employee_attendance| employee_attendance.overtime_hrs }
+      column(:Late_Mark, sortable: true) { |employee_attendance| employee_attendance.late_mark }
+      column(:Status, sortable: true) { |employee_attendance| employee_attendance.present }
+    end
+    session[:active_tab] ="LeaveManagement"
+    session[:active_tab1] ="LeaveReports"
+  end
 
   private
   # Use callbacks to share common setup or constraints between actions.

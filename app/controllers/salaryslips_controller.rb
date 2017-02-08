@@ -1069,6 +1069,7 @@ class SalaryslipsController < ApplicationController
               SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: s.march_amount, calculated_amount: s.march_amount, is_deducted: true, other_component_name: 'Prof. Tax',salary_component_id: @salary_component.id)
             end
         else
+          # byebug
             if @total.between?(s.min_amount, s.max_amount) && @month != "March" && @employee.company_location_id == s.company_location_id
               @salary_component = SalaryComponent.find_by(name: "Prof. Tax")
               SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: s.for_month, calculated_amount: s.for_month, is_deducted: true, other_component_name: 'Prof. Tax',salary_component_id: @salary_component.id)

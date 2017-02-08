@@ -1243,6 +1243,19 @@ ActiveRecord::Schema.define(version: 20170204035132) do
     t.datetime "updated_at",     null: false
   end
 
+  create_table "esic_employer_masters", force: :cascade do |t|
+    t.boolean  "esic"
+    t.decimal  "percentage"
+    t.date     "effective_from"
+    t.date     "effective_to"
+    t.decimal  "max_limit"
+    t.string   "base_component"
+    t.boolean  "is_active"
+    t.boolean  "is_confirm"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
   create_table "esic_employers", force: :cascade do |t|
     t.string   "base_component"
     t.decimal  "percentage"
@@ -1370,6 +1383,19 @@ ActiveRecord::Schema.define(version: 20170204035132) do
 
   add_index "food_deductions", ["employee_id"], name: "index_food_deductions_on_employee_id"
   add_index "food_deductions", ["food_coupan_master_id"], name: "index_food_deductions_on_food_coupan_master_id"
+
+  create_table "fp_masters", force: :cascade do |t|
+    t.boolean  "is_fp"
+    t.decimal  "min_limit"
+    t.decimal  "percentage"
+    t.string   "base_component"
+    t.date     "effective_from"
+    t.date     "effective_to"
+    t.boolean  "is_active"
+    t.boolean  "is_confirm"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
 
   create_table "goal_bunches", force: :cascade do |t|
     t.integer  "period_id"
@@ -1576,6 +1602,18 @@ ActiveRecord::Schema.define(version: 20170204035132) do
   end
 
   add_index "instalments", ["advance_salary_id"], name: "index_instalments_on_advance_salary_id"
+
+  create_table "insurance_masters", force: :cascade do |t|
+    t.boolean  "is_insurance"
+    t.decimal  "percentage"
+    t.string   "base_component"
+    t.date     "effective_from"
+    t.date     "effective_to"
+    t.boolean  "is_active"
+    t.boolean  "is_confirm"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
 
   create_table "interview_analyses", force: :cascade do |t|
     t.integer  "vacancy_request_history_id"
@@ -1904,6 +1942,7 @@ ActiveRecord::Schema.define(version: 20170204035132) do
     t.boolean  "is_society_member"
     t.date     "retirement_date"
     t.integer  "reserved_category_id"
+    t.boolean  "is_da"
     t.boolean  "is_employeer_pf"
     t.boolean  "is_employeer_esic"
     t.boolean  "is_insurance"

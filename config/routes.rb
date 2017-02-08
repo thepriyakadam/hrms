@@ -424,6 +424,7 @@ end
       get :department_wise_xls
       get :select_date_present_form
       get :show_datewise_employee
+      get :search_by_date
 
       # get :date_wise_pdf
       # get :date_wise_xls

@@ -78,7 +78,7 @@
                      <% if circular.avatar_file_name == nil %>
                      <small class="label label-default">Document Not Available</small>
                        <% else %>
-                       <%= link_to ' Document',download_documents_path(id: circular.id),class: 'btn btn-xs btn btn-info fa fa-download' %>
+                       <%= link_to ' Document',download_documents_path(id: circular.id),class: 'btn btn-xs btn btn-info fa fa-download' ,:target => "_blank"%>
                        <% end %>
                   </td>
                   <!-- <td><div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div></td> -->

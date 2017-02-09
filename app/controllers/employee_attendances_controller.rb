@@ -262,40 +262,47 @@ class EmployeeAttendancesController < ApplicationController
       b=a.last
       @payroll_overtime_masters = PayrollOvertimeMaster.where(is_active: true,is_payroll: true).take
       @emp1.try(:each) do |x| 
-      emp_attend=EmployeeAttendance.where(employee_id: x,month_name: b.month_name)
-      
-      EmployeeAttendance.where("strftime('%m/%Y', day) = ? AND employee_id = ?", @date.strftime('%m/%Y'),x).update_all(is_confirm: true)
-      EmployeeWeekOff.where("strftime('%m/%Y', date) = ? AND employee_id = ?", @date.strftime('%m/%Y'),x).update_all(is_confirm: true)
-      # ff=EmployeeAttendance.where(employee_id: x,month_name: b.month_name).take
-      
-      ot_hours=emp_attend.sum(:overtime_hrs).to_f
-      diff_hours=emp_attend.sum(:difference_hrs).to_f
-      calculated_diff=ot_hours-diff_hours
-      # Workingday.where(employee_id: x).update_all(ot_days: calculated_diff.to_f / @payroll_overtime_masters.company_hrs.to_f)
-      Workingday.where(employee_id: x).update_all(ot_days: calculated_diff.to_f)
-      d=Workingday.where(employee_id: x)
-        d.each do |f|
-          f.update(calculated_payable_days: f.payable_day)
-        end
-      end
-      work=Workingday.where("ot_days < ?", 0).pluck(:id)
-      @workingdays = Workingday.where(id: work)
-      @workingdays.each do |wor|
-      
-      emp_att=EmployeeAttendance.where(employee_id: wor.employee_id,month_name: wor.month_name)
-      
-      overtime_hours=emp_att.sum(:overtime_hrs).to_f
-      difference_hours=emp_att.sum(:difference_hrs).to_f
-      calculated_diff_hours=(overtime_hours-difference_hours)
-      total_hrs =  wor.payable_day.to_f * @payroll_overtime_masters.company_hrs.to_f
-      result = total_hrs - wor.ot_days.abs.to_f
-      final_payable_day = result / @payroll_overtime_masters.company_hrs.to_f
-      # byebug
-      Workingday.where(id: wor,employee_id: wor.employee_id).update_all(calculated_payable_days: final_payable_day.to_f,ot_days: nil)
-      # Workingday.update_all(is_confirm: true)
-      end
-      
-      
+          emp_attend=EmployeeAttendance.where(employee_id: x,month_name: b.month_name)
+          
+          EmployeeAttendance.where("strftime('%m/%Y', day) = ? AND employee_id = ?", @date.strftime('%m/%Y'),x).update_all(is_confirm: true)
+          EmployeeWeekOff.where("strftime('%m/%Y', date) = ? AND employee_id = ?", @date.strftime('%m/%Y'),x).update_all(is_confirm: true)
+        # ff=EmployeeAttendance.where(employee_id: x,month_name: b.month_name).take
+        
+          d=Workingday.where(employee_id: x)
+          d.each do |f|
+            f.update(calculated_payable_days: f.payable_day)
+          end
+
+          ot_hours=emp_attend.sum(:overtime_hrs).to_f
+          diff_hours=emp_attend.sum(:difference_hrs).to_f
+          calculated_diff=ot_hours-diff_hours
+          # Workingday.where(employee_id: x).update_all(ot_days: calculated_diff.to_f / @payroll_overtime_masters.company_hrs.to_f)
+          # byebug
+          joining_detail = JoiningDetail.where(employee_id: x).take
+        if joining_detail.ot_option == true
+          Workingday.where(employee_id: x).update_all(ot_days: calculated_diff.to_f)
+          # d=Workingday.where(employee_id: x)
+          #   d.each do |f|
+          #     f.update(calculated_payable_days: f.payable_day)
+          #   end
+      end#emp1 loop
+          work=Workingday.where("ot_days < ?", 0).pluck(:id)
+          @workingdays = Workingday.where(id: work)
+          @workingdays.each do |wor|
+          
+          emp_att=EmployeeAttendance.where(employee_id: wor.employee_id,month_name: wor.month_name)
+          
+          overtime_hours=emp_att.sum(:overtime_hrs).to_f
+          difference_hours=emp_att.sum(:difference_hrs).to_f
+          calculated_diff_hours=(overtime_hours-difference_hours)
+          total_hrs =  wor.payable_day.to_f * @payroll_overtime_masters.company_hrs.to_f
+          result = total_hrs - wor.ot_days.abs.to_f
+          final_payable_day = result / @payroll_overtime_masters.company_hrs.to_f
+          # byebug
+          Workingday.where(id: wor,employee_id: wor.employee_id).update_all(calculated_payable_days: final_payable_day.to_f,ot_days: 0)
+          # Workingday.update_all(is_confirm: true)
+          end#workingdays loop
+        end#joining_detail
       flash[:notice] = "Workingday successfully saved."
       redirect_to employee_attendances_path
   end

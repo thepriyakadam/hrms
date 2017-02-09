@@ -931,19 +931,19 @@ require 'roo'
 #  end
 
 
-ex = Roo::Excel.new("#{Rails.root}/public/employer_contribution.xls")
-ex.default_sheet = ex.sheets[0] #siya feb
-i = 1
-ActiveRecord::Base.transaction do
-2.upto(72) do |line| # siya Feb 2016
- puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
- @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A'))
- puts "#{i} Record inserting.----------------------------"
- JoiningDetail.where(employee_id: @employee.id).update_all(is_da: ex.cell(line,'B'),is_employeer_pf: ex.cell(line,'C'),is_employeer_esic: ex.cell(line,'D'),is_insurance: ex.cell(line,'E'),is_family_pension: ex.cell(line,'F'),is_bonus: ex.cell(line,'G'),basis_of_time: ex.cell(line,'H'))
- puts "#{i} Record inserted.-----------------------------------------------"
- i += 1
- end
- end
+# ex = Roo::Excel.new("#{Rails.root}/public/employer_contribution.xls")
+# ex.default_sheet = ex.sheets[0] #siya feb
+# i = 1
+# ActiveRecord::Base.transaction do
+# 2.upto(72) do |line| # siya Feb 2016
+#  puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
+#  @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A'))
+#  puts "#{i} Record inserting.----------------------------"
+#  JoiningDetail.where(employee_id: @employee.id).update_all(is_da: ex.cell(line,'B'),is_employeer_pf: ex.cell(line,'C'),is_employeer_esic: ex.cell(line,'D'),is_insurance: ex.cell(line,'E'),is_family_pension: ex.cell(line,'F'),is_bonus: ex.cell(line,'G'),basis_of_time: ex.cell(line,'H'))
+#  puts "#{i} Record inserted.-----------------------------------------------"
+#  i += 1
+#  end
+#  end
 
 # ex = Roo::Excel.new("#{Rails.root}/public/employee_punch_card_detail.xls")
 # ex.default_sheet = ex.sheets[0] #siya feb
@@ -975,6 +975,22 @@ ActiveRecord::Base.transaction do
 #  i += 1
 #  end
 #  end
+
+ex = Roo::Excel.new("#{Rails.root}/public/sasi_dec_attendance.xls")
+ex.default_sheet = ex.sheets[1] #siya feb
+i = 1
+ActiveRecord::Base.transaction do
+2.upto(32) do |line| # siya Feb 2016
+ puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
+ # byebug
+ @employee = Employee.find_by_punch_card_id(ex.cell(line,'A').to_i)
+ puts "#{i} Record inserting.----------------------------"
+ # MachineAttendance.where(employee_id: @employee.id).update_all(employee_id: @employee.id,in: ex.cell(line,'B'),out: ex.cell(line,'C'),shift_master_id: ex.cell(line,'E'),present: ex.cell(line,'F').to_s,day: ex.cell(line,'G'))
+ MachineAttendance.where(employee_id: @employee.id).create(employee_id: @employee.id,in: ex.cell(line,'B'),out: ex.cell(line,'C'),shift_master_id: ex.cell(line,'E'),present: ex.cell(line,'F').to_s,day: ex.cell(line,'G'))
+ puts "#{i} Record inserted.-----------------------------------------------"
+ i += 1
+ end
+ end
 
 # ex = Roo::Excel.new("#{Rails.root}/public/Yearly Workingdays.xls")
 # ex.default_sheet = ex.sheets[0] #siya feb

@@ -37,6 +37,12 @@ class EmployeePromotionsController < ApplicationController
     @joining_detail.update(employee_designation_id: @employee_designation_id,employee_grade_id: @employee_grade_id,employee_category_id: @employee_category_id)
     respond_to do |format|
       if @employee_promotion.save
+        #   ActiveRecord::Base.transaction do
+        # @employee = @employee_promotion.employee
+        # @pre_employee_promotion = EmployeePromotion.where('employee_id = ? and current = ?', @employee.id, true).take
+        # @pre_employee_promotion.update(current: false, effective_to: @pre_employee_promotion.effective_from)
+        # @employee_promotion.update(current: true, effective_from: @pre_employee_promotion.effective_to)
+      # end
         format.html { redirect_to @employee_promotion, notice: 'Employee promotion was successfully created.' }
         format.json { render :show, status: :created, location: @employee_promotion }
       else
@@ -86,6 +92,7 @@ class EmployeePromotionsController < ApplicationController
 
   def print_employee_promotion
       @employee = Employee.find(params[:id])
+      # @employee1 = EmployeePromotion.where(id: @employee)
       @employee_promotions = EmployeePromotion.where(employee_id: params[:id])
             respond_to do |f|
             f.js
@@ -102,7 +109,9 @@ class EmployeePromotionsController < ApplicationController
 
 
   def promotion_history
+    # byebug
     @employee = Employee.find(params[:id])
+    @employee1 = EmployeePromotion.where(id: @employee)
     @employee_promotions = EmployeePromotion.where(employee_id: params[:id])
   end
 

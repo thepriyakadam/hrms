@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170208060007) do
+ActiveRecord::Schema.define(version: 20170210062430) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -375,6 +375,7 @@ ActiveRecord::Schema.define(version: 20170208060007) do
     t.datetime "avatar_updated_at"
     t.boolean  "is_active"
     t.boolean  "is_confirm"
+    t.string   "document"
     t.string   "document_file_name"
     t.string   "document_content_type"
     t.integer  "document_file_size"
@@ -473,6 +474,7 @@ ActiveRecord::Schema.define(version: 20170208060007) do
     t.integer  "document_file_size"
     t.datetime "document_updated_at"
     t.text     "description"
+    t.string   "document"
   end
 
   create_table "company_shifts", force: :cascade do |t|
@@ -1092,6 +1094,7 @@ ActiveRecord::Schema.define(version: 20170208060007) do
     t.date     "effective_to"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
+    t.boolean  "current"
   end
 
   add_index "employee_promotions", ["department_id"], name: "index_employee_promotions_on_department_id"

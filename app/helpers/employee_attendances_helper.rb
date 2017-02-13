@@ -64,6 +64,8 @@ module EmployeeAttendancesHelper
     exist.select {|k,v| v == "PG" }.count
   end
   
+ 
+
   # def payable_day_count(exist)
   #   exist.select {|k,v| v == "P" }.count
   # end
@@ -95,6 +97,10 @@ module EmployeeAttendancesHelper
 
   def coff_leave_count(exist)
     exist.select {|k,v| v == "C.Off" }.count + (exist.select {|k,v| v == "P/C.Off" }.count)/2.to_f 
+  end
+
+   def od_leave_count(exist)
+    exist.select {|k,v| v == "OD" }.count + (exist.select {|k,v| v == "P/OD" }.count)/2.to_f 
   end
 
 

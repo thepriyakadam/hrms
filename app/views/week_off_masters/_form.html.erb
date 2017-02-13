@@ -45,7 +45,7 @@
     <div class="col-sm-3">
     <label></label>
       <div class="actions">
-        <%= f.submit "Search Employee" ,class: "btn btn-primary btn-sm" %>
+        <%= f.submit "Search Employee" ,class: "btn btn-primary btn-sm", id: "buttonCtc" %>
       </div>
     </div>
   </div>
@@ -60,7 +60,11 @@
 <br>
 
 <script type="text/javascript">
-
+  $("#buttonCtc").click(function(){
+      $('.ajax-progress').show();
+      $("#salary").submit();
+    })
+  
   $(function(){
      $('.week_off_date').datepicker({
     changeYear:true,

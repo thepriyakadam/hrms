@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   
+  resources :monthly_arrears
   resources :employee_week_offs do
     collection do
       get :revert_week_off
@@ -434,7 +435,12 @@ end
     end
   end
   resources :salary_comp_mappings
-  resources :company_events
+  resources :company_events do
+    collection do
+      get :event_detail
+      get :show_event
+    end
+  end
   resources :employee_task_to_dos do
     collection do
       get :dynamic_refresh
@@ -1127,6 +1133,7 @@ end
   match 'interview_schedules/:id/sample_email_to_interviewer/:id' => 'interview_schedules#sample_email_to_interviewer', :via => [:get], :as => :sample_email_to_interviewer
 
   match 'circulars/:id/download_documents/:id' => 'circulars#download_documents', :via => [:get], :as => :download_documents
+  match 'circulars/:id/download_company_policy_document/:id' => 'circulars#download_company_policy_document', :via => [:get], :as => :download_company_policy_document
 
   match 'daily_bill_details/:id/download_doc/:id' => 'daily_bill_details#download_doc', :via => [:get], :as => :download_doc
   match 'daily_bill_details/:id/download_pics/:id' => 'daily_bill_details#download_pics', :via => [:get], :as => :download_pics
@@ -1694,6 +1701,7 @@ end
   resources :leav_categories do
     collection do
       get :is_confirm
+      get :show_leave_category
     end
   end
   resources :employee_physicals do

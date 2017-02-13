@@ -25,9 +25,12 @@ class AccidentRecordsController < ApplicationController
   # POST /accident_records
   # POST /accident_records.json
   def create
+    # byebug
     @accident_record = AccidentRecord.new(accident_record_params)
     respond_to do |format|
       if @accident_record.save
+        # @employee = AccidentRecord.find(id: employee_id)
+        # @employee1 = Employee.find_by_employee_id(@employee)
         format.html { redirect_to @accident_record, notice: 'Accident record was successfully created.' }
         format.json { render :show, status: :created, location: @accident_record }
       else
@@ -65,6 +68,7 @@ class AccidentRecordsController < ApplicationController
     @employee = Employee.find(params[:id])
     @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
     @esic_no = @joining_detail.employee_efic_no
+    @department_id = @employee.department.name
   end
 
   def download_jpg

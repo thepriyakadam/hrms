@@ -5,7 +5,7 @@
     <div class="info-box">
       <span class="info-box-icon bg-aqua"><i class="fa fa-industry"></i></span>
       <div class="info-box-content">
-        <span class="info-box-text">Companies</span>
+        <span class="info-box-text"><strong>Companies</strong></span>
         <span class="info-box-number"><%=@companies.try(:count)%></span>
       </div><!-- /.info-box-content -->
     </div><!-- /.info-box -->
@@ -14,7 +14,7 @@
     <div class="info-box">
       <span class="info-box-icon bg-red"><i class="glyphicon glyphicon-th-list"></i></span>
       <div class="info-box-content">
-        <span class="info-box-text">Locations</span>
+        <span class="info-box-text"><strong>Locations</strong></span>
         <span class="info-box-number"><%= @company_locations.try(:count)%></span>
       </div><!-- /.info-box-content -->
     </div><!-- /.info-box -->
@@ -27,7 +27,7 @@
     <div class="info-box">
       <span class="info-box-icon bg-green"><i class="glyphicon glyphicon-th"></i></span>
       <div class="info-box-content">
-        <span class="info-box-text">Departments</span>
+        <span class="info-box-text"><strong>Departments</strong></span>
         <span class="info-box-number"><%= @departments.try(:count) %></span>
       </div><!-- /.info-box-content --> 
     </div><!-- /.info-box -->
@@ -36,7 +36,7 @@
     <div class="info-box">
       <span class="info-box-icon bg-yellow"><i class="ion ion-ios-people-outline"></i></span>
       <div class="info-box-content">
-        <span class="info-box-text">Employees</span>
+        <span class="info-box-text"><strong>Employees</strong></span>
         <span class="info-box-number"><%= @employees.try(:count) %></span>
       </div><!-- /.info-box-content -->
     </div><!-- /.info-box -->
@@ -52,7 +52,7 @@
        <!-- TABLE: LATEST ORDERS -->
       <div class="box box-info">
         <div class="box-header with-border">
-          <h3 class="box-title">Circular List</h3>
+          <h3 class="box-title"><strong>Circular List</strong></h3>
           <div class="box-tools pull-right">
             <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
             <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -65,20 +65,28 @@
                 <tr>
                  <th>Date</th>
                  <th>Subject</th>
-                 <th>Download</th>
+                 <th>Document</th>
+                 <th>Picture</th>
                   <!-- <th>Popularity</th> -->
                 </tr>
               </thead>
               <tbody>
-              <% Circular.where(is_active: :true) do |circular| %>
+              <% @circulars.each do |circular| %>
                 <tr>
                    <td><%= circular.date %></td>
                    <td><%= circular.subject %></td>
+                   <td>
+                     <% if circular.document_file_name == nil %>
+                       <small class="label label-default">Not Available</small>
+                       <% else %>
+                    <%= link_to ' ',download_company_policy_document_path(id: circular.id),class: 'btn btn-xs btn btn-primary fa fa-download',:target => "_blank" %>
+                  <% end %>
+                </td>
                   <td>
                      <% if circular.avatar_file_name == nil %>
-                     <small class="label label-default">Document Not Available</small>
+                     <small class="label label-default">Not Available</small>
                        <% else %>
-                       <%= link_to ' Document',download_documents_path(id: circular.id),class: 'btn btn-xs btn btn-info fa fa-download' %>
+                       <%= link_to ' ',download_documents_path(id: circular.id),class: 'btn btn-xs btn btn-primary fa fa-download' ,:target => "_blank"%>
                        <% end %>
                   </td>
                   <!-- <td><div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div></td> -->
@@ -97,7 +105,7 @@
       <!-- TABLE: LATEST ORDERS -->
       <div class="box box-info">
         <div class="box-header with-border">
-          <h3 class="box-title">Company Events</h3>
+          <h3 class="box-title"><strong>Company Events</strong></h3>
           <div class="box-tools pull-right">
             <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
             <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -110,23 +118,18 @@
                 <tr>
                   <th>Event Date</th>
                   <th>Event Name</th>
-                  <th>Event Detail</th>
-                  <th>Status</th>
+                  <th>Detail</th>
                   <!-- <th>Popularity</th> -->
                 </tr>
               </thead>
               <tbody>
-              <% CompanyEvent.where(status: true).try(:each) do |e| %>
+              <% @company_events.where(status: true).try(:each) do |e| %>
                 <tr>
                   <td><%= e.event_date %></td>
                   <td><%= e.event_name %></td>
-                  <td><%= e.description %></td>
                   <td>
-                    <% if e.status %>
-                      <span class="label label-success">Active</span>
-                    <%else%>
-                      <span class="label label-danger">Inactive</span>
-                    <%end%>
+                    <%= link_to '', event_detail_company_events_path(id: e),class: 'btn btn-xs btn-primary fa fa-info-circle',remote:true %>
+
                   </td>
                   <!-- <td><div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div></td> -->
                 </tr>
@@ -141,10 +144,11 @@
         </div><!-- /.box-footer -->
       </div><!-- /.box -->
 
+    <div id="event_detail" class="modal fade"></div>
             <!-- TABLE: LATEST ORDERS -->
       <div class="box box-info">
         <div class="box-header with-border">
-          <h3 class="box-title">Policy Corner</h3>
+          <h3 class="box-title"><strong>Policy Corner</strong></h3>
           <div class="box-tools pull-right">
             <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
             <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -157,7 +161,7 @@
               <tr>
                 <th>Name</th>
                 <th>Description</th>
-                <th>Download Document</th>
+                <th>Document</th>
               </tr>
             </thead>
 
@@ -168,9 +172,9 @@
                 <td><%= company_policy.description %></td>
                 <td>
                    <% if company_policy.document_file_name == nil %>
-                   <small class="label label-default">Document Not Available</small>
+                   <small class="label label-default">Not Available</small>
                      <% else %>
-                     <%= link_to ' Document',download_docs_path(id: company_policy.id),class: 'btn btn-xs btn btn-info fa fa-download' %>
+                     <%= link_to '',download_docs_path(id: company_policy.id),class: 'btn btn-xs btn btn-primary fa fa-download' %>
                      <% end %>
                   </td>
                 </tr>
@@ -195,7 +199,7 @@
 
         <div class="box box-primary">
         <div class="box-header with-border">
-          <h3 class="box-title">Today's Birthday</h3>
+          <h3 class="box-title"><strong>Today's Birthday</strong></h3>
           <div class="box-tools pull-right">
             <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
             <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -212,7 +216,6 @@
               <%@employees.each do |e|%>
                 <li class="item">
                   <div class="product-img">
-
                  <%unless e.nil? or e.member.nil? or e.member.avatar.nil? %>
                   <%= image_tag e.member.avatar.url(:medium),class: "img-circle"%>
                   <%else%>
@@ -221,7 +224,7 @@
                 </div> 
                 <div class="product-info">
                   <%= full_name(e) %>
-                  <span class="label label-success pull-right">Happy Birthday</span>
+                 <span class="label label-primary pull-right"><i><strong>Happy Birthday</strong></i></span>
                   <span class="users-list-date"><%= e.contact_no %></span>
                   </div>
                 <% end %>
@@ -235,7 +238,7 @@
           <div class="box box-default collapsed-box">
           <div class="box box-info">
             <div class="box-header with-border">
-              <h3 class="box-title">Tomorrow's Birthday</h3>
+              <h3 class="box-title"><strong>Tomorrow's Birthday</strong></h3>
               <div class="box-tools pull-right">
                <!--  <span class="label label-success"> BirthDay's</span> -->
                  <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
@@ -274,7 +277,7 @@
       <!-- PRODUCT LIST -->
       <div class="box box-primary">
         <div class="box-header with-border">
-          <h3 class="box-title">Newly Joined Employees</h3>
+          <h3 class="box-title"><strong>Newly Joined Employees</strong></h3>
           <div class="box-tools pull-right">
             <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
             <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>

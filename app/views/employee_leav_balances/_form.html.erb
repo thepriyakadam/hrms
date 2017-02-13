@@ -118,7 +118,7 @@ $(function () {
   });
 
   function calculate_total_leave() {
-    var no_of_leave = parseInt($('#employee_leav_balance_no_of_leave').val());
+    var no_of_leave = parseFloat($('#employee_leav_balance_no_of_leave').val());
     if(isNaN(no_of_leave)){
       $('#employee_leav_balance_total_leave').val(""); 
     }
@@ -127,7 +127,7 @@ $(function () {
     }    
   }
   function calculate_no_of_leave() {
-    var total_leave = parseInt($('#employee_leav_balance_total_leave').val());
+    var total_leave = parseFloat($('#employee_leav_balance_total_leave').val());
     if(isNaN(total_leave)){
       $('#employee_leav_balance_no_of_leave').val(""); 
     }

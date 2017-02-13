@@ -1,6 +1,6 @@
 <table id="example1" class="table table-bordered table-hover table-condensed">
   <thead>
-  <tr><td colspan="5"><center><strong>Salary Templates of <%= full_name(@employee_templates.first.employee) %></strong></center></td></tr>
+  <tr><td colspan="5"><center><strong>Salary Templates of <%= full_name(@employee_templates.try(:first).try(:employee)) %></strong></center></td></tr>
     <tr>
       <th>Template Name</th>
       <th>Active Date</th>

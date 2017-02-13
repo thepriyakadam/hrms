@@ -6,7 +6,7 @@ class EmployeeLeavRequestsController < ApplicationController
 
   def index
     @employee = Employee.find(current_user.employee_id)
-    @employee_leav_requests = EmployeeLeavRequest.where('employee_id = ?', current_user.try(:employee_id))
+    @employee_leav_requests = EmployeeLeavRequest.where('employee_id = ?', current_user.try(:employee_id)).order("id DESC")
     @employee_leav_balances = EmployeeLeavBalance.where(employee_id: current_user.employee_id)
     session[:active_tab] ="EmployeeSelfService"
   end
@@ -274,19 +274,21 @@ class EmployeeLeavRequestsController < ApplicationController
 
   def hr_view_request
     @employee = Employee.find(params[:format])
-    @employee_leav_requests = @employee.employee_leav_requests
+    @total_leaves = EmployeeLeavBalance.where('employee_id = ?', @employee.id)
+    @employee_leav_requests = @employee.employee_leav_requests.order("id DESC")
   end
 
   def employee_history_with_current_leave
     @current_request = EmployeeLeavRequest.find(params[:format])
     @employee = Employee.find(@current_request.employee_id)
-    @employee_leav_requests = @employee.employee_leav_requests
+    @total_leaves = EmployeeLeavBalance.where('employee_id = ?', @employee.id)
+    @employee_leav_requests = @employee.employee_leav_requests.order("id DESC")
   end
 
   def admin_employee_history_with_current_leave
     @current_request = EmployeeLeavRequest.find(params[:format])
     @employee = Employee.find(@current_request.employee_id)
-    @employee_leav_requests = @employee.employee_leav_requests
+    @employee_leav_requests = @employee.employee_leav_requests.order("id DESC")
   end
 
   def search_by_start_date

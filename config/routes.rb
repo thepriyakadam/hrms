@@ -24,6 +24,7 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :monthly_arrears
   resources :employee_week_offs do
     collection do
       get :revert_week_off

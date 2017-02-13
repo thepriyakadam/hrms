@@ -56,6 +56,13 @@ class MonthlyArrearsController < ApplicationController
      @monthly_arrears = MonthlyArrear.all   
   end
 
+   def is_paid
+    @monthly_arrear = MonthlyArrear.find(params[:monthly_arrear])
+    MonthlyArrear.find(@monthly_arrear.id).update(is_paid: true)
+    flash[:notice] = "Paid Successfully"
+    redirect_to new_monthly_arrear_path
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_monthly_arrear

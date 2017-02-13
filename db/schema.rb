@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170208060007) do
+ActiveRecord::Schema.define(version: 20170213065029) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -2389,6 +2389,56 @@ ActiveRecord::Schema.define(version: 20170208060007) do
     t.boolean  "is_confirm"
   end
 
+  create_table "od_records", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.integer  "on_duty_request_id"
+    t.date     "day"
+    t.string   "status"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
+
+  add_index "od_records", ["employee_id"], name: "index_od_records_on_employee_id"
+  add_index "od_records", ["on_duty_request_id"], name: "index_od_records_on_on_duty_request_id"
+
+  create_table "od_status_records", force: :cascade do |t|
+    t.integer  "on_duty_request_id"
+    t.integer  "employee_id"
+    t.string   "status"
+    t.datetime "change_date"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
+
+  add_index "od_status_records", ["employee_id"], name: "index_od_status_records_on_employee_id"
+  add_index "od_status_records", ["on_duty_request_id"], name: "index_od_status_records_on_on_duty_request_id"
+
+  create_table "on_duty_requests", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.string   "leave_type"
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.string   "no_of_day"
+    t.text     "reason"
+    t.boolean  "first_half"
+    t.boolean  "last_half"
+    t.integer  "current_status"
+    t.boolean  "is_pending"
+    t.boolean  "is_cancelled"
+    t.boolean  "is_first_approved"
+    t.boolean  "is_second_approved"
+    t.boolean  "is_first_rejected"
+    t.boolean  "is_second_rejected"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.integer  "first_reporter_id"
+    t.integer  "second_reporter_id"
+  end
+
+  add_index "on_duty_requests", ["employee_id"], name: "index_on_duty_requests_on_employee_id"
+  add_index "on_duty_requests", ["first_reporter_id"], name: "index_on_duty_requests_on_first_reporter_id"
+  add_index "on_duty_requests", ["second_reporter_id"], name: "index_on_duty_requests_on_second_reporter_id"
+
   create_table "other_salary_components", force: :cascade do |t|
     t.string   "code"
     t.string   "name"
@@ -2512,6 +2562,19 @@ ActiveRecord::Schema.define(version: 20170208060007) do
   add_index "particular_leave_records", ["employee_id"], name: "index_particular_leave_records_on_employee_id"
   add_index "particular_leave_records", ["employee_leav_request_id"], name: "index_particular_leave_records_on_employee_leav_request_id"
   add_index "particular_leave_records", ["leav_category_id"], name: "index_particular_leave_records_on_leav_category_id"
+
+  create_table "particular_od_records", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.integer  "on_duty_request_id"
+    t.datetime "leave_date"
+    t.boolean  "is_full"
+    t.boolean  "is_cancel_after_approve"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  add_index "particular_od_records", ["employee_id"], name: "index_particular_od_records_on_employee_id"
+  add_index "particular_od_records", ["on_duty_request_id"], name: "index_particular_od_records_on_on_duty_request_id"
 
   create_table "particular_vacancy_requests", force: :cascade do |t|
     t.integer  "vacancy_master_id"

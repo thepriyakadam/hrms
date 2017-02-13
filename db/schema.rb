@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170210062430) do
+ActiveRecord::Schema.define(version: 20170213063011) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -2359,6 +2359,18 @@ ActiveRecord::Schema.define(version: 20170210062430) do
   add_index "members", ["member_code"], name: "index_members_on_member_code", unique: true
   add_index "members", ["reset_password_token"], name: "index_members_on_reset_password_token", unique: true
   add_index "members", ["role_id"], name: "index_members_on_role_id"
+
+  create_table "monthly_arrears", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.date     "day"
+    t.decimal  "amount"
+    t.boolean  "is_paid"
+    t.text     "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "monthly_arrears", ["employee_id"], name: "index_monthly_arrears_on_employee_id"
 
   create_table "monthly_expences", force: :cascade do |t|
     t.date     "expence_date"

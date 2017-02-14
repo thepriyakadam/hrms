@@ -7,7 +7,7 @@ class OnDutyRequestsController < ApplicationController
   # GET /on_duty_requests.json
   def index
     @employee = Employee.find(current_user.employee_id)
-    @on_duty_requests = OnDutyRequest.where('employee_id = ?', current_user.try(:employee_id))
+    @on_duty_requests = OnDutyRequest.where('employee_id = ?', current_user.try(:employee_id)).order("id DESC")
     session[:active_tab] ="EmployeeSelfService"
   end
 
@@ -19,7 +19,7 @@ class OnDutyRequestsController < ApplicationController
   # GET /on_duty_requests/new
   def new
     @on_duty_request = OnDutyRequest.new
-    @employee = Employee.find(current_user.employee_id)
+    @employee = Employee.find_by(id: current_user.employee_id)
   end
 
   # GET /on_duty_requests/1/edit
@@ -62,10 +62,10 @@ class OnDutyRequestsController < ApplicationController
         if @on_duty_request.leave_type == 'Full Day'
           @on_duty_request.no_of_day = (@on_duty_request.end_date.to_date - @on_duty_request.start_date.to_date).to_f + 1
         elsif @on_duty_request.leave_type == 'Full/Half'
-          if @on_duty_request.first_half == true || @on_duty_request.last_half == true
-            @on_duty_request.no_of_day = (@on_duty_request.end_date.to_date - @on_duty_request.start_date.to_date).to_f + 0.5
-          elsif @on_duty_request.last_half == true && @on_duty_request.last_half == true
+          if @on_duty_request.last_half == true && @on_duty_request.last_half == true
             @on_duty_request.no_of_day = (@on_duty_request.end_date.to_date - @on_duty_request.start_date.to_date).to_f
+          elsif @on_duty_request.first_half == true || @on_duty_request.last_half == true
+            @on_duty_request.no_of_day = (@on_duty_request.end_date.to_date - @on_duty_request.start_date.to_date).to_f + 0.5
           else
             @on_duty_request.no_of_day = (@on_duty_request.end_date.to_date - @on_duty_request.start_date.to_date).to_f + 1
           end  
@@ -182,7 +182,7 @@ class OnDutyRequestsController < ApplicationController
 
   def hr_view_request
     @employee = Employee.find(params[:format])
-    @on_duty_requests = OnDutyRequest.where(employee_id: @employee.id)
+    @on_duty_requests = OnDutyRequest.where(employee_id: @employee.id).order("id DESC")
   end
 
   private

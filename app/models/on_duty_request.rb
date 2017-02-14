@@ -69,7 +69,7 @@ class OnDutyRequest < ActiveRecord::Base
 
  def is_there(i)
     flag = 0
-    flag = EmployeeAttendance.exists?(day: i,employee_id: self.employee_id)
+      flag = EmployeeAttendance.exists?(day: i,employee_id: self.employee_id)
     flag
   end
   

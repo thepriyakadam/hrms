@@ -68,6 +68,7 @@ class Employee < ActiveRecord::Base
   has_many :issue_lockers
   has_many :week_off_masters
   has_many :machine_attendances
+  has_many :on_duty_requests
   
   #accepts_nested_attributes_for :joining_detail
   has_many :subordinates, class_name: 'Employee',
@@ -91,6 +92,12 @@ class Employee < ActiveRecord::Base
                           foreign_key: "manager_id"
   has_many :manager_histories, class_name: "Employee",
                           foreign_key: "manager_2_id"
+
+  has_many :on_duty_requests, class_name: "Employee",
+                          foreign_key: "first_reporter_id"
+
+  has_many :on_duty_requests, class_name: "Employee",
+                          foreign_key: "second_reporter_id"
 
   belongs_to :user, class_name: 'Employee'
 

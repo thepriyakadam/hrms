@@ -24,7 +24,13 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :monthly_arrears
+
+  resources :monthly_arrears do
+    collection do
+      get :is_paid
+      
+    end
+  end
   resources :employee_week_offs do
     collection do
       get :revert_week_off

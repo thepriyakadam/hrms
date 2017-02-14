@@ -316,6 +316,13 @@ class EmployeeTemplatesController < ApplicationController
   end
 
   def show_all_record
+  	@employee_ids = params[:employee_ids]
+    if @employee_ids.nil?
+      flash[:alert] = "Please Select the checkbox"
+      @employees = []
+      redirect_to show_all_record_employee_templates_path
+    else
+    end
   end
 
 end

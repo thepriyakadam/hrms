@@ -293,4 +293,29 @@ class EmployeeTemplatesController < ApplicationController
       format.xls {render template: 'employee_templates/employee_wise_salary.xls.erb'}
     end
   end
+
+  def employee_list
+    if current_user.class == Group
+      @employees = Employee.where(is_active: true)
+    elsif current_user.class == Member
+      if current_user.role.name == 'GroupAdmin'
+        @employees = Employee.where(status: 'Active')
+      elsif current_user.role.name == 'Admin'
+        @employees = Employee.where(company_id: current_user.company_location.company_id)
+        @employees = Employee.where(status: 'Active',id: @employees)
+      elsif current_user.role.name == 'Branch'
+        @employees = Employee.where(company_location_id: current_user.company_location_id)
+        @employees = Employee.where(status: 'Active',id: @employees)
+      elsif current_user.role.name == 'HOD'
+        @employees = Employee.where(department_id: current_user.department_id)
+        @employees = Employee.where(status: 'Active',id: @employees)
+      else current_user.role.name == 'Employee'
+         @employees = Employee.where(status: 'Active',id: current_user.employee_id)
+      end
+    end
+  end
+
+  def show_all_record
+  end
+
 end

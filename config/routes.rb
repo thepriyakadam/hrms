@@ -1319,6 +1319,8 @@ end
       post :salary_employee_wise
       get :employee_wise_pdf
       get :employee_wise_xls
+      get :employee_list
+      post :show_all_record
     end
   end
   resources :retention_moneys do

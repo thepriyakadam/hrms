@@ -1297,30 +1297,23 @@ class SalaryslipsController < ApplicationController
       end
     end
 
-      @payroll_overtime_masters = PayrollOvertimeMaster.where(is_active: true,is_payroll: true)
+    #   @payroll_overtime_masters = PayrollOvertimeMaster.where(is_active: true,is_payroll: true)
       
-      @payroll_overtime_masters.try(:each) do |pom|
-      formula_string = pom.base_component.split(',').map {|i| i.to_i}
-      formula_item = SalaryslipComponent.where(salary_component_id: formula_string,salaryslip_id: @salaryslip.id)  
-      @total = formula_item.sum(:calculated_amount)
-      @total_actual = formula_item.sum(:actual_amount)
-      base_amount = (@total.to_f / working_day.try(:day_in_month).to_f) / pom.company_hrs.to_f
-      overtime_payment = working_day.try(:ot_days).to_f * pom.rate.to_f * base_amount.to_f
-      @salary_component = SalaryComponent.find_by(name: "Overtime")
-      SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: 0, calculated_amount: overtime_payment, is_deducted: false, other_component_name: 'Overtime',salary_component_id: @salary_component.id)
-      puts "Overtime................................."
-    end
+    #   @payroll_overtime_masters.try(:each) do |pom|
+    #   formula_string = pom.base_component.split(',').map {|i| i.to_i}
+    #   formula_item = SalaryslipComponent.where(salary_component_id: formula_string,salaryslip_id: @salaryslip.id)  
+    #   @total = formula_item.sum(:calculated_amount)
+    #   @total_actual = formula_item.sum(:actual_amount)
+    #   base_amount = (@total.to_f / working_day.try(:day_in_month).to_f) / pom.company_hrs.to_f
+    #   overtime_payment = working_day.try(:ot_days).to_f * pom.rate.to_f * base_amount.to_f
+    #   @salary_component = SalaryComponent.find_by(name: "Overtime")
+    #   SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: 0, calculated_amount: overtime_payment, is_deducted: false, other_component_name: 'Overtime',salary_component_id: @salary_component.id)
+    #   puts "Overtime................................."
+    # end
 
-    # @monthly_arrears = MonthlyArrear.where(employee_id: @employee.id, day: date.all_month)
-    #   @monthly_arrears.try(:each) do |m|
-    #     addable_actual_amount = 0
-    #     addable_calculated_amount = m.amount
-    #     @salary_component=SalaryComponent.find_by(name: "Monthly Arrear")
-    #     SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: 0, calculated_amount: addable_calculated_amount, is_deducted: false,other_component_name: 'Monthly Arrear', salary_component_id:  @salary_compon.id)
-    #      puts "Monthly Arrear......................................"
-    #   end
+   
 
-      date = Date.new(@year.to_i, Workingday.months[@month])
+    date = Date.new(@year.to_i, Workingday.months[@month])
      @monthly_arrears = MonthlyArrear.where(day: date..date.at_end_of_month, employee_id: @employee.id)
       unless @monthly_arrears.empty?
         addable_calculated_amount = 0

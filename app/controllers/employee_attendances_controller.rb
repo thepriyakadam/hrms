@@ -69,13 +69,6 @@ class EmployeeAttendancesController < ApplicationController
 
   def department_wise_employee_list
     @costcenter, @date = params[:salary][:name], params[:salary][:day].to_date
-<<<<<<< HEAD
-   
-=======
-    #@department = params[:salary][:department_id]
-   
-  
->>>>>>> fecf7311120ba17b3a5da0abd671425c0d1b8180
       if current_user.class == Member
         if current_user.role.name == 'GroupAdmin'
           @employees = Employee.where(status: "Active").filter_by_date_and_costcenter(@date, @costcenter, current_user)
@@ -99,10 +92,6 @@ class EmployeeAttendancesController < ApplicationController
           else
           end
         end
-<<<<<<< HEAD
-=======
-
->>>>>>> fecf7311120ba17b3a5da0abd671425c0d1b8180
       @employee_attendance = EmployeeAttendance.new
     end  
   end

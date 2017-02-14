@@ -46,10 +46,10 @@ div.nobreak{ page-break-inside: avoid;
       <th>Gross Salary : <%= @salaryslip.actual_gross_salary.round %> 
     </th>   
  
-      <th>Deduction : <%= @salaryslip.actual_total_deduction.round %> 
+      <th>Deduction : <%= @salaryslip.calculated_total_deduction.round %>
          </th>   
   
-      <th>Net Salary :  <%= @salaryslip.actual_net_salary.round %>
+      <th>Net Salary :  <%= @salaryslip.calculated_net_salary.round %>
       </th>   
     </tr>
 

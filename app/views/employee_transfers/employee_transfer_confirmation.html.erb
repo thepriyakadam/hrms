@@ -9,7 +9,8 @@
         <table id="example2" class="table table-bordered table-hover table-condensed">
           <thead>
             <tr>
-              <th>Employee</th>
+              <th>ID</th>
+              <th>Employee Name</th>
               <th>Request To</th>
               <th>Employee Designation</th>
               <th>Employee Category</th>
@@ -23,7 +24,20 @@
           <tbody>
           <% @employee_transfers.each do |employee_transfer| %>
           <tr>
+          <% if @current_request.id == employee_transfer.id %>
+          <th><font color='green'>*<%= employee_transfer.employee.try(:manual_employee_code) %></font></th>
+                <th><font color='green'><%= full_name(employee_transfer.employee) %></th></font>
+                <th><font color='green'><%= employee_transfer.reporting_master.employee.try(:first_name) %> <%= employee_transfer.reporting_master.employee.try(:middle_name) %> <%= employee_transfer.reporting_master.employee.try(:last_name) %></th></font>
+                <th><font color='green'><%= employee_transfer.employee_designation.try(:name) %></th></font>
+                <th><font color='green'><%= employee_transfer.employee_category.try(:name) %></th></font>
+                <th><font color='green'><%= employee_transfer.company.try(:name) %></th></font>
+                <th><font color='green'><%= employee_transfer.employee.try(:company_location).try(:name) %></th></font>
+                <th><font color='green'><%= employee_transfer.employee.try(:department).try(:name) %></th></font>
+                 <th><font color='green'><%= employee_transfer.justification %></th></font>
+
+                <%else%>
             <td><%= employee_transfer.employee.try(:manual_employee_code) %></td>
+             <td><%= full_name(employee_transfer.employee) %></td>
             <td><%= employee_transfer.reporting_master.employee.try(:first_name) %> <%= employee_transfer.reporting_master.employee.try(:middle_name) %> <%= employee_transfer.reporting_master.employee.try(:last_name) %></td>
             <td><%= employee_transfer.employee_designation.try(:name) %></td>
             <td><%= employee_transfer.employee_category.try(:name) %></td>
@@ -31,10 +45,52 @@
             <td><%= employee_transfer.employee.try(:company_location).try(:name) %></td>  
             <td><%= employee_transfer.employee.try(:department).try(:name) %></td>
             <td><%= employee_transfer.justification %></td>
+             <% end %>
           </tr>
         <% end %>
       </tbody>
     </table>
+
+<table id="example1" class="table table-bordered table-hover table-condensed">
+<tbody>
+            <tr><td colspan="4"><font color='red'><center>Current Transfer Request Detail</center></font></td></tr>
+            <tr>
+            <th> ID </th>
+            <td><%= @current_request.employee.try(:manual_employee_code) %></td>
+            <th>Employee Name</th>
+            <td><%= full_name(@current_request.employee) %></td>
+            </tr>
+
+            <tr>
+              <th>Request To</th>
+              <td><%= @current_request.reporting_master.employee.try(:first_name) %> <%= @current_request.reporting_master.employee.try(:middle_name) %> <%= @current_request.reporting_master.employee.try(:last_name) %></td>
+              <th>Employee Designation</th>
+              <td><%= @current_request.employee_designation.try(:name) %></td>
+            </tr>
+
+            <tr>
+              <th>Employee Category</th>
+              <td><%= @current_request.employee_category.try(:name) %></td>
+              <th>Company</th>
+              <td><%= @current_request.company.try(:name) %></td>
+            </tr>
+
+            <tr>
+              <th>Company Location</th>
+              <td><%= @current_request.employee.try(:company_location).try(:name) %></td>
+               <th>Department</th>
+              <td><%= @current_request.employee.try(:department).try(:name) %></td>
+            </tr>
+
+            <tr>
+              <th>Justification</th>
+              <td><%= @current_request.justification %></td>
+              <th></th>
+              <td></td>           
+            </tr>
+   </tbody>
+   </table>         
+
     <div id="myModal" class="modal fade"></div>
     <div id="myModal1" class="modal fade"></div>
       <%= link_to 'Approve',approve_transfer_employee_transfers_path(@employee_transfer),class: 'btn btn-sm btn-primary fa fa-check' %> |

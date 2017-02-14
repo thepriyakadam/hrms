@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
   
+  resources :monthly_arrears do
+    collection do
+      get :is_paid
+      
+    end
+  end
   resources :on_duty_requests do 
     collection do
       get :select_checkbox
@@ -23,8 +29,6 @@ Rails.application.routes.draw do
       get :second_reject
     end
   end
-
-  resources :monthly_arrears
   resources :employee_week_offs do
     collection do
       get :revert_week_off

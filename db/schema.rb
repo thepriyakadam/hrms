@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170213065029) do
+ActiveRecord::Schema.define(version: 20170213063011) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -2435,6 +2435,8 @@ ActiveRecord::Schema.define(version: 20170213065029) do
     t.text     "reason"
     t.boolean  "first_half"
     t.boolean  "last_half"
+    t.integer  "first_reporter_id"
+    t.integer  "second_reporter_id"
     t.integer  "current_status"
     t.boolean  "is_pending"
     t.boolean  "is_cancelled"
@@ -2444,8 +2446,6 @@ ActiveRecord::Schema.define(version: 20170213065029) do
     t.boolean  "is_second_rejected"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
-    t.integer  "first_reporter_id"
-    t.integer  "second_reporter_id"
   end
 
   add_index "on_duty_requests", ["employee_id"], name: "index_on_duty_requests_on_employee_id"

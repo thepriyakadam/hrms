@@ -11,6 +11,9 @@ class EmployeePromotionsController < ApplicationController
   # GET /employee_promotions/1
   # GET /employee_promotions/1.json
   def show
+    # @employee = Employee.find(params[:id])
+    # # @employee1 = EmployeePromotion.where(id: @employee)
+    # @employee_promotions = EmployeePromotion.where(employee_id: params[:id])
   end
 
   # GET /employee_promotions/new

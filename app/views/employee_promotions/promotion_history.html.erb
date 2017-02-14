@@ -5,13 +5,13 @@
     <div class="pull-right">
     <%= link_to " Print Report ", print_employee_promotion_employee_promotions_path(id: @employee.id, format: "pdf"), class: "btn btn-xl btn-info fa fa-print",:target => "_blank" %>
       <%= link_to " Excel Report ", print_promotion_excel_employee_promotions_path(id: @employee.id, format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
-    </div>
+    </div><br>
  
-  <div class="box-body">
+  <div class="box-body"><br>
     <table id="example2" class="table table-bordered table-hover table-condensed">
     <thead>
       <tr>
-        <th>Promotion</th>
+        <th>Promotion ID</th>
         <th>Department</th>
         <th>Grade</th>
         <th>Designation</th>

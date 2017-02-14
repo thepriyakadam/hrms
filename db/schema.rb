@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170207105642) do
+ActiveRecord::Schema.define(version: 20170213063011) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -367,14 +367,18 @@ ActiveRecord::Schema.define(version: 20170207105642) do
   create_table "circulars", force: :cascade do |t|
     t.date     "date"
     t.string   "subject"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
     t.string   "avatar_file_name"
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
     t.boolean  "is_active"
     t.boolean  "is_confirm"
+    t.string   "document_file_name"
+    t.string   "document_content_type"
+    t.integer  "document_file_size"
+    t.datetime "document_updated_at"
   end
 
   create_table "companies", force: :cascade do |t|
@@ -1088,6 +1092,7 @@ ActiveRecord::Schema.define(version: 20170207105642) do
     t.date     "effective_to"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
+    t.boolean  "current"
   end
 
   add_index "employee_promotions", ["department_id"], name: "index_employee_promotions_on_department_id"
@@ -2352,6 +2357,18 @@ ActiveRecord::Schema.define(version: 20170207105642) do
   add_index "members", ["member_code"], name: "index_members_on_member_code", unique: true
   add_index "members", ["reset_password_token"], name: "index_members_on_reset_password_token", unique: true
   add_index "members", ["role_id"], name: "index_members_on_role_id"
+
+  create_table "monthly_arrears", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.date     "day"
+    t.decimal  "amount"
+    t.boolean  "is_paid"
+    t.text     "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "monthly_arrears", ["employee_id"], name: "index_monthly_arrears_on_employee_id"
 
   create_table "monthly_expences", force: :cascade do |t|
     t.date     "expence_date"

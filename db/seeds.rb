@@ -207,7 +207,6 @@ require 'roo'
 # end
 
 ex = Roo::Excel.new("#{Rails.root}/public/rgeejd.xls")
-
 ex.default_sheet = ex.sheets[1] #siya feb
 i = 1
 ActiveRecord::Base.transaction do

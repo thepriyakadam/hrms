@@ -206,26 +206,39 @@ require 'roo'
 #   end
 # end
 
+ex = Roo::Excel.new("#{Rails.root}/public/rgeejd.xls")
+ex.default_sheet = ex.sheets[2] #siya feb
+i = 1
+ActiveRecord::Base.transaction do
+
+1.upto(95) do |line| # siya Feb 2016
+  puts "Starting Record #{ex.cell(line,'A')}---------------------------------------AAAAAAAADDDD"
+  @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
+  JoiningDetail.where(id: @employee.id).update_all(employee_uan_no: ex.cell(line, 'B'))
+  puts "#{i} Record inserted.---------------------------------------------UAN NO-- #{ex.cell(line, 'B')}"
+  JoiningDetail.where(id: @employee.id).update_all(employee_pf_no: ex.cell(line, 'C'))
+  puts "#{i} Record inserted.---------------------------------------------Pf NO-- #{ex.cell(line, 'C')}"
+  end
+end
+
 # ex = Roo::Excel.new("#{Rails.root}/public/rgeejd.xls")
-# ex.default_sheet = ex.sheets[1] #siya feb
+# ex.default_sheet = ex.sheets[3] #siya feb
 # i = 1
 # ActiveRecord::Base.transaction do
 
-# 2.upto(93) do |line| # siya Feb 2016
-#   puts "Starting Record #{ex.cell(line,'A')}---------------------------------------AAAAAAAADDDD"
-#   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
+# 1.upto(27) do |line| # siya Feb 2016
+#   puts "Starting Record --------------------------------------------------#{ex.cell(line,'A')}"
+#   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A'))
 #   JoiningDetail.where(id: @employee.id).update_all(employee_uan_no: ex.cell(line, 'B'))
-#   puts "#{i} Record inserted.---------------------------------------------UAN NO--"
-#   JoiningDetail.where(id: @employee.id).update_all(employee_pf_no: ex.cell(line, 'C'))
-#   puts "#{i} Record inserted.---------------------------------------------Pf NO--"
+#   puts "#{i} Record inserted.---------------------------------------------#{ex.cell(line, 'B')}"
 #   end
 # end
 
-GoalPerspective.destroy_all
-AttributeMaster.destroy_all
-GoalBunch.destroy_all
-GoalRating.destroy_all
-Period.destroy_all
+# GoalPerspective.destroy_all
+# AttributeMaster.destroy_all
+# GoalBunch.destroy_all
+# GoalRating.destroy_all
+# Period.destroy_all
 
 # ex = Roo::Excel.new("#{Rails.root}/public/rgfinalprol.xls")
 # ex.default_sheet = ex.sheets[0]

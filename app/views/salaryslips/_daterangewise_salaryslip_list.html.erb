@@ -80,6 +80,8 @@
     <% item.try(:actual_amount).try(:round) %>
   <% when "Rembursement of Medical Allowence" %>
     <% item.try(:actual_amount).try(:round) %>
+  <% when "Monthly Arrear" %>
+    <% item.try(:actual_amount).try(:round) %>
   <% else %>
   <% end %> <!-- switch case -->
 <% end %><!-- addable items -->
@@ -109,6 +111,8 @@
   <% when "Children Education Allowance" %>
     <% item.try(:calculated_amount).try(:round) %>
   <% when "Rembursement of Medical Allowence" %>
+    <% item.try(:calculated_amount).try(:round) %>
+  <% when "Monthly Arrear" %>
     <% item.try(:calculated_amount).try(:round) %>
   <% else %>
   <% end %> <!-- switch case -->

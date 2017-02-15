@@ -5,7 +5,7 @@ class SalaryReport
                 :pf, :esic, :income_tax, :pt, :advance, :society, :food_deduction, :mobile, :retention, :welfair, :deduction_total, :net_payable, :other_deduction,
                 :total_leave, :cl_leave, :el_leave,:advance_leave,:od_leave,:coff_leave,:esic_leave, :lwp_leave, :day_in_month, :payable_day, :present_day, :absent_day, :holiday, :weekoff, :month, :year,
                 :pf_ctc, :esic_ctc, :bonus_ctc, :actual_driver, :actual_medical, :actual_child_edu, :actual_mra, :earned_driver, :earned_medical, :earned_child_edu,
-                :earned_mra,:monthly_arrear
+                :earned_mra,:actual_monthly_arrear,:earned_monthly_arrear
         
 
   def self.collect_data(e, j, sl)
@@ -228,7 +228,7 @@ class SalaryReport
     array_actual_mra = reports.collect {|r| r.try(:actual_mra)}.compact
     @sum.actual_mra = array_actual_mra.inject(0){|sum,x| sum + x}
 
-     array_actual_monthly_arrear = reports.collect {|r| r.try(:actual_monthly_arrear)}.compact
+    array_actual_monthly_arrear = reports.collect {|r| r.try(:actual_monthly_arrear)}.compact
     @sum.actual_monthly_arrear = array_actual_monthly_arrear.inject(0){|sum,x| sum + x}
 
 
@@ -268,6 +268,10 @@ class SalaryReport
 
     array_earned_mra = reports.collect {|r| r.try(:earned_mra)}.compact
     @sum.earned_mra = array_earned_mra.inject(0){|sum,x| sum + x}
+
+    array_earned_monthly_arrear = reports.collect {|r| r.try(:earned_monthly_arrear)}.compact
+    @sum.earned_monthly_arrear = array_earned_monthly_arrear.inject(0){|sum,x| sum + x}
+
 
     array_earned_total = reports.collect {|r| r.try(:earned_total)}.compact
     @sum.earned_total = array_earned_total.inject(0){|sum,x| sum + x }

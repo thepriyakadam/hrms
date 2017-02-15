@@ -4,9 +4,9 @@
       <thead>
       <tr><td colspan="3"><center><strong>Salary Details</strong></center></td></tr>
         <tr>
-          <th>Salary Component</th>
-          <th>Actual Amount</th>
-          <th>Calculated Amount</th>
+          <th><center>Salary Component</center></th>
+          <th><center>Actual Amount</center></th>
+          <th><center>Calculated Amount</center></th>
         </tr>
       </thead>
       <tbody>
@@ -23,9 +23,9 @@
           <td align="right"><strong><%= @salaryslip.calculated_gross_salary.round %></strong></td>
         </tr>
          <tr>
-          <td><strong>Deduction Component</strong></td>
+          <td><strong><center>Deduction Component</center></strong></td>
           <td align="right"><strong></strong></td>
-          <td align="right"><strong>Amount</strong></td>
+          <td align="right"><strong><center>Amount</center></strong></td>
         </tr>
         <% @deducted_salary_components.each do |item| %>
           <tr>

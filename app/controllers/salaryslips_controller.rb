@@ -159,6 +159,7 @@ class SalaryslipsController < ApplicationController
       format.pdf do
         render pdf: 'print_emp_contribution_slip',
               layout: 'pdf.html',
+              :orientation      => 'Landscape', # default , Landscape
               template: 'salaryslips/emp_contribution_slip_pdf.pdf.erb',
               :show_as_html => params[:debug].present?
       end
@@ -182,6 +183,7 @@ class SalaryslipsController < ApplicationController
       format.pdf do
         render pdf: 'print_salary_slip',
               layout: 'pdf.html',
+              :orientation      => 'Landscape', # default , Landscape
               template: 'salaryslips/print_salary_slip.pdf.erb',
               :show_as_html => params[:debug].present?
       end
@@ -201,6 +203,7 @@ class SalaryslipsController < ApplicationController
       format.pdf do
         render pdf: 'print_salary_slip_rg',
               layout: 'pdf.html',
+              :orientation      => 'Landscape', # default , Landscape
               template: 'salaryslips/print_salary_slip_rg.pdf.erb',
               :show_as_html => params[:debug].present?
       end
@@ -220,6 +223,7 @@ class SalaryslipsController < ApplicationController
       format.pdf do
         render pdf: 'print_salary_slip_formate_3',
               layout: 'pdf.html',
+              :orientation      => 'Landscape', # default , Landscape
               template: 'salaryslips/print_salary_slip_formate_3.pdf.erb',
               :show_as_html => params[:debug].present?
       end

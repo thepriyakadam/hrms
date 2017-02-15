@@ -13,7 +13,7 @@ class SlipInformation < ActiveRecord::Base
   		s.contact_no = employee.contact_no
   		s.esic_no = @joining_detail.employee_efic_no
   		s.pf_no = @joining_detail.employee_pf_no
-      s.account_no = @employee_bank_detail.account_no
+      # s.account_no = @employee_bank_detail.account_no
   		s.uan_no = @joining_detail.employee_uan_no
   		
       s.save

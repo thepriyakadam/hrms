@@ -107,7 +107,7 @@
           <Cell ss:Index="3"><Data ss:Type="String"><%= employee.first_name.to_s+" "+employee.middle_name.to_s+" "+employee.last_name.to_s %></Data></Cell>
           
           <Cell ss:Index="4"><Data ss:Type="String"><%= joining.employee_designation.try(:name) %></Data></Cell>
-          <Cell ss:Index="5"><Data ss:Type="String"><%= joining.department.try(:name) %></Data></Cell>
+          <Cell ss:Index="5"><Data ss:Type="String"><%= employee.department.try(:name) %></Data></Cell>
           <Cell ss:Index="6"><Data ss:Type="String"><%= joining.cost_center.try(:name) %></Data></Cell>
           <Cell ss:Index="7"><Data ss:Type="String"><%= slip.year %></Data></Cell>
           <Cell ss:Index="8"><Data ss:Type="String"><%= slip.month %></Data></Cell>

@@ -322,7 +322,25 @@ class EmployeeTemplatesController < ApplicationController
       @employees = []
       redirect_to show_all_record_employee_templates_path
     else
+      @employee_ids.each do |e|
+        @employee = Employee.find_by(id: e)
+      end
     end
+
+      respond_to do |f|
+        f.js
+        f.xls {render template: 'employee_templates/employee_record.xls.erb'}
+        f.html
+        f.pdf do
+          render pdf: 'employee_record',
+          layout: 'pdf.html',
+          orientation: 'Landscape',
+          template: 'employee_templates/employee_record.pdf.erb',
+          show_as_html: params[:debug].present?
+          #margin:  { top:1,bottom:1,left:1,right:1 }
+        end
+      end
   end
+
 
 end

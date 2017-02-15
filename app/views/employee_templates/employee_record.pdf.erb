@@ -1,0 +1,70 @@
+<style>
+th {
+    text-align: left;
+}
+tr {
+    page-break-inside: avoid;
+}
+div.alwaysbreak { page-break-before: always; }
+div.nobreak:before { clear:both; }
+div.nobreak{ page-break-inside: avoid;
+  /* http://code.google.com/p/wkhtmltopdf/issues/detail?id=9#c21 */
+}
+</style>
+<div>
+<div class="box box-default">
+  <div class="box-body">
+
+  	<% employee = Employee.find_by(id: @employee.id) %>
+    <table style="border-collapse: collapse;font-size:10pt;" border=1 width=900 class="table table-bordered table-hover">
+       <tr><th colspan="4"><center><%= employee.company.try(:description)%> <%= employee.company_location.try(:name)%></center><center><small><%= employee.company.try(:address)%></small></center></th></tr>
+
+      <% i=0 %>
+        <% @employee_ids.each do |e|  %>
+        <% @employee = Employee.find_by(id: e) %>
+          <tr>
+            <th><%= i=i+1 %></th>
+            <td>ID : <%= @employee.manual_employee_code %></td>
+            <td>Name : <%= full_name(@employee) %></td>
+            <td>Department : <%= @employee.try(:department).try(:name) %></td>
+          </tr>
+
+          <tr>
+            <th>Degree</th>
+            <th>Degree Type</th>
+            <th>Degree Stream</th>
+            <th>Year Of Passing</th>
+          </tr>
+          <% @qualifications = Qualification.where(employee_id: e) %>
+          <% @qualifications.each do |q|  %>
+            <tr>
+              <td><%= q.try(:degree).try(:name) %></td>
+              <td><%= q.try(:degree_type).try(:name) %></td>
+              <td><%= q.try(:degree_stream).try(:name) %></td>
+              <td><%= q.try(:year).try(:name) %></td>
+            </tr> 
+          <% end %>
+
+          <tr>
+            <th>Joining Date</th>
+            <th>Designation</th>
+            <th>Post</th>
+            <th>Current Designation</th>
+          </tr>
+          <% @joining_details = JoiningDetail.where(employee_id: e) %>
+          <% @joining_details.each do |g|  %>
+          <% @employee_promotion = EmployeePromotion.where(employee_id: e).last %>
+            <tr>
+              <td><%= g.try(:joining_date) %></td>
+              <td><%= g.try(:employee_designation).try(:name) %></td>
+              <td><%= g.try(:employee_category).try(:name) %></td>
+              <td><%= @employee_promotion.try(:employee_designation).try(:name) %></td>
+            </tr> 
+          <% end %>
+
+        <% end %>
+        </tbody>
+      </table>
+    
+  </div>
+</div>

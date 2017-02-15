@@ -1,10 +1,11 @@
 <div class="box box-default">
   <div class="box-body">
      <div class="pull-right">
-        <!-- <= link_to 'PDF Report', salary_breakup_pdf_employee_templates_path(format: 'pdf',employee_template_ids: @employee_template_ids ),class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
-        <= link_to "Excel Report",salary_breakup_xls_employee_templates_path(format: "xls",employee_template_ids: @employee_template_ids ), class: "btn btn-xl btn-primary fa fa-print", :target => "_blank" %> -->
+        <%= link_to 'PDF Report', show_all_record_employee_templates_path(format: 'pdf',employee_ids: @employee_ids ),class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+       <!--  <= link_to "Excel Report",salary_breakup_xls_employee_templates_path(format: "xls",employee_template_ids: @employee_template_ids ), class: "btn btn-xl btn-primary fa fa-print", :target => "_blank" %> -->
+        <%= link_to 'Back',employee_list_employee_templates_path,class: 'btn btn-sm btn-default fa fa-arrow-left'%>
       </div>
-      <br>
+      <br><br>
       <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
         <tbody>
          <% i=0 %>
@@ -14,14 +15,14 @@
             <th><%= i=i+1 %></th>
             <td>ID : <%= @employee.manual_employee_code %></td>
             <td>Name : <%= full_name(@employee) %></td>
-            <td>Department : <%= @employee.try(:department).try(:name) %></td>
+            <td colspan="2">Department : <%= @employee.try(:department).try(:name) %></td>
           </tr>
 
           <tr>
             <th>Degree</th>
             <th>Degree Type</th>
             <th>Degree Stream</th>
-            <th>Year Of Passing</th>
+            <th colspan="2">Year Of Passing</th>
           </tr>
           <% @qualifications = Qualification.where(employee_id: e) %>
           <% @qualifications.each do |q|  %>
@@ -35,20 +36,82 @@
 
           <tr>
             <th>Joining Date</th>
-            <th>Designation</th>
+            <th>Joining Designation</th>
             <th>Post</th>
             <th>Current Designation</th>
+            <th>Last Promotion</th>
           </tr>
           <% @joining_details = JoiningDetail.where(employee_id: e) %>
           <% @joining_details.each do |g|  %>
-          <% @employee_promotion = EmployeePromotion.where(employee_id: e).last %>
+          <% @employee_promotion = EmployeePromotion.where(employee_id: e).first %>
+          <% @employee_promotion_last = EmployeePromotion.where(employee_id: e).last %>
             <tr>
               <td><%= g.try(:joining_date) %></td>
-              <td><%= g.try(:employee_designation).try(:name) %></td>
-              <td><%= g.try(:employee_category).try(:name) %></td>
               <td><%= @employee_promotion.try(:employee_designation).try(:name) %></td>
+              <td><%= g.try(:employee_category).try(:name) %></td>
+              <td><%=  g.try(:employee_designation).try(:name) %></td>
+              <td><%= @employee_promotion_last.try(:effective_from) %></td>
             </tr> 
           <% end %>
+
+          <tr>
+            <th>Joining CTC</th>
+            <th>Current CTC</th>
+            <th>Last Salary Revision</th>
+            <th colspan="2">Past Experience(in year)</th>
+          </tr>
+          <% @current_template = EmployeeTemplate.where(employee_id: e,is_active: true).take %>
+          <% @first_template = EmployeeTemplate.where(employee_id: e).first %>
+          <% @last_template = EmployeeTemplate.where(employee_id: e).last %>
+          <% @experience = Experience.where(employee_id: e) %>
+
+          <% @current_employee_salary_templates = @current_template.employee_salary_templates %>
+          <% @first_employee_salary_templates = @first_template.employee_salary_templates %>
+            <tr>
+              <td><%= @first_employee_salary_templates.sum(:annual_amount) %></td>
+              <td><%= @current_employee_salary_templates.sum(:annual_amount) %></td>
+              <td><%= @last_template.start_date %></td>
+              <td colspan="2"><%= @experience.sum(:no_of_year) %></td>
+            </tr> 
+
+            <tr>
+            <th>CTC 1</th>
+            <th>CTC 2</th>
+            <th colspan="3">CTC 3</th>
+            </tr>
+              <% @employee_templates = EmployeeTemplate.where(employee_id: e).last(3) %>
+              <% @emp_temp1 = @employee_templates.first %>
+              <% @emp_temp = @employee_templates.last(2) %>
+              <% @emp_temp2 = @emp_temp.first %>
+              <% @emp_temp3 = @employee_templates.last %>
+
+              <% @employee_template1 = EmployeeTemplate.find_by(id: @emp_temp1.id) %>
+              <% @employee_salary_templates1 = @employee_template1.employee_salary_templates %>
+              <% @employee_template2 = EmployeeTemplate.find_by(id: @emp_temp2.id) %>
+              <% @employee_salary_templates2 = @employee_template2.employee_salary_templates %>
+              <% @employee_template3 = EmployeeTemplate.find_by(id: @emp_temp3.id) %>
+              <% @employee_salary_templates3 = @employee_template3.employee_salary_templates %>
+            <tr>
+              <td><%= @employee_salary_templates1.sum(:annual_amount) %></td>
+              <td><%= @employee_salary_templates2.sum(:annual_amount) %></td>
+              <td><%= @employee_salary_templates3.sum(:annual_amount) %></td>
+            </tr> 
+
+          <tr>
+            <th>Appraisee Rating</th>
+            <th>Appraiser Rating</th>
+            <th>Reviewer Rating</th>
+            <th>Final Rating</th>
+            <th>Proposed Designation</th>
+          </tr>
+          <% @goal_bunch = GoalBunch.where(employee_id: e).last %>
+            <tr>
+              <td><%= @goal_bunch.appraisee_rating_id.to_f.round(4) %></td>
+              <td><%= @goal_bunch.appraiser_rating %></td>
+              <td><%= @goal_bunch.reviewer_rating_id %></td>
+              <td><%= @goal_bunch.final_rating_id %></td>
+              <td><%= @goal_bunch.f_designation.try(:name) %></td>
+            </tr> 
 
         <% end %>
         </tbody>

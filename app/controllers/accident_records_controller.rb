@@ -20,6 +20,7 @@ class AccidentRecordsController < ApplicationController
 
   # GET /accident_records/1/edit
   def edit
+    @employee = @accident_record.employee
   end
 
   # POST /accident_records
@@ -43,6 +44,7 @@ class AccidentRecordsController < ApplicationController
   # PATCH/PUT /accident_records/1
   # PATCH/PUT /accident_records/1.json
   def update
+    # @accident_record = AccidentRecord.find(params['accident_record']['employee_id'])
     respond_to do |format|
       if @accident_record.update(accident_record_params)
         format.html { redirect_to @accident_record, notice: 'Accident record was successfully updated.' }

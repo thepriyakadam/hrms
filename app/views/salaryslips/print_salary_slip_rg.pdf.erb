@@ -17,7 +17,7 @@ div.nobreak{ page-break-inside: avoid;
    <thead>
        <tr>
       <td colspan="3">
-      <center> <%= wicked_pdf_image_tag @employee.company.company_logo.url, :size => "120x70" %></center> 
+      <center> <%= wicked_pdf_image_tag @employee.company.company_logo.url, :size => "90x50" %></center> 
         <center><strong><%= @employee.company_location.company.try(:description) %></strong><br><%= @employee.company_location.try(:address) %>, <%= @employee.company_location.try(:name) %>  </center>
         <center><strong>SALARY SLIP</strong></center>
       </td>           

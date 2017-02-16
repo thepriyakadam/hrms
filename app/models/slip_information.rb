@@ -5,6 +5,7 @@ class SlipInformation < ActiveRecord::Base
 
   def self.create_salaryslip_information(salaryslip, employee, workingday)
   	@joining_detail = JoiningDetail.find_by_employee_id(employee.id)
+    @employee_bank_details = EmployeeBankDetail.find_by_employee_id(employee.id)
   	SlipInformation.new do |s|
   		s.salaryslip_id = salaryslip.id
   		s.cost_center_id = @joining_detail.cost_center_id
@@ -13,6 +14,7 @@ class SlipInformation < ActiveRecord::Base
   		s.esic_no = @joining_detail.employee_efic_no
   		s.pf_no = @joining_detail.employee_pf_no
   		s.uan_no = @joining_detail.employee_uan_no
+      # s.account_no = @employee_bank_details.account_no
   		
       s.save
   	end

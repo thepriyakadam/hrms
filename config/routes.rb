@@ -1,11 +1,6 @@
 Rails.application.routes.draw do
   
-  resources :monthly_arrears do
-    collection do
-      get :is_paid
-      
-    end
-  end
+  resources :monthly_arrears
   resources :on_duty_requests do 
     collection do
       get :select_checkbox

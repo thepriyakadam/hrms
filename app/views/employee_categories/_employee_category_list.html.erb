@@ -1,8 +1,10 @@
+<br>
 <table id="example2" class="table table-bordered table-hover table-condensed'">
     <thead>
       <tr>
       <th>Code</th>
       <th>Name</th>
+      <th>Status</th>
       <th>Description</th>
       <th>Action</th>
     </tr>
@@ -13,6 +15,7 @@
       <tr>
         <td><%= employee_category.code %></td>
         <td><%= employee_category.name %></td>
+        <td><%= employee_category.is_active ? "Active" : "Inactive" %></td>
         <td><%= employee_category.description %></td>
         <td>
           <% if employee_category.is_confirm == true %>

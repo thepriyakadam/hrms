@@ -73,9 +73,11 @@ class EmployeeTransfersController < ApplicationController
   end
 
   def employee_transfer_confirmation
-    reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
+     reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
      @employee_transfer = EmployeeTransfer.find(params[:format])
-     @employee_transfers = EmployeeTransfer.where(reporting_master_id: reporting_masters)
+     @employee_transfers = EmployeeTransfer.where(reporting_master_id: reporting_masters).order("id DESC")
+     @current_request = EmployeeTransfer.find(params[:format])
+     @employee = Employee.find(@current_request.employee_id)
   end
 
   def approve_transfer

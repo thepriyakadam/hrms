@@ -22,7 +22,6 @@
            <%else%>
             <%= link_to '', edit_monthly_arrear_path(monthly_arrear),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
             <%= link_to '',  monthly_arrear, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-xs fa fa-close',remote:true %>
-          <%= link_to '', is_paid_monthly_arrears_path(monthly_arrear: monthly_arrear),data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-info fa fa-check' %>
            <% end %>
         </td>
       </tr>

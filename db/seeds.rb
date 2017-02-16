@@ -206,20 +206,24 @@ require 'roo'
 #   end
 # end
 
-# ex = Roo::Excel.new("#{Rails.root}/public/rgeejd.xls")
-# ex.default_sheet = ex.sheets[2] #siya feb
-# i = 1
-# ActiveRecord::Base.transaction do
+JoiningDetail.update_all(employee_uan_no: nil)
+JoiningDetail.update_all(employee_pf_no: nil)
 
-# 1.upto(95) do |line| # siya Feb 2016
-#   puts "Starting Record #{ex.cell(line,'A')}---------------------------------------AAAAAAAADDDD"
-#   @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
-#   JoiningDetail.where(id: @employee.id).update_all(employee_uan_no: ex.cell(line, 'B'))
-#   puts "#{i} Record inserted.---------------------------------------------UAN NO-- #{ex.cell(line, 'B')}"
-#   JoiningDetail.where(id: @employee.id).update_all(employee_pf_no: ex.cell(line, 'C'))
-#   puts "#{i} Record inserted.---------------------------------------------Pf NO-- #{ex.cell(line, 'C')}"
-#   end
-# end
+ex = Roo::Excel.new("#{Rails.root}/public/k.xls")
+ex.default_sheet = ex.sheets[1] #siya feb
+i = 1
+ActiveRecord::Base.transaction do
+
+2.upto(183) do |line| # siya Feb 2016
+  puts "Starting Record #{ex.cell(line,'A')}---------------------------------------"
+  @employee = Employee.find_by_manual_employee_code(ex.cell(line,'A').to_i)
+  JoiningDetail.where(id: @employee.id).update_all(employee_uan_no: ex.cell(line, 'B'),employee_pf_no: ex.cell(line, 'C'))
+  puts "#{i} Record inserted.---------UAN NO-- #{ex.cell(line, 'B')}..........Pf NO-- #{ex.cell(line, 'C')}"
+  end
+end
+
+
+
 
 # ex = Roo::Excel.new("#{Rails.root}/public/rgeejd.xls")
 # ex.default_sheet = ex.sheets[3] #siya feb
@@ -1192,7 +1196,7 @@ require 'roo'
  #   end
  # end
 
-FoodDeduction.last.destroy
+# FoodDeduction.last.destroy
 
 # ex = Roo::Excel.new("#{Rails.root}/public/joining_detail_report.xls")
 # ex.default_sheet = ex.sheets[2] #siya feb

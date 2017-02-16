@@ -23,6 +23,7 @@ class SalarySlipLedgersController < ApplicationController
     @bank = Bank.find(params[:bank_id])
     @category = params[:category]
     @month, @year = params[:month], params[:year]
+    # byebug
     joining_array = JoiningDetail.where(employee_category_id: @category).pluck(:employee_id)
     emp_array = EmployeeBankDetail.where(bank_id: @bank.id).pluck(:employee_id)
     emp_user_array = Employee.collect_rolewise(current_user)
@@ -38,6 +39,7 @@ class SalarySlipLedgersController < ApplicationController
       #wd1 = Workingday.where('employee_id = ? and month_name = ? and year = ?', e.id, @month, @year.to_s).take
       sl1 = Salaryslip.where('employee_id = ? and month = ? and year = ?', e.id, @month, @year.to_s).take
       if j.nil? or e.nil? or sl1.nil?
+        
       else
         sr = SalaryReport.collect_data(e,j,sl1)
         @reports << sr

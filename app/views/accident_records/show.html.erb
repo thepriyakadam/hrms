@@ -1,15 +1,12 @@
-<!-- SELECT2 EXAMPLE -->
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title">Company</h3>
-    <div class="box-tools pull-right">
-    </div>
+      <h3 class="box-title">Accident Record</h3>
+      <div class="box-tools pull-right"> </div>
   </div><!-- /.box-header -->
   <div class="box-body">
-  <%= bootstrap_form_for(@accident_record,html: {id: 'accident_record'}) do |f| %>
-
-    <table id="example2" class="table table-bordered table-hover table-condensed">
-
+    <%= bootstrap_form_for(@accident_record,html: {id: 'accident_record'}) do |f| %>
+     <div id="entry1" class="clonedInput">
+  <table id="example2" class="table table-bordered table-hover table-condensed">
     <tr>
       <th><strong>Accident Code</strong></th>
       <td><%= @accident_record.code %></td>
@@ -17,7 +14,6 @@
       <th><strong>Employee</strong></th>
       <td><%= @accident_record.employee.try(:manual_employee_code) %></td>
     </tr>
-
     <tr>
       <th><strong>Department</strong></th>
       <td><%= @accident_record.department.try(:name) %></td>
@@ -25,7 +21,6 @@
       <th><strong>Root Cause</strong></th>
       <td><%= @accident_record.root_cause_master.try(:name) %></td>
     </tr>
-
     <tr>
       <th><strong>Accident Date</strong></th>
       <td><%= @accident_record.accident_date %></td>
@@ -33,7 +28,6 @@
       <th><strong>ESIC No</strong></th>
       <td><%= @accident_record.esic_no %></td>
     </tr>
-
     <tr>
       <th><strong>Case Type</strong></th>
       <td><%= @accident_record.case_type %></td>
@@ -54,73 +48,67 @@
       <th><strong>Description</strong></th>
       <td colspan="3"><%= @accident_record.description %></td>
     </tr>
- </table>
-  <%= link_to 'Edit', edit_accident_record_path(@accident_record),class: 'btn btn-success btn-sm fa fa-edit' %> |
-    <%= link_to 'Back', accident_records_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+  </table>
+      <%= link_to 'Edit', edit_accident_record_path(@accident_record),class: 'btn btn-success btn-sm fa fa-edit' %> |
+      <%= link_to 'Back', accident_records_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
 
   <div class="row">
-       <div class="col-sm-3">
-      <div class="field">
-        <%= f.file_field :avatar,label: 'Upload Photo' , class: 'input_avatar' %>
-      </div>
+      <div class="col-sm-3">
+          <div class="field">
+              <%= f.file_field :avatar,label: 'Upload Photo' , class: 'input_avatar' %>
+          </div>
       </div> 
-      
-       <% unless params['controller'] == 'accident_records' and params['action'] == 'edit' %>
-        <div class="row">
-          <div class="col-sm-1">
-            <input type="button" id="btnAdd" value="+" class="btn btn-xs btn-success"> 
-       
-            <input type="button" id="btnDel" value="-" class="btn btn-xs btn-danger">
-          </div>
-        </div><br>
-      <%end%>
-           
-
-       <div class="col-sm-3">
-       <label></label>
+  <% unless params['controller'] == 'accident_records' and params['action'] == 'edit' %>
+  <div class="row">
+      <div class="col-sm-1">
+          <input type="button" id="btnAdd" value="+" class="btn btn-xs btn-success"> 
+          <input type="button" id="btnDel" value="-" class="btn btn-xs btn-danger">
+      </div>
+  </div><br>
+  <%end%>
+      <div class="col-sm-3">
+        <label></label>
           <div class="actions">
-             <%= f.submit'Upload Accident Record', :class => class_name, data: { disable_with: data_info } %>
-            <% if params['controller'] == 'accident_records' and params['action'] == 'edit' %>
-           <%end%>
+              <%= f.submit'Creat Accident Record', :class => class_name, data: { disable_with: data_info } %>
+              <% if params['controller'] == 'accident_records' and params['action'] == 'edit' %>
+              <%end%>
           </div>
-        </div>
-        </div>
-      <%end%>
-<br>
-   
-  </div><!-- /.box-body -->
-</div><!-- /.box -->
+      </div>
+  </div>
+   <%end%><br>
+  </div>
+</div>
 
 
 <script type="text/javascript">
-  $(function () {
-  $('#btnAdd').click(function () {
-    var num     = $('.clonedInput').length, 
-        newNum  = new Number(num + 1),      
-        newElem = $('#entry' + num).clone().attr('id', 'entry' + newNum).fadeIn('slow'); 
-        newElem.find('.input_avatar').attr('avatar','accident_record['+ newNum +'][avatar]').attr('id', newNum + '_accident_record_avatar').val('');
+    $(function () {
+    $('#btnAdd').click(function () {
+      var num     = $('.clonedInput').length, 
+          newNum  = new Number(num + 1),      
+          newElem = $('#entry' + num).clone().attr('id', 'entry' + newNum).fadeIn('slow'); 
+          newElem.find('.input_avatar').attr('avatar','accident_record['+ newNum +'][avatar]').attr('id', newNum + '_accident_record_avatar').val('');
 
-    $('#entry' + num).after(newElem);
-    $('#ID' + newNum + '_title').focus();
+      $('#entry' + num).after(newElem);
+      $('#ID' + newNum + '_title').focus();
 
-    $('#btnDel').attr('disabled', false);
+      $('#btnDel').attr('disabled', false);
 
-    if (newNum == 5)
-    $('#btnAdd').attr('disabled', true).prop('value', "You've reached the limit"); 
+      if (newNum == 5)
+      $('#btnAdd').attr('disabled', true).prop('value', "You've reached the limit"); 
+    });
+
+    $('#btnDel').click(function () {
+        if (confirm("Are you sure you want to remove this section? This cannot be undone."))
+            {
+                var num = $('.clonedInput').length;
+                $('#entry' + num).slideUp('slow', function () {$(this).remove();
+                    if (num -1 === 1)
+                $('#btnDel').attr('disabled', true);
+                $('#btnAdd').attr('disabled', false).prop('value', "+")});
+            }
+        return false;
+    });
+    $('#btnAdd').attr('disabled', false);
+    $('#btnDel').attr('disabled', true);
   });
-
-  $('#btnDel').click(function () {
-      if (confirm("Are you sure you want to remove this section? This cannot be undone."))
-          {
-              var num = $('.clonedInput').length;
-              $('#entry' + num).slideUp('slow', function () {$(this).remove();
-                  if (num -1 === 1)
-              $('#btnDel').attr('disabled', true);
-              $('#btnAdd').attr('disabled', false).prop('value', "+ Additional Accident Images");});
-          }
-      return false;
-  });
-  $('#btnAdd').attr('disabled', false);
-  $('#btnDel').attr('disabled', true);
-});
 </script>

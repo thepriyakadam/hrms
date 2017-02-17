@@ -1,5 +1,34 @@
 Rails.application.routes.draw do
   
+  resources :monthly_arrears do
+    collection do
+      get :is_paid
+      
+    end
+  end
+  resources :on_duty_requests do 
+    collection do
+      get :select_checkbox
+      get :request_approval_list
+      get :employee_od_request_detail
+      get :employee_list
+      get :from_hr
+      get :hr_view_request
+    end
+  end
+
+  resources :od_status_records do
+    collection do
+      get :cancel_after_approve
+    end
+    member do
+      get :cancel
+      get :first_approve
+      get :second_approve
+      get :first_reject
+      get :second_reject
+    end
+  end
   resources :employee_week_offs do
     collection do
       get :revert_week_off

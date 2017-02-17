@@ -159,6 +159,7 @@ class SalaryslipsController < ApplicationController
       format.pdf do
         render pdf: 'print_emp_contribution_slip',
               layout: 'pdf.html',
+              :orientation      => 'Landscape', # default , Landscape
               template: 'salaryslips/emp_contribution_slip_pdf.pdf.erb',
               :show_as_html => params[:debug].present?
       end
@@ -182,6 +183,7 @@ class SalaryslipsController < ApplicationController
       format.pdf do
         render pdf: 'print_salary_slip',
               layout: 'pdf.html',
+              :orientation      => 'Landscape', # default , Landscape
               template: 'salaryslips/print_salary_slip.pdf.erb',
               :show_as_html => params[:debug].present?
       end
@@ -201,6 +203,9 @@ class SalaryslipsController < ApplicationController
       format.pdf do
         render pdf: 'print_salary_slip_rg',
               layout: 'pdf.html',
+              :orientation      => 'Landscape', # default , Landscape
+              :page_height      => 1000,
+              :dpi              => '300',
               template: 'salaryslips/print_salary_slip_rg.pdf.erb',
               :show_as_html => params[:debug].present?
       end
@@ -220,6 +225,7 @@ class SalaryslipsController < ApplicationController
       format.pdf do
         render pdf: 'print_salary_slip_formate_3',
               layout: 'pdf.html',
+              :orientation      => 'Landscape', # default , Landscape
               template: 'salaryslips/print_salary_slip_formate_3.pdf.erb',
               :show_as_html => params[:debug].present?
       end
@@ -320,6 +326,8 @@ class SalaryslipsController < ApplicationController
             end
             @salaryslip_component_array << @addable_salaryslip_item
         end
+        
+
           deducted_actual_amount = 0
           deducted_calculated_amount = 0
           deducted_total_actual_amount = 0
@@ -754,8 +762,22 @@ class SalaryslipsController < ApplicationController
       overtime_payment = working_day.try(:ot_days).to_f * pom.rate.to_f * base_amount.to_f
       @salary_component = SalaryComponent.find_by(name: "Overtime")
       SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: 0, calculated_amount: overtime_payment, is_deducted: false, other_component_name: 'Overtime',salary_component_id: @salary_component.id)
-      puts "fffffffffffffff"
+      puts "Overtime...................................................."
     end
+
+     date = Date.new(@year.to_i, Workingday.months[@month])
+     @monthly_arrears = MonthlyArrear.where(day: date..date.at_end_of_month, employee_id: @employee.id)
+      unless @monthly_arrears.empty?
+        addable_calculated_amount = 0
+        @monthly_arrears.try(:each) do |m|
+          m.update(is_paid: true)
+        addable_actual_amount = 0
+        addable_calculated_amount = addable_calculated_amount + m.amount
+      end
+        @salary_component=SalaryComponent.find_by(name: "Monthly Arrear")
+        SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: 0, calculated_amount: addable_calculated_amount, is_deducted: false,other_component_name: 'Monthly Arrear', salary_component_id:  @salary_component.id)
+         puts "Monthly Arrear......................................"
+      end
 
 
     @salaryslip = Salaryslip.last
@@ -1281,19 +1303,36 @@ class SalaryslipsController < ApplicationController
       end
     end
 
-      @payroll_overtime_masters = PayrollOvertimeMaster.where(is_active: true,is_payroll: true)
+    #   @payroll_overtime_masters = PayrollOvertimeMaster.where(is_active: true,is_payroll: true)
       
-      @payroll_overtime_masters.try(:each) do |pom|
-      formula_string = pom.base_component.split(',').map {|i| i.to_i}
-      formula_item = SalaryslipComponent.where(salary_component_id: formula_string,salaryslip_id: @salaryslip.id)  
-      @total = formula_item.sum(:calculated_amount)
-      @total_actual = formula_item.sum(:actual_amount)
-      base_amount = (@total.to_f / working_day.try(:day_in_month).to_f) / pom.company_hrs.to_f
-      overtime_payment = working_day.try(:ot_days).to_f * pom.rate.to_f * base_amount.to_f
-      @salary_component = SalaryComponent.find_by(name: "Overtime")
-      SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: 0, calculated_amount: overtime_payment, is_deducted: false, other_component_name: 'Overtime',salary_component_id: @salary_component.id)
-      puts "gggggggggggggggg"
-    end
+    #   @payroll_overtime_masters.try(:each) do |pom|
+    #   formula_string = pom.base_component.split(',').map {|i| i.to_i}
+    #   formula_item = SalaryslipComponent.where(salary_component_id: formula_string,salaryslip_id: @salaryslip.id)  
+    #   @total = formula_item.sum(:calculated_amount)
+    #   @total_actual = formula_item.sum(:actual_amount)
+    #   base_amount = (@total.to_f / working_day.try(:day_in_month).to_f) / pom.company_hrs.to_f
+    #   overtime_payment = working_day.try(:ot_days).to_f * pom.rate.to_f * base_amount.to_f
+    #   @salary_component = SalaryComponent.find_by(name: "Overtime")
+    #   SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: 0, calculated_amount: overtime_payment, is_deducted: false, other_component_name: 'Overtime',salary_component_id: @salary_component.id)
+    #   puts "Overtime................................."
+    # end
+
+   
+
+    date = Date.new(@year.to_i, Workingday.months[@month])
+     @monthly_arrears = MonthlyArrear.where(day: date..date.at_end_of_month, employee_id: @employee.id)
+      unless @monthly_arrears.empty?
+        addable_calculated_amount = 0
+        @monthly_arrears.try(:each) do |m|
+        m.update(is_paid: true)
+        addable_actual_amount = 0
+        addable_calculated_amount = addable_calculated_amount + m.amount
+      end
+        @salary_component=SalaryComponent.find_by(name: "Monthly Arrear")
+        SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: 0, calculated_amount: addable_calculated_amount, is_deducted: false,other_component_name: 'Monthly Arrear', salary_component_id:  @salary_component.id)
+         puts "Monthly Arrear......................................"
+      end
+
 
 
     @salaryslip = Salaryslip.last
@@ -1793,6 +1832,7 @@ end
         Instalment.where("strftime('%m/%Y' , instalment_date) = ? ", date.strftime('%m/%Y')).update_all(is_complete: false) 
         MonthlyExpence.where("strftime('%m/%Y' , expence_date) = ? ", date.strftime('%m/%Y')).update_all(is_paid: false) 
         FoodDeduction.where("strftime('%m/%Y' , food_date) = ? ", date.strftime('%m/%Y')).update_all(is_paid: false) 
+        MonthlyArrear.where("strftime('%m/%Y' , day) = ? ", date.strftime('%m/%Y')).update_all(is_paid: false) 
         @bonus_employees.destroy_all
         SalaryslipComponent.where(salaryslip_id: @salaryslip.id).destroy_all
         SlipInformation.where(salaryslip_id: @salaryslip.id).destroy_all

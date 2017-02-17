@@ -39,7 +39,7 @@
        <td>
 
         <% @leave_details.each do |ld| %>
-            <%= ld.leav_category.name %> <%= ld.no_of_leave %> <%= ld.balance %><br><br>
+            <%= ld.leav_category.name %> - Leave:  <%= ld.no_of_leave %> - Balance: <%= ld.balance %><br><br>
         <% end %>
         </td>
        <td>

@@ -100,9 +100,9 @@ div.nobreak{ page-break-inside: avoid;
   <thead>
   <tr><td colspan="7"><center><strong>Salary Details</strong></center> </td></tr>
     <tr>
-      <th>Salary Component</th>
-      <th style="text-align: right;">Actual Amount</th>
-      <th style="text-align: right;">Calculated Amount</th>
+      <th><center>Salary Component</center></th>
+      <th style="text-align: right;"><center>Actual Amount</center></th>
+      <th style="text-align: right;"><center>Calculated Amount</center></th>
       <!-- <th>Action</th> -->
     </tr>
   </thead>
@@ -122,9 +122,9 @@ div.nobreak{ page-break-inside: avoid;
      <!--  <td></td> -->
     </tr>
      <tr>
-      <td><strong>Deduction Component</strong></td>
+      <td><strong><center>Deduction Component</center></strong></td>
       <td align="right"><strong></strong></td>
-      <td align="right"><strong>Amount</strong></td>
+      <td align="right"><strong><center>Amount</center></strong></td>
      <!--  <td></td> -->
     </tr>
     <% @deducted_salary_components.each do |item| %>
@@ -154,6 +154,9 @@ div.nobreak{ page-break-inside: avoid;
       <td align="right"><strong><%= @salaryslip.calculated_net_salary.round %></strong></td>
       <!-- <td></td> -->
     </tr>
+    <tr>
+        <td colspan="3"><center>This is a computer generated slip, hence no signature is required.</center></td>
+        </tr>
   </tbody>
 </table>
     </div>

@@ -117,6 +117,16 @@ class EmployeeAttendancesController < ApplicationController
     redirect_to new_employee_attendance_path
   end
 
+  def loginwise_attendance_form
+    session[:active_tab] ="EmployeeSelfService"
+  end
+
+  def emp_attendance
+    
+    session[:active_tab] ="TimeManagement"
+    session[:active_tab1] ="Report"
+  end
+
   def attendance
     @year = params[:year]
     @month = params[:month]
@@ -291,7 +301,7 @@ class EmployeeAttendancesController < ApplicationController
 
   def costcenter_wise_attendance
     session[:active_tab] ="TimeManagement"
-    session[:active_tab1] ="Attendance"
+    session[:active_tab1] ="Report"
   end
 
   def show_costcenter_wise_attendance
@@ -406,7 +416,7 @@ class EmployeeAttendancesController < ApplicationController
   
   def calculate_attendance
     session[:active_tab] ="TimeManagement"
-    session[:active_tab1] ="Attendance"
+    session[:active_tab1] ="Report"
   end
 
   def display_total
@@ -458,7 +468,7 @@ class EmployeeAttendancesController < ApplicationController
 
   def select_date_department_form
     session[:active_tab] ="TimeManagement"
-    session[:active_tab1] ="Reports"
+    session[:active_tab1] ="Report"
   end
 
   def show_departmntwise_employee
@@ -517,7 +527,7 @@ class EmployeeAttendancesController < ApplicationController
 
   def select_date_present_form
     session[:active_tab] ="TimeManagement"
-    session[:active_tab1] ="Reports"
+    session[:active_tab1] ="Report"
   end
 
   def show_datewise_employee

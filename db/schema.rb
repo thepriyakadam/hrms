@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170214120418) do
+ActiveRecord::Schema.define(version: 20170216053607) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -44,6 +44,18 @@ ActiveRecord::Schema.define(version: 20170214120418) do
 
   add_index "access_issue_requests", ["issue_request_id"], name: "index_access_issue_requests_on_issue_request_id"
   add_index "access_issue_requests", ["issue_tracker_access_id"], name: "index_access_issue_requests_on_issue_tracker_access_id"
+
+  create_table "accident_images", force: :cascade do |t|
+    t.integer  "accident_record_id"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+    t.string   "avatar_file_name"
+    t.string   "avatar_content_type"
+    t.integer  "avatar_file_size"
+    t.datetime "avatar_updated_at"
+  end
+
+  add_index "accident_images", ["accident_record_id"], name: "index_accident_images_on_accident_record_id"
 
   create_table "accident_masters", force: :cascade do |t|
     t.string   "code"
@@ -813,6 +825,7 @@ ActiveRecord::Schema.define(version: 20170214120418) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.boolean  "is_confirm"
+    t.boolean  "is_active"
   end
 
   create_table "employee_code_masters", force: :cascade do |t|

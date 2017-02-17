@@ -23,6 +23,7 @@ class SalarySlipLedgersController < ApplicationController
     @bank = Bank.find(params[:bank_id])
     @category = params[:category]
     @month, @year = params[:month], params[:year]
+    # byebug
     joining_array = JoiningDetail.where(employee_category_id: @category).pluck(:employee_id)
     emp_array = EmployeeBankDetail.where(bank_id: @bank.id).pluck(:employee_id)
     emp_user_array = Employee.collect_rolewise(current_user)
@@ -38,6 +39,7 @@ class SalarySlipLedgersController < ApplicationController
       #wd1 = Workingday.where('employee_id = ? and month_name = ? and year = ?', e.id, @month, @year.to_s).take
       sl1 = Salaryslip.where('employee_id = ? and month = ? and year = ?', e.id, @month, @year.to_s).take
       if j.nil? or e.nil? or sl1.nil?
+        
       else
         sr = SalaryReport.collect_data(e,j,sl1)
         @reports << sr
@@ -211,6 +213,9 @@ class SalarySlipLedgersController < ApplicationController
   end
 
   def pf_detail_report
+    session[:active_tab] ="PayrollManagement"
+   session[:active_tab1] ="SalaryProcess"
+   session[:active_tab2] = "DeductionReport"
   end
 
   def dynamic_report
@@ -326,6 +331,9 @@ class SalarySlipLedgersController < ApplicationController
   end
 
   def esic_report
+    session[:active_tab] ="PayrollManagement"
+   session[:active_tab1] ="SalaryProcess"
+   session[:active_tab2] = "DeductionReport"
   end
 
   def esic_dynamic_report
@@ -440,6 +448,9 @@ class SalarySlipLedgersController < ApplicationController
   end
 
   def proff_tax_report
+    session[:active_tab] ="PayrollManagement"
+   session[:active_tab1] ="SalaryProcess"
+   session[:active_tab2] = "DeductionReport"
   end
 
   def professional_tax_master_dynamic_report
@@ -553,6 +564,9 @@ class SalarySlipLedgersController < ApplicationController
   end
 
   def retention_money_report
+   session[:active_tab] ="PayrollManagement"
+   session[:active_tab1] ="SalaryProcess"
+   session[:active_tab2] = "DeductionReport"
   end
 
   def retention_dynamic_report
@@ -781,6 +795,9 @@ class SalarySlipLedgersController < ApplicationController
   end
 
   def soc_membership_report
+    session[:active_tab] ="PayrollManagement"
+   session[:active_tab1] ="SalaryProcess"
+   session[:active_tab2] = "DeductionReport"
   end
 
   def soc_membership_dynamic_report
@@ -1000,6 +1017,9 @@ class SalarySlipLedgersController < ApplicationController
   end
 
   def monthly_deduction_report
+   session[:active_tab] ="PayrollManagement"
+   session[:active_tab1] ="SalaryProcess"
+   session[:active_tab2] = "DeductionReport"
   end
 
   def monthly_deduction

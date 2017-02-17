@@ -131,6 +131,9 @@ class MonthlyExpencesController < ApplicationController
   end
 
   def monthly_expence_report
+   session[:active_tab] ="PayrollManagement"
+   session[:active_tab1] ="SalaryProcess"
+   session[:active_tab2] = "DeductionReport"
   end
 
   def dynamic_report

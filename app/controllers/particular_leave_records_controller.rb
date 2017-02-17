@@ -31,6 +31,8 @@ class ParticularLeaveRecordsController < ApplicationController
   end
 
   def leave_approval_report
+    session[:active_tab] ="LeaveManagement"
+    session[:active_tab1] ="LeaveReports"
   end
 
   def show_approved_record

@@ -5,7 +5,7 @@ class WorkingdaysController < ApplicationController
   def index
     @workingdays = Workingday.group(:year)
    session[:active_tab] ="TimeManagement"
-    session[:active_tab1] ="Attendance"
+    session[:active_tab1] ="Report"
   end
 
   def show
@@ -108,74 +108,6 @@ class WorkingdaysController < ApplicationController
       end
     end
   end
-
-  # def workingday_xls
-  #   @year = params[:year]
-  #   @month = params[:month]
-  #   @workingday = Workingday.where(year: params[:year],month_name: params[:month])
-  #   if current_user.class == Group
-  #     @workingdays = Workingday.where(year: params[:year], month_name: params[:month])
-  #   else
-  #     if current_user.role.name == 'GroupAdmin'
-  #       @workingdays = Workingday.where(year: params[:year], month_name: params[:month])
-  #     elsif current_user.role.name == 'Admin'
-  #       @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
-  #       @workingdays = Workingday.where(year: params[:year], month_name: params[:month], employee_id: @employees)
-  #     elsif current_user.role.name == 'Branch'
-  #       @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
-  #       @workingdays = Workingday.where(year: params[:year], month_name: params[:month], employee_id: @employees)
-  #     elsif current_user.role.name == 'HOD'
-  #       @employees = Employee.where(department_id: current_user.department_id).pluck(:id)
-  #       @workingdays = Workingday.where(year: params[:year], month_name: params[:month], employee_id: @employees)
-  #     elsif current_user.role.name == 'Employee'
-  #       @workingdays = Workingday.where(year: params[:year], month_name: params[:month], employee_id: current_user.employee_id)
-  #     end
-  #   end
-  #   respond_to do |format|
-  #     format.xls {render template: 'workingdays/workingday.xls.erb'}
-  #   end
-  # end
-
-  # def workingday_pdf
-  #   @year = params[:year]
-  #   @month = params[:month]
-  #   @workingday = Workingday.where(year: params[:year],month_name: params[:month])
-  #   if current_user.class == Group
-  #     @workingdays = Workingday.where(year: params[:year], month_name: params[:month])
-  #   else
-  #     if current_user.role.name == 'GroupAdmin'
-  #       @workingdays = Workingday.where(year: params[:year], month_name: params[:month])
-  #     elsif current_user.role.name == 'Admin'
-  #       @employees = Employee.where(company_id: current_user.company_location.company_id).pluck(:id)
-  #       @workingdays = Workingday.where(year: params[:year], month_name: params[:month], employee_id: @employees)
-  #     elsif current_user.role.name == 'Branch'
-  #       @employees = Employee.where(company_location_id: current_user.company_location_id).pluck(:id)
-  #       @workingdays = Workingday.where(year: params[:year], month_name: params[:month], employee_id: @employees)
-  #     elsif current_user.role.name == 'HOD'
-  #       @employees = Employee.where(department_id: current_user.department_id).pluck(:id)
-  #       @workingdays = Workingday.where(year: params[:year], month_name: params[:month], employee_id: @employees)
-  #     elsif current_user.role.name == 'Employee'
-  #       @workingdays = Workingday.where(year: params[:year], month_name: params[:month], employee_id: current_user.employee_id)
-  #     end
-  #   end
-  #   respond_to do |format|
-  #   format.json
-  #   format.pdf do
-  #     render pdf: 'workingday',
-  #           layout: 'pdf.html',
-  #           orientation: 'Landscape',
-  #           template: 'workingdays/workingday.pdf.erb',
-  #           # show_as_html: params[:debug].present?,
-  #           :page_height      => 1000,
-  #           :dpi              => '300',
-  #           :margin           => {:top    => 10, # default 10 (mm)
-  #                         :bottom => 10,
-  #                         :left   => 20,
-  #                         :right  => 20},
-  #           :show_as_html => params[:debug].present?
-  #         end
-  #      end
-  # end
 
   def import_workingday
     @workingdays = Workingday.all
@@ -331,6 +263,8 @@ class WorkingdaysController < ApplicationController
   end
   
   def revert_workingday
+    session[:active_tab] ="TimeManagement"
+    session[:active_tab1] ="Attendance"
   end
 
   def show_employee
@@ -379,6 +313,22 @@ class WorkingdaysController < ApplicationController
       flash[:notice] = "Revert successfully"
       redirect_to revert_workingday_workingdays_path
     end
+  end
+
+  def search_by_month_year
+  end
+
+  def month_year_wise_record
+    month1 = params[:salary][:month1]
+    year1 = params[:salary][:year1]
+    month2 = params[:salary][:month2]
+    year2 = params[:salary][:year2]
+
+    @date1 = Date.new(year1.to_i, Workingday.months[month1])
+    @date2 = Date.new(year2.to_i, Workingday.months[month2])
+
+    @d1 = @date1.strftime('%B/%Y')
+    @d2 = @date2.strftime('%B/%Y')
   end
 
   private

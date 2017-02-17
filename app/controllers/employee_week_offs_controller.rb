@@ -5,6 +5,8 @@ class EmployeeWeekOffsController < ApplicationController
   # GET /employee_week_offs.json
   def index
     @employee_week_offs = EmployeeWeekOff.all
+    session[:active_tab] ="TimeManagement"
+    session[:active_tab1] ="AttendanceSetup"
   end
 
   # GET /employee_week_offs/1

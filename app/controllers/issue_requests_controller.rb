@@ -23,7 +23,6 @@ class IssueRequestsController < ApplicationController
     @issue_request = IssueRequest.new
     session[:active_tab] = "HelpDesk"
     session[:active_tab1] = "Process"
-    session[:active_tab1] = "SupportReport"
   end
 
   # GET /issue_requests/1/edit

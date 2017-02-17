@@ -23,8 +23,8 @@ class EmployeeResignationsController < ApplicationController
   # GET /employee_resignations/new
   def new
     @employee_resignation = EmployeeResignation.new
-    session[:active_tab] ="resignationmanagement"
-    session[:active_tab1] = "resign"  
+    session[:active_tab] ="employee_resignation"
+    session[:active_tab1] = "resignation"  
   end
 
   # GET /employee_resignations/1/edit
@@ -92,15 +92,15 @@ class EmployeeResignationsController < ApplicationController
 
   def employee_resignation_list
     @employee_resignations = EmployeeResignation.all
-    session[:active_tab] ="resignationmanagement"
-    session[:active_tab1] = "resign"  
+    session[:active_tab] ="employee_resignation"
+    session[:active_tab1] = "resignation"   
   end
   
   def resignation_history
     @reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
     @employee_resignations = EmployeeResignation.where(reporting_master_id: @reporting_masters)
-    session[:active_tab] ="resignationmanagement"
-    session[:active_tab1] = "resign"  
+    session[:active_tab] ="employee_resignation"
+    session[:active_tab1] = "resignation"   
   end
 
   def print_resignation_detail
@@ -189,6 +189,8 @@ class EmployeeResignationsController < ApplicationController
 
   def emp_resignation_history
     @employee_resignations = EmployeeResignation.all
+    session[:active_tab] ="employee_resignation"
+    session[:active_tab1] = "resignation"  
   end
 
   def show_resignation_detail

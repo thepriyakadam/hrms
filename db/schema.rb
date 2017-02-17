@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170216053607) do
+ActiveRecord::Schema.define(version: 20170217092904) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -649,6 +649,7 @@ ActiveRecord::Schema.define(version: 20170216053607) do
     t.string   "contact_no"
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+    t.boolean  "is_confirm"
   end
 
   add_index "departments", ["company_location_id"], name: "index_departments_on_company_location_id"

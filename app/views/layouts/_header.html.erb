@@ -128,6 +128,7 @@
            <% @members1.each do |m| %>
            <% if e.gender == "Male" && m.avatar_file_name == nil  %>
            <%= image_tag "avatar5.png",size: "25x25",class: "img-circle" %>
+
            <% elsif e.gender == "Female" && m.avatar_file_name == nil  %>
            <%= image_tag "avatar2.png",size: "25x25",class: "img-circle" %>
            <!-- < image_tag("avatar2.png") %> -->
@@ -186,7 +187,10 @@
              <% elsif e.gender == "Female" && m.avatar_file_name == nil  %>
              <%= image_tag "avatar2.png" %>
              <!-- < image_tag("avatar2.png") %> -->
+             <% else %>
+              <%= image_tag current_user.avatar.url(:medium),size: "25x25",class: "img-circle", alt: "avatar2"%>
               <%end%>
+
               <%end%>
               <%end%>
               <%end%>

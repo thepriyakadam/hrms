@@ -216,6 +216,9 @@ class FoodDeductionsController < ApplicationController
   end
 
   def food_deduction_report
+    session[:active_tab] ="PayrollManagement"
+   session[:active_tab1] ="SalaryProcess"
+   session[:active_tab2] = "DeductionReport"
   end
 
   def dynamic_report

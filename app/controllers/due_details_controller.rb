@@ -125,15 +125,15 @@ class DueDetailsController < ApplicationController
     # byebug
     @reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
     @due_employee_details = DueEmployeeDetail.where(reporting_master_id: @reporting_masters,is_confirmed: true)
-    session[:active_tab] = "resignationmanagement"
+    session[:active_tab] = "employee_resignation"
     session[:active_tab1] ="no_due_mgmt"
   end
 
   def all_employee_list
      @employee_resignations = EmployeeResignation.where(resign_status: "Approved").pluck(:employee_id)
      @employees = Employee.where(id: @employee_resignations,status: "Active")
-     session[:active_tab] = "resignationmanagement"
-     session[:active_tab1] ="no_due_mgmt"
+     session[:active_tab] = "employee_resignation"
+    session[:active_tab1] ="no_due_mgmt"
   end
 
   def all_employee_due_detail

@@ -196,8 +196,8 @@ class DailyBillDetailsController < ApplicationController
 
   def approved_daily_bill_details
     @daily_bill_details = DailyBillDetail.where(request_status: "Approved")
-   session[:active_tab] = "TravelManagement"
-    session[:active_tab1] = "ExpensesClaimProcess"  
+    session[:active_tab] = "TravelManagemnt"
+    session[:active_tab1] = "expensesclaimprocess"  
   end
 
   def download_doc
@@ -225,8 +225,8 @@ class DailyBillDetailsController < ApplicationController
      # @travel_request_histories = TravelRequestHistory.where(daily_bill_status: "true",reporting_master_id: reporting_masters)
 
      # @travel_request_histories = TravelRequestHistory.where(daily_bill_status: "true",reporting_master_id: reporting_masters)
-    session[:active_tab] = "TravelManagement"
-    session[:active_tab1] = "ExpensesClaimProcess"  
+    session[:active_tab] = "TravelManagemnt"
+    session[:active_tab1] = "expensesclaimprocess"  
   end
 
   def travel_request_history_list

@@ -632,11 +632,18 @@ class EmployeesController < ApplicationController
 
   def selected_employee_pdf
 
-      @employee_id = params[:employee_id]
+    @employee_id = params[:employee_id]
+      @employees = Employee.where(id: @employee_id)
       @employee_id.each do |e|
-      @employee = Employee.find_by(id: e)
-      @employees = Employee.where(id: e)
-    end
+        @employee = Employee.find_by(id: e)
+      end
+
+    #   @employee_id = params[:employee_id]
+    #   @employee_id.each do |e|
+    #   @employee = Employee.find_by(id: e)
+    #   @employees = Employee.where(id: e)
+    # end 
+
     #@employee_template = EmployeeTemplate.find(params[:employee_template_id])
     #@employee_salary_templates = EmployeeSalaryTemplate.where(employee_id: @employee_template.employee_id,salary_template_id: @employee_template.salary_template_id)    
     respond_to do |format|

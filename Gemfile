@@ -37,6 +37,7 @@ gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 
+gem 'thin', '~> 1.6', '>= 1.6.4'
 
 # for pdf generation
 gem 'prawn', '~> 1.3.0'

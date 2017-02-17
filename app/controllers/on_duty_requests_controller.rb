@@ -148,6 +148,9 @@ class OnDutyRequestsController < ApplicationController
       @pending_on_duty_requests = OnDutyRequest.where(is_first_approved: nil, is_first_rejected: nil, is_cancelled: nil,employee_id: @employees)
       @first_approved_on_duty_requests = OnDutyRequest.where(is_first_approved: true, is_second_approved: nil, is_second_rejected: nil, is_cancelled: nil,employee_id: @employees_ind)
     end
+    
+    session[:active_tab] ="LeaveManagement"
+    session[:active_tab1] ="LeaveProcess"
   end
 
   def employee_od_request_detail
@@ -173,6 +176,8 @@ class OnDutyRequestsController < ApplicationController
         @employees = Employee.where(id: current_user.employee_id)
       end
     end
+    session[:active_tab] ="LeaveManagement"
+    session[:active_tab1] ="LeaveProcess"
   end
 
   def from_hr

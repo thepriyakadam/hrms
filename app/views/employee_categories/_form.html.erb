@@ -16,8 +16,15 @@
        <%= f.text_field :description,hide_label: true,placeholder: "Description"%>
        </div>
     </div>
+    <div class="col-sm-3">
+            <div class="field">
+            <%= f.check_box :is_active , label:'Active'%>
+          </div>
+          </div>
+          </div>
   
-
+ <div class="row">
+ <label></label>
   <div class="col-sm-3">
       <div class="actions">
         <%= f.submit "Create Employee Category",:class => class_name, data: { disable_with: data_info } %>

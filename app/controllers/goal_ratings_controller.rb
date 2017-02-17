@@ -259,6 +259,8 @@ class GoalRatingsController < ApplicationController
   end
 
   def employee_goal_wise
+     session[:active_tab] ="performancemgmt"
+    session[:active_tab1] ="perform_report"
   end
 
   def print_employee
@@ -316,6 +318,8 @@ class GoalRatingsController < ApplicationController
   end
 
   def employee_wise_goal
+    session[:active_tab] ="performancemgmt"
+    session[:active_tab1] ="perform_report"
   end
 
   def goal_employee_wise
@@ -379,6 +383,8 @@ class GoalRatingsController < ApplicationController
   
   def period_for_training
     @periods = Period.all
+    session[:active_tab] ="performancemgmt"
+    session[:active_tab1] ="perform_cycle1"
   end
 
   def training_request
@@ -416,7 +422,7 @@ class GoalRatingsController < ApplicationController
 
   def period_and_topic_wise_list
     session[:active_tab] ="performancemgmt"
-    session[:active_tab1] ="perform_report"
+    session[:active_tab1] ="perform_cycle1"
   end
 
   def period_topic_wise_employee
@@ -525,6 +531,8 @@ class GoalRatingsController < ApplicationController
 
   def increment_index
     @rating = Rating.last
+     session[:active_tab] ="performancemgmt"
+    session[:active_tab1] ="perform_cycle1"
   end
 
   def all_employee_list
@@ -562,6 +570,8 @@ class GoalRatingsController < ApplicationController
   end
 
   def period_rating_wise
+    session[:active_tab] ="performancemgmt"
+    session[:active_tab1] ="perform_report"
   end
 
   def Period_rating_wise_employee

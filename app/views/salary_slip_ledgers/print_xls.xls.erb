@@ -27,6 +27,7 @@
       <th>Medi Allow</th>
       <th>Child Edu Allow</th>
       <th>MRA</th>
+      <th>MA</th>
       <th>Total</th>
 
       <th>CL</th>
@@ -88,6 +89,7 @@
         <td><%= r.try(:actual_medical).try(:round) %></td>
         <td><%= r.try(:actual_child_edu).try(:round) %></td>
         <td><%= r.try(:actual_mra).try(:round) %></td>
+        <td><%= r.try(:actual_monthly_arrear).try(:round) %></td>
         <td><%= r.try(:actual_total).try(:round) %></td>
 
         <td><%= r.try(:cl_leave) %></td>
@@ -111,6 +113,7 @@
         <td><%= r.try(:earned_medical).try(:round) %></td>
         <td><%= r.try(:earned_child_edu).try(:round) %></td>
         <td><%= r.try(:earned_mra).try(:round) %></td>
+        <td><%= r.try(:earned_monthly_arrear).try(:round) %></td>
         <td><%= r.try(:earned_total).try(:round) %></td>
 
         <td><%= r.try(:pf) %></td>
@@ -149,6 +152,7 @@
       <td><%= @sum.actual_medical.try(:round) %></td>
       <td><%= @sum.actual_child_edu.try(:round) %></td>
       <td><%= @sum.actual_mra.try(:round) %></td>
+      <td><%= @sum.actual_monthly_arrear.try(:round) %></td>
       <td><%= @sum.actual_total.try(:round) %></td>
       
       <td><%= @sum.cl_leave %></td>
@@ -171,6 +175,7 @@
       <td><%= @sum.earned_medical.try(:round) %></td>
       <td><%= @sum.earned_child_edu.try(:round) %></td>
       <td><%= @sum.earned_mra.try(:round) %></td>
+      <td><%= @sum.earned_monthly_arrear.try(:round) %></td>
       <td><%= @sum.earned_total.try(:round) %></td>
 
       <td><%= @sum.pf %></td>

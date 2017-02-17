@@ -1,11 +1,6 @@
 Rails.application.routes.draw do
   
-  resources :monthly_arrears do
-    collection do
-      get :is_paid
-      
-    end
-  end
+  resources :monthly_arrears
   resources :on_duty_requests do 
     collection do
       get :select_checkbox
@@ -1323,6 +1318,10 @@ end
       post :salary_employee_wise
       get :employee_wise_pdf
       get :employee_wise_xls
+      get :employee_list
+      get :show_all_record
+      post :show_all_record
+      get :employee_record
     end
   end
   resources :retention_moneys do
@@ -1524,6 +1523,8 @@ end
       get :revert_workingday
       get :show_employee
       post :revert_all_workingday
+      get :search_by_month_year
+      post :month_year_wise_record
     end
   end
 

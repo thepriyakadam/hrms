@@ -30,6 +30,7 @@ try(:<div )class="ajax-progress"></div>
       <th>Medi Allow</th>
       <th>Child Edu Allow</th>
       <th>MRA</th>
+      <th>MA</th>
       <th>Gross</th>
 
       <th>PF</th>
@@ -65,6 +66,7 @@ try(:<div )class="ajax-progress"></div>
         <td><%= r.try(:earned_medical).try(:round) %></td>
         <td><%= r.try(:earned_child_edu).try(:round) %></td>
         <td><%= r.try(:earned_mra).try(:round) %></td>
+        <td><%= r.try(:earned_monthly_arrear).try(:round) %></td>
         <td><%= r.try(:earned_total).try(:round) %></td>
 
         <td><%= r.try(:pf) %></td>
@@ -96,6 +98,7 @@ try(:<div )class="ajax-progress"></div>
       <td><%= @sum.earned_medical.try(:round) %></td>
       <td><%= @sum.earned_child_edu.try(:round) %></td>
       <td><%= @sum.earned_mra.try(:round) %></td>
+      <td><%= @sum.earned_monthly_arrear.try(:round) %></td>
       <th><%= @sum.earned_total.try(:round) %></th>
 
       <th><%= @sum.pf %></th>

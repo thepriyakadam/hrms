@@ -15,6 +15,8 @@ class LeaveCashablesController < ApplicationController
   def new
     @leave_cashable = LeaveCashable.new
     @leave_cashables = LeaveCashable.all
+    session[:active_tab] ="LeaveManagement"
+    session[:active_tab1] ="leaveadministration"
   end
 
   # GET /leave_cashables/1/edit

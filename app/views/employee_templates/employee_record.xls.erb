@@ -11,7 +11,8 @@
         <Cell ss:Index="1"><Data ss:Type="String">Sr. No.</Data></Cell>
         <Cell ss:Index="2"><Data ss:Type="String"> ID</Data></Cell>
         <Cell ss:Index="3"><Data ss:Type="String">Employee Name </Data></Cell>
-        <Cell ss:Index="4"><Data ss:Type="String">Department</Data></Cell>    
+        <Cell ss:Index="4"><Data ss:Type="String">Department</Data></Cell> 
+           
         <Cell ss:Index="5"><Data ss:Type="String">Degree</Data></Cell>
         <Cell ss:Index="6"><Data ss:Type="String">Degree Type</Data></Cell>
         <Cell ss:Index="7"><Data ss:Type="String">Degree Stream</Data></Cell>
@@ -101,47 +102,54 @@
           <Cell ss:Index="15"><Data ss:Type="String"><%= @qualification3.try(:degree_stream).try(:name) %></Data></Cell>
           <Cell ss:Index="16"><Data ss:Type="String"><%= @qualification3.try(:year).try(:name) %></Data></Cell>
        
-        <Cell ss:Index="17"><Data ss:Type="String"><%= @joining_detail.try(:joining_date) %></Data></Cell>
-        <Cell ss:Index="18"><Data ss:Type="String"><%= @employee_promotion.try(:employee_designation).try(:name) %></Data></Cell>
-        <Cell ss:Index="19"><Data ss:Type="String"><%= @joining_detail.try(:employee_category).try(:name) %></Data></Cell>
-        <Cell ss:Index="20"><Data ss:Type="String"><%= @joining_detail.try(:employee_designation).try(:name) %></Data></Cell>
-        <Cell ss:Index="21"><Data ss:Type="String"><%= @employee_promotion_last.try(:effective_from) %></Data></Cell>
+          <Cell ss:Index="17"><Data ss:Type="String"><%= @joining_detail.try(:joining_date) %></Data></Cell>
+          <Cell ss:Index="18"><Data ss:Type="String"><%= @employee_promotion.try(:employee_designation).try(:name) %></Data></Cell>
+          <Cell ss:Index="19"><Data ss:Type="String"><%= @joining_detail.try(:employee_category).try(:name) %></Data></Cell>
+          <Cell ss:Index="20"><Data ss:Type="String"><%= @joining_detail.try(:employee_designation).try(:name) %></Data></Cell>
+          <Cell ss:Index="21"><Data ss:Type="String"><%= @employee_promotion_last.try(:effective_from) %></Data></Cell>
+          <%if @first_employee_salary_templates == nil %>
+            <cell></cell>
+          <% else %>
+            <Cell ss:Index="22"><Data ss:Type="String"><%= @first_employee_salary_templates.sum(:annual_amount) %></Data></Cell>
+          <% end %>
+          <%if @current_employee_salary_templates == nil %>
+            <cell></cell>
+          <% else %>
+            <Cell ss:Index="23"><Data ss:Type="String"><%= @current_employee_salary_templates.sum(:annual_amount) %></Data></Cell>
+          <% end %>
+          <Cell ss:Index="24"><Data ss:Type="String"><%= @last_template.try(:start_date) %></Data></Cell>
+          <Cell ss:Index="25"><Data ss:Type="String"><%= @experience.sum(:no_of_year) %></Data></Cell>
 
-        <Cell ss:Index="22"><Data ss:Type="String"><%= @first_employee_salary_templates.sum(:annual_amount) %></Data></Cell>
-        <Cell ss:Index="23"><Data ss:Type="String"><%= @current_employee_salary_templates.sum(:annual_amount) %></Data></Cell>
-        <Cell ss:Index="24"><Data ss:Type="String"><%= @last_template.try(:start_date) %></Data></Cell>
-        <Cell ss:Index="25"><Data ss:Type="String"><%= @experience.sum(:no_of_year) %></Data></Cell>
+          <%if @employee_salary_templates1 == nil %>
+          <cell></cell>
+          <% else %>
+          <Cell ss:Index="26"><Data ss:Type="String"><%= @employee_salary_templates1.sum(:annual_amount) %></Data></Cell>
+          <% end %>
+          <%if @employee_salary_templates2 == nil %>
+          <cell></cell>
+          <% else %>
+          <Cell ss:Index="27"><Data ss:Type="String"><%= @employee_salary_templates2.sum(:annual_amount) %></Data></Cell>
+          <% end %>
+          <%if @employee_salary_templates3 == nil %>
+          <cell></cell>
+          <% else %>
+          <Cell ss:Index="28"><Data ss:Type="String"><%= @employee_salary_templates3.sum(:annual_amount) %></Data></Cell>
+          <% end %>
 
-        <%if @employee_salary_templates1 == nil %>
-        <cell></cell>
-        <% else %>
-        <Cell ss:Index="26"><Data ss:Type="String"><%= @employee_salary_templates1.sum(:annual_amount) %></Data></Cell>
-        <% end %>
-        <%if @employee_salary_templates2 == nil %>
-        <cell></cell>
-        <% else %>
-        <Cell ss:Index="27"><Data ss:Type="String"><%= @employee_salary_templates2.sum(:annual_amount) %></Data></Cell>
-        <% end %>
-        <%if @employee_salary_templates3 == nil %>
-        <cell></cell>
-        <% else %>
-        <Cell ss:Index="28"><Data ss:Type="String"><%= @employee_salary_templates3.sum(:annual_amount) %></Data></Cell>
-        <% end %>
+          <Cell ss:Index="29"><Data ss:Type="String"><%= @goal_bunch.try(:appraisee_rating_id).to_f.round(4) %></Data></Cell>
+          <Cell ss:Index="30"><Data ss:Type="String"><%= @goal_bunch.try(:appraiser_rating) %></Data></Cell>
+          <Cell ss:Index="31"><Data ss:Type="String"><%= @goal_bunch.try(:reviewer_rating_id) %></Data></Cell>
+          <Cell ss:Index="32"><Data ss:Type="String"><%= @goal_bunch.try(:final_rating_id) %></Data></Cell>
 
-        <Cell ss:Index="29"><Data ss:Type="String"><%= @goal_bunch.try(:appraisee_rating_id).to_f.round(4) %></Data></Cell>
-        <Cell ss:Index="30"><Data ss:Type="String"><%= @goal_bunch.try(:appraiser_rating) %></Data></Cell>
-        <Cell ss:Index="31"><Data ss:Type="String"><%= @goal_bunch.try(:reviewer_rating_id) %></Data></Cell>
-        <Cell ss:Index="32"><Data ss:Type="String"><%= @goal_bunch.try(:final_rating_id) %></Data></Cell>
+          <Cell ss:Index="33"><Data ss:Type="String"><%= @goal_bunch.try(:r_increment) %></Data></Cell>
+          <Cell ss:Index="34"><Data ss:Type="String"><%= @goal_bunch.try(:r_promotion) %></Data></Cell>
+          <Cell ss:Index="35"><Data ss:Type="String"><%= @goal_bunch.try(:r_designation).try(:name) %></Data></Cell>
+          <Cell ss:Index="36"><Data ss:Type="String"><%= @goal_bunch.try(:r_ctc) %></Data></Cell>
 
-        <Cell ss:Index="33"><Data ss:Type="String"><%= @goal_bunch.try(:r_increment) %></Data></Cell>
-        <Cell ss:Index="34"><Data ss:Type="String"><%= @goal_bunch.try(:r_promotion) %></Data></Cell>
-        <Cell ss:Index="35"><Data ss:Type="String"><%= @goal_bunch.try(:r_designation).try(:name) %></Data></Cell>
-        <Cell ss:Index="36"><Data ss:Type="String"><%= @goal_bunch.try(:r_ctc) %></Data></Cell>
-
-        <Cell ss:Index="37"><Data ss:Type="String"><%= @goal_bunch.try(:f_increment) %></Data></Cell>
-        <Cell ss:Index="38"><Data ss:Type="String"><%= @goal_bunch.try(:f_promotion) %></Data></Cell>
-        <Cell ss:Index="39"><Data ss:Type="String"><%= @goal_bunch.try(:f_designation).try(:name) %></Data></Cell>
-        <Cell ss:Index="40"><Data ss:Type="String"><%= @goal_bunch.try(:f_ctc) %></Data></Cell>
+          <Cell ss:Index="37"><Data ss:Type="String"><%= @goal_bunch.try(:f_increment) %></Data></Cell>
+          <Cell ss:Index="38"><Data ss:Type="String"><%= @goal_bunch.try(:f_promotion) %></Data></Cell>
+          <Cell ss:Index="39"><Data ss:Type="String"><%= @goal_bunch.try(:f_designation).try(:name) %></Data></Cell>
+          <Cell ss:Index="40"><Data ss:Type="String"><%= @goal_bunch.try(:f_ctc) %></Data></Cell>
        </Row>
       <% end %>
     </Table>

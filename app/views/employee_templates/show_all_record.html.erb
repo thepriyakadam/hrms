@@ -88,16 +88,16 @@
             <th colspan="3">CTC 3</th>
           </tr>
             <% @employee_templates = EmployeeTemplate.where(employee_id: e).last(3) %>
-            <% @emp_temp1 = @employee_templates.first %>
+            <% @emp_temp1 = @employee_templates.try(:first) %>
             <% @emp_temp = @employee_templates.last(2) %>
-            <% @emp_temp2 = @emp_temp.first %>
-            <% @emp_temp3 = @employee_templates.last %>
+            <% @emp_temp2 = @emp_temp.try(:first) %>
+            <% @emp_temp3 = @employee_templates.try(:last) %>
 
-            <% @employee_template1 = EmployeeTemplate.find_by(id: @emp_temp1.id) %>
+            <% @employee_template1 = EmployeeTemplate.find_by(id: @emp_temp1.try(:id)) %>
             <% @employee_salary_templates1 = @employee_template1.try(:employee_salary_templates) %>
-            <% @employee_template2 = EmployeeTemplate.find_by(id: @emp_temp2.id) %>
+            <% @employee_template2 = EmployeeTemplate.find_by(id: @emp_temp2.try(:id)) %>
             <% @employee_salary_templates2 = @employee_template2.try(:employee_salary_templates) %>
-            <% @employee_template3 = EmployeeTemplate.find_by(id: @emp_temp3.id) %>
+            <% @employee_template3 = EmployeeTemplate.find_by(id: @emp_temp3.try(:id)) %>
             <% @employee_salary_templates3 = @employee_template3.try(:employee_salary_templates) %>
           <tr>
             <% if @employee_salary_templates1 == nil %>

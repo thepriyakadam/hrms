@@ -1523,6 +1523,8 @@ end
       get :revert_workingday
       get :show_employee
       post :revert_all_workingday
+      get :search_by_month_year
+      post :month_year_wise_record
     end
   end
 

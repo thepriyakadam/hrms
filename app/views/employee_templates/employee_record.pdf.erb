@@ -76,11 +76,19 @@ div.nobreak{ page-break-inside: avoid;
             <% @last_template = EmployeeTemplate.where(employee_id: e).last %>
             <% @experience = Experience.where(employee_id: e) %>
 
-            <% @current_employee_salary_templates = @current_template.employee_salary_templates %>
-            <% @first_employee_salary_templates = @first_template.employee_salary_templates %>
-          <tr>
-            <td><%= @first_employee_salary_templates.sum(:annual_amount) %></td>
-            <td><%= @current_employee_salary_templates.sum(:annual_amount) %></td>
+            <% @current_employee_salary_templates = @current_template.try(:employee_salary_templates) %>
+            <% @first_employee_salary_templates = @first_template.try(:employee_salary_templates) %>
+          <tr> 
+            <% if @first_employee_salary_templates == nil %>
+              <td></td>
+            <% else %>
+              <td><%= @first_employee_salary_templates.sum(:annual_amount) %></td>
+            <% end %>
+            <% if @current_employee_salary_templates == nil %>
+              <td></td>
+            <% else %>
+              <td><%= @current_employee_salary_templates.sum(:annual_amount) %></td>
+            <% end %>
             <td><%= @last_template.try(:start_date) %></td>
             <td colspan="2"><%= @experience.sum(:no_of_year) %></td>
           </tr> 
@@ -91,21 +99,30 @@ div.nobreak{ page-break-inside: avoid;
             <th colspan="3">CTC 3</th>
           </tr>
             <% @employee_templates = EmployeeTemplate.where(employee_id: e).last(3) %>
-            <% @emp_temp1 = @employee_templates.first %>
+            <% @emp_temp1 = @employee_templates.try(:first) %>
             <% @emp_temp = @employee_templates.last(2) %>
-            <% @emp_temp2 = @emp_temp.first %>
-            <% @emp_temp3 = @employee_templates.last %>
+            <% @emp_temp2 = @emp_temp.try(:first) %>
+            <% @emp_temp3 = @employee_templates.try(:last) %>
 
-            <% @employee_template1 = EmployeeTemplate.find_by(id: @emp_temp1.id) %>
-            <% @employee_salary_templates1 = @employee_template1.employee_salary_templates %>
-            <% @employee_template2 = EmployeeTemplate.find_by(id: @emp_temp2.id) %>
-            <% @employee_salary_templates2 = @employee_template2.employee_salary_templates %>
-            <% @employee_template3 = EmployeeTemplate.find_by(id: @emp_temp3.id) %>
-            <% @employee_salary_templates3 = @employee_template3.employee_salary_templates %>
+            <% @employee_template1 = EmployeeTemplate.find_by(id: @emp_temp1.try(:id)) %>
+            <% @employee_salary_templates1 = @employee_template1.try(:employee_salary_templates) %>
+            <% @employee_template2 = EmployeeTemplate.find_by(id: @emp_temp2.try(:id)) %>
+            <% @employee_salary_templates2 = @employee_template2.try(:employee_salary_templates) %>
+            <% @employee_template3 = EmployeeTemplate.find_by(id: @emp_temp3.try(:id)) %>
+            <% @employee_salary_templates3 = @employee_template3.try(:employee_salary_templates) %>
           <tr>
-            <td><%= @employee_salary_templates1.sum(:annual_amount) %></td>
-            <td><%= @employee_salary_templates2.sum(:annual_amount) %></td>
-            <td colspan="3"><%= @employee_salary_templates3.sum(:annual_amount) %></td>
+            <% if @employee_salary_templates1 == nil %>
+            <% else %>
+              <td><%= @employee_salary_templates1.sum(:annual_amount) %></td>
+            <% end %>
+            <% if @employee_salary_templates2 == nil %>
+            <% else %>
+              <td><%= @employee_salary_templates2.sum(:annual_amount) %></td>
+            <% end %>
+            <% if @employee_salary_templates3 == nil %>
+            <% else %>
+              <td colspan="3"><%= @employee_salary_templates3.sum(:annual_amount) %></td>
+            <% end %>
           </tr> 
 
           <tr>
@@ -149,7 +166,8 @@ div.nobreak{ page-break-inside: avoid;
               <td><%= @goal_bunch.try(:f_designation).try(:name) %></td>
               <td colspan="2"><%= @goal_bunch.try(:f_ctc) %></td>
             </tr>
-        <% end %>
+
+          <% end %>
         </tbody>
       </table>
     

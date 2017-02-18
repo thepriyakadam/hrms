@@ -18,8 +18,8 @@
 		      	<% date = i.to_date %>
       			<% @month = date.strftime('%B') %>
       			<% @year = date.strftime('%Y') %>
-      			<% workingdays = Workingday.where(month_name: @month,year: @year) %>
-	      			<% workingdays.each do |workingday| %>
+      			<% @workingdays = Workingday.where(month_name: @month,year: @year) %>
+	      			<% @workingdays.each do |workingday| %>
 				        <tr>
 				          <td><%= workingday.employee.try(:manual_employee_code) %></td>
 				          <td><%= full_name(workingday.employee) %></td>

@@ -308,9 +308,9 @@ class EmployeeLeavRequestsController < ApplicationController
       column(:Status, sortable: true, &:current_status)
       column(:No_OF_Day, sortable: true, &:leave_count)
       column(:Reason, sortable: true, &:reason)
-    end
     session[:active_tab] ="LeaveManagement"
     session[:active_tab1] ="LeaveReports"
+    end
   end
 
   def search_by_is_pending_date

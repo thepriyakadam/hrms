@@ -6,10 +6,6 @@
     <tr>
       <th>Branch</th>
       <th>Base Component</th>
-      <th>Min Amount</th>
-      <th>Max Amount</th>
-      <th>For Month</th>
-      <th>Status</th>
       <th>Action</th>
     </tr>
   </thead>
@@ -29,10 +25,6 @@
             <% i = i + 1 %>
           <% end %>
         </td>
-        <td><%= professional_tax_master.min_amount %></td>
-        <td><%= professional_tax_master.max_amount %></td>
-        <td><%= professional_tax_master.for_month %></td>
-        <td><%= professional_tax_master.is_active ? "Active" : "Inactive" %></td>
         <td>
           <% if professional_tax_master.is_confirm == true %>
             <small class= "label label-primary">Confirmed</small>

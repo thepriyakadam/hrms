@@ -3,11 +3,15 @@ class EmployeeResignation < ActiveRecord::Base
   belongs_to :reporting_master
   belongs_to :leaving_reason
   has_many :due_employee_details
+  has_many :resignation_status_records
+  belongs_to :second_reporter, class_name: 'Employee'
+  belongs_to :change_status_employee, class_name: 'Employee'
+  belongs_to :final_reporter, class_name: 'Employee'
 
   validates :resignation_date,presence:true
  
   validates :employee_id,presence:true
-  validates :reporting_master_id,presence:true
+  # validates :reporting_master_id,presence:true
   
   # has_many :reporting_masters_resign
   # has_many :reporting_masters, through: :reporting_masters_resign

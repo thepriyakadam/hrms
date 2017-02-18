@@ -763,19 +763,21 @@ class SalaryslipsController < ApplicationController
 
      # @working_day = working_day.try(:calculated_payable_days).to_f
 
-      @payroll_overtime_masters = PayrollOvertimeMaster.where(is_active: true,is_payroll: true)
-      
-      @payroll_overtime_masters.try(:each) do |pom|
-      formula_string = pom.base_component.split(',').map {|i| i.to_i}
-      formula_item = SalaryslipComponent.where(salary_component_id: formula_string,salaryslip_id: @salaryslip.id)  
-      @total = formula_item.sum(:calculated_amount)
-      @total_actual = formula_item.sum(:actual_amount)
-      base_amount = (@total.to_f / working_day.try(:day_in_month).to_f) / pom.company_hrs.to_f
-      overtime_payment = working_day.try(:ot_days).to_f * pom.rate.to_f * base_amount.to_f
-      @salary_component = SalaryComponent.find_by(name: "Overtime")
-      SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: 0, calculated_amount: overtime_payment, is_deducted: false, other_component_name: 'Overtime',salary_component_id: @salary_component.id)
-      puts "Overtime...................................................."
-    end
+       if @employee.joining_detail.ot_option == true && working_day.ot_hours != 0
+        @payroll_overtime_masters = PayrollOvertimeMaster.where(is_active: true,is_payroll: true)
+        
+        @payroll_overtime_masters.try(:each) do |pom|
+        formula_string = pom.base_component.split(',').map {|i| i.to_i}
+        formula_item = SalaryslipComponent.where(salary_component_id: formula_string,salaryslip_id: @salaryslip.id)  
+        @total = formula_item.sum(:calculated_amount)
+        @total_actual = formula_item.sum(:actual_amount)
+        base_amount = (@total.to_f / working_day.try(:day_in_month).to_f) / pom.company_hrs.to_f
+        overtime_payment = working_day.try(:ot_hours).to_f * pom.rate.to_f * base_amount.to_f
+        @salary_component = SalaryComponent.find_by(name: "Overtime")
+        SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: 0, calculated_amount: overtime_payment, is_deducted: false, other_component_name: 'Overtime',salary_component_id: @salary_component.id)
+        puts "ffffffffffffffffffff"
+        end
+      end
 
      date = Date.new(@year.to_i, Workingday.months[@month])
      @monthly_arrears = MonthlyArrear.where(day: date..date.at_end_of_month, employee_id: @employee.id)
@@ -1118,6 +1120,7 @@ class SalaryslipsController < ApplicationController
               SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: s.march_amount, calculated_amount: s.march_amount, is_deducted: true, other_component_name: 'Prof. Tax',salary_component_id: @salary_component.id)
             end
         else
+          # byebug
             if @total.between?(s.min_amount, s.max_amount) && @month != "March" && @employee.company_location_id == s.company_location_id
               @salary_component = SalaryComponent.find_by(name: "Prof. Tax")
               SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: s.for_month, calculated_amount: s.for_month, is_deducted: true, other_component_name: 'Prof. Tax',salary_component_id: @salary_component.id)
@@ -1317,6 +1320,20 @@ class SalaryslipsController < ApplicationController
 
     #   @payroll_overtime_masters = PayrollOvertimeMaster.where(is_active: true,is_payroll: true)
       
+      if @employee.joining_detail.ot_option == true && working_day.ot_hours != 0
+        @payroll_overtime_masters.try(:each) do |pom|
+        formula_string = pom.base_component.split(',').map {|i| i.to_i}
+        formula_item = SalaryslipComponent.where(salary_component_id: formula_string,salaryslip_id: @salaryslip.id)  
+        @total = formula_item.sum(:calculated_amount)
+        @total_actual = formula_item.sum(:actual_amount)
+        base_amount = (@total.to_f / working_day.try(:day_in_month).to_f) / pom.company_hrs.to_f
+        overtime_payment = working_day.try(:ot_hours).to_f * pom.rate.to_f * base_amount.to_f
+        @salary_component = SalaryComponent.find_by(name: "Overtime")
+        SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: 0, calculated_amount: overtime_payment, is_deducted: false, other_component_name: 'Overtime',salary_component_id: @salary_component.id)
+        puts "gggggggggggggggg"
+        end
+      end
+      
     #   @payroll_overtime_masters.try(:each) do |pom|
     #   formula_string = pom.base_component.split(',').map {|i| i.to_i}
     #   formula_item = SalaryslipComponent.where(salary_component_id: formula_string,salaryslip_id: @salaryslip.id)  
@@ -1344,7 +1361,6 @@ class SalaryslipsController < ApplicationController
         SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: 0, calculated_amount: addable_calculated_amount, is_deducted: false,other_component_name: 'Monthly Arrear', salary_component_id:  @salary_component.id)
          puts "Monthly Arrear......................................"
       end
-
 
 
     @salaryslip = Salaryslip.last

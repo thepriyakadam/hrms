@@ -448,6 +448,7 @@ end
       get :department_wise_xls
       get :select_date_present_form
       get :show_datewise_employee
+      get :search_by_date
 
       # get :date_wise_pdf
       # get :date_wise_xls
@@ -760,6 +761,13 @@ end
       get :xl_resignation_detail
       post :edit_n_approve
       get :edit_n_approve_modal
+      get :display_notice_period
+      get :first_approve
+      get :second_approve
+      get :final_approval_emp_resignation_list
+      get :final_approve
+      get :first_reject
+      get :second_reject
   end
 end
   resources :travel_options do

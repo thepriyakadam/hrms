@@ -1362,8 +1362,6 @@ class SalaryslipsController < ApplicationController
          puts "Monthly Arrear......................................"
       end
 
->>>>>>> 9561549e5872faed20e90e901e7bc4126dfaee20
-
 
     @salaryslip = Salaryslip.last
     @salaryslip_component1 = SalaryslipComponent.where(salaryslip_id: @salaryslip.id)

@@ -11,11 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
-ActiveRecord::Schema.define(version: 20170217113948) do
-=======
-ActiveRecord::Schema.define(version: 20170217092904) do
->>>>>>> 9561549e5872faed20e90e901e7bc4126dfaee20
+ActiveRecord::Schema.define(version: 20170218104438) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -1141,11 +1137,23 @@ ActiveRecord::Schema.define(version: 20170217092904) do
     t.string   "resign_status"
     t.boolean  "is_stop_pay_request"
     t.datetime "application_date"
+    t.boolean  "is_pending"
+    t.boolean  "is_cancelled"
+    t.boolean  "is_first_approved"
+    t.boolean  "is_second_approved"
+    t.boolean  "is_first_rejected"
+    t.boolean  "is_second_rejected"
+    t.integer  "second_reporter_id"
+    t.integer  "final_reporter_id"
+    t.boolean  "is_final_approved"
+    t.boolean  "is_final_rejected"
   end
 
   add_index "employee_resignations", ["employee_id"], name: "index_employee_resignations_on_employee_id"
+  add_index "employee_resignations", ["final_reporter_id"], name: "index_employee_resignations_on_final_reporter_id"
   add_index "employee_resignations", ["leaving_reason_id"], name: "index_employee_resignations_on_leaving_reason_id"
   add_index "employee_resignations", ["reporting_master_id"], name: "index_employee_resignations_on_reporting_master_id"
+  add_index "employee_resignations", ["second_reporter_id"], name: "index_employee_resignations_on_second_reporter_id"
 
   create_table "employee_salary_templates", force: :cascade do |t|
     t.integer  "employee_id"
@@ -2946,6 +2954,18 @@ ActiveRecord::Schema.define(version: 20170217092904) do
   add_index "resignation_histories", ["employee_resignation_id"], name: "index_resignation_histories_on_employee_resignation_id"
   add_index "resignation_histories", ["reporting_master_id"], name: "index_resignation_histories_on_reporting_master_id"
 
+  create_table "resignation_status_records", force: :cascade do |t|
+    t.integer  "employee_resignation_id"
+    t.integer  "change_status_employee_id"
+    t.string   "status"
+    t.datetime "change_date"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
+  add_index "resignation_status_records", ["change_status_employee_id"], name: "index_resignation_status_records_on_change_status_employee_id"
+  add_index "resignation_status_records", ["employee_resignation_id"], name: "index_resignation_status_records_on_employee_resignation_id"
+
   create_table "retention_moneys", force: :cascade do |t|
     t.boolean  "have_retention"
     t.decimal  "amount",         precision: 15, scale: 2
@@ -3657,12 +3677,8 @@ ActiveRecord::Schema.define(version: 20170217092904) do
     t.decimal  "nonpay_leave",            precision: 10, scale: 2
     t.decimal  "gatepass"
     t.decimal  "calculated_payable_days"
-<<<<<<< HEAD
     t.decimal  "ot_hours"
-=======
-    t.decimal  "ot_days"
     t.decimal  "od_leave"
->>>>>>> 9561549e5872faed20e90e901e7bc4126dfaee20
   end
 
   add_index "workingdays", ["employee_id"], name: "index_workingdays_on_employee_id"

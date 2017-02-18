@@ -762,6 +762,12 @@ end
       post :edit_n_approve
       get :edit_n_approve_modal
       get :display_notice_period
+      get :first_approve
+      get :second_approve
+      get :final_approval_emp_resignation_list
+      get :final_approve
+      get :first_reject
+      get :second_reject
   end
 end
   resources :travel_options do

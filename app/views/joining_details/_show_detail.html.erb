@@ -10,7 +10,7 @@
      <font color='#0077b3'>
        ID : <%= @joining_detail.employee.try(:manual_employee_code) %><br>
        Name : <%= @joining_detail.employee.try(:first_name) %> <%= @joining_detail.employee.try(:middle_name) %> <%= @joining_detail.employee.try(:last_name) %><br>
-       Email : <%= @joining_detail.first.employee.try(:email) %></font>
+       Email : <%= @joining_detail.employee.try(:email) %></font>
     </div>
   </div>
    <div class="box-tools pull-right">

@@ -175,10 +175,16 @@ end
     # @employees = Employee.all
   end
 
+  def salary_slip_costunit_wise
+    session[:active_tab] ="PayrollManagement"
+    session[:active_tab1] ="SalaryProcess"
+    session[:active_tab2] = "SalarySlip"
+  end
+
   def select_month_year_form
-  session[:active_tab] ="PayrollManagement"
-  session[:active_tab1] ="SalaryProcess"
-  session[:active_tab2] = "SalarySlip"
+    session[:active_tab] ="PayrollManagement"
+    session[:active_tab1] ="SalaryProcess"
+    session[:active_tab2] = "SalarySlip"
   end
 
 end

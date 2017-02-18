@@ -79,6 +79,12 @@ class BonusEmployeesController < ApplicationController
     @particular_bonuses = @employee.particular_bonuses
   end
 
+  def bonus_employee_report
+    session[:active_tab] ="PayrollManagement"
+    session[:active_tab1] ="SalaryProcess"
+    session[:active_tab2] = "SalaryReport"
+  end
+
   def bonus_employee_xls
     # byebug
     start_date = params[:start_date].to_date

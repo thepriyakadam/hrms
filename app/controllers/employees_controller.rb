@@ -579,6 +579,7 @@ class EmployeesController < ApplicationController
 
   def member_list_for_update_password
     @members = Member.all
+    session[:active_tab] ="UserAdministration"
   end
 
   def reset_password
@@ -1159,6 +1160,11 @@ def left_employee_pdf
                   :show_as_html => params[:debug].present?
                 end
              end
+end
+
+def destroy_employee
+  session[:active_tab] ="UserAdministration"
+  
 end
 
   # def destroy_details

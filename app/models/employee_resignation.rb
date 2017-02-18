@@ -7,7 +7,7 @@ class EmployeeResignation < ActiveRecord::Base
   validates :resignation_date,presence:true
  
   validates :employee_id,presence:true
-  validates :reporting_master_id,presence:true
+  # validates :reporting_master_id,presence:true
   
   # has_many :reporting_masters_resign
   # has_many :reporting_masters, through: :reporting_masters_resign

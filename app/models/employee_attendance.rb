@@ -1,6 +1,8 @@
 class EmployeeAttendance < ActiveRecord::Base
   belongs_to :employee
   belongs_to :employee_leav_request
+  belongs_to :machine_attendance
+  belongs_to :company_time_master
   validates :day, uniqueness: { scope: [:employee_id] }
 
   private

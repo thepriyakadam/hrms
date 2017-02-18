@@ -5,11 +5,12 @@
   <div class="box-body">
     <%= bootstrap_form_for(@employee_resignation,html: {id: 'employee_resignation'}) do |f| %>
     <%= f.hidden_field :employee_id, :value => current_user.employee_id %>
+     <%= f.hidden_field :application_date, value: Date.today %>
      
       <div class="row">
       <div class="col-sm-3">
           <div class="form-group required">
-          <%= f.select :employee_id, all_active_employee_with_code, {include_blank: "Select Employee"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>    
+          <%= f.select :employee_id, all_active_employee_with_code, {include_blank: "Select Employee",label: "Employee"},{onchange:"var a={id:$(this).val()}; $.get('/employee_resignations/display_notice_period',a,function(response){});"} %>    
           </div>
         </div>
         
@@ -31,21 +32,21 @@
           </div>
         </div>
 
-         <div class="col-sm-3">
+         <!-- <div class="col-sm-3">
           <div class="form-group required">
-          <%= f.select :reporting_master_id, all_reporting_master_list, {include_blank: "Select Approval",label:"Request To"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>    
+          <= f.select :reporting_master_id, all_reporting_master_list, {include_blank: "Select Approval",label:"Request To"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>    
           </div>
-        </div> 
+        </div>  -->
+
+         <div class="col-sm-3">
+         <div class="field">
+           <%= f.text_field :notice_period, label:'Notice Period (in days)',readonly: true %>
+         </div>
+       </div>
        
       </div>
       <div class="row">
 
-       <div class="col-sm-3">
-         <div class="field">
-           <%= f.text_field :notice_period, label:'Notice Period (in days)' %>
-         </div>
-       </div>
-       
       <div class="col-sm-3">
        <div class="field">
          <%= f.text_field :short_notice_period, label:'Short Notice Period (in days)' %>
@@ -68,9 +69,8 @@
        <div class="field">
          <%= f.text_field :remark, label:'Remark' %>
        </div>
-      </div></div>
+      </div>
 
-      <div class="row">
       <div class="col-sm-3">
        <label>Exit Interview Date</label>
        <div class="field">
@@ -83,6 +83,10 @@
        </div>
       </div>
     
+      </div>
+
+      <div class="row">
+      
   
       <div class="col-sm-3">
        <div class="field">

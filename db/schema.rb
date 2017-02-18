@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170204035132) do
+ActiveRecord::Schema.define(version: 20170217113948) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -444,7 +444,7 @@ ActiveRecord::Schema.define(version: 20170204035132) do
     t.datetime "in_max_time"
     t.datetime "out_min_time"
     t.datetime "out_max_time"
-    t.decimal  "working_hrs"
+    t.string   "working_hrs"
     t.boolean  "is_active"
     t.boolean  "is_confirm"
     t.datetime "created_at",      null: false
@@ -768,7 +768,6 @@ ActiveRecord::Schema.define(version: 20170204035132) do
     t.boolean  "is_confirm",                                       default: false
     t.decimal  "count",                    precision: 5, scale: 2
     t.integer  "employee_leav_request_id"
-    t.integer  "machine_attendances_id"
     t.integer  "company_time_master_id"
     t.string   "working_hrs"
     t.string   "rest_time"
@@ -776,13 +775,14 @@ ActiveRecord::Schema.define(version: 20170204035132) do
     t.decimal  "overtime_hrs"
     t.string   "month_name"
     t.decimal  "late_mark"
+    t.integer  "machine_attendance_id"
   end
 
   add_index "employee_attendances", ["company_time_master_id"], name: "index_employee_attendances_on_company_time_master_id"
   add_index "employee_attendances", ["department_id"], name: "index_employee_attendances_on_department_id"
   add_index "employee_attendances", ["employee_id"], name: "index_employee_attendances_on_employee_id"
   add_index "employee_attendances", ["employee_leav_request_id"], name: "index_employee_attendances_on_employee_leav_request_id"
-  add_index "employee_attendances", ["machine_attendances_id"], name: "index_employee_attendances_on_machine_attendances_id"
+  add_index "employee_attendances", ["machine_attendance_id"], name: "index_employee_attendances_on_machine_attendance_id"
 
   create_table "employee_bank_details", force: :cascade do |t|
     t.integer  "employee_id"
@@ -1021,6 +1021,7 @@ ActiveRecord::Schema.define(version: 20170204035132) do
     t.integer  "reporting_master_id"
     t.string   "resign_status"
     t.boolean  "is_stop_pay_request"
+    t.datetime "application_date"
   end
 
   add_index "employee_resignations", ["employee_id"], name: "index_employee_resignations_on_employee_id"
@@ -3351,7 +3352,7 @@ ActiveRecord::Schema.define(version: 20170204035132) do
     t.decimal  "nonpay_leave",            precision: 10, scale: 2
     t.decimal  "gatepass"
     t.decimal  "calculated_payable_days"
-    t.decimal  "ot_days"
+    t.decimal  "ot_hours"
   end
 
   add_index "workingdays", ["employee_id"], name: "index_workingdays_on_employee_id"

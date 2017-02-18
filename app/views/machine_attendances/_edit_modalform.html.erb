@@ -11,21 +11,20 @@
    <div class="col-sm-2">
     <%= select :machine_attendance,:shift_master_id,all_shift_type,{include_blank: " Select Shift"}, class: "form-control" %>
     </div>
-   <div class="col-sm-3">
-       <div class="field">
-          <%= text_field :machine_attendance,:day,hide_label: true,placeholder: 'Date', class: 'form-control joining_date'%>
-        </div>
-      </div>
+     <div class="col-sm-3">
+      <%= text_field :machine_attendance,:day,hide_label: true, class: 'form-control machine_attendance',value: @machine_attendance.day %>
+    </div>
+  
 
     <div class="col-sm-2">
       <div class="bootstrap-timepicker">
         <div class="form-group">
 <!--           <label>In Time</label>
  -->          <div class="input-group">
-            <%= text_field :machine_attendance,:in,hide_label: true, placeholder: 'In Time',class: 'form-control timepicker',value: @machine_attendance.in %>
             <div class="input-group-addon">
               <i class="fa fa-clock-o"></i>
-            </div>
+            </div> 
+            <%= text_field :machine_attendance,:in,hide_label: true, placeholder: 'In Time',class: 'form-control timepicker',value: @machine_attendance.in %>
           </div><!-- /.input group -->
         </div><!-- /.form group -->
       </div>
@@ -35,10 +34,10 @@
         <div class="form-group">
 <!--           <label>Out Time</label>
  -->          <div class="input-group">
-            <%= text_field :machine_attendance,:out,hide_label: true, placeholder: 'Out Time',class: 'form-control timepicker',value: @machine_attendance.out %>
             <div class="input-group-addon">
               <i class="fa fa-clock-o"></i>
             </div>
+            <%= text_field :machine_attendance,:out,hide_label: true, placeholder: 'Out Time',class: 'form-control timepicker',value: @machine_attendance.out %>
           </div><!-- /.input group -->
         </div><!-- /.form group -->
       </div>
@@ -68,32 +67,13 @@
 
 <script type="text/javascript">
   $(function(){
-    $('.joining_date').datepicker({
+     $(".timepicker").timepicker({
+    showInputs: false
+  });
+    $('.machine_attendance').datepicker({
     changeYear:true,
     changeMonth: true,
     yearRange: '-100:-0',
     dateFormat: 'dd-mm-yy' });
   }); 
 </script>
-
-<script>
-$(function () {
-//Timepicker
-  $(".timepicker").timepicker({
-    showInputs: false
-  });
-  
-});
-</script>
-
-<script type="text/javascript">
-    $(function () {
-        $('#datetimepicker10').datetimepicker();
-    });
- </script>
-
- <script type="text/javascript">
-    $(function () {
-        $('#datetimepicker11').datetimepicker();
-    });
- </script>

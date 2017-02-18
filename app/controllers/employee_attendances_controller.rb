@@ -280,13 +280,13 @@ class EmployeeAttendancesController < ApplicationController
           # byebug
           joining_detail = JoiningDetail.where(employee_id: x).take
         if joining_detail.ot_option == true
-          Workingday.where(employee_id: x).update_all(ot_days: calculated_diff.to_f)
+          Workingday.where(employee_id: x).update_all(ot_hours: calculated_diff.to_f.round(2))
           # d=Workingday.where(employee_id: x)
           #   d.each do |f|
           #     f.update(calculated_payable_days: f.payable_day)
           #   end
       end#emp1 loop
-          work=Workingday.where("ot_days < ?", 0).pluck(:id)
+          work=Workingday.where("ot_hours < ?", 0).pluck(:id)
           @workingdays = Workingday.where(id: work)
           @workingdays.each do |wor|
           
@@ -296,10 +296,10 @@ class EmployeeAttendancesController < ApplicationController
           difference_hours=emp_att.sum(:difference_hrs).to_f
           calculated_diff_hours=(overtime_hours-difference_hours)
           total_hrs =  wor.payable_day.to_f * @payroll_overtime_masters.company_hrs.to_f
-          result = total_hrs - wor.ot_days.abs.to_f
+          result = total_hrs - wor.ot_hours.abs.to_f
           final_payable_day = result / @payroll_overtime_masters.company_hrs.to_f
           # byebug
-          Workingday.where(id: wor,employee_id: wor.employee_id).update_all(calculated_payable_days: final_payable_day.to_f,ot_days: 0)
+          Workingday.where(id: wor,employee_id: wor.employee_id).update_all(calculated_payable_days: final_payable_day.to_f,ot_hours: 0)
           # Workingday.update_all(is_confirm: true)
           end#workingdays loop
         end#joining_detail
@@ -701,14 +701,25 @@ def search_by_date
       # filter :current_status, type: :string
       #column(:Request_ID, sortable: true) { |employee_leav_request| employee_leav_request.id }
       column(:ID, sortable: true) { |employee_attendance| employee_attendance.employee.try(:manual_employee_code) }
+      column(:MachineId, sortable: true) { |employee_attendance| employee_attendance.machine_attendance_id }
       column(:Employee_Name, sortable: true) { |employee_attendance| full_name(employee_attendance.employee) }
       column(:Day, sortable: true) { |employee_attendance| employee_attendance.day }
       column(:Month, sortable: true) { |employee_attendance| employee_attendance.month_name }
+      column(:Company_In_Min_Time, sortable: true) { |employee_attendance| employee_attendance.company_time_master.try(:in_min_time) }
+      column(:Company_In_Max_Time, sortable: true) { |employee_attendance| employee_attendance.company_time_master.try(:in_max_time) }
+      column(:Company_In_Time, sortable: true) { |employee_attendance| employee_attendance.company_time_master.try(:in_time) }
+      column(:Employee_In_Time, sortable: true) { |employee_attendance| employee_attendance.machine_attendance.try(:in) }
       column(:In_Time, sortable: true) { |employee_attendance| employee_attendance.in_time }
+      column(:Company_Out_Min_Time, sortable: true) { |employee_attendance| employee_attendance.company_time_master.try(:out_min_time) }
+      column(:Company_Out_Max_Time, sortable: true) { |employee_attendance| employee_attendance.company_time_master.try(:out_max_time) }
+      column(:Company_Out_Time, sortable: true) { |employee_attendance| employee_attendance.company_time_master.try(:out_time) }
+      column(:Employee_Out_Time, sortable: true) { |employee_attendance| employee_attendance.machine_attendance.try(:out) }
       column(:Out_Time, sortable: true) { |employee_attendance| employee_attendance.out_time}
-      column(:Working_Hrs, sortable: true) { |employee_attendance| employee_attendance.working_hrs }
-      column(:Difference_Hrs, sortable: true) { |employee_attendance| employee_attendance.difference_hrs }
-      column(:Overtime_Hrs, sortable: true) { |employee_attendance| employee_attendance.overtime_hrs }
+      column(:Company_Master_Hrs, sortable: true) { |employee_attendance| employee_attendance.company_time_master.try(:working_hrs).to_f.round(2) }
+      column(:Working_Hrs, sortable: true) { |employee_attendance| employee_attendance.working_hrs.to_f.round(2) }
+      # column(:Shift, sortable: true) { |employee_attendance| employee_attendance.company_time_master.shift_master.try(:name) }
+      column(:Difference_Hrs, sortable: true) { |employee_attendance| employee_attendance.difference_hrs.to_f.round(2) }
+      column(:Overtime_Hrs, sortable: true) { |employee_attendance| employee_attendance.overtime_hrs.to_f.round(2) }
       column(:Late_Mark, sortable: true) { |employee_attendance| employee_attendance.late_mark }
       column(:Status, sortable: true) { |employee_attendance| employee_attendance.present }
     end

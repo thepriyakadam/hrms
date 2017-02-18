@@ -1,6 +1,7 @@
 class MachineAttendance < ActiveRecord::Base
   belongs_to :employee
   belongs_to :shift_master
+  has_many :employee_attendances
   validates :shift_master_id, presence: true
   validates :employee_id, uniqueness: { scope: [:day] }
 

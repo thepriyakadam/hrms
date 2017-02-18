@@ -22,6 +22,8 @@ class VacancyMastersController < ApplicationController
         @vacancy_masters = VacancyMaster.where(department_id: current_user.department_id)
       end
     end
+    session[:active_tab] ="recruitment"
+    session[:active_tab1] ="particular_vacancy"
    end
   end
 
@@ -218,6 +220,7 @@ class VacancyMastersController < ApplicationController
       @vacancy_masters = VacancyMaster.where("employee_id = ? and (current_status = ? or current_status = ?)",current_user.employee_id,"Approved","Edit And Approved")
      # @vacancy_masters = VacancyMaster.where(employee_id: current_user.employee_id,current_status: "Approved")
      session[:active_tab] ="recruitment"
+    session[:active_tab1] ="particular_vacancy"
   end
 
   def is_closed
@@ -236,7 +239,8 @@ class VacancyMastersController < ApplicationController
   def vacancy_profile
 
     @vacancy_masters = VacancyMaster.where("employee_id = ? and (current_status = ? or current_status = ?)",current_user.employee_id,"Approved","Edit And Approved")
-
+    session[:active_tab] ="recruitment"
+    session[:active_tab1] ="particular_vacancy"
   end
 
   

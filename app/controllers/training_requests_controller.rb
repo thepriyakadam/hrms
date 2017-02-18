@@ -52,6 +52,7 @@ class TrainingRequestsController < ApplicationController
           flash[:notice] = 'Training Request Created Successfully'
           redirect_to new_training_request_path
         end
+
   end
 
   def create_department_wise_training_request
@@ -228,7 +229,8 @@ end
   end
 
   def confirmation_list
-   @training_requests = TrainingRequest.where(status:"Approved")  
+   @training_requests = TrainingRequest.where(status:"Approved")
+   session[:active_tab] ="trainingmgmt"
   end
 
   def approve_training_request

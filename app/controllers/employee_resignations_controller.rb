@@ -32,22 +32,47 @@ class EmployeeResignationsController < ApplicationController
   end
 
 
+  # def create
+  #   @employee_resignation = EmployeeResignation.new(employee_resignation_params)
+  #   @employee_resignation.resign_status = "Pending"
+  #   respond_to do |format|
+  #     if @employee_resignation.save
+  #        # ReportingMastersResign.create(reporting_master_id: @employee_resignation.reporting_master_id, employee_resignation_id: @employee_resignation.id)
+  #        # ResignationHistory.create(employee_resignation_id: @employee_resignation.id,resign_status: @employee_resignation.resign_status,employee_id: @employee_resignation.employee_id,reporting_master_id: @employee_resignation.reporting_master_id,resignation_date: @employee_resignation.resignation_date,reason: @employee_resignation.reason,is_notice_period: @employee_resignation.is_notice_period,notice_period: @employee_resignation.notice_period,short_notice_period: @employee_resignation.short_notice_period,tentative_leaving_date: @employee_resignation.tentative_leaving_date,remark: @employee_resignation.remark,exit_interview_date: @employee_resignation.exit_interview_date,note: @employee_resignation.note,leaving_date: @employee_resignation.leaving_date,settled_on: @employee_resignation.settled_on,has_left: @employee_resignation.has_left,notice_served: @employee_resignation.notice_served,rehired: @employee_resignation.rehired,leaving_reason_id: @employee_resignation.leaving_reason_id)
+
+  #        byebug
+  #        employees=Employee.where(employee_id: @employee_resignation.employee_id)
+         
+  #       EmployeeResignation.where(id: @employee_resignation.id).update_all(reporting_master_id: e.manager_id)
+     
+         
+  #        EmployeeResignationMailer.resignation_request(@employee_resignation).deliver_now
+  #       format.html { redirect_to @employee_resignation, notice: 'Employee Resignation created successfully.' }
+  #       format.json { render :show, status: :created, location: @employee_resignation }
+  #     else
+  #       format.html { render :new }
+  #       format.json { render json: @employee_resignation.errors, status: :unprocessable_entity }
+  #     end
+  #   end
+  # end
+
+
   def create
     @employee_resignation = EmployeeResignation.new(employee_resignation_params)
     @employee_resignation.resign_status = "Pending"
-    respond_to do |format|
-      if @employee_resignation.save
-         ReportingMastersResign.create(reporting_master_id: @employee_resignation.reporting_master_id, employee_resignation_id: @employee_resignation.id)
-         ResignationHistory.create(employee_resignation_id: @employee_resignation.id,resign_status: @employee_resignation.resign_status,employee_id: @employee_resignation.employee_id,reporting_master_id: @employee_resignation.reporting_master_id,resignation_date: @employee_resignation.resignation_date,reason: @employee_resignation.reason,is_notice_period: @employee_resignation.is_notice_period,notice_period: @employee_resignation.notice_period,short_notice_period: @employee_resignation.short_notice_period,tentative_leaving_date: @employee_resignation.tentative_leaving_date,remark: @employee_resignation.remark,exit_interview_date: @employee_resignation.exit_interview_date,note: @employee_resignation.note,leaving_date: @employee_resignation.leaving_date,settled_on: @employee_resignation.settled_on,has_left: @employee_resignation.has_left,notice_served: @employee_resignation.notice_served,rehired: @employee_resignation.rehired,leaving_reason_id: @employee_resignation.leaving_reason_id)
-
-         EmployeeResignationMailer.resignation_request(@employee_resignation).deliver_now
-        format.html { redirect_to @employee_resignation, notice: 'Employee Resignation created successfully.' }
-        format.json { render :show, status: :created, location: @employee_resignation }
-      else
-        format.html { render :new }
-        format.json { render json: @employee_resignation.errors, status: :unprocessable_entity }
-      end
+      @employee_resignation.save
+        # @employee_resignation = EmployeeResignation.new
+        # byebug
+        @employees=Employee.where(id: @employee_resignation.employee_id)
+        @employees.each do |e|
+          # byebug
+          if e.manager_id.present?
+           EmployeeResignation.where(id: @employee_resignation.id).update_all(reporting_master_id: e.manager_id)
+         else
+        end
     end
+      redirect_to new_employee_resignation_path
+      flash[:notice] = 'Employee Resignation created successfully.'   
   end
 
   # PATCH/PUT /employee_resignations/1
@@ -298,6 +323,12 @@ class EmployeeResignationsController < ApplicationController
   def send_email_to_reporting_manager
   end
 
+  def display_notice_period
+    @employee = Employee.find(params[:id])
+    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
+    @notice_period = @joining_detail.notice_period
+  end
+
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_employee_resignation
@@ -309,6 +340,6 @@ class EmployeeResignationsController < ApplicationController
   end
   # Never trust parameters from the scary internet, only allow the white list through.
   def employee_resignation_params
-    params.require(:employee_resignation).permit(:employee_id, :resign_status,:reporting_master_id, :resignation_date, :reason, :is_notice_period, :notice_period, :short_notice_period, :tentative_leaving_date, :remark, :exit_interview_date, :note, :leaving_date, :settled_on, :has_left, :notice_served, :rehired , :leaving_reason_id, :is_stop_pay_request)
+    params.require(:employee_resignation).permit(:employee_id, :resign_status,:application_date,:reporting_master_id, :resignation_date, :reason, :is_notice_period, :notice_period, :short_notice_period, :tentative_leaving_date, :remark, :exit_interview_date, :note, :leaving_date, :settled_on, :has_left, :notice_served, :rehired , :leaving_reason_id, :is_stop_pay_request)
   end
 end

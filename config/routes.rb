@@ -732,6 +732,7 @@ end
       get :xl_resignation_detail
       post :edit_n_approve
       get :edit_n_approve_modal
+      get :display_notice_period
   end
 end
   resources :travel_options do

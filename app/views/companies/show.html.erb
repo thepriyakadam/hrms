@@ -1,7 +1,7 @@
 <!-- SELECT2 EXAMPLE -->
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title">Company</h3>
+    <h3 class="box-title">Company Details</h3>
     <div class="box-tools pull-right">
     </div>
   </div><!-- /.box-header -->
@@ -46,25 +46,29 @@
       </tr>
       <tr>
 
-        <th>Pin Code</th>
-        <td><%= @company.pin_code %></td>
-     
         <th>City</th>
         <td><%= @company.city %></td>
 
-      </tr>
-
-      <tr>
-        <th>District</th>
-        <td><%= @company.district.try(:name) %></td>
 
         <th>State</th>
         <td><%= @company.state.try(:name) %></td>
+
       </tr>
 
       <tr>
-        <th>Country</th>
+
+        <th>District</th>
+        <td><%= @company.district.try(:name) %></td>
+
+         <th>Country</th>
         <td><%= @company.country.try(:name) %></td>
+
+      </tr>
+
+      <tr>
+
+        <th>Pin Code</th>
+        <td><%= @company.pin_code %></td>
 
         <th>Starting Date</th>
         <td><%= @company.starting_date %></td>

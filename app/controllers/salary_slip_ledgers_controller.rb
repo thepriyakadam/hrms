@@ -213,6 +213,9 @@ class SalarySlipLedgersController < ApplicationController
   end
 
   def pf_detail_report
+    session[:active_tab] ="PayrollManagement"
+   session[:active_tab1] ="SalaryProcess"
+   session[:active_tab2] = "DeductionReport"
   end
 
   def dynamic_report
@@ -328,6 +331,9 @@ class SalarySlipLedgersController < ApplicationController
   end
 
   def esic_report
+    session[:active_tab] ="PayrollManagement"
+   session[:active_tab1] ="SalaryProcess"
+   session[:active_tab2] = "DeductionReport"
   end
 
   def esic_dynamic_report
@@ -442,6 +448,9 @@ class SalarySlipLedgersController < ApplicationController
   end
 
   def proff_tax_report
+    session[:active_tab] ="PayrollManagement"
+   session[:active_tab1] ="SalaryProcess"
+   session[:active_tab2] = "DeductionReport"
   end
 
   def professional_tax_master_dynamic_report
@@ -555,6 +564,9 @@ class SalarySlipLedgersController < ApplicationController
   end
 
   def retention_money_report
+   session[:active_tab] ="PayrollManagement"
+   session[:active_tab1] ="SalaryProcess"
+   session[:active_tab2] = "DeductionReport"
   end
 
   def retention_dynamic_report
@@ -783,6 +795,9 @@ class SalarySlipLedgersController < ApplicationController
   end
 
   def soc_membership_report
+    session[:active_tab] ="PayrollManagement"
+   session[:active_tab1] ="SalaryProcess"
+   session[:active_tab2] = "DeductionReport"
   end
 
   def soc_membership_dynamic_report
@@ -1002,6 +1017,9 @@ class SalarySlipLedgersController < ApplicationController
   end
 
   def monthly_deduction_report
+   session[:active_tab] ="PayrollManagement"
+   session[:active_tab1] ="SalaryProcess"
+   session[:active_tab2] = "DeductionReport"
   end
 
   def monthly_deduction

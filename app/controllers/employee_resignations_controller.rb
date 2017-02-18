@@ -130,10 +130,11 @@ class EmployeeResignationsController < ApplicationController
   # end
 
   def resignation_history
+    # byebug
     @pending_resignation_requests = EmployeeResignation.where(is_pending: true, is_first_approved: nil,is_first_rejected: nil, is_cancelled: nil,reporting_master_id: current_user.employee_id)
     @first_approved_resignation_requests = EmployeeResignation.where(is_first_approved: true, is_second_approved: nil,is_second_rejected: nil, is_cancelled: nil,second_reporter_id: current_user.employee_id)
     session[:active_tab] ="employee_resignation"
-    session[:active_tab1] ="employee_resignation"
+    session[:active_tab1] ="resignation"
   end
 
   def print_resignation_detail
@@ -180,7 +181,7 @@ class EmployeeResignationsController < ApplicationController
   def first_approve
     @employee_resignation = EmployeeResignation.find(params[:format])
     if @employee_resignation.employee.manager_2_id.nil?
-      @employee_resignation.update(is_pending:nil,is_first_approved: true,resign_status: "SecondApproved")
+      @employee_resignation.update(is_pending:nil,is_first_approved: true,is_final_approved: true,resign_status: "FinalApproved")
       ResignationStatusRecord.create(employee_resignation_id: @employee_resignation.id,change_status_employee_id: current_user.employee_id,status: "FinalApproved",change_date: Date.today)
     else
        @employee_resignation.update(is_pending:nil,is_first_approved: true,second_reporter_id: @employee_resignation.employee.manager_2_id,resign_status: "FirstApproved")
@@ -200,29 +201,45 @@ class EmployeeResignationsController < ApplicationController
 
   def final_approve
     @employee_resignation = EmployeeResignation.find(params[:format])
-    @employee_resignation.update(final_reporter_id: current_user.employee_id,resign_status: "FinalApproved")
+    @employee_resignation.update(final_reporter_id: current_user.employee_id,is_final_approved: true,resign_status: "FinalApproved")
     ResignationStatusRecord.create(employee_resignation_id: @employee_resignation.id,change_status_employee_id: current_user.employee_id,status: "FinalApproved",change_date: Date.today)
     flash[:notice] = 'Resignation Request Approved Successfully'
-    redirect_to resignation_history_employee_resignations_path
+    redirect_to final_approval_emp_resignation_list_employee_resignations_path
   end
 
   def first_reject
     @employee_resignation = EmployeeResignation.find(params[:format])
     if @employee_resignation.employee.manager_2_id.nil?
-      @employee_resignation.update(is_pending:nil,is_first_rejected: true,resign_status: "FirstRejected")
-      ResignationStatusRecord.create(employee_resignation_id: @employee_resignation.id,change_status_employee_id: current_user.employee_id,status: "FinalApproved",change_date: Date.today)
+      @employee_resignation.update(is_pending:nil,is_first_rejected: true,is_final_rejected: true,resign_status: "FinalRejected")
+      ResignationStatusRecord.create(employee_resignation_id: @employee_resignation.id,change_status_employee_id: current_user.employee_id,status: "FinalRejected",change_date: Date.today)
     else
-       @employee_resignation.update(is_pending:nil,is_first_approved: true,second_reporter_id: @employee_resignation.employee.manager_2_id,resign_status: "FirstApproved")
-      ResignationStatusRecord.create(employee_resignation_id: @employee_resignation.id,change_status_employee_id: current_user.employee_id,status: "FirstApproved",change_date: Date.today)
+       @employee_resignation.update(is_pending:nil,is_first_rejected: true,second_reporter_id: @employee_resignation.employee.manager_2_id,resign_status: "FirstRejected")
+      ResignationStatusRecord.create(employee_resignation_id: @employee_resignation.id,change_status_employee_id: current_user.employee_id,status: "FirstRejected",change_date: Date.today)
     end
+    flash[:alert] = 'Resignation Request Rejected Successfully'
+    redirect_to resignation_history_employee_resignations_path
   end
 
   def second_reject
+    @employee_resignation = EmployeeResignation.find(params[:format])
+    @employee_resignation.update(is_second_rejected: true,resign_status: "SecondRejected")
+    ResignationStatusRecord.create(employee_resignation_id: @employee_resignation.id,change_status_employee_id: current_user.employee_id,status: "SecondRejected",change_date: Date.today)
+    flash[:notice] = 'Resignation Request Rejected Successfully'
+    redirect_to resignation_history_employee_resignations_path
+  end
 
+  def final_reject
+    @employee_resignation = EmployeeResignation.find(params[:format])
+    @employee_resignation.update(final_reporter_id: current_user.employee_id,is_final_rejected: true,resign_status: "FinalRejected")
+    ResignationStatusRecord.create(employee_resignation_id: @employee_resignation.id,change_status_employee_id: current_user.employee_id,status: "FinalRejected",change_date: Date.today)
+    flash[:notice] = 'Resignation Request Rejected Successfully'
+    redirect_to final_approval_emp_resignation_list_employee_resignations_path
   end
 
   def final_approval_emp_resignation_list
-    @employee_resignations = EmployeeResignation.where(resign_status: "SecondApproved")
+    @employee_resignations = EmployeeResignation.where("(resign_status = ? or resign_status = ?)","SecondApproved","SecondRejected")
+    session[:active_tab] ="employee_resignation"
+    session[:active_tab1] = "resignation" 
   end
 
   def reject_employee_resignation
@@ -265,7 +282,7 @@ class EmployeeResignationsController < ApplicationController
   def emp_resignation_history
     @employee_resignations = EmployeeResignation.all
     session[:active_tab] ="employee_resignation"
-    session[:active_tab1] = "resignation"  
+    session[:active_tab1] = "resignation"
   end
 
   def show_resignation_detail

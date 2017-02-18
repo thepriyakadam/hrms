@@ -5,7 +5,7 @@
     <div class="info-box">
       <span class="info-box-icon bg-aqua"><i class="fa fa-industry"></i></span>
       <div class="info-box-content">
-        <span class="info-box-text"><strong>Companies</strong></span>
+        <span class="info-box-text">Companies</span>
         <span class="info-box-number"><%=@companies.try(:count)%></span>
       </div><!-- /.info-box-content -->
     </div><!-- /.info-box -->
@@ -14,7 +14,7 @@
     <div class="info-box">
       <span class="info-box-icon bg-red"><i class="glyphicon glyphicon-th-list"></i></span>
       <div class="info-box-content">
-        <span class="info-box-text"><strong>Locations</strong></span>
+        <span class="info-box-text">Locations</span>
         <span class="info-box-number"><%= @company_locations.try(:count)%></span>
       </div><!-- /.info-box-content -->
     </div><!-- /.info-box -->
@@ -27,7 +27,7 @@
     <div class="info-box">
       <span class="info-box-icon bg-green"><i class="glyphicon glyphicon-th"></i></span>
       <div class="info-box-content">
-        <span class="info-box-text"><strong>Departments</strong></span>
+        <span class="info-box-text">Departments</span>
         <span class="info-box-number"><%= @departments.try(:count) %></span>
       </div><!-- /.info-box-content --> 
     </div><!-- /.info-box -->
@@ -36,7 +36,7 @@
     <div class="info-box">
       <span class="info-box-icon bg-yellow"><i class="ion ion-ios-people-outline"></i></span>
       <div class="info-box-content">
-        <span class="info-box-text"><strong>Employees</strong></span>
+        <span class="info-box-text">Employees</span>
         <span class="info-box-number"><%= @employees.try(:count) %></span>
       </div><!-- /.info-box-content -->
     </div><!-- /.info-box -->
@@ -52,7 +52,7 @@
        <!-- TABLE: LATEST ORDERS -->
       <div class="box box-info">
         <div class="box-header with-border">
-          <h3 class="box-title"><strong>Circular List</strong></h3>
+          <h3 class="box-title">Circular List</h3>
           <div class="box-tools pull-right">
             <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
             <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -105,7 +105,7 @@
       <!-- TABLE: LATEST ORDERS -->
       <div class="box box-info">
         <div class="box-header with-border">
-          <h3 class="box-title"><strong>Company Events</strong></h3>
+          <h3 class="box-title">Company Events</h3>
           <div class="box-tools pull-right">
             <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
             <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -148,7 +148,7 @@
             <!-- TABLE: LATEST ORDERS -->
       <div class="box box-info">
         <div class="box-header with-border">
-          <h3 class="box-title"><strong>Policy Corner</strong></h3>
+          <h3 class="box-title">Policy Corner</h3>
           <div class="box-tools pull-right">
             <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
             <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -199,7 +199,7 @@
 
         <div class="box box-primary">
         <div class="box-header with-border">
-          <h3 class="box-title"><strong>Today's Birthday</strong></h3>
+          <h3 class="box-title">Today's Birthday</h3>
           <div class="box-tools pull-right">
             <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
             <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -213,30 +213,18 @@
             <% if @employees.empty? %>
              
             <%else%>
-              <%@employees.each do |e|%>
+              <% @employees.each do |e| %>
                 <li class="item">
                   <div class="product-img">
-                 <%unless e.nil? or e.member.nil? or e.member.avatar.nil? %>
-                  <% if current_user.class == Member %>
-                 <%  @members = Member.where(employee_id: current_user.employee_id).pluck(:employee_id) %>
-                 <%  @members1 = Member.where(employee_id: current_user.employee_id) %>
-                 <% @employees = Employee.where(id: @members) %>
-                 <% @employees.each do |e| %>
-                 <% @members1.each do |m| %>
-                 <% if e.gender == "Male" && m.avatar_file_name == nil  %>
+                  <%unless e.nil? or e.nil? or  e.member.nil? or e.member.avatar.nil? %>
+                 <% if e.gender == "Male" && e.member.avatar_file_name == nil  %>
                  <%= image_tag "avatar5.png",class: "img-circle", alt: "User Image", size: "25x25" %>
-                  <% elsif e.gender == "Female" && m.avatar_file_name == nil  %>
+                  <% elsif e.gender == "Female" && e.member.avatar_file_name == nil  %>
                   <%= image_tag "avatar2.png",class: "img-circle", alt: "User Image", size: "25x25" %>
                    <%else%>
-                 <%= image_tag current_user.avatar.url(:medium),size: "25x25",class: "img-circle", alt: "avatar2"%>
-                 <!--  <= image_tag j.employee.member.avatar.url(:medium),class: "img-circle"%>
-                  <else%>
-                   <img src="images/user.jpg" alt=" "> -->
+                   <%= image_tag e.member.avatar.url(:medium),class: "img-circle"%>
                   <%end%>
                    <%end%>
-                    <%end%>
-                   <%end%>
-                  <%end%>
                 </div> 
                 <div class="product-info">
                   <%= full_name(e) %>
@@ -254,7 +242,7 @@
           <div class="box box-default collapsed-box">
           <div class="box box-info">
             <div class="box-header with-border">
-              <h3 class="box-title"><strong>Tomorrow's Birthday</strong></h3>
+              <h3 class="box-title">Tomorrow's Birthday</h3>
               <div class="box-tools pull-right">
                <!--  <span class="label label-success"> BirthDay's</span> -->
                  <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
@@ -293,7 +281,7 @@
       <!-- PRODUCT LIST -->
       <div class="box box-primary">
         <div class="box-header with-border">
-          <h3 class="box-title"><strong>Newly Joined Employees</strong></h3>
+          <h3 class="box-title">Newly Joined Employees</h3>
           <div class="box-tools pull-right">
             <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
             <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -306,26 +294,14 @@
                 <li class="item">
                  <div class="product-img">
 
-                 <%unless j.nil? or j.employee.nil? or j.employee.member.nil? or j.employee.member.avatar.nil? %>
-                 <% if current_user.class == Member %>
-                 <%  @members = Member.where(employee_id: current_user.employee_id).pluck(:employee_id) %>
-                 <%  @members1 = Member.where(employee_id: current_user.employee_id) %>
-                 <% @employees = Employee.where(id: @members) %>
-                 <% @employees.each do |e| %>
-                 <% @members1.each do |m| %>
-                 <% if e.gender == "Male" && m.avatar_file_name == nil  %>
+                 <%unless j.nil? or j.employee.nil? or  j.employee.member.nil? or j.employee.member.avatar.nil? %>
+                 <% if j.employee.gender == "Male" && j.employee.member.avatar_file_name == nil  %>
                  <%= image_tag "avatar5.png",class: "img-circle", alt: "User Image", size: "25x25" %>
-                  <% elsif e.gender == "Female" && m.avatar_file_name == nil  %>
+                  <% elsif j.employee.gender == "Female" && j.employee.member.avatar_file_name == nil  %>
                   <%= image_tag "avatar2.png",class: "img-circle", alt: "User Image", size: "25x25" %>
                    <%else%>
-                 <%= image_tag current_user.avatar.url(:medium),size: "25x25",class: "img-circle", alt: "avatar2"%>
-                 <!--  <= image_tag j.employee.member.avatar.url(:medium),class: "img-circle"%>
-                  <else%>
-                   <img src="images/user.jpg" alt=" "> -->
+                   <%= image_tag j.employee.member.avatar.url(:medium),class: "img-circle"%>
                   <%end%>
-                   <%end%>
-                    <%end%>
-                   <%end%>
                    <%end%>
                 </div> 
                 <div class="product-info">

@@ -381,6 +381,21 @@ end
         end
  end
 
+ def application_date_report
+    session[:active_tab] = "TravelManagemnt"
+    session[:active_tab1] = "travelrequestreports"
+ end
+
+ def travelling_datewise_report
+     session[:active_tab] = "TravelManagemnt"
+    session[:active_tab1] = "travelrequestreports"
+ end
+
+ def travel_request_id_report
+   session[:active_tab] = "TravelManagemnt"
+    session[:active_tab1] = "travelrequestreports"
+ end
+
   def print_travelling_datewise_report
     session[:active_tab] = "TravelManagemnt"
     session[:active_tab1] = "travelrequestreports"
@@ -474,6 +489,7 @@ end
             :page_height      => 1000,
             :dpi              => '300',
             :margin           => {:top    => 10, # default 10 (mm)
+
                           :bottom => 10,
                           :left   => 20,
                           :right  => 20},

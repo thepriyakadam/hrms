@@ -70,6 +70,7 @@ class EmployeeTransfersController < ApplicationController
   def transfer_request
     reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
     @employee_transfers = EmployeeTransfer.where("reporting_master_id = ? and (current_status = ? or current_status = ? or current_status = ?)",reporting_masters,"Pending","Approved & Send Next","Edit & Send Next")
+    session[:active_tab] = "transfer"
   end
 
   def employee_transfer_confirmation

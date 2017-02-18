@@ -217,9 +217,25 @@
                 <li class="item">
                   <div class="product-img">
                  <%unless e.nil? or e.member.nil? or e.member.avatar.nil? %>
-                  <%= image_tag e.member.avatar.url(:medium),class: "img-circle"%>
-                  <%else%>
-                   <img src="images/user.jpg" alt=" ">
+                  <% if current_user.class == Member %>
+                 <%  @members = Member.where(employee_id: current_user.employee_id).pluck(:employee_id) %>
+                 <%  @members1 = Member.where(employee_id: current_user.employee_id) %>
+                 <% @employees = Employee.where(id: @members) %>
+                 <% @employees.each do |e| %>
+                 <% @members1.each do |m| %>
+                 <% if e.gender == "Male" && m.avatar_file_name == nil  %>
+                 <%= image_tag "avatar5.png",class: "img-circle", alt: "User Image", size: "25x25" %>
+                  <% elsif e.gender == "Female" && m.avatar_file_name == nil  %>
+                  <%= image_tag "avatar2.png",class: "img-circle", alt: "User Image", size: "25x25" %>
+                   <%else%>
+                 <%= image_tag current_user.avatar.url(:medium),size: "25x25",class: "img-circle", alt: "avatar2"%>
+                 <!--  <= image_tag j.employee.member.avatar.url(:medium),class: "img-circle"%>
+                  <else%>
+                   <img src="images/user.jpg" alt=" "> -->
+                  <%end%>
+                   <%end%>
+                    <%end%>
+                   <%end%>
                   <%end%>
                 </div> 
                 <div class="product-info">
@@ -285,15 +301,32 @@
         </div><!-- /.box-header -->
         <div class="box-body">
           <ul class="products-list product-list-in-box">
+
                 <% JoiningDetail.all.order("id desc").limit(5).each do |j| %>
                 <li class="item">
                  <div class="product-img">
 
                  <%unless j.nil? or j.employee.nil? or j.employee.member.nil? or j.employee.member.avatar.nil? %>
-                  <%= image_tag j.employee.member.avatar.url(:medium),class: "img-circle"%>
-                  <%else%>
-                   <img src="images/user.jpg" alt=" ">
+                 <% if current_user.class == Member %>
+                 <%  @members = Member.where(employee_id: current_user.employee_id).pluck(:employee_id) %>
+                 <%  @members1 = Member.where(employee_id: current_user.employee_id) %>
+                 <% @employees = Employee.where(id: @members) %>
+                 <% @employees.each do |e| %>
+                 <% @members1.each do |m| %>
+                 <% if e.gender == "Male" && m.avatar_file_name == nil  %>
+                 <%= image_tag "avatar5.png",class: "img-circle", alt: "User Image", size: "25x25" %>
+                  <% elsif e.gender == "Female" && m.avatar_file_name == nil  %>
+                  <%= image_tag "avatar2.png",class: "img-circle", alt: "User Image", size: "25x25" %>
+                   <%else%>
+                 <%= image_tag current_user.avatar.url(:medium),size: "25x25",class: "img-circle", alt: "avatar2"%>
+                 <!--  <= image_tag j.employee.member.avatar.url(:medium),class: "img-circle"%>
+                  <else%>
+                   <img src="images/user.jpg" alt=" "> -->
                   <%end%>
+                   <%end%>
+                    <%end%>
+                   <%end%>
+                   <%end%>
                 </div> 
                 <div class="product-info">
                   <%= j.employee.try(:manual_employee_code) %> <%= j.employee.try(:first_name) %> <%= j.employee.try(:middle_name) %> <%= j.employee.try(:last_name) %>

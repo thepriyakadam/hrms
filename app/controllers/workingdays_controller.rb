@@ -323,7 +323,6 @@ class WorkingdaysController < ApplicationController
     year1 = params[:salary][:year1]
     month2 = params[:salary][:month2]
     year2 = params[:salary][:year2]
-
     @date1 = Date.new(year1.to_i, Workingday.months[month1])
     @date2 = Date.new(year2.to_i, Workingday.months[month2])
 

@@ -80,13 +80,13 @@ class SalaryReport
     
     deductable_items.each do |d|
       case d.other_component_name
-        when "PF"
+        when "Provident Fund"
         sr.pf = d.calculated_amount.to_i
         when "ESIC"
         sr.esic = d.calculated_amount.to_i
         when "Income Tax"
         sr.income_tax = d.calculated_amount
-        when "Prof. Tax"
+        when "Professional Tax"
         sr.pt = d.calculated_amount
         when "Advance"
         sr.advance = d.calculated_amount.to_i
@@ -490,13 +490,13 @@ class SalaryReport
         
     deductable_items.each do |d|
       case d.other_component_name
-        when "PF"
+        when "Provident Fund"
         sr.pf = d.calculated_amount.to_i
         when "ESIC"
         sr.esic = d.calculated_amount.to_i
         when "Income Tax"
         sr.income_tax = d.calculated_amount
-        when "Prof. Tax"
+        when "Professional Tax"
         sr.pt = d.calculated_amount
         when "Advance"
         sr.advance = d.calculated_amount.to_i

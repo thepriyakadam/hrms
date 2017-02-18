@@ -227,17 +227,16 @@
       <li><a href="/employee_leav_requests"><i class="fa fa-tags"></i> Leave Request </a></li>
       <li><a href="/on_duty_requests"><i class="fa fa-tags"></i> OD Request </a></li>
       <li><a href="/self_services/employee_template"><i class="fa fa-tags"> </i> Salary Structure </a></li>
-      <li><a href="/self_services/attendance"><i class="fa fa-tags"></i> Attendances </a></li>
       <li><a href="/employee_attendances/loginwise_attendance_form"><i class="fa fa-tags"></i>Attendance </a></li> 
       <li><a href="/self_services/salaryslip"><i class="fa fa-tags"></i> Salary Slip </a></li>
-      <li><a href="/self_services/advance"><i class="fa fa-tags"></i> Advance & Installment </a></li>
+     <!--  <li><a href="/self_services/advance"><i class="fa fa-tags"></i> Advance & Installment </a></li>
       <li><a href="/self_services/employee_resignation"><i class="fa fa-tags"></i> Employee Resignation </a></li>
       <li><a href="/self_services/resignation_history"><i class="fa fa-tags"></i> Resignation History </a></li>
-      <!--<li><a href="/employee_daily_activities/new"><i class="fa fa-tags"></i> Daily Activity </a></li>
-      -->      
+      <li><a href="/employee_daily_activities/new"><i class="fa fa-tags"></i> Daily Activity </a></li>
+            
      <li><a href="/training_plans/trainee_list"><i class="fa fa-tags"></i> Training Feedback </a></li>
     <li><a href="/self_services/employee_transfer"><i class="fa fa-tags"></i> Employee Transfer </a></li>
-    <li><a href="/self_services/travel_request"><i class="fa fa-plane"></i> Travel Request </a></li>
+    <li><a href="/self_services/travel_request"><i class="fa fa-plane"></i> Travel Request </a></li> -->
     <li><a href="/goal_bunches/new"><i class="fa fa-tags"></i> Goal Setting </a></li>
     <li><a href="/goal_bunches/period_list_appraisee"><i class="fa fa-tags"></i> Self Evaluation </a></li>
     </ul>
@@ -254,8 +253,8 @@
        <li><a href="/leave_masters/new"><i class="fa fa-tags"></i>Leave Master</a></li>
        <li><a href="/employee_leav_balances"><i class="fa fa-tags"></i>Leave Assignment</a></li>
        <li><a href="/leave_c_offs/new"><i class="fa fa-tags"></i>C.Off Maintenance</a></li>
-       <li><a href="/leave_cash_masters/new"><i class="fa fa-tags"></i>Leave Cashable</a></li>
-       <li><a href="/leave_cashables/new"><i class="fa fa-tags"></i>Leave</a></li>
+       <li><a href="/leave_cash_masters/new"><i class="fa fa-tags"></i>Leave Encashment Master</a></li>
+       <li><a href="/leave_cashables/new"><i class="fa fa-tags"></i>Leave Encashment</a></li>
        </ul>
       </li> 
       <li class="treeview" id="LeaveProcess">
@@ -331,7 +330,7 @@
         </ul>
         </li> 
 
-         <li id="Reports">
+         <li id="Report">
         <a href="#"><i class="fa fa-edit"></i> Reports <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu" >
         <li><a href="/employee_attendances/emp_attendance"><i class="fa fa-tags"></i> Show Attendance  </a></li>
@@ -410,13 +409,6 @@
                <li><a href="/advance_salaries"><i class="fa fa-tags"> </i>Salary Advance </a></li>
             </ul>
           </li>
-
-          <!-- <li id="Instalment">
-            <a href="#"><i class="fa fa-edit"></i> Instalment <i class="fa fa-angle-left pull-right"></i></a>
-            <ul class="treeview-menu">
-             <li><a href="/instalments"><i class="fa fa-tags"> </i>Installment</a></li>
-            </ul>
-          </li> -->
            <li id="Instalment">
             <a href="#"><i class="fa fa-edit"></i> Report <i class="fa fa-angle-left pull-right"></i></a>
             <ul class="treeview-menu">
@@ -526,7 +518,8 @@
     </a>
     <ul class="treeview-menu" >
        
-       <li class="treeview" id="Setup"> <a href="#"><i class="fa fa-edit"></i>Setup <i class="fa fa-angle-left pull-right"></i></a>
+       <li class="treeview" id="Setup"> 
+       <a href="#"><i class="fa fa-edit"></i>Setup <i class="fa fa-angle-left pull-right"></i></a>
        <ul class="treeview-menu">
         <li><a href="/issue_tracker_groups/new"><i class="fa fa-tags"></i>Group</a></li>
         <li><a href="/issue_tracker_members/new"><i class="fa fa-tags"></i>Member</a></li>
@@ -555,14 +548,15 @@
     </ul>
   </li>
 
-   <li class="treeview" id="travelmanagement">
+   <li class="treeview" id="TravelManagemnt">
     <a href="#">
       <i class="glyphicon glyphicon-th-large"></i> <span>Travel Management</span>
       <i class="fa fa-angle-left pull-right"></i>
     </a>
     <ul class="treeview-menu" >
        
-       <li class="treeview" id="travelrequestprocess"> <a href="#"><i class="fa fa-edit"></i>Travel Request Process <i class="fa fa-angle-left pull-right"></i></a>
+       <li class="treeview" id="travelrequestprocess"> 
+       <a href="#"><i class="fa fa-edit"></i>Travel Request Process <i class="fa fa-angle-left pull-right"></i></a>
        <ul class="treeview-menu">
         <li><a href="/travel_requests"><i class="fa fa-plane"></i>Travel Request </a></li>
         <li><a href="/travel_requests/travel_history"><i class="fa fa-plane"></i> Travel Approve/Reject </a></li>
@@ -581,7 +575,8 @@
            -->    
         </ul>
       </li>
-       <li class="treeview" id="travelrequestreports"> <a href="#"><i class="fa fa-edit"></i>Reports<i class="fa fa-angle-left pull-right"></i></a>
+       <li class="treeview" id="travelrequestreports"> 
+       <a href="#"><i class="fa fa-edit"></i>Reports<i class="fa fa-angle-left pull-right"></i></a>
        <ul class="treeview-menu">
         <li><a href="/travel_requests/travel_request_employee_name_report"><i class="fa fa-plane"></i>Employee Report </a></li>
         <li><a href="/travel_requests/application_date_report"><i class="fa fa-plane"></i> Application Date Report</a></li>
@@ -609,7 +604,7 @@
         </ul>
       </li> 
 
-      <li id="perform_cycle">
+      <li id="perform_cycle1">
         <a href="#"><i class="fa fa-edit"></i>Employee Plan <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
         <li><a href="/goal_ratings/period_for_training"><i class="fa fa-tags"></i>Training Assessment</a></li>
@@ -656,17 +651,19 @@
     </ul>
    </li>
 
-     <li class="treeview" id="resignationmanagement">
+     <li class="treeview" id="employee_resignation">
     <a href="#">
       <i class="glyphicon glyphicon-th-large"></i> <span>Separation Management</span>
       <i class="fa fa-angle-left pull-right"></i>
     </a>
-    <ul class="treeview-menu" id="resign" >
-       <li class="treeview" id="leaveadministration"> <a href="#"><i class="fa fa-edit"></i>Employee Resignation <i class="fa fa-angle-left pull-right"></i></a>
+    <ul class="treeview-menu"  >
+       <li class="treeview" id="resignation"> 
+       <a href="#"><i class="fa fa-edit"></i>Employee Resignation <i class="fa fa-angle-left pull-right"></i></a>
        <ul class="treeview-menu">
        <li><a href="/leaving_reasons/new"><i class="fa fa-tags"></i> Leaving Reason Master </a></li>
       <li><a href="/employee_resignations/new"><i class="fa fa-tags"></i> Resignation </a></li>
-       <li><a href="/employee_resignations/resignation_history"><i class="fa fa-tags"></i> Approve/Reject </a></li> 
+       <li><a href="/employee_resignations/resignation_history"><i class="fa fa-tags"></i> Approve/Reject </a></li>
+       <li><a href="/employee_resignations/final_approval_emp_resignation_list"><i class="fa fa-tags"></i> Final Approval/Reject </a></li> 
       <li><a href="/employee_resignations/emp_resignation_history"><i class="fa fa-tags"></i> History </a></li>
       <li><a href="/employee_resignations/employee_resignation_list"><i class="fa fa-tags"></i> Exit Interview </a></li>
        </ul>

@@ -320,7 +320,7 @@
           <% end %>
         </td>
         <td><%= goal_bunch.appraisee_comment %></td>
-        <td><%= goal_bunch.appraisee_rating_id %></td>
+        <td><%= goal_bunch.appraisee_rating_id.to_f.round(4) %></td>
       </tr>
       <% end %>
     </tbody>

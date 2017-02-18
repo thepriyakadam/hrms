@@ -5,8 +5,8 @@ class TravelRequestsController < ApplicationController
   # GET /travel_requests.json
   def index
     @travel_requests = TravelRequest.where(employee_id: current_user.employee_id)
-   session[:active_tab] = "TravelManagement"
-    session[:active_tab1] = "TravelRequestProcess" 
+    session[:active_tab] = "TravelManagemnt"
+    session[:active_tab1] = "travelrequestprocess" 
   end
 
   # GET /travel_requests/1
@@ -81,8 +81,8 @@ class TravelRequestsController < ApplicationController
   def daily_bill
      # @travel_requests = TravelRequest.where(employee_id: current_user.employee_id)
     @travel_requests = TravelRequest.where("employee_id = ? and (current_status = ?)",current_user.employee_id,"Approved")
-    session[:active_tab] = "TravelManagement"
-    session[:active_tab1] = "ExpensesClaimProcess"  
+    session[:active_tab] = "TravelManagemnt"
+    session[:active_tab1] = "expensesclaimprocess"  
   end
 
   def travel_history
@@ -91,8 +91,8 @@ class TravelRequestsController < ApplicationController
     @reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
     @travel_requests = TravelRequest.where(reporting_master_id: @reporting_masters)
     #@travel_requests = TravelRequest.where(reporting_master_id: current_user.employee_id)
-     session[:active_tab] = "TravelManagement"
-    session[:active_tab1] = "TravelRequestProcess" 
+    session[:active_tab] = "TravelManagemnt"
+    session[:active_tab1] = "travelrequestprocess" 
   end
 
   def travel_request_confirmation
@@ -166,8 +166,8 @@ class TravelRequestsController < ApplicationController
     # else
       @travel_requests = TravelRequest.where(employee_id: current_user.employee_id)
     # end
-   session[:active_tab] = "TravelManagement"
-    session[:active_tab1] = "TravelRequestProcess" 
+    session[:active_tab] = "TravelManagemnt"
+    session[:active_tab1] = "travelrequestprocess" 
   end
 
   def edit_and_send_next_modal
@@ -278,8 +278,13 @@ class TravelRequestsController < ApplicationController
     redirect_to daily_bill_travel_requests_path
   end
 
+  def travel_request_employee_name_report
+    session[:active_tab] = "TravelManagemnt"
+    session[:active_tab1] = "travelrequestreports"
+  end
+
   def print_application_report 
-    session[:active_tab] = "travelmanagement"
+    session[:active_tab] = "TravelManagemnt"
     session[:active_tab1] = "travelrequestreports"
 
       @from = params[:salary] ? params[:salary][:from_date] : params[:from_date] 
@@ -376,8 +381,23 @@ end
         end
  end
 
+ def application_date_report
+    session[:active_tab] = "TravelManagemnt"
+    session[:active_tab1] = "travelrequestreports"
+ end
+
+ def travelling_datewise_report
+     session[:active_tab] = "TravelManagemnt"
+    session[:active_tab1] = "travelrequestreports"
+ end
+
+ def travel_request_id_report
+   session[:active_tab] = "TravelManagemnt"
+    session[:active_tab1] = "travelrequestreports"
+ end
+
   def print_travelling_datewise_report
-     session[:active_tab] = "travelmanagement"
+    session[:active_tab] = "TravelManagemnt"
     session[:active_tab1] = "travelrequestreports"
     # byebug
       @from = params[:salary] ? params[:salary][:from_date] : params[:from_date] 
@@ -469,6 +489,7 @@ end
             :page_height      => 1000,
             :dpi              => '300',
             :margin           => {:top    => 10, # default 10 (mm)
+
                           :bottom => 10,
                           :left   => 20,
                           :right  => 20},
@@ -478,7 +499,7 @@ end
     end
 
     def print_travel_request_id_report
-    session[:active_tab] = "travelmanagement"
+    session[:active_tab] = "TravelManagemnt"
     session[:active_tab1] = "travelrequestreports"
       # byebug
       @travel_request =  params[:travel_request] ? params[:travel_request][:travel_request_id] : params[:travel_request_id]
@@ -508,7 +529,7 @@ end
 
     def print_travel_request_employee_name_report
 
-    session[:active_tab] = "travelmanagement"
+    session[:active_tab] = "TravelManagemnt"
     session[:active_tab1] = "travelrequestreports"
 
       @employee_id = params[:travel_request] ? params[:travel_request][:employee_id] : params[:employee_id]

@@ -113,6 +113,12 @@ class InstalmentsController < ApplicationController
     end
   end
 
+  def installment_report
+    session[:active_tab] ="PayrollManagement"
+    session[:active_tab1] ="AdvanceSalary"
+    session[:active_tab2] ="Instalment"
+  end
+
   # def employees
   #   date = Date.new(params[:year].to_i, Workingday.months[params[:month]])
   #   if current_user.class == Group

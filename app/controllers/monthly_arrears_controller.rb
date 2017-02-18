@@ -17,6 +17,9 @@ class MonthlyArrearsController < ApplicationController
   def new
      @monthly_arrear = MonthlyArrear.new
      @monthly_arrears = MonthlyArrear.all
+    session[:active_tab] ="PayrollManagement"
+    session[:active_tab1] ="PayrollSetup"
+    session[:active_tab2] ="PeriodicComponents"
   end
 
   # GET /monthly_arrears/1/edit

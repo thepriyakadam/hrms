@@ -101,6 +101,10 @@ class Employee < ActiveRecord::Base
 
   belongs_to :user, class_name: 'Employee'
 
+  has_many :second_reporters, class_name: 'EmployeeResignation', foreign_key: 'second_reporter_id'
+  has_many :resignation_status_records, class_name: 'ResignationStatusRecord', foreign_key: 'change_status_employee_id'
+  has_many :second_reporters, class_name: 'EmployeeResignation', foreign_key: 'final_reporter_id'
+
   # has_many :reporting_masters, class_name: "Employee",
   #                         foreign_key: "manager_id"
 

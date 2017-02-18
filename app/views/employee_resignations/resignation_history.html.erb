@@ -5,57 +5,72 @@
   </div><!-- /.box-header -->
   <div class="box-body">
     <div class="row">
-      <div class="col-sm-12">
-    <table id="example1" class="table table-bordered table-hover table-condensed'">
-      <thead>
-        <tr>
-          <th>Employee ID</th>
-          <th>Resignation Date</th>
-          <th>Reason</th>
-          <th>Leaving Date</th>
-          <!-- <th>Notice Period</th>
-          <th>Short Notice Period</th>
-          <th>Exit Interview Date</th>
- -->          <th>Status</th>
-          <th>Action</th>
-       </tr>
-      </thead>
+      <div class="col-sm-6">
+        <table id="example6" class="table table-bordered table-hover table-condensed">
+          <thead>
+           <tr><td colspan="5"><center>First Level Request</center></td></tr>
+            <tr>
+              <th>ID</th>
+              <th>Employee Name</th>
+              <th>Action</th>
+            </tr>
+          </thead>
 
-      <tbody>
-        <% @employee_resignations.each do |employee_resignation| %>
-          <tr>
-            <td><%= employee_resignation.employee.try(:manual_employee_code) %></td>
-            <td><%= employee_resignation.resignation_date %></td>
-            <td><%= employee_resignation.reason %></td>
-            <td><%= employee_resignation.leaving_date %></td>
-            <!-- <td><%= employee_resignation.notice_period %></td>
-            <td><%= employee_resignation.short_notice_period %></td>
-            <td><%= employee_resignation.exit_interview_date %></td>
- -->            <td>
-              <% if employee_resignation.resign_status == "Pending" %>
-                 <small class="label label-primary">Pending</small>
-              <% elsif employee_resignation.resign_status == "Approved" %>
-                  <small class="label label-primary">Approved</small>
-              <% elsif employee_resignation.resign_status == "Rejected" %>
-                  <small class="label label-primary">Rejected</small>
-              <% elsif employee_resignation.resign_status == "Edit & Send Next" %>
-                  <small class="label label-info">Edit & Send Next</small>
-              <% elsif employee_resignation.resign_status == "Approved & Send Next" %>
-                  <small class="label label-info">Approved & Send Next</small>
-              <% elsif employee_resignation.resign_status == "Edit & Approved" %>
-                  <small class="label label-info">Edit & Approved</small>
-              <% else %>
-              <% end %>
-            </td>
-            <td>
-              <%= link_to 'Approve / Reject', employee_resignation_confirmation_employee_resignations_path(employee_resignation),class: 'btn btn-sm btn-warning' %>
-            </td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
+          <tbody>
+            <% @pending_resignation_requests.try(:each) do |pending_resignation_request| %>
+              <tr>
+                <td><%= pending_resignation_request.employee.try(:manual_employee_code) %></td>
+                <td><%= pending_resignation_request.employee.try(:first_name) %> <%= pending_resignation_request.employee.try(:middle_name) %> <%=pending_resignation_request.employee.try(:last_name) %></td>
+                <td>
+                  <%= link_to 'View Detail',employee_resignation_confirmation_employee_resignations_path(pending_resignation_request),class: 'btn btn-sm btn-info' %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+
+       <div class="col-sm-6">
+        <table id="example7" class="table table-bordered table-hover table-condensed">
+          <thead>
+          <tr><td colspan="5"><center>Second Level Request</center></td></tr>
+            <tr>
+              <th>ID</th>
+              <th>Employee Name</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% @first_approved_resignation_requests.try(:each) do |first_approved_resignation_request| %>
+              <tr>
+                <td><%= first_approved_resignation_request.employee.try(:manual_employee_code) %></td>
+                <td><%= first_approved_resignation_request.employee.try(:first_name) %> <%= first_approved_resignation_request.employee.try(:middle_name) %> <%=first_approved_resignation_request.employee.try(:last_name) %></td>
+                <td>
+                  <%= link_to 'View Detail',employee_resignation_confirmation_employee_resignations_path(first_approved_resignation_request),class: 'btn btn-sm btn-info' %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
 </div>
-</div>
-</div>
-<br>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example7').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>
+

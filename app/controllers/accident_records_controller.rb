@@ -27,9 +27,16 @@ class AccidentRecordsController < ApplicationController
   # POST /accident_records.json
   def create
     # byebug
+    @employee = Employee.find(params[:accident_record][:employee_id])
     @accident_record = AccidentRecord.new(accident_record_params)
     respond_to do |format|
       if @accident_record.save
+        len = params['accident_record'].length - 2
+         for i in 2..len
+          AccidentRecord.create(employee_id: params['accident_record']['employee_id'], avatar: params['accident_record'][i.to_s]['avatar'])
+          end
+          @accident_records = @employee.accident_records
+          flash[:notice] = 'Photo Added successfully created'
         # @employee = AccidentRecord.find(id: employee_id)
         # @employee1 = Employee.find_by_employee_id(@employee)
         format.html { redirect_to @accident_record, notice: 'Accident record was successfully created.' }

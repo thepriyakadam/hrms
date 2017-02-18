@@ -20,7 +20,7 @@ class TrainingRequestsController < ApplicationController
     @training_request = TrainingRequest.new
     #@training_requests = TrainingRequest.all
     @employees = Employee.where(department_id: current_user.department_id)
-    session[:active_tab] ="trainingmgmt"
+     session[:active_tab] = "trainingmgmt"
   end
 
   # GET /training_requests/1/edit
@@ -52,6 +52,7 @@ class TrainingRequestsController < ApplicationController
           flash[:notice] = 'Training Request Created Successfully'
           redirect_to new_training_request_path
         end
+
   end
 
   def create_department_wise_training_request
@@ -106,7 +107,7 @@ class TrainingRequestsController < ApplicationController
   def training_request_list
     @reporting_masters = ReportingMaster.find_by_employee_id(current_user.employee_id)
     @training_requests = TrainingRequest.where(reporting_master_id: @reporting_masters)
-    session[:active_tab] ="trainingmgmt"
+     session[:active_tab] = "trainingmgmt"
   end
 
   def all_training_request_list
@@ -228,7 +229,8 @@ end
   end
 
   def confirmation_list
-   @training_requests = TrainingRequest.where(status:"Approved")  
+   @training_requests = TrainingRequest.where(status:"Approved") 
+   session[:active_tab] = "trainingmgmt" 
   end
 
   def approve_training_request
@@ -271,6 +273,7 @@ end
   end
 
   def department_wise_search
+    session[:active_tab] = "trainingmgmt"
   end
 
   def show_dept_wise_form

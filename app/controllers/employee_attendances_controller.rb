@@ -1,6 +1,8 @@
+require 'query_report/helper'  # need to require the helper
 class EmployeeAttendancesController < ApplicationController
   before_action :set_employee_attendance, only: [:show, :edit, :update, :destroy]
   before_action :check_params, only: [:create_attendance]
+  include QueryReport::Helper  # need to include it
 
   # GET /employee_attendances
   # GET /employee_attendances.json
@@ -115,6 +117,16 @@ class EmployeeAttendancesController < ApplicationController
       end
     end
     redirect_to new_employee_attendance_path
+  end
+
+  def loginwise_attendance_form
+    session[:active_tab] ="EmployeeSelfService"
+  end
+
+  def emp_attendance
+    
+    session[:active_tab] ="TimeManagement"
+    session[:active_tab1] ="Report"
   end
 
   def attendance
@@ -236,11 +248,11 @@ class EmployeeAttendancesController < ApplicationController
                                 
   def create_attendance
       @employees, @attendances, work_data_structure = params[:employees], params[:attendances], []
-     
+      
       @month = params[:month]
       @year = params[:year]
       @date = Date.new(@year.to_i, Workingday.months[@month])
-
+      
       params.permit!
       @employees.each { |e| work_data_structure << params[e] }
       a = Workingday.create(work_data_structure)      
@@ -251,47 +263,54 @@ class EmployeeAttendancesController < ApplicationController
       b=a.last
       @payroll_overtime_masters = PayrollOvertimeMaster.where(is_active: true,is_payroll: true).take
       @emp1.try(:each) do |x| 
-      emp_attend=EmployeeAttendance.where(employee_id: x,month_name: b.month_name)
-      
-      EmployeeAttendance.where("strftime('%m/%Y', day) = ? AND employee_id = ?", @date.strftime('%m/%Y'),x).update_all(is_confirm: true)
-      EmployeeWeekOff.where("strftime('%m/%Y', date) = ? AND employee_id = ?", @date.strftime('%m/%Y'),x).update_all(is_confirm: true)
-      # ff=EmployeeAttendance.where(employee_id: x,month_name: b.month_name).take
-      
-      ot_hours=emp_attend.sum(:overtime_hrs).to_f
-      diff_hours=emp_attend.sum(:difference_hrs).to_f
-      calculated_diff=ot_hours-diff_hours
-      # Workingday.where(employee_id: x).update_all(ot_days: calculated_diff.to_f / @payroll_overtime_masters.company_hrs.to_f)
-      Workingday.where(employee_id: x).update_all(ot_days: calculated_diff.to_f)
-      # d=Workingday.where(employee_id: x)
-      #   d.each do |f|
-      #     f.update(calculated_payable_days: f.payable_day)
-      #   end
-      end
-      work=Workingday.where("ot_days < ?", 0).pluck(:id)
-      @workingdays = Workingday.where(id: work)
-      @workingdays.each do |wor|
-      
-      emp_att=EmployeeAttendance.where(employee_id: wor.employee_id,month_name: wor.month_name)
+          emp_attend=EmployeeAttendance.where(employee_id: x,month_name: b.month_name)
+          
+          EmployeeAttendance.where("strftime('%m/%Y', day) = ? AND employee_id = ?", @date.strftime('%m/%Y'),x).update_all(is_confirm: true)
+          EmployeeWeekOff.where("strftime('%m/%Y', date) = ? AND employee_id = ?", @date.strftime('%m/%Y'),x).update_all(is_confirm: true)
+        # ff=EmployeeAttendance.where(employee_id: x,month_name: b.month_name).take
+        
+          d=Workingday.where(employee_id: x)
+          d.each do |f|
+            f.update(calculated_payable_days: f.payable_day)
+          end
 
-      overtime_hours=emp_att.sum(:overtime_hrs).to_f
-      difference_hours=emp_att.sum(:difference_hrs).to_f
-      calculated_diff_hours=(overtime_hours-difference_hours)
-      total_hrs =  wor.payable_day.to_f * @payroll_overtime_masters.company_hrs.to_f
-      result = total_hrs - wor.ot_days.abs.to_f
-      final_payable_day = result / @payroll_overtime_masters.company_hrs.to_f
-      # byebug
-      Workingday.where(id: wor,employee_id: wor.employee_id).update_all(calculated_payable_days: final_payable_day.to_f,ot_days: nil)
-      # Workingday.update_all(is_confirm: true)
-      end
-
-
+          ot_hours=emp_attend.sum(:overtime_hrs).to_f
+          diff_hours=emp_attend.sum(:difference_hrs).to_f
+          calculated_diff=ot_hours-diff_hours
+          # Workingday.where(employee_id: x).update_all(ot_days: calculated_diff.to_f / @payroll_overtime_masters.company_hrs.to_f)
+          # byebug
+          joining_detail = JoiningDetail.where(employee_id: x).take
+        if joining_detail.ot_option == true
+          Workingday.where(employee_id: x).update_all(ot_hours: calculated_diff.to_f.round(2))
+          # d=Workingday.where(employee_id: x)
+          #   d.each do |f|
+          #     f.update(calculated_payable_days: f.payable_day)
+          #   end
+      end#emp1 loop
+          work=Workingday.where("ot_hours < ?", 0).pluck(:id)
+          @workingdays = Workingday.where(id: work)
+          @workingdays.each do |wor|
+          
+          emp_att=EmployeeAttendance.where(employee_id: wor.employee_id,month_name: wor.month_name)
+          
+          overtime_hours=emp_att.sum(:overtime_hrs).to_f
+          difference_hours=emp_att.sum(:difference_hrs).to_f
+          calculated_diff_hours=(overtime_hours-difference_hours)
+          total_hrs =  wor.payable_day.to_f * @payroll_overtime_masters.company_hrs.to_f
+          result = total_hrs - wor.ot_hours.abs.to_f
+          final_payable_day = result / @payroll_overtime_masters.company_hrs.to_f
+          # byebug
+          Workingday.where(id: wor,employee_id: wor.employee_id).update_all(calculated_payable_days: final_payable_day.to_f,ot_hours: 0)
+          # Workingday.update_all(is_confirm: true)
+          end#workingdays loop
+        end#joining_detail
       flash[:notice] = "Workingday successfully saved."
       redirect_to employee_attendances_path
   end
 
   def costcenter_wise_attendance
     session[:active_tab] ="TimeManagement"
-    session[:active_tab1] ="Attendance"
+    session[:active_tab1] ="Report"
   end
 
   def show_costcenter_wise_attendance
@@ -406,7 +425,7 @@ class EmployeeAttendancesController < ApplicationController
   
   def calculate_attendance
     session[:active_tab] ="TimeManagement"
-    session[:active_tab1] ="Attendance"
+    session[:active_tab1] ="Report"
   end
 
   def display_total
@@ -458,7 +477,7 @@ class EmployeeAttendancesController < ApplicationController
 
   def select_date_department_form
     session[:active_tab] ="TimeManagement"
-    session[:active_tab1] ="Reports"
+    session[:active_tab1] ="Report"
   end
 
   def show_departmntwise_employee
@@ -517,7 +536,7 @@ class EmployeeAttendancesController < ApplicationController
 
   def select_date_present_form
     session[:active_tab] ="TimeManagement"
-    session[:active_tab1] ="Reports"
+    session[:active_tab1] ="Report"
   end
 
   def show_datewise_employee
@@ -588,6 +607,39 @@ def from_date_wise_pdf
       end
     end
 end
+
+def search_by_date
+  @employee_attendances = EmployeeAttendance.all
+    reporter(@employee_attendances, template_class: PdfReportTemplate) do
+      filter :day, type: :date
+      # filter :current_status, type: :string
+      #column(:Request_ID, sortable: true) { |employee_leav_request| employee_leav_request.id }
+      column(:ID, sortable: true) { |employee_attendance| employee_attendance.employee.try(:manual_employee_code) }
+      column(:MachineId, sortable: true) { |employee_attendance| employee_attendance.machine_attendance_id }
+      column(:Employee_Name, sortable: true) { |employee_attendance| full_name(employee_attendance.employee) }
+      column(:Day, sortable: true) { |employee_attendance| employee_attendance.day }
+      column(:Month, sortable: true) { |employee_attendance| employee_attendance.month_name }
+      column(:Company_In_Min_Time, sortable: true) { |employee_attendance| employee_attendance.company_time_master.try(:in_min_time) }
+      column(:Company_In_Max_Time, sortable: true) { |employee_attendance| employee_attendance.company_time_master.try(:in_max_time) }
+      column(:Company_In_Time, sortable: true) { |employee_attendance| employee_attendance.company_time_master.try(:in_time) }
+      column(:Employee_In_Time, sortable: true) { |employee_attendance| employee_attendance.machine_attendance.try(:in) }
+      column(:In_Time, sortable: true) { |employee_attendance| employee_attendance.in_time }
+      column(:Company_Out_Min_Time, sortable: true) { |employee_attendance| employee_attendance.company_time_master.try(:out_min_time) }
+      column(:Company_Out_Max_Time, sortable: true) { |employee_attendance| employee_attendance.company_time_master.try(:out_max_time) }
+      column(:Company_Out_Time, sortable: true) { |employee_attendance| employee_attendance.company_time_master.try(:out_time) }
+      column(:Employee_Out_Time, sortable: true) { |employee_attendance| employee_attendance.machine_attendance.try(:out) }
+      column(:Out_Time, sortable: true) { |employee_attendance| employee_attendance.out_time}
+      column(:Company_Master_Hrs, sortable: true) { |employee_attendance| employee_attendance.company_time_master.try(:working_hrs).to_f.round(2) }
+      column(:Working_Hrs, sortable: true) { |employee_attendance| employee_attendance.working_hrs.to_f.round(2) }
+      # column(:Shift, sortable: true) { |employee_attendance| employee_attendance.company_time_master.shift_master.try(:name) }
+      column(:Difference_Hrs, sortable: true) { |employee_attendance| employee_attendance.difference_hrs.to_f.round(2) }
+      column(:Overtime_Hrs, sortable: true) { |employee_attendance| employee_attendance.overtime_hrs.to_f.round(2) }
+      column(:Late_Mark, sortable: true) { |employee_attendance| employee_attendance.late_mark }
+      column(:Status, sortable: true) { |employee_attendance| employee_attendance.present }
+    end
+    session[:active_tab] ="LeaveManagement"
+    session[:active_tab1] ="LeaveReports"
+  end
 
   private
   # Use callbacks to share common setup or constraints between actions.

@@ -2,6 +2,18 @@ require 'query_report/helper'
 class SalaryslipsController < ApplicationController
  include QueryReport::Helper
 
+  def salary_slip_report_form
+    session[:active_tab] ="PayrollManagement"
+    session[:active_tab1] ="SalaryProcess"
+    session[:active_tab2] = "SalaryReport"
+  end
+
+  def salaryslip_daterange_report
+    session[:active_tab] ="PayrollManagement"
+    session[:active_tab1] ="SalaryProcess"
+    session[:active_tab2] = "SalaryReport"
+  end
+
   def employee_salary_list
     @employees = Employee.find_by_role(current_user)
     # authorize! :show, @employees
@@ -751,19 +763,21 @@ class SalaryslipsController < ApplicationController
 
      # @working_day = working_day.try(:calculated_payable_days).to_f
 
-      @payroll_overtime_masters = PayrollOvertimeMaster.where(is_active: true,is_payroll: true)
-      
-      @payroll_overtime_masters.try(:each) do |pom|
-      formula_string = pom.base_component.split(',').map {|i| i.to_i}
-      formula_item = SalaryslipComponent.where(salary_component_id: formula_string,salaryslip_id: @salaryslip.id)  
-      @total = formula_item.sum(:calculated_amount)
-      @total_actual = formula_item.sum(:actual_amount)
-      base_amount = (@total.to_f / working_day.try(:day_in_month).to_f) / pom.company_hrs.to_f
-      overtime_payment = working_day.try(:ot_days).to_f * pom.rate.to_f * base_amount.to_f
-      @salary_component = SalaryComponent.find_by(name: "Overtime")
-      SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: 0, calculated_amount: overtime_payment, is_deducted: false, other_component_name: 'Overtime',salary_component_id: @salary_component.id)
-      puts "Overtime...................................................."
-    end
+       if @employee.joining_detail.ot_option == true && working_day.ot_hours != 0
+        @payroll_overtime_masters = PayrollOvertimeMaster.where(is_active: true,is_payroll: true)
+        
+        @payroll_overtime_masters.try(:each) do |pom|
+        formula_string = pom.base_component.split(',').map {|i| i.to_i}
+        formula_item = SalaryslipComponent.where(salary_component_id: formula_string,salaryslip_id: @salaryslip.id)  
+        @total = formula_item.sum(:calculated_amount)
+        @total_actual = formula_item.sum(:actual_amount)
+        base_amount = (@total.to_f / working_day.try(:day_in_month).to_f) / pom.company_hrs.to_f
+        overtime_payment = working_day.try(:ot_hours).to_f * pom.rate.to_f * base_amount.to_f
+        @salary_component = SalaryComponent.find_by(name: "Overtime")
+        SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: 0, calculated_amount: overtime_payment, is_deducted: false, other_component_name: 'Overtime',salary_component_id: @salary_component.id)
+        puts "ffffffffffffffffffff"
+        end
+      end
 
      date = Date.new(@year.to_i, Workingday.months[@month])
      @monthly_arrears = MonthlyArrear.where(day: date..date.at_end_of_month, employee_id: @employee.id)
@@ -1106,6 +1120,7 @@ class SalaryslipsController < ApplicationController
               SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: s.march_amount, calculated_amount: s.march_amount, is_deducted: true, other_component_name: 'Prof. Tax',salary_component_id: @salary_component.id)
             end
         else
+          # byebug
             if @total.between?(s.min_amount, s.max_amount) && @month != "March" && @employee.company_location_id == s.company_location_id
               @salary_component = SalaryComponent.find_by(name: "Prof. Tax")
               SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: s.for_month, calculated_amount: s.for_month, is_deducted: true, other_component_name: 'Prof. Tax',salary_component_id: @salary_component.id)
@@ -1305,6 +1320,20 @@ class SalaryslipsController < ApplicationController
 
     #   @payroll_overtime_masters = PayrollOvertimeMaster.where(is_active: true,is_payroll: true)
       
+      if @employee.joining_detail.ot_option == true && working_day.ot_hours != 0
+        @payroll_overtime_masters.try(:each) do |pom|
+        formula_string = pom.base_component.split(',').map {|i| i.to_i}
+        formula_item = SalaryslipComponent.where(salary_component_id: formula_string,salaryslip_id: @salaryslip.id)  
+        @total = formula_item.sum(:calculated_amount)
+        @total_actual = formula_item.sum(:actual_amount)
+        base_amount = (@total.to_f / working_day.try(:day_in_month).to_f) / pom.company_hrs.to_f
+        overtime_payment = working_day.try(:ot_hours).to_f * pom.rate.to_f * base_amount.to_f
+        @salary_component = SalaryComponent.find_by(name: "Overtime")
+        SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: 0, calculated_amount: overtime_payment, is_deducted: false, other_component_name: 'Overtime',salary_component_id: @salary_component.id)
+        puts "gggggggggggggggg"
+        end
+      end
+      
     #   @payroll_overtime_masters.try(:each) do |pom|
     #   formula_string = pom.base_component.split(',').map {|i| i.to_i}
     #   formula_item = SalaryslipComponent.where(salary_component_id: formula_string,salaryslip_id: @salaryslip.id)  
@@ -1332,7 +1361,6 @@ class SalaryslipsController < ApplicationController
         SalaryslipComponent.create(salaryslip_id: @salaryslip.id, actual_amount: 0, calculated_amount: addable_calculated_amount, is_deducted: false,other_component_name: 'Monthly Arrear', salary_component_id:  @salary_component.id)
          puts "Monthly Arrear......................................"
       end
-
 
 
     @salaryslip = Salaryslip.last
@@ -1543,57 +1571,59 @@ end
   end
 
   def salary_slip_xls
-    @month = params[:month]
-    @year = params[:year]
-    @company = params[:company_id]
-    @location = params[:company_location_id]
+    @month = params[:salaryslip] ?  params[:salaryslip][:month] : params[:month]
+    @year = params[:salaryslip] ?  params[:salaryslip][:year] : params[:year]
+    @company = params[:salaryslip] ?  params[:salaryslip][:company_id] : params[:company_id]
+    @company_location = params[:salaryslip] ?  params[:salaryslip][:company_location_id] : params[:company_location_id]
     if current_user.class == Group
-      if @location == ""
-          @employees = Employee.where(company_id: @company.to_i)
-          @salaryslips = Salaryslip.where('month = ? and year = ?', @month, @year).where(employee_id: @employees)
-        elsif @company == ""
-          @employees = Employee.where(company_location_id: @location.to_i)
-          @salaryslips = Salaryslip.where('month = ? and year = ?', @month, @year).where(employee_id: @employees)
-        else 
-          @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i)
-          @salaryslips = Salaryslip.where('month = ? and year = ?', @month, @year).where(employee_id: @employees)
+        if @company == ""
+          @salaryslips = Salaryslip.where(month:  @month,year: @year.to_s)
+        elsif @company_location == ""
+          @employees = Employee.where(company_id: @company.to_i).pluck(:id)
+          @salaryslips = Salaryslip.where(month:  @month,year: @year.to_s,employee_id: @employees)
+        else
+          @employees = Employee.where(company_id: @company.to_i,company_location_id: @company_location.to_i)
+          @salaryslips = Salaryslip.where(month:  @month,year: @year.to_s,employee_id: @employees)
         end
-    elsif current_user.class == Member
+
+      elsif current_user.class == Member
       if current_user.role.name == 'GroupAdmin'
-        if @location == ""
+        if @company == ""
+          @salaryslips = Salaryslip.where(month:  @month,year: @year.to_s)
+        elsif @company_location == ""
           @employees = Employee.where(company_id: @company.to_i)
-          @salaryslips = Salaryslip.where('month = ? and year = ?', @month, @year).where(employee_id: @employees)
-        elsif @company == ""
-          @employees = Employee.where(company_location_id: @location.to_i)
-          @salaryslips = Salaryslip.where('month = ? and year = ?', @month, @year).where(employee_id: @employees)
-        else 
-          @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i)
-          @salaryslips = Salaryslip.where('month = ? and year = ?', @month, @year).where(employee_id: @employees)
+          @salaryslips = Salaryslip.where(month:  @month,year: @year.to_s,employee_id: @employees)
+        else
+          @employees = Employee.where(company_id: @company.to_i,company_location_id: @company_location.to_i)
+          @salaryslips = Salaryslip.where(month:  @month,year: @year.to_s,employee_id: @employees)
         end
-       elsif current_user.role.name == 'Admin'
-        if @location == ""
+        elsif current_user.role.name == 'Admin'
+         if @company == ""
+          @employees = Employee.where(company_id: current_user.company_location.company_id)
+          @salaryslips = Salaryslip.where(month:  @month,year: @year.to_s).where(employee_id: @employees)
+        elsif @company_location == ""
           @employees = Employee.where(company_id: @company.to_i)
-          @salaryslips = Salaryslip.where('month = ? and year = ?', @month, @year).where(employee_id: @employees)
-        elsif @company == ""
-          @employees = Employee.where(company_location_id: @location.to_i)
-          @salaryslips = Salaryslip.where('month = ? and year = ?', @month, @year).where(employee_id: @employees)
-        else 
-          @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i)
-          @salaryslips = Salaryslip.where('month = ? and year = ?', @month, @year).where(employee_id: @employees)
+          @salaryslips = Salaryslip.where(month:  @month,year: @year.to_s,employee_id: @employees)
+        else
+          @employees = Employee.where(company_id: @company.to_i,company_location_id: @company_location.to_i)
+          @salaryslips = Salaryslip.where(month:  @month,year: @year.to_s,employee_id: @employees)
         end
         elsif current_user.role.name == 'Branch'
-        if @location == ""
+          if @company == "" || @company_location == ""
           @employees = Employee.where(company_location_id: current_user.company_location_id)
-          @salaryslips = Salaryslip.where('month = ? and year = ?', @month, @year).where(employee_id: @employees)
-        elsif @company == ""
-          @employees = Employee.where(company_location_id: @location.to_i)
-          @salaryslips = Salaryslip.where('month = ? and year = ?', @month, @year).where(employee_id: @employees)
-        else 
-          @employees = Employee.where(company_id: @company.to_i,company_location_id: @location.to_i)
-          @salaryslips = Salaryslip.where('month = ? and year = ?', @month, @year).where(employee_id: @employees)
+          @salaryslips = Salaryslip.where(month:  @month,year: @year.to_s,employee_id: @employees)
+          else 
+          @employees = Employee.where(company_id: @company.to_i,company_location_id: @company_location.to_i)
+          @salaryslips = Salaryslip.where(month:  @month,year: @year.to_s,employee_id: @employees)
         end
-      elsif current_user.role.name == 'HOD'
-        @salaryslips = Salaryslip.where(department_id: current_user.department_id)
+        elsif current_user.role.name == 'HOD'
+          if @company == "" || @company_location == ""
+          @employees = Employee.where(department_id: current_user.department_id)
+          @salaryslips = Salaryslip.where(month:  @month,year: @year.to_s,employee_id: @employees)
+        else 
+          @employees = Employee.where(company_id: @company.to_i,company_location_id: @company_location.to_i)
+          @salaryslips = Salaryslip.where(month:  @month,year: @year.to_s,employee_id: @employees)
+        end
       elsif current_user.role.name == 'Superviser'
       elsif current_user.role.name == 'Employee'
       end
@@ -1850,6 +1880,8 @@ end
   end
 
   def confirm_salaryslip
+    session[:active_tab] ="PayrollManagement"
+    session[:active_tab1] ="SalaryProcess"
   end
 
   def show_unconfirmed_employee

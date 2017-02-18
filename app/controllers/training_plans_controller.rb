@@ -150,6 +150,7 @@ class TrainingPlansController < ApplicationController
   end
 
   def training_topic_wise_search
+    session[:active_tab] ="trainingmgmt"
   end
 
   def show_traineerequest_list

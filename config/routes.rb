@@ -1932,6 +1932,7 @@ end
   resources :departments do
     collection do
       get :department_list_xls
+      get :is_confirm
     end
   end
 

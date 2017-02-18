@@ -5,10 +5,6 @@
   </div><!-- /.box-header -->
   <div class="box-body">
     <table id="example2" class="table table-bordered table-hover table-condensed">
-    <tr> 
-      <th colspan="2"></th>
-      <th colspan="2"></th>
-    </tr>
     <tr>
       <th><strong>Location Code</strong></th>
       <td><%= @company_location.manual_company_location_code %></td>
@@ -37,19 +33,22 @@
       <th><strong>City</strong></th>
       <td><%= @company_location.city %></td>
 
-      <th><strong>Country</strong></th>
-      <td><%= @company_location.country.try(:name) %></td>
+       <th><strong>State</strong></th>
+      <td><%= @company_location.state.try(:name) %></td>      
+
     </tr>
 
     <tr>
-      <th><strong>State</strong></th>
-      <td><%= @company_location.state.try(:name) %></td>
-
-      <th> <strong>District</strong></th>
+     <th> <strong>District</strong></th>
       <td> <%= @company_location.district.try(:name) %></td>
+
+      <th><strong>Country</strong></th>
+      <td><%= @company_location.country.try(:name) %></td>      
+
     </tr>
 
     <tr>
+
       <th><strong>Pin/Zip Code</strong></th>
       <td><%= @company_location.pin_code %></td>
 

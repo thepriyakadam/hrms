@@ -52,6 +52,7 @@ class TrainingRequestsController < ApplicationController
           flash[:notice] = 'Training Request Created Successfully'
           redirect_to new_training_request_path
         end
+
   end
 
   def create_department_wise_training_request

@@ -1,21 +1,32 @@
 <div class="box box-default">
   <div class="box-header with-border">
-    <strong> <font color='#0077b3'> Onboarding Details of ID : <%= @joining_detail.employee.try(:manual_employee_code) %> - Name : <%= @joining_detail.employee.try(:first_name) %> <%= @joining_detail.employee.try(:middle_name) %> <%= @joining_detail.employee.try(:last_name) %></font></strong>
-    <div class="box-tools pull-right">
+   
+ <!-- /.box-header -->
+   <div class="row">
+  <div class="col-sm-1">
+      <%= image_tag @employee.passport_photo.url, :size => "70x70" %>
+  </div>
+    <div class="col-sm-6">
+     <font color='#0077b3'>
+       ID : <%= @joining_detail.employee.try(:manual_employee_code) %><br>
+       Name : <%= @joining_detail.employee.try(:first_name) %> <%= @joining_detail.employee.try(:middle_name) %> <%= @joining_detail.employee.try(:last_name) %><br>
+       Email : <%= @joining_detail.first.employee.try(:email) %></font>
+    </div>
+  </div>
+   <div class="box-tools pull-right">
       <%= link_to 'Edit',  edit_joining_detail_path(@joining_detail),class: 'btn btn-success fa fa-edit',remote:true %>
       <%= link_to 'Back', employees_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
     </div>
-  </div><!-- /.box-header -->
+     </div>
   <div class="box-body">
     <table id="example2" class="table table-bordered table-hover table-condensed">
    <tr><th colspan="4"><center><font color='#0077b3'>EMPLOYEE ONBOARDING DETAILS</font></center> </th></tr>
 
     <tr>
-      <th><strong>Employee</strong></th>
-      <td><%= @joining_detail.employee.try(:manual_employee_code) %></td>
-
       <th><strong>UAN No</strong></th>
       <td><%= @joining_detail.employee_uan_no %></td>
+      <th></th>
+      <td></td>
     </tr>
 
     <tr>

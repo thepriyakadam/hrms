@@ -1,6 +1,16 @@
 <div class="box box-default">
   <div class="box-header with-border">
-  <h6 class="box-title"> Physical Details Of : <%= @employee_physical.try(:employee).try(:manual_employee_code) %> - Name : <%= @employee_physical.try(:employee).try(:first_name) %> <%= @employee_physical.try(:employee).try(:middle_name) %> <%= @employee_physical.try(:employee).try(:last_name) %></h6>
+   <div class="row">
+  <div class="col-sm-1">
+      <%= image_tag @employee.passport_photo.url, :size => "70x70" %>
+  </div>
+    <div class="col-sm-6">
+     <font color='#0077b3'>
+       ID : <%= @employee_physical.employee.try(:manual_employee_code) %><br>
+       Name : <%= @employee_physical.employee.try(:first_name) %> <%= @employee_physical.employee.try(:middle_name) %> <%= @employee_physical.employee.try(:last_name) %><br>
+       Email : <%= @employee_physical.employee.try(:email) %></font>
+    </div>
+  </div>
      
     <div class="box-tools pull-right">
       <%= link_to 'Edit',  edit_employee_physical_path(@employee_physical),class: 'btn btn-sm btn-success fa fa-edit',remote:true %>
@@ -9,6 +19,7 @@
   </div><!-- /.box-header -->
   <div class="box-body">
    <table id="example2" class="table table-bordered table-hover table-condensed">
+    <tr><th colspan="4"><center><font color='#0077b3'>Physical Detail</font></center> </th></tr>
 
     <tr>
         <th> <strong>Trouser Size(cm)</strong></th>

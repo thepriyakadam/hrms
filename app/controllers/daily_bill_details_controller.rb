@@ -14,6 +14,13 @@ class DailyBillDetailsController < ApplicationController
     # @employee = Employee.find(@reporting_master.employee_id)
   end
 
+  
+ def expence_date_report
+    session[:active_tab] = "TravelManagemnt"
+    session[:active_tab1] = "travelrequestreports"
+ end
+
+
   # GET /daily_bill_details/new
   def new
     @daily_bill_detail = DailyBillDetail.new

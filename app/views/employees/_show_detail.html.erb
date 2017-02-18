@@ -5,7 +5,8 @@
       <%= image_tag @employee.passport_photo.url, :size => "70x70" %>
   </div>
     <div class="col-sm-6">
-     <font color='#0077b3'>ID: <%= @employee.try(:manual_employee_code) %><br>
+     <font color='#0077b3'>
+        ID : <%= @employee.try(:manual_employee_code) %><br>
         Name : <%= @employee.try(:first_name) %> <%= @employee.try(:middle_name) %> <%= @employee.try(:last_name) %><br>
         Email : <%= @employee.email %></font>
     </div>
@@ -17,28 +18,21 @@
     
   </div><!-- /.box-header -->
   <div class="box-body">
-    <table class="table table-bordered table-hover table-condensed">    
+    <table class="table table-bordered table-hover table-condensed">  
+      <tr><th colspan="4"><center><font color='#0077b3'>Basic Detail</font></center> </th></tr>
       <tr>
-
-        <th><strong>Employee ID</strong></th>
-        <td><%= @employee.manual_employee_code %></td>
-
-        <th><strong>Employee Name</strong></th>
-        <td><%= @employee.prefix %> <%= @employee.first_name %> <%= @employee.middle_name %> <%= @employee.last_name %></td> 
-      </tr>
-      <tr>
-        <th><strong>Gender</strong></th>
-        <td><%= @employee.gender %></td>
+        <th><strong>PAN Card No.</strong></th>
+        <td><%= @employee.pan_no %></td>
 
         <th><strong>Aadhaar Card No.</strong></th>
         <td><%= @employee.adhar_no %></td>
       </tr>
       <tr>
-        <th><strong>PAN Card No.</strong></th>
-        <td><%= @employee.pan_no %></td>
-
         <th><strong>Licence No.</strong></th>
         <td><%= @employee.licence_no %></td>
+
+        <th><strong>Gender</strong></th>
+        <td><%= @employee.gender %></td> 
       </tr>
       <tr>
         <th><strong>Marital Status</strong></th>

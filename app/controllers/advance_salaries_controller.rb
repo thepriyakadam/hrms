@@ -114,6 +114,12 @@ class AdvanceSalariesController < ApplicationController
      end
   end
 
+  def advance_salary_report
+    session[:active_tab] ="PayrollManagement"
+    session[:active_tab1] ="AdvanceSalary"
+    session[:active_tab2] ="Instalment"
+  end
+
   def dynamic_report
     @month = params[:advance_salary][:month]
     @year = params[:advance_salary][:year]
@@ -243,7 +249,9 @@ class AdvanceSalariesController < ApplicationController
    end
 
    def advance_detailed_report 
-    
+    session[:active_tab] ="PayrollManagement"
+    session[:active_tab1] ="AdvanceSalary"
+    session[:active_tab2] ="Instalment"
    end
 
    def advance_detail
@@ -345,6 +353,12 @@ class AdvanceSalariesController < ApplicationController
       end
     end
    end #def
+
+   def  yearly_advance_report
+    session[:active_tab] ="PayrollManagement"
+    session[:active_tab1] ="AdvanceSalary"
+    session[:active_tab2] ="Instalment"
+   end
 
    def yearly_advance
     @year = params[:advance_salary][:year]

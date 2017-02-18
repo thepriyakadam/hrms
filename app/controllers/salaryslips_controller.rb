@@ -3,9 +3,15 @@ class SalaryslipsController < ApplicationController
  include QueryReport::Helper
 
   def salary_slip_report_form
-   session[:active_tab] ="PayrollManagement"
-   session[:active_tab1] ="SalaryProcess"
-   session[:active_tab2] = "SalaryReport"
+    session[:active_tab] ="PayrollManagement"
+    session[:active_tab1] ="SalaryProcess"
+    session[:active_tab2] = "SalaryReport"
+  end
+
+  def salaryslip_daterange_report
+    session[:active_tab] ="PayrollManagement"
+    session[:active_tab1] ="SalaryProcess"
+    session[:active_tab2] = "SalaryReport"
   end
 
   def employee_salary_list
@@ -1876,6 +1882,8 @@ end
   end
 
   def confirm_salaryslip
+    session[:active_tab] ="PayrollManagement"
+    session[:active_tab1] ="SalaryProcess"
   end
 
   def show_unconfirmed_employee

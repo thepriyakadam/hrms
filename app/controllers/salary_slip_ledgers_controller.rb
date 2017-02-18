@@ -9,9 +9,30 @@ class SalarySlipLedgersController < ApplicationController
   end
 
   def employee_salary_ledger
+    session[:active_tab] ="PayrollManagement"
+    session[:active_tab1] ="SalaryProcess"
+    session[:active_tab2] = "SalaryReport"
   end
 
   def employee_ctc
+  end
+
+  def select_month_year_form
+    session[:active_tab] ="PayrollManagement"
+    session[:active_tab1] ="SalaryProcess"
+    session[:active_tab2] = "SalaryReport"
+  end
+
+  def bank_wise_net_amount
+    session[:active_tab] ="PayrollManagement"
+    session[:active_tab1] ="SalaryProcess"
+    session[:active_tab2] = "SalaryReport"
+  end
+
+  def welfare_detail_report
+     session[:active_tab] ="PayrollManagement"
+   session[:active_tab1] ="SalaryProcess"
+   session[:active_tab2] = "DeductionReport"
   end
 
   def show_employee

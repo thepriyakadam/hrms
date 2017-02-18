@@ -212,6 +212,11 @@ class OvertimeSalariesController < ApplicationController
   def revert_salary
   end
 
+  def revert_overtime
+    session[:active_tab] ="PayrollManagement"
+    session[:active_tab1] ="Overtime"
+  end
+
   def show_employee
    
     @month = params[:month]

@@ -16,6 +16,9 @@ class BonusEmployersController < ApplicationController
   def new
     @bonus_employer = BonusEmployer.new
     @bonus_employers = BonusEmployer.all
+    session[:active_tab] ="PayrollManagement"
+    session[:active_tab1] ="PayrollSetup"
+    session[:active_tab2] ="EmployerMaster"
   end
 
   # GET /bonus_employers/1/edit

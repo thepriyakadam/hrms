@@ -1,5 +1,29 @@
 Rails.application.routes.draw do
   
+  resources :monthly_arrears
+  resources :on_duty_requests do 
+    collection do
+      get :select_checkbox
+      get :request_approval_list
+      get :employee_od_request_detail
+      get :employee_list
+      get :from_hr
+      get :hr_view_request
+    end
+  end
+
+  resources :od_status_records do
+    collection do
+      get :cancel_after_approve
+    end
+    member do
+      get :cancel
+      get :first_approve
+      get :second_approve
+      get :first_reject
+      get :second_reject
+    end
+  end
   resources :employee_week_offs do
     collection do
       get :revert_week_off
@@ -435,7 +459,12 @@ end
     end
   end
   resources :salary_comp_mappings
-  resources :company_events
+  resources :company_events do
+    collection do
+      get :event_detail
+      get :show_event
+    end
+  end
   resources :employee_task_to_dos do
     collection do
       get :dynamic_refresh
@@ -1129,6 +1158,7 @@ end
   match 'interview_schedules/:id/sample_email_to_interviewer/:id' => 'interview_schedules#sample_email_to_interviewer', :via => [:get], :as => :sample_email_to_interviewer
 
   match 'circulars/:id/download_documents/:id' => 'circulars#download_documents', :via => [:get], :as => :download_documents
+  match 'circulars/:id/download_company_policy_document/:id' => 'circulars#download_company_policy_document', :via => [:get], :as => :download_company_policy_document
 
   match 'daily_bill_details/:id/download_doc/:id' => 'daily_bill_details#download_doc', :via => [:get], :as => :download_doc
   match 'daily_bill_details/:id/download_pics/:id' => 'daily_bill_details#download_pics', :via => [:get], :as => :download_pics
@@ -1290,6 +1320,10 @@ end
       post :salary_employee_wise
       get :employee_wise_pdf
       get :employee_wise_xls
+      get :employee_list
+      get :show_all_record
+      post :show_all_record
+      get :employee_record
     end
   end
   resources :retention_moneys do
@@ -1374,6 +1408,7 @@ end
       get :print_salary_slip_rg
       get :show_salaryslip_formate_3
       get :print_salary_slip_formate_3
+      get :search_by_slip_detail
     end
   end
  
@@ -1490,6 +1525,8 @@ end
       get :revert_workingday
       get :show_employee
       post :revert_all_workingday
+      get :search_by_month_year
+      post :month_year_wise_record
     end
   end
 
@@ -1695,6 +1732,7 @@ end
   resources :leav_categories do
     collection do
       get :is_confirm
+      get :show_leave_category
     end
   end
   resources :employee_physicals do
@@ -1896,6 +1934,7 @@ end
   resources :departments do
     collection do
       get :department_list_xls
+      get :is_confirm
     end
   end
 

@@ -34,11 +34,17 @@
     rules: {
       "relation_master[name]":{
         required: true
+      },
+       "relation_master[code]":{
+        required: true
       }
     },
     messages: {
       "relation_master[name]":{
         required: "Please Specify Name"
+      },
+       "relation_master[code]":{
+        required: "Please Specify code"
       }
     },
     errorPlacement: function(error, element) {

@@ -20,6 +20,7 @@
 //= require jquery-ui/datepicker
 //= require chartkick
 
+
 //= require moment
 //= require bootstrap-datetimepicker
 

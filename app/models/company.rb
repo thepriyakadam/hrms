@@ -24,6 +24,7 @@ class Company < ActiveRecord::Base
   validate :pan_no_regex
   validate :contact_no_regex
 
+
   has_attached_file :company_logo, styles: { medium: '300x300>', thumb: '100x100>' }, default_url: 'missing.png'
   validates_attachment_content_type :company_logo, :content_type => /\Aimage\/.*\Z/,:message => 'only (png/gif/jpeg) images'
 

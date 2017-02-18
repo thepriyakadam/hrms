@@ -3,9 +3,9 @@ class SalaryReport
                 :actual_basic, :actual_da, :actual_hra, :actual_convenience, :actual_other, :actual_special, :actual_washing, :actual_total,
                 :earned_basic, :earned_da, :earned_hra, :earned_convenience, :earned_other, :earned_special, :earned_washing, :earned_total,
                 :pf, :esic, :income_tax, :pt, :advance, :society, :food_deduction, :mobile, :retention, :welfair, :deduction_total, :net_payable, :other_deduction,
-                :total_leave, :cl_leave, :el_leave,:advance_leave,:coff_leave,:esic_leave, :lwp_leave, :day_in_month, :payable_day, :present_day, :absent_day, :holiday, :weekoff, :month, :year,
+                :total_leave, :cl_leave, :el_leave,:advance_leave,:od_leave,:coff_leave,:esic_leave, :lwp_leave, :day_in_month, :payable_day, :present_day, :absent_day, :holiday, :weekoff, :month, :year,
                 :pf_ctc, :esic_ctc, :bonus_ctc, :actual_driver, :actual_medical, :actual_child_edu, :actual_mra, :earned_driver, :earned_medical, :earned_child_edu,
-                :earned_mra
+                :earned_mra,:actual_monthly_arrear,:earned_monthly_arrear
         
 
   def self.collect_data(e, j, sl)
@@ -67,6 +67,10 @@ class SalaryReport
         when "Rembursement of Medical Allowence"
         sr.actual_mra = a.actual_amount
         sr.earned_mra = a.calculated_amount
+
+        when "Monthly Arrear"
+        sr.actual_monthly_arrear = a.actual_amount
+        sr.earned_monthly_arrear = a.calculated_amount
         
       end
     end
@@ -76,13 +80,13 @@ class SalaryReport
     
     deductable_items.each do |d|
       case d.other_component_name
-        when "PF"
+        when "Provident Fund"
         sr.pf = d.calculated_amount.to_i
         when "ESIC"
         sr.esic = d.calculated_amount.to_i
         when "Income Tax"
         sr.income_tax = d.calculated_amount
-        when "Prof. Tax"
+        when "Professional Tax"
         sr.pt = d.calculated_amount
         when "Advance"
         sr.advance = d.calculated_amount.to_i
@@ -107,6 +111,7 @@ class SalaryReport
     sr.cl_leave = wd.cl_leave.to_f
     sr.el_leave = wd.el_leave.to_f
     sr.advance_leave = wd.advance_leave.to_f
+    sr.od_leave = wd.od_leave.to_f
     sr.coff_leave = wd.coff_leave.to_f
     sr.esic_leave = wd.esic_leave.to_f
     sr.lwp_leave = wd.lwp_leave.to_f 
@@ -223,6 +228,9 @@ class SalaryReport
     array_actual_mra = reports.collect {|r| r.try(:actual_mra)}.compact
     @sum.actual_mra = array_actual_mra.inject(0){|sum,x| sum + x}
 
+    array_actual_monthly_arrear = reports.collect {|r| r.try(:actual_monthly_arrear)}.compact
+    @sum.actual_monthly_arrear = array_actual_monthly_arrear.inject(0){|sum,x| sum + x}
+
 
     array_actual_total = reports.collect {|r| r.try(:actual_total)}.compact
     @sum.actual_total = array_actual_total.inject(0){|sum,x| sum + x }
@@ -260,6 +268,10 @@ class SalaryReport
 
     array_earned_mra = reports.collect {|r| r.try(:earned_mra)}.compact
     @sum.earned_mra = array_earned_mra.inject(0){|sum,x| sum + x}
+
+    array_earned_monthly_arrear = reports.collect {|r| r.try(:earned_monthly_arrear)}.compact
+    @sum.earned_monthly_arrear = array_earned_monthly_arrear.inject(0){|sum,x| sum + x}
+
 
     array_earned_total = reports.collect {|r| r.try(:earned_total)}.compact
     @sum.earned_total = array_earned_total.inject(0){|sum,x| sum + x }
@@ -314,6 +326,9 @@ class SalaryReport
 
     array_advance_leave = reports.collect {|r| r.try(:advance_leave)}.compact
     @sum.advance_leave = array_advance_leave.inject(0){|sum,x| sum + x }
+
+     array_od_leave = reports.collect {|r| r.try(:od_leave)}.compact
+    @sum.od_leave = array_od_leave.inject(0){|sum,x| sum + x }
 
     array_coff_leave = reports.collect {|r| r.try(:coff_leave)}.compact
     @sum.coff_leave = array_coff_leave.inject(0){|sum,x| sum + x }
@@ -384,6 +399,10 @@ class SalaryReport
 
         when "Rembursement of Medical Allowence"
         sr.actual_mra = a.actual_amount
+
+         when "Monthly Arrear"
+        sr.actual_monthly_arrear = a.actual_amount
+        
       end
     end
 
@@ -458,6 +477,11 @@ class SalaryReport
         when "Rembursement of Medical Allowence"
         sr.actual_mra = a.actual_amount
         sr.earned_mra = a.calculated_amount
+
+        when "Monthly Arrear"
+        sr.actual_monthly_arrear = a.actual_amount
+        sr.earned_monthly_arrear = a.calculated_amount
+        
       end
     end
 
@@ -466,13 +490,13 @@ class SalaryReport
         
     deductable_items.each do |d|
       case d.other_component_name
-        when "PF"
+        when "Provident Fund"
         sr.pf = d.calculated_amount.to_i
         when "ESIC"
         sr.esic = d.calculated_amount.to_i
         when "Income Tax"
         sr.income_tax = d.calculated_amount
-        when "Prof. Tax"
+        when "Professional Tax"
         sr.pt = d.calculated_amount
         when "Advance"
         sr.advance = d.calculated_amount.to_i
@@ -497,6 +521,7 @@ class SalaryReport
     sr.cl_leave = wd.cl_leave.to_f
     sr.el_leave = wd.el_leave.to_f
     sr.advance_leave = wd.advance_leave.to_f
+    sr.od_leave = wd.od_leave.to_f
     sr.coff_leave = wd.coff_leave.to_f
     sr.esic_leave = wd.esic_leave.to_f
     sr.lwp_leave = wd.lwp_leave.to_f 

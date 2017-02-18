@@ -32,11 +32,17 @@
     rules: {
       "asset_type[name]":{
         required: true
+      },
+       "asset_type[code]":{
+        required: true
       }
     },
     messages: {
       "asset_type[name]":{
         required: "Please Specify Name"
+      },
+       "asset_type[code]":{
+        required: "Please Specify Code"
       }
     },
     errorPlacement: function(error, element) {

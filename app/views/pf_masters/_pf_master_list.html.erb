@@ -33,6 +33,7 @@
         <td>
           <% if pf_master.is_confirm == true %>
             <small class= "label label-primary">Confirmed</small>
+            <%= link_to '', edit_pf_master_path(pf_master) ,class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
           <% else %>
             <%= link_to '', edit_pf_master_path(pf_master) ,class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
             <%= link_to '',  pf_master, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-xs btn-danger fa fa-close' %>

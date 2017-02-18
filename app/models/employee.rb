@@ -68,6 +68,7 @@ class Employee < ActiveRecord::Base
   has_many :issue_lockers
   has_many :week_off_masters
   has_many :machine_attendances
+  has_many :on_duty_requests
   
   #accepts_nested_attributes_for :joining_detail
   has_many :subordinates, class_name: 'Employee',
@@ -91,6 +92,12 @@ class Employee < ActiveRecord::Base
                           foreign_key: "manager_id"
   has_many :manager_histories, class_name: "Employee",
                           foreign_key: "manager_2_id"
+
+  has_many :on_duty_requests, class_name: "Employee",
+                          foreign_key: "first_reporter_id"
+
+  has_many :on_duty_requests, class_name: "Employee",
+                          foreign_key: "second_reporter_id"
 
   belongs_to :user, class_name: 'Employee'
 
@@ -160,6 +167,17 @@ class Employee < ActiveRecord::Base
     end
   end
 
+  def self.filter_by_date_and_costcenter(date, costcenter, current_user)
+    month = date.strftime("%B")
+    year = date.strftime("%Y")
+    @workingday = Workingday.where(month_name: month,year: year).pluck(:employee_id)
+    @attendances = EmployeeAttendance.where(day: date).pluck(:employee_id)
+    @joining_details = JoiningDetail.where(cost_center_id: costcenter).pluck(:employee_id)
+    @roles = collect_rolewise(current_user)
+    finals = (@joining_details - @attendances - @workingday) & @roles
+    Employee.where(id: finals)
+  end
+  
   private
 
   def self.find_by_role(current_user)
@@ -194,23 +212,6 @@ class Employee < ActiveRecord::Base
     end
   end
   
-  def self.filter_by_date_and_costcenter(date, costcenter, current_user)
-    @attendances = EmployeeAttendance.where(day: date).pluck(:employee_id)
-    @joining_details = JoiningDetail.where(cost_center_id: costcenter).pluck(:employee_id)
-    @roles = collect_rolewise(current_user)
-    finals = (@joining_details - @attendances) & @roles
-    Employee.where(id: finals)
-  end
-
-  def self.filter_by_date_costcenter_and_department(date, costcenter, department, current_user)
-    @attendances = EmployeeAttendance.where(day: date).pluck(:employee_id)
-    @joining_details = JoiningDetail.where(cost_center_id: costcenter).pluck(:employee_id)
-    @departments = Employee.where(department_id: department).pluck(:id)
-    @roles = collect_rolewise(current_user)
-    final = (@departments) & @roles
-    finals = (@joining_details) & @roles
-    #Employee.where(id: finals,id: final)
-  end
 
   def self.to_csv(options = {})
     CSV.generate(options) do |csv|

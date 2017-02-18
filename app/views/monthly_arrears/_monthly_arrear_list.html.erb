@@ -1,0 +1,30 @@
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>ID</th>  
+      <th>Employee Name</th>
+      <th>Date</th>
+      <th>Amount</th>
+      <th>Description</th>
+      <th>Action</th>
+ 
+  <tbody>
+    <% @monthly_arrears.each do |monthly_arrear| %>
+      <tr>
+       <td><%= monthly_arrear.employee.try(:manual_employee_code) %></td>
+       <td><%= full_name(monthly_arrear.employee) %></td>
+        <td><%= monthly_arrear.day %></td>
+        <td><%= monthly_arrear.amount %></td>
+        <td><%= monthly_arrear.description %></td>
+        <td>
+           <% if monthly_arrear.is_paid == true %>
+           <small class= "label label-primary">Paid</small>
+           <%else%>
+            <%= link_to '', edit_monthly_arrear_path(monthly_arrear),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
+            <%= link_to '',  monthly_arrear, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-xs fa fa-close',remote:true %>
+           <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

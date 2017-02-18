@@ -36,8 +36,6 @@
     </tfoot>
   </tbody>
 </table>
-<div class="col-sm-6">
   <%= link_to " PDF Report ", collect_salary_salary_slip_ledgers_path(bank_id: @bank,year: @year,month: @month, format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank"  %>
 
   <%= link_to " Excel Report ", collect_salary_salary_slip_ledgers_path(bank_id: @bank,year: @year,month: @month, format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
-</div>

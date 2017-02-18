@@ -1,5 +1,5 @@
-<div class="box-body">
-<%= bootstrap_form_for(@employee_category,remote: true) do |f| %>
+
+<%= bootstrap_form_for(@employee_category,html: {id: 'employee_category'},remote: true) do |f| %>
   <div class="row">
     <div class="col-sm-3">
       <div class="form-group required">
@@ -16,8 +16,15 @@
        <%= f.text_field :description,hide_label: true,placeholder: "Description"%>
        </div>
     </div>
+    <div class="col-sm-3">
+            <div class="field">
+            <%= f.check_box :is_active , label:'Active'%>
+          </div>
+          </div>
+          </div>
   
-
+ <div class="row">
+ <label></label>
   <div class="col-sm-3">
       <div class="actions">
         <%= f.submit "Create Employee Category",:class => class_name, data: { disable_with: data_info } %>

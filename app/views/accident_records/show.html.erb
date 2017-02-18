@@ -1,21 +1,18 @@
-<!-- SELECT2 EXAMPLE -->
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title">Company</h3>
-    <div class="box-tools pull-right">
-    </div>
+      <h3 class="box-title">Accident Record</h3>
+      <div class="box-tools pull-right"> </div>
   </div><!-- /.box-header -->
   <div class="box-body">
-    <table id="example2" class="table table-bordered table-hover table-condensed">
-
+   
+  <table id="example2" class="table table-bordered table-hover table-condensed">
     <tr>
-      <th><strong>Sr No</strong></th>
+      <th><strong>Accident Code</strong></th>
       <td><%= @accident_record.code %></td>
 
       <th><strong>Employee</strong></th>
       <td><%= @accident_record.employee.try(:manual_employee_code) %></td>
     </tr>
-
     <tr>
       <th><strong>Department</strong></th>
       <td><%= @accident_record.department.try(:name) %></td>
@@ -23,7 +20,6 @@
       <th><strong>Root Cause</strong></th>
       <td><%= @accident_record.root_cause_master.try(:name) %></td>
     </tr>
-
     <tr>
       <th><strong>Accident Date</strong></th>
       <td><%= @accident_record.accident_date %></td>
@@ -31,7 +27,6 @@
       <th><strong>ESIC No</strong></th>
       <td><%= @accident_record.esic_no %></td>
     </tr>
-
     <tr>
       <th><strong>Case Type</strong></th>
       <td><%= @accident_record.case_type %></td>
@@ -52,9 +47,8 @@
       <th><strong>Description</strong></th>
       <td colspan="3"><%= @accident_record.description %></td>
     </tr>
- </table>
-<br>
-    <%= link_to 'Edit', edit_accident_record_path(@accident_record),class: 'btn btn-success btn-sm fa fa-edit' %> |
-    <%= link_to 'Back', accident_records_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
-  </div><!-- /.box-body -->
-</div><!-- /.box -->
+  </table><br>
+      <%= link_to 'Edit', edit_accident_record_path(@accident_record),class: 'btn btn-success btn-sm fa fa-edit' %> |
+      <%= link_to 'Back', accident_records_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+</div>
+</div>

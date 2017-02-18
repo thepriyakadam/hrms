@@ -11,6 +11,7 @@
       <thead>
        <tr>
         <td colspan="4">
+        <center> <%= image_tag @employee.company.company_logo.url, :size => "130x50" %></center>  <br>
           <center><strong><%= @employee.company_location.company.try(:description) %></strong><br><%= @employee.company_location.try(:address) %>, <%= @employee.company_location.try(:name) %>.  </center>
         </td>           
        </tr>
@@ -38,7 +39,7 @@
        <td>
 
         <% @leave_details.each do |ld| %>
-            <%= ld.leav_category.name %> <%= ld.no_of_leave %> <%= ld.balance %><br><br>
+            <%= ld.leav_category.name %> - Leave:  <%= ld.no_of_leave %> - Balance: <%= ld.balance %><br><br>
         <% end %>
         </td>
        <td>
@@ -50,7 +51,6 @@
        </tr>
   </tbody>
   </table>
-      
     <%= render 'slip' %>
   </div>
 </div>

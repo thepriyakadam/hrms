@@ -23,6 +23,7 @@
           <% if esic_master.is_confirm == true %>
             <small class= "label label-primary">Confirmed</small>
             <%= link_to '', esic_master ,class: 'btn btn-xs btn-default fa fa-eye' %>
+             <%= link_to '', edit_esic_master_path(esic_master),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
           <% else %>
             <%= link_to '', edit_esic_master_path(esic_master),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
             <%= link_to '',  esic_master, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-xs btn-danger fa fa-close' %>

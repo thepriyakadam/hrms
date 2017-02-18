@@ -10,39 +10,40 @@
       <thead>
        <tr>
       <td colspan="3">
-     <center><%= image_tag("image6.jpg", :alt => "image6 feed" , :size => '130x50') %></center>  <br>
-        <center><strong><%= @employee.company_location.company.try(:description) %></strong><br><%= @employee.company_location.try(:address) %>, <%= @employee.company_location.try(:name) %>  </center><center><strong>Salary Slip</strong></center> 
+        <center> <%= image_tag @employee.company.company_logo.url, :size => "180x90" %></center>  <br>
+        <center><strong><%= @employee.company_location.company.try(:description) %></strong><br><%= @employee.company_location.try(:address) %>, <%= @employee.company_location.try(:name) %>  </center>
+        <center><strong>SALARY SLIP</strong></center> 
       </td>           
     </tr>
     <tr>
       <td>
-      Employee ID : <%= @employee.manual_employee_code%> <br><br>
-      Employee Name : <%= full_name(@employee) %> <br><br>
-      Designation : <%= @employee.joining_detail.try(:employee_designation).name %> <br><br>
-      Department : <%= @employee.department.try(:name) %> <br><br>
+      <strong> Employee ID :</strong> <%= @employee.manual_employee_code%> <br><br>
+      <strong> Employee Name :</strong> <%= full_name(@employee) %> <br><br>
+      <strong> Designation :</strong> <%= @employee.joining_detail.try(:employee_designation).name %> <br><br>
+      <strong> Department : </strong><%= @employee.department.try(:name) %> <br><br>
       </td>
       <td>
-      UAN No. : <%= @employee.joining_detail.try(:employee_uan_no) %><br><br> 
-      PF No. : <%= @employee.joining_detail.try(:employee_pf_no) %><br><br>
-      PAN No  : <%= @salaryslip.employee.pan_no %><br><br> 
-      Account No. :<%= @employee.try(:employee_bank_detail).try(:account_no) %><br><br> 
+      <strong> UAN No. :</strong> <%= @employee.joining_detail.try(:employee_uan_no) %><br><br> 
+      <strong> PF No. :</strong> <%= @employee.joining_detail.try(:employee_pf_no) %><br><br>
+      <strong> PAN No  : </strong> <%= @salaryslip.employee.pan_no %><br><br> 
+      <strong> Account No. :</strong><%= @employee.try(:employee_bank_detail).try(:account_no) %><br><br> 
       </td>
       <td>
-      Location : <%= @employee.company_location.try(:name) %>  <br><br>
-      Pay Period :  <%= @salaryslip.month%> - <%= @salaryslip.year%><br><br>
-      Working Days : <%= @working_day.try(:day_in_month) %> <br><br> 
-      Paid Days : <%= @working_day.try(:payable_day) %><br><br> 
+      <strong> Location : </strong><%= @employee.company_location.try(:name) %>  <br><br>
+      <strong> Pay Month : </strong> <%= @salaryslip.month%> - <%= @salaryslip.year%><br><br>
+      <strong> Working Days : </strong><%= @working_day.try(:day_in_month) %> <br><br> 
+      <strong> Paid Days : </strong><%= @working_day.try(:payable_day) %><br><br> 
       </td>   
     </tr>
    
      <tr>
-      <th>Gross Salary : <%= @salaryslip.actual_gross_salary.round %> 
+      <th>Gross Salary : <%= @salaryslip.calculated_gross_salary.round %>
     </th>   
  
-      <th>Deduction : <%= @salaryslip.actual_total_deduction.round %> 
+      <th>Deduction : <%= @salaryslip.calculated_total_deduction.round %> 
          </th>   
   
-      <th>Net Salary :  <%= @salaryslip.actual_net_salary.round %>
+      <th>Net Salary :  <%= @salaryslip.calculated_net_salary.round %>
       </th>   
     </tr>
 
@@ -56,9 +57,9 @@
       <thead>
       <tr><th colspan="3"><center> Earning Details </center></th></tr>
         <tr>
-          <th>Component</th>
-          <th>Actual Amount</th>
-          <th>Calculated Amount</th>
+          <th><center>Component</center></th>
+          <th><center>Actual Amount</center></th>
+          <th><center>Calculated Amount</center></th>
         </tr>
       </thead>
       <tbody>
@@ -100,8 +101,10 @@
           <td align="right"><strong><%= @salaryslip.actual_net_salary.round %></strong></td>
           <td align="right"><strong><%= @salaryslip.calculated_net_salary.round %></strong></td>
         </tr>
+        <tr>
+        <td colspan="3"><center>**This is a computer generated slip, hence no signature is required.**</center></td>
+        </tr>
       </tbody>
-
     </table>
   </div>
 </div>

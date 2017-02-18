@@ -44,7 +44,7 @@
 		<td><%= slip.employee.manual_employee_code %></td>
 		<td><%= employee.first_name.to_s+" "+employee.middle_name.to_s+" "+employee.last_name.to_s %></td>
 		<td><%= joining.employee_designation.try(:name) %></td>
-		<td><%= joining.department.try(:name) %></td>
+		<td><%= slip.employee.department.try(:name) %></td>
 		<td><%= joining.cost_center.try(:name) %></td>
 		<td><%= slip.year %></td>
 		<td><%= slip.month %></td>
@@ -80,6 +80,8 @@
     <% item.try(:actual_amount).try(:round) %>
   <% when "Rembursement of Medical Allowence" %>
     <% item.try(:actual_amount).try(:round) %>
+  <% when "Monthly Arrear" %>
+    <% item.try(:actual_amount).try(:round) %>
   <% else %>
   <% end %> <!-- switch case -->
 <% end %><!-- addable items -->
@@ -109,6 +111,8 @@
   <% when "Children Education Allowance" %>
     <% item.try(:calculated_amount).try(:round) %>
   <% when "Rembursement of Medical Allowence" %>
+    <% item.try(:calculated_amount).try(:round) %>
+  <% when "Monthly Arrear" %>
     <% item.try(:calculated_amount).try(:round) %>
   <% else %>
   <% end %> <!-- switch case -->
@@ -165,7 +169,8 @@
     </tbody>
   </table>
   </div>
-  <%= link_to " Excel Report ",salary_slip_xls_salaryslips_path(month: params[:salaryslip][:month], year: params[:salaryslip][:year],company_id: params[:salaryslip][:company_id],company_location_id: params[:food_deduction][:company_location_id], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+  
+  <%= link_to " Excel Report ",salary_slip_xls_salaryslips_path(month: params[:salaryslip][:month], year: params[:salaryslip][:year],company_id: params[:salaryslip][:company_id],company_location_id: params[:salaryslip][:company_location_id], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
   <!-- <= link_to " Print Salaryslip ",salary_slip_pdf_salaryslips_path(month: params[:salaryslip][:month], year: params[:salaryslip][:year],company_id: params[:salaryslip][:company_id],company_location_id: params[:food_deduction][:company_location_id], format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %> -->
 </div>
 

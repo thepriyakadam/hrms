@@ -243,6 +243,7 @@ class AdvanceSalariesController < ApplicationController
    end
 
    def advance_detailed_report 
+    
    end
 
    def advance_detail

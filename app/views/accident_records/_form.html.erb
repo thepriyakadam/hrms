@@ -24,7 +24,7 @@
         <div class="col-sm-3">
           <div class="field">
             <div class="field">
-              <%= f.select :department_id, all_department_type,{label: 'Department',include_blank: " Select Department"} %>
+              <%= f.text_field :department_id, label: 'Department',placeholder: "Department", readonly: true %>
             </div>
           </div>
         </div> 
@@ -95,26 +95,79 @@
         </div>
       </div>  
      
-      <div class="row">
+      <!-- <div class="row">
        <div class="col-sm-3">
       <div class="field">
-        <%= f.file_field :avatar,label: 'Upload Photo' %>
+        <= f.file_field :avatar,label: 'Upload Photo', multiple: true %>
       </div>
       </div> 
-      </div><br>
+      </div> --><br>
 
-      <div class="row">
-        <div class="col-sm-3">
-          <div class="actions">
-            <%= f.submit'Create Accident Record', :class => class_name, data: { disable_with: data_info } %>
-            <%= link_to 'Back', accident_records_path,class:'btn btn-sm btn-default fa fa-arrow-left' %>
-
+<div id="entry1" class="clonedInput">
+  <div class="row">
+      <div class="col-sm-3">
+          <div class="field">
+              <%= f.file_field :avatar,label: 'Upload Photo' , class: 'input_avatar' %>
           </div>
-        </div>
+      </div> 
+  <% unless params['controller'] == 'accident_records' and params['action'] == 'edit' %>
+  <div class="row">
+      <div class="col-sm-1">
+          <input type="button" id="btnAdd" value="+" class="btn btn-xs btn-success"> 
+          <input type="button" id="btnDel" value="-" class="btn btn-xs btn-danger">
+      </div>
+  </div><br>
+  <%end%>
+  </div>
     </div>
+   <div class="row">
+      <div class="col-sm-3">
+        <label></label>
+          <div class="actions">
+              <%= f.submit'Creat Accident Record', :class => class_name, data: { disable_with: data_info } %>
+                <%= link_to 'Back', accident_records_path,class:'btn btn-sm btn-default fa fa-arrow-left' %>
+              <% if params['controller'] == 'accident_records' and params['action'] == 'edit' %>
+              <%end%>
+          </div>
+      </div>
+  </div><br>
+</div>
     <% end %>
   </div><!-- /.box-body -->
 </div><!-- /.box -->
+
+<script type="text/javascript">
+    $(function () {
+    $('#btnAdd').click(function () {
+      var num     = $('.clonedInput').length, 
+          newNum  = new Number(num + 1),      
+          newElem = $('#entry' + num).clone().attr('id', 'entry' + newNum).fadeIn('slow'); 
+          newElem.find('.input_avatar').attr('avatar','accident_record['+ newNum +'][avatar]').attr('id', newNum + '_accident_record_avatar').val('');
+
+      $('#entry' + num).after(newElem);
+      $('#ID' + newNum + '_title').focus();
+
+      $('#btnDel').attr('disabled', false);
+
+      if (newNum == 5)
+      $('#btnAdd').attr('disabled', true).prop('value', "You've reached the limit"); 
+    });
+
+    $('#btnDel').click(function () {
+        if (confirm("Are you sure you want to remove this section? This cannot be undone."))
+            {
+                var num = $('.clonedInput').length;
+                $('#entry' + num).slideUp('slow', function () {$(this).remove();
+                    if (num -1 === 1)
+                $('#btnDel').attr('disabled', true);
+                $('#btnAdd').attr('disabled', false).prop('value', "+")});
+            }
+        return false;
+    });
+    $('#btnAdd').attr('disabled', false);
+    $('#btnDel').attr('disabled', true);
+  });
+</script>
 
 <script type="text/javascript">
   $(function(){

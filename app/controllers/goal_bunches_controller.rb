@@ -21,8 +21,7 @@ class GoalBunchesController < ApplicationController
     @goal_bunch = GoalBunch.new
     @goal_bunches = GoalBunch.where(employee_id: current_user.employee_id)
     #@period_id = params[:period_id]
-    session[:active_tab] ="performancemgmt"
-    session[:active_tab1] ="perform_cycle"
+    session[:active_tab] ="EmployeeSelfService"
   end
 
   # GET /goal_bunches/1/edit
@@ -811,8 +810,7 @@ class GoalBunchesController < ApplicationController
   def period_list_appraisee
     @employee = Employee.find(current_user.employee_id)
     @goal_bunches = GoalBunch.where(employee_id: @employee.id)
-    session[:active_tab] ="performancemgmt"
-    session[:active_tab1] ="perform_cycle"
+    session[:active_tab] ="EmployeeSelfService"
   end
 
   def period_list_print

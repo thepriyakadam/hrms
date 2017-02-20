@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170218104438) do
+ActiveRecord::Schema.define(version: 20170218053643) do
 
   create_table "about_bosses", force: :cascade do |t|
     t.string   "code"
@@ -1136,17 +1136,17 @@ ActiveRecord::Schema.define(version: 20170218104438) do
     t.integer  "reporting_master_id"
     t.string   "resign_status"
     t.boolean  "is_stop_pay_request"
-    t.datetime "application_date"
-    t.boolean  "is_pending"
-    t.boolean  "is_cancelled"
-    t.boolean  "is_first_approved"
-    t.boolean  "is_second_approved"
-    t.boolean  "is_first_rejected"
-    t.boolean  "is_second_rejected"
     t.integer  "second_reporter_id"
     t.integer  "final_reporter_id"
+    t.boolean  "is_pending"
+    t.boolean  "is_first_approved"
+    t.boolean  "is_second_approved"
     t.boolean  "is_final_approved"
+    t.boolean  "is_cancelled"
+    t.boolean  "is_first_rejected"
+    t.boolean  "is_second_rejected"
     t.boolean  "is_final_rejected"
+    t.datetime "application_date"
   end
 
   add_index "employee_resignations", ["employee_id"], name: "index_employee_resignations_on_employee_id"

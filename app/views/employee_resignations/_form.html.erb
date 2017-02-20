@@ -4,7 +4,7 @@
   </div><!-- /.box-header -->
   <div class="box-body">
     <%= bootstrap_form_for(@employee_resignation,html: {id: 'employee_resignation'}) do |f| %>
-    <%= f.hidden_field :employee_id, :value => current_user.employee_id %>
+   <!--  <= f.hidden_field :employee_id, :value => current_user.employee_id %> -->
      <%= f.hidden_field :application_date, value: Date.today %>
      
       <div class="row">
@@ -153,28 +153,15 @@
 </div><!--box -->
 
 <script type="text/javascript">
-
     $("#employee_resignation").validate({
     rules: {
-      "employee_resignation[reporting_master_id]":{
-        required: true
-      },
       "employee_resignation[employee_id]":{
-        required: true
-      },
-      "employee_resignation[resignation_date]":{
         required: true
       }
     },
     messages: {
-      "employee_resignation[reporting_master_id]":{
-        required: "Please specify Reporting Manager"
-      },
       "employee_resignation[employee_id]":{
-        required: "Please specify Employee"
-      },
-      "employee_resignation[resignation_date]":{
-        required: "Please specify Date"
+        required: "Please Select Employee"
       }
     },
     errorPlacement: function(error, element) {
@@ -183,6 +170,7 @@
     }
    });
 </script>
+
 <script type="text/javascript">
   $(function(){
     $('.resignation').datepicker({

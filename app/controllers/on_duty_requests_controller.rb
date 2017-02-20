@@ -42,10 +42,10 @@ class OnDutyRequestsController < ApplicationController
     if @on_duty_request.is_available?
       flash[:alert] = "Your Request already has been sent"
       if current_user.employee_id == @on_duty_request.employee_id
-          redirect_to new_on_duty_request_path
-        else
-          redirect_to employee_list_on_duty_requests_path
-        end
+        redirect_to new_on_duty_request_path
+      else
+        redirect_to employee_list_on_duty_requests_path
+      end
     else
       if @employee.manager_id.nil?
         flash[:alert] = 'Reporting manager not set please set Reporting Manager'
@@ -93,6 +93,13 @@ class OnDutyRequestsController < ApplicationController
           OdRecord.create(employee_id: @employee.id,on_duty_request_id: @on_duty_request.id,status: 'Pending',day: i)
         end
           OdStatusRecord.create(employee_id: @employee.id,on_duty_request_id: @on_duty_request.id,status: 'Pending',change_date: Date.today)
+
+          if @employee.manager.email.nil? or @employee.manager.email == ""
+              flash[:notice] = "Send request without email."
+            else
+              flash[:notice] = 'Od Request sent successfully.'
+              OdRequestMailer.pending(@on_duty_request).deliver_now
+            end
 
         flash[:notice] = "Request Created Successfully"
         if current_user.employee_id == @on_duty_request.employee_id

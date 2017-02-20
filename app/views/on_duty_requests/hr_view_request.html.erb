@@ -74,8 +74,10 @@
                 <%= link_to '', on_duty_request, class: 'btn btn-default btn-xs fa fa-eye' %>
                 <% if on_duty_request.current_status == "Pending" %>
                   <%= link_to '', cancel_od_status_record_path(on_duty_request), data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-xs fa fa-trash' %>
+                <% elsif on_duty_request.current_status == "Cancelled" %>
+            
                 <% else %>
-                 
+                  <!-- <= link_to 'Revert',show_od_record_particular_od_records_path(on_duty_request), class: 'btn btn-danger btn-xs' %> -->
                 <% end %>
 
               </td>

@@ -47,7 +47,7 @@ class CircularsController < ApplicationController
       if @circular.save
         @circular = Circular.new
       end
-      flash[:notice] = 'Company Policy saved Successfully.' 
+      flash[:notice] = 'Circular saved Successfully.' 
       redirect_to new_circular_path
         
   end
